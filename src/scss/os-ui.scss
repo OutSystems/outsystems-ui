@@ -14,8 +14,8 @@
 /*!  $3 - Page Layout                                                             */
 /*!         Page Layout - Header                                                  */
 /*!            Page Layout - Header Top                                           */
-/*!            Page Layout - Header Content                                       */
 /*!         Page Layout - Menu                                                    */
+/*!            Page Layout - Header Content                                       */
 /*!         Page Layout - Content                                                 */
 /*!         Page Layout - Login                                                   */
 /*!         Page Layout - iOS Scroll Bounce                                       */
@@ -152,6 +152,12 @@
 /*!  $3 - Page Layout                                                             */
 /*! ============================================================================= */
 @import '02-layout/layout';
+@import '02-layout/header';
+@import '02-layout/menu';
+@import '02-layout/content';
+@import '02-layout/section';
+@import '02-layout/login';
+@import '02-layout/ios-bounce';
 
 /*! ============================================================================= */
 /*!  $4 - Patterns                                                                */
