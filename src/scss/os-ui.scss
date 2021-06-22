@@ -19,7 +19,19 @@
 /*!         Page Layout - Content                                                 */
 /*!         Page Layout - Login                                                   */
 /*!         Page Layout - iOS Scroll Bounce                                       */
-/*!  $4 - Patterns                                                                */
+/*!  $4 - Widgets                                                                 */
+/*!         Widgets - List                                                        */
+/*!         Widgets - ListItem                                                    */
+/*!         Widgets - Table                                                       */
+/*!         Widgets - BulkActions                                                 */
+/*!         Widgets - Form                                                        */
+/*!         Widgets - Upload                                                      */
+/*!         Widgets - ButtonGroup                                                 */
+/*!         Widgets - Popover                                                     */
+/*!         Widgets - Popup                                                       */
+/*!         Widgets - FeedbackMessage                                             */
+/*!         Widgets - Radio Button                                                */
+/*!  $5 - Patterns                                                                */
 /*!         Patterns - Adaptive                                                   */
 /*!            Patterns - Adaptive - Columns                                      */
 /*!            Patterns - Adaptive - Gallery                                      */
@@ -80,18 +92,6 @@
 /*!            Patterns - Utilities - CenterContent                               */
 /*!            Patterns - Utilities - MarginContainer                             */
 /*!            Patterns - Utilities - Separator                                   */
-/*!  $5 - Widgets                                                                 */
-/*!         Widgets - List                                                        */
-/*!         Widgets - ListItem                                                    */
-/*!         Widgets - Table                                                       */
-/*!         Widgets - BulkActions                                                 */
-/*!         Widgets - Form                                                        */
-/*!         Widgets - Upload                                                      */
-/*!         Widgets - ButtonGroup                                                 */
-/*!         Widgets - Popover                                                     */
-/*!         Widgets - Popup                                                       */
-/*!         Widgets - FeedbackMessage                                             */
-/*!         Widgets - Radio Button                                                */
 /*!  $6 - Styles                                                                  */
 /*!         Styles - Typography                                                   */
 /*!            Styles - Typography - Sizes Desktop                                */
@@ -160,102 +160,102 @@
 @import '02-layout/ios-bounce';
 
 /*! ============================================================================= */
-/*!  $4 - Patterns                                                                */
+/*!  $4 - Widgets                                                                 */
+/*! ============================================================================= */
+@import '03-widgets/list';
+@import '03-widgets/list-item';
+@import '03-widgets/table';
+@import '03-widgets/bulk-actions';
+@import '03-widgets/form';
+@import '03-widgets/upload';
+@import '03-widgets/button-group';
+@import '03-widgets/popover';
+@import '03-widgets/popup';
+@import '03-widgets/feedback-message';
+@import '03-widgets/radio-button';
+
+/*! ============================================================================= */
+/*!  $5 - Patterns                                                                */
 /*! ============================================================================= */
 
 /* ============================================================================== */
 /*      - Patterns - Adaptive                                                     */
 /* ============================================================================== */
-@import '03-patterns/01-adaptive/columns';
-@import '03-patterns/01-adaptive/gallery';
-@import '03-patterns/01-adaptive/master-detail';
+@import '04-patterns/01-adaptive/columns';
+@import '04-patterns/01-adaptive/gallery';
+@import '04-patterns/01-adaptive/master-detail';
 
 /* ============================================================================== */
 /*      - Patterns - Content                                                      */
 /* ============================================================================== */
-@import '03-patterns/02-content/accordion';
-@import '03-patterns/02-content/alert';
-@import '03-patterns/02-content/blank-slate';
-@import '03-patterns/02-content/card';
-@import '03-patterns/02-content/card-background';
-@import '03-patterns/02-content/card-tem';
-@import '03-patterns/02-content/card-sectioned';
-@import '03-patterns/02-content/chat-message';
-@import '03-patterns/02-content/flip-content';
-@import '03-patterns/02-content/floating-content';
-@import '03-patterns/02-content/list-item-content';
-@import '03-patterns/02-content/section';
-@import '03-patterns/02-content/tag';
-@import '03-patterns/02-content/tooltip';
-@import '03-patterns/02-content/user-avatar';
+@import '04-patterns/02-content/accordion';
+@import '04-patterns/02-content/alert';
+@import '04-patterns/02-content/blank-slate';
+@import '04-patterns/02-content/card';
+@import '04-patterns/02-content/card-background';
+@import '04-patterns/02-content/card-tem';
+@import '04-patterns/02-content/card-sectioned';
+@import '04-patterns/02-content/chat-message';
+@import '04-patterns/02-content/flip-content';
+@import '04-patterns/02-content/floating-content';
+@import '04-patterns/02-content/list-item-content';
+@import '04-patterns/02-content/section';
+@import '04-patterns/02-content/tag';
+@import '04-patterns/02-content/tooltip';
+@import '04-patterns/02-content/user-avatar';
 
 /* ============================================================================== */
 /*      - Patterns - Interaction                                                  */
 /* ============================================================================== */
-@import '03-patterns/03-interaction/action-sheet';
-@import '03-patterns/03-interaction/animate';
-@import '03-patterns/03-interaction/animated-label';
-@import '03-patterns/03-interaction/carousel';
-@import '03-patterns/03-interaction/date-picker';
-@import '03-patterns/03-interaction/dropdown-search';
-@import '03-patterns/03-interaction/dropdown-tags';
-@import '03-patterns/03-interaction/floating-actions';
-@import '03-patterns/03-interaction/horizontal-scroll';
-@import '03-patterns/03-interaction/input-with-icon';
-@import '03-patterns/03-interaction/lightbox-image';
-@import '03-patterns/03-interaction/notification';
-@import '03-patterns/03-interaction/range-slider';
-@import '03-patterns/03-interaction/scrollable-area';
-@import '03-patterns/03-interaction/search';
-@import '03-patterns/03-interaction/sidebar';
-@import '03-patterns/03-interaction/stacked-cards';
-@import '03-patterns/03-interaction/video';
+@import '04-patterns/03-interaction/action-sheet';
+@import '04-patterns/03-interaction/animate';
+@import '04-patterns/03-interaction/animated-label';
+@import '04-patterns/03-interaction/carousel';
+@import '04-patterns/03-interaction/date-picker';
+@import '04-patterns/03-interaction/dropdown-search';
+@import '04-patterns/03-interaction/dropdown-tags';
+@import '04-patterns/03-interaction/floating-actions';
+@import '04-patterns/03-interaction/horizontal-scroll';
+@import '04-patterns/03-interaction/input-with-icon';
+@import '04-patterns/03-interaction/lightbox-image';
+@import '04-patterns/03-interaction/notification';
+@import '04-patterns/03-interaction/range-slider';
+@import '04-patterns/03-interaction/scrollable-area';
+@import '04-patterns/03-interaction/search';
+@import '04-patterns/03-interaction/sidebar';
+@import '04-patterns/03-interaction/stacked-cards';
+@import '04-patterns/03-interaction/video';
 
 /* ============================================================================== */
 /*      - Patterns - Navigation                                                   */
 /* ============================================================================== */
-@import '03-patterns/04-navigation/bottom-bar-item';
-@import '03-patterns/04-navigation/breadcrumbs';
-@import '03-patterns/04-navigation/pagination';
-@import '03-patterns/04-navigation/section-index';
-@import '03-patterns/04-navigation/tabs';
-@import '03-patterns/04-navigation/timeline';
-@import '03-patterns/04-navigation/wizard';
+@import '04-patterns/04-navigation/bottom-bar-item';
+@import '04-patterns/04-navigation/breadcrumbs';
+@import '04-patterns/04-navigation/pagination';
+@import '04-patterns/04-navigation/section-index';
+@import '04-patterns/04-navigation/tabs';
+@import '04-patterns/04-navigation/timeline';
+@import '04-patterns/04-navigation/wizard';
 
 /* ============================================================================== */
 /*      - Patterns - Numbers                                                      */
 /* ============================================================================== */
-@import '03-patterns/05-numbers/badge';
-@import '03-patterns/05-numbers/counter';
-@import '03-patterns/05-numbers/icon-badge';
-@import '03-patterns/05-numbers/progress-bar';
-@import '03-patterns/05-numbers/progress-circle';
-@import '03-patterns/05-numbers/progress-circle-fraction';
-@import '03-patterns/05-numbers/rating';
+@import '04-patterns/05-numbers/badge';
+@import '04-patterns/05-numbers/counter';
+@import '04-patterns/05-numbers/icon-badge';
+@import '04-patterns/05-numbers/progress-bar';
+@import '04-patterns/05-numbers/progress-circle';
+@import '04-patterns/05-numbers/progress-circle-fraction';
+@import '04-patterns/05-numbers/rating';
 
 /* ============================================================================== */
 /*      - Patterns - Utilities                                                    */
 /* ============================================================================== */
-@import '03-patterns/06-utilities/align-center';
-@import '03-patterns/06-utilities/button-loading';
-@import '03-patterns/06-utilities/center-content';
-@import '03-patterns/06-utilities/margin-container';
-@import '03-patterns/06-utilities/separator';
-
-/*! ============================================================================= */
-/*!  $5 - Widgets                                                                 */
-/*! ============================================================================= */
-@import '04-widgets/list';
-@import '04-widgets/list-item';
-@import '04-widgets/table';
-@import '04-widgets/bulk-actions';
-@import '04-widgets/form';
-@import '04-widgets/upload';
-@import '04-widgets/button-group';
-@import '04-widgets/popover';
-@import '04-widgets/popup';
-@import '04-widgets/feedback-message';
-@import '04-widgets/radio-button';
+@import '04-patterns/06-utilities/align-center';
+@import '04-patterns/06-utilities/button-loading';
+@import '04-patterns/06-utilities/center-content';
+@import '04-patterns/06-utilities/margin-container';
+@import '04-patterns/06-utilities/separator';
 
 /*! ============================================================================= */
 /*!  $6 - Styles                                                                  */
