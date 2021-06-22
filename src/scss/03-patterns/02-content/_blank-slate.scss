@@ -1,0 +1,40 @@
+/*! Patterns - Content - BlankSlate */
+.blank-slate {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+        flex-direction: column;
+    text-align: center;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -ms-flex-direction: column;
+}
+
+.blank-slate-description {
+    color: var(--color-neutral-9);
+    padding: var(--space-none) var(--space-base);
+}
+
+.blank-slate.large {
+    height: 100%;
+}
+
+.large .blank-slate-icon {
+    font-size: 120px;
+}
+
+.blank-slate-actions {
+    padding: var(--space-base);
+}
+
+.large .blank-slate-actions {
+    padding: var(--space-xxl) var(--space-base);
+}
+
+.blank-slate-icon {
+    color: var(--color-neutral-6);
+    font-size: 70px;
+}

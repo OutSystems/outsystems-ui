@@ -1,0 +1,11 @@
+/*! Patterns - Content - Card */
+.card {
+    background-color: var(--color-neutral-0);
+    border: var(--border-size-s) solid var(--color-neutral-4);
+    border-radius: var(--border-radius-soft);
+    padding: var(--space-m);
+}
+
+.layout-native .card {
+    padding: var(--space-base);
+}

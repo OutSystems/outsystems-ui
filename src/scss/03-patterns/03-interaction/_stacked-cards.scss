@@ -1,0 +1,181 @@
+/*! Patterns - Interaction - StackedCards */
+.stackedcards .stackedcards-container .OSAutoMarginTop {
+    margin-top: var(--space-none);
+}
+
+.stackedcards .stackedcards-container .list.list-group {
+    background-color: transparent;
+    height: 100%;
+    z-index: 6;
+}
+
+.stackedcards-overflow {
+    overflow-y: hidden !important;
+}
+
+.stackedcards.init {
+    opacity: 0;
+
+    -servicestudio-opacity: 1;
+}
+
+.stackedcards {
+    position: relative;
+}
+
+.stackedcards * {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+
+.stackedcards--animatable {
+    -webkit-transition: all 400ms ease;
+            transition: all 400ms ease;
+}
+
+.stackedcards-container,
+.stackedcards-container .list.list-group > * {
+    -servicestudio-min-height: 80px;
+}
+
+.stackedcards-container .list.list-group > *,
+.stackedcards .stackedcards-container > *,
+.stackedcards-overlay {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+    -servicestudio-position: relative;
+    will-change: transform, opacity;
+}
+
+.stackedcards-overlay.left > div,
+.stackedcards-overlay.right > div,
+.stackedcards-overlay.top > div {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.stackedcards-overlay.left,
+.stackedcards-overlay.right,
+.stackedcards-overlay.top {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    top: 0;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+
+    -servicestudio-left: inherit;
+    -servicestudio-opacity: .7;
+    -servicestudio-width: 100%;
+}
+
+.stackedcards-overlay.top {
+    background-color: var(--color-info);
+    color: var(--color-neutral-0);
+
+    -servicestudio-background-color: #2980b9;
+    -servicestudio-float: none;
+    -servicestudio-min-height: 80px;
+    -servicestudio-width: 100%;
+    -servicestudio-z-index: 7;
+}
+
+.stackedcards-overlay.right {
+    background-color: var(--color-success);
+    color: var(--color-neutral-0);
+
+    -servicestudio-background-color: #27ae60;
+    -servicestudio-float: right;
+    -servicestudio-min-height: 80px;
+    -servicestudio-width: 50%;
+    -servicestudio-z-index: 8;
+}
+
+.stackedcards-overlay.left {
+    background-color: var(--color-error);
+    color: var(--color-neutral-0);
+
+    -servicestudio-background-color: #c0392b;
+    -servicestudio-float: none;
+    -servicestudio-min-height: 80px;
+    -servicestudio-width: 50%;
+    -servicestudio-z-index: 8;
+}
+
+.stackedcards-overlay-hidden {
+    display: none;
+}
+
+.stackedcards-origin-bottom {
+    -webkit-transform-origin: bottom;
+            transform-origin: bottom;
+}
+
+.stackedcards-origin-top {
+    -webkit-transform-origin: top;
+            transform-origin: top;
+}
+
+.stackedcards-bottom,
+.stackedcards-top,
+.stackedcards-none {
+    background-color: var(--color-neutral-0);
+    height: 100%;
+}
+
+.stackedcards .stackedcards-container > :nth-child(1),
+.stackedcards .stackedcards-container .list.list-group > :nth-child(1) {
+    display: block;
+    position: relative;
+}
+
+.stackedcards > span {
+    -servicestudio-display: block !important;
+}
+
+.stackedcards .stackedcards-container > .list:not([data-virtualization-disabled]) > *,
+.stackedcards .stackedcards-container > .list:not([data-animation-disabled]) > * {
+    -servicestudio-display: none !important;
+}
+
+.stackedcards .stackedcards-container > .list:not([data-virtualization-disabled]),
+.stackedcards .stackedcards-container > .list:not([data-animation-disabled]) {
+    -servicestudio-min-height: 225px;
+    -servicestudio-pointer-events: none;
+}
+
+.stackedcards .stackedcards-container > .list:not([data-virtualization-disabled]):after,
+.stackedcards .stackedcards-container > .list:not([data-animation-disabled]):after {
+    -servicestudio-background-color: #fff;
+    -servicestudio-background-position: center;
+    -servicestudio-background-repeat: no-repeat;
+    -servicestudio-background-size: 291px 225px;
+    -servicestudio-content: " ";
+    -servicestudio-height: 100%;
+    -servicestudio-left: 0;
+    -servicestudio-min-height: 225px;
+    -servicestudio-position: absolute;
+    -servicestudio-top: 0;
+    -servicestudio-width: 100%;
+}

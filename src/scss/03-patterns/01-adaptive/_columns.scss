@@ -1,0 +1,258 @@
+/*! Patterns - Adaptive - Columns */
+.columns {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+}
+
+.columns.gutter-none {
+    margin-left: var(--space-none);
+    margin-right: var(--space-none);
+}
+
+.columns.gutter-xs {
+    margin-left: calc(-1 * var(--space-xs) / 2);
+    margin-right: calc(-1 * var(--space-xs) / 2);
+}
+
+.columns.gutter-s {
+    margin-left: calc(-1 * var(--space-s) / 2);
+    margin-right: calc(-1 * var(--space-s) / 2);
+}
+
+.columns.gutter-base {
+    margin-left: calc(-1 * var(--space-base) / 2);
+    margin-right: calc(-1 * var(--space-base) / 2);
+}
+
+.columns.gutter-m {
+    margin-left: calc(-1 * var(--space-m) / 2);
+    margin-right: calc(-1 * var(--space-m) / 2);
+}
+
+.columns.gutter-l {
+    margin-left: calc(-1 * var(--space-l) / 2);
+    margin-right: calc(-1 * var(--space-l) / 2);
+}
+
+.columns.gutter-xl {
+    margin-left: calc(-1 * var(--space-xl) / 2);
+    margin-right: calc(-1 * var(--space-xl) / 2);
+}
+
+.columns.gutter-xxl {
+    margin-left: calc(-1 * var(--space-xxl) / 2);
+    margin-right: calc(-1 * var(--space-xxl) / 2);
+}
+
+.columns > .columns-item {
+    min-width: 0;
+    word-break: break-word;
+
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+        flex: 1;
+}
+
+.columns.columns-small-left > .columns-item:last-child,
+.columns.columns-small-right > .columns-item:first-child {
+    -webkit-box-flex: 3;
+    -ms-flex: 3;
+        flex: 3;
+}
+
+.columns.columns-medium-left > .columns-item:last-child,
+.columns.columns-medium-right > .columns-item:first-child {
+    -webkit-box-flex: 2;
+    -ms-flex: 2;
+        flex: 2;
+}
+
+.columns.gutter-none > .columns-item {
+    margin-bottom: var(--space-none);
+    padding: var(--space-none) var(--space-none);
+}
+
+.columns.gutter-xs > .columns-item {
+    margin-bottom: var(--space-xs);
+    padding: var(--space-none) calc(var(--space-xs) / 2);
+}
+
+.columns.gutter-s > .columns-item {
+    margin-bottom: var(--space-s);
+    padding: var(--space-none) calc(var(--space-s) / 2);
+}
+
+.columns.gutter-base > .columns-item {
+    margin-bottom: var(--space-base);
+    padding: var(--space-none) calc(var(--space-base) / 2);
+}
+
+.columns.gutter-m > .columns-item {
+    margin-bottom: var(--space-m);
+    padding: var(--space-none) calc(var(--space-m) / 2);
+}
+
+.columns.gutter-l > .columns-item {
+    margin-bottom: var(--space-l);
+    padding: var(--space-none) calc(var(--space-l) / 2);
+}
+
+.columns.gutter-xl > .columns-item {
+    margin-bottom: var(--space-xl);
+    padding: var(--space-none) calc(var(--space-xl) / 2);
+}
+
+.columns.gutter-xxl > .columns-item {
+    margin-bottom: var(--space-xxl);
+    padding: var(--space-none) calc(var(--space-xxl) / 2);
+}
+
+.columns .columns-item > .card {
+    height: 100%;
+}
+
+.columns:only-child > .columns-item {
+    margin-bottom: var(--space-none);
+}
+
+/* Columns - Responsive */
+.tablet .columns.tablet-break-first > .columns-item:first-child,
+.phone .columns.phone-break-first > .columns-item:first-child,
+.tablet .columns.tablet-break-last > .columns-item:last-child,
+.phone .columns.phone-break-last > .columns-item:last-child,
+.tablet .columns.tablet-break-all > .columns-item,
+.phone .columns.phone-break-all > .columns-item {
+    width: 100%;
+
+    -webkit-box-flex: 0;
+    -ms-flex: none;
+        flex: none;
+}
+
+.tablet .columns.columns2.tablet-break-middle > .columns-item,
+.phone .columns.columns2.phone-break-middle > .columns-item,
+.tablet .columns.columns3.tablet-break-middle > .columns-item:last-child,
+.phone .columns.columns3.phone-break-middle > .columns-item:last-child,
+.tablet .columns.columns-small-left.tablet-break-middle > .columns-item,
+.phone .columns.columns-small-left.phone-break-middle > .columns-item,
+.tablet .columns.columns-medium-left.tablet-break-middle > .columns-item,
+.phone .columns.columns-medium-left.phone-break-middle > .columns-item,
+.tablet .columns.columns-small-right.tablet-break-middle > .columns-item,
+.phone .columns.columns-small-right.phone-break-middle > .columns-item,
+.tablet .columns.columns-medium-right.tablet-break-middle > .columns-item,
+.phone .columns.columns-medium-right.phone-break-middle > .columns-item {
+    width: 100%;
+
+    -webkit-box-flex: 0;
+    -ms-flex: none;
+        flex: none;
+}
+
+.tablet .columns.columns4.tablet-break-middle > .columns-item,
+.phone .columns.columns4.phone-break-middle > .columns-item {
+    width: 50%;
+
+    -webkit-box-flex: 0;
+    -ms-flex: none;
+        flex: none;
+}
+
+.tablet .columns.columns5.tablet-break-middle > .columns-item:nth-child(1),
+.tablet .columns.columns5.tablet-break-middle > .columns-item:nth-child(2),
+.tablet .columns.columns5.tablet-break-middle > .columns-item:nth-child(3),
+.phone .columns.columns5.phone-break-middle > .columns-item:nth-child(1),
+.phone .columns.columns5.phone-break-middle > .columns-item:nth-child(2),
+.phone .columns.columns5.phone-break-middle > .columns-item:nth-child(3),
+.tablet .columns.columns6.tablet-break-middle > .columns-item:nth-child(1),
+.tablet .columns.columns6.tablet-break-middle > .columns-item:nth-child(2),
+.tablet .columns.columns6.tablet-break-middle > .columns-item:nth-child(3),
+.phone .columns.columns6.phone-break-middle > .columns-item:nth-child(1),
+.phone .columns.columns6.phone-break-middle > .columns-item:nth-child(2),
+.phone .columns.columns6.phone-break-middle > .columns-item:nth-child(3) {
+    width: 33.333%;
+
+    -webkit-box-flex: 0;
+    -ms-flex: none;
+        flex: none;
+}
+
+.tablet .columns.gutter-xs.tablet-break-first:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-xs.phone-break-first:only-child > .columns-item:not(:last-child),
+.tablet .columns.gutter-xs.tablet-break-last:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-xs.phone-break-last:only-child > .columns-item:not(:last-child),
+.tablet .columns.gutter-xs.tablet-break-middle:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-xs.phone-break-middle:only-child > .columns-item:not(:last-child),
+.tablet .columns.gutter-xs.tablet-break-all:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-xs.phone-break-all:only-child > .columns-item:not(:last-child) {
+    margin-bottom: var(--space-xs);
+}
+
+.tablet .columns.gutter-s.tablet-break-first:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-s.phone-break-first:only-child > .columns-item:not(:last-child),
+.tablet .columns.gutter-s.tablet-break-last:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-s.phone-break-last:only-child > .columns-item:not(:last-child),
+.tablet .columns.gutter-s.tablet-break-middle:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-s.phone-break-middle:only-child > .columns-item:not(:last-child),
+.tablet .columns.gutter-s.tablet-break-all:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-s.phone-break-all:only-child > .columns-item:not(:last-child) {
+    margin-bottom: var(--space-s);
+}
+
+.tablet .columns.gutter-base.tablet-break-first:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-base.phone-break-first:only-child > .columns-item:not(:last-child),
+.tablet .columns.gutter-base.tablet-break-last:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-base.phone-break-last:only-child > .columns-item:not(:last-child),
+.tablet .columns.gutter-base.tablet-break-middle:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-base.phone-break-middle:only-child > .columns-item:not(:last-child),
+.tablet .columns.gutter-base.tablet-break-all:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-base.phone-break-all:only-child > .columns-item:not(:last-child) {
+    margin-bottom: var(--space-base);
+}
+
+.tablet .columns.gutter-m.tablet-break-first:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-m.phone-break-first:only-child > .columns-item:not(:last-child),
+.tablet .columns.gutter-m.tablet-break-last:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-m.phone-break-last:only-child > .columns-item:not(:last-child),
+.tablet .columns.gutter-m.tablet-break-middle:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-m.phone-break-middle:only-child > .columns-item:not(:last-child),
+.tablet .columns.gutter-m.tablet-break-all:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-m.phone-break-all:only-child > .columns-item:not(:last-child) {
+    margin-bottom: var(--space-m);
+}
+
+.tablet .columns.gutter-l.tablet-break-first:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-l.phone-break-first:only-child > .columns-item:not(:last-child),
+.tablet .columns.gutter-l.tablet-break-last:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-l.phone-break-last:only-child > .columns-item:not(:last-child),
+.tablet .columns.gutter-l.tablet-break-middle:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-l.phone-break-middle:only-child > .columns-item:not(:last-child),
+.tablet .columns.gutter-l.tablet-break-all:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-l.phone-break-all:only-child > .columns-item:not(:last-child) {
+    margin-bottom: var(--space-l);
+}
+
+.tablet .columns.gutter-xl.tablet-break-first:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-xl.phone-break-first:only-child > .columns-item:not(:last-child),
+.tablet .columns.gutter-xl.tablet-break-last:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-xl.phone-break-last:only-child > .columns-item:not(:last-child),
+.tablet .columns.gutter-xl.tablet-break-middle:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-xl.phone-break-middle:only-child > .columns-item:not(:last-child),
+.tablet .columns.gutter-xl.tablet-break-all:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-xl.phone-break-all:only-child > .columns-item:not(:last-child) {
+    margin-bottom: var(--space-xl);
+}
+
+.tablet .columns.gutter-xxl.tablet-break-first:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-xxl.phone-break-first:only-child > .columns-item:not(:last-child),
+.tablet .columns.gutter-xxl.tablet-break-last:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-xxl.phone-break-last:only-child > .columns-item:not(:last-child),
+.tablet .columns.gutter-xxl.tablet-break-middle:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-xxl.phone-break-middle:only-child > .columns-item:not(:last-child),
+.tablet .columns.gutter-xxl.tablet-break-all:only-child > .columns-item:not(:last-child),
+.phone .columns.gutter-xxl.phone-break-all:only-child > .columns-item:not(:last-child) {
+    margin-bottom: var(--space-xxl);
+}

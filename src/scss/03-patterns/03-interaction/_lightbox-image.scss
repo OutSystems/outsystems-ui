@@ -1,0 +1,88 @@
+/*! Patterns - Interaction - LightboxImage */
+.hide-lightbox-image .lightbox-image {
+    display: none;
+}
+
+.lightbox-content-thumbnail {
+    -servicestudio-min-height: 100px;
+}
+
+.phone .pswp__caption__center {
+    padding-bottom: calc(var(--os-safe-area-bottom) + 10px);
+}
+
+.pswp__top-bar {
+    padding-left: var(--os-safe-area-left);
+    padding-right: var(--os-safe-area-right);
+}
+
+.ios .pswp__top-bar {
+    padding-left: var(--os-safe-area-left);
+    padding-right: var(--os-safe-area-right);
+    top: var(--os-safe-area-top);
+}
+
+.ios .pswp__top-bar .pswp__counter {
+    left: var(--os-safe-area-left);
+}
+
+.android[data-status-bar-height] .pswp__top-bar {
+    top: var(--status-bar-height);
+}
+
+/* Accessibility Styles */
+.lightbox-item img {
+    display: block;
+}
+
+.has-accessible-features .lightbox-item a:focus {
+    background-color: transparent;
+    box-shadow: none;
+    outline: 3px solid var(--color-focus-outer);
+}
+
+/* DEPRECATED Lightbox item */
+.hide-lightbox-image .lightbox-image {
+    display: none;
+}
+
+.lightbox-item {
+    -servicestudio-position: relative;
+}
+
+.lightbox-image:empty {
+    -servicestudio-min-height: 200px;
+}
+
+.lightbox-image:after {
+    -servicestudio-background-color: rgba(0, 0, 0, .3);
+    -servicestudio-color: #fff;
+    -servicestudio-content: "Image";
+    -servicestudio-font-size: 9px;
+    -servicestudio-left: 0;
+    -servicestudio-padding: 3px;
+    -servicestudio-position: absolute;
+    -servicestudio-right: 0;
+}
+
+.lightbox-thumbnail:empty {
+    -servicestudio-min-height: 40%;
+}
+
+.lightbox-thumbnail {
+    -servicestudio-bottom: 0;
+    -servicestudio-position: absolute;
+    -servicestudio-right: 0;
+    -servicestudio-width: 100%;
+}
+
+.lightbox-thumbnail:after {
+    -servicestudio-background-color: rgba(0, 0, 0, .3);
+    -servicestudio-color: #fff;
+    -servicestudio-content: "Thumbnail";
+    -servicestudio-font-size: 9px;
+    -servicestudio-left: 0;
+    -servicestudio-padding: 3px;
+    -servicestudio-position: absolute;
+    -servicestudio-right: 0;
+}

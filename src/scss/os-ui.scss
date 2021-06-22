@@ -1,0 +1,278 @@
+/*! ============================================================================= */
+
+/*!  OutSystems UI                                                                */
+/*!  For more information, visit www.outsystems.com/outsystems-ui                 */
+
+/*!  $0 - Root - CSS Variables                                                    */
+/*!  $1 - Resets (https://necolas.github.io/normalize.css/)                       */
+/*!  $2 - HTML Elements                                                           */
+/*!         HTML Elements - Links                                                 */
+/*!         HTML Elements - Images                                                */
+/*!         HTML Elements - Headings                                              */
+/*!         HTML Elements - Inputs and Selectors                                  */
+/*!         HTML Elements - Buttons                                               */
+/*!  $3 - Page Layout                                                             */
+/*!         Page Layout - Header                                                  */
+/*!            Page Layout - Header Top                                           */
+/*!            Page Layout - Header Content                                       */
+/*!         Page Layout - Menu                                                    */
+/*!         Page Layout - Content                                                 */
+/*!         Page Layout - Login                                                   */
+/*!         Page Layout - iOS Scroll Bounce                                       */
+/*!  $4 - Patterns                                                                */
+/*!         Patterns - Adaptive                                                   */
+/*!            Patterns - Adaptive - Columns                                      */
+/*!            Patterns - Adaptive - Gallery                                      */
+/*!            Patterns - Adaptive - MasterDetail                                 */
+/*!         Patterns - Content                                                    */
+/*!            Patterns - Content - Accordion                                     */
+/*!            Patterns - Content - Alert                                         */
+/*!            Patterns - Content - BlankSlate                                    */
+/*!            Patterns - Content - Card                                          */
+/*!            Patterns - Content - CardBackground                                */
+/*!            Patterns - Content - CardItem                                      */
+/*!            Patterns - Content - CardSectioned                                 */
+/*!            Patterns - Content - ChatMessage                                   */
+/*!            Patterns - Content - FlipContent                                   */
+/*!            Patterns - Content - FloatingContent                               */
+/*!            Patterns - Content - ListItemContent                               */
+/*!            Patterns - Content - Section                                       */
+/*!            Patterns - Content - Tag                                           */
+/*!            Patterns - Content - Tooltip                                       */
+/*!            Patterns - Content - UserAvatar                                    */
+/*!         Patterns - Interaction                                                */
+/*!            Patterns - Interaction - ActionSheet                               */
+/*!            Patterns - Interaction - Animate                                   */
+/*!            Patterns - Interaction - AnimatedLabel                             */
+/*!            Patterns - Interaction - Carousel                                  */
+/*!            Patterns - Interaction - DatePicker                                */
+/*!            Patterns - Interaction - DropdownSearch                            */
+/*!            Patterns - Interaction - DropdownTags                              */
+/*!            Patterns - Interaction - FloatingActions                           */
+/*!            Patterns - Interaction - HorizontalScroll                          */
+/*!            Patterns - Interaction - LightBoxImage                             */
+/*!            Patterns - Interaction - Notification                              */
+/*!            Patterns - Interaction - RangeSlider                               */
+/*!            Patterns - Interaction - ScrollableArea                            */
+/*!            Patterns - Interaction - Search                                    */
+/*!            Patterns - Interaction - Sidebar                                   */
+/*!            Patterns - Interaction - StackedCards                              */
+/*!            Patterns - Interaction - Video                                     */
+/*!         Patterns - Navigation                                                 */
+/*!            Patterns - Navigation - BottomBarItem                              */
+/*!            Patterns - Navigation - Breadcrumbs                                */
+/*!            Patterns - Navigation - Pagination                                 */
+/*!            Patterns - Navigation - SectionIndex                               */
+/*!            Patterns - Navigation - Tabs                                       */
+/*!            Patterns - Navigation - Timeline                                   */
+/*!            Patterns - Navigation - Wizard                                     */
+/*!         Patterns - Numbers                                                    */
+/*!            Patterns - Numbers - Badge                                         */
+/*!            Patterns - Numbers - Counter                                       */
+/*!            Patterns - Numbers - IconBadge                                     */
+/*!            Patterns - Numbers - ProgressBar                                   */
+/*!            Patterns - Numbers - ProgressCircle                                */
+/*!            Patterns - Numbers - ProgressCircleFraction                        */
+/*!            Patterns - Numbers - Rating                                        */
+/*!         Patterns - Utilities                                                  */
+/*!            Patterns - Utilities - AlignCenter                                 */
+/*!            Patterns - Utilities - ButtonLoading                               */
+/*!            Patterns - Utilities - CenterContent                               */
+/*!            Patterns - Utilities - MarginContainer                             */
+/*!            Patterns - Utilities - Separator                                   */
+/*!  $5 - Widgets                                                                 */
+/*!         Widgets - List                                                        */
+/*!         Widgets - ListItem                                                    */
+/*!         Widgets - Table                                                       */
+/*!         Widgets - BulkActions                                                 */
+/*!         Widgets - Form                                                        */
+/*!         Widgets - Upload                                                      */
+/*!         Widgets - ButtonGroup                                                 */
+/*!         Widgets - Popover                                                     */
+/*!         Widgets - Popup                                                       */
+/*!         Widgets - FeedbackMessage                                             */
+/*!         Widgets - Radio Button                                                */
+/*!  $6 - Styles                                                                  */
+/*!         Styles - Typography                                                   */
+/*!            Styles - Typography - Sizes Desktop                                */
+/*!            Styles - Typography - Sizes Tablet                                 */
+/*!            Styles - Typography - Sizes Phone                                  */
+/*!            Styles - Typography - Transform                                    */
+/*!            Styles - Typography - Weight                                       */
+/*!         Styles - Colors                                                       */
+/*!            Styles - Colors - Brand                                            */
+/*!            Styles - Colors - Extendend                                        */
+/*!            Styles - Colors - Neutral                                          */
+/*!            Styles - Colors - Semantic                                         */
+/*!         Styles - Space                                                        */
+/*!            Styles - Space - Padding                                           */
+/*!            Styles - Space - Padding Top                                       */
+/*!            Styles - Space - Padding Right                                     */
+/*!            Styles - Space - Padding Bottom                                    */
+/*!            Styles - Space - Padding Left                                      */
+/*!            Styles - Space - Padding Vertical                                  */
+/*!            Styles - Space - Padding Horizontal                                */
+/*!            Styles - Space - Margin                                            */
+/*!            Styles - Space - Margin Top                                        */
+/*!            Styles - Space - Margin Right                                      */
+/*!            Styles - Space - Margin Bottom                                     */
+/*!            Styles - Space - Margin Left                                       */
+/*!            Styles - Space - Margin Vertical                                   */
+/*!            Styles - Space - Margin Horizontal                                 */
+/*!         Styles - Border Radius                                                */
+/*!         Styles - Border Size                                                  */
+/*!         Styles - Elevation/Shadows                                            */
+/*!         Styles - Display Flex Properties                                      */
+/*!         Styles - Others                                                       */
+/*!  $7 - Screen Transitions                                                      */
+/*! ============================================================================= */
+
+/* ============================================================================== */
+/*  Function & Mixins                                                             */
+/* ============================================================================== */
+@import '00-abstract/functions';
+@import '00-abstract/mixins';
+
+/*! ============================================================================= */
+/*!  $0 - Root - CSS Variables                                                    */
+/*! ============================================================================= */
+@import '01-foundations/root';
+
+/*! ============================================================================= */
+/*!  $1 - Resets                                                                  */
+/*! ============================================================================= */
+@import '01-foundations/resets';
+
+/*! ============================================================================= */
+/*!  $2 - HTML Elements                                                           */
+/*! ============================================================================= */
+@import '01-foundations/html-elements';
+
+/*! ============================================================================= */
+/*!  $3 - Page Layout                                                             */
+/*! ============================================================================= */
+@import '02-layout/layout';
+
+/*! ============================================================================= */
+/*!  $4 - Patterns                                                                */
+/*! ============================================================================= */
+
+/* ============================================================================== */
+/*      - Patterns - Adaptive                                                     */
+/* ============================================================================== */
+@import '03-patterns/01-adaptive/columns';
+@import '03-patterns/01-adaptive/gallery';
+@import '03-patterns/01-adaptive/master-detail';
+
+/* ============================================================================== */
+/*      - Patterns - Content                                                      */
+/* ============================================================================== */
+@import '03-patterns/02-content/accordion';
+@import '03-patterns/02-content/alert';
+@import '03-patterns/02-content/blank-slate';
+@import '03-patterns/02-content/card';
+@import '03-patterns/02-content/card-background';
+@import '03-patterns/02-content/card-tem';
+@import '03-patterns/02-content/card-sectioned';
+@import '03-patterns/02-content/chat-message';
+@import '03-patterns/02-content/flip-content';
+@import '03-patterns/02-content/floating-content';
+@import '03-patterns/02-content/list-item-content';
+@import '03-patterns/02-content/section';
+@import '03-patterns/02-content/tag';
+@import '03-patterns/02-content/tooltip';
+@import '03-patterns/02-content/user-avatar';
+
+/* ============================================================================== */
+/*      - Patterns - Interaction                                                  */
+/* ============================================================================== */
+@import '03-patterns/03-interaction/action-sheet';
+@import '03-patterns/03-interaction/animate';
+@import '03-patterns/03-interaction/animated-label';
+@import '03-patterns/03-interaction/carousel';
+@import '03-patterns/03-interaction/date-picker';
+@import '03-patterns/03-interaction/dropdown-search';
+@import '03-patterns/03-interaction/dropdown-tags';
+@import '03-patterns/03-interaction/floating-actions';
+@import '03-patterns/03-interaction/horizontal-scroll';
+@import '03-patterns/03-interaction/input-with-icon';
+@import '03-patterns/03-interaction/lightbox-image';
+@import '03-patterns/03-interaction/notification';
+@import '03-patterns/03-interaction/range-slider';
+@import '03-patterns/03-interaction/scrollable-area';
+@import '03-patterns/03-interaction/search';
+@import '03-patterns/03-interaction/sidebar';
+@import '03-patterns/03-interaction/stacked-cards';
+@import '03-patterns/03-interaction/video';
+
+/* ============================================================================== */
+/*      - Patterns - Navigation                                                   */
+/* ============================================================================== */
+@import '03-patterns/04-navigation/bottom-bar-item';
+@import '03-patterns/04-navigation/breadcrumbs';
+@import '03-patterns/04-navigation/pagination';
+@import '03-patterns/04-navigation/section-index';
+@import '03-patterns/04-navigation/tabs';
+@import '03-patterns/04-navigation/timeline';
+@import '03-patterns/04-navigation/wizard';
+
+/* ============================================================================== */
+/*      - Patterns - Numbers                                                      */
+/* ============================================================================== */
+@import '03-patterns/05-numbers/badge';
+@import '03-patterns/05-numbers/counter';
+@import '03-patterns/05-numbers/icon-badge';
+@import '03-patterns/05-numbers/progress-bar';
+@import '03-patterns/05-numbers/progress-circle';
+@import '03-patterns/05-numbers/progress-circle-fraction';
+@import '03-patterns/05-numbers/rating';
+
+/* ============================================================================== */
+/*      - Patterns - Utilities                                                    */
+/* ============================================================================== */
+@import '03-patterns/06-utilities/align-center';
+@import '03-patterns/06-utilities/button-loading';
+@import '03-patterns/06-utilities/center-content';
+@import '03-patterns/06-utilities/margin-container';
+@import '03-patterns/06-utilities/separator';
+
+/*! ============================================================================= */
+/*!  $5 - Widgets                                                                 */
+/*! ============================================================================= */
+@import '04-widgets/list';
+@import '04-widgets/list-item';
+@import '04-widgets/table';
+@import '04-widgets/bulk-actions';
+@import '04-widgets/form';
+@import '04-widgets/upload';
+@import '04-widgets/button-group';
+@import '04-widgets/popover';
+@import '04-widgets/popup';
+@import '04-widgets/feedback-message';
+@import '04-widgets/radio-button';
+
+/*! ============================================================================= */
+/*!  $6 - Styles                                                                  */
+/*! ============================================================================= */
+@import '05-usefull-classes/typography';
+@import '05-usefull-classes/colors';
+@import '05-usefull-classes/space';
+@import '05-usefull-classes/border-radius';
+@import '05-usefull-classes/border-size';
+@import '05-usefull-classes/shadows';
+@import '05-usefull-classes/display-flex';
+@import '05-usefull-classes/others';
+
+/*! ============================================================================= */
+/*!  $7 - Screen Transitions                                                      */
+/*! ============================================================================= */
+@import '06-screen-transitions/screen-transitions';
+
+/* ============================================================================== */
+/*   
+    Excluders
+        Note: This next file must be on *.css, this way the commented string 
+        will not be validated and compiled.
+*/
+/* ============================================================================== */
+@import '07-excluders/excluders';

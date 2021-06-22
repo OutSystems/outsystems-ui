@@ -1,0 +1,35 @@
+/* ================================================================ */
+/*  $3.4 - Page Layout - Section                                    */
+/* ================================================================ */
+.full-width-section .ThemeGrid_Container {
+    padding: var(--space-none) var(--space-xl);
+}
+
+.full-width-section {
+    position: relative;
+}
+
+.section-background {
+    height: 100%;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.section-background:empty {
+    -servicestudio-min-height: 80px;
+    -servicestudio-position: relative;
+}
+
+.section-background img {
+    height: 100%;
+    width: 100%;
+
+    object-fit: cover;
+}
+
+.section-content {
+    position: relative;
+}

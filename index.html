@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= htmlWebpackPlugin.options.title %>
+    </title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <style>
+        body {
+            font-size: 14px;
+        }
+
+        input {
+            display: block;
+        }
+
+        .row {
+            background-color: #fff;
+        }
+
+        .row:nth-child(even) {
+            background-color: #efefef;
+        }
+
+        button strong {
+            pointer-events: none;
+
+        }
+
+        [type="search"] {
+            -webkit-appearance: searchfield;
+            appearance: searchfield;
+        }
+
+        [type="search"]::-webkit-search-cancel-button,
+        [type="search"]::-webkit-search-decoration {
+            -webkit-appearance: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid pt-5">
+        <div id="output"></div>
+    </div>
+    <script>
+        const host = 'http://localhost:3000';
+        const collection = [
+            {
+                target: 'Experience Builder',
+                url: `${host}/<%= htmlWebpackPlugin.options.prefix %>.outsystems-ui.css`,
+            }
+        ]
+
+        collection.map(function (el, index) {
+            let line = `<div class="row pt-3 pb-3">
+                <div class="col col-4">${el.target}<br><a target="_blank" href="${el.url}">${el.url}</a></div>
+            `;
+            document.getElementById("output").innerHTML += line;
+        });
+
+    </script>
+</body>
+
+</html>

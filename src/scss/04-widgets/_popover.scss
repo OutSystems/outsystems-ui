@@ -1,0 +1,28 @@
+/*! Widgets - Popover */
+[data-popover] > .popover-top {
+    border: var(--border-size-none);
+    padding: var(--space-none);
+}
+
+[data-popover] > .popover-bottom {
+    background-color: var(--color-neutral-0);
+    border: var(--border-size-s) solid var(--color-neutral-4);
+    border-radius: var(--border-radius-soft);
+    box-shadow: var(--shadow-s);
+    color: var(--color-neutral-9);
+    max-width: 350px;
+    min-width: auto;
+    padding: var(--space-base);
+}
+
+/* RTL */
+.is-rtl [data-popover] > .popover-top {
+    display: inline;
+}
+
+.is-rtl [data-popover] > .popover-bottom {
+    margin-left: initial;
+    margin-right: -50%;
+    -webkit-transform: translateX(50%);
+            transform: translateX(50%) !important;
+}

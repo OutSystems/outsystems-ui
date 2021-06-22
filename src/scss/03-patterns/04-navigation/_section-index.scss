@@ -1,0 +1,66 @@
+/*! Patterns - Navigation - SectionIndex */
+.section-index {
+    border-left: var(--border-size-s) solid var(--color-neutral-5);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+        flex-direction: column;
+
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -ms-flex-direction: column;
+}
+
+.section-index.is--sticky {
+    position: -webkit-sticky;
+    position:         sticky;
+    top: var(--top-position);
+}
+
+.layout-native .section-index.is--sticky {
+    top: calc(var(--header-size) + var(--header-size-content) + var(--top-position) + var(--os-safe-area-top));
+}
+
+.android[data-status-bar-height] .layout-native .section-index.is--sticky {
+    top: calc(var(--header-size) + var(--header-size-content) + var(--top-position) + var(--status-bar-height));
+}
+
+.ios .layout-native .section-index.is--sticky {
+    position: fixed;
+}
+
+.section-index a,
+.section-index a:visited {
+    border-left: var(--border-size-m) solid transparent;
+    color: var(--color-neutral-8);
+    margin-bottom: var(--space-s);
+    padding-left: var(--space-base);
+}
+
+.section-index a:hover {
+    color: var(--color-neutral-9);
+}
+
+.section-index-item {
+    cursor: pointer;
+}
+
+.section-index-item:last-child {
+    margin-bottom: var(--space-none);
+}
+
+a.section-index-item.is--active {
+    border-left: var(--border-size-m) solid var(--color-primary);
+    color: var(--color-neutral-9);
+    font-weight: var(--font-semi-bold);
+}
+
+.edge .section-index.is--sticky {
+    position: fixed;
+}
+
+/* Accessibility Styles */
+.has-accessible-features .section-index a:focus {
+    background-color: transparent;
+    box-shadow: 0 0 0 3px var(--color-focus-outer);
+}

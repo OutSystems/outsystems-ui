@@ -1,0 +1,92 @@
+/*! Widgets - ButtonGroup */
+.button-group {
+    background-color: transparent;
+    border-radius: 0;
+    padding: var(--space-none);
+}
+
+.button-group-item {
+    background-color: var(--color-neutral-0);
+    border: var(--border-size-s) solid var(--color-primary);
+    border-radius: 0;
+    color: var(--color-primary);
+    cursor: pointer;
+    font-size: var(--font-size-s);
+    font-weight: var(--font-semi-bold);
+    height: 40px;
+    padding: var(--space-none) var(--space-base);
+    position: relative;
+}
+
+.tablet .button-group-item,
+.phone .button-group-item {
+    height: 48px;
+}
+
+.button-group-item:first-child {
+    border-radius: var(--border-radius-soft) var(--border-radius-none) var(--border-radius-none)
+    var(--border-radius-soft);
+}
+
+.is-rtl .button-group-item:first-child {
+    border-radius: var(--border-radius-none) var(--border-radius-soft) var(--border-radius-soft)
+    var(--border-radius-none);
+}
+
+.button-group-item:last-child {
+    border-radius: var(--border-radius-none) var(--border-radius-soft) var(--border-radius-soft)
+    var(--border-radius-none);
+}
+
+.is-rtl .button-group-item:last-child {
+    border-radius: var(--border-radius-soft) var(--border-radius-none) var(--border-radius-none)
+    var(--border-radius-soft);
+}
+
+.button-group-item:not(:first-child) {
+    border-left: var(--border-size-none);
+}
+
+.is-rtl .button-group-item:not(:first-child) {
+    border-left: var(--border-size-s) solid var(--color-primary);
+    border-right: var(--border-size-none);
+}
+
+.button-group-item.button-group-selected-item {
+    background-color: var(--color-primary);
+    color: var(--color-neutral-0);
+}
+
+/* Button Group when used inside Header Content Placeholder */
+.layout-native .header-top-content .button-group-item:first-child,
+.layout-native .header-top-content .button-group-item:last-child {
+    border-radius: 0;
+}
+
+.layout-native .header-top-content .button-group-item {
+    background-color: var(--header-color);
+    border: 0;
+    border-bottom: var(--border-size-m) solid transparent;
+    color: var(--color-neutral-8);
+}
+
+.layout-native .header-top-content .button-group-item.button-group-selected-item {
+    border-bottom: var(--border-size-m) solid var(--color-primary);
+    color: var(--color-neutral-10);
+}
+
+/* Accessibility Styles */
+.has-accessible-features .button-group-item:focus {
+    box-shadow: none;
+}
+
+.has-accessible-features .button-group-item:focus:before {
+    bottom: -1px;
+    box-shadow: 0 0 0 3px var(--color-focus-outer);
+    content: "";
+    left: -1px;
+    position: absolute;
+    right: -1px;
+    top: -1px;
+    z-index: 2;
+}

@@ -1,0 +1,46 @@
+/*! Patterns - Content - CardItem */
+.card-detail {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.card-detail-center {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+        flex: 1;
+}
+
+.card-detail-left {
+    max-width: 120px;
+    padding-right: var(--space-base);
+}
+
+.is-rtl .card-detail-left {
+    padding-left: var(--space-base);
+    padding-right: 0;
+}
+
+.card-detail-right {
+    padding-left: var(--space-base);
+}
+
+.is-rtl .card-detail-right {
+    padding-left: 0;
+    padding-right: var(--space-base);
+}
+
+.card-detail-text {
+    color: var(--color-neutral-7);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-detail-title {
+    color: var(--color-neutral-10);
+    font-size: var(--font-size-h5);
+    font-weight: var(--font-semi-bold);
+}

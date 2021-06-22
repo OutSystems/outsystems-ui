@@ -1,0 +1,91 @@
+/*! Patterns - Content - CardBackground */
+.card-background {
+    border-radius: var(--border-radius-soft);
+    color: var(--color-neutral-0);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    overflow: hidden;
+    padding: var(--space-m);
+    position: relative;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+
+    -servicestudio-height: auto !important;
+}
+
+.layout-native .card-background {
+    padding: var(--space-base);
+}
+
+.layout-native .card-background.padding-none {
+    padding: var(--space-none);
+}
+
+.card-background-content {
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
+    position: relative;
+    width: 100%;
+    z-index: 1;
+
+    -servicestudio-display: initial;
+}
+
+.card-background-content.top-left,
+.card-background-content.center-left,
+.card-background-content.bottom-left {
+    text-align: left;
+}
+
+.card-background-content.top-center,
+.card-background-content.center,
+.card-background-content.bottom-center {
+    text-align: center;
+}
+
+.card-background-content.top-right,
+.card-background-content.center-right,
+.card-background-content.bottom-right {
+    text-align: right;
+}
+
+.card-background-image,
+.card-background-color {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.card-background-color {
+    opacity: .6;
+}
+
+.card-background-color:after {
+    background:         linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+    background:      -o-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 1)));
+    background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+    content: "";
+    height: 100%;
+    left: 0;
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.card-background-image img {
+    height: 100%;
+    width: 100%;
+
+    -o-object-fit: cover;
+       object-fit: cover;
+    -o-object-position: center center;
+       object-position: center center;
+}

@@ -1,0 +1,111 @@
+/*! Patterns - Content - CardSectioned */
+.card-sectioned {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: var(--space-none);
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+.layout-native .card-sectioned {
+    padding: 0;
+}
+
+.card-image {
+    padding: var(--space-m) var(--space-m) var(--space-none);
+}
+
+.layout-native .card-image {
+    padding: var(--space-base) var(--space-base) var(--space-none);
+}
+
+.layout-native .card-image.padding-none {
+    padding: var(--space-none);
+}
+
+.card-image img {
+    display: block;
+    margin: 0 auto;
+}
+
+.card-title {
+    font-size: var(--font-size-h4);
+    font-weight: var(--font-semi-bold);
+    padding: var(--space-m) var(--space-m) var(--space-none) var(--space-m);
+}
+
+.tablet .card-title {
+    font-size: calc(var(--font-size-h4) - 1px);
+}
+
+.phone .card-title {
+    font-size: calc(var(--font-size-h4) - 2px);
+}
+
+.layout-native .card-title {
+    padding: var(--space-base) var(--space-base) var(--space-none) var(--space-base);
+}
+
+.card-sectioned.flex-direction-row .card-image {
+    padding: var(--space-m) var(--space-none) var(--space-m) var(--space-m);
+}
+
+.layout-native .card-sectioned.flex-direction-row .card-image {
+    padding: var(--space-base) var(--space-none) var(--space-base) var(--space-base);
+}
+
+.card-sectioned.flex-direction-row .card-image.padding-none {
+    padding: var(--space-none);
+}
+
+.layout-native .card-sectioned.flex-direction-row .card-image.padding-none {
+    padding: var(--space-none);
+}
+
+.card-content {
+    padding: var(--space-m);
+
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+        flex: 1;
+}
+
+.layout-native .card-content {
+    padding: var(--space-base);
+}
+
+.layout-native .card-content.padding-none {
+    padding: var(--space-none);
+}
+
+.card-bottom {
+    padding: var(--space-none) var(--space-m) var(--space-m);
+}
+
+.layout-native .card-bottom {
+    padding: var(--space-none) var(--space-base) var(--space-base);
+}
+
+.card-sectioned-top {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+        flex: 1;
+}
+
+.card-sectioned.flex-direction-row.card-sectioned-right .card-image {
+    padding: var(--space-m) var(--space-m) var(--space-m) var(--space-none);
+
+    -webkit-box-ordinal-group: 3;
+    -ms-flex-order: 2;
+    order: 2;
+}
+
+.card-sectioned.flex-direction-row.card-sectioned-right .card-image.padding-none {
+    padding: var(--space-none);
+}

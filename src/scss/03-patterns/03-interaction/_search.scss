@@ -1,0 +1,52 @@
+/*! Patterns - Interaction - Search */
+.search {
+    position: relative;
+}
+
+.search-input {
+    position: relative;
+}
+
+.search .form-control[data-input] {
+    padding-left: var(--space-xl);
+}
+
+.is-rtl .search .form-control[data-input] {
+    padding-left: var(--space-base);
+    padding-right: var(--space-xl);
+}
+
+.search-preview {
+    display: none;
+}
+
+.search:empty {
+    -servicestudio-height: 40px;
+}
+
+.search-input:empty {
+    -servicestudio-background-color: #fff;
+    -servicestudio-border-radius: 4px;
+    -servicestudio-height: 40px;
+}
+
+.search-input:after {
+    color: var(--color-neutral-6);
+    content: "\f002";
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    font: normal normal normal 14px/1 FontAwesome;
+    height: 100%;
+    left: 16px;
+    position: absolute;
+    top: 0;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.is-rtl .search-input:after {
+    left: auto;
+    right: 16px;
+}

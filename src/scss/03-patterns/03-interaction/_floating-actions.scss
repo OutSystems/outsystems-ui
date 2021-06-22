@@ -1,0 +1,235 @@
+/*! Patterns - Interaction - FloatingActions */
+.floating-actions-wrapper {
+    bottom: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+        flex-direction: column;
+    margin: var(--space-l);
+    position: fixed;
+    right: 0;
+    z-index: 104;
+    -webkit-box-align: end;
+    -ms-flex-align: end;
+    align-items: flex-end;
+
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -ms-flex-direction: column;
+    will-change: transform, opacity;
+}
+
+.is-rtl .floating-actions-wrapper {
+    left: 0;
+    right: auto;
+}
+
+.ios.phone.portrait .layout-native .floating-actions-wrapper {
+    margin-bottom: var(--os-safe-area-bottom);
+}
+
+.ios.tablet .floating-actions-wrapper.bottom-bar-exists {
+    margin-bottom: 0;
+}
+
+.ios.phone.landscape .layout-native .floating-actions-wrapper {
+    margin-right: calc(var(--os-safe-area-right) + var(--space-base));
+}
+
+.floating-items {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+        flex-direction: column;
+    padding-bottom: var(--space-s);
+    padding-right: var(--space-s);
+    -webkit-box-align: end;
+    -ms-flex-align: end;
+    align-items: flex-end;
+
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -ms-flex-direction: column;
+}
+
+.floating-actions-item {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: var(--space-base);
+    opacity: 0;
+    -webkit-transform: translateY(--space-base) translateZ(0);
+            transform: translateY(--space-base) translateZ(0);
+    -webkit-transition: all 100ms ease-in;
+            transition: all 100ms ease-in;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+
+    -servicestudio-opacity: 1;
+    -servicestudio-transform: translateY(0);
+}
+
+.floating-actions-wrapper:not(.is--open) {
+    pointer-events: none;
+
+    -servicestudio-pointer-events: auto;
+}
+
+.floating-actions-wrapper.is--open .floating-actions-item {
+    opacity: 1;
+    -webkit-transform: translateY(0px) translateZ(0) scale(1);
+            transform: translateY(0px) translateZ(0) scale(1);
+    -webkit-transition: all 180ms ease-out;
+            transition: all 180ms ease-out;
+    -webkit-transition-delay: calc(var(--delay) * 40ms);
+            transition-delay: calc(var(--delay) * 40ms);
+}
+
+.floating-actions-item-button {
+    background-color: var(--color-neutral-0);
+    border-radius: var(--border-radius-rounded);
+    box-shadow: var(--shadow-s);
+    color: var(--color-primary);
+    cursor: pointer;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    font-size: var(--font-size-base);
+    height: 40px;
+    margin-left: var(--space-base);
+    -webkit-transform: translateZ(0) scale(.3);
+            transform: translateZ(0) scale(.3);
+    -webkit-transition: -webkit-transform 180ms ease-out;
+            transition:         transform 180ms ease-out;
+    -webkit-transition-delay: calc(var(--delay) * 40ms);
+            transition-delay: calc(var(--delay) * 40ms);
+    width: 40px;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+
+    -servicestudio-transform: scale(1);
+}
+
+.floating-actions-wrapper.is--open .floating-actions-item-button {
+    -webkit-transform: translateZ(0) scale(1);
+            transform: translateZ(0) scale(1);
+}
+
+.floating-actions-item-button:hover {
+    background-color: var(--color-primary);
+    color: var(--color-neutral-0);
+}
+
+.floating-button {
+    background-color: var(--color-primary);
+    border-radius: var(--border-radius-rounded);
+    box-shadow: var(--shadow-xl);
+    color: var(--color-neutral-0);
+    cursor: pointer;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    font-size: var(--font-size-h4);
+    height: 56px;
+    pointer-events: auto;
+    -webkit-transform: rotate(0deg) translateZ(0);
+            transform: rotate(0deg) translateZ(0);
+    -webkit-transform-origin: center center;
+            transform-origin: center center;
+    -webkit-transition: all 180ms linear;
+            transition: all 180ms linear;
+    width: 56px;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.floating-actions-wrapper.is--open .floating-button {
+    box-shadow: var(--shadow-none);
+            filter: brightness(.9);
+    -webkit-transform: rotate(135deg) translateZ(0);
+            transform: rotate(135deg) translateZ(0);
+
+    -webkit-filter: brightness(.9);
+}
+
+.floating-button:hover {
+            filter: brightness(.9);
+
+    -webkit-filter: brightness(.9);
+}
+
+.desktop .floating-overlay {
+    display: none;
+}
+
+.floating-overlay {
+    background-color: rgba(0, 0, 0, .25);
+    cursor: pointer;
+    height: 100vh;
+    opacity: 0;
+    pointer-events: none;
+    position: fixed;
+    right: 0;
+    top: 0;
+    -webkit-transition: opacity 180ms ease-out;
+            transition: opacity 180ms ease-out;
+    width: 100vw;
+    z-index: 103;
+}
+
+.floating-overlay.is--open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.floating-actions-wrapper.bottom-bar-exists {
+    bottom: calc(var(--bottom-bar-size) + var(--space-base));
+}
+
+.no-rotation.floating-actions-wrapper .floating-button {
+    transform: none;
+}
+
+.phone .layout-native .floating-actions-wrapper {
+    margin: var(--space-base);
+}
+
+.slide-from-left-enter .layout-native .floating-actions-wrapper,
+.slide-from-left-leave .layout-native .floating-actions-wrapper,
+.slide-from-right-enter .layout-native .floating-actions-wrapper,
+.slide-from-right-leave .layout-native .floating-actions-wrapper,
+.slide-from-top-enter .layout-native .floating-actions-wrapper,
+.slide-from-top-leave .layout-native .floating-actions-wrapper,
+.slide-from-bottom-enter .layout-native .floating-actions-wrapper,
+.slide-from-bottom-leave .layout-native .floating-actions-wrapper,
+.fade-enter .layout-native .floating-actions-wrapper,
+.fade-leave .layout-native .floating-actions-wrapper {
+    display: none;
+}
+
+/* Accessibility */
+.has-accessible-features .floating-button:focus {
+    box-shadow: 0 0 0 3px var(--color-focus-outer);
+}
+
+.has-accessible-features .floating-actions-wrapper.is--open .floating-button:focus {
+    box-shadow: 0 0 0 3px var(--color-focus-outer);
+}
+
+/* RTL */
+.is-rtl .floating-actions-item-button {
+    margin-left: var(--space-none);
+    margin-right: var(--space-base);
+}

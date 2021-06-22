@@ -1,0 +1,142 @@
+/*! ============================================================================== */
+/*!		Patterns - Adaptive                                                        */
+/*! ============================================================================== */
+
+/*! Patterns - Content - Accordion */
+.section-expandable {
+    background-color: var(--color-neutral-0);
+    border: var(--border-size-s) solid var(--color-neutral-4);
+    border-bottom-width: var(--border-size-none);
+}
+
+[data-block*="AccordionItem"]:first-child .section-expandable {
+    border-radius: var(--border-radius-soft) var(--border-radius-soft) var(--border-radius-none)
+    var(--border-radius-none);
+}
+
+[data-block*="AccordionItem"]:last-child .section-expandable {
+    border-bottom-width: var(--border-size-s);
+    border-radius: var(--border-radius-none) var(--border-radius-none) var(--border-radius-soft)
+    var(--border-radius-soft);
+}
+
+.section-expandable.is--open {
+    border-top: var(--border-size-m) solid var(--color-primary);
+}
+
+.section-expandable .section-expandable-title {
+    cursor: pointer;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    font-size: var(--font-size-h6);
+    line-height: 1;
+    padding: var(--space-m);
+    width: 100%;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+}
+
+.layout-native .section-expandable .section-expandable-title {
+    padding: var(--space-base);
+}
+
+.section-expandable.is--open .section-expandable-title {
+    font-weight: var(--font-semi-bold);
+}
+
+.section-expandable .section-expandable-icon {
+    color: var(--color-primary);
+    font-family: FontAwesome;
+    font-size: 24px;
+    font-weight: 400;
+    -webkit-transition: all 300ms ease-in-out;
+            transition: all 300ms ease-in-out;
+}
+
+.section-expandable .section-expandable-icon:after {
+    content: "\f107";
+}
+
+.section-expandable.is--open > .section-expandable-title > .section-expandable-icon {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+}
+
+.tablet .section-expandable .section-expandable-title {
+    font-size: calc(var(--font-size-h6) - 1px);
+}
+
+.phone .section-expandable .section-expandable-title {
+    font-size: calc(var(--font-size-h6) - 2px);
+}
+
+.section-expandable.is--disabled {
+    color: var(--color-neutral-7);
+    pointer-events: none;
+
+    -servicestudio-color: var(--color-neutral-9);
+    -servicestudio-pointer-events: auto;
+}
+
+.section-expandable.is--disabled .section-expandable-icon {
+    color: var(--color-neutral-6);
+}
+
+.section-expandable .section-expandable-content {
+    display: block;
+    overflow: hidden;
+}
+
+/* Add a margin-top when animated label is the first child */
+.section-expandable-content [data-block*="AnimatedLabel"]:first-child .animated-label {
+    margin-top: var(--space-s);
+}
+
+.section-expandable .section-expandable-content,
+.section-expandable .section-expandable-content.is--collapsed {
+    height: 0;
+    padding: var(--space-none) var(--space-m);
+    visibility: hidden;
+
+    -servicestudio-height: auto;
+    -servicestudio-padding: var(--space-none) var(--space-m) var(--space-m);
+}
+
+.layout-native .section-expandable .section-expandable-content,
+.layout-native .section-expandable .section-expandable-content.is--collapsed {
+    padding: var(--space-none) var(--space-base);
+}
+
+.section-expandable .section-expandable-content.is--expanded {
+    height: auto;
+    padding: var(--space-none) var(--space-m) var(--space-m);
+    visibility: visible;
+}
+
+.layout-native .section-expandable .section-expandable-content.is--expanded {
+    padding: var(--space-none) var(--space-base) var(--space-base);
+}
+
+.layout-native .section-expandable .section-expandable-content.no-padding,
+.section-expandable .section-expandable-content.no-padding {
+    padding: var(--space-none);
+}
+
+.section-expandable .section-expandable-content.is--animating {
+    -webkit-transition: all 300ms ease-in-out;
+            transition: all 300ms ease-in-out;
+}
+
+.section-expandable .choices__list.choices__list--dropdown,
+.section-expandable [data-dropdown] > div.dropdown-list {
+    position: initial;
+}
+
+/* Accessibility Styles */
+.has-accessible-features .section-expandable .section-expandable-title:focus,
+.has-accessible-features .section-expandable .section-expandable-content:focus {
+    box-shadow: none;
+    outline: 3px solid var(--color-focus-outer);
+}

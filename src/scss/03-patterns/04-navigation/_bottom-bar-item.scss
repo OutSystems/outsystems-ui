@@ -1,0 +1,91 @@
+/*! Patterns - Navigation - BottomBarItem */
+.bottom-bar-wrapper {
+    background-color: var(--color-neutral-0);
+    border-top: var(--border-size-s) solid var(--color-neutral-3);
+    height: 100%;
+}
+
+.layout-native .bottom-bar-wrapper {
+    padding-bottom: var(--os-safe-area-bottom);
+}
+
+.layout-native .footer {
+    height: var(--bottom-bar-size);
+}
+
+.bottom-bar {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.layout-native .bottom-bar {
+    height: 100%;
+    justify-content: center;
+}
+
+.bottom-bar:empty:after {
+    color: #999;
+    content: "Add Bottom Bar Items to this Container";
+    display: block;
+    font-size: 12px;
+    padding: 20px;
+    text-align: center;
+}
+
+.bottom-bar > a,
+.bottom-bar > div {
+    max-width: 150px;
+    overflow: hidden;
+
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+        flex: 1;
+}
+
+.bottom-bar-item {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+        flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    padding: 0 var(--space-s);
+    position: relative;
+    justify-content: center;
+
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -ms-flex-direction: column;
+}
+
+.bottom-bar-item-icon {
+    display: inline-flex;
+    font-size: var(--font-size-h6);
+    height: auto;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.bottom-bar-item-text {
+    font-size: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: break-word;
+}
+
+.bottom-bar > a {
+    color: var(--color-neutral-8);
+}
+
+.bottom-bar > a.active {
+    color: var(--color-primary);
+}
+
+/* Accessibility Styles */
+.has-accessible-features .bottom-bar > a:focus {
+    background-color: transparent;
+    box-shadow: 0 0 0 3px var(--color-focus-outer);
+}

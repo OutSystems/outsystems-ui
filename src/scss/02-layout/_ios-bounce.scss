@@ -1,0 +1,40 @@
+/* ================================================================ */
+/*  $3.6 - Page Layout - iOS Scroll Bounce                          */
+/* ================================================================ */
+.ios .layout-native.ios-bounce:not(.hide-header-on-scroll) .main {
+    display: grid;
+    max-height: var(--viewport-height, 100vh);
+    width: 100%;
+
+    -servicestudio-max-height: 100% !important;
+    grid-template: auto 1fr auto / 1fr;
+    grid-template-areas: "header" "content" "footer";
+}
+
+.ios .layout-native.ios-bounce:not(.hide-header-on-scroll) .header {
+    position: relative;
+
+    grid-area: header;
+}
+
+.ios .layout-native.ios-bounce:not(.hide-header-on-scroll)  [data-block="Private.PullToRefresh"] {
+    display: contents;
+}
+
+.ios .layout-native.ios-bounce:not(.hide-header-on-scroll) .pull-to-refresh {
+    top: var(--header-size, 0);
+}
+
+.ios .layout-native.ios-bounce:not(.hide-header-on-scroll) .content-bottom {
+    position: relative;
+
+    grid-area: footer;
+}
+
+.ios .layout-native.ios-bounce:not(.hide-header-on-scroll) .content {
+    background-color: var(--color-background-body);
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    grid-area: content;
+}

@@ -1,0 +1,180 @@
+/*! Patterns - Content - Tooltip */
+.tooltip {
+    display: inline-block;
+    position: relative;
+}
+
+.tooltip-content {
+    -servicestudio-min-width: 90px;
+}
+
+.tooltip-wrapper {
+    background-color: var(--color-neutral-9);
+    border-radius: var(--border-radius-soft);
+    color: var(--color-neutral-0);
+    min-width: 80px;
+    padding: var(--space-s) var(--space-base);
+    position: absolute;
+    text-align: center;
+    z-index: 150;
+
+    -servicestudio-position: relative;
+    -servicestudio-width: 150px;
+}
+
+.tooltip-background {
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+
+    -servicestudio-display: none;
+}
+
+.tooltip-wrapper.top {
+    bottom: calc(100% + var(--space-s));
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+
+    -servicestudio-bottom: 130%;
+}
+
+.tooltip-wrapper.top:after {
+    border: 7px solid transparent;
+    border-top: 7px solid var(--color-neutral-9);
+    bottom: -14px;
+    content: "";
+    height: 0;
+    left: 50%;
+    position: absolute;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+    width: 0;
+}
+
+.tooltip-wrapper.bottom {
+    left: 50%;
+    top: calc(100% + var(--space-s));
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+}
+
+.tooltip-wrapper.bottom:after {
+    border: 7px solid transparent;
+    border-bottom: 7px solid var(--color-neutral-9);
+    content: "";
+    height: 0;
+    left: 50%;
+    position: absolute;
+    top: -14px;
+    -webkit-transform: translateX(-50%);
+            transform: translateX(-50%);
+    width: 0;
+}
+
+.tooltip-wrapper.bottom-left {
+    right: calc(100% - var(--space-m));
+    top: calc(100% + var(--space-s));
+}
+
+.tooltip-wrapper.bottom-left:after {
+    border: 7px solid transparent;
+    border-bottom: 7px solid var(--color-neutral-9);
+    content: "";
+    height: 0;
+    position: absolute;
+    right: 7px;
+    top: -14px;
+    width: 0;
+}
+
+.tooltip-wrapper.bottom-right {
+    left: calc(100% - var(--space-m));
+    top: calc(100% + var(--space-s));
+}
+
+.tooltip-wrapper.bottom-right:after {
+    border: 7px solid transparent;
+    border-bottom: 7px solid var(--color-neutral-9);
+    content: "";
+    height: 0;
+    left: 7px;
+    position: absolute;
+    top: -14px;
+    width: 0;
+}
+
+.tooltip-wrapper.left {
+    right: calc(100% + var(--space-s));
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+}
+
+.tooltip-wrapper.left:after {
+    border: 7px solid transparent;
+    border-left: 7px solid var(--color-neutral-9);
+    content: "";
+    height: 0;
+    left: 100%;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+    width: 0;
+}
+
+.tooltip-wrapper.right {
+    left: calc(100% + var(--space-s));
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+}
+
+.tooltip-wrapper.right:after {
+    border: 7px solid transparent;
+    border-right: 7px solid var(--color-neutral-9);
+    content: "";
+    height: 0;
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+    width: 0;
+}
+
+.tooltip-wrapper.top-left {
+    bottom: calc(100% + var(--space-s));
+    right: calc(100% - var(--space-m));
+}
+
+.tooltip-wrapper.top-left:after {
+    border: 7px solid transparent;
+    border-top: 7px solid var(--color-neutral-9);
+    bottom: -14px;
+    content: "";
+    height: 0;
+    position: absolute;
+    right: 7px;
+    width: 0;
+}
+
+.tooltip-wrapper.top-right {
+    bottom: calc(100% + var(--space-s));
+    left: calc(100% - var(--space-m));
+}
+
+.tooltip-wrapper.top-right:after {
+    border: 7px solid transparent;
+    border-top: 7px solid var(--color-neutral-9);
+    bottom: -14px;
+    content: "";
+    height: 0;
+    left: 7px;
+    position: absolute;
+    width: 0;
+}

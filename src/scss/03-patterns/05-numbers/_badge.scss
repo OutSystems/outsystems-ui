@@ -1,0 +1,49 @@
+/*! Patterns - Numbers - Badge */
+.badge {
+    color: var(--color-neutral-0);
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    font-weight: var(--font-semi-bold);
+    height: 32px;
+    line-height: 1;
+    min-width: 32px;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.badge span {
+    width: auto;
+}
+
+.badge-small {
+    font-size: var(--font-size-xs);
+    height: 24px;
+    min-width: 24px;
+    padding: var(--space-none) var(--space-xs);
+}
+
+.badge-medium {
+    font-size: var(--font-size-base);
+    height: 40px;
+    min-width: 40px;
+}
+
+.badge.background-neutral-1,
+.badge.background-neutral-2,
+.badge.background-neutral-3,
+.badge.background-neutral-4 {
+    color: var(--color-neutral-9);
+}
+
+.badge.background-transparent {
+    color: var(--color-primary);
+}
+
+.badge.background-neutral-0 {
+    color: var(--color-primary);
+}

@@ -1,0 +1,64 @@
+/*! - Patterns - Adaptive - Gallery */
+.grid-gallery,
+.grid-gallery > .list {
+    display: -ms-grid;
+    display:     grid;
+
+    -ms-grid-columns: 1fr 3 1fr 3 1fr;
+    grid-gap: var(--grid-gap);
+    grid-template-columns: repeat(var(--grid-desktop), 1fr);
+}
+
+.tablet .grid-gallery,
+.tablet .grid-gallery > .list {
+    grid-template-columns: repeat(var(--grid-tablet), 1fr);
+}
+
+.phone .grid-gallery,
+.phone .grid-gallery > .list {
+    grid-template-columns: repeat(var(--grid-phone), 1fr);
+}
+
+.grid-gallery > .list.list-group {
+    overflow: initial;
+
+    grid-column-start: 1;
+}
+
+.grid-gallery > .list .card,
+.grid-gallery > .list .animate {
+    height: 100%;
+}
+
+.grid-gallery > .list {
+    grid-column-end: calc(var(--grid-desktop) + 1);
+}
+
+.tablet .grid-gallery > .list {
+    grid-column-end: calc(var(--grid-tablet) + 1);
+}
+
+.phone .grid-gallery > .list {
+    grid-column-end: calc(var(--grid-phone) + 1);
+}
+
+.grid-gallery > * {
+    margin-top: 0;
+}
+
+.grid-gallery > img {
+    object-fit: cover;
+}
+
+/* Edge fix for lists */
+.edge .grid-gallery > .list {
+    grid-column-end: var(--grid-list-desktop);
+}
+
+.edge.tablet .grid-gallery > .list {
+    grid-column-end: var(--grid-list-tablet);
+}
+
+.edge.phone .grid-gallery > .list {
+    grid-column-end: var(--grid-list-phone);
+}

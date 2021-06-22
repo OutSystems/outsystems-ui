@@ -1,0 +1,123 @@
+/*! Patterns - Interaction - ActionSheet */
+.action-sheet-container {
+    height: 100%;
+    left: 0;
+    overflow: hidden;
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 155;
+
+    -servicestudio-margin-top: -20px;
+}
+
+.action-sheet-container--visible {
+    pointer-events: auto;
+}
+
+.action-sheet-container--visible.action-sheet-container:after {
+    opacity: 1;
+}
+
+.action-sheet-container:after {
+    background-color: rgba(0, 0, 0, .25);
+    content: "";
+    display: block;
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    -webkit-transition: opacity .3s cubic-bezier(0, 0, .3, 1);
+            transition: opacity .3s cubic-bezier(0, 0, .3, 1);
+    width: 100%;
+
+    -servicestudio-opacity: 1;
+    will-change: opacity;
+}
+
+.action-sheet {
+    bottom: 0;
+    left: 0;
+    margin-top: 0;
+    padding-bottom: calc(var(--os-safe-area-bottom) + var(--space-base));
+    padding-left: calc(var(--os-safe-area-left) + var(--space-base));
+    padding-right: calc(var(--os-safe-area-right) + var(--space-base));
+    padding-top: var(--space-base);
+    pointer-events: auto;
+    position: absolute;
+    -webkit-transform: translateY(100%);
+            transform: translateY(100%);
+    width: 100%;
+    z-index: 60;
+
+    -servicestudio--webkit-transform: translateY(0);
+    -servicestudio-transform: translateY(0);
+    will-change: transform;
+}
+
+.action-sheet-container--visible .action-sheet {
+    -webkit-transform: none;
+            transform: none;
+}
+
+.action-sheet-container--animatable .action-sheet {
+    -webkit-transition: all 130ms ease-in;
+            transition: all 130ms ease-in;
+}
+
+.action-sheet-container--visible.action-sheet-container--animatable .action-sheet {
+    -webkit-transition: all 330ms ease-out;
+            transition: all 330ms ease-out;
+}
+
+.action-sheet-buttons {
+    border-radius: var(--border-radius-soft);
+    display: block;
+    overflow: hidden;
+    position: relative;
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+}
+
+.action-sheet-actions .btn {
+    border-radius: 0;
+    width: 100%;
+}
+
+.action-sheet-actions {
+    -servicestudio-min-height: 40px;
+}
+
+.action-sheet-cancel .btn {
+    border: none;
+    color: var(--color-neutral-8);
+}
+
+.action-sheet-actions .btn {
+    border: none;
+    margin-top: 1px;
+}
+
+.action-sheet-actions:first-child .btn {
+    margin-top: 0;
+}
+
+.desktop .action-sheet-buttons,
+.desktop .action-sheet-cancel {
+    margin: var(--space-none) auto;
+    max-width: 500px;
+}
+
+.tablet .action-sheet-buttons,
+.tablet .action-sheet-cancel {
+    margin: var(--space-none) auto;
+    max-width: 600px;
+}
+
+.desktop .action-sheet-cancel,
+.tablet .action-sheet-cancel {
+    margin: var(--space-base) auto var(--space-none);
+}

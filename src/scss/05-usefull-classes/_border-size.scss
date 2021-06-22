@@ -1,0 +1,64 @@
+.border-size-none { border-width: var(--border-size-none); }
+.border-size-s { border: var(--border-size-s) solid currentColor; }
+.border-size-m {border: var(--border-size-m) solid currentColor; }
+.border-size-l { border: var(--border-size-l) solid currentColor; }
+
+.border-top-s:not(.columns),
+.columns.border-top-s > .columns-item:not(:last-child) {
+    border-top: var(--border-size-s) solid currentColor;
+}
+
+.border-right-s:not(.columns),
+.columns.border-right-s > .columns-item:not(:last-child) {
+    border-right: var(--border-size-s) solid currentColor;
+}
+
+.border-bottom-s:not(.columns),
+.columns.border-bottom-s > .columns-item:not(:last-child) {
+    border-bottom: var(--border-size-s) solid currentColor;
+}
+
+.border-left-s:not(.columns),
+.columns.border-left-s > .columns-item:not(:last-child) {
+    border-left: var(--border-size-s) solid currentColor;
+}
+
+.border-top-m:not(.columns),
+.columns.border-top-m > .columns-item:not(:last-child) {
+    border-top: var(--border-size-m) solid currentColor;
+}
+
+.border-right-m:not(.columns),
+.columns.border-right-m > .columns-item:not(:last-child) {
+    border-right: var(--border-size-m) solid currentColor;
+}
+
+.border-bottom-m:not(.columns),
+.columns.border-bottom-m > .columns-item:not(:last-child) {
+    border-bottom: var(--border-size-m) solid currentColor;
+}
+
+.border-left-m:not(.columns),
+.columns.border-left-m > .columns-item:not(:last-child) {
+    border-left: var(--border-size-m) solid currentColor;
+}
+
+.border-top-l:not(.columns),
+.columns.border-top-l > .columns-item:not(:last-child) {
+    border-top: var(--border-size-l) solid currentColor;
+}
+
+.border-right-l:not(.columns),
+.columns.border-right-l > .columns-item:not(:last-child) {
+    border-right: var(--border-size-l) solid currentColor;
+}
+
+.border-bottom-l:not(.columns),
+.columns.border-bottom-l > .columns-item:not(:last-child) { 
+    border-bottom: var(--border-size-l) solid currentColor;
+}
+
+.border-left-l:not(.columns),
+.columns.border-left-l > .columns-item:not(:last-child) { 
+    border-left: var(--border-size-l) solid currentColor;
+}

@@ -1,0 +1,17 @@
+/*! Patterns - Utilities - Separator */
+.separator {
+    background-color: var(--color-primary);
+}
+
+.separator-vertical {
+    display: inline-block;
+    height: 100%;
+    min-height: 20px;
+    min-width: 1px;
+    width: 1px;
+}
+
+.separator-horizontal {
+    height: 1px;
+    width: 100%;
+}

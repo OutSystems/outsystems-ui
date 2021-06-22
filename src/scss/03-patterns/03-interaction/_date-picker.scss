@@ -1,0 +1,482 @@
+/*! Patterns - Interaction - DatePicker */
+.pika-single {
+    background: var(--color-neutral-0);
+    border: var(--border-size-s) solid var(--color-neutral-4);
+    border-radius: var(--border-radius-soft);
+    display: block;
+    margin-top: var(--space-xs);
+    max-width: 300px;
+    position: relative;
+}
+
+.layout-native .pika-single {
+    max-width: 100%;
+}
+
+.pika-single.is-bound {
+    box-shadow: var(--shadow-s);
+    position: absolute !important;
+    z-index: 151;
+}
+
+input.OSFillParent.calendar-input {
+    display: none;
+}
+
+.pika-single.is-hidden {
+    display: none;
+}
+
+.pika-title {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: var(--space-m) var(--space-base);
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+.pika-labels {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+        flex: 1;
+}
+
+.year-first .pika-select-month {
+    margin-left: var(--space-base);
+    margin-right: 0;
+}
+
+.pika-select-month {
+    margin-right: var(--space-base);
+}
+
+.pika-prev,
+.pika-next {
+    background-color: transparent;
+    border: var(--border-size-none);
+    color: var(--color-neutral-7);
+    cursor: pointer;
+    font: normal normal normal 0 FontAwesome;
+    padding: var(--space-none) var(--space-s);
+}
+
+.pika-next {
+    margin-left: var(--space-base);
+}
+
+.pika-prev:before {
+    content: "\f104";
+    font-size: var(--font-size-h5);
+    position: relative;
+}
+
+.pika-next:before {
+    content: "\f105";
+    font-size: var(--font-size-h5);
+    position: relative;
+}
+
+.pika-label {
+    color: var(--color-primary);
+    cursor: pointer;
+    position: relative;
+}
+
+.pika-label:first-child {
+    margin-right: var(--space-base);
+}
+
+.pika-title select {
+    cursor: pointer;
+    left: 0;
+    margin: 0;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+}
+
+.pika-label:hover {
+    color: var(--color-primary-hover);
+    text-decoration: underline;
+}
+
+.pika-table {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+        flex-direction: column;
+    padding: var(--space-none) var(--space-base) var(--space-base);
+    width: 100%;
+
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -ms-flex-direction: column;
+}
+
+.pika-table thead {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+        flex-direction: row;
+
+    -webkit-box-direction: normal;
+    -webkit-box-orient: horizontal;
+    -ms-flex-direction: row;
+}
+
+.pika-table thead tr {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+        flex: 1;
+}
+
+.pika-table th {
+    color: var(--color-neutral-7);
+    font-weight: var(--font-regular);
+
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+        flex: 1;
+}
+
+.pika-table th abbr[title] {
+    text-decoration: none;
+}
+
+.pika-table tbody {
+    margin-top: var(--space-s);
+    overflow: hidden;
+}
+
+.pika-table tbody tr {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+        flex-direction: row;
+    margin-bottom: var(--space-xs);
+
+    -webkit-box-direction: normal;
+    -webkit-box-orient: horizontal;
+    -ms-flex-direction: row;
+}
+
+.phone .pika-lendar tr {
+    border-bottom: 0;
+}
+
+.phone .pika-time td {
+    display: initial;
+}
+
+.pika-table tbody tr:last-child {
+    margin-bottom: var(--space-none);
+}
+
+.pika-table tbody td {
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+        flex: 1;
+}
+
+.pika-button {
+    background-color: transparent;
+    border: var(--border-size-none);
+    border-radius: var(--border-radius-soft);
+    color: var(--color-neutral-9);
+    cursor: pointer;
+    height: 32px;
+    padding: var(--space-none);
+    position: relative;
+    width: 32px;
+    z-index: 10;
+}
+
+.pika-button:hover {
+    background-color: var(--color-neutral-3);
+}
+
+.is-today .pika-button {
+    background-color: var(--color-neutral-4);
+}
+
+.is-inrange .pika-button {
+    background: var(--color-primary) var(--color-primary-lightest);
+}
+
+.is-startrange .pika-button,
+.is-selected .pika-button,
+.is-endrange .pika-button {
+    background: var(--color-primary);
+    color: var(--color-neutral-0);
+}
+
+.is-inrange {
+    position: relative;
+}
+
+.is-inrange:before {
+    background: var(--color-primary) var(--color-primary-lightest);
+    border-radius: var(--border-radius-soft);
+    content: "";
+    height: 100%;
+    left: -8px;
+    position: absolute;
+    right: -14px;
+    top: 0;
+}
+
+.is-inrange:first-child:before {
+    left: 3px;
+}
+
+.is-inrange:last-child:before {
+    right: 3px;
+}
+
+.is-disabled .pika-button,
+.is-disabled.is-outside-current-month .pika-button {
+    color: var(--color-neutral-7);
+    pointer-events: none;
+    text-decoration: line-through;
+}
+
+.is-outside-current-month .pika-button {
+    color: var(--color-neutral-7);
+    text-decoration: none;
+}
+
+.has-event .pika-button:before {
+    background-color: var(--color-primary);
+    border-radius: var(--border-radius-circle);
+    bottom: 3px;
+    content: "";
+    height: 4px;
+    left: 50%;
+    margin-left: -2px;
+    position: absolute;
+    width: 4px;
+}
+
+.is-selected.has-event .pika-button:before {
+    background-color: var(--color-neutral-0);
+}
+
+.pika-today-container {
+    height: auto;
+    margin: var(--space-none) var(--space-none) var(--space-base);
+    padding: var(--space-none) var(--space-none) var(--space-none);
+    width: 100%;
+}
+
+.pika-today-container:hover {
+    background-color: transparent;
+}
+
+.pika-go-today {
+    background-color: transparent;
+    border: var(--border-size-none);
+    color: var(--color-primary);
+    cursor: pointer;
+    font-weight: normal;
+    padding: var(--space-none);
+}
+
+.pika-go-today:hover {
+    color: var(--color-primary-hover);
+}
+
+.month-picker,
+.year-picker {
+        flex-direction: row;
+    padding: var(--space-none);
+
+    -webkit-box-direction: normal;
+    -webkit-box-orient: horizontal;
+    -ms-flex-direction: row;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+}
+
+.pika-month,
+.pika-year {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-bottom: var(--space-base);
+    width: 33.333%;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.pika-month.is-selected,
+.pika-year.is-selected {
+    background-color: var(--color-primary);
+    color: var(--color-neutral-0);
+}
+
+.prev-year,
+.next-year {
+    color: var(--color-neutral-7);
+}
+
+.pika-time-container {
+    margin: 0 var(--space-base);
+}
+
+.pika-time-container select {
+    background-color: transparent;
+    border: 0;
+    color: var(--color-primary);
+}
+
+.pika-time-container option {
+    color: var(--color-neutral-10);
+}
+
+.pika-title .pika-time-container select {
+    opacity: 1;
+    position: static;
+}
+
+/* Accessibility */
+.desktop .has-accessible-features .pika-title select {
+    border: none;
+    color: var(--color-primary);
+    opacity: 1;
+}
+
+.desktop .has-accessible-features .pika-title select:hover {
+    border-bottom: var(--border-size-s) solid var(--color-primary);
+}
+
+.desktop .has-accessible-features .pika-title select option {
+    color: var(--color-neutral-10);
+}
+
+.desktop .has-accessible-features .pika-title .pika-label {
+    display: flex;
+    align-items: center;
+}
+
+/* RTL */
+.is-rtl .pika-next {
+    margin-left: 0;
+    margin-right: var(--space-m);
+    padding: var(--space-none) var(--space-xs);
+}
+
+.is-rtl .pika-next:before {
+    content: "\f104";
+}
+
+.is-rtl .pika-prev:before {
+    content: "\f105";
+}
+
+.is-rtl .pika-label:first-child {
+    margin-left: var(--space-base);
+    margin-right: 0;
+}
+
+/* Keycode shortcuts dialog */
+.calendar-help-dialog {
+    background-color: var(--color-neutral-0);
+    bottom: 0;
+    color: var(--color-neutral-10);
+    display: none;
+    left: 0;
+    padding: var(--space-s);
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 100;
+}
+
+.calendar-help-dialog.is--open {
+    display: block;
+}
+
+.calendar-help-content {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+        flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -ms-flex-direction: column;
+}
+
+.calendar-help-content p {
+    margin: 0;
+}
+
+.calendar-help-content ul {
+    padding-left: var(--space-m);
+}
+
+.calendar-help-trigger {
+    background-color: var(--color-info);
+    clip: rect(0, 0, 0, 0);
+    color: var(--color-neutral-0);
+    height: 0;
+    left: 50%;
+    overflow: hidden;
+    padding: var(--space-s);
+    position: absolute;
+    top: var(--space-xxl);
+    transform: translateX(-50%);
+    white-space: nowrap;
+    width: 0;
+}
+
+.calendar-help-trigger:focus {
+    clip: initial;
+    height: auto;
+    overflow: visible;
+    width: auto;
+    z-index: 100;
+}
+
+.calendar-help-close {
+    background-color: var(--color-neutral-0);
+    color: var(--color-neutral-10);
+    height: auto;
+}
+
+/* Fix datepicker when inside Popup Widget */
+.portal-class ~ .pika-single.is-bound {
+    z-index: 251;
+}

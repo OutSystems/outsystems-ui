@@ -1,0 +1,36 @@
+/*! Patterns - Numbers - ProgressCircleFraction */
+.progress-circle-text {
+    left: 50%;
+    line-height: 1.2;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+
+    -servicestudio--webkit-transform: translate(0);
+    -servicestudio-position: static;
+}
+
+.progress-circle-text-numerator {
+    font-size: var(--font-size-h4);
+}
+
+.progress-circle-text-denominator {
+    font-size: var(--font-size-h6);
+}
+
+.progress-circle-medium .progress-circle-text-numerator {
+    font-size: var(--font-size-h1);
+}
+
+.progress-circle-medium .progress-circle-text-denominator {
+    font-size: var(--font-size-h4);
+}
+
+.progress-circle-large .progress-circle-text-numerator {
+    font-size: 44px;
+}
+
+.progress-circle-large .progress-circle-text-denominator {
+    font-size: var(--font-size-h2);
+}

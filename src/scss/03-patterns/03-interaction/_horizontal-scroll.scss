@@ -1,0 +1,30 @@
+/*! Patterns - Interaction - HorizontalScroll */
+.horizontal-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+
+    -servicestudio-min-height: 80px;
+    -servicestudio-white-space: normal;
+}
+
+.horizontal-scroll > *,
+.horizontal-scroll > .list > * {
+    display: inline-block;
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+}
+
+.horizontal-scroll > :not(:first-child),
+.horizontal-scroll > .list > :not(:first-child) {
+    margin-left: var(--space-base);
+}
+
+.horizontal-scroll > [data-block*="Card"] + [data-block*="Card"] .card,
+.horizontal-scroll > .list > [data-block*="Card"] + [data-block*="Card"] .card {
+    margin-top: var(--space-none);
+}
+
+.horizontal-scroll .list {
+    background-color: transparent;
+}

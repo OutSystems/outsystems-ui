@@ -1,0 +1,19 @@
+/*! Patterns - Interaction - Video */
+.video-preview {
+    display: block;
+}
+
+.video.hide-controls::-webkit-media-controls-panel,
+.video.hide-controls::-webkit-media-controls-panel-container {
+    display: none !important;
+
+    -webkit-appearance: none;
+}
+
+.video.hide-controls {
+    pointer-events: none;
+}
+
+.video.hide-controls {
+    pointer-events: none;
+}

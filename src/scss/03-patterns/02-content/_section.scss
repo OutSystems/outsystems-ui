@@ -1,0 +1,52 @@
+/*! Patterns - Content - Section */
+.section-title {
+    background-color: transparent;
+    border-bottom: var(--border-size-s) solid var(--color-neutral-4);
+    color: var(--color-neutral-9);
+    font-size: var(--font-size-h2);
+    font-weight: var(--font-semi-bold);
+    padding: var(--space-none) var(--space-none) var(--space-s) var(--space-none);
+    position: relative;
+    text-transform: none;
+    width: 100%;
+}
+
+.tablet .section-title {
+    font-size: calc(var(--font-size-h2) - 2px);
+}
+
+.phone .section-title {
+    font-size: calc(var(--font-size-h2) - 4px);
+}
+
+.layout-native .section-title {
+    padding: var(--space-s) var(--space-base) var(--space-s) var(--space-base);
+}
+
+.section-group.is--sticky .section-title {
+    position: -webkit-sticky;
+    position:         sticky;
+    top: calc(var(--section-top-position) + var(--os-safe-area-top));
+    z-index: 90;
+}
+
+.android[data-status-bar-height] .section-group.is--sticky .section-title {
+    top: calc(var(--section-top-position) + var(--status-bar-height));
+}
+
+.section-group .section-title {
+    background-color: var(--color-background-body);
+}
+
+.section-content {
+    padding: var(--space-s) var(--space-none) var(--space-none);
+}
+
+.layout-native .section-content {
+    padding: 0;
+}
+
+/* Override default value from sticky position */
+.ios .layout-native .section-group .sticky {
+    position: static;
+}

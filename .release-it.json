@@ -1,0 +1,14 @@
+{
+	"git": {
+		"requireUpstream": false,
+		"push": true
+	},
+	"npm": {
+		"publish": false
+	},
+	"hooks": {
+		"after:bump": [
+			"npm run build"
+		]
+	}
+}

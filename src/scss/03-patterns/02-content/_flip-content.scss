@@ -1,0 +1,61 @@
+/*! Patterns - Content - FlipContent */
+.flip-content {
+    position: relative;
+
+    -servicestudio--webkit-perspective: initial;
+    -servicestudio-perspective: initial;
+    -webkit-perspective: 1000;
+            perspective: 1000;
+}
+
+.flip-content-container {
+    position: relative;
+    -webkit-transition: all 630ms cubic-bezier(.03, .01, .67, 1.97);
+            transition: all 630ms cubic-bezier(.03, .01, .67, 1.97);
+
+    -servicestudio--webkit-transform-style: initial;
+    -servicestudio-transform-style: initial;
+    -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+}
+
+.flip-content-front,
+.flip-content-back {
+    left: 0;
+    top: 0;
+
+    -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+}
+
+.flip-content-front:empty,
+.flip-content-back:empty {
+    -servicestudio-min-height: 80px;
+}
+
+.flip-content-front {
+    position: relative;
+    z-index: 2;
+}
+
+.flip-content-back {
+    position: absolute;
+    width: 100%;
+
+    -servicestudio-position: static;
+}
+
+.flip-content.flipped .flip-content-front {
+    position: absolute;
+}
+
+.flip-content.flipped .flip-content-back {
+    position: relative;
+    -webkit-transform: rotateY(90deg);
+            transform: rotateY(90deg);
+}
+
+.flip-content.flipped .flip-content-container {
+    -webkit-transform: rotateY(-90deg);
+            transform: rotateY(-90deg);
+}

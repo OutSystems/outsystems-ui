@@ -1,0 +1,43 @@
+/*! Widgets - BulkActions */
+.table [data-checkbox] {
+    display: block;
+    height: 16px;
+    width: 16px;
+}
+
+.table [data-checkbox]:before {
+    height: 14px;
+    width: 14px;
+}
+
+.table [data-checkbox]:checked:after {
+    border: var(--border-size-m) solid var(--color-neutral-0);
+    border-right: var(--border-size-none) !important;
+    border-top: var(--border-size-none) !important;
+    display: block;
+    height: 2px;
+    left: 4px;
+    top: 5px;
+    width: 7px;
+}
+
+.table .checkbox-intermediate:before {
+    background-color: var(--color-primary);
+    border: var(--border-size-s) solid var(--color-primary);
+}
+
+.table .checkbox-intermediate:after {
+    background-color: var(--color-neutral-0);
+    content: "";
+    height: 2px;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%) translateX(-50%);
+            transform: translateY(-50%) translateX(-50%);
+    width: 8px;
+
+    -servicestudio-border-width: 1px !important;
+    -servicestudio-left: 8px !important;
+    -servicestudio-top: 7px !important;
+}

@@ -1,0 +1,49 @@
+/*! Patterns - Content - UserAvatar */
+.avatar {
+    color: var(--color-neutral-0);
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    font-weight: var(--font-semi-bold);
+    height: 32px;
+    line-height: 1;
+    text-transform: uppercase;
+    width: 32px;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.avatar span {
+    width: auto;
+}
+
+.avatar.background-neutral-1,
+.avatar.background-neutral-2,
+.avatar.background-neutral-3,
+.avatar.background-neutral-4 {
+    color: var(--color-neutral-9);
+}
+
+.avatar.background-transparent {
+    color: var(--color-primary);
+}
+
+.avatar.background-neutral-0 {
+    color: var(--color-primary);
+}
+
+.avatar-small {
+    font-size: var(--font-size-xs);
+    height: 24px;
+    width: 24px;
+}
+
+.avatar-medium {
+    font-size: var(--font-size-base);
+    height: 40px;
+    width: 40px;
+}

@@ -1,0 +1,19 @@
+{
+    "extends": "stylelint-config-prettier",
+    "plugins": [
+        "stylelint-order"
+    ],
+    "rules": {
+        "order/order": [
+            [
+                "dollar-variables",
+                "at-rules",
+                "declarations",
+                "rules",
+                "custom-properties"
+            ]
+        ],
+        "order/properties-alphabetical-order": true,
+        "max-line-length": 170
+    }
+}

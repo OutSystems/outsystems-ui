@@ -1,0 +1,99 @@
+/*! Patterns - Interaction - Sidebar */
+.sidebar {
+    background-color: var(--color-neutral-0);
+    box-shadow: var(--shadow-l);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+        flex-direction: column;
+    height: 100%;
+    margin: var(--space-none);
+    position: fixed;
+    right: 0;
+    top: 0;
+    -webkit-transform: translateX(102%);
+            transform: translateX(102%);
+    -webkit-transition: all 130ms ease-in;
+            transition: all 130ms ease-in;
+    width: 500px;
+    z-index: 140;
+
+    -servicestudio-bottom: 20px;
+    -servicestudio-height: auto;
+    -servicestudio-margin-left: auto;
+    -servicestudio-position: relative;
+    -servicestudio-transform: none;
+    -servicestudio-webkit-transform: none;
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -ms-flex-direction: column;
+    will-change: transform;
+}
+
+.landscape .layout-native .sidebar {
+    padding-bottom: var(--os-safe-area-bottom);
+}
+
+.ios .layout-native .sidebar {
+    padding-bottom: var(--os-safe-area-bottom);
+    padding-top: var(--os-safe-area-top);
+}
+
+.android[data-status-bar-height] .layout-native .sidebar {
+    padding-top: var(--status-bar-height);
+}
+
+.sidebar:before {
+    background-color: transparent;
+    content: "";
+    height: 100%;
+    left: -24px;
+    position: fixed;
+    width: 24px;
+}
+
+.ios.phone.landscape .layout-native .sidebar:before {
+    left: calc((var(--os-safe-area-left) + 12px) * -1);
+	width: calc(var(--os-safe-area-left) + 12px);
+}
+
+.active-screen.screen-container .sidebar.sidebar-open {
+    -webkit-transform: none;
+            transform: none;
+    -webkit-transition: all 330ms ease-out;
+            transition: all 330ms ease-out;
+
+    will-change: transform;
+}
+
+.sidebar-header,
+.sidebar-content {
+    padding: var(--space-base) var(--space-m);
+}
+
+.sidebar-content {
+    overflow: auto;
+
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+        flex: 1;
+    -webkit-overflow-scrolling: touch;
+}
+
+.tablet .layout-native .sidebar {
+    width: 336px;
+}
+
+.phone .sidebar {
+    width: 85vw;
+}
+
+.tablet .sidebar.full-width,
+.phone .sidebar.full-width {
+    width: 100%;
+}
+
+.tablet .sidebar.full-width-vw,
+.phone .sidebar.full-width-vw {
+    width: 100vw;
+}

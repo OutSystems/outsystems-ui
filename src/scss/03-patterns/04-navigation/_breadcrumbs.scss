@@ -1,0 +1,32 @@
+/*! Patterns - Navigation - Breadcrumbs */
+.breadcrumbs-content {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.breadcrumbs-item {
+    color: var(--color-neutral-8);
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.breadcrumbs-item .icon {
+    color: var(--color-neutral-7);
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    font-size: var(--font-size-xs);
+    margin: var(--space-none) var(--space-s);
+    width: auto;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}

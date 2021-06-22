@@ -1,0 +1,16 @@
+/*! Patterns - Utilities - MarginContainer */
+.margin-container {
+    padding: var(--space-m);
+}
+
+.layout-native .margin-container {
+    padding: var(--space-l);
+}
+
+.tablet .layout-native .margin-container {
+    padding: var(--space-m);
+}
+
+.phone .layout-native .margin-container {
+    padding: var(--space-base);
+}

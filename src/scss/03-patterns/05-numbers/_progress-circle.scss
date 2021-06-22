@@ -1,0 +1,38 @@
+/*! Patterns - Numbers - ProgressCircle */
+.progress-circle-outer {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: var(--space-base);
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+            justify-content: center;
+
+    -webkit-justify-content: center;
+}
+
+.progress-circle {
+    position: relative;
+}
+
+.progress-circle svg {
+    height: 100%;
+
+    stroke-linecap: round;
+}
+
+.progress-circle .progressbar-text {
+    text-align: center;
+}
+
+.progress-circle-small .progressbar-text {
+    font-size: var(--font-size-h4);
+}
+
+.progress-circle-medium .progressbar-text {
+    font-size: var(--font-size-h3);
+}
+
+.progress-circle-large .progressbar-text {
+    font-size: var(--font-size-display);
+}

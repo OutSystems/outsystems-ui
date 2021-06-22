@@ -1,0 +1,66 @@
+/*! Patterns - Interaction - ScrollableArea */
+.scrollable-area-content {
+    height: var(--scrollable-area-height);
+    width: var(--scrollable-area-width);
+
+    --scrollable-area-height: auto;
+    --scrollable-area-width: 100%;
+}
+
+.scrollable-area-content.none {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.scrollable-area-content.none::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollable-area-content.none:hover {
+    cursor: default;
+}
+
+.scrollable-area-content.horizontal-scroll,
+.scrollable-area-content.horizontal-scroll .list.list-group {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.scrollable-area-content.vertical-scroll,
+.scrollable-area-content.vertical-scroll .list.list-group {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+[data-block="Interaction.ScrollableArea"]::-webkit-scrollbar,
+.scrollable-area-content.compact.horizontal-scroll::-webkit-scrollbar,
+.scrollable-area-content.compact.vertical-scroll::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+}
+
+[data-block="Interaction.ScrollableArea"]::-webkit-scrollbar-track,
+.scrollable-area-content.compact.horizontal-scroll::-webkit-scrollbar-track,
+.scrollable-area-content.compact.vertical-scroll::-webkit-scrollbar-track,
+[data-block="Interaction.ScrollableArea"]::-webkit-scrollbar-thumb,
+.scrollable-area-content.compact.horizontal-scroll::-webkit-scrollbar-thumb,
+.scrollable-area-content.compact.vertical-scroll::-webkit-scrollbar-thumb,
+[data-block="Interaction.ScrollableArea"]:hover::-webkit-scrollbar-track,
+.scrollable-area-content.compact.horizontal-scroll:hover::-webkit-scrollbar-track,
+.scrollable-area-content.compact.vertical-scroll:hover::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+[data-block="Interaction.ScrollableArea"]:hover::-webkit-scrollbar-thumb,
+.scrollable-area-content.compact.horizontal-scroll:hover::-webkit-scrollbar-thumb,
+.scrollable-area-content.compact.vertical-scroll:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(173, 181, 189, .5);
+    border-radius: 6px;
+}
+
+[data-block="Interaction.ScrollableArea"]::-webkit-scrollbar-thumb:hover,
+.scrollable-area-content.compact.horizontal-scroll::-webkit-scrollbar-thumb:hover,
+.scrollable-area-content.compact.vertical-scroll::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(106, 113, 120, .5);
+    border-radius: 6px;
+}
