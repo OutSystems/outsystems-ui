@@ -1,127 +1,160 @@
+/* ============================================================================= */
+/* Global Selector *
+/* ============================================================================= */
 * {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	box-sizing: border-box;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+/* ============================================================================= */
+/* HTML *
+/* ============================================================================= */
+/* ToDo
+    - Check the selector below and try to understand if something is pending here!
+*/
 html {
-    color: var(--color-neutral-9);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    overflow: hidden; /* Temporary fix related to changes in scroll position */
-    overflow-x: hidden;
+	color: var(--color-neutral-9);
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
+		'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	overflow: hidden; /* Temporary fix related to changes in scroll position */
+	overflow-x: hidden;
 
-    -servicestudio-overflow: hidden;
-    -webkit-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-    /*overflow-y: scroll;*/ /* Commented due to changes in scroll position */
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+	/*overflow-y: scroll;*/ /* Commented due to changes in scroll position */
 
+	// ServiceStudio Preview
+	& {
+		-servicestudio-overflow: hidden;
+	}
 }
 
+/* ============================================================================= */
+/* Body *
+/* ============================================================================= */
+/* 
+@ToDo:
+    - Check why the font-size is S instead of BASE?
+*/
 body {
-    background-color: var(--color-background-body);
-    font-size: var(--font-size-s);
-    line-height: 1.5;
-    margin: 0;
-    /* -webkit-overflow-scrolling: touch; */
+	background-color: var(--color-background-body);
+	font-size: var(--font-size-s);
+	line-height: 1.5;
+	margin: 0;
 }
 
-a {
-    text-decoration: none;
-
-    -webkit-text-decoration-skip: objects;
-}
-
-abbr[title] {
-    border-bottom: 0;
-    text-decoration: underline;
-}
-
+/* ============================================================================= */
+/* Focus state */
+/* ============================================================================= */
 :focus {
-    outline: 0;
+	outline: 0;
 }
 
-/* Accessibility Styles */
+::-moz-focus-inner {
+	border: 0;
+}
+
 .has-accessible-features :focus {
-    box-shadow: 0 0 0 3px var(--color-focus-outer);
+	box-shadow: 0 0 0 3px var(--color-focus-outer);
 }
 
+/* ============================================================================= */
+/* Abbreviation */
+/* ============================================================================= */
+abbr[title] {
+	border-bottom: 0;
+	text-decoration: underline;
+}
+
+/* ============================================================================= */
+/* Style the cursor when a div elem is clickable */
+/* ============================================================================= */
+div[onclick] {
+	cursor: pointer;
+}
+
+/* 
+@ToDo:
+    - Remove this section and place it on the layout partial
+*/
+.layout-native {
+	-servicestudio-min-height: 100vh !important;
+}
+
+/* 
+@ToDo:
+    - Remove this section and place it on the html-elements partial
+*/
+figure {
+	margin: 0;
+}
+
+/* 
+@ToDo:
+    - Remove this section and place it on the html-elements partial
+*/
+a {
+	text-decoration: none;
+
+	-webkit-text-decoration-skip: objects;
+}
+
+/* 
+@ToDo:
+    - This section below should be breaked and placed in the right places at
+    html-elements partial
+*/
 input,
 textarea,
 select,
 button {
-    font-family: inherit;
-    font-size: 100%;
-    line-height: 1.25;
-    margin: 0;
-
-    -webkit-appearance: none;
-       -moz-appearance: none;
-            appearance: none;
+	appearance: none;
+	font-family: inherit;
+	font-size: 100%;
+	line-height: 1.25;
+	margin: 0;
 }
 
-[type="checkbox"],
-[type="radio"] {
-    border: 0;
-    padding: 0;
+[type='checkbox'],
+[type='radio'] {
+	border: 0;
+	padding: 0;
 }
 
-[type="number"]::-webkit-inner-spin-button,
-[type="number"]::-webkit-outer-spin-button {
-    height: auto;
+[type='number']::-webkit-inner-spin-button,
+[type='number']::-webkit-outer-spin-button {
+	height: auto;
 }
 
-[type="search"] {
-    outline-offset: -2px;
-
-    -webkit-appearance: textfield;
-       -moz-appearance: textfield;
-            appearance: textfield;
+[type='search'] {
+	appearance: textfield;
+	outline-offset: -2px;
 }
 
-[type="search"]::-webkit-search-cancel-button,
-[type="search"]::-webkit-search-decoration {
-    -webkit-appearance: none;
-       -moz-appearance: none;
-            appearance: none;
+[type='search']::-webkit-search-cancel-button,
+[type='search']::-webkit-search-decoration {
+	appearance: none;
 }
 
-input[type="time"],
-input[type="date"],
-input[type="datetime"],
-input[type="datetime-local"],
-input[type="time"],
-input[type="time"]:empty {
-    display: inline-flex;
+input[type='time'],
+input[type='date'],
+input[type='datetime'],
+input[type='datetime-local'],
+input[type='time'],
+input[type='time']:empty {
+	display: inline-flex;
 }
 
 ::-webkit-file-upload-button {
-    -webkit-appearance: button;
-       -moz-appearance: button;
-            appearance: button;
-}
-
-div[onclick] {
-    cursor: pointer;
+	appearance: button;
 }
 
 select::-ms-expand {
-    display: none;
+	display: none;
 }
 
 input::-ms-clear {
-    display: none;
-}
-
-figure {
-    margin: 0;
-}
-
-.layout-native {
-    -servicestudio-min-height: 100vh !important;
-}
-
-::-moz-focus-inner {
-    border: 0;
+	display: none;
 }
