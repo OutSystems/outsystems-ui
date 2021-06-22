@@ -22,6 +22,7 @@
 		"css-loader": "^4.3.0",
 		"file-loader": "^6.2.0",
 		"html-webpack-plugin": "^4.5.2",
+		"marked": "^2.1.1",
 		"mini-css-extract-plugin": "^1.6.0",
 		"postcss-discard-comments": "^4.0.2",
 		"postcss-loader": "^4.2.0",
