@@ -1,6 +1,6 @@
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
 const outputPath = path.join(__dirname, 'dist');
 const webpack = require('webpack');
@@ -13,23 +13,17 @@ module.exports = {
 	output: {
 		path: outputPath,
 		filename: `${prefix}.[name].js`,
+		clean: true,
 	},
 	stats: {
 		colors: true,
-		children: false,
+		children: true,
 	},
-	watch: false,
 	module: {
 		rules: [
 			{
-				test: /\.js?$/,
-				exclude: /node_modules/,
-				use: {
-					loader: 'babel-loader',
-					options: {
-						presets: ['@babel/preset-env'],
-					},
-				},
+				test: /\.ts$/,
+				use: 'ts-loader',
 			},
 			{
 				test: /\.(sa|sc|c)ss$/,
@@ -45,16 +39,13 @@ module.exports = {
 					},
 					{
 						loader: 'sass-loader',
-						options: {
-							implementation: require('sass'),
-							sassOptions: {},
-						},
 					},
 				],
 			},
 		],
 	},
 	plugins: [
+		new CleanWebpackPlugin({}),
 		new MiniCssExtractPlugin({
 			filename: `${prefix}.[name].css`,
 		}),
@@ -69,16 +60,10 @@ module.exports = {
 				.replace('T', ' ')}`,
 		}),
 	],
-	devtool: 'inline-source-map',
+	devtool: false,
 	devServer: {
 		contentBase: path.join(__dirname, 'dist'),
-		disableHostCheck: true,
-		hot: false,
-		https: false,
-		inline: false,
-		liveReload: false,
 		port: 3000,
-		watchContentBase: true,
 		writeToDisk: true,
 	},
 };
