@@ -4,7 +4,7 @@
 	"description": "OutSystems UI Base Theme",
 	"scripts": {
 		"osui-prod": "webpack --env mode=production --config webpack/webpack.osui.js",
-		"osui-dev": "webpack --env mode=development serve --config webpack/webpack.osui.js --devtool inline-source-map"
+		"osui-dev": "webpack serve --env mode=development --config webpack/webpack.osui.js --devtool inline-source-map"
 	},
 	"author": "OutSystems UI Team",
 	"browserslist": [

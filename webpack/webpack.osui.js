@@ -5,7 +5,7 @@ const { merge } = require('webpack-merge');
 module.exports = (env) => {
 	let prefix = env.mode === 'production' ? 'prod' : 'dev';
 	return merge(common, {
-		mode: env.mode || 'development',
+		mode: 'development',
 		output: {
 			filename: `${prefix}.[name].js`,
 		},
