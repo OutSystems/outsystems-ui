@@ -9,10 +9,8 @@ const package = require('./package.json');
 let prefix = process.env.PREFIX === 'prod ' ? 'prod' : 'dev';
 
 module.exports = {
-	mode: 'development',
 	output: {
 		path: outputPath,
-		filename: `${prefix}.[name].js`,
 		clean: true,
 	},
 	stats: {
@@ -46,9 +44,6 @@ module.exports = {
 	},
 	plugins: [
 		new CleanWebpackPlugin({}),
-		new MiniCssExtractPlugin({
-			filename: `${prefix}.[name].css`,
-		}),
 		new HtmlWebpackPlugin({
 			template: 'index.html',
 			prefix: prefix,
