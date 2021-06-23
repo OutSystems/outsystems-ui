@@ -1,3 +1,5 @@
+@import '00-foundations/variables';
+
 /*! ============================================================================= */
 
 /*!  OutSystems UI                                                                */
@@ -262,7 +264,11 @@
 /*! ============================================================================= */
 @import '05-usefull-classes/typography';
 @import '05-usefull-classes/colors';
-@import '05-usefull-classes/space';
+
+//@import '05-usefull-classes/space'; //ACarvalho
+@import '05-usefull-classes/space-margin'; //ACarvalho
+@import '05-usefull-classes/space-padding'; //ACarvalho
+
 @import '05-usefull-classes/border-radius';
 @import '05-usefull-classes/border-size';
 @import '05-usefull-classes/shadows';

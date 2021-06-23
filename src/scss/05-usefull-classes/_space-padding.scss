@@ -1,0 +1,48 @@
+/*! padding start */
+
+@each $entry in $osui-sizes {
+	$label: nth($entry, 1);
+	$value: nth($entry, 2);
+
+	.padding-#{$label} {
+		padding: #{$value};
+	}
+
+	.padding-top-#{$label} {
+		padding-top: #{$value};
+	}
+
+	.padding-right-#{$label} {
+		padding-right: #{$value};
+	}
+
+	.padding-bottom-#{$label} {
+		padding-bottom: #{$value};
+	}
+
+	.padding-left-#{$label} {
+		padding-left: #{$value};
+	}
+
+	.is-rtl .padding-right-#{$label} {
+		padding-left: #{$value};
+		padding-right: var(--space-none);
+	}
+
+	.is-rtl .padding-left-#{$label} {
+		padding-left: var(--space-none);
+		padding-right: #{$value};
+	}
+
+	.padding-x-#{$label} {
+		padding-left: #{$value};
+		padding-right: #{$value};
+	}
+
+	.padding-y-#{$label} {
+		padding-bottom: #{$value};
+		padding-top: #{$value};
+	}
+}
+
+/*! padding end */

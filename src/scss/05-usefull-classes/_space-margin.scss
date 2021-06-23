@@ -1,0 +1,52 @@
+/*! margin start */
+
+@each $entry in $osui-sizes {
+	$label: nth($entry, 1);
+	$value: nth($entry, 2);
+
+	.margin-#{$label} {
+		margin: #{$value};
+	}
+
+	.margin-top-#{$label} {
+		margin-top: #{$value};
+	}
+
+	.margin-right-#{$label} {
+		margin-right: #{$value};
+	}
+
+	.margin-bottom-#{$label} {
+		margin-bottom: #{$value};
+	}
+
+	.margin-left-#{$label} {
+		margin-left: #{$value};
+	}
+
+	.is-rtl .margin-right-#{$label} {
+		margin-left: #{$value};
+		margin-right: var(--space-none);
+	}
+
+	.is-rtl .margin-left-#{$label} {
+		margin-left: var(--space-none);
+		margin-right: #{$value};
+	}
+
+	.margin-x-#{$label} {
+		margin-left: #{$value};
+		margin-right: #{$value};
+	}
+
+	.margin-y-#{$label} {
+		margin-bottom: #{$value};
+		margin-top: #{$value};
+	}
+}
+
+.margin-auto {
+	margin: 0 auto;
+}
+
+/*! margin end */
