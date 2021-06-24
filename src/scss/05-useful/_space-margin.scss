@@ -1,4 +1,4 @@
-/*! space margin start */
+/*! useful space margin start */
 
 @each $entry in $osui-sizes {
 	$label: nth($entry, 1);
@@ -49,4 +49,4 @@
 	margin: 0 auto;
 }
 
-/*! space margin end */
+/*! useful space margin end */

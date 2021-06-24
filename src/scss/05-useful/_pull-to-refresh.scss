@@ -1,0 +1,98 @@
+/*! useful pull-to-refresh start */
+
+/* Pull to Refresh*/
+.pull-to-refresh {
+	color: var(--color-neutral-6);
+	-servicestudio-display: none;
+	font-size: var(--font-size-h3);
+	left: 0;
+	padding: var(--space-s);
+	position: absolute;
+	text-align: center;
+	width: 100%;
+}
+
+.pull-to-refresh-loading {
+	display: none;
+	text-align: center;
+}
+
+.ptr-loading .pull-to-refresh-loading {
+	display: block;
+}
+
+@-webkit-keyframes ptr-loading {
+	0% {
+		opacity: 0;
+		-webkit-transform: translateY(0) scale(0.3);
+		transform: translateY(0) scale(0.3);
+	}
+	100% {
+		background-color: var(--color-neutral-0);
+		opacity: 1;
+		-webkit-transform: scale(1);
+		transform: scale(1);
+	}
+}
+
+@keyframes ptr-loading {
+	0% {
+		opacity: 0;
+		-webkit-transform: translateY(0) scale(0.3);
+		transform: translateY(0) scale(0.3);
+	}
+	100% {
+		background-color: var(--color-neutral-0);
+		opacity: 1;
+		-webkit-transform: scale(1);
+		transform: scale(1);
+	}
+}
+
+.ptr-loading .content,
+.ptr-reset .content,
+.ptr-loading .pull-to-refresh,
+.ptr-reset .pull-to-refresh {
+	-webkit-transition: all 0.25s ease;
+	transition: all 0.25s ease;
+}
+
+.ptr-reset .content {
+	-webkit-transform: translate3D(0, 0, 0);
+	transform: translate3D(0, 0, 0);
+}
+
+.ptr-loading .content {
+	-webkit-transform: translate3D(0, 50px, 0);
+	transform: translate3D(0, 50px, 0);
+}
+
+/* icon */
+.pull-to-refresh .genericon {
+	-webkit-transition: all 0.25s ease;
+	transition: all 0.25s ease;
+}
+.ptr-refresh .pull-to-refresh .genericon {
+	-webkit-transform: rotate(180deg);
+	transform: rotate(180deg);
+}
+
+.ptr-loading .pull-to-refresh .genericon,
+.ptr-reset .pull-to-refresh .genericon {
+	display: none;
+}
+
+.slide-from-left-enter .layout-native .pull-to-refresh,
+.slide-from-left-leave .layout-native .pull-to-refresh,
+.slide-from-right-enter .layout-native .pull-to-refresh,
+.slide-from-right-leave .layout-native .pull-to-refresh,
+.slide-from-top-enter .layout-native .pull-to-refresh,
+.slide-from-top-leave .layout-native .pull-to-refresh,
+.slide-from-bottom-enter .layout-native .pull-to-refresh,
+.slide-from-bottom-leave .layout-native .pull-to-refresh,
+.fade-enter .layout-native .pull-to-refresh,
+.fade-leave .layout-native .pull-to-refresh {
+	display: none;
+}
+
+/*! useful pull-to-refresh end */

@@ -1,4 +1,4 @@
-/*! space padding start */
+/*! useful space padding start */
 
 @each $entry in $osui-sizes {
 	$label: nth($entry, 1);
@@ -45,4 +45,4 @@
 	}
 }
 
-/*! space padding end */
+/*! useful space padding end */

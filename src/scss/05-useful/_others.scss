@@ -1,0 +1,54 @@
+.no-transition {
+	transition: none !important;
+}
+
+.no-transform {
+	transform: none !important;
+}
+
+.remove-card-gradient .card-background-color:after {
+	background: none;
+}
+
+.tablet .tablet-full-width,
+.phone .phone-full-width {
+	margin-left: 0;
+	width: 100%;
+}
+
+/* Hide StickyObserve when HideOnScroll is used*/
+.sticky-observer {
+	height: var(--header-size);
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	visibility: hidden;
+}
+
+/* Menu ServiceStudio Preview */
+body .app-menu-content {
+	-servicestudio-align-items: flex-start;
+	-servicestudio-height: 100% !important;
+	-servicestudio-left: 0 !important;
+	-servicestudio-position: relative !important;
+	-servicestudio-width: 100% !important;
+}
+
+.layout-native .aside-navigation,
+.layout-top .aside-navigation {
+	-servicestudio-display: none !important;
+}
+
+body .app-menu-content .app-menu-links {
+	-servicestudio-align-items: flex-start;
+	-servicestudio-padding: var(--space-none);
+	-servicestudio-width: 100% !important;
+}
+
+.tablet .app-menu-links a,
+.phone .app-menu-links a {
+	-servicestudio-margin-left: var(--space-none);
+	-servicestudio-padding: var(--space-s) var(--space-m);
+	-servicestudio-width: 100%;
+}

@@ -1,0 +1,43 @@
+/*! useful a11y start */
+
+.wcag-hide-text {
+	border: 0;
+	clip: rect(0 0 0 0);
+	-servicestudio-display: none;
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Skip-nav link used on Accessibility*/
+/* Accessibility Styles */
+.skip-nav[data-showskipcontent='false'] {
+	display: none;
+}
+
+.skip-nav[data-showskipcontent='true'] {
+	display: block;
+}
+
+.skip-nav {
+	left: var(--space-xl);
+	opacity: 0;
+	padding: var(--space-s) var(--space-base);
+	pointer-events: none;
+	position: absolute;
+	text-transform: uppercase;
+	top: 10px;
+	z-index: 200;
+}
+
+.has-accessible-features .skip-nav:focus,
+.has-accessible-features .skip-nav:active {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+/*! useful a11y end */

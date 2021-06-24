@@ -1,3 +1,5 @@
+/*! useful text start */
+
 .break-word {
 	word-break: break-word;
 }
@@ -17,3 +19,15 @@
 .white-space-nowrap {
 	white-space: nowrap;
 }
+
+.is-rtl [align='right'],
+.is-rtl .text-align-right {
+	text-align: left;
+}
+
+.is-rtl [align='left'],
+.is-rtl .text-align-left {
+	text-align: right;
+}
+
+/*! useful text end */
