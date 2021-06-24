@@ -1,0 +1,13 @@
+@for $index from 0 through 10 {
+	/*! neutral-#{$index} start */
+
+	.background-neutral-#{$index} {
+		background-color: var(--color-neutral-#{$index});
+	}
+
+	.text-neutral-#{$index} {
+		color: var(--color-neutral-#{$index});
+	}
+
+	/*! neutral-#{$index} end */
+}

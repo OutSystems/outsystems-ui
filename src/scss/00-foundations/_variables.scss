@@ -8,3 +8,7 @@ $osui-sizes: (
 	'xl': var(--space-xl),
 	'xxl': var(--space-xxl),
 );
+
+$osui-colors: 'red', 'pink', 'grape', 'violet', 'indigo', 'blue', 'cyan', 'teal', 'green', 'lime', 'yellow', 'orange';
+
+$osui-semantic: 'error', 'warning', 'success', 'info';

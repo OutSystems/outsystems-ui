@@ -1,0 +1,60 @@
+@each $entry in $osui-colors {
+	/*! color #{$entry} start */
+	.background-#{$entry}-lightest {
+		background-color: var(--color-#{$entry}-lightest);
+	}
+
+	.background-#{$entry}-lighter {
+		background-color: var(--color-#{$entry}-lighter);
+	}
+
+	.background-#{$entry}-light {
+		background-color: var(--color-#{$entry}-light);
+	}
+
+	.background-#{$entry} {
+		background-color: var(--color-#{$entry});
+	}
+
+	.background-#{$entry}-dark {
+		background-color: var(--color-#{$entry}-dark);
+	}
+
+	.background-#{$entry}-darker {
+		background-color: var(--color-#{$entry}-darker);
+	}
+
+	.background-#{$entry}-darkest {
+		background-color: var(--color-#{$entry}-darkest);
+	}
+
+	.text-#{$entry}-lightest {
+		color: var(--color-#{$entry}-lightest);
+	}
+
+	.text-#{$entry}-lighter {
+		color: var(--color-#{$entry}-lighter);
+	}
+
+	.text-#{$entry}-light {
+		color: var(--color-#{$entry}-light);
+	}
+
+	.text-#{$entry} {
+		color: var(--color-#{$entry});
+	}
+
+	.text-#{$entry}-dark {
+		color: var(--color-#{$entry}-dark);
+	}
+
+	.text-#{$entry}-darker {
+		color: var(--color-#{$entry}-darker);
+	}
+
+	.text-#{$entry}-darkest {
+		color: var(--color-#{$entry}-darkest);
+	}
+
+	/*! color #{$entry} end */
+}

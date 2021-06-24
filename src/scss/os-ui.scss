@@ -263,9 +263,15 @@
 /*!  $6 - Styles                                                                  */
 /*! ============================================================================= */
 @import '05-usefull-classes/typography';
-@import '05-usefull-classes/colors';
 
-//@import '05-usefull-classes/space'; //ACarvalho
+@import '05-usefull-classes/colors'; //ACarvalho
+@import '05-usefull-classes/colors-brand'; //ACarvalho
+@import '05-usefull-classes/colors-neutral'; //ACarvalho
+@import '05-usefull-classes/colors-others'; //ACarvalho
+@import '05-usefull-classes/colors-palete'; //ACarvalho
+@import '05-usefull-classes/colors-semantic'; //ACarvalho
+
+@import '05-usefull-classes/space'; //ACarvalho
 @import '05-usefull-classes/space-margin'; //ACarvalho
 @import '05-usefull-classes/space-padding'; //ACarvalho
 

@@ -1,0 +1,21 @@
+@each $entry in $osui-semantic {
+	/*! color semantic #{$entry} start */
+
+	.text-#{$entry} {
+		color: var(--color-#{$entry});
+	}
+
+	.text-#{$entry}-light {
+		color: var(--color-#{$entry}-light);
+	}
+
+	.background-#{$entry} {
+		background-color: var(--color-#{$entry});
+	}
+
+	.background-#{$entry}-light {
+		background-color: var(--color-#{$entry}-light);
+	}
+
+	/*! color semantic #{$entry} end */
+}

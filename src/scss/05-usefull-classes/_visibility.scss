@@ -1,0 +1,28 @@
+/*! useful visibility start */
+
+.ph:empty {
+	display: none;
+}
+
+.hidden {
+	display: none;
+}
+
+.hide-on-service-studio {
+	-servicestudio-display: none;
+}
+
+.hide-scrollbar {
+	-ms-overflow-style: none; // IE and Edge
+	scrollbar-width: none; // Firefox
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+	display: none; // Chrome
+}
+
+.hide-scrollbar:hover {
+	cursor: all-scroll;
+}
+
+/*! useful visibility end */
