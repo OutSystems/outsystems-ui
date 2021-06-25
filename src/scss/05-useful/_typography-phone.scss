@@ -1,0 +1,39 @@
+/*! useful typography phone start */
+
+.phone {
+	.heading1,
+	h1 {
+		font-size: calc(var(--font-size-h1) - 4px);
+	}
+
+	.heading2,
+	h2 {
+		font-size: calc(var(--font-size-h2) - 4px);
+	}
+
+	.heading3,
+	h3 {
+		font-size: calc(var(--font-size-h3) - 4px);
+	}
+
+	.heading4,
+	h4 {
+		font-size: calc(var(--font-size-h4) - 2px);
+	}
+
+	.heading5,
+	h5 {
+		font-size: calc(var(--font-size-h5) - 2px);
+	}
+
+	.heading6,
+	h6 {
+		font-size: calc(var(--font-size-h6) - 2px);
+	}
+
+	.font-size-display {
+		font-size: calc(var(--font-size-display) - 4px);
+	}
+}
+
+/*! useful typography phone end */

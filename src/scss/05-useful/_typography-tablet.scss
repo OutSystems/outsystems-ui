@@ -1,0 +1,39 @@
+/*! useful typography tablet start */
+
+.tablet {
+	.heading1,
+	h1 {
+		font-size: calc(var(--font-size-h1) - 2px);
+	}
+
+	.heading2,
+	h2 {
+		font-size: calc(var(--font-size-h2) - 2px);
+	}
+
+	.heading3,
+	h3 {
+		font-size: calc(var(--font-size-h3) - 2px);
+	}
+
+	.heading4,
+	h4 {
+		font-size: calc(var(--font-size-h4) - 1px);
+	}
+
+	.heading5,
+	h5 {
+		font-size: calc(var(--font-size-h5) - 1px);
+	}
+
+	.heading6,
+	h6 {
+		font-size: calc(var(--font-size-h6) - 1px);
+	}
+
+	.font-size-display {
+		font-size: calc(var(--font-size-display) - 2px);
+	}
+}
+
+/*! useful typography tablet end */

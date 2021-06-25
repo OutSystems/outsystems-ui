@@ -1,154 +1,65 @@
-/*! Styles - Typography - Sizes Desktop */
-.font-size-display {
+/*! useful typography start */
+
+.font-size-display,
+.heading1,
+.heading2,
+.heading3,
+.heading4,
+.heading5,
+.heading6 {
 	color: var(--color-neutral-10);
-	font-size: var(--font-size-display);
 	font-weight: var(--font-semi-bold);
 	line-height: 1.25;
+}
+
+.font-size-display {
+	font-size: var(--font-size-display);
 }
 
 .heading1 {
-	color: var(--color-neutral-10);
 	font-size: var(--font-size-h1);
-	font-weight: var(--font-semi-bold);
-	line-height: 1.25;
 }
 
 .heading2 {
-	color: var(--color-neutral-10);
 	font-size: var(--font-size-h2);
-	font-weight: var(--font-semi-bold);
-	line-height: 1.25;
 }
 
 .heading3 {
-	color: var(--color-neutral-10);
 	font-size: var(--font-size-h3);
-	font-weight: var(--font-semi-bold);
-	line-height: 1.25;
 }
 
 .heading4 {
-	color: var(--color-neutral-10);
 	font-size: var(--font-size-h4);
-	font-weight: var(--font-semi-bold);
-	line-height: 1.25;
 }
 
 .heading5 {
-	color: var(--color-neutral-10);
 	font-size: var(--font-size-h5);
-	font-weight: var(--font-semi-bold);
-	line-height: 1.25;
 }
 
 .heading6 {
-	color: var(--color-neutral-10);
 	font-size: var(--font-size-h6);
-	font-weight: var(--font-semi-bold);
-	line-height: 1.25;
 }
 
 .font-size-base {
 	font-size: var(--font-size-base);
 }
+
 .font-size-s {
 	font-size: var(--font-size-s);
 }
+
 .font-size-xs {
 	font-size: var(--font-size-xs);
 }
 
-/*! Styles - Typography - Sizes Tablet */
-.tablet h1 {
-	font-size: calc(var(--font-size-h1) - 2px);
-}
-.tablet h2 {
-	font-size: calc(var(--font-size-h2) - 2px);
-}
-.tablet h3 {
-	font-size: calc(var(--font-size-h3) - 2px);
-}
-.tablet h4 {
-	font-size: calc(var(--font-size-h4) - 1px);
-}
-.tablet h5 {
-	font-size: calc(var(--font-size-h5) - 1px);
-}
-.tablet h6 {
-	font-size: calc(var(--font-size-h6) - 1px);
-}
-
-.tablet .font-size-display {
-	font-size: calc(var(--font-size-display) - 2px);
-}
-.tablet .heading1 {
-	font-size: calc(var(--font-size-h1) - 2px);
-}
-.tablet .heading2 {
-	font-size: calc(var(--font-size-h2) - 2px);
-}
-.tablet .heading3 {
-	font-size: calc(var(--font-size-h3) - 2px);
-}
-.tablet .heading4 {
-	font-size: calc(var(--font-size-h4) - 1px);
-}
-.tablet .heading5 {
-	font-size: calc(var(--font-size-h5) - 1px);
-}
-.tablet .heading6 {
-	font-size: calc(var(--font-size-h6) - 1px);
-}
-
-/*! Styles - Typography - Sizes Phone */
-.phone h1 {
-	font-size: calc(var(--font-size-h1) - 4px);
-}
-.phone h2 {
-	font-size: calc(var(--font-size-h2) - 4px);
-}
-.phone h3 {
-	font-size: calc(var(--font-size-h3) - 4px);
-}
-.phone h4 {
-	font-size: calc(var(--font-size-h4) - 2px);
-}
-.phone h5 {
-	font-size: calc(var(--font-size-h5) - 2px);
-}
-.phone h6 {
-	font-size: calc(var(--font-size-h6) - 2px);
-}
-
-.phone .font-size-display {
-	font-size: calc(var(--font-size-display) - 4px);
-}
-.phone .heading1 {
-	font-size: calc(var(--font-size-h1) - 4px);
-}
-.phone .heading2 {
-	font-size: calc(var(--font-size-h2) - 4px);
-}
-.phone .heading3 {
-	font-size: calc(var(--font-size-h3) - 4px);
-}
-.phone .heading4 {
-	font-size: calc(var(--font-size-h4) - 2px);
-}
-.phone .heading5 {
-	font-size: calc(var(--font-size-h5) - 2px);
-}
-.phone .heading6 {
-	font-size: calc(var(--font-size-h6) - 2px);
-}
-
-/*! Styles - Typography - Transform */
 .text-lowercase {
 	text-transform: lowercase;
 }
+
 .text-uppercase {
 	text-transform: uppercase;
 }
+
 .text-capitalize {
 	text-transform: capitalize;
 }
@@ -159,19 +70,21 @@
 	white-space: nowrap;
 }
 
-/*! Styles - Typography - Weight */
 .font-light {
 	font-weight: var(--font-light);
 }
+
 .font-regular {
 	font-weight: var(--font-regular);
 }
+
 .font-semi-bold {
 	font-weight: var(--font-semi-bold);
 }
-.font-bold {
-	font-weight: var(--font-bold);
-}
+
+.font-bold,
 .bold {
 	font-weight: var(--font-bold);
 }
+
+/*! useful typography end */
