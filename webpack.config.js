@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 const outputPath = path.join(__dirname, 'dist');
 const webpack = require('webpack');
+const CopyPlugin = require('copy-webpack-plugin');
 const package = require('./package.json');
 
 module.exports = (env) => {
@@ -50,6 +51,9 @@ module.exports = (env) => {
 			new CleanWebpackPlugin({}),
 			new MiniCssExtractPlugin({
 				filename: `${env.prefix}.[name].css`,
+			}),
+			new CopyPlugin({
+				patterns: [{ from: 'src/static', to: 'static' }],
 			}),
 			new HtmlWebpackPlugin({
 				template: 'index.html',
