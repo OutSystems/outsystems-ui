@@ -1,7 +1,9 @@
 var content = document.getElementById($parameters.ContentId);
 var wrapper = document.getElementById($parameters.TooltipWrapperId);
-var tooltip = '';
-var tooltipBackground = '';
+var tooltip = document.getElementById($parameters.TooltipId) ? document.getElementById($parameters.TooltipId) : '';
+var tooltipBackground = document.getElementById($parameters.TooltipBackgroundId)
+	? document.getElementById($parameters.TooltipBackgroundId)
+	: '';
 var isActive = false;
 var isExpanded;
 
@@ -30,8 +32,36 @@ if ($parameters.IsHover) {
 	});
 	wrapper.addEventListener('mouseleave', function () {
 		$actions.ToggleTooltip(false);
+
+		if (tooltipBackground !== '') {
+			tooltipBackground.addEventListener('click', tooltipBgClick, true);
+		}
+
+		if (tooltip !== '') {
+			tooltip.addEventListener('click', toolTipContent, true);
+		}
+	});
+	wrapper.addEventListener('click', function (e) {
+		e.preventDefault();
+		e.stopPropagation();
+
+		tooltipBackground = document.getElementById($parameters.TooltipBackgroundId)
+			? document.getElementById($parameters.TooltipBackgroundId)
+			: '';
+		tooltipBackground.addEventListener('click', tooltipBgClick, true);
+
+		tooltip = document.getElementById($parameters.TooltipId) ? document.getElementById($parameters.TooltipId) : '';
+		tooltip.addEventListener('click', toolTipContent, true);
 	});
 } else {
+	if (tooltipBackground !== '') {
+		tooltipBackground.addEventListener('click', tooltipBgClick, true);
+	}
+
+	if (tooltip !== '') {
+		tooltip.addEventListener('click', toolTipContent, true);
+	}
+
 	content.addEventListener(
 		'click',
 		function (e) {
@@ -41,10 +71,16 @@ if ($parameters.IsHover) {
 			$actions.ToggleTooltip(true);
 
 			setTimeout(function () {
-				tooltipBackground = document.getElementById($parameters.TooltipBackgroundId);
+				tooltipBackground = document.getElementById($parameters.TooltipBackgroundId)
+					? document.getElementById($parameters.TooltipBackgroundId)
+					: '';
+				tooltipBackground.removeEventListener('click', tooltipBgClick, true);
 				tooltipBackground.addEventListener('click', tooltipBgClick, true);
 
-				tooltip = document.getElementById($parameters.TooltipId);
+				tooltip = document.getElementById($parameters.TooltipId)
+					? document.getElementById($parameters.TooltipId)
+					: '';
+				tooltip.removeEventListener('click', toolTipContent, true);
 				tooltip.addEventListener('click', toolTipContent, true);
 			}, 0);
 		},
