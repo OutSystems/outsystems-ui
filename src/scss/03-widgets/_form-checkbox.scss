@@ -1,0 +1,112 @@
+/*! HTML Elements - Checkbox */
+
+/* 
+	Note:
+		- This are Override Styles from OutSystemsReactWidgets theme!
+*/
+
+[data-checkbox] {
+	height: 24px;
+	padding: var(--space-none);
+	width: 24px;
+
+	&:before {
+		background: var(--color-neutral-0);
+		border: var(--border-size-s) solid var(--color-neutral-5);
+		border-radius: var(--border-radius-soft);
+		height: 22px;
+		opacity: 1;
+		transition: all 180ms linear;
+		width: 22px;
+	}
+
+	&:hover {
+		&:before {
+			border: var(--border-size-s) solid var(--color-neutral-6);
+		}
+	}
+
+	&:checked {
+		&:before {
+			background: var(--color-primary);
+			border: var(--border-size-s) solid var(--color-primary);
+		}
+
+		&:after {
+			border: var(--border-size-l) solid var(--color-neutral-0);
+			border-right: var(--border-size-none) !important;
+			border-top: var(--border-size-none) !important;
+			display: block;
+			height: 4px;
+			left: 5px;
+			top: 7px;
+			width: 12px;
+		}
+	}
+
+	&[disabled] {
+		pointer-events: none;
+
+		&:before,
+		&:checked:before {
+			background-color: var(--color-neutral-2);
+			border: var(--border-size-s) solid var(--color-neutral-4);
+		}
+
+		&:checked {
+			&:after {
+				border: var(--border-size-l) solid var(--color-neutral-6);
+			}
+		}
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+.tablet,
+.phone {
+	[data-checkbox] {
+		height: 32px;
+		width: 32px;
+
+		&:before {
+			height: 30px;
+			width: 30px;
+		}
+
+		&:checked {
+			&:after {
+				left: 9px;
+				top: 11px;
+			}
+		}
+	}
+}
+
+// Accessibility -----------------------------------------------------------------
+.has-accessible-features {
+	[data-checkbox] {
+		border-radius: var(--border-radius-soft);
+
+		&:before {
+			border-color: var(--color-neutral-7);
+		}
+
+		&:hover {
+			&:before {
+				border-color: var(--color-neutral-8);
+			}
+		}
+
+		&:checked {
+			&:before {
+				border-color: var(--color-primary);
+			}
+		}
+
+		&:focus {
+			&:before {
+				border-color: var(--color-focus-inner);
+			}
+		}
+	}
+}

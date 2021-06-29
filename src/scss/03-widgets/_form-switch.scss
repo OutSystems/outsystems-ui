@@ -1,0 +1,107 @@
+/*! HTML Elements - Switch */
+
+/* 
+	Note:
+		- This are Override Styles from OutSystemsReactWidgets theme!
+*/
+
+[data-switch] {
+	background-color: transparent;
+	border-radius: 0;
+	height: 32px;
+	overflow: initial;
+	width: 50px;
+
+	&:empty {
+		&:before {
+			background-color: var(--color-neutral-5);
+			border: var(--border-size-s) solid var(--color-neutral-5);
+			border-radius: var(--border-radius-rounded);
+			height: 30px;
+			opacity: 1;
+			transition: all 180ms linear;
+			width: 48px;
+		}
+
+		&:after {
+			border: 0;
+			bottom: 0;
+			box-shadow: none;
+			height: 24px;
+			left: 0;
+			margin-left: 0;
+			top: 4px;
+			transform: translateX(4px) translateZ(0);
+			transition: all 180ms linear;
+			width: 24px;
+		}
+	}
+
+	&:hover {
+		&:before {
+			background-color: var(--color-neutral-6);
+			border: var(--border-size-s) solid var(--color-neutral-6);
+		}
+	}
+
+	&:checked {
+		&:before {
+			background-color: var(--color-primary);
+			border: var(--border-size-s) solid var(--color-primary);
+		}
+
+		&:after {
+			transform: translateX(22px) translateZ(0);
+		}
+	}
+
+	&[disabled] {
+		pointer-events: none;
+
+		&:empty {
+			&:before {
+				background-color: var(--color-neutral-2);
+				border: var(--border-size-s) solid var(--color-neutral-4);
+			}
+
+			&:after {
+				background-color: var(--color-neutral-5);
+				border: 0;
+			}
+		}
+	}
+}
+
+// Accessibility -----------------------------------------------------------------
+.has-accessible-features {
+	[data-switch] {
+		border-radius: var(--border-radius-rounded);
+
+		&:empty {
+			&:before {
+				background-color: var(--color-neutral-7);
+				border-color: var(--color-neutral-7);
+			}
+		}
+
+		&:hover {
+			&:before {
+				background-color: var(--color-neutral-8);
+				border-color: var(--color-neutral-8);
+			}
+		}
+
+		&:checked {
+			&:before {
+				background-color: var(--color-primary);
+				border-color: var(--color-primary);
+			}
+		}
+
+		&:focus {
+			&:before {
+				border-color: var(--color-focus-inner);
+			}
+		}
+	}
+}

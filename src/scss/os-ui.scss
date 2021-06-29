@@ -149,6 +149,9 @@
 /*!  $2 - HTML Elements                                                           */
 /*! ============================================================================= */
 @import '00-foundations/html-elements'; // jRio
+@import '03-widgets/form-inputs-and-textareas'; // jRio
+@import '03-widgets/form-switch'; // jRio
+@import '03-widgets/form-checkbox'; // jRio
 
 /*! ============================================================================= */
 /*!  $3 - Page Layout                                                             */
@@ -297,10 +300,6 @@
 @import '06-screen-transitions/screen-transitions';
 
 /* ============================================================================== */
-/*   
-    Excluders
-        Note: This next file must be on *.css, this way the commented string 
-        will not be validated and compiled.
-*/
+/*  Excluders                                                                     */
 /* ============================================================================== */
 @import '07-excluders/excluders';

@@ -1,0 +1,152 @@
+/*! HTML Elements - Inputs and TextAreas */
+
+/* 
+	Note:
+		- This are Override Styles from OutSystemsReactWidgets theme!
+*/
+
+/* Input placeholder style */
+::-webkit-input-placeholder {
+	color: var(--color-neutral-7);
+}
+
+::-moz-placeholder {
+	color: var(--color-neutral-7);
+}
+
+:-ms-input-placeholder {
+	color: var(--color-neutral-7);
+}
+
+/* Iuput and TextArea */
+.form-control {
+	&[data-input],
+	&[data-textarea] {
+		background-color: var(--color-neutral-0);
+		border: var(--border-size-s) solid var(--color-neutral-5);
+		border-radius: var(--border-radius-soft);
+		color: var(--color-neutral-9);
+		font-size: var(--font-size-s);
+		transition: all 180ms linear;
+
+		&:hover {
+			border: var(--border-size-s) solid var(--color-neutral-6);
+		}
+
+		&:focus {
+			border: var(--border-size-s) solid var(--color-primary);
+		}
+
+		&[disabled] {
+			background-color: var(--color-neutral-2);
+			border: var(--border-size-s) solid var(--color-neutral-4);
+			color: var(--color-neutral-6);
+			pointer-events: none;
+		}
+	}
+
+	&[data-input] {
+		height: 40px;
+		padding: var(--space-none) var(--space-base);
+	}
+
+	&[data-textarea] {
+		height: auto;
+		padding: var(--space-base);
+		resize: auto;
+	}
+
+	/* Small sizes */
+	&.input-small {
+		&[data-input] {
+			font-size: var(--font-size-xs);
+			height: 32px;
+			padding: var(--space-none) var(--space-s);
+		}
+
+		&[data-textarea] {
+			font-size: var(--font-size-xs);
+			padding: var(--space-s);
+		}
+	}
+
+	/* Large sizes */
+	&.input-large {
+		&[data-input] {
+			font-size: var(--font-size-base);
+			height: 48px;
+		}
+
+		&[data-textarea] {
+			font-size: var(--font-size-base);
+		}
+	}
+
+	/* Error */
+	&.not-valid {
+		&[data-input],
+		&[data-textarea] {
+			border: var(--border-size-s) solid var(--color-error);
+		}
+	}
+}
+
+/* Responsive ----------------------------------------------------------------- */
+.tablet,
+.phone {
+	.form-control {
+		&[data-input] {
+			font-size: var(--font-size-base);
+			height: 48px;
+		}
+
+		&[data-textarea] {
+			font-size: var(--font-size-base);
+			height: auto;
+		}
+	}
+}
+
+/* Other layout places -------------------------------------------------------- */
+.layout-native {
+	.header-top-content {
+		.form-control {
+			&[data-input] {
+				background-color: var(--header-color);
+				border: 0;
+				border-bottom: var(--border-size-s) solid transparent;
+				border-radius: 0;
+
+				&:focus {
+					border-bottom: var(--border-size-s) solid var(--color-primary);
+				}
+			}
+		}
+	}
+}
+
+/* Accessibility -------------------------------------------------------------- */
+.has-accessible-features {
+	.form-control {
+		&[data-input],
+		&[data-textarea] {
+			border-color: var(--color-neutral-7);
+
+			&:hover {
+				border-color: var(--color-neutral-8);
+			}
+
+			&:focus {
+				border-color: var(--color-focus-inner);
+			}
+
+			&.not-valid {
+				&,
+				&:hover,
+				&:focus {
+					border-color: var(--color-error);
+				}
+			}
+		}
+	}
+}
