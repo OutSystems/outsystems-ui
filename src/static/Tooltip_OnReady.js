@@ -45,13 +45,10 @@ if ($parameters.IsHover) {
 		e.preventDefault();
 		e.stopPropagation();
 
-		tooltipBackground = document.getElementById($parameters.TooltipBackgroundId)
-			? document.getElementById($parameters.TooltipBackgroundId)
-			: '';
-		tooltipBackground.addEventListener('click', tooltipBgClick, true);
-
 		tooltip = document.getElementById($parameters.TooltipId) ? document.getElementById($parameters.TooltipId) : '';
-		tooltip.addEventListener('click', toolTipContent, true);
+		if (tooltip !== '') {
+			tooltip.addEventListener('click', toolTipContent, true);
+		}
 	});
 } else {
 	if (tooltipBackground !== '') {
