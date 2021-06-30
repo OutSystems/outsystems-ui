@@ -33,6 +33,12 @@
     -servicestudio-display: none;
 }
 
+/*jRio:  Fix done by Joana to solve the issue when the tooltip is inside tabs content*/
+.layout-native .tabs-content .tooltip-background {
+    position: absolute;
+    height: 80vh;
+}
+
 .tooltip-wrapper.top {
     bottom: calc(100% + var(--space-s));
     left: 50%;

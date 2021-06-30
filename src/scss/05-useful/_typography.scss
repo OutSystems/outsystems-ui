@@ -1,43 +1,10 @@
 /*! useful typography start */
 
-.font-size-display,
-.heading1,
-.heading2,
-.heading3,
-.heading4,
-.heading5,
-.heading6 {
+.font-size-display {
 	color: var(--color-neutral-10);
+	font-size: var(--font-size-display);
 	font-weight: var(--font-semi-bold);
 	line-height: 1.25;
-}
-
-.font-size-display {
-	font-size: var(--font-size-display);
-}
-
-.heading1 {
-	font-size: var(--font-size-h1);
-}
-
-.heading2 {
-	font-size: var(--font-size-h2);
-}
-
-.heading3 {
-	font-size: var(--font-size-h3);
-}
-
-.heading4 {
-	font-size: var(--font-size-h4);
-}
-
-.heading5 {
-	font-size: var(--font-size-h5);
-}
-
-.heading6 {
-	font-size: var(--font-size-h6);
 }
 
 .font-size-base {

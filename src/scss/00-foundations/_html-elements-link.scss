@@ -1,0 +1,49 @@
+/*! HTML Elements - Links */
+a {
+	&,
+	&:visited {
+		color: var(--color-primary);
+		transition: all 180ms linear;
+	}
+
+	&:hover,
+	&:focus {
+		color: var(--color-primary-hover);
+		text-decoration: underline;
+	}
+
+	&[disabled] {
+		color: var(--color-neutral-6);
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+.phone,
+.tablet {
+	a {
+		&:hover,
+		&:focus {
+			text-decoration: none;
+		}
+	}
+}
+
+// Accessibility -----------------------------------------------------------------
+.has-accessible-features {
+	a {
+		&:focus {
+			background-color: var(--color-focus-outer);
+			box-shadow: 0 2px var(--color-focus-inner);
+			color: var(--color-neutral-10);
+
+			&,
+			&:hover {
+				text-decoration: none;
+			}
+		}
+
+		&[disabled] {
+			color: var(--color-neutral-6);
+		}
+	}
+}

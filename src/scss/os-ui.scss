@@ -149,9 +149,14 @@
 /*!  $2 - HTML Elements                                                           */
 /*! ============================================================================= */
 @import '00-foundations/html-elements'; // jRio
-@import '03-widgets/form-inputs-and-textareas'; // jRio
-@import '03-widgets/form-switch'; // jRio
-@import '03-widgets/form-checkbox'; // jRio
+@import '00-foundations/html-elements-link'; // jRio
+@import '00-foundations/html-elements-img'; // jRio
+@import '00-foundations/html-elements-headings'; // jRio
+@import '03-widgets/inputs-and-textareas'; // jRio
+@import '03-widgets/switch'; // jRio
+@import '03-widgets/checkbox'; // jRio
+@import '03-widgets/dropdown'; // jRio
+@import '03-widgets/btn'; // jRio
 
 /*! ============================================================================= */
 /*!  $3 - Page Layout                                                             */
@@ -275,10 +280,10 @@
 @import '05-useful/colors-others'; //ACarvalho
 @import '05-useful/colors-palette'; //ACarvalho
 @import '05-useful/colors-semantic'; //ACarvalho
-@import '05-useful/colors'; //ACarvalho
+// @import '05-useful/colors'; //ACarvalho // comment since it's all commented
 @import '05-useful/display-flex'; //ACarvalho
 @import '05-useful/display'; //ACarvalho
-@import '05-useful/images'; //ACarvalho
+// @import '05-useful/images'; //ACarvalho // passed into html-elements-imag partial
 @import '05-useful/others';
 @import '05-useful/overflow'; //ACarvalho
 @import '05-useful/positioning-absolute'; //ACarvalho
@@ -287,10 +292,10 @@
 @import '05-useful/shadow'; //ACarvalho
 @import '05-useful/space-margin'; //ACarvalho
 @import '05-useful/space-padding'; //ACarvalho
-@import '05-useful/space'; //ACarvalho
+// @import '05-useful/space'; //ACarvalho // comment since it's all commented
 @import '05-useful/text'; //ACarvalho
 @import '05-useful/typography-phone'; //ACarvalho
-@import '05-useful/typography-tablet'; //ACarvalho
+@import '05-useful/typography-tablet'; //ACarvalho // Removed the heading from this context and place them into html-elements-headings
 @import '05-useful/typography'; //ACarvalho
 @import '05-useful/visibility'; //ACarvalho
 

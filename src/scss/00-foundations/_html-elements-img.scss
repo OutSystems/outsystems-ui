@@ -1,0 +1,23 @@
+/*! HTML Elements - Images */
+img {
+	max-width: 100%;
+
+	&.img-rounded {
+		border-radius: 10px;
+	}
+
+	&.img-circle {
+		border-radius: var(--border-radius-circle);
+	}
+
+	&.thumbnail {
+		background-color: var(--color-neutral-0);
+		border: var(--border-size-s) solid var(--color-neutral-4);
+		padding: var(--space-xs);
+	}
+
+	&.img-cover {
+		height: 100%;
+		object-fit: cover;
+	}
+}
