@@ -1,21 +1,24 @@
-@each $entry in $osui-semantic {
-	/*! color semantic #{$entry} start */
+////
+/// @group useful classes
 
-	.text-#{$entry} {
-		color: var(--color-#{$entry});
+@each $osui-semantic in $osui-semantics {
+	/*! color semantic #{$osui-semantic} start */
+
+	.text-#{$osui-semantic} {
+		color: var(--color-#{$osui-semantic});
 	}
 
-	.text-#{$entry}-light {
-		color: var(--color-#{$entry}-light);
+	.text-#{$osui-semantic}-light {
+		color: var(--color-#{$osui-semantic}-light);
 	}
 
-	.background-#{$entry} {
-		background-color: var(--color-#{$entry});
+	.background-#{$osui-semantic} {
+		background-color: var(--color-#{$osui-semantic});
 	}
 
-	.background-#{$entry}-light {
-		background-color: var(--color-#{$entry}-light);
+	.background-#{$osui-semantic}-light {
+		background-color: var(--color-#{$osui-semantic}-light);
 	}
 
-	/*! color semantic #{$entry} end */
+	/*! color semantic #{$osui-semantic} end */
 }

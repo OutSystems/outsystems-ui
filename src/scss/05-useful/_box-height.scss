@@ -1,26 +1,34 @@
+////
+/// @group useful box
+
 /*! useful box height start */
 
 .auto-height {
 	height: auto;
 }
 
+///
 .full-height {
 	height: 100%;
 }
 
+///
 .full-height-vh {
 	height: 100vh;
 }
 
+///
 .full-height-minus-header {
 	-servicestudio-height: auto;
 	height: calc(100vh - var(--header-size));
 }
 
+///
 .half-height {
 	height: 50%;
 }
 
+///
 .half-height-vh {
 	-servicestudio-height: auto;
 	height: 50vh;
