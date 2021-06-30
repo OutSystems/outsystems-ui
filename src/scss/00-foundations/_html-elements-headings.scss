@@ -10,7 +10,8 @@ h4,
 h5,
 .heading5,
 h6,
-.heading6 {
+.heading6,
+.font-size-display {
 	color: var(--color-neutral-10);
 	font-weight: var(--font-semi-bold);
 	line-height: 1.25;
@@ -22,4 +23,8 @@ h6,
 	.heading#{$i} {
 		font-size: var(--font-size-h#{$i});
 	}
+}
+
+.font-size-display {
+	font-size: var(--font-size-display);
 }
