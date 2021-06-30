@@ -152,8 +152,8 @@
 @import '00-foundations/html-elements-link'; // jRio
 @import '00-foundations/html-elements-img'; // jRio
 @import '00-foundations/html-elements-headings'; // jRio
-@import '03-widgets/inputs-and-textareas'; // jRio
 
+@import '03-widgets/inputs-and-textareas'; // jRio
 @import '03-widgets/switch'; // jRio
 @import '03-widgets/checkbox'; // jRio
 @import '03-widgets/dropdown'; // jRio
@@ -296,8 +296,8 @@
 // @import '05-useful/space'; //ACarvalho // comment since it's all commented
 @import '05-useful/text'; //ACarvalho
 @import '05-useful/typography-phone'; //ACarvalho
-@import '05-useful/typography-tablet'; //ACarvalho // Removed the heading from this context and place them into html-elements-headings
-@import '05-useful/typography'; //ACarvalho
+@import '05-useful/typography-tablet'; //ACarvalho
+@import '05-useful/typography'; //ACarvalho // Removed the heading from this context and place them into html-elements-headings
 @import '05-useful/visibility'; //ACarvalho
 
 /*! ============================================================================= */
