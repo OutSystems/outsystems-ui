@@ -1,9 +1,10 @@
 ////
-/// @group global
+/// @group Headings
+/// h1 to h6 and font-size-display
 
 /*! HTML Elements - Headings */
 
-///
+/// Default h1, .heading1-6 and font-size-display styles
 h1,
 .heading1,
 h2,
@@ -23,15 +24,53 @@ h6,
 	margin: 0;
 }
 
-///
-@for $i from 1 through 6 {
-	h#{$i},
-	.heading#{$i} {
-		font-size: var(--font-size-h#{$i});
+/// Default h1 and .heading1-6 sizes
+h,
+.heading {
+	@for $i from 1 through 6 {
+		&#{$i} {
+			font-size: var(--font-size-h#{$i});
+		}
 	}
 }
 
-///
+/// Default size display value
 .font-size-display {
 	font-size: var(--font-size-display);
+}
+
+/// Responsive - Tablet values
+.tablet {
+	@for $k from 1 through 6 {
+		h#{$k},
+		.heading#{$k} {
+			@if $k < 3 {
+				font-size: calc(var(--font-size-h#{$k}) - 2px);
+			} @else {
+				font-size: calc(var(--font-size-h#{$k}) - 1px);
+			}
+		}
+	}
+
+	.font-size-display {
+		font-size: calc(var(--font-size-display) - 2px);
+	}
+}
+
+/// Responsive - Phone values
+.phone {
+	@for $j from 1 through 6 {
+		h#{$j},
+		.heading#{$j} {
+			@if $j < 3 {
+				font-size: calc(var(--font-size-h#{$j}) - 4px);
+			} @else {
+				font-size: calc(var(--font-size-h#{$j}) - 2px);
+			}
+		}
+	}
+
+	.font-size-display {
+		font-size: calc(var(--font-size-display) - 4px);
+	}
 }

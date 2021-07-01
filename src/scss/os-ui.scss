@@ -153,6 +153,11 @@
 @import '00-foundations/html-elements-img'; // jRio => Done!
 @import '00-foundations/html-elements-headings'; // jRio => Done!
 
+/* 
+    @ToDo:
+    - The partials below has been removed from the htmlElements section since
+    they are widgets, When everything is close, they should be moved to the proper section!
+*/
 @import '03-widgets/inputs-and-textareas'; // jRio => Done!
 @import '03-widgets/switch'; // jRio => Done!
 @import '03-widgets/checkbox'; // jRio => Done!
@@ -294,8 +299,6 @@
 @import '05-useful/space-padding'; //ACarvalho
 @import '05-useful/text'; //ACarvalho
 @import '05-useful/typography'; //ACarvalho
-@import '05-useful/typography-phone'; //ACarvalho
-@import '05-useful/typography-tablet'; //ACarvalho
 @import '05-useful/visibility'; //ACarvalho
 
 /*! ============================================================================= */
