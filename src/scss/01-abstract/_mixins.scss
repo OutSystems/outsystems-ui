@@ -8,3 +8,10 @@
 	top: 50%;
 	transform: translate(-50%, -50%);
 }
+
+///
+@mixin absolute-left-top($left: 0, $top: 0) {
+	left: $left;
+	position: absolute;
+	top: $top;
+}

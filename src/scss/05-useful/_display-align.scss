@@ -1,0 +1,80 @@
+////
+/// @group useful display
+
+/*! useful display align start */
+
+///
+.align-items-baseline {
+	align-items: baseline;
+}
+
+///
+.align-items-center {
+	align-items: center;
+}
+
+///
+.align-items-flex-end {
+	align-items: flex-end;
+}
+
+///
+.align-items-initial {
+	align-items: initial;
+}
+
+///
+.center-left {
+	align-items: center;
+	justify-content: flex-start;
+}
+
+///
+.center {
+	align-items: center;
+	justify-content: center;
+}
+
+///
+.center-right {
+	align-items: center;
+	justify-content: flex-end;
+}
+
+///
+.bottom-left {
+	align-items: flex-end;
+	justify-content: flex-start;
+}
+
+///
+.bottom-center {
+	align-items: flex-end;
+	justify-content: center;
+}
+
+///
+.bottom-right {
+	align-items: flex-end;
+	justify-content: flex-end;
+}
+
+///
+.top-left {
+	align-items: flex-start;
+	justify-content: flex-start;
+}
+
+///
+.top-center {
+	align-items: flex-start;
+	justify-content: center;
+}
+
+///
+.top-right {
+	align-items: flex-start;
+	justify-content: flex-end;
+}
+
+/*! useful display align end */
