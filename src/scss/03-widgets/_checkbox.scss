@@ -1,3 +1,7 @@
+////
+/// @group Checkbox
+/// Default Checkbox styles
+
 /*! Widgets - Checkbox */
 
 /* 
@@ -5,6 +9,7 @@
 		- This are Override Styles from OutSystemsReactWidgets theme!
 */
 
+///
 [data-checkbox] {
 	height: 24px;
 	padding: var(--space-none);
@@ -62,6 +67,7 @@
 }
 
 // Responsive --------------------------------------------------------------------
+///
 .tablet,
 .phone {
 	[data-checkbox] {
@@ -83,6 +89,7 @@
 }
 
 // Accessibility -----------------------------------------------------------------
+///
 .has-accessible-features {
 	[data-checkbox] {
 		border-radius: var(--border-radius-soft);

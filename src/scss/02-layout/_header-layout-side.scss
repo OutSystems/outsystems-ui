@@ -1,0 +1,66 @@
+////
+/// @group Header_LayoutSide
+/// Layout - Layout Side - Header styles
+
+/*! Page Layout - Layout Side - Header */
+
+///
+.layout-side {
+	.layout-native.aside-expandable .main .header {
+		z-index: 120;
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+///
+.desktop {
+	.layout-side.layout-native.aside-expandable .header {
+		margin-left: 0;
+	}
+
+	.layout-side.layout-native.aside-expandable.menu-visible .header {
+		margin-left: calc(-1 * var(--side-menu-size));
+	}
+}
+
+///
+.tablet {
+	&.portrait {
+		.layout-side.layout-native.aside-expandable .main .header {
+			z-index: 100;
+		}
+	}
+
+	&.landscape {
+		.layout-side.layout-native.aside-expandable.menu-visible .header {
+			margin-left: calc(-1 * var(--side-menu-size));
+		}
+	}
+}
+
+///
+.phone {
+	.layout-side.layout-native.aside-expandable .main .header {
+		z-index: 100;
+	}
+}
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	&.desktop {
+		.layout-side.layout-native.aside-expandable.menu-visible .header {
+			margin-left: 0;
+			margin-right: calc(-1 * var(--side-menu-size));
+		}
+	}
+
+	&.tablet {
+		&.landscape {
+			.layout-side.layout-native.aside-expandable.menu-visible .header {
+				margin-left: 0;
+				margin-right: calc(-1 * var(--side-menu-size));
+			}
+		}
+	}
+}

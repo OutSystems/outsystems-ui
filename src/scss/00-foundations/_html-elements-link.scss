@@ -1,5 +1,14 @@
+////
+/// @group Link
+/// Default Link styles
+
 /*! HTML Elements - Links */
+///
 a {
+	text-decoration: none;
+
+	-webkit-text-decoration-skip: objects;
+
 	&,
 	&:visited {
 		color: var(--color-primary);
@@ -18,6 +27,7 @@ a {
 }
 
 // Responsive --------------------------------------------------------------------
+///
 .phone,
 .tablet {
 	a {
@@ -29,6 +39,7 @@ a {
 }
 
 // Accessibility -----------------------------------------------------------------
+///
 .has-accessible-features {
 	a {
 		&:focus {

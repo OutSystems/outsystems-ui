@@ -1,4 +1,10 @@
+////
+/// @group Button
+/// Default Button styles
+
 /*! Widgets - Button */
+
+///
 .btn {
 	align-items: center;
 	background-color: var(--color-neutral-0);
@@ -82,6 +88,8 @@
 }
 
 // Responsive --------------------------------------------------------------------
+
+///
 .desktop {
 	.btn {
 		&:hover {
@@ -90,6 +98,7 @@
 	}
 }
 
+///
 .tablet,
 .phone {
 	.btn {
@@ -107,6 +116,7 @@
 	}
 }
 
+///
 .phone {
 	.layout:not(.layout-native) {
 		.btn {
@@ -129,6 +139,7 @@
 }
 
 // Accessibility -----------------------------------------------------------------
+///
 .has-accessible-features {
 	& .btn:focus {
 		border-color: var(--color-focus-inner);
@@ -136,6 +147,7 @@
 }
 
 // Layout Native Context ---------------------------------------------------------
+///
 .layout-native {
 	.header-right {
 		.btn {

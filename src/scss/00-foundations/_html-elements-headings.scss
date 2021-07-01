@@ -39,7 +39,7 @@ h,
 	font-size: var(--font-size-display);
 }
 
-/// Responsive - Tablet values
+///
 .tablet {
 	@for $k from 1 through 6 {
 		h#{$k},
@@ -57,7 +57,7 @@ h,
 	}
 }
 
-/// Responsive - Phone values
+///
 .phone {
 	@for $j from 1 through 6 {
 		h#{$j},

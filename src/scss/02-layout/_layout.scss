@@ -1,128 +1,160 @@
-/* ============================================================================= */
-/*  $3 - Page Layout                                                             */
-/* ============================================================================= */
+////
+/// @group Layout
+/// layout styles
 
-.screen-container {
-    /*overflow-y: initial;*/ /* Comented due to changes in scroll position */
+/*! $3 - Page Layout */
 
-    overflow-x: hidden; /* Temporary fix related to changes in scroll position */
-    overflow-y: auto; /* Temporary fix related to changes in scroll position */
-}
-
+///
 html,
 body,
 #reactContainer,
 #transitionContainer,
 .screen-container {
-    height: 100%;
+	height: 100%;
 }
 
+/// @todo Try to understand if there are somthing pending here!
+.screen-container {
+	/*overflow-y: initial;*/ /* Comented due to changes in scroll position */
+
+	overflow-x: hidden; /* Temporary fix related to changes in scroll position */
+	overflow-y: auto; /* Temporary fix related to changes in scroll position */
+}
+
+///
 .layout {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    min-height: 100vh;
+	display: flex;
+	min-height: 100vh;
+
+	&.layout-top {
+		&,
+		&:not(.layout-native) {
+			flex-direction: column;
+		}
+	}
+
+	&.layout-left {
+		flex-direction: row;
+	}
+
+	&.layout-native {
+		// Service Studio Preview
+		& {
+			-servicestudio-min-height: 100vh !important;
+		}
+
+		.main {
+			width: 100%;
+		}
+	}
+
+	/// @todo Try to understand if there are somthing pending here!
+	.main,
+	&.fixed-header .main {
+		padding-top: 0; /* Temporary fix related to changes in scroll position */
+	}
+
+	.main {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+	}
 }
 
-.ios .layout {
-    min-height: 100%;
+// iOS ---------------------------------------------------------------------------
+///
+.ios {
+	.layout {
+		min-height: 100%;
+	}
+
+	.layout-native .footer {
+		height: calc(var(--os-safe-area-bottom) + var(--bottom-bar-size));
+	}
 }
 
-.layout.layout-top,
-.layout.layout-side:not(.layout-native) {
-        flex-direction: column;
-
-    -webkit-box-direction: normal;
-    -webkit-box-orient: vertical;
-    -ms-flex-direction: column;
+// Responsive --------------------------------------------------------------------
+///
+.desktop,
+.tablet {
+	.layout-native {
+		&.aside-visible,
+		&.aside-expandable {
+			--side-menu-size: 264px;
+		}
+	}
 }
 
-.layout.layout-left {
-        flex-direction: row;
-
-    -webkit-box-direction: normal;
-    -webkit-box-orient: horizontal;
-    -ms-flex-direction: row;
+///
+.desktop {
+	.layout-native {
+		&.aside-visible,
+		&.aside-expandable {
+			.main {
+				width: calc(100% - var(--side-menu-size));
+			}
+		}
+	}
 }
 
-.main {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-        flex-direction: column;
+///
+.tablet {
+	&.landscape {
+		.layout-native {
+			&.aside-visible,
+			&.aside-expandable {
+				.main {
+					margin-left: var(--side-menu-size);
+					width: calc(100% - var(--side-menu-size));
+				}
+			}
+		}
 
-    -webkit-box-direction: normal;
-    -webkit-box-flex: 1;
-    -webkit-box-orient: vertical;
-    -ms-flex: 1;
-        flex: 1;
-    -ms-flex-direction: column;
+		.layout-side.layout-native.aside-expandable {
+			&.menu-visible .main {
+				margin-left: var(--side-menu-size);
+			}
+
+			.main {
+				margin-right: 0;
+			}
+		}
+	}
 }
 
-.layout-native .main {
-    width: 100%;
+///
+.phone {
+	.layout:not(.layout-native) [class*='ThemeGrid_Width']:not(.no-responsive) {
+		margin: var(--space-none) var(--space-none) var(--space-base) var(--space-none);
+		width: 100%;
+	}
 }
 
-.desktop .layout-native.aside-expandable .main,
-.desktop .layout-native.aside-visible .main,
-.tablet.landscape .layout-native.aside-expandable .main,
-.tablet.landscape .layout-native.aside-visible .main {
-    width: calc(100% - var(--side-menu-size));
-}
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	&.tablet {
+		.layout-native {
+			&.aside-visible,
+			&.aside-expandable {
+				.main {
+					margin-left: 0;
+					margin-right: var(--side-menu-size);
+				}
+			}
+		}
 
-.desktop .layout-native.aside-visible,
-.tablet .layout-native.aside-visible,
-.desktop .layout-native.aside-expandable,
-.tablet .layout-native.aside-expandable {
-    --side-menu-size: 264px;
-}
+		&.landscape {
+			.layout-side.layout-native.aside-expandable {
+				&.menu-visible .main {
+					margin-left: 0;
+					margin-right: var(--side-menu-size);
+				}
 
-.tablet.landscape .layout-native.aside-visible .main,
-.tablet.landscape .layout-native.aside-expandable .main {
-    margin-left: var(--side-menu-size);
-}
-
-.is-rtl.tablet.landscape .layout-native.aside-visible .main,
-.is-rtl.tablet.landscape .layout-native.aside-expandable .main {
-    margin-left: 0;
-    margin-right: var(--side-menu-size);
-}
-
-.tablet.landscape .layout-side.layout-native.aside-expandable.menu-visible .main {
-    margin-left: var(--side-menu-size);
-}
-
-.is-rtl.tablet.landscape .layout-side.layout-native.aside-expandable.menu-visible .main {
-    margin-left: 0;
-    margin-right: var(--side-menu-size);
-}
-
-.tablet.landscape .layout-side.layout-native.aside-expandable .main {
-    margin-left: 0;
-}
-
-.is-rtl.tablet.landscape .layout-side.layout-native.aside-expandable .main {
-    margin-right: 0;
-}
-
-.fixed-header .main {
-    /* Space between the main content and the top of the screen, calculated automatically in the Layout JS */
-    /*--header-gutter: var(--header-size);
-  padding-top: var(--header-gutter); */
-    /* Commented due to changes in scroll position */
-}
-
-/* Temporary fix related to changes in scroll position */
-.main,
-.fixed-header .main {
-    padding-top: 0;
-}
-
-.phone .layout:not(.layout-native) [class*="ThemeGrid_Width"]:not(.no-responsive) {
-    margin: var(--space-none) var(--space-none) var(--space-base) var(--space-none);
-    width: 100%;
-}
-
-.ios .layout-native .footer {
-    height: calc(var(--os-safe-area-bottom) + var(--bottom-bar-size));
+				.main {
+					margin-right: 0;
+				}
+			}
+		}
+	}
 }

@@ -1,252 +1,169 @@
-/* ================================================================ */
-/*  $3.1 - Page Layout - Header                                     */
-/* ================================================================ */
+////
+/// @group Header
+/// Layout - General Header styles
 
+/*! Page Layout - Header */
+
+///
 .header {
-    background-color: var(--header-color);
-    box-shadow: 0 1px 5px 0 rgba(21, 24, 26, .1);
-    z-index: 100;
+	background-color: var(--header-color);
+	box-shadow: 0 1px 5px 0 rgba(21, 24, 26, 0.1);
+	z-index: 100;
 
-    -servicestudio-position: relative;
+	// Service Studio Preview
+	& {
+		-servicestudio-position: relative;
+	}
+
+	.header-top {
+		height: var(--header-size);
+	}
+
+	.header-content {
+		height: 100%;
+
+		& > [data-block*='ApplicationTitle'] .application-name {
+			margin-right: var(--space-m);
+		}
+
+		.app-logo {
+			border-radius: var(--border-radius-soft);
+			margin-right: var(--space-s);
+			max-height: var(--header-size);
+			max-width: 120px;
+		}
+	}
 }
 
+/// @todo Check if there are something pending here!
 .fixed-header .header {
-    /* position: fixed; */ /* Commented due to changes in scroll position */
+	/* position: fixed; */ /* Commented due to changes in scroll position */
 
-    left: 0;
-    position: sticky; /* Temporary fix related to changes in scroll position */
-    right: 0;
-    top: 0;
+	left: 0;
+	position: sticky; /* Temporary fix related to changes in scroll position */
+	right: 0;
+	top: 0;
 }
 
-.layout-side.aside-expandable:not(.fixed-header) .main .header {
-    margin-left: calc(var(--side-menu-size) * -1);
+///
+.layout-side {
+	.aside-expandable {
+		&:not(.fixed-header) .main .header {
+			margin-left: calc(var(--side-menu-size) * -1);
+		}
+
+		&.menu-visible:not(.fixed-header) .main .header {
+			margin-left: 0;
+		}
+	}
 }
 
-.tablet .layout-side.aside-expandable:not(.fixed-header) .main .header,
-.phone .layout-side.aside-expandable:not(.fixed-header) .main .header {
-    margin-left: 0;
-}
-
-.layout-side.aside-expandable.menu-visible:not(.fixed-header) .main .header {
-    margin-left: 0;
-}
-
-.header-logo {
-    padding-right: var(--space-base);
-}
-
-.is-rtl .header-logo {
-    padding-left: var(--space-base);
-    padding-right: 0;
-}
-
-.header-navigation {
-    flex: 1;
-}
-
-.layout-native .header {
-    position: sticky;
-    top: 0;
-}
-
-.landscape .layout-native .header,
-.landscape .layout-native:not(.blank) .main-content,
-.landscape .layout-native .bottom-bar-wrapper {
-    padding-left: var(--os-safe-area-left);
-    padding-right: var(--os-safe-area-right);
-}
-
-.layout-native.hide-header-on-scroll .header {
-    top: calc(-1 * (var(--header-size) + var(--os-safe-area-top)));
-}
-
-.android[data-status-bar-height] .layout-native.hide-header-on-scroll .header {
-    top: calc(-1 * (var(--header-size) + var(--status-bar-height)));
-}
-
-.layout-native .content-bottom {
-    bottom: 0;
-    position: sticky;
-    z-index: 100;
-}
-
-.layout-side.layout-native.aside-expandable .main .header {
-    z-index: 120;
-}
-
-.desktop .layout-side.layout-native.aside-expandable.menu-visible .header,
-.tablet.landscape .layout-side.layout-native.aside-expandable.menu-visible .header {
-    margin-left: calc(-1 * var(--side-menu-size));
-}
-
-.is-rtl.desktop .layout-side.layout-native.aside-expandable.menu-visible .header,
-.is-rtl.tablet.landscape .layout-side.layout-native.aside-expandable.menu-visible .header {
-    margin-left: 0;
-    margin-right: calc(-1 * var(--side-menu-size));
-}
-
-.desktop .layout-side.layout-native.aside-expandable .header {
-    margin-left: 0;
-}
-
-.tablet.portrait .layout-side.layout-native.aside-expandable .main .header,
-.phone .layout-side.layout-native.aside-expandable .main .header {
-    z-index: 100;
-}
-
-.ios .layout-native .header {
-    padding-top: var(--os-safe-area-top);
-}
-
-.android[data-status-bar-height] .layout-native .header {
-    padding-top: var(--status-bar-height);
-}
-
-/* $3.1.1 - Page Layout - Header Top */
+///
 .header-top {
-    height: var(--header-size);
+	height: var(--header-size);
 }
 
-.layout-native .header-top {
-    padding: 0 var(--space-l);
+///
+.header-logo {
+	padding-right: var(--space-base);
 }
 
-.tablet .layout-native .header-top {
-    padding: 0 var(--space-m);
+///
+.header-navigation {
+	flex: 1;
 }
 
-.phone .layout-native .header-top {
-    padding: 0 var(--space-base);
+///
+.menu-icon {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	justify-content: center;
+	margin-right: var(--space-m);
+	padding: 0;
+	width: 24px;
 }
 
-.layout-native .header-title {
-    font-size: var(--font-size-h5);
-    font-weight: var(--font-regular);
-
-    -servicestudio-text-align: center;
-    -servicestudio-width: 100%;
+///
+.menu-icon-line {
+	background-color: var(--color-neutral-8);
+	border-radius: 20px;
+	height: 3px;
+	margin: 2px 0;
+	width: 24px;
 }
 
-h1.header-title,
-h1.header-title :first-child {
-    -servicestudio-text-align: center;
-    -servicestudio-width: 100%;
+///
+.menu-back {
+	color: var(--color-neutral-8);
 }
 
-.tablet .layout-native .header-title {
-    font-size: calc(var(--font-size-h5) - 1px);
+///
+.user-info {
+	align-items: center;
+	display: flex;
+	height: 100%;
+
+	div {
+		align-items: center;
+		display: inline-flex;
+	}
 }
 
-.phone .layout-native .header-title {
-    font-size: calc(var(--font-size-h5) - 2px);
-}
-
-.layout-native .header-left {
-    margin-right: var(--space-base);
-
-    flex: 1;
-}
-
-.is-rtl .layout-native .header-left {
-    margin-left: var(--space-base);
-    margin-right: 0;
-}
-
-.layout-native .header-right {
-    display: flex;
-    margin-left: var(--space-base);
-    margin-right: auto;
-    justify-content: flex-end;
-
-    flex: 1;
-}
-
-.is-rtl .layout-native .header-right {
-    margin-left: auto;
-    margin-right: var(--space-base);
-}
-
-/*  $3.1.2 - Page Layout - Header Content  */
-.header-content {
-    height: 100%;
-}
-
-.app-logo {
-    border-radius: var(--border-radius-soft);
-    margin-right: var(--space-s);
-    max-height: var(--header-size);
-    max-width: 120px;
-}
-
-.is-rtl .app-logo {
-    margin-left: var(--space-s);
-    margin-right: 0;
-}
-
-.desktop .header-content > [data-block*="ApplicationTitle"] .application-name {
-    display: none;
-}
-
-.header-content > [data-block*="ApplicationTitle"] .application-name {
-    margin-right: var(--space-m);
-}
-
+///
 .layout-native .app-menu-icon.back .menu-icon,
 .desktop .menu-icon,
 .tablet.landscape .layout-native.aside-visible .menu-icon,
 .app-menu-icon.back .menu-icon,
 .app-menu-icon:not(.back) .menu-back {
-    display: none;
-
-    -servicestudio-display: none;
+	display: none;
 }
 
-.landscape .layout-native .app-menu {
-    padding-bottom: var(--os-safe-area-bottom);
+// Responsive --------------------------------------------------------------------
+///
+.desktop {
+	.header-content {
+		& > [data-block*='ApplicationTitle'] .application-name {
+			display: none;
+		}
+	}
+
+	.aside-expandable,
+	.aside-overlay {
+		.menu-icon {
+			display: flex;
+		}
+	}
 }
 
-.android[data-status-bar-height] .layout-native .app-menu {
-    padding-top: var(--status-bar-height);
+///
+.tablet,
+.phone {
+	.layout-side.aside-expandable:not(.fixed-header) {
+		.main .header {
+			margin-left: 0;
+		}
+	}
 }
 
-.desktop .aside-expandable .menu-icon,
-.desktop .aside-overlay .menu-icon {
-    display: flex;
-}
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	.header-logo {
+		padding-left: var(--space-base);
+		padding-right: 0;
+	}
 
-.menu-icon {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    margin-right: var(--space-m);
-    padding: 0;
-    width: 24px;
-    justify-content: center;
-}
+	.app-logo {
+		margin-left: var(--space-s);
+		margin-right: 0;
+	}
 
-.is-rtl .menu-icon {
-    margin-left: var(--space-m);
-    margin-right: 0;
-}
-
-.layout-native .menu-icon {
-    margin-right: 0;
-}
-
-.menu-icon-line {
-    background-color: var(--color-neutral-8);
-    border-radius: 20px;
-    height: 3px;
-    margin: 2px 0;
-    width: 24px;
-}
-
-.menu-back {
-    color: var(--color-neutral-8);
+	.menu-icon {
+		margin-left: var(--space-m);
+		margin-right: 0;
+	}
 }

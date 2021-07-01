@@ -1,4 +1,9 @@
+////
+/// @group Images
+/// Default images styles
+
 /*! HTML Elements - Images */
+///
 img {
 	max-width: 100%;
 
@@ -20,4 +25,9 @@ img {
 		height: 100%;
 		object-fit: cover;
 	}
+}
+
+///
+figure {
+	margin: 0;
 }

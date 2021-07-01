@@ -1,0 +1,147 @@
+////
+/// @group Header_LayoutNative
+/// Layout - Layout Native - Header styles
+
+/*! Page Layout - Layout Native - Header */
+
+///
+.layout-native {
+	&.hide-header-on-scroll .header {
+		top: calc(-1 * (var(--header-size) + var(--os-safe-area-top)));
+	}
+
+	.header {
+		position: sticky;
+		top: 0;
+	}
+
+	.header-top {
+		padding: 0 var(--space-l);
+	}
+
+	.header-title {
+		font-size: var(--font-size-h5);
+		font-weight: var(--font-regular);
+
+		// Service Studio Preview
+		& {
+			-servicestudio-text-align: center;
+			-servicestudio-width: 100%;
+		}
+	}
+
+	h1.header-title {
+		// Service Studio Preview
+		& {
+			-servicestudio-text-align: center;
+			-servicestudio-width: 100%;
+		}
+	}
+
+	.header-left {
+		flex: 1;
+		margin-right: var(--space-base);
+	}
+
+	.header-right {
+		display: flex;
+		flex: 1;
+		justify-content: flex-end;
+		margin-left: var(--space-base);
+		margin-right: auto;
+	}
+
+	.content-bottom {
+		bottom: 0;
+		position: sticky;
+		z-index: 100;
+	}
+
+	.menu-icon {
+		margin-right: 0;
+	}
+}
+
+///
+.landscape {
+	.layout-native {
+		&.header,
+		&:not(.blank) .main-content,
+		.bottom-bar-wrapper {
+			padding-left: var(--os-safe-area-left);
+			padding-right: var(--os-safe-area-right);
+		}
+
+		.app-menu {
+			padding-bottom: var(--os-safe-area-bottom);
+		}
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+///
+.tablet,
+.phone {
+	.layout-native {
+		.header-top {
+			padding: 0 var(--space-m);
+		}
+	}
+}
+
+///
+.tablet {
+	.layout-native {
+		.header-title {
+			font-size: calc(var(--font-size-h5) - 1px);
+		}
+	}
+}
+
+///
+.phone {
+	.layout-native {
+		.header-title {
+			font-size: calc(var(--font-size-h5) - 2px);
+		}
+	}
+}
+
+///
+.android {
+	&[data-status-bar-height] {
+		.layout-native {
+			&.hide-header-on-scroll .header {
+				top: calc(-1 * (var(--header-size) + var(--status-bar-height)));
+			}
+
+			.header,
+			.app-menu {
+				padding-top: var(--status-bar-height);
+			}
+		}
+	}
+}
+
+///
+.ios {
+	.layout-native .header {
+		padding-top: var(--os-safe-area-top);
+	}
+}
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	.layout-native {
+		.header-left {
+			margin-left: var(--space-base);
+			margin-right: 0;
+		}
+
+		.header-right {
+			margin-left: auto;
+			margin-right: var(--space-base);
+		}
+	}
+}

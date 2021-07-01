@@ -1,3 +1,7 @@
+////
+/// @group Input&Textarea
+/// Default Input and Textareas styles
+
 /*! Widgets - Inputs and TextAreas */
 
 /* 
@@ -19,6 +23,7 @@
 }
 
 /* Iuput and TextArea */
+///
 .form-control {
 	&[data-input],
 	&[data-textarea] {
@@ -92,6 +97,7 @@
 }
 
 /* Responsive ----------------------------------------------------------------- */
+///
 .tablet,
 .phone {
 	.form-control {
@@ -108,6 +114,7 @@
 }
 
 /* Other layout places -------------------------------------------------------- */
+///
 .layout-native {
 	.header-top-content {
 		.form-control {
@@ -126,6 +133,7 @@
 }
 
 /* Accessibility -------------------------------------------------------------- */
+///
 .has-accessible-features {
 	.form-control {
 		&[data-input],

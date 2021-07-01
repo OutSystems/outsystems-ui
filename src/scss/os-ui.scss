@@ -144,18 +144,17 @@
 /*! ============================================================================= */
 /*!  $1 - Resets                                                                  */
 /*! ============================================================================= */
-@import '00-foundations/resets'; // jRio => @here!
+@import '00-foundations/resets'; // jRio => Done!
 
 /*! ============================================================================= */
 /*!  $2 - HTML Elements                                                           */
 /*! ============================================================================= */
-// @import '00-foundations/html-elements'; // jRio // Cleaned File!
 @import '00-foundations/html-elements-link'; // jRio => Done!
 @import '00-foundations/html-elements-img'; // jRio => Done!
 @import '00-foundations/html-elements-headings'; // jRio => Done!
 
 /* 
-    @ToDo:
+    @todo:
     - The partials below has been removed from the htmlElements section since
     they are widgets, When everything is close, they should be moved to the proper section!
 */
@@ -168,9 +167,11 @@
 /*! ============================================================================= */
 /*!  $3 - Page Layout                                                             */
 /*! ============================================================================= */
-@import '02-layout/layout';
-@import '02-layout/header';
-@import '02-layout/menu';
+@import '02-layout/layout'; // jRio => Done!
+@import '02-layout/header'; // jRio => @Done!
+@import '02-layout/header-layout-native'; // jRio => @Done!
+@import '02-layout/header-layout-side'; // jRio => @Done!
+@import '02-layout/menu'; // jRio => @here!
 @import '02-layout/content';
 @import '02-layout/section';
 @import '02-layout/login';

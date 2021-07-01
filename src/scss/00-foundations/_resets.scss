@@ -1,6 +1,11 @@
+////
+/// @group #Resets
+/// Group of selectors used to reset default and native styles
+
 /* ============================================================================= */
 /* Global Selector *
 /* ============================================================================= */
+///
 * {
 	box-sizing: border-box;
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -9,9 +14,7 @@
 /* ============================================================================= */
 /* HTML *
 /* ============================================================================= */
-/* ToDo
-    - Check the selector below and try to understand if something is pending here!
-*/
+/// @todo Check the selector below and try to understand if something is pending here!
 html {
 	color: var(--color-neutral-9);
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
@@ -34,10 +37,7 @@ html {
 /* ============================================================================= */
 /* Body *
 /* ============================================================================= */
-/* 
-@ToDo:
-    - Check why the font-size is S instead of BASE?
-*/
+///
 body {
 	background-color: var(--color-background-body);
 	font-size: var(--font-size-s);
@@ -48,14 +48,15 @@ body {
 /* ============================================================================= */
 /* Focus state */
 /* ============================================================================= */
+///
 :focus {
 	outline: 0;
 }
-
+///
 ::-moz-focus-inner {
 	border: 0;
 }
-
+///
 .has-accessible-features :focus {
 	box-shadow: 0 0 0 3px var(--color-focus-outer);
 }
@@ -63,6 +64,7 @@ body {
 /* ============================================================================= */
 /* Abbreviation */
 /* ============================================================================= */
+///
 abbr[title] {
 	border-bottom: 0;
 	text-decoration: underline;
@@ -71,41 +73,15 @@ abbr[title] {
 /* ============================================================================= */
 /* Style the cursor when a div elem is clickable */
 /* ============================================================================= */
+///
 div[onclick] {
 	cursor: pointer;
 }
 
-/* 
-@ToDo:
-    - Remove this section and place it on the layout partial
-*/
-.layout-native {
-	-servicestudio-min-height: 100vh !important;
-}
-
-/* 
-@ToDo:
-    - Remove this section and place it on the html-elements partial
-*/
-figure {
-	margin: 0;
-}
-
-/* 
-@ToDo:
-    - Remove this section and place it on the html-elements partial
-*/
-a {
-	text-decoration: none;
-
-	-webkit-text-decoration-skip: objects;
-}
-
-/* 
-@ToDo:
-    - This section below should be breaked and placed in the right places at
-    html-elements partial
-*/
+/* ============================================================================= */
+/* Inputs Styles */
+/* ============================================================================= */
+///
 input,
 textarea,
 select,
@@ -117,27 +93,32 @@ button {
 	margin: 0;
 }
 
+///
 [type='checkbox'],
 [type='radio'] {
 	border: 0;
 	padding: 0;
 }
 
+///
 [type='number']::-webkit-inner-spin-button,
 [type='number']::-webkit-outer-spin-button {
 	height: auto;
 }
 
+///
 [type='search'] {
 	appearance: textfield;
 	outline-offset: -2px;
 }
 
+///
 [type='search']::-webkit-search-cancel-button,
 [type='search']::-webkit-search-decoration {
 	appearance: none;
 }
 
+///
 input[type='time'],
 input[type='date'],
 input[type='datetime'],
@@ -151,10 +132,12 @@ input[type='time']:empty {
 	appearance: button;
 }
 
+///
 select::-ms-expand {
 	display: none;
 }
 
+///
 input::-ms-clear {
 	display: none;
 }

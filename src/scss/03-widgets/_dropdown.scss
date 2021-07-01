@@ -1,3 +1,7 @@
+////
+/// @group Dropdown
+/// Default Dropdown styles
+
 /*! Widgets - Dropdown */
 
 /* 
@@ -5,6 +9,7 @@
 		- This are Override Styles from OutSystemsReactWidgets theme!
 */
 
+///
 [data-dropdown] {
 	cursor: initial;
 	position: relative;
@@ -193,6 +198,7 @@
 }
 
 // IsRTL -------------------------------------------------------------------------
+///
 .is-rtl {
 	.dropdown-container {
 		&:after {
@@ -203,6 +209,7 @@
 }
 
 // Accessibility -----------------------------------------------------------------
+///
 .has-accessible-features {
 	[data-dropdown] {
 		&.dropdown-expanded {
