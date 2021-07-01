@@ -2,70 +2,67 @@
 /*  $3.5 - Page Layout - Login                                      */
 /* ================================================================ */
 .login-screen {
-    background-color: var(--color-primary);
-    display: flex;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
+	align-items: center;
+	background-color: var(--color-primary);
+	display: flex;
+	height: 100%;
+	justify-content: center;
 }
 
 .layout-native .login-screen {
-    padding: var(--os-safe-area-top) var(--os-safe-area-right) var(--os-safe-area-bottom) var(--os-safe-area-left);
+	padding: var(--os-safe-area-top) var(--os-safe-area-right) var(--os-safe-area-bottom) var(--os-safe-area-left);
 }
 
 .android[data-status-bar-height] .layout-native .login-screen {
-    padding-top: var(--status-bar-height);
+	padding-top: var(--status-bar-height);
 }
 
 .login-form {
-    background-color: var(--color-neutral-0);
-    border-radius: var(--border-radius-soft);
-    box-shadow: var(--shadow-l);
-    min-width: 435px;
-    padding: var(--space-xxl);
-    z-index: 2;
+	background-color: var(--color-neutral-0);
+	border-radius: var(--border-radius-soft);
+	box-shadow: var(--shadow-l);
+	min-width: 435px;
+	padding: var(--space-xxl);
+	z-index: 2;
 }
 
 .login-screen > img {
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-
-    object-fit: cover;
+	@include absolute-left-top();
+	height: 100%;
+	object-fit: cover;
+	width: 100%;
 }
 
 .phone .login-form {
-    margin: var(--space-none) var(--space-base);
-    min-width: auto;
-    padding: var(--space-l);
-    width: 100%;
+	margin: var(--space-none) var(--space-base);
+	min-width: auto;
+	padding: var(--space-l);
+	width: 100%;
 }
 
-.login-button > [data-block*="ButtonLoading"],
-.login-button > [data-block*="ButtonLoading"] > div {
-    -servicestudio-width: 100% !important;
+.login-button > [data-block*='ButtonLoading'],
+.login-button > [data-block*='ButtonLoading'] > div {
+	-servicestudio-width: 100% !important;
 }
 
 .layout-native .login-screen {
-    background-color: var(--color-background-login);
+	background-color: var(--color-background-login);
 }
 
 .layout-native .login-form {
-    border-radius: 0;
-    box-shadow: none;
+	border-radius: 0;
+	box-shadow: none;
 }
 
 .phone .layout-native .login-form {
-    background: transparent;
-    margin: 0;
+	background: transparent;
+	margin: 0;
 }
 
 .layout-native .login-button .btn {
-    padding-bottom: var(--os-safe-area-bottom);
+	padding-bottom: var(--os-safe-area-bottom);
 }
 
 .layout-native.blank .login-button .btn {
-    padding-bottom: var(--space-none);
+	padding-bottom: var(--space-none);
 }

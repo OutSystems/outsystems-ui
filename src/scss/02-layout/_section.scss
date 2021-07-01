@@ -1,35 +1,33 @@
 /* ================================================================ */
 /*  $3.4 - Page Layout - Section                                    */
 /* ================================================================ */
-.full-width-section .ThemeGrid_Container {
-    padding: var(--space-none) var(--space-xl);
-}
 
 .full-width-section {
-    position: relative;
+	position: relative;
+	.ThemeGrid_Container {
+		padding: var(--space-none) var(--space-xl);
+	}
 }
 
 .section-background {
-    height: 100%;
-    left: 0;
-    overflow: hidden;
-    position: absolute;
-    top: 0;
-    width: 100%;
-}
-
-.section-background:empty {
-    -servicestudio-min-height: 80px;
-    -servicestudio-position: relative;
-}
-
-.section-background img {
-    height: 100%;
-    width: 100%;
-
-    object-fit: cover;
+	@include absolute-left-top();
+	height: 100%;
+	overflow: hidden;
+	width: 100%;
+	img {
+		height: 100%;
+		object-fit: cover;
+		width: 100%;
+	}
 }
 
 .section-content {
-    position: relative;
+	position: relative;
+}
+
+//
+// service studio
+.section-background:empty {
+	-servicestudio-min-height: 80px;
+	-servicestudio-position: relative;
 }
