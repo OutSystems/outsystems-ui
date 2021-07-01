@@ -22,18 +22,20 @@ button.OSFillParent {
 	}
 }
 
-.btn-show-label .btn-loading {
-	position: relative;
+.btn-loading {
+	.btn-show-label & {
+		position: relative;
+	}
+	.is--loading & {
+		display: inline-flex;
+	}
 }
 
-.is--loading .btn-loading {
-	display: inline-flex;
-}
-
-.is--loading .btn-label {
-	opacity: 0;
-}
-
-.btn-show-label .btn-label {
-	opacity: 1;
+.btn-label {
+	.is--loading & {
+		opacity: 0;
+	}
+	.btn-show-label & {
+		opacity: 1;
+	}
 }
