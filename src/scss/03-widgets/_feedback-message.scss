@@ -2,33 +2,32 @@
 .feedback-message {
 	align-items: center;
 	border-radius: var(--border-radius-soft);
-	-webkit-box-align: center;
-	display: -webkit-box;
-	display: -ms-flexbox;
 	display: flex;
-	-ms-flex-align: center;
 	font-size: var(--font-size-h6);
 	font-weight: var(--font-regular);
 	left: 50%;
 	max-width: 600px;
 	min-width: 400px;
 	padding: var(--space-base);
-}
-
-.ios.phone .feedback-message {
-	padding-top: calc(var(--os-safe-area-top) + var(--space-base));
+	i {
+		align-self: flex-start;
+		font-size: var(--font-size-h5);
+		margin-top: 2px;
+		position: relative;
+	}
+	.ios.phone & {
+		padding-top: calc(var(--os-safe-area-top) + var(--space-base));
+	}
+	.phone & {
+		animation-name: feedbackMessageSlideDownPhone;
+		border-radius: 0;
+		max-width: 100%;
+		min-width: 100%;
+	}
 }
 
 .android[data-status-bar-height] .feedback-message {
 	padding-top: calc(var(--status-bar-height) + var(--space-base));
-}
-
-.feedback-message i {
-	align-self: flex-start;
-	-ms-flex-item-align: start;
-	font-size: var(--font-size-h5);
-	margin-top: 2px;
-	position: relative;
 }
 
 .feedback-message-text {
@@ -52,21 +51,11 @@ div.feedback-message-warning {
 	color: var(--color-neutral-10);
 }
 
-.phone .feedback-message {
-	-webkit-animation-name: feedbackMessageSlideDownPhone;
-	animation-name: feedbackMessageSlideDownPhone;
-	border-radius: 0;
-	max-width: 100%;
-	min-width: 100%;
-}
-
 .phone .feedback-message.feedback-message-autoclose {
-	-webkit-animation-name: feedbackMessageSlideDownThenUpPhone;
 	animation-name: feedbackMessageSlideDownThenUpPhone;
 }
 
 .is-rtl.phone .feedback-message {
-	-webkit-animation-name: feedbackMessageSlideDownPhoneRTL;
 	animation-name: feedbackMessageSlideDownPhoneRTL;
 	border-radius: 0;
 	left: 0;
@@ -75,6 +64,5 @@ div.feedback-message-warning {
 }
 
 .is-rtl.phone .feedback-message.feedback-message-autoclose {
-	-webkit-animation-name: feedbackMessageSlideDownThenUpPhoneRTL;
 	animation-name: feedbackMessageSlideDownThenUpPhoneRTL;
 }
