@@ -1,47 +1,61 @@
+////
+/// @group useful text
+
 /*! useful typography start */
 
+///
 .font-size-base {
 	font-size: var(--font-size-base);
 }
 
+///
 .font-size-s {
 	font-size: var(--font-size-s);
 }
 
+///
 .font-size-xs {
 	font-size: var(--font-size-xs);
 }
 
+///
 .text-lowercase {
 	text-transform: lowercase;
 }
 
+///
 .text-uppercase {
 	text-transform: uppercase;
 }
 
+///
 .text-capitalize {
 	text-transform: capitalize;
 }
 
+///
 .text-ellipsis {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
 
+///
 .font-light {
 	font-weight: var(--font-light);
 }
 
+///
 .font-regular {
 	font-weight: var(--font-regular);
 }
 
+///
 .font-semi-bold {
 	font-weight: var(--font-semi-bold);
 }
 
+///
 .font-bold,
 .bold {
 	font-weight: var(--font-bold);

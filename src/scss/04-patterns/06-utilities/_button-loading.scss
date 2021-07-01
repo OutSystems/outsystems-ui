@@ -1,61 +1,61 @@
 /*! Patterns - Utilities - ButtonLoading */
 button.OSFillParent {
-    display: inline-flex;
+	display: inline-flex;
 }
 
 .is--loading .btn {
-    pointer-events: none;
+	pointer-events: none;
 }
 
 .btn-loading {
-    display: none;
-    position: absolute;
+	display: none;
+	position: absolute;
 }
 
 .btn-show-label .btn-loading {
-    position: relative;
+	position: relative;
 }
 
 .is--loading .btn-loading {
-    display: inline-flex;
+	display: inline-flex;
 }
 
 .is--loading .btn-label {
-    opacity: 0;
+	opacity: 0;
 }
 
 .btn-show-label .btn-label {
-    opacity: 1;
+	opacity: 1;
 }
 
 .btn-loading .loading-spinner {
-    -webkit-animation: loadingSpinner 850ms cubic-bezier(.7, 1.05, .78, .78) infinite;
-            animation: loadingSpinner 850ms cubic-bezier(.7, 1.05, .78, .78) infinite;
-    border: var(--border-size-m) solid currentColor;
-    border-radius: var(--border-radius-circle);
-    border-top: var(--border-size-m) solid transparent;
-    height: 16px;
-    width: 16px;
+	-webkit-animation: loadingSpinner 850ms cubic-bezier(0.7, 1.05, 0.78, 0.78) infinite;
+	animation: loadingSpinner 850ms cubic-bezier(0.7, 1.05, 0.78, 0.78) infinite;
+	border: var(--border-size-m) solid currentColor;
+	border-radius: var(--border-radius-circle);
+	border-top: var(--border-size-m) solid transparent;
+	height: 16px;
+	width: 16px;
 
-    will-change: transform;
+	will-change: transform;
 }
 
 @-webkit-keyframes loadingSpinner {
-    0% {
-        -webkit-transform: rotate(0deg) translateZ(0);
-    }
+	0% {
+		-webkit-transform: rotate(0deg) translateZ(0);
+	}
 
-    100% {
-        -webkit-transform: rotate(360deg) translateZ(0);
-    }
+	100% {
+		-webkit-transform: rotate(360deg) translateZ(0);
+	}
 }
 
 @keyframes loadingSpinner {
-    0% {
-        transform: rotate(0deg) translateZ(0);
-    }
+	0% {
+		transform: rotate(0deg) translateZ(0);
+	}
 
-    100% {
-        transform: rotate(360deg) translateZ(0);
-    }
+	100% {
+		transform: rotate(360deg) translateZ(0);
+	}
 }

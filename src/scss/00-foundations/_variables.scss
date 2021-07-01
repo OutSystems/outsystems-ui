@@ -1,3 +1,7 @@
+////
+/// @group global
+
+/// OutSystemsUI predefined sizes
 $osui-sizes: (
 	'none': var(--space-none),
 	'xs': var(--space-xs),
@@ -9,6 +13,8 @@ $osui-sizes: (
 	'xxl': var(--space-xxl),
 );
 
+/// OutSystemsUI predefined colors
 $osui-colors: 'red', 'pink', 'grape', 'violet', 'indigo', 'blue', 'cyan', 'teal', 'green', 'lime', 'yellow', 'orange';
 
-$osui-semantic: 'error', 'warning', 'success', 'info';
+/// OutSystemsUI semantic identifiers
+$osui-semantics: 'error', 'warning', 'success', 'info';
