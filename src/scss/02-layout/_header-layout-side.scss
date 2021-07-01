@@ -6,6 +6,16 @@
 
 ///
 .layout-side {
+	.aside-expandable {
+		&:not(.fixed-header) .main .header {
+			margin-left: calc(var(--side-menu-size) * -1);
+		}
+
+		&.menu-visible:not(.fixed-header) .main .header {
+			margin-left: 0;
+		}
+	}
+
 	.layout-native.aside-expandable .main .header {
 		z-index: 120;
 	}
@@ -20,6 +30,16 @@
 
 	.layout-side.layout-native.aside-expandable.menu-visible .header {
 		margin-left: calc(-1 * var(--side-menu-size));
+	}
+}
+
+///
+.tablet,
+.phone {
+	.layout-side.aside-expandable:not(.fixed-header) {
+		.main .header {
+			margin-left: 0;
+		}
 	}
 }
 

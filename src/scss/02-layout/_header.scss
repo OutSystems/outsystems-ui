@@ -46,19 +46,6 @@
 }
 
 ///
-.layout-side {
-	.aside-expandable {
-		&:not(.fixed-header) .main .header {
-			margin-left: calc(var(--side-menu-size) * -1);
-		}
-
-		&.menu-visible:not(.fixed-header) .main .header {
-			margin-left: 0;
-		}
-	}
-}
-
-///
 .header-top {
 	height: var(--header-size);
 }
@@ -135,16 +122,6 @@
 	.aside-overlay {
 		.menu-icon {
 			display: flex;
-		}
-	}
-}
-
-///
-.tablet,
-.phone {
-	.layout-side.aside-expandable:not(.fixed-header) {
-		.main .header {
-			margin-left: 0;
 		}
 	}
 }
