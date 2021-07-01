@@ -1,46 +1,31 @@
 /*! Patterns - Utilities - CenterContent */
+
 .center-content {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-        flex-direction: column;
-    height: 100%;
-    width: 100%;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-
-    -servicestudio-height: auto !important;
-    -webkit-box-direction: normal;
-    -webkit-box-orient: vertical;
-    -ms-flex-direction: column;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: 100%;
+	&-header {
+		width: 100%;
+	}
+	&-container {
+		align-items: center;
+		display: flex;
+		flex: 1;
+		justify-content: center;
+		width: 100%;
+		> div {
+			width: 100%;
+		}
+	}
+	&-bottom {
+		width: 100%;
+	}
 }
 
-.center-content-header {
-    width: 100%;
-}
-
-.center-content-container {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    width: 100%;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-
-    -webkit-box-flex: 1;
-    -ms-flex: 1;
-        flex: 1;
-}
-
-.center-content-container > div {
-    width: 100%;
-}
-
-.center-content-bottom {
-    width: 100%;
+//
+// service studio
+.center-content {
+	-servicestudio-height: auto !important;
 }
