@@ -254,12 +254,6 @@
     -servicestudio-white-space: normal;
 }
 
-/*jRio:  Fix made by Joana to solve the issue when ToolTip is inside tabs content*/
-.layout-native .tabs-content {
-    overflow: initial;
-    min-height: 500px;
-}
-
 .layout-native .tabs-content-tab > * {
     left: 0;
     position: absolute;

@@ -48,8 +48,27 @@
 	}
 
 	&.active {
+		&.open {
+			.submenu-item {
+				color: var(--color-primary);
+			}
+		}
+
 		.submenu-header {
 			border-bottom: var(--border-size-m) solid var(--color-primary);
+		}
+
+		.submenu-item {
+			&,
+			a {
+				color: var(--color-primary);
+			}
+		}
+
+		.submenu-icon:before {
+			border: var(--border-size-s) solid var(--color-primary);
+			border-right: 0;
+			border-top: 0;
 		}
 	}
 
@@ -136,6 +155,10 @@
 		margin: 0;
 		padding: var(--space-s) var(--space-base);
 		white-space: nowrap;
+
+		&.active {
+			color: var(--color-primary);
+		}
 	}
 }
 
@@ -187,10 +210,15 @@
 }
 
 // Responsive --------------------------------------------------------------------
+///
 .desktop {
 	.layout-side.aside-expandable:not(.fixed-header) .app-menu-content {
 		padding-top: var(--header-size);
 		top: 0;
+	}
+
+	.app-menu-overlay {
+		display: none;
 	}
 
 	.app-menu-links {
@@ -205,16 +233,9 @@
 			}
 		}
 
-		.submenu-item {
-			a:hover {
-				color: var(--color-neutral-9);
-			}
-		}
-
-		.submenu-items {
-			a:hover {
-				background-color: var(--color-neutral-2);
-				color: var(--color-neutral-9);
+		&.active {
+			.submenu-header:hover .submenu-item {
+				color: var(--color-primary);
 			}
 		}
 	}
@@ -224,6 +245,25 @@
 			border-bottom: var(--border-size-m) solid var(--color-primary);
 		}
 	}
+
+	.submenu-item {
+		a:hover {
+			color: var(--color-neutral-9);
+		}
+	}
+
+	.submenu-items {
+		a {
+			&:hover {
+				background-color: var(--color-neutral-2);
+				color: var(--color-neutral-9);
+			}
+
+			&.active:hover {
+				color: var(--color-primary);
+			}
+		}
+	}
 }
 
 ///
@@ -231,6 +271,15 @@
 .phone {
 	.submenu-item {
 		flex: 1;
+	}
+}
+
+///
+.tablet {
+	&.landscape {
+		.layout-native.aside-expandable .app-menu-overlay {
+			display: none;
+		}
 	}
 }
 
@@ -250,6 +299,7 @@
 }
 
 // IsRTL -------------------------------------------------------------------------
+///
 .is-rtl {
 	.submenu-icon {
 		margin-left: 0;
@@ -263,29 +313,6 @@
 // ------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------------
-
-.submenu-items a.active,
-.desktop .submenu-items a.active:hover,
-.submenu.active.open .submenu-item {
-	color: var(--color-primary);
-}
-
-.submenu.active .submenu-item,
-.desktop .submenu.active .submenu-header:hover .submenu-item,
-.submenu.active .submenu-item a {
-	color: var(--color-primary);
-}
-
-.submenu.active .submenu-icon:before {
-	border: var(--border-size-s) solid var(--color-primary);
-	border-right: 0;
-	border-top: 0;
-}
-
-.tablet.landscape .layout-native.aside-expandable .app-menu-overlay,
-.desktop .app-menu-overlay {
-	display: none;
-}
 
 .desktop .aside-overlay .app-menu-overlay {
 	display: block;

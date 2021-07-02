@@ -16,7 +16,7 @@
     padding: var(--space-s) var(--space-base);
     position: absolute;
     text-align: center;
-    z-index: 150;
+    z-index: 100;
 
     -servicestudio-position: relative;
     -servicestudio-width: 150px;
@@ -36,7 +36,6 @@
 /*jRio:  Fix done by Joana to solve the issue when the tooltip is inside tabs content*/
 .layout-native .tabs-content .tooltip-background {
     position: absolute;
-    height: 80vh;
 }
 
 .tooltip-wrapper.top {
