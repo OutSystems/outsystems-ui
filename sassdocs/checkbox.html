@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <title>outsystems-ui-scss Documentation</title>
+  <title>checkbox | outsystems-ui-scss Documentation</title>
 
   <link href="assets/img/favicon.ico" rel="shortcut icon">
   <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,600|Source+Sans+Pro:400,400i,700,700i" rel="stylesheet">
@@ -57,7 +57,7 @@
     <div class="nav-subsection">
       <h3 class="nav-home">
         
-        <a href="index.html" data-nav="is-active">outsystems-ui-scss</a>
+        <a href="index.html" data-nav="is-not-active">outsystems-ui-scss</a>
       </h3>
 
       
@@ -80,7 +80,7 @@
   
   
     <li class="nav-item">
-      <a href="checkbox.html" data-nav="is-not-active">checkbox</a>
+      <a href="checkbox.html" data-nav="is-active">checkbox</a>
     </li>
   
   
@@ -205,17 +205,450 @@
 
       <main data-region="main">
         
+  <nav class="breadcrumb">
+    
+    <a href="index.html" >outsystems-ui-scss</a> »
+    <strong>checkbox</strong>
+  </nav>
 
-        <div data-page="index">
+
+        <div data-page="checkbox">
           
   
+    
+    
+
+
+
+
+
+
+
+
+
+
+<section class="item" id="css--%5Bdata-checkbox%5D">
+  
+    
+  
   
 
   
-    <div class="text-block">
-      <h1 id="outsystems-ui">outsystems-ui</h1>
+  
+  
+  
 
+  <div data-item-section="header">
+    <h2 class="item-title">
+      
+        <span class="item-type"></span>
+      
+
+      
+        <a href="#css--%5Bdata-checkbox%5D" class="item-name">[data-checkbox]</a>
+      
+
+      
+
+      
+    </h2>
+
+    
+  
+
+
+    
+    
+    
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            scss
+          </span>
+
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-scss">[data-checkbox] {
+  height: 24px;
+  padding: var(--space-none);
+  width: 24px;
+
+  &amp;:before {
+    background: var(--color-neutral-0);
+    border: var(--border-size-s) solid var(--color-neutral-5);
+    border-radius: var(--border-radius-soft);
+    height: 22px;
+    opacity: 1;
+    transition: all 180ms linear;
+    width: 22px;
+  }
+
+  &amp;:hover {
+    &amp;:before {
+      border: var(--border-size-s) solid var(--color-neutral-6);
+    }
+  }
+
+  &amp;:checked {
+    &amp;:before {
+      background: var(--color-primary);
+      border: var(--border-size-s) solid var(--color-primary);
+    }
+
+    &amp;:after {
+      border: var(--border-size-l) solid var(--color-neutral-0);
+      border-right: var(--border-size-none) !important;
+      border-top: var(--border-size-none) !important;
+      display: block;
+      height: 4px;
+      left: 5px;
+      top: 7px;
+      width: 12px;
+    }
+  }
+
+  &amp;[disabled] {
+    pointer-events: none;
+
+    &amp;:before,
+    &amp;:checked:before {
+      background-color: var(--color-neutral-2);
+      border: var(--border-size-s) solid var(--color-neutral-4);
+    }
+
+    &amp;:checked {
+      &amp;:after {
+        border: var(--border-size-l) solid var(--color-neutral-6);
+      }
+    }
+  }
+}</code></pre>
     </div>
+  
+
+    
+  
+  
+  
+  
+
+  
+
+  </div>
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+
+  
+  
+
+
+  
+  
+  
+  
+    
+    
+  
+
+  
+
+  
+  
+
+
+  
+  
+
+  
+  
+
+</section>
+
+  
+    
+    
+
+
+
+
+
+
+
+
+
+
+<section class="item" id="css--.tablet%2C%0A.phone">
+  
+    
+  
+  
+
+  
+  
+  
+  
+
+  <div data-item-section="header">
+    <h2 class="item-title">
+      
+        <span class="item-type"></span>
+      
+
+      
+        <a href="#css--.tablet%2C%0A.phone" class="item-name">.tablet,
+.phone</a>
+      
+
+      
+
+      
+    </h2>
+
+    
+  
+
+
+    
+    
+    
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            scss
+          </span>
+
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-scss">.tablet,
+.phone {
+  [data-checkbox] {
+    height: 32px;
+    width: 32px;
+
+    &amp;:before {
+      height: 30px;
+      width: 30px;
+    }
+
+    &amp;:checked {
+      &amp;:after {
+        left: 9px;
+        top: 11px;
+      }
+    }
+  }
+}</code></pre>
+    </div>
+  
+
+    
+  
+  
+  
+  
+
+  
+
+  </div>
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+
+  
+  
+
+
+  
+  
+  
+  
+    
+    
+  
+
+  
+
+  
+  
+
+
+  
+  
+
+  
+  
+
+</section>
+
+  
+    
+    
+
+
+
+
+
+
+
+
+
+
+<section class="item" id="css--.has-accessible-features">
+  
+    
+  
+  
+
+  
+  
+  
+  
+
+  <div data-item-section="header">
+    <h2 class="item-title">
+      
+        <span class="item-type"></span>
+      
+
+      
+        <a href="#css--.has-accessible-features" class="item-name">.has-accessible-features</a>
+      
+
+      
+
+      
+    </h2>
+
+    
+  
+
+
+    
+    
+    
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            scss
+          </span>
+
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-scss">.has-accessible-features {
+  [data-checkbox] {
+    border-radius: var(--border-radius-soft);
+
+    &amp;:before {
+      border-color: var(--color-neutral-7);
+    }
+
+    &amp;:hover {
+      &amp;:before {
+        border-color: var(--color-neutral-8);
+      }
+    }
+
+    &amp;:checked {
+      &amp;:before {
+        border-color: var(--color-primary);
+      }
+    }
+
+    &amp;:focus {
+      &amp;:before {
+        border-color: var(--color-focus-inner);
+      }
+    }
+  }
+}</code></pre>
+    </div>
+  
+
+    
+  
+  
+  
+  
+
+  
+
+  </div>
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+
+  
+  
+
+
+  
+  
+  
+  
+    
+    
+  
+
+  
+
+  
+  
+
+
+  
+  
+
+  
+  
+
+</section>
+
   
 
         </div>

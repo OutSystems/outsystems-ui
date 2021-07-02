@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <title>outsystems-ui-scss Documentation</title>
+  <title>switch | outsystems-ui-scss Documentation</title>
 
   <link href="assets/img/favicon.ico" rel="shortcut icon">
   <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,600|Source+Sans+Pro:400,400i,700,700i" rel="stylesheet">
@@ -57,7 +57,7 @@
     <div class="nav-subsection">
       <h3 class="nav-home">
         
-        <a href="index.html" data-nav="is-active">outsystems-ui-scss</a>
+        <a href="index.html" data-nav="is-not-active">outsystems-ui-scss</a>
       </h3>
 
       
@@ -140,7 +140,7 @@
   
   
     <li class="nav-item">
-      <a href="switch.html" data-nav="is-not-active">switch</a>
+      <a href="switch.html" data-nav="is-active">switch</a>
     </li>
   
   
@@ -205,17 +205,335 @@
 
       <main data-region="main">
         
+  <nav class="breadcrumb">
+    
+    <a href="index.html" >outsystems-ui-scss</a> »
+    <strong>switch</strong>
+  </nav>
 
-        <div data-page="index">
+
+        <div data-page="switch">
           
   
+    
+    
+
+
+
+
+
+
+
+
+
+
+<section class="item" id="css--%5Bdata-switch%5D">
+  
+    
+  
   
 
   
-    <div class="text-block">
-      <h1 id="outsystems-ui">outsystems-ui</h1>
+  
+  
+  
 
+  <div data-item-section="header">
+    <h2 class="item-title">
+      
+        <span class="item-type"></span>
+      
+
+      
+        <a href="#css--%5Bdata-switch%5D" class="item-name">[data-switch]</a>
+      
+
+      
+
+      
+    </h2>
+
+    
+  
+
+
+    
+    
+    
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            scss
+          </span>
+
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-scss">[data-switch] {
+  background-color: transparent;
+  border-radius: 0;
+  height: 32px;
+  overflow: initial;
+  width: 50px;
+
+  &amp;:empty {
+    &amp;:before {
+      background-color: var(--color-neutral-5);
+      border: var(--border-size-s) solid var(--color-neutral-5);
+      border-radius: var(--border-radius-rounded);
+      height: 30px;
+      opacity: 1;
+      transition: all 180ms linear;
+      width: 48px;
+    }
+
+    &amp;:after {
+      border: 0;
+      bottom: 0;
+      box-shadow: none;
+      height: 24px;
+      left: 0;
+      margin-left: 0;
+      top: 4px;
+      transform: translateX(4px) translateZ(0);
+      transition: all 180ms linear;
+      width: 24px;
+    }
+  }
+
+  &amp;:hover {
+    &amp;:before {
+      background-color: var(--color-neutral-6);
+      border: var(--border-size-s) solid var(--color-neutral-6);
+    }
+  }
+
+  &amp;:checked {
+    &amp;:before {
+      background-color: var(--color-primary);
+      border: var(--border-size-s) solid var(--color-primary);
+    }
+
+    &amp;:after {
+      transform: translateX(22px) translateZ(0);
+    }
+  }
+
+  &amp;[disabled] {
+    pointer-events: none;
+
+    &amp;:empty {
+      &amp;:before {
+        background-color: var(--color-neutral-2);
+        border: var(--border-size-s) solid var(--color-neutral-4);
+      }
+
+      &amp;:after {
+        background-color: var(--color-neutral-5);
+        border: 0;
+      }
+    }
+  }
+}</code></pre>
     </div>
+  
+
+    
+  
+  
+  
+  
+
+  
+
+  </div>
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+
+  
+  
+
+
+  
+  
+  
+  
+    
+    
+  
+
+  
+
+  
+  
+
+
+  
+  
+
+  
+  
+
+</section>
+
+  
+    
+    
+
+
+
+
+
+
+
+
+
+
+<section class="item" id="css--.has-accessible-features">
+  
+    
+  
+  
+
+  
+  
+  
+  
+
+  <div data-item-section="header">
+    <h2 class="item-title">
+      
+        <span class="item-type"></span>
+      
+
+      
+        <a href="#css--.has-accessible-features" class="item-name">.has-accessible-features</a>
+      
+
+      
+
+      
+    </h2>
+
+    
+  
+
+
+    
+    
+    
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            scss
+          </span>
+
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-scss">.has-accessible-features {
+  [data-switch] {
+    border-radius: var(--border-radius-rounded);
+
+    &amp;:empty {
+      &amp;:before {
+        background-color: var(--color-neutral-7);
+        border-color: var(--color-neutral-7);
+      }
+    }
+
+    &amp;:hover {
+      &amp;:before {
+        background-color: var(--color-neutral-8);
+        border-color: var(--color-neutral-8);
+      }
+    }
+
+    &amp;:checked {
+      &amp;:before {
+        background-color: var(--color-primary);
+        border-color: var(--color-primary);
+      }
+    }
+
+    &amp;:focus {
+      &amp;:before {
+        border-color: var(--color-focus-inner);
+      }
+    }
+  }
+}</code></pre>
+    </div>
+  
+
+    
+  
+  
+  
+  
+
+  
+
+  </div>
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+
+  
+  
+
+
+  
+  
+  
+  
+    
+    
+  
+
+  
+
+  
+  
+
+
+  
+  
+
+  
+  
+
+</section>
+
   
 
         </div>

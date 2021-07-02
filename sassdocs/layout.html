@@ -1,0 +1,1526 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-herman="root">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <title>layout | outsystems-ui-scss Documentation</title>
+
+  <link href="assets/img/favicon.ico" rel="shortcut icon">
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,600|Source+Sans+Pro:400,400i,700,700i" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/webpack/app_styles.min.css" />
+
+  
+
+  
+</head>
+<body data-herman="body">
+  <svg xmlns="http://www.w3.org/2000/svg" hidden>
+  <symbol id="icon-logo" viewBox="0 0 16 16">
+    <path d="M.2 8 0 7.8v-.2C.8 6.9 1.9 5.9 2.7 5l.4.3c-.5.8-1.1 1.6-1.8 2.3 1 1.2 1 1.3 1.7 2.4l-.4.3c-.4-.4-.5-.6-1-1C1 8.6 1.1 8.7.2 8zM13 10c.6-1.1.7-1.1 1.7-2.4-.6-.6-1.3-1.5-1.7-2.3l.3-.3c.8.8 1.8 1.8 2.7 2.6v.2l-.8.7c-.3.3-1.2 1.1-1.8 1.7L13 10z"/><path d="M2.6 13.1H3c.9 0 1.1-.2 1.1-1.4V4.2c0-1.1-.2-1.4-1.1-1.4h-.4v-.6h4.5v.7h-.3c-.9 0-1.1.2-1.1 1.4v3.2h4.6V4.2c0-1.1-.2-1.4-1.1-1.4h-.3v-.6h4.5v.7H13c-.9 0-1.1.2-1.1 1.4v7.5c0 1.1.2 1.4 1.1 1.4h.4v.7H8.9v-.7h.3c.9 0 1.1-.2 1.1-1.4V8.2H5.7v3.5c0 1.1.2 1.4 1.1 1.4h.3v.7H2.6v-.7z"/>
+  </symbol>
+  <symbol id="icon-menu" viewBox="0 0 24 28">
+    <path d="M24 21v2c0 .547-.453 1-1 1H1c-.547 0-1-.453-1-1v-2c0-.547.453-1 1-1h22c.547 0 1 .453 1 1zm0-8v2c0 .547-.453 1-1 1H1c-.547 0-1-.453-1-1v-2c0-.547.453-1 1-1h22c.547 0 1 .453 1 1zm0-8v2c0 .547-.453 1-1 1H1c-.547 0-1-.453-1-1V5c0-.547.453-1 1-1h22c.547 0 1 .453 1 1z"/>
+  </symbol>
+</svg>
+
+  <div data-region="app">
+    <header data-region="banner">
+      
+  <button data-nav-toggle data-toggle="button" aria-controls="nav" aria-pressed="false" type="button" data-toggle-synced="false">
+    
+  <svg data-icon="menu" data-icon-size="nav-icon" ><title>menu</title><use xlink:href="#icon-menu" />
+  </svg>
+
+  </button>
+
+
+      <div class="project-title">
+        <a href="index.html" rel="home" class="project-name">outsystems-ui-scss</a>
+        
+          <span class="project-version">2.6.9</span>
+        
+      </div>
+    </header>
+
+    <div data-region="container">
+      
+  <nav data-region="nav" data-toggle="target" id="nav" data-target-id="nav" aria-expanded="false" data-auto-closing="false" data-auto-closing-on-any-click="false">
+    <form action="search.html">
+      <input type="text" name="q" placeholder="Search…" required minlength="3">
+    </form>
+
+    <div class="nav-subsection">
+      <h3 class="nav-home">
+        
+        <a href="index.html" data-nav="is-not-active">outsystems-ui-scss</a>
+      </h3>
+
+      
+      
+    </div>
+
+    
+    <div class="nav-subsection">
+      <ul>
+  
+  
+    <li class="nav-item">
+      <a href="#resets.html" data-nav="is-not-active">#resets</a>
+    </li>
+  
+  
+    <li class="nav-item">
+      <a href="button.html" data-nav="is-not-active">button</a>
+    </li>
+  
+  
+    <li class="nav-item">
+      <a href="checkbox.html" data-nav="is-not-active">checkbox</a>
+    </li>
+  
+  
+    <li class="nav-item">
+      <a href="dropdown.html" data-nav="is-not-active">dropdown</a>
+    </li>
+  
+  
+    <li class="nav-item">
+      <a href="global.html" data-nav="is-not-active">global</a>
+    </li>
+  
+  
+    <li class="nav-item">
+      <a href="header.html" data-nav="is-not-active">header</a>
+    </li>
+  
+  
+    <li class="nav-item">
+      <a href="header_layout_native.html" data-nav="is-not-active">header_layout_native</a>
+    </li>
+  
+  
+    <li class="nav-item">
+      <a href="header_layout_side.html" data-nav="is-not-active">header_layout_side</a>
+    </li>
+  
+  
+    <li class="nav-item">
+      <a href="headings.html" data-nav="is-not-active">headings</a>
+    </li>
+  
+  
+    <li class="nav-item">
+      <a href="images.html" data-nav="is-not-active">images</a>
+    </li>
+  
+  
+    <li class="nav-item">
+      <a href="input&amp;textarea.html" data-nav="is-not-active">input&amp;textarea</a>
+    </li>
+  
+  
+    <li class="nav-item">
+      <a href="layout.html" data-nav="is-active">layout</a>
+    </li>
+  
+  
+    <li class="nav-item">
+      <a href="link.html" data-nav="is-not-active">link</a>
+    </li>
+  
+  
+    <li class="nav-item">
+      <a href="menu.html" data-nav="is-not-active">menu</a>
+    </li>
+  
+  
+    <li class="nav-item">
+      <a href="switch.html" data-nav="is-not-active">switch</a>
+    </li>
+  
+  
+    <li class="nav-item">
+      <a href="useful box.html" data-nav="is-not-active">useful box</a>
+    </li>
+  
+  
+    <li class="nav-item">
+      <a href="useful colors.html" data-nav="is-not-active">useful colors</a>
+    </li>
+  
+  
+    <li class="nav-item">
+      <a href="useful display.html" data-nav="is-not-active">useful display</a>
+    </li>
+  
+  
+    <li class="nav-item">
+      <a href="useful padding.html" data-nav="is-not-active">useful padding</a>
+    </li>
+  
+  
+    <li class="nav-item">
+      <a href="useful position.html" data-nav="is-not-active">useful position</a>
+    </li>
+  
+  
+    <li class="nav-item">
+      <a href="useful text.html" data-nav="is-not-active">useful text</a>
+    </li>
+  </ul>
+    </div>
+
+    
+    
+
+    
+      <aside class="footer-credit">
+        <a href="https://www.oddbird.net/herman/" class="footer-icon">
+          
+  <svg data-icon="logo" data-icon-size="footer-logo" ><use xlink:href="#icon-logo" />
+  </svg>
+
+        </a>
+        <span>
+          Documented with
+          <a href="https://www.oddbird.net/herman/" class="footer-link">
+            Herman
+          </a>
+        </span>
+        <span>
+          by
+          <a href="https://www.oddbird.net/" class="footer-link">
+            OddBird
+          </a>
+        </span>
+      </aside>
+    
+  </nav>
+
+
+      <main data-region="main">
+        
+  <nav class="breadcrumb">
+    
+    <a href="index.html" >outsystems-ui-scss</a> »
+    <strong>layout</strong>
+  </nav>
+
+
+        <div data-page="layout">
+          
+  
+    
+    
+
+
+
+
+
+
+
+
+
+
+<section class="item" id="css--html%2C%0Abody%2C%0A%23reactContainer%2C%0A%23transitionContainer%2C%0A.screen-container">
+  
+    
+  
+  
+
+  
+  
+  
+  
+
+  <div data-item-section="header">
+    <h2 class="item-title">
+      
+        <span class="item-type"></span>
+      
+
+      
+        <a href="#css--html%2C%0Abody%2C%0A%23reactContainer%2C%0A%23transitionContainer%2C%0A.screen-container" class="item-name">html,
+body,
+#reactContainer,
+#transitionContainer,<span class="widont">&nbsp;</span>.screen-container</a>
+      
+
+      
+
+      
+    </h2>
+
+    
+  
+
+
+    
+    
+    
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            scss
+          </span>
+
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-scss">html,
+body,
+#reactContainer,
+#transitionContainer,
+.screen-container {
+  height: 100%;
+}</code></pre>
+    </div>
+  
+
+    
+  
+  
+  
+  
+
+  
+
+  </div>
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+
+  
+  
+
+
+  
+  
+  
+  
+    
+    
+  
+
+  
+
+  
+  
+
+
+  
+  
+
+  
+  
+
+</section>
+
+  
+    
+    
+
+
+
+
+
+
+
+
+
+
+<section class="item" id="css--.screen-container">
+  
+    
+  
+  
+
+  
+  
+  
+  
+
+  <div data-item-section="header">
+    <h2 class="item-title">
+      
+        <span class="item-type"></span>
+      
+
+      
+        <a href="#css--.screen-container" class="item-name">.screen-container</a>
+      
+
+      
+
+      
+    </h2>
+
+    
+  
+
+
+    
+    
+    
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            scss
+          </span>
+
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-scss">.screen-container {
+  /*overflow-y: initial;*/ /* Comented due to changes in scroll position */
+
+  overflow-x: hidden; /* Temporary fix related to changes in scroll position */
+  overflow-y: auto; /* Temporary fix related to changes in scroll position */
+}</code></pre>
+    </div>
+  
+
+    
+  
+  
+  
+  
+
+  
+
+  </div>
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+
+  
+  
+
+
+  
+  
+  
+  
+    
+    
+  
+
+  
+
+  
+  
+    
+  <div data-item-section="todo">
+    
+      <h3 class="item-subtitle">
+        <span class="item-subtitle-main">To-do List</span>
+        
+      </h3>
+    
+
+    
+      <ul>
+        
+          <li data-sassdoc="todo-item">
+            <p>Try to understand if there are somthing pending<span class="widont">&nbsp;</span>here!</p>
+
+          </li>
+        
+      </ul>
+    
+  </div>
+
+  
+
+
+  
+  
+
+  
+  
+
+</section>
+
+  
+    
+    
+
+
+
+
+
+
+
+
+
+
+<section class="item" id="css--.layout">
+  
+    
+  
+  
+
+  
+  
+  
+  
+
+  <div data-item-section="header">
+    <h2 class="item-title">
+      
+        <span class="item-type"></span>
+      
+
+      
+        <a href="#css--.layout" class="item-name">.layout</a>
+      
+
+      
+
+      
+    </h2>
+
+    
+  
+
+
+    
+    
+    
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            scss
+          </span>
+
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-scss">.layout {
+  display: flex;
+  min-height: 100vh;
+
+  &amp;.layout-top {
+    &amp;,
+    &amp;:not(.layout-native) {
+      flex-direction: column;
+    }
+  }
+
+  &amp;.layout-left {
+    flex-direction: row;
+  }
+
+  &amp;.layout-native {
+    // Service Studio Preview
+    &amp; {
+      -servicestudio-min-height: 100vh !important;
+    }
+
+    .main {
+      width: 100%;
+    }
+  }
+
+  /// @todo Try to understand if there are somthing pending here!
+  .main,
+  &amp;.fixed-header .main {
+    padding-top: 0; /* Temporary fix related to changes in scroll position */
+  }
+
+  .main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+}</code></pre>
+    </div>
+  
+
+    
+  
+  
+  
+  
+
+  
+
+  </div>
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+
+  
+  
+
+
+  
+  
+  
+  
+    
+    
+  
+
+  
+
+  
+  
+
+
+  
+  
+
+  
+  
+
+</section>
+
+  
+    
+    
+
+
+
+
+
+
+
+
+
+
+<section class="item" id="css--.main%2C%0A%09%26.fixed-header%20.main">
+  
+    
+  
+  
+
+  
+  
+  
+  
+
+  <div data-item-section="header">
+    <h2 class="item-title">
+      
+        <span class="item-type"></span>
+      
+
+      
+        <a href="#css--.main%2C%0A%09%26.fixed-header%20.main" class="item-name">.main,
+	&amp;.fixed-header<span class="widont">&nbsp;</span>.main</a>
+      
+
+      
+
+      
+    </h2>
+
+    
+  
+
+
+    
+    
+    
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            scss
+          </span>
+
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-scss">.main,
+  &amp;.fixed-header .main {
+  padding-top: 0; /* Temporary fix related to changes in scroll position */
+}</code></pre>
+    </div>
+  
+
+    
+  
+  
+  
+  
+
+  
+
+  </div>
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+
+  
+  
+
+
+  
+  
+  
+  
+    
+    
+  
+
+  
+
+  
+  
+    
+  <div data-item-section="todo">
+    
+      <h3 class="item-subtitle">
+        <span class="item-subtitle-main">To-do List</span>
+        
+      </h3>
+    
+
+    
+      <ul>
+        
+          <li data-sassdoc="todo-item">
+            <p>Try to understand if there are somthing pending<span class="widont">&nbsp;</span>here!</p>
+
+          </li>
+        
+      </ul>
+    
+  </div>
+
+  
+
+
+  
+  
+
+  
+  
+
+</section>
+
+  
+    
+    
+
+
+
+
+
+
+
+
+
+
+<section class="item" id="css--.ios">
+  
+    
+  
+  
+
+  
+  
+  
+  
+
+  <div data-item-section="header">
+    <h2 class="item-title">
+      
+        <span class="item-type"></span>
+      
+
+      
+        <a href="#css--.ios" class="item-name">.ios</a>
+      
+
+      
+
+      
+    </h2>
+
+    
+  
+
+
+    
+    
+    
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            scss
+          </span>
+
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-scss">.ios {
+  .layout {
+    min-height: 100%;
+  }
+
+  .layout-native .footer {
+    height: calc(var(--os-safe-area-bottom) + var(--bottom-bar-size));
+  }
+}</code></pre>
+    </div>
+  
+
+    
+  
+  
+  
+  
+
+  
+
+  </div>
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+
+  
+  
+
+
+  
+  
+  
+  
+    
+    
+  
+
+  
+
+  
+  
+
+
+  
+  
+
+  
+  
+
+</section>
+
+  
+    
+    
+
+
+
+
+
+
+
+
+
+
+<section class="item" id="css--.desktop%2C%0A.tablet">
+  
+    
+  
+  
+
+  
+  
+  
+  
+
+  <div data-item-section="header">
+    <h2 class="item-title">
+      
+        <span class="item-type"></span>
+      
+
+      
+        <a href="#css--.desktop%2C%0A.tablet" class="item-name">.desktop,
+.tablet</a>
+      
+
+      
+
+      
+    </h2>
+
+    
+  
+
+
+    
+    
+    
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            scss
+          </span>
+
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-scss">.desktop,
+.tablet {
+  .layout-native {
+    &amp;.aside-visible,
+    &amp;.aside-expandable {
+      --side-menu-size: 264px;
+    }
+  }
+}</code></pre>
+    </div>
+  
+
+    
+  
+  
+  
+  
+
+  
+
+  </div>
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+
+  
+  
+
+
+  
+  
+  
+  
+    
+    
+  
+
+  
+
+  
+  
+
+
+  
+  
+
+  
+  
+
+</section>
+
+  
+    
+    
+
+
+
+
+
+
+
+
+
+
+<section class="item" id="css--.desktop">
+  
+    
+  
+  
+
+  
+  
+  
+  
+
+  <div data-item-section="header">
+    <h2 class="item-title">
+      
+        <span class="item-type"></span>
+      
+
+      
+        <a href="#css--.desktop" class="item-name">.desktop</a>
+      
+
+      
+
+      
+    </h2>
+
+    
+  
+
+
+    
+    
+    
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            scss
+          </span>
+
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-scss">.desktop {
+  .layout-native {
+    &amp;.aside-visible,
+    &amp;.aside-expandable {
+      .main {
+        width: calc(100% - var(--side-menu-size));
+      }
+    }
+  }
+}</code></pre>
+    </div>
+  
+
+    
+  
+  
+  
+  
+
+  
+
+  </div>
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+
+  
+  
+
+
+  
+  
+  
+  
+    
+    
+  
+
+  
+
+  
+  
+
+
+  
+  
+
+  
+  
+
+</section>
+
+  
+    
+    
+
+
+
+
+
+
+
+
+
+
+<section class="item" id="css--.tablet">
+  
+    
+  
+  
+
+  
+  
+  
+  
+
+  <div data-item-section="header">
+    <h2 class="item-title">
+      
+        <span class="item-type"></span>
+      
+
+      
+        <a href="#css--.tablet" class="item-name">.tablet</a>
+      
+
+      
+
+      
+    </h2>
+
+    
+  
+
+
+    
+    
+    
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            scss
+          </span>
+
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-scss">.tablet {
+  &amp;.landscape {
+    .layout-native {
+      &amp;.aside-visible,
+      &amp;.aside-expandable {
+        .main {
+          margin-left: var(--side-menu-size);
+          width: calc(100% - var(--side-menu-size));
+        }
+      }
+    }
+
+    .layout-side.layout-native.aside-expandable {
+      &amp;.menu-visible .main {
+        margin-left: var(--side-menu-size);
+      }
+
+      .main {
+        margin-right: 0;
+      }
+    }
+  }
+}</code></pre>
+    </div>
+  
+
+    
+  
+  
+  
+  
+
+  
+
+  </div>
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+
+  
+  
+
+
+  
+  
+  
+  
+    
+    
+  
+
+  
+
+  
+  
+
+
+  
+  
+
+  
+  
+
+</section>
+
+  
+    
+    
+
+
+
+
+
+
+
+
+
+
+<section class="item" id="css--.phone">
+  
+    
+  
+  
+
+  
+  
+  
+  
+
+  <div data-item-section="header">
+    <h2 class="item-title">
+      
+        <span class="item-type"></span>
+      
+
+      
+        <a href="#css--.phone" class="item-name">.phone</a>
+      
+
+      
+
+      
+    </h2>
+
+    
+  
+
+
+    
+    
+    
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            scss
+          </span>
+
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-scss">.phone {
+  .layout:not(.layout-native) [class*=&#39;ThemeGrid_Width&#39;]:not(.no-responsive) {
+    margin: var(--space-none) var(--space-none) var(--space-base) var(--space-none);
+    width: 100%;
+  }
+}</code></pre>
+    </div>
+  
+
+    
+  
+  
+  
+  
+
+  
+
+  </div>
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+
+  
+  
+
+
+  
+  
+  
+  
+    
+    
+  
+
+  
+
+  
+  
+
+
+  
+  
+
+  
+  
+
+</section>
+
+  
+    
+    
+
+
+
+
+
+
+
+
+
+
+<section class="item" id="css--.is-rtl">
+  
+    
+  
+  
+
+  
+  
+  
+  
+
+  <div data-item-section="header">
+    <h2 class="item-title">
+      
+        <span class="item-type"></span>
+      
+
+      
+        <a href="#css--.is-rtl" class="item-name">.is-rtl</a>
+      
+
+      
+
+      
+    </h2>
+
+    
+  
+
+
+    
+    
+    
+  
+    <div class="code-block">
+      
+        <div class="code-header">
+          <span class="code-language">
+            scss
+          </span>
+
+          
+        </div>
+      
+
+      
+      
+      <pre class="hljs-pre"><code class="lang-scss">.is-rtl {
+  &amp;.tablet {
+    .layout-native {
+      &amp;.aside-visible,
+      &amp;.aside-expandable {
+        .main {
+          margin-left: 0;
+          margin-right: var(--side-menu-size);
+        }
+      }
+    }
+
+    &amp;.landscape {
+      .layout-side.layout-native.aside-expandable {
+        &amp;.menu-visible .main {
+          margin-left: 0;
+          margin-right: var(--side-menu-size);
+        }
+
+        .main {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}</code></pre>
+    </div>
+  
+
+    
+  
+  
+  
+  
+
+  
+
+  </div>
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+
+  
+  
+
+
+  
+  
+  
+  
+    
+    
+  
+
+  
+
+  
+  
+
+
+  
+  
+
+  
+  
+
+</section>
+
+  
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="assets/webpack/runtime.min.js"></script>
+  <script type="text/javascript" src="assets/webpack/common.min.js"></script>
+  <script type="text/javascript" src="assets/webpack/app.min.js"></script>
+  
+</body>
+</html>

@@ -1,6 +1,7 @@
 var sassdoc = require('sassdoc');
 
 sassdoc('./src', {
+	theme: 'herman',
 	verbose: true,
 	dest: './sassdocs',
 }).then(
