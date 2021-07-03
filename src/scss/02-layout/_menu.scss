@@ -8,21 +8,10 @@
 .app-menu-content {
 	height: 100%;
 
-	// Service Studio Prevview
-	& {
-		-servicestudio-height: auto !important;
-	}
-}
-
-///
-.app-menu-links {
-	flex: 1;
-	height: 100%;
-
-	// Service Studio Prevview
+	// Service Studio Preview
 	& {
 		-servicestudio-align-items: center;
-		-servicestudio-display: flex;
+		-servicestudio-height: auto !important;
 	}
 }
 
@@ -180,11 +169,31 @@
 }
 
 ///
-.landscape {
-	.layout-native {
-		.app-menu-links {
-			padding-left: calc(var(--os-safe-area-left) / 2);
-		}
+.app-menu-overlay {
+	background-color: rgba(0, 0, 0, 0.25);
+	height: 100vh;
+	left: 0;
+	opacity: 0;
+	pointer-events: none;
+	position: fixed;
+	top: 0;
+	transition: opacity 130ms ease-in;
+	width: 100vw;
+	will-change: opacity;
+	z-index: 104;
+
+	// Service Studio Preview
+	& {
+		-servicestudio-display: none;
+	}
+}
+
+///
+.menu-visible {
+	.app-menu-overlay {
+		opacity: 1;
+		pointer-events: auto;
+		transition: opacity 330ms ease-out;
 	}
 }
 
@@ -221,9 +230,8 @@
 		display: none;
 	}
 
-	.app-menu-links {
-		display: flex;
-		flex-wrap: wrap;
+	.aside-overlay .app-menu-overlay {
+		display: block;
 	}
 
 	.submenu {
@@ -272,6 +280,10 @@
 	.submenu-item {
 		flex: 1;
 	}
+
+	.app-login-info {
+		padding: var(--space-s) var(--space-m);
+	}
 }
 
 ///
@@ -314,150 +326,8 @@
 // ------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------------------
 
-.desktop .aside-overlay .app-menu-overlay {
-	display: block;
-}
-
-.app-menu-overlay {
-	background-color: rgba(0, 0, 0, 0.25);
-
-	-servicestudio-display: none;
-	height: 100vh;
-	left: 0;
-	opacity: 0;
-	pointer-events: none;
-	position: fixed;
-	top: 0;
-	transition: opacity 130ms ease-in;
-	width: 100vw;
-	will-change: opacity;
-	z-index: 104;
-}
-
-.menu-visible .app-menu-overlay {
-	opacity: 1;
-	pointer-events: auto;
-	transition: opacity 330ms ease-out;
-}
-
-.tablet .app-login-info,
-.phone .app-login-info {
-	padding: var(--space-s) var(--space-m);
-}
-
-.slide-from-left-enter .layout-native .app-menu-overlay,
-.slide-from-left-leave .layout-native .app-menu-overlay,
-.slide-from-right-enter .layout-native .app-menu-overlay,
-.slide-from-right-leave .layout-native .app-menu-overlay,
-.slide-from-top-enter .layout-native .app-menu-overlay,
-.slide-from-top-leave .layout-native .app-menu-overlay,
-.slide-from-bottom-enter .layout-native .app-menu-overlay,
-.slide-from-bottom-leave .layout-native .app-menu-overlay,
-.fade-enter .layout-native .app-menu-overlay,
-.fade-leave .layout-native .app-menu-overlay {
-	display: none;
-}
-
-/* Styles for links on menu*/
-.app-menu-links a {
-	-servicestudio-color: var(--color-neutral-9);
-	color: var(--color-neutral-9);
-}
-
-.app-menu-links a:hover,
-.app-menu-links a.active {
-	color: var(--color-primary);
-	text-decoration: none;
-}
-
-.layout:not(.layout-side) .app-menu-links a {
-	align-items: center;
-	border-bottom: var(--border-size-m) solid transparent;
-	border-top: var(--border-size-m) solid transparent;
-	display: inline-flex;
-}
-
-.layout:not(.layout-side) .app-menu-links a.active {
-	border-bottom: var(--border-size-m) solid var(--color-primary);
-}
-
-.phone .layout:not(.layout-side) .app-menu-links a.active,
-.tablet .layout:not(.layout-side) .app-menu-links a.active {
-	border-bottom: 0;
-}
-
-.layout-side .app-menu-links a,
-.menu-visible .app-menu-links a {
-	border-bottom: 0;
-	border-left: var(--border-size-m) solid transparent;
-	border-top: 0;
-	margin-left: 0;
-	padding: var(--space-s) var(--space-m);
-}
-
-.layout-side .app-menu-links a.active {
-	border-left: var(--border-size-m) solid var(--color-primary);
-}
-
-.layout:not(.layout-side) .app-menu-links .submenu a {
-	border-bottom: none;
-}
-
-.layout:not(.layout-side) .app-menu-links a {
-	border-bottom: var(--border-size-m) solid transparent;
-}
-
-.layout-side .app-menu-links .submenu a {
-	border-left: none;
-}
-
-.layout-side .app-menu-links .submenu-header a,
-.menu-visible .app-menu-links .submenu-header a {
-	padding: 0;
-}
-
-.layout-side .app-menu-links .submenu-items a {
-	padding: var(--space-s) var(--space-base);
-}
-
-.has-accessible-features .app-menu-links a:focus {
-	background-color: transparent;
-	box-shadow: 0 0 0 3px var(--color-focus-outer);
-}
-
-.has-accessible-features .header a.active:focus {
-	color: var(--color-primary);
-}
-
-/* ServiceStudio Preview*/
-.layout-side .app-menu-links {
-	-servicestudio-align-items: flex-start;
-}
-
-.app-menu-content {
-	-servicestudio-align-items: center;
-}
-
-.app-menu-links:empty {
-	-servicestudio-position: relative;
-}
-
-.app-menu-links:empty:after {
-	-servicestudio-color: var(--color-neutral-7);
-	-servicestudio-content: 'Drag screens to this container to create menu entries';
-	-servicestudio-font-size: var(--font-size-xs);
-	-servicestudio-left: 50%;
-	-servicestudio-position: absolute;
-	-servicestudio-text-align: center;
-	-servicestudio-top: 50%;
-	-servicestudio-transform: translateX(-50%) translateY(-50%);
-}
-
-.layout .app-menu-links:empty:after {
-	-servicestudio-content: '';
-}
-
 .aside-expandable .header .ThemeGrid_Container {
+	//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 	max-width: 100%;
 }
 
@@ -500,59 +370,65 @@
 	left: auto;
 }
 
-.desktop .aside-expandable .app-menu-content,
+.desktop .aside-expandable .app-menu-content, //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 .tablet.landscape .layout-native.aside-expandable .app-menu-content {
+	//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 	display: none;
 }
 
 .desktop .aside-expandable.menu-visible .app-menu-content {
+	//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 	display: flex;
 }
 
 .desktop .aside-expandable .header {
+	//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 	z-index: 105;
 }
 
 .desktop .aside-expandable.menu-visible .main {
+	//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 	margin-left: var(--side-menu-size);
 }
 
 .is-rtl.desktop .aside-expandable.menu-visible .main {
+	//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 	margin-left: 0;
 	margin-right: var(--side-menu-size);
 }
 
 .tablet.landscape .layout-native.aside-expandable.menu-visible .app-menu-content {
+	//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 	display: flex;
 	-webkit-transform: none;
 	transform: none;
 	transition: none;
 }
 
-.aside-expandable .main,
+.aside-expandable .main, //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 .layout-side.aside-overlay .main,
 .tablet .layout-side .main,
 .phone .layout-side .main {
 	margin-left: 0;
 }
 
-.is-rtl .aside-expandable .main,
+.is-rtl .aside-expandable .main, //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 .is-rtl .layout-side.aside-overlay .main,
 .is-rtl.tablet .layout-side .main,
 .is-rtl.phone .layout-side .main {
 	margin-right: 0;
 }
 
-.layout-side.fixed-header.aside-expandable .header,
-.aside-expandable.menu-visible .header,
+.layout-side.fixed-header.aside-expandable .header, //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+.aside-expandable.menu-visible .header, //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 .layout-side.fixed-header.aside-overlay .header,
 .tablet .layout-side.fixed-header .header,
 .phone .layout-side.fixed-header .header {
 	left: 0;
 }
 
-.is-rtl .layout-side.fixed-header.aside-expandable .header,
-.is-rtl .aside-expandable.menu-visible .header,
+.is-rtl .layout-side.fixed-header.aside-expandable .header, //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+.is-rtl .aside-expandable.menu-visible .header, //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 .is-rtl .layout-side.fixed-header.aside-overlay .header,
 .is-rtl.tablet .layout-side.fixed-header .header,
 .is-rtl.phone .layout-side.fixed-header .header {
@@ -647,11 +523,13 @@
 
 .tablet.landscape .layout-native.aside-visible .app-menu-content,
 .tablet.landscape .layout-native.aside-expandable .app-menu-content {
+	//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 	left: 0;
 }
 
 .is-rtl.tablet.landscape .layout-native.aside-visible .app-menu-content,
 .is-rtl.tablet.landscape .layout-native.aside-expandable .app-menu-content {
+	//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 	right: 0;
 }
 
@@ -697,17 +575,6 @@
 .tablet .user-info,
 .phone .user-info {
 	justify-content: space-between;
-}
-
-.layout-side .app-menu-links,
-.tablet .app-menu-links,
-.phone .app-menu-links {
-	display: flex;
-	flex-direction: column;
-
-	-webkit-overflow-scrolling: touch;
-	overflow-y: auto;
-	padding-top: var(--space-s);
 }
 
 .layout-side .submenu,

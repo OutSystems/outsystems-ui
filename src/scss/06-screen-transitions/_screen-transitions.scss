@@ -1,3 +1,16 @@
+.slide-from-left-enter .layout-native .app-menu-overlay,
+.slide-from-left-leave .layout-native .app-menu-overlay,
+.slide-from-right-enter .layout-native .app-menu-overlay,
+.slide-from-right-leave .layout-native .app-menu-overlay,
+.slide-from-top-enter .layout-native .app-menu-overlay,
+.slide-from-top-leave .layout-native .app-menu-overlay,
+.slide-from-bottom-enter .layout-native .app-menu-overlay,
+.slide-from-bottom-leave .layout-native .app-menu-overlay,
+.fade-enter .layout-native .app-menu-overlay,
+.fade-leave .layout-native .app-menu-overlay {
+	display: none;
+}
+
 .slide-from-right-enter.slide-from-right-enter-active,
 .slide-from-right-leave.slide-from-right-leave-active,
 .slide-from-left-enter.slide-from-left-enter-active,
