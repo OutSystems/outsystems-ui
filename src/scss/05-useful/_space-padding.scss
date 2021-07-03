@@ -1,48 +1,58 @@
-/*! useful space padding start */
+////
+/// @group useful padding
 
 @each $entry in $osui-sizes {
-	$label: nth($entry, 1);
-	$value: nth($entry, 2);
+	$size: nth($entry, 1);
+	$variable: nth($entry, 2);
 
-	.padding-#{$label} {
-		padding: #{$value};
+	///
+	.padding-#{$size} {
+		padding: #{$variable};
 	}
 
-	.padding-top-#{$label} {
-		padding-top: #{$value};
+	///
+	.padding-top-#{$size} {
+		padding-top: #{$variable};
 	}
 
-	.padding-right-#{$label} {
-		padding-right: #{$value};
+	///
+	.padding-right-#{$size} {
+		padding-right: #{$variable};
 	}
 
-	.padding-bottom-#{$label} {
-		padding-bottom: #{$value};
+	///
+	.padding-bottom-#{$size} {
+		padding-bottom: #{$variable};
 	}
 
-	.padding-left-#{$label} {
-		padding-left: #{$value};
+	///
+	.padding-left-#{$size} {
+		padding-left: #{$variable};
 	}
 
-	.is-rtl .padding-right-#{$label} {
-		padding-left: #{$value};
+	///
+	.is-rtl .padding-right-#{$size} {
+		padding-left: #{$variable};
 		padding-right: var(--space-none);
 	}
 
-	.is-rtl .padding-left-#{$label} {
+	///
+	.is-rtl .padding-left-#{$size} {
 		padding-left: var(--space-none);
-		padding-right: #{$value};
+		padding-right: #{$variable};
 	}
 
-	.padding-x-#{$label} {
-		padding-left: #{$value};
-		padding-right: #{$value};
+	///
+	.padding-x-#{$size} {
+		padding-left: #{$variable};
+		padding-right: #{$variable};
 	}
 
-	.padding-y-#{$label} {
-		padding-bottom: #{$value};
-		padding-top: #{$value};
+	///
+	.padding-y-#{$size} {
+		padding-bottom: #{$variable};
+		padding-top: #{$variable};
 	}
+
+	/*! useful space padding #{$size} end */
 }
-
-/*! useful space padding end */
