@@ -6,6 +6,28 @@
 
 ///
 .layout-side {
+	&.fixed-header {
+		&.aside-expandable {
+			.header {
+				left: 0;
+			}
+		}
+
+		&.aside-overlay {
+			.header {
+				left: 0;
+			}
+		}
+
+		.header {
+			left: var(--side-menu-size);
+		}
+	}
+
+	&.layout-native.aside-expandable .main .header {
+		z-index: 120;
+	}
+
 	.aside-expandable {
 		&:not(.fixed-header) .main .header {
 			margin-left: calc(var(--side-menu-size) * -1);
@@ -14,31 +36,52 @@
 		&.menu-visible:not(.fixed-header) .main .header {
 			margin-left: 0;
 		}
+
+		&.menu-visible {
+			.header {
+				left: 0;
+			}
+		}
 	}
 
-	.layout-native.aside-expandable .main .header {
-		z-index: 120;
+	.header-navigation {
+		align-items: center;
+		display: inline-flex;
 	}
 }
 
 // Responsive --------------------------------------------------------------------
 ///
 .desktop {
-	.layout-side.layout-native.aside-expandable .header {
-		margin-left: 0;
+	.layout-side.layout-native.aside-expandable {
+		.header {
+			margin-left: 0;
+		}
+
+		&.menu-visible .header {
+			margin-left: calc(-1 * var(--side-menu-size));
+		}
 	}
 
-	.layout-side.layout-native.aside-expandable.menu-visible .header {
-		margin-left: calc(-1 * var(--side-menu-size));
+	.aside-expandable {
+		.header {
+			z-index: 105;
+		}
 	}
 }
 
 ///
 .tablet,
 .phone {
-	.layout-side.aside-expandable:not(.fixed-header) {
-		.main .header {
-			margin-left: 0;
+	.layout-side {
+		&.aside-expandable:not(.fixed-header) {
+			.main .header {
+				margin-left: 0;
+			}
+		}
+
+		&.fixed-header .header {
+			left: 0;
 		}
 	}
 }
@@ -83,4 +126,49 @@
 			}
 		}
 	}
+
+	&.tablet,
+	&.phone {
+		left: 0;
+		right: 0;
+	}
+
+	.layout-side {
+		&.fixed-header {
+			&.aside-expandable .header {
+				left: 0;
+				right: 0;
+			}
+
+			.header {
+				left: 0;
+				right: var(--side-menu-size);
+			}
+		}
+	}
+
+	.aside-expandable.menu-visible .header {
+		left: 0;
+		right: 0;
+	}
+}
+
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+.aside-expandable.menu-visible .header,
+.layout-side.fixed-header.aside-overlay .header,
+.tablet .layout-side.fixed-header .header,
+.phone .layout-side.fixed-header .header {
+	left: 0;
+}
+
+.is-rtl .layout-side.fixed-header.aside-expandable .header,
+.is-rtl .aside-expandable.menu-visible .header,
+.is-rtl .layout-side.fixed-header.aside-overlay .header,
+.is-rtl.tablet .layout-side.fixed-header .header,
+.is-rtl.phone .layout-side.fixed-header .header {
+	left: 0;
+	right: 0;
 }

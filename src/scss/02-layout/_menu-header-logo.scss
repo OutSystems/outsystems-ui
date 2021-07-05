@@ -1,0 +1,22 @@
+////
+/// @group Header-Logo
+/// Layout - Menu - HeaderLogo
+
+/*! Page Layout - Menu - HeaderLogo*/
+
+///
+.layout-side {
+	.header-logo {
+		height: var(--header-size);
+		padding: var(--space-none) var(--space-m);
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+.tablet,
+.phone {
+	.header-logo {
+		height: var(--header-size);
+		padding: var(--space-none) var(--space-m);
+	}
+}

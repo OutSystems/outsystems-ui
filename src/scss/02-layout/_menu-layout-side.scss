@@ -1,0 +1,169 @@
+////
+/// @group Menu-Layout-Side
+/// Layout Side - Menu
+
+/*! Page Layout Side - Menu */
+
+///
+.layout-side {
+	.app-menu-content {
+		background-color: var(--color-neutral-0);
+		bottom: 0;
+		flex-direction: column;
+		height: auto;
+		left: 0;
+		position: fixed;
+		top: 0;
+		width: var(--side-menu-size);
+		z-index: 102;
+	}
+
+	.submenu {
+		flex-direction: column;
+		margin-left: 0;
+		width: 100%;
+
+		&.active .submenu-header {
+			border-left: var(--border-size-m) solid var(--color-primary);
+		}
+
+		&.open .submenu-items {
+			display: flex;
+		}
+
+		.submenu-header {
+			border-bottom: 0;
+			border-left: var(--border-size-m) solid transparent;
+			border-top: 0;
+			padding: var(--space-s) var(--space-m);
+		}
+	}
+
+	.submenu-item {
+		flex: 1;
+	}
+
+	.submenu-items {
+		border: none;
+		box-shadow: none;
+		display: none;
+		opacity: 1;
+		padding: 0;
+		padding: var(--space-xs) var(--space-m);
+		pointer-events: auto;
+		position: relative;
+		top: 0;
+		transform: translateY(0);
+	}
+}
+
+// This class is applied to .layout element either
+///
+.aside-overlay {
+	.app-menu-content {
+		background-color: var(--color-neutral-0);
+		flex-direction: column;
+		height: 100%;
+		left: calc(-1 * var(--side-menu-size));
+		position: fixed;
+		top: 0;
+		transform: translateX(0) translateZ(0);
+		transition: transform 130ms ease-in;
+		width: var(--side-menu-size);
+
+		will-change: transform;
+		z-index: 105;
+	}
+
+	&.menu-visible {
+		.app-menu-content {
+			transform: translateX(var(--side-menu-size)) translateZ(0);
+			transition: transform 330ms ease-out;
+		}
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+///
+.desktop {
+	.layout-side {
+		&.aside-expandable:not(.fixed-header) .app-menu-content {
+			padding-top: var(--header-size);
+			top: 0;
+		}
+	}
+
+	.aside-expandable {
+		&.menu-visible {
+			.app-menu-content {
+				display: flex;
+			}
+
+			.main {
+				margin-left: var(--side-menu-size);
+			}
+		}
+
+		.app-menu-content {
+			display: none;
+		}
+	}
+}
+
+///
+.tablet {
+	&.landscape {
+		.layout-native {
+			&.aside-expandable.menu-visible {
+				.app-menu-content {
+					display: flex;
+					transform: none;
+					transition: none;
+				}
+			}
+		}
+	}
+}
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	&.desktop {
+		.aside-expandable.menu-visible {
+			.main {
+				margin-left: 0;
+				margin-right: var(--side-menu-size);
+			}
+		}
+	}
+
+	&.tablet,
+	&.phone {
+		.app-menu-content {
+			left: auto;
+			right: calc(-1 * var(--side-menu-size));
+			transition: all 330ms ease-out;
+		}
+	}
+
+	.layout-side {
+		.submenu {
+			.submenu-header {
+				border-left: 0;
+				border-right: var(--border-size-m) solid transparent;
+			}
+		}
+	}
+
+	.layout-side .app-menu-content {
+		left: auto;
+	}
+
+	.aside-overlay.menu-visible {
+		.app-menu-content {
+			right: 0;
+			transform: translateX(0) translateZ(0);
+			transition: all 330ms ease-out;
+		}
+	}
+}

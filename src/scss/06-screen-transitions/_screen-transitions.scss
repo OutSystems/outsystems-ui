@@ -1,3 +1,39 @@
+.slide-from-left-enter .layout-native .app-menu-content,
+.slide-from-left-leave .layout-native .app-menu-content,
+.slide-from-right-enter .layout-native .app-menu-content,
+.slide-from-right-leave .layout-native .app-menu-content,
+.slide-from-top-enter .layout-native .app-menu-content,
+.slide-from-top-leave .layout-native .app-menu-content,
+.slide-from-bottom-enter .layout-native .app-menu-content,
+.slide-from-bottom-leave .layout-native .app-menu-content,
+.fade-enter .layout-native .app-menu-content,
+.fade-leave .layout-native .app-menu-content {
+	display: none;
+}
+
+.desktop .slide-from-left-enter .layout-native.aside-visible .app-menu-content,
+.desktop .slide-from-left-leave .layout-native.aside-visible .app-menu-content,
+.desktop .slide-from-right-enter .layout-native.aside-visible .app-menu-content,
+.desktop .slide-from-right-leave .layout-native.aside-visible .app-menu-content,
+.desktop .slide-from-top-enter .layout-native.aside-visible .app-menu-content,
+.desktop .slide-from-top-leave .layout-native.aside-visible .app-menu-content,
+.desktop .slide-from-bottom-enter .layout-native.aside-visible .app-menu-content,
+.desktop .slide-from-bottom-leave .layout-native.aside-visible .app-menu-content,
+.desktop .fade-enter .layout-native.aside-visible .app-menu-content,
+.desktop .fade-leave .layout-native.aside-visible .app-menu-content,
+.tablet.landscape .slide-from-left-enter .layout-native.aside-visible .app-menu-content,
+.tablet.landscape .slide-from-left-leave .layout-native.aside-visible .app-menu-content,
+.tablet.landscape .slide-from-right-enter .layout-native.aside-visible .app-menu-content,
+.tablet.landscape .slide-from-right-leave .layout-native.aside-visible .app-menu-content,
+.tablet.landscape .slide-from-top-enter .layout-native.aside-visible .app-menu-content,
+.tablet.landscape .slide-from-top-leave .layout-native.aside-visible .app-menu-content,
+.tablet.landscape .slide-from-bottom-enter .layout-native.aside-visible .app-menu-content,
+.tablet.landscape .slide-from-bottom-leave .layout-native.aside-visible .app-menu-content,
+.tablet.landscape .fade-enter .layout-native.aside-visible .app-menu-content,
+.tablet.landscape .fade-leave .layout-native.aside-visible .app-menu-content {
+	display: flex;
+}
+
 .slide-from-left-enter .layout-native .app-menu-overlay,
 .slide-from-left-leave .layout-native .app-menu-overlay,
 .slide-from-right-enter .layout-native .app-menu-overlay,

@@ -81,15 +81,15 @@
 ///
 .layout-side,
 .menu-visible {
-	a {
-		border-bottom: 0;
-		border-left: var(--border-size-m) solid transparent;
-		border-top: 0;
-		margin-left: 0;
-		padding: var(--space-s) var(--space-m);
-	}
-
 	.app-menu-links {
+		a {
+			border-bottom: 0;
+			border-left: var(--border-size-m) solid transparent;
+			border-top: 0;
+			margin-left: 0;
+			padding: var(--space-s) var(--space-m);
+		}
+
 		.submenu-header a {
 			padding: 0;
 		}
@@ -104,7 +104,7 @@
 			-servicestudio-align-items: flex-start;
 		}
 
-		.app-menu-links {
+		& {
 			display: flex;
 			flex-direction: column;
 

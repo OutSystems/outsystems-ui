@@ -97,6 +97,11 @@
 }
 
 ///
+.aside-expandable .header .ThemeGrid_Container {
+	max-width: 100%;
+}
+
+///
 .layout-native .app-menu-icon.back .menu-icon,
 .desktop .menu-icon,
 .tablet.landscape .layout-native.aside-visible .menu-icon,
@@ -122,6 +127,18 @@
 	}
 }
 
+///
+.tablet,
+.phone {
+	.layout-top .header-navigation {
+		height: 100vh;
+		left: 0;
+		position: fixed;
+		top: 0;
+		z-index: 102;
+	}
+}
+
 // IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {
@@ -139,4 +156,11 @@
 		margin-left: var(--space-m);
 		margin-right: 0;
 	}
+}
+
+// -------------------------------------------------------------------------------
+/* Fix for responsive in safari forcing refresh for events to work */
+.osx.tablet .layout-top:not(.menu-visible) .header-navigation,
+.osx.phone .layout-top:not(.menu-visible) .header-navigation {
+	pointer-events: none;
 }

@@ -1,0 +1,127 @@
+////
+/// @group Menu-Layout-Native
+/// Layout Native - Menu
+
+/*! Page Layout Native - Menu */
+
+///
+.layout-native {
+	&.menu-visible {
+		.app-menu-content {
+			&:after {
+				pointer-events: none;
+			}
+		}
+	}
+
+	.app-menu-content {
+		&:after {
+			background: transparent;
+			content: '';
+			height: 100%;
+			position: absolute;
+			right: -24px;
+			top: calc(var(--header-size) + var(--header-size-content));
+			width: 24px;
+		}
+	}
+}
+
+// Responsice --------------------------------------------------------------------
+///
+.desktop {
+	.layout-native {
+		&.aside-visible,
+		&.aside-expandable {
+			.app-menu-content {
+				box-shadow: var(--shadow-m);
+				z-index: 110;
+			}
+		}
+
+		&.layout-side {
+			&.aside-expandable {
+				.app-menu-content {
+					padding-top: calc(var(--header-size) + var(--header-size-content) + var(--os-safe-area-top));
+				}
+			}
+		}
+	}
+
+	.layout-side.layout-native.aside-expandable.hide-header-on-scroll:not(.header-is--visible) {
+		.app-menu-content {
+			padding-top: var(--header-size-content);
+		}
+	}
+}
+
+///
+.desktop,
+.tablet {
+	.layout-native {
+		.landscape {
+			&.android[data-status-bar-height] {
+				&.layout-side {
+					&.aside-expandable {
+						.app-menu-content {
+							padding-top: calc(
+								var(--header-size) + var(--header-size-content) + var(--status-bar-height)
+							);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+///
+.tablet {
+	&.landscape {
+		.layout-native {
+			&.aside-expandable .app-menu-content {
+				display: none;
+			}
+
+			&.aside-visible,
+			&.aside-expandable {
+				.app-menu-content {
+					box-shadow: var(--shadow-m);
+					left: 0;
+					z-index: 110;
+				}
+			}
+
+			&.layout-side {
+				&.aside-expandable {
+					.app-menu-content {
+						padding-top: calc(var(--header-size) + var(--header-size-content) + var(--os-safe-area-top));
+					}
+				}
+			}
+		}
+
+		.layout-side.layout-native.aside-expandable.hide-header-on-scroll:not(.header-is--visible) {
+			.app-menu-content {
+				padding-top: var(--header-size-content);
+			}
+		}
+	}
+}
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	.tablet {
+		&.landscape {
+			&.landscape {
+				&.aside-visible,
+				&.aside-expandable {
+					.app-menu-content {
+						right: 0;
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,28 @@
+////
+/// @group Header-App-Login-Info
+/// Layout - Menu - AppLoginInfo
+
+/*! Page Layout - Menu - AppLoginInfo */
+
+///
+.layout-side {
+	.app-login-info {
+		padding: var(--space-base) var(--space-m);
+	}
+
+	.user-info {
+		justify-content: space-between;
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+.tablet,
+.phone {
+	.app-login-info {
+		padding: var(--space-base) var(--space-m);
+	}
+
+	.user-info {
+		justify-content: space-between;
+	}
+}
