@@ -1,0 +1,70 @@
+////
+/// @group Layout_ThemeGrid_Container
+/// Page Layout - ThemeGrid_Container
+
+/*! Page Layout - ThemeGrid_Container */
+
+///
+.ThemeGrid_Container {
+	margin: var(--space-none) auto;
+	width: 100%;
+}
+
+///
+.header {
+	.ThemeGrid_Container {
+		padding: var(--space-none) var(--space-xl);
+	}
+}
+
+///
+.layout {
+	.main-content.ThemeGrid_Container {
+		padding: var(--space-xl);
+	}
+
+	.footer.ThemeGrid_Container {
+		padding: var(--space-base) var(--space-xl);
+	}
+}
+
+///
+.layout-native {
+	.main-content.ThemeGrid_Container {
+		padding: 0;
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+
+///
+.tablet {
+	.header {
+		.ThemeGrid_Container {
+			padding: var(--space-none) var(--space-m);
+		}
+	}
+
+	.main-content.ThemeGrid_Container {
+		padding: var(--space-m);
+	}
+
+	.footer.ThemeGrid_Container {
+		padding: var(--space-base) var(--space-m);
+	}
+}
+
+///
+.phone {
+	.header {
+		.ThemeGrid_Container {
+			padding-left: calc(var(--os-safe-area-left) + var(--space-base));
+			padding-right: calc(var(--os-safe-area-right) + var(--space-base));
+		}
+	}
+
+	.footer.ThemeGrid_Container {
+		padding-left: calc(var(--os-safe-area-left) + var(--space-base));
+		padding-right: calc(var(--os-safe-area-right) + var(--space-base));
+	}
+}

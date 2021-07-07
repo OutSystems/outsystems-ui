@@ -1,19 +1,34 @@
-/* ================================================================ */
-/*  $3.4 - Page Layout - Section                                    */
-/* ================================================================ */
+////
+/// @group Layout_Section
+/// Page Layout - Section
 
+/*! Page Layout - Section */
+
+///
 .full-width-section {
 	position: relative;
+
 	.ThemeGrid_Container {
 		padding: var(--space-none) var(--space-xl);
 	}
 }
 
+///
 .section-background {
 	@include absolute-left-top();
+
 	height: 100%;
 	overflow: hidden;
 	width: 100%;
+
+	&:empty {
+		// Service Studio Preview
+		& {
+			-servicestudio-min-height: 80px;
+			-servicestudio-position: relative;
+		}
+	}
+
 	img {
 		height: 100%;
 		object-fit: cover;
@@ -21,13 +36,7 @@
 	}
 }
 
+///
 .section-content {
 	position: relative;
-}
-
-//
-// service studio
-.section-background:empty {
-	-servicestudio-min-height: 80px;
-	-servicestudio-position: relative;
 }
