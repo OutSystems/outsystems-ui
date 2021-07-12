@@ -188,7 +188,8 @@
 /*! ============================================================================= */
 @import '03-widgets/list'; // jRio => @Done!
 @import '03-widgets/list-item'; //jRio => @Done!
-@import '03-widgets/table'; // jRio => @here!
+@import '03-widgets/table'; // jRio => @Done!
+@import '03-widgets/table-sortable-icon'; // jRio => @Done!
 @import '03-widgets/bulk-actions';
 @import '03-widgets/form';
 @import '03-widgets/upload';
@@ -309,6 +310,7 @@
 @import '05-useful/text'; //ACarvalho
 @import '05-useful/typography'; //ACarvalho
 @import '05-useful/visibility'; //ACarvalho
+@import '05-useful/list-updating'; //jRio => @Done!
 
 /*! ============================================================================= */
 /*!  $7 - Screen Transitions                                                      */

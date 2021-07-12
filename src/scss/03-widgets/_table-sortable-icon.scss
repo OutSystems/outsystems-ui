@@ -1,0 +1,64 @@
+/*! Widgets - Table - Sortable Icon */
+////
+/// @group Widgets_Table_SortableIcon
+/// Widgets - Table - Sortable Icon
+
+///
+.sortable-icon {
+	display: inline-block;
+	height: 11px;
+	margin-left: var(--space-s);
+	position: relative;
+	width: 10px;
+
+	&:before,
+	&:after {
+		border-left: 4px solid transparent;
+		border-right: 4px solid transparent;
+		content: '';
+		left: 0;
+		position: absolute;
+	}
+
+	&:before {
+		border-bottom: 4px solid var(--color-neutral-8);
+	}
+
+	&:after {
+		border-top: 4px solid var(--color-neutral-8);
+		bottom: 0;
+	}
+}
+
+///
+.table-header {
+	th.sorted {
+		.sortable-icon {
+			&:before {
+				border-bottom: 4px solid var(--color-primary);
+			}
+
+			&:after {
+				border-top: 4px solid var(--color-primary);
+			}
+		}
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+///
+.desktop {
+	.table-header {
+		th.sortable:hover {
+			.sortable-icon {
+				&:before {
+					border-bottom: 4px solid var(--color-primary);
+				}
+
+				&:after {
+					border-top: 4px solid var(--color-primary);
+				}
+			}
+		}
+	}
+}

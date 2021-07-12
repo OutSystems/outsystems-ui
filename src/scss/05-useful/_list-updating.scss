@@ -1,0 +1,32 @@
+/*! Usefull Classes - List Updating */
+////
+/// @group UsefullClasses_ListUpdating
+/// Usefull Classes - List Updating
+
+///
+.list-updating {
+	height: 40px;
+	margin-top: var(--space-m);
+	position: relative;
+
+	&:before {
+		-webkit-animation: spin 1s infinite linear, fade 300ms ease;
+		animation: spin 1s infinite linear, fade 300ms ease;
+		border: 5px solid var(--color-neutral-5);
+		border-radius: 50%;
+		border-top-color: var(--color-neutral-7);
+		box-sizing: border-box;
+		content: '';
+		height: 40px;
+		left: 50%;
+		margin-left: -20px;
+		position: absolute;
+		width: 40px;
+
+		// Service Studio Preview
+		& {
+			-servicestudio--webkit-animation: none;
+			-servicestudio-animation: none;
+		}
+	}
+}
