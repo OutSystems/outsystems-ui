@@ -1,5 +1,12 @@
 /*! Widgets - List */
-.list.list-group {
-    overflow: hidden;
-    position: relative;
+////
+/// @group Widgets_List
+/// Widgets - List
+
+///
+.list {
+	&.list-group {
+		overflow: hidden;
+		position: relative;
+	}
 }
