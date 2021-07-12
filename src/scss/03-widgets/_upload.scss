@@ -1,47 +1,44 @@
 /*! Widgets - Upload */
+////
+/// @group Widgets_Upload
+/// Widgets - Upload
+
+///
 [data-upload] {
-    background: var(--color-neutral-0);
-    border: var(--border-size-s) solid var(--color-neutral-4);
-    border-radius: var(--border-radius-soft);
-    color: var(--color-neutral-9);
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    font-size: var(--font-size-s);
-    margin-bottom: 0;
-    min-height: auto;
-    padding: var(--space-base);
-    position: relative;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-}
+	align-items: center;
+	background: var(--color-neutral-0);
+	border: var(--border-size-s) solid var(--color-neutral-4);
+	border-radius: var(--border-radius-soft);
+	color: var(--color-neutral-9);
+	display: flex;
+	font-size: var(--font-size-s);
+	margin-bottom: 0;
+	min-height: auto;
+	padding: var(--space-base);
+	position: relative;
 
-[data-upload] [data-icon] {
-    background-color: transparent;
-    color: var(--color-neutral-5);
-    line-height: 1;
-    margin-right: var(--space-base);
-    width: auto;
-}
+	&.uploaded [data-icon] {
+		background-color: transparent;
+	}
 
-[data-upload].uploaded [data-icon] {
-    background-color: transparent;
-}
+	&.upload-image-withoverlay {
+		flex-direction: column;
 
-[data-upload].upload-image-withoverlay .change-image {
-    background-color: transparent;
-    color: var(--color-primary);
-    height: auto;
-    margin-top: var(--space-base);
-    opacity: 1;
-    position: relative;
-}
+		.change-image {
+			background-color: transparent;
+			color: var(--color-primary);
+			height: auto;
+			margin-top: var(--space-base);
+			opacity: 1;
+			position: relative;
+		}
+	}
 
-[data-upload].upload-image-withoverlay {
-        flex-direction: column;
-
-    -webkit-box-direction: normal;
-    -webkit-box-orient: vertical;
-    -ms-flex-direction: column;
+	[data-icon] {
+		background-color: transparent;
+		color: var(--color-neutral-5);
+		line-height: 1;
+		margin-right: var(--space-base);
+		width: auto;
+	}
 }
