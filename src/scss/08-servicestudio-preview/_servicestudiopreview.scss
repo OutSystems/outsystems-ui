@@ -1,0 +1,92 @@
+/*! Service Studio Preview */
+////
+/// @group ServiceStudio_Preview
+/// This section contains several styles in order to improve the service studio preview
+
+/* Menu ServiceStudio Windows Preview */
+///
+html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-neutral']),
+html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-orange']),
+html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-yellow']),
+html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-lime']),
+html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-green']),
+html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-teal']),
+html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-cyan']),
+html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-blue']),
+html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-indigo']),
+html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-violet']),
+html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-grape']),
+html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-pink']),
+html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-red']),
+html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-primary']),
+html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-secondary']),
+html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-neutral']),
+html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-orange']),
+html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-yellow']),
+html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-lime']),
+html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-green']),
+html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-teal']),
+html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-cyan']),
+html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-blue']),
+html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-indigo']),
+html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-violet']),
+html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-grape']),
+html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-pink']),
+html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-red']),
+html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-primary']),
+html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-secondary']) {
+	-servicestudio-color: #000 !important;
+}
+
+/* Menu ServiceStudio Hybrid Preview */
+body > .app-menu-content {
+	-servicestudio-align-items: flex-start;
+	-servicestudio-height: 100% !important;
+	-servicestudio-left: 0 !important;
+	-servicestudio-position: relative !important;
+	-servicestudio-width: 100% !important;
+}
+body > .app-menu-content .app-menu-links {
+	-servicestudio-align-items: flex-start;
+	-servicestudio-padding: var(--space-none);
+	-servicestudio-width: 100% !important;
+}
+.tablet .app-menu-links a,
+.phone .app-menu-links a {
+	-servicestudio-margin-left: var(--space-none);
+	-servicestudio-padding: var(--space-s) var(--space-m);
+	-servicestudio-width: 100%;
+}
+
+html[data-uieditorversion^='1'] body .app-menu-content {
+	-servicestudio-align-items: flex-start;
+	-servicestudio-height: 100% !important;
+	-servicestudio-left: 0;
+	-servicestudio-position: relative;
+	-servicestudio-width: 100% !important;
+}
+html[data-uieditorversion^='1'] body .app-menu-links {
+	-servicestudio-height: auto;
+	-servicestudio-width: 100%;
+}
+html[data-uieditorversion^='1'] body .app-menu-content > * {
+	-servicestudio-align-items: flex-start;
+	-servicestudio-display: flex;
+}
+html[data-uieditorversion^='1'] .app-menu-content .app-login-info {
+	-servicestudio-display: flex;
+}
+html[data-uieditorversion^='1'] body.phone .layout .app-menu-content,
+html[data-uieditorversion^='1'] body.tablet .layout .app-menu-content,
+html[data-uieditorversion^='1'] .layout-side .header .app-menu-content,
+html[data-uieditorversion^='1'] body:not(.phone):not(.tablet) .layout-side .menu-icon {
+	-servicestudio-display: none;
+}
+html[data-uieditorversion^='1'] body:not(.phone):not(.tablet) .layout-side aside {
+	-servicestudio-background-color: var(--color-neutral-0);
+	-servicestudio-bottom: 0;
+	-servicestudio-position: fixed;
+	-servicestudio-top: 0;
+	-servicestudio-width: var(--side-menu-size);
+	-servicestudio-z-index: 102;
+}

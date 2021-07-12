@@ -15,7 +15,7 @@
 	}
 
 	.scale-animation {
-		animation: scale-animation 1500ms;
+		animation: list-item-scale-animation 1500ms;
 		background-color: rgba(0, 0, 0, 0.1);
 		border-radius: 100px;
 		display: block;
@@ -30,7 +30,7 @@
 	}
 }
 
-///
+/// cenas com coisas aqui
 .list {
 	.list-item {
 		background-color: var(--color-neutral-0);

@@ -12,6 +12,18 @@
 }
 
 ///
+@keyframes list-item-scale-animation {
+	from {
+		opacity: 0.3;
+		transform: scale(0, 1) translateZ(0);
+	}
+	to {
+		opacity: 0;
+		transform: scale(400, 300) translateZ(0);
+	}
+}
+
+///
 @keyframes feedbackMessageSlideDownThenUp {
 	0% {
 		transform: translateY(-100%) translateX(-50%) translateZ(0);
