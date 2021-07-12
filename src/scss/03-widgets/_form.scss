@@ -1,84 +1,91 @@
 /*! Widgets - Form */
-label {
-    color: var(--color-neutral-8);
+////
+/// @group Widgets_Form
+/// Widgets - Form
+
+///
+.form {
+	label {
+		margin-bottom: var(--space-s);
+	}
 }
 
-.form label {
-    margin-bottom: var(--space-s);
-}
+// ---------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------
 
 .form .dropdown,
 .form input[data-input],
 .form textarea[data-textarea],
 .form [data-switch] {
-    margin-bottom: var(--space-m);
+	margin-bottom: var(--space-m);
 }
 
 [data-label].mandatory:after {
-    color: var(--color-error);
-    margin-left: var(--space-xs);
+	color: var(--color-error);
+	margin-left: var(--space-xs);
 }
 
 span.validation-message {
-    color: var(--color-error);
-    font-size: var(--font-size-xs);
-    margin-left: var(--space-none);
+	color: var(--color-error);
+	font-size: var(--font-size-xs);
+	margin-left: var(--space-none);
 }
 
 .form span {
-    position: relative;
+	position: relative;
 }
 
 .form span.validation-message {
-    bottom: -32px;
-    left: 0;
-    position: absolute;
-    white-space: nowrap;
-    width: 100%;
+	bottom: -32px;
+	left: 0;
+	position: absolute;
+	white-space: nowrap;
+	width: 100%;
 }
 
 .form .upload-file span.validation-message {
-    bottom: 8px;
-    position: relative;
+	bottom: 8px;
+	position: relative;
 }
 
-.form.OSFillParent .form-control[class*="ThemeGrid_Width"].not-valid + span.validation-message {
-    left: 22px;
+.form.OSFillParent .form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message {
+	left: 22px;
 }
 
-.form-control[class*="ThemeGrid_Width"].not-valid + span.validation-message {
-    left: 10px;
+.form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message {
+	left: 10px;
 }
 
-.phone .layout-native .form.OSFillParent .form-control[class*="ThemeGrid_Width"].not-valid + span.validation-message {
-    left: 6px;
+.phone .layout-native .form.OSFillParent .form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message {
+	left: 6px;
 }
 
-.form .dropdown-container[class*="ThemeGrid_Width"].not-valid span.validation-message {
-    bottom: 4px;
+.form .dropdown-container[class*='ThemeGrid_Width'].not-valid span.validation-message {
+	bottom: 4px;
 }
 
 .form .dropdown-container.not-valid span.validation-message {
-    bottom: -19px;
+	bottom: -19px;
 }
 
 .form textarea.form-control.not-valid + span.validation-message {
-    bottom: 8px;
+	bottom: 8px;
 }
 
-.form textarea.form-control[class*="ThemeGrid_Width"] + span.validation-message {
-    bottom: 0;
+.form textarea.form-control[class*='ThemeGrid_Width'] + span.validation-message {
+	bottom: 0;
 }
 
 .form .radio-group.not-valid {
-    position: relative;
+	position: relative;
 }
 
 .form .radio-group.not-valid span.validation-message {
-    bottom: -10px;
+	bottom: -10px;
 }
 
-.phone .form.OSFillParent .form-control[class*="ThemeGrid_Width"].not-valid + span.validation-message,
-.phone .form-control[class*="ThemeGrid_Width"].not-valid + span.validation-message {
-    left: 0;
+.phone .form.OSFillParent .form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message,
+.phone .form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message {
+	left: 0;
 }
