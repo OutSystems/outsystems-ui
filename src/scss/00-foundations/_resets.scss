@@ -94,6 +94,12 @@ label {
 	color: var(--color-neutral-8);
 }
 
+///
+[data-label].mandatory:after {
+	color: var(--color-error);
+	margin-left: var(--space-xs);
+}
+
 /* ============================================================================= */
 /* Inputs Styles */
 /* ============================================================================= */
