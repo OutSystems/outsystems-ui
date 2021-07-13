@@ -3,13 +3,6 @@
 /// @group ServiceStudio_Preview
 /// This section contains several styles in order to improve the service studio preview
 
-/* Menu ServiceStudio Windows Preview */
-///
-html[data-ss-kind='Nodes.WebBlock'] .app-menu-content,
-html[data-ss-kind='NRNodes.WebBlock'] .app-menu-content {
-	-servicestudio-background-color: var(--header-color);
-}
-
 /* Menu ServiceStudio Hybrid Preview */
 body > .app-menu-content {
 	-servicestudio-align-items: flex-start;
