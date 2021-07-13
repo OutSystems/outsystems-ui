@@ -1,32 +1,46 @@
 /*! Widgets - Popup */
+////
+/// @group Widgets_Popup
+/// Widgets - Popup
+
+///
 [data-popup] {
-    -servicestudio-top: 0;
+	-servicestudio-top: 0;
 }
 
+///
 [data-popup-backdrop] {
-    z-index: 250;
+	z-index: 250;
 }
 
+///
 .popup-backdrop {
-    background-color: rgba(0, 0, 0, .25);
+	background-color: rgba(0, 0, 0, 0.25);
 }
 
+///
 .popup-dialog {
-    border: 0;
-    border-radius: var(--border-radius-soft);
-    box-shadow: var(--shadow-xl);
-    margin: var(--space-m);
-    max-height: calc(100% - var(--space-xl));
-    max-width: 500px;
-    overflow: visible;
-    padding: var(--space-m);
-    width: 100%;
+	border: 0;
+	border-radius: var(--border-radius-soft);
+	box-shadow: var(--shadow-xl);
+	margin: var(--space-m);
+	max-height: calc(100% - var(--space-xl));
+	max-width: 500px;
+	overflow: visible;
+	padding: var(--space-m);
+	width: 100%;
 
-    -servicestudio-margin: auto;
-    -servicestudio-overflow: hidden;
+	// Service Studio Preview
+	& {
+		-servicestudio-margin: auto;
+		-servicestudio-overflow: hidden;
+	}
 }
 
-.layout-native .popup-backdrop,
-.layout-native .popup-dialog {
-    padding: var(--space-base);
+///
+.layout-native {
+	.popup-backdrop,
+	.popup-dialog {
+		padding: var(--space-base);
+	}
 }
