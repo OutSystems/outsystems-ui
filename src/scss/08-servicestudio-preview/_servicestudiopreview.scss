@@ -3,41 +3,6 @@
 /// @group ServiceStudio_Preview
 /// This section contains several styles in order to improve the service studio preview
 
-/* Menu ServiceStudio Windows Preview */
-///
-html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-neutral']),
-html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-orange']),
-html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-yellow']),
-html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-lime']),
-html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-green']),
-html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-teal']),
-html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-cyan']),
-html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-blue']),
-html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-indigo']),
-html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-violet']),
-html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-grape']),
-html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-pink']),
-html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-red']),
-html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-primary']),
-html[data-ss-kind='Nodes.WebBlock'] > body *:not(a):not([class*='text-secondary']),
-html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-neutral']),
-html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-orange']),
-html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-yellow']),
-html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-lime']),
-html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-green']),
-html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-teal']),
-html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-cyan']),
-html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-blue']),
-html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-indigo']),
-html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-violet']),
-html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-grape']),
-html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-pink']),
-html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-red']),
-html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-primary']),
-html[data-ss-kind='NRNodes.WebBlock'] > body *:not([class*='text-secondary']) {
-	-servicestudio-color: #000 !important;
-}
-
 /* Menu ServiceStudio Hybrid Preview */
 body > .app-menu-content {
 	-servicestudio-align-items: flex-start;
