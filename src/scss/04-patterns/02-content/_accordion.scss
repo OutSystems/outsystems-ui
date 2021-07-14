@@ -1,5 +1,5 @@
 ////
-/// @group Accordion
+/// @group Patterns_Accordion
 /// Patterns - Content - Accordion
 
 /*! Patterns - Content - Accordion */
@@ -30,12 +30,10 @@
 
 	& .section-expandable-title {
 		align-items: flex-start;
-		-webkit-box-align: start;
 		cursor: pointer;
 		display: -webkit-box;
 		display: -ms-flexbox;
 		display: flex;
-		-ms-flex-align: start;
 		font-size: var(--font-size-h6);
 		line-height: 1;
 		padding: var(--space-m);
@@ -48,7 +46,6 @@
 		}
 
 		& > .section-expandable-title > .section-expandable-icon {
-			-webkit-transform: rotate(180deg);
 			transform: rotate(180deg);
 		}
 	}
@@ -69,7 +66,6 @@
 		font-family: FontAwesome;
 		font-size: 24px;
 		font-weight: 400;
-		-webkit-transition: all 300ms ease-in-out;
 		transition: all 300ms ease-in-out;
 
 		&:after {
@@ -97,7 +93,6 @@
 		}
 
 		&.is--animating {
-			-webkit-transition: all 300ms ease-in-out;
 			transition: all 300ms ease-in-out;
 		}
 
