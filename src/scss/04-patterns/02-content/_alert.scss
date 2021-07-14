@@ -1,55 +1,62 @@
+////
+/// @group Accordion
+/// Patterns - Content - Alert
+
 /*! Patterns - Content - Alert */
+
 .alert {
-    border-radius: var(--border-radius-soft);
-    color: var(--color-neutral-0);
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    padding: var(--space-base);
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+	align-items: center;
+	border-radius: var(--border-radius-soft);
+	-webkit-box-align: center;
+	color: var(--color-neutral-0);
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: center;
+	padding: var(--space-base);
+
+	& .alert-icon {
+		align-self: flex-start;
+		display: -webkit-inline-box;
+		display: -ms-inline-flexbox;
+		display: inline-flex;
+		-ms-flex-item-align: start;
+		font-size: 24px;
+		margin-right: var(--space-base);
+	}
+
+	& .fa-fw {
+		width: auto;
+	}
+
+	& .alert-message {
+		-webkit-box-flex: 1;
+		-ms-flex: 1;
+		flex: 1;
+	}
+
+	&-info {
+		background-color: var(--color-info);
+	}
+
+	&-success {
+		background-color: var(--color-success);
+	}
+
+	&-error {
+		background-color: var(--color-error);
+	}
+
+	&-warning {
+		background-color: var(--color-warning);
+		color: var(--color-neutral-10);
+	}
 }
 
-.alert-icon {
-    display: -webkit-inline-box;
-    display: -ms-inline-flexbox;
-    display: inline-flex;
-    font-size: 24px;
-    margin-right: var(--space-base);
-
-    align-self: flex-start;
-    -ms-flex-item-align: start;
-}
-
-.is-rtl .alert-icon {
-    margin-left: var(--space-base);
-    margin-right: 0;
-}
-
-.alert .fa-fw {
-    width: auto;
-}
-
-.alert-message {
-    -webkit-box-flex: 1;
-    -ms-flex: 1;
-        flex: 1;
-}
-
-.alert-info {
-    background-color: var(--color-info);
-}
-
-.alert-success {
-    background-color: var(--color-success);
-}
-
-.alert-error {
-    background-color: var(--color-error);
-}
-
-.alert-warning {
-    background-color: var(--color-warning);
-    color: var(--color-neutral-10);
+///
+.is-rtl {
+	& .alert-icon {
+		margin-left: var(--space-base);
+		margin-right: 0;
+	}
 }
