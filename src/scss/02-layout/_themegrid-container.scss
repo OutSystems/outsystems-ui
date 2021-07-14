@@ -55,11 +55,16 @@
 
 ///
 .phone {
-	.header {
-		.ThemeGrid_Container {
-			padding-left: calc(var(--os-safe-area-left) + var(--space-base));
-			padding-right: calc(var(--os-safe-area-right) + var(--space-base));
-		}
+	.header.ThemeGrid_Container {
+		padding-left: calc(var(--os-safe-area-left) + var(--space-base));
+		padding-right: calc(var(--os-safe-area-right) + var(--space-base));
+	}
+
+	.main-content.ThemeGrid_Container {
+		padding-bottom: var(--space-base);
+		padding-left: calc(var(--os-safe-area-left) + var(--space-base));
+		padding-right: calc(var(--os-safe-area-right) + var(--space-base));
+		padding-top: var(--space-base);
 	}
 
 	.footer.ThemeGrid_Container {
