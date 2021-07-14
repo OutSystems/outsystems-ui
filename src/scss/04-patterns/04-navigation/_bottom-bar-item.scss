@@ -36,7 +36,7 @@
 			}
 		}
 
-		.bottom-bar-item {
+		&-item {
 			display: flex;
 			flex-direction: column;
 			height: 100%;
@@ -45,14 +45,14 @@
 			padding: 0 var(--space-s);
 			position: relative;
 
-			.bottom-bar-item-icon {
+			&-icon {
 				display: inline-flex;
 				font-size: var(--font-size-h6);
 				height: auto;
 				justify-content: center;
 			}
 
-			.bottom-bar-item-text {
+			&-text {
 				font-size: 10px;
 				overflow: hidden;
 				text-overflow: ellipsis;
@@ -66,7 +66,7 @@
 // Layout ---------------------------------------------------------------------------
 ///
 .layout-native {
-	.bottom-bar-wrapper {
+	& .bottom-bar-wrapper {
 		padding-bottom: var(--os-safe-area-bottom);
 
 		.bottom-bar {
@@ -74,10 +74,8 @@
 			justify-content: center;
 		}
 	}
-}
 
-.layout-native {
-	.footer {
+	& .footer {
 		height: var(--bottom-bar-size);
 	}
 }
