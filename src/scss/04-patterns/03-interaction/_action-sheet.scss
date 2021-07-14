@@ -6,8 +6,6 @@
 .action-sheet-container {
 	height: 100%;
 	left: 0;
-
-	-servicestudio-margin-top: -20px;
 	overflow: hidden;
 	pointer-events: none;
 	position: fixed;
@@ -18,7 +16,7 @@
 	&--visible {
 		pointer-events: auto;
 
-		&.action-sheet-container:after {
+		&:after {
 			opacity: 1;
 		}
 
@@ -54,10 +52,14 @@
 			transition: all 130ms ease-in;
 		}
 	}
+
+	// Service Studio Preview
+	& {
+		-servicestudio-margin-top: -20px;
+	}
 }
 
 .action-sheet {
-	-servicestudio--webkit-transform: translateY(0);
 	bottom: 0;
 	left: 0;
 	margin-top: 0;
@@ -67,63 +69,77 @@
 	padding-top: var(--space-base);
 	pointer-events: auto;
 	position: absolute;
-	-servicestudio-transform: translateY(0);
 	transform: translateY(100%);
 	width: 100%;
 	will-change: transform;
 	z-index: 60;
-}
 
-.action-sheet-buttons {
-	border-radius: var(--border-radius-soft);
-	display: block;
-	overflow: hidden;
-	position: relative;
-	transform: translateZ(0);
-}
-
-.action-sheet-actions {
-	-servicestudio-min-height: 40px;
-
-	.btn {
-		border: none;
-		border-radius: 0;
-		margin-top: 1px;
-		width: 100%;
+	// Service Studio Preview
+	& {
+		-servicestudio--webkit-transform: translateY(0);
+		-servicestudio-transform: translateY(0);
 	}
 
-	&:first-child .btn {
-		margin-top: 0;
+	&-buttons {
+		border-radius: var(--border-radius-soft);
+		display: block;
+		overflow: hidden;
+		position: relative;
+		transform: translateZ(0);
 	}
-}
 
-.action-sheet-cancel .btn {
-	border: none;
-	color: var(--color-neutral-8);
+	&-actions {
+		.btn {
+			border: none;
+			border-radius: 0;
+			margin-top: 1px;
+			width: 100%;
+		}
+
+		&:first-child .btn {
+			margin-top: 0;
+		}
+
+		// Service Studio Preview
+		& {
+			-servicestudio-min-height: 40px;
+		}
+	}
+
+	&-cancel {
+		.btn {
+			border: none;
+			color: var(--color-neutral-8);
+		}
+	}
 }
 
 // Responsive --------------------------------------------------------------------
 ///
 
 .desktop {
-	.action-sheet-buttons,
-	.action-sheet-cancel {
-		margin: var(--space-none) auto;
-		max-width: 500px;
-	}
-	.action-sheet-cancel {
-		margin: var(--space-base) auto var(--space-none);
+	.action-sheet {
+		&-buttons,
+		&-cancel {
+			margin: var(--space-none) auto;
+			max-width: 500px;
+		}
+
+		&-cancel {
+			margin: var(--space-base) auto var(--space-none);
+		}
 	}
 }
 
 .tablet {
-	.action-sheet-buttons,
-	.action-sheet-cancel {
-		margin: var(--space-none) auto;
-		max-width: 600px;
-	}
-
-	.action-sheet-cancel {
-		margin: var(--space-base) auto var(--space-none);
+	.action-sheet {
+		&-buttons,
+		&-cancel {
+			margin: var(--space-none) auto;
+			max-width: 600px;
+		}
+		&-cancel {
+			margin: var(--space-base) auto var(--space-none);
+		}
 	}
 }
