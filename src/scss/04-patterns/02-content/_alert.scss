@@ -1,5 +1,5 @@
 ////
-/// @group Alert
+/// @group Patterns_Alert
 /// Patterns - Content - Alert
 
 /*! Patterns - Content - Alert */
@@ -7,20 +7,13 @@
 .alert {
 	align-items: center;
 	border-radius: var(--border-radius-soft);
-	-webkit-box-align: center;
 	color: var(--color-neutral-0);
-	display: -webkit-box;
-	display: -ms-flexbox;
 	display: flex;
-	-ms-flex-align: center;
 	padding: var(--space-base);
 
 	& .alert-icon {
 		align-self: flex-start;
-		display: -webkit-inline-box;
-		display: -ms-inline-flexbox;
 		display: inline-flex;
-		-ms-flex-item-align: start;
 		font-size: 24px;
 		margin-right: var(--space-base);
 	}
@@ -30,8 +23,6 @@
 	}
 
 	& .alert-message {
-		-webkit-box-flex: 1;
-		-ms-flex: 1;
 		flex: 1;
 	}
 
