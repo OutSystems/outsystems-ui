@@ -1,166 +1,217 @@
-/*! Patterns - Adaptive - MasterDetail */
+////*! Patterns - Adaptive - MasterDetail */
+////
+/// @group MasterDetail
+/// Patterns - Adaptive - MasterDetail Styles
+
+///
 .split-screen-wrapper {
-    background-color: var(--color-neutral-0);
-    border: var(--border-size-s) solid var(--color-neutral-4);
-    border-radius: var(--border-radius-soft);
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    overflow: hidden;
-    position: relative;
+	background-color: var(--color-neutral-0);
+	border: var(--border-size-s) solid var(--color-neutral-4);
+	border-radius: var(--border-radius-soft);
+	display: flex;
+	overflow: hidden;
+	position: relative;
+
+	.split-left,
+	.split-right {
+		overflow-y: auto;
+		touch-action: pan-y;
+
+		// Service Studio Preview
+		& {
+			-servicestudio-min-height: 80px;
+			-servicestudio-position: relative;
+			-servicestudio-width: 50%;
+		}
+	}
+
+	.split-left {
+		width: var(--left-percentage);
+
+		.list-item {
+			cursor: pointer;
+		}
+	}
+
+	.split-right {
+		border-left: var(--border-size-s) solid var(--color-neutral-4);
+		padding: var(--space-xl);
+		width: calc(100% - var(--left-percentage));
+
+		.split-right-close {
+			left: calc(var(--os-safe-area-left) + var(--space-m));
+			position: fixed;
+			top: 12px;
+			z-index: 180;
+
+			// Service Studio Preview
+			& {
+				-servicestudio-display: none;
+			}
+
+			a {
+				color: var(--color-neutral-8);
+				font-size: var(--font-size-base);
+			}
+		}
+
+		.split-right-content {
+			height: 100%;
+
+			// Service Studio Preview
+			& {
+				-servicestudio-min-height: 80px;
+			}
+
+			.split-right--placeholder {
+				height: 100%;
+			}
+		}
+	}
 }
 
-.phone .split-screen-wrapper {
-    -servicestudio-display: block;
+// Layout --------------------------------------------------------------------
+///
+.layout-native {
+	.split-right-close {
+		left: calc(var(--os-safe-area-left) + 24px);
+	}
 }
 
-.tablet .split-screen-wrapper.is--screen-size,
-.desktop .split-screen-wrapper.is--screen-size {
-    height: calc(100vh - var(--master-detail-height));
+// Responsive --------------------------------------------------------------------
+///
+.desktop,
+.tablet {
+	.split-screen-wrapper {
+		&.is--screen-size {
+			height: calc(100vh - var(--master-detail-height));
+		}
+
+		&.is--full-height {
+			height: var(--master-detail-height);
+		}
+
+		.split-right-close {
+			display: none;
+		}
+	}
 }
 
-.tablet .split-screen-wrapper.is--full-height,
-.desktop .split-screen-wrapper.is--full-height {
-    height: var(--master-detail-height);
+.phone {
+	.split-screen-wrapper {
+		// Service Studio Preview
+		& {
+			-servicestudio-display: block;
+		}
+
+		.split-left,
+		.split-right {
+			// Service Studio Preview
+			& {
+				-servicestudio-width: 100% !important;
+			}
+		}
+
+		.split-left {
+			width: 100%;
+		}
+
+		.split-right {
+			background-color: var(--color-neutral-0);
+			border-left: var(--border-size-none);
+			height: 100%;
+			left: 0;
+			padding-bottom: calc(var(--os-safe-area-bottom) + var(--space-m));
+			padding-left: calc(var(--os-safe-area-left) + var(--space-m));
+			padding-right: calc(var(--os-safe-area-right) + var(--space-m));
+			padding-top: var(--header-size);
+			position: fixed;
+			top: 0;
+			transform: translateX(100%) translateZ(0);
+			transition: all 190ms ease-in;
+			width: 100%;
+			will-change: transform;
+			z-index: 150;
+
+			&.open {
+				transform: translateX(0) translateZ(0);
+				transition: all 330ms ease-out;
+			}
+
+			// Service Studio Preview
+			& {
+				-servicestudio--webkit-transform: none;
+				-servicestudio-position: static;
+			}
+		}
+	}
+
+	.layout-native {
+		.split-right {
+			padding-bottom: calc(var(--os-safe-area-bottom) + var(--space-base));
+			padding-left: calc(var(--os-safe-area-left) + var(--space-base));
+			padding-right: calc(var(--os-safe-area-right) + var(--space-base));
+			padding-top: calc(var(--header-size) + var(--os-safe-area-top));
+
+			.split-right-close {
+				left: calc(var(--os-safe-area-left) + var(--space-base));
+			}
+		}
+	}
+
+	&.android[data-status-bar-height] {
+		.layout-native {
+			.split-right {
+				padding-top: calc(var(--header-size) + var(--status-bar-height));
+			}
+		}
+	}
+
+	&.ios {
+		.layout-native {
+			.split-right-close {
+				top: calc(var(--os-safe-area-top) + 12px);
+			}
+		}
+	}
 }
 
-.split-left,
-.split-right {
-    overflow-y: auto;
-
-    -servicestudio-min-height: 80px;
-    -servicestudio-position: relative;
-    -servicestudio-width: 50%;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
+.android[data-status-bar-height] {
+	.layout-native {
+		.split-right-close {
+			left: 16px;
+			top: calc(var(--status-bar-height) + 10px);
+		}
+	}
 }
 
-.phone .split-left,
-.phone .split-right {
-    -servicestudio-width: 100% !important;
+// RTL --------------------------------------------------------------------
+///
+.is-rtl {
+	.split-right {
+		border-left: 0;
+		border-right: var(--border-size-s) solid var(--color-neutral-4);
+	}
 }
 
-.split-left {
-    width: var(--left-percentage);
-}
+// Accessibility --------------------------------------------------------------------
+///
+.has-accessible-features {
+	.split-left {
+		.list-item {
+			&:focus {
+				box-shadow: none;
 
-.split-right {
-    border-left: var(--border-size-s) solid var(--color-neutral-4);
-    padding: var(--space-xl);
-    width: calc(100% - var(--left-percentage));
-}
-
-.is-rtl .split-right {
-    border-left: 0;
-    border-right: var(--border-size-s) solid var(--color-neutral-4);
-}
-
-.split-left .list-item {
-    cursor: pointer;
-}
-
-.split-right-content {
-    height: 100%;
-
-    -servicestudio-min-height: 80px;
-}
-
-.split-right--placeholder {
-    height: 100%;
-}
-
-.phone .split-left {
-    width: 100%;
-}
-
-.phone .split-right {
-    background-color: var(--color-neutral-0);
-    border-left: var(--border-size-none);
-    height: 100%;
-    left: 0;
-    padding-bottom: calc(var(--os-safe-area-bottom) + var(--space-m));
-    padding-left: calc(var(--os-safe-area-left) + var(--space-m));
-    padding-right: calc(var(--os-safe-area-right) + var(--space-m));
-    padding-top: var(--header-size);
-    position: fixed;
-    top: 0;
-    -webkit-transform: translateX(100%) translateZ(0);
-            transform: translateX(100%) translateZ(0);
-    -webkit-transition: all 190ms ease-in;
-            transition: all 190ms ease-in;
-    width: 100%;
-    z-index: 150;
-
-    -servicestudio--webkit-transform: none;
-    -servicestudio-position: static;
-    will-change: transform;
-}
-
-.phone .layout-native .split-right {
-    padding-bottom: calc(var(--os-safe-area-bottom) + var(--space-base));
-    padding-left: calc(var(--os-safe-area-left) + var(--space-base));
-    padding-right: calc(var(--os-safe-area-right) + var(--space-base));
-    padding-top: calc(var(--header-size) + var(--os-safe-area-top));
-}
-
-.phone.android[data-status-bar-height] .layout-native .split-right {
-    padding-top: calc(var(--header-size) + var(--status-bar-height));
-}
-
-.phone .split-right.open {
-    -webkit-transform: translateX(0) translateZ(0);
-            transform: translateX(0) translateZ(0);
-    -webkit-transition: all 330ms ease-out;
-            transition: all 330ms ease-out;
-}
-
-.split-right-close {
-    left: calc(var(--os-safe-area-left) + var(--space-m));
-    position: fixed;
-    top: 12px;
-    z-index: 180;
-
-    -servicestudio-display: none;
-}
-
-.phone .layout-native .split-right-close {
-    left: calc(var(--os-safe-area-left) + var(--space-base));
-}
-
-.split-right-close a {
-    color: var(--color-neutral-8);
-    font-size: var(--font-size-base);
-}
-
-.desktop .split-right-close,
-.tablet .split-right-close {
-    display: none;
-}
-
-.ios.phone .layout-native .split-right-close {
-    top: calc(var(--os-safe-area-top) + 12px);
-}
-
-.layout-native .split-right-close {
-    left: calc(var(--os-safe-area-left) + 24px);
-}
-
-.android[data-status-bar-height] .layout-native .split-right-close {
-    left: 16px;
-    top: calc(var(--status-bar-height) + 10px);
-}
-
-/* Accessibility Styles */
-.has-accessible-features .split-left .list-item:focus {
-    box-shadow: none;
-}
-
-.has-accessible-features .split-left .list-item:focus:before {
-    border: 3px solid var(--color-focus-outer);
-    bottom: 0;
-    content: "";
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
+				&:before {
+					border: 3px solid var(--color-focus-outer);
+					bottom: 0;
+					content: '';
+					left: 0;
+					position: absolute;
+					right: 0;
+					top: 0;
+				}
+			}
+		}
+	}
 }
