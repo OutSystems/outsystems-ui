@@ -1,18 +1,12 @@
 ////
-/// @group BlankSlate
+/// @group Patterns_BlankSlate
 /// Patterns - Content - BlankSlate
 
 /*! Patterns - Content - BlankSlate */
 ///
 .blank-slate {
-	-webkit-box-direction: normal;
-	-webkit-box-orient: vertical;
-	display: -webkit-box;
-	display: -ms-flexbox;
 	display: flex;
-	-ms-flex-direction: column;
 	flex-direction: column;
-	-ms-flex-pack: distribute;
 	justify-content: space-around;
 	text-align: center;
 
