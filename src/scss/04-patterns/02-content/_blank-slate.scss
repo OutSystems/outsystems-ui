@@ -1,40 +1,44 @@
+////
+/// @group BlankSlate
+/// Patterns - Content - BlankSlate
+
 /*! Patterns - Content - BlankSlate */
+///
 .blank-slate {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-        flex-direction: column;
-    text-align: center;
-    -ms-flex-pack: distribute;
-    justify-content: space-around;
+	-webkit-box-direction: normal;
+	-webkit-box-orient: vertical;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	-ms-flex-pack: distribute;
+	justify-content: space-around;
+	text-align: center;
 
-    -webkit-box-direction: normal;
-    -webkit-box-orient: vertical;
-    -ms-flex-direction: column;
-}
+	&-description {
+		color: var(--color-neutral-9);
+		padding: var(--space-none) var(--space-base);
+	}
 
-.blank-slate-description {
-    color: var(--color-neutral-9);
-    padding: var(--space-none) var(--space-base);
-}
+	&.large {
+		height: 100%;
 
-.blank-slate.large {
-    height: 100%;
-}
+		& .blank-slate-icon {
+			font-size: 120px;
+		}
 
-.large .blank-slate-icon {
-    font-size: 120px;
-}
+		& .blank-slate-actions {
+			padding: var(--space-xxl) var(--space-base);
+		}
+	}
 
-.blank-slate-actions {
-    padding: var(--space-base);
-}
+	&-actions {
+		padding: var(--space-base);
+	}
 
-.large .blank-slate-actions {
-    padding: var(--space-xxl) var(--space-base);
-}
-
-.blank-slate-icon {
-    color: var(--color-neutral-6);
-    font-size: 70px;
+	&-icon {
+		color: var(--color-neutral-6);
+		font-size: 70px;
+	}
 }

@@ -1,6 +1,6 @@
 /*! Patterns - Adaptive - Columns */
 ////
-/// @group Columns
+/// @group Patterns_Columns
 /// Patterns - Adaptive - Columns Styles
 
 ///
@@ -33,7 +33,7 @@
 	}
 }
 
-// Columns Gutters --------------------------------------------------------------------
+// Gutters --------------------------------------------------------------------
 ///
 @each $entry in $osui-sizes {
 	$label: nth($entry, 1);
@@ -70,7 +70,7 @@
 	}
 }
 
-// Columns Responsive --------------------------------------------------------------------
+// Responsive --------------------------------------------------------------------
 ///
 @each $osui-device in $osui-devices {
 	@if ($osui-device != 'desktop') {
