@@ -1,8 +1,7 @@
+/*! Page Layout Native - Menu */
 ////
 /// @group Menu-Layout-Native
 /// Layout Native - Menu
-
-/*! Page Layout Native - Menu */
 
 ///
 .layout-native {
@@ -31,11 +30,13 @@
 ///
 .desktop {
 	.layout-native {
-		&.aside-visible,
-		&.aside-expandable {
-			.app-menu-content {
-				box-shadow: var(--shadow-m);
-				z-index: 110;
+		&.aside {
+			&-visible,
+			&-expandable {
+				.app-menu-content {
+					box-shadow: var(--shadow-m);
+					z-index: 110;
+				}
 			}
 		}
 
@@ -83,12 +84,14 @@
 				display: none;
 			}
 
-			&.aside-visible,
-			&.aside-expandable {
-				.app-menu-content {
-					box-shadow: var(--shadow-m);
-					left: 0;
-					z-index: 110;
+			&.aside {
+				&-visible,
+				&-expandable {
+					.app-menu-content {
+						box-shadow: var(--shadow-m);
+						left: 0;
+						z-index: 110;
+					}
 				}
 			}
 
@@ -115,10 +118,12 @@
 	.tablet {
 		&.landscape {
 			&.landscape {
-				&.aside-visible,
-				&.aside-expandable {
-					.app-menu-content {
-						right: 0;
+				&.aside {
+					&-visible,
+					&-expandable {
+						.app-menu-content {
+							right: 0;
+						}
 					}
 				}
 			}

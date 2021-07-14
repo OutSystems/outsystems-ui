@@ -61,16 +61,18 @@
 		.list-item-selected {
 			background: var(--color-primary) var(--color-primary-lightest);
 
-			.list-item-content-title {
-				color: var(--color-neutral-10);
-			}
+			.list-item-content {
+				&-title {
+					color: var(--color-neutral-10);
+				}
 
-			.list-item-content-text {
-				color: var(--color-neutral-8);
-			}
+				&-text {
+					color: var(--color-neutral-8);
+				}
 
-			.list-item-content-right .icon {
-				color: var(--color-primary);
+				&-right .icon {
+					color: var(--color-primary);
+				}
 			}
 		}
 	}

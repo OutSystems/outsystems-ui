@@ -1,8 +1,7 @@
+/*! Widgets - Inputs and TextAreas */
 ////
 /// @group Input&Textarea
 /// Default Input and Textareas styles
-
-/*! Widgets - Inputs and TextAreas */
 
 /* 
 	Note:
@@ -62,28 +61,30 @@
 	}
 
 	/* Small sizes */
-	&.input-small {
-		&[data-input] {
-			font-size: var(--font-size-xs);
-			height: 32px;
-			padding: var(--space-none) var(--space-s);
+	&.input {
+		&-small {
+			&[data-input] {
+				font-size: var(--font-size-xs);
+				height: 32px;
+				padding: var(--space-none) var(--space-s);
+			}
+
+			&[data-textarea] {
+				font-size: var(--font-size-xs);
+				padding: var(--space-s);
+			}
 		}
 
-		&[data-textarea] {
-			font-size: var(--font-size-xs);
-			padding: var(--space-s);
-		}
-	}
+		/* Large sizes */
+		&-large {
+			&[data-input] {
+				font-size: var(--font-size-base);
+				height: 48px;
+			}
 
-	/* Large sizes */
-	&.input-large {
-		&[data-input] {
-			font-size: var(--font-size-base);
-			height: 48px;
-		}
-
-		&[data-textarea] {
-			font-size: var(--font-size-base);
+			&[data-textarea] {
+				font-size: var(--font-size-base);
+			}
 		}
 	}
 

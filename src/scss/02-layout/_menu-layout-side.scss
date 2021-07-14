@@ -1,8 +1,7 @@
+/*! Page Layout Side - Menu */
 ////
 /// @group Menu-Layout-Side
 /// Layout Side - Menu
-
-/*! Page Layout Side - Menu */
 
 ///
 .layout-side {
@@ -37,23 +36,23 @@
 			border-top: 0;
 			padding: var(--space-s) var(--space-m);
 		}
-	}
 
-	.submenu-item {
-		flex: 1;
-	}
+		&-item {
+			flex: 1;
+		}
 
-	.submenu-items {
-		border: none;
-		box-shadow: none;
-		display: none;
-		opacity: 1;
-		padding: 0;
-		padding: var(--space-xs) var(--space-m);
-		pointer-events: auto;
-		position: relative;
-		top: 0;
-		transform: translateY(0);
+		&-items {
+			border: none;
+			box-shadow: none;
+			display: none;
+			opacity: 1;
+			padding: 0;
+			padding: var(--space-xs) var(--space-m);
+			pointer-events: auto;
+			position: relative;
+			top: 0;
+			transform: translateY(0);
+		}
 	}
 }
 

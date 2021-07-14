@@ -1,8 +1,7 @@
+/*! $3 - Page Layout */
 ////
 /// @group Layout
 /// layout styles
-
-/*! $3 - Page Layout */
 
 ///
 html,
@@ -26,35 +25,37 @@ body,
 	display: flex;
 	min-height: 100vh;
 
-	&.layout-top {
-		&,
-		&:not(.layout-native) {
-			flex-direction: column;
-		}
-	}
-
-	&.layout-left {
-		flex-direction: row;
-	}
-
-	&.layout-side {
-		.main {
-			margin-left: var(--side-menu-size);
+	&.layout {
+		&-top {
+			&,
+			&:not(.layout-native) {
+				flex-direction: column;
+			}
 		}
 
-		&.aside-overlay .main {
-			margin-left: 0;
-		}
-	}
-
-	&.layout-native {
-		// Service Studio Preview
-		& {
-			-servicestudio-min-height: 100vh !important;
+		&-left {
+			flex-direction: row;
 		}
 
-		.main {
-			width: 100%;
+		&-side {
+			.main {
+				margin-left: var(--side-menu-size);
+			}
+
+			&.aside-overlay .main {
+				margin-left: 0;
+			}
+		}
+
+		&-native {
+			// Service Studio Preview
+			& {
+				-servicestudio-min-height: 100vh !important;
+			}
+
+			.main {
+				width: 100%;
+			}
 		}
 	}
 
@@ -82,10 +83,10 @@ body,
 .ios {
 	.layout {
 		min-height: 100%;
-	}
 
-	.layout-native .footer {
-		height: calc(var(--os-safe-area-bottom) + var(--bottom-bar-size));
+		&-native .footer {
+			height: calc(var(--os-safe-area-bottom) + var(--bottom-bar-size));
+		}
 	}
 }
 
@@ -94,9 +95,11 @@ body,
 .desktop,
 .tablet {
 	.layout-native {
-		&.aside-visible,
-		&.aside-expandable {
-			--side-menu-size: 264px;
+		&.aside {
+			&-visible,
+			&-expandable {
+				--side-menu-size: 264px;
+			}
 		}
 	}
 }
@@ -104,10 +107,12 @@ body,
 ///
 .desktop {
 	.layout-native {
-		&.aside-visible,
-		&.aside-expandable {
-			.main {
-				width: calc(100% - var(--side-menu-size));
+		&.aside {
+			&-visible,
+			&-expandable {
+				.main {
+					width: calc(100% - var(--side-menu-size));
+				}
 			}
 		}
 	}
@@ -117,11 +122,13 @@ body,
 .tablet {
 	&.landscape {
 		.layout-native {
-			&.aside-visible,
-			&.aside-expandable {
-				.main {
-					margin-left: var(--side-menu-size);
-					width: calc(100% - var(--side-menu-size));
+			&.aside {
+				&-visible,
+				&-expandable {
+					.main {
+						margin-left: var(--side-menu-size);
+						width: calc(100% - var(--side-menu-size));
+					}
 				}
 			}
 		}
@@ -159,11 +166,13 @@ body,
 .is-rtl {
 	&.tablet {
 		.layout-native {
-			&.aside-visible,
-			&.aside-expandable {
-				.main {
-					margin-left: 0;
-					margin-right: var(--side-menu-size);
+			&.aside {
+				&-visible,
+				&-expandable {
+					.main {
+						margin-left: 0;
+						margin-right: var(--side-menu-size);
+					}
 				}
 			}
 		}

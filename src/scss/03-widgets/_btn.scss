@@ -1,8 +1,7 @@
+/*! Widgets - Button */
 ////
 /// @group Button
 /// Default Button styles
-
-/*! Widgets - Button */
 
 ///
 .btn {
@@ -44,39 +43,41 @@
 	}
 
 	// States
-	&.btn-primary {
-		background-color: var(--color-primary);
-		border: var(--border-size-s) solid var(--color-primary);
-		color: var(--color-neutral-0);
-	}
+	&.btn {
+		&-primary {
+			background-color: var(--color-primary);
+			border: var(--border-size-s) solid var(--color-primary);
+			color: var(--color-neutral-0);
+		}
 
-	&.btn-small {
-		font-size: var(--font-size-xs);
-		height: 32px;
-		padding: var(--space-none) var(--space-s);
-	}
+		&-small {
+			font-size: var(--font-size-xs);
+			height: 32px;
+			padding: var(--space-none) var(--space-s);
+		}
 
-	&.btn-large {
-		font-size: var(--font-size-base);
-		height: 48px;
-	}
+		&-large {
+			font-size: var(--font-size-base);
+			height: 48px;
+		}
 
-	&.btn-cancel {
-		background-color: var(--color-neutral-0);
-		border: var(--border-size-s) solid var(--color-neutral-8);
-		color: var(--color-neutral-7);
-	}
+		&-cancel {
+			background-color: var(--color-neutral-0);
+			border: var(--border-size-s) solid var(--color-neutral-8);
+			color: var(--color-neutral-7);
+		}
 
-	&.btn-success {
-		background-color: var(--color-success);
-		border: var(--border-size-s) solid var(--color-success);
-		color: var(--color-neutral-0);
-	}
+		&-success {
+			background-color: var(--color-success);
+			border: var(--border-size-s) solid var(--color-success);
+			color: var(--color-neutral-0);
+		}
 
-	&.btn-error {
-		background-color: var(--color-error);
-		border: var(--border-size-s) solid var(--color-error);
-		color: var(--color-neutral-0);
+		&-error {
+			background-color: var(--color-error);
+			border: var(--border-size-s) solid var(--color-error);
+			color: var(--color-neutral-0);
+		}
 	}
 
 	&[disabled] {
@@ -105,13 +106,15 @@
 		font-size: var(--font-size-base);
 		height: 48px;
 
-		&.btn-small {
-			font-size: var(--font-size-s);
-			height: 40px;
-		}
+		&.btn {
+			&-small {
+				font-size: var(--font-size-s);
+				height: 40px;
+			}
 
-		&.btn-large {
-			height: 56px;
+			&-large {
+				height: 56px;
+			}
 		}
 	}
 }

@@ -5,7 +5,10 @@
 
 ///
 [data-popup] {
-	-servicestudio-top: 0;
+	// Service Studio Preview
+	& {
+		-servicestudio-top: 0;
+	}
 }
 
 ///
@@ -14,33 +17,36 @@
 }
 
 ///
-.popup-backdrop {
-	background-color: rgba(0, 0, 0, 0.25);
-}
+.popup {
+	&-backdrop {
+		background-color: rgba(0, 0, 0, 0.25);
+	}
 
-///
-.popup-dialog {
-	border: 0;
-	border-radius: var(--border-radius-soft);
-	box-shadow: var(--shadow-xl);
-	margin: var(--space-m);
-	max-height: calc(100% - var(--space-xl));
-	max-width: 500px;
-	overflow: visible;
-	padding: var(--space-m);
-	width: 100%;
+	&-dialog {
+		border: 0;
+		border-radius: var(--border-radius-soft);
+		box-shadow: var(--shadow-xl);
+		margin: var(--space-m);
+		max-height: calc(100% - var(--space-xl));
+		max-width: 500px;
+		overflow: visible;
+		padding: var(--space-m);
+		width: 100%;
 
-	// Service Studio Preview
-	& {
-		-servicestudio-margin: auto;
-		-servicestudio-overflow: hidden;
+		// Service Studio Preview
+		& {
+			-servicestudio-margin: auto;
+			-servicestudio-overflow: hidden;
+		}
 	}
 }
 
 ///
 .layout-native {
-	.popup-backdrop,
-	.popup-dialog {
-		padding: var(--space-base);
+	.popup {
+		&-backdrop,
+		&-dialog {
+			padding: var(--space-base);
+		}
 	}
 }
