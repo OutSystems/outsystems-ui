@@ -1,54 +1,71 @@
-/*! Patterns - Content - CardBackground */
+////*! Patterns - Content - CardBackground */
+////
+/// @group Patterns_CardBackground
+/// Patterns - Content - CardBackground Styles
+
+///
 .card-background {
 	align-items: center;
 	border-radius: var(--border-radius-soft);
-	-webkit-box-align: center;
 	color: var(--color-neutral-0);
-	display: -webkit-box;
-	display: -ms-flexbox;
 	display: flex;
-	-ms-flex-align: center;
 
 	-servicestudio-height: auto !important;
 	overflow: hidden;
 	padding: var(--space-m);
 	position: relative;
-}
 
-.layout-native .card-background {
-	padding: var(--space-base);
-}
+	&-content {
+		-servicestudio-display: initial;
+		display: flex;
+		position: relative;
+		width: 100%;
+		z-index: 1;
 
-.layout-native .card-background.padding-none {
-	padding: var(--space-none);
-}
+		&.top-left,
+		&.center-left,
+		&.bottom-left {
+			text-align: left;
+		}
 
-.card-background-content {
-	-servicestudio-display: initial;
-	display: -ms-flexbox;
-	display: -webkit-box;
-	display: flex;
-	position: relative;
-	width: 100%;
-	z-index: 1;
-}
+		&.top-center,
+		&.center,
+		&.bottom-center {
+			text-align: center;
+		}
 
-.card-background-content.top-left,
-.card-background-content.center-left,
-.card-background-content.bottom-left {
-	text-align: left;
-}
+		&.top-right,
+		&.center-right,
+		&.bottom-right {
+			text-align: right;
+		}
+	}
 
-.card-background-content.top-center,
-.card-background-content.center,
-.card-background-content.bottom-center {
-	text-align: center;
-}
+	&-image img {
+		height: 100%;
+		object-fit: cover;
+		object-position: center center;
+		width: 100%;
+	}
 
-.card-background-content.top-right,
-.card-background-content.center-right,
-.card-background-content.bottom-right {
-	text-align: right;
+	&-color {
+		opacity: 0.6;
+
+		&:after {
+			background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+			background: -o-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+			background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 1)));
+			background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+			content: '';
+			height: 100%;
+			left: 0;
+			opacity: 1;
+			position: absolute;
+			top: 0;
+			width: 100%;
+			z-index: 1;
+		}
+	}
 }
 
 .card-background-image,
@@ -58,31 +75,13 @@
 	width: 100%;
 }
 
-.card-background-color {
-	opacity: 0.6;
-}
-
-.card-background-color:after {
-	background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
-	background: -o-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
-	background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 1)));
-	background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
-	content: '';
-	height: 100%;
-	left: 0;
-	opacity: 1;
-	position: absolute;
-	top: 0;
-	width: 100%;
-	z-index: 1;
-}
-
-.card-background-image img {
-	height: 100%;
-
-	-o-object-fit: cover;
-	object-fit: cover;
-	-o-object-position: center center;
-	object-position: center center;
-	width: 100%;
+// Layout -------------------------------------------------------------------------
+///
+.layout-native {
+	& .card-background {
+		padding: var(--space-base);
+		&.padding-none {
+			padding: var(--space-none);
+		}
+	}
 }
