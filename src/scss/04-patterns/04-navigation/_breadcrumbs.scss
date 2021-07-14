@@ -1,9 +1,15 @@
 /*! Patterns - Navigation - Breadcrumbs */
+////
+/// @group Patterns_Breadcrumbs
+/// Breadcrumbs styles
+
+///
 .breadcrumbs-content {
 	align-items: center;
 	display: flex;
 }
 
+///
 .breadcrumbs-item {
 	align-items: center;
 	color: var(--color-neutral-8);
