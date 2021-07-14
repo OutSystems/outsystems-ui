@@ -1,21 +1,22 @@
+/*! Page Layout - Layout Side - Header */
 ////
 /// @group Header_Layout_Side
 /// Layout - Layout Side - Header styles
 
-/*! Page Layout - Layout Side - Header */
-
 ///
 .layout-side {
 	&.fixed-header {
-		&.aside-expandable {
-			.header {
-				left: 0;
+		&.aside {
+			&-expandable {
+				.header {
+					left: 0;
+				}
 			}
-		}
 
-		&.aside-overlay {
-			.header {
-				left: 0;
+			&-overlay {
+				.header {
+					left: 0;
+				}
 			}
 		}
 
@@ -33,11 +34,11 @@
 			margin-left: calc(var(--side-menu-size) * -1);
 		}
 
-		&.menu-visible:not(.fixed-header) .main .header {
-			margin-left: 0;
-		}
-
 		&.menu-visible {
+			&:not(.fixed-header) .main .header {
+				margin-left: 0;
+			}
+
 			.header {
 				left: 0;
 			}
@@ -151,24 +152,4 @@
 		left: 0;
 		right: 0;
 	}
-}
-
-//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-
-.aside-expandable.menu-visible .header,
-.layout-side.fixed-header.aside-overlay .header,
-.tablet .layout-side.fixed-header .header,
-.phone .layout-side.fixed-header .header {
-	left: 0;
-}
-
-.is-rtl .layout-side.fixed-header.aside-expandable .header,
-.is-rtl .aside-expandable.menu-visible .header,
-.is-rtl .layout-side.fixed-header.aside-overlay .header,
-.is-rtl.tablet .layout-side.fixed-header .header,
-.is-rtl.phone .layout-side.fixed-header .header {
-	left: 0;
-	right: 0;
 }

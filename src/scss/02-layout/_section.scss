@@ -1,8 +1,7 @@
+/*! Page Layout - Section */
 ////
 /// @group Layout_Section
 /// Page Layout - Section
-
-/*! Page Layout - Section */
 
 ///
 .full-width-section {
@@ -14,29 +13,30 @@
 }
 
 ///
-.section-background {
-	@include absolute-left-top();
+.section {
+	&-background {
+		@include absolute-left-top();
 
-	height: 100%;
-	overflow: hidden;
-	width: 100%;
+		height: 100%;
+		overflow: hidden;
+		width: 100%;
 
-	&:empty {
-		// Service Studio Preview
-		& {
-			-servicestudio-min-height: 80px;
-			-servicestudio-position: relative;
+		&:empty {
+			// Service Studio Preview
+			& {
+				-servicestudio-min-height: 80px;
+				-servicestudio-position: relative;
+			}
+		}
+
+		img {
+			height: 100%;
+			object-fit: cover;
+			width: 100%;
 		}
 	}
 
-	img {
-		height: 100%;
-		object-fit: cover;
-		width: 100%;
+	&-content {
+		position: relative;
 	}
-}
-
-///
-.section-content {
-	position: relative;
 }

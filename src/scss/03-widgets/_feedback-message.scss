@@ -28,22 +28,22 @@
 	padding-left: var(--space-base);
 }
 
-///
+/// @todo Check if div tag is needed on this selector!
 div.feedback-message-error {
 	background-color: var(--color-error);
 }
 
-///
+/// @todo Check if div tag is needed on this selector!
 div.feedback-message-info {
 	background-color: var(--color-info);
 }
 
-///
+/// @todo Check if div tag is needed on this selector!
 div.feedback-message-success {
 	background-color: var(--color-success);
 }
 
-///
+/// @todo Check if div tag is needed on this selector!
 div.feedback-message-warning {
 	background-color: var(--color-warning);
 	color: var(--color-neutral-10);

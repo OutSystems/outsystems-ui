@@ -1,8 +1,7 @@
+/*! Page Layout - Content */
 ////
 /// @group Layout_Content
 /// Page Layout - Content
-
-/*! Page Layout - Content */
 
 ///
 .content {
@@ -10,63 +9,58 @@
 	flex: 1;
 	flex-direction: column;
 	position: relative;
+
+	&-breadcrumbs {
+		margin-bottom: var(--space-base);
+	}
+
+	&-top {
+		justify-content: space-between;
+
+		&-title {
+			flex: 1;
+			margin-bottom: var(--space-l);
+
+			/// @todo Check this selector! It makes sence?
+			.Title_Links {
+				font-size: var(--font-size-s);
+				font-weight: var(--font-regular);
+			}
+		}
+
+		&-actions {
+			flex: 1;
+			justify-content: flex-end;
+			margin-bottom: var(--space-l);
+			text-align: right;
+		}
+
+		&-title,
+		&-actions {
+			align-items: center;
+			display: flex;
+			flex-wrap: wrap;
+
+			& > div:not([class*='ThemeGrid_Width']) {
+				width: 100%;
+			}
+		}
+	}
+
+	&-middle {
+		position: relative;
+
+		// Service Studio Preview
+		& {
+			-servicestudio-min-height: 420px;
+		}
+	}
 }
 
 ///
 .main-content {
 	flex: 1;
 	position: relative;
-}
-
-///
-.content-breadcrumbs {
-	margin-bottom: var(--space-base);
-}
-
-///
-.content-top {
-	justify-content: space-between;
-}
-
-///
-.content-top-title {
-	flex: 1;
-	margin-bottom: var(--space-l);
-
-	.Title_Links {
-		font-size: var(--font-size-s);
-		font-weight: var(--font-regular);
-	}
-}
-
-///
-.content-top-actions {
-	flex: 1;
-	justify-content: flex-end;
-	margin-bottom: var(--space-l);
-	text-align: right;
-}
-
-///
-.content-top-title,
-.content-top-actions {
-	align-items: center;
-	display: flex;
-	flex-wrap: wrap;
-
-	& > div:not([class*='ThemeGrid_Width']) {
-		width: 100%;
-	}
-}
-
-///
-.content-middle {
-	position: relative;
-
-	// Service Studio Preview
-	& {
-		-servicestudio-min-height: 420px;
-	}
 }
 
 ///
@@ -84,13 +78,15 @@
 
 ///
 .phone {
-	.content-top {
-		flex-direction: column;
-	}
+	.content {
+		&-top {
+			flex-direction: column;
 
-	.content-top-actions,
-	.content-top-title {
-		flex-wrap: wrap;
-		width: 100%;
+			&-actions,
+			&-title {
+				flex-wrap: wrap;
+				width: 100%;
+			}
+		}
 	}
 }

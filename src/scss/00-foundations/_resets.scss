@@ -52,10 +52,12 @@ body {
 :focus {
 	outline: 0;
 }
+
 ///
 ::-moz-focus-inner {
 	border: 0;
 }
+
 ///
 .has-accessible-features :focus {
 	box-shadow: 0 0 0 3px var(--color-focus-outer);
@@ -150,6 +152,7 @@ input[type='time']:empty {
 	display: inline-flex;
 }
 
+///
 ::-webkit-file-upload-button {
 	appearance: button;
 }

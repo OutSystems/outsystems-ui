@@ -1,8 +1,7 @@
+/*! Page Layout - Layout Native - Header */
 ////
 /// @group Header_Layout_Native
 /// Layout - Layout Native - Header styles
-
-/*! Page Layout - Layout Native - Header */
 
 ///
 .layout-native {
@@ -13,20 +12,33 @@
 	.header {
 		position: sticky;
 		top: 0;
-	}
 
-	.header-top {
-		padding: 0 var(--space-l);
-	}
+		&-top {
+			padding: 0 var(--space-l);
+		}
 
-	.header-title {
-		font-size: var(--font-size-h5);
-		font-weight: var(--font-regular);
+		&-title {
+			font-size: var(--font-size-h5);
+			font-weight: var(--font-regular);
 
-		// Service Studio Preview
-		& {
-			-servicestudio-text-align: center;
-			-servicestudio-width: 100%;
+			// Service Studio Preview
+			& {
+				-servicestudio-text-align: center;
+				-servicestudio-width: 100%;
+			}
+		}
+
+		&-left {
+			flex: 1;
+			margin-right: var(--space-base);
+		}
+
+		&-right {
+			display: flex;
+			flex: 1;
+			justify-content: flex-end;
+			margin-left: var(--space-base);
+			margin-right: auto;
 		}
 	}
 
@@ -36,19 +48,6 @@
 			-servicestudio-text-align: center;
 			-servicestudio-width: 100%;
 		}
-	}
-
-	.header-left {
-		flex: 1;
-		margin-right: var(--space-base);
-	}
-
-	.header-right {
-		display: flex;
-		flex: 1;
-		justify-content: flex-end;
-		margin-left: var(--space-base);
-		margin-right: auto;
 	}
 
 	.content-bottom {

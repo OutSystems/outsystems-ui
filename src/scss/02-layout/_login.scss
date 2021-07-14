@@ -1,45 +1,48 @@
+/*! Page Layout - Login */
 ////
 /// @group Layout_Login
 /// Page Layout - Login
 
-/*! Page Layout - Login */
-
 ///
-.login-screen {
-	align-items: center;
-	background-color: var(--color-primary);
-	display: flex;
-	height: 100%;
-	justify-content: center;
-
-	& > img {
-		@include absolute-left-top();
+.login {
+	&-screen {
+		align-items: center;
+		background-color: var(--color-primary);
+		display: flex;
 		height: 100%;
-		object-fit: cover;
-		width: 100%;
-	}
-}
+		justify-content: center;
 
-///
-.login-form {
-	background-color: var(--color-neutral-0);
-	border-radius: var(--border-radius-soft);
-	box-shadow: var(--shadow-l);
-	min-width: 435px;
-	padding: var(--space-xxl);
-	z-index: 2;
+		& > img {
+			@include absolute-left-top();
+			height: 100%;
+			object-fit: cover;
+			width: 100%;
+		}
+	}
+
+	&-form {
+		background-color: var(--color-neutral-0);
+		border-radius: var(--border-radius-soft);
+		box-shadow: var(--shadow-l);
+		min-width: 435px;
+		padding: var(--space-xxl);
+		z-index: 2;
+	}
 }
 
 ///
 .layout-native {
-	.login-screen {
-		background-color: var(--color-background-login);
-		padding: var(--os-safe-area-top) var(--os-safe-area-right) var(--os-safe-area-bottom) var(--os-safe-area-left);
-	}
+	.login {
+		&-screen {
+			background-color: var(--color-background-login);
+			padding: var(--os-safe-area-top) var(--os-safe-area-right) var(--os-safe-area-bottom)
+				var(--os-safe-area-left);
+		}
 
-	.login-form {
-		border-radius: 0;
-		box-shadow: none;
+		&-form {
+			border-radius: 0;
+			box-shadow: none;
+		}
 	}
 }
 
@@ -70,13 +73,15 @@
 	}
 
 	.layout-native {
-		.login-form {
-			background: transparent;
-			margin: 0;
-		}
+		.login {
+			&-form {
+				background: transparent;
+				margin: 0;
+			}
 
-		.login-button .btn {
-			padding-bottom: var(--os-safe-area-bottom);
+			&-button .btn {
+				padding-bottom: var(--os-safe-area-bottom);
+			}
 		}
 
 		&.blank .login-button .btn {

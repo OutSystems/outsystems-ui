@@ -1,8 +1,7 @@
+/*! Page Layout - iOS Scroll Bounce */
 ////
 /// @group Layout_iOS_ScrollBounce
 /// Page Layout - iOS Scroll Bounce
-
-/*! Page Layout - iOS Scroll Bounce */
 
 ///
 .ios {
@@ -35,16 +34,16 @@
 					top: var(--header-size, 0);
 				}
 
-				.content-bottom {
-					grid-area: footer;
-					position: relative;
-				}
-
 				.content {
 					background-color: var(--color-background-body);
 					grid-area: content;
 					overflow-x: hidden;
 					overflow-y: auto;
+
+					&-bottom {
+						grid-area: footer;
+						position: relative;
+					}
 				}
 			}
 		}

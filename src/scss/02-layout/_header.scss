@@ -1,8 +1,7 @@
+/*! Page Layout - Header */
 ////
 /// @group Header
 /// Layout - General Header styles
-
-/*! Page Layout - Header */
 
 ///
 .header {
@@ -13,6 +12,18 @@
 	// Service Studio Preview
 	& {
 		-servicestudio-position: relative;
+	}
+
+	&-top {
+		height: var(--header-size);
+	}
+
+	&-logo {
+		padding-right: var(--space-base);
+	}
+
+	&-navigation {
+		flex: 1;
 	}
 
 	.header-content {
@@ -42,21 +53,6 @@
 }
 
 ///
-.header-top {
-	height: var(--header-size);
-}
-
-///
-.header-logo {
-	padding-right: var(--space-base);
-}
-
-///
-.header-navigation {
-	flex: 1;
-}
-
-///
 .menu-icon {
 	background-color: transparent;
 	border: none;
@@ -68,15 +64,14 @@
 	margin-right: var(--space-m);
 	padding: 0;
 	width: 24px;
-}
 
-///
-.menu-icon-line {
-	background-color: var(--color-neutral-8);
-	border-radius: 20px;
-	height: 3px;
-	margin: 2px 0;
-	width: 24px;
+	&-line {
+		background-color: var(--color-neutral-8);
+		border-radius: 20px;
+		height: 3px;
+		margin: 2px 0;
+		width: 24px;
+	}
 }
 
 ///
