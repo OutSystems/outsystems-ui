@@ -18,10 +18,6 @@
 		}
 	}
 
-	&:only-child > .columns-item {
-		margin-bottom: var(--space-none);
-	}
-
 	&.columns-small-left > .columns-item:last-child,
 	&.columns-small-right > .columns-item:first-child {
 		flex: 3;
@@ -68,6 +64,11 @@
 			margin-bottom: #{$value};
 		}
 	}
+}
+
+// Override gutters rule
+.columns:only-child > .columns-item {
+	margin-bottom: var(--space-none);
 }
 
 // Responsive --------------------------------------------------------------------
