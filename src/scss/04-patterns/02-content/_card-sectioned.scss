@@ -16,20 +16,22 @@
 		}
 
 		&.flex-direction-row {
-			& .card-image {
-				padding: var(--space-m) var(--space-none) var(--space-m) var(--space-m);
+			.card {
+				&-image {
+					padding: var(--space-m) var(--space-none) var(--space-m) var(--space-m);
 
-				&.padding-none {
-					padding: var(--space-none);
+					&.padding-none {
+						padding: var(--space-none);
+					}
 				}
-			}
 
-			&.card-sectioned-right .card-image {
-				order: 2;
-				padding: var(--space-m) var(--space-m) var(--space-m) var(--space-none);
+				&-sectioned-right .card-image {
+					order: 2;
+					padding: var(--space-m) var(--space-m) var(--space-m) var(--space-none);
 
-				&.padding-none {
-					padding: var(--space-none);
+					&.padding-none {
+						padding: var(--space-none);
+					}
 				}
 			}
 		}
@@ -60,24 +62,9 @@
 	}
 }
 
-// Responsive -------------------------------------------------------------------------
-///
-.tablet {
-	& .card-title {
-		font-size: calc(var(--font-size-h4) - 1px);
-	}
-}
-
-.phone {
-	& .card-title {
-		font-size: calc(var(--font-size-h4) - 2px);
-	}
-}
-
-// Layout -------------------------------------------------------------------------
 ///
 .layout-native {
-	& .card {
+	.card {
 		&-sectioned {
 			padding: 0;
 
@@ -113,5 +100,19 @@
 		&-bottom {
 			padding: var(--space-none) var(--space-base) var(--space-base);
 		}
+	}
+}
+
+// Responsive -------------------------------------------------------------------------
+///
+.tablet {
+	.card-title {
+		font-size: calc(var(--font-size-h4) - 1px);
+	}
+}
+
+.phone {
+	.card-title {
+		font-size: calc(var(--font-size-h4) - 2px);
 	}
 }
