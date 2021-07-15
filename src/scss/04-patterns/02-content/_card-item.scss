@@ -1,36 +1,24 @@
 ////*! Patterns - Content - CardItem */
 ////
-/// @group Patterns_CardItem
+/// @group Patterns-CardItem
 /// Patterns - Content - CardItem Styles
 
 ///
 .card-detail {
 	align-items: center;
-	-webkit-box-align: center;
-	display: -webkit-box;
-	display: -ms-flexbox;
 	display: flex;
-	-ms-flex-align: center;
-
-	&-center {
-		-webkit-box-flex: 1;
-		-ms-flex: 1;
-		flex: 1;
-	}
 
 	&-left {
 		max-width: 120px;
 		padding-right: var(--space-base);
 	}
 
-	&-right {
-		padding-left: var(--space-base);
+	&-center {
+		flex: 1;
 	}
 
-	&-text {
-		color: var(--color-neutral-7);
-		overflow: hidden;
-		text-overflow: ellipsis;
+	&-right {
+		padding-left: var(--space-base);
 	}
 
 	&-title {
@@ -38,18 +26,26 @@
 		font-size: var(--font-size-h5);
 		font-weight: var(--font-semi-bold);
 	}
+
+	&-text {
+		color: var(--color-neutral-7);
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
 }
 
-// RTL -------------------------------------------------------------------------
+// IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {
-	& .card-detail-left {
-		padding-left: var(--space-base);
-		padding-right: 0;
-	}
+	.card-detail {
+		&-left {
+			padding-left: var(--space-base);
+			padding-right: 0;
+		}
 
-	& .card-detail-right {
-		padding-left: 0;
-		padding-right: var(--space-base);
+		&-right {
+			padding-left: 0;
+			padding-right: var(--space-base);
+		}
 	}
 }

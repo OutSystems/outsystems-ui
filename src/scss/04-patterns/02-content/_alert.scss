@@ -1,6 +1,6 @@
 ////*! Patterns - Content - Alert */
 ////
-/// @group Patterns_Alert
+/// @group Patterns-Alert
 /// Patterns - Content - Alert Styles
 
 ///
@@ -11,18 +11,18 @@
 	display: flex;
 	padding: var(--space-base);
 
-	& .alert-icon {
+	.alert-icon {
 		align-self: flex-start;
 		display: inline-flex;
 		font-size: 24px;
 		margin-right: var(--space-base);
 	}
 
-	& .fa-fw {
+	.fa-fw {
 		width: auto;
 	}
 
-	& .alert-message {
+	.alert-message {
 		flex: 1;
 	}
 
@@ -47,7 +47,7 @@
 // RTL -------------------------------------------------------------------------
 ///
 .is-rtl {
-	& .alert-icon {
+	.alert-icon {
 		margin-left: var(--space-base);
 		margin-right: 0;
 	}
