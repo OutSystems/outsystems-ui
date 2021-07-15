@@ -3,14 +3,17 @@
 /// carousel styles
 /*! Patterns - Interaction - Carousel */
 .carousel {
-	-servicestudio-max-height: 100vh;
-
-	-servicestudio-max-height: none !important;
-	-servicestudio-min-height: 80px !important;
 	overflow: hidden;
 	position: relative;
 	transition: all 400ms ease;
 	will-change: transform;
+
+	//Service Studio Preview
+	& {
+		-servicestudio-max-height: 100vh;
+		-servicestudio-max-height: none !important;
+		-servicestudio-min-height: 80px !important;
+	}
 
 	&:empty {
 		-servicestudio-min-height: 200px;
@@ -25,19 +28,19 @@
 		opacity: 0;
 	}
 
-	> .list:not([data-virtualization-disabled]) > *,
-	> .list:not([data-animation-disabled]) > * {
+	& > .list:not([data-virtualization-disabled]) > *,
+	& > .list:not([data-animation-disabled]) > * {
 		-servicestudio-display: none !important;
 	}
 
-	> .list:not([data-virtualization-disabled]),
-	> .list:not([data-animation-disabled]) {
+	& > .list:not([data-virtualization-disabled]),
+	& > .list:not([data-animation-disabled]) {
 		-servicestudio-min-height: 225px;
 		-servicestudio-pointer-events: none;
 	}
 
-	> .list:not([data-virtualization-disabled]):after,
-	> .list:not([data-animation-disabled]):after {
+	& > .list:not([data-virtualization-disabled]):after,
+	& > .list:not([data-animation-disabled]):after {
 		-servicestudio-background-color: #fff;
 		-servicestudio-background-position: center;
 		-servicestudio-background-repeat: no-repeat;
@@ -77,8 +80,8 @@
 		}
 
 		/* Used for list and non list elements */
-		> .carousel-container-content > *:not(.list),
-		> .carousel-container-content > .list > div {
+		& > .carousel-container-content > *:not(.list),
+		& > .carousel-container-content > .list > div {
 			display: inline-block;
 			white-space: normal;
 			width: 100%;
@@ -176,7 +179,7 @@
 				margin: 0 var(--space-xs);
 				width: 8px;
 
-				.active {
+				& .active {
 					background-color: var(--color-primary);
 				}
 			}
@@ -187,9 +190,11 @@
 		}
 	}
 
-	&-is-moving .hide-on-drag {
-		opacity: 0;
-		transition: opacity 250ms ease;
+	&-is-moving {
+		& .hide-on-drag {
+			opacity: 0;
+			transition: opacity 250ms ease;
+		}
 	}
 
 	/* Fix for lists inside Carousel */
@@ -203,6 +208,8 @@
 	}
 }
 
+// Accessibility --------------------------------------------------------------------
+///
 /* Accessibility Styles */
 .has-accessible-features .carousel .carousel-navigation:focus {
 	box-shadow: 0 0 0 3px var(--color-focus-outer);
