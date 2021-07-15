@@ -1,8 +1,9 @@
-////
-/// @group Interaction
-/// date picker styles
 /*! Patterns - Interaction - DatePicker */
+////
+/// @group Patterns-Date_Picker
+/// date picker styles
 
+///
 .pika {
 	&-single {
 		background: var(--color-neutral-0);
@@ -142,27 +143,27 @@
 				text-decoration: none;
 			}
 		}
-	}
 
-	tbody {
-		margin-top: var(--space-s);
-		overflow: hidden;
+		tbody {
+			margin-top: var(--space-s);
+			overflow: hidden;
 
-		tr {
-			display: flex;
-			flex-direction: row;
-			margin-bottom: var(--space-xs);
+			tr {
+				display: flex;
+				flex-direction: row;
+				margin-bottom: var(--space-xs);
 
-			&:last-child {
-				margin-bottom: var(--space-none);
+				&:last-child {
+					margin-bottom: var(--space-none);
+				}
 			}
-		}
 
-		td {
-			align-items: center;
-			display: inline-flex;
-			flex: 1;
-			justify-content: center;
+			td {
+				align-items: center;
+				display: inline-flex;
+				flex: 1;
+				justify-content: center;
+			}
 		}
 	}
 
