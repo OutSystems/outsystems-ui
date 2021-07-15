@@ -173,9 +173,11 @@
 ///
 .phone {
 	.layout-native {
-		display: block;
-		overflow: auto;
-		position: relative;
+		.table {
+			display: block;
+			overflow: auto;
+			position: relative;
+		}
 
 		.table:not(.table-responsive) {
 			td:before {
