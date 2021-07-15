@@ -216,16 +216,14 @@
 .spinner {
 	animation: spinner 1000ms infinite linear;
 	visibility: visible !important;
-}
 
-///
-.spinner.slow {
-	animation: spinner 1500ms infinite linear;
-}
+	&.slow {
+		animation: spinner 1500ms infinite linear;
+	}
 
-///
-.spinner.fast {
-	animation: spinner 500ms infinite linear;
+	&.fast {
+		animation: spinner 500ms infinite linear;
+	}
 }
 
 /// @todo Remove this keyFrame into a single partial
