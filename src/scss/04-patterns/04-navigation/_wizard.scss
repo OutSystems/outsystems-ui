@@ -12,7 +12,7 @@
 				flex-direction: row;
 				margin-bottom: var(--space-l);
 
-				.label-top {
+				&.label-top {
 					flex-direction: row-reverse;
 				}
 			}
@@ -48,7 +48,7 @@
 			flex-direction: column;
 			width: 100%;
 
-			.label-top {
+			&.label-top {
 				flex-direction: column-reverse;
 			}
 		}
@@ -186,7 +186,7 @@
 			}
 		}
 
-		.label-top {
+		&.label-top {
 			.wizard-item-label {
 				text-align: right;
 			}
