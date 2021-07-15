@@ -27,13 +27,6 @@
 	}
 }
 
-///
-.layout-native {
-	.main-content.ThemeGrid_Container {
-		padding: 0;
-	}
-}
-
 // Responsive --------------------------------------------------------------------
 
 ///
@@ -55,6 +48,12 @@
 
 ///
 .phone {
+	.layout-native {
+		.main-content.ThemeGrid_Container {
+			padding: 0;
+		}
+	}
+
 	.header.ThemeGrid_Container {
 		padding-left: calc(var(--os-safe-area-left) + var(--space-base));
 		padding-right: calc(var(--os-safe-area-right) + var(--space-base));
