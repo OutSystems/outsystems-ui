@@ -3,61 +3,6 @@
 /// action-sheet styles
 
 /*! Patterns - Interaction - ActionSheet */
-.action-sheet-container {
-	height: 100%;
-	left: 0;
-	overflow: hidden;
-	pointer-events: none;
-	position: fixed;
-	top: 0;
-	width: 100%;
-	z-index: 155;
-
-	&--visible {
-		pointer-events: auto;
-
-		&:after {
-			opacity: 1;
-		}
-
-		.action-sheet {
-			transform: none;
-		}
-
-		&.action-sheet-container--animatable .action-sheet {
-			transition: all 330ms ease-out;
-		}
-	}
-
-	&:after {
-		background-color: rgba(0, 0, 0, 0.25);
-		content: '';
-		display: block;
-		height: 100%;
-		left: 0;
-
-		-servicestudio-opacity: 1;
-		opacity: 0;
-		pointer-events: none;
-		position: absolute;
-		top: 0;
-		transition: opacity 0.3s cubic-bezier(0, 0, 0.3, 1);
-		width: 100%;
-		will-change: opacity;
-	}
-
-	&--animatable {
-		.action-sheet {
-			-webkit-transition: all 130ms ease-in;
-			transition: all 130ms ease-in;
-		}
-	}
-
-	// Service Studio Preview
-	& {
-		-servicestudio-margin-top: -20px;
-	}
-}
 
 .action-sheet {
 	bottom: 0;
@@ -110,6 +55,62 @@
 		.btn {
 			border: none;
 			color: var(--color-neutral-8);
+		}
+	}
+
+	&-container {
+		height: 100%;
+		left: 0;
+		overflow: hidden;
+		pointer-events: none;
+		position: fixed;
+		top: 0;
+		width: 100%;
+		z-index: 155;
+
+		&--visible {
+			pointer-events: auto;
+
+			&:after {
+				opacity: 1;
+			}
+
+			.action-sheet {
+				transform: none;
+			}
+
+			&.action-sheet-container--animatable .action-sheet {
+				transition: all 330ms ease-out;
+			}
+		}
+
+		&:after {
+			background-color: rgba(0, 0, 0, 0.25);
+			content: '';
+			display: block;
+			height: 100%;
+			left: 0;
+
+			-servicestudio-opacity: 1;
+			opacity: 0;
+			pointer-events: none;
+			position: absolute;
+			top: 0;
+			transition: opacity 0.3s cubic-bezier(0, 0, 0.3, 1);
+			width: 100%;
+			will-change: opacity;
+		}
+
+		&--animatable {
+			.action-sheet {
+				-webkit-transition: all 130ms ease-in;
+				transition: all 130ms ease-in;
+			}
+		}
+
+		// Service Studio Preview
+		& {
+			-servicestudio-margin-top: -20px;
 		}
 	}
 }
