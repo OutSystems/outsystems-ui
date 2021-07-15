@@ -1,6 +1,6 @@
 ////*! Patterns - Content - Accordion */
 ////
-/// @group Patterns_Accordion
+/// @group Patterns-Accordion
 /// Patterns - Content - Accordion Styles
 
 ///
@@ -37,10 +37,14 @@
 		}
 
 		&-disabled {
-			-servicestudio-color: var(--color-neutral-9);
 			color: var(--color-neutral-7);
-			-servicestudio-pointer-events: auto;
 			pointer-events: none;
+
+			// Service Studio Preview
+			& {
+				-servicestudio-color: var(--color-neutral-9);
+				-servicestudio-pointer-events: auto;
+			}
 
 			.section-expandable-icon {
 				color: var(--color-neutral-6);
@@ -80,11 +84,15 @@
 			&,
 			&.is- {
 				&-collapsed {
-					-servicestudio-height: auto;
 					height: 0;
-					-servicestudio-padding: var(--space-none) var(--space-m) var(--space-m);
 					padding: var(--space-none) var(--space-m);
 					visibility: hidden;
+
+					// Service Studio Preview
+					& {
+						-servicestudio-height: auto;
+						-servicestudio-padding: var(--space-none) var(--space-m) var(--space-m);
+					}
 				}
 
 				&-expanded {

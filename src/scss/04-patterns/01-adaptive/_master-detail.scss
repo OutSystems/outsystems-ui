@@ -1,6 +1,6 @@
 /*! Patterns - Adaptive - MasterDetail */
 ////
-/// @group Patterns_MasterDetail
+/// @group Patterns-MasterDetail
 /// Patterns - Adaptive - MasterDetail Styles
 
 ///
@@ -12,59 +12,61 @@
 	overflow: hidden;
 	position: relative;
 
-	.split-left,
-	.split-right {
-		overflow-y: auto;
-		touch-action: pan-y;
-
-		// Service Studio Preview
-		& {
-			-servicestudio-min-height: 80px;
-			-servicestudio-position: relative;
-			-servicestudio-width: 50%;
-		}
-	}
-
-	.split-left {
-		width: var(--left-percentage);
-
-		.list-item {
-			cursor: pointer;
-		}
-	}
-
-	.split-right {
-		border-left: var(--border-size-s) solid var(--color-neutral-4);
-		padding: var(--space-xl);
-		width: calc(100% - var(--left-percentage));
-
-		.split-right-close {
-			left: calc(var(--os-safe-area-left) + var(--space-m));
-			position: fixed;
-			top: 12px;
-			z-index: 180;
-
-			// Service Studio Preview
-			& {
-				-servicestudio-display: none;
-			}
-
-			a {
-				color: var(--color-neutral-8);
-				font-size: var(--font-size-base);
-			}
-		}
-
-		.split-right-content {
-			height: 100%;
+	.split {
+		&-left,
+		&-right {
+			overflow-y: auto;
+			touch-action: pan-y;
 
 			// Service Studio Preview
 			& {
 				-servicestudio-min-height: 80px;
+				-servicestudio-position: relative;
+				-servicestudio-width: 50%;
+			}
+		}
+
+		&-left {
+			width: var(--left-percentage);
+
+			.list-item {
+				cursor: pointer;
+			}
+		}
+
+		&-right {
+			border-left: var(--border-size-s) solid var(--color-neutral-4);
+			padding: var(--space-xl);
+			width: calc(100% - var(--left-percentage));
+
+			.split-right-close {
+				left: calc(var(--os-safe-area-left) + var(--space-m));
+				position: fixed;
+				top: 12px;
+				z-index: 180;
+
+				// Service Studio Preview
+				& {
+					-servicestudio-display: none;
+				}
+
+				a {
+					color: var(--color-neutral-8);
+					font-size: var(--font-size-base);
+				}
 			}
 
-			.split-right--placeholder {
+			.split-right-content {
 				height: 100%;
+
+				// Service Studio Preview
+				& {
+					-servicestudio-min-height: 80px;
+				}
+
+				.split-right--placeholder {
+					height: 100%;
+				}
 			}
 		}
 	}
@@ -83,12 +85,14 @@
 .desktop,
 .tablet {
 	.split-screen-wrapper {
-		&.is--screen-size {
-			height: calc(100vh - var(--master-detail-height));
-		}
+		&.is- {
+			&-screen-size {
+				height: calc(100vh - var(--master-detail-height));
+			}
 
-		&.is--full-height {
-			height: var(--master-detail-height);
+			&-full-height {
+				height: var(--master-detail-height);
+			}
 		}
 
 		.split-right-close {
@@ -104,44 +108,46 @@
 			-servicestudio-display: block;
 		}
 
-		.split-left,
-		.split-right {
-			// Service Studio Preview
-			& {
-				-servicestudio-width: 100% !important;
-			}
-		}
-
-		.split-left {
-			width: 100%;
-		}
-
-		.split-right {
-			background-color: var(--color-neutral-0);
-			border-left: var(--border-size-none);
-			height: 100%;
-			left: 0;
-			padding-bottom: calc(var(--os-safe-area-bottom) + var(--space-m));
-			padding-left: calc(var(--os-safe-area-left) + var(--space-m));
-			padding-right: calc(var(--os-safe-area-right) + var(--space-m));
-			padding-top: var(--header-size);
-			position: fixed;
-			top: 0;
-			transform: translateX(100%) translateZ(0);
-			transition: all 190ms ease-in;
-			width: 100%;
-			will-change: transform;
-			z-index: 150;
-
-			&.open {
-				transform: translateX(0) translateZ(0);
-				transition: all 330ms ease-out;
+		.split {
+			&-left,
+			&-right {
+				// Service Studio Preview
+				& {
+					-servicestudio-width: 100% !important;
+				}
 			}
 
-			// Service Studio Preview
-			& {
-				-servicestudio--webkit-transform: none;
-				-servicestudio-position: static;
+			&-left {
+				width: 100%;
+			}
+
+			&-right {
+				background-color: var(--color-neutral-0);
+				border-left: var(--border-size-none);
+				height: 100%;
+				left: 0;
+				padding-bottom: calc(var(--os-safe-area-bottom) + var(--space-m));
+				padding-left: calc(var(--os-safe-area-left) + var(--space-m));
+				padding-right: calc(var(--os-safe-area-right) + var(--space-m));
+				padding-top: var(--header-size);
+				position: fixed;
+				top: 0;
+				transform: translateX(100%) translateZ(0);
+				transition: all 190ms ease-in;
+				width: 100%;
+				will-change: transform;
+				z-index: 150;
+
+				&.open {
+					transform: translateX(0) translateZ(0);
+					transition: all 330ms ease-out;
+				}
+
+				// Service Studio Preview
+				& {
+					-servicestudio--webkit-transform: none;
+					-servicestudio-position: static;
+				}
 			}
 		}
 	}

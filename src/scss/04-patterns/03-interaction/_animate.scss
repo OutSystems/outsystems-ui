@@ -1,10 +1,11 @@
-////
-/// @group Interaction
-/// animate styles
 /*! Patterns - Interaction - Animate */
+////
+/// @group Patterns-Animate
+/// animate styles
+
+///
 .animate {
 	animation-duration: 1000ms;
-
 	animation-fill-mode: both;
 	display: inline-block;
 	transition-timing-function: ease-out;
@@ -21,11 +22,13 @@
 	}
 }
 
+///
 .bottom-to-top {
 	animation-name: bottomtotop;
 	visibility: visible !important;
 }
 
+/// @todo Remove this keyFrame into a single partial
 @keyframes bottomtotop {
 	from {
 		opacity: 0;
@@ -38,11 +41,13 @@
 	}
 }
 
+///
 .bounce {
 	animation-name: bounce;
 	visibility: visible !important;
 }
 
+/// @todo Remove this keyFrame into a single partial
 @keyframes bounce {
 	from,
 	20%,
@@ -66,11 +71,13 @@
 	}
 }
 
+///
 .fade-in {
 	animation-name: fadein;
 	visibility: visible !important;
 }
 
+/// @todo Remove this keyFrame into a single partial
 @keyframes fadein {
 	0% {
 		opacity: 0;
@@ -85,11 +92,13 @@
 	}
 }
 
+///
 .left-to-right {
 	animation-name: lefttoright;
 	visibility: visible !important;
 }
 
+/// @todo Remove this keyFrame into a single partial
 @keyframes lefttoright {
 	0% {
 		opacity: 0;
@@ -102,11 +111,13 @@
 	}
 }
 
+///
 .right-to-left {
 	animation-name: righttoleft;
 	visibility: visible !important;
 }
 
+/// @todo Remove this keyFrame into a single partial
 @keyframes righttoleft {
 	0% {
 		opacity: 0;
@@ -119,11 +130,14 @@
 	}
 }
 
+///
 .top-to-bottom {
 	animation-name: toptobottom;
 	visibility: visible !important;
 }
 
+///
+/// @todo Remove this keyFrame into a single partial
 @keyframes toptobottom {
 	0% {
 		opacity: 0;
@@ -136,11 +150,13 @@
 	}
 }
 
+///
 .scale {
 	animation-name: scale;
 	visibility: visible !important;
 }
 
+/// @todo Remove this keyFrame into a single partial
 @keyframes scale {
 	0% {
 		opacity: 0;
@@ -158,11 +174,13 @@
 	}
 }
 
+///
 .scale-down {
 	animation-name: scaledown;
 	visibility: visible !important;
 }
 
+/// @todo Remove this keyFrame into a single partial
 @keyframes scaledown {
 	0% {
 		opacity: 0;
@@ -175,11 +193,13 @@
 	}
 }
 
+///
 .scale-up {
 	animation-name: scaleup;
 	visibility: visible !important;
 }
 
+/// @todo Remove this keyFrame into a single partial
 @keyframes scaleup {
 	0% {
 		opacity: 0;
@@ -192,19 +212,23 @@
 	}
 }
 
+///
 .spinner {
 	animation: spinner 1000ms infinite linear;
 	visibility: visible !important;
 }
 
+///
 .spinner.slow {
 	animation: spinner 1500ms infinite linear;
 }
 
+///
 .spinner.fast {
 	animation: spinner 500ms infinite linear;
 }
 
+/// @todo Remove this keyFrame into a single partial
 @keyframes spinner {
 	0% {
 		transform: rotate(0deg);

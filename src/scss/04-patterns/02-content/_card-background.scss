@@ -1,6 +1,6 @@
 ////*! Patterns - Content - CardBackground */
 ////
-/// @group Patterns_CardBackground
+/// @group Patterns-CardBackground
 /// Patterns - Content - CardBackground Styles
 
 ///
@@ -9,18 +9,25 @@
 	border-radius: var(--border-radius-soft);
 	color: var(--color-neutral-0);
 	display: flex;
-
-	-servicestudio-height: auto !important;
 	overflow: hidden;
 	padding: var(--space-m);
 	position: relative;
 
+	// Service Studio Preview
+	& {
+		-servicestudio-height: auto !important;
+	}
+
 	&-content {
-		-servicestudio-display: initial;
 		display: flex;
 		position: relative;
 		width: 100%;
 		z-index: 1;
+
+		// Service Studio Preview
+		& {
+			-servicestudio-display: initial;
+		}
 
 		&.top-left,
 		&.center-left,
@@ -53,9 +60,6 @@
 
 		&:after {
 			background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
-			background: -o-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
-			background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 1)));
-			background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
 			content: '';
 			height: 100%;
 			left: 0;
@@ -68,18 +72,21 @@
 	}
 }
 
-.card-background-image,
-.card-background-color {
-	@include absolute-left-top();
-	height: 100%;
-	width: 100%;
+///
+.card-background {
+	&-image,
+	&-color {
+		@include absolute-left-top();
+		height: 100%;
+		width: 100%;
+	}
 }
 
-// Layout -------------------------------------------------------------------------
 ///
 .layout-native {
-	& .card-background {
+	.card-background {
 		padding: var(--space-base);
+
 		&.padding-none {
 			padding: var(--space-none);
 		}
