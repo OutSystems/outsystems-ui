@@ -144,30 +144,30 @@
 /*! ============================================================================= */
 /*!  $1 - Resets                                                                  */
 /*! ============================================================================= */
-@import '00-foundations/resets'; // jRio => Done!
+@import '00-foundations/resets'; // jRio => @Done!
 
 /*! ============================================================================= */
 /*!  $2 - HTML Elements                                                           */
 /*! ============================================================================= */
-@import '00-foundations/html-elements-link'; // jRio => Done!
-@import '00-foundations/html-elements-img'; // jRio => Done!
-@import '00-foundations/html-elements-headings'; // jRio => Done!
+@import '00-foundations/html-elements-link'; // jRio => @Done!
+@import '00-foundations/html-elements-img'; // jRio => @Done!
+@import '00-foundations/html-elements-headings'; // jRio => @Done!
 
 /* 
     @todo:
     - The partials below has been removed from the htmlElements section since
     they are widgets, When everything is close, they should be moved to the proper section!
 */
-@import '03-widgets/inputs-and-textareas'; // jRio => Done!
-@import '03-widgets/switch'; // jRio => Done!
-@import '03-widgets/checkbox'; // jRio => Done!
-@import '03-widgets/dropdown'; // jRio => Done!
-@import '03-widgets/btn'; // jRio => Done!
+@import '03-widgets/inputs-and-textareas'; // jRio => @Done!
+@import '03-widgets/switch'; // jRio => @Done!
+@import '03-widgets/checkbox'; // jRio => @Done!
+@import '03-widgets/dropdown'; // jRio => @Done!
+@import '03-widgets/btn'; // jRio => @Done!
 
 /*! ============================================================================= */
 /*!  $3 - Page Layout                                                             */
 /*! ============================================================================= */
-@import '02-layout/layout'; // jRio => Done!
+@import '02-layout/layout'; // jRio => @Done!
 @import '02-layout/header'; // jRio => @Done!
 @import '02-layout/header-layout-native'; // jRio => @Done!
 @import '02-layout/header-layout-side'; // jRio => @Done!
