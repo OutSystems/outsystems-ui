@@ -1,7 +1,9 @@
-////
-/// @group Interaction
-/// animated label styles
 /*! Patterns - Interaction - AnimatedLabel */
+////
+/// @group Patterns-Animated_Label
+/// animated label styles
+
+///
 .animated-label {
 	position: relative;
 
@@ -19,7 +21,6 @@
 	&-text {
 		color: var(--color-neutral-8);
 		font-size: var(--font-size-s);
-
 		pointer-events: none;
 		position: absolute;
 		top: 8px;
@@ -87,6 +88,7 @@
 	}
 }
 
+/// @todo understand this keyframe
 @keyframes onAutoFillStart {
 	from {
 	}
@@ -94,7 +96,7 @@
 	to {
 	}
 }
-
+///
 @keyframes onAutoFillCancel {
 	from {
 	}
@@ -105,13 +107,7 @@
 
 // Responsive --------------------------------------------------------------------
 ///
-
-.tablet {
-	.animated-label-text {
-		top: 14px;
-	}
-}
-
+.tablet,
 .phone {
 	.animated-label-text {
 		top: 14px;
