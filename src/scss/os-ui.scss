@@ -144,30 +144,30 @@
 /*! ============================================================================= */
 /*!  $1 - Resets                                                                  */
 /*! ============================================================================= */
-@import '00-foundations/resets'; // jRio => Done!
+@import '00-foundations/resets'; // jRio => @Done!
 
 /*! ============================================================================= */
 /*!  $2 - HTML Elements                                                           */
 /*! ============================================================================= */
-@import '00-foundations/html-elements-link'; // jRio => Done!
-@import '00-foundations/html-elements-img'; // jRio => Done!
-@import '00-foundations/html-elements-headings'; // jRio => Done!
+@import '00-foundations/html-elements-link'; // jRio => @Done!
+@import '00-foundations/html-elements-img'; // jRio => @Done!
+@import '00-foundations/html-elements-headings'; // jRio => @Done!
 
 /* 
     @todo:
     - The partials below has been removed from the htmlElements section since
     they are widgets, When everything is close, they should be moved to the proper section!
 */
-@import '03-widgets/inputs-and-textareas'; // jRio => Done!
-@import '03-widgets/switch'; // jRio => Done!
-@import '03-widgets/checkbox'; // jRio => Done!
-@import '03-widgets/dropdown'; // jRio => Done!
-@import '03-widgets/btn'; // jRio => Done!
+@import '03-widgets/inputs-and-textareas'; // jRio => @Done!
+@import '03-widgets/switch'; // jRio => @Done!
+@import '03-widgets/checkbox'; // jRio => @Done!
+@import '03-widgets/dropdown'; // jRio => @Done!
+@import '03-widgets/btn'; // jRio => @Done!
 
 /*! ============================================================================= */
 /*!  $3 - Page Layout                                                             */
 /*! ============================================================================= */
-@import '02-layout/layout'; // jRio => Done!
+@import '02-layout/layout'; // jRio => @Done!
 @import '02-layout/header'; // jRio => @Done!
 @import '02-layout/header-layout-native'; // jRio => @Done!
 @import '02-layout/header-layout-side'; // jRio => @Done!
@@ -197,7 +197,7 @@
 @import '03-widgets/popover'; // jRio => @Done!
 @import '03-widgets/popup'; // jRio => @Done!
 @import '03-widgets/feedback-message'; // jRio => @Done!
-@import '03-widgets/radio-button'; // jRio => @here!
+@import '03-widgets/radio-button'; // jRio => @Done!
 
 /*! ============================================================================= */
 /*!  $5 - Patterns                                                                */
@@ -236,10 +236,10 @@
 @import '04-patterns/03-interaction/animate'; // @JBP => done
 @import '04-patterns/03-interaction/animated-label'; // @JBP => done
 @import '04-patterns/03-interaction/carousel'; // @JBP => done
-@import '04-patterns/03-interaction/date-picker'; // @JBP => here
+@import '04-patterns/03-interaction/date-picker'; // @JBP => done
 @import '04-patterns/03-interaction/dropdown-search'; // @JBP => done
-@import '04-patterns/03-interaction/dropdown-tags';
-@import '04-patterns/03-interaction/floating-actions';
+@import '04-patterns/03-interaction/dropdown-tags'; // @JBP => done
+@import '04-patterns/03-interaction/floating-actions'; // @JBP => here
 @import '04-patterns/03-interaction/horizontal-scroll';
 @import '04-patterns/03-interaction/input-with-icon';
 @import '04-patterns/03-interaction/lightbox-image';

@@ -1,6 +1,6 @@
 /*! Patterns - Adaptive - Columns */
 ////
-/// @group Patterns_Columns
+/// @group Patterns-Columns
 /// Patterns - Adaptive - Columns Styles
 
 ///
@@ -48,20 +48,24 @@
 	}
 
 	.tablet {
-		.columns.gutter-#{$label}.tablet-break-first:only-child > .columns-item:not(:last-child),
-		.columns.gutter-#{$label}.tablet-break-last:only-child > .columns-item:not(:last-child),
-		.columns.gutter-#{$label}.tablet-break-middle:only-child > .columns-item:not(:last-child),
-		.columns.gutter-#{$label}.tablet-break-all:only-child > .columns-item:not(:last-child) {
-			margin-bottom: #{$value};
+		.columns.gutter-#{$label}.tablet-break {
+			&-first:only-child > .columns-item:not(:last-child),
+			&-last:only-child > .columns-item:not(:last-child),
+			&-middle:only-child > .columns-item:not(:last-child),
+			&-all:only-child > .columns-item:not(:last-child) {
+				margin-bottom: #{$value};
+			}
 		}
 	}
 
 	.phone {
-		.columns.gutter-#{$label}.phone-break-first:only-child > .columns-item:not(:last-child),
-		.columns.gutter-#{$label}.phone-break-last:only-child > .columns-item:not(:last-child),
-		.columns.gutter-#{$label}.phone-break-middle:only-child > .columns-item:not(:last-child),
-		.columns.gutter-#{$label}.phone-break-all:only-child > .columns-item:not(:last-child) {
-			margin-bottom: #{$value};
+		.columns.gutter-#{$label}.phone-break {
+			&-first:only-child > .columns-item:not(:last-child),
+			&-last:only-child > .columns-item:not(:last-child),
+			&-middle:only-child > .columns-item:not(:last-child),
+			&-all:only-child > .columns-item:not(:last-child) {
+				margin-bottom: #{$value};
+			}
 		}
 	}
 }

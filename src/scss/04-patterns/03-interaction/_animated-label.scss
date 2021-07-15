@@ -20,9 +20,7 @@
 		color: var(--color-neutral-8);
 		font-size: var(--font-size-s);
 
-		-servicestudio-left: 0 !important;
 		pointer-events: none;
-		-servicestudio-position: static !important;
 		position: absolute;
 		top: 8px;
 		transition: all 300ms ease;
@@ -30,6 +28,12 @@
 
 		.icon {
 			padding-right: var(--space-base);
+		}
+
+		// Service Studio Preview
+		& {
+			-servicestudio-left: 0 !important;
+			-servicestudio-position: static !important;
 		}
 	}
 
