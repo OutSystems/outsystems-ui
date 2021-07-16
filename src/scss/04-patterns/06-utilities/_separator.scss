@@ -1,7 +1,12 @@
 /*! Patterns - Utilities - Separator */
+////
+/// @group Patterns-Margin_Container
+/// Patterns - Utilities - Separator Styles
 
+///
 .separator {
 	background-color: var(--color-primary);
+
 	&-vertical {
 		display: inline-block;
 		height: 100%;
@@ -9,6 +14,7 @@
 		min-width: 1px;
 		width: 1px;
 	}
+
 	&-horizontal {
 		height: 1px;
 		width: 100%;

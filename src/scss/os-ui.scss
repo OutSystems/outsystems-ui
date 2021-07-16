@@ -280,14 +280,14 @@
 @import '04-patterns/06-utilities/align-center'; //ACarvalho // jRio => @Checked!
 @import '04-patterns/06-utilities/button-loading'; //ACarvalho // jRio => @Checked!
 @import '04-patterns/06-utilities/center-content'; //ACarvalho // jRio => @Checked!
-@import '04-patterns/06-utilities/margin-container'; //ACarvalho // jRio => @Here!
-@import '04-patterns/06-utilities/separator'; //ACarvalho
+@import '04-patterns/06-utilities/margin-container'; //ACarvalho // jRio => @Checked!
+@import '04-patterns/06-utilities/separator'; //ACarvalho // jRio => @Checked!
 
 /*! ============================================================================= */
 /*!  $6 - Styles                                                                  */
 /*! ============================================================================= */
-@import '05-useful/a11y'; //ACarvalho
-@import '05-useful/border-radius';
+@import '05-useful/a11y'; //ACarvalho // jRio => @Checked!
+@import '05-useful/border-radius'; // jRio => @Here!
 @import '05-useful/border-size';
 @import '05-useful/box-height'; //ACarvalho
 @import '05-useful/box-width'; //ACarvalho

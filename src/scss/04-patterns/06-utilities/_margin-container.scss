@@ -1,17 +1,35 @@
 /*! Patterns - Utilities - MarginContainer */
+////
+/// @group Patterns-Margin_Container
+/// Patterns - Utilities - MarginContainer Styles
 
+///
 .margin-container {
 	padding: var(--space-m);
 }
 
-.layout-native .margin-container {
-	padding: var(--space-l);
+///
+.layout-native {
+	.margin-container {
+		padding: var(--space-l);
+	}
 }
 
-.tablet .layout-native .margin-container {
-	padding: var(--space-m);
+// Responsive --------------------------------------------------------------------
+///
+.tablet {
+	.layout-native {
+		.margin-container {
+			padding: var(--space-m);
+		}
+	}
 }
 
-.phone .layout-native .margin-container {
-	padding: var(--space-base);
+///
+.phone {
+	.layout-native {
+		.margin-container {
+			padding: var(--space-base);
+		}
+	}
 }

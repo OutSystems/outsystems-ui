@@ -1,9 +1,12 @@
-/*! useful a11y start */
+/*! Usefull - a11y (Accessibility) */
+////
+/// @group Patterns-a11y
+/// Usefull - a11y (Accessibility)
 
+///
 .wcag-hide-text {
 	border: 0;
 	clip: rect(0 0 0 0);
-	-servicestudio-display: none;
 	height: 1px;
 	margin: -1px;
 	overflow: hidden;
@@ -11,18 +14,15 @@
 	position: absolute;
 	white-space: nowrap;
 	width: 1px;
+
+	// Service Studio Preview
+	& {
+		-servicestudio-display: none;
+	}
 }
 
 /* Skip-nav link used on Accessibility*/
-/* Accessibility Styles */
-.skip-nav[data-showskipcontent='false'] {
-	display: none;
-}
-
-.skip-nav[data-showskipcontent='true'] {
-	display: block;
-}
-
+///
 .skip-nav {
 	left: var(--space-xl);
 	opacity: 0;
@@ -32,12 +32,23 @@
 	text-transform: uppercase;
 	top: 10px;
 	z-index: 200;
+
+	&[data-showskipcontent='false'] {
+		display: none;
+	}
+
+	&[data-showskipcontent='true'] {
+		display: block;
+	}
 }
 
-.has-accessible-features .skip-nav:focus,
-.has-accessible-features .skip-nav:active {
-	opacity: 1;
-	pointer-events: auto;
+///
+.has-accessible-features {
+	.skip-nav {
+		&:focus,
+		&:active {
+			opacity: 1;
+			pointer-events: auto;
+		}
+	}
 }
-
-/*! useful a11y end */

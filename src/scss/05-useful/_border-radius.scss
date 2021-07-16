@@ -1,111 +1,33 @@
-.border-radius-none {
-	border-radius: var(--border-radius-none);
-}
-.border-radius-soft {
-	border-radius: var(--border-radius-soft);
-}
-.border-radius-rounded {
-	border-radius: var(--border-radius-rounded);
-}
-.border-radius-circle {
-	border-radius: var(--border-radius-circle);
-}
+/*! Usefull - Border Radius */
+////
+/// @group UsefullClasses-Border_Radius
+/// Usefull - Border Radius
 
-.border-radius-top-right-none {
-	border-top-right-radius: var(--border-radius-none);
-}
-.border-radius-bottom-right-none {
-	border-bottom-right-radius: var(--border-radius-none);
-}
-.border-radius-top-left-none {
-	border-top-left-radius: var(--border-radius-none);
-}
-.border-radius-bottom-left-none {
-	border-bottom-left-radius: var(--border-radius-none);
-}
+///
+.border-radius {
+	@each $osui-border-radius-type in $osui-border-radius-types {
+		// Generated - Eg: .border-radius-none
+		&-#{$osui-border-radius-type} {
+			border-radius: var(--border-radius-#{$osui-border-radius-type});
+		}
 
-.border-radius-top-right-soft {
-	border-top-right-radius: var(--border-radius-soft);
-}
-.border-radius-bottom-right-soft {
-	border-bottom-right-radius: var(--border-radius-soft);
-}
-.border-radius-top-left-soft {
-	border-top-left-radius: var(--border-radius-soft);
-}
-.border-radius-bottom-left-soft {
-	border-bottom-left-radius: var(--border-radius-soft);
-}
+		@each $osui-box-corner in $osui-box-corners {
+			// Generated - Eg: .border-radius-top-left-none
+			&-#{$osui-box-corner}-#{$osui-border-radius-type} {
+				border-#{$osui-box-corner}-radius: var(--border-radius-#{$osui-border-radius-type});
+			}
+		}
 
-.border-radius-top-right-rounded {
-	border-top-right-radius: var(--border-radius-rounded);
-}
-.border-radius-bottom-right-rounded {
-	border-bottom-right-radius: var(--border-radius-rounded);
-}
-.border-radius-top-left-rounded {
-	border-top-left-radius: var(--border-radius-rounded);
-}
-.border-radius-bottom-left-rounded {
-	border-bottom-left-radius: var(--border-radius-rounded);
-}
-
-.border-radius-top-none {
-	border-top-left-radius: var(--border-radius-none);
-	border-top-right-radius: var(--border-radius-none);
-}
-
-.border-radius-right-none {
-	border-bottom-right-radius: var(--border-radius-none);
-	border-top-right-radius: var(--border-radius-none);
-}
-
-.border-radius-bottom-none {
-	border-bottom-left-radius: var(--border-radius-none);
-	border-bottom-right-radius: var(--border-radius-none);
-}
-
-.border-radius-left-none {
-	border-bottom-left-radius: var(--border-radius-none);
-	border-top-left-radius: var(--border-radius-none);
-}
-
-.border-radius-top-soft {
-	border-top-left-radius: var(--border-radius-soft);
-	border-top-right-radius: var(--border-radius-soft);
-}
-
-.border-radius-right-soft {
-	border-bottom-right-radius: var(--border-radius-soft);
-	border-top-right-radius: var(--border-radius-soft);
-}
-
-.border-radius-bottom-soft {
-	border-bottom-left-radius: var(--border-radius-soft);
-	border-bottom-right-radius: var(--border-radius-soft);
-}
-
-.border-radius-left-soft {
-	border-bottom-left-radius: var(--border-radius-soft);
-	border-top-left-radius: var(--border-radius-soft);
-}
-
-.border-radius-top-rounded {
-	border-top-left-radius: var(--border-radius-rounded);
-	border-top-right-radius: var(--border-radius-rounded);
-}
-
-.border-radius-right-rounded {
-	border-bottom-right-radius: var(--border-radius-rounded);
-	border-top-right-radius: var(--border-radius-rounded);
-}
-
-.border-radius-bottom-rounded {
-	border-bottom-left-radius: var(--border-radius-rounded);
-	border-bottom-right-radius: var(--border-radius-rounded);
-}
-
-.border-radius-left-rounded {
-	border-bottom-left-radius: var(--border-radius-rounded);
-	border-top-left-radius: var(--border-radius-rounded);
+		@each $osui-border-side, $osui-border-corner1, $osui-border-corner2 in $osui-border-radius-box-sides {
+			// Generated - Eg: .border-radius-top-none
+			&-#{$osui-border-side}-#{$osui-border-radius-type} {
+				border-#{$osui-border-side}-#{$osui-border-corner1}-radius: var(
+					--border-radius-#{$osui-border-radius-type}
+				);
+				border-#{$osui-border-side}-#{$osui-border-corner2}-radius: var(
+					--border-radius-#{$osui-border-radius-type}
+				);
+			}
+		}
+	}
 }

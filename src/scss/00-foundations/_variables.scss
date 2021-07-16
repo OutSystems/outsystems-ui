@@ -1,7 +1,7 @@
 ////
-/// @group global
+/// @group SCSS_Variables
 
-/// OutSystemsUI predefined sizes
+/// Predefined sizes
 $osui-sizes: (
 	'none': var(--space-none),
 	'xs': var(--space-xs),
@@ -13,11 +13,24 @@ $osui-sizes: (
 	'xxl': var(--space-xxl),
 );
 
-/// OutSystemsUI predefined colors
+/// Box Sides
+$osui-box-sides: 'top', 'right', 'bottom', 'left';
+$osui-box-corners: 'top-left', 'top-right', 'bottom-right', 'bottom-left';
+
+/// Predefined colors
 $osui-colors: 'red', 'pink', 'grape', 'violet', 'indigo', 'blue', 'cyan', 'teal', 'green', 'lime', 'yellow', 'orange';
 
-/// OutSystemsUI semantic identifiers
+/// Semantic identifiers
 $osui-semantics: 'error', 'warning', 'success', 'info';
 
-/// OutSystemsUI devices
+/// Devices
 $osui-devices: 'phone', 'tablet', 'desktop';
+
+/// Border Radius
+$osui-border-radius-types: 'none', 'soft', 'rounded', 'circle';
+$osui-border-radius-box-sides: (
+	'top' 'left' 'right',
+	'right' 'top' 'bottom',
+	'bottom' 'left' 'right',
+	'left' 'top' 'bottom'
+);
