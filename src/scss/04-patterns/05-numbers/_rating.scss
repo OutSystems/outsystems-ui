@@ -1,154 +1,183 @@
 /*! Patterns - Numbers - Rating */
+////
+/// @group Patterns-Rating
+/// Patterns - Numbers - Rating Styles
 
+///
 .rating {
 	display: inline-flex;
 	font-size: var(--rating-size);
 	pointer-events: none;
-	&.rating-small {
-		.rating-item {
-			padding-right: calc(var(--rating-size) + var(--space-xs));
+
+	// Service Studio Preview
+	& {
+		-servicestudio-display: inline-flex;
+	}
+
+	&.rating {
+		&-small {
+			.rating-item {
+				padding-right: calc(var(--rating-size) + var(--space-xs));
+			}
+
+			--rating-size: 8px;
 		}
-		--rating-size: 8px;
+
+		&-medium {
+			--rating-size: 24px;
+		}
 	}
-	&.rating-medium {
-		--rating-size: 24px;
-	}
+
 	&.is-half {
+		&:hover input:checked + label .rating-item-filled {
+			opacity: 1;
+		}
+
 		.rating-item-half {
 			z-index: 1;
 		}
-		input:checked + label .rating-item-half {
-			opacity: 1;
-		}
-		input:checked + label .rating-item-filled {
-			opacity: 0;
+
+		input {
+			&:checked + label .rating-item {
+				&-half {
+					opacity: 1;
+				}
+
+				&-filled {
+					opacity: 0;
+				}
+			}
+
+			&:hover ~ label.rating-item .rating-item {
+				&-filled,
+				&-half {
+					opacity: 0;
+				}
+			}
 		}
 	}
+
+	&.is-edit {
+		.rating-item {
+			cursor: pointer;
+			pointer-events: auto;
+		}
+	}
+
 	fieldset {
 		border: none;
 		display: contents;
 		margin: 0;
 		padding: 0;
 	}
+
+	&-item {
+		display: inline-block;
+		height: var(--rating-size);
+		// Padding is used to avoid flicks on hover due to rating-items gap
+		padding-right: calc(var(--rating-size) + var(--space-s));
+		position: relative;
+		width: var(--rating-size);
+
+		&-filled,
+		&-half,
+		&-empty {
+			left: 0;
+			line-height: 1;
+			position: absolute;
+			top: 0;
+			transition: opacity linear 150ms;
+		}
+
+		&-filled {
+			opacity: 1;
+			z-index: 1;
+		}
+
+		&-empty,
+		&-half {
+			opacity: 0;
+			z-index: 0;
+		}
+	}
+
+	.rating-item[class*='rating-']:last-of-type {
+		padding-right: 0;
+	}
+
+	input {
+		&:checked + label .rating-item-empty,
+		&:checked ~ label .rating-item-filled,
+		&:focus + label .rating-item-empty,
+		&:hover ~ label .rating-item-filled {
+			opacity: 0;
+		}
+
+		&:checked ~ label .rating-item-empty,
+		&:checked + label .rating-item-filled,
+		&:checked + label .rating-item-half,
+		&:hover ~ label .rating-item-empty,
+		&:hover + label .rating-item-filled,
+		&:focus ~ label .rating-item-empty,
+		&:focus + label .rating-item-filled {
+			opacity: 1;
+		}
+	}
+
+	&-item-filled,
+	&-item-half,
+	&-item-empty {
+		// Service Studio Preview
+		& {
+			-servicestudio-margin-right: var(--space-s);
+			-servicestudio-min-height: 24px;
+			-servicestudio-min-width: 24px;
+			-servicestudio-opacity: 1 !important;
+			-servicestudio-position: relative;
+		}
+	}
+
 	--rating-size: 16px;
 }
 
-.rating-item {
-	display: inline-block;
-	height: var(--rating-size);
-	padding-right: calc(
-		var(--rating-size) + var(--space-s)
-	); // Padding is used to avoid flicks on hover due to rating-items gap
-	position: relative;
-	width: var(--rating-size);
-
-	&-filled,
-	&-half,
-	&-empty {
-		left: 0;
-		line-height: 1;
-		position: absolute;
-		top: 0;
-		transition: opacity linear 150ms;
-	}
-
-	&-filled {
-		opacity: 1;
-		z-index: 1;
-	}
-
-	&-empty,
-	&-half {
-		opacity: 0;
-		z-index: 0;
+///
+.form {
+	.rating {
+		span.wcag-hide-text {
+			position: absolute;
+		}
 	}
 }
 
-.form .rating span.wcag-hide-text {
-	position: absolute;
-}
-
-.rating .rating-item[class*='rating-']:last-of-type {
-	padding-right: 0;
-}
-
-.rating.is-edit .rating-item {
-	cursor: pointer;
-	pointer-events: auto;
-}
-
-/* Accessibility focus styles*/
-.has-accessible-features input:focus + .rating-item > div {
-	-webkit-box-shadow: 0 0 0 3px var(--color-focus-outer);
-	box-shadow: 0 0 0 3px var(--color-focus-outer);
-}
-
-/* Checked styles*/
-.rating input:checked + label .rating-item-empty,
-.rating input:checked ~ label .rating-item-filled {
-	opacity: 0;
-}
-
-/* Selected Styles*/
-.rating:hover input + label .rating-item-filled,
-.rating.is-half:hover input:checked + label .rating-item-filled {
-	opacity: 1;
-}
-
-.rating input:focus + label .rating-item-empty,
-.rating input:hover ~ label .rating-item-filled {
-	opacity: 0;
-}
-
-.rating input:checked ~ label .rating-item-empty,
-.rating input:checked + label .rating-item-filled,
-.rating input:checked + label .rating-item-half,
-.rating input:hover ~ label .rating-item-empty,
-.rating input:focus ~ label .rating-item-empty,
-.rating input:focus + label .rating-item-filled {
-	opacity: 1;
-}
-
-.rating input:hover ~ label .rating-item-filled,
-.rating.is-half input:hover ~ label.rating-item .rating-item-filled,
-.rating.is-half input:hover ~ label.rating-item .rating-item-half {
-	opacity: 0;
-}
-
-.rating input:hover + label .rating-item-filled,
-.rating.is-half input:hover + label.rating-item .rating-item-filled {
-	opacity: 1;
-}
-
-/* RTL Rating Styles */
-.is-rtl {
-	.rating .rating-item {
-		padding-left: calc(var(--rating-size) + var(--space-s));
-		padding-right: 0;
-		transform: scaleX(-1);
-	}
-	.rating:not(.is-half) .rating-item:nth-of-type(2) {
-		padding: 0;
-	}
-}
-
-//
-// service studio
-.rating {
-	-servicestudio-display: inline-flex;
-}
-
+/// @todo Check this selector?!
 .icon-states,
 div[data-block*='Rating'] span {
-	-servicestudio-display: flex;
+	// Service Studio Preview
+	& {
+		-servicestudio-display: flex;
+	}
 }
 
-.rating-item-filled,
-.rating-item-half,
-.rating-item-empty {
-	-servicestudio-margin-right: var(--space-s);
-	-servicestudio-min-height: 24px;
-	-servicestudio-min-width: 24px;
-	-servicestudio-opacity: 1 !important;
-	-servicestudio-position: relative;
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	.rating {
+		&:not(.is-half) .rating-item:nth-of-type(2) {
+			padding: 0;
+		}
+
+		.rating-item {
+			padding-left: calc(var(--rating-size) + var(--space-s));
+			padding-right: 0;
+			transform: scaleX(-1);
+		}
+	}
+}
+
+// Accessibility -----------------------------------------------------------------
+///
+.has-accessible-features {
+	input:focus + .rating-item > div {
+		box-shadow: 0 0 0 3px var(--color-focus-outer);
+	}
 }
