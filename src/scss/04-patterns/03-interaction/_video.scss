@@ -1,19 +1,20 @@
 /*! Patterns - Interaction - Video */
+////
+/// @group Patterns-Video
+/// Patterns - Adaptive - Video Styles
+
+///
+.video {
+	.hide-controls {
+		pointer-events: none;
+
+		&::-webkit-media-controls-panel,
+		&::-webkit-media-controls-panel-container {
+			display: none !important;
+		}
+	}
+}
+
 .video-preview {
-    display: block;
-}
-
-.video.hide-controls::-webkit-media-controls-panel,
-.video.hide-controls::-webkit-media-controls-panel-container {
-    display: none !important;
-
-    -webkit-appearance: none;
-}
-
-.video.hide-controls {
-    pointer-events: none;
-}
-
-.video.hide-controls {
-    pointer-events: none;
+	display: block;
 }
