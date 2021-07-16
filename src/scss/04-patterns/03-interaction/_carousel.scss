@@ -17,6 +17,7 @@
 		-servicestudio-min-height: 80px !important;
 	}
 
+	// Service Studio Preview
 	&:empty {
 		//Service Studio Preview
 		& {
@@ -30,13 +31,13 @@
 
 	&.init {
 		opacity: 0;
-
-		//Service Studio Preview
+		// Service Studio Preview
 		& {
 			-servicestudio-opacity: 1;
 		}
 	}
 
+	// Service Studio Preview
 	& > .list:not([data-virtualization-disabled]) > *,
 	& > .list:not([data-animation-disabled]) > * {
 		//Service Studio Preview
@@ -45,6 +46,7 @@
 		}
 	}
 
+	// Service Studio Preview
 	& > .list:not([data-virtualization-disabled]),
 	& > .list:not([data-animation-disabled]) {
 		//Service Studio Preview
@@ -54,6 +56,7 @@
 		}
 	}
 
+	// Service Studio Preview
 	& > .list:not([data-virtualization-disabled]):after,
 	& > .list:not([data-animation-disabled]):after {
 		//Service Studio Preview
@@ -86,7 +89,7 @@
 		background-color: transparent;
 		white-space: nowrap;
 
-		//Service Studio Preview
+		// Service Studio Preview
 		& {
 			-servicestudio-min-height: 80px !important;
 			-servicestudio-white-space: normal;
@@ -111,6 +114,7 @@
 		}
 
 		.carousel-container-content > {
+			// Service Studio Preview
 			.list:not([data-virtualization-disabled]) > *,
 			.list:not([data-animation-disabled]) > * {
 				//Service Studio Preview
@@ -119,6 +123,7 @@
 				}
 			}
 
+			// Service Studio Preview
 			.list:not([data-virtualization-disabled]),
 			.list:not([data-animation-disabled]) {
 				//Service Studio Preview
@@ -128,6 +133,7 @@
 				}
 			}
 
+			// Service Studio Preview
 			.list:not([data-virtualization-disabled]):after,
 			.list:not([data-animation-disabled]):after {
 				//Service Studio Preview
@@ -149,7 +155,7 @@
 	}
 
 	.carousel-container-content {
-		//Service Studio Preview
+		// Service Studio preview
 		& {
 			-servicestudio-min-height: 80px !important;
 		}
@@ -199,27 +205,27 @@
 			right: 24px;
 			text-align: right;
 		}
+	}
 
-		.carousel-dots-container {
-			margin-top: var(--space-base);
-			text-align: center;
+	.carousel-dots-container {
+		margin-top: var(--space-base);
+		text-align: center;
 
-			.carousel-dot {
-				background-color: var(--color-neutral-5);
-				border-radius: var(--border-radius-circle);
-				cursor: pointer;
-				display: inline-block;
-				height: 8px;
-				margin: 0 var(--space-xs);
-				width: 8px;
+		&.disabled {
+			display: none;
+		}
 
-				& .active {
-					background-color: var(--color-primary);
-				}
-			}
+		.carousel-dot {
+			background-color: var(--color-neutral-5);
+			border-radius: var(--border-radius-circle);
+			cursor: pointer;
+			display: inline-block;
+			height: 8px;
+			margin: 0 var(--space-xs);
+			width: 8px;
 
-			&.disabled {
-				display: none;
+			&.active {
+				background-color: var(--color-primary);
 			}
 		}
 	}

@@ -1,8 +1,9 @@
-////
-/// @group Interaction
-/// date picker styles
 /*! Patterns - Interaction - DatePicker */
+////
+/// @group Patterns-Date_Picker
+/// date picker styles
 
+///
 .pika {
 	&-single {
 		background: var(--color-neutral-0);
@@ -142,27 +143,27 @@
 				text-decoration: none;
 			}
 		}
-	}
 
-	tbody {
-		margin-top: var(--space-s);
-		overflow: hidden;
+		tbody {
+			margin-top: var(--space-s);
+			overflow: hidden;
 
-		tr {
-			display: flex;
-			flex-direction: row;
-			margin-bottom: var(--space-xs);
+			tr {
+				display: flex;
+				flex-direction: row;
+				margin-bottom: var(--space-xs);
 
-			&:last-child {
-				margin-bottom: var(--space-none);
+				&:last-child {
+					margin-bottom: var(--space-none);
+				}
 			}
-		}
 
-		td {
-			align-items: center;
-			display: inline-flex;
-			flex: 1;
-			justify-content: center;
+			td {
+				align-items: center;
+				display: inline-flex;
+				flex: 1;
+				justify-content: center;
+			}
 		}
 	}
 
@@ -295,10 +296,12 @@
 	}
 }
 
+///
 input.OSFillParent.calendar-input {
 	display: none;
 }
 
+///
 .is-inrange {
 	position: relative;
 
@@ -326,6 +329,7 @@ input.OSFillParent.calendar-input {
 	}
 }
 
+///
 .month-picker,
 .year-picker {
 	-webkit-box-direction: normal;
@@ -336,11 +340,13 @@ input.OSFillParent.calendar-input {
 	flex-wrap: wrap;
 	padding: var(--space-none);
 }
+///
 .prev-year,
 .next-year {
 	color: var(--color-neutral-7);
 }
 
+///
 /* Keycode shortcuts dialog */
 .calendar-help {
 	&-dialog {
@@ -406,6 +412,7 @@ input.OSFillParent.calendar-input {
 	}
 }
 
+///
 /* Fix datepicker when inside Popup Widget */
 .portal-class ~ .pika-single.is-bound {
 	z-index: 251;
