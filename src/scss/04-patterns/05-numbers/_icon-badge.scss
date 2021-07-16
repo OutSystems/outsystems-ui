@@ -1,9 +1,16 @@
 /*! Patterns - Numbers - IconBadge */
+////
+/// @group Patterns-Icon_Badge
+/// Patterns - Numbers - IconBadge Styles
+
+///
 .icon-badge {
 	display: inline-block;
 	position: relative;
+
 	.badge {
 		@include absolute-left-top(45%, 0);
+
 		border-radius: var(--border-radius-rounded);
 		font-size: var(--font-size-xs);
 		height: 18px;
@@ -11,20 +18,30 @@
 		padding: var(--space-none) var(--space-xs);
 		transform: translateY(-40%);
 		white-space: nowrap;
+
 		[data-expression] {
 			white-space: nowrap;
 		}
 	}
+
 	.icon {
 		font-size: var(--font-size-h4);
 	}
+
+	div:first-child:empty {
+		// Service Studio Preview
+		& {
+			-servicestudio-height: 30px;
+			-servicestudio-width: 30px;
+		}
+	}
 }
 
-.layout-native .bottom-bar-wrapper .icon-badge .icon {
-	font-size: inherit;
-}
-
-.icon-badge div:first-child:empty {
-	-servicestudio-height: 30px;
-	-servicestudio-width: 30px;
+///
+.layout-native {
+	.bottom-bar-wrapper {
+		.icon-badge .icon {
+			font-size: inherit;
+		}
+	}
 }
