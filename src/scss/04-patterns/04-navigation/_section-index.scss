@@ -1,6 +1,6 @@
 /*! Patterns - Navigation - SectionIndex */
 ////
-/// @group Patterns-SectionIndex
+/// @group Patterns-Section_Index
 /// Patterns - Navigation - SectionIndex Styles
 
 ///
@@ -12,6 +12,20 @@
 	&.is--sticky {
 		position: sticky;
 		top: var(--top-position);
+	}
+
+	&-item {
+		cursor: pointer;
+
+		&:last-child {
+			margin-bottom: var(--space-none);
+		}
+
+		&.is--active {
+			border-left: var(--border-size-m) solid var(--color-primary);
+			color: var(--color-neutral-9);
+			font-weight: var(--font-semi-bold);
+		}
 	}
 
 	a {
@@ -27,24 +41,8 @@
 			color: var(--color-neutral-9);
 		}
 	}
-
-	// .section-index-item
-	&-item {
-		cursor: pointer;
-
-		&:last-child {
-			margin-bottom: var(--space-none);
-		}
-
-		&.is--active {
-			border-left: var(--border-size-m) solid var(--color-primary);
-			color: var(--color-neutral-9);
-			font-weight: var(--font-semi-bold);
-		}
-	}
 }
 
-// Layout ---------------------------------------------------------------------------
 ///
 .layout-native {
 	.section-index {

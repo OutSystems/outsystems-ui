@@ -4,22 +4,24 @@
 /// Breadcrumbs styles
 
 ///
-.breadcrumbs-content {
-	align-items: center;
-	display: flex;
-}
+.breadcrumbs {
+	&-content {
+		align-items: center;
+		display: flex;
+	}
 
-///
-.breadcrumbs-item {
-	align-items: center;
-	color: var(--color-neutral-8);
-	display: inline-flex;
-	.icon {
-		color: var(--color-neutral-7);
+	&-item {
+		align-items: center;
+		color: var(--color-neutral-8);
 		display: inline-flex;
-		font-size: var(--font-size-xs);
-		justify-content: center;
-		margin: var(--space-none) var(--space-s);
-		width: auto;
+
+		.icon {
+			color: var(--color-neutral-7);
+			display: inline-flex;
+			font-size: var(--font-size-xs);
+			justify-content: center;
+			margin: var(--space-none) var(--space-s);
+			width: auto;
+		}
 	}
 }

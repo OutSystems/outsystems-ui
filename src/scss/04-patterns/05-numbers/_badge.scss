@@ -1,5 +1,9 @@
 /*! Patterns - Numbers - Badge */
+////
+/// @group Patterns-Badge
+/// Patterns - Numbers - Badge Styles
 
+///
 .badge {
 	align-items: center;
 	color: var(--color-neutral-0);
@@ -9,30 +13,40 @@
 	justify-content: center;
 	line-height: 1;
 	min-width: 32px;
-	span {
-		width: auto;
+
+	&.background {
+		&-neutral {
+			&-0 {
+				color: var(--color-primary);
+			}
+
+			&-1,
+			&-2,
+			&-3,
+			&-4 {
+				color: var(--color-neutral-9);
+			}
+		}
+
+		&-transparent {
+			color: var(--color-primary);
+		}
 	}
+
 	&-small {
 		font-size: var(--font-size-xs);
 		height: 24px;
 		min-width: 24px;
 		padding: var(--space-none) var(--space-xs);
 	}
+
 	&-medium {
 		font-size: var(--font-size-base);
 		height: 40px;
 		min-width: 40px;
 	}
-	&.background-neutral-1,
-	&.background-neutral-2,
-	&.background-neutral-3,
-	&.background-neutral-4 {
-		color: var(--color-neutral-9);
-	}
-	&.background-transparent {
-		color: var(--color-primary);
-	}
-	&.background-neutral-0 {
-		color: var(--color-primary);
+
+	span {
+		width: auto;
 	}
 }

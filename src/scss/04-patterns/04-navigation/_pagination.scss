@@ -21,52 +21,54 @@
 		display: flex;
 		justify-content: center;
 
-		.pagination-input {
-			align-items: center;
-			display: flex;
+		.pagination {
+			&-input {
+				align-items: center;
+				display: flex;
 
-			// Service Studio Preview
-			& {
-				-servicestudio-display: none;
-			}
-		}
-
-		// With ShowGoToPage parameter, this container is in this context
-		.pagination-counter {
-			margin-left: var(--space-s);
-		}
-
-		.pagination-button {
-			align-items: center;
-			background-color: var(--color-neutral-0);
-			border: var(--border-size-s) solid var(--color-neutral-4);
-			border-radius: var(--border-radius-soft);
-			color: var(--color-neutral-8);
-			cursor: pointer;
-			display: inline-flex;
-			height: 32px;
-			justify-content: center;
-			margin-left: var(--space-s);
-			padding: 0;
-			width: 32px;
-
-			&[disabled] {
-				opacity: 0.5;
-				pointer-events: none;
+				// Service Studio Preview
+				& {
+					-servicestudio-display: none;
+				}
 			}
 
-			&.is--active {
-				border: var(--border-size-s) solid var(--color-primary);
-				color: var(--color-primary);
-				cursor: auto;
-				pointer-events: none;
+			// With ShowGoToPage parameter, this container is in this context
+			&-counter {
+				margin-left: var(--space-s);
 			}
 
-			&.is--ellipsis {
-				background-color: transparent;
-				border: 0;
-				cursor: auto;
-				width: 16px;
+			&-button {
+				align-items: center;
+				background-color: var(--color-neutral-0);
+				border: var(--border-size-s) solid var(--color-neutral-4);
+				border-radius: var(--border-radius-soft);
+				color: var(--color-neutral-8);
+				cursor: pointer;
+				display: inline-flex;
+				height: 32px;
+				justify-content: center;
+				margin-left: var(--space-s);
+				padding: 0;
+				width: 32px;
+
+				&[disabled] {
+					opacity: 0.5;
+					pointer-events: none;
+				}
+
+				&.is--active {
+					border: var(--border-size-s) solid var(--color-primary);
+					color: var(--color-primary);
+					cursor: auto;
+					pointer-events: none;
+				}
+
+				&.is--ellipsis {
+					background-color: transparent;
+					border: 0;
+					cursor: auto;
+					width: 16px;
+				}
 			}
 		}
 
@@ -74,9 +76,11 @@
 			margin-left: 0;
 		}
 
-		// Service Studio Preview
 		.list {
-			-servicestudio-display: none;
+			// Service Studio Preview
+			& {
+				-servicestudio-display: none;
+			}
 		}
 	}
 

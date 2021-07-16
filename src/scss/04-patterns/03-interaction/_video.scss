@@ -1,7 +1,7 @@
 /*! Patterns - Interaction - Video */
 ////
 /// @group Patterns-Video
-/// Patterns - Adaptive - Video Styles
+/// Patterns - Interaction - Video Styles
 
 ///
 .video {
@@ -13,8 +13,8 @@
 			display: none !important;
 		}
 	}
-}
 
-.video-preview {
-	display: block;
+	&-preview {
+		display: block;
+	}
 }

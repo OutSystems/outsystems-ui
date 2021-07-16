@@ -1,6 +1,6 @@
 /*! Patterns - Navigation - BottomBarItem */
 ////
-/// @group Patterns-BottomBar
+/// @group Patterns-Bottom_Bar
 /// Patterns - Navigation - BottomBarItem Styles
 
 ///
@@ -63,10 +63,9 @@
 	}
 }
 
-// Layout ---------------------------------------------------------------------------
 ///
 .layout-native {
-	& .bottom-bar-wrapper {
+	.bottom-bar-wrapper {
 		padding-bottom: var(--os-safe-area-bottom);
 
 		.bottom-bar {
@@ -75,7 +74,7 @@
 		}
 	}
 
-	& .footer {
+	.footer {
 		height: var(--bottom-bar-size);
 	}
 }
