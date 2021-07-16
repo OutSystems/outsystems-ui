@@ -1,31 +1,38 @@
-/*! Patterns - Utilities - CenterContent */
+/*! Patterns - Numbers - CenterContent */
+////
+/// @group Patterns-Center_Content
+/// Patterns - Numbers - CenterContent Styles
 
+///
 .center-content {
 	align-items: center;
 	display: flex;
 	flex-direction: column;
 	height: 100%;
 	width: 100%;
+
+	// Service Studio Preview
+	& {
+		-servicestudio-height: auto !important;
+	}
+
 	&-header {
 		width: 100%;
 	}
+
 	&-container {
 		align-items: center;
 		display: flex;
 		flex: 1;
 		justify-content: center;
 		width: 100%;
+
 		> div {
 			width: 100%;
 		}
 	}
+
 	&-bottom {
 		width: 100%;
 	}
-}
-
-//
-// service studio
-.center-content {
-	-servicestudio-height: auto !important;
 }
