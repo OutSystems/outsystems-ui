@@ -53,9 +53,9 @@
 
 		// Service Studio Preview
 		& {
-			-servicestudio-left: 0 !important;
-			-servicestudio-margin-left: 0 !important;
-			-servicestudio-transform: none !important;
+			-servicestudio-left: 0;
+			-servicestudio-margin-left: 0;
+			-servicestudio-transform: none;
 		}
 
 		&--visible {
@@ -133,8 +133,3 @@
 		}
 	}
 }
-
-// ------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------

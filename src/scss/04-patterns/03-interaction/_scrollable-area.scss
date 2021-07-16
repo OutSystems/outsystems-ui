@@ -1,66 +1,115 @@
 /*! Patterns - Interaction - ScrollableArea */
-.scrollable-area-content {
-    height: var(--scrollable-area-height);
-    width: var(--scrollable-area-width);
+////
+/// @group Patterns-Scrollable_Area
+/// Patterns - Interaction - ScrollableArea
 
-    --scrollable-area-height: auto;
-    --scrollable-area-width: 100%;
+///
+.scrollable-area {
+	&-content {
+		height: var(--scrollable-area-height);
+		width: var(--scrollable-area-width);
+
+		// Service Studio Preview
+		& {
+			--scrollable-area-height: auto;
+			--scrollable-area-width: 100%;
+		}
+
+		&.none {
+			-ms-overflow-style: none; /* IE and Edge */
+			scrollbar-width: none; /* Firefox */
+
+			&::-webkit-scrollbar {
+				display: none;
+			}
+
+			&:hover {
+				cursor: default;
+			}
+		}
+
+		&.horizontal-scroll  {
+			&,
+			.list.list-group {
+				overflow-x: auto;
+				overflow-y: hidden;
+			}
+		}
+
+		&.vertical-scroll {
+			&,
+			.list.list-group {
+				overflow-x: hidden;
+				overflow-y: auto;
+			}
+		}
+
+		&.compact {
+			&.horizontal,
+			&.vertical {
+				&-scroll {
+					&:hover {
+						&::-webkit-scrollbar {
+							&-track {
+								background-color: transparent;
+							}
+
+							&-thumb {
+								background-color: rgba(173, 181, 189, 0.5);
+								border-radius: 6px;
+							}
+						}
+					}
+
+					&::-webkit-scrollbar {
+						height: 8px;
+						width: 8px;
+
+						&-track,
+						&-thumb {
+							background-color: transparent;
+						}
+
+						&-thumb {
+							&:hover {
+								background-color: rgba(106, 113, 120, 0.5);
+								border-radius: 6px;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
-.scrollable-area-content.none {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-}
+///
+[data-block='Interaction.ScrollableArea'] {
+	&::-webkit-scrollbar {
+		height: 8px;
+		width: 8px;
 
-.scrollable-area-content.none::-webkit-scrollbar {
-    display: none;
-}
+		&-track,
+		&-thumb {
+			background-color: transparent;
+		}
+	}
 
-.scrollable-area-content.none:hover {
-    cursor: default;
-}
+	&:hover {
+		&::-webkit-scrollbar {
+			&-track {
+				background-color: transparent;
+			}
 
-.scrollable-area-content.horizontal-scroll,
-.scrollable-area-content.horizontal-scroll .list.list-group {
-    overflow-x: auto;
-    overflow-y: hidden;
-}
+			&-thumb {
+				background-color: rgba(173, 181, 189, 0.5);
+				border-radius: 6px;
 
-.scrollable-area-content.vertical-scroll,
-.scrollable-area-content.vertical-scroll .list.list-group {
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
-[data-block="Interaction.ScrollableArea"]::-webkit-scrollbar,
-.scrollable-area-content.compact.horizontal-scroll::-webkit-scrollbar,
-.scrollable-area-content.compact.vertical-scroll::-webkit-scrollbar {
-    height: 8px;
-    width: 8px;
-}
-
-[data-block="Interaction.ScrollableArea"]::-webkit-scrollbar-track,
-.scrollable-area-content.compact.horizontal-scroll::-webkit-scrollbar-track,
-.scrollable-area-content.compact.vertical-scroll::-webkit-scrollbar-track,
-[data-block="Interaction.ScrollableArea"]::-webkit-scrollbar-thumb,
-.scrollable-area-content.compact.horizontal-scroll::-webkit-scrollbar-thumb,
-.scrollable-area-content.compact.vertical-scroll::-webkit-scrollbar-thumb,
-[data-block="Interaction.ScrollableArea"]:hover::-webkit-scrollbar-track,
-.scrollable-area-content.compact.horizontal-scroll:hover::-webkit-scrollbar-track,
-.scrollable-area-content.compact.vertical-scroll:hover::-webkit-scrollbar-track {
-    background-color: transparent;
-}
-
-[data-block="Interaction.ScrollableArea"]:hover::-webkit-scrollbar-thumb,
-.scrollable-area-content.compact.horizontal-scroll:hover::-webkit-scrollbar-thumb,
-.scrollable-area-content.compact.vertical-scroll:hover::-webkit-scrollbar-thumb {
-    background-color: rgba(173, 181, 189, .5);
-    border-radius: 6px;
-}
-
-[data-block="Interaction.ScrollableArea"]::-webkit-scrollbar-thumb:hover,
-.scrollable-area-content.compact.horizontal-scroll::-webkit-scrollbar-thumb:hover,
-.scrollable-area-content.compact.vertical-scroll::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(106, 113, 120, .5);
-    border-radius: 6px;
+				&:hover {
+					background-color: rgba(106, 113, 120, 0.5);
+					border-radius: 6px;
+				}
+			}
+		}
+	}
 }
