@@ -18,7 +18,10 @@
 	}
 
 	&:empty {
-		-servicestudio-min-height: 200px;
+		//Service Studio Preview
+		& {
+			-servicestudio-min-height: 200px;
+		}
 	}
 
 	&:not(.no-swipe) .carousel-container-content:hover {
@@ -26,39 +29,51 @@
 	}
 
 	&.init {
-		-servicestudio-opacity: 1;
 		opacity: 0;
+
+		//Service Studio Preview
+		& {
+			-servicestudio-opacity: 1;
+		}
 	}
 
 	& > .list:not([data-virtualization-disabled]) > *,
 	& > .list:not([data-animation-disabled]) > * {
-		-servicestudio-display: none !important;
+		//Service Studio Preview
+		& {
+			-servicestudio-display: none !important;
+		}
 	}
 
 	& > .list:not([data-virtualization-disabled]),
 	& > .list:not([data-animation-disabled]) {
-		-servicestudio-min-height: 225px;
-		-servicestudio-pointer-events: none;
+		//Service Studio Preview
+		& {
+			-servicestudio-min-height: 225px;
+			-servicestudio-pointer-events: none;
+		}
 	}
 
 	& > .list:not([data-virtualization-disabled]):after,
 	& > .list:not([data-animation-disabled]):after {
-		-servicestudio-background-color: #fff;
-		-servicestudio-background-position: center;
-		-servicestudio-background-repeat: no-repeat;
-		-servicestudio-background-size: 291px 225px;
-		-servicestudio-content: ' ';
-		-servicestudio-height: 100%;
-		-servicestudio-left: 0;
-		-servicestudio-min-height: 225px;
-		-servicestudio-position: absolute;
-		-servicestudio-top: 0;
-		-servicestudio-width: 100%;
+		//Service Studio Preview
+		& {
+			-servicestudio-background-color: #fff;
+			-servicestudio-background-position: center;
+			-servicestudio-background-repeat: no-repeat;
+			-servicestudio-background-size: 291px 225px;
+			-servicestudio-content: ' ';
+			-servicestudio-height: 100%;
+			-servicestudio-left: 0;
+			-servicestudio-min-height: 225px;
+			-servicestudio-position: absolute;
+			-servicestudio-top: 0;
+			-servicestudio-width: 100%;
+		}
 	}
 
 	&--animatable {
 		transition: all 250ms linear;
-
 		will-change: transform;
 	}
 
@@ -69,16 +84,22 @@
 
 	.carousel-container {
 		background-color: transparent;
-		-servicestudio-min-height: 80px !important;
-
-		-servicestudio-white-space: normal;
 		white-space: nowrap;
+
+		//Service Studio Preview
+		& {
+			-servicestudio-min-height: 80px !important;
+			-servicestudio-white-space: normal;
+		}
 
 		.list.list-group {
 			background-color: transparent;
-
-			-servicestudio-white-space: normal;
 			white-space: nowrap;
+
+			//Service Studio Preview
+			& {
+				-servicestudio-white-space: normal;
+			}
 		}
 
 		/* Used for list and non list elements */
@@ -92,34 +113,46 @@
 		.carousel-container-content > {
 			.list:not([data-virtualization-disabled]) > *,
 			.list:not([data-animation-disabled]) > * {
-				-servicestudio-display: none !important;
+				//Service Studio Preview
+				& {
+					-servicestudio-display: none !important;
+				}
 			}
 
 			.list:not([data-virtualization-disabled]),
 			.list:not([data-animation-disabled]) {
-				-servicestudio-min-height: 225px;
-				-servicestudio-pointer-events: none;
+				//Service Studio Preview
+				& {
+					-servicestudio-min-height: 225px;
+					-servicestudio-pointer-events: none;
+				}
 			}
 
 			.list:not([data-virtualization-disabled]):after,
 			.list:not([data-animation-disabled]):after {
-				-servicestudio-background-color: #fff;
-				-servicestudio-background-position: center;
-				-servicestudio-background-repeat: no-repeat;
-				-servicestudio-background-size: 291px 225px;
-				-servicestudio-content: ' ';
-				-servicestudio-height: 100%;
-				-servicestudio-left: 0;
-				-servicestudio-min-height: 225px;
-				-servicestudio-position: absolute;
-				-servicestudio-top: 0;
-				-servicestudio-width: 100%;
+				//Service Studio Preview
+				& {
+					-servicestudio-background-color: #fff;
+					-servicestudio-background-position: center;
+					-servicestudio-background-repeat: no-repeat;
+					-servicestudio-background-size: 291px 225px;
+					-servicestudio-content: ' ';
+					-servicestudio-height: 100%;
+					-servicestudio-left: 0;
+					-servicestudio-min-height: 225px;
+					-servicestudio-position: absolute;
+					-servicestudio-top: 0;
+					-servicestudio-width: 100%;
+				}
 			}
 		}
 	}
 
 	.carousel-container-content {
-		-servicestudio-min-height: 80px !important;
+		//Service Studio Preview
+		& {
+			-servicestudio-min-height: 80px !important;
+		}
 
 		.OSFillParent {
 			display: inline-block;
@@ -147,7 +180,6 @@
 		transform: translateY(-25px);
 		transition: opacity 150ms linear;
 		width: 40px;
-
 		will-change: opacity;
 		z-index: 2;
 
