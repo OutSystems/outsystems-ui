@@ -1,30 +1,49 @@
 /*! Patterns - Interaction - HorizontalScroll */
+////
+/// @group Patterns-Horizontal_Scroll
+/// Patterns - Interaction - HorizontalScroll
+
+///
 .horizontal-scroll {
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
+	overflow-x: auto;
+	overflow-y: hidden;
+	white-space: nowrap;
 
-    -servicestudio-min-height: 80px;
-    -servicestudio-white-space: normal;
-}
+	// Service Studio Preview
+	& {
+		-servicestudio-min-height: 80px;
+		-servicestudio-white-space: normal;
+	}
 
-.horizontal-scroll > *,
-.horizontal-scroll > .list > * {
-    display: inline-block;
-    -webkit-transform: translateZ(0);
-            transform: translateZ(0);
-}
+	& > * {
+		display: inline-block;
+		transform: translateZ(0);
+	}
 
-.horizontal-scroll > :not(:first-child),
-.horizontal-scroll > .list > :not(:first-child) {
-    margin-left: var(--space-base);
-}
+	& > .list {
+		& > * {
+			display: inline-block;
+			transform: translateZ(0);
+		}
 
-.horizontal-scroll > [data-block*="Card"] + [data-block*="Card"] .card,
-.horizontal-scroll > .list > [data-block*="Card"] + [data-block*="Card"] .card {
-    margin-top: var(--space-none);
-}
+		& > :not(:first-child) {
+			margin-left: var(--space-base);
+		}
 
-.horizontal-scroll .list {
-    background-color: transparent;
+		& > [data-block*='Card'] + [data-block*='Card'] .card {
+			margin-top: var(--space-none);
+		}
+	}
+
+	.list {
+		background-color: transparent;
+	}
+
+	& > :not(:first-child) {
+		margin-left: var(--space-base);
+	}
+
+	& > [data-block*='Card'] + [data-block*='Card'] .card {
+		margin-top: var(--space-none);
+	}
 }
