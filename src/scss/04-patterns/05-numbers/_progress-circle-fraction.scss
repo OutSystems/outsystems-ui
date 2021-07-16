@@ -1,34 +1,51 @@
 /*! Patterns - Numbers - ProgressCircleFraction */
-.progress-circle-text {
-	@include absolute-center();
-	line-height: 1.2;
-	&-numerator {
-		font-size: var(--font-size-h4);
-	}
-	&-denominator {
-		font-size: var(--font-size-h6);
-	}
-}
+////
+/// @group Patterns-Progress_Circle_Fraction
+/// Patterns - Numbers - ProgressCircleFraction Styles
 
-.progress-circle-medium {
-	.progress-circle-text-numerator {
-		font-size: var(--font-size-h1);
-	}
-	.progress-circle-text-denominator {
-		font-size: var(--font-size-h4);
-	}
-}
+///
+.progress-circle {
+	&-text {
+		@include absolute-center();
 
-.progress-circle-large {
-	.progress-circle-text-numerator {
-		font-size: 44px;
-	}
-	.progress-circle-text-denominator {
-		font-size: var(--font-size-h2);
-	}
-}
+		line-height: 1.2;
 
-.progress-circle-text {
-	-servicestudio--webkit-transform: translate(0);
-	-servicestudio-position: static;
+		// Service Studio Preview
+		& {
+			-servicestudio--webkit-transform: translate(0);
+			-servicestudio-position: static;
+		}
+
+		&-numerator {
+			font-size: var(--font-size-h4);
+		}
+
+		&-denominator {
+			font-size: var(--font-size-h6);
+		}
+	}
+
+	&-medium {
+		.progress-circle-text {
+			&-numerator {
+				font-size: var(--font-size-h1);
+			}
+
+			&-denominator {
+				font-size: var(--font-size-h4);
+			}
+		}
+	}
+
+	&-large {
+		.progress-circle-text {
+			&-numerator {
+				font-size: 44px;
+			}
+
+			&-denominator {
+				font-size: var(--font-size-h2);
+			}
+		}
+	}
 }
