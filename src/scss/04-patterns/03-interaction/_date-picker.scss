@@ -296,10 +296,12 @@
 	}
 }
 
+///
 input.OSFillParent.calendar-input {
 	display: none;
 }
 
+///
 .is-inrange {
 	position: relative;
 
@@ -327,6 +329,7 @@ input.OSFillParent.calendar-input {
 	}
 }
 
+///
 .month-picker,
 .year-picker {
 	-webkit-box-direction: normal;
@@ -337,11 +340,13 @@ input.OSFillParent.calendar-input {
 	flex-wrap: wrap;
 	padding: var(--space-none);
 }
+///
 .prev-year,
 .next-year {
 	color: var(--color-neutral-7);
 }
 
+///
 /* Keycode shortcuts dialog */
 .calendar-help {
 	&-dialog {
@@ -407,6 +412,7 @@ input.OSFillParent.calendar-input {
 	}
 }
 
+///
 /* Fix datepicker when inside Popup Widget */
 .portal-class ~ .pika-single.is-bound {
 	z-index: 251;
