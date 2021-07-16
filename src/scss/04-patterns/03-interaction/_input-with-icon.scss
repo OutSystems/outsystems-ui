@@ -1,70 +1,84 @@
-/*! Patterns - Controls - InputWithIcon */
+/*! Patterns - Interaction - InputWithIcon */
+////
+/// @group Patterns-Input_With_Icon
+/// Patterns - Interaction - InputWithIcon
+
+///
 .input-with-icon {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    position: relative;
+	display: flex;
+	position: relative;
+
+	&.input-with-icon-right {
+		.input-with-icon-content-icon {
+			left: auto;
+			right: 0;
+
+			&:not(:empty) + .input-with-icon-input input {
+				padding-left: var(--space-base);
+				padding-right: var(--space-xl);
+			}
+
+			&.search-actions {
+				left: 0;
+				right: auto;
+			}
+		}
+	}
+
+	.input-with-icon {
+		&-content-icon {
+			display: inline-flex;
+			height: 100%;
+			left: 0;
+			position: absolute;
+			width: 40px;
+
+			&,
+			a {
+				color: var(--color-neutral-7);
+			}
+
+			&:not(:empty) + .input-with-icon-input input {
+				padding-left: var(--space-xl);
+			}
+
+			&.search-actions {
+				left: auto;
+				right: 0;
+
+				&:hover {
+					color: var(--color-neutral-8);
+					cursor: pointer;
+				}
+			}
+		}
+
+		&-input {
+			&,
+			input {
+				width: 100%;
+			}
+		}
+	}
+
+	.fa-fw {
+		width: auto;
+	}
+
+	span {
+		&.validation-message {
+			display: block;
+			position: absolute;
+		}
+	}
 }
 
-.input-with-icon .input-with-icon-content-icon {
-    display: -webkit-inline-box;
-    display: -ms-inline-flexbox;
-    display: inline-flex;
-    height: 100%;
-    left: 0;
-    position: absolute;
-    width: 40px;
-}
-
-.input-with-icon.input-with-icon-right .input-with-icon-content-icon {
-    left: auto;
-    right: 0;
-}
-
-.input-with-icon .input-with-icon-content-icon,
-.input-with-icon .input-with-icon-content-icon a {
-    color: var(--color-neutral-7);
-}
-
-.input-with-icon .input-with-icon-input,
-.input-with-icon .input-with-icon-input input {
-    width: 100%;
-}
-
-.input-with-icon .input-with-icon-content-icon:not(:empty) + .input-with-icon-input input {
-    padding-left: var(--space-xl);
-}
-
-.input-with-icon.input-with-icon-right .input-with-icon-content-icon:not(:empty) + .input-with-icon-input input {
-    padding-left: var(--space-base);
-    padding-right: var(--space-xl);
-}
-
-.input-with-icon .fa-fw {
-    width: auto;
-}
-
-.input-with-icon .input-with-icon-content-icon.search-actions {
-    left: auto;
-    right: 0;
-}
-
-.input-with-icon.input-with-icon-right .input-with-icon-content-icon.search-actions {
-    left: 0;
-    right: auto;
-}
-
-.input-with-icon .input-with-icon-content-icon.search-actions:hover {
-    color: var(--color-neutral-8);
-    cursor: pointer;
-}
-
-.form .input-with-icon .input-with-icon-content-icon {
-    padding-bottom: var(--space-m);
-    z-index: 1;
-}
-
-.input-with-icon span.validation-message {
-    display: block;
-    position: absolute;
+///
+.form {
+	.input-with-icon {
+		.input-with-icon-content-icon {
+			padding-bottom: var(--space-m);
+			z-index: 1;
+		}
+	}
 }
