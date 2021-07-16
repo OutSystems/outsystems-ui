@@ -1,25 +1,35 @@
 /*! Patterns - Numbers - ProgressCircle */
-.progress-circle-outer {
-	display: flex;
-	justify-content: center;
-	padding: var(--space-base);
-}
+////
+/// @group Patterns-Progress_Circle
+/// Patterns - Numbers - ProgressCircle Styles
 
+///
 .progress-circle {
 	position: relative;
+
 	svg {
 		height: 100%;
 		stroke-linecap: round;
 	}
+
 	.progressbar-text {
 		text-align: center;
 	}
+
+	&-outer {
+		display: flex;
+		justify-content: center;
+		padding: var(--space-base);
+	}
+
 	&-small .progressbar-text {
 		font-size: var(--font-size-h4);
 	}
+
 	&-medium .progressbar-text {
 		font-size: var(--font-size-h3);
 	}
+
 	&-large .progressbar-text {
 		font-size: var(--font-size-display);
 	}
