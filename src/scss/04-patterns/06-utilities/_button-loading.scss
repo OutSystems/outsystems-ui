@@ -1,41 +1,39 @@
-/*! Patterns - Utilities - ButtonLoading */
+/*! Patterns - Numbers - ButtonLoading */
+////
+/// @group Patterns-Button_Loading
+/// Patterns - Numbers - ButtonLoading Styles
 
-button.OSFillParent {
-	display: inline-flex;
-}
+///
+.btn {
+	&-loading {
+		display: none;
+		position: absolute;
 
-.is--loading .btn {
-	pointer-events: none;
-}
+		.loading-spinner {
+			animation: loadingSpinner 850ms cubic-bezier(0.7, 1.05, 0.78, 0.78) infinite;
+			border: var(--border-size-m) solid currentColor;
+			border-radius: var(--border-radius-circle);
+			border-top: var(--border-size-m) solid transparent;
+			height: 16px;
+			width: 16px;
+			will-change: transform;
+		}
 
-.btn-loading {
-	display: none;
-	position: absolute;
-	.loading-spinner {
-		animation: loadingSpinner 850ms cubic-bezier(0.7, 1.05, 0.78, 0.78) infinite;
-		border: var(--border-size-m) solid currentColor;
-		border-radius: var(--border-radius-circle);
-		border-top: var(--border-size-m) solid transparent;
-		height: 16px;
-		width: 16px;
-		will-change: transform;
+		.btn-show-label & {
+			position: relative;
+		}
+
+		.is--loading & {
+			display: inline-flex;
+		}
 	}
-}
 
-.btn-loading {
-	.btn-show-label & {
-		position: relative;
-	}
-	.is--loading & {
-		display: inline-flex;
-	}
-}
-
-.btn-label {
-	.is--loading & {
-		opacity: 0;
-	}
-	.btn-show-label & {
-		opacity: 1;
+	&-label {
+		.is--loading & {
+			opacity: 0;
+		}
+		.btn-show-label & {
+			opacity: 1;
+		}
 	}
 }
