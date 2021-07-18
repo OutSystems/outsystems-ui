@@ -1,37 +1,41 @@
+/*! Usefull - BoxHeight */
 ////
-/// @group useful box
-
-/*! useful box height start */
-
-.auto-height {
-	height: auto;
-}
+/// @group UsefullClasses-Box_Height
+/// Usefull - BoxHeight
 
 ///
 .full-height {
 	height: 100%;
-}
 
-///
-.full-height-vh {
-	height: 100vh;
-}
+	&-vh {
+		height: 100vh;
+	}
 
-///
-.full-height-minus-header {
-	-servicestudio-height: auto;
-	height: calc(100vh - var(--header-size));
+	&-minus-header {
+		height: calc(100vh - var(--header-size));
+
+		// Service Studio Preview
+		& {
+			-servicestudio-height: auto;
+		}
+	}
 }
 
 ///
 .half-height {
 	height: 50%;
+
+	&-vh {
+		height: 50vh;
+
+		// Service Studio Preview
+		& {
+			-servicestudio-height: auto;
+		}
+	}
 }
 
 ///
-.half-height-vh {
-	-servicestudio-height: auto;
-	height: 50vh;
+.auto-height {
+	height: auto;
 }
-
-/*! useful box height end */

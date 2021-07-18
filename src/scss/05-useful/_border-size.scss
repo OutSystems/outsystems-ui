@@ -1,89 +1,34 @@
-/*! useful border size start */
-
+/*! Usefull - Border Size */
 ////
-/// @group useful box
+/// @group UsefullClasses-Border_Size
+/// Usefull - Border Size
 
 ///
-.border-size-none {
-	border-width: var(--border-size-none);
-}
+.border {
+	&-size {
+		@each $osui-border-size-type in $osui-border-size-types {
+			// Generated - Eg: .border-size-none
+			&-#{$osui-border-size-type} {
+				@if $osui-border-size-type == 'none' {
+					border-width: var(--border-size-#{$osui-border-size-type});
+				} @else {
+					border: var(--border-size-#{$osui-border-size-type}) solid currentColor;
+				}
+			}
+		}
+	}
 
-///
-.border-size-s {
-	border: var(--border-size-s) solid currentColor;
+	& {
+		@each $osui-box-side in $osui-box-sides {
+			@each $osui-border-size-type in $osui-border-size-types {
+				@if $osui-border-size-type != 'none' {
+					// Generated - Eg: .border-top-s
+					&-#{$osui-box-side}-#{$osui-border-size-type}:not(.columns),
+					&-#{$osui-box-side}-#{$osui-border-size-type}.columns > .columns-item:not(:last-child) {
+						border-#{$osui-box-side}: var(--border-size-#{$osui-border-size-type}) solid currentColor;
+					}
+				}
+			}
+		}
+	}
 }
-
-///
-.border-size-m {
-	border: var(--border-size-m) solid currentColor;
-}
-
-///
-.border-size-l {
-	border: var(--border-size-l) solid currentColor;
-}
-
-///
-.border-top-s:not(.columns),
-.columns.border-top-s > .columns-item:not(:last-child) {
-	border-top: var(--border-size-s) solid currentColor;
-}
-
-///
-.border-right-s:not(.columns),
-.columns.border-right-s > .columns-item:not(:last-child) {
-	border-right: var(--border-size-s) solid currentColor;
-}
-
-///
-.border-bottom-s:not(.columns),
-.columns.border-bottom-s > .columns-item:not(:last-child) {
-	border-bottom: var(--border-size-s) solid currentColor;
-}
-
-.border-left-s:not(.columns),
-.columns.border-left-s > .columns-item:not(:last-child) {
-	border-left: var(--border-size-s) solid currentColor;
-}
-
-.border-top-m:not(.columns),
-.columns.border-top-m > .columns-item:not(:last-child) {
-	border-top: var(--border-size-m) solid currentColor;
-}
-
-.border-right-m:not(.columns),
-.columns.border-right-m > .columns-item:not(:last-child) {
-	border-right: var(--border-size-m) solid currentColor;
-}
-
-.border-bottom-m:not(.columns),
-.columns.border-bottom-m > .columns-item:not(:last-child) {
-	border-bottom: var(--border-size-m) solid currentColor;
-}
-
-.border-left-m:not(.columns),
-.columns.border-left-m > .columns-item:not(:last-child) {
-	border-left: var(--border-size-m) solid currentColor;
-}
-
-.border-top-l:not(.columns),
-.columns.border-top-l > .columns-item:not(:last-child) {
-	border-top: var(--border-size-l) solid currentColor;
-}
-
-.border-right-l:not(.columns),
-.columns.border-right-l > .columns-item:not(:last-child) {
-	border-right: var(--border-size-l) solid currentColor;
-}
-
-.border-bottom-l:not(.columns),
-.columns.border-bottom-l > .columns-item:not(:last-child) {
-	border-bottom: var(--border-size-l) solid currentColor;
-}
-
-.border-left-l:not(.columns),
-.columns.border-left-l > .columns-item:not(:last-child) {
-	border-left: var(--border-size-l) solid currentColor;
-}
-
-/*! useful border size end */

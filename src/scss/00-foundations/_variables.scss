@@ -26,6 +26,9 @@ $osui-semantics: 'error', 'warning', 'success', 'info';
 /// Devices
 $osui-devices: 'phone', 'tablet', 'desktop';
 
+/// Border Sizes
+$osui-border-size-types: 'none', 's', 'm', 'l';
+
 /// Border Radius
 $osui-border-radius-types: 'none', 'soft', 'rounded', 'circle';
 $osui-border-radius-box-sides: (
