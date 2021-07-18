@@ -104,7 +104,6 @@
 		height: 40px;
 		justify-content: center;
 		margin-left: var(--space-base);
-
 		transform: translateZ(0) scale(0.3);
 		transition: transform 180ms ease-out;
 		transition-delay: calc(var(--delay) * 40ms);
@@ -209,7 +208,7 @@
 	}
 }
 
-// RTL --------------------------------------------------------------------
+// IsRTL --------------------------------------------------------------------
 ///
 .is-rtl {
 	.floating-actions-item-button {
@@ -225,7 +224,6 @@
 
 // Accessibility --------------------------------------------------------------------
 ///
-/* Accessibility */
 .has-accessible-features {
 	.floating-button:focus {
 		box-shadow: 0 0 0 3px var(--color-focus-outer);
