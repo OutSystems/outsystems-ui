@@ -43,6 +43,7 @@
 			position: absolute;
 			right: 0;
 		}
+
 		.pika-time-container {
 			select {
 				opacity: 1;
@@ -52,11 +53,7 @@
 	}
 
 	&-labels {
-		-webkit-box-flex: 1;
-		display: -webkit-box;
-		display: -ms-flexbox;
 		display: flex;
-		-ms-flex: 1;
 		flex: 1;
 	}
 
@@ -133,9 +130,7 @@
 		}
 
 		th {
-			-webkit-box-flex: 1;
 			color: var(--color-neutral-7);
-			-ms-flex: 1;
 			flex: 1;
 			font-weight: var(--font-regular);
 
@@ -163,22 +158,6 @@
 				display: inline-flex;
 				flex: 1;
 				justify-content: center;
-			}
-		}
-	}
-
-	&-lendar {
-		.phone & {
-			tr {
-				border-bottom: 0;
-			}
-		}
-	}
-
-	&-time {
-		.phone & {
-			td {
-				display: initial;
 			}
 		}
 	}
@@ -340,14 +319,15 @@ input.OSFillParent.calendar-input {
 	flex-wrap: wrap;
 	padding: var(--space-none);
 }
+
 ///
 .prev-year,
 .next-year {
 	color: var(--color-neutral-7);
 }
 
-///
 /* Keycode shortcuts dialog */
+///
 .calendar-help {
 	&-dialog {
 		background-color: var(--color-neutral-0);
@@ -413,14 +393,31 @@ input.OSFillParent.calendar-input {
 }
 
 ///
-/* Fix datepicker when inside Popup Widget */
 .portal-class ~ .pika-single.is-bound {
+	/* Fix datepicker when inside Popup Widget */
 	z-index: 251;
 }
 
-// RTL ------------------------------------------------------------------------------
+// Responsive --------------------------------------------------------------------
 ///
+.phone {
+	.pika {
+		&-lendar {
+			tr {
+				border-bottom: 0;
+			}
+		}
 
+		&-time {
+			td {
+				display: initial;
+			}
+		}
+	}
+}
+
+// IsRTL -------------------------------------------------------------------------
+///
 .is-rtl {
 	.pika {
 		&-next {
@@ -450,9 +447,8 @@ input.OSFillParent.calendar-input {
 
 // Accessibility ---------------------------------------------------------------------
 ///
-/* Accessibility */
-.desktop {
-	.has-accessible-features {
+.has-accessible-features {
+	.desktop & {
 		.pika {
 			&-title {
 				select {

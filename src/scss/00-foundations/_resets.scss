@@ -125,31 +125,34 @@ button {
 }
 
 ///
-[type='number']::-webkit-inner-spin-button,
-[type='number']::-webkit-outer-spin-button {
-	height: auto;
+[type='number'] {
+	&::-webkit-inner-spin-button,
+	&::-webkit-outer-spin-button {
+		height: auto;
+	}
 }
 
 ///
 [type='search'] {
 	appearance: textfield;
 	outline-offset: -2px;
+
+	&::-webkit-search-cancel-button,
+	&::-webkit-search-decoration {
+		appearance: none;
+	}
 }
 
 ///
-[type='search']::-webkit-search-cancel-button,
-[type='search']::-webkit-search-decoration {
-	appearance: none;
-}
-
-///
-input[type='time'],
-input[type='date'],
-input[type='datetime'],
-input[type='datetime-local'],
-input[type='time'],
-input[type='time']:empty {
-	display: inline-flex;
+input {
+	&[type='time'],
+	&[type='date'],
+	&[type='datetime'],
+	&[type='datetime-local'],
+	&[type='time'],
+	&[type='time']:empty {
+		display: inline-flex;
+	}
 }
 
 ///
