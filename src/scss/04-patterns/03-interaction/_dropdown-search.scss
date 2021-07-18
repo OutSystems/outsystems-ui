@@ -4,7 +4,6 @@
 /// dropdown search styles
 
 ///
-/* $4.3.6 - Patterns - Interaction - DropdownSearch */
 .choices {
 	min-width: 150px;
 	position: relative;
@@ -245,6 +244,11 @@
 			}
 		}
 	}
+}
+
+///
+.dropdown-search-select {
+	opacity: 0;
 }
 
 // Responsive --------------------------------------------------------------------
