@@ -31,13 +31,13 @@
 
 	&.init {
 		opacity: 0;
+
 		// Service Studio Preview
 		& {
 			-servicestudio-opacity: 1;
 		}
 	}
 
-	// Service Studio Preview
 	& > .list:not([data-virtualization-disabled]) > *,
 	& > .list:not([data-animation-disabled]) > * {
 		//Service Studio Preview
@@ -46,7 +46,6 @@
 		}
 	}
 
-	// Service Studio Preview
 	& > .list:not([data-virtualization-disabled]),
 	& > .list:not([data-animation-disabled]) {
 		//Service Studio Preview
@@ -56,7 +55,6 @@
 		}
 	}
 
-	// Service Studio Preview
 	& > .list:not([data-virtualization-disabled]):after,
 	& > .list:not([data-animation-disabled]):after {
 		//Service Studio Preview
@@ -114,7 +112,6 @@
 		}
 
 		.carousel-container-content > {
-			// Service Studio Preview
 			.list:not([data-virtualization-disabled]) > *,
 			.list:not([data-animation-disabled]) > * {
 				//Service Studio Preview
@@ -123,7 +120,6 @@
 				}
 			}
 
-			// Service Studio Preview
 			.list:not([data-virtualization-disabled]),
 			.list:not([data-animation-disabled]) {
 				//Service Studio Preview
@@ -133,7 +129,6 @@
 				}
 			}
 
-			// Service Studio Preview
 			.list:not([data-virtualization-disabled]):after,
 			.list:not([data-animation-disabled]):after {
 				//Service Studio Preview
@@ -250,7 +245,10 @@
 
 // Accessibility --------------------------------------------------------------------
 ///
-/* Accessibility Styles */
-.has-accessible-features .carousel .carousel-navigation:focus {
-	box-shadow: 0 0 0 3px var(--color-focus-outer);
+.has-accessible-features {
+	.carousel {
+		.carousel-navigation:focus {
+			box-shadow: 0 0 0 3px var(--color-focus-outer);
+		}
+	}
 }
