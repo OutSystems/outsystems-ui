@@ -1,13 +1,17 @@
-@for $index from 0 through 10 {
-	/*! neutral-#{$index} start */
+/*! Usefull - ColorsNeutral */
+////
+/// @group UsefullClasses-Colors_Neutral
+/// Usefull - ColorsNeutral
 
+///
+// for loop
+@for $index from 0 through 10 {
 	.background-neutral-#{$index} {
+		/*! jRio  */
 		background-color: var(--color-neutral-#{$index});
 	}
 
 	.text-neutral-#{$index} {
 		color: var(--color-neutral-#{$index});
 	}
-
-	/*! neutral-#{$index} end */
 }

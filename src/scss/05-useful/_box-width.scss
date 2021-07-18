@@ -1,19 +1,22 @@
-/*! useful box width start */
+/*! Usefull - BoxWidth */
+////
+/// @group UsefullClasses-Box_Width
+/// Usefull - BoxWidth
 
+///
 .full-width {
 	width: 100%;
+
+	&-vw {
+		width: 100vw;
+	}
 }
 
-.full-width-vw {
-	width: 100vw;
-}
-
+///
 .half-width {
 	width: 50%;
-}
 
-.half-width-vw {
-	width: 50vw;
+	&-vw {
+		width: 50vw;
+	}
 }
-
-/*! useful box width end */

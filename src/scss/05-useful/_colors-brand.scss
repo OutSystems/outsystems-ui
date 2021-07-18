@@ -1,25 +1,40 @@
-/* $6.2.1 - Styles - Colors - Brand */
-.background-primary {
-	background-color: var(--color-primary);
-}
-.background-secondary {
-	background-color: var(--color-secondary);
+/*! Usefull - ColorsBrand */
+////
+/// @group UsefullClasses-Colors_Brand
+/// Usefull - ColorsBrand
+
+///
+.background {
+	&-primary {
+		background-color: var(--color-primary);
+
+		&-lightest {
+			background-color: var(--color-neutral-0);
+		}
+	}
+
+	&-secondary {
+		background-color: var(--color-secondary);
+
+		&-lightest {
+			background-color: var(--color-neutral-0);
+		}
+	}
 }
 
-.text-primary,
-.text-primary-darker {
-	color: var(--color-primary);
-}
-.text-secondary,
-.text-secondary-darker {
-	color: var(--color-secondary);
-}
+///
+.text {
+	&-primary {
+		&,
+		&-darker {
+			color: var(--color-primary);
+		}
+	}
 
-/* Background and Text Colors used when IsLight parameter for Badge / Tag / UserInitials is True */
-.background-primary-lightest {
-	background-color: var(--color-neutral-0);
-}
-
-.background-secondary-lightest {
-	background-color: var(--color-neutral-0);
+	&-secondary {
+		&,
+		&-darker {
+			color: var(--color-secondary);
+		}
+	}
 }
