@@ -20,21 +20,19 @@
 	&-content {
 		padding: var(--space-s) var(--space-none) var(--space-none);
 	}
-}
 
-///
-.section-group {
-	&.is--sticky {
-		.section-title {
-			position: -webkit-sticky;
-			position: sticky;
-			top: calc(var(--section-top-position) + var(--os-safe-area-top));
-			z-index: 90;
+	&-group {
+		&.is--sticky {
+			.section-title {
+				position: sticky;
+				top: calc(var(--section-top-position) + var(--os-safe-area-top));
+				z-index: 90;
+			}
 		}
-	}
 
-	.section-title {
-		background-color: var(--color-background-body);
+		.section-title {
+			background-color: var(--color-background-body);
+		}
 	}
 }
 
