@@ -283,6 +283,12 @@
 @import '04-patterns/06-utilities/margin-container'; //ACarvalho // jRio => @Checked!
 @import '04-patterns/06-utilities/separator'; //ACarvalho // jRio => @Checked!
 
+/* 
+    @todo:
+    - Pass the partial below to another context since it's not a usefull class!
+*/
+@import '05-useful/pull-to-refresh'; //ACarvalho // jRio => @Done!
+
 /*! ============================================================================= */
 /*!  $6 - Styles                                                                  */
 /*! ============================================================================= */
@@ -299,13 +305,12 @@
 @import '05-useful/display'; //ACarvalho // jRio => @Done!
 @import '05-useful/display-flex'; //ACarvalho // jRio => @Done!
 @import '05-useful/display-align'; //ACarvalho // jRio => @Done!
-@import '05-useful/images'; //ACarvalho // jRio => @Here!
-@import '05-useful/overflow'; //ACarvalho
-@import '05-useful/positioning'; //ACarvalho
-@import '05-useful/positioning-absolute'; //ACarvalho
-@import '05-useful/pull-to-refresh'; //ACarvalho
-@import '05-useful/shadow'; //ACarvalho
-@import '05-useful/space-margin'; //ACarvalho
+@import '05-useful/images'; //ACarvalho // jRio => @Done!
+@import '05-useful/overflow'; //ACarvalho // jRio => @Done!
+@import '05-useful/positioning'; //ACarvalho // jRio => @Done!
+@import '05-useful/positioning-absolute'; //ACarvalho // jRio => @Done!
+@import '05-useful/shadow'; //ACarvalho // jRio => @Done!
+@import '05-useful/space-margin'; //ACarvalho // jRio => @Here!
 @import '05-useful/space-padding'; //ACarvalho
 @import '05-useful/text'; //ACarvalho
 @import '05-useful/typography'; //ACarvalho

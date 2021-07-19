@@ -1,16 +1,19 @@
-/*! useful positioning start */
+/*! Usefull - Position */
+////
+/// @group UsefullClasses-Position
+/// Usefull - Position
 
+///
 .position-relative {
 	position: relative;
 }
 
+///
 .fixed {
 	position: fixed;
 }
 
+///
 .sticky {
-	position: -webkit-sticky;
 	position: sticky;
 }
-
-/*! useful positioning end */

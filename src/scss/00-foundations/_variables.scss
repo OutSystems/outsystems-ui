@@ -15,6 +15,8 @@ $osui-sizes: (
 
 /// Box Sides
 $osui-box-sides: 'top', 'right', 'bottom', 'left';
+
+/// Box Corners
 $osui-box-corners: 'top-left', 'top-right', 'bottom-right', 'bottom-left';
 
 /// Predefined colors
@@ -43,3 +45,6 @@ $osui-border-radius-box-sides: (
 	'bottom' 'left' 'right',
 	'left' 'top' 'bottom'
 );
+
+/// Shadow Types
+$osui-shadow-types: 'none', 'xs', 's', 'm', 'l', 'xl';
