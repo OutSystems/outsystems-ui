@@ -2,18 +2,7 @@
 /// @group SCSS_Variables
 
 /// Predefined sizes
-$osui-sizes: (
-	'none': var(--space-none),
-	'xs': var(--space-xs),
-	's': var(--space-s),
-	'base': var(--space-base),
-	'm': var(--space-m),
-	'l': var(--space-l),
-	'xl': var(--space-xl),
-	'xxl': var(--space-xxl),
-);
-
-$osui-sizes2: 'none' 'xs' 's' 'base' 'm' 'l' 'xl' 'xxl';
+$osui-sizes: 'none' 'xs' 's' 'base' 'm' 'l' 'xl' 'xxl';
 
 /// Box Sides
 $osui-box-sides: 'top', 'right', 'bottom', 'left';

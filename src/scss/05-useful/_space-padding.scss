@@ -1,58 +1,52 @@
+/*! Usefull - Padding */
 ////
-/// @group useful padding
+/// @group UsefullClasses-Padding
+/// Usefull - Padding
 
-@each $entry in $osui-sizes {
-	$size: nth($entry, 1);
-	$variable: nth($entry, 2);
+///
+///
+.padding {
+	@each $osui-size in $osui-sizes {
+		&-#{$osui-size} {
+			padding: var(--space-#{$osui-size});
+		}
 
-	///
-	.padding-#{$size} {
-		padding: #{$variable};
+		@each $osui-box-side in $osui-box-sides {
+			&-#{$osui-box-side}-#{$osui-size} {
+				padding-#{$osui-box-side}: var(--space-#{$osui-size});
+			}
+		}
+
+		&-x-#{$osui-size} {
+			padding-left: var(--space-#{$osui-size});
+			padding-right: var(--space-#{$osui-size});
+		}
+
+		&-y-#{$osui-size} {
+			padding-bottom: var(--space-#{$osui-size});
+			padding-top: var(--space-#{$osui-size});
+		}
 	}
 
-	///
-	.padding-top-#{$size} {
-		padding-top: #{$variable};
+	&-auto {
+		padding: 0 auto;
 	}
+}
 
-	///
-	.padding-right-#{$size} {
-		padding-right: #{$variable};
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	@each $osui-size in $osui-sizes {
+		.padding {
+			&-right-#{$osui-size} {
+				padding-left: var(--space-#{$osui-size});
+				padding-right: var(--space-none);
+			}
+
+			&-left-#{$osui-size} {
+				padding-left: var(--space-none);
+				padding-right: var(--space-#{$osui-size});
+			}
+		}
 	}
-
-	///
-	.padding-bottom-#{$size} {
-		padding-bottom: #{$variable};
-	}
-
-	///
-	.padding-left-#{$size} {
-		padding-left: #{$variable};
-	}
-
-	///
-	.is-rtl .padding-right-#{$size} {
-		padding-left: #{$variable};
-		padding-right: var(--space-none);
-	}
-
-	///
-	.is-rtl .padding-left-#{$size} {
-		padding-left: var(--space-none);
-		padding-right: #{$variable};
-	}
-
-	///
-	.padding-x-#{$size} {
-		padding-left: #{$variable};
-		padding-right: #{$variable};
-	}
-
-	///
-	.padding-y-#{$size} {
-		padding-bottom: #{$variable};
-		padding-top: #{$variable};
-	}
-
-	/*! useful space padding #{$size} end */
 }

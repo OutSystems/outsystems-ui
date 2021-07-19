@@ -5,7 +5,7 @@
 
 ///
 .margin {
-	@each $osui-size in $osui-sizes2 {
+	@each $osui-size in $osui-sizes {
 		&-#{$osui-size} {
 			margin: var(--space-#{$osui-size});
 		}
@@ -35,7 +35,7 @@
 // IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {
-	@each $osui-size in $osui-sizes2 {
+	@each $osui-size in $osui-sizes {
 		.margin {
 			&-right-#{$osui-size} {
 				margin-left: var(--space-#{$osui-size});

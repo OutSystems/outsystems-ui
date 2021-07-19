@@ -46,7 +46,7 @@
 
 	// Gutters -------------------------------------------------------------------
 	& {
-		@each $osui-size in $osui-sizes2 {
+		@each $osui-size in $osui-sizes {
 			&.gutter {
 				&-#{$osui-size} {
 					margin-left: calc(-1 * var(--space-#{$osui-size}) / 2);
