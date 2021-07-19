@@ -78,6 +78,17 @@ body,
 	}
 }
 
+///
+.layout-native,
+.layout-top {
+	.aside-navigation {
+		// Service Studio Preview
+		& {
+			-servicestudio-display: none !important;
+		}
+	}
+}
+
 // iOS ---------------------------------------------------------------------------
 ///
 .ios {

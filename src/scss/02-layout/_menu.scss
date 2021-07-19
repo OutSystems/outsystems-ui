@@ -15,6 +15,21 @@
 	}
 }
 
+/* Menu ServiceStudio Preview */
+///
+body {
+	.app-menu-content {
+		// Service Studio Preview
+		& {
+			-servicestudio-align-items: flex-start;
+			-servicestudio-height: 100% !important;
+			-servicestudio-left: 0 !important;
+			-servicestudio-position: relative !important;
+			-servicestudio-width: 100% !important;
+		}
+	}
+}
+
 ///
 .submenu {
 	cursor: pointer;

@@ -48,6 +48,14 @@
 		}
 	}
 
+	&-image,
+	&-color {
+		@include absolute-left-top();
+
+		height: 100%;
+		width: 100%;
+	}
+
 	&-image img {
 		height: 100%;
 		object-fit: cover;
@@ -73,12 +81,11 @@
 }
 
 ///
-.card-background {
-	&-image,
-	&-color {
-		@include absolute-left-top();
-		height: 100%;
-		width: 100%;
+.remove-card-gradient {
+	.card-background-color {
+		&:after {
+			background: none;
+		}
 	}
 }
 

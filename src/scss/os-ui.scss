@@ -288,6 +288,7 @@
     - Pass the partial below to another context since it's not a usefull class!
 */
 @import '05-useful/pull-to-refresh'; //ACarvalho // jRio => @Done!
+@import '05-useful/list-updating'; //jRio => @Done!
 
 /*! ============================================================================= */
 /*!  $6 - Styles                                                                  */
@@ -314,19 +315,18 @@
 @import '05-useful/space-padding'; //ACarvalho // jRio => @Done!
 @import '05-useful/text'; //ACarvalho // jRio => @Done!
 @import '05-useful/typography'; //ACarvalho // jRio = @Done!
-@import '05-useful/visibility'; //ACarvalho // jRio => @Here!
-@import '05-useful/list-updating'; //jRio => @Done!
-@import '05-useful/others'; //ACarvalho
+@import '05-useful/visibility'; //ACarvalho // jRio => @Done!
+@import '05-useful/others'; //ACarvalho // jRio => @Done!
 
 /*! ============================================================================= */
 /*!  $7 - Screen Transitions                                                      */
 /*! ============================================================================= */
-@import '06-screen-transitions/screen-transitions';
+@import '06-screen-transitions/screen-transitions'; // jRio => @Done!
 
 /* ============================================================================== */
 /*  Service Studio Preview                                                        */
 /* ============================================================================== */
-@import '08-servicestudio-preview/servicestudiopreview';
+@import '08-servicestudio-preview/servicestudiopreview'; // jRio => @Done!
 
 /* ============================================================================== */
 /*  Excluders                                                                     */

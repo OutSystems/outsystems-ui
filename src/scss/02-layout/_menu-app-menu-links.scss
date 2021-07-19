@@ -48,6 +48,20 @@
 }
 
 ///
+body {
+	.app-menu-content {
+		.app-menu-links {
+			// Service Studio Preview
+			& {
+				-servicestudio-align-items: flex-start;
+				-servicestudio-padding: var(--space-none);
+				-servicestudio-width: 100% !important;
+			}
+		}
+	}
+}
+
+///
 .layout {
 	.app-menu-links:empty:after {
 		// Service Studio Preview
@@ -150,10 +164,18 @@
 	.app-menu-links {
 		display: flex;
 		flex-direction: column;
-
 		-webkit-overflow-scrolling: touch;
 		overflow-y: auto;
 		padding-top: var(--space-s);
+
+		a {
+			// Service Studio preview
+			& {
+				-servicestudio-margin-left: var(--space-none);
+				-servicestudio-padding: var(--space-s) var(--space-m);
+				-servicestudio-width: 100%;
+			}
+		}
 	}
 
 	.layout:not(.layout-side) .app-menu-links a.active {
