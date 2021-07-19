@@ -1,52 +1,51 @@
-/*! useful space margin start */
+/*! Usefull - Margin */
+////
+/// @group UsefullClasses-Margin
+/// Usefull - Margin
 
-@each $entry in $osui-sizes {
-	$label: nth($entry, 1);
-	$value: nth($entry, 2);
+///
+.margin {
+	@each $osui-size in $osui-sizes2 {
+		&-#{$osui-size} {
+			margin: var(--space-#{$osui-size});
+		}
 
-	.margin-#{$label} {
-		margin: #{$value};
+		@each $osui-box-side in $osui-box-sides {
+			&-#{$osui-box-side}-#{$osui-size} {
+				margin-#{$osui-box-side}: var(--space-#{$osui-size});
+			}
+		}
+
+		&-x-#{$osui-size} {
+			margin-left: var(--space-#{$osui-size});
+			margin-right: var(--space-#{$osui-size});
+		}
+
+		&-y-#{$osui-size} {
+			margin-bottom: var(--space-#{$osui-size});
+			margin-top: var(--space-#{$osui-size});
+		}
 	}
 
-	.margin-top-#{$label} {
-		margin-top: #{$value};
-	}
-
-	.margin-right-#{$label} {
-		margin-right: #{$value};
-	}
-
-	.margin-bottom-#{$label} {
-		margin-bottom: #{$value};
-	}
-
-	.margin-left-#{$label} {
-		margin-left: #{$value};
-	}
-
-	.is-rtl .margin-right-#{$label} {
-		margin-left: #{$value};
-		margin-right: var(--space-none);
-	}
-
-	.is-rtl .margin-left-#{$label} {
-		margin-left: var(--space-none);
-		margin-right: #{$value};
-	}
-
-	.margin-x-#{$label} {
-		margin-left: #{$value};
-		margin-right: #{$value};
-	}
-
-	.margin-y-#{$label} {
-		margin-bottom: #{$value};
-		margin-top: #{$value};
+	&-auto {
+		margin: 0 auto;
 	}
 }
 
-.margin-auto {
-	margin: 0 auto;
-}
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	@each $osui-size in $osui-sizes2 {
+		.margin {
+			&-right-#{$osui-size} {
+				margin-left: var(--space-#{$osui-size});
+				margin-right: var(--space-none);
+			}
 
-/*! useful space margin end */
+			&-left-#{$osui-size} {
+				margin-left: var(--space-none);
+				margin-right: var(--space-#{$osui-size});
+			}
+		}
+	}
+}

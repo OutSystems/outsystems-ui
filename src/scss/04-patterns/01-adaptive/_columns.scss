@@ -18,53 +18,67 @@
 		}
 	}
 
-	&.columns-small-left > .columns-item:last-child,
-	&.columns-small-right > .columns-item:first-child {
-		flex: 3;
-	}
-
-	&.columns-medium-left > .columns-item:last-child,
-	&.columns-medium-right > .columns-item:first-child {
-		flex: 2;
-	}
-}
-
-// Gutters --------------------------------------------------------------------
-///
-@each $entry in $osui-sizes {
-	$label: nth($entry, 1);
-	$value: nth($entry, 2);
-
-	.columns {
-		&.gutter-#{$label} {
-			margin-left: calc(-1 * #{$value} / 2);
-			margin-right: calc(-1 * #{$value} / 2);
+	&.columns {
+		&-small {
+			&-left,
+			&-right {
+				& > .columns-item {
+					&:last-child,
+					&:first-child {
+						flex: 3;
+					}
+				}
+			}
 		}
 
-		&.gutter-#{$label} > .columns-item {
-			margin-bottom: #{$value};
-			padding: var(--space-none) calc(#{$value} / 2);
-		}
-	}
-
-	.tablet {
-		.columns.gutter-#{$label}.tablet-break {
-			&-first:only-child > .columns-item:not(:last-child),
-			&-last:only-child > .columns-item:not(:last-child),
-			&-middle:only-child > .columns-item:not(:last-child),
-			&-all:only-child > .columns-item:not(:last-child) {
-				margin-bottom: #{$value};
+		&-medium {
+			&-left,
+			&-right {
+				& > .columns-item {
+					&:last-child,
+					&:first-child {
+						flex: 2;
+					}
+				}
 			}
 		}
 	}
 
-	.phone {
-		.columns.gutter-#{$label}.phone-break {
-			&-first:only-child > .columns-item:not(:last-child),
-			&-last:only-child > .columns-item:not(:last-child),
-			&-middle:only-child > .columns-item:not(:last-child),
-			&-all:only-child > .columns-item:not(:last-child) {
-				margin-bottom: #{$value};
+	// Gutters -------------------------------------------------------------------
+	& {
+		@each $osui-size in $osui-sizes2 {
+			&.gutter {
+				&-#{$osui-size} {
+					margin-left: calc(-1 * var(--space-#{$osui-size}) / 2);
+					margin-right: calc(-1 * var(--space-#{$osui-size}) / 2);
+
+					& > .columns-item {
+						margin-bottom: var(--space-#{$osui-size});
+						padding: var(--space-none) calc(var(--space-#{$osui-size}) / 2);
+					}
+
+					.tablet &.tablet-break {
+						&-first,
+						&-last,
+						&-middle,
+						&-all {
+							&:only-child > .columns-item:not(:last-child) {
+								margin-bottom: var(--space-#{$osui-size});
+							}
+						}
+					}
+
+					.phone &.phone-break {
+						&-first,
+						&-last,
+						&-middle,
+						&-all {
+							&:only-child > .columns-item:not(:last-child) {
+								margin-bottom: var(--space-#{$osui-size});
+							}
+						}
+					}
+				}
 			}
 		}
 	}

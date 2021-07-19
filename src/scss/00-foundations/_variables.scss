@@ -13,6 +13,8 @@ $osui-sizes: (
 	'xxl': var(--space-xxl),
 );
 
+$osui-sizes2: 'none' 'xs' 's' 'base' 'm' 'l' 'xl' 'xxl';
+
 /// Box Sides
 $osui-box-sides: 'top', 'right', 'bottom', 'left';
 
