@@ -1,7 +1,7 @@
+/*! Usefull - Display Flex */
 ////
-/// @group useful display
-
-/*! useful display flex start */
+/// @group UsefullClasses-Display_Flex
+/// Usefull - Display Flex
 
 ///
 .display-flex {
@@ -9,43 +9,34 @@
 }
 
 ///
+.flex {
+	@for $index from 1 through 3 {
+		// Generate .flex1
+		&#{$index} {
+			flex: #{$index};
+		}
+	}
+
+	&-direction {
+		&-column {
+			flex-direction: column;
+
+			&-reverse {
+				flex-direction: column-reverse;
+			}
+		}
+
+		&-row {
+			flex-direction: row;
+
+			&-reverse {
+				flex-direction: row-reverse;
+			}
+		}
+	}
+}
+
+///
 .justify-content-flex-end {
 	justify-content: flex-end;
 }
-
-///
-.flex1 {
-	flex: 1;
-}
-
-///
-.flex2 {
-	flex: 2;
-}
-
-///
-.flex3 {
-	flex: 3;
-}
-
-///
-.flex-direction-column {
-	flex-direction: column;
-}
-
-///
-.flex-direction-column-reverse {
-	flex-direction: column-reverse;
-}
-
-///
-.flex-direction-row {
-	flex-direction: row;
-}
-
-///
-.flex-direction-row-reverse {
-	flex-direction: row-reverse;
-}
-
-/*! useful display flex end */
