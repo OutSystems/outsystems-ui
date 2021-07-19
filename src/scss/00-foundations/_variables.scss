@@ -18,7 +18,11 @@ $osui-box-sides: 'top', 'right', 'bottom', 'left';
 $osui-box-corners: 'top-left', 'top-right', 'bottom-right', 'bottom-left';
 
 /// Predefined colors
-$osui-colors: 'red', 'pink', 'grape', 'violet', 'indigo', 'blue', 'cyan', 'teal', 'green', 'lime', 'yellow', 'orange';
+$osui-colors: 'red', 'orange', 'yellow', 'lime', 'green', 'teal', 'cyan', 'blue', 'indigo', 'violet', 'grape', 'pink';
+
+/// Predefined color variations
+$osui-color-variations: 'lightest', 'lighter', 'light', '', 'dark', 'darker', 'darkest';
+// The above '' (empty string) is needed in order to grant the default color value
 
 /// Semantic identifiers
 $osui-semantics: 'error', 'warning', 'success', 'info';
@@ -31,6 +35,8 @@ $osui-border-size-types: 'none', 's', 'm', 'l';
 
 /// Border Radius
 $osui-border-radius-types: 'none', 'soft', 'rounded', 'circle';
+
+/// Border Radius BoxSides
 $osui-border-radius-box-sides: (
 	'top' 'left' 'right',
 	'right' 'top' 'bottom',

@@ -1,24 +1,35 @@
+/*! Usefull - Colors Semantic */
 ////
-/// @group useful classes
+/// @group UsefullClasses-Colors_Semantic
+/// Usefull - Colors Semantic
 
-@each $osui-semantic in $osui-semantics {
-	/*! color semantic #{$osui-semantic} start */
+/* 
+	Note:
+	- In order to improve the SASSDOC generated file, the loop was splited in 2!
+*/
 
-	.text-#{$osui-semantic} {
-		color: var(--color-#{$osui-semantic});
+///
+.background {
+	@each $osui-semantic in $osui-semantics {
+		&-#{$osui-semantic} {
+			background-color: var(--color-#{$osui-semantic});
+
+			&-light {
+				background-color: var(--color-#{$osui-semantic}-light);
+			}
+		}
 	}
+}
 
-	.text-#{$osui-semantic}-light {
-		color: var(--color-#{$osui-semantic}-light);
+///
+.text {
+	@each $osui-semantic in $osui-semantics {
+		&-#{$osui-semantic} {
+			color: var(--color-#{$osui-semantic});
+
+			&-light {
+				color: var(--color-#{$osui-semantic}-light);
+			}
+		}
 	}
-
-	.background-#{$osui-semantic} {
-		background-color: var(--color-#{$osui-semantic});
-	}
-
-	.background-#{$osui-semantic}-light {
-		background-color: var(--color-#{$osui-semantic}-light);
-	}
-
-	/*! color semantic #{$osui-semantic} end */
 }

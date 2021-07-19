@@ -1,78 +1,43 @@
+/*! Usefull - Colors Palette */
 ////
-/// @group useful colors
+/// @group UsefullClasses-Colors_Pallete
+/// Usefull - Colors Palette
 
-@each $osui-color in $osui-colors {
-	/*! color #{$osui-color} start */
+/* 
+	Note:
+	- In order to improve the SASSDOC generated file, the loop was splited in 2!
+*/
 
-	///
-	.background-#{$osui-color}-lightest {
-		background-color: var(--color-#{$osui-color}-lightest);
+///
+.background {
+	@each $osui-color in $osui-colors {
+		@each $osui-color-variation in $osui-color-variations {
+			&-#{$osui-color} {
+				@if ($osui-color-variation != '') {
+					&-#{$osui-color-variation} {
+						background-color: var(--color-#{$osui-color}-#{$osui-color-variation});
+					}
+				} @else {
+					background-color: var(--color-#{$osui-color});
+				}
+			}
+		}
 	}
+}
 
-	///
-	.background-#{$osui-color}-lighter {
-		background-color: var(--color-#{$osui-color}-lighter);
+///
+.text {
+	@each $osui-color in $osui-colors {
+		@each $osui-color-variation in $osui-color-variations {
+			&-#{$osui-color} {
+				@if ($osui-color-variation != '') {
+					&-#{$osui-color-variation} {
+						color: var(--color-#{$osui-color}-#{$osui-color-variation});
+					}
+				} @else {
+					color: var(--color-#{$osui-color});
+				}
+			}
+		}
 	}
-
-	///
-	.background-#{$osui-color}-light {
-		background-color: var(--color-#{$osui-color}-light);
-	}
-
-	///
-	.background-#{$osui-color} {
-		background-color: var(--color-#{$osui-color});
-	}
-
-	///
-	.background-#{$osui-color}-dark {
-		background-color: var(--color-#{$osui-color}-dark);
-	}
-
-	///
-	.background-#{$osui-color}-darker {
-		background-color: var(--color-#{$osui-color}-darker);
-	}
-
-	///
-	.background-#{$osui-color}-darkest {
-		background-color: var(--color-#{$osui-color}-darkest);
-	}
-
-	///
-	.text-#{$osui-color}-lightest {
-		color: var(--color-#{$osui-color}-lightest);
-	}
-
-	///
-	.text-#{$osui-color}-lighter {
-		color: var(--color-#{$osui-color}-lighter);
-	}
-
-	///
-	.text-#{$osui-color}-light {
-		color: var(--color-#{$osui-color}-light);
-	}
-
-	///
-	.text-#{$osui-color} {
-		color: var(--color-#{$osui-color});
-	}
-
-	///
-	.text-#{$osui-color}-dark {
-		color: var(--color-#{$osui-color}-dark);
-	}
-
-	///
-	.text-#{$osui-color}-darker {
-		color: var(--color-#{$osui-color}-darker);
-	}
-
-	///
-	.text-#{$osui-color}-darkest {
-		color: var(--color-#{$osui-color}-darkest);
-	}
-
-	/*! color #{$osui-color} end */
 }

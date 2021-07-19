@@ -1,13 +1,12 @@
-/*! Usefull - ColorsNeutral */
+/*! Usefull - Colors Neutral */
 ////
 /// @group UsefullClasses-Colors_Neutral
-/// Usefull - ColorsNeutral
+/// Usefull - Colors Neutral
 
 ///
 // for loop
 @for $index from 0 through 10 {
 	.background-neutral-#{$index} {
-		/*! jRio  */
 		background-color: var(--color-neutral-#{$index});
 	}
 
