@@ -4,7 +4,6 @@
 /// Usefull - Padding
 
 ///
-///
 .padding {
 	@each $osui-size in $osui-sizes {
 		&-#{$osui-size} {

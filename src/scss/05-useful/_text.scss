@@ -1,33 +1,42 @@
-/*! useful text start */
+/*! Usefull - Text */
+////
+/// @group UsefullClasses-Text
+/// Usefull - Text
 
+///
 .break-word {
 	word-break: break-word;
 }
 
-.text-align-left {
-	text-align: left;
+///
+.text-align {
+	&-left {
+		text-align: left;
+	}
+
+	&-center {
+		text-align: center;
+	}
+
+	&-right {
+		text-align: right;
+	}
 }
 
-.text-align-center {
-	text-align: center;
-}
-
-.text-align-right {
-	text-align: right;
-}
-
+///
 .white-space-nowrap {
 	white-space: nowrap;
 }
 
-.is-rtl [align='right'],
-.is-rtl .text-align-right {
-	text-align: left;
-}
+// IsRTL -------------------------------------------------------------------------
+.is-rtl {
+	[align='right'],
+	.text-align-right {
+		text-align: left;
+	}
 
-.is-rtl [align='left'],
-.is-rtl .text-align-left {
-	text-align: right;
+	[align='left'],
+	.text-align-left {
+		text-align: right;
+	}
 }
-
-/*! useful text end */

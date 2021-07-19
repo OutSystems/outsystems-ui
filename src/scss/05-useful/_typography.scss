@@ -1,58 +1,29 @@
+/*! Usefull - Typography */
 ////
-/// @group useful text
-
-/*! useful typography start */
-
-///
-.font-size-base {
-	font-size: var(--font-size-base);
-}
+/// @group UsefullClasses-Typography
+/// Usefull - Typography
 
 ///
-.font-size-s {
-	font-size: var(--font-size-s);
-}
+.font {
+	&-size {
+		@each $osui-font-size in $osui-font-sizes {
+			&-#{$osui-font-size} {
+				font-size: var(--font-size-#{$osui-font-size});
+			}
+		}
+	}
 
-///
-.font-size-xs {
-	font-size: var(--font-size-xs);
-}
+	&-light {
+		font-weight: var(--font-light);
+	}
 
-///
-.text-lowercase {
-	text-transform: lowercase;
-}
+	&-regular {
+		font-weight: var(--font-regular);
+	}
 
-///
-.text-uppercase {
-	text-transform: uppercase;
-}
-
-///
-.text-capitalize {
-	text-transform: capitalize;
-}
-
-///
-.text-ellipsis {
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-
-///
-.font-light {
-	font-weight: var(--font-light);
-}
-
-///
-.font-regular {
-	font-weight: var(--font-regular);
-}
-
-///
-.font-semi-bold {
-	font-weight: var(--font-semi-bold);
+	&-semi-bold {
+		font-weight: var(--font-semi-bold);
+	}
 }
 
 ///
@@ -61,4 +32,23 @@
 	font-weight: var(--font-bold);
 }
 
-/*! useful typography end */
+///
+.text {
+	&-lowercase {
+		text-transform: lowercase;
+	}
+
+	&-uppercase {
+		text-transform: uppercase;
+	}
+
+	&-capitalize {
+		text-transform: capitalize;
+	}
+
+	&-ellipsis {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+}
