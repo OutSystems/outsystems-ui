@@ -1,48 +1,14 @@
-.background-transparent {
-	background-color: transparent;
-}
+/*! Usefull - Colors Other */
+////
+/// @group UsefullClasses-Colors_Other
+/// Usefull - Colors Other
 
-.ie11 .background-transparent {
-	background-color: transparent;
-}
-
-.background-neutral-0-lightest,
-.background-neutral-1-lightest,
-.background-neutral-2-lightest,
-.background-neutral-3-lightest,
-.background-neutral-4-lightest {
-	background-color: var(--color-neutral-9);
-}
-
-.background-neutral-5-lightest,
-.background-neutral-6-lightest,
-.background-neutral-7-lightest,
-.background-neutral-8-lightest,
-.background-neutral-9-lightest,
-.background-neutral-10-lightest {
-	background-color: var(--color-neutral-0);
-}
-
-.text-neutral-5-darker {
-	color: var(--color-neutral-5);
-}
-
-.text-neutral-6-darker {
-	color: var(--color-neutral-6);
-}
-
-.text-neutral-7-darker {
-	color: var(--color-neutral-7);
-}
-
-.text-neutral-8-darker {
-	color: var(--color-neutral-8);
-}
-
-.text-neutral-9-darker {
-	color: var(--color-neutral-9);
-}
-
-.text-neutral-10-darker {
-	color: var(--color-neutral-10);
+///
+.background {
+	&-transparent {
+		&,
+		.ie11 & {
+			background-color: transparent;
+		}
+	}
 }

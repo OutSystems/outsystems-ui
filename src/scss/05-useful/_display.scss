@@ -1,14 +1,15 @@
+/*! Usefull - Display */
 ////
-/// @group useful display
+/// @group UsefullClasses-Display
+/// Usefull - Display
 
-/*! useful display start */
+///
+.display {
+	&-block {
+		display: block;
+	}
 
-.display-block {
-	display: block;
+	&-contents {
+		display: contents;
+	}
 }
-
-.display-contents {
-	display: contents;
-}
-
-/*! useful display end */
