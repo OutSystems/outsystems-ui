@@ -133,28 +133,28 @@
 /*! =========================================================================== */
 
 // SCSS Setup variables
-@import '00-foundations/scss-setup-variables';
+@import '00-abstract/setup-variables';
 
 // Abstract Stuff - Function & Mixins
-@import '01-abstract/functions';
-@import '01-abstract/mixins';
+@import '00-abstract/functions';
+@import '00-abstract/mixins';
 
 /*! =========================================================================== */
 /*! Root - CSS Variables                                                        */
 /*! =========================================================================== */
-@import '00-foundations/root';
+@import '01-foundations/root';
 
 /*! =========================================================================== */
 /*! Resets                                                                      */
 /*! =========================================================================== */
-@import '00-foundations/resets';
+@import '01-foundations/resets';
 
 /*! =========================================================================== */
 /*! HTML Elements                                                               */
 /*! =========================================================================== */
-@import '00-foundations/html-elements-link';
-@import '00-foundations/html-elements-img';
-@import '00-foundations/html-elements-headings';
+@import '01-foundations/html-elements-link';
+@import '01-foundations/html-elements-img';
+@import '01-foundations/html-elements-headings';
 
 /*! =========================================================================== */
 /*! Page Layout                                                                 */
