@@ -153,17 +153,6 @@
 @import '00-foundations/html-elements-img'; // jRio => @Done!
 @import '00-foundations/html-elements-headings'; // jRio => @Done!
 
-/* 
-    @todo:
-    - The partials below has been removed from the htmlElements section since
-    they are widgets, When everything is close, they should be moved to the proper section!
-*/
-@import '03-widgets/inputs-and-textareas'; // jRio => @Done!
-@import '03-widgets/switch'; // jRio => @Done!
-@import '03-widgets/checkbox'; // jRio => @Done!
-@import '03-widgets/dropdown'; // jRio => @Done!
-@import '03-widgets/btn'; // jRio => @Done!
-
 /*! ============================================================================= */
 /*!  $3 - Page Layout                                                             */
 /*! ============================================================================= */
@@ -186,6 +175,11 @@
 /*! ============================================================================= */
 /*!  $4 - Widgets                                                                 */
 /*! ============================================================================= */
+@import '03-widgets/inputs-and-textareas'; // jRio => @Done!
+@import '03-widgets/switch'; // jRio => @Done!
+@import '03-widgets/checkbox'; // jRio => @Done!
+@import '03-widgets/dropdown'; // jRio => @Done!
+@import '03-widgets/btn'; // jRio => @Done!
 @import '03-widgets/list'; // jRio => @Done!
 @import '03-widgets/list-item'; //jRio => @Done!
 @import '03-widgets/table'; // jRio => @Done!
