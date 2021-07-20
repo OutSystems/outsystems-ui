@@ -1,7 +1,7 @@
-/*! Usefull - Pull to Refresh */
+/*! Patterns - Utilities - Pull to Refresh */
 ////
-/// @group UsefullClasses-Pull_To_Refresh
-/// Usefull - Pull to Refresh
+/// @group Utilities-Pull_To_Refresh
+/// Patterns - Utilities - Pull to Refresh
 
 ///
 .pull-to-refresh {
@@ -84,30 +84,5 @@
 		.pull-to-refresh {
 			display: none;
 		}
-	}
-}
-
-/// @todo Remove this keyframes from this partial!
-@-webkit-keyframes ptr-loading {
-	0% {
-		opacity: 0;
-		transform: translateY(0) scale(0.3);
-	}
-	100% {
-		background-color: var(--color-neutral-0);
-		opacity: 1;
-		transform: scale(1);
-	}
-}
-
-@keyframes ptr-loading {
-	0% {
-		opacity: 0;
-		transform: translateY(0) scale(0.3);
-	}
-	100% {
-		background-color: var(--color-neutral-0);
-		opacity: 1;
-		transform: scale(1);
 	}
 }

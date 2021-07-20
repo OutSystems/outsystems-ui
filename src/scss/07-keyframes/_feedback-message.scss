@@ -1,52 +1,7 @@
+/*! KeyFrames - Feedback Message */
 ////
-/// @group global
-
-/// @todo Split this also!
-
-///
-@keyframes loadingSpinner {
-	0% {
-		transform: rotate(0deg) translateZ(0);
-	}
-	100% {
-		transform: rotate(360deg) translateZ(0);
-	}
-}
-
-///
-@keyframes list-item-scale-animation {
-	from {
-		opacity: 0.3;
-		transform: scale(0, 1) translateZ(0);
-	}
-	to {
-		opacity: 0;
-		transform: scale(400, 300) translateZ(0);
-	}
-}
-
-///
-@keyframes spin {
-	0% {
-		transform: rotate(0deg);
-	}
-
-	100% {
-		transform: rotate(360deg);
-	}
-}
-
-///
-@keyframes fade {
-	0%,
-	50% {
-		opacity: 0;
-	}
-
-	100% {
-		opacity: 1;
-	}
-}
+/// @group KeyFrames-Feedback_Message
+/// KeyFrames - Feedback Message
 
 ///
 @keyframes feedbackMessageSlideDownThenUp {

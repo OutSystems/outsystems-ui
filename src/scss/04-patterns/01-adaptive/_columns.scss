@@ -1,7 +1,7 @@
 /*! Patterns - Adaptive - Columns */
 ////
 /// @group Patterns-Columns
-/// Patterns - Adaptive - Columns Styles
+/// Patterns - Adaptive - Columns
 
 ///
 .columns {
@@ -20,26 +20,16 @@
 
 	&.columns {
 		&-small {
-			&-left,
-			&-right {
-				& > .columns-item {
-					&:last-child,
-					&:first-child {
-						flex: 3;
-					}
-				}
+			&-left > .columns-item:last-child,
+			&-right > .columns-item:first-child {
+				flex: 3;
 			}
 		}
 
 		&-medium {
-			&-left,
-			&-right {
-				& > .columns-item {
-					&:last-child,
-					&:first-child {
-						flex: 2;
-					}
-				}
+			&-left > .columns-item:last-child,
+			&-right > .columns-item:first-child {
+				flex: 2;
 			}
 		}
 	}

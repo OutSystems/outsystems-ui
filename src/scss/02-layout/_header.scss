@@ -1,7 +1,7 @@
 /*! Page Layout - Header */
 ////
 /// @group Layout-Header
-/// Layout - General Header styles
+/// Page Layout - Header
 
 ///
 .header {
@@ -42,14 +42,14 @@
 	}
 }
 
-/// @todo Check if there are something pending here!
-.fixed-header .header {
-	/* position: fixed; */ /* Commented due to changes in scroll position */
-
-	left: 0;
-	position: sticky; /* Temporary fix related to changes in scroll position */
-	right: 0;
-	top: 0;
+///
+.fixed-header {
+	.header {
+		left: 0;
+		position: sticky;
+		right: 0;
+		top: 0;
+	}
 }
 
 ///

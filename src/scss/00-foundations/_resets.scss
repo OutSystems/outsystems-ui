@@ -1,4 +1,4 @@
-/*! Resets */
+/* Resets */
 ////
 /// @group Resets
 /// Normalize - Reset default and native styles
@@ -15,19 +15,17 @@
 /* ============================================================================= */
 /* HTML *
 /* ============================================================================= */
-/// @todo Check the selector below and try to understand if something is pending here!
 html {
 	color: var(--color-neutral-9);
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
 		'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
-	overflow: hidden; /* Temporary fix related to changes in scroll position */
+	overflow: hidden;
 	overflow-x: hidden;
 
 	-webkit-text-size-adjust: 100%;
 	-ms-text-size-adjust: 100%;
-	/*overflow-y: scroll;*/ /* Commented due to changes in scroll position */
 
 	// ServiceStudio Preview
 	& {

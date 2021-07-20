@@ -1,4 +1,4 @@
-/*! $3 - Layout */
+/*! Layout */
 ////
 /// @group Layout
 /// Layout
@@ -12,12 +12,10 @@ body,
 	height: 100%;
 }
 
-/// @todo Try to understand if there are somthing pending here!
+///
 .screen-container {
-	/*overflow-y: initial;*/ /* Comented due to changes in scroll position */
-
-	overflow-x: hidden; /* Temporary fix related to changes in scroll position */
-	overflow-y: auto; /* Temporary fix related to changes in scroll position */
+	overflow-x: hidden;
+	overflow-y: auto;
 }
 
 ///
@@ -65,10 +63,9 @@ body,
 		}
 	}
 
-	/// @todo Try to understand if there are somthing pending here!
 	.main,
 	&.fixed-header .main {
-		padding-top: 0; /* Temporary fix related to changes in scroll position */
+		padding-top: 0;
 	}
 
 	.main {

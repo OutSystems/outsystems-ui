@@ -1,203 +1,341 @@
+/*! =========================================================================== */
+/*!  OutSystems UI                                                              */
+/*!  For more information, visit www.outsystems.com/outsystems-ui               */
+/*!                                                                             */
+/*!   Root - CSS Variables                                                      */
+/*!   Resets                                                                    */
+/*!   HTML Elements                                                             */
+/*!     - Links                                                                 */
+/*!     - Images                                                                */
+/*!     - Headings                                                              */
+/*!   Page Layout                                                               */
+/*!     - Header                                                                */
+/*!     - Layout Native - Header                                                */
+/*!     - Layout Side - Header                                                  */
+/*!     - Menu                                                                  */
+/*!     - Layout Native - Menu                                                  */
+/*!     - Layout Side - Menu                                                    */
+/*!     - Menu - Header Logo                                                    */
+/*!     - Menu - App Menu Link                                                  */
+/*!     - Menu - App Login Info                                                 */
+/*!     - Content                                                               */
+/*!     - ThemeGrid_Container                                                   */
+/*!     - Section                                                               */
+/*!     - Login                                                                 */
+/*!     - iOS Scroll Bounce                                                     */
+/*!   Widgets                                                                   */
+/*!     - Inputs and TextAreas                                                  */
+/*!     - Switch                                                                */
+/*!     - Checkbox                                                              */
+/*!     - Dropdown                                                              */
+/*!     - Button                                                                */
+/*!     - List                                                                  */
+/*!     - List Item                                                             */
+/*!     - Table                                                                 */
+/*!     - Table - Sortable Icon                                                 */
+/*!     - Table - Bulk Actions                                                  */
+/*!     - Form                                                                  */
+/*!     - Upload                                                                */
+/*!     - Button Group                                                          */
+/*!     - Popover                                                               */
+/*!     - Popup                                                                 */
+/*!     - Feedback Message                                                      */
+/*!     - Radio Button                                                          */
+/*!   Patterns                                                                  */
+/*!     - Adaptive                                                              */
+/*!         - Columns                                                           */
+/*!         - Gallery                                                           */
+/*!         - Master Detail                                                     */
+/*!     - Content                                                               */
+/*!         - Accordion                                                         */
+/*!         - Alert                                                             */
+/*!         - Blank Slate                                                       */
+/*!         - Card                                                              */
+/*!         - Card Background                                                   */
+/*!         - CardItem                                                          */
+/*!         - Card Sectioned                                                    */
+/*!         - Chat Message                                                      */
+/*!         - Flip_Content                                                      */
+/*!         - Floating Content                                                  */
+/*!         - List Item Content                                                 */
+/*!         - Section                                                           */
+/*!         - Tag                                                               */
+/*!         - Tooltip                                                           */
+/*!         - User Avatar                                                       */
+/*!     - Interaction                                                           */
+/*!         - Action Sheet                                                      */
+/*!         - Animate                                                           */
+/*!         - Animated Label                                                    */
+/*!         - Carousel                                                          */
+/*!         - Date Picker                                                       */
+/*!         - Dropdown Search                                                   */
+/*!         - Dropdown Tags                                                     */
+/*!         - Floating Actions                                                  */
+/*!         - Horizontal Scroll                                                 */
+/*!         - Input With Icon                                                   */
+/*!         - Lightbox Image                                                    */
+/*!         - Notification                                                      */
+/*!         - Range Slider                                                      */
+/*!         - Scrollable Area                                                   */
+/*!         - Search                                                            */
+/*!         - Sidebar                                                           */
+/*!         - Stacked Cards                                                     */
+/*!         - Video                                                             */
+/*!     - Navigation                                                            */
+/*!         - Bottom Bar Item                                                   */
+/*!         - Breadcrumbs                                                       */
+/*!         - Pagination                                                        */
+/*!         - Section Index                                                     */
+/*!         - Tabs                                                              */
+/*!         - Timeline                                                          */
+/*!         - Wizard                                                            */
+/*!     - Numbers                                                               */
+/*!         - Badge                                                             */
+/*!         - Counter                                                           */
+/*!         - Icon Badge                                                        */
+/*!         - Progress Bar                                                      */
+/*!         - Progress Circle                                                   */
+/*!         - Progress Circle Fraction                                          */
+/*!         - Rating                                                            */
+/*!     - Utilities                                                             */
+/*!         - Align Center                                                      */
+/*!         - Button Loading                                                    */
+/*!         - Center Content                                                    */
+/*!         - Margin Container                                                  */
+/*!         - Separator                                                         */
+/*!         - Pull to Refresh                                                   */
+/*!         - List Updating                                                     */
+/*!   Usefull Classes                                                           */
+/*!       - a11y (Accessibility)                                                */
+/*!       - Colors Brand                                                        */
+/*!       - Colors Neutral                                                      */
+/*!       - Colors Palette                                                      */
+/*!       - Colors Semantic                                                     */
+/*!       - Colors Other                                                        */
+/*!       - Text                                                                */
+/*!       - Typography                                                          */
+/*!       - Border Size                                                         */
+/*!       - Border Radius                                                       */
+/*!       - Margin                                                              */
+/*!       - Padding                                                             */
+/*!       - Shadow                                                              */
+/*!       - Box Width                                                           */
+/*!       - Box Height                                                          */
+/*!       - Display                                                             */
+/*!       - Display Flex                                                        */
+/*!       - Display Align                                                       */
+/*!       - Images                                                              */
+/*!       - Overflow                                                            */
+/*!       - Visibility                                                          */
+/*!       - Position                                                            */
+/*!       - Position Absolute                                                   */
+/*!       - Miscellaneous                                                       */
+/*!                                                                             */
+/*! =========================================================================== */
+
+// SCSS Setup variables
 @import '00-foundations/scss-setup-variables';
 
-/*! ============================================================================= */
-
-/*!  OutSystems UI                                                                */
-/*!  For more information, visit www.outsystems.com/outsystems-ui                 */
-
-/*! ============================================================================= */
-/*!  $0 - Root - CSS Variables                                                    */
-/*! ============================================================================= */
-@import '00-foundations/root'; // jRio => @Here!
-
-/* ============================================================================== */
-/*  Abstract Stuff - Function & Mixins                                            */
-/* ============================================================================== */
+// Abstract Stuff - Function & Mixins
 @import '01-abstract/functions';
 @import '01-abstract/mixins';
 
-/*! ============================================================================= */
-/*!  $1 - Resets                                                                  */
-/*! ============================================================================= */
-@import '00-foundations/resets'; // jRio => @Done!
+/*! =========================================================================== */
+/*!  Root - CSS Variables                                                       */
+/*! =========================================================================== */
+@import '00-foundations/root';
 
-/*! ============================================================================= */
-/*!  $2 - HTML Elements                                                           */
-/*! ============================================================================= */
-@import '00-foundations/html-elements-link'; // jRio => @Done!
-@import '00-foundations/html-elements-img'; // jRio => @Done!
-@import '00-foundations/html-elements-headings'; // jRio => @Done!
+/*! =========================================================================== */
+/*!  Resets                                                                     */
+/*! =========================================================================== */
+@import '00-foundations/resets';
 
-/*! ============================================================================= */
-/*!  $3 - Page Layout                                                             */
-/*! ============================================================================= */
-@import '02-layout/layout'; // jRio => @Done!
-@import '02-layout/header'; // jRio => @Done!
-@import '02-layout/header-layout-native'; // jRio => @Done!
-@import '02-layout/header-layout-side'; // jRio => @Done!
-@import '02-layout/menu'; // jRio => @Done!
-@import '02-layout/menu-layout-side'; // jRio => @Done!
-@import '02-layout/menu-layout-native'; // jRio => @Done!
-@import '02-layout/menu-header-logo'; // jRio => @Done!
-@import '02-layout/menu-app-menu-links'; // jRio => @Done!
-@import '02-layout/menu-app-login-info'; // jRio => @Done!
-@import '02-layout/content'; // jRio => @Done!
-@import '02-layout/themegrid-container'; // jRio => @Done!
-@import '02-layout/section'; // jRio => @Done!
-@import '02-layout/login'; // jRio => @Done!
-@import '02-layout/ios-bounce'; // jRio => @Done!
+/*! =========================================================================== */
+/*!  HTML Elements                                                              */
+/*! =========================================================================== */
+@import '00-foundations/html-elements-link';
+@import '00-foundations/html-elements-img';
+@import '00-foundations/html-elements-headings';
 
-/*! ============================================================================= */
-/*!  $4 - Widgets                                                                 */
-/*! ============================================================================= */
-@import '03-widgets/inputs-and-textareas'; // jRio => @Done!
-@import '03-widgets/switch'; // jRio => @Done!
-@import '03-widgets/checkbox'; // jRio => @Done!
-@import '03-widgets/dropdown'; // jRio => @Done!
-@import '03-widgets/btn'; // jRio => @Done!
-@import '03-widgets/list'; // jRio => @Done!
-@import '03-widgets/list-item'; //jRio => @Done!
-@import '03-widgets/table'; // jRio => @Done!
-@import '03-widgets/table-sortable-icon'; // jRio => @Done!
-@import '03-widgets/bulk-actions'; // jRio => @Done!
-@import '03-widgets/form'; // jRio => @Done!
-@import '03-widgets/upload'; // jRio => @Done!
-@import '03-widgets/button-group'; // jRio => @Done!
-@import '03-widgets/popover'; // jRio => @Done!
-@import '03-widgets/popup'; // jRio => @Done!
-@import '03-widgets/feedback-message'; // jRio => @Done!
-@import '03-widgets/radio-button'; // jRio => @Done!
+/*! =========================================================================== */
+/*!  Page Layout                                                                */
+/*! =========================================================================== */
+@import '02-layout/layout';
+@import '02-layout/header';
+@import '02-layout/header-layout-native';
+@import '02-layout/header-layout-side';
+@import '02-layout/menu';
+@import '02-layout/menu-layout-native';
+@import '02-layout/menu-layout-side';
+@import '02-layout/menu-header-logo';
+@import '02-layout/menu-app-menu-links';
+@import '02-layout/menu-app-login-info';
+@import '02-layout/content';
+@import '02-layout/themegrid-container';
+@import '02-layout/section';
+@import '02-layout/login';
+@import '02-layout/ios-bounce';
 
-/*! ============================================================================= */
-/*!  $5 - Patterns                                                                */
-/*! ============================================================================= */
+/*! =========================================================================== */
+/*!  Widgets                                                                    */
+/*! =========================================================================== */
+@import '03-widgets/inputs-and-textareas';
+@import '03-widgets/switch';
+@import '03-widgets/checkbox';
+@import '03-widgets/dropdown';
+@import '03-widgets/btn';
+@import '03-widgets/list';
+@import '03-widgets/list-item';
+@import '03-widgets/table';
+@import '03-widgets/table-sortable-icon';
+@import '03-widgets/bulk-actions';
+@import '03-widgets/form';
+@import '03-widgets/upload';
+@import '03-widgets/button-group';
+@import '03-widgets/popover';
+@import '03-widgets/popup';
+@import '03-widgets/feedback-message';
+@import '03-widgets/radio-button';
 
-/* ============================================================================== */
-/*      - Patterns - Adaptive                                                     */
-/* ============================================================================== */
-@import '04-patterns/01-adaptive/columns'; // BCA => @Done!
-@import '04-patterns/01-adaptive/gallery'; // BCA => @Done!
-@import '04-patterns/01-adaptive/master-detail'; // BCA => @Done!
+/*! =========================================================================== */
+/*!  Patterns                                                                   */
+/*! =========================================================================== */
 
-/* ============================================================================== */
-/*      - Patterns - Content                                                      */
-/* ============================================================================== */
-@import '04-patterns/02-content/accordion'; // BMO => @Done!
-@import '04-patterns/02-content/alert'; // BMO => @Done!
-@import '04-patterns/02-content/blank-slate'; // BMO => @Done!
-@import '04-patterns/02-content/card'; // BMO => @Done!
-@import '04-patterns/02-content/card-background'; // BMO => @Done!
-@import '04-patterns/02-content/card-item'; // BMO => @Done!
-@import '04-patterns/02-content/card-sectioned'; // BMO => @Done!
-@import '04-patterns/02-content/chat-message'; // jRio => @Done!
-@import '04-patterns/02-content/flip-content'; // jRio => @Done!
-@import '04-patterns/02-content/floating-content'; // jRio => @Done!
-@import '04-patterns/02-content/list-item-content'; // jRio => @Done!
-@import '04-patterns/02-content/section'; // jRio => @Done!
-@import '04-patterns/02-content/tag'; // jRio => @Done!
-@import '04-patterns/02-content/tooltip'; // jRio => @Done!
-@import '04-patterns/02-content/user-avatar'; // jRio => @Done!
+/* ============================================================================ */
+/*      - Adaptive                                                              */
+/* ============================================================================ */
+@import '04-patterns/01-adaptive/columns';
+@import '04-patterns/01-adaptive/gallery';
+@import '04-patterns/01-adaptive/master-detail';
 
-/* ============================================================================== */
-/*      - Patterns - Interaction                                                  */
-/* ============================================================================== */
-@import '04-patterns/03-interaction/action-sheet'; // @JBP => done
-@import '04-patterns/03-interaction/animate'; // @JBP => done
-@import '04-patterns/03-interaction/animated-label'; // @JBP => done
-@import '04-patterns/03-interaction/carousel'; // @JBP => done
-@import '04-patterns/03-interaction/date-picker'; // @JBP => done
-@import '04-patterns/03-interaction/dropdown-search'; // @JBP => TODO // jRio => @Done!
-@import '04-patterns/03-interaction/dropdown-tags'; // @JBP => TODO // jRio => @Done!
-@import '04-patterns/03-interaction/floating-actions'; // @JBP => done!
-@import '04-patterns/03-interaction/horizontal-scroll'; // jRio => @Done!
-@import '04-patterns/03-interaction/input-with-icon'; // jRio => @Done!
-@import '04-patterns/03-interaction/lightbox-image'; // jRio => @Done!
-@import '04-patterns/03-interaction/notification'; // jRio => @Done!
-@import '04-patterns/03-interaction/range-slider-deprecated'; // jRio => @Done!
-@import '04-patterns/03-interaction/range-slider'; // jRio => @Done!
-@import '04-patterns/03-interaction/scrollable-area'; // jRio => @Done!
-@import '04-patterns/03-interaction/search'; // jRio => @Done!
-@import '04-patterns/03-interaction/sidebar'; // jRio => @Done!
-@import '04-patterns/03-interaction/stacked-cards'; // BCA => @Done!
-@import '04-patterns/03-interaction/video'; // BCA => @Done!
+/* ============================================================================ */
+/*      - Content                                                               */
+/* ============================================================================ */
+@import '04-patterns/02-content/accordion';
+@import '04-patterns/02-content/alert';
+@import '04-patterns/02-content/blank-slate';
+@import '04-patterns/02-content/card';
+@import '04-patterns/02-content/card-background';
+@import '04-patterns/02-content/card-item';
+@import '04-patterns/02-content/card-sectioned';
+@import '04-patterns/02-content/chat-message';
+@import '04-patterns/02-content/flip-content';
+@import '04-patterns/02-content/floating-content';
+@import '04-patterns/02-content/list-item-content';
+@import '04-patterns/02-content/section';
+@import '04-patterns/02-content/tag';
+@import '04-patterns/02-content/tooltip';
+@import '04-patterns/02-content/user-avatar';
 
-/* ============================================================================== */
-/*      - Patterns - Navigation                                                   */
-/* ============================================================================== */
-@import '04-patterns/04-navigation/bottom-bar-item'; // BCA => @Done!
-@import '04-patterns/04-navigation/breadcrumbs'; // BCA => @Done!
-@import '04-patterns/04-navigation/pagination'; // BCA => @Done!
-@import '04-patterns/04-navigation/section-index'; // BCA => @Done!
-@import '04-patterns/04-navigation/tabs'; // BCA => @Done!
-@import '04-patterns/04-navigation/timeline'; // BCA => @Done!
-@import '04-patterns/04-navigation/wizard'; // BCA => @Done!
+/* ============================================================================ */
+/*      - Interaction                                                           */
+/* ============================================================================ */
+@import '04-patterns/03-interaction/action-sheet';
+@import '04-patterns/03-interaction/animate';
+@import '04-patterns/03-interaction/animated-label';
+@import '04-patterns/03-interaction/carousel';
+@import '04-patterns/03-interaction/date-picker';
+@import '04-patterns/03-interaction/dropdown-search';
+@import '04-patterns/03-interaction/dropdown-tags';
+@import '04-patterns/03-interaction/floating-actions';
+@import '04-patterns/03-interaction/horizontal-scroll';
+@import '04-patterns/03-interaction/input-with-icon';
+@import '04-patterns/03-interaction/lightbox-image';
+@import '04-patterns/03-interaction/notification';
+@import '04-patterns/03-interaction/range-slider';
+@import '04-patterns/03-interaction/scrollable-area';
+@import '04-patterns/03-interaction/search';
+@import '04-patterns/03-interaction/sidebar';
+@import '04-patterns/03-interaction/stacked-cards';
+@import '04-patterns/03-interaction/video';
 
 /* ============================================================================== */
-/*      - Patterns - Numbers                                                      */
+/*      - Navigation                                                              */
 /* ============================================================================== */
-@import '04-patterns/05-numbers/badge'; //ACarvalh // jRio => @Checked!
-@import '04-patterns/05-numbers/counter'; //ACarvalho // jRio => @Checked!
-@import '04-patterns/05-numbers/icon-badge'; //ACarvalho // jRio => @Checked!
-@import '04-patterns/05-numbers/progress-bar'; //ACarvalho // jRio => @Checked!
-@import '04-patterns/05-numbers/progress-circle'; //ACarvalho // jRio => @Checked!
-@import '04-patterns/05-numbers/progress-circle-fraction'; //ACarvalho // jRio => @Checked!
-@import '04-patterns/05-numbers/rating'; //ACarvalho // jRio => @Checked!
+@import '04-patterns/04-navigation/bottom-bar-item';
+@import '04-patterns/04-navigation/breadcrumbs';
+@import '04-patterns/04-navigation/pagination';
+@import '04-patterns/04-navigation/section-index';
+@import '04-patterns/04-navigation/tabs';
+@import '04-patterns/04-navigation/timeline';
+@import '04-patterns/04-navigation/wizard';
 
-/* ============================================================================== */
-/*      - Patterns - Utilities                                                    */
-/* ============================================================================== */
-@import '04-patterns/06-utilities/align-center'; //ACarvalho // jRio => @Checked!
-@import '04-patterns/06-utilities/button-loading'; //ACarvalho // jRio => @Checked!
-@import '04-patterns/06-utilities/center-content'; //ACarvalho // jRio => @Checked!
-@import '04-patterns/06-utilities/margin-container'; //ACarvalho // jRio => @Checked!
-@import '04-patterns/06-utilities/separator'; //ACarvalho // jRio => @Checked!
-@import '04-patterns/06-utilities/pull-to-refresh'; //ACarvalho // jRio => @Done!
-@import '04-patterns/06-utilities/list-updating'; //jRio => @Done!
+/* ============================================================================ */
+/*      - Numbers                                                               */
+/* ============================================================================ */
+@import '04-patterns/05-numbers/badge';
+@import '04-patterns/05-numbers/counter';
+@import '04-patterns/05-numbers/icon-badge';
+@import '04-patterns/05-numbers/progress-bar';
+@import '04-patterns/05-numbers/progress-circle';
+@import '04-patterns/05-numbers/progress-circle-fraction';
+@import '04-patterns/05-numbers/rating';
 
-/*! ============================================================================= */
-/*!  $6 - Styles                                                                  */
-/*! ============================================================================= */
-@import '05-useful/a11y'; //ACarvalho // jRio => @Checked!
-@import '05-useful/border-radius'; // jRio => @Checked!
-@import '05-useful/border-size'; // jRio => @Checked!
-@import '05-useful/box-height'; //ACarvalho // jRio => @Done!
-@import '05-useful/box-width'; //ACarvalho // jRio => @Done!
-@import '05-useful/colors-brand'; //ACarvalho // jRio => @Done!
-@import '05-useful/colors-neutral'; //ACarvalho // jRio => @Done!
-@import '05-useful/colors-palette'; //ACarvalho // jRio => @Done!
-@import '05-useful/colors-semantic'; //ACarvalho // jRio => @Done!
-@import '05-useful/colors-others'; //ACarvalho // jRio => @Done!
-@import '05-useful/display'; //ACarvalho // jRio => @Done!
-@import '05-useful/display-flex'; //ACarvalho // jRio => @Done!
-@import '05-useful/display-align'; //ACarvalho // jRio => @Done!
-@import '05-useful/images'; //ACarvalho // jRio => @Done!
-@import '05-useful/overflow'; //ACarvalho // jRio => @Done!
-@import '05-useful/positioning'; //ACarvalho // jRio => @Done!
-@import '05-useful/positioning-absolute'; //ACarvalho // jRio => @Done!
-@import '05-useful/shadow'; //ACarvalho // jRio => @Done!
-@import '05-useful/space-margin'; //ACarvalho // jRio => @Done!
-@import '05-useful/space-padding'; //ACarvalho // jRio => @Done!
-@import '05-useful/text'; //ACarvalho // jRio => @Done!
-@import '05-useful/typography'; //ACarvalho // jRio = @Done!
-@import '05-useful/visibility'; //ACarvalho // jRio => @Done!
-@import '05-useful/others'; //ACarvalho // jRio => @Done!
+/* ============================================================================ */
+/*      - Utilities                                                             */
+/* ============================================================================ */
+@import '04-patterns/06-utilities/align-center';
+@import '04-patterns/06-utilities/button-loading';
+@import '04-patterns/06-utilities/center-content';
+@import '04-patterns/06-utilities/margin-container';
+@import '04-patterns/06-utilities/separator';
+@import '04-patterns/06-utilities/pull-to-refresh';
+@import '04-patterns/06-utilities/list-updating';
 
-/*! ============================================================================= */
-/*!  $7 - Screen Transitions                                                      */
-/*! ============================================================================= */
-@import '06-screen-transitions/screen-transitions'; // jRio => @Done!
+/*! =========================================================================== */
+/*!  Deprecated Patterns                                                        */
+/*! =========================================================================== */
+@import '10-deprecated/range-slider-deprecated';
 
-/* ============================================================================== */
-/*  Keyframes - Animations                                                        */
-/* ============================================================================== */
-@import '01-abstract/keyframes'; //ACarvalho
+/*! =========================================================================== */
+/*!  Styles                                                                     */
+/*! =========================================================================== */
+@import '05-useful/a11y';
+@import '05-useful/colors-brand';
+@import '05-useful/colors-neutral';
+@import '05-useful/colors-palette';
+@import '05-useful/colors-semantic';
+@import '05-useful/colors-others';
+@import '05-useful/text';
+@import '05-useful/typography';
+@import '05-useful/border-size';
+@import '05-useful/border-radius';
+@import '05-useful/space-margin';
+@import '05-useful/space-padding';
+@import '05-useful/shadow';
+@import '05-useful/box-width';
+@import '05-useful/box-height';
+@import '05-useful/display';
+@import '05-useful/display-flex';
+@import '05-useful/display-align';
+@import '05-useful/images';
+@import '05-useful/overflow';
+@import '05-useful/visibility';
+@import '05-useful/positioning';
+@import '05-useful/positioning-absolute';
+@import '05-useful/others';
 
-/* ============================================================================== */
-/*  Service Studio Preview                                                        */
-/* ============================================================================== */
-@import '08-servicestudio-preview/servicestudiopreview'; // jRio => @Done!
+/*! =========================================================================== */
+/*!  Screen Transitions                                                         */
+/*! =========================================================================== */
+@import '06-screen-transitions/screen-transitions';
 
-/* ============================================================================== */
-/*  Excluders                                                                     */
-/* ============================================================================== */
-@import '07-excluders/excluders';
+/*! =========================================================================== */
+/*!  Keyframes - Animations                                                     */
+/*! =========================================================================== */
+@import '07-keyframes/animate';
+@import '07-keyframes/btn-loading';
+@import '07-keyframes/list-item';
+@import '07-keyframes/feedback-message';
+@import '07-keyframes/pull-to-refresh';
+@import '07-keyframes/miscellaneous';
+
+/*! =========================================================================== */
+/*!  Service Studio Preview                                                     */
+/*! =========================================================================== */
+@import '08-servicestudio-preview/servicestudiopreview';
+
+/* ============================================================================ */
+/*  Excluders                                                                   */
+/* ============================================================================ */
+@import '09-excluders/excluders';

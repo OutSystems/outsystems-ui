@@ -1,7 +1,7 @@
-/*! Patterns - Interaction - AnimatedLabel */
+/*! Patterns - Interaction - Animated Label */
 ////
 /// @group Patterns-Animated_Label
-/// animated label styles
+/// Patterns - Interaction - Animated Label
 
 ///
 .animated-label {
@@ -88,7 +88,8 @@
 	}
 }
 
-/// @todo understand this keyframe
+// Chrome autofill hack
+///
 @keyframes onAutoFillStart {
 	from {
 	}
@@ -96,6 +97,8 @@
 	to {
 	}
 }
+
+// Chrome autofill hack
 ///
 @keyframes onAutoFillCancel {
 	from {

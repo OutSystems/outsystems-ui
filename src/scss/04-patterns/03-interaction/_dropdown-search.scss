@@ -1,7 +1,7 @@
-/*! Patterns - Interaction - DropdownSearch */
+/*! Patterns - Interaction - Dropdown Search */
 ////
 /// @group Interaction-Dropdown_Search
-/// dropdown search styles
+/// Patterns - Interaction - Dropdown Search
 
 ///
 .choices {
@@ -104,7 +104,6 @@
 
 		.choices {
 			&__button {
-				/// @todo This property (display:none) cames from the commented selector below! Check Why?!?!
 				display: none;
 				height: auto;
 				margin-right: var(--space-m);
@@ -114,11 +113,6 @@
 				right: 0;
 				top: 50%;
 				width: 20px;
-
-				/* 
-				.choices[data-type*='select-one'] .choices__button {
-					display: none;
-				} */
 
 				&:hover,
 				&:focus {

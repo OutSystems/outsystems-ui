@@ -1,7 +1,7 @@
 /*! Widgets - Button */
 ////
 /// @group Widgets-Button
-/// Default Button styles
+/// Widgets - Button
 
 ///
 .btn {
@@ -11,12 +11,10 @@
 	border-radius: var(--border-radius-soft);
 	color: var(--color-primary);
 	cursor: pointer;
-
 	display: inline-flex;
 	filter: brightness(1);
 	font-weight: var(--font-semi-bold);
 	height: 40px;
-
 	justify-content: center;
 	line-height: 1;
 	margin: 0;

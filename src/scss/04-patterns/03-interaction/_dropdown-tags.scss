@@ -1,7 +1,7 @@
-/*! Patterns - Interaction - DropdownTags */
+/*! Patterns - Interaction - Dropdown Tags */
 ////
 /// @group Interaction-Dropdown_Tags
-/// dropdown tags styles
+/// Patterns - Interaction - Dropdown Tags
 
 ///
 .choices {
@@ -297,6 +297,7 @@
 }
 
 // IsRTL -------------------------------------------------------------------------
+///
 .choices {
 	&[dir='rtl'] {
 		&[data-type*='select-multiple'],
@@ -389,7 +390,8 @@
 	}
 }
 
-/// @todo Should the next selectors be here? without DropDownTags context?
+// Search Wrapper used in DropDownSearch and DropDrownTags patterns
+///
 .search--wrapper {
 	position: relative;
 

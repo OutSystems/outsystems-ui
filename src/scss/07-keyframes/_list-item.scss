@@ -1,0 +1,16 @@
+/*! KeyFrames - List Item */
+////
+/// @group KeyFrames-List_Item
+/// KeyFrames - List Item
+
+///
+@keyframes list-item-scale-animation {
+	from {
+		opacity: 0.3;
+		transform: scale(0, 1) translateZ(0);
+	}
+	to {
+		opacity: 0;
+		transform: scale(400, 300) translateZ(0);
+	}
+}
