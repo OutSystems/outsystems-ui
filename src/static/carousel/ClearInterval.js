@@ -1,0 +1,1 @@
+clearInterval($parameters.AutoplayObj);
