@@ -1,0 +1,37 @@
+/*! Usefull - Border Color */
+////
+/// @group UsefullClasses-Border_Color
+/// Usefull - Border Color
+
+///
+.border {
+	&-color {
+		@each $size-type, $size-value in $osui-border-size {
+			@each $box-side-type, $box-side-value in $osui-box-sides {
+				@if $size-type == 'none' {
+					&-#{$box-side-type}-#{$size-type} {
+						border-color: transparent;
+					}
+				} @else {
+					@each $color-type, $variations in $osui-colors-extended {
+						@each $variation-type, $variation-value in $variations {
+							@if ($variation-type == '') {
+								&-#{$box-side-type}-#{$color-type}-#{$size-type} {
+									border-#{$box-side-type}-color: var(--border-size-#{$size-type})
+										solid
+										var(--color-#{$color-type});
+								}
+							} @else {
+								&-#{$box-side-type}-#{$color-type}-#{$variation-type}-#{$size-type} {
+									border-#{$box-side-type}-color: var(--border-size-#{$size-type})
+										solid
+										var(--color-#{$color-type}-#{$variation-type});
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
