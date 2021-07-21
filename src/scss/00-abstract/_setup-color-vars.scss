@@ -2,15 +2,167 @@
 /// @group SCSS_Setup_Colors_Variables
 
 /* ---------------------------------------------------------------------------- */
-/* COLORS																		*/
+/* App Settings																	*/
 /* ---------------------------------------------------------------------------- */
+/// Header Color
+$header-color: #ffffff;
 
+/// Body Background Color
+$color-background-body: #f3f6f8;
+
+/// Body Login Background Color
+$color-background-login: #ffffff;
+
+/* ---------------------------------------------------------------------------- */
+/* Color - Brand                                                                */
+/* ---------------------------------------------------------------------------- */
 /// Predefined colors
-$osui-colors: 'red', 'orange', 'yellow', 'lime', 'green', 'teal', 'cyan', 'blue', 'indigo', 'violet', 'grape', 'pink';
+$osui-colors-brand: 'primary' #1068eb, 'secondary' #303d60, 'primary-hover' #295fd6,
+	'primary-selected' 'rgba(20, 110, 245, 0.12)',
+	'primary-lightest' 'linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9))';
 
-/// Predefined color variations
-$osui-color-variations: 'lightest', 'lighter', 'light', '', 'dark', 'darker', 'darkest';
-// The above '' (empty string) is needed in order to grant the default color value
+/* ---------------------------------------------------------------------------- */
+/* Color - Focus                                                                */
+/* ---------------------------------------------------------------------------- */
+/// Predefined Focus Colors
+$osui-colors-focus: 'outer' #ffd337, 'inner' var(--color-neutral-10);
 
-/// Semantic identifiers
-$osui-semantics: 'error', 'warning', 'success', 'info';
+/* ---------------------------------------------------------------------------- */
+/* Color - Extended                                                             */
+/* - The '' (empty string) is needed in order to set the default color value.   */
+/* ---------------------------------------------------------------------------- */
+/// Predefined Colors - Extended
+$osui-colors-extended: 'red'
+		(
+			'lightest' #faeaea,
+			'lighter' #e9aaaa,
+			'light' #d96a6a,
+			'' #c92a2a,
+			'dark' #ab2424,
+			'darker' #8d1d1d,
+			'darkest' #6f1717
+		),
+	'orange'
+		(
+			'lightest' #fef0e6,
+			'lighter' #fcc29c,
+			'light' #f99551,
+			'' #f76707,
+			'dark' #d25806,
+			'darker' #ad4805,
+			'darkest' #883904
+		),
+	'yellow'
+		(
+			'lightest' #fef5e5,
+			'lighter' #fbd999,
+			'light' #f8bc4c,
+			'' #f59f00,
+			'dark' #d08700,
+			'darker' #ac6f00,
+			'darkest' #875700
+		),
+	'lime'
+		(
+			'lightest' #f1f8e8,
+			'lighter' #c7e3a2,
+			'light' #9ecd5c,
+			'' #74b816,
+			'dark' #639c13,
+			'darker' #51810f,
+			'darkest' #40650c
+		),
+	'green'
+		(
+			'lightest' #ebf7ed,
+			'lighter' #afe0b8,
+			'light' #73c982,
+			'' #37b24d,
+			'dark' #2f9741,
+			'darker' #267d36,
+			'darkest' #1e622a
+		),
+	'teal'
+		(
+			'lightest' #e6f2ef,
+			'lighter' #9cccbd,
+			'light' #52a58c,
+			'' #087f5b,
+			'dark' #076c4d,
+			'darker' #065940,
+			'darkest' #044632
+		),
+	'cyan'
+		(
+			'lightest' #e7f2f4,
+			'lighter' #9eccd3,
+			'light' #56a6b2,
+			'' #0d8091,
+			'dark' #0b6d7b,
+			'darker' #095a66,
+			'darkest' #074650
+		),
+	'blue'
+		(
+			'lightest' #e8f2fa,
+			'lighter' #a3c9ea,
+			'light' #5fa1db,
+			'' #1a79cb,
+			'dark' #1667ad,
+			'darker' #12558e,
+			'darkest' #0e4370
+		),
+	'indigo'
+		(
+			'lightest' #eceffd,
+			'lighter' #b3c1f7,
+			'light' #7b92f1,
+			'' #4263eb,
+			'dark' #3854c8,
+			'darker' #2e45a5,
+			'darkest' #243681
+		),
+	'violet'
+		(
+			'lightest' #f1edfd,
+			'lighter' #c6b6f6,
+			'light' #9b7fef,
+			'violet' #7048e8,
+			'' #5f3dc5,
+			'darker' #4e32a2,
+			'darkest' #3e2880
+		),
+	'grape'
+		(
+			'lightest' #f7ecfa,
+			'lighter' #dfb2e9,
+			'light' #c678d9,
+			'' #ae3ec9,
+			'dark' #9435ab,
+			'darker' #7a2b8d,
+			'darkest' #60226f
+		),
+	'pink'
+		(
+			'lightest' #fbebf0,
+			'lighter' #efadc4,
+			'light' #e27098,
+			'' #d6336c,
+			'dark' #b62b5c,
+			'darker' #96244c,
+			'darkest' #761c3b
+		);
+
+/* ---------------------------------------------------------------------------- */
+/* Color - Neutral                                                              */
+/* ---------------------------------------------------------------------------- */
+/// Predefined Colors - Neutral
+$osui-colors-neutral: '0' #ffffff, '1' #f8f9fa, '2' #f1f3f5, '3' #e9ecef, '4' #dee2e6, '5' #ced4da, '6' #adb5bd,
+	'7' #6a7178, '8' #4f575e, '9' #272b30, '10' #101213;
+
+/* ---------------------------------------------------------------------------- */
+/* Color - Semantic                                                             */
+/* ---------------------------------------------------------------------------- */
+/// Predefined Colors - Semantic
+$osui-colors-semantic: 'error-light' #fceaea, 'error' #dc2020, 'warning-light' #fdf6e5, 'warning' #e9a100,
+	'success-light' #eaf3eb, 'success' #29823b, 'info-light' #e5f5fc, 'info' #017aad;

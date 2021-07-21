@@ -10,51 +10,40 @@
 
 ///
 .background {
-	@for $index from 0 through 10 {
+	$i: 0;
+	@each $type, $value in $osui-colors-neutral {
 		&-neutral {
-			&-#{$index} {
-				background-color: var(--color-neutral-#{$index});
-			}
-		}
-	}
+			&-#{$type} {
+				background-color: var(--color-neutral-#{$type});
 
-	&-neutral {
-		&-0,
-		&-1,
-		&-2,
-		&-3,
-		&-4 {
-			&-lightest {
-				background-color: var(--color-neutral-9);
+				&-lightest {
+					@if ($i < 5) {
+						background-color: var(--color-neutral-9);
+					} @else {
+						background-color: var(--color-neutral-0);
+					}
+				}
 			}
 		}
-
-		&-5,
-		&-6,
-		&-7,
-		&-8,
-		&-9,
-		&-10 {
-			&-lightest {
-				background-color: var(--color-neutral-0);
-			}
-		}
+		$i: $i + 1;
 	}
 }
 
 ///
 .text {
-	@for $index from 0 through 10 {
-		&-neutral-#{$index} {
-			color: var(--color-neutral-#{$index});
+	$i: 0;
+	@each $type, $value in $osui-colors-neutral {
+		&-neutral-#{$type} {
+			color: var(--color-neutral-#{$type});
 
 			& {
-				@if ($index > 5) {
+				@if ($i > 4) {
 					&-darker {
-						color: var(--color-neutral-#{$index});
+						color: var(--color-neutral-#{$type});
 					}
 				}
 			}
 		}
+		$i: $i + 1;
 	}
 }

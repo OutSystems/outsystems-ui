@@ -5,9 +5,9 @@
 
 ///
 .shadow {
-	@each $osui-shadow-type in $osui-shadow-types {
-		&-#{$osui-shadow-type} {
-			box-shadow: var(--shadow-#{$osui-shadow-type});
+	@each $type, $value in $osui-shadow-types {
+		&-#{$type} {
+			box-shadow: var(--shadow-#{$type});
 		}
 	}
 }

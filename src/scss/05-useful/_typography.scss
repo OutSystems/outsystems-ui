@@ -6,28 +6,26 @@
 ///
 .font {
 	&-size {
-		@each $osui-font-size in $osui-font-sizes {
-			&-#{$osui-font-size} {
-				font-size: var(--font-size-#{$osui-font-size});
+		@each $type, $value in $osui-typography-sizes {
+			@if ($type != 'display') {
+				&-#{$type} {
+					font-size: var(--font-size-#{$type});
+				}
 			}
 		}
 	}
 
-	&-light {
-		font-weight: var(--font-light);
-	}
-
-	&-regular {
-		font-weight: var(--font-regular);
-	}
-
-	&-semi-bold {
-		font-weight: var(--font-semi-bold);
+	// this & is used to ensure that the scss prettier doesn't move the loop to another position
+	& {
+		@each $type, $value in $osui-typography-weight {
+			&-#{$type} {
+				font-weight: var(--font-#{$type});
+			}
+		}
 	}
 }
 
 ///
-.font-bold,
 .bold {
 	font-weight: var(--font-bold);
 }

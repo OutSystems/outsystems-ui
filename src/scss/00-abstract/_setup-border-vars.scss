@@ -6,10 +6,10 @@
 /* ---------------------------------------------------------------------------- */
 
 /// Border Sizes
-$osui-border-size-types: 'none', 's', 'm', 'l';
+$osui-border-size: 'none' 0, 's' 1px, 'm' 2px, 'l' 3px;
 
 /// Border Radius
-$osui-border-radius-types: 'none', 'soft', 'rounded', 'circle';
+$osui-border-radius-types: 'none' 0, 'soft' 4px, 'rounded' 100px, 'circle' 100%;
 
 /// Border Radius BoxSides
 $osui-border-radius-box-sides: (

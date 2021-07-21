@@ -36,15 +36,15 @@
 
 	// Gutters -------------------------------------------------------------------
 	& {
-		@each $osui-size in $osui-sizes {
+		@each $type, $value in $osui-sizes {
 			&.gutter {
-				&-#{$osui-size} {
-					margin-left: calc(-1 * var(--space-#{$osui-size}) / 2);
-					margin-right: calc(-1 * var(--space-#{$osui-size}) / 2);
+				&-#{$type} {
+					margin-left: calc(-1 * var(--space-#{$type}) / 2);
+					margin-right: calc(-1 * var(--space-#{$type}) / 2);
 
 					& > .columns-item {
-						margin-bottom: var(--space-#{$osui-size});
-						padding: var(--space-none) calc(var(--space-#{$osui-size}) / 2);
+						margin-bottom: var(--space-#{$type});
+						padding: var(--space-none) calc(var(--space-#{$type}) / 2);
 					}
 
 					.tablet &.tablet-break {
@@ -53,7 +53,7 @@
 						&-middle,
 						&-all {
 							&:only-child > .columns-item:not(:last-child) {
-								margin-bottom: var(--space-#{$osui-size});
+								margin-bottom: var(--space-#{$type});
 							}
 						}
 					}
@@ -64,7 +64,7 @@
 						&-middle,
 						&-all {
 							&:only-child > .columns-item:not(:last-child) {
-								margin-bottom: var(--space-#{$osui-size});
+								margin-bottom: var(--space-#{$type});
 							}
 						}
 					}

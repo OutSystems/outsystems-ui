@@ -10,26 +10,18 @@
 
 ///
 .background {
-	@each $osui-semantic in $osui-semantics {
-		&-#{$osui-semantic} {
-			background-color: var(--color-#{$osui-semantic});
-
-			&-light {
-				background-color: var(--color-#{$osui-semantic}-light);
-			}
+	@each $type, $value in $osui-colors-semantic {
+		&-#{$type} {
+			background-color: var(--color-#{$type});
 		}
 	}
 }
 
 ///
 .text {
-	@each $osui-semantic in $osui-semantics {
-		&-#{$osui-semantic} {
-			color: var(--color-#{$osui-semantic});
-
-			&-light {
-				color: var(--color-#{$osui-semantic}-light);
-			}
+	@each $type, $value in $osui-colors-semantic {
+		&-#{$type} {
+			color: var(--color-#{$type});
 		}
 	}
 }

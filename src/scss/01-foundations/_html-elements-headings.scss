@@ -26,9 +26,9 @@ h6,
 /// Default h1 and .heading1-6 sizes
 h,
 .heading {
-	@for $i from 1 through 6 {
-		&#{$i} {
-			font-size: var(--font-size-h#{$i});
+	@each $type, $value in $osui-typography-heading-sizes {
+		&#{$type} {
+			font-size: var(--font-size-h#{$type});
 		}
 	}
 }
@@ -40,13 +40,13 @@ h,
 
 ///
 .tablet {
-	@for $k from 1 through 6 {
-		h#{$k},
-		.heading#{$k} {
-			@if $k < 3 {
-				font-size: calc(var(--font-size-h#{$k}) - 2px);
+	@each $type, $value in $osui-typography-heading-sizes {
+		h#{$type},
+		.heading#{$type} {
+			@if $type < 4 {
+				font-size: calc(var(--font-size-h#{$type}) - 2px);
 			} @else {
-				font-size: calc(var(--font-size-h#{$k}) - 1px);
+				font-size: calc(var(--font-size-h#{$type}) - 1px);
 			}
 		}
 	}
@@ -58,13 +58,13 @@ h,
 
 ///
 .phone {
-	@for $j from 1 through 6 {
-		h#{$j},
-		.heading#{$j} {
-			@if $j < 3 {
-				font-size: calc(var(--font-size-h#{$j}) - 4px);
+	@each $type, $value in $osui-typography-heading-sizes {
+		h#{$type},
+		.heading#{$type} {
+			@if $type < 4 {
+				font-size: calc(var(--font-size-h#{$type}) - 4px);
 			} @else {
-				font-size: calc(var(--font-size-h#{$j}) - 2px);
+				font-size: calc(var(--font-size-h#{$type}) - 2px);
 			}
 		}
 	}

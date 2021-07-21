@@ -6,13 +6,13 @@
 ///
 .border {
 	&-size {
-		@each $osui-border-size-type in $osui-border-size-types {
+		@each $type, $value in $osui-border-size {
 			// Generated - Eg: .border-size-none
-			&-#{$osui-border-size-type} {
-				@if $osui-border-size-type == 'none' {
-					border-width: var(--border-size-#{$osui-border-size-type});
+			&-#{$type} {
+				@if $type == 'none' {
+					border-width: var(--border-size-#{$type});
 				} @else {
-					border: var(--border-size-#{$osui-border-size-type}) solid currentColor;
+					border: var(--border-size-#{$type}) solid currentColor;
 				}
 			}
 		}
@@ -20,12 +20,12 @@
 
 	& {
 		@each $osui-box-side in $osui-box-sides {
-			@each $osui-border-size-type in $osui-border-size-types {
-				@if $osui-border-size-type != 'none' {
+			@each $type, $value in $osui-border-size {
+				@if $type != 'none' {
 					// Generated - Eg: .border-top-s
-					&-#{$osui-box-side}-#{$osui-border-size-type}:not(.columns),
-					&-#{$osui-box-side}-#{$osui-border-size-type}.columns > .columns-item:not(:last-child) {
-						border-#{$osui-box-side}: var(--border-size-#{$osui-border-size-type}) solid currentColor;
+					&-#{$osui-box-side}-#{$type}:not(.columns),
+					&-#{$osui-box-side}-#{$type}.columns > .columns-item:not(:last-child) {
+						border-#{$osui-box-side}: var(--border-size-#{$type}) solid currentColor;
 					}
 				}
 			}

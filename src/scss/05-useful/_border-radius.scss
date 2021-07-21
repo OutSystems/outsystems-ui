@@ -5,28 +5,24 @@
 
 ///
 .border-radius {
-	@each $osui-border-radius-type in $osui-border-radius-types {
+	@each $type, $value in $osui-border-radius-types {
 		// Generated - Eg: .border-radius-none
-		&-#{$osui-border-radius-type} {
-			border-radius: var(--border-radius-#{$osui-border-radius-type});
+		&-#{$type} {
+			border-radius: var(--border-radius-#{$type});
 		}
 
 		@each $osui-box-corner in $osui-box-corners {
 			// Generated - Eg: .border-radius-top-left-none
-			&-#{$osui-box-corner}-#{$osui-border-radius-type} {
-				border-#{$osui-box-corner}-radius: var(--border-radius-#{$osui-border-radius-type});
+			&-#{$osui-box-corner}-#{$type} {
+				border-#{$osui-box-corner}-radius: var(--border-radius-#{$type});
 			}
 		}
 
 		@each $osui-border-side, $osui-border-corner1, $osui-border-corner2 in $osui-border-radius-box-sides {
 			// Generated - Eg: .border-radius-top-none
-			&-#{$osui-border-side}-#{$osui-border-radius-type} {
-				border-#{$osui-border-side}-#{$osui-border-corner1}-radius: var(
-					--border-radius-#{$osui-border-radius-type}
-				);
-				border-#{$osui-border-side}-#{$osui-border-corner2}-radius: var(
-					--border-radius-#{$osui-border-radius-type}
-				);
+			&-#{$osui-border-side}-#{$type} {
+				border-#{$osui-border-side}-#{$osui-border-corner1}-radius: var(--border-radius-#{$type});
+				border-#{$osui-border-side}-#{$osui-border-corner2}-radius: var(--border-radius-#{$type});
 			}
 		}
 	}

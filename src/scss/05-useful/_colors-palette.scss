@@ -10,15 +10,17 @@
 
 ///
 .background {
-	@each $osui-color in $osui-colors {
-		@each $osui-color-variation in $osui-color-variations {
-			&-#{$osui-color} {
-				@if ($osui-color-variation != '') {
-					&-#{$osui-color-variation} {
-						background-color: var(--color-#{$osui-color}-#{$osui-color-variation});
+	@each $color, $variations in $osui-colors-extended {
+		@each $type, $value in $variations {
+			&-#{$color} {
+				@if ($type == '') {
+					& {
+						background-color: var(--color-#{$color});
 					}
 				} @else {
-					background-color: var(--color-#{$osui-color});
+					&-#{$type} {
+						background-color: var(--color-#{$color}-#{$type});
+					}
 				}
 			}
 		}
@@ -27,15 +29,17 @@
 
 ///
 .text {
-	@each $osui-color in $osui-colors {
-		@each $osui-color-variation in $osui-color-variations {
-			&-#{$osui-color} {
-				@if ($osui-color-variation != '') {
-					&-#{$osui-color-variation} {
-						color: var(--color-#{$osui-color}-#{$osui-color-variation});
+	@each $color, $variations in $osui-colors-extended {
+		@each $type, $value in $variations {
+			&-#{$color} {
+				@if ($type == '') {
+					& {
+						color: var(--color-#{$color});
 					}
 				} @else {
-					color: var(--color-#{$osui-color});
+					&-#{$type} {
+						color: var(--color-#{$color}-#{$type});
+					}
 				}
 			}
 		}

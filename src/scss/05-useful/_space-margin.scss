@@ -5,25 +5,25 @@
 
 ///
 .margin {
-	@each $osui-size in $osui-sizes {
-		&-#{$osui-size} {
-			margin: var(--space-#{$osui-size});
+	@each $type, $value in $osui-sizes {
+		&-#{$type} {
+			margin: var(--space-#{$type});
 		}
 
 		@each $osui-box-side in $osui-box-sides {
-			&-#{$osui-box-side}-#{$osui-size} {
-				margin-#{$osui-box-side}: var(--space-#{$osui-size});
+			&-#{$osui-box-side}-#{$type} {
+				margin-#{$osui-box-side}: var(--space-#{$type});
 			}
 		}
 
-		&-x-#{$osui-size} {
-			margin-left: var(--space-#{$osui-size});
-			margin-right: var(--space-#{$osui-size});
+		&-x-#{$type} {
+			margin-left: var(--space-#{$type});
+			margin-right: var(--space-#{$type});
 		}
 
-		&-y-#{$osui-size} {
-			margin-bottom: var(--space-#{$osui-size});
-			margin-top: var(--space-#{$osui-size});
+		&-y-#{$type} {
+			margin-bottom: var(--space-#{$type});
+			margin-top: var(--space-#{$type});
 		}
 	}
 
@@ -35,16 +35,16 @@
 // IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {
-	@each $osui-size in $osui-sizes {
+	@each $type, $value in $osui-sizes {
 		.margin {
-			&-right-#{$osui-size} {
-				margin-left: var(--space-#{$osui-size});
+			&-right-#{$type} {
+				margin-left: var(--space-#{$type});
 				margin-right: var(--space-none);
 			}
 
-			&-left-#{$osui-size} {
+			&-left-#{$type} {
 				margin-left: var(--space-none);
-				margin-right: var(--space-#{$osui-size});
+				margin-right: var(--space-#{$type});
 			}
 		}
 	}
