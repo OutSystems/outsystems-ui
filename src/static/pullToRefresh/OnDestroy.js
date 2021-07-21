@@ -1,0 +1,1 @@
+WebPullToRefresh.destroy();
