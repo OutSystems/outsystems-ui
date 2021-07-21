@@ -13,6 +13,25 @@
 						border-color: transparent;
 					}
 				} @else {
+					// Border Brand Colors
+					&-#{$box-side-type}-primary {
+						border-color: var(--color-primary);
+					}
+
+					&-#{$box-side-type}-secondary {
+						border-color: var(--color-secondary);
+					}
+
+					// Border Neutral Colors
+					@each $neutral-type, $neutral-value in $osui-colors-neutral {
+						&-#{$box-side-type}-#{$size-type}-neutral#{$neutral-type} {
+							border-#{$box-side-type}-color: var(--border-size-#{$size-type})
+								solid
+								var(--color-neutral-#{$neutral-type});
+						}
+					}
+
+					// Border Extended Colors
 					@each $color-type, $variations in $osui-colors-extended {
 						@each $variation-type, $variation-value in $variations {
 							@if ($variation-type == '') {
