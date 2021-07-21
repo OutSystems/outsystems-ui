@@ -1,0 +1,1 @@
+requestAnimationFrame($actions.UpdateUI);
