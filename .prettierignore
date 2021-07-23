@@ -1,7 +1,5 @@
 dist
-ExtProd_Theme
 dependencies
 node_modules
 
 *.css
-src/03-builders/experience-builder/index_experience_builder.scss

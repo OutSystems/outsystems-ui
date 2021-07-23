@@ -1,0 +1,133 @@
+{
+    "root": true,
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier/@typescript-eslint", // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
+        "plugin:prettier/recommended" // Enables eslint-plugin-prettier and eslint-config-prettier. This will display prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 12
+    },
+    "plugins": ["@typescript-eslint", "prettier"],
+    "rules": {
+        "@typescript-eslint/member-ordering": [
+            "warn",
+            {
+                "default": {
+                    "memberTypes": [
+                        "signature", 
+                        "field", 
+                        "method"
+                    ], 
+                    "order": "alphabetically"
+                },
+                "interfaces": {
+                    "memberTypes": [
+                        "signature",
+                        "field", 
+                        "method"
+                    ],
+                    "order": "alphabetically"
+                },
+                "classes": {
+                    "memberTypes": [
+                        "signature", 
+                        "private-field", 
+                        "protected-field",
+                        "public-field",  
+                        "constructor", 
+                        "private-method", 
+                        "protected-method", 
+                        "public-method", 
+                        "abstract-method"
+                    ], 
+                    "order": "alphabetically"
+                }           
+            }
+        ],
+        "@typescript-eslint/explicit-member-accessibility": [
+            "warn",
+            {
+                "ignoredMethodNames": ["constructor"]
+            }
+        ],
+        "@typescript-eslint/naming-convention": [
+            "error",
+            {
+                "selector": "function",
+                "format": ["StrictPascalCase"],
+                "modifiers": ["exported"]
+            },
+            {
+              "selector": "class",
+              "format": ["StrictPascalCase"]
+            },
+            {
+                "selector": "classProperty",
+                "format": ["strictCamelCase"],
+                "leadingUnderscore": "require",
+                "modifiers": ["private"]
+            },
+            {
+                "selector": "classProperty",
+                "format": ["strictCamelCase"],
+                "leadingUnderscore": "forbid",
+                "modifiers": ["public", "protected"]
+            },
+            {
+                "selector": "classMethod",
+                "format": ["strictCamelCase"],
+                "leadingUnderscore": "require",
+                "modifiers": ["private"]
+            },
+            {
+                "selector": "classMethod",
+                "format": ["strictCamelCase"],
+                "leadingUnderscore": "forbid",
+                "modifiers": ["public", "protected"]
+            },
+            {
+                "selector": "interface",
+                "format": ["UPPER_CASE", "StrictPascalCase"],
+                "prefix": ["I"]
+            }            
+        ],
+        "@typescript-eslint/no-empty-interface": "off",
+        "@typescript-eslint/no-namespace": "off",
+        "@typescript-eslint/triple-slash-reference": "off",
+        "eqeqeq": "warn",
+        "linebreak-style": "off",
+        "no-cond-assign": "error",
+        //"no-console": "error", //-> let's add this in the future
+        "no-eval": "error",
+        "no-extend-native": "error",
+        "no-inner-declarations": "off",
+        "no-multiple-empty-lines": [
+            "warn", 
+            { 
+                "max": 1, 
+                "maxEOF": 0 
+            }
+        ],
+        "no-template-curly-in-string": "warn",
+        "no-unmodified-loop-condition": "error",
+        "no-unneeded-ternary": "warn",
+        "no-prototype-builtins": "off",
+        //"no-use-before-define": "error",
+        "no-var": "error",
+        "one-var": ["warn", "never"],
+        //"quotes": ["error", "single"], //ecaping quotes on prettier https://github.com/prettier/prettier/issues/973
+        "semi": [
+            "error",
+            "always"
+        ],
+        "yoda": "warn"
+    }
+}

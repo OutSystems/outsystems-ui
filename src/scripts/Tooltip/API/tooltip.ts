@@ -1,3 +1,5 @@
 namespace outsystems.osuiAPI.tooltip {
-	export function demoTooltip() {}
+	export function DemoTooltip() {
+		console('cenas aqui');
+	}
 }
