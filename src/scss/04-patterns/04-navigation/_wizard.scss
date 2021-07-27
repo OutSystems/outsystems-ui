@@ -195,6 +195,60 @@
 	}
 }
 
+/* Hybrid Service Studio preview*/
+html[data-uieditorversion^='1'] {
+	.wizard-wrapper {
+		.OSBlockWidget {
+			// Service Studio Preview
+			& {
+				-servicestudio-display: contents;
+			}
+
+			&:first-child {
+				.wizard-item-icon-wrapper {
+					&:before {
+						& {
+							-servicestudio-content: none;
+						}
+					}
+
+					&.label-top {
+						& {
+							-servicestudio-flex-direction: column-reverse;
+						}
+					}
+				}
+			}
+		}
+
+		&.wizard-vertical {
+			.OSBlockWidget {
+				.wizard-wrapper-item {
+					&.label-top {
+						& {
+							-servicestudio-flex-direction: row-reverse;
+						}
+					}
+				}
+
+				&:last-child {
+					& {
+						-servicestudio-margin-bottom: var(--space-none);
+					}
+				}
+			}
+		}
+	}
+
+	.wizard-wrapper-item {
+		& {
+			-servicestudio-display: flex;
+			-servicestudio-flex-direction: column;
+			-servicestudio-width: 100%;
+		}
+	}
+}
+
 // IsRTL ---------------------------------------------------------------------------
 ///
 .is-rtl {
