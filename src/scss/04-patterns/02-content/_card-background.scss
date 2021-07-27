@@ -56,11 +56,21 @@
 		width: 100%;
 	}
 
-	&-image img {
-		height: 100%;
-		object-fit: cover;
-		object-position: center center;
-		width: 100%;
+	&-image {
+		img {
+			height: 100%;
+			object-fit: cover;
+			object-position: center center;
+			width: 100%;
+		}
+
+		/* Hybrid Service Studio preview  - Inline SVG */
+		.card {
+			//Service Studio Preview
+			& {
+				-servicestudio-display: flex;
+			}
+		}
 	}
 
 	&-color {
