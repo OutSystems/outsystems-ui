@@ -150,11 +150,23 @@
 }
 
 ///
-.icon-states,
-div[data-block*='Rating'] span {
-	// Service Studio Preview
-	& {
-		-servicestudio-display: flex;
+.icon-states {
+	div[data-block*='Rating'] span {
+		// Service Studio Preview
+		& {
+			-servicestudio-display: flex;
+		}
+	}
+
+	/* Hybrid Service Studio preview */
+	html[data-uieditorversion^='1'] & {
+		.uieditor-if-branch-widget {
+			-servicestudio-display: inline-flex;
+
+			&:empty {
+				-servicestudio-display: none;
+			}
+		}
 	}
 }
 
