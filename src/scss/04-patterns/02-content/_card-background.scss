@@ -65,10 +65,12 @@
 		}
 
 		/* Hybrid Service Studio preview  - Inline SVG */
-		.card {
-			//Service Studio Preview
-			& {
-				-servicestudio-display: flex;
+		html[data-uieditorversion^='1'] & {
+			.card {
+				//Service Studio Preview
+				& {
+					-servicestudio-display: flex;
+				}
 			}
 		}
 	}
