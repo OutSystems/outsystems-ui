@@ -3,10 +3,10 @@
 // @group ServiceStudio_Preview
 /* 
 	Notes:
-	- This section contains several styles in order to improve the service studio blocks preview
+	- This section contains several styles that improve the service studio blocks preview
 	- Menu ServiceStudio Hybrid Preview
 
-	- This should not be visible at SASSDOCS.
+	- This sections should not be visible at SASSDOCS.
 */
 
 body > .app-menu-content {
@@ -45,26 +45,34 @@ html[data-uieditorversion^='1'] {
 			-servicestudio-z-index: 102;
 		}
 
-		.app-menu-content {
-			-servicestudio-align-items: flex-start;
-			-servicestudio-height: 100% !important;
-			-servicestudio-left: 0;
-			-servicestudio-position: relative;
-			-servicestudio-width: 100% !important;
-
-			& > * {
+		.app-menu {
+			&-content {
 				-servicestudio-align-items: flex-start;
-				-servicestudio-display: flex;
+				-servicestudio-height: 100% !important;
+				-servicestudio-left: 0;
+				-servicestudio-position: relative;
+				-servicestudio-width: 100% !important;
+
+				& > * {
+					-servicestudio-align-items: flex-start;
+					-servicestudio-display: flex;
+				}
+
+				.app-login-info {
+					-servicestudio-display: flex;
+				}
 			}
 
-			.app-login-info {
-				-servicestudio-display: flex;
+			&-links {
+				-servicestudio-height: auto;
+				-servicestudio-width: 100%;
 			}
-		}
 
-		.app-menu-links {
-			-servicestudio-height: auto;
-			-servicestudio-width: 100%;
+			&-overlay {
+				& {
+					pointer-events: none !important;
+				}
+			}
 		}
 	}
 
