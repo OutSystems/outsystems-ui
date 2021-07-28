@@ -216,6 +216,18 @@ body {
 	}
 }
 
+/* Preview for Srvice Studio Hybrid */
+html[data-uieditorversion^='1'] {
+	body {
+		.app-menu-overlay {
+			// Service Studio Preview
+			& {
+				pointer-events: none !important;
+			}
+		}
+	}
+}
+
 ///
 .layout {
 	.app-menu-content {
