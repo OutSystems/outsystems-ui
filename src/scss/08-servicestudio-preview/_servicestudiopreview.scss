@@ -92,4 +92,12 @@ html[data-uieditorversion^='1'] {
 			-servicestudio-width: 100%;
 		}
 	}
+
+	.card-background-image {
+		.card {
+			& {
+				-servicestudio-display: flex;
+			}
+		}
+	}
 }
