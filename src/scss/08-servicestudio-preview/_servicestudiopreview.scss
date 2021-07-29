@@ -82,4 +82,14 @@ html[data-uieditorversion^='1'] {
 	body:not(.phone):not(.tablet) .layout-side .menu-icon {
 		-servicestudio-display: none;
 	}
+
+	.blank-slate {
+		> div {
+			-servicestudio-display: flex;
+			-servicestudio-flex-direction: column;
+			-servicestudio-justify-content: space-around;
+			-servicestudio-text-align: center;
+			-servicestudio-width: 100%;
+		}
+	}
 }
