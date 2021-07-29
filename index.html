@@ -44,9 +44,6 @@
 </head>
 
 <body>
-    <svg xmlns="http://www.w3.org/2000/svg">
-        <rect fill="#FB9071" x="0" y="0" width="50" height="50" />
-    </svg>
 
     <div class="container-fluid pt-5">
         <div id="output"></div>
@@ -57,12 +54,18 @@
             {
                 target: 'OutSystemsUI_Theme',
                 url: `${host}/<%= htmlWebpackPlugin.options.prefix %>.outsystems-ui.css`,
+            },
+            {
+                target: 'OutSystemsUI_JS',
+                url: `${host}/<%= htmlWebpackPlugin.options.prefix %>.outsystems-ui.js`,
             }
         ]
 
         collection.map(function (el, index) {
-            let line = `<div class="row pt-3 pb-3">
-                <div class="col col-4">${el.target}<br><a target="_blank" href="${el.url}">${el.url}</a></div>
+            let line = `
+                <div class="row pt-3 pb-3">
+                    <div class="col col-4">${el.target}<br><a target="_blank" href="${el.url}">${el.url}</a>
+                </div>
             `;
             document.getElementById("output").innerHTML += line;
         });

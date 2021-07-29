@@ -11,7 +11,8 @@ module.exports = (env) => {
 		entry: {
 			'outsystems-ui': './src/os-ui.js',
 		},
-		mode: env.prefix === 'dev' ? 'development' : 'production',
+		// mode: env.prefix === 'dev' ? 'development' : 'production',
+		mode: 'none',
 		output: {
 			path: outputPath,
 			filename: `${env.prefix}.[name].js`,
@@ -77,5 +78,8 @@ module.exports = (env) => {
 			writeToDisk: true,
 		},
 		devtool: 'source-map',
+		optimization: {
+			minimize: false,
+		},
 	};
 };

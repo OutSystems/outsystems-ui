@@ -3,7 +3,7 @@
 	"version": "2.6.9",
 	"description": "OutSystems UI Base Theme",
 	"scripts": {
-		"prod": "webpack --env prefix=prod",
+		"prod": "webpack serve --env prefix=prod",
 		"dev": "webpack serve --env prefix=dev --devtool inline-source-map",
 		"lint": "eslint **/*.ts",
 		"lintfix": "eslint --fix **/*.ts",
