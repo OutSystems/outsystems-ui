@@ -1,5 +1,6 @@
 dist
 dependencies
 node_modules
+src/static/**
 
 *.css

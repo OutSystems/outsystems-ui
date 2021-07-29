@@ -4,15 +4,14 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 const outputPath = path.join(__dirname, 'dist');
 const webpack = require('webpack');
-const CopyPlugin = require('copy-webpack-plugin');
 const package = require('./package.json');
 
 module.exports = (env) => {
 	return {
 		entry: {
-			'outsystems-ui': './src/scss/os-ui.js',
+			'outsystems-ui': './src/os-ui.js',
 		},
-		mode: 'development',
+		mode: env.prefix === 'dev' ? 'development' : 'production',
 		output: {
 			path: outputPath,
 			filename: `${env.prefix}.[name].js`,
@@ -22,11 +21,20 @@ module.exports = (env) => {
 			colors: true,
 			children: true,
 		},
+		resolve: {
+			extensions: ['.tsx', '.ts'],
+		},
 		module: {
 			rules: [
 				{
-					test: /\.ts$/,
-					use: 'ts-loader',
+					test: /\.tsx?$/,
+					exclude: [/node_modules/, /src\/static/],
+					use: [
+						{
+							loader: 'ts-loader',
+							options: {},
+						},
+					],
 				},
 				{
 					test: /\.(sa|sc|c)ss$/,
@@ -52,9 +60,6 @@ module.exports = (env) => {
 			new MiniCssExtractPlugin({
 				filename: `${env.prefix}.[name].css`,
 			}),
-			new CopyPlugin({
-				patterns: [{ from: 'src/static', to: 'static' }],
-			}),
 			new HtmlWebpackPlugin({
 				template: 'index.html',
 				prefix: env.prefix,
@@ -66,11 +71,11 @@ module.exports = (env) => {
 					.replace('T', ' ')}`,
 			}),
 		],
-		devtool: false,
 		devServer: {
 			contentBase: path.join(__dirname, 'dist'),
 			port: 3000,
 			writeToDisk: true,
 		},
+		devtool: 'source-map',
 	};
 };

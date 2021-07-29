@@ -1,6 +1,6 @@
 dist
-ExtProd_Theme
 dependencies
 node_modules
+src/static/**
 
 *.css
