@@ -82,4 +82,32 @@ html[data-uieditorversion^='1'] {
 	body:not(.phone):not(.tablet) .layout-side .menu-icon {
 		-servicestudio-display: none;
 	}
+
+	.blank-slate {
+		> div {
+			-servicestudio-display: flex;
+			-servicestudio-flex-direction: column;
+			-servicestudio-justify-content: space-around;
+			-servicestudio-text-align: center;
+			-servicestudio-width: 100%;
+		}
+	}
+
+	.card-background-image {
+		.card {
+			& {
+				-servicestudio-display: flex;
+			}
+		}
+	}
+
+	.icon-states {
+		.uieditor-if-branch-widget {
+			-servicestudio-display: inline-flex;
+
+			&:empty {
+				-servicestudio-display: none;
+			}
+		}
+	}
 }

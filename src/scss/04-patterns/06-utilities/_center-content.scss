@@ -36,3 +36,13 @@
 		width: 100%;
 	}
 }
+
+///
+.animate {
+	.center-content {
+		// Service Studio Preview
+		& {
+			-servicestudio-display: table;
+		}
+	}
+}
