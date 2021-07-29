@@ -100,4 +100,14 @@ html[data-uieditorversion^='1'] {
 			}
 		}
 	}
+
+	.icon-states {
+		.uieditor-if-branch-widget {
+			-servicestudio-display: inline-flex;
+
+			&:empty {
+				-servicestudio-display: none;
+			}
+		}
+	}
 }
