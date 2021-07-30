@@ -8,7 +8,7 @@ namespace OutSystems.Tooltip.API {
 	export const dateFormat = '';
 
 	export function Demo() {
-		console.log('cenas');
+		console.log('CENAS');
 	}
 
 	(() => {
