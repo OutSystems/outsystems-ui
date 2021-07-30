@@ -2,7 +2,7 @@
   "compilerOptions": {
     /* Basic Options */
     // "incremental": true,                   /* Enable incremental compilation */
-    "target": "es5", /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */
+    "target": "es6", /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */
     // "module": "amd", /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */
     // "lib": [],                             /* Specify library files to be included in the compilation. */
     "allowJs": false, /* Allow javascript files to be compiled. */
@@ -11,8 +11,8 @@
     // "declaration": true,                   /* Generates corresponding '.d.ts' file. */
     // "declarationMap": true,                /* Generates a sourcemap for each corresponding '.d.ts' file. */
     "sourceMap": true, /* Generates corresponding '.map' file. */
-    // "outFile": "./dist/outsystems-ui.js", /* Concatenate and emit output to single file. */
-    // "outDir": "./dist",                        /* Redirect output structure to the directory. */
+    "outFile": "./dist/prod.outsystems-ui.js", /* Concatenate and emit output to single file. */
+    "outDir": "./dist", /* Redirect output structure to the directory. */
     // "rootDir": "./",                       /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
     // "composite": true,                     /* Enable project compilation */
     // "tsBuildInfoFile": "./",               /* Specify file to store incremental compilation information */
@@ -50,7 +50,7 @@
     // "sourceRoot": "",                      /* Specify the location where debugger should locate TypeScript files instead of source locations. */
     // "mapRoot": "",                         /* Specify the location where debugger should locate map files instead of generated locations. */
     // "inlineSourceMap": true,               /* Emit a single file with source maps instead of having a separate file. */
-    // "inlineSources": true,                 /* Emit the source alongside the sourcemaps within a single file; requires '--inlineSourceMap' or '--sourceMap' to be set. */
+    // "inlineSources": true, /* Emit the source alongside the sourcemaps within a single file; requires '--inlineSourceMap' or '--sourceMap' to be set. */
     /* Experimental Options */
     // "experimentalDecorators": true,        /* Enables experimental support for ES7 decorators. */
     // "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
@@ -58,22 +58,24 @@
     "skipLibCheck": true, /* Skip type checking of declaration files. */
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
   },
+  "watchOptions": {
+    // Use native file system events for files and directories
+    "watchFile": "useFsEvents",
+    "watchDirectory": "useFsEvents",
+    // Poll files for updates more frequently
+    // when they're updated a lot.
+    "fallbackPolling": "dynamicPriority",
+    // Finally, two additional settings for reducing the amount of possible
+    // files to track  work from these directories
+    "excludeDirectories": [
+      "**/node_modules",
+      "./dist"
+    ],
+  },
   "include": [
-    "src/scripts"
+    "./src/scripts"
   ],
   "exclude": [
-    "src/GridLicense.ts"
+    "./src/GridLicense.ts"
   ]
 }
-// {
-//   "compilerOptions": {
-//     "allowJs": true, /* Allow javascript files to be compiled. */
-//     "jsx": "react", /* Specify JSX code generation: 'preserve', 'react-native', or 'react'. */
-//     "module": "amd", /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */
-//     "moduleResolution": "node", /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */
-//     "noImplicitAny": true, /* Raise error on expressions and declarations with an implied 'any' type. */
-//     "outDir": "./dist/", /* Redirect output structure to the directory. */
-//     // "target": "es5", /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */
-//     "sourceMap": true /* Generates corresponding '.map' file. */
-//   }
-// }

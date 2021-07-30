@@ -8,10 +8,6 @@
 		"source.fixAll.eslint": true,
 		"source.fixAll.stylelint": true
 	},
-	"postcssSorting.config": {
-		"properties-order": "alphabetical",
-		"sort-on-save": true
-	},
 	"css.lint.fontFaceProperties": "ignore",
 	"scss.lint.fontFaceProperties": "ignore",
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -32,9 +28,5 @@
 	},
 	"[jsonc]": {
 		"editor.defaultFormatter": "vscode.json-language-features"
-	},
-	"prettier.printWidth": 170,
-	"prettier.singleQuote": true,
-	"prettier.useTabs": true,
-	"liveServer.settings.port": 5501
+	}
 }
