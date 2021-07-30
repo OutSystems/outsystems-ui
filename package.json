@@ -5,9 +5,10 @@
 	"scripts": {
 		"setup": "npm i && npm i webpack webpack-cli -g",
 		"start": "run-script-os",
+		"start:darwin:linux": "run-s tab:build:css:mac tab:build:js",
 		"start:win32": "echo 'del whatever you want in Windows 32/64'",
-		"start:darwin:linux": "run-s tab:build:css tab:build:js",
-		"tab:build:css": "ttab webpack serve --env prefix=dev",
+		"tab:build:css:mac": "ttab webpack serve --env prefix=dev",
+		"tab:build:css:win": "ttab webpack serve --env prefix=dev",
 		"tab:build:js": "tsc --watch",
 		"prod": "eslint **/*.ts && tsc --sourceMap false && webpack --env prefix=prod",
 		"lint": "eslint **/*.ts",
