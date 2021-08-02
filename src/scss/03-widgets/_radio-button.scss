@@ -68,6 +68,27 @@
 }
 
 ///
+.radio-group {
+	&.is-horizontal {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+
+		& > div {
+			display: contents;
+		}
+
+		[data-radio-button] {
+			width: auto;
+
+			&:not(:first-of-type) {
+				margin-left: var(--space-base);
+			}
+		}
+	}
+}
+
+///
 [data-radio-group] {
 	&.not-valid [data-radio-button] .radio-button {
 		&:before {
@@ -156,5 +177,16 @@
 	[data-radio-group] label {
 		margin-left: var(--space-none);
 		margin-right: var(--space-s);
+	}
+
+	.radio-group {
+		&.is-horizontal {
+			[data-radio-button] {
+				&:not(:first-of-type) {
+					margin-left: unset;
+					margin-right: var(--space-base);
+				}
+			}
+		}
 	}
 }
