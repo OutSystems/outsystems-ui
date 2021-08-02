@@ -113,3 +113,15 @@
 		}
 	}
 }
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	.horizontal-scroll {
+		& > :not(:first-child),
+		.list > :not(:first-child) {
+			margin-left: unset;
+			margin-right: var(--space-base);
+		}
+	}
+}
