@@ -3,8 +3,8 @@
 	"version": "2.6.9",
 	"description": "OutSystems UI Base Theme",
 	"scripts": {
-		"setup": "npm i && npm i webpack webpack-cli -g",
-		"dev-scss": "webpack serve --env prefix=dev",
+		"setup": "npm i && tsc && webpack --env prefix=dev",
+		"dev": "webpack serve --env prefix=dev",
 		"dev-ts": "tsc --watch",
 		"prod": "eslint **/*.ts && tsc --sourceMap false && webpack --env prefix=prod",
 		"lint": "eslint **/*.ts",
@@ -33,7 +33,6 @@
 		"prettier": "^2.3.0",
 		"prettier-eslint": "^12.0.0",
 		"release-it": "^14.5.0",
-		"run-script-os": "^1.1.6",
 		"sass": "^1.35.1",
 		"sass-loader": "^12.1.0",
 		"stylelint": "^13.12.0",
