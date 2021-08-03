@@ -15,7 +15,21 @@ namespace OutSystems.osuiAPI {
 	}
 
 	/**
-	 * Fucntion used to Toogle a class to a given element
+	 * Function used to check if has MasterDetail, this is used only for native apps
+	 *
+	 * @export
+	 */
+	export function HasMasterDetail(): void {
+		const masterDetail: HTMLElement = document.querySelector('.split-screen-wrapper');
+		const content: HTMLElement = document.querySelector('.active-screen .content');
+
+		if (content && content.contains(masterDetail)) {
+			content.classList.add('has-master-detail');
+		}
+	}
+
+	/**
+	 * [Deprecated] Function used to Toogle a class to a given element
 	 *
 	 * @export
 	 * @param {HTMLElement} el
@@ -40,7 +54,7 @@ namespace OutSystems.osuiAPI {
 	}
 
 	/**
-	 * Function to get closest element, in use by AnimatedLabel
+	 * [Deprecated] Function to get closest element, in use by AnimatedLabel
 	 *
 	 * @export
 	 * @param {HTMLElement} elem
@@ -50,20 +64,8 @@ namespace OutSystems.osuiAPI {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	export function GetClosest(elem: HTMLElement, selector: string): any {
+		console.warn('osui.GetClosest(), is deprecated. Avoid use this method.');
+
 		return elem.closest(selector) ? elem.closest(selector) : false;
-	}
-
-	/**
-	 * Function used to check if has MasterDetail, this is used only for native apps
-	 *
-	 * @export
-	 */
-	export function HasMasterDetail(): void {
-		const masterDetail: HTMLElement = document.querySelector('.split-screen-wrapper');
-		const content: HTMLElement = document.querySelector('.active-screen .content');
-
-		if (content && content.contains(masterDetail)) {
-			content.classList.add('has-master-detail');
-		}
 	}
 }
