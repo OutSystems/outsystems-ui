@@ -12,15 +12,15 @@ namespace OutSystems.osuiAPI.HideOnScroll {
 		const content: HTMLElement = document.querySelector('.active-screen .content');
 
 		if (header.classList.contains('hide') && content) {
-			const mainContentHeight = document.querySelector('.main-content').scrollHeight;
 			let startY = 0;
+			const mainContentHeight: number = document.querySelector('.main-content').scrollHeight;
 			const threshold = 60;
-			const layout = document.querySelector('.layout');
+			const layout: HTMLElement = document.querySelector('.layout');
 
 			if (mainContentHeight - threshold > content.offsetHeight) {
 				content.addEventListener(
 					'touchstart',
-					function (e) {
+					function (e: TouchEvent) {
 						startY = e.touches[0].pageY;
 					},
 					false
@@ -28,9 +28,9 @@ namespace OutSystems.osuiAPI.HideOnScroll {
 
 				content.addEventListener(
 					'touchmove',
-					function (e) {
-						const c = e.touches[0].pageY;
-						const translateY = c - startY;
+					function (e: TouchEvent) {
+						const c: number = e.touches[0].pageY;
+						const translateY: number = c - startY;
 
 						if (c < startY - threshold && translateY < 0) {
 							header.classList.add('header-on-scroll');
