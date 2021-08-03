@@ -110,10 +110,4 @@ html[data-uieditorversion^='1'] {
 			}
 		}
 	}
-
-	.section-background {
-		&:empty {
-			-servicestudio-height: auto;
-		}
-	}
 }
