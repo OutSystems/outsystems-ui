@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace osuiDemo {
+namespace osui {
 	export function GetVersion(): any {
 		return OutSystems.osuiAPI.GetVersion();
 	}
