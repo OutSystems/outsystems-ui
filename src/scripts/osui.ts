@@ -1,0 +1,37 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+namespace osuiDemo {
+	export function GetVersion(): any {
+		return OutSystems.osuiAPI.GetVersion();
+	}
+
+	export function HideOnScroll(): any {
+		return {
+			init: () => {
+				OutSystems.osuiAPI.HideOnScroll.Init();
+			},
+		};
+	}
+
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+	export function ToggleClass(el: HTMLElement, state: any, className: string): any {
+		OutSystems.osuiAPI.ToggleClass(el, state, className);
+	}
+
+	export function GetClosest(elem: HTMLElement, selector: string): any {
+		return OutSystems.osuiAPI.GetClosest(elem, selector);
+	}
+
+	export function FixInputs(): any {
+		OutSystems.osuiAPI.FixInputs();
+	}
+
+	export function HasMasterDetail(): any {
+		OutSystems.osuiAPI.HasMasterDetail();
+	}
+
+	// eslint-disable-next-line @typescript-eslint/naming-convention
+	export function StartMWO(): any {
+		OutSystems.osuiAPI.StartMadeWithOS();
+	}
+}

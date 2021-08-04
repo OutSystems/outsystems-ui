@@ -10,8 +10,7 @@ namespace OutSystems.osuiAPI {
 	 * @return {*}  {string}
 	 */
 	export function GetVersion(): string {
-		const version = '2.6.9';
-		return 'OutSystems UI - Version ' + version;
+		return '2.6.9';
 	}
 
 	/**
@@ -36,7 +35,8 @@ namespace OutSystems.osuiAPI {
 	 * @param {*} state
 	 * @param {string} className
 	 */
-	export function ToggleClass(el: HTMLElement, state: unknown, className: string): void {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+	export function ToggleClass(el: HTMLElement, state: any, className: string): void {
 		const classList = el.classList;
 
 		if (!state) {
@@ -50,7 +50,7 @@ namespace OutSystems.osuiAPI {
 			el.offsetHeight;
 		}
 
-		console.warn('osui.toggleClass(), is deprecated. Avoid use this method.');
+		console.warn('osui.toggleClass(), is deprecated. Avoid using this method.');
 	}
 
 	/**
@@ -64,7 +64,7 @@ namespace OutSystems.osuiAPI {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	export function GetClosest(elem: HTMLElement, selector: string): any {
-		console.warn('osui.GetClosest(), is deprecated. Avoid use this method.');
+		console.warn('osui.GetClosest(), is deprecated. Avoid using this method.');
 
 		return elem.closest(selector) ? elem.closest(selector) : false;
 	}
