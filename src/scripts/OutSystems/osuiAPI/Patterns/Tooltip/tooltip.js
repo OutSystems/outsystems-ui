@@ -81,7 +81,7 @@ function OSUI_ToolTip(opts) {
 		},
 
 		// check if the tooltip ballon is on window edges and will be cutted
-		isItemOutOfElementView: function (elem, viewElem, defaultPosition) {
+		isItemOutOfElementView: function (elem, viewElem) {
 			// check if the given elements are not empty
 			if(!elem || !viewElem) {
 				console.error("Missing some param value at isItemOutOfElementView();");
@@ -247,11 +247,11 @@ function OSUI_ToolTip(opts) {
 			// check if an parentNode element was found
 			if(overflowElem) {
 				// check if the element is out of the founded parentNode view boundaries
-				newItemPosition = _aux.isItemOutOfElementView(elemToTestBounds, overflowElem, elemToManagePos.dataset.position);
+				newItemPosition = _aux.isItemOutOfElementView(elemToTestBounds, overflowElem);
 			}
 			else {
 				// if there are not a parentNode with the overflow hidden, check the body boudaries
-				newItemPosition = _aux.isItemOutOfElementView(elemToTestBounds, document.body, elemToManagePos.dataset.position);
+				newItemPosition = _aux.isItemOutOfElementView(elemToTestBounds, document.body);
 			}
 
 			// check if the tooltip has already a defined class position
