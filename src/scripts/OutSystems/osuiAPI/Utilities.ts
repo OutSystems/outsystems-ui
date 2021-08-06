@@ -19,6 +19,8 @@ namespace OutSystems.osuiAPI {
 	 * @export
 	 */
 	export function HasMasterDetail(): void {
+		console.log('HasMasterDetail as run!');
+
 		const masterDetail: HTMLElement = document.querySelector('.split-screen-wrapper');
 		const content: HTMLElement = document.querySelector('.active-screen .content');
 

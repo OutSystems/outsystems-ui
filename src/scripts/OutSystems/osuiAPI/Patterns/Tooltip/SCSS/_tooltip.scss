@@ -5,8 +5,6 @@
 
 // myCustom tooltip variables
 $osui-tooltip-arrow-size: 8px;
-$osui-tooltip-ballon-color: var(--color-neutral-0);
-$osui-tooltip-ballon-bg-color: var(--color-neutral-9);
 
 ///
 .osui-tooltip {
@@ -138,7 +136,7 @@ $osui-tooltip-ballon-bg-color: var(--color-neutral-9);
 				top: initial;
 
 				&:before {
-					border-color: $osui-tooltip-ballon-bg-color transparent transparent transparent;
+					border-color: var(--color-neutral-9) transparent transparent transparent;
 					border-width: $osui-tooltip-arrow-size $osui-tooltip-arrow-size 0 $osui-tooltip-arrow-size;
 					bottom: 0;
 					top: initial;
@@ -183,7 +181,7 @@ $osui-tooltip-ballon-bg-color: var(--color-neutral-9);
 				top: initial;
 
 				&:before {
-					border-color: transparent $osui-tooltip-ballon-bg-color transparent transparent;
+					border-color: transparent var(--color-neutral-9) transparent transparent;
 					border-width: $osui-tooltip-arrow-size $osui-tooltip-arrow-size $osui-tooltip-arrow-size 0;
 					left: initial;
 					right: 100%;
@@ -202,7 +200,7 @@ $osui-tooltip-ballon-bg-color: var(--color-neutral-9);
 
 			.osui-tooltip_balloon {
 				&:before {
-					border-color: transparent transparent transparent $osui-tooltip-ballon-bg-color;
+					border-color: transparent transparent transparent var(--color-neutral-9);
 					border-width: $osui-tooltip-arrow-size 0 $osui-tooltip-arrow-size $osui-tooltip-arrow-size;
 					left: 100%;
 					right: initial;
@@ -213,9 +211,9 @@ $osui-tooltip-ballon-bg-color: var(--color-neutral-9);
 
 	///
 	.osui-tooltip_balloon {
-		background-color: $osui-tooltip-ballon-bg-color;
+		background-color: var(--color-neutral-9);
 		border-radius: var(--border-radius-soft);
-		color: $osui-tooltip-ballon-color;
+		color: var(--color-neutral-0);
 		min-width: 150px;
 		opacity: 0;
 		padding: var(--space-s);
@@ -231,7 +229,7 @@ $osui-tooltip-ballon-bg-color: var(--color-neutral-9);
 		}
 
 		&:before {
-			border-color: transparent transparent $osui-tooltip-ballon-bg-color transparent;
+			border-color: transparent transparent var(--color-neutral-9) transparent;
 			border-style: solid;
 			border-width: 0 $osui-tooltip-arrow-size $osui-tooltip-arrow-size $osui-tooltip-arrow-size;
 			content: '';

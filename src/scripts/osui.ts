@@ -5,14 +5,6 @@ namespace osui {
 		return OutSystems.osuiAPI.GetVersion();
 	}
 
-	export function HideOnScroll(): any {
-		return {
-			init: () => {
-				OutSystems.osuiAPI.HideOnScroll.Init();
-			},
-		};
-	}
-
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 	export function ToggleClass(el: HTMLElement, state: any, className: string): any {
 		OutSystems.osuiAPI.ToggleClass(el, state, className);
@@ -20,6 +12,11 @@ namespace osui {
 
 	export function GetClosest(elem: HTMLElement, selector: string): any {
 		return OutSystems.osuiAPI.GetClosest(elem, selector);
+	}
+
+	// eslint-disable-next-line @typescript-eslint/naming-convention
+	export function StartMWO(): any {
+		OutSystems.osuiAPI.StartMadeWithOS();
 	}
 
 	export function FixInputs(): any {
@@ -30,8 +27,11 @@ namespace osui {
 		OutSystems.osuiAPI.HasMasterDetail();
 	}
 
-	// eslint-disable-next-line @typescript-eslint/naming-convention
-	export function StartMWO(): any {
-		OutSystems.osuiAPI.StartMadeWithOS();
+	export function HideOnScroll(): any {
+		return {
+			init: () => {
+				OutSystems.osuiAPI.HideOnScroll.Init();
+			},
+		};
 	}
 }
