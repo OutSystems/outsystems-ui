@@ -1,0 +1,247 @@
+/*! Patterns - Content - Tooltip */
+////
+/// @group Patterns-Tooltip
+/// Patterns - Content - Tooltip
+
+// myCustom tooltip variables
+$osui-tooltip-arrow-size: 8px;
+
+///
+.osui-tooltip {
+	display: inline-block;
+	position: relative;
+
+	///
+	&.is-hover:hover,
+	&.is-opened {
+		.osui-tooltip_balloon-wrapper {
+			max-height: 50vh;
+			padding-top: var(--space-base);
+
+			// if opens to top
+			&.top,
+			&.top-left,
+			&.top-right {
+				bottom: 100%;
+				padding-bottom: var(--space-base);
+				padding-top: initial;
+				top: initial;
+
+				.osui-tooltip_balloon {
+					bottom: 0;
+					top: initial;
+
+					&:before {
+						opacity: 1;
+						transform: translateY(100%);
+					}
+				}
+			}
+
+			// if opens to left or right
+			&.left,
+			&.right {
+				max-height: initial;
+				padding-left: var(--space-base);
+				padding-top: var(--space-none);
+			}
+
+			// if opens to right
+			&.left {
+				padding-left: initial;
+				padding-right: var(--space-base);
+			}
+		}
+
+		.osui-tooltip_balloon {
+			opacity: 1;
+			top: 0;
+
+			&:before {
+				opacity: 1;
+				transform: translateY(-100%);
+			}
+		}
+	}
+
+	///
+	&:not(.is-hover) {
+		.osui-tooltip_content {
+			cursor: pointer;
+		}
+	}
+
+	///
+	.osui-tooltip_content {
+		position: inherit;
+	}
+
+	///
+	.osui-tooltip_balloon-wrapper {
+		left: calc(50% - var(--space-base));
+		max-height: 0;
+		overflow: hidden;
+		padding-top: var(--space-none);
+		position: absolute;
+		top: 100%;
+		transition: all 0.5s ease;
+
+		// Service Studio Preview
+		& {
+			-servicestudio-left: initial;
+			-servicestudio-max-height: initial;
+			-servicestudio-overflow: initial;
+			-servicestudio-position: relative;
+			-servicestudio-top: initial;
+		}
+
+		// open states
+		&.bottom {
+			// default state
+		}
+
+		// if opens to bottom-left
+		&.bottom-left {
+			left: calc(-1 * var(--space-s));
+
+			.osui-tooltip_balloon {
+				&:before {
+					left: var(--space-s);
+				}
+			}
+		}
+
+		// if opens to bottom-left
+		&.bottom-right {
+			left: initial;
+			right: calc(-1 * var(--space-s));
+
+			.osui-tooltip_balloon {
+				&:before {
+					left: initial;
+					right: var(--space-s);
+				}
+			}
+		}
+
+		// if opens to top
+		&.top,
+		&.top-left,
+		&.top-right {
+			bottom: 100%;
+			top: initial;
+
+			.osui-tooltip_balloon {
+				bottom: calc(-1 * var(--space-base));
+				top: initial;
+
+				&:before {
+					border-color: var(--color-neutral-9) transparent transparent transparent;
+					border-width: $osui-tooltip-arrow-size $osui-tooltip-arrow-size 0 $osui-tooltip-arrow-size;
+					bottom: 0;
+					top: initial;
+				}
+			}
+		}
+
+		// if opens to top-left
+		&.top-left {
+			left: calc(-1 * var(--space-s));
+
+			.osui-tooltip_balloon {
+				&:before {
+					left: var(--space-s);
+				}
+			}
+		}
+
+		// if opens to top-left
+		&.top-right {
+			left: initial;
+			right: calc(-1 * var(--space-s));
+
+			.osui-tooltip_balloon {
+				&:before {
+					left: initial;
+					right: var(--space-s);
+				}
+			}
+		}
+
+		// if opens to left or right
+		&.left,
+		&.right {
+			left: 100%;
+			max-height: initial;
+			padding-left: var(--space-none);
+			top: 50%;
+			transform: translateY(-50%);
+
+			.osui-tooltip_balloon {
+				top: initial;
+
+				&:before {
+					border-color: transparent var(--color-neutral-9) transparent transparent;
+					border-width: $osui-tooltip-arrow-size $osui-tooltip-arrow-size $osui-tooltip-arrow-size 0;
+					left: initial;
+					right: 100%;
+					top: 50%;
+					transform: translate(0, -50%);
+				}
+			}
+		}
+
+		// if opens to right
+		&.left {
+			left: initial;
+			padding-left: initial;
+			padding-right: var(--space-none);
+			right: 100%;
+
+			.osui-tooltip_balloon {
+				&:before {
+					border-color: transparent transparent transparent var(--color-neutral-9);
+					border-width: $osui-tooltip-arrow-size 0 $osui-tooltip-arrow-size $osui-tooltip-arrow-size;
+					left: 100%;
+					right: initial;
+				}
+			}
+		}
+	}
+
+	///
+	.osui-tooltip_balloon {
+		background-color: var(--color-neutral-9);
+		border-radius: var(--border-radius-soft);
+		color: var(--color-neutral-0);
+		min-width: 150px;
+		opacity: 0;
+		padding: var(--space-s);
+		position: relative;
+		top: calc(-1 * var(--space-base));
+		transition: all 0.25s ease;
+		width: fit-content;
+
+		// Service Studio Preview
+		& {
+			-servicestudio-opacity: 1;
+			-servicestudio-top: 0;
+		}
+
+		&:before {
+			border-color: transparent transparent var(--color-neutral-9) transparent;
+			border-style: solid;
+			border-width: 0 $osui-tooltip-arrow-size $osui-tooltip-arrow-size $osui-tooltip-arrow-size;
+			content: '';
+			display: block;
+			height: 0;
+			left: var(--space-s);
+			opacity: 0;
+			position: absolute;
+			top: 0;
+			transform: translateY(0);
+			transition: all 0.25s ease;
+			width: 0;
+		}
+	}
+}

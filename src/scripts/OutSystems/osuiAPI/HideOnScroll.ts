@@ -9,6 +9,8 @@ namespace OutSystems.osuiAPI.HideOnScroll {
 	 * @param {HTMLElement} header
 	 */
 	function addEvents(header: HTMLElement) {
+		console.log('HideOnScroll has been initialized!');
+
 		const content: HTMLElement = document.querySelector('.active-screen .content');
 
 		if (header.classList.contains('hide') && content) {
