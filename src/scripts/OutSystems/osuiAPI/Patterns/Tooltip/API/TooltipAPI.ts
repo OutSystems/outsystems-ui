@@ -1,17 +1,11 @@
-// /**
-//  * Namespace for all public methods to access and use the Data Grid component.
-//  */
-// namespace OutSystems.Tooltip.API {
-// 	/**
-// 	 * Format of data as set in service center.
-// 	 */
-// 	export const dateFormat = '';
-
-// 	export function Demo() {
-// 		console.log('CENAS');
-// 	}
-
-// 	(() => {
-// 		Demo();
-// 	})();
-// }
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/**
+ *  Namespace that contains functions responsible for interactions with the tooltip.
+ */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+namespace OutSystems.osuiAPI.Patterns.TooltipAPI {
+	export function Create(): void {
+		const a = new Tooltip('ceasd', '');
+		console.log('CENAS COM COISAS', a);
+	}
+}

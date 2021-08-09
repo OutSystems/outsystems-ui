@@ -6,12 +6,16 @@ namespace OutSystems.osuiAPI.Patterns {
 	export abstract class AbstractPattern implements IPattern, IBuilder {
 		private _isBuilt: boolean;
 		private _uniqueId: string;
-		private _widgetId: string;
+		protected _widgetId: string;
 
 		constructor(uniqueId: string) {
 			this._uniqueId = uniqueId;
 
-			console.log(`Constructor pattern '${uniqueId}'`);
+			console.log(`AbstractPattern Constructor - '${uniqueId}'`);
+		}
+
+		protected finishBuild(): void {
+			this._isBuilt = true;
 		}
 
 		public get isBuilt(): boolean {
@@ -24,10 +28,6 @@ namespace OutSystems.osuiAPI.Patterns {
 
 		public get widgetId(): string {
 			return this._widgetId;
-		}
-
-		protected finishBuild(): void {
-			this._isBuilt = true;
 		}
 
 		public abstract build(): void;

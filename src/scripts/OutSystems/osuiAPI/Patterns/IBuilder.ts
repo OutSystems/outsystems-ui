@@ -6,6 +6,7 @@ namespace OutSystems.osuiAPI.Patterns {
 	export interface IBuilder {
 		/**
 		 * Build object, instantiating dependencies, and maniulating DOM when necessary
+		 *
 		 */
 		build(): void;
 	}
