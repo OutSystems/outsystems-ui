@@ -386,7 +386,7 @@ function OSUI_ToolTip(opts) {
 
 /* ------------------------------------------------------------------------------- */
 
-// check if the tooltip object exit on the osui pattern already
+// check if the tooltip object is present on the osui pattern already
 window.outsystems = window.outsystems || {};
 outsystems.osui = outsystems.osui || {};
 outsystems.osui.pattern = outsystems.osui.pattern || {};
@@ -396,7 +396,7 @@ outsystems.osui.pattern.tooltip.items = outsystems.osui.pattern.tooltip.items ||
 
 // Development Stuff -------------------------------------------------------------------------------
 
-// Demo a fcuntion that will be used as a client action trigger
+// Demo a function that will be used as a client action trigger
 function myClientActionDemo() {
 	console.log('Trigger client action stuff!');
 }
