@@ -17,22 +17,22 @@
 	padding: var(--space-base);
 	position: relative;
 
+	&.upload-image-withoverlay {
+		flex-direction: column;
+
+		.change-image {
+			background-color: transparent;
+			color: var(--color-primary);
+			height: auto;
+			margin-top: var(--space-base);
+			opacity: 1;
+			position: relative;
+		}
+	}
+
 	&.uploaded {
 		[data-icon] {
 			background-color: transparent;
-		}
-
-		&-image-withoverlay {
-			flex-direction: column;
-
-			.change-image {
-				background-color: transparent;
-				color: var(--color-primary);
-				height: auto;
-				margin-top: var(--space-base);
-				opacity: 1;
-				position: relative;
-			}
 		}
 	}
 
