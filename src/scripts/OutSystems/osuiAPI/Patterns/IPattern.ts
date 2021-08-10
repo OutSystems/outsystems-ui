@@ -3,7 +3,7 @@ namespace OutSystems.osuiAPI.Patterns {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
-	export interface IPattern {
+	export interface IPattern extends IBuilder, ISearchById {
 		isBuilt: boolean;
 		uniqueId: string;
 		widgetId: string;
