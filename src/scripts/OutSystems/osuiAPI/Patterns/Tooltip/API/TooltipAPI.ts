@@ -4,7 +4,7 @@
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.osuiAPI.Patterns.TooltipAPI {
-	export const tooltipsMap = new Map<string, ITooltip>(); //grid.uniqueId -> Tooltip obj
+	export const tooltipsMap = new Map<string, ITooltip>(); //tooltip.uniqueId -> Tooltip obj
 
 	/**
 	 * Create the new tooltip instance and add it to the tooltipsMap
@@ -27,16 +27,31 @@ namespace OutSystems.osuiAPI.Patterns.TooltipAPI {
 	}
 
 	/**
+	 * Function that will change the property of a given tooltip.
+	 *
+	 * @export
+	 * @param {string} widgetId ID of the Tooltip where the property will be changed.
+	 * @param {string} propertyName Property name that will be updated
+	 * @param {*} propertyValue Value that will be set to the property
+	 */
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+	export function ChangeProperty(widgetId: string, propertyName: string, propertyValue: any): void {
+		const tooltip = GetTooltipById(widgetId);
+
+		tooltip.changeProperty(propertyName, propertyValue);
+	}
+
+	/**
 	 * Function that gets the instance of tooltip, by a given ID.
 	 *
 	 * @export
 	 * @param {string} widgetId ID of the Tooltip that will be looked for.
 	 * @return {*}  {ITooltip}
 	 */
-	export function GetGridById(widgetId: string): ITooltip {
+	export function GetTooltipById(widgetId: string): ITooltip {
 		let tooltip: ITooltip;
 
-		//gridID is the UniqueId
+		//widgetId is the UniqueId
 		if (tooltipsMap.has(widgetId)) {
 			tooltip = tooltipsMap.get(widgetId);
 		} else {
@@ -50,7 +65,7 @@ namespace OutSystems.osuiAPI.Patterns.TooltipAPI {
 		}
 
 		if (tooltip === undefined) {
-			throw new Error(`Grid id:${widgetId} not found`);
+			throw new Error(`Tooltipf id:${widgetId} not found`);
 		}
 
 		return tooltip;
@@ -63,8 +78,8 @@ namespace OutSystems.osuiAPI.Patterns.TooltipAPI {
 	 * @param {string} widgetId ID of the Tooltip that will be initialized.
 	 * @return {*}  {ITooltip}
 	 */
-	export function InitializeGrid(widgetId: string): ITooltip {
-		const tooltip = GetGridById(widgetId);
+	export function Initialize(widgetId: string): ITooltip {
+		const tooltip = GetTooltipById(widgetId);
 
 		tooltip.build();
 

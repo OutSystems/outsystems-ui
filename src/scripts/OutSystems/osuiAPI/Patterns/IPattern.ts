@@ -7,5 +7,11 @@ namespace OutSystems.osuiAPI.Patterns {
 		isBuilt: boolean;
 		uniqueId: string;
 		widgetId: string;
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		changeProperty(propertyName: string, propertyValue: any): void;
+
+		// eslint-disable-next-line @typescript-eslint/member-ordering
+		UpdateExtendedClass(elem: HTMLElement, activeCssClass: string, newCssClass: string): void;
 	}
 }
