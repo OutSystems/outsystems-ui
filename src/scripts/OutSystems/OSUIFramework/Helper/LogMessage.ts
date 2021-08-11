@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace OutSystems.osuiAPI.Helper {
+namespace OutSystems.OSUIFramework.Helper {
 	/**
 	 * Trigger a log message at the console.
 	 *
@@ -7,7 +7,7 @@ namespace OutSystems.osuiAPI.Helper {
 	 * @param {string} message
 	 */
 	export function LogMessage(message: string): void {
-		if (OutSystems.osuiAPI.Constants.enableLogMessages) {
+		if (OutSystems.OSUIFramework.Constants.enableLogMessages) {
 			console.log(message);
 		}
 	}

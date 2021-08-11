@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OutSystems.osuiAPI {
+namespace OutSystems.OSUI {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	function bodyClick(event: any) {
 		if (event.target.classList.contains('btn')) {

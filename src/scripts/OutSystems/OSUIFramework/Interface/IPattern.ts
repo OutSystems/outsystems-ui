@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OutSystems.osuiAPI.Patterns {
+namespace OutSystems.OSUIFramework.Patterns {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
@@ -12,6 +12,6 @@ namespace OutSystems.osuiAPI.Patterns {
 		changeProperty(propertyName: string, propertyValue: any): void;
 
 		// eslint-disable-next-line @typescript-eslint/member-ordering
-		UpdateExtendedClass(elem: HTMLElement, activeCssClass: string, newCssClass: string): void;
+		UpdateExtendedClass(activeCssClass: string, newCssClass: string): void;
 	}
 }

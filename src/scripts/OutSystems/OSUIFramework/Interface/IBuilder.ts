@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OutSystems.osuiAPI.Patterns {
+namespace OutSystems.OSUIFramework.Patterns {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
 	 */

@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OutSystems.osuiAPI {
+namespace OutSystems.OSUI {
 	/**
 	 * Function used to Fix Inputs for iOS devices
 	 *

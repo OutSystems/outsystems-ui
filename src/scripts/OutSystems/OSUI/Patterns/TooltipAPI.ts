@@ -1,10 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/**
- *  Namespace that contains functions responsible for interactions with the tooltip.
- */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OutSystems.osuiAPI.Patterns.TooltipAPI {
-	export const tooltipsMap = new Map<string, ITooltip>(); //tooltip.uniqueId -> Tooltip obj
+namespace OutSystems.OSUI.Patterns.TooltipAPI {
+	export const tooltipsMap = new Map<string, OSUIFramework.Patterns.ITooltip>(); //tooltip.uniqueId -> Tooltip obj
 
 	/**
 	 * Create the new tooltip instance and add it to the tooltipsMap
@@ -12,14 +8,14 @@ namespace OutSystems.osuiAPI.Patterns.TooltipAPI {
 	 * @export
 	 * @param {string} widgetId ID of the Tooltip where the instance will be created.
 	 * @param {string} configs configurations for the Tooltip in JSON format.
-	 * @return {*}  {ITooltip}
+	 * @return {*}  {OSUIFramework.Patterns.ITooltip}
 	 */
-	export function Create(widgetId: string, configs: string): ITooltip {
+	export function Create(widgetId: string, configs: string): OSUIFramework.Patterns.ITooltip {
 		if (tooltipsMap.has(widgetId)) {
 			throw new Error(`There is already a tooltip registered under id: ${widgetId}`);
 		}
 
-		const _newTooltip = new Tooltip(widgetId, JSON.parse(configs));
+		const _newTooltip = new OSUIFramework.Patterns.Tooltip(widgetId, JSON.parse(configs));
 
 		tooltipsMap.set(widgetId, _newTooltip);
 
@@ -46,10 +42,10 @@ namespace OutSystems.osuiAPI.Patterns.TooltipAPI {
 	 *
 	 * @export
 	 * @param {string} widgetId ID of the Tooltip that will be looked for.
-	 * @return {*}  {ITooltip}
+	 * @return {*}  {OSUIFramework.Patterns.ITooltip}
 	 */
-	export function GetTooltipById(widgetId: string): ITooltip {
-		let tooltip: ITooltip;
+	export function GetTooltipById(widgetId: string): OSUIFramework.Patterns.ITooltip {
+		let tooltip: OSUIFramework.Patterns.ITooltip;
 
 		//widgetId is the UniqueId
 		if (tooltipsMap.has(widgetId)) {
@@ -65,7 +61,7 @@ namespace OutSystems.osuiAPI.Patterns.TooltipAPI {
 		}
 
 		if (tooltip === undefined) {
-			throw new Error(`Tooltipf id:${widgetId} not found`);
+			throw new Error(`Tooltip id:${widgetId} not found`);
 		}
 
 		return tooltip;
@@ -76,9 +72,9 @@ namespace OutSystems.osuiAPI.Patterns.TooltipAPI {
 	 *
 	 * @export
 	 * @param {string} widgetId ID of the Tooltip that will be initialized.
-	 * @return {*}  {ITooltip}
+	 * @return {*}  {OSUIFramework.Patterns.ITooltip}
 	 */
-	export function Initialize(widgetId: string): ITooltip {
+	export function Initialize(widgetId: string): OSUIFramework.Patterns.ITooltip {
 		const tooltip = GetTooltipById(widgetId);
 
 		tooltip.build();

@@ -1,8 +1,5 @@
-/**
- * Namespace used to trigger the HideOnScroll behaviour, this will only be applied to native apps.
- */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OutSystems.osuiAPI.HideOnScroll {
+namespace OutSystems.OSUI.HideOnScroll {
 	/**
 	 * Function responsible to add events that will manage the header accordingly
 	 *

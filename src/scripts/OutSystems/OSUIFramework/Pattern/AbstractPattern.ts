@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OutSystems.osuiAPI.Patterns {
+namespace OutSystems.OSUIFramework.Patterns {
 	/**
 	 * Defines the Default props and methods for OutSystemsUI Patterns
 	 */
@@ -7,7 +7,7 @@ namespace OutSystems.osuiAPI.Patterns {
 		private _isBuilt: boolean;
 		private _uniqueId: string;
 		protected _configs: C;
-		protected _htmlParentElem: HTMLElement;
+		protected _selfElem: HTMLElement;
 		protected _widgetId: string;
 
 		constructor(uniqueId: string, configs: C) {
@@ -18,12 +18,16 @@ namespace OutSystems.osuiAPI.Patterns {
 		}
 
 		protected finishBuild(): void {
+			// Set the widget id value
+			this._widgetId = Helper.GetElementByUniqueId(this._uniqueId).closest(Constants.dataBlockTag).id;
+
 			this._isBuilt = true;
+		}
 
+		protected preBuild(): void {
 			const obj = document.getElementsByName(this._uniqueId);
-
 			if (obj.length) {
-				this._htmlParentElem = document.getElementsByName(this._uniqueId)[0];
+				this._selfElem = document.getElementsByName(this._uniqueId)[0];
 			} else {
 				throw new Error(`Object with name '${this._uniqueId}' not found.`);
 			}
@@ -45,12 +49,12 @@ namespace OutSystems.osuiAPI.Patterns {
 			return this._widgetId;
 		}
 
-		public UpdateExtendedClass(elem: HTMLElement, activeCssClass: string, newCssClass: string): void {
+		public UpdateExtendedClass(activeCssClass: string, newCssClass: string): void {
 			if (activeCssClass !== '') {
 				const activeCssClassArray = activeCssClass.split(' ');
 
 				for (let i = 0; i < activeCssClassArray.length; ++i) {
-					elem.classList.remove(activeCssClassArray[i]);
+					this._selfElem.classList.remove(activeCssClassArray[i]);
 				}
 			}
 
@@ -58,7 +62,7 @@ namespace OutSystems.osuiAPI.Patterns {
 				const newCssClassArray = newCssClass.split(' ');
 
 				for (let i = 0; i < newCssClassArray.length; ++i) {
-					elem.classList.add(newCssClassArray[i]);
+					this._selfElem.classList.add(newCssClassArray[i]);
 				}
 			}
 		}
