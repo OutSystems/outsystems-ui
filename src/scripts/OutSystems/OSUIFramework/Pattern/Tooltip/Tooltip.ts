@@ -18,7 +18,6 @@ namespace OutSystems.OSUIFramework.Patterns {
 
 		// Store the content html element
 		private _tooltipContentElem: HTMLElement;
-		private _tooltipContentId: string;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
@@ -30,7 +29,6 @@ namespace OutSystems.OSUIFramework.Patterns {
 
 			// Set the Content html element
 			this._tooltipContentElem = this._selfElem.querySelector('.' + this._tooltipClasses.Content);
-			this._tooltipContentId = Helper.Attribute.Get(this._tooltipContentElem, 'id');
 
 			// Set the ballon html element
 			this._tooltipBallonElem = this._selfElem.querySelector('.' + this._tooltipClasses.BalloonWrapper);
