@@ -2,7 +2,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace osui {
 	export function GetVersion(): any {
-		return OSUIFramework.Utils.GetVersion();
+		return OutSystems.OSUI.GetVersion();
 	}
 
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
