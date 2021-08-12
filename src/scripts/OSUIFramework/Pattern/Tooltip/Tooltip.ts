@@ -5,60 +5,67 @@ namespace OSUIFramework.Patterns {
 	 */
 	export class Tooltip extends AbstractPattern<TooltipConfig> implements ITooltip {
 		// Store the ballon html element
-		private _tooltipBallonElem: HTMLElement;
-		private _tooltipBallonId: string;
+		private _tooltipBallonContentElem: HTMLElement;
+		private _tooltipBallonWrapperElem: HTMLElement;
+		private _tooltipBallonWrapperId: string;
+
+		// Store the content html element
+		private _tooltipContentElem: HTMLElement;
 
 		// Store all the classes strings used by the pattern
-		private _tooltipClasses = {
+		private _tooltipCssClass = {
 			IsHover: 'is-hover',
 			IsVisible: 'is-opened',
 			Content: 'osui-tooltip_content',
 			BalloonWrapper: 'osui-tooltip_balloon-wrapper',
+			BalloonContent: 'osui-tooltip_balloon',
 		};
-
-		// Store the content html element
-		private _tooltipContentElem: HTMLElement;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new TooltipConfig(configs));
 		}
 
+		private _setHtmlElements(): void {
+			// Set the Content html element
+			this._tooltipContentElem = this._selfElem.querySelector('.' + this._tooltipCssClass.Content);
+
+			// Set the ballon html element
+			this._tooltipBallonContentElem = this._selfElem.querySelector('.' + this._tooltipCssClass.BalloonContent);
+			this._tooltipBallonWrapperElem = this._selfElem.querySelector('.' + this._tooltipCssClass.BalloonWrapper);
+			this._tooltipBallonWrapperId = Helper.Attribute.Get(this._tooltipBallonWrapperElem, 'id');
+		}
+
 		public build(): void {
 			this.preBuild();
 
-			// Set the Content html element
-			this._tooltipContentElem = this._selfElem.querySelector('.' + this._tooltipClasses.Content);
+			this._setHtmlElements();
 
-			// Set the ballon html element
-			this._tooltipBallonElem = this._selfElem.querySelector('.' + this._tooltipClasses.BalloonWrapper);
-			this._tooltipBallonId = Helper.Attribute.Get(this._tooltipBallonElem, 'id');
-
-			// Set default cssClass property ExtendedClass values
+			// Set default ExtendedClass values
 			if (this._configs.ExtendedClass !== '') {
 				this.UpdateExtendedClass(this._configs.ExtendedClass, this._configs.ExtendedClass);
 			}
 
-			// Set default cssClass property IsHover values
+			// Set default IsHover cssClass property value
 			if (this._configs.IsHover) {
-				Helper.Style.AddClass(this._selfElem, this._tooltipClasses.IsHover);
+				Helper.Style.AddClass(this._selfElem, this._tooltipCssClass.IsHover);
 			}
 
-			// Set default cssClass property IsVisible values
+			// Set default IsVisible cssClass property value
 			if (this._configs.IsVisible) {
-				Helper.Style.AddClass(this._selfElem, this._tooltipClasses.IsVisible);
+				Helper.Style.AddClass(this._selfElem, this._tooltipCssClass.IsVisible);
 			}
 
-			// Set default cssClass property Position values
+			// Set default Position cssClass property value
 			if (this._configs.Position !== '') {
-				Helper.Style.AddClass(this._tooltipBallonElem, this._configs.Position);
+				Helper.Style.AddClass(this._tooltipBallonWrapperElem, this._configs.Position);
 			}
 
 			// Add the Accessibility Attributes values
 			Helper.Attribute.Set(this._tooltipContentElem, 'role', 'tooltip');
 			Helper.Attribute.Set(this._tooltipContentElem, 'tabindex', '0');
-			Helper.Attribute.Set(this._tooltipContentElem, 'aria-describedby', this._tooltipBallonId);
-			Helper.Attribute.Set(this._tooltipContentElem, 'aria-labelledby', this._tooltipBallonId);
+			Helper.Attribute.Set(this._tooltipContentElem, 'aria-describedby', this._tooltipBallonWrapperId);
+			Helper.Attribute.Set(this._tooltipContentElem, 'aria-labelledby', this._tooltipBallonWrapperId);
 
 			// Instance is properly created
 			this.finishBuild();
@@ -76,14 +83,14 @@ namespace OSUIFramework.Patterns {
 						break;
 
 					case Enum.Tooltip.IsHover:
-						Helper.Style.ToogleClass(this._selfElem, this._tooltipClasses.IsHover);
+						Helper.Style.ToogleClass(this._selfElem, this._tooltipCssClass.IsHover);
 
 						this._configs.IsHover = propertyValue;
 
 						break;
 
 					case Enum.Tooltip.IsVisible:
-						Helper.Style.ToogleClass(this._selfElem, this._tooltipClasses.IsVisible);
+						Helper.Style.ToogleClass(this._selfElem, this._tooltipCssClass.IsVisible);
 
 						this._configs.IsVisible = propertyValue;
 
@@ -91,12 +98,12 @@ namespace OSUIFramework.Patterns {
 
 					case Enum.Tooltip.Position:
 						if (this._configs.Position !== '') {
-							Helper.Style.ToogleClass(this._tooltipBallonElem, this._configs.Position);
+							Helper.Style.ToogleClass(this._tooltipBallonWrapperElem, this._configs.Position);
 						}
 
 						if (propertyValue !== '') {
 							// eslint-disable-next-line @typescript-eslint/no-unused-vars
-							Helper.Style.ToogleClass(this._tooltipBallonElem, propertyValue);
+							Helper.Style.ToogleClass(this._tooltipBallonWrapperElem, propertyValue);
 						}
 
 						this._configs.Position = propertyValue;
@@ -106,6 +113,16 @@ namespace OSUIFramework.Patterns {
 			} else {
 				throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
 			}
+		}
+
+		// Close the tooltip
+		public close(): void {
+			Helper.Style.RemoveClass(this._selfElem, this._tooltipCssClass.IsVisible);
+		}
+
+		// Open the tooltip
+		public open(): void {
+			Helper.Style.AddClass(this._selfElem, this._tooltipCssClass.IsVisible);
 		}
 	}
 }
