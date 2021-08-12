@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSUIFramework.Utils {
+namespace OutSystems.OSUI.Utils {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export function StartMadeWithOS(): void {
 		function setStyles() {
