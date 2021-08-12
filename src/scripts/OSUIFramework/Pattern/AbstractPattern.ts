@@ -3,7 +3,7 @@ namespace OSUIFramework.Patterns {
 	/**
 	 * Defines the Default props and methods for OutSystemsUI Patterns
 	 */
-	export abstract class AbstractPattern<C> implements IPattern {
+	export abstract class AbstractPattern<C> implements Interface.IPattern {
 		private _isBuilt: boolean;
 		private _uniqueId: string;
 		protected _configs: C;
@@ -24,6 +24,28 @@ namespace OSUIFramework.Patterns {
 			} else {
 				throw new Error(`Object with name '${this._uniqueId}' not found.`);
 			}
+		}
+
+		public UpdateExtendedClass(activeCssClass: string, newCssClass: string): void {
+			if (activeCssClass !== '') {
+				const activeCssClassArray = activeCssClass.split(' ');
+
+				for (let i = 0; i < activeCssClassArray.length; ++i) {
+					this._selfElem.classList.remove(activeCssClassArray[i]);
+				}
+			}
+
+			if (newCssClass !== '') {
+				const newCssClassArray = newCssClass.split(' ');
+
+				for (let i = 0; i < newCssClassArray.length; ++i) {
+					this._selfElem.classList.add(newCssClassArray[i]);
+				}
+			}
+		}
+
+		public equalsToID(widgetId: string): boolean {
+			return widgetId === this._uniqueId || widgetId === this._widgetId;
 		}
 
 		public finishBuild(): void {
@@ -47,28 +69,6 @@ namespace OSUIFramework.Patterns {
 
 		public get widgetId(): string {
 			return this._widgetId;
-		}
-
-		public UpdateExtendedClass(activeCssClass: string, newCssClass: string): void {
-			if (activeCssClass !== '') {
-				const activeCssClassArray = activeCssClass.split(' ');
-
-				for (let i = 0; i < activeCssClassArray.length; ++i) {
-					this._selfElem.classList.remove(activeCssClassArray[i]);
-				}
-			}
-
-			if (newCssClass !== '') {
-				const newCssClassArray = newCssClass.split(' ');
-
-				for (let i = 0; i < newCssClassArray.length; ++i) {
-					this._selfElem.classList.add(newCssClassArray[i]);
-				}
-			}
-		}
-
-		public equalsToID(widgetId: string): boolean {
-			return widgetId === this._uniqueId || widgetId === this._widgetId;
 		}
 
 		public abstract build(): void;

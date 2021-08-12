@@ -41,17 +41,17 @@ namespace OSUIFramework.Patterns {
 
 			// Set default cssClass property IsHover values
 			if (this._configs.IsHover) {
-				this._selfElem.classList.add(this._tooltipClasses.IsHover);
+				Helper.Style.AddClass(this._selfElem, this._tooltipClasses.IsHover);
 			}
 
 			// Set default cssClass property IsVisible values
 			if (this._configs.IsVisible) {
-				this._selfElem.classList.add(this._tooltipClasses.IsVisible);
+				Helper.Style.AddClass(this._selfElem, this._tooltipClasses.IsVisible);
 			}
 
 			// Set default cssClass property Position values
 			if (this._configs.Position !== '') {
-				this._tooltipBallonElem.classList.add(this._configs.Position);
+				Helper.Style.AddClass(this._tooltipBallonElem, this._configs.Position);
 			}
 
 			// Add the Accessibility Attributes values
