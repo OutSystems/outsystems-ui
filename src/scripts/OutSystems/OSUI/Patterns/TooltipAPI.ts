@@ -38,6 +38,16 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	}
 
 	/**
+	 * Fucntion that will return the Map with all the Tooltip instances at the page
+	 *
+	 * @export
+	 * @return {*}  {Map<string, OSUIFramework.Patterns.ITooltip>}
+	 */
+	export function GetAllTooltipsMap(): Map<string, OSUIFramework.Patterns.ITooltip> {
+		return tooltipsMap;
+	}
+
+	/**
 	 * Function that gets the instance of tooltip, by a given ID.
 	 *
 	 * @export
@@ -65,16 +75,6 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 		}
 
 		return tooltip;
-	}
-
-	/**
-	 * Fucntion that will return the Map with all the Tooltip instances at the page
-	 *
-	 * @export
-	 * @return {*}  {Map<string, OSUIFramework.Patterns.ITooltip>}
-	 */
-	export function GetAllTooltipsMap(): Map<string, OSUIFramework.Patterns.ITooltip> {
-		return tooltipsMap;
 	}
 
 	/**
