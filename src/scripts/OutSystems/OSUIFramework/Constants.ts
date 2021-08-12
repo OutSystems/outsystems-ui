@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OutSystems.OSUIFramework.Constants {
+namespace OSUIFramework.Constants {
 	/* Manage if the log messages are visible or not  */
 	export const enableLogMessages = false;
 

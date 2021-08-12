@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OutSystems.OSUIFramework.Patterns {
+namespace OSUIFramework.Patterns {
 	/**
 	 * Defines the Default props and methods for OutSystemsUI Patterns
 	 */
@@ -17,13 +17,6 @@ namespace OutSystems.OSUIFramework.Patterns {
 			// console.log(`AbstractPattern Constructor - '${uniqueId}'`);
 		}
 
-		protected finishBuild(): void {
-			// Set the widget id value
-			this._widgetId = Helper.GetElementByUniqueId(this._uniqueId).closest(Constants.dataBlockTag).id;
-
-			this._isBuilt = true;
-		}
-
 		protected preBuild(): void {
 			const obj = document.getElementsByName(this._uniqueId);
 			if (obj.length) {
@@ -31,6 +24,13 @@ namespace OutSystems.OSUIFramework.Patterns {
 			} else {
 				throw new Error(`Object with name '${this._uniqueId}' not found.`);
 			}
+		}
+
+		public finishBuild(): void {
+			// Set the widget id value
+			this._widgetId = Helper.GetElementByUniqueId(this._uniqueId).closest(Constants.dataBlockTag).id;
+
+			this._isBuilt = true;
 		}
 
 		public get isBuilt(): boolean {

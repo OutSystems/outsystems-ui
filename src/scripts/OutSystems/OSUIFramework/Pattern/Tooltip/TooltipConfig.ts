@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OutSystems.OSUIFramework.Patterns {
+namespace OSUIFramework.Patterns {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	export class TooltipConfig extends AbstractConfiguration {
 		public IsHover: boolean;

@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OutSystems.OSUIFramework.Helper.Style {
+namespace OSUIFramework.Helper.Style {
 	/**
 	 * Method that will add a given css class to a given html element
 	 *

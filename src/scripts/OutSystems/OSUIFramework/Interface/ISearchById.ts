@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OutSystems.OSUIFramework.Patterns {
+namespace OSUIFramework.Patterns {
 	/**
 	 * Defines the interface for objects with multiple DOM identifiers
 	 */

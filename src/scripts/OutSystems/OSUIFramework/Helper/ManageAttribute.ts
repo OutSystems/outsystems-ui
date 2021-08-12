@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OutSystems.OSUIFramework.Helper.Attribute {
+namespace OSUIFramework.Helper.Attribute {
 	/**
 	 * Method that will add a given attribute to a given html element
 	 *

@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OutSystems.OSUIFramework.Patterns.Enum {
+namespace OSUIFramework.Patterns.Enum {
 	/**
 	 * Tooltip Enum properties
 	 */

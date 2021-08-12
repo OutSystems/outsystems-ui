@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OutSystems.OSUIFramework.Helper {
+namespace OSUIFramework.Helper {
 	/**
 	 * Responsable for finding a DOM Element
 	 * @param uniqueId Identificator for a HTMElement
