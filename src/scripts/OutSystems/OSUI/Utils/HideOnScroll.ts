@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSUIFramework.Utils.HideOnScroll {
+namespace OutSystems.OSUI.Utils.HideOnScroll {
 	/**
 	 * Function responsible to add events that will manage the header accordingly
 	 *

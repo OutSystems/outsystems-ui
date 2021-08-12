@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSUIFramework.Utils {
+namespace OutSystems.OSUI.Utils {
 	/**
 	 * [Deprecated] Function to get closest element, in use by AnimatedLabel
 	 *
@@ -11,8 +11,6 @@ namespace OSUIFramework.Utils {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	export function GetClosest(elem: HTMLElement, selector: string): any {
-		console.warn('osui.GetClosest(), is deprecated. Avoid using this method.');
-
 		return elem.closest(selector) ? elem.closest(selector) : false;
 	}
 }

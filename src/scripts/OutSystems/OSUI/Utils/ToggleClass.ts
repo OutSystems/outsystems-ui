@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSUIFramework.Utils {
+namespace OutSystems.OSUI.Utils {
 	/**
 	 * [Deprecated] Function used to Toogle a class to a given element
 	 *
@@ -22,7 +22,5 @@ namespace OSUIFramework.Utils {
 			classList.add(className);
 			el.offsetHeight;
 		}
-
-		console.warn('osui.toggleClass(), is deprecated. Avoid using this method.');
 	}
 }
