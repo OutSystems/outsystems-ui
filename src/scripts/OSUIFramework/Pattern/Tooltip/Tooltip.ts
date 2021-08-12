@@ -26,21 +26,24 @@ namespace OSUIFramework.Patterns {
 			super(uniqueId, new TooltipConfig(configs));
 		}
 
-		private _setHtmlElements(): void {
-			// Set the Content html element
-			this._tooltipContentElem = this._selfElem.querySelector('.' + this._tooltipCssClass.Content);
+		// Add the Accessibility Attributes values
+		private _setAccessibilityProps(): void {
+			Helper.Attribute.Set(this._tooltipContentElem, 'role', 'tooltip');
+			Helper.Attribute.Set(this._tooltipContentElem, 'tabindex', '0');
+			Helper.Attribute.Set(this._tooltipContentElem, 'aria-describedby', this._tooltipBallonWrapperId);
+			Helper.Attribute.Set(this._tooltipContentElem, 'aria-labelledby', this._tooltipBallonWrapperId);
+		}
 
-			// Set the ballon html element
+		// Set the html references that will be used to manage the cssClasses and atribute properties
+		private _setHtmlElements(): void {
+			this._tooltipContentElem = this._selfElem.querySelector('.' + this._tooltipCssClass.Content);
 			this._tooltipBallonContentElem = this._selfElem.querySelector('.' + this._tooltipCssClass.BalloonContent);
 			this._tooltipBallonWrapperElem = this._selfElem.querySelector('.' + this._tooltipCssClass.BalloonWrapper);
 			this._tooltipBallonWrapperId = Helper.Attribute.Get(this._tooltipBallonWrapperElem, 'id');
 		}
 
-		public build(): void {
-			this.preBuild();
-
-			this._setHtmlElements();
-
+		// Set the cssClasses that should be assigned to the element on it's initialization
+		private _setInitialCssClasses(): void {
 			// Set default ExtendedClass values
 			if (this._configs.ExtendedClass !== '') {
 				this.UpdateExtendedClass(this._configs.ExtendedClass, this._configs.ExtendedClass);
@@ -60,14 +63,17 @@ namespace OSUIFramework.Patterns {
 			if (this._configs.Position !== '') {
 				Helper.Style.AddClass(this._tooltipBallonWrapperElem, this._configs.Position);
 			}
+		}
 
-			// Add the Accessibility Attributes values
-			Helper.Attribute.Set(this._tooltipContentElem, 'role', 'tooltip');
-			Helper.Attribute.Set(this._tooltipContentElem, 'tabindex', '0');
-			Helper.Attribute.Set(this._tooltipContentElem, 'aria-describedby', this._tooltipBallonWrapperId);
-			Helper.Attribute.Set(this._tooltipContentElem, 'aria-labelledby', this._tooltipBallonWrapperId);
+		public build(): void {
+			this.preBuild();
 
-			// Instance is properly created
+			this._setHtmlElements();
+
+			this._setInitialCssClasses();
+
+			this._setAccessibilityProps();
+
 			this.finishBuild();
 		}
 
