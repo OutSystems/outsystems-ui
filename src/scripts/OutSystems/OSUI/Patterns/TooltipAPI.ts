@@ -1,6 +1,21 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.TooltipAPI {
-	export const tooltipsMap = new Map<string, OSUIFramework.Patterns.ITooltip>(); //tooltip.uniqueId -> Tooltip obj
+	const tooltipsMap = new Map<string, OSUIFramework.Patterns.ITooltip>(); //tooltip.uniqueId -> Tooltip obj
+
+	/**
+	 * Function that will change the property of a given tooltip.
+	 *
+	 * @export
+	 * @param {string} widgetId ID of the Tooltip where the property will be changed.
+	 * @param {string} propertyName Property name that will be updated
+	 * @param {*} propertyValue Value that will be set to the property
+	 */
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+	export function ChangeProperty(widgetId: string, propertyName: string, propertyValue: any): void {
+		const tooltip = GetTooltipById(widgetId);
+
+		tooltip.changeProperty(propertyName, propertyValue);
+	}
 
 	/**
 	 * Create the new tooltip instance and add it to the tooltipsMap
@@ -20,21 +35,6 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 		tooltipsMap.set(widgetId, _newTooltip);
 
 		return _newTooltip;
-	}
-
-	/**
-	 * Function that will change the property of a given tooltip.
-	 *
-	 * @export
-	 * @param {string} widgetId ID of the Tooltip where the property will be changed.
-	 * @param {string} propertyName Property name that will be updated
-	 * @param {*} propertyValue Value that will be set to the property
-	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ChangeProperty(widgetId: string, propertyName: string, propertyValue: any): void {
-		const tooltip = GetTooltipById(widgetId);
-
-		tooltip.changeProperty(propertyName, propertyValue);
 	}
 
 	/**
@@ -65,6 +65,16 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 		}
 
 		return tooltip;
+	}
+
+	/**
+	 * Fucntion that will return the Map with all the Tooltip instances at the page
+	 *
+	 * @export
+	 * @return {*}  {Map<string, OSUIFramework.Patterns.ITooltip>}
+	 */
+	export function GetAllTooltipsMap(): Map<string, OSUIFramework.Patterns.ITooltip> {
+		return tooltipsMap;
 	}
 
 	/**
