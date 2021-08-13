@@ -32,4 +32,16 @@ namespace OSUIFramework.Helper.Style {
 	export function ToogleClass(elem: HTMLElement, cssClass: string): void {
 		elem.classList.toggle(cssClass);
 	}
+
+	/**
+	 * Method that add a style attribute to a given html element
+	 *
+	 * @export
+	 * @param {HTMLElement} elem Element where the class will be toggled
+	 * @param {string} cssRule Css rule that will be added
+	 * @param {string} ruleValue Value of the CSS rule
+	 */
+	export function SetStyleAttribute(elem: HTMLElement, cssRule: string, ruleValue: string): void {
+		elem.style.setProperty(cssRule, ruleValue);
+	}
 }
