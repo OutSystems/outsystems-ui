@@ -66,7 +66,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 		}
 
 		public build(): void {
-			this.preBuild();
+			super.build();
 
 			this._setHtmlElements();
 
