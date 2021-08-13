@@ -151,6 +151,14 @@ body {
 }
 
 ///
+.desktop {
+	.layout:not(.layout-side) .app-menu-links {
+		display: flex;
+		flex-wrap: wrap;
+	}
+}
+
+///
 .phone,
 .tablet {
 	.app-menu-links {
