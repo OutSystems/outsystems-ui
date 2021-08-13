@@ -42,8 +42,8 @@ namespace OSUIFramework.Patterns {
 			}
 		}
 
-		public equalsToID(widgetId: string): boolean {
-			return widgetId === this._uniqueId || widgetId === this._widgetId;
+		public equalsToID(patternId: string): boolean {
+			return patternId === this._uniqueId || patternId === this._widgetId;
 		}
 
 		public finishBuild(): void {
