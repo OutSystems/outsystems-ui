@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSUIFramework.Patterns {
+namespace OSUIFramework.Patterns.Tooltip {
 	export class TooltipConfig extends AbstractConfiguration {
 		public IsHover: boolean;
 		public IsVisible: boolean;

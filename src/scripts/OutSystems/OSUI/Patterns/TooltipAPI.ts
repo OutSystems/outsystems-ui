@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.TooltipAPI {
-	const tooltipsMap = new Map<string, OSUIFramework.Patterns.ITooltip>(); //tooltip.uniqueId -> Tooltip obj
+	const tooltipsMap = new Map<string, OSUIFramework.Patterns.Tooltip.ITooltip>(); //tooltip.uniqueId -> Tooltip obj
 
 	/**
 	 * Function that will change the property of a given tooltip.
@@ -37,12 +37,12 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 * @param {string} configs configurations for the Tooltip in JSON format.
 	 * @return {*}  {OSUIFramework.Patterns.ITooltip}
 	 */
-	export function Create(tooltipId: string, configs: string): OSUIFramework.Patterns.ITooltip {
+	export function Create(tooltipId: string, configs: string): OSUIFramework.Patterns.Tooltip.ITooltip {
 		if (tooltipsMap.has(tooltipId)) {
 			throw new Error(`There is already a tooltip registered under id: ${tooltipId}`);
 		}
 
-		const _newTooltip = new OSUIFramework.Patterns.Tooltip(tooltipId, JSON.parse(configs));
+		const _newTooltip = new OSUIFramework.Patterns.Tooltip.Tooltip(tooltipId, JSON.parse(configs));
 
 		tooltipsMap.set(tooltipId, _newTooltip);
 
@@ -55,7 +55,7 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 * @export
 	 * @return {*}  {Map<string, OSUIFramework.Patterns.ITooltip>}
 	 */
-	export function GetAllTooltipsMap(): Map<string, OSUIFramework.Patterns.ITooltip> {
+	export function GetAllTooltipsMap(): Map<string, OSUIFramework.Patterns.Tooltip.ITooltip> {
 		return tooltipsMap;
 	}
 
@@ -66,8 +66,8 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 * @param {string} tooltipId ID of the Tooltip that will be looked for.
 	 * @return {*}  {OSUIFramework.Patterns.ITooltip}
 	 */
-	export function GetTooltipById(tooltipId: string): OSUIFramework.Patterns.ITooltip {
-		let tooltip: OSUIFramework.Patterns.ITooltip;
+	export function GetTooltipById(tooltipId: string): OSUIFramework.Patterns.Tooltip.ITooltip {
+		let tooltip: OSUIFramework.Patterns.Tooltip.ITooltip;
 
 		//tooltipId is the UniqueId
 		if (tooltipsMap.has(tooltipId)) {
@@ -108,7 +108,7 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 * @param {string} tooltipId ID of the Tooltip that will be initialized.
 	 * @return {*}  {OSUIFramework.Patterns.ITooltip}
 	 */
-	export function Initialize(tooltipId: string): OSUIFramework.Patterns.ITooltip {
+	export function Initialize(tooltipId: string): OSUIFramework.Patterns.Tooltip.ITooltip {
 		const tooltip = GetTooltipById(tooltipId);
 
 		tooltip.build();

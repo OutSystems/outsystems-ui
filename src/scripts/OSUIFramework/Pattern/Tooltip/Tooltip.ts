@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSUIFramework.Patterns {
+namespace OSUIFramework.Patterns.Tooltip {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
@@ -66,7 +66,7 @@ namespace OSUIFramework.Patterns {
 		}
 
 		public build(): void {
-			this.preBuild();
+			super.build();
 
 			this._setHtmlElements();
 
