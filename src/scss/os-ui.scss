@@ -228,7 +228,7 @@
 @import '04-patterns/02-content/section';
 @import '04-patterns/02-content/tag';
 @import '04-patterns/02-content/tooltip';
-@import '../scripts/OutSystems/OSUIFramework/Pattern/Tooltip/scss/tooltip';
+@import '../scripts/OSUIFramework/Pattern/Tooltip/scss/tooltip';
 @import '04-patterns/02-content/user-avatar';
 
 /* ============================================================================ */
@@ -273,7 +273,7 @@
 @import '04-patterns/05-numbers/progress-bar';
 @import '04-patterns/05-numbers/progress-circle';
 @import '04-patterns/05-numbers/progress-circle-fraction';
-@import '04-patterns/05-numbers/rating';
+@import '../scripts/OSUIFramework/Pattern/Rating/scss/rating';
 
 /* ============================================================================ */
 /*      - Utilities                                                             */
