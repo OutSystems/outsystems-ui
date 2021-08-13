@@ -1,21 +1,22 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OutSystems.osuiAPI {
+namespace OutSystems.OSUI.Utils {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	function bodyClick(event: any) {
+	function _bodyClick(event: any) {
 		if (event.target.classList.contains('btn')) {
-			buttonEffect(event.target);
+			_buttonEffect(event.target);
 			return;
 		}
 
 		const found =
-			hasSomeParentTheClass(event.target, 'list-item') || hasSomeParentTheClass(event.target, 'bottom-bar-item');
+			_hasSomeParentTheClass(event.target, 'list-item') ||
+			_hasSomeParentTheClass(event.target, 'bottom-bar-item');
 
 		if (found) {
-			clickEffect(found);
+			_clickEffect(found);
 		}
 	}
 
-	function clickEffect(el: HTMLElement) {
+	function _clickEffect(el: HTMLElement) {
 		const spanEl: HTMLElement = document.createElement('span');
 		spanEl.classList.add('scale-animation');
 
@@ -31,7 +32,7 @@ namespace OutSystems.osuiAPI {
 		}
 	}
 
-	function buttonEffect(el: HTMLElement) {
+	function _buttonEffect(el: HTMLElement) {
 		const spanEl: HTMLElement = document.createElement('span');
 		spanEl.classList.add('btn-animation');
 		el.appendChild(spanEl);
@@ -41,7 +42,7 @@ namespace OutSystems.osuiAPI {
 		}, 1800);
 	}
 
-	function hasSomeParentTheClass(element: HTMLElement, classname: string) {
+	function _hasSomeParentTheClass(element: HTMLElement, classname: string) {
 		if (element) {
 			// only if it has a class, only if it's beneath 'main-content' and doesn't pass it, if it's not a chart
 			if (
@@ -52,7 +53,7 @@ namespace OutSystems.osuiAPI {
 				if (element.className.split(' ').indexOf(classname) >= 0) {
 					return element;
 				} else {
-					return hasSomeParentTheClass(element.parentElement, classname);
+					return _hasSomeParentTheClass(element.parentElement, classname);
 				}
 			}
 		}
@@ -61,5 +62,5 @@ namespace OutSystems.osuiAPI {
 	}
 
 	// Init Events
-	document.body.addEventListener('click', bodyClick);
+	document.body.addEventListener('click', _bodyClick);
 }
