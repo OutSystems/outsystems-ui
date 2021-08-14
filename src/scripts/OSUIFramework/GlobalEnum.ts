@@ -10,10 +10,11 @@ namespace OSUIFramework.GlobalEnum {
 		'bottom' = 'bottom',
 		'bottom-left' = 'bottom-left',
 		'bottom-right' = 'bottom-right',
+		'center' = 'center',
+		'top-left' = 'top-left',
 		'left' = 'left',
 		'right' = 'right',
 		'top' = 'top',
-		'top-left' = 'top-left',
 		'top-right' = 'top-right',
 	}
 }
