@@ -148,7 +148,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 				Object.keys(GlobalEnum.OSUICssClassPosition)
 			);
 
-			if (hasPosition && typeof hasPosition === 'string') {
+			if (hasPosition && typeof hasPosition === 'string' && hasPosition !== this._configs.Position) {
 				Helper.Style.RemoveClass(this._tooltipBallonWrapperElem, hasPosition);
 			}
 
