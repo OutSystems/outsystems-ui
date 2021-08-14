@@ -362,10 +362,6 @@ function OSUI_ToolTip(opts) {
 			// add the window click event to manage the close balloon behaviour
 			_aux.addWindowClickEvent();
 		}
-		else {
-			// check if the tooltip has an overflow hidden parentNode or if it's out of viewport
-			_aux.testPositionToOpen(_this.tooltipEl.parentElement, _this.tooltipEl_Ballon, _this.tooltipEl_BallonWrapper);
-		}
 
 		// check if the accessible features are enabled
 		if (document.querySelector('.has-accessible-features')) {

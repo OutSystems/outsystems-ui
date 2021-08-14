@@ -32,4 +32,22 @@ namespace OSUIFramework.Helper.Style {
 	export function ToogleClass(elem: HTMLElement, cssClass: string): void {
 		elem.classList.toggle(cssClass);
 	}
+
+	/**
+	 * Method that will look for a cssClass based on a given cssClasses Array values
+	 *
+	 * @export
+	 * @param {HTMLElement} elem Element where the Array cssClasses values will be looked for
+	 * @param {any[]} cssClasses Array values to be looked for as a cssClass into the given element
+	 * @return {*}  {(string | boolean)}
+	 */
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	export function HasCssClassFromEnum(elem: HTMLElement, cssClasses: any[]): string | boolean {
+		for (let i = 0; i < cssClasses.length; ++i) {
+			if (elem.classList.contains(cssClasses[i])) {
+				return cssClasses[i];
+			}
+		}
+		return false;
+	}
 }

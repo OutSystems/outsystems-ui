@@ -9,6 +9,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// Store the Events
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		private _eventBallonContentOnClose: any;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnBlur: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnClick: any;
@@ -24,6 +26,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// Store the content html element
 		private _tooltipContentElem: HTMLElement;
+
 		// Store all the classes strings used by the pattern
 		private _tooltipCssClass = {
 			pattern: 'osui-tooltip',
@@ -43,6 +46,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 			this._eventOnBlur = this.close.bind(this);
 			this._eventOnClick = this._onClick.bind(this);
 			this._eventOnFocus = this.open.bind(this);
+			this._eventBallonContentOnClose = this._updatePositionOnClose.bind(this);
 		}
 
 		// Add the tooltip Events
@@ -63,6 +67,23 @@ namespace OSUIFramework.Patterns.Tooltip {
 				// add the focus event in order to show the tooltip ballon when the toolTip content is focused
 				this._tooltipContentElem.addEventListener('blur', this._eventOnBlur);
 				this._tooltipContentElem.addEventListener('focus', this._eventOnFocus);
+			}
+		}
+
+		// Check if the tooltip will be able to be opend at the defined position or a new position must be setted
+		private _managePosition(): void {
+			const _newPosition = Helper.ElemBoundsPosition.Test(
+				this._selfElem,
+				this._tooltipBallonContentElem,
+				this._tooltipBallonWrapperElem
+			);
+
+			if (_newPosition.removeCssClassPos) {
+				Helper.Style.RemoveClass(this._tooltipBallonWrapperElem, _newPosition.removeCssClassPos);
+			}
+
+			if (_newPosition.addCssClassPos) {
+				Helper.Style.AddClass(this._tooltipBallonWrapperElem, _newPosition.addCssClassPos);
 			}
 		}
 
@@ -117,6 +138,23 @@ namespace OSUIFramework.Patterns.Tooltip {
 			}
 		}
 
+		// Used to update the tooltip position after it's closed
+		private _updatePositionOnClose(): void {
+			this._tooltipBallonContentElem.removeEventListener('transitionend', this._eventBallonContentOnClose);
+
+			// Check if the tooltip has a defined cssClass position
+			const hasPosition = Helper.Style.HasCssClassFromEnum(
+				this._tooltipBallonWrapperElem,
+				Object.keys(GlobalEnum.OSUICssClassPosition)
+			);
+
+			if (hasPosition && typeof hasPosition === 'string') {
+				Helper.Style.RemoveClass(this._tooltipBallonWrapperElem, hasPosition);
+			}
+
+			this._managePosition();
+		}
+
 		// Close tooltip if user has clicked outside of it
 		private _windowClick(e: MouseEvent): void {
 			const _clickedElem: HTMLElement = e.target as HTMLElement;
@@ -142,6 +180,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 			this._setAccessibilityProps();
 
 			this._addEvents();
+
+			this._managePosition();
 
 			this.finishBuild();
 		}
@@ -191,6 +231,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// Close the tooltip
 		public close(): void {
+			this._tooltipBallonContentElem.addEventListener('transitionend', this._eventBallonContentOnClose);
+
 			Helper.Style.RemoveClass(this._selfElem, this._tooltipCssClass.IsVisible);
 
 			this._configs.IsVisible = false;
@@ -206,10 +248,14 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 			this._tooltipContentElem.removeEventListener('blur', this._eventOnBlur);
 			this._tooltipContentElem.removeEventListener('focus', this._eventOnFocus);
+
+			this._tooltipBallonContentElem.removeEventListener('transitionend', this._eventBallonContentOnClose);
 		}
 
 		// Open the tooltip
 		public open(): void {
+			this._managePosition();
+
 			Helper.Style.AddClass(this._selfElem, this._tooltipCssClass.IsVisible);
 
 			this._configs.IsVisible = true;
