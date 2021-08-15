@@ -135,6 +135,9 @@ namespace OSUIFramework.Patterns.Tooltip {
 			// Set default Position cssClass property value
 			if (this._configs.Position !== '') {
 				Helper.Style.AddClass(this._tooltipBallonWrapperElem, this._configs.Position);
+			} else {
+				this._configs.Position = 'bottom';
+				Helper.Style.AddClass(this._tooltipBallonWrapperElem, this._configs.Position);
 			}
 		}
 
@@ -147,6 +150,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 				this._tooltipBallonWrapperElem,
 				Object.keys(GlobalEnum.OSUICssClassPosition)
 			);
+
+			console.log(hasPosition, this._configs.Position);
 
 			if (hasPosition && typeof hasPosition === 'string' && hasPosition !== this._configs.Position) {
 				Helper.Style.RemoveClass(this._tooltipBallonWrapperElem, hasPosition);

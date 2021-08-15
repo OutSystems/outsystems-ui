@@ -38,6 +38,18 @@ $osui-tooltip-arrow-size: 8px;
 				}
 			}
 
+			&.top {
+				left: 50%;
+				transform: translateX(-50%);
+
+				.osui-tooltip_balloon {
+					&:before {
+						left: 50%;
+						transform: translate(-50%, 100%);
+					}
+				}
+			}
+
 			// if opens to left or right
 			&.left,
 			&.right {
@@ -97,22 +109,19 @@ $osui-tooltip-arrow-size: 8px;
 
 		// open states
 		&.bottom {
-			// default state
-		}
-
-		// if opens to bottom-left
-		&.bottom-left {
-			left: calc(-1 * var(--space-s));
+			left: 50%;
+			transform: translateX(-50%);
 
 			.osui-tooltip_balloon {
 				&:before {
-					left: var(--space-s);
+					left: 50%;
+					transform: translate(-50%, -100%);
 				}
 			}
 		}
 
 		// if opens to bottom-left
-		&.bottom-right {
+		&.bottom-left {
 			left: initial;
 			right: calc(-1 * var(--space-s));
 
@@ -120,6 +129,17 @@ $osui-tooltip-arrow-size: 8px;
 				&:before {
 					left: initial;
 					right: var(--space-s);
+				}
+			}
+		}
+
+		// if opens to bottom-left
+		&.bottom-right {
+			left: calc(-1 * var(--space-s));
+
+			.osui-tooltip_balloon {
+				&:before {
+					left: var(--space-s);
 				}
 			}
 		}
@@ -144,19 +164,20 @@ $osui-tooltip-arrow-size: 8px;
 			}
 		}
 
-		// if opens to top-left
-		&.top-left {
-			left: calc(-1 * var(--space-s));
+		&.top {
+			left: 50%;
+			transform: translateX(-50%);
 
 			.osui-tooltip_balloon {
 				&:before {
-					left: var(--space-s);
+					left: 50%;
+					transform: translate(-50%, -100%);
 				}
 			}
 		}
 
 		// if opens to top-left
-		&.top-right {
+		&.top-left {
 			left: initial;
 			right: calc(-1 * var(--space-s));
 
@@ -164,6 +185,17 @@ $osui-tooltip-arrow-size: 8px;
 				&:before {
 					left: initial;
 					right: var(--space-s);
+				}
+			}
+		}
+
+		// if opens to top-left
+		&.top-right {
+			left: calc(-1 * var(--space-s));
+
+			.osui-tooltip_balloon {
+				&:before {
+					left: var(--space-s);
 				}
 			}
 		}
@@ -204,6 +236,20 @@ $osui-tooltip-arrow-size: 8px;
 					border-width: $osui-tooltip-arrow-size 0 $osui-tooltip-arrow-size $osui-tooltip-arrow-size;
 					left: 100%;
 					right: initial;
+				}
+			}
+		}
+
+		// if opens to center
+		&.center {
+			left: 50%;
+			top: 40%;
+			transform: translate(-50%, 0);
+
+			.osui-tooltip_balloon {
+				&:before {
+					left: 50%;
+					transform: translate(-50%, -100%);
 				}
 			}
 		}
