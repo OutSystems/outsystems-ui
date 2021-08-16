@@ -117,26 +117,11 @@ namespace OSUIFramework.Patterns.Rating {
 
 		// Method called on createItems() to render the correct HTML structure for each item
 		private _renderItems(index: number): void {
-			const input =
-				'<input ' +
-				this.disabled +
-				' type="radio" class="rating-input wcag-hide-text" id="' +
-				this._ratingInputId +
-				'" name="' +
-				this._ratingInputName +
-				'" value="' +
-				index +
-				'"/>';
-			const label =
-				'<label class="' +
-				(index === 0 ? 'rating-item wcag-hide-text' : 'rating-item') +
-				'" for="' +
-				this._ratingInputId +
-				'"><span class="wcag-hide-text">Rating ' +
-				index +
-				'</span>' +
-				(index !== 0 ? this._clonedPlaceholders : '') +
-				'</label>';
+			const hideLabelClass = index === 0 ? 'wcag-hide-text' : '';
+			const labelHTML = index !== 0 ? this._clonedPlaceholders : '';
+
+			const input = `<input ${this.disabled} type="radio" class="rating-input wcag-hide-text" id=${this._ratingInputId} name=${this._ratingInputName} value=${index}/>`;
+			const label = `<label class='rating-item ${hideLabelClass}' for=${this._ratingInputId}><span class='wcag-hide-text'>Rating ${index}</span>${labelHTML}</label>`;
 
 			this._ratingFieldsetElem.innerHTML += input + label;
 		}
