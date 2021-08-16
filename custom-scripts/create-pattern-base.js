@@ -5,6 +5,7 @@ if (!shell.which('git')) {
 	shell.exit(1);
 }
 
+//gets the variable 'patternname' from th console command
 const patternname = process.env.npm_config_patternname;
 
 shell.echo('Lets do this or pattern = ' + patternname);
