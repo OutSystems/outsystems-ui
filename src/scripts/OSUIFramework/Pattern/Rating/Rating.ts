@@ -76,7 +76,9 @@ namespace OSUIFramework.Patterns.Rating {
 			}
 
 			// Set Size class
-			Helper.Style.AddClass(this._selfElem, this._ratingCssClass.Size);
+			if (this._configs.Size !== '') {
+				Helper.Style.AddClass(this._selfElem, this._ratingCssClass.Size);
+			}
 
 			// Set default ExtendedClass values
 			if (this._configs.ExtendedClass !== '') {
@@ -201,7 +203,6 @@ namespace OSUIFramework.Patterns.Rating {
 		// Set a rating value
 		public setValue(value: any): void {
 			if (this._configs.IsEdit === false) {
-				console.log('isEdit false');
 				return;
 			}
 
@@ -273,7 +274,8 @@ namespace OSUIFramework.Patterns.Rating {
 		// Set a RatingScale
 		public setScale(value: number): void {
 			this.configs.RatingScale = value;
-			this.destroy(true);
+			this.destroy();
+			this._ratingFieldsetElem.innerHTML = '';
 			this._createItems();
 			this.setValue(this.value);
 		}
@@ -307,13 +309,9 @@ namespace OSUIFramework.Patterns.Rating {
 		}
 
 		// Destroy the Rating pattern
-		public destroy(IsUpdate: boolean): void {
+		public destroy(): void {
 			if (this._selfElem) {
 				this._selfElem.removeEventListener('click', this._handleClickEvent);
-
-				if (IsUpdate) {
-					this._ratingFieldsetElem.innerHTML = '';
-				}
 			}
 		}
 	}

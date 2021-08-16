@@ -4,6 +4,6 @@ namespace OSUIFramework.Patterns.Rating {
 	 * Defines the interface for OutSystemsUI Rating Pattern
 	 */
 	export interface IRating extends Interface.IPattern {
-		destroy(IsUpdate: boolean): any;
+		destroy(): any;
 	}
 }
