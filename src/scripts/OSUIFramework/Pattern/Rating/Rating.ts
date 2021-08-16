@@ -12,18 +12,25 @@ namespace OSUIFramework.Patterns.Rating {
 		private _ratingIconStatesId: string;
 		private _ratingFieldsetElem: HTMLElement;
 		private _ratingFieldsetId: string;
+
 		// Store the placholders content
 		private _clonedPlaceholders: string;
+
 		// Keep the current input Id
 		private _ratingInputId: string;
+
 		// Store the input name to be used on clones
 		private _ratingInputName: string = this.uniqueId + '-rating';
+
 		// Store if the rating value is half
 		public isHalfValue: boolean;
+
 		// Store current decimal value
 		public decimalValue: number;
+
 		// Store current rating value
 		public value: any = this.configs.RatingValue;
+
 		// Store current disable value
 		public disabled: any = !this.configs.IsEdit;
 
@@ -33,6 +40,7 @@ namespace OSUIFramework.Patterns.Rating {
 			IsHalf: 'is-half',
 			Size: 'rating-' + this.configs.Size,
 			Rating: 'rating',
+			RatingInput: 'rating-input',
 			IconStates: 'icon-states',
 			FilledState: 'rating-item-filled',
 			HalfState: 'rating-item-half',
@@ -87,13 +95,16 @@ namespace OSUIFramework.Patterns.Rating {
 			}
 		}
 
+		// Method that handles the placeholders content storage and DOM lifecycle
 		private _handlePlaceholders(): void {
 			// Store the placholders content to cloned after
 			this._clonedPlaceholders = this._ratingIconStatesElem.innerHTML;
+
 			// After it's stored, remove the original content from the DOM
 			this._ratingIconStatesElem.remove();
 		}
 
+		// Medthod that will iterate on the RatingScale, to crate an item for each one
 		private _createItems(): void {
 			let index = 0;
 
@@ -104,6 +115,7 @@ namespace OSUIFramework.Patterns.Rating {
 			}
 		}
 
+		// Method called on createItems() to render the correct HTML structure for each item
 		private _renderItems(index: number): void {
 			const input =
 				'<input ' +
@@ -129,6 +141,7 @@ namespace OSUIFramework.Patterns.Rating {
 			this._ratingFieldsetElem.innerHTML += input + label;
 		}
 
+		// Method to add click event if IsEdit is true
 		private _setClickEvent(): void {
 			if (this.configs.IsEdit) {
 				this._selfElem.addEventListener('click', (e) => {
@@ -137,10 +150,12 @@ namespace OSUIFramework.Patterns.Rating {
 			}
 		}
 
+		// Method that handles the click event and set the new value, by checkinh the input :checked
 		private _handleClickEvent(e): void {
 			this.isHalfValue = false;
+			const isInput = Helper.Style.ContainsClass(e.target, this._ratingCssClass.RatingInput);
 
-			if (e.target.classList.contains('rating-input')) {
+			if (isInput) {
 				this.value = this.getValue();
 				this.setValue(this.value);
 			}
@@ -206,8 +221,8 @@ namespace OSUIFramework.Patterns.Rating {
 			this.isHalfValue = this.getIsHalfValue(value);
 			const ratingItems = this._selfElem.querySelectorAll('input');
 
-			if (this._selfElem.classList.contains('is-half')) {
-				this._selfElem.classList.remove('is-half');
+			if (Helper.Style.ContainsClass(this._selfElem, this._ratingCssClass.IsHalf)) {
+				Helper.Style.RemoveClass(this._selfElem, this._ratingCssClass.IsHalf);
 			}
 
 			if (value !== null) {
@@ -226,10 +241,11 @@ namespace OSUIFramework.Patterns.Rating {
 					return;
 				}
 
-				this.isHalfValue ? this._selfElem.classList.add('is-half') : this.isHalfValue;
+				this.isHalfValue
+					? Helper.Style.AddClass(this._selfElem, this._ratingCssClass.IsHalf)
+					: this.isHalfValue;
 
 				this._configs.RatingValue = newValue;
-				console.log('rating value: ' + this.value);
 				//this.onClick(this.value);
 			}
 		}
@@ -265,6 +281,7 @@ namespace OSUIFramework.Patterns.Rating {
 			this.disabled = true;
 		}
 
+		// Set a RatingScale
 		public setScale(value: number): void {
 			this.configs.RatingScale = value;
 			this.destroy(true);
@@ -272,6 +289,7 @@ namespace OSUIFramework.Patterns.Rating {
 			this.setValue(this.value);
 		}
 
+		// Set the IsEdit option
 		public setIsEdit(isEdit: any): void {
 			this._setFieldsetStatus(isEdit);
 			if (isEdit === 'True') {
@@ -283,6 +301,7 @@ namespace OSUIFramework.Patterns.Rating {
 			this._configs.IsEdit = isEdit;
 		}
 
+		// Set the Rating Size
 		public setSize(size: string): void {
 			Helper.Style.RemoveClass(this._selfElem, this._ratingCssClass.Size);
 			Helper.Style.AddClass(this._selfElem, 'rating-' + size);
@@ -291,6 +310,7 @@ namespace OSUIFramework.Patterns.Rating {
 			this._ratingCssClass.Size = 'rating-' + size;
 		}
 
+		// Destroy the Rating pattern
 		public destroy(IsUpdate: boolean): void {
 			if (this._selfElem) {
 				this._selfElem.removeEventListener('click', this._handleClickEvent);

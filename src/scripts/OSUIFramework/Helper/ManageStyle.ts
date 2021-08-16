@@ -32,4 +32,16 @@ namespace OSUIFramework.Helper.Style {
 	export function ToogleClass(elem: HTMLElement, cssClass: string): void {
 		elem.classList.toggle(cssClass);
 	}
+
+	/**
+	 * Method that will check a given css class on a given html element
+	 *
+	 * @export
+	 * @param {HTMLElement} elem
+	 * @param {string} cssClass
+	 * @return {*}  {boolean}
+	 */
+	export function ContainsClass(elem: HTMLElement, cssClass: string): boolean {
+		return elem.classList.contains(cssClass);
+	}
 }
