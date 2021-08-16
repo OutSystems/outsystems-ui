@@ -200,8 +200,12 @@ namespace OSUIFramework.Patterns.Rating {
 
 		// Set a rating value
 		public setValue(value: any): void {
+			if (this._configs.IsEdit === false) {
+				console.log('isEdit false');
+				return;
+			}
+
 			let newValue: number;
-			this.value = value;
 			this.decimalValue = this.getDecimalValue(value);
 			this.isHalfValue = this.getIsHalfValue(value);
 			const ratingItems = this._selfElem.querySelectorAll('input');
@@ -216,8 +220,7 @@ namespace OSUIFramework.Patterns.Rating {
 					return;
 				}
 
-				newValue =
-					this.isHalfValue || this.decimalValue > 0.7 ? parseInt(this.value) + 1 : parseInt(this.value);
+				newValue = this.isHalfValue || this.decimalValue > 0.7 ? parseInt(value) + 1 : parseInt(value);
 
 				try {
 					ratingItems[newValue].checked = true;
@@ -231,6 +234,7 @@ namespace OSUIFramework.Patterns.Rating {
 					: this.isHalfValue;
 
 				this._configs.RatingValue = newValue;
+				this.value = newValue;
 				//this.onClick(this.value);
 			}
 		}
@@ -277,18 +281,20 @@ namespace OSUIFramework.Patterns.Rating {
 		// Set the IsEdit option
 		public setIsEdit(isEdit: any): void {
 			this._setFieldsetStatus(isEdit);
+
 			if (isEdit === 'True') {
 				Helper.Style.AddClass(this._selfElem, this._ratingCssClass.IsEdit);
 			} else {
 				Helper.Style.RemoveClass(this._selfElem, this._ratingCssClass.IsEdit);
 			}
 
-			this._configs.IsEdit = isEdit;
+			this._configs.IsEdit = isEdit === 'True' ? true : false;
 		}
 
 		// Set the Rating Size
 		public setSize(size: string): void {
 			Helper.Style.RemoveClass(this._selfElem, this._ratingCssClass.Size);
+
 			if (size !== '') {
 				Helper.Style.AddClass(this._selfElem, 'rating-' + size);
 
