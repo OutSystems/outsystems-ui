@@ -44,8 +44,11 @@ namespace OSUIFramework.Helper.Style {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	export function HasCssClassFromEnum(elem: HTMLElement, cssClasses: any[]): string | boolean {
 		for (let i = 0; i < cssClasses.length; ++i) {
-			if (elem.classList.contains(cssClasses[i])) {
-				return cssClasses[i];
+			if (
+				GlobalEnum.OSUICssClassPosition.hasOwnProperty(cssClasses[i]) &&
+				elem.classList.contains(GlobalEnum.OSUICssClassPosition[cssClasses[i]])
+			) {
+				return GlobalEnum.OSUICssClassPosition[cssClasses[i]];
 			}
 		}
 		return false;

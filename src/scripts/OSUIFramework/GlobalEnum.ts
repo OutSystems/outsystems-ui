@@ -8,13 +8,13 @@ namespace OSUIFramework.GlobalEnum {
 	 */
 	export enum OSUICssClassPosition {
 		'bottom' = 'bottom',
-		'bottom-left' = 'bottom-left',
-		'bottom-right' = 'bottom-right',
+		'bottomLeft' = 'bottom-left',
+		'bottomRight' = 'bottom-right',
 		'center' = 'center',
 		'left' = 'left',
 		'right' = 'right',
 		'top' = 'top',
-		'top-left' = 'top-left',
-		'top-right' = 'top-right',
+		'topLeft' = 'top-left',
+		'topRight' = 'top-right',
 	}
 }

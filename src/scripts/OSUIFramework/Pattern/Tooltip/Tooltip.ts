@@ -72,7 +72,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// Check if the tooltip will be able to be opend at the defined position or a new position must be setted
 		private _managePosition(): void {
-			const _newPosition = Helper.ElemBoundsPosition.Test(
+			const _newPosition = BoundsPosition.CalcBounds(
 				this._selfElem,
 				this._tooltipBallonContentElem,
 				this._tooltipBallonWrapperElem
@@ -83,7 +83,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 			}
 
 			if (_newPosition.addCssClassPos) {
-				Helper.Style.AddClass(this._tooltipBallonWrapperElem, _newPosition.addCssClassPos);
+				this._configs.Position = _newPosition.addCssClassPos;
+				Helper.Style.AddClass(this._tooltipBallonWrapperElem, this._configs.Position);
 			}
 		}
 
@@ -151,8 +152,6 @@ namespace OSUIFramework.Patterns.Tooltip {
 				Object.keys(GlobalEnum.OSUICssClassPosition)
 			);
 
-			console.log(hasPosition, this._configs.Position);
-
 			if (hasPosition && typeof hasPosition === 'string' && hasPosition !== this._configs.Position) {
 				Helper.Style.RemoveClass(this._tooltipBallonWrapperElem, hasPosition);
 			}
@@ -186,7 +185,10 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 			this._addEvents();
 
-			this._managePosition();
+			//OS takes a while to set the Widget Classes
+			setTimeout(() => {
+				this._managePosition();
+			}, 0);
 
 			this.finishBuild();
 		}

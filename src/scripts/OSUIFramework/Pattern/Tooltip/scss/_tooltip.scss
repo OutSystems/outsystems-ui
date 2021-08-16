@@ -17,6 +17,7 @@ $osui-tooltip-arrow-size: 8px;
 		.osui-tooltip_balloon-wrapper {
 			max-height: 50vh;
 			padding-top: var(--space-base);
+			pointer-events: initial;
 
 			// if opens to top
 			&.top,
@@ -30,6 +31,7 @@ $osui-tooltip-arrow-size: 8px;
 				.osui-tooltip_balloon {
 					bottom: 0;
 					top: initial;
+					transform: translateY(0);
 
 					&:before {
 						opacity: 1;
@@ -94,9 +96,11 @@ $osui-tooltip-arrow-size: 8px;
 		max-height: 0;
 		overflow: hidden;
 		padding-top: var(--space-none);
+		pointer-events: none;
 		position: absolute;
 		top: 100%;
 		transition: all 0.5s ease;
+		transition-delay: 0.06s;
 
 		// Service Studio Preview
 		& {
@@ -154,6 +158,7 @@ $osui-tooltip-arrow-size: 8px;
 			.osui-tooltip_balloon {
 				bottom: calc(-1 * var(--space-base));
 				top: initial;
+				transform: translateY(-50%);
 
 				&:before {
 					border-color: var(--color-neutral-9) transparent transparent transparent;
@@ -266,6 +271,7 @@ $osui-tooltip-arrow-size: 8px;
 		position: relative;
 		top: calc(-1 * var(--space-base));
 		transition: all 0.25s ease;
+		transition-delay: 0.03s;
 		width: fit-content;
 
 		// Service Studio Preview
