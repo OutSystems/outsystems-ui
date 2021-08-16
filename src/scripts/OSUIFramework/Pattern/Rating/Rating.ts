@@ -17,13 +17,15 @@ namespace OSUIFramework.Patterns.Rating {
 		// Keep the current input Id
 		private _ratingInputId: string;
 		// Store the input name to be used on clones
-		private _ratingInputName: string = this.widgetId + 'rating';
+		private _ratingInputName: string = this.uniqueId + '-rating';
 		// Store if the rating value is half
-		private _IsHalfValue: boolean;
+		public isHalfValue: boolean;
 		// Store current decimal value
-		private _ratingDecimalValue: number;
+		public decimalValue: number;
 		// Store current rating value
-		private _ratingValue: any = this.configs.RatingValue;
+		public value: any = this.configs.RatingValue;
+		// Store current disable value
+		public disabled: any = !this.configs.IsEdit;
 
 		// Store all the classes strings used by the pattern
 		private _ratingCssClass = {
@@ -55,6 +57,19 @@ namespace OSUIFramework.Patterns.Rating {
 
 		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _setInitialCssClasses(): void {
+			// Set IsEdit class
+			if (this.isHalfValue === true) {
+				Helper.Style.AddClass(this._selfElem, this._ratingCssClass.IsHalf);
+			}
+
+			// Set IsHalf class
+			if (this._configs.IsEdit === true) {
+				Helper.Style.AddClass(this._selfElem, this._ratingCssClass.IsEdit);
+			}
+
+			// Set Size class
+			Helper.Style.AddClass(this._selfElem, this._ratingCssClass.Size);
+
 			// Set default ExtendedClass values
 			if (this._configs.ExtendedClass !== '') {
 				this.UpdateExtendedClass(this._configs.ExtendedClass, this._configs.ExtendedClass);
@@ -84,14 +99,16 @@ namespace OSUIFramework.Patterns.Rating {
 
 			for (var i = 0; i <= this.configs.RatingScale; i++) {
 				index = i;
-				this._ratingInputId = this.widgetId + '-rating-' + index;
+				this._ratingInputId = this.uniqueId + '-rating-' + index;
 				this._renderItems(index);
 			}
 		}
 
 		private _renderItems(index: number): void {
-			const input = '<input ' + this.getIsDisabled();
-			+' type="radio" class="rating-input wcag-hide-text" id="' +
+			const input =
+				'<input ' +
+				this.disabled +
+				' type="radio" class="rating-input wcag-hide-text" id="' +
 				this._ratingInputId +
 				'" name="' +
 				this._ratingInputName +
@@ -121,11 +138,11 @@ namespace OSUIFramework.Patterns.Rating {
 		}
 
 		private _handleClickEvent(e): void {
-			this._IsHalfValue = false;
+			this.isHalfValue = false;
 
 			if (e.target.classList.contains('rating-input')) {
-				this._ratingValue = this.getValue();
-				this.setValue(this._ratingValue);
+				this.value = this.getValue();
+				this.setValue(this.value);
 			}
 		}
 
@@ -159,6 +176,22 @@ namespace OSUIFramework.Patterns.Rating {
 						this._configs.ExtendedClass = propertyValue;
 
 						break;
+					case Enum.Rating.RatingValue:
+						this.setValue(propertyValue);
+
+						break;
+					case Enum.Rating.RatingScale:
+						this.setScale(propertyValue);
+
+						break;
+					case Enum.Rating.IsEdit:
+						this.setIsEdit(propertyValue);
+
+						break;
+					case Enum.Rating.Size:
+						this.setSize(propertyValue);
+
+						break;
 				}
 			} else {
 				throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
@@ -166,27 +199,25 @@ namespace OSUIFramework.Patterns.Rating {
 		}
 
 		// Set a rating value
-		public setValue(value: number): void {
+		public setValue(value: any): void {
 			let newValue: number;
-			this._ratingValue = value;
-			this._ratingDecimalValue = this.getDecimalValue(value);
-			this._IsHalfValue = this.getIsHalfValue(value);
+			this.value = value;
+			this.decimalValue = this.getDecimalValue(value);
+			this.isHalfValue = this.getIsHalfValue(value);
 			const ratingItems = this._selfElem.querySelectorAll('input');
 
 			if (this._selfElem.classList.contains('is-half')) {
 				this._selfElem.classList.remove('is-half');
 			}
 
-			if (this._ratingValue !== null) {
+			if (value !== null) {
 				if (this.configs.RatingScale === 1) {
 					ratingItems[1].checked = true;
 					return;
 				}
 
 				newValue =
-					this._IsHalfValue || this._ratingDecimalValue > 0.7
-						? parseInt(this._ratingValue + 1)
-						: parseInt(this._ratingValue);
+					this.isHalfValue || this.decimalValue > 0.7 ? parseInt(this.value) + 1 : parseInt(this.value);
 
 				try {
 					ratingItems[newValue].checked = true;
@@ -195,25 +226,31 @@ namespace OSUIFramework.Patterns.Rating {
 					return;
 				}
 
-				this._IsHalfValue ? this._selfElem.classList.add('is-half') : this._IsHalfValue;
+				this.isHalfValue ? this._selfElem.classList.add('is-half') : this.isHalfValue;
 
+				this._configs.RatingValue = newValue;
+				console.log('rating value: ' + this.value);
 				//this.onClick(this.value);
 			}
 		}
 
 		// Get the rating value
 		public getValue(): number {
-			return 1;
+			const inputChecked: any = this._selfElem.querySelector('input:checked');
+			return parseInt(inputChecked.value);
 		}
 
 		// Get the rating decimal value
 		public getDecimalValue(value: number): number {
-			return 1;
+			return Math.round((value - Math.floor(value)) * 100) / 100;
 		}
 
 		// Get if the valie is-half
 		public getIsHalfValue(value: number): boolean {
-			return true;
+			const decimalValue = this.getDecimalValue(value);
+			const isHalf = decimalValue >= 0.3 && decimalValue <= 0.7 ? true : false;
+
+			return isHalf;
 		}
 
 		// Get disabled status
@@ -224,6 +261,44 @@ namespace OSUIFramework.Patterns.Rating {
 		// Set disabled status
 		public setIsDisabled(): void {
 			Helper.Attribute.Set(this._ratingFieldsetElem, 'disabled', 'true');
+
+			this.disabled = true;
+		}
+
+		public setScale(value: number): void {
+			this.configs.RatingScale = value;
+			this.destroy(true);
+			this._createItems();
+			this.setValue(this.value);
+		}
+
+		public setIsEdit(isEdit: any): void {
+			this._setFieldsetStatus(isEdit);
+			if (isEdit === 'True') {
+				Helper.Style.AddClass(this._selfElem, this._ratingCssClass.IsEdit);
+			} else {
+				Helper.Style.RemoveClass(this._selfElem, this._ratingCssClass.IsEdit);
+			}
+
+			this._configs.IsEdit = isEdit;
+		}
+
+		public setSize(size: string): void {
+			Helper.Style.RemoveClass(this._selfElem, this._ratingCssClass.Size);
+			Helper.Style.AddClass(this._selfElem, 'rating-' + size);
+
+			this.configs.Size = size;
+			this._ratingCssClass.Size = 'rating-' + size;
+		}
+
+		public destroy(IsUpdate: boolean): void {
+			if (this._selfElem) {
+				this._selfElem.removeEventListener('click', this._handleClickEvent);
+
+				if (IsUpdate) {
+					this._ratingFieldsetElem.innerHTML = '';
+				}
+			}
 		}
 	}
 }

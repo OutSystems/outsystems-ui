@@ -90,4 +90,28 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 
 		return rating;
 	}
+
+	export function Destroy(ratingId: string): void {
+		const rating = GetRatingById(ratingId);
+
+		rating.destroy(false);
+
+		ratingsMap.delete(rating.uniqueId);
+	}
+
+	export function SetScale(ratingId: string, scale: number): OSUIFramework.Patterns.Rating.IRating {
+		const rating = GetRatingById(ratingId);
+
+		rating.setScale(scale);
+
+		return rating;
+	}
+
+	export function SetIsEdit(ratingId: string, isEdit: boolean): OSUIFramework.Patterns.Rating.IRating {
+		const rating = GetRatingById(ratingId);
+
+		rating.setIsEdit(isEdit);
+
+		return rating;
+	}
 }
