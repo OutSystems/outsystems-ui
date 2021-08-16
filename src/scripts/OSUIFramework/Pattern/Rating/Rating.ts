@@ -289,10 +289,15 @@ namespace OSUIFramework.Patterns.Rating {
 		// Set the Rating Size
 		public setSize(size: string): void {
 			Helper.Style.RemoveClass(this._selfElem, this._ratingCssClass.Size);
-			Helper.Style.AddClass(this._selfElem, 'rating-' + size);
+			if (size !== '') {
+				Helper.Style.AddClass(this._selfElem, 'rating-' + size);
 
-			this.configs.Size = size;
-			this._ratingCssClass.Size = 'rating-' + size;
+				this.configs.Size = size;
+				this._ratingCssClass.Size = 'rating-' + size;
+			} else {
+				this.configs.Size = 'base';
+				this._ratingCssClass.Size = 'base';
+			}
 		}
 
 		// Destroy the Rating pattern
