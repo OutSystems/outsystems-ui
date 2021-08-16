@@ -4,7 +4,7 @@ namespace OSUIFramework.Patterns.Rating {
 	 * Defines the interface for OutSystemsUI Rating Pattern
 	 */
 	export interface IRating extends Interface.IPattern {
-		setValue(): void;
-		getValue(): void;
+		//setValue(): any;
+		//getValue(): any;
 	}
 }
