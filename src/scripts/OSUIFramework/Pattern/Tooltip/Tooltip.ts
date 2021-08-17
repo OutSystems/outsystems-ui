@@ -147,10 +147,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 			this._tooltipBallonContentElem.removeEventListener('transitionend', this._eventBallonContentOnClose);
 
 			// Check if the tooltip has a defined cssClass position
-			const hasPosition = Helper.Style.HasCssClassFromEnum(
-				this._tooltipBallonWrapperElem,
-				Object.keys(GlobalEnum.OSUICssClassPosition)
-			);
+			const hasPosition = Helper.Style.HasCssClassPosition(this._tooltipBallonWrapperElem);
 
 			if (hasPosition && typeof hasPosition === 'string' && hasPosition !== this._configs.Position) {
 				Helper.Style.RemoveClass(this._tooltipBallonWrapperElem, hasPosition);

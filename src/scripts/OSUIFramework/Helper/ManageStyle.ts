@@ -34,21 +34,17 @@ namespace OSUIFramework.Helper.Style {
 	}
 
 	/**
-	 * Method that will look for a cssClass based on a given cssClasses Array values
+	 * Method that will look for a cssClass Position on a given element
 	 *
 	 * @export
-	 * @param {HTMLElement} elem Element where the Array cssClasses values will be looked for
-	 * @param {any[]} cssClasses Array values to be looked for as a cssClass into the given element
+	 * @param {HTMLElement} elem Element where the cssClass will be looked for
 	 * @return {*}  {(string | boolean)}
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	export function HasCssClassFromEnum(elem: HTMLElement, cssClasses: any[]): string | boolean {
-		for (let i = 0; i < cssClasses.length; ++i) {
-			if (
-				GlobalEnum.OSUICssClassPosition.hasOwnProperty(cssClasses[i]) &&
-				elem.classList.contains(GlobalEnum.OSUICssClassPosition[cssClasses[i]])
-			) {
-				return GlobalEnum.OSUICssClassPosition[cssClasses[i]];
+	export function HasCssClassPosition(elem: HTMLElement): string | boolean {
+		const classesEnum = Object.keys(GlobalEnum.OSUICssClassPosition);
+		for (let i = 0; i < classesEnum.length; ++i) {
+			if (elem.classList.contains(GlobalEnum.OSUICssClassPosition[classesEnum[i]])) {
+				return GlobalEnum.OSUICssClassPosition[classesEnum[i]];
 			}
 		}
 		return false;

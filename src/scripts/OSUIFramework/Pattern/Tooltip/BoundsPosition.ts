@@ -264,10 +264,7 @@ namespace OSUIFramework.Patterns.Tooltip.BoundsPosition {
 		let _newItemPosition: string | boolean = '';
 
 		// Check if the element has already a defined class position
-		const _checkIfElementPosition = Helper.Style.HasCssClassFromEnum(
-			elemToAddCssClassPos,
-			Object.keys(GlobalEnum.OSUICssClassPosition)
-		);
+		const _checkIfElementPosition = Helper.Style.HasCssClassPosition(elemToAddCssClassPos);
 
 		// Check if there are any parentNode with the overflow hidden property
 		const _overflowElem = HasOverflowHiddenProp(elem.parentElement);
