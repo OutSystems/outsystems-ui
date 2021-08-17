@@ -50,13 +50,13 @@ namespace OutSystems.OSUI.Utils {
 	}
 
 	/**
-	 * Function that identifies the browser being used.
+	 * Function that identifies the browser being used
 	 *
 	 * @export
 	 * @param {string} [useragent]
 	 * @return {*}  {string}
 	 */
-	export function GetBrowser(useragent?: string): string {
+	export function GetBrowser(useragent = ''): string {
 		const useragentLocal =
 			useragent.replace(' ', '') === '' ? window.navigator.userAgent.toLowerCase() : useragent.toLowerCase();
 		if (CheckIsChrome(useragentLocal)) {
