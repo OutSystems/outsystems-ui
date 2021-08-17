@@ -12,7 +12,7 @@ namespace OSUIFramework.Patterns.Rating {
 		private _clonedPlaceholders: string;
 
 		// Store the input name to be used on clones
-		private ratingInputName: string = 'rating-' + this.uniqueId;
+		private _ratingInputName: string = 'rating-' + this.uniqueId;
 
 		// Store if the rating already has an event added
 		private _ratingHasEventAdded: boolean = false;
@@ -122,7 +122,7 @@ namespace OSUIFramework.Patterns.Rating {
 			const ratingInputId: string = this.uniqueId + '-rating-' + index;
 
 			// Craete input and label html
-			const input = `<input ${this.disabled} type="radio" class="${this._ratingCssClass.RatingInput} ${this._ratingCssClass.WCAGHideText}" id=${ratingInputId} name=${this.ratingInputName} value=${index}/>`;
+			const input = `<input ${this.disabled} type="radio" class="${this._ratingCssClass.RatingInput} ${this._ratingCssClass.WCAGHideText}" id=${ratingInputId} name=${this._ratingInputName} value=${index}/>`;
 			const label = `<label class='${this._ratingCssClass.RatingItem} ${hideLabelClass}' for=${ratingInputId}><span class="${this._ratingCssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
 
 			// Append new input + label to fieldset's html
