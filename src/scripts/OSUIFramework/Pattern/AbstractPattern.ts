@@ -46,6 +46,10 @@ namespace OSUIFramework.Patterns {
 			return patternId === this._uniqueId || patternId === this._widgetId;
 		}
 
+		public destroy(): void {
+			this._isBuilt = false;
+		}
+
 		public finishBuild(): void {
 			// Set the widget id value
 			this._widgetId = Helper.GetElementByUniqueId(this._uniqueId).closest(Constants.dataBlockTag).id;

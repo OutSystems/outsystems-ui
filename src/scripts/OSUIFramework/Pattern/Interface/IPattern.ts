@@ -11,6 +11,8 @@ namespace OSUIFramework.Interface {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		changeProperty(propertyName: string, propertyValue: any): void;
 
+		destroy(): void;
+
 		finishBuild(): void;
 
 		// eslint-disable-next-line @typescript-eslint/member-ordering
