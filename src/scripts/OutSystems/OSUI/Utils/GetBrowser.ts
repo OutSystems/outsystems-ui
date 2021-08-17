@@ -105,49 +105,6 @@ namespace OutSystems.OSUI.Utils {
 	function CheckIsFirefox(useragent: string): boolean {
 		return useragent.indexOf(UAKeyword.firefox) > -1 || useragent.indexOf(UAKeyword.fxios) > -1;
 	}
-
-	/**
-	 * Function to check if the browser is Safari based on the user agent string
-	 *
-	 * @param {string} useragent
-	 * @return {*}  {boolean}
-	 */
-	function CheckIsSafari(useragent: string): boolean {
-		return (
-			useragent.indexOf(UAKeyword.safari) > -1 &&
-			useragent.indexOf(UAKeyword.chrome) === -1 &&
-			useragent.indexOf(UAKeyword.opr) === -1 &&
-			useragent.indexOf(UAKeyword.opera) === -1 &&
-			useragent.indexOf(UAKeyword.opios) === -1 &&
-			useragent.indexOf(UAKeyword.kindle) === -1 &&
-			useragent.indexOf(UAKeyword.silk) === -1 &&
-			useragent.indexOf(UAKeyword.kftt) === -1 &&
-			useragent.indexOf(UAKeyword.kfot) === -1 &&
-			useragent.indexOf(UAKeyword.kfjwa) === -1 &&
-			useragent.indexOf(UAKeyword.kfjwi) === -1 &&
-			useragent.indexOf(UAKeyword.kfsowi) === -1 &&
-			useragent.indexOf(UAKeyword.kfthwa) === -1 &&
-			useragent.indexOf(UAKeyword.kfthwi) === -1 &&
-			useragent.indexOf(UAKeyword.kfapwa) === -1 &&
-			useragent.indexOf(UAKeyword.kfapwi) === -1 &&
-			useragent.indexOf(UAKeyword.ucbrowser) === -1
-		);
-	}
-
-	/**
-	 * Function to check if the browser is Opera based on the user agent string
-	 *
-	 * @param {string} useragent
-	 * @return {*}  {boolean}
-	 */
-	function CheckIsOpera(useragent: string): boolean {
-		return (
-			useragent.indexOf(UAKeyword.opr) > -1 ||
-			useragent.indexOf(UAKeyword.opera) > -1 ||
-			useragent.indexOf(UAKeyword.opios) > -1
-		);
-	}
-
 	/**
 	 * Function to check if the browser is Internet Explorer based on the user agent string
 	 *
@@ -179,27 +136,6 @@ namespace OutSystems.OSUI.Utils {
 			useragent.indexOf(UAKeyword.kfapwi) > -1
 		);
 	}
-
-	/**
-	 * Function to check if the browser is Samsung Browser based on the user agent string
-	 *
-	 * @param {string} useragent
-	 * @return {*}  {boolean}
-	 */
-	function CheckIsSamsungBrowser(useragent: string): boolean {
-		return useragent.indexOf(UAKeyword.samsungbrowser) > -1;
-	}
-
-	/**
-	 * Function to check if the browser is Yandex based on the user agent string
-	 *
-	 * @param {string} useragent
-	 * @return {*}  {boolean}
-	 */
-	function CheckIsYandex(useragent: string): boolean {
-		return useragent.indexOf(UAKeyword.yabrowser) > -1;
-	}
-
 	/**
 	 * Function to check if the browser is MIUI Browser based on the user agent string
 	 *
@@ -211,6 +147,56 @@ namespace OutSystems.OSUI.Utils {
 	}
 
 	/**
+	 * Function to check if the browser is Opera based on the user agent string
+	 *
+	 * @param {string} useragent
+	 * @return {*}  {boolean}
+	 */
+	function CheckIsOpera(useragent: string): boolean {
+		return (
+			useragent.indexOf(UAKeyword.opr) > -1 ||
+			useragent.indexOf(UAKeyword.opera) > -1 ||
+			useragent.indexOf(UAKeyword.opios) > -1
+		);
+	}
+	/**
+	 * Function to check if the browser is Safari based on the user agent string
+	 *
+	 * @param {string} useragent
+	 * @return {*}  {boolean}
+	 */
+	function CheckIsSafari(useragent: string): boolean {
+		return (
+			useragent.indexOf(UAKeyword.safari) > -1 &&
+			useragent.indexOf(UAKeyword.chrome) === -1 &&
+			useragent.indexOf(UAKeyword.opr) === -1 &&
+			useragent.indexOf(UAKeyword.opera) === -1 &&
+			useragent.indexOf(UAKeyword.opios) === -1 &&
+			useragent.indexOf(UAKeyword.kindle) === -1 &&
+			useragent.indexOf(UAKeyword.silk) === -1 &&
+			useragent.indexOf(UAKeyword.kftt) === -1 &&
+			useragent.indexOf(UAKeyword.kfot) === -1 &&
+			useragent.indexOf(UAKeyword.kfjwa) === -1 &&
+			useragent.indexOf(UAKeyword.kfjwi) === -1 &&
+			useragent.indexOf(UAKeyword.kfsowi) === -1 &&
+			useragent.indexOf(UAKeyword.kfthwa) === -1 &&
+			useragent.indexOf(UAKeyword.kfthwi) === -1 &&
+			useragent.indexOf(UAKeyword.kfapwa) === -1 &&
+			useragent.indexOf(UAKeyword.kfapwi) === -1 &&
+			useragent.indexOf(UAKeyword.ucbrowser) === -1
+		);
+	}
+
+	/**
+	 * Function to check if the browser is Samsung Browser based on the user agent string
+	 *
+	 * @param {string} useragent
+	 * @return {*}  {boolean}
+	 */
+	function CheckIsSamsungBrowser(useragent: string): boolean {
+		return useragent.indexOf(UAKeyword.samsungbrowser) > -1;
+	}
+	/**
 	 * Function to check if the browser is UC Browser based on the user agent string
 	 *
 	 * @param {string} useragent
@@ -218,6 +204,15 @@ namespace OutSystems.OSUI.Utils {
 	 */
 	function CheckIsUCBrowser(useragent: string): boolean {
 		return useragent.indexOf(UAKeyword.ucbrowser) > -1;
+	}
+	/**
+	 * Function to check if the browser is Yandex based on the user agent string
+	 *
+	 * @param {string} useragent
+	 * @return {*}  {boolean}
+	 */
+	function CheckIsYandex(useragent: string): boolean {
+		return useragent.indexOf(UAKeyword.yabrowser) > -1;
 	}
 
 	/**
