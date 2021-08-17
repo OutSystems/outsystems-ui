@@ -48,44 +48,6 @@ namespace OutSystems.OSUI.Utils {
 		ucbrowser = 'ucbrowser',
 		yandex = 'yabrowser',
 	}
-
-	/**
-	 * Function that identifies the browser being used
-	 *
-	 * @export
-	 * @param {string} [useragent]
-	 * @return {*}  {string}
-	 */
-	export function GetBrowser(useragent = ''): string {
-		const useragentLocal =
-			useragent.replace(' ', '') === '' ? window.navigator.userAgent.toLowerCase() : useragent.toLowerCase();
-		if (CheckIsChrome(useragentLocal)) {
-			return BrowserName.chrome;
-		} else if (CheckIsEdge(useragentLocal)) {
-			return BrowserName.edge;
-		} else if (CheckIsFirefox(useragentLocal)) {
-			return BrowserName.firefox;
-		} else if (CheckIsSafari(useragentLocal)) {
-			return BrowserName.safari;
-		} else if (CheckIsOpera(useragentLocal)) {
-			return BrowserName.opera;
-		} else if (CheckIsInternetExplorer(useragentLocal)) {
-			return BrowserName.internetexplorer;
-		} else if (CheckIsKindle(useragentLocal)) {
-			return BrowserName.kindle;
-		} else if (CheckIsSamsungBrowser(useragentLocal)) {
-			return BrowserName.samsungbrowser;
-		} else if (CheckIsYandex(useragentLocal)) {
-			return BrowserName.yandex;
-		} else if (CheckIsMIUIBrowser(useragentLocal)) {
-			return BrowserName.miuibrowser;
-		} else if (CheckIsUCBrowser(useragentLocal)) {
-			return BrowserName.ucbrowser;
-		} else {
-			return '';
-		}
-	}
-
 	/**
 	 * Function to check if the browser is Chrome based on the user agent string
 	 *
@@ -256,5 +218,42 @@ namespace OutSystems.OSUI.Utils {
 	 */
 	function CheckIsUCBrowser(useragent: string): boolean {
 		return useragent.indexOf(UAKeyword.ucbrowser) > -1;
+	}
+
+	/**
+	 * Function that identifies the browser being used
+	 *
+	 * @export
+	 * @param {string} [useragent]
+	 * @return {*}  {string}
+	 */
+	export function GetBrowser(useragent = ''): string {
+		const useragentLocal =
+			useragent.replace(' ', '') === '' ? window.navigator.userAgent.toLowerCase() : useragent.toLowerCase();
+		if (CheckIsChrome(useragentLocal)) {
+			return BrowserName.chrome;
+		} else if (CheckIsEdge(useragentLocal)) {
+			return BrowserName.edge;
+		} else if (CheckIsFirefox(useragentLocal)) {
+			return BrowserName.firefox;
+		} else if (CheckIsSafari(useragentLocal)) {
+			return BrowserName.safari;
+		} else if (CheckIsOpera(useragentLocal)) {
+			return BrowserName.opera;
+		} else if (CheckIsInternetExplorer(useragentLocal)) {
+			return BrowserName.internetexplorer;
+		} else if (CheckIsKindle(useragentLocal)) {
+			return BrowserName.kindle;
+		} else if (CheckIsSamsungBrowser(useragentLocal)) {
+			return BrowserName.samsungbrowser;
+		} else if (CheckIsYandex(useragentLocal)) {
+			return BrowserName.yandex;
+		} else if (CheckIsMIUIBrowser(useragentLocal)) {
+			return BrowserName.miuibrowser;
+		} else if (CheckIsUCBrowser(useragentLocal)) {
+			return BrowserName.ucbrowser;
+		} else {
+			return '';
+		}
 	}
 }
