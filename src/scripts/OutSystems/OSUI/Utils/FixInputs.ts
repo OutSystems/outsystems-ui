@@ -46,7 +46,7 @@ namespace OutSystems.OSUI.Utils {
 					}
 				});
 
-				content.addEventListener('touchend', function (e) {
+				content.addEventListener('touchend', function () {
 					setTimeout(function () {
 						for (let i = inputs.length - 1; i >= 0; i--) {
 							inputs[i].style.webkitUserSelect = 'auto';
