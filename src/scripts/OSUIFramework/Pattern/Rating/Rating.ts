@@ -41,10 +41,12 @@ namespace OSUIFramework.Patterns.Rating {
 			Size: 'rating-' + this.configs.Size,
 			Rating: 'rating',
 			RatingInput: 'rating-input',
+			RatingItem: 'rating-item',
 			IconStates: 'icon-states',
 			FilledState: 'rating-item-filled',
 			HalfState: 'rating-item-half',
 			EmptyState: 'rating-item-empty',
+			WCAGHideText: 'wcag-hide-text',
 		};
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
@@ -123,15 +125,15 @@ namespace OSUIFramework.Patterns.Rating {
 		// Method called on createItems() to render the correct HTML structure for each item
 		private _renderItems(index: number): void {
 			// If first input, whihc is hidden, than also hide the label
-			const hideLabelClass = index === 0 ? 'wcag-hide-text' : '';
+			const hideLabelClass: string = index === 0 ? this._ratingCssClass.WCAGHideText : '';
 			// if not first input, which is hidden, add the html stored form the placeholders
-			const labelHTML = index !== 0 ? this._clonedPlaceholders : '';
+			const labelHTML: any = index !== 0 ? this._clonedPlaceholders : '';
 			// Create a unique rating input id, based on the index
-			const ratingInputId = this.uniqueId + '-rating-' + index;
+			const ratingInputId: string = this.uniqueId + '-rating-' + index;
 
 			// Craete input and label html
-			const input = `<input ${this.disabled} type="radio" class="rating-input wcag-hide-text" id=${ratingInputId} name=${this.ratingInputName} value=${index}/>`;
-			const label = `<label class='rating-item ${hideLabelClass}' for=${ratingInputId}><span class='wcag-hide-text'>Rating ${index}</span>${labelHTML}</label>`;
+			const input = `<input ${this.disabled} type="radio" class="${this._ratingCssClass.RatingInput} ${this._ratingCssClass.WCAGHideText}" id=${ratingInputId} name=${this.ratingInputName} value=${index}/>`;
+			const label = `<label class='${this._ratingCssClass.RatingItem} ${hideLabelClass}' for=${ratingInputId}><span class="${this._ratingCssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
 
 			// Append new input + label to fieldset's html
 			this._ratingFieldsetElem.innerHTML += input + label;
@@ -255,7 +257,7 @@ namespace OSUIFramework.Patterns.Rating {
 				try {
 					ratingItems[newValue].checked = true;
 				} catch (e) {
-					console.warn('value exceeds the scale boundaries');
+					console.warn(`Value of Rating '${this.uniqueId}' exceeds the scale boundaries`);
 					return;
 				}
 
