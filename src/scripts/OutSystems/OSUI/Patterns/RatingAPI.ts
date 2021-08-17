@@ -96,6 +96,19 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 *
 	 * @export
 	 * @param {string} ratingId
+	 * @param {*} callback
+	 */
+	export function RegisterCallback(ratingId: string, callback: any): void {
+		const rating = GetRatingById(ratingId);
+
+		rating.registerCallback(callback);
+	}
+
+	/**
+	 *
+	 *
+	 * @export
+	 * @param {string} ratingId
 	 * @return {*}  {*}
 	 */
 	export function Destroy(ratingId: string): any {

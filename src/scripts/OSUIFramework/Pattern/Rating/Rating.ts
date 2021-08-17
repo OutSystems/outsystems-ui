@@ -29,6 +29,9 @@ namespace OSUIFramework.Patterns.Rating {
 		// Store current disable value
 		public disabled: any = !this.configs.IsEdit;
 
+		// Store the callback to be used on the OnSelect event
+		public onSelect: any = null;
+
 		// Store all the classes strings used by the pattern
 		private _ratingCssClass = {
 			IsEdit: 'is-edit',
@@ -78,16 +81,13 @@ namespace OSUIFramework.Patterns.Rating {
 			}
 		}
 
-		// Disable fieldset according to IsEdit parameter
-		private _setFieldsetStatus(IsEnabled: boolean): void {
-			// get fieldset runtime status
-			const isDisabled = this.getIsDisabled();
+		// Toggle fieldset disbaled status
+		private _setFieldsetDisabledStatus(IsDisabled: boolean): void {
+			const isFieldsetDisabled = Helper.Attribute.Get(this._ratingFieldsetElem, 'disabled');
 
-			if (!IsEnabled) {
-				// Set the Fieldset as disabled
+			if (IsDisabled) {
 				Helper.Attribute.Set(this._ratingFieldsetElem, 'disabled', 'true');
-			} else if (IsEnabled && isDisabled) {
-				// If the param is true and the Fieldset has the disabled attribute, remove it.
+			} else if (!IsDisabled && isFieldsetDisabled) {
 				Helper.Attribute.Remove(this._ratingFieldsetElem, 'disabled');
 			}
 		}
@@ -122,7 +122,7 @@ namespace OSUIFramework.Patterns.Rating {
 			const ratingInputId: string = this.uniqueId + '-rating-' + index;
 
 			// Craete input and label html
-			const input = `<input ${this.disabled} type="radio" class="${this._ratingCssClass.RatingInput} ${this._ratingCssClass.WCAGHideText}" id=${ratingInputId} name=${this._ratingInputName} value=${index}/>`;
+			const input = `<input type="radio" class="${this._ratingCssClass.RatingInput} ${this._ratingCssClass.WCAGHideText}" id=${ratingInputId} name=${this._ratingInputName} value=${index}/>`;
 			const label = `<label class='${this._ratingCssClass.RatingItem} ${hideLabelClass}' for=${ratingInputId}><span class="${this._ratingCssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
 
 			// Append new input + label to fieldset's html
@@ -170,9 +170,9 @@ namespace OSUIFramework.Patterns.Rating {
 
 			this._setInitialCssClasses();
 
-			this._setFieldsetStatus(this._configs.IsEdit);
-
 			this._handlePlaceholders();
+
+			this._setFieldsetDisabledStatus(!this._configs.IsEdit);
 
 			this._createItems();
 
@@ -216,22 +216,31 @@ namespace OSUIFramework.Patterns.Rating {
 			}
 		}
 
+		public registerCallback(callback: any): void {
+			this.onSelect = (param, ...args) => {
+				callback(param, ...args);
+			};
+		}
+
 		// Set a rating value
 		public setValue(value: any): void {
-			let newValue: number;
-			// Check if passed value is decimal
-			this.decimalValue = this.getDecimalValue(value);
-			// Check if passed value is half
-			this.isHalfValue = this.getIsHalfValue(value);
-			// Get all inputs on rating, to properly add the :checked attribute on the correct one
-			const ratingItems = this._selfElem.querySelectorAll('input');
-
-			// Reset the is-half class
-			if (Helper.Style.ContainsClass(this._selfElem, this._ratingCssClass.IsHalf)) {
-				Helper.Style.RemoveClass(this._selfElem, this._ratingCssClass.IsHalf);
-			}
-
 			if (value !== null) {
+				// Format value to be of type decimal number
+				value = parseFloat(value);
+				// Store the new value to be defined
+				let newValue: number;
+				// Check if passed value is decimal
+				this.decimalValue = this.getDecimalValue(value);
+				// Check if passed value is half
+				this.isHalfValue = this.getIsHalfValue(value);
+				// Get all inputs on rating, to properly add the :checked attribute on the correct one
+				const ratingItems = this._selfElem.querySelectorAll('input');
+
+				// Reset the is-half class
+				if (Helper.Style.ContainsClass(this._selfElem, this._ratingCssClass.IsHalf)) {
+					Helper.Style.RemoveClass(this._selfElem, this._ratingCssClass.IsHalf);
+				}
+
 				// If there's only one rating item, then there's no need for further checks, this one will be checked
 				if (this.configs.RatingScale === 1) {
 					ratingItems[1].checked = true;
@@ -259,7 +268,11 @@ namespace OSUIFramework.Patterns.Rating {
 				// Update the variables with the new value
 				this._configs.RatingValue = this.isHalfValue ? value : newValue;
 				this.value = this._configs.RatingValue;
-				//this.onClick(this.value);
+
+				// Call calbackfor OnSelect event
+				if (this.onSelect !== null) {
+					this.onSelect(this.value);
+				}
 			}
 		}
 
@@ -286,19 +299,19 @@ namespace OSUIFramework.Patterns.Rating {
 
 		// Get disabled status
 		public getIsDisabled(): string {
-			return Helper.Attribute.Get(this._ratingFieldsetElem, 'disabled');
+			return this.disabled;
 		}
 
 		// Set disabled status
-		public setIsDisabled(): void {
-			Helper.Attribute.Set(this._ratingFieldsetElem, 'disabled', 'true');
+		public setIsDisabled(isDisabled: boolean): void {
+			this._setFieldsetDisabledStatus(isDisabled);
 
-			this.disabled = true;
+			this.disabled = isDisabled;
 		}
 
 		// Set a RatingScale
 		public setScale(value: number): void {
-			// Update config
+			// Update configs
 			this.configs.RatingScale = value;
 			// Call destroy, so that the html is deleted
 			this.destroy();
@@ -314,8 +327,8 @@ namespace OSUIFramework.Patterns.Rating {
 			// This needs to be done, for compatibility with OutSystems platform logic
 			const IsEditParam = isEdit === 'True' ? true : false;
 
-			// Set the fieldset disabled attribute status
-			this._setFieldsetStatus(IsEditParam);
+			// Set the fieldset and input disabled attribute status
+			this.setIsDisabled(!IsEditParam);
 			// Update the config
 			this._configs.IsEdit = IsEditParam;
 
