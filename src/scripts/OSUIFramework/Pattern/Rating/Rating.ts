@@ -5,13 +5,8 @@ namespace OSUIFramework.Patterns.Rating {
 	 */
 	export class Rating extends AbstractPattern<RatingConfig> implements IRating {
 		// Store the rating html element
-		private _ratingFilledStateElem: HTMLElement;
-		private _ratingHalfStateElem: HTMLElement;
-		private _ratingEmptyStateElem: HTMLElement;
 		private _ratingIconStatesElem: HTMLElement;
-		private _ratingIconStatesId: string;
 		private _ratingFieldsetElem: HTMLElement;
-		private _ratingFieldsetId: string;
 
 		// Store the placholders content
 		private _clonedPlaceholders: string;
@@ -56,13 +51,8 @@ namespace OSUIFramework.Patterns.Rating {
 
 		// Set the html references that will be used to manage the cssClasses and atribute properties
 		private _setHtmlElements(): void {
-			this._ratingFilledStateElem = this._selfElem.querySelector('.' + this._ratingCssClass.FilledState);
-			this._ratingHalfStateElem = this._selfElem.querySelector('.' + this._ratingCssClass.HalfState);
-			this._ratingEmptyStateElem = this._selfElem.querySelector('.' + this._ratingCssClass.EmptyState);
 			this._ratingIconStatesElem = this._selfElem.querySelector('.' + this._ratingCssClass.IconStates);
-			this._ratingIconStatesId = Helper.Attribute.Get(this._ratingIconStatesElem, 'id');
 			this._ratingFieldsetElem = this._selfElem.querySelector('fieldset');
-			this._ratingFieldsetId = Helper.Attribute.Get(this._ratingFieldsetElem, 'id');
 		}
 
 		// Set the cssClasses that should be assigned to the element on it's initialization
