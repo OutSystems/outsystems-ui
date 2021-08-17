@@ -4,9 +4,9 @@ namespace OSUIFramework.Patterns.Tooltip.Enum {
 	 * Tooltip Enum properties
 	 */
 	export enum Tooltip {
-		'ExtendedClass' = 'ExtendedClass',
-		'IsVisible' = 'IsVisible',
-		'IsHover' = 'IsHover',
-		'Position' = 'Position',
+		ExtendedClass = 'ExtendedClass',
+		IsVisible = 'IsVisible',
+		IsHover = 'IsHover',
+		Position = 'Position',
 	}
 }
