@@ -4,6 +4,21 @@ namespace OSUIFramework.Patterns.Rating {
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	export class Rating extends AbstractPattern<RatingConfig> implements IRating {
+		// Store all the classes strings used by the pattern
+		private _ratingCssClass = {
+			IsEdit: 'is-edit',
+			IsHalf: 'is-half',
+			Size: 'rating-' + this.configs.Size,
+			Rating: 'rating',
+			RatingInput: 'rating-input',
+			RatingItem: 'rating-item',
+			IconStates: 'icon-states',
+			FilledState: 'rating-item-filled',
+			HalfState: 'rating-item-half',
+			EmptyState: 'rating-item-empty',
+			WCAGHideText: 'wcag-hide-text',
+		};
+
 		// Store the rating html element
 		private _ratingIconStatesElem: HTMLElement;
 		private _ratingFieldsetElem: HTMLElement;
@@ -31,21 +46,6 @@ namespace OSUIFramework.Patterns.Rating {
 
 		// Store the callback to be used on the OnSelect event
 		public onSelect: any = null;
-
-		// Store all the classes strings used by the pattern
-		private _ratingCssClass = {
-			IsEdit: 'is-edit',
-			IsHalf: 'is-half',
-			Size: 'rating-' + this.configs.Size,
-			Rating: 'rating',
-			RatingInput: 'rating-input',
-			RatingItem: 'rating-item',
-			IconStates: 'icon-states',
-			FilledState: 'rating-item-filled',
-			HalfState: 'rating-item-half',
-			EmptyState: 'rating-item-empty',
-			WCAGHideText: 'wcag-hide-text',
-		};
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
@@ -82,12 +82,12 @@ namespace OSUIFramework.Patterns.Rating {
 		}
 
 		// Toggle fieldset disbaled status
-		private _setFieldsetDisabledStatus(IsDisabled: boolean): void {
+		private _setFieldsetDisabledStatus(isDisabled: boolean): void {
 			const isFieldsetDisabled = Helper.Attribute.Get(this._ratingFieldsetElem, 'disabled');
 
-			if (IsDisabled) {
+			if (isDisabled) {
 				Helper.Attribute.Set(this._ratingFieldsetElem, 'disabled', 'true');
-			} else if (!IsDisabled && isFieldsetDisabled) {
+			} else if (!isDisabled && isFieldsetDisabled) {
 				Helper.Attribute.Remove(this._ratingFieldsetElem, 'disabled');
 			}
 		}
