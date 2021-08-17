@@ -78,11 +78,11 @@ namespace OSUIFramework.Patterns.Tooltip {
 				this._tooltipBallonWrapperElem
 			);
 
-			if (_newPosition.removeCssClassPos) {
+			if (_newPosition.removeCssClassPos && typeof _newPosition.removeCssClassPos === 'string') {
 				Helper.Style.RemoveClass(this._tooltipBallonWrapperElem, _newPosition.removeCssClassPos);
 			}
 
-			if (_newPosition.addCssClassPos) {
+			if (_newPosition.addCssClassPos && typeof _newPosition.addCssClassPos === 'string') {
 				this._configs.Position = _newPosition.addCssClassPos;
 				Helper.Style.AddClass(this._tooltipBallonWrapperElem, this._configs.Position);
 			}

@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Tooltip.BoundsPosition {
-	// type returnedType = { addCssClassPos: string | boolean; removeCssClassPos: string | boolean };
+	type boundsReturnCalc = { addCssClassPos: string | boolean; removeCssClassPos: string | boolean };
 
 	/**
 	 * Recursive function that will be test if the given element has an overflow hidden property, it will be calling himself until body element if any parentNode has a overflow hidden property. If a parentNode has a position fixed, it will break the loop.
@@ -249,9 +249,16 @@ namespace OSUIFramework.Patterns.Tooltip.BoundsPosition {
 	 * @return {*}  {*}
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	export function CalcBounds(elem: HTMLElement, elemToTest: HTMLElement, elemToAddCssClassPos: HTMLElement): any {
+	export function CalcBounds(
+		elem: HTMLElement,
+		elemToTest: HTMLElement,
+		elemToAddCssClassPos: HTMLElement
+	): boundsReturnCalc {
 		// Info that will be returned
-		const _infoToReturn = {};
+		const _infoToReturn: boundsReturnCalc = {
+			addCssClassPos: false,
+			removeCssClassPos: false,
+		};
 
 		// Store the new position if it will have one
 		let _newItemPosition: string | boolean = '';
@@ -274,12 +281,12 @@ namespace OSUIFramework.Patterns.Tooltip.BoundsPosition {
 
 		// Check if the old cssClass position must be removed!
 		if (_newItemPosition && _checkIfElementPosition && _newItemPosition !== _checkIfElementPosition) {
-			_infoToReturn['removeCssClassPos'] = _checkIfElementPosition;
+			_infoToReturn.removeCssClassPos = _checkIfElementPosition;
 		}
 
 		// If a new position cssClass must be added
 		if (_newItemPosition) {
-			_infoToReturn['addCssClassPos'] = _newItemPosition;
+			_infoToReturn.addCssClassPos = _newItemPosition;
 		}
 
 		return _infoToReturn;
