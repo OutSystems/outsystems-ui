@@ -4,21 +4,6 @@ namespace OSUIFramework.Patterns.Rating {
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	export class Rating extends AbstractPattern<RatingConfig> implements IRating {
-		// Store all the classes strings used by the pattern
-		private _ratingCssClass = {
-			IsEdit: 'is-edit',
-			IsHalf: 'is-half',
-			Size: 'rating-' + this.configs.Size,
-			Rating: 'rating',
-			RatingInput: 'rating-input',
-			RatingItem: 'rating-item',
-			IconStates: 'icon-states',
-			FilledState: 'rating-item-filled',
-			HalfState: 'rating-item-half',
-			EmptyState: 'rating-item-empty',
-			WCAGHideText: 'wcag-hide-text',
-		};
-
 		// Store the placholders content
 		private _clonedPlaceholders: string;
 		// Store current decimal value
@@ -91,9 +76,8 @@ namespace OSUIFramework.Patterns.Rating {
 			// Remove the is-half when clicking, as a click will never result in a half value
 			this._isHalfValue = false;
 
-			// Check if the e.target is a label with the this._ratingCssClass.RatingInput class
-			const isInput = Helper.Style.ContainsClass(currentTarget, this._ratingCssClass.RatingInput);
-
+			// Check if the e.target is a label with the Enum.RatingCssClass.RatingInput class
+			const isInput = Helper.Style.ContainsClass(currentTarget, Enum.RatingCssClass.RatingInput);
 			if (isInput) {
 				// If it is, then get the input:checked value
 				this._value = this.getValue();
@@ -105,15 +89,15 @@ namespace OSUIFramework.Patterns.Rating {
 		// Method called on createItems() to render the correct HTML structure for each item
 		private _renderItems(index: number): void {
 			// If first input, whihc is hidden, than also hide the label
-			const hideLabelClass: string = index === 0 ? this._ratingCssClass.WCAGHideText : '';
+			const hideLabelClass: string = index === 0 ? Enum.RatingCssClass.WCAGHideText : '';
 			// if not first input, which is hidden, add the html stored form the placeholders
 			const labelHTML: any = index !== 0 ? this._clonedPlaceholders : '';
 			// Create a unique rating input id, based on the index
 			const ratingInputId: string = this.uniqueId + '-rating-' + index;
 
 			// Craete input and label html
-			const input = `<input type="radio" class="${this._ratingCssClass.RatingInput} ${this._ratingCssClass.WCAGHideText}" id=${ratingInputId} name=${this._ratingInputName} value=${index}/>`;
-			const label = `<label class='${this._ratingCssClass.RatingItem} ${hideLabelClass}' for=${ratingInputId}><span class="${this._ratingCssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
+			const input = `<input type="radio" class="${Enum.RatingCssClass.RatingInput} ${Enum.RatingCssClass.WCAGHideText}" id=${ratingInputId} name=${this._ratingInputName} value=${index}/>`;
+			const label = `<label class='${Enum.RatingCssClass.RatingItem} ${hideLabelClass}' for=${ratingInputId}><span class="${Enum.RatingCssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
 
 			// Append new input + label to fieldset's html
 			this._ratingFieldsetElem.innerHTML += input + label;
@@ -132,7 +116,7 @@ namespace OSUIFramework.Patterns.Rating {
 
 		// Set the html references that will be used to manage the cssClasses and atribute properties
 		private _setHtmlElements(): void {
-			this._ratingIconStatesElem = this._selfElem.querySelector('.' + this._ratingCssClass.IconStates);
+			this._ratingIconStatesElem = this._selfElem.querySelector('.' + Enum.RatingCssClass.IconStates);
 			this._ratingFieldsetElem = this._selfElem.querySelector('fieldset');
 		}
 
@@ -140,17 +124,17 @@ namespace OSUIFramework.Patterns.Rating {
 		private _setInitialCssClasses(): void {
 			// Set IsEdit class
 			if (this._isHalfValue === true) {
-				Helper.Style.AddClass(this._selfElem, this._ratingCssClass.IsHalf);
+				Helper.Style.AddClass(this._selfElem, Enum.RatingCssClass.IsHalf);
 			}
 
 			// Set IsHalf class
 			if (this._configs.IsEdit === true) {
-				Helper.Style.AddClass(this._selfElem, this._ratingCssClass.IsEdit);
+				Helper.Style.AddClass(this._selfElem, Enum.RatingCssClass.IsEdit);
 			}
 
 			// Set Size class
 			if (this._configs.Size !== '') {
-				Helper.Style.AddClass(this._selfElem, this._ratingCssClass.Size);
+				Helper.Style.AddClass(this._selfElem, Enum.RatingCssClass.Size + this._configs.Size);
 			}
 
 			// Set default ExtendedClass values
@@ -174,7 +158,7 @@ namespace OSUIFramework.Patterns.Rating {
 
 			this._manageRatingEvent();
 
-			this.setValue(this._configs.RatingValue);
+			this.setValue(this._configs.RatingValue, false);
 
 			this.finishBuild();
 		}
@@ -278,8 +262,8 @@ namespace OSUIFramework.Patterns.Rating {
 
 			// Toggle the is-edit class
 			IsEditParam
-				? Helper.Style.AddClass(this._selfElem, this._ratingCssClass.IsEdit)
-				: Helper.Style.RemoveClass(this._selfElem, this._ratingCssClass.IsEdit);
+				? Helper.Style.AddClass(this._selfElem, Enum.RatingCssClass.IsEdit)
+				: Helper.Style.RemoveClass(this._selfElem, Enum.RatingCssClass.IsEdit);
 
 			// Review if there's a need to add/remove the click event, accordingly to the IsEdit value
 			this._manageRatingEvent();
@@ -294,7 +278,7 @@ namespace OSUIFramework.Patterns.Rating {
 			// Afteer the fieldset html is clean, create the items again
 			this._createItems();
 			// Set the rating value equal to the value before calling the setScale method
-			this.setValue(this._value);
+			this.setValue(this._value, false);
 		}
 
 		// Set the Rating Size
@@ -302,26 +286,26 @@ namespace OSUIFramework.Patterns.Rating {
 			let newSize: string;
 
 			// Reset current class
-			Helper.Style.RemoveClass(this._selfElem, this._ratingCssClass.Size);
+			if (this.configs.Size !== '') {
+				Helper.Style.RemoveClass(this._selfElem, this.configs.Size);
+			}
 
 			// If size param is not empty, it means is either 'small' or 'medium', so we can add the class based on the size param
 			// This is done, as the Size entity in OutSystems has not a 'base' entity, just a NullIdentifier, which is the default size
 			if (size !== '') {
-				Helper.Style.AddClass(this._selfElem, 'rating-' + size);
-
-				newSize = 'rating-' + size;
+				newSize = Enum.RatingCssClass.Size + size;
+				Helper.Style.AddClass(this._selfElem, newSize);
 			} else {
 				// If it's empty, it means is the default NullIdentifier, whihch corresponds to the 'base' size
-				newSize = 'rating-base';
+				newSize = '';
 			}
 
 			// Update the config
 			this.configs.Size = newSize;
-			this._ratingCssClass.Size = newSize;
 		}
 
 		// Set a rating value
-		public setValue(value: any): void {
+		public setValue(value: any, triggerEvent: boolean = true): void {
 			if (value !== null) {
 				// Format value to be of type decimal number
 				value = parseFloat(value);
@@ -335,8 +319,8 @@ namespace OSUIFramework.Patterns.Rating {
 				const ratingItems = this._selfElem.querySelectorAll('input');
 
 				// Reset the is-half class
-				if (Helper.Style.ContainsClass(this._selfElem, this._ratingCssClass.IsHalf)) {
-					Helper.Style.RemoveClass(this._selfElem, this._ratingCssClass.IsHalf);
+				if (Helper.Style.ContainsClass(this._selfElem, Enum.RatingCssClass.IsHalf)) {
+					Helper.Style.RemoveClass(this._selfElem, Enum.RatingCssClass.IsHalf);
 				}
 
 				// If there's only one rating item, then there's no need for further checks, this one will be checked
@@ -360,7 +344,7 @@ namespace OSUIFramework.Patterns.Rating {
 
 				// If is-half add the appropriate class, otherwise just declare the this.isHalfValue, to complete the if statement
 				this._isHalfValue
-					? Helper.Style.AddClass(this._selfElem, this._ratingCssClass.IsHalf)
+					? Helper.Style.AddClass(this._selfElem, Enum.RatingCssClass.IsHalf)
 					: this._isHalfValue;
 
 				// Update the variables with the new value
@@ -368,7 +352,7 @@ namespace OSUIFramework.Patterns.Rating {
 				this._value = this._configs.RatingValue;
 
 				// Call calbackfor OnSelect event
-				if (this._onSelect !== null) {
+				if (this._onSelect !== null && triggerEvent) {
 					this._onSelect(this._value);
 				}
 			}
