@@ -3,4 +3,65 @@
 /// @group Patterns-Search
 /// Patterns - Content - Search
 
-//Implement you code here
+///
+.search {
+	position: relative;
+
+	&:empty {
+		// Service Studio Preview
+		& {
+			-servicestudio-height: 40px;
+		}
+	}
+
+	&-input {
+		position: relative;
+
+		&:empty {
+			// Service Studio Preview
+			& {
+				-servicestudio-background-color: #fff;
+				-servicestudio-border-radius: 4px;
+				-servicestudio-height: 40px;
+			}
+		}
+
+		&:after {
+			align-items: center;
+			color: var(--color-neutral-6);
+			content: '\f002';
+			display: flex;
+			font: normal normal normal 14px/1 FontAwesome;
+			height: 100%;
+			left: 16px;
+			position: absolute;
+			top: 0;
+		}
+	}
+
+	&-preview {
+		display: none;
+	}
+
+	.form-control {
+		&[data-input] {
+			padding-left: var(--space-xl);
+		}
+	}
+}
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	.search {
+		&-input:after {
+			left: auto;
+			right: 16px;
+		}
+
+		.form-control[data-input] {
+			padding-left: var(--space-base);
+			padding-right: var(--space-xl);
+		}
+	}
+}

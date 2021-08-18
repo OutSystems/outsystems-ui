@@ -4,8 +4,6 @@ namespace OSUIFramework.Patterns.Search.Enum {
 	 * Search Enum properties
 	 */
 	export enum Search {
-		
-        //Implement you code here
-
+		ExtendedClass = 'ExtendedClass',
 	}
 }
