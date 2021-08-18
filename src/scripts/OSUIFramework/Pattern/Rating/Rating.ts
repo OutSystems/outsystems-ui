@@ -210,12 +210,6 @@ namespace OSUIFramework.Patterns.Rating {
 			this._ratingFieldsetElem.innerHTML = '';
 		}
 
-		public registerCallback(callback: any): void {
-			this._onSelect = (param, ...args) => {
-				callback(param, ...args);
-			};
-		}
-
 		// Get the rating decimal value
 		public getDecimalValue(value: number): number {
 			return Math.round((value - Math.floor(value)) * 100) / 100;
@@ -240,6 +234,13 @@ namespace OSUIFramework.Patterns.Rating {
 		public getValue(): number {
 			const inputChecked: any = this._selfElem.querySelector('input:checked');
 			return parseInt(inputChecked.value);
+		}
+
+		// Set callbacks for the onSelect click event
+		public registerCallback(callback: any): void {
+			this._onSelect = (param, ...args) => {
+				callback(param, ...args);
+			};
 		}
 
 		// Set disabled status
