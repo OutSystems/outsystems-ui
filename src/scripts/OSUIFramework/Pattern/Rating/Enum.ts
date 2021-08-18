@@ -3,7 +3,7 @@ namespace OSUIFramework.Patterns.Rating.Enum {
 	/**
 	 * Rating Enum properties
 	 */
-	export enum Rating {
+	export enum Properties {
 		ExtendedClass = 'ExtendedClass',
 		RatingValue = 'RatingValue',
 		RatingScale = 'RatingScale',

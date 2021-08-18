@@ -165,28 +165,28 @@ namespace OSUIFramework.Patterns.Rating {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
-			if (Enum.Rating[propertyName] && this._configs.hasOwnProperty(propertyName)) {
+			if (Enum.Properties[propertyName] && this._configs.hasOwnProperty(propertyName)) {
 				// Check which property changed and call respective method to update it
 				switch (propertyName) {
-					case Enum.Rating.ExtendedClass:
+					case Enum.Properties.ExtendedClass:
 						this.UpdateExtendedClass(this._configs.ExtendedClass, propertyValue);
 
 						this._configs.ExtendedClass = propertyValue;
 
 						break;
-					case Enum.Rating.RatingValue:
+					case Enum.Properties.RatingValue:
 						this.setValue(propertyValue);
 
 						break;
-					case Enum.Rating.RatingScale:
+					case Enum.Properties.RatingScale:
 						this.setScale(propertyValue);
 
 						break;
-					case Enum.Rating.IsEdit:
+					case Enum.Properties.IsEdit:
 						this.setIsEdit(propertyValue);
 
 						break;
-					case Enum.Rating.Size:
+					case Enum.Properties.Size:
 						this.setSize(propertyValue);
 
 						break;
