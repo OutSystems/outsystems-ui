@@ -8,7 +8,8 @@
 		"dev-ts": "tsc --watch",
 		"prod": "eslint **/*.ts && tsc --sourceMap false && webpack --env prefix=prod",
 		"lint": "eslint **/*.ts",
-		"lintfix": "eslint --fix **/*.ts"
+		"lintfix": "eslint --fix **/*.ts",
+		"create-pattern-base": "node ./custom-scripts/create-pattern-base.js"
 	},
 	"author": "OutSystems UI Team",
 	"browserslist": [
@@ -42,6 +43,7 @@
 		"webpack": "^5.47.1",
 		"webpack-cli": "^4.7.2",
 		"webpack-dev-server": "^3.11.2",
-		"webpack-merge": "^5.8.0"
+		"webpack-merge": "^5.8.0",
+		"shelljs": "^0.8.4"
 	}
 }
