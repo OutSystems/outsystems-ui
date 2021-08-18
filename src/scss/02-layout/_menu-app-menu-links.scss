@@ -152,7 +152,7 @@ body {
 
 ///
 .desktop {
-	.app-menu-links {
+	.layout:not(.layout-side) .app-menu-links {
 		display: flex;
 		flex-wrap: wrap;
 	}

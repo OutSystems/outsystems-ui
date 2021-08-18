@@ -54,9 +54,11 @@
 		}
 	}
 
-	.header.ThemeGrid_Container {
-		padding-left: calc(var(--os-safe-area-left) + var(--space-base));
-		padding-right: calc(var(--os-safe-area-right) + var(--space-base));
+	.header {
+		.ThemeGrid_Container {
+			padding-left: calc(var(--os-safe-area-left) + var(--space-base));
+			padding-right: calc(var(--os-safe-area-right) + var(--space-base));
+		}
 	}
 
 	.main-content.ThemeGrid_Container {
