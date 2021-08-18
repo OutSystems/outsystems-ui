@@ -32,4 +32,21 @@ namespace OSUIFramework.Helper.Style {
 	export function ToogleClass(elem: HTMLElement, cssClass: string): void {
 		elem.classList.toggle(cssClass);
 	}
+
+	/**
+	 * Method that will look for a cssClass Position on a given element
+	 *
+	 * @export
+	 * @param {HTMLElement} elem Element where the cssClass will be looked for
+	 * @return {*}  {(string | boolean)}
+	 */
+	export function HasCssClassPosition(elem: HTMLElement): string | boolean {
+		const classesEnum = Object.keys(GlobalEnum.OSUICssClassPosition);
+		for (let i = 0; i < classesEnum.length; ++i) {
+			if (elem.classList.contains(GlobalEnum.OSUICssClassPosition[classesEnum[i]])) {
+				return GlobalEnum.OSUICssClassPosition[classesEnum[i]];
+			}
+		}
+		return false;
+	}
 }

@@ -1,3 +1,5 @@
+/// <reference path="../AbstractConfiguration.ts" />
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Tooltip {
 	export class TooltipConfig extends AbstractConfiguration {
