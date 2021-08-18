@@ -1,8 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Tooltip {
-	/**
-	 * Defines the interface for OutSystemsUI Patterns
-	 */
 	export class Tooltip extends AbstractPattern<TooltipConfig> implements ITooltip {
 		// Store if the accessibility feature is enabled
 		private _enableAccessibility: boolean;
