@@ -122,13 +122,13 @@ namespace OSUIFramework.Patterns.Rating {
 
 		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _setInitialCssClasses(): void {
-			// Set IsEdit class
-			if (this._isHalfValue === true) {
+			// Set IsHalf class
+			if (this._isHalfValue) {
 				Helper.Style.AddClass(this._selfElem, Enum.RatingCssClass.IsHalf);
 			}
 
-			// Set IsHalf class
-			if (this._configs.IsEdit === true) {
+			// Set IsEdit class
+			if (this._configs.IsEdit) {
 				Helper.Style.AddClass(this._selfElem, Enum.RatingCssClass.IsEdit);
 			}
 
