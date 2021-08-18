@@ -37,6 +37,21 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	}
 
 	/**
+	 *
+	 *
+	 * @export
+	 * @param {string} ratingId
+	 * @return {*}  {*}
+	 */
+	export function Destroy(ratingId: string): any {
+		const rating = GetRatingById(ratingId);
+
+		rating.destroy();
+
+		ratingsMap.delete(ratingId);
+	}
+
+	/**
 	 * Function that will return the Map with all the Rating instances at the page
 	 *
 	 * @export
@@ -102,20 +117,5 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 		const rating = GetRatingById(ratingId);
 
 		rating.registerCallback(callback);
-	}
-
-	/**
-	 *
-	 *
-	 * @export
-	 * @param {string} ratingId
-	 * @return {*}  {*}
-	 */
-	export function Destroy(ratingId: string): any {
-		const rating = GetRatingById(ratingId);
-
-		rating.destroy();
-
-		ratingsMap.delete(rating.uniqueId);
 	}
 }
