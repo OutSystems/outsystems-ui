@@ -10,11 +10,10 @@
 		bottom: 0;
 		flex-direction: column;
 		height: auto;
-		left: 0;
 		position: fixed;
 		top: 0;
 		width: var(--side-menu-size);
-		z-index: 102;
+		z-index: 105;
 	}
 
 	.submenu {
@@ -86,6 +85,10 @@
 ///
 .desktop {
 	.layout-side {
+		.app-menu-content {
+			left: 0;
+		}
+
 		&.aside-expandable:not(.fixed-header) .app-menu-content {
 			padding-top: var(--header-size);
 			top: 0;
