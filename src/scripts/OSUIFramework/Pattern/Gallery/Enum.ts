@@ -3,14 +3,14 @@ namespace OSUIFramework.Patterns.Gallery.Enum {
 	/**
 	 * Gallery Enum properties
 	 */
-	export enum Gallery {
+	export enum Property {
 		ItemsInPhone = 'ItemsInPhone',
 		ItemsInTablet = 'ItemsInTablet',
 		ItemsInDesktop = 'ItemsInDesktop',
 		GutterSize = 'GutterSize',
 	}
 
-	export enum GalleryCssProperties {
+	export enum CssProperty {
 		GridDesktop = '--grid-desktop',
 		GridTablet = '--grid-tablet',
 		GridPhone = '--grid-phone',
