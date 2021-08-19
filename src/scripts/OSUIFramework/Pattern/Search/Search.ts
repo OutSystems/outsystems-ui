@@ -28,21 +28,32 @@ namespace OSUIFramework.Patterns.Search {
 
 			this._setHtmlElements();
 
+			this._setInitialCssClasses();
+
+			this._setAccessibilityProps();
+
+			this._addEvents();
+
 			this.finishBuild();
 		}
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
 			if (Enum.Properties[propertyName] && this._configs.hasOwnProperty(propertyName)) {
-				this.UpdateExtendedClass(this._configs.ExtendedClass, propertyValue);
+				switch (propertyName) {
+					case Enum.Properties.ExtendedClass:
+						this.UpdateExtendedClass(this._configs.ExtendedClass, propertyValue);
 
-				this._configs.ExtendedClass = propertyValue;
+						this._configs.ExtendedClass = propertyValue;
+
+						break;
+				}
 			} else {
 				throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
 			}
 		}
 
-		// Close the tooltip
+		// Close the search
 		public close(): void {
 			// code for close method here
 		}
