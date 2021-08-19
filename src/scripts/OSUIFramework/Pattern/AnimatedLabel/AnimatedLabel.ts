@@ -125,7 +125,7 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 			super.destroy();
 
 			this._inputElem.removeEventListener('blur', this._eventOnBlur);
-			this._inputElem.removeEventListener('focus', this._eventOnBlur);
+			this._inputElem.removeEventListener('focus', this._eventOnFocus);
 		}
 
 		// Update Label active status accordingly when the input info has canhged
