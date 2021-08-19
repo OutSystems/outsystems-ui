@@ -6,6 +6,7 @@
 ///
 .rating {
 	display: inline-flex;
+	flex-wrap: wrap;
 	font-size: var(--rating-size);
 	pointer-events: none;
 
@@ -25,35 +26,6 @@
 
 		&-medium {
 			--rating-size: 24px;
-		}
-	}
-
-	&.is-half {
-		&:hover input:checked + label .rating-item-filled {
-			opacity: 1;
-		}
-
-		.rating-item-half {
-			z-index: 1;
-		}
-
-		input {
-			&:checked + label .rating-item {
-				&-half {
-					opacity: 1;
-				}
-
-				&-filled {
-					opacity: 0;
-				}
-			}
-
-			&:hover ~ label.rating-item .rating-item {
-				&-filled,
-				&-half {
-					opacity: 0;
-				}
-			}
 		}
 	}
 
@@ -105,25 +77,6 @@
 		padding-right: 0;
 	}
 
-	input {
-		&:checked + label .rating-item-empty,
-		&:checked ~ label .rating-item-filled,
-		&:focus + label .rating-item-empty,
-		&:hover ~ label .rating-item-filled {
-			opacity: 0;
-		}
-
-		&:checked ~ label .rating-item-empty,
-		&:checked + label .rating-item-filled,
-		&:checked + label .rating-item-half,
-		&:hover ~ label .rating-item-empty,
-		&:hover + label .rating-item-filled,
-		&:focus ~ label .rating-item-empty,
-		&:focus + label .rating-item-filled {
-			opacity: 1;
-		}
-	}
-
 	&-item-filled,
 	&-item-half,
 	&-item-empty {
@@ -135,6 +88,56 @@
 			-servicestudio-opacity: 1 !important;
 			-servicestudio-position: relative;
 		}
+	}
+
+	// These need to be separated, to keep exact CSS specificty, for the hover/ checked styles to work as intended
+	/* Checked styles*/
+	input:checked + label .rating-item-empty,
+	input:checked ~ label .rating-item-filled {
+		opacity: 0;
+	}
+
+	&.is-half .rating-item-half {
+		z-index: 1;
+	}
+
+	&.is-half input:checked + label .rating-item-half {
+		opacity: 1;
+	}
+
+	&.is-half input:checked + label .rating-item-filled {
+		opacity: 0;
+	}
+
+	/* Selected Styles*/
+	&:hover input + label .rating-item-filled,
+	&.is-half:hover input:checked + label .rating-item-filled {
+		opacity: 1;
+	}
+
+	input:focus + label .rating-item-empty,
+	input:hover ~ label .rating-item-filled {
+		opacity: 0;
+	}
+
+	input:checked ~ label .rating-item-empty,
+	input:checked + label .rating-item-filled,
+	input:checked + label .rating-item-half,
+	input:hover ~ label .rating-item-empty,
+	input:focus ~ label .rating-item-empty,
+	input:focus + label .rating-item-filled {
+		opacity: 1;
+	}
+
+	input:hover ~ label .rating-item-filled,
+	&.is-half input:hover ~ label.rating-item .rating-item-filled,
+	&.is-half input:hover ~ label.rating-item .rating-item-half {
+		opacity: 0;
+	}
+
+	input:hover + label .rating-item-filled,
+	&.is-half input:hover + label.rating-item .rating-item-filled {
+		opacity: 1;
 	}
 
 	--rating-size: 16px;
@@ -178,10 +181,6 @@
 ///
 .is-rtl {
 	.rating {
-		&:not(.is-half) .rating-item:nth-of-type(2) {
-			padding: 0;
-		}
-
 		.rating-item {
 			padding-left: calc(var(--rating-size) + var(--space-s));
 			padding-right: 0;
