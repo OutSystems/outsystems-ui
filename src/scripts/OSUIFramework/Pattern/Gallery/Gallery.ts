@@ -1,30 +1,15 @@
+/// <reference path="../AbstractPattern.ts" />
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Gallery {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	export class Gallery extends AbstractPattern<GalleryConfig> implements IGallery {
-		private _gallery: HTMLElement;
-
 		// Store all the classes strings used by the pattern
-		private _galleryClasses = {
-			GridGallery: 'grid-gallery',
-		};
+		private readonly _galleryClass = '.grid-gallery';
 
 		// Store all the css property strings used by the pattern
-		private _galleryCssProperties = {
-			GridDesktop: '--grid-desktop',
-			GridTablet: '--grid-tablet',
-			GridPhone: '--grid-phone',
-			GridGap: '--grid-gap',
-			GridListDesktop: '--grid-list-desktop',
-			GridListTablet: '--grid-list-tablet',
-			GridListPhone: '--grid-list-phone',
-		};
-
-		private _galleryId: string;
-		private _isEdge: boolean;
-		private _root;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
@@ -38,9 +23,9 @@ namespace OSUIFramework.Patterns.Gallery {
 		 */
 		private _setGutterSize(): void {
 			Helper.Style.SetStyleAttribute(
-				this._gallery,
-				this._galleryCssProperties.GridGap,
-				'var(--space-' + this.configs.GutterSize + ')'
+				this._selfElem,
+				Enum.GalleryCssProperties.GridGap,
+				`var(--space-${this.configs.GutterSize})`
 			);
 		}
 
@@ -51,17 +36,17 @@ namespace OSUIFramework.Patterns.Gallery {
 		 */
 		private _setItemsInDesktop(): void {
 			Helper.Style.SetStyleAttribute(
-				this._gallery,
-				this._galleryCssProperties.GridDesktop,
-				this.configs.ItemsInDesktop.toString()
+				this._selfElem,
+				Enum.GalleryCssProperties.GridDesktop,
+				this.configs.ItemsInDesktop
 			);
 			// Fix for Edge, as css calc() doesn't work on all scenarios for this browser
 			this.configs.ItemsInDesktop++;
 
 			Helper.Style.SetStyleAttribute(
-				this._gallery,
-				this._galleryCssProperties.GridListDesktop,
-				this.configs.ItemsInDesktop.toString()
+				this._selfElem,
+				Enum.GalleryCssProperties.GridListDesktop,
+				this.configs.ItemsInDesktop
 			);
 		}
 
@@ -72,18 +57,18 @@ namespace OSUIFramework.Patterns.Gallery {
 		 */
 		private _setItemsInPhone(): void {
 			Helper.Style.SetStyleAttribute(
-				this._gallery,
-				this._galleryCssProperties.GridPhone,
-				this.configs.ItemsInPhone.toString()
+				this._selfElem,
+				Enum.GalleryCssProperties.GridPhone,
+				this.configs.ItemsInPhone
 			);
 
 			// Fix for Edge, as css calc() doesn't work on all scenarios for this browser
 			this.configs.ItemsInPhone++;
 
 			Helper.Style.SetStyleAttribute(
-				this._gallery,
-				this._galleryCssProperties.GridListPhone,
-				this.configs.ItemsInPhone.toString()
+				this._selfElem,
+				Enum.GalleryCssProperties.GridListPhone,
+				this.configs.ItemsInPhone
 			);
 		}
 
@@ -94,28 +79,23 @@ namespace OSUIFramework.Patterns.Gallery {
 		 */
 		private _setItemsInTablet(): void {
 			Helper.Style.SetStyleAttribute(
-				this._gallery,
-				this._galleryCssProperties.GridTablet,
-				this.configs.ItemsInTablet.toString()
+				this._selfElem,
+				Enum.GalleryCssProperties.GridTablet,
+				this.configs.ItemsInTablet
 			);
 
 			// Fix for Edge, as css calc() doesn't work on all scenarios for this browser
 			this.configs.ItemsInTablet++;
 
 			Helper.Style.SetStyleAttribute(
-				this._gallery,
-				this._galleryCssProperties.GridListTablet,
-				this.configs.ItemsInTablet.toString()
+				this._selfElem,
+				Enum.GalleryCssProperties.GridListTablet,
+				this.configs.ItemsInTablet
 			);
 		}
 
 		public build(): void {
 			super.build();
-
-			//Build the gallery here
-			this._root = document.documentElement;
-			this._gallery = document.querySelector('.' + this._galleryClasses.GridGallery);
-			this._isEdge = document.body.classList.contains('edge');
 
 			// Set Items
 			this._setItemsInDesktop();
@@ -135,26 +115,21 @@ namespace OSUIFramework.Patterns.Gallery {
 					case Enum.Gallery.ItemsInDesktop:
 						this._configs.ItemsInDesktop = propertyValue;
 						this._setItemsInDesktop();
-
 						break;
 					case Enum.Gallery.ItemsInTablet:
 						this._configs.ItemsInTablet = propertyValue;
-
 						this._setItemsInTablet();
-
 						break;
 					case Enum.Gallery.ItemsInPhone:
 						this._configs.ItemsInPhone = propertyValue;
-
 						this._setItemsInPhone();
-
 						break;
 					case Enum.Gallery.GutterSize:
 						this._configs.GutterSize = propertyValue;
-
 						this._setGutterSize();
-
 						break;
+					default:
+						throw Error(`changeProperty - Property '${propertyName}' can't be changed.`);
 				}
 			}
 		}
