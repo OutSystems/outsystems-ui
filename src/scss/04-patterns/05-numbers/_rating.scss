@@ -159,6 +159,21 @@
 	}
 }
 
+// Responsive -------------------------------------------------------------------------
+///
+.ios {
+	.rating {
+		.rating-item {
+			//Fix for preventing FastClick issues on iOS
+			// Check here for details: https://github.com/ftlabs/fastclick/issues/60 */
+			& > * {
+				display: block;
+				pointer-events: none;
+			}
+		}
+	}
+}
+
 // IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {

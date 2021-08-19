@@ -110,7 +110,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 		private _setInitialCssClasses(): void {
 			// Set default ExtendedClass values
 			if (this._configs.ExtendedClass !== '') {
-				this.UpdateExtendedClass('', this._configs.ExtendedClass);
+				this.updateExtendedClass(this._configs.ExtendedClass, this._configs.ExtendedClass);
 			}
 
 			// Set default IsHover cssClass property value
@@ -185,7 +185,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 			if (Enum.Tooltip[propertyName] && this._configs.hasOwnProperty(propertyName)) {
 				switch (propertyName) {
 					case Enum.Tooltip.ExtendedClass:
-						this.UpdateExtendedClass(this._configs.ExtendedClass, propertyValue);
+						this.updateExtendedClass(this._configs.ExtendedClass, propertyValue);
 
 						this._configs.ExtendedClass = propertyValue;
 
@@ -233,8 +233,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 		}
 
 		// Destroy the tooltip
-		public destroy(): void {
-			super.destroy();
+		public dispose(): void {
+			super.dispose();
 
 			window.removeEventListener('click', this._eventWindowClick);
 

@@ -49,4 +49,20 @@ namespace OSUIFramework.Helper.Style {
 		}
 		return false;
 	}
+
+	/**
+	 * Method that add a style attribute to a given html element
+	 *
+	 * @export
+	 * @param {HTMLElement} elem Element where the class will be toggled
+	 * @param {string} cssRule Css rule that will be added
+	 * @param {string} ruleValue Value of the CSS rule
+	 */
+	export function SetStyleAttribute(elem: HTMLElement, cssRule: string, ruleValue: number | string): void {
+		if (elem) {
+			elem.style.setProperty(cssRule, ruleValue.toString());
+		} else {
+			throw Error(`The element does not exist, when trying to apply the rule '${cssRule}'.`);
+		}
+	}
 }
