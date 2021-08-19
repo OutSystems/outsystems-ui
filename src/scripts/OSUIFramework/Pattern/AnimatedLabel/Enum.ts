@@ -12,13 +12,21 @@ namespace OSUIFramework.Patterns.AnimatedLabel.Enum {
 	//
 	export enum DataBlockTag {
 		Input = '[data-input]',
+		Label = '[data-label]',
 		TextArea = '[data-textarea]',
 	}
 
 	// Css Classes
 	export enum CssClasses {
-		Pattern = 'animated-label',
-		LabelPlaceholder = 'animated-label-text',
 		InputPlaceholder = 'animated-label-input',
+		IsActive = 'active',
+		LabelPlaceholder = 'animated-label-text',
+		Pattern = 'animated-label',
+	}
+
+	// Warning/Error messages
+	export enum Messages {
+		InputNotFound = 'Missing input or textarea.',
+		LabelNotFound = 'We notice that a label is missing inside the Label Placeholder. In order to grant accessibility add it and assign the Input Widget accordingly.',
 	}
 }

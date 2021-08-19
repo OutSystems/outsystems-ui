@@ -111,4 +111,19 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 
 		return animatedlabel;
 	}
+
+	/**
+	 * Fucntion that will update the Label text according text has been changed inside the input
+	 *
+	 * @export
+	 * @param {string} animatedLabelId ID of the Animatedlabel that will be updated.
+	 * @return {*}  {OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel}
+	 */
+	export function UpdateOnRender(animatedLabelId: string): OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel {
+		const animatedlabel = GetAnimatedLabelById(animatedLabelId);
+
+		animatedlabel.updateOnRender();
+
+		return animatedlabel;
+	}
 }
