@@ -60,7 +60,7 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 
 		search.destroy();
 
-		searchsMap.delete(search.uniqueId);
+		searchsMap.delete(searchId);
 	}
 
 	/**

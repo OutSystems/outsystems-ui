@@ -5,7 +5,7 @@ namespace OSUIFramework.Patterns.Search {
 	 */
 	export class Search extends AbstractPattern<SearchConfig> implements ISearch {
 		// Store the input html element
-		private _inputPlaceholderElem: HTMLElement;
+		private _inputElem: HTMLElement;
 
 		// Store all the classes strings used by the pattern
 		private _searchCssClass = {
@@ -17,10 +17,20 @@ namespace OSUIFramework.Patterns.Search {
 			super(uniqueId, new SearchConfig(configs));
 		}
 
+		// Add Pattern Events
+		private _addEvents(): void {
+			console.log('Set Events here!');
+		}
+
+		// Add the Accessibility Attributes values
+		private _setAccessibilityProps(): void {
+			console.log('Set Accessibility attributes here!');
+		}
+
 		// Update info based on htmlContent
 		private _setHtmlElements(): void {
 			// Set the html references that will be used to manage the cssClasses and atribute properties
-			this._inputPlaceholderElem = this._selfElem.querySelector('.' + Enum.CssClasses.InputPlaceholder);
+			this._inputElem = this._selfElem.querySelector(Enum.DataBlockTag.Input);
 		}
 
 		public build(): void {
@@ -35,6 +45,16 @@ namespace OSUIFramework.Patterns.Search {
 			this._addEvents();
 
 			this.finishBuild();
+		}
+
+		// Set the cssClasses that should be assigned to the element on it's initialization
+		private _setInitialCssClasses(): void {
+			// Set default ExtendedClass values
+			if (this._configs.ExtendedClass !== '') {
+				this.UpdateExtendedClass('', this._configs.ExtendedClass);
+			}
+
+			console.log('Set all the cssClasses here if needed!');
 		}
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
@@ -53,6 +73,11 @@ namespace OSUIFramework.Patterns.Search {
 			}
 		}
 
+		// Open the Search
+		public open(): void {
+			// code for open method here
+		}
+
 		// Close the search
 		public close(): void {
 			// code for close method here
@@ -61,11 +86,6 @@ namespace OSUIFramework.Patterns.Search {
 		// Destroy the Search
 		public destroy(): void {
 			super.destroy();
-		}
-
-		// Open the Search
-		public open(): void {
-			// code for open method here
 		}
 	}
 }
