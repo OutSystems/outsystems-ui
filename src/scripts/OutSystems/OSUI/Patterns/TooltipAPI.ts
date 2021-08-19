@@ -50,6 +50,20 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	}
 
 	/**
+	 * Function that will destroy the instance of the given tooltip
+	 *
+	 * @export
+	 * @param {string} tooltipId
+	 */
+	export function Destroy(tooltipId: string): void {
+		const tooltip = GetTooltipById(tooltipId);
+
+		tooltip.destroy();
+
+		tooltipsMap.delete(tooltip.uniqueId);
+	}
+
+	/**
 	 * Fucntion that will return the Map with all the Tooltip instances at the page
 	 *
 	 * @export

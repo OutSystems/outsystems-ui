@@ -42,6 +42,10 @@ namespace OSUIFramework.Patterns {
 			}
 		}
 
+		public destroy(): void {
+			this._isBuilt = false;
+		}
+
 		public equalsToID(patternId: string): boolean {
 			return patternId === this._uniqueId || patternId === this._widgetId;
 		}
@@ -57,6 +61,7 @@ namespace OSUIFramework.Patterns {
 			this._isBuilt = true;
 		}
 
+		// eslint-disable-next-line @typescript-eslint/member-ordering
 		public UpdateExtendedClass(activeCssClass: string, newCssClass: string): void {
 			if (activeCssClass !== '') {
 				const activeCssClassArray = activeCssClass.split(' ');
