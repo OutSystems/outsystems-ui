@@ -1,6 +1,7 @@
 dist
 dependencies
 node_modules
+custom-scripts/**
 src/static/**
 
 *.css
