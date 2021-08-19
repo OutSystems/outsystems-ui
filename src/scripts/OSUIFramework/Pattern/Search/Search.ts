@@ -5,8 +5,7 @@ namespace OSUIFramework.Patterns.Search {
 	 */
 	export class Search extends AbstractPattern<SearchConfig> implements ISearch {
 		// Store the input html element
-		private _searchWrapperElem: HTMLElement;
-		private _searchInputElem: HTMLElement;
+		private _inputPlaceholderElem: HTMLElement;
 
 		// Store all the classes strings used by the pattern
 		private _searchCssClass = {
@@ -21,8 +20,7 @@ namespace OSUIFramework.Patterns.Search {
 		// Update info based on htmlContent
 		private _setHtmlElements(): void {
 			// Set the html references that will be used to manage the cssClasses and atribute properties
-			this._searchWrapperElem = this._selfElem;
-			this._searchInputElem = this._selfElem.querySelector('input');
+			this._inputPlaceholderElem = this._selfElem.querySelector('.' + Enum.CssClasses.InputPlaceholder);
 		}
 
 		public build(): void {
@@ -35,7 +33,7 @@ namespace OSUIFramework.Patterns.Search {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
-			if (Enum.Search[propertyName] && this._configs.hasOwnProperty(propertyName)) {
+			if (Enum.Properties[propertyName] && this._configs.hasOwnProperty(propertyName)) {
 				this.UpdateExtendedClass(this._configs.ExtendedClass, propertyValue);
 
 				this._configs.ExtendedClass = propertyValue;
