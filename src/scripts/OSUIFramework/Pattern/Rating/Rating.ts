@@ -13,7 +13,7 @@ namespace OSUIFramework.Patterns.Rating {
 		// Store if the rating value is half
 		private _isHalfValue: boolean;
 		// Store the callback to be used on the OnSelect event
-		private _onSelect: any;
+		private _onSelect: Callbacks.OSRatingSelectEvent;
 		// Store the fieldset html element
 		private _ratingFieldsetElem: HTMLElement;
 		// Store if the rating already has an event added
@@ -33,7 +33,6 @@ namespace OSUIFramework.Patterns.Rating {
 			this._disabled = !this.configs.IsEdit;
 			this._ratingInputName = 'rating-' + this.uniqueId;
 			this._ratingHasEventAdded = false;
-			this._onSelect = null;
 		}
 
 		// Medthod that will iterate on the RatingScale, to crate an item for each one
@@ -83,6 +82,15 @@ namespace OSUIFramework.Patterns.Rating {
 				this._value = this.getValue();
 				// And use that value to set a new Rating Value
 				this.setValue(this._value);
+			}
+		}
+
+		// Method that triggers the OnSelect event
+		private _triggerOnSelectEvent(value: number): void {
+			if (this._onSelect !== undefined) {
+				setTimeout(() => {
+					this._onSelect(this.widgetId, value);
+				}, 0);
 			}
 		}
 
@@ -237,10 +245,8 @@ namespace OSUIFramework.Patterns.Rating {
 		}
 
 		// Set callbacks for the onSelect click event
-		public registerCallback(callback: any): void {
-			this._onSelect = (...args) => {
-				callback(...args);
-			};
+		public registerCallback(callback: Callbacks.OSRatingSelectEvent): void {
+			this._onSelect = callback;
 		}
 
 		// Set disabled status
@@ -353,8 +359,8 @@ namespace OSUIFramework.Patterns.Rating {
 				this._value = this._configs.RatingValue;
 
 				// Call calbackfor OnSelect event
-				if (this._onSelect !== null && triggerEvent) {
-					this._onSelect(this._value);
+				if (triggerEvent) {
+					this._triggerOnSelectEvent(this._value);
 				}
 			}
 		}

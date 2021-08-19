@@ -5,6 +5,7 @@ namespace OSUIFramework.Patterns.Rating {
 	 */
 	export interface IRating extends Interface.IPattern {
 		destroy(): void;
-		registerCallback(callback: any): void;
+
+		registerCallback(callback: Callbacks.OSRatingSelectEvent): void;
 	}
 }
