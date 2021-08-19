@@ -54,7 +54,7 @@ namespace OSUIFramework.Patterns {
 
 		public finishBuild(): void {
 			// Set the widget id value
-			this._widgetId = Helper.GetElementByUniqueId(this._uniqueId).closest(Constants.dataBlockTag).id;
+			this._widgetId = Helper.GetElementByUniqueId(this._uniqueId).closest(GlobalEnum.DataBlocksTag.DataBlock).id;
 
 			this._isBuilt = true;
 		}

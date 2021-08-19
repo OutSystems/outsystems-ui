@@ -55,8 +55,8 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 			this._inputPlaceholderElem = this._selfElem.querySelector('.' + Enum.CssClasses.InputPlaceholder);
 
 			this._inputElem =
-				this._inputPlaceholderElem.querySelector(Enum.DataBlockTag.Input) ||
-				this._inputPlaceholderElem.querySelector(Enum.DataBlockTag.TextArea);
+				this._inputPlaceholderElem.querySelector(GlobalEnum.DataBlocksTag.Input) ||
+				this._inputPlaceholderElem.querySelector(GlobalEnum.DataBlocksTag.TextArea);
 
 			// Check if the input exist
 			if (this._inputElem) {
@@ -71,7 +71,7 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 			}
 
 			// Show a warning message if a label was in use
-			if (!this._labelPlaceholderElem.querySelector(Enum.DataBlockTag.Label)) {
+			if (!this._labelPlaceholderElem.querySelector(GlobalEnum.DataBlocksTag.Label)) {
 				console.warn(Enum.Messages.LabelNotFound);
 			}
 		}
