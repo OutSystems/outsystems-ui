@@ -33,11 +33,6 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 			this._inputElem.addEventListener('focus', this._eventOnFocus);
 		}
 
-		// manage the label active cssClass that will animate the label accordingly
-		private _manageActiveState(): void {
-			Helper.Style.ToogleClass(this._selfElem, Enum.CssClasses.IsActive);
-		}
-
 		// Check if the input is empty, if yes reposition the Label
 		private _onInputBlur(): void {
 			if (this._inputElem.value === '' && this._isLabelActive) {
