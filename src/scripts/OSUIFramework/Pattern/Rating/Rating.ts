@@ -14,14 +14,14 @@ namespace OSUIFramework.Patterns.Rating {
 		private _isHalfValue: boolean;
 		// Store the callback to be used on the OnSelect event
 		private _onSelect: any;
+		// Store the fieldset html element
+		private _ratingFieldsetElem: HTMLElement;
 		// Store if the rating already has an event added
 		private _ratingHasEventAdded: boolean;
 		// Store the rating icons html element
 		private _ratingIconStatesElem: HTMLElement;
 		// Store the input name to be used on clones
 		private _ratingInputName: string;
-		// Store the fieldset html element
-		private _ratingFieldsetElem: HTMLElement;
 		// Store current rating value
 		private _value: number;
 
@@ -225,7 +225,7 @@ namespace OSUIFramework.Patterns.Rating {
 			const decimalValue = this.getDecimalValue(value);
 			// If bigger than 0.3 and lower than 0.7 means it should be represented as a half value.
 			// This threshold was decided by UX principles
-			const isHalf = decimalValue >= 0.3 && decimalValue <= 0.7 ? true : false;
+			const isHalf = !!(decimalValue >= 0.3 && decimalValue <= 0.7);
 
 			return isHalf;
 		}
@@ -254,7 +254,7 @@ namespace OSUIFramework.Patterns.Rating {
 		public setIsEdit(isEdit: any): void {
 			// Make sure that the param value is boolean and not a string
 			// This needs to be done, for compatibility with OutSystems platform logic
-			const IsEditParam = isEdit === 'True' ? true : false;
+			const IsEditParam = isEdit === 'True';
 
 			// Set the fieldset and input disabled attribute status
 			this.setIsDisabled(!IsEditParam);
@@ -306,7 +306,7 @@ namespace OSUIFramework.Patterns.Rating {
 		}
 
 		// Set a rating value
-		public setValue(value: any, triggerEvent: boolean = true): void {
+		public setValue(value: any, triggerEvent = true): void {
 			if (value !== null) {
 				// Format value to be of type decimal number
 				value = parseFloat(value);
