@@ -4,16 +4,13 @@ namespace OSUIFramework.Patterns.Search {
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	export class Search extends AbstractPattern<SearchConfig> implements ISearch {
-		// Store if the accessibility feature is enabled
-		private _enableAccessibility: boolean;
-
 		// Store the input html element
 		private _searchWrapperElem: HTMLElement;
 		private _searchInputElem: HTMLElement;
 
 		// Store all the classes strings used by the pattern
 		private _searchCssClass = {
-			pattern: 'osui-search',
+			pattern: 'search',
 		};
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
@@ -23,9 +20,6 @@ namespace OSUIFramework.Patterns.Search {
 
 		// Update info based on htmlContent
 		private _setHtmlElements(): void {
-			// Check if the accessibility feature is enabled
-			this._enableAccessibility = !!document.querySelector('.' + Constants.hasAccessibilityClass);
-
 			// Set the html references that will be used to manage the cssClasses and atribute properties
 			this._searchWrapperElem = this._selfElem;
 			this._searchInputElem = this._selfElem.querySelector('input');
