@@ -238,8 +238,8 @@ namespace OSUIFramework.Patterns.Rating {
 
 		// Set callbacks for the onSelect click event
 		public registerCallback(callback: any): void {
-			this._onSelect = (param, ...args) => {
-				callback(param, ...args);
+			this._onSelect = (...args) => {
+				callback(...args);
 			};
 		}
 
