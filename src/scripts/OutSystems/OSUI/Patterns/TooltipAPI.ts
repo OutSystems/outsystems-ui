@@ -58,7 +58,7 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	export function Destroy(tooltipId: string): void {
 		const tooltip = GetTooltipById(tooltipId);
 
-		tooltip.destroy();
+		tooltip.dispose();
 
 		tooltipsMap.delete(tooltip.uniqueId);
 	}
