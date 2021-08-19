@@ -9,6 +9,12 @@ namespace OSUIFramework.Patterns.AnimatedLabel.Enum {
 		ExtendedClass = 'ExtendedClass',
 	}
 
+	//
+	export enum DataBlockTag {
+		Input = '[data-input]',
+		TextArea = '[data-textarea]',
+	}
+
 	// Css Classes
 	export enum CssClasses {
 		Pattern = 'animated-label',

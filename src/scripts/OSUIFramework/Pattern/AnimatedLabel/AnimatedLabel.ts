@@ -1,6 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.AnimatedLabel {
 	export class AnimatedLabel extends AbstractPattern<AnimatedLabelConfig> implements IAnimatedLabel {
+		// Store the pattern html elements
+		private _inputElem: HTMLElement;
+		private _inputPlaceholderElem: HTMLElement;
+		private _labelPlaceholderElem: HTMLElement;
+
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new AnimatedLabelConfig(configs));
@@ -18,7 +23,16 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 
 		// Update info based on htmlContent
 		private _setHtmlElements(): void {
-			console.log('Set the default html references here if needed!');
+			this._labelPlaceholderElem = this._selfElem.querySelector('.' + Enum.CssClasses.LabelPlaceholder);
+			this._inputPlaceholderElem = this._selfElem.querySelector('.' + Enum.CssClasses.InputPlaceholder);
+
+			this._inputElem =
+				this._inputPlaceholderElem.querySelector(Enum.DataBlockTag.Input) ||
+				this._inputPlaceholderElem.querySelector(Enum.DataBlockTag.TextArea);
+
+			if (!this._inputElem) {
+				throw new Error('Missing input or textarea.');
+			}
 		}
 
 		// Set the cssClasses that should be assigned to the element on it's initialization
