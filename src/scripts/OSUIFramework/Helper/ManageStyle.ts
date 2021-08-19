@@ -41,7 +41,12 @@ namespace OSUIFramework.Helper.Style {
 	 * @param {string} cssRule Css rule that will be added
 	 * @param {string} ruleValue Value of the CSS rule
 	 */
-	export function SetStyleAttribute(elem: HTMLElement, cssRule: string, ruleValue: string): void {
-		elem.style.setProperty(cssRule, ruleValue);
+	export function SetStyleAttribute(elem: HTMLElement, cssRule: string, ruleValue: string | number): void {
+		if (elem) {
+			//elem !== null && elem !== undefined
+			elem.style.setProperty(cssRule, ruleValue.toString());
+		} else {
+			throw Error(`The element does not exist, when trying to apply the rule '${cssRule}'.`);
+		}
 	}
 }
