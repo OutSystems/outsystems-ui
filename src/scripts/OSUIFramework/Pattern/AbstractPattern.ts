@@ -7,6 +7,7 @@ namespace OSUIFramework.Patterns {
 		private _isBuilt: boolean;
 		private _uniqueId: string;
 		protected _configs: C;
+		protected _enableAccessibility: boolean;
 		protected _selfElem: HTMLElement;
 		protected _widgetId: string;
 
@@ -37,8 +38,9 @@ namespace OSUIFramework.Patterns {
 			const obj = document.getElementsByName(this._uniqueId);
 			if (obj.length) {
 				this._selfElem = document.getElementsByName(this._uniqueId)[0];
+				this._enableAccessibility = !!document.querySelector('.' + Constants.hasAccessibilityClass);
 			} else {
-				throw new Error(`Object with name '${this._uniqueId}' not found.`);
+				throw new Error(`Object with name '${this._uniqueId}' not found at DOM!`);
 			}
 		}
 
