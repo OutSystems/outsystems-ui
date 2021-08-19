@@ -6,9 +6,9 @@ namespace OSUIFramework.Helper {
 	 * @export
 	 * @param {string} message
 	 */
-	export function LogMessage(message: string): void {
+	export function LogMessage(message: string): string {
 		if (Constants.enableLogMessages) {
-			console.log(message);
+			return message;
 		}
 	}
 }
