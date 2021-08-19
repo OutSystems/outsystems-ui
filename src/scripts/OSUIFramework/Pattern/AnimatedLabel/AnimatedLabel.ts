@@ -80,7 +80,7 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		private _setInitialCssClasses(): void {
 			// Set default ExtendedClass values
 			if (this._configs.ExtendedClass !== '') {
-				this.UpdateExtendedClass('', this._configs.ExtendedClass);
+				this.updateExtendedClass('', this._configs.ExtendedClass);
 			}
 		}
 
@@ -104,7 +104,7 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 			if (Enum.Properties[propertyName] && this._configs.hasOwnProperty(propertyName)) {
 				switch (propertyName) {
 					case Enum.Properties.ExtendedClass:
-						this.UpdateExtendedClass(this._configs.ExtendedClass, propertyValue);
+						this.updateExtendedClass(this._configs.ExtendedClass, propertyValue);
 
 						this._configs.ExtendedClass = propertyValue;
 
@@ -116,8 +116,8 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		}
 
 		// Destroy the Animatedlabel
-		public destroy(): void {
-			super.destroy();
+		public dispose(): void {
+			super.dispose();
 
 			this._inputElem.removeEventListener('blur', this._eventOnBlur);
 			this._inputElem.removeEventListener('focus', this._eventOnFocus);

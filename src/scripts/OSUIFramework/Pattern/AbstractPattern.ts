@@ -59,7 +59,7 @@ namespace OSUIFramework.Patterns {
 
 		public build(): void {
 			this._selfElem = Helper.GetElementByUniqueId(this._uniqueId);
-			this._widgetId = this._selfElem.closest(Constants.dataBlockTag).id;
+			this._widgetId = this._selfElem.closest(GlobalEnum.DataBlocksTag.DataBlock).id;
 		}
 
 		public dispose(): void {

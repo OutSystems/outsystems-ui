@@ -44,15 +44,15 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	}
 
 	/**
-	 * Function that will destroy the instance of the given AnimatedLabel
+	 * Function that will dispose the instance of the given AnimatedLabel
 	 *
 	 * @export
 	 * @param {string} animatedLabelId
 	 */
-	export function Destroy(animatedLabelId: string): void {
+	export function Dispose(animatedLabelId: string): void {
 		const animatedlabel = GetAnimatedLabelById(animatedLabelId);
 
-		animatedlabel.destroy();
+		animatedlabel.dispose();
 
 		animatedLabelsMap.delete(animatedlabel.uniqueId);
 	}
