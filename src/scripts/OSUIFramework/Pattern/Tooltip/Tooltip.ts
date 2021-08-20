@@ -1,13 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Tooltip {
-	/**
-	 * Defines the interface for OutSystemsUI Patterns
-	 */
 	export class Tooltip extends AbstractPattern<TooltipConfig> implements ITooltip {
-		// Store if the accessibility feature is enabled
-		private _enableAccessibility: boolean;
-
-		// Store the Events
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventBallonContentOnClose: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -106,9 +99,6 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// Update info based on htmlContent
 		private _setHtmlElements(): void {
-			// Check if the accessibility feature is enabled
-			this._enableAccessibility = !!document.querySelector('.' + Constants.hasAccessibilityClass);
-
 			// Set the html references that will be used to manage the cssClasses and atribute properties
 			this._tooltipContentElem = this._selfElem.querySelector('.' + this._tooltipCssClass.Content);
 			this._tooltipBallonContentElem = this._selfElem.querySelector('.' + this._tooltipCssClass.BalloonContent);

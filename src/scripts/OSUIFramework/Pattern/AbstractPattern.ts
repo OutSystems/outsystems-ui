@@ -7,6 +7,7 @@ namespace OSUIFramework.Patterns {
 		private _isBuilt: boolean;
 		private _uniqueId: string;
 		protected _configs: C;
+		protected _enableAccessibility: boolean;
 		protected _selfElem: HTMLElement;
 		protected _widgetId: string;
 
@@ -58,7 +59,7 @@ namespace OSUIFramework.Patterns {
 
 		public build(): void {
 			this._selfElem = Helper.GetElementByUniqueId(this._uniqueId);
-			this._widgetId = this._selfElem.closest(Constants.dataBlockTag).id;
+			this._widgetId = this._selfElem.closest(GlobalEnum.DataBlocksTag.DataBlock).id;
 		}
 
 		public dispose(): void {
