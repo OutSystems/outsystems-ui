@@ -39,11 +39,11 @@ namespace OSUIFramework.Patterns.Tooltip.BoundsPosition {
 		activePosition?: string | boolean
 	): boolean | string {
 		// Get Bounds element and sizes
-		const elemBound: ClientRect = elem.getBoundingClientRect();
+		const elemBound = elem.getBoundingClientRect();
 		const elemHeight = elem.clientHeight;
 		const elemWidth = elem.clientWidth;
 
-		const viewElemBound: ClientRect = viewElem.getBoundingClientRect();
+		const viewElemBound = viewElem.getBoundingClientRect();
 		const viewElemHeight = viewElem.clientHeight;
 		const viewElemWidth = viewElem.clientWidth;
 

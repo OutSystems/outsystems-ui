@@ -10,9 +10,9 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 * @param {string} propertyName Property name that will be updated
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 	export function ChangeProperty(ratingId: string, propertyName: string, propertyValue: any): void {
 		const rating = GetRatingById(ratingId);
-
 		rating.changeProperty(propertyName, propertyValue);
 	}
 
@@ -30,9 +30,7 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 		}
 
 		const _newRating = new OSUIFramework.Patterns.Rating.Rating(ratingId, JSON.parse(configs));
-
 		ratingsMap.set(ratingId, _newRating);
-
 		return _newRating;
 	}
 
@@ -43,7 +41,7 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 * @param {string} ratingId
 	 * @return {*}  {*}
 	 */
-	export function Destroy(ratingId: string): any {
+	export function Destroy(ratingId: string): void {
 		const rating = GetRatingById(ratingId);
 
 		rating.dispose();
@@ -113,7 +111,7 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 * @param {string} ratingId
 	 * @param {*} callback
 	 */
-	export function RegisterCallback(ratingId: string, callback: any): void {
+	export function RegisterCallback(ratingId: string, callback: OSUIFramework.Callbacks.OSRatingSelectEvent): void {
 		const rating = GetRatingById(ratingId);
 
 		rating.registerCallback(callback);
