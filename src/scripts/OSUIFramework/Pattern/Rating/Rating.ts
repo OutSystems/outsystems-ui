@@ -147,7 +147,7 @@ namespace OSUIFramework.Patterns.Rating {
 
 			// Set default ExtendedClass values
 			if (this._configs.ExtendedClass !== '') {
-				this.UpdateExtendedClass(this._configs.ExtendedClass, this._configs.ExtendedClass);
+				this.updateExtendedClass(this._configs.ExtendedClass, this._configs.ExtendedClass);
 			}
 		}
 
@@ -177,7 +177,7 @@ namespace OSUIFramework.Patterns.Rating {
 				// Check which property changed and call respective method to update it
 				switch (propertyName) {
 					case Enum.Properties.ExtendedClass:
-						this.UpdateExtendedClass(this._configs.ExtendedClass, propertyValue);
+						this.updateExtendedClass(this._configs.ExtendedClass, propertyValue);
 
 						this._configs.ExtendedClass = propertyValue;
 
@@ -205,9 +205,9 @@ namespace OSUIFramework.Patterns.Rating {
 		}
 
 		// Destroy the Rating pattern
-		public destroy(): void {
+		public dispose(): void {
 			// call super method, which deletes this rating class instance from the RatingMap
-			super.destroy();
+			super.dispose();
 
 			// remove event listener if any was added
 			if (this._ratingHasEventAdded) {
@@ -281,7 +281,7 @@ namespace OSUIFramework.Patterns.Rating {
 			// Update configs
 			this.configs.RatingScale = value;
 			// Call destroy, so that the html is deleted
-			this.destroy();
+			this.dispose();
 			// Afteer the fieldset html is clean, create the items again
 			this._createItems();
 			// Set the rating value equal to the value before calling the setScale method
