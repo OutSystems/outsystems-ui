@@ -10,7 +10,7 @@ namespace OSUIFramework.Patterns.Search {
 
 		// Store the Events
 		private _eventOnClick: any;
-		private _eventOnClickGlass: any;
+		private _eventWindowClick: any;
 
 		// Store the input html element
 		private _layoutNative: HTMLElement;
@@ -27,26 +27,17 @@ namespace OSUIFramework.Patterns.Search {
 			super(uniqueId, new SearchConfig(configs));
 
 			this._eventOnClick = this._onToggle.bind(this);
-			this._eventOnClickGlass = this._onToggle.bind(this);
+			this._eventWindowClick = this._onToggle.bind(this);
 		}
 
 		// Add Pattern Events
 		private _addEvents(): void {
-			console.log('Set Events here!');
-
+			// Add events only in Native Applications
 			if (this._layoutNative) {
-				console.log('Native Layout');
+				this._searchGlass.addEventListener('click', this._eventOnClick);
 
 				if (this._isOpen) {
-					this._searchGlass.addEventListener('click', this._eventOnClickGlass);
-
-					this._inputElem.focus();
-
-					this._isOpen = true;
-				} else {
-					this._selfElem.addEventListener('click', this._eventOnClick);
-
-					this._isOpen = false;
+					window.addEventListener('click', this._eventWindowClick);
 				}
 			}
 		}
@@ -78,22 +69,6 @@ namespace OSUIFramework.Patterns.Search {
 			this._searchGlass = this._selfElem.querySelector('.' + Enum.CssClasses.SearchGlass);
 		}
 
-		public build(): void {
-			super.build();
-
-			this._setHtmlElements();
-
-			this._setInitialCssClasses();
-
-			this._getInputValue();
-
-			this._setAccessibilityProps();
-
-			this._addEvents();
-
-			this.finishBuild();
-		}
-
 		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _setInitialCssClasses(): void {
 			// Set default ExtendedClass values
@@ -108,6 +83,36 @@ namespace OSUIFramework.Patterns.Search {
 
 				this._isOpen = true;
 			}
+		}
+
+		// Close Search if user has clicked outside of it
+		private _windowClick(e: TouchEvent): void {
+			const _clickedElem: HTMLElement = e.target as HTMLElement;
+			const _closestElem: HTMLElement = _clickedElem.closest('.' + this._searchCssClass.pattern);
+
+			// If the click has occur outside of this tooltip
+			if (_closestElem !== this._selfElem && _closestElem !== this._searchGlass) {
+				// Close Search
+				this.toggle();
+			}
+
+			console.log('body event');
+		}
+
+		public build(): void {
+			super.build();
+
+			this._setHtmlElements();
+
+			this._getInputValue();
+
+			this._setInitialCssClasses();
+
+			this._setAccessibilityProps();
+
+			this._addEvents();
+
+			this.finishBuild();
 		}
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
@@ -137,17 +142,13 @@ namespace OSUIFramework.Patterns.Search {
 			if (this._isOpen) {
 				Helper.Style.RemoveClass(this._selfElem, this._searchCssClass.IsOpen);
 
-				this._selfElem.addEventListener('click', this._eventOnClick);
-
-				this._searchGlass.removeEventListener('click', this._eventOnClickGlass);
+				window.removeEventListener('click', this._eventWindowClick);
 
 				this._isOpen = false;
 			} else {
 				Helper.Style.AddClass(this._selfElem, this._searchCssClass.IsOpen);
 
-				this._selfElem.removeEventListener('click', this._eventOnClick);
-
-				this._searchGlass.addEventListener('click', this._eventOnClickGlass);
+				window.addEventListener('click', this._eventWindowClick);
 
 				this._inputElem.focus();
 
