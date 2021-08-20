@@ -46,7 +46,7 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	export function Destroy(ratingId: string): any {
 		const rating = GetRatingById(ratingId);
 
-		rating.destroy();
+		rating.dispose();
 
 		ratingsMap.delete(ratingId);
 	}
