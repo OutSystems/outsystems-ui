@@ -23,10 +23,22 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	 * @export
 	 * @param {string} searchId ID of the search that will be closed
 	 */
-	export function Toggle(searchId: string): void {
+	export function Close(searchId: string): void {
 		const search = GetSearchById(searchId);
 
-		search.toggle();
+		search.close();
+	}
+
+	/**
+	 * Function that will open a given search.
+	 *
+	 * @export
+	 * @param {string} searchId ID of the search that will be closed
+	 */
+	export function Open(searchId: string): void {
+		const search = GetSearchById(searchId);
+
+		search.open();
 	}
 
 	/**
@@ -116,5 +128,18 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 		search.build();
 
 		return search;
+	}
+
+	/**
+	 * Function that trigger pattern event.
+	 *
+	 * @export
+	 * @param {string} searchId ID of the Search that will be initialized.
+	 * @return {*}  callback
+	 */
+
+	export function RegisterCallback(searchId: string, callback: OSUIFramework.Callbacks.OSSearchCollapseEvent): void {
+		const search = GetSearchById(searchId);
+		search.registerCallback(callback);
 	}
 }

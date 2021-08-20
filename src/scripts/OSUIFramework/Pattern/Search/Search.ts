@@ -14,6 +14,7 @@ namespace OSUIFramework.Patterns.Search {
 		private _isLayoutNative = false;
 		private _isOpen = false;
 		private _searchGlass: HTMLElement;
+		private _onCollapse: Callbacks.OSSearchCollapseEvent;
 
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		constructor(uniqueId: string, configs: any) {
@@ -35,13 +36,18 @@ namespace OSUIFramework.Patterns.Search {
 			}
 		}
 
+		// Check input value on search
+		private _checkInputValue(): void {
+			this._inputValue = this._inputElem.value;
+		}
+
 		// Trigger the search at toggle behaviour
 		private _onToggle(): void {
 			// Check in input has value
-			this._updateInputValue();
+			this._checkInputValue();
 
-			// Trigger the Toggle method
-			this.toggle();
+			// Toggle the search classes
+			this._isOpen ? this.close() : this.open();
 		}
 
 		// Add the Accessibility Attributes values
@@ -75,20 +81,23 @@ namespace OSUIFramework.Patterns.Search {
 			}
 		}
 
-		// Check input search value
-		private _updateInputValue(): void {
-			this._inputValue = this._inputElem.value;
+		private _triggerOnCollapseEvent(): void {
+			if (this._onCollapse !== undefined) {
+				setTimeout(() => {
+					this._onCollapse(this.widgetId);
+				}, 0);
+			}
 		}
 
 		// Close Search if user has clicked outside of it
-		private _windowClick(e: TouchEvent): void {
+		private _windowClick(e: MouseEvent): void {
 			const _clickedElem: HTMLElement = e.target as HTMLElement;
 			const _closestElem: HTMLElement = _clickedElem.closest('.' + Enum.CssProperty.Pattern);
 
 			// If the click has occur outside of this tooltip
 			if (_closestElem !== this._selfElem && _closestElem !== this._searchGlass) {
 				// Close Search
-				this.toggle();
+				this.close();
 			}
 		}
 
@@ -97,7 +106,7 @@ namespace OSUIFramework.Patterns.Search {
 
 			this._setHtmlElements();
 
-			this._updateInputValue();
+			this._checkInputValue();
 
 			this._setInitialCssClasses();
 
@@ -124,32 +133,40 @@ namespace OSUIFramework.Patterns.Search {
 			}
 		}
 
+		// Close Search
+		public close(): void {
+			Helper.Style.RemoveClass(this._selfElem, Enum.CssProperty.PatternIsOpen);
+
+			window.removeEventListener('click', this._eventWindowClick);
+
+			this._inputElem.blur();
+
+			this._isOpen = false;
+
+			if (!this._isOpen) {
+				this._triggerOnCollapseEvent();
+			}
+		}
+
 		// Destroy the Search
 		public destroy(): void {
 			super.destroy();
 		}
 
-		// Close the search
-		// Convert into To OpenAndClose
-		public toggle(): void {
-			// Toggle the search classes
-			if (this._isOpen) {
-				Helper.Style.RemoveClass(this._selfElem, Enum.CssProperty.PatternIsOpen);
+		// Open Search
+		public open(): void {
+			Helper.Style.AddClass(this._selfElem, Enum.CssProperty.PatternIsOpen);
 
-				window.removeEventListener('click', this._eventWindowClick);
+			window.addEventListener('click', this._eventWindowClick);
 
-				this._inputElem.blur();
+			this._inputElem.focus();
 
-				this._isOpen = false;
-			} else {
-				Helper.Style.AddClass(this._selfElem, Enum.CssProperty.PatternIsOpen);
+			this._isOpen = true;
+		}
 
-				window.addEventListener('click', this._eventWindowClick);
-
-				this._inputElem.focus();
-
-				this._isOpen = true;
-			}
+		// Set callbacks for the OnCollapse event
+		public registerCallback(callback: Callbacks.OSSearchCollapseEvent): void {
+			this._onCollapse = callback;
 		}
 	}
 }
