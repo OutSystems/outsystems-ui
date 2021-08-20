@@ -3,19 +3,17 @@ namespace OSUIFramework.Patterns.Search.Enum {
 	/**
 	 * Search Enum properties
 	 */
-	export enum Properties {
+	export enum Property {
 		ExtendedClass = 'ExtendedClass',
 	}
 
 	// Css Classes
-	export enum CssClasses {
-		LayoutNative = 'layout-native',
-		Pattern = 'search',
-		SearchGlass = 'search-glass',
+	export enum CssProperty {
 		Input = 'input',
 		InputPlaceholder = 'search-input',
-		// PatternSearchGlass = 'search-glass',
-		// PatternSearchStickBottom = 'search-stick-bottom',
-		// PatternSearchRound = 'search-round',
+		LayoutNative = 'layout-native',
+		Pattern = 'search',
+		PatternIsOpen = 'open',
+		SearchGlass = 'search-glass',
 	}
 }
