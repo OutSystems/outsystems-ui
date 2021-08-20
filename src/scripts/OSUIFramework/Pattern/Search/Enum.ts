@@ -7,14 +7,12 @@ namespace OSUIFramework.Patterns.Search.Enum {
 		ExtendedClass = 'ExtendedClass',
 	}
 
-	//
-	export enum DataBlockTag {
-		Input = '[data-input]',
-	}
-
 	// Css Classes
 	export enum CssClasses {
+		LayoutNative = 'layout-native',
 		Pattern = 'search',
+		SearchGlass = 'search-glass',
+		Input = 'input',
 		InputPlaceholder = 'search-input',
 		// PatternSearchGlass = 'search-glass',
 		// PatternSearchStickBottom = 'search-stick-bottom',

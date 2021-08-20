@@ -23,10 +23,10 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	 * @export
 	 * @param {string} searchId ID of the search that will be closed
 	 */
-	export function Close(searchId: string): void {
+	export function Toggle(searchId: string): void {
 		const search = GetSearchById(searchId);
 
-		search.close();
+		search.toggle();
 	}
 
 	/**
@@ -101,18 +101,6 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 		}
 
 		return search;
-	}
-
-	/**
-	 * Fucntion that will open a given search.
-	 *
-	 * @export
-	 * @param {string} searchId ID of the search that will be opened
-	 */
-	export function Open(searchId: string): void {
-		const search = GetSearchById(searchId);
-
-		search.open();
 	}
 
 	/**

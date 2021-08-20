@@ -4,7 +4,6 @@ namespace OSUIFramework.Patterns.Search {
 	 * Defines the interface for OutSystemsUI Search Pattern
 	 */
 	export interface ISearch extends Interface.IPattern {
-		close(): void;
-		open(): void;
+		toggle(): void;
 	}
 }
