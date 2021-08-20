@@ -3,6 +3,7 @@
 		"esbenp.prettier-vscode",
 		"stylelint.vscode-stylelint",
 		"oouo-diogo-perdigao.docthis",
-		"waderyan.gitblame"
+		"waderyan.gitblame",
+		"bdaeumer.vscode-eslint"
 	]
 }
