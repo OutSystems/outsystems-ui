@@ -309,10 +309,8 @@ namespace OSUIFramework.Patterns.Rating {
 
 		// Set a rating value
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		public setValue(value: any, triggerEvent = true): void {
+		public setValue(value: number, triggerEvent = true): void {
 			if (value !== null) {
-				// Format value to be of type decimal number
-				value = parseFloat(value);
 				// Check if passed value is decimal
 				this._decimalValue = this.getDecimalValue(value);
 				// Check if passed value is half
@@ -334,7 +332,8 @@ namespace OSUIFramework.Patterns.Rating {
 				// Set the newValue const to the correct value
 				// If is-half or the decimal value is bigger than 0.7, that means that we will have to apply the :checked attribute on the next input
 				// Otherwise, the input :checked will correspond to the one clicked.
-				const newValue = this._isHalfValue || this._decimalValue > 0.7 ? parseInt(value) + 1 : parseInt(value);
+				const newValue =
+					this._isHalfValue || this._decimalValue > 0.7 ? Math.floor(value) + 1 : Math.floor(value);
 
 				// Try if the input :checked exists, otherwise throw warn for trying to set a value bigger than the limit
 				try {
