@@ -141,11 +141,9 @@ namespace OSUIFramework.Patterns.Search {
 
 			this._inputElem.blur();
 
-			this._isOpen = false;
+			this._triggerOnCollapseEvent();
 
-			if (!this._isOpen) {
-				this._triggerOnCollapseEvent();
-			}
+			this._isOpen = false;
 		}
 
 		// Destroy the Search
