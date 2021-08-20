@@ -182,30 +182,30 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
-			if (Enum.Tooltip[propertyName] && this._configs.hasOwnProperty(propertyName)) {
+			if (Enum.Properties[propertyName] && this._configs.hasOwnProperty(propertyName)) {
 				switch (propertyName) {
-					case Enum.Tooltip.ExtendedClass:
+					case Enum.Properties.ExtendedClass:
 						this.updateExtendedClass(this._configs.ExtendedClass, propertyValue);
 
 						this._configs.ExtendedClass = propertyValue;
 
 						break;
 
-					case Enum.Tooltip.IsHover:
+					case Enum.Properties.IsHover:
 						Helper.Style.ToogleClass(this._selfElem, this._tooltipCssClass.IsHover);
 
 						this._configs.IsHover = propertyValue;
 
 						break;
 
-					case Enum.Tooltip.IsVisible:
+					case Enum.Properties.IsVisible:
 						Helper.Style.ToogleClass(this._selfElem, this._tooltipCssClass.IsVisible);
 
 						this._configs.IsVisible = propertyValue;
 
 						break;
 
-					case Enum.Tooltip.Position:
+					case Enum.Properties.Position:
 						if (this._configs.Position !== '') {
 							Helper.Style.ToogleClass(this._tooltipBallonWrapperElem, this._configs.Position);
 						}

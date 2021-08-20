@@ -85,21 +85,12 @@ namespace OSUIFramework.Patterns.Rating {
 			}
 		}
 
-		// Method that triggers the OnSelect event
-		private _triggerOnSelectEvent(value: number): void {
-			if (this._onSelect !== undefined) {
-				setTimeout(() => {
-					this._onSelect(this.widgetId, value);
-				}, 0);
-			}
-		}
-
 		// Method called on createItems() to render the correct HTML structure for each item
 		private _renderItems(index: number): void {
 			// If first input, whihc is hidden, than also hide the label
 			const hideLabelClass: string = index === 0 ? Enum.RatingCssClass.WCAGHideText : '';
 			// if not first input, which is hidden, add the html stored form the placeholders
-			const labelHTML: any = index !== 0 ? this._clonedPlaceholders : '';
+			const labelHTML = index !== 0 ? this._clonedPlaceholders : '';
 			// Create a unique rating input id, based on the index
 			const ratingInputId: string = this.uniqueId + '-rating-' + index;
 
@@ -148,6 +139,15 @@ namespace OSUIFramework.Patterns.Rating {
 			// Set default ExtendedClass values
 			if (this._configs.ExtendedClass !== '') {
 				this.updateExtendedClass(this._configs.ExtendedClass, this._configs.ExtendedClass);
+			}
+		}
+
+		// Method that triggers the OnSelect event
+		private _triggerOnSelectEvent(value: number): void {
+			if (this._onSelect !== undefined) {
+				setTimeout(() => {
+					this._onSelect(this.widgetId, value);
+				}, 0);
 			}
 		}
 
@@ -240,7 +240,7 @@ namespace OSUIFramework.Patterns.Rating {
 
 		// Get the rating value
 		public getValue(): number {
-			const inputChecked: any = this._selfElem.querySelector('input:checked');
+			const inputChecked: HTMLInputElement = this._selfElem.querySelector('input:checked');
 			return parseInt(inputChecked.value);
 		}
 
@@ -257,18 +257,14 @@ namespace OSUIFramework.Patterns.Rating {
 		}
 
 		// Set the IsEdit option
-		public setIsEdit(isEdit: any): void {
-			// Make sure that the param value is boolean and not a string
-			// This needs to be done, for compatibility with OutSystems platform logic
-			const IsEditParam = isEdit === 'True';
-
+		public setIsEdit(IsEdit: boolean): void {
 			// Set the fieldset and input disabled attribute status
-			this.setIsDisabled(!IsEditParam);
+			this.setIsDisabled(!IsEdit);
 			// Update the config
-			this._configs.IsEdit = IsEditParam;
+			this._configs.IsEdit = IsEdit;
 
 			// Toggle the is-edit class
-			IsEditParam
+			IsEdit
 				? Helper.Style.AddClass(this._selfElem, Enum.RatingCssClass.IsEdit)
 				: Helper.Style.RemoveClass(this._selfElem, Enum.RatingCssClass.IsEdit);
 
@@ -312,12 +308,11 @@ namespace OSUIFramework.Patterns.Rating {
 		}
 
 		// Set a rating value
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public setValue(value: any, triggerEvent = true): void {
 			if (value !== null) {
 				// Format value to be of type decimal number
 				value = parseFloat(value);
-				// Store the new value to be defined
-				let newValue: number;
 				// Check if passed value is decimal
 				this._decimalValue = this.getDecimalValue(value);
 				// Check if passed value is half
@@ -339,7 +334,7 @@ namespace OSUIFramework.Patterns.Rating {
 				// Set the newValue const to the correct value
 				// If is-half or the decimal value is bigger than 0.7, that means that we will have to apply the :checked attribute on the next input
 				// Otherwise, the input :checked will correspond to the one clicked.
-				newValue = this._isHalfValue || this._decimalValue > 0.7 ? parseInt(value) + 1 : parseInt(value);
+				const newValue = this._isHalfValue || this._decimalValue > 0.7 ? parseInt(value) + 1 : parseInt(value);
 
 				// Try if the input :checked exists, otherwise throw warn for trying to set a value bigger than the limit
 				try {
