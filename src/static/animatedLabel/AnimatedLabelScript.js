@@ -27,8 +27,6 @@ function AnimatedLabel() {
     };
     
     var updateLabel = function (input) {
-
-        console.log("Update");
         
         animatedLabelEl = osui.GetClosest(input, '.animated-label');
 
