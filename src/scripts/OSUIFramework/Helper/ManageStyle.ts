@@ -34,6 +34,18 @@ namespace OSUIFramework.Helper.Style {
 	}
 
 	/**
+	 * Method that will check a given css class on a given html element
+	 *
+	 * @export
+	 * @param {HTMLElement} elem
+	 * @param {string} cssClass
+	 * @return {*}  {boolean}
+	 */
+	export function ContainsClass(elem: HTMLElement, cssClass: string): boolean {
+		return elem.classList.contains(cssClass);
+  }
+  
+  /*
 	 * Method that will look for a cssClass Position on a given element
 	 *
 	 * @export
