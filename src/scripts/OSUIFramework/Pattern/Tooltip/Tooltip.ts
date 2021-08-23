@@ -74,7 +74,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// Method to close the tooltip at onBlur
 		private _onBlur(): void {
-			// Wait for next activeElement e active
+			// Wait for next activeElement be active
 			setTimeout(() => {
 				// Check if a previous active element has been assigned
 				if (this._tooltipBallonContentActiveElem) {
@@ -83,13 +83,11 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 				// Get the closest element in order to check if the activeElement is inside this TooltipBallon
 				const _closestElem = document.activeElement.closest('.' + Enum.CssClass.Pattern);
-
-				// If the click has occur outside of this tooltip
 				if (_closestElem !== this._selfElem) {
 					// Close Tooltip
 					this.close();
 				} else {
-					// Add the blur event in order to proper close the tooltip after blur on it
+					// Add the blur event in order to proper close the tooltip after its blur
 					this._tooltipBallonContentActiveElem = document.activeElement as HTMLElement;
 					this._tooltipBallonContentActiveElem.addEventListener('blur', this._eventOnBlur);
 				}
