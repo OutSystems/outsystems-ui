@@ -4,6 +4,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventBallonContentOnClose: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		private _eventBallonfOnClick: any;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnBlur: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnClick: any;
@@ -39,6 +41,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 			this._eventOnBlur = this.close.bind(this);
 			this._eventOnClick = this._onClick.bind(this);
 			this._eventOnFocus = this.open.bind(this);
+			this._eventBallonfOnClick = this._ballonClick.bind(this);
 			this._eventBallonContentOnClose = this._updatePositionOnClose.bind(this);
 		}
 
@@ -53,6 +56,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 			// If tooltip should behave at onMouseClick
 			if (!this.configs.IsHover) {
 				this._tooltipContentElem.addEventListener('click', this._eventOnClick);
+				this._tooltipBallonContentElem.addEventListener('click', this._eventBallonfOnClick);
 			}
 
 			// if the accessibility feature is enabled
@@ -61,6 +65,11 @@ namespace OSUIFramework.Patterns.Tooltip {
 				this._tooltipContentElem.addEventListener('blur', this._eventOnBlur);
 				this._tooltipContentElem.addEventListener('focus', this._eventOnFocus);
 			}
+		}
+
+		// Add a stopPropagation in order to be possible to click inside ballon without trigger possible parentEvents
+		private _ballonClick(e: MouseEvent): void {
+			e.stopPropagation();
 		}
 
 		// Check if the tooltip will be able to be opend at the defined position or a new position must be setted
