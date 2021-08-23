@@ -37,6 +37,20 @@ namespace OutSystems.OSUI.Patterns.GalleryAPI {
 	}
 
 	/**
+	 * Function that will destroy the instance of the given search
+	 *
+	 * @export
+	 * @param {string} galleryId
+	 */
+	export function Destroy(galleryId: string): void {
+		const gallery = GetGalleryById(galleryId);
+
+		gallery.dispose();
+
+		_galleryMap.delete(galleryId);
+	}
+
+	/**
 	 * Fucntion that will return the Map with all the gallery instances at the page
 	 *
 	 * @export
