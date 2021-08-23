@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.RatingAPI {
-	const ratingsMap = new Map<string, OSUIFramework.Patterns.Rating.IRating>(); //rating.uniqueId -> Rating obj
+	const _ratingsMap = new Map<string, OSUIFramework.Patterns.Rating.IRating>(); //rating.uniqueId -> Rating obj
 
 	/**
 	 * Function that will change the property of a given rating.
@@ -25,12 +25,12 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 * @return {*}  {OSUIFramework.Patterns.IRating}
 	 */
 	export function Create(ratingId: string, configs: string): OSUIFramework.Patterns.Rating.IRating {
-		if (ratingsMap.has(ratingId)) {
+		if (_ratingsMap.has(ratingId)) {
 			throw new Error(`There is already a rating registered under id: ${ratingId}`);
 		}
 
 		const _newRating = new OSUIFramework.Patterns.Rating.Rating(ratingId, JSON.parse(configs));
-		ratingsMap.set(ratingId, _newRating);
+		_ratingsMap.set(ratingId, _newRating);
 		return _newRating;
 	}
 
@@ -46,7 +46,7 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 
 		rating.dispose();
 
-		ratingsMap.delete(ratingId);
+		_ratingsMap.delete(ratingId);
 	}
 
 	/**
@@ -56,7 +56,7 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 * @return {*}  {Map<string, OSUIFramework.Patterns.IRating>}
 	 */
 	export function GetAllRatingsMap(): Map<string, OSUIFramework.Patterns.Rating.IRating> {
-		return ratingsMap;
+		return _ratingsMap;
 	}
 
 	/**
@@ -70,11 +70,11 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 		let rating: OSUIFramework.Patterns.Rating.IRating;
 
 		//ratingId is the UniqueId
-		if (ratingsMap.has(ratingId)) {
-			rating = ratingsMap.get(ratingId);
+		if (_ratingsMap.has(ratingId)) {
+			rating = _ratingsMap.get(ratingId);
 		} else {
 			//Search for ratingId
-			for (const p of ratingsMap.values()) {
+			for (const p of _ratingsMap.values()) {
 				if (p.equalsToID(ratingId)) {
 					rating = p;
 					break;

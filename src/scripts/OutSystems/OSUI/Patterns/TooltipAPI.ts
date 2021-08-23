@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.TooltipAPI {
-	const tooltipsMap = new Map<string, OSUIFramework.Patterns.Tooltip.ITooltip>(); //tooltip.uniqueId -> Tooltip obj
+	const _tooltipsMap = new Map<string, OSUIFramework.Patterns.Tooltip.ITooltip>(); //tooltip.uniqueId -> Tooltip obj
 
 	/**
 	 * Function that will change the property of a given tooltip.
@@ -38,13 +38,13 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 * @return {*}  {OSUIFramework.Patterns.ITooltip}
 	 */
 	export function Create(tooltipId: string, configs: string): OSUIFramework.Patterns.Tooltip.ITooltip {
-		if (tooltipsMap.has(tooltipId)) {
+		if (_tooltipsMap.has(tooltipId)) {
 			throw new Error(`There is already a tooltip registered under id: ${tooltipId}`);
 		}
 
 		const _newTooltip = new OSUIFramework.Patterns.Tooltip.Tooltip(tooltipId, JSON.parse(configs));
 
-		tooltipsMap.set(tooltipId, _newTooltip);
+		_tooltipsMap.set(tooltipId, _newTooltip);
 
 		return _newTooltip;
 	}
@@ -60,7 +60,7 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 
 		tooltip.dispose();
 
-		tooltipsMap.delete(tooltip.uniqueId);
+		_tooltipsMap.delete(tooltip.uniqueId);
 	}
 
 	/**
@@ -70,7 +70,7 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 * @return {*}  {Map<string, OSUIFramework.Patterns.ITooltip>}
 	 */
 	export function GetAllTooltipsMap(): Map<string, OSUIFramework.Patterns.Tooltip.ITooltip> {
-		return tooltipsMap;
+		return _tooltipsMap;
 	}
 
 	/**
@@ -84,11 +84,11 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 		let tooltip: OSUIFramework.Patterns.Tooltip.ITooltip;
 
 		//tooltipId is the UniqueId
-		if (tooltipsMap.has(tooltipId)) {
-			tooltip = tooltipsMap.get(tooltipId);
+		if (_tooltipsMap.has(tooltipId)) {
+			tooltip = _tooltipsMap.get(tooltipId);
 		} else {
 			//Search for tooltipId
-			for (const p of tooltipsMap.values()) {
+			for (const p of _tooltipsMap.values()) {
 				if (p.equalsToID(tooltipId)) {
 					tooltip = p;
 					break;
