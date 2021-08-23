@@ -59,12 +59,9 @@ namespace OSUIFramework.Patterns.Tooltip {
 				this._tooltipBallonContentElem.addEventListener('click', this._eventBallonfOnClick);
 			}
 
-			// if the accessibility feature is enabled
-			if (this._enableAccessibility) {
-				// add the focus event in order to show the tooltip ballon when the toolTip content is focused
-				this._tooltipContentElem.addEventListener('blur', this._eventOnBlur);
-				this._tooltipContentElem.addEventListener('focus', this._eventOnFocus);
-			}
+			// add the focus event in order to show the tooltip ballon when the toolTip content is focused
+			this._tooltipContentElem.addEventListener('blur', this._eventOnBlur);
+			this._tooltipContentElem.addEventListener('focus', this._eventOnFocus);
 		}
 
 		// Add a stopPropagation in order to be possible to click inside ballon without trigger possible parentEvents
