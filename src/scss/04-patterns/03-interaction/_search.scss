@@ -54,6 +54,14 @@
 	display: none;
 }
 
+.form {
+	.search {
+		input[data-input] {
+			margin-bottom: var(--space-none);
+		}
+	}
+}
+
 // IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {
