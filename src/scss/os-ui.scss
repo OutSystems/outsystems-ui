@@ -208,7 +208,7 @@
 /*      - Adaptive                                                              */
 /* ============================================================================ */
 @import '04-patterns/01-adaptive/columns';
-@import '04-patterns/01-adaptive/gallery';
+@import '../scripts/OSUIFramework/Pattern/Gallery/scss/_gallery.scss';
 @import '04-patterns/01-adaptive/master-detail';
 
 /* ============================================================================ */
@@ -228,7 +228,7 @@
 @import '04-patterns/02-content/section';
 @import '04-patterns/02-content/tag';
 @import '04-patterns/02-content/tooltip';
-@import '../scripts/OSUIFramework/Pattern/Tooltip/scss/tooltip';
+@import '../scripts/OSUIFramework/Pattern/Tooltip/scss/_tooltip.scss';
 @import '04-patterns/02-content/user-avatar';
 
 /* ============================================================================ */
@@ -236,7 +236,7 @@
 /* ============================================================================ */
 @import '04-patterns/03-interaction/action-sheet';
 @import '04-patterns/03-interaction/animate';
-@import '04-patterns/03-interaction/animated-label';
+@import '../scripts/OSUIFramework/Pattern/AnimatedLabel/scss/animated-label';
 @import '04-patterns/03-interaction/carousel';
 @import '04-patterns/03-interaction/date-picker';
 @import '04-patterns/03-interaction/dropdown-search-and-tags';
@@ -273,7 +273,7 @@
 @import '04-patterns/05-numbers/progress-bar';
 @import '04-patterns/05-numbers/progress-circle';
 @import '04-patterns/05-numbers/progress-circle-fraction';
-@import '04-patterns/05-numbers/rating';
+@import '../scripts/OSUIFramework/Pattern/Rating/scss/rating';
 
 /* ============================================================================ */
 /*      - Utilities                                                             */

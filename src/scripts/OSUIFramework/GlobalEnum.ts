@@ -1,6 +1,19 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.GlobalEnum {
 	/**
+	 * OutSystemsUI Data Blocks attribute values
+	 *
+	 * @export
+	 * @enum {number}
+	 */
+	export enum DataBlocksTag {
+		DataBlock = '[data-block]',
+		Input = '[data-input]',
+		Label = '[data-label]',
+		TextArea = '[data-textarea]',
+	}
+
+	/**
 	 * OutSystemsUI position cssClasses
 	 *
 	 * @export

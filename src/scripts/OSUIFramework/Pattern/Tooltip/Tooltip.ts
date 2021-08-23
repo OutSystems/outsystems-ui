@@ -1,13 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Tooltip {
-	/**
-	 * Defines the interface for OutSystemsUI Patterns
-	 */
 	export class Tooltip extends AbstractPattern<TooltipConfig> implements ITooltip {
-		// Store if the accessibility feature is enabled
-		private _enableAccessibility: boolean;
-
-		// Store the Events
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventBallonContentOnClose: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -106,9 +99,6 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// Update info based on htmlContent
 		private _setHtmlElements(): void {
-			// Check if the accessibility feature is enabled
-			this._enableAccessibility = !!document.querySelector('.' + Constants.hasAccessibilityClass);
-
 			// Set the html references that will be used to manage the cssClasses and atribute properties
 			this._tooltipContentElem = this._selfElem.querySelector('.' + this._tooltipCssClass.Content);
 			this._tooltipBallonContentElem = this._selfElem.querySelector('.' + this._tooltipCssClass.BalloonContent);
@@ -120,7 +110,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 		private _setInitialCssClasses(): void {
 			// Set default ExtendedClass values
 			if (this._configs.ExtendedClass !== '') {
-				this.UpdateExtendedClass('', this._configs.ExtendedClass);
+				this.updateExtendedClass(this._configs.ExtendedClass, this._configs.ExtendedClass);
 			}
 
 			// Set default IsHover cssClass property value
@@ -192,30 +182,30 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
-			if (Enum.Tooltip[propertyName] && this._configs.hasOwnProperty(propertyName)) {
+			if (Enum.Properties[propertyName] && this._configs.hasOwnProperty(propertyName)) {
 				switch (propertyName) {
-					case Enum.Tooltip.ExtendedClass:
-						this.UpdateExtendedClass(this._configs.ExtendedClass, propertyValue);
+					case Enum.Properties.ExtendedClass:
+						this.updateExtendedClass(this._configs.ExtendedClass, propertyValue);
 
 						this._configs.ExtendedClass = propertyValue;
 
 						break;
 
-					case Enum.Tooltip.IsHover:
+					case Enum.Properties.IsHover:
 						Helper.Style.ToogleClass(this._selfElem, this._tooltipCssClass.IsHover);
 
 						this._configs.IsHover = propertyValue;
 
 						break;
 
-					case Enum.Tooltip.IsVisible:
+					case Enum.Properties.IsVisible:
 						Helper.Style.ToogleClass(this._selfElem, this._tooltipCssClass.IsVisible);
 
 						this._configs.IsVisible = propertyValue;
 
 						break;
 
-					case Enum.Tooltip.Position:
+					case Enum.Properties.Position:
 						if (this._configs.Position !== '') {
 							Helper.Style.ToogleClass(this._tooltipBallonWrapperElem, this._configs.Position);
 						}
@@ -243,8 +233,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 		}
 
 		// Destroy the tooltip
-		public destroy(): void {
-			super.destroy();
+		public dispose(): void {
+			super.dispose();
 
 			window.removeEventListener('click', this._eventWindowClick);
 

@@ -7,6 +7,7 @@ namespace OSUIFramework.Patterns {
 		private _isBuilt: boolean;
 		private _uniqueId: string;
 		protected _configs: C;
+		protected _enableAccessibility: boolean;
 		protected _selfElem: HTMLElement;
 		protected _widgetId: string;
 
@@ -33,32 +34,12 @@ namespace OSUIFramework.Patterns {
 			return this._widgetId;
 		}
 
-		public build(): void {
-			const obj = document.getElementsByName(this._uniqueId);
-			if (obj.length) {
-				this._selfElem = document.getElementsByName(this._uniqueId)[0];
-			} else {
-				throw new Error(`Object with name '${this._uniqueId}' not found.`);
-			}
-		}
-
-		public destroy(): void {
-			this._isBuilt = false;
-		}
-
-		public equalsToID(patternId: string): boolean {
-			return patternId === this._uniqueId || patternId === this._widgetId;
-		}
-
-		public finishBuild(): void {
-			// Set the widget id value
-			this._widgetId = Helper.GetElementByUniqueId(this._uniqueId).closest(Constants.dataBlockTag).id;
-
+		protected finishBuild(): void {
+			//In the future we can trigger an initialized event.
 			this._isBuilt = true;
 		}
 
-		// eslint-disable-next-line @typescript-eslint/member-ordering
-		public UpdateExtendedClass(activeCssClass: string, newCssClass: string): void {
+		protected updateExtendedClass(activeCssClass: string, newCssClass: string): void {
 			if (activeCssClass !== '') {
 				const activeCssClassArray = activeCssClass.split(' ');
 
@@ -74,6 +55,19 @@ namespace OSUIFramework.Patterns {
 					this._selfElem.classList.add(newCssClassArray[i]);
 				}
 			}
+		}
+
+		public build(): void {
+			this._selfElem = Helper.GetElementByUniqueId(this._uniqueId);
+			this._widgetId = this._selfElem.closest(GlobalEnum.DataBlocksTag.DataBlock).id;
+		}
+
+		public dispose(): void {
+			this._isBuilt = false;
+		}
+
+		public equalsToID(patternId: string): boolean {
+			return patternId === this._uniqueId || patternId === this._widgetId;
 		}
 
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
