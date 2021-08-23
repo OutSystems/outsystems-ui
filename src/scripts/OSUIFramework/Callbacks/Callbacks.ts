@@ -3,4 +3,8 @@ namespace OSUIFramework.Callbacks {
 	export type OSRatingSelectEvent = {
 		(ratingId: string, value: number): void;
 	};
+
+	export type OSSearchCollapseEvent = {
+		(searchId: string): void;
+	};
 }

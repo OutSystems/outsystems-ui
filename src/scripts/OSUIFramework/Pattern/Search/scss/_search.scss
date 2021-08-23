@@ -80,7 +80,7 @@
 				&,
 				&:empty {
 					border: var(--border-size-none);
-					padding-left: var(--space-l);
+					padding-left: var(--space-xl);
 				}
 			}
 		}
@@ -170,7 +170,7 @@
 					&,
 					&:empty {
 						height: 34px;
-						padding-left: var(--space-l);
+						padding-left: var(--space-xl);
 						transition: none;
 					}
 					&:focus {

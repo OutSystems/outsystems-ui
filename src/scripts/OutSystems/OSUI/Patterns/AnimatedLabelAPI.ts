@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
-	export const animatedLabelsMap = new Map<string, OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel>(); //animatedlabel.uniqueId -> AnimatedLabel obj
+	const _animatedLabelsMap = new Map<string, OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel>(); //animatedlabel.uniqueId -> AnimatedLabel obj
 
 	/**
 	 * Function that will change the property of a given animatedLabel.
@@ -29,7 +29,7 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 		animatedLabelId: string,
 		configs: string
 	): OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel {
-		if (animatedLabelsMap.has(animatedLabelId)) {
+		if (_animatedLabelsMap.has(animatedLabelId)) {
 			throw new Error(`There is already an AnimatedLabel registered under id: ${animatedLabelId}`);
 		}
 
@@ -38,7 +38,7 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 			JSON.parse(configs)
 		);
 
-		animatedLabelsMap.set(animatedLabelId, _newAnimatedLabel);
+		_animatedLabelsMap.set(animatedLabelId, _newAnimatedLabel);
 
 		return _newAnimatedLabel;
 	}
@@ -54,7 +54,7 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 
 		animatedlabel.dispose();
 
-		animatedLabelsMap.delete(animatedlabel.uniqueId);
+		_animatedLabelsMap.delete(animatedlabel.uniqueId);
 	}
 
 	/**
@@ -64,7 +64,7 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	 * @return {*}  {Map<string, OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel>}
 	 */
 	export function GetAllAnimatedLabelsMap(): Map<string, OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel> {
-		return animatedLabelsMap;
+		return _animatedLabelsMap;
 	}
 
 	/**
@@ -78,11 +78,11 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 		let animatedlabel: OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel;
 
 		//animatedLabelId is the UniqueId
-		if (animatedLabelsMap.has(animatedLabelId)) {
-			animatedlabel = animatedLabelsMap.get(animatedLabelId);
+		if (_animatedLabelsMap.has(animatedLabelId)) {
+			animatedlabel = _animatedLabelsMap.get(animatedLabelId);
 		} else {
 			//Search for animatedLabelId
-			for (const p of animatedLabelsMap.values()) {
+			for (const p of _animatedLabelsMap.values()) {
 				if (p.equalsToID(animatedLabelId)) {
 					animatedlabel = p;
 					break;
