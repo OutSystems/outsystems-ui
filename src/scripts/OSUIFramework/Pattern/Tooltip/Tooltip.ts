@@ -4,8 +4,6 @@ namespace OSUIFramework.Patterns.Tooltip {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventBallonContentOnClose: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventBallonfOnClick: any;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnBlur: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnClick: any;
@@ -15,6 +13,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 		private _eventWindowClick: any;
 
 		// Store the ballon html element
+		private _tooltipBallonContentActiveElem: HTMLElement;
 		private _tooltipBallonContentElem: HTMLElement;
 		private _tooltipBallonWrapperElem: HTMLElement;
 		private _tooltipBallonWrapperId: string;
@@ -38,10 +37,9 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 			// Set the method that will be assigned to the window click event
 			this._eventWindowClick = this._windowClick.bind(this);
-			this._eventOnBlur = this.close.bind(this);
+			this._eventOnBlur = this._onBlur.bind(this);
 			this._eventOnClick = this._onClick.bind(this);
 			this._eventOnFocus = this.open.bind(this);
-			this._eventBallonfOnClick = this._ballonClick.bind(this);
 			this._eventBallonContentOnClose = this._updatePositionOnClose.bind(this);
 		}
 
@@ -56,17 +54,14 @@ namespace OSUIFramework.Patterns.Tooltip {
 			// If tooltip should behave at onMouseClick
 			if (!this.configs.IsHover) {
 				this._tooltipContentElem.addEventListener('click', this._eventOnClick);
-				this._tooltipBallonContentElem.addEventListener('click', this._eventBallonfOnClick);
 			}
 
-			// add the focus event in order to show the tooltip ballon when the toolTip content is focused
-			this._tooltipContentElem.addEventListener('blur', this._eventOnBlur);
-			this._tooltipContentElem.addEventListener('focus', this._eventOnFocus);
-		}
-
-		// Add a stopPropagation in order to be possible to click inside ballon without trigger possible parentEvents
-		private _ballonClick(e: MouseEvent): void {
-			e.stopPropagation();
+			// if the accessibility feature is enabled
+			if (this._enableAccessibility) {
+				// add the focus event in order to show the tooltip ballon when the toolTip content is focused
+				this._tooltipContentElem.addEventListener('blur', this._eventOnBlur);
+				this._tooltipContentElem.addEventListener('focus', this._eventOnFocus);
+			}
 		}
 
 		// Check if the tooltip will be able to be opend at the defined position or a new position must be setted
@@ -87,12 +82,48 @@ namespace OSUIFramework.Patterns.Tooltip {
 			}
 		}
 
+		// Method to close the tooltip at onBlur
+		private _onBlur(): void {
+			// Wait for next activeElement e active
+			setTimeout(() => {
+				// Check if a previous active element has been assigned
+				if (this._tooltipBallonContentActiveElem) {
+					this._tooltipBallonContentActiveElem.removeEventListener('blur', this._eventOnBlur);
+				}
+
+				// Get the closest element in order to check if the activeElement is inside this TooltipBallon
+				const _closestElem = document.activeElement.closest('.' + this._tooltipCssClass.pattern);
+
+				// If the click has occur outside of this tooltip
+				if (_closestElem !== this._selfElem) {
+					// Close Tooltip
+					this.close();
+				} else {
+					// Add the blur event in order to proper close the tooltip after blur on it
+					this._tooltipBallonContentActiveElem = document.activeElement as HTMLElement;
+					this._tooltipBallonContentActiveElem.addEventListener('blur', this._eventOnBlur);
+				}
+			}, 0);
+		}
+
 		// Trigger the tooltip at onClick behaviour
 		private _onClick(): void {
 			// Add a window event that will be responsible to close it, if it's opend by default
 			window.addEventListener('click', this._eventWindowClick);
 
 			this.open();
+		}
+
+		// Remove all the assigned Events
+		private _removeEvents(): void {
+			window.removeEventListener('click', this._eventWindowClick);
+
+			this._tooltipContentElem.removeEventListener('click', this._eventOnClick);
+
+			this._tooltipContentElem.removeEventListener('blur', this._eventOnBlur);
+			this._tooltipContentElem.removeEventListener('focus', this._eventOnFocus);
+
+			this._tooltipBallonContentElem.removeEventListener('transitionend', this._eventBallonContentOnClose);
 		}
 
 		// Add the Accessibility Attributes values
@@ -154,8 +185,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// Close tooltip if user has clicked outside of it
 		private _windowClick(e: MouseEvent): void {
-			const _clickedElem: HTMLElement = e.target as HTMLElement;
-			const _closestElem: HTMLElement = _clickedElem.closest('.' + this._tooltipCssClass.pattern);
+			const _clickedElem = e.target as HTMLElement;
+			const _closestElem = _clickedElem.closest('.' + this._tooltipCssClass.pattern);
 
 			// If the click has occur outside of this tooltip
 			if (_closestElem !== this._selfElem) {
@@ -198,16 +229,32 @@ namespace OSUIFramework.Patterns.Tooltip {
 						break;
 
 					case Enum.Properties.IsHover:
-						Helper.Style.ToogleClass(this._selfElem, this._tooltipCssClass.IsHover);
-
 						this._configs.IsHover = propertyValue;
+
+						if (this._configs.IsHover) {
+							Helper.Style.AddClass(this._selfElem, this._tooltipCssClass.IsHover);
+						} else {
+							Helper.Style.RemoveClass(this._selfElem, this._tooltipCssClass.IsHover);
+						}
+
+						this._removeEvents();
+
+						this._addEvents();
 
 						break;
 
 					case Enum.Properties.IsVisible:
-						Helper.Style.ToogleClass(this._selfElem, this._tooltipCssClass.IsVisible);
-
 						this._configs.IsVisible = propertyValue;
+
+						if (this._configs.IsVisible) {
+							Helper.Style.AddClass(this._selfElem, this._tooltipCssClass.IsVisible);
+						} else {
+							Helper.Style.RemoveClass(this._selfElem, this._tooltipCssClass.IsVisible);
+						}
+
+						this._removeEvents();
+
+						this._addEvents();
 
 						break;
 
@@ -221,6 +268,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 						}
 
 						this._configs.Position = propertyValue;
+
+						this._managePosition();
 
 						break;
 				}
@@ -242,14 +291,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 		public dispose(): void {
 			super.dispose();
 
-			window.removeEventListener('click', this._eventWindowClick);
-
-			this._tooltipContentElem.removeEventListener('click', this._eventOnClick);
-
-			this._tooltipContentElem.removeEventListener('blur', this._eventOnBlur);
-			this._tooltipContentElem.removeEventListener('focus', this._eventOnFocus);
-
-			this._tooltipBallonContentElem.removeEventListener('transitionend', this._eventBallonContentOnClose);
+			this._removeEvents();
 		}
 
 		// Open the tooltip
