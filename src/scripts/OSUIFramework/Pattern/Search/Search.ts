@@ -42,12 +42,18 @@ namespace OSUIFramework.Patterns.Search {
 		}
 
 		// Trigger the search at toggle behaviour
-		private _onToggle(): void {
+		private _onToggle(e: MouseEvent): void {
 			// Check in input has value
 			this._checkInputValue();
 
 			// Toggle the search classes
-			this._isOpen ? this.close() : this.open();
+			if (this._isOpen) {
+				this.close();
+			} else {
+				this.open();
+			}
+
+			e.stopPropagation();
 		}
 
 		// Add the Accessibility Attributes values
@@ -69,7 +75,7 @@ namespace OSUIFramework.Patterns.Search {
 		private _setInitialCssClasses(): void {
 			// Set default ExtendedClass values
 			if (this._configs.ExtendedClass !== '') {
-				this.UpdateExtendedClass('', this._configs.ExtendedClass);
+				this.updateExtendedClass('', this._configs.ExtendedClass);
 			}
 
 			if (this._isLayoutNative && this._inputValue !== '') {
@@ -98,6 +104,7 @@ namespace OSUIFramework.Patterns.Search {
 			if (_closestElem !== this._selfElem && _closestElem !== this._searchGlass) {
 				// Close Search
 				this.close();
+				e.stopPropagation();
 			}
 		}
 
@@ -122,7 +129,7 @@ namespace OSUIFramework.Patterns.Search {
 			if (Enum.Property[propertyName] && this._configs.hasOwnProperty(propertyName)) {
 				switch (propertyName) {
 					case Enum.Property.ExtendedClass:
-						this.UpdateExtendedClass(this._configs.ExtendedClass, propertyValue);
+						this.updateExtendedClass(this._configs.ExtendedClass, propertyValue);
 
 						this._configs.ExtendedClass = propertyValue;
 
@@ -147,8 +154,8 @@ namespace OSUIFramework.Patterns.Search {
 		}
 
 		// Destroy the Search
-		public destroy(): void {
-			super.destroy();
+		public dispose(): void {
+			super.dispose();
 		}
 
 		// Open Search

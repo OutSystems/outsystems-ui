@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.SearchAPI {
-	const searchsMap = new Map<string, OSUIFramework.Patterns.Search.ISearch>(); //search.uniqueId -> Search obj
+	const _searchsMap = new Map<string, OSUIFramework.Patterns.Search.ISearch>(); //search.uniqueId -> Search obj
 
 	/**
 	 * Function that will change the property of a given search.
@@ -50,13 +50,13 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	 * @return {*}  {OSUIFramework.Patterns.ISearch}
 	 */
 	export function Create(searchId: string, configs: string): OSUIFramework.Patterns.Search.ISearch {
-		if (searchsMap.has(searchId)) {
+		if (_searchsMap.has(searchId)) {
 			throw new Error(`There is already a search registered under id: ${searchId}`);
 		}
 
 		const _newSearch = new OSUIFramework.Patterns.Search.Search(searchId, JSON.parse(configs));
 
-		searchsMap.set(searchId, _newSearch);
+		_searchsMap.set(searchId, _newSearch);
 
 		return _newSearch;
 	}
@@ -70,19 +70,19 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	export function Destroy(searchId: string): void {
 		const search = GetSearchById(searchId);
 
-		search.destroy();
+		search.dispose();
 
-		searchsMap.delete(searchId);
+		_searchsMap.delete(searchId);
 	}
 
 	/**
-	 * Fucntion that will return the Map with all the Search instances at the page
+	 * Function that will return the Map with all the Search instances at the page
 	 *
 	 * @export
 	 * @return {*}  {Map<string, OSUIFramework.Patterns.ISearch>}
 	 */
-	export function GetAllSearchsMap(): Map<string, OSUIFramework.Patterns.Search.ISearch> {
-		return searchsMap;
+	export function GetAllSearches(): Array<string> {
+		return [...Object.keys(_searchsMap)];
 	}
 
 	/**
@@ -96,11 +96,11 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 		let search: OSUIFramework.Patterns.Search.ISearch;
 
 		//searchId is the UniqueId
-		if (searchsMap.has(searchId)) {
-			search = searchsMap.get(searchId);
+		if (_searchsMap.has(searchId)) {
+			search = _searchsMap.get(searchId);
 		} else {
 			//Search for searchId
-			for (const p of searchsMap.values()) {
+			for (const p of _searchsMap.values()) {
 				if (p.equalsToID(searchId)) {
 					search = p;
 					break;
