@@ -5,10 +5,10 @@ namespace OSUIFramework.Patterns.Sidebar.Enum {
 	 */
 	export enum Properties {
 		ExtendedClass = 'ExtendedClass',
-		RatingValue = 'RatingValue',
-		RatingScale = 'RatingScale',
-		IsEdit = 'IsEdit',
-		Size = 'Size',
+		IsOpen = 'IsOpen',
+		Direction = 'Direction',
+		Width = 'Width',
+		HasOverlay = 'HasOverlay',
 	}
 
 	export enum SidebarCssClass {

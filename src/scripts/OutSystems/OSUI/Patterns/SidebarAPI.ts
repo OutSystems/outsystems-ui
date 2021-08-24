@@ -6,7 +6,14 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 		const sidebar = GetSidebarById(sidebarId);
 		sidebar.changeProperty(propertyName, propertyValue);
 	}
-
+	/**
+	 *
+	 *
+	 * @export
+	 * @param {string} sidebarId
+	 * @param {string} configs
+	 * @return {*}  {OSUIFramework.Patterns.Sidebar.ISidebar}
+	 */
 	export function Create(sidebarId: string, configs: string): OSUIFramework.Patterns.Sidebar.ISidebar {
 		if (_sidebarMap.has(sidebarId)) {
 			throw new Error(`There is already a sidebar registered under id: ${sidebarId}`);
@@ -16,7 +23,12 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 		_sidebarMap.set(sidebarId, _newSidebar);
 		return _newSidebar;
 	}
-
+	/**
+	 *
+	 *
+	 * @export
+	 * @param {string} sidebarId
+	 */
 	export function Destroy(sidebarId: string): void {
 		const sidebar = GetSidebarById(sidebarId);
 
@@ -24,11 +36,22 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 
 		_sidebarMap.delete(sidebarId);
 	}
-
+	/**
+	 *
+	 *
+	 * @export
+	 * @return {*}  {Map<string, OSUIFramework.Patterns.Sidebar.ISidebar>}
+	 */
 	export function GetAllSidebarMap(): Map<string, OSUIFramework.Patterns.Sidebar.ISidebar> {
 		return _sidebarMap;
 	}
-
+	/**
+	 *
+	 *
+	 * @export
+	 * @param {string} sidebarId
+	 * @return {*}  {OSUIFramework.Patterns.Sidebar.ISidebar}
+	 */
 	export function GetSidebarById(sidebarId: string): OSUIFramework.Patterns.Sidebar.ISidebar {
 		let sidebar: OSUIFramework.Patterns.Sidebar.ISidebar;
 
@@ -51,7 +74,13 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 
 		return sidebar;
 	}
-
+	/**
+	 *
+	 *
+	 * @export
+	 * @param {string} sidebarId
+	 * @return {*}  {OSUIFramework.Patterns.Sidebar.ISidebar}
+	 */
 	export function Initialize(sidebarId: string): OSUIFramework.Patterns.Sidebar.ISidebar {
 		const sidebar = GetSidebarById(sidebarId);
 
@@ -59,7 +88,13 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 
 		return sidebar;
 	}
-
+	/**
+	 *
+	 *
+	 * @export
+	 * @param {string} sidebarId
+	 * @param {OSUIFramework.Callbacks.OSSidebarToggleEvent} callback
+	 */
 	export function RegisterCallback(sidebarId: string, callback: OSUIFramework.Callbacks.OSSidebarToggleEvent): void {
 		const sidebar = GetSidebarById(sidebarId);
 

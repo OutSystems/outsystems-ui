@@ -9,6 +9,6 @@ namespace OSUIFramework.Callbacks {
 	};
 
 	export type OSSidebarToggleEvent = {
-		(sidebarId: string): void;
+		(sidebarId: string, isOpen: boolean): void;
 	};
 }

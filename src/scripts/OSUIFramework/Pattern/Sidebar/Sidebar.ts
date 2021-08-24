@@ -4,8 +4,10 @@ namespace OSUIFramework.Patterns.Sidebar {
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	export class Sidebar extends AbstractPattern<SidebarConfig> implements ISidebar {
-		// Store if the Siebar is Open
+		// Store if the Sidebar is Open
 		private _isOpen: boolean;
+		// Store if the Sidebar is Open
+		private _onToggle: Callbacks.OSSidebarToggleEvent;
 		// Store the Sidebar Content element
 		private _sidebarContentElem: HTMLElement;
 		// Store the Sidebar Header element
@@ -16,6 +18,13 @@ namespace OSUIFramework.Patterns.Sidebar {
 			super(uniqueId, new SidebarConfig(configs));
 
 			this._isOpen = this._configs.IsOpen;
+		}
+
+		private _setAccessibilityProps(isOpen: boolean): void {
+			Helper.Attribute.Set(this._selfElem, 'role', 'complementary');
+			Helper.Attribute.Set(this._selfElem, 'aria-haspopup', 'true');
+			Helper.Attribute.Set(this._selfElem, 'tabindex', isOpen ? '0' : '-1');
+			Helper.Attribute.Set(this._selfElem, 'aria-hidden', isOpen ? 'false' : 'true');
 		}
 
 		// Set the html references that will be used to manage the cssClasses and atribute properties
@@ -37,12 +46,23 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 		}
 
+		// Method that triggers the OnToggle event
+		private _triggerOnToggleEvent(isOpen: boolean): void {
+			if (this._onToggle !== undefined) {
+				setTimeout(() => {
+					this._onToggle(this.widgetId, isOpen);
+				}, 0);
+			}
+		}
+
 		public build(): void {
 			super.build();
 
 			this._setHtmlElements();
 
 			this._setInitialCssClasses();
+
+			this._setAccessibilityProps(this._isOpen);
 
 			this.finishBuild();
 		}
@@ -52,16 +72,38 @@ namespace OSUIFramework.Patterns.Sidebar {
 			if (Enum.Properties[propertyName] && this._configs.hasOwnProperty(propertyName)) {
 				// Check which property changed and call respective method to update it
 				switch (propertyName) {
+					case Enum.Properties.IsOpen:
+						this.toggleSidebar(propertyValue);
+
+						this._configs.IsOpen = propertyValue;
+						break;
 					case Enum.Properties.ExtendedClass:
+						this.updateExtendedClass(this._configs.ExtendedClass, propertyValue);
+
+						this._configs.ExtendedClass = propertyValue;
+						break;
 				}
 			} else {
 				throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
 			}
 		}
 
-		// Set callbacks for the onSelect click event
-		public registerCallback(callback: Callbacks.OSRatingSelectEvent): void {
-			//this._onSelect = callback;
+		// Set callbacks for the onToggle event
+		public registerCallback(callback: Callbacks.OSSidebarToggleEvent): void {
+			this._onToggle = callback;
+		}
+
+		public toggleSidebar(isOpen: boolean): void {
+			// Toggle event listeners missing
+			// Toggle focus if open
+			console.log(isOpen);
+			isOpen
+				? Helper.Style.AddClass(this._selfElem, Enum.SidebarCssClass.IsOpen)
+				: Helper.Style.RemoveClass(this._selfElem, Enum.SidebarCssClass.IsOpen);
+
+			this._isOpen = isOpen;
+			this._setAccessibilityProps(isOpen);
+			this._triggerOnToggleEvent(isOpen);
 		}
 	}
 }
