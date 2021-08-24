@@ -7,4 +7,8 @@ namespace OSUIFramework.Callbacks {
 	export type OSSearchCollapseEvent = {
 		(searchId: string): void;
 	};
+
+	export type OSSidebarToggleEvent = {
+		(sidebarId: string): void;
+	};
 }

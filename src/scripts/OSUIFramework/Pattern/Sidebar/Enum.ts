@@ -12,6 +12,8 @@ namespace OSUIFramework.Patterns.Sidebar.Enum {
 	}
 
 	export enum SidebarCssClass {
-		IsEdit = 'is-edit',
+		Header = 'sidebar-header',
+		Content = 'sidebar-content',
+		IsOpen = 'is-open',
 	}
 }

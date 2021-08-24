@@ -3,5 +3,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 	/**
 	 * Defines the interface for OutSystemsUI Sidebar Pattern
 	 */
-	export interface ISidebar extends Interface.IPattern {}
+	export interface ISidebar extends Interface.IPattern {
+		registerCallback(callback: Callbacks.OSSidebarToggleEvent): void;
+	}
 }

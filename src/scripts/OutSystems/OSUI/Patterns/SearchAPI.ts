@@ -137,7 +137,6 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	 * @param {string} searchId ID of the Search that will be initialized.
 	 * @return {*}  callback
 	 */
-
 	export function RegisterCallback(searchId: string, callback: OSUIFramework.Callbacks.OSSearchCollapseEvent): void {
 		const search = GetSearchById(searchId);
 		search.registerCallback(callback);

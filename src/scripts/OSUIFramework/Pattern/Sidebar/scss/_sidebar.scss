@@ -55,7 +55,7 @@
 .active-screen {
 	&.screen-container {
 		.sidebar {
-			&.sidebar-open {
+			&.is-open {
 				transform: none;
 				transition: all 330ms ease-out;
 				will-change: transform;
