@@ -2,6 +2,8 @@
 namespace OSUIFramework.Patterns.AnimatedLabel {
 	export class AnimatedLabel extends AbstractPattern<AnimatedLabelConfig> implements IAnimatedLabel {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		private _eventOnAnimationStart: any;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnBlur: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnFocus: any;
@@ -25,12 +27,14 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 			// Set the method that will be assigned to the window click event
 			this._eventOnBlur = this._onInputBlur.bind(this);
 			this._eventOnFocus = this._onInputFocus.bind(this);
+			this._eventOnAnimationStart = this._onInputFocus.bind(this);
 		}
 
 		// Add Pattern Events
 		private _addEvents(): void {
 			this._inputElem.addEventListener('blur', this._eventOnBlur);
 			this._inputElem.addEventListener('focus', this._eventOnFocus);
+			this._inputElem.addEventListener('animationstart', this._eventOnAnimationStart);
 		}
 
 		// Check if the input is empty, if yes reposition the Label
@@ -121,6 +125,7 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 
 			this._inputElem.removeEventListener('blur', this._eventOnBlur);
 			this._inputElem.removeEventListener('focus', this._eventOnFocus);
+			this._inputElem.removeEventListener('animationstart', this._eventOnAnimationStart);
 		}
 
 		// Update Label active status accordingly when the input info has canhged
