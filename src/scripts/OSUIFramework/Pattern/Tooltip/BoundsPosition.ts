@@ -273,7 +273,7 @@ namespace OSUIFramework.Patterns.Tooltip.BoundsPosition {
 			_newItemPosition = IsItemOutOfViewElemBounds(elemToTest, _overflowElem, _checkIfElementPosition);
 		} else {
 			// If there are not a parentNode with the overflow hidden, check the body boudaries
-			_newItemPosition = IsItemOutOfViewElemBounds(elemToTest, document.body);
+			_newItemPosition = IsItemOutOfViewElemBounds(elemToTest, document.body, _checkIfElementPosition);
 		}
 
 		// Check if the old cssClass position must be removed!
