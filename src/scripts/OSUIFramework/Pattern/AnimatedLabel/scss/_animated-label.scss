@@ -89,6 +89,7 @@
 			}
 
 			&[data-textarea] {
+				margin-bottom: var(--space-none);
 				padding-top: var(--space-s);
 
 				& + span.validation-message {
