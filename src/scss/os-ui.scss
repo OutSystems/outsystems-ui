@@ -208,7 +208,7 @@
 /*      - Adaptive                                                              */
 /* ============================================================================ */
 @import '04-patterns/01-adaptive/columns';
-@import '../scripts/OSUIFramework/Pattern/Gallery/scss/_gallery.scss';
+@import '../scripts/OSUIFramework/Pattern/Gallery/scss/gallery';
 @import '04-patterns/01-adaptive/master-detail';
 
 /* ============================================================================ */
@@ -227,8 +227,7 @@
 @import '04-patterns/02-content/list-item-content';
 @import '04-patterns/02-content/section';
 @import '04-patterns/02-content/tag';
-@import '04-patterns/02-content/tooltip';
-@import '../scripts/OSUIFramework/Pattern/Tooltip/scss/_tooltip.scss';
+@import '../scripts/OSUIFramework/Pattern/Tooltip/scss/tooltip';
 @import '04-patterns/02-content/user-avatar';
 
 /* ============================================================================ */
@@ -291,6 +290,7 @@
 /*! =========================================================================== */
 @import '10-deprecated/range-slider-deprecated';
 @import '10-deprecated/horizontal-scroll-deprecated';
+@import '10-deprecated/tooltip-deprecated';
 
 /*! =========================================================================== */
 /*! Usefull Classes                                                             */
