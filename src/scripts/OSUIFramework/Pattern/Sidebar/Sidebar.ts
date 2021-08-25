@@ -33,6 +33,19 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._width = this._configs.Width;
 		}
 
+		// Manage the Overlay click event
+		private _handleOverlayClick(hasOverlay: boolean): void {
+			if (hasOverlay) {
+				this._sidebarOverlayElem.addEventListener('click', this._overlayOnClick.bind(this));
+			}
+		}
+
+		// Overlay onClick event to close the Sidebar
+		private _overlayOnClick(): void {
+			this.toggleSidebar(false);
+		}
+
+		// Set accessibility atrributes on html elements
 		private _setAccessibilityProps(isOpen: boolean): void {
 			Helper.Attribute.Set(this._sidebarAsideElem, 'role', 'complementary');
 			Helper.Attribute.Set(this._sidebarAsideElem, 'aria-haspopup', 'true');
@@ -95,6 +108,8 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 			this.setWidth(this._width);
 
+			this._handleOverlayClick(this._hasOverlay);
+
 			this.finishBuild();
 		}
 
@@ -139,6 +154,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._onToggle = callback;
 		}
 
+		// Set the Sidebar direction
 		public setDirection(direction: string): void {
 			if (this._direction !== '') {
 				Helper.Style.RemoveClass(this._selfElem, Enum.SidebarCssClass.Direction + this._configs.Direction);
@@ -148,6 +164,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._direction = direction;
 		}
 
+		// Toggle the Sidebar overlay
 		public setHasOverlay(hasOverlay: boolean): void {
 			const alreadyHasOverlayClass = Helper.Style.ContainsClass(this._selfElem, Enum.SidebarCssClass.HasOverlay);
 
@@ -157,23 +174,33 @@ namespace OSUIFramework.Patterns.Sidebar {
 				Helper.Style.RemoveClass(this._selfElem, Enum.SidebarCssClass.HasOverlay);
 			}
 
+			setTimeout(() => {
+				this._sidebarOverlayElem = this._selfElem.querySelector('.' + Enum.SidebarCssClass.Overlay);
+				this._handleOverlayClick(hasOverlay);
+			}, 0);
+
 			this._hasOverlay = hasOverlay;
 		}
 
+		// Set the Sidebar width
 		public setWidth(width: string): void {
 			Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, width);
 			this._width = width;
 		}
 
-		public toggleSidebar(isOpen: boolean): void {
+		// Toggle the Sidebar and trigger toggle event
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+		public toggleSidebar(isOpen: boolean): any {
 			// Toggle event listeners missing
 			isOpen
 				? Helper.Style.AddClass(this._selfElem, Enum.SidebarCssClass.IsOpen)
 				: Helper.Style.RemoveClass(this._selfElem, Enum.SidebarCssClass.IsOpen);
 
-			this._isOpen = isOpen;
 			this._setAccessibilityProps(isOpen);
 			this._triggerOnToggleEvent(isOpen);
+
+			this._isOpen = isOpen;
+			this._configs.IsOpen = isOpen;
 		}
 	}
 }
