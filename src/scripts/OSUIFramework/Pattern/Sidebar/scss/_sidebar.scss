@@ -28,6 +28,7 @@
 		flex-direction: column;
 		height: 100%;
 		margin: var(--space-none);
+		opacity: 0;
 		position: fixed;
 		top: 0;
 		transition: all 130ms ease-in;
@@ -91,8 +92,9 @@
 	.osui-sidebar {
 		&.is-open {
 			.osui-sidebar_aside {
+				opacity: 1;
 				transform: none;
-				transition: all 330ms ease-out;
+				transition: transform 330ms ease-out;
 				will-change: transform;
 			}
 

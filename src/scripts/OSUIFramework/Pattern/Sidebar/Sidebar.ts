@@ -51,6 +51,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			Helper.Attribute.Set(this._sidebarAsideElem, 'aria-haspopup', 'true');
 			Helper.Attribute.Set(this._sidebarAsideElem, 'tabindex', isOpen ? '0' : '-1');
 			Helper.Attribute.Set(this._sidebarAsideElem, 'aria-hidden', isOpen ? 'false' : 'true');
+			Helper.Attribute.Set(this._sidebarOverlayElem, 'aria-hidden', 'true');
 		}
 
 		// Set the html references that will be used to manage the cssClasses and atribute properties

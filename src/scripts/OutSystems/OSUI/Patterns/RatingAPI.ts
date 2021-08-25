@@ -50,13 +50,13 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	}
 
 	/**
-	 * Function that will return the Map with all the Rating instances at the page
+	 *
 	 *
 	 * @export
-	 * @return {*}  {Map<string, OSUIFramework.Patterns.IRating>}
+	 * @return {*}  {Array<string>}
 	 */
-	export function GetAllRatingsMap(): Map<string, OSUIFramework.Patterns.Rating.IRating> {
-		return _ratingsMap;
+	export function GetAllRatings(): Array<string> {
+		return Array.from(_ratingsMap.keys());
 	}
 
 	/**

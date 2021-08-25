@@ -82,7 +82,7 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	 * @return {*}  {Map<string, OSUIFramework.Patterns.ISearch>}
 	 */
 	export function GetAllSearches(): Array<string> {
-		return [...Object.keys(_searchsMap)];
+		return Array.from(_searchsMap.keys());
 	}
 
 	/**

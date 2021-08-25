@@ -41,10 +41,10 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 *
 	 *
 	 * @export
-	 * @return {*}  {Map<string, OSUIFramework.Patterns.Sidebar.ISidebar>}
+	 * @return {*}  {Array<string>}
 	 */
-	export function GetAllSidebarMap(): Map<string, OSUIFramework.Patterns.Sidebar.ISidebar> {
-		return _sidebarMap;
+	export function GetAllSidebars(): Array<string> {
+		return Array.from(_sidebarMap.keys());
 	}
 	/**
 	 *
