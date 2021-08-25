@@ -12,8 +12,16 @@ namespace OSUIFramework.Patterns.Sidebar.Enum {
 	}
 
 	export enum SidebarCssClass {
-		Header = 'sidebar-header',
-		Content = 'sidebar-content',
+		Aside = 'osui-sidebar_aside',
+		Header = 'osui-sidebar_header',
+		Content = 'osui-sidebar_content',
+		Overlay = 'osui-sidebar_overlay',
 		IsOpen = 'is-open',
+		Direction = 'is-',
+		HasOverlay = 'has-overlay',
+	}
+
+	export enum CssProperty {
+		Width = '--sidebar-width',
 	}
 }

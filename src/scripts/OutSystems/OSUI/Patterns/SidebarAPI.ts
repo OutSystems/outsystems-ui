@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	const _sidebarMap = new Map<string, OSUIFramework.Patterns.Sidebar.ISidebar>();
 
@@ -69,7 +70,7 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 		}
 
 		if (sidebar === undefined) {
-			throw new Error(`Rating id:${sidebarId} not found`);
+			throw new Error(`Sidebar id:${sidebarId} not found`);
 		}
 
 		return sidebar;

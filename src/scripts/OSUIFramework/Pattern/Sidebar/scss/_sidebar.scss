@@ -4,61 +4,101 @@
 /// Patterns - Interaction - Sidebar
 
 ///
-.sidebar {
-	background-color: var(--color-neutral-0);
-	box-shadow: var(--shadow-l);
-	display: flex;
-	flex-direction: column;
-	height: 100%;
-	margin: var(--space-none);
-	position: fixed;
-	right: 0;
-	top: 0;
-	transform: translateX(102%);
-	transition: all 130ms ease-in;
-	width: 500px;
-	will-change: transform;
-	z-index: 140;
+.osui-sidebar {
+	display: contents;
 
-	// Service Studio Preview
-	& {
-		-servicestudio-bottom: 20px;
-		-servicestudio-height: auto;
-		-servicestudio-margin-left: auto;
-		-servicestudio-position: relative;
-		-servicestudio-transform: none;
-		-servicestudio-webkit-transform: none;
+	&.is-right {
+		.osui-sidebar_aside {
+			right: 0;
+			transform: translateX(102%);
+		}
 	}
 
-	&:before {
-		background-color: transparent;
-		content: '';
+	&.is-left {
+		.osui-sidebar_aside {
+			left: 0;
+			transform: translateX(-102%);
+		}
+	}
+
+	&_aside {
+		background-color: var(--color-neutral-0);
+		box-shadow: var(--shadow-l);
+		display: flex;
+		flex-direction: column;
 		height: 100%;
-		left: -24px;
+		margin: var(--space-none);
 		position: fixed;
-		width: 24px;
+		top: 0;
+		transition: all 130ms ease-in;
+		width: var(--sidebar-width);
+		will-change: transform;
+		z-index: 140;
+
+		&:before {
+			background-color: transparent;
+			content: '';
+			height: 100%;
+			left: -24px;
+			position: fixed;
+			width: 24px;
+		}
+
+		// Service Studio Preview
+		& {
+			-servicestudio-bottom: 20px;
+			-servicestudio-height: auto;
+			-servicestudio-margin-left: auto;
+			-servicestudio-position: relative;
+			-servicestudio-transform: none;
+			-servicestudio-webkit-transform: none;
+		}
 	}
 
-	&-header,
-	&-content {
+	&_header,
+	&_content {
 		padding: var(--space-base) var(--space-m);
 	}
 
-	&-content {
+	&_content {
 		flex: 1;
 		overflow: auto;
 		-webkit-overflow-scrolling: touch;
+	}
+
+	&_overlay {
+		background-color: rgba(190, 190, 190, 0.25);
+		cursor: pointer;
+		height: 100vh;
+		opacity: 0;
+		pointer-events: none;
+		position: fixed;
+		right: 0;
+		top: 0;
+		transition: opacity 130ms ease-in;
+		width: 100vw;
+		z-index: 130;
+
+		// Service Studio Preview
+		& {
+			-servicestudio-display: none;
+		}
 	}
 }
 
 ///
 .active-screen {
-	&.screen-container {
-		.sidebar {
-			&.is-open {
+	.osui-sidebar {
+		&.is-open {
+			.osui-sidebar_aside {
 				transform: none;
 				transition: all 330ms ease-out;
 				will-change: transform;
+			}
+
+			.osui-sidebar_overlay {
+				opacity: 1;
+				pointer-events: initial;
 			}
 		}
 	}
@@ -68,7 +108,7 @@
 ///
 .android[data-status-bar-height] {
 	.layout-native {
-		.sidebar {
+		.osui-sidebar_aside {
 			padding-top: var(--status-bar-height);
 		}
 	}
@@ -77,7 +117,7 @@
 ///
 .ios {
 	.layout-native {
-		.sidebar {
+		.osui-sidebar_aside {
 			padding-bottom: var(--os-safe-area-bottom);
 			padding-top: var(--os-safe-area-top);
 		}
@@ -86,7 +126,7 @@
 	.phone {
 		&.landscape {
 			.layout-native {
-				.sidebar:before {
+				.osui-sidebar_aside:before {
 					left: calc((var(--os-safe-area-left) + 12px) * -1);
 					width: calc(var(--os-safe-area-left) + 12px);
 				}
@@ -98,37 +138,15 @@
 ///
 .landscape {
 	.layout-native {
-		.sidebar {
+		.osui-sidebar_aside {
 			padding-bottom: var(--os-safe-area-bottom);
 		}
 	}
 }
 
-.tablet,
-.phone {
-	.sidebar {
-		&.full-width {
-			width: 100%;
-
-			&-vw {
-				width: 100vw;
-			}
-		}
-	}
-}
-
-///
-.tablet {
-	.layout-native {
-		.sidebar {
-			width: 336px;
-		}
-	}
-}
-
 ///
 .phone {
-	.sidebar {
-		width: 85vw;
+	.osui-sidebar_aside {
+		max-width: 85vw;
 	}
 }
