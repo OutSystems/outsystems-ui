@@ -3,7 +3,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Progress.Circle {
 	export class ProgressCircleConfig extends Progress.ProgressConfiguration {
-		public AnimateInitialProgress: boolean;
 		public CircleThickness: number;
 		public Progress: number;
 		public ProgressColor: string;

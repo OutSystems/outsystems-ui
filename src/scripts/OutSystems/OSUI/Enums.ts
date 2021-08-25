@@ -8,5 +8,6 @@ namespace OutSystems.OSUI.Patterns.Enum {
 	export enum Progress {
 		Bar = 'Bar',
 		Circle = 'Circle',
+		CircleFraction = 'CircleFraction',
 	}
 }
