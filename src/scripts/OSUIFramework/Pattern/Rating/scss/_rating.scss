@@ -140,6 +140,19 @@
 		opacity: 1;
 	}
 
+	.icon-states {
+		// Service Studio Preview
+		& {
+			-servicestudio-display: flex;
+		}
+		span {
+			// Service Studio Preview
+			& {
+				-servicestudio-display: flex;
+			}
+		}
+	}
+
 	--rating-size: 16px;
 }
 
@@ -148,16 +161,6 @@
 	.rating {
 		span.wcag-hide-text {
 			position: absolute;
-		}
-	}
-}
-
-///
-.icon-states {
-	div[data-block*='Rating'] span {
-		// Service Studio Preview
-		& {
-			-servicestudio-display: flex;
 		}
 	}
 }
