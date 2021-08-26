@@ -7,7 +7,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		// Store the Sidebar direction
 		private _direction: string;
 		// Store current drag direction
-		private _dragDirection: string;
+		private _dragOrientation: string;
 		// Store if the Sidebar has Overlay
 		private _hasOverlay: boolean;
 		// Store the if the Sidebar is moving on Native Gestures
@@ -20,14 +20,10 @@ namespace OSUIFramework.Patterns.Sidebar {
 		private _onToggle: Callbacks.OSSidebarToggleEvent;
 		// Store the Sidebar Aside element
 		private _sidebarAsideElem: HTMLElement;
-		// Store the Sidebar Content element
-		private _sidebarContentElem: HTMLElement;
-		// Store the Sidebar Header element
-		private _sidebarHeaderElem: HTMLElement;
 		// Store the Sidebar Overlay element
 		private _sidebarOverlayElem: HTMLElement;
 		// Store the minimal speed for a swipe to be triggered
-		private _swipeSpeed = 0.3;
+		private _swipeTriggerSpeed = 0.3;
 		// Store the Sidebar width
 		private _width: string;
 
@@ -48,19 +44,17 @@ namespace OSUIFramework.Patterns.Sidebar {
 		}
 
 		private _checkIsDraggingInsideBounds(x: number): boolean {
-			const isRtlOrDirectionLeft = this._isRtl || this._direction === GlobalEnum.Direction.left;
 			let IsDraggingInsideBounds: boolean;
 
-			if (isRtlOrDirectionLeft) {
+			if (this._direction === GlobalEnum.Direction.left) {
 				IsDraggingInsideBounds =
-					this._zNativeGestures.MoveX + (x - this._zNativeGestures.LastX) > -parseInt(this._width) &&
-					this._zNativeGestures.MoveX + (x - this._zNativeGestures.LastX) < 0;
+					this._zNativeGestures.MoveX + (x + this._zNativeGestures.LastX) > -parseInt(this._width) &&
+					this._zNativeGestures.MoveX + (x + this._zNativeGestures.LastX) < 0;
 			} else {
 				IsDraggingInsideBounds =
-					this._zNativeGestures.MoveX + (x - this._zNativeGestures.LastX) < -parseInt(this._width) &&
+					this._zNativeGestures.MoveX + (x - this._zNativeGestures.LastX) < parseInt(this._width) &&
 					this._zNativeGestures.MoveX + (x - this._zNativeGestures.LastX) > 0;
 			}
-
 			return IsDraggingInsideBounds;
 		}
 
@@ -91,8 +85,6 @@ namespace OSUIFramework.Patterns.Sidebar {
 		// Set the html references that will be used to manage the cssClasses and atribute properties
 		private _setHtmlElements(): void {
 			this._sidebarAsideElem = this._selfElem.querySelector('.' + Enum.SidebarCssClass.Aside);
-			this._sidebarHeaderElem = this._selfElem.querySelector('.' + Enum.SidebarCssClass.Header);
-			this._sidebarContentElem = this._selfElem.querySelector('.' + Enum.SidebarCssClass.Content);
 			this._sidebarOverlayElem = this._selfElem.querySelector('.' + Enum.SidebarCssClass.Overlay);
 		}
 
@@ -141,7 +133,12 @@ namespace OSUIFramework.Patterns.Sidebar {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/naming-convention
 		private _updateUI(): any {
 			if (this._isMoving) {
-				this._sidebarAsideElem.style.transform = 'translateX(' + this._zNativeGestures.MoveX + 'px)';
+				if (this._direction === GlobalEnum.Direction.left) {
+					this._sidebarAsideElem.style.transform = `translateX(-${this._zNativeGestures.MoveX}px)`;
+				} else {
+					this._sidebarAsideElem.style.transform = `translateX(${this._zNativeGestures.MoveX}px)`;
+				}
+
 				requestAnimationFrame(() => {
 					this._updateUI();
 				});
@@ -201,10 +198,6 @@ namespace OSUIFramework.Patterns.Sidebar {
 		}
 
 		public onGestureEnd(offsetX: number, offsetY: number, timeTaken: number): void {
-			let intervalExpressionForClose: boolean;
-			let intervalExpressionForOpen: boolean;
-			let offsetExpression: boolean;
-
 			this._isMoving = false;
 
 			Helper.Style.RemoveClass(this._sidebarAsideElem, Constants.noTransition);
@@ -214,47 +207,38 @@ namespace OSUIFramework.Patterns.Sidebar {
 				return;
 			}
 
-			if (this._isRtl || this._direction === GlobalEnum.Direction.left) {
-				intervalExpressionForClose = this._zNativeGestures.MoveX < -parseInt(this._width) / 2;
-				intervalExpressionForOpen = this._zNativeGestures.MoveX > -parseInt(this._width) / 2;
-				offsetExpression = offsetX < 0;
-			} else {
-				intervalExpressionForClose = this._zNativeGestures.MoveX > -parseInt(this._width) / 2;
-				intervalExpressionForOpen = this._zNativeGestures.MoveX < -parseInt(this._width) / 2;
-				offsetExpression = offsetX > 0;
-			}
+			const hasOffset = offsetX > 0;
+			const isLeft = this._direction === GlobalEnum.Direction.left;
 
 			if (this._isOpen) {
+				const intervalForClose = isLeft
+					? this._zNativeGestures.MoveX > parseInt(this._width) / 2
+					: this._zNativeGestures.MoveX > -parseInt(this._width) / 2;
+
+				const closedOneThird =
+					intervalForClose && Math.abs(offsetX) / timeTaken > this._swipeTriggerSpeed && hasOffset;
+
 				this._sidebarAsideElem.style.transform = '';
-				// Closed one third?
-				if (
-					intervalExpressionForClose &&
-					Math.abs(offsetX) / timeTaken > this._swipeSpeed &&
-					offsetExpression
-				) {
-					// Close Sidebar
-					this.toggleSidebar(false);
-				} else {
-					// Open Sidebar
-					this.toggleSidebar(true);
-				}
+
+				closedOneThird ? this.toggleSidebar(false) : this.toggleSidebar(true);
 			} else {
+				const intervalForOpen = isLeft
+					? this._zNativeGestures.MoveX < parseInt(this._width) / 2
+					: this._zNativeGestures.MoveX < -parseInt(this._width) / 2;
+				console.log(intervalForOpen);
+
+				const openedTwoThirds = intervalForOpen || Math.abs(offsetX) / timeTaken > this._swipeTriggerSpeed;
+
 				this._sidebarAsideElem.style.transform = '';
-				// Opened two thirds?
-				if (intervalExpressionForOpen || Math.abs(offsetX) / timeTaken > this._swipeSpeed) {
-					// Open Sidebar
-					this.toggleSidebar(true);
-				} else {
-					// Close Sidebar
-					this.toggleSidebar(false);
-				}
+
+				openedTwoThirds ? this.toggleSidebar(true) : this.toggleSidebar(false);
 			}
 		}
 
 		public onGestureMove(x: number, y: number, offsetX: number, offsetY: number, evt: TouchEvent): void {
-			// No direction set?
-			if (this._dragDirection === '') {
-				this._dragDirection =
+			// No orientation set?
+			if (this._dragOrientation === '') {
+				this._dragOrientation =
 					Math.abs(offsetX) >= Math.abs(offsetY)
 						? GlobalEnum.Orientation.horizontal
 						: GlobalEnum.Orientation.vertical;
@@ -264,7 +248,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 
 			// Is Scrolling?
-			if (this._dragDirection === GlobalEnum.Orientation.vertical) {
+			if (this._dragOrientation === GlobalEnum.Orientation.vertical) {
 				this._updateLastPositions(x, y);
 				return;
 			}
@@ -272,30 +256,37 @@ namespace OSUIFramework.Patterns.Sidebar {
 			evt.preventDefault();
 			const IsDraggingInsideBounds = this._checkIsDraggingInsideBounds(x);
 
-			// Dragging inside bounds?
-			if (IsDraggingInsideBounds) {
-				this._updateLastPositions(x, y);
+			if (this._direction === GlobalEnum.Direction.left) {
+				// Dragging inside bounds?
+				if (IsDraggingInsideBounds) {
+					// Update x axis offset
+					this._zNativeGestures.MoveX = this._zNativeGestures.MoveX - (x - this._zNativeGestures.LastX);
+					this._updateLastPositions(x, y);
+					return;
+				} else {
+					this._updateLastPositions(x, y);
+				}
 			} else {
-				// Update x axis offset
-				this._zNativeGestures.MoveX = this._zNativeGestures.MoveX + (x - this._zNativeGestures.LastX);
-				this._updateLastPositions(x, y);
+				// Dragging inside bounds?
+				if (IsDraggingInsideBounds) {
+					// Update x axis offset
+					this._zNativeGestures.MoveX = this._zNativeGestures.MoveX + (x - this._zNativeGestures.LastX);
+					this._updateLastPositions(x, y);
+					return;
+				} else {
+					this._updateLastPositions(x, y);
+				}
 			}
 		}
 
 		public onGestureStart(x: number, y: number): void {
-			this._isRtl = OutSystems.OSUI.Utils.GetIsRTL();
 			this._isMoving = true;
-			this._dragDirection = '';
+			this._dragOrientation = '';
 			this._zNativeGestures.LastX = x;
 			this._zNativeGestures.LastY = y;
-			this._zNativeGestures.MoveX = this._isOpen
-				? 0
-				: this._isRtl
-				? -parseInt(this._width)
-				: parseInt(this._width);
+			this._zNativeGestures.MoveX = this._isOpen ? 0 : parseInt(this._width);
 
 			Helper.Style.AddClass(this._sidebarAsideElem, Constants.noTransition);
-			this._sidebarAsideElem.offsetHeight;
 		}
 
 		// Set callbacks for the onToggle event
