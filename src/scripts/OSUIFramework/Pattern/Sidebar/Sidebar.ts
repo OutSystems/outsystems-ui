@@ -34,7 +34,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		private _zNativeGestures = {
 			LastX: 0,
 			LastY: 0,
-			MoveX: undefined,
+			MoveX: 0,
 		};
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
@@ -53,11 +53,11 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 			if (isRtlOrDirectionLeft) {
 				IsDraggingInsideBounds =
-					this._zNativeGestures.MoveX + (x - this._zNativeGestures.LastX) > -this._width &&
+					this._zNativeGestures.MoveX + (x - this._zNativeGestures.LastX) > -parseInt(this._width) &&
 					this._zNativeGestures.MoveX + (x - this._zNativeGestures.LastX) < 0;
 			} else {
 				IsDraggingInsideBounds =
-					this._zNativeGestures.MoveX + (x - this._zNativeGestures.LastX) < -this._width &&
+					this._zNativeGestures.MoveX + (x - this._zNativeGestures.LastX) < -parseInt(this._width) &&
 					this._zNativeGestures.MoveX + (x - this._zNativeGestures.LastX) > 0;
 			}
 
@@ -138,15 +138,14 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._zNativeGestures.LastY = y;
 		}
 
-		// eslint-disable-next-line @typescript-eslint/naming-convention
-		private _updateUI(): FrameRequestCallback {
-			if (!this._isMoving) {
-				return;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/naming-convention
+		private _updateUI(): any {
+			if (this._isMoving) {
+				this._sidebarAsideElem.style.transform = 'translateX(' + this._zNativeGestures.MoveX + 'px)';
+				requestAnimationFrame(() => {
+					this._updateUI();
+				});
 			}
-
-			this._selfElem.style.transform = `translateX( + ${this._zNativeGestures.MoveX} + px)`;
-
-			//requestAnimationFrame(this._updateUI());
 		}
 
 		public build(): void {
@@ -208,25 +207,25 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 			this._isMoving = false;
 
-			Helper.Style.RemoveClass(this._selfElem, Constants.noTransition);
+			Helper.Style.RemoveClass(this._sidebarAsideElem, Constants.noTransition);
 
 			// Just clicked?
 			if (offsetX === 0 && offsetY === 0) {
 				return;
 			}
 
-			if (this._isRtl) {
-				intervalExpressionForClose = this._zNativeGestures.MoveX < -this._width / 2;
-				intervalExpressionForOpen = this._zNativeGestures.MoveX > -this._width / 2;
+			if (this._isRtl || this._direction === GlobalEnum.Direction.left) {
+				intervalExpressionForClose = this._zNativeGestures.MoveX < -parseInt(this._width) / 2;
+				intervalExpressionForOpen = this._zNativeGestures.MoveX > -parseInt(this._width) / 2;
 				offsetExpression = offsetX < 0;
 			} else {
-				intervalExpressionForClose = this._zNativeGestures.MoveX > -this._width / 2;
-				intervalExpressionForOpen = this._zNativeGestures.MoveX < -this._width / 2;
+				intervalExpressionForClose = this._zNativeGestures.MoveX > -parseInt(this._width) / 2;
+				intervalExpressionForOpen = this._zNativeGestures.MoveX < -parseInt(this._width) / 2;
 				offsetExpression = offsetX > 0;
 			}
 
 			if (this._isOpen) {
-				this._selfElem.style.transform = '';
+				this._sidebarAsideElem.style.transform = '';
 				// Closed one third?
 				if (
 					intervalExpressionForClose &&
@@ -240,7 +239,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 					this.toggleSidebar(true);
 				}
 			} else {
-				this._selfElem.style.transform = '';
+				this._sidebarAsideElem.style.transform = '';
 				// Opened two thirds?
 				if (intervalExpressionForOpen || Math.abs(offsetX) / timeTaken > this._swipeSpeed) {
 					// Open Sidebar
@@ -254,12 +253,14 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 		public onGestureMove(x: number, y: number, offsetX: number, offsetY: number, evt: TouchEvent): void {
 			// No direction set?
-			if (this._direction === '') {
-				this._direction =
+			if (this._dragDirection === '') {
+				this._dragDirection =
 					Math.abs(offsetX) >= Math.abs(offsetY)
 						? GlobalEnum.Orientation.horizontal
 						: GlobalEnum.Orientation.vertical;
-				requestAnimationFrame(this._updateUI());
+				requestAnimationFrame(() => {
+					this._updateUI();
+				});
 			}
 
 			// Is Scrolling?
@@ -283,6 +284,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 		public onGestureStart(x: number, y: number): void {
 			this._isRtl = OutSystems.OSUI.Utils.GetIsRTL();
+			this._isMoving = true;
 			this._dragDirection = '';
 			this._zNativeGestures.LastX = x;
 			this._zNativeGestures.LastY = y;
@@ -292,7 +294,8 @@ namespace OSUIFramework.Patterns.Sidebar {
 				? -parseInt(this._width)
 				: parseInt(this._width);
 
-			Helper.Style.AddClass(this._selfElem, Constants.noTransition);
+			Helper.Style.AddClass(this._sidebarAsideElem, Constants.noTransition);
+			this._sidebarAsideElem.offsetHeight;
 		}
 
 		// Set callbacks for the onToggle event
@@ -343,7 +346,10 @@ namespace OSUIFramework.Patterns.Sidebar {
 				: Helper.Style.RemoveClass(this._selfElem, Enum.SidebarCssClass.IsOpen);
 
 			this._setAccessibilityProps(isOpen);
-			this._triggerOnToggleEvent(isOpen);
+
+			if (isOpen !== this._isOpen) {
+				this._triggerOnToggleEvent(isOpen);
+			}
 
 			this._isOpen = isOpen;
 			this._configs.IsOpen = isOpen;

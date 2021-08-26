@@ -11,6 +11,10 @@
 		.osui-sidebar_aside {
 			right: 0;
 			transform: translateX(102%);
+
+			&:before {
+				left: -24px;
+			}
 		}
 	}
 
@@ -18,6 +22,10 @@
 		.osui-sidebar_aside {
 			left: 0;
 			transform: translateX(-102%);
+
+			&:before {
+				right: -24px;
+			}
 		}
 	}
 
@@ -28,7 +36,6 @@
 		flex-direction: column;
 		height: 100%;
 		margin: var(--space-none);
-		opacity: 0;
 		position: fixed;
 		top: 0;
 		transition: all 130ms ease-in;
@@ -40,7 +47,6 @@
 			background-color: transparent;
 			content: '';
 			height: 100%;
-			left: -24px;
 			position: fixed;
 			width: 24px;
 		}
@@ -107,6 +113,13 @@
 }
 
 // Responsive --------------------------------------------------------------------
+///
+.desktop {
+	.osui-sidebar_aside {
+		opacity: 0;
+	}
+}
+
 ///
 .android[data-status-bar-height] {
 	.layout-native {
