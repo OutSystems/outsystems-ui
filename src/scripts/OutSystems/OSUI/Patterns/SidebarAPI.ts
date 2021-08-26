@@ -89,6 +89,7 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 
 		return sidebar;
 	}
+
 	/**
 	 *
 	 *

@@ -30,4 +30,26 @@ namespace OSUIFramework.GlobalEnum {
 		topLeft = 'top-left',
 		topRight = 'top-right',
 	}
+
+	/**
+	 *
+	 *
+	 * @export
+	 * @enum {number}
+	 */
+	export enum Orientation {
+		horizontal = 'horizontal',
+		vertical = 'vertical',
+	}
+
+	/**
+	 *
+	 *
+	 * @export
+	 * @enum {number}
+	 */
+	export enum Direction {
+		left = 'left',
+		right = 'right',
+	}
 }

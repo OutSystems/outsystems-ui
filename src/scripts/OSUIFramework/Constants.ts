@@ -6,6 +6,12 @@ namespace OSUIFramework.Constants {
 	/* cssClass to be checked if the Accessibility Feature is enabled */
 	export const hasAccessibilityClass = 'has-accessible-features';
 
+	/* cssClass to be checked if the RTL Feature is enabled */
+	export const isRTLClass = 'is-rtl';
+
+	/* cssClass to be remove transitions on element */
+	export const noTransition = 'no-transition';
+
 	/* OSUI Version */
-	export const OSUIVersion = '2.6.9';
+	export const OSUIVersion = '2.7.0';
 }
