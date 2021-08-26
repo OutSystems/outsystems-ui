@@ -8,6 +8,10 @@ namespace OSUIFramework.Patterns.Sidebar {
 		private _direction: string;
 		// Store current drag direction
 		private _dragOrientation: string;
+		// Store the first element to receive focus in the sidebar
+		private _firstFocusableElem: any;
+		// Store focusable element inside sidebar
+		private _focusableElems: NodeList;
 		// Store if the Sidebar has Overlay
 		private _hasOverlay: boolean;
 		// Store the if the Sidebar is moving on Native Gestures
@@ -16,6 +20,8 @@ namespace OSUIFramework.Patterns.Sidebar {
 		private _isOpen: boolean;
 		// Store if it's RTL
 		private _isRtl: boolean;
+		// Store the last element to receive focus in the sidebar
+		private _lastFocusableElem: any;
 		// Store if the Sidebar is Open
 		private _onToggle: Callbacks.OSSidebarToggleEvent;
 		// Store the Sidebar Aside element
@@ -48,14 +54,31 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 			if (this._direction === GlobalEnum.Direction.left) {
 				IsDraggingInsideBounds =
-					this._zNativeGestures.MoveX + (x + this._zNativeGestures.LastX) > -parseInt(this._width) &&
-					this._zNativeGestures.MoveX + (x + this._zNativeGestures.LastX) < 0;
+					this._zNativeGestures.MoveX + (x + this._zNativeGestures.LastX) < parseInt(this._width) &&
+					this._zNativeGestures.MoveX + (x + this._zNativeGestures.LastX) >= 0;
 			} else {
 				IsDraggingInsideBounds =
 					this._zNativeGestures.MoveX + (x - this._zNativeGestures.LastX) < parseInt(this._width) &&
-					this._zNativeGestures.MoveX + (x - this._zNativeGestures.LastX) > 0;
+					this._zNativeGestures.MoveX + (x - this._zNativeGestures.LastX) >= 0;
 			}
 			return IsDraggingInsideBounds;
+		}
+
+		private _handleFocusableElemsTabindex(): void {
+			this._focusableElems = [].slice.call(this._focusableElems);
+
+			this._focusableElems.forEach((item: HTMLElement) => {
+				item.setAttribute('tabindex', this._isOpen ? '0' : '-1');
+			});
+		}
+
+		// Manage the aside keypress event
+		private _handleKeypressEvent(): void {
+			if (this._isOpen) {
+				this._sidebarAsideElem.addEventListener('keydown', this._sidebarOnKeypress.bind(this));
+			} else {
+				this._sidebarAsideElem.removeEventListener('keydown', this._sidebarOnKeypress.bind(this));
+			}
 		}
 
 		// Manage the Overlay click event
@@ -86,6 +109,9 @@ namespace OSUIFramework.Patterns.Sidebar {
 		private _setHtmlElements(): void {
 			this._sidebarAsideElem = this._selfElem.querySelector('.' + Enum.SidebarCssClass.Aside);
 			this._sidebarOverlayElem = this._selfElem.querySelector('.' + Enum.SidebarCssClass.Overlay);
+			this._focusableElems = this._sidebarAsideElem.querySelectorAll(Constants.focusableElems);
+			this._firstFocusableElem = this._focusableElems[0];
+			this._lastFocusableElem = this._focusableElems[this._focusableElems.length - 1];
 		}
 
 		// Set the cssClasses that should be assigned to the element on it's initialization
@@ -115,6 +141,30 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 		}
 
+		private _sidebarOnKeypress(e: KeyboardEvent): void {
+			const isTabPressed = e.key === GlobalEnum.Keycodes.tab;
+			const isEscapedPressed = e.key === GlobalEnum.Keycodes.escape;
+			const isShiftPressed = e.key === GlobalEnum.Keycodes.shift;
+
+			if (!isTabPressed && !isEscapedPressed) {
+				return;
+			}
+
+			if (isEscapedPressed && this._isOpen) {
+				this.toggleSidebar(false);
+			}
+
+			if (isShiftPressed) {
+				if (document.activeElement === this._firstFocusableElem) {
+					this._lastFocusableElem.focus();
+					e.preventDefault();
+				}
+			} else if (document.activeElement === this._lastFocusableElem) {
+				this._firstFocusableElem.focus();
+				e.preventDefault();
+			}
+		}
+
 		// Method that triggers the OnToggle event
 		private _triggerOnToggleEvent(isOpen: boolean): void {
 			if (this._onToggle !== undefined) {
@@ -134,8 +184,10 @@ namespace OSUIFramework.Patterns.Sidebar {
 		private _updateUI(): any {
 			if (this._isMoving) {
 				if (this._direction === GlobalEnum.Direction.left) {
+					console.log(`translateX(${this._zNativeGestures.MoveX}px)`);
 					this._sidebarAsideElem.style.transform = `translateX(-${this._zNativeGestures.MoveX}px)`;
 				} else {
+					console.log(`translateX(${this._zNativeGestures.MoveX}px)`);
 					this._sidebarAsideElem.style.transform = `translateX(${this._zNativeGestures.MoveX}px)`;
 				}
 
@@ -157,6 +209,8 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this.setWidth(this._width);
 
 			this._handleOverlayClick(this._hasOverlay);
+
+			this._handleKeypressEvent();
 
 			this.finishBuild();
 		}
@@ -225,7 +279,6 @@ namespace OSUIFramework.Patterns.Sidebar {
 				const intervalForOpen = isLeft
 					? this._zNativeGestures.MoveX < parseInt(this._width) / 2
 					: this._zNativeGestures.MoveX < -parseInt(this._width) / 2;
-				console.log(intervalForOpen);
 
 				const openedTwoThirds = intervalForOpen || Math.abs(offsetX) / timeTaken > this._swipeTriggerSpeed;
 
@@ -342,8 +395,15 @@ namespace OSUIFramework.Patterns.Sidebar {
 				this._triggerOnToggleEvent(isOpen);
 			}
 
+			if (isOpen) {
+				this._sidebarAsideElem.focus();
+			}
+
 			this._isOpen = isOpen;
 			this._configs.IsOpen = isOpen;
+
+			this._handleKeypressEvent();
+			this._handleFocusableElemsTabindex();
 		}
 	}
 }

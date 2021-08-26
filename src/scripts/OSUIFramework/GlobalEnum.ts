@@ -52,4 +52,18 @@ namespace OSUIFramework.GlobalEnum {
 		left = 'left',
 		right = 'right',
 	}
+
+	/**
+	 *
+	 *
+	 * @export
+	 * @enum {number}
+	 */
+	export enum Keycodes {
+		tab = 'Tab',
+		escape = 'Escape',
+		enter = 'Enter',
+		space = ' ',
+		shift = 'Shift',
+	}
 }
