@@ -60,7 +60,7 @@ namespace OSUIFramework.Patterns {
 		public build(): void {
 			this._selfElem = Helper.GetElementByUniqueId(this._uniqueId);
 			this._widgetId = this._selfElem.closest(GlobalEnum.DataBlocksTag.DataBlock).id;
-			this._enableAccessibility = !!document.querySelector('.' + Constants.hasAccessibilityClass);
+			this._enableAccessibility = !!document.querySelector(Constants.Dot + Constants.HasAccessibilityClass);
 		}
 
 		public dispose(): void {

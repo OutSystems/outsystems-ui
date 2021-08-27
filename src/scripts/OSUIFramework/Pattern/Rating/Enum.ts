@@ -11,7 +11,7 @@ namespace OSUIFramework.Patterns.Rating.Enum {
 		Size = 'Size',
 	}
 
-	export enum RatingCssClass {
+	export enum CssClass {
 		IsEdit = 'is-edit',
 		IsHalf = 'is-half',
 		Size = 'rating-',

@@ -76,7 +76,7 @@ namespace OSUIFramework.Patterns.Rating {
 			this._isHalfValue = false;
 
 			// Check if the e.target is a label with the Enum.RatingCssClass.RatingInput class
-			const isInput = Helper.Style.ContainsClass(currentTarget, Enum.RatingCssClass.RatingInput);
+			const isInput = Helper.Style.ContainsClass(currentTarget, Enum.CssClass.RatingInput);
 			if (isInput) {
 				// If it is, then get the input:checked value
 				this._value = this.getValue();
@@ -88,15 +88,15 @@ namespace OSUIFramework.Patterns.Rating {
 		// Method called on createItems() to render the correct HTML structure for each item
 		private _renderItems(index: number): void {
 			// If first input, whihc is hidden, than also hide the label
-			const hideLabelClass: string = index === 0 ? Enum.RatingCssClass.WCAGHideText : '';
+			const hideLabelClass: string = index === 0 ? Enum.CssClass.WCAGHideText : '';
 			// if not first input, which is hidden, add the html stored form the placeholders
 			const labelHTML = index !== 0 ? this._clonedPlaceholders : '';
 			// Create a unique rating input id, based on the index
 			const ratingInputId: string = this.uniqueId + '-rating-' + index;
 
 			// Craete input and label html
-			const input = `<input type="radio" class="${Enum.RatingCssClass.RatingInput} ${Enum.RatingCssClass.WCAGHideText}" id=${ratingInputId} name=${this._ratingInputName} value=${index}/>`;
-			const label = `<label class='${Enum.RatingCssClass.RatingItem} ${hideLabelClass}' for=${ratingInputId}><span class="${Enum.RatingCssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
+			const input = `<input type="radio" class="${Enum.CssClass.RatingInput} ${Enum.CssClass.WCAGHideText}" id=${ratingInputId} name=${this._ratingInputName} value=${index}/>`;
+			const label = `<label class='${Enum.CssClass.RatingItem} ${hideLabelClass}' for=${ratingInputId}><span class="${Enum.CssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
 
 			// Append new input + label to fieldset's html
 			this._ratingFieldsetElem.innerHTML += input + label;
@@ -123,17 +123,17 @@ namespace OSUIFramework.Patterns.Rating {
 		private _setInitialCssClasses(): void {
 			// Set IsHalf class
 			if (this._isHalfValue) {
-				Helper.Style.AddClass(this._selfElem, Enum.RatingCssClass.IsHalf);
+				Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsHalf);
 			}
 
 			// Set IsEdit class
 			if (this._configs.IsEdit) {
-				Helper.Style.AddClass(this._selfElem, Enum.RatingCssClass.IsEdit);
+				Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsEdit);
 			}
 
 			// Set Size class
 			if (this._configs.Size !== '') {
-				Helper.Style.AddClass(this._selfElem, Enum.RatingCssClass.Size + this._configs.Size);
+				Helper.Style.AddClass(this._selfElem, Enum.CssClass.Size + this._configs.Size);
 			}
 
 			// Set default ExtendedClass values
@@ -265,8 +265,8 @@ namespace OSUIFramework.Patterns.Rating {
 
 			// Toggle the is-edit class
 			IsEdit
-				? Helper.Style.AddClass(this._selfElem, Enum.RatingCssClass.IsEdit)
-				: Helper.Style.RemoveClass(this._selfElem, Enum.RatingCssClass.IsEdit);
+				? Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsEdit)
+				: Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.IsEdit);
 
 			// Review if there's a need to add/remove the click event, accordingly to the IsEdit value
 			this._manageRatingEvent();
@@ -296,7 +296,7 @@ namespace OSUIFramework.Patterns.Rating {
 			// If size param is not empty, it means is either 'small' or 'medium', so we can add the class based on the size param
 			// This is done, as the Size entity in OutSystems has not a 'base' entity, just a NullIdentifier, which is the default size
 			if (size !== '') {
-				newSize = Enum.RatingCssClass.Size + size;
+				newSize = Enum.CssClass.Size + size;
 				Helper.Style.AddClass(this._selfElem, newSize);
 			} else {
 				// If it's empty, it means is the default NullIdentifier, whihch corresponds to the 'base' size
@@ -319,8 +319,8 @@ namespace OSUIFramework.Patterns.Rating {
 				const ratingItems = this._selfElem.querySelectorAll('input');
 
 				// Reset the is-half class
-				if (Helper.Style.ContainsClass(this._selfElem, Enum.RatingCssClass.IsHalf)) {
-					Helper.Style.RemoveClass(this._selfElem, Enum.RatingCssClass.IsHalf);
+				if (Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.IsHalf)) {
+					Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.IsHalf);
 				}
 
 				// If there's only one rating item, then there's no need for further checks, this one will be checked

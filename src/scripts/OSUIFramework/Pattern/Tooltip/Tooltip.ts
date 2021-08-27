@@ -248,11 +248,11 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 					case Enum.Properties.Position:
 						if (this._configs.Position !== '') {
-							Helper.Style.ToogleClass(this._tooltipBallonWrapperElem, this._configs.Position);
+							Helper.Style.ToggleClass(this._tooltipBallonWrapperElem, this._configs.Position);
 						}
 
 						if (propertyValue !== '') {
-							Helper.Style.ToogleClass(this._tooltipBallonWrapperElem, propertyValue);
+							Helper.Style.ToggleClass(this._tooltipBallonWrapperElem, propertyValue);
 						}
 
 						this._configs.Position = propertyValue;

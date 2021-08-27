@@ -20,14 +20,15 @@ namespace OSUIFramework.GlobalEnum {
 	 * @enum {number}
 	 */
 	export enum OSUICssClassPosition {
-		bottom = 'bottom',
-		bottomLeft = 'bottom-left',
-		bottomRight = 'bottom-right',
-		center = 'center',
-		left = 'left',
-		right = 'right',
-		top = 'top',
-		topLeft = 'top-left',
-		topRight = 'top-right',
+		Bottom = 'bottom',
+		BottomLeft = 'bottom-left',
+		BottomRight = 'bottom-right',
+		Center = 'center',
+		Left = 'left',
+		Right = 'right',
+		Top = 'top',
+		TopLeft = 'top-left',
+		TopRight = 'top-right',
+	}
 	}
 }
