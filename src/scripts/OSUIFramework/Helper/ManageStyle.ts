@@ -8,7 +8,11 @@ namespace OSUIFramework.Helper.Style {
 	 * @param {string} cssClass Css class that will be added
 	 */
 	export function AddClass(elem: HTMLElement, cssClass: string): void {
-		elem.classList.add(cssClass);
+		if (elem) {
+			elem.classList.add(cssClass);
+		} else {
+			throw Error(`The element does not exist, when trying to add the class '${cssClass}'.`);
+		}
 	}
 
 	/**
@@ -19,7 +23,11 @@ namespace OSUIFramework.Helper.Style {
 	 * @param {string} cssClass Css class that will be removed
 	 */
 	export function RemoveClass(elem: HTMLElement, cssClass: string): void {
-		elem.classList.remove(cssClass);
+		if (elem) {
+			elem.classList.remove(cssClass);
+		} else {
+			throw Error(`The element does not exist, when trying to remove the class '${cssClass}'.`);
+		}
 	}
 
 	/**
@@ -29,8 +37,12 @@ namespace OSUIFramework.Helper.Style {
 	 * @param {HTMLElement} elem Element where the class will be toggled
 	 * @param {string} cssClass Css class that will be toggled
 	 */
-	export function ToogleClass(elem: HTMLElement, cssClass: string): void {
-		elem.classList.toggle(cssClass);
+	export function ToggleClass(elem: HTMLElement, cssClass: string): void {
+		if (elem) {
+			elem.classList.toggle(cssClass);
+		} else {
+			throw Error(`The element does not exist, when trying to toggle the class '${cssClass}'.`);
+		}
 	}
 
 	/**
@@ -42,7 +54,11 @@ namespace OSUIFramework.Helper.Style {
 	 * @return {*}  {boolean}
 	 */
 	export function ContainsClass(elem: HTMLElement, cssClass: string): boolean {
-		return elem.classList.contains(cssClass);
+		if (elem) {
+			return elem.classList.contains(cssClass);
+		} else {
+			throw Error(`The element does not exist, when trying to check if it has the class '${cssClass}'.`);
+		}
 	}
 
 	/*
@@ -52,12 +68,17 @@ namespace OSUIFramework.Helper.Style {
 	 * @param {HTMLElement} elem Element where the cssClass will be looked for
 	 * @return {*}  {(string | boolean)}
 	 */
-	export function HasCssClassPosition(elem: HTMLElement): string | boolean {
-		const classesEnum = Object.keys(GlobalEnum.OSUICssClassPosition);
-		for (let i = 0; i < classesEnum.length; ++i) {
-			if (elem.classList.contains(GlobalEnum.OSUICssClassPosition[classesEnum[i]])) {
-				return GlobalEnum.OSUICssClassPosition[classesEnum[i]];
+	export function HasCssClassPosition(elem: HTMLElement): string {
+		if (elem) {
+			const classesEnum = Object.keys(GlobalEnum.OSUICssClassPosition);
+			for (let i = 0; i < classesEnum.length; ++i) {
+				if (elem.classList.contains(GlobalEnum.OSUICssClassPosition[classesEnum[i]])) {
+					return GlobalEnum.OSUICssClassPosition[classesEnum[i]];
+				}
 			}
+			return null;
+		} else {
+			throw Error('The element does not exist, when trying to check for position class.');
 		}
 		return false;
 	}
