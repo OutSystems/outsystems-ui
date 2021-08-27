@@ -9,6 +9,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		// Store current drag direction
 		private _dragOrientation: string;
 		// Store the first element to receive focus in the sidebar
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _firstFocusableElem: any;
 		// Store focusable element inside sidebar
 		private _focusableElems: NodeList;
@@ -21,6 +22,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		// Store if it's RTL
 		private _isRtl: boolean;
 		// Store the last element to receive focus in the sidebar
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _lastFocusableElem: any;
 		// Store if the Sidebar is Open
 		private _onToggle: Callbacks.OSSidebarToggleEvent;
@@ -54,8 +56,8 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 			if (this._direction === GlobalEnum.Direction.left) {
 				IsDraggingInsideBounds =
-					this._zNativeGestures.MoveX + (x + this._zNativeGestures.LastX) < parseInt(this._width) &&
-					this._zNativeGestures.MoveX + (x + this._zNativeGestures.LastX) >= 0;
+					this._zNativeGestures.MoveX + (x - this._zNativeGestures.LastX) > -parseInt(this._width) &&
+					this._zNativeGestures.MoveX + (x - this._zNativeGestures.LastX) <= 0;
 			} else {
 				IsDraggingInsideBounds =
 					this._zNativeGestures.MoveX + (x - this._zNativeGestures.LastX) < parseInt(this._width) &&
@@ -144,7 +146,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		private _sidebarOnKeypress(e: KeyboardEvent): void {
 			const isTabPressed = e.key === GlobalEnum.Keycodes.tab;
 			const isEscapedPressed = e.key === GlobalEnum.Keycodes.escape;
-			const isShiftPressed = e.key === GlobalEnum.Keycodes.shift;
+			const isShiftPressed = e.shiftKey;
 
 			if (!isTabPressed && !isEscapedPressed) {
 				return;
@@ -185,7 +187,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			if (this._isMoving) {
 				if (this._direction === GlobalEnum.Direction.left) {
 					console.log(`translateX(${this._zNativeGestures.MoveX}px)`);
-					this._sidebarAsideElem.style.transform = `translateX(-${this._zNativeGestures.MoveX}px)`;
+					this._sidebarAsideElem.style.transform = `translateX(${this._zNativeGestures.MoveX}px)`;
 				} else {
 					console.log(`translateX(${this._zNativeGestures.MoveX}px)`);
 					this._sidebarAsideElem.style.transform = `translateX(${this._zNativeGestures.MoveX}px)`;
@@ -269,9 +271,10 @@ namespace OSUIFramework.Patterns.Sidebar {
 					? this._zNativeGestures.MoveX > parseInt(this._width) / 2
 					: this._zNativeGestures.MoveX > -parseInt(this._width) / 2;
 
-				const closedOneThird =
-					intervalForClose && Math.abs(offsetX) / timeTaken > this._swipeTriggerSpeed && hasOffset;
-
+				const closedOneThird = isLeft
+					? offsetX < (-1 * parseInt(this._width)) / 2 ||
+					  Math.abs(offsetX) / timeTaken > this._swipeTriggerSpeed
+					: intervalForClose && Math.abs(offsetX) / timeTaken > this._swipeTriggerSpeed && hasOffset;
 				this._sidebarAsideElem.style.transform = '';
 
 				closedOneThird ? this.toggleSidebar(false) : this.toggleSidebar(true);
@@ -313,7 +316,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 				// Dragging inside bounds?
 				if (IsDraggingInsideBounds) {
 					// Update x axis offset
-					this._zNativeGestures.MoveX = this._zNativeGestures.MoveX - (x - this._zNativeGestures.LastX);
+					this._zNativeGestures.MoveX = this._zNativeGestures.MoveX + (x - this._zNativeGestures.LastX);
 					this._updateLastPositions(x, y);
 					return;
 				} else {
@@ -337,7 +340,11 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._dragOrientation = '';
 			this._zNativeGestures.LastX = x;
 			this._zNativeGestures.LastY = y;
-			this._zNativeGestures.MoveX = this._isOpen ? 0 : parseInt(this._width);
+			this._zNativeGestures.MoveX = this._isOpen
+				? 0
+				: this._direction === GlobalEnum.Direction.left
+				? -parseInt(this._width)
+				: parseInt(this._width);
 
 			Helper.Style.AddClass(this._sidebarAsideElem, Constants.noTransition);
 		}
