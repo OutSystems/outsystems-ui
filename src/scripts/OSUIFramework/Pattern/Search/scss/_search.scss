@@ -166,7 +166,7 @@
 			}
 
 			&-input {
-				left: 0;
+				left: var(--os-safe-area-left);
 				position: absolute;
 				right: 0;
 				top: var(--os-safe-area-top);
