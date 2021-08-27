@@ -13,8 +13,8 @@ namespace OSUIFramework.Patterns.Search {
 		private _inputValue: string;
 		private _isLayoutNative = false;
 		private _isOpen = false;
-		private _searchGlass: HTMLElement;
 		private _onCollapse: Callbacks.OSSearchCollapseEvent;
+		private _searchGlass: HTMLElement;
 
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		constructor(uniqueId: string, configs: any) {

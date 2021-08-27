@@ -6,9 +6,6 @@ namespace OSUIFramework.Patterns.Gallery {
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	export class Gallery extends AbstractPattern<GalleryConfig> implements IGallery {
-		// Store all the classes strings used by the pattern
-		private readonly _galleryClass = '.grid-gallery';
-
 		// Store all the css property strings used by the pattern
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
