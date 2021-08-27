@@ -8,7 +8,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		private _direction: string;
 		// Store current drag direction
 		private _dragOrientation: string;
-		// Store the keypress event with bind(this)
+		// Store the click event with bind(this)
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnOverlayClick: any;
 		// Store the keypress event with bind(this)
