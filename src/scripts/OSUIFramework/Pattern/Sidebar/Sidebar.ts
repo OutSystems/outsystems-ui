@@ -8,6 +8,12 @@ namespace OSUIFramework.Patterns.Sidebar {
 		private _direction: string;
 		// Store current drag direction
 		private _dragOrientation: string;
+		// Store the keypress event with bind(this)
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		private _eventOnOverlayClick: any;
+		// Store the keypress event with bind(this)
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		private _eventOnSidebarKeypress: any;
 		// Store the first element to receive focus in the sidebar
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _firstFocusableElem: any;
@@ -50,6 +56,8 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._direction = this._configs.Direction;
 			this._hasOverlay = this._configs.HasOverlay;
 			this._width = this._configs.Width;
+			this._eventOnSidebarKeypress = this._sidebarOnKeypress.bind(this);
+			this._eventOnOverlayClick = this._overlayOnClick.bind(this);
 		}
 
 		private _checkIsDraggingInsideBounds(x: number): boolean {
@@ -79,16 +87,18 @@ namespace OSUIFramework.Patterns.Sidebar {
 		// Manage the aside keypress event
 		private _handleKeypressEvent(): void {
 			if (this._isOpen) {
-				this._sidebarAsideElem.addEventListener('keydown', this._sidebarOnKeypress.bind(this));
+				this._sidebarAsideElem.addEventListener('keydown', this._eventOnSidebarKeypress);
 			} else {
-				this._sidebarAsideElem.removeEventListener('keydown', this._sidebarOnKeypress.bind(this));
+				this._sidebarAsideElem.removeEventListener('keydown', this._eventOnSidebarKeypress);
 			}
 		}
 
 		// Manage the Overlay click event
 		private _handleOverlayClick(hasOverlay: boolean): void {
 			if (hasOverlay) {
-				this._sidebarOverlayElem.addEventListener('click', this._overlayOnClick.bind(this));
+				this._sidebarOverlayElem.addEventListener('click', this._eventOnOverlayClick);
+			} else if (!this._isOpen && this._sidebarOverlayElem) {
+				this._sidebarOverlayElem.removeEventListener('click', this._eventOnOverlayClick);
 			}
 		}
 
