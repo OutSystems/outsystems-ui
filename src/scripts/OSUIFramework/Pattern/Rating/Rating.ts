@@ -57,13 +57,13 @@ namespace OSUIFramework.Patterns.Rating {
 			// Check if a event was already added
 			if (this._ratingHasEventAdded) {
 				// If true, remove event
-				this._selfElem.removeEventListener('click', this._ratingOnClick.bind(this));
+				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._ratingOnClick.bind(this));
 
 				// And set variable as false
 				this._ratingHasEventAdded = false;
 			} else if (this.configs.IsEdit) {
 				// Otherwise, if there is no event already added and the param IsEdit is true, add new event
-				this._selfElem.addEventListener('click', this._ratingOnClick.bind(this));
+				this._selfElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._ratingOnClick.bind(this));
 				// And set variable as true
 				this._ratingHasEventAdded = true;
 			}
@@ -115,8 +115,8 @@ namespace OSUIFramework.Patterns.Rating {
 
 		// Set the html references that will be used to manage the cssClasses and atribute properties
 		private _setHtmlElements(): void {
-			this._ratingIconStatesElem = this._selfElem.querySelector('.' + Enum.RatingCssClass.IconStates);
-			this._ratingFieldsetElem = this._selfElem.querySelector('fieldset');
+			this._ratingIconStatesElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.IconStates);
+			this._ratingFieldsetElem = this._selfElem.querySelector(GlobalEnum.HTMLElement.FieldSet);
 		}
 
 		// Set the cssClasses that should be assigned to the element on it's initialization
@@ -211,7 +211,7 @@ namespace OSUIFramework.Patterns.Rating {
 
 			// remove event listener if any was added
 			if (this._ratingHasEventAdded) {
-				this._selfElem.removeEventListener('click', this._ratingOnClick.bind(this));
+				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._ratingOnClick.bind(this));
 			}
 
 			// Remove html from the fieldset
@@ -316,7 +316,7 @@ namespace OSUIFramework.Patterns.Rating {
 				// Check if passed value is half
 				this._isHalfValue = this.getIsHalfValue(value);
 				// Get all inputs on rating, to properly add the :checked attribute on the correct one
-				const ratingItems = this._selfElem.querySelectorAll('input');
+				const ratingItems = this._selfElem.querySelectorAll(GlobalEnum.HTMLElement.Input);
 
 				// Reset the is-half class
 				if (Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.IsHalf)) {
@@ -344,9 +344,7 @@ namespace OSUIFramework.Patterns.Rating {
 				}
 
 				// If is-half add the appropriate class, otherwise just declare the this.isHalfValue, to complete the if statement
-				this._isHalfValue
-					? Helper.Style.AddClass(this._selfElem, Enum.RatingCssClass.IsHalf)
-					: this._isHalfValue;
+				this._isHalfValue ? Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsHalf) : this._isHalfValue;
 
 				// Update the variables with the new value
 				this._configs.RatingValue = this._isHalfValue ? value : newValue;

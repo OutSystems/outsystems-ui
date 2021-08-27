@@ -28,10 +28,10 @@ namespace OSUIFramework.Patterns.Search {
 		private _addEvents(): void {
 			// Add events only in Native Applications
 			if (this._isLayoutNative) {
-				this._searchGlass.addEventListener('click', this._eventOnClick);
+				this._searchGlass.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 
 				if (this._isOpen) {
-					window.addEventListener('click', this._eventWindowClick);
+					window.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventWindowClick);
 				}
 			}
 		}
@@ -64,11 +64,11 @@ namespace OSUIFramework.Patterns.Search {
 		// Update info based on htmlContent
 		private _setHtmlElements(): void {
 			// Set the html references that will be used to manage the cssClasses and atribute properties
-			if (document.querySelector('.' + Enum.CssProperty.LayoutNative)) {
+			if (document.querySelector(Constants.Dot + Enum.CssProperty.LayoutNative)) {
 				this._isLayoutNative = true;
 			}
-			this._inputElem = this._selfElem.querySelector(Enum.CssProperty.Input);
-			this._searchGlass = this._selfElem.querySelector('.' + Enum.CssProperty.SearchGlass);
+			this._inputElem = this._selfElem.querySelector(GlobalEnum.HTMLElement.Input);
+			this._searchGlass = this._selfElem.querySelector(Constants.Dot + Enum.CssProperty.SearchGlass);
 		}
 
 		// Set the cssClasses that should be assigned to the element on it's initialization
@@ -144,7 +144,7 @@ namespace OSUIFramework.Patterns.Search {
 		public close(): void {
 			Helper.Style.RemoveClass(this._selfElem, Enum.CssProperty.PatternIsOpen);
 
-			window.removeEventListener('click', this._eventWindowClick);
+			window.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventWindowClick);
 
 			this._inputElem.blur();
 
@@ -162,7 +162,7 @@ namespace OSUIFramework.Patterns.Search {
 		public open(): void {
 			Helper.Style.AddClass(this._selfElem, Enum.CssProperty.PatternIsOpen);
 
-			window.addEventListener('click', this._eventWindowClick);
+			window.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventWindowClick);
 
 			this._inputElem.focus();
 

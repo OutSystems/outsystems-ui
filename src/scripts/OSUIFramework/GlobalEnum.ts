@@ -30,5 +30,21 @@ namespace OSUIFramework.GlobalEnum {
 		TopLeft = 'top-left',
 		TopRight = 'top-right',
 	}
+
+	export enum HTMLEvent {
+		AnimationEnd = 'animationend',
+		AnimationStart = 'animationstart',
+		Blur = 'blur',
+		Click = 'click',
+		Focus = 'focus',
+		TouchEnd = 'touchend',
+		TouchMove = 'touchmove',
+		TouchStart = 'touchstart',
+		TransitionEnd = 'transitionend',
+	}
+
+	export enum HTMLElement {
+		FieldSet = 'fieldset',
+		Input = 'input',
 	}
 }
