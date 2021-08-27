@@ -80,7 +80,6 @@ namespace OSUIFramework.Helper.Style {
 		} else {
 			throw Error('The element does not exist, when trying to check for position class.');
 		}
-		return false;
 	}
 
 	/**
