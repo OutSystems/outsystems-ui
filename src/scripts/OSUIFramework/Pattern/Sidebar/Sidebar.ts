@@ -270,7 +270,9 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 
 			const checkSwipeSpeed = Math.abs(offsetX) / timeTaken > this._swipeTriggerSpeed;
+
 			const sizeThreshold = -parseInt(this._width) / 2;
+
 			const swipeInterval = this._isOpen
 				? this._nativeGesturesParams.MoveX > sizeThreshold
 				: this._nativeGesturesParams.MoveX < sizeThreshold;
@@ -296,10 +298,12 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 			// No orientation set?
 			if (this._dragOrientation === '') {
-				this._dragOrientation =
-					Math.abs(offsetX) >= Math.abs(offsetY)
-						? GlobalEnum.Orientation.horizontal
-						: GlobalEnum.Orientation.vertical;
+				const isHorizontal = Math.abs(offsetX) >= Math.abs(offsetY);
+
+				this._dragOrientation = isHorizontal
+					? GlobalEnum.Orientation.horizontal
+					: GlobalEnum.Orientation.vertical;
+
 				requestAnimationFrame(() => {
 					this._updateUI();
 				});
@@ -316,9 +320,9 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 			// Dragging inside bounds?
 			if (IsDraggingInsideBounds) {
+				const updateXaxis = this._nativeGesturesParams.MoveX + (x - this._nativeGesturesParams.LastX);
 				// Update x axis offset
-				this._nativeGesturesParams.MoveX =
-					this._nativeGesturesParams.MoveX + (x - this._nativeGesturesParams.LastX);
+				this._nativeGesturesParams.MoveX = updateXaxis;
 			}
 
 			this._updateLastPositions(x, y);
