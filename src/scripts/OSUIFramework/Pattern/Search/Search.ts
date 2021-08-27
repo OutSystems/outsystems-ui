@@ -98,7 +98,7 @@ namespace OSUIFramework.Patterns.Search {
 		// Close Search if user has clicked outside of it
 		private _windowClick(e: MouseEvent): void {
 			const _clickedElem: HTMLElement = e.target as HTMLElement;
-			const _closestElem: HTMLElement = _clickedElem.closest('.' + Enum.CssProperty.Pattern);
+			const _closestElem: HTMLElement = _clickedElem.closest(Constants.Dot + Enum.CssProperty.Pattern);
 
 			// If the click has occur outside of this tooltip
 			if (_closestElem !== this._selfElem && _closestElem !== this._searchGlass) {

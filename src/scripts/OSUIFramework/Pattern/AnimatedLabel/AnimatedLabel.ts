@@ -55,8 +55,8 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 
 		// Update info based on htmlContent
 		private _setHtmlElements(): void {
-			this._labelPlaceholderElem = this._selfElem.querySelector('.' + Enum.CssClasses.LabelPlaceholder);
-			this._inputPlaceholderElem = this._selfElem.querySelector('.' + Enum.CssClasses.InputPlaceholder);
+			this._labelPlaceholderElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClasses.LabelPlaceholder);
+			this._inputPlaceholderElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClasses.InputPlaceholder);
 
 			this._inputElem =
 				this._inputPlaceholderElem.querySelector(GlobalEnum.DataBlocksTag.Input) ||

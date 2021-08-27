@@ -85,7 +85,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 				}
 
 				// Get the closest element in order to check if the activeElement is inside this TooltipBallon
-				const _closestElem = document.activeElement.closest('.' + Enum.CssClass.Pattern);
+				const _closestElem = document.activeElement.closest(Constants.Dot + Enum.CssClass.Pattern);
 				if (_closestElem !== this._selfElem) {
 					// Close Tooltip
 					this.close();
@@ -131,9 +131,9 @@ namespace OSUIFramework.Patterns.Tooltip {
 		// Update info based on htmlContent
 		private _setHtmlElements(): void {
 			// Set the html references that will be used to manage the cssClasses and atribute properties
-			this._tooltipContentElem = this._selfElem.querySelector('.' + Enum.CssClass.Content);
-			this._tooltipBallonContentElem = this._selfElem.querySelector('.' + Enum.CssClass.BalloonContent);
-			this._tooltipBallonWrapperElem = this._selfElem.querySelector('.' + Enum.CssClass.BalloonWrapper);
+			this._tooltipContentElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Content);
+			this._tooltipBallonContentElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.BalloonContent);
+			this._tooltipBallonWrapperElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.BalloonWrapper);
 			this._tooltipBallonWrapperId = Helper.Attribute.Get(this._tooltipBallonWrapperElem, 'id');
 		}
 
@@ -183,7 +183,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 		// Close tooltip if user has clicked outside of it
 		private _windowClick(e: MouseEvent): void {
 			const _clickedElem = e.target as HTMLElement;
-			const _closestElem = _clickedElem.closest('.' + Enum.CssClass.Pattern);
+			const _closestElem = _clickedElem.closest(Constants.Dot + Enum.CssClass.Pattern);
 
 			// If the click has occur outside of this tooltip
 			if (_closestElem !== this._selfElem) {
