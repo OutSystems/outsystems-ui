@@ -19,8 +19,6 @@ namespace OSUIFramework.Patterns.Rating {
 		private _onSelect: Callbacks.OSRatingSelectEvent;
 		// Store the fieldset html element
 		private _ratingFieldsetElem: HTMLElement;
-		// Store if the rating already has an event added
-		private _ratingHasEventAdded: boolean;
 		// Store the rating icons html element
 		private _ratingIconStatesElem: HTMLElement;
 		// Store the input name to be used on clones
@@ -35,7 +33,6 @@ namespace OSUIFramework.Patterns.Rating {
 			this._value = this.configs.RatingValue;
 			this._disabled = !this.configs.IsEdit;
 			this._ratingInputName = 'rating-' + this.uniqueId;
-			this._ratingHasEventAdded = false;
 			this._eventOnRatingClick = this._ratingOnClick.bind(this);
 		}
 
@@ -59,17 +56,12 @@ namespace OSUIFramework.Patterns.Rating {
 		// Method to manage the click event
 		private _manageRatingEvent(): void {
 			// Check if a event was already added
-			if (this._ratingHasEventAdded) {
+			if (!this.configs.IsEdit) {
 				// If true, remove event
 				this._selfElem.removeEventListener('click', this._eventOnRatingClick);
-
-				// And set variable as false
-				this._ratingHasEventAdded = false;
-			} else if (this.configs.IsEdit) {
+			} else {
 				// Otherwise, if there is no event already added and the param IsEdit is true, add new event
 				this._selfElem.addEventListener('click', this._eventOnRatingClick);
-				// And set variable as true
-				this._ratingHasEventAdded = true;
 			}
 		}
 
@@ -214,9 +206,7 @@ namespace OSUIFramework.Patterns.Rating {
 			super.dispose();
 
 			// remove event listener if any was added
-			if (this._ratingHasEventAdded) {
-				this._selfElem.removeEventListener('click', this._ratingOnClick.bind(this));
-			}
+			this._selfElem.removeEventListener('click', this._eventOnRatingClick);
 
 			// Remove html from the fieldset
 			this._ratingFieldsetElem.innerHTML = '';
