@@ -185,13 +185,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/naming-convention
 		private _updateUI(): any {
 			if (this._isMoving) {
-				if (this._direction === GlobalEnum.Direction.left) {
-					console.log(`translateX(${this._zNativeGestures.MoveX}px)`);
-					this._sidebarAsideElem.style.transform = `translateX(${this._zNativeGestures.MoveX}px)`;
-				} else {
-					console.log(`translateX(${this._zNativeGestures.MoveX}px)`);
-					this._sidebarAsideElem.style.transform = `translateX(${this._zNativeGestures.MoveX}px)`;
-				}
+				this._sidebarAsideElem.style.transform = `translateX(${this._zNativeGestures.MoveX}px)`;
 
 				requestAnimationFrame(() => {
 					this._updateUI();
@@ -263,32 +257,16 @@ namespace OSUIFramework.Patterns.Sidebar {
 				return;
 			}
 
-			const hasOffset = offsetX > 0;
-			const isLeft = this._direction === GlobalEnum.Direction.left;
+			const checkSwipeSpeed = Math.abs(offsetX) / timeTaken > this._swipeTriggerSpeed;
+			const sizeThreshold = -parseInt(this._width) / 2;
+			const swipeInterval = this._isOpen
+				? this._zNativeGestures.MoveX > sizeThreshold
+				: this._zNativeGestures.MoveX < sizeThreshold;
+			const isReadyToToggle = swipeInterval || checkSwipeSpeed;
 
-			if (this._isOpen) {
-				const intervalForClose = isLeft
-					? this._zNativeGestures.MoveX > parseInt(this._width) / 2
-					: this._zNativeGestures.MoveX > -parseInt(this._width) / 2;
+			this._sidebarAsideElem.style.transform = '';
 
-				const closedOneThird = isLeft
-					? offsetX < (-1 * parseInt(this._width)) / 2 ||
-					  Math.abs(offsetX) / timeTaken > this._swipeTriggerSpeed
-					: intervalForClose && Math.abs(offsetX) / timeTaken > this._swipeTriggerSpeed && hasOffset;
-				this._sidebarAsideElem.style.transform = '';
-
-				closedOneThird ? this.toggleSidebar(false) : this.toggleSidebar(true);
-			} else {
-				const intervalForOpen = isLeft
-					? this._zNativeGestures.MoveX < parseInt(this._width) / 2
-					: this._zNativeGestures.MoveX < -parseInt(this._width) / 2;
-
-				const openedTwoThirds = intervalForOpen || Math.abs(offsetX) / timeTaken > this._swipeTriggerSpeed;
-
-				this._sidebarAsideElem.style.transform = '';
-
-				openedTwoThirds ? this.toggleSidebar(true) : this.toggleSidebar(false);
-			}
+			isReadyToToggle ? this.toggleSidebar(!this._isOpen) : this.toggleSidebar(this._isOpen);
 		}
 
 		public onGestureMove(x: number, y: number, offsetX: number, offsetY: number, evt: TouchEvent): void {
@@ -312,26 +290,14 @@ namespace OSUIFramework.Patterns.Sidebar {
 			evt.preventDefault();
 			const IsDraggingInsideBounds = this._checkIsDraggingInsideBounds(x);
 
-			if (this._direction === GlobalEnum.Direction.left) {
-				// Dragging inside bounds?
-				if (IsDraggingInsideBounds) {
-					// Update x axis offset
-					this._zNativeGestures.MoveX = this._zNativeGestures.MoveX + (x - this._zNativeGestures.LastX);
-					this._updateLastPositions(x, y);
-					return;
-				} else {
-					this._updateLastPositions(x, y);
-				}
+			// Dragging inside bounds?
+			if (IsDraggingInsideBounds) {
+				// Update x axis offset
+				this._zNativeGestures.MoveX = this._zNativeGestures.MoveX + (x - this._zNativeGestures.LastX);
+				this._updateLastPositions(x, y);
+				return;
 			} else {
-				// Dragging inside bounds?
-				if (IsDraggingInsideBounds) {
-					// Update x axis offset
-					this._zNativeGestures.MoveX = this._zNativeGestures.MoveX + (x - this._zNativeGestures.LastX);
-					this._updateLastPositions(x, y);
-					return;
-				} else {
-					this._updateLastPositions(x, y);
-				}
+				this._updateLastPositions(x, y);
 			}
 		}
 
