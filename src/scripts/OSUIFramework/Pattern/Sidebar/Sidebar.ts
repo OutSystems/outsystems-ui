@@ -60,25 +60,27 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._eventOnOverlayClick = this._overlayOnClick.bind(this);
 		}
 
+		// Method to check if current gesture is withing sidebar boundaries
 		private _checkIsDraggingInsideBounds(x: number): boolean {
-			let IsDraggingInsideBounds: boolean;
+			const isLeft = this._direction === GlobalEnum.Direction.left;
 
-			if (this._direction === GlobalEnum.Direction.left) {
-				IsDraggingInsideBounds =
-					this._nativeGesturesParams.MoveX + (x - this._nativeGesturesParams.LastX) >
-						-parseInt(this._width) &&
-					this._nativeGesturesParams.MoveX + (x - this._nativeGesturesParams.LastX) <= 0;
-			} else {
-				IsDraggingInsideBounds =
-					this._nativeGesturesParams.MoveX + (x - this._nativeGesturesParams.LastX) < parseInt(this._width) &&
-					this._nativeGesturesParams.MoveX + (x - this._nativeGesturesParams.LastX) >= 0;
-			}
-			return IsDraggingInsideBounds;
+			const baseThreshold = this._nativeGesturesParams.MoveX + (x - this._nativeGesturesParams.LastX);
+
+			// Check correct threshold for each direction
+			const directionThreshold = isLeft
+				? baseThreshold > -parseInt(this._width) &&
+				  this._nativeGesturesParams.MoveX + (x - this._nativeGesturesParams.LastX) <= 0
+				: baseThreshold < parseInt(this._width) &&
+				  this._nativeGesturesParams.MoveX + (x - this._nativeGesturesParams.LastX) >= 0;
+
+			return directionThreshold;
 		}
 
+		// Method that will handle the tabindex value of the elements inside the Sidebar
 		private _handleFocusableElemsTabindex(): void {
 			this._focusableElems = [].slice.call(this._focusableElems);
 
+			// On each element, toggle the tabindex value, depending if sidebar is open or closed
 			this._focusableElems.forEach((item: HTMLElement) => {
 				item.setAttribute('tabindex', this._isOpen ? '0' : '-1');
 			});
@@ -124,6 +126,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._sidebarAsideElem = this._selfElem.querySelector('.' + Enum.SidebarCssClass.Aside);
 			this._sidebarOverlayElem = this._selfElem.querySelector('.' + Enum.SidebarCssClass.Overlay);
 			this._focusableElems = this._sidebarAsideElem.querySelectorAll(Constants.focusableElems);
+			// to handle focusable element's tabindex when toggling the sidebar
 			this._firstFocusableElem = this._focusableElems[0];
 			this._lastFocusableElem = this._focusableElems[this._focusableElems.length - 1];
 		}
@@ -155,6 +158,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 		}
 
+		// Method that will handle the tab navigation and sidebar closing on Escape
 		private _sidebarOnKeypress(e: KeyboardEvent): void {
 			const isTabPressed = e.key === GlobalEnum.Keycodes.tab;
 			const isEscapedPressed = e.key === GlobalEnum.Keycodes.escape;
@@ -164,10 +168,12 @@ namespace OSUIFramework.Patterns.Sidebar {
 				return;
 			}
 
+			// Close the sidebar when pressing Esc
 			if (isEscapedPressed && this._isOpen) {
 				this.toggleSidebar(false);
 			}
 
+			// If pressing shift + tab do a focus trap inside the sidebar
 			if (isShiftPressed) {
 				if (document.activeElement === this._firstFocusableElem) {
 					this._lastFocusableElem.focus();
@@ -194,6 +200,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._nativeGesturesParams.LastY = y;
 		}
 
+		// Method to update the UI when doing a gesture
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/naming-convention
 		private _updateUI(): any {
 			if (this._isMoving) {
@@ -259,9 +266,11 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 		}
 
+		// Method to handle the start of a gesture
 		public onGestureEnd(offsetX: number, offsetY: number, timeTaken: number): void {
 			this._isMoving = false;
 
+			// Remove transitions
 			Helper.Style.RemoveClass(this._sidebarAsideElem, Constants.noTransition);
 
 			// Just clicked or swiped in invalid direction?
@@ -273,10 +282,12 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 			const sizeThreshold = -parseInt(this._width) / 2;
 
+			// Define a interval for later checks, depending on Sidebar visibility
 			const swipeInterval = this._isOpen
 				? this._nativeGesturesParams.MoveX > sizeThreshold
 				: this._nativeGesturesParams.MoveX < sizeThreshold;
 
+			// If swipe was fast enough or with sufficient move, procede to toggleidebar
 			const isReadyToToggle = swipeInterval || checkSwipeSpeed;
 
 			this._sidebarAsideElem.style.transform = '';
@@ -284,6 +295,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			isReadyToToggle ? this.toggleSidebar(!this._isOpen) : this.toggleSidebar(this._isOpen);
 		}
 
+		// Method to handle the gesture move
 		public onGestureMove(x: number, y: number, offsetX: number, offsetY: number, evt: TouchEvent): void {
 			// Check X axis direction
 			const _dragDirection = offsetX > 0 ? GlobalEnum.Direction.right : GlobalEnum.Direction.left;
@@ -328,7 +340,9 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._updateLastPositions(x, y);
 		}
 
+		// Method to handle the end of a gesture
 		public onGestureStart(x: number, y: number): void {
+			// Set defaults
 			this._isMoving = true;
 			this._dragOrientation = '';
 			this._nativeGesturesParams.LastX = x;
@@ -349,6 +363,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 		// Set the Sidebar direction
 		public setDirection(direction: string): void {
+			// Reset direction class
 			if (this._direction !== '') {
 				Helper.Style.RemoveClass(this._selfElem, Enum.SidebarCssClass.Direction + this._configs.Direction);
 			}
@@ -378,6 +393,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 		// Set the Sidebar width
 		public setWidth(width: string): void {
+			// Update css variable
 			Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, width);
 			this._width = width;
 		}
@@ -390,12 +406,15 @@ namespace OSUIFramework.Patterns.Sidebar {
 				? Helper.Style.AddClass(this._selfElem, Enum.SidebarCssClass.IsOpen)
 				: Helper.Style.RemoveClass(this._selfElem, Enum.SidebarCssClass.IsOpen);
 
+			// Set necessary accesibility attributes
 			this._setAccessibilityProps(isOpen);
 
+			// Only toggle event if the status has chnaged
 			if (isOpen !== this._isOpen) {
 				this._triggerOnToggleEvent(isOpen);
 			}
 
+			// If is open, change focus to the aside element
 			if (isOpen) {
 				this._sidebarAsideElem.focus();
 			}
@@ -403,6 +422,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._isOpen = isOpen;
 			this._configs.IsOpen = isOpen;
 
+			// Handle keypress and focus on elements inside the sidebar
 			this._handleKeypressEvent();
 			this._handleFocusableElemsTabindex();
 		}
