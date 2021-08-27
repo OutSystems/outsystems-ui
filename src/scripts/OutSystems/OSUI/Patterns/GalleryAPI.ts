@@ -57,7 +57,7 @@ namespace OutSystems.OSUI.Patterns.GalleryAPI {
 	 * @return {*}  {Map<string, OSUIFramework.Patterns.IGallery>}
 	 */
 	export function GetAllGalleries(): Array<string> {
-		return Array.from(_galleryMap.keys());
+		return OSUIFramework.Helper.MapOperation.ExportKeys(_galleryMap);
 	}
 
 	/**
@@ -68,26 +68,7 @@ namespace OutSystems.OSUI.Patterns.GalleryAPI {
 	 * @return {*}  {OSUIFramework.Patterns.IGallery}
 	 */
 	export function GetGalleryById(galleryId: string): OSUIFramework.Patterns.Gallery.IGallery {
-		let gallery: OSUIFramework.Patterns.Gallery.IGallery;
-
-		//widgetId is the UniqueId
-		if (_galleryMap.has(galleryId)) {
-			gallery = _galleryMap.get(galleryId);
-		} else {
-			//Search for WidgetId
-			for (const p of _galleryMap.values()) {
-				if (p.equalsToID(galleryId)) {
-					gallery = p;
-					break;
-				}
-			}
-		}
-
-		if (gallery === undefined) {
-			throw new Error(`Gallery id:${galleryId} not found`);
-		}
-
-		return gallery;
+		return OSUIFramework.Helper.MapOperation.FindInMap('Gallery', galleryId, _galleryMap);
 	}
 
 	/**
