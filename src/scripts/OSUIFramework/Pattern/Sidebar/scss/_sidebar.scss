@@ -74,7 +74,7 @@
 	}
 
 	&_overlay {
-		background-color: rgba(190, 190, 190, 0.25);
+		background-color: rgba(0, 0, 0, 0.25);
 		cursor: pointer;
 		height: 100vh;
 		opacity: 0;
@@ -84,6 +84,7 @@
 		top: 0;
 		transition: opacity 130ms ease-in;
 		width: 100vw;
+		will-change: opacity;
 		z-index: 130;
 
 		// Service Studio Preview

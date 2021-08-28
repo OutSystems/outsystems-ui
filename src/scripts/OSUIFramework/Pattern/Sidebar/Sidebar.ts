@@ -118,6 +118,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 			if (this._sidebarOverlayElem) {
 				Helper.Attribute.Set(this._sidebarOverlayElem, 'aria-hidden', 'true');
+				Helper.Attribute.Set(this._sidebarOverlayElem, 'role', 'button');
 			}
 		}
 
@@ -155,6 +156,24 @@ namespace OSUIFramework.Patterns.Sidebar {
 			// Set default ExtendedClass values
 			if (this._configs.ExtendedClass !== '') {
 				this.updateExtendedClass(this._configs.ExtendedClass, this._configs.ExtendedClass);
+			}
+		}
+
+		// Method to handle the overlay transition on gestures
+		private _setOverlayTransition(x: number): void {
+			const isLeft = this._direction === GlobalEnum.Direction.left;
+			const overlay = this._sidebarOverlayElem;
+			const overlayOpacity = parseInt(overlay.style.opacity);
+
+			Helper.Style.AddClass(overlay, Constants.noTransition);
+
+			const percentageBeforeDif = (Math.abs(x) * 100) / parseInt(this._width);
+			const percentage = isLeft ? 0 + percentageBeforeDif : 100 - percentageBeforeDif;
+
+			const newOpacity = Math.floor(percentage) / 100;
+
+			if (overlayOpacity !== newOpacity && newOpacity % 1 !== 0) {
+				overlay.style.opacity = newOpacity.toString();
 			}
 		}
 
@@ -293,6 +312,14 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._sidebarAsideElem.style.transform = '';
 
 			isReadyToToggle ? this.toggleSidebar(!this._isOpen) : this.toggleSidebar(this._isOpen);
+
+			if (this._hasOverlay) {
+				this._sidebarOverlayElem.style.opacity = '';
+
+				if (this._isOpen) {
+					Helper.Style.RemoveClass(this._sidebarOverlayElem, Constants.noTransition);
+				}
+			}
 		}
 
 		// Method to handle the gesture move
@@ -338,6 +365,10 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 
 			this._updateLastPositions(x, y);
+
+			if (this._hasOverlay) {
+				this._setOverlayTransition(x);
+			}
 		}
 
 		// Method to handle the end of a gesture
