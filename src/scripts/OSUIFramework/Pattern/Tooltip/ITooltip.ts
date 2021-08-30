@@ -3,8 +3,5 @@ namespace OSUIFramework.Patterns.Tooltip {
 	/**
 	 * Defines the interface for OutSystemsUI Tooltip Pattern
 	 */
-	export interface ITooltip extends Interface.IPattern {
-		close(): void;
-		open(): void;
-	}
+	export interface ITooltip extends Interface.IPattern, Interface.IOpenable {}
 }

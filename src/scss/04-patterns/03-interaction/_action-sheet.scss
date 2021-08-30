@@ -118,13 +118,21 @@
 
 // Responsive --------------------------------------------------------------------
 ///
+.desktop {
+	.action-sheet {
+		&-buttons,
+		&-cancel {
+			max-width: 500px;
+		}
+	}
+}
+
 .desktop,
 .tablet {
 	.action-sheet {
 		&-buttons,
 		&-cancel {
 			margin: var(--space-none) auto;
-			max-width: 500px;
 		}
 
 		&-cancel {
@@ -134,7 +142,10 @@
 }
 
 .tablet {
-	.action-sheet-cancel {
-		max-width: 600px;
+	.action-sheet {
+		&-buttons,
+		&-cancel {
+			max-width: 600px;
+		}
 	}
 }

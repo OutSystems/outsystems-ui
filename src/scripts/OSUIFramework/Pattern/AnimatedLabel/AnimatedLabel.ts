@@ -32,9 +32,9 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 
 		// Add Pattern Events
 		private _addEvents(): void {
-			this._inputElem.addEventListener('blur', this._eventOnBlur);
-			this._inputElem.addEventListener('focus', this._eventOnFocus);
-			this._inputElem.addEventListener('animationstart', this._eventOnAnimationStart);
+			this._inputElem.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
+			this._inputElem.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
+			this._inputElem.addEventListener(GlobalEnum.HTMLEvent.AnimationStart, this._eventOnAnimationStart);
 		}
 
 		// Check if the input is empty, if yes reposition the Label
@@ -55,8 +55,8 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 
 		// Update info based on htmlContent
 		private _setHtmlElements(): void {
-			this._labelPlaceholderElem = this._selfElem.querySelector('.' + Enum.CssClasses.LabelPlaceholder);
-			this._inputPlaceholderElem = this._selfElem.querySelector('.' + Enum.CssClasses.InputPlaceholder);
+			this._labelPlaceholderElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClasses.LabelPlaceholder);
+			this._inputPlaceholderElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClasses.InputPlaceholder);
 
 			this._inputElem =
 				this._inputPlaceholderElem.querySelector(GlobalEnum.DataBlocksTag.Input) ||
@@ -123,9 +123,9 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		public dispose(): void {
 			super.dispose();
 
-			this._inputElem.removeEventListener('blur', this._eventOnBlur);
-			this._inputElem.removeEventListener('focus', this._eventOnFocus);
-			this._inputElem.removeEventListener('animationstart', this._eventOnAnimationStart);
+			this._inputElem.removeEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
+			this._inputElem.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
+			this._inputElem.removeEventListener(GlobalEnum.HTMLEvent.AnimationStart, this._eventOnAnimationStart);
 		}
 
 		// Update Label active status accordingly when the input info has canhged

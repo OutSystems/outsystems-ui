@@ -63,8 +63,8 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	 * @export
 	 * @return {*}  {Map<string, OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel>}
 	 */
-	export function GetAllAnimatedLabelsMap(): Map<string, OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel> {
-		return _animatedLabelsMap;
+	export function GetAllAnimatedLabels(): Array<string> {
+		return OSUIFramework.Helper.MapOperation.ExportKeys(_animatedLabelsMap);
 	}
 
 	/**
@@ -75,26 +75,11 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	 * @return {*}  {OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel;}
 	 */
 	export function GetAnimatedLabelById(animatedLabelId: string): OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel {
-		let animatedlabel: OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel;
-
-		//animatedLabelId is the UniqueId
-		if (_animatedLabelsMap.has(animatedLabelId)) {
-			animatedlabel = _animatedLabelsMap.get(animatedLabelId);
-		} else {
-			//Search for animatedLabelId
-			for (const p of _animatedLabelsMap.values()) {
-				if (p.equalsToID(animatedLabelId)) {
-					animatedlabel = p;
-					break;
-				}
-			}
-		}
-
-		if (animatedlabel === undefined) {
-			throw new Error(`AnimatedLabel id:${animatedLabelId} not found`);
-		}
-
-		return animatedlabel;
+		return OSUIFramework.Helper.MapOperation.FindInMap(
+			'AnimatedLabel',
+			animatedLabelId,
+			_animatedLabelsMap
+		) as OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel;
 	}
 
 	/**

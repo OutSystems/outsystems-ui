@@ -22,7 +22,7 @@ namespace OutSystems.OSUI.Utils {
 
 		el.appendChild(spanEl);
 
-		el.addEventListener('animationend', OnTransitionEnd, false);
+		el.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.AnimationEnd, OnTransitionEnd, false);
 		el.addEventListener('webkitAnimationEnd', OnTransitionEnd, false);
 
 		function OnTransitionEnd() {
@@ -62,5 +62,5 @@ namespace OutSystems.OSUI.Utils {
 	}
 
 	// Init Events
-	document.body.addEventListener('click', _bodyClick);
+	document.body.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, _bodyClick);
 }
