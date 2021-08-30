@@ -9,7 +9,11 @@ namespace OSUIFramework.Helper.Attribute {
 	 * @param {string} attrValue Attribute value
 	 */
 	export function Set(elem: HTMLElement, attrName: string, attrValue: string): void {
-		elem.setAttribute(attrName, attrValue);
+		if (elem) {
+			elem.setAttribute(attrName, attrValue);
+		} else {
+			throw Error(`The element does not exist, when trying to set the attribute '${attrName}'.`);
+		}
 	}
 
 	/**
@@ -20,7 +24,11 @@ namespace OSUIFramework.Helper.Attribute {
 	 * @param {string} attrName Attribute name
 	 */
 	export function Get(elem: HTMLElement, attrName: string): string {
-		return elem.getAttribute(attrName);
+		if (elem) {
+			return elem.getAttribute(attrName);
+		} else {
+			throw Error(`The element does not exist, when trying to get the attribute '${attrName}'.`);
+		}
 	}
 
 	/**
@@ -31,6 +39,10 @@ namespace OSUIFramework.Helper.Attribute {
 	 * @param {string} attrName Attribute name
 	 */
 	export function Remove(elem: HTMLElement, attrName: string): void {
-		elem.removeAttribute(attrName);
+		if (elem) {
+			elem.removeAttribute(attrName);
+		} else {
+			throw Error(`The element does not exist, when trying to remove the attribute '${attrName}'.`);
+		}
 	}
 }

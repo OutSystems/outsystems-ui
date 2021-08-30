@@ -9,7 +9,6 @@ namespace OSUIFramework.Patterns.Search.Enum {
 
 	// Css Classes
 	export enum CssProperty {
-		Input = 'input',
 		InputPlaceholder = 'search-input',
 		LayoutNative = 'layout-native',
 		Pattern = 'search',

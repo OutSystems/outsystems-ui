@@ -82,7 +82,7 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	 * @return {*}  {Map<string, OSUIFramework.Patterns.ISearch>}
 	 */
 	export function GetAllSearches(): Array<string> {
-		return Array.from(_searchsMap.keys());
+		return OSUIFramework.Helper.MapOperation.ExportKeys(_searchsMap);
 	}
 
 	/**
@@ -93,26 +93,11 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	 * @return {*}  {OSUIFramework.Patterns.ISearch}
 	 */
 	export function GetSearchById(searchId: string): OSUIFramework.Patterns.Search.ISearch {
-		let search: OSUIFramework.Patterns.Search.ISearch;
-
-		//searchId is the UniqueId
-		if (_searchsMap.has(searchId)) {
-			search = _searchsMap.get(searchId);
-		} else {
-			//Search for searchId
-			for (const p of _searchsMap.values()) {
-				if (p.equalsToID(searchId)) {
-					search = p;
-					break;
-				}
-			}
-		}
-
-		if (search === undefined) {
-			throw new Error(`Search id:${searchId} not found`);
-		}
-
-		return search;
+		return OSUIFramework.Helper.MapOperation.FindInMap(
+			'Search',
+			searchId,
+			_searchsMap
+		) as OSUIFramework.Patterns.Search.ISearch;
 	}
 
 	/**
@@ -137,6 +122,7 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	 * @param {string} searchId ID of the Search that will be initialized.
 	 * @return {*}  callback
 	 */
+
 	export function RegisterCallback(searchId: string, callback: OSUIFramework.Callbacks.OSSearchCollapseEvent): void {
 		const search = GetSearchById(searchId);
 		search.registerCallback(callback);

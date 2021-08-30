@@ -50,13 +50,13 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	}
 
 	/**
-	 *
+	 * Function that will return the Map with all the Rating instances at the page
 	 *
 	 * @export
-	 * @return {*}  {Array<string>}
+	 * @return {*}  {Map<string, OSUIFramework.Patterns.IRating>}
 	 */
 	export function GetAllRatings(): Array<string> {
-		return Array.from(_ratingsMap.keys());
+		return OSUIFramework.Helper.MapOperation.ExportKeys(_ratingsMap);
 	}
 
 	/**
@@ -67,26 +67,11 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 * @return {*}  {OSUIFramework.Patterns.IRating}
 	 */
 	export function GetRatingById(ratingId: string): OSUIFramework.Patterns.Rating.IRating {
-		let rating: OSUIFramework.Patterns.Rating.IRating;
-
-		//ratingId is the UniqueId
-		if (_ratingsMap.has(ratingId)) {
-			rating = _ratingsMap.get(ratingId);
-		} else {
-			//Search for ratingId
-			for (const p of _ratingsMap.values()) {
-				if (p.equalsToID(ratingId)) {
-					rating = p;
-					break;
-				}
-			}
-		}
-
-		if (rating === undefined) {
-			throw new Error(`Rating id:${ratingId} not found`);
-		}
-
-		return rating;
+		return OSUIFramework.Helper.MapOperation.FindInMap(
+			'Rating',
+			ratingId,
+			_ratingsMap
+		) as OSUIFramework.Patterns.Rating.IRating;
 	}
 
 	/**

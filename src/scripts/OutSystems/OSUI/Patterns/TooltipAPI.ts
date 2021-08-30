@@ -69,8 +69,8 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 * @export
 	 * @return {*}  {Map<string, OSUIFramework.Patterns.ITooltip>}
 	 */
-	export function GetAllTooltipsMap(): Map<string, OSUIFramework.Patterns.Tooltip.ITooltip> {
-		return _tooltipsMap;
+	export function GetAllTooltips(): Array<string> {
+		return OSUIFramework.Helper.MapOperation.ExportKeys(_tooltipsMap);
 	}
 
 	/**
@@ -81,26 +81,11 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 * @return {*}  {OSUIFramework.Patterns.ITooltip}
 	 */
 	export function GetTooltipById(tooltipId: string): OSUIFramework.Patterns.Tooltip.ITooltip {
-		let tooltip: OSUIFramework.Patterns.Tooltip.ITooltip;
-
-		//tooltipId is the UniqueId
-		if (_tooltipsMap.has(tooltipId)) {
-			tooltip = _tooltipsMap.get(tooltipId);
-		} else {
-			//Search for tooltipId
-			for (const p of _tooltipsMap.values()) {
-				if (p.equalsToID(tooltipId)) {
-					tooltip = p;
-					break;
-				}
-			}
-		}
-
-		if (tooltip === undefined) {
-			throw new Error(`Tooltip id:${tooltipId} not found`);
-		}
-
-		return tooltip;
+		return OSUIFramework.Helper.MapOperation.FindInMap(
+			'Tooltip',
+			tooltipId,
+			_tooltipsMap
+		) as OSUIFramework.Patterns.Tooltip.ITooltip;
 	}
 
 	/**

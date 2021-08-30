@@ -13,6 +13,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 		private _eventWindowClick: any;
 
 		// Store the ballon html element
+		private _tooltipBallonContentActiveElem: HTMLElement;
 		private _tooltipBallonContentElem: HTMLElement;
 		private _tooltipBallonWrapperElem: HTMLElement;
 		private _tooltipBallonWrapperId: string;
@@ -20,23 +21,13 @@ namespace OSUIFramework.Patterns.Tooltip {
 		// Store the content html element
 		private _tooltipContentElem: HTMLElement;
 
-		// Store all the classes strings used by the pattern
-		private _tooltipCssClass = {
-			pattern: 'osui-tooltip',
-			IsHover: 'is-hover',
-			IsVisible: 'is-opened',
-			Content: 'osui-tooltip_content',
-			BalloonWrapper: 'osui-tooltip_balloon-wrapper',
-			BalloonContent: 'osui-tooltip_balloon',
-		};
-
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new TooltipConfig(configs));
 
 			// Set the method that will be assigned to the window click event
 			this._eventWindowClick = this._windowClick.bind(this);
-			this._eventOnBlur = this.close.bind(this);
+			this._eventOnBlur = this._onBlur.bind(this);
 			this._eventOnClick = this._onClick.bind(this);
 			this._eventOnFocus = this.open.bind(this);
 			this._eventBallonContentOnClose = this._updatePositionOnClose.bind(this);
@@ -47,19 +38,19 @@ namespace OSUIFramework.Patterns.Tooltip {
 			// If tooltip should behave onMouseOver and it's visible by default
 			if (this.configs.IsHover || this.configs.IsVisible) {
 				// Add a window event that will be responsible to close it, if it's opend by default
-				window.addEventListener('click', this._eventWindowClick);
+				window.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventWindowClick);
 			}
 
 			// If tooltip should behave at onMouseClick
 			if (!this.configs.IsHover) {
-				this._tooltipContentElem.addEventListener('click', this._eventOnClick);
+				this._tooltipContentElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			}
 
 			// if the accessibility feature is enabled
 			if (this._enableAccessibility) {
 				// add the focus event in order to show the tooltip ballon when the toolTip content is focused
-				this._tooltipContentElem.addEventListener('blur', this._eventOnBlur);
-				this._tooltipContentElem.addEventListener('focus', this._eventOnFocus);
+				this._tooltipContentElem.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
+				this._tooltipContentElem.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
 			}
 		}
 
@@ -81,12 +72,52 @@ namespace OSUIFramework.Patterns.Tooltip {
 			}
 		}
 
+		// Method to close the tooltip at onBlur
+		private _onBlur(): void {
+			// Wait for next activeElement be active
+			setTimeout(() => {
+				// Check if a previous active element has been assigned
+				if (this._tooltipBallonContentActiveElem) {
+					this._tooltipBallonContentActiveElem.removeEventListener(
+						GlobalEnum.HTMLEvent.Blur,
+						this._eventOnBlur
+					);
+				}
+
+				// Get the closest element in order to check if the activeElement is inside this TooltipBallon
+				const _closestElem = document.activeElement.closest(Constants.Dot + Enum.CssClass.Pattern);
+				if (_closestElem !== this._selfElem) {
+					// Close Tooltip
+					this.close();
+				} else {
+					// Add the blur event in order to proper close the tooltip after its blur
+					this._tooltipBallonContentActiveElem = document.activeElement as HTMLElement;
+					this._tooltipBallonContentActiveElem.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
+				}
+			}, 0);
+		}
+
 		// Trigger the tooltip at onClick behaviour
 		private _onClick(): void {
 			// Add a window event that will be responsible to close it, if it's opend by default
-			window.addEventListener('click', this._eventWindowClick);
+			window.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventWindowClick);
 
 			this.open();
+		}
+
+		// Remove all the assigned Events
+		private _removeEvents(): void {
+			window.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventWindowClick);
+
+			this._tooltipContentElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+
+			this._tooltipContentElem.removeEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
+			this._tooltipContentElem.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
+
+			this._tooltipBallonContentElem.removeEventListener(
+				GlobalEnum.HTMLEvent.TransitionEnd,
+				this._eventBallonContentOnClose
+			);
 		}
 
 		// Add the Accessibility Attributes values
@@ -100,9 +131,9 @@ namespace OSUIFramework.Patterns.Tooltip {
 		// Update info based on htmlContent
 		private _setHtmlElements(): void {
 			// Set the html references that will be used to manage the cssClasses and atribute properties
-			this._tooltipContentElem = this._selfElem.querySelector('.' + this._tooltipCssClass.Content);
-			this._tooltipBallonContentElem = this._selfElem.querySelector('.' + this._tooltipCssClass.BalloonContent);
-			this._tooltipBallonWrapperElem = this._selfElem.querySelector('.' + this._tooltipCssClass.BalloonWrapper);
+			this._tooltipContentElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Content);
+			this._tooltipBallonContentElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.BalloonContent);
+			this._tooltipBallonWrapperElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.BalloonWrapper);
 			this._tooltipBallonWrapperId = Helper.Attribute.Get(this._tooltipBallonWrapperElem, 'id');
 		}
 
@@ -115,12 +146,12 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 			// Set default IsHover cssClass property value
 			if (this._configs.IsHover) {
-				Helper.Style.AddClass(this._selfElem, this._tooltipCssClass.IsHover);
+				Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsHover);
 			}
 
 			// Set default IsVisible cssClass property value
 			if (this._configs.IsVisible) {
-				Helper.Style.AddClass(this._selfElem, this._tooltipCssClass.IsVisible);
+				Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsVisible);
 			}
 
 			// Set default Position cssClass property value
@@ -134,7 +165,10 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// Used to update the tooltip position after it's closed
 		private _updatePositionOnClose(): void {
-			this._tooltipBallonContentElem.removeEventListener('transitionend', this._eventBallonContentOnClose);
+			this._tooltipBallonContentElem.removeEventListener(
+				GlobalEnum.HTMLEvent.TransitionEnd,
+				this._eventBallonContentOnClose
+			);
 
 			// Check if the tooltip has a defined cssClass position
 			const hasPosition = Helper.Style.HasCssClassPosition(this._tooltipBallonWrapperElem);
@@ -148,13 +182,13 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// Close tooltip if user has clicked outside of it
 		private _windowClick(e: MouseEvent): void {
-			const _clickedElem: HTMLElement = e.target as HTMLElement;
-			const _closestElem: HTMLElement = _clickedElem.closest('.' + this._tooltipCssClass.pattern);
+			const _clickedElem = e.target as HTMLElement;
+			const _closestElem = _clickedElem.closest(Constants.Dot + Enum.CssClass.Pattern);
 
 			// If the click has occur outside of this tooltip
 			if (_closestElem !== this._selfElem) {
 				// Remove the Event
-				window.removeEventListener('click', this._eventWindowClick);
+				window.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventWindowClick);
 
 				// Close Tooltip
 				this.close();
@@ -192,29 +226,47 @@ namespace OSUIFramework.Patterns.Tooltip {
 						break;
 
 					case Enum.Properties.IsHover:
-						Helper.Style.ToogleClass(this._selfElem, this._tooltipCssClass.IsHover);
-
 						this._configs.IsHover = propertyValue;
+
+						if (this._configs.IsHover) {
+							Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsHover);
+						} else {
+							Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.IsHover);
+						}
+
+						this._removeEvents();
+
+						this._addEvents();
 
 						break;
 
 					case Enum.Properties.IsVisible:
-						Helper.Style.ToogleClass(this._selfElem, this._tooltipCssClass.IsVisible);
-
 						this._configs.IsVisible = propertyValue;
+
+						if (this._configs.IsVisible) {
+							Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsVisible);
+						} else {
+							Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.IsVisible);
+						}
+
+						this._removeEvents();
+
+						this._addEvents();
 
 						break;
 
 					case Enum.Properties.Position:
 						if (this._configs.Position !== '') {
-							Helper.Style.ToogleClass(this._tooltipBallonWrapperElem, this._configs.Position);
+							Helper.Style.ToggleClass(this._tooltipBallonWrapperElem, this._configs.Position);
 						}
 
 						if (propertyValue !== '') {
-							Helper.Style.ToogleClass(this._tooltipBallonWrapperElem, propertyValue);
+							Helper.Style.ToggleClass(this._tooltipBallonWrapperElem, propertyValue);
 						}
 
 						this._configs.Position = propertyValue;
+
+						this._managePosition();
 
 						break;
 				}
@@ -225,9 +277,12 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// Close the tooltip
 		public close(): void {
-			this._tooltipBallonContentElem.addEventListener('transitionend', this._eventBallonContentOnClose);
+			this._tooltipBallonContentElem.addEventListener(
+				GlobalEnum.HTMLEvent.TransitionEnd,
+				this._eventBallonContentOnClose
+			);
 
-			Helper.Style.RemoveClass(this._selfElem, this._tooltipCssClass.IsVisible);
+			Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.IsVisible);
 
 			this._configs.IsVisible = false;
 		}
@@ -236,21 +291,14 @@ namespace OSUIFramework.Patterns.Tooltip {
 		public dispose(): void {
 			super.dispose();
 
-			window.removeEventListener('click', this._eventWindowClick);
-
-			this._tooltipContentElem.removeEventListener('click', this._eventOnClick);
-
-			this._tooltipContentElem.removeEventListener('blur', this._eventOnBlur);
-			this._tooltipContentElem.removeEventListener('focus', this._eventOnFocus);
-
-			this._tooltipBallonContentElem.removeEventListener('transitionend', this._eventBallonContentOnClose);
+			this._removeEvents();
 		}
 
 		// Open the tooltip
 		public open(): void {
 			this._managePosition();
 
-			Helper.Style.AddClass(this._selfElem, this._tooltipCssClass.IsVisible);
+			Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsVisible);
 
 			this._configs.IsVisible = true;
 		}

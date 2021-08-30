@@ -93,15 +93,17 @@
 				padding-top: var(--space-s);
 
 				& + span.validation-message {
-					bottom: -18px;
+					bottom: 7px;
 				}
 			}
 		}
 	}
 }
 
-// Chrome autofill hack
-///
+/* Chrome autofill hack ----------------------------------------
+	This is an hack to solve the autoFill when Chrome at windows.
+	An event added throught JS was added to proper manage the input behaviour based on this animation.
+*/
 @keyframes onAutoFillStart {
 	from {
 	}
@@ -110,8 +112,6 @@
 	}
 }
 
-// Chrome autofill hack
-///
 @keyframes onAutoFillCancel {
 	from {
 	}
@@ -119,6 +119,7 @@
 	to {
 	}
 }
+// End of Chrome autofill hack -----------------------------------
 
 // Responsive --------------------------------------------------------------------
 ///
@@ -126,6 +127,14 @@
 .phone {
 	.animated-label-text {
 		top: 14px;
+	}
+
+	.form-control {
+		&[data-textarea] {
+			& + span.validation-message {
+				bottom: 10px;
+			}
+		}
 	}
 }
 
