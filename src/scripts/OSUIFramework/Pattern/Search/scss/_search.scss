@@ -166,12 +166,12 @@
 			}
 
 			&-input {
-				left: 0;
+				left: var(--os-safe-area-left);
 				position: absolute;
 				right: 0;
-				top: 0;
-				-webkit-transform: translate(0, -100%);
-				transform: translate(0, -100%);
+				top: var(--os-safe-area-top);
+				-webkit-transform: translate(0, calc(-100% - var(--os-safe-area-top)));
+				transform: translate(0, calc(-100% - var(--os-safe-area-top)));
 				transition: all 300ms ease;
 
 				input[data-input] {
