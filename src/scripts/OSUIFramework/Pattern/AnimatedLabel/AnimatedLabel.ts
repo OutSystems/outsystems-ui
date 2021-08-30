@@ -80,22 +80,12 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 			}
 		}
 
-		// Set the cssClasses that should be assigned to the element on it's initialization
-		private _setInitialCssClasses(): void {
-			// Set default ExtendedClass values
-			if (this._configs.ExtendedClass !== '') {
-				this.updateExtendedClass('', this._configs.ExtendedClass);
-			}
-		}
-
 		public build(): void {
 			//OS takes a while to set the TextArea
 			setTimeout(() => {
 				super.build();
 
 				this._setHtmlElements();
-
-				this._setInitialCssClasses();
 
 				this._addEvents();
 
@@ -105,18 +95,7 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
-			if (Enum.Properties[propertyName] && this._configs.hasOwnProperty(propertyName)) {
-				switch (propertyName) {
-					case Enum.Properties.ExtendedClass:
-						this.updateExtendedClass(this._configs.ExtendedClass, propertyValue);
-
-						this._configs.ExtendedClass = propertyValue;
-
-						break;
-				}
-			} else {
-				throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
-			}
+			super.changeProperty(propertyName, propertyValue);
 		}
 
 		// Destroy the Animatedlabel
