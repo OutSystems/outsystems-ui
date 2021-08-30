@@ -112,7 +112,6 @@
 							&-round {
 								border-radius: var(--border-radius-none);
 								box-shadow: inset 0 0 0 3px var(--color-neutral-6);
-								-webkit-transform: rotate(135deg);
 								transform: rotate(135deg);
 								width: 3px;
 							}
@@ -120,14 +119,12 @@
 							&-stick-bottom {
 								background-color: var(--color-neutral-6);
 								top: 12px;
-								-webkit-transform: rotate(45deg);
 								transform: rotate(45deg);
 							}
 						}
 					}
 
 					&-input {
-						-webkit-transform: translate(0, 0);
 						transform: translate(0, 0);
 					}
 				}
@@ -159,7 +156,6 @@
 				position: absolute;
 				right: 12px;
 				top: 23px;
-				-webkit-transform: rotate(-45deg);
 				transform: rotate(-45deg);
 				transition: all 300ms ease;
 				width: 3px;
@@ -170,7 +166,6 @@
 				position: absolute;
 				right: 0;
 				top: var(--os-safe-area-top);
-				-webkit-transform: translate(0, calc(-100% - var(--os-safe-area-top)));
 				transform: translate(0, calc(-100% - var(--os-safe-area-top)));
 				transition: all 300ms ease;
 
