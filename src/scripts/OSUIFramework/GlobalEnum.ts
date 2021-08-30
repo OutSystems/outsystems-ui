@@ -55,8 +55,8 @@ namespace OSUIFramework.GlobalEnum {
 	 * @enum {number}
 	 */
 	export enum Orientation {
-		horizontal = 'horizontal',
-		vertical = 'vertical',
+		Horizontal = 'horizontal',
+		Vertical = 'vertical',
 	}
 
 	/**
@@ -66,8 +66,8 @@ namespace OSUIFramework.GlobalEnum {
 	 * @enum {number}
 	 */
 	export enum Direction {
-		left = 'left',
-		right = 'right',
+		Left = 'left',
+		Right = 'right',
 	}
 
 	/**
@@ -77,10 +77,10 @@ namespace OSUIFramework.GlobalEnum {
 	 * @enum {number}
 	 */
 	export enum Keycodes {
-		tab = 'Tab',
-		escape = 'Escape',
-		enter = 'Enter',
-		space = ' ',
-		shift = 'Shift',
+		Tab = 'Tab',
+		Escape = 'Escape',
+		Enter = 'Enter',
+		Space = ' ',
+		Shift = 'Shift',
 	}
 }

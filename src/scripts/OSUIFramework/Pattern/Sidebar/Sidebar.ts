@@ -62,7 +62,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 		// Method to check if current gesture is withing sidebar boundaries
 		private _checkIsDraggingInsideBounds(x: number): boolean {
-			const isLeft = this._direction === GlobalEnum.Direction.left;
+			const isLeft = this._direction === GlobalEnum.Direction.Left;
 
 			const baseThreshold = this._nativeGesturesParams.MoveX + (x - this._nativeGesturesParams.LastX);
 
@@ -126,7 +126,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		private _setHtmlElements(): void {
 			this._sidebarAsideElem = this._selfElem.querySelector('.' + Enum.SidebarCssClass.Aside);
 			this._sidebarOverlayElem = this._selfElem.querySelector('.' + Enum.SidebarCssClass.Overlay);
-			this._focusableElems = this._sidebarAsideElem.querySelectorAll(Constants.focusableElems);
+			this._focusableElems = this._sidebarAsideElem.querySelectorAll(Constants.FocusableElems);
 			// to handle focusable element's tabindex when toggling the sidebar
 			this._firstFocusableElem = this._focusableElems[0];
 			this._lastFocusableElem = this._focusableElems[this._focusableElems.length - 1];
@@ -161,11 +161,11 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 		// Method to handle the overlay transition on gestures
 		private _setOverlayTransition(x: number): void {
-			const isLeft = this._direction === GlobalEnum.Direction.left;
+			const isLeft = this._direction === GlobalEnum.Direction.Left;
 			const overlay = this._sidebarOverlayElem;
 			const overlayOpacity = parseInt(overlay.style.opacity);
 
-			Helper.Style.AddClass(overlay, Constants.noTransition);
+			Helper.Style.AddClass(overlay, Constants.NoTransition);
 
 			const percentageBeforeDif = (Math.abs(x) * 100) / parseInt(this._width);
 			const percentage = isLeft ? 0 + percentageBeforeDif : 100 - percentageBeforeDif;
@@ -179,8 +179,8 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 		// Method that will handle the tab navigation and sidebar closing on Escape
 		private _sidebarOnKeypress(e: KeyboardEvent): void {
-			const isTabPressed = e.key === GlobalEnum.Keycodes.tab;
-			const isEscapedPressed = e.key === GlobalEnum.Keycodes.escape;
+			const isTabPressed = e.key === GlobalEnum.Keycodes.Tab;
+			const isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
 			const isShiftPressed = e.shiftKey;
 
 			if (!isTabPressed && !isEscapedPressed) {
@@ -290,7 +290,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._isMoving = false;
 
 			// Remove transitions
-			Helper.Style.RemoveClass(this._sidebarAsideElem, Constants.noTransition);
+			Helper.Style.RemoveClass(this._sidebarAsideElem, Constants.NoTransition);
 
 			// Just clicked or swiped in invalid direction?
 			if ((offsetX === 0 && offsetY === 0) || this._nativeGesturesParams.InvalidX) {
@@ -317,7 +317,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 				this._sidebarOverlayElem.style.opacity = '';
 
 				if (this._isOpen) {
-					Helper.Style.RemoveClass(this._sidebarOverlayElem, Constants.noTransition);
+					Helper.Style.RemoveClass(this._sidebarOverlayElem, Constants.NoTransition);
 				}
 			}
 		}
@@ -325,7 +325,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		// Method to handle the gesture move
 		public onGestureMove(x: number, y: number, offsetX: number, offsetY: number, evt: TouchEvent): void {
 			// Check X axis direction
-			const _dragDirection = offsetX > 0 ? GlobalEnum.Direction.right : GlobalEnum.Direction.left;
+			const _dragDirection = offsetX > 0 ? GlobalEnum.Direction.Right : GlobalEnum.Direction.Left;
 			// Set direction as invalid if isOpen and swipe is on opposite direction
 			this._nativeGesturesParams.InvalidX = this._isOpen && _dragDirection !== this._direction;
 
@@ -340,8 +340,8 @@ namespace OSUIFramework.Patterns.Sidebar {
 				const isHorizontal = Math.abs(offsetX) >= Math.abs(offsetY);
 
 				this._dragOrientation = isHorizontal
-					? GlobalEnum.Orientation.horizontal
-					: GlobalEnum.Orientation.vertical;
+					? GlobalEnum.Orientation.Horizontal
+					: GlobalEnum.Orientation.Vertical;
 
 				requestAnimationFrame(() => {
 					this._updateUI();
@@ -349,7 +349,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 
 			// Is Scrolling?
-			if (this._dragOrientation === GlobalEnum.Orientation.vertical) {
+			if (this._dragOrientation === GlobalEnum.Orientation.Vertical) {
 				this._updateLastPositions(x, y);
 				return;
 			}
@@ -380,11 +380,11 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._nativeGesturesParams.LastY = y;
 			this._nativeGesturesParams.MoveX = this._isOpen
 				? 0
-				: this._direction === GlobalEnum.Direction.left
+				: this._direction === GlobalEnum.Direction.Left
 				? -parseInt(this._width)
 				: parseInt(this._width);
 
-			Helper.Style.AddClass(this._sidebarAsideElem, Constants.noTransition);
+			Helper.Style.AddClass(this._sidebarAsideElem, Constants.NoTransition);
 		}
 
 		// Set callbacks for the onToggle event
