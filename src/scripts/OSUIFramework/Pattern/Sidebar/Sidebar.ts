@@ -122,8 +122,8 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 		// Set the html references that will be used to manage the cssClasses and atribute properties
 		private _setHtmlElements(): void {
-			this._sidebarAsideElem = this._selfElem.querySelector('.' + Enum.CssClass.Aside);
-			this._sidebarOverlayElem = this._selfElem.querySelector('.' + Enum.CssClass.Overlay);
+			this._sidebarAsideElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Aside);
+			this._sidebarOverlayElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Overlay);
 			this._focusableElems = this._sidebarAsideElem.querySelectorAll(Constants.FocusableElems);
 			// to handle focusable element's tabindex when toggling the sidebar
 			this._firstFocusableElem = this._focusableElems[0];
@@ -408,7 +408,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 			// Make async so that the platform updates the DIV visibility on the DOM
 			setTimeout(() => {
-				this._sidebarOverlayElem = this._selfElem.querySelector('.' + Enum.CssClass.Overlay);
+				this._sidebarOverlayElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Overlay);
 				this._handleOverlayClick(hasOverlay);
 			}, 0);
 
