@@ -150,11 +150,6 @@ namespace OSUIFramework.Patterns.Sidebar {
 			if (this._hasOverlay) {
 				Helper.Style.AddClass(this._selfElem, Enum.SidebarCssClass.HasOverlay);
 			}
-
-			// Set default ExtendedClass values
-			if (this._configs.ExtendedClass !== '') {
-				this.updateExtendedClass(this._configs.ExtendedClass, this._configs.ExtendedClass);
-			}
 		}
 
 		// Method to handle the overlay transition on gestures
@@ -271,10 +266,8 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 						this._hasOverlay = propertyValue;
 						break;
-					case Enum.Properties.ExtendedClass:
-						this.updateExtendedClass(this._configs.ExtendedClass, propertyValue);
-
-						this._configs.ExtendedClass = propertyValue;
+					default:
+						super.changeProperty(propertyName, propertyValue);
 						break;
 				}
 			} else {
