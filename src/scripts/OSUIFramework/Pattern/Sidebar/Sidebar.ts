@@ -25,8 +25,6 @@ namespace OSUIFramework.Patterns.Sidebar {
 		private _isMoving: boolean;
 		// Store if the Sidebar is Open
 		private _isOpen: boolean;
-		// Store if it's RTL
-		private _isRtl: boolean;
 		// Store the last element to receive focus in the sidebar
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _lastFocusableElem: any;
@@ -224,7 +222,6 @@ namespace OSUIFramework.Patterns.Sidebar {
 		private _updateUI(): any {
 			if (this._isMoving) {
 				this._sidebarAsideElem.style.transform = `translateX(${this._nativeGesturesParams.MoveX}px)`;
-
 				requestAnimationFrame(() => {
 					this._updateUI();
 				});
