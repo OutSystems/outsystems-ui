@@ -26,14 +26,14 @@ namespace OutSystems.OSUI.Utils {
 			}
 
 			if (content) {
-				content.addEventListener('touchstart', function (e) {
+				content.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.TouchStart, function (e) {
 					originalPosition = e.changedTouches[0].pageY;
 					for (let i = inputs.length - 1; i >= 0; i--) {
 						inputs[i].style.webkitUserSelect = 'auto';
 					}
 				});
 
-				content.addEventListener('touchmove', function (e) {
+				content.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.TouchMove, function (e) {
 					currentPosition = e.touches[0].pageY;
 					if (Math.abs(originalPosition - currentPosition) > 10) {
 						for (let i = inputs.length - 1; i >= 0; i--) {
@@ -46,7 +46,7 @@ namespace OutSystems.OSUI.Utils {
 					}
 				});
 
-				content.addEventListener('touchend', function () {
+				content.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.TouchEnd, function () {
 					setTimeout(function () {
 						for (let i = inputs.length - 1; i >= 0; i--) {
 							inputs[i].style.webkitUserSelect = 'auto';

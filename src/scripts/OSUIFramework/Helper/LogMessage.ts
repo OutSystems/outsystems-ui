@@ -7,7 +7,7 @@ namespace OSUIFramework.Helper {
 	 * @param {string} message
 	 */
 	export function LogMessage(message: string): string {
-		if (Constants.enableLogMessages) {
+		if (Constants.EnableLogMessages) {
 			return message;
 		}
 	}

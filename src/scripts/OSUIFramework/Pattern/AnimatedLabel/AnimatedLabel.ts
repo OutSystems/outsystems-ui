@@ -32,9 +32,9 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 
 		// Add Pattern Events
 		private _addEvents(): void {
-			this._inputElem.addEventListener('blur', this._eventOnBlur);
-			this._inputElem.addEventListener('focus', this._eventOnFocus);
-			this._inputElem.addEventListener('animationstart', this._eventOnAnimationStart);
+			this._inputElem.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
+			this._inputElem.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
+			this._inputElem.addEventListener(GlobalEnum.HTMLEvent.AnimationStart, this._eventOnAnimationStart);
 		}
 
 		// Check if the input is empty, if yes reposition the Label
@@ -55,8 +55,8 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 
 		// Update info based on htmlContent
 		private _setHtmlElements(): void {
-			this._labelPlaceholderElem = this._selfElem.querySelector('.' + Enum.CssClasses.LabelPlaceholder);
-			this._inputPlaceholderElem = this._selfElem.querySelector('.' + Enum.CssClasses.InputPlaceholder);
+			this._labelPlaceholderElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClasses.LabelPlaceholder);
+			this._inputPlaceholderElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClasses.InputPlaceholder);
 
 			this._inputElem =
 				this._inputPlaceholderElem.querySelector(GlobalEnum.DataBlocksTag.Input) ||
@@ -80,22 +80,12 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 			}
 		}
 
-		// Set the cssClasses that should be assigned to the element on it's initialization
-		private _setInitialCssClasses(): void {
-			// Set default ExtendedClass values
-			if (this._configs.ExtendedClass !== '') {
-				this.updateExtendedClass('', this._configs.ExtendedClass);
-			}
-		}
-
 		public build(): void {
 			//OS takes a while to set the TextArea
 			setTimeout(() => {
 				super.build();
 
 				this._setHtmlElements();
-
-				this._setInitialCssClasses();
 
 				this._addEvents();
 
@@ -105,27 +95,16 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
-			if (Enum.Properties[propertyName] && this._configs.hasOwnProperty(propertyName)) {
-				switch (propertyName) {
-					case Enum.Properties.ExtendedClass:
-						this.updateExtendedClass(this._configs.ExtendedClass, propertyValue);
-
-						this._configs.ExtendedClass = propertyValue;
-
-						break;
-				}
-			} else {
-				throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
-			}
+			super.changeProperty(propertyName, propertyValue);
 		}
 
 		// Destroy the Animatedlabel
 		public dispose(): void {
 			super.dispose();
 
-			this._inputElem.removeEventListener('blur', this._eventOnBlur);
-			this._inputElem.removeEventListener('focus', this._eventOnFocus);
-			this._inputElem.removeEventListener('animationstart', this._eventOnAnimationStart);
+			this._inputElem.removeEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
+			this._inputElem.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
+			this._inputElem.removeEventListener(GlobalEnum.HTMLEvent.AnimationStart, this._eventOnAnimationStart);
 		}
 
 		// Update Label active status accordingly when the input info has canhged

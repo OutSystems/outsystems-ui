@@ -1,6 +1,13 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.GlobalEnum {
 	/**
+	 * OutSystemsUI common properties
+	 */
+	export enum CommonPatternsProperties {
+		ExtendedClass = 'ExtendedClass',
+	}
+
+	/**
 	 * OutSystemsUI Data Blocks attribute values
 	 *
 	 * @export
@@ -20,14 +27,31 @@ namespace OSUIFramework.GlobalEnum {
 	 * @enum {number}
 	 */
 	export enum OSUICssClassPosition {
-		bottom = 'bottom',
-		bottomLeft = 'bottom-left',
-		bottomRight = 'bottom-right',
-		center = 'center',
-		left = 'left',
-		right = 'right',
-		top = 'top',
-		topLeft = 'top-left',
-		topRight = 'top-right',
+		Bottom = 'bottom',
+		BottomLeft = 'bottom-left',
+		BottomRight = 'bottom-right',
+		Center = 'center',
+		Left = 'left',
+		Right = 'right',
+		Top = 'top',
+		TopLeft = 'top-left',
+		TopRight = 'top-right',
+	}
+
+	export enum HTMLEvent {
+		AnimationEnd = 'animationend',
+		AnimationStart = 'animationstart',
+		Blur = 'blur',
+		Click = 'click',
+		Focus = 'focus',
+		TouchEnd = 'touchend',
+		TouchMove = 'touchmove',
+		TouchStart = 'touchstart',
+		TransitionEnd = 'transitionend',
+	}
+
+	export enum HTMLElement {
+		FieldSet = 'fieldset',
+		Input = 'input',
 	}
 }

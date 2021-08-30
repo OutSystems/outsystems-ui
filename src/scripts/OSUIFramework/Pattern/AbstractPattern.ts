@@ -3,7 +3,7 @@ namespace OSUIFramework.Patterns {
 	/**
 	 * Defines the Default props and methods for OutSystemsUI Patterns
 	 */
-	export abstract class AbstractPattern<C> implements Interface.IPattern {
+	export abstract class AbstractPattern<C extends AbstractConfiguration> implements Interface.IPattern {
 		private _isBuilt: boolean;
 		private _uniqueId: string;
 		protected _configs: C;
@@ -16,6 +16,24 @@ namespace OSUIFramework.Patterns {
 			this._configs = configs;
 
 			// console.log(`AbstractPattern Constructor - '${uniqueId}'`);
+		}
+
+		private _updateExtendedClass(activeCssClass: string, newCssClass: string): void {
+			if (activeCssClass !== '') {
+				const activeCssClassArray = activeCssClass.split(' ');
+
+				for (let i = 0; i < activeCssClassArray.length; ++i) {
+					this._selfElem.classList.remove(activeCssClassArray[i]);
+				}
+			}
+
+			if (newCssClass !== '') {
+				const newCssClassArray = newCssClass.split(' ');
+
+				for (let i = 0; i < newCssClassArray.length; ++i) {
+					this._selfElem.classList.add(newCssClassArray[i]);
+				}
+			}
 		}
 
 		public get isBuilt(): boolean {
@@ -39,28 +57,30 @@ namespace OSUIFramework.Patterns {
 			this._isBuilt = true;
 		}
 
-		protected updateExtendedClass(activeCssClass: string, newCssClass: string): void {
-			if (activeCssClass !== '') {
-				const activeCssClassArray = activeCssClass.split(' ');
-
-				for (let i = 0; i < activeCssClassArray.length; ++i) {
-					this._selfElem.classList.remove(activeCssClassArray[i]);
-				}
-			}
-
-			if (newCssClass !== '') {
-				const newCssClassArray = newCssClass.split(' ');
-
-				for (let i = 0; i < newCssClassArray.length; ++i) {
-					this._selfElem.classList.add(newCssClassArray[i]);
-				}
-			}
-		}
-
 		public build(): void {
 			this._selfElem = Helper.GetElementByUniqueId(this._uniqueId);
 			this._widgetId = this._selfElem.closest(GlobalEnum.DataBlocksTag.DataBlock).id;
-			this._enableAccessibility = !!document.querySelector('.' + Constants.hasAccessibilityClass);
+			this._enableAccessibility = !!document.querySelector(Constants.Dot + Constants.HasAccessibilityClass);
+
+			if (this._configs.ExtendedClass !== '') {
+				this._updateExtendedClass('', this._configs.ExtendedClass);
+			}
+		}
+
+		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
+		public changeProperty(propertyName: string, propertyValue: any): void {
+			switch (propertyName) {
+				case GlobalEnum.CommonPatternsProperties.ExtendedClass:
+					this._updateExtendedClass(this._configs.ExtendedClass, propertyValue);
+
+					this._configs.ExtendedClass = propertyValue;
+
+					break;
+
+				default:
+					throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
+					break;
+			}
 		}
 
 		public dispose(): void {
@@ -70,8 +90,5 @@ namespace OSUIFramework.Patterns {
 		public equalsToID(patternId: string): boolean {
 			return patternId === this._uniqueId || patternId === this._widgetId;
 		}
-
-		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-		public abstract changeProperty(propertyName: string, propertyValue: any): void;
 	}
 }
