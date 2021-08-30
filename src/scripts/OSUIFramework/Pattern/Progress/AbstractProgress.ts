@@ -7,8 +7,5 @@ namespace OSUIFramework.Patterns.Progress {
 
 			console.log(`AbstractProgress Constructor - '${uniqueId}'`);
 		}
-
-		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-		// public abstract changeProperty(propertyName: string, propertyValue: any): void;
 	}
 }

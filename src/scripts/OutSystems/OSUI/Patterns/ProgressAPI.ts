@@ -12,11 +12,9 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 	export function ChangeProperty(progressId: string, propertyName: string, propertyValue: any): void {
-		const progressItem = GetProgressItemById(progressId);
+		const _progressItem = GetProgressItemById(progressId);
 
-		progressItem.changeProperty(propertyName, propertyValue);
-
-		console.log('check progress type before calling the proper method!;');
+		_progressItem.changeProperty(propertyName, propertyValue);
 	}
 
 	/**
@@ -71,7 +69,7 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 * @return {*}  Array<string>
 	 */
 	export function GetAllprogressItemsMap(): Array<string> {
-		return Array.from(_progressItemsMap.keys());
+		return OSUIFramework.Helper.MapOperation.ExportKeys(_progressItemsMap);
 	}
 
 	/**
@@ -82,28 +80,11 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 * @return {*}  {OSUIFramework.Patterns.Progress.IProgress;}
 	 */
 	export function GetProgressItemById(progressId: string): OSUIFramework.Patterns.Progress.IProgress {
-		let _progressItem: OSUIFramework.Patterns.Progress.IProgress;
-
-		return _progressItem;
-
-		//progressId is the UniqueId
-		if (_progressItemsMap.has(progressId)) {
-			_progressItem = _progressItemsMap.get(progressId);
-		} else {
-			//Search for progressId
-			for (const p of _progressItemsMap.values()) {
-				if (p.equalsToID(progressId)) {
-					_progressItem = p;
-					break;
-				}
-			}
-		}
-
-		if (_progressItem === undefined) {
-			throw new Error(`Progress Item id:${progressId} not found`);
-		}
-
-		return _progressItem;
+		return OSUIFramework.Helper.MapOperation.FindInMap(
+			'Progress',
+			progressId,
+			_progressItemsMap
+		) as OSUIFramework.Patterns.Progress.IProgress;
 	}
 
 	/**

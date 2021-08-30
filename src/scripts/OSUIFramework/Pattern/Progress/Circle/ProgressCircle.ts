@@ -9,7 +9,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		}
 
 		public changeProperty(propertyName: string, propertyValue: any): void {
-			console.log('cenas', propertyName, propertyValue);
+			console.log('changeProperty();', propertyName, propertyValue);
 		}
 	}
 }
