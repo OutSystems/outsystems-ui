@@ -354,7 +354,9 @@ namespace OSUIFramework.Patterns.Sidebar {
 				return;
 			}
 
+			// Prevent scrolling the page while doing gesture
 			evt.preventDefault();
+
 			const IsDraggingInsideBounds = this._checkIsDraggingInsideBounds(x);
 
 			// Dragging inside bounds?
