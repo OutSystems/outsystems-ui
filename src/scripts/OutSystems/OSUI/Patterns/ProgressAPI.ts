@@ -68,7 +68,7 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 * @export
 	 * @return {*}  Array<string>
 	 */
-	export function GetAllprogressItemsMap(): Array<string> {
+	export function GetAllProgressItemsMap(): Array<string> {
 		return OSUIFramework.Helper.MapOperation.ExportKeys(_progressItemsMap);
 	}
 

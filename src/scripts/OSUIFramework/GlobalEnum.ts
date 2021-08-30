@@ -9,9 +9,6 @@ namespace OSUIFramework.GlobalEnum {
 
 	/**
 	 * OutSystemsUI Data Blocks attribute values
-	 *
-	 * @export
-	 * @enum {number}
 	 */
 	export enum DataBlocksTag {
 		DataBlock = '[data-block]',
@@ -22,9 +19,6 @@ namespace OSUIFramework.GlobalEnum {
 
 	/**
 	 * OutSystemsUI position cssClasses
-	 *
-	 * @export
-	 * @enum {number}
 	 */
 	export enum OSUICssClassPosition {
 		Bottom = 'bottom',
@@ -38,6 +32,9 @@ namespace OSUIFramework.GlobalEnum {
 		TopRight = 'top-right',
 	}
 
+	/**
+	 * OutSystemsUI HTML Events
+	 */
 	export enum HTMLEvent {
 		AnimationEnd = 'animationend',
 		AnimationStart = 'animationstart',
@@ -50,6 +47,9 @@ namespace OSUIFramework.GlobalEnum {
 		TransitionEnd = 'transitionend',
 	}
 
+	/**
+	 * OutSystemsUI HTML Elements
+	 */
 	export enum HTMLElement {
 		FieldSet = 'fieldset',
 		Input = 'input',
