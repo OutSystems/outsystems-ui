@@ -64,7 +64,7 @@
 ///
 .landscape {
 	.layout.layout-native {
-		& .header,
+		.header,
 		&:not(.blank) .main-content,
 		.bottom-bar-wrapper {
 			padding-left: var(--os-safe-area-left);
