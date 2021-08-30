@@ -73,11 +73,6 @@ namespace OSUIFramework.Patterns.Search {
 
 		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _setInitialCssClasses(): void {
-			// Set default ExtendedClass values
-			if (this._configs.ExtendedClass !== '') {
-				this.updateExtendedClass('', this._configs.ExtendedClass);
-			}
-
 			if (this._isLayoutNative && this._inputValue !== '') {
 				Helper.Style.AddClass(this._selfElem, Enum.CssProperty.PatternIsOpen);
 
@@ -126,18 +121,7 @@ namespace OSUIFramework.Patterns.Search {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
-			if (Enum.Property[propertyName] && this._configs.hasOwnProperty(propertyName)) {
-				switch (propertyName) {
-					case Enum.Property.ExtendedClass:
-						this.updateExtendedClass(this._configs.ExtendedClass, propertyValue);
-
-						this._configs.ExtendedClass = propertyValue;
-
-						break;
-				}
-			} else {
-				throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
-			}
+			super.changeProperty(propertyName, propertyValue);
 		}
 
 		// Close Search

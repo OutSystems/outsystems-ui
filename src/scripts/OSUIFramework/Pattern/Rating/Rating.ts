@@ -135,11 +135,6 @@ namespace OSUIFramework.Patterns.Rating {
 			if (this._configs.Size !== '') {
 				Helper.Style.AddClass(this._selfElem, Enum.CssClass.Size + this._configs.Size);
 			}
-
-			// Set default ExtendedClass values
-			if (this._configs.ExtendedClass !== '') {
-				this.updateExtendedClass(this._configs.ExtendedClass, this._configs.ExtendedClass);
-			}
 		}
 
 		// Method that triggers the OnSelect event
@@ -173,34 +168,27 @@ namespace OSUIFramework.Patterns.Rating {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
-			if (Enum.Properties[propertyName] && this._configs.hasOwnProperty(propertyName)) {
-				// Check which property changed and call respective method to update it
-				switch (propertyName) {
-					case Enum.Properties.ExtendedClass:
-						this.updateExtendedClass(this._configs.ExtendedClass, propertyValue);
+			// Check which property changed and call respective method to update it
+			switch (propertyName) {
+				case Enum.Properties.RatingValue:
+					this.setValue(propertyValue);
 
-						this._configs.ExtendedClass = propertyValue;
+					break;
+				case Enum.Properties.RatingScale:
+					this.setScale(propertyValue);
 
-						break;
-					case Enum.Properties.RatingValue:
-						this.setValue(propertyValue);
+					break;
+				case Enum.Properties.IsEdit:
+					this.setIsEdit(propertyValue);
 
-						break;
-					case Enum.Properties.RatingScale:
-						this.setScale(propertyValue);
+					break;
+				case Enum.Properties.Size:
+					this.setSize(propertyValue);
 
-						break;
-					case Enum.Properties.IsEdit:
-						this.setIsEdit(propertyValue);
-
-						break;
-					case Enum.Properties.Size:
-						this.setSize(propertyValue);
-
-						break;
-				}
-			} else {
-				throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
+					break;
+				default:
+					super.changeProperty(propertyName, propertyValue);
+					break;
 			}
 		}
 

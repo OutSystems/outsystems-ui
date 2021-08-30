@@ -139,11 +139,6 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _setInitialCssClasses(): void {
-			// Set default ExtendedClass values
-			if (this._configs.ExtendedClass !== '') {
-				this.updateExtendedClass(this._configs.ExtendedClass, this._configs.ExtendedClass);
-			}
-
 			// Set default IsHover cssClass property value
 			if (this._configs.IsHover) {
 				Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsHover);
@@ -216,62 +211,55 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
-			if (Enum.Properties[propertyName] && this._configs.hasOwnProperty(propertyName)) {
-				switch (propertyName) {
-					case Enum.Properties.ExtendedClass:
-						this.updateExtendedClass(this._configs.ExtendedClass, propertyValue);
+			switch (propertyName) {
+				case Enum.Properties.IsHover:
+					this._configs.IsHover = propertyValue;
 
-						this._configs.ExtendedClass = propertyValue;
+					if (this._configs.IsHover) {
+						Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsHover);
+					} else {
+						Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.IsHover);
+					}
 
-						break;
+					this._removeEvents();
 
-					case Enum.Properties.IsHover:
-						this._configs.IsHover = propertyValue;
+					this._addEvents();
 
-						if (this._configs.IsHover) {
-							Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsHover);
-						} else {
-							Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.IsHover);
-						}
+					break;
 
-						this._removeEvents();
+				case Enum.Properties.IsVisible:
+					this._configs.IsVisible = propertyValue;
 
-						this._addEvents();
+					if (this._configs.IsVisible) {
+						Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsVisible);
+					} else {
+						Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.IsVisible);
+					}
 
-						break;
+					this._removeEvents();
 
-					case Enum.Properties.IsVisible:
-						this._configs.IsVisible = propertyValue;
+					this._addEvents();
 
-						if (this._configs.IsVisible) {
-							Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsVisible);
-						} else {
-							Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.IsVisible);
-						}
+					break;
 
-						this._removeEvents();
+				case Enum.Properties.Position:
+					if (this._configs.Position !== '') {
+						Helper.Style.ToggleClass(this._tooltipBallonWrapperElem, this._configs.Position);
+					}
 
-						this._addEvents();
+					if (propertyValue !== '') {
+						Helper.Style.ToggleClass(this._tooltipBallonWrapperElem, propertyValue);
+					}
 
-						break;
+					this._configs.Position = propertyValue;
 
-					case Enum.Properties.Position:
-						if (this._configs.Position !== '') {
-							Helper.Style.ToggleClass(this._tooltipBallonWrapperElem, this._configs.Position);
-						}
+					this._managePosition();
 
-						if (propertyValue !== '') {
-							Helper.Style.ToggleClass(this._tooltipBallonWrapperElem, propertyValue);
-						}
+					break;
 
-						this._configs.Position = propertyValue;
-
-						this._managePosition();
-
-						break;
-				}
-			} else {
-				throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
+				default:
+					super.changeProperty(propertyName, propertyValue);
+					break;
 			}
 		}
 
