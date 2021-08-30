@@ -1,6 +1,13 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.GlobalEnum {
 	/**
+	 * OutSystemsUI common properties
+	 */
+	export enum CommonPatternsProperties {
+		ExtendedClass = 'ExtendedClass',
+	}
+
+	/**
 	 * OutSystemsUI Data Blocks attribute values
 	 *
 	 * @export
