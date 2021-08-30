@@ -8,6 +8,7 @@ namespace OSUIFramework.Patterns.Progress.Circle.Enum {
 		ExtendedClass = 'ExtendedClass',
 		Progress = 'Progress',
 		ProgressColor = 'ProgressColor',
+		Shape = 'Shape',
 		TrailColor = 'TrailColor',
 	}
 
@@ -27,6 +28,7 @@ namespace OSUIFramework.Patterns.Progress.Circle.Enum {
 	export enum InlineStyleProp {
 		CircleThickness = '--circle-thickness',
 		ProgressColor = '--progress-color',
+		Shape = '--shape-style',
 		TrailColor = '--trail-color',
 	}
 }

@@ -1,5 +1,4 @@
 /// <reference path="../AbstractProgress.ts" />
-/// <reference path="../ProgressEnum.ts" />
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Progress.Circle {
@@ -39,10 +38,22 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			Helper.Style.SetStyleAttribute(
 				this._selfElem,
 				Enum.InlineStyleProp.ProgressColor,
-				this._configs.ProgressColor
+				Helper.Style.GetColorValueFromColorType(this._configs.ProgressColor)
 			);
 
-			Helper.Style.SetStyleAttribute(this._selfElem, Enum.InlineStyleProp.TrailColor, this._configs.TrailColor);
+			Helper.Style.SetStyleAttribute(
+				this._selfElem,
+				Enum.InlineStyleProp.Shape,
+				this._configs.Shape === GlobalEnum.ShapeTypes.Sharp
+					? ProgressEnum.SvgShapeTypes.Sharp
+					: ProgressEnum.SvgShapeTypes.Rounded
+			);
+
+			Helper.Style.SetStyleAttribute(
+				this._selfElem,
+				Enum.InlineStyleProp.TrailColor,
+				Helper.Style.GetColorValueFromColorType(this._configs.TrailColor)
+			);
 		}
 
 		// Update info based on htmlContent
@@ -103,14 +114,35 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 				case Enum.Properties.ProgressColor:
 					this._configs.ProgressColor = propertyValue;
 
-					Helper.Style.SetStyleAttribute(this._selfElem, Enum.InlineStyleProp.ProgressColor, propertyValue);
+					Helper.Style.SetStyleAttribute(
+						this._selfElem,
+						Enum.InlineStyleProp.ProgressColor,
+						Helper.Style.GetColorValueFromColorType(this._configs.ProgressColor)
+					);
+
+					break;
+
+				case Enum.Properties.Shape:
+					this._configs.Shape = propertyValue;
+
+					Helper.Style.SetStyleAttribute(
+						this._selfElem,
+						Enum.InlineStyleProp.Shape,
+						this._configs.Shape === GlobalEnum.ShapeTypes.Sharp
+							? ProgressEnum.SvgShapeTypes.Sharp
+							: ProgressEnum.SvgShapeTypes.Rounded
+					);
 
 					break;
 
 				case Enum.Properties.TrailColor:
 					this._configs.TrailColor = propertyValue;
 
-					Helper.Style.SetStyleAttribute(this._selfElem, Enum.InlineStyleProp.TrailColor, propertyValue);
+					Helper.Style.SetStyleAttribute(
+						this._selfElem,
+						Enum.InlineStyleProp.TrailColor,
+						Helper.Style.GetColorValueFromColorType(this._configs.TrailColor)
+					);
 
 					break;
 

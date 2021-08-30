@@ -8,6 +8,15 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
+	 * OutSystemsUI Shape Types
+	 */
+	export enum ShapeTypes {
+		Rounded = 'rounded',
+		Sharp = 'none',
+		SoftRounded = 'soft',
+	}
+
+	/**
 	 * OutSystemsUI Data Blocks attribute values
 	 */
 	export enum DataBlocksTag {

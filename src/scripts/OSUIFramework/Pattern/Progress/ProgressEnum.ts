@@ -13,4 +13,12 @@ namespace OSUIFramework.Patterns.Progress.ProgressEnum {
 	export enum InlineStyleProp {
 		ProgressValue = '--progress-value',
 	}
+
+	/**
+	 * Progress Enum Shape Types
+	 */
+	export enum SvgShapeTypes {
+		Rounded = 'round',
+		Sharp = 'sharp',
+	}
 }
