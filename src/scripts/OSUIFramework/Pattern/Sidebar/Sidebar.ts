@@ -53,7 +53,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._isOpen = this._configs.IsOpen;
 			this._direction = this._configs.Direction;
 			this._hasOverlay = this._configs.HasOverlay;
-			this._width = this._configs.Width;
+			this._width = this._configs.Width !== '' ? this._configs.Width : '300px';
 			this._eventOnSidebarKeypress = this._sidebarOnKeypress.bind(this);
 			this._eventOnOverlayClick = this._overlayOnClick.bind(this);
 		}
@@ -400,6 +400,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 			Helper.Style.AddClass(this._selfElem, Enum.SidebarCssClass.Direction + direction);
 			this._direction = direction;
+			this._configs.Direction = direction;
 		}
 
 		// Toggle the Sidebar overlay
@@ -419,13 +420,17 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}, 0);
 
 			this._hasOverlay = hasOverlay;
+			this._configs.HasOverlay = hasOverlay;
 		}
 
 		// Set the Sidebar width
 		public setWidth(width: string): void {
-			// Update css variable
-			Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, width);
-			this._width = width;
+			if (width !== '') {
+				// Update css variable
+				Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, width);
+				this._width = width;
+				this._configs.Width = width;
+			}
 		}
 
 		// Toggle the Sidebar and trigger toggle event
