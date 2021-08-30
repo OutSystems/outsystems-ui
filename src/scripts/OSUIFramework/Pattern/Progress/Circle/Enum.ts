@@ -1,18 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Progress.Circle.Enum {
 	/**
-	 * ProgressCircle Enum properties
-	 */
-	export enum Properties {
-		CircleThickness = 'CircleThickness',
-		ExtendedClass = 'ExtendedClass',
-		Progress = 'Progress',
-		ProgressColor = 'ProgressColor',
-		Shape = 'Shape',
-		TrailColor = 'TrailColor',
-	}
-
-	/**
 	 * ProgressCircle Enum CssClasses
 	 */
 	export enum CssClass {
@@ -30,5 +18,17 @@ namespace OSUIFramework.Patterns.Progress.Circle.Enum {
 		ProgressColor = '--progress-color',
 		Shape = '--shape-style',
 		TrailColor = '--trail-color',
+	}
+
+	/**
+	 * ProgressCircle Enum properties
+	 */
+	export enum Properties {
+		CircleThickness = 'CircleThickness',
+		ExtendedClass = 'ExtendedClass',
+		Progress = 'Progress',
+		ProgressColor = 'ProgressColor',
+		Shape = 'Shape',
+		TrailColor = 'TrailColor',
 	}
 }

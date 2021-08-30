@@ -29,31 +29,10 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 
 		// Set the default inline css variables
 		private _setCssVariables(): void {
-			Helper.Style.SetStyleAttribute(
-				this._selfElem,
-				Enum.InlineStyleProp.CircleThickness,
-				this._configs.CircleThickness
-			);
-
-			Helper.Style.SetStyleAttribute(
-				this._selfElem,
-				Enum.InlineStyleProp.ProgressColor,
-				Helper.Style.GetColorValueFromColorType(this._configs.ProgressColor)
-			);
-
-			Helper.Style.SetStyleAttribute(
-				this._selfElem,
-				Enum.InlineStyleProp.Shape,
-				this._configs.Shape === GlobalEnum.ShapeTypes.Sharp
-					? ProgressEnum.SvgShapeTypes.Sharp
-					: ProgressEnum.SvgShapeTypes.Rounded
-			);
-
-			Helper.Style.SetStyleAttribute(
-				this._selfElem,
-				Enum.InlineStyleProp.TrailColor,
-				Helper.Style.GetColorValueFromColorType(this._configs.TrailColor)
-			);
+			this.changeProperty(Enum.Properties.CircleThickness, this._configs.CircleThickness);
+			this.changeProperty(Enum.Properties.ProgressColor, this._configs.ProgressColor);
+			this.changeProperty(Enum.Properties.Shape, this._configs.Shape);
+			this.changeProperty(Enum.Properties.TrailColor, this._configs.TrailColor);
 		}
 
 		// Update info based on htmlContent
