@@ -122,8 +122,8 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 		// Set the html references that will be used to manage the cssClasses and atribute properties
 		private _setHtmlElements(): void {
-			this._sidebarAsideElem = this._selfElem.querySelector('.' + Enum.SidebarCssClass.Aside);
-			this._sidebarOverlayElem = this._selfElem.querySelector('.' + Enum.SidebarCssClass.Overlay);
+			this._sidebarAsideElem = this._selfElem.querySelector('.' + Enum.CssClass.Aside);
+			this._sidebarOverlayElem = this._selfElem.querySelector('.' + Enum.CssClass.Overlay);
 			this._focusableElems = this._sidebarAsideElem.querySelectorAll(Constants.FocusableElems);
 			// to handle focusable element's tabindex when toggling the sidebar
 			this._firstFocusableElem = this._focusableElems[0];
@@ -134,12 +134,12 @@ namespace OSUIFramework.Patterns.Sidebar {
 		private _setInitialCssClasses(): void {
 			// Set IsOpen class
 			if (this._isOpen) {
-				Helper.Style.AddClass(this._selfElem, Enum.SidebarCssClass.IsOpen);
+				Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsOpen);
 			}
 
 			// Set the direction class
 			if (this._direction !== '') {
-				Helper.Style.AddClass(this._selfElem, Enum.SidebarCssClass.Direction + this._configs.Direction);
+				Helper.Style.AddClass(this._selfElem, Enum.CssClass.Direction + this._configs.Direction);
 			}
 
 			if (this._width !== '') {
@@ -148,7 +148,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 			// Set the overlay class
 			if (this._hasOverlay) {
-				Helper.Style.AddClass(this._selfElem, Enum.SidebarCssClass.HasOverlay);
+				Helper.Style.AddClass(this._selfElem, Enum.CssClass.HasOverlay);
 			}
 		}
 
@@ -388,27 +388,27 @@ namespace OSUIFramework.Patterns.Sidebar {
 		public setDirection(direction: string): void {
 			// Reset direction class
 			if (this._direction !== '') {
-				Helper.Style.RemoveClass(this._selfElem, Enum.SidebarCssClass.Direction + this._configs.Direction);
+				Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.Direction + this._configs.Direction);
 			}
 
-			Helper.Style.AddClass(this._selfElem, Enum.SidebarCssClass.Direction + direction);
+			Helper.Style.AddClass(this._selfElem, Enum.CssClass.Direction + direction);
 			this._direction = direction;
 			this._configs.Direction = direction;
 		}
 
 		// Toggle the Sidebar overlay
 		public setHasOverlay(hasOverlay: boolean): void {
-			const alreadyHasOverlayClass = Helper.Style.ContainsClass(this._selfElem, Enum.SidebarCssClass.HasOverlay);
+			const alreadyHasOverlayClass = Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.HasOverlay);
 
 			if (hasOverlay && !alreadyHasOverlayClass) {
-				Helper.Style.AddClass(this._selfElem, Enum.SidebarCssClass.HasOverlay);
+				Helper.Style.AddClass(this._selfElem, Enum.CssClass.HasOverlay);
 			} else {
-				Helper.Style.RemoveClass(this._selfElem, Enum.SidebarCssClass.HasOverlay);
+				Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.HasOverlay);
 			}
 
 			// Make async so that the platform updates the DIV visibility on the DOM
 			setTimeout(() => {
-				this._sidebarOverlayElem = this._selfElem.querySelector('.' + Enum.SidebarCssClass.Overlay);
+				this._sidebarOverlayElem = this._selfElem.querySelector('.' + Enum.CssClass.Overlay);
 				this._handleOverlayClick(hasOverlay);
 			}, 0);
 
@@ -431,8 +431,8 @@ namespace OSUIFramework.Patterns.Sidebar {
 		public toggleSidebar(isOpen: boolean): any {
 			// Toggle event listeners missing
 			isOpen
-				? Helper.Style.AddClass(this._selfElem, Enum.SidebarCssClass.IsOpen)
-				: Helper.Style.RemoveClass(this._selfElem, Enum.SidebarCssClass.IsOpen);
+				? Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsOpen)
+				: Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.IsOpen);
 
 			// Set necessary accesibility attributes
 			this._setAccessibilityProps(isOpen);

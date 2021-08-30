@@ -11,7 +11,7 @@ namespace OSUIFramework.Patterns.Sidebar.Enum {
 		HasOverlay = 'HasOverlay',
 	}
 
-	export enum SidebarCssClass {
+	export enum CssClass {
 		Aside = 'osui-sidebar_aside',
 		Header = 'osui-sidebar_header',
 		Content = 'osui-sidebar_content',
