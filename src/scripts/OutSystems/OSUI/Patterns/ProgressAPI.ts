@@ -97,7 +97,7 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	export function Initialize(progressId: string): OSUIFramework.Patterns.Progress.IProgress {
 		const _progressItem = GetProgressItemById(progressId);
 
-		// _progressItem.build();
+		_progressItem.build();
 
 		return _progressItem;
 	}

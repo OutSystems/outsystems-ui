@@ -7,5 +7,18 @@ namespace OSUIFramework.Patterns.Progress {
 
 			console.log(`AbstractProgress Constructor - '${uniqueId}'`);
 		}
+
+		// set default Accessibility properties
+		public setAccessibilityProps(): void {
+			Helper.Attribute.Set(this._selfElem, 'tabindex', '0');
+			Helper.Attribute.Set(this._selfElem, 'role', 'progressbar');
+			Helper.Attribute.Set(this._selfElem, 'aria-valuemin', '0');
+			Helper.Attribute.Set(this._selfElem, 'aria-valuemax', '100');
+		}
+
+		// update value now Accessibility property
+		public updateValueNow(progressValue: string): void {
+			Helper.Attribute.Set(this._selfElem, 'aria-valuenow', progressValue);
+		}
 	}
 }
