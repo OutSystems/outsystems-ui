@@ -8,17 +8,25 @@ namespace OSUIFramework.Patterns.Progress.Circle.Enum {
 		ExtendedClass = 'ExtendedClass',
 		Progress = 'Progress',
 		ProgressColor = 'ProgressColor',
-		ProgressType = 'ProgressType',
-		TextColor = 'TextColor',
 		TrailColor = 'TrailColor',
 	}
 
 	/**
-	 * Tooltip Enum Css Classes
+	 * ProgressCircle Enum CssClasses
 	 */
 	export enum CssClass {
 		Container = 'osui-progress-circle',
-		Trail = 'osui-progress-circle--trail',
 		Progress = 'osui-progress-circle--progress',
+		TextContainer = 'osui-progress-circle-text',
+		Trail = 'osui-progress-circle--trail',
+	}
+
+	/**
+	 * ProgressCircle Enum Inline Style Attributes
+	 */
+	export enum InlineStyleProp {
+		CircleThickness = '--circle-thickness',
+		ProgressColor = '--progress-color',
+		TrailColor = '--trail-color',
 	}
 }
