@@ -302,12 +302,12 @@ namespace OSUIFramework.Patterns.Sidebar {
 			const sizeThreshold = -parseInt(this._width) / 2;
 
 			// Define a interval for later checks, depending on Sidebar visibility
-			const swipeInterval = this._isOpen
-				? this._nativeGesturesParams.MoveX > sizeThreshold
-				: this._nativeGesturesParams.MoveX < sizeThreshold;
+			const swipedHalfWidth = this._isOpen
+				? this._nativeGesturesParams.MoveX < sizeThreshold
+				: this._nativeGesturesParams.MoveX > sizeThreshold;
 
-			// If swipe was fast enough or with sufficient move, procede to toggleidebar
-			const isReadyToToggle = swipeInterval || checkSwipeSpeed;
+			// If swipe was fast enough or with sufficient move, procede to toggleSidebar
+			const isReadyToToggle = swipedHalfWidth || checkSwipeSpeed;
 
 			this._sidebarAsideElem.style.transform = '';
 
