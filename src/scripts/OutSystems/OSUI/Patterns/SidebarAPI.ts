@@ -53,7 +53,7 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * @return {*}  {Array<string>}
 	 */
 	export function GetAllSidebars(): Array<string> {
-		return Array.from(_sidebarMap.keys());
+		return OSUIFramework.Helper.MapOperation.ExportKeys(_sidebarMap);
 	}
 
 	/**
@@ -64,26 +64,11 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * @return {*}  {OSUIFramework.Patterns.Sidebar.ISidebar}
 	 */
 	export function GetSidebarById(sidebarId: string): OSUIFramework.Patterns.Sidebar.ISidebar {
-		let sidebar: OSUIFramework.Patterns.Sidebar.ISidebar;
-
-		//sidebarId is the UniqueId
-		if (_sidebarMap.has(sidebarId)) {
-			sidebar = _sidebarMap.get(sidebarId);
-		} else {
-			//Search for sidebarId
-			for (const p of _sidebarMap.values()) {
-				if (p.equalsToID(sidebarId)) {
-					sidebar = p;
-					break;
-				}
-			}
-		}
-
-		if (sidebar === undefined) {
-			throw new Error(`Sidebar id:${sidebarId} not found`);
-		}
-
-		return sidebar;
+		return OSUIFramework.Helper.MapOperation.FindInMap(
+			'Sidebar',
+			sidebarId,
+			_sidebarMap
+		) as OSUIFramework.Patterns.Sidebar.ISidebar;
 	}
 
 	/**
