@@ -1,5 +1,25 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Constants {
+	/**
+	 * OutSystemsUI Accessibility attribues
+	 */
+	export const AccessibilityAttribute = {
+		Aria: {
+			Describedby: 'describedby',
+			Labelledby: 'labelledby',
+			ValueMax: 'valuemax',
+			ValueMin: 'valuemin',
+		},
+		Role: {
+			AttrName: 'role',
+			Progressbar: 'progressbar',
+			Search: 'search',
+			Tooltip: 'tooltip',
+		},
+		TabIndex: 'tabindex',
+	};
+
+	/* Used to concatenate when querySelector for a class */
 	export const Dot = '.';
 
 	/* Manage if the log messages are visible or not  */

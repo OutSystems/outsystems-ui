@@ -122,10 +122,25 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// Add the Accessibility Attributes values
 		private _setAccessibilityProps(): void {
-			Helper.Attribute.Set(this._tooltipContentElem, 'role', 'tooltip');
-			Helper.Attribute.Set(this._tooltipContentElem, 'tabindex', '0');
-			Helper.Attribute.Set(this._tooltipContentElem, 'aria-describedby', this._tooltipBallonWrapperId);
-			Helper.Attribute.Set(this._tooltipContentElem, 'aria-labelledby', this._tooltipBallonWrapperId);
+			Helper.Attribute.Set(
+				this._tooltipContentElem,
+				Constants.AccessibilityAttribute.Role.AttrName,
+				Constants.AccessibilityAttribute.Role.Tooltip
+			);
+
+			Helper.Attribute.Set(this._tooltipContentElem, Constants.AccessibilityAttribute.TabIndex, '0');
+
+			Helper.Attribute.Set(
+				this._tooltipContentElem,
+				Constants.AccessibilityAttribute.Aria.Describedby,
+				this._tooltipBallonWrapperId
+			);
+
+			Helper.Attribute.Set(
+				this._tooltipContentElem,
+				Constants.AccessibilityAttribute.Aria.Labelledby,
+				this._tooltipBallonWrapperId
+			);
 		}
 
 		// Update info based on htmlContent
