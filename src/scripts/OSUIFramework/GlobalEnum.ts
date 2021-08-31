@@ -44,6 +44,7 @@ namespace OSUIFramework.GlobalEnum {
 		Blur = 'blur',
 		Click = 'click',
 		Focus = 'focus',
+		keyDown = 'keydown',
 		TouchEnd = 'touchend',
 		TouchMove = 'touchmove',
 		TouchStart = 'touchstart',

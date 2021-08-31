@@ -87,18 +87,18 @@ namespace OSUIFramework.Patterns.Sidebar {
 		// Manage the aside keypress event
 		private _handleKeypressEvent(): void {
 			if (this._isOpen) {
-				this._sidebarAsideElem.addEventListener('keydown', this._eventOnSidebarKeypress);
+				this._sidebarAsideElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnSidebarKeypress);
 			} else {
-				this._sidebarAsideElem.removeEventListener('keydown', this._eventOnSidebarKeypress);
+				this._sidebarAsideElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnSidebarKeypress);
 			}
 		}
 
 		// Manage the Overlay click event
 		private _handleOverlayClick(hasOverlay: boolean): void {
 			if (hasOverlay) {
-				this._sidebarOverlayElem.addEventListener('click', this._eventOnOverlayClick);
+				this._sidebarOverlayElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnOverlayClick);
 			} else if (!this._isOpen && this._sidebarOverlayElem) {
-				this._sidebarOverlayElem.removeEventListener('click', this._eventOnOverlayClick);
+				this._sidebarOverlayElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnOverlayClick);
 			}
 		}
 
@@ -273,6 +273,14 @@ namespace OSUIFramework.Patterns.Sidebar {
 			} else {
 				throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
 			}
+		}
+
+		// Method to remove event listener and destroy sidebar instance
+		public dispose(): void {
+			super.dispose();
+
+			this._sidebarAsideElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnOverlayClick);
+			this._sidebarAsideElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnSidebarKeypress);
 		}
 
 		// Method to handle the start of a gesture
