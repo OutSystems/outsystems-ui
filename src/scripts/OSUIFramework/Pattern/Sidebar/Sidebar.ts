@@ -243,35 +243,31 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
-			if (Enum.Properties[propertyName] && this._configs.hasOwnProperty(propertyName)) {
-				// Check which property changed and call respective method to update it
-				switch (propertyName) {
-					case Enum.Properties.IsOpen:
-						this.toggleSidebar(propertyValue);
+			// Check which property changed and call respective method to update it
+			switch (propertyName) {
+				case Enum.Properties.IsOpen:
+					this.toggleSidebar(propertyValue);
 
-						this._configs.IsOpen = propertyValue;
-						break;
-					case Enum.Properties.Direction:
-						this.setDirection(propertyValue);
+					this._configs.IsOpen = propertyValue;
+					break;
+				case Enum.Properties.Direction:
+					this.setDirection(propertyValue);
 
-						this._configs.Direction = propertyValue;
-						break;
-					case Enum.Properties.Width:
-						this.setWidth(propertyValue);
+					this._configs.Direction = propertyValue;
+					break;
+				case Enum.Properties.Width:
+					this.setWidth(propertyValue);
 
-						this._configs.Width = propertyValue;
-						break;
-					case Enum.Properties.HasOverlay:
-						this.setHasOverlay(propertyValue);
+					this._configs.Width = propertyValue;
+					break;
+				case Enum.Properties.HasOverlay:
+					this.setHasOverlay(propertyValue);
 
-						this._hasOverlay = propertyValue;
-						break;
-					default:
-						super.changeProperty(propertyName, propertyValue);
-						break;
-				}
-			} else {
-				throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
+					this._hasOverlay = propertyValue;
+					break;
+				default:
+					super.changeProperty(propertyName, propertyValue);
+					break;
 			}
 		}
 
@@ -438,9 +434,11 @@ namespace OSUIFramework.Patterns.Sidebar {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public toggleSidebar(isOpen: boolean): any {
 			// Toggle event listeners missing
-			isOpen
-				? Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsOpen)
-				: Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.IsOpen);
+			if (isOpen) {
+				Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsOpen);
+			} else {
+				Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.IsOpen);
+			}
 
 			// Set necessary accesibility attributes
 			this._setAccessibilityProps(isOpen);

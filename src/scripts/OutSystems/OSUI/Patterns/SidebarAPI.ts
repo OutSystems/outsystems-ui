@@ -1,14 +1,21 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	const _sidebarMap = new Map<string, OSUIFramework.Patterns.Sidebar.ISidebar>();
-
-	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
+	/**
+	 * Function that will change the property of a given Sidebar.
+	 *
+	 * @export
+	 * @param {string} sidebarId
+	 * @param {string} propertyName
+	 * @param {*} propertyValue
+	 */
 	export function ChangeProperty(sidebarId: string, propertyName: string, propertyValue: any): void {
 		const sidebar = GetSidebarById(sidebarId);
 		sidebar.changeProperty(propertyName, propertyValue);
 	}
+
 	/**
-	 *
+	 * Create the new Sidebar instance and add it to the sidebarsMap
 	 *
 	 * @export
 	 * @param {string} sidebarId
@@ -24,8 +31,9 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 		_sidebarMap.set(sidebarId, _newSidebar);
 		return _newSidebar;
 	}
+
 	/**
-	 *
+	 * Function that will destroy the instance of the given Sidebar
 	 *
 	 * @export
 	 * @param {string} sidebarId
@@ -37,8 +45,9 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 
 		_sidebarMap.delete(sidebarId);
 	}
+
 	/**
-	 *
+	 * Fucntion that will return the Map with all the Sidebar instances at the page
 	 *
 	 * @export
 	 * @return {*}  {Array<string>}
@@ -46,8 +55,9 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	export function GetAllSidebars(): Array<string> {
 		return Array.from(_sidebarMap.keys());
 	}
+
 	/**
-	 *
+	 * Function that gets the instance of Sidebar, by a given ID.
 	 *
 	 * @export
 	 * @param {string} sidebarId
@@ -75,8 +85,9 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 
 		return sidebar;
 	}
+
 	/**
-	 *
+	 * Function that will initialize the pattern instance.
 	 *
 	 * @export
 	 * @param {string} sidebarId
@@ -91,7 +102,7 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	}
 
 	/**
-	 *
+	 * Function that will register a pattern callback.
 	 *
 	 * @export
 	 * @param {string} sidebarId

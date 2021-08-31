@@ -4,7 +4,6 @@ namespace OSUIFramework.Patterns.Sidebar.Enum {
 	 * Sidebar Enum properties
 	 */
 	export enum Properties {
-		ExtendedClass = 'ExtendedClass',
 		IsOpen = 'IsOpen',
 		Direction = 'Direction',
 		Width = 'Width',
