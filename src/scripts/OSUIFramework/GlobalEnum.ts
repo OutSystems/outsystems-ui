@@ -8,15 +8,6 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
-	 * OutSystemsUI Shape Types
-	 */
-	export enum ShapeTypes {
-		Rounded = 'rounded',
-		Sharp = 'none',
-		SoftRounded = 'soft',
-	}
-
-	/**
 	 * OutSystemsUI Data Blocks attribute values
 	 */
 	export enum DataBlocksTag {
@@ -27,18 +18,11 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
-	 * OutSystemsUI position cssClasses
+	 * OutSystemsUI HTML Elements
 	 */
-	export enum OSUICssClassPosition {
-		Bottom = 'bottom',
-		BottomLeft = 'bottom-left',
-		BottomRight = 'bottom-right',
-		Center = 'center',
-		Left = 'left',
-		Right = 'right',
-		Top = 'top',
-		TopLeft = 'top-left',
-		TopRight = 'top-right',
+	export enum HTMLElement {
+		FieldSet = 'fieldset',
+		Input = 'input',
 	}
 
 	/**
@@ -57,10 +41,26 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
-	 * OutSystemsUI HTML Elements
+	 * OutSystemsUI position cssClasses
 	 */
-	export enum HTMLElement {
-		FieldSet = 'fieldset',
-		Input = 'input',
+	export enum OSUICssClassPosition {
+		Bottom = 'bottom',
+		BottomLeft = 'bottom-left',
+		BottomRight = 'bottom-right',
+		Center = 'center',
+		Left = 'left',
+		Right = 'right',
+		Top = 'top',
+		TopLeft = 'top-left',
+		TopRight = 'top-right',
+	}
+
+	/**
+	 * OutSystemsUI Shape Types
+	 */
+	export enum ShapeTypes {
+		Rounded = 'rounded',
+		Sharp = 'none',
+		SoftRounded = 'soft',
 	}
 }
