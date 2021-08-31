@@ -66,10 +66,7 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
-	 *
-	 *
-	 * @export
-	 * @enum {number}
+	 * OutSystemsUI Orientation options
 	 */
 	export enum Orientation {
 		Horizontal = 'horizontal',
@@ -77,10 +74,7 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
-	 *
-	 *
-	 * @export
-	 * @enum {number}
+	 * OutSystemsUI Direction options
 	 */
 	export enum Direction {
 		Left = 'left',
@@ -88,16 +82,13 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
-	 *
-	 *
-	 * @export
-	 * @enum {number}
+	 * OutSystemsUI event Keycodes
 	 */
 	export enum Keycodes {
-		Tab = 'Tab',
 		Escape = 'Escape',
 		Enter = 'Enter',
-		Space = ' ',
+		Tab = 'Tab',
 		Shift = 'Shift',
+		Space = ' ',
 	}
 }

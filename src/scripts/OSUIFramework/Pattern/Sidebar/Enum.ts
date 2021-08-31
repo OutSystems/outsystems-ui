@@ -10,16 +10,23 @@ namespace OSUIFramework.Patterns.Sidebar.Enum {
 		HasOverlay = 'HasOverlay',
 	}
 
+	/**
+	 * Sidebar Enum for CSS Classes
+	 */
+
 	export enum CssClass {
 		Aside = 'osui-sidebar_aside',
-		Header = 'osui-sidebar_header',
 		Content = 'osui-sidebar_content',
-		Overlay = 'osui-sidebar_overlay',
-		IsOpen = 'is-open',
 		Direction = 'is-',
 		HasOverlay = 'has-overlay',
+		Header = 'osui-sidebar_header',
+		IsOpen = 'is-open',
+		Overlay = 'osui-sidebar_overlay',
 	}
 
+	/**
+	 * Sidebar Enum for CSS Custom Properties
+	 */
 	export enum CssProperty {
 		Width = '--sidebar-width',
 	}
