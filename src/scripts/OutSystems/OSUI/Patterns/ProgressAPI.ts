@@ -63,7 +63,7 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	}
 
 	/**
-	 * Fucntion that will return the Map with all the Animatedlabels instances at the page
+	 * Fucntion that will return the Map with all the Progress instances at the page
 	 *
 	 * @export
 	 * @return {*}  Array<string>
@@ -73,10 +73,10 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	}
 
 	/**
-	 * Function that gets the instance of AnimatedLabel, by a given ID.
+	 * Function that gets the instance of Progress, by a given ID.
 	 *
 	 * @export
-	 * @param {string} progressId ID of the AnimatedLabel that will be looked for.
+	 * @param {string} progressId ID of the Progress that will be looked for.
 	 * @return {*}  {OSUIFramework.Patterns.Progress.IProgress;}
 	 */
 	export function GetProgressItemById(progressId: string): OSUIFramework.Patterns.Progress.IProgress {
