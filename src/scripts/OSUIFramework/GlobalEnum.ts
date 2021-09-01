@@ -34,6 +34,7 @@ namespace OSUIFramework.GlobalEnum {
 		Blur = 'blur',
 		Click = 'click',
 		Focus = 'focus',
+		keyDown = 'keydown',
 		TouchEnd = 'touchend',
 		TouchMove = 'touchmove',
 		TouchStart = 'touchstart',
@@ -62,5 +63,32 @@ namespace OSUIFramework.GlobalEnum {
 		Rounded = 'rounded',
 		Sharp = 'none',
 		SoftRounded = 'soft',
+	}
+
+	/**
+	 * OutSystemsUI Orientation options
+	 */
+	export enum Orientation {
+		Horizontal = 'horizontal',
+		Vertical = 'vertical',
+	}
+
+	/**
+	 * OutSystemsUI Direction options
+	 */
+	export enum Direction {
+		Left = 'left',
+		Right = 'right',
+	}
+
+	/**
+	 * OutSystemsUI event Keycodes
+	 */
+	export enum Keycodes {
+		Escape = 'Escape',
+		Enter = 'Enter',
+		Tab = 'Tab',
+		Shift = 'Shift',
+		Space = ' ',
 	}
 }

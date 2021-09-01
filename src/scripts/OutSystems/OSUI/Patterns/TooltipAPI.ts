@@ -18,7 +18,7 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	}
 
 	/**
-	 * Fucntion that will close a given tooltip.
+	 * Function that will close a given tooltip.
 	 *
 	 * @export
 	 * @param {string} tooltipId ID of the tooltip that will be closed
