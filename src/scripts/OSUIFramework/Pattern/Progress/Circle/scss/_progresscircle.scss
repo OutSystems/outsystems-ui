@@ -3,4 +3,71 @@
 /// @group Patterns-ProgressCircle
 /// Patterns - Content - ProgressCircle
 
-//Implement you code here
+///
+.osui-progress-circle {
+	display: inline-block;
+	height: 100%;
+	position: relative;
+	width: 100%;
+
+	.osui-progress {
+		&-container {
+			height: inherit;
+			position: relative;
+			width: inherit;
+			z-index: 0;
+		}
+
+		&-text {
+			left: 50%;
+			position: absolute;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			z-index: 1;
+		}
+	}
+
+	.svg-wrapper {
+		display: inline-flex;
+		position: relative;
+		width: 100%;
+
+		svg {
+			height: 100%;
+			width: 100%;
+		}
+	}
+
+	.osui-progress {
+		&--progress-path,
+		&--trail-path {
+			cx: 50%;
+			cy: 50%;
+			r: calc(50% - var(--circle-r));
+			stroke-width: var(--circle-thickness);
+			transform: rotate(-90deg) translateZ(0);
+			transform-origin: center;
+		}
+
+		&--progress-path {
+			height: 100%;
+			left: 0;
+			position: absolute;
+			stroke: var(--progress-color);
+			stroke-dasharray: var(--stroke-dasharray);
+			stroke-dashoffset: var(--stroke-dashoffset);
+			stroke-linecap: var(--shape-style);
+			top: 0;
+			width: 100%;
+
+			&.animate-entrance {
+				transition: stroke-dashoffset 0.35s;
+				transition-delay: 0.5s;
+			}
+		}
+
+		&--trail-path {
+			stroke: var(--trail-color);
+		}
+	}
+}
