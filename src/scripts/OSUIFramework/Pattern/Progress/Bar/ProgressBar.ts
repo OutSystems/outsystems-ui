@@ -8,9 +8,7 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 		private _eventAnimateEntranceEnd: any;
 
 		// Store the htmlElements
-		private _contentElem: HTMLElement;
 		private _progressElem: HTMLElement;
-		private _trailElem: HTMLElement;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
@@ -21,7 +19,7 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 
 		// remove the added transitionEnd event and the cssClass added at the beginning
 		private _animateEntranceEnd(): void {
-			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._animateEntranceEnd);
+			this._progressElem.removeEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._animateEntranceEnd);
 
 			Helper.Style.RemoveClass(this._progressElem, ProgressEnum.CssClass.AddInitialAnimation);
 		}
@@ -38,8 +36,6 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 		private _setHtmlElements(): void {
 			// Set the html references that will be used to manage the cssClasses and atribute properties
 			this._progressElem = this._selfElem.querySelector(Constants.Dot + ProgressEnum.CssClass.Container);
-			this._contentElem = this._selfElem.querySelector(Constants.Dot + ProgressEnum.CssClass.Content);
-			this._trailElem = this._selfElem.querySelector(Constants.Dot + ProgressEnum.CssClass.Trail);
 		}
 
 		// Update the valuenow accessibility property
@@ -53,7 +49,7 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 			if (this._configs.AnimateInitialProgress) {
 				Helper.Style.AddClass(this._progressElem, ProgressEnum.CssClass.AddInitialAnimation);
 
-				this._selfElem.addEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._animateEntranceEnd);
+				this._progressElem.addEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._animateEntranceEnd);
 			}
 
 			this._updateProgressValue();
@@ -86,7 +82,7 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 					break;
 
 				case ProgressEnum.Properties.Progress:
-					this._configs.Progress = propertyValue;
+					this._configs.Progress = propertyValue > 100 ? 100 : propertyValue;
 
 					this._updateProgressValue();
 
