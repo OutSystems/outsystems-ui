@@ -42,6 +42,16 @@ namespace OSUIFramework.Helper.Style {
 	}
 
 	/**
+	 * Method used to get the border radius value based on shape entity
+	 *
+	 * @param shapeName
+	 * @returns
+	 */
+	export function GetBorderRadiusValueFromShapeType(shapeName: string): string {
+		return getComputedStyle(document.documentElement).getPropertyValue('--border-radius-' + shapeName);
+	}
+
+	/**
 	 * Method that will look for a cssClass Position on a given element
 	 *
 	 * @param elem elem Element where the cssClass will be looked for
