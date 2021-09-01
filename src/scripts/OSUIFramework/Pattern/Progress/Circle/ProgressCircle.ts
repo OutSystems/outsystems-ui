@@ -6,36 +6,50 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		// Store the circunference circle value
 		private _circleCircumference: number;
 
-		// Store the htmlElements
-		private _progressCircleContainerElem: HTMLElement;
+		// Store the events
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		private _eventAnimateEntranceEnd: any;
+
+		// Store the htmlElement
 		private _progressSvgElem: HTMLElement;
 
 		// Store values to be assigned to the circle
 		private _strokeDasharray: number;
 		private _strokeDashoffset: number;
 
-		// Store the htmlElements
-		private _textContainerElem: HTMLElement;
-		private _trailSvgElem: HTMLElement;
-
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new ProgressCircleConfig(configs));
+
+			this._eventAnimateEntranceEnd = this._animateEntranceEnd.bind(this);
 		}
 
-		// Convert progress value into offset to assign into our circle
+		// remove the added transitionEnd event and the cssClass added at the beginning
+		private _animateEntranceEnd(): void {
+			this._progressSvgElem.removeEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._animateEntranceEnd);
+
+			Helper.Style.RemoveClass(this._progressSvgElem, ProgressEnum.CssClass.AddInitialAnimation);
+
+			Helper.Style.AddClass(this._selfElem, ProgressEnum.CssClass.IsFullLoaded);
+		}
+
+		// Convert progress value into offset to assign to our circle
 		private _progressToOffset(): void {
-			const radius = Math.floor(parseInt(window.getComputedStyle(this._selfElem).height) / 2);
+			const radius = Math.floor(this._selfElem.clientHeight / 2 - this._configs.CircleThickness / 2);
 			this._circleCircumference = radius * 2 * Math.PI;
 
 			// set the base values
 			this._strokeDashoffset = this._strokeDasharray = this._circleCircumference;
 
 			// Set the css variables that will be used at ProgressCircle
-			Helper.Style.SetStyleAttribute(this._selfElem, '--stroke-dasharray', this._strokeDasharray);
-			Helper.Style.SetStyleAttribute(this._selfElem, '--stroke-dashoffset', this._strokeDashoffset);
+			Helper.Style.SetStyleAttribute(this._selfElem, Enum.InlineStyleProp.StrokeDasharray, this._strokeDasharray);
+			Helper.Style.SetStyleAttribute(
+				this._selfElem,
+				Enum.InlineStyleProp.StrokeDashoffset,
+				this._strokeDashoffset
+			);
 
-			// Ensure that this will run only at the Initialize
+			// Ensure that this will run only at the Initialization
 			if (!this.isBuilt) {
 				// Make async to ensure that all the css variables are assigned
 				setTimeout(() => {
@@ -44,6 +58,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 						Helper.Style.AddClass(this._progressSvgElem, ProgressEnum.CssClass.AddInitialAnimation);
 					}
 
+					// Update according initial style
 					this.addInitialAnimation();
 				}, 0);
 			}
@@ -55,29 +70,16 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			this.changeProperty(Enum.Properties.ProgressColor, this._configs.ProgressColor);
 			this.changeProperty(Enum.Properties.Shape, this._configs.Shape);
 			this.changeProperty(Enum.Properties.TrailColor, this._configs.TrailColor);
-
-			// Set an inline css variable that will be used to proper calculate the circle radius
-			Helper.Style.SetStyleAttribute(
-				this._selfElem,
-				Enum.InlineStyleProp.CircleRadius,
-				Math.ceil(this._configs.CircleThickness / 2) + 'px'
-			);
 		}
 
 		// Update info based on htmlContent
 		private _setHtmlElements(): void {
-			// Set the html references that will be used to manage the cssClasses and atribute properties
-			this._progressCircleContainerElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Container);
+			// Set the html reference that will be used to do all the needed calcs
 			this._progressSvgElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Progress);
-			this._textContainerElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.TextContainer);
-			this._trailSvgElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Trail);
 		}
 
 		// Update the valuenow accessibility property
 		private _updateProgressValue(): void {
-			// Update inline attributes based on new Progress value
-			this.updateValueNow(this._configs.Progress.toString());
-
 			// Force Progress value to be 0 when receive negative values
 			if (this._configs.Progress < 0) {
 				this._configs.Progress = 0;
@@ -88,22 +90,41 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 				this._configs.Progress = 100;
 			}
 
+			// Update inline attributes based on new Progress value
+			this.updateValueNow(this._configs.Progress.toString());
+
 			// Update the offset value
 			this._strokeDashoffset =
 				this._circleCircumference - (this._configs.Progress / 100) * this._circleCircumference;
 
-			Helper.Style.SetStyleAttribute(this._selfElem, '--stroke-dashoffset', this._strokeDashoffset);
-
-			console.log('PS: Add a is-full-loaded class');
+			Helper.Style.SetStyleAttribute(
+				this._selfElem,
+				Enum.InlineStyleProp.StrokeDashoffset,
+				this._strokeDashoffset
+			);
 		}
 
 		// Add the initial animation to the pattern if it's applicable
 		protected addInitialAnimation(): void {
-			this._updateProgressValue();
+			// Check if the animation at init should be added
+			if (this._configs.AnimateInitialProgress) {
+				// Do the initial animation
+				Helper.Style.AddClass(this._progressSvgElem, ProgressEnum.CssClass.AddInitialAnimation);
 
-			console.log(
-				'PS: Add the transitionEnd event and after that add the is-full-loaded css Class in order to add transition animation into the item, the animate-entrance must be removed also!'
-			);
+				// Add the event to remove the cssClass responsible to add the initial animation
+				this._progressSvgElem.addEventListener(
+					GlobalEnum.HTMLEvent.TransitionEnd,
+					this._eventAnimateEntranceEnd
+				);
+			} else {
+				// Make async to ensure that svg has been place in right position based on the calcs
+				setTimeout(() => {
+					Helper.Style.AddClass(this._selfElem, ProgressEnum.CssClass.IsFullLoaded);
+				}, 5);
+			}
+
+			// Set the progressValue into the element
+			this._updateProgressValue();
 		}
 
 		public build(): void {
@@ -117,7 +138,6 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 
 			this.finishBuild();
 
-			console.log('PS: Missing Destroy!');
 			console.log('PS: Add resizeEvent in order to update the circle values if they changed!');
 		}
 
@@ -127,7 +147,15 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 				case Enum.Properties.CircleThickness:
 					this._configs.CircleThickness = propertyValue;
 
-					Helper.Style.SetStyleAttribute(this._selfElem, Enum.InlineStyleProp.CircleThickness, propertyValue);
+					this._progressToOffset();
+
+					this._updateProgressValue();
+
+					Helper.Style.SetStyleAttribute(
+						this._selfElem,
+						Enum.InlineStyleProp.CircleThickness,
+						propertyValue + 'px'
+					);
 
 					break;
 
@@ -177,6 +205,11 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 					super.changeProperty(propertyName, propertyValue);
 					break;
 			}
+		}
+
+		// Destroy the ProgressCircle
+		public dispose(): void {
+			super.dispose();
 		}
 	}
 }

@@ -5,6 +5,7 @@ namespace OSUIFramework.Patterns.Progress.ProgressEnum {
 	 */
 	export enum CssClass {
 		AddInitialAnimation = 'animate-entrance',
+		IsFullLoaded = 'is-full-loaded',
 	}
 
 	/**
