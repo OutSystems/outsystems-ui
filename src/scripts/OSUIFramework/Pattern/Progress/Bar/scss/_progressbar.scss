@@ -8,11 +8,19 @@
 	&-bar {
 		min-height: var(--thickness);
 		position: relative;
+
+		& {
+			-servicestudio-min-height: 16px;
+		}
 	}
 
 	&-container {
 		min-height: var(--thickness);
 		position: relative;
+
+		& {
+			-servicestudio-min-height: 16px;
+		}
 
 		&.animate-entrance .osui-progress-value:before {
 			transition-delay: 0.5s;
@@ -26,6 +34,10 @@
 		position: absolute;
 		right: 0;
 
+		& {
+			-servicestudio-height: 16px;
+		}
+
 		&:after,
 		&:before {
 			border-radius: var(--shape);
@@ -34,22 +46,36 @@
 			left: 0;
 			position: absolute;
 			top: 0;
+
+			& {
+				-servicestudio-border-radius: var(--border-radius-rounded);
+			}
 		}
 
 		&:after {
 			background: var(--trail-color);
 			width: 100%;
+
+			& {
+				-servicestudio-background: var(--color-neutral-3);
+			}
 		}
 
 		&:before {
 			background: var(--progress-color);
 			width: var(--progress-value);
 			z-index: 1;
+
+			& {
+				-servicestudio-background: var(--color-primary);
+				-servicestudio-width: 75%;
+			}
 		}
 	}
 
 	&-content {
 		left: 0;
+		padding: var(--space-none) var(--space-s);
 		position: absolute;
 		top: 50%;
 		transform: translateY(-50%);

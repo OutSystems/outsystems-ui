@@ -7,8 +7,6 @@ namespace OSUIFramework.Patterns.Progress {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
-
-			console.log(`AbstractProgress Constructor - '${uniqueId}'`);
 		}
 
 		// Set default Accessibility properties
