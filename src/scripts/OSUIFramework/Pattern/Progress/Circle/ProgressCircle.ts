@@ -9,19 +9,32 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		// Store the events
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventAnimateEntranceEnd: any;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		private _eventWindowFocus: any;
 
 		// Store the htmlElement
 		private _progressSvgElem: HTMLElement;
+		private _trailSvgElem: HTMLElement;
 
 		// Store values to be assigned to the circle
 		private _strokeDasharray: number;
 		private _strokeDashoffset: number;
+
+		// ResizeOberver
+		private _myObserver: ResizeObserver;
+		private _eventResizeOberver: any;
+		// private _updateCircleCalcs = 0;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new ProgressCircleConfig(configs));
 
 			this._eventAnimateEntranceEnd = this._animateEntranceEnd.bind(this);
+
+			this._eventWindowFocus = this._windowFocus.bind(this);
+
+			// ResizeOberver
+			this._eventResizeOberver = this._updateCircleProps.bind(this);
 		}
 
 		// remove the added transitionEnd event and the cssClass added at the beginning
@@ -29,6 +42,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			this._progressSvgElem.removeEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._animateEntranceEnd);
 
 			Helper.Style.RemoveClass(this._progressSvgElem, ProgressEnum.CssClass.AddInitialAnimation);
+			Helper.Style.RemoveClass(this._progressSvgElem, ProgressEnum.CssClass.AnimateProgressChange);
 
 			Helper.Style.AddClass(this._selfElem, ProgressEnum.CssClass.IsFullLoaded);
 		}
@@ -49,6 +63,9 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 				this._strokeDashoffset
 			);
 
+			Helper.Style.SetStyleAttribute(this._progressSvgElem, 'r', radius);
+			Helper.Style.SetStyleAttribute(this._trailSvgElem, 'r', radius);
+
 			// Ensure that this will run only at the Initialization
 			if (!this.isBuilt) {
 				// Make async to ensure that all the css variables are assigned
@@ -66,16 +83,38 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 
 		// Set the default inline css variables
 		private _setCssVariables(): void {
-			this.changeProperty(Enum.Properties.CircleThickness, this._configs.CircleThickness);
-			this.changeProperty(Enum.Properties.ProgressColor, this._configs.ProgressColor);
-			this.changeProperty(Enum.Properties.Shape, this._configs.Shape);
-			this.changeProperty(Enum.Properties.TrailColor, this._configs.TrailColor);
+			Helper.Style.SetStyleAttribute(
+				this._selfElem,
+				Enum.InlineStyleProp.CircleThickness,
+				this._configs.CircleThickness + 'px'
+			);
+
+			Helper.Style.SetStyleAttribute(
+				this._selfElem,
+				Enum.InlineStyleProp.ProgressColor,
+				Helper.Style.GetColorValueFromColorType(this._configs.ProgressColor)
+			);
+
+			Helper.Style.SetStyleAttribute(
+				this._selfElem,
+				Enum.InlineStyleProp.Shape,
+				this._configs.Shape === GlobalEnum.ShapeTypes.Sharp
+					? ProgressEnum.SvgShapeTypes.Sharp
+					: ProgressEnum.SvgShapeTypes.Rounded
+			);
+
+			Helper.Style.SetStyleAttribute(
+				this._selfElem,
+				Enum.InlineStyleProp.TrailColor,
+				Helper.Style.GetColorValueFromColorType(this._configs.TrailColor)
+			);
 		}
 
 		// Update info based on htmlContent
 		private _setHtmlElements(): void {
 			// Set the html reference that will be used to do all the needed calcs
 			this._progressSvgElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Progress);
+			this._trailSvgElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Trail);
 		}
 
 		// Update the valuenow accessibility property
@@ -104,6 +143,19 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			);
 		}
 
+		// OberverCallback
+		private _updateCircleProps(): void {
+			this._progressToOffset();
+			this._updateProgressValue();
+		}
+
+		// Event triggerd when the window is focused that is used to update the Progress Circle if the window size has changed
+		private _windowFocus(): void {
+			setTimeout(() => {
+				this._updateCircleProps();
+			}, 500);
+		}
+
 		// Add the initial animation to the pattern if it's applicable
 		protected addInitialAnimation(): void {
 			// Check if the animation at init should be added
@@ -117,14 +169,15 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 					this._eventAnimateEntranceEnd
 				);
 			} else {
-				// Make async to ensure that svg has been place in right position based on the calcs
-				setTimeout(() => {
-					Helper.Style.AddClass(this._selfElem, ProgressEnum.CssClass.IsFullLoaded);
-				}, 5);
+				Helper.Style.AddClass(this._selfElem, ProgressEnum.CssClass.IsFullLoaded);
 			}
 
 			// Set the progressValue into the element
 			this._updateProgressValue();
+
+			// ResizeOberver
+			this._myObserver = new ResizeObserver(this._eventResizeOberver);
+			this._myObserver.observe(document.body);
 		}
 
 		public build(): void {
@@ -136,9 +189,9 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 
 			this._progressToOffset();
 
-			this.finishBuild();
+			window.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventWindowFocus);
 
-			console.log('PS: Add resizeEvent in order to update the circle values if they changed!');
+			this.finishBuild();
 		}
 
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
@@ -161,6 +214,15 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 
 				case Enum.Properties.Progress:
 					this._configs.Progress = propertyValue;
+
+					// Do the initial animation
+					Helper.Style.AddClass(this._progressSvgElem, ProgressEnum.CssClass.AnimateProgressChange);
+
+					// Add the event to remove the cssClass responsible to add the initial animation
+					this._progressSvgElem.addEventListener(
+						GlobalEnum.HTMLEvent.TransitionEnd,
+						this._eventAnimateEntranceEnd
+					);
 
 					this._updateProgressValue();
 
@@ -210,6 +272,11 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		// Destroy the ProgressCircle
 		public dispose(): void {
 			super.dispose();
+
+			window.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventWindowFocus);
+
+			// ResizeOberver
+			this._myObserver.disconnect();
 		}
 	}
 }

@@ -11,14 +11,6 @@
 	position: relative;
 	width: 100%;
 
-	&.is-full-loaded {
-		.osui-progress {
-			&-progress-path {
-				transition-duration: 0.35s;
-			}
-		}
-	}
-
 	.osui-progress {
 		&-container {
 			height: 100%;
@@ -75,9 +67,15 @@
 			transition: stroke-dashoffset 0;
 			width: 100%;
 
-			&.animate-entrance {
-				transition-delay: 0.5s;
-				transition-duration: 0.35s;
+			&.animate {
+				&-entrance,
+				&-progress-change {
+					transition-duration: 0.35s;
+				}
+
+				&-entrance {
+					transition-delay: 0.5s;
+				}
 			}
 		}
 

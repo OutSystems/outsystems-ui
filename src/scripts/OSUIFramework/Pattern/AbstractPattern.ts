@@ -4,7 +4,7 @@ namespace OSUIFramework.Patterns {
 	 * Defines the Default props and methods for OutSystemsUI Patterns
 	 */
 	export abstract class AbstractPattern<C extends AbstractConfiguration> implements Interface.IPattern {
-		private _isBuilt: boolean;
+		private _isBuilt = false;
 		private _uniqueId: string;
 		protected _configs: C;
 		protected _enableAccessibility: boolean;
