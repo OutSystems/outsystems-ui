@@ -43,6 +43,15 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 				console.log('Created new ProgressCircle instance!', _progressItemsMap);
 
 				break;
+
+			case Enum.Progress.Bar:
+				_progressItem = new OSUIFramework.Patterns.Progress.Bar.Bar(progressId, JSON.parse(configs));
+
+				_progressItemsMap.set(progressId, _progressItem);
+
+				console.log('Created new ProgressBar instance!', _progressItemsMap);
+
+				break;
 		}
 
 		return _progressItem;

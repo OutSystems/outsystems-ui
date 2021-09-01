@@ -4,15 +4,56 @@
 /// Patterns - Numbers - Progress Bar
 
 ///
-.osui-progress {
-	background-color: var(--color-primary);
-	transform-origin: left;
-	transition: all 750ms ease-out;
-	will-change: width;
+.osui-progress-bar {
+	min-height: var(--thickness);
+	position: relative;
+}
 
-	&-bar {
-		background-color: var(--color-neutral-3);
-		overflow: hidden;
-		position: relative;
-	}
+.osui-progress-container {
+	min-height: var(--thickness);
+	position: relative;
+}
+
+.osui-progress-value {
+	height: var(--thickness);
+	left: 0;
+	position: absolute;
+	right: 0;
+}
+
+.osui-progress-value:after {
+	background: var(--trail-color);
+	border-radius: var(--shape);
+	content: '';
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+.osui-progress-value:before {
+	background: var(--progress-color);
+	border-radius: var(--shape);
+	content: '';
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: var(--progress-value);
+	z-index: 1;
+}
+
+.is-rtl .osui-progress-value:before {
+	left: inherit;
+	right: 0;
+}
+
+.osui-progress-content {
+	left: 0;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 100%;
+	z-index: 2;
 }
