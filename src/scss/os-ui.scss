@@ -269,7 +269,7 @@
 @import '04-patterns/05-numbers/badge';
 @import '04-patterns/05-numbers/counter';
 @import '04-patterns/05-numbers/icon-badge';
-@import '04-patterns/05-numbers/progress-bar';
+@import '../scripts/OSUIFramework/Pattern/Progress/Bar/scss/progressbar';
 @import '04-patterns/05-numbers/progress-circle';
 @import '04-patterns/05-numbers/progress-circle-fraction';
 @import '../scripts/OSUIFramework/Pattern/Rating/scss/rating';
@@ -291,6 +291,7 @@
 @import '10-deprecated/range-slider-deprecated';
 @import '10-deprecated/horizontal-scroll-deprecated';
 @import '10-deprecated/tooltip-deprecated';
+@import '10-deprecated/progress-bar-deprecated';
 
 /*! =========================================================================== */
 /*! Usefull Classes                                                             */
