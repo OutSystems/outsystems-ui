@@ -1,0 +1,94 @@
+/*! Patterns - Content - ProgressBar */
+////
+/// @group Patterns-ProgressBar
+/// Patterns - Numbers - Progress Bar
+
+///
+.osui-progress {
+	&-bar {
+		min-height: var(--thickness);
+		position: relative;
+
+		& {
+			-servicestudio-min-height: 16px;
+		}
+	}
+
+	&-container {
+		min-height: var(--thickness);
+		position: relative;
+
+		& {
+			-servicestudio-min-height: 16px;
+		}
+
+		&.animate-entrance .osui-progress-value:before {
+			transition-delay: 0.5s;
+			transition-duration: 0.35s;
+		}
+	}
+
+	&-value {
+		height: var(--thickness);
+		left: 0;
+		position: absolute;
+		right: 0;
+
+		& {
+			-servicestudio-height: 16px;
+		}
+
+		&:after,
+		&:before {
+			border-radius: var(--shape);
+			content: '';
+			height: 100%;
+			left: 0;
+			position: absolute;
+			top: 0;
+
+			& {
+				-servicestudio-border-radius: var(--border-radius-rounded);
+			}
+		}
+
+		&:after {
+			background: var(--trail-color);
+			width: 100%;
+
+			& {
+				-servicestudio-background: var(--color-neutral-3);
+			}
+		}
+
+		&:before {
+			background: var(--progress-color);
+			width: var(--progress-value);
+			z-index: 1;
+
+			& {
+				-servicestudio-background: var(--color-primary);
+				-servicestudio-width: 75%;
+			}
+		}
+	}
+
+	&-content {
+		left: 0;
+		padding: var(--space-none) var(--space-s);
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 100%;
+		z-index: 2;
+	}
+}
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	.osui-progress-value:before {
+		left: inherit;
+		right: 0;
+	}
+}

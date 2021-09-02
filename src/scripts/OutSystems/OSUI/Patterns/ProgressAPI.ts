@@ -41,6 +41,13 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 				_progressItemsMap.set(progressId, _progressItem);
 
 				break;
+
+			case Enum.Progress.Bar:
+				_progressItem = new OSUIFramework.Patterns.Progress.Bar.Bar(progressId, JSON.parse(configs));
+
+				_progressItemsMap.set(progressId, _progressItem);
+
+				break;
 		}
 
 		return _progressItem;
