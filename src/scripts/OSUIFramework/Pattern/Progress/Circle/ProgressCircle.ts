@@ -49,10 +49,11 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			Helper.Style.RemoveClass(this._progressSvgElem, ProgressEnum.CssClass.AddInitialAnimation);
 			Helper.Style.RemoveClass(this._progressSvgElem, ProgressEnum.CssClass.AnimateProgressChange);
 
-			Helper.Style.AddClass(this._selfElem, ProgressEnum.CssClass.IsFullLoaded);
-
-			// Element has fully loaded, add the resizeObserver
-			this._addResizeOberser();
+			// Check if the resizeOberver already exist
+			if (!this._resizeOberver) {
+				// Element has fully loaded, add the resizeObserver
+				this._addResizeOberser();
+			}
 		}
 
 		// Convert progress value into offset to assign to our circle
@@ -92,11 +93,6 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			if (!this.isBuilt) {
 				// Make async to ensure that all css variables are assigned
 				setTimeout(() => {
-					// Check if the initial animation should be added
-					if (this._configs.AnimateInitialProgress) {
-						Helper.Style.AddClass(this._progressSvgElem, ProgressEnum.CssClass.AddInitialAnimation);
-					}
-
 					// Update according initial style
 					this.addInitialAnimation();
 				}, 0);
@@ -188,12 +184,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 				// Set the progressValue into the element
 				this._updateProgressValue();
 			} else {
-				// Since the initial animation was not added
-
-				// Add the class to represent that the element is full loaded
-				Helper.Style.AddClass(this._selfElem, ProgressEnum.CssClass.IsFullLoaded);
-
-				// Add the ResizeObserver
+				// Since the initial animation was not added add the ResizeObserver
 				this._addResizeOberser();
 			}
 		}
@@ -287,7 +278,10 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		public dispose(): void {
 			super.dispose();
 
-			this._resizeOberver.disconnect();
+			// Check if the resizeOberver already exist
+			if (!this._resizeOberver) {
+				this._resizeOberver.disconnect();
+			}
 		}
 	}
 }

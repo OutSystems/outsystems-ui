@@ -52,8 +52,8 @@
 
 		svg {
 			height: 100%;
-			min-height: inherit;
-			min-width: inherit;
+			min-height: var(--circle-size);
+			min-width: var(--circle-size);
 			width: 100%;
 		}
 	}
@@ -64,23 +64,20 @@
 			cx: 50%;
 			cy: 50%;
 			fill: transparent;
-			r: calc(50% - (var(--circle-thickness) / 2));
+			left: 0;
+			position: absolute;
 			stroke-width: var(--circle-thickness);
-			transform: rotate(-90deg) translateZ(0);
+			top: 0;
+			transform: rotate(-90deg);
 			transform-origin: center;
 		}
 
 		&-progress-path {
-			height: 100%;
-			left: 0;
-			position: absolute;
 			stroke: var(--progress-color);
 			stroke-dasharray: var(--stroke-dasharray);
 			stroke-dashoffset: var(--stroke-dashoffset);
 			stroke-linecap: var(--shape-style);
-			top: 0;
 			transition: stroke-dashoffset 0;
-			width: 100%;
 
 			&.animate {
 				&-entrance,
