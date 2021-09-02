@@ -16,7 +16,6 @@ namespace OSUIFramework.Patterns.Progress.Factory {
 	):OSUIFramework.Patterns.Progress.IProgress {
         let _progressItem = null;
 
-		// Check ProgressType before create the instance
 		switch (type) {
 			case ProgressEnum.ProgressTypes.Circle:
 				_progressItem = new OSUIFramework.Patterns.Progress.Circle.Circle(progressId, JSON.parse(configs));
