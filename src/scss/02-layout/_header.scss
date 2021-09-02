@@ -47,6 +47,7 @@
 	.header {
 		left: 0;
 		position: sticky;
+		position: -webkit-sticky; //Fix for older iPhones
 		right: 0;
 		top: 0;
 	}
