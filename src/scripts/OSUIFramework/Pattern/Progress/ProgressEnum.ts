@@ -34,6 +34,13 @@ namespace OSUIFramework.Patterns.Progress.ProgressEnum {
 		TrailColor = 'TrailColor',
 	}
 
+	// Progress Types
+	export enum ProgressTypes {
+		Bar = 'Bar',
+		Circle = 'Circle',
+		CircleFraction = 'CircleFraction',
+	}
+
 	/**
 	 * Progress Enum Shape Types
 	 */
