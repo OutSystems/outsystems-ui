@@ -16,16 +16,4 @@ namespace OSUIFramework.Patterns.Progress.Circle.Enum {
 		StrokeDasharray = '--stroke-dasharray',
 		StrokeDashoffset = '--stroke-dashoffset',
 	}
-
-	/**
-	 * ProgressCircle Enum properties
-	 */
-	export enum Properties {
-		Thickness = 'Thickness',
-		ExtendedClass = 'ExtendedClass',
-		Progress = 'Progress',
-		ProgressColor = 'ProgressColor',
-		Shape = 'Shape',
-		TrailColor = 'TrailColor',
-	}
 }

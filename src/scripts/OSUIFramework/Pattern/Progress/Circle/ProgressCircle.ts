@@ -206,7 +206,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		public changeProperty(propertyName: string, propertyValue: any): void {
 			switch (propertyName) {
-				case Enum.Properties.Thickness:
+				case ProgressEnum.Properties.Thickness:
 					this._configs.Thickness = propertyValue;
 
 					this._updateCircleProps();
@@ -219,7 +219,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 
 					break;
 
-				case Enum.Properties.Progress:
+				case ProgressEnum.Properties.Progress:
 					this._configs.Progress = propertyValue;
 
 					// Do the transition animation
@@ -235,7 +235,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 
 					break;
 
-				case Enum.Properties.ProgressColor:
+				case ProgressEnum.Properties.ProgressColor:
 					this._configs.ProgressColor = propertyValue;
 
 					Helper.Style.SetStyleAttribute(
@@ -246,7 +246,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 
 					break;
 
-				case Enum.Properties.Shape:
+				case ProgressEnum.Properties.Shape:
 					this._configs.Shape = propertyValue;
 
 					Helper.Style.SetStyleAttribute(
@@ -259,7 +259,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 
 					break;
 
-				case Enum.Properties.TrailColor:
+				case ProgressEnum.Properties.TrailColor:
 					this._configs.TrailColor = propertyValue;
 
 					Helper.Style.SetStyleAttribute(

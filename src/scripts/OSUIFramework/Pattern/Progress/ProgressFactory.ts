@@ -1,7 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Progress.Factory {
-	
-    /**
+	/**
 	 * Create the new Progress instance object according given type
 	 *
 	 * @export
@@ -9,12 +8,12 @@ namespace OSUIFramework.Patterns.Progress.Factory {
 	 * @param {string} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSUIFramework.Patterns.Progress.IProgress}
 	 */
-    export function NewProgress(
+	export function NewProgress(
 		progressId: string,
 		type: string,
 		configs: string
-	):OSUIFramework.Patterns.Progress.IProgress {
-        let _progressItem = null;
+	): OSUIFramework.Patterns.Progress.IProgress {
+		let _progressItem = null;
 
 		switch (type) {
 			case ProgressEnum.ProgressTypes.Circle:
@@ -27,10 +26,11 @@ namespace OSUIFramework.Patterns.Progress.Factory {
 
 				break;
 
-            default:
-                throw new Error(`There is any Progress of ${type} type`);
-                break;
+			default:
+				throw new Error(`There is any Progress of ${type} type`);
+				break;
 		}
 
 		return _progressItem;
-    }
+	}
+}
