@@ -49,9 +49,9 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			Helper.Style.RemoveClass(this._progressSvgElem, ProgressEnum.CssClass.AddInitialAnimation);
 			Helper.Style.RemoveClass(this._progressSvgElem, ProgressEnum.CssClass.AnimateProgressChange);
 
-			// Check if the resizeOberver already exist
+			// Check if the resizeOberver does not exist yet!
 			if (!this._resizeOberver) {
-				// Element has fully loaded, add the resizeObserver
+				// Create the Oberver
 				this._addResizeOberser();
 			}
 		}
