@@ -117,8 +117,8 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 				this._selfElem,
 				Enum.InlineStyleProp.Shape,
 				this._configs.Shape === GlobalEnum.ShapeTypes.Sharp
-					? ProgressEnum.SvgShapeTypes.Sharp
-					: ProgressEnum.SvgShapeTypes.Rounded
+					? ProgressEnum.ShapeTypes.Sharp
+					: ProgressEnum.ShapeTypes.Rounded
 			);
 
 			Helper.Style.SetStyleAttribute(

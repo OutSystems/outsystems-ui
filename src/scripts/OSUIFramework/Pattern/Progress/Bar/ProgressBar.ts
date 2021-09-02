@@ -19,10 +19,9 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 
 		// remove the added transitionEnd event and the cssClass added at the beginning
 		private _animateEntranceEnd(): void {
-			this._progressElem.removeEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._animateEntranceEnd);
+			this._progressElem.removeEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._eventAnimateEntranceEnd);
 
 			Helper.Style.RemoveClass(this._progressElem, ProgressEnum.CssClass.AddInitialAnimation);
-			console.log('removed');
 		}
 
 		// Set the default inline css variables
@@ -50,7 +49,7 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 			if (this._configs.AnimateInitialProgress) {
 				Helper.Style.AddClass(this._progressElem, ProgressEnum.CssClass.AddInitialAnimation);
 
-				this._progressElem.addEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._animateEntranceEnd);
+				this._progressElem.addEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._eventAnimateEntranceEnd);
 			}
 
 			this._updateProgressValue();
