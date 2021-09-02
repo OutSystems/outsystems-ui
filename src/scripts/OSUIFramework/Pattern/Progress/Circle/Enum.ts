@@ -14,19 +14,20 @@ namespace OSUIFramework.Patterns.Progress.Circle.Enum {
 	 * ProgressCircle Enum Inline Style Attributes
 	 */
 	export enum InlineStyleProp {
-		CircleThickness = '--circle-thickness',
+		CircleSize = '--circle-size',
 		ProgressColor = '--progress-color',
 		Shape = '--shape-style',
-		TrailColor = '--trail-color',
 		StrokeDasharray = '--stroke-dasharray',
 		StrokeDashoffset = '--stroke-dashoffset',
+		Thickness = '--circle-thickness',
+		TrailColor = '--trail-color',
 	}
 
 	/**
 	 * ProgressCircle Enum properties
 	 */
 	export enum Properties {
-		CircleThickness = 'CircleThickness',
+		Thickness = 'CircleThickness',
 		ExtendedClass = 'ExtendedClass',
 		Progress = 'Progress',
 		ProgressColor = 'ProgressColor',

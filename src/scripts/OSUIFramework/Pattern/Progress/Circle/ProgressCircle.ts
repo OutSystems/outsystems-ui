@@ -3,38 +3,43 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Progress.Circle {
 	export class Circle extends Progress.AbstractProgress<ProgressCircleConfig> {
-		// Store the circunference circle value
+		// Circunference circle value
 		private _circleCircumference: number;
+		private _circletSize = 0;
 
 		// Store the events
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventAnimateEntranceEnd: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventWindowFocus: any;
+		private _eventResizeOberver: any;
 
-		// Store the htmlElement
+		// ProgressContainer htmlElement
+		private _progressConatainerElem: HTMLElement;
+		// ProgressSVG htmlElement
 		private _progressSvgElem: HTMLElement;
-		private _trailSvgElem: HTMLElement;
+
+		// ResizeOberver
+		private _resizeOberver: ResizeObserver;
 
 		// Store values to be assigned to the circle
 		private _strokeDasharray: number;
 		private _strokeDashoffset: number;
 
-		// ResizeOberver
-		private _myObserver: ResizeObserver;
-		private _eventResizeOberver: any;
-		// private _updateCircleCalcs = 0;
+		// TrailSVG htmlElement
+		private _trailSvgElem: HTMLElement;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new ProgressCircleConfig(configs));
 
 			this._eventAnimateEntranceEnd = this._animateEntranceEnd.bind(this);
-
-			this._eventWindowFocus = this._windowFocus.bind(this);
-
-			// ResizeOberver
 			this._eventResizeOberver = this._updateCircleProps.bind(this);
+		}
+
+		// Set the resizeObserver
+		private _addResizeOberser(): void {
+			this._resizeOberver = new ResizeObserver(this._eventResizeOberver);
+			this._resizeOberver.observe(this._selfElem);
 		}
 
 		// remove the added transitionEnd event and the cssClass added at the beginning
@@ -45,12 +50,28 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			Helper.Style.RemoveClass(this._progressSvgElem, ProgressEnum.CssClass.AnimateProgressChange);
 
 			Helper.Style.AddClass(this._selfElem, ProgressEnum.CssClass.IsFullLoaded);
+
+			// Element has fully loaded, add the resizeObserver
+			this._addResizeOberser();
 		}
 
 		// Convert progress value into offset to assign to our circle
 		private _progressToOffset(): void {
-			const radius = Math.floor(this._selfElem.clientHeight / 2 - this._configs.CircleThickness / 2);
-			this._circleCircumference = radius * 2 * Math.PI;
+			const _elementSize =
+				this._selfElem.parentElement.clientHeight < this._selfElem.parentElement.clientWidth
+					? this._selfElem.parentElement.clientHeight
+					: this._selfElem.parentElement.clientWidth;
+
+			if (this._selfElem.clientHeight < this._selfElem.parentElement.clientWidth) {
+				this._circletSize = this._selfElem.parentElement.clientWidth;
+			} else {
+				this._circletSize = _elementSize;
+			}
+
+			Helper.Style.SetStyleAttribute(this._selfElem, Enum.InlineStyleProp.CircleSize, this._circletSize + 'px');
+
+			const _radius = Math.floor(this._circletSize / 2 - this._configs.Thickness / 2);
+			this._circleCircumference = _radius * 2 * Math.PI;
 
 			// set the base values
 			this._strokeDashoffset = this._strokeDasharray = this._circleCircumference;
@@ -63,12 +84,13 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 				this._strokeDashoffset
 			);
 
-			Helper.Style.SetStyleAttribute(this._progressSvgElem, 'r', radius);
-			Helper.Style.SetStyleAttribute(this._trailSvgElem, 'r', radius);
+			// Set the radius SVG value in order to force the svg repainting
+			Helper.Style.SetStyleAttribute(this._progressSvgElem, 'r', _radius);
+			Helper.Style.SetStyleAttribute(this._trailSvgElem, 'r', _radius);
 
 			// Ensure that this will run only at the Initialization
 			if (!this.isBuilt) {
-				// Make async to ensure that all the css variables are assigned
+				// Make async to ensure that all css variables are assigned
 				setTimeout(() => {
 					// Check if the initial animation should be added
 					if (this._configs.AnimateInitialProgress) {
@@ -85,8 +107,8 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		private _setCssVariables(): void {
 			Helper.Style.SetStyleAttribute(
 				this._selfElem,
-				Enum.InlineStyleProp.CircleThickness,
-				this._configs.CircleThickness + 'px'
+				Enum.InlineStyleProp.Thickness,
+				this._configs.Thickness + 'px'
 			);
 
 			Helper.Style.SetStyleAttribute(
@@ -113,8 +135,15 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		// Update info based on htmlContent
 		private _setHtmlElements(): void {
 			// Set the html reference that will be used to do all the needed calcs
+			this._progressConatainerElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Container);
 			this._progressSvgElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Progress);
 			this._trailSvgElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Trail);
+		}
+
+		// Trigger all the meethods responsible to proper update the Circle
+		private _updateCircleProps(): void {
+			this._progressToOffset();
+			this._updateProgressValue();
 		}
 
 		// Update the valuenow accessibility property
@@ -143,19 +172,6 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			);
 		}
 
-		// OberverCallback
-		private _updateCircleProps(): void {
-			this._progressToOffset();
-			this._updateProgressValue();
-		}
-
-		// Event triggerd when the window is focused that is used to update the Progress Circle if the window size has changed
-		private _windowFocus(): void {
-			setTimeout(() => {
-				this._updateCircleProps();
-			}, 500);
-		}
-
 		// Add the initial animation to the pattern if it's applicable
 		protected addInitialAnimation(): void {
 			// Check if the animation at init should be added
@@ -168,16 +184,18 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 					GlobalEnum.HTMLEvent.TransitionEnd,
 					this._eventAnimateEntranceEnd
 				);
+
+				// Set the progressValue into the element
+				this._updateProgressValue();
 			} else {
+				// Since the initial animation was not added
+
+				// Add the class to represent that the element is full loaded
 				Helper.Style.AddClass(this._selfElem, ProgressEnum.CssClass.IsFullLoaded);
+
+				// Add the ResizeObserver
+				this._addResizeOberser();
 			}
-
-			// Set the progressValue into the element
-			this._updateProgressValue();
-
-			// ResizeOberver
-			this._myObserver = new ResizeObserver(this._eventResizeOberver);
-			this._myObserver.observe(document.body);
 		}
 
 		public build(): void {
@@ -189,24 +207,20 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 
 			this._progressToOffset();
 
-			window.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventWindowFocus);
-
 			this.finishBuild();
 		}
 
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		public changeProperty(propertyName: string, propertyValue: any): void {
 			switch (propertyName) {
-				case Enum.Properties.CircleThickness:
-					this._configs.CircleThickness = propertyValue;
+				case Enum.Properties.Thickness:
+					this._configs.Thickness = propertyValue;
 
-					this._progressToOffset();
-
-					this._updateProgressValue();
+					this._updateCircleProps();
 
 					Helper.Style.SetStyleAttribute(
 						this._selfElem,
-						Enum.InlineStyleProp.CircleThickness,
+						Enum.InlineStyleProp.Thickness,
 						propertyValue + 'px'
 					);
 
@@ -215,10 +229,10 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 				case Enum.Properties.Progress:
 					this._configs.Progress = propertyValue;
 
-					// Do the initial animation
+					// Do the transition animation
 					Helper.Style.AddClass(this._progressSvgElem, ProgressEnum.CssClass.AnimateProgressChange);
 
-					// Add the event to remove the cssClass responsible to add the initial animation
+					// Add the event that will remove the responsible cssClass that added animation
 					this._progressSvgElem.addEventListener(
 						GlobalEnum.HTMLEvent.TransitionEnd,
 						this._eventAnimateEntranceEnd
@@ -273,10 +287,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		public dispose(): void {
 			super.dispose();
 
-			window.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventWindowFocus);
-
-			// ResizeOberver
-			this._myObserver.disconnect();
+			this._resizeOberver.disconnect();
 		}
 	}
 }
