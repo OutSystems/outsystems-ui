@@ -34,7 +34,7 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 		let _progressItem = null;
 
 		// Check ProgressType before create the instance
-		switch (_configs.ProgressType) {
+		switch (_configs.Type) {
 			case Enum.Progress.Circle:
 				_progressItem = new OSUIFramework.Patterns.Progress.Circle.Circle(progressId, JSON.parse(configs));
 

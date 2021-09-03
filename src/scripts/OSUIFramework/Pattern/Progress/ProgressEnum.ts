@@ -8,6 +8,7 @@ namespace OSUIFramework.Patterns.Progress.ProgressEnum {
 		Container = 'osui-progress-container',
 		Content = 'osui-progress-content',
 		Trail = 'osui-progress-trail',
+		AnimateProgressChange = 'animate-progress-change',
 	}
 
 	/**

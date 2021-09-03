@@ -39,8 +39,6 @@ namespace OSUIFramework.Patterns.Progress {
 			super.build();
 
 			this._setAccessibilityProps();
-
-			this.finishBuild();
 		}
 
 		// Implement the _addInitialAnimation method since a transitionend event must be added, this must be implemented at childs level
