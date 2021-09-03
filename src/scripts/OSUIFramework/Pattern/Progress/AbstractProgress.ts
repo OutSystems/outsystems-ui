@@ -19,6 +19,8 @@ namespace OSUIFramework.Patterns.Progress {
 				Constants.AccessibilityAttribute.Role.Progressbar
 			);
 
+			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.Aria.Label, 'progress');
+
 			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.Aria.ValueMin, '0');
 
 			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.Aria.ValueMax, '100');
