@@ -172,6 +172,11 @@
 				vertical-align: inherit;
 				width: auto !important;
 			}
+			
+			td:before {
+				display: none;
+			}
+			
 		}
 	}
 }
