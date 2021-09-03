@@ -8,6 +8,21 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
+	 * OutSystemsUI position cssClasses
+	 */
+	export enum CssClassPosition {
+		Bottom = 'bottom',
+		BottomLeft = 'bottom-left',
+		BottomRight = 'bottom-right',
+		Center = 'center',
+		Left = 'left',
+		Right = 'right',
+		Top = 'top',
+		TopLeft = 'top-left',
+		TopRight = 'top-right',
+	}
+
+	/**
 	 * OutSystemsUI Data Blocks attribute values
 	 */
 	export enum DataBlocksTag {
@@ -66,21 +81,6 @@ namespace OSUIFramework.GlobalEnum {
 	export enum Orientation {
 		Horizontal = 'horizontal',
 		Vertical = 'vertical',
-	}
-
-	/**
-	 * OutSystemsUI position cssClasses
-	 */
-	export enum OSUICssClassPosition {
-		Bottom = 'bottom',
-		BottomLeft = 'bottom-left',
-		BottomRight = 'bottom-right',
-		Center = 'center',
-		Left = 'left',
-		Right = 'right',
-		Top = 'top',
-		TopLeft = 'top-left',
-		TopRight = 'top-right',
 	}
 
 	/**

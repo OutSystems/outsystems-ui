@@ -102,75 +102,75 @@ namespace OSUIFramework.Patterns.Tooltip.BoundsPosition {
 		// Is out of Top boundary
 		if (out.top) {
 			switch (activePosition) {
-				case GlobalEnum.OSUICssClassPosition.Center:
+				case GlobalEnum.CssClassPosition.Center:
 					if (out.right) {
-						openAt = GlobalEnum.OSUICssClassPosition.Top;
+						openAt = GlobalEnum.CssClassPosition.Top;
 					} else if (out.left) {
-						openAt = GlobalEnum.OSUICssClassPosition.TopRight;
+						openAt = GlobalEnum.CssClassPosition.TopRight;
 					}
 					break;
 
-				case GlobalEnum.OSUICssClassPosition.Top:
-					openAt = GlobalEnum.OSUICssClassPosition.Bottom;
+				case GlobalEnum.CssClassPosition.Top:
+					openAt = GlobalEnum.CssClassPosition.Bottom;
 
 					if (out.right) {
-						openAt = GlobalEnum.OSUICssClassPosition.BottomLeft;
+						openAt = GlobalEnum.CssClassPosition.BottomLeft;
 					} else if (out.left) {
-						openAt = GlobalEnum.OSUICssClassPosition.BottomRight;
+						openAt = GlobalEnum.CssClassPosition.BottomRight;
 					}
 					break;
 
-				case GlobalEnum.OSUICssClassPosition.TopRight:
-					openAt = GlobalEnum.OSUICssClassPosition.BottomRight;
+				case GlobalEnum.CssClassPosition.TopRight:
+					openAt = GlobalEnum.CssClassPosition.BottomRight;
 
 					if (out.right) {
-						openAt = GlobalEnum.OSUICssClassPosition.BottomLeft;
+						openAt = GlobalEnum.CssClassPosition.BottomLeft;
 					} else if (out.left) {
-						openAt = GlobalEnum.OSUICssClassPosition.BottomRight;
+						openAt = GlobalEnum.CssClassPosition.BottomRight;
 					}
 					break;
 
-				case GlobalEnum.OSUICssClassPosition.TopLeft:
-					openAt = GlobalEnum.OSUICssClassPosition.BottomLeft;
+				case GlobalEnum.CssClassPosition.TopLeft:
+					openAt = GlobalEnum.CssClassPosition.BottomLeft;
 
 					if (out.right) {
-						openAt = GlobalEnum.OSUICssClassPosition.BottomLeft;
+						openAt = GlobalEnum.CssClassPosition.BottomLeft;
 					} else if (out.left) {
-						openAt = GlobalEnum.OSUICssClassPosition.BottomRight;
+						openAt = GlobalEnum.CssClassPosition.BottomRight;
 					}
 					break;
 			}
 		}
 		// Is out of Right boundary
 		else if (out.right) {
-			openAt = GlobalEnum.OSUICssClassPosition.Left;
+			openAt = GlobalEnum.CssClassPosition.Left;
 
 			switch (activePosition) {
-				case GlobalEnum.OSUICssClassPosition.Center:
+				case GlobalEnum.CssClassPosition.Center:
 					if (out.bottom) {
-						openAt = GlobalEnum.OSUICssClassPosition.TopLeft;
+						openAt = GlobalEnum.CssClassPosition.TopLeft;
 					} else if (out.left) {
-						openAt = GlobalEnum.OSUICssClassPosition.Left;
+						openAt = GlobalEnum.CssClassPosition.Left;
 					}
 					break;
 
-				case GlobalEnum.OSUICssClassPosition.Top:
-					openAt = GlobalEnum.OSUICssClassPosition.TopLeft;
+				case GlobalEnum.CssClassPosition.Top:
+					openAt = GlobalEnum.CssClassPosition.TopLeft;
 					break;
 
-				case GlobalEnum.OSUICssClassPosition.TopRight:
-					openAt = GlobalEnum.OSUICssClassPosition.TopLeft;
+				case GlobalEnum.CssClassPosition.TopRight:
+					openAt = GlobalEnum.CssClassPosition.TopLeft;
 					break;
 
-				case GlobalEnum.OSUICssClassPosition.Bottom:
+				case GlobalEnum.CssClassPosition.Bottom:
 					if (out.bottom) {
-						openAt = GlobalEnum.OSUICssClassPosition.TopLeft;
+						openAt = GlobalEnum.CssClassPosition.TopLeft;
 					}
 					break;
 
-				case GlobalEnum.OSUICssClassPosition.BottomRight:
+				case GlobalEnum.CssClassPosition.BottomRight:
 					if (out.bottom) {
-						openAt = GlobalEnum.OSUICssClassPosition.TopLeft;
+						openAt = GlobalEnum.CssClassPosition.TopLeft;
 					}
 					break;
 			}
@@ -178,60 +178,60 @@ namespace OSUIFramework.Patterns.Tooltip.BoundsPosition {
 		// Is out of Bottom boundary
 		else if (out.bottom) {
 			switch (activePosition) {
-				case GlobalEnum.OSUICssClassPosition.Center:
+				case GlobalEnum.CssClassPosition.Center:
 					if (out.right) {
-						openAt = GlobalEnum.OSUICssClassPosition.TopLeft;
+						openAt = GlobalEnum.CssClassPosition.TopLeft;
 					} else if (out.left) {
-						openAt = GlobalEnum.OSUICssClassPosition.TopRight;
+						openAt = GlobalEnum.CssClassPosition.TopRight;
 					}
 					break;
 
-				case GlobalEnum.OSUICssClassPosition.Bottom:
-					openAt = GlobalEnum.OSUICssClassPosition.Top;
+				case GlobalEnum.CssClassPosition.Bottom:
+					openAt = GlobalEnum.CssClassPosition.Top;
 
 					if (out.right) {
-						openAt = GlobalEnum.OSUICssClassPosition.TopLeft;
+						openAt = GlobalEnum.CssClassPosition.TopLeft;
 					} else if (out.left) {
-						openAt = GlobalEnum.OSUICssClassPosition.TopRight;
+						openAt = GlobalEnum.CssClassPosition.TopRight;
 					}
 					break;
 
-				case GlobalEnum.OSUICssClassPosition.BottomRight:
-					openAt = GlobalEnum.OSUICssClassPosition.TopRight;
+				case GlobalEnum.CssClassPosition.BottomRight:
+					openAt = GlobalEnum.CssClassPosition.TopRight;
 
 					if (out.right) {
-						openAt = GlobalEnum.OSUICssClassPosition.TopLeft;
+						openAt = GlobalEnum.CssClassPosition.TopLeft;
 					} else if (out.left) {
-						openAt = GlobalEnum.OSUICssClassPosition.TopRight;
+						openAt = GlobalEnum.CssClassPosition.TopRight;
 					}
 					break;
 
-				case GlobalEnum.OSUICssClassPosition.BottomLeft:
-					openAt = GlobalEnum.OSUICssClassPosition.TopLeft;
+				case GlobalEnum.CssClassPosition.BottomLeft:
+					openAt = GlobalEnum.CssClassPosition.TopLeft;
 
 					if (out.right) {
-						openAt = GlobalEnum.OSUICssClassPosition.TopLeft;
+						openAt = GlobalEnum.CssClassPosition.TopLeft;
 					} else if (out.left) {
-						openAt = GlobalEnum.OSUICssClassPosition.TopRight;
+						openAt = GlobalEnum.CssClassPosition.TopRight;
 					}
 					break;
 			}
 		}
 		// Is out of Left boundary
 		else if (out.left) {
-			openAt = GlobalEnum.OSUICssClassPosition.Right;
+			openAt = GlobalEnum.CssClassPosition.Right;
 
 			switch (activePosition) {
-				case GlobalEnum.OSUICssClassPosition.Center:
-					openAt = GlobalEnum.OSUICssClassPosition.Right;
+				case GlobalEnum.CssClassPosition.Center:
+					openAt = GlobalEnum.CssClassPosition.Right;
 					break;
 
-				case GlobalEnum.OSUICssClassPosition.Top:
-					openAt = GlobalEnum.OSUICssClassPosition.TopRight;
+				case GlobalEnum.CssClassPosition.Top:
+					openAt = GlobalEnum.CssClassPosition.TopRight;
 					break;
 
-				case GlobalEnum.OSUICssClassPosition.TopLeft:
-					openAt = GlobalEnum.OSUICssClassPosition.TopRight;
+				case GlobalEnum.CssClassPosition.TopLeft:
+					openAt = GlobalEnum.CssClassPosition.TopRight;
 					break;
 			}
 		}
