@@ -225,6 +225,11 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 					break;
 
 				case ProgressEnum.Properties.Progress:
+					// Ensure that progress has correct values
+					if (propertyValue < 0 || propertyValue > 100) {
+						return;
+					}
+
 					this._configs.Progress = propertyValue;
 
 					// Do the transition animation
