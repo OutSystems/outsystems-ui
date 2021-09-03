@@ -76,7 +76,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			Helper.Style.SetStyleAttribute(
 				this._selfElem,
 				Enum.InlineStyleProp.CircleSize,
-				this._circletSize + Constants.Pixel
+				this._circletSize + GlobalEnum.Units.Pixel
 			);
 
 			const _radius = Math.floor(this._circletSize / 2 - this._configs.Thickness / 2);
@@ -89,7 +89,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			Helper.Style.SetStyleAttribute(
 				this._selfElem,
 				Enum.InlineStyleProp.CircleRadius,
-				_radius + Constants.Pixel
+				_radius + GlobalEnum.Units.Pixel
 			);
 			Helper.Style.SetStyleAttribute(this._selfElem, Enum.InlineStyleProp.StrokeDasharray, this._strokeDasharray);
 			Helper.Style.SetStyleAttribute(
@@ -113,7 +113,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			Helper.Style.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.Thickness,
-				this._configs.Thickness + Constants.Pixel
+				this._configs.Thickness + GlobalEnum.Units.Pixel
 			);
 
 			Helper.Style.SetStyleAttribute(
@@ -219,7 +219,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 					Helper.Style.SetStyleAttribute(
 						this._selfElem,
 						ProgressEnum.InlineStyleProp.Thickness,
-						propertyValue + Constants.Pixel
+						propertyValue + GlobalEnum.Units.Pixel
 					);
 
 					break;

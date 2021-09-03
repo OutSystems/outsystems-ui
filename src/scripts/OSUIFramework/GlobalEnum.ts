@@ -63,4 +63,12 @@ namespace OSUIFramework.GlobalEnum {
 		Sharp = 'none',
 		SoftRounded = 'soft',
 	}
+
+	/**
+	 * OutSystemsUI Units
+	 */
+	export enum Units {
+		Percentage = '%',
+		Pixel = 'px',
+	}
 }

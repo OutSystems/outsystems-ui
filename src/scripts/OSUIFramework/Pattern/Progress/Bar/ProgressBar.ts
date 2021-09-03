@@ -29,7 +29,7 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 			Helper.Style.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.Thickness,
-				this._configs.Thickness + Constants.Pixel
+				this._configs.Thickness + GlobalEnum.Units.Pixel
 			);
 
 			Helper.Style.SetStyleAttribute(
@@ -95,7 +95,7 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 					Helper.Style.SetStyleAttribute(
 						this._selfElem,
 						ProgressEnum.InlineStyleProp.Thickness,
-						propertyValue + Constants.Pixel
+						propertyValue + GlobalEnum.Units.Pixel
 					);
 
 					break;
