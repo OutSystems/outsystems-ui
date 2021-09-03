@@ -7,8 +7,6 @@ namespace OSUIFramework.Patterns.Progress {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
-
-			console.log(`AbstractProgress Constructor - '${uniqueId}'`);
 		}
 
 		// Set default Accessibility properties
@@ -33,7 +31,7 @@ namespace OSUIFramework.Patterns.Progress {
 			Helper.Style.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.ProgressValue,
-				progressValue + '%'
+				progressValue + Constants.Percentage
 			);
 		}
 
@@ -41,8 +39,6 @@ namespace OSUIFramework.Patterns.Progress {
 			super.build();
 
 			this._setAccessibilityProps();
-
-			this.finishBuild();
 		}
 
 		// Implement the _addInitialAnimation method since a transitionend event must be added, this must be implemented at childs level

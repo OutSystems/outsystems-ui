@@ -3,4 +3,96 @@
 /// @group Patterns-ProgressCircle
 /// Patterns - Content - ProgressCircle
 
-//Implement you code here
+[data-block*='ProgressCircle'] {
+	display: block;
+}
+
+///
+.osui-progress-circle {
+	align-items: center;
+	display: flex;
+	height: 100%;
+	position: relative;
+	width: 100%;
+
+	.osui-progress {
+		&-container {
+			display: inline-block;
+			height: 100%;
+			margin: 0 auto;
+			min-height: var(--circle-size);
+			min-width: var(--circle-size);
+			position: relative;
+			z-index: 0;
+
+			> div {
+				display: block;
+				min-height: inherit;
+				min-width: inherit;
+			}
+		}
+
+		&-content {
+			left: 50%;
+			position: absolute;
+			text-align: center;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			width: 80%;
+			z-index: 1;
+		}
+	}
+
+	.svg-wrapper {
+		display: inline-flex;
+		min-height: inherit;
+		min-width: inherit;
+		position: relative;
+		width: 100%;
+
+		svg {
+			height: 100%;
+			min-height: var(--circle-size);
+			min-width: var(--circle-size);
+			width: 100%;
+		}
+	}
+
+	.osui-progress {
+		&-progress-path,
+		&-trail-path {
+			cx: 50%;
+			cy: 50%;
+			fill: transparent;
+			left: 0;
+			position: absolute;
+			stroke-width: var(--thickness);
+			top: 0;
+			transform: rotate(-90deg);
+			transform-origin: center;
+		}
+
+		&-progress-path {
+			stroke: var(--progress-color);
+			stroke-dasharray: var(--stroke-dasharray);
+			stroke-dashoffset: var(--stroke-dashoffset);
+			stroke-linecap: var(--shape);
+			transition: stroke-dashoffset 0;
+
+			&.animate {
+				&-entrance,
+				&-progress-change {
+					transition-duration: 0.35s;
+				}
+
+				&-entrance {
+					transition-delay: 0.5s;
+				}
+			}
+		}
+
+		&-trail-path {
+			stroke: var(--trail-color);
+		}
+	}
+}

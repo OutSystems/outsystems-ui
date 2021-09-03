@@ -25,25 +25,18 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 * @param {string} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSUIFramework.Patterns.Progress.IProgress}
 	 */
-	export function Create(progressId: string, configs: string): OSUIFramework.Patterns.Progress.IProgress {
+	export function Create(
+		progressId: string,
+		type: string,
+		configs: string
+	): OSUIFramework.Patterns.Progress.IProgress {
 		if (_progressItemsMap.has(progressId)) {
 			throw new Error(`There is already an ProgressItem registered under id: ${progressId}`);
 		}
 
-		const _configs = JSON.parse(configs);
-		let _progressItem = null;
+		const _progressItem = OSUIFramework.Patterns.Progress.Factory.NewProgress(progressId, type, configs);
 
-		// Check ProgressType before create the instance
-		switch (_configs.ProgressType) {
-			case Enum.Progress.Circle:
-				_progressItem = new OSUIFramework.Patterns.Progress.Circle.Circle(progressId, JSON.parse(configs));
-
-				_progressItemsMap.set(progressId, _progressItem);
-
-				console.log('Created new ProgressCircle instance!', _progressItemsMap);
-
-				break;
-		}
+		_progressItemsMap.set(progressId, _progressItem);
 
 		return _progressItem;
 	}

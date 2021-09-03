@@ -1,8 +1,8 @@
 /// <reference path="../AbstractProgressConfiguration.ts" />
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSUIFramework.Patterns.Progress.Circle {
-	export class ProgressCircleConfig extends Progress.ProgressConfiguration {
+namespace OSUIFramework.Patterns.Progress.Bar {
+	export class ProgressBarConfig extends Progress.ProgressConfiguration {
 		public Progress: number;
 		public ProgressColor: string;
 		public Shape: string;
