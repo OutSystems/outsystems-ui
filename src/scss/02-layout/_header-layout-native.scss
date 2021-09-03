@@ -10,6 +10,7 @@
 	}
 
 	.header {
+		position: -webkit-sticky; //Fix for older iPhones
 		position: sticky;
 		top: 0;
 
@@ -52,6 +53,7 @@
 
 	.content-bottom {
 		bottom: 0;
+		position: -webkit-sticky; //Fix for older iPhones
 		position: sticky;
 		z-index: 100;
 	}

@@ -46,6 +46,7 @@
 .fixed-header {
 	.header {
 		left: 0;
+		position: -webkit-sticky; //Fix for older iPhones
 		position: sticky;
 		right: 0;
 		top: 0;

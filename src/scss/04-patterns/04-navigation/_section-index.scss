@@ -10,6 +10,7 @@
 	flex-direction: column;
 
 	&.is--sticky {
+		position: -webkit-sticky; //Fix for older iPhones
 		position: sticky;
 		top: var(--top-position);
 	}
