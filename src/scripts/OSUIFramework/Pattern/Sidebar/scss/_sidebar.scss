@@ -1,0 +1,168 @@
+/*! Patterns - Interaction - Sidebar */
+////
+/// @group Patterns-Sidebar
+/// Patterns - Interaction - Sidebar
+
+///
+.osui-sidebar {
+	display: contents;
+
+	&.is-right {
+		.osui-sidebar_aside {
+			right: 0;
+			transform: translateX(102%);
+
+			&:before {
+				left: -24px;
+			}
+		}
+	}
+
+	&.is-left {
+		.osui-sidebar_aside {
+			left: 0;
+			transform: translateX(-102%);
+
+			&:before {
+				right: -24px;
+			}
+		}
+	}
+
+	&_aside {
+		background-color: var(--color-neutral-0);
+		box-shadow: var(--shadow-l);
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		margin: var(--space-none);
+		position: fixed;
+		top: 0;
+		transition: all 130ms ease-in;
+		width: var(--sidebar-width);
+		will-change: transform;
+		z-index: 140;
+
+		&:before {
+			background-color: transparent;
+			content: '';
+			height: 100%;
+			position: fixed;
+			width: 24px;
+		}
+
+		// Service Studio Preview
+		& {
+			-servicestudio-bottom: 20px;
+			-servicestudio-height: auto;
+			-servicestudio-margin-left: auto;
+			-servicestudio-position: relative;
+			-servicestudio-transform: none;
+			-servicestudio-webkit-transform: none;
+		}
+	}
+
+	&_header,
+	&_content {
+		padding: var(--space-base) var(--space-m);
+	}
+
+	&_content {
+		flex: 1;
+		overflow: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	&_overlay {
+		background-color: rgba(0, 0, 0, 0.25);
+		cursor: pointer;
+		height: 100vh;
+		opacity: 0;
+		pointer-events: none;
+		position: fixed;
+		right: 0;
+		top: 0;
+		transition: opacity 130ms ease-in;
+		width: 100vw;
+		will-change: opacity;
+		z-index: 130;
+
+		// Service Studio Preview
+		& {
+			-servicestudio-display: none;
+		}
+	}
+}
+
+///
+.active-screen {
+	.osui-sidebar {
+		&.is-open {
+			.osui-sidebar_aside {
+				opacity: 1;
+				transform: none;
+				transition: transform 330ms ease-out;
+				will-change: transform;
+			}
+
+			.osui-sidebar_overlay {
+				opacity: 1;
+				pointer-events: initial;
+			}
+		}
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+///
+.desktop {
+	.osui-sidebar_aside {
+		opacity: 0;
+	}
+}
+
+///
+.android[data-status-bar-height] {
+	.layout-native {
+		.osui-sidebar_aside {
+			padding-top: var(--status-bar-height);
+		}
+	}
+}
+
+///
+.ios {
+	.layout-native {
+		.osui-sidebar_aside {
+			padding-bottom: var(--os-safe-area-bottom);
+			padding-top: var(--os-safe-area-top);
+		}
+	}
+
+	.phone {
+		&.landscape {
+			.layout-native {
+				.osui-sidebar_aside:before {
+					left: calc((var(--os-safe-area-left) + 12px) * -1);
+					width: calc(var(--os-safe-area-left) + 12px);
+				}
+			}
+		}
+	}
+}
+
+///
+.landscape {
+	.layout-native {
+		.osui-sidebar_aside {
+			padding-bottom: var(--os-safe-area-bottom);
+		}
+	}
+}
+
+///
+.phone {
+	.osui-sidebar_aside {
+		max-width: 85vw;
+	}
+}

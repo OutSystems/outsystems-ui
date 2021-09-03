@@ -248,7 +248,7 @@
 @import '04-patterns/03-interaction/range-slider';
 @import '04-patterns/03-interaction/scrollable-area';
 @import '../scripts/OSUIFramework/Pattern/Search/scss/search';
-@import '04-patterns/03-interaction/sidebar';
+@import '../scripts/OSUIFramework/Pattern/Sidebar/scss/sidebar';
 @import '04-patterns/03-interaction/stacked-cards';
 @import '04-patterns/03-interaction/video';
 
@@ -290,6 +290,7 @@
 /*! =========================================================================== */
 @import '10-deprecated/range-slider-deprecated';
 @import '10-deprecated/horizontal-scroll-deprecated';
+@import '10-deprecated/sidebar-deprecated';
 @import '10-deprecated/tooltip-deprecated';
 @import '10-deprecated/progress-bar-deprecated';
 @import '10-deprecated/progress-circle-deprecated';

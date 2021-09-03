@@ -1,6 +1,6 @@
 {
 	"name": "outsystems-ui",
-	"version": "2.6.9",
+	"version": "2.7.0",
 	"description": "OutSystems UI Base Theme",
 	"scripts": {
 		"setup": "npm i && tsc && webpack --env prefix=dev",
