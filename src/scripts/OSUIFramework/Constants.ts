@@ -9,6 +9,7 @@ namespace OSUIFramework.Constants {
 			Labelledby: 'labelledby',
 			ValueMax: 'valuemax',
 			ValueMin: 'valuemin',
+			Label: 'aria-label',
 		},
 		Role: {
 			AttrName: 'role',
