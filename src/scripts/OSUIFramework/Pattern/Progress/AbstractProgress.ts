@@ -31,7 +31,7 @@ namespace OSUIFramework.Patterns.Progress {
 			Helper.Style.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.ProgressValue,
-				progressValue + Constants.Percentage
+				progressValue + GlobalEnum.Units.Percentage
 			);
 		}
 

@@ -18,6 +18,14 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
+	 * OutSystemsUI Direction options
+	 */
+	export enum Direction {
+		Left = 'left',
+		Right = 'right',
+	}
+
+	/**
 	 * OutSystemsUI HTML Elements
 	 */
 	export enum HTMLElement {
@@ -39,6 +47,25 @@ namespace OSUIFramework.GlobalEnum {
 		TouchMove = 'touchmove',
 		TouchStart = 'touchstart',
 		TransitionEnd = 'transitionend',
+	}
+
+	/**
+	 * OutSystemsUI event Keycodes
+	 */
+	export enum Keycodes {
+		Escape = 'Escape',
+		Enter = 'Enter',
+		Tab = 'Tab',
+		Shift = 'Shift',
+		Space = ' ',
+	}
+
+	/**
+	 * OutSystemsUI Orientation options
+	 */
+	export enum Orientation {
+		Horizontal = 'horizontal',
+		Vertical = 'vertical',
 	}
 
 	/**
@@ -66,29 +93,10 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
-	 * OutSystemsUI Orientation options
+	 * OutSystemsUI Units
 	 */
-	export enum Orientation {
-		Horizontal = 'horizontal',
-		Vertical = 'vertical',
-	}
-
-	/**
-	 * OutSystemsUI Direction options
-	 */
-	export enum Direction {
-		Left = 'left',
-		Right = 'right',
-	}
-
-	/**
-	 * OutSystemsUI event Keycodes
-	 */
-	export enum Keycodes {
-		Escape = 'Escape',
-		Enter = 'Enter',
-		Tab = 'Tab',
-		Shift = 'Shift',
-		Space = ' ',
+	export enum Units {
+		Percentage = '%',
+		Pixel = 'px',
 	}
 }
