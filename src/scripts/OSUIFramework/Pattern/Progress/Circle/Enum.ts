@@ -12,6 +12,7 @@ namespace OSUIFramework.Patterns.Progress.Circle.Enum {
 	 * ProgressCircle Enum Inline Style Attributes
 	 */
 	export enum InlineStyleProp {
+		CircleRadius = '--radius',
 		CircleSize = '--circle-size',
 		StrokeDasharray = '--stroke-dasharray',
 		StrokeDashoffset = '--stroke-dashoffset',

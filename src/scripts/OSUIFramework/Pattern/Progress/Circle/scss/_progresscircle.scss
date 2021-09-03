@@ -18,11 +18,10 @@
 	.osui-progress {
 		&-container {
 			display: inline-block;
-			height: 100%;
+			height: var(--circle-size);
 			margin: 0 auto;
-			min-height: var(--circle-size);
-			min-width: var(--circle-size);
 			position: relative;
+			width: var(--circle-size);
 			z-index: 0;
 
 			> div {
@@ -45,16 +44,14 @@
 
 	.svg-wrapper {
 		display: inline-flex;
-		min-height: inherit;
-		min-width: inherit;
+		// the !important is used to override the inline style
+		height: var(--circle-size) !important;
 		position: relative;
-		width: 100%;
+		width: var(--circle-size);
 
 		svg {
-			height: 100%;
-			min-height: var(--circle-size);
-			min-width: var(--circle-size);
-			width: 100%;
+			height: var(--circle-size);
+			width: var(--circle-size);
 		}
 	}
 
@@ -66,6 +63,7 @@
 			fill: transparent;
 			left: 0;
 			position: absolute;
+			r: var(--radius);
 			stroke-width: var(--thickness);
 			top: 0;
 			transform: rotate(-90deg);
@@ -93,6 +91,15 @@
 
 		&-trail-path {
 			stroke: var(--trail-color);
+		}
+	}
+}
+
+// IsRTL
+.is-rtl {
+	.osui-progress-circle {
+		.svg-wrapper {
+			transform: scaleX(-1);
 		}
 	}
 }

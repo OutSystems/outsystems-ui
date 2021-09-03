@@ -10,11 +10,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		// Store the events
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventAnimateEntranceEnd: any;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventResizeOberver: any;
 
-		// ProgressContainer htmlElement
-		private _progressConatainerElem: HTMLElement;
 		// ProgressSVG htmlElement
 		private _progressSvgElem: HTMLElement;
 
@@ -25,20 +21,25 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		private _strokeDasharray: number;
 		private _strokeDashoffset: number;
 
-		// TrailSVG htmlElement
-		private _trailSvgElem: HTMLElement;
-
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new ProgressCircleConfig(configs));
 
 			this._eventAnimateEntranceEnd = this._animateEntranceEnd.bind(this);
-			this._eventResizeOberver = this._updateCircleProps.bind(this);
 		}
 
 		// Set the resizeObserver
 		private _addResizeOberser(): void {
-			this._resizeOberver = new ResizeObserver(this._eventResizeOberver);
+			this._resizeOberver = new ResizeObserver((entries) => {
+				// We wrap it in requestAnimationFrame to avoid this error - ResizeObserver loop limit exceeded
+				requestAnimationFrame(() => {
+					if (!Array.isArray(entries) || !entries.length) {
+						return;
+					}
+
+					this._updateCircleProps();
+				});
+			});
 			this._resizeOberver.observe(this._selfElem);
 		}
 
@@ -58,30 +59,38 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 
 		// Convert progress value into offset to assign to our circle
 		private _progressToOffset(): void {
+			// Get the pattern parent size
 			const _elementSize =
 				this._selfElem.parentElement.clientHeight < this._selfElem.parentElement.clientWidth
 					? this._selfElem.parentElement.clientHeight
 					: this._selfElem.parentElement.clientWidth;
 
+			// Check the maxValue that the circle must have
 			if (this._selfElem.clientHeight < this._selfElem.parentElement.clientWidth) {
 				this._circletSize = this._selfElem.parentElement.clientWidth;
 			} else {
 				this._circletSize = _elementSize;
 			}
 
-			Helper.Style.SetStyleAttribute(this._selfElem, Enum.InlineStyleProp.CircleSize, this._circletSize + 'px');
+			// Set the css variable to
+			Helper.Style.SetStyleAttribute(
+				this._selfElem,
+				Enum.InlineStyleProp.CircleSize,
+				this._circletSize + Constants.Pixel
+			);
 
 			const _radius = Math.floor(this._circletSize / 2 - this._configs.Thickness / 2);
 			this._circleCircumference = _radius * 2 * Math.PI;
-
-			// Set the radius SVG value in order to force the svg repainting
-			Helper.Style.SetStyleAttribute(this._progressSvgElem, 'r', _radius);
-			Helper.Style.SetStyleAttribute(this._trailSvgElem, 'r', _radius);
 
 			// set the base values
 			this._strokeDashoffset = this._strokeDasharray = this._circleCircumference;
 
 			// Set the css variables that will be used at ProgressCircle
+			Helper.Style.SetStyleAttribute(
+				this._selfElem,
+				Enum.InlineStyleProp.CircleRadius,
+				_radius + Constants.Pixel
+			);
 			Helper.Style.SetStyleAttribute(this._selfElem, Enum.InlineStyleProp.StrokeDasharray, this._strokeDasharray);
 			Helper.Style.SetStyleAttribute(
 				this._selfElem,
@@ -104,7 +113,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			Helper.Style.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.Thickness,
-				this._configs.Thickness + 'px'
+				this._configs.Thickness + Constants.Pixel
 			);
 
 			Helper.Style.SetStyleAttribute(
@@ -131,11 +140,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		// Update info based on htmlContent
 		private _setHtmlElements(): void {
 			// Set the html reference that will be used to do all the needed calcs
-			this._progressConatainerElem = this._selfElem.querySelector(
-				Constants.Dot + ProgressEnum.CssClass.Container
-			);
 			this._progressSvgElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Progress);
-			this._trailSvgElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Trail);
 		}
 
 		// Trigger all the meethods responsible to proper update the Circle
@@ -214,7 +219,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 					Helper.Style.SetStyleAttribute(
 						this._selfElem,
 						ProgressEnum.InlineStyleProp.Thickness,
-						propertyValue + 'px'
+						propertyValue + Constants.Pixel
 					);
 
 					break;
