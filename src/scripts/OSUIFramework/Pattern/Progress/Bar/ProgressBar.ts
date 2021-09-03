@@ -22,7 +22,6 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 			this._progressElem.removeEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._eventAnimateEntranceEnd);
 
 			Helper.Style.RemoveClass(this._progressElem, ProgressEnum.CssClass.AddInitialAnimation);
-			console.log('removed');
 		}
 
 		// Set the default inline css variables
