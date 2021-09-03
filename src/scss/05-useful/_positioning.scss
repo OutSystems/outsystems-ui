@@ -15,6 +15,6 @@
 
 ///
 .sticky {
-	position: sticky;
 	position: -webkit-sticky; //Fix for older iPhones
+	position: sticky;
 }

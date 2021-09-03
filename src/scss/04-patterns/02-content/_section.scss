@@ -24,6 +24,7 @@
 	&-group {
 		&.is--sticky {
 			.section-title {
+				position: -webkit-sticky; //Fix for older iPhones
 				position: sticky;
 				top: calc(var(--section-top-position) + var(--os-safe-area-top));
 				z-index: 90;
