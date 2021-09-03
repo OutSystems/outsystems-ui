@@ -49,9 +49,9 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			Helper.Style.RemoveClass(this._progressSvgElem, ProgressEnum.CssClass.AddInitialAnimation);
 			Helper.Style.RemoveClass(this._progressSvgElem, ProgressEnum.CssClass.AnimateProgressChange);
 
-			// Check if the resizeOberver already exist
+			// Check if the resizeOberver does not exist yet!
 			if (!this._resizeOberver) {
-				// Element has fully loaded, add the resizeObserver
+				// Create the Oberver
 				this._addResizeOberser();
 			}
 		}
@@ -74,6 +74,10 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			const _radius = Math.floor(this._circletSize / 2 - this._configs.Thickness / 2);
 			this._circleCircumference = _radius * 2 * Math.PI;
 
+			// Set the radius SVG value in order to force the svg repainting
+			Helper.Style.SetStyleAttribute(this._progressSvgElem, 'r', _radius);
+			Helper.Style.SetStyleAttribute(this._trailSvgElem, 'r', _radius);
+
 			// set the base values
 			this._strokeDashoffset = this._strokeDasharray = this._circleCircumference;
 
@@ -84,10 +88,6 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 				Enum.InlineStyleProp.StrokeDashoffset,
 				this._strokeDashoffset
 			);
-
-			// Set the radius SVG value in order to force the svg repainting
-			Helper.Style.SetStyleAttribute(this._progressSvgElem, 'r', _radius);
-			Helper.Style.SetStyleAttribute(this._trailSvgElem, 'r', _radius);
 
 			// Ensure that this will run only at the Initialization
 			if (!this.isBuilt) {
@@ -103,27 +103,27 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		private _setCssVariables(): void {
 			Helper.Style.SetStyleAttribute(
 				this._selfElem,
-				Enum.InlineStyleProp.Thickness,
+				ProgressEnum.InlineStyleProp.Thickness,
 				this._configs.Thickness + 'px'
 			);
 
 			Helper.Style.SetStyleAttribute(
 				this._selfElem,
-				Enum.InlineStyleProp.ProgressColor,
+				ProgressEnum.InlineStyleProp.ProgressColor,
 				Helper.Style.GetColorValueFromColorType(this._configs.ProgressColor)
 			);
 
 			Helper.Style.SetStyleAttribute(
 				this._selfElem,
-				Enum.InlineStyleProp.Shape,
+				ProgressEnum.InlineStyleProp.Shape,
 				this._configs.Shape === GlobalEnum.ShapeTypes.Sharp
-					? ProgressEnum.SvgShapeTypes.Sharp
-					: ProgressEnum.SvgShapeTypes.Rounded
+					? ProgressEnum.ShapeTypes.Sharp
+					: ProgressEnum.ShapeTypes.Round
 			);
 
 			Helper.Style.SetStyleAttribute(
 				this._selfElem,
-				Enum.InlineStyleProp.TrailColor,
+				ProgressEnum.InlineStyleProp.TrailColor,
 				Helper.Style.GetColorValueFromColorType(this._configs.TrailColor)
 			);
 		}
@@ -131,7 +131,9 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		// Update info based on htmlContent
 		private _setHtmlElements(): void {
 			// Set the html reference that will be used to do all the needed calcs
-			this._progressConatainerElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Container);
+			this._progressConatainerElem = this._selfElem.querySelector(
+				Constants.Dot + ProgressEnum.CssClass.Container
+			);
 			this._progressSvgElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Progress);
 			this._trailSvgElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Trail);
 		}
@@ -204,20 +206,20 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		public changeProperty(propertyName: string, propertyValue: any): void {
 			switch (propertyName) {
-				case Enum.Properties.Thickness:
+				case ProgressEnum.Properties.Thickness:
 					this._configs.Thickness = propertyValue;
 
 					this._updateCircleProps();
 
 					Helper.Style.SetStyleAttribute(
 						this._selfElem,
-						Enum.InlineStyleProp.Thickness,
+						ProgressEnum.InlineStyleProp.Thickness,
 						propertyValue + 'px'
 					);
 
 					break;
 
-				case Enum.Properties.Progress:
+				case ProgressEnum.Properties.Progress:
 					this._configs.Progress = propertyValue;
 
 					// Do the transition animation
@@ -233,36 +235,36 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 
 					break;
 
-				case Enum.Properties.ProgressColor:
+				case ProgressEnum.Properties.ProgressColor:
 					this._configs.ProgressColor = propertyValue;
 
 					Helper.Style.SetStyleAttribute(
 						this._selfElem,
-						Enum.InlineStyleProp.ProgressColor,
+						ProgressEnum.InlineStyleProp.ProgressColor,
 						Helper.Style.GetColorValueFromColorType(this._configs.ProgressColor)
 					);
 
 					break;
 
-				case Enum.Properties.Shape:
+				case ProgressEnum.Properties.Shape:
 					this._configs.Shape = propertyValue;
 
 					Helper.Style.SetStyleAttribute(
 						this._selfElem,
-						Enum.InlineStyleProp.Shape,
+						ProgressEnum.InlineStyleProp.Shape,
 						this._configs.Shape === GlobalEnum.ShapeTypes.Sharp
 							? ProgressEnum.ShapeTypes.Sharp
-							: ProgressEnum.ShapeTypes.Rounded
+							: ProgressEnum.ShapeTypes.Round
 					);
 
 					break;
 
-				case Enum.Properties.TrailColor:
+				case ProgressEnum.Properties.TrailColor:
 					this._configs.TrailColor = propertyValue;
 
 					Helper.Style.SetStyleAttribute(
 						this._selfElem,
-						Enum.InlineStyleProp.TrailColor,
+						ProgressEnum.InlineStyleProp.TrailColor,
 						Helper.Style.GetColorValueFromColorType(this._configs.TrailColor)
 					);
 

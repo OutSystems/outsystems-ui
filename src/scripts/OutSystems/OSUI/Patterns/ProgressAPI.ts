@@ -34,24 +34,9 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 			throw new Error(`There is already an ProgressItem registered under id: ${progressId}`);
 		}
 
-		let _progressItem = null;
+		const _progressItem = OSUIFramework.Patterns.Progress.Factory.NewProgress(progressId, type, configs);
 
-		// Check ProgressType before create the instance
-		switch (type) {
-			case Enum.Progress.Circle:
-				_progressItem = new OSUIFramework.Patterns.Progress.Circle.Circle(progressId, JSON.parse(configs));
-
-				_progressItemsMap.set(progressId, _progressItem);
-
-				break;
-
-			case Enum.Progress.Bar:
-				_progressItem = new OSUIFramework.Patterns.Progress.Bar.Bar(progressId, JSON.parse(configs));
-
-				_progressItemsMap.set(progressId, _progressItem);
-
-				break;
-		}
+		_progressItemsMap.set(progressId, _progressItem);
 
 		return _progressItem;
 	}
