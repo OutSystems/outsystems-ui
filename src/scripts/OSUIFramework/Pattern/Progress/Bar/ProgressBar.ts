@@ -26,10 +26,29 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 
 		// Set the default inline css variables
 		private _setCssVariables(): void {
-			this.changeProperty(ProgressEnum.Properties.Thickness, this._configs.Thickness);
-			this.changeProperty(ProgressEnum.Properties.ProgressColor, this._configs.ProgressColor);
-			this.changeProperty(ProgressEnum.Properties.Shape, this._configs.Shape);
-			this.changeProperty(ProgressEnum.Properties.TrailColor, this._configs.TrailColor);
+			Helper.Style.SetStyleAttribute(
+				this._selfElem,
+				ProgressEnum.InlineStyleProp.Thickness,
+				this._configs.Thickness + Constants.Pixel
+			);
+
+			Helper.Style.SetStyleAttribute(
+				this._selfElem,
+				ProgressEnum.InlineStyleProp.ProgressColor,
+				Helper.Style.GetColorValueFromColorType(this._configs.ProgressColor)
+			);
+
+			Helper.Style.SetStyleAttribute(
+				this._selfElem,
+				ProgressEnum.InlineStyleProp.Shape,
+				Helper.Style.GetBorderRadiusValueFromShapeType(this._configs.Shape)
+			);
+
+			Helper.Style.SetStyleAttribute(
+				this._selfElem,
+				ProgressEnum.InlineStyleProp.TrailColor,
+				Helper.Style.GetColorValueFromColorType(this._configs.TrailColor)
+			);
 		}
 
 		// Update info based on htmlContent
