@@ -7,8 +7,6 @@ namespace OSUIFramework.Patterns.Progress.ProgressEnum {
 		AddInitialAnimation = 'animate-entrance',
 		AnimateProgressChange = 'animate-progress-change',
 		Container = 'osui-progress-container',
-		Content = 'osui-progress-content',
-		Trail = 'osui-progress-trail',
 	}
 
 	/**
@@ -38,7 +36,6 @@ namespace OSUIFramework.Patterns.Progress.ProgressEnum {
 	export enum ProgressTypes {
 		Bar = 'Bar',
 		Circle = 'Circle',
-		CircleFraction = 'CircleFraction',
 	}
 
 	/**

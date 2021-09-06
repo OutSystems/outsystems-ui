@@ -59,10 +59,10 @@ namespace OSUIFramework.Helper.Style {
 	 */
 	export function HasCssClassPosition(elem: HTMLElement): string {
 		if (elem) {
-			const classesEnum = Object.keys(GlobalEnum.OSUICssClassPosition);
+			const classesEnum = Object.keys(GlobalEnum.CssClassPosition);
 			for (let i = 0; i < classesEnum.length; ++i) {
-				if (elem.classList.contains(GlobalEnum.OSUICssClassPosition[classesEnum[i]])) {
-					return GlobalEnum.OSUICssClassPosition[classesEnum[i]];
+				if (elem.classList.contains(GlobalEnum.CssClassPosition[classesEnum[i]])) {
+					return GlobalEnum.CssClassPosition[classesEnum[i]];
 				}
 			}
 			return null;

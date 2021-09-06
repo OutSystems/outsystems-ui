@@ -22,6 +22,7 @@ namespace OSUIFramework.Patterns.Progress.Factory {
 				break;
 
 			case ProgressEnum.ProgressTypes.Bar:
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				_progressItem = new OSUIFramework.Patterns.Progress.Bar.Bar(progressId, JSON.parse(configs));
 
 				break;
