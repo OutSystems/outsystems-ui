@@ -1,14 +1,17 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSUIFramework.Patterns.Carousel {
+namespace Providers.Carousel.OSUISplider.Carousel {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
-	export class Carousel extends AbstractPattern<CarouselConfig> implements ICarousel {
-		private _onChange: Callbacks.OSCarouselChangeEvent;
+	export class Carousel
+		extends OSUIFramework.Patterns.AbstractPattern<OSUIFramework.Patterns.Carousel.CarouselConfig>
+		implements OSUIFramework.Patterns.Carousel.ICarousel
+	{
+		private _onChange: OSUIFramework.Callbacks.OSCarouselChangeEvent;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
-			super(uniqueId, new CarouselConfig(configs));
+			super(uniqueId, new OSUIFramework.Patterns.Carousel.CarouselConfig(configs));
 		}
 
 		// Set the html references that will be used to manage the cssClasses and atribute properties
@@ -38,8 +41,6 @@ namespace OSUIFramework.Patterns.Carousel {
 		public changeProperty(propertyName: string, propertyValue: any): void {
 			// Check which property changed and call respective method to update it
 			switch (propertyName) {
-				case Enum.Properties.Navigation:
-					break;
 				default:
 					super.changeProperty(propertyName, propertyValue);
 					break;
@@ -52,8 +53,12 @@ namespace OSUIFramework.Patterns.Carousel {
 		}
 
 		// Set callbacks for the onToggle event
-		public registerCallback(callback: Callbacks.OSCarouselChangeEvent): void {
+		public registerCallback(callback: OSUIFramework.Callbacks.OSCarouselChangeEvent): void {
 			this._onChange = callback;
+		}
+
+		public updateOnRender(): void {
+			console.log('render');
 		}
 	}
 }

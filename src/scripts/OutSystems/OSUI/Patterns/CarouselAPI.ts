@@ -28,7 +28,7 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 			throw new Error(`There is already a carousel registered under id: ${carouselId}`);
 		}
 
-		const _newCarousel = new OSUIFramework.Patterns.Carousel.Carousel(carouselId, JSON.parse(configs));
+		const _newCarousel = new Providers.Carousel.OSUISplider.Carousel.Carousel(carouselId, JSON.parse(configs));
 		_carouselMap.set(carouselId, _newCarousel);
 		return _newCarousel;
 	}
