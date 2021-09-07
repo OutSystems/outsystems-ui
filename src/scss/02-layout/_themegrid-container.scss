@@ -30,6 +30,16 @@
 // Responsive --------------------------------------------------------------------
 
 ///
+.tablet,
+.phone {
+	.layout-native {
+		.main-content.ThemeGrid_Container {
+			padding: 0;
+		}
+	}
+}
+
+///
 .tablet {
 	.header {
 		.ThemeGrid_Container {
@@ -48,12 +58,6 @@
 
 ///
 .phone {
-	.layout-native {
-		.main-content.ThemeGrid_Container {
-			padding: 0;
-		}
-	}
-
 	.header {
 		.ThemeGrid_Container {
 			padding-left: calc(var(--os-safe-area-left) + var(--space-base));

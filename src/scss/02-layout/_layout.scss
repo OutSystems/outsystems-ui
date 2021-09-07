@@ -63,16 +63,16 @@ body,
 		}
 	}
 
-	.main,
-	&.fixed-header .main {
-		padding-top: 0;
-	}
-
 	.main {
 		display: flex;
 		flex: 1;
 		flex-direction: column;
 	}
+}
+
+.main,
+.fixed-header .main {
+	padding-top: 0;
 }
 
 ///
