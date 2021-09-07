@@ -9,6 +9,7 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * @param {string} propertyName
 	 * @param {*} propertyValue
 	 */
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 	export function ChangeProperty(sidebarId: string, propertyName: string, propertyValue: any): void {
 		const sidebar = GetSidebarById(sidebarId);
 		sidebar.changeProperty(propertyName, propertyValue);

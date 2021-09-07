@@ -3,9 +3,5 @@ namespace OSUIFramework.Patterns.Carousel {
 	/**
 	 * Defines the interface for OutSystemsUI Carousel Pattern
 	 */
-	export interface ICarousel extends Interface.IPattern {
-		
-        //Implement you code here
-
-	}
+	export interface ICarousel extends Interface.IPattern, Interface.ICallback {}
 }
