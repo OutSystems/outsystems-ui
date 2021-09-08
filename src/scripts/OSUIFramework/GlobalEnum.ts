@@ -1,6 +1,14 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.GlobalEnum {
 	/**
+	 * OutSystemsUI Responsive breakpoints
+	 */
+	export enum Breakpoints {
+		Tablet = 1024,
+		Phone = 768,
+	}
+
+	/**
 	 * OutSystemsUI common properties
 	 */
 	export enum CommonPatternsProperties {

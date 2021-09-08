@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.Carousel.OSUISplide.Carousel {
@@ -14,16 +15,8 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		private _placeholderContent: NodeList;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _provider: any;
-		private _splideOptions = {
-			arrows: false,
-			pagination: false, // dots
-			perPage: 1,
-			autoplay: false,
-			type: 'loop',
-			focus: '0',
-			padding: false,
-			start: 0,
-		};
+		// eslint-disable-next-line @typescript-eslint/explicit-member-accessibility, @typescript-eslint/no-explicit-any
+		private _splideOptions: Record<string, any> = {};
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
@@ -96,23 +89,24 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 					this._splideOptions.pagination = true;
 			}
 
-			switch (OutSystems.OSUI.Utils.GetDevice()) {
-				case OSUIFramework.GlobalEnum.Devices.Desktop:
-					this._splideOptions.perPage = this._configs.ItemsPerSlide.Desktop;
-					break;
-				case OSUIFramework.GlobalEnum.Devices.Tablet:
-					this._splideOptions.perPage = this._configs.ItemsPerSlide.Tablet;
-					break;
-				case OSUIFramework.GlobalEnum.Devices.Phone:
-					this._splideOptions.perPage = this._configs.ItemsPerSlide.Phone;
-					break;
-			}
-
-			this._splideOptions.autoplay = this._configs.OptionalConfigs.Autoplay;
-			this._splideOptions.type = this._configs.OptionalConfigs.Loop ? 'loop' : 'slide';
-			this._splideOptions.focus = this._configs.OptionalConfigs.FocusCenter ? 'center' : '0';
-			this._splideOptions.padding = this._configs.OptionalConfigs.Padding;
-			this._splideOptions.start = this._configs.OptionalConfigs.InitialPosition;
+			this._splideOptions = {
+				// MISSING SCALE!!!
+				direction: OutSystems.OSUI.Utils.GetIsRTL ? 'rtl' : 'ltr',
+				perPage: this._configs.ItemsPerSlide.Desktop,
+				autoplay: this._configs.OptionalConfigs.Autoplay,
+				type: this._configs.OptionalConfigs.Loop ? 'loop' : 'slide',
+				focus: this._configs.OptionalConfigs.FocusCenter ? 'center' : '0',
+				padding: this._configs.OptionalConfigs.Padding,
+				start: this._configs.OptionalConfigs.InitialPosition,
+				breakpoints: {
+					768: {
+						perPage: this._configs.ItemsPerSlide.Phone,
+					},
+					1024: {
+						perPage: this._configs.ItemsPerSlide.Tablet,
+					},
+				},
+			};
 		}
 
 		public build(): void {
