@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.Carousel.Splide.Carousel {
+namespace Providers.Carousel.OSUISplide.Carousel {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
@@ -12,6 +12,18 @@ namespace Providers.Carousel.Splide.Carousel {
 		private _carouselList: HTMLElement;
 		private _onChange: OSUIFramework.Callbacks.OSCarouselChangeEvent;
 		private _placeholderContent: NodeList;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		private _provider: any;
+		private _splideOptions = {
+			arrows: false,
+			pagination: false, // dots
+			perPage: 1,
+			autoplay: false,
+			type: 'loop',
+			focus: '0',
+			padding: false,
+			start: 0,
+		};
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
@@ -41,6 +53,12 @@ namespace Providers.Carousel.Splide.Carousel {
 			`;
 		}
 
+		private _createSplideCarousel(): void {
+			//this._provider = new Splide(this._selfElem, this._splideOptions).mount()
+			// eslint-disable-next-line no-debugger
+			debugger;
+		}
+
 		private _getPlaceholderContent(): NodeList {
 			this._placeholderContent = this._selfElem.querySelector(
 				OSUIFramework.Constants.Dot + OSUIFramework.Patterns.Carousel.Enum.CssClass.Content
@@ -56,10 +74,45 @@ namespace Providers.Carousel.Splide.Carousel {
 
 		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _setInitialCssClasses(): void {
-			// Set IsOpen class
-			// if (this._isOpen) {
-			// 	Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsOpen);
-			// }
+			OSUIFramework.Helper.Style.AddClass(this._selfElem, Enum.CssClass.Splide);
+		}
+
+		private _setLibraryOptions(): void {
+			switch (this._configs.Navigation) {
+				case '':
+					this._splideOptions.arrows = false;
+					this._splideOptions.pagination = false;
+					break;
+				case 'dots':
+					this._splideOptions.arrows = false;
+					this._splideOptions.pagination = true;
+					break;
+				case 'arrows':
+					this._splideOptions.arrows = true;
+					this._splideOptions.pagination = false;
+					break;
+				default:
+					this._splideOptions.arrows = true;
+					this._splideOptions.pagination = true;
+			}
+
+			switch (OutSystems.OSUI.Utils.GetDevice()) {
+				case OSUIFramework.GlobalEnum.Devices.Desktop:
+					this._splideOptions.perPage = this._configs.ItemsPerSlide.Desktop;
+					break;
+				case OSUIFramework.GlobalEnum.Devices.Tablet:
+					this._splideOptions.perPage = this._configs.ItemsPerSlide.Tablet;
+					break;
+				case OSUIFramework.GlobalEnum.Devices.Phone:
+					this._splideOptions.perPage = this._configs.ItemsPerSlide.Phone;
+					break;
+			}
+
+			this._splideOptions.autoplay = this._configs.OptionalConfigs.Autoplay;
+			this._splideOptions.type = this._configs.OptionalConfigs.Loop ? 'loop' : 'slide';
+			this._splideOptions.focus = this._configs.OptionalConfigs.FocusCenter ? 'center' : '0';
+			this._splideOptions.padding = this._configs.OptionalConfigs.Padding;
+			this._splideOptions.start = this._configs.OptionalConfigs.InitialPosition;
 		}
 
 		public build(): void {
@@ -72,6 +125,10 @@ namespace Providers.Carousel.Splide.Carousel {
 			this._setHtmlElements();
 
 			this._setInitialCssClasses();
+
+			this._setLibraryOptions();
+
+			this._createSplideCarousel();
 
 			this.finishBuild();
 		}

@@ -33,6 +33,15 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
+	 * OutSystemsUI Devices
+	 */
+	export enum Devices {
+		Desktop = 'desktop',
+		Tablet = 'tablet',
+		Phone = 'phone',
+	}
+
+	/**
 	 * OutSystemsUI Direction options
 	 */
 	export enum Direction {
