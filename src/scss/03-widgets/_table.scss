@@ -172,11 +172,10 @@
 				vertical-align: inherit;
 				width: auto !important;
 			}
-			
+
 			td:before {
 				display: none;
 			}
-			
 		}
 	}
 }
@@ -185,14 +184,14 @@
 .phone {
 	.layout-native {
 		.table {
-			display: block;
-			overflow: auto;
-			position: relative;
-		}
+			:not(.table-responsive) {
+				display: block;
+				overflow: auto;
+				position: relative;
 
-		.table:not(.table-responsive) {
-			td:before {
-				display: none;
+				td:before {
+					display: none;
+				}
 			}
 		}
 	}
