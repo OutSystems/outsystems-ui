@@ -3,4 +3,16 @@
 /// @group Patterns-Carousel
 /// Patterns - Content - Carousel
 
-//Implement you code here
+///
+.osui-carousel {
+	&.has-scale {
+		.splide__slide {
+			transform: scale(0.8);
+			transition: transform 300ms ease;
+
+			&.is-active {
+				transform: scale(1);
+			}
+		}
+	}
+}

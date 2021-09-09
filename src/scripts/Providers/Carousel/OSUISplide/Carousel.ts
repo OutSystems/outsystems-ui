@@ -72,15 +72,15 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 
 		private _setLibraryOptions(): void {
 			switch (this._configs.Navigation) {
-				case '':
+				case Enum.Navigation.Empty:
 					this._splideOptions.arrows = false;
 					this._splideOptions.pagination = false;
 					break;
-				case 'dots':
+				case Enum.Navigation.Dots:
 					this._splideOptions.arrows = false;
 					this._splideOptions.pagination = true;
 					break;
-				case 'arrows':
+				case Enum.Navigation.Arrows:
 					this._splideOptions.arrows = true;
 					this._splideOptions.pagination = false;
 					break;
@@ -90,7 +90,6 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			}
 
 			this._splideOptions = {
-				// MISSING SCALE!!!
 				direction: OutSystems.OSUI.Utils.GetIsRTL ? 'rtl' : 'ltr',
 				perPage: this._configs.ItemsPerSlide.Desktop,
 				autoplay: this._configs.OptionalConfigs.Autoplay,
@@ -107,6 +106,9 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 					},
 				},
 			};
+
+			// Manage Scale option
+			this.handleScale(true);
 		}
 
 		public build(): void {
@@ -145,6 +147,19 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		// Set callbacks for the onToggle event
 		public registerCallback(callback: OSUIFramework.Callbacks.OSCarouselChangeEvent): void {
 			this._onChange = callback;
+		}
+
+		public handleScale(setScale: boolean): void {
+			const containsScaleClass = OSUIFramework.Helper.Style.ContainsClass(
+				this._selfElem,
+				Enum.CssClass.ScaleOption
+			);
+
+			if (setScale) {
+				OSUIFramework.Helper.Style.AddClass(this._selfElem, Enum.CssClass.ScaleOption);
+			} else if (containsScaleClass) {
+				OSUIFramework.Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.ScaleOption);
+			}
 		}
 
 		public updateOnRender(): void {

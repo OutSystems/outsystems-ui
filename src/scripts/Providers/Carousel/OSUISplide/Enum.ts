@@ -8,5 +8,16 @@ namespace Providers.Carousel.OSUISplide.Enum {
 		SplideTrack = 'splide__track',
 		SplideList = 'splide__list',
 		SplideSlide = 'splide__slide',
+		ScaleOption = 'has-scale',
+	}
+
+	/**
+	 * Splide Navigation options
+	 */
+	export enum Navigation {
+		Empty = '',
+		Arrows = 'arrows',
+		Dots = 'dots',
+		Both = 'both',
 	}
 }
