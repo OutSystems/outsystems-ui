@@ -225,9 +225,11 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 					break;
 
 				case ProgressEnum.Properties.Progress:
-					// Ensure that progress has correct values
-					if (propertyValue < 0 || propertyValue > 100) {
-						return;
+					// Ensure that progress has the min and max correct values
+					if (propertyValue < 0) {
+						propertyValue = 0;
+					} else if (propertyValue > 100) {
+						propertyValue = 100;
 					}
 
 					this._configs.Progress = propertyValue;
