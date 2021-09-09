@@ -9,41 +9,56 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		extends OSUIFramework.Patterns.AbstractPattern<OSUIFramework.Patterns.Carousel.CarouselConfig>
 		implements OSUIFramework.Patterns.Carousel.ICarousel
 	{
-		private _carouselItems: [string];
-		private _carouselList: HTMLElement;
+		private _hasList: boolean;
+		private _listWidget: HTMLElement;
 		private _onChange: OSUIFramework.Callbacks.OSCarouselChangeEvent;
+		private _placeholder: HTMLElement;
 		private _placeholderContent: NodeList;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _provider: any;
 		// eslint-disable-next-line @typescript-eslint/explicit-member-accessibility, @typescript-eslint/no-explicit-any
 		private _splideOptions: Record<string, any> = {};
+		private _splideTrack: HTMLElement;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new OSUIFramework.Patterns.Carousel.CarouselConfig(configs));
 		}
 
-		private _createCarouselItems(): string {
-			let carouselList = '';
+		private _checkListWidget(): void {
+			const listElements = OutSystems.OSUI.Utils.ChildrenMatches(
+				this._placeholder,
+				OSUIFramework.Constants.Dot + OSUIFramework.GlobalEnum.CssClassElements.List
+			);
 
-			for (const item of this._placeholderContent) {
-				const wrapper = document.createElement('li');
-				wrapper.appendChild(item.cloneNode(true));
+			this._hasList = listElements.length > 0;
 
-				carouselList += `<li class=${Enum.CssClass.SplideSlide}>${wrapper.innerHTML}</li>`;
+			if (this._hasList) {
+				this._listWidget = this._selfElem.querySelector(
+					OSUIFramework.Constants.Dot + OSUIFramework.GlobalEnum.CssClassElements.List
+				);
+
+				this._selfElem.parentNode.append(this._listWidget);
 			}
-
-			return carouselList;
 		}
 
 		private _createHtmlStructure(): void {
-			this._selfElem.innerHTML = `
-			<div class=${Enum.CssClass.SplideTrack}>
-				<ul class=${Enum.CssClass.SplideList}>
-					${this._createCarouselItems()}
-				</ul>
-			</div>
-			`;
+			// Create element to be the splide__track
+			this._splideTrack = document.createElement('div');
+			// Move this element abole the placeholder container
+			this._placeholder.parentNode.replaceChild(this._splideTrack, this._placeholder);
+			// Append the placeholder container inside the new div created
+			this._splideTrack.innerHTML = this._placeholder.outerHTML;
+
+			// Update elements reference after DOM manipulation
+			this._setHtmlElements();
+
+			// Add the placeholder content alreay with the correct html structure per item, expected ny the library
+			this._placeholder.innerHTML = this._getCarouselItemsHtml();
+
+			if (this._hasList) {
+				this._listWidget.style.display = 'none';
+			}
 		}
 
 		private _createSplideCarousel(): void {
@@ -52,22 +67,41 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			debugger;
 		}
 
+		private _getCarouselItemsHtml(): string {
+			let carouselList = '';
+
+			for (const item of this._placeholderContent) {
+				const wrapper = document.createElement('div');
+				wrapper.appendChild(item.cloneNode(true));
+				// For each element inside the platform's placeholder, wrap it on a div with the class expected by the library
+				carouselList += `<div class=${Enum.CssClass.SplideSlide}>${wrapper.innerHTML}</div>`;
+			}
+
+			return carouselList;
+		}
+
 		private _getPlaceholderContent(): NodeList {
-			this._placeholderContent = this._selfElem.querySelector(
-				OSUIFramework.Constants.Dot + OSUIFramework.Patterns.Carousel.Enum.CssClass.Content
-			).childNodes;
+			if (this._hasList) {
+				this._placeholderContent = this._listWidget.childNodes;
+			} else {
+				this._placeholderContent = this._placeholder.childNodes;
+			}
 
 			return this._placeholderContent;
 		}
 
 		// Set the html references that will be used to manage the cssClasses and atribute properties
 		private _setHtmlElements(): void {
-			//
+			this._placeholder = this._selfElem.querySelector(
+				OSUIFramework.Constants.Dot + OSUIFramework.Patterns.Carousel.Enum.CssClass.Content
+			);
 		}
 
 		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _setInitialCssClasses(): void {
 			OSUIFramework.Helper.Style.AddClass(this._selfElem, Enum.CssClass.Splide);
+			OSUIFramework.Helper.Style.AddClass(this._placeholder, Enum.CssClass.SplideList);
+			OSUIFramework.Helper.Style.AddClass(this._splideTrack, Enum.CssClass.SplideTrack);
 		}
 
 		private _setLibraryOptions(): void {
@@ -90,12 +124,14 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			}
 
 			this._splideOptions = {
-				direction: OutSystems.OSUI.Utils.GetIsRTL ? 'rtl' : 'ltr',
+				direction: OutSystems.OSUI.Utils.GetIsRTL() ? 'rtl' : 'ltr',
 				perPage: this._configs.ItemsPerSlide.Desktop,
-				autoplay: this._configs.OptionalConfigs.Autoplay,
+				autoplay: this._configs.OptionalConfigs.AutoPlay,
 				type: this._configs.OptionalConfigs.Loop ? 'loop' : 'slide',
-				focus: this._configs.OptionalConfigs.FocusCenter ? 'center' : '0',
+				focus: 'center',
+				autoWidth: this._configs.OptionalConfigs.AutoWidth,
 				padding: this._configs.OptionalConfigs.Padding,
+				gap: this._configs.OptionalConfigs.Gap,
 				start: this._configs.OptionalConfigs.InitialPosition,
 				breakpoints: {
 					768: {
@@ -108,17 +144,19 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			};
 
 			// Manage Scale option
-			this.handleScale(true);
+			this.handleScale(this._configs.OptionalConfigs.Scale);
 		}
 
 		public build(): void {
 			super.build();
 
+			this._setHtmlElements();
+
+			this._checkListWidget();
+
 			this._getPlaceholderContent();
 
 			this._createHtmlStructure();
-
-			this._setHtmlElements();
 
 			this._setInitialCssClasses();
 
