@@ -34,31 +34,27 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			this._hasList = listElements.length > 0;
 
 			if (this._hasList) {
-				this._listWidget = this._selfElem.querySelector(
-					OSUIFramework.Constants.Dot + OSUIFramework.GlobalEnum.CssClassElements.List
-				);
-
-				this._selfElem.parentNode.append(this._listWidget);
+				this._setListWidgetElem();
 			}
 		}
 
 		private _createHtmlStructure(): void {
 			// Create element to be the splide__track
 			this._splideTrack = document.createElement('div');
-			// Move this element abole the placeholder container
+			// Move this element above the placeholder container
 			this._placeholder.parentNode.replaceChild(this._splideTrack, this._placeholder);
 			// Append the placeholder container inside the new div created
 			this._splideTrack.innerHTML = this._placeholder.outerHTML;
 
 			// Update elements reference after DOM manipulation
 			this._setHtmlElements();
+			this._setListWidgetElem();
 
-			// Add the placeholder content alreay with the correct html structure per item, expected ny the library
-			this._placeholder.innerHTML = this._getCarouselItemsHtml();
+			// Define the element that has the items. The List widget if dynamic content, otherwise get from the placeholder directly
+			const targetList = this._hasList ? this._listWidget : this._placeholder;
 
-			if (this._hasList) {
-				this._listWidget.style.display = 'none';
-			}
+			// Add the placeholder content already with the correct html structure per item, expected by the library
+			this._setCarouselItemsHtml(targetList);
 		}
 
 		private _createSplideCarousel(): void {
@@ -67,17 +63,24 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			debugger;
 		}
 
-		private _getCarouselItemsHtml(): string {
-			let carouselList = '';
-
-			for (const item of this._placeholderContent) {
+		private _setCarouselItemsHtml(targetList: Element): void {
+			for (const item of targetList.children) {
 				const wrapper = document.createElement('div');
-				wrapper.appendChild(item.cloneNode(true));
-				// For each element inside the platform's placeholder, wrap it on a div with the class expected by the library
-				carouselList += `<div class=${Enum.CssClass.SplideSlide}>${wrapper.innerHTML}</div>`;
+				// insert wrapper before el in the DOM tree
+				item.parentNode.insertBefore(wrapper, item);
+				wrapper.classList.add(Enum.CssClass.SplideSlide);
+				// move el into wrapper
+				wrapper.appendChild(item);
 			}
 
-			return carouselList;
+			// Call the foloowing methods here, so that all DOM elements are iterated and ready to init the library
+			this._setInitialCssClasses();
+
+			this._setLibraryOptions();
+
+			this._createSplideCarousel();
+
+			this._setOnchangeEvent();
 		}
 
 		private _getPlaceholderContent(): NodeList {
@@ -90,6 +93,14 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			return this._placeholderContent;
 		}
 
+		private _setOnchangeEvent(): void {
+			this._provider.on('move', function (index) {
+				setTimeout(() => {
+					this._onChange(this.widgetId, index);
+				}, 0);
+			});
+		}
+
 		// Set the html references that will be used to manage the cssClasses and atribute properties
 		private _setHtmlElements(): void {
 			this._placeholder = this._selfElem.querySelector(
@@ -99,9 +110,15 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 
 		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _setInitialCssClasses(): void {
-			OSUIFramework.Helper.Style.AddClass(this._selfElem, Enum.CssClass.Splide);
-			OSUIFramework.Helper.Style.AddClass(this._placeholder, Enum.CssClass.SplideList);
-			OSUIFramework.Helper.Style.AddClass(this._splideTrack, Enum.CssClass.SplideTrack);
+			if (this._hasList) {
+				OSUIFramework.Helper.Style.AddClass(this._splideTrack, Enum.CssClass.Splide);
+				OSUIFramework.Helper.Style.AddClass(this._placeholder, Enum.CssClass.SplideTrack);
+				OSUIFramework.Helper.Style.AddClass(this._listWidget, Enum.CssClass.SplideList);
+			} else {
+				OSUIFramework.Helper.Style.AddClass(this._selfElem, Enum.CssClass.Splide);
+				OSUIFramework.Helper.Style.AddClass(this._placeholder, Enum.CssClass.SplideList);
+				OSUIFramework.Helper.Style.AddClass(this._splideTrack, Enum.CssClass.SplideTrack);
+			}
 		}
 
 		private _setLibraryOptions(): void {
@@ -147,6 +164,12 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			this.handleScale(this._configs.OptionalConfigs.Scale);
 		}
 
+		private _setListWidgetElem(): void {
+			this._listWidget = this._selfElem.querySelector(
+				OSUIFramework.Constants.Dot + OSUIFramework.GlobalEnum.CssClassElements.List
+			);
+		}
+
 		public build(): void {
 			super.build();
 
@@ -157,12 +180,6 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			this._getPlaceholderContent();
 
 			this._createHtmlStructure();
-
-			this._setInitialCssClasses();
-
-			this._setLibraryOptions();
-
-			this._createSplideCarousel();
 
 			this.finishBuild();
 		}
@@ -182,7 +199,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			super.dispose();
 		}
 
-		// Set callbacks for the onToggle event
+		// Set callbacks for the onChange event
 		public registerCallback(callback: OSUIFramework.Callbacks.OSCarouselChangeEvent): void {
 			this._onChange = callback;
 		}

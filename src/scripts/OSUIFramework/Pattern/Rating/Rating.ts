@@ -296,7 +296,6 @@ namespace OSUIFramework.Patterns.Rating {
 		}
 
 		// Set a rating value
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public setValue(value: number, triggerEvent = true): void {
 			if (value !== null) {
 				// Check if passed value is decimal

@@ -102,4 +102,19 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 
 		carousel.registerCallback(callback);
 	}
+
+	/**
+	 * Function that will update on DOM changes inside the Carousel
+	 *
+	 * @export
+	 * @param {string} carouselId
+	 * @return {*}  {OSUIFramework.Patterns.Carousel.ICarousel}
+	 */
+	export function UpdateOnRender(carouselId: string): OSUIFramework.Patterns.Carousel.ICarousel {
+		const carousel = GetCarouselById(carouselId);
+
+		carousel.updateOnRender();
+
+		return carousel;
+	}
 }
