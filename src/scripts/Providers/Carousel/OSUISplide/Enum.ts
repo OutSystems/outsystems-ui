@@ -20,4 +20,10 @@ namespace Providers.Carousel.OSUISplide.Enum {
 		Dots = 'dots',
 		Both = 'both',
 	}
+
+	export enum FocusOnItem {
+		Center = 'center',
+		FirstOnSlide = 'first',
+		LastOnSlide = 'last',
+	}
 }

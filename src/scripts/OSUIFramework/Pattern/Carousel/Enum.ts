@@ -6,6 +6,7 @@ namespace OSUIFramework.Patterns.Carousel.Enum {
 	export enum CssClass {
 		Carousel = 'osui-carousel',
 		Content = 'osui-carousel_content',
+		Track = 'osui-carousel_track',
 	}
 
 	/**
