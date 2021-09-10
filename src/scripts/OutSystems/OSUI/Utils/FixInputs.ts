@@ -11,7 +11,7 @@ namespace OutSystems.OSUI.Utils {
 	 *  - Check the fact that webkitUserSelect prop is also deprecated!
 	 */
 	export function FixInputs(): void {
-		console.log('FixInputs as run!');
+		console.log('FixInputs has run!');
 
 		let originalPosition = 0;
 		let currentPosition = 0;
