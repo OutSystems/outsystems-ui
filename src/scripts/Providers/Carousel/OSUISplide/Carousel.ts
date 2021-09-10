@@ -174,6 +174,9 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		public changeProperty(propertyName: string, propertyValue: any): void {
 			// Check which property changed and call respective method to update it
 			switch (propertyName) {
+				case 'Options':
+					this.updateCarousel(false);
+					break;
 				default:
 					super.changeProperty(propertyName, propertyValue);
 					break;
@@ -220,15 +223,20 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			return currentFocus;
 		}
 
-		public updateCarousel(): void {
-			this._setInitialCssClasses();
-			this._prepareCarouselItems();
+		public updateCarousel(hasDOMChanged: boolean): void {
+			if (hasDOMChanged) {
+				this._setInitialCssClasses();
+				this._prepareCarouselItems();
+			} else {
+				this._setLibraryOptions();
+			}
+
 			this._provider.refresh();
 		}
 
 		public updateOnRender(): void {
 			console.log('render');
-			this.updateCarousel();
+			this.updateCarousel(true);
 		}
 	}
 }
