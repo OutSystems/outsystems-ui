@@ -175,7 +175,8 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			// Check which property changed and call respective method to update it
 			switch (propertyName) {
 				case 'Options':
-					this.updateCarousel(false);
+					// eslint-disable-next-line prefer-const
+					///////USE THIS FOR EACH ONE OutSystems.OSUI.Patterns.CarouselAPI.GetCarouselById('$b4')._provider.refresh()
 					break;
 				default:
 					super.changeProperty(propertyName, propertyValue);
