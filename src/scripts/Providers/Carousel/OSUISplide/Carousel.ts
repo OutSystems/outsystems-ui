@@ -104,7 +104,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		}
 
 		private _setLibraryOptions(): void {
-			switch (this._configs.Navigation) {
+			switch (this.configs.Navigation) {
 				case Enum.Navigation.Empty:
 					this._splideOptions.arrows = false;
 					this._splideOptions.pagination = false;
@@ -129,7 +129,10 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 				perPage: this._configs.ItemsPerSlide.Desktop,
 				autoplay: this._configs.OptionalConfigs.AutoPlay,
 				type: this._configs.OptionalConfigs.Loop ? Enum.FocusOptions.Loop : Enum.FocusOptions.Slide,
-				focus: this.setFocusOnItemOption(this._configs.ItemsPerSlide.Desktop),
+				focus: this.setFocusOnItemOption(
+					this._configs.OptionalConfigs.FocusOnItem,
+					this._configs.ItemsPerSlide.Desktop
+				),
 				autoWidth: this._configs.OptionalConfigs.AutoWidth,
 				padding: this._configs.OptionalConfigs.Padding,
 				gap: this._configs.OptionalConfigs.Gap,
@@ -137,17 +140,58 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 				breakpoints: {
 					768: {
 						perPage: this._configs.ItemsPerSlide.Phone,
-						focus: this.setFocusOnItemOption(this._configs.ItemsPerSlide.Phone),
+						focus: this.setFocusOnItemOption(
+							this._configs.OptionalConfigs.FocusOnItem,
+							this._configs.ItemsPerSlide.Phone
+						),
 					},
 					1024: {
 						perPage: this._configs.ItemsPerSlide.Tablet,
-						focus: this.setFocusOnItemOption(this._configs.ItemsPerSlide.Tablet),
+						focus: this.setFocusOnItemOption(
+							this._configs.OptionalConfigs.FocusOnItem,
+							this._configs.ItemsPerSlide.Tablet
+						),
 					},
 				},
 			};
 
 			// Manage Scale option
 			this.handleScale(this._configs.OptionalConfigs.Scale);
+		}
+
+		private _updateBreakpointsOptions(focusValue = this._configs.OptionalConfigs.FocusOnItem): void {
+			this._provider.options = {
+				breakpoints: {
+					768: {
+						perPage: this._configs.ItemsPerSlide.Phone,
+						focus: this.setFocusOnItemOption(focusValue, this._configs.ItemsPerSlide.Phone),
+					},
+					1024: {
+						perPage: this._configs.ItemsPerSlide.Tablet,
+						focus: this.setFocusOnItemOption(focusValue, this._configs.ItemsPerSlide.Tablet),
+					},
+				},
+			};
+		}
+
+		private _updateNavigationOptions(navigation: string): void {
+			switch (navigation) {
+				case Enum.Navigation.Empty:
+					this._provider.options.arrows = false;
+					this._provider.options.pagination = false;
+					break;
+				case Enum.Navigation.Dots:
+					this._provider.options.arrows = false;
+					this._provider.options.pagination = true;
+					break;
+				case Enum.Navigation.Arrows:
+					this._provider.options.arrows = true;
+					this._provider.options.pagination = false;
+					break;
+				default:
+					this._provider.options.arrows = true;
+					this._provider.options.pagination = true;
+			}
 		}
 
 		public build(): void {
@@ -171,17 +215,64 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 
 			// Check which property changed and call respective method to update it
 			switch (propertyName) {
+				case 'navigation':
+					this._configs.Navigation = propertyValue;
+					this._updateNavigationOptions(propertyValue);
+					break;
+				case 'itemsDesktop':
+					this._configs.ItemsPerSlide.Desktop = propertyValue;
+					this._provider.options.perPage = propertyValue;
+					break;
+				case 'itemsTablet':
+					this._configs.ItemsPerSlide.Tablet = propertyValue;
+					this._updateBreakpointsOptions();
+					break;
+				case 'itemsPhone':
+					this._configs.ItemsPerSlide.Tablet = propertyValue;
+					this._updateBreakpointsOptions();
+					break;
+				case 'autoplay':
+					this._configs.OptionalConfigs.Autoplay = propertyValue;
+					this._provider.options.autoplay = propertyValue;
+					break;
+				case 'autowidth':
+					this._configs.OptionalConfigs.Autowidth = propertyValue;
+					this._provider.options.autoWidth = propertyValue;
+					break;
+				case 'loop':
+					this._configs.OptionalConfigs.Loop = propertyValue;
+					this._provider.options.type = propertyValue ? Enum.FocusOptions.Loop : Enum.FocusOptions.Slide;
+					break;
+				case 'padding':
+					this._configs.OptionalConfigs.Padding = propertyValue;
+					this._provider.options.padding = propertyValue;
+					break;
 				case 'gap':
+					this._configs.OptionalConfigs.Gap = propertyValue;
 					this._provider.options.gap = propertyValue;
-					this.updateCarousel();
-
-					this._configs.OptionalConfigs.gap = propertyValue;
+					break;
+				case 'initialPosition':
+					this._configs.OptionalConfigs.InitialPosition = propertyValue;
+					this._provider.options.start = propertyValue;
+					break;
+				case 'Scale':
+					this._configs.OptionalConfigs.InitialPosition = propertyValue;
+					this.handleScale(propertyValue);
+					break;
+				case 'focus':
+					this._configs.OptionalConfigs.FocusOnItem = propertyValue;
+					this._provider.options.focus = this.setFocusOnItemOption(
+						propertyValue,
+						this._configs.ItemsPerSlide.Desktop
+					);
+					this._updateBreakpointsOptions();
 					break;
 				default:
 					super.changeProperty(propertyName, propertyValue);
 					break;
 			}
 
+			this.updateCarousel();
 			// Unblock UpdateOnRender so that it is able to update on DOM changes inside Carousel content
 			setTimeout(() => {
 				this._blockRender = false;
@@ -214,9 +305,10 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			this._setOnchangeEvent();
 		}
 
-		public setFocusOnItemOption(itemsPerSlide: number): void {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		public setFocusOnItemOption(value: string, itemsPerSlide: number): any {
 			let currentFocus;
-			switch (this._configs.OptionalConfigs.FocusOnItem) {
+			switch (value) {
 				case Enum.FocusOnItem.Center:
 					currentFocus = 'center';
 					break;
