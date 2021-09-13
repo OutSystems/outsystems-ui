@@ -218,6 +218,8 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		}
 
 		public toggleClick(): void {
+			this._isOpen = !this._isOpen;
+			//this._isOpen? Helper.Style.AddClass(this._floatingActions, Enum.CssClasses.Open);
 			this._toggleAttributesAndFocus();
 		}
 	}
