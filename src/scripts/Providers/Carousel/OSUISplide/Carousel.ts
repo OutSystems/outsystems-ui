@@ -13,8 +13,8 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		private _listWidget: HTMLElement;
 		private _onChange: OSUIFramework.Callbacks.OSCarouselChangeEvent;
 		private _placeholder: HTMLElement;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _provider: Splide;
+		private _providerContainer: HTMLElement;
 		// eslint-disable-next-line @typescript-eslint/explicit-member-accessibility, @typescript-eslint/no-explicit-any
 		private _splideOptions: Record<string, any> = {};
 		private _splideTrack: HTMLElement;
@@ -36,19 +36,24 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 				this._listWidget = this._selfElem.querySelector(
 					OSUIFramework.Constants.Dot + OSUIFramework.GlobalEnum.CssClassElements.List
 				);
+
+				this._providerContainer = this._splideTrack;
+			} else {
+				this._providerContainer = this._selfElem;
 			}
 		}
 
 		private _createProviderCarousel(): void {
-			this._prepareCarouselItems();
 			// Call the following methods here, so that all DOM elements are iterated and ready to init the library
+			this._prepareCarouselItems();
 			this._setLibraryOptions();
 
+			// Init the Library
 			this._initProvider();
 		}
 
 		private _initProvider(): void {
-			this._provider = new window.Splide(this._selfElem, this._splideOptions);
+			this._provider = new window.Splide(this._providerContainer, this._splideOptions);
 			this._provider.mount();
 		}
 
@@ -117,10 +122,12 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			}
 
 			this._splideOptions = {
-				direction: OutSystems.OSUI.Utils.GetIsRTL() ? 'rtl' : 'ltr',
+				direction: OutSystems.OSUI.Utils.GetIsRTL()
+					? OSUIFramework.GlobalEnum.Direction.rtl
+					: OSUIFramework.GlobalEnum.Direction.ltr,
 				perPage: this._configs.ItemsPerSlide.Desktop,
 				autoplay: this._configs.OptionalConfigs.AutoPlay,
-				type: this._configs.OptionalConfigs.Loop ? 'loop' : 'slide',
+				type: this._configs.OptionalConfigs.Loop ? Enum.FocusOptions.Loop : Enum.FocusOptions.Slide,
 				focus: this.setFocusOnItemOption(this._configs.ItemsPerSlide.Desktop),
 				autoWidth: this._configs.OptionalConfigs.AutoWidth,
 				padding: this._configs.OptionalConfigs.Padding,
@@ -170,9 +177,11 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			}
 		}
 
-		// Method to remove event listener and destroy sidebar instance
+		// Method to remove and destroy Carousel Splide instance
 		public dispose(): void {
 			super.dispose();
+
+			this._provider.destroy();
 		}
 
 		public handleScale(setScale: boolean): void {

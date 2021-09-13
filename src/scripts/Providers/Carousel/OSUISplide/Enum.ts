@@ -26,4 +26,9 @@ namespace Providers.Carousel.OSUISplide.Enum {
 		FirstOnSlide = 'first',
 		LastOnSlide = 'last',
 	}
+
+	export enum FocusOptions {
+		Loop = 'loop',
+		Slide = 'slide',
+	}
 }
