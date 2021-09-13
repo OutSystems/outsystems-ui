@@ -14,7 +14,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		private _onChange: OSUIFramework.Callbacks.OSCarouselChangeEvent;
 		private _placeholder: HTMLElement;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _provider: any;
+		private _provider: Splide;
 		// eslint-disable-next-line @typescript-eslint/explicit-member-accessibility, @typescript-eslint/no-explicit-any
 		private _splideOptions: Record<string, any> = {};
 		private _splideTrack: HTMLElement;
