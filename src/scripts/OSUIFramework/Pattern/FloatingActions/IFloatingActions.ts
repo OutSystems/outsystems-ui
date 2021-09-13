@@ -3,5 +3,5 @@ namespace OSUIFramework.Patterns.FloatingActions {
 	/**
 	 * Defines the interface for OutSystemsUI Floating Actions Pattern
 	 */
-	export interface IFloatingActions extends Interface.IPattern {}
+	export interface IFloatingActions extends Interface.IPattern, Interface.ICallback {}
 }

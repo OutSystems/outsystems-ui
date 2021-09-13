@@ -19,17 +19,16 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		private _indexArray = [];
 		// Boolean to tell if the pattern is inside the Bottom Bar or not
 		private _insideBottomBar: boolean;
+		//Booelan to tell if the pattern is in the state 'open'
+		private _isOpen: boolean;
 		// Last Floating Action Item
 		private _lastButton: HTMLElement;
+		// Store the callback to be used on the OnClick event
+		private _onClick: Callbacks.OSGeneric;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new FloatingActionsConfig(configs));
-
-			// Set the method that will be assigned to the window click event
-			/*this._eventOnBlur = this._onInputBlur.bind(this);
-			this._eventOnFocus = this._onInputFocus.bind(this);
-			this._eventOnAnimationStart = this._onInputFocus.bind(this);*/
 		}
 
 		// Add Pattern Events
@@ -37,11 +36,16 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			/*this._inputElem.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
 			this._inputElem.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
 			this._inputElem.addEventListener(GlobalEnum.HTMLEvent.AnimationStart, this._eventOnAnimationStart);*/
+			this._floatingActionsButton.removeEventListener(
+				GlobalEnum.HTMLEvent.MouseEnter,
+				this.toggleClick.bind(this)
+			);
+			this._floatingActions.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this.toggleClick.bind(this));
 		}
-
 		private _checkIfInsideBottomBar(): void {
+			console.log('Bottom bar');
 			// Inside Bottom Bar and IOS fix
-			/*if (this._bottomBar && this._floatingActions) {
+			if (this._bottomBar && this._floatingActions) {
 				this._insideBottomBar = this._bottomBar.contains(this._floatingActions);
 			}
 
@@ -53,23 +57,39 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 					if (nativeLayout) {
 						// new native layouts
-						$actions.MoveElement($parameters.FloatingId, '.active-screen .main');
+						//$actions.MoveElement($parameters.FloatingId, '.active-screen .main');
 					} else {
 						// Old native layouts
-						$actions.MoveElement($parameters.FloatingId, '.active-screen .screen');
+						//$actions.MoveElement($parameters.FloatingId, '.active-screen .screen');
 					}
 				}
-				
+
 				if (this._bottomBar) {
-					$parameters.IsInsideBottomBar = true;
+					this._insideBottomBar = true;
 				}
-			}*/
+			}
 		}
+
 		private _manageFloatingActionsEvent(): void {
 			//
 		}
 
-		private _setFocusTrap(e: MouseEvent): void {
+		// Set keyboard interaction - Accessibility
+		private _onButtonKeypress(e: KeyboardEvent): void {
+			//If esc, Close Items
+			if (e.key === GlobalEnum.Keycodes.Tab && this._floatingActions.classList.contains('is--open')) {
+				this.toggleClick();
+			}
+
+			//If enter or space toggle Items
+			if (e.key === GlobalEnum.Keycodes.Enter || e.key === GlobalEnum.Keycodes.Space) {
+				this.toggleClick();
+			}
+
+			this._setFocusTrap(e);
+		}
+
+		private _setFocusTrap(e: KeyboardEvent): void {
 			if (this._floatingActionsItems.length > 0) {
 				const isShiftKey = e.shiftKey;
 
@@ -111,9 +131,11 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			);
 			this._firstButton = this._floatingActionsItems[0];
 			this._lastButton = this._floatingActionsItems[this._floatingActionsItems.length - 1];
+			console.log(this._floatingActionsItems);
 		}
 
 		private _setUpFloatingItems(): void {
+			console.log('floating items');
 			// Check if there are FloatingActionsItems
 			if (this._floatingActionsItems.length > 0) {
 				// Push every floating-item index into a empty array
@@ -126,15 +148,15 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 				// set var --delay on style with each items index, to perform sequential css animation
 				for (let i = 0; i < this._floatingActionsItems.length; i++) {
-					this._floatingActionsItem[i].setAttribute('style', '--delay: ' + (this._indexArray[i] + 1));
+					this._floatingActionsItems[i].setAttribute('style', '--delay: ' + (this._indexArray[i] + 1));
 				}
 			}
 		}
 
 		// Method to toggle a11y attributes and focus
-		private _toggleAttributesAndFocus(isOpen: boolean, isHover: boolean): void {
+		private _toggleAttributesAndFocus(): void {
 			let firstItem;
-			if (isOpen) {
+			if (this._isOpen) {
 				this._setTabIndex('0');
 				firstItem = this._floatingActionsItem;
 
@@ -146,29 +168,57 @@ namespace OSUIFramework.Patterns.FloatingActions {
 				this._setTabIndex('-1');
 			}
 
-			/*if (isHover) {
-				this._floatingActionsButton.removeEventListener('focus', $actions.ToggleClick);
+			if (this.configs.IsHover) {
+				this._floatingActionsButton.removeEventListener(
+					GlobalEnum.HTMLEvent.Focus,
+					this.toggleClick.bind(this)
+				);
 
 				//Handle event listeners
-				if (isOpen) {
-					this._floatingActionsButton.removeEventListener('mouseenter', $actions.ToggleClick);
-					this._floatingActions.addEventListener('mouseleave', $actions.ToggleClick);
-					this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._ratingOnClick.bind(this));
+				if (this._isOpen) {
+					this._floatingActionsButton.removeEventListener(
+						GlobalEnum.HTMLEvent.MouseEnter,
+						this.toggleClick.bind(this)
+					);
+					this._floatingActions.addEventListener(
+						GlobalEnum.HTMLEvent.MouseLeave,
+						this.toggleClick.bind(this)
+					);
 				} else {
-					this._floatingActionsButton.addEventListener('mouseenter', $actions.ToggleClick);
-					this._floatingActions.removeEventListener('mouseleave', $actions.ToggleClick);
-					this._floatingActionsButton.addEventListener('focus', $actions.ToggleClick);
+					this._floatingActionsButton.addEventListener(
+						GlobalEnum.HTMLEvent.MouseEnter,
+						this.toggleClick.bind(this)
+					);
+					this._floatingActions.removeEventListener(
+						GlobalEnum.HTMLEvent.MouseLeave,
+						this.toggleClick.bind(this)
+					);
+					this._floatingActionsButton.addEventListener(
+						GlobalEnum.HTMLEvent.Focus,
+						this.toggleClick.bind(this)
+					);
 				}
-			}*/
+			}
 		}
 
 		// Method to manage the events on Floating Actions
 
 		public build(): void {
 			super.build();
-			//this._setUpFloatingActions();
-			//this._setUpFloatingItems();
+			this._setUpFloatingActions();
+			this._setUpFloatingItems();
+			this._checkIfInsideBottomBar();
+			this._toggleAttributesAndFocus();
 			this.finishBuild();
+		}
+
+		// Set callbacks for the onSelect click event
+		public registerCallback(callback: Callbacks.OSGeneric): void {
+			this._onClick = callback;
+		}
+
+		public toggleClick(): void {
+			this._toggleAttributesAndFocus();
 		}
 	}
 }

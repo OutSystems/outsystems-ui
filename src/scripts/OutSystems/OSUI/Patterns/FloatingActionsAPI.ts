@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OutSystems.OSUI.Patterns.FloatingAPI {
+namespace OutSystems.OSUI.Patterns.FloatingActionsAPI {
 	const _floatingActionsMap = new Map<string, OSUIFramework.Patterns.FloatingActions.IFloatingActions>(); //floatingActions.uniqueId -> FloatingActions obj
 
 	/**
@@ -97,5 +97,18 @@ namespace OutSystems.OSUI.Patterns.FloatingAPI {
 		floatingAction.build();
 
 		return floatingAction;
+	}
+
+	/**
+	 * Function to register a callback
+	 *
+	 * @export
+	 * @param {string} ratingId
+	 * @param {*} callback
+	 */
+	export function RegisterCallback(floatingId: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
+		const floating = GetFloatingActionsById(floatingId);
+
+		floating.registerCallback(callback);
 	}
 }
