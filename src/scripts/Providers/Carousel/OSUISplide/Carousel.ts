@@ -18,6 +18,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		// eslint-disable-next-line @typescript-eslint/explicit-member-accessibility, @typescript-eslint/no-explicit-any
 		private _splideOptions: Record<string, any> = {};
 		private _splideTrack: HTMLElement;
+		private _blockRender: boolean;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
@@ -165,16 +166,26 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
+			// Block UpdateOnRender to avoid multiple triggers of provider.refresh()
+			this._blockRender = true;
+
 			// Check which property changed and call respective method to update it
 			switch (propertyName) {
-				case 'Options':
-					// eslint-disable-next-line prefer-const
-					///////USE THIS FOR EACH ONE option = x and provider.refresh()
+				case 'gap':
+					this._provider.options.gap = propertyValue;
+					this.updateCarousel();
+
+					this._configs.OptionalConfigs.gap = propertyValue;
 					break;
 				default:
 					super.changeProperty(propertyName, propertyValue);
 					break;
 			}
+
+			// Unblock UpdateOnRender so that it is able to update on DOM changes inside Carousel content
+			setTimeout(() => {
+				this._blockRender = false;
+			}, 0);
 		}
 
 		// Method to remove and destroy Carousel Splide instance
@@ -219,19 +230,20 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			return currentFocus;
 		}
 
-		public updateCarousel(hasDOMChanged: boolean): void {
-			if (hasDOMChanged) {
+		public updateCarousel(hasDomChanges = false): void {
+			if (hasDomChanges) {
 				this._setInitialCssClasses();
 				this._prepareCarouselItems();
 			}
 
-			this._setLibraryOptions();
 			this._provider.refresh();
 		}
 
 		public updateOnRender(): void {
-			console.log('render');
-			this.updateCarousel(true);
+			if (!this._blockRender) {
+				console.log('render');
+				this.updateCarousel(true);
+			}
 		}
 	}
 }
