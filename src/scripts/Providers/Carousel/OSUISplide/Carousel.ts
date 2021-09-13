@@ -48,9 +48,8 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		}
 
 		private _initProvider(): void {
-			//this._provider = new Splide(this._selfElem, this._splideOptions).mount()
-			// eslint-disable-next-line no-debugger
-			debugger;
+			this._provider = new window.Splide(this._selfElem, this._splideOptions);
+			this._provider.mount();
 		}
 
 		private _prepareCarouselItems(): void {
