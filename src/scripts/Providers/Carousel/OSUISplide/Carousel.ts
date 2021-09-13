@@ -13,7 +13,6 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		private _listWidget: HTMLElement;
 		private _onChange: OSUIFramework.Callbacks.OSCarouselChangeEvent;
 		private _placeholder: HTMLElement;
-		private _placeholderContent: NodeList;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _provider: any;
 		// eslint-disable-next-line @typescript-eslint/explicit-member-accessibility, @typescript-eslint/no-explicit-any
@@ -46,16 +45,6 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			this._setLibraryOptions();
 
 			this._initProvider();
-		}
-
-		private _getPlaceholderContent(): NodeList {
-			if (this._hasList) {
-				this._placeholderContent = this._listWidget.childNodes;
-			} else {
-				this._placeholderContent = this._placeholder.childNodes;
-			}
-
-			return this._placeholderContent;
 		}
 
 		private _initProvider(): void {
@@ -161,8 +150,6 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 
 			this._checkListWidget();
 
-			this._getPlaceholderContent();
-
 			this._setInitialCssClasses();
 
 			this._createProviderCarousel();
@@ -176,7 +163,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			switch (propertyName) {
 				case 'Options':
 					// eslint-disable-next-line prefer-const
-					///////USE THIS FOR EACH ONE OutSystems.OSUI.Patterns.CarouselAPI.GetCarouselById('$b4')._provider.refresh()
+					///////USE THIS FOR EACH ONE option = x and provider.refresh()
 					break;
 				default:
 					super.changeProperty(propertyName, propertyValue);
@@ -228,10 +215,9 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			if (hasDOMChanged) {
 				this._setInitialCssClasses();
 				this._prepareCarouselItems();
-			} else {
-				this._setLibraryOptions();
 			}
 
+			this._setLibraryOptions();
 			this._provider.refresh();
 		}
 
