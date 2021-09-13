@@ -184,7 +184,7 @@
 .phone {
 	.layout-native {
 		.table {
-			:not(.table-responsive) {
+			&:not(.table-responsive) {
 				display: block;
 				overflow: auto;
 				position: relative;
