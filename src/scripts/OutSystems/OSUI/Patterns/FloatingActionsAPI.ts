@@ -98,17 +98,4 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsAPI {
 
 		return floatingAction;
 	}
-
-	/**
-	 * Function to register a callback
-	 *
-	 * @export
-	 * @param {string} ratingId
-	 * @param {*} callback
-	 */
-	export function RegisterCallback(floatingId: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
-		const floating = GetFloatingActionsById(floatingId);
-
-		floating.registerCallback(callback);
-	}
 }
