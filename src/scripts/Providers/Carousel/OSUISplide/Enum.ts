@@ -15,7 +15,7 @@ namespace Providers.Carousel.OSUISplide.Enum {
 	 * Splide Navigation options
 	 */
 	export enum Navigation {
-		Empty = '',
+		None = 'none',
 		Arrows = 'arrows',
 		Dots = 'dots',
 		Both = 'both',

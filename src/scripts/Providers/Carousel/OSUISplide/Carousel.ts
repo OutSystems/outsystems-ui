@@ -47,7 +47,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		private _createProviderCarousel(): void {
 			// Call the following methods here, so that all DOM elements are iterated and ready to init the library
 			this._prepareCarouselItems();
-			this._setLibraryOptions();
+			this._setInitialLibraryOptions();
 
 			// Init the Library
 			this._initProvider();
@@ -103,95 +103,61 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			}
 		}
 
-		private _setLibraryOptions(): void {
-			switch (this.configs.Navigation) {
-				case Enum.Navigation.Empty:
-					this._splideOptions.arrows = false;
-					this._splideOptions.pagination = false;
-					break;
-				case Enum.Navigation.Dots:
-					this._splideOptions.arrows = false;
-					this._splideOptions.pagination = true;
-					break;
-				case Enum.Navigation.Arrows:
-					this._splideOptions.arrows = true;
-					this._splideOptions.pagination = false;
-					break;
-				default:
-					this._splideOptions.arrows = true;
-					this._splideOptions.pagination = true;
-			}
+		private _setInitialLibraryOptions(): void {
+			this._splideOptions.direction = OutSystems.OSUI.Utils.GetIsRTL()
+				? OSUIFramework.GlobalEnum.Direction.rtl
+				: OSUIFramework.GlobalEnum.Direction.ltr;
 
-			this._splideOptions = {
-				direction: OutSystems.OSUI.Utils.GetIsRTL()
-					? OSUIFramework.GlobalEnum.Direction.rtl
-					: OSUIFramework.GlobalEnum.Direction.ltr,
-				perPage: this._configs.ItemsPerSlide.Desktop,
-				autoplay: this._configs.OptionalConfigs.AutoPlay,
-				type: this._configs.OptionalConfigs.Loop ? Enum.FocusOptions.Loop : Enum.FocusOptions.Slide,
-				focus: this.setFocusOnItemOption(
-					this._configs.OptionalConfigs.FocusOnItem,
-					this._configs.ItemsPerSlide.Desktop
-				),
-				autoWidth: this._configs.OptionalConfigs.AutoWidth,
-				padding: this._configs.OptionalConfigs.Padding,
-				gap: this._configs.OptionalConfigs.Gap,
-				start: this._configs.OptionalConfigs.InitialPosition,
-				breakpoints: {
-					768: {
-						perPage: this._configs.ItemsPerSlide.Phone,
-						focus: this.setFocusOnItemOption(
-							this._configs.OptionalConfigs.FocusOnItem,
-							this._configs.ItemsPerSlide.Phone
-						),
-					},
-					1024: {
-						perPage: this._configs.ItemsPerSlide.Tablet,
-						focus: this.setFocusOnItemOption(
-							this._configs.OptionalConfigs.FocusOnItem,
-							this._configs.ItemsPerSlide.Tablet
-						),
-					},
+			this._splideOptions.perPage = this._configs.ItemsPerSlide.Desktop;
+			this._splideOptions.autoplay = this._configs.OptionalConfigs.AutoPlay;
+			this._splideOptions.type = this._configs.OptionalConfigs.Loop
+				? Enum.FocusOptions.Loop
+				: Enum.FocusOptions.Slide;
+
+			this._splideOptions.focus = this.setFocusOnItemOption(
+				this._configs.OptionalConfigs.FocusOnItem,
+				this._configs.ItemsPerSlide.Desktop
+			);
+
+			this._splideOptions.autoWidth = this._configs.OptionalConfigs.AutoWidth;
+			this._splideOptions.padding = this._configs.OptionalConfigs.Padding;
+			this._splideOptions.gap = this._configs.OptionalConfigs.Gap;
+			this._splideOptions.start = this._configs.OptionalConfigs.InitialPosition;
+
+			this._splideOptions.breakpoints = {
+				768: {
+					perPage: this._configs.ItemsPerSlide.Phone,
+					focus: this.setFocusOnItemOption(
+						this._configs.OptionalConfigs.FocusOnItem,
+						this._configs.ItemsPerSlide.Phone
+					),
+				},
+				1024: {
+					perPage: this._configs.ItemsPerSlide.Tablet,
+					focus: this.setFocusOnItemOption(
+						this._configs.OptionalConfigs.FocusOnItem,
+						this._configs.ItemsPerSlide.Tablet
+					),
 				},
 			};
+
+			this.setNavigation(this._configs.Navigation);
 
 			// Manage Scale option
 			this.handleScale(this._configs.OptionalConfigs.Scale);
 		}
 
 		private _updateBreakpointsOptions(focusValue = this._configs.OptionalConfigs.FocusOnItem): void {
-			this._provider.options = {
-				breakpoints: {
-					768: {
-						perPage: this._configs.ItemsPerSlide.Phone,
-						focus: this.setFocusOnItemOption(focusValue, this._configs.ItemsPerSlide.Phone),
-					},
-					1024: {
-						perPage: this._configs.ItemsPerSlide.Tablet,
-						focus: this.setFocusOnItemOption(focusValue, this._configs.ItemsPerSlide.Tablet),
-					},
+			this._provider.options.breakpoints = {
+				768: {
+					perPage: this._configs.ItemsPerSlide.Phone,
+					focus: this.setFocusOnItemOption(focusValue, this._configs.ItemsPerSlide.Phone),
+				},
+				1024: {
+					perPage: this._configs.ItemsPerSlide.Tablet,
+					focus: this.setFocusOnItemOption(focusValue, this._configs.ItemsPerSlide.Tablet),
 				},
 			};
-		}
-
-		private _updateNavigationOptions(navigation: string): void {
-			switch (navigation) {
-				case Enum.Navigation.Empty:
-					this._provider.options.arrows = false;
-					this._provider.options.pagination = false;
-					break;
-				case Enum.Navigation.Dots:
-					this._provider.options.arrows = false;
-					this._provider.options.pagination = true;
-					break;
-				case Enum.Navigation.Arrows:
-					this._provider.options.arrows = true;
-					this._provider.options.pagination = false;
-					break;
-				default:
-					this._provider.options.arrows = true;
-					this._provider.options.pagination = true;
-			}
 		}
 
 		public build(): void {
@@ -217,47 +183,52 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			switch (propertyName) {
 				case 'navigation':
 					this._configs.Navigation = propertyValue;
-					this._updateNavigationOptions(propertyValue);
+					this.destroyAndUpdateCarousel();
 					break;
 				case 'itemsDesktop':
 					this._configs.ItemsPerSlide.Desktop = propertyValue;
 					this._provider.options.perPage = propertyValue;
+					this.updateCarousel();
 					break;
 				case 'itemsTablet':
 					this._configs.ItemsPerSlide.Tablet = propertyValue;
-					this._updateBreakpointsOptions();
+					this.destroyAndUpdateCarousel();
 					break;
 				case 'itemsPhone':
-					this._configs.ItemsPerSlide.Tablet = propertyValue;
-					this._updateBreakpointsOptions();
+					this._configs.ItemsPerSlide.Phone = propertyValue;
+					this.destroyAndUpdateCarousel();
 					break;
 				case 'autoplay':
-					this._configs.OptionalConfigs.Autoplay = propertyValue;
-					this._provider.options.autoplay = propertyValue;
+					this._configs.OptionalConfigs.AutoPlay = propertyValue;
+					this.destroyAndUpdateCarousel();
 					break;
 				case 'autowidth':
-					this._configs.OptionalConfigs.Autowidth = propertyValue;
+					this._configs.OptionalConfigs.AutoWidth = propertyValue;
 					this._provider.options.autoWidth = propertyValue;
+					this.updateCarousel();
 					break;
 				case 'loop':
 					this._configs.OptionalConfigs.Loop = propertyValue;
-					this._provider.options.type = propertyValue ? Enum.FocusOptions.Loop : Enum.FocusOptions.Slide;
+					this.destroyAndUpdateCarousel();
 					break;
 				case 'padding':
 					this._configs.OptionalConfigs.Padding = propertyValue;
 					this._provider.options.padding = propertyValue;
+					this.updateCarousel();
 					break;
 				case 'gap':
 					this._configs.OptionalConfigs.Gap = propertyValue;
 					this._provider.options.gap = propertyValue;
+					this.updateCarousel();
 					break;
 				case 'initialPosition':
 					this._configs.OptionalConfigs.InitialPosition = propertyValue;
-					this._provider.options.start = propertyValue;
+					this.destroyAndUpdateCarousel();
 					break;
-				case 'Scale':
-					this._configs.OptionalConfigs.InitialPosition = propertyValue;
+				case 'scale':
+					this._configs.OptionalConfigs.Scale = propertyValue;
 					this.handleScale(propertyValue);
+					this.updateCarousel();
 					break;
 				case 'focus':
 					this._configs.OptionalConfigs.FocusOnItem = propertyValue;
@@ -266,17 +237,22 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 						this._configs.ItemsPerSlide.Desktop
 					);
 					this._updateBreakpointsOptions();
+					this.updateCarousel();
 					break;
 				default:
 					super.changeProperty(propertyName, propertyValue);
 					break;
 			}
 
-			this.updateCarousel();
 			// Unblock UpdateOnRender so that it is able to update on DOM changes inside Carousel content
 			setTimeout(() => {
 				this._blockRender = false;
 			}, 0);
+		}
+
+		public destroyAndUpdateCarousel(): void {
+			this._provider.destroy();
+			this._createProviderCarousel();
 		}
 
 		// Method to remove and destroy Carousel Splide instance
@@ -303,6 +279,26 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		public registerCallback(callback: OSUIFramework.Callbacks.OSCarouselChangeEvent): void {
 			this._onChange = callback;
 			this._setOnchangeEvent();
+		}
+
+		public setNavigation(navigation: string): void {
+			switch (navigation) {
+				case Enum.Navigation.None:
+					this._splideOptions.arrows = false;
+					this._splideOptions.pagination = false;
+					break;
+				case Enum.Navigation.Dots:
+					this._splideOptions.arrows = false;
+					this._splideOptions.pagination = true;
+					break;
+				case Enum.Navigation.Arrows:
+					this._splideOptions.arrows = true;
+					this._splideOptions.pagination = false;
+					break;
+				case Enum.Navigation.Both:
+					this._splideOptions.arrows = true;
+					this._splideOptions.pagination = true;
+			}
 		}
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -333,7 +329,6 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 
 		public updateOnRender(): void {
 			if (!this._blockRender) {
-				console.log('render');
 				this.updateCarousel(true);
 			}
 		}
