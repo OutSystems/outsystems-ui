@@ -23,6 +23,8 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		private _isOpen: boolean;
 		// Last Floating Action Item
 		private _lastButton: HTMLElement;
+		// Callback function to trigger the click event
+		private _onClick: Callbacks.OSGeneric;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
@@ -196,6 +198,15 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			this._floatingActionsItem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._escException.bind(this));
 		}
 
+		// Method that triggers the toggle event
+		private _triggerOnClickEvent(): void {
+			if (this._onClick !== undefined) {
+				setTimeout(() => {
+					this._onClick(this.widgetId);
+				}, 0);
+			}
+		}
+
 		public build(): void {
 			super.build();
 			this._setUpFloatingActions();
@@ -212,6 +223,10 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			} else {
 				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.Click, this.toggleClick);
 			}
+		}
+
+		public registerCallback(callback: Callbacks.OSGeneric): void {
+			this._onClick = callback;
 		}
 
 		public toggleClick(): void {
@@ -263,6 +278,8 @@ namespace OSUIFramework.Patterns.FloatingActions {
 					);
 				}
 			}
+
+			this._triggerOnClickEvent();
 		}
 	}
 }
