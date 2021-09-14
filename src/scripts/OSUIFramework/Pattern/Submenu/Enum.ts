@@ -1,11 +1,19 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Submenu.Enum {
 	/**
-	 * Submenu Enum properties
+	 * Search Enum properties
 	 */
-	export enum Submenu {
-		
-        //Implement you code here
+	export enum Property {
+		ExtendedClass = 'ExtendedClass',
+	}
 
+	// Css Classes
+	export enum CssClass {
+		Pattern = 'submenu',
+		PatternHeader = 'submenu-header',
+		PatternIsOpen = 'open',
+		PatternItem = 'submenu-item',
+		PatternIcon = 'submenu-icon',
+		PatternLinks = 'submenu-items',
 	}
 }

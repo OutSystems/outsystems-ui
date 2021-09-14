@@ -10,18 +10,32 @@ namespace OSUIFramework.Constants {
 			ValueMax: 'valuemax',
 			ValueMin: 'valuemin',
 			Label: 'aria-label',
+			Expanded: 'aria-expanded',
+			Controls: 'aria-controls',
+			Hidden: 'aria-hidden',
 		},
 		Role: {
 			AttrName: 'role',
 			Progressbar: 'progressbar',
 			Search: 'search',
 			Tooltip: 'tooltip',
+			MenuItem: 'menuitem',
+			Button: 'button',
 		},
 		TabIndex: 'tabindex',
+		States: {
+			True: 'true',
+			False: 'false',
+			TabIndexShow: '0',
+			TabIndexHidden: '-1',
+		},
 	};
 
 	/* Used to concatenate when querySelector for a class */
 	export const Dot = '.';
+
+	/* Used to select a link element on HTML selectors */
+	export const Link = 'a';
 
 	/* Manage if the log messages are visible or not  */
 	export const EnableLogMessages = false;
