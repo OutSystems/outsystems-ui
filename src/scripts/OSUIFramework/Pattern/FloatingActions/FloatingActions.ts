@@ -23,30 +23,21 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		private _isOpen: boolean;
 		// Last Floating Action Item
 		private _lastButton: HTMLElement;
-		// Store the callback to be used on the OnClick event
-		private _onClick: Callbacks.OSGeneric;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new FloatingActionsConfig(configs));
 		}
 
-		// Add Pattern Events
-		private _addEvents(): void {
-			/*this._inputElem.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
-			this._inputElem.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
-			this._inputElem.addEventListener(GlobalEnum.HTMLEvent.AnimationStart, this._eventOnAnimationStart);*/
-			this._floatingActionsButton.removeEventListener(
-				GlobalEnum.HTMLEvent.MouseEnter,
-				this.toggleClick.bind(this)
-			);
-			this._floatingActions.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this.toggleClick.bind(this));
-		}
+		// Inside Bottom Bar and IOS fix
+		// Checks in the Floating Actions Pattern is inside the Bottom Bar
 		private _checkIfInsideBottomBar(): void {
-			console.log('Bottom bar');
 			// Inside Bottom Bar and IOS fix
 			if (this._bottomBar && this._floatingActions) {
 				this._insideBottomBar = this._bottomBar.contains(this._floatingActions);
+				if (this._insideBottomBar) {
+					Helper.Style.AddClass(this._floatingActions, Enum.CssClasses.BottomBarExists);
+				}
 			}
 
 			if (!this._insideBottomBar && this._floatingActions) {
@@ -57,31 +48,47 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 					if (nativeLayout) {
 						// new native layouts
-						//$actions.MoveElement($parameters.FloatingId, '.active-screen .main');
+						Helper.MoveElement(this._selfElem, '.active-screen .main');
 					} else {
 						// Old native layouts
-						//$actions.MoveElement($parameters.FloatingId, '.active-screen .screen');
+						Helper.MoveElement(this._selfElem, '.active-screen .screen');
 					}
 				}
 
 				if (this._bottomBar) {
 					this._insideBottomBar = true;
+					Helper.Style.AddClass(this._floatingActions, Enum.CssClasses.BottomBarExists);
 				}
 			}
 		}
 
-		private _manageFloatingActionsEvent(): void {
-			//
+		private _escException(e: KeyboardEvent): void {
+			if (e.key === GlobalEnum.Keycodes.Escape) {
+				if (this.configs.IsHover) {
+					this._floatingActionsButton.removeEventListener('focus', this.toggleClick.bind(this));
+				}
+
+				this.toggleClick();
+
+				if (this.configs.IsHover) {
+					this._floatingActionsButton.addEventListener('focus', this.toggleClick.bind(this));
+				}
+			}
+
+			this._setFocusTrap(e);
 		}
 
-		// Set keyboard interaction - Accessibility
+		// Sets keyboard interaction - Accessibility
 		private _onButtonKeypress(e: KeyboardEvent): void {
-			//If esc, Close Items
-			if (e.key === GlobalEnum.Keycodes.Tab && this._floatingActions.classList.contains('is--open')) {
+			//If ESC is pressed then close the floatiing action items
+			if (
+				e.key === GlobalEnum.Keycodes.Escape &&
+				Helper.Style.ContainsClass(this._floatingActions, Enum.CssClasses.Open)
+			) {
 				this.toggleClick();
 			}
 
-			//If enter or space toggle Items
+			//If ENTER or SPACE toggle floating action items
 			if (e.key === GlobalEnum.Keycodes.Enter || e.key === GlobalEnum.Keycodes.Space) {
 				this.toggleClick();
 			}
@@ -89,6 +96,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			this._setFocusTrap(e);
 		}
 
+		// Traps the focus on the floating action items when navigating with the keyboard
 		private _setFocusTrap(e: KeyboardEvent): void {
 			if (this._floatingActionsItems.length > 0) {
 				const isShiftKey = e.shiftKey;
@@ -106,14 +114,15 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			}
 		}
 
-		// Accessibility SetTabIndex values
+		// Accessibility - Set tabindex values
 		private _setTabIndex(value: string): void {
 			this._floatingActionsItems = [].slice.call(this._floatingActionsItems);
 			this._floatingActionsItems.forEach((item) => {
-				Helper.Attribute.Set(item, 'tabindex', value);
+				Helper.Attribute.Set(item, Constants.AccessibilityAttribute.TabIndex, value);
 			});
 		}
 
+		// Sets up the Floating Action elements on first render
 		private _setUpFloatingActions(): void {
 			this._floatingActions = this._selfElem;
 			this._bottomBar = document.querySelector(
@@ -131,11 +140,10 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			);
 			this._firstButton = this._floatingActionsItems[0];
 			this._lastButton = this._floatingActionsItems[this._floatingActionsItems.length - 1];
-			console.log(this._floatingActionsItems);
 		}
 
+		// Sets up floating action items on first render
 		private _setUpFloatingItems(): void {
-			console.log('floating items');
 			// Check if there are FloatingActionsItems
 			if (this._floatingActionsItems.length > 0) {
 				// Push every floating-item index into a empty array
@@ -148,17 +156,73 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 				// set var --delay on style with each items index, to perform sequential css animation
 				for (let i = 0; i < this._floatingActionsItems.length; i++) {
-					this._floatingActionsItems[i].setAttribute('style', '--delay: ' + (this._indexArray[i] + 1));
+					Helper.Attribute.Set(
+						this._floatingActionsItems[i],
+						'style',
+						'--delay: ' + (this._indexArray[i] + 1)
+					);
 				}
 			}
 		}
 
-		// Method to toggle a11y attributes and focus
+		// Method to manage the events on Floating Actions
 		private _toggleAttributesAndFocus(): void {
+			if (this.configs.IsHover) {
+				if (this.configs.IsExpanded) {
+					this._floatingActions.addEventListener(
+						GlobalEnum.HTMLEvent.MouseLeave,
+						this.toggleClick.bind(this)
+					);
+				} else {
+					this._floatingActionsButton.addEventListener(
+						GlobalEnum.HTMLEvent.MouseEnter,
+						this.toggleClick.bind(this)
+					);
+				}
+
+				this._floatingActionsButton.removeEventListener(
+					GlobalEnum.HTMLEvent.Focus,
+					this.toggleClick.bind(this)
+				);
+			} else {
+				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.Click, this.toggleClick.bind(this));
+				this._floatingActionsButton.addEventListener(
+					GlobalEnum.HTMLEvent.keyDown,
+					this._onButtonKeypress.bind(this)
+				);
+			}
+
+			// Exception for clicking Esc on items wrapper
+			this._floatingActionsItem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._escException.bind(this));
+		}
+
+		public build(): void {
+			super.build();
+			this._setUpFloatingActions();
+			this._setUpFloatingItems();
+			this._checkIfInsideBottomBar();
+			this._toggleAttributesAndFocus();
+			this.finishBuild();
+		}
+
+		public dispose(): void {
+			if (this.configs.IsHover) {
+				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this.toggleClick);
+				this._floatingActions.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this.toggleClick);
+			} else {
+				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.Click, this.toggleClick);
+			}
+		}
+
+		public toggleClick(): void {
+			this._isOpen = !this._isOpen;
+			this._isOpen
+				? Helper.Style.AddClass(this._floatingActions, Enum.CssClasses.Open)
+				: Helper.Style.RemoveClass(this._floatingActions, Enum.CssClasses.Open);
 			let firstItem;
 			if (this._isOpen) {
 				this._setTabIndex('0');
-				firstItem = this._floatingActionsItem;
+				firstItem = this._floatingActionsItems[0];
 
 				if (firstItem) {
 					firstItem.focus();
@@ -199,28 +263,6 @@ namespace OSUIFramework.Patterns.FloatingActions {
 					);
 				}
 			}
-		}
-
-		// Method to manage the events on Floating Actions
-
-		public build(): void {
-			super.build();
-			this._setUpFloatingActions();
-			this._setUpFloatingItems();
-			this._checkIfInsideBottomBar();
-			this._toggleAttributesAndFocus();
-			this.finishBuild();
-		}
-
-		// Set callbacks for the onSelect click event
-		public registerCallback(callback: Callbacks.OSGeneric): void {
-			this._onClick = callback;
-		}
-
-		public toggleClick(): void {
-			this._isOpen = !this._isOpen;
-			//this._isOpen? Helper.Style.AddClass(this._floatingActions, Enum.CssClasses.Open);
-			this._toggleAttributesAndFocus();
 		}
 	}
 }

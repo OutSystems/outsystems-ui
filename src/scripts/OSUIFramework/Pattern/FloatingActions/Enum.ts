@@ -13,6 +13,7 @@ namespace OSUIFramework.Patterns.FloatingActions.Enum {
 	export enum CssClasses {
 		ActiveScreen = 'active-screen',
 		BottomBar = 'bottom-bar',
+		BottomBarExists = 'bottom-bar-exists',
 		FloatingActionsButton = 'floating-button',
 		FloatingActionsItems = 'floating-items',
 		FloatingActionItem = 'floating-actions-item',

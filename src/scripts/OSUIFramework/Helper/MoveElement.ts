@@ -8,13 +8,12 @@ namespace OSUIFramework.Helper {
 	 * @param target Identificator of the HTMLElement where the element should be moved.
 	 * @return
 	 */
-	export function MoveElement(element: string, target: string): void {
+	export function MoveElement(element: HTMLElement, target: string): void {
 		if (target && element) {
-			const screenEl = document.getElementById(element);
 			const DOMTarget = document.querySelector(target);
 
-			if (screenEl && DOMTarget) {
-				DOMTarget.appendChild(screenEl);
+			if (element && DOMTarget) {
+				DOMTarget.appendChild(element);
 			}
 		}
 	}
