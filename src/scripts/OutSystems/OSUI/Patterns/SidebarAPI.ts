@@ -24,7 +24,9 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 */
 	export function Create(sidebarId: string, configs: string): OSUIFramework.Patterns.Sidebar.ISidebar {
 		if (_sidebarMap.has(sidebarId)) {
-			throw new Error(`There is already a sidebar registered under id: ${sidebarId}`);
+			throw new Error(
+				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.Sidebar} registered under id: ${sidebarId}`
+			);
 		}
 
 		const _newSidebar = new OSUIFramework.Patterns.Sidebar.Sidebar(sidebarId, JSON.parse(configs));
