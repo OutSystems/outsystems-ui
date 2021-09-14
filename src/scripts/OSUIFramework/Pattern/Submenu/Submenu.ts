@@ -22,7 +22,7 @@ namespace OSUIFramework.Patterns.Submenu {
 			super(uniqueId, new SubmenuConfig(configs));
 
 			this._eventOnClick = this._onSubmenuClick.bind(this);
-			this._eventOnSubmenuKeypress = this._submenuOnKeypress.bind(this);
+			this._eventOnSubmenuKeypress = this._onSubmenuKeypress.bind(this);
 		}
 
 		// Add Pattern Events
@@ -31,46 +31,65 @@ namespace OSUIFramework.Patterns.Submenu {
 				this._selfElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 				this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnSubmenuKeypress);
 			}
-		}
 
-		// Close all open submenus
-		private _closeAllSubmenus(): void {
-			this._allSubmenus = document.querySelectorAll(
-				Constants.Dot + Enum.CssClass.Pattern + Constants.Dot + Enum.CssClass.PatternIsOpen
+			OSUIFramework.Event.Internal.GetEventManagerInstance().addHandler(
+				OSUIFramework.Event.Internal.Events.SubmenuOpen,
+				this._onSubmenuEventTriggered.bind(this)
 			);
-
-			this._allSubmenus.forEach((item: HTMLElement) => {
-				Helper.Attribute.Set(
-					item.querySelector(Constants.Dot + Enum.CssClass.PatternHeader),
-					Constants.AccessibilityAttribute.Aria.Expanded,
-					Constants.AccessibilityAttribute.States.False
-				);
-
-				Helper.Attribute.Set(
-					item.querySelector(Constants.Dot + Enum.CssClass.PatternLinks),
-					Constants.AccessibilityAttribute.Aria.Hidden,
-					Constants.AccessibilityAttribute.States.True
-				);
-				Helper.Style.RemoveClass(item, Enum.CssClass.PatternIsOpen);
-				this._updateTabIndex(item.querySelectorAll(Constants.Link));
-			});
 		}
 
 		// Trigger the submenu at toggle behaviour
 		private _onSubmenuClick(e: MouseEvent): void {
-			this._onToggle();
+			this._onSubmenuToggle();
 
 			e.stopPropagation();
 		}
 
-		// Trigger the submenu at toggle behaviour
-		private _onToggle(): void {
-			// Validate the visibility of submenu and update the value _isOpen when it's clicked on other submenu instatiation
-			if (this._isOpen && !Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen)) {
-				this._isOpen = false;
+		// Prevent close submenu based on a uniqueID validation, when his event his triggered
+		private _onSubmenuEventTriggered(element: string): void {
+			if (element !== this.uniqueId) {
+				if (this._isOpen) {
+					this.close();
+				}
+			}
+		}
+
+		// Call methods to open or close, based ok e.key and behavior applied
+		private _onSubmenuKeypress(e: KeyboardEvent): void {
+			const _clickedElem: HTMLElement = e.target as HTMLElement;
+			const _closestElem: HTMLElement = _clickedElem.closest(Constants.Dot + Enum.CssClass.Pattern);
+			const _isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
+			const _isEnterPressed = e.key === GlobalEnum.Keycodes.Enter;
+			const _isTabPressed = e.key === GlobalEnum.Keycodes.Tab;
+			const _isShiftPressed = e.shiftKey;
+
+			//Open the submenu
+			if (_isEnterPressed) {
+				this._onSubmenuToggle();
+
+				e.stopPropagation();
+			}
+			// Close the submenu when pressing Esc
+			if (_isEscapedPressed && this._isOpen) {
+				this.close();
+
+				this._submenuHeader.focus();
+
+				e.stopPropagation();
 			}
 
-			// Toggle the Submenu classes
+			// If navigate to outside of Submenu, close it
+			if (_isShiftPressed && _isTabPressed && _clickedElem === this._submenuHeader) {
+				if (_closestElem === this._selfElem && this._isOpen) {
+					this.close();
+
+					e.stopPropagation();
+				}
+			}
+		}
+
+		// Trigger the submenu behavior based on visibility
+		private _onSubmenuToggle(): void {
 			if (this._isOpen) {
 				this.close();
 			} else {
@@ -116,40 +135,6 @@ namespace OSUIFramework.Patterns.Submenu {
 
 			if (this._submenuAllLinks.length > 0) {
 				this._hasElements = true;
-			}
-		}
-
-		// Call methods to open or close, based ok e.key and behavior applied
-		private _submenuOnKeypress(e: KeyboardEvent): void {
-			const _clickedElem: HTMLElement = e.target as HTMLElement;
-			const _closestElem: HTMLElement = _clickedElem.closest(Constants.Dot + Enum.CssClass.Pattern);
-			const _isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
-			const _isEnterPressed = e.key === GlobalEnum.Keycodes.Enter;
-			const _isTabPressed = e.key === GlobalEnum.Keycodes.Tab;
-			const _isShiftPressed = e.shiftKey;
-
-			//Open the submenu
-			if (_isEnterPressed) {
-				this._onToggle();
-
-				e.stopPropagation();
-			}
-			// Close the submenu when pressing Esc
-			if (_isEscapedPressed && this._isOpen) {
-				this.close();
-
-				this._submenuHeader.focus();
-
-				e.stopPropagation();
-			}
-
-			// If navigate to outside of Submenu, close it
-			if (_isShiftPressed && _isTabPressed && _clickedElem === this._submenuHeader) {
-				if (_closestElem === this._selfElem && this._isOpen) {
-					this.close();
-
-					e.stopPropagation();
-				}
 			}
 		}
 
@@ -201,8 +186,6 @@ namespace OSUIFramework.Patterns.Submenu {
 			super.changeProperty(propertyName, propertyValue);
 		}
 
-		//toggle
-
 		// Close Submenu
 		public close(): void {
 			Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
@@ -218,8 +201,6 @@ namespace OSUIFramework.Patterns.Submenu {
 
 		// Open Submenu
 		public open(): void {
-			this._closeAllSubmenus();
-
 			setTimeout(() => {
 				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternIsOpen);
 			}, 0);
@@ -227,6 +208,12 @@ namespace OSUIFramework.Patterns.Submenu {
 			this._isOpen = true;
 
 			this._updateAccessibilityProps();
+
+			// Trigger event to close other submenu instances
+			OSUIFramework.Event.Internal.GetEventManagerInstance().trigger(
+				OSUIFramework.Event.Internal.Events.SubmenuOpen,
+				this.uniqueId
+			);
 		}
 	}
 }
