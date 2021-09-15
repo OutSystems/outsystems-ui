@@ -10,8 +10,8 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		private _blockRender: boolean;
 		private _hasList: boolean;
 		private _listWidget: HTMLElement;
+		private _onInitialized: OSUIFramework.Callbacks.OSCarouselOnInitializedEvent;
 		private _onSlideMoved: OSUIFramework.Callbacks.OSCarouselSlideMovedEvent;
-		private _onInitialized: any;
 		private _placeholder: HTMLElement;
 		private _provider: Splide;
 		private _providerContainer: HTMLElement;

@@ -6,6 +6,10 @@ namespace OSUIFramework.Callbacks {
 		(carouselId: string, index: number): void;
 	};
 
+	export type OSCarouselOnInitializedEvent = {
+		(carouselId: string): void;
+	};
+
 	export type OSRatingSelectEvent = {
 		(ratingId: string, value: number): void;
 	};
