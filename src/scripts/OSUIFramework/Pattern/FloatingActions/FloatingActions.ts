@@ -98,6 +98,41 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			this._setFocusTrap(e);
 		}
 
+		// Accessibility - sets the aria labels that depend on the opened/closed state
+		private _setAccessibility(): void {
+			const floatingOverlay: HTMLElement = document.querySelector(
+				Constants.Dot + Enum.CssClasses.FloatingOverlay
+			);
+
+			//Toggles the open class on Floating Actions
+			this._isOpen
+				? Helper.Style.AddClass(this._floatingActions, Enum.CssClasses.Open)
+				: Helper.Style.RemoveClass(this._floatingActions, Enum.CssClasses.Open);
+
+			//Toggles the open class on Floating Actions' Overlay
+			this._isOpen
+				? Helper.Style.AddClass(floatingOverlay, Enum.CssClasses.Open)
+				: Helper.Style.RemoveClass(floatingOverlay, Enum.CssClasses.Open);
+
+			//Toggles accessibility property on Floating Actions Items' container
+			this._isOpen
+				? Helper.Attribute.Set(this._floatingActionsItem, Constants.AccessibilityAttribute.Aria.Hidden, 'false')
+				: Helper.Attribute.Set(this._floatingActionsItem, Constants.AccessibilityAttribute.Aria.Hidden, 'true');
+
+			//Toggles accessibility property 'aria-expanded' on Floating Actions Button
+			this._isOpen
+				? Helper.Attribute.Set(
+						this._floatingActionsButton,
+						Constants.AccessibilityAttribute.Aria.Expanded,
+						'true'
+				  )
+				: Helper.Attribute.Set(
+						this._floatingActionsButton,
+						Constants.AccessibilityAttribute.Aria.Expanded,
+						'false'
+				  );
+		}
+
 		// Traps the focus on the floating action items when navigating with the keyboard
 		private _setFocusTrap(e: KeyboardEvent): void {
 			if (this._floatingActionsItems.length > 0) {
@@ -119,9 +154,41 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		// Accessibility - Set tabindex values
 		private _setTabIndex(value: string): void {
 			this._floatingActionsItems = [].slice.call(this._floatingActionsItems);
+			//TODO call FloatingActionItem method
 			this._floatingActionsItems.forEach((item) => {
 				Helper.Attribute.Set(item, Constants.AccessibilityAttribute.TabIndex, value);
 			});
+		}
+
+		// Method to manage the events on Floating Actions
+		private _setUpEvents(): void {
+			if (this.configs.IsHover) {
+				if (this.configs.IsExpanded) {
+					this._floatingActions.addEventListener(
+						GlobalEnum.HTMLEvent.MouseLeave,
+						this.toggleClick.bind(this)
+					);
+				} else {
+					this._floatingActionsButton.addEventListener(
+						GlobalEnum.HTMLEvent.MouseEnter,
+						this.toggleClick.bind(this)
+					);
+				}
+
+				this._floatingActionsButton.removeEventListener(
+					GlobalEnum.HTMLEvent.Focus,
+					this.toggleClick.bind(this)
+				);
+			} else {
+				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.Click, this.toggleClick.bind(this));
+				this._floatingActionsButton.addEventListener(
+					GlobalEnum.HTMLEvent.keyDown,
+					this._onButtonKeypress.bind(this)
+				);
+			}
+
+			// Exception for clicking Esc on items wrapper
+			this._floatingActionsItem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._escException.bind(this));
 		}
 
 		// Sets up the Floating Action elements on first render
@@ -158,6 +225,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 				// set var --delay on style with each items index, to perform sequential css animation
 				for (let i = 0; i < this._floatingActionsItems.length; i++) {
+					//TODO FloatingActionItem method
 					Helper.Attribute.Set(
 						this._floatingActionsItems[i],
 						'style',
@@ -165,37 +233,6 @@ namespace OSUIFramework.Patterns.FloatingActions {
 					);
 				}
 			}
-		}
-
-		// Method to manage the events on Floating Actions
-		private _toggleAttributesAndFocus(): void {
-			if (this.configs.IsHover) {
-				if (this.configs.IsExpanded) {
-					this._floatingActions.addEventListener(
-						GlobalEnum.HTMLEvent.MouseLeave,
-						this.toggleClick.bind(this)
-					);
-				} else {
-					this._floatingActionsButton.addEventListener(
-						GlobalEnum.HTMLEvent.MouseEnter,
-						this.toggleClick.bind(this)
-					);
-				}
-
-				this._floatingActionsButton.removeEventListener(
-					GlobalEnum.HTMLEvent.Focus,
-					this.toggleClick.bind(this)
-				);
-			} else {
-				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.Click, this.toggleClick.bind(this));
-				this._floatingActionsButton.addEventListener(
-					GlobalEnum.HTMLEvent.keyDown,
-					this._onButtonKeypress.bind(this)
-				);
-			}
-
-			// Exception for clicking Esc on items wrapper
-			this._floatingActionsItem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._escException.bind(this));
 		}
 
 		// Method that triggers the toggle event
@@ -212,7 +249,8 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			this._setUpFloatingActions();
 			this._setUpFloatingItems();
 			this._checkIfInsideBottomBar();
-			this._toggleAttributesAndFocus();
+			this._setAccessibility();
+			this._setUpEvents();
 			this.finishBuild();
 		}
 
@@ -230,11 +268,9 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		}
 
 		public toggleClick(): void {
-			this._isOpen = !this._isOpen;
-			this._isOpen
-				? Helper.Style.AddClass(this._floatingActions, Enum.CssClasses.Open)
-				: Helper.Style.RemoveClass(this._floatingActions, Enum.CssClasses.Open);
 			let firstItem;
+
+			this._isOpen = !this._isOpen;
 			if (this._isOpen) {
 				this._setTabIndex('0');
 				firstItem = this._floatingActionsItems[0];
@@ -278,7 +314,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 					);
 				}
 			}
-
+			this._setAccessibility();
 			this._triggerOnClickEvent();
 		}
 	}

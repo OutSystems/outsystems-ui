@@ -17,6 +17,7 @@ namespace OSUIFramework.Patterns.FloatingActions.Enum {
 		FloatingActionsButton = 'floating-button',
 		FloatingActionsItems = 'floating-items',
 		FloatingActionItem = 'floating-actions-item',
+		FloatingOverlay = 'floating-overlay',
 		Open = 'is--open',
 	}
 
