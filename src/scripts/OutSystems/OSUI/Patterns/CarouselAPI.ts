@@ -92,15 +92,16 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 *
 	 * @export
 	 * @param {string} carouselId
-	 * @param {OSUIFramework.Callbacks.OSCarouselChangeEvent} callback
+	 * @param {OSUIFramework.Callbacks.OSCarouselSlideMovedEvent} callback
 	 */
-	export function RegisterCallback(
+	export function RegisterProviderCallback(
 		carouselId: string,
-		callback: OSUIFramework.Callbacks.OSCarouselChangeEvent
+		eventName: string,
+		callback: OSUIFramework.Callbacks.OSGeneric
 	): void {
 		const carousel = GetCarouselById(carouselId);
 
-		carousel.registerCallback(callback);
+		carousel.registerProviderCallback(eventName, callback);
 	}
 
 	/**

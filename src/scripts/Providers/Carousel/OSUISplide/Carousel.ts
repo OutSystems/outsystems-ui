@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/member-ordering */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.Carousel.OSUISplide.Carousel {
 	/**
@@ -7,18 +5,22 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 	 */
 	export class Carousel
 		extends OSUIFramework.Patterns.AbstractPattern<OSUIFramework.Patterns.Carousel.CarouselConfig>
-		implements OSUIFramework.Patterns.Carousel.ICarousel
+		implements ISlider
 	{
+		private _blockRender: boolean;
 		private _hasList: boolean;
 		private _listWidget: HTMLElement;
-		private _onChange: OSUIFramework.Callbacks.OSCarouselChangeEvent;
+		private _onSlideMoved: OSUIFramework.Callbacks.OSCarouselSlideMovedEvent;
+		private _onInitialized: any;
 		private _placeholder: HTMLElement;
 		private _provider: Splide;
 		private _providerContainer: HTMLElement;
 		// eslint-disable-next-line @typescript-eslint/explicit-member-accessibility, @typescript-eslint/no-explicit-any
 		private _splideOptions: Record<string, any> = {};
 		private _splideTrack: HTMLElement;
-		private _blockRender: boolean;
+
+		// eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
+		provider: Splide;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
@@ -51,10 +53,13 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 
 			// Init the Library
 			this._initProvider();
+
+			this._setOnSlideMovedEvent();
 		}
 
 		private _initProvider(): void {
 			this._provider = new window.Splide(this._providerContainer, this._splideOptions);
+			this._setOnInitializedEvent();
 			this._provider.mount();
 		}
 
@@ -68,16 +73,6 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 					item.classList.add(Enum.CssClass.SplideSlide);
 				}
 			}
-		}
-
-		private _setOnchangeEvent(): void {
-			//eslint-disable-next-line @typescript-eslint/no-this-alias
-			const that = this;
-			this._provider.on('moved', function (index) {
-				setTimeout(() => {
-					that._onChange(that.widgetId, index);
-				}, 0);
-			});
 		}
 
 		// Set the html references that will be used to manage the cssClasses and atribute properties
@@ -145,6 +140,22 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 
 			// Manage Scale option
 			this.handleScale(this._configs.OptionalConfigs.Scale);
+		}
+
+		private _setOnSlideMovedEvent(): void {
+			this._provider.on('moved', (index) => {
+				setTimeout(() => {
+					this._onSlideMoved(this.widgetId, index);
+				}, 0);
+			});
+		}
+
+		private _setOnInitializedEvent(): void {
+			this._provider.on('mounted', () => {
+				setTimeout(() => {
+					this._onInitialized(this.widgetId);
+				}, 0);
+			});
 		}
 
 		private _updateBreakpointsOptions(focusValue = this._configs.OptionalConfigs.FocusOnItem): void {
@@ -276,9 +287,32 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		}
 
 		// Set callbacks for the onChange event
-		public registerCallback(callback: OSUIFramework.Callbacks.OSCarouselChangeEvent): void {
-			this._onChange = callback;
-			this._setOnchangeEvent();
+		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
+			switch (eventName) {
+				case Enum.Events.OnSlideMoved:
+					this._onSlideMoved = callback;
+					break;
+				case Enum.Events.OnInitialized:
+					this._onInitialized = callback;
+					break;
+			}
+		}
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		public setFocusOnItemOption(value: string, itemsPerSlide: number): any {
+			let currentFocus;
+			switch (value) {
+				case Enum.FocusOnItem.Center:
+					currentFocus = 'center';
+					break;
+				case Enum.FocusOnItem.FirstOnSlide:
+					currentFocus = 0;
+					break;
+				case Enum.FocusOnItem.LastOnSlide:
+					currentFocus = itemsPerSlide - 1;
+			}
+
+			return currentFocus;
 		}
 
 		public setNavigation(navigation: string): void {
@@ -299,23 +333,6 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 					this._splideOptions.arrows = true;
 					this._splideOptions.pagination = true;
 			}
-		}
-
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		public setFocusOnItemOption(value: string, itemsPerSlide: number): any {
-			let currentFocus;
-			switch (value) {
-				case Enum.FocusOnItem.Center:
-					currentFocus = 'center';
-					break;
-				case Enum.FocusOnItem.FirstOnSlide:
-					currentFocus = 0;
-					break;
-				case Enum.FocusOnItem.LastOnSlide:
-					currentFocus = itemsPerSlide - 1;
-			}
-
-			return currentFocus;
 		}
 
 		public updateCarousel(hasDomChanges = false): void {

@@ -2,7 +2,7 @@
 namespace OSUIFramework.Callbacks {
 	export type OSGeneric = { (patternId, ...ags): void };
 
-	export type OSCarouselChangeEvent = {
+	export type OSCarouselSlideMovedEvent = {
 		(carouselId: string, index: number): void;
 	};
 

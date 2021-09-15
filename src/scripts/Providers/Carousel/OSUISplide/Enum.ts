@@ -12,6 +12,14 @@ namespace Providers.Carousel.OSUISplide.Enum {
 	}
 
 	/**
+	 * Splide Events
+	 */
+	export enum Events {
+		OnInitialized = 'OnInitialized',
+		OnSlideMoved = 'OnSlideMoved',
+	}
+
+	/**
 	 * Splide Navigation options
 	 */
 	export enum Navigation {
