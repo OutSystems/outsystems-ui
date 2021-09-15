@@ -15,4 +15,41 @@
 			}
 		}
 	}
+
+	.splide__arrow {
+		background-color: var(--color-neutral-0);
+		box-shadow: var(--shadow-xs);
+		height: 40px;
+		opacity: 1;
+		transition: opacity 150ms linear;
+		width: 40px;
+		will-change: opacity;
+
+		&[disabled] {
+			opacity: 0.3;
+		}
+
+		svg {
+			height: 14px;
+			width: 14px;
+
+			path {
+				fill: var(--color-neutral-7);
+			}
+		}
+	}
+
+	.splide__pagination {
+		background-color: var(--color-neutral-0);
+		border-radius: 100px;
+		box-shadow: var(--shadow-xs);
+		padding: var(--space-xs) var(--space-s);
+		width: auto;
+
+		.splide__pagination__page {
+			&.is-active {
+				background-color: var(--color-primary);
+			}
+		}
+	}
 }
