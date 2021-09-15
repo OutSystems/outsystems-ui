@@ -13,6 +13,7 @@ namespace OSUIFramework.Patterns.Submenu {
 		private _hasElements = false;
 		private _isOpen = false;
 		private _submenuAllLinks: NodeList;
+		private _submenuActiveLinks: NodeList;
 		private _submenuHeader: HTMLElement;
 		private _submenuItem: HTMLElement;
 		private _submenuLinks: HTMLElement;
@@ -32,8 +33,8 @@ namespace OSUIFramework.Patterns.Submenu {
 				this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnSubmenuKeypress);
 			}
 
-			OSUIFramework.Event.Internal.GetEventManagerInstance().addHandler(
-				OSUIFramework.Event.Internal.Events.SubmenuOpen,
+			OSUIFramework.Event.Internal.GlobalEventManager.instance().addHandler(
+				OSUIFramework.Event.Internal.Triggers.SubmenuOpen,
 				this._onSubmenuEventTriggered.bind(this)
 			);
 		}
@@ -94,6 +95,13 @@ namespace OSUIFramework.Patterns.Submenu {
 				this.close();
 			} else {
 				this.open();
+
+				// Trigger event to close other submenu instances
+				OSUIFramework.Event.Internal.GlobalEventManager.instance().trigger(
+					// eslint-disable-next-line @typescript-eslint/no-unused-vars
+					OSUIFramework.Event.Internal.Triggers.SubmenuOpen,
+					this.uniqueId
+				);
 			}
 		}
 
@@ -132,9 +140,21 @@ namespace OSUIFramework.Patterns.Submenu {
 			this._submenuItem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternItem);
 			this._submenuLinks = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternLinks);
 			this._submenuAllLinks = this._submenuLinks.querySelectorAll(Constants.Link);
+			this._submenuActiveLinks = this._submenuLinks.querySelectorAll(Constants.Dot + Enum.CssClass.PatternActive);
 
 			if (this._submenuAllLinks.length > 0) {
 				this._hasElements = true;
+			}
+		}
+
+		// Set the cssClasses that should be assigned to the element on it's initialization
+		private _setInitialCssClasses(): void {
+			if (this._submenuActiveLinks.length > 0) {
+				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternActive);
+			}
+
+			if (this._hasElements) {
+				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternIsDropdown);
 			}
 		}
 
@@ -174,6 +194,8 @@ namespace OSUIFramework.Patterns.Submenu {
 
 			this._setHtmlElements();
 
+			this._setInitialCssClasses();
+
 			this._setAccessibilityProps();
 
 			this._addEvents();
@@ -201,19 +223,11 @@ namespace OSUIFramework.Patterns.Submenu {
 
 		// Open Submenu
 		public open(): void {
-			setTimeout(() => {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternIsOpen);
-			}, 0);
+			Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternIsOpen);
 
 			this._isOpen = true;
 
 			this._updateAccessibilityProps();
-
-			// Trigger event to close other submenu instances
-			OSUIFramework.Event.Internal.GetEventManagerInstance().trigger(
-				OSUIFramework.Event.Internal.Events.SubmenuOpen,
-				this.uniqueId
-			);
 		}
 	}
 }

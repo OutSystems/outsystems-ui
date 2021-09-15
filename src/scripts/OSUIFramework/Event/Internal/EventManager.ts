@@ -1,16 +1,21 @@
 namespace OSUIFramework.Event.Internal {
-	export class EventManager extends AbstractEventsManager<Events, string> {
-		protected getInstanceOfEventType(eventType: Events): IEvent<string> {
+	export class EventManager extends AbstractEventsManager<Triggers, string> {
+		protected getInstanceOfEventType(eventType: Triggers): IEvent<string> {
 			switch (eventType) {
-				case Events.SubmenuOpen:
+				case Triggers.SubmenuOpen:
+					// eslint-disable-next-line @typescript-eslint/no-unused-vars
 					return new OSUIFramework.Patterns.Submenu.Event.Open();
 			}
 
 			// throw new Error('Method not implemented.');
 		}
 	}
-	const eventManager = new EventManager();
-	export function GetEventManagerInstance(): EventManager {
-		return eventManager;
+
+	export class GlobalEventManager {
+		private static _eventManager = new EventManager();
+
+		public static instance(): EventManager {
+			return GlobalEventManager._eventManager;
+		}
 	}
 }
