@@ -142,18 +142,18 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			this.handleScale(this._configs.OptionalConfigs.Scale);
 		}
 
-		private _setOnSlideMovedEvent(): void {
-			this._provider.on('moved', (index) => {
-				setTimeout(() => {
-					this._onSlideMoved(this.widgetId, index);
-				}, 0);
-			});
-		}
-
 		private _setOnInitializedEvent(): void {
 			this._provider.on('mounted', () => {
 				setTimeout(() => {
 					this._onInitialized(this.widgetId);
+				}, 0);
+			});
+		}
+
+		private _setOnSlideMovedEvent(): void {
+			this._provider.on('moved', (index) => {
+				setTimeout(() => {
+					this._onSlideMoved(this.widgetId, index);
 				}, 0);
 			});
 		}
