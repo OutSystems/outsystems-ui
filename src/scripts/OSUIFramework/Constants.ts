@@ -10,6 +10,8 @@ namespace OSUIFramework.Constants {
 			ValueMax: 'valuemax',
 			ValueMin: 'valuemin',
 			Label: 'aria-label',
+			Hidden: 'aria-hidden',
+			Expanded: 'aria-expanded',
 		},
 		Role: {
 			AttrName: 'role',
