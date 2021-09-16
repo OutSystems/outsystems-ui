@@ -1,7 +1,7 @@
 /// <reference path="../AbstractPattern.ts" />
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSUIFramework.Patterns.FloatingActions {
+namespace OSUIFramework.Patterns.FloatingActionsItem {
 	export class FloatingActionsItem
 		extends AbstractPattern<FloatingActionsItemConfig>
 		implements IFloatingActionsItem
@@ -9,10 +9,6 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new FloatingActionsItemConfig(configs));
-		}
-
-		public setTabIndex(FloatingActionsItem: HTMLElement, value: string): void {
-			Helper.Attribute.Set(FloatingActionsItem, Constants.AccessibilityAttribute.TabIndex, value);
 		}
 	}
 }

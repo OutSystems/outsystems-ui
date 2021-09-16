@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSUIFramework.Patterns.FloatingActions {
+namespace OSUIFramework.Patterns.FloatingActionsItem {
 	/**
 	 * Defines the interface for OutSystemsUI Floating Actions Pattern
 	 */

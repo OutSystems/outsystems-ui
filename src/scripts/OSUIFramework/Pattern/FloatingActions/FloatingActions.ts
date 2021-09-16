@@ -5,6 +5,12 @@ namespace OSUIFramework.Patterns.FloatingActions {
 	export class FloatingActions extends AbstractPattern<FloatingActionsConfig> implements IFloatingActions {
 		// Stores the bottom bar HTML element
 		private _bottomBar: HTMLElement;
+		// Store the click event with bind(this)
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		private _eventToggleClick: any;
+		// Store the keyboard event with bind(this)
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		private _eventkeyboard: any;
 		// First Floating Action Item
 		private _firstButton: HTMLElement;
 		// Stores the HTML element of the pattern
@@ -29,11 +35,16 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new FloatingActionsConfig(configs));
+			this._eventToggleClick = this._toggleClick.bind(this);
+			this._eventkeyboard = this._onButtonKeypress.bind(this);
 		}
 
-		// Inside Bottom Bar and IOS fix
-		// Checks in the Floating Actions Pattern is inside the Bottom Bar
+		// Checks in the Floating Actions Pattern is inside the Bottom Bar and applies a fix for iOS devices
 		private _checkIfInsideBottomBar(): void {
+			this._bottomBar = document.querySelector(
+				Constants.Dot + Enum.CssClasses.ActiveScreen + ' ' + Constants.Dot + Enum.CssClasses.BottomBar
+			);
+
 			// Inside Bottom Bar and IOS fix
 			if (this._bottomBar && this._floatingActions) {
 				this._insideBottomBar = this._bottomBar.contains(this._floatingActions);
@@ -43,20 +54,6 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			}
 
 			if (!this._insideBottomBar && this._floatingActions) {
-				const layout = document.querySelector('.layout');
-
-				if (layout) {
-					const nativeLayout = layout.classList.contains('layout-native');
-
-					if (nativeLayout) {
-						// new native layouts
-						Helper.MoveElement(this._selfElem, '.active-screen .main');
-					} else {
-						// Old native layouts
-						Helper.MoveElement(this._selfElem, '.active-screen .screen');
-					}
-				}
-
 				if (this._bottomBar) {
 					this._insideBottomBar = true;
 					Helper.Style.AddClass(this._floatingActions, Enum.CssClasses.BottomBarExists);
@@ -64,35 +61,36 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			}
 		}
 
-		private _escException(e: KeyboardEvent): void {
+		// Accessibility - Exception for clicking Esc on items wrapper
+		private _handleEscException(e: KeyboardEvent): void {
 			if (e.key === GlobalEnum.Keycodes.Escape) {
 				if (this.configs.IsHover) {
-					this._floatingActionsButton.removeEventListener('focus', this.toggleClick.bind(this));
+					this._floatingActionsButton.removeEventListener('focus', this._eventToggleClick);
 				}
 
-				this.toggleClick();
+				this._toggleClick();
 
 				if (this.configs.IsHover) {
-					this._floatingActionsButton.addEventListener('focus', this.toggleClick.bind(this));
+					this._floatingActionsButton.addEventListener('focus', this._eventToggleClick);
 				}
 			}
 
 			this._setFocusTrap(e);
 		}
 
-		// Sets keyboard interaction - Accessibility
+		// Accessibility - Sets keyboard interaction
 		private _onButtonKeypress(e: KeyboardEvent): void {
 			//If ESC is pressed then close the floatiing action items
 			if (
 				e.key === GlobalEnum.Keycodes.Escape &&
 				Helper.Style.ContainsClass(this._floatingActions, Enum.CssClasses.Open)
 			) {
-				this.toggleClick();
+				this._toggleClick();
 			}
 
 			//If ENTER or SPACE toggle floating action items
 			if (e.key === GlobalEnum.Keycodes.Enter || e.key === GlobalEnum.Keycodes.Space) {
-				this.toggleClick();
+				this._toggleClick();
 			}
 
 			this._setFocusTrap(e);
@@ -100,20 +98,6 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 		// Accessibility - sets the aria labels that depend on the opened/closed state
 		private _setAccessibility(): void {
-			const floatingOverlay: HTMLElement = document.querySelector(
-				Constants.Dot + Enum.CssClasses.FloatingOverlay
-			);
-
-			//Toggles the open class on Floating Actions
-			this._isOpen
-				? Helper.Style.AddClass(this._floatingActions, Enum.CssClasses.Open)
-				: Helper.Style.RemoveClass(this._floatingActions, Enum.CssClasses.Open);
-
-			//Toggles the open class on Floating Actions' Overlay
-			this._isOpen
-				? Helper.Style.AddClass(floatingOverlay, Enum.CssClasses.Open)
-				: Helper.Style.RemoveClass(floatingOverlay, Enum.CssClasses.Open);
-
 			//Toggles accessibility property on Floating Actions Items' container
 			this._isOpen
 				? Helper.Attribute.Set(this._floatingActionsItem, Constants.AccessibilityAttribute.Aria.Hidden, 'false')
@@ -133,7 +117,24 @@ namespace OSUIFramework.Patterns.FloatingActions {
 				  );
 		}
 
-		// Traps the focus on the floating action items when navigating with the keyboard
+		// Sets classes that depend on the open/closed state
+		private _setClasses() {
+			const floatingOverlay: HTMLElement = document.querySelector(
+				Constants.Dot + Enum.CssClasses.FloatingOverlay
+			);
+
+			//Toggles the open class on Floating Actions
+			this._isOpen
+				? Helper.Style.AddClass(this._floatingActions, Enum.CssClasses.Open)
+				: Helper.Style.RemoveClass(this._floatingActions, Enum.CssClasses.Open);
+
+			//Toggles the open class on Floating Actions' Overlay
+			this._isOpen
+				? Helper.Style.AddClass(floatingOverlay, Enum.CssClasses.Open)
+				: Helper.Style.RemoveClass(floatingOverlay, Enum.CssClasses.Open);
+		}
+
+		// Accessibility - Traps the focus on the floating action items when navigating with the keyboard
 		private _setFocusTrap(e: KeyboardEvent): void {
 			if (this._floatingActionsItems.length > 0) {
 				const isShiftKey = e.shiftKey;
@@ -154,7 +155,6 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		// Accessibility - Set tabindex values
 		private _setTabIndex(value: string): void {
 			this._floatingActionsItems = [].slice.call(this._floatingActionsItems);
-			//TODO call FloatingActionItem method
 			this._floatingActionsItems.forEach((item) => {
 				Helper.Attribute.Set(item, Constants.AccessibilityAttribute.TabIndex, value);
 			});
@@ -164,39 +164,31 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		private _setUpEvents(): void {
 			if (this.configs.IsHover) {
 				if (this.configs.IsExpanded) {
-					this._floatingActions.addEventListener(
-						GlobalEnum.HTMLEvent.MouseLeave,
-						this.toggleClick.bind(this)
-					);
+					this._floatingActions.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventToggleClick);
 				} else {
 					this._floatingActionsButton.addEventListener(
 						GlobalEnum.HTMLEvent.MouseEnter,
-						this.toggleClick.bind(this)
+						this._eventToggleClick
 					);
 				}
 
-				this._floatingActionsButton.removeEventListener(
-					GlobalEnum.HTMLEvent.Focus,
-					this.toggleClick.bind(this)
-				);
+				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventToggleClick);
 			} else {
-				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.Click, this.toggleClick.bind(this));
-				this._floatingActionsButton.addEventListener(
-					GlobalEnum.HTMLEvent.keyDown,
-					this._onButtonKeypress.bind(this)
-				);
+				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventToggleClick);
+				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventkeyboard);
 			}
 
 			// Exception for clicking Esc on items wrapper
-			this._floatingActionsItem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._escException.bind(this));
+			this._floatingActionsItem.addEventListener(
+				GlobalEnum.HTMLEvent.keyDown,
+				this._handleEscException.bind(this)
+			);
 		}
 
 		// Sets up the Floating Action elements on first render
 		private _setUpFloatingActions(): void {
 			this._floatingActions = this._selfElem;
-			this._bottomBar = document.querySelector(
-				Constants.Dot + Enum.CssClasses.ActiveScreen + ' ' + Constants.Dot + Enum.CssClasses.BottomBar
-			);
+
 			//this._floatingActions = document.getElementById($parameters.FloatingId);
 			this._floatingActionsButton = this._floatingActions.querySelector(
 				Constants.Dot + Enum.CssClasses.FloatingActionsButton
@@ -225,7 +217,6 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 				// set var --delay on style with each items index, to perform sequential css animation
 				for (let i = 0; i < this._floatingActionsItems.length; i++) {
-					//TODO FloatingActionItem method
 					Helper.Attribute.Set(
 						this._floatingActionsItems[i],
 						'style',
@@ -235,7 +226,12 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			}
 		}
 
-		// Method that triggers the toggle event
+		// Method to toggle between classes
+		private _toggleClick(): void {
+			this._isOpen ? this.close() : this.open();
+		}
+
+		// Method that triggers the toggle event on the platform
 		private _triggerOnClickEvent(): void {
 			if (this._onClick !== undefined) {
 				setTimeout(() => {
@@ -246,76 +242,84 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 		public build(): void {
 			super.build();
+
+			this._setClasses();
+
 			this._setUpFloatingActions();
+
 			this._setUpFloatingItems();
+
 			this._checkIfInsideBottomBar();
+
 			this._setAccessibility();
+
 			this._setUpEvents();
+
 			this.finishBuild();
 		}
 
-		public dispose(): void {
+		public close(): void {
+			this._isOpen = false;
+
+			this._floatingActionsButton.focus();
+			this._setTabIndex('-1');
+
 			if (this.configs.IsHover) {
-				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this.toggleClick);
-				this._floatingActions.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this.toggleClick);
-			} else {
-				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.Click, this.toggleClick);
+				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.Focus, this.close.bind(this));
+
+				//Handle event listeners
+				this._floatingActions.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this.close.bind(this));
+				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.MouseEnter, this.open.bind(this));
+				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.Focus, this.open.bind(this));
 			}
+
+			this._setAccessibility();
+			this._setClasses();
+			this._triggerOnClickEvent();
+		}
+
+		public dispose(): void {
+			super.dispose();
+
+			if (this.configs.IsHover) {
+				this._floatingActionsButton.removeEventListener(
+					GlobalEnum.HTMLEvent.MouseLeave,
+					this._eventToggleClick
+				);
+				this._floatingActions.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventToggleClick);
+			} else {
+				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventToggleClick);
+			}
+
+			// Removes keyboard events
+			this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventkeyboard);
+		}
+
+		public open(): void {
+			const firstItem = this._floatingActionsItems[0];
+			this._isOpen = true;
+
+			this._setTabIndex('0');
+
+			if (firstItem) {
+				firstItem.focus();
+			}
+
+			if (this.configs.IsHover) {
+				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.Focus, this.open.bind(this));
+
+				//Handle event listeners
+				this._floatingActions.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this.close.bind(this));
+				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.MouseEnter, this.open.bind(this));
+			}
+
+			this._setAccessibility();
+			this._setClasses();
+			this._triggerOnClickEvent();
 		}
 
 		public registerCallback(callback: Callbacks.OSGeneric): void {
 			this._onClick = callback;
-		}
-
-		public toggleClick(): void {
-			let firstItem;
-
-			this._isOpen = !this._isOpen;
-			if (this._isOpen) {
-				this._setTabIndex('0');
-				firstItem = this._floatingActionsItems[0];
-
-				if (firstItem) {
-					firstItem.focus();
-				}
-			} else {
-				this._floatingActionsButton.focus();
-				this._setTabIndex('-1');
-			}
-
-			if (this.configs.IsHover) {
-				this._floatingActionsButton.removeEventListener(
-					GlobalEnum.HTMLEvent.Focus,
-					this.toggleClick.bind(this)
-				);
-
-				//Handle event listeners
-				if (this._isOpen) {
-					this._floatingActionsButton.removeEventListener(
-						GlobalEnum.HTMLEvent.MouseEnter,
-						this.toggleClick.bind(this)
-					);
-					this._floatingActions.addEventListener(
-						GlobalEnum.HTMLEvent.MouseLeave,
-						this.toggleClick.bind(this)
-					);
-				} else {
-					this._floatingActionsButton.addEventListener(
-						GlobalEnum.HTMLEvent.MouseEnter,
-						this.toggleClick.bind(this)
-					);
-					this._floatingActions.removeEventListener(
-						GlobalEnum.HTMLEvent.MouseLeave,
-						this.toggleClick.bind(this)
-					);
-					this._floatingActionsButton.addEventListener(
-						GlobalEnum.HTMLEvent.Focus,
-						this.toggleClick.bind(this)
-					);
-				}
-			}
-			this._setAccessibility();
-			this._triggerOnClickEvent();
 		}
 	}
 }
