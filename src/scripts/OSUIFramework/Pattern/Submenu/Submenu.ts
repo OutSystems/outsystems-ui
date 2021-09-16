@@ -10,8 +10,10 @@ namespace OSUIFramework.Patterns.Submenu {
 		private _eventOnClick: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnSubmenuKeypress: any;
-		private _globalEventOnSubmenuOpen: any;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _globalEventOnBodyClick: any;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		private _globalEventOnSubmenuOpen: any;
 		private _hasActiveLinks = false;
 		private _hasElements = false;
 		private _isOpen = false;
@@ -63,15 +65,6 @@ namespace OSUIFramework.Patterns.Submenu {
 			e.stopPropagation();
 		}
 
-		// Prevent close submenu based on a uniqueID validation, when his event is triggered
-		private _onSubmenuOpenEvent(element: string): void {
-			if (element !== this.uniqueId) {
-				if (this._isOpen) {
-					this.close();
-				}
-			}
-		}
-
 		// Call methods to open or close, based ok e.key and behavior applied
 		private _onSubmenuKeypress(e: KeyboardEvent): void {
 			const _clickedElem: HTMLElement = e.target as HTMLElement;
@@ -100,6 +93,15 @@ namespace OSUIFramework.Patterns.Submenu {
 			}
 
 			e.stopPropagation();
+		}
+
+		// Prevent close submenu based on a uniqueID validation, when his event is triggered
+		private _onSubmenuOpenEvent(element: string): void {
+			if (element !== this.uniqueId) {
+				if (this._isOpen) {
+					this.close();
+				}
+			}
 		}
 
 		// Trigger the submenu behavior based on visibility
