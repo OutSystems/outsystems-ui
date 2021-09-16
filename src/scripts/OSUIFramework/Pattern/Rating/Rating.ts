@@ -10,6 +10,9 @@ namespace OSUIFramework.Patterns.Rating {
 		private _decimalValue: number;
 		// Store current disable values
 		private _disabled: boolean;
+		// Store the click event with bind(this)
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		private _eventOnRatingClick: any;
 		// Store if the rating value is half
 		private _isHalfValue: boolean;
 		// Store the callback to be used on the OnSelect event
@@ -33,6 +36,7 @@ namespace OSUIFramework.Patterns.Rating {
 			this._disabled = !this.configs.IsEdit;
 			this._ratingInputName = 'rating-' + this.uniqueId;
 			this._ratingHasEventAdded = false;
+			this._eventOnRatingClick = this._ratingOnClick.bind(this);
 		}
 
 		// Medthod that will iterate on the RatingScale, to crate an item for each one
@@ -57,13 +61,13 @@ namespace OSUIFramework.Patterns.Rating {
 			// Check if a event was already added
 			if (this._ratingHasEventAdded) {
 				// If true, remove event
-				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._ratingOnClick.bind(this));
+				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnRatingClick);
 
 				// And set variable as false
 				this._ratingHasEventAdded = false;
 			} else if (this.configs.IsEdit) {
 				// Otherwise, if there is no event already added and the param IsEdit is true, add new event
-				this._selfElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._ratingOnClick.bind(this));
+				this._selfElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnRatingClick);
 				// And set variable as true
 				this._ratingHasEventAdded = true;
 			}
@@ -199,7 +203,7 @@ namespace OSUIFramework.Patterns.Rating {
 
 			// remove event listener if any was added
 			if (this._ratingHasEventAdded) {
-				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._ratingOnClick.bind(this));
+				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnRatingClick);
 			}
 
 			// Remove html from the fieldset
