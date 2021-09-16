@@ -75,6 +75,25 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			}
 		}
 
+		private _setBreakpointsOptions(): void {
+			this._splideOptions.breakpoints = {
+				768: {
+					perPage: this._configs.ItemsPerSlide.Phone,
+					focus: this.setFocusOnItemOption(
+						this._configs.OptionalConfigs.FocusOnItem,
+						this._configs.ItemsPerSlide.Phone
+					),
+				},
+				1024: {
+					perPage: this._configs.ItemsPerSlide.Tablet,
+					focus: this.setFocusOnItemOption(
+						this._configs.OptionalConfigs.FocusOnItem,
+						this._configs.ItemsPerSlide.Tablet
+					),
+				},
+			};
+		}
+
 		// Set the html references that will be used to manage the cssClasses and atribute properties
 		private _setHtmlElements(): void {
 			this._placeholder = this._selfElem.querySelector(
@@ -103,8 +122,6 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 				? OSUIFramework.GlobalEnum.Direction.rtl
 				: OSUIFramework.GlobalEnum.Direction.ltr;
 
-			this._splideOptions.perPage = this._configs.ItemsPerSlide.Desktop;
-			this._splideOptions.autoplay = this._configs.OptionalConfigs.AutoPlay;
 			this._splideOptions.type = this._configs.OptionalConfigs.Loop
 				? Enum.FocusOptions.Loop
 				: Enum.FocusOptions.Slide;
@@ -114,26 +131,13 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 				this._configs.ItemsPerSlide.Desktop
 			);
 
+			this._splideOptions.perPage = this._configs.ItemsPerSlide.Desktop;
+			this._splideOptions.autoplay = this._configs.OptionalConfigs.AutoPlay;
 			this._splideOptions.padding = this._configs.OptionalConfigs.Padding;
 			this._splideOptions.gap = this._configs.OptionalConfigs.Gap;
 			this._splideOptions.start = this._configs.OptionalConfigs.InitialPosition;
 
-			this._splideOptions.breakpoints = {
-				768: {
-					perPage: this._configs.ItemsPerSlide.Phone,
-					focus: this.setFocusOnItemOption(
-						this._configs.OptionalConfigs.FocusOnItem,
-						this._configs.ItemsPerSlide.Phone
-					),
-				},
-				1024: {
-					perPage: this._configs.ItemsPerSlide.Tablet,
-					focus: this.setFocusOnItemOption(
-						this._configs.OptionalConfigs.FocusOnItem,
-						this._configs.ItemsPerSlide.Tablet
-					),
-				},
-			};
+			this._setBreakpointsOptions();
 
 			this.setNavigation(this._configs.Navigation);
 
@@ -155,19 +159,6 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 					this._onSlideMoved(this.widgetId, index);
 				}, 0);
 			});
-		}
-
-		private _updateBreakpointsOptions(focusValue = this._configs.OptionalConfigs.FocusOnItem): void {
-			this._provider.options.breakpoints = {
-				768: {
-					perPage: this._configs.ItemsPerSlide.Phone,
-					focus: this.setFocusOnItemOption(focusValue, this._configs.ItemsPerSlide.Phone),
-				},
-				1024: {
-					perPage: this._configs.ItemsPerSlide.Tablet,
-					focus: this.setFocusOnItemOption(focusValue, this._configs.ItemsPerSlide.Tablet),
-				},
-			};
 		}
 
 		public build(): void {
@@ -237,11 +228,12 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 					break;
 				case 'focus':
 					this._configs.OptionalConfigs.FocusOnItem = propertyValue;
+					this._setBreakpointsOptions();
 					this._provider.options.focus = this.setFocusOnItemOption(
-						propertyValue,
+						this._configs.OptionalConfigs.FocusOnItem,
 						this._configs.ItemsPerSlide.Desktop
 					);
-					this._updateBreakpointsOptions();
+					this._provider.options.breakpoints = this._splideOptions.breakpoints;
 					this.updateCarousel();
 					break;
 				default:
@@ -262,9 +254,8 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 
 		// Method to remove and destroy Carousel Splide instance
 		public dispose(): void {
-			super.dispose();
-
 			this._provider.destroy();
+			super.dispose();
 		}
 
 		public handleScale(setScale: boolean): void {
@@ -336,6 +327,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			}
 
 			this._provider.refresh();
+			console.log(this._provider.options);
 		}
 
 		public updateOnRender(): void {
