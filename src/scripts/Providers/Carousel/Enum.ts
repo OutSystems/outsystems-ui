@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.Carousel.OSUISplide.Enum {
+namespace Providers.Carousel.Enum {
 	/**
 	 * Splide CSS Classes
 	 */
@@ -14,9 +14,9 @@ namespace Providers.Carousel.OSUISplide.Enum {
 	/**
 	 * Splide Events
 	 */
-	export enum Events {
-		OnInitialized = 'OnInitialized',
-		OnSlideMoved = 'OnSlideMoved',
+	export enum SpliderEvents {
+		Mounted = 'mounted',
+		Moved = 'moved',
 	}
 
 	/**

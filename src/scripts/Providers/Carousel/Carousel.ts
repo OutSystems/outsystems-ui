@@ -148,7 +148,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		}
 
 		private _setOnInitializedEvent(): void {
-			this._provider.on('mounted', () => {
+			this._provider.on(Enum.SpliderEvents.Mounted, () => {
 				setTimeout(() => {
 					this._onInitialized(this.widgetId);
 				}, 0);
@@ -156,7 +156,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		}
 
 		private _setOnSlideMovedEvent(): void {
-			this._provider.on('moved', (index) => {
+			this._provider.on(Enum.SpliderEvents.Moved, (index) => {
 				setTimeout(() => {
 					this._onSlideMoved(this.widgetId, index);
 				}, 0);
@@ -276,10 +276,10 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		// Set callbacks for the onChange event
 		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
 			switch (eventName) {
-				case Enum.Events.OnSlideMoved:
+				case OSUIFramework.Patterns.Carousel.Enum.CarouselEvents.OnSlideMoved:
 					this._onSlideMoved = callback;
 					break;
-				case Enum.Events.OnInitialized:
+				case OSUIFramework.Patterns.Carousel.Enum.CarouselEvents.OnInitialized:
 					this._onInitialized = callback;
 					break;
 			}
@@ -290,7 +290,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			let currentFocus;
 			switch (value) {
 				case Enum.FocusOnItem.Center:
-					currentFocus = 'center';
+					currentFocus = Enum.FocusOnItem.Center;
 					break;
 				case Enum.FocusOnItem.FirstOnSlide:
 					currentFocus = 0;
