@@ -5,7 +5,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 	 */
 	export class Carousel
 		extends OSUIFramework.Patterns.AbstractPattern<OSUIFramework.Patterns.Carousel.CarouselConfig>
-		implements ISlider
+		implements ICarouselProvider
 	{
 		private _blockRender: boolean;
 		private _hasList: boolean;
@@ -20,7 +20,9 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		private _splideTrack: HTMLElement;
 
 		// eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-		provider: Splide;
+		get provider(): Splide {
+			return this._provider;
+		}
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {

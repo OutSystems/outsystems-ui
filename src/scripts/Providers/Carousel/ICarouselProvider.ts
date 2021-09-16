@@ -3,7 +3,7 @@ namespace Providers.Carousel.OSUISplide {
 	/**
 	 * Defines the interface for OutSystemsUI Splide Carousel
 	 */
-	export interface ISlider
+	export interface ICarouselProvider
 		extends OSUIFramework.Patterns.Carousel.ICarousel,
-			Providers.Interface.IProviderPattern<Splide> {}
+			OSUIFramework.Interface.IProviderPattern<Splide> {}
 }

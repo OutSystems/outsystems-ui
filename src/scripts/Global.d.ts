@@ -1,31 +1,19 @@
 import OriginalSplide from '@splidejs/splide';
 
 /**
- * Splide Carousel library definition
+ * Set global declarations
  */
 
 declare global {
 	//eslint-disable-next-line @typescript-eslint/naming-convention
 	interface Window {
+		cordova: any;
 		Splide: typeof OriginalSplide;
 	}
-	type Splide = OriginalSplide;
-}
 
-/**
- * Global cordova type definition
- */
-export declare global {
-	interface Window {
-		cordova: any;
-	}
-}
-
-/**
- * Global navigator.standalone type definition
- */
-export declare global {
 	interface Navigator {
 		standalone: any;
 	}
+
+	type Splide = OriginalSplide;
 }

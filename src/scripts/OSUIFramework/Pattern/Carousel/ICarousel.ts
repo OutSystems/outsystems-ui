@@ -3,7 +3,5 @@ namespace OSUIFramework.Patterns.Carousel {
 	/**
 	 * Defines the interface for OutSystemsUI Carousel Pattern
 	 */
-	export interface ICarousel extends Interface.IPattern, Interface.IRenderUpdate {
-		registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void;
-	}
+	export interface ICarousel extends Interface.IPattern, Interface.IRenderUpdate {}
 }
