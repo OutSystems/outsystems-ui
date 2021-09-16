@@ -26,7 +26,9 @@ namespace OutSystems.OSUI.Patterns.GalleryAPI {
 	 */
 	export function Create(galleryId: string, configs: string): OSUIFramework.Patterns.Gallery.IGallery {
 		if (_galleryMap.has(galleryId)) {
-			throw new Error(`There is already a gallery registered under id: ${galleryId}`);
+			throw new Error(
+				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.Gallery} registered under id: ${galleryId}`
+			);
 		}
 
 		const _newGallery = new OSUIFramework.Patterns.Gallery.Gallery(galleryId, JSON.parse(configs));

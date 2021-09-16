@@ -6,6 +6,31 @@ namespace OSUIFramework.GlobalEnum {
 	export enum CommonPatternsProperties {
 		ExtendedClass = 'ExtendedClass',
 	}
+	/**
+	 * OutSystemsUI patterns names
+	 * Note: Can be used for logging purposes
+	 */
+	export enum PatternsNames {
+		Accordion = 'Accordion',
+		AccordionItem = 'Accordion Item',
+		AnimatedLabel = 'Animated Label',
+		ButtonLoading = 'ButtonLoading',
+		Carousel = 'Carousel',
+		FloatingActions = 'Floating Actions',
+		FloatingActionsItem = 'Floating Actions Item',
+		Gallery = 'Gallery',
+		Notification = 'Notification',
+		ProgressBar = 'Progress Bar',
+		ProgressCircle = 'Progress Circle',
+		Rating = 'Rating',
+		RangeSlider = 'Range Slider',
+		RangeSliderInterval = 'Range Slider Interval',
+		Search = 'Search',
+		SectionIndex = 'Section Index',
+		Sidebar = 'Sidebar',
+		Submenu = 'Submenu',
+		Tooltip = 'Tooltip',
+	}
 
 	/**
 	 * OutSystemsUI position cssClasses

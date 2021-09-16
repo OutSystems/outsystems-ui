@@ -39,7 +39,9 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 */
 	export function Create(tooltipId: string, configs: string): OSUIFramework.Patterns.Tooltip.ITooltip {
 		if (_tooltipsMap.has(tooltipId)) {
-			throw new Error(`There is already a tooltip registered under id: ${tooltipId}`);
+			throw new Error(
+				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.Tooltip} registered under id: ${tooltipId}`
+			);
 		}
 
 		const _newTooltip = new OSUIFramework.Patterns.Tooltip.Tooltip(tooltipId, JSON.parse(configs));
