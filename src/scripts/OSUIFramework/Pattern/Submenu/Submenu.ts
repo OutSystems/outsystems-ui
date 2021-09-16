@@ -10,6 +10,8 @@ namespace OSUIFramework.Patterns.Submenu {
 		private _eventOnClick: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnSubmenuKeypress: any;
+		private _globalEventOnSubmenuOpen: any;
+		private _globalEventOnBodyClick: any;
 		private _hasActiveLinks = false;
 		private _hasElements = false;
 		private _isOpen = false;
@@ -25,6 +27,8 @@ namespace OSUIFramework.Patterns.Submenu {
 
 			this._eventOnClick = this._onSubmenuClick.bind(this);
 			this._eventOnSubmenuKeypress = this._onSubmenuKeypress.bind(this);
+			this._globalEventOnSubmenuOpen = this._onSubmenuOpenEvent.bind(this);
+			this._globalEventOnBodyClick = this._onBodyClick.bind(this);
 		}
 
 		// Add Pattern Events
@@ -34,10 +38,22 @@ namespace OSUIFramework.Patterns.Submenu {
 				this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnSubmenuKeypress);
 			}
 
-			OSUIFramework.Event.Internal.GlobalEventManager.instance().addHandler(
-				OSUIFramework.Event.Internal.Triggers.SubmenuOpen,
-				this._onSubmenuEventTriggered.bind(this)
+			OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
+				OSUIFramework.Event.Type.SubmenuOpen,
+				this._globalEventOnSubmenuOpen
 			);
+
+			OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
+				OSUIFramework.Event.Type.BodyOnClick,
+				this._globalEventOnBodyClick
+			);
+		}
+
+		// Close submenu, when BodyOnCLick event is triggered
+		private _onBodyClick(): void {
+			if (this._isOpen) {
+				this.close();
+			}
 		}
 
 		// Trigger the submenu at toggle behaviour
@@ -47,8 +63,8 @@ namespace OSUIFramework.Patterns.Submenu {
 			e.stopPropagation();
 		}
 
-		// Prevent close submenu based on a uniqueID validation, when his event his triggered
-		private _onSubmenuEventTriggered(element: string): void {
+		// Prevent close submenu based on a uniqueID validation, when his event is triggered
+		private _onSubmenuOpenEvent(element: string): void {
 			if (element !== this.uniqueId) {
 				if (this._isOpen) {
 					this.close();
@@ -68,26 +84,22 @@ namespace OSUIFramework.Patterns.Submenu {
 			//Open the submenu
 			if (_isEnterPressed) {
 				this._onSubmenuToggle();
-
-				e.stopPropagation();
 			}
 			// Close the submenu when pressing Esc
 			if (_isEscapedPressed && this._isOpen) {
 				this.close();
 
 				this._submenuHeader.focus();
-
-				e.stopPropagation();
 			}
 
 			// If navigate to outside of Submenu, close it
 			if (_isShiftPressed && _isTabPressed && _clickedElem === this._submenuHeader) {
 				if (_closestElem === this._selfElem && this._isOpen) {
 					this.close();
-
-					e.stopPropagation();
 				}
 			}
+
+			e.stopPropagation();
 		}
 
 		// Trigger the submenu behavior based on visibility
@@ -98,9 +110,9 @@ namespace OSUIFramework.Patterns.Submenu {
 				this.open();
 
 				// Trigger event to close other submenu instances
-				OSUIFramework.Event.Internal.GlobalEventManager.instance().trigger(
+				OSUIFramework.Event.GlobalEventManager.Instance.trigger(
 					// eslint-disable-next-line @typescript-eslint/no-unused-vars
-					OSUIFramework.Event.Internal.Triggers.SubmenuOpen,
+					OSUIFramework.Event.Type.SubmenuOpen,
 					this.uniqueId
 				);
 			}
@@ -112,6 +124,16 @@ namespace OSUIFramework.Patterns.Submenu {
 				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnSubmenuKeypress);
 			}
+
+			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
+				OSUIFramework.Event.Type.SubmenuOpen,
+				this._globalEventOnSubmenuOpen
+			);
+
+			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
+				OSUIFramework.Event.Type.BodyOnClick,
+				this._globalEventOnBodyClick
+			);
 		}
 
 		// Add the Accessibility Attributes values

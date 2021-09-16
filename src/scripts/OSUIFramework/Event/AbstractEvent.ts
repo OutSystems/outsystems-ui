@@ -37,7 +37,11 @@ namespace OSUIFramework.Event {
 
 		// eslint-disable-next-line  @typescript-eslint/no-unused-vars, @typescript-eslint/explicit-module-boundary-types
 		public trigger(data?: T, ...args): void {
-			this._handlers.slice(0).forEach((h) => h(data));
+			this._handlers.slice(0).forEach((h) =>
+				setTimeout(() => {
+					h(data);
+				}, 0)
+			);
 		}
 	}
 }
