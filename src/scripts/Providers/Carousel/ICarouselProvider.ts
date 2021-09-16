@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace Providers.Carousel.OSUISplide {
+namespace Providers.Carousel {
 	/**
 	 * Defines the interface for OutSystemsUI Splide Carousel
 	 */
