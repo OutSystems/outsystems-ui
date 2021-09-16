@@ -30,7 +30,9 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 		configs: string
 	): OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel {
 		if (_animatedLabelsMap.has(animatedLabelId)) {
-			throw new Error(`There is already an AnimatedLabel registered under id: ${animatedLabelId}`);
+			throw new Error(
+				`There is already an ${OSUIFramework.GlobalEnum.PatternsNames.AnimatedLabel} registered under id: ${animatedLabelId}`
+			);
 		}
 
 		const _newAnimatedLabel = new OSUIFramework.Patterns.AnimatedLabel.AnimatedLabel(

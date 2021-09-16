@@ -26,7 +26,9 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 */
 	export function Create(ratingId: string, configs: string): OSUIFramework.Patterns.Rating.IRating {
 		if (_ratingsMap.has(ratingId)) {
-			throw new Error(`There is already a rating registered under id: ${ratingId}`);
+			throw new Error(
+				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.Rating} registered under id: ${ratingId}`
+			);
 		}
 
 		const _newRating = new OSUIFramework.Patterns.Rating.Rating(ratingId, JSON.parse(configs));

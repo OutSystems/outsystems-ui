@@ -221,9 +221,7 @@ namespace OSUIFramework.Patterns.Rating {
 			const decimalValue = this.getDecimalValue(value);
 			// If bigger than 0.3 and lower than 0.7 means it should be represented as a half value.
 			// This threshold was decided by UX principles
-			const isHalf = !!(decimalValue >= 0.3 && decimalValue <= 0.7);
-
-			return isHalf;
+			return !!(decimalValue >= 0.3 && decimalValue <= 0.7);
 		}
 
 		// Get the rating value
