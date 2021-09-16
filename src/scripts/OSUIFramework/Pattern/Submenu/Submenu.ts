@@ -52,10 +52,12 @@ namespace OSUIFramework.Patterns.Submenu {
 		}
 
 		// Close submenu, when BodyOnCLick event is triggered
-		private _onBodyClick(): void {
+		private _onBodyClick(type: string, e: PointerEvent): void {
 			if (this._isOpen) {
 				this.close();
 			}
+
+			console.log(type, e);
 		}
 
 		// Trigger the submenu at toggle behaviour
@@ -133,6 +135,7 @@ namespace OSUIFramework.Patterns.Submenu {
 			);
 
 			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				OSUIFramework.Event.Type.BodyOnClick,
 				this._globalEventOnBodyClick
 			);

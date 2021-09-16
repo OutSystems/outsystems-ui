@@ -23,8 +23,8 @@ namespace OSUIFramework.Layout {
 			super();
 			document.body.addEventListener(GlobalEnum.HTMLEvent.Click, this._bodyTrigger.bind(this));
 		}
-		private _bodyTrigger(): void {
-			super.trigger();
+		private _bodyTrigger(evt: PointerEvent): void {
+			super.trigger('click', evt);
 		}
 		// eslint-disable-next-line  @typescript-eslint/no-unused-vars, @typescript-eslint/explicit-module-boundary-types
 		public trigger(data?: string, ...args): void {

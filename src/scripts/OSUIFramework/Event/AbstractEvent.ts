@@ -39,7 +39,7 @@ namespace OSUIFramework.Event {
 		public trigger(data?: T, ...args): void {
 			this._handlers.slice(0).forEach((h) =>
 				setTimeout(() => {
-					h(data);
+					h(data, ...args);
 				}, 0)
 			);
 		}
