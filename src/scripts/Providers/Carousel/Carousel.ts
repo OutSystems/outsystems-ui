@@ -7,18 +7,29 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		extends OSUIFramework.Patterns.AbstractPattern<OSUIFramework.Patterns.Carousel.CarouselConfig>
 		implements ICarouselProvider
 	{
+		// Store if the render callback should be prevented
 		private _blockRender: boolean;
+		// Store if a List widget is used inside the CarouselItems placeholder
 		private _hasList: boolean;
+		// Store the List widget element
 		private _listWidget: HTMLElement;
+		// Store the onInitialized event
 		private _onInitialized: OSUIFramework.Callbacks.OSCarouselOnInitializedEvent;
+		// Store the onSlideMoved event
 		private _onSlideMoved: OSUIFramework.Callbacks.OSCarouselSlideMovedEvent;
+		// Store the placholder element
 		private _placeholder: HTMLElement;
+		// Store the provider reference
 		private _provider: Splide;
+		// Store the element that will be used to init the provider
 		private _providerContainer: HTMLElement;
+		// Store initial provider options
 		// eslint-disable-next-line @typescript-eslint/explicit-member-accessibility, @typescript-eslint/no-explicit-any
 		private _splideOptions: Record<string, any> = {};
+		// Store the splide__track element from the provider
 		private _splideTrack: HTMLElement;
 
+		// Provider getter
 		// eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
 		get provider(): Splide {
 			return this._provider;
@@ -29,6 +40,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			super(uniqueId, new OSUIFramework.Patterns.Carousel.CarouselConfig(configs));
 		}
 
+		// Method to check if a List Widget is used inside the placeholder and assign the _listWidget variable
 		private _checkListWidget(): void {
 			const listElements = OutSystems.OSUI.Utils.ChildrenMatches(
 				this._placeholder,
@@ -48,6 +60,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			}
 		}
 
+		// Method that encapsulates all methods needed to create a new Carousel
 		private _createProviderCarousel(): void {
 			// Call the following methods here, so that all DOM elements are iterated and ready to init the library
 			this._prepareCarouselItems();
@@ -56,15 +69,20 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			// Init the Library
 			this._initProvider();
 
+			// Set the OnSlideMoved event
 			this._setOnSlideMovedEvent();
 		}
 
+		// Method to init the provider
 		private _initProvider(): void {
 			this._provider = new window.Splide(this._providerContainer, this._splideOptions);
+			// Set the OnInitialized event, before the provider is mounted
 			this._setOnInitializedEvent();
+			// Init the provider
 			this._provider.mount();
 		}
 
+		// Method to add the splide__slide class on each carousel item
 		private _prepareCarouselItems(): void {
 			// Define the element that has the items. The List widget if dynamic content, otherwise get from the placeholder directly
 			const targetList = this._hasList ? this._listWidget : this._placeholder;
@@ -77,6 +95,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			}
 		}
 
+		// Method that handles the breakpoint options from the library
 		private _setBreakpointsOptions(): void {
 			this._splideOptions.breakpoints = {
 				768: {
@@ -108,6 +127,8 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 
 		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _setInitialCssClasses(): void {
+			// If using Carousel with a List, get one level below on the HTML, so that the List element is used on the structure expected by the library
+			// In this case, the osui-carousel won't be used, and the library will be mounted on the osui-carousel_track
 			if (this._hasList) {
 				OSUIFramework.Helper.Style.AddClass(this._splideTrack, Enum.CssClass.Splide);
 				OSUIFramework.Helper.Style.AddClass(this._placeholder, Enum.CssClass.SplideTrack);
@@ -119,6 +140,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			}
 		}
 
+		// Method to set the initial provider options, when created by the first time or after a destroy()
 		private _setInitialLibraryOptions(): void {
 			this._splideOptions.direction = OutSystems.OSUI.Utils.GetIsRTL()
 				? OSUIFramework.GlobalEnum.Direction.rtl
@@ -147,6 +169,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			this.handleScale(this._configs.OptionalConfigs.Scale);
 		}
 
+		// Method to set the OnInitializeEvent
 		private _setOnInitializedEvent(): void {
 			this._provider.on(Enum.SpliderEvents.Mounted, () => {
 				setTimeout(() => {
@@ -155,6 +178,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			});
 		}
 
+		// Method to set the OnSlideMoved event
 		private _setOnSlideMovedEvent(): void {
 			this._provider.on(Enum.SpliderEvents.Moved, (index) => {
 				setTimeout(() => {
@@ -249,6 +273,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			}, 0);
 		}
 
+		// Method used on the changeProperty for the options that require the Carousel to be destroyd and created again to properly update
 		public destroyAndUpdateCarousel(): void {
 			this._provider.destroy();
 			this._createProviderCarousel();
@@ -260,6 +285,8 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			super.dispose();
 		}
 
+		// Method to handle the scale option (not provided by the library be default), by simply toggling a 'has-scale' options
+		// This class is then used on the CSS to implement the scale effect on the active item
 		public handleScale(setScale: boolean): void {
 			const containsScaleClass = OSUIFramework.Helper.Style.ContainsClass(
 				this._selfElem,
@@ -285,6 +312,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			}
 		}
 
+		// Method to set the correct FocusOnItem option, as the library only supports 'center' or an index
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		public setFocusOnItemOption(value: string, itemsPerSlide: number): any {
 			let currentFocus;
@@ -296,12 +324,13 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 					currentFocus = 0;
 					break;
 				case Enum.FocusOnItem.LastOnSlide:
-					currentFocus = itemsPerSlide - 1;
+					currentFocus = itemsPerSlide - 1; // last on each page
 			}
 
 			return currentFocus;
 		}
 
+		// Method to set the correct configuration for the Navigation option
 		public setNavigation(navigation: string): void {
 			switch (navigation) {
 				case Enum.Navigation.None:
@@ -322,6 +351,8 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			}
 		}
 
+		// Method to update carousel after a options change
+		// If called by the render it means there are DOM changes (like list manipulation), so it will make sure the html has the necessary css classes again
 		public updateCarousel(hasDomChanges = false): void {
 			if (hasDomChanges) {
 				this._setInitialCssClasses();
@@ -332,6 +363,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			console.log(this._provider.options);
 		}
 
+		// Method to run when there's a platform onRender
 		public updateOnRender(): void {
 			if (!this._blockRender) {
 				this.updateCarousel(true);
