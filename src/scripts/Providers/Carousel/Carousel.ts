@@ -187,6 +187,19 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			});
 		}
 
+		// Method to update Breakpoints options
+		private _updateBreakpoints(): void {
+			this._setBreakpointsOptions();
+
+			this._provider.options = {
+				focus: this.setFocusOnItemOption(
+					this._configs.OptionalConfigs.FocusOnItem,
+					this._configs.ItemsPerSlide.Desktop
+				),
+				breakpoints: this._splideOptions.breakpoints,
+			};
+		}
+
 		public build(): void {
 			super.build();
 
@@ -210,57 +223,47 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			switch (propertyName) {
 				case 'navigation':
 					this._configs.Navigation = propertyValue;
-					this.destroyAndUpdateCarousel();
+					this.updateCarousel();
 					break;
 				case 'itemsDesktop':
 					this._configs.ItemsPerSlide.Desktop = propertyValue;
-					this._provider.options.perPage = propertyValue;
-					this.updateCarousel();
+					this._provider.options = { perPage: propertyValue };
 					break;
 				case 'itemsTablet':
 					this._configs.ItemsPerSlide.Tablet = propertyValue;
-					this.destroyAndUpdateCarousel();
+					this.updateCarousel();
 					break;
 				case 'itemsPhone':
 					this._configs.ItemsPerSlide.Phone = propertyValue;
-					this.destroyAndUpdateCarousel();
+					this.updateCarousel();
 					break;
 				case 'autoplay':
 					this._configs.OptionalConfigs.AutoPlay = propertyValue;
-					this.destroyAndUpdateCarousel();
+					this.updateCarousel();
 					break;
 				case 'loop':
 					this._configs.OptionalConfigs.Loop = propertyValue;
-					this.destroyAndUpdateCarousel();
+					this.updateCarousel();
 					break;
 				case 'padding':
 					this._configs.OptionalConfigs.Padding = propertyValue;
-					this._provider.options.padding = propertyValue;
-					this.updateCarousel();
+					this._provider.options = { padding: propertyValue };
 					break;
 				case 'gap':
 					this._configs.OptionalConfigs.Gap = propertyValue;
-					this._provider.options.gap = propertyValue;
-					this.updateCarousel();
+					this._provider.options = { gap: propertyValue };
 					break;
 				case 'initialPosition':
 					this._configs.OptionalConfigs.InitialPosition = propertyValue;
-					this.destroyAndUpdateCarousel();
+					this.updateCarousel();
 					break;
 				case 'scale':
 					this._configs.OptionalConfigs.Scale = propertyValue;
 					this.handleScale(propertyValue);
-					this.updateCarousel();
 					break;
 				case 'focus':
 					this._configs.OptionalConfigs.FocusOnItem = propertyValue;
-					this._setBreakpointsOptions();
-					this._provider.options.focus = this.setFocusOnItemOption(
-						this._configs.OptionalConfigs.FocusOnItem,
-						this._configs.ItemsPerSlide.Desktop
-					);
-					this._provider.options.breakpoints = this._splideOptions.breakpoints;
-					this.updateCarousel();
+					this._updateBreakpoints();
 					break;
 				default:
 					super.changeProperty(propertyName, propertyValue);
@@ -271,12 +274,6 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			setTimeout(() => {
 				this._blockRender = false;
 			}, 0);
-		}
-
-		// Method used on the changeProperty for the options that require the Carousel to be destroyd and created again to properly update
-		public destroyAndUpdateCarousel(): void {
-			this._provider.destroy();
-			this._createProviderCarousel();
 		}
 
 		// Method to remove and destroy Carousel Splide instance
@@ -366,21 +363,23 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			}
 		}
 
-		// Method to update carousel after a options change
-		// If called by the render it means there are DOM changes (like list manipulation), so it will make sure the html has the necessary css classes again
-		public updateCarousel(hasDomChanges = false): void {
-			if (hasDomChanges) {
-				this._setInitialCssClasses();
-				this._prepareCarouselItems();
-			}
+		// Method to call the option API from the provider to toggle drag events
+		public toggleDrag(hasDrag: boolean): void {
+			this._provider.options = { drag: hasDrag };
+		}
 
-			this._provider.refresh();
+		// Method used on the changeProperty for the options that require the Carousel to be destroyd and created again to properly update
+		public updateCarousel(): void {
+			this._provider.destroy();
+			this._createProviderCarousel();
 		}
 
 		// Method to run when there's a platform onRender
 		public updateOnRender(): void {
 			if (!this._blockRender) {
-				this.updateCarousel(true);
+				this._setInitialCssClasses();
+				this._prepareCarouselItems();
+				this._provider.refresh();
 			}
 		}
 	}

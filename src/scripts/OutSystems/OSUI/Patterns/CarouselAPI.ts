@@ -73,7 +73,7 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	}
 
 	/**
-	 *
+	 * Function to go to a especific page index
 	 *
 	 * @export
 	 * @param {string} carouselId
@@ -101,7 +101,7 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	}
 
 	/**
-	 *
+	 * Function to go to the next page
 	 *
 	 * @export
 	 * @param {string} carouselId
@@ -114,7 +114,7 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	}
 
 	/**
-	 *
+	 * Function to go to the previous page
 	 *
 	 * @export
 	 * @param {string} carouselId
@@ -142,6 +142,19 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 		const carousel = GetCarouselById(carouselId);
 
 		carousel.registerProviderCallback(eventName, callback);
+	}
+
+	/**
+	 * Function to toggle the drag events on the Carousel
+	 *
+	 * @export
+	 * @param {string} carouselId
+	 * @param {boolean} hasDrag
+	 */
+	export function ToggleDrag(carouselId: string, hasDrag: boolean): void {
+		const carousel = GetCarouselById(carouselId);
+
+		carousel.toggleDrag(hasDrag);
 	}
 
 	/**
