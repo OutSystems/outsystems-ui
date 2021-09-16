@@ -7,7 +7,7 @@ namespace OSUIFramework.Event {
 					return new OSUIFramework.Patterns.Submenu.Open();
 				case Type.BodyOnClick:
 					// eslint-disable-next-line @typescript-eslint/no-unused-vars
-					return new OSUIFramework.Layout.BodyOnClick();
+					return new OSUIFramework.Event.BodyOnClick();
 			}
 
 			// throw new Error('Method not implemented.');

@@ -1,22 +1,18 @@
 /*
-    Possible events to be added to Layouts and fire callbacks to patters:
-        - OnClick (To trigger patterns that needs to be close on a body click - Tooltip)
+    Events to be added to Layouts / Body and fire callbacks to patterns:
+        - OnClick (To trigger patterns that needs to be close on a body click - Tooltip, Search, MasterDetail, Menu, Submenu)
         - IsRTL (Add the logic of Observers applied on patterns to trigger this event when RTL class is added)
         - OnResize
-        - OrientationChange
-    
-	export class OnRtlApplied extends OSUIFramework.Event.AbstractEvent<string> {}
-	export class WindowOnResize extends OSUIFramework.Event.AbstractEvent<string> {}
-	export class WindowOnOrientationChange extends OSUIFramework.Event.AbstractEvent<string> {}
+        - OrientationChange (Responsive behavior)
 
-    Maybe in future we can add also
+    Maybe in future we can add also:
         - OnLoad
         - OnScroll
         - OnOnline
         - OnOffline
 
 */
-namespace OSUIFramework.Layout {
+namespace OSUIFramework.Event {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	export class BodyOnClick extends OSUIFramework.Event.AbstractEvent<string> {
 		constructor() {
