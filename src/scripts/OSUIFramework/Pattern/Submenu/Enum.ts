@@ -9,13 +9,13 @@ namespace OSUIFramework.Patterns.Submenu.Enum {
 
 	// Css Classes
 	export enum CssClass {
-		Pattern = 'submenu',
+		Pattern = 'osui-submenu',
 		PatternActive = 'active',
-		PatternHeader = 'submenu-header',
+		PatternHeader = 'osui-submenu-header',
 		PatternIsDropdown = 'is--dropdown',
 		PatternIsOpen = 'open',
-		PatternItem = 'submenu-item',
-		PatternIcon = 'submenu-icon',
-		PatternLinks = 'submenu-items',
+		PatternItem = 'osui-submenu-item',
+		PatternIcon = 'osui-submenu-icon',
+		PatternLinks = 'osui-submenu-items',
 	}
 }

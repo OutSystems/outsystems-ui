@@ -10,10 +10,11 @@ namespace OSUIFramework.Patterns.Submenu {
 		private _eventOnClick: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnSubmenuKeypress: any;
+		private _hasActiveLinks = false;
 		private _hasElements = false;
 		private _isOpen = false;
-		private _submenuAllLinks: NodeList;
 		private _submenuActiveLinks: NodeList;
+		private _submenuAllLinks: NodeList;
 		private _submenuHeader: HTMLElement;
 		private _submenuItem: HTMLElement;
 		private _submenuLinks: HTMLElement;
@@ -105,6 +106,14 @@ namespace OSUIFramework.Patterns.Submenu {
 			}
 		}
 
+		// Remove all the assigned Events
+		private _removeEvents(): void {
+			if (this._hasElements) {
+				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnSubmenuKeypress);
+			}
+		}
+
 		// Add the Accessibility Attributes values
 		private _setAccessibilityProps(): void {
 			Helper.Attribute.Set(
@@ -139,17 +148,23 @@ namespace OSUIFramework.Patterns.Submenu {
 			this._submenuHeader = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternHeader);
 			this._submenuItem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternItem);
 			this._submenuLinks = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternLinks);
-			this._submenuAllLinks = this._submenuLinks.querySelectorAll(Constants.Link);
+			this._submenuAllLinks = this._submenuLinks.querySelectorAll(GlobalEnum.HTMLElement.Link);
 			this._submenuActiveLinks = this._submenuLinks.querySelectorAll(Constants.Dot + Enum.CssClass.PatternActive);
 
+			// Check if submenu has childs
 			if (this._submenuAllLinks.length > 0) {
 				this._hasElements = true;
+			}
+
+			// Check if submenu contains elements with active class
+			if (this._submenuActiveLinks.length > 0) {
+				this._hasActiveLinks = true;
 			}
 		}
 
 		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _setInitialCssClasses(): void {
-			if (this._submenuActiveLinks.length > 0) {
+			if (this._hasActiveLinks) {
 				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternActive);
 			}
 
@@ -172,13 +187,8 @@ namespace OSUIFramework.Patterns.Submenu {
 				(!this._isOpen).toString()
 			);
 
-			this._updateTabIndex(this._submenuAllLinks);
-		}
-
-		// Update tabindex of list of elements
-		private _updateTabIndex(itemList): void {
-			itemList = [].slice.call(itemList);
-			itemList.forEach((item: HTMLElement) => {
+			this._submenuAllLinks = [].slice.call(this._submenuAllLinks);
+			this._submenuAllLinks.forEach((item: HTMLElement) => {
 				Helper.Attribute.Set(
 					item,
 					Constants.AccessibilityAttribute.TabIndex,
@@ -219,6 +229,8 @@ namespace OSUIFramework.Patterns.Submenu {
 		// Destroy the Submenu
 		public dispose(): void {
 			super.dispose();
+
+			this._removeEvents();
 		}
 
 		// Open Submenu

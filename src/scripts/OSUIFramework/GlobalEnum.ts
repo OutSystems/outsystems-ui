@@ -46,6 +46,7 @@ namespace OSUIFramework.GlobalEnum {
 	export enum HTMLElement {
 		FieldSet = 'fieldset',
 		Input = 'input',
+		Link = 'a',
 	}
 
 	/**

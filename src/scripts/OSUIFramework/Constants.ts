@@ -34,9 +34,6 @@ namespace OSUIFramework.Constants {
 	/* Used to concatenate when querySelector for a class */
 	export const Dot = '.';
 
-	/* Used to select a link element on HTML selectors */
-	export const Link = 'a';
-
 	/* Manage if the log messages are visible or not  */
 	export const EnableLogMessages = false;
 
