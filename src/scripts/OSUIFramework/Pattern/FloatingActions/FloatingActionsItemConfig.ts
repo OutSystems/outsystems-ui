@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSUIFramework.Patterns.FloatingActionsItem {
+namespace OSUIFramework.Patterns.FloatingActions {
 	export class FloatingActionsItemConfig extends AbstractConfiguration {
 		public ExtendedClass: string;
 
