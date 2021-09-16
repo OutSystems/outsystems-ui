@@ -12,13 +12,21 @@ namespace Providers.Carousel.Enum {
 	}
 
 	/**
-	 * Splide Events
+	 * Splide focus API options
 	 */
-	export enum SpliderEvents {
-		Mounted = 'mounted',
-		Moved = 'moved',
+	export enum FocusOnItem {
+		Center = 'center',
+		FirstOnSlide = 'first',
+		LastOnSlide = 'last',
 	}
 
+	/**
+	 * Splide type API options
+	 */
+	export enum TypeOptions {
+		Loop = 'loop',
+		Slide = 'slide',
+	}
 	/**
 	 * Splide Navigation options
 	 */
@@ -29,14 +37,11 @@ namespace Providers.Carousel.Enum {
 		Both = 'both',
 	}
 
-	export enum FocusOnItem {
-		Center = 'center',
-		FirstOnSlide = 'first',
-		LastOnSlide = 'last',
-	}
-
-	export enum FocusOptions {
-		Loop = 'loop',
-		Slide = 'slide',
+	/**
+	 * Splide Events
+	 */
+	export enum SpliderEvents {
+		Mounted = 'mounted',
+		Moved = 'moved',
 	}
 }

@@ -73,6 +73,19 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	}
 
 	/**
+	 *
+	 *
+	 * @export
+	 * @param {string} carouselId
+	 * @param {number} index
+	 */
+	export function GoTo(carouselId: string, index: number): void {
+		const carousel = GetCarouselById(carouselId);
+
+		carousel.goTo(index);
+	}
+
+	/**
 	 * Function that will initialize the pattern instance.
 	 *
 	 * @export
@@ -85,6 +98,32 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 		carousel.build();
 
 		return carousel;
+	}
+
+	/**
+	 *
+	 *
+	 * @export
+	 * @param {string} carouselId
+	 * @param {string} target
+	 */
+	export function Next(carouselId: string): void {
+		const carousel = GetCarouselById(carouselId);
+
+		carousel.next();
+	}
+
+	/**
+	 *
+	 *
+	 * @export
+	 * @param {string} carouselId
+	 * @param {string} target
+	 */
+	export function Previous(carouselId: string): void {
+		const carousel = GetCarouselById(carouselId);
+
+		carousel.previous();
 	}
 
 	/**

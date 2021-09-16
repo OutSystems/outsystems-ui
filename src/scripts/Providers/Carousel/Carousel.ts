@@ -147,8 +147,8 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 				: OSUIFramework.GlobalEnum.Direction.ltr;
 
 			this._splideOptions.type = this._configs.OptionalConfigs.Loop
-				? Enum.FocusOptions.Loop
-				: Enum.FocusOptions.Slide;
+				? Enum.TypeOptions.Loop
+				: Enum.TypeOptions.Slide;
 
 			this._splideOptions.focus = this.setFocusOnItemOption(
 				this._configs.OptionalConfigs.FocusOnItem,
@@ -285,6 +285,11 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			super.dispose();
 		}
 
+		// Method to call the go API from the provider
+		public goTo(index: number): void {
+			this._provider.go(index);
+		}
+
 		// Method to handle the scale option (not provided by the library be default), by simply toggling a 'has-scale' options
 		// This class is then used on the CSS to implement the scale effect on the active item
 		public handleScale(setScale: boolean): void {
@@ -298,6 +303,16 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			} else if (containsScaleClass) {
 				OSUIFramework.Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.ScaleOption);
 			}
+		}
+
+		// Method to call the go API from the provider. With '>' it will go to the next page
+		public next(): void {
+			this._provider.go('>');
+		}
+
+		// Method to call the go API from the provider. With '<' it will go to the previous page
+		public previous(): void {
+			this._provider.go('<');
 		}
 
 		// Set callbacks for the onChange event
@@ -360,7 +375,6 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			}
 
 			this._provider.refresh();
-			console.log(this._provider.options);
 		}
 
 		// Method to run when there's a platform onRender
