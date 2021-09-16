@@ -114,7 +114,6 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 				this._configs.ItemsPerSlide.Desktop
 			);
 
-			this._splideOptions.autoWidth = this._configs.OptionalConfigs.AutoWidth;
 			this._splideOptions.padding = this._configs.OptionalConfigs.Padding;
 			this._splideOptions.gap = this._configs.OptionalConfigs.Gap;
 			this._splideOptions.start = this._configs.OptionalConfigs.InitialPosition;
@@ -212,11 +211,6 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 				case 'autoplay':
 					this._configs.OptionalConfigs.AutoPlay = propertyValue;
 					this.destroyAndUpdateCarousel();
-					break;
-				case 'autowidth':
-					this._configs.OptionalConfigs.AutoWidth = propertyValue;
-					this._provider.options.autoWidth = propertyValue;
-					this.updateCarousel();
 					break;
 				case 'loop':
 					this._configs.OptionalConfigs.Loop = propertyValue;
