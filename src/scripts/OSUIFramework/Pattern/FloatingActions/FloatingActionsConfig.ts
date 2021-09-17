@@ -1,8 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.FloatingActions {
 	export class FloatingActionsConfig extends AbstractConfiguration {
-		private _isInsideBottomBar: boolean;
-		private _isOpen: boolean;
 		public ExtendedClass: string;
 		public FloatingId: string;
 		public IsExpanded: boolean;

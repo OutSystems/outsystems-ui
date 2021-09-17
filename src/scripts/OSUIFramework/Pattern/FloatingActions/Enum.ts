@@ -7,6 +7,8 @@ namespace OSUIFramework.Patterns.FloatingActions.Enum {
 	// Properties
 	export enum Properties {
 		ExtendedClass = 'ExtendedClass',
+		IsHover = 'IsHover',
+		IsExpanded = 'IsExpanded',
 	}
 
 	// Css Classes
