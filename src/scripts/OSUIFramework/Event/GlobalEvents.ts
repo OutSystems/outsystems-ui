@@ -22,6 +22,7 @@ namespace OSUIFramework.Event {
 		private _bodyTrigger(evt: PointerEvent): void {
 			super.trigger('click', evt);
 		}
+		// Override the default trigger method from AbstractEvent
 		// eslint-disable-next-line  @typescript-eslint/no-unused-vars, @typescript-eslint/explicit-module-boundary-types
 		public trigger(data?: string, ...args): void {
 			return;

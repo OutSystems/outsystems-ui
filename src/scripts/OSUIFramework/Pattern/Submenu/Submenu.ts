@@ -18,7 +18,7 @@ namespace OSUIFramework.Patterns.Submenu {
 		private _hasElements = false;
 		private _isOpen = false;
 		private _submenuActiveLinks: NodeList;
-		private _submenuAllLinks: NodeList;
+		private _submenuAllLinks: HTMLAnchorElement[];
 		private _submenuHeader: HTMLElement;
 		private _submenuItem: HTMLElement;
 		private _submenuLinks: HTMLElement;
@@ -53,10 +53,10 @@ namespace OSUIFramework.Patterns.Submenu {
 
 		// Close submenu, when BodyOnCLick event is triggered
 		private _onBodyClick(): void {
-			if (this._isOpen) {
-				this.close();
-			} else if (Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen)) {
+			if (Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen)) {
 				Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
+			} else if (this._isOpen) {
+				this.close();
 			}
 		}
 
@@ -179,7 +179,7 @@ namespace OSUIFramework.Patterns.Submenu {
 			this._submenuHeader = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternHeader);
 			this._submenuItem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternItem);
 			this._submenuLinks = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternLinks);
-			this._submenuAllLinks = this._submenuLinks.querySelectorAll(GlobalEnum.HTMLElement.Link);
+			this._submenuAllLinks = [...this._submenuLinks.querySelectorAll(GlobalEnum.HTMLElement.Link)];
 			this._submenuActiveLinks = this._submenuLinks.querySelectorAll(Constants.Dot + Enum.CssClass.PatternActive);
 
 			// Check if submenu has childs
@@ -220,7 +220,6 @@ namespace OSUIFramework.Patterns.Submenu {
 				(!this._isOpen).toString()
 			);
 
-			this._submenuAllLinks = [].slice.call(this._submenuAllLinks);
 			this._submenuAllLinks.forEach((item: HTMLElement) => {
 				Helper.Attribute.Set(
 					item,

@@ -8,9 +8,9 @@ namespace OSUIFramework.Event {
 				case Type.BodyOnClick:
 					// eslint-disable-next-line @typescript-eslint/no-unused-vars
 					return new OSUIFramework.Event.BodyOnClick();
+				default:
+					throw new Error("The event can't be triggered");
 			}
-
-			// throw new Error('Method not implemented.');
 		}
 	}
 

@@ -3,9 +3,6 @@ namespace OSUIFramework.Patterns.Submenu.Enum {
 	/**
 	 * Search Enum properties
 	 */
-	export enum Property {
-		ExtendedClass = 'ExtendedClass',
-	}
 
 	// Css Classes
 	export enum CssClass {
