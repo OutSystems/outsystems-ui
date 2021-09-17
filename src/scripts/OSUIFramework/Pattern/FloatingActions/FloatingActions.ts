@@ -24,6 +24,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		private _floatingActionsItem: HTMLElement;
 		// Stores the Items present in the pattern
 		private _floatingActionsItems: Array<HTMLElement>;
+		private _items: Array<FloatingActionsItem.IFloatingActionsItem>;
 		// Stores the items of this specific Floating Action
 		private _indexArray = [];
 		// Boolean to tell if the pattern is inside the Bottom Bar or not
@@ -41,6 +42,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new FloatingActionsConfig(configs));
+			this._items = [];
 			this._eventToggleClick = this._toggleClick.bind(this);
 			this._eventkeyboard = this._onButtonKeypress.bind(this);
 			this._openMethod = this.open.bind(this);
@@ -232,29 +234,6 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			this._lastButton = this._floatingActionsItems[this._floatingActionsItems.length - 1];
 		}
 
-		// Sets up floating action items on first render
-		private _setUpFloatingItems(): void {
-			// Check if there are FloatingActionsItems
-			if (this._floatingActionsItems.length > 0) {
-				// Push every floating-item index into a empty array
-				for (let i = 0; i < this._floatingActionsItems.length; i++) {
-					this._indexArray.push(i);
-				}
-
-				// reverse order of array for css animation
-				this._indexArray.reverse();
-
-				// set var --delay on style with each items index, to perform sequential css animation
-				for (let i = 0; i < this._floatingActionsItems.length; i++) {
-					Helper.Attribute.Set(
-						this._floatingActionsItems[i],
-						'style',
-						'--delay: ' + (this._indexArray[i] + 1)
-					);
-				}
-			}
-		}
-
 		// Method to toggle between classes
 		private _toggleClick(): void {
 			this._isOpen ? this.close() : this.open();
@@ -274,8 +253,6 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 			this._setUpFloatingActions();
 
-			this._setUpFloatingItems();
-
 			this._setClasses();
 
 			this._checkIfInsideBottomBar();
@@ -293,7 +270,6 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			switch (propertyName) {
 				case Enum.Properties.IsHover:
 					this._setIsHover(propertyValue);
-
 					break;
 				case Enum.Properties.IsExpanded:
 					this._setIsExpanded(propertyValue);
@@ -366,6 +342,13 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 		public registerCallback(callback: Callbacks.OSGeneric): void {
 			this._onClick = callback;
+		}
+
+		public addFloatingActionItem(floatingActionItem: FloatingActionsItem.IFloatingActionsItem): void {
+			this._items.unshift(floatingActionItem);
+		}
+		public getFloatingActionItems(): Array<FloatingActionsItem.IFloatingActionsItem> {
+			return this._items;
 		}
 	}
 }

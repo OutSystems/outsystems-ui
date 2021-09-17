@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
+	const _floatingActionsMap = new Map<string, string>(); //floatingActionsItem.uniqueId -> FloatingActions.uniqueId
 	const _floatingActionsItemMap = new Map<string, OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem>(); //floatingActionsItem.uniqueId -> FloatingActionsItem obj
 
 	/**
@@ -33,24 +34,24 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 			throw new Error(`There is already a floating action registered under id: ${floatingActionsItemId}`);
 		}
 
-		const _newFloatingActions = new OSUIFramework.Patterns.FloatingActionsItem.FloatingActionsItem(
+		const _newFloatingActionsItem = new OSUIFramework.Patterns.FloatingActionsItem.FloatingActionsItem(
 			floatingActionsItemId,
 			JSON.parse(configs)
 		);
 
-		_floatingActionsItemMap.set(floatingActionsItemId, _newFloatingActions);
+		_floatingActionsItemMap.set(floatingActionsItemId, _newFloatingActionsItem);
 
-		return _newFloatingActions;
+		return _newFloatingActionsItem;
 	}
 
 	/**
 	 * Function that will dispose the instance of the given Floating Actions
 	 *
 	 * @export
-	 * @param {string} floatingActionsId
+	 * @param {string} floatingActionsItemId
 	 */
-	export function Dispose(floatingActionsId: string): void {
-		const floatingActionItem = GetFloatingActionsItemById(floatingActionsId);
+	export function Dispose(floatingActionsItemId: string): void {
+		const floatingActionItem = GetFloatingActionsItemById(floatingActionsItemId);
 
 		floatingActionItem.dispose();
 
@@ -58,13 +59,48 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 	}
 
 	/**
-	 * Fucntion that will return the Map with all the Floating Actions instances at the page
+	 * Function that will return the Map with all the Floating Actions instances at the page
 	 *
 	 * @export
 	 * @return {*}  {Map<string, OSUIFramework.Patterns.FloatingActions.IFloatingActions>}
 	 */
 	export function GetAllFloatingActionsItems(): Array<string> {
 		return OSUIFramework.Helper.MapOperation.ExportKeys(_floatingActionsItemMap);
+	}
+
+	/**
+	 * Gets the Floating Action pattern the Item belongs to
+	 *
+	 * @export
+	 * @return {*}  {Map<string, OSUIFramework.Patterns.FloatingActions.IFloatingActions>}
+	 */
+	export function GetFloatingActionsByItem(
+		floatingActionsItemId: string
+	): OSUIFramework.Patterns.FloatingActions.IFloatingActions {
+		let floatingActions: OSUIFramework.Patterns.FloatingActions.IFloatingActions;
+
+		//ColumnId is the UniqueId
+		if (_floatingActionsItemMap.has(floatingActionsItemId)) {
+			floatingActions = FloatingActionsAPI.GetFloatingActionsById(_floatingActionsMap.get(floatingActionsItemId));
+			//UniqueID not found
+		} else {
+			// Try to find its reference on DOM
+			const elem = OSUIFramework.Helper.GetElementByUniqueId(floatingActionsItemId);
+
+			// If element is found, means that the DOM was rendered
+			if (elem !== undefined) {
+				//TODO improve this here
+				const floating = elem.closest('[data-block="Interaction.FloatingActions"]');
+				const uniqueId = floating.querySelector('.floating-actions-wrapper').getAttribute('name');
+				floatingActions = FloatingActionsAPI.GetFloatingActionsById(uniqueId);
+			} else {
+				// Assign this to the first floating action that is found
+				const uniqueId = FloatingActionsAPI.GetAllFloatingActions()[0];
+				floatingActions = FloatingActionsAPI.GetFloatingActionsById(uniqueId);
+			}
+		}
+
+		return floatingActions;
 	}
 
 	/**
@@ -96,7 +132,20 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 	): OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem {
 		const floatingActionItem = GetFloatingActionsItemById(floatingActionItemId);
 
+		const floatingAction = GetFloatingActionsByItem(floatingActionItemId);
+
+		if (floatingAction !== undefined) {
+			_floatingActionsMap.set(floatingActionItemId, floatingAction.uniqueId);
+			floatingAction.addFloatingActionItem(floatingActionItem);
+		}
+
 		floatingActionItem.build();
+
+		//SetTabIndex
+		const items = floatingAction.getFloatingActionItems();
+		items.forEach((item: OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem, index) => {
+			item.setAnimationDelay(index);
+		});
 
 		return floatingActionItem;
 	}
