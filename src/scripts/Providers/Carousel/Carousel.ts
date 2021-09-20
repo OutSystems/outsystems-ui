@@ -369,6 +369,9 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 				case Enum.Navigation.Both:
 					this._splideOptions.arrows = true;
 					this._splideOptions.pagination = true;
+					break;
+				default:
+					throw new Error(`setNavigation - Option '${navigation}' can't be set.`);
 			}
 		}
 
