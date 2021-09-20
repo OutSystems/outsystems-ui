@@ -84,10 +84,6 @@ body {
 				border-bottom: var(--border-size-m) solid var(--color-primary);
 			}
 		}
-
-		.submenu a {
-			border-bottom: none;
-		}
 	}
 }
 
@@ -101,10 +97,6 @@ body {
 			border-top: 0;
 			margin-left: 0;
 			padding: var(--space-s) var(--space-m);
-		}
-
-		.submenu-header a {
-			padding: 0;
 		}
 	}
 }
@@ -129,14 +121,6 @@ body {
 		a.active {
 			border-left: var(--border-size-m) solid var(--color-primary);
 		}
-
-		.submenu a {
-			border-left: none;
-		}
-	}
-
-	.submenu-items a {
-		padding: var(--space-s) var(--space-base);
 	}
 }
 

@@ -15,44 +15,6 @@
 		width: var(--side-menu-size);
 		z-index: 105;
 	}
-
-	.submenu {
-		flex-direction: column;
-		margin-left: 0;
-		width: 100%;
-
-		&.active .submenu-header {
-			border-left: var(--border-size-m) solid var(--color-primary);
-		}
-
-		&.open .submenu-items {
-			display: flex;
-		}
-
-		.submenu-header {
-			border-bottom: 0;
-			border-left: var(--border-size-m) solid transparent;
-			border-top: 0;
-			padding: var(--space-s) var(--space-m);
-		}
-
-		&-item {
-			flex: 1;
-		}
-
-		&-items {
-			border: none;
-			box-shadow: none;
-			display: none;
-			opacity: 1;
-			padding: 0;
-			padding: var(--space-xs) var(--space-m);
-			pointer-events: auto;
-			position: relative;
-			top: 0;
-			transform: translateY(0);
-		}
-	}
 }
 
 // This class is applied to .layout element either
@@ -145,15 +107,6 @@
 			left: auto;
 			right: calc(-1 * var(--side-menu-size));
 			transition: all 330ms ease-out;
-		}
-	}
-
-	.layout-side {
-		.submenu {
-			.submenu-header {
-				border-left: 0;
-				border-right: var(--border-size-m) solid transparent;
-			}
 		}
 	}
 
