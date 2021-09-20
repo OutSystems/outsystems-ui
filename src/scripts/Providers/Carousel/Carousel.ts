@@ -226,7 +226,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 					break;
 				case 'itemsDesktop':
 					this._configs.ItemsPerSlide.Desktop = propertyValue;
-					this._provider.refresh();
+					this.updateCarousel();
 					break;
 				case 'itemsTablet':
 					this._configs.ItemsPerSlide.Tablet = propertyValue;
