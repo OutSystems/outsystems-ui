@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Submenu.Enum {
 	/**
-	 * Search Enum properties
+	 * Submenu Enum properties
 	 */
 
 	// Css Classes
