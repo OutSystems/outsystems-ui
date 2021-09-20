@@ -176,9 +176,9 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 		// Accessibility - Set tabindex values
 		private _setTabIndex(value: string): void {
-			this._floatingActionsItems = [...this._floatingActionsItems];
-			this._floatingActionsItems.forEach((item) => {
-				Helper.Attribute.Set(item, Constants.AccessibilityAttribute.TabIndex, value);
+			this._items = [...this._items];
+			this._items.forEach((item: FloatingActionsItem.IFloatingActionsItem) => {
+				item.setTabindex(value);
 			});
 		}
 

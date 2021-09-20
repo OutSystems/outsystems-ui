@@ -10,4 +10,10 @@ namespace OutSystems.OSUI.Patterns.Enum {
 		Circle = 'Circle',
 		CircleFraction = 'CircleFraction',
 	}
+
+	// Floating Actions
+	export enum FloatingActions {
+		FloatingActions = '[data-block="Interaction.FloatingActions"]',
+		FloatingActionWrapper = '.floating-actions-wrapper',
+	}
 }

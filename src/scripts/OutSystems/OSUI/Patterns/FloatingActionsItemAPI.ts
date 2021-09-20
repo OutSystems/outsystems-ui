@@ -90,8 +90,10 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 			// If element is found, means that the DOM was rendered
 			if (elem !== undefined) {
 				//TODO improve this here
-				const floating = elem.closest('[data-block="Interaction.FloatingActions"]');
-				const uniqueId = floating.querySelector('.floating-actions-wrapper').getAttribute('name');
+				const floating = elem.closest(Enum.FloatingActions.FloatingActions);
+				const uniqueId = floating
+					.querySelector(Enum.FloatingActions.FloatingActionWrapper)
+					.getAttribute('name');
 				floatingActions = FloatingActionsAPI.GetFloatingActionsById(uniqueId);
 			} else {
 				// Assign this to the first floating action that is found
@@ -141,10 +143,10 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 
 		floatingActionItem.build();
 
-		//SetTabIndex
 		const items = floatingAction.getFloatingActionItems();
 		items.forEach((item: OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem, index) => {
-			item.setAnimationDelay(index);
+			// indexes always start at 0
+			item.setAnimationDelay(index + 1);
 		});
 
 		return floatingActionItem;
