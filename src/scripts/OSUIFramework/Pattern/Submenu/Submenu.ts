@@ -286,6 +286,7 @@ namespace OSUIFramework.Patterns.Submenu {
 			this._updateAccessibilityProps();
 
 			OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				OSUIFramework.Event.Type.BodyOnClick,
 				this._globalEventOnBodyClick
 			);
