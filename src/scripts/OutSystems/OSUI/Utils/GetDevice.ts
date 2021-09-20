@@ -1,9 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Utils {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	export function GetDevice(): any {
+	export function GetDevice(): OSUIFramework.GlobalEnum.Devices {
 		const classList = document.body.classList;
-		let device: string;
+		let device: OSUIFramework.GlobalEnum.Devices;
 
 		if (classList.contains(OSUIFramework.GlobalEnum.Devices.Phone)) {
 			device = OSUIFramework.GlobalEnum.Devices.Phone;

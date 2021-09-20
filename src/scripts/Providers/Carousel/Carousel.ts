@@ -29,12 +29,6 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		// Store the splide__track element from the provider
 		private _splideTrack: HTMLElement;
 
-		// Provider getter
-		// eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-		get provider(): Splide {
-			return this._provider;
-		}
-
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new OSUIFramework.Patterns.Carousel.CarouselConfig(configs));
@@ -216,6 +210,11 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
+			// Check if provider is ready
+			if (typeof this._provider !== 'object') {
+				return;
+			}
+
 			// Block UpdateOnRender to avoid multiple triggers of provider.refresh()
 			this._blockRender = true;
 
@@ -227,7 +226,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 					break;
 				case 'itemsDesktop':
 					this._configs.ItemsPerSlide.Desktop = propertyValue;
-					this.provider.refresh();
+					this._provider.refresh();
 					break;
 				case 'itemsTablet':
 					this._configs.ItemsPerSlide.Tablet = propertyValue;
@@ -278,7 +277,11 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 
 		// Method to remove and destroy Carousel Splide instance
 		public dispose(): void {
-			this._provider.destroy();
+			// Check if provider is ready
+			if (typeof this._provider === 'object') {
+				this._provider.destroy();
+			}
+
 			super.dispose();
 		}
 
@@ -310,6 +313,12 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		// Method to call the go API from the provider. With '<' it will go to the previous page
 		public previous(): void {
 			this._provider.go('<');
+		}
+
+		// Provider getter
+		// eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
+		public get provider(): Splide {
+			return this._provider;
 		}
 
 		// Set callbacks for the onChange event
@@ -370,7 +379,11 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 
 		// Method used on the changeProperty for the options that require the Carousel to be destroyd and created again to properly update
 		public updateCarousel(): void {
-			this._provider.destroy();
+			// Check if provider is ready
+			if (typeof this._provider === 'object') {
+				this._provider.destroy();
+			}
+
 			this._createProviderCarousel();
 		}
 
@@ -379,7 +392,11 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			if (!this._blockRender) {
 				this._setInitialCssClasses();
 				this._prepareCarouselItems();
-				this._provider.refresh();
+
+				// Check if provider is ready
+				if (typeof this._provider === 'object') {
+					this._provider.refresh();
+				}
 			}
 		}
 	}
