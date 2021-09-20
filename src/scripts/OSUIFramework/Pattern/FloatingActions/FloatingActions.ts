@@ -24,10 +24,9 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		private _floatingActionsItem: HTMLElement;
 		// Stores the Items present in the pattern
 		private _floatingActionsItems: Array<HTMLElement>;
-		private _items: Array<FloatingActionsItem.IFloatingActionsItem>;
-		// Stores the items of this specific Floating Action
-		private _indexArray = [];
 		// Boolean to tell if the pattern is inside the Bottom Bar or not
+		// Stores the items of this specific Floating Action
+		private _floatingItems: Array<FloatingActionsItem.IFloatingActionsItem>;
 		private _insideBottomBar: boolean;
 		//Booelan to tell if the pattern is in the state 'open'
 		private _isOpen: boolean;
@@ -42,22 +41,25 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new FloatingActionsConfig(configs));
-			this._items = [];
+			this._floatingItems = [];
 			this._eventToggleClick = this._toggleClick.bind(this);
 			this._eventkeyboard = this._onButtonKeypress.bind(this);
 			this._openMethod = this.open.bind(this);
 			this._closeMethod = this.close.bind(this);
+			this._isOpen = configs.IsExpanded;
 		}
 
 		// Checks in the Floating Actions Pattern is inside the Bottom Bar and applies a fix for iOS devices
 		private _checkIfInsideBottomBar(): void {
+			const bottomBar: HTMLElement = this._floatingActions.closest(
+				Constants.Dot + Enum.CssClasses.ActiveScreen + ' ' + Constants.Dot + Enum.CssClasses.BottomBar
+			);
 			this._bottomBar = document.querySelector(
 				Constants.Dot + Enum.CssClasses.ActiveScreen + ' ' + Constants.Dot + Enum.CssClasses.BottomBar
 			);
-
 			// Inside Bottom Bar and IOS fix
 			if (this._bottomBar && this._floatingActions) {
-				this._insideBottomBar = this._bottomBar.contains(this._floatingActions);
+				this._insideBottomBar = bottomBar === undefined;
 				if (this._insideBottomBar) {
 					Helper.Style.AddClass(this._floatingActions, Enum.CssClasses.BottomBarExists);
 				}
@@ -109,21 +111,16 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		// Accessibility - sets the aria labels that depend on the opened/closed state
 		private _setAccessibility(): void {
 			//Toggles accessibility 'aria-hidden' property on Floating Actions Items' container & 'aria-expanded' on Floating Actions Button
-			if (this._isOpen) {
-				Helper.Attribute.Set(this._floatingActionsItem, Constants.AccessibilityAttribute.Aria.Hidden, 'false');
-				Helper.Attribute.Set(
-					this._floatingActionsButton,
-					Constants.AccessibilityAttribute.Aria.Expanded,
-					'true'
-				);
-			} else {
-				Helper.Attribute.Set(this._floatingActionsItem, Constants.AccessibilityAttribute.Aria.Hidden, 'true');
-				Helper.Attribute.Set(
-					this._floatingActionsButton,
-					Constants.AccessibilityAttribute.Aria.Expanded,
-					'false'
-				);
-			}
+			Helper.Attribute.Set(
+				this._floatingActionsItem,
+				Constants.AccessibilityAttribute.Aria.Hidden,
+				(!this._isOpen).toString()
+			);
+			Helper.Attribute.Set(
+				this._floatingActionsButton,
+				Constants.AccessibilityAttribute.Aria.Expanded,
+				this._isOpen.toString()
+			);
 		}
 
 		/*  Sets classes that depend on the open/closed state
@@ -176,8 +173,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 		// Accessibility - Set tabindex values
 		private _setTabIndex(value: string): void {
-			this._items = [...this._items];
-			this._items.forEach((item: FloatingActionsItem.IFloatingActionsItem) => {
+			this._floatingItems.forEach((item: FloatingActionsItem.IFloatingActionsItem) => {
 				item.setTabindex(value);
 			});
 		}
@@ -227,11 +223,21 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			this._floatingActionsItem = this._floatingActions.querySelector(
 				Constants.Dot + Enum.CssClasses.FloatingActionsItems
 			);
-			this._floatingActionsItems = Array.from(
-				this._floatingActions.querySelectorAll(Constants.Dot + Enum.CssClasses.FloatingActionItem)
-			);
+			this._floatingActionsItems = <HTMLElement[]>[
+				...this._floatingActions.querySelectorAll(Constants.Dot + Enum.CssClasses.FloatingActionItem),
+			];
 			this._firstButton = this._floatingActionsItems[0];
 			this._lastButton = this._floatingActionsItems[this._floatingActionsItems.length - 1];
+
+			if (this.configs.IsExpanded) {
+				this._setTabIndex('0');
+			}
+
+			// Let's recalculate the items' position to set the delay
+			this._floatingItems.forEach((floatingItem: Patterns.FloatingActionsItem.IFloatingActionsItem, index) => {
+				// indexes always start at 0
+				floatingItem.setAnimationDelay(index + 1);
+			});
 		}
 
 		// Method to toggle between classes
@@ -246,6 +252,10 @@ namespace OSUIFramework.Patterns.FloatingActions {
 					this._onClick(this.widgetId);
 				}, 0);
 			}
+		}
+
+		public addFloatingActionItem(floatingActionItem: FloatingActionsItem.IFloatingActionsItem): void {
+			this._floatingItems.unshift(floatingActionItem);
 		}
 
 		public build(): void {
@@ -343,12 +353,8 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		public registerCallback(callback: Callbacks.OSGeneric): void {
 			this._onClick = callback;
 		}
-
-		public addFloatingActionItem(floatingActionItem: FloatingActionsItem.IFloatingActionsItem): void {
-			this._items.unshift(floatingActionItem);
-		}
 		public getFloatingActionItems(): Array<FloatingActionsItem.IFloatingActionsItem> {
-			return this._items;
+			return this._floatingItems;
 		}
 	}
 }

@@ -1,5 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
+	enum _floatingActions {
+		FloatingActions = '[data-block="Interaction.FloatingActions"]',
+		FloatingActionWrapper = '.floating-actions-wrapper',
+	}
 	const _floatingActionsMap = new Map<string, string>(); //floatingActionsItem.uniqueId -> FloatingActions.uniqueId
 	const _floatingActionsItemMap = new Map<string, OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem>(); //floatingActionsItem.uniqueId -> FloatingActionsItem obj
 
@@ -41,6 +45,13 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 
 		_floatingActionsItemMap.set(floatingActionsItemId, _newFloatingActionsItem);
 
+		const floatingAction = GetFloatingActionsByItem(floatingActionsItemId);
+
+		if (floatingAction !== undefined) {
+			_floatingActionsMap.set(floatingActionsItemId, floatingAction.uniqueId);
+			floatingAction.addFloatingActionItem(_newFloatingActionsItem);
+		}
+
 		return _newFloatingActionsItem;
 	}
 
@@ -56,6 +67,7 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 		floatingActionItem.dispose();
 
 		_floatingActionsItemMap.delete(floatingActionItem.uniqueId);
+		_floatingActionsMap.delete(floatingActionItem.uniqueId);
 	}
 
 	/**
@@ -71,29 +83,23 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 	/**
 	 * Gets the Floating Action pattern the Item belongs to
 	 *
-	 * @export
 	 * @return {*}  {Map<string, OSUIFramework.Patterns.FloatingActions.IFloatingActions>}
 	 */
-	export function GetFloatingActionsByItem(
+	function GetFloatingActionsByItem(
 		floatingActionsItemId: string
 	): OSUIFramework.Patterns.FloatingActions.IFloatingActions {
 		let floatingActions: OSUIFramework.Patterns.FloatingActions.IFloatingActions;
 
-		//ColumnId is the UniqueId
 		if (_floatingActionsItemMap.has(floatingActionsItemId)) {
 			floatingActions = FloatingActionsAPI.GetFloatingActionsById(_floatingActionsMap.get(floatingActionsItemId));
-			//UniqueID not found
 		} else {
 			// Try to find its reference on DOM
 			const elem = OSUIFramework.Helper.GetElementByUniqueId(floatingActionsItemId);
 
 			// If element is found, means that the DOM was rendered
 			if (elem !== undefined) {
-				//TODO improve this here
-				const floating = elem.closest(Enum.FloatingActions.FloatingActions);
-				const uniqueId = floating
-					.querySelector(Enum.FloatingActions.FloatingActionWrapper)
-					.getAttribute('name');
+				const floating = elem.closest(_floatingActions.FloatingActions);
+				const uniqueId = floating.querySelector(_floatingActions.FloatingActionWrapper).getAttribute('name');
 				floatingActions = FloatingActionsAPI.GetFloatingActionsById(uniqueId);
 			} else {
 				// Assign this to the first floating action that is found
@@ -134,20 +140,7 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 	): OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem {
 		const floatingActionItem = GetFloatingActionsItemById(floatingActionItemId);
 
-		const floatingAction = GetFloatingActionsByItem(floatingActionItemId);
-
-		if (floatingAction !== undefined) {
-			_floatingActionsMap.set(floatingActionItemId, floatingAction.uniqueId);
-			floatingAction.addFloatingActionItem(floatingActionItem);
-		}
-
 		floatingActionItem.build();
-
-		const items = floatingAction.getFloatingActionItems();
-		items.forEach((item: OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem, index) => {
-			// indexes always start at 0
-			item.setAnimationDelay(index + 1);
-		});
 
 		return floatingActionItem;
 	}

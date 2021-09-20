@@ -4,7 +4,7 @@ namespace OSUIFramework.Patterns.FloatingActionsItem {
 	 * Defines the interface for OutSystemsUI Floating Actions Pattern
 	 */
 	export interface IFloatingActionsItem extends Interface.IPattern {
-		setAnimationDelay(value: string): void;
+		setAnimationDelay(value: number): void;
 		setTabindex(value: string): void;
 	}
 }
