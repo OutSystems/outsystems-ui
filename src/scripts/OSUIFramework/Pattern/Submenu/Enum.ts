@@ -12,8 +12,8 @@ namespace OSUIFramework.Patterns.Submenu.Enum {
 		PatternIsDropdown = 'is--dropdown',
 		PatternIsHidden = 'hidden',
 		PatternIsOpen = 'open',
-		PatternItem = 'osui-submenu-item',
 		PatternIcon = 'osui-submenu-icon',
+		PatternItem = 'osui-submenu-item',
 		PatternLinks = 'osui-submenu-items',
 	}
 }
