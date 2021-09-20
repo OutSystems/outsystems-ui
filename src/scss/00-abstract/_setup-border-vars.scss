@@ -14,7 +14,7 @@ $osui-border-radius-types: 'none' 0, 'soft' 4px, 'rounded' 100px, 'circle' 100%;
 /// Border Radius BoxSides
 $osui-border-radius-box-sides: (
 	'top' 'left' 'right',
-	'right' 'top' 'bottom',
+	'top' 'right' 'left',
 	'bottom' 'left' 'right',
-	'left' 'top' 'bottom'
+	'bottom' 'right' 'left'
 );

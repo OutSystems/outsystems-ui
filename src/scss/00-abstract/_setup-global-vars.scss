@@ -30,6 +30,8 @@ $osui-devices: 'phone', 'tablet', 'desktop';
 /* ---------------------------------------------------------------------------- */
 /// Box Sides
 $osui-box-sides: 'top', 'right', 'bottom', 'left';
+$osui-box-x-sides: 'right', 'bottom';
+$osui-box-y-sides: 'top', 'bottom';
 
 /// Box Corners
 $osui-box-corners: 'top-left', 'top-right', 'bottom-right', 'bottom-left';
