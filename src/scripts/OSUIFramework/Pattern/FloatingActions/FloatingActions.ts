@@ -24,9 +24,9 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		private _floatingActionsItem: HTMLElement;
 		// Stores the Items present in the pattern
 		private _floatingActionsItems: Array<HTMLElement>;
-		// Boolean to tell if the pattern is inside the Bottom Bar or not
 		// Stores the items of this specific Floating Action
 		private _floatingItems: Array<FloatingActionsItem.IFloatingActionsItem>;
+		// Boolean to tell if the pattern is inside the Bottom Bar or not
 		private _insideBottomBar: boolean;
 		//Booelan to tell if the pattern is in the state 'open'
 		private _isOpen: boolean;
@@ -41,7 +41,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new FloatingActionsConfig(configs));
-			this._floatingItems = [];
+			this._floatingItems = new Array<FloatingActionsItem.IFloatingActionsItem>();
 			this._eventToggleClick = this._toggleClick.bind(this);
 			this._eventkeyboard = this._onButtonKeypress.bind(this);
 			this._openMethod = this.open.bind(this);
