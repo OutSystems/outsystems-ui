@@ -107,6 +107,23 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 			this._setFocusTrap(e);
 		}
+		// Recalculates the position of the floating Action items in case a new item was added dynamically
+		private _refreshFloatingActionItems(): void {
+			// eslint-disable-next-line prefer-const
+			let floatingItem = [];
+			this._floatingActionsItems.forEach((item) => {
+				let newfloatingItem;
+				// eslint-disable-next-line prefer-const
+				newfloatingItem = this._floatingItems.find((element: FloatingActionsItem.FloatingActionsItem) => {
+					return element.uniqueId === item.getAttribute('name');
+				});
+				floatingItem.unshift(newfloatingItem);
+			});
+			this._floatingItems = floatingItem;
+			this._floatingItems.forEach((floatingItem, index) => {
+				floatingItem.setAnimationDelay(index + 1);
+			});
+		}
 
 		// Accessibility - sets the aria labels that depend on the opened/closed state
 		private _setAccessibility(): void {
@@ -212,9 +229,14 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			);
 		}
 
-		// Sets up the Floating Action elements on first render
+		// Sets up the Floating Action Items elements
 		private _setUpFloatingActions(): void {
 			this._floatingActions = this._selfElem;
+
+			//In case this is being setup by the items before it's the floating actions itself
+			if (!this._floatingActions) {
+				return;
+			}
 
 			//this._floatingActions = document.getElementById($parameters.FloatingId);
 			this._floatingActionsButton = this._floatingActions.querySelector(
@@ -233,11 +255,12 @@ namespace OSUIFramework.Patterns.FloatingActions {
 				this._setTabIndex('0');
 			}
 
+			this._refreshFloatingActionItems();
 			// Let's recalculate the items' position to set the delay
-			this._floatingItems.forEach((floatingItem: Patterns.FloatingActionsItem.IFloatingActionsItem, index) => {
+			/*this._floatingItems.forEach((floatingItem: Patterns.FloatingActionsItem.IFloatingActionsItem, index) => {
 				// indexes always start at 0
 				floatingItem.setAnimationDelay(index + 1);
-			});
+			});*/
 		}
 
 		// Method to toggle between classes
@@ -256,6 +279,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 		public addFloatingActionItem(floatingActionItem: FloatingActionsItem.IFloatingActionsItem): void {
 			this._floatingItems.unshift(floatingActionItem);
+			this._setUpFloatingActions();
 		}
 
 		public build(): void {
@@ -353,7 +377,15 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		public registerCallback(callback: Callbacks.OSGeneric): void {
 			this._onClick = callback;
 		}
-		public getFloatingActionItems(): Array<FloatingActionsItem.IFloatingActionsItem> {
+
+		public removeFloatingActionItem(floatingActionItem: FloatingActionsItem.IFloatingActionsItem): void {
+			for (let i = 0; i < this._floatingItems.length; i++) {
+				if (this._floatingItems[i] === floatingActionItem) {
+					this._floatingItems.splice(i, 1);
+				}
+			}
+		}
+		public get floatingActionItems(): Array<FloatingActionsItem.IFloatingActionsItem> {
 			return this._floatingItems;
 		}
 	}

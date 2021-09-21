@@ -45,13 +45,6 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 
 		_floatingActionsItemMap.set(floatingActionsItemId, _newFloatingActionsItem);
 
-		const floatingAction = GetFloatingActionsByItem(floatingActionsItemId);
-
-		if (floatingAction !== undefined) {
-			_floatingActionsMap.set(floatingActionsItemId, floatingAction.uniqueId);
-			floatingAction.addFloatingActionItem(_newFloatingActionsItem);
-		}
-
 		return _newFloatingActionsItem;
 	}
 
@@ -63,7 +56,11 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 	 */
 	export function Dispose(floatingActionsItemId: string): void {
 		const floatingActionItem = GetFloatingActionsItemById(floatingActionsItemId);
+		const floatingAction = GetFloatingActionsByItem(floatingActionsItemId);
 
+		if (floatingAction !== undefined) {
+			floatingAction.removeFloatingActionItem(floatingActionItem);
+		}
 		floatingActionItem.dispose();
 
 		_floatingActionsItemMap.delete(floatingActionItem.uniqueId);
@@ -90,7 +87,7 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 	): OSUIFramework.Patterns.FloatingActions.IFloatingActions {
 		let floatingActions: OSUIFramework.Patterns.FloatingActions.IFloatingActions;
 
-		if (_floatingActionsItemMap.has(floatingActionsItemId)) {
+		if (_floatingActionsMap.has(floatingActionsItemId)) {
 			floatingActions = FloatingActionsAPI.GetFloatingActionsById(_floatingActionsMap.get(floatingActionsItemId));
 		} else {
 			// Try to find its reference on DOM
@@ -132,16 +129,23 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 	 * Function that will initialize the pattern instance.
 	 *
 	 * @export
-	 * @param {string} floatingActionItemId ID of the Floating Action Item pattern that will be initialized.
+	 * @param {string} floatingActionsItemId ID of the Floating Action Item pattern that will be initialized.
 	 * @return {*}  {OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem}
 	 */
 	export function Initialize(
-		floatingActionItemId: string
+		floatingActionsItemId: string
 	): OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem {
-		const floatingActionItem = GetFloatingActionsItemById(floatingActionItemId);
+		const floatingActionsItem = GetFloatingActionsItemById(floatingActionsItemId);
 
-		floatingActionItem.build();
+		floatingActionsItem.build();
 
-		return floatingActionItem;
+		const floatingAction = GetFloatingActionsByItem(floatingActionsItemId);
+
+		if (floatingAction !== undefined) {
+			_floatingActionsMap.set(floatingActionsItemId, floatingAction.uniqueId);
+			floatingAction.addFloatingActionItem(floatingActionsItem);
+		}
+
+		return floatingActionsItem;
 	}
 }

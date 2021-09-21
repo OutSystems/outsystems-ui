@@ -5,6 +5,6 @@ namespace OSUIFramework.Patterns.FloatingActions {
 	 */
 	export interface IFloatingActions extends Interface.IPattern, Interface.ICallback, Interface.IOpenable {
 		addFloatingActionItem(floatingActionItem: FloatingActionsItem.IFloatingActionsItem);
-		getFloatingActionItems();
+		removeFloatingActionItem(floatingActionItem: FloatingActionsItem.IFloatingActionsItem);
 	}
 }
