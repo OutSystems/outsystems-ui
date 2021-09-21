@@ -282,10 +282,20 @@
 		}
 	}
 }
-
+.has-accessible-features .osui-submenu:focus-within {
+	-webkit-box-shadow: 0 0 0 3px var(--color-focus-outer);
+	box-shadow: 0 0 0 3px var(--color-focus-outer);
+	outline: 0;
+}
 ///
 .tablet,
 .phone {
+	.has-accessible-features .osui-submenu:focus-within {
+		-webkit-box-shadow: 0 0 0 3px var(--color-focus-outer);
+		box-shadow: 0 0 0 3px var(--color-focus-outer);
+		outline: 0;
+	}
+
 	.osui-submenu {
 		flex-direction: column;
 		margin-left: var(--space-none);
