@@ -1,0 +1,18 @@
+.splide {
+	&__spinner {
+		animation: splide-loading 1s infinite linear;
+		border: 2px solid #999;
+		border-left-color: transparent;
+		border-radius: 50%;
+		bottom: 0;
+
+		display: inline-block;
+		height: $spinner-size;
+		left: 0;
+		margin: auto;
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: $spinner-size;
+	}
+}

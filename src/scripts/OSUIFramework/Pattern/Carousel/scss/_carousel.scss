@@ -1,10 +1,12 @@
-//@import './../../../../../../node_modules\@splidejs\splide\src\sass\core\splide-core.scss';
-
 /*! Patterns - Content - Carousel */
 ////
 /// @group Patterns-Carousel
 /// Patterns - Content - Carousel
 
+/*! Splider Library Core Default Styles */
+@import './Splider/splide-core.scss';
+
+/*! OutSystems UI Carousel customization */
 ///
 .osui-carousel {
 	&.has-scale {
@@ -44,11 +46,7 @@
 	}
 
 	.splide__pagination {
-		background-color: var(--color-neutral-0);
-		border-radius: 100px;
-		box-shadow: var(--shadow-xs);
-		padding: var(--space-xs) var(--space-s);
-		width: auto;
+		margin: 0;
 
 		.splide__pagination__page {
 			&.is-active {
