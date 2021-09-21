@@ -36,8 +36,8 @@ namespace OSUIFramework.Patterns.Submenu {
 		// Add Pattern Events
 		private _addEvents(): void {
 			if (this._hasElements) {
-				this._selfElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnSubmenuClick);
-				this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnSubmenuKeypress);
+				this._submenuHeader.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnSubmenuClick);
+				this._submenuHeader.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnSubmenuKeypress);
 			}
 
 			OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
@@ -45,25 +45,31 @@ namespace OSUIFramework.Patterns.Submenu {
 				this._globalEventOnSubmenuOpen
 			);
 
-			OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
-				OSUIFramework.Event.Type.BodyOnClick,
-				this._globalEventOnBodyClick
-			);
+			// For support reasons, the use case of adding the open class by ExtendedClass on submenu we will add the handler to close all on body click
+			if (Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen)) {
+				OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
+					OSUIFramework.Event.Type.BodyOnClick,
+					this._globalEventOnBodyClick
+				);
+			}
 		}
 
 		// Close submenu, when BodyOnCLick event is triggered
-		private _onBodyClick(): void {
-			if (Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen)) {
-				Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
-			} else if (this._isOpen) {
-				this.close();
+		private _onBodyClick(args: string, e: MouseEvent): void {
+			if (!this._selfElem.contains(e.target as HTMLElement)) {
+				if (Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen) && !this._isOpen) {
+					Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
+				} else if (this._isOpen) {
+					this.close();
+				}
+
+				e.stopPropagation();
 			}
 		}
 
 		// Trigger the submenu at toggle behaviour
 		private _onSubmenuClick(e: MouseEvent): void {
 			this._onSubmenuToggle();
-
 			e.stopPropagation();
 		}
 
@@ -125,8 +131,8 @@ namespace OSUIFramework.Patterns.Submenu {
 		// Remove all the assigned Events
 		private _removeEvents(): void {
 			if (this._hasElements) {
-				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnSubmenuClick);
-				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnSubmenuKeypress);
+				this._submenuHeader.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnSubmenuClick);
+				this._submenuHeader.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnSubmenuKeypress);
 			}
 
 			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
@@ -257,6 +263,11 @@ namespace OSUIFramework.Patterns.Submenu {
 			this._isOpen = false;
 
 			this._updateAccessibilityProps();
+
+			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
+				OSUIFramework.Event.Type.BodyOnClick,
+				this._globalEventOnBodyClick
+			);
 		}
 
 		// Destroy the Submenu
@@ -273,6 +284,12 @@ namespace OSUIFramework.Patterns.Submenu {
 			this._isOpen = true;
 
 			this._updateAccessibilityProps();
+
+			OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
+				OSUIFramework.Event.Type.BodyOnClick,
+				this._globalEventOnBodyClick
+			);
 		}
 	}
 }
