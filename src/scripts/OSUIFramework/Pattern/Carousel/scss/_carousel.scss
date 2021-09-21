@@ -1,3 +1,5 @@
+//@import './../../../../../../node_modules\@splidejs\splide\src\sass\core\splide-core.scss';
+
 /*! Patterns - Content - Carousel */
 ////
 /// @group Patterns-Carousel
@@ -7,10 +9,12 @@
 .osui-carousel {
 	&.has-scale {
 		.splide__slide {
-			transform: scale(0.8);
-			transition: transform 300ms ease;
+			& > * {
+				transform: scale(0.8);
+				transition: transform 300ms ease;
+			}
 
-			&.is-active {
+			&.is-active > * {
 				transform: scale(1);
 			}
 		}
