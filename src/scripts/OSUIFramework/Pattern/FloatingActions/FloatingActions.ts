@@ -8,6 +8,9 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		// Store the close method with bind(this)
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _closeMethod: any;
+		// Stores the Esc exception function handler.
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		private _escException: any;
 		// Store the click event with bind(this)
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventToggleClick: any;
@@ -44,6 +47,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			this._floatingItems = new Array<FloatingActionsItem.IFloatingActionsItem>();
 			this._eventToggleClick = this._toggleClick.bind(this);
 			this._eventkeyboard = this._onButtonKeypress.bind(this);
+			this._escException = this._handleEscException.bind(this);
 			this._openMethod = this.open.bind(this);
 			this._closeMethod = this.close.bind(this);
 			this._isOpen = configs.IsExpanded;
@@ -117,7 +121,9 @@ namespace OSUIFramework.Patterns.FloatingActions {
 				newfloatingItem = this._floatingItems.find((element: FloatingActionsItem.FloatingActionsItem) => {
 					return element.uniqueId === item.getAttribute('name');
 				});
-				floatingItem.unshift(newfloatingItem);
+				if (newfloatingItem) {
+					floatingItem.unshift(newfloatingItem);
+				}
 			});
 			this._floatingItems = floatingItem;
 			this._floatingItems.forEach((floatingItem, index) => {
@@ -223,10 +229,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			}
 
 			// Exception for clicking Esc on items wrapper
-			this._floatingActionsItem.addEventListener(
-				GlobalEnum.HTMLEvent.keyDown,
-				this._handleEscException.bind(this)
-			);
+			this._floatingActionsItem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._escException);
 		}
 
 		// Sets up the Floating Action Items elements
@@ -256,11 +259,6 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			}
 
 			this._refreshFloatingActionItems();
-			// Let's recalculate the items' position to set the delay
-			/*this._floatingItems.forEach((floatingItem: Patterns.FloatingActionsItem.IFloatingActionsItem, index) => {
-				// indexes always start at 0
-				floatingItem.setAnimationDelay(index + 1);
-			});*/
 		}
 
 		// Method to toggle between classes
@@ -349,6 +347,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 			// Removes keyboard events
 			this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventkeyboard);
+			this._floatingActionsItem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._escException);
 		}
 
 		public open(): void {
@@ -384,6 +383,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 					this._floatingItems.splice(i, 1);
 				}
 			}
+			this._refreshFloatingActionItems();
 		}
 		public get floatingActionItems(): Array<FloatingActionsItem.IFloatingActionsItem> {
 			return this._floatingItems;

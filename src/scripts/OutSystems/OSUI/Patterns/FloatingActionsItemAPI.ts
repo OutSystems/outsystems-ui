@@ -8,6 +8,37 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 	const _floatingActionsItemMap = new Map<string, OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem>(); //floatingActionsItem.uniqueId -> FloatingActionsItem obj
 
 	/**
+	 * Gets the Floating Action pattern the Item belongs to
+	 *
+	 * @return {*}  {Map<string, OSUIFramework.Patterns.FloatingActions.IFloatingActions>}
+	 */
+	function GetFloatingActionsByItem(
+		floatingActionsItemId: string
+	): OSUIFramework.Patterns.FloatingActions.IFloatingActions {
+		let floatingActions: OSUIFramework.Patterns.FloatingActions.IFloatingActions;
+
+		if (_floatingActionsMap.has(floatingActionsItemId)) {
+			floatingActions = FloatingActionsAPI.GetFloatingActionsById(_floatingActionsMap.get(floatingActionsItemId));
+		} else {
+			// Try to find its reference on DOM
+			const elem = OSUIFramework.Helper.GetElementByUniqueId(floatingActionsItemId);
+
+			// If element is found, means that the DOM was rendered
+			if (elem !== undefined) {
+				const floating = elem.closest(_floatingActions.FloatingActions);
+				const uniqueId = floating.querySelector(_floatingActions.FloatingActionWrapper).getAttribute('name');
+				floatingActions = FloatingActionsAPI.GetFloatingActionsById(uniqueId);
+			} else {
+				// Assign this to the first floating action that is found
+				const uniqueId = FloatingActionsAPI.GetAllFloatingActions()[0];
+				floatingActions = FloatingActionsAPI.GetFloatingActionsById(uniqueId);
+			}
+		}
+
+		return floatingActions;
+	}
+
+	/**
 	 * Function that will change the property of a given Floating Actions pattern.
 	 *
 	 * @export
@@ -75,37 +106,6 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 	 */
 	export function GetAllFloatingActionsItems(): Array<string> {
 		return OSUIFramework.Helper.MapOperation.ExportKeys(_floatingActionsItemMap);
-	}
-
-	/**
-	 * Gets the Floating Action pattern the Item belongs to
-	 *
-	 * @return {*}  {Map<string, OSUIFramework.Patterns.FloatingActions.IFloatingActions>}
-	 */
-	function GetFloatingActionsByItem(
-		floatingActionsItemId: string
-	): OSUIFramework.Patterns.FloatingActions.IFloatingActions {
-		let floatingActions: OSUIFramework.Patterns.FloatingActions.IFloatingActions;
-
-		if (_floatingActionsMap.has(floatingActionsItemId)) {
-			floatingActions = FloatingActionsAPI.GetFloatingActionsById(_floatingActionsMap.get(floatingActionsItemId));
-		} else {
-			// Try to find its reference on DOM
-			const elem = OSUIFramework.Helper.GetElementByUniqueId(floatingActionsItemId);
-
-			// If element is found, means that the DOM was rendered
-			if (elem !== undefined) {
-				const floating = elem.closest(_floatingActions.FloatingActions);
-				const uniqueId = floating.querySelector(_floatingActions.FloatingActionWrapper).getAttribute('name');
-				floatingActions = FloatingActionsAPI.GetFloatingActionsById(uniqueId);
-			} else {
-				// Assign this to the first floating action that is found
-				const uniqueId = FloatingActionsAPI.GetAllFloatingActions()[0];
-				floatingActions = FloatingActionsAPI.GetFloatingActionsById(uniqueId);
-			}
-		}
-
-		return floatingActions;
 	}
 
 	/**
