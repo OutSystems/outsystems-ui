@@ -19,6 +19,7 @@
 		will-change: opacity;
 
 		&[disabled] {
+			cursor: default;
 			opacity: 0.3;
 		}
 

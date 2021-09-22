@@ -25,13 +25,18 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		private _providerContainer: HTMLElement;
 		// Store initial provider options
 		// eslint-disable-next-line @typescript-eslint/explicit-member-accessibility, @typescript-eslint/no-explicit-any
-		private _splideOptions: Record<string, any> = {};
+		private _splideOptions: SplideOpts;
 		// Store the splide__track element from the provider
 		private _splideTrack: HTMLElement;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new OSUIFramework.Patterns.Carousel.CarouselConfig(configs));
+
+			// As the Splider library only has the SplideOptions as an inteface, and not an object
+			// we decided to create an empty object of type SplideOpts, as already give us the intellisense, without the need to create
+			// a SplideOptions class on our side.
+			this._splideOptions = {};
 		}
 
 		// Method to check if a List Widget is used inside the placeholder and assign the _listWidget variable
