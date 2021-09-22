@@ -75,6 +75,13 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 		);
 
 		_floatingActionsItemMap.set(floatingActionsItemId, _newFloatingActionsItem);
+		const floatingAction = GetFloatingActionsByItem(floatingActionsItemId);
+
+		if (floatingAction !== undefined) {
+			_floatingActionsMap.set(floatingActionsItemId, floatingAction.uniqueId);
+			floatingAction.addFloatingActionItem(_newFloatingActionsItem);
+		}
+		_newFloatingActionsItem.build();
 
 		return _newFloatingActionsItem;
 	}
@@ -123,29 +130,5 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 			floatingActionsItemId,
 			_floatingActionsItemMap
 		) as OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem;
-	}
-
-	/**
-	 * Function that will initialize the pattern instance.
-	 *
-	 * @export
-	 * @param {string} floatingActionsItemId ID of the Floating Action Item pattern that will be initialized.
-	 * @return {*}  {OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem}
-	 */
-	export function Initialize(
-		floatingActionsItemId: string
-	): OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem {
-		const floatingActionsItem = GetFloatingActionsItemById(floatingActionsItemId);
-
-		floatingActionsItem.build();
-
-		const floatingAction = GetFloatingActionsByItem(floatingActionsItemId);
-
-		if (floatingAction !== undefined) {
-			_floatingActionsMap.set(floatingActionsItemId, floatingAction.uniqueId);
-			floatingAction.addFloatingActionItem(floatingActionsItem);
-		}
-
-		return floatingActionsItem;
 	}
 }
