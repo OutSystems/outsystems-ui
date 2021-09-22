@@ -4,7 +4,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 	 * Defines the interface for OutSystemsUI Floating Actions Pattern
 	 */
 	export interface IFloatingActions extends Interface.IPattern, Interface.ICallback, Interface.IOpenable {
-		addFloatingActionItem(floatingActionItem: FloatingActionsItem.IFloatingActionsItem);
-		removeFloatingActionItem(floatingActionItem: FloatingActionsItem.IFloatingActionsItem);
+		addFloatingActionItem(uniqueId: string, floatingActionItem: FloatingActionsItem.IFloatingActionsItem);
+		removeFloatingActionItem(uniqueId: string);
 	}
 }

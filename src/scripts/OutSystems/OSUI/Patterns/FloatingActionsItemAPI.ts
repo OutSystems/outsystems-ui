@@ -29,9 +29,7 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 				const uniqueId = floating.querySelector(_floatingActions.FloatingActionWrapper).getAttribute('name');
 				floatingActions = FloatingActionsAPI.GetFloatingActionsById(uniqueId);
 			} else {
-				// Assign this to the first floating action that is found
-				const uniqueId = FloatingActionsAPI.GetAllFloatingActions()[0];
-				floatingActions = FloatingActionsAPI.GetFloatingActionsById(uniqueId);
+				throw Error('This Floating Action Item does not belong to any Floating Action pattern. ');
 			}
 		}
 
@@ -75,13 +73,14 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 		);
 
 		_floatingActionsItemMap.set(floatingActionsItemId, _newFloatingActionsItem);
+		_newFloatingActionsItem.build();
+
 		const floatingAction = GetFloatingActionsByItem(floatingActionsItemId);
 
 		if (floatingAction !== undefined) {
 			_floatingActionsMap.set(floatingActionsItemId, floatingAction.uniqueId);
-			floatingAction.addFloatingActionItem(_newFloatingActionsItem);
+			floatingAction.addFloatingActionItem(_newFloatingActionsItem.uniqueId, _newFloatingActionsItem);
 		}
-		_newFloatingActionsItem.build();
 
 		return _newFloatingActionsItem;
 	}
@@ -97,7 +96,7 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 		const floatingAction = GetFloatingActionsByItem(floatingActionsItemId);
 
 		if (floatingAction !== undefined) {
-			floatingAction.removeFloatingActionItem(floatingActionItem);
+			floatingAction.removeFloatingActionItem(floatingActionItem.uniqueId);
 		}
 		floatingActionItem.dispose();
 

@@ -28,7 +28,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		// Stores the Items present in the pattern
 		private _floatingActionsItems: Array<HTMLElement>;
 		// Stores the items of this specific Floating Action
-		private _floatingItems: Array<FloatingActionsItem.IFloatingActionsItem>;
+		private _floatingItems: Map<string, OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem>;
 		// Boolean to tell if the pattern is inside the Bottom Bar or not
 		private _insideBottomBar: boolean;
 		//Booelan to tell if the pattern is in the state 'open'
@@ -44,7 +44,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new FloatingActionsConfig(configs));
-			this._floatingItems = new Array<FloatingActionsItem.IFloatingActionsItem>();
+			this._floatingItems = new Map<string, OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem>();
 			this._eventToggleClick = this._toggleClick.bind(this);
 			this._eventkeyboard = this._onButtonKeypress.bind(this);
 			this._escException = this._handleEscException.bind(this);
@@ -114,31 +114,26 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		// Recalculates the position of the floating Action items in case a new item was added dynamically
 		private _refreshFloatingActionItems(): void {
 			// eslint-disable-next-line prefer-const
-			let floatingItem = [];
+			let floatingItemIds = [];
 			this._floatingActionsItems.forEach((item) => {
-				let newfloatingItem;
-				// eslint-disable-next-line prefer-const
-				newfloatingItem = this._floatingItems.find((element: FloatingActionsItem.FloatingActionsItem) => {
-					return element.uniqueId === item.getAttribute('name');
-				});
-				if (newfloatingItem) {
-					floatingItem.unshift(newfloatingItem);
-				}
+				floatingItemIds.push(item.getAttribute('name'));
 			});
-			this._floatingItems = floatingItem;
-			this._floatingItems.forEach((floatingItem, index) => {
-				floatingItem.setAnimationDelay(index + 1);
+
+			floatingItemIds.forEach((name, index) => {
+				const floatingActionItem = this._floatingItems.get(name);
+				floatingActionItem.setAnimationDelay(index + 1);
 			});
 		}
 
 		// Accessibility - sets the aria labels that depend on the opened/closed state
 		private _setAccessibility(): void {
 			//Toggles accessibility 'aria-hidden' property on Floating Actions Items' container & 'aria-expanded' on Floating Actions Button
-			Helper.Attribute.Set(
-				this._floatingActionsItem,
-				Constants.AccessibilityAttribute.Aria.Hidden,
-				(!this._isOpen).toString()
-			);
+			if (this._floatingActionsItem)
+				Helper.Attribute.Set(
+					this._floatingActionsItem,
+					Constants.AccessibilityAttribute.Aria.Hidden,
+					(!this._isOpen).toString()
+				);
 			Helper.Attribute.Set(
 				this._floatingActionsButton,
 				Constants.AccessibilityAttribute.Aria.Expanded,
@@ -241,7 +236,6 @@ namespace OSUIFramework.Patterns.FloatingActions {
 				return;
 			}
 
-			//this._floatingActions = document.getElementById($parameters.FloatingId);
 			this._floatingActionsButton = this._floatingActions.querySelector(
 				Constants.Dot + Enum.CssClasses.FloatingActionsButton
 			);
@@ -275,25 +269,24 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			}
 		}
 
-		public addFloatingActionItem(floatingActionItem: FloatingActionsItem.IFloatingActionsItem): void {
-			this._floatingItems.unshift(floatingActionItem);
+		public addFloatingActionItem(
+			uniqueId: string,
+			floatingActionItem: FloatingActionsItem.IFloatingActionsItem
+		): void {
+			this._floatingItems.set(uniqueId, floatingActionItem);
 			this._setUpFloatingActions();
 		}
 
 		public build(): void {
 			super.build();
 
+			super.finishBuild();
+
 			this._setUpFloatingActions();
-
 			this._setClasses();
-
 			this._checkIfInsideBottomBar();
-
 			this._setAccessibility();
-
 			this._setUpEvents();
-
-			this.finishBuild();
 		}
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
@@ -377,15 +370,11 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			this._onClick = callback;
 		}
 
-		public removeFloatingActionItem(floatingActionItem: FloatingActionsItem.IFloatingActionsItem): void {
-			for (let i = 0; i < this._floatingItems.length; i++) {
-				if (this._floatingItems[i] === floatingActionItem) {
-					this._floatingItems.splice(i, 1);
-				}
-			}
+		public removeFloatingActionItem(floatingActionItemId: string): void {
+			this._floatingItems.delete(floatingActionItemId);
 			this._refreshFloatingActionItems();
 		}
-		public get floatingActionItems(): Array<FloatingActionsItem.IFloatingActionsItem> {
+		public get floatingActionItems(): Map<string, OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem> {
 			return this._floatingItems;
 		}
 	}
