@@ -54,4 +54,18 @@
 			}
 		}
 	}
+
+	.library-link {
+		// Service Studio Preview
+		& {
+			-servicestudio-background-color: var(--color-neutral-3);
+		}
+
+		// Service Studio Preview
+		&::before {
+			-servicestudio-color: var(--color-neutral-7);
+			-servicestudio-content: 'The Carousel uses an external library - Splide.js. For extended options or general documentation check the link below:';
+			-servicestudio-display: block;
+		}
+	}
 }
