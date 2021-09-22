@@ -42,6 +42,15 @@
 		}
 	}
 
+	.osui-carousel_content {
+		& > .list {
+			// Service Studio Preview
+			& {
+				-servicestudio-display: inline-flex;
+			}
+		}
+	}
+
 	.library-link {
 		// Service Studio Preview
 		& {
