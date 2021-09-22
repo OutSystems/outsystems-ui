@@ -155,12 +155,11 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 			this._splideOptions.gap = this._configs.OptionalConfigs.Gap;
 			this._splideOptions.start = this._configs.OptionalConfigs.InitialPosition;
 
+			// Method to handle the breakpoints, and it will need to be called again on changeProperty
 			this._setBreakpointsOptions();
 
+			// Method to handle the Navigation, and it will need to be called again on changeProperty
 			this.setNavigation(this._configs.Navigation);
-
-			// Manage Scale option
-			this.handleScale(this._configs.OptionalConfigs.Scale);
 		}
 
 		// Method to set the OnInitializeEvent
@@ -256,10 +255,6 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 					this._configs.OptionalConfigs.InitialPosition = propertyValue;
 					this.updateCarousel();
 					break;
-				case 'scale':
-					this._configs.OptionalConfigs.Scale = propertyValue;
-					this.handleScale(propertyValue);
-					break;
 				case 'focus':
 					this._configs.OptionalConfigs.FocusOnItem = propertyValue;
 					this._updateBreakpoints();
@@ -288,21 +283,6 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		// Method to call the go API from the provider
 		public goTo(index: number): void {
 			this._provider.go(index);
-		}
-
-		// Method to handle the scale option (not provided by the library be default), by simply toggling a 'has-scale' options
-		// This class is then used on the CSS to implement the scale effect on the active item
-		public handleScale(setScale: boolean): void {
-			const containsScaleClass = OSUIFramework.Helper.Style.ContainsClass(
-				this._selfElem,
-				Enum.CssClass.ScaleOption
-			);
-
-			if (setScale) {
-				OSUIFramework.Helper.Style.AddClass(this._selfElem, Enum.CssClass.ScaleOption);
-			} else if (containsScaleClass) {
-				OSUIFramework.Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.ScaleOption);
-			}
 		}
 
 		// Method to call the go API from the provider. With '>' it will go to the next page

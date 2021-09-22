@@ -9,19 +9,6 @@
 /*! OutSystems UI Carousel customization */
 ///
 .osui-carousel {
-	&.has-scale {
-		.splide__slide {
-			& > * {
-				transform: scale(0.8);
-				transition: transform 300ms ease;
-			}
-
-			&.is-active > * {
-				transform: scale(1);
-			}
-		}
-	}
-
 	.splide__arrow {
 		background-color: var(--color-neutral-0);
 		box-shadow: var(--shadow-xs);
