@@ -4,7 +4,7 @@ namespace OSUIFramework.Patterns.Carousel.Enum {
 	 * Carousel Events
 	 */
 	export enum CarouselEvents {
-		OnInitialized = 'OnInitialized',
+		OnInitialize = 'OnInitialize',
 		OnSlideMoved = 'OnSlideMoved',
 	}
 

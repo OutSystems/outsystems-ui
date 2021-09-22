@@ -6,7 +6,7 @@ namespace OSUIFramework.Callbacks {
 		(carouselId: string, index: number): void;
 	};
 
-	export type OSCarouselOnInitializedEvent = {
+	export type OSCarouselOnInitializeEvent = {
 		(carouselId: string): void;
 	};
 

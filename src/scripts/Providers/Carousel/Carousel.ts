@@ -14,7 +14,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		// Store the List widget element
 		private _listWidget: HTMLElement;
 		// Store the onInitialized event
-		private _onInitialized: OSUIFramework.Callbacks.OSCarouselOnInitializedEvent;
+		private _onInitialize: OSUIFramework.Callbacks.OSCarouselOnInitializeEvent;
 		// Store the onSlideMoved event
 		private _onSlideMoved: OSUIFramework.Callbacks.OSCarouselSlideMovedEvent;
 		// Store the placholder element
@@ -171,7 +171,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		private _setOnInitializedEvent(): void {
 			this._provider.on(Enum.SpliderEvents.Mounted, () => {
 				setTimeout(() => {
-					this._onInitialized(this.widgetId);
+					this._onInitialize(this.widgetId);
 				}, 0);
 			});
 		}
@@ -215,7 +215,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
 			// Check if provider is ready
-			if (this.isBuilt) {
+			if (!this.isBuilt) {
 				return;
 			}
 
@@ -312,8 +312,8 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 				case OSUIFramework.Patterns.Carousel.Enum.CarouselEvents.OnSlideMoved:
 					this._onSlideMoved = callback;
 					break;
-				case OSUIFramework.Patterns.Carousel.Enum.CarouselEvents.OnInitialized:
-					this._onInitialized = callback;
+				case OSUIFramework.Patterns.Carousel.Enum.CarouselEvents.OnInitialize:
+					this._onInitialize = callback;
 					break;
 			}
 		}
