@@ -8,7 +8,6 @@ namespace Providers.Carousel.Enum {
 		SplideTrack = 'splide__track',
 		SplideList = 'splide__list',
 		SplideSlide = 'splide__slide',
-		ScaleOption = 'has-scale',
 	}
 
 	/**
