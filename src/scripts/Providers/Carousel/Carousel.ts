@@ -210,7 +210,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
 			// Check if provider is ready
-			if (typeof this._provider !== 'object') {
+			if (this.isBuilt) {
 				return;
 			}
 
@@ -273,7 +273,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 		// Method to remove and destroy Carousel Splide instance
 		public dispose(): void {
 			// Check if provider is ready
-			if (typeof this._provider === 'object') {
+			if (this.isBuilt) {
 				this._provider.destroy();
 			}
 
@@ -377,7 +377,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 				this._prepareCarouselItems();
 
 				// Check if provider is ready
-				if (typeof this._provider === 'object') {
+				if (this.isBuilt) {
 					this._provider.refresh();
 				}
 			}
