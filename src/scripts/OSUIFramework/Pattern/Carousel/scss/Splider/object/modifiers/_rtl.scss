@@ -1,5 +1,29 @@
 .splide {
-  &--rtl {
-    direction: rtl;
-  }
+	$root: &;
+
+	&--rtl {
+		direction: rtl;
+		> #{$root}__track > #{$root}__arrows,
+		> #{$root}__arrows {
+			#{$root}__arrow {
+				&--prev {
+					left: auto;
+					right: 1em;
+
+					svg {
+						transform: scaleX(1);
+					}
+				}
+
+				&--next {
+					left: 1em;
+					right: auto;
+
+					svg {
+						transform: scaleX(-1);
+					}
+				}
+			}
+		}
+	}
 }
