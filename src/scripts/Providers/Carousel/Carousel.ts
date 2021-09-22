@@ -382,7 +382,7 @@ namespace Providers.Carousel.OSUISplide.Carousel {
 				this._prepareCarouselItems();
 
 				// Check if provider is ready
-				if (this.isBuilt) {
+				if (typeof this._provider === 'object') {
 					this._provider.refresh();
 				}
 			}
