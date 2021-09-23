@@ -96,11 +96,18 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 	 */
 	export function Dispose(floatingActionsItemId: string): void {
 		const floatingActionItem = GetFloatingActionsItemById(floatingActionsItemId);
-		const floatingAction = GetFloatingActionsByItem(floatingActionsItemId);
 
-		if (floatingAction !== undefined) {
-			floatingAction.removeFloatingActionItem(floatingActionItem.uniqueId);
-		}
+		//When destroying the whole pattern Floating Actions + Floating Actions Item, the parent is destroyed first
+		//So, there is no parent to disconnect from.
+		try {
+			const floatingAction = GetFloatingActionsByItem(floatingActionsItemId);
+
+			if (floatingAction !== undefined) {
+				floatingAction.removeFloatingActionItem(floatingActionItem.uniqueId);
+			}
+			// eslint-disable-next-line no-empty
+		} catch {}
+
 		floatingActionItem.dispose();
 
 		_floatingActionsItemMap.delete(floatingActionItem.uniqueId);

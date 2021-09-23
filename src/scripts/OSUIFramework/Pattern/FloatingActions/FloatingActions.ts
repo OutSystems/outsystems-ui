@@ -116,12 +116,15 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			// eslint-disable-next-line prefer-const
 			let floatingItemIds = [];
 			this._floatingActionsItems.forEach((item) => {
-				floatingItemIds.push(item.getAttribute('name'));
+				if (this._floatingItems.has(item.getAttribute('name'))) floatingItemIds.push(item.getAttribute('name'));
 			});
+
+			//Animation starts from the bottom to the top
+			floatingItemIds.reverse();
 
 			floatingItemIds.forEach((name, index) => {
 				const floatingActionItem = this._floatingItems.get(name);
-				floatingActionItem.setAnimationDelay(index + 1);
+				if (floatingActionItem) floatingActionItem.setAnimationDelay(index + 1);
 			});
 		}
 
