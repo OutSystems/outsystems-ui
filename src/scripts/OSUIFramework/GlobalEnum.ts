@@ -102,6 +102,14 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
+	 * OutSystems mobile operating systems
+	 */
+	export enum MobileOS {
+		Android = 'android',
+		IOS = 'ios',
+	}
+
+	/**
 	 * OutSystemsUI Orientation options
 	 */
 	export enum Orientation {
