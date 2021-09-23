@@ -8,24 +8,6 @@
 	cursor: initial;
 	position: relative;
 
-	&.dropdown-container:after {
-		border: var(--border-size-m) solid var(--color-neutral-7);
-		border-right-width: var(--border-size-none);
-		border-top-width: var(--border-size-none);
-		bottom: 0;
-		box-sizing: border-box;
-		content: '';
-		height: 8px;
-		left: auto;
-		pointer-events: none;
-		position: absolute;
-		right: 16px;
-		top: 15px;
-		transform: rotate(-45deg) translateY(0) translateX(0);
-		transition: all 300ms ease-in-out;
-		width: 8px;
-	}
-
 	& > div,
 	& > select {
 		&.dropdown {
@@ -76,37 +58,6 @@
 			color: var(--color-neutral-6);
 			opacity: 1;
 			pointer-events: none;
-		}
-	}
-
-	// Is expanded
-	&.dropdown-expanded {
-		&.dropdown {
-			&-container:after {
-				border-color: var(--color-primary);
-				transform: rotate(135deg) translateY(-3px) translateX(3px);
-			}
-
-			// Is expanded Down
-			&-expanded-down {
-				& div.dropdown-list {
-					margin-top: var(--space-xs);
-					top: 100% !important;
-				}
-			}
-
-			// Is expanded Up
-			&-expanded-up {
-				& div.dropdown-list {
-					bottom: 100% !important;
-					margin-bottom: var(--space-xs);
-					top: auto !important;
-				}
-			}
-		}
-
-		& > div.dropdown-display {
-			border: var(--border-size-s) solid var(--color-primary);
 		}
 	}
 
@@ -176,6 +127,55 @@
 		& > select.dropdown-display {
 			border: var(--border-size-s) solid var(--color-error);
 		}
+	}
+}
+
+.dropdown-container:after {
+	border: var(--border-size-m) solid var(--color-neutral-7);
+	border-right-width: var(--border-size-none);
+	border-top-width: var(--border-size-none);
+	bottom: 0;
+	box-sizing: border-box;
+	content: '';
+	height: 8px;
+	left: auto;
+	pointer-events: none;
+	position: absolute;
+	right: 16px;
+	top: 15px;
+	transform: rotate(-45deg) translateY(0) translateX(0);
+	transition: all 300ms ease-in-out;
+	width: 8px;
+}
+
+// Is expanded
+.dropdown-expanded {
+	&.dropdown {
+		&-container:after {
+			border-color: var(--color-primary);
+			transform: rotate(135deg) translateY(-3px) translateX(3px);
+		}
+
+		// Is expanded Down
+		&-expanded-down {
+			& div.dropdown-list {
+				margin-top: var(--space-xs);
+				top: 100% !important;
+			}
+		}
+
+		// Is expanded Up
+		&-expanded-up {
+			& div.dropdown-list {
+				bottom: 100% !important;
+				margin-bottom: var(--space-xs);
+				top: auto !important;
+			}
+		}
+	}
+
+	& > div.dropdown-display {
+		border: var(--border-size-s) solid var(--color-primary);
 	}
 }
 
