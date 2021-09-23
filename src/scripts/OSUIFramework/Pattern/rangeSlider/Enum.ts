@@ -1,19 +1,20 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSUIFramework.Patterns.rangeSlider.Enum {
+namespace OSUIFramework.Patterns.RangeSlider.Enum {
 	/**
-	 * rangeSlider Enum properties
+	 * RangeSlider Enum properties
 	 */
-	export enum Properties {
-        //Implement you code here
-	}
-
+	export enum Properties {}
 
 	/**
-	 * rangeSlider Enum for CSS Classes
+	 * RangeSlider Enum for CSS Classes
 	 */
-	export enum CssClass {
-		//Implement you code here
+	export enum CssClass {}
+
+	/**
+	 * RangeSlider Types
+	 */
+	export enum RangeSliderTypes {
+		Slider = 'slider',
+		Interval = 'interval',
 	}
-
-
 }
