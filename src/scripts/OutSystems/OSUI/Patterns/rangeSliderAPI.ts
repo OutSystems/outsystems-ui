@@ -94,4 +94,22 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 
 		return _rangeSliderItem;
 	}
+
+	/**
+	 * Function to register a provider callback
+	 *
+	 * @export
+	 * @param {string} rangeSliderId
+	 * @param {string} eventName
+	 * @param {OSUIFramework.Callbacks.OSGeneric} callback
+	 */
+	export function RegisterProviderCallback(
+		rangeSliderId: string,
+		eventName: string,
+		callback: OSUIFramework.Callbacks.OSGeneric
+	): void {
+		const rangeSlider = GetRangeSliderItemById(rangeSliderId);
+
+		rangeSlider.registerProviderCallback(eventName, callback);
+	}
 }
