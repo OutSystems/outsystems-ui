@@ -26,10 +26,13 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 			// If element is found, means that the DOM was rendered
 			if (elem !== undefined) {
 				const floating = elem.closest(_floatingActions.FloatingActions);
+
+				if (!floating) {
+					throw Error('This Floating Action Item does not belong to any Floating Action pattern. ');
+					return;
+				}
 				const uniqueId = floating.querySelector(_floatingActions.FloatingActionWrapper).getAttribute('name');
 				floatingActions = FloatingActionsAPI.GetFloatingActionsById(uniqueId);
-			} else {
-				throw Error('This Floating Action Item does not belong to any Floating Action pattern. ');
 			}
 		}
 

@@ -344,7 +344,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		}
 
 		public open(): void {
-			const firstItem = this._floatingActionsItems[0];
+			const firstItem = this._firstButton;
 			this._isOpen = true;
 
 			this._setTabIndex('0');
