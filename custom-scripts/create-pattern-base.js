@@ -6,7 +6,10 @@ if (!shell.which('git')) {
 }
 
 //gets the variable 'patternname' from th console command
-const patternname = process.env.npm_config_patternname;
+let patternname = process.env.npm_config_patternname;
+
+//Capitalizing the First Letter
+patternname = patternname.charAt(0).toUpperCase() + patternname.slice(1);
 
 shell.echo('Lets do this or pattern = ' + patternname);
 
