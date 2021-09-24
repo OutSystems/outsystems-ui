@@ -99,6 +99,7 @@ namespace Providers.RangeSlider {
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.InitialValue:
 					this._configs.InitialValue = propertyValue;
+					this.provider.set(propertyValue);
 
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ChangeEventDuringSlide:
