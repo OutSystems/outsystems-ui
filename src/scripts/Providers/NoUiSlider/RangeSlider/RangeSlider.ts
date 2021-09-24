@@ -21,6 +21,8 @@ namespace Providers.RangeSlider {
 		}
 
 		private _createProviderRangeSlider(): void {
+			this._setInitialLibraryOptions();
+
 			this._provider = window.noUiSlider.create(this._rangeSliderProviderElem, this._providerOptions);
 
 			this._setOnInitializedEvent();
@@ -47,22 +49,12 @@ namespace Providers.RangeSlider {
 				orientation: this._configs.OptionalConfigs.IsVertical ? 'vertical' : 'horizontal',
 				range: {
 					min: this._configs.MinValue,
-					max: this._configs.MinValue === this._configs.MinValue ? 100 : this._configs.MinValue,
+					max: this._configs.MaxValue === this._configs.MinValue ? 100 : this._configs.MaxValue,
 				},
 			};
 
 			if (this._configs.OptionalConfigs.ShowPips) {
-				const pipsStep = Math.floor(this._configs.OptionalConfigs.PipsStep);
-				const pipsValues = pipsStep <= 1 ? 2 : pipsStep;
-				const mode = pipsValues > 10 ? window.NoUiSliderPipsMode.Count : window.NoUiSliderPipsMode.Range;
-				const pipsDensity = (pipsValues - 1) * 100;
-
-				this._providerOptions.pips = {
-					values: pipsValues,
-					density: pipsDensity,
-					stepped: true,
-					mode: mode,
-				};
+				this.handleRangePips(this._configs.OptionalConfigs.PipsStep, false);
 			}
 		}
 
@@ -88,11 +80,100 @@ namespace Providers.RangeSlider {
 
 			this._setHtmllElements();
 
-			this._setInitialLibraryOptions();
-
 			this._createProviderRangeSlider();
 
 			this.finishBuild();
+		}
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+		public changeProperty(propertyName: string, propertyValue: any): void {
+			// Check which property changed and call respective method to update it
+			switch (propertyName) {
+				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.MinValue:
+					this.updateRangeValues(propertyValue, this._configs.MaxValue);
+
+					break;
+				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.MaxValue:
+					this.updateRangeValues(this._configs.MinValue, propertyValue);
+
+					break;
+				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.InitialValue:
+					this._configs.InitialValue = propertyValue;
+
+					break;
+				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ChangeEventDuringSlide:
+					this._configs.OptionalConfigs.ChangeEventDuringSlide = propertyValue;
+					this.updateRangeSlider();
+
+					break;
+				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.IsDisabled:
+					this._configs.OptionalConfigs.IsDisabled = propertyValue;
+					// IsDisable Method
+
+					break;
+				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.IsVertical:
+					this._configs.OptionalConfigs.IsVertical = propertyValue;
+					this.updateRangeSlider();
+
+					break;
+				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.PipsStep:
+					this._configs.OptionalConfigs.PipsStep = propertyValue;
+					this.updateRangeSlider();
+
+					break;
+				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowPips:
+					this._configs.OptionalConfigs.PipsStep = propertyValue;
+					this.handleRangePips(propertyValue, true);
+
+					break;
+				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.Step:
+					this._configs.OptionalConfigs.Step = propertyValue;
+					this._provider.updateOptions({ step: propertyValue });
+
+					break;
+				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.VerticalHeight:
+					this._configs.OptionalConfigs.VerticalHeight = propertyValue;
+					// Add method for VerticalHeight
+
+					break;
+				default:
+					super.changeProperty(propertyName, propertyValue);
+					break;
+			}
+		}
+
+		// Method to remove and destroy RangeSlider instance
+		public dispose(): void {
+			// Check if provider is ready
+			if (this.isBuilt) {
+				this._provider.destroy();
+			}
+
+			super.dispose();
+		}
+
+		public handleRangePips(pipsStepParam: number, isUpdate: boolean): void {
+			const pipsStep = Math.floor(pipsStepParam);
+			const pipsValues = pipsStep <= 1 ? 2 : pipsStep;
+			const mode = pipsValues > 10 ? window.NoUiSliderPipsMode.Count : window.NoUiSliderPipsMode.Range;
+			const pipsDensity = (pipsValues - 1) * 100;
+
+			if (isUpdate) {
+				this._provider.updateOptions({
+					pips: {
+						values: pipsValues,
+						density: pipsDensity,
+						mode: mode,
+					},
+				});
+			} else {
+				this._providerOptions.pips = {
+					values: pipsValues,
+					density: pipsDensity,
+					stepped: true,
+					mode: mode,
+				};
+			}
 		}
 
 		// Provider getter
@@ -110,6 +191,27 @@ namespace Providers.RangeSlider {
 					this._onInitialize = callback;
 					break;
 			}
+		}
+
+		// Method to remove and destroy RangeSlider instance
+		public updateRangeSlider(): void {
+			if (typeof this._provider === 'object') {
+				this._provider.destroy();
+			}
+
+			this._createProviderRangeSlider();
+		}
+
+		public updateRangeValues(min: number, max: number): void {
+			this.provider.updateOptions({
+				range: {
+					min: min,
+					max: max === min ? 100 : max,
+				},
+			});
+
+			this._configs.MinValue = min;
+			this._configs.MaxValue = max;
 		}
 	}
 }
