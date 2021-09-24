@@ -99,7 +99,7 @@ namespace Providers.RangeSlider {
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.InitialValue:
 					this._configs.InitialValue = propertyValue;
-					this.provider.set(propertyValue);
+					this.provider.setValue(propertyValue);
 
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ChangeEventDuringSlide:
@@ -153,6 +153,10 @@ namespace Providers.RangeSlider {
 			super.dispose();
 		}
 
+		public getValue(): number {
+			return this.provider.get();
+		}
+
 		public handleRangePips(pipsStepParam: number, isUpdate: boolean): void {
 			let pipsValues = Math.floor(pipsStepParam);
 			const mode = pipsValues > 10 ? 'range' : 'count';
@@ -197,6 +201,10 @@ namespace Providers.RangeSlider {
 					this._onInitialize = callback;
 					break;
 			}
+		}
+
+		public setValue(value: number): void {
+			this.provider.set(value);
 		}
 
 		// Method to remove and destroy RangeSlider instance
