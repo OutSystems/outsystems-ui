@@ -24,7 +24,12 @@ namespace Providers.RangeSlider {
 			this._provider = window.noUiSlider.create(this._rangeSliderProviderElem, this._providerOptions);
 
 			this._setOnInitializedEvent();
-			this._setOnValueChangeEvent();
+
+			const changeEvent = this._configs.OptionalConfigs.ChangeEventDuringSlide
+				? Enum.NoUISpliderEvents.Update
+				: Enum.NoUISpliderEvents.Change;
+
+			this._setOnValueChangeEvent(changeEvent);
 		}
 
 		private _setHtmllElements(): void {
@@ -37,17 +42,17 @@ namespace Providers.RangeSlider {
 			this._providerOptions = {
 				direction: OutSystems.OSUI.Utils.GetIsRTL() ? 'rtl' : 'ltr',
 				start: [this._configs.InitialValue],
-				step: this._configs.Step,
+				step: this._configs.OptionalConfigs.Step,
 				connect: 'lower',
-				orientation: this._configs.IsVertical ? 'vertical' : 'horizontal',
+				orientation: this._configs.OptionalConfigs.IsVertical ? 'vertical' : 'horizontal',
 				range: {
 					min: this._configs.MinValue,
 					max: this._configs.MinValue === this._configs.MinValue ? 100 : this._configs.MinValue,
 				},
 			};
 
-			if (this._configs.ShowPips) {
-				const pipsStep = Math.floor(this._configs.PipsStep);
+			if (this._configs.OptionalConfigs.ShowPips) {
+				const pipsStep = Math.floor(this._configs.OptionalConfigs.PipsStep);
 				const pipsValues = pipsStep <= 1 ? 2 : pipsStep;
 				const mode = pipsValues > 10 ? window.NoUiSliderPipsMode.Count : window.NoUiSliderPipsMode.Range;
 				const pipsDensity = (pipsValues - 1) * 100;
@@ -69,9 +74,9 @@ namespace Providers.RangeSlider {
 		}
 
 		// Method to set the OnValueChangeEvent
-		private _setOnValueChangeEvent(): void {
+		private _setOnValueChangeEvent(changeEvent): void {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			this._provider.on(Enum.NoUISpliderEvents.Change, (value: any) => {
+			this._provider.on(changeEvent, (value: any) => {
 				setTimeout(() => {
 					this._onValueChange(this.widgetId, parseFloat(value));
 				}, 0);
