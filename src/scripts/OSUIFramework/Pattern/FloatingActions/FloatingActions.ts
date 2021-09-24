@@ -27,6 +27,8 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		private _floatingActionsItem: HTMLElement;
 		// Stores the Items present in the pattern
 		private _floatingActionsItems: Array<HTMLElement>;
+		// Stores (if any) links from Floating Action Items
+		private _floatingAllLinks: HTMLAnchorElement[];
 		// Stores the items of this specific Floating Action
 		private _floatingItems: Map<string, OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem>;
 		// Boolean to tell if the pattern is inside the Bottom Bar or not
@@ -142,6 +144,20 @@ namespace OSUIFramework.Patterns.FloatingActions {
 				Constants.AccessibilityAttribute.Aria.Expanded,
 				this._isOpen.toString()
 			);
+
+			this._floatingAllLinks = [...this._floatingActions.querySelectorAll(GlobalEnum.HTMLElement.Link)];
+
+			if (this._floatingAllLinks.length > 0) {
+				this._floatingAllLinks.forEach((item: HTMLElement) => {
+					Helper.Attribute.Set(
+						item,
+						Constants.AccessibilityAttribute.TabIndex,
+						this._isOpen
+							? Constants.AccessibilityAttribute.States.TabIndexShow
+							: Constants.AccessibilityAttribute.States.TabIndexHidden
+					);
+				});
+			}
 		}
 
 		/*  Sets classes that depend on the open/closed state
@@ -312,7 +328,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			this._isOpen = false;
 
 			this._floatingActionsButton.focus();
-			this._setTabIndex('-1');
+			this._setTabIndex(Constants.AccessibilityAttribute.States.TabIndexHidden);
 
 			if (this.configs.IsHover) {
 				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._closeMethod);
@@ -350,7 +366,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			const firstItem = this._firstButton;
 			this._isOpen = true;
 
-			this._setTabIndex('0');
+			this._setTabIndex(Constants.AccessibilityAttribute.States.TabIndexShow);
 
 			if (firstItem) {
 				firstItem.focus();
