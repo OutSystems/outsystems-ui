@@ -1,4 +1,4 @@
-import TargetElement from '@nouislider/nouislider';
+import noUiSlider from 'nouislider';
 
 /**
  * Set global declarations
@@ -8,12 +8,12 @@ declare global {
 	//eslint-disable-next-line @typescript-eslint/naming-convention
 	interface Window {
 		cordova: any;
-		NoUiSlider: typeof TargetElement.noUiSlider;
+		NoUiSlider: typeof noUiSlider;
 	}
 
 	interface Navigator {
 		standalone: any;
 	}
 
-	type NoUiSlider = TargetElement;
+	type NoUiSlider = noUiSlider;
 }
