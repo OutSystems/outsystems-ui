@@ -118,12 +118,12 @@ namespace Providers.RangeSlider {
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.PipsStep:
 					this._configs.OptionalConfigs.PipsStep = propertyValue;
-					this.updateRangeSlider();
+					this.handleRangePips(propertyValue, true);
 
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowPips:
-					this._configs.OptionalConfigs.PipsStep = propertyValue;
-					this.handleRangePips(propertyValue, true);
+					this._configs.OptionalConfigs.ShowPips = propertyValue;
+					this.updateRangeSlider();
 
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.Step:
@@ -155,7 +155,7 @@ namespace Providers.RangeSlider {
 		public handleRangePips(pipsStepParam: number, isUpdate: boolean): void {
 			const pipsStep = Math.floor(pipsStepParam);
 			const pipsValues = pipsStep <= 1 ? 2 : pipsStep;
-			const mode = pipsValues > 10 ? window.NoUiSliderPipsMode.Count : window.NoUiSliderPipsMode.Range;
+			const mode = pipsValues > 10 ? 'count' : 'range';
 			const pipsDensity = (pipsValues - 1) * 100;
 
 			if (isUpdate) {
