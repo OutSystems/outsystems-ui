@@ -3,12 +3,27 @@ namespace OSUIFramework.Patterns.RangeSlider.Enum {
 	/**
 	 * RangeSlider Enum properties
 	 */
-	export enum Properties {}
+	export enum Properties {
+		ChangeEventDuringSlide = 'ChangeEventDuringSlide',
+		ExtendedClass = 'ExtendedClass',
+		InitialValue = 'InitialValue',
+		IsDisabled = 'IsDisabled',
+		IsVertical = 'IsVertical',
+		MaxValue = 'MaxValue',
+		MinValue = 'MinValue',
+		PipsStep = 'PipsStep',
+		ShowPips = 'ShowPips',
+		Step = 'Step',
+		VerticalHeight = 'VerticalHeight',
+	}
 
 	/**
 	 * RangeSlider Enum for CSS Classes
 	 */
-	export enum CssClass {}
+	export enum CssClass {
+		RangeSlider = 'osui-range-slider',
+		RangeSliderProviderElem = 'osui-range-slider_provider',
+	}
 
 	/**
 	 * RangeSlider Types

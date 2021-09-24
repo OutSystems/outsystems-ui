@@ -10,6 +10,8 @@ namespace Providers.RangeSlider {
 	{
 		// Store the provider reference
 		private _provider: NoUiSlider;
+		private _providerOptions: NoUiSliderOptions;
+		private _rangeSliderProviderElem: HTMLElement;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
@@ -17,18 +19,49 @@ namespace Providers.RangeSlider {
 		}
 
 		private _createProviderRangeSlider(): void {
-			window.NoUiSlider.create(this._selfElem, {
-				start: [20],
+			this._provider = window.noUiSlider.create(this._rangeSliderProviderElem, this._providerOptions);
+		}
+
+		private _setHtmllElements(): void {
+			this._rangeSliderProviderElem = this._selfElem.querySelector(
+				OSUIFramework.Constants.Dot + OSUIFramework.Patterns.RangeSlider.Enum.CssClass.RangeSliderProviderElem
+			);
+		}
+
+		private _setInitialLibraryOptions(): void {
+			this._providerOptions = {
+				direction: OutSystems.OSUI.Utils.GetIsRTL() ? 'rtl' : 'ltr',
+				start: [this._configs.InitialValue],
+				step: this._configs.Step,
 				connect: 'lower',
+				orientation: this._configs.IsVertical ? 'vertical' : 'horizontal',
 				range: {
-					min: 0,
-					max: 100,
+					min: this._configs.MinValue,
+					max: this._configs.MinValue === this._configs.MinValue ? 100 : this._configs.MinValue,
 				},
-			});
+			};
+
+			if (this._configs.ShowPips) {
+				const pipsStep = Math.floor(this._configs.PipsStep);
+				const pipsValues = pipsStep <= 1 ? 2 : pipsStep;
+				const mode = pipsValues > 10 ? window.NoUiSliderPipsMode.Count : window.NoUiSliderPipsMode.Range;
+				const pipsDensity = (pipsValues - 1) * 100;
+
+				this._providerOptions.pips = {
+					values: pipsValues,
+					density: pipsDensity,
+					stepped: true,
+					mode: mode,
+				};
+			}
 		}
 
 		public build(): void {
 			super.build();
+
+			this._setHtmllElements();
+
+			this._setInitialLibraryOptions();
 
 			this._createProviderRangeSlider();
 
