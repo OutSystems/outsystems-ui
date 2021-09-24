@@ -181,15 +181,34 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			if (this._floatingActionsItems.length > 0) {
 				const isShiftKey = e.shiftKey;
 
-				// Focus trap to circle all buttons inside
-				if (isShiftKey) {
-					if (document.activeElement === this._firstButton) {
-						this._lastButton.focus();
+				if (this._floatingAllLinks.length > 0) {
+					// Focus trap to circle all buttons inside
+					if (isShiftKey) {
+						if (document.activeElement === this._firstButton) {
+							this._floatingAllLinks[0].focus();
+							e.preventDefault();
+						} else if (document.activeElement === this._floatingAllLinks[0]) {
+							this._lastButton.focus();
+							e.preventDefault();
+						}
+					} else if (document.activeElement === this._lastButton) {
+						this._floatingAllLinks[this._floatingAllLinks.length - 1].focus();
+						e.preventDefault();
+					} else if (document.activeElement === this._floatingAllLinks[this._floatingAllLinks.length - 1]) {
+						this._firstButton.focus();
 						e.preventDefault();
 					}
-				} else if (document.activeElement === this._lastButton) {
-					this._firstButton.focus();
-					e.preventDefault();
+				} else {
+					// Focus trap to circle all buttons inside
+					if (isShiftKey) {
+						if (document.activeElement === this._firstButton) {
+							this._lastButton.focus();
+							e.preventDefault();
+						}
+					} else if (document.activeElement === this._lastButton) {
+						this._firstButton.focus();
+						e.preventDefault();
+					}
 				}
 			}
 		}
