@@ -11,6 +11,8 @@ namespace OSUIFramework.Patterns.Submenu {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnSubmenuClick: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		private _eventOnSubmenuFocus: any;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnSubmenuKeypress: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnSubmenuLinksClick: any;
@@ -35,6 +37,7 @@ namespace OSUIFramework.Patterns.Submenu {
 			super(uniqueId, new SubmenuConfig(configs));
 
 			this._eventOnSubmenuClick = this._onSubmenuClick.bind(this);
+			this._eventOnSubmenuFocus = this._onSubmenuFocus.bind(this);
 			this._eventOnSubmenuLinksClick = this._onSubmenuLinksClick.bind(this);
 			this._eventOnSubmenuKeypress = this._onSubmenuKeypress.bind(this);
 			this._globalEventOnSubmenuOpen = this._onSubmenuOpenEvent.bind(this);
@@ -60,6 +63,11 @@ namespace OSUIFramework.Patterns.Submenu {
 			if (this._hasElements) {
 				this._submenuHeader.addEventListener(this._eventOnSubmenu, this._eventOnSubmenuClick);
 				this._submenuHeader.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnSubmenuKeypress);
+			} else {
+				// Add event to force focus element when a user tap in an empty submenu on a iOS device
+				if (this._isIos) {
+					this._submenuHeader.addEventListener(this._eventOnSubmenu, this._eventOnSubmenuFocus);
+				}
 			}
 
 			OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
@@ -94,6 +102,12 @@ namespace OSUIFramework.Patterns.Submenu {
 		// Trigger the submenu at toggle behaviour
 		private _onSubmenuClick(e: MouseEvent): void {
 			this._onSubmenuToggle();
+			e.stopPropagation();
+		}
+
+		// Trigger the submenu at toggle behaviour
+		private _onSubmenuFocus(e: MouseEvent): void {
+			this._submenuHeader.focus();
 			e.stopPropagation();
 		}
 
@@ -165,6 +179,11 @@ namespace OSUIFramework.Patterns.Submenu {
 			if (this._hasElements) {
 				this._submenuHeader.removeEventListener(this._eventOnSubmenu, this._eventOnSubmenuClick);
 				this._submenuHeader.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnSubmenuKeypress);
+			} else {
+				// Remove event to force focus element when a user tap in an empty submenu on a iOS device
+				if (this._isIos) {
+					this._submenuHeader.removeEventListener(this._eventOnSubmenu, this._eventOnSubmenuFocus);
+				}
 			}
 
 			// Remove event only if is iOS
@@ -198,9 +217,7 @@ namespace OSUIFramework.Patterns.Submenu {
 			Helper.Attribute.Set(
 				this._submenuHeader,
 				Constants.AccessibilityAttribute.TabIndex,
-				this._hasElements
-					? Constants.AccessibilityAttribute.States.TabIndexShow
-					: Constants.AccessibilityAttribute.States.TabIndexHidden
+				Constants.AccessibilityAttribute.States.TabIndexShow
 			);
 			Helper.Attribute.Set(
 				this._submenuHeader,
