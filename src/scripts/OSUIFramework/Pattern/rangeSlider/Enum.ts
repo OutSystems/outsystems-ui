@@ -26,6 +26,14 @@ namespace OSUIFramework.Patterns.RangeSlider.Enum {
 	}
 
 	/**
+	 * RangeSlider Events
+	 */
+	export enum RangeSliderEvents {
+		OnInitialize = 'OnInitialize',
+		OnValueChange = 'OnValueChange',
+	}
+
+	/**
 	 * RangeSlider Types
 	 */
 	export enum RangeSliderTypes {

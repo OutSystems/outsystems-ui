@@ -1,5 +1,4 @@
 import noUiSlider from 'nouislider';
-import { API } from 'nouislider';
 import Options from 'nouislider';
 import { PipsMode } from 'nouislider';
 
@@ -20,7 +19,7 @@ declare global {
 		standalone: any;
 	}
 
-	type NoUiSlider = API;
+	type NoUiSlider = noUiSlider;
 	type NoUiSliderOptions = Options;
 	type NoUiSliderPipsMode = PipsMode;
 }

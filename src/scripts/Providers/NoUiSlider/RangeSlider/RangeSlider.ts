@@ -8,6 +8,8 @@ namespace Providers.RangeSlider {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		implements Providers.RangeSlider.IRangeSliderProvider
 	{
+		private _onInitialize: OSUIFramework.Callbacks.OSRangeSliderInitializeEvent;
+		private _onValueChange: OSUIFramework.Callbacks.OSRangeSliderOnValueChangeEvent;
 		// Store the provider reference
 		private _provider: NoUiSlider;
 		private _providerOptions: NoUiSliderOptions;
@@ -20,6 +22,9 @@ namespace Providers.RangeSlider {
 
 		private _createProviderRangeSlider(): void {
 			this._provider = window.noUiSlider.create(this._rangeSliderProviderElem, this._providerOptions);
+
+			this._setOnInitializedEvent();
+			this._setOnValueChangeEvent();
 		}
 
 		private _setHtmllElements(): void {
@@ -56,6 +61,23 @@ namespace Providers.RangeSlider {
 			}
 		}
 
+		// Method to set the OnInitializeEvent
+		private _setOnInitializedEvent(): void {
+			setTimeout(() => {
+				this._onInitialize(this.widgetId);
+			});
+		}
+
+		// Method to set the OnValueChangeEvent
+		private _setOnValueChangeEvent(): void {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			this._provider.on(Enum.NoUISpliderEvents.Change, (value: any) => {
+				setTimeout(() => {
+					this._onValueChange(this.widgetId, parseFloat(value));
+				}, 0);
+			});
+		}
+
 		public build(): void {
 			super.build();
 
@@ -75,14 +97,14 @@ namespace Providers.RangeSlider {
 		}
 
 		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
-			// switch (eventName) {
-			// 	case OSUIFramework.Patterns.Carousel.Enum.CarouselEvents.OnSlideMoved:
-			// 		this._onSlideMoved = callback;
-			// 		break;
-			// 	case OSUIFramework.Patterns.Carousel.Enum.CarouselEvents.OnInitialize:
-			// 		this._onInitialize = callback;
-			// 		break;
-			// }
+			switch (eventName) {
+				case OSUIFramework.Patterns.RangeSlider.Enum.RangeSliderEvents.OnValueChange:
+					this._onValueChange = callback;
+					break;
+				case OSUIFramework.Patterns.RangeSlider.Enum.RangeSliderEvents.OnInitialize:
+					this._onInitialize = callback;
+					break;
+			}
 		}
 	}
 }
