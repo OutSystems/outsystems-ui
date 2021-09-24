@@ -153,9 +153,14 @@ namespace Providers.RangeSlider {
 		}
 
 		public handleRangePips(pipsStepParam: number, isUpdate: boolean): void {
-			const pipsStep = Math.floor(pipsStepParam);
-			const pipsValues = pipsStep <= 1 ? 2 : pipsStep;
-			const mode = pipsValues > 10 ? 'count' : 'range';
+			let pipsValues = Math.floor(pipsStepParam);
+			const mode = pipsValues > 10 ? 'range' : 'count';
+
+			if (pipsValues <= 1) {
+				// steps, when they exist, can't be less than 2 (library restraint)
+				pipsValues = 2;
+			}
+
 			const pipsDensity = (pipsValues - 1) * 100;
 
 			if (isUpdate) {
