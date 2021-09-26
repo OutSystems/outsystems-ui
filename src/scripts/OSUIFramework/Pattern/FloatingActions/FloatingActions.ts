@@ -178,38 +178,47 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 		// Accessibility - Traps the focus on the floating action items when navigating with the keyboard
 		private _setFocusTrap(e: KeyboardEvent): void {
-			if (this._floatingActionsItems.length > 0) {
-				const isShiftKey = e.shiftKey;
+			const isShiftKey = e.shiftKey;
 
-				if (this._floatingAllLinks.length > 0) {
-					// Focus trap to circle all buttons inside
-					if (isShiftKey) {
-						if (document.activeElement === this._firstButton) {
-							this._floatingAllLinks[0].focus();
-							e.preventDefault();
-						} else if (document.activeElement === this._floatingAllLinks[0]) {
-							this._lastButton.focus();
-							e.preventDefault();
-						}
-					} else if (document.activeElement === this._lastButton) {
+			// Focus trap to circle all buttons inside
+			if (isShiftKey) {
+				if (document.activeElement === this._firstButton) {
+					const link = this._firstButton.closest('a');
+					if (link) {
+						// This means items are wrapped inside links, so we need to focus on the link first
+						this._floatingAllLinks[0].focus();
+					} else {
+						this._lastButton.focus();
+					}
+					e.preventDefault();
+				} else if (document.activeElement === this._floatingAllLinks[0]) {
+					const link = this._lastButton.closest('a');
+					if (link) {
+						this._lastButton.focus();
+					} else {
+						// This means items are wrapped inside links, so we need to focus on the link first
 						this._floatingAllLinks[this._floatingAllLinks.length - 1].focus();
-						e.preventDefault();
-					} else if (document.activeElement === this._floatingAllLinks[this._floatingAllLinks.length - 1]) {
-						this._firstButton.focus();
-						e.preventDefault();
 					}
-				} else {
-					// Focus trap to circle all buttons inside
-					if (isShiftKey) {
-						if (document.activeElement === this._firstButton) {
-							this._lastButton.focus();
-							e.preventDefault();
-						}
-					} else if (document.activeElement === this._lastButton) {
-						this._firstButton.focus();
-						e.preventDefault();
-					}
+					e.preventDefault();
 				}
+			} else if (document.activeElement === this._lastButton) {
+				const link = this._lastButton.querySelector('a');
+				if (link) {
+					// This means items are wrapped inside links, so we need to focus on the link first
+					link.focus();
+				} else {
+					this._firstButton.focus();
+				}
+				e.preventDefault();
+			} else if (document.activeElement === this._floatingAllLinks[this._floatingAllLinks.length - 1]) {
+				const link = this._firstButton.closest('a');
+				if (link) {
+					// This means items are wrapped inside links, so we need to focus on the link first
+					this._floatingAllLinks[0].focus();
+				} else {
+					this._firstButton.focus();
+				}
+				e.preventDefault();
 			}
 		}
 
