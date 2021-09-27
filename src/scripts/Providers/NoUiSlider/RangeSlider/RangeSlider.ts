@@ -60,6 +60,8 @@ namespace Providers.RangeSlider {
 			if (this._configs.OptionalConfigs.IsVertical) {
 				this.setVerticalHeight(this._configs.OptionalConfigs.VerticalHeight);
 			}
+
+			this.setIsDisabled(this._configs.OptionalConfigs.IsDisabled);
 		}
 
 		// Method to set the OnInitializeEvent
@@ -113,7 +115,7 @@ namespace Providers.RangeSlider {
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.IsDisabled:
 					this._configs.OptionalConfigs.IsDisabled = propertyValue;
-					// IsDisable Method
+					this.setIsDisabled(propertyValue);
 
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.IsVertical:
@@ -139,7 +141,6 @@ namespace Providers.RangeSlider {
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.VerticalHeight:
 					this._configs.OptionalConfigs.VerticalHeight = propertyValue;
 					this.setVerticalHeight(propertyValue);
-					// Add method for VerticalHeight
 
 					break;
 				default:
@@ -205,6 +206,18 @@ namespace Providers.RangeSlider {
 				case OSUIFramework.Patterns.RangeSlider.Enum.RangeSliderEvents.OnInitialize:
 					this._onInitialize = callback;
 					break;
+			}
+		}
+
+		public setIsDisabled(isDisabled: boolean): void {
+			console.log(isDisabled);
+
+			const isRangeSliderDisabled = OSUIFramework.Helper.Attribute.Get(this._rangeSliderProviderElem, 'disabled');
+
+			if (isDisabled) {
+				OSUIFramework.Helper.Attribute.Set(this._rangeSliderProviderElem, 'disabled', 'true');
+			} else if (!isDisabled && isRangeSliderDisabled) {
+				OSUIFramework.Helper.Attribute.Remove(this._rangeSliderProviderElem, 'disabled');
 			}
 		}
 
