@@ -80,6 +80,16 @@
 			height: 40px;
 			padding: var(--space-none) var(--space-base);
 
+			&:hover,
+			&-selected:hover {
+				background: var(--color-neutral-2);
+			}
+
+			&-selected {
+				background-color: var(--color-neutral-2);
+				color: var(--color-neutral-9);
+			}
+
 			span {
 				overflow: hidden;
 				text-overflow: ellipsis;
@@ -151,17 +161,6 @@ div {
 		& > span,
 		& > div {
 			font-size: var(--font-size-s);
-		}
-	}
-
-	&.dropdown-popup-row {
-		&:hover,
-		&-selected:hover {
-			background: var(--color-neutral-2);
-		}
-		&-selected {
-			background-color: var(--color-neutral-2);
-			color: var(--color-neutral-9);
 		}
 	}
 }
