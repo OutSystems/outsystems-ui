@@ -33,6 +33,11 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		private _floatingItems: Map<string, OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem>;
 		// Boolean to tell if the pattern is inside the Bottom Bar or not
 		private _insideBottomBar: boolean;
+		//Boolean to flag if it's an iOS operated device
+		// eslint-disable-next-line @typescript-eslint/naming-convention
+		private _isIOS: boolean;
+		//Boolean to flag if it's a touch-based device
+		private _isMobile: boolean;
 		//Booelan to tell if the pattern is in the state 'open'
 		private _isOpen: boolean;
 		// Last Floating Action Item
@@ -258,6 +263,15 @@ namespace OSUIFramework.Patterns.FloatingActions {
 				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventToggleClick);
 				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventToggleClick);
 			} else {
+				// Set variables based on device detection classes
+				this._isIOS = !!document.querySelector(Constants.Dot + GlobalEnum.MobileOS.IOS);
+
+				// Set event type based on device
+				if (this._isIOS) {
+					this._floatingActionsItem.addEventListener(GlobalEnum.HTMLEvent.TouchStart, (e) => {
+						e.stopPropagation();
+					});
+				}
 				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventToggleClick);
 				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventkeyboard);
 				this._floatingActionsButton.removeEventListener(
@@ -388,6 +402,13 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			// Removes keyboard events
 			this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventkeyboard);
 			this._floatingActionsItem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._escException);
+
+			// Removes events based on device
+			if (this._isIOS) {
+				this._floatingActionsItem.addEventListener(GlobalEnum.HTMLEvent.TouchStart, (e) => {
+					e.stopPropagation();
+				});
+			}
 		}
 
 		public open(): void {
