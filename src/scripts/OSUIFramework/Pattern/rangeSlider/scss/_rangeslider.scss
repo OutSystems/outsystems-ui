@@ -15,6 +15,10 @@
 		-servicestudio-margin-bottom: 16px;
 	}
 
+	.noUi-vertical {
+		height: var(--vertical-height);
+	}
+
 	.noUi {
 		&-base {
 			background-color: transparent;

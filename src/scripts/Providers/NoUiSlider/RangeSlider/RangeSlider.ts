@@ -56,6 +56,10 @@ namespace Providers.RangeSlider {
 			if (this._configs.OptionalConfigs.ShowPips) {
 				this.handleRangePips(this._configs.OptionalConfigs.PipsStep, false);
 			}
+
+			if (this._configs.OptionalConfigs.IsVertical) {
+				this.setVerticalHeight(this._configs.OptionalConfigs.VerticalHeight);
+			}
 		}
 
 		// Method to set the OnInitializeEvent
@@ -134,6 +138,7 @@ namespace Providers.RangeSlider {
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.VerticalHeight:
 					this._configs.OptionalConfigs.VerticalHeight = propertyValue;
+					this.setVerticalHeight(propertyValue);
 					// Add method for VerticalHeight
 
 					break;
@@ -205,6 +210,14 @@ namespace Providers.RangeSlider {
 
 		public setValue(value: number): void {
 			this.provider.set(value);
+		}
+
+		public setVerticalHeight(height: number): void {
+			OSUIFramework.Helper.Style.SetStyleAttribute(
+				this._selfElem,
+				OSUIFramework.Patterns.RangeSlider.Enum.CssProperties.VerticalHeight,
+				height + OSUIFramework.GlobalEnum.Units.Pixel
+			);
 		}
 
 		// Method to remove and destroy RangeSlider instance

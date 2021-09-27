@@ -26,6 +26,13 @@ namespace OSUIFramework.Patterns.RangeSlider.Enum {
 	}
 
 	/**
+	 * RangeSlider Enum for CSS Properties
+	 */
+	export enum CssProperties {
+		VerticalHeight = '--vertical-height',
+	}
+
+	/**
 	 * RangeSlider Events
 	 */
 	export enum RangeSliderEvents {
