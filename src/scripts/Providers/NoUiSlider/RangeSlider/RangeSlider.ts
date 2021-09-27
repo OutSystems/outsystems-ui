@@ -39,17 +39,13 @@ namespace Providers.RangeSlider {
 			// the developer is manipulating the IntialValue variable directly on the OnValueChange event
 			// (and by doing that triggering the parameterChange again, and creating a loop)
 			if (changeEvent === Enum.NoUISpliderEvents.Slide) {
-				this._provider.on('start', () => {
+				this._provider.on(Enum.NoUISpliderEvents.Start, () => {
 					this._toggleSlideStatus(true);
 				});
-				this._provider.on('end', () => {
+				this._provider.on(Enum.NoUISpliderEvents.End, () => {
 					this._toggleSlideStatus(false);
 				});
 			}
-		}
-
-		private _toggleSlideStatus(status: boolean): void {
-			this._isSliding = status;
 		}
 
 		private _setHtmllElements(): void {
@@ -95,6 +91,10 @@ namespace Providers.RangeSlider {
 			this._provider.on(changeEvent, (value: number) => {
 				this._triggerOnValueChangeEvent(value);
 			});
+		}
+
+		private _toggleSlideStatus(status: boolean): void {
+			this._isSliding = status;
 		}
 
 		private _triggerOnValueChangeEvent(value: number): void {
