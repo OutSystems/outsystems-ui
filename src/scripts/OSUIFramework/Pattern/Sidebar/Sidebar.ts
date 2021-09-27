@@ -138,7 +138,11 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 
 			// Set the direction class
-			Helper.Style.AddClass(this._selfElem, Enum.CssClass.Direction + this._configs.Direction);
+			if (this._direction !== '') {
+				Helper.Style.AddClass(this._selfElem, Enum.CssClass.Direction + this._configs.Direction);
+			} else {
+				Helper.Style.AddClass(this._selfElem, Enum.CssClass.Direction + GlobalEnum.Direction.Right);
+			}
 
 			if (this._width !== '') {
 				Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, this._configs.Width);
