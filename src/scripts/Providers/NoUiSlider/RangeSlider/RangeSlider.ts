@@ -8,6 +8,7 @@ namespace Providers.RangeSlider {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		implements Providers.RangeSlider.IRangeSliderProvider
 	{
+		private _isSliding: boolean;
 		private _onInitialize: OSUIFramework.Callbacks.OSRangeSliderInitializeEvent;
 		private _onValueChange: OSUIFramework.Callbacks.OSRangeSliderOnValueChangeEvent;
 		// Store the provider reference
@@ -32,6 +33,23 @@ namespace Providers.RangeSlider {
 				: Enum.NoUISpliderEvents.Change;
 
 			this._setOnValueChangeEvent(changeEvent);
+
+			// Add these events, to keep stored when the range slider is being dragged.
+			// This is later used on changeProperty for InitialValue, to prevent a loop being created when
+			// the developer is manipulating the IntialValue variable directly on the OnValueChange event
+			// (and by doing that triggering the parameterChange again, and creating a loop)
+			if (changeEvent === Enum.NoUISpliderEvents.Slide) {
+				this._provider.on('start', () => {
+					this._toggleSlideStatus(true);
+				});
+				this._provider.on('end', () => {
+					this._toggleSlideStatus(false);
+				});
+			}
+		}
+
+		private _toggleSlideStatus(status: boolean): void {
+			this._isSliding = status;
 		}
 
 		private _setHtmllElements(): void {
@@ -109,7 +127,9 @@ namespace Providers.RangeSlider {
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.InitialValue:
 					this._configs.InitialValue = propertyValue;
-					this.setValue(propertyValue);
+					if (!this._isSliding) {
+						this.setValue(propertyValue);
+					}
 
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ChangeEventDuringSlide:
