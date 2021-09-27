@@ -6,6 +6,9 @@
 /*! NoUiSlider Library Core Styles */
 @import './NoUiSlider/noUiSlider';
 
+/*! Base cusotmization that affects all version of Range Sliders (inlcuding deprecated ones) */
+@import './osui-rangeslider-base';
+
 ///
 .osui-range-slider {
 	padding: 0 12px;

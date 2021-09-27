@@ -1,0 +1,198 @@
+.osui-range-slider-interval .noUi-base {
+	background-color: var(--color-neutral-5);
+}
+
+.noUi-base {
+	background-color: var(--color-primary);
+	border-radius: var(--border-radius-soft);
+}
+
+.noUi-origin {
+	background-color: var(--color-neutral-5);
+}
+
+.noUi-target {
+	background: var(--color-neutral-5);
+	border: var(--border-size-none);
+	border-radius: var(--border-radius-soft);
+	box-shadow: none;
+	height: 4px;
+	margin: var(--space-m) var(--space-none) 45px;
+}
+
+.noUi-vertical {
+	margin: var(--space-m) var(--space-none);
+	width: 4px;
+}
+
+.noUi-connects {
+	border-radius: var(--border-radius-soft);
+}
+
+.noUi-horizontal .noUi-handle,
+.noUi-vertical .noUi-handle {
+	background-color: var(--color-neutral-0);
+	border: var(--border-size-s) solid var(--color-neutral-7);
+	border-radius: var(--border-radius-circle);
+	box-shadow: var(--shadow-xs);
+	cursor: pointer;
+	display: inline-block;
+	height: 24px;
+	left: -10px;
+	position: relative;
+	top: -10px;
+	transition: transform 150ms ease-out;
+	width: 24px;
+}
+
+.noUi-vertical .noUi-handle {
+	left: -14px;
+}
+
+.noUi-horizontal .noUi-handle:before,
+.noUi-horizontal .noUi-handle:after,
+.noUi-vertical .noUi-handle:before,
+.noUi-vertical .noUi-handle:after {
+	background: transparent;
+	border-color: var(--color-neutral-6);
+	border-style: solid;
+	content: '';
+	height: 10px;
+	margin-top: -5px;
+	position: absolute;
+	top: 50%;
+}
+
+.noUi-horizontal .noUi-handle:before,
+.noUi-vertical .noUi-handle:before {
+	border-width: var(--border-size-none) var(--border-size-none) var(--border-size-none) var(--border-size-s);
+	content: '';
+	left: 6px;
+	right: auto;
+}
+
+.noUi-horizontal .noUi-handle:after,
+.noUi-vertical .noUi-handle:after {
+	border-style: solid;
+	border-width: var(--border-size-none) var(--border-size-s);
+	left: 10px;
+	width: 3px;
+}
+
+.noUi-horizontal .noUi-handle.noUi-active,
+.noUi-horizontal .noUi-handle:hover,
+.noUi-vertical .noUi-handle.noUi-active,
+.noUi-vertical .noUi-handle:hover {
+	border: var(--border-size-s) solid var(--color-primary);
+}
+
+.noUi-horizontal .noUi-handle.noUi-active:before,
+.noUi-horizontal .noUi-handle.noUi-active:after,
+.noUi-horizontal .noUi-handle:hover:before,
+.noUi-horizontal .noUi-handle:hover:after,
+.noUi-vertical .noUi-handle.noUi-active:before,
+.noUi-vertical .noUi-handle.noUi-active:after,
+.noUi-vertical .noUi-handle:hover:before,
+.noUi-vertical .noUi-handle:hover:after {
+	border-color: var(--color-primary);
+}
+
+.noUi-horizontal .noUi-pips {
+	color: var(--color-neutral-8);
+	position: absolute;
+}
+
+.noUi-background {
+	box-shadow: none;
+}
+
+.noUi-origin.noUi-connect {
+	background-color: var(--color-primary);
+	box-shadow: none;
+}
+
+.noUi-horizontal.noUi-pips-margin {
+	margin-bottom: 60px;
+}
+
+.range-slider .noUi-origin {
+	height: 10%;
+	width: 10%;
+}
+
+.noUi-vertical .noUi-origin {
+	width: 0;
+}
+
+.range-slider .noUi-horizontal .noUi-origin {
+	height: 0;
+}
+
+.noUi-pips-vertical {
+	color: var(--color-neutral-8);
+	height: 100%;
+	left: 100%;
+	padding: 0 0 0 var(--space-base);
+	top: 0;
+}
+
+.noUi-value-vertical {
+	padding-left: var(--space-s);
+	-webkit-transform: translate(0, -50%);
+	transform: translate(0, -50%);
+}
+
+.noUi-marker-vertical.noUi-marker {
+	height: 2px;
+	margin-top: -1px;
+	width: 5px;
+}
+
+.noUi-marker-vertical.noUi-marker-sub {
+	width: 10px;
+}
+
+.noUi-marker-vertical.noUi-marker-large {
+	width: 4px;
+}
+
+.noUi-tooltip {
+	background: var(--color-neutral-0);
+	border: var(--border-size-s) solid var(--color-neutral-5);
+	border-radius: var(--border-radius-soft);
+	color: var(--color-neutral-10);
+	display: block;
+	padding: var(--space-xs);
+	position: absolute;
+	text-align: center;
+	white-space: nowrap;
+}
+
+.noUi-horizontal .noUi-tooltip {
+	bottom: 120%;
+	left: 50%;
+	-webkit-transform: translate(-50%, 0);
+	transform: translate(-50%, 0);
+}
+
+.noUi-vertical .noUi-tooltip {
+	right: 120%;
+	top: 50%;
+	-webkit-transform: translate(0, -50%);
+	transform: translate(0, -50%);
+}
+
+/* RTL */
+.noUi-rtl .noUi-value-vertical {
+	-webkit-transform: translate(0, 50%);
+	transform: translate(0, 50%);
+}
+
+.is-rtl .noUi-value.noUi-value-vertical {
+	padding-left: var(--space-none);
+	padding-right: var(--space-m);
+}
+
+.is-rtl .noUi-marker.noUi-marker-vertical {
+	margin-right: var(--space-base);
+}
