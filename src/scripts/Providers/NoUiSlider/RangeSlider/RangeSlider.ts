@@ -210,8 +210,6 @@ namespace Providers.RangeSlider {
 		}
 
 		public setIsDisabled(isDisabled: boolean): void {
-			console.log(isDisabled);
-
 			const isRangeSliderDisabled = OSUIFramework.Helper.Attribute.Get(this._rangeSliderProviderElem, 'disabled');
 
 			if (isDisabled) {
