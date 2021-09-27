@@ -68,9 +68,9 @@ namespace Providers.RangeSlider {
 		// Method to set the OnValueChangeEvent
 		private _setOnValueChangeEvent(changeEvent): void {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			this._provider.on(changeEvent, (value: any) => {
+			this._provider.on(changeEvent, (value: number) => {
 				setTimeout(() => {
-					this._onValueChange(this.widgetId, parseFloat(value));
+					this._onValueChange(this.widgetId, Math.floor(value));
 				}, 0);
 			});
 		}
@@ -99,7 +99,7 @@ namespace Providers.RangeSlider {
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.InitialValue:
 					this._configs.InitialValue = propertyValue;
-					this.provider.setValue(propertyValue);
+					this.setValue(propertyValue);
 
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ChangeEventDuringSlide:
