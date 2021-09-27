@@ -309,7 +309,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			this._firstButton = this._floatingActionsItems[0];
 			this._lastButton = this._floatingActionsItems[this._floatingActionsItems.length - 1];
 
-			if (this.configs.IsExpanded) {
+			if (this._isOpen) {
 				this._setTabIndex('0');
 			}
 
