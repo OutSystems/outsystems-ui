@@ -2,6 +2,6 @@
 namespace Providers.RangeSlider.Enum {
 	export enum NoUISpliderEvents {
 		Change = 'change',
-		Update = 'update',
+		Slide = 'slide',
 	}
 }

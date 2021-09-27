@@ -28,7 +28,7 @@ namespace Providers.RangeSlider {
 			this._setOnInitializedEvent();
 
 			const changeEvent = this._configs.OptionalConfigs.ChangeEventDuringSlide
-				? Enum.NoUISpliderEvents.Update
+				? Enum.NoUISpliderEvents.Slide
 				: Enum.NoUISpliderEvents.Change;
 
 			this._setOnValueChangeEvent(changeEvent);
@@ -75,10 +75,14 @@ namespace Providers.RangeSlider {
 		private _setOnValueChangeEvent(changeEvent): void {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			this._provider.on(changeEvent, (value: number) => {
-				setTimeout(() => {
-					this._onValueChange(this.widgetId, Math.floor(value));
-				}, 0);
+				this._triggerOnValueChangeEvent(value);
 			});
+		}
+
+		private _triggerOnValueChangeEvent(value: number): void {
+			setTimeout(() => {
+				this._onValueChange(this.widgetId, Math.floor(value));
+			}, 0);
 		}
 
 		public build(): void {
@@ -221,6 +225,7 @@ namespace Providers.RangeSlider {
 
 		public setValue(value: number): void {
 			this.provider.set(value);
+			this._triggerOnValueChangeEvent(value);
 		}
 
 		public setVerticalHeight(height: number): void {
