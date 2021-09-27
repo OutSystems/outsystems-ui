@@ -1,6 +1,3 @@
-namespace OutSystems.OSUI.Patterns.flipContentAPI {
-
-    //Implement you code here
-
-
-}    
+namespace OutSystems.OSUI.Patterns.FlipContentAPI {
+	//Implement you code here
+}
