@@ -36,8 +36,6 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		//Boolean to flag if it's an iOS operated device
 		// eslint-disable-next-line @typescript-eslint/naming-convention
 		private _isIOS: boolean;
-		//Boolean to flag if it's a touch-based device
-		private _isMobile: boolean;
 		//Booelan to tell if the pattern is in the state 'open'
 		private _isOpen: boolean;
 		// Last Floating Action Item
@@ -184,9 +182,10 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		// Accessibility - Traps the focus on the floating action items when navigating with the keyboard
 		private _setFocusTrap(e: KeyboardEvent): void {
 			const isShiftKey = e.shiftKey;
+			const isTabKey = e.key === GlobalEnum.Keycodes.Tab;
 
 			// Focus trap to circle all buttons inside
-			if (isShiftKey) {
+			if (isShiftKey && isTabKey) {
 				if (document.activeElement === this._floatingActionsButton) {
 					const link = this._lastButton.querySelector('a');
 					if (link) {
@@ -199,9 +198,11 @@ namespace OSUIFramework.Patterns.FloatingActions {
 					this._floatingActionsButton.focus();
 					e.preventDefault();
 				}
-			} else if (document.activeElement === this._floatingActionsButton) {
-				this._firstButton.focus();
-				e.preventDefault();
+			} else if (isTabKey) {
+				if (document.activeElement === this._floatingActionsButton) {
+					this._firstButton.focus();
+					e.preventDefault();
+				}
 			}
 		}
 
