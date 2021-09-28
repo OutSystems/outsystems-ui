@@ -62,7 +62,9 @@ namespace OSUIFramework.GlobalEnum {
 	 */
 	export enum Direction {
 		Left = 'left',
+		LTR = 'ltr',
 		Right = 'right',
+		RTL = 'rtl',
 	}
 
 	/**

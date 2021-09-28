@@ -60,11 +60,15 @@ namespace Providers.RangeSlider {
 
 		private _setInitialLibraryOptions(): void {
 			this._providerOptions = {
-				direction: OutSystems.OSUI.Utils.GetIsRTL() ? 'rtl' : 'ltr',
+				direction: OutSystems.OSUI.Utils.GetIsRTL()
+					? OSUIFramework.GlobalEnum.Direction.RTL
+					: OSUIFramework.GlobalEnum.Direction.LTR,
 				start: [this._configs.InitialValue],
 				step: this._configs.Step,
-				connect: 'lower',
-				orientation: this._configs.IsVertical ? 'vertical' : 'horizontal',
+				connect: Enum.NoUiSpliderConnectOptions.Lower,
+				orientation: this._configs.IsVertical
+					? OSUIFramework.GlobalEnum.Orientation.Vertical
+					: OSUIFramework.GlobalEnum.Orientation.Horizontal,
 				range: {
 					min: this._configs.MinValue,
 					max: this._configs.MaxValue === this._configs.MinValue ? 100 : this._configs.MaxValue,
@@ -191,7 +195,7 @@ namespace Providers.RangeSlider {
 
 		public handleRangePips(pipsStepParam: number, isUpdate: boolean): void {
 			let pipsValues = Math.floor(pipsStepParam);
-			const mode = pipsValues > 10 ? 'range' : 'count';
+			const mode = pipsValues > 10 ? Enum.NoUiSpliderModeOptions.Range : Enum.NoUiSpliderModeOptions.Count;
 
 			if (pipsValues <= 1) {
 				// steps, when they exist, can't be less than 2 (library restraint)

@@ -6,4 +6,13 @@ namespace Providers.RangeSlider.Enum {
 		Start = 'start',
 		Slide = 'slide',
 	}
+
+	export enum NoUiSpliderConnectOptions {
+		Lower = 'lower',
+	}
+
+	export enum NoUiSpliderModeOptions {
+		Count = 'count',
+		Range = 'range',
+	}
 }
