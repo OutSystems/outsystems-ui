@@ -14,12 +14,16 @@ namespace Providers.RangeSlider {
 		private _eventOnStart: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnValueChangeEvent: any;
+		// Store if the slider is being dragged
 		private _isSliding: boolean;
+		// RangeSlider events
 		private _onInitialize: OSUIFramework.Callbacks.OSRangeSliderInitializeEvent;
 		private _onValueChange: OSUIFramework.Callbacks.OSRangeSliderOnValueChangeEvent;
 		// Store the provider reference
 		private _provider: NoUiSlider;
+		// Store the provider options
 		private _providerOptions: NoUiSliderOptions;
+		// Store the provider target elem
 		private _rangeSliderProviderElem: HTMLElement;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
@@ -31,17 +35,23 @@ namespace Providers.RangeSlider {
 			this._eventOnStart = this._triggerOnStartEvent.bind(this);
 		}
 
+		// Method that will create the provider
 		private _createProviderRangeSlider(): void {
+			// Set inital library options
 			this._setInitialLibraryOptions();
 
+			// Init provider
 			this._provider = window.noUiSlider.create(this._rangeSliderProviderElem, this._providerOptions);
 
+			// Trigger platform's OnInitialize event (done by us, the library doesn't have a 'mount' event)
 			this._setOnInitializedEvent();
 
+			// Set the correct type of event to add (Change only triggers when stoping the drag)
 			const changeEvent = this._configs.ChangeEventDuringSlide
 				? Enum.NoUISpliderEvents.Slide
 				: Enum.NoUISpliderEvents.Change;
 
+			// Set OnValueChange event
 			this._setOnValueChangeEvent(changeEvent);
 
 			// Add these events, to keep stored when the range slider is being dragged.
@@ -54,12 +64,15 @@ namespace Providers.RangeSlider {
 			}
 		}
 
+		// Method to set the html elements used
 		private _setHtmllElements(): void {
+			// Element that will be used to init the provider
 			this._rangeSliderProviderElem = this._selfElem.querySelector(
 				OSUIFramework.Constants.Dot + OSUIFramework.Patterns.RangeSlider.Enum.CssClass.RangeSliderProviderElem
 			);
 		}
 
+		// Method to set the library options from the config
 		private _setInitialLibraryOptions(): void {
 			this._providerOptions = {
 				direction: OutSystems.OSUI.Utils.GetIsRTL()
@@ -101,18 +114,22 @@ namespace Providers.RangeSlider {
 			this._provider.on(changeEvent, this._eventOnValueChangeEvent);
 		}
 
+		// Method to toggle the _IsSliding property
 		private _toggleSlideStatus(status: boolean): void {
 			this._isSliding = status;
 		}
 
+		// Handler to trigger the OnEnd event
 		private _triggerOnEndEvent(): void {
 			this._toggleSlideStatus(false);
 		}
 
+		// Handler to trigger the OnStart event
 		private _triggerOnStartEvent(): void {
 			this._toggleSlideStatus(true);
 		}
 
+		// Handler to trigger the OnValueChange event
 		private _triggerOnValueChangeEvent(value: number): void {
 			setTimeout(() => {
 				this._onValueChange(this.widgetId, Math.floor(value));
@@ -132,6 +149,8 @@ namespace Providers.RangeSlider {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
 			// Check which property changed and call respective method to update it
+			// Library only supports update on some options, so in most cases we need to
+			// destroy the object and create a new RangeSlider
 			switch (propertyName) {
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.MinValue:
 					this.updateRangeValues(propertyValue, this._configs.MaxValue);
@@ -199,10 +218,12 @@ namespace Providers.RangeSlider {
 			super.dispose();
 		}
 
+		// Method to get current RangeSlider value
 		public getValue(): number {
 			return this.provider.get();
 		}
 
+		// Method to handle the pips options from the library
 		public handleRangePips(pipsStepParam: number, isUpdate: boolean): void {
 			let pipsValues = Math.floor(pipsStepParam);
 
@@ -248,6 +269,7 @@ namespace Providers.RangeSlider {
 			}
 		}
 
+		// Method to togghe the disabled attribute
 		public setIsDisabled(isDisabled: boolean): void {
 			const isRangeSliderDisabled = OSUIFramework.Helper.Attribute.Get(this._rangeSliderProviderElem, 'disabled');
 
@@ -258,11 +280,14 @@ namespace Providers.RangeSlider {
 			}
 		}
 
+		// Method to set a new value to the RangeSlider
 		public setValue(value: number): void {
 			this.provider.set(value);
+			// Trigger platform event after setting the value
 			this._triggerOnValueChangeEvent(value);
 		}
 
+		// Method to create/update the VerticalHieght CSS Variable
 		public setVerticalHeight(height: number): void {
 			OSUIFramework.Helper.Style.SetStyleAttribute(
 				this._selfElem,
@@ -280,6 +305,7 @@ namespace Providers.RangeSlider {
 			this._createProviderRangeSlider();
 		}
 
+		// Method to update range values on RangeSlider
 		public updateRangeValues(min: number, max: number): void {
 			this.provider.updateOptions({
 				range: {
