@@ -32,7 +32,7 @@ namespace Providers.RangeSlider {
 
 			this._setOnInitializedEvent();
 
-			const changeEvent = this._configs.OptionalConfigs.ChangeEventDuringSlide
+			const changeEvent = this._configs.ChangeEventDuringSlide
 				? Enum.NoUISpliderEvents.Slide
 				: Enum.NoUISpliderEvents.Change;
 
@@ -62,24 +62,24 @@ namespace Providers.RangeSlider {
 			this._providerOptions = {
 				direction: OutSystems.OSUI.Utils.GetIsRTL() ? 'rtl' : 'ltr',
 				start: [this._configs.InitialValue],
-				step: this._configs.OptionalConfigs.Step,
+				step: this._configs.Step,
 				connect: 'lower',
-				orientation: this._configs.OptionalConfigs.IsVertical ? 'vertical' : 'horizontal',
+				orientation: this._configs.IsVertical ? 'vertical' : 'horizontal',
 				range: {
 					min: this._configs.MinValue,
 					max: this._configs.MaxValue === this._configs.MinValue ? 100 : this._configs.MaxValue,
 				},
 			};
 
-			if (this._configs.OptionalConfigs.ShowPips) {
-				this.handleRangePips(this._configs.OptionalConfigs.PipsStep, false);
+			if (this._configs.ShowPips) {
+				this.handleRangePips(this._configs.PipsStep, false);
 			}
 
-			if (this._configs.OptionalConfigs.IsVertical) {
-				this.setVerticalHeight(this._configs.OptionalConfigs.VerticalHeight);
+			if (this._configs.IsVertical) {
+				this.setVerticalHeight(this._configs.VerticalHeight);
 			}
 
-			this.setIsDisabled(this._configs.OptionalConfigs.IsDisabled);
+			this.setIsDisabled(this._configs.IsDisabled);
 		}
 
 		// Method to set the OnInitializeEvent
@@ -135,37 +135,37 @@ namespace Providers.RangeSlider {
 
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ChangeEventDuringSlide:
-					this._configs.OptionalConfigs.ChangeEventDuringSlide = propertyValue;
+					this._configs.ChangeEventDuringSlide = propertyValue;
 					this.updateRangeSlider();
 
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.IsDisabled:
-					this._configs.OptionalConfigs.IsDisabled = propertyValue;
+					this._configs.IsDisabled = propertyValue;
 					this.setIsDisabled(propertyValue);
 
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.IsVertical:
-					this._configs.OptionalConfigs.IsVertical = propertyValue;
+					this._configs.IsVertical = propertyValue;
 					this.updateRangeSlider();
 
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.PipsStep:
-					this._configs.OptionalConfigs.PipsStep = propertyValue;
+					this._configs.PipsStep = propertyValue;
 					this.handleRangePips(propertyValue, true);
 
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowPips:
-					this._configs.OptionalConfigs.ShowPips = propertyValue;
+					this._configs.ShowPips = propertyValue;
 					this.updateRangeSlider();
 
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.Step:
-					this._configs.OptionalConfigs.Step = propertyValue;
+					this._configs.Step = propertyValue;
 					this._provider.updateOptions({ step: propertyValue });
 
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.VerticalHeight:
-					this._configs.OptionalConfigs.VerticalHeight = propertyValue;
+					this._configs.VerticalHeight = propertyValue;
 					this.setVerticalHeight(propertyValue);
 
 					break;
