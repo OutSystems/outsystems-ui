@@ -8,6 +8,8 @@ namespace Providers.RangeSlider {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		implements Providers.RangeSlider.IRangeSliderProvider
 	{
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		private _eventOnValueChangeEvent: any;
 		private _isSliding: boolean;
 		private _onInitialize: OSUIFramework.Callbacks.OSRangeSliderInitializeEvent;
 		private _onValueChange: OSUIFramework.Callbacks.OSRangeSliderOnValueChangeEvent;
@@ -19,6 +21,8 @@ namespace Providers.RangeSlider {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new RangeSliderConfig(configs));
+
+			this._eventOnValueChangeEvent = this._triggerOnValueChangeEvent.bind(this);
 		}
 
 		private _createProviderRangeSlider(): void {
@@ -88,9 +92,7 @@ namespace Providers.RangeSlider {
 		// Method to set the OnValueChangeEvent
 		private _setOnValueChangeEvent(changeEvent): void {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			this._provider.on(changeEvent, (value: number) => {
-				this._triggerOnValueChangeEvent(value);
-			});
+			this._provider.on(changeEvent, this._eventOnValueChangeEvent);
 		}
 
 		private _toggleSlideStatus(status: boolean): void {
