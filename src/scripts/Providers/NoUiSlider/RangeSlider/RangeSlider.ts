@@ -9,6 +9,10 @@ namespace Providers.RangeSlider {
 		implements Providers.RangeSlider.IRangeSliderProvider
 	{
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		private _eventOnEnd: any;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		private _eventOnStart: any;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnValueChangeEvent: any;
 		private _isSliding: boolean;
 		private _onInitialize: OSUIFramework.Callbacks.OSRangeSliderInitializeEvent;
@@ -23,6 +27,8 @@ namespace Providers.RangeSlider {
 			super(uniqueId, new RangeSliderConfig(configs));
 
 			this._eventOnValueChangeEvent = this._triggerOnValueChangeEvent.bind(this);
+			this._eventOnEnd = this._triggerOnEndEvent.bind(this);
+			this._eventOnStart = this._triggerOnStartEvent.bind(this);
 		}
 
 		private _createProviderRangeSlider(): void {
@@ -43,12 +49,8 @@ namespace Providers.RangeSlider {
 			// the developer is manipulating the IntialValue variable directly on the OnValueChange event
 			// (and by doing that triggering the parameterChange again, and creating a loop)
 			if (changeEvent === Enum.NoUISpliderEvents.Slide) {
-				this._provider.on(Enum.NoUISpliderEvents.Start, () => {
-					this._toggleSlideStatus(true);
-				});
-				this._provider.on(Enum.NoUISpliderEvents.End, () => {
-					this._toggleSlideStatus(false);
-				});
+				this._provider.on(Enum.NoUISpliderEvents.Start, this._eventOnStart);
+				this._provider.on(Enum.NoUISpliderEvents.End, this._eventOnEnd);
 			}
 		}
 
@@ -101,6 +103,14 @@ namespace Providers.RangeSlider {
 
 		private _toggleSlideStatus(status: boolean): void {
 			this._isSliding = status;
+		}
+
+		private _triggerOnEndEvent(): void {
+			this._toggleSlideStatus(false);
+		}
+
+		private _triggerOnStartEvent(): void {
+			this._toggleSlideStatus(true);
 		}
 
 		private _triggerOnValueChangeEvent(value: number): void {
