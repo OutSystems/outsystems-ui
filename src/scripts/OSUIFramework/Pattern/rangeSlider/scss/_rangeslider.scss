@@ -21,6 +21,10 @@
 			border-radius: var(--border-radius-soft);
 		}
 
+		&-pips {
+			position: static;
+		}
+
 		&-origin {
 			background-color: var(--color-neutral-5);
 			height: 10%;
@@ -258,6 +262,11 @@
 		}
 
 		&-rtl {
+			&.noUi-vertical .noUi-handle {
+				position: absolute;
+				right: unset;
+			}
+
 			.noUi-value-vertical {
 				transform: translate(0, 50%);
 			}
@@ -273,6 +282,15 @@
 
 			.noUi-marker.noUi-marker-vertical {
 				margin-right: var(--space-base);
+			}
+		}
+
+		&-txt-dir-rtl {
+			&.noUi-horizontal {
+				.noUi-origin {
+					left: inherit;
+					right: inherit;
+				}
 			}
 		}
 	}
