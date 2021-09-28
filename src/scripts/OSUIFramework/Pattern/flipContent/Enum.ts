@@ -13,5 +13,9 @@ namespace OSUIFramework.Patterns.FlipContent.Enum {
 	 */
 	export enum CssClass {
 		DataFlipped = 'data-flipped',
+		IsFlipped = 'flipped',
+		FlipContainer = 'flip-content-container',
+		CardFront = 'flip-content-front',
+		CardBack = 'flip-content-back',
 	}
 }
