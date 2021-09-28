@@ -35,6 +35,14 @@
 		}
 	}
 
+	textarea[data-textarea] {
+		& + span {
+			&.validation-message {
+				bottom: 7px;
+			}
+		}
+	}
+
 	.upload-file span.validation-message {
 		bottom: 8px;
 		position: relative;
@@ -48,10 +56,6 @@
 		&.not-valid span.validation-message {
 			bottom: -19px;
 		}
-	}
-
-	textarea.form-control[class*='ThemeGrid_Width'] + span.validation-message {
-		bottom: 0;
 	}
 
 	.radio-group.not-valid {
