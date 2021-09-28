@@ -5,6 +5,12 @@
 
 ///
 .form {
+	&.OSFillParent {
+		.form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message {
+			left: 22px;
+		}
+	}
+
 	label {
 		margin-bottom: var(--space-s);
 	}
@@ -21,18 +27,18 @@
 		position: relative;
 
 		&.validation-message {
-			display: block;
-			margin: -20px 0 2px;
-			position: relative;
+			bottom: -32px;
+			left: 0;
+			position: absolute;
+			white-space: nowrap;
+			width: 100%;
 		}
 	}
 
 	textarea[data-textarea] {
 		& + span {
 			&.validation-message {
-				margin: -20px 0 0;
-				min-height: 20px;
-				top: -4px;
+				bottom: 7px;
 			}
 		}
 	}
@@ -65,6 +71,12 @@
 span.validation-message {
 	color: var(--color-error);
 	font-size: var(--font-size-xs);
+	margin-left: var(--space-none);
+}
+
+///
+.form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message {
+	left: 10px;
 }
 
 // Responsive --------------------------------------------------------------------
