@@ -13,4 +13,8 @@ namespace OSUIFramework.Callbacks {
 	export type OSSidebarToggleEvent = {
 		(sidebarId: string, isOpen: boolean): void;
 	};
+
+	export type OSFlipContentFlipEvent = {
+		(flipId: string, isFlipped: boolean): void;
+	};
 }

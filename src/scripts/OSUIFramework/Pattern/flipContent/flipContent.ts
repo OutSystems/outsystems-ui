@@ -14,7 +14,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 		private _flipWrapper: HTMLElement;
 		private _isExpanded: string;
 		// Callback function to trigger the click event on the platform
-		private _onClick: Callbacks.OSGeneric;
+		private _onClick: Callbacks.OSFlipContentFlipEvent;
 		// Saves the event to disconnect it in the future
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _onClickEvent: any;
@@ -67,6 +67,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 
 		// Method to trigger the flipping of the pattern and the event on the platform's side
 		private _triggerFlip(): void {
+			console.log('click');
 			const notFlipped = !this._configs.IsFlipped;
 			Helper.Attribute.Set(this._flipWrapper, Enum.CssClass.DataFlipped, this._configs.IsFlipped.toString());
 
@@ -77,7 +78,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 				Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.IsFlipped);
 			}
 
-			Helper.Attribute.Set(
+			/*Helper.Attribute.Set(
 				this._flipCardFront,
 				Constants.AccessibilityAttribute.Aria.Hidden,
 				this.configs.IsFlipped.toString()
@@ -86,14 +87,17 @@ namespace OSUIFramework.Patterns.FlipContent {
 				this._flipCardBack,
 				Constants.AccessibilityAttribute.Aria.Hidden,
 				notFlipped.toString()
-			);
+			);*/
+
+			this._configs.IsFlipped = !this._configs.IsFlipped;
+			//this._triggerToggleClick();
 		}
 
 		// Method that triggers the toggle event on the platform
 		private _triggerToggleClick(): void {
 			if (this._onClick !== undefined) {
 				setTimeout(() => {
-					this._onClick(this.widgetId);
+					this._onClick(this.widgetId, this.configs.IsFlipped);
 				}, 0);
 			}
 		}
@@ -112,7 +116,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 			this._removeEvents();
 		}
 
-		public registerCallback(callback: Callbacks.OSGeneric): void {
+		public registerCallback(callback: Callbacks.OSFlipContentFlipEvent): void {
 			this._onClick = callback;
 		}
 	}
