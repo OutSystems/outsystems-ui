@@ -40,6 +40,10 @@
 			justify-content: flex-end;
 			margin-left: var(--space-base);
 			margin-right: auto;
+
+			& {
+				-servicestudio-min-width: fit-content;
+			}
 		}
 	}
 
