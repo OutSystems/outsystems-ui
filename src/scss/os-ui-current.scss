@@ -227,7 +227,8 @@
 @import '04-patterns/02-content/list-item-content';
 @import '04-patterns/02-content/section';
 @import '04-patterns/02-content/tag';
-@import '../scripts/OSUIFramework/Pattern/Tooltip/scss/tooltip';
+// @import '../scripts/OSUIFramework/Pattern/Tooltip/scss/tooltip';
+@import '10-deprecated/tooltip-deprecated';
 @import '04-patterns/02-content/user-avatar';
 
 /* ============================================================================ */
@@ -245,10 +246,12 @@
 @import '04-patterns/03-interaction/input-with-icon';
 @import '04-patterns/03-interaction/lightbox-image';
 @import '04-patterns/03-interaction/notification';
-@import '04-patterns/03-interaction/range-slider';
+@import '10-deprecated/range-slider-deprecated';
+//@import '../scripts/OSUIFramework/Pattern/RangeSlider/scss/rangeslider';
 @import '04-patterns/03-interaction/scrollable-area';
 @import '../scripts/OSUIFramework/Pattern/Search/scss/search';
-@import '../scripts/OSUIFramework/Pattern/Sidebar/scss/sidebar';
+// @import '../scripts/OSUIFramework/Pattern/Sidebar/scss/sidebar';
+@import '10-deprecated/sidebar-deprecated';
 @import '04-patterns/03-interaction/stacked-cards';
 @import '04-patterns/03-interaction/video';
 
@@ -259,7 +262,8 @@
 @import '04-patterns/04-navigation/breadcrumbs';
 @import '04-patterns/04-navigation/pagination';
 @import '04-patterns/04-navigation/section-index';
-@import '../scripts/OSUIFramework/Pattern/Submenu/scss/submenu';
+// @import '../scripts/OSUIFramework/Pattern/Submenu/scss/submenu';
+@import '10-deprecated/submenu-deprecated';
 @import '04-patterns/04-navigation/tabs';
 @import '04-patterns/04-navigation/timeline';
 @import '04-patterns/04-navigation/wizard';
@@ -270,8 +274,10 @@
 @import '04-patterns/05-numbers/badge';
 @import '04-patterns/05-numbers/counter';
 @import '04-patterns/05-numbers/icon-badge';
-@import '../scripts/OSUIFramework/Pattern/Progress/Bar/scss/progressbar';
-@import '../scripts/OSUIFramework/Pattern/Progress/Circle/scss/progresscircle';
+// @import '../scripts/OSUIFramework/Pattern/Progress/Bar/scss/progressbar';
+@import '10-deprecated/progress-bar-deprecated';
+// @import '../scripts/OSUIFramework/Pattern/Progress/Circle/scss/progresscircle';
+@import '10-deprecated/progress-circle-deprecated';
 @import '04-patterns/05-numbers/progress-circle-fraction';
 @import '../scripts/OSUIFramework/Pattern/Rating/scss/rating';
 
@@ -289,13 +295,7 @@
 /*! =========================================================================== */
 /*! Deprecated Patterns                                                         */
 /*! =========================================================================== */
-@import '10-deprecated/range-slider-deprecated';
 @import '10-deprecated/horizontal-scroll-deprecated';
-@import '10-deprecated/sidebar-deprecated';
-@import '10-deprecated/submenu-deprecated';
-@import '10-deprecated/tooltip-deprecated';
-@import '10-deprecated/progress-bar-deprecated';
-@import '10-deprecated/progress-circle-deprecated';
 
 /*! =========================================================================== */
 /*! Usefull Classes                                                             */

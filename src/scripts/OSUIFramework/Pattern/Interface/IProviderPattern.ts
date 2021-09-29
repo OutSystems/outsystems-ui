@@ -1,0 +1,9 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+namespace OSUIFramework.Interface {
+	/**
+	 * Defines the interface for OutSystemsUI Providers
+	 */
+	export interface IProviderPattern<P> extends Interface.IPattern {
+		provider: P;
+	}
+}
