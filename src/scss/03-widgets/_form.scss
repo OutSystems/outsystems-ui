@@ -68,6 +68,17 @@
 }
 
 ///
+.firefox {
+	textarea[data-textarea] {
+		& + span {
+			&.validation-message {
+				bottom: 4px;
+			}
+		}
+	}
+}
+
+///
 span.validation-message {
 	color: var(--color-error);
 	font-size: var(--font-size-xs);
