@@ -1,5 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Callbacks {
+	export type Generic = { (...args): void };
+
 	export type OSGeneric = { (patternId, ...args): void };
 
 	export type OSRatingSelectEvent = {
