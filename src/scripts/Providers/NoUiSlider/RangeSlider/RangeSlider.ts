@@ -74,21 +74,7 @@ namespace Providers.RangeSlider {
 
 		// Method to set the library options from the config
 		private _setInitialLibraryOptions(): void {
-			this._providerOptions = {
-				direction: OutSystems.OSUI.Utils.GetIsRTL()
-					? OSUIFramework.GlobalEnum.Direction.RTL
-					: OSUIFramework.GlobalEnum.Direction.LTR,
-				start: [this._configs.InitialValue],
-				step: this._configs.Step,
-				connect: Enum.NoUiSpliderConnectOptions.Lower,
-				orientation: this._configs.IsVertical
-					? OSUIFramework.GlobalEnum.Orientation.Vertical
-					: OSUIFramework.GlobalEnum.Orientation.Horizontal,
-				range: {
-					min: this._configs.MinValue,
-					max: this._configs.MaxValue === this._configs.MinValue ? 100 : this._configs.MaxValue,
-				},
-			};
+			this._providerOptions = this._configs.getProviderConfig();
 
 			if (this._configs.ShowPips) {
 				this.handleRangePips(this._configs.PipsStep, false);
