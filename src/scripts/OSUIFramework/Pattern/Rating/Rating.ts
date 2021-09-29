@@ -144,9 +144,7 @@ namespace OSUIFramework.Patterns.Rating {
 		// Method that triggers the OnSelect event
 		private _triggerOnSelectEvent(value: number): void {
 			if (this._onSelect !== undefined) {
-				setTimeout(() => {
-					this._onSelect(this.widgetId, value);
-				}, 0);
+				Helper.AsyncInvocation(this._onSelect, this.widgetId, value);
 			}
 		}
 

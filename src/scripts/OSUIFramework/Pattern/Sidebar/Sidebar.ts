@@ -202,9 +202,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		// Method that triggers the OnToggle event
 		private _triggerOnToggleEvent(isOpen: boolean): void {
 			if (this._onToggle !== undefined) {
-				setTimeout(() => {
-					this._onToggle(this.widgetId, isOpen);
-				}, 0);
+				Helper.AsyncInvocation(this._onToggle, this.widgetId, isOpen);
 			}
 		}
 
