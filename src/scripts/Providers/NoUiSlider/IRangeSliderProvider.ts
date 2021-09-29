@@ -5,5 +5,7 @@ namespace Providers.RangeSlider {
 	 */
 	export interface IRangeSliderProvider
 		extends OSUIFramework.Patterns.RangeSlider.IRangeSlider,
-			OSUIFramework.Interface.IProviderPattern<NoUiSlider> {}
+			OSUIFramework.Interface.IProviderPattern<NoUiSlider> {
+		registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void;
+	}
 }

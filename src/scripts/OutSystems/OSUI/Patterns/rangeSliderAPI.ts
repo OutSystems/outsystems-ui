@@ -108,7 +108,7 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 		eventName: string,
 		callback: OSUIFramework.Callbacks.OSGeneric
 	): void {
-		const rangeSlider = GetRangeSliderItemById(rangeSliderId);
+		const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
 
 		rangeSlider.registerProviderCallback(eventName, callback);
 	}

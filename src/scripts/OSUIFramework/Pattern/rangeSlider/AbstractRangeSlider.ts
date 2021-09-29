@@ -12,7 +12,5 @@ namespace OSUIFramework.Patterns.RangeSlider {
 		public build(): void {
 			super.build();
 		}
-
-		abstract registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void;
 	}
 }
