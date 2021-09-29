@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
-	enum _floatingActions {
-		FloatingActions = '[data-block="Interaction.FloatingActions"]',
-		FloatingActionWrapper = '.floating-actions-wrapper',
-	}
 	const _floatingActionsMap = new Map<string, string>(); //floatingActionsItem.uniqueId -> FloatingActions.uniqueId
 	const _floatingActionsItemMap = new Map<string, OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem>(); //floatingActionsItem.uniqueId -> FloatingActionsItem obj
 
@@ -22,14 +18,16 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 		} else {
 			// Try to find its reference on DOM
 			const elem = OSUIFramework.Helper.GetElementByUniqueId(floatingActionsItemId);
-			const floating = elem.closest(_floatingActions.FloatingActions);
+			const floating = elem.closest(OSUIFramework.Patterns.FloatingActions.Enum.CssClasses.FloatingActions);
 
 			if (!floating) {
 				throw Error(
 					`This ${OSUIFramework.GlobalEnum.PatternsNames.FloatingActionsItem} does not belong to any ${OSUIFramework.GlobalEnum.PatternsNames.FloatingActions} pattern.`
 				);
 			}
-			const uniqueId = floating.querySelector(_floatingActions.FloatingActionWrapper).getAttribute('name');
+			const uniqueId = floating
+				.querySelector(OSUIFramework.Patterns.FloatingActions.Enum.CssClasses.FloatingActionWrapper)
+				.getAttribute('name');
 			floatingActions = FloatingActionsAPI.GetFloatingActionsById(uniqueId);
 		}
 
