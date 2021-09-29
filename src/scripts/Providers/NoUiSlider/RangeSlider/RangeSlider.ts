@@ -91,7 +91,7 @@ namespace Providers.RangeSlider {
 		private _setOnInitializedEvent(): void {
 			setTimeout(() => {
 				this._onInitialize(this.widgetId);
-			});
+			}, 0);
 		}
 
 		// Method to set the OnValueChangeEvent
