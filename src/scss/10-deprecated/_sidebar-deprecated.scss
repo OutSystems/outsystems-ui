@@ -1,7 +1,6 @@
 /*! Patterns - Interaction - Sidebar */
 /* Since this pattern is Deprecated, it should not appear at SASSDCS! */
 
-///
 .sidebar {
 	background-color: var(--color-neutral-0);
 	box-shadow: var(--shadow-l);
@@ -49,7 +48,6 @@
 	}
 }
 
-///
 .active-screen {
 	&.screen-container {
 		.sidebar {
@@ -63,7 +61,7 @@
 }
 
 // Responsive --------------------------------------------------------------------
-///
+
 .android[data-status-bar-height] {
 	.layout-native {
 		.sidebar {
@@ -72,7 +70,6 @@
 	}
 }
 
-///
 .ios {
 	.layout-native {
 		.sidebar {
@@ -93,7 +90,6 @@
 	}
 }
 
-///
 .landscape {
 	.layout-native {
 		.sidebar {
@@ -115,7 +111,6 @@
 	}
 }
 
-///
 .tablet {
 	.layout-native {
 		.sidebar {
@@ -124,7 +119,6 @@
 	}
 }
 
-///
 .phone {
 	.sidebar {
 		width: 85vw;
