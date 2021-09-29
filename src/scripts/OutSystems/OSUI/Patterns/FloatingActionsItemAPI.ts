@@ -22,19 +22,15 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 		} else {
 			// Try to find its reference on DOM
 			const elem = OSUIFramework.Helper.GetElementByUniqueId(floatingActionsItemId);
+			const floating = elem.closest(_floatingActions.FloatingActions);
 
-			// If element is found, means that the DOM was rendered
-			if (elem !== undefined) {
-				const floating = elem.closest(_floatingActions.FloatingActions);
-
-				if (!floating) {
-					throw Error(
-						`This ${OSUIFramework.GlobalEnum.PatternsNames.FloatingActionsItem} does not belong to any ${OSUIFramework.GlobalEnum.PatternsNames.FloatingActions} pattern.`
-					);
-				}
-				const uniqueId = floating.querySelector(_floatingActions.FloatingActionWrapper).getAttribute('name');
-				floatingActions = FloatingActionsAPI.GetFloatingActionsById(uniqueId);
+			if (!floating) {
+				throw Error(
+					`This ${OSUIFramework.GlobalEnum.PatternsNames.FloatingActionsItem} does not belong to any ${OSUIFramework.GlobalEnum.PatternsNames.FloatingActions} pattern.`
+				);
 			}
+			const uniqueId = floating.querySelector(_floatingActions.FloatingActionWrapper).getAttribute('name');
+			floatingActions = FloatingActionsAPI.GetFloatingActionsById(uniqueId);
 		}
 
 		return floatingActions;

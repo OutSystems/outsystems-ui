@@ -69,11 +69,9 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			// Inside Bottom Bar and IOS fix
 			if (this._bottomBar && this._floatingActions) {
 				this._insideBottomBar = bottomBar === undefined;
-				if (this._insideBottomBar) {
-					Helper.Style.AddClass(this._floatingActions, Enum.CssClasses.BottomBarExists);
-				}
 			}
 
+			// Not inside the bottom bar BUT there is a bottom bar in the screen, they cannot overlap
 			if (!this._insideBottomBar && this._floatingActions) {
 				if (this._bottomBar) {
 					this._insideBottomBar = true;
@@ -320,13 +318,13 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		public build(): void {
 			super.build();
 
-			super.finishBuild();
-
 			this._setUpFloatingActions();
 			this._setClasses();
 			this._checkIfInsideBottomBar();
 			this._setAccessibility();
 			this._setUpEvents();
+
+			super.finishBuild();
 		}
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
@@ -334,10 +332,12 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			// Check which property changed and call respective method to update it
 			switch (propertyName) {
 				case Enum.Properties.IsHover:
-					this._setIsHover(propertyValue);
+					//Casting to boolean
+					this._setIsHover(propertyValue.toLowerCase() === 'true');
 					break;
 				case Enum.Properties.IsExpanded:
-					this._setIsExpanded(propertyValue);
+					// Casting to boolean
+					this._setIsExpanded(propertyValue.toLowerCase() === 'true');
 					break;
 				default:
 					super.changeProperty(propertyName, propertyValue);
@@ -384,7 +384,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 			// Removes events based on device
 			if (this._isIOS) {
-				this._floatingActionsItem.addEventListener(GlobalEnum.HTMLEvent.TouchStart, (e) => {
+				this._floatingActionsItem.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, (e) => {
 					e.stopPropagation();
 				});
 			}
