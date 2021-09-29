@@ -9,7 +9,8 @@ const package = require('./package.json');
 module.exports = (env) => {
 	return {
 		entry: {
-			'outsystems-ui': './src/scss/os-ui.scss',
+			'outsystems-ui-current': './src/scss/os-ui-current.scss',
+			'outsystems-ui-new': './src/scss/os-ui-new.scss',
 		},
 		mode: env.prefix === 'dev' ? 'development' : 'production',
 		stats: {
