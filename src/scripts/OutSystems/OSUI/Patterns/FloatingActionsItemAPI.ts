@@ -98,14 +98,13 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 
 		//When destroying the whole pattern Floating Actions + Floating Actions Item, the parent is destroyed first
 		//So, there is no parent to disconnect from.
-		try {
+		if (floatingActionItem) {
 			const floatingAction = GetFloatingActionsByItem(floatingActionsItemId);
 
 			if (floatingAction !== undefined) {
 				floatingAction.removeFloatingActionItem(floatingActionItem.uniqueId);
 			}
-			// eslint-disable-next-line no-empty
-		} catch {}
+		}
 
 		floatingActionItem.dispose();
 
