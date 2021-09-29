@@ -3,17 +3,11 @@ namespace OSUIFramework.Patterns.Notification.Enum {
 	/**
 	 * Notification Enum properties
 	 */
-	export enum Properties {
-        //Implement you code here
-	}
-
-
+	export enum Properties {}
+	//Implement you code here
 	/**
 	 * Notification Enum for CSS Classes
 	 */
-	export enum CssClass {
-		//Implement you code here
-	}
-
-
+	export enum CssClass {}
+	//Implement you code here
 }

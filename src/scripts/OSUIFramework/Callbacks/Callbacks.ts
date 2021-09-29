@@ -2,6 +2,10 @@
 namespace OSUIFramework.Callbacks {
 	export type OSGeneric = { (patternId, ...args): void };
 
+	export type OSNotificationToggleEvent = {
+		(notificationId: string, isOpen: boolean): void;
+	};
+
 	export type OSRatingSelectEvent = {
 		(ratingId: string, value: number): void;
 	};
