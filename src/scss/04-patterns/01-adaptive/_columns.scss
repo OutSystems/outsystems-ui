@@ -10,12 +10,15 @@
 
 	& > .columns-item {
 		flex: 1;
-		min-width: 0;
 		word-break: break-word;
 
 		& > .card {
 			height: 100%;
 		}
+	}
+
+	&:not(.gutter-none) > .columns-item {
+		min-width: 0;
 	}
 
 	&.columns {
