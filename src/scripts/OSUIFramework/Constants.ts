@@ -5,22 +5,23 @@ namespace OSUIFramework.Constants {
 	 */
 	export const AccessibilityAttribute = {
 		Aria: {
+			Controls: 'aria-controls',
 			Describedby: 'describedby',
+			Expanded: 'aria-expanded',
+			Hidden: 'aria-hidden',
 			Labelledby: 'labelledby',
+			Label: 'aria-label',
 			ValueMax: 'valuemax',
 			ValueMin: 'valuemin',
-			Label: 'aria-label',
-			Expanded: 'aria-expanded',
-			Controls: 'aria-controls',
-			Hidden: 'aria-hidden',
 		},
 		Role: {
+			Alert: 'alert',
 			AttrName: 'role',
+			Button: 'button',
+			MenuItem: 'menuitem',
 			Progressbar: 'progressbar',
 			Search: 'search',
 			Tooltip: 'tooltip',
-			MenuItem: 'menuitem',
-			Button: 'button',
 		},
 		TabIndex: 'tabindex',
 		States: {
