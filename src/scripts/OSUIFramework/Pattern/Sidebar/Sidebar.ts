@@ -202,9 +202,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		// Method that triggers the OnToggle event
 		private _triggerOnToggleEvent(isOpen: boolean): void {
 			if (this._onToggle !== undefined) {
-				setTimeout(() => {
-					this._onToggle(this.widgetId, isOpen);
-				}, 0);
+				Helper.AsyncInvocation(this._onToggle, this.widgetId, isOpen);
 			}
 		}
 
@@ -413,10 +411,10 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 
 			// Make async so that the platform updates the DIV visibility on the DOM
-			setTimeout(() => {
+			Helper.AsyncInvocation(() => {
 				this._sidebarOverlayElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Overlay);
 				this._handleOverlayClick(hasOverlay);
-			}, 0);
+			});
 
 			this._hasOverlay = hasOverlay;
 			this._configs.HasOverlay = hasOverlay;

@@ -88,9 +88,7 @@ namespace OSUIFramework.Patterns.Search {
 
 		private _triggerOnCollapseEvent(): void {
 			if (this._onCollapse !== undefined) {
-				setTimeout(() => {
-					this._onCollapse(this.widgetId);
-				}, 0);
+				Helper.AsyncInvocation(this._onCollapse, this.widgetId);
 			}
 		}
 
