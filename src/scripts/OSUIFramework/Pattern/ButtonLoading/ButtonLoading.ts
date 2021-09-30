@@ -100,6 +100,8 @@ namespace OSUIFramework.Patterns.ButtonLoading {
 							Constants.AccessibilityAttribute.TabIndex,
 							Constants.AccessibilityAttribute.States.TabIndexHidden
 						);
+
+						this._buttonElem.blur();
 					} else {
 						Helper.Attribute.Set(
 							this._buttonElem,
