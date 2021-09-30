@@ -38,6 +38,9 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		private _isIOS: boolean;
 		//Booelan to tell if the pattern is in the state 'open'
 		private _isOpen: boolean;
+		// Store the stopPropagation method
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		private _iOSStopPropagation: any;
 		// Last Floating Action Item
 		private _lastButton: HTMLElement;
 		// Callback function to trigger the click event
@@ -56,6 +59,9 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			this._openMethod = this.open.bind(this);
 			this._closeMethod = this.close.bind(this);
 			this._isOpen = configs.IsExpanded;
+			this._iOSStopPropagation = (e) => {
+				e.stopPropagation();
+			};
 		}
 
 		// Checks in the Floating Actions Pattern is inside the Bottom Bar and applies a fix for iOS devices
@@ -245,9 +251,10 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 				// Set event type based on device
 				if (this._isIOS) {
-					this._floatingActionsItem.addEventListener(GlobalEnum.HTMLEvent.TouchStart, (e) => {
-						e.stopPropagation();
-					});
+					this._floatingActionsItem.addEventListener(
+						GlobalEnum.HTMLEvent.TouchStart,
+						this._iOSStopPropagation
+					);
 				}
 				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventToggleClick);
 				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventkeyboard);
@@ -267,8 +274,6 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 		// Sets up the Floating Action Items elements
 		private _setUpFloatingActions(): void {
-			this._floatingActions = this._selfElem;
-
 			this._floatingActionsButton = this._floatingActions.querySelector(
 				Constants.Dot + Enum.CssClasses.FloatingActionsButton
 			);
@@ -315,7 +320,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 		public build(): void {
 			super.build();
-
+			this._floatingActions = this._selfElem;
 			this._setUpFloatingActions();
 			this._setClasses();
 			this._checkIfInsideBottomBar();
@@ -382,9 +387,10 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 			// Removes events based on device
 			if (this._isIOS) {
-				this._floatingActionsItem.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, (e) => {
-					e.stopPropagation();
-				});
+				this._floatingActionsItem.removeEventListener(
+					GlobalEnum.HTMLEvent.TouchStart,
+					this._iOSStopPropagation
+				);
 			}
 		}
 
