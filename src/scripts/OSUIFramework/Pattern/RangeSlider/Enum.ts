@@ -6,7 +6,6 @@ namespace OSUIFramework.Patterns.RangeSlider.Enum {
 	export enum Properties {
 		ChangeEventDuringSlide = 'ChangeEventDuringSlide',
 		InitialValueEnd = 'InitialValueEnd',
-		ExtendedClass = 'ExtendedClass',
 		InitialValueStart = 'InitialValueStart',
 		IsDisabled = 'IsDisabled',
 		IsVertical = 'IsVertical',
