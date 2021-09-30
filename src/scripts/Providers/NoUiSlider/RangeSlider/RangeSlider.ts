@@ -213,6 +213,11 @@ namespace Providers.RangeSlider {
 		public handleRangePips(pipsStepParam: number, isUpdate: boolean): void {
 			let pipsValues = Math.floor(pipsStepParam);
 
+			// To avoid performance issues
+			if (pipsValues > this._configs.MaxValue) {
+				pipsValues = this._configs.MaxValue;
+			}
+
 			if (pipsValues <= 1) {
 				// steps, when they exist, can't be less than 2 (library restraint)
 				pipsValues = 2;
@@ -285,10 +290,11 @@ namespace Providers.RangeSlider {
 		// Method to remove and destroy RangeSlider instance
 		public updateRangeSlider(): void {
 			if (typeof this._provider === 'object') {
+				// Get value so the the Range Slider keeps the same value as before is destroyed
+				this._configs.InitialValue = this.getValue();
 				this._provider.destroy();
+				this._createProviderRangeSlider();
 			}
-
-			this._createProviderRangeSlider();
 		}
 
 		// Method to update range values on RangeSlider
