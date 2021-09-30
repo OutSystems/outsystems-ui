@@ -4,7 +4,6 @@ namespace OSUIFramework.Patterns.ButtonLoading.Enum {
 	 * ButtonLoading Enum properties
 	 */
 	export enum Properties {
-		ExtendedClass = 'ExtendedClass',
 		IsLoading = 'IsLoading',
 		ShowLoadingAndLabel = 'ShowLoadingAndLabel',
 	}
