@@ -77,6 +77,11 @@ That said, It should not be visible at SASSDOCS as well. */
 
 		.loading-spinner {
 			@include buttonLoadingSpinner;
+
+			// ServiceStudio Preview
+			& {
+				-servicestudio-margin-right: var(--space-s);
+			}
 		}
 	}
 }
