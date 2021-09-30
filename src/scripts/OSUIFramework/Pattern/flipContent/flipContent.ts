@@ -12,12 +12,15 @@ namespace OSUIFramework.Patterns.FlipContent {
 		private _flipElement: HTMLElement;
 		//The Flip Content content wrapper
 		private _flipWrapper: HTMLElement;
+		//Contains the state of "flipness" of the content for accessiblity purposes
 		private _isExpanded: string;
 		// Callback function to trigger the click event on the platform
 		private _onClick: Callbacks.OSFlipContentFlipEvent;
+
 		// Saves the event to disconnect it in the future
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _onClickEvent: any;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _onKeyDown: any;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
@@ -78,7 +81,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 			this._configs.IsFlipped = !this._configs.IsFlipped;
 			this._triggerToggleClick();
 
-			// At this point, there isn't Flip Card Back yet as it hasn't been rendered yet - it's only when it's flipped that it exists
+			// At this point, there isn't Flip Card Back yet as it hasn't been rendered - it's only when it's flipped that it exists
 
 			this._flipCardBack = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.CardBack);
 
@@ -141,6 +144,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 			this._onClick = callback;
 		}
 
+		// Public method to trigger the flip
 		public triggerFlipContent(): void {
 			this._triggerFlip();
 		}
