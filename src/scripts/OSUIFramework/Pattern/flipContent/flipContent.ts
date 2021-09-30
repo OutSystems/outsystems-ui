@@ -55,50 +55,53 @@ namespace OSUIFramework.Patterns.FlipContent {
 		private _setFlipContent(): void {
 			this._flipElement = this._selfElem;
 			this._flipWrapper = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.FlipContainer);
-			this._flipCardBack = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.CardBack);
 			this._flipCardFront = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.CardFront);
 		}
 
 		// Method to set the events on the pattern's first render
 		private _setUpEvents(): void {
-			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._onKeyDown);
-			this._flipWrapper.addEventListener(GlobalEnum.HTMLEvent.Click, this._onClickEvent);
+			if (!this.configs.IsFlipped) {
+				this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._onKeyDown);
+				this._flipWrapper.addEventListener(GlobalEnum.HTMLEvent.Click, this._onClickEvent);
+			} else {
+				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._onKeyDown);
+				this._flipWrapper.removeEventListener(GlobalEnum.HTMLEvent.Click, this._onClickEvent);
+			}
 		}
 
 		// Method to trigger the flipping of the pattern and the event on the platform's side
 		private _triggerFlip(): void {
-			console.log('click');
 			const notFlipped = !this._configs.IsFlipped;
-			Helper.Attribute.Set(this._flipWrapper, Enum.CssClass.DataFlipped, this._configs.IsFlipped.toString());
+			Helper.Attribute.Set(this._flipWrapper, Enum.CssClass.DataFlipped, notFlipped.toString());
+
+			Helper.Style.ToggleClass(this._selfElem, Enum.CssClass.IsFlipped);
+			this._configs.IsFlipped = !this._configs.IsFlipped;
+			this._triggerToggleClick();
+
+			// At this point, there isn't Flip Card Back yet as it hasn't been rendered yet - it's only when it's flipped that it exists
+
+			this._flipCardBack = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.CardBack);
 
 			// Is this flipped?
 			if (this._configs.IsFlipped) {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsFlipped);
+				Helper.Attribute.Set(
+					this._flipCardBack,
+					Constants.AccessibilityAttribute.Aria.Hidden,
+					notFlipped.toString()
+				);
 			} else {
-				Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.IsFlipped);
+				Helper.Attribute.Set(
+					this._flipCardFront,
+					Constants.AccessibilityAttribute.Aria.Hidden,
+					this.configs.IsFlipped.toString()
+				);
 			}
-
-			/*Helper.Attribute.Set(
-				this._flipCardFront,
-				Constants.AccessibilityAttribute.Aria.Hidden,
-				this.configs.IsFlipped.toString()
-			);
-			Helper.Attribute.Set(
-				this._flipCardBack,
-				Constants.AccessibilityAttribute.Aria.Hidden,
-				notFlipped.toString()
-			);*/
-
-			this._configs.IsFlipped = !this._configs.IsFlipped;
-			//this._triggerToggleClick();
 		}
 
 		// Method that triggers the toggle event on the platform
 		private _triggerToggleClick(): void {
 			if (this._onClick !== undefined) {
-				setTimeout(() => {
-					this._onClick(this.widgetId, this.configs.IsFlipped);
-				}, 0);
+				this._onClick(this.widgetId, this.configs.IsFlipped);
 			}
 		}
 
@@ -110,6 +113,24 @@ namespace OSUIFramework.Patterns.FlipContent {
 			this.finishBuild();
 		}
 
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+		public changeProperty(propertyName: string, propertyValue: any): void {
+			if (Enum.Properties[propertyName] && this._configs.hasOwnProperty(propertyName)) {
+				switch (propertyName) {
+					case Enum.Properties.IsFlipped:
+						this._configs.IsFlipped = propertyValue;
+						this._triggerFlip();
+						break;
+					case Enum.Properties.FlipSelf:
+						this._configs.FlipSelf = propertyValue;
+						this._setUpEvents();
+						break;
+				}
+			} else {
+				throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
+			}
+		}
+
 		// Destroying the Flip Content Pattern
 		public dispose(): void {
 			super.dispose();
@@ -118,6 +139,10 @@ namespace OSUIFramework.Patterns.FlipContent {
 
 		public registerCallback(callback: Callbacks.OSFlipContentFlipEvent): void {
 			this._onClick = callback;
+		}
+
+		public triggerFlipContent(): void {
+			this._triggerFlip();
 		}
 	}
 }
