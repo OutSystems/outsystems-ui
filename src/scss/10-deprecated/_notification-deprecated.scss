@@ -1,10 +1,10 @@
-/*! Patterns - Content - Notification */
+/*! Patterns - Interaction - Notification */
 ////
 /// @group Patterns-Notification
-/// Patterns - Content - Notification
+/// Patterns - Interaction - Notification
 
 ///
-.osui-notification {
+.notification {
 	background-color: var(--color-neutral-0);
 	border: var(--border-size-s) solid var(--color-neutral-4);
 	border-radius: var(--border-radius-soft);
@@ -31,7 +31,7 @@
 		display: flex;
 	}
 
-	&.is-open {
+	&--visible {
 		transform: translateY(24px) translateX(-50%);
 
 		&.notification--animatable {
@@ -46,7 +46,7 @@
 
 ///
 .layout-native {
-	.osui-notification {
+	.notification {
 		left: 50%;
 		margin-left: -185px;
 		transform: translateY(-120%) translateX(0);
@@ -58,7 +58,7 @@
 			-servicestudio-transform: none;
 		}
 
-		&.is-open {
+		&--visible {
 			transform: translateY(24px) translateX(0);
 		}
 	}
@@ -86,7 +86,7 @@
 ///
 .tablet {
 	.layout-native {
-		.osui-notification {
+		.notification {
 			left: 50%;
 			margin-left: -185px;
 		}
@@ -96,7 +96,7 @@
 ///
 .phone {
 	.layout-native {
-		.osui-notification {
+		.notification {
 			left: 16px;
 			margin-left: 0;
 			right: 16px;
@@ -108,7 +108,7 @@
 ///
 .android[data-status-bar-height] {
 	.layout-native {
-		.osui-notification.is-open {
+		.notification--visible {
 			margin-top: var(--status-bar-height);
 		}
 	}
@@ -119,7 +119,7 @@
 	&.phone {
 		&.landscape {
 			.layout-native {
-				.osui-notification {
+				.notification {
 					left: calc(var(--os-safe-area-left) + 16px);
 					right: calc(var(--os-safe-area-right) + 16px);
 				}
@@ -128,7 +128,7 @@
 	}
 
 	.layout-native {
-		.osui-notification.is-open {
+		.notification--visible {
 			margin-top: var(--status-bar-height);
 		}
 	}

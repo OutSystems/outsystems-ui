@@ -245,7 +245,8 @@
 @import '04-patterns/03-interaction/floating-actions';
 @import '04-patterns/03-interaction/input-with-icon';
 @import '04-patterns/03-interaction/lightbox-image';
-@import '04-patterns/03-interaction/notification';
+@import '10-deprecated/notification-deprecated';
+//@import '../scripts/OSUIFramework/Pattern/Notification/scss/notification';
 @import '10-deprecated/range-slider-deprecated';
 //@import '../scripts/OSUIFramework/Pattern/RangeSlider/scss/rangeslider';
 @import '04-patterns/03-interaction/scrollable-area';
