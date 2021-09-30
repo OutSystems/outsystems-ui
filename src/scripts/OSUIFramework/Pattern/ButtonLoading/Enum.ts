@@ -16,6 +16,6 @@ namespace OSUIFramework.Patterns.ButtonLoading.Enum {
 		Button = 'btn',
 		IsLoading = 'is--loading',
 		ShowSpinnerOnly = 'show-spinner-only',
-		Spinner = 'osui-btn-loading-spinner',
+		Spinner = 'loading-spinner',
 	}
 }

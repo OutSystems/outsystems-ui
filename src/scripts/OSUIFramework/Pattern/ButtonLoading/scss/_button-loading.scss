@@ -1,0 +1,82 @@
+/*! Patterns - Utilities - Button Loading */
+////
+/// @group Patterns-Button_Loading
+/// Patterns - Utilities - Button Loading
+
+// LoadingSpinner animation
+@mixin buttonLoadingSpinner {
+	animation: loadingSpinner 850ms cubic-bezier(0.7, 1.05, 0.78, 0.78) infinite;
+	border: var(--border-size-m) solid currentColor;
+	border-radius: var(--border-radius-circle);
+	border-top: var(--border-size-m) solid transparent;
+	height: 16px;
+	width: 16px;
+	will-change: transform;
+}
+
+/* This section will remains here in order do maintain the styling for the older ButtonLoading structure.
+That said, It should not be visible at SASSDOCS as well. */
+.btn {
+	&-loading {
+		display: none;
+		position: absolute;
+
+		.loading-spinner {
+			@include buttonLoadingSpinner;
+		}
+
+		.btn-show-label & {
+			position: relative;
+		}
+
+		.is--loading & {
+			display: inline-flex;
+		}
+	}
+
+	&-label {
+		.is--loading & {
+			opacity: 0;
+		}
+		.btn-show-label & {
+			opacity: 1;
+		}
+	}
+}
+
+// New ButtonLoading styling section
+///
+.osui-btn-loading {
+	&.show-spinner-only {
+		.btn {
+			overflow: hidden;
+			text-indent: -9999px;
+
+			& > *:not(.loading-spinner) {
+				display: none;
+			}
+		}
+	}
+
+	&:not(.is--loading) {
+		.btn {
+			text-indent: initial;
+
+			.loading-spinner {
+				display: none;
+			}
+		}
+	}
+
+	.btn {
+		text-indent: var(--space-s);
+
+		& > * {
+			text-indent: initial;
+		}
+
+		.loading-spinner {
+			@include buttonLoadingSpinner;
+		}
+	}
+}

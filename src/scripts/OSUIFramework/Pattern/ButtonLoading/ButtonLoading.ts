@@ -94,6 +94,20 @@ namespace OSUIFramework.Patterns.ButtonLoading {
 
 					Helper.Style.ToggleClass(this._selfElem, Enum.CssClass.IsLoading);
 
+					if (propertyValue) {
+						Helper.Attribute.Set(
+							this._buttonElem,
+							Constants.AccessibilityAttribute.TabIndex,
+							Constants.AccessibilityAttribute.States.TabIndexHidden
+						);
+					} else {
+						Helper.Attribute.Set(
+							this._buttonElem,
+							Constants.AccessibilityAttribute.TabIndex,
+							Constants.AccessibilityAttribute.States.TabIndexShow
+						);
+					}
+
 					break;
 
 				case Enum.Properties.ShowLoadingAndLabel:
