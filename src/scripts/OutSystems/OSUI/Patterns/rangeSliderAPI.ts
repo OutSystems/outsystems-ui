@@ -25,16 +25,12 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 * @param {string} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSUIFramework.Patterns.RangeSlider.IRangeSlider}
 	 */
-	export function Create(
-		rangeSliderId: string,
-		type: string,
-		configs: string
-	): OSUIFramework.Patterns.RangeSlider.IRangeSlider {
+	export function Create(rangeSliderId: string, configs: string): OSUIFramework.Patterns.RangeSlider.IRangeSlider {
 		if (_rangeSliderItemsMap.has(rangeSliderId)) {
-			throw new Error(`There is already an RangeSliderItem registered under id: ${rangeSliderId}`);
+			throw new Error(`There is already an RangeSlider registered under id: ${rangeSliderId}`);
 		}
 
-		const _rangeSliderItem = Providers.RangeSlider.Factory.NewRangeSlider(rangeSliderId, type, configs);
+		const _rangeSliderItem = new Providers.NoUiSlider.OSUINoUiSlider(rangeSliderId, JSON.parse(configs));
 
 		_rangeSliderItemsMap.set(rangeSliderId, _rangeSliderItem);
 

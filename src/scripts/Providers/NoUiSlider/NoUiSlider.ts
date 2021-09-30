@@ -1,12 +1,15 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.RangeSlider {
+namespace Providers.NoUiSlider {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
-	export class RangeSlider
-		extends OSUIFramework.Patterns.RangeSlider.AbstractRangeSlider<Providers.RangeSlider.RangeSliderConfig>
+	// eslint-disable-next-line @typescript-eslint/naming-convention
+	export class OSUINoUiSlider
+		extends OSUIFramework.Patterns.RangeSlider.AbstractRangeSlider<NoUiSlider.NoUiSliderConfig>
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		implements Providers.RangeSlider.IRangeSliderProvider
+		implements
+			OSUIFramework.Patterns.RangeSlider.IRangeSlider,
+			OSUIFramework.Interface.IProviderPattern<NoUiSlider>
 	{
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnEnd: any;
@@ -28,7 +31,7 @@ namespace Providers.RangeSlider {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
-			super(uniqueId, new RangeSliderConfig(configs));
+			super(uniqueId, new NoUiSliderConfig(configs));
 
 			this._eventOnValueChangeEvent = this._triggerOnValueChangeEvent.bind(this);
 			this._eventOnEnd = this._triggerOnEndEvent.bind(this);
@@ -116,9 +119,13 @@ namespace Providers.RangeSlider {
 		}
 
 		// Handler to trigger the OnValueChange event
-		private _triggerOnValueChangeEvent(value: number): void {
+		private _triggerOnValueChangeEvent(value: number[]): void {
 			setTimeout(() => {
-				this._onValueChange(this.widgetId, Math.floor(value));
+				this._onValueChange(
+					this.widgetId,
+					Math.floor(value[0]),
+					Math.floor(value[1]) ? Math.floor(value[1]) : Math.floor(value[0])
+				);
 			}, 0);
 		}
 
@@ -146,10 +153,17 @@ namespace Providers.RangeSlider {
 					this.updateRangeValues(this._configs.MinValue, propertyValue);
 
 					break;
-				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.InitialValue:
-					this._configs.InitialValue = propertyValue;
+				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.InitialValueStart:
+					this._configs.InitialValueStart = propertyValue;
 					if (!this._isSliding) {
-						this.setValue(propertyValue);
+						this.setValue(propertyValue, this._configs.InitialValueEnd);
+					}
+
+					break;
+				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.InitialValueEnd:
+					this._configs.InitialValueEnd = propertyValue;
+					if (!this._isSliding) {
+						this.setValue(this._configs.InitialValueStart, propertyValue);
 					}
 
 					break;
@@ -272,10 +286,10 @@ namespace Providers.RangeSlider {
 		}
 
 		// Method to set a new value to the RangeSlider
-		public setValue(value: number): void {
-			this.provider.set(value);
+		public setValue(startValue: number, endValue: number): void {
+			this.provider.set([startValue, endValue]);
 			// Trigger platform event after setting the value
-			this._triggerOnValueChangeEvent(value);
+			this._triggerOnValueChangeEvent([startValue, endValue]);
 		}
 
 		// Method to create/update the VerticalHieght CSS Variable
@@ -290,8 +304,9 @@ namespace Providers.RangeSlider {
 		// Method to remove and destroy RangeSlider instance
 		public updateRangeSlider(): void {
 			if (typeof this._provider === 'object') {
-				// Get value so the the Range Slider keeps the same value as before is destroyed
-				this._configs.InitialValue = this.getValue();
+				// Get values so the the Range Slider keeps the same values as before is destroyed
+				this._configs.InitialValueStart = this.getValue()[0];
+				this._configs.InitialValueEnd = this.getValue()[1];
 				this._provider.destroy();
 				this._createProviderRangeSlider();
 			}
