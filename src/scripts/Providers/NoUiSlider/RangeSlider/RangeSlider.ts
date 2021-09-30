@@ -290,7 +290,7 @@ namespace Providers.RangeSlider {
 		// Method to remove and destroy RangeSlider instance
 		public updateRangeSlider(): void {
 			if (typeof this._provider === 'object') {
-				// Get value so the the Range Slider kees the same value as before is destroyed
+				// Get value so the the Range Slider keeps the same value as before is destroyed
 				this._configs.InitialValue = this.getValue();
 				this._provider.destroy();
 				this._createProviderRangeSlider();
