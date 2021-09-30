@@ -18,6 +18,20 @@ namespace OSUIFramework.Patterns.Notification {
 
 		// Set accessibility atrributes on html elements
 		private _setAccessibilityProps(): void {
+			Helper.Attribute.Set(
+				this._selfElem,
+				Constants.AccessibilityAttribute.Aria.Hidden,
+				(!this._isOpen).toString()
+			);
+
+			Helper.Attribute.Set(
+				this._selfElem,
+				Constants.AccessibilityAttribute.TabIndex,
+				this._isOpen
+					? Constants.AccessibilityAttribute.States.TabIndexShow
+					: Constants.AccessibilityAttribute.States.TabIndexHidden
+			);
+
 			console.log('_setAccessibilityProps');
 		}
 
@@ -28,6 +42,9 @@ namespace OSUIFramework.Patterns.Notification {
 
 		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _setInitialCssClasses(): void {
+			if (this._isOpen) {
+				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternIsOpen);
+			}
 			console.log('_setInitialCssClasses');
 		}
 
@@ -64,8 +81,11 @@ namespace OSUIFramework.Patterns.Notification {
 						Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
 					}
 
-					// Only toggle event if the status has chnaged
+					// Only toggle event if the status has changed
 					this._triggerOnToggleEvent(this._isOpen);
+
+					// Update accessibility properties
+					this._setAccessibilityProps();
 
 					break;
 				default:
