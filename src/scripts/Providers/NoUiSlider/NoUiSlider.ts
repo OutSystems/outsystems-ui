@@ -1,11 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.NoUiSlider {
+namespace Providers.RangeSlider {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class OSUINoUiSlider
-		extends OSUIFramework.Patterns.RangeSlider.AbstractRangeSlider<NoUiSlider.NoUiSliderConfig>
+		extends OSUIFramework.Patterns.RangeSlider.AbstractRangeSlider<RangeSlider.NoUiSliderConfig>
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		implements
 			OSUIFramework.Patterns.RangeSlider.IRangeSlider,

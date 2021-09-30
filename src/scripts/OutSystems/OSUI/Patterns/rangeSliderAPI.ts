@@ -30,7 +30,7 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 			throw new Error(`There is already an RangeSlider registered under id: ${rangeSliderId}`);
 		}
 
-		const _rangeSliderItem = new Providers.NoUiSlider.OSUINoUiSlider(rangeSliderId, JSON.parse(configs));
+		const _rangeSliderItem = new Providers.RangeSlider.OSUINoUiSlider(rangeSliderId, JSON.parse(configs));
 
 		_rangeSliderItemsMap.set(rangeSliderId, _rangeSliderItem);
 

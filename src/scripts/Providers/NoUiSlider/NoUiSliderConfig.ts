@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace Providers.NoUiSlider {
+namespace Providers.RangeSlider {
 	export class NoUiSliderConfig extends OSUIFramework.Patterns.RangeSlider.AbstractRangeSliderConfig {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		public getProviderConfig(): any {
