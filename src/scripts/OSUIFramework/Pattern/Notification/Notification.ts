@@ -20,17 +20,12 @@ namespace OSUIFramework.Patterns.Notification {
 		private _setAccessibilityProps(): void {
 			Helper.Attribute.Set(
 				this._selfElem,
-				Constants.AccessibilityAttribute.Aria.Hidden,
-				(!this._isOpen).toString()
+				Constants.AccessibilityAttribute.Role.AttrName,
+				Constants.AccessibilityAttribute.Role.Alert
 			);
 
-			Helper.Attribute.Set(
-				this._selfElem,
-				Constants.AccessibilityAttribute.TabIndex,
-				this._isOpen
-					? Constants.AccessibilityAttribute.States.TabIndexShow
-					: Constants.AccessibilityAttribute.States.TabIndexHidden
-			);
+			// Update accessibility properties
+			this._updateAccessibilityProps();
 
 			console.log('_setAccessibilityProps');
 		}
@@ -53,6 +48,23 @@ namespace OSUIFramework.Patterns.Notification {
 			setTimeout(() => {
 				this._onToggle(this.widgetId, isOpen);
 			}, 0);
+		}
+
+		// Set the cssClasses that should be assigned to the element on it's initialization
+		private _updateAccessibilityProps(): void {
+			Helper.Attribute.Set(
+				this._selfElem,
+				Constants.AccessibilityAttribute.Aria.Hidden,
+				(!this._isOpen).toString()
+			);
+
+			Helper.Attribute.Set(
+				this._selfElem,
+				Constants.AccessibilityAttribute.TabIndex,
+				this._isOpen
+					? Constants.AccessibilityAttribute.States.TabIndexShow
+					: Constants.AccessibilityAttribute.States.TabIndexHidden
+			);
 		}
 
 		public build(): void {
@@ -85,7 +97,7 @@ namespace OSUIFramework.Patterns.Notification {
 					this._triggerOnToggleEvent(this._isOpen);
 
 					// Update accessibility properties
-					this._setAccessibilityProps();
+					this._updateAccessibilityProps();
 
 					break;
 				default:
