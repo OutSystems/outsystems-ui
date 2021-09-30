@@ -213,7 +213,9 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		// Set the IsExpanded option
 		private _setIsExpanded(IsExpanded: boolean): void {
 			this._configs.IsExpanded = IsExpanded;
+			this._isOpen = IsExpanded;
 
+			this._setClasses();
 			this._setUpEvents();
 		}
 
