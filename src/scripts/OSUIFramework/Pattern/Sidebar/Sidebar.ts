@@ -411,10 +411,10 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 
 			// Make async so that the platform updates the DIV visibility on the DOM
-			setTimeout(() => {
+			Helper.AsyncInvocation(() => {
 				this._sidebarOverlayElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Overlay);
 				this._handleOverlayClick(hasOverlay);
-			}, 0);
+			});
 
 			this._hasOverlay = hasOverlay;
 			this._configs.HasOverlay = hasOverlay;

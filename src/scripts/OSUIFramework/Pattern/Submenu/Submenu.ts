@@ -301,9 +301,7 @@ namespace OSUIFramework.Patterns.Submenu {
 			this._setAccessibilityProps();
 
 			// Add timeout to make this method call asynchronous to wait for the classes of device detection
-			setTimeout(() => {
-				this._addEvents();
-			}, 0);
+			Helper.AsyncInvocation(this._addEvents.bind(this));
 
 			this.finishBuild();
 		}
