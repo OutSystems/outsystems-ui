@@ -63,7 +63,9 @@ namespace OSUIFramework.GlobalEnum {
 	 */
 	export enum Direction {
 		Left = 'left',
+		LTR = 'ltr',
 		Right = 'right',
+		RTL = 'rtl',
 	}
 
 	/**
@@ -100,6 +102,14 @@ namespace OSUIFramework.GlobalEnum {
 		Tab = 'Tab',
 		Shift = 'Shift',
 		Space = ' ',
+	}
+
+	/**
+	 * OutSystems mobile operating systems
+	 */
+	export enum MobileOS {
+		Android = 'android',
+		IOS = 'ios',
 	}
 
 	/**
