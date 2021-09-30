@@ -269,11 +269,6 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		private _setUpFloatingActions(): void {
 			this._floatingActions = this._selfElem;
 
-			//In case this is being setup by the items before it's the floating actions itself
-			if (!this._floatingActions) {
-				return;
-			}
-
 			this._floatingActionsButton = this._floatingActions.querySelector(
 				Constants.Dot + Enum.CssClasses.FloatingActionsButton
 			);
@@ -312,7 +307,10 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			floatingActionItem: FloatingActionsItem.IFloatingActionsItem
 		): void {
 			this._floatingItems.set(uniqueId, floatingActionItem);
-			this._setUpFloatingActions();
+			//In case this is being setup by the items before it's the floating actions itself
+			if (this.isBuilt) {
+				this._setUpFloatingActions();
+			}
 		}
 
 		public build(): void {

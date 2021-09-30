@@ -24,7 +24,4 @@ namespace OSUIFramework.Patterns.FloatingActions.Enum {
 		FloatingActions = '[data-block="Interaction.FloatingActions"]',
 		FloatingActionWrapper = '.floating-actions-wrapper',
 	}
-
-	// Warning/Error messages
-	export enum Messages {}
 }
