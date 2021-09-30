@@ -17,6 +17,8 @@ namespace Providers.NoUiSlider {
 		private _eventOnStart: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnValueChangeEvent: any;
+		// Store if is RangeSliderInterval or RangeSlider
+		private _isInterval: boolean;
 		// Store if the slider is being dragged
 		private _isSliding: boolean;
 		// RangeSlider events
@@ -36,6 +38,7 @@ namespace Providers.NoUiSlider {
 			this._eventOnValueChangeEvent = this._triggerOnValueChangeEvent.bind(this);
 			this._eventOnEnd = this._triggerOnEndEvent.bind(this);
 			this._eventOnStart = this._triggerOnStartEvent.bind(this);
+			this._isInterval = this._configs.IsInterval;
 		}
 
 		// Method that will create the provider
