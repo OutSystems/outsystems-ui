@@ -3,11 +3,23 @@ namespace OSUIFramework.Patterns.Notification.Enum {
 	/**
 	 * Notification Enum properties
 	 */
-	export enum Properties {}
-	//Implement you code here
+	export enum Properties {
+		IsOpen = 'IsOpen',
+		Position = 'Position',
+		Width = 'Width',
+		HasOverlay = 'HasOverlay',
+		CloseAfterTime = 'CloseAfterTime',
+		CloseOnBodyClick = 'CloseOnBodyClick',
+	}
+
 	/**
-	 * Notification Enum for CSS Classes
+	 * Sidebar Enum for CSS Classes
 	 */
-	export enum CssClass {}
-	//Implement you code here
+
+	export enum CssClass {
+		Pattern = 'osui-notification',
+		PatternContent = 'osui-notification-content',
+		PatternIsOpen = 'is-open',
+		PatternOverlay = 'osui-notification_overlay',
+	}
 }
