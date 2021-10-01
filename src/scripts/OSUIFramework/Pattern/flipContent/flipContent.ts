@@ -124,6 +124,18 @@ namespace OSUIFramework.Patterns.FlipContent {
 			this._onClick = callback;
 		}
 
+		// Public method to trigger the flipping of the pattern and the event on the platform's side
+		public triggerFlip(): void {
+			this.configs.IsFlipped = !this.configs.IsFlipped;
+			Helper.Attribute.Set(this._flipWrapper, Enum.CssClass.DataFlipped, this.configs.IsFlipped.toString());
+
+			Helper.Style.ToggleClass(this._selfElem, Enum.CssClass.IsFlipped);
+
+			this._triggerToggleClick();
+
+			this._setUpClasses();
+		}
+
 		public updateOnRender(): void {
 			// This won't run until the pattern has been built
 			if (this.isBuilt) {
@@ -145,17 +157,6 @@ namespace OSUIFramework.Patterns.FlipContent {
 					);
 				}
 			}
-		}
-		// Public method to trigger the flipping of the pattern and the event on the platform's side
-		public triggerFlip(): void {
-			this.configs.IsFlipped = !this.configs.IsFlipped;
-			Helper.Attribute.Set(this._flipWrapper, Enum.CssClass.DataFlipped, this.configs.IsFlipped.toString());
-
-			Helper.Style.ToggleClass(this._selfElem, Enum.CssClass.IsFlipped);
-
-			this._triggerToggleClick();
-
-			this._setUpClasses();
 		}
 	}
 }
