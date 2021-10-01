@@ -101,10 +101,8 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			// Ensure that this will run only at the Initialization
 			if (!this.isBuilt) {
 				// Make async to ensure that all css variables are assigned
-				setTimeout(() => {
-					// Update according initial style
-					this.addInitialAnimation();
-				}, 0);
+				// Update according initial style
+				Helper.AsyncInvocation(this.addInitialAnimation.bind(this));
 			}
 		}
 

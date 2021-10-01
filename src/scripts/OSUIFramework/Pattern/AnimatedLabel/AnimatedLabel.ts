@@ -82,7 +82,7 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 
 		public build(): void {
 			//OS takes a while to set the TextArea
-			setTimeout(() => {
+			Helper.AsyncInvocation(() => {
 				super.build();
 
 				this._setHtmlElements();
@@ -90,7 +90,7 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 				this._addEvents();
 
 				this.finishBuild();
-			}, 0);
+			});
 		}
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
