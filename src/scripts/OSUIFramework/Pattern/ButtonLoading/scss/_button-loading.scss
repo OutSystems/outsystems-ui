@@ -14,24 +14,12 @@
 			overflow: hidden;
 			text-indent: -9999px;
 
-			& > *:not(.btn-loading):not(.loading-spinner):not(.btn-label) {
+			& > *:not(.btn-loading):not(.loading-spinner) {
 				display: none;
 			}
-		}
 
-		&.is--loading {
-			.btn {
-				.btn-label {
-					display: none;
-				}
-			}
-		}
-	}
-
-	&.is--loading:not(.show-spinner-only) {
-		.btn {
-			.btn-label {
-				text-indent: var(--space-s);
+			.btn-loading {
+				margin: var(--space-none);
 			}
 		}
 	}
@@ -51,10 +39,6 @@
 
 		& > * {
 			text-indent: initial;
-		}
-
-		.btn-loading {
-			margin: var(--space-none);
 		}
 
 		.loading-spinner {
