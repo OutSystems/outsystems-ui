@@ -5,18 +5,6 @@
 
 ///
 .osui-notification {
-	background-color: var(--color-neutral-0);
-	border: var(--border-size-s) solid var(--color-neutral-4);
-	border-radius: var(--border-radius-soft);
-	box-shadow: var(--shadow-xl);
-	color: var(--color-neutral-10);
-	padding: var(--space-m);
-	position: fixed;
-	transition: all 300ms ease-out;
-	user-select: none;
-	width: var(--notification-width);
-	z-index: 300;
-
 	// Service Studio Preview
 	& {
 		-servicestudio--webkit-transform: translateY(0);
@@ -25,108 +13,138 @@
 	}
 
 	&-content {
-		align-items: center;
-		display: flex;
+		background-color: var(--color-neutral-0);
+		border: var(--border-size-s) solid var(--color-neutral-4);
+		border-radius: var(--border-radius-soft);
+		box-shadow: var(--shadow-xl);
+		color: var(--color-neutral-10);
+		padding: var(--space-m);
+		position: fixed;
+		transition: all 300ms ease-out;
+		user-select: none;
+		width: var(--notification-width);
+		z-index: 300;
 	}
 }
 
-.osui-notification.is-top {
+.osui-notification.is-top .osui-notification-content {
 	left: 50%;
 	top: calc(var(--space-xxl) * -1);
 	transform: translate(-50%, -100%);
 }
 
-.osui-notification.is-top.is-open {
-	top: var(--space-m);
+.osui-notification.is-top.is-open .osui-notification-content {
+	margin-top: var(--space-m);
+	top: 0;
 	transform: translate(-50%, 0%);
 }
 
-.osui-notification.is-top-right {
-	right: var(--space-m);
-	top: calc(var(--space-xxl) * -1);
-	transform: translateY(-100%);
+.osui-notification.is-top-right .osui-notification-content {
+	margin-top: var(--space-m);
+	right: -100%;
+	top: 0;
 }
 
-.osui-notification.is-top-right.is-open {
-	top: var(--space-m);
-	transform: translateY(0%);
+.osui-notification.is-top-right.is-open .osui-notification-content {
+	margin-right: var(--space-m);
+	right: 0;
 }
 
-.osui-notification.is-top-left {
-	left: var(--space-m);
-	top: calc(var(--space-xxl) * -1);
-	transform: translateY(-100%);
+.osui-notification.is-top-left .osui-notification-content {
+	left: -100%;
+	margin-top: var(--space-m);
+	top: 0;
 }
 
-.osui-notification.is-top-left.is-open {
-	top: var(--space-m);
-	transform: translateY(0%);
+.osui-notification.is-top-left.is-open .osui-notification-content {
+	left: 0;
+	margin-left: var(--space-m);
 }
 
-.osui-notification.is-bottom {
+.osui-notification.is-bottom .osui-notification-content {
 	bottom: calc(var(--space-xxl) * -1);
 	left: 50%;
 	transform: translate(-50%, 100%);
 }
 
-.osui-notification.is-bottom.is-open {
-	bottom: var(--space-m);
+.osui-notification.is-bottom.is-open .osui-notification-content {
+	bottom: 0;
+	margin-bottom: var(--space-m);
 	transform: translateX(-50%);
 }
 
-.osui-notification.is-bottom-right {
-	bottom: var(--space-m);
+.osui-notification.is-bottom-right .osui-notification-content {
+	bottom: 0;
+	margin-bottom: var(--space-m);
 	right: -100%;
 }
 
-.osui-notification.is-bottom-right.is-open {
-	bottom: var(--space-m);
-	right: var(--space-m);
+.osui-notification.is-bottom-right.is-open .osui-notification-content {
+	bottom: 0;
+	margin: var(--space-none) var(--space-m) var(--space-m) var(--space-none);
+	right: 0;
 }
 
-.osui-notification.is-bottom-left {
-	bottom: var(--space-m);
+.osui-notification.is-bottom-left .osui-notification-content {
+	bottom: 0;
 	left: -100%;
+	margin-bottom: var(--space-m);
 }
 
-.osui-notification.is-bottom-left.is-open {
-	bottom: var(--space-m);
-	left: var(--space-m);
+.osui-notification.is-bottom-left.is-open .osui-notification-content {
+	bottom: 0;
+	left: 0;
+	margin: var(--space-none) var(--space-none) var(--space-m) var(--space-m);
 }
 
-.osui-notification.is-center {
+.osui-notification.is-center .osui-notification-content {
 	left: 50%;
 	top: calc(var(--space-xxl) * -1);
 	transform: translate(-50%, -100%);
 }
 
-.osui-notification.is-center.is-open {
+.osui-notification.is-center.is-open .osui-notification-content {
 	top: 50%;
 	transform: translate(-50%, -50%);
 }
 
-.osui-notification.is-right {
+.osui-notification.is-right .osui-notification-content {
 	right: -100%;
 	top: 50%;
 	transform: translateY(-50%);
 }
 
-.osui-notification.is-right.is-open {
-	right: var(--space-m);
+.osui-notification.is-right.is-open .osui-notification-content {
+	margin-right: var(--space-m);
+	right: 0;
 	top: 50%;
 	transform: translateY(-50%);
 }
 
-.osui-notification.is-left {
+.osui-notification.is-left .osui-notification-content {
 	left: -100%;
 	top: 50%;
 	transform: translateY(-50%);
 }
 
-.osui-notification.is-left.is-open {
-	left: var(--space-m);
+.osui-notification.is-left.is-open .osui-notification-content {
+	left: 0;
+	margin-left: var(--space-m);
 	top: 50%;
 	transform: translateY(-50%);
+}
+
+.osui-notification.is-open.has-overlay:before {
+	background-color: rgba(0, 0, 0, 0.25);
+	content: '';
+	display: block;
+	height: 100vh;
+	left: 0;
+	pointer-events: none;
+	position: fixed;
+	top: 0;
+	width: 100vw;
+	z-index: 100;
 }
 
 ///
@@ -161,7 +179,7 @@
 .fade-enter,
 .fade-leave {
 	.layout-native {
-		.notification {
+		.osui-notification {
 			display: none;
 		}
 	}

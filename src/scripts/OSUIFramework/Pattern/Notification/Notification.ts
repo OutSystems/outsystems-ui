@@ -39,17 +39,24 @@ namespace OSUIFramework.Patterns.Notification {
 			// Set width value for Notification
 			if (this._configs.Width !== '') {
 				Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, this._configs.Width);
+			} else {
+				Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, Enum.Defaults.DefaultWidth);
+				this._configs.Width = Enum.Defaults.DefaultWidth;
 			}
 
 			// Set position initial class
 			if (this._configs.Position !== '') {
 				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternPosition + this._configs.Position);
+			} else {
+				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternPosition + Enum.Defaults.DefaultPosition);
+				this._configs.Position = Enum.Defaults.DefaultPosition;
 			}
 
 			// Set HasOverlay class
 			if (this._configs.HasOverlay) {
 				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternOverlay);
 			}
+
 			console.log('_setInitialCssClasses');
 		}
 

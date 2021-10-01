@@ -13,7 +13,15 @@ namespace OSUIFramework.Patterns.Notification.Enum {
 	}
 
 	/**
-	 * Sidebar Enum for CSS Classes
+	 * Notification default properties
+	 */
+	export enum Defaults {
+		DefaultWidth = '370px',
+		DefaultPosition = 'top',
+	}
+
+	/**
+	 * Notification Enum for CSS Classes
 	 */
 
 	export enum CssClass {
@@ -25,7 +33,7 @@ namespace OSUIFramework.Patterns.Notification.Enum {
 	}
 
 	/**
-	 * Sidebar Enum for CSS Custom Properties
+	 * Notification Enum for CSS Custom Properties
 	 */
 	export enum CssProperty {
 		Width = '--notification-width',
