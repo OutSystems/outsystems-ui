@@ -1,7 +1,6 @@
 /*! Patterns - Content - Submenu */
 /* Since this pattern is Deprecated, it should not appear at SASSDCS! */
 
-///
 .submenu {
 	cursor: pointer;
 	display: inline-flex;
@@ -154,7 +153,6 @@
 	}
 }
 
-///
 .layout {
 	&:not(.layout-side) {
 		.app-menu-links {
@@ -176,7 +174,6 @@
 	}
 }
 
-///
 .layout-side {
 	.app-menu-links {
 		.submenu a {
@@ -226,7 +223,6 @@
 	}
 }
 
-///
 .layout-side,
 .menu-visible {
 	.app-menu-links {
@@ -237,7 +233,7 @@
 }
 
 // Responsive --------------------------------------------------------------------
-///
+
 .desktop {
 	.submenu {
 		&:hover {
@@ -281,7 +277,6 @@
 	}
 }
 
-///
 .tablet,
 .phone {
 	.submenu {
@@ -325,7 +320,7 @@
 }
 
 // IsRTL -------------------------------------------------------------------------
-///
+
 .is-rtl {
 	.layout-side {
 		.submenu {
