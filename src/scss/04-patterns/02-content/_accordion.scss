@@ -5,12 +5,12 @@
 
 ///
 [data-block*='AccordionItem'] {
-	&:first-child .section-expandable {
+	&:first-of-type .section-expandable {
 		border-radius: var(--border-radius-soft) var(--border-radius-soft) var(--border-radius-none)
 			var(--border-radius-none);
 	}
 
-	&:last-child .section-expandable {
+	&:last-of-type .section-expandable {
 		border-bottom-width: var(--border-size-s);
 		border-radius: var(--border-radius-none) var(--border-radius-none) var(--border-radius-soft)
 			var(--border-radius-soft);

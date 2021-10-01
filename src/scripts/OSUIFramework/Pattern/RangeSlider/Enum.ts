@@ -5,8 +5,8 @@ namespace OSUIFramework.Patterns.RangeSlider.Enum {
 	 */
 	export enum Properties {
 		ChangeEventDuringSlide = 'ChangeEventDuringSlide',
-		ExtendedClass = 'ExtendedClass',
-		InitialValue = 'InitialValue',
+		InitialValueEnd = 'InitialValueEnd',
+		InitialValueStart = 'InitialValueStart',
 		IsDisabled = 'IsDisabled',
 		IsVertical = 'IsVertical',
 		MaxValue = 'MaxValue',
@@ -30,6 +30,13 @@ namespace OSUIFramework.Patterns.RangeSlider.Enum {
 	 */
 	export enum CssProperties {
 		VerticalHeight = '--vertical-height',
+	}
+
+	/**
+	 * RangeSlider Enum for Providers
+	 */
+	export enum Provider {
+		NoUiSlider = 'noUiSlider',
 	}
 
 	/**

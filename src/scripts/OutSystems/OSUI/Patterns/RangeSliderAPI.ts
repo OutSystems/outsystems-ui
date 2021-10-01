@@ -27,14 +27,18 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 */
 	export function Create(
 		rangeSliderId: string,
-		type: string,
-		configs: string
+		configs: string,
+		provider: string
 	): OSUIFramework.Patterns.RangeSlider.IRangeSlider {
 		if (_rangeSliderItemsMap.has(rangeSliderId)) {
-			throw new Error(`There is already an RangeSliderItem registered under id: ${rangeSliderId}`);
+			throw new Error(`There is already an RangeSlider registered under id: ${rangeSliderId}`);
 		}
 
-		const _rangeSliderItem = Providers.RangeSlider.Factory.NewRangeSlider(rangeSliderId, type, configs);
+		const _rangeSliderItem = OSUIFramework.Patterns.RangeSlider.Factory.NewRangeSlider(
+			rangeSliderId,
+			configs,
+			provider
+		);
 
 		_rangeSliderItemsMap.set(rangeSliderId, _rangeSliderItem);
 

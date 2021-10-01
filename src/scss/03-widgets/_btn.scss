@@ -175,8 +175,7 @@
 
 	.bottom-bar {
 		.btn {
-			border-radius: 0;
-			height: 100%;
+			padding-bottom: var(--space-none);
 		}
 	}
 }
