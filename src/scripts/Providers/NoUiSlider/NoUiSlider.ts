@@ -305,11 +305,13 @@ namespace Providers.RangeSlider {
 		public updateRangeSlider(): void {
 			if (this.isBuilt) {
 				// Get values so the the Range Slider keeps the same values as before is destroyed
+				const value = this.getValue();
+
 				if (this._isInterval) {
-					this._configs.InitialValueStart = this.getValue()[0];
-					this._configs.InitialValueEnd = this.getValue()[1];
+					this._configs.InitialValueStart = value[0];
+					this._configs.InitialValueEnd = value[1];
 				} else {
-					this._configs.InitialValueStart = this.getValue();
+					this._configs.InitialValueStart = value;
 				}
 
 				this._provider.destroy();
