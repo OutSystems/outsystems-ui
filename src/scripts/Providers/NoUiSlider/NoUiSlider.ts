@@ -219,7 +219,7 @@ namespace Providers.RangeSlider {
 		}
 
 		// Method to get current RangeSlider value
-		public getValue(): number {
+		public getValue(): number | number[] {
 			return this.provider.get();
 		}
 
@@ -311,7 +311,7 @@ namespace Providers.RangeSlider {
 					this._configs.InitialValueStart = value[0];
 					this._configs.InitialValueEnd = value[1];
 				} else {
-					this._configs.InitialValueStart = value;
+					this._configs.InitialValueStart = value as number;
 				}
 
 				this._provider.destroy();
