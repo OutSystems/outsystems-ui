@@ -120,12 +120,12 @@ namespace Providers.RangeSlider {
 		}
 
 		// Handler to trigger the OnValueChange event
-		private _triggerOnValueChangeEvent(value: number[]): void {
+		private _triggerOnValueChangeEvent(value: number | number[]): void {
 			OSUIFramework.Helper.AsyncInvocation(
 				this._onValueChange,
 				this.widgetId,
 				Math.floor(value[0]),
-				Math.floor(value[1]) ? Math.floor(value[1]) : Math.floor(value[0])
+				Math.floor(value[1])
 			);
 		}
 
