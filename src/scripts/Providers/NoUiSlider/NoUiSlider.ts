@@ -95,9 +95,7 @@ namespace Providers.RangeSlider {
 
 		// Method to set the OnInitializeEvent
 		private _setOnInitializedEvent(): void {
-			setTimeout(() => {
-				this._onInitialize(this.widgetId);
-			}, 0);
+			OSUIFramework.Helper.AsyncInvocation(this._onInitialize, this.widgetId);
 		}
 
 		// Method to set the OnValueChangeEvent
