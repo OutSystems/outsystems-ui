@@ -25,144 +25,151 @@
 		width: var(--notification-width);
 		z-index: 300;
 	}
-}
 
-.osui-notification.is-top .osui-notification-content {
-	left: 50%;
-	top: calc(var(--space-xxl) * -1);
-	transform: translate(-50%, -100%);
-}
+	&.is {
+		&-top {
+			.osui-notification-content {
+				left: 50%;
+				top: calc(var(--space-xxl) * -1);
+				transform: translate(-50%, -100%);
+			}
 
-.osui-notification.is-top.is-open .osui-notification-content {
-	margin-top: var(--space-m);
-	top: 0;
-	transform: translate(-50%, 0%);
-}
+			&-right,
+			&-left {
+				.osui-notification-content {
+					margin-top: var(--space-m);
+					top: 0;
+				}
+			}
 
-.osui-notification.is-top-right .osui-notification-content {
-	margin-top: var(--space-m);
-	right: -100%;
-	top: 0;
-}
+			&-right .osui-notification-content {
+				right: -100%;
+			}
 
-.osui-notification.is-top-right.is-open .osui-notification-content {
-	margin-right: var(--space-m);
-	right: 0;
-}
-
-.osui-notification.is-top-left .osui-notification-content {
-	left: -100%;
-	margin-top: var(--space-m);
-	top: 0;
-}
-
-.osui-notification.is-top-left.is-open .osui-notification-content {
-	left: 0;
-	margin-left: var(--space-m);
-}
-
-.osui-notification.is-bottom .osui-notification-content {
-	bottom: calc(var(--space-xxl) * -1);
-	left: 50%;
-	transform: translate(-50%, 100%);
-}
-
-.osui-notification.is-bottom.is-open .osui-notification-content {
-	bottom: 0;
-	margin-bottom: var(--space-m);
-	transform: translateX(-50%);
-}
-
-.osui-notification.is-bottom-right .osui-notification-content {
-	bottom: 0;
-	margin-bottom: var(--space-m);
-	right: -100%;
-}
-
-.osui-notification.is-bottom-right.is-open .osui-notification-content {
-	bottom: 0;
-	margin: var(--space-none) var(--space-m) var(--space-m) var(--space-none);
-	right: 0;
-}
-
-.osui-notification.is-bottom-left .osui-notification-content {
-	bottom: 0;
-	left: -100%;
-	margin-bottom: var(--space-m);
-}
-
-.osui-notification.is-bottom-left.is-open .osui-notification-content {
-	bottom: 0;
-	left: 0;
-	margin: var(--space-none) var(--space-none) var(--space-m) var(--space-m);
-}
-
-.osui-notification.is-center .osui-notification-content {
-	left: 50%;
-	top: calc(var(--space-xxl) * -1);
-	transform: translate(-50%, -100%);
-}
-
-.osui-notification.is-center.is-open .osui-notification-content {
-	top: 50%;
-	transform: translate(-50%, -50%);
-}
-
-.osui-notification.is-right .osui-notification-content {
-	right: -100%;
-	top: 50%;
-	transform: translateY(-50%);
-}
-
-.osui-notification.is-right.is-open .osui-notification-content {
-	margin-right: var(--space-m);
-	right: 0;
-	top: 50%;
-	transform: translateY(-50%);
-}
-
-.osui-notification.is-left .osui-notification-content {
-	left: -100%;
-	top: 50%;
-	transform: translateY(-50%);
-}
-
-.osui-notification.is-left.is-open .osui-notification-content {
-	left: 0;
-	margin-left: var(--space-m);
-	top: 50%;
-	transform: translateY(-50%);
-}
-
-.osui-notification.is-open.has-overlay:before {
-	background-color: rgba(0, 0, 0, 0.25);
-	content: '';
-	display: block;
-	height: 100vh;
-	left: 0;
-	pointer-events: none;
-	position: fixed;
-	top: 0;
-	width: 100vw;
-	z-index: 100;
-}
-
-///
-.layout-native {
-	.osui-notification {
-		left: 50%;
-		margin-left: -185px;
-		transform: translateY(-120%) translateX(0);
-
-		// Service Studio Preview
-		& {
-			-servicestudio-left: 0;
-			-servicestudio-margin-left: 0;
-			-servicestudio-transform: none;
+			&-left .osui-notification-content {
+				left: -100%;
+			}
 		}
 
-		&.is-open {
-			transform: translateY(24px) translateX(0);
+		&-bottom {
+			.osui-notification-content {
+				bottom: calc(var(--space-xxl) * -1);
+				left: 50%;
+				transform: translate(-50%, 100%);
+			}
+
+			&-right,
+			&-left {
+				.osui-notification-content {
+					bottom: 0;
+					margin-bottom: var(--space-m);
+				}
+			}
+
+			&-right .osui-notification-content {
+				right: -100%;
+			}
+
+			&-left .osui-notification-content {
+				left: -100%;
+			}
+		}
+
+		&-center .osui-notification-content {
+			left: 50%;
+			opacity: 0;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		&-right .osui-notification-content {
+			right: -100%;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		&-left .osui-notification-content {
+			left: -100%;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		&-open {
+			&.has-overlay:before {
+				background-color: rgba(0, 0, 0, 0.25);
+				content: '';
+				display: block;
+				height: 100vh;
+				left: 0;
+				pointer-events: none;
+				position: fixed;
+				top: 0;
+				width: 100vw;
+				z-index: 100;
+			}
+
+			&.is {
+				&-top {
+					.osui-notification-content {
+						margin-top: var(--space-m);
+						top: 0;
+						transform: translate(-50%, 0%);
+					}
+
+					&-right .osui-notification-content {
+						margin-right: var(--space-m);
+						right: 0;
+					}
+
+					&-left .osui-notification-content {
+						left: 0;
+						margin-left: var(--space-m);
+					}
+				}
+
+				&-bottom {
+					.osui-notification-content {
+						bottom: 0;
+						margin-bottom: var(--space-m);
+						transform: translateX(-50%);
+					}
+
+					&-right,
+					&-left {
+						.osui-notification-content {
+							bottom: 0;
+						}
+					}
+
+					&-right .osui-notification-content {
+						margin: var(--space-none) var(--space-m) var(--space-m) var(--space-none);
+						right: 0;
+					}
+
+					&-left .osui-notification-content {
+						left: 0;
+						margin: var(--space-none) var(--space-none) var(--space-m) var(--space-m);
+					}
+				}
+
+				&-center .osui-notification-content {
+					opacity: 1;
+				}
+
+				&-right .osui-notification-content {
+					margin-right: var(--space-m);
+					right: 0;
+					top: 50%;
+					transform: translateY(-50%);
+				}
+
+				&-left .osui-notification-content {
+					left: 0;
+					margin-left: var(--space-m);
+					top: 50%;
+					transform: translateY(-50%);
+				}
+			}
 		}
 	}
 }
@@ -181,6 +188,26 @@
 	.layout-native {
 		.osui-notification {
 			display: none;
+		}
+	}
+}
+
+///
+.layout-native {
+	.osui-notification {
+		left: 50%;
+		margin-left: -185px;
+		transform: translateY(-120%) translateX(0);
+
+		// Service Studio Preview
+		& {
+			-servicestudio-left: 0;
+			-servicestudio-margin-left: 0;
+			-servicestudio-transform: none;
+		}
+
+		&.is-open {
+			transform: translateY(24px) translateX(0);
 		}
 	}
 }
