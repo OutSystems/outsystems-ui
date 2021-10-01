@@ -125,7 +125,7 @@ namespace Providers.RangeSlider {
 				this._onValueChange,
 				this.widgetId,
 				Math.floor(value[0]),
-				Math.floor(value[1])
+				this._isInterval ? Math.floor(value[1]) : undefined
 			);
 		}
 
