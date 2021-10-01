@@ -16,6 +16,7 @@ namespace OSUIFramework.GlobalEnum {
 		AnimatedLabel = 'Animated Label',
 		ButtonLoading = 'ButtonLoading',
 		Carousel = 'Carousel',
+		FlipContent = 'Flip Content',
 		FloatingActions = 'Floating Actions',
 		FloatingActionsItem = 'Floating Actions Item',
 		Gallery = 'Gallery',
