@@ -28,7 +28,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 			super(uniqueId, new FlipContentConfig(configs));
 
 			this._onKeyDown = this._onKeyDownPress.bind(this);
-			this._onClickEvent = this._triggerFlip.bind(this);
+			this._onClickEvent = this.triggerFlip.bind(this);
 		}
 
 		private _onKeyDownPress(e): void {
@@ -58,49 +58,38 @@ namespace OSUIFramework.Patterns.FlipContent {
 		private _setFlipContent(): void {
 			this._flipElement = this._selfElem;
 			this._flipWrapper = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.FlipContainer);
-
-			Helper.Style.SetStyleAttribute(this._flipWrapper, 'cursor', 'pointer');
 		}
 
 		// Method to set the classes on the pattern's first render, toggle click & parameters changed
 		private _setUpClasses(): void {
 			if (this.configs.IsFlipped) {
 				Helper.Style.AddClass(this._flipElement, Enum.CssClass.IsFlipped);
-				Helper.Attribute.Set(this._flipWrapper, Enum.CssClass.DataFlipped, this.configs.IsFlipped.toString());
 			} else {
 				Helper.Style.RemoveClass(this._flipElement, Enum.CssClass.IsFlipped);
-				Helper.Attribute.Set(this._flipWrapper, Enum.CssClass.DataFlipped, this.configs.IsFlipped.toString());
 			}
+			Helper.Attribute.Set(this._flipWrapper, Enum.CssClass.DataFlipped, this.configs.IsFlipped.toString());
 		}
 
 		// Method to set the events on the pattern's first render
 		private _setUpEvents(): void {
-			if (!this.configs.FlipSelf) {
-				this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._onKeyDown);
-				this._flipWrapper.addEventListener(GlobalEnum.HTMLEvent.Click, this._onClickEvent);
-			} else {
-				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._onKeyDown);
+			if (this.configs.FlipSelf) {
+				this._flipElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._onKeyDown);
 				this._flipWrapper.removeEventListener(GlobalEnum.HTMLEvent.Click, this._onClickEvent);
 				Helper.Style.SetStyleAttribute(this._flipWrapper, 'cursor', 'default');
+			} else {
+				this._flipElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._onKeyDown);
+				this._flipWrapper.addEventListener(GlobalEnum.HTMLEvent.Click, this._onClickEvent);
+				// TODO a class for this
+				Helper.Style.SetStyleAttribute(this._flipWrapper, 'cursor', 'pointer');
 			}
-		}
-
-		// Method to trigger the flipping of the pattern and the event on the platform's side
-		private _triggerFlip(): void {
-			const notFlipped = !this._configs.IsFlipped;
-			Helper.Attribute.Set(this._flipWrapper, Enum.CssClass.DataFlipped, notFlipped.toString());
-
-			Helper.Style.ToggleClass(this._selfElem, Enum.CssClass.IsFlipped);
-			this._configs.IsFlipped = !this._configs.IsFlipped;
-			this._triggerToggleClick();
-
-			this._setUpClasses();
 		}
 
 		// Method that triggers the toggle event on the platform
 		private _triggerToggleClick(): void {
 			if (this._onClick !== undefined) {
-				this._onClick(this.widgetId, this.configs.IsFlipped);
+				setTimeout(() => {
+					this._onClick(this.widgetId, this.configs.IsFlipped);
+				}, 0);
 			}
 		}
 
@@ -115,19 +104,18 @@ namespace OSUIFramework.Patterns.FlipContent {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
-			if (Enum.Properties[propertyName] && this._configs.hasOwnProperty(propertyName)) {
-				switch (propertyName) {
-					case Enum.Properties.IsFlipped:
-						this._configs.IsFlipped = propertyValue.toLowerCase() === 'true';
-						this._setUpClasses();
-						break;
-					case Enum.Properties.FlipSelf:
-						this._configs.FlipSelf = propertyValue.toLowerCase() === 'true';
-						this._setUpEvents();
-						break;
-				}
-			} else {
-				throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
+			switch (propertyName) {
+				case Enum.Properties.IsFlipped:
+					this.configs.IsFlipped = propertyValue;
+					this._setUpClasses();
+					break;
+				case Enum.Properties.FlipSelf:
+					this.configs.FlipSelf = propertyValue;
+					this._setUpEvents();
+					break;
+				default:
+					super.changeProperty(propertyName, propertyValue);
+					break;
 			}
 		}
 
@@ -144,14 +132,13 @@ namespace OSUIFramework.Patterns.FlipContent {
 		public updateOnRender(): void {
 			// This won't run until the pattern has been built
 			if (this.isBuilt) {
-				const notFlipped = !this._configs.IsFlipped;
 				if (this.configs.IsFlipped) {
 					// We need to set this here because it's only when flipped that the back card exists
 					this._flipCardBack = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.CardBack);
 					Helper.Attribute.Set(
 						this._flipCardBack,
 						Constants.AccessibilityAttribute.Aria.Hidden,
-						notFlipped.toString()
+						(!this.configs.IsFlipped).toString()
 					);
 				} else {
 					// We need to set this here because Front Card doesn't exist until it has been flipped
@@ -163,6 +150,17 @@ namespace OSUIFramework.Patterns.FlipContent {
 					);
 				}
 			}
+		}
+		// Public method to trigger the flipping of the pattern and the event on the platform's side
+		public triggerFlip(): void {
+			this.configs.IsFlipped = !this.configs.IsFlipped;
+			Helper.Attribute.Set(this._flipWrapper, Enum.CssClass.DataFlipped, this.configs.IsFlipped.toString());
+
+			Helper.Style.ToggleClass(this._selfElem, Enum.CssClass.IsFlipped);
+
+			this._triggerToggleClick();
+
+			this._setUpClasses();
 		}
 	}
 }

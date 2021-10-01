@@ -120,4 +120,9 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 
 		return flipContent;
 	}
+
+	export function TriggerFlip(flipId: string): void {
+		const flipContent = GetFlipContentById(flipId);
+		flipContent.triggerFlip();
+	}
 }
