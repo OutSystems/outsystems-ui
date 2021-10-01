@@ -58,17 +58,30 @@ namespace OSUIFramework.Patterns.FlipContent {
 		private _setFlipContent(): void {
 			this._flipElement = this._selfElem;
 			this._flipWrapper = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.FlipContainer);
-			this._flipCardFront = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.CardFront);
+
+			Helper.Style.SetStyleAttribute(this._flipWrapper, 'cursor', 'pointer');
+		}
+
+		// Method to set the classes on the pattern's first render, toggle click & parameters changed
+		private _setUpClasses(): void {
+			if (this.configs.IsFlipped) {
+				Helper.Style.AddClass(this._flipElement, Enum.CssClass.IsFlipped);
+				Helper.Attribute.Set(this._flipWrapper, Enum.CssClass.DataFlipped, this.configs.IsFlipped.toString());
+			} else {
+				Helper.Style.RemoveClass(this._flipElement, Enum.CssClass.IsFlipped);
+				Helper.Attribute.Set(this._flipWrapper, Enum.CssClass.DataFlipped, this.configs.IsFlipped.toString());
+			}
 		}
 
 		// Method to set the events on the pattern's first render
 		private _setUpEvents(): void {
-			if (!this.configs.IsFlipped) {
+			if (!this.configs.FlipSelf) {
 				this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._onKeyDown);
 				this._flipWrapper.addEventListener(GlobalEnum.HTMLEvent.Click, this._onClickEvent);
 			} else {
 				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._onKeyDown);
 				this._flipWrapper.removeEventListener(GlobalEnum.HTMLEvent.Click, this._onClickEvent);
+				Helper.Style.SetStyleAttribute(this._flipWrapper, 'cursor', 'default');
 			}
 		}
 
@@ -81,24 +94,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 			this._configs.IsFlipped = !this._configs.IsFlipped;
 			this._triggerToggleClick();
 
-			// At this point, there isn't Flip Card Back yet as it hasn't been rendered - it's only when it's flipped that it exists
-
-			this._flipCardBack = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.CardBack);
-
-			// Is this flipped?
-			if (this._configs.IsFlipped) {
-				Helper.Attribute.Set(
-					this._flipCardBack,
-					Constants.AccessibilityAttribute.Aria.Hidden,
-					notFlipped.toString()
-				);
-			} else {
-				Helper.Attribute.Set(
-					this._flipCardFront,
-					Constants.AccessibilityAttribute.Aria.Hidden,
-					this.configs.IsFlipped.toString()
-				);
-			}
+			this._setUpClasses();
 		}
 
 		// Method that triggers the toggle event on the platform
@@ -113,6 +109,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 			super.build();
 			this._setFlipContent();
 			this._setUpEvents();
+			this._setUpClasses();
 			this.finishBuild();
 		}
 
@@ -121,11 +118,11 @@ namespace OSUIFramework.Patterns.FlipContent {
 			if (Enum.Properties[propertyName] && this._configs.hasOwnProperty(propertyName)) {
 				switch (propertyName) {
 					case Enum.Properties.IsFlipped:
-						this._configs.IsFlipped = propertyValue;
-						this._triggerFlip();
+						this._configs.IsFlipped = propertyValue.toLowerCase() === 'true';
+						this._setUpClasses();
 						break;
 					case Enum.Properties.FlipSelf:
-						this._configs.FlipSelf = propertyValue;
+						this._configs.FlipSelf = propertyValue.toLowerCase() === 'true';
 						this._setUpEvents();
 						break;
 				}
@@ -144,9 +141,28 @@ namespace OSUIFramework.Patterns.FlipContent {
 			this._onClick = callback;
 		}
 
-		// Public method to trigger the flip
-		public triggerFlipContent(): void {
-			this._triggerFlip();
+		public updateOnRender(): void {
+			// This won't run until the pattern has been built
+			if (this.isBuilt) {
+				const notFlipped = !this._configs.IsFlipped;
+				if (this.configs.IsFlipped) {
+					// We need to set this here because it's only when flipped that the back card exists
+					this._flipCardBack = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.CardBack);
+					Helper.Attribute.Set(
+						this._flipCardBack,
+						Constants.AccessibilityAttribute.Aria.Hidden,
+						notFlipped.toString()
+					);
+				} else {
+					// We need to set this here because Front Card doesn't exist until it has been flipped
+					this._flipCardFront = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.CardFront);
+					Helper.Attribute.Set(
+						this._flipCardFront,
+						Constants.AccessibilityAttribute.Aria.Hidden,
+						this.configs.IsFlipped.toString()
+					);
+				}
+			}
 		}
 	}
 }

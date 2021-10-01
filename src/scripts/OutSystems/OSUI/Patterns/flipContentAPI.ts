@@ -6,7 +6,7 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 * Function that will change the property of a flip content pattern.
 	 *
 	 * @export
-	 * @param {string} flipID ID of the Tooltip where the property will be changed.
+	 * @param {string} flipID ID of the Flip Content where the property will be changed.
 	 * @param {string} propertyName Property name that will be updated
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
@@ -23,7 +23,7 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 * @export
 	 * @param {string} flipId ID of the Flip Content where the instance will be created.
 	 * @param {string} configs configurations for the Flip Content in JSON format.
-	 * @return {*}  {OSUIFramework.Patterns.ITooltip}
+	 * @return {*}  {OSUIFramework.Patterns.FlipContent.IFlipContent}
 	 */
 	export function Create(flipId: string, configs: string): OSUIFramework.Patterns.FlipContent.IFlipContent {
 		if (_flipMap.has(flipId)) {
@@ -106,8 +106,18 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 		flipContent.registerCallback(callback);
 	}
 
-	export function TriggerFlip(flipId: string): void {
+	/**
+	 * Function that will run on the platform's OnRender.
+	 *
+	 * @export
+	 * @param {string} flipId
+	 * @return {*}  {OSUIFramework.Patterns.FlipContent.IFlipContent
+	 */
+	export function UpdateOnRender(flipId: string): OSUIFramework.Patterns.FlipContent.IFlipContent {
 		const flipContent = GetFlipContentById(flipId);
-		flipContent.triggerFlipContent();
+
+		flipContent.updateOnRender();
+
+		return flipContent;
 	}
 }
