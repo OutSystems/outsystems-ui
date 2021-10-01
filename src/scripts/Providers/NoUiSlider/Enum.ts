@@ -13,6 +13,5 @@ namespace Providers.RangeSlider.Enum {
 
 	export enum NoUiSpliderModeOptions {
 		Count = 'count',
-		Range = 'range',
 	}
 }

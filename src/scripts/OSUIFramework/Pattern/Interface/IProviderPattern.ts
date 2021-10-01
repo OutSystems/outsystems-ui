@@ -5,5 +5,7 @@ namespace OSUIFramework.Interface {
 	 */
 	export interface IProviderPattern<P> extends Interface.IPattern {
 		provider: P;
+
+		registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void;
 	}
 }

@@ -9,7 +9,7 @@ namespace OSUIFramework.Callbacks {
 	export type OSGeneric = { (patternId, ...args): void };
 
 	export type OSRangeSliderOnValueChangeEvent = {
-		(rangeSliderId: string, value: number): void;
+		(rangeSliderId: string, startValue: number, endValue: number): void;
 	};
 
 	export type OSRangeSliderInitializeEvent = {

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace Providers.RangeSlider {
-	export class RangeSliderConfig extends OSUIFramework.Patterns.RangeSlider.AbstractRangeSliderConfig {
+	export class NoUiSliderConfig extends OSUIFramework.Patterns.RangeSlider.AbstractRangeSliderConfig {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		public getProviderConfig(): any {
 			// eslint-disable-next-line prefer-const
@@ -8,9 +8,9 @@ namespace Providers.RangeSlider {
 				direction: OutSystems.OSUI.Utils.GetIsRTL()
 					? OSUIFramework.GlobalEnum.Direction.RTL
 					: OSUIFramework.GlobalEnum.Direction.LTR,
-				start: [this.InitialValue],
+				start: this.IsInterval ? [this.InitialValueStart, this.InitialValueEnd] : [this.InitialValueStart],
 				step: this.Step,
-				connect: Enum.NoUiSpliderConnectOptions.Lower,
+				connect: this.IsInterval ? true : Enum.NoUiSpliderConnectOptions.Lower,
 				orientation: this.IsVertical
 					? OSUIFramework.GlobalEnum.Orientation.Vertical
 					: OSUIFramework.GlobalEnum.Orientation.Horizontal,
