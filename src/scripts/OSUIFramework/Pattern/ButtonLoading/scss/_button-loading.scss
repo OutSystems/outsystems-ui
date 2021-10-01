@@ -3,8 +3,8 @@
 /// @group Patterns-Button_Loading
 /// Patterns - Utilities - Button Loading
 
-// LoadingSpinner animation
-@mixin buttonLoadingSpinner {
+// LoadingSpinner "SilentClass" animation
+%buttonLoadingSpinner {
 	animation: loadingSpinner 850ms cubic-bezier(0.7, 1.05, 0.78, 0.78) infinite;
 	border: var(--border-size-m) solid currentColor;
 	border-radius: var(--border-radius-circle);
@@ -22,7 +22,8 @@ That said, It should not be visible at SASSDOCS as well. */
 		position: absolute;
 
 		.loading-spinner {
-			@include buttonLoadingSpinner;
+			// @include buttonLoadingSpinner;
+			@extend %buttonLoadingSpinner;
 		}
 
 		.btn-show-label & {
@@ -76,7 +77,8 @@ That said, It should not be visible at SASSDOCS as well. */
 		}
 
 		.loading-spinner {
-			@include buttonLoadingSpinner;
+			// @include buttonLoadingSpinner;
+			@extend %buttonLoadingSpinner;
 
 			// ServiceStudio Preview
 			& {
