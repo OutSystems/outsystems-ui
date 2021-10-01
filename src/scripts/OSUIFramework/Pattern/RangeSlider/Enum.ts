@@ -33,6 +33,13 @@ namespace OSUIFramework.Patterns.RangeSlider.Enum {
 	}
 
 	/**
+	 * RangeSlider Enum for Providers
+	 */
+	export enum Provider {
+		NoUiSlider = 'noUiSlider',
+	}
+
+	/**
 	 * RangeSlider Events
 	 */
 	export enum RangeSliderEvents {
