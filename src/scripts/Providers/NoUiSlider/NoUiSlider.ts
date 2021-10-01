@@ -225,8 +225,6 @@ namespace Providers.RangeSlider {
 
 		// Method to handle the pips options from the library
 		public handleRangePips(pipsStepParam: number, isUpdate: boolean): void {
-			// eslint-disable-next-line no-debugger
-			debugger;
 			let pipsValues = Math.floor(pipsStepParam);
 
 			// To avoid performance issues
