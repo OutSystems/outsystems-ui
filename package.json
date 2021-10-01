@@ -7,8 +7,8 @@
 		"dev": "webpack serve --env prefix=dev",
 		"dev-ts": "tsc --watch",
 		"prod": "eslint **/*.ts && tsc --sourceMap false && webpack --env prefix=prod",
-		"lint": "eslint **/*.ts",
-		"lintfix": "eslint --fix **/*.ts",
+		"lint": "eslint . --ext .ts",
+		"lintfix": "eslint . --fix --ext .ts",
 		"create-pattern-base": "node ./custom-scripts/create-pattern-base.js"
 	},
 	"author": "OutSystems UI Team",

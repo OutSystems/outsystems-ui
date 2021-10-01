@@ -75,7 +75,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 		// Method to close the tooltip at onBlur
 		private _onBlur(): void {
 			// Wait for next activeElement be active
-			setTimeout(() => {
+			Helper.AsyncInvocation(() => {
 				// Check if a previous active element has been assigned
 				if (this._tooltipBallonContentActiveElem) {
 					this._tooltipBallonContentActiveElem.removeEventListener(
@@ -94,7 +94,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 					this._tooltipBallonContentActiveElem = document.activeElement as HTMLElement;
 					this._tooltipBallonContentActiveElem.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
 				}
-			}, 0);
+			});
 		}
 
 		// Trigger the tooltip at onClick behaviour
@@ -217,9 +217,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 			this._addEvents();
 
 			//OS takes a while to set the Widget Classes
-			setTimeout(() => {
-				this._managePosition();
-			}, 0);
+			Helper.AsyncInvocation(this._managePosition.bind(this));
 
 			this.finishBuild();
 		}
