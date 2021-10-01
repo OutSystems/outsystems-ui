@@ -286,7 +286,7 @@ namespace Providers.RangeSlider {
 		}
 
 		// Method to set a new value to the RangeSlider
-		public setValue(startValue: number, endValue: number): void {
+		public setValue(startValue: number, endValue?: number): void {
 			this.provider.set([startValue, endValue]);
 			// Trigger platform event after setting the value
 			this._triggerOnValueChangeEvent([startValue, endValue]);
