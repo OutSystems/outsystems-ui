@@ -87,6 +87,8 @@ namespace OSUIFramework.GlobalEnum {
 		Click = 'click',
 		Focus = 'focus',
 		keyDown = 'keydown',
+		MouseEnter = 'mouseenter',
+		MouseLeave = 'mouseleave',
 		TouchEnd = 'touchend',
 		TouchMove = 'touchmove',
 		TouchStart = 'touchstart',
