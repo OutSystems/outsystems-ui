@@ -32,9 +32,14 @@
 	}
 
 	&-container {
+		cursor: default;
 		position: relative;
 		transform-style: preserve-3d;
 		transition: all 630ms cubic-bezier(0.03, 0.01, 0.67, 1.97);
+
+		&.flip-self {
+			cursor: pointer;
+		}
 
 		// Service Studio preview
 		& {
@@ -69,13 +74,6 @@
 		// Service Studio preview
 		& {
 			-servicestudio-position: static;
-		}
-	}
-	.flip-wrapper {
-		cursor: pointer;
-
-		&.flip-self {
-			cursor: default;
 		}
 	}
 }

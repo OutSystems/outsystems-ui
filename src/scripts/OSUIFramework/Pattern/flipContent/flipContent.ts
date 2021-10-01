@@ -12,8 +12,6 @@ namespace OSUIFramework.Patterns.FlipContent {
 		private _flipElement: HTMLElement;
 		//The Flip Content content wrapper
 		private _flipWrapper: HTMLElement;
-		//Contains the state of "flipness" of the content for accessiblity purposes
-		private _isExpanded: string;
 		// Callback function to trigger the click event on the platform
 		private _onClick: Callbacks.OSFlipContentFlipEvent;
 
@@ -32,18 +30,16 @@ namespace OSUIFramework.Patterns.FlipContent {
 		}
 
 		private _onKeyDownPress(e): void {
-			this._isExpanded = this._flipWrapper.getAttribute(Enum.CssClass.DataFlipped);
-
 			//If ESC is pressed then we need to close Flip
-			if (this._isExpanded === 'True' && e.keyCode === GlobalEnum.Keycodes.Escape) {
-				this._triggerToggleClick();
+			if (this.configs.IsFlipped && e.key === GlobalEnum.Keycodes.Escape) {
+				this.triggerFlip();
 				e.preventDefault();
 				e.stopPropagation();
 			}
 
-			//If ENTER or SPCE use toggleClick to validate
-			if (e.keyCode === GlobalEnum.Keycodes.Enter || e.keyCode === GlobalEnum.Keycodes.Space) {
-				this._triggerToggleClick();
+			//If ENTER or SPACE use toggleClick to validate
+			if (e.key === GlobalEnum.Keycodes.Enter || e.key === GlobalEnum.Keycodes.Space) {
+				this.triggerFlip();
 				e.preventDefault();
 			}
 		}
@@ -73,14 +69,13 @@ namespace OSUIFramework.Patterns.FlipContent {
 		// Method to set the events on the pattern's first render
 		private _setUpEvents(): void {
 			if (this.configs.FlipSelf) {
-				this._flipElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._onKeyDown);
-				this._flipWrapper.removeEventListener(GlobalEnum.HTMLEvent.Click, this._onClickEvent);
-				Helper.Style.SetStyleAttribute(this._flipWrapper, 'cursor', 'default');
-			} else {
 				this._flipElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._onKeyDown);
 				this._flipWrapper.addEventListener(GlobalEnum.HTMLEvent.Click, this._onClickEvent);
-				// TODO a class for this
-				Helper.Style.SetStyleAttribute(this._flipWrapper, 'cursor', 'pointer');
+				Helper.Style.AddClass(this._flipWrapper, Enum.CssClass.FlipSelf);
+			} else {
+				this._flipElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._onKeyDown);
+				this._flipWrapper.removeEventListener(GlobalEnum.HTMLEvent.Click, this._onClickEvent);
+				Helper.Style.RemoveClass(this._flipWrapper, Enum.CssClass.FlipSelf);
 			}
 		}
 

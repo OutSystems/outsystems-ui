@@ -17,5 +17,6 @@ namespace OSUIFramework.Patterns.FlipContent.Enum {
 		FlipContainer = 'flip-content-container',
 		CardFront = 'flip-content-front',
 		CardBack = 'flip-content-back',
+		FlipSelf = 'flip-self',
 	}
 }
