@@ -29,18 +29,16 @@ namespace OSUIFramework.Patterns.FlipContent {
 			this._onClickEvent = this.triggerFlip.bind(this);
 		}
 
-		private _onKeyDownPress(e): void {
-			//If ESC is pressed then we need to close Flip
-			if (this.configs.IsFlipped && e.key === GlobalEnum.Keycodes.Escape) {
+		private _onKeyDownPress(e: KeyboardEvent): void {
+			//If ENTER or SPACE use toggleClick to validate & If ESC is pressed then we need to close Flip
+			if (
+				e.key === GlobalEnum.Keycodes.Enter ||
+				e.key === GlobalEnum.Keycodes.Space ||
+				(e.key === GlobalEnum.Keycodes.Escape && this.configs.IsFlipped)
+			) {
 				this.triggerFlip();
 				e.preventDefault();
 				e.stopPropagation();
-			}
-
-			//If ENTER or SPACE use toggleClick to validate
-			if (e.key === GlobalEnum.Keycodes.Enter || e.key === GlobalEnum.Keycodes.Space) {
-				this.triggerFlip();
-				e.preventDefault();
 			}
 		}
 
