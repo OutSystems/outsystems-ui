@@ -20,6 +20,14 @@ namespace OSUIFramework.Patterns.Notification.Enum {
 		Pattern = 'osui-notification',
 		PatternContent = 'osui-notification-content',
 		PatternIsOpen = 'is-open',
-		PatternOverlay = 'osui-notification_overlay',
+		PatternOverlay = 'has-overlay',
+		PatternPosition = 'is-',
+	}
+
+	/**
+	 * Sidebar Enum for CSS Custom Properties
+	 */
+	export enum CssProperty {
+		Width = '--notification-width',
 	}
 }

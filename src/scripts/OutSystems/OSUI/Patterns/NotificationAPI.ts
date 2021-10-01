@@ -77,6 +77,18 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	}
 
 	/**
+	 * Function that will Show a given notification.
+	 *
+	 * @export
+	 * @param {string} notificationId ID of the notification that will be hidden
+	 */
+	export function Hide(notificationId: string): void {
+		const notification = GetNotificationById(notificationId);
+
+		notification.hide();
+	}
+
+	/**
 	 * Function that will initialize the pattern instance.
 	 *
 	 * @export
@@ -105,5 +117,17 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 		const notification = GetNotificationById(notificationId);
 
 		notification.registerCallback(callback);
+	}
+
+	/**
+	 * Function that will open a given notification.
+	 *
+	 * @export
+	 * @param {string} notificationId ID of the notification that will be shown
+	 */
+	export function Show(notificationId: string): void {
+		const notification = GetNotificationById(notificationId);
+
+		notification.show();
 	}
 }

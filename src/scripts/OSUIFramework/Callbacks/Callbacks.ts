@@ -2,6 +2,14 @@
 namespace OSUIFramework.Callbacks {
 	export type OSGeneric = { (patternId, ...args): void };
 
+	export type OSRangeSliderOnValueChangeEvent = {
+		(rangeSliderId: string, value: number): void;
+	};
+
+	export type OSRangeSliderInitializeEvent = {
+		(rangeSliderId: string): void;
+	};
+
 	export type OSNotificationToggleEvent = {
 		(notificationId: string, isOpen: boolean): void;
 	};

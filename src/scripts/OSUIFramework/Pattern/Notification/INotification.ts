@@ -3,5 +3,8 @@ namespace OSUIFramework.Patterns.Notification {
 	/**
 	 * Defines the interface for OutSystemsUI Notification Pattern
 	 */
-	export interface INotification extends Interface.IPattern, Interface.ICallback {}
+	export interface INotification extends Interface.IPattern, Interface.ICallback {
+		hide(): void;
+		show(): void;
+	}
 }

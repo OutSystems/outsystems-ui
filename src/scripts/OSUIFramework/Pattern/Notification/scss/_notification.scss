@@ -10,13 +10,11 @@
 	border-radius: var(--border-radius-soft);
 	box-shadow: var(--shadow-xl);
 	color: var(--color-neutral-10);
-	left: 50%;
 	padding: var(--space-m);
 	position: fixed;
-	top: 0;
-	transform: translateY(-120%) translateX(-50%);
+	transition: all 300ms ease-out;
 	user-select: none;
-	width: 370px;
+	width: var(--notification-width);
 	z-index: 300;
 
 	// Service Studio Preview
@@ -30,18 +28,105 @@
 		align-items: center;
 		display: flex;
 	}
+}
 
-	&.is-open {
-		transform: translateY(24px) translateX(-50%);
+.osui-notification.is-top {
+	left: 50%;
+	top: calc(var(--space-xxl) * -1);
+	transform: translate(-50%, -100%);
+}
 
-		&.notification--animatable {
-			transition: all 330ms ease-out;
-		}
-	}
+.osui-notification.is-top.is-open {
+	top: var(--space-m);
+	transform: translate(-50%, 0%);
+}
 
-	&--animatable {
-		transition: all 130ms ease-in;
-	}
+.osui-notification.is-top-right {
+	right: var(--space-m);
+	top: calc(var(--space-xxl) * -1);
+	transform: translateY(-100%);
+}
+
+.osui-notification.is-top-right.is-open {
+	top: var(--space-m);
+	transform: translateY(0%);
+}
+
+.osui-notification.is-top-left {
+	left: var(--space-m);
+	top: calc(var(--space-xxl) * -1);
+	transform: translateY(-100%);
+}
+
+.osui-notification.is-top-left.is-open {
+	top: var(--space-m);
+	transform: translateY(0%);
+}
+
+.osui-notification.is-bottom {
+	bottom: calc(var(--space-xxl) * -1);
+	left: 50%;
+	transform: translate(-50%, 100%);
+}
+
+.osui-notification.is-bottom.is-open {
+	bottom: var(--space-m);
+	transform: translateX(-50%);
+}
+
+.osui-notification.is-bottom-right {
+	bottom: var(--space-m);
+	right: -100%;
+}
+
+.osui-notification.is-bottom-right.is-open {
+	bottom: var(--space-m);
+	right: var(--space-m);
+}
+
+.osui-notification.is-bottom-left {
+	bottom: var(--space-m);
+	left: -100%;
+}
+
+.osui-notification.is-bottom-left.is-open {
+	bottom: var(--space-m);
+	left: var(--space-m);
+}
+
+.osui-notification.is-center {
+	left: 50%;
+	top: calc(var(--space-xxl) * -1);
+	transform: translate(-50%, -100%);
+}
+
+.osui-notification.is-center.is-open {
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.osui-notification.is-right {
+	right: -100%;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.osui-notification.is-right.is-open {
+	right: var(--space-m);
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.osui-notification.is-left {
+	left: -100%;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.osui-notification.is-left.is-open {
+	left: var(--space-m);
+	top: 50%;
+	transform: translateY(-50%);
 }
 
 ///
