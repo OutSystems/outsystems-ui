@@ -71,8 +71,8 @@ namespace OSUIFramework.Patterns.Notification {
 		}
 
 		// Prevent close notification based on a uniqueID validation, when his event is triggered
-		private _onNotificationOpenEvent(element: string): void {
-			if (element !== this.uniqueId) {
+		private _onNotificationOpenEvent(elementId: string): void {
+			if (elementId !== this.uniqueId) {
 				if (this._configs.IsOpen) {
 					this.hide();
 				}
