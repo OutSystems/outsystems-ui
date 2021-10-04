@@ -5,14 +5,21 @@ namespace OSUIFramework.Constants {
 	 */
 	export const AccessibilityAttribute = {
 		Aria: {
+			Atomic: 'atomic',
 			Controls: 'aria-controls',
 			Describedby: 'describedby',
 			Expanded: 'aria-expanded',
 			Hidden: 'aria-hidden',
-			Labelledby: 'labelledby',
 			Label: 'aria-label',
+			Labelledby: 'labelledby',
 			ValueMax: 'valuemax',
 			ValueMin: 'valuemin',
+		},
+		AriaLive: {
+			AttrName: 'aria-live',
+			Assertive: 'assertive',
+			Polite: 'polite',
+			Off: 'off',
 		},
 		Role: {
 			Alert: 'alert',
