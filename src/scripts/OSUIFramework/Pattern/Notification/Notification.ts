@@ -90,6 +90,40 @@ namespace OSUIFramework.Patterns.Notification {
 			}
 		}
 
+		// Set the cssClasses that should be assigned to the element on it's initialization
+		private _prepareElements(): void {
+			this._isMobile = !!(
+				document.querySelector(Constants.Dot + GlobalEnum.MobileOS.Android) ||
+				document.querySelector(Constants.Dot + GlobalEnum.MobileOS.IOS)
+			);
+
+			// Set event type based on device
+			if (this._isMobile) {
+				this._eventOnNotification = GlobalEnum.HTMLEvent.TouchStart;
+			} else {
+				this._eventOnNotification = GlobalEnum.HTMLEvent.Click;
+			}
+
+			// Set width value for Notification
+			Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, this._configs.Width);
+
+			// Set position initial class
+			Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternPosition + this._configs.Position);
+
+			// Set HasOverlay class
+			if (this._configs.HasOverlay) {
+				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternOverlay);
+			}
+
+			if (this._configs.IsOpen) {
+				this._onNotificationToggle(this._configs.IsOpen);
+			}
+
+			if (this._configs.CloseAfterTime > 0 && this._configs.IsOpen) {
+				this._autoCloseNotification();
+			}
+		}
+
 		// Remove all the assigned Events
 		private _removeEvents(): void {
 			// Remove listeners to toggle Notification
@@ -124,40 +158,6 @@ namespace OSUIFramework.Patterns.Notification {
 		// Set the html references that will be used to manage the cssClasses and atribute properties
 		private _setHtmlElements(): void {
 			this._notificationContent = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternContent);
-		}
-
-		// Set the cssClasses that should be assigned to the element on it's initialization
-		private _setInitialCssClasses(): void {
-			this._isMobile = !!(
-				document.querySelector(Constants.Dot + GlobalEnum.MobileOS.Android) ||
-				document.querySelector(Constants.Dot + GlobalEnum.MobileOS.IOS)
-			);
-
-			// Set event type based on device
-			if (this._isMobile) {
-				this._eventOnNotification = GlobalEnum.HTMLEvent.TouchStart;
-			} else {
-				this._eventOnNotification = GlobalEnum.HTMLEvent.Click;
-			}
-
-			// Set width value for Notification
-			Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, this._configs.Width);
-
-			// Set position initial class
-			Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternPosition + this._configs.Position);
-
-			// Set HasOverlay class
-			if (this._configs.HasOverlay) {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternOverlay);
-			}
-
-			if (this._configs.IsOpen) {
-				this._onNotificationToggle(this._configs.IsOpen);
-			}
-
-			if (this._configs.CloseAfterTime > 0 && this._configs.IsOpen) {
-				this._autoCloseNotification();
-			}
 		}
 
 		// Method that triggers the OnToggle event
@@ -246,7 +246,7 @@ namespace OSUIFramework.Patterns.Notification {
 			// Add timeout to make this method call asynchronous to wait for the classes of device detection
 			this._setHtmlElements();
 
-			this._setInitialCssClasses();
+			this._prepareElements();
 
 			this._setAccessibilityProps();
 
