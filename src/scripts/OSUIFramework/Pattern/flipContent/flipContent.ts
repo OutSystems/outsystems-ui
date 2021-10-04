@@ -4,6 +4,11 @@ namespace OSUIFramework.Patterns.FlipContent {
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	export class FlipContent extends AbstractPattern<FlipContentConfig> implements IFlipContent {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		private _eventOnKeyDown: any;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		private _eventOnToogleClick: any;
+
 		// The Flip Content card (back) Element
 		private _flipCardBack: HTMLElement;
 		// The Flip Content card (front) Element
@@ -12,21 +17,16 @@ namespace OSUIFramework.Patterns.FlipContent {
 		private _flipElement: HTMLElement;
 		//The Flip Content content wrapper
 		private _flipWrapper: HTMLElement;
-		// Callback function to trigger the click event on the platform
-		private _onClick: Callbacks.OSFlipContentFlipEvent;
 
-		// Saves the event to disconnect it in the future
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _onClickEvent: any;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _onKeyDown: any;
+		// Callback function to trigger the click event on the platform
+		private _onToogleClick: Callbacks.OSFlipContentFlipEvent;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new FlipContentConfig(configs));
 
-			this._onKeyDown = this._onKeyDownPress.bind(this);
-			this._onClickEvent = this.triggerFlip.bind(this);
+			this._eventOnKeyDown = this._onKeyDownPress.bind(this);
+			this._eventOnToogleClick = this.triggerFlip.bind(this);
 		}
 
 		private _onKeyDownPress(e: KeyboardEvent): void {
@@ -44,8 +44,40 @@ namespace OSUIFramework.Patterns.FlipContent {
 
 		// Method to remove the events on the pattern's first render
 		private _removeEvents(): void {
-			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._onKeyDown);
-			this._flipWrapper.removeEventListener(GlobalEnum.HTMLEvent.Click, this._onClickEvent);
+			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeyDown);
+			this._flipWrapper.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnToogleClick);
+		}
+
+		// Set the accessibilty attributes
+		private _setAccessibilityAttributes(): void {
+			Helper.Attribute.Set(
+				this._selfElem,
+				Constants.AccessibilityAttribute.TabIndex,
+				Constants.AccessibilityAttribute.States.TabIndexShow
+			);
+
+			Helper.Attribute.Set(
+				this._selfElem,
+				Constants.AccessibilityAttribute.Role.AttrName,
+				Constants.AccessibilityAttribute.Role.Button
+			);
+
+			Helper.Attribute.Set(
+				this._selfElem,
+				Constants.AccessibilityAttribute.AriaLive.AttrName,
+				Constants.AccessibilityAttribute.AriaLive.Polite
+			);
+
+			Helper.Attribute.Set(
+				this._selfElem,
+				Constants.AccessibilityAttribute.Aria.Atomic,
+				Constants.AccessibilityAttribute.States.True
+			);
+		}
+
+		// Add Attributes and it's values
+		private _setAttributes(): void {
+			Helper.Attribute.Set(this._flipWrapper, Enum.CssClass.DataFlipped, this.configs.IsFlipped);
 		}
 
 		// Method to set the variables on the pattern's first render
@@ -61,37 +93,61 @@ namespace OSUIFramework.Patterns.FlipContent {
 			} else {
 				Helper.Style.RemoveClass(this._flipElement, Enum.CssClass.IsFlipped);
 			}
-			Helper.Attribute.Set(this._flipWrapper, Enum.CssClass.DataFlipped, this.configs.IsFlipped.toString());
 		}
 
 		// Method to set the events on the pattern's first render
 		private _setUpEvents(): void {
 			if (this.configs.FlipSelf) {
-				this._flipElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._onKeyDown);
-				this._flipWrapper.addEventListener(GlobalEnum.HTMLEvent.Click, this._onClickEvent);
+				this._flipElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeyDown);
+				this._flipWrapper.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnToogleClick);
+
 				Helper.Style.AddClass(this._flipWrapper, Enum.CssClass.FlipSelf);
 			} else {
-				this._flipElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._onKeyDown);
-				this._flipWrapper.removeEventListener(GlobalEnum.HTMLEvent.Click, this._onClickEvent);
+				this._flipElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeyDown);
+				this._flipWrapper.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnToogleClick);
+
 				Helper.Style.RemoveClass(this._flipWrapper, Enum.CssClass.FlipSelf);
 			}
 		}
 
 		// Method that triggers the toggle event on the platform
 		private _triggerToggleClick(): void {
-			if (this._onClick !== undefined) {
-				setTimeout(() => {
-					this._onClick(this.widgetId, this.configs.IsFlipped);
-				}, 0);
+			if (this._onToogleClick) {
+				Helper.AsyncInvocation(() => {
+					this._onToogleClick(this.widgetId, this.configs.IsFlipped);
+				});
+			}
+		}
+
+		// Method used to set and update the Accessibility attributes value
+		private _updateAccessibiltyAttrs(): void {
+			if (this._configs.FlipSelf) {
+				this._setAccessibilityAttributes();
+			} else {
+				this._selfElem.blur();
+				Helper.Attribute.Remove(this._selfElem, Constants.AccessibilityAttribute.AriaLive.AttrName);
+				Helper.Attribute.Remove(this._selfElem, Constants.AccessibilityAttribute.Aria.Atomic);
+				Helper.Attribute.Remove(this._selfElem, Constants.AccessibilityAttribute.Role.AttrName);
+				Helper.Attribute.Remove(this._selfElem, Constants.AccessibilityAttribute.TabIndex);
 			}
 		}
 
 		// Building the Flip Content pattern
 		public build(): void {
 			super.build();
+
 			this._setFlipContent();
+
 			this._setUpEvents();
+
 			this._setUpClasses();
+
+			if (this._configs.FlipSelf) {
+				this._setAccessibilityAttributes();
+			}
+
+			this._setAttributes();
+
 			this.finishBuild();
 		}
 
@@ -101,13 +157,17 @@ namespace OSUIFramework.Patterns.FlipContent {
 				case Enum.Properties.IsFlipped:
 					this.configs.IsFlipped = propertyValue;
 					this._setUpClasses();
+
 					break;
 				case Enum.Properties.FlipSelf:
 					this.configs.FlipSelf = propertyValue;
+					this._updateAccessibiltyAttrs();
 					this._setUpEvents();
+
 					break;
 				default:
 					super.changeProperty(propertyName, propertyValue);
+
 					break;
 			}
 		}
@@ -118,43 +178,20 @@ namespace OSUIFramework.Patterns.FlipContent {
 			this._removeEvents();
 		}
 
+		// Register OnToogleClick clientAction as a callBack reference
 		public registerCallback(callback: Callbacks.OSFlipContentFlipEvent): void {
-			this._onClick = callback;
+			this._onToogleClick = callback;
 		}
 
 		// Public method to trigger the flipping of the pattern and the event on the platform's side
 		public triggerFlip(): void {
 			this.configs.IsFlipped = !this.configs.IsFlipped;
-			Helper.Attribute.Set(this._flipWrapper, Enum.CssClass.DataFlipped, this.configs.IsFlipped.toString());
-
-			Helper.Style.ToggleClass(this._selfElem, Enum.CssClass.IsFlipped);
-
-			this._triggerToggleClick();
 
 			this._setUpClasses();
-		}
 
-		public updateOnRender(): void {
-			// This won't run until the pattern has been built
-			if (this.isBuilt) {
-				if (this.configs.IsFlipped) {
-					// We need to set this here because it's only when flipped that the back card exists
-					this._flipCardBack = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.CardBack);
-					Helper.Attribute.Set(
-						this._flipCardBack,
-						Constants.AccessibilityAttribute.Aria.Hidden,
-						(!this.configs.IsFlipped).toString()
-					);
-				} else {
-					// We need to set this here because Front Card doesn't exist until it has been flipped
-					this._flipCardFront = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.CardFront);
-					Helper.Attribute.Set(
-						this._flipCardFront,
-						Constants.AccessibilityAttribute.Aria.Hidden,
-						this.configs.IsFlipped.toString()
-					);
-				}
-			}
+			this._setAttributes();
+
+			this._triggerToggleClick();
 		}
 	}
 }

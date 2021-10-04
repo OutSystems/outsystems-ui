@@ -31,6 +31,7 @@ namespace OSUIFramework.Constants {
 		},
 		TabIndex: 'tabindex',
 		States: {
+			Empty: '',
 			False: 'false',
 			TabIndexHidden: '-1',
 			TabIndexShow: '0',

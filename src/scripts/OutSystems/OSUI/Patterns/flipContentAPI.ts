@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.FlipContentAPI {
-	const _flipMap = new Map<string, OSUIFramework.Patterns.FlipContent.IFlipContent>(); //flipContent.uniqueId -> FlipContent obj
+	const _flipContentMap = new Map<string, OSUIFramework.Patterns.FlipContent.IFlipContent>(); //flipContent.uniqueId -> FlipContent obj
 
 	/**
 	 * Function that will change the property of a flip content pattern.
@@ -26,7 +26,7 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 * @return {*}  {OSUIFramework.Patterns.FlipContent.IFlipContent}
 	 */
 	export function Create(flipId: string, configs: string): OSUIFramework.Patterns.FlipContent.IFlipContent {
-		if (_flipMap.has(flipId)) {
+		if (_flipContentMap.has(flipId)) {
 			throw new Error(
 				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.FlipContent} registered under id: ${flipId}`
 			);
@@ -34,7 +34,7 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 
 		const _newFlip = new OSUIFramework.Patterns.FlipContent.FlipContent(flipId, JSON.parse(configs));
 
-		_flipMap.set(flipId, _newFlip);
+		_flipContentMap.set(flipId, _newFlip);
 
 		return _newFlip;
 	}
@@ -50,7 +50,7 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 
 		flipContent.dispose();
 
-		_flipMap.delete(flipContent.uniqueId);
+		_flipContentMap.delete(flipContent.uniqueId);
 	}
 
 	/**
@@ -60,7 +60,7 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 * @return {*}  {Map<string, OSUIFramework.Patterns.FlipContent.IFlipContent>}
 	 */
 	export function GetAllFlipContent(): Array<string> {
-		return OSUIFramework.Helper.MapOperation.ExportKeys(_flipMap);
+		return OSUIFramework.Helper.MapOperation.ExportKeys(_flipContentMap);
 	}
 
 	/**
@@ -74,7 +74,7 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 		return OSUIFramework.Helper.MapOperation.FindInMap(
 			'FlipContent',
 			flipId,
-			_flipMap
+			_flipContentMap
 		) as OSUIFramework.Patterns.FlipContent.IFlipContent;
 	}
 
@@ -98,7 +98,7 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 *
 	 * @export
 	 * @param {string} flipId
-	 * @param {OSUIFramework. Callbacks.OSFlipContentFlipEvent} callback
+	 * @param {OSUIFramework.Callbacks.OSFlipContentFlipEvent} callback
 	 */
 	export function RegisterCallback(flipId: string, callback: OSUIFramework.Callbacks.OSFlipContentFlipEvent): void {
 		const flipContent = GetFlipContentById(flipId);
@@ -106,23 +106,9 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 		flipContent.registerCallback(callback);
 	}
 
-	/**
-	 * Function that will run on the platform's OnRender.
-	 *
-	 * @export
-	 * @param {string} flipId
-	 * @return {*}  {OSUIFramework.Patterns.FlipContent.IFlipContent
-	 */
-	export function UpdateOnRender(flipId: string): OSUIFramework.Patterns.FlipContent.IFlipContent {
-		const flipContent = GetFlipContentById(flipId);
-
-		flipContent.updateOnRender();
-
-		return flipContent;
-	}
-
 	export function TriggerFlip(flipId: string): void {
 		const flipContent = GetFlipContentById(flipId);
+
 		flipContent.triggerFlip();
 	}
 }
