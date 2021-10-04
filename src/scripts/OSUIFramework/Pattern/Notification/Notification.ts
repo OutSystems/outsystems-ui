@@ -193,7 +193,8 @@ namespace OSUIFramework.Patterns.Notification {
 		}
 
 		// Update CloseOnBodyClick value
-		private _updateCloseOnBodyClick(): void {
+		private _updateCloseOnBodyClick(closeOnBodyClick: boolean): void {
+			this._configs.CloseOnBodyClick = closeOnBodyClick;
 			// Toggle handlers from EventManager
 			if (this._configs.CloseOnBodyClick && this._configs.IsOpen) {
 				OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
@@ -261,8 +262,7 @@ namespace OSUIFramework.Patterns.Notification {
 					this._updateCloseAfterTime(propertyValue);
 					break;
 				case Enum.Properties.CloseOnBodyClick:
-					this._configs.CloseOnBodyClick = propertyValue;
-					this._updateCloseOnBodyClick();
+					this._updateCloseOnBodyClick(propertyValue);
 					break;
 				case Enum.Properties.HasOverlay:
 					this._updateHasOverlay(propertyValue);
