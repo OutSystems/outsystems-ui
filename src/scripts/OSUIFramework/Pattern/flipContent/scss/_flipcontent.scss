@@ -5,13 +5,19 @@
 
 ///
 .flip-content {
-	perspective: 1000;
+	perspective: 200vw;
 	position: relative;
 
 	// Service Studio preview
 	& {
 		-servicestudio--webkit-perspective: initial;
 		-servicestudio-perspective: initial;
+	}
+
+	// when inside firefox
+	.firefox & {
+		transform: perspective(200vw);
+		transform-style: preserve-3d;
 	}
 
 	&.flipped {
