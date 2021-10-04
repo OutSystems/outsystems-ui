@@ -301,8 +301,8 @@ namespace OSUIFramework.Patterns.Notification {
 			// Update accessibility properties
 			this._updateAccessibilityProps();
 
-			// Focus on body, when a Notification is closed
-			document.body.focus();
+			// Remove focus when a Notification is closed
+			this._notificationContent.blur();
 
 			// Remove listeners to toggle Notification
 			this._notificationContent.removeEventListener(this._eventOnNotification, this._eventOnNotificationClick);
