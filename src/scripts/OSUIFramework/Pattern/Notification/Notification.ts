@@ -28,11 +28,6 @@ namespace OSUIFramework.Patterns.Notification {
 			this._globalEventOnNotificationOpen = this._onNotificationOpenEvent.bind(this);
 		}
 
-		// Add Pattern Events
-		private _addEvents(): void {
-			// code here
-		}
-
 		// Close Notification after wait the time defined
 		private _autoCloseNotification(): void {
 			setTimeout(() => {
@@ -252,8 +247,6 @@ namespace OSUIFramework.Patterns.Notification {
 			this._setHtmlElements();
 
 			this._setInitialCssClasses();
-
-			this._addEvents();
 
 			this._setAccessibilityProps();
 
