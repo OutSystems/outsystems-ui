@@ -49,7 +49,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 		}
 
 		// Set the accessibilty attributes
-		private _setAccessibiltyAttrs(): void {
+		private _setAccessibilityAttributes(): void {
 			Helper.Attribute.Set(
 				this._selfElem,
 				Constants.AccessibilityAttribute.TabIndex,
@@ -122,7 +122,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 		// Method used to set and update the Accessibility attributes value
 		private _updateAccessibiltyAttrs(): void {
 			if (this._configs.FlipSelf) {
-				this._setAccessibiltyAttrs();
+				this._setAccessibilityAttributes();
 			} else {
 				this._selfElem.blur();
 				Helper.Attribute.Remove(this._selfElem, Constants.AccessibilityAttribute.AriaLive.AttrName);
@@ -143,7 +143,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 			this._setUpClasses();
 
 			if (this._configs.FlipSelf) {
-				this._setAccessibiltyAttrs();
+				this._setAccessibilityAttributes();
 			}
 
 			this._setAttributes();
