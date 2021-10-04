@@ -49,7 +49,6 @@ namespace OSUIFramework.Patterns.Notification {
 			}
 
 			e.stopPropagation();
-			console.log('_onBodyClick');
 		}
 
 		// Trigger the notification at toggle behaviour
@@ -57,7 +56,6 @@ namespace OSUIFramework.Patterns.Notification {
 			e.stopPropagation();
 			e.preventDefault();
 			this._onNotificationToggle(!this._configs.IsOpen);
-			console.log('_onNotificationClick');
 		}
 
 		// Call methods to open or close, based ok e.key and behavior applied
@@ -95,7 +93,6 @@ namespace OSUIFramework.Patterns.Notification {
 			} else {
 				this.hide();
 			}
-			console.log('_onNotificationToggle');
 		}
 
 		// Remove all the assigned Events
@@ -195,7 +192,6 @@ namespace OSUIFramework.Patterns.Notification {
 		// Update CloseAfterTime value
 		private _updateCloseAfterTime(value: number): void {
 			this._configs.CloseAfterTime = value;
-			console.log(value);
 			if (this._configs.IsOpen) {
 				this._autoCloseNotification();
 			}
@@ -210,14 +206,12 @@ namespace OSUIFramework.Patterns.Notification {
 					OSUIFramework.Event.Type.BodyOnClick,
 					this._globalEventOnBodyClick
 				);
-				console.log('true');
 			} else {
 				OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
 					// eslint-disable-next-line @typescript-eslint/no-unused-vars
 					OSUIFramework.Event.Type.BodyOnClick,
 					this._globalEventOnBodyClick
 				);
-				console.log('false');
 			}
 		}
 
@@ -272,7 +266,6 @@ namespace OSUIFramework.Patterns.Notification {
 			switch (propertyName) {
 				case Enum.Properties.CloseAfterTime:
 					this._updateCloseAfterTime(propertyValue);
-					console.log(propertyValue);
 					break;
 				case Enum.Properties.CloseOnBodyClick:
 					this._configs.CloseOnBodyClick = propertyValue;
@@ -330,8 +323,6 @@ namespace OSUIFramework.Patterns.Notification {
 				OSUIFramework.Event.Type.BodyOnClick,
 				this._globalEventOnBodyClick
 			);
-
-			console.log('hide');
 		}
 
 		// Set callbacks for the onToggle event
@@ -369,7 +360,6 @@ namespace OSUIFramework.Patterns.Notification {
 					this._globalEventOnBodyClick
 				);
 			}
-			console.log('show', this._configs.CloseOnBodyClick);
 		}
 	}
 }
