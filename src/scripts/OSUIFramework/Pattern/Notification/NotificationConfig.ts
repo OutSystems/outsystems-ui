@@ -11,9 +11,6 @@ namespace OSUIFramework.Patterns.Notification {
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		constructor(config: any) {
 			super(config);
-
-			this.Width = this.Width !== '' ? this.Width : Enum.Defaults.DefaultWidth;
-			this.Position = this.Position !== '' ? this.Position : Enum.Defaults.DefaultPosition;
 		}
 	}
 }
