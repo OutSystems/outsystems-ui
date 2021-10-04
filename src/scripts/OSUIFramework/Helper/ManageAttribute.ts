@@ -8,9 +8,9 @@ namespace OSUIFramework.Helper.Attribute {
 	 * @param {string} attrName Attribute name
 	 * @param {string} attrValue Attribute value
 	 */
-	export function Set(elem: HTMLElement, attrName: string, attrValue: string): void {
+	export function Set(elem: HTMLElement, attrName: string, attrValue: string | boolean): void {
 		if (elem) {
-			elem.setAttribute(attrName, attrValue);
+			elem.setAttribute(attrName, attrValue.toString());
 		} else {
 			throw Error(`The element does not exist, when trying to set the attribute '${attrName}'.`);
 		}
