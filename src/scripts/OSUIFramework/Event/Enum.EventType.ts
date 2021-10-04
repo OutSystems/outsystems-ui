@@ -3,5 +3,6 @@ namespace OSUIFramework.Event {
 	export enum Type {
 		BodyOnClick = 'body.onclick',
 		SubmenuOpen = 'submenu.open',
+		NotificationOpen = 'notification.open',
 	}
 }

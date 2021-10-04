@@ -1,0 +1,269 @@
+/*! Patterns - Content - Notification */
+////
+/// @group Patterns-Notification
+/// Patterns - Content - Notification
+
+///
+.osui-notification {
+	// Service Studio Preview
+	& {
+		-servicestudio--webkit-transform: translateY(0);
+		-servicestudio-position: static;
+		-servicestudio-transform: translateY(0);
+	}
+
+	&-content {
+		background-color: var(--color-neutral-0);
+		border: var(--border-size-s) solid var(--color-neutral-4);
+		border-radius: var(--border-radius-soft);
+		box-shadow: var(--shadow-xl);
+		color: var(--color-neutral-10);
+		opacity: 0;
+		padding: var(--space-m);
+		position: fixed;
+		transition: all 300ms ease-out;
+		user-select: none;
+		width: var(--notification-width);
+		z-index: 300;
+	}
+
+	&.is {
+		&-top {
+			.osui-notification-content {
+				left: 50%;
+				top: calc(var(--space-xxl) * -1);
+				transform: translate(-50%, -100%);
+			}
+
+			&-right,
+			&-left {
+				.osui-notification-content {
+					margin-top: var(--space-m);
+					top: 0;
+				}
+			}
+
+			&-right .osui-notification-content {
+				right: -100%;
+			}
+
+			&-left .osui-notification-content {
+				left: -100%;
+			}
+		}
+
+		&-bottom {
+			.osui-notification-content {
+				bottom: calc(var(--space-xxl) * -1);
+				left: 50%;
+				transform: translate(-50%, 100%);
+			}
+
+			&-right,
+			&-left {
+				.osui-notification-content {
+					bottom: 0;
+					margin-bottom: var(--space-m);
+				}
+			}
+
+			&-right .osui-notification-content {
+				right: -100%;
+			}
+
+			&-left .osui-notification-content {
+				left: -100%;
+			}
+		}
+
+		&-center .osui-notification-content {
+			left: 50%;
+			opacity: 0;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		&-right .osui-notification-content {
+			right: -100%;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		&-left .osui-notification-content {
+			left: -100%;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		&-open {
+			.osui-notification-content {
+				opacity: 1;
+			}
+			&.has-overlay:before {
+				background-color: rgba(0, 0, 0, 0.25);
+				content: '';
+				display: block;
+				height: 100vh;
+				left: 0;
+				pointer-events: none;
+				position: fixed;
+				top: 0;
+				width: 100vw;
+				z-index: 100;
+			}
+
+			&.is {
+				&-top {
+					.osui-notification-content {
+						margin-top: var(--space-m);
+						top: 0;
+						transform: translate(-50%, 0%);
+					}
+
+					&-right .osui-notification-content {
+						margin-right: var(--space-m);
+						right: 0;
+					}
+
+					&-left .osui-notification-content {
+						left: 0;
+						margin-left: var(--space-m);
+					}
+				}
+
+				&-bottom {
+					.osui-notification-content {
+						bottom: 0;
+						margin-bottom: var(--space-m);
+						transform: translateX(-50%);
+					}
+
+					&-right,
+					&-left {
+						.osui-notification-content {
+							bottom: 0;
+						}
+					}
+
+					&-right .osui-notification-content {
+						margin: var(--space-none) var(--space-m) var(--space-m) var(--space-none);
+						right: 0;
+					}
+
+					&-left .osui-notification-content {
+						left: 0;
+						margin: var(--space-none) var(--space-none) var(--space-m) var(--space-m);
+					}
+				}
+
+				&-center .osui-notification-content {
+					opacity: 1;
+				}
+
+				&-right .osui-notification-content {
+					margin-right: var(--space-m);
+					right: 0;
+					top: 50%;
+					transform: translateY(-50%);
+				}
+
+				&-left .osui-notification-content {
+					left: 0;
+					margin-left: var(--space-m);
+					top: 50%;
+					transform: translateY(-50%);
+				}
+			}
+		}
+	}
+}
+
+///
+.slide-from-left-enter,
+.slide-from-left-leave,
+.slide-from-right-enter,
+.slide-from-right-leave,
+.slide-from-top-enter,
+.slide-from-top-leave,
+.slide-from-bottom-enter,
+.slide-from-bottom-leave,
+.fade-enter,
+.fade-leave {
+	.layout-native {
+		.osui-notification {
+			display: none;
+		}
+	}
+}
+
+///
+.layout-native {
+	.osui-notification {
+		left: 50%;
+		margin-left: -185px;
+		transform: translateY(-120%) translateX(0);
+
+		// Service Studio Preview
+		& {
+			-servicestudio-left: 0;
+			-servicestudio-margin-left: 0;
+			-servicestudio-transform: none;
+		}
+
+		&.is-open {
+			transform: translateY(24px) translateX(0);
+		}
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+///
+.tablet {
+	.layout-native {
+		.osui-notification {
+			left: 50%;
+			margin-left: -185px;
+		}
+	}
+}
+
+///
+.phone {
+	.layout-native {
+		.osui-notification {
+			left: 16px;
+			margin-left: 0;
+			right: 16px;
+			width: auto;
+		}
+	}
+}
+
+///
+.android[data-status-bar-height] {
+	.layout-native {
+		.osui-notification.is-open {
+			margin-top: var(--status-bar-height);
+		}
+	}
+}
+
+///
+.ios {
+	&.phone {
+		&.landscape {
+			.layout-native {
+				.osui-notification {
+					left: calc(var(--os-safe-area-left) + 16px);
+					right: calc(var(--os-safe-area-right) + 16px);
+				}
+			}
+		}
+	}
+
+	.layout-native {
+		.osui-notification.is-open {
+			margin-top: var(--status-bar-height);
+		}
+	}
+}

@@ -22,6 +22,7 @@ namespace OSUIFramework.Constants {
 			Off: 'off',
 		},
 		Role: {
+			Alert: 'alert',
 			AttrName: 'role',
 			Button: 'button',
 			MenuItem: 'menuitem',

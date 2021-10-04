@@ -243,7 +243,7 @@
 @import '../scripts/OSUIFramework/Pattern/FloatingActions/scss/floating-actions';
 @import '04-patterns/03-interaction/input-with-icon';
 @import '04-patterns/03-interaction/lightbox-image';
-@import '04-patterns/03-interaction/notification';
+@import '../scripts/OSUIFramework/Pattern/Notification/scss/notification';
 @import '../scripts/OSUIFramework/Pattern/RangeSlider/scss/rangeslider';
 @import '04-patterns/03-interaction/scrollable-area';
 @import '../scripts/OSUIFramework/Pattern/Search/scss/search';
@@ -289,6 +289,7 @@
 /*! Deprecated Patterns                                                         */
 /*! =========================================================================== */
 @import '10-deprecated/horizontal-scroll-deprecated';
+@import '10-deprecated/notification-deprecated';
 @import '10-deprecated/sidebar-deprecated';
 @import '10-deprecated/submenu-deprecated';
 @import '10-deprecated/tooltip-deprecated';
