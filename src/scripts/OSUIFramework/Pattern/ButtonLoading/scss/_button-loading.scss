@@ -11,9 +11,6 @@
 .osui-btn-loading {
 	&.show-spinner-only {
 		.btn {
-			overflow: hidden;
-			text-indent: -9999px;
-
 			& > *:not(.btn-loading):not(.loading-spinner):not(.btn-label) {
 				display: none;
 			}
@@ -21,6 +18,12 @@
 
 		&.is--loading {
 			.btn {
+				font-size: 0;
+
+				.loading-spinner {
+					margin: 0;
+				}
+
 				.btn-label {
 					display: none;
 				}
@@ -28,18 +31,8 @@
 		}
 	}
 
-	&.is--loading:not(.show-spinner-only) {
-		.btn {
-			.btn-label {
-				text-indent: var(--space-s);
-			}
-		}
-	}
-
 	&:not(.is--loading) {
 		.btn {
-			text-indent: initial;
-
 			.loading-spinner {
 				display: none;
 			}
@@ -47,10 +40,10 @@
 	}
 
 	.btn {
-		text-indent: var(--space-s);
+		transition: none;
 
 		& > * {
-			text-indent: initial;
+			font-size: initial;
 		}
 
 		.btn-loading {
@@ -63,12 +56,26 @@
 			border-radius: var(--border-radius-circle);
 			border-top: var(--border-size-m) solid transparent;
 			height: 16px;
+			margin-right: var(--space-s);
 			width: 16px;
 			will-change: transform;
 
 			// ServiceStudio Preview
 			& {
 				-servicestudio-margin-right: var(--space-s);
+			}
+		}
+	}
+}
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	.osui-btn-loading {
+		.btn {
+			.loading-spinner {
+				margin-left: var(--space-s);
+				margin-right: var(--space-none);
 			}
 		}
 	}
