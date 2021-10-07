@@ -102,7 +102,7 @@
 			height: 48px;
 		}
 
-		&[data-textarea] {
+		&[data-textarea]:not(.input-small) {
 			font-size: var(--font-size-base);
 			height: auto;
 		}
