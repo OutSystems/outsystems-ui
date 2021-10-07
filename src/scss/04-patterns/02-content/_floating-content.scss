@@ -153,6 +153,23 @@
 
 	&-margin {
 		margin: var(--space-l);
+
+		&.floating-content {
+			&-center {
+				left: calc(50% - var(--space-l));
+				top: calc(50% - var(--space-l));
+			}
+
+			&-left,
+			&-right {
+				top: calc(50% - var(--space-l));
+			}
+			&-top,
+			&-bottom,
+			&-center {
+				left: calc(50% - var(--space-l));
+			}
+		}
 	}
 }
 
@@ -265,7 +282,7 @@
 				&,
 				&-left,
 				&-right {
-					bottom: calc(var(--footer-height) + var(--os-safe-area-bottom));
+					bottom: calc(var(--bottom-bar-size) + var(--os-safe-area-bottom));
 				}
 			}
 		}
