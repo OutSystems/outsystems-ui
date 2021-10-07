@@ -9,24 +9,8 @@
 
 	// Service Studio Preview
 	& {
-		-servicestudio-align-items: center;
 		-servicestudio-background-color: var(--header-color);
 		-servicestudio-height: auto !important;
-	}
-}
-
-/* Menu ServiceStudio Preview */
-///
-body {
-	.app-menu-content {
-		// Service Studio Preview
-		& {
-			-servicestudio-align-items: flex-start;
-			-servicestudio-height: 100% !important;
-			-servicestudio-left: 0 !important;
-			-servicestudio-position: relative !important;
-			-servicestudio-width: 100% !important;
-		}
 	}
 }
 
@@ -69,6 +53,67 @@ body {
 	}
 }
 
+///
+.layout-top {
+	.header-content {
+		// Service Studio Preview
+		& {
+			-servicestudio-align-items: center;
+			-servicestudio-flex-direction: row;
+		}
+	}
+}
+
+///
+.layout-side {
+	.aside-navigation {
+		// Service Studio Preview
+		& {
+			-servicestudio-background-color: var(--color-neutral-0);
+			-servicestudio-height: 100%;
+			-servicestudio-position: fixed;
+			-servicestudio-width: var(--side-menu-size);
+			-servicestudio-z-index: 105;
+		}
+
+		& > div {
+			// Service Studio Preview
+			& {
+				-servicestudio-height: 100%;
+			}
+		}
+	}
+
+	.header {
+		.app-menu-content {
+			// Service Studio Preview
+			& {
+				-servicestudio-flex-direction: row;
+				-servicestudio-position: static;
+				-servicestudio-width: 100%;
+			}
+		}
+
+		.app-menu-links {
+			// Service Studio Preview
+			& {
+				-servicestudio-align-items: center;
+				-servicestudio-flex-direction: row;
+			}
+		}
+	}
+
+	.header-navigation {
+		& > div {
+			// Service Studio Preview
+			& {
+				-servicestudio-height: 100%;
+				-servicestudio-width: 100%;
+			}
+		}
+	}
+}
+
 // Responsive --------------------------------------------------------------------
 ///
 .desktop {
@@ -107,6 +152,16 @@ body {
 	.menu-visible .app-menu-content {
 		transform: translateX(var(--side-menu-size)) translateZ(0);
 		transition: transform 330ms ease-out;
+	}
+
+	.layout-side {
+		.header .app-menu-content,
+		.aside-navigation {
+			// Service Studio Preview
+			& {
+				-servicestudio-display: none;
+			}
+		}
 	}
 }
 
