@@ -73,6 +73,14 @@
 				border-bottom: var(--border-size-m) solid var(--color-primary);
 				color: var(--color-neutral-10);
 			}
+
+			&[disabled] {
+				color: var(--color-neutral-6);
+
+				&.button-group-selected-item {
+					border-bottom: var(--border-size-m) solid var(--color-neutral-6);
+				}
+			}
 		}
 	}
 }
