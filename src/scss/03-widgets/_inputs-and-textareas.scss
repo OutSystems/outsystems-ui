@@ -97,7 +97,7 @@
 .tablet,
 .phone {
 	.form-control {
-		&[data-input] {
+		&[data-input]:not(.input-small) {
 			font-size: var(--font-size-base);
 			height: 48px;
 		}
