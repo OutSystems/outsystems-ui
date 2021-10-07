@@ -78,7 +78,6 @@ html[data-uieditorversion^='1'] {
 
 	body.phone .layout .app-menu-content,
 	body.tablet .layout .app-menu-content,
-	.layout-side .header .app-menu-content,
 	body:not(.phone):not(.tablet) .layout-side .menu-icon {
 		-servicestudio-display: none;
 	}
