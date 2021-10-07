@@ -47,7 +47,7 @@
 ///
 .desktop {
 	.layout-side {
-		.app-menu-content {
+		&:not(.layout-native) .app-menu-content {
 			left: 0;
 		}
 
