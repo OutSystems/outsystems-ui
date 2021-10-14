@@ -4,12 +4,13 @@
 /// Patterns - Utilities - Button Loading
 
 /* NOTE:
-	.btn-loading & .btn-label are selectors that are used to mantain retrocompatilibilty
+	.btn-show-label, .btn-loading & .btn-label are selectors that are used to mantain retrocompatilibilty
 */
 
 ///
 .osui-btn-loading {
-	&.show-spinner-only {
+	&.show-spinner-only,
+	&:not(.btn-show-label) {
 		.btn {
 			& > *:not(.btn-loading):not(.loading-spinner):not(.btn-label) {
 				display: none;
