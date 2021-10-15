@@ -39,6 +39,7 @@ namespace Providers.RangeSlider {
 			this._eventOnEnd = this._triggerOnEndEvent.bind(this);
 			this._eventOnStart = this._triggerOnStartEvent.bind(this);
 			this._isInterval = this._configs.IsInterval;
+			console.log('HEYYY');
 		}
 
 		// Method that will create the provider
@@ -239,21 +240,16 @@ namespace Providers.RangeSlider {
 
 			const pipsDensity = (pipsValues - 1) * 100;
 
+			const pips = {
+				values: pipsValues,
+				density: pipsDensity,
+				mode: Enum.NoUiSpliderModeOptions.Count,
+			};
+
 			if (isUpdate) {
-				this._provider.updateOptions({
-					pips: {
-						values: pipsValues,
-						density: pipsDensity,
-						mode: Enum.NoUiSpliderModeOptions.Count,
-					},
-				});
+				this._provider.updateOptions({ pips });
 			} else {
-				this._providerOptions.pips = {
-					values: pipsValues,
-					density: pipsDensity,
-					stepped: true,
-					mode: Enum.NoUiSpliderModeOptions.Count,
-				};
+				this._providerOptions.pips = pips;
 			}
 		}
 
