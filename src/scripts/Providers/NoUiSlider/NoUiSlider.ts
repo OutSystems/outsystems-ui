@@ -239,21 +239,16 @@ namespace Providers.RangeSlider {
 
 			const pipsDensity = (pipsValues - 1) * 100;
 
+			const pips = {
+				values: pipsValues,
+				density: pipsDensity,
+				mode: Enum.NoUiSpliderModeOptions.Count,
+			};
+
 			if (isUpdate) {
-				this._provider.updateOptions({
-					pips: {
-						values: pipsValues,
-						density: pipsDensity,
-						mode: Enum.NoUiSpliderModeOptions.Count,
-					},
-				});
+				this._provider.updateOptions({ pips });
 			} else {
-				this._providerOptions.pips = {
-					values: pipsValues,
-					density: pipsDensity,
-					stepped: true,
-					mode: Enum.NoUiSpliderModeOptions.Count,
-				};
+				this._providerOptions.pips = pips;
 			}
 		}
 
