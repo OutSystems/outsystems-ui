@@ -39,7 +39,6 @@ namespace Providers.RangeSlider {
 			this._eventOnEnd = this._triggerOnEndEvent.bind(this);
 			this._eventOnStart = this._triggerOnStartEvent.bind(this);
 			this._isInterval = this._configs.IsInterval;
-			console.log('HEYYY');
 		}
 
 		// Method that will create the provider
