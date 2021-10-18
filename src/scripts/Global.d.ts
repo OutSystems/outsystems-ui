@@ -1,6 +1,8 @@
 import noUiSlider from 'nouislider';
 import Options from 'nouislider';
 import { PipsMode } from 'nouislider';
+import OriginalSplide from '@splidejs/splide';
+import { SplideOptions } from '@splidejs/splide';
 
 /**
  * Set global declarations
@@ -13,6 +15,8 @@ declare global {
 		noUiSlider: typeof noUiSlider;
 		NoUiSliderOptions: typeof Options;
 		NoUiSliderPipsMode: typeof PipsMode;
+		Splide: typeof OriginalSplide;
+		SplideOpts: typeof SplideOptions;
 	}
 
 	interface Navigator {
@@ -22,4 +26,6 @@ declare global {
 	type NoUiSlider = noUiSlider;
 	type NoUiSliderOptions = Options;
 	type NoUiSliderPipsMode = PipsMode;
+	type Splide = OriginalSplide;
+	type SplideOpts = SplideOptions;
 }
