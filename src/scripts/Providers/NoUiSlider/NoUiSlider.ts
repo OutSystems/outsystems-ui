@@ -70,6 +70,7 @@ namespace Providers.RangeSlider {
 			}
 		}
 
+		// Method to set a default to aria-label on handles, to avoid Lighthouse audit errors
 		private _setAccessibilityLabel(): void {
 			if (this._isInterval) {
 				this._providerOptions.handleAttributes = [
