@@ -1,0 +1,339 @@
+/*! Patterns - Interaction - Range Slider */
+////
+/// @group Patterns-Range_Slider
+/// Patterns - Interaction - Range Slider
+
+/*! NoUiSlider Library Core Styles */
+@import './NoUiSlider/noUiSlider';
+
+///
+.osui-range-slider {
+	padding: 0 12px;
+
+	// Service Studio Preview
+	& {
+		-servicestudio-margin-bottom: 16px;
+	}
+
+	.noUi {
+		&-base {
+			background-color: transparent;
+			border-radius: var(--border-radius-soft);
+		}
+
+		&-pips {
+			position: static;
+		}
+
+		&-origin {
+			background-color: var(--color-neutral-5);
+			height: 10%;
+			width: 10%;
+		}
+
+		&-target {
+			background: var(--color-neutral-5);
+			border: var(--border-size-none);
+			border-radius: var(--border-radius-soft);
+			box-shadow: none;
+			margin: var(--space-m) var(--space-none) 45px;
+		}
+
+		&-horizontal,
+		&-vertical {
+			.noUi-handle {
+				background-color: var(--color-neutral-0);
+				border: var(--border-size-s) solid var(--color-neutral-7);
+				border-radius: var(--border-radius-circle);
+				box-shadow: var(--shadow-xs);
+				cursor: pointer;
+				display: inline-block;
+				height: 24px;
+				left: -10px;
+				position: relative;
+				top: -10px;
+				transition: transform 150ms ease-out;
+				width: 24px;
+			}
+
+			.noUi-handle:before,
+			.noUi-handle:after {
+				background: transparent;
+				border-color: var(--color-neutral-6);
+				border-style: solid;
+				content: '';
+				height: 10px;
+				margin-top: -5px;
+				position: absolute;
+				top: 50%;
+			}
+
+			.noUi-handle:before {
+				border-width: var(--border-size-none) var(--border-size-none) var(--border-size-none)
+					var(--border-size-s);
+				content: '';
+				left: 6px;
+				right: auto;
+			}
+
+			.noUi-handle:after {
+				border-style: solid;
+				border-width: var(--border-size-none) var(--border-size-s);
+				left: 10px;
+				width: 3px;
+			}
+
+			.noUi-handle.noUi-active,
+			.noUi-handle:hover {
+				border: var(--border-size-s) solid var(--color-primary);
+			}
+
+			.noUi-handle.noUi-active:before,
+			.noUi-handle.noUi-active:after,
+			.noUi-handle:hover:before,
+			.noUi-handle:hover:after {
+				border-color: var(--color-primary);
+			}
+		}
+
+		&-vertical {
+			height: var(--vertical-height);
+			margin: var(--space-m) var(--space-none);
+			width: 4px;
+
+			.noUi-origin {
+				width: 0;
+			}
+
+			.noUi-handle {
+				left: -14px;
+			}
+
+			.noUi-tooltip {
+				right: 120%;
+				top: 50%;
+				-webkit-transform: translate(0, -50%);
+				transform: translate(0, -50%);
+			}
+		}
+
+		&-horizontal {
+			height: 4px;
+
+			.noUi-origin {
+				height: 0;
+			}
+
+			.noUi-handle {
+				left: auto;
+				position: absolute;
+				right: -12px;
+			}
+
+			.noUi-pips {
+				color: var(--color-neutral-8);
+				position: absolute;
+			}
+
+			.noUi-pips-margin {
+				margin-bottom: 60px;
+			}
+
+			.noUi-tooltip {
+				bottom: 120%;
+				left: 50%;
+				-webkit-transform: translate(-50%, 0);
+				transform: translate(-50%, 0);
+			}
+		}
+
+		&-connects {
+			border-radius: var(--border-radius-soft);
+		}
+
+		&-connect {
+			background-color: var(--color-primary);
+			box-shadow: none;
+			height: 100%;
+			width: 100%;
+		}
+
+		&-background {
+			box-shadow: none;
+		}
+
+		&-handle {
+			-webkit-backface-visibility: hidden;
+			backface-visibility: hidden;
+			position: absolute;
+		}
+
+		&-pips-horizontal {
+			height: 40px;
+			left: 0;
+			padding: 12px 0 0;
+			top: 100%;
+			width: 100%;
+		}
+
+		&-pips-vertical {
+			color: var(--color-neutral-8);
+			height: 100%;
+			left: 100%;
+			padding: 0 0 0 var(--space-base);
+			top: 0;
+		}
+
+		&-marker {
+			position: absolute;
+
+			&-sub {
+				background-color: var(--color-neutral-5);
+			}
+
+			&-large {
+				background-color: var(--color-neutral-6);
+			}
+
+			&-horizontal {
+				&.noUi-marker {
+					height: 4px;
+					margin-left: -1px;
+					width: 2px;
+
+					&-sub {
+						height: 10px;
+					}
+
+					&-large {
+						height: 4px;
+					}
+				}
+			}
+
+			&-vertical {
+				&.noUi-marker {
+					height: 2px;
+					margin-top: -1px;
+					width: 5px;
+				}
+
+				&.noUi-marker-sub {
+					width: 10px;
+				}
+
+				&.noUi-marker-large {
+					width: 4px;
+				}
+			}
+		}
+
+		&-value {
+			position: absolute;
+			text-align: center;
+			white-space: nowrap;
+
+			&-sub {
+				background-color: var(--color-neutral-6);
+				font-size: 10px;
+			}
+
+			&-horizontal {
+				top: 6px;
+				transform: translate(-50%, 50%);
+			}
+		}
+
+		&-value-vertical {
+			padding-left: var(--space-s);
+			transform: translate(0, -50%);
+		}
+
+		&-tooltip {
+			background: var(--color-neutral-0);
+			border: var(--border-size-s) solid var(--color-neutral-5);
+			border-radius: var(--border-radius-soft);
+			color: var(--color-neutral-10);
+			display: block;
+			padding: var(--space-xs);
+			position: absolute;
+			text-align: center;
+			white-space: nowrap;
+		}
+
+		&-rtl {
+			&.noUi-vertical .noUi-handle {
+				position: absolute;
+				right: unset;
+			}
+
+			.noUi-value-vertical {
+				transform: translate(0, 50%);
+			}
+
+			.noUi-value-horizontal {
+				transform: translate(50%, 50%);
+			}
+
+			.noUi-value.noUi-value-vertical {
+				padding-left: var(--space-none);
+				padding-right: var(--space-m);
+			}
+
+			.noUi-marker.noUi-marker-vertical {
+				margin-right: var(--space-base);
+			}
+		}
+
+		&-txt-dir-rtl {
+			&.noUi-horizontal {
+				.noUi-origin {
+					left: inherit;
+					right: inherit;
+				}
+			}
+		}
+	}
+
+	.osui-range-slider_provider {
+		&[disabled='true'] {
+			pointer-events: none;
+
+			.noUi {
+				&-target {
+					background-color: var(--color-neutral-4);
+				}
+
+				&-connect {
+					background-color: var(--color-neutral-6);
+				}
+
+				&-handle {
+					background-color: var(--color-neutral-2);
+					border: var(--border-size-s) solid var(--color-neutral-5);
+					box-shadow: none;
+
+					&:before,
+					&:after {
+						border-color: var(--color-neutral-6);
+					}
+				}
+
+				&-pips {
+					color: var(--color-neutral-6);
+				}
+			}
+		}
+	}
+}
+
+// Accessibility -----------------------------------------------------------------
+///
+.has-accessible-features {
+	.osui-range-slider {
+		.noUi-handle:focus {
+			border-color: var(--color-focus-inner);
+			box-shadow: 0 0 0 3px var(--color-focus-outer);
+		}
+	}
+}
