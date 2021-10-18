@@ -13,11 +13,11 @@ namespace OSUIFramework.Patterns.Carousel.Factory {
 		configs: string,
 		provider: string
 	): OSUIFramework.Patterns.Carousel.ICarousel {
-		const _carouselItem = null;
+		let _carouselItem = null;
 
 		switch (provider) {
 			case Enum.Provider.Splide:
-				//_carouselItem = new Providers.Carousel.OSUISplide(carouselId, JSON.parse(configs));
+				_carouselItem = new Providers.Carousel.OSUISplide(carouselId, JSON.parse(configs));
 
 				break;
 

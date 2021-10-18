@@ -96,6 +96,32 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	}
 
 	/**
+	 * Function to go to the next page
+	 *
+	 * @export
+	 * @param {string} carouselId
+	 * @param {string} target
+	 */
+	export function Next(carouselId: string): void {
+		const carousel = GetCarouselItemById(carouselId);
+
+		carousel.next();
+	}
+
+	/**
+	 * Function to go to the previous page
+	 *
+	 * @export
+	 * @param {string} carouselId
+	 * @param {string} target
+	 */
+	export function Previous(carouselId: string): void {
+		const carousel = GetCarouselItemById(carouselId);
+
+		carousel.previous();
+	}
+
+	/**
 	 * Function to register a provider callback
 	 *
 	 * @export
@@ -108,8 +134,36 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 		eventName: string,
 		callback: OSUIFramework.Callbacks.OSGeneric
 	): void {
-		const carousel = this.GetRangeSliderItemById(carouselId);
+		const carousel = GetCarouselItemById(carouselId);
 
 		carousel.registerProviderCallback(eventName, callback);
+	}
+
+	/**
+	 * Function to toggle the drag events on the Carousel
+	 *
+	 * @export
+	 * @param {string} carouselId
+	 * @param {boolean} hasDrag
+	 */
+	export function ToggleDrag(carouselId: string, hasDrag: boolean): void {
+		const carousel = GetCarouselItemById(carouselId);
+
+		carousel.toggleDrag(hasDrag);
+	}
+
+	/**
+	 * Function that will update on DOM changes inside the Carousel
+	 *
+	 * @export
+	 * @param {string} carouselId
+	 * @return {*}  {OSUIFramework.Patterns.Carousel.ICarousel}
+	 */
+	export function UpdateOnRender(carouselId: string): OSUIFramework.Patterns.Carousel.ICarousel {
+		const carousel = GetCarouselItemById(carouselId);
+
+		carousel.updateOnRender();
+
+		return carousel;
 	}
 }
