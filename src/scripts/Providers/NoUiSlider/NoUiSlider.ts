@@ -54,8 +54,8 @@ namespace Providers.RangeSlider {
 
 			// Set the correct type of event to add (Change only triggers when stoping the drag)
 			const changeEvent = this._configs.ChangeEventDuringSlide
-				? Enum.NoUISpliderEvents.Slide
-				: Enum.NoUISpliderEvents.Change;
+				? Enum.NoUISliderEvents.Slide
+				: Enum.NoUISliderEvents.Change;
 
 			// Set OnValueChange event
 			this._setOnValueChangeEvent(changeEvent);
@@ -64,9 +64,21 @@ namespace Providers.RangeSlider {
 			// This is later used on changeProperty for InitialValue, to prevent a loop being created when
 			// the developer is manipulating the IntialValue variable directly on the OnValueChange event
 			// (and by doing that triggering the parameterChange again, and creating a loop)
-			if (changeEvent === Enum.NoUISpliderEvents.Slide) {
-				this._provider.on(Enum.NoUISpliderEvents.Start, this._eventOnStart);
-				this._provider.on(Enum.NoUISpliderEvents.End, this._eventOnEnd);
+			if (changeEvent === Enum.NoUISliderEvents.Slide) {
+				this._provider.on(Enum.NoUISliderEvents.Start, this._eventOnStart);
+				this._provider.on(Enum.NoUISliderEvents.End, this._eventOnEnd);
+			}
+		}
+
+		// Method to set a default to aria-label on handles, to avoid Lighthouse audit errors
+		private _setAccessibilityLabel(): void {
+			if (this._isInterval) {
+				this._providerOptions.handleAttributes = [
+					{ 'aria-label': Enum.NoUISliderLabels.Lower },
+					{ 'aria-label': Enum.NoUISliderLabels.Upper },
+				];
+			} else {
+				this._providerOptions.handleAttributes = [{ 'aria-label': Enum.NoUISliderLabels.Single }];
 			}
 		}
 
@@ -81,6 +93,8 @@ namespace Providers.RangeSlider {
 		// Method to set the library options from the config
 		private _setInitialLibraryOptions(): void {
 			this._providerOptions = this._configs.getProviderConfig();
+
+			this._setAccessibilityLabel();
 
 			if (this._configs.ShowPips) {
 				this.handleRangePips(this._configs.PipsStep, false);
@@ -242,7 +256,7 @@ namespace Providers.RangeSlider {
 			const pips = {
 				values: pipsValues,
 				density: pipsDensity,
-				mode: Enum.NoUiSpliderModeOptions.Count,
+				mode: Enum.NoUiSliderModeOptions.Count,
 			};
 
 			if (isUpdate) {

@@ -10,7 +10,7 @@ namespace Providers.RangeSlider {
 					: OSUIFramework.GlobalEnum.Direction.LTR,
 				start: this.IsInterval ? [this.InitialValueStart, this.InitialValueEnd] : [this.InitialValueStart],
 				step: this.Step,
-				connect: this.IsInterval ? true : Enum.NoUiSpliderConnectOptions.Lower,
+				connect: this.IsInterval ? true : Enum.NoUiSliderConnectOptions.Lower,
 				orientation: this.IsVertical
 					? OSUIFramework.GlobalEnum.Orientation.Vertical
 					: OSUIFramework.GlobalEnum.Orientation.Horizontal,
