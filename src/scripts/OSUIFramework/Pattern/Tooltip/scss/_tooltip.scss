@@ -114,6 +114,7 @@ $osui-tooltip-arrow-size: 8px;
 		position: absolute;
 		top: 100%;
 		transition: opacity 0.25s;
+		z-index: 1;
 
 		// Service Studio Preview
 		& {
@@ -254,7 +255,7 @@ $osui-tooltip-arrow-size: 8px;
 			.osui-tooltip_balloon {
 				left: initial;
 				right: calc(-1 * var(--space-s));
-				transform: translateX(-100%);
+				transform: translateX(100%);
 
 				&:before {
 					border-color: transparent transparent transparent var(--color-neutral-9);
