@@ -74,11 +74,11 @@ namespace Providers.RangeSlider {
 		private _setAccessibilityLabel(): void {
 			if (this._isInterval) {
 				this._providerOptions.handleAttributes = [
-					{ 'aria-label': Enum.NoUISsliderLabels.Lower },
-					{ 'aria-label': Enum.NoUISsliderLabels.Upper },
+					{ 'aria-label': Enum.NoUISliderLabels.Lower },
+					{ 'aria-label': Enum.NoUISliderLabels.Upper },
 				];
 			} else {
-				this._providerOptions.handleAttributes = [{ 'aria-label': Enum.NoUISsliderLabels.Single }];
+				this._providerOptions.handleAttributes = [{ 'aria-label': Enum.NoUISliderLabels.Single }];
 			}
 		}
 
