@@ -26,6 +26,14 @@ namespace Providers.Carousel.Enum {
 		Loop = 'loop',
 		Slide = 'slide',
 	}
+
+	/**
+	 * Splide Keyboard API options
+	 */
+	export enum KeyboardOptions {
+		Focused = 'focused',
+	}
+
 	/**
 	 * Splide Navigation options
 	 */
