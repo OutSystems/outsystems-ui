@@ -27,7 +27,7 @@ namespace Providers.Carousel {
 		private _providerContainer: HTMLElement;
 		// Store initial provider options
 		// eslint-disable-next-line @typescript-eslint/explicit-member-accessibility, @typescript-eslint/no-explicit-any
-		private _splideOptions: SplideOpts;
+		private _providerOptions: SplideOpts;
 		// Store the splide__track element from the provider
 		private _splideTrack: HTMLElement;
 
@@ -38,7 +38,7 @@ namespace Providers.Carousel {
 			// As the Splider library only has the SplideOptions as an interface, and not an object
 			// we decided to create an empty object of type SplideOpts, as already give us the intellisense, without the need to create
 			// a SplideOptions class on our side.
-			this._splideOptions = {};
+			this._providerOptions = {};
 		}
 
 		// Method to check if a List Widget is used inside the placeholder and assign the _listWidget variable
@@ -76,7 +76,7 @@ namespace Providers.Carousel {
 
 		// Method to init the provider
 		private _initProvider(): void {
-			this._provider = new window.Splide(this._providerContainer, this._splideOptions);
+			this._provider = new window.Splide(this._providerContainer, this._providerOptions);
 			// Set the OnInitialized event, before the provider is mounted
 			this._setOnInitializedEvent();
 			// Init the provider
@@ -98,7 +98,7 @@ namespace Providers.Carousel {
 
 		// Method that handles the breakpoint options from the library
 		private _setBreakpointsOptions(): void {
-			this._splideOptions.breakpoints = {
+			this._providerOptions.breakpoints = {
 				768: {
 					perPage: this._configs.ItemsPerSlide.Phone,
 					focus: this.setFocusOnItemOption(this._configs.FocusOnItem, this._configs.ItemsPerSlide.Phone),
@@ -137,22 +137,7 @@ namespace Providers.Carousel {
 
 		// Method to set the initial provider options, when created by the first time or after a destroy()
 		private _setInitialLibraryOptions(): void {
-			this._splideOptions.direction = OutSystems.OSUI.Utils.GetIsRTL()
-				? OSUIFramework.GlobalEnum.Direction.RTL
-				: OSUIFramework.GlobalEnum.Direction.LTR;
-
-			this._splideOptions.type = this._configs.Loop ? Enum.TypeOptions.Loop : Enum.TypeOptions.Slide;
-
-			this._splideOptions.focus = this.setFocusOnItemOption(
-				this._configs.FocusOnItem,
-				this._configs.ItemsPerSlide.Desktop
-			);
-
-			this._splideOptions.perPage = this._configs.ItemsPerSlide.Desktop;
-			this._splideOptions.autoplay = this._configs.AutoPlay;
-			this._splideOptions.padding = this._configs.Padding;
-			this._splideOptions.gap = this._configs.Gap;
-			this._splideOptions.start = this._configs.InitialPosition;
+			this._providerOptions = this._configs.getProviderConfig();
 
 			// Method to handle the breakpoints, and it will need to be called again on changeProperty
 			this._setBreakpointsOptions();
@@ -185,7 +170,7 @@ namespace Providers.Carousel {
 
 			this._provider.options = {
 				focus: this.setFocusOnItemOption(this._configs.FocusOnItem, this._configs.ItemsPerSlide.Desktop),
-				breakpoints: this._splideOptions.breakpoints,
+				breakpoints: this._providerOptions.breakpoints,
 			};
 		}
 
@@ -331,20 +316,20 @@ namespace Providers.Carousel {
 		public setNavigation(navigation: string): void {
 			switch (navigation) {
 				case Enum.Navigation.None:
-					this._splideOptions.arrows = false;
-					this._splideOptions.pagination = false;
+					this._providerOptions.arrows = false;
+					this._providerOptions.pagination = false;
 					break;
 				case Enum.Navigation.Dots:
-					this._splideOptions.arrows = false;
-					this._splideOptions.pagination = true;
+					this._providerOptions.arrows = false;
+					this._providerOptions.pagination = true;
 					break;
 				case Enum.Navigation.Arrows:
-					this._splideOptions.arrows = true;
-					this._splideOptions.pagination = false;
+					this._providerOptions.arrows = true;
+					this._providerOptions.pagination = false;
 					break;
 				case Enum.Navigation.Both:
-					this._splideOptions.arrows = true;
-					this._splideOptions.pagination = true;
+					this._providerOptions.arrows = true;
+					this._providerOptions.pagination = true;
 					break;
 				default:
 					throw new Error(`setNavigation - Option '${navigation}' can't be set.`);
