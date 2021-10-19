@@ -11,6 +11,8 @@ namespace Providers.Carousel {
 	{
 		// Store if the render callback should be prevented
 		private _blockRender: boolean;
+		// Store current carousel index;
+		private _currentIndex: number;
 		// Store if a List widget is used inside the CarouselItems placeholder
 		private _hasList: boolean;
 		// Store the List widget element
@@ -149,19 +151,22 @@ namespace Providers.Carousel {
 		// Method to set the OnInitializeEvent
 		private _setOnInitializedEvent(): void {
 			this._provider.on(Enum.SpliderEvents.Mounted, () => {
-				setTimeout(() => {
-					this._onInitialize(this.widgetId);
-				}, 0);
+				OSUIFramework.Helper.AsyncInvocation(this._onInitialize, this.widgetId);
 			});
 		}
 
 		// Method to set the OnSlideMoved event
 		private _setOnSlideMovedEvent(): void {
 			this._provider.on(Enum.SpliderEvents.Moved, (index) => {
-				setTimeout(() => {
-					this._onSlideMoved(this.widgetId, index);
-				}, 0);
+				if (index !== this._currentIndex) {
+					OSUIFramework.Helper.AsyncInvocation(this._onSlideMoved, this.widgetId, index);
+					this._currentIndex = index;
+				}
 			});
+		}
+
+		private _toggleBlockRender(block: boolean): void {
+			this._blockRender = block;
 		}
 
 		// Method to update Breakpoints options
@@ -196,7 +201,7 @@ namespace Providers.Carousel {
 			}
 
 			// Block UpdateOnRender to avoid multiple triggers of provider.refresh()
-			this._blockRender = true;
+			this._toggleBlockRender(true);
 
 			// Check which property changed and call respective method to update it
 			switch (propertyName) {
@@ -246,9 +251,7 @@ namespace Providers.Carousel {
 			}
 
 			// Unblock UpdateOnRender so that it is able to update on DOM changes inside Carousel content
-			setTimeout(() => {
-				this._blockRender = false;
-			}, 0);
+			OSUIFramework.Helper.AsyncInvocation(this._toggleBlockRender, false);
 		}
 
 		// Method to remove and destroy Carousel Splide instance

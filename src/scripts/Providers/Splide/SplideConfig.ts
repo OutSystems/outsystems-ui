@@ -5,6 +5,7 @@ namespace Providers.Carousel {
 		public getProviderConfig(): any {
 			// eslint-disable-next-line prefer-const
 			let providerOptions = {
+				keyboard: Enum.KeyboardOptions.Focused,
 				direction: OutSystems.OSUI.Utils.GetIsRTL()
 					? OSUIFramework.GlobalEnum.Direction.RTL
 					: OSUIFramework.GlobalEnum.Direction.LTR,
