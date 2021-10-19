@@ -18,6 +18,22 @@ namespace OSUIFramework.Patterns.Carousel.Enum {
 	}
 
 	/**
+	 * Carousel Enum for Properties
+	 */
+	export enum Properties {
+		Navigation = 'navigations',
+		ItemsDesktop = 'itemsDesktop',
+		ItemsTablet = 'itemsTablet',
+		ItemsPhone = 'itemsPhone',
+		AutoPlay = 'autoplay',
+		Loop = 'loop',
+		Padding = 'padding',
+		Gap = 'gap',
+		InitialPosition = 'initialPosition',
+		Focus = 'focus',
+	}
+
+	/**
 	 * Carousel Enum for Providers
 	 */
 	export enum Provider {

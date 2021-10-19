@@ -201,43 +201,43 @@ namespace Providers.Carousel {
 
 			// Check which property changed and call respective method to update it
 			switch (propertyName) {
-				case 'navigation':
+				case OSUIFramework.Patterns.Carousel.Enum.Properties.Navigation:
 					this._configs.Navigation = propertyValue;
 					this.updateCarousel();
 					break;
-				case 'itemsDesktop':
+				case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsDesktop:
 					this._configs.ItemsPerSlide.Desktop = propertyValue;
 					this.updateCarousel();
 					break;
-				case 'itemsTablet':
+				case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsTablet:
 					this._configs.ItemsPerSlide.Tablet = propertyValue;
 					this.updateCarousel();
 					break;
-				case 'itemsPhone':
+				case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsPhone:
 					this._configs.ItemsPerSlide.Phone = propertyValue;
 					this.updateCarousel();
 					break;
-				case 'autoplay':
+				case OSUIFramework.Patterns.Carousel.Enum.Properties.AutoPlay:
 					this._configs.AutoPlay = propertyValue;
 					this.updateCarousel();
 					break;
-				case 'loop':
+				case OSUIFramework.Patterns.Carousel.Enum.Properties.Loop:
 					this._configs.Loop = propertyValue;
 					this.updateCarousel();
 					break;
-				case 'padding':
+				case OSUIFramework.Patterns.Carousel.Enum.Properties.Padding:
 					this._configs.Padding = propertyValue;
 					this._provider.options = { padding: propertyValue };
 					break;
-				case 'gap':
+				case OSUIFramework.Patterns.Carousel.Enum.Properties.Gap:
 					this._configs.Gap = propertyValue;
 					this._provider.options = { gap: propertyValue };
 					break;
-				case 'initialPosition':
+				case OSUIFramework.Patterns.Carousel.Enum.Properties.InitialPosition:
 					this._configs.InitialPosition = propertyValue;
 					this.updateCarousel();
 					break;
-				case 'focus':
+				case OSUIFramework.Patterns.Carousel.Enum.Properties.Focus:
 					this._configs.FocusOnItem = propertyValue;
 					this._updateBreakpoints();
 					break;
