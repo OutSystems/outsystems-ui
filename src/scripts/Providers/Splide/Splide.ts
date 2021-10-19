@@ -165,10 +165,6 @@ namespace Providers.Carousel {
 			});
 		}
 
-		private _toggleBlockRender(block: boolean): void {
-			this._blockRender = block;
-		}
-
 		// Method to update Breakpoints options
 		private _updateBreakpoints(): void {
 			this._setBreakpointsOptions();
@@ -201,7 +197,7 @@ namespace Providers.Carousel {
 			}
 
 			// Block UpdateOnRender to avoid multiple triggers of provider.refresh()
-			this._toggleBlockRender(true);
+			this._blockRender = true;
 
 			// Check which property changed and call respective method to update it
 			switch (propertyName) {
@@ -251,7 +247,9 @@ namespace Providers.Carousel {
 			}
 
 			// Unblock UpdateOnRender so that it is able to update on DOM changes inside Carousel content
-			OSUIFramework.Helper.AsyncInvocation(this._toggleBlockRender, false);
+			setTimeout(() => {
+				this._blockRender = false;
+			}, 0);
 		}
 
 		// Method to remove and destroy Carousel Splide instance
