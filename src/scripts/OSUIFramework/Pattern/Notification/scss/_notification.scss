@@ -20,6 +20,7 @@
 		color: var(--color-neutral-10);
 		opacity: 0;
 		padding: var(--space-m);
+		pointer-events: none;
 		position: fixed;
 		transition: all 300ms ease-out;
 		user-select: none;
@@ -98,6 +99,7 @@
 		&-open {
 			.osui-notification-content {
 				opacity: 1;
+				pointer-events: auto;
 			}
 			&.has-overlay:before {
 				background-color: rgba(0, 0, 0, 0.25);
