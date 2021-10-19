@@ -1,8 +1,8 @@
 import noUiSlider from 'nouislider';
-import Options from 'nouislider';
+import noUiSliderOptions from 'nouislider';
 import { PipsMode } from 'nouislider';
 import OriginalSplide from '@splidejs/splide';
-import { SplideOptions } from '@splidejs/splide';
+import { Options } from '@splidejs/splide/dist/types/types/options';
 
 /**
  * Set global declarations
@@ -13,10 +13,10 @@ declare global {
 	interface Window {
 		cordova: any;
 		noUiSlider: typeof noUiSlider;
-		NoUiSliderOptions: typeof Options;
+		NoUiSliderOptions: typeof noUiSliderOptions;
 		NoUiSliderPipsMode: typeof PipsMode;
 		Splide: typeof OriginalSplide;
-		SplideOpts: typeof SplideOptions;
+		SplideOpts: typeof OriginalSplide.defaults;
 	}
 
 	interface Navigator {
@@ -24,8 +24,8 @@ declare global {
 	}
 
 	type NoUiSlider = noUiSlider;
-	type NoUiSliderOptions = Options;
+	type NoUiSliderOptions = noUiSliderOptions;
 	type NoUiSliderPipsMode = PipsMode;
 	type Splide = OriginalSplide;
-	type SplideOpts = SplideOptions;
+	type SplideOpts = Options;
 }

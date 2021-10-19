@@ -35,7 +35,7 @@ namespace Providers.Carousel {
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new SplideConfig(configs));
 
-			// As the Splider library only has the SplideOptions as an inteface, and not an object
+			// As the Splider library only has the SplideOptions as an interface, and not an object
 			// we decided to create an empty object of type SplideOpts, as already give us the intellisense, without the need to create
 			// a SplideOptions class on our side.
 			this._splideOptions = {};
@@ -101,17 +101,11 @@ namespace Providers.Carousel {
 			this._splideOptions.breakpoints = {
 				768: {
 					perPage: this._configs.ItemsPerSlide.Phone,
-					focus: this.setFocusOnItemOption(
-						this._configs.OptionalConfigs.FocusOnItem,
-						this._configs.ItemsPerSlide.Phone
-					),
+					focus: this.setFocusOnItemOption(this._configs.FocusOnItem, this._configs.ItemsPerSlide.Phone),
 				},
 				1024: {
 					perPage: this._configs.ItemsPerSlide.Tablet,
-					focus: this.setFocusOnItemOption(
-						this._configs.OptionalConfigs.FocusOnItem,
-						this._configs.ItemsPerSlide.Tablet
-					),
+					focus: this.setFocusOnItemOption(this._configs.FocusOnItem, this._configs.ItemsPerSlide.Tablet),
 				},
 			};
 		}
@@ -147,20 +141,18 @@ namespace Providers.Carousel {
 				? OSUIFramework.GlobalEnum.Direction.RTL
 				: OSUIFramework.GlobalEnum.Direction.LTR;
 
-			this._splideOptions.type = this._configs.OptionalConfigs.Loop
-				? Enum.TypeOptions.Loop
-				: Enum.TypeOptions.Slide;
+			this._splideOptions.type = this._configs.Loop ? Enum.TypeOptions.Loop : Enum.TypeOptions.Slide;
 
 			this._splideOptions.focus = this.setFocusOnItemOption(
-				this._configs.OptionalConfigs.FocusOnItem,
+				this._configs.FocusOnItem,
 				this._configs.ItemsPerSlide.Desktop
 			);
 
 			this._splideOptions.perPage = this._configs.ItemsPerSlide.Desktop;
-			this._splideOptions.autoplay = this._configs.OptionalConfigs.AutoPlay;
-			this._splideOptions.padding = this._configs.OptionalConfigs.Padding;
-			this._splideOptions.gap = this._configs.OptionalConfigs.Gap;
-			this._splideOptions.start = this._configs.OptionalConfigs.InitialPosition;
+			this._splideOptions.autoplay = this._configs.AutoPlay;
+			this._splideOptions.padding = this._configs.Padding;
+			this._splideOptions.gap = this._configs.Gap;
+			this._splideOptions.start = this._configs.InitialPosition;
 
 			// Method to handle the breakpoints, and it will need to be called again on changeProperty
 			this._setBreakpointsOptions();
@@ -192,10 +184,7 @@ namespace Providers.Carousel {
 			this._setBreakpointsOptions();
 
 			this._provider.options = {
-				focus: this.setFocusOnItemOption(
-					this._configs.OptionalConfigs.FocusOnItem,
-					this._configs.ItemsPerSlide.Desktop
-				),
+				focus: this.setFocusOnItemOption(this._configs.FocusOnItem, this._configs.ItemsPerSlide.Desktop),
 				breakpoints: this._splideOptions.breakpoints,
 			};
 		}
@@ -243,27 +232,27 @@ namespace Providers.Carousel {
 					this.updateCarousel();
 					break;
 				case 'autoplay':
-					this._configs.OptionalConfigs.AutoPlay = propertyValue;
+					this._configs.AutoPlay = propertyValue;
 					this.updateCarousel();
 					break;
 				case 'loop':
-					this._configs.OptionalConfigs.Loop = propertyValue;
+					this._configs.Loop = propertyValue;
 					this.updateCarousel();
 					break;
 				case 'padding':
-					this._configs.OptionalConfigs.Padding = propertyValue;
+					this._configs.Padding = propertyValue;
 					this._provider.options = { padding: propertyValue };
 					break;
 				case 'gap':
-					this._configs.OptionalConfigs.Gap = propertyValue;
+					this._configs.Gap = propertyValue;
 					this._provider.options = { gap: propertyValue };
 					break;
 				case 'initialPosition':
-					this._configs.OptionalConfigs.InitialPosition = propertyValue;
+					this._configs.InitialPosition = propertyValue;
 					this.updateCarousel();
 					break;
 				case 'focus':
-					this._configs.OptionalConfigs.FocusOnItem = propertyValue;
+					this._configs.FocusOnItem = propertyValue;
 					this._updateBreakpoints();
 					break;
 				default:

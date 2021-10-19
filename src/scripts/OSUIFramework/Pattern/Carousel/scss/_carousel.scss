@@ -3,8 +3,8 @@
 /// @group Patterns-Carousel
 /// Patterns - Content - Carousel
 
-/*! Splider Library Core Default Styles */
-//@import './Splider/splide-core.scss';
+/*! Splide Library Core Default Styles */
+@import './Splide/splide-core.scss';
 
 /*! OutSystems UI Carousel customization */
 ///
@@ -45,6 +45,8 @@
 
 	.osui-carousel_content {
 		& > .list {
+			overflow: unset;
+
 			// Service Studio Preview
 			& {
 				-servicestudio-display: inline-flex;
