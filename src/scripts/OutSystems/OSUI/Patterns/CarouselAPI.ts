@@ -81,6 +81,19 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	}
 
 	/**
+	 * Function to go to a especific page index
+	 *
+	 * @export
+	 * @param {string} carouselId
+	 * @param {number} index
+	 */
+	export function GoTo(carouselId: string, index: number): void {
+		const carousel = GetCarouselItemById(carouselId);
+
+		carousel.goTo(index);
+	}
+
+	/**
 	 * Function that will initialize the pattern instance.
 	 *
 	 * @export
