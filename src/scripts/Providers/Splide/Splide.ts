@@ -351,6 +351,9 @@ namespace Providers.Carousel {
 				this._provider.destroy();
 			}
 
+			// Keep same position after update
+			this._configs.InitialPosition = this._currentIndex;
+			// Create Carousel again
 			this._createProviderCarousel();
 		}
 
