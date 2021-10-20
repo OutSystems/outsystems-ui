@@ -21,11 +21,6 @@ namespace OSUIFramework.Patterns.Notification {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new NotificationConfig(configs));
-
-			this._configs.Width = this._configs.Width !== '' ? this._configs.Width : Enum.Defaults.DefaultWidth;
-			this._configs.Position =
-				this._configs.Position !== '' ? this._configs.Position : Enum.Defaults.DefaultPosition;
-
 			this._eventOnNotificationClick = this._onNotificationClick.bind(this);
 			this._eventOnNotificationKeypress = this._onNotificationKeypress.bind(this);
 			this._globalEventOnBodyClick = this._onBodyClick.bind(this);
