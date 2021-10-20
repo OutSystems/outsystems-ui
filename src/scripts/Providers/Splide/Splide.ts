@@ -269,12 +269,12 @@ namespace Providers.Carousel {
 
 		// Method to call the go API from the provider. With '>' it will go to the next page
 		public next(): void {
-			this._provider.go('>');
+			this._provider.go(Enum.Go.Next);
 		}
 
 		// Method to call the go API from the provider. With '<' it will go to the previous page
 		public previous(): void {
-			this._provider.go('<');
+			this._provider.go(Enum.Go.Previous);
 		}
 
 		// Provider getter

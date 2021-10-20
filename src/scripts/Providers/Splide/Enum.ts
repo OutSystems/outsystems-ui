@@ -18,13 +18,12 @@ namespace Providers.Carousel.Enum {
 		FirstOnSlide = 'first',
 		LastOnSlide = 'last',
 	}
-
 	/**
-	 * Splide type API options
+	 * Splide go API options
 	 */
-	export enum TypeOptions {
-		Loop = 'loop',
-		Slide = 'slide',
+	export enum Go {
+		Next = '>',
+		Previous = '<',
 	}
 
 	/**
@@ -50,5 +49,13 @@ namespace Providers.Carousel.Enum {
 	export enum SpliderEvents {
 		Mounted = 'mounted',
 		Moved = 'moved',
+	}
+
+	/**
+	 * Splide type API options
+	 */
+	export enum TypeOptions {
+		Loop = 'loop',
+		Slide = 'slide',
 	}
 }
