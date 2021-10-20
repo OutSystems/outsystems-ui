@@ -54,7 +54,8 @@
 		}
 	}
 
-	.splide--draggable {
+	.splide--draggable,
+	&.splide--draggable {
 		cursor: grab;
 	}
 
@@ -70,5 +71,12 @@
 			-servicestudio-content: 'The Carousel uses an external library - Splide.js. For extended options or general documentation check the link below:';
 			-servicestudio-display: block;
 		}
+	}
+}
+
+///
+.has-accessible-features {
+	.splide__slide {
+		box-shadow: none;
 	}
 }
