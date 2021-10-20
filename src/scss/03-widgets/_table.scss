@@ -117,12 +117,22 @@
 
 		thead {
 			display: none;
+
+			// Service Studio Preview
+			& {
+				-servicestudio-display: table-header-group;
+			}
 		}
 	}
 
 	tr,
 	td {
 		display: block;
+
+		// Service Studio Preview
+		& {
+			-servicestudio-display: table-row;
+		}
 	}
 
 	tr {
@@ -188,6 +198,11 @@
 				display: block;
 				overflow: auto;
 				position: relative;
+
+				// Service Studio Preview
+				& {
+					-servicestudio-display: table;
+				}
 
 				td:before {
 					display: none;
