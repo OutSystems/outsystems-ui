@@ -6,11 +6,8 @@ namespace OSUIFramework.Patterns.Carousel {
 		public FocusOnItem: string;
 		public Gap: string;
 		public InitialPosition: number;
-		public ItemsPerSlide = {
-			Desktop: 1,
-			Tablet: 1,
-			Phone: 1,
-		};
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		public ItemsPerSlide: any;
 		public Loop: boolean;
 		public Navigation: string;
 		public Padding: string;
