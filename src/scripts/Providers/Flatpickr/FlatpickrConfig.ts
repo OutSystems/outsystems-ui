@@ -2,6 +2,15 @@
 namespace Providers.Flatpickr {
 	export class FlatpickrConfig extends OSUIFramework.Patterns.DatePicker.AbstractDatePickerConfig {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		public OnChange: any;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		public OnClose: any;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		public OnOpen: any;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		public OnReady: any;
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		public getProviderConfig(): any {
 			// eslint-disable-next-line prefer-const
 			let providerOptions = {
@@ -14,8 +23,8 @@ namespace Providers.Flatpickr {
 				// ariaDateFormat: '',
 				// conjunction: '',
 				// clickOpens: '',
-				// dateFormat: '',
-				// defaultDate: '',
+				dateFormat: this.DateFormat,
+				defaultDate: this.DefaultDate,
 				// defaultHour: '',
 				// defaultMinute: '',
 				// disable: '',
@@ -25,17 +34,18 @@ namespace Providers.Flatpickr {
 				// enableSeconds: '',
 				// formatDate: '',
 				// hourIncrement: '',
-				// inline: '',
+				// inline: true,
 				// maxDate: '',
 				// minDate: '',
 				// minuteIncrement: '',
-				// mode: '',
+				// mode: this.Mode,
+				mode: 'range',
 				// nextArrow: '',
 				// noCalendar: '',
-				// onChange: '',
-				// onClose: '',
-				// onOpen: '',
-				// onReady: '',
+				onChange: this.OnChange,
+				onClose: this.OnClose,
+				onOpen: this.OnOpen,
+				onReady: this.OnReady,
 				// parseDate: '',
 				// position: '',
 				// positionElement: '',

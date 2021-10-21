@@ -1,8 +1,10 @@
 // DatePicker
 import flatpickr from 'flatpickr';
+import { flatpickrOpts as Options } from 'flatpickr';
+
 // RangeSlider
 import noUiSlider from 'nouislider';
-import Options from 'nouislider';
+import { noUiSliderOpts as Options } from 'nouislider';
 import { PipsMode } from 'nouislider';
 
 /**
@@ -15,10 +17,11 @@ declare global {
 		cordova: any;
 		// DatePicker
 		flatpickr: typeof flatpickr;
-		flatpickrOptions: typeof Object;
+		flatpickrOptions: typeof flatpickrOpts;
+
 		// RangeSlider
 		noUiSlider: typeof noUiSlider;
-		NoUiSliderOptions: typeof Options;
+		NoUiSliderOptions: typeof noUiSliderOpts;
 		NoUiSliderPipsMode: typeof PipsMode;
 	}
 
@@ -28,9 +31,10 @@ declare global {
 
 	// RangeSlider
 	type NoUiSlider = noUiSlider;
-	type NoUiSliderOptions = Options;
+	type NoUiSliderOptions = noUiSliderOpts;
 	type NoUiSliderPipsMode = PipsMode;
+
 	// DatePicker
 	type Flatpickr = flatpickr;
-	type FlatpickrOptions = {};
+	type FlatpickrOptions = flatpickrOpts;
 }
