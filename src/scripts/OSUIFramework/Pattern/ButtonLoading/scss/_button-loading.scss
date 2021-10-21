@@ -33,8 +33,11 @@
 	}
 
 	&.is--loading {
-		.btn > * {
-			pointer-events: none;
+		.btn {
+			&,
+			& > * {
+				pointer-events: none;
+			}
 		}
 	}
 
