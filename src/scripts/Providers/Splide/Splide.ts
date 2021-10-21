@@ -353,7 +353,6 @@ namespace Providers.Carousel {
 				// Keep same position after update
 				this._configs.InitialPosition = this._currentIndex;
 			}
-
 			// Create Carousel again
 			this._createProviderCarousel();
 		}
@@ -362,11 +361,10 @@ namespace Providers.Carousel {
 		public updateOnRender(): void {
 			if (!this._blockRender) {
 				this._setInitialCssClasses();
-				this._prepareCarouselItems();
 
 				// Check if provider is ready
 				if (typeof this._provider === 'object') {
-					this._provider.refresh();
+					this.updateCarousel(false);
 				}
 			}
 		}
