@@ -32,6 +32,12 @@
 		}
 	}
 
+	&.is--loading {
+		.btn > * {
+			pointer-events: none;
+		}
+	}
+
 	&:not(.is--loading) {
 		.btn {
 			.loading-spinner {
