@@ -235,7 +235,7 @@ namespace Providers.Carousel {
 					break;
 				case OSUIFramework.Patterns.Carousel.Enum.Properties.InitialPosition:
 					this._configs.InitialPosition = propertyValue;
-					this.updateCarousel();
+					this.updateCarousel(false);
 					break;
 				case OSUIFramework.Patterns.Carousel.Enum.Properties.Focus:
 					this._configs.FocusOnItem = propertyValue;
@@ -343,14 +343,17 @@ namespace Providers.Carousel {
 		}
 
 		// Method used on the changeProperty for the options that require the Carousel to be destroyd and created again to properly update
-		public updateCarousel(): void {
+		public updateCarousel(keepCurrentIndex = true): void {
 			// Check if provider is ready
 			if (typeof this._provider === 'object') {
 				this._provider.destroy();
 			}
 
-			// Keep same position after update
-			this._configs.InitialPosition = this._currentIndex;
+			if (keepCurrentIndex) {
+				// Keep same position after update
+				this._configs.InitialPosition = this._currentIndex;
+			}
+
 			// Create Carousel again
 			this._createProviderCarousel();
 		}

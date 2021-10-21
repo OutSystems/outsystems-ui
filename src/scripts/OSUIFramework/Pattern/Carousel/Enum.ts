@@ -21,7 +21,7 @@ namespace OSUIFramework.Patterns.Carousel.Enum {
 	 * Carousel Enum for Properties
 	 */
 	export enum Properties {
-		Navigation = 'navigations',
+		Navigation = 'navigation',
 		ItemsDesktop = 'itemsDesktop',
 		ItemsTablet = 'itemsTablet',
 		ItemsPhone = 'itemsPhone',
