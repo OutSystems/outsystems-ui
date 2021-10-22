@@ -1,11 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.Carousel {
+namespace Providers.Splide {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class OSUISplide
-		extends OSUIFramework.Patterns.Carousel.AbstractCarousel<Carousel.SplideConfig>
+		extends OSUIFramework.Patterns.Carousel.AbstractCarousel<Splide.SplideConfig>
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		implements OSUIFramework.Patterns.Carousel.ICarousel, OSUIFramework.Interface.IProviderPattern<Splide>
 	{

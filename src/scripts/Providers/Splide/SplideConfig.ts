@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace Providers.Carousel {
+namespace Providers.Splide {
 	export class SplideConfig extends OSUIFramework.Patterns.Carousel.AbstractCarouselConfig {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		public getProviderConfig(): any {
@@ -12,7 +12,7 @@ namespace Providers.Carousel {
 
 				type: this.Loop ? Enum.TypeOptions.Loop : Enum.TypeOptions.Slide,
 
-				focus: Providers.Carousel.OSUISplide.prototype.setFocusOnItemOption(
+				focus: Providers.Splide.OSUISplide.prototype.setFocusOnItemOption(
 					this.FocusOnItem,
 					this.ItemsPerSlide.Desktop
 				),
