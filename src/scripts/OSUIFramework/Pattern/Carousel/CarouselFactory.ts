@@ -4,9 +4,9 @@ namespace OSUIFramework.Patterns.Carousel.Factory {
 	 * Create the new Carousel instance object according given provider
 	 *
 	 * @export
-	 * @param {string} rangeSliderId ID of the Pattern that a new instance will be created.
+	 * @param {string} carouselId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSUIFramework.Patterns.Progress.IRangeSlider}
+	 * @return {*}  {OSUIFramework.Patterns.Progress.ICarousel}
 	 */
 	export function NewCarousel(
 		carouselId: string,
