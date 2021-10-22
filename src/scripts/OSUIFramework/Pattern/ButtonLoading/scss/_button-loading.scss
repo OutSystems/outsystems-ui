@@ -33,11 +33,11 @@
 	}
 
 	&.is--loading {
+		pointer-events: none;
+
 		.btn {
-			&,
-			& * {
-				pointer-events: none;
-			}
+			display: inline-block;
+			pointer-events: none;
 		}
 	}
 
