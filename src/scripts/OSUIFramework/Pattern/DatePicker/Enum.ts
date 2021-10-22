@@ -18,6 +18,13 @@ namespace OSUIFramework.Patterns.DatePicker.Enum {
 	}
 
 	/**
+	 * DatePicker Events
+	 */
+	export enum DatePickerEvents {
+		OnChange = 'OnChange',
+	}
+
+	/**
 	 * DatePicker Enum for CSS Classes
 	 */
 	export enum CssClass {}

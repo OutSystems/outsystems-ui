@@ -113,6 +113,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 		callback: OSUIFramework.Callbacks.OSGeneric
 	): void {
 		const _datePicker = this.GetDatePickerItemById(datePickerId);
+		console.log('_datePicker API', _datePicker);
 
 		_datePicker.registerProviderCallback(eventName, callback);
 	}

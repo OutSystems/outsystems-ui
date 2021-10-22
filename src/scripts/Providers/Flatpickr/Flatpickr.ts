@@ -16,16 +16,26 @@ namespace Providers.Flatpickr {
 		// Store the provider options
 		private _flatpickrOptions: FlatpickrOptions;
 
+		// RangeSlider events
+		private _onChangeEvent: OSUIFramework.Callbacks.OSDatepickerOnChangeEvent;
+
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new FlatpickrConfig(configs));
 
 			// Set the default library Events
-			this._configs.OnChange = [this._onChange];
-			this._configs.OnClose = [this._onClose];
-			this._configs.OnOpen = [this._onOpen];
-			this._configs.OnReady = [this._onReady];
+			this._configs.OnChange = [this._onChange.bind(this)];
+			this._configs.OnClose = [this._onClose.bind(this)];
+			this._configs.OnOpen = [this._onOpen.bind(this)];
+			this._configs.OnReady = [this._onReady.bind(this)];
 		}
+
+		// private _addTodayBtn() {
+		// 	const myBtn = document.createElement('button');
+		// 	myBtn.innerHTML = 'Today';
+		// 	myBtn.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, this._todayClick.bind(this));
+		// 	this._flatpickr.calendarContainer.appendChild(myBtn);
+		// }
 
 		// Method that will create the provider
 		private _createProviderDatePicker(): void {
@@ -37,12 +47,22 @@ namespace Providers.Flatpickr {
 			// Init provider
 			this._flatpickr = window.flatpickr(this._datePickerProviderElem, this._flatpickrOptions);
 
-			console.log(this._flatpickr);
+			// this._addTodayBtn();
+
+			console.log(this._flatpickrOptions, this);
 		}
 
 		// Method that will be triggered by library each time any date is selected
 		private _onChange(selectedDates: [], dateStr: string): void {
 			console.log('onChange', selectedDates, dateStr);
+
+			// Trigger platform's onChange event
+			OSUIFramework.Helper.AsyncInvocation(
+				this._onChangeEvent,
+				this.widgetId,
+				this._flatpickrOptions.enableTime,
+				JSON.stringify(selectedDates)
+			);
 		}
 
 		// Method that will be triggered by library each time calendar is closed
@@ -59,8 +79,8 @@ namespace Providers.Flatpickr {
 		private _onReady(selectedDates: [], dateStr: string): void {
 			console.log('onReady', selectedDates, dateStr);
 
-			// Trigger platform's OnInitialize event (done by us, the library doesn't have a 'mount' event)
-			// OSUIFramework.Helper.AsyncInvocation(this._onInitialize, this.widgetId);
+			// Trigger platform's onChange event
+			// OSUIFramework.Helper.AsyncInvocation(this._onChangeEvent, this.widgetId);
 		}
 
 		// Method to set the html elements used
@@ -69,7 +89,13 @@ namespace Providers.Flatpickr {
 			this._datePickerProviderElem = document.getElementById(this._configs.InputWidgetId);
 		}
 
+		// private _todayClick() {
+		// 	this._flatpickr.jumpToDate(this._flatpickr.now);
+		// }
+
 		public build(): void {
+			console.log('BUILD!');
+
 			super.build();
 
 			this._setHtmllElements();
@@ -102,7 +128,13 @@ namespace Providers.Flatpickr {
 		}
 
 		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
-			console.log(`registerProviderCallback()`);
+			console.log('registerProviderCallback()');
+			switch (eventName) {
+				case OSUIFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnChange:
+					console.log('Assign this._onChangeEvent');
+					this._onChangeEvent = callback;
+					break;
+			}
 		}
 	}
 }
