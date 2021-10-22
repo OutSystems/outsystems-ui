@@ -76,6 +76,11 @@ namespace Providers.Splide {
 			this._setOnSlideMovedEvent();
 		}
 
+		// Method to toggle the blockRender status
+		private _disableBlockRender(): void {
+			this._blockRender = false;
+		}
+
 		// Method to init the provider
 		private _initProvider(): void {
 			this._provider = new window.Splide(this._providerContainer, this._providerOptions);
@@ -247,9 +252,7 @@ namespace Providers.Splide {
 			}
 
 			// Unblock UpdateOnRender so that it is able to update on DOM changes inside Carousel content
-			setTimeout(() => {
-				this._blockRender = false;
-			}, 0);
+			OSUIFramework.Helper.AsyncInvocation(this._disableBlockRender, this.widgetId);
 		}
 
 		// Method to remove and destroy Carousel Splide instance
