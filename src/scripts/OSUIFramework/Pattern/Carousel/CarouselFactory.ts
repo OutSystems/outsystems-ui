@@ -23,7 +23,6 @@ namespace OSUIFramework.Patterns.Carousel.Factory {
 
 			default:
 				throw new Error(`There is no Carousel of the ${provider} provider`);
-				break;
 		}
 
 		return _carouselItem;
