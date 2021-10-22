@@ -17,6 +17,8 @@ namespace Providers.Splide {
 		private _hasList: boolean;
 		// Store the List widget element
 		private _listWidget: HTMLElement;
+		// Store the disable render async callback
+		private _onDisableRender: OSUIFramework.Callbacks.Generic;
 		// Store the onInitialized event
 		private _onInitialize: OSUIFramework.Callbacks.OSCarouselOnInitializeEvent;
 		// Store the onSlideMoved event
@@ -41,6 +43,9 @@ namespace Providers.Splide {
 			// we decided to create an empty object of type SplideOpts, as already give us the intellisense, without the need to create
 			// a SplideOptions class on our side.
 			this._providerOptions = {};
+
+			// Bind this to the async callback
+			this._onDisableRender = this._disableBlockRender.bind(this);
 		}
 
 		// Method to check if a List Widget is used inside the placeholder and assign the _listWidget variable
@@ -252,7 +257,7 @@ namespace Providers.Splide {
 			}
 
 			// Unblock UpdateOnRender so that it is able to update on DOM changes inside Carousel content
-			OSUIFramework.Helper.AsyncInvocation(this._disableBlockRender, this.widgetId);
+			OSUIFramework.Helper.AsyncInvocation(this._onDisableRender, this.widgetId);
 		}
 
 		// Method to remove and destroy Carousel Splide instance
