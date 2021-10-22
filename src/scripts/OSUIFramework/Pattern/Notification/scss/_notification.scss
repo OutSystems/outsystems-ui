@@ -101,17 +101,18 @@
 				opacity: 1;
 				pointer-events: auto;
 			}
-			&.has-overlay:before {
-				background-color: rgba(0, 0, 0, 0.25);
-				content: '';
-				display: block;
-				height: 100vh;
-				left: 0;
-				pointer-events: none;
-				position: fixed;
-				top: 0;
-				width: 100vw;
-				z-index: 100;
+			&.has-overlay {
+				&:before {
+					background-color: rgba(0, 0, 0, 0.25);
+					content: '';
+					display: block;
+					height: 100vh;
+					left: 0;
+					position: fixed;
+					top: 0;
+					width: 100vw;
+					z-index: 100;
+				}
 			}
 
 			&.is {

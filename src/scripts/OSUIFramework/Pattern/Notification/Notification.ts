@@ -21,6 +21,11 @@ namespace OSUIFramework.Patterns.Notification {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new NotificationConfig(configs));
+
+			this._configs.Width = this._configs.Width !== '' ? this._configs.Width : Enum.Defaults.DefaultWidth;
+			this._configs.Position =
+				this._configs.Position !== '' ? this._configs.Position : Enum.Defaults.DefaultPosition;
+
 			this._eventOnNotificationClick = this._onNotificationClick.bind(this);
 			this._eventOnNotificationKeypress = this._onNotificationKeypress.bind(this);
 			this._globalEventOnBodyClick = this._onBodyClick.bind(this);
@@ -89,6 +94,32 @@ namespace OSUIFramework.Patterns.Notification {
 			}
 		}
 
+		// Close notification on swipe top
+		private _onSwipeBottom(offsetX: number, offsetY: number, timeTaken: number): void {
+			if (
+				(Math.abs(offsetX) < this._notificationContent.offsetHeight / 2 ||
+					Math.abs(offsetX) / timeTaken > 0.3) &&
+				offsetX < 0
+			) {
+				this.hide();
+				console.log('Notification closed!!!');
+			}
+			console.log('onGestureEnd ', offsetX, offsetY, timeTaken);
+		}
+
+		// Close notification on swipe top
+		private _onSwipeTop(offsetX: number, offsetY: number, timeTaken: number): void {
+			if (
+				(Math.abs(offsetY) > this._notificationContent.offsetHeight / 2 ||
+					Math.abs(offsetY) / timeTaken > 0.3) &&
+				offsetY < 0
+			) {
+				this.hide();
+				console.log('Notification closed!!!');
+			}
+			console.log('onGestureEnd ', offsetX, offsetY, timeTaken);
+		}
+
 		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _prepareElements(): void {
 			this._isMobile = !!(
@@ -121,16 +152,29 @@ namespace OSUIFramework.Patterns.Notification {
 			if (this._configs.CloseAfterTime > 0 && this._configs.IsOpen) {
 				this._autoCloseNotification();
 			}
+
+			OSUIFramework.Helper.Element.Move(
+				this._selfElem,
+				document.querySelector(
+					Constants.Dot + GlobalEnum.Screen.Active + Constants.Dot + GlobalEnum.Screen.Container
+				)
+			);
+			OutSystems.OSUI.Utils.IsRunningAsNativeApp();
 		}
 
 		// Remove all the assigned Events
 		private _removeEvents(): void {
 			// Remove listeners to toggle Notification
-			this._notificationContent.removeEventListener(this._eventOnNotification, this._eventOnNotificationClick);
-			this._notificationContent.removeEventListener(
-				GlobalEnum.HTMLEvent.keyDown,
-				this._eventOnNotificationKeypress
-			);
+			if (this._configs.ClickToClose) {
+				this._notificationContent.removeEventListener(
+					this._eventOnNotification,
+					this._eventOnNotificationClick
+				);
+				this._notificationContent.removeEventListener(
+					GlobalEnum.HTMLEvent.keyDown,
+					this._eventOnNotificationKeypress
+				);
+			}
 
 			// Remove handler from EventManager
 			if (this._configs.CloseOnBodyClick) {
@@ -184,6 +228,11 @@ namespace OSUIFramework.Patterns.Notification {
 		}
 
 		// Update CloseAfterTime value
+		private _updateClickToClose(clickToClose: boolean): void {
+			this._configs.ClickToClose = clickToClose;
+		}
+
+		// Update CloseAfterTime value
 		private _updateCloseAfterTime(value: number): void {
 			this._configs.CloseAfterTime = value;
 			if (this._configs.IsOpen) {
@@ -194,6 +243,7 @@ namespace OSUIFramework.Patterns.Notification {
 		// Update CloseOnBodyClick value
 		private _updateCloseOnBodyClick(closeOnBodyClick: boolean): void {
 			this._configs.CloseOnBodyClick = closeOnBodyClick;
+
 			// Toggle handlers from EventManager
 			if (this._configs.CloseOnBodyClick && this._configs.IsOpen) {
 				OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
@@ -212,7 +262,7 @@ namespace OSUIFramework.Patterns.Notification {
 
 		private _updateHasOverlay(overlay: boolean): void {
 			this._configs.HasOverlay = overlay;
-			// Reset direction class
+			// Reset overlay class
 			if (this._configs.HasOverlay) {
 				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternOverlay);
 			} else {
@@ -257,6 +307,9 @@ namespace OSUIFramework.Patterns.Notification {
 		public changeProperty(propertyName: string, propertyValue: any): void {
 			// Check which property changed and call respective method to update it
 			switch (propertyName) {
+				case Enum.Properties.ClickToClose:
+					this._updateClickToClose(propertyValue);
+					break;
 				case Enum.Properties.CloseAfterTime:
 					this._updateCloseAfterTime(propertyValue);
 					break;
@@ -304,17 +357,61 @@ namespace OSUIFramework.Patterns.Notification {
 			this._notificationContent.blur();
 
 			// Remove listeners to toggle Notification
-			this._notificationContent.removeEventListener(this._eventOnNotification, this._eventOnNotificationClick);
-			this._notificationContent.removeEventListener(
-				GlobalEnum.HTMLEvent.keyDown,
-				this._eventOnNotificationKeypress
-			);
+			if (this._configs.ClickToClose) {
+				this._notificationContent.removeEventListener(
+					this._eventOnNotification,
+					this._eventOnNotificationClick
+				);
+				this._notificationContent.removeEventListener(
+					GlobalEnum.HTMLEvent.keyDown,
+					this._eventOnNotificationKeypress
+				);
+			}
 
 			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				OSUIFramework.Event.Type.BodyOnClick,
 				this._globalEventOnBodyClick
 			);
+		}
+
+		// Method to handle the swipe bottom
+		public onSwipeBottom(): void {
+			if (
+				this._configs.Position === GlobalEnum.CssClassPosition.Bottom ||
+				this._configs.Position === GlobalEnum.CssClassPosition.BottomLeft ||
+				this._configs.Position === GlobalEnum.CssClassPosition.BottomRight ||
+				this._configs.Position === GlobalEnum.CssClassPosition.Center
+			) {
+				this.hide();
+			}
+		}
+
+		// Method to handle the swipe left
+		public onSwipeLeft(): void {
+			if (
+				this._configs.Position === GlobalEnum.CssClassPosition.Left ||
+				this._configs.Position === GlobalEnum.CssClassPosition.BottomLeft ||
+				this._configs.Position === GlobalEnum.CssClassPosition.TopLeft
+			) {
+				this.hide();
+			}
+		}
+
+		// Method to handle the swipe right
+		public onSwipeRight(): void {
+			if (
+				this._configs.Position === GlobalEnum.CssClassPosition.Right ||
+				this._configs.Position === GlobalEnum.CssClassPosition.BottomRight ||
+				this._configs.Position === GlobalEnum.CssClassPosition.TopRight
+			) {
+				this.hide();
+			}
+		}
+
+		// Method to handle the swipe top
+		public onSwipeTop(): void {
+			this.hide();
 		}
 
 		// Set callbacks for the onToggle event
@@ -335,8 +432,13 @@ namespace OSUIFramework.Patterns.Notification {
 			this._updateAccessibilityProps();
 
 			// Add listeners to toggle Notification
-			this._notificationContent.addEventListener(this._eventOnNotification, this._eventOnNotificationClick);
-			this._notificationContent.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnNotificationKeypress);
+			if (this._configs.ClickToClose) {
+				this._notificationContent.addEventListener(this._eventOnNotification, this._eventOnNotificationClick);
+				this._notificationContent.addEventListener(
+					GlobalEnum.HTMLEvent.keyDown,
+					this._eventOnNotificationKeypress
+				);
+			}
 
 			// Focus on element when Notification is open
 			this._notificationContent.focus();
