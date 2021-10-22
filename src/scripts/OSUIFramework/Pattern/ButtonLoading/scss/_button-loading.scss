@@ -32,15 +32,6 @@
 		}
 	}
 
-	&.is--loading {
-		pointer-events: none;
-
-		.btn {
-			display: inline-block;
-			pointer-events: none;
-		}
-	}
-
 	&:not(.is--loading) {
 		.btn {
 			.loading-spinner {
