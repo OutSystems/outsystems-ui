@@ -8,6 +8,14 @@ namespace OSUIFramework.Callbacks {
 	//This type is used to define callbacks that will be actions in OutSystems code side.
 	export type OSGeneric = { (patternId, ...args): void };
 
+	export type OSCarouselSlideMovedEvent = {
+		(carouselId: string, index: number): void;
+	};
+
+	export type OSCarouselOnInitializeEvent = {
+		(carouselId: string): void;
+	};
+
 	export type OSRangeSliderOnValueChangeEvent = {
 		(rangeSliderId: string, startValue: number, endValue: number): void;
 	};

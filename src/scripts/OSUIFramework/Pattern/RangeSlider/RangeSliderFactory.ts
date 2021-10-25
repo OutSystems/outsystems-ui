@@ -23,7 +23,6 @@ namespace OSUIFramework.Patterns.RangeSlider.Factory {
 
 			default:
 				throw new Error(`There is no RangeSlider of the ${provider} provider`);
-				break;
 		}
 
 		return _rangeSliderItem;
