@@ -15,14 +15,11 @@ namespace OSUIFramework.Patterns.Carousel.Factory {
 	): OSUIFramework.Patterns.Carousel.ICarousel {
 		let _carouselItem = null;
 
-		switch (provider) {
-			case Enum.Provider.Splide:
+		if (provider === Enum.Provider.Splide) {
 				_carouselItem = new Providers.Splide.OSUISplide(carouselId, JSON.parse(configs));
-
-				break;
-
-			default:
-				throw new Error(`There is no Carousel of the ${provider} provider`);
+		}
+		else{
+				throw new Error(`There is no  ${OSUIFramework.GlobalEnum.PatternsNames.Carousel}  of the ${provider} provider`);
 		}
 
 		return _carouselItem;

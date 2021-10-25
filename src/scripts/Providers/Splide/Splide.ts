@@ -137,11 +137,11 @@ namespace Providers.Splide {
 			// If using Carousel with a List, get one level below on the HTML, so that the List element is used on the structure expected by the library
 			// In this case, the osui-carousel won't be used, and the library will be mounted on the osui-carousel_track
 			if (this._hasList) {
-				OSUIFramework.Helper.Style.AddClass(this._splideTrack, Enum.CssClass.Splide);
+				OSUIFramework.Helper.Style.AddClass(this._splideTrack, Enum.CssClass.SplideWrapper);
 				OSUIFramework.Helper.Style.AddClass(this._placeholder, Enum.CssClass.SplideTrack);
 				OSUIFramework.Helper.Style.AddClass(this._listWidget, Enum.CssClass.SplideList);
 			} else {
-				OSUIFramework.Helper.Style.AddClass(this._selfElem, Enum.CssClass.Splide);
+				OSUIFramework.Helper.Style.AddClass(this._selfElem, Enum.CssClass.SplideWrapper);
 				OSUIFramework.Helper.Style.AddClass(this._splideTrack, Enum.CssClass.SplideTrack);
 				OSUIFramework.Helper.Style.AddClass(this._placeholder, Enum.CssClass.SplideList);
 			}
