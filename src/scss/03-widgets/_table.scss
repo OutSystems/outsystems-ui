@@ -128,11 +128,6 @@
 	tr,
 	td {
 		display: block;
-
-		// Service Studio Preview
-		& {
-			-servicestudio-display: table-row !important;
-		}
 	}
 
 	tr {
