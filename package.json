@@ -16,6 +16,7 @@
 		"last 2 versions"
 	],
 	"devDependencies": {
+		"@splidejs/splide": "^3.1.7",
 		"@typescript-eslint/eslint-plugin": "^4.23.0",
 		"@typescript-eslint/parser": "^4.23.0",
 		"autoprefixer": "^9.8.6",

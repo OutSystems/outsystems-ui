@@ -1,11 +1,15 @@
 // DatePicker
 import flatpickr from 'flatpickr';
-import { flatpickrOpts as Options } from 'flatpickr';
+import flatpickrOpts from 'flatpickr';
 
 // RangeSlider
 import noUiSlider from 'nouislider';
-import { noUiSliderOpts as Options } from 'nouislider';
+import noUiSliderOptions from 'nouislider';
 import { PipsMode } from 'nouislider';
+
+// Carousel
+import OriginalSplide from '@splidejs/splide';
+import { Options } from '@splidejs/splide/dist/types/types/options';
 
 /**
  * Set global declarations
@@ -21,8 +25,12 @@ declare global {
 
 		// RangeSlider
 		noUiSlider: typeof noUiSlider;
-		NoUiSliderOptions: typeof noUiSliderOpts;
+		NoUiSliderOptions: typeof noUiSliderOptions;
 		NoUiSliderPipsMode: typeof PipsMode;
+
+		// Carousel
+		Splide: typeof OriginalSplide;
+		SplideOpts: typeof OriginalSplide.defaults;
 	}
 
 	interface Navigator {
@@ -31,8 +39,12 @@ declare global {
 
 	// RangeSlider
 	type NoUiSlider = noUiSlider;
-	type NoUiSliderOptions = noUiSliderOpts;
+	type NoUiSliderOptions = noUiSliderOptions;
 	type NoUiSliderPipsMode = PipsMode;
+
+	// Carousel
+	type Splide = OriginalSplide;
+	type SplideOpts = Options;
 
 	// DatePicker
 	type Flatpickr = flatpickr;
