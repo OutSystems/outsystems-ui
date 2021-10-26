@@ -69,13 +69,13 @@ namespace Providers.Splide {
 		}
 
 		// Method that encapsulates all methods needed to create a new Carousel
-		private _createProviderCarousel(): void {
+		private _createProviderCarousel(triggerInitialize = true): void {
 			// Call the following methods here, so that all DOM elements are iterated and ready to init the library
 			this._prepareCarouselItems();
 			this._setInitialLibraryOptions();
 
 			// Init the Library
-			this._initProvider();
+			this._initProvider(triggerInitialize);
 
 			// Set the OnSlideMoved event
 			this._setOnSlideMovedEvent();
@@ -87,10 +87,14 @@ namespace Providers.Splide {
 		}
 
 		// Method to init the provider
-		private _initProvider(): void {
+		private _initProvider(triggerInitialize = true): void {
 			this._provider = new window.Splide(this._providerContainer, this._providerOptions);
-			// Set the OnInitialized event, before the provider is mounted
-			this._setOnInitializedEvent();
+
+			if (triggerInitialize) {
+				// Set the OnInitialized event, before the provider is mounted
+				this._setOnInitializedEvent();
+			}
+
 			// Init the provider
 			this._provider.mount();
 		}
@@ -351,7 +355,7 @@ namespace Providers.Splide {
 		}
 
 		// Method used on the changeProperty for the options that require the Carousel to be destroyd and created again to properly update
-		public updateCarousel(keepCurrentIndex = true): void {
+		public updateCarousel(keepCurrentIndex = true, triggerInitialize = true): void {
 			// Check if provider is ready
 			if (typeof this._provider === 'object') {
 				this._provider.destroy();
@@ -362,7 +366,7 @@ namespace Providers.Splide {
 				this._configs.InitialPosition = this._currentIndex;
 			}
 			// Create Carousel again
-			this._createProviderCarousel();
+			this._createProviderCarousel(triggerInitialize);
 		}
 
 		// Method to run when there's a platform onRender
@@ -372,7 +376,7 @@ namespace Providers.Splide {
 
 				// Check if provider is ready
 				if (typeof this._provider === 'object') {
-					this.updateCarousel(false);
+					this.updateCarousel(false, false);
 				}
 			}
 		}
