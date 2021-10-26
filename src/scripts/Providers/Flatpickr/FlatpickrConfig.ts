@@ -10,37 +10,56 @@ namespace Providers.Flatpickr {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		public OnReady: any;
 
+		// Method used to check if a given serverDateFormat matches with the expected type
+		private _checkServerDateFormat(dateFormat: string): boolean {
+			return Enum.ServerDateFromat[dateFormat.replace(/[-/]/g, '')] !== undefined;
+		}
+
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		public getProviderConfig(): any {
+			// Check if it's a valid ServerDateFormat
+			if (!this._checkServerDateFormat(this.ServerDateFormat)) {
+				throw new Error(`The given ServerDateFormat '${this.ServerDateFormat}' it's not allowed.`);
+			}
+
 			// eslint-disable-next-line prefer-const
 			let providerOptions = {
-				// altFormat: '',
-				// altInput: '',
+				altFormat: this.Show24HourFormat
+					? this.InputDateFormat.replace('K', '')
+					: this.InputDateFormat.replace('H', 'h'),
+				altInput: true,
 				// altInputClass: '',
-				// allowInput: '',
+				// allowInput: true,
 				// allowInvalidPreload: '',
 				// appendTo: '',
 				// ariaDateFormat: '',
 				// conjunction: '',
 				// clickOpens: '',
-				dateFormat: this.DateFormat,
+				dateFormat: this.ShowTime ? this.ServerDateFormat + ' H:i:s' : this.ServerDateFormat,
+				// dateFormat: 'H:i:s K',
+				// dateFormat: 'Y-m-d',
 				defaultDate: this.DefaultDate,
 				// defaultHour: '',
 				// defaultMinute: '',
 				// disable: '',
 				// disableMobile: '',
 				// enable: '',
+				enableTime: this.ShowTime,
 				// enableTime: true,
 				// enableSeconds: '',
 				// formatDate: '',
+				// formatDate: (date, format) => {
+				// 	console.log('formatDate', date, format);
+				// },
 				// hourIncrement: '',
 				// inline: true,
 				// maxDate: '',
 				// minDate: '',
 				// minuteIncrement: '',
-				mode: 'single',
+				mode: this.Mode,
+				// mode: 'multiple',
 				// nextArrow: '',
-				// noCalendar: '',
+				// noCalendar: true,
 				onChange: this.OnChange,
 				onClose: this.OnClose,
 				onOpen: this.OnOpen,
@@ -52,7 +71,7 @@ namespace Providers.Flatpickr {
 				// shorthandCurrentMonth: '',
 				// static: true,
 				// showMonths: true,
-				// time_24hr: '',
+				time_24hr: this.Show24HourFormat,
 				// weekNumbers: '',
 				// wrap: '',
 				// monthSelectorType: '',

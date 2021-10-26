@@ -8,6 +8,13 @@ namespace Providers.Flatpickr.Enum {
 		OnReady = 'onReady',
 	}
 
+	// ServerDateFormat Types
+	export enum ServerDateFromat {
+		dmY = 'dmY',
+		mdY = 'mdY',
+		Ymd = 'Ymd',
+	}
+
 	// Modes Type
 	export enum FlatPickerMode {
 		Multiple = 'multiple',

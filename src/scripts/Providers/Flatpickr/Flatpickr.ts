@@ -13,6 +13,8 @@ namespace Providers.Flatpickr {
 		private _datePickerProviderElem: HTMLElement;
 		// Store the provider reference
 		private _flatpickr: Flatpickr;
+		// Store the flatpickr html element that will be added by library
+		private _flatpickrInputElem: HTMLElement;
 		// Store the provider options
 		private _flatpickrOptions: FlatpickrOptions;
 
@@ -25,8 +27,8 @@ namespace Providers.Flatpickr {
 
 			// Set the default library Events
 			this._configs.OnChange = [this._onChange.bind(this)];
-			this._configs.OnClose = [this._onClose.bind(this)];
-			this._configs.OnOpen = [this._onOpen.bind(this)];
+			// this._configs.OnClose = [this._onClose.bind(this)];
+			// this._configs.OnOpen = [this._onOpen.bind(this)];
 			this._configs.OnReady = [this._onReady.bind(this)];
 		}
 
@@ -48,21 +50,25 @@ namespace Providers.Flatpickr {
 			this._flatpickr = window.flatpickr(this._datePickerProviderElem, this._flatpickrOptions);
 
 			// this._addTodayBtn();
-
-			console.log(this._flatpickrOptions, this);
 		}
 
 		// Method that will be triggered by library each time any date is selected
 		private _onChange(selectedDates: [], dateStr: string): void {
-			console.log('onChange', selectedDates, dateStr);
+			let _dateStr = dateStr;
+
+			switch (this._configs.Mode) {
+				case Enum.FlatPickerMode.Single:
+					_dateStr = dateStr;
+					break;
+				default:
+					_dateStr = JSON.stringify(dateStr.replace(/ to /g, ',').replace(/, /g, ',').split(','));
+					break;
+			}
 
 			// Trigger platform's onChange event
-			OSUIFramework.Helper.AsyncInvocation(
-				this._onChangeEvent,
-				this.widgetId,
-				this._flatpickrOptions.enableTime,
-				JSON.stringify(selectedDates)
-			);
+			OSUIFramework.Helper.AsyncInvocation(this._onChangeEvent, this.widgetId, _dateStr);
+
+			console.log('onChange', dateStr /*, selectedDates */);
 		}
 
 		// Method that will be triggered by library each time calendar is closed
@@ -78,6 +84,12 @@ namespace Providers.Flatpickr {
 		// Method that will be triggered by library each time calendar is ready
 		private _onReady(selectedDates: [], dateStr: string): void {
 			console.log('onReady', selectedDates, dateStr);
+
+			// Since a new input will be added by the flatpickr library, we must address it only at onReady
+			this._flatpickrInputElem = this._datePickerProviderElem.nextSibling as HTMLElement;
+
+			// Added the data-input attribute in order to input be styled as all platform inputs
+			OSUIFramework.Helper.Attribute.Set(this._flatpickrInputElem, 'data-input', '');
 
 			// Trigger platform's onChange event
 			// OSUIFramework.Helper.AsyncInvocation(this._onChangeEvent, this.widgetId);
@@ -128,10 +140,8 @@ namespace Providers.Flatpickr {
 		}
 
 		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
-			console.log('registerProviderCallback()');
 			switch (eventName) {
 				case OSUIFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnChange:
-					console.log('Assign this._onChangeEvent');
 					this._onChangeEvent = callback;
 					break;
 			}

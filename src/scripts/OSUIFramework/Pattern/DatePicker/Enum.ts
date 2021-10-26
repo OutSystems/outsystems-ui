@@ -4,10 +4,13 @@ namespace OSUIFramework.Patterns.DatePicker.Enum {
 	 * DatePicker Enum properties
 	 */
 	export enum Properties {
-		DateFormat = 'DateFormat',
 		DefaultDate = 'DefaultDate',
+		InputDateFormat = 'InputDateFormat',
 		InputWidgetId = 'InputWidgetId',
 		Mode = 'Mode',
+		ServerDateFormat = 'ServerDateFormat',
+		Show24HourFormat = 'Show24HourFormat',
+		ShowTime = 'ShowTime',
 	}
 
 	/**

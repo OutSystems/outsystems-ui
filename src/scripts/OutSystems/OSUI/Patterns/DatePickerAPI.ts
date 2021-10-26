@@ -34,6 +34,8 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 			throw new Error(`There is already an DatePicker registered under id: ${datePickerId}`);
 		}
 
+		console.log('CreateAPI', configs);
+
 		const _datePickerItem = OSUIFramework.Patterns.DatePicker.Factory.NewDatePicker(
 			datePickerId,
 			configs,
@@ -113,7 +115,6 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 		callback: OSUIFramework.Callbacks.OSGeneric
 	): void {
 		const _datePicker = this.GetDatePickerItemById(datePickerId);
-		console.log('_datePicker API', _datePicker);
 
 		_datePicker.registerProviderCallback(eventName, callback);
 	}
