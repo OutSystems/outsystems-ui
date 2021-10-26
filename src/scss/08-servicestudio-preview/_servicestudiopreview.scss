@@ -82,6 +82,12 @@ html[data-uieditorversion^='1'] {
 		-servicestudio-display: none;
 	}
 
+	.table {
+		tr:empty {
+			-servicestudio-display: block !important;
+		}
+	}
+
 	.blank-slate {
 		> div {
 			-servicestudio-display: flex;
@@ -109,50 +115,56 @@ html[data-uieditorversion^='1'] {
 			}
 		}
 	}
+
+	.phone {
+		.layout:not(.layout-native) {
+			.table {
+				-servicestudio-display: block;
+
+				td {
+					-servicestudio-min-width: 100vw;
+				}
+			}
+
+			thead {
+				-servicestudio-display: initial !important;
+			}
+		}
+	}
+
+	.phone,
+	.tablet {
+		.layout:not(.layout-native) {
+			thead {
+				& > tr {
+					-servicestudio-position: relative;
+				}
+
+				& > tr:not(:empty):before {
+					-servicestudio-position: absolute;
+					-servicestudio-left: 0;
+					-servicestudio-top: 0;
+					-servicestudio-background-color: var(--color-neutral-3);
+					-servicestudio-width: 100%;
+					-servicestudio-height: 100%;
+					-servicestudio-content: 'Table Header is hidden on responsive devices';
+					-servicestudio-z-index: 1;
+					-servicestudio-display: flex;
+					-servicestudio-align-items: center;
+					-servicestudio-justify-content: center;
+					-servicestudio-font-weight: var(--font-semi-bold);
+				}
+			}
+		}
+	}
 }
 
-// Table Preview MISSING SCSS NESTING
-html[data-uieditorversion^='1'] .phone .layout:not(.layout-native) .table {
-	-servicestudio-display: block;
-}
-html[data-uieditorversion^='1'] .phone .layout:not(.layout-native) .table td {
-	-servicestudio-min-width: 100vw;
-}
-html[data-uieditorversion^='1'] .phone .layout:not(.layout-native) thead > tr,
-html[data-uieditorversion^='1'] .tablet .layout:not(.layout-native) thead > tr {
-	-servicestudio-position: relative;
-}
-html[data-uieditorversion^='1'] .phone .layout:not(.layout-native) thead {
-	-servicestudio-display: initial !important;
-}
-html[data-uieditorversion^='1'] .phone .layout:not(.layout-native) thead > tr:not(:empty):before,
-html[data-uieditorversion^='1'] .tablet .layout:not(.layout-native) thead > tr:not(:empty):before {
-	-servicestudio-position: absolute;
-	-servicestudio-left: 0;
-	-servicestudio-top: 0;
-	-servicestudio-background-color: var(--color-neutral-3);
-	-servicestudio-width: 100%;
-	-servicestudio-height: 100%;
-	-servicestudio-content: 'Table Header is hidden on responsive devices';
-	-servicestudio-z-index: 1;
-	-servicestudio-display: flex;
-	-servicestudio-align-items: center;
-	-servicestudio-justify-content: center;
-	-servicestudio-font-weight: var(--font-semi-bold);
-}
-html[data-uieditorversion^='1'] .table tr:empty {
-	-servicestudio-display: block !important;
-}
-.table th {
-	-servicestudio-width: 100%;
-}
-html:not([data-uieditorversion^='1']) .phone td,
-html:not([data-uieditorversion^='1']) .tablet td {
-	-servicestudio-display: table-cell;
-}
-.table-header {
-	-servicestudio-border-bottom: none !important;
-}
-html:not([data-uieditorversion^='1']) .table {
-	-servicestudio-white-space: unset;
+html:not([data-uieditorversion^='1']) {
+	.phone td,
+	.tablet td {
+		-servicestudio-display: table-cell;
+	}
+	.table {
+		-servicestudio-white-space: unset;
+	}
 }
