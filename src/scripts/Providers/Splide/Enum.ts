@@ -4,7 +4,7 @@ namespace Providers.Splide.Enum {
 	 * Splide CSS Classes
 	 */
 	export enum CssClass {
-		Splide = 'splide',
+		SplideWrapper = 'splide',
 		SplideTrack = 'splide__track',
 		SplideList = 'splide__list',
 		SplideSlide = 'splide__slide',
