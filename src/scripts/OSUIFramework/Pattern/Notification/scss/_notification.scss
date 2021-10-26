@@ -240,6 +240,10 @@
 			width: auto;
 		}
 	}
+
+	.osui-notification-content {
+		max-width: calc(100% - var(--space-xl));
+	}
 }
 
 ///

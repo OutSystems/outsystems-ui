@@ -94,32 +94,6 @@ namespace OSUIFramework.Patterns.Notification {
 			}
 		}
 
-		// Close notification on swipe top
-		private _onSwipeBottom(offsetX: number, offsetY: number, timeTaken: number): void {
-			if (
-				(Math.abs(offsetX) < this._notificationContent.offsetHeight / 2 ||
-					Math.abs(offsetX) / timeTaken > 0.3) &&
-				offsetX < 0
-			) {
-				this.hide();
-				console.log('Notification closed!!!');
-			}
-			console.log('onGestureEnd ', offsetX, offsetY, timeTaken);
-		}
-
-		// Close notification on swipe top
-		private _onSwipeTop(offsetX: number, offsetY: number, timeTaken: number): void {
-			if (
-				(Math.abs(offsetY) > this._notificationContent.offsetHeight / 2 ||
-					Math.abs(offsetY) / timeTaken > 0.3) &&
-				offsetY < 0
-			) {
-				this.hide();
-				console.log('Notification closed!!!');
-			}
-			console.log('onGestureEnd ', offsetX, offsetY, timeTaken);
-		}
-
 		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _prepareElements(): void {
 			this._isMobile = !!(
@@ -159,7 +133,6 @@ namespace OSUIFramework.Patterns.Notification {
 					Constants.Dot + GlobalEnum.Screen.Active + Constants.Dot + GlobalEnum.Screen.Container
 				)
 			);
-			OutSystems.OSUI.Utils.IsRunningAsNativeApp();
 		}
 
 		// Remove all the assigned Events
@@ -336,9 +309,9 @@ namespace OSUIFramework.Patterns.Notification {
 
 		// Method to remove event listener and destroy notification instance
 		public dispose(): void {
-			super.dispose();
-
 			this._removeEvents();
+
+			super.dispose();
 		}
 
 		// Hide Notification
