@@ -26,10 +26,11 @@ namespace Providers.Flatpickr {
 			super(uniqueId, new FlatpickrConfig(configs));
 
 			// Set the default library Events
-			this._configs.OnChange = [this._onChange.bind(this)];
-			// this._configs.OnClose = [this._onClose.bind(this)];
-			// this._configs.OnOpen = [this._onOpen.bind(this)];
-			this._configs.OnReady = [this._onReady.bind(this)];
+			this._configs.OnChange = this._onChange.bind(this);
+			// this._configs.OnClose = this._onClose.bind(this);
+			this._configs.OnDayCreate = this._onDayCreate.bind(this);
+			// this._configs.OnOpen = this._onOpen.bind(this);
+			this._configs.OnReady = this._onReady.bind(this);
 		}
 
 		// private _addTodayBtn() {
@@ -74,6 +75,13 @@ namespace Providers.Flatpickr {
 		// Method that will be triggered by library each time calendar is closed
 		private _onClose(selectedDates: [], dateStr: string): void {
 			console.log('onClose', selectedDates, dateStr);
+		}
+
+		// Method that will be responsible to show if a day has an Event
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		private _onDayCreate(dObj: [], dStr: string, fp: Flatpickr, dayElem: any) {
+			// Get each day date
+			console.log(fp.formatDate(dayElem.dateObj, 'Y-m-d'));
 		}
 
 		// Method that will be triggered by library each time calendar is opened

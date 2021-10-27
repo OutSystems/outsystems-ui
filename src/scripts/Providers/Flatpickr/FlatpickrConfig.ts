@@ -6,6 +6,8 @@ namespace Providers.Flatpickr {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		public OnClose: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		public OnDayCreate: any;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		public OnOpen: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		public OnReady: any;
@@ -62,6 +64,7 @@ namespace Providers.Flatpickr {
 				// noCalendar: true,
 				onChange: this.OnChange,
 				onClose: this.OnClose,
+				onDayCreate: this.OnDayCreate,
 				onOpen: this.OnOpen,
 				onReady: this.OnReady,
 				// parseDate: '',
