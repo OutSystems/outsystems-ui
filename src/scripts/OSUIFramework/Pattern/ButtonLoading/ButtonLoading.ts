@@ -45,7 +45,7 @@ namespace OSUIFramework.Patterns.ButtonLoading {
 				throw new Error(
 					`There are no '${
 						Constants.Dot + Enum.CssClass.Button
-					}' element as a ButtonLoading placeholder child.`
+					}' element as a  ${OSUIFramework.GlobalEnum.PatternsNames.ButtonLoading}  placeholder child.`
 				);
 			}
 
