@@ -32,13 +32,13 @@
 		& > [data-block*='ApplicationTitle'] .application-name {
 			margin-right: var(--space-m);
 		}
+	}
 
-		.app-logo {
-			border-radius: var(--border-radius-soft);
-			margin-right: var(--space-s);
-			max-height: var(--header-size);
-			max-width: 120px;
-		}
+	.app-logo {
+		border-radius: var(--border-radius-soft);
+		margin-right: var(--space-s);
+		max-height: var(--header-size);
+		max-width: 120px;
 	}
 }
 
