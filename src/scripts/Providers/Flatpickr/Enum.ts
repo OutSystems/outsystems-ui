@@ -1,11 +1,16 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.Flatpickr.Enum {
+	//  Flatpickr Enum properties
+	export enum Properties {
+		Mode = 'Mode',
+	}
+
 	// Events
 	export enum FlatpickrEvents {
-		OnChange = 'onChange',
-		OnClose = 'onClose',
-		OnOpen = 'onOpen',
-		OnReady = 'onReady',
+		OnChange = 'OnChange',
+		OnClose = 'OnClose',
+		OnOpen = 'OnOpen',
+		OnReady = 'OnReady',
 	}
 
 	// ServerDateFormat Types

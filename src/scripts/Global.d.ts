@@ -49,4 +49,11 @@ declare global {
 	// DatePicker
 	type Flatpickr = flatpickr;
 	type FlatpickrOptions = flatpickrOpts;
+	type FlatPickerAdvancedConfig = {
+		DisableDates: [];
+		DisableDatesRange: [];
+		EnableDates: [];
+		EnableDatesRange: [];
+		EventDates: [];
+	};
 }

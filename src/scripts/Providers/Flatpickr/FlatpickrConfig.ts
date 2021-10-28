@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace Providers.Flatpickr {
 	export class FlatpickrConfig extends OSUIFramework.Patterns.DatePicker.AbstractDatePickerConfig {
+		public AdvancedConfigs: FlatPickerAdvancedConfig;
+		public Mode: string;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		public OnChange: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -11,6 +13,11 @@ namespace Providers.Flatpickr {
 		public OnOpen: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		public OnReady: any;
+
+		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
+		constructor(config: any) {
+			super(config);
+		}
 
 		// Method used to check if a given serverDateFormat matches with the expected type
 		private _checkServerDateFormat(dateFormat: string): boolean {

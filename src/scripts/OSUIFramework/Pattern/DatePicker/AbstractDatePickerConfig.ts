@@ -4,7 +4,6 @@ namespace OSUIFramework.Patterns.DatePicker {
 		public DefaultDate: string;
 		public InputDateFormat: string;
 		public InputWidgetId: string;
-		public Mode: string;
 		public ServerDateFormat: string;
 		public Show24HourFormat: boolean;
 		public ShowTime: boolean;

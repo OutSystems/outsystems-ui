@@ -26,7 +26,7 @@ namespace Providers.Flatpickr {
 			super(uniqueId, new FlatpickrConfig(configs));
 
 			// Set the default library Events
-			this._configs.OnChange = this._onChange.bind(this);
+			this._configs.OnChange = this._onDateSelected.bind(this);
 			// this._configs.OnClose = this._onClose.bind(this);
 			this._configs.OnDayCreate = this._onDayCreate.bind(this);
 			// this._configs.OnOpen = this._onOpen.bind(this);
@@ -42,7 +42,7 @@ namespace Providers.Flatpickr {
 
 		// Method that will create the provider
 		private _createProviderDatePicker(): void {
-			console.log(`_createProviderDatePicker() ---- Still Here!`);
+			console.log(`_createProviderDatePicker() => ${this._configs.Mode} mode`);
 
 			// Set inital library options
 			this._flatpickrOptions = this._configs.getProviderConfig();
@@ -53,35 +53,52 @@ namespace Providers.Flatpickr {
 			// this._addTodayBtn();
 		}
 
+		// Method that will be triggered by library each time calendar is closed
+		private _onClose(selectedDates: [], dateStr: string): void {
+			console.log('onClose', selectedDates, dateStr);
+		}
+
 		// Method that will be triggered by library each time any date is selected
-		private _onChange(selectedDates: [], dateStr: string): void {
-			let _dateStr = dateStr;
+		private _onDateSelected(selectedDates: string[], dateStr: string, fp: Flatpickr): void {
+			let _dateStr = '';
+			const _datesArray = [];
 
 			switch (this._configs.Mode) {
 				case Enum.FlatPickerMode.Single:
-					_dateStr = dateStr;
+					_dateStr = fp.formatDate(selectedDates[0], this._flatpickrOptions.dateFormat);
+
 					break;
-				default:
-					_dateStr = JSON.stringify(dateStr.replace(/ to /g, ',').replace(/, /g, ',').split(','));
+				case Enum.FlatPickerMode.Range:
+					// Go through the selected dates and convert them from DateObject into ServerDate format
+					for (let i = 0; i < selectedDates.length; ++i) {
+						_datesArray.push(fp.formatDate(selectedDates[i], this._flatpickrOptions.dateFormat));
+					}
+					// Only 2 dates will be selected here
+					_dateStr = _datesArray.toString();
+
+					break;
+				case Enum.FlatPickerMode.Multiple:
+					// Go through the selected dates and convert them from DateObject into ServerDate format
+					for (let i = 0; i < selectedDates.length; ++i) {
+						_datesArray.push(fp.formatDate(selectedDates[i], this._flatpickrOptions.dateFormat));
+					}
+					// Encode all the given dates into a JSON string
+					_dateStr = JSON.stringify(_datesArray);
+
 					break;
 			}
 
 			// Trigger platform's onChange event
 			OSUIFramework.Helper.AsyncInvocation(this._onChangeEvent, this.widgetId, _dateStr);
 
-			console.log('onChange', dateStr /*, selectedDates */);
-		}
-
-		// Method that will be triggered by library each time calendar is closed
-		private _onClose(selectedDates: [], dateStr: string): void {
-			console.log('onClose', selectedDates, dateStr);
+			console.log('_onDateSelected', _dateStr);
 		}
 
 		// Method that will be responsible to show if a day has an Event
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _onDayCreate(dObj: [], dStr: string, fp: Flatpickr, dayElem: any) {
 			// Get each day date
-			console.log(fp.formatDate(dayElem.dateObj, 'Y-m-d'));
+			// console.log(fp.formatDate(dayElem.dateObj, this._configs.ServerDateFormat));
 		}
 
 		// Method that will be triggered by library each time calendar is opened
@@ -91,7 +108,7 @@ namespace Providers.Flatpickr {
 
 		// Method that will be triggered by library each time calendar is ready
 		private _onReady(selectedDates: [], dateStr: string): void {
-			console.log('onReady', selectedDates, dateStr);
+			// console.log('onReady', selectedDates, dateStr);
 
 			// Since a new input will be added by the flatpickr library, we must address it only at onReady
 			this._flatpickrInputElem = this._datePickerProviderElem.nextSibling as HTMLElement;
@@ -114,8 +131,6 @@ namespace Providers.Flatpickr {
 		// }
 
 		public build(): void {
-			console.log('BUILD!');
-
 			super.build();
 
 			this._setHtmllElements();

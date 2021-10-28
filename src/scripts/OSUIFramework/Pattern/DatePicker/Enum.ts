@@ -7,7 +7,6 @@ namespace OSUIFramework.Patterns.DatePicker.Enum {
 		DefaultDate = 'DefaultDate',
 		InputDateFormat = 'InputDateFormat',
 		InputWidgetId = 'InputWidgetId',
-		Mode = 'Mode',
 		ServerDateFormat = 'ServerDateFormat',
 		Show24HourFormat = 'Show24HourFormat',
 		ShowTime = 'ShowTime',
