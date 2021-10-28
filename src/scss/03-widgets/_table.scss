@@ -122,7 +122,17 @@
 ///
 .phone,
 .tablet {
-	.table {
+	div:not(.overflow-horizontal) {
+		& > .table:not(.table-no-responsive){
+			word-break: break-all;
+		}
+	}
+
+	.table-no-responsive{
+		overflow-x: auto;
+	}
+
+	.table:not(.table-no-responsive) {
 		overflow: hidden;
 
 		thead {
@@ -197,18 +207,22 @@
 
 ///
 .phone {
+	.table {
+		&:not(.table-responsive) {
+			display: block;
+			overflow: auto;
+			position: relative;
+
+			// Service Studio Preview
+			& {
+				-servicestudio-display: table;
+			}
+		}
+	}
+
 	.layout-native {
 		.table {
 			&:not(.table-responsive) {
-				display: block;
-				overflow: auto;
-				position: relative;
-
-				// Service Studio Preview
-				& {
-					-servicestudio-display: table;
-				}
-
 				td:before {
 					display: none;
 				}
