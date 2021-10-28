@@ -30,7 +30,7 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsAPI {
 		configs: string
 	): OSUIFramework.Patterns.FloatingActions.IFloatingActions {
 		if (_floatingActionsMap.has(floatingActionsId)) {
-			throw new Error(`There is already a floating action registered under id: ${floatingActionsId}`);
+			throw new Error(`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.FloatingActions} registered under id: ${floatingActionsId}`);
 		}
 
 		const _newFloatingActions = new OSUIFramework.Patterns.FloatingActions.FloatingActions(

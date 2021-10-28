@@ -34,6 +34,13 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
+	 * OutSystemsUI elements cssClasses
+	 */
+	export enum CssClassElements {
+		List = 'list',
+	}
+
+	/**
 	 * OutSystemsUI position cssClasses
 	 */
 	export enum CssClassPosition {
