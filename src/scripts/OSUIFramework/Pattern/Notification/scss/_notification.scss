@@ -5,13 +5,6 @@
 
 ///
 .osui-notification {
-	// Service Studio Preview
-	& {
-		-servicestudio--webkit-transform: translateY(0);
-		-servicestudio-position: static;
-		-servicestudio-transform: translateY(0);
-	}
-
 	&-content {
 		background-color: var(--color-neutral-0);
 		border: var(--border-size-s) solid var(--color-neutral-4);
@@ -26,6 +19,12 @@
 		user-select: none;
 		width: var(--notification-width);
 		z-index: 300;
+
+		// Service Studio Preview
+		& {
+			-servicestudio--webkit-opacity: 1;
+			-servicestudio--webkit-position: relative;
+		}
 	}
 
 	&.is {
