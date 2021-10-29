@@ -60,11 +60,16 @@ namespace Providers.Flatpickr {
 
 		// Method that will be triggered by library each time any date is selected
 		private _onDateSelected(selectedDates: string[], dateStr: string, fp: Flatpickr): void {
+			/* NOTE: dateStr param is not in use since the library has an issue arround it */
+
+			// String with selected dates that will be sent into Callback
 			let _dateStr = '';
+			// In case Datepicker is not in single mode, format and store those selected dates
 			const _datesArray = [];
 
 			switch (this._configs.Mode) {
 				case Enum.FlatPickerMode.Single:
+					// Since we've only one selected date
 					_dateStr = fp.formatDate(selectedDates[0], this._flatpickrOptions.dateFormat);
 
 					break;
@@ -82,13 +87,13 @@ namespace Providers.Flatpickr {
 					for (let i = 0; i < selectedDates.length; ++i) {
 						_datesArray.push(fp.formatDate(selectedDates[i], this._flatpickrOptions.dateFormat));
 					}
-					// Encode all the given dates into a JSON string
+					// Encode all the given dates into a JSON string that will be parsed inside platform
 					_dateStr = JSON.stringify(_datesArray);
 
 					break;
 			}
 
-			// Trigger platform's onChange event
+			// Trigger platform's onChange callback event
 			OSUIFramework.Helper.AsyncInvocation(this._onChangeEvent, this.widgetId, _dateStr);
 
 			console.log('_onDateSelected', _dateStr);
