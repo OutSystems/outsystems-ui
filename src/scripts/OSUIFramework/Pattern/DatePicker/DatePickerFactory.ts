@@ -17,12 +17,12 @@ namespace OSUIFramework.Patterns.DatePicker.Factory {
 
 		switch (provider) {
 			case Enum.Provider.FlatPicker:
-				_datePickerItem = new Providers.Flatpickr.OSUIFlatpickr(datePickerId, JSON.parse(configs));
+				_datePickerItem = Providers.Flatpickr.Factory.NewFlatpickr(datePickerId, configs);
 
 				break;
 
 			default:
-				throw new Error(`There is no DatePicker of the ${provider} provider`);
+				throw new Error(`There is no ${GlobalEnum.PatternsNames.Datepicker} of the ${provider} provider`);
 				break;
 		}
 

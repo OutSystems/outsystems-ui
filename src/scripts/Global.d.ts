@@ -1,6 +1,6 @@
-// DatePicker
+// DatePicker => Flatpickr
 import flatpickr from 'flatpickr';
-import flatpickrOpts from 'flatpickr';
+import { BaseOptions as flatpickrOpts } from 'flatpickr/dist/types/options';
 
 // RangeSlider
 import noUiSlider from 'nouislider';
@@ -19,9 +19,9 @@ declare global {
 	//eslint-disable-next-line @typescript-eslint/naming-convention
 	interface Window {
 		cordova: any;
-		// DatePicker
+		// DatePicker => Flatpickr
 		flatpickr: typeof flatpickr;
-		flatpickrOptions: typeof flatpickrOpts;
+		flatpickrOpts: typeof flatpickrOpts;
 
 		// RangeSlider
 		noUiSlider: typeof noUiSlider;
@@ -46,7 +46,7 @@ declare global {
 	type Splide = OriginalSplide;
 	type SplideOpts = Options;
 
-	// DatePicker
+	// DatePicker => Flatpickr
 	type Flatpickr = flatpickr;
 	type FlatpickrOptions = flatpickrOpts;
 	type FlatPickerAdvancedConfig = {

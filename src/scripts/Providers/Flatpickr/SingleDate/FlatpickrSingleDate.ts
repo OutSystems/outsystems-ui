@@ -1,20 +1,12 @@
+/// <reference path="../AbstractFlatpickr.ts" />
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.Flatpickr {
+namespace Providers.Flatpickr.SingleDate {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
-	export class OSUIFlatpickr
-		extends OSUIFramework.Patterns.DatePicker.AbstractDatePicker<Flatpickr.FlatpickrConfig>
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		implements OSUIFramework.Patterns.DatePicker.IDatePicker, OSUIFramework.Interface.IProviderPattern<Flatpickr>
-	{
-		// Store the provider target elem
-		private _datePickerProviderElem: HTMLElement;
-		// Store the provider reference
-		private _flatpickr: Flatpickr;
-		// Store the flatpickr html element that will be added by library
-		private _flatpickrInputElem: HTMLElement;
+	export class OSUIFlatpickrSingleDate extends AbstractFlatpickr<FlatpickrSingleDateConfig> {
 		// Store the provider options
 		private _flatpickrOptions: FlatpickrOptions;
 
@@ -23,7 +15,7 @@ namespace Providers.Flatpickr {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
-			super(uniqueId, new FlatpickrConfig(configs));
+			super(uniqueId, new FlatpickrSingleDateConfig(configs));
 
 			// Set the default library Events
 			this._configs.OnChange = this._onDateSelected.bind(this);
@@ -37,7 +29,7 @@ namespace Providers.Flatpickr {
 		// 	const myBtn = document.createElement('button');
 		// 	myBtn.innerHTML = 'Today';
 		// 	myBtn.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, this._todayClick.bind(this));
-		// 	this._flatpickr.calendarContainer.appendChild(myBtn);
+		// 	this.Flatpickr.calendarContainer.appendChild(myBtn);
 		// }
 
 		// Method that will create the provider
@@ -62,41 +54,14 @@ namespace Providers.Flatpickr {
 		private _onDateSelected(selectedDates: string[], dateStr: string, fp: Flatpickr): void {
 			/* NOTE: dateStr param is not in use since the library has an issue arround it */
 
-			// String with selected dates that will be sent into Callback
-			let _dateStr = '';
-			// In case Datepicker is not in single mode, format and store those selected dates
-			const _datesArray = [];
-
-			switch (this._configs.Mode) {
-				case Enum.FlatPickerMode.Single:
-					// Since we've only one selected date
-					_dateStr = fp.formatDate(selectedDates[0], this._flatpickrOptions.dateFormat);
-
-					break;
-				case Enum.FlatPickerMode.Range:
-					// Go through the selected dates and convert them from DateObject into ServerDate format
-					for (let i = 0; i < selectedDates.length; ++i) {
-						_datesArray.push(fp.formatDate(selectedDates[i], this._flatpickrOptions.dateFormat));
-					}
-					// Only 2 dates will be selected here
-					_dateStr = _datesArray.toString();
-
-					break;
-				case Enum.FlatPickerMode.Multiple:
-					// Go through the selected dates and convert them from DateObject into ServerDate format
-					for (let i = 0; i < selectedDates.length; ++i) {
-						_datesArray.push(fp.formatDate(selectedDates[i], this._flatpickrOptions.dateFormat));
-					}
-					// Encode all the given dates into a JSON string that will be parsed inside platform
-					_dateStr = JSON.stringify(_datesArray);
-
-					break;
-			}
-
 			// Trigger platform's onChange callback event
-			OSUIFramework.Helper.AsyncInvocation(this._onChangeEvent, this.widgetId, _dateStr);
+			OSUIFramework.Helper.AsyncInvocation(
+				this._onChangeEvent,
+				this.widgetId,
+				fp.formatDate(selectedDates[0], this._flatpickrOptions.dateFormat)
+			);
 
-			console.log('_onDateSelected', _dateStr);
+			console.log('_onDateSelected', fp.formatDate(selectedDates[0], this._flatpickrOptions.dateFormat));
 		}
 
 		// Method that will be responsible to show if a day has an Event
@@ -125,20 +90,12 @@ namespace Providers.Flatpickr {
 			// OSUIFramework.Helper.AsyncInvocation(this._onChangeEvent, this.widgetId);
 		}
 
-		// Method to set the html elements used
-		private _setHtmllElements(): void {
-			// Set the inputHTML element
-			this._datePickerProviderElem = document.getElementById(this._configs.InputWidgetId);
-		}
-
 		// private _todayClick() {
-		// 	this._flatpickr.jumpToDate(this._flatpickr.now);
+		// 	this.Flatpickr.jumpToDate(this.Flatpickr.now);
 		// }
 
 		public build(): void {
 			super.build();
-
-			this._setHtmllElements();
 
 			this._createProviderDatePicker();
 
@@ -153,18 +110,7 @@ namespace Providers.Flatpickr {
 
 		// Method to remove and destroy DatePicker instance
 		public dispose(): void {
-			// Check if provider is ready
-			if (this.isBuilt) {
-				this._flatpickr.destroy();
-			}
-
 			super.dispose();
-		}
-
-		// Provider getter
-		// eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-		public get provider(): Flatpickr {
-			return this._flatpickr;
 		}
 
 		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
