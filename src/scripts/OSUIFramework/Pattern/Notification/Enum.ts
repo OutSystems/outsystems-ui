@@ -10,6 +10,7 @@ namespace OSUIFramework.Patterns.Notification.Enum {
 		HasOverlay = 'HasOverlay',
 		CloseAfterTime = 'CloseAfterTime',
 		CloseOnBodyClick = 'CloseOnBodyClick',
+		ClickToClose = 'ClickToClose',
 	}
 
 	/**

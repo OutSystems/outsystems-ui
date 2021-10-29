@@ -5,13 +5,6 @@
 
 ///
 .osui-notification {
-	// Service Studio Preview
-	& {
-		-servicestudio--webkit-transform: translateY(0);
-		-servicestudio-position: static;
-		-servicestudio-transform: translateY(0);
-	}
-
 	&-content {
 		background-color: var(--color-neutral-0);
 		border: var(--border-size-s) solid var(--color-neutral-4);
@@ -20,11 +13,18 @@
 		color: var(--color-neutral-10);
 		opacity: 0;
 		padding: var(--space-m);
+		pointer-events: none;
 		position: fixed;
 		transition: all 300ms ease-out;
 		user-select: none;
 		width: var(--notification-width);
 		z-index: 300;
+
+		// Service Studio Preview
+		& {
+			-servicestudio--webkit-opacity: 1;
+			-servicestudio--webkit-position: relative;
+		}
 	}
 
 	&.is {
@@ -98,18 +98,20 @@
 		&-open {
 			.osui-notification-content {
 				opacity: 1;
+				pointer-events: auto;
 			}
-			&.has-overlay:before {
-				background-color: rgba(0, 0, 0, 0.25);
-				content: '';
-				display: block;
-				height: 100vh;
-				left: 0;
-				pointer-events: none;
-				position: fixed;
-				top: 0;
-				width: 100vw;
-				z-index: 100;
+			&.has-overlay {
+				&:before {
+					background-color: rgba(0, 0, 0, 0.25);
+					content: '';
+					display: block;
+					height: 100vh;
+					left: 0;
+					position: fixed;
+					top: 0;
+					width: 100vw;
+					z-index: 100;
+				}
 			}
 
 			&.is {
@@ -236,6 +238,10 @@
 			right: 16px;
 			width: auto;
 		}
+	}
+
+	.osui-notification-content {
+		max-width: calc(100% - var(--space-xl));
 	}
 }
 
