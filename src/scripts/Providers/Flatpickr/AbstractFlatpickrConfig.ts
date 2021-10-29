@@ -3,6 +3,8 @@ namespace Providers.Flatpickr {
 	export abstract class AbstractFlatpickrConfig extends OSUIFramework.Patterns.DatePicker.AbstractDatePickerConfig {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		protected _flatpickrOpts: any;
+
+		public Mode: string;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		public OnChange: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -30,6 +32,7 @@ namespace Providers.Flatpickr {
 					: this.InputDateFormat.replace('H', 'h'),
 				altInput: true,
 				dateFormat: this.ShowTime ? this.ServerDateFormat + ' H:i:s' : this.ServerDateFormat,
+				mode: this.Mode,
 				enableTime: this.ShowTime,
 				time_24hr: this.Show24HourFormat,
 			};

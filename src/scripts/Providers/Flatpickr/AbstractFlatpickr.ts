@@ -23,6 +23,19 @@ namespace Providers.Flatpickr {
 			this._datePickerProviderElem = document.getElementById(this._configs.InputWidgetId);
 		}
 
+		// Trigger the jumToDate to now
+		private _todayBtnClick() {
+			this._flatpickr.jumpToDate(this._flatpickr.now);
+		}
+
+		// Method used to add the TodayButton at calendar
+		protected _addTodayBtn(): void {
+			const todayBtn = document.createElement('button');
+			todayBtn.innerHTML = 'Today';
+			todayBtn.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, this._todayBtnClick.bind(this));
+			this._flatpickr.calendarContainer.appendChild(todayBtn);
+		}
+
 		public build(): void {
 			super.build();
 

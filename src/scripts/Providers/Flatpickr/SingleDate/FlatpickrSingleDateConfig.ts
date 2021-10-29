@@ -4,7 +4,6 @@
 namespace Providers.Flatpickr.SingleDate {
 	export class FlatpickrSingleDateConfig extends AbstractFlatpickrConfig {
 		public AdvancedConfigs: FlatPickerAdvancedConfig;
-		public Mode: string;
 
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		constructor(config: any) {
@@ -19,51 +18,19 @@ namespace Providers.Flatpickr.SingleDate {
 			}
 
 			// eslint-disable-next-line prefer-const
-			let fpSingleDateOpts = {
-				// altInputClass: '',
-				// allowInput: true,
-				// allowInvalidPreload: '',
-				// appendTo: '',
-				// ariaDateFormat: '',
-				// conjunction: '',
-				// clickOpens: '',
+			let flatpickrSingleDateOpts = {
 				defaultDate: this.DefaultDate,
-				// defaultHour: '',
-				// defaultMinute: '',
-				// disable: '',
-				// disableMobile: '',
-				// enable: '',
-				// enableSeconds: '',
-				// formatDate: '',
-				// hourIncrement: '',
-				// inline: true,
-				// maxDate: '',
-				// minDate: '',
-				// minuteIncrement: '',
-				mode: this.Mode,
-				// nextArrow: '',
-				// noCalendar: true,
 				onChange: this.OnChange,
 				onClose: this.OnClose,
 				onDayCreate: this.OnDayCreate,
 				onOpen: this.OnOpen,
 				onReady: this.OnReady,
-				// parseDate: '',
-				// position: '',
-				// positionElement: '',
-				// prevArrow: '',
-				// shorthandCurrentMonth: '',
-				// static: true,
-				// showMonths: true,
-				// weekNumbers: '',
-				// wrap: '',
-				// monthSelectorType: '',
 			};
 
 			// Merge both option objects => if objects have a property with the same name, then the right-most object property overwrites the previous one
 			const fpOptions = {
 				...this._flatpickrOpts,
-				...fpSingleDateOpts,
+				...flatpickrSingleDateOpts,
 			};
 
 			//Cleanning undefined properties

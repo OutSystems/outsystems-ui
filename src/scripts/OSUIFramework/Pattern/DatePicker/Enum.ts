@@ -24,6 +24,9 @@ namespace OSUIFramework.Patterns.DatePicker.Enum {
 	 */
 	export enum DatePickerEvents {
 		OnChange = 'OnChange',
+		OnClose = 'OnClose',
+		OnInitialize = 'OnInitialize',
+		OnOpen = 'OnOpen',
 	}
 
 	/**

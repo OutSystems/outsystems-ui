@@ -8,10 +8,13 @@ namespace Providers.Flatpickr.SingleDate {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class OSUIFlatpickrSingleDate extends AbstractFlatpickr<FlatpickrSingleDateConfig> {
 		// Store the provider options
-		private _flatpickrOptions: FlatpickrOptions;
+		private _flatpickrOpts: FlatpickrOptions;
 
 		// RangeSlider events
-		private _onChangeEvent: OSUIFramework.Callbacks.OSDatepickerOnChangeEvent;
+		private _onChangeCallbackEvent: OSUIFramework.Callbacks.OSDatepickerOnChangeEvent;
+		private _onCloseCallbackEvent: OSUIFramework.Callbacks.OSGeneric;
+		private _onInitializeCallbackEvent: OSUIFramework.Callbacks.OSGeneric;
+		private _onOpenCallbackEvent: OSUIFramework.Callbacks.OSGeneric;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
@@ -19,35 +22,30 @@ namespace Providers.Flatpickr.SingleDate {
 
 			// Set the default library Events
 			this._configs.OnChange = this._onDateSelected.bind(this);
-			// this._configs.OnClose = this._onClose.bind(this);
+			this._configs.OnClose = this._onClose.bind(this);
 			this._configs.OnDayCreate = this._onDayCreate.bind(this);
-			// this._configs.OnOpen = this._onOpen.bind(this);
+			this._configs.OnOpen = this._onOpen.bind(this);
 			this._configs.OnReady = this._onReady.bind(this);
 		}
-
-		// private _addTodayBtn() {
-		// 	const myBtn = document.createElement('button');
-		// 	myBtn.innerHTML = 'Today';
-		// 	myBtn.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, this._todayClick.bind(this));
-		// 	this.Flatpickr.calendarContainer.appendChild(myBtn);
-		// }
 
 		// Method that will create the provider
 		private _createProviderDatePicker(): void {
 			console.log(`_createProviderDatePicker() => ${this._configs.Mode} mode`);
 
 			// Set inital library options
-			this._flatpickrOptions = this._configs.getProviderConfig();
+			this._flatpickrOpts = this._configs.getProviderConfig();
 
 			// Init provider
-			this._flatpickr = window.flatpickr(this._datePickerProviderElem, this._flatpickrOptions);
+			this._flatpickr = window.flatpickr(this._datePickerProviderElem, this._flatpickrOpts);
 
+			// Add TodayBtn
 			// this._addTodayBtn();
 		}
 
 		// Method that will be triggered by library each time calendar is closed
-		private _onClose(selectedDates: [], dateStr: string): void {
-			console.log('onClose', selectedDates, dateStr);
+		private _onClose(): void {
+			// Trigger platform's OnCloseHandler client Action
+			OSUIFramework.Helper.AsyncInvocation(this._onCloseCallbackEvent, this.widgetId);
 		}
 
 		// Method that will be triggered by library each time any date is selected
@@ -56,43 +54,39 @@ namespace Providers.Flatpickr.SingleDate {
 
 			// Trigger platform's onChange callback event
 			OSUIFramework.Helper.AsyncInvocation(
-				this._onChangeEvent,
+				this._onChangeCallbackEvent,
 				this.widgetId,
-				fp.formatDate(selectedDates[0], this._flatpickrOptions.dateFormat)
+				fp.formatDate(selectedDates[0], this._flatpickrOpts.dateFormat)
 			);
 
-			console.log('_onDateSelected', fp.formatDate(selectedDates[0], this._flatpickrOptions.dateFormat));
+			console.log('_onDateSelected', fp.formatDate(selectedDates[0], this._flatpickrOpts.dateFormat));
 		}
 
 		// Method that will be responsible to show if a day has an Event
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _onDayCreate(dObj: [], dStr: string, fp: Flatpickr, dayElem: any) {
+			/* NOTE: dObj and dStr have alwways same value, we must use dayElem.dateObj property to get the proper day Date */
 			// Get each day date
 			// console.log(fp.formatDate(dayElem.dateObj, this._configs.ServerDateFormat));
 		}
 
 		// Method that will be triggered by library each time calendar is opened
-		private _onOpen(selectedDates: [], dateStr: string): void {
-			console.log('onOpen', selectedDates, dateStr);
+		private _onOpen(): void {
+			// Trigger platform's OnOpenHandler client Action
+			OSUIFramework.Helper.AsyncInvocation(this._onOpenCallbackEvent, this.widgetId);
 		}
 
 		// Method that will be triggered by library each time calendar is ready
-		private _onReady(selectedDates: [], dateStr: string): void {
-			// console.log('onReady', selectedDates, dateStr);
-
+		private _onReady(): void {
 			// Since a new input will be added by the flatpickr library, we must address it only at onReady
 			this._flatpickrInputElem = this._datePickerProviderElem.nextSibling as HTMLElement;
 
 			// Added the data-input attribute in order to input be styled as all platform inputs
 			OSUIFramework.Helper.Attribute.Set(this._flatpickrInputElem, 'data-input', '');
 
-			// Trigger platform's onChange event
-			// OSUIFramework.Helper.AsyncInvocation(this._onChangeEvent, this.widgetId);
+			// Trigger platform's InstanceIntializedHandler client Action
+			OSUIFramework.Helper.AsyncInvocation(this._onInitializeCallbackEvent, this.widgetId);
 		}
-
-		// private _todayClick() {
-		// 	this.Flatpickr.jumpToDate(this.Flatpickr.now);
-		// }
 
 		public build(): void {
 			super.build();
@@ -113,10 +107,23 @@ namespace Providers.Flatpickr.SingleDate {
 			super.dispose();
 		}
 
+		// Method used to regist callback events
 		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
 			switch (eventName) {
 				case OSUIFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnChange:
-					this._onChangeEvent = callback;
+					this._onChangeCallbackEvent = callback;
+					break;
+				case OSUIFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnClose:
+					this._onCloseCallbackEvent = callback;
+					break;
+				case OSUIFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnInitialize:
+					this._onInitializeCallbackEvent = callback;
+					break;
+				case OSUIFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnOpen:
+					this._onOpenCallbackEvent = callback;
+					break;
+				default:
+					throw new Error(`The given '${eventName}' event name it's not defined.`);
 					break;
 			}
 		}
