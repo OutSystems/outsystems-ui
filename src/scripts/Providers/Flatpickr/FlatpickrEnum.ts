@@ -5,6 +5,12 @@ namespace Providers.Flatpickr.Enum {
 		Mode = 'Mode',
 	}
 
+	//  Flatpickr Today button Enum
+	export enum TodayBtn {
+		Selector = 'flatpickr-today-button',
+		Text = 'Today',
+	}
+
 	// Events
 	export enum FlatpickrEvents {
 		OnChange = 'OnChange',

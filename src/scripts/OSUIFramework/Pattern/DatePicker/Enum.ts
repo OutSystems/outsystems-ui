@@ -8,8 +8,16 @@ namespace OSUIFramework.Patterns.DatePicker.Enum {
 		InputDateFormat = 'InputDateFormat',
 		InputWidgetId = 'InputWidgetId',
 		ServerDateFormat = 'ServerDateFormat',
-		Show24HourFormat = 'Show24HourFormat',
-		ShowTime = 'ShowTime',
+		TimeFormat = 'TimeFormat',
+	}
+
+	/**
+	 * DatePicker TimeFormat Enum
+	 */
+	export enum TimeFormat {
+		Disable = '',
+		Time12hFormat = '12',
+		Time24hFormat = '24',
 	}
 
 	/**

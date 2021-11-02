@@ -39,7 +39,9 @@ namespace Providers.Flatpickr.SingleDate {
 			this._flatpickr = window.flatpickr(this._datePickerProviderElem, this._flatpickrOpts);
 
 			// Add TodayBtn
-			// this._addTodayBtn();
+			if (this._configs.ShowTodayButton) {
+				this._addTodayBtn();
+			}
 		}
 
 		// Method that will be triggered by library each time calendar is closed

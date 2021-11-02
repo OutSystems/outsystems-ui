@@ -27,14 +27,18 @@ namespace Providers.Flatpickr {
 		private _setFlatpickrOpts(): void {
 			// eslint-disable-next-line prefer-const
 			this._flatpickrOpts = {
-				altFormat: this.Show24HourFormat
-					? this.InputDateFormat.replace('K', '')
-					: this.InputDateFormat.replace('H', 'h'),
+				altFormat:
+					this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormat.Disable
+						? this.InputDateFormat.replace('K', '')
+						: this.InputDateFormat.replace('H', 'h'),
 				altInput: true,
-				dateFormat: this.ShowTime ? this.ServerDateFormat + ' H:i:s' : this.ServerDateFormat,
+				dateFormat:
+					this.TimeFormat !== OSUIFramework.Patterns.DatePicker.Enum.TimeFormat.Disable
+						? this.ServerDateFormat + ' H:i:s'
+						: this.ServerDateFormat,
 				mode: this.Mode,
-				enableTime: this.ShowTime,
-				time_24hr: this.Show24HourFormat,
+				enableTime: this.TimeFormat !== OSUIFramework.Patterns.DatePicker.Enum.TimeFormat.Disable,
+				time_24hr: this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormat.Time24hFormat,
 			};
 		}
 

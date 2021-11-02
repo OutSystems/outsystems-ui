@@ -30,8 +30,9 @@ namespace Providers.Flatpickr {
 
 		// Method used to add the TodayButton at calendar
 		protected _addTodayBtn(): void {
-			const todayBtn = document.createElement('button');
-			todayBtn.innerHTML = 'Today';
+			const todayBtn = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Link);
+			todayBtn.innerHTML = Enum.TodayBtn.Text;
+			todayBtn.classList.add(Enum.TodayBtn.Selector);
 			todayBtn.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, this._todayBtnClick.bind(this));
 			this._flatpickr.calendarContainer.appendChild(todayBtn);
 		}
