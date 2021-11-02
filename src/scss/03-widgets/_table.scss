@@ -179,6 +179,7 @@
 				max-width: 110px;
 				min-width: 110px;
 				word-break: break-word;
+				white-space: normal;
 			}
 
 			&:not([data-header]) {
@@ -259,4 +260,12 @@
 		position: relative;
 		z-index: 1;
 	}
+}
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl.phone .table:not(.table-no-responsive) td:before, 
+.is-rtl.tablet .table:not(.table-no-responsive) td:before {
+    margin-left: 10px;
+    margin-right: 0px
 }
