@@ -170,7 +170,6 @@
 			position: relative;
 			text-align: left !important;
 			width: 100% !important;
-			height: 56px;
 
 			&:before {
 				content: attr(data-header);
@@ -207,7 +206,6 @@
 				padding: var(--space-s) var(--space-m);
 				vertical-align: inherit;
 				width: auto !important;
-				height: 56px;
 			}
 
 			td:before {
