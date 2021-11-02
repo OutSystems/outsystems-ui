@@ -264,8 +264,12 @@
 
 // IsRTL -------------------------------------------------------------------------
 ///
-.is-rtl.phone .table:not(.table-no-responsive) td:before, 
-.is-rtl.tablet .table:not(.table-no-responsive) td:before {
-    margin-left: 10px;
-    margin-right: 0px
+.is-rtl.phone, 
+.is-rtl.tablet {
+	.table:not(.table-no-responsive){
+		td:before{
+			margin-left: 10px;
+			margin-right: 0px
+		}
+	}
 }
