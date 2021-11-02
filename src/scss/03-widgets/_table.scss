@@ -155,7 +155,8 @@
 
 			// Service Studio Preview
 			& {
-				-servicestudio-display: table-row !important;
+				-servicestudio-word-break: normal;
+				// -servicestudio-display: table-row !important;  // confirm with gonçalo!!!
 			}
 		}
 
@@ -170,7 +171,6 @@
 			position: relative;
 			text-align: left !important;
 			width: 100% !important;
-			word-break: break-all;
 
 			&:before {
 				content: attr(data-header);
