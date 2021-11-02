@@ -1,5 +1,3 @@
-/// <reference path="../AbstractPattern.ts" />
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.FloatingActions {
 	export class FloatingActions extends AbstractPattern<FloatingActionsConfig> implements IFloatingActions {
@@ -31,6 +29,9 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		private _floatingAllLinks: HTMLAnchorElement[];
 		// Stores the items of this specific Floating Action
 		private _floatingItems: Map<string, OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem>;
+		// Store the stopPropagation method
+		// eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/no-explicit-any
+		private _iOSStopPropagation: any;
 		// Boolean to tell if the pattern is inside the Bottom Bar or not
 		private _insideBottomBar: boolean;
 		//Boolean to flag if it's an iOS operated device
@@ -38,9 +39,6 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		private _isIOS: boolean;
 		//Booelan to tell if the pattern is in the state 'open'
 		private _isOpen: boolean;
-		// Store the stopPropagation method
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _iOSStopPropagation: any;
 		// Last Floating Action Item
 		private _lastButton: HTMLElement;
 		// Callback function to trigger the click event
@@ -427,6 +425,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			this._floatingItems.delete(floatingActionItemId);
 			this._refreshFloatingActionItems();
 		}
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		public get floatingActionItems(): Map<string, OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem> {
 			return this._floatingItems;
 		}
