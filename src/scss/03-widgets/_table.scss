@@ -170,6 +170,7 @@
 			position: relative;
 			text-align: left !important;
 			width: 100% !important;
+			word-break: break-all;
 
 			&:before {
 				content: attr(data-header);
