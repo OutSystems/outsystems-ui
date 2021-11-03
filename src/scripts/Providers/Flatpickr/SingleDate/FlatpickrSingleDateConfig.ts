@@ -4,6 +4,7 @@
 namespace Providers.Flatpickr.SingleDate {
 	export class FlatpickrSingleDateConfig extends AbstractFlatpickrConfig {
 		public AdvancedConfigs: FlatPickerAdvancedConfig;
+		public Type: string;
 
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		constructor(config: any) {
@@ -12,14 +13,10 @@ namespace Providers.Flatpickr.SingleDate {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		public getProviderConfig(): any {
-			// Check if it's a valid ServerDateFormat
-			if (!this._checkServerDateFormat(this.ServerDateFormat)) {
-				throw new Error(`The given ServerDateFormat '${this.ServerDateFormat}' it's not allowed.`);
-			}
-
 			// eslint-disable-next-line prefer-const
 			let flatpickrSingleDateOpts = {
 				defaultDate: this.DefaultDate,
+				mode: OSUIFramework.Patterns.DatePicker.Enum.Type.Single,
 				onChange: this.OnChange,
 				onClose: this.OnClose,
 				onDayCreate: this.OnDayCreate,
@@ -32,6 +29,8 @@ namespace Providers.Flatpickr.SingleDate {
 				...this._flatpickrOpts,
 				...flatpickrSingleDateOpts,
 			};
+
+			console.log('Providers.Flatpickr.SingleDate', fpOptions);
 
 			//Cleanning undefined properties
 			Object.keys(fpOptions).forEach((key) => fpOptions[key] === undefined && delete fpOptions[key]);

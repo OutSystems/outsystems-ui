@@ -12,25 +12,21 @@ namespace Providers.Flatpickr.SingleDate {
 
 		// RangeSlider events
 		private _onChangeCallbackEvent: OSUIFramework.Callbacks.OSDatepickerOnChangeEvent;
-		private _onCloseCallbackEvent: OSUIFramework.Callbacks.OSGeneric;
-		private _onInitializeCallbackEvent: OSUIFramework.Callbacks.OSGeneric;
-		private _onOpenCallbackEvent: OSUIFramework.Callbacks.OSGeneric;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new FlatpickrSingleDateConfig(configs));
 
-			// Set the default library Events
-			this._configs.OnChange = this._onDateSelected.bind(this);
-			this._configs.OnClose = this._onClose.bind(this);
-			this._configs.OnDayCreate = this._onDayCreate.bind(this);
-			this._configs.OnOpen = this._onOpen.bind(this);
-			this._configs.OnReady = this._onReady.bind(this);
+			// Set the default library Event handlers
+			this._configs.OnChange = this._onDateSelectedEvent.bind(this);
+			this._configs.OnClose = this._onCloseEvent.bind(this);
+			this._configs.OnDayCreate = this._onDayCreateEvent.bind(this);
+			this._configs.OnOpen = this._onOpenEvent.bind(this);
 		}
 
 		// Method that will create the provider
 		private _createProviderDatePicker(): void {
-			console.log(`_createProviderDatePicker() => ${this._configs.Mode} mode`);
+			console.log(`_createProviderDatePicker() => '${this._configs.Type}' Type`);
 
 			// Set inital library options
 			this._flatpickrOpts = this._configs.getProviderConfig();
@@ -42,52 +38,41 @@ namespace Providers.Flatpickr.SingleDate {
 			if (this._configs.ShowTodayButton) {
 				this._addTodayBtn();
 			}
+
+			// Instance has been Created!
+			super._onReady();
 		}
 
 		// Method that will be triggered by library each time calendar is closed
-		private _onClose(): void {
-			// Trigger platform's OnCloseHandler client Action
-			OSUIFramework.Helper.AsyncInvocation(this._onCloseCallbackEvent, this.widgetId);
+		private _onCloseEvent(): void {
+			super._onClose();
 		}
 
 		// Method that will be triggered by library each time any date is selected
-		private _onDateSelected(selectedDates: string[], dateStr: string, fp: Flatpickr): void {
+		private _onDateSelectedEvent(selectedDates: string[], dateStr: string, fp: Flatpickr): void {
 			/* NOTE: dateStr param is not in use since the library has an issue arround it */
+			let _selectedDate = '';
+
+			// Check if any date has been selected, In case of Clear this will retunr empty array
+			if (selectedDates.length > 0) {
+				_selectedDate = fp.formatDate(selectedDates[0], this._flatpickrOpts.dateFormat);
+			}
 
 			// Trigger platform's onChange callback event
-			OSUIFramework.Helper.AsyncInvocation(
-				this._onChangeCallbackEvent,
-				this.widgetId,
-				fp.formatDate(selectedDates[0], this._flatpickrOpts.dateFormat)
-			);
+			OSUIFramework.Helper.AsyncInvocation(this._onChangeCallbackEvent, this.widgetId, _selectedDate);
 
-			console.log('_onDateSelected', fp.formatDate(selectedDates[0], this._flatpickrOpts.dateFormat));
+			console.log('_onDateSelected', _selectedDate);
 		}
 
-		// Method that will be responsible to show if a day has an Event
+		// Trigger the method that will check if a given day should have an Event
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _onDayCreate(dObj: [], dStr: string, fp: Flatpickr, dayElem: any) {
-			/* NOTE: dObj and dStr have alwways same value, we must use dayElem.dateObj property to get the proper day Date */
-			// Get each day date
-			// console.log(fp.formatDate(dayElem.dateObj, this._configs.ServerDateFormat));
+		private _onDayCreateEvent(dObj: [], dStr: string, fp: Flatpickr, dayElem: any) {
+			super._onDayCreated(fp, dayElem);
 		}
 
 		// Method that will be triggered by library each time calendar is opened
-		private _onOpen(): void {
-			// Trigger platform's OnOpenHandler client Action
-			OSUIFramework.Helper.AsyncInvocation(this._onOpenCallbackEvent, this.widgetId);
-		}
-
-		// Method that will be triggered by library each time calendar is ready
-		private _onReady(): void {
-			// Since a new input will be added by the flatpickr library, we must address it only at onReady
-			this._flatpickrInputElem = this._datePickerProviderElem.nextSibling as HTMLElement;
-
-			// Added the data-input attribute in order to input be styled as all platform inputs
-			OSUIFramework.Helper.Attribute.Set(this._flatpickrInputElem, 'data-input', '');
-
-			// Trigger platform's InstanceIntializedHandler client Action
-			OSUIFramework.Helper.AsyncInvocation(this._onInitializeCallbackEvent, this.widgetId);
+		private _onOpenEvent(): void {
+			super._onOpen();
 		}
 
 		public build(): void {
@@ -102,6 +87,15 @@ namespace Providers.Flatpickr.SingleDate {
 		public changeProperty(propertyName: string, propertyValue: any): void {
 			// Check which property changed and call respective method to update it
 			console.log(`changeProperty(${propertyName}, ${propertyValue})`);
+			// switch (propertyName) {
+			// 	case 'PROP':
+			// 		console.log('Stuff @here!');
+			// 		break;
+
+			// 	default:
+			// 		super.changeProperty(propertyName, propertyValue);
+			// 		break;
+			// }
 		}
 
 		// Method to remove and destroy DatePicker instance
@@ -115,17 +109,8 @@ namespace Providers.Flatpickr.SingleDate {
 				case OSUIFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnChange:
 					this._onChangeCallbackEvent = callback;
 					break;
-				case OSUIFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnClose:
-					this._onCloseCallbackEvent = callback;
-					break;
-				case OSUIFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnInitialize:
-					this._onInitializeCallbackEvent = callback;
-					break;
-				case OSUIFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnOpen:
-					this._onOpenCallbackEvent = callback;
-					break;
 				default:
-					throw new Error(`The given '${eventName}' event name it's not defined.`);
+					super._registerProviderCallback(eventName, callback);
 					break;
 			}
 		}

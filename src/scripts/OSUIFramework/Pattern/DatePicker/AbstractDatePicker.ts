@@ -12,5 +12,9 @@ namespace OSUIFramework.Patterns.DatePicker {
 		public build(): void {
 			super.build();
 		}
+
+		public abstract clear(): void;
+		public abstract close(): void;
+		public abstract open(): void;
 	}
 }

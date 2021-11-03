@@ -18,6 +18,34 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	}
 
 	/**
+	 * Function used to Resets the selected dates (if any) and clears the input from a Given Id datepicker
+	 *
+	 * @param {string} datePickerId ID of the DatePickerItem that will be initialized.
+	 * @return {*}  {OSUIFramework.Patterns.DatePicker.IDatePicker}
+	 */
+	export function Clear(datePickerId: string): OSUIFramework.Patterns.DatePicker.IDatePicker {
+		const _datePickerItem = GetDatePickerItemById(datePickerId);
+
+		_datePickerItem.clear();
+
+		return _datePickerItem;
+	}
+
+	/**
+	 * Function used to Close the Datepicker with the Given Id
+	 *
+	 * @param {string} datePickerId ID of the DatePickerItem that will be initialized.
+	 * @return {*}  {OSUIFramework.Patterns.DatePicker.IDatePicker}
+	 */
+	export function Close(datePickerId: string): OSUIFramework.Patterns.DatePicker.IDatePicker {
+		const _datePickerItem = GetDatePickerItemById(datePickerId);
+
+		_datePickerItem.close();
+
+		return _datePickerItem;
+	}
+
+	/**
 	 * Create the new DatePickerItem instance and add it to the datePickerItemsMap
 	 *
 	 * @export
@@ -95,6 +123,20 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 		const _datePickerItem = GetDatePickerItemById(datePickerId);
 
 		_datePickerItem.build();
+
+		return _datePickerItem;
+	}
+
+	/**
+	 * Function used to Open the Datepicker with the Given Id
+	 *
+	 * @param {string} datePickerId ID of the DatePickerItem that will be initialized.
+	 * @return {*}  {OSUIFramework.Patterns.DatePicker.IDatePicker}
+	 */
+	export function Open(datePickerId: string): OSUIFramework.Patterns.DatePicker.IDatePicker {
+		const _datePickerItem = GetDatePickerItemById(datePickerId);
+
+		_datePickerItem.open();
 
 		return _datePickerItem;
 	}

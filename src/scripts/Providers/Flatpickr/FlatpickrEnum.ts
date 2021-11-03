@@ -1,14 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.Flatpickr.Enum {
-	//  Flatpickr Enum properties
-	export enum Properties {
-		Mode = 'Mode',
-	}
-
-	//  Flatpickr Today button Enum
-	export enum TodayBtn {
-		Selector = 'flatpickr-today-button',
-		Text = 'Today',
+	// Css Classes Enum
+	export enum CssClasses {
+		TodayBtn = 'flatpickr-today-button',
 	}
 
 	// Events
@@ -19,6 +13,9 @@ namespace Providers.Flatpickr.Enum {
 		OnReady = 'OnReady',
 	}
 
+	//  Flatpickr Enum properties
+	export enum Properties {}
+
 	// ServerDateFormat Types
 	export enum ServerDateFromat {
 		dmY = 'dmY',
@@ -26,10 +23,8 @@ namespace Providers.Flatpickr.Enum {
 		Ymd = 'Ymd',
 	}
 
-	// Modes Type
-	export enum FlatPickerMode {
-		Multiple = 'multiple',
-		Range = 'range',
-		Single = 'single',
+	//  Flatpickr Today button Enum
+	export enum TodayBtn {
+		Text = 'Today',
 	}
 }
