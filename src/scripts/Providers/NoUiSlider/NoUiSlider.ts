@@ -138,8 +138,8 @@ namespace Providers.RangeSlider {
 			OSUIFramework.Helper.AsyncInvocation(
 				this._onValueChange,
 				this.widgetId,
-				Math.floor(value[0]),
-				this._isInterval ? Math.floor(value[1]) : undefined
+				value[0],
+				this._isInterval ? value[1] : undefined
 			);
 		}
 
