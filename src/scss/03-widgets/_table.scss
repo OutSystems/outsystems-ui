@@ -155,7 +155,7 @@
 
 			// Service Studio Preview
 			& {
-				-servicestudio-display: table-row !important;
+				-servicestudio-word-break: normal;
 			}
 		}
 
@@ -179,6 +179,7 @@
 				max-width: 110px;
 				min-width: 110px;
 				word-break: break-word;
+				white-space: normal;
 			}
 
 			&:not([data-header]) {
@@ -258,5 +259,17 @@
 		box-shadow: 0 0 0 3px var(--color-focus-outer);
 		position: relative;
 		z-index: 1;
+	}
+}
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl.phone, 
+.is-rtl.tablet {
+	.table:not(.table-no-responsive){
+		td:before{
+			margin-left: 10px;
+			margin-right: 0px
+		}
 	}
 }
