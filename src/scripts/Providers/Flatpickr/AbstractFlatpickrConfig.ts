@@ -4,6 +4,7 @@ namespace Providers.Flatpickr {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		protected _flatpickrOpts: any;
 
+		public DefaultDate: string;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		public OnChange: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any

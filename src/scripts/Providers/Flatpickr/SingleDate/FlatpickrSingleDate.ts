@@ -32,7 +32,7 @@ namespace Providers.Flatpickr.SingleDate {
 			this._flatpickrOpts = this._configs.getProviderConfig();
 
 			// Init provider
-			this._flatpickr = window.flatpickr(this._datePickerProviderElem, this._flatpickrOpts);
+			this._flatpickr = window.flatpickr(this._datePickerProviderInputElem, this._flatpickrOpts);
 
 			// Add TodayBtn
 			if (this._configs.ShowTodayButton) {

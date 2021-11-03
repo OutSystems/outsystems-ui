@@ -11,11 +11,11 @@ namespace Providers.Flatpickr {
 		private _onOpenCallbackEvent: OSUIFramework.Callbacks.OSGeneric;
 
 		// Store the provider target element
-		protected _datePickerProviderElem: HTMLElement;
+		protected _datePickerProviderInputElem: HTMLInputElement;
 		// Store the provider reference
 		protected _flatpickr: Flatpickr;
 		// Store the flatpickr html element that will be added by library
-		protected _flatpickrInputElem: HTMLElement;
+		protected _flatpickrInputElem: HTMLInputElement;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: C) {
@@ -25,7 +25,9 @@ namespace Providers.Flatpickr {
 		// Method to set the html elements used
 		private _setHtmllElements(): void {
 			// Set the inputHTML element
-			this._datePickerProviderElem = document.getElementById(this._configs.InputWidgetId);
+			this._datePickerProviderInputElem = document.getElementById(
+				this._configs.InputWidgetId
+			) as HTMLInputElement;
 		}
 
 		// Trigger the jumToDate to now
@@ -86,7 +88,15 @@ namespace Providers.Flatpickr {
 		// Method that will be triggered at Flatpickr is ready
 		protected _onReady(): void {
 			// Since a new input will be added by the flatpickr library, we must address it only at onReady
-			this._flatpickrInputElem = this._datePickerProviderElem.nextSibling as HTMLElement;
+			this._flatpickrInputElem = this._datePickerProviderInputElem.nextSibling as HTMLInputElement;
+
+			// Check if the default date is an OutSystems null date, if so, clear the input
+			if (OutSystems.OSUI.Utils.IsNullDate(this._configs.InitalDate)) {
+				// Update the Calendar date
+				this._flatpickr.jumpToDate(this._flatpickr.now);
+				// Clear the input
+				this._flatpickrInputElem.value = '';
+			}
 
 			// Added the data-input attribute in order to input be styled as all platform inputs
 			OSUIFramework.Helper.Attribute.Set(this._flatpickrInputElem, 'data-input', '');
@@ -130,13 +140,9 @@ namespace Providers.Flatpickr {
 				case OSUIFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass:
 					this._updateExtendedClassSelectors(this._configs.ExtendedClass, propertyValue);
 
-					this._configs.ExtendedClass = propertyValue;
+					// Update the property at the _selfElem
+					super.changeProperty(propertyName, propertyValue);
 
-					break;
-
-				default:
-					/* NOTE: The super() should not be triggerd on this case since the scope of the elements we're working with are not the same as this._selfElem */
-					throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
 					break;
 			}
 		}

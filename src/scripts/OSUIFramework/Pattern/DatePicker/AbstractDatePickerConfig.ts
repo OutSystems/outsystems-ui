@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.DatePicker {
 	export abstract class AbstractDatePickerConfig extends Patterns.AbstractProviderConfiguration {
-		public DefaultDate: string;
+		public InitalDate: string;
 		public InputDateFormat: string;
 		public InputWidgetId: string;
 		public ServerDateFormat: string;

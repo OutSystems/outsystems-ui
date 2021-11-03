@@ -9,6 +9,8 @@ namespace Providers.Flatpickr.SingleDate {
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		constructor(config: any) {
 			super(config);
+
+			this.DefaultDate = this.InitalDate;
 		}
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
