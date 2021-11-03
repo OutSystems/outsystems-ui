@@ -18,6 +18,7 @@ namespace Providers.RangeSlider {
 					min: this.MinValue,
 					max: this.MaxValue === this.MinValue ? 100 : this.MaxValue,
 				},
+				tooltips: this.IsInterval ? [true, true] : [window.wNumb({ decimals: 0 })],
 			};
 
 			//Cleanning undefined properties

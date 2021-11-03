@@ -256,7 +256,7 @@ namespace Providers.RangeSlider {
 			const pips = {
 				values: pipsValues,
 				density: pipsDensity,
-				mode: Enum.NoUiSliderModeOptions.Count,
+				mode: 'count',
 			};
 
 			if (isUpdate) {

@@ -17,6 +17,7 @@ declare global {
 		NoUiSliderPipsMode: typeof PipsMode;
 		Splide: typeof OriginalSplide;
 		SplideOpts: typeof OriginalSplide.defaults;
+		wNumb: typeof window.wNumb;
 	}
 
 	interface Navigator {
@@ -28,4 +29,5 @@ declare global {
 	type NoUiSliderPipsMode = PipsMode;
 	type Splide = OriginalSplide;
 	type SplideOpts = Options;
+	type wNumb = WNumb;
 }
