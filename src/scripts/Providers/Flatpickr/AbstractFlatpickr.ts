@@ -22,17 +22,17 @@ namespace Providers.Flatpickr {
 			super(uniqueId, configs);
 		}
 
+		// Trigger the jumToDate to now
+		private _jumpIntoToday() {
+			this._flatpickr.jumpToDate(this._flatpickr.now);
+		}
+
 		// Method to set the html elements used
 		private _setHtmllElements(): void {
 			// Set the inputHTML element
 			this._datePickerProviderInputElem = document.getElementById(
 				this._configs.InputWidgetId
 			) as HTMLInputElement;
-		}
-
-		// Trigger the jumToDate to now
-		private _todayBtnClick() {
-			this._flatpickr.jumpToDate(this._flatpickr.now);
 		}
 
 		// Method that will be used to set the CSS ExtendedClasses into input and calendar
@@ -61,7 +61,7 @@ namespace Providers.Flatpickr {
 			const todayBtn = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Link);
 			todayBtn.innerHTML = Enum.TodayBtn.Text;
 			todayBtn.classList.add(Enum.CssClasses.TodayBtn);
-			todayBtn.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, this._todayBtnClick.bind(this));
+			todayBtn.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, this._jumpIntoToday.bind(this));
 			this._flatpickr.calendarContainer.appendChild(todayBtn);
 		}
 
@@ -93,7 +93,7 @@ namespace Providers.Flatpickr {
 			// Check if the default date is an OutSystems null date, if so, clear the input
 			if (OutSystems.OSUI.Utils.IsNullDate(this._configs.InitalDate)) {
 				// Update the Calendar date
-				this._flatpickr.jumpToDate(this._flatpickr.now);
+				this._jumpIntoToday();
 				// Clear the input
 				this._flatpickrInputElem.value = '';
 			}
@@ -149,6 +149,7 @@ namespace Providers.Flatpickr {
 
 		public clear(): void {
 			this._flatpickr.clear();
+			this._jumpIntoToday();
 		}
 
 		public close(): void {
