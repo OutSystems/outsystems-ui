@@ -8,7 +8,7 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 	 *
 	 * @return {*}  {Map<string, OSUIFramework.Patterns.FloatingActions.IFloatingActions>}
 	 */
-	function GetFloatingActionsByItem(
+	export function GetFloatingActionsByItem(
 		floatingActionsItemId: string
 	): OSUIFramework.Patterns.FloatingActions.IFloatingActions {
 		let floatingActions: OSUIFramework.Patterns.FloatingActions.IFloatingActions;
@@ -18,16 +18,14 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 		} else {
 			// Try to find its reference on DOM
 			const elem = OSUIFramework.Helper.GetElementByUniqueId(floatingActionsItemId);
-			const floating = elem.closest(OSUIFramework.Patterns.FloatingActions.Enum.CssClasses.FloatingActions);
+			const floating = elem.closest(OSUIFramework.Patterns.FloatingActions.Enum.CssClasses.FloatingActionWrapper);
 
 			if (!floating) {
 				throw Error(
 					`This ${OSUIFramework.GlobalEnum.PatternsNames.FloatingActionsItem} does not belong to any ${OSUIFramework.GlobalEnum.PatternsNames.FloatingActions} pattern.`
 				);
 			}
-			const uniqueId = floating
-				.querySelector(OSUIFramework.Patterns.FloatingActions.Enum.CssClasses.FloatingActionWrapper)
-				.getAttribute('name');
+			const uniqueId = floating.getAttribute('name');
 			floatingActions = FloatingActionsAPI.GetFloatingActionsById(uniqueId);
 		}
 
