@@ -135,6 +135,10 @@
 	.table-no-responsive{
 		overflow-x: auto;
 		word-break: break-all;
+		// Service Studio Preview
+		& {
+			-servicestudio-word-break: normal;
+		}
 	}
 
 	.table:not(.table-no-responsive) {
@@ -145,7 +149,7 @@
 
 			// Service Studio Preview
 			& {
-				-servicestudio-display: table-header-group;
+				-servicestudio-display: none;
 			}
 		}
 
@@ -207,6 +211,11 @@
 				padding: var(--space-s) var(--space-m);
 				vertical-align: inherit;
 				width: auto !important;
+
+				// Service Studio Preview
+				& {
+					-servicestudio-word-break: break-all;
+				}
 			}
 
 			td:before {
