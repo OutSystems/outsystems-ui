@@ -22,8 +22,9 @@
 
 		// Service Studio Preview
 		& {
-			-servicestudio--webkit-opacity: 1;
-			-servicestudio--webkit-position: relative;
+			-servicestudio-min-width: calc(100% - 64px);
+			-servicestudio-opacity: 1;
+			-servicestudio-position: relative;
 		}
 	}
 

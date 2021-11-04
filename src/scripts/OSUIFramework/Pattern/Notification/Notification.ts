@@ -35,7 +35,9 @@ namespace OSUIFramework.Patterns.Notification {
 		// Close Notification after wait the time defined
 		private _autoCloseNotification(): void {
 			setTimeout(() => {
-				this.hide();
+				if (this._configs.IsOpen) {
+					this.hide();
+				}
 			}, this._configs.CloseAfterTime);
 		}
 
