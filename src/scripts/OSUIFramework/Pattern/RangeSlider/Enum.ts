@@ -13,6 +13,7 @@ namespace OSUIFramework.Patterns.RangeSlider.Enum {
 		MinValue = 'MinValue',
 		PipsStep = 'PipsStep',
 		ShowPips = 'ShowPips',
+		ShowTooltip = 'ShowTooltip',
 		Step = 'Step',
 		VerticalHeight = 'VerticalHeight',
 	}

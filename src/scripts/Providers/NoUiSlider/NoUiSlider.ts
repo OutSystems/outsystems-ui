@@ -30,6 +30,8 @@ namespace Providers.RangeSlider {
 		private _providerOptions: NoUiSliderOptions;
 		// Store the provider target elem
 		private _rangeSliderProviderElem: HTMLElement;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		private _tooltipFormat: any;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
@@ -39,6 +41,10 @@ namespace Providers.RangeSlider {
 			this._eventOnEnd = this._triggerOnEndEvent.bind(this);
 			this._eventOnStart = this._triggerOnStartEvent.bind(this);
 			this._isInterval = this._configs.IsInterval;
+
+			this._tooltipFormat = this._isInterval
+				? [window.wNumb({ decimals: 0 }), window.wNumb({ decimals: 0 })]
+				: [window.wNumb({ decimals: 0 })];
 		}
 
 		// Method that will create the provider
@@ -216,6 +222,10 @@ namespace Providers.RangeSlider {
 					this.setVerticalHeight(propertyValue);
 
 					break;
+				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowTooltip:
+					this.updateTooltipVisibility(propertyValue);
+
+					break;
 				default:
 					super.changeProperty(propertyName, propertyValue);
 					break;
@@ -251,12 +261,13 @@ namespace Providers.RangeSlider {
 				pipsValues = 2;
 			}
 
+			// To avoid the creation of minor pips, whatever the value
 			const pipsDensity = (pipsValues - 1) * 100;
 
 			const pips = {
 				values: pipsValues,
 				density: pipsDensity,
-				mode: 'count',
+				mode: Enum.NoUiSliderModeOptions.Count,
 			};
 
 			if (isUpdate) {
@@ -339,6 +350,15 @@ namespace Providers.RangeSlider {
 
 			this._configs.MinValue = min;
 			this._configs.MaxValue = max;
+		}
+
+		// Method to update tooltips visibility on RangeSlider
+		public updateTooltipVisibility(showTooltip: boolean): void {
+			this.provider.updateOptions({
+				tooltips: this._configs.setTooltipVisibility(showTooltip),
+			});
+
+			this._configs.ShowTooltip = showTooltip;
 		}
 	}
 }
