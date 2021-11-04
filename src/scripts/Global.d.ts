@@ -19,6 +19,7 @@ declare global {
 	//eslint-disable-next-line @typescript-eslint/naming-convention
 	interface Window {
 		cordova: any;
+
 		// DatePicker => Flatpickr
 		flatpickr: typeof flatpickr;
 		flatpickrOpts: typeof flatpickrOpts;

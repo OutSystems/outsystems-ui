@@ -5,14 +5,6 @@ namespace Providers.Flatpickr.Enum {
 		TodayBtn = 'flatpickr-today-button',
 	}
 
-	// Events
-	export enum FlatpickrEvents {
-		OnChange = 'OnChange',
-		OnClose = 'OnClose',
-		OnOpen = 'OnOpen',
-		OnReady = 'OnReady',
-	}
-
 	//  Flatpickr Enum properties
 	export enum Properties {}
 
