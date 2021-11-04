@@ -32,9 +32,7 @@ namespace Providers.RangeSlider {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		public setTooltipVisibility(showTooltip: boolean): any {
 			const tooltipValue = showTooltip ? window.wNumb({ decimals: 0 }) : false;
-			const tooltipParam = this.IsInterval ? [tooltipValue, tooltipValue] : [tooltipValue];
-
-			return tooltipParam;
+			return this.IsInterval ? [tooltipValue, tooltipValue] : [tooltipValue];
 		}
 	}
 }
