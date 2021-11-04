@@ -90,7 +90,7 @@ namespace Providers.Flatpickr {
 			// Since a new input will be added by the flatpickr library, we must address it only at onReady
 			this._flatpickrInputElem = this._datePickerProviderInputElem.nextSibling as HTMLInputElement;
 
-			// Check if the default date is an OutSystems null date, if so, clear the input
+			// Check if the initial date is an OutSystems null date, if so, clear the input
 			if (OutSystems.OSUI.Utils.IsNullDate(this._configs.InitalDate)) {
 				// Update the Calendar date
 				this._jumpIntoToday();
@@ -144,12 +144,19 @@ namespace Providers.Flatpickr {
 					super.changeProperty(propertyName, propertyValue);
 
 					break;
+				default:
+					throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
+					break;
 			}
 		}
 
 		public clear(): void {
 			this._flatpickr.clear();
-			this._jumpIntoToday();
+
+			// Check if the initial date is an OutSystems null date, if so, jump into today
+			if (OutSystems.OSUI.Utils.IsNullDate(this._configs.InitalDate)) {
+				this._jumpIntoToday();
+			}
 		}
 
 		public close(): void {

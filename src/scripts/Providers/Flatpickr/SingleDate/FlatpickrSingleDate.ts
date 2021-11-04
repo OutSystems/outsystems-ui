@@ -85,17 +85,15 @@ namespace Providers.Flatpickr.SingleDate {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
-			// Check which property changed and call respective method to update it
-			console.log(`changeProperty(${propertyName}, ${propertyValue})`);
-			// switch (propertyName) {
-			// 	case 'PROP':
-			// 		console.log('Stuff @here!');
-			// 		break;
+			switch (propertyName) {
+				case 'PROP':
+					console.log('Stuff @here!');
+					break;
 
-			// 	default:
-			// 		super.changeProperty(propertyName, propertyValue);
-			// 		break;
-			// }
+				default:
+					super.changeProperty(propertyName, propertyValue);
+					break;
+			}
 		}
 
 		// Method to remove and destroy DatePicker instance
