@@ -171,9 +171,7 @@ namespace OSUIFramework.Patterns.Submenu {
 				);
 
 				// Make async the method call
-				setTimeout(() => {
-					this.open();
-				}, 0);
+				Helper.AsyncInvocation(this.open.bind(this));
 			}
 		}
 
