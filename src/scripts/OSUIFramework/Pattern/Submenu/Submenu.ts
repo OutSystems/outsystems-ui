@@ -163,14 +163,15 @@ namespace OSUIFramework.Patterns.Submenu {
 			if (this._isOpen) {
 				this.close();
 			} else {
-				this.open();
-
 				// Trigger event to close other submenu instances
 				OSUIFramework.Event.GlobalEventManager.Instance.trigger(
 					// eslint-disable-next-line @typescript-eslint/no-unused-vars
 					OSUIFramework.Event.Type.SubmenuOpen,
 					this.uniqueId
 				);
+
+				// Make async the method call
+				Helper.AsyncInvocation(this.open.bind(this));
 			}
 		}
 
