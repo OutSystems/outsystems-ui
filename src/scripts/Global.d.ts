@@ -47,20 +47,18 @@ declare global {
 	type Splide = OriginalSplide;
 	type SplideOpts = Options;
 
-	// DatePicker => Flatpickr
-	type Flatpickr = flatpickr;
-	type FlatpickrOptions = flatpickrOpts;
-	type FlatpickrOptionalConfigs = {
+	// DatePicker
+	type DatepickrOptionalConfigs = {
 		firstWeekDay: number;
 		maxDate: string;
 		minDate: string;
 		showMonths: boolean;
 	};
-	type FlatPickerAdvancedConfig = {
-		disableDates: [];
-		disableDatesRange: [];
-		enableDates: [];
-		enableDatesRange: [];
-		eventDates: [];
+	type DatepickrAdvancedConfig = {
+		flatpickr: { disableDates: []; disableDatesRange: []; enableDates: []; enableDatesRange: []; eventDates: [] };
 	};
+
+	// DatePicker => Flatpickr
+	type Flatpickr = flatpickr;
+	type FlatpickrOptions = flatpickrOpts;
 }

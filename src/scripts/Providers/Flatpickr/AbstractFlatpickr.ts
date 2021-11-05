@@ -22,6 +22,19 @@ namespace Providers.Flatpickr {
 			super(uniqueId, configs);
 		}
 
+		// Method used to check if a given date exist as an EventDate
+		private _checkIfEventDate(_date: string): boolean {
+			const _givenDate = new Date(_date).getTime();
+
+			for (let i = 0; i < this._configs.AdvancedConfigs.flatpickr.eventDates.length; ++i) {
+				if (_givenDate === new Date(this._configs.AdvancedConfigs.flatpickr.eventDates[i]).getTime()) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
 		// Trigger the jumToDate to now
 		private _jumpIntoToday() {
 			this._flatpickr.jumpToDate(this._flatpickr.now);
@@ -75,8 +88,12 @@ namespace Providers.Flatpickr {
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		protected _onDayCreated(fp: Flatpickr, dayElem: any): void {
 			/* NOTE: dObj and dStr have alwways same value, we must use dayElem.dateObj property to get the proper day Date */
-			// Get each day date
-			// console.log(fp.formatDate(dayElem.dateObj, this._configs.ServerDateFormat));
+
+			// Check if the created day date has should behave like it has an Event
+			if (this._checkIfEventDate(fp.formatDate(dayElem.dateObj, this._configs.ServerDateFormat))) {
+				const _dayHtmlElem = dayElem as HTMLElement;
+				_dayHtmlElem.classList.add('has-event');
+			}
 		}
 
 		// Method that will be triggered each time calendar is opened
@@ -85,18 +102,10 @@ namespace Providers.Flatpickr {
 			OSUIFramework.Helper.AsyncInvocation(this._onOpenCallbackEvent, this.widgetId);
 		}
 
-		// Method that will be triggered at Flatpickr is ready
+		// Method that will be triggered at Flatpickr instance is ready
 		protected _onReady(): void {
 			// Since a new input will be added by the flatpickr library, we must address it only at onReady
 			this._flatpickrInputElem = this._datePickerProviderInputElem.nextSibling as HTMLInputElement;
-
-			// Check if the initial date is an OutSystems null date, if so, clear the input
-			if (OutSystems.OSUI.Utils.IsNullDate(this._configs.InitalDate)) {
-				// Update the Calendar date
-				this._jumpIntoToday();
-				// Clear the input
-				this._flatpickrInputElem.value = '';
-			}
 
 			// Added the data-input attribute in order to input be styled as all platform inputs
 			OSUIFramework.Helper.Attribute.Set(this._flatpickrInputElem, 'data-input', '');
@@ -152,11 +161,6 @@ namespace Providers.Flatpickr {
 
 		public clear(): void {
 			this._flatpickr.clear();
-
-			// Check if the initial date is an OutSystems null date, if so, jump into today
-			if (OutSystems.OSUI.Utils.IsNullDate(this._configs.InitalDate)) {
-				this._jumpIntoToday();
-			}
 		}
 
 		public close(): void {
