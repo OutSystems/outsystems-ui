@@ -18,6 +18,7 @@ namespace Providers.RangeSlider {
 					min: this.MinValue,
 					max: this.MaxValue === this.MinValue ? 100 : this.MaxValue,
 				},
+				tooltips: this.setTooltipVisibility(this.ShowTooltip),
 			};
 
 			//Cleanning undefined properties
@@ -26,6 +27,12 @@ namespace Providers.RangeSlider {
 			);
 
 			return providerOptions;
+		}
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		public setTooltipVisibility(showTooltip: boolean): any {
+			const tooltipValue = showTooltip ? window.wNumb({ decimals: 0 }) : false;
+			return this.IsInterval ? [tooltipValue, tooltipValue] : [tooltipValue];
 		}
 	}
 }

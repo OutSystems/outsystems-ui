@@ -1,5 +1,3 @@
-/// <reference path="../AbstractPattern.ts" />
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.FloatingActionsItem {
 	export class FloatingActionsItem
