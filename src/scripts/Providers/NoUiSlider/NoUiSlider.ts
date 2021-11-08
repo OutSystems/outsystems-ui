@@ -251,21 +251,24 @@ namespace Providers.RangeSlider {
 		public handleRangePips(pipsStepParam: number, isUpdate: boolean): void {
 			let pipsValues = Math.floor(pipsStepParam);
 
-			// To avoid performance issues
+			//To avoid performance issues
 			if (pipsValues > this._configs.MaxValue) {
 				pipsValues = this._configs.MaxValue;
 			}
 
-			if (pipsValues <= 1) {
-				// steps, when they exist, can't be less than 2 (library restraint)
-				pipsValues = 2;
+			// steps, when they exist, can't be less than 1 (library restraint)
+			if (pipsValues < 1) {
+				return;
 			}
 
+			// to account for 0 and max value pisps
+			const pipsRange = Math.floor(this.configs.MaxValue / pipsValues) + 1;
+
 			// To avoid the creation of minor pips, whatever the value
-			const pipsDensity = (pipsValues - 1) * 100;
+			const pipsDensity = (pipsRange - 1) * 100;
 
 			const pips = {
-				values: pipsValues,
+				values: pipsRange,
 				density: pipsDensity,
 				mode: Enum.NoUiSliderModeOptions.Count,
 			};
