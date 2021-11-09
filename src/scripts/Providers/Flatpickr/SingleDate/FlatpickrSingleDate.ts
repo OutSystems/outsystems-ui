@@ -145,6 +145,12 @@ namespace Providers.Flatpickr.SingleDate {
 
 					break;
 
+				case OSUIFramework.Patterns.DatePicker.Enum.Properties.ShowWeekNumbers:
+					// Set the new ShowMonths value
+					this._configs.OptionalConfigs.showWeekNumbers = propertyValue;
+
+					break;
+
 				case OSUIFramework.Patterns.DatePicker.Enum.Properties.AdvancedConfigs:
 					// Set the new ShowMonths value
 					this._configs.AdvancedConfigs = JSON.parse(propertyValue);

@@ -28,6 +28,7 @@ namespace OSUIFramework.Patterns.DatePicker.Enum {
 		ServerDateFormat = 'ServerDateFormat',
 		ShowMonths = 'ShowMonths',
 		ShowTodayButton = 'ShowTodayButton',
+		ShowWeekNumbers = 'ShowWeekNumbers',
 		TimeFormat = 'TimeFormat',
 		Type = 'Type',
 	}

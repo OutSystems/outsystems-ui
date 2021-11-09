@@ -131,6 +131,7 @@ namespace Providers.Flatpickr {
 		public changeProperty(propertyName: string, propertyValue: any): void {
 			switch (propertyName) {
 				case OSUIFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass:
+					// Since we've an element that will be added dynamically at the body...
 					this._updateExtendedClassSelectors(this._configs.ExtendedClass, propertyValue);
 
 					// Update the property at the _selfElem

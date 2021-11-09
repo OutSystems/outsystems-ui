@@ -54,7 +54,8 @@ declare global {
 		firstWeekDay: number;
 		maxDate: string;
 		minDate: string;
-		showMonths: boolean;
+		showMonths: number;
+		showWeekNumbers: boolean;
 	};
 	type DatepickrAdvancedConfig = {
 		flatpickr: { disableDates: []; disableDatesRange: []; enableDates: []; enableDatesRange: []; eventDates: [] };

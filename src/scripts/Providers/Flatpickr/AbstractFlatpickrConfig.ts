@@ -100,7 +100,7 @@ namespace Providers.Flatpickr {
 		}
 
 		// Method used to set all the global Flatpickr properties across the different types of instances
-		protected _setFlatpickrOpts(): FlatpickrOptions {
+		protected _getFlatpickrOpts(): FlatpickrOptions {
 			// Check the given server date format config
 			this._checkServerDateFormat();
 
@@ -129,6 +129,7 @@ namespace Providers.Flatpickr {
 						: this.ServerDateFormat,
 				showMonths: this.OptionalConfigs.showMonths,
 				time_24hr: this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormat.Time24hFormat,
+				weekNumbers: this.OptionalConfigs.showWeekNumbers,
 			};
 
 			return this._flatpickrOpts;

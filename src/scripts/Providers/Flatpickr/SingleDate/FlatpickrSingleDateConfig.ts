@@ -26,8 +26,8 @@ namespace Providers.Flatpickr.SingleDate {
 
 			// Merge both option objects => if objects have a property with the same name, then the right-most object property overwrites the previous one
 			const fpOptions = {
+				...super._getFlatpickrOpts(),
 				...flatpickrSingleDateOpts,
-				...super._setFlatpickrOpts(),
 			};
 
 			//Cleanning undefined properties
