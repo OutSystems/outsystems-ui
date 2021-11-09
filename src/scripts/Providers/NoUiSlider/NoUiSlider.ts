@@ -256,8 +256,11 @@ namespace Providers.RangeSlider {
 				pipsValues = this._configs.MaxValue;
 			}
 
-			// steps, when they exist, can't be less than 1 (library restraint)
+			// Pips, when they exist, can't be less than 1 (library restraint)
 			if (pipsValues < 1) {
+				console.warn(
+					'Pips, when they exist, can not be less than one (library restraint). If you do not want pips to show, set the ShowPips paramater to false.'
+				);
 				return;
 			}
 
