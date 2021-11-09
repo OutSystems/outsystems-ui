@@ -16,6 +16,7 @@ namespace Providers.Flatpickr {
 		protected _flatpickr: Flatpickr;
 		// Store the flatpickr html element that will be added by library
 		protected _flatpickrInputElem: HTMLInputElement;
+		protected _onChangeCallbackEvent: OSUIFramework.Callbacks.OSDatepickerOnChangeEvent;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: C) {
@@ -24,10 +25,11 @@ namespace Providers.Flatpickr {
 
 		// Method used to check if a given date exist as an EventDate
 		private _checkIfEventDate(_date: string): boolean {
-			const _givenDate = new Date(_date).getTime();
-
 			for (let i = 0; i < this._configs.AdvancedConfigs.flatpickr.eventDates.length; ++i) {
-				if (_givenDate === new Date(this._configs.AdvancedConfigs.flatpickr.eventDates[i]).getTime()) {
+				if (
+					new Date(_date).getTime() ===
+					new Date(this._configs.AdvancedConfigs.flatpickr.eventDates[i]).getTime()
+				) {
 					return true;
 				}
 			}
@@ -119,24 +121,6 @@ namespace Providers.Flatpickr {
 			OSUIFramework.Helper.AsyncInvocation(this._onInitializeCallbackEvent, this.widgetId);
 		}
 
-		// Method used to regist callback events
-		protected _registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
-			switch (eventName) {
-				case OSUIFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnClose:
-					this._onCloseCallbackEvent = callback;
-					break;
-				case OSUIFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnInitialize:
-					this._onInitializeCallbackEvent = callback;
-					break;
-				case OSUIFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnOpen:
-					this._onOpenCallbackEvent = callback;
-					break;
-				default:
-					throw new Error(`The given '${eventName}' event name it's not defined.`);
-					break;
-			}
-		}
-
 		public build(): void {
 			super.build();
 
@@ -187,6 +171,25 @@ namespace Providers.Flatpickr {
 			return this._flatpickr;
 		}
 
-		public abstract registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void;
+		// Method used to regist callback events
+		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
+			switch (eventName) {
+				case OSUIFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnChange:
+					this._onChangeCallbackEvent = callback;
+					break;
+				case OSUIFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnClose:
+					this._onCloseCallbackEvent = callback;
+					break;
+				case OSUIFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnInitialize:
+					this._onInitializeCallbackEvent = callback;
+					break;
+				case OSUIFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnOpen:
+					this._onOpenCallbackEvent = callback;
+					break;
+				default:
+					throw new Error(`The given '${eventName}' event name it's not defined.`);
+					break;
+			}
+		}
 	}
 }

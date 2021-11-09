@@ -19,10 +19,15 @@ namespace OSUIFramework.Patterns.DatePicker.Enum {
 	 * DatePicker Enum properties
 	 */
 	export enum Properties {
-		DefaultDate = 'DefaultDate',
+		AdvancedConfigs = 'AdvancedConfigs',
+		FirstWeekDay = 'FirstWeekDay',
+		InitialDate = 'InitialDate',
 		InputDateFormat = 'InputDateFormat',
-		InputWidgetId = 'InputWidgetId',
+		MaxDate = 'MaxDate',
+		MinDate = 'MinDate',
 		ServerDateFormat = 'ServerDateFormat',
+		ShowMonths = 'ShowMonths',
+		ShowTodayButton = 'ShowTodayButton',
 		TimeFormat = 'TimeFormat',
 		Type = 'Type',
 	}

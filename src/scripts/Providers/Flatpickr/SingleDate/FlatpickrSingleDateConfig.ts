@@ -9,31 +9,26 @@ namespace Providers.Flatpickr.SingleDate {
 		constructor(config: any) {
 			super(config);
 
-			this.DefaultDate = this.InitalDate;
-
-			console.log('config', config);
+			this.DefaultDate = this.InitialDate;
 		}
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		public getProviderConfig(): any {
 			// eslint-disable-next-line prefer-const
 			let flatpickrSingleDateOpts = {
-				defaultDate: OutSystems.OSUI.Utils.IsNullDate(this.DefaultDate) ? undefined : this.DefaultDate,
+				defaultDate: OSUIFramework.Helper.Dates.IsNull(this.DefaultDate) ? undefined : this.DefaultDate,
 				mode: OSUIFramework.Patterns.DatePicker.Enum.Type.Single,
 				onChange: this.OnChange,
 				onClose: this.OnClose,
 				onDayCreate: this.OnDayCreate,
 				onOpen: this.OnOpen,
-				onReady: this.OnReady,
 			};
 
 			// Merge both option objects => if objects have a property with the same name, then the right-most object property overwrites the previous one
 			const fpOptions = {
-				...this._flatpickrOpts,
 				...flatpickrSingleDateOpts,
+				...super._setFlatpickrOpts(),
 			};
-
-			console.log('fpOptions', fpOptions);
 
 			//Cleanning undefined properties
 			Object.keys(fpOptions).forEach((key) => fpOptions[key] === undefined && delete fpOptions[key]);

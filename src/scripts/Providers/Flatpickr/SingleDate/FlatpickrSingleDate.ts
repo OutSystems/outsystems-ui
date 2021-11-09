@@ -10,9 +10,6 @@ namespace Providers.Flatpickr.SingleDate {
 		// Store the provider options
 		private _flatpickrOpts: FlatpickrOptions;
 
-		// RangeSlider events
-		private _onChangeCallbackEvent: OSUIFramework.Callbacks.OSDatepickerOnChangeEvent;
-
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new FlatpickrSingleDateConfig(configs));
@@ -30,6 +27,8 @@ namespace Providers.Flatpickr.SingleDate {
 
 			// Set inital library options
 			this._flatpickrOpts = this._configs.getProviderConfig();
+			// console.log('this._configs', this._configs);
+			// console.log('this._flatpickrOpts', this._flatpickrOpts);
 
 			// Init provider
 			this._flatpickr = window.flatpickr(this._datePickerProviderInputElem, this._flatpickrOpts);
@@ -83,11 +82,73 @@ namespace Providers.Flatpickr.SingleDate {
 			this.finishBuild();
 		}
 
+		// Method used to change given propertyName at OnParametersChange platform event
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
 			switch (propertyName) {
-				case 'PROP':
-					console.log('Stuff @here!');
+				case OSUIFramework.Patterns.DatePicker.Enum.Properties.InitialDate:
+					// Set the DefaultDate values
+					this._configs.InitialDate = propertyValue;
+					this._configs.DefaultDate = this._configs.InitialDate;
+
+					break;
+
+				case OSUIFramework.Patterns.DatePicker.Enum.Properties.InputDateFormat:
+					// Check if any Date was selected
+					if (this._flatpickr.selectedDates.length > 0) {
+						// Set the new DefaultDate values
+						this._configs.InitialDate = this._flatpickr.formatDate(
+							this._flatpickr.selectedDates[0],
+							this._flatpickrOpts.dateFormat
+						);
+						this._configs.DefaultDate = this._configs.InitialDate;
+					}
+
+					// Set the new InputDateFormat
+					this._configs.InputDateFormat = propertyValue;
+
+					break;
+
+				case OSUIFramework.Patterns.DatePicker.Enum.Properties.TimeFormat:
+					// Set the new Timeformat value
+					this._configs.TimeFormat = propertyValue;
+
+					break;
+
+				case OSUIFramework.Patterns.DatePicker.Enum.Properties.ShowTodayButton:
+					// Set the new ShowTodayButton value
+					this._configs.ShowTodayButton = propertyValue;
+
+					break;
+
+				case OSUIFramework.Patterns.DatePicker.Enum.Properties.FirstWeekDay:
+					// Set the new FirstWeekDay value
+					this._configs.OptionalConfigs.firstWeekDay = propertyValue;
+
+					break;
+
+				case OSUIFramework.Patterns.DatePicker.Enum.Properties.MinDate:
+					// Set the new MinDate value
+					this._configs.OptionalConfigs.minDate = propertyValue;
+
+					break;
+
+				case OSUIFramework.Patterns.DatePicker.Enum.Properties.MaxDate:
+					// Set the new MaxDate value
+					this._configs.OptionalConfigs.maxDate = propertyValue;
+
+					break;
+
+				case OSUIFramework.Patterns.DatePicker.Enum.Properties.ShowMonths:
+					// Set the new ShowMonths value
+					this._configs.OptionalConfigs.showMonths = propertyValue;
+
+					break;
+
+				case OSUIFramework.Patterns.DatePicker.Enum.Properties.AdvancedConfigs:
+					// Set the new ShowMonths value
+					this._configs.AdvancedConfigs = JSON.parse(propertyValue);
+
 					break;
 
 				default:
@@ -101,16 +162,12 @@ namespace Providers.Flatpickr.SingleDate {
 			super.dispose();
 		}
 
-		// Method used to regist callback events
-		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
-			switch (eventName) {
-				case OSUIFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnChange:
-					this._onChangeCallbackEvent = callback;
-					break;
-				default:
-					super._registerProviderCallback(eventName, callback);
-					break;
-			}
+		/* Method that will be responsible to redraw the calendar when it's needed */
+		public redraw(): void {
+			// Destroy the old flatpickr instance
+			this.dispose();
+			// Create a new flatpickr instance with the updated configs
+			OSUIFramework.Helper.AsyncInvocation(this._createProviderDatePicker.bind(this), '');
 		}
 	}
 }

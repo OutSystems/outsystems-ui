@@ -2,7 +2,7 @@
 namespace OSUIFramework.Patterns.DatePicker {
 	export abstract class AbstractDatePickerConfig extends Patterns.AbstractProviderConfiguration {
 		public AdvancedConfigs: DatepickrAdvancedConfig;
-		public InitalDate: string;
+		public InitialDate: string;
 		public InputDateFormat: string;
 		public InputWidgetId: string;
 		public OptionalConfigs: DatepickrOptionalConfigs;

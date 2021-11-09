@@ -5,9 +5,6 @@ namespace Providers.Flatpickr.Enum {
 		TodayBtn = 'flatpickr-today-button',
 	}
 
-	//  Flatpickr Enum properties
-	export enum Properties {}
-
 	// ServerDateFormat Types
 	export enum ServerDateFromat {
 		dmY = 'dmY',

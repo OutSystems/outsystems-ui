@@ -12,15 +12,10 @@ namespace Providers.Flatpickr {
 		public OnDayCreate: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		public OnOpen: any;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		public OnReady: any;
 
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		constructor(config: any) {
 			super(config);
-
-			// Set the Flatpickr global configs
-			this._setFlatpickrOpts();
 		}
 
 		// Method used to manage the AM/PM time when it's on use
@@ -105,7 +100,7 @@ namespace Providers.Flatpickr {
 		}
 
 		// Method used to set all the global Flatpickr properties across the different types of instances
-		private _setFlatpickrOpts(): void {
+		protected _setFlatpickrOpts(): FlatpickrOptions {
 			// Check the given server date format config
 			this._checkServerDateFormat();
 
@@ -122,10 +117,10 @@ namespace Providers.Flatpickr {
 				locale: {
 					firstDayOfWeek: this.OptionalConfigs.firstWeekDay,
 				},
-				maxDate: OutSystems.OSUI.Utils.IsNullDate(this.OptionalConfigs.maxDate)
+				maxDate: OSUIFramework.Helper.Dates.IsNull(this.OptionalConfigs.maxDate)
 					? undefined
 					: this.OptionalConfigs.maxDate,
-				minDate: OutSystems.OSUI.Utils.IsNullDate(this.OptionalConfigs.minDate)
+				minDate: OSUIFramework.Helper.Dates.IsNull(this.OptionalConfigs.minDate)
 					? undefined
 					: this.OptionalConfigs.minDate,
 				dateFormat:
@@ -135,6 +130,8 @@ namespace Providers.Flatpickr {
 				showMonths: this.OptionalConfigs.showMonths,
 				time_24hr: this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormat.Time24hFormat,
 			};
+
+			return this._flatpickrOpts;
 		}
 	}
 }

@@ -158,4 +158,16 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 
 		_datePicker.registerProviderCallback(eventName, callback);
 	}
+
+	/**
+	 * Fucntion that will/should be triggered after some parameters changed
+	 *
+	 * @export
+	 * @param {string} datePickerId
+	 */
+	export function Redraw(datePickerId: string): void {
+		const _datePicker = this.GetDatePickerItemById(datePickerId);
+
+		_datePicker.redraw();
+	}
 }
