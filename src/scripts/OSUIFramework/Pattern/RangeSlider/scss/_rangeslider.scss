@@ -250,7 +250,7 @@
 		}
 
 		&-tooltip {
-			background: var(--color-neutral-0);
+			background: transparent;
 			border: none;
 			color: var(--color-neutral-10);
 			padding: var(--space-xs);
@@ -317,6 +317,10 @@
 				&-pips {
 					color: var(--color-neutral-6);
 				}
+			}
+
+			.noUi-tooltip {
+				color: var(--color-neutral-6);
 			}
 		}
 	}
