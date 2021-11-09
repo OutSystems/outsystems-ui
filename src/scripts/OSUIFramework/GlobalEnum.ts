@@ -146,4 +146,12 @@ namespace OSUIFramework.GlobalEnum {
 		Percentage = '%',
 		Pixel = 'px',
 	}
+
+	/**
+	 * OutSystemsUI Units
+	 */
+	export enum Screen {
+		Active = 'active-screen',
+		Container = 'screen-container',
+	}
 }

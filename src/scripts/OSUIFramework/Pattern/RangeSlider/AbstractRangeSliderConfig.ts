@@ -11,6 +11,7 @@ namespace OSUIFramework.Patterns.RangeSlider {
 		public MinValue: number;
 		public PipsStep: number;
 		public ShowPips: boolean;
+		public ShowTooltip: boolean;
 		public Step: number;
 		public VerticalHeight: number;
 

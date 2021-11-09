@@ -35,7 +35,9 @@ namespace OSUIFramework.Patterns.Notification {
 		// Close Notification after wait the time defined
 		private _autoCloseNotification(): void {
 			setTimeout(() => {
-				this.hide();
+				if (this._configs.IsOpen) {
+					this.hide();
+				}
 			}, this._configs.CloseAfterTime);
 		}
 
@@ -126,16 +128,28 @@ namespace OSUIFramework.Patterns.Notification {
 			if (this._configs.CloseAfterTime > 0 && this._configs.IsOpen) {
 				this._autoCloseNotification();
 			}
+
+			OSUIFramework.Helper.Element.Move(
+				this._selfElem,
+				document.querySelector(
+					Constants.Dot + GlobalEnum.Screen.Active + Constants.Dot + GlobalEnum.Screen.Container
+				)
+			);
 		}
 
 		// Remove all the assigned Events
 		private _removeEvents(): void {
 			// Remove listeners to toggle Notification
-			this._notificationContent.removeEventListener(this._eventOnNotification, this._eventOnNotificationClick);
-			this._notificationContent.removeEventListener(
-				GlobalEnum.HTMLEvent.keyDown,
-				this._eventOnNotificationKeypress
-			);
+			if (this._configs.ClickToClose) {
+				this._notificationContent.removeEventListener(
+					this._eventOnNotification,
+					this._eventOnNotificationClick
+				);
+				this._notificationContent.removeEventListener(
+					GlobalEnum.HTMLEvent.keyDown,
+					this._eventOnNotificationKeypress
+				);
+			}
 
 			// Remove handler from EventManager
 			if (this._configs.CloseOnBodyClick) {
@@ -189,6 +203,11 @@ namespace OSUIFramework.Patterns.Notification {
 		}
 
 		// Update CloseAfterTime value
+		private _updateClickToClose(clickToClose: boolean): void {
+			this._configs.ClickToClose = clickToClose;
+		}
+
+		// Update CloseAfterTime value
 		private _updateCloseAfterTime(value: number): void {
 			this._configs.CloseAfterTime = value;
 			if (this._configs.IsOpen) {
@@ -199,6 +218,7 @@ namespace OSUIFramework.Patterns.Notification {
 		// Update CloseOnBodyClick value
 		private _updateCloseOnBodyClick(closeOnBodyClick: boolean): void {
 			this._configs.CloseOnBodyClick = closeOnBodyClick;
+
 			// Toggle handlers from EventManager
 			if (this._configs.CloseOnBodyClick && this._configs.IsOpen) {
 				OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
@@ -217,7 +237,7 @@ namespace OSUIFramework.Patterns.Notification {
 
 		private _updateHasOverlay(overlay: boolean): void {
 			this._configs.HasOverlay = overlay;
-			// Reset direction class
+			// Reset overlay class
 			if (this._configs.HasOverlay) {
 				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternOverlay);
 			} else {
@@ -262,6 +282,9 @@ namespace OSUIFramework.Patterns.Notification {
 		public changeProperty(propertyName: string, propertyValue: any): void {
 			// Check which property changed and call respective method to update it
 			switch (propertyName) {
+				case Enum.Properties.ClickToClose:
+					this._updateClickToClose(propertyValue);
+					break;
 				case Enum.Properties.CloseAfterTime:
 					this._updateCloseAfterTime(propertyValue);
 					break;
@@ -288,9 +311,9 @@ namespace OSUIFramework.Patterns.Notification {
 
 		// Method to remove event listener and destroy notification instance
 		public dispose(): void {
-			super.dispose();
-
 			this._removeEvents();
+
+			super.dispose();
 		}
 
 		// Hide Notification
@@ -309,17 +332,61 @@ namespace OSUIFramework.Patterns.Notification {
 			this._notificationContent.blur();
 
 			// Remove listeners to toggle Notification
-			this._notificationContent.removeEventListener(this._eventOnNotification, this._eventOnNotificationClick);
-			this._notificationContent.removeEventListener(
-				GlobalEnum.HTMLEvent.keyDown,
-				this._eventOnNotificationKeypress
-			);
+			if (this._configs.ClickToClose) {
+				this._notificationContent.removeEventListener(
+					this._eventOnNotification,
+					this._eventOnNotificationClick
+				);
+				this._notificationContent.removeEventListener(
+					GlobalEnum.HTMLEvent.keyDown,
+					this._eventOnNotificationKeypress
+				);
+			}
 
 			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				OSUIFramework.Event.Type.BodyOnClick,
 				this._globalEventOnBodyClick
 			);
+		}
+
+		// Method to handle the swipe bottom
+		public onSwipeBottom(): void {
+			if (
+				this._configs.Position === GlobalEnum.CssClassPosition.Bottom ||
+				this._configs.Position === GlobalEnum.CssClassPosition.BottomLeft ||
+				this._configs.Position === GlobalEnum.CssClassPosition.BottomRight ||
+				this._configs.Position === GlobalEnum.CssClassPosition.Center
+			) {
+				this.hide();
+			}
+		}
+
+		// Method to handle the swipe left
+		public onSwipeLeft(): void {
+			if (
+				this._configs.Position === GlobalEnum.CssClassPosition.Left ||
+				this._configs.Position === GlobalEnum.CssClassPosition.BottomLeft ||
+				this._configs.Position === GlobalEnum.CssClassPosition.TopLeft
+			) {
+				this.hide();
+			}
+		}
+
+		// Method to handle the swipe right
+		public onSwipeRight(): void {
+			if (
+				this._configs.Position === GlobalEnum.CssClassPosition.Right ||
+				this._configs.Position === GlobalEnum.CssClassPosition.BottomRight ||
+				this._configs.Position === GlobalEnum.CssClassPosition.TopRight
+			) {
+				this.hide();
+			}
+		}
+
+		// Method to handle the swipe top
+		public onSwipeTop(): void {
+			this.hide();
 		}
 
 		// Set callbacks for the onToggle event
@@ -340,8 +407,13 @@ namespace OSUIFramework.Patterns.Notification {
 			this._updateAccessibilityProps();
 
 			// Add listeners to toggle Notification
-			this._notificationContent.addEventListener(this._eventOnNotification, this._eventOnNotificationClick);
-			this._notificationContent.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnNotificationKeypress);
+			if (this._configs.ClickToClose) {
+				this._notificationContent.addEventListener(this._eventOnNotification, this._eventOnNotificationClick);
+				this._notificationContent.addEventListener(
+					GlobalEnum.HTMLEvent.keyDown,
+					this._eventOnNotificationKeypress
+				);
+			}
 
 			// Focus on element when Notification is open
 			this._notificationContent.focus();

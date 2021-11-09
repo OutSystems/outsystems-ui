@@ -32,6 +32,7 @@ declare global {
 		// Carousel
 		Splide: typeof OriginalSplide;
 		SplideOpts: typeof OriginalSplide.defaults;
+		wNumb: typeof window.wNumb;
 	}
 
 	interface Navigator {
@@ -42,6 +43,7 @@ declare global {
 	type NoUiSlider = noUiSlider;
 	type NoUiSliderOptions = noUiSliderOptions;
 	type NoUiSliderPipsMode = PipsMode;
+	type wNumb = WNumb;
 
 	// Carousel
 	type Splide = OriginalSplide;

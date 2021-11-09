@@ -1,5 +1,3 @@
-/// <reference path="../AbstractPattern.ts" />
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.FloatingActions {
 	export class FloatingActions extends AbstractPattern<FloatingActionsConfig> implements IFloatingActions {
@@ -31,6 +29,9 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		private _floatingAllLinks: HTMLAnchorElement[];
 		// Stores the items of this specific Floating Action
 		private _floatingItems: Map<string, OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem>;
+		// Store the stopPropagation method
+		// eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/no-explicit-any
+		private _iOSStopPropagation: any;
 		// Boolean to tell if the pattern is inside the Bottom Bar or not
 		private _insideBottomBar: boolean;
 		//Boolean to flag if it's an iOS operated device
@@ -38,9 +39,6 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		private _isIOS: boolean;
 		//Booelan to tell if the pattern is in the state 'open'
 		private _isOpen: boolean;
-		// Store the stopPropagation method
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _iOSStopPropagation: any;
 		// Last Floating Action Item
 		private _lastButton: HTMLElement;
 		// Callback function to trigger the click event
@@ -245,7 +243,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 					);
 				}
 
-				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventToggleClick);
+				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventToggleClick);
 				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventToggleClick);
 			} else {
 				// Set variables based on device detection classes
@@ -260,6 +258,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 				}
 				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventToggleClick);
 				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventkeyboard);
+				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventToggleClick);
 				this._floatingActionsButton.removeEventListener(
 					GlobalEnum.HTMLEvent.MouseEnter,
 					this._eventToggleClick
@@ -357,12 +356,12 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			this._setTabIndex(Constants.AccessibilityAttribute.States.TabIndexHidden);
 
 			if (this.configs.IsHover) {
-				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._closeMethod);
+				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventToggleClick);
 
 				//Handle event listeners
-				this._floatingActions.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._closeMethod);
-				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._openMethod);
-				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.Focus, this._openMethod);
+				this._floatingActions.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventToggleClick);
+				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventToggleClick);
+				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventToggleClick);
 			}
 
 			this._setAccessibility();
@@ -407,11 +406,14 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			}
 
 			if (this.configs.IsHover) {
-				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._openMethod);
+				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventToggleClick);
 
 				//Handle event listeners
-				this._floatingActions.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._closeMethod);
-				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._openMethod);
+				this._floatingActions.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventToggleClick);
+				this._floatingActionsButton.removeEventListener(
+					GlobalEnum.HTMLEvent.MouseEnter,
+					this._eventToggleClick
+				);
 			}
 
 			this._setAccessibility();
@@ -427,6 +429,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			this._floatingItems.delete(floatingActionItemId);
 			this._refreshFloatingActionItems();
 		}
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		public get floatingActionItems(): Map<string, OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem> {
 			return this._floatingItems;
 		}

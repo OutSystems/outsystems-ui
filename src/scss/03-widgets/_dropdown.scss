@@ -182,6 +182,13 @@ select.dropdown-display[disabled] {
 	select.dropdown-display {
 		font-size: var(--font-size-base);
 		height: 48px;
+
+		.dropdown-display-content {
+			& > span,
+			& > div {
+				font-size: var(--font-size-base);
+			}
+		}
 	}
 }
 

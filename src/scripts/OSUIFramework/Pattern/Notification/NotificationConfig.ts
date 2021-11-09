@@ -1,10 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Notification {
 	export class NotificationConfig extends AbstractConfiguration {
+		public ClickToClose: boolean;
 		public CloseAfterTime: number;
 		public CloseOnBodyClick: boolean;
 		public HasOverlay: boolean;
 		public IsOpen: boolean;
+		public NeedsSwipes: boolean;
 		public Position: string;
 		public Width: string;
 
