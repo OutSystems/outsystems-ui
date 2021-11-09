@@ -1,0 +1,19 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+namespace OSUIFramework.Patterns.AccordionItem.Enum {
+	/**
+	 * AccordionItem Enum properties
+	 */
+	export enum Properties {}
+
+	/**
+	 * AccordionItem Enum for CSS Classes
+	 */
+	export enum CssClass {
+		Accordion = 'osui-accordion', //accordion
+		AccordionItem = 'osui-accordion-item', //section-expandable
+		AccordionIcon = 'osui-accordion-icon', //section-expandable-icon
+		AccordionTitle = 'osui-accordion-title', //section-expandable-title
+		AccordionContent = 'osui-accordion-content', //section-expandable-content
+		AccordionPlaceholder = 'osui-accordion-placeholder',
+	}
+}
