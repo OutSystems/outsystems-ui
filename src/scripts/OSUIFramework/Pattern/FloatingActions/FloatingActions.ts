@@ -243,7 +243,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 					);
 				}
 
-				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventToggleClick);
+				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventToggleClick);
 				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventToggleClick);
 			} else {
 				// Set variables based on device detection classes
@@ -258,6 +258,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 				}
 				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventToggleClick);
 				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventkeyboard);
+				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventToggleClick);
 				this._floatingActionsButton.removeEventListener(
 					GlobalEnum.HTMLEvent.MouseEnter,
 					this._eventToggleClick
@@ -355,12 +356,12 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			this._setTabIndex(Constants.AccessibilityAttribute.States.TabIndexHidden);
 
 			if (this.configs.IsHover) {
-				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._closeMethod);
+				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventToggleClick);
 
 				//Handle event listeners
-				this._floatingActions.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._closeMethod);
-				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._openMethod);
-				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.Focus, this._openMethod);
+				this._floatingActions.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventToggleClick);
+				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventToggleClick);
+				this._floatingActionsButton.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventToggleClick);
 			}
 
 			this._setAccessibility();
@@ -405,11 +406,14 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			}
 
 			if (this.configs.IsHover) {
-				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._openMethod);
+				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventToggleClick);
 
 				//Handle event listeners
-				this._floatingActions.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._closeMethod);
-				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._openMethod);
+				this._floatingActions.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventToggleClick);
+				this._floatingActionsButton.removeEventListener(
+					GlobalEnum.HTMLEvent.MouseEnter,
+					this._eventToggleClick
+				);
 			}
 
 			this._setAccessibility();
