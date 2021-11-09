@@ -261,11 +261,12 @@ namespace Providers.RangeSlider {
 				return;
 			}
 
-			// to account for 0 and max value pisps
+			// Add plus 1, to account for 0 and max value pips
+			// Not doing this would result, on a Pips value of 10, to have pips on 0, 11, 21, 31, and so on
 			const pipsRange = Math.floor(this.configs.MaxValue / pipsValues) + 1;
 
 			// To avoid the creation of minor pips, whatever the value
-			const pipsDensity = (pipsRange - 1) * 100;
+			const pipsDensity = pipsRange * 100;
 
 			const pips = {
 				values: pipsRange,
