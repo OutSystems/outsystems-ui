@@ -271,11 +271,8 @@ namespace Providers.RangeSlider {
 
 			// Create array with the numbers from min to max values, respecting the interval set on the pipsStepParam
 			const list = [];
-			for (let i = this.configs.MinValue; i <= this.configs.MaxValue; i++) {
+			for (let i = this.configs.MinValue; i <= this.configs.MaxValue; i = i + pipsValues) {
 				list.push(i);
-
-				// Not doing -1 would result, on a Pips value of 10, to have pips on 0, 11, 21, 31, and so on
-				i = i + (pipsValues - 1);
 			}
 
 			// To make sure that a pip is always created for the MaxValue
