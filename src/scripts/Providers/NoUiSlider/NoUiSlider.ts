@@ -171,6 +171,7 @@ namespace Providers.RangeSlider {
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.MaxValue:
 					this.updateRangeValues(this._configs.MinValue, propertyValue);
+					this.handleRangePips(this.configs.PipsStep, true);
 
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.InitialValueStart:
