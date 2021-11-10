@@ -241,7 +241,25 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			this._setUpEvents();
 			super.finishBuild();
 		}
-
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+		public changeProperty(propertyName: string, propertyValue: any): void {
+			switch (propertyName) {
+				case Enum.Properties.IsDisabled:
+					this.configs.IsDisabled = propertyValue;
+					this._setUpEvents();
+					break;
+				case Enum.Properties.IsExpanded:
+					this.configs.IsExpanded = propertyValue;
+					this._toggleAccordion();
+					break;
+				case Enum.Properties.UsePadding:
+					this.configs.UsePadding = propertyValue;
+					break;
+				default:
+					super.changeProperty(propertyName, propertyValue);
+					break;
+			}
+		}
 		public dispose(): void {
 			super.dispose();
 		}

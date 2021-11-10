@@ -3,7 +3,11 @@ namespace OSUIFramework.Patterns.AccordionItem.Enum {
 	/**
 	 * AccordionItem Enum properties
 	 */
-	export enum Properties {}
+	export enum Properties {
+		IsExpanded = 'IsExpanded',
+		IsDisabled = 'IsDisabled',
+		UsePadding = 'UsePadding',
+	}
 
 	/**
 	 * AccordionItem Enum for CSS Classes
