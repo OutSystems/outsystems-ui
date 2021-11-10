@@ -10,11 +10,6 @@
 	justify-content: space-between;
 	margin-top: var(--space-m);
 
-	// pagination-counter
-	&-counter {
-		color: var(--color-neutral-7);
-	}
-
 	// pagination-container
 	&-container {
 		align-items: center;
@@ -77,8 +72,10 @@
 		}
 	}
 
-	// With ShowGoToPage parameter, this container is in this context
+	// pagination-counter
 	&-counter {
+		color: var(--color-neutral-7);
+		// With ShowGoToPage parameter, this container is in this context
 		margin-left: var(--space-s);
 	}
 
