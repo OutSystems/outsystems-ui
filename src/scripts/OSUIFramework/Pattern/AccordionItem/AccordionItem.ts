@@ -26,6 +26,12 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		private _hasParent: boolean;
 		// Callback function to trigger the click event on the platform
 		private _onToogleClick: Callbacks.OSAccordionItemToggleEvent;
+		//Stores the transition end callback function
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		private _transitionEnd: any;
+		// Stores the wait DOM transition function to use on a timeout
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/naming-convention
+		private _waitDOM: any;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
@@ -33,14 +39,8 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 			this._hasParent = false;
 			this._eventToggleClick = this._toggleAccordion.bind(this);
-		}
-
-		private _collapse(): void {
-			Helper.Style.RemoveClass(this._accordionItem, 'is--open');
-			Helper.Style.RemoveClass(this._accordionContent, 'is--expanded');
-			Helper.Style.AddClass(this._accordionItem, 'is--closed');
-			Helper.Style.AddClass(this._accordionContent, 'is--collapsed');
-			this.configs.IsExpanded = false;
+			this._transitionEnd = this._transitionEndHandler.bind(this);
+			this._waitDOM = this._waitDomIterateTimeout.bind(this);
 		}
 
 		private _checkIfInsideAccordion(): void {
@@ -57,11 +57,90 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			//}
 		}
 
+		private _collapse(): void {
+			this._accordionContent.removeAttribute('style');
+
+			// Gets initial height value
+			const expandedHeight = this._accordionContent.getBoundingClientRect().height;
+
+			// Toggle is--closed/is--open class from current accordion item
+			Helper.Style.AddClass(this._accordionItem, Enum.CssClass.Closed);
+			Helper.Style.RemoveClass(this._accordionItem, Enum.CssClass.Open);
+
+			// Removes expanded class and adds the collapsed class to obtain the collapsed height value
+			Helper.Style.RemoveClass(this._accordionContent, Enum.CssClass.Expanded);
+			Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Collapsed);
+
+			const collapsedHeight = this._accordionContent.getBoundingClientRect().height;
+
+			this._accordionContent.style.height = expandedHeight + GlobalEnum.Units.Pixel;
+
+			// Removes collapsed class and adds the expanded class to animate
+			Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Expanded);
+			Helper.Style.RemoveClass(this._accordionContent, Enum.CssClass.Collapsed);
+
+			// This setTimeout (0ms) will ensure that the DOM received the height 0 before actually starts the transition
+			const waitDomIterateTimeout = setTimeout(() => {
+				// Adds is--animating class to current accordion item content to obtain the final height value
+				Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Animation);
+
+				// Removes is--expanded class from current accordion item content
+				Helper.Style.RemoveClass(this._accordionContent, Enum.CssClass.Expanded);
+
+				this._accordionContent.style.height = collapsedHeight + GlobalEnum.Units.Pixel;
+
+				// Adds event listener to transition end
+				this._accordionContent.addEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._transitionEnd);
+
+				// Adds is--collapsed class to current accordion item content
+				Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Collapsed);
+
+				// Clear timeout
+				clearTimeout(waitDomIterateTimeout);
+			}, 100);
+
+			this.configs.IsExpanded = false;
+		}
+
 		private _expand(): void {
-			Helper.Style.RemoveClass(this._accordionItem, 'is--closed');
-			Helper.Style.RemoveClass(this._accordionContent, 'is--collapsed');
-			Helper.Style.AddClass(this._accordionItem, 'is--open');
-			Helper.Style.AddClass(this._accordionContent, 'is--expanded');
+			const collapsedHeight = this._accordionContent.getBoundingClientRect().height;
+
+			Helper.Style.RemoveClass(this._accordionItem, Enum.CssClass.Closed);
+			Helper.Style.AddClass(this._accordionItem, Enum.CssClass.Open);
+
+			// While the animation is running, we don't want any clicks happening on the title
+			this._accordionTitle.style.pointerEvents = 'none';
+
+			Helper.Style.RemoveClass(this._accordionContent, Enum.CssClass.Collapsed);
+			Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Expanded);
+
+			this._accordionTitle.removeAttribute('style');
+
+			// Gets final height value
+			const expandedHeight = this._accordionContent.getBoundingClientRect().height;
+
+			// Removes is--expanded class from current accordion item content to animate
+			this._accordionContent.classList.remove(Enum.CssClass.Expanded);
+
+			this._accordionContent.style.height = collapsedHeight + GlobalEnum.Units.Pixel;
+
+			// This setTimeout (0ms) will ensure that the DOM received the height 0 before actually starts the transition
+			const waitDomIterateTimeout = setTimeout(() => {
+				// Adds is--animating class to current accordion item content to obtain the final height value
+				this._accordionContent.classList.add(Enum.CssClass.Animation);
+
+				this._accordionContent.style.height = expandedHeight + GlobalEnum.Units.Pixel;
+
+				// Adds event listener to transition end
+				this._accordionContent.addEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._transitionEnd);
+
+				// Adds is--expanded class to current accordion item content
+				this._accordionContent.classList.add(Enum.CssClass.Expanded);
+
+				// Clear timeout
+				clearTimeout(waitDomIterateTimeout);
+			}, 100);
+
 			this.configs.IsExpanded = true;
 		}
 
@@ -79,14 +158,52 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			}
 			this._accordionTitle.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventToggleClick);
 		}
+
+		private _setUpInitialState(): void {
+			if (this.configs.IsExpanded) {
+				Helper.Style.AddClass(this._accordionItem, Enum.CssClass.Open);
+				Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Expanded);
+				//data-expanded
+			} else {
+				Helper.Style.RemoveClass(this._accordionItem, Enum.CssClass.Open);
+				Helper.Style.RemoveClass(this._accordionContent, Enum.CssClass.Expanded);
+			}
+		}
+
 		// Method to toggle the collapse and expansion of the AccordionItem
-		private _toggleAccordion() {
+		private _toggleAccordion(): void {
 			if (this._configs.IsExpanded) {
 				//If open, let's close
 				this._collapse();
 			} else {
 				//If closed, let's open
 				this._expand();
+			}
+		}
+
+		private _transitionEndHandler(): void {
+			if (this._accordionContent) {
+				this._accordionContent.classList.remove(Enum.CssClass.Animation);
+				this._accordionContent.style.height = '';
+				this._accordionTitle.style.pointerEvents = '';
+
+				if (this._accordionContent.style.cssText.length === 0) {
+					this._accordionContent.removeAttribute('style');
+				}
+
+				/*if($parameters.IsKeypress) {
+					// Add focus for Accessibility
+					currentElement.focus();
+				}
+				
+				// Set visibility through ARIA states - Accessibility
+				$actions.SetAriaAttributes(true, $parameters.WidgetId);*/
+
+				this._accordionContent.removeEventListener(
+					GlobalEnum.HTMLEvent.TransitionEnd,
+					this._transitionEndHandler,
+					false
+				);
 			}
 		}
 
@@ -99,11 +216,28 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			}
 		}
 
+		private _waitDomIterateTimeout(height: number): void {
+			// Adds is--animating class to current accordion item content to obtain the final height value
+			this._accordionContent.classList.add(Enum.CssClass.Animation);
+
+			this._accordionContent.style.height = height + GlobalEnum.Units.Pixel;
+
+			// Adds event listener to transition end
+			this._accordionContent.addEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._transitionEndHandler);
+
+			// Adds is--expanded class to current accordion item content
+			this._accordionContent.classList.add(Enum.CssClass.Expanded);
+
+			// Clear timeout
+			clearTimeout(this._waitDOM);
+		}
+
 		public build(): void {
 			super.build();
 			this._accordionItem = this._selfElem;
 			this._checkIfInsideAccordion();
 			this._setUpElements();
+			this._setUpInitialState();
 			this._setUpEvents();
 			super.finishBuild();
 		}

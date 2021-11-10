@@ -1,8 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.AccordionItem {
 	export class AccordionItemConfig extends AbstractConfiguration {
-		public AccordionItemId: string;
-		public ExtendedClass: string;
 		public IsDisabled: boolean;
 		public IsExpanded: boolean;
 		public UsePadding: boolean;

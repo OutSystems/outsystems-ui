@@ -15,5 +15,10 @@ namespace OSUIFramework.Patterns.AccordionItem.Enum {
 		AccordionTitle = 'osui-accordion-title', //section-expandable-title
 		AccordionContent = 'osui-accordion-content', //section-expandable-content
 		AccordionPlaceholder = 'osui-accordion-placeholder',
+		Open = 'is--open',
+		Closed = 'is--closed',
+		Expanded = 'is--expanded',
+		Collapsed = 'is--collapsed',
+		Animation = 'is--animating',
 	}
 }
