@@ -269,7 +269,7 @@ namespace Providers.RangeSlider {
 			// To avoid the creation of minor pips, whatever the value
 			const pipsDensity = pipsValues * 100;
 
-			// Create array with the numbers fro min to max values, respecting the interval set on the pipsStepParam
+			// Create array with the numbers from min to max values, respecting the interval set on the pipsStepParam
 			const list = [];
 			for (let i = this.configs.MinValue; i <= this.configs.MaxValue; i++) {
 				list.push(i);
