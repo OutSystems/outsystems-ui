@@ -167,6 +167,7 @@ namespace Providers.RangeSlider {
 			switch (propertyName) {
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.MinValue:
 					this.updateRangeValues(propertyValue, this._configs.MaxValue);
+					this.handleRangePips(this.configs.PipsStep, true);
 
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.MaxValue:
@@ -265,17 +266,27 @@ namespace Providers.RangeSlider {
 				return;
 			}
 
-			// Add plus 1, to account for 0 and max value pips
-			// Not doing this would result, on a Pips value of 10, to have pips on 0, 11, 21, 31, and so on
-			const pipsRange = Math.floor(this.configs.MaxValue / pipsValues) + 1;
-
 			// To avoid the creation of minor pips, whatever the value
-			const pipsDensity = pipsRange * 100;
+			const pipsDensity = pipsValues * 100;
+
+			// Create array with the numbers fro min to max values, respecting the interval set on the pipsStepParam
+			const list = [];
+			for (let i = this.configs.MinValue; i <= this.configs.MaxValue; i++) {
+				list.push(i);
+
+				// Not doing -1 would result, on a Pips value of 10, to have pips on 0, 11, 21, 31, and so on
+				i = i + (pipsValues - 1);
+			}
+
+			// To make sure that a pip is always created for the MaxValue
+			if (!list.includes(this._configs.MaxValue)) {
+				list.push(this._configs.MaxValue);
+			}
 
 			const pips = {
-				values: pipsRange,
+				values: list,
 				density: pipsDensity,
-				mode: Enum.NoUiSliderModeOptions.Count,
+				mode: 'values',
 			};
 
 			if (isUpdate) {
