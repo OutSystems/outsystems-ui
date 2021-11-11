@@ -1,6 +1,60 @@
-/*! Patterns - Content - Tabs */
-////
-/// @group Patterns-Tabs
-/// Patterns - Content - Tabs
+.osui-tabs {
+	--header-height: 50px;
+	--accent: #1068eb;
 
-//Implement you code here
+	display: grid;
+	grid-template-rows: var(--header-height) 1fr;
+	position: relative;
+	overflow: hidden;
+	padding: 0.25rem;
+}
+
+.osui-tabs > ul {
+	display: grid;
+	grid-gap: 0.25rem;
+	gap: 0.25rem;
+	grid-auto-flow: column;
+	grid-auto-columns: 1fr;
+	align-content: stretch;
+	justify-content: stretch;
+	place-content: stretch;
+	list-style-type: none;
+}
+
+.osui-tabs > ul li {
+	--background-highlight: hsl(226, 46%, 68%);
+
+	appearance: none;
+	border: none;
+	font-size: 1rem;
+	outline-color: var(--accent);
+}
+
+.osui-tabs > ul li:hover {
+	cursor: pointer;
+	background: var(--background-highlight);
+}
+
+.osui-tabs > section {
+	width: 100%;
+	overflow-x: auto;
+	overflow-y: hidden;
+	overscroll-behavior-x: contain;
+	scroll-snap-type: x mandatory;
+
+	display: grid;
+	grid-auto-flow: column;
+	grid-auto-columns: 100%;
+}
+
+.osui-tabs > section::-webkit-scrollbar {
+	display: none;
+}
+
+.osui-tabs > section section {
+	scroll-snap-align: start;
+	scroll-snap-stop: always;
+
+	padding: 1rem;
+	overflow-y: auto;
+}

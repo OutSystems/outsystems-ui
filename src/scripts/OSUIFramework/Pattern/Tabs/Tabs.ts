@@ -16,6 +16,8 @@ namespace OSUIFramework.Patterns.Tabs {
 		public build(): void {
 			super.build();
 
+			this.listen();
+
 			this.finishBuild();
 		}
 
@@ -37,7 +39,38 @@ namespace OSUIFramework.Patterns.Tabs {
 
 		// Set callbacks for the onTbsChange  event
 		public registerCallback(callback: Callbacks.OSRatingSelectEvent): void {
-			console.log(callback);
+			return;
 		}
+
+		// eslint-disable-next-line @typescript-eslint/member-ordering
+		public listen = (): void => {
+			console.log('listen');
+			const tabs = this._selfElem;
+			const tab_btns = tabs.querySelectorAll('.osui-tabs-header-item');
+			// const snap = tabs.querySelector('section');
+			//const snap_width = snap.clientWidth;
+			console.log(tab_btns);
+			tab_btns.forEach((node) => node.addEventListener('click', this.tab_clicked));
+
+			//snap.addEventListener('scrollend', (e) => {
+			// const selection_index = Math.round(e.currentTarget.scrollLeft / snap_width);
+			// console.log('active tab: ' + selection_index);
+			//});
+		};
+
+		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+		public tab_clicked = ({ currentTarget }): void => {
+			const tabs = this._selfElem;
+			const tab_btns = tabs.querySelectorAll('.osui-tabs-header-item');
+			const index = [...tab_btns].indexOf(currentTarget);
+			const contents = tabs.querySelectorAll('.osui-tabs_content-item');
+			const tab_article: any = contents[index];
+
+			this._selfElem.querySelector(`section`).scrollTo({
+				top: 0,
+				left: tab_article.offsetLeft,
+				behavior: 'auto',
+			});
+		};
 	}
 }
