@@ -1,9 +1,6 @@
 /*! Patterns - Navigation - Tabs */
-////
-/// @group Patterns-Tabs
-/// Patterns - Navigation - Tabs
+/* Since this pattern is Deprecated, it should not appear at SASSDCS! */
 
-///
 .tabs {
 	display: flex;
 	flex-wrap: wrap;
@@ -142,14 +139,12 @@
 	}
 }
 
-///
 [data-block*='TabsHeaderItem'] {
 	&:first-child .tabs-header-tab {
 		margin-left: var(--space-none);
 	}
 }
 
-///
 .popup-dialog {
 	.tabs {
 		.tabs-content-tab {
@@ -165,7 +160,6 @@
 	}
 }
 
-///
 .layout-native {
 	.tabs {
 		&.tabs {
@@ -238,7 +232,6 @@
 }
 
 // Responsive --------------------------------------------------------------------
-///
 .desktop {
 	.tabs {
 		&.tabs-vertical {
@@ -280,7 +273,6 @@
 }
 
 // IsRTL -------------------------------------------------------------------------
-///
 .is-rtl {
 	.tabs {
 		&.tabs-vertical {

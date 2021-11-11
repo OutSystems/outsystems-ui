@@ -260,7 +260,7 @@
 @import '04-patterns/04-navigation/pagination';
 @import '04-patterns/04-navigation/section-index';
 @import '../scripts/OSUIFramework/Pattern/Submenu/scss/submenu';
-@import '04-patterns/04-navigation/tabs';
+@import '../scripts/OSUIFramework/Pattern/Tabs/scss/tabs';
 @import '04-patterns/04-navigation/timeline';
 @import '04-patterns/04-navigation/wizard';
 
@@ -297,6 +297,7 @@
 @import '10-deprecated/tooltip-deprecated';
 @import '10-deprecated/progress-bar-deprecated';
 @import '10-deprecated/progress-circle-deprecated';
+@import '10-deprecated/tabs-deprecated';
 
 /*! =========================================================================== */
 /*! Usefull Classes                                                             */
