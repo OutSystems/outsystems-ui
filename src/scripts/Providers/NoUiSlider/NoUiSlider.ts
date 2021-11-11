@@ -283,7 +283,7 @@ namespace Providers.RangeSlider {
 			const pips = {
 				values: list,
 				density: pipsDensity,
-				mode: 'values',
+				mode: Enum.NoUiSliderModeOptions.Values,
 			};
 
 			if (isUpdate) {
