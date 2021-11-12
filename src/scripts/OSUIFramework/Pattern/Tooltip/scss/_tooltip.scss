@@ -4,7 +4,7 @@
 /// Patterns - Content - Tooltip
 
 // myCustom tooltip variables
-$osui-tooltip-arrow-size: 8px;
+$osui-tooltip-arrow-size: 9px;
 
 ///
 .osui-tooltip {
@@ -178,7 +178,7 @@ $osui-tooltip-arrow-size: 8px;
 				&:before {
 					border-color: var(--color-neutral-9) transparent transparent transparent;
 					border-width: $osui-tooltip-arrow-size $osui-tooltip-arrow-size 0 $osui-tooltip-arrow-size;
-					bottom: 0;
+					bottom: 1px;
 					top: initial;
 				}
 			}
@@ -311,7 +311,7 @@ $osui-tooltip-arrow-size: 8px;
 			left: var(--space-s);
 			opacity: 0;
 			position: absolute;
-			top: 0;
+			top: 1px;
 			transform: translateY(0);
 			width: 0;
 		}
