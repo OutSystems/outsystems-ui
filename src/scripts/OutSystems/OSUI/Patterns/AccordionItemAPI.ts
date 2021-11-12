@@ -133,4 +133,20 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 
 		return accordionItem;
 	}
+
+	/**
+	 * Function to register a callback on this pattern
+	 *
+	 * @export
+	 * @param {string} accordionItemId
+	 * @param {*} callback
+	 */
+	export function RegisterCallback(
+		accordionItemId: string,
+		callback: OSUIFramework.Callbacks.OSAccordionItemToggleEvent
+	): void {
+		const accordionItem = GetAccordionItemById(accordionItemId);
+
+		accordionItem.registerCallback(callback);
+	}
 }

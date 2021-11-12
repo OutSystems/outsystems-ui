@@ -24,5 +24,7 @@ namespace OSUIFramework.Patterns.AccordionItem.Enum {
 		Expanded = 'is--expanded',
 		Collapsed = 'is--collapsed',
 		Animation = 'is--animating',
+		Disabled = 'is--disabled',
+		DataExpanded = 'data-expanded',
 	}
 }
