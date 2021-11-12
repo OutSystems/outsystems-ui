@@ -9,7 +9,7 @@
 	padding: 0.25rem;
 }
 
-.osui-tabs > ul {
+.osui-tabs .osui-tabs_header {
 	display: grid;
 	grid-gap: 0.25rem;
 	gap: 0.25rem;
@@ -21,7 +21,7 @@
 	list-style-type: none;
 }
 
-.osui-tabs > ul li {
+.osui-tabs .osui-tabs_header-item {
 	--background-highlight: hsl(226, 46%, 68%);
 
 	appearance: none;
@@ -30,12 +30,12 @@
 	outline-color: var(--accent);
 }
 
-.osui-tabs > ul li:hover {
+.osui-tabs .osui-tabs_header-item {
 	cursor: pointer;
 	background: var(--background-highlight);
 }
 
-.osui-tabs > section {
+.osui-tabs .osui-tabs_content {
 	width: 100%;
 	overflow-x: auto;
 	overflow-y: hidden;
@@ -47,14 +47,13 @@
 	grid-auto-columns: 100%;
 }
 
-.osui-tabs > section::-webkit-scrollbar {
+.osui-tabs .osui-tabs_content::-webkit-scrollbar {
 	display: none;
 }
 
-.osui-tabs > section section {
+.osui-tabs .osui-tabs_content-item {
 	scroll-snap-align: start;
 	scroll-snap-stop: always;
 
-	padding: 1rem;
 	overflow-y: auto;
 }
