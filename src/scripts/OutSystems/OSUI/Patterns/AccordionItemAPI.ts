@@ -12,12 +12,21 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 		let accordion: OSUIFramework.Patterns.Accordion.IAccordion;
 
 		if (_accordionMap.has(accordionItemId)) {
-			//	accordion = AccordionAPI.GetAccordionById(_accordionMap.get(accordionItemId));
+			accordion = AccordionAPI.GetAccordionById(_accordionMap.get(accordionItemId));
+		} else {
+			// Try to find the accordion reference on DOM
+			const elem = OSUIFramework.Helper.GetElementByUniqueId(accordionItemId);
+			//TODO verify this
+			const accordionElem = elem.closest(OSUIFramework.Patterns.Accordion.Enum.CssClass.AccordionWrapper);
+			if (accordionElem) {
+				const uniqueId = accordionElem.getAttribute('name');
+				accordion = AccordionAPI.GetAccordionById(uniqueId);
+			}
+			// Else, it's a 'free' accordion item, no accordion as parent
 		}
 
 		return accordion;
 	}
-
 	/**
 	 * Function that will change the property of a given Accordion Item pattern.
 	 *
@@ -57,13 +66,13 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 		);
 
 		_accordionItemMap.set(accordionItemId, _newAccordionItem);
-		//TODO _newAccordionItem.build();
+		_newAccordionItem.build();
 
 		const accordion = GetAccordionByItem(accordionItemId);
 
 		if (accordion !== undefined) {
 			_accordionMap.set(accordionItemId, accordion.uniqueId);
-			//accordion.addAccordionItem(_newAccordionItem.uniqueId, _newAccordionItem);
+			accordion.addAccordionItem(_newAccordionItem.uniqueId, _newAccordionItem);
 		}
 
 		return _newAccordionItem;
@@ -84,7 +93,7 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 			const accordion = GetAccordionByItem(accordionItemId);
 
 			if (accordion !== undefined) {
-				//accordion.removeAccordionItem(accordionItem.uniqueId);
+				accordion.removeAccordionItem(accordionItem.uniqueId);
 			}
 		}
 
