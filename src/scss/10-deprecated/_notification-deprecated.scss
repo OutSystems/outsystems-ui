@@ -1,9 +1,6 @@
-/*! Patterns - Interaction - Notification */
-////
-/// @group Patterns-Notification
-/// Patterns - Interaction - Notification
+/*! Patterns - Interaction - Deprecated Notification */
+/* Since this pattern is Deprecated, it should not appear at SASSDCS! */
 
-///
 .notification {
 	background-color: var(--color-neutral-0);
 	border: var(--border-size-s) solid var(--color-neutral-4);
@@ -44,7 +41,6 @@
 	}
 }
 
-///
 .layout-native {
 	.notification {
 		left: 50%;
@@ -64,7 +60,6 @@
 	}
 }
 
-///
 .slide-from-left-enter,
 .slide-from-left-leave,
 .slide-from-right-enter,
@@ -83,7 +78,6 @@
 }
 
 // Responsive --------------------------------------------------------------------
-///
 .tablet {
 	.layout-native {
 		.notification {
@@ -93,7 +87,6 @@
 	}
 }
 
-///
 .phone {
 	.layout-native {
 		.notification {
@@ -105,7 +98,6 @@
 	}
 }
 
-///
 .android[data-status-bar-height] {
 	.layout-native {
 		.notification--visible {
@@ -114,7 +106,6 @@
 	}
 }
 
-///
 .ios {
 	&.phone {
 		&.landscape {
