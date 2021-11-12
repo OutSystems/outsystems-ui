@@ -171,9 +171,12 @@ namespace Providers.Flatpickr.SingleDate {
 		/* Method that will be responsible to redraw the calendar when it's needed */
 		public redraw(): void {
 			// Destroy the old flatpickr instance
-			this.dispose();
-			// Create a new flatpickr instance with the updated configs
-			OSUIFramework.Helper.AsyncInvocation(this._createProviderDatePicker.bind(this), '');
+			if (this.isBuilt) {
+				this._flatpickr.destroy();
+
+				// Create a new flatpickr instance with the updated configs
+				OSUIFramework.Helper.AsyncInvocation(this._createProviderDatePicker.bind(this), '');
+			}
 		}
 	}
 }
