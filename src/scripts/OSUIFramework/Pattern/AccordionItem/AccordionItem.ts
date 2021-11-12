@@ -133,6 +133,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			this._accordionTitle = this._accordionItem.querySelector(Constants.Dot + Enum.CssClass.AccordionTitle);
 			this._accordionContent = this._accordionItem.querySelector(Constants.Dot + Enum.CssClass.AccordionContent);
 			this._accordionIcon = this._accordionItem.querySelector(Constants.Dot + Enum.CssClass.AccordionIcon);
+			this._accordionPlaceholder = this._accordionContent.firstChild as HTMLElement;
 		}
 
 		private _setUpEvents(): void {
@@ -214,6 +215,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			this._checkIfInsideAccordion();
 			this._setUpElements();
 			this._setUpInitialState();
+			this._setA11yAttributes();
 			this._setUpEvents();
 			super.finishBuild();
 		}
