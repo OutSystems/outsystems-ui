@@ -1,102 +1,81 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace Providers.Flatpickr {
 	export abstract class AbstractFlatpickrConfig extends OSUIFramework.Patterns.DatePicker.AbstractDatePickerConfig {
+		protected _flatpickrLocale: FlatpickrLocale;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		protected _flatpickrOpts: any;
+
 		public DefaultDate: string;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		public OnChange: any;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		public OnClose: any;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		public OnDayCreate: any;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		public OnOpen: any;
+		public ServerDateFormat: string;
 
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		constructor(config: any) {
 			super(config);
 		}
 
+		// Method used to abstract DateFormat style and map it into flatpickr expected one
+		private _abstractDateFormat(): string {
+			const _dateFormat = this.DateFormat.replace(/[^a-zA-Z]/g, ' ').split(' ');
+			for (let i = 0; i < _dateFormat.length; ++i) {
+				switch (_dateFormat[i]) {
+					// Map Year
+					case 'YYYY':
+						this.DateFormat = this.DateFormat.replace('YYYY', 'Y');
+						break;
+
+					case 'YY':
+						this.DateFormat = this.DateFormat.replace('YY', 'y');
+						break;
+
+					// Map Month
+					case 'MMM':
+						this.DateFormat = this.DateFormat.replace('MMM', 'M');
+						break;
+
+					case 'MM':
+						this.DateFormat = this.DateFormat.replace('MM', 'm');
+						break;
+
+					// Map Month
+					case 'DDD':
+						this.DateFormat = this.DateFormat.replace('DDD', 'D');
+						break;
+
+					case 'DD':
+						this.DateFormat = this.DateFormat.replace('DD', 'd');
+						break;
+				}
+			}
+
+			return this.DateFormat;
+		}
+
 		// Method used to manage the AM/PM time when it's on use
 		private _checkAltFormat(): string {
-			let _altFormat = '';
+			// If DateFormat hasn't been defined, set the same format as server date
+			let _altFormat = this.DateFormat !== '' ? this._abstractDateFormat() : this.ServerDateFormat;
 
-			if (
-				this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormat.Disable ||
-				this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormat.Time24hFormat
-			) {
-				// Time must behave in 24h format
-				_altFormat = this.InputDateFormat.replace('K', '');
-			} else {
-				// Time must behave in 12h format with AM/PM
-				_altFormat = this.InputDateFormat.replace('H', 'h');
+			// Time must behave in 24h format
+			if (this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormat.Time24hFormat) {
+				_altFormat = _altFormat + ' H:i';
+			}
+
+			// Time must behave in 12h format with AM/PM
+			if (this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormat.Time12hFormat) {
+				_altFormat = _altFormat + ' h:i K';
 			}
 
 			return _altFormat;
 		}
 
-		// Method used to check if a given serverDateFormat matches with the expected type
+		// Method used to check the serverDateFormat and set it into the Flatpickr expected format
 		private _checkServerDateFormat(): void {
-			if (Enum.ServerDateFromat[this.ServerDateFormat.replace(/[-/]/g, '')] === undefined) {
-				throw new Error(`The given ServerDateFormat '${this.ServerDateFormat}' it's not allowed.`);
-			}
-		}
-
-		// Method used to get the proper disable dates info, since they could be an array of dates or an array of ranges (from, to) dates
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _getDisableDates(): any[] {
-			let _disableDates = [];
-
-			// Check the proper value to set at disable dates
-			if (
-				this.AdvancedConfigs.flatpickr.disableDates.length > 0 &&
-				this.AdvancedConfigs.flatpickr.disableDatesRange.length === 0
-			) {
-				_disableDates = this.AdvancedConfigs.flatpickr.disableDates;
-			} else if (
-				this.AdvancedConfigs.flatpickr.disableDates.length === 0 &&
-				this.AdvancedConfigs.flatpickr.disableDatesRange.length > 0
-			) {
-				_disableDates = this.AdvancedConfigs.flatpickr.disableDatesRange;
-			}
-
-			return _disableDates;
-		}
-
-		// Method used to get the proper enable dates info, since they could be an array of dates or an array of ranges (from, to) dates
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _getEnableDates(): any[] {
-			let _enableDates = [];
-
-			// Check the proper value to set at disable dates
-			if (
-				this.AdvancedConfigs.flatpickr.enableDates.length > 0 &&
-				this.AdvancedConfigs.flatpickr.enableDatesRange.length === 0
-			) {
-				_enableDates = this.AdvancedConfigs.flatpickr.enableDates;
-			} else if (
-				this.AdvancedConfigs.flatpickr.enableDates.length === 0 &&
-				this.AdvancedConfigs.flatpickr.enableDatesRange.length > 0
-			) {
-				_enableDates = this.AdvancedConfigs.flatpickr.enableDatesRange;
-			}
-
-			return _enableDates;
-		}
-
-		// Method used to check if for some reason user is passing Enable and Disable dates at the same time
-		private _hasEnableAndDisableDates(): void {
-			if (
-				(this.AdvancedConfigs.flatpickr.disableDates.length > 0 ||
-					this.AdvancedConfigs.flatpickr.disableDatesRange.length > 0) &&
-				(this.AdvancedConfigs.flatpickr.enableDates.length > 0 ||
-					this.AdvancedConfigs.flatpickr.enableDatesRange.length > 0)
-			) {
-				throw new Error(
-					`${OSUIFramework.GlobalEnum.PatternsNames.Datepicker}: Enable and Disable Dates can not be used at the same time.`
-				);
-			}
+			this.ServerDateFormat = OSUIFramework.Helper.Dates.serverFormat
+				.replace('YYYY', 'Y')
+				.replace('MM', 'm')
+				.replace('dd', 'd');
 		}
 
 		// Method used to set all the global Flatpickr properties across the different types of instances
@@ -104,19 +83,17 @@ namespace Providers.Flatpickr {
 			// Check the given server date format config
 			this._checkServerDateFormat();
 
-			// Chech if Enable and Disable dates are both defined
-			this._hasEnableAndDisableDates();
+			const _locale = 'en';
+			this._flatpickrLocale = window.flatpickr.l10ns[_locale];
+			this._flatpickrLocale.firstDayOfWeek = this.OptionalConfigs.firstWeekDay;
+			// console.log('Changed LOCALE', this._flatpickrLocale);
 
 			// eslint-disable-next-line prefer-const
 			this._flatpickrOpts = {
 				altFormat: this._checkAltFormat(),
 				altInput: true,
-				disable: this._getDisableDates().length > 0 ? this._getDisableDates() : undefined,
-				enable: this._getEnableDates().length > 0 ? this._getEnableDates() : undefined,
 				enableTime: this.TimeFormat !== OSUIFramework.Patterns.DatePicker.Enum.TimeFormat.Disable,
-				locale: {
-					firstDayOfWeek: this.OptionalConfigs.firstWeekDay,
-				},
+				locale: _locale,
 				maxDate: OSUIFramework.Helper.Dates.IsNull(this.OptionalConfigs.maxDate)
 					? undefined
 					: this.OptionalConfigs.maxDate,

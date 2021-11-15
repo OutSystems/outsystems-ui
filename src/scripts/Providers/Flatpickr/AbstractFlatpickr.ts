@@ -23,20 +23,6 @@ namespace Providers.Flatpickr {
 			super(uniqueId, configs);
 		}
 
-		// Method used to check if a given date exist as an EventDate
-		private _checkIfEventDate(_date: string): boolean {
-			for (let i = 0; i < this._configs.AdvancedConfigs.flatpickr.eventDates.length; ++i) {
-				if (
-					new Date(_date).getTime() ===
-					new Date(this._configs.AdvancedConfigs.flatpickr.eventDates[i]).getTime()
-				) {
-					return true;
-				}
-			}
-
-			return false;
-		}
-
 		// Trigger the jumToDate to now
 		private _jumpIntoToday() {
 			this._flatpickr.jumpToDate(this._flatpickr.now);
@@ -84,18 +70,6 @@ namespace Providers.Flatpickr {
 		protected _onClose(): void {
 			// Trigger platform's OnCloseHandler client Action
 			OSUIFramework.Helper.AsyncInvocation(this._onCloseCallbackEvent, this.widgetId);
-		}
-
-		// Method that will be used to add a custom selector to all days that has an Event
-		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-		protected _onDayCreated(fp: Flatpickr, dayElem: any): void {
-			/* NOTE: dObj and dStr have alwways same value, we must use dayElem.dateObj property to get the proper day Date */
-
-			// Check if the created day date has should behave like it has an Event
-			if (this._checkIfEventDate(fp.formatDate(dayElem.dateObj, this._configs.ServerDateFormat))) {
-				const _dayHtmlElem = dayElem as HTMLElement;
-				_dayHtmlElem.classList.add('has-event');
-			}
 		}
 
 		// Method that will be triggered each time calendar is opened
@@ -178,15 +152,11 @@ namespace Providers.Flatpickr {
 				case OSUIFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnChange:
 					this._onChangeCallbackEvent = callback;
 					break;
-				case OSUIFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnClose:
-					this._onCloseCallbackEvent = callback;
-					break;
+
 				case OSUIFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnInitialize:
 					this._onInitializeCallbackEvent = callback;
 					break;
-				case OSUIFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnOpen:
-					this._onOpenCallbackEvent = callback;
-					break;
+
 				default:
 					throw new Error(`The given '${eventName}' event name it's not defined.`);
 					break;

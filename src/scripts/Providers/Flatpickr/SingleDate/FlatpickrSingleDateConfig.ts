@@ -19,9 +19,6 @@ namespace Providers.Flatpickr.SingleDate {
 				defaultDate: OSUIFramework.Helper.Dates.IsNull(this.DefaultDate) ? undefined : this.DefaultDate,
 				mode: OSUIFramework.Patterns.DatePicker.Enum.Type.Single,
 				onChange: this.OnChange,
-				onClose: this.OnClose,
-				onDayCreate: this.OnDayCreate,
-				onOpen: this.OnOpen,
 			};
 
 			// Merge both option objects => if objects have a property with the same name, then the right-most object property overwrites the previous one

@@ -1,6 +1,23 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Helper.Dates {
 	/**
+	 * Format of data as set in service center.
+	 */
+	// eslint-disable-next-line prefer-const
+	export let serverFormat = '';
+
+	/**
+	 * Function responsible for setting up the the server date format.
+	 *
+	 * @export
+	 * @param {string} date example of date.
+	 */
+	export function SetServerDateFormat(date: string): void {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		OSUIFramework.Helper.Dates.serverFormat = date.replace('13', 'dd').replace('10', 'MM').replace('1900', 'YYYY');
+	}
+
+	/**
 	 * Function used to check if a given date is an OutSystems nullDate
 	 *
 	 * @export

@@ -1,6 +1,7 @@
 // DatePicker => Flatpickr
 import flatpickr from 'flatpickr';
 import { BaseOptions as flatpickrOpts } from 'flatpickr/dist/types/options';
+import { CustomLocale as flatpickrLocale } from 'flatpickr/dist/types/locale';
 
 // RangeSlider
 import noUiSlider from 'nouislider';
@@ -23,6 +24,7 @@ declare global {
 		// DatePicker => Flatpickr
 		flatpickr: typeof flatpickr;
 		flatpickrOpts: typeof flatpickrOpts;
+		flatpickrLocale: typeof flatpickrOpts;
 
 		// RangeSlider
 		noUiSlider: typeof noUiSlider;
@@ -57,11 +59,9 @@ declare global {
 		showMonths: number;
 		showWeekNumbers: boolean;
 	};
-	type DatepickrAdvancedConfig = {
-		flatpickr: { disableDates: []; disableDatesRange: []; enableDates: []; enableDatesRange: []; eventDates: [] };
-	};
 
 	// DatePicker => Flatpickr
 	type Flatpickr = flatpickr;
 	type FlatpickrOptions = flatpickrOpts;
+	type FlatpickrLocale = flatpickrLocale;
 }

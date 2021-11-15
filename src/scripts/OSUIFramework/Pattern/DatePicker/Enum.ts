@@ -10,22 +10,18 @@ namespace OSUIFramework.Patterns.DatePicker.Enum {
 	 */
 	export enum DatePickerEvents {
 		OnChange = 'OnChange',
-		OnClose = 'OnClose',
 		OnInitialize = 'OnInitialize',
-		OnOpen = 'OnOpen',
 	}
 
 	/**
 	 * DatePicker Enum properties
 	 */
 	export enum Properties {
-		AdvancedConfigs = 'AdvancedConfigs',
 		FirstWeekDay = 'FirstWeekDay',
 		InitialDate = 'InitialDate',
-		InputDateFormat = 'InputDateFormat',
+		DateFormat = 'DateFormat',
 		MaxDate = 'MaxDate',
 		MinDate = 'MinDate',
-		ServerDateFormat = 'ServerDateFormat',
 		ShowMonths = 'ShowMonths',
 		ShowTodayButton = 'ShowTodayButton',
 		ShowWeekNumbers = 'ShowWeekNumbers',

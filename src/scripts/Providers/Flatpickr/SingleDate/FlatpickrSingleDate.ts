@@ -16,9 +16,6 @@ namespace Providers.Flatpickr.SingleDate {
 
 			// Set the default library Event handlers
 			this._configs.OnChange = this._onDateSelectedEvent.bind(this);
-			this._configs.OnClose = this._onCloseEvent.bind(this);
-			this._configs.OnDayCreate = this._onDayCreateEvent.bind(this);
-			this._configs.OnOpen = this._onOpenEvent.bind(this);
 		}
 
 		// Method that will create the provider
@@ -63,12 +60,6 @@ namespace Providers.Flatpickr.SingleDate {
 			console.log('_onDateSelected', _selectedDate);
 		}
 
-		// Trigger the method that will check if a given day should have an Event
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _onDayCreateEvent(dObj: [], dStr: string, fp: Flatpickr, dayElem: any) {
-			super._onDayCreated(fp, dayElem);
-		}
-
 		// Method that will be triggered by library each time calendar is opened
 		private _onOpenEvent(): void {
 			super._onOpen();
@@ -93,7 +84,7 @@ namespace Providers.Flatpickr.SingleDate {
 
 					break;
 
-				case OSUIFramework.Patterns.DatePicker.Enum.Properties.InputDateFormat:
+				case OSUIFramework.Patterns.DatePicker.Enum.Properties.DateFormat:
 					// Check if any Date was selected
 					if (this._flatpickr.selectedDates.length > 0) {
 						// Set the new DefaultDate values
@@ -105,7 +96,7 @@ namespace Providers.Flatpickr.SingleDate {
 					}
 
 					// Set the new InputDateFormat
-					this._configs.InputDateFormat = propertyValue;
+					this._configs.DateFormat = propertyValue;
 
 					break;
 
@@ -148,12 +139,6 @@ namespace Providers.Flatpickr.SingleDate {
 				case OSUIFramework.Patterns.DatePicker.Enum.Properties.ShowWeekNumbers:
 					// Set the new ShowMonths value
 					this._configs.OptionalConfigs.showWeekNumbers = propertyValue;
-
-					break;
-
-				case OSUIFramework.Patterns.DatePicker.Enum.Properties.AdvancedConfigs:
-					// Set the new ShowMonths value
-					this._configs.AdvancedConfigs = JSON.parse(propertyValue);
 
 					break;
 
