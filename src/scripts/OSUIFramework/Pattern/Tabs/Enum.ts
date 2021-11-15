@@ -15,4 +15,13 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 		TabsHeaderItem = 'osui-tabs_header-item',
 		TabsContentItem = 'osui-tabs_content-item',
 	}
+
+	export enum Attributes {
+		DataTab = 'data-tab',
+	}
+
+	export enum OnChangeBehavior {
+		Instant = 'auto',
+		Smooth = 'smooth',
+	}
 }

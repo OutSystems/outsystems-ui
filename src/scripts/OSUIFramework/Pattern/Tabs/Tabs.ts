@@ -4,6 +4,7 @@ namespace OSUIFramework.Patterns.Tabs {
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	export class Tabs extends AbstractPattern<TabsConfig> implements ITabs {
+		private _currentTab: number;
 		private _tabsContent: HTMLElement;
 		// Stores the content items of this specific Tabs
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -56,10 +57,10 @@ namespace OSUIFramework.Patterns.Tabs {
 				const currentHeaderItem = this._tabsHeaderItems[tabNumber] as HTMLElement;
 				const currentContentItem = this._tabsContentItems[tabNumber] as HTMLElement;
 
-				Helper.Attribute.Set(currentHeaderItem, 'data-tab', tabNumber.toString());
+				Helper.Attribute.Set(currentHeaderItem, Enum.Attributes.DataTab, tabNumber.toString());
 
 				if (currentContentItem !== undefined) {
-					Helper.Attribute.Set(currentContentItem, 'data-tab', tabNumber.toString());
+					Helper.Attribute.Set(currentContentItem, Enum.Attributes.DataTab, tabNumber.toString());
 				}
 			}
 		}
@@ -99,31 +100,28 @@ namespace OSUIFramework.Patterns.Tabs {
 
 		// eslint-disable-next-line @typescript-eslint/member-ordering
 		public listen = (): void => {
-			const tabs = this._selfElem;
-			const tab_btns = tabs.querySelectorAll('.osui-tabs_header-item');
+			// const tabs = this._selfElem;
+			// const tab_btns = tabs.querySelectorAll('.osui-tabs_header-item');
 			// const snap = tabs.querySelector('section');
 			//const snap_width = snap.clientWidth;
-
-			tab_btns.forEach((node) => node.addEventListener('click', this.tab_clicked));
-
 			//snap.addEventListener('scrollend', (e) => {
 			// const selection_index = Math.round(e.currentTarget.scrollLeft / snap_width);
 			// console.log('active tab: ' + selection_index);
 			//});
+			//this.addEventListener('click', this.tab_clicked);
+
+			this._tabsHeaderItems.forEach((node) => node.addEventListener('click', this.tab_clicked));
 		};
 
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 		public tab_clicked = ({ currentTarget }): void => {
-			const tabs = this._selfElem;
-			const tab_btns = tabs.querySelectorAll('.osui-tabs_header-item');
-			const index = [...tab_btns].indexOf(currentTarget);
-			const contents = tabs.querySelectorAll('.osui-tabs_content-item');
-			const tab_article: any = contents[index];
+			this._currentTab = parseInt(Helper.Attribute.Get(currentTarget, Enum.Attributes.DataTab));
+			const currentContent = this._tabsContentItems[this._currentTab] as HTMLElement;
 
-			this._selfElem.querySelector(`section`).scrollTo({
+			this._tabsContent.scrollTo({
 				top: 0,
-				left: tab_article.offsetLeft,
-				behavior: 'auto',
+				left: currentContent.offsetLeft,
+				behavior: Enum.OnChangeBehavior.Instant,
 			});
 		};
 	}

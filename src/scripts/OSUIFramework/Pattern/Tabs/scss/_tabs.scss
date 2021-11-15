@@ -24,10 +24,10 @@
 .osui-tabs .osui-tabs_header-item {
 	--background-highlight: hsl(226, 46%, 68%);
 
-	appearance: none;
 	border: none;
 	font-size: 1rem;
 	outline-color: var(--accent);
+	width: 100%;
 }
 
 .osui-tabs .osui-tabs_header-item {
