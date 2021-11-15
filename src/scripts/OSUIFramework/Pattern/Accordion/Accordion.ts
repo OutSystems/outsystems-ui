@@ -24,5 +24,20 @@ namespace OSUIFramework.Patterns.Accordion {
 		public removeAccordionItem(accordionItemId: string): void {
 			this._accordionItems.delete(accordionItemId);
 		}
+
+		public triggerAccordionItemClose(accordionItemId: string): void {
+			//If this accordion has multiple items, it means we don't want to close the other items.
+			if (this.configs.MultipleItems) {
+				return;
+			}
+
+			this._accordionItems.forEach((item) => {
+				if (item.uniqueId !== accordionItemId) {
+					if (item.isExpanded) {
+						item.close();
+					}
+				}
+			});
+		}
 	}
 }

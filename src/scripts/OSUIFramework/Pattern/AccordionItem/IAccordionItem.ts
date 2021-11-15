@@ -4,6 +4,6 @@ namespace OSUIFramework.Patterns.AccordionItem {
 	 * Defines the interface for OutSystemsUI AccordionItem Pattern
 	 */
 	export interface IAccordionItem extends Interface.IPattern, Interface.IOpenable, Interface.ICallback {
-		//Implement you code here
+		get isExpanded(): boolean;
 	}
 }

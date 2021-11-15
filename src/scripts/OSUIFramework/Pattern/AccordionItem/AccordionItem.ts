@@ -31,24 +31,9 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new AccordionItemConfig(configs));
-
 			this._eventToggleClick = this._toggleAccordion.bind(this);
 			this._transitionEnd = this._transitionEndHandler.bind(this);
 			this._keyBoardCallback = this._onKeyboardPress.bind(this);
-		}
-
-		private _checkIfInsideAccordion(): void {
-			this._accordion = this._accordionItem.closest(Enum.CssClass.Accordion);
-
-			// If accordion selector with closest returns null, change to work with parent nodes
-			if (this._accordion === null) {
-				//this._accordion = sectionItem.parentNode.parentNode;
-			}
-
-			// Check if is inside Accordion
-			//if (this._accordion.classList.contains(Enum.CssClass.Accordion)) {
-			//	this._hasParent = true;
-			//}
 		}
 
 		// A11y keyboard navigation
@@ -174,6 +159,9 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				this.open();
 				this._setAriaExpanded(true, false);
 				this._triggerToggleClick();
+
+				// Event to close other submenu instances
+				if (this.configs.AccordionParent) this.configs.AccordionParent.triggerAccordionItemClose(this.uniqueId);
 			}
 		}
 
@@ -209,10 +197,13 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			}
 		}
 
+		public get isExpanded(): boolean {
+			return this.configs.IsExpanded;
+		}
+
 		public build(): void {
 			super.build();
 			this._accordionItem = this._selfElem;
-			this._checkIfInsideAccordion();
 			this._setUpElements();
 			this._setUpInitialState();
 			this._setA11yAttributes();
