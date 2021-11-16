@@ -115,8 +115,6 @@ namespace Providers.Flatpickr {
 				weekNumbers: this.OptionalConfigs.showWeekNumbers,
 			};
 
-			console.log(this._flatpickrOpts);
-
 			return this._flatpickrOpts;
 		}
 	}

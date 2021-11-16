@@ -19,7 +19,7 @@ namespace OSUIFramework.Helper {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public static IsNull(date: string): boolean {
 			// Check if the given date is a valid date
-			if (isNaN(Date.parse(date))) {
+			if (isNaN(Date.parse(date.split(' ')[0]))) {
 				throw new Error(`The given date '${date}' it's not a valid date.`);
 			} else if (Date.parse(date) < 0) {
 				// 1st Jan 1970 is the actual Date baseline.
