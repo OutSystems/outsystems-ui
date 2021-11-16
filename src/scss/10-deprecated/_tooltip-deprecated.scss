@@ -44,8 +44,8 @@
 			}
 
 			&:after {
-				border: 7px solid transparent;
-				border-top: 7px solid var(--color-neutral-9);
+				border: 8px solid transparent;
+				border-top: 8px solid var(--color-neutral-9);
 				bottom: -14px;
 				content: '';
 				height: 0;
@@ -60,8 +60,8 @@
 				right: calc(100% - var(--space-m));
 
 				&:after {
-					border: 7px solid transparent;
-					border-top: 7px solid var(--color-neutral-9);
+					border: 8px solid transparent;
+					border-top: 8px solid var(--color-neutral-9);
 					bottom: -14px;
 					content: '';
 					height: 0;
@@ -76,8 +76,8 @@
 				left: calc(100% - var(--space-m));
 
 				&:after {
-					border: 7px solid transparent;
-					border-top: 7px solid var(--color-neutral-9);
+					border: 8px solid transparent;
+					border-top: 8px solid var(--color-neutral-9);
 					bottom: -14px;
 					content: '';
 					height: 0;
@@ -94,8 +94,8 @@
 			transform: translateX(-50%);
 
 			&:after {
-				border: 7px solid transparent;
-				border-bottom: 7px solid var(--color-neutral-9);
+				border: 8px solid transparent;
+				border-bottom: 8px solid var(--color-neutral-9);
 				content: '';
 				height: 0;
 				left: 50%;
@@ -110,8 +110,8 @@
 				top: calc(100% + var(--space-s));
 
 				&:after {
-					border: 7px solid transparent;
-					border-bottom: 7px solid var(--color-neutral-9);
+					border: 8px solid transparent;
+					border-bottom: 8px solid var(--color-neutral-9);
 					content: '';
 					height: 0;
 					position: absolute;
@@ -126,8 +126,8 @@
 				top: calc(100% + var(--space-s));
 
 				&:after {
-					border: 7px solid transparent;
-					border-bottom: 7px solid var(--color-neutral-9);
+					border: 8px solid transparent;
+					border-bottom: 8px solid var(--color-neutral-9);
 					content: '';
 					height: 0;
 					left: 7px;
@@ -144,11 +144,11 @@
 			transform: translateY(-50%);
 
 			&:after {
-				border: 7px solid transparent;
-				border-left: 7px solid var(--color-neutral-9);
+				border: 8px solid transparent;
+				border-left: 8px solid var(--color-neutral-9);
 				content: '';
 				height: 0;
-				left: 100%;
+				left: calc(100% - 1px);
 				position: absolute;
 				top: 50%;
 				transform: translateY(-50%);
@@ -162,12 +162,12 @@
 			transform: translateY(-50%);
 
 			&:after {
-				border: 7px solid transparent;
-				border-right: 7px solid var(--color-neutral-9);
+				border: 8px solid transparent;
+				border-right: 8px solid var(--color-neutral-9);
 				content: '';
 				height: 0;
 				position: absolute;
-				right: 100%;
+				right: calc(100% - 1px);
 				top: 50%;
 				transform: translateY(-50%);
 				width: 0;
