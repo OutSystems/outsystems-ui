@@ -9,6 +9,7 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 	 * Tabs Enum for CSS Classes
 	 */
 	export enum CssClasses {
+		ActiveTab = 'is--active',
 		Tabs = 'osui-tabs',
 		TabsHeader = 'osui-tabs_header',
 		TabsContent = 'osui-tabs_content',

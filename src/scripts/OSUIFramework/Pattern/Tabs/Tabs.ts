@@ -4,7 +4,7 @@ namespace OSUIFramework.Patterns.Tabs {
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	export class Tabs extends AbstractPattern<TabsConfig> implements ITabs {
-		private _currentTab: number;
+		private _currentTabIndex: number;
 		private _tabsContent: HTMLElement;
 		// Stores the content items of this specific Tabs
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -115,8 +115,18 @@ namespace OSUIFramework.Patterns.Tabs {
 
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 		public tab_clicked = ({ currentTarget }): void => {
-			this._currentTab = parseInt(Helper.Attribute.Get(currentTarget, Enum.Attributes.DataTab));
-			const currentContent = this._tabsContentItems[this._currentTab] as HTMLElement;
+			const oldActiveElem = this._selfElem.querySelector(
+				Constants.Dot + Enum.CssClasses.ActiveTab
+			) as HTMLElement;
+
+			if (oldActiveElem) {
+				Helper.Style.RemoveClass(oldActiveElem, Enum.CssClasses.ActiveTab);
+			}
+
+			Helper.Style.AddClass(currentTarget, Enum.CssClasses.ActiveTab);
+
+			this._currentTabIndex = parseInt(Helper.Attribute.Get(currentTarget, Enum.Attributes.DataTab));
+			const currentContent = this._tabsContentItems[this._currentTabIndex] as HTMLElement;
 
 			this._tabsContent.scrollTo({
 				top: 0,
