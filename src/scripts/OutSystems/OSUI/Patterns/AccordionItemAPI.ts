@@ -16,7 +16,6 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 		} else {
 			// Try to find the accordion reference on DOM
 			const elem = OSUIFramework.Helper.GetElementByUniqueId(accordionItemId);
-			//TODO verify this
 			const accordionElem = elem.closest(OSUIFramework.Patterns.Accordion.Enum.CssClass.AccordionWrapper);
 			if (accordionElem) {
 				const uniqueId = accordionElem.getAttribute('name');
@@ -64,7 +63,6 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 
 		config.AccordionParent = accordion;
 
-		//TODO add accordion ref
 		const _newAccordionItem = new OSUIFramework.Patterns.AccordionItem.AccordionItem(accordionItemId, config);
 
 		_accordionItemMap.set(accordionItemId, _newAccordionItem);

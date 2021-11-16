@@ -18,6 +18,18 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	}
 
 	/**
+	 * Function that will collapse all the expanded items in a given accordion
+	 *
+	 * @export
+	 * @param {string} accordionId ID of the Accordion pattern.
+	 *
+	 */
+	export function CollapseAll(accordionId: string): void {
+		const accordion = GetAccordionById(accordionId);
+		accordion.collapseAllItems();
+	}
+
+	/**
 	 * Create the new Accordion instance and add it to the AccordionMap
 	 *
 	 * @export
@@ -51,6 +63,18 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 		accordion.dispose();
 
 		_accordionMap.delete(accordion.uniqueId);
+	}
+
+	/**
+	 * Function that will expand all the collapsed items in a given accordion
+	 *
+	 * @export
+	 * @param {string} accordionId ID of the Accordion pattern.
+	 *
+	 */
+	export function ExpandAll(accordionId: string): void {
+		const accordion = GetAccordionById(accordionId);
+		accordion.expandAllItems();
 	}
 
 	/**

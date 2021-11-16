@@ -198,6 +198,10 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			}
 		}
 
+		public get isDisabled(): boolean {
+			return this.configs.IsDisabled;
+		}
+
 		public get isExpanded(): boolean {
 			return this.configs.IsExpanded;
 		}
@@ -249,7 +253,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Expanded);
 			Helper.Style.RemoveClass(this._accordionContent, Enum.CssClass.Collapsed);
 
-			// This setTimeout (0ms) will ensure that the DOM received the height 0 before actually starts the transition
+			// This setTimeout (100ms) will ensure that the DOM received the height 0 before actually starts the transition
 			const waitDomIterateTimeout = setTimeout(() => {
 				// Adds is--animating class to current accordion item content to obtain the final height value
 				Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Animation);

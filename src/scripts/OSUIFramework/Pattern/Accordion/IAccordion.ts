@@ -5,6 +5,8 @@ namespace OSUIFramework.Patterns.Accordion {
 	 */
 	export interface IAccordion extends Interface.IPattern {
 		addAccordionItem(uniqueId: string, accordionItem: AccordionItem.IAccordionItem);
+		collapseAllItems();
+		expandAllItems();
 		removeAccordionItem(uniqueId: string);
 		triggerAccordionItemClose(accordionItemId: string);
 	}

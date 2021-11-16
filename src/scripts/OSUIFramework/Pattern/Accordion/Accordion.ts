@@ -13,37 +13,39 @@ namespace OSUIFramework.Patterns.Accordion {
 			this._accordionItems = new Map<string, OSUIFramework.Patterns.AccordionItem.IAccordionItem>();
 		}
 
-		public accordionCollapseAll(): void {
+		public addAccordionItem(uniqueId: string, accordionItem: AccordionItem.IAccordionItem): void {
+			this._accordionItems.set(uniqueId, accordionItem);
+
+			// If we're adding to an accordion w/Multiple Items set to false & this item is expanded,
+			// we have to close all the other items
+			if (accordionItem.isExpanded) {
+				this.triggerAccordionItemClose(accordionItem.uniqueId);
+			}
+		}
+
+		public collapseAllItems(): void {
 			this._accordionItems.forEach((item) => {
-				if (item.isExpanded) {
+				if (item.isExpanded && !item.isDisabled) {
 					item.close();
 				}
 			});
 		}
 
-		public accordionExpandAll(): void {
+		public dispose(): void {
+			super.dispose();
+		}
+
+		public expandAllItems(): void {
 			//If this accordion has multiple items, it means we can't expand all.
 			if (this.configs.MultipleItems) {
 				return;
 			}
 
 			this._accordionItems.forEach((item) => {
-				if (!item.isExpanded) {
+				if (!item.isExpanded && !item.isDisabled) {
 					item.open();
 				}
 			});
-		}
-
-		public addAccordionItem(uniqueId: string, accordionItem: AccordionItem.IAccordionItem): void {
-			this._accordionItems.set(uniqueId, accordionItem);
-			//In case this is being setup by the items before it's the accordion itself
-			if (this.isBuilt) {
-				//this._setUpFloatingActions();
-			}
-		}
-
-		public dispose(): void {
-			super.dispose();
 		}
 
 		public removeAccordionItem(accordionItemId: string): void {
