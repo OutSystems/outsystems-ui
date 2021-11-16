@@ -5,6 +5,22 @@
 	height: var(--tabs-height);
 }
 
+.osui-tabs.is--vertical.is--right {
+	grid-auto-flow: dense;
+}
+
+.osui-tabs.is--vertical.is--right .osui-tabs_header {
+	grid-column: 2;
+}
+
+.osui-tabs.is--vertical.is--right {
+	grid-template-columns: 1fr auto;
+}
+
+.osui-tabs.is--vertical.is--right .osui-tabs_header {
+	border-left: var(--border-size-s) solid var(--color-neutral-5);
+}
+
 .osui-tabs.is--horizontal {
 	grid-auto-flow: column;
 	grid-template-rows: var(--header-height) auto;
@@ -19,9 +35,12 @@
 	display: flex;
 }
 
+.osui-tabs.is--vertical.is--left .osui-tabs_header {
+	border-right: var(--border-size-s) solid var(--color-neutral-5);
+}
+
 .osui-tabs.is--vertical .osui-tabs_header {
 	flex-direction: column;
-	border-right: var(--border-size-s) solid var(--color-neutral-5);
 }
 
 .osui-tabs.is--vertical.is--justified .osui-tabs_header-item {
@@ -83,8 +102,17 @@
 }
 
 .osui-tabs.is--vertical .osui-tabs_header-item.is--active::after {
+	height: 100%;
+}
+
+.osui-tabs.is--vertical.is--left .osui-tabs_header-item.is--active::after {
 	right: calc(-1px - var(--border-size-m));
 	border-right: var(--border-size-m) solid var(--color-primary);
+}
+
+.osui-tabs.is--vertical.is--right .osui-tabs_header-item.is--active::after {
+	left: calc(1px - var(--border-size-m));
+	border-left: var(--border-size-m) solid var(--color-primary);
 	height: 100%;
 }
 
@@ -130,6 +158,6 @@
 	overflow-y: auto;
 }
 
-.osui-tabs_header > .OSBlockWidget {
+.osui-tabs_header .OSBlockWidget {
 	display: contents;
 }
