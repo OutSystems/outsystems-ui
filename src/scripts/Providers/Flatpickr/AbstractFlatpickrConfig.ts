@@ -70,10 +70,21 @@ namespace Providers.Flatpickr {
 			return _altFormat;
 		}
 
+		// Method used to check the language and also map it into Flatpickr expected format
+		private _checkLocale(): string {
+			const _locale = OSUIFramework.Helper.Language.Lang.substr(0, 2)
+				? OSUIFramework.Helper.Language.Lang.substr(0, 2)
+				: 'en';
+
+			this._flatpickrLocale = window.flatpickr.l10ns[_locale];
+			this._flatpickrLocale.firstDayOfWeek = this.OptionalConfigs.firstWeekDay;
+
+			return _locale;
+		}
+
 		// Method used to check the serverDateFormat and map it into the Flatpickr expected format
 		private _checkServerDateFormat(): void {
-			this.ServerDateFormat = OSUIFramework.Helper.Dates.serverFormat
-				.replace('YYYY', 'Y')
+			this.ServerDateFormat = OSUIFramework.Helper.Dates.ServerFormat.replace('YYYY', 'Y')
 				.replace('MM', 'm')
 				.replace('DD', 'd');
 		}
@@ -83,17 +94,12 @@ namespace Providers.Flatpickr {
 			// Check the given server date format config
 			this._checkServerDateFormat();
 
-			const _locale = 'en';
-			this._flatpickrLocale = window.flatpickr.l10ns[_locale];
-			this._flatpickrLocale.firstDayOfWeek = this.OptionalConfigs.firstWeekDay;
-			// console.log('Changed LOCALE', this._flatpickrLocale);
-
 			// eslint-disable-next-line prefer-const
 			this._flatpickrOpts = {
 				altFormat: this._checkAltFormat(),
 				altInput: true,
 				enableTime: this.TimeFormat !== OSUIFramework.Patterns.DatePicker.Enum.TimeFormat.Disable,
-				locale: _locale,
+				locale: this._checkLocale(),
 				maxDate: OSUIFramework.Helper.Dates.IsNull(this.OptionalConfigs.maxDate)
 					? undefined
 					: this.OptionalConfigs.maxDate,
@@ -108,6 +114,8 @@ namespace Providers.Flatpickr {
 				time_24hr: this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormat.Time24hFormat,
 				weekNumbers: this.OptionalConfigs.showWeekNumbers,
 			};
+
+			console.log(this._flatpickrOpts);
 
 			return this._flatpickrOpts;
 		}
