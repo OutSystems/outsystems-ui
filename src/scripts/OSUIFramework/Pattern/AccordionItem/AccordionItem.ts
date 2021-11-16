@@ -4,8 +4,6 @@ namespace OSUIFramework.Patterns.AccordionItem {
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	export class AccordionItem extends AbstractPattern<AccordionItemConfig> implements IAccordionItem {
-		// Stores the accordion item's parent, if it exists
-		private _accordion: HTMLElement;
 		// Stores the HTML element of the pattern's content
 		private _accordionContent: HTMLElement;
 		// Stores the HTML element of the pattern's icon
@@ -18,9 +16,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		// Stores the HTML element of the pattern's title
 		private _accordionTitle: HTMLElement;
 		// Store the click event with bind(this)
-		private _eventToggleClick: Callbacks.Generic;
-		//Stores the type of event triggered
-		private _eventType: KeyboardEvent;
+		private _eventToggleAccordion: Callbacks.Generic;
 		//Stores the keyboard callback function
 		private _keyBoardCallback: Callbacks.Generic;
 		// Callback function to trigger the click event on the platform
@@ -31,7 +27,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new AccordionItemConfig(configs));
-			this._eventToggleClick = this._toggleAccordion.bind(this);
+			this._eventToggleAccordion = this._toggleAccordion.bind(this);
 			this._transitionEnd = this._transitionEndHandler.bind(this);
 			this._keyBoardCallback = this._onKeyboardPress.bind(this);
 		}
@@ -55,13 +51,12 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 		// Method to be called when the pattern's destruction is required
 		private _removeEvents(): void {
-			this._accordionTitle.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventToggleClick);
+			this._accordionTitle.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventToggleAccordion);
 			this._accordionTitle.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._keyBoardCallback);
 		}
 
 		//Method to apply the static aria attributes
 		private _setA11yAttributes(): void {
-			// TODO data-expanded
 			Helper.Attribute.Set(
 				this._accordionItem,
 				Constants.AccessibilityAttribute.Aria.Disabled,
@@ -125,7 +120,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			if (this.configs.IsDisabled) {
 				return;
 			}
-			this._accordionTitle.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventToggleClick);
+			this._accordionTitle.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventToggleAccordion);
 			this._accordionTitle.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._keyBoardCallback);
 		}
 
@@ -148,7 +143,18 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		}
 
 		// Method to toggle the collapse and expansion of the AccordionItem
-		private _toggleAccordion(): void {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		private _toggleAccordion(event?: any): void {
+			//If we're clicking on buttons or links, we won't open the accordion
+			if (event) {
+				if (
+					event.target !== this._accordionTitle &&
+					event.target !== this._accordionIcon &&
+					event.target !== this._accordionTitle.firstChild
+				) {
+					return;
+				}
+			}
 			if (this._configs.IsExpanded) {
 				//If open, let's close
 				this.close();
@@ -174,11 +180,6 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				if (this._accordionContent.style.cssText.length === 0) {
 					this._accordionContent.removeAttribute('style');
 				}
-
-				/*if ($parameters.IsKeypress) {
-					// Add focus for Accessibility
-					currentElement.focus();
-				}*/
 
 				this._accordionContent.removeEventListener(
 					GlobalEnum.HTMLEvent.TransitionEnd,
