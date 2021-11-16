@@ -10,6 +10,9 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 	 */
 	export enum CssClasses {
 		ActiveTab = 'is--active',
+		IsVertical = 'is--vertical',
+		IsHorizontal = 'is--horizontal',
+		IsJustified = 'is--justified',
 		Tabs = 'osui-tabs',
 		TabsHeader = 'osui-tabs_header',
 		TabsContent = 'osui-tabs_content',
@@ -19,10 +22,21 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 
 	export enum Attributes {
 		DataTab = 'data-tab',
+		DataOrientation = 'data-orientation',
+		DataPosition = 'data-position',
+		TabsHeight = '--tabs-height',
 	}
 
 	export enum OnChangeBehavior {
 		Instant = 'auto',
 		Smooth = 'smooth',
+	}
+
+	export enum Properties {
+		ActiveTab = 'ActiveTab',
+		Height = 'Height',
+		IsJustified = 'IsJustified',
+		Orientation = 'Orientation',
+		Position = 'Position',
 	}
 }

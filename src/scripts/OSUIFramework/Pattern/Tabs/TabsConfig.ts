@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Tabs {
 	export class TabsConfig extends AbstractConfiguration {
-		public ActiveItem: number;
+		public ActiveTab: number;
 		public Height: string;
 		public IsJustified: boolean;
 		public Orientation: GlobalTypes.Orientation;

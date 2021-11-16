@@ -24,14 +24,14 @@
 .osui-tabs .osui-tabs_header-item {
 	--background-highlight: hsl(226, 46%, 68%);
 
+	cursor: pointer;
 	border: none;
 	font-size: 1rem;
 	outline-color: var(--accent);
 	width: 100%;
 }
 
-.osui-tabs .osui-tabs_header-item {
-	cursor: pointer;
+.osui-tabs .osui-tabs_header-item.is--active {
 	background: var(--background-highlight);
 }
 

@@ -40,6 +40,10 @@ namespace OSUIFramework.Callbacks {
 		(sidebarId: string, isOpen: boolean): void;
 	};
 
+	export type OSTabsOnChangeEvent = {
+		(tabsId: string, ActiveTab: number): void;
+	};
+
 	export type OSFlipContentFlipEvent = {
 		(flipId: string, isFlipped: boolean): void;
 	};

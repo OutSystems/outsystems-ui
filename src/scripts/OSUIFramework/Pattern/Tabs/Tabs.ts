@@ -9,6 +9,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		// Store the click event with bind(this)
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnTabsClick: any;
+		private _onTabsChange: Callbacks.OSTabsOnChangeEvent;
 		private _tabsContent: HTMLElement;
 		// Stores the content items of this specific Tabs
 		private _tabsContentItems: NodeList;
@@ -22,7 +23,6 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._eventOnTabsClick = this._handleClickEvent.bind(this);
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		private _getTabsContentItems(): NodeList {
 			this._tabsContentItems = Array.prototype.filter.call(
 				this._selfElem.querySelectorAll(Constants.Dot + Enum.CssClasses.TabsContentItem),
@@ -33,7 +33,6 @@ namespace OSUIFramework.Patterns.Tabs {
 			return this._tabsContentItems;
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		private _getTabsHeaderItems(): NodeList {
 			this._tabsHeaderItems = Array.prototype.filter.call(
 				this._selfElem.querySelectorAll(Constants.Dot + Enum.CssClasses.TabsHeaderItem),
@@ -44,7 +43,6 @@ namespace OSUIFramework.Patterns.Tabs {
 			return this._tabsHeaderItems;
 		}
 
-		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 		private _handleClickEvent({ currentTarget }): void {
 			this._currentTabElement = this._selfElem.querySelector(
 				Constants.Dot + Enum.CssClasses.ActiveTab
@@ -54,29 +52,24 @@ namespace OSUIFramework.Patterns.Tabs {
 				return;
 			}
 
-			if (this._currentTabElement) {
-				Helper.Style.RemoveClass(this._currentTabElement, Enum.CssClasses.ActiveTab);
-			}
+			const currentTabIndex = parseInt(Helper.Attribute.Get(currentTarget, Enum.Attributes.DataTab));
 
-			Helper.Style.AddClass(currentTarget, Enum.CssClasses.ActiveTab);
-
-			this._currentTabIndex = parseInt(Helper.Attribute.Get(currentTarget, Enum.Attributes.DataTab));
-			const currentContent = this._tabsContentItems[this._currentTabIndex] as HTMLElement;
-
-			this._tabsContent.scrollTo({
-				top: 0,
-				left: currentContent.offsetLeft,
-				behavior: Enum.OnChangeBehavior.Instant,
-			});
+			this.changeTab(currentTabIndex);
 		}
 
 		private _prepareElements(): void {
+			console.log(this._configs);
 			this._getTabsHeaderItems();
 			this._getTabsContentItems();
 			this._setTabsConnection();
+			this.setTabsOrientation(this.configs.Orientation);
+			this.setTabsPosition(this._configs.Position);
+			this.setTabsHeight(this._configs.Height);
+			this.setTabsIsJustified(this._configs.IsJustified);
+			this.changeTab(this.configs.ActiveTab);
+			this._setEventListeners();
 		}
 
-		// eslint-disable-next-line @typescript-eslint/member-ordering
 		private _setEventListeners(): void {
 			this._tabsHeaderItems.forEach((node) => node.addEventListener('click', this._eventOnTabsClick));
 		}
@@ -101,14 +94,19 @@ namespace OSUIFramework.Patterns.Tabs {
 			}
 		}
 
+		// Method that triggers the OnTabsChange event
+		private _triggerOnChangeEvent(activeTab: number): void {
+			if (this._onTabsChange !== undefined) {
+				Helper.AsyncInvocation(this._onTabsChange, this.widgetId, activeTab);
+			}
+		}
+
 		public build(): void {
 			super.build();
 
 			this._setHtmlElements();
 
 			this._prepareElements();
-
-			this._setEventListeners();
 
 			this.finishBuild();
 		}
@@ -117,10 +115,51 @@ namespace OSUIFramework.Patterns.Tabs {
 		public changeProperty(propertyName: string, propertyValue: any): void {
 			// Check which property changed and call respective method to update it
 			switch (propertyName) {
+				case Enum.Properties.ActiveTab:
+					this.changeTab(propertyValue);
+					break;
+				case Enum.Properties.Height:
+					this.setTabsHeight(propertyValue);
+					break;
+				case Enum.Properties.Orientation:
+					this.setTabsOrientation(propertyValue);
+					break;
+				case Enum.Properties.Position:
+					this.setTabsPosition(propertyValue);
+					break;
+				case Enum.Properties.IsJustified:
+					this.setTabsIsJustified(propertyValue);
+					break;
 				default:
 					super.changeProperty(propertyName, propertyValue);
 					break;
 			}
+		}
+
+		public changeTab(tabIndex: number): void {
+			const newHeaderItem = this._tabsHeaderItems[tabIndex] as HTMLElement;
+
+			if (newHeaderItem === undefined) {
+				console.warn(`The TabsHeaderItem with the index value of ${tabIndex} doesn't exist.`);
+				return;
+			}
+			const newContentItem = this._tabsContentItems[tabIndex] as HTMLElement;
+
+			if (this._currentTabElement) {
+				Helper.Style.RemoveClass(this._currentTabElement, Enum.CssClasses.ActiveTab);
+			}
+
+			this._tabsContent.scrollTo({
+				top: 0,
+				left: newContentItem.offsetLeft,
+				behavior: Enum.OnChangeBehavior.Instant,
+			});
+
+			Helper.Style.AddClass(newHeaderItem, Enum.CssClasses.ActiveTab);
+			this._currentTabElement = newHeaderItem;
+			this._configs.ActiveTab = tabIndex;
+
+			this._triggerOnChangeEvent(tabIndex);
 		}
 
 		// Destroy the Tabs pattern
@@ -129,9 +168,40 @@ namespace OSUIFramework.Patterns.Tabs {
 			super.dispose();
 		}
 
-		// Set callbacks for the onTabsChange  event
-		public registerCallback(callback: Callbacks.OSRatingSelectEvent): void {
-			return;
+		// Set callbacks for the onTabsChange event
+		public registerCallback(callback: Callbacks.OSTabsOnChangeEvent): void {
+			this._onTabsChange = callback;
+		}
+
+		public setTabsHeight(height: string): void {
+			Helper.Style.SetStyleAttribute(this._selfElem, Enum.Attributes.TabsHeight, height);
+			this.configs.Height = height;
+		}
+
+		public setTabsIsJustified(isJustified: boolean): void {
+			if (isJustified) {
+				Helper.Style.AddClass(this._selfElem, Enum.CssClasses.IsJustified);
+			} else {
+				Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.IsJustified);
+			}
+
+			this._configs.IsJustified = isJustified;
+		}
+
+		public setTabsOrientation(orientation: GlobalTypes.Orientation): void {
+			Helper.Style.RemoveClass(this._selfElem, 'is--' + this._configs.Orientation);
+			Helper.Attribute.Set(this._selfElem, Enum.Attributes.DataOrientation, orientation.toString());
+			Helper.Style.AddClass(this._selfElem, 'is--' + orientation);
+
+			this._configs.Orientation = orientation;
+		}
+
+		public setTabsPosition(position: GlobalTypes.Direction): void {
+			Helper.Style.RemoveClass(this._selfElem, 'is--' + this._configs.Position);
+			Helper.Attribute.Set(this._selfElem, Enum.Attributes.DataPosition, position.toString());
+			Helper.Style.AddClass(this._selfElem, 'is--' + position);
+
+			this._configs.Position = position;
 		}
 	}
 }
