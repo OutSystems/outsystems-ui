@@ -26,7 +26,6 @@ namespace OSUIFramework.Patterns.DatePicker.Enum {
 		ShowTodayButton = 'ShowTodayButton',
 		ShowWeekNumbers = 'ShowWeekNumbers',
 		TimeFormat = 'TimeFormat',
-		Type = 'Type',
 	}
 
 	/**
@@ -43,14 +42,5 @@ namespace OSUIFramework.Patterns.DatePicker.Enum {
 		Disable = '',
 		Time12hFormat = '12',
 		Time24hFormat = '24',
-	}
-
-	/**
-	 * DatePicker Types Enum
-	 */
-	export enum Type {
-		Multiple = 'multiple',
-		Range = 'range',
-		Single = 'single',
 	}
 }

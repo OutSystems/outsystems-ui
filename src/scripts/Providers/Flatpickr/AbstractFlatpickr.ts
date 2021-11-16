@@ -31,9 +31,12 @@ namespace Providers.Flatpickr {
 		// Method to set the html elements used
 		private _setHtmllElements(): void {
 			// Set the inputHTML element
-			this._datePickerProviderInputElem = document.getElementById(
-				this._configs.InputWidgetId
-			) as HTMLInputElement;
+			this._datePickerProviderInputElem = this._selfElem.querySelector('input.form-control') as HTMLInputElement;
+
+			// If the input hasn't be added
+			if (!this._datePickerProviderInputElem) {
+				throw new Error(`The datepicker input at DatepickerId '${this._widgetId}' is missing`);
+			}
 		}
 
 		// Method that will be used to set the CSS ExtendedClasses into input and calendar
@@ -42,7 +45,6 @@ namespace Providers.Flatpickr {
 				const activeCssClassArray = activeCssClass.split(' ');
 
 				for (let i = 0; i < activeCssClassArray.length; ++i) {
-					this._flatpickrInputElem.classList.remove(activeCssClassArray[i]);
 					this._flatpickr.calendarContainer.classList.remove(activeCssClassArray[i]);
 				}
 			}
@@ -51,7 +53,6 @@ namespace Providers.Flatpickr {
 				const newCssClassArray = newCssClass.split(' ');
 
 				for (let i = 0; i < newCssClassArray.length; ++i) {
-					this._flatpickrInputElem.classList.add(newCssClassArray[i]);
 					this._flatpickr.calendarContainer.classList.add(newCssClassArray[i]);
 				}
 			}
@@ -64,18 +65,6 @@ namespace Providers.Flatpickr {
 			todayBtn.classList.add(Enum.CssClasses.TodayBtn);
 			todayBtn.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, this._jumpIntoToday.bind(this));
 			this._flatpickr.calendarContainer.appendChild(todayBtn);
-		}
-
-		// Method that will be triggered each time calendar is closed
-		protected _onClose(): void {
-			// Trigger platform's OnCloseHandler client Action
-			OSUIFramework.Helper.AsyncInvocation(this._onCloseCallbackEvent, this.widgetId);
-		}
-
-		// Method that will be triggered each time calendar is opened
-		protected _onOpen(): void {
-			// Trigger platform's OnOpenHandler client Action
-			OSUIFramework.Helper.AsyncInvocation(this._onOpenCallbackEvent, this.widgetId);
 		}
 
 		// Method that will be triggered at Flatpickr instance is ready

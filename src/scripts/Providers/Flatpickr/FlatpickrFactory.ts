@@ -10,10 +10,10 @@ namespace Providers.Flatpickr.Factory {
 	 */
 	export function NewFlatpickr(datePickerId: string, configs: string): OSUIFramework.Patterns.DatePicker.IDatePicker {
 		let _flatpickrItem = null;
-		const _flatpickrMode = JSON.parse(configs)[OSUIFramework.Patterns.DatePicker.Enum.Properties.Type];
+		const _flatpickrMode = JSON.parse(configs)[Enum.Properties.Type];
 
 		switch (_flatpickrMode) {
-			case OSUIFramework.Patterns.DatePicker.Enum.Type.Single:
+			case Enum.Type.Single:
 				_flatpickrItem = new Providers.Flatpickr.SingleDate.OSUIFlatpickrSingleDate(
 					datePickerId,
 					JSON.parse(configs)
@@ -21,7 +21,7 @@ namespace Providers.Flatpickr.Factory {
 
 				break;
 
-			case OSUIFramework.Patterns.DatePicker.Enum.Type.Range:
+			case Enum.Type.Range:
 				console.log(`Create Flatpickr ${_flatpickrMode} mode`);
 
 				break;

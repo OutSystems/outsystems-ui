@@ -59,23 +59,23 @@ namespace Providers.Flatpickr {
 
 			// Time must behave in 24h format
 			if (this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormat.Time24hFormat) {
-				_altFormat = _altFormat + ' H:i';
+				_altFormat = _altFormat + ' - H:i';
 			}
 
 			// Time must behave in 12h format with AM/PM
 			if (this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormat.Time12hFormat) {
-				_altFormat = _altFormat + ' h:i K';
+				_altFormat = _altFormat + ' - h:i K';
 			}
 
 			return _altFormat;
 		}
 
-		// Method used to check the serverDateFormat and set it into the Flatpickr expected format
+		// Method used to check the serverDateFormat and map it into the Flatpickr expected format
 		private _checkServerDateFormat(): void {
 			this.ServerDateFormat = OSUIFramework.Helper.Dates.serverFormat
 				.replace('YYYY', 'Y')
 				.replace('MM', 'm')
-				.replace('dd', 'd');
+				.replace('DD', 'd');
 		}
 
 		// Method used to set all the global Flatpickr properties across the different types of instances
@@ -102,7 +102,7 @@ namespace Providers.Flatpickr {
 					: this.OptionalConfigs.minDate,
 				dateFormat:
 					this.TimeFormat !== OSUIFramework.Patterns.DatePicker.Enum.TimeFormat.Disable
-						? this.ServerDateFormat + ' H:i:s'
+						? this.ServerDateFormat + ' H:i'
 						: this.ServerDateFormat,
 				showMonths: this.OptionalConfigs.showMonths,
 				time_24hr: this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormat.Time24hFormat,

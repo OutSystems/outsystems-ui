@@ -17,7 +17,7 @@ namespace Providers.Flatpickr.SingleDate {
 			// eslint-disable-next-line prefer-const
 			let flatpickrSingleDateOpts = {
 				defaultDate: OSUIFramework.Helper.Dates.IsNull(this.DefaultDate) ? undefined : this.DefaultDate,
-				mode: OSUIFramework.Patterns.DatePicker.Enum.Type.Single,
+				mode: Flatpickr.Enum.Type.Single,
 				onChange: this.OnChange,
 			};
 

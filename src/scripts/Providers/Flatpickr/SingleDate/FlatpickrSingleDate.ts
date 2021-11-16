@@ -39,11 +39,6 @@ namespace Providers.Flatpickr.SingleDate {
 			super._onReady();
 		}
 
-		// Method that will be triggered by library each time calendar is closed
-		private _onCloseEvent(): void {
-			super._onClose();
-		}
-
 		// Method that will be triggered by library each time any date is selected
 		private _onDateSelectedEvent(selectedDates: string[], dateStr: string, fp: Flatpickr): void {
 			/* NOTE: dateStr param is not in use since the library has an issue arround it */
@@ -58,11 +53,6 @@ namespace Providers.Flatpickr.SingleDate {
 			OSUIFramework.Helper.AsyncInvocation(this._onChangeCallbackEvent, this.widgetId, _selectedDate);
 
 			console.log('_onDateSelected', _selectedDate);
-		}
-
-		// Method that will be triggered by library each time calendar is opened
-		private _onOpenEvent(): void {
-			super._onOpen();
 		}
 
 		public build(): void {

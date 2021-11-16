@@ -14,7 +14,7 @@ namespace OSUIFramework.Helper.Dates {
 	 */
 	export function SetServerDateFormat(date: string): void {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		OSUIFramework.Helper.Dates.serverFormat = date.replace('13', 'dd').replace('10', 'MM').replace('1900', 'YYYY');
+		OSUIFramework.Helper.Dates.serverFormat = date.replace('13', 'DD').replace('10', 'MM').replace('1900', 'YYYY');
 	}
 
 	/**

@@ -3,7 +3,6 @@ namespace OSUIFramework.Patterns.DatePicker {
 	export abstract class AbstractDatePickerConfig extends Patterns.AbstractProviderConfiguration {
 		public DateFormat: string;
 		public InitialDate: string;
-		public InputWidgetId: string;
 		public OptionalConfigs: DatepickrOptionalConfigs;
 		public ShowTodayButton: boolean;
 		public TimeFormat: string;

@@ -5,8 +5,24 @@ namespace Providers.Flatpickr.Enum {
 		TodayBtn = 'flatpickr-today-button',
 	}
 
+	/**
+	 * Flatpickr Enum properties
+	 */
+	export enum Properties {
+		Type = 'Type',
+	}
+
 	//  Flatpickr Today button Enum
 	export enum TodayBtn {
 		Text = 'Today',
+	}
+
+	/**
+	 * Flatpickr Types Enum
+	 */
+	export enum Type {
+		Multiple = 'multiple',
+		Range = 'range',
+		Single = 'single',
 	}
 }
