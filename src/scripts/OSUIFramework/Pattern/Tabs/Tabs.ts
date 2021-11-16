@@ -58,7 +58,6 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		private _prepareElements(): void {
-			console.log(this._configs);
 			this._getTabsHeaderItems();
 			this._getTabsContentItems();
 			this._setTabsConnection();

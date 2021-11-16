@@ -1,38 +1,64 @@
 .osui-tabs {
-	--header-height: 50px;
-	--accent: #1068eb;
-
+	--header-height: auto;
 	display: grid;
-	grid-template-rows: var(--header-height) 1fr;
-	position: relative;
-	overflow: hidden;
-	padding: 0.25rem;
+	grid-template-rows: var(--header-height) auto;
+	height: var(--tabs-height);
+}
+
+.osui-tabs.is--horizontal {
+	grid-auto-flow: column;
+	grid-template-rows: var(--header-height) auto;
+}
+
+.osui-tabs.is--vertical {
+	grid-auto-flow: row;
+	grid-template-columns: auto auto;
 }
 
 .osui-tabs .osui-tabs_header {
 	display: grid;
-	grid-gap: 0.25rem;
-	gap: 0.25rem;
+}
+
+.osui-tabs.is--vertical .osui-tabs_header {
+	grid-auto-flow: row;
+	border-right: var(--border-size-s) solid var(--color-neutral-5);
+}
+
+.osui-tabs.is--horizontal .osui-tabs_header {
 	grid-auto-flow: column;
-	grid-auto-columns: 1fr;
-	align-content: stretch;
-	justify-content: stretch;
-	place-content: stretch;
-	list-style-type: none;
+	border-bottom: var(--border-size-s) solid var(--color-neutral-5);
 }
 
 .osui-tabs .osui-tabs_header-item {
-	--background-highlight: hsl(226, 46%, 68%);
-
-	cursor: pointer;
+	align-items: center;
+	background-color: transparent;
 	border: none;
-	font-size: 1rem;
-	outline-color: var(--accent);
+	border-bottom: var(--border-size-m) solid transparent;
+	cursor: pointer;
+	justify-content: center;
+	display: inline-flex;
+	height: 100%;
+	padding: var(--space-base) var(--space-xs);
+	position: relative;
+}
+
+.osui-tabs.is--justified .osui-tabs_header-item {
 	width: 100%;
 }
 
 .osui-tabs .osui-tabs_header-item.is--active {
-	background: var(--background-highlight);
+	color: var(--color-neutral-10);
+	font-weight: var(--font-semi-bold);
+}
+
+.osui-tabs .osui-tabs_header-item.is--active::after {
+	content: '';
+	bottom: calc(-1px - var(--border-size-m));
+	left: 0;
+	position: absolute;
+	border-bottom: var(--border-size-m) solid var(--color-primary);
+	width: 100%;
+	z-index: 100;
 }
 
 .osui-tabs .osui-tabs_content {
@@ -40,11 +66,12 @@
 	overflow-x: auto;
 	overflow-y: hidden;
 	overscroll-behavior-x: contain;
+	-ms-scroll-snap-type: x mandatory;
 	scroll-snap-type: x mandatory;
-
 	display: grid;
 	grid-auto-flow: column;
 	grid-auto-columns: 100%;
+	padding: var(--space-m) var(--space-none);
 }
 
 .osui-tabs .osui-tabs_content::-webkit-scrollbar {
@@ -54,6 +81,5 @@
 .osui-tabs .osui-tabs_content-item {
 	scroll-snap-align: start;
 	scroll-snap-stop: always;
-
 	overflow-y: auto;
 }
