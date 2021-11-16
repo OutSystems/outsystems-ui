@@ -4,7 +4,8 @@ namespace OSUIFramework.Patterns.Tabs {
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	export class Tabs extends AbstractPattern<TabsConfig> implements ITabs {
-		private _currentTabElement: HTMLElement;
+		private _activeTabContentElement: HTMLElement;
+		private _activeTabHeaderElement: HTMLElement;
 		private _currentTabIndex: number;
 		// Store the click event with bind(this)
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -44,11 +45,11 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		private _handleClickEvent({ currentTarget }): void {
-			this._currentTabElement = this._selfElem.querySelector(
+			this._activeTabHeaderElement = this._selfElem.querySelector(
 				Constants.Dot + Enum.CssClasses.ActiveTab
 			) as HTMLElement;
 
-			if (this._currentTabElement === currentTarget) {
+			if (this._activeTabHeaderElement === currentTarget) {
 				return;
 			}
 
@@ -144,8 +145,12 @@ namespace OSUIFramework.Patterns.Tabs {
 			}
 			const newContentItem = this._tabsContentItems[tabIndex] as HTMLElement;
 
-			if (this._currentTabElement) {
-				Helper.Style.RemoveClass(this._currentTabElement, Enum.CssClasses.ActiveTab);
+			if (this._activeTabHeaderElement) {
+				Helper.Style.RemoveClass(this._activeTabHeaderElement, Enum.CssClasses.ActiveTab);
+			}
+
+			if (this._activeTabContentElement) {
+				Helper.Style.RemoveClass(this._activeTabContentElement, Enum.CssClasses.ActiveTab);
 			}
 
 			this._tabsContent.scrollTo({
@@ -155,7 +160,10 @@ namespace OSUIFramework.Patterns.Tabs {
 			});
 
 			Helper.Style.AddClass(newHeaderItem, Enum.CssClasses.ActiveTab);
-			this._currentTabElement = newHeaderItem;
+			Helper.Style.AddClass(newContentItem, Enum.CssClasses.ActiveTab);
+
+			this._activeTabHeaderElement = newHeaderItem;
+			this._activeTabContentElement = newContentItem;
 			this._configs.ActiveTab = tabIndex;
 
 			this._triggerOnChangeEvent(tabIndex);
