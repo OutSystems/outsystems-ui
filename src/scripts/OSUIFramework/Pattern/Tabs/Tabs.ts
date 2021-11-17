@@ -6,6 +6,7 @@ namespace OSUIFramework.Patterns.Tabs {
 	export class Tabs extends AbstractPattern<TabsConfig> implements ITabs {
 		private _activeTabContentElement: HTMLElement;
 		private _activeTabHeaderElement: HTMLElement;
+		private _blockOnRender: boolean;
 		private _currentTabIndex: number;
 		// Store the click event with bind(this)
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -16,8 +17,6 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _tabsContentItems: NodeList;
 		private _tabsHeader: HTMLElement;
 		private _tabsHeaderItems: NodeList;
-		// eslint-disable-next-line @typescript-eslint/member-ordering
-		private _blockRender: boolean;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
@@ -57,7 +56,7 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			const currentTabIndex = parseInt(Helper.Attribute.Get(currentTarget, Enum.Attributes.DataTab));
 
-			this.changeTab(currentTabIndex);
+			this.changeTab(currentTabIndex, true);
 		}
 
 		private _handleScrollEvent(e): void {
@@ -79,7 +78,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			this.setTabsPosition(this._configs.Position);
 			this.setTabsHeight(this._configs.Height);
 			this.setTabsIsJustified(this._configs.IsJustified);
-			this.changeTab(this.configs.ActiveTab);
+			this.changeTab(this.configs.ActiveTab, false);
 			this._setEventListeners();
 		}
 
@@ -148,7 +147,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			// Check which property changed and call respective method to update it
 			switch (propertyName) {
 				case Enum.Properties.ActiveTab:
-					this.changeTab(propertyValue);
+					this.changeTab(propertyValue, true);
 					break;
 				case Enum.Properties.Height:
 					this.setTabsHeight(propertyValue);
@@ -168,12 +167,12 @@ namespace OSUIFramework.Patterns.Tabs {
 			}
 		}
 
-		public changeTab(tabIndex: number): void {
-			this._blockRender = true;
+		public changeTab(tabIndex: number, triggerEvent?: boolean): void {
+			this._blockOnRender = true;
 			const newHeaderItem = this._tabsHeaderItems[tabIndex] as HTMLElement;
 
 			if (newHeaderItem === undefined) {
-				this._blockRender = false;
+				this._blockOnRender = false;
 				return;
 			}
 
@@ -191,10 +190,12 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			this._configs.ActiveTab = tabIndex;
 
-			this._triggerOnChangeEvent(tabIndex);
+			if (triggerEvent) {
+				this._triggerOnChangeEvent(tabIndex);
+			}
 
 			setTimeout(() => {
-				this._blockRender = false;
+				this._blockOnRender = false;
 			}, 0);
 		}
 
@@ -241,9 +242,9 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		public updateOnRender(): void {
-			if (!this._blockRender) {
+			if (!this._blockOnRender) {
 				if (this._currentTabIndex === undefined && this.configs.ActiveTab !== undefined) {
-					this.changeTab(this.configs.ActiveTab);
+					this.changeTab(this.configs.ActiveTab, false);
 				}
 
 				this._prepareElements();
