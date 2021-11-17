@@ -16,6 +16,8 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _tabsContentItems: NodeList;
 		private _tabsHeader: HTMLElement;
 		private _tabsHeaderItems: NodeList;
+		// eslint-disable-next-line @typescript-eslint/member-ordering
+		private _blockRender: boolean;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
@@ -58,6 +60,17 @@ namespace OSUIFramework.Patterns.Tabs {
 			this.changeTab(currentTabIndex);
 		}
 
+		private _handleScrollEvent(e): void {
+			const width = this._tabsContent.clientWidth;
+			const selection_index = Math.round(e.currentTarget.scrollLeft / width);
+
+			console.log(e.currentTarget.scrollLeft);
+
+			const newHeaderItem = this._tabsHeaderItems[selection_index] as HTMLElement;
+			const newContentItem = this._tabsContentItems[selection_index] as HTMLElement;
+			this._toggleActiveClasses(newHeaderItem, newContentItem);
+		}
+
 		private _prepareElements(): void {
 			this._getTabsHeaderItems();
 			this._getTabsContentItems();
@@ -72,6 +85,9 @@ namespace OSUIFramework.Patterns.Tabs {
 
 		private _setEventListeners(): void {
 			this._tabsHeaderItems.forEach((node) => node.addEventListener('click', this._eventOnTabsClick));
+			this._tabsContent.addEventListener('touchend', (e) => {
+				this._handleScrollEvent(e);
+			});
 		}
 
 		private _setHtmlElements(): void {
@@ -92,6 +108,22 @@ namespace OSUIFramework.Patterns.Tabs {
 					Helper.Attribute.Set(currentContentItem, Enum.Attributes.DataTab, tabNumber.toString());
 				}
 			}
+		}
+
+		private _toggleActiveClasses(newActiveHeader: HTMLElement, newActiveContent: HTMLElement): void {
+			if (this._activeTabHeaderElement) {
+				Helper.Style.RemoveClass(this._activeTabHeaderElement, Enum.CssClasses.ActiveTab);
+			}
+
+			if (this._activeTabContentElement) {
+				Helper.Style.RemoveClass(this._activeTabContentElement, Enum.CssClasses.ActiveTab);
+			}
+
+			Helper.Style.AddClass(newActiveHeader, Enum.CssClasses.ActiveTab);
+			Helper.Style.AddClass(newActiveContent, Enum.CssClasses.ActiveTab);
+
+			this._activeTabHeaderElement = newActiveHeader;
+			this._activeTabContentElement = newActiveContent;
 		}
 
 		// Method that triggers the OnTabsChange event
@@ -137,21 +169,17 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		public changeTab(tabIndex: number): void {
+			this._blockRender = true;
 			const newHeaderItem = this._tabsHeaderItems[tabIndex] as HTMLElement;
 
 			if (newHeaderItem === undefined) {
-				console.warn(`The TabsHeaderItem with the index value of ${tabIndex} doesn't exist.`);
+				this._blockRender = false;
 				return;
 			}
-			const newContentItem = this._tabsContentItems[tabIndex] as HTMLElement;
 
-			if (this._activeTabHeaderElement) {
-				Helper.Style.RemoveClass(this._activeTabHeaderElement, Enum.CssClasses.ActiveTab);
-			}
-
-			if (this._activeTabContentElement) {
-				Helper.Style.RemoveClass(this._activeTabContentElement, Enum.CssClasses.ActiveTab);
-			}
+			const newContentItem = (this._tabsContentItems[tabIndex] as HTMLElement)
+				? (this._tabsContentItems[tabIndex] as HTMLElement)
+				: (this._tabsContentItems[0] as HTMLElement);
 
 			this._tabsContent.scrollTo({
 				top: 0,
@@ -159,14 +187,15 @@ namespace OSUIFramework.Patterns.Tabs {
 				behavior: Enum.OnChangeBehavior.Instant,
 			});
 
-			Helper.Style.AddClass(newHeaderItem, Enum.CssClasses.ActiveTab);
-			Helper.Style.AddClass(newContentItem, Enum.CssClasses.ActiveTab);
+			this._toggleActiveClasses(newHeaderItem, newContentItem);
 
-			this._activeTabHeaderElement = newHeaderItem;
-			this._activeTabContentElement = newContentItem;
 			this._configs.ActiveTab = tabIndex;
 
 			this._triggerOnChangeEvent(tabIndex);
+
+			setTimeout(() => {
+				this._blockRender = false;
+			}, 0);
 		}
 
 		// Destroy the Tabs pattern
@@ -209,6 +238,16 @@ namespace OSUIFramework.Patterns.Tabs {
 			Helper.Style.AddClass(this._selfElem, 'is--' + position);
 
 			this._configs.Position = position;
+		}
+
+		public updateOnRender(): void {
+			if (!this._blockRender) {
+				if (this._currentTabIndex === undefined && this.configs.ActiveTab !== undefined) {
+					this.changeTab(this.configs.ActiveTab);
+				}
+
+				this._prepareElements();
+			}
 		}
 	}
 }

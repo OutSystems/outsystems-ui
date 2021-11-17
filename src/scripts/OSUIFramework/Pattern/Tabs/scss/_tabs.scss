@@ -1,7 +1,6 @@
 .osui-tabs {
 	--header-height: auto;
 	display: grid;
-	grid-template-rows: var(--header-height) auto;
 	height: var(--tabs-height);
 }
 
@@ -23,12 +22,12 @@
 
 .osui-tabs.is--horizontal {
 	grid-auto-flow: column;
-	grid-template-rows: var(--header-height) auto;
+	grid-template-rows: var(--header-height) 1fr;
 }
 
 .osui-tabs.is--vertical {
 	grid-auto-flow: row;
-	grid-template-columns: auto 1fr;
+	grid-template-columns: var(--header-height) 1fr;
 }
 
 .osui-tabs .osui-tabs_header {
@@ -159,5 +158,10 @@
 }
 
 .osui-tabs_header .OSBlockWidget {
+	display: contents;
+}
+
+.osui-tabs .osui-tabs_content .ph > .list,
+.osui-tabs .osui-tabs_header .ph > .list {
 	display: contents;
 }
