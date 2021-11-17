@@ -11,6 +11,8 @@ namespace OSUIFramework.Patterns.Tabs {
 		// Store the click event with bind(this)
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnTabsClick: any;
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		private _onDisableRender: OSUIFramework.Callbacks.Generic;
 		private _onTabsChange: Callbacks.OSTabsOnChangeEvent;
 		private _tabsContent: HTMLElement;
 		// Stores the content items of this specific Tabs
@@ -23,6 +25,13 @@ namespace OSUIFramework.Patterns.Tabs {
 			super(uniqueId, new TabsConfig(configs));
 
 			this._eventOnTabsClick = this._handleClickEvent.bind(this);
+			// Bind this to the async callback
+			this._onDisableRender = this._disableBlockRender.bind(this);
+		}
+
+		// Method to toggle the blockRender status
+		private _disableBlockRender(): void {
+			this._blockOnRender = false;
 		}
 
 		private _getTabsContentItems(): NodeList {
@@ -194,9 +203,7 @@ namespace OSUIFramework.Patterns.Tabs {
 				this._triggerOnChangeEvent(tabIndex);
 			}
 
-			setTimeout(() => {
-				this._blockOnRender = false;
-			}, 0);
+			Helper.AsyncInvocation(this._onDisableRender, this.widgetId);
 		}
 
 		// Destroy the Tabs pattern
