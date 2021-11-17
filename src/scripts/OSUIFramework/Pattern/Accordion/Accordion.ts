@@ -36,8 +36,8 @@ namespace OSUIFramework.Patterns.Accordion {
 		}
 
 		public expandAllItems(): void {
-			//If this accordion has multiple items, it means we can't expand all.
-			if (this.configs.MultipleItems) {
+			//If this accordion does not have multiple items, it means we can't expand all.
+			if (!this.configs.MultipleItems) {
 				return;
 			}
 
