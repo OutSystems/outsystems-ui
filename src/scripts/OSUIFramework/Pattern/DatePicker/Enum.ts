@@ -18,7 +18,6 @@ namespace OSUIFramework.Patterns.DatePicker.Enum {
 	 */
 	export enum Properties {
 		FirstWeekDay = 'FirstWeekDay',
-		InitialDate = 'InitialDate',
 		DateFormat = 'DateFormat',
 		MaxDate = 'MaxDate',
 		MinDate = 'MinDate',

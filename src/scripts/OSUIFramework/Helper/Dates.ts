@@ -6,6 +6,19 @@ namespace OSUIFramework.Helper {
 		 */
 		private static _serverFormat = '';
 
+		/**
+		 * Function that will compare 2 dates and check if date1 is older than date2
+		 *
+		 * @static
+		 * @param {string} date1 Date to be checked if older
+		 * @param {string} date2 Date to be checked if it's after date1
+		 * @return {*}  {boolean}
+		 * @memberof Dates
+		 */
+		public static Compare(date1: string, date2: string): boolean {
+			return Date.parse(date1) < Date.parse(date2);
+		}
+
 		public static get ServerFormat(): string {
 			return Dates._serverFormat;
 		}

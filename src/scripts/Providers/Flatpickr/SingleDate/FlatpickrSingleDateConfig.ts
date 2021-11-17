@@ -3,20 +3,21 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace Providers.Flatpickr.SingleDate {
 	export class FlatpickrSingleDateConfig extends AbstractFlatpickrConfig {
+		public InitialDate: string;
 		public Type: string;
 
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		constructor(config: any) {
 			super(config);
 
-			this.DefaultDate = this.InitialDate;
+			this.DefaultDate[0] = this.InitialDate;
 		}
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		public getProviderConfig(): any {
 			// eslint-disable-next-line prefer-const
 			let flatpickrSingleDateOpts = {
-				defaultDate: OSUIFramework.Helper.Dates.IsNull(this.DefaultDate) ? undefined : this.DefaultDate,
+				defaultDate: OSUIFramework.Helper.Dates.IsNull(this.InitialDate) ? undefined : this.DefaultDate,
 				mode: Flatpickr.Enum.Type.Single,
 				onChange: this.OnChange,
 			};

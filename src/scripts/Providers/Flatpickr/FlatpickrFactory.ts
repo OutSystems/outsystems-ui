@@ -22,7 +22,10 @@ namespace Providers.Flatpickr.Factory {
 				break;
 
 			case Enum.Type.Range:
-				console.log(`Create Flatpickr ${_flatpickrMode} mode`);
+				_flatpickrItem = new Providers.Flatpickr.RangeDate.OSUIFlatpickrRangeDate(
+					datePickerId,
+					JSON.parse(configs)
+				);
 
 				break;
 

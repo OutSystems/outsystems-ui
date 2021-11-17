@@ -1,18 +1,18 @@
 /// <reference path="../AbstractFlatpickr.ts" />
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.Flatpickr.SingleDate {
+namespace Providers.Flatpickr.RangeDate {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
-	export class OSUIFlatpickrSingleDate extends AbstractFlatpickr<FlatpickrSingleDateConfig> {
+	export class OSUIFlatpickrRangeDate extends AbstractFlatpickr<FlatpickrRangeDateConfig> {
 		// Store the provider options
 		private _flatpickrOpts: FlatpickrOptions;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
-			super(uniqueId, new FlatpickrSingleDateConfig(configs));
+			super(uniqueId, new FlatpickrRangeDateConfig(configs));
 
 			// Set the default library Event handlers
 			this._configs.OnChange = this._onDateSelectedEvent.bind(this);
@@ -38,15 +38,25 @@ namespace Providers.Flatpickr.SingleDate {
 		// Method that will be triggered by library each time any date is selected
 		private _onDateSelectedEvent(selectedDates: string[], dateStr: string, fp: Flatpickr): void {
 			/* NOTE: dateStr param is not in use since the library has an issue arround it */
-			let _selectedDate = '';
+			const _selectedDate = [];
 
 			// Check if any date has been selected, In case of Clear this will retunr empty array
 			if (selectedDates.length > 0) {
-				_selectedDate = fp.formatDate(selectedDates[0], this._flatpickrOpts.dateFormat);
+				_selectedDate[0] = fp.formatDate(selectedDates[0], this._flatpickrOpts.dateFormat);
+				if (selectedDates[1]) {
+					_selectedDate[1] = fp.formatDate(selectedDates[1], this._flatpickrOpts.dateFormat);
+				}
 			}
 
 			// Trigger platform's onChange callback event
-			OSUIFramework.Helper.AsyncInvocation(this._onChangeCallbackEvent, this.widgetId, _selectedDate);
+			OSUIFramework.Helper.AsyncInvocation(
+				this._onChangeCallbackEvent,
+				this.widgetId,
+				_selectedDate[0],
+				_selectedDate[1]
+			);
+
+			console.log(_selectedDate[0], _selectedDate[1]);
 		}
 
 		public build(): void {
@@ -61,23 +71,31 @@ namespace Providers.Flatpickr.SingleDate {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
 			switch (propertyName) {
-				case Enum.Properties.InitialDate:
+				case Enum.Properties.StartDate:
 					// Set the DefaultDate values
-					this._configs.InitialDate = propertyValue;
-					this._configs.DefaultDate[0] = this._configs.InitialDate;
+					this._configs.StartDate = propertyValue;
+					this._configs.DefaultDate[0] = this._configs.StartDate;
+
+					break;
+
+				case Enum.Properties.EndDate:
+					// Set the DefaultDate values
+					this._configs.EndDate = propertyValue;
+					this._configs.DefaultDate[1] = this._configs.EndDate;
 
 					break;
 
 				case OSUIFramework.Patterns.DatePicker.Enum.Properties.DateFormat:
+					console.log('Check this!');
 					// Check if any Date was selected
-					if (this._flatpickr.selectedDates.length > 0) {
-						// Set the new DefaultDate values
-						this._configs.InitialDate = this._flatpickr.formatDate(
-							this._flatpickr.selectedDates[0],
-							this._flatpickrOpts.dateFormat
-						);
-						this._configs.DefaultDate[0] = this._configs.InitialDate;
-					}
+					// if (this._flatpickr.selectedDates.length > 0) {
+					// 	// Set the new DefaultDate values
+					// 	this._configs.InitialDate = this._flatpickr.formatDate(
+					// 		this._flatpickr.selectedDates[0],
+					// 		this._flatpickrOpts.dateFormat
+					// 	);
+					// 	this._configs.DefaultDate = this._configs.InitialDate;
+					// }
 
 					// Set the new InputDateFormat
 					this._configs.DateFormat = propertyValue;

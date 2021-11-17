@@ -5,7 +5,7 @@ namespace Providers.Flatpickr {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		protected _flatpickrOpts: any;
 
-		public DefaultDate: string;
+		public DefaultDate = [];
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		public OnChange: any;
 		public ServerDateFormat: string;
@@ -113,6 +113,7 @@ namespace Providers.Flatpickr {
 				showMonths: this.OptionalConfigs.showMonths,
 				time_24hr: this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormat.Time24hFormat,
 				weekNumbers: this.OptionalConfigs.showWeekNumbers,
+				onChange: this.OnChange,
 			};
 
 			return this._flatpickrOpts;
