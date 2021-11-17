@@ -236,16 +236,8 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 			// Gets initial height value
 			const expandedHeight = this._accordionContent.getBoundingClientRect().height;
-
-			// Toggle is--closed/is--open class from current accordion item
-			Helper.Style.AddClass(this._accordionItem, Enum.CssClass.Closed);
-			Helper.Style.RemoveClass(this._accordionItem, Enum.CssClass.Open);
-
-			// Removes expanded class and adds the collapsed class to obtain the collapsed height value
-			Helper.Style.RemoveClass(this._accordionContent, Enum.CssClass.Expanded);
-			Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Collapsed);
-
-			const collapsedHeight = this._accordionContent.getBoundingClientRect().height;
+			// We know the final height is 0 - it is being collapsed
+			const collapsedHeight = 0;
 
 			this._accordionContent.style.height = expandedHeight + GlobalEnum.Units.Pixel;
 
