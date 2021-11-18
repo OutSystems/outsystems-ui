@@ -9,6 +9,8 @@
 /*! OutSystems UI Carousel customization */
 ///
 .osui-carousel {
+	--osui-carousel-track-width: 100%;
+
 	.splide__arrow {
 		background-color: var(--color-neutral-0);
 		box-shadow: var(--shadow-xs);
@@ -55,8 +57,7 @@
 	}
 
 	.osui-carousel_track {
-		--carousel-width: 100%;
-		width: var(--carousel-width);
+		width: var(--osui-carousel-track-width);
 	}
 
 	.splide--draggable,

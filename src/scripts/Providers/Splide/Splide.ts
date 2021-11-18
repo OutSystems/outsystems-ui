@@ -53,7 +53,7 @@ namespace Providers.Splide {
 
 		// Add event listener to update the correct width of the pattern
 		private _adjustWidthOnResize(): void {
-			window.addEventListener('resize', this._onResizeWidth);
+			window.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Resize, this._onResizeWidth);
 		}
 
 		// Method to check if a List Widget is used inside the placeholder and assign the _listWidget variable
@@ -140,8 +140,8 @@ namespace Providers.Splide {
 		private _setCarouselWidth(): void {
 			OSUIFramework.Helper.Style.SetStyleAttribute(
 				this._splideTrack,
-				'--carousel-width',
-				this._selfElem.offsetWidth + 'px'
+				OSUIFramework.Patterns.Carousel.Enum.CssVariables.CarouselWidth,
+				this._selfElem.offsetWidth + OSUIFramework.GlobalEnum.Units.Pixel
 			);
 		}
 
@@ -293,7 +293,7 @@ namespace Providers.Splide {
 			}
 
 			// remove event listener
-			window.addEventListener('resize', this._onResizeWidth);
+			window.removeEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Resize, this._onResizeWidth);
 
 			super.dispose();
 		}
