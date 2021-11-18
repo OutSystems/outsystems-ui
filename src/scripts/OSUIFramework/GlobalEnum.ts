@@ -109,6 +109,8 @@ namespace OSUIFramework.GlobalEnum {
 	 * OutSystemsUI event Keycodes
 	 */
 	export enum Keycodes {
+		ArrowLeft = 'ArrowLeft',
+		ArrowRight = 'ArrowRight',
 		Escape = 'Escape',
 		Enter = 'Enter',
 		Tab = 'Tab',

@@ -8,6 +8,8 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _activeTabHeaderElement: HTMLElement;
 		private _blockOnRender: boolean;
 		private _currentTabIndex: number;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		private _eventOnHeaderKeypress: any;
 		// Store the click event with bind(this)
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnTabsClick: any;
@@ -24,6 +26,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new TabsConfig(configs));
 
+			this._eventOnHeaderKeypress = this._handleKeypressEvent.bind(this);
 			this._eventOnTabsClick = this._handleClickEvent.bind(this);
 			// Bind this to the async callback
 			this._onDisableRender = this._disableBlockRender.bind(this);
@@ -70,6 +73,27 @@ namespace OSUIFramework.Patterns.Tabs {
 			this.changeTab(currentTabIndex, true);
 		}
 
+		private _handleKeypressEvent(e): void {
+			let targetHeaderItemIndex;
+
+			switch (e.key) {
+				case GlobalEnum.Keycodes.ArrowRight:
+					targetHeaderItemIndex = this._configs.ActiveTab + 1;
+					this.changeTab(targetHeaderItemIndex, true);
+					break;
+				case GlobalEnum.Keycodes.ArrowLeft:
+					targetHeaderItemIndex = this._configs.ActiveTab - 1;
+					this.changeTab(targetHeaderItemIndex, true);
+					break;
+			}
+
+			const targetHeaderItem = this._tabsHeaderItemsElements[targetHeaderItemIndex] as HTMLElement;
+
+			if (targetHeaderItem) {
+				targetHeaderItem.focus();
+			}
+		}
+
 		private _handleScrollEvent(e): void {
 			const width = this._tabsContentElement.clientWidth;
 			const selection_index = Math.round(e.currentTarget.scrollLeft / width);
@@ -90,6 +114,8 @@ namespace OSUIFramework.Patterns.Tabs {
 				Constants.AccessibilityAttribute.Role.AttrName,
 				Constants.AccessibilityAttribute.Role.TabList
 			);
+
+			this._tabsHeaderElement.addEventListener('keydown', this._eventOnHeaderKeypress);
 
 			this._setTabsConnection();
 		}
@@ -220,6 +246,7 @@ namespace OSUIFramework.Patterns.Tabs {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
+			this._blockOnRender = true;
 			// Check which property changed and call respective method to update it
 			switch (propertyName) {
 				case Enum.Properties.ActiveTab:
@@ -241,19 +268,30 @@ namespace OSUIFramework.Patterns.Tabs {
 					super.changeProperty(propertyName, propertyValue);
 					break;
 			}
+			Helper.AsyncInvocation(this._onDisableRender, this.widgetId);
 		}
 
 		public changeTab(tabIndex: number, triggerEvent?: boolean): void {
 			this._blockOnRender = true;
-			const newHeaderItem = this._tabsHeaderItemsElements[tabIndex] as HTMLElement;
+			let newTabIndex;
+
+			if (this._tabsHeaderItemsElements[tabIndex] as HTMLElement) {
+				newTabIndex = tabIndex;
+			} else if (this._tabsHeaderItemsElements[this._configs.ActiveTab] as HTMLElement) {
+				newTabIndex = this._configs.ActiveTab;
+			} else {
+				newTabIndex = 0;
+			}
+
+			const newHeaderItem = this._tabsHeaderItemsElements[newTabIndex] as HTMLElement;
 
 			if (newHeaderItem === undefined) {
 				this._blockOnRender = false;
 				return;
 			}
 
-			const newContentItem = (this._tabsContentItemsElements[tabIndex] as HTMLElement)
-				? (this._tabsContentItemsElements[tabIndex] as HTMLElement)
+			const newContentItem = (this._tabsContentItemsElements[newTabIndex] as HTMLElement)
+				? (this._tabsContentItemsElements[newTabIndex] as HTMLElement)
 				: (this._tabsContentItemsElements[0] as HTMLElement);
 
 			this._tabsContentElement.scrollTo({
@@ -269,10 +307,10 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			this._activeTabHeaderElement = newHeaderItem;
 			this._activeTabContentElement = newContentItem;
-			this._configs.ActiveTab = tabIndex;
+			this._configs.ActiveTab = newTabIndex;
 
 			if (triggerEvent) {
-				this._triggerOnChangeEvent(tabIndex);
+				this._triggerOnChangeEvent(newTabIndex);
 			}
 
 			Helper.AsyncInvocation(this._onDisableRender, this.widgetId);
