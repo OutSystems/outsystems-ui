@@ -91,7 +91,7 @@
 .osui-tabs .osui-tabs_header-item.is--active::after {
 	content: '';
 	position: absolute;
-	z-index: 100;
+	z-index: 1;
 }
 
 .osui-tabs.is--horizontal .osui-tabs_header-item.is--active::after {

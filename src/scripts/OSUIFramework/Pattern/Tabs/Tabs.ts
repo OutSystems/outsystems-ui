@@ -54,7 +54,9 @@ namespace OSUIFramework.Patterns.Tabs {
 			return this._tabsHeaderItems;
 		}
 
-		private _handleClickEvent({ currentTarget }): void {
+		private _handleClickEvent(e): void {
+			const currentTarget = e.currentTarget;
+
 			this._activeTabHeaderElement = this._selfElem.querySelector(
 				Constants.Dot + Enum.CssClasses.ActiveTab
 			) as HTMLElement;
@@ -92,7 +94,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		private _setEventListeners(): void {
-			this._tabsHeaderItems.forEach((node) => node.addEventListener('click', this._eventOnTabsClick));
+			this._tabsHeaderItems.forEach((headerItem) => headerItem.addEventListener('click', this._eventOnTabsClick));
 			this._tabsContent.addEventListener('touchend', (e) => {
 				this._handleScrollEvent(e);
 			});
@@ -210,6 +212,10 @@ namespace OSUIFramework.Patterns.Tabs {
 		public dispose(): void {
 			// call super method, which deletes this tabs class instance from the TabsMap
 			super.dispose();
+			// remove click events
+			this._tabsHeaderItems.forEach((headerItem) =>
+				headerItem.removeEventListener('click', this._eventOnTabsClick)
+			);
 		}
 
 		// Set callbacks for the onTabsChange event
@@ -233,17 +239,17 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		public setTabsOrientation(orientation: GlobalTypes.Orientation): void {
-			Helper.Style.RemoveClass(this._selfElem, 'is--' + this._configs.Orientation);
+			Helper.Style.RemoveClass(this._selfElem, Constants.ClassModifier + this._configs.Orientation);
 			Helper.Attribute.Set(this._selfElem, Enum.Attributes.DataOrientation, orientation.toString());
-			Helper.Style.AddClass(this._selfElem, 'is--' + orientation);
+			Helper.Style.AddClass(this._selfElem, Constants.ClassModifier + orientation);
 
 			this._configs.Orientation = orientation;
 		}
 
 		public setTabsPosition(position: GlobalTypes.Direction): void {
-			Helper.Style.RemoveClass(this._selfElem, 'is--' + this._configs.Position);
+			Helper.Style.RemoveClass(this._selfElem, Constants.ClassModifier + this._configs.Position);
 			Helper.Attribute.Set(this._selfElem, Enum.Attributes.DataPosition, position.toString());
-			Helper.Style.AddClass(this._selfElem, 'is--' + position);
+			Helper.Style.AddClass(this._selfElem, Constants.ClassModifier + position);
 
 			this._configs.Position = position;
 		}
