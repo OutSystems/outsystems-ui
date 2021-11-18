@@ -54,6 +54,11 @@
 		}
 	}
 
+	.osui-carousel_track {
+		--carousel-width: 100%;
+		width: var(--carousel-width);
+	}
+
 	.splide--draggable,
 	&.splide--draggable {
 		cursor: grab;
