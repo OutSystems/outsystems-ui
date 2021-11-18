@@ -37,7 +37,7 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ChangeProperty(accordionItemId: string, propertyName: string, propertyValue: any): void {
+	export function ChangeProperty(accordionItemId: string, propertyName: string, propertyValue: unknown): void {
 		const accordionItem = GetAccordionItemById(accordionItemId);
 
 		accordionItem.changeProperty(propertyName, propertyValue);

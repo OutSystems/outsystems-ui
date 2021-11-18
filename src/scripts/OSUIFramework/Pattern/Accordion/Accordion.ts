@@ -22,6 +22,17 @@ namespace OSUIFramework.Patterns.Accordion {
 			}
 		}
 
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+		public changeProperty(propertyName: string, propertyValue: any): void {
+			switch (propertyName) {
+				case Enum.Properties.MultipleItems:
+					this.configs.MultipleItems = propertyValue;
+					//We collapse all the items to begin anew
+					this.collapseAllItems();
+					break;
+			}
+		}
+
 		public collapseAllItems(): void {
 			this._accordionItems.forEach((item) => {
 				if (item.isExpanded && !item.isDisabled) {

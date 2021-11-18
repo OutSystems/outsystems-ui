@@ -3,7 +3,9 @@ namespace OSUIFramework.Patterns.Accordion.Enum {
 	/**
 	 * Accordion Enum properties
 	 */
-	export enum Properties {}
+	export enum Properties {
+		MultipleItems = 'MultipleItems',
+	}
 	//Implement you code here
 	/**
 	 * Accordion Enum for CSS Classes
