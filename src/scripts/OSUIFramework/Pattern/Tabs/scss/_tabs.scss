@@ -95,10 +95,16 @@
 
 .osui-tabs .osui-tabs_header-item::after {
 	content: '';
-	height: 100%;
 	position: absolute;
 	z-index: 1;
+}
+
+.osui-tabs.is--horizontal .osui-tabs_header-item::after {
 	width: 100%;
+}
+
+.osui-tabs.is--vertical .osui-tabs_header-item::after {
+	height: 100%;
 }
 
 .osui-tabs.is--horizontal .osui-tabs_header-item::after {
