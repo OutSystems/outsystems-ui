@@ -125,6 +125,8 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._tabsHeaderItemsElements.forEach((headerItem) =>
 				headerItem.removeEventListener('click', this._eventOnTabsClick)
 			);
+
+			this._tabsHeaderElement.removeEventListener('keydown', this._eventOnHeaderKeypress);
 		}
 
 		private _setContentAccessibilityAttributes(contentItem: HTMLElement, currentHeaderItemId: string): void {
@@ -361,6 +363,7 @@ namespace OSUIFramework.Patterns.Tabs {
 
 		public updateOnRender(): void {
 			if (!this._blockOnRender) {
+				this._removeEventListeners();
 				this._prepareElements();
 				if (this._currentTabIndex === undefined && this.configs.ActiveTab !== undefined) {
 					this.changeTab(this.configs.ActiveTab, false);
