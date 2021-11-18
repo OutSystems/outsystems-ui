@@ -84,7 +84,13 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _prepareElements(): void {
 			this._getTabsHeaderItems();
 			this._getTabsContentItems();
-			this._setAccessibilityAttributes();
+
+			Helper.Attribute.Set(
+				this._tabsHeaderElement,
+				Constants.AccessibilityAttribute.Role.AttrName,
+				Constants.AccessibilityAttribute.Role.TabList
+			);
+
 			this._setTabsConnection();
 		}
 
@@ -92,14 +98,6 @@ namespace OSUIFramework.Patterns.Tabs {
 			// remove click events
 			this._tabsHeaderItemsElements.forEach((headerItem) =>
 				headerItem.removeEventListener('click', this._eventOnTabsClick)
-			);
-		}
-
-		private _setAccessibilityAttributes(): void {
-			Helper.Attribute.Set(
-				this._tabsHeaderElement,
-				Constants.AccessibilityAttribute.Role.AttrName,
-				Constants.AccessibilityAttribute.Role.TabList
 			);
 		}
 
@@ -120,6 +118,7 @@ namespace OSUIFramework.Patterns.Tabs {
 				Constants.AccessibilityAttribute.Role.AttrName,
 				Constants.AccessibilityAttribute.Role.Tab
 			);
+			Helper.Attribute.Set(headerItem, Constants.AccessibilityAttribute.TabIndex, '-1');
 			Helper.Attribute.Set(headerItem, Constants.AccessibilityAttribute.Aria.Selected, false);
 			Helper.Attribute.Set(headerItem, Constants.AccessibilityAttribute.Aria.Controls, currentContentItemId);
 		}
@@ -178,7 +177,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			Helper.Style.AddClass(newActiveContent, Enum.CssClasses.ActiveTab);
 		}
 
-		private _toggleContentAccessibilityAttributes(newActiveContent: HTMLElement): void {
+		private _toggleContentItemsAccessibilityAttributes(newActiveContent: HTMLElement): void {
 			if (this._activeTabContentElement) {
 				Helper.Attribute.Set(this._activeTabContentElement, Constants.AccessibilityAttribute.TabIndex, '-1');
 				Helper.Attribute.Set(this._activeTabContentElement, Constants.AccessibilityAttribute.Aria.Hidden, true);
@@ -187,15 +186,17 @@ namespace OSUIFramework.Patterns.Tabs {
 			Helper.Attribute.Set(newActiveContent, Constants.AccessibilityAttribute.TabIndex, '0');
 		}
 
-		private _toggleHeaderAccessibilityAttributes(newActiveHeader: HTMLElement): void {
+		private _toggleHeaderItemsAccessibilityAttributes(newActiveHeader: HTMLElement): void {
 			if (this._activeTabHeaderElement) {
 				Helper.Attribute.Set(
 					this._activeTabHeaderElement,
 					Constants.AccessibilityAttribute.Aria.Selected,
 					false
 				);
+				Helper.Attribute.Set(this._activeTabHeaderElement, Constants.AccessibilityAttribute.TabIndex, '-1');
 			}
 			Helper.Attribute.Set(newActiveHeader, Constants.AccessibilityAttribute.Aria.Selected, true);
+			Helper.Attribute.Set(newActiveHeader, Constants.AccessibilityAttribute.TabIndex, '0');
 		}
 
 		// Method that triggers the OnTabsChange event
@@ -263,8 +264,8 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			this._toggleActiveClasses(newHeaderItem, newContentItem);
 
-			this._toggleHeaderAccessibilityAttributes(newHeaderItem);
-			this._toggleContentAccessibilityAttributes(newContentItem);
+			this._toggleHeaderItemsAccessibilityAttributes(newHeaderItem);
+			this._toggleContentItemsAccessibilityAttributes(newContentItem);
 
 			this._activeTabHeaderElement = newHeaderItem;
 			this._activeTabContentElement = newContentItem;
