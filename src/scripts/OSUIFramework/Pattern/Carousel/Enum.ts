@@ -9,6 +9,13 @@ namespace OSUIFramework.Patterns.Carousel.Enum {
 	}
 
 	/**
+	 * Carousel CSS Variables
+	 */
+	export enum CssVariables {
+		CarouselWidth = '--osui-carousel-track-width',
+	}
+
+	/**
 	 * Carousel CSS Classes
 	 */
 	export enum CssClass {
