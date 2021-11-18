@@ -14,11 +14,11 @@ namespace OSUIFramework.Patterns.Tabs {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		private _onDisableRender: OSUIFramework.Callbacks.Generic;
 		private _onTabsChange: Callbacks.OSTabsOnChangeEvent;
-		private _tabsContent: HTMLElement;
+		private _tabsContentElement: HTMLElement;
 		// Stores the content items of this specific Tabs
-		private _tabsContentItems: NodeList;
-		private _tabsHeader: HTMLElement;
-		private _tabsHeaderItems: NodeList;
+		private _tabsContentItemsElements: NodeList;
+		private _tabsHeaderElement: HTMLElement;
+		private _tabsHeaderItemsElements: NodeList;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
@@ -35,23 +35,23 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		private _getTabsContentItems(): NodeList {
-			this._tabsContentItems = Array.prototype.filter.call(
+			this._tabsContentItemsElements = Array.prototype.filter.call(
 				this._selfElem.querySelectorAll(Constants.Dot + Enum.CssClasses.TabsContentItem),
 				(el) => {
 					return el.closest(Constants.Dot + Enum.CssClasses.Tabs) === this._selfElem;
 				}
 			);
-			return this._tabsContentItems;
+			return this._tabsContentItemsElements;
 		}
 
 		private _getTabsHeaderItems(): NodeList {
-			this._tabsHeaderItems = Array.prototype.filter.call(
+			this._tabsHeaderItemsElements = Array.prototype.filter.call(
 				this._selfElem.querySelectorAll(Constants.Dot + Enum.CssClasses.TabsHeaderItem),
 				(el) => {
 					return el.closest(Constants.Dot + Enum.CssClasses.Tabs) === this._selfElem;
 				}
 			);
-			return this._tabsHeaderItems;
+			return this._tabsHeaderItemsElements;
 		}
 
 		private _handleClickEvent(e): void {
@@ -71,33 +71,66 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		private _handleScrollEvent(e): void {
-			const width = this._tabsContent.clientWidth;
+			const width = this._tabsContentElement.clientWidth;
 			const selection_index = Math.round(e.currentTarget.scrollLeft / width);
 
 			console.log(e.currentTarget.scrollLeft);
 
-			const newHeaderItem = this._tabsHeaderItems[selection_index] as HTMLElement;
-			const newContentItem = this._tabsContentItems[selection_index] as HTMLElement;
+			const newHeaderItem = this._tabsHeaderItemsElements[selection_index] as HTMLElement;
+			const newContentItem = this._tabsContentItemsElements[selection_index] as HTMLElement;
 			this._toggleActiveClasses(newHeaderItem, newContentItem);
 		}
 
 		private _prepareElements(): void {
 			this._getTabsHeaderItems();
 			this._getTabsContentItems();
+			this._setAccessibilityAttributes();
 			this._setTabsConnection();
-			this._setEventListeners();
 		}
 
-		private _setEventListeners(): void {
-			this._tabsHeaderItems.forEach((headerItem) => headerItem.addEventListener('click', this._eventOnTabsClick));
-			this._tabsContent.addEventListener('touchend', (e) => {
-				this._handleScrollEvent(e);
-			});
+		private _removeEventListeners(): void {
+			// remove click events
+			this._tabsHeaderItemsElements.forEach((headerItem) =>
+				headerItem.removeEventListener('click', this._eventOnTabsClick)
+			);
+		}
+
+		private _setAccessibilityAttributes(): void {
+			Helper.Attribute.Set(
+				this._tabsHeaderElement,
+				Constants.AccessibilityAttribute.Role.AttrName,
+				Constants.AccessibilityAttribute.Role.TabList
+			);
+		}
+
+		private _setContentAccessibilityAttributes(contentItem: HTMLElement, currentHeaderItemId: string): void {
+			Helper.Attribute.Set(
+				contentItem,
+				Constants.AccessibilityAttribute.Role.AttrName,
+				Constants.AccessibilityAttribute.Role.TabPanel
+			);
+			Helper.Attribute.Set(contentItem, Constants.AccessibilityAttribute.TabIndex, '-1');
+			Helper.Attribute.Set(contentItem, Constants.AccessibilityAttribute.Aria.Hidden, true);
+			Helper.Attribute.Set(contentItem, Constants.AccessibilityAttribute.Aria.Labelledby, currentHeaderItemId);
+		}
+
+		private _setHeaderAccessibilityAttributes(headerItem: HTMLElement, currentContentItemId: string): void {
+			Helper.Attribute.Set(
+				headerItem,
+				Constants.AccessibilityAttribute.Role.AttrName,
+				Constants.AccessibilityAttribute.Role.Tab
+			);
+			Helper.Attribute.Set(headerItem, Constants.AccessibilityAttribute.Aria.Selected, false);
+			Helper.Attribute.Set(headerItem, Constants.AccessibilityAttribute.Aria.Controls, currentContentItemId);
+		}
+
+		private _setHeaderItemOnClickEvent(elem: HTMLElement): void {
+			elem.addEventListener('click', this._eventOnTabsClick);
 		}
 
 		private _setHtmlElements(): void {
-			this._tabsHeader = this._selfElem.querySelector(Constants.Dot + Enum.CssClasses.TabsHeader);
-			this._tabsContent = this._selfElem.querySelector(Constants.Dot + Enum.CssClasses.TabsContent);
+			this._tabsHeaderElement = this._selfElem.querySelector(Constants.Dot + Enum.CssClasses.TabsHeader);
+			this._tabsContentElement = this._selfElem.querySelector(Constants.Dot + Enum.CssClasses.TabsContent);
 		}
 
 		private _setInitialOptions(): void {
@@ -111,15 +144,24 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _setTabsConnection(): void {
 			let tabNumber = 0;
 
-			for (tabNumber; tabNumber < this._tabsHeaderItems.length; tabNumber++) {
-				const currentHeaderItem = this._tabsHeaderItems[tabNumber] as HTMLElement;
-				const currentContentItem = this._tabsContentItems[tabNumber] as HTMLElement;
+			while (tabNumber < this._tabsHeaderItemsElements.length) {
+				const currentHeaderItem = this._tabsHeaderItemsElements[tabNumber] as HTMLElement;
+				const currentHeaderItemId = Helper.Attribute.Get(currentHeaderItem.parentNode as HTMLElement, 'id');
+				const currentContentItem = this._tabsContentItemsElements[tabNumber] as HTMLElement;
+				const currentContentItemId = Helper.Attribute.Get(currentContentItem.parentNode as HTMLElement, 'id');
 
-				Helper.Attribute.Set(currentHeaderItem, Enum.Attributes.DataTab, tabNumber.toString());
+				if (currentHeaderItem !== undefined) {
+					Helper.Attribute.Set(currentHeaderItem, Enum.Attributes.DataTab, tabNumber.toString());
+					this._setHeaderAccessibilityAttributes(currentHeaderItem, currentContentItemId);
+					this._setHeaderItemOnClickEvent(currentHeaderItem);
+				}
 
 				if (currentContentItem !== undefined) {
 					Helper.Attribute.Set(currentContentItem, Enum.Attributes.DataTab, tabNumber.toString());
+					this._setContentAccessibilityAttributes(currentContentItem, currentHeaderItemId);
 				}
+
+				tabNumber++;
 			}
 		}
 
@@ -134,9 +176,26 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			Helper.Style.AddClass(newActiveHeader, Enum.CssClasses.ActiveTab);
 			Helper.Style.AddClass(newActiveContent, Enum.CssClasses.ActiveTab);
+		}
 
-			this._activeTabHeaderElement = newActiveHeader;
-			this._activeTabContentElement = newActiveContent;
+		private _toggleContentAccessibilityAttributes(newActiveContent: HTMLElement): void {
+			if (this._activeTabContentElement) {
+				Helper.Attribute.Set(this._activeTabContentElement, Constants.AccessibilityAttribute.TabIndex, '-1');
+				Helper.Attribute.Set(this._activeTabContentElement, Constants.AccessibilityAttribute.Aria.Hidden, true);
+			}
+			Helper.Attribute.Set(newActiveContent, Constants.AccessibilityAttribute.Aria.Hidden, false);
+			Helper.Attribute.Set(newActiveContent, Constants.AccessibilityAttribute.TabIndex, '0');
+		}
+
+		private _toggleHeaderAccessibilityAttributes(newActiveHeader: HTMLElement): void {
+			if (this._activeTabHeaderElement) {
+				Helper.Attribute.Set(
+					this._activeTabHeaderElement,
+					Constants.AccessibilityAttribute.Aria.Selected,
+					false
+				);
+			}
+			Helper.Attribute.Set(newActiveHeader, Constants.AccessibilityAttribute.Aria.Selected, true);
 		}
 
 		// Method that triggers the OnTabsChange event
@@ -185,18 +244,18 @@ namespace OSUIFramework.Patterns.Tabs {
 
 		public changeTab(tabIndex: number, triggerEvent?: boolean): void {
 			this._blockOnRender = true;
-			const newHeaderItem = this._tabsHeaderItems[tabIndex] as HTMLElement;
+			const newHeaderItem = this._tabsHeaderItemsElements[tabIndex] as HTMLElement;
 
 			if (newHeaderItem === undefined) {
 				this._blockOnRender = false;
 				return;
 			}
 
-			const newContentItem = (this._tabsContentItems[tabIndex] as HTMLElement)
-				? (this._tabsContentItems[tabIndex] as HTMLElement)
-				: (this._tabsContentItems[0] as HTMLElement);
+			const newContentItem = (this._tabsContentItemsElements[tabIndex] as HTMLElement)
+				? (this._tabsContentItemsElements[tabIndex] as HTMLElement)
+				: (this._tabsContentItemsElements[0] as HTMLElement);
 
-			this._tabsContent.scrollTo({
+			this._tabsContentElement.scrollTo({
 				top: 0,
 				left: newContentItem.offsetLeft,
 				behavior: Enum.OnChangeBehavior.Instant,
@@ -204,6 +263,11 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			this._toggleActiveClasses(newHeaderItem, newContentItem);
 
+			this._toggleHeaderAccessibilityAttributes(newHeaderItem);
+			this._toggleContentAccessibilityAttributes(newContentItem);
+
+			this._activeTabHeaderElement = newHeaderItem;
+			this._activeTabContentElement = newContentItem;
 			this._configs.ActiveTab = tabIndex;
 
 			if (triggerEvent) {
@@ -217,10 +281,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		public dispose(): void {
 			// call super method, which deletes this tabs class instance from the TabsMap
 			super.dispose();
-			// remove click events
-			this._tabsHeaderItems.forEach((headerItem) =>
-				headerItem.removeEventListener('click', this._eventOnTabsClick)
-			);
+			this._removeEventListeners();
 		}
 
 		// Set callbacks for the onTabsChange event
