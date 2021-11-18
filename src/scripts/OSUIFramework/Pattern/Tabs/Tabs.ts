@@ -85,11 +85,6 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._getTabsHeaderItems();
 			this._getTabsContentItems();
 			this._setTabsConnection();
-			this.setTabsOrientation(this.configs.Orientation);
-			this.setTabsPosition(this._configs.Position);
-			this.setTabsHeight(this._configs.Height);
-			this.setTabsIsJustified(this._configs.IsJustified);
-			this.changeTab(this.configs.ActiveTab, false);
 			this._setEventListeners();
 		}
 
@@ -103,6 +98,14 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _setHtmlElements(): void {
 			this._tabsHeader = this._selfElem.querySelector(Constants.Dot + Enum.CssClasses.TabsHeader);
 			this._tabsContent = this._selfElem.querySelector(Constants.Dot + Enum.CssClasses.TabsContent);
+		}
+
+		private _setInitialOptions(): void {
+			this.setTabsOrientation(this.configs.Orientation);
+			this.setTabsPosition(this._configs.Position);
+			this.setTabsHeight(this._configs.Height);
+			this.setTabsIsJustified(this._configs.IsJustified);
+			this.changeTab(this.configs.ActiveTab, false);
 		}
 
 		private _setTabsConnection(): void {
@@ -149,6 +152,8 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._setHtmlElements();
 
 			this._prepareElements();
+
+			this._setInitialOptions();
 
 			this.finishBuild();
 		}
@@ -256,11 +261,10 @@ namespace OSUIFramework.Patterns.Tabs {
 
 		public updateOnRender(): void {
 			if (!this._blockOnRender) {
+				this._prepareElements();
 				if (this._currentTabIndex === undefined && this.configs.ActiveTab !== undefined) {
 					this.changeTab(this.configs.ActiveTab, false);
 				}
-
-				this._prepareElements();
 			}
 		}
 	}
