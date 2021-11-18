@@ -13,12 +13,12 @@ namespace OSUIFramework.Patterns.AccordionItem.Enum {
 	 * AccordionItem Enum for CSS Classes
 	 */
 	export enum CssClass {
-		Accordion = 'osui-accordion', //accordion
-		AccordionItem = 'osui-accordion-item', //section-expandable
-		AccordionIcon = 'osui-accordion-icon', //section-expandable-icon
-		AccordionTitle = 'osui-accordion-title', //section-expandable-title
-		AccordionContent = 'osui-accordion-content', //section-expandable-content
-		AccordionPlaceholder = 'osui-accordion-placeholder',
+		Pattern = 'osui-accordion', //accordion
+		PatternItem = 'osui-accordion-item', //section-expandable
+		PatternIcon = 'osui-accordion-icon', //section-expandable-icon
+		PatternTitle = 'osui-accordion-title', //section-expandable-title
+		PatternContent = 'osui-accordion-content', //section-expandable-content
+		PatternPlaceholder = 'osui-accordion-placeholder',
 		Open = 'is--open',
 		Closed = 'is--closed',
 		Expanded = 'is--expanded',

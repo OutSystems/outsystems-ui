@@ -24,7 +24,7 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 * @param {string} accordionId ID of the Accordion pattern.
 	 *
 	 */
-	export function CollapseAll(accordionId: string): void {
+	export function CollapseAllItems(accordionId: string): void {
 		const accordion = GetAccordionById(accordionId);
 		accordion.collapseAllItems();
 	}
@@ -72,7 +72,7 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 * @param {string} accordionId ID of the Accordion pattern.
 	 *
 	 */
-	export function ExpandAll(accordionId: string): void {
+	export function ExpandAllItems(accordionId: string): void {
 		const accordion = GetAccordionById(accordionId);
 		accordion.expandAllItems();
 	}
@@ -83,7 +83,7 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 * @export
 	 * @return {*}  {Map<string, OSUIFramework.Patterns.Accordion.IAccordion>}
 	 */
-	export function GetAllAccordion(): Array<string> {
+	export function GetAllAccordions(): Array<string> {
 		return OSUIFramework.Helper.MapOperation.ExportKeys(_accordionMap);
 	}
 

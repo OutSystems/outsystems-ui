@@ -7,8 +7,7 @@ namespace OSUIFramework.Patterns.Accordion {
 		// Stores the Accordion Items of this Accordion
 		private _accordionItems: Map<string, OSUIFramework.Patterns.AccordionItem.IAccordionItem>;
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		constructor(uniqueId: string, configs: any) {
+		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new AccordionConfig(configs));
 			this._accordionItems = new Map<string, OSUIFramework.Patterns.AccordionItem.IAccordionItem>();
 		}

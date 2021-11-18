@@ -110,9 +110,9 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 		// Method that gets & stores the HTML elements of the Accordion Item
 		private _setUpElements(): void {
-			this._accordionTitle = this._accordionItem.querySelector(Constants.Dot + Enum.CssClass.AccordionTitle);
-			this._accordionContent = this._accordionItem.querySelector(Constants.Dot + Enum.CssClass.AccordionContent);
-			this._accordionIcon = this._accordionItem.querySelector(Constants.Dot + Enum.CssClass.AccordionIcon);
+			this._accordionTitle = this._accordionItem.querySelector(Constants.Dot + Enum.CssClass.PatternTitle);
+			this._accordionContent = this._accordionItem.querySelector(Constants.Dot + Enum.CssClass.PatternContent);
+			this._accordionIcon = this._accordionItem.querySelector(Constants.Dot + Enum.CssClass.PatternIcon);
 			this._accordionPlaceholder = this._accordionContent.firstChild as HTMLElement;
 		}
 
