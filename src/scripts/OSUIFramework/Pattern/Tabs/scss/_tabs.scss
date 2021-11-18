@@ -60,6 +60,7 @@
 	align-items: center;
 	background-color: transparent;
 	border: none;
+	color: var(--color-neutral-8);
 	cursor: pointer;
 	justify-content: center;
 	display: inline-flex;
@@ -83,21 +84,41 @@
 	padding: var(--space-xs) var(--space-base);
 }
 
+.osui-tabs .osui-tabs_header-item:hover:not(.is--active) {
+	color: var(--color-neutral-10);
+}
+
 .osui-tabs .osui-tabs_header-item.is--active {
 	color: var(--color-neutral-10);
 	font-weight: var(--font-semi-bold);
 }
 
-.osui-tabs .osui-tabs_header-item.is--active::after {
+.osui-tabs .osui-tabs_header-item::after {
 	content: '';
+	height: 100%;
 	position: absolute;
 	z-index: 1;
+	width: 100%;
+}
+
+.osui-tabs.is--horizontal .osui-tabs_header-item::after {
+	bottom: calc(-1px - var(--border-size-m));
+}
+
+.osui-tabs.is--vertical.is--left .osui-tabs_header-item::after {
+	right: calc(-1px - var(--border-size-m));
+}
+
+.osui-tabs.is--vertical.is--right .osui-tabs_header-item::after {
+	left: calc(1px - var(--border-size-m));
+}
+
+.osui-tabs.is--horizontal .osui-tabs_header-item:hover:not(.is--active)::after {
+	border-bottom: var(--border-size-m) solid var(--color-neutral-6);
 }
 
 .osui-tabs.is--horizontal .osui-tabs_header-item.is--active::after {
-	bottom: calc(-1px - var(--border-size-m));
 	border-bottom: var(--border-size-m) solid var(--color-primary);
-	width: 100%;
 }
 
 .osui-tabs.is--vertical .osui-tabs_header-item.is--active::after {
@@ -105,14 +126,19 @@
 }
 
 .osui-tabs.is--vertical.is--left .osui-tabs_header-item.is--active::after {
-	right: calc(-1px - var(--border-size-m));
 	border-right: var(--border-size-m) solid var(--color-primary);
 }
 
+.osui-tabs.is--vertical.is--left .osui-tabs_header-item:hover:not(.is--active)::after {
+	border-right: var(--border-size-m) solid var(--color-neutral-6);
+}
+
 .osui-tabs.is--vertical.is--right .osui-tabs_header-item.is--active::after {
-	left: calc(1px - var(--border-size-m));
 	border-left: var(--border-size-m) solid var(--color-primary);
-	height: 100%;
+}
+
+.osui-tabs.is--vertical.is--right .osui-tabs_header-item:hover:not(.is--active)::after {
+	border-left: var(--border-size-m) solid var(--color-neutral-6);
 }
 
 .osui-tabs .osui-tabs_content {
@@ -123,7 +149,6 @@
 	overflow-x: auto;
 	overflow-y: hidden;
 	overscroll-behavior-x: contain;
-	-ms-scroll-snap-type: x mandatory;
 	scroll-snap-type: x mandatory;
 	display: grid;
 	grid-auto-flow: column;
