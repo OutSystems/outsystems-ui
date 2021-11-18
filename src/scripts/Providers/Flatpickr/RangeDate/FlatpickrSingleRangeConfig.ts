@@ -20,8 +20,8 @@ namespace Providers.Flatpickr.RangeDate {
 			}
 
 			// Check if the Start Date is lower that End Date
-			if (OSUIFramework.Helper.Dates.Compare(this.StartDate, this.StartDate)) {
-				throw new Error(`Start Date '${this.StartDate}' is lower than End Date '${this.EndDate}'`);
+			if (!OSUIFramework.Helper.Dates.Compare(this.StartDate, this.EndDate)) {
+				throw new Error(`Start Date '${this.StartDate}' can't be after End Date '${this.EndDate}'`);
 			}
 
 			this.DefaultDate[0] = this.StartDate;

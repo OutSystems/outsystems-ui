@@ -86,16 +86,22 @@ namespace Providers.Flatpickr.RangeDate {
 					break;
 
 				case OSUIFramework.Patterns.DatePicker.Enum.Properties.DateFormat:
-					console.log('Check this!');
 					// Check if any Date was selected
-					// if (this._flatpickr.selectedDates.length > 0) {
-					// 	// Set the new DefaultDate values
-					// 	this._configs.InitialDate = this._flatpickr.formatDate(
-					// 		this._flatpickr.selectedDates[0],
-					// 		this._flatpickrOpts.dateFormat
-					// 	);
-					// 	this._configs.DefaultDate = this._configs.InitialDate;
-					// }
+					if (this._flatpickr.selectedDates.length > 0) {
+						// Set the new Start DefaultDate value
+						this._configs.DefaultDate[0] = this._flatpickr.formatDate(
+							this._flatpickr.selectedDates[0],
+							this._flatpickrOpts.dateFormat
+						);
+
+						// Set the new End DefaultDate value
+						if (this._flatpickr.selectedDates[1]) {
+							this._configs.DefaultDate[1] = this._flatpickr.formatDate(
+								this._flatpickr.selectedDates[1],
+								this._flatpickrOpts.dateFormat
+							);
+						}
+					}
 
 					// Set the new InputDateFormat
 					this._configs.DateFormat = propertyValue;
