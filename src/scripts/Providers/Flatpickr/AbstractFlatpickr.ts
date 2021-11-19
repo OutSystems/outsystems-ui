@@ -43,16 +43,18 @@ namespace Providers.Flatpickr {
 			if (activeCssClass !== '') {
 				const activeCssClassArray = activeCssClass.split(' ');
 
-				for (let i = 0; i < activeCssClassArray.length; ++i) {
-					this._flatpickr.calendarContainer.classList.remove(activeCssClassArray[i]);
+				// for (let i = 0; i < activeCssClassArray.length; ++i) {
+				for (const className of activeCssClassArray) {
+					this._flatpickr.calendarContainer.classList.remove(className);
 				}
 			}
 
 			if (newCssClass !== '') {
 				const newCssClassArray = newCssClass.split(' ');
 
-				for (let i = 0; i < newCssClassArray.length; ++i) {
-					this._flatpickr.calendarContainer.classList.add(newCssClassArray[i]);
+				// for (let i = 0; i < newCssClassArray.length; ++i) {
+				for (const className of newCssClassArray) {
+					this._flatpickr.calendarContainer.classList.add(className);
 				}
 			}
 		}
