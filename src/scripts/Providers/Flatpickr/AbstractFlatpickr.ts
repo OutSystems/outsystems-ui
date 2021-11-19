@@ -71,7 +71,11 @@ namespace Providers.Flatpickr {
 			this._flatpickrInputElem = this._datePickerProviderInputElem.nextSibling as HTMLInputElement;
 
 			// Added the data-input attribute in order to input be styled as all platform inputs
-			OSUIFramework.Helper.Attribute.Set(this._flatpickrInputElem, 'data-input', '');
+			OSUIFramework.Helper.Attribute.Set(
+				this._flatpickrInputElem,
+				OSUIFramework.GlobalEnum.HTMLAttributes.DataInput,
+				''
+			);
 
 			// Check if there are any ExtendedClass to be added into our calendar elements
 			if (this._configs.ExtendedClass !== '') {
