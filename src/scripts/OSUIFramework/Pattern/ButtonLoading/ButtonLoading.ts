@@ -19,20 +19,20 @@ namespace OSUIFramework.Patterns.ButtonLoading {
 		private _setAccessibilityProps(): void {
 			Helper.Attribute.Set(
 				this._selfElem,
-				Constants.AccessibilityAttribute.AriaLive.AttrName,
-				Constants.AccessibilityAttribute.AriaLive.Polite
+				Constants.A11YAttributes.AriaLive.AttrName,
+				Constants.A11YAttributes.AriaLive.Polite
 			);
 
 			Helper.Attribute.Set(
 				this._selfElem,
-				Constants.AccessibilityAttribute.Aria.Atomic,
-				Constants.AccessibilityAttribute.States.True
+				Constants.A11YAttributes.Aria.Atomic,
+				Constants.A11YAttributes.States.True
 			);
 
 			Helper.Attribute.Set(
 				this._spinnerElem,
-				Constants.AccessibilityAttribute.Aria.Hidden,
-				Constants.AccessibilityAttribute.States.True
+				Constants.A11YAttributes.Aria.Hidden,
+				Constants.A11YAttributes.States.True
 			);
 		}
 
@@ -98,16 +98,16 @@ namespace OSUIFramework.Patterns.ButtonLoading {
 					if (propertyValue) {
 						Helper.Attribute.Set(
 							this._buttonElem,
-							Constants.AccessibilityAttribute.TabIndex,
-							Constants.AccessibilityAttribute.States.TabIndexHidden
+							Constants.A11YAttributes.TabIndex,
+							Constants.A11YAttributes.States.TabIndexHidden
 						);
 
 						this._buttonElem.blur();
 					} else {
 						Helper.Attribute.Set(
 							this._buttonElem,
-							Constants.AccessibilityAttribute.TabIndex,
-							Constants.AccessibilityAttribute.States.TabIndexShow
+							Constants.A11YAttributes.TabIndex,
+							Constants.A11YAttributes.States.TabIndexShow
 						);
 					}
 
