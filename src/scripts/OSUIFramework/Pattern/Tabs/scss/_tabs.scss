@@ -1,198 +1,198 @@
+/*! Patterns - Navigation - Tabs */
+////
+/// @group Patterns-Tabs
+/// Patterns - Navigation - Tabs
+
+///
 .osui-tabs {
 	--header-height: auto;
 	display: grid;
 	height: var(--tabs-height);
-}
 
-.osui-tabs.osui-tabs--is-vertical.osui-tabs--is-right {
-	grid-auto-flow: dense;
-}
+	&--is-vertical {
+		grid-auto-flow: row;
+		grid-template-columns: var(--header-height) 1fr;
 
-.osui-tabs.osui-tabs--is-vertical.osui-tabs--is-right .osui-tabs__header {
-	grid-column: 2;
-}
+		&.osui-tabs--is-right {
+			grid-auto-flow: dense;
+			grid-template-columns: 1fr auto;
 
-.osui-tabs.osui-tabs--is-vertical.osui-tabs--is-right {
-	grid-template-columns: 1fr auto;
-}
+			.osui-tabs__header {
+				border-left: var(--border-size-s) solid var(--color-neutral-5);
+				grid-column: 2;
 
-.osui-tabs.osui-tabs--is-vertical.osui-tabs--is-right .osui-tabs__header {
-	border-left: var(--border-size-s) solid var(--color-neutral-5);
-}
+				&-item {
+					&::after {
+						left: calc(1px - var(--border-size-m));
+					}
 
-.osui-tabs.osui-tabs--is-horizontal {
-	grid-auto-flow: column;
-	grid-template-rows: var(--header-height) 1fr;
-}
+					&:hover:not(.osui-tabs--is-active)::after {
+						border-left: var(--border-size-m) solid var(--color-neutral-6);
+					}
 
-.osui-tabs.osui-tabs--is-vertical {
-	grid-auto-flow: row;
-	grid-template-columns: var(--header-height) 1fr;
-}
+					&.osui-tabs--is-active::after {
+						border-left: var(--border-size-m) solid var(--color-primary);
+					}
+				}
+			}
+		}
 
-.osui-tabs .osui-tabs__header {
-	display: flex;
-}
+		&.osui-tabs--is-left {
+			.osui-tabs__header {
+				border-right: var(--border-size-s) solid var(--color-neutral-5);
 
-.osui-tabs.osui-tabs--is-vertical.osui-tabs--is-left .osui-tabs__header {
-	border-right: var(--border-size-s) solid var(--color-neutral-5);
-}
+				&-item {
+					&::after {
+						right: calc(-1px - var(--border-size-m));
+					}
 
-.osui-tabs.osui-tabs--is-vertical .osui-tabs__header {
-	flex-direction: column;
-}
+					&:hover:not(.osui-tabs--is-active)::after {
+						border-right: var(--border-size-m) solid var(--color-neutral-6);
+					}
 
-.osui-tabs.osui-tabs--is-vertical.osui-tabs--is-justified .osui-tabs__header-item {
-	flex: 1;
-}
+					&.osui-tabs--is-active::after {
+						border-right: var(--border-size-m) solid var(--color-primary);
+					}
+				}
+			}
+		}
 
-.osui-tabs.osui-tabs--is-vertical .osui-tabs__header-item {
-	height: auto;
-	flex: none;
-}
+		&.osui-tabs--is-justified {
+			.osui-tabs__header-item {
+				flex: 1;
+			}
+		}
 
-.osui-tabs.osui-tabs--is-horizontal .osui-tabs__header {
-	flex-direction: row;
-	border-bottom: var(--border-size-s) solid var(--color-neutral-5);
-}
+		.osui-tabs__header {
+			flex-direction: column;
 
-.osui-tabs .osui-tabs__header-item {
-	align-items: center;
-	background-color: transparent;
-	border: none;
-	color: var(--color-neutral-8);
-	cursor: pointer;
-	justify-content: center;
-	display: inline-flex;
-	height: 100%;
-	position: relative;
-	min-height: 42px;
-	width: 100%;
-}
+			&-item {
+				border-right: var(--border-size-m) solid transparent;
+				height: auto;
+				flex: none;
+				padding: var(--space-xs) var(--space-base);
 
-.osui-tabs.osui-tabs--is-horizontal:not(.osui-tabs--is-justified) .osui-tabs__header-item {
-	width: auto;
-}
+				&::after {
+					height: 100%;
+				}
 
-.osui-tabs.osui-tabs--is-horizontal .osui-tabs__header-item {
-	border-bottom: var(--border-size-m) solid transparent;
-	padding: var(--space-base) var(--space-xs);
-}
+				&.osui-tabs--is-active::after {
+					height: 100%;
+				}
+			}
+		}
 
-.osui-tabs.osui-tabs--is-vertical .osui-tabs__header-item {
-	border-right: var(--border-size-m) solid transparent;
-	padding: var(--space-xs) var(--space-base);
-}
+		.osui-tabs__content {
+			overflow-x: hidden;
+			overflow-y: auto;
+			padding: var(--space-none) var(--space-m);
 
-.osui-tabs .osui-tabs__header-item:hover:not(.osui-tabs--is-active) {
-	color: var(--color-neutral-10);
-}
+			&-item:not(.osui-tabs--is-active) {
+				display: none;
+			}
+		}
+	}
 
-.osui-tabs .osui-tabs__header-item.osui-tabs--is-active {
-	color: var(--color-neutral-10);
-	font-weight: var(--font-semi-bold);
-}
+	&--is-horizontal {
+		grid-auto-flow: column;
+		grid-template-rows: var(--header-height) 1fr;
 
-.osui-tabs .osui-tabs__header-item::after {
-	content: '';
-	position: absolute;
-	z-index: 1;
-}
+		&:not(.osui-tabs--is-justified) {
+			.osui-tabs__header-item {
+				width: auto;
+			}
+		}
 
-.osui-tabs.osui-tabs--is-horizontal .osui-tabs__header-item::after {
-	width: 100%;
-}
+		.osui-tabs__header {
+			flex-direction: row;
+			border-bottom: var(--border-size-s) solid var(--color-neutral-5);
 
-.osui-tabs.osui-tabs--is-vertical .osui-tabs__header-item::after {
-	height: 100%;
-}
+			&-item {
+				border-bottom: var(--border-size-m) solid transparent;
+				padding: var(--space-base) var(--space-xs);
 
-.osui-tabs.osui-tabs--is-horizontal .osui-tabs__header-item::after {
-	bottom: calc(-1px - var(--border-size-m));
-}
+				&::after {
+					bottom: calc(-1px - var(--border-size-m));
+					width: 100%;
+				}
 
-.osui-tabs.osui-tabs--is-vertical.osui-tabs--is-left .osui-tabs__header-item::after {
-	right: calc(-1px - var(--border-size-m));
-}
+				&:hover:not(.osui-tabs--is-active)::after {
+					border-bottom: var(--border-size-m) solid var(--color-neutral-6);
+				}
 
-.osui-tabs.osui-tabs--is-vertical.osui-tabs--is-right .osui-tabs__header-item::after {
-	left: calc(1px - var(--border-size-m));
-}
+				&.osui-tabs--is-active::after {
+					border-bottom: var(--border-size-m) solid var(--color-primary);
+				}
+			}
+		}
 
-.osui-tabs.osui-tabs--is-horizontal .osui-tabs__header-item:hover:not(.osui-tabs--is-active)::after {
-	border-bottom: var(--border-size-m) solid var(--color-neutral-6);
-}
+		.osui-tabs__content {
+			display: grid;
+			grid-auto-flow: column;
+			grid-auto-columns: 100%;
+			overflow-x: auto;
+			overflow-y: hidden;
+			overscroll-behavior-x: contain;
+			padding: var(--space-m) var(--space-none);
+			scroll-snap-type: x mandatory;
+		}
+	}
 
-.osui-tabs.osui-tabs--is-horizontal .osui-tabs__header-item.osui-tabs--is-active::after {
-	border-bottom: var(--border-size-m) solid var(--color-primary);
-}
+	&__header {
+		display: flex;
 
-.osui-tabs.osui-tabs--is-vertical .osui-tabs__header-item.osui-tabs--is-active::after {
-	height: 100%;
-}
+		&-item {
+			align-items: center;
+			background-color: transparent;
+			border: none;
+			color: var(--color-neutral-8);
+			cursor: pointer;
+			justify-content: center;
+			display: inline-flex;
+			height: 100%;
+			position: relative;
+			min-height: 42px;
+			width: 100%;
 
-.osui-tabs.osui-tabs--is-vertical.osui-tabs--is-left .osui-tabs__header-item.osui-tabs--is-active::after {
-	border-right: var(--border-size-m) solid var(--color-primary);
-}
+			&:hover:not(.osui-tabs--is-active) {
+				color: var(--color-neutral-10);
+			}
 
-.osui-tabs.osui-tabs--is-vertical.osui-tabs--is-left .osui-tabs__header-item:hover:not(.osui-tabs--is-active)::after {
-	border-right: var(--border-size-m) solid var(--color-neutral-6);
-}
+			&.osui-tabs--is-active {
+				color: var(--color-neutral-10);
+				font-weight: var(--font-semi-bold);
+			}
 
-.osui-tabs.osui-tabs--is-vertical.osui-tabs--is-right .osui-tabs__header-item.osui-tabs--is-active::after {
-	border-left: var(--border-size-m) solid var(--color-primary);
-}
+			&::after {
+				content: '';
+				position: absolute;
+				z-index: 1;
+			}
+		}
 
-.osui-tabs.osui-tabs--is-vertical.osui-tabs--is-right .osui-tabs__header-item:hover:not(.osui-tabs--is-active)::after {
-	border-left: var(--border-size-m) solid var(--color-neutral-6);
-}
+		.OSBlockWidget {
+			display: contents;
+		}
+	}
 
-.osui-tabs .osui-tabs__content {
-	width: 100%;
-}
+	&__content {
+		width: 100%;
 
-.osui-tabs.osui-tabs--is-horizontal .osui-tabs__content {
-	overflow-x: auto;
-	overflow-y: hidden;
-	overscroll-behavior-x: contain;
-	scroll-snap-type: x mandatory;
-	display: grid;
-	grid-auto-flow: column;
-	grid-auto-columns: 100%;
-}
+		&::-webkit-scrollbar {
+			display: none;
+		}
 
-.osui-tabs.osui-tabs--is-vertical .osui-tabs__content {
-	overflow-x: hidden;
-	overflow-y: auto;
-}
+		&-item {
+			overflow-y: auto;
+			scroll-snap-align: start;
+			scroll-snap-stop: always;
+		}
+	}
 
-.osui-tabs.osui-tabs--is-vertical .osui-tabs__content-item:not(.osui-tabs--is-active) {
-	display: none;
-}
-
-.osui-tabs.osui-tabs--is-horizontal .osui-tabs__content {
-	padding: var(--space-m) var(--space-none);
-}
-
-.osui-tabs.osui-tabs--is-vertical .osui-tabs__content {
-	padding: var(--space-none) var(--space-m);
-}
-
-.osui-tabs .osui-tabs__content::-webkit-scrollbar {
-	display: none;
-}
-
-.osui-tabs .osui-tabs__content-item {
-	scroll-snap-align: start;
-	scroll-snap-stop: always;
-	overflow-y: auto;
-}
-
-.osui-tabs__header .OSBlockWidget {
-	display: contents;
-}
-
-.osui-tabs .osui-tabs__content .ph > .list,
-.osui-tabs .osui-tabs__header .ph > .list {
-	display: contents;
+	&__header,
+	&__content {
+		.ph > .list {
+			display: contents;
+		}
+	}
 }
