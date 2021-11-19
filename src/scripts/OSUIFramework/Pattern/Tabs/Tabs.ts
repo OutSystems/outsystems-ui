@@ -346,17 +346,17 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		public setTabsOrientation(orientation: GlobalTypes.Orientation): void {
-			Helper.Style.RemoveClass(this._selfElem, Constants.ClassModifier + this._configs.Orientation);
+			Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._configs.Orientation);
 			Helper.Attribute.Set(this._selfElem, Enum.Attributes.DataOrientation, orientation.toString());
-			Helper.Style.AddClass(this._selfElem, Constants.ClassModifier + orientation);
+			Helper.Style.AddClass(this._selfElem, Enum.CssClasses.Modifier + orientation);
 
 			this._configs.Orientation = orientation;
 		}
 
 		public setTabsPosition(position: GlobalTypes.Direction): void {
-			Helper.Style.RemoveClass(this._selfElem, Constants.ClassModifier + this._configs.Position);
+			Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._configs.Position);
 			Helper.Attribute.Set(this._selfElem, Enum.Attributes.DataPosition, position.toString());
-			Helper.Style.AddClass(this._selfElem, Constants.ClassModifier + position);
+			Helper.Style.AddClass(this._selfElem, Enum.CssClasses.Modifier + position);
 
 			this._configs.Position = position;
 		}

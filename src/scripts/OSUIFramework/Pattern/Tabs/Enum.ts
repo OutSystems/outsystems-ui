@@ -9,15 +9,16 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 	 * Tabs Enum for CSS Classes
 	 */
 	export enum CssClasses {
-		ActiveTab = 'is--active',
-		IsVertical = 'is--vertical',
-		IsHorizontal = 'is--horizontal',
-		IsJustified = 'is--justified',
+		ActiveTab = 'osui-tabs--is-active',
+		IsVertical = 'osui-tabs--is-vertical',
+		IsHorizontal = 'osui-tabs--is-horizontal',
+		IsJustified = 'osui-tabs--is-justified',
+		Modifier = 'osui-tabs--is-',
 		Tabs = 'osui-tabs',
-		TabsHeader = 'osui-tabs_header',
-		TabsContent = 'osui-tabs_content',
-		TabsHeaderItem = 'osui-tabs_header-item',
-		TabsContentItem = 'osui-tabs_content-item',
+		TabsHeader = 'osui-tabs__header',
+		TabsContent = 'osui-tabs__content',
+		TabsHeaderItem = 'osui-tabs__header-item',
+		TabsContentItem = 'osui-tabs__content-item',
 	}
 
 	export enum Attributes {
