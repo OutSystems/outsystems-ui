@@ -19,7 +19,7 @@ namespace OSUIFramework.Callbacks {
 
 	// Datepicker
 	export type OSDatepickerOnChangeEvent = {
-		(datepickerId: string, selectedDate: string): void;
+		(datepickerId: string, selectedDate: string | string[]): void;
 	};
 
 	// FlipContent

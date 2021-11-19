@@ -5,7 +5,7 @@ namespace Providers.Flatpickr {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		implements IFlatpickr, OSUIFramework.Interface.IProviderPattern<Flatpickr>
 	{
-		// RangeSlider events
+		// RangeSlider onInitialize event
 		private _onInitializeCallbackEvent: OSUIFramework.Callbacks.OSGeneric;
 
 		// Store the provider target element
@@ -14,6 +14,7 @@ namespace Providers.Flatpickr {
 		protected _flatpickr: Flatpickr;
 		// Store the flatpickr html element that will be added by library
 		protected _flatpickrInputElem: HTMLInputElement;
+		// RangeSlider onChange (SelectedDate) event
 		protected _onChangeCallbackEvent: OSUIFramework.Callbacks.OSDatepickerOnChangeEvent;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
