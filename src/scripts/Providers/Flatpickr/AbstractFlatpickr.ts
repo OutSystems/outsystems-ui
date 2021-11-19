@@ -6,9 +6,7 @@ namespace Providers.Flatpickr {
 		implements IFlatpickr, OSUIFramework.Interface.IProviderPattern<Flatpickr>
 	{
 		// RangeSlider events
-		private _onCloseCallbackEvent: OSUIFramework.Callbacks.OSGeneric;
 		private _onInitializeCallbackEvent: OSUIFramework.Callbacks.OSGeneric;
-		private _onOpenCallbackEvent: OSUIFramework.Callbacks.OSGeneric;
 
 		// Store the provider target element
 		protected _datePickerProviderInputElem: HTMLInputElement;
