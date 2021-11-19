@@ -110,6 +110,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 		// Method that gets & stores the HTML elements of the Accordion Item
 		private _setUpElements(): void {
+			this._accordionItem = this._selfElem;
 			this._accordionTitle = this._accordionItem.querySelector(Constants.Dot + Enum.CssClass.PatternTitle);
 			this._accordionContent = this._accordionItem.querySelector(Constants.Dot + Enum.CssClass.PatternContent);
 			this._accordionIcon = this._accordionItem.querySelector(Constants.Dot + Enum.CssClass.PatternIcon);
@@ -145,7 +146,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		// Method to toggle the collapse and expansion of the AccordionItem
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _toggleAccordion(event?: any): void {
-			//If we're clicking on buttons or links, we won't open the accordion
+			//If we're not clicking on the title, the icon or the accordion title, we won't open the accordion
 			if (event) {
 				if (
 					event.target !== this._accordionTitle &&
@@ -208,7 +209,6 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 		public build(): void {
 			super.build();
-			this._accordionItem = this._selfElem;
 			this._setUpElements();
 			this._setUpInitialState();
 			this._setA11yAttributes();
@@ -231,13 +231,17 @@ namespace OSUIFramework.Patterns.AccordionItem {
 					break;
 			}
 		}
+
+		// This method will open and then close the item to get its final value; then, it will run an animation
+		// from the item's inital height to 0
 		public close(): void {
 			this._accordionContent.removeAttribute('style');
-
-			// Gets initial height value
 			const expandedHeight = this._accordionContent.getBoundingClientRect().height;
 			// We know the final height is 0 - it is being collapsed
 			const collapsedHeight = 0;
+
+			Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Closed);
+			Helper.Style.RemoveClass(this._accordionItem, Enum.CssClass.Open);
 
 			this._accordionContent.style.height = expandedHeight + GlobalEnum.Units.Pixel;
 
@@ -245,23 +249,15 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Expanded);
 			Helper.Style.RemoveClass(this._accordionContent, Enum.CssClass.Collapsed);
 
-			// This setTimeout (100ms) will ensure that the DOM received the height 0 before actually starts the transition
 			const waitDomIterateTimeout = setTimeout(() => {
 				// Adds is--animating class to current accordion item content to obtain the final height value
 				Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Animation);
-
-				// Removes is--expanded class from current accordion item content
 				Helper.Style.RemoveClass(this._accordionContent, Enum.CssClass.Expanded);
-
 				this._accordionContent.style.height = collapsedHeight + GlobalEnum.Units.Pixel;
-
-				// Adds event listener to transition end
 				this._accordionContent.addEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._transitionEnd);
-
-				// Adds is--collapsed class to current accordion item content
+				// End of animation, item is collapsed
 				Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Collapsed);
 
-				// Clear timeout
 				clearTimeout(waitDomIterateTimeout);
 			}, 100);
 
@@ -273,8 +269,11 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			this._removeEvents();
 		}
 
+		// This method will open and then close the item to get its final value; then, it will run an animation
+		// from 0 to the item's final height
 		public open(): void {
-			const collapsedHeight = this._accordionContent.getBoundingClientRect().height;
+			// We know the initial height is 0 - it is  collapsed
+			const collapsedHeight = 0;
 
 			Helper.Style.RemoveClass(this._accordionItem, Enum.CssClass.Closed);
 			Helper.Style.AddClass(this._accordionItem, Enum.CssClass.Open);
@@ -286,29 +285,20 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Expanded);
 
 			this._accordionTitle.removeAttribute('style');
-
-			// Gets final height value
 			const expandedHeight = this._accordionContent.getBoundingClientRect().height;
-
-			// Removes is--expanded class from current accordion item content to animate
 			this._accordionContent.classList.remove(Enum.CssClass.Expanded);
 
 			this._accordionContent.style.height = collapsedHeight + GlobalEnum.Units.Pixel;
 
-			// This setTimeout (0ms) will ensure that the DOM received the height 0 before actually starts the transition
 			const waitDomIterateTimeout = setTimeout(() => {
 				// Adds is--animating class to current accordion item content to obtain the final height value
 				this._accordionContent.classList.add(Enum.CssClass.Animation);
-
 				this._accordionContent.style.height = expandedHeight + GlobalEnum.Units.Pixel;
-
-				// Adds event listener to transition end
 				this._accordionContent.addEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._transitionEnd);
 
-				// Adds is--expanded class to current accordion item content
+				// End of animation, item is expanded
 				this._accordionContent.classList.add(Enum.CssClass.Expanded);
 
-				// Clear timeout
 				clearTimeout(waitDomIterateTimeout);
 			}, 100);
 
