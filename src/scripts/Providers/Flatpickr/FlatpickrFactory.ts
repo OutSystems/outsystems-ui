@@ -31,7 +31,6 @@ namespace Providers.Flatpickr.Factory {
 
 			default:
 				throw new Error(`There is no Flatpickr of ${_flatpickrMode} type`);
-				break;
 		}
 
 		return _flatpickrItem;

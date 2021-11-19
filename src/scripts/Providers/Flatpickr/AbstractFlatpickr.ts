@@ -14,6 +14,8 @@ namespace Providers.Flatpickr {
 		protected _flatpickr: Flatpickr;
 		// Store the flatpickr html element that will be added by library
 		protected _flatpickrInputElem: HTMLInputElement;
+		// Store the provider options
+		protected _flatpickrOpts: FlatpickrOptions;
 		// RangeSlider onChange (SelectedDate) event
 		protected _onChangeCallbackEvent: OSUIFramework.Callbacks.OSDatepickerOnChangeEvent;
 
@@ -30,7 +32,7 @@ namespace Providers.Flatpickr {
 		// Method to set the html elements used
 		private _setHtmllElements(): void {
 			// Set the inputHTML element
-			this._datePickerProviderInputElem = this._selfElem.querySelector('input.form-control') as HTMLInputElement;
+			this._datePickerProviderInputElem = this._selfElem.querySelector('input.form-control');
 
 			// If the input hasn't be added
 			if (!this._datePickerProviderInputElem) {
@@ -68,6 +70,14 @@ namespace Providers.Flatpickr {
 
 		// Method that will be triggered at Flatpickr instance is ready
 		protected _onReady(): void {
+			// Init provider
+			this._flatpickr = window.flatpickr(this._datePickerProviderInputElem, this._flatpickrOpts);
+
+			// Add TodayBtn
+			if (this._configs.ShowTodayButton) {
+				this._addTodayBtn();
+			}
+
 			// Since a new input will be added by the flatpickr library, we must address it only at onReady
 			this._flatpickrInputElem = this._datePickerProviderInputElem.nextSibling as HTMLInputElement;
 
@@ -96,6 +106,48 @@ namespace Providers.Flatpickr {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
 			switch (propertyName) {
+				case OSUIFramework.Patterns.DatePicker.Enum.Properties.TimeFormat:
+					// Set the new Timeformat value
+					this._configs.TimeFormat = propertyValue;
+
+					break;
+
+				case OSUIFramework.Patterns.DatePicker.Enum.Properties.ShowTodayButton:
+					// Set the new ShowTodayButton value
+					this._configs.ShowTodayButton = propertyValue;
+
+					break;
+
+				case OSUIFramework.Patterns.DatePicker.Enum.Properties.FirstWeekDay:
+					// Set the new FirstWeekDay value
+					this._configs.OptionalConfigs.firstWeekDay = propertyValue;
+
+					break;
+
+				case OSUIFramework.Patterns.DatePicker.Enum.Properties.MinDate:
+					// Set the new MinDate value
+					this._configs.OptionalConfigs.minDate = propertyValue;
+
+					break;
+
+				case OSUIFramework.Patterns.DatePicker.Enum.Properties.MaxDate:
+					// Set the new MaxDate value
+					this._configs.OptionalConfigs.maxDate = propertyValue;
+
+					break;
+
+				case OSUIFramework.Patterns.DatePicker.Enum.Properties.ShowMonths:
+					// Set the new ShowMonths value
+					this._configs.OptionalConfigs.showMonths = propertyValue;
+
+					break;
+
+				case OSUIFramework.Patterns.DatePicker.Enum.Properties.ShowWeekNumbers:
+					// Set the new ShowMonths value
+					this._configs.OptionalConfigs.showWeekNumbers = propertyValue;
+
+					break;
+
 				case OSUIFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass:
 					// Since we've an element that will be added dynamically at the body...
 					this._updateExtendedClassSelectors(this._configs.ExtendedClass, propertyValue);
@@ -106,7 +158,6 @@ namespace Providers.Flatpickr {
 					break;
 				default:
 					throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
-					break;
 			}
 		}
 
@@ -151,7 +202,6 @@ namespace Providers.Flatpickr {
 
 				default:
 					throw new Error(`The given '${eventName}' event name it's not defined.`);
-					break;
 			}
 		}
 	}

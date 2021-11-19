@@ -23,7 +23,6 @@ namespace OSUIFramework.Patterns.DatePicker.Factory {
 
 			default:
 				throw new Error(`There is no ${GlobalEnum.PatternsNames.Datepicker} of the ${provider} provider`);
-				break;
 		}
 
 		return _datePickerItem;

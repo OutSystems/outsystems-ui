@@ -7,9 +7,6 @@ namespace Providers.Flatpickr.SingleDate {
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class OSUIFlatpickrSingleDate extends AbstractFlatpickr<FlatpickrSingleDateConfig> {
-		// Store the provider options
-		private _flatpickrOpts: FlatpickrOptions;
-
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new FlatpickrSingleDateConfig(configs));
@@ -22,14 +19,6 @@ namespace Providers.Flatpickr.SingleDate {
 		private _createProviderDatePicker(): void {
 			// Set inital library options
 			this._flatpickrOpts = this._configs.getProviderConfig();
-
-			// Init provider
-			this._flatpickr = window.flatpickr(this._datePickerProviderInputElem, this._flatpickrOpts);
-
-			// Add TodayBtn
-			if (this._configs.ShowTodayButton) {
-				this._addTodayBtn();
-			}
 
 			// Instance has been Created!
 			super._onReady();
@@ -84,57 +73,10 @@ namespace Providers.Flatpickr.SingleDate {
 
 					break;
 
-				case OSUIFramework.Patterns.DatePicker.Enum.Properties.TimeFormat:
-					// Set the new Timeformat value
-					this._configs.TimeFormat = propertyValue;
-
-					break;
-
-				case OSUIFramework.Patterns.DatePicker.Enum.Properties.ShowTodayButton:
-					// Set the new ShowTodayButton value
-					this._configs.ShowTodayButton = propertyValue;
-
-					break;
-
-				case OSUIFramework.Patterns.DatePicker.Enum.Properties.FirstWeekDay:
-					// Set the new FirstWeekDay value
-					this._configs.OptionalConfigs.firstWeekDay = propertyValue;
-
-					break;
-
-				case OSUIFramework.Patterns.DatePicker.Enum.Properties.MinDate:
-					// Set the new MinDate value
-					this._configs.OptionalConfigs.minDate = propertyValue;
-
-					break;
-
-				case OSUIFramework.Patterns.DatePicker.Enum.Properties.MaxDate:
-					// Set the new MaxDate value
-					this._configs.OptionalConfigs.maxDate = propertyValue;
-
-					break;
-
-				case OSUIFramework.Patterns.DatePicker.Enum.Properties.ShowMonths:
-					// Set the new ShowMonths value
-					this._configs.OptionalConfigs.showMonths = propertyValue;
-
-					break;
-
-				case OSUIFramework.Patterns.DatePicker.Enum.Properties.ShowWeekNumbers:
-					// Set the new ShowMonths value
-					this._configs.OptionalConfigs.showWeekNumbers = propertyValue;
-
-					break;
-
 				default:
 					super.changeProperty(propertyName, propertyValue);
 					break;
 			}
-		}
-
-		// Method to remove and destroy DatePicker instance
-		public dispose(): void {
-			super.dispose();
 		}
 
 		/* Method that will be responsible to redraw the calendar when it's needed */
