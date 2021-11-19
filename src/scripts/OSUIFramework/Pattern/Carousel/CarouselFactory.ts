@@ -16,10 +16,11 @@ namespace OSUIFramework.Patterns.Carousel.Factory {
 		let _carouselItem = null;
 
 		if (provider === Enum.Provider.Splide) {
-				_carouselItem = new Providers.Splide.OSUISplide(carouselId, JSON.parse(configs));
-		}
-		else{
-				throw new Error(`There is no  ${OSUIFramework.GlobalEnum.PatternsNames.Carousel}  of the ${provider} provider`);
+			_carouselItem = new Providers.Splide.OSUISplide(carouselId, JSON.parse(configs));
+		} else {
+			throw new Error(
+				`There is no  ${OSUIFramework.GlobalEnum.PatternsNames.Carousel}  of the ${provider} provider`
+			);
 		}
 
 		return _carouselItem;

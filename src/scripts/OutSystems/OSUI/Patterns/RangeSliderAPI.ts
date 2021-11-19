@@ -31,7 +31,9 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 		provider: string
 	): OSUIFramework.Patterns.RangeSlider.IRangeSlider {
 		if (_rangeSliderItemsMap.has(rangeSliderId)) {
-			throw new Error(`There is already an ${OSUIFramework.GlobalEnum.PatternsNames.RangeSlider} registered under id: ${rangeSliderId}`);
+			throw new Error(
+				`There is already an ${OSUIFramework.GlobalEnum.PatternsNames.RangeSlider} registered under id: ${rangeSliderId}`
+			);
 		}
 
 		const _rangeSliderItem = OSUIFramework.Patterns.RangeSlider.Factory.NewRangeSlider(
