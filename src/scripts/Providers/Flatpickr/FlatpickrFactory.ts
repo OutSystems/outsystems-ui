@@ -13,7 +13,7 @@ namespace Providers.Flatpickr.Factory {
 		const _flatpickrMode = JSON.parse(configs)[Enum.Properties.Type];
 
 		switch (_flatpickrMode) {
-			case Enum.Type.Single:
+			case Enum.Mode.Single:
 				_flatpickrItem = new Providers.Flatpickr.SingleDate.OSUIFlatpickrSingleDate(
 					datePickerId,
 					JSON.parse(configs)
@@ -21,7 +21,7 @@ namespace Providers.Flatpickr.Factory {
 
 				break;
 
-			case Enum.Type.Range:
+			case Enum.Mode.Range:
 				_flatpickrItem = new Providers.Flatpickr.RangeDate.OSUIFlatpickrRangeDate(
 					datePickerId,
 					JSON.parse(configs)

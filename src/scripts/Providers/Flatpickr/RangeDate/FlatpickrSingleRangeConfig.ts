@@ -36,7 +36,7 @@ namespace Providers.Flatpickr.RangeDate {
 			// eslint-disable-next-line prefer-const
 			let flatpickrRangeDateOpts = {
 				defaultDate: this._setDefaultDate(),
-				mode: Flatpickr.Enum.Type.Range,
+				mode: Flatpickr.Enum.Mode.Range,
 			};
 
 			// Merge both option objects => if objects have a property with the same name, then the right-most object property overwrites the previous one

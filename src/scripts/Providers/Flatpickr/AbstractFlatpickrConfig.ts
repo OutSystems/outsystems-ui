@@ -18,8 +18,8 @@ namespace Providers.Flatpickr {
 		// Method used to abstract DateFormat style and map it into flatpickr expected one
 		private _abstractDateFormat(): string {
 			const _dateFormat = this.DateFormat.replace(/[^a-zA-Z]/g, ' ').split(' ');
-			for (let i = 0; i < _dateFormat.length; ++i) {
-				switch (_dateFormat[i]) {
+			for (const format of _dateFormat) {
+				switch (format) {
 					// Map Year
 					case 'YYYY':
 						this.DateFormat = this.DateFormat.replace('YYYY', 'Y');
@@ -58,12 +58,12 @@ namespace Providers.Flatpickr {
 			let _altFormat = this.DateFormat !== '' ? this._abstractDateFormat() : this.ServerDateFormat;
 
 			// Time must behave in 24h format
-			if (this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormat.Time24hFormat) {
+			if (this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat) {
 				_altFormat = _altFormat + ' - H:i';
 			}
 
 			// Time must behave in 12h format with AM/PM
-			if (this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormat.Time12hFormat) {
+			if (this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time12hFormat) {
 				_altFormat = _altFormat + ' - h:i K';
 			}
 
@@ -98,7 +98,7 @@ namespace Providers.Flatpickr {
 			this._flatpickrOpts = {
 				altFormat: this._checkAltFormat(),
 				altInput: true,
-				enableTime: this.TimeFormat !== OSUIFramework.Patterns.DatePicker.Enum.TimeFormat.Disable,
+				enableTime: this.TimeFormat !== OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable,
 				locale: this._checkLocale(),
 				maxDate: OSUIFramework.Helper.Dates.IsNull(this.OptionalConfigs.maxDate)
 					? undefined
@@ -107,11 +107,11 @@ namespace Providers.Flatpickr {
 					? undefined
 					: this.OptionalConfigs.minDate,
 				dateFormat:
-					this.TimeFormat !== OSUIFramework.Patterns.DatePicker.Enum.TimeFormat.Disable
+					this.TimeFormat !== OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable
 						? this.ServerDateFormat + ' H:i'
 						: this.ServerDateFormat,
 				showMonths: this.OptionalConfigs.showMonths,
-				time_24hr: this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormat.Time24hFormat,
+				time_24hr: this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat,
 				weekNumbers: this.OptionalConfigs.showWeekNumbers,
 				onChange: this.OnChange,
 			};

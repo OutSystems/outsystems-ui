@@ -13,7 +13,7 @@ namespace OSUIFramework.Helper {
 
 		// Check if the same script has asked to be loaded
 		if (document.querySelector('script[src*="' + url + '"]')) {
-			script = document.querySelector('script[src*="' + url + '"]') as HTMLScriptElement;
+			script = document.querySelector('script[src*="' + url + '"]');
 		} else {
 			script = document.createElement('script');
 

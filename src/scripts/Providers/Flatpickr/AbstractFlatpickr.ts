@@ -43,7 +43,6 @@ namespace Providers.Flatpickr {
 			if (activeCssClass !== '') {
 				const activeCssClassArray = activeCssClass.split(' ');
 
-				// for (let i = 0; i < activeCssClassArray.length; ++i) {
 				for (const className of activeCssClassArray) {
 					this._flatpickr.calendarContainer.classList.remove(className);
 				}
@@ -52,7 +51,6 @@ namespace Providers.Flatpickr {
 			if (newCssClass !== '') {
 				const newCssClassArray = newCssClass.split(' ');
 
-				// for (let i = 0; i < newCssClassArray.length; ++i) {
 				for (const className of newCssClassArray) {
 					this._flatpickr.calendarContainer.classList.add(className);
 				}
@@ -62,7 +60,7 @@ namespace Providers.Flatpickr {
 		// Method used to add the TodayButton at calendar
 		protected _addTodayBtn(): void {
 			const todayBtn = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Link);
-			todayBtn.innerHTML = Enum.TodayBtn.Text;
+			todayBtn.innerHTML = Enum.TodayButton.Text;
 			todayBtn.classList.add(Enum.CssClasses.TodayBtn);
 			todayBtn.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, this._jumpIntoToday.bind(this));
 			this._flatpickr.calendarContainer.appendChild(todayBtn);

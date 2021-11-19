@@ -35,9 +35,9 @@ namespace OSUIFramework.Patterns.DatePicker.Enum {
 	}
 
 	/**
-	 * DatePicker TimeFormat Enum
+	 * DatePicker TimeFormatMode Enum
 	 */
-	export enum TimeFormat {
+	export enum TimeFormatMode {
 		Disable = '',
 		Time12hFormat = '12',
 		Time24hFormat = '24',

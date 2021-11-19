@@ -55,8 +55,6 @@ namespace Providers.Flatpickr.RangeDate {
 				_selectedDate[0],
 				_selectedDate[1]
 			);
-
-			console.log(_selectedDate[0], _selectedDate[1]);
 		}
 
 		public build(): void {

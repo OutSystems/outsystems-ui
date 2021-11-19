@@ -13,14 +13,14 @@ namespace Providers.Flatpickr.Enum {
 	}
 
 	//  Flatpickr Today button Enum
-	export enum TodayBtn {
+	export enum TodayButton {
 		Text = 'Today',
 	}
 
 	/**
-	 * Flatpickr Types Enum
+	 * Flatpickr Modes
 	 */
-	export enum Type {
+	export enum Mode {
 		Multiple = 'multiple',
 		Range = 'range',
 		Single = 'single',
