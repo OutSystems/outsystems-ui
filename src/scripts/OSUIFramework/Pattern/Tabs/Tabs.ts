@@ -16,6 +16,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		private _onDisableRender: OSUIFramework.Callbacks.Generic;
 		private _onTabsChange: Callbacks.OSTabsOnChangeEvent;
+		private _scrollBehavior: Enum.ScrollBehavior;
 		private _tabsContentElement: HTMLElement;
 		// Stores the content items of this specific Tabs
 		private _tabsContentItemsElements: NodeList;
@@ -154,6 +155,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			this.setTabsPosition(this._configs.Position);
 			this.setTabsHeight(this._configs.Height);
 			this.setTabsIsJustified(this._configs.IsJustified);
+			this.setScrollBehavior(this._configs.DisableAnimation);
 			this.changeTab(this.configs.ActiveTab, false);
 		}
 
@@ -243,6 +245,9 @@ namespace OSUIFramework.Patterns.Tabs {
 				case Enum.Properties.ActiveTab:
 					this.changeTab(propertyValue, true);
 					break;
+				case Enum.Properties.DisableAnimation:
+					this.setScrollBehavior(propertyValue);
+					break;
 				case Enum.Properties.Height:
 					this.setTabsHeight(propertyValue);
 					break;
@@ -288,7 +293,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._tabsContentElement.scrollTo({
 				top: 0,
 				left: newContentItem.offsetLeft,
-				behavior: Enum.OnChangeBehavior.Instant,
+				behavior: this._scrollBehavior,
 			});
 
 			this._toggleActiveClasses(newHeaderItem, newContentItem);
@@ -317,6 +322,11 @@ namespace OSUIFramework.Patterns.Tabs {
 		// Set callbacks for the onTabsChange event
 		public registerCallback(callback: Callbacks.OSTabsOnChangeEvent): void {
 			this._onTabsChange = callback;
+		}
+
+		public setScrollBehavior(disableAnimation: boolean): void {
+			this._scrollBehavior = disableAnimation ? Enum.ScrollBehavior.Instant : Enum.ScrollBehavior.Smooth;
+			this._configs.DisableAnimation = disableAnimation;
 		}
 
 		public setTabsHeight(height: string): void {

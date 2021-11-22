@@ -2,6 +2,7 @@
 namespace OSUIFramework.Patterns.Tabs {
 	export class TabsConfig extends AbstractConfiguration {
 		public ActiveTab: number;
+		public DisableAnimation: boolean;
 		public Height: string;
 		public IsJustified: boolean;
 		public Orientation: GlobalTypes.Orientation;
