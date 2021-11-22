@@ -31,7 +31,9 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 		provider: string
 	): OSUIFramework.Patterns.Carousel.ICarousel {
 		if (_carouselItemsMap.has(carouselId)) {
-			throw new Error(`There is already an ${OSUIFramework.GlobalEnum.PatternsNames.Carousel} registered under id: ${carouselId}`);
+			throw new Error(
+				`There is already an ${OSUIFramework.GlobalEnum.PatternsNames.Carousel} registered under id: ${carouselId}`
+			);
 		}
 
 		const _carouselItem = OSUIFramework.Patterns.Carousel.Factory.NewCarousel(carouselId, configs, provider);

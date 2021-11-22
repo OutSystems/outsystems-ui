@@ -6,32 +6,6 @@ namespace OSUIFramework.GlobalEnum {
 	export enum CommonPatternsProperties {
 		ExtendedClass = 'ExtendedClass',
 	}
-	/**
-	 * OutSystemsUI patterns names
-	 * Note: Can be used for logging purposes
-	 */
-	export enum PatternsNames {
-		Accordion = 'Accordion',
-		AccordionItem = 'Accordion Item',
-		AnimatedLabel = 'Animated Label',
-		ButtonLoading = 'ButtonLoading',
-		Carousel = 'Carousel',
-		FlipContent = 'Flip Content',
-		FloatingActions = 'Floating Actions',
-		FloatingActionsItem = 'Floating Actions Item',
-		Gallery = 'Gallery',
-		Notification = 'Notification',
-		ProgressBar = 'Progress Bar',
-		ProgressCircle = 'Progress Circle',
-		Rating = 'Rating',
-		RangeSlider = 'Range Slider',
-		RangeSliderInterval = 'Range Slider Interval',
-		Search = 'Search',
-		SectionIndex = 'Section Index',
-		Sidebar = 'Sidebar',
-		Submenu = 'Submenu',
-		Tooltip = 'Tooltip',
-	}
 
 	/**
 	 * OutSystemsUI elements cssClasses
@@ -73,6 +47,13 @@ namespace OSUIFramework.GlobalEnum {
 		LTR = 'ltr',
 		Right = 'right',
 		RTL = 'rtl',
+	}
+
+	/**
+	 * OutSystemsUI HTML Attributes
+	 */
+	export enum HTMLAttributes {
+		DataInput = 'data-input',
 	}
 
 	/**
@@ -131,6 +112,42 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
+	 * OutSystemsUI patterns names
+	 * Note: Can be used for logging purposes
+	 */
+	export enum PatternsNames {
+		Accordion = 'Accordion',
+		AccordionItem = 'Accordion Item',
+		AnimatedLabel = 'Animated Label',
+		ButtonLoading = 'ButtonLoading',
+		Carousel = 'Carousel',
+		Datepicker = 'Datepicker',
+		FlipContent = 'Flip Content',
+		FloatingActions = 'Floating Actions',
+		FloatingActionsItem = 'Floating Actions Item',
+		Gallery = 'Gallery',
+		Notification = 'Notification',
+		ProgressBar = 'Progress Bar',
+		ProgressCircle = 'Progress Circle',
+		Rating = 'Rating',
+		RangeSlider = 'Range Slider',
+		RangeSliderInterval = 'Range Slider Interval',
+		Search = 'Search',
+		SectionIndex = 'Section Index',
+		Sidebar = 'Sidebar',
+		Submenu = 'Submenu',
+		Tooltip = 'Tooltip',
+	}
+
+	/**
+	 * OutSystemsUI Units
+	 */
+	export enum Screen {
+		Active = 'active-screen',
+		Container = 'screen-container',
+	}
+
+	/**
 	 * OutSystemsUI Shape Types
 	 */
 	export enum ShapeTypes {
@@ -145,13 +162,5 @@ namespace OSUIFramework.GlobalEnum {
 	export enum Units {
 		Percentage = '%',
 		Pixel = 'px',
-	}
-
-	/**
-	 * OutSystemsUI Units
-	 */
-	export enum Screen {
-		Active = 'active-screen',
-		Container = 'screen-container',
 	}
 }

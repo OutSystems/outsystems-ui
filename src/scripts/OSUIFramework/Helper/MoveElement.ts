@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Helper.Element {
 	// Move element to target position
 	export function Move(element: HTMLElement, target: HTMLElement): void {
