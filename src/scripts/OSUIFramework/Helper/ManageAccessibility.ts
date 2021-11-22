@@ -1,11 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Helper {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	abstract class A11Y {
+	export abstract class A11Y {
 		/**
 		 * Method that will disable the aria-atomic
 		 *
-		 * @param element
+		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
 		 */
 		public static AriaAtomicFalse(element: HTMLElement): void {
@@ -15,7 +15,7 @@ namespace OSUIFramework.Helper {
 		/**
 		 * Method that will enable the aria-atomic
 		 *
-		 * @param element
+		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
 		 */
 		public static AriaAtomicTrue(element: HTMLElement): void {
@@ -25,7 +25,8 @@ namespace OSUIFramework.Helper {
 		/**
 		 * Method that will define the aria-controls
 		 *
-		 * @param element
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @param {string} targetId Element id that will be related to target element
 		 * @returns
 		 */
 		public static AriaControls(element: HTMLElement, targetId: string): void {
@@ -35,7 +36,8 @@ namespace OSUIFramework.Helper {
 		/**
 		 * Method that will define the aria-describedby
 		 *
-		 * @param element
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @param {string} targetId Element id that will be related to target element
 		 * @returns
 		 */
 		public static AriaDescribedBy(element: HTMLElement, targetId: string): void {
@@ -45,7 +47,7 @@ namespace OSUIFramework.Helper {
 		/**
 		 * Method that will enable the aria-expanded
 		 *
-		 * @param element
+		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
 		 */
 		public static AriaExpandedFalse(element: HTMLElement): void {
@@ -59,7 +61,7 @@ namespace OSUIFramework.Helper {
 		/**
 		 * Method that will enable the aria-expanded
 		 *
-		 * @param element
+		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
 		 */
 		public static AriaExpandedTrue(element: HTMLElement): void {
@@ -69,7 +71,7 @@ namespace OSUIFramework.Helper {
 		/**
 		 * Method that will enable the aria-hidden
 		 *
-		 * @param element
+		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
 		 */
 		public static AriaHiddenFalse(element: HTMLElement): void {
@@ -79,7 +81,7 @@ namespace OSUIFramework.Helper {
 		/**
 		 * Method that will enable the aria-hidden
 		 *
-		 * @param element
+		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
 		 */
 		public static AriaHiddenTrue(element: HTMLElement): void {
@@ -89,7 +91,8 @@ namespace OSUIFramework.Helper {
 		/**
 		 * Method that will define the aria-label
 		 *
-		 * @param element
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @param {string} value Value atributte to be set on target element
 		 * @returns
 		 */
 		public static AriaLabel(element: HTMLElement, value: string): void {
@@ -99,7 +102,8 @@ namespace OSUIFramework.Helper {
 		/**
 		 * Method that will define the aria-labelledby
 		 *
-		 * @param element
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @param {string} targetId Element id that will be related to target element
 		 * @returns
 		 */
 		public static AriaLabelledBy(element: HTMLElement, targetId: string): void {
@@ -109,7 +113,7 @@ namespace OSUIFramework.Helper {
 		/**
 		 * Method that will set the aria-live assertive
 		 *
-		 * @param element
+		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
 		 */
 		public static AriaLiveAssertive(element: HTMLElement): void {
@@ -123,7 +127,7 @@ namespace OSUIFramework.Helper {
 		/**
 		 * Method that will set the aria-live off
 		 *
-		 * @param element
+		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
 		 */
 		public static AriaLiveOff(element: HTMLElement): void {
@@ -137,7 +141,7 @@ namespace OSUIFramework.Helper {
 		/**
 		 * Method that will set the aria-live polite
 		 *
-		 * @param element
+		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
 		 */
 		public static AriaLivePolite(element: HTMLElement): void {
@@ -151,27 +155,29 @@ namespace OSUIFramework.Helper {
 		/**
 		 * Method that will set the aria-value max
 		 *
-		 * @param element
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @param {number} value Value that will be set on aria atributte
 		 * @returns
 		 */
-		public static AriaValueMax(element: HTMLElement, value: string): void {
+		public static AriaValueMax(element: HTMLElement, value: number): void {
 			Helper.Attribute.Set(element, Constants.A11YAttributes.Aria.ValueMax, value);
 		}
 
 		/**
 		 * Method that will set the aria-value min
 		 *
-		 * @param element
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @param {number} value Value that will be set on aria atributte
 		 * @returns
 		 */
-		public static AriaValueMin(element: HTMLElement, value: string): void {
+		public static AriaValueMin(element: HTMLElement, value: number): void {
 			Helper.Attribute.Set(element, Constants.A11YAttributes.Aria.ValueMin, value);
 		}
 
 		/**
 		 * Method that will set the alert role
 		 *
-		 * @param element
+		 * @param {HTMLElement} element Target element to receive the role atributte
 		 * @returns
 		 */
 		public static RoleAlert(element: HTMLElement): void {
@@ -181,7 +187,7 @@ namespace OSUIFramework.Helper {
 		/**
 		 * Method that will set the button role
 		 *
-		 * @param element
+		 * @param {HTMLElement} element Target element to receive the role atributte
 		 * @returns
 		 */
 		public static RoleButton(element: HTMLElement): void {
@@ -191,7 +197,7 @@ namespace OSUIFramework.Helper {
 		/**
 		 * Method that will set the button role
 		 *
-		 * @param element
+		 * @param {HTMLElement} element Target element to receive the role atributte
 		 * @returns
 		 */
 		public static RoleMenuItem(element: HTMLElement): void {
@@ -205,7 +211,7 @@ namespace OSUIFramework.Helper {
 		/**
 		 * Method that will set the progressbar role
 		 *
-		 * @param element
+		 * @param {HTMLElement} element Target element to receive the role atributte
 		 * @returns
 		 */
 		public static RoleProgressBar(element: HTMLElement): void {
@@ -219,7 +225,7 @@ namespace OSUIFramework.Helper {
 		/**
 		 * Method that will set the search role
 		 *
-		 * @param element
+		 * @param {HTMLElement} element Target element to receive the role atributte
 		 * @returns
 		 */
 		public static RoleSearch(element: HTMLElement): void {
@@ -229,7 +235,7 @@ namespace OSUIFramework.Helper {
 		/**
 		 * Method that will set the tooltip role
 		 *
-		 * @param element
+		 * @param {HTMLElement} element Target element to receive the role atributte
 		 * @returns
 		 */
 		public static RoleTooltip(element: HTMLElement): void {
@@ -243,7 +249,7 @@ namespace OSUIFramework.Helper {
 		/**
 		 * Method that will enable the tabindex
 		 *
-		 * @param element
+		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
 		 */
 		public static TabIndexFalse(element: HTMLElement): void {
@@ -257,7 +263,7 @@ namespace OSUIFramework.Helper {
 		/**
 		 * Method that will disable the tabindex
 		 *
-		 * @param element
+		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
 		 */
 		public static TabIndexTrue(element: HTMLElement): void {
