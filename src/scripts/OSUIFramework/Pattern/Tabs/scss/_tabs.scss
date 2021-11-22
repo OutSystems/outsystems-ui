@@ -198,3 +198,13 @@
 		}
 	}
 }
+
+///
+.has-accessible-features {
+	.osui-tabs__header-item {
+		&.osui-tabs--is-active:focus {
+			border: var(--border-size-s) solid var(--color-focus-outer);
+			box-shadow: none;
+		}
+	}
+}
