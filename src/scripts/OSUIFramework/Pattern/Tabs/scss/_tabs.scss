@@ -202,6 +202,8 @@
 ///
 .has-accessible-features {
 	.osui-tabs__header-item {
+		border: var(--border-size-m) solid transparent;
+
 		&.osui-tabs--is-active:focus {
 			border: var(--border-size-m) solid var(--color-focus-outer);
 			box-shadow: none;
