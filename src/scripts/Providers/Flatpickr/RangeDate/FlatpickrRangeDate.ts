@@ -46,6 +46,26 @@ namespace Providers.Flatpickr.RangeDate {
 			);
 		}
 
+		// Method used to check if tehre is any seelcted date before changing the DateFormat
+		private _onUpdateDateFormat(): void {
+			// Check if any Date was selected
+			if (this._flatpickr.selectedDates.length > 0) {
+				// Set the new Start DefaultDate value
+				this._configs.DefaultDate[0] = this._flatpickr.formatDate(
+					this._flatpickr.selectedDates[0],
+					this._flatpickrOpts.dateFormat
+				);
+
+				// Set the new End DefaultDate value
+				if (this._flatpickr.selectedDates[1]) {
+					this._configs.DefaultDate[1] = this._flatpickr.formatDate(
+						this._flatpickr.selectedDates[1],
+						this._flatpickrOpts.dateFormat
+					);
+				}
+			}
+		}
+
 		public build(): void {
 			super.build();
 
@@ -73,23 +93,8 @@ namespace Providers.Flatpickr.RangeDate {
 					break;
 
 				case OSUIFramework.Patterns.DatePicker.Enum.Properties.DateFormat:
-					// Check if any Date was selected
-					if (this._flatpickr.selectedDates.length > 0) {
-						// Set the new Start DefaultDate value
-						this._configs.DefaultDate[0] = this._flatpickr.formatDate(
-							this._flatpickr.selectedDates[0],
-							this._flatpickrOpts.dateFormat
-						);
-
-						// Set the new End DefaultDate value
-						if (this._flatpickr.selectedDates[1]) {
-							this._configs.DefaultDate[1] = this._flatpickr.formatDate(
-								this._flatpickr.selectedDates[1],
-								this._flatpickrOpts.dateFormat
-							);
-						}
-					}
-
+					// Check if there is any selected date already
+					this._onUpdateDateFormat();
 					// Set the new InputDateFormat
 					this._configs.DateFormat = propertyValue;
 
