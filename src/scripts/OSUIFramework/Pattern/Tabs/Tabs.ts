@@ -94,17 +94,6 @@ namespace OSUIFramework.Patterns.Tabs {
 			}
 		}
 
-		private _handleScrollEvent(e): void {
-			const width = this._tabsContentElement.clientWidth;
-			const selection_index = Math.round(e.currentTarget.scrollLeft / width);
-
-			console.log(e.currentTarget.scrollLeft);
-
-			const newHeaderItem = this._tabsHeaderItemsElements[selection_index] as HTMLElement;
-			const newContentItem = this._tabsContentItemsElements[selection_index] as HTMLElement;
-			this._toggleActiveClasses(newHeaderItem, newContentItem);
-		}
-
 		private _prepareElements(): void {
 			this._getTabsHeaderItems();
 			this._getTabsContentItems();

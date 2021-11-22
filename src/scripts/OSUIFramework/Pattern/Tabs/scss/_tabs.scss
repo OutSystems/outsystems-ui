@@ -65,6 +65,8 @@
 
 		.osui-tabs__header {
 			flex-direction: column;
+			overflow-y: auto;
+			overflow-x: hidden;
 
 			&-item {
 				border-right: var(--border-size-m) solid transparent;
@@ -106,6 +108,9 @@
 		.osui-tabs__header {
 			flex-direction: row;
 			border-bottom: var(--border-size-s) solid var(--color-neutral-5);
+			overflow-y: hidden;
+			overflow-x: auto;
+			word-break: keep-all;
 
 			&-item {
 				border-bottom: var(--border-size-m) solid transparent;
@@ -169,10 +174,6 @@
 				z-index: 1;
 			}
 		}
-
-		.OSBlockWidget {
-			display: contents;
-		}
 	}
 
 	&__content {
@@ -191,7 +192,8 @@
 
 	&__header,
 	&__content {
-		.ph > .list {
+		.ph > .list,
+		.ph > .OSBlockWidget {
 			display: contents;
 		}
 	}
