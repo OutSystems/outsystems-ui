@@ -5,13 +5,12 @@
 
 ///
 .osui-tabs {
-	--header-height: auto;
 	display: grid;
 	height: var(--tabs-height);
 
 	&--is-vertical {
 		grid-auto-flow: row;
-		grid-template-columns: var(--header-height) 1fr;
+		grid-template-columns: auto 1fr;
 
 		&.osui-tabs--is-right {
 			grid-auto-flow: dense;
@@ -22,6 +21,8 @@
 				grid-column: 2;
 
 				&-item {
+					padding: var(--space-xs) 0 var(--space-xs) var(--space-base);
+
 					&::after {
 						left: calc(1px - var(--border-size-m));
 					}
@@ -42,6 +43,8 @@
 				border-right: var(--border-size-s) solid var(--color-neutral-5);
 
 				&-item {
+					padding: var(--space-xs) var(--space-base) var(--space-xs) 0;
+
 					&::after {
 						right: calc(-1px - var(--border-size-m));
 					}
@@ -57,22 +60,16 @@
 			}
 		}
 
-		&.osui-tabs--is-justified {
-			.osui-tabs__header-item {
-				flex: 1;
-			}
-		}
-
 		.osui-tabs__header {
-			flex-direction: column;
+			align-content: start;
+			grid-auto-flow: row;
 			overflow-y: auto;
 			overflow-x: hidden;
 
 			&-item {
 				border-right: var(--border-size-m) solid transparent;
-				height: auto;
 				flex: none;
-				padding: var(--space-xs) var(--space-base);
+				justify-content: flex-start;
 
 				&::after {
 					height: 100%;
@@ -97,23 +94,19 @@
 
 	&--is-horizontal {
 		grid-auto-flow: column;
-		grid-template-rows: var(--header-height) 1fr;
-
-		&:not(.osui-tabs--is-justified) {
-			.osui-tabs__header-item {
-				width: auto;
-			}
-		}
+		grid-template-rows: auto 1fr;
 
 		.osui-tabs__header {
-			flex-direction: row;
 			border-bottom: var(--border-size-s) solid var(--color-neutral-5);
+			grid-auto-flow: column;
+			justify-content: start;
 			overflow-y: hidden;
 			overflow-x: auto;
 			word-break: keep-all;
 
 			&-item {
 				border-bottom: var(--border-size-m) solid transparent;
+				justify-content: center;
 				padding: var(--space-base) var(--space-xs);
 
 				&::after {
@@ -143,8 +136,22 @@
 		}
 	}
 
+	&--is-justified {
+		&.osui-tabs--is-horizontal {
+			.osui-tabs__header {
+				justify-content: initial;
+			}
+		}
+
+		&.osui-tabs--is-vertical {
+			.osui-tabs__header {
+				align-content: initial;
+			}
+		}
+	}
+
 	&__header {
-		display: flex;
+		display: grid;
 
 		&-item {
 			align-items: center;
@@ -152,7 +159,6 @@
 			border: none;
 			color: var(--color-neutral-8);
 			cursor: pointer;
-			justify-content: center;
 			display: inline-flex;
 			height: 100%;
 			position: relative;
@@ -164,8 +170,7 @@
 			}
 
 			&.osui-tabs--is-active {
-				color: var(--color-neutral-10);
-				font-weight: var(--font-semi-bold);
+				color: var(--color-primary);
 			}
 
 			&::after {
