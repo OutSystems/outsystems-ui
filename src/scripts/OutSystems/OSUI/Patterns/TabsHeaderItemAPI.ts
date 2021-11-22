@@ -1,51 +1,95 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	const _tabsMap = new Map<string, string>();
-	const _tabsContentItemMap = new Map<string, OSUIFramework.Patterns.TabsContentItem.ITabsContentItem>();
+	const _tabsHeaderItemMap = new Map<string, OSUIFramework.Patterns.TabsHeaderItem.ITabsHeaderItem>();
 	/**
 	 * Gets the Tabd pattern the Item belongs to
 	 *
-	 * @return {*}  {Map<string, OSUIFramework.Patterns.TabsContentItem.ITabsContentItem>}
+	 * @return {*}  {Map<string, OSUIFramework.Patterns.TabsHeaderItem.ITabsHeaderItem>}
 	 */
-	export function GetTabsByItem(tabsContentItemId: string): OSUIFramework.Patterns.Tabs.ITabs {
-		return;
+	export function GetTabsByItem(tabsHeaderItemId: string): OSUIFramework.Patterns.Tabs.ITabs {
+		let tabs: OSUIFramework.Patterns.Tabs.ITabs;
+
+		if (_tabsMap.has(tabsHeaderItemId)) {
+			tabs = TabsAPI.GetTabsById(_tabsMap.get(tabsHeaderItemId));
+		} else {
+			// Try to find its reference on DOM
+			const elem = OSUIFramework.Helper.GetElementByUniqueId(tabsHeaderItemId);
+			const tabsElem = elem.closest(
+				OSUIFramework.Constants.Dot + OSUIFramework.Patterns.Tabs.Enum.CssClasses.Tabs
+			);
+
+			if (!tabsElem) {
+				throw Error(
+					`This ${OSUIFramework.GlobalEnum.PatternsNames.TabsHeaderItem} does not belong to any ${OSUIFramework.GlobalEnum.PatternsNames.Tabs} pattern.`
+				);
+			}
+			const uniqueId = tabsElem.getAttribute('name');
+			tabs = TabsAPI.GetTabsById(uniqueId);
+		}
+
+		console.log(tabs);
+		return tabs;
 	}
 
 	/**
 	 * Function that will change the property of a given Tabs pattern.
 	 *
 	 * @export
-	 * @param {string} tabsContentItemId ID of the Tabs Item where the property will be changed.
+	 * @param {string} tabsHeaderItemId ID of the Tabs Item where the property will be changed.
 	 * @param {string} propertyName Property name that will be updated
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ChangeProperty(tabsContentItemId: string, propertyName: string, propertyValue: any): void {
-		return;
+	export function ChangeProperty(tabsHeaderItemId: string, propertyName: string, propertyValue: any): void {
+		const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
+
+		tabsHeaderItem.changeProperty(propertyName, propertyValue);
 	}
 
 	/**
-	 * Create the new TabsContentItem instance and add it to the tabsContentItem Map
+	 * Create the new TabsHeaderItem instance and add it to the tabsContentItem Map
 	 *
 	 * @export
-	 * @param {string} tabsContentItemId ID of the Pattern that a new instance will be created.
+	 * @param {string} tabsHeaderItemId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSUIFramework.Patterns.Tabs.ITabs}
 	 */
 	export function Create(
-		tabsContentItemId: string,
+		tabsHeaderItemId: string,
 		configs: string
-	): OSUIFramework.Patterns.TabsContentItem.ITabsContentItem {
-		return;
+	): OSUIFramework.Patterns.TabsHeaderItem.ITabsHeaderItem {
+		if (_tabsHeaderItemMap.has(tabsHeaderItemId)) {
+			throw new Error(
+				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.TabsHeaderItem} registered under id: ${tabsHeaderItemId}`
+			);
+		}
+
+		const _newTabsHeaderItem = new OSUIFramework.Patterns.TabsHeaderItem.TabsHeaderItem(
+			tabsHeaderItemId,
+			JSON.parse(configs)
+		);
+
+		_tabsHeaderItemMap.set(tabsHeaderItemId, _newTabsHeaderItem);
+		_newTabsHeaderItem.build();
+
+		const tabs = GetTabsByItem(tabsHeaderItemId);
+
+		if (tabs !== undefined) {
+			_tabsMap.set(tabsHeaderItemId, tabs.uniqueId);
+			tabs.addTabsHeaderItem(_newTabsHeaderItem.uniqueId, _newTabsHeaderItem);
+		}
+
+		return _newTabsHeaderItem;
 	}
 
 	/**
 	 * Function that will dispose the instance of the given Tabs
 	 *
 	 * @export
-	 * @param {string} tabsContentItemId
+	 * @param {string} tabsHeaderItemId
 	 */
-	export function Dispose(tabsContentItemId: string): void {
+	export function Dispose(tabsHeaderItemId: string): void {
 		return;
 	}
 
@@ -55,8 +99,8 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	 * @export
 	 * @return {*}  {Map<string, OSUIFramework.Patterns.Tabs.ITabs>}
 	 */
-	export function GetAllTabsContentItems(): Array<string> {
-		return OSUIFramework.Helper.MapOperation.ExportKeys(_tabsContentItemMap);
+	export function GetAllTabsHeaderItems(): Array<string> {
+		return OSUIFramework.Helper.MapOperation.ExportKeys(_tabsHeaderItemMap);
 	}
 
 	/**
@@ -66,13 +110,13 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	 * @param {string} tabsId ID of the Tabs that will be looked for.
 	 * @return {*}  {OSUIFramework.Patterns.Tabs.ITabs}
 	 */
-	export function GetTabsContentItemById(
-		tabsContentItemId: string
-	): OSUIFramework.Patterns.TabsContentItem.ITabsContentItem {
-		return;
-	}
-
-	export function Initialize(tabsContentItemId: string): OSUIFramework.Patterns.TabsContentItem.ITabsContentItem {
-		return;
+	export function GetTabsHeaderItemById(
+		tabsHeaderItemId: string
+	): OSUIFramework.Patterns.TabsHeaderItem.ITabsHeaderItem {
+		return OSUIFramework.Helper.MapOperation.FindInMap(
+			'TabsHeaderItem',
+			tabsHeaderItemId,
+			_tabsHeaderItemMap
+		) as OSUIFramework.Patterns.TabsHeaderItem.ITabsHeaderItem;
 	}
 }

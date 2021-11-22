@@ -4,6 +4,7 @@ namespace OSUIFramework.Patterns.Tabs {
 	 * Defines the interface for OutSystemsUI Tabs Pattern
 	 */
 	export interface ITabs extends Interface.IPattern, Interface.ICallback {
+		addTabsHeaderItem(uniqueId: string, tabsHeaderItemItem: TabsHeaderItem.ITabsHeaderItem);
 		updateOnRender();
 	}
 }

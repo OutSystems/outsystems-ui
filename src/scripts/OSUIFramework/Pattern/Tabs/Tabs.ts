@@ -225,6 +225,10 @@ namespace OSUIFramework.Patterns.Tabs {
 			}
 		}
 
+		public addTabsHeaderItem(uniqueId: string, tabsHeaderItemItem: TabsHeaderItem.ITabsHeaderItem): void {
+			console.log(uniqueId, tabsHeaderItemItem);
+		}
+
 		public build(): void {
 			super.build();
 
