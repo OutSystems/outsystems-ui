@@ -120,31 +120,31 @@ namespace Providers.Flatpickr {
 
 				case OSUIFramework.Patterns.DatePicker.Enum.Properties.FirstWeekDay:
 					// Set the new FirstWeekDay value
-					this._configs.OptionalConfigs.firstWeekDay = propertyValue;
+					this._configs.FirstWeekDay = propertyValue;
 
 					break;
 
 				case OSUIFramework.Patterns.DatePicker.Enum.Properties.MinDate:
 					// Set the new MinDate value
-					this._configs.OptionalConfigs.minDate = propertyValue;
+					this._configs.MinDate = propertyValue;
 
 					break;
 
 				case OSUIFramework.Patterns.DatePicker.Enum.Properties.MaxDate:
 					// Set the new MaxDate value
-					this._configs.OptionalConfigs.maxDate = propertyValue;
+					this._configs.MaxDate = propertyValue;
 
 					break;
 
 				case OSUIFramework.Patterns.DatePicker.Enum.Properties.ShowMonths:
 					// Set the new ShowMonths value
-					this._configs.OptionalConfigs.showMonths = propertyValue;
+					this._configs.ShowMonths = propertyValue;
 
 					break;
 
 				case OSUIFramework.Patterns.DatePicker.Enum.Properties.ShowWeekNumbers:
 					// Set the new ShowMonths value
-					this._configs.OptionalConfigs.showWeekNumbers = propertyValue;
+					this._configs.ShowWeekNumbers = propertyValue;
 
 					break;
 

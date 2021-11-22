@@ -51,15 +51,6 @@ declare global {
 	type Splide = OriginalSplide;
 	type SplideOpts = Options;
 
-	// DatePicker
-	type DatepickrOptionalConfigs = {
-		firstWeekDay: number;
-		maxDate: string;
-		minDate: string;
-		showMonths: number;
-		showWeekNumbers: boolean;
-	};
-
 	// DatePicker => Flatpickr
 	type Flatpickr = flatpickr;
 	type FlatpickrOptions = flatpickrOpts;

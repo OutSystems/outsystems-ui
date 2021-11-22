@@ -13,6 +13,8 @@ namespace Providers.Flatpickr {
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		constructor(config: any) {
 			super(config);
+
+			console.log(config);
 		}
 
 		// Method used to abstract DateFormat style and map it into flatpickr expected one
@@ -77,7 +79,7 @@ namespace Providers.Flatpickr {
 				: 'en';
 
 			this._flatpickrLocale = window.flatpickr.l10ns[_locale];
-			this._flatpickrLocale.firstDayOfWeek = this.OptionalConfigs.firstWeekDay;
+			this._flatpickrLocale.firstDayOfWeek = this.FirstWeekDay;
 
 			return _locale;
 		}
@@ -100,19 +102,15 @@ namespace Providers.Flatpickr {
 				altInput: true,
 				enableTime: this.TimeFormat !== OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable,
 				locale: this._checkLocale(),
-				maxDate: OSUIFramework.Helper.Dates.IsNull(this.OptionalConfigs.maxDate)
-					? undefined
-					: this.OptionalConfigs.maxDate,
-				minDate: OSUIFramework.Helper.Dates.IsNull(this.OptionalConfigs.minDate)
-					? undefined
-					: this.OptionalConfigs.minDate,
+				maxDate: OSUIFramework.Helper.Dates.IsNull(this.MaxDate) ? undefined : this.MaxDate,
+				minDate: OSUIFramework.Helper.Dates.IsNull(this.MinDate) ? undefined : this.MinDate,
 				dateFormat:
 					this.TimeFormat !== OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable
 						? this.ServerDateFormat + ' H:i'
 						: this.ServerDateFormat,
-				showMonths: this.OptionalConfigs.showMonths,
+				showMonths: this.ShowMonths,
 				time_24hr: this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat,
-				weekNumbers: this.OptionalConfigs.showWeekNumbers,
+				weekNumbers: this.ShowWeekNumbers,
 				onChange: this.OnChange,
 			};
 
