@@ -46,6 +46,12 @@ namespace OSUIFramework.Patterns.Tabs {
 			}
 		}
 
+		private _prepareHeaderAndContentItems(): void {
+			this._activeTabHeaderElement = this._tabsHeaderItemsElementsArray[this._configs.ActiveTab];
+			this._activeTabContentElement = this._tabsContentItemsElementsArray[this._configs.ActiveTab];
+			this._updateTabsConnection(false);
+		}
+
 		private _prepareHeaderElement(): void {
 			Helper.Attribute.Set(
 				this._tabsHeaderElement,
@@ -71,9 +77,6 @@ namespace OSUIFramework.Patterns.Tabs {
 			this.setTabsHeight(this._configs.Height);
 			this.setTabsIsJustified(this._configs.IsJustified);
 			this.setScrollBehavior(this._configs.DisableAnimation);
-			this._activeTabHeaderElement = this._tabsHeaderItemsElementsArray[this._configs.ActiveTab];
-			this._activeTabContentElement = this._tabsContentItemsElementsArray[this._configs.ActiveTab];
-			this._updateTabsConnection(false);
 			this.changeTab(this.configs.ActiveTab, undefined, false);
 		}
 
@@ -99,7 +102,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			});
 		}
 
-		public addTabsContentItem(uniqueId: string, tabsContentItem: TabsContentItem.ITabsContentItem): void {
+		public addTabsContentItem(tabsContentItem: TabsContentItem.ITabsContentItem): void {
 			this._tabsContentItemsElementsArray.push(tabsContentItem);
 
 			if (this._activeTabContentElement === undefined && this.isBuilt) {
@@ -113,7 +116,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			}
 		}
 
-		public addTabsHeaderItem(uniqueId: string, tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem): void {
+		public addTabsHeaderItem(tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem): void {
 			this._tabsHeaderItemsElementsArray.push(tabsHeaderItem);
 
 			if (this._activeTabHeaderElement === undefined && this.isBuilt) {
@@ -122,6 +125,7 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			if (this.isBuilt) {
 				Helper.AsyncInvocation(this._updateTabsConnection.bind(this));
+				Helper.AsyncInvocation(this.changeTab.bind(this), this._configs.ActiveTab, tabsHeaderItem, false);
 			} else {
 				tabsHeaderItem.setDataTab(this._tabsHeaderItemsElementsArray.length - 1);
 			}
@@ -131,6 +135,8 @@ namespace OSUIFramework.Patterns.Tabs {
 			super.build();
 
 			this._setHtmlElements();
+
+			this._prepareHeaderAndContentItems();
 
 			this._prepareHeaderElement();
 
@@ -168,7 +174,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		public changeTab(
-			tabIndex: number,
+			tabIndex = this._configs.ActiveTab,
 			tabsHeaderItem?: Patterns.TabsHeaderItem.ITabsHeaderItem,
 			triggerEvent?: boolean
 		): void {

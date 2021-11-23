@@ -15,8 +15,7 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		}
 
 		private _prepareElement(): void {
-			//this.setDataTab(this._dataTab);
-			this._tabsElem.addTabsContentItem(this.uniqueId, this);
+			this._tabsElem.addTabsContentItem(this);
 			this._setAccessibilityAttributes();
 		}
 

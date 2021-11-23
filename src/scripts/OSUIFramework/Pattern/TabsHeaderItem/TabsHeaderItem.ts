@@ -30,8 +30,7 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		}
 
 		private _prepareElement(): void {
-			//this.setDataTab(this._dataTab);
-			this._tabsElem.addTabsHeaderItem(this.uniqueId, this);
+			this._tabsElem.addTabsHeaderItem(this);
 			this._setAccessibilityAttributes();
 		}
 
