@@ -57,7 +57,7 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		public dispose(): void {
 			super.dispose();
 
-			this._tabsElem.removeTabsHeaderItem(this.uniqueId, this);
+			this._tabsElem.removeTabsHeaderItem(this);
 
 			this._selfElem.removeEventListener('click', this._eventOnTabsClick);
 		}

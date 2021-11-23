@@ -40,7 +40,7 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		public dispose(): void {
 			super.dispose();
 
-			this._tabsElem.removeTabsContentItem(this.uniqueId, this);
+			this._tabsElem.removeTabsContentItem(this);
 		}
 
 		public getOffsetLeft(): number {

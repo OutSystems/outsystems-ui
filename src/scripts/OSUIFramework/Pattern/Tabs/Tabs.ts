@@ -231,12 +231,12 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._onTabsChange = callback;
 		}
 
-		public removeTabsContentItem(uniqueId: string, tabsContentItem: TabsContentItem.ITabsContentItem): void {
+		public removeTabsContentItem(tabsContentItem: TabsContentItem.ITabsContentItem): void {
 			const currentIndex = this._tabsContentItemsElementsArray.indexOf(tabsContentItem);
 			this._tabsContentItemsElementsArray.splice(currentIndex, 1);
 		}
 
-		public removeTabsHeaderItem(uniqueId: string, tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem): void {
+		public removeTabsHeaderItem(tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem): void {
 			const currentIndex = this._tabsHeaderItemsElementsArray.indexOf(tabsHeaderItem);
 			this._tabsHeaderItemsElementsArray.splice(currentIndex, 1);
 		}

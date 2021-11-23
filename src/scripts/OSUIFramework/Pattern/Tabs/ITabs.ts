@@ -7,7 +7,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		addTabsContentItem(tabsContentItem: TabsContentItem.ITabsContentItem);
 		addTabsHeaderItem(tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem);
 		changeTab(tabIndex: number, tabsHeaderItem: Patterns.TabsHeaderItem.ITabsHeaderItem, triggerEvent?: boolean);
-		removeTabsContentItem(uniqueId: string, tabsContentItem: TabsContentItem.ITabsContentItem);
-		removeTabsHeaderItem(uniqueId: string, tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem);
+		removeTabsContentItem(tabsContentItem: TabsContentItem.ITabsContentItem);
+		removeTabsHeaderItem(tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem);
 	}
 }
