@@ -15,7 +15,6 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 
 			this._tabsElem = tabsElem;
 			this._eventOnTabsClick = this._handleClickEvent.bind(this);
-			this._dataTab = this._tabsElem.addTabsHeaderItem(this.uniqueId, this);
 		}
 
 		private _addEventListener(): void {
@@ -27,11 +26,12 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 				return;
 			}
 
-			this._tabsElem.changeTab(this._dataTab, true);
+			this._tabsElem.changeTab(this._dataTab, this, true);
 		}
 
 		private _prepareElement(): void {
-			Helper.Attribute.Set(this._selfElem, Tabs.Enum.Attributes.DataTab, this._dataTab.toString());
+			//this.setDataTab(this._dataTab);
+			this._tabsElem.addTabsHeaderItem(this.uniqueId, this);
 			this._setAccessibilityAttributes();
 		}
 
@@ -61,6 +61,31 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 			this._tabsElem.removeTabsHeaderItem(this.uniqueId, this);
 
 			this._selfElem.removeEventListener('click', this._eventOnTabsClick);
+		}
+
+		public removeAsActiveElement(): void {
+			Helper.Style.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
+			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.Aria.Selected, false);
+			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.TabIndex, '-1');
+		}
+
+		public setAriaControlsAttribute(contentItemId: string): void {
+			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.Aria.Controls, contentItemId);
+		}
+
+		public setAsActiveElement(): void {
+			Helper.Style.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
+			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.Aria.Selected, true);
+			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.TabIndex, '0');
+		}
+
+		public setDataTab(dataTab: number): void {
+			Helper.Attribute.Set(this._selfElem, Tabs.Enum.Attributes.DataTab, dataTab.toString());
+			this._dataTab = dataTab;
+		}
+
+		public setFocus(): void {
+			this._selfElem.focus();
 		}
 	}
 }

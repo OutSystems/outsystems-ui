@@ -4,10 +4,9 @@ namespace OSUIFramework.Patterns.Tabs {
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	export class Tabs extends AbstractPattern<TabsConfig> implements ITabs {
-		private _activeTabContentElement: HTMLElement;
-		private _activeTabHeaderElement: HTMLElement;
+		private _activeTabContentElement: Patterns.TabsContentItem.ITabsContentItem;
+		private _activeTabHeaderElement: Patterns.TabsHeaderItem.ITabsHeaderItem;
 		private _blockOnRender: boolean;
-		private _currentTabIndex: number;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnHeaderKeypress: any;
 		// Store the click event with bind(this)
@@ -16,12 +15,9 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _onTabsChange: Callbacks.OSTabsOnChangeEvent;
 		private _scrollBehavior: Enum.ScrollBehavior;
 		private _tabsContentElement: HTMLElement;
-		// Stores the content items of this specific Tabs
-		private _tabsContentItemsElements: NodeList;
-		private _tabsContentItemsElementsArray: HTMLElement[];
+		private _tabsContentItemsElementsArray: Patterns.TabsContentItem.ITabsContentItem[];
 		private _tabsHeaderElement: HTMLElement;
-		private _tabsHeaderItemsElements: Map<string, Patterns.TabsHeaderItem.ITabsHeaderItem>;
-		private _tabsHeaderItemsElementsArray: HTMLElement[];
+		private _tabsHeaderItemsElementsArray: Patterns.TabsHeaderItem.ITabsHeaderItem[];
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
@@ -30,7 +26,6 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._eventOnHeaderKeypress = this._handleKeypressEvent.bind(this);
 			// Bind this to the async callback
 			this._onDisableRender = this._disableBlockRender.bind(this);
-			this._tabsHeaderItemsElements = new Map<string, Patterns.TabsHeaderItem.ITabsHeaderItem>();
 			this._tabsHeaderItemsElementsArray = [];
 			this._tabsContentItemsElementsArray = [];
 		}
@@ -46,18 +41,18 @@ namespace OSUIFramework.Patterns.Tabs {
 			switch (e.key) {
 				case GlobalEnum.Keycodes.ArrowRight:
 					targetHeaderItemIndex = this._configs.ActiveTab + 1;
-					this.changeTab(targetHeaderItemIndex, true);
+					this.changeTab(targetHeaderItemIndex, undefined, true);
 					break;
 				case GlobalEnum.Keycodes.ArrowLeft:
 					targetHeaderItemIndex = this._configs.ActiveTab - 1;
-					this.changeTab(targetHeaderItemIndex, true);
+					this.changeTab(targetHeaderItemIndex, undefined, true);
 					break;
 			}
 
-			const targetHeaderItem = this._tabsHeaderItemsElements[targetHeaderItemIndex] as HTMLElement;
+			const targetHeaderItem = this._tabsHeaderItemsElementsArray[targetHeaderItemIndex];
 
 			if (targetHeaderItem) {
-				targetHeaderItem.focus();
+				targetHeaderItem.setFocus();
 			}
 		}
 
@@ -75,28 +70,6 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._tabsHeaderElement.removeEventListener('keydown', this._eventOnHeaderKeypress);
 		}
 
-		private _updateContentAccessibilityAttributes(contentItem: HTMLElement, currentHeaderItemId: string): void {
-			Helper.Attribute.Set(
-				contentItem,
-				Constants.AccessibilityAttribute.Role.AttrName,
-				Constants.AccessibilityAttribute.Role.TabPanel
-			);
-			Helper.Attribute.Set(contentItem, Constants.AccessibilityAttribute.TabIndex, '-1');
-			Helper.Attribute.Set(contentItem, Constants.AccessibilityAttribute.Aria.Hidden, true);
-			Helper.Attribute.Set(contentItem, Constants.AccessibilityAttribute.Aria.Labelledby, currentHeaderItemId);
-		}
-
-		private _updateHeaderAccessibilityAttributes(headerItem: HTMLElement, currentContentItemId?: string): void {
-			Helper.Attribute.Set(
-				headerItem,
-				Constants.AccessibilityAttribute.Role.AttrName,
-				Constants.AccessibilityAttribute.Role.Tab
-			);
-			Helper.Attribute.Set(headerItem, Constants.AccessibilityAttribute.TabIndex, '-1');
-			Helper.Attribute.Set(headerItem, Constants.AccessibilityAttribute.Aria.Selected, false);
-			Helper.Attribute.Set(headerItem, Constants.AccessibilityAttribute.Aria.Controls, currentContentItemId);
-		}
-
 		private _setHtmlElements(): void {
 			this._tabsHeaderElement = this._selfElem.querySelector(Constants.Dot + Enum.CssClasses.TabsHeader);
 			this._tabsContentElement = this._selfElem.querySelector(Constants.Dot + Enum.CssClasses.TabsContent);
@@ -108,42 +81,9 @@ namespace OSUIFramework.Patterns.Tabs {
 			this.setTabsHeight(this._configs.Height);
 			this.setTabsIsJustified(this._configs.IsJustified);
 			this.setScrollBehavior(this._configs.DisableAnimation);
-			this.changeTab(this.configs.ActiveTab, false);
-		}
-
-		private _toggleActiveClasses(newActiveHeader: HTMLElement, newActiveContent: HTMLElement): void {
-			if (this._activeTabHeaderElement) {
-				Helper.Style.RemoveClass(this._activeTabHeaderElement, Enum.CssClasses.ActiveTab);
-			}
-
-			if (this._activeTabContentElement) {
-				Helper.Style.RemoveClass(this._activeTabContentElement, Enum.CssClasses.ActiveTab);
-			}
-
-			Helper.Style.AddClass(newActiveHeader, Enum.CssClasses.ActiveTab);
-			Helper.Style.AddClass(newActiveContent, Enum.CssClasses.ActiveTab);
-		}
-
-		private _toggleContentItemsAccessibilityAttributes(newActiveContent: HTMLElement): void {
-			if (this._activeTabContentElement) {
-				Helper.Attribute.Set(this._activeTabContentElement, Constants.AccessibilityAttribute.TabIndex, '-1');
-				Helper.Attribute.Set(this._activeTabContentElement, Constants.AccessibilityAttribute.Aria.Hidden, true);
-			}
-			Helper.Attribute.Set(newActiveContent, Constants.AccessibilityAttribute.Aria.Hidden, false);
-			Helper.Attribute.Set(newActiveContent, Constants.AccessibilityAttribute.TabIndex, '0');
-		}
-
-		private _toggleHeaderItemsAccessibilityAttributes(newActiveHeader: HTMLElement): void {
-			if (this._activeTabHeaderElement) {
-				Helper.Attribute.Set(
-					this._activeTabHeaderElement,
-					Constants.AccessibilityAttribute.Aria.Selected,
-					false
-				);
-				Helper.Attribute.Set(this._activeTabHeaderElement, Constants.AccessibilityAttribute.TabIndex, '-1');
-			}
-			Helper.Attribute.Set(newActiveHeader, Constants.AccessibilityAttribute.Aria.Selected, true);
-			Helper.Attribute.Set(newActiveHeader, Constants.AccessibilityAttribute.TabIndex, '0');
+			this._activeTabHeaderElement = this._tabsHeaderItemsElementsArray[this._configs.ActiveTab];
+			this._activeTabContentElement = this._tabsContentItemsElementsArray[this._configs.ActiveTab];
+			this.changeTab(this.configs.ActiveTab, undefined, false);
 		}
 
 		// Method that triggers the OnTabsChange event
@@ -155,48 +95,44 @@ namespace OSUIFramework.Patterns.Tabs {
 
 		private _updateTabsConnection(): void {
 			this._tabsHeaderItemsElementsArray.forEach((item, index) => {
-				const currentHeaderItemId = Helper.Attribute.Get(item.parentNode as HTMLElement, 'id');
 				const currentContentItem = this._tabsContentItemsElementsArray[index];
-				const currentContentItemId = Helper.Attribute.Get(currentContentItem.parentNode as HTMLElement, 'id');
 
-				Helper.Attribute.Set(item, Enum.Attributes.DataTab, index.toString());
-				this._updateHeaderAccessibilityAttributes(item, currentContentItemId);
+				item.setAriaControlsAttribute(currentContentItem.widgetId);
+				item.setDataTab(index);
 
-				if (currentContentItem !== undefined) {
-					Helper.Attribute.Set(currentContentItem, Enum.Attributes.DataTab, index.toString());
-					this._updateContentAccessibilityAttributes(currentContentItem, currentHeaderItemId);
-				}
+				currentContentItem.setAriaLabelledByAttribute(item.widgetId);
+				currentContentItem.setDataTab(index);
 			});
 		}
 
-		public addTabsContentItem(uniqueId: string, tabsContentItem: TabsContentItem.ITabsContentItem): number {
-			const currentContentElem = Helper.GetElementByUniqueId(uniqueId);
-			this._tabsContentItemsElementsArray.push(currentContentElem);
+		public addTabsContentItem(uniqueId: string, tabsContentItem: TabsContentItem.ITabsContentItem): void {
+			this._tabsContentItemsElementsArray.push(tabsContentItem);
 
-			return this._tabsContentItemsElementsArray.length - 1;
+			if (this._activeTabContentElement === undefined && this.isBuilt) {
+				this._activeTabContentElement = this._tabsContentItemsElementsArray[this._configs.ActiveTab];
+			}
+
+			if (this.isBuilt) {
+				Helper.AsyncInvocation(this._updateTabsConnection.bind(this));
+			} else {
+				tabsContentItem.setDataTab(this._tabsContentItemsElementsArray.length - 1);
+			}
 		}
 
-		public addTabsHeaderItem(uniqueId: string, tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem): number {
-			//this._tabsHeaderItemsElements.set(uniqueId, tabsHeaderItem);
-			const currentHeaderElem = Helper.GetElementByUniqueId(uniqueId);
-			this._tabsHeaderItemsElementsArray.push(currentHeaderElem);
+		public addTabsHeaderItem(uniqueId: string, tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem): void {
+			this._tabsHeaderItemsElementsArray.push(tabsHeaderItem);
 
-			return this._tabsHeaderItemsElementsArray.length - 1;
+			if (this._activeTabHeaderElement === undefined && this.isBuilt) {
+				this._activeTabHeaderElement = this._tabsHeaderItemsElementsArray[this._configs.ActiveTab];
+			}
+
+			if (this.isBuilt) {
+				Helper.AsyncInvocation(this._updateTabsConnection.bind(this));
+			} else {
+				tabsHeaderItem.setDataTab(this._tabsHeaderItemsElementsArray.length - 1);
+			}
 		}
 
-		public removeTabsContentItem(uniqueId: string, tabsContentItem: TabsContentItem.ITabsContentItem): void {
-			const currentContentElem = Helper.GetElementByUniqueId(uniqueId);
-			const currentIndex = this._tabsContentItemsElementsArray.indexOf(currentContentElem);
-			this._tabsContentItemsElementsArray.splice(currentIndex, 1);
-		}
-
-		public removeTabsHeaderItem(uniqueId: string, tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem): void {
-			const currentHeaderElem = Helper.GetElementByUniqueId(uniqueId);
-			const currentIndex = this._tabsHeaderItemsElementsArray.indexOf(currentHeaderElem);
-			this._tabsHeaderItemsElementsArray.splice(currentIndex, 1);
-		}
-
-		// eslint-disable-next-line @typescript-eslint/member-ordering
 		public build(): void {
 			super.build();
 
@@ -215,7 +151,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			// Check which property changed and call respective method to update it
 			switch (propertyName) {
 				case Enum.Properties.ActiveTab:
-					this.changeTab(propertyValue, true);
+					this.changeTab(propertyValue, undefined, true);
 					break;
 				case Enum.Properties.DisableAnimation:
 					this.setScrollBehavior(propertyValue);
@@ -239,9 +175,17 @@ namespace OSUIFramework.Patterns.Tabs {
 			Helper.AsyncInvocation(this._onDisableRender, this.widgetId);
 		}
 
-		public changeTab(tabIndex: number, triggerEvent?: boolean): void {
+		public changeTab(
+			tabIndex: number,
+			tabsHeaderItem?: Patterns.TabsHeaderItem.ITabsHeaderItem,
+			triggerEvent?: boolean
+		): void {
 			this._blockOnRender = true;
 			let newTabIndex;
+
+			if (this._activeTabHeaderElement === tabsHeaderItem) {
+				return;
+			}
 
 			if (this._tabsHeaderItemsElementsArray[tabIndex]) {
 				newTabIndex = tabIndex;
@@ -253,25 +197,25 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			const newHeaderItem = this._tabsHeaderItemsElementsArray[newTabIndex];
 
-			if (newHeaderItem === undefined) {
-				this._blockOnRender = false;
-				return;
-			}
+			// if (newHeaderItem === undefined) {
+			// 	this._blockOnRender = false;
+			// 	return;
+			// }
 
-			const newContentItem = this._tabsContentItemsElementsArray[newTabIndex]
-				? this._tabsContentItemsElementsArray[newTabIndex]
-				: this._tabsContentItemsElementsArray[0];
+			const newContentItem = this._tabsContentItemsElementsArray[newTabIndex];
+			const targetOffeset = newContentItem.getOffsetLeft();
 
 			this._tabsContentElement.scrollTo({
 				top: 0,
-				left: newContentItem.offsetLeft,
+				left: targetOffeset,
 				behavior: this._scrollBehavior,
 			});
 
-			this._toggleActiveClasses(newHeaderItem, newContentItem);
+			this._activeTabHeaderElement.removeAsActiveElement();
+			newHeaderItem.setAsActiveElement();
 
-			this._toggleHeaderItemsAccessibilityAttributes(newHeaderItem);
-			this._toggleContentItemsAccessibilityAttributes(newContentItem);
+			this._activeTabContentElement.removeAsActiveElement();
+			newContentItem.setAsActiveElement();
 
 			this._activeTabHeaderElement = newHeaderItem;
 			this._activeTabContentElement = newContentItem;
@@ -294,6 +238,16 @@ namespace OSUIFramework.Patterns.Tabs {
 		// Set callbacks for the onTabsChange event
 		public registerCallback(callback: Callbacks.OSTabsOnChangeEvent): void {
 			this._onTabsChange = callback;
+		}
+
+		public removeTabsContentItem(uniqueId: string, tabsContentItem: TabsContentItem.ITabsContentItem): void {
+			const currentIndex = this._tabsContentItemsElementsArray.indexOf(tabsContentItem);
+			this._tabsContentItemsElementsArray.splice(currentIndex, 1);
+		}
+
+		public removeTabsHeaderItem(uniqueId: string, tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem): void {
+			const currentIndex = this._tabsHeaderItemsElementsArray.indexOf(tabsHeaderItem);
+			this._tabsHeaderItemsElementsArray.splice(currentIndex, 1);
 		}
 
 		public setScrollBehavior(disableAnimation: boolean): void {
@@ -333,35 +287,31 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		public updateOnRender(): void {
-			if (!this._blockOnRender) {
-				let needsUpdate = false;
-
-				this._tabsHeaderItemsElementsArray.forEach((item) => {
-					const hasDataTab = Helper.Attribute.Get(item, Enum.Attributes.DataTab);
-					if (!hasDataTab) {
-						needsUpdate = true;
-						return;
-					}
-				});
-
-				if (!needsUpdate) {
-					this._tabsContentItemsElementsArray.forEach((item) => {
-						const hasDataTab = Helper.Attribute.Get(item, Enum.Attributes.DataTab);
-						if (!hasDataTab) {
-							needsUpdate = true;
-							return;
-						}
-					});
-				}
-
-				if (needsUpdate) {
-					this._updateTabsConnection();
-				}
-
-				if (this._currentTabIndex === undefined && this.configs.ActiveTab !== undefined) {
-					this.changeTab(this.configs.ActiveTab, false);
-				}
-			}
+			// if (!this._blockOnRender) {
+			// 	let needsUpdate = false;
+			// 	this._tabsHeaderItemsElementsArray.forEach((item) => {
+			// 		const hasDataTab = Helper.Attribute.Get(item, Enum.Attributes.DataTab);
+			// 		if (!hasDataTab) {
+			// 			needsUpdate = true;
+			// 			return;
+			// 		}
+			// 	});
+			// 	if (!needsUpdate) {
+			// 		this._tabsContentItemsElementsArray.forEach((item) => {
+			// 			const hasDataTab = Helper.Attribute.Get(item, Enum.Attributes.DataTab);
+			// 			if (!hasDataTab) {
+			// 				needsUpdate = true;
+			// 				return;
+			// 			}
+			// 		});
+			// 	}
+			// 	if (needsUpdate) {
+			// 		this._updateTabsConnection();
+			// 	}
+			// 	if (this._currentTabIndex === undefined && this.configs.ActiveTab !== undefined) {
+			// 		this.changeTab(this.configs.ActiveTab, false);
+			// 	}
+			// }
 		}
 	}
 }

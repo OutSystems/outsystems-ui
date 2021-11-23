@@ -6,7 +6,7 @@ namespace OSUIFramework.Patterns.Tabs {
 	export interface ITabs extends Interface.IPattern, Interface.ICallback {
 		addTabsContentItem(uniqueId: string, tabsContentItem: TabsContentItem.ITabsContentItem);
 		addTabsHeaderItem(uniqueId: string, tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem);
-		changeTab(tabIndex: number, triggerEvent?: boolean);
+		changeTab(tabIndex: number, tabsHeaderItem: Patterns.TabsHeaderItem.ITabsHeaderItem, triggerEvent?: boolean);
 		removeTabsContentItem(uniqueId: string, tabsContentItem: TabsContentItem.ITabsContentItem);
 		removeTabsHeaderItem(uniqueId: string, tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem);
 		updateOnRender();
