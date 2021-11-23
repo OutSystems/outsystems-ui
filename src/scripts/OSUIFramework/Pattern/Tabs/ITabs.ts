@@ -9,6 +9,5 @@ namespace OSUIFramework.Patterns.Tabs {
 		changeTab(tabIndex: number, tabsHeaderItem: Patterns.TabsHeaderItem.ITabsHeaderItem, triggerEvent?: boolean);
 		removeTabsContentItem(uniqueId: string, tabsContentItem: TabsContentItem.ITabsContentItem);
 		removeTabsHeaderItem(uniqueId: string, tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem);
-		updateOnRender();
 	}
 }

@@ -6,12 +6,9 @@ namespace OSUIFramework.Patterns.Tabs {
 	export class Tabs extends AbstractPattern<TabsConfig> implements ITabs {
 		private _activeTabContentElement: Patterns.TabsContentItem.ITabsContentItem;
 		private _activeTabHeaderElement: Patterns.TabsHeaderItem.ITabsHeaderItem;
-		private _blockOnRender: boolean;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnHeaderKeypress: any;
 		// Store the click event with bind(this)
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		private _onDisableRender: OSUIFramework.Callbacks.Generic;
 		private _onTabsChange: Callbacks.OSTabsOnChangeEvent;
 		private _scrollBehavior: Enum.ScrollBehavior;
 		private _tabsContentElement: HTMLElement;
@@ -24,15 +21,8 @@ namespace OSUIFramework.Patterns.Tabs {
 			super(uniqueId, new TabsConfig(configs));
 
 			this._eventOnHeaderKeypress = this._handleKeypressEvent.bind(this);
-			// Bind this to the async callback
-			this._onDisableRender = this._disableBlockRender.bind(this);
 			this._tabsHeaderItemsElementsArray = [];
 			this._tabsContentItemsElementsArray = [];
-		}
-
-		// Method to toggle the blockRender status
-		private _disableBlockRender(): void {
-			this._blockOnRender = false;
 		}
 
 		private _handleKeypressEvent(e): void {
@@ -83,6 +73,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			this.setScrollBehavior(this._configs.DisableAnimation);
 			this._activeTabHeaderElement = this._tabsHeaderItemsElementsArray[this._configs.ActiveTab];
 			this._activeTabContentElement = this._tabsContentItemsElementsArray[this._configs.ActiveTab];
+			this._updateTabsConnection(false);
 			this.changeTab(this.configs.ActiveTab, undefined, false);
 		}
 
@@ -93,15 +84,18 @@ namespace OSUIFramework.Patterns.Tabs {
 			}
 		}
 
-		private _updateTabsConnection(): void {
+		private _updateTabsConnection(updateDataTab = true): void {
 			this._tabsHeaderItemsElementsArray.forEach((item, index) => {
 				const currentContentItem = this._tabsContentItemsElementsArray[index];
 
 				item.setAriaControlsAttribute(currentContentItem.widgetId);
-				item.setDataTab(index);
 
 				currentContentItem.setAriaLabelledByAttribute(item.widgetId);
-				currentContentItem.setDataTab(index);
+
+				if (updateDataTab) {
+					item.setDataTab(index);
+					currentContentItem.setDataTab(index);
+				}
 			});
 		}
 
@@ -147,7 +141,6 @@ namespace OSUIFramework.Patterns.Tabs {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
-			this._blockOnRender = true;
 			// Check which property changed and call respective method to update it
 			switch (propertyName) {
 				case Enum.Properties.ActiveTab:
@@ -172,7 +165,6 @@ namespace OSUIFramework.Patterns.Tabs {
 					super.changeProperty(propertyName, propertyValue);
 					break;
 			}
-			Helper.AsyncInvocation(this._onDisableRender, this.widgetId);
 		}
 
 		public changeTab(
@@ -180,7 +172,6 @@ namespace OSUIFramework.Patterns.Tabs {
 			tabsHeaderItem?: Patterns.TabsHeaderItem.ITabsHeaderItem,
 			triggerEvent?: boolean
 		): void {
-			this._blockOnRender = true;
 			let newTabIndex;
 
 			if (this._activeTabHeaderElement === tabsHeaderItem) {
@@ -197,12 +188,8 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			const newHeaderItem = this._tabsHeaderItemsElementsArray[newTabIndex];
 
-			// if (newHeaderItem === undefined) {
-			// 	this._blockOnRender = false;
-			// 	return;
-			// }
-
 			const newContentItem = this._tabsContentItemsElementsArray[newTabIndex];
+
 			const targetOffeset = newContentItem.getOffsetLeft();
 
 			this._tabsContentElement.scrollTo({
@@ -224,8 +211,6 @@ namespace OSUIFramework.Patterns.Tabs {
 			if (triggerEvent) {
 				this._triggerOnChangeEvent(newTabIndex);
 			}
-
-			Helper.AsyncInvocation(this._onDisableRender, this.widgetId);
 		}
 
 		// Destroy the Tabs pattern
@@ -284,34 +269,6 @@ namespace OSUIFramework.Patterns.Tabs {
 			Helper.Style.AddClass(this._selfElem, Enum.CssClasses.Modifier + position);
 
 			this._configs.Position = position;
-		}
-
-		public updateOnRender(): void {
-			// if (!this._blockOnRender) {
-			// 	let needsUpdate = false;
-			// 	this._tabsHeaderItemsElementsArray.forEach((item) => {
-			// 		const hasDataTab = Helper.Attribute.Get(item, Enum.Attributes.DataTab);
-			// 		if (!hasDataTab) {
-			// 			needsUpdate = true;
-			// 			return;
-			// 		}
-			// 	});
-			// 	if (!needsUpdate) {
-			// 		this._tabsContentItemsElementsArray.forEach((item) => {
-			// 			const hasDataTab = Helper.Attribute.Get(item, Enum.Attributes.DataTab);
-			// 			if (!hasDataTab) {
-			// 				needsUpdate = true;
-			// 				return;
-			// 			}
-			// 		});
-			// 	}
-			// 	if (needsUpdate) {
-			// 		this._updateTabsConnection();
-			// 	}
-			// 	if (this._currentTabIndex === undefined && this.configs.ActiveTab !== undefined) {
-			// 		this.changeTab(this.configs.ActiveTab, false);
-			// 	}
-			// }
 		}
 	}
 }

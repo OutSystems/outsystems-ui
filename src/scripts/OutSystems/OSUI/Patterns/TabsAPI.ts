@@ -105,19 +105,4 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 
 		tabs.registerCallback(callback);
 	}
-
-	/**
-	 * Function that will update on DOM changes inside the Tabs
-	 *
-	 * @export
-	 * @param {string} tabsId
-	 * @return {*}  {OSUIFramework.Patterns.Tabs.ITabs}
-	 */
-	export function UpdateOnRender(tabsId: string): OSUIFramework.Patterns.Tabs.ITabs {
-		const tabs = GetTabsById(tabsId);
-
-		tabs.updateOnRender();
-
-		return tabs;
-	}
 }
