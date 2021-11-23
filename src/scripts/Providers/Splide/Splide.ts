@@ -138,8 +138,6 @@ namespace Providers.Splide {
 
 		// Ensure that the splide track maintains the correct width
 		private _setCarouselWidth(): void {
-			console.log(this._splideTrack);
-			console.log(this._selfElem.offsetWidth);
 			OSUIFramework.Helper.Style.SetStyleAttribute(
 				this._splideTrack,
 				OSUIFramework.Patterns.Carousel.Enum.CssVariables.CarouselWidth,
