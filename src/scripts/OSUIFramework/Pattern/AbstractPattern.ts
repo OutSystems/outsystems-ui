@@ -14,8 +14,6 @@ namespace OSUIFramework.Patterns {
 		constructor(uniqueId: string, configs: C) {
 			this._uniqueId = uniqueId;
 			this._configs = configs;
-
-			// console.log(`AbstractPattern Constructor - '${uniqueId}'`);
 		}
 
 		private _updateExtendedClass(activeCssClass: string, newCssClass: string): void {

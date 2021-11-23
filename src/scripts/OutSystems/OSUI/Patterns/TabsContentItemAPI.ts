@@ -8,7 +8,27 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 	 * @return {*}  {Map<string, OSUIFramework.Patterns.TabsContentItem.ITabsContentItem>}
 	 */
 	export function GetTabsByItem(tabsContentItemId: string): OSUIFramework.Patterns.Tabs.ITabs {
-		return;
+		let tabs: OSUIFramework.Patterns.Tabs.ITabs;
+
+		if (_tabsMap.has(tabsContentItemId)) {
+			tabs = TabsAPI.GetTabsById(_tabsMap.get(tabsContentItemId));
+		} else {
+			// Try to find its reference on DOM
+			const elem = OSUIFramework.Helper.GetElementByUniqueId(tabsContentItemId);
+			const tabsElem = elem.closest(
+				OSUIFramework.Constants.Dot + OSUIFramework.Patterns.Tabs.Enum.CssClasses.Tabs
+			);
+
+			if (!tabsElem) {
+				throw Error(
+					`This ${OSUIFramework.GlobalEnum.PatternsNames.TabsContentItem} does not belong to any ${OSUIFramework.GlobalEnum.PatternsNames.Tabs} pattern.`
+				);
+			}
+			const uniqueId = tabsElem.getAttribute('name');
+			tabs = TabsAPI.GetTabsById(uniqueId);
+		}
+
+		return tabs;
 	}
 
 	/**
@@ -21,7 +41,9 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 	export function ChangeProperty(tabsContentItemId: string, propertyName: string, propertyValue: any): void {
-		return;
+		const tabsContentItem = GetTabsContentItemById(tabsContentItemId);
+
+		tabsContentItem.changeProperty(propertyName, propertyValue);
 	}
 
 	/**
@@ -36,7 +58,27 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 		tabsContentItemId: string,
 		configs: string
 	): OSUIFramework.Patterns.TabsContentItem.ITabsContentItem {
-		return;
+		if (_tabsContentItemMap.has(tabsContentItemId)) {
+			throw new Error(
+				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.TabsHeaderItem} registered under id: ${tabsContentItemId}`
+			);
+		}
+		const tabs = GetTabsByItem(tabsContentItemId);
+
+		const _newTabsContentItem = new OSUIFramework.Patterns.TabsContentItem.TabsContentItem(
+			tabsContentItemId,
+			JSON.parse(configs),
+			tabs
+		);
+
+		_tabsContentItemMap.set(tabsContentItemId, _newTabsContentItem);
+		_newTabsContentItem.build();
+
+		if (tabs !== undefined) {
+			_tabsMap.set(tabsContentItemId, tabs.uniqueId);
+		}
+
+		return _newTabsContentItem;
 	}
 
 	/**
@@ -69,10 +111,10 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 	export function GetTabsContentItemById(
 		tabsContentItemId: string
 	): OSUIFramework.Patterns.TabsContentItem.ITabsContentItem {
-		return;
-	}
-
-	export function Initialize(tabsContentItemId: string): OSUIFramework.Patterns.TabsContentItem.ITabsContentItem {
-		return;
+		return OSUIFramework.Helper.MapOperation.FindInMap(
+			'TabsContentItem',
+			tabsContentItemId,
+			_tabsContentItemMap
+		) as OSUIFramework.Patterns.TabsContentItem.ITabsContentItem;
 	}
 }

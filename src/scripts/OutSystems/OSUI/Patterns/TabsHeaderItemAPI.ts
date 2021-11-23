@@ -28,7 +28,6 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 			tabs = TabsAPI.GetTabsById(uniqueId);
 		}
 
-		console.log(tabs);
 		return tabs;
 	}
 
@@ -64,20 +63,20 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.TabsHeaderItem} registered under id: ${tabsHeaderItemId}`
 			);
 		}
+		const tabs = GetTabsByItem(tabsHeaderItemId);
 
 		const _newTabsHeaderItem = new OSUIFramework.Patterns.TabsHeaderItem.TabsHeaderItem(
 			tabsHeaderItemId,
-			JSON.parse(configs)
+			JSON.parse(configs),
+			tabs
 		);
 
 		_tabsHeaderItemMap.set(tabsHeaderItemId, _newTabsHeaderItem);
 		_newTabsHeaderItem.build();
 
-		const tabs = GetTabsByItem(tabsHeaderItemId);
-
 		if (tabs !== undefined) {
 			_tabsMap.set(tabsHeaderItemId, tabs.uniqueId);
-			tabs.addTabsHeaderItem(_newTabsHeaderItem.uniqueId, _newTabsHeaderItem);
+			//tabs.addTabsHeaderItem(_newTabsHeaderItem.uniqueId, _newTabsHeaderItem);
 		}
 
 		return _newTabsHeaderItem;
