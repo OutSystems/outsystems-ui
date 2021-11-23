@@ -1,5 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Helper {
+	/**
+	 * Keywords to identify the browsers.
+	 *
+	 * @enum {number}
+	 */
 	enum UAKeyword {
 		chrome = 'chrome',
 		crios = 'crios',
@@ -32,41 +37,120 @@ namespace OSUIFramework.Helper {
 		yabrowser = 'yabrowser',
 	}
 
-	enum Browser {
-		chrome = 'chrome',
-		edge = 'edge',
-		firefox = 'firefox',
-		ie = 'ie',
-		kindle = 'kindle',
-		miui = 'miui',
-		opera = 'opera',
-		safari = 'safari',
-		samsung = 'samsung',
-		uc = 'uc',
-		unknown = 'unknown',
-		yandex = 'yandex',
+	/**
+	 * Keywords to identify operating systems.
+	 *
+	 * @enum {number}
+	 */
+	enum OperatingSystemKeyword {
+		Android = 'android',
+		Ipad = 'ipad',
+		Iphone = 'iphone',
+		MacOS = 'mac',
+		Windows = 'windows',
 	}
 
-	enum DeviceOrientation {
-		landscape = 'landscape',
-		portrait = 'portrait',
-		unknown = 'unknown',
-	}
+	/** @type {iphoneDetails} type that identifies a iPhoneX/iPhone12/iPhone13 */
+	type iphoneDetails = {
+		description: string;
+		height: number;
+		width: number;
+	};
 
-	enum DeviceType {
-		desktop = 'desktop',
-		phone = 'phone',
-		tablet = 'tablet',
-	}
+	/** @type {iphoneDetails[]} has the widths and heights of each one of the devices. */
+	const iphoneDevices: iphoneDetails[] = [
+		// iPhoneX
+		{ width: 1125, height: 2436, description: 'iphone x/xs' },
+		{ width: 828, height: 1792, description: 'iphone xr' },
+		{ width: 750, height: 1624, description: 'iphone xr scaled' },
+		{ width: 1242, height: 2688, description: 'iphone xs max' },
+
+		// iPhone12
+		{ width: 1170, height: 2532, description: 'iphone 12' },
+		{ width: 1284, height: 2778, description: 'iphone 12 pro max' },
+
+		// iPhone13
+		{ width: 1170, height: 2532, description: 'iphone 13' },
+		{ width: 1125, height: 2436, description: 'iphone 13 mini' },
+		{ width: 1170, height: 2532, description: 'iphone 13 pro' },
+		{ width: 1284, height: 2778, description: 'iphone 13 pro max' },
+	];
 
 	export abstract class DeviceInfo {
+		/******************** PRIVATE CACHE VARIABLES ********************/
+		private static _iphoneDetails: iphoneDetails = undefined;
+		private static _isIphoneWithNotch: boolean | undefined = undefined;
+		private static _isNativeApp: boolean | undefined = undefined;
 		private static _isPwa: boolean | undefined = undefined;
 		private static _isTouch: boolean | undefined = undefined;
+		private static _operatingSystem = GlobalEnum.MobileOS.Unknown;
 
+		/******************** PRIVATE METHODS ********************/
+		/**
+		 * Gets the operating system based on the user agent.
+		 *
+		 * @private
+		 * @static
+		 * @param {string} [userAgent='']
+		 * @return {*}  {GlobalEnum.MobileOS}
+		 * @memberof DeviceInfo
+		 */
+		private static _getOperatingSystem(userAgent = ''): GlobalEnum.MobileOS {
+			const useragentLocal = DeviceInfo._getUserAgent(userAgent);
+			let localos = GlobalEnum.MobileOS.Unknown;
+
+			if (useragentLocal.includes(OperatingSystemKeyword.Android)) {
+				localos = GlobalEnum.MobileOS.Android;
+			} else if (useragentLocal.includes(OperatingSystemKeyword.Windows)) {
+				localos = GlobalEnum.MobileOS.Windows;
+			} else if (useragentLocal.includes(OperatingSystemKeyword.MacOS)) {
+				localos = GlobalEnum.MobileOS.Windows;
+			} else if (
+				useragentLocal.includes(OperatingSystemKeyword.Ipad) ||
+				useragentLocal.includes(OperatingSystemKeyword.Iphone)
+			) {
+				localos = GlobalEnum.MobileOS.IOS;
+			}
+			return localos;
+		}
+
+		/**
+		 * Cleans the userAgent passed by the developer, or returns the one from the window.
+		 *
+		 * @private
+		 * @static
+		 * @param {string} [userAgent='']
+		 * @return {*}
+		 * @memberof DeviceInfo
+		 */
+		private static _getUserAgent(userAgent = '') {
+			return userAgent.replace(' ', '') === ''
+				? window.navigator.userAgent.toLowerCase()
+				: userAgent.toLowerCase();
+		}
+
+		/**
+		 * Checks if it's running inside chrome browser.
+		 *
+		 * @private
+		 * @static
+		 * @param {string} ua
+		 * @return {*}  {boolean}
+		 * @memberof DeviceInfo
+		 */
 		private static _isChrome(ua: string): boolean {
 			return ua.includes(UAKeyword.chrome) || ua.includes(UAKeyword.crios);
 		}
 
+		/**
+		 * Checks if it's running inside Edge browser.
+		 *
+		 * @private
+		 * @static
+		 * @param {string} ua
+		 * @return {*}  {boolean}
+		 * @memberof DeviceInfo
+		 */
 		private static _isEdge(ua: string): boolean {
 			return (
 				ua.includes(UAKeyword.edge) ||
@@ -76,15 +160,42 @@ namespace OSUIFramework.Helper {
 			);
 		}
 
+		/**
+		 * Checks if it's running inside Firefox browser.
+		 *
+		 * @private
+		 * @static
+		 * @param {string} ua
+		 * @return {*}  {boolean}
+		 * @memberof DeviceInfo
+		 */
 		private static _isFirefox(ua: string): boolean {
 			return ua.includes(UAKeyword.firefox) || ua.includes(UAKeyword.fxios);
 		}
 
+		/**
+		 * Checks if it's running inside IE browser.
+		 *
+		 * @private
+		 * @static
+		 * @param {string} ua
+		 * @return {*}  {boolean}
+		 * @memberof DeviceInfo
+		 */
 		// eslint-disable-next-line @typescript-eslint/naming-convention
 		private static _isIE(ua: string): boolean {
 			return ua.includes(UAKeyword.trident) || ua.includes(UAKeyword.msie);
 		}
 
+		/**
+		 * Checks if it's running inside Kindle browser.
+		 *
+		 * @private
+		 * @static
+		 * @param {string} ua
+		 * @return {*}  {boolean}
+		 * @memberof DeviceInfo
+		 */
 		private static _isKindle(ua: string): boolean {
 			return (
 				ua.includes(UAKeyword.kindle) ||
@@ -101,40 +212,145 @@ namespace OSUIFramework.Helper {
 			);
 		}
 
+		/**
+		 * Checks if it's running inside MIUI browser.
+		 *
+		 * @private
+		 * @static
+		 * @param {string} ua
+		 * @return {*}  {boolean}
+		 * @memberof DeviceInfo
+		 */
 		private static _isMiui(ua: string): boolean {
 			return ua.includes(UAKeyword.miuibrowser);
 		}
 
+		/**
+		 * Checks if it's running inside Opera browser.
+		 *
+		 * @private
+		 * @static
+		 * @param {string} ua
+		 * @return {*}  {boolean}
+		 * @memberof DeviceInfo
+		 */
 		private static _isOpera(ua: string): boolean {
 			return ua.includes(UAKeyword.opr) || ua.includes(UAKeyword.opera) || ua.includes(UAKeyword.opios);
 		}
 
+		/**
+		 * Checks if it's running inside Samsung browser.
+		 *
+		 * @private
+		 * @static
+		 * @param {string} ua
+		 * @return {*}  {boolean}
+		 * @memberof DeviceInfo
+		 */
 		private static _isSamsung(ua: string): boolean {
 			return ua.includes(UAKeyword.samsungbrowser);
 		}
 
+		/**
+		 *  Checks if it's running inside UC browser.
+		 *
+		 * @private
+		 * @static
+		 * @param {string} ua
+		 * @return {*}  {boolean}
+		 * @memberof DeviceInfo
+		 */
 		// eslint-disable-next-line @typescript-eslint/naming-convention
 		private static _isUC(ua: string): boolean {
 			return ua.includes(UAKeyword.ucbrowser);
 		}
+
+		/**
+		 * Checks if it's running inside Yandex browser.
+		 *
+		 * @private
+		 * @static
+		 * @param {string} ua
+		 * @return {*}  {boolean}
+		 * @memberof DeviceInfo
+		 */
 		private static _isYandex(ua: string): boolean {
 			return ua.includes(UAKeyword.yabrowser);
 		}
 
-		/* PUBLIC GETTERS */
+		/******************** PUBLIC GETTERS ********************/
 
+		/**
+		 * Getter that returns if the application is running in a desktop device.
+		 *
+		 * @readonly
+		 * @static
+		 * @type {boolean}
+		 * @memberof DeviceInfo
+		 */
 		public static get IsDesktop(): boolean {
-			return DeviceInfo.GetDeviceType() === DeviceType.desktop;
+			return DeviceInfo.GetDeviceType() === GlobalEnum.DeviceType.desktop;
 		}
 
+		/**
+		 * Getter that returns if the application is running in a phone device.
+		 *
+		 * @readonly
+		 * @static
+		 * @type {boolean}
+		 * @memberof DeviceInfo
+		 */
 		public static get IsPhone(): boolean {
-			return DeviceInfo.GetDeviceType() === DeviceType.phone;
+			return DeviceInfo.GetDeviceType() === GlobalEnum.DeviceType.phone;
 		}
 
+		/**
+		 * Getter that retuns if the application is running in a iPhone with a notch (iphoneX/iphone12/iphone13).
+		 *
+		 * @readonly
+		 * @static
+		 * @type {boolean}
+		 * @memberof DeviceInfo
+		 */
+		public static get IsIphoneWithNotch(): boolean {
+			if (DeviceInfo._isIphoneWithNotch === undefined) {
+				// get the device pixel ratio
+				const ratio = window.devicePixelRatio || 1;
+				const currScreen: iphoneDetails = {
+					width: window.screen.width * ratio,
+					height: window.screen.height * ratio,
+					description: '',
+				};
+
+				DeviceInfo._iphoneDetails = iphoneDevices.find((device: iphoneDetails) => {
+					return device.height === currScreen.height && device.width === currScreen.width;
+				});
+
+				DeviceInfo._isIphoneWithNotch = DeviceInfo._iphoneDetails !== undefined;
+			}
+			return DeviceInfo._isIphoneWithNotch;
+		}
+
+		/**
+		 * Getter that returns if the application is running in a tablet device.
+		 *
+		 * @readonly
+		 * @static
+		 * @type {boolean}
+		 * @memberof DeviceInfo
+		 */
 		public static get IsTablet(): boolean {
-			return DeviceInfo.GetDeviceType() === DeviceType.tablet;
+			return DeviceInfo.GetDeviceType() === GlobalEnum.DeviceType.tablet;
 		}
 
+		/**
+		 * Getter that returns if the application is running as a PWA.
+		 *
+		 * @readonly
+		 * @static
+		 * @type {boolean}
+		 * @memberof DeviceInfo
+		 */
 		public static get IsPwa(): boolean {
 			if (DeviceInfo._isPwa === undefined) {
 				DeviceInfo._isPwa =
@@ -144,10 +360,29 @@ namespace OSUIFramework.Helper {
 			return DeviceInfo._isPwa;
 		}
 
+		/**
+		 * Getter that returns if the application is running inside a native shell.
+		 *
+		 * @readonly
+		 * @static
+		 * @type {boolean}
+		 * @memberof DeviceInfo
+		 */
 		public static get IsNative(): boolean {
-			return window.cordova !== undefined && !DeviceInfo.IsPwa;
+			if (DeviceInfo._isNativeApp === undefined) {
+				DeviceInfo._isNativeApp = window.cordova !== undefined && !DeviceInfo.IsPwa;
+			}
+			return DeviceInfo._isNativeApp;
 		}
 
+		/**
+		 * Getter that returns if the device is touched enabled or not.
+		 *
+		 * @readonly
+		 * @static
+		 * @type {boolean}
+		 * @memberof DeviceInfo
+		 */
 		public static get IsTouch(): boolean {
 			if (DeviceInfo._isTouch === undefined) {
 				if (window.PointerEvent && 'maxTouchPoints' in navigator) {
@@ -167,48 +402,94 @@ namespace OSUIFramework.Helper {
 			return DeviceInfo._isTouch;
 		}
 
-		/* PUBLIC METHODS */
+		/******************** PUBLIC METHODS ********************/
 
-		public static GetBrowser(useragent = ''): Browser {
-			const useragentLocal =
-				useragent.replace(' ', '') === '' ? window.navigator.userAgent.toLowerCase() : useragent.toLowerCase();
+		/**
+		 * Gets in which browser the framework is running, based in the UserAgent information.
+		 *
+		 * @static
+		 * @param {string} [useragent=''] Optional parameter. If none is passed, the framework will get it.
+		 * @return {*}  {GlobalEnum.Browser}
+		 * @memberof DeviceInfo
+		 */
+		public static GetBrowser(useragent = ''): GlobalEnum.Browser {
+			const useragentLocal = DeviceInfo._getUserAgent(useragent);
 
-			let browser = Browser.unknown;
+			let browser = GlobalEnum.Browser.unknown;
 
 			//The order of the ifs should be kept until chrome
-			if (DeviceInfo._isKindle(useragentLocal)) browser = Browser.kindle;
-			else if (DeviceInfo._isOpera(useragentLocal)) browser = Browser.opera;
-			else if (DeviceInfo._isEdge(useragentLocal)) browser = Browser.edge;
-			else if (DeviceInfo._isSamsung(useragentLocal)) browser = Browser.samsung;
-			else if (DeviceInfo._isYandex(useragentLocal)) browser = Browser.yandex;
-			else if (DeviceInfo._isMiui(useragentLocal)) browser = Browser.miui;
+			if (DeviceInfo._isKindle(useragentLocal)) browser = GlobalEnum.Browser.kindle;
+			else if (DeviceInfo._isOpera(useragentLocal)) browser = GlobalEnum.Browser.opera;
+			else if (DeviceInfo._isEdge(useragentLocal)) browser = GlobalEnum.Browser.edge;
+			else if (DeviceInfo._isSamsung(useragentLocal)) browser = GlobalEnum.Browser.samsung;
+			else if (DeviceInfo._isYandex(useragentLocal)) browser = GlobalEnum.Browser.yandex;
+			else if (DeviceInfo._isMiui(useragentLocal)) browser = GlobalEnum.Browser.miui;
 			//this way we are sure,that even though the UserAgent has chrome, it's not one of the previous browsers.
-			else if (DeviceInfo._isChrome(useragentLocal)) browser = Browser.chrome;
-			else if (DeviceInfo._isFirefox(useragentLocal)) browser = Browser.firefox;
-			else if (DeviceInfo._isIE(useragentLocal)) browser = Browser.ie;
-			else if (DeviceInfo._isUC(useragentLocal)) browser = Browser.uc;
+			else if (DeviceInfo._isChrome(useragentLocal)) browser = GlobalEnum.Browser.chrome;
+			else if (DeviceInfo._isFirefox(useragentLocal)) browser = GlobalEnum.Browser.firefox;
+			else if (DeviceInfo._isIE(useragentLocal)) browser = GlobalEnum.Browser.ie;
+			else if (DeviceInfo._isUC(useragentLocal)) browser = GlobalEnum.Browser.uc;
 
 			return browser;
 		}
 
-		public static GetDeviceOrientation(): DeviceOrientation {
-			let orientation = DeviceOrientation.unknown;
-
-			if (Style.ContainsClass(document.body, DeviceOrientation.landscape))
-				orientation = DeviceOrientation.landscape;
-			else if (Style.ContainsClass(document.body, DeviceOrientation.portrait))
-				orientation = DeviceOrientation.portrait;
+		/**
+		 * Gets the orientation of the device, based on the class added by OutSystems platform in the body.
+		 *
+		 * @static
+		 * @return {*}  {GlobalEnum.DeviceOrientation} Detected orientation of the device.
+		 * @memberof DeviceInfo
+		 */
+		public static GetDeviceOrientation(): GlobalEnum.DeviceOrientation {
+			let orientation = GlobalEnum.DeviceOrientation.unknown;
+			if (Dom.Styles.ContainsClass(document.body, GlobalEnum.DeviceOrientation.landscape))
+				orientation = GlobalEnum.DeviceOrientation.landscape;
+			else if (Dom.Styles.ContainsClass(document.body, GlobalEnum.DeviceOrientation.portrait))
+				orientation = GlobalEnum.DeviceOrientation.portrait;
 
 			return orientation;
 		}
 
-		public static GetDeviceType(): DeviceType {
-			let device = DeviceType.desktop;
+		/**
+		 * Gets the device in which the framework is running, based on the class added by the OutSystems platform in the body.
+		 *
+		 * @static
+		 * @return {*}  {GlobalEnum.DeviceType} Detected device type.
+		 * @memberof DeviceInfo
+		 */
+		public static GetDeviceType(): GlobalEnum.DeviceType {
+			let device = GlobalEnum.DeviceType.desktop;
 
-			if (Style.ContainsClass(document.body, DeviceType.phone)) device = DeviceType.phone;
-			else if (Style.ContainsClass(document.body, DeviceType.tablet)) device = DeviceType.tablet;
+			if (Dom.Styles.ContainsClass(document.body, GlobalEnum.DeviceType.phone))
+				device = GlobalEnum.DeviceType.phone;
+			else if (Dom.Styles.ContainsClass(document.body, GlobalEnum.DeviceType.tablet))
+				device = GlobalEnum.DeviceType.tablet;
 
 			return device;
+		}
+
+		/**
+		 * Obtains the Operating system in which the framework is running
+		 *
+		 * @static
+		 * @param {string} [useragent=''] Optional parameter. If none, the framework will obtain the UserAgent, calculate it once, and use the cache value afterwards.
+		 * @return {*}  {GlobalEnum.MobileOS} Detected operating system.
+		 * @memberof DeviceInfo
+		 */
+		public static GetOperatingSystem(useragent = ''): GlobalEnum.MobileOS {
+			let localos = GlobalEnum.MobileOS.Unknown;
+
+			//If the developer passed an UA, let's not use the cached value, but always calculate it. Useful
+			if (useragent.trim() === '') {
+				localos = DeviceInfo._getOperatingSystem();
+			} else {
+				if (DeviceInfo._operatingSystem === undefined) {
+					DeviceInfo._operatingSystem = DeviceInfo._getOperatingSystem();
+				}
+				localos = DeviceInfo._operatingSystem;
+			}
+
+			return localos;
 		}
 	}
 }
