@@ -6,7 +6,7 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 	export class TabsHeaderItem extends AbstractPattern<TabsHeaderItemConfig> implements ITabsHeaderItem {
 		private _dataTab: number;
 		private _eventOnTabsClick: Callbacks.Generic;
-		private _tabContentItem: HTMLElement;
+		private _isActive: boolean;
 		private _tabsElem: Patterns.Tabs.ITabs;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
@@ -57,7 +57,7 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		public dispose(): void {
 			super.dispose();
 
-			this._tabsElem.removeTabsHeaderItem(this);
+			this._tabsElem.removeTabsHeaderItem(this, this._isActive);
 
 			this._selfElem.removeEventListener('click', this._eventOnTabsClick);
 		}
@@ -66,6 +66,7 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 			Helper.Style.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
 			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.Aria.Selected, false);
 			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.TabIndex, '-1');
+			this._isActive = false;
 		}
 
 		public setAriaControlsAttribute(contentItemId: string): void {
@@ -76,6 +77,7 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 			Helper.Style.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
 			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.Aria.Selected, true);
 			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.TabIndex, '0');
+			this._isActive = true;
 		}
 
 		public setDataTab(dataTab: number): void {

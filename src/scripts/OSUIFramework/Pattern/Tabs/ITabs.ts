@@ -8,6 +8,6 @@ namespace OSUIFramework.Patterns.Tabs {
 		addTabsHeaderItem(tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem);
 		changeTab(tabIndex: number, tabsHeaderItem: Patterns.TabsHeaderItem.ITabsHeaderItem, triggerEvent?: boolean);
 		removeTabsContentItem(tabsContentItem: TabsContentItem.ITabsContentItem);
-		removeTabsHeaderItem(tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem);
+		removeTabsHeaderItem(tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem, isActiveItem?: boolean);
 	}
 }

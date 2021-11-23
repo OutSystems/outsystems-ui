@@ -119,13 +119,14 @@ namespace OSUIFramework.Patterns.Tabs {
 		public addTabsHeaderItem(tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem): void {
 			this._tabsHeaderItemsElementsArray.push(tabsHeaderItem);
 
-			if (this._activeTabHeaderElement === undefined && this.isBuilt) {
-				this._activeTabHeaderElement = this._tabsHeaderItemsElementsArray[this._configs.ActiveTab];
-			}
-
 			if (this.isBuilt) {
 				Helper.AsyncInvocation(this._updateTabsConnection.bind(this));
-				Helper.AsyncInvocation(this.changeTab.bind(this), this._configs.ActiveTab, tabsHeaderItem, false);
+
+				if (this._activeTabHeaderElement === undefined) {
+					this._activeTabHeaderElement = tabsHeaderItem;
+					//tabsHeaderItem = this._tabsHeaderItemsElementsArray[this._configs.ActiveTab];
+					Helper.AsyncInvocation(this.changeTab.bind(this), this._configs.ActiveTab, undefined, false);
+				}
 			} else {
 				tabsHeaderItem.setDataTab(this._tabsHeaderItemsElementsArray.length - 1);
 			}
@@ -198,6 +199,7 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			const targetOffeset = newContentItem.getOffsetLeft();
 
+			console.log('changeTab');
 			this._tabsContentElement.scrollTo({
 				top: 0,
 				left: targetOffeset,
@@ -236,9 +238,13 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._tabsContentItemsElementsArray.splice(currentIndex, 1);
 		}
 
-		public removeTabsHeaderItem(tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem): void {
+		public removeTabsHeaderItem(tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem, isActiveItem?: boolean): void {
 			const currentIndex = this._tabsHeaderItemsElementsArray.indexOf(tabsHeaderItem);
 			this._tabsHeaderItemsElementsArray.splice(currentIndex, 1);
+
+			if (isActiveItem) {
+				Helper.AsyncInvocation(this.changeTab.bind(this), this._configs.ActiveTab, undefined, false);
+			}
 		}
 
 		public setScrollBehavior(disableAnimation: boolean): void {
