@@ -87,8 +87,6 @@ namespace Providers.Splide {
 
 			// Set the OnSlideMoved event
 			this._setOnSlideMovedEvent();
-
-			this._setCarouselWidth();
 		}
 
 		// Method to toggle the blockRender status
