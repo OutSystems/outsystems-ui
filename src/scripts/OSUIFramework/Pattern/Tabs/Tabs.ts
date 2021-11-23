@@ -75,7 +75,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._tabsHeaderElement.removeEventListener('keydown', this._eventOnHeaderKeypress);
 		}
 
-		private _setContentAccessibilityAttributes(contentItem: HTMLElement, currentHeaderItemId: string): void {
+		private _updateContentAccessibilityAttributes(contentItem: HTMLElement, currentHeaderItemId: string): void {
 			Helper.Attribute.Set(
 				contentItem,
 				Constants.AccessibilityAttribute.Role.AttrName,
@@ -86,7 +86,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			Helper.Attribute.Set(contentItem, Constants.AccessibilityAttribute.Aria.Labelledby, currentHeaderItemId);
 		}
 
-		private _setHeaderAccessibilityAttributes(headerItem: HTMLElement, currentContentItemId?: string): void {
+		private _updateHeaderAccessibilityAttributes(headerItem: HTMLElement, currentContentItemId?: string): void {
 			Helper.Attribute.Set(
 				headerItem,
 				Constants.AccessibilityAttribute.Role.AttrName,
@@ -160,11 +160,11 @@ namespace OSUIFramework.Patterns.Tabs {
 				const currentContentItemId = Helper.Attribute.Get(currentContentItem.parentNode as HTMLElement, 'id');
 
 				Helper.Attribute.Set(item, Enum.Attributes.DataTab, index.toString());
-				this._setHeaderAccessibilityAttributes(item, currentContentItemId);
+				this._updateHeaderAccessibilityAttributes(item, currentContentItemId);
 
 				if (currentContentItem !== undefined) {
 					Helper.Attribute.Set(currentContentItem, Enum.Attributes.DataTab, index.toString());
-					this._setContentAccessibilityAttributes(currentContentItem, currentHeaderItemId);
+					this._updateContentAccessibilityAttributes(currentContentItem, currentHeaderItemId);
 				}
 			});
 		}
@@ -334,7 +334,29 @@ namespace OSUIFramework.Patterns.Tabs {
 
 		public updateOnRender(): void {
 			if (!this._blockOnRender) {
-				this._updateTabsConnection();
+				let needsUpdate = false;
+
+				this._tabsHeaderItemsElementsArray.forEach((item) => {
+					const hasDataTab = Helper.Attribute.Get(item, Enum.Attributes.DataTab);
+					if (!hasDataTab) {
+						needsUpdate = true;
+						return;
+					}
+				});
+
+				if (!needsUpdate) {
+					this._tabsContentItemsElementsArray.forEach((item) => {
+						const hasDataTab = Helper.Attribute.Get(item, Enum.Attributes.DataTab);
+						if (!hasDataTab) {
+							needsUpdate = true;
+							return;
+						}
+					});
+				}
+
+				if (needsUpdate) {
+					this._updateTabsConnection();
+				}
 
 				if (this._currentTabIndex === undefined && this.configs.ActiveTab !== undefined) {
 					this.changeTab(this.configs.ActiveTab, false);
