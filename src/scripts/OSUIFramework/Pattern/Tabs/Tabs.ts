@@ -40,25 +40,6 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._blockOnRender = false;
 		}
 
-		private _getTabsContentItems(): void {
-			// this._tabsContentItemsElements = Array.prototype.filter.call(
-			// 	this._selfElem.querySelectorAll(Constants.Dot + Enum.CssClasses.TabsContentItem),
-			// 	(el) => {
-			// 		return el.closest(Constants.Dot + Enum.CssClasses.Tabs) === this._selfElem;
-			// 	}
-			// );
-			// return this._tabsContentItemsElements;
-		}
-
-		private _getTabsHeaderItems(): void {
-			// this._tabsHeaderItemsElements = Array.prototype.filter.call(
-			// 	this._selfElem.querySelectorAll(Constants.Dot + Enum.CssClasses.TabsHeaderItem),
-			// 	(el) => {
-			// 		return el.closest(Constants.Dot + Enum.CssClasses.Tabs) === this._selfElem;
-			// 	}
-			// );
-		}
-
 		private _handleKeypressEvent(e): void {
 			let targetHeaderItemIndex;
 
@@ -73,16 +54,14 @@ namespace OSUIFramework.Patterns.Tabs {
 					break;
 			}
 
-			// const targetHeaderItem = this._tabsHeaderItemsElements[targetHeaderItemIndex] as HTMLElement;
+			const targetHeaderItem = this._tabsHeaderItemsElements[targetHeaderItemIndex] as HTMLElement;
 
-			// if (targetHeaderItem) {
-			// 	targetHeaderItem.focus();
-			// }
+			if (targetHeaderItem) {
+				targetHeaderItem.focus();
+			}
 		}
 
-		private _prepareElements(): void {
-			//this._getTabsContentItems();
-
+		private _prepareHeaderElement(): void {
 			Helper.Attribute.Set(
 				this._tabsHeaderElement,
 				Constants.AccessibilityAttribute.Role.AttrName,
@@ -90,26 +69,9 @@ namespace OSUIFramework.Patterns.Tabs {
 			);
 
 			this._tabsHeaderElement.addEventListener('keydown', this._eventOnHeaderKeypress);
-
-			// let i = 0;
-
-			// this._tabsHeaderItemsElements.forEach((item) => {
-			// 	const currentHeaderElem = Helper.GetElementByUniqueId(item.uniqueId);
-			// 	if (currentHeaderElem) {
-			// 		this._tabsHeaderItemsElementsArray.push(currentHeaderElem);
-			// 		this._setTabsConnection(i, currentHeaderElem);
-
-			// 		i++;
-			// 	}
-			// });
 		}
 
 		private _removeEventListeners(): void {
-			// remove click events
-			// this._tabsHeaderItemsElements.forEach((headerItem) =>
-			// 	headerItem.removeEventListener('click', this._eventOnTabsClick)
-			// );
-
 			this._tabsHeaderElement.removeEventListener('keydown', this._eventOnHeaderKeypress);
 		}
 
@@ -125,14 +87,14 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		private _setHeaderAccessibilityAttributes(headerItem: HTMLElement, currentContentItemId?: string): void {
-			// Helper.Attribute.Set(
-			// 	headerItem,
-			// 	Constants.AccessibilityAttribute.Role.AttrName,
-			// 	Constants.AccessibilityAttribute.Role.Tab
-			// );
-			// Helper.Attribute.Set(headerItem, Constants.AccessibilityAttribute.TabIndex, '-1');
-			// Helper.Attribute.Set(headerItem, Constants.AccessibilityAttribute.Aria.Selected, false);
-			// Helper.Attribute.Set(headerItem, Constants.AccessibilityAttribute.Aria.Controls, currentContentItemId);
+			Helper.Attribute.Set(
+				headerItem,
+				Constants.AccessibilityAttribute.Role.AttrName,
+				Constants.AccessibilityAttribute.Role.Tab
+			);
+			Helper.Attribute.Set(headerItem, Constants.AccessibilityAttribute.TabIndex, '-1');
+			Helper.Attribute.Set(headerItem, Constants.AccessibilityAttribute.Aria.Selected, false);
+			Helper.Attribute.Set(headerItem, Constants.AccessibilityAttribute.Aria.Controls, currentContentItemId);
 		}
 
 		private _setHtmlElements(): void {
@@ -147,21 +109,6 @@ namespace OSUIFramework.Patterns.Tabs {
 			this.setTabsIsJustified(this._configs.IsJustified);
 			this.setScrollBehavior(this._configs.DisableAnimation);
 			this.changeTab(this.configs.ActiveTab, false);
-		}
-
-		private _setTabsConnection(tabNumber: number, tabeHeaderItem: HTMLElement): void {
-			const currentHeaderItemId = Helper.Attribute.Get(tabeHeaderItem.parentNode as HTMLElement, 'id');
-			const currentContentItem = this._tabsContentItemsElements[tabNumber] as HTMLElement;
-			const currentContentItemId = Helper.Attribute.Get(currentContentItem.parentNode as HTMLElement, 'id');
-
-			// if (tabeHeaderItem !== undefined) {
-			// 	Helper.Attribute.Set(tabeHeaderItem, Enum.Attributes.DataTab, tabNumber.toString());
-			// 	this._setHeaderAccessibilityAttributes(tabeHeaderItem, currentContentItemId);
-			// }
-			if (currentContentItem !== undefined) {
-				Helper.Attribute.Set(currentContentItem, Enum.Attributes.DataTab, tabNumber.toString());
-				this._setContentAccessibilityAttributes(currentContentItem, currentHeaderItemId);
-			}
 		}
 
 		private _toggleActiveClasses(newActiveHeader: HTMLElement, newActiveContent: HTMLElement): void {
@@ -206,27 +153,56 @@ namespace OSUIFramework.Patterns.Tabs {
 			}
 		}
 
+		private _updateTabsConnection(): void {
+			this._tabsHeaderItemsElementsArray.forEach((item, index) => {
+				const currentHeaderItemId = Helper.Attribute.Get(item.parentNode as HTMLElement, 'id');
+				const currentContentItem = this._tabsContentItemsElementsArray[index];
+				const currentContentItemId = Helper.Attribute.Get(currentContentItem.parentNode as HTMLElement, 'id');
+
+				Helper.Attribute.Set(item, Enum.Attributes.DataTab, index.toString());
+				this._setHeaderAccessibilityAttributes(item, currentContentItemId);
+
+				if (currentContentItem !== undefined) {
+					Helper.Attribute.Set(currentContentItem, Enum.Attributes.DataTab, index.toString());
+					this._setContentAccessibilityAttributes(currentContentItem, currentHeaderItemId);
+				}
+			});
+		}
+
 		public addTabsContentItem(uniqueId: string, tabsContentItem: TabsContentItem.ITabsContentItem): number {
 			const currentContentElem = Helper.GetElementByUniqueId(uniqueId);
-			this._tabsContentItemsElementsArray.push(currentContentElem as HTMLElement);
+			this._tabsContentItemsElementsArray.push(currentContentElem);
 
-			return this._tabsHeaderItemsElementsArray.length - 1;
+			return this._tabsContentItemsElementsArray.length - 1;
 		}
 
 		public addTabsHeaderItem(uniqueId: string, tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem): number {
 			//this._tabsHeaderItemsElements.set(uniqueId, tabsHeaderItem);
 			const currentHeaderElem = Helper.GetElementByUniqueId(uniqueId);
-			this._tabsHeaderItemsElementsArray.push(currentHeaderElem as HTMLElement);
+			this._tabsHeaderItemsElementsArray.push(currentHeaderElem);
 
 			return this._tabsHeaderItemsElementsArray.length - 1;
 		}
 
+		public removeTabsContentItem(uniqueId: string, tabsContentItem: TabsContentItem.ITabsContentItem): void {
+			const currentContentElem = Helper.GetElementByUniqueId(uniqueId);
+			const currentIndex = this._tabsContentItemsElementsArray.indexOf(currentContentElem);
+			this._tabsContentItemsElementsArray.splice(currentIndex, 1);
+		}
+
+		public removeTabsHeaderItem(uniqueId: string, tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem): void {
+			const currentHeaderElem = Helper.GetElementByUniqueId(uniqueId);
+			const currentIndex = this._tabsHeaderItemsElementsArray.indexOf(currentHeaderElem);
+			this._tabsHeaderItemsElementsArray.splice(currentIndex, 1);
+		}
+
+		// eslint-disable-next-line @typescript-eslint/member-ordering
 		public build(): void {
 			super.build();
 
 			this._setHtmlElements();
 
-			this._prepareElements();
+			this._prepareHeaderElement();
 
 			this._setInitialOptions();
 
@@ -358,9 +334,8 @@ namespace OSUIFramework.Patterns.Tabs {
 
 		public updateOnRender(): void {
 			if (!this._blockOnRender) {
-				//this._removeEventListeners();
-				//this._prepareElements();
-				//this._getTabsContentItems();
+				this._updateTabsConnection();
+
 				if (this._currentTabIndex === undefined && this.configs.ActiveTab !== undefined) {
 					this.changeTab(this.configs.ActiveTab, false);
 				}

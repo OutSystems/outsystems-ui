@@ -88,7 +88,11 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 	 * @param {string} tabsContentItemId
 	 */
 	export function Dispose(tabsContentItemId: string): void {
-		return;
+		const tabsContentItem = GetTabsContentItemById(tabsContentItemId);
+
+		tabsContentItem.dispose();
+
+		_tabsContentItemMap.delete(tabsContentItem.uniqueId);
 	}
 
 	/**

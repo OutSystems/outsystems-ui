@@ -89,7 +89,11 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	 * @param {string} tabsHeaderItemId
 	 */
 	export function Dispose(tabsHeaderItemId: string): void {
-		return;
+		const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
+
+		tabsHeaderItem.dispose();
+
+		_tabsHeaderItemMap.delete(tabsHeaderItem.uniqueId);
 	}
 
 	/**

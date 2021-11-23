@@ -43,7 +43,6 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 			);
 			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.TabIndex, '-1');
 			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.Aria.Selected, false);
-			//Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.Aria.Controls, currentContentItemId);
 		}
 
 		public build(): void {
@@ -58,6 +57,8 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 
 		public dispose(): void {
 			super.dispose();
+
+			this._tabsElem.removeTabsHeaderItem(this.uniqueId, this);
 
 			this._selfElem.removeEventListener('click', this._eventOnTabsClick);
 		}
