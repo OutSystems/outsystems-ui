@@ -9,7 +9,7 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static AriaAtomicFalse(element: HTMLElement): void {
-			Helper.Attribute.Set(element, Constants.A11YAttributes.Aria.Atomic, Constants.A11YAttributes.States.False);
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Atomic, Constants.A11YAttributes.States.False);
 		}
 
 		/**
@@ -19,7 +19,7 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static AriaAtomicTrue(element: HTMLElement): void {
-			Helper.Attribute.Set(element, Constants.A11YAttributes.Aria.Atomic, Constants.A11YAttributes.States.True);
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Atomic, Constants.A11YAttributes.States.True);
 		}
 
 		/**
@@ -30,7 +30,7 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static AriaControls(element: HTMLElement, targetId: string): void {
-			Helper.Attribute.Set(element, Constants.A11YAttributes.Aria.Controls, targetId);
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Controls, targetId);
 		}
 
 		/**
@@ -41,7 +41,7 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static AriaDescribedBy(element: HTMLElement, targetId: string): void {
-			Helper.Attribute.Set(element, Constants.A11YAttributes.Aria.Describedby, targetId);
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Describedby, targetId);
 		}
 
 		/**
@@ -51,11 +51,7 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static AriaExpandedFalse(element: HTMLElement): void {
-			Helper.Attribute.Set(
-				element,
-				Constants.A11YAttributes.Aria.Expanded,
-				Constants.A11YAttributes.States.False
-			);
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Expanded, Constants.A11YAttributes.States.False);
 		}
 
 		/**
@@ -65,7 +61,7 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static AriaExpandedTrue(element: HTMLElement): void {
-			Helper.Attribute.Set(element, Constants.A11YAttributes.Aria.Expanded, Constants.A11YAttributes.States.True);
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Expanded, Constants.A11YAttributes.States.True);
 		}
 
 		/**
@@ -75,7 +71,7 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static AriaHiddenFalse(element: HTMLElement): void {
-			Helper.Attribute.Set(element, Constants.A11YAttributes.Aria.Hidden, Constants.A11YAttributes.States.False);
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Hidden, Constants.A11YAttributes.States.False);
 		}
 
 		/**
@@ -85,7 +81,7 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static AriaHiddenTrue(element: HTMLElement): void {
-			Helper.Attribute.Set(element, Constants.A11YAttributes.Aria.Hidden, Constants.A11YAttributes.States.True);
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Hidden, Constants.A11YAttributes.States.True);
 		}
 
 		/**
@@ -96,7 +92,7 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static AriaLabel(element: HTMLElement, value: string): void {
-			Helper.Attribute.Set(element, Constants.A11YAttributes.Aria.Label, value);
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Label, value);
 		}
 
 		/**
@@ -107,7 +103,7 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static AriaLabelledBy(element: HTMLElement, targetId: string): void {
-			Helper.Attribute.Set(element, Constants.A11YAttributes.Aria.Labelledby, targetId);
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Labelledby, targetId);
 		}
 
 		/**
@@ -117,7 +113,7 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static AriaLiveAssertive(element: HTMLElement): void {
-			Helper.Attribute.Set(
+			Dom.Attribute.Set(
 				element,
 				Constants.A11YAttributes.AriaLive.AttrName,
 				Constants.A11YAttributes.AriaLive.Assertive
@@ -131,7 +127,7 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static AriaLiveOff(element: HTMLElement): void {
-			Helper.Attribute.Set(
+			Dom.Attribute.Set(
 				element,
 				Constants.A11YAttributes.AriaLive.AttrName,
 				Constants.A11YAttributes.AriaLive.Off
@@ -145,7 +141,7 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static AriaLivePolite(element: HTMLElement): void {
-			Helper.Attribute.Set(
+			Dom.Attribute.Set(
 				element,
 				Constants.A11YAttributes.AriaLive.AttrName,
 				Constants.A11YAttributes.AriaLive.Polite
@@ -160,7 +156,7 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static AriaValueMax(element: HTMLElement, value: number): void {
-			Helper.Attribute.Set(element, Constants.A11YAttributes.Aria.ValueMax, value);
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.ValueMax, value);
 		}
 
 		/**
@@ -171,7 +167,7 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static AriaValueMin(element: HTMLElement, value: number): void {
-			Helper.Attribute.Set(element, Constants.A11YAttributes.Aria.ValueMin, value);
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.ValueMin, value);
 		}
 
 		/**
@@ -181,7 +177,7 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static RoleAlert(element: HTMLElement): void {
-			Helper.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Alert);
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Alert);
 		}
 
 		/**
@@ -191,7 +187,7 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static RoleButton(element: HTMLElement): void {
-			Helper.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Button);
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Button);
 		}
 
 		/**
@@ -201,11 +197,7 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static RoleMenuItem(element: HTMLElement): void {
-			Helper.Attribute.Set(
-				element,
-				Constants.A11YAttributes.Role.AttrName,
-				Constants.A11YAttributes.Role.MenuItem
-			);
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.MenuItem);
 		}
 
 		/**
@@ -215,7 +207,7 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static RoleProgressBar(element: HTMLElement): void {
-			Helper.Attribute.Set(
+			Dom.Attribute.Set(
 				element,
 				Constants.A11YAttributes.Role.AttrName,
 				Constants.A11YAttributes.Role.Progressbar
@@ -229,7 +221,7 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static RoleSearch(element: HTMLElement): void {
-			Helper.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Search);
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Search);
 		}
 
 		/**
@@ -239,11 +231,7 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static RoleTooltip(element: HTMLElement): void {
-			Helper.Attribute.Set(
-				element,
-				Constants.A11YAttributes.Role.AttrName,
-				Constants.A11YAttributes.Role.Tooltip
-			);
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Tooltip);
 		}
 
 		/**
@@ -253,11 +241,7 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static TabIndexFalse(element: HTMLElement): void {
-			Helper.Attribute.Set(
-				element,
-				Constants.A11YAttributes.TabIndex,
-				Constants.A11YAttributes.States.TabIndexShow
-			);
+			Dom.Attribute.Set(element, Constants.A11YAttributes.TabIndex, Constants.A11YAttributes.States.TabIndexShow);
 		}
 
 		/**
@@ -267,7 +251,7 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static TabIndexTrue(element: HTMLElement): void {
-			Helper.Attribute.Set(
+			Dom.Attribute.Set(
 				element,
 				Constants.A11YAttributes.TabIndex,
 				Constants.A11YAttributes.States.TabIndexHidden
