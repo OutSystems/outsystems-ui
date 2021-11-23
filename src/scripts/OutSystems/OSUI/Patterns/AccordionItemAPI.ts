@@ -65,7 +65,11 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 
 		config.AccordionParent = accordion;
 
-		const _newAccordionItem = new OSUIFramework.Patterns.AccordionItem.AccordionItem(accordionItemId, config);
+		const _newAccordionItem = new OSUIFramework.Patterns.AccordionItem.AccordionItem(
+			accordionItemId,
+			config,
+			accordion
+		);
 
 		_accordionItemMap.set(accordionItemId, _newAccordionItem);
 		_newAccordionItem.build();

@@ -24,12 +24,19 @@ namespace OSUIFramework.Patterns.Accordion {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
-			switch (propertyName) {
-				case Enum.Properties.MultipleItems:
-					this.configs.MultipleItems = propertyValue;
-					//We collapse all the items to begin anew
-					this.collapseAllItems();
-					break;
+			if (Enum.Properties[propertyName] && this._configs.hasOwnProperty(propertyName)) {
+				switch (propertyName) {
+					case Enum.Properties.MultipleItems:
+						this.configs.MultipleItems = propertyValue;
+						//We collapse all the items to begin anew
+						this.collapseAllItems();
+						break;
+					default:
+						super.changeProperty(propertyName, propertyValue);
+						break;
+				}
+			} else {
+				throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
 			}
 		}
 
@@ -47,15 +54,13 @@ namespace OSUIFramework.Patterns.Accordion {
 
 		public expandAllItems(): void {
 			//If this accordion does not have multiple items, it means we can't expand all.
-			if (!this.configs.MultipleItems) {
-				return;
+			if (this.configs.MultipleItems) {
+				this._accordionItems.forEach((item) => {
+					if (!item.isExpanded && !item.isDisabled) {
+						item.open();
+					}
+				});
 			}
-
-			this._accordionItems.forEach((item) => {
-				if (!item.isExpanded && !item.isDisabled) {
-					item.open();
-				}
-			});
 		}
 
 		public removeAccordionItem(accordionItemId: string): void {
