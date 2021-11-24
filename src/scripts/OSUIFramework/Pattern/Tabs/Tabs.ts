@@ -4,16 +4,26 @@ namespace OSUIFramework.Patterns.Tabs {
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	export class Tabs extends AbstractPattern<TabsConfig> implements ITabs {
+		// Store the current contentItem active
 		private _activeTabContentElement: Patterns.TabsContentItem.ITabsContentItem;
+		// Store the current headerItem active
 		private _activeTabHeaderElement: Patterns.TabsHeaderItem.ITabsHeaderItem;
+		// Store the keypress event with bind(this)
 		private _eventOnHeaderKeypress: Callbacks.Generic;
+		// Store if the Tabs has only one ContentItem, to prevebt unnecessary usages of ScrollTo
 		private _hasSingleContent: boolean;
-		// Store the click event with bind(this)
+		// Store the onTabsChange platform callback
 		private _onTabsChange: Callbacks.OSTabsOnChangeEvent;
+		// Store the disableAnimation config, as its a boolean on the platform,
+		// and it needs to be converted here to 'auto' if true, and 'smooth' if false
 		private _scrollBehavior: Enum.ScrollBehavior;
+		// Store the contentItems wrapper -- osui-tabs__content
 		private _tabsContentElement: HTMLElement;
+		// Store all the contentItems that are created
 		private _tabsContentItemsElementsArray: Patterns.TabsContentItem.ITabsContentItem[];
+		// Store the headerItems wrapper -- osui-tabs__header
 		private _tabsHeaderElement: HTMLElement;
+		// Store all the headerItems that are created
 		private _tabsHeaderItemsElementsArray: Patterns.TabsHeaderItem.ITabsHeaderItem[];
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
@@ -21,10 +31,12 @@ namespace OSUIFramework.Patterns.Tabs {
 			super(uniqueId, new TabsConfig(configs));
 
 			this._eventOnHeaderKeypress = this._handleKeypressEvent.bind(this);
+			// Start with the arrays empty
 			this._tabsHeaderItemsElementsArray = [];
 			this._tabsContentItemsElementsArray = [];
 		}
 
+		// Method that handles the Keypress Event, for tabs navigation using arrows
 		private _handleKeypressEvent(e): void {
 			let targetHeaderItemIndex;
 
@@ -51,6 +63,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			}
 		}
 
+		// Method to make neccessary preparations for header and content items, that can't be done on their scope
 		private _prepareHeaderAndContentItems(): void {
 			this._hasSingleContent = this._tabsContentItemsElementsArray.length === 1;
 
@@ -67,6 +80,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._updateTabsConnection(false);
 		}
 
+		// Method that adds the necessary attributes and listeners to the Tabs header
 		private _prepareHeaderElement(): void {
 			Helper.Attribute.Set(
 				this._tabsHeaderElement,
@@ -77,15 +91,18 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._tabsHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
 		}
 
+		// Method to remove the event listener on the Tabs header
 		private _removeEventListeners(): void {
 			this._tabsHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
 		}
 
+		// Method to assign the html elements to the header and content wrappers
 		private _setHtmlElements(): void {
 			this._tabsHeaderElement = this._selfElem.querySelector(Constants.Dot + Enum.CssClasses.TabsHeader);
 			this._tabsContentElement = this._selfElem.querySelector(Constants.Dot + Enum.CssClasses.TabsContent);
 		}
 
+		// Method to set the initial options on screen load
 		private _setInitialOptions(): void {
 			this.setTabsOrientation(this.configs.Orientation);
 			this.setTabsPosition(this._configs.Position);
