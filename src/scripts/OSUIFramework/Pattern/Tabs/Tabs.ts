@@ -32,11 +32,16 @@ namespace OSUIFramework.Patterns.Tabs {
 			switch (e.key) {
 				case GlobalEnum.Keycodes.ArrowRight:
 					targetHeaderItemIndex = this._configs.ActiveTab + 1;
-					this.changeTab(targetHeaderItemIndex, undefined, true);
+					if (targetHeaderItemIndex < this._tabsHeaderItemsElementsArray.length) {
+						this.changeTab(targetHeaderItemIndex, undefined, true);
+					}
+
 					break;
 				case GlobalEnum.Keycodes.ArrowLeft:
 					targetHeaderItemIndex = this._configs.ActiveTab - 1;
-					this.changeTab(targetHeaderItemIndex, undefined, true);
+					if (targetHeaderItemIndex >= 0) {
+						this.changeTab(targetHeaderItemIndex, undefined, true);
+					}
 					break;
 			}
 
