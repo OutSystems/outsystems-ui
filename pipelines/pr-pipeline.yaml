@@ -1,62 +1,74 @@
 trigger: none
 
 pr:
-  branches:
-    include:
-      - "*" # This does not trigger the pipeline 
+    branches:
+        include:
+            - '*' # This does not trigger the pipeline
 
 jobs:
-  - job: CheckChanges
-    displayName: 'Check changed files'
-    steps:
-    - bash: |
-        CHANGED_FILES=$(git diff origin/dev --name-only)
-        BRANCH=$(git branch --show-current)
-        echo "Checking for file changes..."
-        declare TAGS
-        echo "##vso[task.setvariable variable=branch;isoutput=true]$BRANCH"
-
-        for FILE in $CHANGED_FILES
-            do
-                if [[ $FILE == *"src/scripts/OSUIFramework/Pattern"* ]]; then
-                    ELEMENT=$(echo $FILE| cut -d/ -f5)
-                    if [[ -z "$TAGS" ]]; then
-                        TAGS="@$ELEMENT"
-                    else
-                        TAGS="$TAGS or @$ELEMENT"
-                    fi
-                else
-                    echo "IGNORE: ${FILE} changed"
-                fi
-
-            done
-        echo "##vso[task.setvariable variable=tags;isoutput=true]$TAGS"
-      name: check_changes
+    - job: CheckChanges
       displayName: 'Check changed files'
-    - script: echo $(check_changes.tags)
-      name: echoTags
-      displayName: 'Show components to run tests for'
+      steps:
+          - bash: |
+                CHANGED_FILES=$(git diff origin/dev --name-only)
+                echo "Checking for file changes..."
+                declare TAGS
 
-  - job: ExecuteFunctionalTests
-    dependsOn: CheckChanges
-    displayName: 'Execute Functional Tests'
-    variables:
-      TAGS: $[ dependencies.CheckChanges.outputs['check_changes.tags'] ]
-      BRANCH: $[ dependencies.CheckChanges.outputs['check_changes.branch'] ]
-    steps:
-    - task: NodeTool@0
-      displayName: 'Use Node 14.15.4'
-      inputs:
-        versionSpec: '14.15.4'
-        checkLatest: true
+                for FILE in $CHANGED_FILES
+                    do
+                        if [[ $FILE == *"src/scripts/OSUIFramework/Pattern"* ]]; then
+                            ELEMENT=$(echo $FILE| cut -d/ -f5)
+                            if [[ -z "$TAGS" ]]; then
+                                TAGS="@$ELEMENT"
+                            else
+                                TAGS="$TAGS or @$ELEMENT"
+                            fi
+                        else
+                            echo "IGNORE: ${FILE} changed"
+                        fi
 
-    - task: CmdLine@2
-      name: install_dep
-      displayName: 'Install dependencies using yarn'
-      inputs:
-        script: 'npm install'
-      continueOnError: true
-    - task: CmdLine@2
-      displayName: Execute Pipeline
-      inputs:
-        script: node pipelines/pipeline-run.js -- --tags="$(TAGS)" --branch="$(BRANCH)"
+                        if [[ $FILE == *"src/static"* ]]; then
+                            ELEMENT=$(echo $FILE| cut -d/ -f3)
+                            if [[ -z "$TAGS" ]]; then
+                                TAGS="@$ELEMENT"
+                            else
+                                TAGS="$TAGS or @$ELEMENT"
+                            fi
+                        else
+                            echo "IGNORE: ${FILE} changed"
+                        fi
+
+                    done
+                echo "##vso[task.setvariable variable=tags;isoutput=true]$TAGS"
+            name: check_changes
+            displayName: 'Check changed files'
+          - script: echo $(check_changes.tags)
+            name: echoTags
+            displayName: 'Show components to run tests for'
+
+    - job: ExecuteFunctionalTests
+      dependsOn: CheckChanges
+      displayName: 'Execute Functional Tests'
+      variables:
+          TAGS: $[ dependencies.CheckChanges.outputs['check_changes.tags'] ]
+      steps:
+          - task: NodeTool@0
+            displayName: 'Use Node 14.15.4'
+            inputs:
+                versionSpec: '14.15.4'
+                checkLatest: true
+
+          - bash: |
+                echo "##vso[task.setvariable variable=branch;isoutput=true]$SYSTEM_PULLREQUEST_SOURCEBRANCH"
+            name: branch_name
+
+          - task: CmdLine@2
+            name: install_dep
+            displayName: 'Install dependencies using yarn'
+            inputs:
+                script: 'npm install'
+            continueOnError: true
+          - task: CmdLine@2
+            displayName: Execute Pipeline
+            inputs:
+                script: node pipelines/pipeline-run.js -- --tags="$(TAGS)" --branch="$(branch_name.branch)"

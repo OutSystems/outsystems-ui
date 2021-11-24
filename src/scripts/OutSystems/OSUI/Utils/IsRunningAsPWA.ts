@@ -10,10 +10,6 @@ namespace OutSystems.OSUI.Utils {
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export function IsRunningAsPWA(): boolean {
-		const IsRunningAsPWA =
-			(window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) ||
-			window.navigator.standalone === true;
-
-		return IsRunningAsPWA;
+		return OSUIFramework.Helper.DeviceInfo.IsPwa;
 	}
 }
