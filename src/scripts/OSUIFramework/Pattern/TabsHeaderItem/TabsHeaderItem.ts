@@ -18,7 +18,7 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		}
 
 		private _addEventListener(): void {
-			this._selfElem.addEventListener('click', this._eventOnTabsClick);
+			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnTabsClick);
 		}
 
 		private _handleClickEvent(): void {
@@ -59,7 +59,7 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 
 			this._tabsElem.removeTabsHeaderItem(this, this._isActive);
 
-			this._selfElem.removeEventListener('click', this._eventOnTabsClick);
+			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnTabsClick);
 		}
 
 		public removeAsActiveElement(): void {

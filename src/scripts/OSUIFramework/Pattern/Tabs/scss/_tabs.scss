@@ -28,8 +28,13 @@
 						left: calc(1px - var(--border-size-m));
 					}
 
-					&:hover:not(.osui-tabs--is-active)::after {
+					&:not(.osui-tabs--is-active)::after {
 						border-left: var(--border-size-m) solid var(--color-neutral-6);
+						opacity: 0;
+					}
+
+					&:hover:not(.osui-tabs--is-active)::after {
+						opacity: 1;
 					}
 
 					&.osui-tabs--is-active::after {
@@ -51,8 +56,13 @@
 						right: calc(-1px - var(--border-size-m));
 					}
 
-					&:hover:not(.osui-tabs--is-active)::after {
+					&:not(.osui-tabs--is-active)::after {
 						border-right: var(--border-size-m) solid var(--color-neutral-6);
+						opacity: 0;
+					}
+
+					&:hover:not(.osui-tabs--is-active)::after {
+						opacity: 1;
 					}
 
 					&.osui-tabs--is-active::after {
@@ -115,8 +125,13 @@
 					width: 100%;
 				}
 
-				&:hover:not(.osui-tabs--is-active)::after {
+				&:not(.osui-tabs--is-active)::after {
 					border-bottom: var(--border-size-m) solid var(--color-neutral-6);
+					opacity: 0;
+				}
+
+				&:hover:not(.osui-tabs--is-active)::after {
+					opacity: 1;
 				}
 
 				&.osui-tabs--is-active::after {
@@ -177,6 +192,7 @@
 			&::after {
 				content: '';
 				position: absolute;
+				transition: opacity 150ms ease-in;
 				z-index: 1;
 			}
 		}
@@ -210,9 +226,12 @@
 	.osui-tabs__header-item {
 		border: var(--border-size-m) solid transparent;
 
-		&.osui-tabs--is-active:focus {
-			border: var(--border-size-m) solid var(--color-focus-outer);
+		&:focus {
 			box-shadow: none;
+		}
+
+		&.osui-tabs--is-active:focus-visible {
+			border: var(--border-size-m) solid var(--color-focus-outer);
 		}
 	}
 }

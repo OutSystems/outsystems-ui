@@ -6,8 +6,7 @@ namespace OSUIFramework.Patterns.Tabs {
 	export class Tabs extends AbstractPattern<TabsConfig> implements ITabs {
 		private _activeTabContentElement: Patterns.TabsContentItem.ITabsContentItem;
 		private _activeTabHeaderElement: Patterns.TabsHeaderItem.ITabsHeaderItem;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventOnHeaderKeypress: any;
+		private _eventOnHeaderKeypress: Callbacks.Generic;
 		private _hasSingleContent: boolean;
 		// Store the click event with bind(this)
 		private _onTabsChange: Callbacks.OSTabsOnChangeEvent;
@@ -75,11 +74,11 @@ namespace OSUIFramework.Patterns.Tabs {
 				Constants.AccessibilityAttribute.Role.TabList
 			);
 
-			this._tabsHeaderElement.addEventListener('keydown', this._eventOnHeaderKeypress);
+			this._tabsHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
 		}
 
 		private _removeEventListeners(): void {
-			this._tabsHeaderElement.removeEventListener('keydown', this._eventOnHeaderKeypress);
+			this._tabsHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
 		}
 
 		private _setHtmlElements(): void {
