@@ -18,6 +18,6 @@ namespace Providers.RangeSlider.Enum {
 	}
 
 	export enum NoUiSliderModeOptions {
-		Count = 'count',
+		Values = 'values',
 	}
 }

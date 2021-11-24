@@ -5,6 +5,10 @@
 
 ///
 .layout-side {
+	.app-logo {
+		@include app-logo;
+	}
+
 	.app-menu-content {
 		background-color: var(--color-neutral-0);
 		bottom: 0;
@@ -47,7 +51,7 @@
 ///
 .desktop {
 	.layout-side {
-		&:not(.layout-native) .app-menu-content {
+		&:not(.layout-native):not(.aside-overlay) .app-menu-content {
 			left: 0;
 		}
 

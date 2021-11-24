@@ -51,7 +51,9 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	 */
 	export function Create(submenuId: string, configs: string): OSUIFramework.Patterns.Submenu.ISubmenu {
 		if (_submenusMap.has(submenuId)) {
-			throw new Error(`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.Submenu} registered under id: ${submenuId}`);
+			throw new Error(
+				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.Submenu} registered under id: ${submenuId}`
+			);
 		}
 
 		const _newSubmenu = new OSUIFramework.Patterns.Submenu.Submenu(submenuId, JSON.parse(configs));

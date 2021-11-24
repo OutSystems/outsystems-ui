@@ -13,10 +13,6 @@
 	width: 100%;
 	word-break: keep-all;
 
-	th {
-		width: 100%;
-	}
-
 	&-header {
 		// Service Studio Preview
 		& {
@@ -127,68 +123,74 @@
 .phone,
 .tablet {
 	div:not(.overflow-horizontal) {
-		& > .table:not(.table-no-responsive){
+		& > .table:not(.table-no-responsive) {
 			word-break: break-all;
 		}
 	}
 
-	.table-no-responsive{
-		overflow-x: auto;
-		word-break: break-all;
-		// Service Studio Preview
-		& {
-			-servicestudio-word-break: normal;
-		}
-	}
-
-	.table:not(.table-no-responsive) {
-		overflow: hidden;
-
-		thead {
-			display: none;
-
-			// Service Studio Preview
-			& {
-				-servicestudio-display: none;
-			}
+	.table {
+		th {
+			width: 100%;
 		}
 
-		tr,
-		td {
-			display: block;
-
+		&-no-responsive {
+			overflow-x: auto;
+			word-break: break-all;
 			// Service Studio Preview
 			& {
 				-servicestudio-word-break: normal;
 			}
 		}
 
-		tr {
-			border-bottom: var(--border-size-s) solid var(--color-neutral-4);
-		}
+		&:not(.table-no-responsive) {
+			overflow: hidden;
 
-		td {
-			border-bottom: 0;
-			display: flex;
-			height: auto;
-			position: relative;
-			text-align: left !important;
-			width: 100% !important;
+			thead {
+				display: none;
 
-			&:before {
-				content: attr(data-header);
-				display: block;
-				font-weight: bold;
-				margin-right: 10px;
-				max-width: 110px;
-				min-width: 110px;
-				word-break: break-word;
-				white-space: normal;
+				// Service Studio Preview
+				& {
+					-servicestudio-display: none;
+				}
 			}
 
-			&:not([data-header]) {
+			tr,
+			td {
+				display: block;
+
+				// Service Studio Preview
+				& {
+					-servicestudio-word-break: normal;
+				}
+			}
+
+			tr {
+				border-bottom: var(--border-size-s) solid var(--color-neutral-4);
+			}
+
+			td {
+				border-bottom: 0;
+				display: flex;
+				height: auto;
+				position: relative;
+				text-align: left !important;
+				width: 100% !important;
+
 				&:before {
-					display: none;
+					content: attr(data-header);
+					display: block;
+					font-weight: bold;
+					margin-right: 10px;
+					max-width: 110px;
+					min-width: 110px;
+					word-break: break-word;
+					white-space: normal;
+				}
+
+				&:not([data-header]) {
+					&:before {
+						display: none;
+					}
 				}
 			}
 		}
@@ -273,12 +275,14 @@
 
 // IsRTL -------------------------------------------------------------------------
 ///
-.is-rtl.phone, 
-.is-rtl.tablet {
-	.table:not(.table-no-responsive){
-		td:before{
-			margin-left: 10px;
-			margin-right: 0px
+.is-rtl {
+	&.phone,
+	&.tablet {
+		.table:not(.table-no-responsive) {
+			td:before {
+				margin-left: 10px;
+				margin-right: 0px;
+			}
 		}
 	}
 }

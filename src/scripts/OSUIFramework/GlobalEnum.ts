@@ -6,6 +6,7 @@ namespace OSUIFramework.GlobalEnum {
 	export enum CommonPatternsProperties {
 		ExtendedClass = 'ExtendedClass',
 	}
+
 	/**
 	 * OutSystemsUI patterns names
 	 * Note: Can be used for logging purposes
@@ -79,6 +80,13 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
+	 * OutSystemsUI HTML Attributes
+	 */
+	export enum HTMLAttributes {
+		DataInput = 'data-input',
+	}
+
+	/**
 	 * OutSystemsUI HTML Elements
 	 */
 	export enum HTMLElement {
@@ -99,6 +107,7 @@ namespace OSUIFramework.GlobalEnum {
 		keyDown = 'keydown',
 		MouseEnter = 'mouseenter',
 		MouseLeave = 'mouseleave',
+		Resize = 'resize',
 		TouchEnd = 'touchend',
 		TouchMove = 'touchmove',
 		TouchStart = 'touchstart',
@@ -124,6 +133,9 @@ namespace OSUIFramework.GlobalEnum {
 	export enum MobileOS {
 		Android = 'android',
 		IOS = 'ios',
+		MacOS = 'osx',
+		Unknown = 'unknown',
+		Windows = 'windows',
 	}
 
 	/**
@@ -132,6 +144,42 @@ namespace OSUIFramework.GlobalEnum {
 	export enum Orientation {
 		Horizontal = 'horizontal',
 		Vertical = 'vertical',
+	}
+
+	/**
+	 * OutSystemsUI patterns names
+	 * Note: Can be used for logging purposes
+	 */
+	export enum PatternsNames {
+		Accordion = 'Accordion',
+		AccordionItem = 'Accordion Item',
+		AnimatedLabel = 'Animated Label',
+		ButtonLoading = 'ButtonLoading',
+		Carousel = 'Carousel',
+		Datepicker = 'Datepicker',
+		FlipContent = 'Flip Content',
+		FloatingActions = 'Floating Actions',
+		FloatingActionsItem = 'Floating Actions Item',
+		Gallery = 'Gallery',
+		Notification = 'Notification',
+		ProgressBar = 'Progress Bar',
+		ProgressCircle = 'Progress Circle',
+		Rating = 'Rating',
+		RangeSlider = 'Range Slider',
+		RangeSliderInterval = 'Range Slider Interval',
+		Search = 'Search',
+		SectionIndex = 'Section Index',
+		Sidebar = 'Sidebar',
+		Submenu = 'Submenu',
+		Tooltip = 'Tooltip',
+	}
+
+	/**
+	 * OutSystemsUI Units
+	 */
+	export enum Screen {
+		Active = 'active-screen',
+		Container = 'screen-container',
 	}
 
 	/**
@@ -151,11 +199,30 @@ namespace OSUIFramework.GlobalEnum {
 		Pixel = 'px',
 	}
 
-	/**
-	 * OutSystemsUI Units
-	 */
-	export enum Screen {
-		Active = 'active-screen',
-		Container = 'screen-container',
+	export enum Browser {
+		chrome = 'chrome',
+		edge = 'edge',
+		firefox = 'firefox',
+		ie = 'ie',
+		kindle = 'kindle',
+		miui = 'miui',
+		opera = 'opera',
+		safari = 'safari',
+		samsung = 'samsung',
+		uc = 'uc',
+		unknown = 'unknown',
+		yandex = 'yandex',
+	}
+
+	export enum DeviceOrientation {
+		landscape = 'landscape',
+		portrait = 'portrait',
+		unknown = 'unknown',
+	}
+
+	export enum DeviceType {
+		desktop = 'desktop',
+		phone = 'phone',
+		tablet = 'tablet',
 	}
 }

@@ -116,11 +116,6 @@
 			}
 		}
 	}
-
-	.choices__list.choices__list--dropdown,
-	& [data-dropdown] > div.dropdown-list {
-		position: initial;
-	}
 }
 
 // Responsive -------------------------------------------------------------------------
@@ -133,8 +128,15 @@
 
 ///
 .phone {
-	.section-expandable .section-expandable-title {
-		font-size: calc(var(--font-size-h6) - 2px);
+	.section-expandable {
+		.section-expandable-title {
+			font-size: calc(var(--font-size-h6) - 2px);
+		}
+
+		.choices__list.choices__list--dropdown,
+		& [data-dropdown] > div.dropdown-list {
+			position: initial;
+		}
 	}
 }
 

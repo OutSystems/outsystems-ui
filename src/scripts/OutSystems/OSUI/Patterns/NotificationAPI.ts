@@ -9,6 +9,7 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	 * @param {string} propertyName
 	 * @param {*} propertyValue
 	 */
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 	export function ChangeProperty(notificationId: string, propertyName: string, propertyValue: any): void {
 		const notification = GetNotificationById(notificationId);
 		notification.changeProperty(propertyName, propertyValue);
