@@ -56,6 +56,10 @@ namespace OSUIFramework.Patterns.Tabs {
 				? this._tabsContentItemsElementsArray[0]
 				: this._tabsContentItemsElementsArray[this._configs.ActiveTab];
 
+			if (this._hasSingleContent) {
+				this._activeTabContentElement.setAsActiveElement();
+			}
+
 			this._updateTabsConnection(false);
 		}
 
