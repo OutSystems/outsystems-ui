@@ -7,6 +7,6 @@ namespace OutSystems.OSUI.Utils {
 	 * @return {*}  {boolean}
 	 */
 	export function IsRunningAsNativeApp(): boolean {
-		return window.cordova !== undefined && !IsRunningAsPWA();
+		return OSUIFramework.Helper.DeviceInfo.IsNative;
 	}
 }
