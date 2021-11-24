@@ -94,7 +94,7 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	}
 
 	/**
-	 *
+	 * Function that will register a pattern callback.
 	 *
 	 * @export
 	 * @param {string} tabsId
@@ -104,5 +104,18 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 		const tabs = GetTabsById(tabsId);
 
 		tabs.registerCallback(callback);
+	}
+
+	/**
+	 * Function that will open a given tabs item.
+	 *
+	 * @export
+	 * @param {string} tabsId
+	 * @param {number} tabsNumber
+	 */
+	export function TabsGoTo(tabsId: string, tabsNumber: number): void {
+		const tabs = GetTabsById(tabsId);
+
+		tabs.changeTab(tabsNumber, undefined, true);
 	}
 }
