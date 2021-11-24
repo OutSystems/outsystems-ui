@@ -9,7 +9,7 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 		IsHorizontal = 'osui-tabs--is-horizontal',
 		IsJustified = 'osui-tabs--is-justified',
 		Modifier = 'osui-tabs--is-',
-		Tabs = 'osui-tabs',
+		TabsWrapper = 'osui-tabs',
 		TabsHeader = 'osui-tabs__header',
 		TabsContent = 'osui-tabs__content',
 		TabsHeaderItem = 'osui-tabs__header-item',
