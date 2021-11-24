@@ -78,6 +78,7 @@ namespace OSUIFramework.Helper {
 
 	export abstract class DeviceInfo {
 		/******************** PRIVATE CACHE VARIABLES ********************/
+		private static _browser = GlobalEnum.Browser.unknown;
 		private static _iphoneDetails: iphoneDetails = undefined;
 		private static _isIphoneWithNotch: boolean | undefined = undefined;
 		private static _isNativeApp: boolean | undefined = undefined;
@@ -96,22 +97,22 @@ namespace OSUIFramework.Helper {
 		 * @memberof DeviceInfo
 		 */
 		private static _getOperatingSystem(userAgent = ''): GlobalEnum.MobileOS {
-			const useragentLocal = DeviceInfo._getUserAgent(userAgent);
-			let localos = GlobalEnum.MobileOS.Unknown;
+			const userAgentLocal = DeviceInfo._getUserAgent(userAgent);
+			let localOs = GlobalEnum.MobileOS.Unknown;
 
-			if (useragentLocal.includes(OperatingSystemKeyword.Android)) {
-				localos = GlobalEnum.MobileOS.Android;
-			} else if (useragentLocal.includes(OperatingSystemKeyword.Windows)) {
-				localos = GlobalEnum.MobileOS.Windows;
-			} else if (useragentLocal.includes(OperatingSystemKeyword.MacOS)) {
-				localos = GlobalEnum.MobileOS.Windows;
+			if (userAgentLocal.includes(OperatingSystemKeyword.Android)) {
+				localOs = GlobalEnum.MobileOS.Android;
+			} else if (userAgentLocal.includes(OperatingSystemKeyword.Windows)) {
+				localOs = GlobalEnum.MobileOS.Windows;
+			} else if (userAgentLocal.includes(OperatingSystemKeyword.MacOS)) {
+				localOs = GlobalEnum.MobileOS.MacOS;
 			} else if (
-				useragentLocal.includes(OperatingSystemKeyword.Ipad) ||
-				useragentLocal.includes(OperatingSystemKeyword.Iphone)
+				userAgentLocal.includes(OperatingSystemKeyword.Ipad) ||
+				userAgentLocal.includes(OperatingSystemKeyword.Iphone)
 			) {
-				localos = GlobalEnum.MobileOS.IOS;
+				localOs = GlobalEnum.MobileOS.IOS;
 			}
-			return localos;
+			return localOs;
 		}
 
 		/**
@@ -408,27 +409,38 @@ namespace OSUIFramework.Helper {
 		 * Gets in which browser the framework is running, based in the UserAgent information.
 		 *
 		 * @static
-		 * @param {string} [useragent=''] Optional parameter. If none is passed, the framework will get it.
+		 * @param {string} [userAgent=''] Optional parameter. If none is passed, the framework will get it.
 		 * @return {*}  {GlobalEnum.Browser}
 		 * @memberof DeviceInfo
 		 */
-		public static GetBrowser(useragent = ''): GlobalEnum.Browser {
-			const useragentLocal = DeviceInfo._getUserAgent(useragent);
-
+		public static GetBrowser(userAgent = ''): GlobalEnum.Browser {
 			let browser = GlobalEnum.Browser.unknown;
 
-			//The order of the ifs should be kept until chrome
-			if (DeviceInfo._isKindle(useragentLocal)) browser = GlobalEnum.Browser.kindle;
-			else if (DeviceInfo._isOpera(useragentLocal)) browser = GlobalEnum.Browser.opera;
-			else if (DeviceInfo._isEdge(useragentLocal)) browser = GlobalEnum.Browser.edge;
-			else if (DeviceInfo._isSamsung(useragentLocal)) browser = GlobalEnum.Browser.samsung;
-			else if (DeviceInfo._isYandex(useragentLocal)) browser = GlobalEnum.Browser.yandex;
-			else if (DeviceInfo._isMiui(useragentLocal)) browser = GlobalEnum.Browser.miui;
-			//this way we are sure,that even though the UserAgent has chrome, it's not one of the previous browsers.
-			else if (DeviceInfo._isChrome(useragentLocal)) browser = GlobalEnum.Browser.chrome;
-			else if (DeviceInfo._isFirefox(useragentLocal)) browser = GlobalEnum.Browser.firefox;
-			else if (DeviceInfo._isIE(useragentLocal)) browser = GlobalEnum.Browser.ie;
-			else if (DeviceInfo._isUC(useragentLocal)) browser = GlobalEnum.Browser.uc;
+			//if the developer did pass an user agent, let's not use our cached value.
+			if (userAgent.trim() !== '') {
+				const userAgentLocal = DeviceInfo._getUserAgent(userAgent);
+				//The order of the ifs should be kept until chrome
+				if (DeviceInfo._isKindle(userAgentLocal)) browser = GlobalEnum.Browser.kindle;
+				else if (DeviceInfo._isOpera(userAgentLocal)) browser = GlobalEnum.Browser.opera;
+				else if (DeviceInfo._isEdge(userAgentLocal)) browser = GlobalEnum.Browser.edge;
+				else if (DeviceInfo._isSamsung(userAgentLocal)) browser = GlobalEnum.Browser.samsung;
+				else if (DeviceInfo._isYandex(userAgentLocal)) browser = GlobalEnum.Browser.yandex;
+				else if (DeviceInfo._isMiui(userAgentLocal)) browser = GlobalEnum.Browser.miui;
+				//this way we are sure,that even though the UserAgent has chrome, it's not one of the previous browsers.
+				else if (DeviceInfo._isChrome(userAgentLocal)) browser = GlobalEnum.Browser.chrome;
+				else if (DeviceInfo._isFirefox(userAgentLocal)) browser = GlobalEnum.Browser.firefox;
+				else if (DeviceInfo._isIE(userAgentLocal)) browser = GlobalEnum.Browser.ie;
+				else if (DeviceInfo._isUC(userAgentLocal)) browser = GlobalEnum.Browser.uc;
+			} else {
+				//if no user agent was passed, and we don't have any value cached, let's call this same function recursively
+				//but this time pass the actual user agent.
+				if (DeviceInfo._browser === GlobalEnum.Browser.unknown) {
+					//let's update the cached value.
+					DeviceInfo._browser = DeviceInfo.GetBrowser(DeviceInfo._getUserAgent());
+				}
+				//let's update the value to be returned.
+				browser = DeviceInfo._browser;
+			}
 
 			return browser;
 		}
@@ -472,24 +484,24 @@ namespace OSUIFramework.Helper {
 		 * Obtains the Operating system in which the framework is running
 		 *
 		 * @static
-		 * @param {string} [useragent=''] Optional parameter. If none, the framework will obtain the UserAgent, calculate it once, and use the cache value afterwards.
+		 * @param {string} [userAgent=''] Optional parameter. If none, the framework will obtain the UserAgent, calculate it once, and use the cache value afterwards.
 		 * @return {*}  {GlobalEnum.MobileOS} Detected operating system.
 		 * @memberof DeviceInfo
 		 */
-		public static GetOperatingSystem(useragent = ''): GlobalEnum.MobileOS {
-			let localos = GlobalEnum.MobileOS.Unknown;
+		public static GetOperatingSystem(userAgent = ''): GlobalEnum.MobileOS {
+			let localOs = GlobalEnum.MobileOS.Unknown;
 
 			//If the developer passed an UA, let's not use the cached value, but always calculate it. Useful
-			if (useragent.trim() === '') {
-				localos = DeviceInfo._getOperatingSystem();
+			if (userAgent.trim() !== '') {
+				localOs = DeviceInfo._getOperatingSystem();
 			} else {
-				if (DeviceInfo._operatingSystem === undefined) {
-					DeviceInfo._operatingSystem = DeviceInfo._getOperatingSystem();
+				if (DeviceInfo._operatingSystem === GlobalEnum.MobileOS.Unknown) {
+					DeviceInfo._operatingSystem = DeviceInfo.GetOperatingSystem(DeviceInfo._getUserAgent());
 				}
-				localos = DeviceInfo._operatingSystem;
+				localOs = DeviceInfo._operatingSystem;
 			}
 
-			return localos;
+			return localOs;
 		}
 	}
 }
