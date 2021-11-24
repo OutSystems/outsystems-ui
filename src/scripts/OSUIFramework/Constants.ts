@@ -44,9 +44,6 @@ namespace OSUIFramework.Constants {
 		},
 	};
 
-	/* Store modifier to apply on dynamic classes */
-	export const ClassModifier = 'is--';
-
 	/* Used to concatenate when querySelector for a class */
 	export const Dot = '.';
 
