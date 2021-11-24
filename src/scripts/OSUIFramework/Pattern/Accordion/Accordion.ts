@@ -27,8 +27,8 @@ namespace OSUIFramework.Patterns.Accordion {
 			switch (propertyName) {
 				case Enum.Properties.MultipleItems:
 					this.configs.MultipleItems = propertyValue;
-					//We collapse all the items to begin anew
-					this.collapseAllItems();
+					// If we're now not having multiple items, let's collapse everything.
+					if (!this.configs.MultipleItems) this.collapseAllItems();
 					break;
 				default:
 					super.changeProperty(propertyName, propertyValue);
