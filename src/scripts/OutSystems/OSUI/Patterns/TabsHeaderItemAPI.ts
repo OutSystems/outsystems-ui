@@ -76,7 +76,6 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 
 		if (tabs !== undefined) {
 			_tabsMap.set(tabsHeaderItemId, tabs.uniqueId);
-			//tabs.addTabsHeaderItem(_newTabsHeaderItem.uniqueId, _newTabsHeaderItem);
 		}
 
 		return _newTabsHeaderItem;
