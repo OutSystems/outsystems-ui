@@ -59,9 +59,4 @@ namespace OSUIFramework.Callbacks {
 	export type OSTabsOnChangeEvent = {
 		(tabsId: string, ActiveTab: number): void;
 	};
-
-	export type OSFlipContentFlipEvent = {
-		(flipId: string, isFlipped: boolean): void;
-	};
-
 }

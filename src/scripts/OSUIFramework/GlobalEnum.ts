@@ -8,36 +8,6 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
-	 * OutSystemsUI patterns names
-	 * Note: Can be used for logging purposes
-	 */
-	export enum PatternsNames {
-		Accordion = 'Accordion',
-		AccordionItem = 'Accordion Item',
-		AnimatedLabel = 'Animated Label',
-		ButtonLoading = 'ButtonLoading',
-		Carousel = 'Carousel',
-		FlipContent = 'Flip Content',
-		FloatingActions = 'Floating Actions',
-		FloatingActionsItem = 'Floating Actions Item',
-		Gallery = 'Gallery',
-		Notification = 'Notification',
-		ProgressBar = 'Progress Bar',
-		ProgressCircle = 'Progress Circle',
-		Rating = 'Rating',
-		RangeSlider = 'Range Slider',
-		RangeSliderInterval = 'Range Slider Interval',
-		Search = 'Search',
-		SectionIndex = 'Section Index',
-		Sidebar = 'Sidebar',
-		Submenu = 'Submenu',
-		Tabs = 'Tabs',
-		TabsContentItem = 'TabsContentItem',
-		TabsHeaderItem = 'TabsHeaderItem',
-		Tooltip = 'Tooltip',
-	}
-
-	/**
 	 * OutSystemsUI elements cssClasses
 	 */
 	export enum CssClassElements {
@@ -171,6 +141,9 @@ namespace OSUIFramework.GlobalEnum {
 		SectionIndex = 'Section Index',
 		Sidebar = 'Sidebar',
 		Submenu = 'Submenu',
+		Tabs = 'Tabs',
+		TabsContentItem = 'TabsContentItem',
+		TabsHeaderItem = 'TabsHeaderItem',
 		Tooltip = 'Tooltip',
 	}
 
