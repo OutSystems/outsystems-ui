@@ -16,9 +16,10 @@ namespace OSUIFramework.Helper {
 		 * @return {*}  {string}
 		 * @memberof AttributeManipulation
 		 */
-		public static Get(element: HTMLElement, attrName: string): string {
+		public static Get(element: HTMLElement, attrName: string): string | undefined {
 			if (element) {
-				return element.getAttribute(attrName);
+				const value = element.getAttribute(attrName);
+				return value ? value : undefined;
 			} else {
 				throw Error(`The element does not exist, when trying to get the attribute '${attrName}'.`);
 			}
