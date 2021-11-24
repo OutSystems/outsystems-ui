@@ -229,18 +229,27 @@
 
 ///
 .has-accessible-features {
-	.osui-tabs__header-item {
-		&:focus {
-			box-shadow: none;
+	.osui-tabs {
+		&--is-vertical {
+			.osui-tabs__header-item {
+				&::after {
+					width: calc(100% + var(--border-size-m));
+				}
+			}
 		}
 
-		&::after {
-			box-sizing: border-box;
-			width: calc(100% + var(--border-size-m));
-		}
+		&__header-item {
+			&:focus {
+				box-shadow: none;
+			}
 
-		&.osui-tabs--is-active:focus-visible::after {
-			border: var(--border-size-m) solid var(--color-focus-outer);
+			&::after {
+				box-sizing: border-box;
+			}
+
+			&.osui-tabs--is-active:focus-visible::after {
+				border: var(--border-size-m) solid var(--color-focus-outer);
+			}
 		}
 	}
 }

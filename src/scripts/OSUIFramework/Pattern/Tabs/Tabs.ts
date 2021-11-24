@@ -119,6 +119,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			}
 		}
 
+		// Method that handles the connection between HeaderItems and ContentItem, related to data-tab and aria-controls/labbeledby
 		private _updateTabsConnection(updateDataTab = true): void {
 			const currentContentItem = this._tabsContentItemsElementsArray[0];
 
