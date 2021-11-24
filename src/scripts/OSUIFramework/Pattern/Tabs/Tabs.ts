@@ -8,6 +8,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _activeTabHeaderElement: Patterns.TabsHeaderItem.ITabsHeaderItem;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnHeaderKeypress: any;
+		private _hasSingleContent: boolean;
 		// Store the click event with bind(this)
 		private _onTabsChange: Callbacks.OSTabsOnChangeEvent;
 		private _scrollBehavior: Enum.ScrollBehavior;
@@ -47,8 +48,14 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		private _prepareHeaderAndContentItems(): void {
+			this._hasSingleContent = this._tabsContentItemsElementsArray.length === 1;
+
 			this._activeTabHeaderElement = this._tabsHeaderItemsElementsArray[this._configs.ActiveTab];
-			this._activeTabContentElement = this._tabsContentItemsElementsArray[this._configs.ActiveTab];
+
+			this._activeTabContentElement = this._hasSingleContent
+				? this._tabsContentItemsElementsArray[0]
+				: this._tabsContentItemsElementsArray[this._configs.ActiveTab];
+
 			this._updateTabsConnection(false);
 		}
 
@@ -88,8 +95,12 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		private _updateTabsConnection(updateDataTab = true): void {
+			const currentContentItem = this._tabsContentItemsElementsArray[0];
+
 			this._tabsHeaderItemsElementsArray.forEach((item, index) => {
-				const currentContentItem = this._tabsContentItemsElementsArray[index];
+				if (!this._hasSingleContent) {
+					this._tabsContentItemsElementsArray[index];
+				}
 
 				item.setAriaControlsAttribute(currentContentItem.widgetId);
 
@@ -194,25 +205,26 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			const newHeaderItem = this._tabsHeaderItemsElementsArray[newTabIndex];
 
-			const newContentItem = this._tabsContentItemsElementsArray[newTabIndex];
+			if (!this._hasSingleContent) {
+				const newContentItem = this._tabsContentItemsElementsArray[newTabIndex];
 
-			const targetOffeset = newContentItem.getOffsetLeft();
+				const targetOffeset = newContentItem.getOffsetLeft();
 
-			console.log('changeTab');
-			this._tabsContentElement.scrollTo({
-				top: 0,
-				left: targetOffeset,
-				behavior: this._scrollBehavior,
-			});
+				this._tabsContentElement.scrollTo({
+					top: 0,
+					left: targetOffeset,
+					behavior: this._scrollBehavior,
+				});
+
+				this._activeTabContentElement.removeAsActiveElement();
+				newContentItem.setAsActiveElement();
+				this._activeTabContentElement = newContentItem;
+			}
 
 			this._activeTabHeaderElement.removeAsActiveElement();
 			newHeaderItem.setAsActiveElement();
-
-			this._activeTabContentElement.removeAsActiveElement();
-			newContentItem.setAsActiveElement();
-
 			this._activeTabHeaderElement = newHeaderItem;
-			this._activeTabContentElement = newContentItem;
+
 			this._configs.ActiveTab = newTabIndex;
 
 			if (triggerEvent) {
