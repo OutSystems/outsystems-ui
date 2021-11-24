@@ -4,9 +4,13 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	export class TabsHeaderItem extends AbstractPattern<TabsHeaderItemConfig> implements ITabsHeaderItem {
+		// Store the data-tab attribute
 		private _dataTab: number;
+		// Store the on click event
 		private _eventOnTabsClick: Callbacks.Generic;
+		// Store if this is the current active item
 		private _isActive: boolean;
+		// Store this item's tab pattern
 		private _tabsElem: Patterns.Tabs.ITabs;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
@@ -17,6 +21,7 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 			this._eventOnTabsClick = this._handleClickEvent.bind(this);
 		}
 
+		// Method to add click event to this headerItem
 		private _addEventListener(): void {
 			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnTabsClick);
 		}
@@ -57,6 +62,7 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		public dispose(): void {
 			super.dispose();
 
+			// Remove this item from the tabs pattern array
 			this._tabsElem.removeTabsHeaderItem(this, this._isActive);
 
 			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnTabsClick);

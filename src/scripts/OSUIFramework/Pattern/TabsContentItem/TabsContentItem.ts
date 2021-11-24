@@ -4,8 +4,11 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	export class TabsContentItem extends AbstractPattern<TabsContentItemConfig> implements ITabsContentItem {
+		// Store the data-tab attribute
 		private _dataTab: number;
+		// Store if this is the current active item
 		private _isActive: boolean;
+		// Store this item's tab pattern
 		private _tabsElem: Patterns.Tabs.ITabs;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
@@ -41,6 +44,7 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		public dispose(): void {
 			super.dispose();
 
+			// Remove this item from the tabs pattern array
 			this._tabsElem.removeTabsContentItem(this);
 		}
 
