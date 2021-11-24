@@ -253,7 +253,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			const currentIndex = this._tabsHeaderItemsElementsArray.indexOf(tabsHeaderItem);
 			this._tabsHeaderItemsElementsArray.splice(currentIndex, 1);
 
-			if (isActiveItem) {
+			if (isActiveItem && this.isBuilt) {
 				Helper.AsyncInvocation(this.changeTab.bind(this), this._configs.ActiveTab, undefined, false);
 			}
 		}
