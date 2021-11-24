@@ -21,6 +21,7 @@
 				grid-column: 2;
 
 				&-item {
+					justify-content: flex-end;
 					padding: var(--space-xs) 0 var(--space-xs) var(--space-base);
 
 					&::after {
@@ -43,6 +44,7 @@
 				border-right: var(--border-size-s) solid var(--color-neutral-5);
 
 				&-item {
+					justify-content: flex-start;
 					padding: var(--space-xs) var(--space-base) var(--space-xs) 0;
 
 					&::after {
@@ -69,7 +71,6 @@
 			&-item {
 				border-right: var(--border-size-m) solid transparent;
 				flex: none;
-				justify-content: flex-start;
 
 				&::after {
 					height: 100%;

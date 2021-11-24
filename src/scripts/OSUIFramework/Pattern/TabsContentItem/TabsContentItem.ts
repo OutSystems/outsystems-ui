@@ -9,7 +9,7 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		private _tabsElem: Patterns.Tabs.ITabs;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		constructor(uniqueId: string, configs: any, tabsElem: Patterns.Tabs.ITabs) {
+		constructor(uniqueId: string, tabsElem: Patterns.Tabs.ITabs, configs: any) {
 			super(uniqueId, new TabsContentItemConfig(configs));
 
 			this._tabsElem = tabsElem;

@@ -67,8 +67,8 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 
 		const _newTabsHeaderItem = new OSUIFramework.Patterns.TabsHeaderItem.TabsHeaderItem(
 			tabsHeaderItemId,
-			JSON.parse(configs),
-			tabs
+			tabs,
+			JSON.parse(configs)
 		);
 
 		_tabsHeaderItemMap.set(tabsHeaderItemId, _newTabsHeaderItem);

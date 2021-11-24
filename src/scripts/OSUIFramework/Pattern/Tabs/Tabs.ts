@@ -124,7 +124,6 @@ namespace OSUIFramework.Patterns.Tabs {
 
 				if (this._activeTabHeaderElement === undefined) {
 					this._activeTabHeaderElement = tabsHeaderItem;
-					//tabsHeaderItem = this._tabsHeaderItemsElementsArray[this._configs.ActiveTab];
 					Helper.AsyncInvocation(this.changeTab.bind(this), this._configs.ActiveTab, undefined, false);
 				}
 			} else {
