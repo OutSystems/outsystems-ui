@@ -24,19 +24,15 @@ namespace OSUIFramework.Patterns.Accordion {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
-			if (Enum.Properties[propertyName] && this._configs.hasOwnProperty(propertyName)) {
-				switch (propertyName) {
-					case Enum.Properties.MultipleItems:
-						this.configs.MultipleItems = propertyValue;
-						//We collapse all the items to begin anew
-						this.collapseAllItems();
-						break;
-					default:
-						super.changeProperty(propertyName, propertyValue);
-						break;
-				}
-			} else {
-				throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
+			switch (propertyName) {
+				case Enum.Properties.MultipleItems:
+					this.configs.MultipleItems = propertyValue;
+					//We collapse all the items to begin anew
+					this.collapseAllItems();
+					break;
+				default:
+					super.changeProperty(propertyName, propertyValue);
+					break;
 			}
 		}
 

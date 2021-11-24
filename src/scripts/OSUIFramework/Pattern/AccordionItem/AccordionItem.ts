@@ -163,8 +163,6 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			} else {
 				//If closed, let's open
 				this.open();
-
-				if (this._accordionParent) this._accordionParent.triggerAccordionItemClose(this.uniqueId);
 			}
 		}
 
@@ -317,6 +315,8 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			this.configs.IsExpanded = true;
 			this._setAriaExpanded(true, false);
 			this._triggerToggleClick();
+
+			if (this._accordionParent) this._accordionParent.triggerAccordionItemClose(this.uniqueId);
 		}
 
 		public registerCallback(callback: Callbacks.OSGeneric): void {
