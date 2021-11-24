@@ -82,6 +82,10 @@ html[data-uieditorversion^='1'] {
 		-servicestudio-display: none;
 	}
 
+	.ph:empty {
+		-servicestudio-display: block;
+	}
+
 	.table {
 		tr:empty {
 			-servicestudio-display: block !important;

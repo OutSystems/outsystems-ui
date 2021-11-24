@@ -167,10 +167,12 @@ namespace Providers.RangeSlider {
 			switch (propertyName) {
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.MinValue:
 					this.updateRangeValues(propertyValue, this._configs.MaxValue);
+					this.handleRangePips(this.configs.PipsStep, true);
 
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.MaxValue:
 					this.updateRangeValues(this._configs.MinValue, propertyValue);
+					this.handleRangePips(this.configs.PipsStep, true);
 
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.Properties.InitialValueStart:
@@ -251,23 +253,43 @@ namespace Providers.RangeSlider {
 		public handleRangePips(pipsStepParam: number, isUpdate: boolean): void {
 			let pipsValues = Math.floor(pipsStepParam);
 
-			// To avoid performance issues
+			//To avoid performance issues
 			if (pipsValues > this._configs.MaxValue) {
 				pipsValues = this._configs.MaxValue;
 			}
 
-			if (pipsValues <= 1) {
-				// steps, when they exist, can't be less than 2 (library restraint)
-				pipsValues = 2;
+			// Pips, when they exist, can't be less than 1 (library restraint)
+			if (pipsValues < 1) {
+				console.warn(
+					'Pips, when they exist, can not be less than one (library restraint). If you do not want pips to show, set the ShowPips paramater to false.'
+				);
+				return;
 			}
 
 			// To avoid the creation of minor pips, whatever the value
-			const pipsDensity = (pipsValues - 1) * 100;
+			const pipsDensity = pipsValues * 100;
+
+			// array to receive the list of pips
+			const list = [];
+
+			// pip iterator used on the while
+			let pip = this.configs.MinValue;
+
+			// Fill the array with the numbers from min to max values, respecting the interval set on the pipsStepParam
+			while (pip <= this.configs.MaxValue) {
+				list.push(pip);
+				pip += pipsValues;
+			}
+
+			// To make sure that a pip is always created for the MaxValue
+			if (pip !== this.configs.MaxValue) {
+				list.push(this._configs.MaxValue);
+			}
 
 			const pips = {
-				values: pipsValues,
+				values: list,
 				density: pipsDensity,
-				mode: Enum.NoUiSliderModeOptions.Count,
+				mode: Enum.NoUiSliderModeOptions.Values,
 			};
 
 			if (isUpdate) {

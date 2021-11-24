@@ -3,64 +3,53 @@
 /// @group Patterns-Button_Loading
 /// Patterns - Utilities - Button Loading
 
-/* NOTE:
-	.btn-show-label, .btn-loading & .btn-label are selectors that are used to mantain retrocompatilibilty
-*/
-
 ///
 .osui-btn-loading {
-	&.show-spinner-only,
-	&:not(.btn-show-label) {
-		.btn {
-			& > *:not(.btn-loading):not(.loading-spinner):not(.btn-label) {
-				display: none;
-			}
-		}
-
-		&.is--loading {
+	&.show-spinner-only {
+		&.is--btn-loading {
 			.btn {
 				font-size: 0;
 
-				.loading-spinner {
-					margin: 0;
-				}
-
-				.btn-label {
-					display: none;
+				.spinner-animation {
+					margin-right: var(--space-none);
 				}
 			}
 		}
 	}
 
-	&.is--loading {
+	&.is--btn-loading {
 		pointer-events: none;
 
 		.btn {
-			display: inline-block;
+			display: inline-flex;
 			pointer-events: none;
-		}
-	}
 
-	&:not(.is--loading) {
-		.btn {
-			.loading-spinner {
-				display: none;
+			.spinner-animation {
+				display: inline-block;
 			}
 		}
 	}
 
 	.btn {
 		transition: none;
+		display: inline-block;
+
+		// ServiceStudio Preview
+		& {
+			-servicestudio-display: inline-flex;
+		}
 
 		& > * {
-			font-size: initial;
+			font-size: var(--font-size-s);
+			vertical-align: middle;
 		}
 
-		.btn-loading {
-			margin: var(--space-none);
+		& > *:not(.spinner-animation) {
+			display: none;
 		}
 
-		.loading-spinner {
+		.spinner-animation {
+			display: none;
 			animation: loadingSpinner 850ms cubic-bezier(0.7, 1.05, 0.78, 0.78) infinite;
 			border: var(--border-size-m) solid currentColor;
 			border-radius: var(--border-radius-circle);
@@ -83,7 +72,7 @@
 .is-rtl {
 	.osui-btn-loading {
 		.btn {
-			.loading-spinner {
+			.spinner-animation {
 				margin-left: var(--space-s);
 				margin-right: var(--space-none);
 			}

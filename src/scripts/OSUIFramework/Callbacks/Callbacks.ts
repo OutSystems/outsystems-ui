@@ -8,10 +8,7 @@ namespace OSUIFramework.Callbacks {
 	//This type is used to define callbacks that will be actions in OutSystems code side.
 	export type OSGeneric = { (patternId, ...args): void };
 
-	export type OSAccordionItemToggleEvent = {
-		(accordionItemId: string, isExpanded: boolean): void;
-	};
-
+	// Carousel
 	export type OSCarouselSlideMovedEvent = {
 		(carouselId: string, index: number): void;
 	};
@@ -20,31 +17,42 @@ namespace OSUIFramework.Callbacks {
 		(carouselId: string): void;
 	};
 
-	export type OSRangeSliderOnValueChangeEvent = {
-		(rangeSliderId: string, startValue: number, endValue: number): void;
+	// Datepicker
+	export type OSDatepickerOnChangeEvent = {
+		(datepickerId: string, selectedDate: string | string[]): void;
 	};
 
-	export type OSRangeSliderInitializeEvent = {
-		(rangeSliderId: string): void;
+	// FlipContent
+	export type OSFlipContentFlipEvent = {
+		(flipId: string, isFlipped: boolean): void;
 	};
 
+	// Notifficaction
 	export type OSNotificationToggleEvent = {
 		(notificationId: string, isOpen: boolean): void;
 	};
 
+	// RangeSlider
+	export type OSRangeSliderInitializeEvent = {
+		(rangeSliderId: string): void;
+	};
+
+	export type OSRangeSliderOnValueChangeEvent = {
+		(rangeSliderId: string, startValue: number, endValue: number): void;
+	};
+
+	// Rating
 	export type OSRatingSelectEvent = {
 		(ratingId: string, value: number): void;
 	};
 
+	// Search
 	export type OSSearchCollapseEvent = {
 		(searchId: string): void;
 	};
 
+	// Sidebar
 	export type OSSidebarToggleEvent = {
 		(sidebarId: string, isOpen: boolean): void;
-	};
-
-	export type OSFlipContentFlipEvent = {
-		(flipId: string, isFlipped: boolean): void;
 	};
 }

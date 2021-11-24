@@ -287,7 +287,8 @@
 /*      - Utilities                                                             */
 /* ============================================================================ */
 @import '04-patterns/06-utilities/align-center';
-@import '../scripts/OSUIFramework/Pattern/ButtonLoading/scss/button-loading';
+// @import '../scripts/OSUIFramework/Pattern/ButtonLoading/scss/button-loading';
+@import '10-deprecated/button-loading-deprecated';
 @import '04-patterns/06-utilities/center-content';
 @import '04-patterns/06-utilities/margin-container';
 @import '04-patterns/06-utilities/separator';

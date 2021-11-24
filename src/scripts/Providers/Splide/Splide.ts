@@ -21,6 +21,8 @@ namespace Providers.Splide {
 		private _onDisableRender: OSUIFramework.Callbacks.Generic;
 		// Store the onInitialized event
 		private _onInitialize: OSUIFramework.Callbacks.OSCarouselOnInitializeEvent;
+		// Store the onResizeWidth event
+		private _onResizeWidth: OSUIFramework.Callbacks.Generic;
 		// Store the onSlideMoved event
 		private _onSlideMoved: OSUIFramework.Callbacks.OSCarouselSlideMovedEvent;
 		// Store the placholder element
@@ -46,6 +48,12 @@ namespace Providers.Splide {
 
 			// Bind this to the async callback
 			this._onDisableRender = this._disableBlockRender.bind(this);
+			this._onResizeWidth = this._setCarouselWidth.bind(this);
+		}
+
+		// Add event listener to update the correct width of the pattern
+		private _adjustWidthOnResize(): void {
+			window.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Resize, this._onResizeWidth);
 		}
 
 		// Method to check if a List Widget is used inside the placeholder and assign the _listWidget variable
@@ -126,6 +134,15 @@ namespace Providers.Splide {
 			};
 		}
 
+		// Ensure that the splide track maintains the correct width
+		private _setCarouselWidth(): void {
+			OSUIFramework.Helper.Style.SetStyleAttribute(
+				this._splideTrack,
+				OSUIFramework.Patterns.Carousel.Enum.CssVariables.CarouselWidth,
+				this._selfElem.offsetWidth + OSUIFramework.GlobalEnum.Units.Pixel
+			);
+		}
+
 		// Set the html references that will be used to manage the cssClasses and atribute properties
 		private _setHtmlElements(): void {
 			this._placeholder = this._selfElem.querySelector(
@@ -197,6 +214,8 @@ namespace Providers.Splide {
 			this._checkListWidget();
 
 			this._setInitialCssClasses();
+
+			this._adjustWidthOnResize();
 
 			this._createProviderCarousel();
 
@@ -270,6 +289,9 @@ namespace Providers.Splide {
 			if (this.isBuilt) {
 				this._provider.destroy();
 			}
+
+			// remove event listener
+			window.removeEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Resize, this._onResizeWidth);
 
 			super.dispose();
 		}

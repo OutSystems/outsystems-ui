@@ -13,8 +13,8 @@ namespace OSUIFramework.Patterns.ButtonLoading.Enum {
 	 */
 	export enum CssClass {
 		Button = 'btn',
-		IsLoading = 'is--loading',
+		IsLoading = 'is--btn-loading',
 		ShowSpinnerOnly = 'show-spinner-only',
-		Spinner = 'loading-spinner',
+		Spinner = 'spinner-animation',
 	}
 }
