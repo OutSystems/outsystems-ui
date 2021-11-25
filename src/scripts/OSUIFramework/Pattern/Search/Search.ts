@@ -60,8 +60,8 @@ namespace OSUIFramework.Patterns.Search {
 		private _setAccessibilityProps(): void {
 			Helper.Attribute.Set(
 				this._selfElem,
-				Constants.AccessibilityAttribute.Role.AttrName,
-				Constants.AccessibilityAttribute.Role.Search
+				Constants.A11YAttributes.Role.AttrName,
+				Constants.A11YAttributes.Role.Search
 			);
 		}
 

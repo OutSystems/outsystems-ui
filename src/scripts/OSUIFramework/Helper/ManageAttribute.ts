@@ -8,7 +8,7 @@ namespace OSUIFramework.Helper.Attribute {
 	 * @param {string} attrName Attribute name
 	 * @param {string} attrValue Attribute value
 	 */
-	export function Set(elem: HTMLElement, attrName: string, attrValue: string | boolean): void {
+	export function Set(elem: HTMLElement, attrName: string, attrValue: string | boolean | number): void {
 		if (elem) {
 			elem.setAttribute(attrName, attrValue.toString());
 		} else {
