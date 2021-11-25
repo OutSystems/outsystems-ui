@@ -165,8 +165,8 @@ namespace OSUIFramework.Patterns.Notification {
 		private _setAccessibilityProps(): void {
 			Helper.Attribute.Set(
 				this._notificationContent,
-				Constants.AccessibilityAttribute.Role.AttrName,
-				Constants.AccessibilityAttribute.Role.Alert
+				Constants.A11YAttributes.Role.AttrName,
+				Constants.A11YAttributes.Role.Alert
 			);
 
 			// Update accessibility properties
@@ -189,16 +189,16 @@ namespace OSUIFramework.Patterns.Notification {
 		private _updateAccessibilityProps(): void {
 			Helper.Attribute.Set(
 				this._notificationContent,
-				Constants.AccessibilityAttribute.Aria.Hidden,
+				Constants.A11YAttributes.Aria.Hidden,
 				(!this._configs.IsOpen).toString()
 			);
 
 			Helper.Attribute.Set(
 				this._notificationContent,
-				Constants.AccessibilityAttribute.TabIndex,
+				Constants.A11YAttributes.TabIndex,
 				this._configs.IsOpen
-					? Constants.AccessibilityAttribute.States.TabIndexShow
-					: Constants.AccessibilityAttribute.States.TabIndexHidden
+					? Constants.A11YAttributes.States.TabIndexShow
+					: Constants.A11YAttributes.States.TabIndexHidden
 			);
 		}
 

@@ -3,7 +3,7 @@ namespace OSUIFramework.Constants {
 	/**
 	 * OutSystemsUI Accessibility attribues
 	 */
-	export const AccessibilityAttribute = {
+	export const A11YAttributes = {
 		Aria: {
 			Atomic: 'atomic',
 			Controls: 'aria-controls',

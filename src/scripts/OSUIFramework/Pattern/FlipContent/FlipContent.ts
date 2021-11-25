@@ -52,26 +52,26 @@ namespace OSUIFramework.Patterns.FlipContent {
 		private _setAccessibilityAttributes(): void {
 			Helper.Attribute.Set(
 				this._selfElem,
-				Constants.AccessibilityAttribute.TabIndex,
-				Constants.AccessibilityAttribute.States.TabIndexShow
+				Constants.A11YAttributes.TabIndex,
+				Constants.A11YAttributes.States.TabIndexShow
 			);
 
 			Helper.Attribute.Set(
 				this._selfElem,
-				Constants.AccessibilityAttribute.Role.AttrName,
-				Constants.AccessibilityAttribute.Role.Button
+				Constants.A11YAttributes.Role.AttrName,
+				Constants.A11YAttributes.Role.Button
 			);
 
 			Helper.Attribute.Set(
 				this._selfElem,
-				Constants.AccessibilityAttribute.AriaLive.AttrName,
-				Constants.AccessibilityAttribute.AriaLive.Polite
+				Constants.A11YAttributes.AriaLive.AttrName,
+				Constants.A11YAttributes.AriaLive.Polite
 			);
 
 			Helper.Attribute.Set(
 				this._selfElem,
-				Constants.AccessibilityAttribute.Aria.Atomic,
-				Constants.AccessibilityAttribute.States.True
+				Constants.A11YAttributes.Aria.Atomic,
+				Constants.A11YAttributes.States.True
 			);
 		}
 
@@ -125,10 +125,10 @@ namespace OSUIFramework.Patterns.FlipContent {
 				this._setAccessibilityAttributes();
 			} else {
 				this._selfElem.blur();
-				Helper.Attribute.Remove(this._selfElem, Constants.AccessibilityAttribute.AriaLive.AttrName);
-				Helper.Attribute.Remove(this._selfElem, Constants.AccessibilityAttribute.Aria.Atomic);
-				Helper.Attribute.Remove(this._selfElem, Constants.AccessibilityAttribute.Role.AttrName);
-				Helper.Attribute.Remove(this._selfElem, Constants.AccessibilityAttribute.TabIndex);
+				Helper.Attribute.Remove(this._selfElem, Constants.A11YAttributes.AriaLive.AttrName);
+				Helper.Attribute.Remove(this._selfElem, Constants.A11YAttributes.Aria.Atomic);
+				Helper.Attribute.Remove(this._selfElem, Constants.A11YAttributes.Role.AttrName);
+				Helper.Attribute.Remove(this._selfElem, Constants.A11YAttributes.TabIndex);
 			}
 		}
 
