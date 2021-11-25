@@ -9,9 +9,6 @@
 	height: var(--tabs-height);
 
 	&--is-vertical {
-		grid-auto-flow: row;
-		grid-template-columns: auto 1fr;
-
 		&.osui-tabs--is-right {
 			grid-auto-flow: dense;
 			grid-template-columns: 1fr auto;
@@ -49,6 +46,9 @@
 		}
 
 		&.osui-tabs--is-left {
+			grid-auto-flow: row;
+			grid-template-columns: auto 1fr;
+
 			.osui-tabs__header {
 				&-item {
 					justify-content: flex-start;
