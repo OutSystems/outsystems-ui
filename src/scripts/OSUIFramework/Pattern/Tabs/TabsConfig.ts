@@ -9,7 +9,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		public TabsVerticalPosition: GlobalTypes.Direction;
 
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-		constructor(config: any) {
+		constructor(config: JSON) {
 			super(config);
 		}
 	}

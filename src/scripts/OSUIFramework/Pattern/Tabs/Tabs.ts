@@ -27,7 +27,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _tabsHeaderItemsElementsArray: Patterns.TabsHeaderItem.ITabsHeaderItem[];
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		constructor(uniqueId: string, configs: any) {
+		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new TabsConfig(configs));
 
 			// Bind the handleKeypressEvent with 'this'

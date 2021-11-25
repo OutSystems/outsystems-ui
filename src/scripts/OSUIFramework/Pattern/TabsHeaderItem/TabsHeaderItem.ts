@@ -14,7 +14,7 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		private _tabsElem: Patterns.Tabs.ITabs;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		constructor(uniqueId: string, tabsElem: Patterns.Tabs.ITabs, configs: any) {
+		constructor(uniqueId: string, tabsElem: Patterns.Tabs.ITabs, configs: JSON) {
 			super(uniqueId, new TabsHeaderItemConfig(configs));
 
 			this._tabsElem = tabsElem;
