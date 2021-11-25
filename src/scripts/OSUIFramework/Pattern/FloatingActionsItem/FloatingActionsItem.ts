@@ -23,7 +23,7 @@ namespace OSUIFramework.Patterns.FloatingActionsItem {
 		}
 
 		public setTabindex(value: string): void {
-			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.TabIndex, value);
+			Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.TabIndex, value);
 		}
 	}
 }

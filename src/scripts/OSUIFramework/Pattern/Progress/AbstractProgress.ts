@@ -11,19 +11,19 @@ namespace OSUIFramework.Patterns.Progress {
 
 		// Set default Accessibility properties
 		private _setAccessibilityProps(): void {
-			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.TabIndex, '0');
+			Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.TabIndex, '0');
 
 			Helper.Attribute.Set(
 				this._selfElem,
-				Constants.AccessibilityAttribute.Role.AttrName,
-				Constants.AccessibilityAttribute.Role.Progressbar
+				Constants.A11YAttributes.Role.AttrName,
+				Constants.A11YAttributes.Role.Progressbar
 			);
 
-			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.Aria.Label, 'progress');
+			Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Label, 'progress');
 
-			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.Aria.ValueMin, '0');
+			Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.ValueMin, '0');
 
-			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.Aria.ValueMax, '100');
+			Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.ValueMax, '100');
 		}
 
 		// Update valuenow Accessibility property and CssVariable that will be used to set the progress value into pattern
