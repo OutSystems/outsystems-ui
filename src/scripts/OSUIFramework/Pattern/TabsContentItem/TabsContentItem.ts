@@ -26,11 +26,11 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		private _setAccessibilityAttributes(): void {
 			Helper.Attribute.Set(
 				this._selfElem,
-				Constants.AccessibilityAttribute.Role.AttrName,
-				Constants.AccessibilityAttribute.Role.TabPanel
+				Constants.A11YAttributes.Role.AttrName,
+				Constants.A11YAttributes.Role.TabPanel
 			);
-			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.TabIndex, '-1');
-			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.Aria.Hidden, true);
+			Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.TabIndex, '-1');
+			Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Hidden, true);
 		}
 
 		public build(): void {
@@ -54,19 +54,19 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 
 		public removeAsActiveElement(): void {
 			Helper.Style.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
-			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.TabIndex, '-1');
-			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.Aria.Hidden, true);
+			Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.TabIndex, '-1');
+			Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Hidden, true);
 			this._isActive = false;
 		}
 
 		public setAriaLabelledByAttribute(headerItemId: string): void {
-			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.Aria.Labelledby, headerItemId);
+			Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Labelledby, headerItemId);
 		}
 
 		public setAsActiveElement(): void {
 			Helper.Style.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
-			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.Aria.Hidden, false);
-			Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.TabIndex, '0');
+			Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Hidden, false);
+			Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.TabIndex, '0');
 			this._isActive = true;
 		}
 

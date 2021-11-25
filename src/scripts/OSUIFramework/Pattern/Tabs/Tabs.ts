@@ -118,8 +118,8 @@ namespace OSUIFramework.Patterns.Tabs {
 			// Set aria-role to TabsHeader
 			Helper.Attribute.Set(
 				this._tabsHeaderElement,
-				Constants.AccessibilityAttribute.Role.AttrName,
-				Constants.AccessibilityAttribute.Role.TabList
+				Constants.A11YAttributes.Role.AttrName,
+				Constants.A11YAttributes.Role.TabList
 			);
 
 			// Add event listener for arrow navigation
