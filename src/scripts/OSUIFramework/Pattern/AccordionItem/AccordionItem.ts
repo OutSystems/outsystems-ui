@@ -21,7 +21,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		//Stores the keyboard callback function
 		private _keyBoardCallback: Callbacks.Generic;
 		// Callback function to trigger the click event on the platform
-		private _onToggleCallback: Callbacks.OSAccordionItemToggleEvent;
+		private _onToggleCallback: Callbacks.Generic;
 		//Stores the transition end callback function
 		private _transitionEnd: Callbacks.Generic;
 
@@ -132,6 +132,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Expanded);
 				this._setAriaExpanded(true, false);
 			} else {
+				Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Collapsed);
 				Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.Open);
 				Helper.Style.RemoveClass(this._accordionContent, Enum.CssClass.Expanded);
 				this._setAriaExpanded(false, true);
@@ -174,7 +175,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				Helper.Style.SetStyleAttribute(this._accordionTitle, 'pointerEvents', '');
 
 				if (this._accordionContent.style.cssText.length === 0) {
-					this._accordionContent.removeAttribute('style');
+					Helper.Attribute.Remove(this._accordionContent, 'style');
 				}
 
 				this._accordionContent.removeEventListener(
