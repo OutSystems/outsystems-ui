@@ -56,7 +56,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		// Method that handles the Keypress Event, for tabs navigation using arrows
-		private _handleKeypressEvent(e): void {
+		private _handleKeypressEvent(e: KeyboardEvent): void {
 			let targetHeaderItemIndex;
 
 			switch (e.key) {
@@ -160,8 +160,8 @@ namespace OSUIFramework.Patterns.Tabs {
 
 		// Method to set the initial options on screen load
 		private _setInitialOptions(): void {
-			this.setTabsOrientation(this.configs.Orientation);
-			this.setTabsPosition(this._configs.Position);
+			this.setTabsOrientation(this.configs.TabsOrientation);
+			this.setTabsPosition(this._configs.TabsVerticalPosition);
 			this.setTabsHeight(this._configs.Height);
 			this.setTabsIsJustified(this._configs.IsJustified);
 			this.setScrollBehavior(this._configs.DisableAnimation);
@@ -393,18 +393,18 @@ namespace OSUIFramework.Patterns.Tabs {
 
 		// Method to set the Tabs Orientation
 		public setTabsOrientation(orientation: GlobalTypes.Orientation): void {
-			Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._configs.Orientation);
+			Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._configs.TabsOrientation);
 			Helper.Style.AddClass(this._selfElem, Enum.CssClasses.Modifier + orientation);
 
-			this._configs.Orientation = orientation;
+			this._configs.TabsOrientation = orientation;
 		}
 
 		// Method to set the Tabs Position
 		public setTabsPosition(position: GlobalTypes.Direction): void {
-			Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._configs.Position);
+			Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._configs.TabsVerticalPosition);
 			Helper.Style.AddClass(this._selfElem, Enum.CssClasses.Modifier + position);
 
-			this._configs.Position = position;
+			this._configs.TabsVerticalPosition = position;
 		}
 	}
 }

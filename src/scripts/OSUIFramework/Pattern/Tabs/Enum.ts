@@ -33,7 +33,7 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 		DisableAnimation = 'DisableAnimation',
 		Height = 'Height',
 		IsJustified = 'IsJustified',
-		Orientation = 'Orientation',
-		Position = 'Position',
+		Orientation = 'TabsOrientation',
+		Position = 'TabsVerticalPosition',
 	}
 }

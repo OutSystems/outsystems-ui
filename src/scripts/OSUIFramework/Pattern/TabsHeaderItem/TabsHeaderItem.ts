@@ -27,7 +27,7 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		}
 
 		private _handleClickEvent(): void {
-			if (Helper.Style.ContainsClass(this._selfElem, Tabs.Enum.CssClasses.ActiveTab)) {
+			if (this._isActive) {
 				return;
 			}
 
