@@ -148,7 +148,7 @@
 				border-left: 8px solid var(--color-neutral-9);
 				content: '';
 				height: 0;
-				left: 100%;
+				left: calc(100% - 1px);
 				position: absolute;
 				top: 50%;
 				transform: translateY(-50%);
@@ -167,7 +167,7 @@
 				content: '';
 				height: 0;
 				position: absolute;
-				right: 100%;
+				right: calc(100% - 1px);
 				top: 50%;
 				transform: translateY(-50%);
 				width: 0;

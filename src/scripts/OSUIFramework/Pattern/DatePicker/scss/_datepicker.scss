@@ -1,0 +1,41 @@
+/*! Patterns - Content - DatePicker */
+////
+/// @group Patterns-DatePicker
+/// Patterns - Content - DatePicker
+
+/*! Flatpickr Library Core Styles */
+/// Import Flatpickr library styles
+// @import '../../../../../../node_modules/flatpickr/dist/flatpickr.css';
+
+///
+// implement all the CSS styles for the Datepicker
+
+// Disable dateTime input pseudoElements
+// input[type="date"]::-moz-inner-spin-button,
+// input[type="date"]::-moz-calendar-picker-indicator,
+// input[type="date"]::-moz-datetime-edit-year-field,
+// input[type="date"]::-moz-datetime-edit-month-field,
+// input[type="date"]::-moz-datetime-edit-day-field,
+// input[type="date"]::-moz-datetime-edit-fields-wrapper {
+//     display: none;
+//     -moz-appearance: none;
+// }
+
+// Disable hack for firefox
+// span.input-date {
+// 	position: relative;
+// 	display: inline-block;
+// 	width: 100%;
+// }
+// span.input-date:before {
+// 	content: '';
+// 	position: absolute;
+// 	display: block;
+// 	background: var(--color-neutral-0);
+// 	left: 4px;
+// 	right: 4px;
+// 	top: 4px;
+// 	bottom: 4px;
+// 	pointer-events: none;
+// 	z-index: 1;
+// }

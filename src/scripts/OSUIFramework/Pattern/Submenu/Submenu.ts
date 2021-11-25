@@ -212,24 +212,20 @@ namespace OSUIFramework.Patterns.Submenu {
 
 			Helper.Attribute.Set(
 				this._submenuHeader,
-				Constants.AccessibilityAttribute.Role.AttrName,
-				Constants.AccessibilityAttribute.Role.MenuItem
+				Constants.A11YAttributes.Role.AttrName,
+				Constants.A11YAttributes.Role.MenuItem
 			);
 			Helper.Attribute.Set(
 				this._submenuHeader,
-				Constants.AccessibilityAttribute.TabIndex,
-				Constants.AccessibilityAttribute.States.TabIndexShow
+				Constants.A11YAttributes.TabIndex,
+				Constants.A11YAttributes.States.TabIndexShow
 			);
-			Helper.Attribute.Set(
-				this._submenuHeader,
-				Constants.AccessibilityAttribute.Aria.Controls,
-				this._submenuLinks.id
-			);
+			Helper.Attribute.Set(this._submenuHeader, Constants.A11YAttributes.Aria.Controls, this._submenuLinks.id);
 
 			Helper.Attribute.Set(
 				this._submenuItem,
-				Constants.AccessibilityAttribute.Role.AttrName,
-				Constants.AccessibilityAttribute.Role.Button
+				Constants.A11YAttributes.Role.AttrName,
+				Constants.A11YAttributes.Role.Button
 			);
 
 			this._updateAccessibilityProps();
@@ -269,25 +265,17 @@ namespace OSUIFramework.Patterns.Submenu {
 
 		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _updateAccessibilityProps(): void {
-			Helper.Attribute.Set(
-				this._submenuHeader,
-				Constants.AccessibilityAttribute.Aria.Expanded,
-				this._isOpen.toString()
-			);
+			Helper.Attribute.Set(this._submenuHeader, Constants.A11YAttributes.Aria.Expanded, this._isOpen.toString());
 
-			Helper.Attribute.Set(
-				this._submenuLinks,
-				Constants.AccessibilityAttribute.Aria.Hidden,
-				(!this._isOpen).toString()
-			);
+			Helper.Attribute.Set(this._submenuLinks, Constants.A11YAttributes.Aria.Hidden, (!this._isOpen).toString());
 
 			this._submenuAllLinks.forEach((item: HTMLElement) => {
 				Helper.Attribute.Set(
 					item,
-					Constants.AccessibilityAttribute.TabIndex,
+					Constants.A11YAttributes.TabIndex,
 					this._isOpen
-						? Constants.AccessibilityAttribute.States.TabIndexShow
-						: Constants.AccessibilityAttribute.States.TabIndexHidden
+						? Constants.A11YAttributes.States.TabIndexShow
+						: Constants.A11YAttributes.States.TabIndexHidden
 				);
 			});
 		}
