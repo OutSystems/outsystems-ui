@@ -6,10 +6,43 @@ namespace OSUIFramework.Patterns.Accordion {
 	export class Accordion extends AbstractPattern<AccordionConfig> implements IAccordion {
 		// Stores the Accordion Items of this Accordion
 		private _accordionItems: Map<string, OSUIFramework.Patterns.AccordionItem.IAccordionItem>;
+		//Stores the order in which the items are in the accordion
+		private _accordionItemsHTML: Array<HTMLElement>;
+		private _accordionItemsOrder: Array<string>;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new AccordionConfig(configs));
 			this._accordionItems = new Map<string, OSUIFramework.Patterns.AccordionItem.IAccordionItem>();
+			this._accordionItemsOrder = [];
+		}
+		// Method used to recalculate the position of items on the accordion
+		private _recalculateItemOrder(): void {
+			this._accordionItemsOrder = [];
+			this._accordionItemsHTML.forEach((item) => {
+				if (this._accordionItems.has(item.getAttribute('name')))
+					this._accordionItemsOrder.push(item.getAttribute('name'));
+			});
+
+			this._accordionItemsOrder.forEach((name, index) => {
+				const AccordionItem = this._accordionItems.get(name);
+				if (AccordionItem) {
+					AccordionItem.removeItemAsFirstItem();
+					AccordionItem.removeItemAsLastItem();
+				}
+			});
+			const firstAccordionItem = this._accordionItems.get(this._accordionItemsOrder[0]);
+			const lastAccordionItem = this._accordionItems.get(
+				this._accordionItemsOrder[this._accordionItemsOrder.length - 1]
+			);
+			if (firstAccordionItem) firstAccordionItem.setItemAsFirstItem();
+			if (lastAccordionItem) lastAccordionItem.setItemAsLastItem();
+		}
+
+		private _setUpAccordion(): void {
+			this._accordionItemsHTML = <HTMLElement[]>[
+				...this._selfElem.querySelectorAll(Constants.Dot + Enum.CssClass.PatternItem),
+			];
+			this._recalculateItemOrder();
 		}
 
 		public addAccordionItem(uniqueId: string, accordionItem: AccordionItem.IAccordionItem): void {
@@ -20,6 +53,18 @@ namespace OSUIFramework.Patterns.Accordion {
 			if (accordionItem.isExpanded) {
 				this.triggerAccordionItemClose(accordionItem.uniqueId);
 			}
+
+			// In case the accordion is built, it means we're adding an item dynamically, after it's first setup.
+			if (this.isBuilt) {
+				//Recalculate positions in the array.
+				this._setUpAccordion();
+			}
+		}
+
+		public build(): void {
+			super.build();
+			this._setUpAccordion();
+			super.finishBuild();
 		}
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types

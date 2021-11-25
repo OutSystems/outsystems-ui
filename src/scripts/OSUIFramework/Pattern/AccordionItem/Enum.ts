@@ -25,6 +25,8 @@ namespace OSUIFramework.Patterns.AccordionItem.Enum {
 		Collapsed = 'osui-accordion-item__content--is-collapsed',
 		Animation = 'osui-accordion-item__content--is-animating',
 		Disabled = 'osui-accordion-item--is-disabled',
+		FirstItem = 'osui-accordion-item--is-first-item',
+		LastItem = 'osui-accordion-item--is-last-item',
 		DataExpanded = 'data-expanded',
 	}
 }

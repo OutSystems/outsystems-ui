@@ -11,6 +11,7 @@ namespace OSUIFramework.Patterns.Accordion.Enum {
 	 * Accordion Enum for CSS Classes
 	 */
 	export enum CssClass {
-		Pattern = 'osui-accordion', //accordion
+		Pattern = 'osui-accordion',
+		PatternItem = 'osui-accordion-item',
 	}
 }

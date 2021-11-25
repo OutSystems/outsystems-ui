@@ -5,21 +5,21 @@
 
 ///
 .osui-accordion {
-	[data-block*='AccordionItem'] {
-		&:first-of-type .osui-accordion-item {
+	& &-item {
+		border-radius: var(--border-size-none);
+		border-bottom-width: var(--border-size-none);
+	}
+
+	.osui-accordion-item {
+		&--is-first-item {
 			border-radius: var(--border-radius-soft) var(--border-radius-soft) var(--border-radius-none)
 				var(--border-radius-none);
 		}
 
-		&:last-of-type .osui-accordion-item {
+		&--is-last-item {
 			border-bottom-width: var(--border-size-s);
 			border-radius: var(--border-radius-none) var(--border-radius-none) var(--border-radius-soft)
 				var(--border-radius-soft);
 		}
-	}
-
-	& &-item {
-		border-radius: var(--border-size-none);
-		border-bottom-width: var(--border-size-none);
 	}
 }
