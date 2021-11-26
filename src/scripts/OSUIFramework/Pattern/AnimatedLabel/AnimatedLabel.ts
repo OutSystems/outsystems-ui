@@ -58,15 +58,21 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		 * @param {boolean} isFocus
 		 * @memberof AnimatedLabel
 		 */
-		private _inputStateToggle(isFocus: boolean): void {
-			//if the input is empty, and there's a change of state, then we want to do something!
-			if (this._inputElement.value === '' && this._isLabelFocus !== isFocus) {
-				if (isFocus) {
+		private _inputStateToggle(isFocus: boolean | undefined): void {
+			const inputHasText = this._inputElement.value !== '';
+
+			//let's check if we have something to do. Is the pattern built or (it's building) and we have text in the input?
+			if (this.isBuilt || inputHasText) {
+				//(Does the input have text or is it Focus) and it's currently inactive?
+				if ((inputHasText || isFocus) && this._isLabelFocus === false) {
+					//let's mark as active!
 					Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClasses.IsActive);
-				} else if (this.isBuilt) {
+					this._isLabelFocus = true;
+					//is the input empty and it's active and it's blur event
+				} else if (inputHasText === false && this._isLabelFocus && isFocus === false) {
 					Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClasses.IsActive);
+					this._isLabelFocus = false;
 				}
-				this._isLabelFocus = isFocus;
 			}
 		}
 
@@ -99,7 +105,7 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 
 			// Check if the input exist
 			if (this._inputElement) {
-				this._inputStateToggle(this._inputElement.value !== '');
+				this._inputStateToggle(undefined);
 			} else {
 				throw new Error(Enum.Messages.InputNotFound);
 			}
@@ -175,7 +181,7 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		public updateOnRender(): void {
 			// Do not run this instead the pattern is totally built
 			if (this.isBuilt) {
-				this._inputStateToggle(this._inputElement.value !== '');
+				this._inputStateToggle(undefined);
 			}
 		}
 	}
