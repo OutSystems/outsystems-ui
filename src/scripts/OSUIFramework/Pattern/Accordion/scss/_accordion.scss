@@ -8,9 +8,7 @@
 	& &-item {
 		border-radius: var(--border-size-none);
 		border-bottom-width: var(--border-size-none);
-	}
 
-	.osui-accordion-item {
 		&--is-first-item {
 			border-radius: var(--border-radius-soft) var(--border-radius-soft) var(--border-radius-none)
 				var(--border-radius-none);
