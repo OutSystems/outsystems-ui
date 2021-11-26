@@ -160,13 +160,54 @@ namespace OSUIFramework.Patterns.Tabs {
 
 		// Method to set the initial options on screen load
 		private _setInitialOptions(): void {
-			this.setTabsOrientation(this.configs.TabsOrientation);
-			this.setTabsPosition(this._configs.TabsVerticalPosition);
-			this.setTabsHeight(this._configs.Height);
-			this.setTabsIsJustified(this._configs.IsJustified);
-			this.setScrollBehavior(this._configs.DisableAnimation);
+			this._setTabsOrientation(this.configs.TabsOrientation);
+			this._setTabsPosition(this._configs.TabsVerticalPosition);
+			this._setTabsHeight(this._configs.Height);
+			this._setTabsIsJustified(this._configs.IsJustified);
+			this._setScrollBehavior(this._configs.DisableAnimation);
 			// Setting as false, to avoid triigering changeTab event on screen load
 			this.changeTab(this.configs.ActiveTab, undefined, false);
+		}
+
+		// Method to set the scroll behavior, based on the disabledAnimation config
+		private _setScrollBehavior(disableAnimation: boolean): void {
+			// If is true, then scroll should instant, otherwise is smooth
+			this._scrollBehavior = disableAnimation ? Enum.ScrollBehavior.Instant : Enum.ScrollBehavior.Smooth;
+			this._configs.DisableAnimation = disableAnimation;
+		}
+
+		// Method to set the Tabs Height
+		private _setTabsHeight(height: string): void {
+			// Create css variable
+			Helper.Style.SetStyleAttribute(this._selfElem, Enum.Attributes.TabsHeight, height);
+			this.configs.Height = height;
+		}
+
+		// Method to set if the Tabs are justified
+		private _setTabsIsJustified(isJustified: boolean): void {
+			if (isJustified) {
+				Helper.Style.AddClass(this._selfElem, Enum.CssClasses.IsJustified);
+			} else {
+				Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.IsJustified);
+			}
+
+			this._configs.IsJustified = isJustified;
+		}
+
+		// Method to set the Tabs Orientation
+		private _setTabsOrientation(orientation: GlobalTypes.Orientation): void {
+			Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._configs.TabsOrientation);
+			Helper.Style.AddClass(this._selfElem, Enum.CssClasses.Modifier + orientation);
+
+			this._configs.TabsOrientation = orientation;
+		}
+
+		// Method to set the Tabs Position
+		private _setTabsPosition(position: GlobalTypes.Direction): void {
+			Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._configs.TabsVerticalPosition);
+			Helper.Style.AddClass(this._selfElem, Enum.CssClasses.Modifier + position);
+
+			this._configs.TabsVerticalPosition = position;
 		}
 
 		// Method that triggers the OnTabsChange event
@@ -268,19 +309,19 @@ namespace OSUIFramework.Patterns.Tabs {
 					this.changeTab(propertyValue, undefined, true);
 					break;
 				case Enum.Properties.DisableAnimation:
-					this.setScrollBehavior(propertyValue);
+					this._setScrollBehavior(propertyValue);
 					break;
 				case Enum.Properties.Height:
-					this.setTabsHeight(propertyValue);
+					this._setTabsHeight(propertyValue);
 					break;
 				case Enum.Properties.Orientation:
-					this.setTabsOrientation(propertyValue);
+					this._setTabsOrientation(propertyValue);
 					break;
 				case Enum.Properties.Position:
-					this.setTabsPosition(propertyValue);
+					this._setTabsPosition(propertyValue);
 					break;
 				case Enum.Properties.IsJustified:
-					this.setTabsIsJustified(propertyValue);
+					this._setTabsIsJustified(propertyValue);
 					break;
 				default:
 					super.changeProperty(propertyName, propertyValue);
@@ -364,47 +405,6 @@ namespace OSUIFramework.Patterns.Tabs {
 			if (isActiveItem && this.isBuilt) {
 				Helper.AsyncInvocation(this.changeTab.bind(this), this._configs.ActiveTab, undefined, false);
 			}
-		}
-
-		// Method to set the scroll behavior, based on the disabledAnimation config
-		public setScrollBehavior(disableAnimation: boolean): void {
-			// If is true, then scroll should instant, otherwise is smooth
-			this._scrollBehavior = disableAnimation ? Enum.ScrollBehavior.Instant : Enum.ScrollBehavior.Smooth;
-			this._configs.DisableAnimation = disableAnimation;
-		}
-
-		// Method to set the Tabs Height
-		public setTabsHeight(height: string): void {
-			// Create css variable
-			Helper.Style.SetStyleAttribute(this._selfElem, Enum.Attributes.TabsHeight, height);
-			this.configs.Height = height;
-		}
-
-		// Method to set if the Tabs are justified
-		public setTabsIsJustified(isJustified: boolean): void {
-			if (isJustified) {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClasses.IsJustified);
-			} else {
-				Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.IsJustified);
-			}
-
-			this._configs.IsJustified = isJustified;
-		}
-
-		// Method to set the Tabs Orientation
-		public setTabsOrientation(orientation: GlobalTypes.Orientation): void {
-			Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._configs.TabsOrientation);
-			Helper.Style.AddClass(this._selfElem, Enum.CssClasses.Modifier + orientation);
-
-			this._configs.TabsOrientation = orientation;
-		}
-
-		// Method to set the Tabs Position
-		public setTabsPosition(position: GlobalTypes.Direction): void {
-			Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._configs.TabsVerticalPosition);
-			Helper.Style.AddClass(this._selfElem, Enum.CssClasses.Modifier + position);
-
-			this._configs.TabsVerticalPosition = position;
 		}
 	}
 }
