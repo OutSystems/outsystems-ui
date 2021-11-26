@@ -51,6 +51,28 @@ namespace Providers.Splide {
 			this._onResizeWidth = this._setCarouselWidth.bind(this);
 		}
 
+		// Method to adjust the splide list to the correct offset width
+		private _adjustSplideList() {
+			// Get the splide list element after render
+			const SplideList = document.querySelector(
+				OSUIFramework.Constants.Dot + Enum.CssClass.SplideList
+			) as HTMLElement;
+
+			const computedStyle = window.getComputedStyle(SplideList);
+			// Select the value of the translateX property
+			let transform = new WebKitCSSMatrix(computedStyle.transform).m41;
+
+			// Splide list transform property must be adjusted by 1 pixel when the images offset is decimal leaving extra space in the carousel
+			if (transform % this._splideTrack.offsetWidth !== 0) {
+				transform -= 1;
+				OSUIFramework.Helper.Style.SetStyleAttribute(
+					SplideList,
+					OSUIFramework.Patterns.Carousel.Enum.Properties.Transform,
+					'translateX(' + transform + OSUIFramework.GlobalEnum.Units.Pixel + ')'
+				);
+			}
+		}
+
 		// Add event listener to update the correct width of the pattern
 		private _adjustWidthOnResize(): void {
 			window.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Resize, this._onResizeWidth);
@@ -87,6 +109,9 @@ namespace Providers.Splide {
 
 			// Set the OnSlideMoved event
 			this._setOnSlideMovedEvent();
+
+			// Adjust carousel width
+			this._setCarouselWidth(false);
 		}
 
 		// Method to toggle the blockRender status
@@ -135,12 +160,18 @@ namespace Providers.Splide {
 		}
 
 		// Ensure that the splide track maintains the correct width
-		private _setCarouselWidth(): void {
-			OSUIFramework.Helper.Style.SetStyleAttribute(
-				this._splideTrack,
-				OSUIFramework.Patterns.Carousel.Enum.CssVariables.CarouselWidth,
-				this._selfElem.offsetWidth + OSUIFramework.GlobalEnum.Units.Pixel
-			);
+		private _setCarouselWidth(splideAdjusted = true): void {
+			OSUIFramework.Helper.AsyncInvocation(() => {
+				OSUIFramework.Helper.Style.SetStyleAttribute(
+					this._splideTrack,
+					OSUIFramework.Patterns.Carousel.Enum.CssVariables.CarouselWidth,
+					this._selfElem.offsetWidth + OSUIFramework.GlobalEnum.Units.Pixel
+				);
+				if (!splideAdjusted) {
+					// splide should be adjusted when rendering the splide component
+					this._adjustSplideList();
+				}
+			});
 		}
 
 		// Set the html references that will be used to manage the cssClasses and atribute properties
