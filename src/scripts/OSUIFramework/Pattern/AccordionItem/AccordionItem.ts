@@ -323,19 +323,5 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		public registerCallback(callback: Callbacks.OSGeneric): void {
 			this._onToggleCallback = callback;
 		}
-
-		public removeItemAsFirstItem(): void {
-			Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.FirstItem);
-		}
-		public removeItemAsLastItem(): void {
-			Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.LastItem);
-		}
-
-		public setItemAsFirstItem(): void {
-			Helper.Style.AddClass(this._selfElem, Enum.CssClass.FirstItem);
-		}
-		public setItemAsLastItem(): void {
-			Helper.Style.AddClass(this._selfElem, Enum.CssClass.LastItem);
-		}
 	}
 }

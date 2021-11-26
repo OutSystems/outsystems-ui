@@ -15,27 +15,22 @@ namespace OSUIFramework.Patterns.Accordion {
 			this._accordionItems = new Map<string, OSUIFramework.Patterns.AccordionItem.IAccordionItem>();
 			this._accordionItemsOrder = [];
 		}
+
 		// Method used to recalculate the position of items on the accordion
 		private _recalculateItemOrder(): void {
-			this._accordionItemsOrder = [];
-			this._accordionItemsHTML.forEach((item) => {
-				if (this._accordionItems.has(item.getAttribute('name')))
-					this._accordionItemsOrder.push(item.getAttribute('name'));
-			});
+			let firstAccordionItem = this._selfElem.querySelector(
+				Constants.Dot + Enum.CssClass.FirstItem
+			) as HTMLElement;
+			let lastAccordionItem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.LastItem) as HTMLElement;
+			if (firstAccordionItem) Helper.Style.RemoveClass(firstAccordionItem, Enum.CssClass.FirstItem);
+			if (lastAccordionItem) Helper.Style.RemoveClass(lastAccordionItem, Enum.CssClass.LastItem);
 
-			this._accordionItemsOrder.forEach((name, index) => {
-				const AccordionItem = this._accordionItems.get(name);
-				if (AccordionItem) {
-					AccordionItem.removeItemAsFirstItem();
-					AccordionItem.removeItemAsLastItem();
-				}
-			});
-			const firstAccordionItem = this._accordionItems.get(this._accordionItemsOrder[0]);
-			const lastAccordionItem = this._accordionItems.get(
-				this._accordionItemsOrder[this._accordionItemsOrder.length - 1]
-			);
-			if (firstAccordionItem) firstAccordionItem.setItemAsFirstItem();
-			if (lastAccordionItem) lastAccordionItem.setItemAsLastItem();
+			// Accordion > OSBlockWidget(Accordion Item) > AccordionItem
+			firstAccordionItem = this._selfElem.firstChild.firstChild as HTMLElement;
+			lastAccordionItem = this._selfElem.lastChild.firstChild as HTMLElement;
+
+			Helper.Style.AddClass(firstAccordionItem, Enum.CssClass.FirstItem);
+			Helper.Style.AddClass(lastAccordionItem, Enum.CssClass.LastItem);
 		}
 
 		private _setUpAccordion(): void {

@@ -13,5 +13,7 @@ namespace OSUIFramework.Patterns.Accordion.Enum {
 	export enum CssClass {
 		Pattern = 'osui-accordion',
 		PatternItem = 'osui-accordion-item',
+		FirstItem = 'osui-accordion-item--is-first-item',
+		LastItem = 'osui-accordion-item--is-last-item',
 	}
 }
