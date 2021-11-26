@@ -5,21 +5,14 @@ namespace OSUIFramework.Patterns.Submenu {
 	 */
 	export class Submenu extends AbstractPattern<SubmenuConfig> implements ISubmenu {
 		// Store the pattern locals
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventClick: any;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventClickLinks: any;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventFocus: any;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventKeypress: any;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _globalEventBody: any;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _globalEventOpen: any;
+		private _eventClick: Callbacks.Generic;
+		private _eventClickLinks: Callbacks.Generic;
+		private _eventFocus: Callbacks.Generic;
+		private _eventKeypress: Callbacks.Generic;
+		private _globalEventBody: Callbacks.Generic;
+		private _globalEventOpen: Callbacks.Generic;
 		private _hasActiveLinks = false;
 		private _hasElements = false;
-		private _isIos = false;
 		private _isOpen = false;
 		private _submenuActiveLinksElement: NodeList;
 		private _submenuAllLinksElement: HTMLAnchorElement[];
@@ -43,9 +36,6 @@ namespace OSUIFramework.Patterns.Submenu {
 
 		// Add Pattern Events
 		private _addEvents(): void {
-			// Set variables based on device detection classes
-			this._isIos = !!document.querySelector(Constants.Dot + GlobalEnum.MobileOS.IOS);
-
 			// Set event type based on device
 			this._submenuEventType = OSUIFramework.Helper.DeviceInfo.IsTouch
 				? GlobalEnum.HTMLEvent.TouchStart
@@ -56,7 +46,7 @@ namespace OSUIFramework.Patterns.Submenu {
 				this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
 			} else {
 				// Add event to force focus element when a user tap in an empty submenu on a iOS device
-				if (this._isIos) {
+				if (Helper.DeviceInfo.IsIos) {
 					this._submenuHeaderElement.addEventListener(this._submenuEventType, this._eventFocus);
 				}
 			}
@@ -156,13 +146,13 @@ namespace OSUIFramework.Patterns.Submenu {
 				this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
 			} else {
 				// Remove event to force focus element when a user tap in an empty submenu on a iOS device
-				if (this._isIos) {
+				if (Helper.DeviceInfo.IsIos) {
 					this._submenuHeaderElement.removeEventListener(this._submenuEventType, this._eventFocus);
 				}
 			}
 
 			// Remove event only if is iOS
-			if (this._isIos) {
+			if (Helper.DeviceInfo.IsIos) {
 				this._submenuLinksElement.removeEventListener(this._submenuEventType, this._eventClickLinks);
 			}
 
@@ -277,7 +267,7 @@ namespace OSUIFramework.Patterns.Submenu {
 			this._updateA11yProperties();
 
 			// Remove event only if is iOS
-			if (this._isIos) {
+			if (Helper.DeviceInfo.IsIos) {
 				this._submenuLinksElement.removeEventListener(this._submenuEventType, this._eventClickLinks);
 			}
 
@@ -305,7 +295,7 @@ namespace OSUIFramework.Patterns.Submenu {
 			this._updateA11yProperties();
 
 			// Add event only if is iOS
-			if (this._isIos) {
+			if (Helper.DeviceInfo.IsIos) {
 				this._submenuLinksElement.addEventListener(this._submenuEventType, this._eventClickLinks);
 			}
 
