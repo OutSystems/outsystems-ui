@@ -5,87 +5,78 @@ namespace OSUIFramework.Patterns.Submenu {
 	 */
 	export class Submenu extends AbstractPattern<SubmenuConfig> implements ISubmenu {
 		// Store the pattern locals
-		private _allSubmenus: NodeList;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventOnSubmenu: any;
+		private _eventClick: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventOnSubmenuClick: any;
+		private _eventClickLinks: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventOnSubmenuFocus: any;
+		private _eventFocus: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventOnSubmenuKeypress: any;
+		private _eventKeypress: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventOnSubmenuLinksClick: any;
+		private _globalEventBody: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _globalEventOnBodyClick: any;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _globalEventOnSubmenuOpen: any;
+		private _globalEventOpen: any;
 		private _hasActiveLinks = false;
 		private _hasElements = false;
 		private _isIos = false;
-		private _isMobile = false;
 		private _isOpen = false;
-		private _submenuActiveLinks: NodeList;
-		private _submenuAllLinks: HTMLAnchorElement[];
-		private _submenuElementClicked: HTMLElement;
-		private _submenuHeader: HTMLElement;
-		private _submenuItem: HTMLElement;
-		private _submenuLinks: HTMLElement;
+		private _submenuActiveLinksElement: NodeList;
+		private _submenuAllLinksElement: HTMLAnchorElement[];
+		private _submenuClickedElement: HTMLElement;
+		private _submenuEventType: GlobalEnum.HTMLEvent;
+		private _submenuHeaderElement: HTMLElement;
+		private _submenuItemElement: HTMLElement;
+		private _submenuLinksElement: HTMLElement;
 
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new SubmenuConfig(configs));
 
-			this._eventOnSubmenuClick = this._onSubmenuClick.bind(this);
-			this._eventOnSubmenuFocus = this._onSubmenuFocus.bind(this);
-			this._eventOnSubmenuLinksClick = this._onSubmenuLinksClick.bind(this);
-			this._eventOnSubmenuKeypress = this._onSubmenuKeypress.bind(this);
-			this._globalEventOnSubmenuOpen = this._onSubmenuOpenEvent.bind(this);
-			this._globalEventOnBodyClick = this._onBodyClick.bind(this);
+			this._eventClick = this._clickCallback.bind(this);
+			this._eventClickLinks = this._clickLinksCallback.bind(this);
+			this._eventFocus = this._focusCallback.bind(this);
+			this._eventKeypress = this._keypressCallback.bind(this);
+			this._globalEventOpen = this._openCallback.bind(this);
+			this._globalEventBody = this._bodyCallback.bind(this);
 		}
 
 		// Add Pattern Events
 		private _addEvents(): void {
 			// Set variables based on device detection classes
 			this._isIos = !!document.querySelector(Constants.Dot + GlobalEnum.MobileOS.IOS);
-			this._isMobile = !!(
-				document.querySelector(Constants.Dot + GlobalEnum.MobileOS.Android) ||
-				document.querySelector(Constants.Dot + GlobalEnum.MobileOS.IOS)
-			);
 
 			// Set event type based on device
-			if (this._isMobile) {
-				this._eventOnSubmenu = GlobalEnum.HTMLEvent.TouchStart;
-			} else {
-				this._eventOnSubmenu = GlobalEnum.HTMLEvent.Click;
-			}
+			this._submenuEventType = OSUIFramework.Helper.DeviceInfo.IsTouch
+				? GlobalEnum.HTMLEvent.TouchStart
+				: GlobalEnum.HTMLEvent.Click;
 
 			if (this._hasElements) {
-				this._submenuHeader.addEventListener(this._eventOnSubmenu, this._eventOnSubmenuClick);
-				this._submenuHeader.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnSubmenuKeypress);
+				this._submenuHeaderElement.addEventListener(this._submenuEventType, this._eventClick);
+				this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
 			} else {
 				// Add event to force focus element when a user tap in an empty submenu on a iOS device
 				if (this._isIos) {
-					this._submenuHeader.addEventListener(this._eventOnSubmenu, this._eventOnSubmenuFocus);
+					this._submenuHeaderElement.addEventListener(this._submenuEventType, this._eventFocus);
 				}
 			}
 
 			OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
 				OSUIFramework.Event.Type.SubmenuOpen,
-				this._globalEventOnSubmenuOpen
+				this._globalEventOpen
 			);
 
 			// For support reasons, the use case of adding the open class by ExtendedClass on submenu we will add the handler to close all on body click
 			if (Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen)) {
 				OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
 					OSUIFramework.Event.Type.BodyOnClick,
-					this._globalEventOnBodyClick
+					this._globalEventBody
 				);
 			}
 		}
 
 		// Close submenu, when BodyOnCLick event is triggered
-		private _onBodyClick(args: string, e: MouseEvent): void {
+		private _bodyCallback(args: string, e: MouseEvent): void {
 			if (!this._selfElem.contains(e.target as HTMLElement)) {
 				if (Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen) && !this._isOpen) {
 					Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
@@ -100,19 +91,27 @@ namespace OSUIFramework.Patterns.Submenu {
 		}
 
 		// Trigger the submenu at toggle behaviour
-		private _onSubmenuClick(e: MouseEvent): void {
-			this._onSubmenuToggle();
+		private _clickCallback(e: MouseEvent): void {
+			this._toggleSubmenu();
 			e.stopPropagation();
 		}
 
+		// This event was created to fix the issue on Native builds that can't focus on element clicked.
+		private _clickLinksCallback(e: MouseEvent): void {
+			this._submenuClickedElement = e.target as HTMLElement;
+			this._submenuClickedElement.focus();
+
+			e.preventDefault();
+		}
+
 		// Trigger the submenu at toggle behaviour
-		private _onSubmenuFocus(e: MouseEvent): void {
-			this._submenuHeader.focus();
+		private _focusCallback(e: MouseEvent): void {
+			this._submenuHeaderElement.focus();
 			e.stopPropagation();
 		}
 
 		// Call methods to open or close, based ok e.key and behavior applied
-		private _onSubmenuKeypress(e: KeyboardEvent): void {
+		private _keypressCallback(e: KeyboardEvent): void {
 			const _clickedElem: HTMLElement = e.target as HTMLElement;
 			const _closestElem: HTMLElement = _clickedElem.closest(Constants.Dot + Enum.CssClass.Pattern);
 			const _isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
@@ -122,17 +121,17 @@ namespace OSUIFramework.Patterns.Submenu {
 
 			//Open the submenu
 			if (_isEnterPressed) {
-				this._onSubmenuToggle();
+				this._toggleSubmenu();
 			}
 			// Close the submenu when pressing Esc
 			if (_isEscapedPressed && this._isOpen) {
 				this.close();
 
-				this._submenuHeader.focus();
+				this._submenuHeaderElement.focus();
 			}
 
 			// If navigate to outside of Submenu, close it
-			if (_isShiftPressed && _isTabPressed && _clickedElem === this._submenuHeader) {
+			if (_isShiftPressed && _isTabPressed && _clickedElem === this._submenuHeaderElement) {
 				if (_closestElem === this._selfElem && this._isOpen) {
 					this.close();
 				}
@@ -141,16 +140,8 @@ namespace OSUIFramework.Patterns.Submenu {
 			e.stopPropagation();
 		}
 
-		// This event was created to fix the issue on Native builds that can't focus on element clicked.
-		private _onSubmenuLinksClick(e: MouseEvent): void {
-			this._submenuElementClicked = e.target as HTMLElement;
-			this._submenuElementClicked.focus();
-
-			e.preventDefault();
-		}
-
 		// Prevent close submenu based on a uniqueID validation, when his event is triggered
-		private _onSubmenuOpenEvent(element: string): void {
+		private _openCallback(element: string): void {
 			if (element !== this.uniqueId) {
 				if (this._isOpen) {
 					this.close();
@@ -158,8 +149,85 @@ namespace OSUIFramework.Patterns.Submenu {
 			}
 		}
 
+		// Remove all the assigned Events
+		private _removeEvents(): void {
+			if (this._hasElements) {
+				this._submenuHeaderElement.removeEventListener(this._submenuEventType, this._eventClick);
+				this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
+			} else {
+				// Remove event to force focus element when a user tap in an empty submenu on a iOS device
+				if (this._isIos) {
+					this._submenuHeaderElement.removeEventListener(this._submenuEventType, this._eventFocus);
+				}
+			}
+
+			// Remove event only if is iOS
+			if (this._isIos) {
+				this._submenuLinksElement.removeEventListener(this._submenuEventType, this._eventClickLinks);
+			}
+
+			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
+				OSUIFramework.Event.Type.SubmenuOpen,
+				this._globalEventOpen
+			);
+
+			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars
+				OSUIFramework.Event.Type.BodyOnClick,
+				this._globalEventBody
+			);
+		}
+
+		// Add the Accessibility Attributes values
+		private _setA11yProperties(): void {
+			if (Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen)) {
+				this._isOpen = true;
+			}
+
+			Helper.A11Y.RoleMenuItem(this._submenuHeaderElement);
+			Helper.A11Y.TabIndexTrue(this._submenuHeaderElement);
+			Helper.A11Y.AriaControls(this._submenuHeaderElement, this._submenuLinksElement.id);
+			Helper.A11Y.RoleButton(this._submenuItemElement);
+
+			this._updateA11yProperties();
+		}
+
+		// Update info based on htmlContent
+		private _setElements(): void {
+			this._submenuHeaderElement = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternHeader);
+			this._submenuItemElement = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternItem);
+			this._submenuLinksElement = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternLinks);
+			this._submenuAllLinksElement = [...this._submenuLinksElement.querySelectorAll(GlobalEnum.HTMLElement.Link)];
+			this._submenuActiveLinksElement = this._submenuLinksElement.querySelectorAll(
+				Constants.Dot + Enum.CssClass.PatternActive
+			);
+
+			// Check if submenu has childs
+			if (this._submenuAllLinksElement.length > 0) {
+				this._hasElements = true;
+			}
+
+			// Check if submenu contains elements with active class
+			if (this._submenuActiveLinksElement.length > 0) {
+				this._hasActiveLinks = true;
+			}
+		}
+
+		// Set the cssClasses that should be assigned to the element on it's initialization
+		private _setInitialStates(): void {
+			if (this._hasActiveLinks) {
+				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternActive);
+			}
+
+			if (this._hasElements) {
+				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternIsDropdown);
+			} else {
+				Helper.Style.AddClass(this._submenuLinksElement, Enum.CssClass.PatternIsHidden);
+			}
+		}
+
 		// Trigger the submenu behavior based on visibility
-		private _onSubmenuToggle(): void {
+		private _toggleSubmenu(): void {
 			if (this._isOpen) {
 				this.close();
 			} else {
@@ -175,129 +243,29 @@ namespace OSUIFramework.Patterns.Submenu {
 			}
 		}
 
-		// Remove all the assigned Events
-		private _removeEvents(): void {
-			if (this._hasElements) {
-				this._submenuHeader.removeEventListener(this._eventOnSubmenu, this._eventOnSubmenuClick);
-				this._submenuHeader.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnSubmenuKeypress);
-			} else {
-				// Remove event to force focus element when a user tap in an empty submenu on a iOS device
-				if (this._isIos) {
-					this._submenuHeader.removeEventListener(this._eventOnSubmenu, this._eventOnSubmenuFocus);
-				}
-			}
-
-			// Remove event only if is iOS
-			if (this._isIos) {
-				this._submenuLinks.removeEventListener(this._eventOnSubmenu, this._eventOnSubmenuLinksClick);
-			}
-
-			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
-				OSUIFramework.Event.Type.SubmenuOpen,
-				this._globalEventOnSubmenuOpen
-			);
-
-			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
-				// eslint-disable-next-line @typescript-eslint/no-unused-vars
-				OSUIFramework.Event.Type.BodyOnClick,
-				this._globalEventOnBodyClick
-			);
-		}
-
-		// Add the Accessibility Attributes values
-		private _setAccessibilityProps(): void {
-			if (Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen)) {
-				this._isOpen = true;
-			}
-
-			Helper.Attribute.Set(
-				this._submenuHeader,
-				Constants.A11YAttributes.Role.AttrName,
-				Constants.A11YAttributes.Role.MenuItem
-			);
-			Helper.Attribute.Set(
-				this._submenuHeader,
-				Constants.A11YAttributes.TabIndex,
-				Constants.A11YAttributes.States.TabIndexShow
-			);
-			Helper.Attribute.Set(this._submenuHeader, Constants.A11YAttributes.Aria.Controls, this._submenuLinks.id);
-
-			Helper.Attribute.Set(
-				this._submenuItem,
-				Constants.A11YAttributes.Role.AttrName,
-				Constants.A11YAttributes.Role.Button
-			);
-
-			this._updateAccessibilityProps();
-		}
-
-		// Update info based on htmlContent
-		private _setHtmlElements(): void {
-			this._submenuHeader = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternHeader);
-			this._submenuItem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternItem);
-			this._submenuLinks = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternLinks);
-			this._submenuAllLinks = [...this._submenuLinks.querySelectorAll(GlobalEnum.HTMLElement.Link)];
-			this._submenuActiveLinks = this._submenuLinks.querySelectorAll(Constants.Dot + Enum.CssClass.PatternActive);
-
-			// Check if submenu has childs
-			if (this._submenuAllLinks.length > 0) {
-				this._hasElements = true;
-			}
-
-			// Check if submenu contains elements with active class
-			if (this._submenuActiveLinks.length > 0) {
-				this._hasActiveLinks = true;
-			}
-		}
-
 		// Set the cssClasses that should be assigned to the element on it's initialization
-		private _setInitialCssClasses(): void {
-			if (this._hasActiveLinks) {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternActive);
-			}
+		private _updateA11yProperties(): void {
+			Helper.A11Y.AriaExpanded(this._submenuHeaderElement, this._isOpen.toString());
+			Helper.A11Y.AriaHidden(this._submenuLinksElement, (!this._isOpen).toString());
 
-			if (this._hasElements) {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternIsDropdown);
-			} else {
-				Helper.Style.AddClass(this._submenuLinks, Enum.CssClass.PatternIsHidden);
-			}
-		}
-
-		// Set the cssClasses that should be assigned to the element on it's initialization
-		private _updateAccessibilityProps(): void {
-			Helper.Attribute.Set(this._submenuHeader, Constants.A11YAttributes.Aria.Expanded, this._isOpen.toString());
-
-			Helper.Attribute.Set(this._submenuLinks, Constants.A11YAttributes.Aria.Hidden, (!this._isOpen).toString());
-
-			this._submenuAllLinks.forEach((item: HTMLElement) => {
-				Helper.Attribute.Set(
-					item,
-					Constants.A11YAttributes.TabIndex,
-					this._isOpen
-						? Constants.A11YAttributes.States.TabIndexShow
-						: Constants.A11YAttributes.States.TabIndexHidden
-				);
+			this._submenuAllLinksElement.forEach((item: HTMLElement) => {
+				this._isOpen ? Helper.A11Y.TabIndexTrue(item) : Helper.A11Y.TabIndexFalse(item);
 			});
 		}
 
 		public build(): void {
 			super.build();
 
-			this._setHtmlElements();
+			this._setElements();
 
-			this._setInitialCssClasses();
+			this._setInitialStates();
 
-			this._setAccessibilityProps();
+			this._setA11yProperties();
 
 			// Add timeout to make this method call asynchronous to wait for the classes of device detection
 			Helper.AsyncInvocation(this._addEvents.bind(this));
 
 			this.finishBuild();
-		}
-
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		public changeProperty(propertyName: string, propertyValue: any): void {
-			super.changeProperty(propertyName, propertyValue);
 		}
 
 		// Close Submenu
@@ -306,16 +274,16 @@ namespace OSUIFramework.Patterns.Submenu {
 
 			this._isOpen = false;
 
-			this._updateAccessibilityProps();
+			this._updateA11yProperties();
 
 			// Remove event only if is iOS
 			if (this._isIos) {
-				this._submenuLinks.removeEventListener(this._eventOnSubmenu, this._eventOnSubmenuLinksClick);
+				this._submenuLinksElement.removeEventListener(this._submenuEventType, this._eventClickLinks);
 			}
 
 			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
 				OSUIFramework.Event.Type.BodyOnClick,
-				this._globalEventOnBodyClick
+				this._globalEventBody
 			);
 		}
 
@@ -330,21 +298,21 @@ namespace OSUIFramework.Patterns.Submenu {
 		public open(): void {
 			Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternIsOpen);
 
-			this._submenuHeader.focus();
+			this._submenuHeaderElement.focus();
 
 			this._isOpen = true;
 
-			this._updateAccessibilityProps();
+			this._updateA11yProperties();
 
 			// Add event only if is iOS
 			if (this._isIos) {
-				this._submenuLinks.addEventListener(this._eventOnSubmenu, this._eventOnSubmenuLinksClick);
+				this._submenuLinksElement.addEventListener(this._submenuEventType, this._eventClickLinks);
 			}
 
 			OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				OSUIFramework.Event.Type.BodyOnClick,
-				this._globalEventOnBodyClick
+				this._globalEventBody
 			);
 		}
 	}
