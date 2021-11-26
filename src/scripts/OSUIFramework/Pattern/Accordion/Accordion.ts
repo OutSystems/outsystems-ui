@@ -6,18 +6,14 @@ namespace OSUIFramework.Patterns.Accordion {
 	export class Accordion extends AbstractPattern<AccordionConfig> implements IAccordion {
 		// Stores the Accordion Items of this Accordion
 		private _accordionItems: Map<string, OSUIFramework.Patterns.AccordionItem.IAccordionItem>;
-		//Stores the order in which the items are in the accordion
-		private _accordionItemsHTML: Array<HTMLElement>;
-		private _accordionItemsOrder: Array<string>;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new AccordionConfig(configs));
 			this._accordionItems = new Map<string, OSUIFramework.Patterns.AccordionItem.IAccordionItem>();
-			this._accordionItemsOrder = [];
 		}
 
 		// Method used to recalculate the position of items on the accordion
-		private _recalculateItemOrder(): void {
+		private _setUpAccordion(): void {
 			let firstAccordionItem = this._selfElem.querySelector(
 				Constants.Dot + Enum.CssClass.FirstItem
 			) as HTMLElement;
@@ -31,13 +27,6 @@ namespace OSUIFramework.Patterns.Accordion {
 
 			Helper.Style.AddClass(firstAccordionItem, Enum.CssClass.FirstItem);
 			Helper.Style.AddClass(lastAccordionItem, Enum.CssClass.LastItem);
-		}
-
-		private _setUpAccordion(): void {
-			this._accordionItemsHTML = <HTMLElement[]>[
-				...this._selfElem.querySelectorAll(Constants.Dot + Enum.CssClass.PatternItem),
-			];
-			this._recalculateItemOrder();
 		}
 
 		public addAccordionItem(uniqueId: string, accordionItem: AccordionItem.IAccordionItem): void {
