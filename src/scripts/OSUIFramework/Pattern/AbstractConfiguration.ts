@@ -11,8 +11,7 @@ namespace OSUIFramework.Patterns {
 		public ExtendedClass: string;
 
 		constructor(config: JSON) {
-			// eslint-disable-next-line prefer-const
-			for (let key in config) {
+			for (const key in config) {
 				if (config[key] !== undefined) this[key] = config[key];
 			}
 		}

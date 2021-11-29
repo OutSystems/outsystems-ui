@@ -9,7 +9,6 @@ namespace OSUIFramework.Event {
 	 * @implements {IEvent<T>}
 	 * @template T
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	export abstract class AbstractEvent<T> implements IEvent<T> {
 		private _handlers: Callbacks.OSGeneric[] = [];
 
