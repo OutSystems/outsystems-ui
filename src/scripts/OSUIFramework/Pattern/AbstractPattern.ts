@@ -34,16 +34,7 @@ namespace OSUIFramework.Patterns {
 		 * @type {C}
 		 * @memberof AbstractPattern
 		 */
-		protected _configs: C;
-
-		/**
-		 * Check done when the pattern is created to assert if accessibility is enabled in the layout.
-		 *
-		 * @protected
-		 * @type {boolean}
-		 * @memberof AbstractPattern
-		 */
-		protected _enableAccessibility: boolean;
+		protected _configs: C; //TODO: change to private
 
 		/**
 		 * Refence for the base HTML of the element of this pattern;
@@ -52,7 +43,7 @@ namespace OSUIFramework.Patterns {
 		 * @type {HTMLElement}
 		 * @memberof AbstractPattern
 		 */
-		protected _selfElem: HTMLElement;
+		protected _selfElem: HTMLElement; //TODO: change to private
 
 		/**
 		 * Id of the widget. This will be the Id that the developer will be using in runtime.
@@ -118,6 +109,31 @@ namespace OSUIFramework.Patterns {
 					Helper.Dom.Styles.AddClass(this._selfElem, classToAdd);
 				});
 			}
+		}
+
+		/**
+		 * Getter that allows to obtain the accessibility is enabled.
+		 *
+		 * @readonly
+		 * @protected
+		 * @type {boolean}
+		 * @memberof AbstractPattern
+		 */
+		//TODO: getter to remove.
+		protected get _enableAccessibility(): boolean {
+			return Helper.DeviceInfo.HasAccessibilityEnabled;
+		}
+
+		/**
+		 * Getter that allows to obtain the self element.
+		 *
+		 * @readonly
+		 * @protected
+		 * @type {(HTMLElement | undefined)}
+		 * @memberof AbstractPattern
+		 */
+		protected get selfElem(): HTMLElement | undefined {
+			return this._selfElem;
 		}
 
 		/**
@@ -192,8 +208,6 @@ namespace OSUIFramework.Patterns {
 		 */
 		public build(): void {
 			this._setCommonHtmlElements();
-			this._enableAccessibility =
-				Helper.Dom.ClassSelector(document.body, Constants.HasAccessibilityClass) !== undefined;
 		}
 
 		/**
