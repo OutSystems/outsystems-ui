@@ -31,11 +31,11 @@ namespace OSUIFramework.Patterns.Submenu {
 			this._eventFocus = this._focusCallback.bind(this);
 			this._eventKeypress = this._keypressCallback.bind(this);
 			this._globalEventOpen = this._openCallback.bind(this);
-			this._globalEventBody = this._bodyCallback.bind(this);
+			this._globalEventBody = this._bodyClickCallback.bind(this);
 		}
 
 		// Close submenu, when BodyOnCLick event is triggered
-		private _bodyCallback(args: string, e: MouseEvent): void {
+		private _bodyClickCallback(args: string, e: MouseEvent): void {
 			if (!this._selfElem.contains(e.target as HTMLElement)) {
 				if (Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen) && !this._isOpen) {
 					Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
@@ -155,9 +155,9 @@ namespace OSUIFramework.Patterns.Submenu {
 
 		// Update info based on htmlContent
 		private _setElements(): void {
-			this._submenuHeaderElement = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternHeader);
-			this._submenuItemElement = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternItem);
-			this._submenuLinksElement = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternLinks);
+			this._submenuHeaderElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternHeader);
+			this._submenuItemElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternItem);
+			this._submenuLinksElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternLinks);
 			this._submenuAllLinksElement = [...this._submenuLinksElement.querySelectorAll(GlobalEnum.HTMLElement.Link)];
 			this._submenuActiveLinksElement = this._submenuLinksElement.querySelectorAll(
 				Constants.Dot + Enum.CssClass.PatternActive
