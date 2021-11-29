@@ -59,54 +59,50 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 		//Method to apply the static aria attributes
 		private _setA11yAttributes(): void {
+			Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Disabled, this.configs.IsDisabled);
 			Helper.Attribute.Set(
 				this._selfElem,
-				Constants.AccessibilityAttribute.Aria.Disabled,
-				this.configs.IsDisabled
-			);
-			Helper.Attribute.Set(
-				this._selfElem,
-				Constants.AccessibilityAttribute.Aria.Controls,
+				Constants.A11YAttributes.Aria.Controls,
 				Helper.Attribute.Get(this._accordionPlaceholder, 'id')
 			);
 
 			Helper.Attribute.Set(
 				this._accordionTitle,
-				Constants.AccessibilityAttribute.TabIndex,
+				Constants.A11YAttributes.TabIndex,
 				this.configs.IsDisabled ? '-1' : '0'
 			);
 			Helper.Attribute.Set(
 				this._accordionTitle,
-				Constants.AccessibilityAttribute.Role.AttrName,
-				Constants.AccessibilityAttribute.Role.Button
+				Constants.A11YAttributes.Role.AttrName,
+				Constants.A11YAttributes.Role.Button
 			);
 
-			Helper.Attribute.Set(this._accordionIcon, Constants.AccessibilityAttribute.Aria.Hidden, true);
+			Helper.Attribute.Set(this._accordionIcon, Constants.A11YAttributes.Aria.Hidden, true);
 
 			Helper.Attribute.Set(
 				this._accordionContent,
-				Constants.AccessibilityAttribute.TabIndex,
+				Constants.A11YAttributes.TabIndex,
 				this.configs.IsDisabled ? '-1' : '0'
 			);
 			Helper.Attribute.Set(
 				this._accordionContent,
-				Constants.AccessibilityAttribute.Aria.Labelledby,
+				Constants.A11YAttributes.Aria.Labelledby,
 				Helper.Attribute.Get(this._accordionTitle, 'id')
 			);
 
 			Helper.Attribute.Set(
 				this._accordionPlaceholder,
-				Constants.AccessibilityAttribute.Role.AttrName,
-				Constants.AccessibilityAttribute.Role.TabPanel
+				Constants.A11YAttributes.Role.AttrName,
+				Constants.A11YAttributes.Role.TabPanel
 			);
 		}
 
 		// Method to apply the dynamic aria attributes
 		private _setAriaExpanded(status: boolean, ariaHidden: boolean): void {
 			if (this._selfElem) {
-				Helper.Attribute.Set(this._selfElem, Constants.AccessibilityAttribute.Aria.Expanded, status);
-				Helper.Attribute.Set(this._accordionTitle, Constants.AccessibilityAttribute.Aria.Expanded, status);
-				Helper.Attribute.Set(this._accordionContent, Constants.AccessibilityAttribute.Aria.Hidden, ariaHidden);
+				Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Expanded, status);
+				Helper.Attribute.Set(this._accordionTitle, Constants.A11YAttributes.Aria.Expanded, status);
+				Helper.Attribute.Set(this._accordionContent, Constants.A11YAttributes.Aria.Hidden, ariaHidden);
 			}
 		}
 
