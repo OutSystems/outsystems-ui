@@ -288,7 +288,8 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 			const expandedHeight = this._accordionContent.getBoundingClientRect().height;
 
-			Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Expanded);
+			Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Collapsed);
+			Helper.Style.RemoveClass(this._accordionContent, Enum.CssClass.Expanded);
 
 			Helper.Style.SetStyleAttribute(this._accordionContent, 'height', collapsedHeight + GlobalEnum.Units.Pixel);
 
