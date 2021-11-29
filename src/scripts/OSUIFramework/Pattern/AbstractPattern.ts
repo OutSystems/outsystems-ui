@@ -150,6 +150,20 @@ namespace OSUIFramework.Patterns {
 		}
 
 		/**
+		 * Sets the HTML elements, by setting the references and the attributes.
+		 *
+		 * @private
+		 * @memberof AbstractPattern
+		 */
+		private _setCommonHtmlElements(): void {
+			this._selfElem = Helper.GetElementByUniqueId(this._uniqueId);
+			this._widgetId = this._selfElem.closest(GlobalEnum.DataBlocksTag.DataBlock).id;
+
+			if (this._configs.ExtendedClass !== '') {
+				this._updateExtendedClass('', this._configs.ExtendedClass);
+			}
+		}
+		/**
 		 * Marks the built as being finished.
 		 *
 		 * @protected
@@ -158,21 +172,6 @@ namespace OSUIFramework.Patterns {
 		protected finishBuild(): void {
 			//In the future we can trigger an initialized event.
 			this._isBuilt = true;
-		}
-
-		/**
-		 * Sets the HTML elements, by setting the references and the attributes.
-		 *
-		 * @protected
-		 * @memberof AbstractPattern
-		 */
-		protected setHtmlElements(): void {
-			this._selfElem = Helper.GetElementByUniqueId(this._uniqueId);
-			this._widgetId = this._selfElem.closest(GlobalEnum.DataBlocksTag.DataBlock).id;
-
-			if (this._configs.ExtendedClass !== '') {
-				this._updateExtendedClass('', this._configs.ExtendedClass);
-			}
 		}
 
 		/**
@@ -191,7 +190,7 @@ namespace OSUIFramework.Patterns {
 		 * @memberof AbstractPattern
 		 */
 		public build(): void {
-			this.setHtmlElements();
+			this._setCommonHtmlElements();
 			this._enableAccessibility =
 				Helper.Dom.ClassSelector(document.body, Constants.HasAccessibilityClass) !== undefined;
 		}
@@ -241,5 +240,12 @@ namespace OSUIFramework.Patterns {
 		public equalsToID(patternId: string): boolean {
 			return patternId === this._uniqueId || patternId === this._widgetId;
 		}
+
+		//TODO: add this to make all patterns implement method.
+		//protected abstract setHtmlElements();
+		//protected abstract unsetHtmlElements();
+		//protected abstract setCallbacks();
+		//protected abstract unsetCallbacks();
+		//protected abstract setA11YProperties();
 	}
 }
