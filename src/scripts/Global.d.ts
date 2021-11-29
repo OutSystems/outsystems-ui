@@ -55,4 +55,7 @@ declare global {
 	type Flatpickr = flatpickr;
 	type FlatpickrOptions = flatpickrOpts;
 	type FlatpickrLocale = flatpickrLocale;
+
+	// DropDown => Virtual Select
+	type VirtualScroll = any;
 }
