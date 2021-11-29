@@ -66,7 +66,7 @@ namespace OSUIFramework.Patterns {
 		 * @memberof AbstractPattern
 		 */
 		private _setCommonHtmlElements(): void {
-			this._selfElem = Helper.GetElementByUniqueId(this._uniqueId);
+			this._selfElem = Helper.Dom.GetElementByUniqueId(this._uniqueId);
 			this._widgetId = this._selfElem.closest(GlobalEnum.DataBlocksTag.DataBlock).id;
 
 			if (this._configs.ExtendedClass !== '') {
@@ -132,7 +132,7 @@ namespace OSUIFramework.Patterns {
 		 * @type {(HTMLElement | undefined)}
 		 * @memberof AbstractPattern
 		 */
-		protected get selfElem(): HTMLElement | undefined {
+		protected get selfElement(): HTMLElement {
 			return this._selfElem;
 		}
 
