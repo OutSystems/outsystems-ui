@@ -9,4 +9,9 @@ namespace OSUIFramework.Patterns.SwipeEvents.Enum {
 		SwipeRight = 'SwipeRight',
 		SwipeLeft = 'SwipeLeft',
 	}
+
+	export enum Properties {
+		Threshold = 10,
+		Velocity = 0.3,
+	}
 }

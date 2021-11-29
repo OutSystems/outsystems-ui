@@ -138,6 +138,7 @@ namespace OSUIFramework.GlobalEnum {
 		Submenu = 'Submenu',
 		SwipeEvents = 'SwipeEvents',
 		Tooltip = 'Tooltip',
+		TouchEvents = 'TouchEvents',
 	}
 
 	/**

@@ -12,6 +12,12 @@ namespace OSUIFramework.Patterns.SwipeEvents {
 		private _swipeDownCallback: OSUIFramework.Callbacks.Generic;
 		private _swipeUpCallback: OSUIFramework.Callbacks.Generic;
 
+		constructor(uniqueId: string, configs: any) {
+			super(uniqueId, new SwipeEventsConfig(configs));
+			this._threshold = Enum.Properties.Threshold;
+			this._velocity = Enum.Properties.Velocity;
+		}
+
 		// Method that triggers the SwipeRight event on the platform
 		private _triggerSwipeRight(): void {
 			if (this._swipeRightCallback) {
