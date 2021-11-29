@@ -69,6 +69,21 @@ namespace OSUIFramework.Patterns {
 		}
 
 		/**
+		 * Sets the HTML elements, by setting the references and the attributes.
+		 *
+		 * @private
+		 * @memberof AbstractPattern
+		 */
+		private _setCommonHtmlElements(): void {
+			this._selfElem = Helper.GetElementByUniqueId(this._uniqueId);
+			this._widgetId = this._selfElem.closest(GlobalEnum.DataBlocksTag.DataBlock).id;
+
+			if (this._configs.ExtendedClass !== '') {
+				this._updateExtendedClass('', this._configs.ExtendedClass);
+			}
+		}
+
+		/**
 		 * Method that knows how to update the Extended class of the pattern.
 		 *
 		 * @private
@@ -149,20 +164,6 @@ namespace OSUIFramework.Patterns {
 			return this._widgetId;
 		}
 
-		/**
-		 * Sets the HTML elements, by setting the references and the attributes.
-		 *
-		 * @private
-		 * @memberof AbstractPattern
-		 */
-		private _setCommonHtmlElements(): void {
-			this._selfElem = Helper.GetElementByUniqueId(this._uniqueId);
-			this._widgetId = this._selfElem.closest(GlobalEnum.DataBlocksTag.DataBlock).id;
-
-			if (this._configs.ExtendedClass !== '') {
-				this._updateExtendedClass('', this._configs.ExtendedClass);
-			}
-		}
 		/**
 		 * Marks the built as being finished.
 		 *
