@@ -59,7 +59,7 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		 * @memberof AnimatedLabel
 		 */
 		private _inputStateToggle(isFocus: boolean | undefined): void {
-			const inputHasText = this._inputElement.value !== '';
+			const inputHasText = this._inputElement && this._inputElement.value !== '';
 
 			//let's check if we have something to do. Is the pattern built or (it's building) and we have text in the input?
 			if (this.isBuilt || inputHasText) {
@@ -79,10 +79,10 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		/**
 		 * Set the callbacks that will be assigned to the window click event
 		 *
-		 * @private
+		 * @protected
 		 * @memberof AnimatedLabel
 		 */
-		private _setCallbacks(): void {
+		protected setCallbacks(): void {
 			this._eventBlur = this._inputBlurCallback.bind(this);
 			this._eventFocus = this._inputFocusCallback.bind(this);
 			this._eventAnimationStart = this._inputFocusCallback.bind(this);
@@ -92,8 +92,13 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 			this._inputElement.addEventListener(GlobalEnum.HTMLEvent.AnimationStart, this._eventAnimationStart);
 		}
 
-		// Update info based on htmlContent
-		private _setHtmlElements(): void {
+		/**
+		 * Update info based on htmlContent
+		 *
+		 * @protected
+		 * @memberof AnimatedLabel
+		 */
+		protected setHtmlElements(): void {
 			this._labelPhElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClasses.LabelPlaceholder);
 			this._inputPhElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClasses.InputPlaceholder);
 			this._inputElement =
@@ -119,10 +124,10 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		/**
 		 * Removes the listeners that were added in the code and unsets the callbacks.
 		 *
-		 * @private
+		 * @protected
 		 * @memberof AnimatedLabel
 		 */
-		private _unsetCallbacks(): void {
+		protected unsetCallbacks(): void {
 			this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.Blur, this._eventBlur);
 			this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventFocus);
 			this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.AnimationStart, this._eventAnimationStart);
@@ -135,10 +140,10 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		/**
 		 * Removes the local value of the variables pointing to HTML elements;
 		 *
-		 * @private
+		 * @protected
 		 * @memberof AnimatedLabel
 		 */
-		private _unsetHtmlElements(): void {
+		protected unsetHtmlElements(): void {
 			this._labelPhElement = undefined;
 			this._inputPhElement = undefined;
 			this._inputElement = undefined;
@@ -154,9 +159,9 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 			Helper.AsyncInvocation(() => {
 				super.build();
 
-				this._setHtmlElements();
+				this.setHtmlElements();
 
-				this._setCallbacks();
+				this.setCallbacks();
 
 				this.finishBuild();
 			});
@@ -169,8 +174,8 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		 */
 		public dispose(): void {
 			super.dispose();
-			this._unsetCallbacks();
-			this._unsetHtmlElements();
+			this.unsetCallbacks();
+			this.unsetHtmlElements();
 		}
 
 		/**
