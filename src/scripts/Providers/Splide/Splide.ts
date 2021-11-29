@@ -61,10 +61,19 @@ namespace Providers.Splide {
 			const computedStyle = window.getComputedStyle(SplideList);
 			// Select the value of the translateX property
 			let transform = new WebKitCSSMatrix(computedStyle.transform).m41;
+			// Calculate extra space left on the slider
+			const extraSpace = Math.abs(Number((transform % this._splideTrack.offsetWidth).toFixed(2)));
 
-			// Splide list transform property must be adjusted by 1 pixel when the images offset is decimal leaving extra space in the carousel
-			if (transform % this._splideTrack.offsetWidth !== 0) {
-				transform -= 1;
+			// If extra space exists, previous/next element in the slider will be visible
+			if (extraSpace !== 0) {
+				// Calculate the gap to eliminate
+				const sliderGap = this._splideTrack.offsetWidth - extraSpace;
+
+				// Check if the extra space is located in the left or right side of the slider
+				if (extraSpace > sliderGap) transform -= sliderGap;
+				else transform += extraSpace;
+
+				// Adjust the Transform property correctly
 				OSUIFramework.Helper.Style.SetStyleAttribute(
 					SplideList,
 					OSUIFramework.Patterns.Carousel.Enum.Properties.Transform,
