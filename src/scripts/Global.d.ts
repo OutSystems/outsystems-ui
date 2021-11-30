@@ -15,7 +15,6 @@ import { Options } from '@splidejs/splide/dist/types/types/options';
 /**
  * Set global declarations
  */
-
 declare global {
 	//eslint-disable-next-line @typescript-eslint/naming-convention
 	interface Window {
