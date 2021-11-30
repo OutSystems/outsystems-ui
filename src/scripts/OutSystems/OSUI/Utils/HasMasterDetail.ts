@@ -5,6 +5,7 @@ namespace OutSystems.OSUI.Utils {
 	 *
 	 * @export
 	 */
+	//TODO: Is this function necessary?
 	export function HasMasterDetail(): boolean {
 		let returnOutput = false;
 
