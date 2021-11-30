@@ -21,7 +21,7 @@ namespace osui {
 
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export function StartMWO(): void {
-		//TO BE REMOVED
+		//TODO: TO BE REMOVED
 		OutSystems.OSUI.Utils.StartMadeWithOS();
 	}
 
