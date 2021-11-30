@@ -124,21 +124,21 @@ namespace OSUIFramework.Patterns.Tooltip {
 		private _setAccessibilityProps(): void {
 			Helper.Attribute.Set(
 				this._tooltipContentElem,
-				Constants.AccessibilityAttribute.Role.AttrName,
-				Constants.AccessibilityAttribute.Role.Tooltip
+				Constants.A11YAttributes.Role.AttrName,
+				Constants.A11YAttributes.Role.Tooltip
 			);
 
-			Helper.Attribute.Set(this._tooltipContentElem, Constants.AccessibilityAttribute.TabIndex, '0');
+			Helper.Attribute.Set(this._tooltipContentElem, Constants.A11YAttributes.TabIndex, '0');
 
 			Helper.Attribute.Set(
 				this._tooltipContentElem,
-				Constants.AccessibilityAttribute.Aria.Describedby,
+				Constants.A11YAttributes.Aria.Describedby,
 				this._tooltipBallonWrapperId
 			);
 
 			Helper.Attribute.Set(
 				this._tooltipContentElem,
-				Constants.AccessibilityAttribute.Aria.Labelledby,
+				Constants.A11YAttributes.Aria.Labelledby,
 				this._tooltipBallonWrapperId
 			);
 		}

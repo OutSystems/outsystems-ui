@@ -141,12 +141,12 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			if (this._floatingActionsItem)
 				Helper.Attribute.Set(
 					this._floatingActionsItem,
-					Constants.AccessibilityAttribute.Aria.Hidden,
+					Constants.A11YAttributes.Aria.Hidden,
 					(!this._isOpen).toString()
 				);
 			Helper.Attribute.Set(
 				this._floatingActionsButton,
-				Constants.AccessibilityAttribute.Aria.Expanded,
+				Constants.A11YAttributes.Aria.Expanded,
 				this._isOpen.toString()
 			);
 
@@ -156,10 +156,10 @@ namespace OSUIFramework.Patterns.FloatingActions {
 				this._floatingAllLinks.forEach((item: HTMLElement) => {
 					Helper.Attribute.Set(
 						item,
-						Constants.AccessibilityAttribute.TabIndex,
+						Constants.A11YAttributes.TabIndex,
 						this._isOpen
-							? Constants.AccessibilityAttribute.States.TabIndexShow
-							: Constants.AccessibilityAttribute.States.TabIndexHidden
+							? Constants.A11YAttributes.States.TabIndexShow
+							: Constants.A11YAttributes.States.TabIndexHidden
 					);
 				});
 			}
@@ -353,7 +353,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			this._isOpen = false;
 
 			this._floatingActionsButton.focus();
-			this._setTabIndex(Constants.AccessibilityAttribute.States.TabIndexHidden);
+			this._setTabIndex(Constants.A11YAttributes.States.TabIndexHidden);
 
 			if (this.configs.IsHover) {
 				this._floatingActionsButton.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventToggleClick);
@@ -399,7 +399,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			const firstItem = this._firstButton;
 			this._isOpen = true;
 
-			this._setTabIndex(Constants.AccessibilityAttribute.States.TabIndexShow);
+			this._setTabIndex(Constants.A11YAttributes.States.TabIndexShow);
 
 			if (firstItem) {
 				firstItem.focus();

@@ -101,6 +101,9 @@ namespace OSUIFramework.GlobalEnum {
 	export enum MobileOS {
 		Android = 'android',
 		IOS = 'ios',
+		MacOS = 'osx',
+		Unknown = 'unknown',
+		Windows = 'windows',
 	}
 
 	/**
@@ -164,5 +167,32 @@ namespace OSUIFramework.GlobalEnum {
 	export enum Units {
 		Percentage = '%',
 		Pixel = 'px',
+	}
+
+	export enum Browser {
+		chrome = 'chrome',
+		edge = 'edge',
+		firefox = 'firefox',
+		ie = 'ie',
+		kindle = 'kindle',
+		miui = 'miui',
+		opera = 'opera',
+		safari = 'safari',
+		samsung = 'samsung',
+		uc = 'uc',
+		unknown = 'unknown',
+		yandex = 'yandex',
+	}
+
+	export enum DeviceOrientation {
+		landscape = 'landscape',
+		portrait = 'portrait',
+		unknown = 'unknown',
+	}
+
+	export enum DeviceType {
+		desktop = 'desktop',
+		phone = 'phone',
+		tablet = 'tablet',
 	}
 }

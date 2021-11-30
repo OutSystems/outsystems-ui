@@ -3,11 +3,12 @@ namespace OSUIFramework.Constants {
 	/**
 	 * OutSystemsUI Accessibility attribues
 	 */
-	export const AccessibilityAttribute = {
+	export const A11YAttributes = {
 		Aria: {
 			Atomic: 'atomic',
 			Controls: 'aria-controls',
 			Describedby: 'describedby',
+			Disabled: 'aria-disabled',
 			Expanded: 'aria-expanded',
 			Hidden: 'aria-hidden',
 			Label: 'aria-label',
@@ -28,6 +29,8 @@ namespace OSUIFramework.Constants {
 			MenuItem: 'menuitem',
 			Progressbar: 'progressbar',
 			Search: 'search',
+			Tab: 'tab',
+			TabPanel: 'tabpanel',
 			Tooltip: 'tooltip',
 		},
 		TabIndex: 'tabindex',
