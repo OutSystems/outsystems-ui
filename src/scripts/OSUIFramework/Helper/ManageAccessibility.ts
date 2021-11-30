@@ -1,6 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Helper {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	export abstract class A11Y {
 		/**
 		 * Method that will disable the aria-atomic

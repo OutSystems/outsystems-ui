@@ -1,23 +1,23 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Utils {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	function _bodyClick(event: any) {
-		if (event.target.classList.contains('btn')) {
-			_buttonEffect(event.target);
+	function _bodyClick(event: PointerEvent) {
+		const target = event.target as HTMLElement;
+		if (target.classList.contains('btn')) {
+			_buttonEffect(target);
 			return;
 		}
 
-		const found =
-			_hasSomeParentTheClass(event.target, 'list-item') ||
-			_hasSomeParentTheClass(event.target, 'bottom-bar-item');
+		const foundElement =
+			_hasSomeParentTheClass(target, 'list-item') || _hasSomeParentTheClass(target, 'bottom-bar-item');
 
-		if (found) {
-			_clickEffect(found);
+		if (foundElement) {
+			_clickEffect(foundElement);
 		}
 	}
 
 	function _clickEffect(el: HTMLElement) {
-		const spanEl: HTMLElement = document.createElement('span');
+		const spanEl: HTMLElement = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Span);
 		spanEl.classList.add('scale-animation');
 
 		el.appendChild(spanEl);
@@ -33,7 +33,7 @@ namespace OutSystems.OSUI.Utils {
 	}
 
 	function _buttonEffect(el: HTMLElement) {
-		const spanEl: HTMLElement = document.createElement('span');
+		const spanEl: HTMLElement = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Span);
 		spanEl.classList.add('btn-animation');
 		el.appendChild(spanEl);
 
@@ -61,6 +61,5 @@ namespace OutSystems.OSUI.Utils {
 		return undefined;
 	}
 
-	// Init Events
-	document.body.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, _bodyClick);
+	OSUIFramework.Event.GlobalEventManager.Instance.addHandler(OSUIFramework.Event.Type.BodyOnClick, _bodyClick);
 }
