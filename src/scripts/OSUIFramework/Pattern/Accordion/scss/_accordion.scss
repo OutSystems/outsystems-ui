@@ -1,0 +1,23 @@
+/*! Patterns - Content - Accordion */
+////
+/// @group Patterns-Accordion
+/// Patterns - Content - Accordion
+
+///
+.osui-accordion {
+	& &-item {
+		border-radius: var(--border-size-none);
+		border-bottom-width: var(--border-size-none);
+
+		&--is-first-item {
+			border-radius: var(--border-radius-soft) var(--border-radius-soft) var(--border-radius-none)
+				var(--border-radius-none);
+		}
+
+		&--is-last-item {
+			border-bottom-width: var(--border-size-s);
+			border-radius: var(--border-radius-none) var(--border-radius-none) var(--border-radius-soft)
+				var(--border-radius-soft);
+		}
+	}
+}
