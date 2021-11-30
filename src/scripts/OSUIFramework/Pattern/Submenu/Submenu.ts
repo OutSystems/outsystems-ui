@@ -153,27 +153,6 @@ namespace OSUIFramework.Patterns.Submenu {
 			}
 		}
 
-		// Update info based on htmlContent
-		private _setElements(): void {
-			this._submenuHeaderElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternHeader);
-			this._submenuItemElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternItem);
-			this._submenuLinksElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternLinks);
-			this._submenuAllLinksElement = [...this._submenuLinksElement.querySelectorAll(GlobalEnum.HTMLElement.Link)];
-			this._submenuActiveLinksElement = this._submenuLinksElement.querySelectorAll(
-				Constants.Dot + Enum.CssClass.PatternActive
-			);
-
-			// Check if submenu has childs
-			if (this._submenuAllLinksElement.length > 0) {
-				this._hasElements = true;
-			}
-
-			// Check if submenu contains elements with active class
-			if (this._submenuActiveLinksElement.length > 0) {
-				this._hasActiveLinks = true;
-			}
-		}
-
 		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _setInitialStates(): void {
 			if (this._hasActiveLinks) {
@@ -203,7 +182,6 @@ namespace OSUIFramework.Patterns.Submenu {
 				Helper.AsyncInvocation(this.open.bind(this));
 			}
 		}
-
 		// Remove all the assigned Events
 		private _unsetCallbacks(): void {
 			if (this._hasElements) {
@@ -243,10 +221,40 @@ namespace OSUIFramework.Patterns.Submenu {
 			});
 		}
 
+		// Update info based on htmlContent
+		protected setHtmlElements(): void {
+			this._submenuHeaderElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternHeader);
+			this._submenuItemElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternItem);
+			this._submenuLinksElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternLinks);
+			this._submenuAllLinksElement = [...this._submenuLinksElement.querySelectorAll(GlobalEnum.HTMLElement.Link)];
+			this._submenuActiveLinksElement = this._submenuLinksElement.querySelectorAll(
+				Constants.Dot + Enum.CssClass.PatternActive
+			);
+
+			// Check if submenu has childs
+			if (this._submenuAllLinksElement.length > 0) {
+				this._hasElements = true;
+			}
+
+			// Check if submenu contains elements with active class
+			if (this._submenuActiveLinksElement.length > 0) {
+				this._hasActiveLinks = true;
+			}
+		}
+
+		// Remove unused elements
+		protected unsetHtmlElements(): void {
+			this._submenuHeaderElement = undefined;
+			this._submenuItemElement = undefined;
+			this._submenuLinksElement = undefined;
+			this._submenuAllLinksElement = undefined;
+			this._submenuActiveLinksElement = undefined;
+		}
+
 		public build(): void {
 			super.build();
 
-			this._setElements();
+			this.setHtmlElements();
 
 			this._setInitialStates();
 
@@ -282,6 +290,8 @@ namespace OSUIFramework.Patterns.Submenu {
 			super.dispose();
 
 			this._unsetCallbacks();
+
+			this.unsetHtmlElements();
 		}
 
 		// Open Submenu
