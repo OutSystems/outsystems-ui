@@ -23,7 +23,7 @@ namespace OSUIFramework.Event {
 			return this._events;
 		}
 
-		public addHandler(eventType: ET, handler: Callbacks.OSGeneric): void {
+		public addHandler(eventType: ET, handler: Callbacks.Generic): void {
 			if (this._events && this._events.has(eventType)) {
 				this._events.get(eventType).addHandler(handler);
 			} else {
