@@ -1,125 +1,192 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.AnimatedLabel {
+	/**
+	 * Class that implements the AnimatedLabel pattern.
+	 *
+	 * @export
+	 * @class AnimatedLabel
+	 * @extends {AbstractPattern<AnimatedLabelConfig>}
+	 * @implements {IAnimatedLabel}
+	 */
 	export class AnimatedLabel extends AbstractPattern<AnimatedLabelConfig> implements IAnimatedLabel {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventOnAnimationStart: any;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventOnBlur: any;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventOnFocus: any;
+		private _eventAnimationStart: Callbacks.Generic;
+		private _eventBlur: Callbacks.Generic;
+		private _eventFocus: Callbacks.Generic;
 
 		// Set the input html element
-		private _inputElem: HTMLInputElement | HTMLTextAreaElement;
+		private _inputElement: HTMLInputElement | HTMLTextAreaElement;
 
 		// Set the inputPlaceholder html element
-		private _inputPlaceholderElem: HTMLElement;
+		private _inputPhElement: HTMLElement;
 
 		// Flag that will be manage if the label is active
-		private _isLabelActive: boolean;
+		private _isLabelFocus: boolean;
 
 		// Set the labelPlaceholder html element
-		private _labelPlaceholderElem: HTMLElement;
+		private _labelPhElement: HTMLElement;
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		constructor(uniqueId: string, configs: any) {
+		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new AnimatedLabelConfig(configs));
-
-			// Set the method that will be assigned to the window click event
-			this._eventOnBlur = this._onInputBlur.bind(this);
-			this._eventOnFocus = this._onInputFocus.bind(this);
-			this._eventOnAnimationStart = this._onInputFocus.bind(this);
+			this._isLabelFocus = false;
 		}
 
-		// Add Pattern Events
-		private _addEvents(): void {
-			this._inputElem.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
-			this._inputElem.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
-			this._inputElem.addEventListener(GlobalEnum.HTMLEvent.AnimationStart, this._eventOnAnimationStart);
+		/**
+		 * Callback to the event "blur" of the input.
+		 *
+		 * @private
+		 * @memberof AnimatedLabel
+		 */
+		private _inputBlurCallback(): void {
+			this._inputStateToggle(false);
 		}
 
-		// Check if the input is empty, if yes reposition the Label
-		private _onInputBlur(): void {
-			if (this._inputElem.value === '' && this._isLabelActive) {
-				this._isLabelActive = false;
-				Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.IsActive);
+		/**
+		 * Callback to the event "focus" of the input.
+		 *
+		 * @private
+		 * @memberof AnimatedLabel
+		 */
+		private _inputFocusCallback(): void {
+			this._inputStateToggle(true);
+		}
+
+		/**
+		 * Method that implements the toggle of the state of the input.
+		 * It can either add or remove the class "active" of the input.
+		 *
+		 * @private
+		 * @param {boolean} isFocus
+		 * @memberof AnimatedLabel
+		 */
+		private _inputStateToggle(isFocus: boolean | undefined): void {
+			const inputHasText = this._inputElement && this._inputElement.value !== '';
+
+			//let's check if we have something to do. Is the pattern built or (it's building) and we have text in the input?
+			if (this.isBuilt || inputHasText) {
+				//(Does the input have text or is it Focus) and it's currently inactive?
+				if ((inputHasText || isFocus) && this._isLabelFocus === false) {
+					//let's mark as active!
+					Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClasses.IsActive);
+					this._isLabelFocus = true;
+					//is the input empty and it's active and it's blur event
+				} else if (inputHasText === false && this._isLabelFocus && isFocus === false) {
+					Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClasses.IsActive);
+					this._isLabelFocus = false;
+				}
 			}
 		}
 
-		// Add the active cssClass into the Label since content will be added into input
-		private _onInputFocus(): void {
-			if (this._inputElem.value === '' && !this._isLabelActive) {
-				this._isLabelActive = true;
-				Helper.Style.AddClass(this._selfElem, Enum.CssClasses.IsActive);
-			}
+		/**
+		 * Set the callbacks that will be assigned to the window click event
+		 *
+		 * @protected
+		 * @memberof AnimatedLabel
+		 */
+		protected setCallbacks(): void {
+			this._eventBlur = this._inputBlurCallback.bind(this);
+			this._eventFocus = this._inputFocusCallback.bind(this);
+			this._eventAnimationStart = this._inputFocusCallback.bind(this);
+
+			this._inputElement.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventBlur);
+			this._inputElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventFocus);
+			this._inputElement.addEventListener(GlobalEnum.HTMLEvent.AnimationStart, this._eventAnimationStart);
 		}
 
-		// Update info based on htmlContent
-		private _setHtmlElements(): void {
-			this._labelPlaceholderElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClasses.LabelPlaceholder);
-			this._inputPlaceholderElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClasses.InputPlaceholder);
-
-			this._inputElem =
-				this._inputPlaceholderElem.querySelector(GlobalEnum.DataBlocksTag.Input) ||
-				this._inputPlaceholderElem.querySelector(GlobalEnum.DataBlocksTag.TextArea);
+		/**
+		 * Update info based on htmlContent
+		 *
+		 * @protected
+		 * @memberof AnimatedLabel
+		 */
+		protected setHtmlElements(): void {
+			this._labelPhElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClasses.LabelPlaceholder);
+			this._inputPhElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClasses.InputPlaceholder);
+			this._inputElement =
+				(Helper.Dom.TagSelector(this._inputPhElement, GlobalEnum.DataBlocksTag.Input) as HTMLInputElement) ||
+				(Helper.Dom.TagSelector(
+					this._inputPhElement,
+					GlobalEnum.DataBlocksTag.TextArea
+				) as HTMLTextAreaElement);
 
 			// Check if the input exist
-			if (this._inputElem) {
-				if (this._inputElem.value) {
-					this._isLabelActive = true;
-					Helper.Style.AddClass(this._selfElem, Enum.CssClasses.IsActive);
-				} else {
-					this._isLabelActive = false;
-				}
+			if (this._inputElement) {
+				this._inputStateToggle(undefined);
 			} else {
 				throw new Error(Enum.Messages.InputNotFound);
 			}
 
 			// Show a warning message if a label was in use
-			if (!this._labelPlaceholderElem.querySelector(GlobalEnum.DataBlocksTag.Label)) {
+			if (Helper.Dom.TagSelector(this._labelPhElement, GlobalEnum.DataBlocksTag.Label) === undefined) {
 				console.warn(Enum.Messages.LabelNotFound);
 			}
 		}
 
+		/**
+		 * Removes the listeners that were added in the code and unsets the callbacks.
+		 *
+		 * @protected
+		 * @memberof AnimatedLabel
+		 */
+		protected unsetCallbacks(): void {
+			this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.Blur, this._eventBlur);
+			this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventFocus);
+			this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.AnimationStart, this._eventAnimationStart);
+
+			this._eventBlur = undefined;
+			this._eventFocus = undefined;
+			this._eventAnimationStart = undefined;
+		}
+
+		/**
+		 * Removes the local value of the variables pointing to HTML elements;
+		 *
+		 * @protected
+		 * @memberof AnimatedLabel
+		 */
+		protected unsetHtmlElements(): void {
+			this._labelPhElement = undefined;
+			this._inputPhElement = undefined;
+			this._inputElement = undefined;
+		}
+
+		/**
+		 * Builds the animation label.
+		 *
+		 * @memberof AnimatedLabel
+		 */
 		public build(): void {
 			//OS takes a while to set the TextArea
 			Helper.AsyncInvocation(() => {
 				super.build();
 
-				this._setHtmlElements();
+				this.setHtmlElements();
 
-				this._addEvents();
+				this.setCallbacks();
 
 				this.finishBuild();
 			});
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		public changeProperty(propertyName: string, propertyValue: any): void {
-			super.changeProperty(propertyName, propertyValue);
-		}
-
-		// Destroy the Animatedlabel
+		/**
+		 * Destroy the Animatedlabel.
+		 *
+		 * @memberof AnimatedLabel
+		 */
 		public dispose(): void {
 			super.dispose();
-
-			this._inputElem.removeEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
-			this._inputElem.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
-			this._inputElem.removeEventListener(GlobalEnum.HTMLEvent.AnimationStart, this._eventOnAnimationStart);
+			this.unsetCallbacks();
+			this.unsetHtmlElements();
 		}
 
-		// Update Label active status accordingly when the input info has canhged
+		/**
+		 * Update Label active status accordingly when the input info has changed.
+		 *
+		 * @memberof AnimatedLabel
+		 */
 		public updateOnRender(): void {
 			// Do not run this instead the pattern is totally built
 			if (this.isBuilt) {
-				if (this._inputElem.value === '') {
-					this._isLabelActive = false;
-					Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.IsActive);
-				}
-
-				if (this._inputElem.value !== '' && !this._isLabelActive) {
-					this._isLabelActive = true;
-					Helper.Style.AddClass(this._selfElem, Enum.CssClasses.IsActive);
-				}
+				this._inputStateToggle(undefined);
 			}
 		}
 	}
