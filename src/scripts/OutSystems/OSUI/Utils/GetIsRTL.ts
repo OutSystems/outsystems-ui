@@ -8,6 +8,6 @@ namespace OutSystems.OSUI.Utils {
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export function GetIsRTL(): boolean {
-		return OSUIFramework.Helper.Style.ContainsClass(document.body, OSUIFramework.Constants.IsRTLClass);
+		return OSUIFramework.Helper.Dom.Styles.ContainsClass(document.body, OSUIFramework.Constants.IsRTLClass);
 	}
 }

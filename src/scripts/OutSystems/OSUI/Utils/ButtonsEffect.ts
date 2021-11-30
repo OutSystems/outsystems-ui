@@ -17,7 +17,7 @@ namespace OutSystems.OSUI.Utils {
 	}
 
 	function _clickEffect(el: HTMLElement) {
-		const spanEl: HTMLElement = document.createElement('span');
+		const spanEl: HTMLElement = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Span);
 		spanEl.classList.add('scale-animation');
 
 		el.appendChild(spanEl);
@@ -33,7 +33,7 @@ namespace OutSystems.OSUI.Utils {
 	}
 
 	function _buttonEffect(el: HTMLElement) {
-		const spanEl: HTMLElement = document.createElement('span');
+		const spanEl: HTMLElement = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Span);
 		spanEl.classList.add('btn-animation');
 		el.appendChild(spanEl);
 
@@ -61,6 +61,5 @@ namespace OutSystems.OSUI.Utils {
 		return undefined;
 	}
 
-	// Init Events
-	document.body.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, _bodyClick);
+	OSUIFramework.Event.GlobalEventManager.Instance.addHandler(OSUIFramework.Event.Type.BodyOnClick, _bodyClick);
 }
