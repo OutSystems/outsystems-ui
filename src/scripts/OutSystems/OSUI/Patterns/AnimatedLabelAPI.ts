@@ -8,10 +8,9 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	 * @export
 	 * @param {string} animatedLabelId ID of the AnimatedLabel where the property will be changed.
 	 * @param {string} propertyName Property name that will be updated
-	 * @param {*} propertyValue Value that will be set to the property
+	 * @param {unknown} propertyValue Value that will be set to the property
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ChangeProperty(animatedLabelId: string, propertyName: string, propertyValue: any): void {
+	export function ChangeProperty(animatedLabelId: string, propertyName: string, propertyValue: unknown): void {
 		const animatedlabel = GetAnimatedLabelById(animatedLabelId);
 
 		animatedlabel.changeProperty(propertyName, propertyValue);
@@ -78,7 +77,7 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	 */
 	export function GetAnimatedLabelById(animatedLabelId: string): OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel {
 		return OSUIFramework.Helper.MapOperation.FindInMap(
-			'AnimatedLabel',
+			OSUIFramework.GlobalEnum.PatternsNames.AnimatedLabel,
 			animatedLabelId,
 			_animatedLabelsMap
 		) as OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel;
