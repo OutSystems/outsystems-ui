@@ -4,6 +4,7 @@
 	"description": "OutSystems UI Base Theme",
 	"scripts": {
 		"setup": "npm i && tsc && webpack --env prefix=dev",
+		"build": "tsc",
 		"dev": "webpack serve --env prefix=dev",
 		"dev-ts": "tsc --watch",
 		"prod": "eslint **/*.ts && tsc --sourceMap false && webpack --env prefix=prod",
