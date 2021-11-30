@@ -19,12 +19,6 @@ namespace osui {
 		return OutSystems.OSUI.Utils.GetClosest(elem, selector);
 	}
 
-	// eslint-disable-next-line @typescript-eslint/naming-convention
-	export function StartMWO(): void {
-		//TODO: TO BE REMOVED
-		OutSystems.OSUI.Utils.StartMadeWithOS();
-	}
-
 	export function FixInputs(): void {
 		console.warn('osui.FixInputs(...), is deprecated. Please use the API `OutSystems.OSUI.Utils.FixInputs(...)`.');
 		OutSystems.OSUI.Utils.FixInputs();
