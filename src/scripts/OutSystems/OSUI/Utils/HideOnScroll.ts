@@ -6,37 +6,39 @@ namespace OutSystems.OSUI.Utils.HideOnScroll {
 	 * @param {HTMLElement} header
 	 */
 	function addEvents(header: HTMLElement) {
-		console.log('HideOnScroll has been initialized!');
-
 		const content: HTMLElement = document.querySelector('.active-screen .content');
 
-		if (header.classList.contains('hide') && content) {
+		if (OSUIFramework.Helper.Dom.Styles.ContainsClass(header, 'hide') && content) {
 			let startY = 0;
-			const mainContentHeight: number = document.querySelector('.main-content').scrollHeight;
+			const mainContentHeight: number = OSUIFramework.Helper.Dom.ClassSelector(
+				document.body,
+				'main-content'
+			)?.scrollHeight;
+
 			const threshold = 60;
-			const layout: HTMLElement = document.querySelector('.layout');
+			const layout = OSUIFramework.Helper.Dom.ClassSelector(document.body, 'layout');
 
 			if (mainContentHeight - threshold > content.offsetHeight) {
 				content.addEventListener(
-					'touchstart',
-					function (e: TouchEvent) {
+					OSUIFramework.GlobalEnum.HTMLEvent.TouchStart,
+					(e: TouchEvent) => {
 						startY = e.touches[0].pageY;
 					},
 					false
 				);
 
 				content.addEventListener(
-					'touchmove',
-					function (e: TouchEvent) {
+					OSUIFramework.GlobalEnum.HTMLEvent.TouchMove,
+					(e: TouchEvent) => {
 						const c: number = e.touches[0].pageY;
 						const translateY: number = c - startY;
 
 						if (c < startY - threshold && translateY < 0) {
-							header.classList.add('header-on-scroll');
-							layout.classList.add('header-is-hidden');
+							OSUIFramework.Helper.Dom.Styles.AddClass(header, 'header-on-scroll');
+							OSUIFramework.Helper.Dom.Styles.AddClass(layout, 'header-is-hidden');
 						} else if (c > startY + threshold) {
-							header.classList.remove('header-on-scroll');
-							layout.classList.remove('header-is-hidden');
+							OSUIFramework.Helper.Dom.Styles.RemoveClass(header, 'header-on-scroll');
+							OSUIFramework.Helper.Dom.Styles.RemoveClass(layout, 'header-is-hidden');
 						}
 					},
 					false
@@ -51,8 +53,8 @@ namespace OutSystems.OSUI.Utils.HideOnScroll {
 	 * @export
 	 */
 	export function Init(): void {
-		const header: HTMLElement = document.querySelector('.header');
-		if (header !== null) {
+		const header = OSUIFramework.Helper.Dom.ClassSelector(document.body, 'header');
+		if (header) {
 			addEvents(header);
 		}
 	}

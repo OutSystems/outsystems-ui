@@ -9,7 +9,6 @@ namespace OSUIFramework.Event {
 	 * @implements {IEvent<T>}
 	 * @template T
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	export abstract class AbstractEvent<T> implements IEvent<T> {
 		private _handlers: Callbacks.OSGeneric[] = [];
 
@@ -35,8 +34,7 @@ namespace OSUIFramework.Event {
 			}
 		}
 
-		// eslint-disable-next-line  @typescript-eslint/no-unused-vars, @typescript-eslint/explicit-module-boundary-types
-		public trigger(data?: T, ...args): void {
+		public trigger(data?: T, ...args: unknown[]): void {
 			this._handlers.slice(0).forEach((h) => Helper.AsyncInvocation(h, data, ...args));
 		}
 	}

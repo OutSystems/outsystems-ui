@@ -281,6 +281,10 @@ namespace OSUIFramework.Helper {
 
 		/******************** PUBLIC GETTERS ********************/
 
+		public static get HasAccessibilityEnabled(): boolean {
+			return Helper.Dom.ClassSelector(document.body, Constants.HasAccessibilityClass) !== undefined;
+		}
+
 		/**
 		 * Getter that returns if the application is running in a desktop device.
 		 *

@@ -63,6 +63,7 @@ namespace OSUIFramework.GlobalEnum {
 		FieldSet = 'fieldset',
 		Input = 'input',
 		Link = 'a',
+		Span = 'span',
 	}
 
 	/**

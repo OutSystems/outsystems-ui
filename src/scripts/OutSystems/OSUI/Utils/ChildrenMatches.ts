@@ -8,10 +8,13 @@ namespace OutSystems.OSUI.Utils {
 	 * @param {*} selector
 	 * @return {*}  {*}
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	export function ChildrenMatches(elem: HTMLElement, selector: string): any {
-		return Array.prototype.filter.call(elem.children, function (child) {
-			return child.matches(selector);
-		});
+	export function ChildrenMatches(elem: HTMLElement, selector: string): Element[] {
+		let matchingChildren = [];
+
+		if (elem) {
+			matchingChildren = [...elem.children].filter((child) => child.matches(selector));
+		}
+
+		return matchingChildren;
 	}
 }
