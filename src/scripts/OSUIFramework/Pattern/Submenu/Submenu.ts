@@ -14,7 +14,7 @@ namespace OSUIFramework.Patterns.Submenu {
 		private _hasActiveLinks = false;
 		private _hasElements = false;
 		private _isOpen = false;
-		private _submenuActiveLinksElement: NodeList;
+		private _submenuActiveLinksElement: HTMLElement;
 		private _submenuAllLinksElement: HTMLAnchorElement[];
 		private _submenuClickedElement: HTMLElement;
 		private _submenuEventType: GlobalEnum.HTMLEvent;
@@ -27,7 +27,14 @@ namespace OSUIFramework.Patterns.Submenu {
 			super(uniqueId, new SubmenuConfig(configs));
 		}
 
-		// Close submenu, when BodyOnCLick event is triggered
+		/**
+		 * Close submenu, when BodyOnCLick event is triggered
+		 *
+		 * @private
+		 * @param {string} args
+		 * @param {MouseEvent} e
+		 * @memberof Submenu
+		 */
 		private _bodyClickCallback(args: string, e: MouseEvent): void {
 			if (!this._selfElem.contains(e.target as HTMLElement)) {
 				if (Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen) && !this._isOpen) {
@@ -42,13 +49,25 @@ namespace OSUIFramework.Patterns.Submenu {
 			e.stopPropagation();
 		}
 
-		// Trigger the submenu at toggle behaviour
+		/**
+		 * Trigger the submenu at toggle behaviour
+		 *
+		 * @private
+		 * @param {MouseEvent} e
+		 * @memberof Submenu
+		 */
 		private _clickCallback(e: MouseEvent): void {
 			this._toggleSubmenu();
 			e.stopPropagation();
 		}
 
-		// This event was created to fix the issue on Native builds that can't focus on element clicked.
+		/**
+		 * This event was created to fix the issue on Native builds that can't focus on element clicked.
+		 *
+		 * @private
+		 * @param {MouseEvent} e
+		 * @memberof Submenu
+		 */
 		private _clickLinksCallback(e: MouseEvent): void {
 			this._submenuClickedElement = e.target as HTMLElement;
 			this._submenuClickedElement.focus();
@@ -56,13 +75,25 @@ namespace OSUIFramework.Patterns.Submenu {
 			e.preventDefault();
 		}
 
-		// Trigger the submenu at toggle behaviour
+		/**
+		 * Trigger the submenu at toggle behaviour
+		 *
+		 * @private
+		 * @param {MouseEvent} e
+		 * @memberof Submenu
+		 */
 		private _focusCallback(e: MouseEvent): void {
 			this._submenuHeaderElement.focus();
 			e.stopPropagation();
 		}
 
-		// Call methods to open or close, based ok e.key and behavior applied
+		/**
+		 * Call methods to open or close, based ok e.key and behavior applied
+		 *
+		 * @private
+		 * @param {KeyboardEvent} e
+		 * @memberof Submenu
+		 */
 		private _keypressCallback(e: KeyboardEvent): void {
 			const _clickedElem: HTMLElement = e.target as HTMLElement;
 			const _closestElem: HTMLElement = _clickedElem.closest(Constants.Dot + Enum.CssClass.Pattern);
@@ -71,7 +102,7 @@ namespace OSUIFramework.Patterns.Submenu {
 			const _isTabPressed = e.key === GlobalEnum.Keycodes.Tab;
 			const _isShiftPressed = e.shiftKey;
 
-			//Open the submenu
+			// Open the submenu
 			if (_isEnterPressed) {
 				this._toggleSubmenu();
 			}
@@ -92,7 +123,13 @@ namespace OSUIFramework.Patterns.Submenu {
 			e.stopPropagation();
 		}
 
-		// Prevent close submenu based on a uniqueID validation, when his event is triggered
+		/**
+		 * Prevent close submenu based on a uniqueID validation, when his event is triggered
+		 *
+		 * @private
+		 * @param {string} element
+		 * @memberof Submenu
+		 */
 		private _openCallback(element: string): void {
 			if (element !== this.uniqueId) {
 				if (this._isOpen) {
@@ -101,7 +138,12 @@ namespace OSUIFramework.Patterns.Submenu {
 			}
 		}
 
-		// Trigger the submenu behavior based on visibility
+		/**
+		 * Trigger the submenu behavior based on visibility
+		 *
+		 * @private
+		 * @memberof Submenu
+		 */
 		private _toggleSubmenu(): void {
 			if (this._isOpen) {
 				this.close();
@@ -118,7 +160,12 @@ namespace OSUIFramework.Patterns.Submenu {
 			}
 		}
 
-		// Set the cssClasses that should be assigned to the element on it's initialization
+		/**
+		 * Set the cssClasses that should be assigned to the element on it's initialization
+		 *
+		 * @private
+		 * @memberof Submenu
+		 */
 		private _updateA11yProperties(): void {
 			Helper.A11Y.AriaExpanded(this._submenuHeaderElement, this._isOpen.toString());
 			Helper.A11Y.AriaHidden(this._submenuLinksElement, (!this._isOpen).toString());
@@ -129,7 +176,12 @@ namespace OSUIFramework.Patterns.Submenu {
 			});
 		}
 
-		// Add the Accessibility Attributes values
+		/**
+		 * Add the A11Y attributes values
+		 *
+		 * @protected
+		 * @memberof Submenu
+		 */
 		protected setA11yProperties(): void {
 			if (Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen)) {
 				this._isOpen = true;
@@ -145,7 +197,12 @@ namespace OSUIFramework.Patterns.Submenu {
 			this._updateA11yProperties();
 		}
 
-		// Add Pattern Events
+		/**
+		 * Add Pattern Events
+		 *
+		 * @protected
+		 * @memberof Submenu
+		 */
 		protected setCallbacks(): void {
 			// Define the callbacks that will be used
 			this._eventClick = this._clickCallback.bind(this);
@@ -186,14 +243,20 @@ namespace OSUIFramework.Patterns.Submenu {
 			}
 		}
 
-		// Update info based on htmlContent
+		/**
+		 * Update info based on htmlContent
+		 *
+		 * @protected
+		 * @memberof Submenu
+		 */
 		protected setHtmlElements(): void {
 			this._submenuHeaderElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternHeader);
 			this._submenuItemElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternItem);
 			this._submenuLinksElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternLinks);
 			this._submenuAllLinksElement = [...this._submenuLinksElement.querySelectorAll(GlobalEnum.HTMLElement.Link)];
-			this._submenuActiveLinksElement = this._submenuLinksElement.querySelectorAll(
-				Constants.Dot + Enum.CssClass.PatternActive
+			this._submenuActiveLinksElement = Helper.Dom.ClassSelector(
+				this._submenuLinksElement,
+				Enum.CssClass.PatternActive
 			);
 
 			// Check if submenu has childs
@@ -202,12 +265,17 @@ namespace OSUIFramework.Patterns.Submenu {
 			}
 
 			// Check if submenu contains elements with active class
-			if (this._submenuActiveLinksElement.length > 0) {
+			if (this._submenuActiveLinksElement) {
 				this._hasActiveLinks = true;
 			}
 		}
 
-		// Set the cssClasses that should be assigned to the element on it's initialization
+		/**
+		 * Set the cssClasses that should be assigned to the element on it's initialization
+		 *
+		 * @protected
+		 * @memberof Submenu
+		 */
 		protected setInitialStates(): void {
 			// Add active class to pattern based on links whit active state
 			if (this._hasActiveLinks) {
@@ -222,7 +290,12 @@ namespace OSUIFramework.Patterns.Submenu {
 			}
 		}
 
-		// Remove all the assigned Events
+		/**
+		 * Remove all the assigned Events
+		 *
+		 * @protected
+		 * @memberof Submenu
+		 */
 		protected unsetCallbacks(): void {
 			// Remove events only if has elements inside
 			if (this._hasElements) {
@@ -246,6 +319,7 @@ namespace OSUIFramework.Patterns.Submenu {
 				this._globalEventOpen
 			);
 
+			// Remove handler from Event Manager
 			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 				OSUIFramework.Event.Type.BodyOnClick,
@@ -261,7 +335,12 @@ namespace OSUIFramework.Patterns.Submenu {
 			this._globalEventBody = undefined;
 		}
 
-		// Reassign the HTML elements to undefined, preventing memory leaks
+		/**
+		 * Reassign the HTML elements to undefined, preventing memory leaks
+		 *
+		 * @protected
+		 * @memberof Submenu
+		 */
 		protected unsetHtmlElements(): void {
 			this._submenuHeaderElement = undefined;
 			this._submenuItemElement = undefined;
@@ -270,6 +349,11 @@ namespace OSUIFramework.Patterns.Submenu {
 			this._submenuActiveLinksElement = undefined;
 		}
 
+		/**
+		 * Built the Submenu
+		 *
+		 * @memberof Submenu
+		 */
 		public build(): void {
 			super.build();
 
@@ -285,7 +369,11 @@ namespace OSUIFramework.Patterns.Submenu {
 			this.finishBuild();
 		}
 
-		// Close Submenu
+		/**
+		 * Close Submenu
+		 *
+		 * @memberof Submenu
+		 */
 		public close(): void {
 			Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
 
@@ -305,7 +393,11 @@ namespace OSUIFramework.Patterns.Submenu {
 			);
 		}
 
-		// Destroy the Submenu
+		/**
+		 * Destroy the Submenu
+		 *
+		 * @memberof Submenu
+		 */
 		public dispose(): void {
 			super.dispose();
 
@@ -316,7 +408,11 @@ namespace OSUIFramework.Patterns.Submenu {
 			this.unsetHtmlElements();
 		}
 
-		// Open Submenu
+		/**
+		 * Open Submenu
+		 *
+		 * @memberof Submenu
+		 */
 		public open(): void {
 			Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternIsOpen);
 
