@@ -64,7 +64,27 @@ namespace OSUIFramework.Helper {
 		}
 
 		/**
-		 * Method that will enable the aria-hidden
+		 * Method that will disable the aria-popup
+		 *
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @returns
+		 */
+		public static AriaHasPopupFalse(element: HTMLElement): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Haspopup, Constants.A11YAttributes.States.False);
+		}
+
+		/**
+		 * Method that will enable the aria-popup
+		 *
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @returns
+		 */
+		public static AriaHasPopupTrue(element: HTMLElement): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Haspopup, Constants.A11YAttributes.States.True);
+		}
+
+		/**
+		 * Method that will disable the aria-hidden
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
@@ -187,6 +207,21 @@ namespace OSUIFramework.Helper {
 		 */
 		public static RoleButton(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Button);
+		}
+
+		/**
+		 * Method that will set the Complementary role
+		 *
+		 * @static
+		 * @param {HTMLElement} element
+		 * @memberof A11Y
+		 */
+		public static RoleComplementary(element: HTMLElement): void {
+			Dom.Attribute.Set(
+				element,
+				Constants.A11YAttributes.Role.AttrName,
+				Constants.A11YAttributes.Role.Complementary
+			);
 		}
 
 		/**
