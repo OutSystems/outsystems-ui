@@ -43,11 +43,11 @@ namespace OSUIFramework.Patterns.ButtonLoading {
 		private _setIsLoading(isLoading: boolean): void {
 			if (isLoading) {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsLoading);
-				Helper.A11Y.TabIndexFalse(this._buttonElement);
+				this.isBuilt && Helper.A11Y.TabIndexFalse(this._buttonElement);
 				this._buttonElement.blur();
 			} else {
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsLoading);
-				Helper.A11Y.TabIndexTrue(this._buttonElement);
+				this.isBuilt && Helper.A11Y.TabIndexTrue(this._buttonElement);
 			}
 		}
 
