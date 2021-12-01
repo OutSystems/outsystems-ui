@@ -34,6 +34,9 @@ declare global {
 		Splide: typeof OriginalSplide;
 		SplideOpts: typeof OriginalSplide.defaults;
 		wNumb: typeof window.wNumb;
+
+		// DropdownSearch
+		VirtualSelect: typeof VirtualSelect;
 	}
 
 	interface Navigator {
@@ -56,5 +59,22 @@ declare global {
 	type FlatpickrLocale = flatpickrLocale;
 
 	// DropDown => Virtual Select
-	type VirtualScroll = any;
+	type VirtualSelect = any;
+	type VirtualSelectMethods = {
+		addOption: () => {};
+		close: () => {};
+		destroy: () => {};
+		getDisplayValue: () => {};
+		getNewValue: () => {};
+		getSelectedOptions: () => {};
+		hide: () => {};
+		isAllSelected: () => {};
+		open: () => {};
+		reset: () => {};
+		setDisabledOptions: () => {};
+		setOptions: () => {};
+		setValue: () => {};
+		show: () => {};
+		toggleSelectAll: () => {};
+	};
 }

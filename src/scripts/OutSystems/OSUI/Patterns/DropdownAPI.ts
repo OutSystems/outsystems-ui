@@ -12,7 +12,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 	export function ChangeProperty(dropdownId: string, propertyName: string, propertyValue: any): void {
-		const _dropdownItem = GetDatePickerItemById(dropdownId);
+		const _dropdownItem = GetDropdownById(dropdownId);
 
 		_dropdownItem.changeProperty(propertyName, propertyValue);
 	}
@@ -48,7 +48,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @param {string} dropdownId
 	 */
 	export function Dispose(dropdownId: string): void {
-		const _dropdownItem = GetDatePickerItemById(dropdownId);
+		const _dropdownItem = GetDropdownById(dropdownId);
 
 		_dropdownItem.dispose();
 
@@ -72,9 +72,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @param {string} dropdownId ID of the DropdownId that will be looked for.
 	 * @return {*}  {OSUIFramework.Patterns.Dropdown.IDropdown}
 	 */
-	export function GetDatePickerItemById(dropdownId: string): OSUIFramework.Patterns.Dropdown.IDropdown {
+	export function GetDropdownById(dropdownId: string): OSUIFramework.Patterns.Dropdown.IDropdown {
 		return OSUIFramework.Helper.MapOperation.FindInMap(
-			'Dropdown',
+			OSUIFramework.GlobalEnum.PatternsNames.Dropdown,
 			dropdownId,
 			_dropdownItemsMap
 		) as OSUIFramework.Patterns.Dropdown.IDropdown;
@@ -88,7 +88,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @return {*}  {OSUIFramework.Patterns.Dropdown.IDropdown}
 	 */
 	export function Initialize(dropdownId: string): OSUIFramework.Patterns.Dropdown.IDropdown {
-		const _dropdownItem = GetDatePickerItemById(dropdownId);
+		const _dropdownItem = GetDropdownById(dropdownId);
 
 		_dropdownItem.build();
 
@@ -108,7 +108,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 		eventName: string,
 		callback: OSUIFramework.Callbacks.OSGeneric
 	): void {
-		const _datePicker = this.GetDatePickerItemById(dropdownId);
+		const _datePicker = this.GetDropdownById(dropdownId);
 
 		_datePicker.registerProviderCallback(eventName, callback);
 	}

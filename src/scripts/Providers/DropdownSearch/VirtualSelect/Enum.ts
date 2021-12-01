@@ -3,8 +3,5 @@ namespace Providers.DropdownSearch.VirtualSelect.Enum {
 	// Events name
 	export enum Events {
 		Change = 'change',
-		Close = 'beforeClose',
-		Open = 'beforeOpen',
-		Reset = 'reset',
 	}
 }
