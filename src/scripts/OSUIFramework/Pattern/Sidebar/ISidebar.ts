@@ -8,5 +8,5 @@ namespace OSUIFramework.Patterns.Sidebar {
 	 * @extends {Interface.IPattern}
 	 * @extends {Interface.ICallback}
 	 */
-	export interface ISidebar extends Interface.IPattern, Interface.ICallback {}
+	export interface ISidebar extends Interface.IPattern, Interface.ICallback, Interface.IOpenable {}
 }
