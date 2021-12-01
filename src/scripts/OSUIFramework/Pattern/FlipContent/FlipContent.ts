@@ -5,193 +5,230 @@ namespace OSUIFramework.Patterns.FlipContent {
 	 */
 	export class FlipContent extends AbstractPattern<FlipContentConfig> implements IFlipContent {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventOnKeyDown: any;
+		private _eventClick: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventOnToogleClick: any;
-
-		// The Flip Content card (back) Element
-		private _flipCardBack: HTMLElement;
-		// The Flip Content card (front) Element
-		private _flipCardFront: HTMLElement;
-		// The Flip Content Element
-		private _flipElement: HTMLElement;
+		private _eventKeydown: any;
 		//The Flip Content content wrapper
-		private _flipWrapper: HTMLElement;
+		private _flipWrapperElement: HTMLElement;
 
 		// Callback function to trigger the click event on the platform
-		private _onToogleClick: Callbacks.OSFlipContentFlipEvent;
+		private _plataformEventFlip: Callbacks.OSFlipContentFlipEvent;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new FlipContentConfig(configs));
-
-			this._eventOnKeyDown = this._onKeyDownPress.bind(this);
-			this._eventOnToogleClick = this.triggerFlip.bind(this);
 		}
-
-		private _onKeyDownPress(e: KeyboardEvent): void {
-			//If ENTER or SPACE use toggleClick to validate & If ESC is pressed then we need to close Flip
+		/**
+		 * Method to toggle pattern on keypress
+		 *
+		 * @private
+		 * @param {KeyboardEvent}
+		 * @memberof FlipContent
+		 */
+		private _keydownCallback(e: KeyboardEvent): void {
+			//If ENTER or SPACE use toggle to validate & If ESC is pressed then we need to close Flip
 			if (
 				e.key === GlobalEnum.Keycodes.Enter ||
 				e.key === GlobalEnum.Keycodes.Space ||
 				(e.key === GlobalEnum.Keycodes.Escape && this.configs.IsFlipped)
 			) {
-				this.triggerFlip();
+				this.toggleFlipContent();
 				e.preventDefault();
 				e.stopPropagation();
 			}
 		}
+		/**
+		 * Add Attributes and it's values
+		 *
+		 * @memberof FlipContent
+		 */
 
-		// Method to remove the events on the pattern's first render
-		private _removeEvents(): void {
-			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeyDown);
-			this._flipWrapper.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnToogleClick);
+		private _setDataAttribute(): void {
+			Helper.Attribute.Set(this._flipWrapperElement, Enum.CssClass.PatternDataFlipped, this.configs.IsFlipped);
 		}
+		/**
+		 * Method to set the classes on the pattern's first render, toggle click & parameters changed
+		 *
+		 * @memberof FlipContent
+		 */
 
-		// Set the accessibilty attributes
-		private _setAccessibilityAttributes(): void {
-			Helper.Attribute.Set(
-				this._selfElem,
-				Constants.A11YAttributes.TabIndex,
-				Constants.A11YAttributes.States.TabIndexShow
-			);
-
-			Helper.Attribute.Set(
-				this._selfElem,
-				Constants.A11YAttributes.Role.AttrName,
-				Constants.A11YAttributes.Role.Button
-			);
-
-			Helper.Attribute.Set(
-				this._selfElem,
-				Constants.A11YAttributes.AriaLive.AttrName,
-				Constants.A11YAttributes.AriaLive.Polite
-			);
-
-			Helper.Attribute.Set(
-				this._selfElem,
-				Constants.A11YAttributes.Aria.Atomic,
-				Constants.A11YAttributes.States.True
-			);
-		}
-
-		// Add Attributes and it's values
-		private _setAttributes(): void {
-			Helper.Attribute.Set(this._flipWrapper, Enum.CssClass.DataFlipped, this.configs.IsFlipped);
-		}
-
-		// Method to set the variables on the pattern's first render
-		private _setFlipContent(): void {
-			this._flipElement = this._selfElem;
-			this._flipWrapper = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.FlipContainer);
-		}
-
-		// Method to set the classes on the pattern's first render, toggle click & parameters changed
-		private _setUpClasses(): void {
+		private _toggleClasses(): void {
 			if (this.configs.IsFlipped) {
-				Helper.Style.AddClass(this._flipElement, Enum.CssClass.IsFlipped);
+				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternIsFlipped);
 			} else {
-				Helper.Style.RemoveClass(this._flipElement, Enum.CssClass.IsFlipped);
+				Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternIsFlipped);
 			}
 		}
+		/**
+		 * Method that triggers the toggle event on the platform
+		 *
+		 * @memberof FlipContent
+		 */
 
-		// Method to set the events on the pattern's first render
-		private _setUpEvents(): void {
-			if (this.configs.FlipSelf) {
-				this._flipElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeyDown);
-				this._flipWrapper.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnToogleClick);
-
-				Helper.Style.AddClass(this._flipWrapper, Enum.CssClass.FlipSelf);
-			} else {
-				this._flipElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeyDown);
-				this._flipWrapper.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnToogleClick);
-
-				Helper.Style.RemoveClass(this._flipWrapper, Enum.CssClass.FlipSelf);
-			}
+		private _triggerPlatformEvent(): void {
+			Helper.AsyncInvocation(this._plataformEventFlip, this.widgetId);
 		}
+		/**
+		 * Method used to update the A11Y attributes
+		 *
+		 * @memberof FlipContent
+		 */
 
-		// Method that triggers the toggle event on the platform
-		private _triggerToggleClick(): void {
-			if (this._onToogleClick) {
-				Helper.AsyncInvocation(() => {
-					this._onToogleClick(this.widgetId, this.configs.IsFlipped);
-				});
-			}
-		}
-
-		// Method used to set and update the Accessibility attributes value
-		private _updateAccessibiltyAttrs(): void {
+		private _updateA11yProperties(): void {
 			if (this._configs.FlipSelf) {
-				this._setAccessibilityAttributes();
+				Helper.A11Y.AriaAtomicTrue(this._selfElem);
+				Helper.A11Y.TabIndexTrue(this._selfElem);
 			} else {
-				this._selfElem.blur();
-				Helper.Attribute.Remove(this._selfElem, Constants.A11YAttributes.AriaLive.AttrName);
-				Helper.Attribute.Remove(this._selfElem, Constants.A11YAttributes.Aria.Atomic);
-				Helper.Attribute.Remove(this._selfElem, Constants.A11YAttributes.Role.AttrName);
-				Helper.Attribute.Remove(this._selfElem, Constants.A11YAttributes.TabIndex);
+				Helper.A11Y.AriaAtomicFalse(this._selfElem);
+				Helper.A11Y.TabIndexFalse(this._selfElem);
 			}
 		}
+		/**
+		 * Set the A11Y attributes
+		 *
+		 * @memberof FlipContent
+		 */
 
-		// Building the Flip Content pattern
+		protected setA11yProperties(): void {
+			Helper.A11Y.AriaAtomicTrue(this._selfElem);
+			Helper.A11Y.TabIndexTrue(this._selfElem);
+			Helper.A11Y.RoleButton(this._selfElem);
+			Helper.A11Y.AriaLivePolite(this._selfElem);
+		}
+		/**
+		 * Method to set the events
+		 *
+		 * @memberof FlipContent
+		 */
+
+		protected setCallbacks(): void {
+			this._eventKeydown = this._keydownCallback.bind(this);
+			this._eventClick = this.toggleFlipContent.bind(this);
+
+			if (this.configs.FlipSelf) {
+				this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
+				this._flipWrapperElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
+
+				Helper.Style.AddClass(this._flipWrapperElement, Enum.CssClass.PatternFlipSelf);
+			} else {
+				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
+				this._flipWrapperElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
+
+				Helper.Style.RemoveClass(this._flipWrapperElement, Enum.CssClass.PatternFlipSelf);
+			}
+		}
+		/**
+		 * Method to set the HTML elements
+		 *
+		 * @memberof FlipContent
+		 */
+
+		protected setHtmlElements(): void {
+			this._flipWrapperElement = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternContainer);
+		}
+		/**
+		 * Method to remove the events
+		 *
+		 * @memberof FlipContent
+		 */
+
+		protected unsetCallbacks(): void {
+			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
+			this._flipWrapperElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
+
+			this._eventKeydown = undefined;
+			this._eventClick = undefined;
+		}
+		/**
+		 * Method to set the HTML elements
+		 *
+		 * @memberof FlipContent
+		 */
+
+		protected unsetHtmlElements(): void {
+			this._flipWrapperElement = undefined;
+		}
+
+		/**
+		 * Building Flip Content
+		 *
+		 * @memberof FlipContent
+		 */
 		public build(): void {
 			super.build();
 
-			this._setFlipContent();
+			this.setHtmlElements();
 
-			this._setUpEvents();
+			this.setCallbacks();
 
-			this._setUpClasses();
+			// Set the initial states
+			this._toggleClasses();
 
+			// Set the A11Y defaults
 			if (this._configs.FlipSelf) {
-				this._setAccessibilityAttributes();
+				this.setA11yProperties();
 			}
 
-			this._setAttributes();
+			// Set the data attribute
+			this._setDataAttribute();
 
 			this.finishBuild();
 		}
-
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		public changeProperty(propertyName: string, propertyValue: any): void {
-			switch (propertyName) {
-				case Enum.Properties.IsFlipped:
-					this.configs.IsFlipped = propertyValue;
-					this._setUpClasses();
-
-					break;
-				case Enum.Properties.FlipSelf:
-					this.configs.FlipSelf = propertyValue;
-					this._updateAccessibiltyAttrs();
-					this._setUpEvents();
-
-					break;
-				default:
-					super.changeProperty(propertyName, propertyValue);
-
-					break;
+		/**
+		 * Method to update value when a parameters changed occurs
+		 *
+		 * @param {string} propertyName
+		 * @param {unknown} propertyValue
+		 * @memberof FlipContent
+		 */
+		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			super.changeProperty(propertyName, propertyValue);
+			if (this.isBuilt) {
+				switch (propertyName) {
+					case Enum.Properties.IsFlipped:
+						this._toggleClasses();
+						break;
+					case Enum.Properties.FlipSelf:
+						this._updateA11yProperties();
+						this.setCallbacks();
+						break;
+				}
 			}
 		}
+		/**
+		 * Destroy pattern
+		 *
+		 * @memberof FlipContent
+		 */
 
-		// Destroying the Flip Content Pattern
 		public dispose(): void {
 			super.dispose();
-			this._removeEvents();
+			this.unsetCallbacks();
+			this.unsetHtmlElements();
 		}
+		/**
+		 * Register OnToogleClick clientAction as a callBack reference
+		 *
+		 * @memberof FlipContent
+		 */
 
-		// Register OnToogleClick clientAction as a callBack reference
 		public registerCallback(callback: Callbacks.OSFlipContentFlipEvent): void {
-			this._onToogleClick = callback;
+			this._plataformEventFlip = callback;
 		}
+		/**
+		 * Public method to trigger the flipping of the pattern and the event on the platform's side
+		 *
+		 * @memberof FlipContent
+		 */
 
-		// Public method to trigger the flipping of the pattern and the event on the platform's side
-		public triggerFlip(): void {
+		public toggleFlipContent(): void {
 			this.configs.IsFlipped = !this.configs.IsFlipped;
 
-			this._setUpClasses();
+			this._toggleClasses();
 
-			this._setAttributes();
+			this._setDataAttribute();
 
-			this._triggerToggleClick();
+			this._triggerPlatformEvent();
 		}
 	}
 }
