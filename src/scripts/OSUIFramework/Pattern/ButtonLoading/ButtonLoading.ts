@@ -59,11 +59,11 @@ namespace OSUIFramework.Patterns.ButtonLoading {
 		 * @memberof ButtonLoading
 		 */
 		private _setLoadingLabel(showSpinnerOnly: boolean): void {
-			if (showSpinnerOnly) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.ShowSpinnerOnly);
-			} else if (showSpinnerOnly === false && this.isBuilt) {
-				//let's remove the class only and only when the pattern is already built and the showSpinnerOnly is false.
+			//let's remove the class only and only when the pattern is already built and the showSpinnerOnly is false.
+			if (showSpinnerOnly && this.isBuilt) {
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.ShowSpinnerOnly);
+			} else if (showSpinnerOnly === false) {
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.ShowSpinnerOnly);
 			}
 		}
 
