@@ -240,7 +240,11 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static TabIndexFalse(element: HTMLElement): void {
-			Dom.Attribute.Set(element, Constants.A11YAttributes.TabIndex, Constants.A11YAttributes.States.TabIndexShow);
+			Dom.Attribute.Set(
+				element,
+				Constants.A11YAttributes.TabIndex,
+				Constants.A11YAttributes.States.TabIndexHidden
+			);
 		}
 
 		/**
@@ -250,11 +254,7 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static TabIndexTrue(element: HTMLElement): void {
-			Dom.Attribute.Set(
-				element,
-				Constants.A11YAttributes.TabIndex,
-				Constants.A11YAttributes.States.TabIndexHidden
-			);
+			Dom.Attribute.Set(element, Constants.A11YAttributes.TabIndex, Constants.A11YAttributes.States.TabIndexShow);
 		}
 	}
 }
