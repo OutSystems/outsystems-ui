@@ -19,7 +19,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 			super(uniqueId, new FlipContentConfig(configs));
 		}
 		/**
-		 * Method to toggle pattern on keypress
+		 * Toggle pattern on keypress
 		 *
 		 * @private
 		 * @param {KeyboardEvent}
@@ -47,7 +47,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 			Helper.Attribute.Set(this._flipWrapperElement, Enum.CssClass.PatternDataFlipped, this.configs.IsFlipped);
 		}
 		/**
-		 * Method to set the classes on the pattern's first render, toggle click & parameters changed
+		 * Set the classes on the pattern's first render, toggle click & parameters changed
 		 *
 		 * @memberof FlipContent
 		 */
@@ -60,7 +60,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 			}
 		}
 		/**
-		 * Method that triggers the toggle event on the platform
+		 * Triggers the toggle event on the platform
 		 *
 		 * @memberof FlipContent
 		 */
@@ -69,7 +69,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 			Helper.AsyncInvocation(this._plataformEventFlip, this.widgetId);
 		}
 		/**
-		 * Method used to update the A11Y attributes
+		 * Update the A11Y attributes
 		 *
 		 * @memberof FlipContent
 		 */
@@ -96,7 +96,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 			Helper.A11Y.AriaLivePolite(this._selfElem);
 		}
 		/**
-		 * Method to set the events
+		 * Set the events
 		 *
 		 * @memberof FlipContent
 		 */
@@ -118,7 +118,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 			}
 		}
 		/**
-		 * Method to set the HTML elements
+		 * Set the HTML elements
 		 *
 		 * @memberof FlipContent
 		 */
@@ -127,7 +127,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 			this._flipWrapperElement = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternContainer);
 		}
 		/**
-		 * Method to remove the events
+		 * Remove the events
 		 *
 		 * @memberof FlipContent
 		 */
@@ -140,7 +140,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 			this._eventClick = undefined;
 		}
 		/**
-		 * Method to set the HTML elements
+		 * Set the HTML elements
 		 *
 		 * @memberof FlipContent
 		 */
@@ -175,7 +175,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 			this.finishBuild();
 		}
 		/**
-		 * Method to update value when a parameters changed occurs
+		 * Update value when a parameters changed occurs
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
@@ -196,7 +196,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 			}
 		}
 		/**
-		 * Destroy pattern
+		 * Destroy FlipContent
 		 *
 		 * @memberof FlipContent
 		 */
