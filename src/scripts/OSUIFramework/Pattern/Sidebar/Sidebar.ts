@@ -41,14 +41,20 @@ namespace OSUIFramework.Patterns.Sidebar {
 		// Store the minimal speed for a swipe to be triggered
 		private readonly _swipeTriggerSpeed = 0.3;
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		constructor(uniqueId: string, configs: any) {
+		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SidebarConfig(configs));
 
 			this._currentDirectionCssClass = Enum.CssClass.Direction + this.configs.Direction;
 		}
 
-		// Method to check if current gesture is withing sidebar boundaries
+		/**
+		 * Method to check if current gesture is withing sidebar boundaries
+		 *
+		 * @private
+		 * @param {number} x
+		 * @return {*}  {boolean}
+		 * @memberof Sidebar
+		 */
 		private _checkIsDraggingInsideBounds(x: number): boolean {
 			const isLeft = this._currentDirectionCssClass === GlobalEnum.Direction.Left;
 
@@ -64,6 +70,12 @@ namespace OSUIFramework.Patterns.Sidebar {
 			return directionThreshold;
 		}
 
+		/**
+		 * Actual method that knows what is to close the sidebar.
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
 		private _closeSidebar(): void {
 			this.configs.IsOpen = false;
 
@@ -79,6 +91,12 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 		}
 
+		/**
+		 * Actual method that knows what is to open the sidebar.
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
 		private _openSidebar() {
 			Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsOpen);
 
@@ -94,13 +112,18 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._setFocusableElementsTabindex();
 		}
 
-		// Overlay onClick event to close the Sidebar
+		/**
+		 * Overlay onClick event to close the Sidebar
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
 		private _overlayClickCallback(): void {
 			this.close();
 		}
 
 		/**
-		 * Set the Sidebar opening/closing direction
+		 * Set the Sidebar opening/closing direction.
 		 *
 		 * @private
 		 * @memberof Sidebar
@@ -114,7 +137,12 @@ namespace OSUIFramework.Patterns.Sidebar {
 			Helper.Dom.Styles.AddClass(this._selfElem, this._currentDirectionCssClass);
 		}
 
-		// Method that will handle the tabindex value of the elements inside the Sidebar
+		/**
+		 * Method that will handle the tabindex value of the elements inside the Sidebar.
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
 		private _setFocusableElementsTabindex(): void {
 			const setA11YtabIndex = this.configs.IsOpen ? Helper.A11Y.TabIndexTrue : Helper.A11Y.TabIndexFalse;
 
@@ -125,7 +153,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		}
 
 		/**
-		 * Sets the Sidebar overlay
+		 * Sets the Sidebar overlay.
 		 *
 		 * @private
 		 * @memberof Sidebar
@@ -142,6 +170,8 @@ namespace OSUIFramework.Patterns.Sidebar {
 					Helper.AsyncInvocation(() => {
 						this._overlayElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.Overlay);
 						this._overlayElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOverlayClick);
+						Helper.A11Y.AriaHiddenTrue(this._sidebarAsideElem);
+						Helper.A11Y.RoleButton(this._overlayElement);
 					});
 				} else {
 					this._overlayElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOverlayClick);
@@ -154,7 +184,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		}
 
 		/**
-		 * Set the cssClasses that should be assigned to the element on it's initialization
+		 * Set the cssClasses that should be assigned to the element on it's initialization.
 		 *
 		 * @private
 		 * @memberof Sidebar
@@ -170,7 +200,13 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._setHasOverlay();
 		}
 
-		// Method to handle the overlay transition on gestures
+		/**
+		 * Method to handle the overlay transition on gestures.
+		 *
+		 * @private
+		 * @param {number} x
+		 * @memberof Sidebar
+		 */
 		private _setOverlayTransition(x: number): void {
 			const isLeft = this.configs.Direction === GlobalEnum.Direction.Left;
 			const overlay = this._overlayElement;
@@ -188,12 +224,24 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 		}
 
-		// Set the Sidebar width
+		/**
+		 * Set the Sidebar width.
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
 		private _setWidth(): void {
 			Helper.Dom.Styles.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, this.configs.Width);
 		}
 
-		// Method that will handle the tab navigation and sidebar closing on Escape
+		/**
+		 * Method that will handle the tab navigation and sidebar closing on Escape.
+		 *
+		 * @private
+		 * @param {KeyboardEvent} e
+		 * @return {*}  {void}
+		 * @memberof Sidebar
+		 */
 		private _sidebarKeypressCallback(e: KeyboardEvent): void {
 			const isTabPressed = e.key === GlobalEnum.Keycodes.Tab;
 			const isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
@@ -221,7 +269,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		}
 
 		/**
-		 * Toggle the Sidebar and trigger toggle event
+		 * Toggle the Sidebar and trigger toggle event.
 		 *
 		 * @private
 		 * @param {boolean} isToOpen
@@ -237,7 +285,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		}
 
 		/**
-		 * Method that triggers the OnToggle event
+		 * Method that triggers the OnToggle event.
 		 *
 		 * @private
 		 * @memberof Sidebar
@@ -247,7 +295,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		}
 
 		/**
-		 * Method that updates the last positions on a gesture move
+		 * Method that updates the last positions on a gesture move.
 		 *
 		 * @private
 		 * @param {number} x
@@ -260,7 +308,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		}
 
 		/**
-		 * Method to update the UI when doing a gesture
+		 * Method to update the UI when doing a gesture.
 		 *
 		 * @private
 		 * @memberof Sidebar
@@ -273,6 +321,12 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 		}
 
+		/**
+		 * Sets the A11Y properties when the pattern is built.
+		 *
+		 * @protected
+		 * @memberof Sidebar
+		 */
 		protected setA11YProperties(): void {
 			Helper.A11Y.RoleComplementary(this._sidebarAsideElem);
 			Helper.A11Y.AriaHasPopupTrue(this._sidebarAsideElem);
@@ -291,12 +345,23 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 		}
 
+		/**
+		 * Sets the callbacks to be used in the pattern.
+		 *
+		 * @protected
+		 * @memberof Sidebar
+		 */
 		protected setCallbacks(): void {
 			this._eventSidebarKeypress = this._sidebarKeypressCallback.bind(this);
 			this._eventOverlayClick = this._overlayClickCallback.bind(this);
 		}
 
-		// Set the html references that will be used to manage the cssClasses and atribute properties
+		/**
+		 * Set the html references that will be used to manage the cssClasses and atribute properties
+		 *
+		 * @protected
+		 * @memberof Sidebar
+		 */
 		protected setHtmlElements(): void {
 			this._sidebarAsideElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.Aside);
 			this._overlayElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.Overlay);
@@ -312,6 +377,12 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._setWidth();
 		}
 
+		/**
+		 * Removes event listeners and callbacks.
+		 *
+		 * @protected
+		 * @memberof Sidebar
+		 */
 		protected unsetCallbacks(): void {
 			this._overlayElement?.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOverlayClick);
 			this._sidebarAsideElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
@@ -320,6 +391,12 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._eventOverlayClick = undefined;
 		}
 
+		/**
+		 * Release references to HTML elements.
+		 *
+		 * @protected
+		 * @memberof Sidebar
+		 */
 		protected unsetHtmlElements(): void {
 			this._sidebarAsideElem = undefined;
 			this._overlayElement = undefined;
@@ -525,27 +602,40 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._dragOrientation = '';
 			this._nativeGesturesParams.LastX = x;
 			this._nativeGesturesParams.LastY = y;
-			this._nativeGesturesParams.MoveX = this.configs.IsOpen
-				? 0
-				: this._currentDirectionCssClass === GlobalEnum.Direction.Left
-				? -parseInt(this.configs.Width)
-				: parseInt(this.configs.Width);
+
+			if (this.configs.IsOpen) {
+				this._nativeGesturesParams.MoveX = 0;
+			} else if (this._currentDirectionCssClass === GlobalEnum.Direction.Left) {
+				this._nativeGesturesParams.MoveX = -parseInt(this.configs.Width);
+			} else {
+				this._nativeGesturesParams.MoveX = parseInt(this.configs.Width);
+			}
 
 			Helper.Dom.Styles.AddClass(this._sidebarAsideElem, Constants.NoTransition);
 		}
 
+		/**
+		 * Method that opens the sidebar.
+		 *
+		 * @memberof Sidebar
+		 */
 		public open(): void {
 			if (this.configs.IsOpen === false) {
 				this._openSidebar();
 			}
 		}
 
-		// Set callbacks for the onToggle event
+		/**
+		 * Set callbacks for the onToggle event
+		 *
+		 * @param {Callbacks.OSSidebarToggleEvent} callback
+		 * @memberof Sidebar
+		 */
 		public registerCallback(callback: Callbacks.OSSidebarToggleEvent): void {
 			if (this._onToggle === undefined) {
 				this._onToggle = callback;
 			} else {
-				//console.warn
+				console.warn(`The ${GlobalEnum.PatternsNames.Sidebar} already has the toggle callback set.`);
 			}
 		}
 	}
