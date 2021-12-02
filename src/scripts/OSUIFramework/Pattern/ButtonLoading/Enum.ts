@@ -19,8 +19,8 @@ namespace OSUIFramework.Patterns.ButtonLoading.Enum {
 	 */
 	export enum CssClass {
 		Button = 'btn',
-		IsLoading = 'is--btn-loading',
-		ShowSpinnerOnly = 'show-spinner-only',
-		Spinner = 'spinner-animation',
+		IsLoading = 'osui-btn-loading--is-btn-loading',
+		ShowSpinnerOnly = 'osui-btn-loading-show-spinner-only',
+		Spinner = 'osui-btn-loading__spinner-animation',
 	}
 }
