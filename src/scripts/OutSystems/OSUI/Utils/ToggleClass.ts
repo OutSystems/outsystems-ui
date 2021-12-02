@@ -9,18 +9,16 @@ namespace OutSystems.OSUI.Utils {
 	 * @param {string} className
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ToggleClass(el: HTMLElement, state: any, className: string): void {
-		const classList = el.classList;
-
+	export function ToggleClass(element: HTMLElement, state: any, className: string): void {
 		if (!state) {
 			setTimeout(function () {
 				if (!state) {
-					classList.remove(className);
+					OSUIFramework.Helper.Dom.Styles.RemoveClass(element, className);
 				}
 			}, 500);
 		} else {
-			classList.add(className);
-			el.offsetHeight;
+			OSUIFramework.Helper.Dom.Styles.AddClass(element, className);
+			element.offsetHeight;
 		}
 	}
 }

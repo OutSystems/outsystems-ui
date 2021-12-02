@@ -10,6 +10,7 @@ namespace OutSystems.OSUI.Utils {
 	 * client actions are not in use by us!
 	 *  - Check the fact that webkitUserSelect prop is also deprecated!
 	 */
+	//TODO: Is this function necessary?
 	export function FixInputs(): void {
 		let originalPosition = 0;
 		let currentPosition = 0;

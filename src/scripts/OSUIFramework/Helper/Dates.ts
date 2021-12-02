@@ -29,7 +29,6 @@ namespace OSUIFramework.Helper {
 		 * @export
 		 * @param {string} date
 		 */
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public static IsNull(date: string): boolean {
 			// Check if the given date is a valid date
 			if (isNaN(Date.parse(date.split(' ')[0]))) {
@@ -56,7 +55,6 @@ namespace OSUIFramework.Helper {
 		 * @param {string} date example of date.
 		 */
 		public static SetServerDateFormat(date: string): void {
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			Dates._serverFormat = date.replace('13', 'DD').replace('10', 'MM').replace('1900', 'YYYY');
 		}
 	}
