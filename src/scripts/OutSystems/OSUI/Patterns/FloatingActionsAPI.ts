@@ -79,11 +79,15 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsAPI {
 	export function GetFloatingActionsById(
 		floatingActionsId: string
 	): OSUIFramework.Patterns.FloatingActions.IFloatingActions {
-		return OSUIFramework.Helper.MapOperation.FindInMap(
-			'FloatingAction',
-			floatingActionsId,
-			_floatingActionsMap
-		) as OSUIFramework.Patterns.FloatingActions.IFloatingActions;
+		// Protects the code when you have the pattern of removing children and parents
+		// In this case, FloatingActionsItem, when destorying itself, will have a hard time looking for something that has already been disposed.
+		if (_floatingActionsMap.has(floatingActionsId)) {
+			return OSUIFramework.Helper.MapOperation.FindInMap(
+				'FloatingAction',
+				floatingActionsId,
+				_floatingActionsMap
+			) as OSUIFramework.Patterns.FloatingActions.IFloatingActions;
+		}
 	}
 
 	/**
