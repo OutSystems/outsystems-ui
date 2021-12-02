@@ -106,6 +106,14 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			}
 		}
 
+		private _setUpDisabledState(): void {
+			if (this.configs.IsDisabled) {
+				Helper.Style.AddClass(this._selfElem, Enum.CssClass.Disabled);
+			} else {
+				Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.Disabled);
+			}
+		}
+
 		// Method that gets & stores the HTML elements of the Accordion Item
 		private _setUpElements(): void {
 			this._accordionTitle = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternTitle);
@@ -116,6 +124,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 		private _setUpEvents(): void {
 			if (this.configs.IsDisabled) {
+				this._removeEvents();
 				return;
 			}
 			this._accordionTitle.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventToggleAccordion);
@@ -132,12 +141,6 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.Open);
 				Helper.Style.RemoveClass(this._accordionContent, Enum.CssClass.Expanded);
 				this._setAriaExpanded(false, true);
-			}
-
-			if (this.configs.IsDisabled) {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClass.Disabled);
-			} else {
-				Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.Disabled);
 			}
 		}
 
@@ -203,6 +206,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			super.build();
 			this._setUpElements();
 			this._setUpInitialState();
+			this._setUpDisabledState();
 			this._setA11yAttributes();
 			this._setUpEvents();
 			super.finishBuild();
@@ -212,6 +216,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			switch (propertyName) {
 				case Enum.Properties.IsDisabled:
 					this.configs.IsDisabled = propertyValue;
+					this._setUpDisabledState();
 					this._setUpEvents();
 					break;
 				case Enum.Properties.IsExpanded:
