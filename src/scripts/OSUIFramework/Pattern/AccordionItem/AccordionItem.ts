@@ -220,8 +220,8 @@ namespace OSUIFramework.Patterns.AccordionItem {
 					this._setUpEvents();
 					break;
 				case Enum.Properties.IsExpanded:
-					this.configs.IsExpanded = propertyValue;
 					this._toggleAccordion();
+					this.configs.IsExpanded = propertyValue;
 					break;
 				default:
 					super.changeProperty(propertyName, propertyValue);
