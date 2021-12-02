@@ -93,11 +93,14 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 		//When destroying the whole pattern Accordion + Accordion Item, the parent is destroyed first
 		//So, there is no parent to disconnect from.
 		if (accordionItem) {
-			const accordion = GetAccordionByItem(accordionItemId);
+			try {
+				const accordion = GetAccordionByItem(accordionItemId);
 
-			if (accordion !== undefined) {
-				accordion.removeAccordionItem(accordionItem.uniqueId);
-			}
+				if (accordion !== undefined) {
+					accordion.removeAccordionItem(accordionItem.uniqueId);
+				}
+				// eslint-disable-next-line no-empty
+			} catch (e) {}
 		}
 
 		accordionItem.dispose();
