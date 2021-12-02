@@ -6,7 +6,12 @@ button.OSFillParent {
 }
 
 .is--loading .btn {
-	pointer-events: none;
+	&,
+	& * {
+		pointer-events: none;
+	}
+
+	display: inline-block;
 }
 
 .btn-loading {

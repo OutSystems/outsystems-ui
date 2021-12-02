@@ -5,14 +5,18 @@ namespace OutSystems.OSUI.Utils {
 	 *
 	 * @export
 	 */
-	export function HasMasterDetail(): void {
-		console.log('HasMasterDetail as run!');
+	//TODO: Is this function necessary?
+	export function HasMasterDetail(): boolean {
+		let returnOutput = false;
 
-		const masterDetail: HTMLElement = document.querySelector('.split-screen-wrapper');
+		const masterDetail = OSUIFramework.Helper.Dom.ClassSelector(document.body, 'split-screen-wrapper');
 		const content: HTMLElement = document.querySelector('.active-screen .content');
 
 		if (content && content.contains(masterDetail)) {
-			content.classList.add('has-master-detail');
+			OSUIFramework.Helper.Dom.Styles.AddClass(content, 'has-master-detail');
+			returnOutput = true;
 		}
+
+		return returnOutput;
 	}
 }
