@@ -44,7 +44,11 @@ namespace OSUIFramework.Patterns.FlipContent {
 		 */
 
 		private _setDataAttribute(): void {
-			Helper.Attribute.Set(this._flipWrapperElement, Enum.CssClass.PatternDataFlipped, this.configs.IsFlipped);
+			Helper.Dom.Attribute.Set(
+				this._flipWrapperElement,
+				Enum.CssClass.PatternDataFlipped,
+				this.configs.IsFlipped
+			);
 		}
 		/**
 		 * Set the classes on the pattern's first render, toggle click & parameters changed
@@ -54,9 +58,9 @@ namespace OSUIFramework.Patterns.FlipContent {
 
 		private _toggleClasses(): void {
 			if (this.configs.IsFlipped) {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternIsFlipped);
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsFlipped);
 			} else {
-				Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternIsFlipped);
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsFlipped);
 			}
 		}
 		/**
@@ -75,7 +79,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 		 */
 
 		private _updateA11yProperties(): void {
-			if (this._configs.FlipSelf) {
+			if (this.configs.FlipSelf) {
 				Helper.A11Y.AriaAtomicTrue(this._selfElem);
 				Helper.A11Y.TabIndexTrue(this._selfElem);
 			} else {
@@ -109,12 +113,12 @@ namespace OSUIFramework.Patterns.FlipContent {
 				this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
 				this._flipWrapperElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
 
-				Helper.Style.AddClass(this._flipWrapperElement, Enum.CssClass.PatternFlipSelf);
+				Helper.Dom.Styles.AddClass(this._flipWrapperElement, Enum.CssClass.PatternFlipSelf);
 			} else {
 				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
 				this._flipWrapperElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
 
-				Helper.Style.RemoveClass(this._flipWrapperElement, Enum.CssClass.PatternFlipSelf);
+				Helper.Dom.Styles.RemoveClass(this._flipWrapperElement, Enum.CssClass.PatternFlipSelf);
 			}
 		}
 		/**
@@ -165,7 +169,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 			this._toggleClasses();
 
 			// Set the A11Y defaults
-			if (this._configs.FlipSelf) {
+			if (this.configs.FlipSelf) {
 				this.setA11yProperties();
 			}
 
