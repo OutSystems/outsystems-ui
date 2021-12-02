@@ -6,7 +6,7 @@ namespace OSUIFramework.Patterns.Dropdown {
 		public NoResultsText: string;
 		public OptionsList: string[];
 		public SearchText: string;
-		public SelectedOption: string[];
+		public SelectedOptions: DropDownOption;
 		public ShowCheckboxes: boolean;
 		public Type: string;
 

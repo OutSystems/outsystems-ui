@@ -20,7 +20,7 @@ namespace Providers.DropdownSearch.VirtualSelect {
 
 		// Provider reference
 		public provider: VirtualSelect;
-		public providerMethods: VirtualSelectMethods;
+		public providerElementMethods: VirtualSelectElementMethods;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new VirtualSelectConfig(configs));
@@ -33,8 +33,7 @@ namespace Providers.DropdownSearch.VirtualSelect {
 
 			// Create the provider instance
 			this.provider = window.VirtualSelect.init(this.configs.getProviderConfig());
-			this.providerMethods = this.provider.$ele;
-			console.log(this.provider);
+			this.providerElementMethods = this.provider.$ele;
 
 			// Add the events to be used at provider instance
 			this.setCallbacks();
@@ -42,15 +41,44 @@ namespace Providers.DropdownSearch.VirtualSelect {
 			// Trigger platform's InstanceIntializedHandler client Action
 			OSUIFramework.Helper.AsyncInvocation(this._onInitializeCallbackEvent, this.widgetId);
 
+			console.log(this.provider);
+			console.log(this.configs);
 			console.log('CreatedProviderInstance.', this.configs.getProviderConfig());
 		}
 
+		// Manage the attributes to be added
+		private _manageAttributes(): void {
+			// Check if the pattenr should be in disabled mode
+			if (this.configs.IsDisabled) {
+				OSUIFramework.Helper.Dom.Attribute.Set(
+					this._selfElem,
+					OSUIFramework.GlobalEnum.HTMLAttributes.Disabled,
+					''
+				);
+			}
+		}
+
+		// Get the selected options and pass them into callBack
 		private _onSelectedOption() {
-			console.log(
-				'selectedValues',
-				this.provider.selectedValues,
-				'selectedOptions',
-				this.providerMethods.getSelectedOptions()
+			// Store the options selected
+			let optionsSelected = [];
+
+			// Check if it's multiple type
+			if (this.configs.ShowCheckboxes) {
+				optionsSelected = this.providerElementMethods.getSelectedOptions(); // It returns an array of selected options
+			} else {
+				// It's single option type
+				// Check if there are any selected option
+				if (this.providerElementMethods.getSelectedOptions()) {
+					optionsSelected.push(this.providerElementMethods.getSelectedOptions()); // It returns an single object of selected option
+				}
+			}
+
+			// Trigger platform's SelectedOptionCallbackEvent client Action
+			OSUIFramework.Helper.AsyncInvocation(
+				this._onSelectedOptionCallbackEvent,
+				this.widgetId,
+				JSON.stringify(optionsSelected)
 			);
 		}
 
@@ -78,6 +106,8 @@ namespace Providers.DropdownSearch.VirtualSelect {
 
 			this._createProviderInstance();
 
+			this._manageAttributes();
+
 			super.finishBuild();
 		}
 
@@ -96,8 +126,7 @@ namespace Providers.DropdownSearch.VirtualSelect {
 		 * Clear any selected values from the DropdownSearch
 		 */
 		public clear(): void {
-			this.providerMethods.reset();
-			this.providerMethods.close();
+			this.providerElementMethods.reset();
 		}
 
 		/**

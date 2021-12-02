@@ -54,6 +54,7 @@ namespace OSUIFramework.GlobalEnum {
 	 */
 	export enum HTMLAttributes {
 		DataInput = 'data-input',
+		Disabled = 'disabled',
 	}
 
 	/**

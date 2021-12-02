@@ -8,6 +8,27 @@ namespace Providers.DropdownSearch.VirtualSelect {
 			super(config);
 		}
 
+		// Method used to get the key values of the given selected values
+		private _getSelectedValues(): string[] {
+			const selectedKeyvalues = [];
+
+			// Has selected values
+			if (this.SelectedOptions.length > 0) {
+				// Check if it's multiple options
+				if (this.ShowCheckboxes) {
+					// Get the selected key value
+					for (const option of this.SelectedOptions) {
+						selectedKeyvalues.push(option.value);
+					}
+				} else {
+					// It's Single option, set only the first given value
+					selectedKeyvalues.push(this.SelectedOptions[0].value);
+				}
+			}
+
+			return selectedKeyvalues;
+		}
+
 		// private _onSampleSelectServerSearch(searchValue, virtualSelect) {
 		// 	console.log(searchValue, virtualSelect);
 		// 	// virtualSelect.setServerOptions(newOptions);
@@ -28,22 +49,21 @@ namespace Providers.DropdownSearch.VirtualSelect {
 			// eslint-disable-next-line prefer-const
 			let providerOptions = {
 				ele: this.ElementId,
-				showValueAsTags: true,
-				// hideClearButton: true,
-				// onServerSearch: this._onSampleSelectServerSearch, // => Trigger the OnServerSearch
-				// selectedValue: [1161], // => Predefined selectec value
-				// labelRenderer: this._sampleLabelRenderer, // => Add icon/image to each option
-				multiple: true,
-				allowNewOption: true,
+				multiple: this.ShowCheckboxes,
 				noOptionsText: this.DropdownPrompt,
 				noSearchResultsText: this.NoResultsText,
 				options: this.OptionsList,
-				position: 'auto',
-				search: true,
+				search: this.Type === OSUIFramework.Patterns.Dropdown.Enum.Type.Search,
 				searchPlaceholderText: this.SearchText !== '' ? this.SearchText : 'Search...',
+				selectedValue: this._getSelectedValues(),
+				showValueAsTags: this.ShowCheckboxes && this.Type === OSUIFramework.Patterns.Dropdown.Enum.Type.Tags,
 				textDirection: OutSystems.OSUI.Utils.GetIsRTL()
 					? OSUIFramework.GlobalEnum.Direction.RTL
 					: OSUIFramework.GlobalEnum.Direction.LTR,
+
+				// hideClearButton: true,
+				// onServerSearch: this._onSampleSelectServerSearch, // => Trigger the OnServerSearch
+				// labelRenderer: this._sampleLabelRenderer, // => Add icon/image to each option
 			};
 
 			//Cleaning undefined properties

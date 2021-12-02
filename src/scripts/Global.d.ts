@@ -58,23 +58,32 @@ declare global {
 	type FlatpickrOptions = flatpickrOpts;
 	type FlatpickrLocale = flatpickrLocale;
 
+	// DropDown => Option type
+	type DropDownOption = [
+		{
+			image: typeof image;
+			label: typeof label;
+			value: typeof value;
+		}
+	];
+
 	// DropDown => Virtual Select
 	type VirtualSelect = any;
-	type VirtualSelectMethods = {
-		addOption: () => {};
-		close: () => {};
-		destroy: () => {};
-		getDisplayValue: () => {};
-		getNewValue: () => {};
-		getSelectedOptions: () => {};
-		hide: () => {};
-		isAllSelected: () => {};
-		open: () => {};
-		reset: () => {};
-		setDisabledOptions: () => {};
-		setOptions: () => {};
-		setValue: () => {};
-		show: () => {};
-		toggleSelectAll: () => {};
+	type VirtualSelectElementMethods = {
+		addOption: typeof addOption;
+		close: typeof close;
+		destroy: typeof destroy;
+		getDisplayValue: typeof getDisplayValue;
+		getNewValue: typeof getNewValue;
+		getSelectedOptions: typeof getSelectedOptions;
+		hide: typeof hide;
+		isAllSelected: typeof isAllSelected;
+		open: typeof open;
+		reset: typeof reset;
+		setDisabledOptions: typeof setDisabledOptions;
+		setOptions: typeof setOptions;
+		setValue: typeof setValue;
+		show: typeof show;
+		toggleSelectAll: typeof toggleSelectAll;
 	};
 }

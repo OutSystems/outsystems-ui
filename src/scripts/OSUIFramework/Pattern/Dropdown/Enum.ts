@@ -1,12 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Dropdown.Enum {
 	/**
-	 * Dropdown Enum for CSS Classes
+	 * CSS Classes
 	 */
 	export enum CssClass {}
 
 	/**
-	 * Dropdown Events
+	 * Events
 	 */
 	export enum Events {
 		OnSelected = 'OnSelected',
@@ -14,14 +14,31 @@ namespace OSUIFramework.Patterns.Dropdown.Enum {
 	}
 
 	/**
-	 * Dropdown Enum properties
+	 * Properties
 	 */
-	export enum Properties {}
+	export enum Properties {
+		DropdownPrompt = 'DropdownPrompt',
+		IsDisabled = 'IsDisabled',
+		NoResultsText = 'NoResultsText',
+		OptionsList = 'OptionsList',
+		SearchText = 'SearchText',
+		SelectedOptions = 'SelectedOptions',
+		ShowCheckboxes = 'ShowCheckboxes',
+		Type = 'Type',
+	}
 
 	/**
-	 * Dropdown Enum for Providers
+	 * Providers
 	 */
 	export enum Provider {
 		VirtualSelect = 'virtual-select',
+	}
+
+	/**
+	 * Types
+	 */
+	export enum Type {
+		Search = 'search',
+		Tags = 'tags',
 	}
 }
