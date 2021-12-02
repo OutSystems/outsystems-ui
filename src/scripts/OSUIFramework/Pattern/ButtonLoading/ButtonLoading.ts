@@ -1,47 +1,95 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.ButtonLoading {
+	//TODO: change the namespace to Pattern instead of Patterns
 	/**
-	 * Defines the interface for OutSystemsUI Patterns
+	 *  Class that implements the ButtonLoading pattern.
+	 *
+	 * @export
+	 * @class ButtonLoading
+	 * @extends {AbstractPattern<ButtonLoadingConfig>}
+	 * @implements {IButtonLoading}
 	 */
 	export class ButtonLoading extends AbstractPattern<ButtonLoadingConfig> implements IButtonLoading {
 		// Store the button html element that must exist inside ButtonLoading placeholder
-		private _buttonElem: HTMLElement;
+		private _buttonElement: HTMLElement;
 
 		// Store the spinner html element that shoul also exist since we've input params for it
-		private _spinnerElem: HTMLElement;
+		private _spinnerElement: HTMLElement;
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		constructor(uniqueId: string, configs: any) {
+		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new ButtonLoadingConfig(configs));
 		}
 
-		// Add the Accessibility Attributes values
-		private _setAccessibilityProps(): void {
-			Helper.Attribute.Set(
-				this._selfElem,
-				Constants.A11YAttributes.AriaLive.AttrName,
-				Constants.A11YAttributes.AriaLive.Polite
-			);
-
-			Helper.Attribute.Set(
-				this._selfElem,
-				Constants.A11YAttributes.Aria.Atomic,
-				Constants.A11YAttributes.States.True
-			);
-
-			Helper.Attribute.Set(
-				this._spinnerElem,
-				Constants.A11YAttributes.Aria.Hidden,
-				Constants.A11YAttributes.States.True
-			);
+		/**
+		 * Set the cssClasses that should be assigned to the element on it's initialization
+		 *
+		 * @private
+		 * @memberof ButtonLoading
+		 */
+		private _setInitialButtonState(): void {
+			// Set default IsLoading cssClass property value
+			this._setIsLoading(this._configs.IsLoading);
+			// Set default ShowLoadingAndLabel cssClass property value
+			this._setLoadingLabel(this._configs.ShowLoadingAndLabel);
 		}
 
-		// Update info based on htmlContent
-		private _setHtmlElements(): void {
-			this._buttonElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Button);
+		/**
+		 * Sets the new state of the button. If it's loading or not loading.
+		 *
+		 * @private
+		 * @param {boolean} isLoading
+		 * @memberof ButtonLoading
+		 */
+		private _setIsLoading(isLoading: boolean): void {
+			if (isLoading) {
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsLoading);
+				this.isBuilt && Helper.A11Y.TabIndexFalse(this._buttonElement);
+				this._buttonElement.blur();
+			} else {
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsLoading);
+				this.isBuilt && Helper.A11Y.TabIndexTrue(this._buttonElement);
+			}
+		}
+
+		/**
+		 * Sets if the button should display label or not.
+		 *
+		 * @private
+		 * @param {boolean} showSpinnerOnly
+		 * @memberof ButtonLoading
+		 */
+		private _setLoadingLabel(showSpinnerOnly: boolean): void {
+			//let's remove the class only and only when the pattern is already built and the showSpinnerOnly is false.
+			if (showSpinnerOnly && this.isBuilt) {
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.ShowSpinnerOnly);
+			} else if (showSpinnerOnly === false) {
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.ShowSpinnerOnly);
+			}
+		}
+
+		/**
+		 * Add the Accessibility Attributes values
+		 *
+		 * @protected
+		 * @memberof ButtonLoading
+		 */
+		protected setA11yProperties(): void {
+			Helper.A11Y.AriaLivePolite(this._selfElem);
+			Helper.A11Y.AriaAtomicTrue(this._selfElem);
+			Helper.A11Y.AriaHiddenTrue(this._spinnerElement);
+		}
+
+		/**
+		 * Update info based on htmlContent
+		 *
+		 * @protected
+		 * @memberof ButtonLoading
+		 */
+		protected setHtmlElements(): void {
+			this._buttonElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.Button);
 
 			// Since the ButtonElem is a must have element, check if it exist
-			if (!this._buttonElem) {
+			if (this._buttonElement === undefined) {
 				throw new Error(
 					`There are no '${Constants.Dot + Enum.CssClass.Button}' element as a  ${
 						// eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -50,10 +98,10 @@ namespace OSUIFramework.Patterns.ButtonLoading {
 				);
 			}
 
-			this._spinnerElem = this._buttonElem.querySelector(Constants.Dot + Enum.CssClass.Spinner);
+			this._spinnerElement = Helper.Dom.ClassSelector(this._buttonElement, Enum.CssClass.Spinner);
 
 			// Since we've input params that will act on SpinnerElement, check if it exist!
-			if (!this._spinnerElem) {
+			if (this._spinnerElement === undefined) {
 				throw new Error(
 					`There are no '${Constants.Dot + Enum.CssClass.Spinner}' element as a '${
 						Constants.Dot + Enum.CssClass.Button
@@ -62,68 +110,65 @@ namespace OSUIFramework.Patterns.ButtonLoading {
 			}
 		}
 
-		// Set the cssClasses that should be assigned to the element on it's initialization
-		private _setInitialCssClasses(): void {
-			// Set default IsLoading cssClass property value
-			if (this._configs.IsLoading) {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsLoading);
-			}
-
-			// Set default ShowLoadingAndLabel cssClass property value
-			if (!this._configs.ShowLoadingAndLabel) {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClass.ShowSpinnerOnly);
-			}
+		/**
+		 * Removes the local value of the variables pointing to HTML elements;
+		 *
+		 * @protected
+		 * @memberof ButtonLoading
+		 */
+		protected unsetHtmlElements(): void {
+			this._buttonElement = undefined;
+			this._spinnerElement = undefined;
 		}
 
+		/**
+		 *  Builds the button loading.
+		 *
+		 * @memberof ButtonLoading
+		 */
 		public build(): void {
 			super.build();
 
-			this._setHtmlElements();
+			this.setHtmlElements();
 
-			this._setInitialCssClasses();
+			this._setInitialButtonState();
 
-			this._setAccessibilityProps();
+			this.setA11yProperties();
 
 			this.finishBuild();
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		public changeProperty(propertyName: string, propertyValue: any): void {
-			switch (propertyName) {
-				case Enum.Properties.IsLoading:
-					this._configs.IsLoading = propertyValue;
+		/**
+		 * Applies the changes of state/value of the configurations.
+		 *
+		 * @param {string} propertyName
+		 * @param {unknown} propertyValue
+		 * @memberof ButtonLoading
+		 */
+		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			super.changeProperty(propertyName, propertyValue);
 
-					Helper.Style.ToggleClass(this._selfElem, Enum.CssClass.IsLoading);
+			if (this.isBuilt) {
+				switch (propertyName) {
+					case Enum.Properties.IsLoading:
+						this._setIsLoading(propertyValue as boolean);
+						break;
 
-					if (propertyValue) {
-						Helper.Attribute.Set(
-							this._buttonElem,
-							Constants.A11YAttributes.TabIndex,
-							Constants.A11YAttributes.States.TabIndexHidden
-						);
-
-						this._buttonElem.blur();
-					} else {
-						Helper.Attribute.Set(
-							this._buttonElem,
-							Constants.A11YAttributes.TabIndex,
-							Constants.A11YAttributes.States.TabIndexShow
-						);
-					}
-
-					break;
-
-				case Enum.Properties.ShowLoadingAndLabel:
-					this._configs.ShowLoadingAndLabel = propertyValue;
-
-					Helper.Style.ToggleClass(this._selfElem, Enum.CssClass.ShowSpinnerOnly);
-
-					break;
-
-				default:
-					super.changeProperty(propertyName, propertyValue);
-					break;
+					case Enum.Properties.ShowLoadingAndLabel:
+						this._setLoadingLabel(propertyValue as boolean);
+						break;
+				}
 			}
+		}
+
+		/**
+		 * Disposes the current pattern.
+		 *
+		 * @memberof ButtonLoading
+		 */
+		public dispose(): void {
+			super.dispose();
+			this.unsetHtmlElements();
 		}
 	}
 }

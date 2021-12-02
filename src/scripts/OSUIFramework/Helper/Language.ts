@@ -4,7 +4,6 @@ namespace OSUIFramework.Helper {
 		/**
 		 * App Language
 		 */
-		// eslint-disable-next-line prefer-const
 		private static _lang = '';
 
 		public static get Lang(): string {
@@ -17,7 +16,6 @@ namespace OSUIFramework.Helper {
 		 * @param language The value returned by platform GetCurrentLocale() method
 		 */
 		public static SetLanguage(language: string): void {
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			Language._lang = language;
 		}
 	}
