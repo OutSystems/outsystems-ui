@@ -66,6 +66,8 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				Helper.Attribute.Get(this._accordionPlaceholder, 'id')
 			);
 
+			Helper.Attribute.Set(this._selfElem, 'role', Constants.A11YAttributes.Role.Tab);
+
 			Helper.Attribute.Set(
 				this._accordionTitle,
 				Constants.A11YAttributes.TabIndex,
