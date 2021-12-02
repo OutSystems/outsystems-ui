@@ -5,9 +5,9 @@ namespace OSUIFramework.Patterns.FlipContent {
 	 */
 	export class FlipContent extends AbstractPattern<FlipContentConfig> implements IFlipContent {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventClick: any;
+		private _eventClick: Callbacks.Generic;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventKeydown: any;
+		private _eventKeydown: Callbacks.Generic;
 		//The Flip Content content wrapper
 		private _flipWrapperElement: HTMLElement;
 
