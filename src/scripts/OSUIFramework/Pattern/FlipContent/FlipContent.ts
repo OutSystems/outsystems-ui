@@ -124,7 +124,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 		 */
 
 		protected setHtmlElements(): void {
-			this._flipWrapperElement = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternContainer);
+			this._flipWrapperElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternContainer);
 		}
 		/**
 		 * Remove the events
