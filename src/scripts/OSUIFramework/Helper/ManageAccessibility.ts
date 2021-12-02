@@ -44,6 +44,16 @@ namespace OSUIFramework.Helper {
 		}
 
 		/**
+		 * Method that will set the aria-expanded
+		 *
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @returns
+		 */
+		public static AriaExpanded(element: HTMLElement, value: string): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Expanded, value);
+		}
+
+		/**
 		 * Method that will enable the aria-expanded
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
@@ -61,6 +71,16 @@ namespace OSUIFramework.Helper {
 		 */
 		public static AriaExpandedTrue(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Expanded, Constants.A11YAttributes.States.True);
+		}
+
+		/**
+		 * Method that will set the aria-hidden
+		 *
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @returns
+		 */
+		public static AriaHidden(element: HTMLElement, value: string): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Hidden, value);
 		}
 
 		/**
@@ -266,6 +286,16 @@ namespace OSUIFramework.Helper {
 		 */
 		public static RoleTooltip(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Tooltip);
+		}
+
+		/**
+		 * Method that will set the tabindex
+		 *
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @returns
+		 */
+		public static TabIndex(element: HTMLElement, value: string): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.TabIndex, value);
 		}
 
 		/**
