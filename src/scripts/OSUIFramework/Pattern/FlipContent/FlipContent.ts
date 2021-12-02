@@ -70,8 +70,13 @@ namespace OSUIFramework.Patterns.FlipContent {
 		 */
 
 		private _triggerPlatformEvent(): void {
-			Helper.AsyncInvocation(this._plataformEventFlip, this.widgetId);
+			if (this._plataformEventFlip) {
+				Helper.AsyncInvocation(() => {
+					this._plataformEventFlip(this.widgetId, this.configs.IsFlipped);
+				});
+			}
 		}
+
 		/**
 		 * Update the A11Y attributes
 		 *
@@ -185,16 +190,24 @@ namespace OSUIFramework.Patterns.FlipContent {
 		 * @param {unknown} propertyValue
 		 * @memberof FlipContent
 		 */
-		public changeProperty(propertyName: string, propertyValue: unknown): void {
-			super.changeProperty(propertyName, propertyValue);
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+		public changeProperty(propertyName: string, propertyValue: any): void {
 			if (this.isBuilt) {
 				switch (propertyName) {
 					case Enum.Properties.IsFlipped:
+						this.configs.IsFlipped = propertyValue;
 						this._toggleClasses();
 						break;
+
 					case Enum.Properties.FlipSelf:
+						this.configs.FlipSelf = propertyValue;
 						this._updateA11yProperties();
 						this.setCallbacks();
+						break;
+
+					default:
+						super.changeProperty(propertyName, propertyValue);
 						break;
 				}
 			}
