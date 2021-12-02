@@ -18,11 +18,13 @@
 	}
 
 	&.is--btn-loading {
-		pointer-events: none;
+		&,
+		& * {
+			pointer-events: none;
+		}
 
 		.btn {
 			display: inline-flex;
-			pointer-events: none;
 
 			.spinner-animation {
 				display: inline-block;
