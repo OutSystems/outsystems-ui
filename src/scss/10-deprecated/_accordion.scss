@@ -149,7 +149,6 @@
 
 		.section-expandable-content {
 			padding: var(--space-none) var(--space-base);
-			overflow: inherit;
 
 			&.is- {
 				&-collapsed {
@@ -158,6 +157,7 @@
 
 				&-expanded {
 					padding: var(--space-none) var(--space-base) var(--space-base);
+					overflow: inherit;
 				}
 			}
 
