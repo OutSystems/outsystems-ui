@@ -121,6 +121,10 @@ html[data-uieditorversion^='1'] {
 	}
 
 	.phone {
+		.table:not(.table-responsive) {
+			display: block;
+		}
+
 		.layout:not(.layout-native) {
 			.table {
 				-servicestudio-display: block;
@@ -165,7 +169,7 @@ html[data-uieditorversion^='1'] {
 
 			.table-no-responsive {
 				thead {
-					-servicestudio-display: table-header-group;
+					-servicestudio-display: table-header-group !important;
 				}
 			}
 		}
