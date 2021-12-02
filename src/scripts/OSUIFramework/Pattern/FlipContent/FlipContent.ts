@@ -71,9 +71,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 
 		private _triggerPlatformEvent(): void {
 			if (this._plataformEventFlip) {
-				Helper.AsyncInvocation(() => {
-					this._plataformEventFlip(this.widgetId, this.configs.IsFlipped);
-				});
+				Helper.AsyncInvocation(this._plataformEventFlip.bind(this), this.widgetId, this.configs.IsFlipped);
 			}
 		}
 
@@ -99,10 +97,12 @@ namespace OSUIFramework.Patterns.FlipContent {
 		 */
 
 		protected setA11yProperties(): void {
-			Helper.A11Y.AriaAtomicTrue(this._selfElem);
-			Helper.A11Y.TabIndexTrue(this._selfElem);
-			Helper.A11Y.RoleButton(this._selfElem);
-			Helper.A11Y.AriaLivePolite(this._selfElem);
+			if (this.configs.FlipSelf) {
+				Helper.A11Y.AriaAtomicTrue(this._selfElem);
+				Helper.A11Y.TabIndexTrue(this._selfElem);
+				Helper.A11Y.RoleButton(this._selfElem);
+				Helper.A11Y.AriaLivePolite(this._selfElem);
+			}
 		}
 		/**
 		 * Set the events
@@ -148,12 +148,12 @@ namespace OSUIFramework.Patterns.FlipContent {
 			this._eventKeydown = undefined;
 			this._eventClick = undefined;
 		}
+
 		/**
 		 * Set the HTML elements
 		 *
 		 * @memberof FlipContent
 		 */
-
 		protected unsetHtmlElements(): void {
 			this._flipWrapperElement = undefined;
 		}
@@ -174,15 +174,14 @@ namespace OSUIFramework.Patterns.FlipContent {
 			this._toggleClasses();
 
 			// Set the A11Y defaults
-			if (this.configs.FlipSelf) {
-				this.setA11yProperties();
-			}
+			this.setA11yProperties();
 
 			// Set the data attribute
 			this._setDataAttribute();
 
 			this.finishBuild();
 		}
+
 		/**
 		 * Update value when a parameters changed occurs
 		 *
@@ -190,34 +189,27 @@ namespace OSUIFramework.Patterns.FlipContent {
 		 * @param {unknown} propertyValue
 		 * @memberof FlipContent
 		 */
-
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		public changeProperty(propertyName: string, propertyValue: any): void {
+		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			super.changeProperty(propertyName, propertyValue);
 			if (this.isBuilt) {
 				switch (propertyName) {
 					case Enum.Properties.IsFlipped:
-						this.configs.IsFlipped = propertyValue;
 						this._toggleClasses();
 						break;
 
 					case Enum.Properties.FlipSelf:
-						this.configs.FlipSelf = propertyValue;
 						this._updateA11yProperties();
 						this.setCallbacks();
-						break;
-
-					default:
-						super.changeProperty(propertyName, propertyValue);
 						break;
 				}
 			}
 		}
+
 		/**
 		 * Destroy FlipContent
 		 *
 		 * @memberof FlipContent
 		 */
-
 		public dispose(): void {
 			super.dispose();
 			this.unsetCallbacks();
@@ -228,16 +220,15 @@ namespace OSUIFramework.Patterns.FlipContent {
 		 *
 		 * @memberof FlipContent
 		 */
-
 		public registerCallback(callback: Callbacks.OSFlipContentFlipEvent): void {
 			this._plataformEventFlip = callback;
 		}
+
 		/**
 		 * Public method to trigger the flipping of the pattern and the event on the platform's side
 		 *
 		 * @memberof FlipContent
 		 */
-
 		public toggleFlipContent(): void {
 			this.configs.IsFlipped = !this.configs.IsFlipped;
 
