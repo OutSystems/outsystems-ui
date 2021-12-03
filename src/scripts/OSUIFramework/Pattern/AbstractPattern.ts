@@ -75,6 +75,16 @@ namespace OSUIFramework.Patterns {
 		}
 
 		/**
+		 * Unsets the refences to the HTML elements.
+		 *
+		 * @protected
+		 * @memberof AbstractPattern
+		 */
+		private _unsetCommonHtmlElements(): void {
+			this._selfElem = undefined;
+		}
+
+		/**
 		 * Method that knows how to update the Extended class of the pattern.
 		 *
 		 * @private
@@ -192,16 +202,6 @@ namespace OSUIFramework.Patterns {
 		}
 
 		/**
-		 * Unsets the refences to the HTML elements.
-		 *
-		 * @protected
-		 * @memberof AbstractPattern
-		 */
-		protected unsetHtmlElements(): void {
-			this._selfElem = undefined;
-		}
-
-		/**
 		 * Builds the pattern.
 		 *
 		 * @memberof AbstractPattern
@@ -241,7 +241,7 @@ namespace OSUIFramework.Patterns {
 		 */
 		public dispose(): void {
 			this._isBuilt = false;
-			this.unsetHtmlElements();
+			this._unsetCommonHtmlElements();
 			this._configs = undefined;
 		}
 
