@@ -16,8 +16,8 @@ namespace OSUIFramework.Patterns.FloatingActionsItem {
 		}
 
 		public dispose(): void {
-			super.dispose();
 			this._floatingParent?.removeFloatingActionItem(this.uniqueId);
+			super.dispose();
 		}
 
 		public setAnimationDelay(value: number): void {

@@ -91,16 +91,6 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 	export function Dispose(floatingActionsItemId: string): void {
 		const floatingActionItem = GetFloatingActionsItemById(floatingActionsItemId);
 
-		//When destroying the whole pattern Floating Actions + Floating Actions Item, the parent is destroyed first
-		//So, there is no parent to disconnect from.
-		if (floatingActionItem) {
-			const floatingAction = GetFloatingActionsByItem(floatingActionsItemId);
-
-			if (floatingAction !== undefined) {
-				floatingAction.removeFloatingActionItem(floatingActionItem.uniqueId);
-			}
-		}
-
 		floatingActionItem.dispose();
 
 		_floatingActionsItemMap.delete(floatingActionItem.uniqueId);
