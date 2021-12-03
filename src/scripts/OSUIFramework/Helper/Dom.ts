@@ -114,24 +114,18 @@ namespace OSUIFramework.Helper {
 		}
 
 		/**
-		 * Method that will look for a cssClass Position on a given element.
+		 * Returns the CSS classes that a a given element has
 		 *
 		 * @static
-		 * @param {HTMLElement} element Element where the cssClass will be looked for.
-		 * @return {*}  {string} returns the class name that represents the position. In case there no position class defined, return undefined.
+		 * @param {HTMLElement} element
+		 * @return {*}  {string[]}
 		 * @memberof StyleManipulation
 		 */
-		public static HasCssClassPosition(element: HTMLElement): string | undefined {
+		public static GetCssClasses(element: HTMLElement): Set<string> {
 			if (element) {
-				const classesEnum = Object.keys(GlobalEnum.CssClassPosition);
-				for (const positionClass in classesEnum) {
-					if (StyleManipulation.ContainsClass(element, GlobalEnum.CssClassPosition[positionClass])) {
-						return GlobalEnum.CssClassPosition[positionClass];
-					}
-				}
-				return undefined;
+				return new Set([...element.classList]);
 			} else {
-				throw Error('The element does not exist, when trying to check for position class.');
+				throw Error('The element does not exist, when trying to get the classes.');
 			}
 		}
 
