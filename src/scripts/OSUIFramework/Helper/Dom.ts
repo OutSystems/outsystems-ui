@@ -26,6 +26,18 @@ namespace OSUIFramework.Helper {
 		}
 
 		/**
+		 * Method that will return the Id of the html element.
+		 *
+		 * @static
+		 * @param {HTMLElement} element
+		 * @return {*}  {(string | undefined)}
+		 * @memberof AttributeManipulation
+		 */
+		public static Id(element: HTMLElement): string | undefined {
+			return AttributeManipulation.Get(element, 'Id');
+		}
+
+		/**
 		 * Method that will remove a given attribute from a given html element
 		 *
 		 * @static
