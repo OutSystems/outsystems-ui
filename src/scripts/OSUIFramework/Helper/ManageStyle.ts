@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Helper.Style {
+	//TODO: This file is to be removed.
 	/**
 	 * Method that will add a given css class to a given html element
 	 *
@@ -59,10 +60,10 @@ namespace OSUIFramework.Helper.Style {
 	 */
 	export function HasCssClassPosition(elem: HTMLElement): string {
 		if (elem) {
-			const classesEnum = Object.keys(GlobalEnum.CssClassPosition);
+			const classesEnum = Object.keys(GlobalEnum.Position);
 			for (let i = 0; i < classesEnum.length; ++i) {
-				if (elem.classList.contains(GlobalEnum.CssClassPosition[classesEnum[i]])) {
-					return GlobalEnum.CssClassPosition[classesEnum[i]];
+				if (elem.classList.contains(GlobalEnum.Position[classesEnum[i]])) {
+					return GlobalEnum.Position[classesEnum[i]];
 				}
 			}
 			return null;
