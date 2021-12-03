@@ -29,7 +29,10 @@ async function executePipeline(azureProject, pipelineId) {
 	const connection = new azdev.WebApi(orgUrl, authHandler);
 	const buildApi = await connection.getBuildApi();
 	const testApi = await connection.getTestApi();
-	const tagsValue = Array.from(new Set(commandLineOptions.tags.split(' or '))).join(' or '); // remove duplicated tags
+	const tagsValue = Array.from(
+		new Set(commandLineOptions.tags.split(' or ').map((tag) => tag.replace(/_|.scss/g, ''))) // convert tags like: "@_columns.scss" to "@columns"
+	).join(' or '); // remove duplicated tags
+	console.log(tagsValue);
 	const build = {
 		templateParameters: {
 			ENVIRONMENT: 'dev',
@@ -65,9 +68,10 @@ async function executePipeline(azureProject, pipelineId) {
 	const failedWithoutBugs = runResults
 		.filter((test) => test.outcome != 'Passed' && test.stackTrace?.includes('**Unstable**'))
 		.map((test) => `${test.testCase.name}`);
-	console.log(`Failed tests with bugs: \n${failedWithBugs.join('\n')}\n`);
-	console.log(`Failed tests without bugs: \n${failedWithoutBugs.join('\n')}\n`);
-	if (failedWithoutBugs.length > 0 || failedWithBugs > 0) {
+	if (failedWithBugs.length > 0) {
+		postWarningMessage(`Some of the tests failed because of bugs. See details ${triggeredBuild._links.web.href}`);
+	}
+	if (failedWithoutBugs.length > 0) {
 		postErrorMessage(`Some of the tests failed. See details ${triggeredBuild._links.web.href}`);
 		failtask();
 	}

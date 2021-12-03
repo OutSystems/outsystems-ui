@@ -96,7 +96,7 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	 */
 	export function GetSubmenuById(submenuId: string): OSUIFramework.Patterns.Submenu.ISubmenu {
 		return OSUIFramework.Helper.MapOperation.FindInMap(
-			'Submenu',
+			OSUIFramework.GlobalEnum.PatternsNames.Submenu,
 			submenuId,
 			_submenusMap
 		) as OSUIFramework.Patterns.Submenu.ISubmenu;
