@@ -64,17 +64,16 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.FloatingActions} registered under id: ${floatingActionsItemId}`
 			);
 		}
+		const floatingAction = GetFloatingActionsByItem(floatingActionsItemId);
 
 		const _newFloatingActionsItem = new OSUIFramework.Patterns.FloatingActionsItem.FloatingActionsItem(
 			floatingActionsItemId,
-			JSON.parse(configs)
+			JSON.parse(configs),
+			floatingAction
 		);
 
 		_floatingActionsItemMap.set(floatingActionsItemId, _newFloatingActionsItem);
 		_newFloatingActionsItem.build();
-
-		const floatingAction = GetFloatingActionsByItem(floatingActionsItemId);
-
 		if (floatingAction !== undefined) {
 			_floatingActionsMap.set(floatingActionsItemId, floatingAction.uniqueId);
 			floatingAction.addFloatingActionItem(_newFloatingActionsItem.uniqueId, _newFloatingActionsItem);
@@ -95,13 +94,11 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 		//When destroying the whole pattern Floating Actions + Floating Actions Item, the parent is destroyed first
 		//So, there is no parent to disconnect from.
 		if (floatingActionItem) {
-			try {
-				const floatingAction = GetFloatingActionsByItem(floatingActionsItemId);
+			const floatingAction = GetFloatingActionsByItem(floatingActionsItemId);
 
-				if (floatingAction !== undefined) {
-					floatingAction.removeFloatingActionItem(floatingActionItem.uniqueId);
-				}
-			} catch (e) {}
+			if (floatingAction !== undefined) {
+				floatingAction.removeFloatingActionItem(floatingActionItem.uniqueId);
+			}
 		}
 
 		floatingActionItem.dispose();
