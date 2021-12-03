@@ -14,10 +14,10 @@ namespace OSUIFramework.Patterns.Accordion {
 
 		// Method used to recalculate the position of items on the accordion
 		private _setUpAccordion(): void {
-			let firstAccordionItem = this._selfElem.querySelector(
-				Constants.Dot + Enum.CssClass.FirstItem
-			) as HTMLElement;
-			let lastAccordionItem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.LastItem) as HTMLElement;
+			// Accordion > OSBlockWidget(Accordion Item) > AccordionItem
+			let firstAccordionItem = this._selfElem.firstChild.firstChild as HTMLElement;
+			let lastAccordionItem = this._selfElem.lastChild.firstChild as HTMLElement;
+
 			if (firstAccordionItem) Helper.Style.RemoveClass(firstAccordionItem, Enum.CssClass.FirstItem);
 			if (lastAccordionItem) Helper.Style.RemoveClass(lastAccordionItem, Enum.CssClass.LastItem);
 
