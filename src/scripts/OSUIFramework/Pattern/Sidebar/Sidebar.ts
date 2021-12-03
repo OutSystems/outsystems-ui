@@ -99,10 +99,11 @@ namespace OSUIFramework.Patterns.Sidebar {
 		 */
 		private _openSidebar() {
 			Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsOpen);
+			Helper.A11Y.TabIndexTrue(this._sidebarAsideElem);
+			Helper.A11Y.AriaHiddenFalse(this._sidebarAsideElem);
 
 			if (this.build) {
-				Helper.A11Y.TabIndexTrue(this._sidebarAsideElem);
-				Helper.A11Y.AriaHiddenFalse(this._sidebarAsideElem);
+				//let's only change the property and trigger the OS event IF the pattern is already built.
 				this.configs.IsOpen = true;
 				this._triggerOnToggleEvent();
 			}
