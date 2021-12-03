@@ -105,7 +105,9 @@ namespace OSUIFramework.Helper {
 		 */
 		public static ContainsClass(element: HTMLElement, cssClass: string): boolean {
 			if (element) {
-				return element.classList.contains(cssClass);
+				if (cssClass !== '') {
+					return element.classList.contains(cssClass);
+				}
 			} else {
 				throw Error(`The element does not exist, when trying to check if it has the class '${cssClass}'.`);
 			}
@@ -143,7 +145,9 @@ namespace OSUIFramework.Helper {
 		 */
 		public static RemoveClass(element: HTMLElement, cssClass: string): void {
 			if (element) {
-				element.classList.remove(cssClass);
+				if (cssClass !== '') {
+					element.classList.remove(cssClass);
+				}
 			} else {
 				throw Error(`The element does not exist, when trying to remove the class '${cssClass}'.`);
 			}
@@ -160,7 +164,9 @@ namespace OSUIFramework.Helper {
 		 */
 		public static SetStyleAttribute(element: HTMLElement, cssRule: string, ruleValue: number | string): void {
 			if (element) {
-				element.style.setProperty(cssRule, ruleValue.toString());
+				if (cssRule !== '') {
+					element.style.setProperty(cssRule, ruleValue.toString());
+				}
 			} else {
 				throw Error(`The element does not exist, when trying to apply the rule '${cssRule}'.`);
 			}
@@ -176,7 +182,9 @@ namespace OSUIFramework.Helper {
 		 */
 		public static ToggleClass(element: HTMLElement, cssClass: string): void {
 			if (element) {
-				element.classList.toggle(cssClass);
+				if (cssClass !== '') {
+					element.classList.toggle(cssClass);
+				}
 			} else {
 				throw Error(`The element does not exist, when trying to toggle the class '${cssClass}'.`);
 			}
@@ -221,7 +229,9 @@ namespace OSUIFramework.Helper {
 			let elementFound: HTMLElement = undefined;
 
 			if (element) {
-				elementFound = element.querySelector(Constants.Dot + cssClass);
+				if (cssClass !== '') {
+					elementFound = element.querySelector(Constants.Dot + cssClass);
+				}
 				//this is to make sure that we are only returning the element or undefined.
 				elementFound = elementFound ? elementFound : undefined;
 			} else {
@@ -277,7 +287,9 @@ namespace OSUIFramework.Helper {
 			let elementFound: HTMLElement = undefined;
 
 			if (element) {
-				elementFound = element.querySelector(htmlTag);
+				if (htmlTag !== '') {
+					elementFound = element.querySelector(htmlTag);
+				}
 				//this is to make sure that we are only returning the element or undefined.
 				elementFound = elementFound ? elementFound : undefined;
 			} else {
