@@ -330,10 +330,10 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// Destroy the tooltip
 		public dispose(): void {
-			super.dispose();
-
 			this.unsetCallbacks();
 			this.unsetHtmlElements();
+			//---
+			super.dispose();
 		}
 
 		public open(): void {
