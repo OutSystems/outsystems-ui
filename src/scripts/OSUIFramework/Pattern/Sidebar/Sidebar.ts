@@ -190,14 +190,13 @@ namespace OSUIFramework.Patterns.Sidebar {
 		 * @memberof Sidebar
 		 */
 		private _setInitialCssClasses(): void {
+			this._setDirection();
+			this._setWidth();
+			this._setHasOverlay();
 			// Set IsOpen class
 			if (this.configs.IsOpen) {
 				this._openSidebar();
 			}
-
-			this._setDirection();
-			this._setWidth();
-			this._setHasOverlay();
 		}
 
 		/**
