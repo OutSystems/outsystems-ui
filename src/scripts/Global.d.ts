@@ -61,7 +61,7 @@ declare global {
 	// DropDown => Option type
 	type DropDownOption = [
 		{
-			image: typeof image;
+			image_url_or_class: typeof image_url_or_class;
 			label: typeof label;
 			value: typeof value;
 		}
