@@ -90,19 +90,6 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	export function Dispose(accordionItemId: string): void {
 		const accordionItem = GetAccordionItemById(accordionItemId);
 
-		//When destroying the whole pattern Accordion + Accordion Item, the parent is destroyed first
-		//So, there is no parent to disconnect from.
-		if (accordionItem) {
-			try {
-				const accordion = GetAccordionByItem(accordionItemId);
-
-				if (accordion !== undefined) {
-					accordion.removeAccordionItem(accordionItem.uniqueId);
-				}
-				// eslint-disable-next-line no-empty
-			} catch (e) {}
-		}
-
 		accordionItem.dispose();
 
 		_accordionItemMap.delete(accordionItem.uniqueId);

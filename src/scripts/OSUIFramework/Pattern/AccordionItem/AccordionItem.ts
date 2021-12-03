@@ -274,6 +274,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		public dispose(): void {
 			super.dispose();
 			this._removeEvents();
+			this._accordionParent?.removeAccordionItem(this.uniqueId);
 		}
 
 		// This method will open and then close the item to get its final value; then, it will run an animation
