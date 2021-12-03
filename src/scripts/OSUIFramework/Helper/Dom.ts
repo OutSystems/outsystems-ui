@@ -8,7 +8,7 @@ namespace OSUIFramework.Helper {
 	 */
 	abstract class AttributeManipulation {
 		/**
-		 * Method that will retunr a given attribute value from a given html element.
+		 * Method that will return a given attribute value from a given html element.
 		 *
 		 * @static
 		 * @param {HTMLElement} element Element where the attribute will be looked for.
@@ -88,7 +88,9 @@ namespace OSUIFramework.Helper {
 		 */
 		public static AddClass(element: HTMLElement, cssClass: string): void {
 			if (element) {
-				element.classList.add(cssClass);
+				if (cssClass !== '') {
+					element.classList.add(cssClass);
+				}
 			} else {
 				throw Error(`The element does not exist, when trying to add the class '${cssClass}'.`);
 			}
@@ -247,7 +249,7 @@ namespace OSUIFramework.Helper {
 		public static GetElementByUniqueId(uniqueId: string): HTMLElement {
 			const obj = document.getElementsByName(uniqueId);
 
-			if (obj.length) {
+			if (obj.length && uniqueId !== '') {
 				return obj[0];
 			} else {
 				throw new Error(`Object with name '${uniqueId}' not found.`);
