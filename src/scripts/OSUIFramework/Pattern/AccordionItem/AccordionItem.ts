@@ -29,23 +29,20 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		constructor(uniqueId: string, configs: any, accordion?: Patterns.Accordion.IAccordion) {
 			super(uniqueId, new AccordionItemConfig(configs));
 			this._accordionParent = accordion;
-			this._eventToggleAccordion = this._toggleAccordion.bind(this);
-			this._transitionEnd = this._transitionEndHandler.bind(this);
-			this._keyBoardCallback = this._onKeyboardPress.bind(this);
 		}
 
 		// A11y keyboard navigation
 		private _onKeyboardPress(event: KeyboardEvent): void {
 			//If esc, Close AccordionItem
 			if (this.configs.IsExpanded && event.key === GlobalEnum.Keycodes.Escape) {
-				this._toggleAccordion();
+				this._toggleAccordion(this.configs.IsExpanded);
 				event.preventDefault();
 				event.stopPropagation();
 			}
 
 			//If enter or space use the onAccordionClick to validate
 			if (event.key === GlobalEnum.Keycodes.Enter || event.key === GlobalEnum.Keycodes.Space) {
-				this._toggleAccordion();
+				this._toggleAccordion(this.configs.IsExpanded);
 				event.preventDefault();
 				event.stopPropagation();
 			}
@@ -57,71 +54,21 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			this._accordionTitle.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._keyBoardCallback);
 		}
 
-		//Method to apply the static aria attributes
-		private _setA11yAttributes(): void {
-			Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Disabled, this.configs.IsDisabled);
-			Helper.Attribute.Set(
-				this._selfElem,
-				Constants.A11YAttributes.Aria.Controls,
-				Helper.Attribute.Get(this._accordionPlaceholder, 'id')
-			);
-
-			Helper.Attribute.Set(this._selfElem, 'role', Constants.A11YAttributes.Role.Tab);
-
-			Helper.Attribute.Set(
-				this._accordionTitle,
-				Constants.A11YAttributes.TabIndex,
-				this.configs.IsDisabled ? '-1' : '0'
-			);
-			Helper.Attribute.Set(
-				this._accordionTitle,
-				Constants.A11YAttributes.Role.AttrName,
-				Constants.A11YAttributes.Role.Button
-			);
-
-			Helper.Attribute.Set(this._accordionIcon, Constants.A11YAttributes.Aria.Hidden, true);
-
-			Helper.Attribute.Set(
-				this._accordionContent,
-				Constants.A11YAttributes.TabIndex,
-				this.configs.IsDisabled ? '-1' : '0'
-			);
-			Helper.Attribute.Set(
-				this._accordionContent,
-				Constants.A11YAttributes.Aria.Labelledby,
-				Helper.Attribute.Get(this._accordionTitle, 'id')
-			);
-
-			Helper.Attribute.Set(
-				this._accordionPlaceholder,
-				Constants.A11YAttributes.Role.AttrName,
-				Constants.A11YAttributes.Role.TabPanel
-			);
-		}
-
 		// Method to apply the dynamic aria attributes
 		private _setAriaExpanded(status: boolean, ariaHidden: boolean): void {
 			if (this._selfElem) {
-				Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Expanded, status);
-				Helper.Attribute.Set(this._accordionTitle, Constants.A11YAttributes.Aria.Expanded, status);
-				Helper.Attribute.Set(this._accordionContent, Constants.A11YAttributes.Aria.Hidden, ariaHidden);
+				Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Expanded, status);
+				Helper.Dom.Attribute.Set(this._accordionTitle, Constants.A11YAttributes.Aria.Expanded, status);
+				Helper.Dom.Attribute.Set(this._accordionContent, Constants.A11YAttributes.Aria.Hidden, ariaHidden);
 			}
 		}
 
 		private _setUpDisabledState(): void {
 			if (this.configs.IsDisabled) {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClass.Disabled);
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Disabled);
 			} else {
-				Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.Disabled);
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.Disabled);
 			}
-		}
-
-		// Method that gets & stores the HTML elements of the Accordion Item
-		private _setUpElements(): void {
-			this._accordionTitle = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternTitle);
-			this._accordionContent = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternContent);
-			this._accordionIcon = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternIcon);
-			this._accordionPlaceholder = this._accordionContent.firstChild as HTMLElement;
 		}
 
 		private _setUpEvents(): void {
@@ -133,22 +80,20 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			this._accordionTitle.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._keyBoardCallback);
 		}
 
-		private _setUpInitialState(): void {
-			if (this.configs.IsExpanded) {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClass.Open);
-				Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Expanded);
-				this._setAriaExpanded(true, false);
+		// Method to toggle the collapse and expansion of the AccordionItem
+		// This method is to be used by the state of the Accordion & the ChangeProperty method
+		private _toggleAccordion(isExpanded: boolean): void {
+			if (isExpanded) {
+				//If open, let's close
+				this.close();
 			} else {
-				Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Collapsed);
-				Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.Open);
-				Helper.Style.RemoveClass(this._accordionContent, Enum.CssClass.Expanded);
-				this._setAriaExpanded(false, true);
+				//If closed, let's open
+				this.open();
 			}
 		}
 
-		// Method to toggle the collapse and expansion of the AccordionItem
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _toggleAccordion(event?: any): void {
+		//This method below is used ONLY for checking if the event is cliked on the correct html element
+		private _toggleAccordionEvent(event?: MouseEvent): void {
 			//If we're not clicking on the title, the icon or the accordion title, we won't open the accordion
 			if (event) {
 				if (
@@ -159,21 +104,16 @@ namespace OSUIFramework.Patterns.AccordionItem {
 					return;
 				}
 			}
-			if (this._configs.IsExpanded) {
-				//If open, let's close
-				this.close();
-			} else {
-				//If closed, let's open
-				this.open();
-			}
+
+			this._toggleAccordion(this.configs.IsExpanded);
 		}
 
 		private _transitionEndHandler(): void {
 			if (this._accordionContent) {
-				Helper.Style.RemoveClass(this._accordionContent, Enum.CssClass.Animation);
+				Helper.Dom.Styles.RemoveClass(this._accordionContent, Enum.CssClass.Animation);
 
-				Helper.Style.SetStyleAttribute(this._accordionContent, 'height', '');
-				Helper.Style.SetStyleAttribute(this._accordionTitle, 'pointerEvents', '');
+				Helper.Dom.Styles.SetStyleAttribute(this._accordionContent, 'height', '');
+				Helper.Dom.Styles.SetStyleAttribute(this._accordionTitle, 'pointerEvents', '');
 
 				if (this._accordionContent.style.cssText.length === 0) {
 					Helper.Attribute.Remove(this._accordionContent, 'style');
@@ -189,10 +129,75 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 		// Method that triggers the toggle event on the platform
 		private _triggerToggleClick(): void {
-			if (this._onToggleCallback) {
-				Helper.AsyncInvocation(() => {
-					this._onToggleCallback(this.widgetId, this.configs.IsExpanded);
-				});
+			Helper.AsyncInvocation(this._onToggleCallback, this.widgetId, this.configs.IsExpanded);
+		}
+
+		//Method to apply the static aria attributes
+		protected setA11yProperties(): void {
+			Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Disabled, this.configs.IsDisabled);
+			Helper.Dom.Attribute.Set(
+				this._selfElem,
+				Constants.A11YAttributes.Aria.Controls,
+				Helper.Attribute.Get(this._accordionPlaceholder, 'id')
+			);
+
+			Helper.Dom.Attribute.Set(this._selfElem, 'role', Constants.A11YAttributes.Role.Tab);
+
+			Helper.Dom.Attribute.Set(
+				this._accordionTitle,
+				Constants.A11YAttributes.TabIndex,
+				this.configs.IsDisabled ? '-1' : '0'
+			);
+			Helper.Dom.Attribute.Set(
+				this._accordionTitle,
+				Constants.A11YAttributes.Role.AttrName,
+				Constants.A11YAttributes.Role.Button
+			);
+
+			Helper.Dom.Attribute.Set(this._accordionIcon, Constants.A11YAttributes.Aria.Hidden, true);
+
+			Helper.Dom.Attribute.Set(
+				this._accordionContent,
+				Constants.A11YAttributes.TabIndex,
+				this.configs.IsDisabled ? '-1' : '0'
+			);
+			Helper.Dom.Attribute.Set(
+				this._accordionContent,
+				Constants.A11YAttributes.Aria.Labelledby,
+				Helper.Attribute.Get(this._accordionTitle, 'id')
+			);
+
+			Helper.Dom.Attribute.Set(
+				this._accordionPlaceholder,
+				Constants.A11YAttributes.Role.AttrName,
+				Constants.A11YAttributes.Role.TabPanel
+			);
+		}
+
+		protected setCallbacks(): void {
+			this._eventToggleAccordion = this._toggleAccordionEvent.bind(this);
+			this._transitionEnd = this._transitionEndHandler.bind(this);
+			this._keyBoardCallback = this._onKeyboardPress.bind(this);
+		}
+
+		// Method that gets & stores the HTML elements of the Accordion Item
+		protected setHtmlElements(): void {
+			this._accordionTitle = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternTitle);
+			this._accordionContent = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternContent);
+			this._accordionIcon = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternIcon);
+			this._accordionPlaceholder = this._accordionContent.firstChild as HTMLElement;
+		}
+
+		protected setInitialStates(): void {
+			if (this.configs.IsExpanded) {
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Open);
+				Helper.Dom.Styles.AddClass(this._accordionContent, Enum.CssClass.Expanded);
+				this._setAriaExpanded(true, false);
+			} else {
+				Helper.Dom.Styles.AddClass(this._accordionContent, Enum.CssClass.Collapsed);
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.Open);
+				Helper.Dom.Styles.RemoveClass(this._accordionContent, Enum.CssClass.Expanded);
+				this._setAriaExpanded(false, true);
 			}
 		}
 
@@ -206,28 +211,28 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 		public build(): void {
 			super.build();
-			this._setUpElements();
-			this._setUpInitialState();
+			this.setHtmlElements();
+			this.setInitialStates();
 			this._setUpDisabledState();
-			this._setA11yAttributes();
+			this.setA11yProperties();
+			this.setCallbacks();
 			this._setUpEvents();
 			super.finishBuild();
 		}
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		public changeProperty(propertyName: string, propertyValue: any): void {
-			switch (propertyName) {
-				case Enum.Properties.IsDisabled:
-					this.configs.IsDisabled = propertyValue;
-					this._setUpDisabledState();
-					this._setUpEvents();
-					break;
-				case Enum.Properties.IsExpanded:
-					this._toggleAccordion();
-					this.configs.IsExpanded = propertyValue;
-					break;
-				default:
-					super.changeProperty(propertyName, propertyValue);
-					break;
+
+		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			const expandedState = this.configs.IsExpanded;
+			super.changeProperty(propertyName, propertyValue);
+			if (this.isBuilt) {
+				switch (propertyName) {
+					case Enum.Properties.IsDisabled:
+						this._setUpDisabledState();
+						this._setUpEvents();
+						break;
+					case Enum.Properties.IsExpanded:
+						this._toggleAccordion(expandedState);
+						break;
+				}
 			}
 		}
 
@@ -239,21 +244,25 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			// We know the final height is 0 - it is being collapsed
 			const collapsedHeight = 0;
 
-			Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Closed);
-			Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.Open);
+			Helper.Dom.Styles.AddClass(this._accordionContent, Enum.CssClass.Closed);
+			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.Open);
 
-			Helper.Style.SetStyleAttribute(this._accordionContent, 'height', expandedHeight + GlobalEnum.Units.Pixel);
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._accordionContent,
+				'height',
+				expandedHeight + GlobalEnum.Units.Pixel
+			);
 
 			// Removes collapsed class and adds the expanded class to animate
-			Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Expanded);
-			Helper.Style.RemoveClass(this._accordionContent, Enum.CssClass.Collapsed);
+			Helper.Dom.Styles.AddClass(this._accordionContent, Enum.CssClass.Expanded);
+			Helper.Dom.Styles.RemoveClass(this._accordionContent, Enum.CssClass.Collapsed);
 
 			const waitDomIterateTimeout = setTimeout(() => {
 				// Adds is--animating class to current accordion item content to obtain the final height value
-				Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Animation);
-				Helper.Style.RemoveClass(this._accordionContent, Enum.CssClass.Expanded);
+				Helper.Dom.Styles.AddClass(this._accordionContent, Enum.CssClass.Animation);
+				Helper.Dom.Styles.RemoveClass(this._accordionContent, Enum.CssClass.Expanded);
 
-				Helper.Style.SetStyleAttribute(
+				Helper.Dom.Styles.SetStyleAttribute(
 					this._accordionContent,
 					'height',
 					collapsedHeight + GlobalEnum.Units.Pixel
@@ -261,7 +270,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 				this._accordionContent.addEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._transitionEnd);
 				// End of animation, item is collapsed
-				Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Collapsed);
+				Helper.Dom.Styles.AddClass(this._accordionContent, Enum.CssClass.Collapsed);
 
 				clearTimeout(waitDomIterateTimeout);
 			}, 100);
@@ -272,9 +281,9 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		}
 
 		public dispose(): void {
-			super.dispose();
 			this._removeEvents();
 			this._accordionParent?.removeAccordionItem(this.uniqueId);
+			super.dispose();
 		}
 
 		// This method will open and then close the item to get its final value; then, it will run an animation
@@ -283,28 +292,32 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			// We know the initial height is 0 - it is  collapsed
 			const collapsedHeight = 0;
 
-			Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.Closed);
-			Helper.Style.AddClass(this._selfElem, Enum.CssClass.Open);
+			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.Closed);
+			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Open);
 
 			// While the animation is running, we don't want any clicks happening on the title
-			Helper.Style.SetStyleAttribute(this._accordionTitle, 'pointerEvents', 'none');
+			Helper.Dom.Styles.SetStyleAttribute(this._accordionTitle, 'pointerEvents', 'none');
 
-			Helper.Style.RemoveClass(this._accordionContent, Enum.CssClass.Collapsed);
-			Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Expanded);
+			Helper.Dom.Styles.RemoveClass(this._accordionContent, Enum.CssClass.Collapsed);
+			Helper.Dom.Styles.AddClass(this._accordionContent, Enum.CssClass.Expanded);
 
-			Helper.Attribute.Remove(this._accordionTitle, 'style');
+			Helper.Dom.Attribute.Remove(this._accordionTitle, 'style');
 
 			const expandedHeight = this._accordionContent.getBoundingClientRect().height;
 
-			Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Collapsed);
-			Helper.Style.RemoveClass(this._accordionContent, Enum.CssClass.Expanded);
+			Helper.Dom.Styles.AddClass(this._accordionContent, Enum.CssClass.Collapsed);
+			Helper.Dom.Styles.RemoveClass(this._accordionContent, Enum.CssClass.Expanded);
 
-			Helper.Style.SetStyleAttribute(this._accordionContent, 'height', collapsedHeight + GlobalEnum.Units.Pixel);
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._accordionContent,
+				'height',
+				collapsedHeight + GlobalEnum.Units.Pixel
+			);
 
 			const waitDomIterateTimeout = setTimeout(() => {
 				// Adds is--animating class to current accordion item content to obtain the final height value
-				Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Animation);
-				Helper.Style.SetStyleAttribute(
+				Helper.Dom.Styles.AddClass(this._accordionContent, Enum.CssClass.Animation);
+				Helper.Dom.Styles.SetStyleAttribute(
 					this._accordionContent,
 					'height',
 					expandedHeight + GlobalEnum.Units.Pixel
@@ -313,7 +326,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				this._accordionContent.addEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._transitionEnd);
 
 				// End of animation, item is expanded
-				Helper.Style.AddClass(this._accordionContent, Enum.CssClass.Expanded);
+				Helper.Dom.Styles.AddClass(this._accordionContent, Enum.CssClass.Expanded);
 
 				clearTimeout(waitDomIterateTimeout);
 			}, 100);
@@ -326,7 +339,9 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		}
 
 		public registerCallback(callback: Callbacks.OSGeneric): void {
-			this._onToggleCallback = callback;
+			if (this._onToggleCallback === undefined) {
+				this._onToggleCallback = callback;
+			}
 		}
 	}
 }
