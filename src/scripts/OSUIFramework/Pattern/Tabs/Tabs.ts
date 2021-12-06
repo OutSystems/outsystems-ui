@@ -324,7 +324,6 @@ namespace OSUIFramework.Patterns.Tabs {
 					break;
 				default:
 					super.changeProperty(propertyName, propertyValue);
-					break;
 			}
 		}
 
