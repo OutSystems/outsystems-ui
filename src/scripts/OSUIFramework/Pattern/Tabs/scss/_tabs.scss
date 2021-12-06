@@ -1,0 +1,267 @@
+/*! Patterns - Navigation - Tabs */
+////
+/// @group Patterns-Tabs
+/// Patterns - Navigation - Tabs
+
+///
+.osui-tabs {
+	display: grid;
+	height: var(--tabs-height);
+
+	&--is-vertical {
+		&.osui-tabs--is-right {
+			grid-auto-flow: dense;
+			grid-template-columns: 1fr auto;
+
+			.osui-tabs__header {
+				grid-column: 2;
+
+				&-item {
+					justify-content: flex-end;
+					padding: var(--space-xs) 0 var(--space-xs) var(--space-base);
+
+					&::after {
+						left: 0;
+					}
+
+					&:not(.osui-tabs--is-active)::after {
+						border-left: var(--border-size-m) solid var(--color-neutral-6);
+						opacity: 0;
+					}
+
+					&:hover:not(.osui-tabs--is-active)::after {
+						opacity: 1;
+					}
+
+					&.osui-tabs--is-active::after {
+						border-left: var(--border-size-m) solid var(--color-primary);
+					}
+				}
+			}
+
+			.osui-tabs__content {
+				border-right: var(--border-size-s) solid var(--color-neutral-5);
+				margin-right: -1px;
+			}
+		}
+
+		&.osui-tabs--is-left {
+			grid-auto-flow: row;
+			grid-template-columns: auto 1fr;
+
+			.osui-tabs__header {
+				&-item {
+					justify-content: flex-start;
+					padding: var(--space-xs) var(--space-base) var(--space-xs) 0;
+
+					&::after {
+						right: calc(0px - var(--border-size-m));
+					}
+
+					&:not(.osui-tabs--is-active)::after {
+						border-right: var(--border-size-m) solid var(--color-neutral-6);
+						opacity: 0;
+					}
+
+					&:hover:not(.osui-tabs--is-active)::after {
+						opacity: 1;
+					}
+
+					&.osui-tabs--is-active::after {
+						border-right: var(--border-size-m) solid var(--color-primary);
+					}
+				}
+			}
+
+			.osui-tabs__content {
+				border-left: var(--border-size-s) solid var(--color-neutral-5);
+				margin-left: -1px;
+			}
+		}
+
+		&.osui-tabs--has-drag {
+			.osui-tabs__content {
+				overflow-x: hidden;
+			}
+		}
+
+		.osui-tabs__header {
+			align-content: start;
+			grid-auto-flow: row;
+			overflow-y: auto;
+			overflow-x: hidden;
+
+			&-item {
+				border-right: var(--border-size-m) solid transparent;
+				flex: none;
+
+				&.osui-tabs--is-active::after {
+					height: 100%;
+				}
+			}
+		}
+
+		.osui-tabs__content {
+			overflow-y: auto;
+			padding: var(--space-none) var(--space-m);
+			width: auto;
+
+			&-item:not(.osui-tabs--is-active) {
+				display: none;
+			}
+		}
+	}
+
+	&--is-horizontal {
+		grid-auto-flow: column;
+		grid-template-rows: auto 1fr;
+
+		.osui-tabs__header {
+			grid-auto-flow: column;
+			justify-content: start;
+			overflow-y: hidden;
+			overflow-x: auto;
+			word-break: keep-all;
+
+			&-item {
+				border-bottom: var(--border-size-m) solid transparent;
+				justify-content: center;
+				padding: var(--space-base) var(--space-xs);
+
+				&::after {
+					bottom: calc(0px - var(--border-size-m));
+				}
+
+				&:not(.osui-tabs--is-active)::after {
+					border-bottom: var(--border-size-m) solid var(--color-neutral-6);
+					opacity: 0;
+				}
+
+				&:hover:not(.osui-tabs--is-active)::after {
+					opacity: 1;
+				}
+
+				&.osui-tabs--is-active::after {
+					border-bottom: var(--border-size-m) solid var(--color-primary);
+				}
+			}
+		}
+
+		.osui-tabs__content {
+			border-top: var(--border-size-s) solid var(--color-neutral-5);
+			display: grid;
+			grid-auto-flow: column;
+			grid-auto-columns: 100%;
+			margin-top: -1px;
+			overflow-y: hidden;
+			overscroll-behavior-x: contain;
+			padding: var(--space-m) var(--space-none);
+			scroll-snap-type: x mandatory;
+		}
+	}
+
+	&--is-justified {
+		&.osui-tabs--is-horizontal {
+			.osui-tabs__header {
+				justify-content: initial;
+			}
+		}
+
+		&.osui-tabs--is-vertical {
+			.osui-tabs__header {
+				align-content: initial;
+			}
+		}
+	}
+
+	&--has-drag {
+		.osui-tabs__content {
+			overflow-x: auto;
+		}
+	}
+
+	&__header {
+		display: grid;
+
+		&-item {
+			align-items: center;
+			background-color: transparent;
+			border: none;
+			color: var(--color-neutral-8);
+			cursor: pointer;
+			display: inline-flex;
+			height: 100%;
+			position: relative;
+			min-height: 42px;
+			width: 100%;
+
+			&:hover:not(.osui-tabs--is-active) {
+				color: var(--color-neutral-10);
+			}
+
+			&.osui-tabs--is-active {
+				color: var(--color-primary);
+			}
+
+			&::after {
+				content: '';
+				height: 100%;
+				pointer-events: none;
+				position: absolute;
+				transition: opacity 150ms ease-in;
+				width: 100%;
+				z-index: 1;
+			}
+		}
+	}
+
+	&__content {
+		overflow-x: hidden;
+		width: 100%;
+
+		&::-webkit-scrollbar {
+			display: none;
+		}
+
+		&-item {
+			overflow-y: auto;
+			scroll-snap-align: start;
+			scroll-snap-stop: always;
+		}
+	}
+
+	&__header,
+	&__content {
+		.ph > .list,
+		.ph > .OSBlockWidget {
+			display: contents;
+		}
+	}
+}
+
+///
+.has-accessible-features {
+	.osui-tabs {
+		&--is-vertical {
+			.osui-tabs__header-item {
+				&::after {
+					width: calc(100% + var(--border-size-m));
+				}
+			}
+		}
+
+		&__header-item {
+			&:focus {
+				box-shadow: none;
+			}
+
+			&::after {
+				box-sizing: border-box;
+			}
+
+			&.osui-tabs--is-active:focus-visible::after {
+				border: var(--border-size-m) solid var(--color-focus-outer);
+			}
+		}
+	}
+}
