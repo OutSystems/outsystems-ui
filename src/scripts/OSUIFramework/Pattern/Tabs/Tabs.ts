@@ -194,7 +194,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		// Method to set the Tabs Orientation
-		private _setTabsOrientation(orientation: GlobalTypes.Orientation): void {
+		private _setTabsOrientation(orientation: GlobalEnum.Orientation): void {
 			Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._configs.TabsOrientation);
 			Helper.Style.AddClass(this._selfElem, Enum.CssClasses.Modifier + orientation);
 
@@ -202,7 +202,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		// Method to set the Tabs Position
-		private _setTabsPosition(position: GlobalTypes.Direction): void {
+		private _setTabsPosition(position: GlobalEnum.Direction): void {
 			Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._configs.TabsVerticalPosition);
 			Helper.Style.AddClass(this._selfElem, Enum.CssClasses.Modifier + position);
 

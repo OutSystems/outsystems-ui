@@ -5,8 +5,8 @@ namespace OSUIFramework.Patterns.Tabs {
 		public DisableAnimation: boolean;
 		public Height: string;
 		public IsJustified: boolean;
-		public TabsOrientation: GlobalTypes.Orientation;
-		public TabsVerticalPosition: GlobalTypes.Direction;
+		public TabsOrientation: GlobalEnum.Orientation;
+		public TabsVerticalPosition: GlobalEnum.Direction;
 
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		constructor(config: JSON) {
