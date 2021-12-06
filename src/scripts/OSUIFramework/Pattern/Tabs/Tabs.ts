@@ -231,9 +231,13 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._setScrollBehavior(this._configs.DisableAnimation);
 			// Setting as false, to avoid trigering changeTab event on screen load
 			this.changeTab(this.configs.ActiveTab, undefined, false, true);
+
 			if (this._addDragGestures) {
 				this.toggleDragGestures(true);
 			}
+
+			// Call scroll polyfill
+			//smoothscroll.polyfill();
 		}
 
 		// Method to set the scroll behavior, based on the disabledAnimation config

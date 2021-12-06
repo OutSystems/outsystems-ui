@@ -12,6 +12,9 @@ import { PipsMode } from 'nouislider';
 import OriginalSplide from '@splidejs/splide';
 import { Options } from '@splidejs/splide/dist/types/types/options';
 
+// SmoothScroll polyfill
+import smoothscroll from 'smoothscroll-polyfill/dist/smoothscroll.js';
+
 /**
  * Set global declarations
  */
@@ -35,6 +38,9 @@ declare global {
 		Splide: typeof OriginalSplide;
 		SplideOpts: typeof OriginalSplide.defaults;
 		wNumb: typeof window.wNumb;
+
+		// SmoothScroll Polyfill
+		smoothscroll: typeof window.smoothscroll;
 	}
 
 	interface Navigator {
@@ -55,4 +61,7 @@ declare global {
 	type Flatpickr = flatpickr;
 	type FlatpickrOptions = flatpickrOpts;
 	type FlatpickrLocale = flatpickrLocale;
+
+	// SmoothScroll Polyfill
+	// type smoothscroll = smoothscroll;
 }
