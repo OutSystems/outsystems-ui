@@ -118,6 +118,10 @@
 .desktop {
 	.osui-sidebar_aside {
 		opacity: 0;
+
+		&:before {
+			display: none;
+		}
 	}
 }
 
