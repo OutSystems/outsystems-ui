@@ -77,4 +77,22 @@ namespace OutSystems.OSUI.Patterns.TouchEventsAPI {
 
 		return TouchEvents;
 	}
+
+	/**
+	 * Function to register a callback
+	 *
+	 * @export
+	 * @param {string} touchEventsID
+	 * @param {string} eventName
+	 * @param {OSUIFramework.Callbacks.OSGeneric} callback
+	 */
+	export function RegisterCallback(
+		touchEventsID: string,
+		eventName: string,
+		callback: OSUIFramework.Callbacks.OSGeneric
+	): void {
+		const touchEvents = this.GetTouchEventsById(touchEventsID);
+
+		touchEvents.registerCallback(eventName, callback);
+	}
 }

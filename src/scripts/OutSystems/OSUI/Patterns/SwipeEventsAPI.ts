@@ -77,4 +77,46 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 
 		return SwipeEvents;
 	}
+
+	/**
+	 * Function to register a callback
+	 *
+	 * @export
+	 * @param {string} swipeEventsID
+	 * @param {string} eventName
+	 * @param {OSUIFramework.Callbacks.OSGeneric} callback
+	 */
+	export function RegisterCallback(
+		swipeEventsID: string,
+		eventName: string,
+		callback: OSUIFramework.Callbacks.OSGeneric
+	): void {
+		const swipeEvents = this.GetSwipeEventsById(swipeEventsID);
+
+		swipeEvents.registerCallback(eventName, callback);
+	}
+
+	/**
+	 * Function that will detect the event type of the pattern instance.
+	 *
+	 * @export
+	 * @param {string} swipeEventsId ID of the SwipeEvents that will be initialized.
+	 */
+	export function GestureMove(swipeEventsId: string, event: TouchEvent): void {
+		const SwipeEvents = GetSwipeEventsById(swipeEventsId);
+
+		SwipeEvents.EventGestureMove(event);
+	}
+
+	/**
+	 * Function that will detect the event type of the pattern instance.
+	 *
+	 * @export
+	 * @param {string} swipeEventsId ID of the SwipeEvents that will be initialized.
+	 */
+	export function GestureEnd(swipeEventsId: string, offsetX: number, offsetY: number, timeTaken: number): void {
+		const SwipeEvents = GetSwipeEventsById(swipeEventsId);
+
+		SwipeEvents.EventGestureEnd(offsetX, offsetY, timeTaken);
+	}
 }
