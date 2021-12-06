@@ -1,6 +1,7 @@
 const azdev = require('azure-devops-node-api');
 const commandLineArgs = require('command-line-args');
 const postErrorMessage = require('./azure_logging').postErrorMessage;
+const postWarningMessage = require('./azure_logging').postWarningMessage;
 const failtask = require('./azure_logging').failtask;
 
 const outSystemsUIProjectId = '8121bc01-f7eb-4048-9d11-a5141ebc74ce';
