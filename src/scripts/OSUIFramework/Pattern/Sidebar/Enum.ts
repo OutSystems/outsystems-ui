@@ -2,6 +2,9 @@
 namespace OSUIFramework.Patterns.Sidebar.Enum {
 	/**
 	 * Sidebar Enum properties
+	 *
+	 * @export
+	 * @enum {number}
 	 */
 	export enum Properties {
 		IsOpen = 'IsOpen',
@@ -12,8 +15,10 @@ namespace OSUIFramework.Patterns.Sidebar.Enum {
 
 	/**
 	 * Sidebar Enum for CSS Classes
+	 *
+	 * @export
+	 * @enum {number}
 	 */
-
 	export enum CssClass {
 		Aside = 'osui-sidebar_aside',
 		Content = 'osui-sidebar_content',
@@ -26,6 +31,9 @@ namespace OSUIFramework.Patterns.Sidebar.Enum {
 
 	/**
 	 * Sidebar Enum for CSS Custom Properties
+	 *
+	 * @export
+	 * @enum {number}
 	 */
 	export enum CssProperty {
 		Width = '--sidebar-width',

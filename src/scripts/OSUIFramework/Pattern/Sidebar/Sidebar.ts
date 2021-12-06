@@ -2,34 +2,31 @@
 namespace OSUIFramework.Patterns.Sidebar {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
+	 *
+	 * @export
+	 * @class Sidebar
+	 * @extends {AbstractPattern<SidebarConfig>}
+	 * @implements {ISidebar}
 	 */
 	export class Sidebar extends AbstractPattern<SidebarConfig> implements ISidebar {
 		// Store the Sidebar direction
-		private _direction: string;
+		private _currentDirectionCssClass: string;
 		// Store current drag direction
 		private _dragOrientation: string;
 		// Store the click event with bind(this)
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventOnOverlayClick: any;
+		private _eventOverlayClick: Callbacks.Generic;
 		// Store the keypress event with bind(this)
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventOnSidebarKeypress: any;
+		private _eventSidebarKeypress: Callbacks.Generic;
 		// Store the first element to receive focus in the sidebar
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _firstFocusableElem: any;
+		private _firstFocusableElem: HTMLElement;
 		// Store focusable element inside sidebar
-		private _focusableElems: NodeList;
-		// Store if the Sidebar has Overlay
-		private _hasOverlay: boolean;
+		private _focusableElems: HTMLElement[];
 		// Store the if the Sidebar is moving on Native Gestures
 		private _isMoving: boolean;
-		// Store if the Sidebar is Open
-		private _isOpen: boolean;
 		// Store the last element to receive focus in the sidebar
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _lastFocusableElem: any;
+		private _lastFocusableElem: HTMLElement;
 		// Store the values used between gesture methods
-		private _nativeGesturesParams = {
+		private readonly _nativeGesturesParams = {
 			LastX: 0,
 			LastY: 0,
 			MoveX: 0,
@@ -37,132 +34,187 @@ namespace OSUIFramework.Patterns.Sidebar {
 		};
 		// Store if the Sidebar is Open
 		private _onToggle: Callbacks.OSSidebarToggleEvent;
+		// Store the Sidebar Overlay element
+		private _overlayElement: HTMLElement;
 		// Store the Sidebar Aside element
 		private _sidebarAsideElem: HTMLElement;
-		// Store the Sidebar Overlay element
-		private _sidebarOverlayElem: HTMLElement;
 		// Store the minimal speed for a swipe to be triggered
-		private _swipeTriggerSpeed = 0.3;
-		// Store the Sidebar width
-		private _width: string;
+		private readonly _swipeTriggerSpeed = 0.3;
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		constructor(uniqueId: string, configs: any) {
+		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SidebarConfig(configs));
 
-			this._isOpen = this._configs.IsOpen;
-			this._direction = this._configs.Direction;
-			this._hasOverlay = this._configs.HasOverlay;
-			this._width = this._configs.Width !== '' ? this._configs.Width : '300px';
-			this._eventOnSidebarKeypress = this._sidebarOnKeypress.bind(this);
-			this._eventOnOverlayClick = this._overlayOnClick.bind(this);
+			this._currentDirectionCssClass = Enum.CssClass.Direction + this.configs.Direction;
 		}
 
-		// Method to check if current gesture is withing sidebar boundaries
+		/**
+		 * Method to check if current gesture is withing sidebar boundaries
+		 *
+		 * @private
+		 * @param {number} x
+		 * @return {*}  {boolean}
+		 * @memberof Sidebar
+		 */
 		private _checkIsDraggingInsideBounds(x: number): boolean {
-			const isLeft = this._direction === GlobalEnum.Direction.Left;
+			const isLeft = this._currentDirectionCssClass === GlobalEnum.Direction.Left;
 
 			const baseThreshold = this._nativeGesturesParams.MoveX + (x - this._nativeGesturesParams.LastX);
 
 			// Check correct threshold for each direction
 			const directionThreshold = isLeft
-				? baseThreshold > -parseInt(this._width) &&
+				? baseThreshold > -parseInt(this.configs.Width) &&
 				  this._nativeGesturesParams.MoveX + (x - this._nativeGesturesParams.LastX) <= 0
-				: baseThreshold < parseInt(this._width) &&
+				: baseThreshold < parseInt(this.configs.Width) &&
 				  this._nativeGesturesParams.MoveX + (x - this._nativeGesturesParams.LastX) >= 0;
 
 			return directionThreshold;
 		}
 
-		// Method that will handle the tabindex value of the elements inside the Sidebar
-		private _handleFocusableElemsTabindex(): void {
-			this._focusableElems = [].slice.call(this._focusableElems);
+		/**
+		 * Actual method that knows what is to close the sidebar.
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
+		private _closeSidebar(): void {
+			this.configs.IsOpen = false;
+
+			if (this.isBuilt) {
+				Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.IsOpen);
+				Helper.A11Y.TabIndexFalse(this._sidebarAsideElem);
+				Helper.A11Y.AriaHiddenTrue(this._sidebarAsideElem);
+
+				this._triggerOnToggleEvent();
+				this._sidebarAsideElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
+
+				this._setFocusableElementsTabindex();
+			}
+		}
+
+		/**
+		 * Actual method that knows what is to open the sidebar.
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
+		private _openSidebar() {
+			Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsOpen);
+			Helper.A11Y.TabIndexTrue(this._sidebarAsideElem);
+			Helper.A11Y.AriaHiddenFalse(this._sidebarAsideElem);
+
+			if (this.build) {
+				//let's only change the property and trigger the OS event IF the pattern is already built.
+				this.configs.IsOpen = true;
+				this._triggerOnToggleEvent();
+			}
+			this._sidebarAsideElem.focus();
+			this._sidebarAsideElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
+
+			this._setFocusableElementsTabindex();
+		}
+
+		/**
+		 * Overlay onClick event to close the Sidebar
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
+		private _overlayClickCallback(): void {
+			this.close();
+		}
+
+		/**
+		 * Set the Sidebar opening/closing direction.
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
+		private _setDirection(): void {
+			// Reset direction class
+			if (this._currentDirectionCssClass !== '') {
+				Helper.Dom.Styles.RemoveClass(this._selfElem, this._currentDirectionCssClass);
+			}
+			this._currentDirectionCssClass = Enum.CssClass.Direction + this.configs.Direction;
+			Helper.Dom.Styles.AddClass(this._selfElem, this._currentDirectionCssClass);
+		}
+
+		/**
+		 * Method that will handle the tabindex value of the elements inside the Sidebar.
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
+		private _setFocusableElementsTabindex(): void {
+			const setA11YtabIndex = this.configs.IsOpen ? Helper.A11Y.TabIndexTrue : Helper.A11Y.TabIndexFalse;
 
 			// On each element, toggle the tabindex value, depending if sidebar is open or closed
-			this._focusableElems.forEach((item: HTMLElement) => {
-				item.setAttribute('tabindex', this._isOpen ? '0' : '-1');
+			this._focusableElems.slice().forEach((item: HTMLElement) => {
+				setA11YtabIndex(item);
 			});
 		}
 
-		// Manage the aside keypress event
-		private _handleKeypressEvent(): void {
-			if (this._isOpen) {
-				this._sidebarAsideElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnSidebarKeypress);
-			} else {
-				this._sidebarAsideElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnSidebarKeypress);
+		/**
+		 * Sets the Sidebar overlay.
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
+		private _setHasOverlay(): void {
+			//TODO: validate that this is actually necessary (the line below).
+			const alreadyHasOverlayClass = Helper.Dom.Styles.ContainsClass(this._selfElem, Enum.CssClass.HasOverlay);
+
+			if (this.configs.HasOverlay && alreadyHasOverlayClass === false) {
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.HasOverlay);
+
+				if (this.isBuilt) {
+					// Make async so that the platform updates the DIV visibility on the DOM
+					Helper.AsyncInvocation(() => {
+						this._overlayElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.Overlay);
+						this._overlayElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOverlayClick);
+						Helper.A11Y.AriaHiddenTrue(this._sidebarAsideElem);
+						Helper.A11Y.RoleButton(this._overlayElement);
+					});
+				} else {
+					this._overlayElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOverlayClick);
+				}
+			} else if (this.isBuilt) {
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.HasOverlay);
+				this._overlayElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOverlayClick);
+				this._overlayElement = undefined;
 			}
 		}
 
-		// Manage the Overlay click event
-		private _handleOverlayClick(hasOverlay: boolean): void {
-			if (hasOverlay) {
-				this._sidebarOverlayElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnOverlayClick);
-			} else if (!this._isOpen && this._sidebarOverlayElem) {
-				this._sidebarOverlayElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnOverlayClick);
-			}
-		}
-
-		// Overlay onClick event to close the Sidebar
-		private _overlayOnClick(): void {
-			this.toggleSidebar(false);
-		}
-
-		// Set accessibility atrributes on html elements
-		private _setAccessibilityProps(isOpen: boolean): void {
-			Helper.Attribute.Set(this._sidebarAsideElem, 'role', 'complementary');
-			Helper.Attribute.Set(this._sidebarAsideElem, 'aria-haspopup', 'true');
-			Helper.Attribute.Set(this._sidebarAsideElem, 'tabindex', isOpen ? '0' : '-1');
-			Helper.Attribute.Set(this._sidebarAsideElem, 'aria-hidden', isOpen ? 'false' : 'true');
-
-			if (this._sidebarOverlayElem) {
-				Helper.Attribute.Set(this._sidebarOverlayElem, 'aria-hidden', 'true');
-				Helper.Attribute.Set(this._sidebarOverlayElem, 'role', 'button');
-			}
-		}
-
-		// Set the html references that will be used to manage the cssClasses and atribute properties
-		private _setHtmlElements(): void {
-			this._sidebarAsideElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Aside);
-			this._sidebarOverlayElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Overlay);
-			this._focusableElems = this._sidebarAsideElem.querySelectorAll(Constants.FocusableElems);
-			// to handle focusable element's tabindex when toggling the sidebar
-			this._firstFocusableElem = this._focusableElems[0];
-			this._lastFocusableElem = this._focusableElems[this._focusableElems.length - 1];
-		}
-
-		// Set the cssClasses that should be assigned to the element on it's initialization
+		/**
+		 * Set the cssClasses that should be assigned to the element on it's initialization.
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
 		private _setInitialCssClasses(): void {
+			this._setDirection();
+			this._setWidth();
+			this._setHasOverlay();
 			// Set IsOpen class
-			if (this._isOpen) {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsOpen);
-			}
-
-			// Set the direction class
-			if (this._direction !== '') {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClass.Direction + this._configs.Direction);
-			} else {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClass.Direction + GlobalEnum.Direction.Right);
-			}
-
-			if (this._width !== '') {
-				Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, this._configs.Width);
-			}
-
-			// Set the overlay class
-			if (this._hasOverlay) {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClass.HasOverlay);
+			if (this.configs.IsOpen) {
+				this._openSidebar();
 			}
 		}
 
-		// Method to handle the overlay transition on gestures
+		/**
+		 * Method to handle the overlay transition on gestures.
+		 *
+		 * @private
+		 * @param {number} x
+		 * @memberof Sidebar
+		 */
 		private _setOverlayTransition(x: number): void {
-			const isLeft = this._direction === GlobalEnum.Direction.Left;
-			const overlay = this._sidebarOverlayElem;
+			const isLeft = this.configs.Direction === GlobalEnum.Direction.Left;
+			const overlay = this._overlayElement;
 			const overlayOpacity = parseInt(overlay.style.opacity);
 
-			Helper.Style.AddClass(overlay, Constants.NoTransition);
+			Helper.Dom.Styles.AddClass(overlay, Constants.NoTransition);
 
-			const percentageBeforeDif = (Math.abs(x) * 100) / parseInt(this._width);
+			const percentageBeforeDif = (Math.abs(x) * 100) / parseInt(this.configs.Width);
 			const percentage = isLeft ? 0 + percentageBeforeDif : 100 - percentageBeforeDif;
 
 			const newOpacity = Math.floor(percentage) / 100;
@@ -172,8 +224,25 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 		}
 
-		// Method that will handle the tab navigation and sidebar closing on Escape
-		private _sidebarOnKeypress(e: KeyboardEvent): void {
+		/**
+		 * Set the Sidebar width.
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
+		private _setWidth(): void {
+			Helper.Dom.Styles.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, this.configs.Width);
+		}
+
+		/**
+		 * Method that will handle the tab navigation and sidebar closing on Escape.
+		 *
+		 * @private
+		 * @param {KeyboardEvent} e
+		 * @return {*}  {void}
+		 * @memberof Sidebar
+		 */
+		private _sidebarKeypressCallback(e: KeyboardEvent): void {
 			const isTabPressed = e.key === GlobalEnum.Keycodes.Tab;
 			const isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
 			const isShiftPressed = e.shiftKey;
@@ -183,8 +252,8 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 
 			// Close the sidebar when pressing Esc
-			if (isEscapedPressed && this._isOpen) {
-				this.toggleSidebar(false);
+			if (isEscapedPressed) {
+				this.close();
 			}
 
 			// If pressing shift + tab do a focus trap inside the sidebar
@@ -199,87 +268,225 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 		}
 
-		// Method that triggers the OnToggle event
-		private _triggerOnToggleEvent(isOpen: boolean): void {
-			if (this._onToggle !== undefined) {
-				Helper.AsyncInvocation(this._onToggle, this.widgetId, isOpen);
+		/**
+		 * Toggle the Sidebar and trigger toggle event.
+		 *
+		 * @private
+		 * @param {boolean} isToOpen
+		 * @memberof Sidebar
+		 */
+		private _toggleSidebar(isToOpen: boolean): void {
+			// Toggle event listeners missing
+			if (isToOpen) {
+				this._openSidebar();
+			} else {
+				this._closeSidebar();
 			}
 		}
 
-		// Method that updates the last positions on a gesture move
+		/**
+		 * Method that triggers the OnToggle event.
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
+		private _triggerOnToggleEvent(): void {
+			Helper.AsyncInvocation(this._onToggle, this.widgetId, this.configs.IsOpen);
+		}
+
+		/**
+		 * Method that updates the last positions on a gesture move.
+		 *
+		 * @private
+		 * @param {number} x
+		 * @param {number} y
+		 * @memberof Sidebar
+		 */
 		private _updateLastPositions(x: number, y: number): void {
 			this._nativeGesturesParams.LastX = x;
 			this._nativeGesturesParams.LastY = y;
 		}
 
-		// Method to update the UI when doing a gesture
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/naming-convention
-		private _updateUI(): any {
+		/**
+		 * Method to update the UI when doing a gesture.
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
+		// eslint-disable-next-line @typescript-eslint/naming-convention
+		private _updateUI(): void {
 			if (this._isMoving) {
 				this._sidebarAsideElem.style.transform = `translateX(${this._nativeGesturesParams.MoveX}px)`;
-				requestAnimationFrame(() => {
-					this._updateUI();
-				});
+				requestAnimationFrame(this._updateUI.bind(this));
 			}
 		}
 
+		/**
+		 * Sets the A11Y properties when the pattern is built.
+		 *
+		 * @protected
+		 * @memberof Sidebar
+		 */
+		protected setA11YProperties(): void {
+			Helper.A11Y.RoleComplementary(this._sidebarAsideElem);
+			Helper.A11Y.AriaHasPopupTrue(this._sidebarAsideElem);
+
+			if (this.configs.IsOpen) {
+				Helper.A11Y.TabIndexTrue(this._sidebarAsideElem);
+				Helper.A11Y.AriaHiddenFalse(this._sidebarAsideElem);
+			} else {
+				Helper.A11Y.TabIndexFalse(this._sidebarAsideElem);
+				Helper.A11Y.AriaHiddenTrue(this._sidebarAsideElem);
+			}
+
+			if (this.configs.HasOverlay) {
+				Helper.A11Y.AriaHiddenTrue(this._sidebarAsideElem);
+				Helper.A11Y.RoleButton(this._overlayElement);
+			}
+		}
+
+		/**
+		 * Sets the callbacks to be used in the pattern.
+		 *
+		 * @protected
+		 * @memberof Sidebar
+		 */
+		protected setCallbacks(): void {
+			this._eventSidebarKeypress = this._sidebarKeypressCallback.bind(this);
+			this._eventOverlayClick = this._overlayClickCallback.bind(this);
+		}
+
+		/**
+		 * Set the html references that will be used to manage the cssClasses and atribute properties
+		 *
+		 * @protected
+		 * @memberof Sidebar
+		 */
+		protected setHtmlElements(): void {
+			this._sidebarAsideElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.Aside);
+			this._overlayElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.Overlay);
+
+			this._focusableElems = [
+				...this._sidebarAsideElem.querySelectorAll(Constants.FocusableElems),
+			] as HTMLElement[];
+
+			// to handle focusable element's tabindex when toggling the sidebar
+			this._firstFocusableElem = this._focusableElems[0];
+			this._lastFocusableElem = this._focusableElems[this._focusableElems.length - 1];
+
+			this._setWidth();
+		}
+
+		/**
+		 * Removes event listeners and callbacks.
+		 *
+		 * @protected
+		 * @memberof Sidebar
+		 */
+		protected unsetCallbacks(): void {
+			this._overlayElement?.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOverlayClick);
+			this._sidebarAsideElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
+
+			this._eventSidebarKeypress = undefined;
+			this._eventOverlayClick = undefined;
+		}
+
+		/**
+		 * Release references to HTML elements.
+		 *
+		 * @protected
+		 * @memberof Sidebar
+		 */
+		protected unsetHtmlElements(): void {
+			this._sidebarAsideElem = undefined;
+			this._overlayElement = undefined;
+			this._focusableElems = undefined;
+			// to handle focusable element's tabindex when toggling the sidebar
+			this._firstFocusableElem = undefined;
+			this._lastFocusableElem = undefined;
+		}
+
+		/**
+		 * Method to build the pattern.
+		 *
+		 * @memberof Sidebar
+		 */
 		public build(): void {
 			super.build();
 
-			this._setHtmlElements();
+			this.setHtmlElements();
 
 			this._setInitialCssClasses();
 
-			this._setAccessibilityProps(this._isOpen);
+			this.setA11YProperties();
 
-			this.setWidth(this._width);
-
-			this._handleOverlayClick(this._hasOverlay);
-
-			this._handleKeypressEvent();
+			this.setCallbacks();
 
 			this.finishBuild();
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		public changeProperty(propertyName: string, propertyValue: any): void {
-			// Check which property changed and call respective method to update it
-			switch (propertyName) {
-				case Enum.Properties.IsOpen:
-					this.toggleSidebar(propertyValue);
+		/**
+		 * Method to change the value of configs/current state.
+		 *
+		 * @param {string} propertyName
+		 * @param {unknown} propertyValue
+		 * @memberof Sidebar
+		 */
+		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			super.changeProperty(propertyName, propertyValue);
 
-					this._configs.IsOpen = propertyValue;
-					break;
-				case Enum.Properties.Direction:
-					this.setDirection(propertyValue);
-
-					this._configs.Direction = propertyValue;
-					break;
-				case Enum.Properties.Width:
-					this.setWidth(propertyValue);
-
-					this._configs.Width = propertyValue;
-					break;
-				case Enum.Properties.HasOverlay:
-					this.setHasOverlay(propertyValue);
-
-					this._hasOverlay = propertyValue;
-					break;
-				default:
-					super.changeProperty(propertyName, propertyValue);
-					break;
+			if (this.isBuilt) {
+				// Check which property changed and call respective method to update it
+				switch (propertyName) {
+					case Enum.Properties.IsOpen:
+						this._toggleSidebar(propertyValue as boolean);
+						break;
+					case Enum.Properties.Direction:
+						this._setDirection();
+						break;
+					case Enum.Properties.Width:
+						this._setWidth();
+						break;
+					case Enum.Properties.HasOverlay:
+						this._setHasOverlay();
+						break;
+				}
 			}
 		}
 
-		// Method to remove event listener and destroy sidebar instance
-		public dispose(): void {
-			super.dispose();
-
-			this._sidebarAsideElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnOverlayClick);
-			this._sidebarAsideElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnSidebarKeypress);
+		/**
+		 * Public method to close the sidebar, if it's open.
+		 *
+		 * @memberof Sidebar
+		 */
+		public close(): void {
+			if (this.configs.IsOpen) {
+				this._closeSidebar();
+			}
 		}
 
-		// Method to handle the start of a gesture
+		/**
+		 * Method to remove event listener and destroy sidebar instance
+		 *
+		 * @memberof Sidebar
+		 */
+		public dispose(): void {
+			this.unsetCallbacks();
+			this.unsetHtmlElements();
+			//--
+			super.dispose();
+		}
+
+		/**
+		 * Method to handle the start of a gesture
+		 * //TODO: Make this method private when touchEvent block becomes available in TypeScript.
+		 *
+		 * @param {number} offsetX
+		 * @param {number} offsetY
+		 * @param {number} timeTaken
+		 * @return {*}  {void}
+		 * @memberof Sidebar
+		 */
 		public onGestureEnd(offsetX: number, offsetY: number, timeTaken: number): void {
 			this._isMoving = false;
 
@@ -293,10 +500,10 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 			const checkSwipeSpeed = Math.abs(offsetX) / timeTaken > this._swipeTriggerSpeed;
 
-			const sizeThreshold = -parseInt(this._width) / 2;
+			const sizeThreshold = -parseInt(this.configs.Width) / 2;
 
 			// Define a interval for later checks, depending on Sidebar visibility
-			const swipedHalfWidth = this._isOpen
+			const swipedHalfWidth = this.configs.IsOpen
 				? this._nativeGesturesParams.MoveX < sizeThreshold
 				: this._nativeGesturesParams.MoveX > sizeThreshold;
 
@@ -305,23 +512,40 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 			this._sidebarAsideElem.style.transform = '';
 
-			isReadyToToggle ? this.toggleSidebar(!this._isOpen) : this.toggleSidebar(this._isOpen);
+			if (isReadyToToggle) {
+				if (this.configs.IsOpen) {
+					this.close();
+				} else {
+					this.open();
+				}
+			}
 
-			if (this._hasOverlay) {
-				this._sidebarOverlayElem.style.opacity = '';
+			if (this.configs.HasOverlay) {
+				this._overlayElement.style.opacity = '';
 
-				if (this._isOpen) {
-					Helper.Style.RemoveClass(this._sidebarOverlayElem, Constants.NoTransition);
+				if (this.configs.IsOpen) {
+					Helper.Dom.Styles.RemoveClass(this._overlayElement, Constants.NoTransition);
 				}
 			}
 		}
 
-		// Method to handle the gesture move
+		/**
+		 * Method to handle the gesture move
+		 * //TODO: Make this method private when touchEvent block becomes available in TypeScript.
+		 *
+		 * @param {number} x
+		 * @param {number} y
+		 * @param {number} offsetX
+		 * @param {number} offsetY
+		 * @param {TouchEvent} evt
+		 * @return {*}  {void}
+		 * @memberof Sidebar
+		 */
 		public onGestureMove(x: number, y: number, offsetX: number, offsetY: number, evt: TouchEvent): void {
 			// Check X axis direction
 			const _dragDirection = offsetX > 0 ? GlobalEnum.Direction.Right : GlobalEnum.Direction.Left;
 			// Set direction as invalid if isOpen and swipe is on opposite direction
-			this._nativeGesturesParams.InvalidX = this._isOpen && _dragDirection !== this._direction;
+			this._nativeGesturesParams.InvalidX = this.configs.IsOpen && _dragDirection !== this.configs.Direction;
 
 			// Swiped in wrong direction?
 			if (this._nativeGesturesParams.InvalidX) {
@@ -337,9 +561,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 					? GlobalEnum.Orientation.Horizontal
 					: GlobalEnum.Orientation.Vertical;
 
-				requestAnimationFrame(() => {
-					this._updateUI();
-				});
+				requestAnimationFrame(this._updateUI.bind(this));
 			}
 
 			// Is Scrolling?
@@ -362,103 +584,60 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 			this._updateLastPositions(x, y);
 
-			if (this._hasOverlay) {
+			if (this.configs.HasOverlay) {
 				this._setOverlayTransition(x);
 			}
 		}
 
-		// Method to handle the end of a gesture
+		/**
+		 * Method to handle the end of a gesture
+		 * //TODO: Make this method private when touchEvent block becomes available in TypeScript.
+		 *
+		 * @param {number} x
+		 * @param {number} y
+		 * @memberof Sidebar
+		 */
 		public onGestureStart(x: number, y: number): void {
 			// Set defaults
 			this._isMoving = true;
 			this._dragOrientation = '';
 			this._nativeGesturesParams.LastX = x;
 			this._nativeGesturesParams.LastY = y;
-			this._nativeGesturesParams.MoveX = this._isOpen
-				? 0
-				: this._direction === GlobalEnum.Direction.Left
-				? -parseInt(this._width)
-				: parseInt(this._width);
 
-			Helper.Style.AddClass(this._sidebarAsideElem, Constants.NoTransition);
+			if (this.configs.IsOpen) {
+				this._nativeGesturesParams.MoveX = 0;
+			} else if (this._currentDirectionCssClass === GlobalEnum.Direction.Left) {
+				this._nativeGesturesParams.MoveX = -parseInt(this.configs.Width);
+			} else {
+				this._nativeGesturesParams.MoveX = parseInt(this.configs.Width);
+			}
+
+			Helper.Dom.Styles.AddClass(this._sidebarAsideElem, Constants.NoTransition);
 		}
 
-		// Set callbacks for the onToggle event
+		/**
+		 * Method that opens the sidebar.
+		 *
+		 * @memberof Sidebar
+		 */
+		public open(): void {
+			if (this.configs.IsOpen === false) {
+				this._openSidebar();
+			}
+		}
+
+		/**
+		 * Set callbacks for the onToggle event
+		 *
+		 * @param {Callbacks.OSSidebarToggleEvent} callback
+		 * @memberof Sidebar
+		 */
 		public registerCallback(callback: Callbacks.OSSidebarToggleEvent): void {
-			this._onToggle = callback;
-		}
-
-		// Set the Sidebar direction
-		public setDirection(direction: string): void {
-			// Reset direction class
-			if (this._direction !== '') {
-				Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.Direction + this._configs.Direction);
-			}
-
-			Helper.Style.AddClass(this._selfElem, Enum.CssClass.Direction + direction);
-			this._direction = direction;
-			this._configs.Direction = direction;
-		}
-
-		// Toggle the Sidebar overlay
-		public setHasOverlay(hasOverlay: boolean): void {
-			const alreadyHasOverlayClass = Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.HasOverlay);
-
-			if (hasOverlay && !alreadyHasOverlayClass) {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClass.HasOverlay);
+			if (this._onToggle === undefined) {
+				this._onToggle = callback;
 			} else {
-				Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.HasOverlay);
+				console.warn(`The ${GlobalEnum.PatternsNames.Sidebar} already has the toggle callback set.`);
 			}
-
-			// Make async so that the platform updates the DIV visibility on the DOM
-			Helper.AsyncInvocation(() => {
-				this._sidebarOverlayElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Overlay);
-				this._handleOverlayClick(hasOverlay);
-			});
-
-			this._hasOverlay = hasOverlay;
-			this._configs.HasOverlay = hasOverlay;
-		}
-
-		// Set the Sidebar width
-		public setWidth(width: string): void {
-			if (width !== '') {
-				// Update css variable
-				Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, width);
-				this._width = width;
-				this._configs.Width = width;
-			}
-		}
-
-		// Toggle the Sidebar and trigger toggle event
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		public toggleSidebar(isOpen: boolean): any {
-			// Toggle event listeners missing
-			if (isOpen) {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsOpen);
-			} else {
-				Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.IsOpen);
-			}
-
-			// Set necessary accesibility attributes
-			this._setAccessibilityProps(isOpen);
-
-			// Only toggle event if the status has chnaged
-			if (isOpen !== this._isOpen) {
-				this._triggerOnToggleEvent(isOpen);
-			}
-
-			// If is open, change focus to the aside element
-			if (isOpen) {
-				this._sidebarAsideElem.focus();
-			}
-
-			this._isOpen = isOpen;
-			this._configs.IsOpen = isOpen;
-
-			// Handle keypress and focus on elements inside the sidebar
-			this._handleKeypressEvent();
-			this._handleFocusableElemsTabindex();
 		}
 	}
 }

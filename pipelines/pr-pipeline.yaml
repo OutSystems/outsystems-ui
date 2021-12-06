@@ -70,3 +70,4 @@ jobs:
             displayName: Execute Pipeline
             inputs:
                 script: node pipelines/pipeline-run.js -- --tags="$(TAGS)" --branch="$(branch_name.branch)"
+                failOnStderr: true

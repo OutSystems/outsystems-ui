@@ -75,6 +75,16 @@ namespace OSUIFramework.Patterns {
 		}
 
 		/**
+		 * Unsets the refences to the HTML elements.
+		 *
+		 * @protected
+		 * @memberof AbstractPattern
+		 */
+		private _unsetCommonHtmlElements(): void {
+			this._selfElem = undefined;
+		}
+
+		/**
 		 * Method that knows how to update the Extended class of the pattern.
 		 *
 		 * @private
@@ -192,16 +202,6 @@ namespace OSUIFramework.Patterns {
 		}
 
 		/**
-		 * Unsets the refences to the HTML elements.
-		 *
-		 * @protected
-		 * @memberof AbstractPattern
-		 */
-		protected unsetHtmlElements(): void {
-			this._selfElem = undefined;
-		}
-
-		/**
 		 * Builds the pattern.
 		 *
 		 * @memberof AbstractPattern
@@ -219,7 +219,8 @@ namespace OSUIFramework.Patterns {
 		 * @memberof AbstractPattern
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
-			if (this._configs.hasOwnProperty(propertyName)) {
+			//TODO: is this the best way to deal with properties? Or should we use - Object.getOwnPropertyDescriptor(this._configs.__proto__, propertyName)
+			if (this._configs.hasOwnProperty(propertyName) || this._configs[propertyName] !== undefined) {
 				this._configs[propertyName] = propertyValue;
 
 				if (this._isBuilt) {
@@ -241,7 +242,7 @@ namespace OSUIFramework.Patterns {
 		 */
 		public dispose(): void {
 			this._isBuilt = false;
-			this.unsetHtmlElements();
+			this._unsetCommonHtmlElements();
 			this._configs = undefined;
 		}
 

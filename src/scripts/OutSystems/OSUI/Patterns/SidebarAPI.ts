@@ -9,10 +9,20 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * @param {string} propertyName
 	 * @param {*} propertyValue
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ChangeProperty(sidebarId: string, propertyName: string, propertyValue: any): void {
+	export function ChangeProperty(sidebarId: string, propertyName: string, propertyValue: unknown): void {
 		const sidebar = GetSidebarById(sidebarId);
 		sidebar.changeProperty(propertyName, propertyValue);
+	}
+
+	/**
+	 * Function that Closes the sidebar.
+	 *
+	 * @export
+	 * @param {string} sidebarId
+	 */
+	export function Close(sidebarId: string): void {
+		const sidebar = GetSidebarById(sidebarId);
+		sidebar.close();
 	}
 
 	/**
@@ -68,7 +78,7 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 */
 	export function GetSidebarById(sidebarId: string): OSUIFramework.Patterns.Sidebar.ISidebar {
 		return OSUIFramework.Helper.MapOperation.FindInMap(
-			'Sidebar',
+			OSUIFramework.GlobalEnum.PatternsNames.Sidebar,
 			sidebarId,
 			_sidebarMap
 		) as OSUIFramework.Patterns.Sidebar.ISidebar;
@@ -100,5 +110,16 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 		const sidebar = GetSidebarById(sidebarId);
 
 		sidebar.registerCallback(callback);
+	}
+
+	/**
+	 * Function that opens the sidebar.
+	 *
+	 * @export
+	 * @param {string} sidebarId
+	 */
+	export function Open(sidebarId: string): void {
+		const sidebar = GetSidebarById(sidebarId);
+		sidebar.open();
 	}
 }
