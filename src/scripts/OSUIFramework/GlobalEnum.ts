@@ -63,6 +63,7 @@ namespace OSUIFramework.GlobalEnum {
 		FieldSet = 'fieldset',
 		Input = 'input',
 		Link = 'a',
+		Span = 'span',
 	}
 
 	/**
@@ -116,6 +117,7 @@ namespace OSUIFramework.GlobalEnum {
 		Vertical = 'vertical',
 	}
 
+	//TODO: change the name of the enum to singular? PatternName or PatternsName
 	/**
 	 * OutSystemsUI patterns names
 	 * Note: Can be used for logging purposes

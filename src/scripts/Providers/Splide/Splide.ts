@@ -51,6 +51,37 @@ namespace Providers.Splide {
 			this._onResizeWidth = this._setCarouselWidth.bind(this);
 		}
 
+		// Method to adjust the splide list to the correct offset width
+		private _adjustSplideList() {
+			// Get the splide list element after render
+			const SplideList = document.querySelector(
+				OSUIFramework.Constants.Dot + Enum.CssClass.SplideList
+			) as HTMLElement;
+
+			const computedStyle = window.getComputedStyle(SplideList);
+			// Select the value of the translateX property
+			let transform = new WebKitCSSMatrix(computedStyle.transform).m41;
+			// Calculate extra space left on the slider
+			const extraSpace = Math.abs(Number((transform % this._splideTrack.offsetWidth).toFixed(2)));
+
+			// If extra space exists, previous/next element in the slider will be visible
+			if (extraSpace !== 0) {
+				// Calculate the gap to eliminate
+				const sliderGap = this._splideTrack.offsetWidth - extraSpace;
+
+				// Check if the extra space is located in the left or right side of the slider
+				if (extraSpace > sliderGap) transform -= sliderGap;
+				else transform += extraSpace;
+
+				// Adjust the Transform property correctly
+				OSUIFramework.Helper.Style.SetStyleAttribute(
+					SplideList,
+					OSUIFramework.Patterns.Carousel.Enum.Properties.Transform,
+					'translateX(' + transform + OSUIFramework.GlobalEnum.Units.Pixel + ')'
+				);
+			}
+		}
+
 		// Add event listener to update the correct width of the pattern
 		private _adjustWidthOnResize(): void {
 			window.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Resize, this._onResizeWidth);
@@ -87,6 +118,9 @@ namespace Providers.Splide {
 
 			// Set the OnSlideMoved event
 			this._setOnSlideMovedEvent();
+
+			// Adjust carousel width
+			this._setCarouselWidth(false);
 		}
 
 		// Method to toggle the blockRender status
@@ -135,12 +169,18 @@ namespace Providers.Splide {
 		}
 
 		// Ensure that the splide track maintains the correct width
-		private _setCarouselWidth(): void {
-			OSUIFramework.Helper.Style.SetStyleAttribute(
-				this._splideTrack,
-				OSUIFramework.Patterns.Carousel.Enum.CssVariables.CarouselWidth,
-				this._selfElem.offsetWidth + OSUIFramework.GlobalEnum.Units.Pixel
-			);
+		private _setCarouselWidth(splideAdjusted = true): void {
+			OSUIFramework.Helper.AsyncInvocation(() => {
+				OSUIFramework.Helper.Style.SetStyleAttribute(
+					this._splideTrack,
+					OSUIFramework.Patterns.Carousel.Enum.CssVariables.CarouselWidth,
+					this._selfElem.offsetWidth + OSUIFramework.GlobalEnum.Units.Pixel
+				);
+				if (!splideAdjusted) {
+					// splide should be adjusted when rendering the splide component
+					this._adjustSplideList();
+				}
+			});
 		}
 
 		// Set the html references that will be used to manage the cssClasses and atribute properties
