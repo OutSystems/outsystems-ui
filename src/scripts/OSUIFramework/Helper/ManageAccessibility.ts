@@ -74,13 +74,13 @@ namespace OSUIFramework.Helper {
 		}
 
 		/**
-		 * Method that will set the aria-hidden
+		 * Method that will toggle the aria-popup
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
 		 */
-		public static AriaHidden(element: HTMLElement, value: string): void {
-			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Hidden, value);
+		public static AriaHasPopup(element: HTMLElement, value: string): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Haspopup, value);
 		}
 
 		/**
@@ -101,6 +101,16 @@ namespace OSUIFramework.Helper {
 		 */
 		public static AriaHasPopupTrue(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Haspopup, Constants.A11YAttributes.States.True);
+		}
+
+		/**
+		 * Method that will set the aria-hidden
+		 *
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @returns
+		 */
+		public static AriaHidden(element: HTMLElement, value: string): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Hidden, value);
 		}
 
 		/**
