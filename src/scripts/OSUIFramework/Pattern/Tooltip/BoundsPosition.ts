@@ -126,39 +126,25 @@ namespace OSUIFramework.Patterns.Tooltip {
 			if (out.top) {
 				switch (activePosition) {
 					case GlobalEnum.Position.Center:
-						if (out.right) {
-							openAt = GlobalEnum.Position.Top;
-						} else if (out.left) {
-							openAt = GlobalEnum.Position.TopRight;
-						}
-						break;
-
 					case GlobalEnum.Position.Top:
-						openAt = GlobalEnum.Position.Bottom;
-
 						if (out.right) {
 							openAt = GlobalEnum.Position.BottomLeft;
 						} else if (out.left) {
 							openAt = GlobalEnum.Position.BottomRight;
+						} else if (activePosition === GlobalEnum.Position.Top) {
+							openAt = GlobalEnum.Position.Bottom;
 						}
 						break;
 
 					case GlobalEnum.Position.TopRight:
-						openAt = GlobalEnum.Position.BottomRight;
-
-						if (out.right) {
-							openAt = GlobalEnum.Position.BottomLeft;
-						} else if (out.left) {
-							openAt = GlobalEnum.Position.BottomRight;
-						}
-						break;
-
 					case GlobalEnum.Position.TopLeft:
 						openAt = GlobalEnum.Position.BottomLeft;
 
 						if (out.right) {
 							openAt = GlobalEnum.Position.BottomLeft;
 						} else if (out.left) {
+							openAt = GlobalEnum.Position.BottomRight;
+						} else if (activePosition === GlobalEnum.Position.TopRight) {
 							openAt = GlobalEnum.Position.BottomRight;
 						}
 						break;
@@ -178,19 +164,11 @@ namespace OSUIFramework.Patterns.Tooltip {
 						break;
 
 					case GlobalEnum.Position.Top:
-						openAt = GlobalEnum.Position.TopLeft;
-						break;
-
 					case GlobalEnum.Position.TopRight:
 						openAt = GlobalEnum.Position.TopLeft;
 						break;
 
 					case GlobalEnum.Position.Bottom:
-						if (out.bottom) {
-							openAt = GlobalEnum.Position.TopLeft;
-						}
-						break;
-
 					case GlobalEnum.Position.BottomRight:
 						if (out.bottom) {
 							openAt = GlobalEnum.Position.TopLeft;
@@ -202,40 +180,26 @@ namespace OSUIFramework.Patterns.Tooltip {
 			else if (out.bottom) {
 				switch (activePosition) {
 					case GlobalEnum.Position.Center:
-						if (out.right) {
-							openAt = GlobalEnum.Position.TopLeft;
-						} else if (out.left) {
-							openAt = GlobalEnum.Position.TopRight;
-						}
-						break;
-
 					case GlobalEnum.Position.Bottom:
-						openAt = GlobalEnum.Position.Top;
-
 						if (out.right) {
 							openAt = GlobalEnum.Position.TopLeft;
 						} else if (out.left) {
 							openAt = GlobalEnum.Position.TopRight;
+						} else if (activePosition === GlobalEnum.Position.Bottom) {
+							openAt = GlobalEnum.Position.Top;
 						}
 						break;
 
 					case GlobalEnum.Position.BottomRight:
-						openAt = GlobalEnum.Position.TopRight;
-
-						if (out.right) {
-							openAt = GlobalEnum.Position.TopLeft;
-						} else if (out.left) {
-							openAt = GlobalEnum.Position.TopRight;
-						}
-						break;
-
 					case GlobalEnum.Position.BottomLeft:
-						openAt = GlobalEnum.Position.TopLeft;
-
 						if (out.right) {
 							openAt = GlobalEnum.Position.TopLeft;
 						} else if (out.left) {
 							openAt = GlobalEnum.Position.TopRight;
+						} else if (activePosition === GlobalEnum.Position.BottomRight) {
+							openAt = GlobalEnum.Position.TopRight;
+						} else {
+							openAt = GlobalEnum.Position.TopLeft;
 						}
 						break;
 				}
@@ -331,7 +295,6 @@ namespace OSUIFramework.Patterns.Tooltip {
 		public static GetElementPositionClass(element: HTMLElement): string | undefined {
 			if (element) {
 				const cssClasses = Helper.Dom.Styles.GetCssClasses(element);
-				//const positions = BoundsPosition.positionMatch;
 				for (const positionClass in GlobalEnum.Position) {
 					if (cssClasses.has(GlobalEnum.Position[positionClass])) {
 						return GlobalEnum.Position[positionClass];
