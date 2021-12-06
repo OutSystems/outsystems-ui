@@ -26,7 +26,6 @@ namespace OSUIFramework.Patterns.Tabs {
 		// Store all the headerItems that are created
 		private _tabsHeaderItemsElementsArray: Patterns.TabsHeaderItem.ITabsHeaderItem[];
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new TabsConfig(configs));
 
