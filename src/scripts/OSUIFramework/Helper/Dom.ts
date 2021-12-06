@@ -8,7 +8,7 @@ namespace OSUIFramework.Helper {
 	 */
 	abstract class AttributeManipulation {
 		/**
-		 * Method that will retunr a given attribute value from a given html element.
+		 * Method that will return a given attribute value from a given html element.
 		 *
 		 * @static
 		 * @param {HTMLElement} element Element where the attribute will be looked for.
@@ -23,6 +23,18 @@ namespace OSUIFramework.Helper {
 			} else {
 				throw Error(`The element does not exist, when trying to get the attribute '${attrName}'.`);
 			}
+		}
+
+		/**
+		 * Method that will return the Id of the html element.
+		 *
+		 * @static
+		 * @param {HTMLElement} element
+		 * @return {*}  {(string | undefined)}
+		 * @memberof AttributeManipulation
+		 */
+		public static Id(element: HTMLElement): string | undefined {
+			return AttributeManipulation.Get(element, 'Id');
 		}
 
 		/**
@@ -76,7 +88,9 @@ namespace OSUIFramework.Helper {
 		 */
 		public static AddClass(element: HTMLElement, cssClass: string): void {
 			if (element) {
-				element.classList.add(cssClass);
+				if (cssClass !== '') {
+					element.classList.add(cssClass);
+				}
 			} else {
 				throw Error(`The element does not exist, when trying to add the class '${cssClass}'.`);
 			}
@@ -93,31 +107,27 @@ namespace OSUIFramework.Helper {
 		 */
 		public static ContainsClass(element: HTMLElement, cssClass: string): boolean {
 			if (element) {
-				return element.classList.contains(cssClass);
+				if (cssClass !== '') {
+					return element.classList.contains(cssClass);
+				}
 			} else {
 				throw Error(`The element does not exist, when trying to check if it has the class '${cssClass}'.`);
 			}
 		}
 
 		/**
-		 * Method that will look for a cssClass Position on a given element.
+		 * Returns the CSS classes that a a given element has
 		 *
 		 * @static
-		 * @param {HTMLElement} element Element where the cssClass will be looked for.
-		 * @return {*}  {string} returns the class name that represents the position. In case there no position class defined, return undefined.
+		 * @param {HTMLElement} element
+		 * @return {*}  {string[]}
 		 * @memberof StyleManipulation
 		 */
-		public static HasCssClassPosition(element: HTMLElement): string | undefined {
+		public static GetCssClasses(element: HTMLElement): Set<string> {
 			if (element) {
-				const classesEnum = Object.keys(GlobalEnum.CssClassPosition);
-				for (const positionClass in classesEnum) {
-					if (StyleManipulation.ContainsClass(element, GlobalEnum.CssClassPosition[positionClass])) {
-						return GlobalEnum.CssClassPosition[positionClass];
-					}
-				}
-				return undefined;
+				return new Set([...element.classList]);
 			} else {
-				throw Error('The element does not exist, when trying to check for position class.');
+				throw Error('The element does not exist, when trying to get the classes.');
 			}
 		}
 
@@ -131,7 +141,9 @@ namespace OSUIFramework.Helper {
 		 */
 		public static RemoveClass(element: HTMLElement, cssClass: string): void {
 			if (element) {
-				element.classList.remove(cssClass);
+				if (cssClass !== '') {
+					element.classList.remove(cssClass);
+				}
 			} else {
 				throw Error(`The element does not exist, when trying to remove the class '${cssClass}'.`);
 			}
@@ -148,7 +160,9 @@ namespace OSUIFramework.Helper {
 		 */
 		public static SetStyleAttribute(element: HTMLElement, cssRule: string, ruleValue: number | string): void {
 			if (element) {
-				element.style.setProperty(cssRule, ruleValue.toString());
+				if (cssRule !== '') {
+					element.style.setProperty(cssRule, ruleValue.toString());
+				}
 			} else {
 				throw Error(`The element does not exist, when trying to apply the rule '${cssRule}'.`);
 			}
@@ -164,7 +178,9 @@ namespace OSUIFramework.Helper {
 		 */
 		public static ToggleClass(element: HTMLElement, cssClass: string): void {
 			if (element) {
-				element.classList.toggle(cssClass);
+				if (cssClass !== '') {
+					element.classList.toggle(cssClass);
+				}
 			} else {
 				throw Error(`The element does not exist, when trying to toggle the class '${cssClass}'.`);
 			}
@@ -209,7 +225,9 @@ namespace OSUIFramework.Helper {
 			let elementFound: HTMLElement = undefined;
 
 			if (element) {
-				elementFound = element.querySelector(Constants.Dot + cssClass);
+				if (cssClass !== '') {
+					elementFound = element.querySelector(Constants.Dot + cssClass);
+				}
 				//this is to make sure that we are only returning the element or undefined.
 				elementFound = elementFound ? elementFound : undefined;
 			} else {
@@ -231,7 +249,7 @@ namespace OSUIFramework.Helper {
 		public static GetElementByUniqueId(uniqueId: string): HTMLElement {
 			const obj = document.getElementsByName(uniqueId);
 
-			if (obj.length) {
+			if (obj.length && uniqueId !== '') {
 				return obj[0];
 			} else {
 				throw new Error(`Object with name '${uniqueId}' not found.`);
@@ -265,7 +283,9 @@ namespace OSUIFramework.Helper {
 			let elementFound: HTMLElement = undefined;
 
 			if (element) {
-				elementFound = element.querySelector(htmlTag);
+				if (htmlTag !== '') {
+					elementFound = element.querySelector(htmlTag);
+				}
 				//this is to make sure that we are only returning the element or undefined.
 				elementFound = elementFound ? elementFound : undefined;
 			} else {

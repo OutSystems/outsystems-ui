@@ -15,9 +15,9 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
-	 * OutSystemsUI position cssClasses
+	 * OutSystemsUI position cssClasses and identifiers of position
 	 */
-	export enum CssClassPosition {
+	export enum Position {
 		Bottom = 'bottom',
 		BottomLeft = 'bottom-left',
 		BottomRight = 'bottom-right',
@@ -27,6 +27,13 @@ namespace OSUIFramework.GlobalEnum {
 		Top = 'top',
 		TopLeft = 'top-left',
 		TopRight = 'top-right',
+	}
+
+	/**
+	 * OutSystemsUI elements CSS properties
+	 */
+	export enum CssProperties {
+		None = 'none',
 	}
 
 	/**
@@ -55,6 +62,8 @@ namespace OSUIFramework.GlobalEnum {
 	export enum HTMLAttributes {
 		DataInput = 'data-input',
 		Disabled = 'disabled',
+		Id = 'id',
+		Style = 'style',
 	}
 
 	/**
@@ -84,6 +93,14 @@ namespace OSUIFramework.GlobalEnum {
 		TouchMove = 'touchmove',
 		TouchStart = 'touchstart',
 		TransitionEnd = 'transitionend',
+	}
+
+	/**
+	 * OutSystemsUI elements inline styles
+	 */
+	export enum InlineStyle {
+		Height = 'height',
+		PointerEvents = 'pointerEvents',
 	}
 
 	/**

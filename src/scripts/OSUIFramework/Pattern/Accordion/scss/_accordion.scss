@@ -9,6 +9,10 @@
 		border-radius: var(--border-size-none);
 		border-bottom-width: var(--border-size-none);
 
+		& {
+			-servicestudio-border-bottom-width: var(--border-size-s);
+		}
+
 		&--is-first-item {
 			border-radius: var(--border-radius-soft) var(--border-radius-soft) var(--border-radius-none)
 				var(--border-radius-none);
