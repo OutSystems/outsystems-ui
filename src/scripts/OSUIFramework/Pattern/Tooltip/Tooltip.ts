@@ -294,6 +294,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 		}
 
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			//Storing the current position, before possibly changing this property.
+			//This will enable us to remove the previous added classes to the element.
 			const oldPosition = this.configs.Position;
 			super.changeProperty(propertyName, propertyValue);
 			if (this.isBuilt) {
