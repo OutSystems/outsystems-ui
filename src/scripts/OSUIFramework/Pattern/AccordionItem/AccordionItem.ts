@@ -112,11 +112,11 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			if (this._accordionContent) {
 				Helper.Dom.Styles.RemoveClass(this._accordionContent, Enum.CssClass.Animation);
 
-				Helper.Dom.Styles.SetStyleAttribute(this._accordionContent, 'height', '');
-				Helper.Dom.Styles.SetStyleAttribute(this._accordionTitle, 'pointerEvents', '');
+				Helper.Dom.Styles.SetStyleAttribute(this._accordionContent, GlobalEnum.InlineStyle.Height, '');
+				Helper.Dom.Styles.SetStyleAttribute(this._accordionTitle, GlobalEnum.InlineStyle.PointerEvents, '');
 
 				if (this._accordionContent.style.cssText.length === 0) {
-					Helper.Attribute.Remove(this._accordionContent, 'style');
+					Helper.Attribute.Remove(this._accordionContent, GlobalEnum.HTMLAttributes.Style);
 				}
 
 				this._accordionContent.removeEventListener(
@@ -138,7 +138,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			Helper.Dom.Attribute.Set(
 				this._selfElem,
 				Constants.A11YAttributes.Aria.Controls,
-				Helper.Attribute.Get(this._accordionPlaceholder, 'id')
+				Helper.Attribute.Get(this._accordionPlaceholder, GlobalEnum.HTMLAttributes.Id)
 			);
 
 			Helper.Dom.Attribute.Set(this._selfElem, 'role', Constants.A11YAttributes.Role.Tab);
@@ -164,7 +164,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			Helper.Dom.Attribute.Set(
 				this._accordionContent,
 				Constants.A11YAttributes.Aria.Labelledby,
-				Helper.Attribute.Get(this._accordionTitle, 'id')
+				Helper.Attribute.Get(this._accordionTitle, GlobalEnum.HTMLAttributes.Id)
 			);
 
 			Helper.Dom.Attribute.Set(
@@ -239,7 +239,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		// This method will open and then close the item to get its final value; then, it will run an animation
 		// from the item's inital height to 0
 		public close(): void {
-			Helper.Attribute.Remove(this._accordionContent, 'style');
+			Helper.Attribute.Remove(this._accordionContent, GlobalEnum.HTMLAttributes.Style);
 			const expandedHeight = this._accordionContent.getBoundingClientRect().height;
 			// We know the final height is 0 - it is being collapsed
 			const collapsedHeight = 0;
@@ -249,7 +249,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._accordionContent,
-				'height',
+				GlobalEnum.InlineStyle.Height,
 				expandedHeight + GlobalEnum.Units.Pixel
 			);
 
@@ -264,7 +264,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 				Helper.Dom.Styles.SetStyleAttribute(
 					this._accordionContent,
-					'height',
+					GlobalEnum.InlineStyle.Height,
 					collapsedHeight + GlobalEnum.Units.Pixel
 				);
 
@@ -296,12 +296,16 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Open);
 
 			// While the animation is running, we don't want any clicks happening on the title
-			Helper.Dom.Styles.SetStyleAttribute(this._accordionTitle, 'pointerEvents', 'none');
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._accordionTitle,
+				GlobalEnum.InlineStyle.PointerEvents,
+				GlobalEnum.CssProperties.None
+			);
 
 			Helper.Dom.Styles.RemoveClass(this._accordionContent, Enum.CssClass.Collapsed);
 			Helper.Dom.Styles.AddClass(this._accordionContent, Enum.CssClass.Expanded);
 
-			Helper.Dom.Attribute.Remove(this._accordionTitle, 'style');
+			Helper.Dom.Attribute.Remove(this._accordionTitle, GlobalEnum.HTMLAttributes.Style);
 
 			const expandedHeight = this._accordionContent.getBoundingClientRect().height;
 
@@ -310,7 +314,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._accordionContent,
-				'height',
+				GlobalEnum.InlineStyle.Height,
 				collapsedHeight + GlobalEnum.Units.Pixel
 			);
 
@@ -319,7 +323,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				Helper.Dom.Styles.AddClass(this._accordionContent, Enum.CssClass.Animation);
 				Helper.Dom.Styles.SetStyleAttribute(
 					this._accordionContent,
-					'height',
+					GlobalEnum.InlineStyle.Height,
 					expandedHeight + GlobalEnum.Units.Pixel
 				);
 
