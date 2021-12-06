@@ -353,10 +353,10 @@ namespace OSUIFramework.Patterns.Notification {
 		// Method to handle the swipe bottom
 		public onSwipeBottom(): void {
 			if (
-				this._configs.Position === GlobalEnum.CssClassPosition.Bottom ||
-				this._configs.Position === GlobalEnum.CssClassPosition.BottomLeft ||
-				this._configs.Position === GlobalEnum.CssClassPosition.BottomRight ||
-				this._configs.Position === GlobalEnum.CssClassPosition.Center
+				this._configs.Position === GlobalEnum.Position.Bottom ||
+				this._configs.Position === GlobalEnum.Position.BottomLeft ||
+				this._configs.Position === GlobalEnum.Position.BottomRight ||
+				this._configs.Position === GlobalEnum.Position.Center
 			) {
 				this.hide();
 			}
@@ -365,9 +365,9 @@ namespace OSUIFramework.Patterns.Notification {
 		// Method to handle the swipe left
 		public onSwipeLeft(): void {
 			if (
-				this._configs.Position === GlobalEnum.CssClassPosition.Left ||
-				this._configs.Position === GlobalEnum.CssClassPosition.BottomLeft ||
-				this._configs.Position === GlobalEnum.CssClassPosition.TopLeft
+				this._configs.Position === GlobalEnum.Position.Left ||
+				this._configs.Position === GlobalEnum.Position.BottomLeft ||
+				this._configs.Position === GlobalEnum.Position.TopLeft
 			) {
 				this.hide();
 			}
@@ -376,9 +376,9 @@ namespace OSUIFramework.Patterns.Notification {
 		// Method to handle the swipe right
 		public onSwipeRight(): void {
 			if (
-				this._configs.Position === GlobalEnum.CssClassPosition.Right ||
-				this._configs.Position === GlobalEnum.CssClassPosition.BottomRight ||
-				this._configs.Position === GlobalEnum.CssClassPosition.TopRight
+				this._configs.Position === GlobalEnum.Position.Right ||
+				this._configs.Position === GlobalEnum.Position.BottomRight ||
+				this._configs.Position === GlobalEnum.Position.TopRight
 			) {
 				this.hide();
 			}

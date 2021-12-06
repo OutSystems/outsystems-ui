@@ -15,9 +15,9 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
-	 * OutSystemsUI position cssClasses
+	 * OutSystemsUI position cssClasses and identifiers of position
 	 */
-	export enum CssClassPosition {
+	export enum Position {
 		Bottom = 'bottom',
 		BottomLeft = 'bottom-left',
 		BottomRight = 'bottom-right',
