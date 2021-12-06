@@ -160,6 +160,9 @@ namespace OSUIFramework.GlobalEnum {
 		SectionIndex = 'Section Index',
 		Sidebar = 'Sidebar',
 		Submenu = 'Submenu',
+		Tabs = 'Tabs',
+		TabsHeaderItem = 'TabsHeaderItem',
+		TabsContentItem = 'TabsContentItem',
 		Tooltip = 'Tooltip',
 	}
 
