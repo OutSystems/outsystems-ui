@@ -77,7 +77,6 @@ namespace OSUIFramework.Patterns {
 
 				default:
 					throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
-					break;
 			}
 		}
 
