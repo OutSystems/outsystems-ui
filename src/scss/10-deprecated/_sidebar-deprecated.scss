@@ -61,6 +61,11 @@
 }
 
 // Responsive --------------------------------------------------------------------
+.desktop {
+	.sidebar:before {
+		display: none;
+	}
+}
 
 .android[data-status-bar-height] {
 	.layout-native {
