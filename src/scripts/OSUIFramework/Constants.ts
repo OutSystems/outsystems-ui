@@ -7,10 +7,10 @@ namespace OSUIFramework.Constants {
 		Aria: {
 			Atomic: 'atomic',
 			Controls: 'aria-controls',
-			Disabled: 'disabled',
+			Disabled: 'aria-disabled',
 			Describedby: 'describedby',
 			Expanded: 'aria-expanded',
-			Haspopup: '',
+			Haspopup: 'aria-haspopup',
 			Hidden: 'aria-hidden',
 			Label: 'aria-label',
 			Labelledby: 'labelledby',
