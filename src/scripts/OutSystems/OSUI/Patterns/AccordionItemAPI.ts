@@ -63,8 +63,6 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 		}
 		const accordion = GetAccordionByItem(accordionItemId);
 
-		config.AccordionParent = accordion;
-
 		const _newAccordionItem = new OSUIFramework.Patterns.AccordionItem.AccordionItem(
 			accordionItemId,
 			config,
@@ -89,16 +87,6 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 */
 	export function Dispose(accordionItemId: string): void {
 		const accordionItem = GetAccordionItemById(accordionItemId);
-
-		//When destroying the whole pattern Accordion + Accordion Item, the parent is destroyed first
-		//So, there is no parent to disconnect from.
-		if (accordionItem) {
-			const accordion = GetAccordionByItem(accordionItemId);
-
-			if (accordion !== undefined) {
-				accordion.removeAccordionItem(accordionItem.uniqueId);
-			}
-		}
 
 		accordionItem.dispose();
 

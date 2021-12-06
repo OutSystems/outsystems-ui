@@ -95,6 +95,8 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 * @return {*}  {OSUIFramework.Patterns.Accordion.IAccordion}
 	 */
 	export function GetAccordionById(AccordionId: string): OSUIFramework.Patterns.Accordion.IAccordion {
+		// Protects the code when you have the pattern of removing children and parents
+		// In this case, FloatingActionsItem, when destorying itself, will have a hard time looking for something that has already been disposed.
 		return OSUIFramework.Helper.MapOperation.FindInMap(
 			'Accordion',
 			AccordionId,

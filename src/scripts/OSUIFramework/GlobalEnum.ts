@@ -30,6 +30,13 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
+	 * OutSystemsUI elements CSS properties
+	 */
+	export enum CssProperties {
+		None = 'none',
+	}
+
+	/**
 	 * OutSystemsUI Data Blocks attribute values
 	 */
 	export enum DataBlocksTag {
@@ -54,6 +61,8 @@ namespace OSUIFramework.GlobalEnum {
 	 */
 	export enum HTMLAttributes {
 		DataInput = 'data-input',
+		Id = 'id',
+		Style = 'style',
 	}
 
 	/**
@@ -83,6 +92,14 @@ namespace OSUIFramework.GlobalEnum {
 		TouchMove = 'touchmove',
 		TouchStart = 'touchstart',
 		TransitionEnd = 'transitionend',
+	}
+
+	/**
+	 * OutSystemsUI elements inline styles
+	 */
+	export enum InlineStyle {
+		Height = 'height',
+		PointerEvents = 'pointerEvents',
 	}
 
 	/**
