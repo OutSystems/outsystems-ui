@@ -235,9 +235,6 @@ namespace OSUIFramework.Patterns.Tabs {
 			if (this._addDragGestures) {
 				this.toggleDragGestures(true);
 			}
-
-			// Call scroll polyfill
-			//smoothscroll.polyfill();
 		}
 
 		// Method to set the scroll behavior, based on the disabledAnimation config
