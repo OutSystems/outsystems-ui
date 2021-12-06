@@ -4,9 +4,10 @@ namespace OSUIFramework.Patterns.FloatingActionsItem {
 		extends AbstractPattern<FloatingActionsItemConfig>
 		implements IFloatingActionsItem
 	{
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		constructor(uniqueId: string, configs: any) {
+		private _floatingParent: Patterns.FloatingActions.IFloatingActions;
+		constructor(uniqueId: string, configs: JSON, floatingParent: Patterns.FloatingActions.IFloatingActions) {
 			super(uniqueId, new FloatingActionsItemConfig(configs));
+			this._floatingParent = floatingParent;
 		}
 
 		public build(): void {
@@ -15,6 +16,7 @@ namespace OSUIFramework.Patterns.FloatingActionsItem {
 		}
 
 		public dispose(): void {
+			this._floatingParent?.removeFloatingActionItem(this.uniqueId);
 			super.dispose();
 		}
 
