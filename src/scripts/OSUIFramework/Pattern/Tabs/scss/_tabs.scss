@@ -22,6 +22,7 @@
 
 					&::after {
 						left: 0;
+						top: 0;
 					}
 
 					&:not(.osui-tabs--is-active)::after {
@@ -56,6 +57,7 @@
 
 					&::after {
 						right: calc(0px - var(--border-size-m));
+						top: 0;
 					}
 
 					&:not(.osui-tabs--is-active)::after {
@@ -105,10 +107,6 @@
 			overflow-y: auto;
 			padding: var(--space-none) var(--space-m);
 			width: auto;
-
-			&-item:not(.osui-tabs--is-active) {
-				display: none;
-			}
 		}
 	}
 
@@ -130,6 +128,7 @@
 
 				&::after {
 					bottom: calc(0px - var(--border-size-m));
+					left: 0;
 				}
 
 				&:not(.osui-tabs--is-active)::after {
@@ -149,14 +148,9 @@
 
 		.osui-tabs__content {
 			border-top: var(--border-size-s) solid var(--color-neutral-5);
-			display: grid;
-			grid-auto-flow: column;
-			grid-auto-columns: 100%;
 			margin-top: -1px;
 			overflow-y: hidden;
-			overscroll-behavior-x: contain;
 			padding: var(--space-m) var(--space-none);
-			scroll-snap-type: x mandatory;
 		}
 	}
 
@@ -174,9 +168,38 @@
 		}
 	}
 
-	&--has-drag {
+	&:not(.osui-tabs--has-drag) {
 		.osui-tabs__content {
-			overflow-x: auto;
+			&-item:not(.osui-tabs--is-active) {
+				display: none;
+			}
+		}
+	}
+
+	&--has-drag {
+		&.osui-tabs--is-horizontal {
+			.osui-tabs__content {
+				display: grid;
+				grid-auto-flow: column;
+				grid-auto-columns: 100%;
+				overflow-y: hidden;
+				overflow-x: auto;
+				overscroll-behavior-x: contain;
+				scroll-snap-type: x mandatory;
+
+				&-item {
+					scroll-snap-align: start;
+					scroll-snap-stop: always;
+				}
+			}
+		}
+
+		&.osui-tabs--is-vertical {
+			.osui-tabs__content {
+				&-item:not(.osui-tabs--is-active) {
+					display: none;
+				}
+			}
 		}
 	}
 
@@ -225,8 +248,6 @@
 
 		&-item {
 			overflow-y: auto;
-			scroll-snap-align: start;
-			scroll-snap-stop: always;
 		}
 	}
 

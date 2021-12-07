@@ -175,7 +175,7 @@ namespace OSUIFramework.Patterns.Tabs {
 				this._tabsContentElement.scrollTo({
 					top: 0,
 					left: targetOffeset,
-					behavior: this._scrollBehavior,
+					behavior: Enum.ScrollBehavior.Instant,
 				});
 
 				// Remove old contentitem as active
@@ -228,20 +228,12 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._setTabsPosition(this._configs.TabsVerticalPosition);
 			this._setTabsHeight(this._configs.Height);
 			this._setTabsIsJustified(this._configs.IsJustified);
-			this._setScrollBehavior(this._configs.DisableAnimation);
 			// Setting as false, to avoid trigering changeTab event on screen load
 			this.changeTab(this.configs.ActiveTab, undefined, false, true);
 
 			if (this._addDragGestures) {
 				this.toggleDragGestures(true);
 			}
-		}
-
-		// Method to set the scroll behavior, based on the disabledAnimation config
-		private _setScrollBehavior(disableAnimation: boolean): void {
-			// If is true, then scroll should instant, otherwise is smooth
-			this._scrollBehavior = disableAnimation ? Enum.ScrollBehavior.Instant : Enum.ScrollBehavior.Smooth;
-			this._configs.DisableAnimation = disableAnimation;
 		}
 
 		// Method to set the Tabs Height
@@ -384,9 +376,6 @@ namespace OSUIFramework.Patterns.Tabs {
 				case Enum.Properties.ActiveTab:
 					this.changeTab(propertyValue, undefined, true, true);
 					break;
-				case Enum.Properties.DisableAnimation:
-					this._setScrollBehavior(propertyValue);
-					break;
 				case Enum.Properties.Height:
 					this._setTabsHeight(propertyValue);
 					break;
@@ -416,7 +405,7 @@ namespace OSUIFramework.Patterns.Tabs {
 				Helper.AsyncInvocation(this._enableBlockObserver.bind(this));
 			}
 
-			// If selecting the same element as the active one, prevent tabsChangereturn;
+			// If selecting the same element as the active one, prevent tabsChange;
 			if (this._activeTabHeaderElement === tabsHeaderItem) {
 				return;
 			}
@@ -437,8 +426,8 @@ namespace OSUIFramework.Patterns.Tabs {
 				newHeaderItem = tabsHeaderItem;
 			}
 
-			// If there're more than one content item or changeTab doesn't come from adrag gesture,
-			// then to scrollTo and change active content item
+			// If there're more than one content item or changeTab doesn't come from a drag gesture,
+			// then do scrollTo and change active content item
 			if (!this._hasSingleContent || this._blockObserver) {
 				// Get the contentItem, based on the newTabIndex
 				const newContentItem = this._tabsContentItemsElementsArray[newTabIndex];
