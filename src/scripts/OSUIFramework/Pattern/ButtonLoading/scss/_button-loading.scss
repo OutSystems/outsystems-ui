@@ -5,19 +5,19 @@
 
 ///
 .osui-btn-loading {
-	&.show-spinner-only {
-		&.is--btn-loading {
+	&-show-spinner {
+		&.osui-btn-loading--is-loading {
 			.btn {
 				font-size: 0;
 
-				.spinner-animation {
+				.osui-btn-loading__spinner-animation {
 					margin-right: var(--space-none);
 				}
 			}
 		}
 	}
 
-	&.is--btn-loading {
+	&.osui-btn-loading--is-loading {
 		&,
 		& * {
 			pointer-events: none;
@@ -26,7 +26,7 @@
 		.btn {
 			display: inline-flex;
 
-			.spinner-animation {
+			.osui-btn-loading__spinner-animation {
 				display: inline-block;
 			}
 		}
@@ -46,11 +46,11 @@
 			vertical-align: middle;
 		}
 
-		& > *:not(.spinner-animation) {
+		& > *:not(.osui-btn-loading__spinner-animation) {
 			display: none;
 		}
 
-		.spinner-animation {
+		.osui-btn-loading__spinner-animation {
 			display: none;
 			animation: loadingSpinner 850ms cubic-bezier(0.7, 1.05, 0.78, 0.78) infinite;
 			border: var(--border-size-m) solid currentColor;
@@ -74,7 +74,7 @@
 .is-rtl {
 	.osui-btn-loading {
 		.btn {
-			.spinner-animation {
+			.osui-btn-loading__spinner-animation {
 				margin-left: var(--space-s);
 				margin-right: var(--space-none);
 			}
