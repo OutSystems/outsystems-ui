@@ -179,7 +179,6 @@
 	&--has-drag {
 		&.osui-tabs--is-horizontal {
 			.osui-tabs__content {
-				display: grid;
 				grid-auto-flow: column;
 				grid-auto-columns: 100%;
 				overflow-y: hidden;
@@ -239,6 +238,7 @@
 	}
 
 	&__content {
+		display: grid;
 		overflow-x: hidden;
 		width: 100%;
 

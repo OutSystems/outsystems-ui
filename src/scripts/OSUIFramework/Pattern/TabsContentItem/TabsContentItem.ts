@@ -57,10 +57,12 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		}
 
 		public removeAsActiveElement(): void {
-			Helper.Style.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
-			Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.TabIndex, '-1');
-			Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Hidden, true);
-			this._isActive = false;
+			if (this._selfElem) {
+				Helper.Style.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
+				Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.TabIndex, '-1');
+				Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Hidden, true);
+				this._isActive = false;
+			}
 		}
 
 		public removeDragObserver(observer: IntersectionObserver): void {

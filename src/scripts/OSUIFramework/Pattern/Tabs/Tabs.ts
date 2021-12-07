@@ -23,9 +23,6 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _hasSingleContent: boolean;
 		// Store the onTabsChange platform callback
 		private _onTabsChange: Callbacks.OSTabsOnChangeEvent;
-		// Store the disableAnimation config, as its a boolean on the platform,
-		// and it needs to be converted here to 'auto' if true, and 'smooth' if false
-		private _scrollBehavior: Enum.ScrollBehavior;
 		// Store the contentItems wrapper -- osui-tabs__content
 		private _tabsContentElement: HTMLElement;
 		// Store all the contentItems that are created
@@ -38,9 +35,6 @@ namespace OSUIFramework.Patterns.Tabs {
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new TabsConfig(configs));
 
-			// Bind the handleKeypressEvent with 'this'
-			this._eventOnHeaderKeypress = this._handleKeypressEvent.bind(this);
-			this._eventOnTouchstart = this._disableBlockObserver.bind(this);
 			// Start with the arrays empty
 			this._tabsHeaderItemsElementsArray = [];
 			this._tabsContentItemsElementsArray = [];
@@ -157,14 +151,6 @@ namespace OSUIFramework.Patterns.Tabs {
 			});
 		}
 
-		// Method to remove the event listener on the Tabs header
-		private _removeEventListeners(): void {
-			this._tabsHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
-			if (this._addDragGestures) {
-				this._tabsContentElement.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, this._eventOnTouchstart);
-			}
-		}
-
 		// Method to scroll to new target content item
 		private _scrollToTargetContent(newContentItem: Patterns.TabsContentItem.ITabsContentItem): void {
 			if (newContentItem) {
@@ -177,12 +163,6 @@ namespace OSUIFramework.Patterns.Tabs {
 					left: targetOffeset,
 					behavior: Enum.ScrollBehavior.Instant,
 				});
-
-				// Remove old contentitem as active
-				this._activeTabContentElement.removeAsActiveElement();
-				// Set new content item as active
-				newContentItem.setAsActiveElement();
-				this._activeTabContentElement = newContentItem;
 			}
 		}
 
@@ -214,12 +194,6 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._tabsContentItemsElementsArray.forEach((item) => {
 				item.setOnDragObserver(this._dragObserver);
 			});
-		}
-
-		// Method to assign the html elements to the header and content wrappers
-		private _setHtmlElements(): void {
-			this._tabsHeaderElement = this._selfElem.querySelector(Constants.Dot + Enum.CssClasses.TabsHeader);
-			this._tabsContentElement = this._selfElem.querySelector(Constants.Dot + Enum.CssClasses.TabsContent);
 		}
 
 		// Method to set the initial options on screen load
@@ -307,6 +281,33 @@ namespace OSUIFramework.Patterns.Tabs {
 			});
 		}
 
+		protected setCallbacks(): void {
+			this._eventOnHeaderKeypress = this._handleKeypressEvent.bind(this);
+			this._eventOnTouchstart = this._disableBlockObserver.bind(this);
+		}
+
+		// Method to assign the html elements to the header and content wrappers
+		protected setHtmlElements(): void {
+			this._tabsHeaderElement = this._selfElem.querySelector(Constants.Dot + Enum.CssClasses.TabsHeader);
+			this._tabsContentElement = this._selfElem.querySelector(Constants.Dot + Enum.CssClasses.TabsContent);
+		}
+
+		// Method to remove the event listener on the Tabs header
+		protected unsetCallbacks(): void {
+			this._tabsHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
+			this._eventOnHeaderKeypress = undefined;
+
+			if (this._addDragGestures) {
+				this._tabsContentElement.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, this._eventOnTouchstart);
+				this._eventOnTouchstart = undefined;
+			}
+		}
+
+		protected unsetHtmlElements(): void {
+			this._tabsHeaderElement = undefined;
+			this._tabsContentElement = undefined;
+		}
+
 		// Method that it's called whenever a new TabsContentItem is rendered
 		public addTabsContentItem(tabsContentItem: TabsContentItem.ITabsContentItem): void {
 			// Add this item to the array
@@ -340,14 +341,21 @@ namespace OSUIFramework.Patterns.Tabs {
 				// So make again the connection between header items and content items,
 				// to make sure the data-tab and labels attributes are correct with the new DOM order
 				Helper.AsyncInvocation(this._updateTabsConnection.bind(this));
-
 				// If there's no active header element, assign it to this one
-				if (this._activeTabHeaderElement === undefined) {
-					this._activeTabHeaderElement = tabsHeaderItem;
+				if (
+					(this._activeTabHeaderElement === undefined || this._activeTabHeaderElement === null) &&
+					currentIndex === this._configs.ActiveTab
+				) {
 					// And call changeTab, to make sure there's an active tab
-					// undefined passed ,as we don't necessarily want this item to be set as active,
+					// undefined passed, as we don't necessarily want this item to be set as active,
 					// but the one passed on the configs.activeTab, if available
-					Helper.AsyncInvocation(this.changeTab.bind(this), this.configs.ActiveTab, undefined, false, true);
+					Helper.AsyncInvocation(
+						this.changeTab.bind(this),
+						this._configs.ActiveTab,
+						tabsHeaderItem,
+						false,
+						true
+					);
 				}
 			} else {
 				// Otherwise are items created before the tabs is built
@@ -359,13 +367,15 @@ namespace OSUIFramework.Patterns.Tabs {
 		public build(): void {
 			super.build();
 
-			this._setHtmlElements();
+			this.setHtmlElements();
 
 			this._prepareHeaderAndContentItems();
 
 			this._prepareHeaderElement();
 
 			this._setInitialOptions();
+
+			this.setCallbacks();
 
 			this.finishBuild();
 		}
@@ -432,8 +442,18 @@ namespace OSUIFramework.Patterns.Tabs {
 				// Get the contentItem, based on the newTabIndex
 				const newContentItem = this._tabsContentItemsElementsArray[newTabIndex];
 
-				// Scroll to new content item and set it as active
-				this._scrollToTargetContent(newContentItem);
+				if (newContentItem) {
+					// Remove old contentitem as active
+					this._activeTabContentElement.removeAsActiveElement();
+					// Set new content item as active
+					newContentItem.setAsActiveElement();
+					this._activeTabContentElement = newContentItem;
+				}
+
+				if (this._addDragGestures) {
+					// Scroll to new content item and set it as active
+					this._scrollToTargetContent(newContentItem);
+				}
 			}
 
 			// Remove old headerItem as active
@@ -457,15 +477,21 @@ namespace OSUIFramework.Patterns.Tabs {
 
 		// Destroy the Tabs pattern
 		public dispose(): void {
+			// Remove event listeners on tabs header element
+			this.unsetCallbacks();
+			this.unsetHtmlElements();
+
 			// call super method, which deletes this tabs class instance from the TabsMap
 			super.dispose();
-			// Remove event listeners on tabs header element
-			this._removeEventListeners();
 		}
 
 		// Set callbacks for the onTabsChange event
 		public registerCallback(callback: Callbacks.OSTabsOnChangeEvent): void {
-			this._onTabsChange = callback;
+			if (this._onTabsChange === undefined) {
+				this._onTabsChange = callback;
+			} else {
+				console.warn(`The ${GlobalEnum.PatternsNames.Tabs} already has the tabs change callback set.`);
+			}
 		}
 
 		// Method that it's called whenever a new TabsContentItem is destroyed
@@ -489,7 +515,8 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			// If this item removed was the active one, set a new one by calling changeTab()
 			if (isActiveItem && this.isBuilt) {
-				Helper.AsyncInvocation(this.changeTab.bind(this), this._configs.ActiveTab, undefined, false, true);
+				this._activeTabHeaderElement = null;
+				Helper.AsyncInvocation(this.changeTab.bind(this), currentIndex - 1, undefined, false, true);
 			}
 		}
 
@@ -504,6 +531,8 @@ namespace OSUIFramework.Patterns.Tabs {
 				this._setTouchEvents();
 				// Set observer on each contentItem to detect current content being intersected
 				this._setDragObserver();
+				// Update content position, due to change to display grid
+				this.changeTab();
 				// If the gestures were already added
 			} else if (this._addDragGestures) {
 				// Remove class to prevent overflow-x

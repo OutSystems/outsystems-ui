@@ -60,12 +60,12 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		}
 
 		public dispose(): void {
-			super.dispose();
-
 			// Remove this item from the tabs pattern array
 			this._tabsElem.removeTabsHeaderItem(this, this._isActive);
 
 			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnTabsClick);
+
+			super.dispose();
 		}
 
 		public getDataTab(): number {
@@ -73,10 +73,12 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		}
 
 		public removeAsActiveElement(): void {
-			Helper.Style.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
-			Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Selected, false);
-			Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.TabIndex, '-1');
-			this._isActive = false;
+			if (this._selfElem) {
+				Helper.Style.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
+				Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Selected, false);
+				Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.TabIndex, '-1');
+				this._isActive = false;
+			}
 		}
 
 		public setAriaControlsAttribute(contentItemId: string): void {
