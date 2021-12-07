@@ -134,7 +134,7 @@
 			}
 		}
 
-		&-enter,
+		&,
 		&-leave {
 			&.fade-leave-active {
 				opacity: 0;
@@ -142,7 +142,7 @@
 			}
 		}
 
-		&-enter {
+		& {
 			&.fade-enter-active {
 				opacity: initial;
 
