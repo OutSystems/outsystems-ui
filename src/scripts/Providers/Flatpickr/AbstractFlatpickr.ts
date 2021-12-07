@@ -136,18 +136,6 @@ namespace Providers.Flatpickr {
 
 					break;
 
-				case OSUIFramework.Patterns.DatePicker.Enum.Properties.ShowMonths:
-					// Set the new ShowMonths value
-					this._configs.ShowMonths = propertyValue;
-
-					break;
-
-				case OSUIFramework.Patterns.DatePicker.Enum.Properties.ShowWeekNumbers:
-					// Set the new ShowMonths value
-					this._configs.ShowWeekNumbers = propertyValue;
-
-					break;
-
 				case OSUIFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass:
 					// Since we've an element that will be added dynamically at the body...
 					this._updateExtendedClassSelectors(this._configs.ExtendedClass, propertyValue);
