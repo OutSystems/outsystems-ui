@@ -86,10 +86,12 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		}
 
 		public setAsActiveElement(): void {
-			Helper.Style.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
-			Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Selected, true);
-			Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.TabIndex, '0');
-			this._isActive = true;
+			if (this._selfElem) {
+				Helper.Style.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
+				Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Selected, true);
+				Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.TabIndex, '0');
+				this._isActive = true;
+			}
 		}
 
 		public setDataTab(dataTab: number): void {
