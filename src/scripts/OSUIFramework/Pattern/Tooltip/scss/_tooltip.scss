@@ -301,6 +301,7 @@ $osui-tooltip-arrow-size: 9px;
 		// Service Studio Preview
 		& {
 			-servicestudio-max-width: 200px;
+			-servicestudio-min-height: 36px;
 			-servicestudio-opacity: 1;
 			-servicestudio-top: 0;
 		}
