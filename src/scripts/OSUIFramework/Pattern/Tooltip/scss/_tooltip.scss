@@ -101,6 +101,10 @@ $osui-tooltip-arrow-size: 9px;
 	///
 	.osui-tooltip_content {
 		position: inherit;
+
+		&:empty {
+			-servicestudio-min-width: 150px;
+		}
 	}
 
 	///
