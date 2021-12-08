@@ -18,6 +18,10 @@
 		}
 	}
 
+	&.right {
+		-servicestudio-justify-content: flex-end;
+	}
+
 	&.is-left {
 		.osui-sidebar_aside {
 			left: 0;
@@ -27,6 +31,10 @@
 				right: -24px;
 			}
 		}
+	}
+
+	&.left {
+		-servicestudio-justify-content: flex-start;
 	}
 
 	&_aside {
@@ -54,11 +62,13 @@
 		// Service Studio Preview
 		& {
 			-servicestudio-bottom: 20px;
+			-servicestudio-display: inline-block;
 			-servicestudio-height: auto;
-			-servicestudio-margin-left: auto;
+			-servicestudio-margin: unset;
 			-servicestudio-position: relative;
 			-servicestudio-transform: none;
 			-servicestudio-webkit-transform: none;
+			-servicestudio-width: unset;
 		}
 	}
 
@@ -87,10 +97,17 @@
 		will-change: opacity;
 		z-index: 130;
 
+		&-preview {
+			background-color: rgba(0, 0, 0, 0.25);
+		}
 		// Service Studio Preview
 		& {
 			-servicestudio-display: none;
 		}
+	}
+	& {
+		-servicestudio-display: flex;
+		-servicestudio-flex-direction: row;
 	}
 }
 
