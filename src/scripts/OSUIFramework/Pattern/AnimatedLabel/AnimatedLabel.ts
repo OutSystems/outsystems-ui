@@ -173,9 +173,10 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		 * @memberof AnimatedLabel
 		 */
 		public dispose(): void {
-			super.dispose();
 			this.unsetCallbacks();
 			this.unsetHtmlElements();
+			//Destroying the base of pattern
+			super.dispose();
 		}
 
 		/**
