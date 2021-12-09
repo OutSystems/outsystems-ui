@@ -519,23 +519,24 @@ namespace OSUIFramework.Patterns.Tabs {
 		 * @param {*} propertyValue
 		 * @memberof Tabs
 		 */
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		public changeProperty(propertyName: string, propertyValue: any): void {
+		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
 
-			switch (propertyName) {
-				case Enum.Properties.Height:
-					this._setTabsHeight(propertyValue);
-					break;
-				case Enum.Properties.TabsOrientation:
-					this._setTabsOrientation(propertyValue);
-					break;
-				case Enum.Properties.TabsVerticalPosition:
-					this._setTabsPosition(propertyValue);
-					break;
-				case Enum.Properties.JustifyHeaders:
-					this._setTabsIsJustified(propertyValue);
-					break;
+			if (this.isBuilt) {
+				switch (propertyName) {
+					case Enum.Properties.Height:
+						this._setTabsHeight(propertyValue as string);
+						break;
+					case Enum.Properties.TabsOrientation:
+						this._setTabsOrientation(propertyValue as GlobalEnum.Orientation);
+						break;
+					case Enum.Properties.TabsVerticalPosition:
+						this._setTabsPosition(propertyValue as GlobalEnum.Direction);
+						break;
+					case Enum.Properties.JustifyHeaders:
+						this._setTabsIsJustified(propertyValue as boolean);
+						break;
+				}
 			}
 		}
 
