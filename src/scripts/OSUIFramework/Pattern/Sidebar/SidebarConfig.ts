@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Sidebar {
 	export class SidebarConfig extends AbstractConfiguration {
-		private readonly _defaultWith = '300px';
+		private static readonly _defaultWith = '300px';
 		private _width: string;
 
 		/** PUBLIC PROPERTIES **/
