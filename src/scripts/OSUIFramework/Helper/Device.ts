@@ -382,7 +382,7 @@ namespace OSUIFramework.Helper {
 		}
 
 		public static get IsIos(): boolean {
-			if (DeviceInfo.IsIos === undefined) {
+			if (DeviceInfo._isIos === undefined) {
 				DeviceInfo._isIos = Dom.Styles.ContainsClass(document.body, GlobalEnum.MobileOS.IOS);
 			}
 			return DeviceInfo._isIos;
