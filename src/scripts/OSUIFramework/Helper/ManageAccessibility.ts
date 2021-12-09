@@ -188,6 +188,28 @@ namespace OSUIFramework.Helper {
 		}
 
 		/**
+		 * Method that will set the aria-selected to false
+		 *
+		 * @static
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @memberof A11Y
+		 */
+		public static AriaSelectedFalse(element: HTMLElement): void {
+			Helper.Attribute.Set(element, Constants.A11YAttributes.Aria.Selected, false);
+		}
+
+		/**
+		 * Method that will set the aria-selected to true
+		 *
+		 * @static
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @memberof A11Y
+		 */
+		public static AriaSelectedTrue(element: HTMLElement): void {
+			Helper.Attribute.Set(element, Constants.A11YAttributes.Aria.Selected, true);
+		}
+
+		/**
 		 * Method that will set the aria-value max
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
@@ -276,6 +298,17 @@ namespace OSUIFramework.Helper {
 		 */
 		public static RoleSearch(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Search);
+		}
+
+		/**
+		 * Method that will set the tab role
+		 *
+		 * @static
+		 * @param {HTMLElement} element Target element to receive the role atributte
+		 * @memberof A11Y
+		 */
+		public static RoleTab(element: HTMLElement): void {
+			Helper.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Tab);
 		}
 
 		/**
