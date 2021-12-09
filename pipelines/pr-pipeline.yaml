@@ -63,6 +63,8 @@ stages:
                   name: branch_name
 
     - stage: safari_functional_tests
+      variables:
+          - group: 'Services Credentials'
       displayName: Execute tests on Safari
       condition: ne(stageDependencies.CheckChanges.outputs['CheckChangesJob.check_changes.tags'], '')
       dependsOn: CheckChanges
@@ -83,6 +85,8 @@ stages:
                       BRANCH: $(branch)
 
     - stage: chrome_functional_tests
+      variables:
+          - group: 'Services Credentials'
       displayName: Execute tests on Chrome
       condition: ne(stageDependencies.CheckChanges.outputs['CheckChangesJob.check_changes.tags'], '')
       dependsOn: CheckChanges
