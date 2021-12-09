@@ -163,20 +163,6 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		/**
-		 * Method that adds the necessary attributes and listeners to the Tabs header
-		 *
-		 * @private
-		 * @memberof Tabs
-		 */
-		private _prepareHeaderElement(): void {
-			// Set aria-role to TabsHeader
-			Helper.A11Y.RoleTabList(this._tabsHeaderElement);
-
-			// Add event listener for arrow navigation
-			this._tabsHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
-		}
-
-		/**
 		 * Method to remove the drag Observer on each contentItem
 		 *
 		 * @private
@@ -220,7 +206,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			// Observer options
 			const observerOptions = {
 				root: this._tabsContentElement,
-				rootMargin: '1px', // Fix for some android devices, that need at least of 1px of threshold for the itersection to properly work
+				rootMargin: Enum.ObserverOptions.RootMargin, // Fix for some android devices, that need at least of 1px of threshold for the itersection to properly work
 				threshold: 1,
 			};
 
@@ -377,6 +363,17 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		/**
+		 * Method that adds the necessary attributes and listeners to the Tabs header
+		 *
+		 * @protected
+		 * @memberof Tabs
+		 */
+		protected setA11YProperties(): void {
+			// Set aria-role to TabsHeader
+			Helper.A11Y.RoleTabList(this._tabsHeaderElement);
+		}
+
+		/**
 		 * Method to set the callbacks and event listeners
 		 *
 		 * @protected
@@ -385,6 +382,9 @@ namespace OSUIFramework.Patterns.Tabs {
 		protected setCallbacks(): void {
 			this._eventOnHeaderKeypress = this._handleKeypressEvent.bind(this);
 			this._eventOnTouchstart = this._disableBlockObserver.bind(this);
+
+			// Add event listener for arrow navigation
+			this._tabsHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
 		}
 
 		/**
@@ -503,9 +503,9 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			this.setCallbacks();
 
-			this._prepareHeaderAndContentItems();
+			this.setA11YProperties();
 
-			this._prepareHeaderElement();
+			this._prepareHeaderAndContentItems();
 
 			this._setInitialOptions();
 

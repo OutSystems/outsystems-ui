@@ -35,4 +35,8 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 		Orientation = 'TabsOrientation',
 		Position = 'TabsVerticalPosition',
 	}
+
+	export enum ObserverOptions {
+		RootMargin = '1px',
+	}
 }
