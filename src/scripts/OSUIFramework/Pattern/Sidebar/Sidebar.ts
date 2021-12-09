@@ -166,17 +166,15 @@ namespace OSUIFramework.Patterns.Sidebar {
 			if (this.configs.HasOverlay && alreadyHasOverlayClass === false) {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.HasOverlay);
 
-				if (this.isBuilt) {
-					// Make async so that the platform updates the DIV visibility on the DOM
-					Helper.AsyncInvocation(() => {
+				// Make async so that the platform updates the DIV visibility on the DOM
+				Helper.AsyncInvocation(() => {
+					if (this.isBuilt) {
 						this._overlayElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.Overlay);
-						this._overlayElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOverlayClick);
-						Helper.A11Y.AriaHiddenTrue(this._sidebarAsideElem);
-						Helper.A11Y.RoleButton(this._overlayElement);
-					});
-				} else {
+					}
 					this._overlayElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOverlayClick);
-				}
+					Helper.A11Y.AriaHiddenTrue(this._sidebarAsideElem);
+					Helper.A11Y.RoleButton(this._overlayElement);
+				});
 			} else if (this.isBuilt) {
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.HasOverlay);
 				this._overlayElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOverlayClick);
