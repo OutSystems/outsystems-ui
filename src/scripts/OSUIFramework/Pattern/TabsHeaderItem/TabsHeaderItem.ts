@@ -50,7 +50,7 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		}
 
 		/**
-		 * Method to set the Accessibility attributes
+		 * Method to handle the Accessibility attributes
 		 *
 		 * @protected
 		 * @param {boolean} [isUpdate=true]
