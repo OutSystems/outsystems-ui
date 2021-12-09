@@ -126,7 +126,7 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	 * @param {string} tabsId
 	 * @param {number} tabsNumber
 	 */
-	export function TabsGoTo(tabsId: string, tabsNumber: number): void {
+	export function SetActiveTab(tabsId: string, tabsNumber: number): void {
 		const tabs = GetTabsById(tabsId);
 
 		tabs.changeTab(tabsNumber, undefined, true, true);

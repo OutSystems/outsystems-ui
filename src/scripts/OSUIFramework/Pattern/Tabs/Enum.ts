@@ -28,12 +28,11 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 	}
 
 	export enum Properties {
-		ActiveTab = 'ActiveTab',
-		DisableAnimation = 'DisableAnimation',
 		Height = 'Height',
-		IsJustified = 'IsJustified',
-		Orientation = 'TabsOrientation',
-		Position = 'TabsVerticalPosition',
+		JustifyHeaders = 'JustifyHeaders',
+		StartingTab = 'StartingTab',
+		TabsOrientation = 'TabsOrientation',
+		TabsVerticalPosition = 'TabsVerticalPosition',
 	}
 
 	export enum ObserverOptions {
