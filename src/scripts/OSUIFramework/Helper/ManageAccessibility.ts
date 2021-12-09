@@ -312,6 +312,21 @@ namespace OSUIFramework.Helper {
 		}
 
 		/**
+		 * Method that will set the tablist role
+		 *
+		 * @static
+		 * @param {HTMLElement} element Target element to receive the role atributte
+		 * @memberof A11Y
+		 */
+		public static RoleTabList(element: HTMLElement): void {
+			Helper.Attribute.Set(
+				element,
+				Constants.A11YAttributes.Role.AttrName,
+				Constants.A11YAttributes.Role.TabList
+			);
+		}
+
+		/**
 		 * Method that will set the tabpanel role
 		 *
 		 * @static
