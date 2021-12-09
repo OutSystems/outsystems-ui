@@ -260,7 +260,6 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _setTabsHeight(height: string): void {
 			// Create css variable
 			Helper.Style.SetStyleAttribute(this._selfElem, Enum.Attributes.TabsHeight, height);
-			this.configs.Height = height;
 		}
 
 		/**
@@ -276,8 +275,6 @@ namespace OSUIFramework.Patterns.Tabs {
 			} else {
 				Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.IsJustified);
 			}
-
-			this._configs.JustifyHeaders = isJustified;
 		}
 
 		/**
@@ -290,8 +287,6 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _setTabsOrientation(orientation: GlobalEnum.Orientation): void {
 			Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._configs.TabsOrientation);
 			Helper.Style.AddClass(this._selfElem, Enum.CssClasses.Modifier + orientation);
-
-			this._configs.TabsOrientation = orientation;
 		}
 
 		/**
@@ -304,8 +299,6 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _setTabsPosition(position: GlobalEnum.Direction): void {
 			Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._configs.TabsVerticalPosition);
 			Helper.Style.AddClass(this._selfElem, Enum.CssClasses.Modifier + position);
-
-			this._configs.TabsVerticalPosition = position;
 		}
 
 		/**
