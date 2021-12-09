@@ -99,7 +99,7 @@
 		z-index: 130;
 
 		&-preview {
-			background-color: $sidebar-overlay-background;
+			-servicestudio-background-color: $sidebar-overlay-background;
 		}
 		// Service Studio Preview
 		& {
