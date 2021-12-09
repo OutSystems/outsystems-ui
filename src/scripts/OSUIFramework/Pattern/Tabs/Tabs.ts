@@ -521,6 +521,8 @@ namespace OSUIFramework.Patterns.Tabs {
 		 */
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
+			super.changeProperty(propertyName, propertyValue);
+
 			switch (propertyName) {
 				case Enum.Properties.Height:
 					this._setTabsHeight(propertyValue);
@@ -533,9 +535,6 @@ namespace OSUIFramework.Patterns.Tabs {
 					break;
 				case Enum.Properties.JustifyHeaders:
 					this._setTabsIsJustified(propertyValue);
-					break;
-				default:
-					super.changeProperty(propertyName, propertyValue);
 					break;
 			}
 		}
