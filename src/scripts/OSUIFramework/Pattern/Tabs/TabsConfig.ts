@@ -7,7 +7,6 @@ namespace OSUIFramework.Patterns.Tabs {
 		public TabsOrientation: GlobalEnum.Orientation;
 		public TabsVerticalPosition: GlobalEnum.Direction;
 
-		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		constructor(config: JSON) {
 			super(config);
 		}
