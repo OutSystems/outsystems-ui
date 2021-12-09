@@ -227,7 +227,9 @@ namespace OSUIFramework.Patterns.FlipContent {
 		 * @memberof FlipContent
 		 */
 		public registerCallback(callback: Callbacks.OSFlipContentFlipEvent): void {
-			this._plataformEventFlip = callback;
+			if (this._plataformEventFlip === undefined) {
+				this._plataformEventFlip = callback;
+			}
 		}
 
 		/**
