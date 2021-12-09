@@ -19,7 +19,6 @@ namespace OSUIFramework.Patterns.Submenu {
 		private _submenuClickedElement: HTMLElement;
 		private _submenuEventType: GlobalEnum.HTMLEvent;
 		private _submenuHeaderElement: HTMLElement;
-		private _submenuItemElement: HTMLElement;
 		private _submenuLinksElement: HTMLElement;
 
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
@@ -258,7 +257,6 @@ namespace OSUIFramework.Patterns.Submenu {
 		 */
 		protected setHtmlElements(): void {
 			this._submenuHeaderElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternHeader);
-			this._submenuItemElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternItem);
 			this._submenuLinksElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternLinks);
 			this._submenuAllLinksElement = [...this._submenuLinksElement.querySelectorAll(GlobalEnum.HTMLElement.Link)];
 			this._submenuActiveLinksElement = Helper.Dom.ClassSelector(
@@ -350,7 +348,6 @@ namespace OSUIFramework.Patterns.Submenu {
 		 */
 		protected unsetHtmlElements(): void {
 			this._submenuHeaderElement = undefined;
-			this._submenuItemElement = undefined;
 			this._submenuLinksElement = undefined;
 			this._submenuAllLinksElement = undefined;
 			this._submenuActiveLinksElement = undefined;
