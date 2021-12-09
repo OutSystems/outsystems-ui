@@ -20,8 +20,19 @@ namespace OSUIFramework.Patterns {
 			}
 		}
 
-		protected validateBoolean(value: boolean | undefined, defaultVAlue: boolean): boolean {
-			return value !== undefined ? value : defaultVAlue;
+		protected validateBoolean(value: boolean | undefined, defaultValue: boolean): boolean {
+			return value !== undefined ? value : defaultValue;
+		}
+
+		protected validateInRange(value: unknown, defaultValue: unknown, ...args: unknown[]): unknown {
+			if (value && args.includes(value)) {
+				return value;
+			}
+			return defaultValue;
+		}
+
+		protected validateString(value: string | undefined, defaultValue: string): string {
+			return value && value.trim() ? value : defaultValue;
 		}
 
 		public validateDefault(key: string, value: unknown): unknown {
