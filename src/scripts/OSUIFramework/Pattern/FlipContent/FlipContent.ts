@@ -211,9 +211,10 @@ namespace OSUIFramework.Patterns.FlipContent {
 		 * @memberof FlipContent
 		 */
 		public dispose(): void {
-			super.dispose();
 			this.unsetCallbacks();
 			this.unsetHtmlElements();
+
+			super.dispose();
 		}
 		/**
 		 * Register OnToogleClick clientAction as a callBack reference
