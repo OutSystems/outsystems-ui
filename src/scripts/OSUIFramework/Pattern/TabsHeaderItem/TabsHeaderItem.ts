@@ -2,6 +2,11 @@
 namespace OSUIFramework.Patterns.TabsHeaderItem {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
+	 *
+	 * @export
+	 * @class TabsHeaderItem
+	 * @extends {AbstractPattern<TabsHeaderItemConfig>}
+	 * @implements {ITabsHeaderItem}
 	 */
 	export class TabsHeaderItem extends AbstractPattern<TabsHeaderItemConfig> implements ITabsHeaderItem {
 		// Store the data-tab attribute
