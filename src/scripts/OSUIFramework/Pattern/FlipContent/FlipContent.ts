@@ -39,19 +39,6 @@ namespace OSUIFramework.Patterns.FlipContent {
 		}
 
 		/**
-		 * Add Attributes and it's values
-		 *
-		 * @memberof FlipContent
-		 */
-		private _setDataAttribute(): void {
-			Helper.Dom.Attribute.Set(
-				this._flipWrapperElement,
-				Enum.CssClass.PatternDataFlipped,
-				this.configs.IsFlipped
-			);
-		}
-
-		/**
 		 * Setting the handlers and the classes for when the FlipSelf is active or not.
 		 *
 		 * @private
@@ -185,9 +172,6 @@ namespace OSUIFramework.Patterns.FlipContent {
 			// Set the A11Y defaults
 			this.setA11yProperties();
 
-			// Set the data attribute
-			this._setDataAttribute();
-
 			this.finishBuild();
 		}
 
@@ -246,8 +230,6 @@ namespace OSUIFramework.Patterns.FlipContent {
 			this.configs.IsFlipped = !this.configs.IsFlipped;
 
 			this._toggleClasses();
-
-			this._setDataAttribute();
 
 			this._triggerPlatformEvent();
 		}
