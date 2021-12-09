@@ -229,7 +229,7 @@ namespace OSUIFramework.Patterns {
 					}
 				}
 				//First we used the previous value of the ExtendedClass config.
-				//Then then we update it or any other config.
+				//then we update it or any other config.
 				this._configs[propertyName] = propertyValue;
 			} else {
 				throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
