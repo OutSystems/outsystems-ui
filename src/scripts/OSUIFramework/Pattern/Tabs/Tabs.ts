@@ -24,7 +24,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _currentVerticalTabsPositon: GlobalEnum.Direction;
 		// Store the IntersectionObserver callback
 		private _dragObserver: IntersectionObserver;
-		// Store the keypress event with bind(this)
+		// Store the events with bind(this)
 		private _eventOnHeaderKeypress: Callbacks.Generic;
 		private _eventOnTouchstart: Callbacks.Generic;
 		// Store if the Tabs has only one ContentItem, to prevebt unnecessary usages of ScrollTo
