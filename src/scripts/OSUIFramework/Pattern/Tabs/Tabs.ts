@@ -560,15 +560,19 @@ namespace OSUIFramework.Patterns.Tabs {
 				Helper.AsyncInvocation(this._enableBlockObserver.bind(this));
 			}
 
-			// If selecting the same element as the active one, prevent tabsChange;
-			if (this._activeTabHeaderElement === tabsHeaderItem) {
+			// If selecting the same element as the active one, prevent tabsChange
+			if (
+				this._activeTabHeaderElement === tabsHeaderItem ||
+				// to prevent triggering event if using client action SetActiveTab to set the already active item
+				(tabIndex === this.configs.StartingTab && this.isBuilt && tabsHeaderItem === undefined)
+			) {
 				return;
 			}
 
 			let newTabIndex;
 			let newHeaderItem;
 
-			// changeTab can be called from changeProperty or other non-click sources,
+			// changeTab can be called from non-click sources, like client action
 			// where the tabsHeaderItem will be passed as undefined
 			if (tabsHeaderItem === undefined) {
 				// Get the new target tab index
