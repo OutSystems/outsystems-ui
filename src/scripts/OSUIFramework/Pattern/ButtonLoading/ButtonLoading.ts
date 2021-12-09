@@ -167,8 +167,9 @@ namespace OSUIFramework.Patterns.ButtonLoading {
 		 * @memberof ButtonLoading
 		 */
 		public dispose(): void {
-			super.dispose();
 			this.unsetHtmlElements();
+			//Destroying the base of pattern
+			super.dispose();
 		}
 	}
 }
