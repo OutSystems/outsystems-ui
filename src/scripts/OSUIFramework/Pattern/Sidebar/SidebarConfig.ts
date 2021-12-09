@@ -45,19 +45,20 @@ namespace OSUIFramework.Patterns.Sidebar {
 			const val = value as string;
 			switch (key) {
 				case 'Direction':
-					validatedValue = GlobalEnum.Direction.Right;
-					if (val && val.trim()) {
-						if (val === GlobalEnum.Direction.Right || val === GlobalEnum.Direction.Left) {
-							validatedValue = val;
-						}
-					}
+					validatedValue = this.validateInRange(
+						value,
+						GlobalEnum.Direction.Right,
+						GlobalEnum.Direction.Right,
+						GlobalEnum.Direction.Left
+					);
+					GlobalEnum.Direction.Right;
 					break;
 				case 'HasOverlay':
 				case 'IsOpen':
 					validatedValue = this.validateBoolean(value as boolean, false);
 					break;
 				case 'Width':
-					validatedValue = val && val.trim() ? val : '300px';
+					validatedValue = this.validateString(value as string, '300px');
 					break;
 				default:
 					validatedValue = super.validateDefault(key, value);
