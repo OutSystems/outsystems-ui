@@ -78,16 +78,18 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// Close tooltip if user has clicked outside of it
 		private _bodyClickCallback(eventName: string, e: MouseEvent): void {
-			const _clickedElem = e.target as HTMLElement;
-			const _closestElem = _clickedElem.closest(Constants.Dot + Enum.CssClass.Pattern);
+			if (this.isBuilt) {
+				const _clickedElem = e.target as HTMLElement;
+				const _closestElem = _clickedElem.closest(Constants.Dot + Enum.CssClass.Pattern);
 
-			// If the click has occur outside of this tooltip
-			if (_closestElem !== this._selfElem) {
-				// Remove the Event
-				Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._globalEventBody);
+				// If the click has occur outside of this tooltip
+				if (_closestElem !== this._selfElem) {
+					// Remove the Event
+					Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._globalEventBody);
 
-				// Close Tooltip
-				this.close();
+					// Close Tooltip
+					this.close();
+				}
 			}
 		}
 

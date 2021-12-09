@@ -221,8 +221,6 @@ namespace OSUIFramework.Patterns {
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			//TODO: is this the best way to deal with properties? Or should we use - Object.getOwnPropertyDescriptor(this._configs.__proto__, propertyName)
 			if (this._configs.hasOwnProperty(propertyName) || this._configs[propertyName] !== undefined) {
-				this._configs[propertyName] = propertyValue;
-
 				if (this._isBuilt) {
 					switch (propertyName) {
 						case GlobalEnum.CommonPatternsProperties.ExtendedClass:
@@ -230,6 +228,9 @@ namespace OSUIFramework.Patterns {
 							break;
 					}
 				}
+				//First we used the previous value of the ExtendedClass config.
+				//then we update it or any other config.
+				this._configs[propertyName] = propertyValue;
 			} else {
 				throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
 			}

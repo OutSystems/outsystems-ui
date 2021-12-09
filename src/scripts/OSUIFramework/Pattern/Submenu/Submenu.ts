@@ -188,10 +188,15 @@ namespace OSUIFramework.Patterns.Submenu {
 			}
 
 			// Apply the default A11Y
-			Helper.A11Y.RoleMenuItem(this._submenuHeaderElement);
+			Helper.A11Y.AriaHasPopupTrue(this._submenuHeaderElement);
 			Helper.A11Y.TabIndexTrue(this._submenuHeaderElement);
 			Helper.A11Y.AriaControls(this._submenuHeaderElement, this._submenuLinksElement.id);
-			Helper.A11Y.RoleButton(this._submenuItemElement);
+			Helper.A11Y.RoleButton(this._submenuHeaderElement);
+
+			// Set the role menuitem on each link
+			this._submenuAllLinksElement.forEach((item: HTMLElement) => {
+				Helper.A11Y.RoleMenuItem(item);
+			});
 
 			// Method that as the initial A11Y states and to be used on parameters changed
 			this._updateA11yProperties();

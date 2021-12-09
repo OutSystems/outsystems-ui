@@ -89,7 +89,7 @@
 			}
 
 			&[data-textarea] {
-				padding-top: var(--space-s);
+				margin-top: var(--space-s);
 
 				& + span.validation-message {
 					bottom: 7px;
