@@ -36,17 +36,19 @@ namespace OSUIFramework.Patterns.Submenu {
 		 * @memberof Submenu
 		 */
 		private _bodyClickCallback(args: string, e: MouseEvent): void {
-			if (!this._selfElem.contains(e.target as HTMLElement)) {
-				if (Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen) && !this._isOpen) {
-					Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
-				} else if (this._isOpen) {
-					this.close();
+			if (this.isBuilt) {
+				if (!this._selfElem.contains(e.target as HTMLElement)) {
+					if (Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen) && !this._isOpen) {
+						Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
+					} else if (this._isOpen) {
+						this.close();
+					}
 				}
+
+				e.preventDefault();
+
+				e.stopPropagation();
 			}
-
-			e.preventDefault();
-
-			e.stopPropagation();
 		}
 
 		/**
