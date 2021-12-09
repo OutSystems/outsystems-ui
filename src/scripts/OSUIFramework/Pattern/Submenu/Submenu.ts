@@ -404,13 +404,13 @@ namespace OSUIFramework.Patterns.Submenu {
 		 * @memberof Submenu
 		 */
 		public dispose(): void {
-			super.dispose();
-
 			// Remove event listners
 			this.unsetCallbacks();
 
 			// Remove unused HTML elements
 			this.unsetHtmlElements();
+
+			super.dispose();
 		}
 
 		/**
