@@ -50,6 +50,21 @@ namespace OSUIFramework.Patterns.FlipContent {
 				this.configs.IsFlipped
 			);
 		}
+
+		private _setEventHandlers(): void {
+			if (this.configs.FlipSelf) {
+				this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
+				this._flipWrapperElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
+
+				Helper.Dom.Styles.AddClass(this._flipWrapperElement, Enum.CssClass.PatternFlipSelf);
+			} else {
+				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
+				this._flipWrapperElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
+
+				Helper.Dom.Styles.RemoveClass(this._flipWrapperElement, Enum.CssClass.PatternFlipSelf);
+			}
+		}
+
 		/**
 		 * Set the classes on the pattern's first render, toggle click & parameters changed
 		 *
@@ -114,17 +129,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 			this._eventKeydown = this._keydownCallback.bind(this);
 			this._eventClick = this.toggleFlipContent.bind(this);
 
-			if (this.configs.FlipSelf) {
-				this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
-				this._flipWrapperElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
-
-				Helper.Dom.Styles.AddClass(this._flipWrapperElement, Enum.CssClass.PatternFlipSelf);
-			} else {
-				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
-				this._flipWrapperElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
-
-				Helper.Dom.Styles.RemoveClass(this._flipWrapperElement, Enum.CssClass.PatternFlipSelf);
-			}
+			this._setEventHandlers();
 		}
 		/**
 		 * Set the HTML elements
@@ -199,7 +204,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 
 					case Enum.Properties.FlipSelf:
 						this._updateA11yProperties();
-						this.setCallbacks();
+						this._setEventHandlers();
 						break;
 				}
 			}
