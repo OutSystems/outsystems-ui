@@ -36,7 +36,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		 */
 		public set Width(width: string) {
 			//Testing for '', undefined and null value.
-			this._width = width?.trim() ? width : this._defaultWith;
+			this._width = width && width.trim() ? width : SidebarConfig._defaultWith;
 		}
 	}
 }
