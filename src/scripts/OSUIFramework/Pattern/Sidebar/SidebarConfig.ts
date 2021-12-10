@@ -11,6 +11,13 @@ namespace OSUIFramework.Patterns.Sidebar {
 			super(config);
 		}
 
+		public validateCanChange(isBuilt: boolean, key: string): boolean {
+			if (isBuilt) {
+				return key !== Enum.Properties.IsOpen;
+			}
+			return true;
+		}
+
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;
 			switch (key) {
