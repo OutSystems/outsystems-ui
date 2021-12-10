@@ -1,42 +1,48 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Sidebar {
 	export class SidebarConfig extends AbstractConfiguration {
-		private static readonly _defaultWith = '300px';
-		private _width: string;
-
 		/** PUBLIC PROPERTIES **/
 		public Direction: GlobalEnum.Direction;
 		public HasOverlay: boolean;
 		public IsOpen: boolean;
+		public Width: string;
 
 		constructor(config: JSON) {
 			super(config);
+		}
 
-			if (this.Direction === undefined) {
-				this.Direction = GlobalEnum.Direction.Right;
+		public validateCanChange(isBuilt: boolean, key: string): boolean {
+			if (isBuilt) {
+				return key !== Enum.Properties.IsOpen;
 			}
+			return true;
 		}
 
-		/**
-		 * Gets the value of the width (already fixed to the right value).
-		 *
-		 * @type {string}
-		 * @memberof SidebarConfig
-		 */
-		public get Width(): string {
-			return this._width;
-		}
+		public validateDefault(key: string, value: unknown): unknown {
+			let validatedValue = undefined;
+			switch (key) {
+				case Enum.Properties.Direction:
+					validatedValue = this.validateInRange(
+						value,
+						GlobalEnum.Direction.Right,
+						GlobalEnum.Direction.Right,
+						GlobalEnum.Direction.Left
+					);
+					GlobalEnum.Direction.Right;
+					break;
+				case Enum.Properties.HasOverlay:
+				case Enum.Properties.IsOpen:
+					validatedValue = this.validateBoolean(value as boolean, false);
+					break;
+				case Enum.Properties.Width:
+					validatedValue = this.validateString(value as string, '300px');
+					break;
+				default:
+					validatedValue = super.validateDefault(key, value);
+					break;
+			}
 
-		/**
-		 * This setter enables us to have a single place of control of the width of the sidebar.
-		 * Like this, whenever the width is set, we can be sure that it's done having in consideration
-		 * the default value in case it's not provided.
-		 *
-		 * @memberof SidebarConfig
-		 */
-		public set Width(width: string) {
-			//Testing for '', undefined and null value.
-			this._width = width && width.trim() ? width : SidebarConfig._defaultWith;
+			return validatedValue;
 		}
 	}
 }
