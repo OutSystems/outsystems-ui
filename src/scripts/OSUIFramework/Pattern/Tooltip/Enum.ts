@@ -14,11 +14,11 @@ namespace OSUIFramework.Patterns.Tooltip.Enum {
 	 */
 	export enum CssClass {
 		Pattern = 'osui-tooltip',
-		IsHover = 'is-hover',
-		IsVisible = 'is-opened',
-		Content = 'osui-tooltip_content',
-		BalloonWrapper = 'osui-tooltip_balloon-wrapper',
-		BalloonContent = 'osui-tooltip_balloon',
+		IsHover = 'osui-tooltip--is-hover',
+		IsVisible = 'osui-tooltip--is-opened',
+		Content = 'osui-tooltip__content',
+		BalloonWrapper = 'osui-tooltip__balloon-wrapper',
+		BalloonContent = 'osui-tooltip__balloon-wrapper__balloon',
 	}
 
 	export enum AriaLabelText {
