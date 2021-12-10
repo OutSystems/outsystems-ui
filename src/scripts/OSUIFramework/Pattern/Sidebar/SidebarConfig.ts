@@ -21,7 +21,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;
 			switch (key) {
-				case 'Direction':
+				case Enum.Properties.Direction:
 					validatedValue = this.validateInRange(
 						value,
 						GlobalEnum.Direction.Right,
@@ -30,11 +30,11 @@ namespace OSUIFramework.Patterns.Sidebar {
 					);
 					GlobalEnum.Direction.Right;
 					break;
-				case 'HasOverlay':
-				case 'IsOpen':
+				case Enum.Properties.HasOverlay:
+				case Enum.Properties.IsOpen:
 					validatedValue = this.validateBoolean(value as boolean, false);
 					break;
-				case 'Width':
+				case Enum.Properties.Width:
 					validatedValue = this.validateString(value as string, '300px');
 					break;
 				default:
