@@ -126,7 +126,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 			}
 
 			if (_newPosition.newPositionCssClass !== undefined) {
-				this.configs.Position = BoundsPosition.GetPositionByClass(_newPosition.newPositionCssClass);
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				this.configs.Position = _newPosition.newPositionCssClass as any;
 				Helper.Dom.Styles.AddClass(this._tooltipBallonWrapperElem, this.configs.Position);
 			}
 		}
