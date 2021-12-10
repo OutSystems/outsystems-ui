@@ -34,6 +34,11 @@ namespace OSUIFramework.Patterns {
 			return value && value.trim() ? value : defaultValue;
 		}
 
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		public validateCanChange(isBuilt: boolean, key: string): boolean {
+			return true;
+		}
+
 		public validateDefault(key: string, value: unknown): unknown {
 			return value;
 		}
