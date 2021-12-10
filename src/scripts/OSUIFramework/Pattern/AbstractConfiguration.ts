@@ -43,9 +43,15 @@ namespace OSUIFramework.Patterns {
 		 * @memberof AbstractConfiguration
 		 */
 		protected validateInRange(value: unknown, defaultValue: unknown, ...args: unknown[]): unknown {
-			if (value && args.includes(value)) {
-				return value;
+			if (value) {
+				if (args.length > 0) {
+					const allowedValues: unknown[] = args.length > 1 ? args : (args[0] as unknown[]);
+					if (allowedValues.includes(value)) {
+						return value;
+					}
+				}
 			}
+
 			return defaultValue;
 		}
 
