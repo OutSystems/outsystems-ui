@@ -219,6 +219,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 		 */
 		protected setA11YProperties(): void {
 			Helper.A11Y.RoleTooltip(this._tooltipContentElem);
+			Helper.A11Y.AriaLabel(this._tooltipContentElem, Enum.AriaLabelText.Content);
 			Helper.A11Y.TabIndexTrue(this._tooltipContentElem);
 
 			const tooltipBallonWrapperId = Helper.Dom.Attribute.Id(this._tooltipBallonWrapperElem);

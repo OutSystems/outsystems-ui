@@ -20,4 +20,8 @@ namespace OSUIFramework.Patterns.Tooltip.Enum {
 		BalloonWrapper = 'osui-tooltip_balloon-wrapper',
 		BalloonContent = 'osui-tooltip_balloon',
 	}
+
+	export enum AriaLabelText {
+		Content = 'toggle tooltip',
+	}
 }
