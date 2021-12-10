@@ -9,8 +9,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 	 */
 	export class TooltipConfig extends AbstractConfiguration {
 		public IsHover: boolean;
-		public IsVisible: boolean;
 		public Position: GlobalEnum.Position;
+		public StartVisible: boolean;
 
 		constructor(config: JSON) {
 			super(config);

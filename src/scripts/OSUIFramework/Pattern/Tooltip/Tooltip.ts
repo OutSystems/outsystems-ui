@@ -23,7 +23,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 		// Add the tooltip Events
 		private _addEvents(): void {
 			// If tooltip should behave onMouseOver and it's visible by default
-			if (this.configs.IsHover || this.configs.IsVisible) {
+			if (this.configs.IsHover || this.configs.StartVisible) {
 				// Add a window event that will be responsible to close it, if it's opend by default
 				Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
 			}
@@ -105,9 +105,9 @@ namespace OSUIFramework.Patterns.Tooltip {
 		private _focusCallback(): void {
 			this._managePosition();
 
-			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsVisible);
+			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.StartVisible);
 
-			this.configs.IsVisible = true;
+			this.configs.StartVisible = true;
 		}
 
 		/**
@@ -162,8 +162,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 			}
 
 			// Set default IsVisible cssClass property value
-			if (this.configs.IsVisible) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsVisible);
+			if (this.configs.StartVisible) {
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.StartVisible);
 			}
 
 			// Set default Position cssClass property value
@@ -183,15 +183,21 @@ namespace OSUIFramework.Patterns.Tooltip {
 		}
 
 		private _setIsVisible(): void {
-			if (this.configs.IsVisible) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsVisible);
+			if (this.isBuilt === false) {
+				if (this.configs.StartVisible) {
+					Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.StartVisible);
+				} else {
+					Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.StartVisible);
+				}
+
+				this._removeEvents();
+
+				this._addEvents();
 			} else {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsVisible);
+				console.warn(
+					`Tooltip (${this.widgetId}): changes to StartOpen parameter do not affect the tooltip. Use the cliend actions 'TooltipOpen' and 'TooltipClose' to affect the Tooltip.`
+				);
 			}
-
-			this._removeEvents();
-
-			this._addEvents();
 		}
 
 		private _setPosition(oldPosition: string) {
@@ -328,9 +334,9 @@ namespace OSUIFramework.Patterns.Tooltip {
 				this._eventBallonContentClose
 			);
 
-			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsVisible);
+			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.StartVisible);
 
-			this.configs.IsVisible = false;
+			this.configs.StartVisible = false;
 		}
 
 		// Destroy the tooltip
