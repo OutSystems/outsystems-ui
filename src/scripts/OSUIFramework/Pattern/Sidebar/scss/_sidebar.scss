@@ -8,8 +8,8 @@
 	$sidebar-overlay-background: rgba(0, 0, 0, 0.25);
 	display: contents;
 
-	&.is-right {
-		.osui-sidebar_aside {
+	&--is-right {
+		.osui-sidebar__aside {
 			right: 0;
 			transform: translateX(102%);
 
@@ -23,8 +23,8 @@
 		-servicestudio-justify-content: flex-end;
 	}
 
-	&.is-left {
-		.osui-sidebar_aside {
+	&--is-left {
+		.osui-sidebar__aside {
 			left: 0;
 			transform: translateX(-102%);
 
@@ -38,7 +38,7 @@
 		-servicestudio-justify-content: flex-start;
 	}
 
-	&_aside {
+	&__aside {
 		background-color: var(--color-neutral-0);
 		box-shadow: var(--shadow-l);
 		display: flex;
@@ -73,18 +73,18 @@
 		}
 	}
 
-	&_header,
-	&_content {
+	&__aside__header,
+	&__aside__content {
 		padding: var(--space-base) var(--space-m);
 	}
 
-	&_content {
+	&__aside__content {
 		flex: 1;
 		overflow: auto;
 		-webkit-overflow-scrolling: touch;
 	}
 
-	&_overlay {
+	&__overlay {
 		background-color: $sidebar-overlay-background;
 		cursor: pointer;
 		height: 100vh;
@@ -115,15 +115,15 @@
 ///
 .active-screen {
 	.osui-sidebar {
-		&.is-open {
-			.osui-sidebar_aside {
+		&--is-open {
+			.osui-sidebar__aside {
 				opacity: 1;
 				transform: none;
 				transition: transform 330ms ease-out;
 				will-change: transform;
 			}
 
-			.osui-sidebar_overlay {
+			.osui-sidebar__overlay {
 				opacity: 1;
 				pointer-events: initial;
 			}
@@ -134,7 +134,7 @@
 // Responsive --------------------------------------------------------------------
 ///
 .desktop {
-	.osui-sidebar_aside {
+	.osui-sidebar__aside {
 		opacity: 0;
 
 		&:before {
@@ -146,7 +146,7 @@
 ///
 .android[data-status-bar-height] {
 	.layout-native {
-		.osui-sidebar_aside {
+		.osui-sidebar__aside {
 			padding-top: var(--status-bar-height);
 		}
 	}
@@ -155,7 +155,7 @@
 ///
 .ios {
 	.layout-native {
-		.osui-sidebar_aside {
+		.osui-sidebar__aside {
 			padding-bottom: var(--os-safe-area-bottom);
 			padding-top: var(--os-safe-area-top);
 		}
@@ -164,7 +164,7 @@
 	.phone {
 		&.landscape {
 			.layout-native {
-				.osui-sidebar_aside:before {
+				.osui-sidebar__aside:before {
 					left: calc((var(--os-safe-area-left) + 12px) * -1);
 					width: calc(var(--os-safe-area-left) + 12px);
 				}
@@ -176,7 +176,7 @@
 ///
 .landscape {
 	.layout-native {
-		.osui-sidebar_aside {
+		.osui-sidebar__aside {
 			padding-bottom: var(--os-safe-area-bottom);
 		}
 	}
@@ -184,7 +184,7 @@
 
 ///
 .phone {
-	.osui-sidebar_aside {
+	.osui-sidebar__aside {
 		max-width: 85vw;
 	}
 }

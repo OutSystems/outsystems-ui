@@ -44,7 +44,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SidebarConfig(configs));
 
-			this._currentDirectionCssClass = Enum.CssClass.Direction + this.configs.Direction;
+			this._currentDirectionCssClass = Enum.CssClass.ClassModifier + this.configs.Direction;
 		}
 
 		/**
@@ -134,7 +134,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			if (this._currentDirectionCssClass !== '') {
 				Helper.Dom.Styles.RemoveClass(this._selfElem, this._currentDirectionCssClass);
 			}
-			this._currentDirectionCssClass = Enum.CssClass.Direction + this.configs.Direction;
+			this._currentDirectionCssClass = Enum.CssClass.ClassModifier + this.configs.Direction;
 			Helper.Dom.Styles.AddClass(this._selfElem, this._currentDirectionCssClass);
 		}
 
