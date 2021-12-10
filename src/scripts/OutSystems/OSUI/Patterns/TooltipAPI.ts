@@ -18,18 +18,6 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	}
 
 	/**
-	 * Function that will close a given tooltip.
-	 *
-	 * @export
-	 * @param {string} tooltipId ID of the tooltip that will be closed
-	 */
-	export function Close(tooltipId: string): void {
-		const tooltip = GetTooltipById(tooltipId);
-
-		tooltip.close();
-	}
-
-	/**
 	 * Create the new tooltip instance and add it to the tooltipsMap
 	 *
 	 * @export
@@ -84,22 +72,22 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 */
 	export function GetTooltipById(tooltipId: string): OSUIFramework.Patterns.Tooltip.ITooltip {
 		return OSUIFramework.Helper.MapOperation.FindInMap(
-			'Tooltip',
+			OSUIFramework.GlobalEnum.PatternsNames.Tooltip,
 			tooltipId,
 			_tooltipsMap
 		) as OSUIFramework.Patterns.Tooltip.ITooltip;
 	}
 
 	/**
-	 * Fucntion that will open a given tooltip.
+	 * Function that will close a given tooltip.
 	 *
 	 * @export
-	 * @param {string} tooltipId ID of the tooltip that will be opened
+	 * @param {string} tooltipId ID of the tooltip that will be closed
 	 */
-	export function Open(tooltipId: string): void {
+	export function Hide(tooltipId: string): void {
 		const tooltip = GetTooltipById(tooltipId);
 
-		tooltip.open();
+		tooltip.close();
 	}
 
 	/**
@@ -115,5 +103,17 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 		tooltip.build();
 
 		return tooltip;
+	}
+
+	/**
+	 * Fucntion that will open a given tooltip.
+	 *
+	 * @export
+	 * @param {string} tooltipId ID of the tooltip that will be opened
+	 */
+	export function Show(tooltipId: string): void {
+		const tooltip = GetTooltipById(tooltipId);
+
+		tooltip.open();
 	}
 }
