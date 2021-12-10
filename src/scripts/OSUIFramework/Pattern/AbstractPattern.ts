@@ -219,7 +219,7 @@ namespace OSUIFramework.Patterns {
 		 * @memberof AbstractPattern
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
-			if (this._configs.hasOwnProperty(propertyName) /*|| this._configs[propertyName] !== undefined*/) {
+			if (this._configs.hasOwnProperty(propertyName)) {
 				if (this._isBuilt) {
 					switch (propertyName) {
 						case GlobalEnum.CommonPatternsProperties.ExtendedClass:

@@ -409,6 +409,7 @@ namespace OSUIFramework.Patterns.Submenu {
 			// Remove unused HTML elements
 			this.unsetHtmlElements();
 
+			//Destroying the base of pattern
 			super.dispose();
 		}
 

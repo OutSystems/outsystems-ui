@@ -474,7 +474,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		public dispose(): void {
 			this.unsetCallbacks();
 			this.unsetHtmlElements();
-			////Destroying the base of pattern
+			//Destroying the base of pattern
 			super.dispose();
 		}
 
