@@ -96,9 +96,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 		// Trigger the tooltip at onClick behaviour
 		private _clickCallback(): void {
 			// Add a window event that will be responsible to close it, if it's opend by default
-			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
-
-			this._focusCallback();
+			this.open();
 		}
 
 		// Open the tooltip
@@ -348,6 +346,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 		}
 
 		public open(): void {
+			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
+
 			this._focusCallback();
 		}
 	}
