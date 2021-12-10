@@ -274,12 +274,15 @@ namespace OSUIFramework.Patterns.Sidebar {
 		 * @memberof Sidebar
 		 */
 		private _toggleSidebar(isToOpen: boolean): void {
-			// Toggle event listeners missing
-			if (isToOpen) {
-				this._openSidebar();
-			} else {
-				this._closeSidebar();
-			}
+			// // Toggle event listeners missing
+			// if (isToOpen) {
+			// 	this._openSidebar();
+			// } else {
+			// 	this._closeSidebar();
+			// }
+			console.warn(
+				`Sidebar (${this.widgetId}): changes to StartOpen parameter do not affect the sidebar. Use the cliend actions 'SidebarOpen' and 'SidebarClose' to affect the Sidebar.`
+			);
 		}
 
 		/**
