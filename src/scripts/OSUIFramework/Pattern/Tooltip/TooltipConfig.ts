@@ -8,25 +8,42 @@ namespace OSUIFramework.Patterns.Tooltip {
 	 * @extends {AbstractConfiguration}
 	 */
 	export class TooltipConfig extends AbstractConfiguration {
-		private _position: GlobalEnum.Position;
 		public IsHover: boolean;
 		public IsVisible: boolean;
+		public Position: GlobalEnum.Position;
 
 		constructor(config: JSON) {
 			super(config);
 		}
 
-		public get Position(): GlobalEnum.Position {
-			return this._position;
+		public validateCanChange(isBuilt: boolean, key: string): boolean {
+			if (isBuilt) {
+				return key !== Enum.Properties.IsVisible;
+			}
+			return true;
 		}
 
-		public set Position(newPosition: string) {
-			const position = BoundsPosition.GetPositionByClass(newPosition);
-			if (position === undefined) {
-				this._position = GlobalEnum.Position.Bottom;
-			} else {
-				this._position = GlobalEnum.Position[position];
+		public validateDefault(key: string, value: unknown): unknown {
+			let validatedValue = undefined;
+			switch (key) {
+				case Enum.Properties.IsHover:
+					validatedValue = this.validateBoolean(value as boolean, true);
+					break;
+				case Enum.Properties.IsVisible:
+					validatedValue = this.validateBoolean(value as boolean, false);
+					break;
+				case Enum.Properties.Position:
+					validatedValue = this.validateInRange(
+						value,
+						GlobalEnum.Position.Right,
+						Object.values(GlobalEnum.Position)
+					);
+					break;
+				default:
+					validatedValue = super.validateDefault(key, value);
+					break;
 			}
+			return validatedValue;
 		}
 	}
 }
