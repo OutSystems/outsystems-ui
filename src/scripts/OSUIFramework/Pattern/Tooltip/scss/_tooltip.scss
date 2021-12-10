@@ -12,8 +12,8 @@ $osui-tooltip-arrow-size: 9px;
 	position: relative;
 
 	///
-	&--is-hover:hover,
-	&--is-opened {
+	&.osui-tooltip--is-hover:hover,
+	&.osui-tooltip--is-opened {
 		.osui-tooltip__balloon-wrapper {
 			max-height: 50vh;
 			opacity: 1;
