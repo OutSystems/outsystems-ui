@@ -266,7 +266,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 				// If there are not a parentNode with the overflow hidden, check the body boudaries
 				_newItemPosition = BoundsPosition._isItemOutOfViewElemBounds(
 					elemToTest,
-					document.body,
+					document.querySelector('.screen-container > div'), // In oder to get the page fullHeight
 					_checkIfElementPosition
 				);
 			}

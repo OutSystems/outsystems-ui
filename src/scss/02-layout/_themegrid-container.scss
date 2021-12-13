@@ -27,17 +27,16 @@
 	}
 }
 
-// Responsive --------------------------------------------------------------------
+// Layout --------------------------------------------------------------------
 
 ///
-.tablet,
-.phone {
-	.layout-native {
-		.main-content.ThemeGrid_Container {
-			padding: 0;
-		}
+.layout-native {
+	.main-content.ThemeGrid_Container {
+		padding: var(--space-none);
 	}
 }
+
+// Responsive --------------------------------------------------------------------
 
 ///
 .tablet {

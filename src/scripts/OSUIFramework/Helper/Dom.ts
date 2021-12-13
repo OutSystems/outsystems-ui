@@ -160,7 +160,7 @@ namespace OSUIFramework.Helper {
 		 */
 		public static SetStyleAttribute(element: HTMLElement, cssRule: string, ruleValue: number | string): void {
 			if (element) {
-				if (cssRule !== '') {
+				if (cssRule !== '' && ruleValue !== undefined) {
 					element.style.setProperty(cssRule, ruleValue.toString());
 				}
 			} else {

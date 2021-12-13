@@ -36,8 +36,10 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		 * @private
 		 * @memberof AnimatedLabel
 		 */
-		private _inputBlurCallback(): void {
-			this._inputStateToggle(false);
+		private _inputBlurCallback(evt: UIEvent): void {
+			if (evt.type === GlobalEnum.HTMLEvent.Blur) {
+				this._inputStateToggle(false);
+			}
 		}
 
 		/**
@@ -46,8 +48,10 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		 * @private
 		 * @memberof AnimatedLabel
 		 */
-		private _inputFocusCallback(): void {
-			this._inputStateToggle(true);
+		private _inputFocusCallback(evt: UIEvent): void {
+			if (evt.type === GlobalEnum.HTMLEvent.Focus) {
+				this._inputStateToggle(true);
+			}
 		}
 
 		/**
@@ -173,9 +177,10 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		 * @memberof AnimatedLabel
 		 */
 		public dispose(): void {
-			super.dispose();
 			this.unsetCallbacks();
 			this.unsetHtmlElements();
+			//Destroying the base of pattern
+			super.dispose();
 		}
 
 		/**
