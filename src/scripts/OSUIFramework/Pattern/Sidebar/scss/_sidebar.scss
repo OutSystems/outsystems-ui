@@ -7,13 +7,14 @@
 	//TODO: Validade the color of all overlays and create "global" variable for it.
 	$sidebar-overlay-background: rgba(0, 0, 0, 0.25);
 	display: contents;
+	--overlay-opacity: 0;
 
 	&--is-right {
 		.osui-sidebar__aside {
 			right: 0;
 			transform: translateX(102%);
 
-			&:before {
+			&:after {
 				left: -24px;
 			}
 		}
@@ -28,7 +29,7 @@
 			left: 0;
 			transform: translateX(-102%);
 
-			&:before {
+			&:after {
 				right: -24px;
 			}
 		}
@@ -52,7 +53,7 @@
 		will-change: transform;
 		z-index: 140;
 
-		&:before {
+		&:after {
 			background-color: transparent;
 			content: '';
 			height: 100%;
@@ -84,19 +85,23 @@
 		-webkit-overflow-scrolling: touch;
 	}
 
-	&__overlay {
-		background-color: $sidebar-overlay-background;
-		cursor: pointer;
-		height: 100vh;
-		opacity: 0;
-		pointer-events: none;
-		position: fixed;
-		right: 0;
-		top: 0;
-		transition: opacity 130ms ease-in;
-		width: 100vw;
-		will-change: opacity;
-		z-index: 130;
+	&--has-overlay {
+		&::before {
+			background-color: $sidebar-overlay-background;
+			content: '';
+			cursor: pointer;
+			display: block;
+			height: 100vh;
+			opacity: var(--overlay-opacity);
+			pointer-events: none;
+			position: fixed;
+			right: 0;
+			top: 0;
+			transition: opacity 130ms ease-in;
+			width: 100vw;
+			will-change: opacity;
+			z-index: 129;
+		}
 
 		&-preview {
 			-servicestudio-background-color: $sidebar-overlay-background;
@@ -123,9 +128,11 @@
 				will-change: transform;
 			}
 
-			.osui-sidebar__overlay {
-				opacity: 1;
-				pointer-events: initial;
+			&.osui-sidebar--has-overlay {
+				&::before {
+					opacity: 1;
+					pointer-events: initial;
+				}
 			}
 		}
 	}
@@ -137,7 +144,7 @@
 	.osui-sidebar__aside {
 		opacity: 0;
 
-		&:before {
+		&:after {
 			display: none;
 		}
 	}

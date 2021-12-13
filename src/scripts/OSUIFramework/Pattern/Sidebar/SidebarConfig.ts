@@ -4,7 +4,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		/** PUBLIC PROPERTIES **/
 		public Direction: GlobalEnum.Direction;
 		public HasOverlay: boolean;
-		public IsOpen: boolean;
+		public StartsOpen: boolean;
 		public Width: string;
 
 		constructor(config: JSON) {
@@ -13,7 +13,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 		public validateCanChange(isBuilt: boolean, key: string): boolean {
 			if (isBuilt) {
-				return key !== Enum.Properties.IsOpen;
+				return key !== Enum.Properties.StartsOpen;
 			}
 			return true;
 		}
@@ -31,7 +31,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 					GlobalEnum.Direction.Right;
 					break;
 				case Enum.Properties.HasOverlay:
-				case Enum.Properties.IsOpen:
+				case Enum.Properties.StartsOpen:
 					validatedValue = this.validateBoolean(value as boolean, false);
 					break;
 				case Enum.Properties.Width:
