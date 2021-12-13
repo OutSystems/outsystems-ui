@@ -524,6 +524,11 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			if (this.isBuilt) {
 				switch (propertyName) {
+					case Enum.Properties.StartingTab:
+						console.warn(
+							`Tabs (${this.widgetId}): changes to ${Enum.Properties.StartingTab} parameter do not affect the tabs. Use the client action 'SetActiveTab' to affect the Tabs.`
+						);
+						break;
 					case Enum.Properties.Height:
 						this._setTabsHeight(propertyValue as string);
 						break;
