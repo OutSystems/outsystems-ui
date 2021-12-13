@@ -189,7 +189,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 			if (this.isBuilt) {
 				switch (propertyName) {
 					case Enum.Properties.IsFlipped:
-						this._toggleClasses();
+						this._setStartsFlipped();
 						break;
 
 					case Enum.Properties.FlipSelf:
