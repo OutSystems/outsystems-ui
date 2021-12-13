@@ -9,17 +9,17 @@ namespace OSUIFramework.Patterns.TouchEvents {
 		private _currentY: number;
 
 		// Stores the touch event with bind(this)
-		private _eventEnd: Callbacks.Generic;
+		private _endEvent: Callbacks.Generic;
 		//Stores the callback to be triggered
-		private _eventEndCallback: OSUIFramework.Callbacks.Generic;
-		// Stores the touch event with bind(this)
-		private _eventMove: Callbacks.Generic;
+		private _endEventCallback: OSUIFramework.Callbacks.Generic;
 		//Stores the callback to be triggered
 		private _eventMoveCallback: OSUIFramework.Callbacks.Generic;
-		// Stores the touch event with bind(this)
-		private _eventStart: Callbacks.Generic;
 		//Stores the callback to be triggered
 		private _eventStartCallback: OSUIFramework.Callbacks.Generic;
+		// Stores the touch event with bind(this)
+		private _moveEvent: Callbacks.Generic;
+		// Stores the touch event with bind(this)
+		private _startEvent: Callbacks.Generic;
 		// Stores the moment when the touch began
 		private _startTime;
 		// Stores the start position
@@ -35,7 +35,8 @@ namespace OSUIFramework.Patterns.TouchEvents {
 		private _translateX;
 		private _translateY;
 
-		constructor(uniqueId: string, configs: unknown) {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new TouchEventsConfig(configs));
 			this._startX = 0;
 			this._startY = 0;
@@ -43,11 +44,12 @@ namespace OSUIFramework.Patterns.TouchEvents {
 			this._currentY = 0;
 			this._touchingElement = false;
 
-			this._eventEnd = this._eventTouchEnd.bind(this);
-			this._eventMove = this._eventTouchMove.bind(this);
-			this._eventStart = this._eventTouchStart.bind(this);
+			this._endEvent = this._eventTouchEnd.bind(this);
+			this._moveEvent = this._eventTouchMove.bind(this);
+			this._startEvent = this._eventTouchStart.bind(this);
 		}
 
+		//Detects if the "touch" has ended
 		private _eventTouchEnd(): void {
 			if (this._touchingElement) {
 				this._touchingElement = false;
@@ -65,7 +67,7 @@ namespace OSUIFramework.Patterns.TouchEvents {
 				);
 			}
 		}
-
+		// Detects if the "touch" is moving
 		private _eventTouchMove(evt: TouchEvent): void {
 			if (this._touchingElement) {
 				this._currentX = evt.changedTouches[0].pageX;
@@ -76,7 +78,7 @@ namespace OSUIFramework.Patterns.TouchEvents {
 				this._triggerTouchMove(this._currentX, this._currentY, this._translateX, this._translateY, evt);
 			}
 		}
-
+		//Detects if the "touch" has started
 		private _eventTouchStart(evt: TouchEvent): void {
 			this._startTime = new Date().getTime();
 			this._startX = evt.changedTouches[0].pageX;
@@ -92,25 +94,25 @@ namespace OSUIFramework.Patterns.TouchEvents {
 
 		private _removeEventListeners(): void {
 			if (this._trackableElement) {
-				this._trackableElement.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, this._eventStart);
-				this._trackableElement.removeEventListener(GlobalEnum.HTMLEvent.TouchMove, this._eventMove);
-				this._trackableElement.removeEventListener(GlobalEnum.HTMLEvent.TouchEnd, this._eventEnd);
+				this._trackableElement.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, this._startEvent);
+				this._trackableElement.removeEventListener(GlobalEnum.HTMLEvent.TouchMove, this._moveEvent);
+				this._trackableElement.removeEventListener(GlobalEnum.HTMLEvent.TouchEnd, this._endEvent);
 			}
 		}
 
 		private _setEventListeners(): void {
 			this._trackableElement = document.getElementById(this.configs.WidgetId);
 			if (this._trackableElement) {
-				this._trackableElement.addEventListener(GlobalEnum.HTMLEvent.TouchStart, this._eventStart);
-				this._trackableElement.addEventListener(GlobalEnum.HTMLEvent.TouchMove, this._eventMove);
-				this._trackableElement.addEventListener(GlobalEnum.HTMLEvent.TouchEnd, this._eventEnd);
+				this._trackableElement.addEventListener(GlobalEnum.HTMLEvent.TouchStart, this._startEvent);
+				this._trackableElement.addEventListener(GlobalEnum.HTMLEvent.TouchMove, this._moveEvent);
+				this._trackableElement.addEventListener(GlobalEnum.HTMLEvent.TouchEnd, this._endEvent);
 			}
 		}
 
 		// Method that triggers the TouchEnd event on the platform
 		private _triggerTouchEnd(x: number, y: number, offsetX: number, offsetY: number, timeTaken: number): void {
-			if (this._eventEndCallback) {
-				Helper.AsyncInvocation(this._eventEndCallback, x, y, offsetX, offsetY, timeTaken);
+			if (this._endEventCallback) {
+				Helper.AsyncInvocation(this._endEventCallback, x, y, offsetX, offsetY, timeTaken);
 			}
 		}
 
@@ -141,7 +143,7 @@ namespace OSUIFramework.Patterns.TouchEvents {
 		public registerCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
 			switch (eventName) {
 				case OSUIFramework.Patterns.TouchEvents.Enum.Events.End:
-					this._eventEndCallback = callback;
+					this._endEventCallback = callback;
 					break;
 				case OSUIFramework.Patterns.TouchEvents.Enum.Events.Move:
 					this._eventMoveCallback = callback;

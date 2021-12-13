@@ -4,31 +4,45 @@ namespace OSUIFramework.Patterns.SwipeEvents {
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	export class SwipeEvents extends AbstractPattern<SwipeEventsConfig> implements ISwipeEvents {
+		// Stores the touch event with bind(this)
+		private _gestureMoveEvent: Callbacks.Generic;
+		// Stores the touch event with bind(this)
+		private _gestureStartEnd: Callbacks.Generic;
+
+		//Stores the element that will have the swipe event
+		private _swipableElement: HTMLElement;
 		private _swipeDownCallback: OSUIFramework.Callbacks.Generic;
 		private _swipeLeftCallback: OSUIFramework.Callbacks.Generic;
 		private _swipeRightCallback: OSUIFramework.Callbacks.Generic;
 		private _swipeUpCallback: OSUIFramework.Callbacks.Generic;
-		private _trackableElement: HTMLElement;
-
 		//Threshold to understand if a swipe event was triggered
 		private _threshold: number;
 		// Velocity of the swipe event
 		private _velocity: number;
 
-		// Stores the touch event with bind(this)
-		private _eventGestureMove: Callbacks.Generic;
-		// Stores the touch event with bind(this)
-		private _eventGestureStart: Callbacks.Generic;
-
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new SwipeEventsConfig(configs));
 			this._threshold = Enum.Properties.Threshold;
 			this._velocity = Enum.Properties.Velocity;
 
-			this._eventGestureStart = this.EventGestureEnd.bind(this);
-			this._eventGestureMove = this.EventGestureMove.bind(this);
+			this._gestureStartEnd = this.EventGestureEnd.bind(this);
+			this._gestureMoveEvent = this.EventGestureMove.bind(this);
+		}
+
+		private _removeEventListeners(): void {
+			if (this._swipableElement) {
+				this._swipableElement.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, this._gestureStartEnd);
+				this._swipableElement.removeEventListener(GlobalEnum.HTMLEvent.TouchMove, this._gestureMoveEvent);
+			}
+		}
+
+		private _setEventListeners(): void {
+			this._swipableElement = document.getElementById(this.configs.WidgetId);
+			if (this._swipableElement) {
+				this._swipableElement.addEventListener(GlobalEnum.HTMLEvent.TouchStart, this._gestureStartEnd);
+				this._swipableElement.addEventListener(GlobalEnum.HTMLEvent.TouchMove, this._gestureMoveEvent);
+			}
 		}
 
 		// Method that triggers the SwipeDown event on the platform
@@ -66,22 +80,6 @@ namespace OSUIFramework.Patterns.SwipeEvents {
 				});
 			}
 		}
-
-		private _removeEventListeners(): void {
-			if (this._trackableElement) {
-				this._trackableElement.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, this._eventGestureStart);
-				this._trackableElement.removeEventListener(GlobalEnum.HTMLEvent.TouchMove, this._eventGestureMove);
-			}
-		}
-
-		private _setEventListeners(): void {
-			this._trackableElement = document.getElementById(this.configs.WidgetId);
-			if (this._trackableElement) {
-				this._trackableElement.addEventListener(GlobalEnum.HTMLEvent.TouchStart, this._eventGestureStart);
-				this._trackableElement.addEventListener(GlobalEnum.HTMLEvent.TouchMove, this._eventGestureMove);
-			}
-		}
-
 		public EventGestureEnd(offsetX: number, offsetY: number, timeTaken: number): void {
 			if (
 				(Math.abs(offsetX) > this._threshold || Math.abs(offsetY) > this._threshold) &&
@@ -104,6 +102,12 @@ namespace OSUIFramework.Patterns.SwipeEvents {
 			}
 		}
 
+		public EventGestureMove(event: TouchEvent): void {
+			if (event) {
+				event.preventDefault();
+			}
+		}
+
 		public build(): void {
 			super.build();
 			this._setEventListeners();
@@ -113,12 +117,6 @@ namespace OSUIFramework.Patterns.SwipeEvents {
 		public dispose(): void {
 			super.dispose();
 			this._removeEventListeners();
-		}
-
-		public EventGestureMove(event: TouchEvent): void {
-			if (event) {
-				event.preventDefault();
-			}
 		}
 
 		public registerCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
