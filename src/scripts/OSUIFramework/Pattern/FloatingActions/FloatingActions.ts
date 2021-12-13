@@ -370,8 +370,6 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		}
 
 		public dispose(): void {
-			super.dispose();
-
 			if (this.configs.IsHover) {
 				this._floatingActionsButton.removeEventListener(
 					GlobalEnum.HTMLEvent.MouseLeave,
@@ -393,6 +391,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 					this._iOSStopPropagation
 				);
 			}
+			super.dispose();
 		}
 
 		public open(): void {

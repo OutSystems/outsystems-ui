@@ -15,9 +15,9 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
-	 * OutSystemsUI position cssClasses
+	 * OutSystemsUI position cssClasses and identifiers of position
 	 */
-	export enum CssClassPosition {
+	export enum Position {
 		Bottom = 'bottom',
 		BottomLeft = 'bottom-left',
 		BottomRight = 'bottom-right',
@@ -27,6 +27,13 @@ namespace OSUIFramework.GlobalEnum {
 		Top = 'top',
 		TopLeft = 'top-left',
 		TopRight = 'top-right',
+	}
+
+	/**
+	 * OutSystemsUI elements CSS properties
+	 */
+	export enum CssProperties {
+		None = 'none',
 	}
 
 	/**
@@ -54,6 +61,8 @@ namespace OSUIFramework.GlobalEnum {
 	 */
 	export enum HTMLAttributes {
 		DataInput = 'data-input',
+		Id = 'id',
+		Style = 'style',
 	}
 
 	/**
@@ -63,6 +72,7 @@ namespace OSUIFramework.GlobalEnum {
 		FieldSet = 'fieldset',
 		Input = 'input',
 		Link = 'a',
+		Span = 'span',
 	}
 
 	/**
@@ -82,6 +92,14 @@ namespace OSUIFramework.GlobalEnum {
 		TouchMove = 'touchmove',
 		TouchStart = 'touchstart',
 		TransitionEnd = 'transitionend',
+	}
+
+	/**
+	 * OutSystemsUI elements inline styles
+	 */
+	export enum InlineStyle {
+		Height = 'height',
+		PointerEvents = 'pointerEvents',
 	}
 
 	/**
@@ -114,6 +132,7 @@ namespace OSUIFramework.GlobalEnum {
 		Vertical = 'vertical',
 	}
 
+	//TODO: change the name of the enum to singular? PatternName or PatternsName
 	/**
 	 * OutSystemsUI patterns names
 	 * Note: Can be used for logging purposes

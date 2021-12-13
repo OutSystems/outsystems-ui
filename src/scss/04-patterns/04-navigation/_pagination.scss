@@ -75,8 +75,6 @@
 	// pagination-counter
 	&-counter {
 		color: var(--color-neutral-7);
-		// With ShowGoToPage parameter, this container is in this context
-		margin-left: var(--space-s);
 	}
 
 	.list.list-group {
@@ -85,7 +83,7 @@
 
 	.form-control[data-input] {
 		height: 32px;
-		margin-left: var(--space-s);
+		margin: var(--space-none) var(--space-s);
 		padding: 0;
 		text-align: center;
 		width: 32px;

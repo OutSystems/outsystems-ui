@@ -8,10 +8,9 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	 * @export
 	 * @param {string} ButtonLoadingId ID of the ButtonLoading where the property will be changed.
 	 * @param {string} propertyName Property name that will be updated
-	 * @param {*} propertyValue Value that will be set to the property
+	 * @param {unknown} propertyValue Value that will be set to the property
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ChangeProperty(buttonLoadingId: string, propertyName: string, propertyValue: any): void {
+	export function ChangeProperty(buttonLoadingId: string, propertyName: string, propertyValue: unknown): void {
 		const ButtonLoading = GetButtonLoadingById(buttonLoadingId);
 
 		ButtonLoading.changeProperty(propertyName, propertyValue);
@@ -78,7 +77,7 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	 */
 	export function GetButtonLoadingById(buttonLoadingId: string): OSUIFramework.Patterns.ButtonLoading.IButtonLoading {
 		return OSUIFramework.Helper.MapOperation.FindInMap(
-			'ButtonLoading',
+			OSUIFramework.GlobalEnum.PatternsNames.ButtonLoading,
 			buttonLoadingId,
 			_buttonsLoadingMap
 		) as OSUIFramework.Patterns.ButtonLoading.IButtonLoading;

@@ -1,3 +1,10 @@
+resources:
+    repositories:
+        - repository: rd-outsystems-ui-qa-tests
+          type: github
+          name: OutSystems/rd-outsystems-ui-qa-tests
+          endpoint: OutSystems
+
 trigger: none
 
 pr:
@@ -5,70 +12,118 @@ pr:
         include:
             - '*' # This does not trigger the pipeline
 
-jobs:
-    - job: CheckChanges
-      displayName: 'Check changed files'
-      steps:
-          - bash: |
-                CHANGED_FILES=$(git diff origin/dev --name-only)
-                echo "Checking for file changes..."
-                declare TAGS
-
-                for FILE in $CHANGED_FILES
-                    do
-                        if [[ $FILE == *"src/scripts/OSUIFramework/Pattern"* ]]; then
-                            ELEMENT=$(echo $FILE| cut -d/ -f5)
-                            if [[ -z "$TAGS" ]]; then
-                                TAGS="@$ELEMENT"
-                            else
-                                TAGS="$TAGS or @$ELEMENT"
-                            fi
-                        else
-                            echo "IGNORE: ${FILE} changed"
-                        fi
-
-                        if [[ $FILE == *"src/static"* ]]; then
-                            ELEMENT=$(echo $FILE| cut -d/ -f3)
-                            if [[ -z "$TAGS" ]]; then
-                                TAGS="@$ELEMENT"
-                            else
-                                TAGS="$TAGS or @$ELEMENT"
-                            fi
-                        else
-                            echo "IGNORE: ${FILE} changed"
-                        fi
-
-                    done
-                echo "##vso[task.setvariable variable=tags;isoutput=true]$TAGS"
-            name: check_changes
+stages:
+    - stage: CheckChanges
+      displayName: Check changes in repository
+      jobs:
+          - job: CheckChangesJob
             displayName: 'Check changed files'
-          - script: echo $(check_changes.tags)
-            name: echoTags
-            displayName: 'Show components to run tests for'
+            steps:
+                - bash: |
+                      CHANGED_FILES=$(git diff origin/dev --name-only)
+                      echo "Checking for file changes..."
+                      declare TAGS
 
-    - job: ExecuteFunctionalTests
-      dependsOn: CheckChanges
-      displayName: 'Execute Functional Tests'
+                      for FILE in $CHANGED_FILES
+                          do
+                              if [[ $FILE == *"src/scripts/OSUIFramework/Pattern"* ]] || [[ $FILE == *"src/scss/04-patterns"* ]]; then
+                                  ELEMENT=$(echo $FILE| cut -d/ -f5)
+                                  if [[ $ELEMENT == *".scss"* ]]; then 
+                                      ELEMENT=${ELEMENT:1:-5}
+                                  fi
+                                  if [[ -z "$TAGS" ]]; then
+                                      TAGS="@$ELEMENT"
+                                  else
+                                      TAGS="$TAGS or @$ELEMENT"
+                                  fi
+                                  continue
+                              fi
+
+                              if [[ $FILE == *"src/static"* ]]; then
+                                  ELEMENT=$(echo $FILE| cut -d/ -f3)
+                                  if [[ -z "$TAGS" ]]; then
+                                      TAGS="@$ELEMENT"
+                                  else
+                                      TAGS="$TAGS or @$ELEMENT"
+                                  fi
+                                  continue
+                              fi
+                              echo "IGNORE: ${FILE} changed"
+                          done
+                      echo "##vso[task.setvariable variable=tags;isoutput=true]$TAGS"
+                  name: check_changes
+                  displayName: 'Check changed files'
+                - script: echo $(check_changes.tags)
+                  name: echoTags
+                  displayName: 'Show components to run tests for'
+                - bash: |
+                      declare BRANCH 
+                      BRANCH=$SYSTEM_PULLREQUEST_SOURCEBRANCH
+                      echo "##vso[task.setvariable variable=branch;isoutput=true]$SYSTEM_PULLREQUEST_SOURCEBRANCH"
+                  name: branch_name
+
+    - stage: safari_functional_tests
       variables:
-          TAGS: $[ dependencies.CheckChanges.outputs['check_changes.tags'] ]
-      steps:
-          - task: NodeTool@0
-            displayName: 'Use Node 14.15.4'
-            inputs:
-                versionSpec: '14.15.4'
-                checkLatest: true
+          - group: 'Services Credentials'
+      displayName: Execute tests on Safari
+      condition: ne(stageDependencies.CheckChanges.outputs['CheckChangesJob.check_changes.tags'], '')
+      dependsOn: CheckChanges
+      jobs:
+          - job: execute_tests
+            displayName: Build and run tests on Safari
+            variables:
+                tags: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['check_changes.tags'] ]
+                branch: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['branch_name.branch'] ]
+            steps:
+                - checkout: rd-outsystems-ui-qa-tests
+                - template: ./pipelines/templates/build-and-execute-functional-tests-template.yml@rd-outsystems-ui-qa-tests
+                  parameters:
+                      BROWSER: safari
+                      ENVIRONMENT: dev
+                      TAGS: not @skipLegacy and not @skipSafari and $(tags)
+                      LEGACY: true
+                      BRANCH: $(branch)
 
-          - bash: |
-                echo "##vso[task.setvariable variable=branch;isoutput=true]$SYSTEM_PULLREQUEST_SOURCEBRANCH"
-            name: branch_name
+    - stage: chrome_functional_tests
+      variables:
+          - group: 'Services Credentials'
+      displayName: Execute tests on Chrome
+      condition: ne(stageDependencies.CheckChanges.outputs['CheckChangesJob.check_changes.tags'], '')
+      dependsOn: CheckChanges
+      jobs:
+          - job: execute_tests
+            displayName: Build and run tests on Chrome
+            variables:
+                tags: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['check_changes.TAGS'] ]
+                branch: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['branch_name.branch'] ]
+            steps:
+                - checkout: rd-outsystems-ui-qa-tests
+                - template: ./pipelines/templates/build-and-execute-functional-tests-template.yml@rd-outsystems-ui-qa-tests
+                  parameters:
+                      BROWSER: chrome
+                      ENVIRONMENT: dev
+                      TAGS: not @skipLegacy and not @skipChrome and $(tags)
+                      LEGACY: true
+                      BRANCH: $(branch)
 
-          - task: CmdLine@2
-            name: install_dep
-            displayName: 'Install dependencies using yarn'
-            inputs:
-                script: 'npm install'
-            continueOnError: true
-          - task: CmdLine@2
-            displayName: Execute Pipeline
-            inputs:
-                script: node pipelines/pipeline-run.js -- --tags="$(TAGS)" --branch="$(branch_name.branch)"
+    - stage: publish_cucumber_results
+      displayName: 'Publish cucumber results'
+      condition: ne(dependencies.CheckChangesStage.outputs['CheckChangesJob.CheckChanges.check_changes.TAGS'], '')
+      dependsOn:
+          - safari_functional_tests
+          - chrome_functional_tests
+      jobs:
+          - job: Publish_cucumber_results
+            displayName: 'Publish cucumber results'
+            steps:
+                - task: DownloadPipelineArtifact@2
+                  inputs:
+                      buildType: 'current'
+                      itemPattern: '**'
+                      targetPath: '$(Pipeline.Workspace)/tmp'
+                - script: ls -R $(Pipeline.Workspace)/tmp
+                - task: MaciejMaciejewski.azure-pipelines-cucumber.PublishCucumberReport.PublishCucumberReport@1
+                  displayName: 'Publish Cucumber Report'
+                  inputs:
+                      jsonDir: $(Pipeline.Workspace)/tmp
+                      outputPath: $(Pipeline.Workspace)/tmp

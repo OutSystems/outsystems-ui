@@ -80,6 +80,7 @@ namespace OSUIFramework.Helper {
 		/******************** PRIVATE CACHE VARIABLES ********************/
 		private static _browser = GlobalEnum.Browser.unknown;
 		private static _iphoneDetails: iphoneDetails = undefined;
+		private static _isIos: boolean | undefined = undefined;
 		private static _isIphoneWithNotch: boolean | undefined = undefined;
 		private static _isNativeApp: boolean | undefined = undefined;
 		private static _isPwa: boolean | undefined = undefined;
@@ -281,6 +282,10 @@ namespace OSUIFramework.Helper {
 
 		/******************** PUBLIC GETTERS ********************/
 
+		public static get HasAccessibilityEnabled(): boolean {
+			return Helper.Dom.ClassSelector(document.body, Constants.HasAccessibilityClass) !== undefined;
+		}
+
 		/**
 		 * Getter that returns if the application is running in a desktop device.
 		 *
@@ -374,6 +379,13 @@ namespace OSUIFramework.Helper {
 				DeviceInfo._isNativeApp = window.cordova !== undefined && !DeviceInfo.IsPwa;
 			}
 			return DeviceInfo._isNativeApp;
+		}
+
+		public static get IsIos(): boolean {
+			if (DeviceInfo._isIos === undefined) {
+				DeviceInfo._isIos = Dom.Styles.ContainsClass(document.body, GlobalEnum.MobileOS.IOS);
+			}
+			return DeviceInfo._isIos;
 		}
 
 		/**

@@ -14,19 +14,19 @@ namespace OSUIFramework.Patterns.Accordion {
 
 		// Method used to recalculate the position of items on the accordion
 		private _setUpAccordion(): void {
-			let firstAccordionItem = this._selfElem.querySelector(
-				Constants.Dot + Enum.CssClass.FirstItem
-			) as HTMLElement;
-			let lastAccordionItem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.LastItem) as HTMLElement;
-			if (firstAccordionItem) Helper.Style.RemoveClass(firstAccordionItem, Enum.CssClass.FirstItem);
-			if (lastAccordionItem) Helper.Style.RemoveClass(lastAccordionItem, Enum.CssClass.LastItem);
+			// Accordion > OSBlockWidget(Accordion Item) > AccordionItem
+			let firstAccordionItem = this._selfElem.firstChild.firstChild as HTMLElement;
+			let lastAccordionItem = this._selfElem.lastChild.firstChild as HTMLElement;
+
+			if (firstAccordionItem) Helper.Dom.Styles.RemoveClass(firstAccordionItem, Enum.CssClass.FirstItem);
+			if (lastAccordionItem) Helper.Dom.Styles.RemoveClass(lastAccordionItem, Enum.CssClass.LastItem);
 
 			// Accordion > OSBlockWidget(Accordion Item) > AccordionItem
 			firstAccordionItem = this._selfElem.firstChild.firstChild as HTMLElement;
 			lastAccordionItem = this._selfElem.lastChild.firstChild as HTMLElement;
 
-			Helper.Style.AddClass(firstAccordionItem, Enum.CssClass.FirstItem);
-			Helper.Style.AddClass(lastAccordionItem, Enum.CssClass.LastItem);
+			Helper.Dom.Styles.AddClass(firstAccordionItem, Enum.CssClass.FirstItem);
+			Helper.Dom.Styles.AddClass(lastAccordionItem, Enum.CssClass.LastItem);
 		}
 
 		public addAccordionItem(uniqueId: string, accordionItem: AccordionItem.IAccordionItem): void {

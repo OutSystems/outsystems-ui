@@ -1,8 +1,14 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.AnimatedLabel {
+	/**
+	 * Class that represents the custom configurations received by the AnimatedLabel.
+	 *
+	 * @export
+	 * @class AnimatedLabelConfig
+	 * @extends {AbstractConfiguration}
+	 */
 	export class AnimatedLabelConfig extends AbstractConfiguration {
-		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-		constructor(config: any) {
+		constructor(config: JSON) {
 			super(config);
 		}
 	}

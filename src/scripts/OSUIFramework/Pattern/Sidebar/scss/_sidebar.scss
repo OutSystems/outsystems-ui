@@ -3,8 +3,9 @@
 /// @group Patterns-Sidebar
 /// Patterns - Interaction - Sidebar
 
-///
 .osui-sidebar {
+	//TODO: Validade the color of all overlays and create "global" variable for it.
+	$sidebar-overlay-background: rgba(0, 0, 0, 0.25);
 	display: contents;
 
 	&.is-right {
@@ -18,6 +19,10 @@
 		}
 	}
 
+	&.right {
+		-servicestudio-justify-content: flex-end;
+	}
+
 	&.is-left {
 		.osui-sidebar_aside {
 			left: 0;
@@ -27,6 +32,10 @@
 				right: -24px;
 			}
 		}
+	}
+
+	&.left {
+		-servicestudio-justify-content: flex-start;
 	}
 
 	&_aside {
@@ -54,11 +63,13 @@
 		// Service Studio Preview
 		& {
 			-servicestudio-bottom: 20px;
+			-servicestudio-display: inline-block;
 			-servicestudio-height: auto;
-			-servicestudio-margin-left: auto;
+			-servicestudio-margin: unset;
 			-servicestudio-position: relative;
 			-servicestudio-transform: none;
 			-servicestudio-webkit-transform: none;
+			-servicestudio-width: unset;
 		}
 	}
 
@@ -74,7 +85,7 @@
 	}
 
 	&_overlay {
-		background-color: rgba(0, 0, 0, 0.25);
+		background-color: $sidebar-overlay-background;
 		cursor: pointer;
 		height: 100vh;
 		opacity: 0;
@@ -87,10 +98,17 @@
 		will-change: opacity;
 		z-index: 130;
 
+		&-preview {
+			-servicestudio-background-color: $sidebar-overlay-background;
+		}
 		// Service Studio Preview
 		& {
 			-servicestudio-display: none;
 		}
+	}
+	& {
+		-servicestudio-display: flex;
+		-servicestudio-flex-direction: row;
 	}
 }
 
@@ -118,6 +136,10 @@
 .desktop {
 	.osui-sidebar_aside {
 		opacity: 0;
+
+		&:before {
+			display: none;
+		}
 	}
 }
 

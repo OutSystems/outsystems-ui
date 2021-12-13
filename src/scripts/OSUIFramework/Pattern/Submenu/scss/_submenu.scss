@@ -16,7 +16,7 @@
 	}
 
 	&:hover {
-		.osui-submenu-icon:before {
+		.osui-submenu__icon:before {
 			border: var(--border-size-s) solid var(--color-neutral-9);
 			border-right: 0;
 			border-top: 0;
@@ -24,40 +24,40 @@
 	}
 
 	&.active {
-		&.open {
-			.osui-submenu-item {
+		&--is-open {
+			.osui-submenu__header__item {
 				color: var(--color-primary);
 			}
 		}
 
 		.osui-submenu {
-			&-header {
+			&__header {
 				border-bottom: var(--border-size-m) solid var(--color-primary);
-			}
 
-			&-item {
-				&,
-				a {
-					color: var(--color-primary);
+				&__item {
+					&,
+					a {
+						color: var(--color-primary);
+					}
 				}
-			}
 
-			&-icon:before {
-				border: var(--border-size-s) solid var(--color-primary);
-				border-right: 0;
-				border-top: 0;
+				&__icon:before {
+					border: var(--border-size-s) solid var(--color-primary);
+					border-right: 0;
+					border-top: 0;
+				}
 			}
 		}
 	}
 
-	&.open {
+	&--is-open {
 		.osui-submenu {
-			&-icon {
+			&__icon {
 				top: 3px;
 				transform: rotate(135deg);
 			}
 
-			&-items {
+			&__items {
 				opacity: 1;
 				pointer-events: auto;
 				transform: translateY(0px);
@@ -65,58 +65,58 @@
 		}
 	}
 
-	&.is--dropdown {
-		.osui-submenu-icon {
+	&--is-dropdown {
+		.osui-submenu__header__icon {
 			display: inline-flex;
 		}
 	}
 
-	&-header {
+	&__header {
 		align-items: center;
 		border-bottom: var(--border-size-m) solid transparent;
 		border-top: var(--border-size-m) solid transparent;
 		display: flex;
 		padding: var(--space-none) var(--space-s);
 		transition: all 150ms linear;
-	}
 
-	&-icon {
-		display: none;
-		margin-left: var(--space-s);
-		position: relative;
-		top: -1px;
-		transform: rotate(-45deg);
-		transition: all 150ms linear;
-
-		&:before {
-			border: var(--border-size-s) solid var(--color-neutral-8);
-			border-right: 0;
-			border-top: 0;
-			box-sizing: border-box;
-			content: '';
-			height: 6px;
+		&__icon {
+			display: none;
+			margin-left: var(--space-s);
+			position: relative;
+			top: -1px;
+			transform: rotate(-45deg);
 			transition: all 150ms linear;
-			width: 6px;
+
+			&:before {
+				border: var(--border-size-s) solid var(--color-neutral-8);
+				border-right: 0;
+				border-top: 0;
+				box-sizing: border-box;
+				content: '';
+				height: 6px;
+				transition: all 150ms linear;
+				width: 6px;
+			}
 		}
-	}
 
-	&-item {
-		align-items: center;
-		color: var(--color-neutral-9);
-		display: inline-flex;
-		height: 100%;
-		position: relative;
-		transition: all 150ms linear;
-
-		a {
+		&__item {
 			align-items: center;
-			color: var(--color-neutral-8);
-			display: flex;
+			color: var(--color-neutral-9);
+			display: inline-flex;
 			height: 100%;
+			position: relative;
+			transition: all 150ms linear;
+
+			a {
+				align-items: center;
+				color: var(--color-neutral-8);
+				display: flex;
+				height: 100%;
+			}
 		}
 	}
 
-	&-items {
+	&__items {
 		background-color: var(--color-neutral-0);
 		border: var(--border-size-s) solid var(--color-neutral-4);
 		border-radius: var(--border-radius-soft);
@@ -165,7 +165,7 @@
 		}
 	}
 
-	.header .osui-submenu-items {
+	.header .osui-submenu__items {
 		-servicestudio-display: none !important;
 	}
 }
@@ -183,26 +183,26 @@
 		margin-left: var(--space-none);
 		width: 100%;
 
-		&.active .osui-submenu-header {
+		&.active .osui-submenu__header {
 			border-left: var(--border-size-m) solid var(--color-primary);
 		}
 
-		&.open .osui-submenu-items {
+		&--is-open .osui-submenu__items {
 			display: flex;
 		}
 
-		.osui-submenu-header {
+		.osui-submenu__header {
 			border-bottom: 0;
 			border-left: var(--border-size-m) solid transparent;
 			border-top: 0;
 			padding: var(--space-s) var(--space-m);
+
+			&__item {
+				flex: 1;
+			}
 		}
 
-		&-item {
-			flex: 1;
-		}
-
-		&-items {
+		&__items {
 			border: none;
 			box-shadow: none;
 			display: none;
@@ -224,7 +224,7 @@
 .layout-side,
 .menu-visible {
 	.app-menu-links {
-		.osui-submenu-header a {
+		.osui-submenu__header a {
 			padding: var(--space-none);
 		}
 	}
@@ -235,32 +235,32 @@
 .desktop {
 	.osui-submenu {
 		&:hover {
-			.osui-submenu-item {
+			.osui-submenu__header__item {
 				color: var(--color-neutral-9);
 			}
 		}
 
 		&.active {
-			.osui-submenu-header:hover .osui-submenu-item {
+			.osui-submenu__header:hover .osui-submenu__header__item {
 				color: var(--color-primary);
 			}
 		}
 	}
 
 	.osui-submenu {
-		&-header {
+		&__header {
 			&:hover {
 				border-bottom: var(--border-size-m) solid var(--color-primary);
 			}
-		}
 
-		&-item {
-			a:hover {
-				color: var(--color-neutral-9);
+			&__item {
+				a:hover {
+					color: var(--color-neutral-9);
+				}
 			}
 		}
 
-		&-items {
+		&__items {
 			a {
 				&:hover {
 					background-color: var(--color-neutral-2);
@@ -293,15 +293,15 @@
 		margin-left: var(--space-none);
 		width: 100%;
 
-		&.active .osui-submenu-header {
+		&.active .osui-submenu__header {
 			border-left: var(--border-size-m) solid var(--color-primary);
 		}
 
-		&.open .osui-submenu-items {
+		&--is-open .osui-submenu__items {
 			display: flex;
 		}
 
-		&-header {
+		&__header {
 			border-bottom: 0;
 			border-left: var(--border-size-m) solid transparent;
 			border-top: 0;
@@ -310,11 +310,11 @@
 	}
 
 	.osui-submenu {
-		&-item {
+		&__header__item {
 			flex: 1;
 		}
 
-		&-items {
+		&__items {
 			border: none;
 			box-shadow: none;
 			display: none;
@@ -333,7 +333,7 @@
 .is-rtl {
 	.layout-side {
 		.osui-submenu {
-			.osui-submenu-header {
+			.osui-submenu__header {
 				border-left: 0;
 				border-right: var(--border-size-m) solid transparent;
 			}
@@ -343,26 +343,26 @@
 	&.tablet,
 	&.phone {
 		.osui-submenu {
-			&.active .osui-submenu-header {
+			&.active .osui-submenu__header {
 				border-left: 0;
 				border-right: var(--border-size-m) solid var(--color-primary);
 			}
 
-			.osui-submenu-header {
+			.osui-submenu__header {
 				border-left: 0;
 				border-right: var(--border-size-m) solid transparent;
 			}
 		}
 	}
 
-	.osui-submenu-icon {
+	.osui-submenu__header__icon {
 		margin-left: var(--space-none);
 		margin-right: var(--space-s);
 	}
 
 	.layout-side {
 		.osui-submenu {
-			&.active .osui-submenu-header {
+			&.active .osui-submenu__header {
 				border-left: var(--border-size-none);
 				border-right: var(--border-size-m) solid var(--color-primary);
 			}

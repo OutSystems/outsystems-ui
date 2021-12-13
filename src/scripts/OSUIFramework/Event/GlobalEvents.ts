@@ -12,9 +12,16 @@
         - OnOffline
 
 */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Event {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	export class BodyOnClick extends OSUIFramework.Event.AbstractEvent<string> {
+	/**
+	 * Class that represents the click on the body event.
+	 *
+	 * @export
+	 * @class BodyOnClick
+	 * @extends {Event.AbstractEvent<string>}
+	 */
+	export class BodyOnClick extends Event.AbstractEvent<string> {
 		constructor() {
 			super();
 			document.body.addEventListener(GlobalEnum.HTMLEvent.Click, this._bodyTrigger.bind(this));
@@ -22,9 +29,17 @@ namespace OSUIFramework.Event {
 		private _bodyTrigger(evt: PointerEvent): void {
 			super.trigger('click', evt);
 		}
-		// Override the default trigger method from AbstractEvent
-		// eslint-disable-next-line  @typescript-eslint/no-unused-vars, @typescript-eslint/explicit-module-boundary-types
-		public trigger(data?: string, ...args): void {
+
+		/**
+		 * Override the default trigger method from AbstractEvent
+		 *
+		 * @param {string} [data]
+		 * @param {*} args
+		 * @return {*}  {void}
+		 * @memberof BodyOnClick
+		 */
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		public trigger(data?: string, ...args: unknown[]): void {
 			return;
 		}
 	}

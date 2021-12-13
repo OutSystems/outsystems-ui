@@ -1,6 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Helper {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	export abstract class A11Y {
 		/**
 		 * Method that will disable the aria-atomic
@@ -45,6 +44,16 @@ namespace OSUIFramework.Helper {
 		}
 
 		/**
+		 * Method that will set the aria-expanded
+		 *
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @returns
+		 */
+		public static AriaExpanded(element: HTMLElement, value: string): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Expanded, value);
+		}
+
+		/**
 		 * Method that will enable the aria-expanded
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
@@ -65,7 +74,47 @@ namespace OSUIFramework.Helper {
 		}
 
 		/**
-		 * Method that will enable the aria-hidden
+		 * Method that will toggle the aria-popup
+		 *
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @returns
+		 */
+		public static AriaHasPopup(element: HTMLElement, value: string): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Haspopup, value);
+		}
+
+		/**
+		 * Method that will disable the aria-popup
+		 *
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @returns
+		 */
+		public static AriaHasPopupFalse(element: HTMLElement): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Haspopup, Constants.A11YAttributes.States.False);
+		}
+
+		/**
+		 * Method that will enable the aria-popup
+		 *
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @returns
+		 */
+		public static AriaHasPopupTrue(element: HTMLElement): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Haspopup, Constants.A11YAttributes.States.True);
+		}
+
+		/**
+		 * Method that will set the aria-hidden
+		 *
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @returns
+		 */
+		public static AriaHidden(element: HTMLElement, value: string): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Hidden, value);
+		}
+
+		/**
+		 * Method that will disable the aria-hidden
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
@@ -191,6 +240,21 @@ namespace OSUIFramework.Helper {
 		}
 
 		/**
+		 * Method that will set the Complementary role
+		 *
+		 * @static
+		 * @param {HTMLElement} element
+		 * @memberof A11Y
+		 */
+		public static RoleComplementary(element: HTMLElement): void {
+			Dom.Attribute.Set(
+				element,
+				Constants.A11YAttributes.Role.AttrName,
+				Constants.A11YAttributes.Role.Complementary
+			);
+		}
+
+		/**
 		 * Method that will set the button role
 		 *
 		 * @param {HTMLElement} element Target element to receive the role atributte
@@ -235,13 +299,27 @@ namespace OSUIFramework.Helper {
 		}
 
 		/**
+		 * Method that will set the tabindex
+		 *
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @returns
+		 */
+		public static TabIndex(element: HTMLElement, value: string): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.TabIndex, value);
+		}
+
+		/**
 		 * Method that will enable the tabindex
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
 		 */
 		public static TabIndexFalse(element: HTMLElement): void {
-			Dom.Attribute.Set(element, Constants.A11YAttributes.TabIndex, Constants.A11YAttributes.States.TabIndexShow);
+			Dom.Attribute.Set(
+				element,
+				Constants.A11YAttributes.TabIndex,
+				Constants.A11YAttributes.States.TabIndexHidden
+			);
 		}
 
 		/**
@@ -251,11 +329,7 @@ namespace OSUIFramework.Helper {
 		 * @returns
 		 */
 		public static TabIndexTrue(element: HTMLElement): void {
-			Dom.Attribute.Set(
-				element,
-				Constants.A11YAttributes.TabIndex,
-				Constants.A11YAttributes.States.TabIndexHidden
-			);
+			Dom.Attribute.Set(element, Constants.A11YAttributes.TabIndex, Constants.A11YAttributes.States.TabIndexShow);
 		}
 	}
 }

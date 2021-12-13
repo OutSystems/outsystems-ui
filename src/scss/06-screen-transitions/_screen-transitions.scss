@@ -129,26 +129,21 @@
 		opacity: initial;
 
 		&.fade-enter-active {
+			opacity: initial;
+
+			.content {
+				opacity: 1;
+			}
+
 			.header {
 				transition: transform 400ms ease-in-out, opacity 400ms ease-in-out;
 			}
 		}
 
-		&-enter,
 		&-leave {
 			&.fade-leave-active {
 				opacity: 0;
 				transition: all 400ms ease-in-out;
-			}
-		}
-
-		&-enter {
-			&.fade-enter-active {
-				opacity: initial;
-
-				.content {
-					opacity: 1;
-				}
 			}
 		}
 
