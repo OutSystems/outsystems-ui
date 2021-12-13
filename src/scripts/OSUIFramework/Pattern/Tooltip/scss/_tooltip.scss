@@ -259,7 +259,7 @@ $osui-tooltip-arrow-size: 9px;
 			.osui-tooltip__balloon-wrapper__balloon {
 				left: initial;
 				right: calc(-1 * var(--space-s));
-				transform: translateX(100%);
+				transform: translateX(-100%);
 
 				&:before {
 					border-color: transparent transparent transparent var(--color-neutral-9);
