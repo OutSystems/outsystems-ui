@@ -64,12 +64,10 @@ namespace OSUIFramework.Patterns.FlipContent {
 		 * @memberof FlipContent
 		 */
 		private _toggleClasses(): void {
-			if (this.isBuilt === false) {
-				if (this.configs.IsFlipped) {
-					Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsFlipped);
-				} else {
-					Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsFlipped);
-				}
+			if (this.configs.IsFlipped) {
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsFlipped);
+			} else {
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsFlipped);
 			}
 		}
 
@@ -224,7 +222,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 		}
 
 		public showBackContent(): void {
-			if (this.configs.IsFlipped) {
+			if (this.configs.IsFlipped === false) {
 				this.toggleFlipContent();
 			}
 		}
@@ -235,7 +233,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 		 * @memberof FlipContent
 		 */
 		public showFrontContent(): void {
-			if (this.configs.IsFlipped === false) {
+			if (this.configs.IsFlipped) {
 				this.toggleFlipContent();
 			}
 		}
