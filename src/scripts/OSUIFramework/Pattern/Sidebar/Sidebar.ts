@@ -177,8 +177,10 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 			if (this.configs.HasOverlay && alreadyHasOverlayClass === false) {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.HasOverlay);
+				Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._eventOverlayClick);
 			} else if (this.isBuilt) {
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.HasOverlay);
+				Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOverlayClick);
 			}
 		}
 
