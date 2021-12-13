@@ -67,6 +67,13 @@ namespace OSUIFramework.Patterns.SwipeEvents {
 			}
 		}
 
+		private _removeEventListeners(): void {
+			if (this._trackableElement) {
+				this._trackableElement.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, this._eventGestureStart);
+				this._trackableElement.removeEventListener(GlobalEnum.HTMLEvent.TouchMove, this._eventGestureMove);
+			}
+		}
+
 		private _setEventListeners(): void {
 			this._trackableElement = document.getElementById(this.configs.WidgetId);
 			if (this._trackableElement) {
@@ -99,13 +106,13 @@ namespace OSUIFramework.Patterns.SwipeEvents {
 
 		public build(): void {
 			super.build();
-			//this._setEventListeners();
+			this._setEventListeners();
 			super.finishBuild();
 		}
 
 		public dispose(): void {
 			super.dispose();
-			//this._removeEventListeners();
+			this._removeEventListeners();
 		}
 
 		public EventGestureMove(event: TouchEvent): void {
