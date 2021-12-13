@@ -15,8 +15,8 @@ namespace OSUIFramework.Patterns.FlipContent.Enum {
 		PatternBack = 'osui-flip-content__container__back',
 		PatternContainer = 'osui-flip-content__container',
 		PatternDataFlipped = 'data-flipped',
-		PatternFlipSelf = 'osui-flip-content__container--flip-self',
+		PatternFlipSelf = 'osui-flip-content--flip-self',
 		PatternFront = 'osui-flip-content__container__front',
-		PatternIsFlipped = 'osui-flip-content__container--flipped',
+		PatternIsFlipped = 'osui-flip-content--flipped',
 	}
 }
