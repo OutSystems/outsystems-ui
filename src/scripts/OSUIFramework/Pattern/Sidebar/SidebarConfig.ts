@@ -28,7 +28,6 @@ namespace OSUIFramework.Patterns.Sidebar {
 						GlobalEnum.Direction.Right,
 						GlobalEnum.Direction.Left
 					);
-					GlobalEnum.Direction.Right;
 					break;
 				case Enum.Properties.HasOverlay:
 				case Enum.Properties.StartsOpen:
