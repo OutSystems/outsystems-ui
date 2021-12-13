@@ -84,22 +84,10 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 */
 	export function GetTooltipById(tooltipId: string): OSUIFramework.Patterns.Tooltip.ITooltip {
 		return OSUIFramework.Helper.MapOperation.FindInMap(
-			'Tooltip',
+			OSUIFramework.GlobalEnum.PatternsNames.Tooltip,
 			tooltipId,
 			_tooltipsMap
 		) as OSUIFramework.Patterns.Tooltip.ITooltip;
-	}
-
-	/**
-	 * Fucntion that will open a given tooltip.
-	 *
-	 * @export
-	 * @param {string} tooltipId ID of the tooltip that will be opened
-	 */
-	export function Open(tooltipId: string): void {
-		const tooltip = GetTooltipById(tooltipId);
-
-		tooltip.open();
 	}
 
 	/**
@@ -115,5 +103,17 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 		tooltip.build();
 
 		return tooltip;
+	}
+
+	/**
+	 * Fucntion that will open a given tooltip.
+	 *
+	 * @export
+	 * @param {string} tooltipId ID of the tooltip that will be opened
+	 */
+	export function Open(tooltipId: string): void {
+		const tooltip = GetTooltipById(tooltipId);
+
+		tooltip.open();
 	}
 }
