@@ -64,10 +64,12 @@ namespace OSUIFramework.Patterns.FlipContent {
 		 * @memberof FlipContent
 		 */
 		private _toggleClasses(): void {
-			if (this.configs.IsFlipped) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsFlipped);
-			} else {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsFlipped);
+			if (this.isBuilt === false) {
+				if (this.configs.IsFlipped) {
+					Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsFlipped);
+				} else {
+					Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsFlipped);
+				}
 			}
 		}
 
