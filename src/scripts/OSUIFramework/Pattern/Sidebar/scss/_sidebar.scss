@@ -103,12 +103,9 @@
 			z-index: 129;
 		}
 
-		&-preview {
-			-servicestudio-background-color: $sidebar-overlay-background;
-		}
 		// Service Studio Preview
 		& {
-			-servicestudio-display: none;
+			-servicestudio-background-color: $sidebar-overlay-background;
 		}
 	}
 	& {
