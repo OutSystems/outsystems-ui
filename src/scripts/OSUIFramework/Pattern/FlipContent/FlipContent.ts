@@ -221,6 +221,23 @@ namespace OSUIFramework.Patterns.FlipContent {
 			}
 		}
 
+		public showBackContent(): void {
+			if (this.configs.IsFlipped) {
+				this.toggleFlipContent();
+			}
+		}
+
+		/**
+		 * Tries to show the font
+		 *
+		 * @memberof FlipContent
+		 */
+		public showFrontContent(): void {
+			if (this.configs.IsFlipped === false) {
+				this.toggleFlipContent();
+			}
+		}
+
 		/**
 		 * Public method to trigger the flipping of the pattern and the event on the platform's side
 		 *
