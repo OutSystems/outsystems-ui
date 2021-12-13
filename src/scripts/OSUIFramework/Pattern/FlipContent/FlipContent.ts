@@ -59,6 +59,17 @@ namespace OSUIFramework.Patterns.FlipContent {
 		}
 
 		/**
+		 *
+		 *
+		 * @memberof FlipContent
+		 */
+		private _setStartsFlipped() {
+			if (this.isBuilt === false) {
+				this._toggleClasses();
+			}
+		}
+
+		/**
 		 * Set the classes on the pattern's first render, toggle click & parameters changed
 		 *
 		 * @memberof FlipContent
