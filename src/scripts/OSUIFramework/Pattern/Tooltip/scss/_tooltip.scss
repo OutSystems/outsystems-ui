@@ -12,9 +12,9 @@ $osui-tooltip-arrow-size: 9px;
 	position: relative;
 
 	///
-	&.is-hover:hover,
-	&.is-opened {
-		.osui-tooltip_balloon-wrapper {
+	&.osui-tooltip--is-hover:hover,
+	&.osui-tooltip--is-opened {
+		.osui-tooltip__balloon-wrapper {
 			max-height: 50vh;
 			opacity: 1;
 			padding-top: var(--space-base);
@@ -29,7 +29,7 @@ $osui-tooltip-arrow-size: 9px;
 				padding-top: initial;
 				top: initial;
 
-				.osui-tooltip_balloon {
+				.osui-tooltip__balloon-wrapper__balloon {
 					bottom: initial;
 					top: 0;
 					transform: translateY(0);
@@ -45,7 +45,7 @@ $osui-tooltip-arrow-size: 9px;
 				left: 50%;
 				transform: translateX(-50%);
 
-				.osui-tooltip_balloon {
+				.osui-tooltip__balloon-wrapper__balloon {
 					&:before {
 						left: 50%;
 						transform: translate(-50%, 100%);
@@ -61,7 +61,7 @@ $osui-tooltip-arrow-size: 9px;
 				padding-left: var(--space-base);
 				padding-top: var(--space-none);
 
-				.osui-tooltip_balloon {
+				.osui-tooltip__balloon-wrapper__balloon {
 					left: 0;
 				}
 			}
@@ -72,7 +72,7 @@ $osui-tooltip-arrow-size: 9px;
 				padding-right: var(--space-base);
 				right: 100%;
 
-				.osui-tooltip_balloon {
+				.osui-tooltip__balloon-wrapper__balloon {
 					left: initial;
 					right: 0;
 					transform: translatex(0);
@@ -80,7 +80,7 @@ $osui-tooltip-arrow-size: 9px;
 			}
 		}
 
-		.osui-tooltip_balloon {
+		.osui-tooltip__balloon-wrapper__balloon {
 			opacity: 1;
 			top: 0;
 
@@ -92,14 +92,14 @@ $osui-tooltip-arrow-size: 9px;
 	}
 
 	///
-	&:not(.is-hover) {
-		.osui-tooltip_content {
+	&:not(.osui-tooltip--is-hover) {
+		.osui-tooltip__content {
 			cursor: pointer;
 		}
 	}
 
 	///
-	.osui-tooltip_content {
+	.osui-tooltip__content {
 		position: inherit;
 
 		&:empty {
@@ -108,7 +108,7 @@ $osui-tooltip-arrow-size: 9px;
 	}
 
 	///
-	.osui-tooltip_balloon-wrapper {
+	.osui-tooltip__balloon-wrapper {
 		left: calc(50% - var(--space-base));
 		max-height: 0;
 		opacity: 0;
@@ -118,7 +118,7 @@ $osui-tooltip-arrow-size: 9px;
 		position: absolute;
 		top: 100%;
 		transition: opacity 0.25s;
-		z-index: 1;
+		z-index: 2;
 
 		// Service Studio Preview
 		& {
@@ -135,7 +135,7 @@ $osui-tooltip-arrow-size: 9px;
 			left: 50%;
 			transform: translateX(-50%);
 
-			.osui-tooltip_balloon {
+			.osui-tooltip__balloon-wrapper__balloon {
 				&:before {
 					left: 50%;
 					transform: translate(-50%, -100%);
@@ -148,7 +148,7 @@ $osui-tooltip-arrow-size: 9px;
 			left: initial;
 			right: calc(-1 * var(--space-s));
 
-			.osui-tooltip_balloon {
+			.osui-tooltip__balloon-wrapper__balloon {
 				&:before {
 					left: initial;
 					right: var(--space-s);
@@ -160,7 +160,7 @@ $osui-tooltip-arrow-size: 9px;
 		&.bottom-right {
 			left: calc(-1 * var(--space-s));
 
-			.osui-tooltip_balloon {
+			.osui-tooltip__balloon-wrapper__balloon {
 				&:before {
 					left: var(--space-s);
 				}
@@ -174,7 +174,7 @@ $osui-tooltip-arrow-size: 9px;
 			bottom: 100%;
 			top: initial;
 
-			.osui-tooltip_balloon {
+			.osui-tooltip__balloon-wrapper__balloon {
 				bottom: initial;
 				top: var(--space-base);
 				transform: translateY(-100%);
@@ -192,7 +192,7 @@ $osui-tooltip-arrow-size: 9px;
 			left: 50%;
 			transform: translateX(-50%);
 
-			.osui-tooltip_balloon {
+			.osui-tooltip__balloon-wrapper__balloon {
 				&:before {
 					left: 50%;
 					transform: translate(-50%, -100%);
@@ -205,7 +205,7 @@ $osui-tooltip-arrow-size: 9px;
 			left: initial;
 			right: calc(-1 * var(--space-s));
 
-			.osui-tooltip_balloon {
+			.osui-tooltip__balloon-wrapper__balloon {
 				&:before {
 					left: initial;
 					right: var(--space-s);
@@ -217,7 +217,7 @@ $osui-tooltip-arrow-size: 9px;
 		&.top-right {
 			left: calc(-1 * var(--space-s));
 
-			.osui-tooltip_balloon {
+			.osui-tooltip__balloon-wrapper__balloon {
 				&:before {
 					left: var(--space-s);
 				}
@@ -234,7 +234,7 @@ $osui-tooltip-arrow-size: 9px;
 			top: 50%;
 			transform: translateY(-50%);
 
-			.osui-tooltip_balloon {
+			.osui-tooltip__balloon-wrapper__balloon {
 				left: calc(-1 * var(--space-s));
 				top: initial;
 
@@ -256,10 +256,10 @@ $osui-tooltip-arrow-size: 9px;
 			padding-right: var(--space-none);
 			right: 100%;
 
-			.osui-tooltip_balloon {
+			.osui-tooltip__balloon-wrapper__balloon {
 				left: initial;
 				right: calc(-1 * var(--space-s));
-				transform: translateX(100%);
+				transform: translateX(-100%);
 
 				&:before {
 					border-color: transparent transparent transparent var(--color-neutral-9);
@@ -276,7 +276,7 @@ $osui-tooltip-arrow-size: 9px;
 			top: 40%;
 			transform: translate(-50%, 0);
 
-			.osui-tooltip_balloon {
+			.osui-tooltip__balloon-wrapper__balloon {
 				&:before {
 					left: 50%;
 					transform: translate(-50%, -100%);
@@ -286,10 +286,13 @@ $osui-tooltip-arrow-size: 9px;
 	}
 
 	///
-	.osui-tooltip_balloon {
+	.osui-tooltip__balloon-wrapper__balloon {
 		background-color: var(--color-neutral-9);
 		border-radius: var(--border-radius-soft);
 		color: var(--color-neutral-0);
+		font-size: var(--font-size-s);
+		font-weight: var(--font-regular);
+		line-height: initial;
 		min-width: 150px;
 		opacity: 0;
 		padding: var(--space-s);

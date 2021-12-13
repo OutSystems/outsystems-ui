@@ -279,6 +279,7 @@
 	box-shadow: 0 0 0 3px var(--color-focus-outer);
 	outline: 0;
 }
+
 ///
 .tablet,
 .phone {
@@ -295,6 +296,7 @@
 
 		&.active .osui-submenu__header {
 			border-left: var(--border-size-m) solid var(--color-primary);
+			border-bottom: 0;
 		}
 
 		&--is-open .osui-submenu__items {

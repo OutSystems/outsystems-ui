@@ -105,8 +105,37 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 
 		flipContent.registerCallback(callback);
 	}
+	/**
+	 * Function that will show the back part of the content.
+	 *
+	 * @export
+	 * @param {string} flipId
+	 */
+	export function ShowBackContent(flipId: string): void {
+		const flipContent = GetFlipContentById(flipId);
 
-	export function TriggerFlip(flipId: string): void {
+		flipContent.showBackContent();
+	}
+
+	/**
+	 * Function that will show the front part of the content.
+	 *
+	 * @export
+	 * @param {string} flipId
+	 */
+	export function ShowFrontContent(flipId: string): void {
+		const flipContent = GetFlipContentById(flipId);
+
+		flipContent.showFrontContent();
+	}
+
+	/**
+	 * Function that will flip the content.
+	 *
+	 * @export
+	 * @param {string} flipId
+	 */
+	export function ToggleFlipContent(flipId: string): void {
 		const flipContent = GetFlipContentById(flipId);
 
 		flipContent.toggleFlipContent();

@@ -14,10 +14,10 @@ namespace OSUIFramework.Patterns.FlipContent {
 		// Callback function to trigger the click event on the platform
 		private _plataformEventFlip: Callbacks.OSFlipContentFlipEvent;
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		constructor(uniqueId: string, configs: any) {
+		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new FlipContentConfig(configs));
 		}
+
 		/**
 		 * Toggle pattern on keypress
 		 *
@@ -37,83 +37,14 @@ namespace OSUIFramework.Patterns.FlipContent {
 				e.stopPropagation();
 			}
 		}
-		/**
-		 * Add Attributes and it's values
-		 *
-		 * @memberof FlipContent
-		 */
-
-		private _setDataAttribute(): void {
-			Helper.Dom.Attribute.Set(
-				this._flipWrapperElement,
-				Enum.CssClass.PatternDataFlipped,
-				this.configs.IsFlipped
-			);
-		}
-		/**
-		 * Set the classes on the pattern's first render, toggle click & parameters changed
-		 *
-		 * @memberof FlipContent
-		 */
-
-		private _toggleClasses(): void {
-			if (this.configs.IsFlipped) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsFlipped);
-			} else {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsFlipped);
-			}
-		}
-		/**
-		 * Triggers the toggle event on the platform
-		 *
-		 * @memberof FlipContent
-		 */
-
-		private _triggerPlatformEvent(): void {
-			if (this._plataformEventFlip) {
-				Helper.AsyncInvocation(this._plataformEventFlip.bind(this), this.widgetId, this.configs.IsFlipped);
-			}
-		}
 
 		/**
-		 * Update the A11Y attributes
+		 * Setting the handlers and the classes for when the FlipSelf is active or not.
 		 *
+		 * @private
 		 * @memberof FlipContent
 		 */
-
-		private _updateA11yProperties(): void {
-			if (this.configs.FlipSelf) {
-				Helper.A11Y.AriaAtomicTrue(this._selfElem);
-				Helper.A11Y.TabIndexTrue(this._selfElem);
-			} else {
-				Helper.A11Y.AriaAtomicFalse(this._selfElem);
-				Helper.A11Y.TabIndexFalse(this._selfElem);
-			}
-		}
-		/**
-		 * Set the A11Y attributes
-		 *
-		 * @memberof FlipContent
-		 */
-
-		protected setA11yProperties(): void {
-			if (this.configs.FlipSelf) {
-				Helper.A11Y.AriaAtomicTrue(this._selfElem);
-				Helper.A11Y.TabIndexTrue(this._selfElem);
-				Helper.A11Y.RoleButton(this._selfElem);
-				Helper.A11Y.AriaLivePolite(this._selfElem);
-			}
-		}
-		/**
-		 * Set the events
-		 *
-		 * @memberof FlipContent
-		 */
-
-		protected setCallbacks(): void {
-			this._eventKeydown = this._keydownCallback.bind(this);
-			this._eventClick = this.toggleFlipContent.bind(this);
-
+		private _setEventHandlers(): void {
 			if (this.configs.FlipSelf) {
 				this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
 				this._flipWrapperElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
@@ -126,21 +57,97 @@ namespace OSUIFramework.Patterns.FlipContent {
 				Helper.Dom.Styles.RemoveClass(this._flipWrapperElement, Enum.CssClass.PatternFlipSelf);
 			}
 		}
+
+		/**
+		 *
+		 *
+		 * @memberof FlipContent
+		 */
+		private _setStartsFlipped() {
+			if (this.isBuilt === false) {
+				this._toggleClasses();
+			}
+		}
+
+		/**
+		 * Set the classes on the pattern's first render, toggle click & parameters changed
+		 *
+		 * @memberof FlipContent
+		 */
+		private _toggleClasses(): void {
+			if (this.configs.IsFlipped) {
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsFlipped);
+			} else {
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsFlipped);
+			}
+		}
+
+		/**
+		 * Triggers the toggle event on the platform
+		 *
+		 * @memberof FlipContent
+		 */
+		private _triggerPlatformEvent(): void {
+			if (this._plataformEventFlip) {
+				Helper.AsyncInvocation(this._plataformEventFlip.bind(this), this.widgetId, this.configs.IsFlipped);
+			}
+		}
+
+		/**
+		 * Update the A11Y attributes
+		 *
+		 * @memberof FlipContent
+		 */
+		private _updateA11yProperties(): void {
+			if (this.configs.FlipSelf) {
+				Helper.A11Y.AriaAtomicTrue(this._selfElem);
+				Helper.A11Y.TabIndexTrue(this._selfElem);
+			} else {
+				Helper.A11Y.AriaAtomicFalse(this._selfElem);
+				Helper.A11Y.TabIndexFalse(this._selfElem);
+			}
+		}
+
+		/**
+		 * Set the A11Y attributes
+		 *
+		 * @memberof FlipContent
+		 */
+		protected setA11yProperties(): void {
+			if (this.configs.FlipSelf) {
+				Helper.A11Y.AriaAtomicTrue(this._selfElem);
+				Helper.A11Y.TabIndexTrue(this._selfElem);
+				Helper.A11Y.RoleButton(this._selfElem);
+				Helper.A11Y.AriaLivePolite(this._selfElem);
+			}
+		}
+
+		/**
+		 * Set the events
+		 *
+		 * @memberof FlipContent
+		 */
+		protected setCallbacks(): void {
+			this._eventKeydown = this._keydownCallback.bind(this);
+			this._eventClick = this.toggleFlipContent.bind(this);
+
+			this._setEventHandlers();
+		}
+
 		/**
 		 * Set the HTML elements
 		 *
 		 * @memberof FlipContent
 		 */
-
 		protected setHtmlElements(): void {
 			this._flipWrapperElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternContainer);
 		}
+
 		/**
 		 * Remove the events
 		 *
 		 * @memberof FlipContent
 		 */
-
 		protected unsetCallbacks(): void {
 			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
 			this._flipWrapperElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
@@ -176,9 +183,6 @@ namespace OSUIFramework.Patterns.FlipContent {
 			// Set the A11Y defaults
 			this.setA11yProperties();
 
-			// Set the data attribute
-			this._setDataAttribute();
-
 			this.finishBuild();
 		}
 
@@ -194,12 +198,12 @@ namespace OSUIFramework.Patterns.FlipContent {
 			if (this.isBuilt) {
 				switch (propertyName) {
 					case Enum.Properties.IsFlipped:
-						this._toggleClasses();
+						this._setStartsFlipped();
 						break;
 
 					case Enum.Properties.FlipSelf:
 						this._updateA11yProperties();
-						this.setCallbacks();
+						this._setEventHandlers();
 						break;
 				}
 			}
@@ -211,17 +215,38 @@ namespace OSUIFramework.Patterns.FlipContent {
 		 * @memberof FlipContent
 		 */
 		public dispose(): void {
-			super.dispose();
 			this.unsetCallbacks();
 			this.unsetHtmlElements();
+
+			super.dispose();
 		}
+
 		/**
 		 * Register OnToogleClick clientAction as a callBack reference
 		 *
 		 * @memberof FlipContent
 		 */
 		public registerCallback(callback: Callbacks.OSFlipContentFlipEvent): void {
-			this._plataformEventFlip = callback;
+			if (this._plataformEventFlip === undefined) {
+				this._plataformEventFlip = callback;
+			}
+		}
+
+		public showBackContent(): void {
+			if (this.configs.IsFlipped === false) {
+				this.toggleFlipContent();
+			}
+		}
+
+		/**
+		 * Tries to show the font
+		 *
+		 * @memberof FlipContent
+		 */
+		public showFrontContent(): void {
+			if (this.configs.IsFlipped) {
+				this.toggleFlipContent();
+			}
 		}
 
 		/**
@@ -233,8 +258,6 @@ namespace OSUIFramework.Patterns.FlipContent {
 			this.configs.IsFlipped = !this.configs.IsFlipped;
 
 			this._toggleClasses();
-
-			this._setDataAttribute();
 
 			this._triggerPlatformEvent();
 		}
