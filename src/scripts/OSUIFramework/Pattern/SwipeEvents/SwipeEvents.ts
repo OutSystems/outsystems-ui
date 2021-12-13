@@ -7,79 +7,129 @@ namespace OSUIFramework.Patterns.SwipeEvents {
 		// Stores the touch event with bind(this)
 		private _gestureMoveEvent: Callbacks.Generic;
 		// Stores the touch event with bind(this)
-		private _gestureStartEnd: Callbacks.Generic;
+		private _gestureStartEvent: Callbacks.Generic;
 
 		//Stores the element that will have the swipe event
 		private _swipableElement: HTMLElement;
-		private _swipeDownCallback: OSUIFramework.Callbacks.Generic;
-		private _swipeLeftCallback: OSUIFramework.Callbacks.Generic;
-		private _swipeRightCallback: OSUIFramework.Callbacks.Generic;
-		private _swipeUpCallback: OSUIFramework.Callbacks.Generic;
+
+		// Callbacks for the platform
+		private _swipeDownCallback: Callbacks.Generic;
+		private _swipeLeftCallback: Callbacks.Generic;
+		private _swipeRightCallback: Callbacks.Generic;
+		private _swipeUpCallback: Callbacks.Generic;
+
 		//Threshold to understand if a swipe event was triggered
 		private _threshold: number;
 		// Velocity of the swipe event
 		private _velocity: number;
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		constructor(uniqueId: string, configs: any) {
+		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SwipeEventsConfig(configs));
 			this._threshold = Enum.Properties.Threshold;
 			this._velocity = Enum.Properties.Velocity;
-
-			this._gestureStartEnd = this.EventGestureEnd.bind(this);
-			this._gestureMoveEvent = this.EventGestureMove.bind(this);
 		}
 
 		private _removeEventListeners(): void {
 			if (this._swipableElement) {
-				this._swipableElement.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, this._gestureStartEnd);
+				this._swipableElement.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, this._gestureStartEvent);
 				this._swipableElement.removeEventListener(GlobalEnum.HTMLEvent.TouchMove, this._gestureMoveEvent);
 			}
 		}
 
 		private _setEventListeners(): void {
-			this._swipableElement = document.getElementById(this.configs.WidgetId);
 			if (this._swipableElement) {
-				this._swipableElement.addEventListener(GlobalEnum.HTMLEvent.TouchStart, this._gestureStartEnd);
+				this._swipableElement.addEventListener(GlobalEnum.HTMLEvent.TouchStart, this._gestureStartEvent);
 				this._swipableElement.addEventListener(GlobalEnum.HTMLEvent.TouchMove, this._gestureMoveEvent);
 			}
 		}
 
-		// Method that triggers the SwipeDown event on the platform
+		/**
+		 * Method that triggers the SwipeDown event on the platform
+		 */
 		private _triggerSwipeDown(): void {
 			if (this._swipeRightCallback) {
-				Helper.AsyncInvocation(() => {
-					this._swipeDownCallback();
-				});
+				Helper.AsyncInvocation(this._swipeDownCallback);
 			}
 		}
 
-		// Method that triggers the SwipeLeft event on the platform
+		/**
+		 * Method that triggers the SwipeLeft event on the platform
+		 */
 		private _triggerSwipeLeft(): void {
 			if (this._swipeRightCallback) {
-				Helper.AsyncInvocation(() => {
-					this._swipeLeftCallback();
-				});
+				Helper.AsyncInvocation(this._swipeLeftCallback);
 			}
 		}
 
-		// Method that triggers the SwipeRight event on the platform
+		/**
+		 * Method that triggers the SwipeRight event on the platform
+		 */
 		private _triggerSwipeRight(): void {
 			if (this._swipeRightCallback) {
-				Helper.AsyncInvocation(() => {
-					this._swipeRightCallback();
-				});
+				Helper.AsyncInvocation(this._swipeRightCallback);
 			}
 		}
 
-		// Method that triggers the SwipeUp event on the platform
+		/**
+		 * Method that triggers the SwipeUp event on the platform
+		 */
 		private _triggerSwipeUp(): void {
 			if (this._swipeRightCallback) {
-				Helper.AsyncInvocation(() => {
-					this._swipeUpCallback();
-				});
+				Helper.AsyncInvocation(this._swipeUpCallback);
 			}
 		}
+
+		/**
+		 * Sets the callbacks to be used in the pattern.
+		 *
+		 * @protected
+		 * @memberof SwipeEvents
+		 */
+		protected setCallbacks(): void {
+			this._gestureStartEvent = this.EventGestureEnd.bind(this);
+			this._gestureMoveEvent = this.EventGestureMove.bind(this);
+
+			this._setEventListeners();
+		}
+
+		/**
+		 * Set the html references that will be used to manage the cssClasses and atribute properties
+		 *
+		 * @protected
+		 * @memberof SwipeEvents
+		 */
+		protected setHtmlElements(): void {
+			this._swipableElement = document.getElementById(this.configs.WidgetId);
+		}
+
+		/**
+		 * Removes event listeners and callbacks.
+		 *
+		 * @protected
+		 * @memberof SwipeEvents
+		 */
+		protected unsetCallbacks(): void {
+			this._removeEventListeners();
+
+			this._gestureStartEvent = undefined;
+			this._gestureMoveEvent = undefined;
+		}
+		/**
+		 * Release references to HTML elements.
+		 *
+		 * @protected
+		 * @memberof SwipeEvents
+		 */
+		protected unsetHtmlElements(): void {
+			this._swipableElement = undefined;
+		}
+
+		/**
+		 * Based on the offset, this method triggers the methods on the platform
+		 * @param {number} offsetX
+		 * @param {number} offsetY
+		 * @param {number} timeTaken
+		 */
 		public EventGestureEnd(offsetX: number, offsetY: number, timeTaken: number): void {
 			if (
 				(Math.abs(offsetX) > this._threshold || Math.abs(offsetY) > this._threshold) &&
@@ -102,6 +152,10 @@ namespace OSUIFramework.Patterns.SwipeEvents {
 			}
 		}
 
+		/**
+		 *
+		 * @param {TouchEvent} event
+		 */
 		public EventGestureMove(event: TouchEvent): void {
 			if (event) {
 				event.preventDefault();
@@ -110,27 +164,29 @@ namespace OSUIFramework.Patterns.SwipeEvents {
 
 		public build(): void {
 			super.build();
-			this._setEventListeners();
+			this.setHtmlElements();
+			this.setCallbacks();
 			super.finishBuild();
 		}
 
 		public dispose(): void {
 			super.dispose();
-			this._removeEventListeners();
+			this.unsetCallbacks();
+			this.unsetHtmlElements();
 		}
 
-		public registerCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
+		public registerCallback(eventName: string, callback: Callbacks.OSGeneric): void {
 			switch (eventName) {
-				case OSUIFramework.Patterns.SwipeEvents.Enum.Events.SwipeDown:
+				case Patterns.SwipeEvents.Enum.Events.SwipeDown:
 					this._swipeDownCallback = callback;
 					break;
-				case OSUIFramework.Patterns.SwipeEvents.Enum.Events.SwipeUp:
+				case Patterns.SwipeEvents.Enum.Events.SwipeUp:
 					this._swipeUpCallback = callback;
 					break;
-				case OSUIFramework.Patterns.SwipeEvents.Enum.Events.SwipeRight:
+				case Patterns.SwipeEvents.Enum.Events.SwipeRight:
 					this._swipeRightCallback = callback;
 					break;
-				case OSUIFramework.Patterns.SwipeEvents.Enum.Events.SwipeLeft:
+				case Patterns.SwipeEvents.Enum.Events.SwipeLeft:
 					this._swipeLeftCallback = callback;
 					break;
 			}
