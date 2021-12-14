@@ -22,13 +22,10 @@
 	z-index: 140;
 
 	&:not(.osui-sidebar--is-open):not(.no-transition) {
-		.osui-sidebar__header,
-		.osui-sidebar__content {
-			opacity: 0;
+		opacity: 0;
 
-			& {
-				-servicestudio-opacity: 1;
-			}
+		& {
+			-servicestudio-opacity: 1;
 		}
 	}
 
