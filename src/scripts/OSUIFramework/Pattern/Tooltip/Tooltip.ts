@@ -187,11 +187,13 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		private _setIsVisible(): void {
 			if (this.isBuilt === false) {
-				if (this._isOpen) {
+				if (this.configs.StartVisible) {
 					Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.StartVisible);
 				} else {
 					Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.StartVisible);
 				}
+
+				this._isOpen = this.configs.StartVisible;
 
 				this._removeEvents();
 
