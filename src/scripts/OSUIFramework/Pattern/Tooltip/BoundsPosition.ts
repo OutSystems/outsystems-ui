@@ -63,12 +63,12 @@ namespace OSUIFramework.Patterns.Tooltip {
 		): string | undefined {
 			// Get Bounds element and sizes
 			const elemBound = elem.getBoundingClientRect();
-			const elemHeight = elem.clientHeight;
-			const elemWidth = elem.clientWidth;
+			const elemHeight = elemBound.height;
+			const elemWidth = elemBound.width;
 
 			const viewElemBound = viewElem.getBoundingClientRect();
-			const viewElemHeight = viewElem.clientHeight;
-			const viewElemWidth = viewElem.clientWidth;
+			const viewElemHeight = viewElemBound.height;
+			const viewElemWidth = viewElemBound.width;
 
 			// Check if it's out of the viewport on each side
 			const out = {
