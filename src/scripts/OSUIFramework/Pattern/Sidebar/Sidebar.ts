@@ -56,7 +56,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		 * @memberof Sidebar
 		 */
 		private _checkIsDraggingInsideBounds(x: number): boolean {
-			const isLeft = this._currentDirectionCssClass === GlobalEnum.Direction.Left;
+			const isLeft = this.configs.Direction === GlobalEnum.Direction.Left;
 
 			const baseThreshold = this._nativeGesturesParams.MoveX + (x - this._nativeGesturesParams.LastX);
 
@@ -584,7 +584,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 			if (this._isOpen) {
 				this._nativeGesturesParams.MoveX = 0;
-			} else if (this._currentDirectionCssClass === GlobalEnum.Direction.Left) {
+			} else if (this.configs.Direction === GlobalEnum.Direction.Left) {
 				this._nativeGesturesParams.MoveX = -parseInt(this.configs.Width);
 			} else {
 				this._nativeGesturesParams.MoveX = parseInt(this.configs.Width);
