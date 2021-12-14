@@ -6,6 +6,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 		private _eventClick: Callbacks.Generic;
 		private _eventFocus: Callbacks.Generic;
 		private _globalEventBody: Callbacks.Generic;
+		private _isOpen: boolean;
 
 		// Store the ballon html element
 		private _tooltipBallonContentActiveElem: HTMLElement;
@@ -17,19 +18,22 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new TooltipConfig(configs));
+
+			this._isOpen = this.configs.StartVisible;
+
 			this.setCallbacks();
 		}
 
 		// Add the tooltip Events
 		private _addEvents(): void {
 			// If tooltip should behave onMouseOver and it's visible by default
-			if (this.configs.IsHover || this.configs.StartVisible) {
+			if (this.configs.IsHover || this._isOpen) {
 				// Add a window event that will be responsible to close it, if it's opend by default
 				Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
 			}
 
-			// If tooltip should behave at onMouseClick
-			if (this.configs.IsHover === false) {
+			// If tooltip should behave at onMouseClick, or if it's on tablet or phone
+			if (this.configs.IsHover === false || Helper.DeviceInfo.IsDesktop === false) {
 				this._tooltipContentElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
 			}
 		}
@@ -105,7 +109,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.StartVisible);
 
-			this.configs.StartVisible = true;
+			this._isOpen = true;
 		}
 
 		/**
@@ -161,7 +165,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 			}
 
 			// Set default IsVisible cssClass property value
-			if (this.configs.StartVisible) {
+			if (this._isOpen) {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.StartVisible);
 			}
 
@@ -183,7 +187,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		private _setIsVisible(): void {
 			if (this.isBuilt === false) {
-				if (this.configs.StartVisible) {
+				if (this._isOpen) {
 					Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.StartVisible);
 				} else {
 					Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.StartVisible);
@@ -313,7 +317,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 						break;
 
-					case Enum.Properties.IsVisible:
+					case Enum.Properties.StartVisible:
 						this._setIsVisible();
 
 						break;
@@ -328,14 +332,17 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// Close the tooltip
 		public close(): void {
-			this._tooltipBallonContentElem.addEventListener(
-				GlobalEnum.HTMLEvent.TransitionEnd,
-				this._eventBallonContentClose
-			);
+			// Check if the tooltip is open
+			if (this._isOpen) {
+				this._tooltipBallonContentElem.addEventListener(
+					GlobalEnum.HTMLEvent.TransitionEnd,
+					this._eventBallonContentClose
+				);
 
-			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.StartVisible);
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.StartVisible);
 
-			this.configs.StartVisible = false;
+				this._isOpen = false;
+			}
 		}
 
 		// Destroy the tooltip
@@ -347,9 +354,12 @@ namespace OSUIFramework.Patterns.Tooltip {
 		}
 
 		public open(): void {
-			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
+			// Check if tooltip is closed
+			if (this._isOpen === false) {
+				Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
 
-			this._focusCallback();
+				this._focusCallback();
+			}
 		}
 	}
 }
