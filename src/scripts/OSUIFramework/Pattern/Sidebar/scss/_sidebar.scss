@@ -50,7 +50,7 @@
 
 		&.osui-sidebar--has-overlay {
 			&::before {
-				right: calc(var(--sidebar-width) + 0px);
+				right: 100%;
 
 				& {
 					-servicestudio-right: 100%;
@@ -75,7 +75,7 @@
 
 		&.osui-sidebar--has-overlay {
 			&::before {
-				left: calc(var(--sidebar-width) + 0px);
+				left: 100%;
 
 				& {
 					-servicestudio-left: 100%;
