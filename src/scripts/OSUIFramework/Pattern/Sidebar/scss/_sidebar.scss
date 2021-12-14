@@ -6,80 +6,96 @@
 .osui-sidebar {
 	//TODO: Validade the color of all overlays and create "global" variable for it.
 	$sidebar-overlay-background: rgba(0, 0, 0, 0.25);
-	display: contents;
 	--overlay-opacity: 0;
 
-	&--is-right {
-		.osui-sidebar__aside {
-			right: 0;
-			transform: translateX(102%);
+	background-color: var(--color-neutral-0);
+	box-shadow: var(--shadow-l);
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	margin: var(--space-none);
+	position: fixed;
+	top: 0;
+	transition: all 130ms ease-in;
+	width: var(--sidebar-width);
+	will-change: transform;
+	z-index: 140;
 
-			&:after {
-				left: -24px;
+	&:not(.osui-sidebar--is-open):not(.no-transition) {
+		.osui-sidebar__header,
+		.osui-sidebar__content {
+			opacity: 0;
+
+			& {
+				-servicestudio-opacity: 1;
 			}
 		}
 	}
 
-	&.right {
-		-servicestudio-justify-content: flex-end;
-	}
-
-	&--is-left {
-		.osui-sidebar__aside {
-			left: 0;
-			transform: translateX(-102%);
-
-			&:after {
-				right: -24px;
-			}
-		}
-	}
-
-	&.left {
-		-servicestudio-justify-content: flex-start;
-	}
-
-	&__aside {
-		background-color: var(--color-neutral-0);
-		box-shadow: var(--shadow-l);
-		display: flex;
-		flex-direction: column;
+	&:after {
+		background-color: transparent;
+		content: '';
 		height: 100%;
-		margin: var(--space-none);
 		position: fixed;
-		top: 0;
-		transition: all 130ms ease-in;
-		width: var(--sidebar-width);
-		will-change: transform;
-		z-index: 140;
+		width: 24px;
+	}
+
+	&--is-right {
+		right: 0;
+		transform: translateX(102%);
 
 		&:after {
-			background-color: transparent;
-			content: '';
-			height: 100%;
-			position: fixed;
-			width: 24px;
+			left: -24px;
+		}
+
+		&.osui-sidebar--has-overlay {
+			&::before {
+				right: calc(var(--sidebar-width) + 0px);
+
+				& {
+					-servicestudio-right: 100%;
+				}
+			}
 		}
 
 		// Service Studio Preview
 		& {
-			-servicestudio-bottom: 20px;
-			-servicestudio-display: inline-block;
-			-servicestudio-height: auto;
-			-servicestudio-margin: unset;
-			-servicestudio-position: relative;
-			-servicestudio-transform: none;
-			-servicestudio-webkit-transform: none;
-			-servicestudio-width: unset;
+			-servicestudio-left: 100%;
+			-servicestudio-transform: translateX(-100%);
 		}
 	}
 
-	&__aside__header,
-	&__aside__content {
+	&--is-left {
+		left: 0;
+		transform: translateX(-102%);
+
+		&:after {
+			right: -24px;
+		}
+
+		&.osui-sidebar--has-overlay {
+			&::before {
+				left: calc(var(--sidebar-width) + 0px);
+
+				& {
+					-servicestudio-left: 100%;
+				}
+			}
+		}
+
+		// Service Studio Preview
+		& {
+			-servicestudio-left: 0;
+			-servicestudio-transform: none;
+		}
+	}
+
+	&__header,
+	&__content {
 		padding: var(--space-base) var(--space-m);
 	}
 
-	&__aside__content {
+	&__content {
 		flex: 1;
 		overflow: auto;
 		-webkit-overflow-scrolling: touch;
@@ -95,22 +111,26 @@
 			opacity: var(--overlay-opacity);
 			pointer-events: none;
 			position: fixed;
-			right: 0;
 			top: 0;
 			transition: opacity 130ms ease-in;
 			width: 100vw;
 			will-change: opacity;
 			z-index: 129;
-		}
 
-		// Service Studio Preview
-		& {
-			-servicestudio-background-color: $sidebar-overlay-background;
+			// Service Studio Preview
+			& {
+				-servicestudio-width: 100%;
+				-servicestudio-height: 100%;
+				-servicestudio-opacity: 1;
+			}
 		}
 	}
+
+	// Service Studio Preview
 	& {
-		-servicestudio-display: flex;
-		-servicestudio-flex-direction: row;
+		-servicestudio-display: inline-block;
+		-servicestudio-position: relative;
+		-servicestudio-width: unset;
 	}
 }
 
@@ -118,12 +138,10 @@
 .active-screen {
 	.osui-sidebar {
 		&--is-open {
-			.osui-sidebar__aside {
-				opacity: 1;
-				transform: none;
-				transition: transform 330ms ease-out;
-				will-change: transform;
-			}
+			opacity: 1;
+			transform: none;
+			transition: transform 330ms ease-out;
+			will-change: transform;
 
 			&.osui-sidebar--has-overlay {
 				&::before {
@@ -138,9 +156,7 @@
 // Responsive --------------------------------------------------------------------
 ///
 .desktop {
-	.osui-sidebar__aside {
-		opacity: 0;
-
+	.osui-sidebar {
 		&:after {
 			display: none;
 		}
@@ -150,7 +166,7 @@
 ///
 .android[data-status-bar-height] {
 	.layout-native {
-		.osui-sidebar__aside {
+		.osui-sidebar {
 			padding-top: var(--status-bar-height);
 		}
 	}
@@ -159,7 +175,7 @@
 ///
 .ios {
 	.layout-native {
-		.osui-sidebar__aside {
+		.osui-sidebar {
 			padding-bottom: var(--os-safe-area-bottom);
 			padding-top: var(--os-safe-area-top);
 		}
@@ -168,7 +184,7 @@
 	.phone {
 		&.landscape {
 			.layout-native {
-				.osui-sidebar__aside:before {
+				.osui-sidebar:before {
 					left: calc((var(--os-safe-area-left) + 12px) * -1);
 					width: calc(var(--os-safe-area-left) + 12px);
 				}
@@ -180,7 +196,7 @@
 ///
 .landscape {
 	.layout-native {
-		.osui-sidebar__aside {
+		.osui-sidebar {
 			padding-bottom: var(--os-safe-area-bottom);
 		}
 	}
@@ -188,7 +204,7 @@
 
 ///
 .phone {
-	.osui-sidebar__aside {
+	.osui-sidebar {
 		max-width: 85vw;
 	}
 }
