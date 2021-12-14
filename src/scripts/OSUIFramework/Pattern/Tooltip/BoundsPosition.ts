@@ -83,7 +83,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 				out.top = false;
 			}
 			// Since it has a smaller height than the viewElem and doesn't fit at top position, check if fits at bottom!
-			else if (out.top && Math.abs(elemBound.top - viewElemBound.top) < elemHeight) {
+			else if (out.top && elemBound.top >= 0 && elemBound.top - viewElemBound.top < elemHeight) {
 				out.top = false;
 			}
 
