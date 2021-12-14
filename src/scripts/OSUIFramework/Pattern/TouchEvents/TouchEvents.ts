@@ -55,13 +55,7 @@ namespace OSUIFramework.Patterns.TouchEvents {
 
 				this._timeTaken = new Date().getTime() - this._startTime;
 
-				this._triggerTouchEnd(
-					this._currentX,
-					this._currentY,
-					this._translateX,
-					this._translateY,
-					this._timeTaken
-				);
+				this._triggerTouchEnd();
 			}
 		}
 
@@ -77,7 +71,7 @@ namespace OSUIFramework.Patterns.TouchEvents {
 				this._translateX = this._currentX - this._startX;
 				this._translateY = this._currentY - this._startY;
 
-				this._triggerTouchMove(this._currentX, this._currentY, this._translateX, this._translateY, evt);
+				this._triggerTouchMove(evt);
 			}
 		}
 
@@ -96,7 +90,7 @@ namespace OSUIFramework.Patterns.TouchEvents {
 
 			this._touchingElement = true;
 
-			this._triggerTouchStart(this._startX, this._startY);
+			this._triggerTouchStart();
 		}
 
 		private _removeEventListeners(): void {
@@ -118,15 +112,17 @@ namespace OSUIFramework.Patterns.TouchEvents {
 		/**
 		 *
 		 * Method that triggers the TouchEnd event on the platform
-		 * @param {number} x
-		 * @param {number} y
-		 * @param {number} offsetX
-		 * @param {number} offsetY
-		 * @param {number} timeTaken
 		 */
-		private _triggerTouchEnd(x: number, y: number, offsetX: number, offsetY: number, timeTaken: number): void {
+		private _triggerTouchEnd(): void {
 			if (this._endEventCallback) {
-				Helper.AsyncInvocation(this._endEventCallback, x, y, offsetX, offsetY, timeTaken);
+				Helper.AsyncInvocation(
+					this._endEventCallback,
+					this._currentX,
+					this._currentY,
+					this._translateX,
+					this._translateY,
+					this._timeTaken
+				);
 			}
 		}
 		/**
@@ -137,9 +133,16 @@ namespace OSUIFramework.Patterns.TouchEvents {
 		 * @param {number} offsetY
 		 * @param {TouchEvent} event
 		 */
-		private _triggerTouchMove(x: number, y: number, offsetX: number, offsetY, event: TouchEvent): void {
+		private _triggerTouchMove(event: TouchEvent): void {
 			if (this._eventMoveCallback) {
-				Helper.AsyncInvocation(this._eventMoveCallback, x, y, offsetX, offsetY, event);
+				Helper.AsyncInvocation(
+					this._eventMoveCallback,
+					this._currentX,
+					this._currentY,
+					this._translateX,
+					this._translateY,
+					event
+				);
 			}
 		}
 		/**
@@ -147,9 +150,9 @@ namespace OSUIFramework.Patterns.TouchEvents {
 		 * @param {number} x
 		 * @param {number} y
 		 */
-		private _triggerTouchStart(x: number, y: number): void {
+		private _triggerTouchStart(): void {
 			if (this._eventStartCallback) {
-				Helper.AsyncInvocation(this._eventStartCallback, x, y);
+				Helper.AsyncInvocation(this._eventStartCallback, this._startX, this._startY);
 			}
 		}
 
