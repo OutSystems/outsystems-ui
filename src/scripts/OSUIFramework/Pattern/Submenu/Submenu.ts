@@ -19,7 +19,6 @@ namespace OSUIFramework.Patterns.Submenu {
 		private _submenuClickedElement: HTMLElement;
 		private _submenuEventType: GlobalEnum.HTMLEvent;
 		private _submenuHeaderElement: HTMLElement;
-		private _submenuItemElement: HTMLElement;
 		private _submenuLinksElement: HTMLElement;
 
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
@@ -36,17 +35,19 @@ namespace OSUIFramework.Patterns.Submenu {
 		 * @memberof Submenu
 		 */
 		private _bodyClickCallback(args: string, e: MouseEvent): void {
-			if (!this._selfElem.contains(e.target as HTMLElement)) {
-				if (Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen) && !this._isOpen) {
-					Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
-				} else if (this._isOpen) {
-					this.close();
+			if (this.isBuilt) {
+				if (!this._selfElem.contains(e.target as HTMLElement)) {
+					if (Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen) && !this._isOpen) {
+						Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
+					} else if (this._isOpen) {
+						this.close();
+					}
 				}
+
+				e.preventDefault();
+
+				e.stopPropagation();
 			}
-
-			e.preventDefault();
-
-			e.stopPropagation();
 		}
 
 		/**
@@ -256,7 +257,6 @@ namespace OSUIFramework.Patterns.Submenu {
 		 */
 		protected setHtmlElements(): void {
 			this._submenuHeaderElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternHeader);
-			this._submenuItemElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternItem);
 			this._submenuLinksElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternLinks);
 			this._submenuAllLinksElement = [...this._submenuLinksElement.querySelectorAll(GlobalEnum.HTMLElement.Link)];
 			this._submenuActiveLinksElement = Helper.Dom.ClassSelector(
@@ -348,7 +348,6 @@ namespace OSUIFramework.Patterns.Submenu {
 		 */
 		protected unsetHtmlElements(): void {
 			this._submenuHeaderElement = undefined;
-			this._submenuItemElement = undefined;
 			this._submenuLinksElement = undefined;
 			this._submenuAllLinksElement = undefined;
 			this._submenuActiveLinksElement = undefined;
@@ -404,13 +403,14 @@ namespace OSUIFramework.Patterns.Submenu {
 		 * @memberof Submenu
 		 */
 		public dispose(): void {
-			super.dispose();
-
 			// Remove event listners
 			this.unsetCallbacks();
 
 			// Remove unused HTML elements
 			this.unsetHtmlElements();
+
+			//Destroying the base of pattern
+			super.dispose();
 		}
 
 		/**

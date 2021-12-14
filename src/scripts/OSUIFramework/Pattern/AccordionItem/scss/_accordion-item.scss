@@ -11,6 +11,10 @@
 	border-radius: var(--border-radius-soft) var(--border-radius-soft) var(--border-radius-soft)
 		var(--border-radius-soft);
 
+	& {
+		-servicestudio-border-top: var(--border-size-m) solid var(--color-primary);
+	}
+
 	&--is {
 		&-open {
 			border-top: var(--border-size-m) solid var(--color-primary);

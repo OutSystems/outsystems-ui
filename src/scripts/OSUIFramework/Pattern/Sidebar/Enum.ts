@@ -7,7 +7,7 @@ namespace OSUIFramework.Patterns.Sidebar.Enum {
 	 * @enum {number}
 	 */
 	export enum Properties {
-		IsOpen = 'IsOpen',
+		StartsOpen = 'StartsOpen',
 		Direction = 'Direction',
 		Width = 'Width',
 		HasOverlay = 'HasOverlay',
@@ -20,13 +20,13 @@ namespace OSUIFramework.Patterns.Sidebar.Enum {
 	 * @enum {number}
 	 */
 	export enum CssClass {
-		Aside = 'osui-sidebar_aside',
-		Content = 'osui-sidebar_content',
-		Direction = 'is-',
-		HasOverlay = 'has-overlay',
-		Header = 'osui-sidebar_header',
-		IsOpen = 'is-open',
-		Overlay = 'osui-sidebar_overlay',
+		Aside = 'osui-sidebar',
+		Content = 'osui-sidebar__content',
+		ClassModifier = 'osui-sidebar--is-',
+		HasOverlay = 'osui-sidebar--has-overlay',
+		Header = 'osui-sidebar__header',
+		IsOpen = 'osui-sidebar--is-open',
+		Overlay = 'osui-sidebar__overlay',
 	}
 
 	/**
