@@ -158,7 +158,9 @@ namespace OSUIFramework.GlobalEnum {
 		SectionIndex = 'Section Index',
 		Sidebar = 'Sidebar',
 		Submenu = 'Submenu',
+		SwipeEvents = 'SwipeEvents',
 		Tooltip = 'Tooltip',
+		TouchEvents = 'TouchEvents',
 	}
 
 	/**
