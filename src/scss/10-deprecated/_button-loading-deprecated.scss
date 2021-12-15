@@ -28,7 +28,8 @@ button.OSFillParent {
 }
 
 .is--loading:not(.btn-show-label) .btn-loading {
-	margin-right: var(--space-none);
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 .is--loading .btn-label {
