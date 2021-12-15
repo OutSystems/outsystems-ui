@@ -87,6 +87,13 @@
 	}
 }
 
+// Fixes the sticky problem on Safari 14.1
+.safari {
+	[data-block*='SectionIndex'] {
+		display: contents;
+	}
+}
+
 // Accessibility ---------------------------------------------------------------------------
 ///
 .has-accessible-features {
