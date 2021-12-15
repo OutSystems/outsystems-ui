@@ -318,8 +318,9 @@
 html[data-uieditorversion^='1'] .osui-tabs__preview {
 	&.osui-tabs__preview--is-active {
 		-servicestudio-display: block;
-		-servicestudio-height: 48px;
-		-servicestudio-width: 100%;
+		-servicestudio-height: auto;
+		-servicestudio-min-height: 48px;
+		-servicestudio-width: auto;
 		-servicestudio-position: relative;
 	}
 
@@ -331,7 +332,8 @@ html[data-uieditorversion^='1'] .osui-tabs__preview {
 		-servicestudio-display: flex;
 		-servicestudio-justify-content: center;
 		-servicestudio-font-weight: var(--font-semi-bold);
-		-servicestudio-height: 100%;
+		-servicestudio-height: auto;
+		-servicestudio-padding: var(--space-s);
 		-servicestudio-position: absolute;
 		-servicestudio-width: 100%;
 	}
