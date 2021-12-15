@@ -235,6 +235,13 @@
 				z-index: 1;
 			}
 		}
+
+		// Service Studio preview
+		& {
+			-servicestudio-display: grid;
+			-servicestudio-grid-auto-flow: column;
+			-servicestudio-gap: var(--space-s);
+		}
 	}
 
 	&__content {
@@ -248,6 +255,12 @@
 
 		&-item {
 			overflow-y: auto;
+
+			// Service Studio Preview
+			& {
+				-servicestudio-display: block !important;
+				-servicestudio-margin-bottom: var(--space-m);
+			}
 		}
 	}
 
@@ -256,6 +269,16 @@
 		.ph > .list,
 		.ph > .OSBlockWidget {
 			display: contents;
+		}
+	}
+
+	// Service Studio Preview
+	& {
+		.osui-tabs__header-item,
+		.osui-tabs__header-item > *,
+		.osui-tabs__content-item {
+			-servicestudio-border: 1px dashed var(--color-neutral-5);
+			-servicestudio-width: 100%;
 		}
 	}
 }
@@ -284,5 +307,32 @@
 				border: var(--border-size-m) solid var(--color-focus-outer);
 			}
 		}
+	}
+}
+
+/* Service Studio Preview Message*/
+.osui-tabs__preview {
+	display: none;
+}
+
+html[data-uieditorversion^='1'] .osui-tabs__preview {
+	&.osui-tabs__preview--is-active {
+		-servicestudio-display: block;
+		-servicestudio-height: 48px;
+		-servicestudio-width: 100%;
+		-servicestudio-position: relative;
+	}
+
+	&--is-active::after {
+		-servicestudio-align-items: center;
+		-servicestudio-background-color: var(--color-neutral-0);
+		-servicestudio-border: 1px solid var(--color-neutral-3);
+		-servicestudio-content: 'TabsContentItems are currently hidden. Use the toggle to preview them inside Service Studio.';
+		-servicestudio-display: flex;
+		-servicestudio-justify-content: center;
+		-servicestudio-font-weight: var(--font-semi-bold);
+		-servicestudio-height: 100%;
+		-servicestudio-position: absolute;
+		-servicestudio-width: 100%;
 	}
 }
