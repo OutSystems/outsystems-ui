@@ -413,6 +413,9 @@
 }
 
 
+// Specific Cases -----------------------------------------------------------------
+// When located inside tabs, the dropdown component must be position relative
+///
 .tabs {
 	.choices {
 		.choices__list {
