@@ -106,8 +106,6 @@ namespace OSUIFramework.GlobalEnum {
 	 * OutSystemsUI event Keycodes
 	 */
 	export enum Keycodes {
-		ArrowLeft = 'ArrowLeft',
-		ArrowRight = 'ArrowRight',
 		Escape = 'Escape',
 		Enter = 'Enter',
 		Tab = 'Tab',
@@ -160,10 +158,9 @@ namespace OSUIFramework.GlobalEnum {
 		SectionIndex = 'Section Index',
 		Sidebar = 'Sidebar',
 		Submenu = 'Submenu',
-		Tabs = 'Tabs',
-		TabsHeaderItem = 'TabsHeaderItem',
-		TabsContentItem = 'TabsContentItem',
+		SwipeEvents = 'SwipeEvents',
 		Tooltip = 'Tooltip',
+		TouchEvents = 'TouchEvents',
 	}
 
 	/**

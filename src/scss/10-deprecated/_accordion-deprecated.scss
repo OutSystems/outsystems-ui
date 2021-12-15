@@ -1,7 +1,4 @@
 /*! Patterns - Content - Accordion */
-////
-/// @group Patterns-Accordion
-/// Patterns - Content - Accordion
 
 ///
 [data-block*='AccordionItem'] {
@@ -157,7 +154,6 @@
 
 				&-expanded {
 					padding: var(--space-none) var(--space-base) var(--space-base);
-					overflow: inherit;
 				}
 			}
 

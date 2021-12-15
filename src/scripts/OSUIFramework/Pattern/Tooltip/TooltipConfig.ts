@@ -18,7 +18,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		public validateCanChange(isBuilt: boolean, key: string): boolean {
 			if (isBuilt) {
-				return key !== Enum.Properties.IsVisible;
+				return key !== Enum.Properties.StartVisible;
 			}
 			return true;
 		}
@@ -29,7 +29,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 				case Enum.Properties.IsHover:
 					validatedValue = this.validateBoolean(value as boolean, true);
 					break;
-				case Enum.Properties.IsVisible:
+				case Enum.Properties.StartVisible:
 					validatedValue = this.validateBoolean(value as boolean, false);
 					break;
 				case Enum.Properties.Position:
