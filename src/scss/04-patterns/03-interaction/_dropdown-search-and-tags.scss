@@ -411,3 +411,14 @@
 		}
 	}
 }
+
+
+.tabs {
+	.choices {
+		.choices__list {
+			&.choices__list--dropdown {
+				position: relative;
+			}
+		}
+	}
+}
