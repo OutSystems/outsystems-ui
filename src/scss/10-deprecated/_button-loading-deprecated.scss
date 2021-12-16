@@ -5,13 +5,16 @@ button.OSFillParent {
 	display: inline-flex;
 }
 
-.is--loading .btn {
-	&,
-	& * {
-		pointer-events: none;
-	}
+.is--loading {
+	position: relative;
+	.btn {
+		&,
+		& * {
+			pointer-events: none;
+		}
 
-	display: inline-block;
+		display: inline-block;
+	}
 }
 
 .btn-loading {
