@@ -7,7 +7,6 @@
 .osui-submenu {
 	cursor: pointer;
 	display: inline-flex;
-	margin-left: var(--space-base);
 	position: relative;
 
 	// Service Studio Preview
@@ -180,7 +179,6 @@
 
 	.osui-submenu {
 		flex-direction: column;
-		margin-left: var(--space-none);
 		width: 100%;
 
 		&.active .osui-submenu__header {
@@ -291,7 +289,6 @@
 
 	.osui-submenu {
 		flex-direction: column;
-		margin-left: var(--space-none);
 		width: 100%;
 
 		&.active .osui-submenu__header {
