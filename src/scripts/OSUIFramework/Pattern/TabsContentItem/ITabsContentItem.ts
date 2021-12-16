@@ -6,10 +6,10 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 	export interface ITabsContentItem extends Interface.IPattern {
 		getDataTab();
 		getOffsetLeft();
-		removeAsActiveElement();
+		removeActiveElement();
 		removeDragObserver(observer: IntersectionObserver);
+		setActiveElement();
 		setAriaLabelledByAttribute(headerItemId: string);
-		setAsActiveElement();
 		setDataTab(dataTab: number);
 		setOnDragObserver(observer: IntersectionObserver);
 	}

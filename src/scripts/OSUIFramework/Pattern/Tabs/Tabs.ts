@@ -15,22 +15,22 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _activeTabHeaderElement: Patterns.TabsHeaderItem.ITabsHeaderItem;
 		// Store if there is need to add drag gestures
 		private _addDragGestures: boolean;
-		// Store if the observer should observe
-		// This is usefull to prevent observer on clicks and changeProperty of changeTab method
-		private _blockObserver: boolean;
 		// Store current orientation config, to be able to remove current active option
-		private _currentOrientation: GlobalEnum.Orientation;
+		private _currentTabsOrientation: GlobalEnum.Orientation;
 		// Store current position config, to be able to remove current active option
 		private _currentVerticalTabsPositon: GlobalEnum.Direction;
+		// Store if the observer should observe
+		// This is usefull to prevent observer on clicks and changeProperty of changeTab method
+		private _disableObserver: boolean;
 		// Store the IntersectionObserver callback
 		private _dragObserver: IntersectionObserver;
 		// Store the events with bind(this)
 		private _eventOnHeaderKeypress: Callbacks.Generic;
 		private _eventOnTouchstart: Callbacks.Generic;
+		// Store the onTabsChange platform callback
+		private _eventTabsChange: Callbacks.OSTabsOnChangeEvent;
 		// Store if the Tabs has only one ContentItem, to prevebt unnecessary usages of ScrollTo
 		private _hasSingleContent: boolean;
-		// Store the onTabsChange platform callback
-		private _onTabsChange: Callbacks.OSTabsOnChangeEvent;
 		// Store the contentItems wrapper -- osui-tabs__content
 		private _tabsContentElement: HTMLElement;
 		// Store all the contentItems that are created
@@ -49,17 +49,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			// Check if running on native shell, to enable drag gestures
 			this._addDragGestures = OutSystems.OSUI.Utils.IsRunningAsNativeApp();
 			// Block observer by default, to prevent it from running on page load
-			this._blockObserver = true;
-		}
-
-		/**
-		 * Method to enable the observer
-		 *
-		 * @private
-		 * @memberof Tabs
-		 */
-		private _disableBlockObserver(): void {
-			this._blockObserver = false;
+			this._disableObserver = true;
 		}
 
 		/**
@@ -68,8 +58,18 @@ namespace OSUIFramework.Patterns.Tabs {
 		 * @private
 		 * @memberof Tabs
 		 */
-		private _enableBlockObserver(): void {
-			this._blockObserver = true;
+		private _disableDragObserver(): void {
+			this._disableObserver = true;
+		}
+
+		/**
+		 * Method to enable the observer
+		 *
+		 * @private
+		 * @memberof Tabs
+		 */
+		private _enableDragObserver(): void {
+			this._disableObserver = false;
 		}
 
 		/**
@@ -156,7 +156,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			// Call the method to immediatelly set the single content as active,
 			// as it won't be needed to wait for more content items
 			if (this._hasSingleContent) {
-				this._activeTabContentElement.setAsActiveElement();
+				this._activeTabContentElement.setActiveElement();
 			}
 
 			// Set the connection between headerItems and contentItems,
@@ -195,7 +195,7 @@ namespace OSUIFramework.Patterns.Tabs {
 				this._tabsContentElement.scrollTo({
 					top: 0,
 					left: targetOffeset,
-					behavior: Enum.ScrollBehavior.Instant,
+					behavior: GlobalEnum.ScrollBehavior.Instant,
 				});
 			}
 		}
@@ -216,7 +216,7 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			this._dragObserver = new IntersectionObserver((entries) => {
 				entries.forEach((entry) => {
-					if (entry.isIntersecting && !this._blockObserver) {
+					if (entry.isIntersecting && !this._disableObserver) {
 						// Get data-tab from active entry intersecting, to know the current contentItem index
 						const targetIndex = parseInt(
 							Helper.Attribute.Get(entry.target as HTMLElement, Enum.Attributes.DataTab)
@@ -289,9 +289,9 @@ namespace OSUIFramework.Patterns.Tabs {
 		 * @memberof Tabs
 		 */
 		private _setTabsOrientation(orientation: GlobalEnum.Orientation): void {
-			Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._currentOrientation);
+			Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._currentTabsOrientation);
 			Helper.Style.AddClass(this._selfElem, Enum.CssClasses.Modifier + orientation);
-			this._currentOrientation = orientation;
+			this._currentTabsOrientation = orientation;
 		}
 
 		/**
@@ -326,8 +326,8 @@ namespace OSUIFramework.Patterns.Tabs {
 		 * @memberof Tabs
 		 */
 		private _triggerOnChangeEvent(activeTab: number): void {
-			if (this._onTabsChange !== undefined) {
-				Helper.AsyncInvocation(this._onTabsChange, this.widgetId, activeTab);
+			if (this._eventTabsChange !== undefined) {
+				Helper.AsyncInvocation(this._eventTabsChange, this.widgetId, activeTab);
 			}
 		}
 
@@ -381,7 +381,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		 */
 		protected setCallbacks(): void {
 			this._eventOnHeaderKeypress = this._handleKeypressEvent.bind(this);
-			this._eventOnTouchstart = this._disableBlockObserver.bind(this);
+			this._eventOnTouchstart = this._enableDragObserver.bind(this);
 
 			// Add event listener for arrow navigation
 			this._tabsHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
@@ -562,7 +562,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			blockObserver?: boolean
 		): void {
 			if (blockObserver) {
-				Helper.AsyncInvocation(this._enableBlockObserver.bind(this));
+				Helper.AsyncInvocation(this._disableDragObserver.bind(this));
 			}
 
 			// If selecting the same element as the active one, prevent tabsChange
@@ -592,15 +592,15 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			// If there're more than one content item or changeTab doesn't come from a drag gesture,
 			// then do scrollTo and change active content item
-			if (!this._hasSingleContent || this._blockObserver) {
+			if (!this._hasSingleContent || this._disableObserver) {
 				// Get the contentItem, based on the newTabIndex
 				const newContentItem = this._tabsContentItemsElementsArray[newTabIndex];
 
 				if (newContentItem) {
 					// Remove old contentitem as active
-					this._activeTabContentElement.removeAsActiveElement();
+					this._activeTabContentElement.removeActiveElement();
 					// Set new content item as active
-					newContentItem.setAsActiveElement();
+					newContentItem.setActiveElement();
 					this._activeTabContentElement = newContentItem;
 				}
 
@@ -612,11 +612,11 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			// Remove old headerItem as active
 			if (this._activeTabHeaderElement) {
-				this._activeTabHeaderElement.removeAsActiveElement();
+				this._activeTabHeaderElement.removeActiveElement();
 			}
 			if (newHeaderItem) {
 				// Set new headerItem as active
-				newHeaderItem.setAsActiveElement();
+				newHeaderItem.setActiveElement();
 				this._activeTabHeaderElement = newHeaderItem;
 			}
 
@@ -650,8 +650,8 @@ namespace OSUIFramework.Patterns.Tabs {
 		 * @memberof Tabs
 		 */
 		public registerCallback(callback: Callbacks.OSTabsOnChangeEvent): void {
-			if (this._onTabsChange === undefined) {
-				this._onTabsChange = callback;
+			if (this._eventTabsChange === undefined) {
+				this._eventTabsChange = callback;
 			} else {
 				console.warn(`The ${GlobalEnum.PatternsNames.Tabs} already has the tabs change callback set.`);
 			}

@@ -57,6 +57,14 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
+	 * OutSystemsUI Scroll Options
+	 */
+	export enum ScrollBehavior {
+		Instant = 'auto',
+		Smooth = 'smooth',
+	}
+
+	/**
 	 * OutSystemsUI HTML Attributes
 	 */
 	export enum HTMLAttributes {

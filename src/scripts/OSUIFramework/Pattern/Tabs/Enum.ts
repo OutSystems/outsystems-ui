@@ -17,16 +17,17 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 		TabsContentItem = 'osui-tabs__content-item',
 	}
 
+	/**
+	 * Tabs Enum for HTML Attributes
+	 */
 	export enum Attributes {
 		DataTab = 'data-tab',
 		TabsHeight = '--tabs-height',
 	}
 
-	export enum ScrollBehavior {
-		Instant = 'auto',
-		Smooth = 'smooth',
-	}
-
+	/**
+	 * Tabs Enum for Properties
+	 */
 	export enum Properties {
 		Height = 'Height',
 		JustifyHeaders = 'JustifyHeaders',
@@ -35,6 +36,9 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 		TabsVerticalPosition = 'TabsVerticalPosition',
 	}
 
+	/**
+	 * Tabs Enum for Intersection Observer options
+	 */
 	export enum ObserverOptions {
 		RootMargin = '1px',
 	}

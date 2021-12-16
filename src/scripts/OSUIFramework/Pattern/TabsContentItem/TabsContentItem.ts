@@ -105,7 +105,7 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		 *
 		 * @memberof TabsContentItem
 		 */
-		public removeAsActiveElement(): void {
+		public removeActiveElement(): void {
 			if (this._selfElem) {
 				Helper.Style.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
 				this._isActive = false;
@@ -125,6 +125,19 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		}
 
 		/**
+		 * Method to set the element as active, called by the tabs
+		 *
+		 * @memberof TabsContentItem
+		 */
+		public setActiveElement(): void {
+			if (this._selfElem) {
+				Helper.Style.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
+				this._isActive = true;
+				this.setA11YProperties();
+			}
+		}
+
+		/**
 		 * Method to set the aria-labbeledby attribute, called by the tabs
 		 *
 		 * @param {string} headerItemId
@@ -132,19 +145,6 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		 */
 		public setAriaLabelledByAttribute(headerItemId: string): void {
 			Helper.A11Y.AriaLabelledBy(this._selfElem, headerItemId);
-		}
-
-		/**
-		 * Method to set the element as active, called by the tabs
-		 *
-		 * @memberof TabsContentItem
-		 */
-		public setAsActiveElement(): void {
-			if (this._selfElem) {
-				Helper.Style.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
-				this._isActive = true;
-				this.setA11YProperties();
-			}
 		}
 
 		/**

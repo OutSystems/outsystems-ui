@@ -140,10 +140,23 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		 *
 		 * @memberof TabsHeaderItem
 		 */
-		public removeAsActiveElement(): void {
+		public removeActiveElement(): void {
 			if (this._selfElem) {
 				Helper.Style.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
 				this._isActive = false;
+				this.setA11YProperties();
+			}
+		}
+
+		/**
+		 * Method to set this element as active
+		 *
+		 * @memberof TabsHeaderItem
+		 */
+		public setActiveElement(): void {
+			if (this._selfElem) {
+				Helper.Style.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
+				this._isActive = true;
 				this.setA11YProperties();
 			}
 		}
@@ -156,19 +169,6 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		 */
 		public setAriaControlsAttribute(contentItemId: string): void {
 			Helper.A11Y.AriaControls(this._selfElem, contentItemId);
-		}
-
-		/**
-		 * Method to set this element as active
-		 *
-		 * @memberof TabsHeaderItem
-		 */
-		public setAsActiveElement(): void {
-			if (this._selfElem) {
-				Helper.Style.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
-				this._isActive = true;
-				this.setA11YProperties();
-			}
 		}
 
 		/**
