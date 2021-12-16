@@ -243,9 +243,7 @@
 				color: var(--color-primary);
 			}
 		}
-	}
 
-	.osui-submenu {
 		&__header {
 			&:hover {
 				border-bottom: var(--border-size-m) solid var(--color-primary);
@@ -271,7 +269,16 @@
 			}
 		}
 	}
+
+	.layout:not(.layout-side) {
+		.app-menu-links {
+			.osui-submenu {
+				height: 100%;
+			}
+		}
+	}
 }
+
 .has-accessible-features .osui-submenu:focus-within {
 	-webkit-box-shadow: 0 0 0 3px var(--color-focus-outer);
 	box-shadow: 0 0 0 3px var(--color-focus-outer);
