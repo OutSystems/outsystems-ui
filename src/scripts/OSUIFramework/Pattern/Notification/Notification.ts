@@ -10,11 +10,17 @@ namespace OSUIFramework.Patterns.Notification {
 		private _eventOnNotificationClick: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventOnNotificationKeypress: any;
+		// Store the first element to receive focus in the notification
+		private _firstFocusableElem: HTMLElement;
+		// Store focusable element inside notification
+		private _focusableElems: HTMLElement[];
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _globalEventOnBodyClick: any;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _globalEventOnNotificationOpen: any;
 		private _isMobile = false;
+		// Store the last element to receive focus in the notification
+		private _lastFocusableElem: HTMLElement;
 		private _notificationContent: HTMLElement;
 		private _onToggle: Callbacks.OSNotificationToggleEvent;
 
@@ -63,6 +69,8 @@ namespace OSUIFramework.Patterns.Notification {
 		private _onNotificationKeypress(e: KeyboardEvent): void {
 			const _isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
 			const _isEnterPressed = e.key === GlobalEnum.Keycodes.Enter;
+			const _isShiftPressed = e.key === GlobalEnum.Keycodes.Shift;
+			const _isTabPressed = e.key === GlobalEnum.Keycodes.Tab;
 
 			//Open the Notification
 			if (_isEnterPressed) {
@@ -71,6 +79,13 @@ namespace OSUIFramework.Patterns.Notification {
 			// Close the Notification when pressing Esc
 			if (_isEscapedPressed && this._configs.IsOpen) {
 				this.hide();
+			}
+
+			// Focus trap to circle all buttons inside
+			if (_isShiftPressed && _isTabPressed) {
+				console.log('shift and tab pressed');
+			} else if (_isTabPressed) {
+				console.log('tab pressed');
 			}
 
 			e.stopPropagation();
@@ -108,6 +123,11 @@ namespace OSUIFramework.Patterns.Notification {
 				this._eventOnNotification = GlobalEnum.HTMLEvent.TouchStart;
 			} else {
 				this._eventOnNotification = GlobalEnum.HTMLEvent.Click;
+			}
+
+			// Add A11Y class to body if feature is enabled
+			if (Helper.DeviceInfo.HasAccessibilityEnabled) {
+				Helper.Style.AddClass(document.body, Constants.HasAccessibilityClass);
 			}
 
 			// Set width value for Notification
@@ -171,6 +191,15 @@ namespace OSUIFramework.Patterns.Notification {
 
 			// Update accessibility properties
 			this._updateAccessibilityProps();
+		}
+
+		// Set focusable elements
+		private _setFocusedElements(): void {
+			this._focusableElems = [...this._selfElem.querySelectorAll(Constants.FocusableElems)] as HTMLElement[];
+
+			// to handle focusable element's tabindex when toggling the notification
+			this._firstFocusableElem = this._focusableElems[0];
+			this._lastFocusableElem = this._focusableElems[this._focusableElems.length - 1];
 		}
 
 		// Set the html references that will be used to manage the cssClasses and atribute properties
@@ -320,6 +349,8 @@ namespace OSUIFramework.Patterns.Notification {
 		public hide(): void {
 			this._configs.IsOpen = false;
 
+			console.log(document.querySelectorAll(Constants.FocusableElems));
+
 			Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
 
 			// Trigger Notification event with new status
@@ -409,14 +440,13 @@ namespace OSUIFramework.Patterns.Notification {
 			// Add listeners to toggle Notification
 			if (this._configs.ClickToClose) {
 				this._notificationContent.addEventListener(this._eventOnNotification, this._eventOnNotificationClick);
-				this._notificationContent.addEventListener(
-					GlobalEnum.HTMLEvent.keyDown,
-					this._eventOnNotificationKeypress
-				);
 			}
+
+			this._notificationContent.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnNotificationKeypress);
 
 			// Focus on element when Notification is open
 			this._notificationContent.focus();
+			console.log(this._notificationContent.querySelectorAll("[tabindex='0'],a,button"));
 
 			if (this._configs.CloseAfterTime > 0) {
 				this._autoCloseNotification();
