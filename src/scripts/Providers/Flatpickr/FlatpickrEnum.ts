@@ -14,6 +14,7 @@ namespace Providers.Flatpickr.Enum {
 
 	//  Flatpickr Today button Enum
 	export enum TodayButton {
+		AriaLabelText = 'click to jump into today date',
 		Text = 'Today',
 	}
 

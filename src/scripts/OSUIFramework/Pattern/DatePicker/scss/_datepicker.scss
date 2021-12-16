@@ -3,39 +3,96 @@
 /// @group Patterns-DatePicker
 /// Patterns - Content - DatePicker
 
-/*! Flatpickr Library Core Styles */
 /// Import Flatpickr library styles
-// @import '../../../../../../node_modules/flatpickr/dist/flatpickr.css';
+@import '../../../../Providers/Flatpickr/scss/flatpickr';
+
+@import 'datepicker_ss_preview_imgs';
 
 ///
-// implement all the CSS styles for the Datepicker
+.osui-datepicker {
+	// Hack used to disable dateTime input pseudoElements (browser native placeholders)
+	input[type='date']::-webkit-inner-spin-button,
+	input[type='date']::-webkit-calendar-picker-indicator,
+	input[type='date']::-webkit-datetime-edit-year-field,
+	input[type='date']::-webkit-datetime-edit-month-field,
+	input[type='date']::-webkit-datetime-edit-day-field,
+	input[type='date']::-webkit-datetime-edit-fields-wrapper {
+		display: none;
+		-moz-appearance: none;
+	}
 
-// Disable dateTime input pseudoElements
-// input[type="date"]::-moz-inner-spin-button,
-// input[type="date"]::-moz-calendar-picker-indicator,
-// input[type="date"]::-moz-datetime-edit-year-field,
-// input[type="date"]::-moz-datetime-edit-month-field,
-// input[type="date"]::-moz-datetime-edit-day-field,
-// input[type="date"]::-moz-datetime-edit-fields-wrapper {
-//     display: none;
-//     -moz-appearance: none;
-// }
+	// Hack used for same reason above but for firefox
+	span.input-date {
+		position: relative;
+		display: inline-block;
+		width: 100%;
+	}
 
-// Disable hack for firefox
-// span.input-date {
-// 	position: relative;
-// 	display: inline-block;
-// 	width: 100%;
-// }
-// span.input-date:before {
-// 	content: '';
-// 	position: absolute;
-// 	display: block;
-// 	background: var(--color-neutral-0);
-// 	left: 4px;
-// 	right: 4px;
-// 	top: 4px;
-// 	bottom: 4px;
-// 	pointer-events: none;
-// 	z-index: 1;
-// }
+	span.input-date:before {
+		content: '';
+		position: absolute;
+		display: block;
+		background: var(--color-neutral-0);
+		left: 4px;
+		right: 4px;
+		top: 4px;
+		bottom: 4px;
+		pointer-events: none;
+		z-index: 1;
+	}
+
+	// Service Studio Preview Container Styles
+	&-calendar-ss-preview {
+		// Service Studio Preview
+		& {
+			background-color: var(--color-neutral-0);
+			background-repeat: no-repeat;
+			background-size: contain;
+			border-radius: var(--border-radius-soft);
+			border: var(--border-size-s) solid var(--color-neutral-5);
+			display: inline-block;
+			height: 0;
+			margin-top: 2px;
+			overflow: hidden;
+			position: relative;
+			width: 100%;
+			max-width: 320px;
+
+			// If has not today btn
+			&:not(.has-today-btn) {
+				&.single {
+					background-image: $calendar_single_img_base64;
+					padding-top: 92%;
+				}
+
+				&.time12h {
+					background-image: $calendar_time12h_img_base64;
+					padding-top: 108%;
+				}
+
+				&.time24h {
+					background-image: $calendar_time24h_img_base64;
+					padding-top: 108%;
+				}
+			}
+
+			// If has today btn
+			&.has-today-btn {
+				&.single {
+					background-image: $calendar_single_hasToday_img_base64;
+					padding-top: 108%;
+				}
+
+				&.time12h {
+					background-image: $calendar_time12h_hasToday_img_base64;
+					padding-top: 122%;
+				}
+
+				&.time24h {
+					background-image: $calendar_time24h_hasToday_img_base64;
+					padding-top: 122%;
+				}
+			}
+		}
+	}
+}

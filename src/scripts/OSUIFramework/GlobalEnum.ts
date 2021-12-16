@@ -69,6 +69,7 @@ namespace OSUIFramework.GlobalEnum {
 	 * OutSystemsUI HTML Elements
 	 */
 	export enum HTMLElement {
+		Div = 'div',
 		FieldSet = 'fieldset',
 		Input = 'input',
 		Link = 'a',

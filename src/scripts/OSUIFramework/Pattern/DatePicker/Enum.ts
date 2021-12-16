@@ -3,7 +3,10 @@ namespace OSUIFramework.Patterns.DatePicker.Enum {
 	/**
 	 * DatePicker Enum for CSS Classes
 	 */
-	export enum CssClass {}
+	export enum CssClass {
+		Pattern = 'osui-datepicker',
+		Calendar = 'osui-datepicker-calendar',
+	}
 
 	/**
 	 * DatePicker Events

@@ -25,8 +25,36 @@ namespace Providers.Flatpickr {
 		}
 
 		// Trigger the jumToDate to now
-		private _jumpIntoToday() {
+		private _jumpIntoToday(event: MouseEvent) {
+			event.preventDefault();
+
 			this._flatpickr.jumpToDate(this._flatpickr.now);
+		}
+
+		// Method used to set the needed HTML attributes
+		private _setAttributes(): void {
+			// Since a new input will be added by the flatpickr library, we must address it only at onReady
+			this._flatpickrInputElem = this._datePickerProviderInputElem.nextSibling as HTMLInputElement;
+
+			// Added the data-input attribute in order to input be styled as all platform inputs
+			OSUIFramework.Helper.Attribute.Set(
+				this._flatpickrInputElem,
+				OSUIFramework.GlobalEnum.HTMLAttributes.DataInput,
+				''
+			);
+		}
+
+		// Method used to set the CSS classes to the pattern HTML elements
+		private _setCssClasses(): void {
+			OSUIFramework.Helper.Style.AddClass(
+				this._flatpickr.calendarContainer,
+				OSUIFramework.Patterns.DatePicker.Enum.CssClass.Calendar
+			);
+
+			// Check if there are any ExtendedClass to be added into our calendar elements
+			if (this._configs.ExtendedClass !== '') {
+				this._updateExtendedClassSelectors('', this._configs.ExtendedClass);
+			}
 		}
 
 		// Method to set the html elements used
@@ -61,11 +89,20 @@ namespace Providers.Flatpickr {
 
 		// Method used to add the TodayButton at calendar
 		protected _addTodayBtn(): void {
-			const todayBtn = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Link);
+			// Create the wrapper container
+			const todayBtnWrapper = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Div) as HTMLElement;
+			todayBtnWrapper.classList.add(Enum.CssClasses.TodayBtn);
+
+			// Create the TodayBtn element
+			const todayBtn = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Link) as HTMLAnchorElement;
 			todayBtn.innerHTML = Enum.TodayButton.Text;
-			todayBtn.classList.add(Enum.CssClasses.TodayBtn);
+			OSUIFramework.Helper.A11Y.AriaLabel(todayBtn, Enum.TodayButton.AriaLabelText);
+
 			todayBtn.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, this._jumpIntoToday.bind(this));
-			this._flatpickr.calendarContainer.appendChild(todayBtn);
+
+			// Append elements to the proper containers
+			todayBtnWrapper.appendChild(todayBtn);
+			this._flatpickr.calendarContainer.appendChild(todayBtnWrapper);
 		}
 
 		// Method that will be triggered at Flatpickr instance is ready
@@ -78,20 +115,11 @@ namespace Providers.Flatpickr {
 				this._addTodayBtn();
 			}
 
-			// Since a new input will be added by the flatpickr library, we must address it only at onReady
-			this._flatpickrInputElem = this._datePickerProviderInputElem.nextSibling as HTMLInputElement;
+			// Set the needed HTML attributes
+			this._setAttributes();
 
-			// Added the data-input attribute in order to input be styled as all platform inputs
-			OSUIFramework.Helper.Attribute.Set(
-				this._flatpickrInputElem,
-				OSUIFramework.GlobalEnum.HTMLAttributes.DataInput,
-				''
-			);
-
-			// Check if there are any ExtendedClass to be added into our calendar elements
-			if (this._configs.ExtendedClass !== '') {
-				this._updateExtendedClassSelectors('', this._configs.ExtendedClass);
-			}
+			// Set CSS classes
+			this._setCssClasses();
 
 			// Trigger platform's InstanceIntializedHandler client Action
 			OSUIFramework.Helper.AsyncInvocation(this._onInitializeCallbackEvent, this.widgetId);

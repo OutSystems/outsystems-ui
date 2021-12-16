@@ -9,6 +9,7 @@ namespace OSUIFramework.Patterns.DatePicker {
 		public ShowTodayButton: boolean;
 		public ShowWeekNumbers: boolean;
 		public TimeFormat: string;
+		public Type: string;
 
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		constructor(config: any) {

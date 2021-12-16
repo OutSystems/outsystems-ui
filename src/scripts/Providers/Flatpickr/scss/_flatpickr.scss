@@ -1,0 +1,335 @@
+/*! Flatpickr Library Core Styles */
+/// Import Flatpickr library styles
+@import 'flatpickr_lib';
+
+/// Flatpickr overriding styles
+.flatpickr-calendar {
+	border-radius: var(--border-radius-soft);
+	border: var(--border-size-s) solid var(--color-neutral-5);
+	box-shadow: var(--shadow-none);
+	width: 320px;
+
+	&.arrowTop {
+		&:before,
+		&::after {
+			left: 40px;
+		}
+	}
+}
+
+/// Flatpickr - Top info wrapper container
+.flatpickr-months {
+	padding: var(--space-base);
+	position: relative;
+
+	// Arrows left and right
+	.flatpickr-prev-month,
+	.flatpickr-next-month {
+		top: 50%;
+		transform: translateY(-50%);
+		width: 34px;
+
+		svg {
+			left: 50%;
+			position: absolute;
+			top: 50%;
+			transform: translate(-50%, -50%);
+
+			path {
+				stroke-width: 2px;
+				stroke: var(--color-primary);
+			}
+		}
+	}
+
+	.flatpickr-prev-month {
+		margin-left: var(--space-base);
+	}
+
+	.flatpickr-next-month {
+		margin-right: var(--space-base);
+	}
+}
+
+/// Flatpickr - Month and Year container
+.flatpickr-current-month {
+	align-items: center;
+	color: var(--color-primary);
+	display: inline-flex;
+	font-size: var(--font-size-s);
+	justify-content: center;
+	padding: 0;
+
+	// Month Select
+	.flatpickr-monthDropdown-months {
+		font-weight: var(--font-bold);
+		height: 30px;
+		margin-right: var(--space-base);
+		padding: var(--space-none);
+
+		&:hover {
+			background-color: var(--color-neutral-0);
+		}
+	}
+
+	// Year stepper
+	.numInputWrapper {
+		width: 7ch;
+
+		input {
+			font-weight: var(--font-bold);
+			height: 30px;
+			padding-left: var(--space-s);
+			padding-right: var(--space-base);
+
+			&:hover {
+				background-color: var(--color-neutral-0);
+			}
+		}
+	}
+}
+
+/// Flatpickr - Days container
+.flatpickr-innerContainer {
+	padding: var(--space-s) var(--space-base) var(--space-base);
+}
+
+.flatpickr-rContainer,
+.flatpickr-days {
+	width: 100%;
+}
+
+.dayContainer {
+	max-width: 100%;
+	min-width: 100%;
+	width: 100%;
+}
+
+/// Flatpickr - WeekDays
+.flatpickr-weekdays {
+	padding-bottom: var(--space-base);
+}
+
+/// Flatpickr - WeekDay Element
+span.flatpickr-weekday {
+	color: var(--color-neutral-7);
+	font-size: var(--font-size-s);
+	font-weight: var(--font-regular);
+	user-select: none;
+}
+
+/// Flatpickr - DayElem
+.flatpickr-day {
+	color: var(--color-neutral-9);
+	font-size: var(--font-size-s);
+	font-weight: var(--font-regular);
+	user-select: none;
+	line-height: 37px;
+
+	&.prevMonthDay,
+	&.nextMonthDay {
+		color: var(--color-neutral-5);
+
+		&:hover,
+		&:focus {
+			color: var(--color-neutral-7);
+		}
+	}
+
+	&.today {
+		border-color: var(--color-neutral-6);
+
+		&:hover,
+		&:focus {
+			border-color: var(--color-neutral-3);
+			background: var(--color-neutral-3);
+			color: var(--color-primary);
+		}
+
+		&.inRange {
+			color: var(--color-neutral-9);
+		}
+	}
+
+	&:hover,
+	&:focus,
+	&.inRange,
+	&.today.inRange,
+	&.prevMonthDay:hover,
+	&.prevMonthDay:focus,
+	&.prevMonthDay.inRange,
+	&.prevMonthDay.today.inRange,
+	&.nextMonthDay:hover,
+	&.nextMonthDay:focus,
+	&.nextMonthDay.inRange,
+	&.nextMonthDay.today.inRange {
+		background: var(--color-neutral-3);
+		border-color: var(--color-neutral-3);
+	}
+
+	&.selected,
+	&.selected:focus,
+	&.selected:hover,
+	&.selected.inRange,
+	&.selected.prevMonthDay,
+	&.selected.nextMonthDay,
+	&.startRange,
+	&.startRange:focus,
+	&.startRange:hover,
+	&.startRange.inRange,
+	&.startRange.prevMonthDay,
+	&.startRange.nextMonthDay,
+	&.endRange,
+	&.endRange:focus,
+	&.endRange:hover,
+	&.endRange.inRange,
+	&.endRange.prevMonthDay,
+	&.endRange.nextMonthDay {
+		background: var(--color-primary);
+		border-color: var(--color-primary);
+
+		&.today {
+			color: var(--color-neutral-0);
+		}
+	}
+
+	// InRange Styles
+	&.selected.startRange,
+	&.startRange.startRange,
+	&.endRange.startRange,
+	&.selected.endRange,
+	&.startRange.endRange,
+	&.endRange.endRange,
+	&.inRange {
+		&:before {
+			content: '';
+			display: block;
+			top: -1px;
+			bottom: -1px;
+			background-color: var(--color-neutral-3);
+			position: absolute;
+			z-index: -1;
+		}
+	}
+
+	&.selected.startRange,
+	&.startRange.startRange,
+	&.endRange.startRange {
+		border-radius: 50px;
+
+		&:before {
+			border-radius: 50px 0 0 50px;
+			left: 0;
+			right: -2px;
+		}
+	}
+
+	&.selected.endRange,
+	&.startRange.endRange,
+	&.endRange.endRange {
+		border-radius: 50px;
+
+		&:before {
+			border-radius: 0 50px 50px 0;
+			right: 0;
+			left: -2px;
+		}
+	}
+
+	&.inRange {
+		box-shadow: var(--shadow-none);
+
+		&:before {
+			left: -2px;
+			right: -2px;
+		}
+	}
+
+	&.selected.startRange + .endRange:not(:nth-child(7n + 1)),
+	&.startRange.startRange + .endRange:not(:nth-child(7n + 1)),
+	&.endRange.startRange + .endRange:not(:nth-child(7n + 1)) {
+		box-shadow: var(--shadow-none);
+	}
+}
+
+/// Flatpickr - Has Time
+.flatpickr-calendar {
+	&.hasTime {
+		.flatpickr-time {
+			border: var(--border-size-none);
+			height: 30px;
+			overflow: visible;
+			padding: var(--space-none) var(--space-base) var(--space-base);
+		}
+	}
+}
+
+/// Flatpickr - Time container
+.flatpickr-time {
+	display: flex;
+	position: relative;
+	align-items: center;
+	justify-content: center;
+	line-height: 30px;
+
+	input {
+		&:hover,
+		&:focus {
+			background: transparent;
+		}
+	}
+
+	// Hour and Minute input number
+	.numInputWrapper {
+		flex: initial;
+		height: 30px;
+		padding-left: var(--space-s);
+		padding-right: var(--space-base);
+		width: 48px;
+	}
+
+	&.time24hr {
+		.numInputWrapper {
+			width: inherit;
+		}
+	}
+
+	// Hour separator
+	.flatpickr-time-separator {
+		margin-right: var(--space-s);
+	}
+
+	// AM/PM selector
+	.flatpickr-am-pm {
+		background-color: var(--color-primary);
+		border-radius: var(--border-radius-soft);
+		color: var(--color-neutral-0);
+		font-size: var(--font-size-xs);
+		font-weight: var(--font-semi-bold);
+		height: auto;
+		line-height: 1;
+		padding: var(--space-xs) var(--space-none);
+		position: absolute;
+		right: var(--space-l);
+		text-transform: lowercase;
+		width: 40px;
+
+		&:hover,
+		&:focus {
+			background-color: var(--color-primary-hover);
+		}
+	}
+}
+
+/// Flatpickr - TodayBtn
+.flatpickr-today-button {
+	padding: var(--space-none) var(--space-base) var(--space-base);
+
+	a {
+		cursor: pointer;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}
