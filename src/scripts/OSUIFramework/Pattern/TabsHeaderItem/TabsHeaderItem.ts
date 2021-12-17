@@ -14,7 +14,7 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		// Store the on click event
 		private _eventOnTabsClick: Callbacks.Generic;
 		// Store if this is the current active item
-		private _isActive: boolean;
+		private _isActive = false;
 		// Store this item's tab pattern
 		private _tabsElem: Patterns.Tabs.ITabs;
 
@@ -42,11 +42,9 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		 * @memberof TabsHeaderItem
 		 */
 		private _handleClickEvent(): void {
-			if (this._isActive) {
-				return;
+			if (this._isActive === false) {
+				this._tabsElem.changeTab(this._dataTab, this, true, true);
 			}
-
-			this._tabsElem.changeTab(this._dataTab, this, true, true);
 		}
 
 		/**
@@ -58,7 +56,7 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		 */
 		protected setA11YProperties(isUpdate = true): void {
 			// Static attribute to be added when the item is created
-			if (!isUpdate) {
+			if (isUpdate === false) {
 				Helper.A11Y.RoleTab(this._selfElem);
 			}
 
