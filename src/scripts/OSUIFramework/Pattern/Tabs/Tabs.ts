@@ -16,9 +16,9 @@ namespace OSUIFramework.Patterns.Tabs {
 		// Store if there is need to add drag gestures
 		private _addDragGestures: boolean;
 		// Store current orientation config, to be able to remove current active option
-		private _currentTabsOrientation: GlobalEnum.Orientation;
+		private _currentOrientation: GlobalEnum.Orientation;
 		// Store current position config, to be able to remove current active option
-		private _currentVerticalTabsPositon: GlobalEnum.Direction;
+		private _currentVerticalPositon: GlobalEnum.Direction;
 		// Store if the observer should observe
 		// This is usefull to prevent observer on clicks and changeProperty of changeTab method
 		private _disableObserver: boolean;
@@ -289,9 +289,9 @@ namespace OSUIFramework.Patterns.Tabs {
 		 * @memberof Tabs
 		 */
 		private _setTabsOrientation(orientation: GlobalEnum.Orientation): void {
-			Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._currentTabsOrientation);
+			Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._currentOrientation);
 			Helper.Style.AddClass(this._selfElem, Enum.CssClasses.Modifier + orientation);
-			this._currentTabsOrientation = orientation;
+			this._currentOrientation = orientation;
 		}
 
 		/**
@@ -302,10 +302,10 @@ namespace OSUIFramework.Patterns.Tabs {
 		 * @memberof Tabs
 		 */
 		private _setTabsPosition(position: GlobalEnum.Direction): void {
-			Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._currentVerticalTabsPositon);
+			Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._currentVerticalPositon);
 			Helper.Style.AddClass(this._selfElem, Enum.CssClasses.Modifier + position);
 
-			this._currentVerticalTabsPositon = position;
+			this._currentVerticalPositon = position;
 		}
 
 		/**
