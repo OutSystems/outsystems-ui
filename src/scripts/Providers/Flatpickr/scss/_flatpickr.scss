@@ -62,6 +62,7 @@
 
 	// Month Select
 	.flatpickr-monthDropdown-months {
+		appearance: none;
 		font-weight: var(--font-bold);
 		height: 30px;
 		margin-right: var(--space-base);
