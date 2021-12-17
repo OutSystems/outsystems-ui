@@ -5,6 +5,11 @@
 
 ///
 .osui-btn-loading {
+	// Service Studio Preview
+	& {
+		-servicestudio-display: inline-flex;
+	}
+
 	&-show-spinner {
 		&.osui-btn-loading--is-loading {
 			.btn {
