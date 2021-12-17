@@ -287,6 +287,10 @@ span.flatpickr-weekday {
 		padding-left: var(--space-s);
 		padding-right: var(--space-base);
 		width: 48px;
+
+		.numInput {
+			font-size: var(--font-size-s);
+		}
 	}
 
 	&.time24hr {
@@ -331,6 +335,19 @@ span.flatpickr-weekday {
 
 		&:hover {
 			text-decoration: none;
+		}
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+///
+.phone {
+	.flatpickr-time {
+		.numInputWrapper {
+			.numInput {
+				// Hack to disable zoom focus on mobile
+				font-size: var(--font-size-base);
+			}
 		}
 	}
 }
