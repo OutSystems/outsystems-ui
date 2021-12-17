@@ -55,4 +55,9 @@ namespace OSUIFramework.Callbacks {
 	export type OSSidebarToggleEvent = {
 		(sidebarId: string, isOpen: boolean): void;
 	};
+
+	// Tabs
+	export type OSTabsOnChangeEvent = {
+		(tabsId: string, ActiveTab: number): void;
+	};
 }
