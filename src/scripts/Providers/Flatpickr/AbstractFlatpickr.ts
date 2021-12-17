@@ -2,21 +2,19 @@
 namespace Providers.Flatpickr {
 	export abstract class AbstractFlatpickr<C extends Flatpickr.AbstractFlatpickrConfig>
 		extends OSUIFramework.Patterns.DatePicker.AbstractDatePicker<C>
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		implements IFlatpickr, OSUIFramework.Interface.IProviderPattern<Flatpickr>
 	{
-		// RangeSlider onInitialize event
+		// Flatpickr onInitialize event
 		private _onInitializeCallbackEvent: OSUIFramework.Callbacks.OSGeneric;
-
-		// Store the provider target element
+		// Store pattern input HTML element reference
 		protected _datePickerProviderInputElem: HTMLInputElement;
 		// Store the provider reference
 		protected _flatpickr: Flatpickr;
-		// Store the flatpickr html element that will be added by library
+		// Store the flatpickr input html element that will be added by library
 		protected _flatpickrInputElem: HTMLInputElement;
 		// Store the provider options
 		protected _flatpickrOpts: FlatpickrOptions;
-		// RangeSlider onChange (SelectedDate) event
+		// Flatpickr onChange (SelectedDate) event
 		protected _onChangeCallbackEvent: OSUIFramework.Callbacks.OSDatepickerOnChangeEvent;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
@@ -68,8 +66,10 @@ namespace Providers.Flatpickr {
 			}
 		}
 
-		// Method that will be used to set the CSS ExtendedClasses into input and calendar
+		// Method that will be used to set the CSS ExtendedClasses into calendar
 		private _updateExtendedClassSelectors(activeCssClass: string, newCssClass: string): void {
+			console.log(this._flatpickr.calendarContainer);
+
 			if (activeCssClass !== '') {
 				const activeCssClassArray = activeCssClass.split(' ');
 

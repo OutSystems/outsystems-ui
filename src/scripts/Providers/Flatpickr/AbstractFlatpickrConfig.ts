@@ -1,23 +1,35 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace Providers.Flatpickr {
+	/**
+	 * Class that represents the custom configurations received by the Datepicker.
+	 *
+	 * @export
+	 * @class AbstractFlatpickrConfig
+	 * @extends {AbstractDatePickerConfig}
+	 */
 	export abstract class AbstractFlatpickrConfig extends OSUIFramework.Patterns.DatePicker.AbstractDatePickerConfig {
+		// Store the Locale that will be used to set the Datepicker language
 		protected _flatpickrLocale: FlatpickrLocale;
+
+		// Store the Flatpickr configs that will be used to create the Flatpickr instance
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		protected _flatpickrOpts: any;
 
+		// Store the default date that will be assigned to the calendar
 		public DefaultDate = [];
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		public OnChange: any;
+
+		// Set the OnChange Event that will be defined in the specific context for each Flatpickr mode
+		public OnChange: OSUIFramework.Callbacks.Generic;
+
+		// Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr
 		public ServerDateFormat: string;
 
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		constructor(config: any) {
 			super(config);
-
-			console.log(config);
 		}
 
-		// Method used to abstract DateFormat style and map it into flatpickr expected one
+		// Method used to abstract DateFormat style and map it into Flatpickr expected one
 		private _abstractDateFormat(): string {
 			const _dateFormat = this.DateFormat.replace(/[^a-zA-Z]/g, ' ').split(' ');
 			for (const format of _dateFormat) {
@@ -40,7 +52,7 @@ namespace Providers.Flatpickr {
 						this.DateFormat = this.DateFormat.replace('MM', 'm');
 						break;
 
-					// Map Month
+					// Map Day
 					case 'DDD':
 						this.DateFormat = this.DateFormat.replace('DDD', 'D');
 						break;
@@ -74,11 +86,14 @@ namespace Providers.Flatpickr {
 
 		// Method used to check the language and also map it into Flatpickr expected format
 		private _checkLocale(): string {
-			const _locale = OSUIFramework.Helper.Language.Lang.substr(0, 2)
-				? OSUIFramework.Helper.Language.Lang.substr(0, 2)
+			const _locale = OSUIFramework.Helper.Language.Lang.substring(0, 2)
+				? OSUIFramework.Helper.Language.Lang.substring(0, 2)
 				: 'en';
 
+			// FlatpickrLocale script file is already loaded
+			// Set the locale in order to define the calendar language
 			this._flatpickrLocale = window.flatpickr.l10ns[_locale];
+			// Set the calendar first week day
 			this._flatpickrLocale.firstDayOfWeek = this.FirstWeekDay;
 
 			return _locale;
@@ -96,22 +111,21 @@ namespace Providers.Flatpickr {
 			// Check the given server date format config
 			this._checkServerDateFormat();
 
-			// eslint-disable-next-line prefer-const
 			this._flatpickrOpts = {
 				altFormat: this._checkAltFormat(),
 				altInput: true,
-				enableTime: this.TimeFormat !== OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable,
-				locale: this._checkLocale(),
-				maxDate: OSUIFramework.Helper.Dates.IsNull(this.MaxDate) ? undefined : this.MaxDate,
-				minDate: OSUIFramework.Helper.Dates.IsNull(this.MinDate) ? undefined : this.MinDate,
 				dateFormat:
 					this.TimeFormat !== OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable
 						? this.ServerDateFormat + ' H:i'
 						: this.ServerDateFormat,
+				enableTime: this.TimeFormat !== OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable,
+				locale: this._checkLocale(),
+				maxDate: OSUIFramework.Helper.Dates.IsNull(this.MaxDate) ? undefined : this.MaxDate,
+				minDate: OSUIFramework.Helper.Dates.IsNull(this.MinDate) ? undefined : this.MinDate,
+				onChange: this.OnChange,
 				showMonths: this.ShowMonths,
 				time_24hr: this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat,
 				weekNumbers: this.ShowWeekNumbers,
-				onChange: this.OnChange,
 			};
 
 			return this._flatpickrOpts;
