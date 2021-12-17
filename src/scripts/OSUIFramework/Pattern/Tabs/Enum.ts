@@ -22,6 +22,12 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 	 */
 	export enum Attributes {
 		DataTab = 'data-tab',
+	}
+
+	/**
+	 * Tabs Enum for CSS Custom Properties
+	 */
+	export enum CssProperty {
 		TabsHeight = '--tabs-height',
 	}
 

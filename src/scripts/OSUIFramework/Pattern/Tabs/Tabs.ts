@@ -263,7 +263,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		 */
 		private _setTabsHeight(height: string): void {
 			// Create css variable
-			Helper.Style.SetStyleAttribute(this._selfElem, Enum.Attributes.TabsHeight, height);
+			Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.TabsHeight, height);
 		}
 
 		/**
