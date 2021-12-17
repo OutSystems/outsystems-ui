@@ -31,6 +31,16 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		}
 
 		/**
+		 * Callback to the event onAnimationStart.
+		 *
+		 * @private
+		 * @memberof AnimatedLabel
+		 */
+		private _inputAnimationStartCallback(): void {
+			this._inputStateToggle(true);
+		}
+
+		/**
 		 * Callback to the event "blur" of the input.
 		 *
 		 * @private
@@ -89,7 +99,7 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		protected setCallbacks(): void {
 			this._eventBlur = this._inputBlurCallback.bind(this);
 			this._eventFocus = this._inputFocusCallback.bind(this);
-			this._eventAnimationStart = this._inputFocusCallback.bind(this);
+			this._eventAnimationStart = this._inputAnimationStartCallback.bind(this);
 
 			this._inputElement.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventBlur);
 			this._inputElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventFocus);
