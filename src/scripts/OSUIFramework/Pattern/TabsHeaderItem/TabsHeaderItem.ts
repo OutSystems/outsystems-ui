@@ -31,7 +31,7 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		 * @memberof TabsHeaderItem
 		 */
 		private _addElementToTabs(): void {
-			this._tabsElem.addTabsHeaderItem(this);
+			this._tabsElem.addHeaderItem(this);
 		}
 
 		/**
@@ -116,7 +116,7 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		 */
 		public dispose(): void {
 			// Remove this item from the tabs pattern array
-			this._tabsElem.removeTabsHeaderItem(this, this._isActive);
+			this._tabsElem.removeHeaderItem(this, this._isActive);
 
 			this.unsetCallbacks();
 

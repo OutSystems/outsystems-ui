@@ -29,7 +29,7 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		 * @memberof TabsContentItem
 		 */
 		private _addElementToTabs(): void {
-			this._tabsElem.addTabsContentItem(this);
+			this._tabsElem.addContentItem(this);
 		}
 
 		/**
@@ -75,7 +75,7 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		 */
 		public dispose(): void {
 			// Remove this item from the tabs pattern array
-			this._tabsElem.removeTabsContentItem(this);
+			this._tabsElem.removeContentItem(this);
 
 			super.dispose();
 		}

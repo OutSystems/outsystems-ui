@@ -80,7 +80,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		 * @return {*}  {number}
 		 * @memberof Tabs
 		 */
-		private _getChangeTabTargetIndex(tabIndex: number): number {
+		private _getTargetIndex(tabIndex: number): number {
 			let newTabIndex;
 
 			// If element exists on the array, set it to tabindex passed
@@ -163,20 +163,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			// for the accessibility attributes that need id's from each item,
 			// Here setting as false the param, as we don't want to set the data-tab here.
 			// That will be done by each pattern, as they are created
-			this._updateTabsConnection(false);
-		}
-
-		/**
-		 * Method to remove the drag Observer on each contentItem
-		 *
-		 * @private
-		 * @memberof Tabs
-		 */
-		private _removeDragObserver(): void {
-			// Set an observer on each contentItem, to detect when is being intersected by a drag gesture
-			this._tabsContentItemsElementsArray.forEach((item) => {
-				item.removeDragObserver(this._dragObserver);
-			});
+			this._updateItemsConnection(false);
 		}
 
 		/**
@@ -236,16 +223,28 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		/**
+		 * Method to set the Tabs Height
+		 *
+		 * @private
+		 * @param {string} height
+		 * @memberof Tabs
+		 */
+		private _setHeight(height: string): void {
+			// Create css variable
+			Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.TabsHeight, height);
+		}
+
+		/**
 		 * Method to set the initial options on screen load
 		 *
 		 * @private
 		 * @memberof Tabs
 		 */
 		private _setInitialOptions(): void {
-			this._setTabsOrientation(this.configs.TabsOrientation);
-			this._setTabsPosition(this._configs.TabsVerticalPosition);
-			this._setTabsHeight(this._configs.Height);
-			this._setTabsIsJustified(this._configs.JustifyHeaders);
+			this._setOrientation(this.configs.TabsOrientation);
+			this._setPosition(this._configs.TabsVerticalPosition);
+			this._setHeight(this._configs.Height);
+			this._setIsJustified(this._configs.JustifyHeaders);
 			// Setting as false, to avoid trigering changeTab event on screen load
 			this.changeTab(this.configs.StartingTab, undefined, false, true);
 
@@ -255,25 +254,13 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		/**
-		 * Method to set the Tabs Height
-		 *
-		 * @private
-		 * @param {string} height
-		 * @memberof Tabs
-		 */
-		private _setTabsHeight(height: string): void {
-			// Create css variable
-			Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.TabsHeight, height);
-		}
-
-		/**
 		 * Method to set if the Tabs are justified
 		 *
 		 * @private
 		 * @param {boolean} isJustified
 		 * @memberof Tabs
 		 */
-		private _setTabsIsJustified(isJustified: boolean): void {
+		private _setIsJustified(isJustified: boolean): void {
 			if (isJustified) {
 				Helper.Style.AddClass(this._selfElem, Enum.CssClasses.IsJustified);
 			} else {
@@ -288,7 +275,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		 * @param {GlobalEnum.Orientation} orientation
 		 * @memberof Tabs
 		 */
-		private _setTabsOrientation(orientation: GlobalEnum.Orientation): void {
+		private _setOrientation(orientation: GlobalEnum.Orientation): void {
 			Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._currentOrientation);
 			Helper.Style.AddClass(this._selfElem, Enum.CssClasses.Modifier + orientation);
 			this._currentOrientation = orientation;
@@ -301,7 +288,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		 * @param {GlobalEnum.Direction} position
 		 * @memberof Tabs
 		 */
-		private _setTabsPosition(position: GlobalEnum.Direction): void {
+		private _setPosition(position: GlobalEnum.Direction): void {
 			Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._currentVerticalPositon);
 			Helper.Style.AddClass(this._selfElem, Enum.CssClasses.Modifier + position);
 
@@ -332,13 +319,26 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		/**
+		 * Method to remove the drag Observer on each contentItem
+		 *
+		 * @private
+		 * @memberof Tabs
+		 */
+		private _unsetDragObserver(): void {
+			// Set an observer on each contentItem, to detect when is being intersected by a drag gesture
+			this._tabsContentItemsElementsArray.forEach((item) => {
+				item.removeDragObserver(this._dragObserver);
+			});
+		}
+
+		/**
 		 * Method that handles the connection between HeaderItems and ContentItem, related to data-tab and aria-controls/labbeledby
 		 *
 		 * @private
 		 * @param {boolean} [updateDataTab=true]
 		 * @memberof Tabs
 		 */
-		private _updateTabsConnection(updateDataTab = true): void {
+		private _updateItemsConnection(updateDataTab = true): void {
 			// By default look to the first content item.
 			let currentContentItem = this._tabsContentItemsElementsArray[0];
 
@@ -431,7 +431,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		 * @param {TabsContentItem.ITabsContentItem} tabsContentItem
 		 * @memberof Tabs
 		 */
-		public addTabsContentItem(tabsContentItem: TabsContentItem.ITabsContentItem): void {
+		public addContentItem(tabsContentItem: TabsContentItem.ITabsContentItem): void {
 			// Add this item to the array
 			this._tabsContentItemsElementsArray.push(tabsContentItem);
 
@@ -439,7 +439,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			if (this.isBuilt) {
 				// So make again the connection between header items and content items,
 				// to make sure the data-tab and labels attributes are correct with the new DOM order
-				Helper.AsyncInvocation(this._updateTabsConnection.bind(this));
+				Helper.AsyncInvocation(this._updateItemsConnection.bind(this));
 
 				// If there's no active content element, assign it to this one
 				if (this._activeTabContentElement === undefined) {
@@ -458,7 +458,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		 * @param {TabsHeaderItem.ITabsHeaderItem} tabsHeaderItem
 		 * @memberof Tabs
 		 */
-		public addTabsHeaderItem(tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem): void {
+		public addHeaderItem(tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem): void {
 			// Add this item to the array
 			this._tabsHeaderItemsElementsArray.push(tabsHeaderItem);
 			const currentIndex = this._tabsHeaderItemsElementsArray.length - 1;
@@ -467,7 +467,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			if (this.isBuilt) {
 				// So make again the connection between header items and content items,
 				// to make sure the data-tab and labels attributes are correct with the new DOM order
-				Helper.AsyncInvocation(this._updateTabsConnection.bind(this));
+				Helper.AsyncInvocation(this._updateItemsConnection.bind(this));
 				// If there's no active header element, assign it to this one
 				if (
 					(this._activeTabHeaderElement === undefined || this._activeTabHeaderElement === null) &&
@@ -530,16 +530,16 @@ namespace OSUIFramework.Patterns.Tabs {
 						);
 						break;
 					case Enum.Properties.Height:
-						this._setTabsHeight(propertyValue as string);
+						this._setHeight(propertyValue as string);
 						break;
 					case Enum.Properties.TabsOrientation:
-						this._setTabsOrientation(propertyValue as GlobalEnum.Orientation);
+						this._setOrientation(propertyValue as GlobalEnum.Orientation);
 						break;
 					case Enum.Properties.TabsVerticalPosition:
-						this._setTabsPosition(propertyValue as GlobalEnum.Direction);
+						this._setPosition(propertyValue as GlobalEnum.Direction);
 						break;
 					case Enum.Properties.JustifyHeaders:
-						this._setTabsIsJustified(propertyValue as boolean);
+						this._setIsJustified(propertyValue as boolean);
 						break;
 				}
 			}
@@ -581,7 +581,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			// where the tabsHeaderItem will be passed as undefined
 			if (tabsHeaderItem === undefined) {
 				// Get the new target tab index
-				newTabIndex = this._getChangeTabTargetIndex(tabIndex);
+				newTabIndex = this._getTargetIndex(tabIndex);
 
 				// Get the headerItem, based on the newTabIndex
 				newHeaderItem = this._tabsHeaderItemsElementsArray[newTabIndex];
@@ -663,7 +663,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		 * @param {TabsContentItem.ITabsContentItem} tabsContentItem
 		 * @memberof Tabs
 		 */
-		public removeTabsContentItem(tabsContentItem: TabsContentItem.ITabsContentItem): void {
+		public removeContentItem(tabsContentItem: TabsContentItem.ITabsContentItem): void {
 			// Get this item's index on the array
 			const currentIndex = this._tabsContentItemsElementsArray.indexOf(tabsContentItem);
 			// Remove it from the array
@@ -681,7 +681,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		 * @param {boolean} [isActiveItem]
 		 * @memberof Tabs
 		 */
-		public removeTabsHeaderItem(tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem, isActiveItem?: boolean): void {
+		public removeHeaderItem(tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem, isActiveItem?: boolean): void {
 			// Get this item's index on the array
 			const currentIndex = this._tabsHeaderItemsElementsArray.indexOf(tabsHeaderItem);
 			// Remove it from the array
@@ -720,7 +720,7 @@ namespace OSUIFramework.Patterns.Tabs {
 				// remove touch event
 				this._tabsContentElement.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, this._eventOnTouchstart);
 				// Disconnect observer
-				this._removeDragObserver();
+				this._unsetDragObserver();
 			}
 		}
 	}

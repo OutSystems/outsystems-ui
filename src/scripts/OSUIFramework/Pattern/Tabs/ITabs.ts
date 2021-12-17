@@ -4,16 +4,16 @@ namespace OSUIFramework.Patterns.Tabs {
 	 * Defines the interface for OutSystemsUI Tabs Pattern
 	 */
 	export interface ITabs extends Interface.IPattern, Interface.ICallback {
-		addTabsContentItem(tabsContentItem: TabsContentItem.ITabsContentItem);
-		addTabsHeaderItem(tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem);
+		addContentItem(tabsContentItem: TabsContentItem.ITabsContentItem);
+		addHeaderItem(tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem);
 		changeTab(
 			tabIndex: number,
 			tabsHeaderItem: Patterns.TabsHeaderItem.ITabsHeaderItem,
 			triggerEvent?: boolean,
 			blockObserver?: boolean
 		);
-		removeTabsContentItem(tabsContentItem: TabsContentItem.ITabsContentItem);
-		removeTabsHeaderItem(tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem, isActiveItem?: boolean);
+		removeContentItem(tabsContentItem: TabsContentItem.ITabsContentItem);
+		removeHeaderItem(tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem, isActiveItem?: boolean);
 		toggleDragGestures(addDragGestures: boolean);
 	}
 }
