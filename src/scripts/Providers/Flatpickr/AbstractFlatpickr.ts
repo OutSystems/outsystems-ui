@@ -110,16 +110,19 @@ namespace Providers.Flatpickr {
 			// Init provider
 			this._flatpickr = window.flatpickr(this._datePickerProviderInputElem, this._flatpickrOpts);
 
-			// Add TodayBtn
-			if (this._configs.ShowTodayButton) {
-				this._addTodayBtn();
-			}
-
 			// Set the needed HTML attributes
 			this._setAttributes();
 
-			// Set CSS classes
-			this._setCssClasses();
+			// At Phone we've native behaviour!
+			if (OSUIFramework.Helper.DeviceInfo.IsPhone === false) {
+				// Add TodayBtn
+				if (this._configs.ShowTodayButton) {
+					this._addTodayBtn();
+				}
+
+				// Set CSS classes
+				this._setCssClasses();
+			}
 
 			// Trigger platform's InstanceIntializedHandler client Action
 			OSUIFramework.Helper.AsyncInvocation(this._onInitializeCallbackEvent, this.widgetId);
