@@ -56,7 +56,7 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		 */
 		protected setA11YProperties(isUpdate = true): void {
 			// Static attribute to be added when the item is created
-			if (isUpdate === false) {
+			if (!isUpdate) {
 				Helper.A11Y.RoleTab(this._selfElem);
 			}
 
