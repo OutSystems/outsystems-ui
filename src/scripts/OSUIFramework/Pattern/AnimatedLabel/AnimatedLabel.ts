@@ -124,6 +124,9 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 
 			// Check if the input exist
 			if (this._inputElement) {
+				// clear the input's prompt, as it not supported when used inside AnimatedLabel
+				this._inputElement.placeholder = '';
+
 				this._inputStateToggle(undefined);
 			} else {
 				throw new Error(Enum.Messages.InputNotFound);
