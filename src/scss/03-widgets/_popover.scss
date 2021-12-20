@@ -5,6 +5,10 @@
 
 ///
 [data-popover] {
+	[data-icon] {
+		vertical-align: initial;
+	}
+
 	& > .popover {
 		&-top {
 			border: var(--border-size-none);
