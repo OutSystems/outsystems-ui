@@ -191,6 +191,10 @@
 					scroll-snap-align: start;
 					scroll-snap-stop: always;
 				}
+
+				.ph > .list {
+					display: contents;
+				}
 			}
 		}
 
