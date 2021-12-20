@@ -93,11 +93,11 @@ namespace Providers.Flatpickr {
 		 */
 		protected _addTodayBtn(): void {
 			// Create the wrapper container
-			const todayBtnWrapper = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Div) as HTMLElement;
+			const todayBtnWrapper = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Div);
 			todayBtnWrapper.classList.add(Enum.CssClasses.TodayBtn);
 
 			// Create the TodayBtn element
-			const todayBtn = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Link) as HTMLAnchorElement;
+			const todayBtn = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Link);
 			todayBtn.innerHTML = Enum.TodayButton.Text;
 			OSUIFramework.Helper.A11Y.AriaLabel(todayBtn, Enum.TodayButton.AriaLabelText);
 

@@ -15,6 +15,16 @@
 			left: 40px;
 		}
 	}
+
+	// Has Time
+	&.hasTime {
+		.flatpickr-time {
+			border: var(--border-size-none);
+			height: 30px;
+			overflow: visible;
+			padding: var(--space-none) var(--space-base) var(--space-base);
+		}
+	}
 }
 
 /// Flatpickr - Top info wrapper container
@@ -251,18 +261,6 @@ span.flatpickr-weekday {
 	&.startRange.startRange + .endRange:not(:nth-child(7n + 1)),
 	&.endRange.startRange + .endRange:not(:nth-child(7n + 1)) {
 		box-shadow: var(--shadow-none);
-	}
-}
-
-/// Flatpickr - Has Time
-.flatpickr-calendar {
-	&.hasTime {
-		.flatpickr-time {
-			border: var(--border-size-none);
-			height: 30px;
-			overflow: visible;
-			padding: var(--space-none) var(--space-base) var(--space-base);
-		}
 	}
 }
 
