@@ -57,6 +57,14 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
+	 * OutSystemsUI Scroll Options
+	 */
+	export enum ScrollBehavior {
+		Instant = 'auto',
+		Smooth = 'smooth',
+	}
+
+	/**
 	 * OutSystemsUI HTML Attributes
 	 */
 	export enum HTMLAttributes {
@@ -106,6 +114,8 @@ namespace OSUIFramework.GlobalEnum {
 	 * OutSystemsUI event Keycodes
 	 */
 	export enum Keycodes {
+		ArrowRight = 'ArrowRight',
+		ArrowLeft = 'ArrowLeft',
 		Escape = 'Escape',
 		Enter = 'Enter',
 		Tab = 'Tab',
@@ -159,6 +169,9 @@ namespace OSUIFramework.GlobalEnum {
 		Sidebar = 'Sidebar',
 		Submenu = 'Submenu',
 		SwipeEvents = 'SwipeEvents',
+		Tabs = 'Tabs',
+		TabsHeaderItem = 'TabsHeaderItem',
+		TabsContentItem = 'TabsContentItem',
 		Tooltip = 'Tooltip',
 		TouchEvents = 'TouchEvents',
 	}

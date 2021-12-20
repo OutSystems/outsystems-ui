@@ -1,14 +1,7 @@
 /*! Patterns - Navigation - Tabs */
-////
-/// @group Patterns-Tabs
-/// Patterns - Navigation - Tabs
-
-///
 .tabs {
 	display: flex;
 	flex-wrap: wrap;
-	position: relative;
-	z-index: 1;
 
 	&.justified {
 		.tabs-header {
@@ -144,14 +137,12 @@
 	}
 }
 
-///
 [data-block*='TabsHeaderItem'] {
 	&:first-child .tabs-header-tab {
 		margin-left: var(--space-none);
 	}
 }
 
-///
 .popup-dialog {
 	.tabs {
 		.tabs-content-tab {
@@ -167,7 +158,6 @@
 	}
 }
 
-///
 .layout-native {
 	.tabs {
 		&.tabs {
@@ -241,7 +231,6 @@
 }
 
 // Responsive --------------------------------------------------------------------
-///
 .desktop {
 	.tabs {
 		&.tabs-vertical {

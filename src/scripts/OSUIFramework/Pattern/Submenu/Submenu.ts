@@ -223,7 +223,7 @@ namespace OSUIFramework.Patterns.Submenu {
 				? GlobalEnum.HTMLEvent.TouchStart
 				: GlobalEnum.HTMLEvent.Click;
 
-			// Add events only if has links inside
+			// Add events only if has elements inside
 			if (this._hasElements) {
 				this._submenuHeaderElement.addEventListener(this._submenuEventType, this._eventClick);
 				this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
@@ -265,7 +265,7 @@ namespace OSUIFramework.Patterns.Submenu {
 			);
 
 			// Check if submenu has childs
-			if (this._submenuAllLinksElement.length > 0) {
+			if (this._submenuLinksElement.children.length > 0) {
 				this._hasElements = true;
 			}
 
@@ -287,7 +287,7 @@ namespace OSUIFramework.Patterns.Submenu {
 				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternActive);
 			}
 
-			// Add an identifier if the pattern as links
+			// Add an identifier if the pattern has childs
 			if (this._hasElements) {
 				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternIsDropdown);
 			} else {
