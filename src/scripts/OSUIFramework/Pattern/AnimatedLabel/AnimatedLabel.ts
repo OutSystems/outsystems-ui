@@ -36,8 +36,10 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		 * @private
 		 * @memberof AnimatedLabel
 		 */
-		private _inputAnimationStartCallback(): void {
-			this._inputStateToggle(true);
+		private _inputAnimationStartCallback(e: AnimationEvent): void {
+			if (e.animationName === Enum.AnimationEvent.OnAutoFillStart) {
+				this._inputStateToggle(true);
+			}
 		}
 
 		/**
