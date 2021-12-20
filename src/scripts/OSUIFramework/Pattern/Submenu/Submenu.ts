@@ -439,5 +439,9 @@ namespace OSUIFramework.Patterns.Submenu {
 				this._globalEventBody
 			);
 		}
+
+		public updateOnRender(): void {
+			console.log('onRender');
+		}
 	}
 }

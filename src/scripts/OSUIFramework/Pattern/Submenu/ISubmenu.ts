@@ -3,5 +3,7 @@ namespace OSUIFramework.Patterns.Submenu {
 	/**
 	 * Defines the interface for OutSystemsUI Search Pattern
 	 */
-	export interface ISubmenu extends Interface.IPattern, Interface.IOpenable {}
+	export interface ISubmenu extends Interface.IPattern, Interface.IOpenable {
+		updateOnRender();
+	}
 }
