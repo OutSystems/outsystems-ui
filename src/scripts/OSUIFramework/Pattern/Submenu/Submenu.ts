@@ -13,6 +13,7 @@ namespace OSUIFramework.Patterns.Submenu {
 		private _globalEventOpen: Callbacks.Generic;
 		private _hasActiveLinks = false;
 		private _hasElements = false;
+		private _isActive = false;
 		private _isOpen = false;
 		private _submenuActiveLinksElement: HTMLElement;
 		private _submenuAllLinksElement: HTMLAnchorElement[];
@@ -47,6 +48,18 @@ namespace OSUIFramework.Patterns.Submenu {
 				e.preventDefault();
 
 				e.stopPropagation();
+			}
+		}
+
+		private _checkForActiveLinks(): void {
+			this._submenuActiveLinksElement = Helper.Dom.ClassSelector(
+				this._submenuLinksElement,
+				Enum.CssClass.PatternActive
+			);
+
+			// Check if submenu contains elements with active class
+			if (this._submenuActiveLinksElement) {
+				this._hasActiveLinks = true;
 			}
 		}
 
@@ -259,10 +272,6 @@ namespace OSUIFramework.Patterns.Submenu {
 			this._submenuHeaderElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternHeader);
 			this._submenuLinksElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternLinks);
 			this._submenuAllLinksElement = [...this._submenuLinksElement.querySelectorAll(GlobalEnum.HTMLElement.Link)];
-			this._submenuActiveLinksElement = Helper.Dom.ClassSelector(
-				this._submenuLinksElement,
-				Enum.CssClass.PatternActive
-			);
 
 			// Check if submenu has childs
 			if (this._submenuLinksElement.children.length > 0) {
@@ -270,9 +279,7 @@ namespace OSUIFramework.Patterns.Submenu {
 			}
 
 			// Check if submenu contains elements with active class
-			if (this._submenuActiveLinksElement) {
-				this._hasActiveLinks = true;
-			}
+			Helper.AsyncInvocation(this._checkForActiveLinks.bind(this));
 		}
 
 		/**
@@ -282,9 +289,9 @@ namespace OSUIFramework.Patterns.Submenu {
 		 * @memberof Submenu
 		 */
 		protected setInitialStates(): void {
-			// Add active class to pattern based on links whit active state
+			// Add active class to pattern based on links whith active state
 			if (this._hasActiveLinks) {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternActive);
+				this.setActive();
 			}
 
 			// Add an identifier if the pattern has childs
@@ -440,8 +447,40 @@ namespace OSUIFramework.Patterns.Submenu {
 			);
 		}
 
+		/**
+		 * Remove submenu as active
+		 *
+		 * @memberof Submenu
+		 */
+		public removeActive(): void {
+			Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternActive);
+			this._isActive = false;
+		}
+
+		/**
+		 * Set submenu as active
+		 *
+		 * @memberof Submenu
+		 */
+		public setActive(): void {
+			Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternActive);
+			this._isActive = true;
+		}
+
+		/**
+		 * Trigger on submenu onRender, to update active state
+		 *
+		 * @memberof Submenu
+		 */
 		public updateOnRender(): void {
-			console.log('onRender');
+			if (this.isBuilt) {
+				// Check if there are active element inside
+				this._checkForActiveLinks();
+
+				if (this._hasActiveLinks) {
+					this._isActive ? this.removeActive() : this.setActive();
+				}
+			}
 		}
 	}
 }
