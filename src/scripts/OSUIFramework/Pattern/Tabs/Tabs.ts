@@ -711,7 +711,7 @@ namespace OSUIFramework.Patterns.Tabs {
 				// Set observer on each contentItem to detect current content being intersected
 				this._setDragObserver();
 				// Update content position, due to change to display grid
-				this.changeTab();
+				this._scrollToTargetContent(this._activeTabContentElement);
 				// If the gestures were already added
 			} else if (this._addDragGestures) {
 				// Remove class to prevent overflow-x
