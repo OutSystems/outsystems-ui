@@ -73,7 +73,7 @@
 	// Month Select
 	.flatpickr-monthDropdown-months {
 		appearance: none;
-		font-weight: var(--font-bold);
+		font-weight: var(--font-regular);
 		height: 30px;
 		margin-right: var(--space-base);
 		padding: var(--space-none);
@@ -85,11 +85,11 @@
 
 	// Year stepper
 	.numInputWrapper {
-		width: 7ch;
+		width: 60px;
 
 		input {
 			font-size: var(--font-size-s);
-			font-weight: var(--font-bold);
+			font-weight: var(--font-regular);
 			height: 30px;
 			padding-left: var(--space-s);
 			padding-right: var(--space-base);
