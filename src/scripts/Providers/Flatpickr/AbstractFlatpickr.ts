@@ -17,7 +17,6 @@ namespace Providers.Flatpickr {
 		// Flatpickr onChange (SelectedDate) event
 		protected _onChangeCallbackEvent: OSUIFramework.Callbacks.OSDatepickerOnChangeEvent;
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
 		}
@@ -43,7 +42,7 @@ namespace Providers.Flatpickr {
 		}
 
 		// Method used to set the CSS classes to the pattern HTML elements
-		private _setCssClasses(): void {
+		private _setCalendarCssClasses(): void {
 			OSUIFramework.Helper.Style.AddClass(
 				this._flatpickr.calendarContainer,
 				OSUIFramework.Patterns.DatePicker.Enum.CssClass.Calendar
@@ -51,7 +50,7 @@ namespace Providers.Flatpickr {
 
 			// Check if there are any ExtendedClass to be added into our calendar elements
 			if (this._configs.ExtendedClass !== '') {
-				this._updateExtendedClassSelectors('', this._configs.ExtendedClass);
+				this._updateCalendarExtendedClassSelectors('', this._configs.ExtendedClass);
 			}
 		}
 
@@ -66,10 +65,9 @@ namespace Providers.Flatpickr {
 			}
 		}
 
-		// Method that will be used to set the CSS ExtendedClasses into calendar
-		private _updateExtendedClassSelectors(activeCssClass: string, newCssClass: string): void {
-			console.log(this._flatpickr.calendarContainer);
-
+		// Since Calendar will be added outside of pattern context,
+		// this method will manage the CSS ExtendedClasses into that element accordingly
+		private _updateCalendarExtendedClassSelectors(activeCssClass: string, newCssClass: string): void {
 			if (activeCssClass !== '') {
 				const activeCssClassArray = activeCssClass.split(' ');
 
@@ -87,7 +85,12 @@ namespace Providers.Flatpickr {
 			}
 		}
 
-		// Method used to add the TodayButton at calendar
+		/**
+		 * Method used to add the TodayButton at calendar
+		 *
+		 * @protected
+		 * @memberof AbstractFlatpickr
+		 */
 		protected _addTodayBtn(): void {
 			// Create the wrapper container
 			const todayBtnWrapper = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Div) as HTMLElement;
@@ -105,7 +108,12 @@ namespace Providers.Flatpickr {
 			this._flatpickr.calendarContainer.appendChild(todayBtnWrapper);
 		}
 
-		// Method that will be triggered at Flatpickr instance is ready
+		/**
+		 * Method that will be triggered at Flatpickr instance is ready
+		 *
+		 * @protected
+		 * @memberof AbstractFlatpickr
+		 */
 		protected _onReady(): void {
 			// Init provider
 			this._flatpickr = window.flatpickr(this._datePickerProviderInputElem, this._flatpickrOpts);
@@ -113,19 +121,40 @@ namespace Providers.Flatpickr {
 			// Set the needed HTML attributes
 			this._setAttributes();
 
-			// At Phone we've native behaviour!
+			// At phone we've native behaviour, so TodayBtn can't be added
 			if (OSUIFramework.Helper.DeviceInfo.IsPhone === false) {
 				// Add TodayBtn
 				if (this._configs.ShowTodayButton) {
 					this._addTodayBtn();
 				}
 
-				// Set CSS classes
-				this._setCssClasses();
+				// Set Calendar CSS classes
+				this._setCalendarCssClasses();
 			}
 
 			// Trigger platform's InstanceIntializedHandler client Action
 			OSUIFramework.Helper.AsyncInvocation(this._onInitializeCallbackEvent, this.widgetId);
+		}
+
+		/**
+		 * Remove all the assigned Events
+		 *
+		 * @protected
+		 * @memberof AbstractFlatpickr
+		 */
+		protected unsetCallbacks(): void {
+			this._onInitializeCallbackEvent = undefined;
+			this._onChangeCallbackEvent = undefined;
+		}
+
+		/**
+		 * Unsets the refences to the HTML elements.
+		 *
+		 * @protected
+		 * @memberof AbstractFlatpickr
+		 */
+		protected unsetHtmlElements(): void {
+			this._datePickerProviderInputElem = undefined;
 		}
 
 		public build(): void {
@@ -134,49 +163,12 @@ namespace Providers.Flatpickr {
 			this._setHtmllElements();
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		public changeProperty(propertyName: string, propertyValue: any): void {
-			switch (propertyName) {
-				case OSUIFramework.Patterns.DatePicker.Enum.Properties.TimeFormat:
-					// Set the new Timeformat value
-					this._configs.TimeFormat = propertyValue;
+		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			super.changeProperty(propertyName, propertyValue);
 
-					break;
-
-				case OSUIFramework.Patterns.DatePicker.Enum.Properties.ShowTodayButton:
-					// Set the new ShowTodayButton value
-					this._configs.ShowTodayButton = propertyValue;
-
-					break;
-
-				case OSUIFramework.Patterns.DatePicker.Enum.Properties.FirstWeekDay:
-					// Set the new FirstWeekDay value
-					this._configs.FirstWeekDay = propertyValue;
-
-					break;
-
-				case OSUIFramework.Patterns.DatePicker.Enum.Properties.MinDate:
-					// Set the new MinDate value
-					this._configs.MinDate = propertyValue;
-
-					break;
-
-				case OSUIFramework.Patterns.DatePicker.Enum.Properties.MaxDate:
-					// Set the new MaxDate value
-					this._configs.MaxDate = propertyValue;
-
-					break;
-
-				case OSUIFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass:
-					// Since we've an element that will be added dynamically at the body...
-					this._updateExtendedClassSelectors(this._configs.ExtendedClass, propertyValue);
-
-					// Update the property at the _selfElem
-					super.changeProperty(propertyName, propertyValue);
-
-					break;
-				default:
-					throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
+			// Since we've an element that will be added dynamically at the body...
+			if (this.isBuilt && propertyName === OSUIFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass) {
+				this._updateCalendarExtendedClassSelectors(this._configs.ExtendedClass, propertyValue as string);
 			}
 		}
 
@@ -190,8 +182,10 @@ namespace Providers.Flatpickr {
 
 		// Method to remove and destroy DatePicker instance
 		public dispose(): void {
-			// Check if provider is ready
 			if (this.isBuilt) {
+				this.unsetCallbacks();
+				this.unsetHtmlElements();
+
 				this._flatpickr.destroy();
 			}
 
@@ -203,7 +197,6 @@ namespace Providers.Flatpickr {
 		}
 
 		// Provider getter
-		// eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
 		public get provider(): Flatpickr {
 			return this._flatpickr;
 		}

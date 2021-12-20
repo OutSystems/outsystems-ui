@@ -78,6 +78,7 @@
 		width: 7ch;
 
 		input {
+			font-size: var(--font-size-s);
 			font-weight: var(--font-bold);
 			height: 30px;
 			padding-left: var(--space-s);
@@ -342,6 +343,7 @@ span.flatpickr-weekday {
 // Responsive --------------------------------------------------------------------
 ///
 .phone {
+	.flatpickr-current-month,
 	.flatpickr-time {
 		.numInputWrapper {
 			.numInput {

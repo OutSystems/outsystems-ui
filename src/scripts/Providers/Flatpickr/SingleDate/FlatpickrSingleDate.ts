@@ -2,13 +2,9 @@
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.Flatpickr.SingleDate {
-	/**
-	 * Defines the interface for OutSystemsUI Patterns
-	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class OSUIFlatpickrSingleDate extends AbstractFlatpickr<FlatpickrSingleDateConfig> {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		constructor(uniqueId: string, configs: any) {
+		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new FlatpickrSingleDateConfig(configs));
 
 			// Set the default library Event handlers
@@ -38,6 +34,16 @@ namespace Providers.Flatpickr.SingleDate {
 			OSUIFramework.Helper.AsyncInvocation(this._onChangeCallbackEvent, this.widgetId, _selectedDate);
 		}
 
+		/**
+		 * Remove all the assigned Events
+		 *
+		 * @protected
+		 * @memberof Flatpickr.SingleDate
+		 */
+		protected unsetCallbacks(): void {
+			this._configs.OnChange = undefined;
+		}
+
 		public build(): void {
 			super.build();
 
@@ -47,42 +53,50 @@ namespace Providers.Flatpickr.SingleDate {
 		}
 
 		// Method used to change given propertyName at OnParametersChange platform event
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		public changeProperty(propertyName: string, propertyValue: any): void {
-			switch (propertyName) {
-				case Enum.Properties.InitialDate:
-					// Set the DefaultDate values
-					this._configs.InitialDate = propertyValue;
-					this._configs.DefaultDate[0] = this._configs.InitialDate;
-
-					break;
-
-				case OSUIFramework.Patterns.DatePicker.Enum.Properties.DateFormat:
-					// Check if any Date was selected
-					if (this._flatpickr.selectedDates.length > 0) {
-						// Set the new DefaultDate values
-						this._configs.InitialDate = this._flatpickr.formatDate(
-							this._flatpickr.selectedDates[0],
-							this._flatpickrOpts.dateFormat
-						);
-						this._configs.DefaultDate[0] = this._configs.InitialDate;
-					}
-
-					// Set the new InputDateFormat
-					this._configs.DateFormat = propertyValue;
-
-					break;
-
-				default:
-					super.changeProperty(propertyName, propertyValue);
-					break;
+		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			// If InitialDate we'll be set a property that doesn't exist as a global pattern config property
+			if (propertyName !== Enum.Properties.InitialDate) {
+				super.changeProperty(propertyName, propertyValue);
 			}
+
+			if (this.isBuilt) {
+				switch (propertyName) {
+					case Enum.Properties.InitialDate:
+						// Set the DefaultDate values
+						this.configs.InitialDate = propertyValue as string;
+						this._configs.DefaultDate[0] = this.configs.InitialDate;
+
+						break;
+
+					case OSUIFramework.Patterns.DatePicker.Enum.Properties.DateFormat:
+						// Check if any Date was selected
+						if (this._flatpickr.selectedDates.length > 0) {
+							// Set the new DefaultDate values
+							this._configs.InitialDate = this._flatpickr.formatDate(
+								this._flatpickr.selectedDates[0],
+								this._flatpickrOpts.dateFormat
+							);
+							this._configs.DefaultDate[0] = this._configs.InitialDate;
+						}
+
+						break;
+				}
+			}
+		}
+
+		// Method to remove and destroy DatePicker instance
+		public dispose(): void {
+			if (this.isBuilt) {
+				this.unsetCallbacks();
+			}
+
+			super.dispose();
 		}
 
 		/* Method that will be responsible to redraw the calendar when it's needed */
 		public redraw(): void {
-			// Destroy the old flatpickr instance
 			if (this.isBuilt) {
+				// Destroy the old flatpickr instance only
 				this._flatpickr.destroy();
 
 				// Create a new flatpickr instance with the updated configs

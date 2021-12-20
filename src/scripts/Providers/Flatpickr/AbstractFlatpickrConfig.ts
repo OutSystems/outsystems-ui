@@ -16,6 +16,7 @@ namespace Providers.Flatpickr {
 		protected _flatpickrOpts: any;
 
 		// Store the default date that will be assigned to the calendar
+		// It could be one date (single mode), two (Range mode), or more (multiple, if will exist)
 		public DefaultDate = [];
 
 		// Set the OnChange Event that will be defined in the specific context for each Flatpickr mode
@@ -24,8 +25,7 @@ namespace Providers.Flatpickr {
 		// Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr
 		public ServerDateFormat: string;
 
-		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-		constructor(config: any) {
+		constructor(config: JSON) {
 			super(config);
 		}
 

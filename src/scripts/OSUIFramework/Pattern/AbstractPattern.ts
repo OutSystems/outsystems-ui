@@ -219,6 +219,7 @@ namespace OSUIFramework.Patterns {
 		 * @memberof AbstractPattern
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			console.log('here!');
 			if (this._configs.hasOwnProperty(propertyName)) {
 				if (this._isBuilt) {
 					switch (propertyName) {
