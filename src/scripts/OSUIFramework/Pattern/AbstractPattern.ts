@@ -70,7 +70,7 @@ namespace OSUIFramework.Patterns {
 			this._widgetId = this._selfElem.closest(GlobalEnum.DataBlocksTag.DataBlock).id;
 
 			if (this._configs.ExtendedClass !== '') {
-				Helper.Dom.Styles.UpdateExtendedClass(this._selfElem, '', this._configs.ExtendedClass);
+				Helper.Dom.Styles.ExtendedClass(this._selfElem, '', this._configs.ExtendedClass);
 			}
 		}
 
@@ -186,7 +186,7 @@ namespace OSUIFramework.Patterns {
 				if (this._isBuilt) {
 					switch (propertyName) {
 						case GlobalEnum.CommonPatternsProperties.ExtendedClass:
-							Helper.Dom.Styles.UpdateExtendedClass(
+							Helper.Dom.Styles.ExtendedClass(
 								this._selfElem,
 								this._configs.ExtendedClass,
 								propertyValue as string

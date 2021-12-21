@@ -53,7 +53,7 @@ namespace Providers.Flatpickr {
 
 			// Check if there are any ExtendedClass to be added into our calendar elements
 			if (this._configs.ExtendedClass !== '') {
-				OSUIFramework.Helper.Dom.Styles.UpdateExtendedClass(
+				OSUIFramework.Helper.Dom.Styles.ExtendedClass(
 					this._flatpickr.calendarContainer,
 					'',
 					this._configs.ExtendedClass
@@ -177,7 +177,7 @@ namespace Providers.Flatpickr {
 				switch (propertyName) {
 					case OSUIFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass:
 						// Since Calendar element will be added dynamically by the library outside the pattern context
-						OSUIFramework.Helper.Dom.Styles.UpdateExtendedClass(
+						OSUIFramework.Helper.Dom.Styles.ExtendedClass(
 							this._flatpickr.calendarContainer,
 							oldExtendedClass,
 							propertyValue as string
