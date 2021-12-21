@@ -26,6 +26,8 @@ namespace Providers.Flatpickr.RangeDate {
 					);
 				}
 			}
+
+			this.redraw();
 		}
 
 		/**
@@ -101,15 +103,6 @@ namespace Providers.Flatpickr.RangeDate {
 						// Check if there is any selected date already
 						this._onUpdateDateFormat();
 						break;
-				}
-
-				// Trigger the redraw method in order to recreate the instance according new received properties values
-				if (
-					propertyName !== OSUIFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass &&
-					propertyName !== Enum.Properties.StartDate &&
-					propertyName !== Enum.Properties.EndDate
-				) {
-					super.redraw();
 				}
 			}
 		}

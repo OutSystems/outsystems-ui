@@ -4,7 +4,7 @@ namespace OSUIFramework.Helper {
 		/**
 		 * App Language
 		 */
-		private static _lang = '';
+		private static _lang = 'en-US';
 
 		public static get Lang(): string {
 			return Language._lang;

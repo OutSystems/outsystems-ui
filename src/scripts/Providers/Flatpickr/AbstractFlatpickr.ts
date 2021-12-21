@@ -2,7 +2,7 @@
 namespace Providers.Flatpickr {
 	export abstract class AbstractFlatpickr<C extends Flatpickr.AbstractFlatpickrConfig>
 		extends OSUIFramework.Patterns.DatePicker.AbstractDatePicker<Flatpickr, C>
-		implements IFlatpickr, OSUIFramework.Interface.IProviderPattern<Flatpickr>
+		implements IFlatpickr
 	{
 		// Flatpickr onInitialize event
 		private _onInitializeCallbackEvent: OSUIFramework.Callbacks.OSGeneric;
@@ -134,7 +134,7 @@ namespace Providers.Flatpickr {
 			this._flatpickr.destroy();
 
 			// Create a new flatpickr instance with the updated configs
-			OSUIFramework.Helper.AsyncInvocation(this.prepareConfigs.bind(this), '');
+			OSUIFramework.Helper.AsyncInvocation(this.prepareConfigs.bind(this));
 		}
 
 		/**
@@ -175,6 +175,21 @@ namespace Providers.Flatpickr {
 
 			if (this.isBuilt) {
 				switch (propertyName) {
+					case OSUIFramework.Patterns.DatePicker.Enum.Properties.FirstWeekDay:
+						this.redraw();
+						break;
+					case OSUIFramework.Patterns.DatePicker.Enum.Properties.MaxDate:
+						this.redraw();
+						break;
+					case OSUIFramework.Patterns.DatePicker.Enum.Properties.MinDate:
+						this.redraw();
+						break;
+					case OSUIFramework.Patterns.DatePicker.Enum.Properties.ShowTodayButton:
+						this.redraw();
+						break;
+					case OSUIFramework.Patterns.DatePicker.Enum.Properties.TimeFormat:
+						this.redraw();
+						break;
 					case OSUIFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass:
 						// Since Calendar element will be added dynamically by the library outside the pattern context
 						OSUIFramework.Helper.Dom.Styles.ExtendedClass(

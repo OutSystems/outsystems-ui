@@ -46,17 +46,17 @@
 			&:not(.has-today-btn) {
 				&.single {
 					-servicestudio-background-image: $calendar_single_img_base64;
-					-servicestudio-padding-top: min(300px, 100%);
+					-servicestudio-height: 310px;
 				}
 
 				&.time12h {
 					-servicestudio-background-image: $calendar_time12h_img_base64;
-					-servicestudio-padding-top: min(344px, 100%);
+					-servicestudio-height: 344px;
 				}
 
 				&.time24h {
 					-servicestudio-background-image: $calendar_time24h_img_base64;
-					-servicestudio-padding-top: min(344px, 100%);
+					-servicestudio-height: 344px;
 				}
 			}
 
@@ -64,17 +64,17 @@
 			&.has-today-btn {
 				&.single {
 					-servicestudio-background-image: $calendar_single_hasToday_img_base64;
-					-servicestudio-padding-top: min(344px, 100%);
+					-servicestudio-height: 344px;
 				}
 
 				&.time12h {
 					-servicestudio-background-image: $calendar_time12h_hasToday_img_base64;
-					-servicestudio-padding-top: min(390px, 100%);
+					-servicestudio-height: 390px;
 				}
 
 				&.time24h {
 					-servicestudio-background-image: $calendar_time24h_hasToday_img_base64;
-					-servicestudio-padding-top: min(390px, 100%);
+					-servicestudio-height: 390px;
 				}
 			}
 
@@ -93,5 +93,47 @@
 	// Service Studio Preview
 	.osui-datepicker-calendar-ss-preview {
 		-servicestudio-margin-top: -22px;
+	}
+}
+
+// If Hybrid IDE
+///
+html[data-uieditorversion^='1'] {
+	.osui-datepicker-calendar-ss-preview {
+		// If has not today btn
+		&:not(.has-today-btn) {
+			&.single {
+				-servicestudio-padding-top: min(300px, 100%);
+				-servicestudio-height: 0;
+			}
+
+			&.time12h {
+				-servicestudio-padding-top: min(344px, 100%);
+				-servicestudio-height: 0;
+			}
+
+			&.time24h {
+				-servicestudio-padding-top: min(344px, 100%);
+				-servicestudio-height: 0;
+			}
+		}
+
+		// If has today btn
+		&.has-today-btn {
+			&.single {
+				-servicestudio-padding-top: min(344px, 100%);
+				-servicestudio-height: 0;
+			}
+
+			&.time12h {
+				-servicestudio-padding-top: min(390px, 100%);
+				-servicestudio-height: 0;
+			}
+
+			&.time24h {
+				-servicestudio-padding-top: min(390px, 100%);
+				-servicestudio-height: 0;
+			}
+		}
 	}
 }

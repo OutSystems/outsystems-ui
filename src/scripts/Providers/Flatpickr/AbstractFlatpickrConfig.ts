@@ -23,14 +23,11 @@ namespace Providers.Flatpickr {
 			// If DateFormat hasn't been defined, set the same format as server date
 			let _altFormat = this.DateFormat !== '' ? this._mapProviderDateFormat() : this.ServerDateFormat;
 
-			// Time must behave in 24h format
-			if (this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat) {
-				_altFormat = _altFormat + ' - H:i';
-			}
-
-			// Time must behave in 12h format with AM/PM
+			// Time must behave in 12h format with AM/PM or in 24h format
 			if (this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time12hFormat) {
 				_altFormat = _altFormat + ' - h:i K';
+			} else if (this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat) {
+				_altFormat = _altFormat + ' - H:i';
 			}
 
 			return _altFormat;
@@ -38,12 +35,9 @@ namespace Providers.Flatpickr {
 
 		// Method used to check the language and also map it into Flatpickr expected format
 		private _checkLocale(): FlatpickrLocale {
-			// Get the short app locale info
-			const _lang = OSUIFramework.Helper.Language.ShortLang ? OSUIFramework.Helper.Language.ShortLang : 'en';
-
 			// FlatpickrLocale script file is already loaded
 			// Set the locale in order to define the calendar language
-			const _locale = window.flatpickr.l10ns[_lang];
+			const _locale = window.flatpickr.l10ns[OSUIFramework.Helper.Language.ShortLang];
 			// Set the calendar first week day
 			_locale.firstDayOfWeek = this.FirstWeekDay;
 
@@ -95,7 +89,7 @@ namespace Providers.Flatpickr {
 		}
 
 		// Method used to set all the global Flatpickr properties across the different types of instances
-		protected _getProviderConfig(): FlatpickrOptions {
+		protected getCommonProviderConfigs(): FlatpickrOptions {
 			// Check the given server date format config
 			this._checkServerDateFormat();
 

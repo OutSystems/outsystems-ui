@@ -65,7 +65,7 @@ namespace OSUIFramework.Patterns {
 		 * @memberof AbstractConfiguration
 		 */
 		protected validateNumber(value: number, defaultValue: number): number {
-			return value && isNaN(value) ? defaultValue : value;
+			return typeof value === 'number' ? value : defaultValue;
 		}
 
 		/**

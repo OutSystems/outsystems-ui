@@ -46,14 +46,16 @@ namespace Providers.Flatpickr.SingleDate {
 
 		// Method used to change given propertyName at OnParametersChange platform event
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
-			// If InitialDate we'll be set a property that doesn't exist as a global pattern config property
+			//Storing the current InitialDate, before possibly changing this property.
+			const oldInitialDate = this.configs.InitialDate;
+
 			super.changeProperty(propertyName, propertyValue);
 
 			if (this.isBuilt) {
 				switch (propertyName) {
 					case Enum.Properties.InitialDate:
 						// Check if redraw must run
-						if (this.configs.InitialDate !== propertyValue) {
+						if (oldInitialDate !== propertyValue) {
 							super.redraw();
 						}
 						break;
@@ -68,15 +70,9 @@ namespace Providers.Flatpickr.SingleDate {
 							);
 						}
 
-						break;
-				}
+						this.redraw();
 
-				// Trigger the redraw method in order to recreate the instance according new received properties values
-				if (
-					propertyName !== OSUIFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass &&
-					propertyName !== Enum.Properties.InitialDate
-				) {
-					super.redraw();
+						break;
 				}
 			}
 		}
