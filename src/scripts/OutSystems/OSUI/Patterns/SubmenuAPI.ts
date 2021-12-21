@@ -116,4 +116,19 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 
 		return submenu;
 	}
+
+	/**
+	 * Function that will run  on the pattern's OnRender.
+	 *
+	 * @export
+	 * @param {string} submenuId
+	 * @return {*}  {OSUIFramework.Patterns.Submenu.ISubmenu}
+	 */
+	export function UpdateOnRender(submenuId: string): OSUIFramework.Patterns.Submenu.ISubmenu {
+		const submenu = GetSubmenuById(submenuId);
+
+		submenu.updateOnRender();
+
+		return submenu;
+	}
 }
