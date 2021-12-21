@@ -56,6 +56,19 @@ namespace OSUIFramework.Patterns {
 		}
 
 		/**
+		 * Method that helps to validate if a number is not empty or undefined.
+		 *
+		 * @protected
+		 * @param {number} value
+		 * @param {number} defaultValue
+		 * @return {*}  {number}
+		 * @memberof AbstractConfiguration
+		 */
+		protected validateNumber(value: number, defaultValue: number): number {
+			return value && isNaN(value) ? defaultValue : value;
+		}
+
+		/**
 		 * Method that helps to validate if a string is not empty or undefined.
 		 *
 		 * @protected

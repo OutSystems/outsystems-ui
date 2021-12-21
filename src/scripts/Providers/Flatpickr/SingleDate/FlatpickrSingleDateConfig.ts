@@ -15,24 +15,20 @@ namespace Providers.Flatpickr.SingleDate {
 
 		constructor(config: JSON) {
 			super(config);
-
-			// Since on this case user could select one date only
-			this.DefaultDate[0] = this.InitialDate;
 		}
 
 		// Method used to set all the config properties for the SingleDate mode type
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		public getProviderConfig(): any {
+		public getProviderConfig(): FlatpickrOptions {
 			const flatpickrSingleDateOpts = {
-				defaultDate: OSUIFramework.Helper.Dates.IsNull(this.InitialDate) ? undefined : this.DefaultDate,
-				mode: Flatpickr.Enum.Mode.Single,
+				defaultDate: OSUIFramework.Helper.Dates.IsNull(this.InitialDate) ? undefined : this.InitialDate,
+				mode: OSUIFramework.Patterns.DatePicker.Enum.Mode.Single,
 				onChange: this.OnChange,
 			};
 
 			// Merge both option objects => if objects have a property with the same name, then the right-most object property overwrites the previous one
 			// eslint-disable-next-line prefer-const
 			let fpOptions = {
-				...super._getFlatpickrOpts(),
+				...super._getProviderConfig(),
 				...flatpickrSingleDateOpts,
 			};
 

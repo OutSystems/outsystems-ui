@@ -10,6 +10,10 @@ namespace OSUIFramework.Helper {
 			return Language._lang;
 		}
 
+		public static get ShortLang(): string {
+			return Language._lang.substring(0, 2);
+		}
+
 		/**
 		 * Function responsible for setting up the the app language
 		 *

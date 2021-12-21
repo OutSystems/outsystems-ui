@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.Flatpickr {
 	export abstract class AbstractFlatpickr<C extends Flatpickr.AbstractFlatpickrConfig>
-		extends OSUIFramework.Patterns.DatePicker.AbstractDatePicker<C>
+		extends OSUIFramework.Patterns.DatePicker.AbstractDatePicker<Flatpickr, C>
 		implements IFlatpickr, OSUIFramework.Interface.IProviderPattern<Flatpickr>
 	{
 		// Flatpickr onInitialize event
@@ -19,6 +19,9 @@ namespace Providers.Flatpickr {
 
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
+
+			// Set the default library Event handler that will be used to set on the provider configs
+			this.configs.OnChange = this.onDateSelectedEvent.bind(this);
 		}
 
 		// Trigger the jumToDate to now
@@ -34,7 +37,7 @@ namespace Providers.Flatpickr {
 			this._flatpickrInputElem = this._datePickerProviderInputElem.nextSibling as HTMLInputElement;
 
 			// Added the data-input attribute in order to input be styled as all platform inputs
-			OSUIFramework.Helper.Attribute.Set(
+			OSUIFramework.Helper.Dom.Attribute.Set(
 				this._flatpickrInputElem,
 				OSUIFramework.GlobalEnum.HTMLAttributes.DataInput,
 				''
@@ -43,14 +46,18 @@ namespace Providers.Flatpickr {
 
 		// Method used to set the CSS classes to the pattern HTML elements
 		private _setCalendarCssClasses(): void {
-			OSUIFramework.Helper.Style.AddClass(
+			OSUIFramework.Helper.Dom.Styles.AddClass(
 				this._flatpickr.calendarContainer,
 				OSUIFramework.Patterns.DatePicker.Enum.CssClass.Calendar
 			);
 
 			// Check if there are any ExtendedClass to be added into our calendar elements
 			if (this._configs.ExtendedClass !== '') {
-				this._updateCalendarExtendedClassSelectors('', this._configs.ExtendedClass);
+				OSUIFramework.Helper.Dom.Styles.UpdateExtendedClass(
+					this._flatpickr.calendarContainer,
+					'',
+					this._configs.ExtendedClass
+				);
 			}
 		}
 
@@ -65,33 +72,13 @@ namespace Providers.Flatpickr {
 			}
 		}
 
-		// Since Calendar will be added outside of pattern context,
-		// this method will manage the CSS ExtendedClasses into that element accordingly
-		private _updateCalendarExtendedClassSelectors(activeCssClass: string, newCssClass: string): void {
-			if (activeCssClass !== '') {
-				const activeCssClassArray = activeCssClass.split(' ');
-
-				for (const className of activeCssClassArray) {
-					this._flatpickr.calendarContainer.classList.remove(className);
-				}
-			}
-
-			if (newCssClass !== '') {
-				const newCssClassArray = newCssClass.split(' ');
-
-				for (const className of newCssClassArray) {
-					this._flatpickr.calendarContainer.classList.add(className);
-				}
-			}
-		}
-
 		/**
 		 * Method used to add the TodayButton at calendar
 		 *
 		 * @protected
 		 * @memberof AbstractFlatpickr
 		 */
-		protected _addTodayBtn(): void {
+		protected addTodayBtn(): void {
 			// Create the wrapper container
 			const todayBtnWrapper = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Div);
 			todayBtnWrapper.classList.add(Enum.CssClasses.TodayBtn);
@@ -114,7 +101,7 @@ namespace Providers.Flatpickr {
 		 * @protected
 		 * @memberof AbstractFlatpickr
 		 */
-		protected _onReady(): void {
+		protected createProviderInstance(): void {
 			// Init provider
 			this._flatpickr = window.flatpickr(this._datePickerProviderInputElem, this._flatpickrOpts);
 
@@ -125,7 +112,7 @@ namespace Providers.Flatpickr {
 			if (OSUIFramework.Helper.DeviceInfo.IsPhone === false) {
 				// Add TodayBtn
 				if (this._configs.ShowTodayButton) {
-					this._addTodayBtn();
+					this.addTodayBtn();
 				}
 
 				// Set Calendar CSS classes
@@ -137,12 +124,28 @@ namespace Providers.Flatpickr {
 		}
 
 		/**
+		 * Method that will be responsible to redraw the calendar when it's needed
+		 *
+		 * @protected
+		 * @memberof AbstractFlatpickr
+		 */
+		protected redraw(): void {
+			// Destroy the old flatpickr instance
+			this._flatpickr.destroy();
+
+			// Create a new flatpickr instance with the updated configs
+			OSUIFramework.Helper.AsyncInvocation(this.prepareConfigs.bind(this), '');
+		}
+
+		/**
 		 * Remove all the assigned Events
 		 *
 		 * @protected
 		 * @memberof AbstractFlatpickr
 		 */
 		protected unsetCallbacks(): void {
+			this.configs.OnChange = undefined;
+
 			this._onInitializeCallbackEvent = undefined;
 			this._onChangeCallbackEvent = undefined;
 		}
@@ -164,11 +167,23 @@ namespace Providers.Flatpickr {
 		}
 
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			//Storing the current ExtendedClass, before possibly changing this property.
+			//This will enable us to remove the previous added classes to the element.
+			const oldExtendedClass = this.configs.ExtendedClass;
+
 			super.changeProperty(propertyName, propertyValue);
 
-			// Since we've an element that will be added dynamically at the body...
-			if (this.isBuilt && propertyName === OSUIFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass) {
-				this._updateCalendarExtendedClassSelectors(this._configs.ExtendedClass, propertyValue as string);
+			if (this.isBuilt) {
+				switch (propertyName) {
+					case OSUIFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass:
+						// Since Calendar element will be added dynamically by the library outside the pattern context
+						OSUIFramework.Helper.Dom.Styles.UpdateExtendedClass(
+							this._flatpickr.calendarContainer,
+							oldExtendedClass,
+							propertyValue as string
+						);
+						break;
+				}
 			}
 		}
 
@@ -196,11 +211,6 @@ namespace Providers.Flatpickr {
 			this._flatpickr.open();
 		}
 
-		// Provider getter
-		public get provider(): Flatpickr {
-			return this._flatpickr;
-		}
-
 		// Method used to regist callback events
 		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
 			switch (eventName) {
@@ -216,5 +226,8 @@ namespace Providers.Flatpickr {
 					throw new Error(`The given '${eventName}' event name it's not defined.`);
 			}
 		}
+
+		protected abstract onDateSelectedEvent(selectedDates: string[], dateStr: string, fp: Flatpickr): void;
+		protected abstract prepareConfigs(): void;
 	}
 }

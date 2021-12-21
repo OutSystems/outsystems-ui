@@ -185,6 +185,50 @@ namespace OSUIFramework.Helper {
 				throw Error(`The element does not exist, when trying to toggle the class '${cssClass}'.`);
 			}
 		}
+
+		/**
+		 * Method that knows how to update the Extended class of the pattern.
+		 *
+		 * @static
+		 * @param {HTMLElement} element Element where the class will be toggled.
+		 * @param {string} currentCssClasses Css classes that are assigned to the given element
+		 * @param {string} newCssClass Css classes that will be assigned to the given element
+		 * @memberof StyleManipulation
+		 */
+		public static UpdateExtendedClass(element: HTMLElement, currentCssClasses: string, newCssClass: string): void {
+			if (element) {
+				const currentClassesList = currentCssClasses.split(' ');
+				const newClassesList = newCssClass.split(' ');
+				let classesToRemove = [];
+				let classesToAdd = [];
+
+				if (currentCssClasses !== '') {
+					classesToRemove = currentClassesList.filter(
+						(currClass) => newClassesList.indexOf(currClass) === -1
+					);
+				}
+
+				if (newCssClass !== '') {
+					classesToAdd = newClassesList.filter((newClass) => currentClassesList.indexOf(newClass) === -1);
+				}
+
+				//Let's remove only the classes that are to do so.
+				if (classesToRemove.length > 0) {
+					classesToRemove.forEach((classToRemove) => {
+						Helper.Dom.Styles.RemoveClass(element, classToRemove);
+					});
+				}
+
+				//Let's add only the new classes
+				if (classesToAdd.length > 0) {
+					classesToAdd.forEach((classToAdd) => {
+						Helper.Dom.Styles.AddClass(element, classToAdd);
+					});
+				}
+			} else {
+				throw Error(`The element does not exist, when trying to update EntendedClass '${newCssClass}'.`);
+			}
+		}
 	}
 
 	export abstract class Dom {

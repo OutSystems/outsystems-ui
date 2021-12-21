@@ -16,6 +16,12 @@ namespace OSUIFramework.Patterns.DatePicker.Enum {
 		OnInitialize = 'OnInitialize',
 	}
 
+	// Datepicker Mode Types
+	export enum Mode {
+		Range = 'range',
+		Single = 'single',
+	}
+
 	/**
 	 * DatePicker Enum properties
 	 */

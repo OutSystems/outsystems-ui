@@ -51,11 +51,14 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @export
 	 * @param {string} datePickerId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
+	 * @param {string} mode Set which calendar type should be created (SingleDate, RangeDate).
+	 * @param {string} provider Set which provider should be used to create the calendar instance.
 	 * @return {*}  {OSUIFramework.Patterns.DatePicker.IDatePicker}
 	 */
 	export function Create(
 		datePickerId: string,
 		configs: string,
+		mode: OSUIFramework.Patterns.DatePicker.Enum.Mode,
 		provider: string
 	): OSUIFramework.Patterns.DatePicker.IDatePicker {
 		if (_datePickerItemsMap.has(datePickerId)) {
@@ -65,6 +68,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 		const _datePickerItem = OSUIFramework.Patterns.DatePicker.Factory.NewDatePicker(
 			datePickerId,
 			configs,
+			mode,
 			provider
 		);
 
