@@ -153,6 +153,26 @@ namespace OSUIFramework.Patterns.Submenu {
 		}
 
 		/**
+		 * Remove submenu as active
+		 *
+		 * @memberof Submenu
+		 */
+		private _removeActive(): void {
+			Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternActive);
+			this._isActive = false;
+		}
+
+		/**
+		 * Set submenu as active
+		 *
+		 * @memberof Submenu
+		 */
+		private _setActive(): void {
+			Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternActive);
+			this._isActive = true;
+		}
+
+		/**
 		 * Trigger the submenu behavior based on visibility
 		 *
 		 * @private
@@ -291,7 +311,7 @@ namespace OSUIFramework.Patterns.Submenu {
 		protected setInitialStates(): void {
 			// Add active class to pattern based on links whith active state
 			if (this._hasActiveLinks) {
-				this.setActive();
+				this._setActive();
 			}
 
 			// Add an identifier if the pattern has childs
@@ -448,26 +468,6 @@ namespace OSUIFramework.Patterns.Submenu {
 		}
 
 		/**
-		 * Remove submenu as active
-		 *
-		 * @memberof Submenu
-		 */
-		public removeActive(): void {
-			Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternActive);
-			this._isActive = false;
-		}
-
-		/**
-		 * Set submenu as active
-		 *
-		 * @memberof Submenu
-		 */
-		public setActive(): void {
-			Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternActive);
-			this._isActive = true;
-		}
-
-		/**
 		 * Trigger on submenu onRender, to update active state
 		 *
 		 * @memberof Submenu
@@ -478,7 +478,7 @@ namespace OSUIFramework.Patterns.Submenu {
 				this._checkForActiveLinks();
 
 				if (this._hasActiveLinks) {
-					this._isActive ? this.removeActive() : this.setActive();
+					this._isActive ? this._removeActive() : this._setActive();
 				}
 			}
 		}
