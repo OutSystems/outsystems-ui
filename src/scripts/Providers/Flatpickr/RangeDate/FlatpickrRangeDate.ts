@@ -85,20 +85,6 @@ namespace Providers.Flatpickr.RangeDate {
 
 			if (this.isBuilt) {
 				switch (propertyName) {
-					case Enum.Properties.StartDate:
-						// Check if redraw must run
-						if (this.configs.StartDate !== propertyValue) {
-							super.redraw();
-						}
-						break;
-
-					case Enum.Properties.EndDate:
-						// Check if redraw must run
-						if (this.configs.EndDate !== propertyValue) {
-							super.redraw();
-						}
-						break;
-
 					case OSUIFramework.Patterns.DatePicker.Enum.Properties.DateFormat:
 						// Check if there is any selected date already
 						this._onUpdateDateFormat();

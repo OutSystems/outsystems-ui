@@ -46,20 +46,10 @@ namespace Providers.Flatpickr.SingleDate {
 
 		// Method used to change given propertyName at OnParametersChange platform event
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
-			//Storing the current InitialDate, before possibly changing this property.
-			const oldInitialDate = this.configs.InitialDate;
-
 			super.changeProperty(propertyName, propertyValue);
 
 			if (this.isBuilt) {
 				switch (propertyName) {
-					case Enum.Properties.InitialDate:
-						// Check if redraw must run
-						if (oldInitialDate !== propertyValue) {
-							super.redraw();
-						}
-						break;
-
 					case OSUIFramework.Patterns.DatePicker.Enum.Properties.DateFormat:
 						// Check if any Date was selected
 						if (this._flatpickr.selectedDates.length > 0) {
