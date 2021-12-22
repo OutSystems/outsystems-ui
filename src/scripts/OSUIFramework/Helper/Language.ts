@@ -4,10 +4,14 @@ namespace OSUIFramework.Helper {
 		/**
 		 * App Language
 		 */
-		private static _lang = '';
+		private static _lang = 'en-US';
 
 		public static get Lang(): string {
 			return Language._lang;
+		}
+
+		public static get ShortLang(): string {
+			return Language._lang.substring(0, 2);
 		}
 
 		/**

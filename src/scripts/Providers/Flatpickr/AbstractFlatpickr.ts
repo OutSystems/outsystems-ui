@@ -1,32 +1,64 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.Flatpickr {
 	export abstract class AbstractFlatpickr<C extends Flatpickr.AbstractFlatpickrConfig>
-		extends OSUIFramework.Patterns.DatePicker.AbstractDatePicker<C>
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		implements IFlatpickr, OSUIFramework.Interface.IProviderPattern<Flatpickr>
+		extends OSUIFramework.Patterns.DatePicker.AbstractDatePicker<Flatpickr, C>
+		implements IFlatpickr
 	{
-		// onInitialize event
+		// Flatpickr onInitialize event
 		private _onInitializeCallbackEvent: OSUIFramework.Callbacks.OSGeneric;
-
-		// Store the provider target element
+		// Store pattern input HTML element reference
 		protected _datePickerProviderInputElem: HTMLInputElement;
 		// Store the provider reference
 		protected _flatpickr: Flatpickr;
-		// Store the flatpickr html element that will be added by library
+		// Store the flatpickr input html element that will be added by library
 		protected _flatpickrInputElem: HTMLInputElement;
 		// Store the provider options
 		protected _flatpickrOpts: FlatpickrOptions;
-		// onChange (SelectedDate) event
+		// Flatpickr onChange (SelectedDate) event
 		protected _onChangeCallbackEvent: OSUIFramework.Callbacks.OSDatepickerOnChangeEvent;
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
+
+			// Set the default library Event handler that will be used to set on the provider configs
+			this.configs.OnChange = this.onDateSelectedEvent.bind(this);
 		}
 
 		// Trigger the jumToDate to now
-		private _jumpIntoToday() {
+		private _jumpIntoToday(event: MouseEvent) {
+			event.preventDefault();
+
 			this._flatpickr.jumpToDate(this._flatpickr.now);
+		}
+
+		// Method used to set the needed HTML attributes
+		private _setAttributes(): void {
+			// Since a new input will be added by the flatpickr library, we must address it only at onReady
+			this._flatpickrInputElem = this._datePickerProviderInputElem.nextSibling as HTMLInputElement;
+
+			// Added the data-input attribute in order to input be styled as all platform inputs
+			OSUIFramework.Helper.Dom.Attribute.Set(
+				this._flatpickrInputElem,
+				OSUIFramework.GlobalEnum.HTMLAttributes.DataInput,
+				''
+			);
+		}
+
+		// Method used to set the CSS classes to the pattern HTML elements
+		private _setCalendarCssClasses(): void {
+			OSUIFramework.Helper.Dom.Styles.AddClass(
+				this._flatpickr.calendarContainer,
+				OSUIFramework.Patterns.DatePicker.Enum.CssClass.Calendar
+			);
+
+			// Check if there are any ExtendedClass to be added into our calendar elements
+			if (this._configs.ExtendedClass !== '') {
+				OSUIFramework.Helper.Dom.Styles.ExtendedClass(
+					this._flatpickr.calendarContainer,
+					'',
+					this._configs.ExtendedClass
+				);
+			}
 		}
 
 		// Method to set the html elements used
@@ -40,61 +72,92 @@ namespace Providers.Flatpickr {
 			}
 		}
 
-		// Method that will be used to set the CSS ExtendedClasses into input and calendar
-		private _updateExtendedClassSelectors(activeCssClass: string, newCssClass: string): void {
-			if (activeCssClass !== '') {
-				const activeCssClassArray = activeCssClass.split(' ');
+		/**
+		 * Method used to add the TodayButton at calendar
+		 *
+		 * @protected
+		 * @memberof AbstractFlatpickr
+		 */
+		protected addTodayBtn(): void {
+			// Create the wrapper container
+			const todayBtnWrapper = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Div);
+			todayBtnWrapper.classList.add(Enum.CssClasses.TodayBtn);
 
-				for (const className of activeCssClassArray) {
-					this._flatpickr.calendarContainer.classList.remove(className);
-				}
-			}
-
-			if (newCssClass !== '') {
-				const newCssClassArray = newCssClass.split(' ');
-
-				for (const className of newCssClassArray) {
-					this._flatpickr.calendarContainer.classList.add(className);
-				}
-			}
-		}
-
-		// Method used to add the TodayButton at calendar
-		protected _addTodayBtn(): void {
+			// Create the TodayBtn element
 			const todayBtn = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Link);
 			todayBtn.innerHTML = Enum.TodayButton.Text;
-			todayBtn.classList.add(Enum.CssClasses.TodayBtn);
+			OSUIFramework.Helper.A11Y.AriaLabel(todayBtn, Enum.TodayButton.AriaLabelText);
+
 			todayBtn.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, this._jumpIntoToday.bind(this));
-			this._flatpickr.calendarContainer.appendChild(todayBtn);
+
+			// Append elements to the proper containers
+			todayBtnWrapper.appendChild(todayBtn);
+			this._flatpickr.calendarContainer.appendChild(todayBtnWrapper);
 		}
 
-		// Method that will be triggered at Flatpickr instance is ready
-		protected _onReady(): void {
+		/**
+		 * Method that will be triggered at Flatpickr instance is ready
+		 *
+		 * @protected
+		 * @memberof AbstractFlatpickr
+		 */
+		protected createProviderInstance(): void {
 			// Init provider
 			this._flatpickr = window.flatpickr(this._datePickerProviderInputElem, this._flatpickrOpts);
 
-			// Add TodayBtn
-			if (this._configs.ShowTodayButton) {
-				this._addTodayBtn();
-			}
+			// Set the needed HTML attributes
+			this._setAttributes();
 
-			// Since a new input will be added by the flatpickr library, we must address it only at onReady
-			this._flatpickrInputElem = this._datePickerProviderInputElem.nextSibling as HTMLInputElement;
+			// At phone we've native behaviour, so TodayBtn can't be added
+			if (OSUIFramework.Helper.DeviceInfo.IsPhone === false) {
+				// Add TodayBtn
+				if (this._configs.ShowTodayButton) {
+					this.addTodayBtn();
+				}
 
-			// Added the data-input attribute in order to input be styled as all platform inputs
-			OSUIFramework.Helper.Attribute.Set(
-				this._flatpickrInputElem,
-				OSUIFramework.GlobalEnum.HTMLAttributes.DataInput,
-				''
-			);
-
-			// Check if there are any ExtendedClass to be added into our calendar elements
-			if (this._configs.ExtendedClass !== '') {
-				this._updateExtendedClassSelectors('', this._configs.ExtendedClass);
+				// Set Calendar CSS classes
+				this._setCalendarCssClasses();
 			}
 
 			// Trigger platform's InstanceIntializedHandler client Action
 			OSUIFramework.Helper.AsyncInvocation(this._onInitializeCallbackEvent, this.widgetId);
+		}
+
+		/**
+		 * Method that will be responsible to redraw the calendar when it's needed
+		 *
+		 * @protected
+		 * @memberof AbstractFlatpickr
+		 */
+		protected redraw(): void {
+			// Destroy the old flatpickr instance
+			this._flatpickr.destroy();
+
+			// Create a new flatpickr instance with the updated configs
+			OSUIFramework.Helper.AsyncInvocation(this.prepareConfigs.bind(this));
+		}
+
+		/**
+		 * Remove all the assigned Events
+		 *
+		 * @protected
+		 * @memberof AbstractFlatpickr
+		 */
+		protected unsetCallbacks(): void {
+			this.configs.OnChange = undefined;
+
+			this._onInitializeCallbackEvent = undefined;
+			this._onChangeCallbackEvent = undefined;
+		}
+
+		/**
+		 * Unsets the refences to the HTML elements.
+		 *
+		 * @protected
+		 * @memberof AbstractFlatpickr
+		 */
+		protected unsetHtmlElements(): void {
+			this._datePickerProviderInputElem = undefined;
 		}
 
 		public build(): void {
@@ -103,61 +166,39 @@ namespace Providers.Flatpickr {
 			this._setHtmllElements();
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		public changeProperty(propertyName: string, propertyValue: any): void {
-			switch (propertyName) {
-				case OSUIFramework.Patterns.DatePicker.Enum.Properties.TimeFormat:
-					// Set the new Timeformat value
-					this._configs.TimeFormat = propertyValue;
+		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			//Storing the current ExtendedClass, before possibly changing this property.
+			//This will enable us to remove the previous added classes to the element.
+			const oldExtendedClass = this.configs.ExtendedClass;
 
-					break;
+			super.changeProperty(propertyName, propertyValue);
 
-				case OSUIFramework.Patterns.DatePicker.Enum.Properties.ShowTodayButton:
-					// Set the new ShowTodayButton value
-					this._configs.ShowTodayButton = propertyValue;
-
-					break;
-
-				case OSUIFramework.Patterns.DatePicker.Enum.Properties.FirstWeekDay:
-					// Set the new FirstWeekDay value
-					this._configs.FirstWeekDay = propertyValue;
-
-					break;
-
-				case OSUIFramework.Patterns.DatePicker.Enum.Properties.MinDate:
-					// Set the new MinDate value
-					this._configs.MinDate = propertyValue;
-
-					break;
-
-				case OSUIFramework.Patterns.DatePicker.Enum.Properties.MaxDate:
-					// Set the new MaxDate value
-					this._configs.MaxDate = propertyValue;
-
-					break;
-
-				case OSUIFramework.Patterns.DatePicker.Enum.Properties.ShowMonths:
-					// Set the new ShowMonths value
-					this._configs.ShowMonths = propertyValue;
-
-					break;
-
-				case OSUIFramework.Patterns.DatePicker.Enum.Properties.ShowWeekNumbers:
-					// Set the new ShowMonths value
-					this._configs.ShowWeekNumbers = propertyValue;
-
-					break;
-
-				case OSUIFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass:
-					// Since we've an element that will be added dynamically at the body...
-					this._updateExtendedClassSelectors(this._configs.ExtendedClass, propertyValue);
-
-					// Update the property at the _selfElem
-					super.changeProperty(propertyName, propertyValue);
-
-					break;
-				default:
-					throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
+			if (this.isBuilt) {
+				switch (propertyName) {
+					case OSUIFramework.Patterns.DatePicker.Enum.Properties.FirstWeekDay:
+						this.redraw();
+						break;
+					case OSUIFramework.Patterns.DatePicker.Enum.Properties.MaxDate:
+						this.redraw();
+						break;
+					case OSUIFramework.Patterns.DatePicker.Enum.Properties.MinDate:
+						this.redraw();
+						break;
+					case OSUIFramework.Patterns.DatePicker.Enum.Properties.ShowTodayButton:
+						this.redraw();
+						break;
+					case OSUIFramework.Patterns.DatePicker.Enum.Properties.TimeFormat:
+						this.redraw();
+						break;
+					case OSUIFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass:
+						// Since Calendar element will be added dynamically by the library outside the pattern context
+						OSUIFramework.Helper.Dom.Styles.ExtendedClass(
+							this._flatpickr.calendarContainer,
+							oldExtendedClass,
+							propertyValue as string
+						);
+						break;
+				}
 			}
 		}
 
@@ -171,8 +212,10 @@ namespace Providers.Flatpickr {
 
 		// Method to remove and destroy DatePicker instance
 		public dispose(): void {
-			// Check if provider is ready
 			if (this.isBuilt) {
+				this.unsetCallbacks();
+				this.unsetHtmlElements();
+
 				this._flatpickr.destroy();
 			}
 
@@ -181,12 +224,6 @@ namespace Providers.Flatpickr {
 
 		public open(): void {
 			this._flatpickr.open();
-		}
-
-		// Provider getter
-		// eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-		public get provider(): Flatpickr {
-			return this._flatpickr;
 		}
 
 		// Method used to regist callback events
@@ -204,5 +241,8 @@ namespace Providers.Flatpickr {
 					throw new Error(`The given '${eventName}' event name it's not defined.`);
 			}
 		}
+
+		protected abstract onDateSelectedEvent(selectedDates: string[], dateStr: string, fp: Flatpickr): void;
+		protected abstract prepareConfigs(): void;
 	}
 }

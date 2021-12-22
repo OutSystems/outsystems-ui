@@ -5,14 +5,42 @@ namespace OSUIFramework.Patterns.DatePicker {
 		public FirstWeekDay: number;
 		public MaxDate: string;
 		public MinDate: string;
-		public ShowMonths: boolean;
 		public ShowTodayButton: boolean;
-		public ShowWeekNumbers: boolean;
 		public TimeFormat: string;
 
-		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-		constructor(config: any) {
+		constructor(config: JSON) {
 			super(config);
+		}
+
+		public validateDefault(key: string, value: unknown): unknown {
+			let validatedValue = undefined;
+
+			switch (key) {
+				case Enum.Properties.DateFormat:
+					// eslint-disable-next-line @typescript-eslint/no-unused-vars
+					validatedValue = this.validateString(value as string, OSUIFramework.Helper.Dates.ServerFormat);
+					break;
+				case Enum.Properties.FirstWeekDay:
+					validatedValue = this.validateNumber(value as number, 0);
+					break;
+				case Enum.Properties.MaxDate:
+					validatedValue = this.validateString(value as string, undefined);
+					break;
+				case Enum.Properties.MinDate:
+					validatedValue = this.validateString(value as string, undefined);
+					break;
+				case Enum.Properties.ShowTodayButton:
+					validatedValue = this.validateBoolean(value as boolean, false);
+					break;
+				case Enum.Properties.TimeFormat:
+					validatedValue = this.validateString(value as string, Enum.TimeFormatMode.Disable);
+					break;
+				default:
+					validatedValue = super.validateDefault(key, value);
+					break;
+			}
+
+			return validatedValue;
 		}
 	}
 }

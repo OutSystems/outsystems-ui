@@ -1,9 +1,6 @@
 /*! Patterns - Interaction - Date Picker */
-////
-/// @group Patterns-Date_Picker
-/// Patterns - Interaction - Date Picker
+/* Since this pattern is Deprecated, it should not appear at SASSDCS! */
 
-///
 .pika {
 	&-single {
 		background: var(--color-neutral-0);
@@ -275,12 +272,10 @@
 	}
 }
 
-///
 input.OSFillParent.calendar-input {
 	display: none;
 }
 
-///
 .is-inrange {
 	position: relative;
 
@@ -308,7 +303,6 @@ input.OSFillParent.calendar-input {
 	}
 }
 
-///
 .month-picker,
 .year-picker {
 	-webkit-box-direction: normal;
@@ -320,14 +314,12 @@ input.OSFillParent.calendar-input {
 	padding: var(--space-none);
 }
 
-///
 .prev-year,
 .next-year {
 	color: var(--color-neutral-7);
 }
 
 /* Keycode shortcuts dialog */
-///
 .calendar-help {
 	&-dialog {
 		background-color: var(--color-neutral-0);
@@ -392,14 +384,12 @@ input.OSFillParent.calendar-input {
 	}
 }
 
-///
 .portal-class ~ .pika-single.is-bound {
 	/* Fix datepicker when inside Popup Widget */
 	z-index: 251;
 }
 
 // Responsive --------------------------------------------------------------------
-///
 .phone {
 	.pika {
 		&-lendar {
@@ -417,7 +407,6 @@ input.OSFillParent.calendar-input {
 }
 
 // IsRTL -------------------------------------------------------------------------
-///
 .is-rtl {
 	.pika {
 		&-next {
@@ -446,7 +435,6 @@ input.OSFillParent.calendar-input {
 }
 
 // Accessibility ---------------------------------------------------------------------
-///
 .has-accessible-features {
 	.desktop & {
 		.pika {
