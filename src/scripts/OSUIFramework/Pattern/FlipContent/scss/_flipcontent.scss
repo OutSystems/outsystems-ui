@@ -4,7 +4,7 @@
 /// Patterns - Content - Flip_Content
 
 ///
-.flip-content {
+.osui-flip-content {
 	perspective: 200vw;
 	position: relative;
 
@@ -20,30 +20,30 @@
 		transform-style: preserve-3d;
 	}
 
-	&.flipped {
-		.flip-content {
-			&-front {
-				position: absolute;
-			}
-
-			&-back {
-				position: relative;
-				transform: rotateY(90deg);
-			}
-
-			&-container {
+	&--flipped {
+		.osui-flip-content {
+			&__container {
 				transform: rotateY(-90deg);
+
+				&__front {
+					position: absolute;
+				}
+
+				&__back {
+					position: relative;
+					transform: rotateY(90deg);
+				}
 			}
 		}
 	}
 
-	&-container {
+	&__container {
 		cursor: default;
 		position: relative;
 		transform-style: preserve-3d;
 		transition: all 630ms cubic-bezier(0.03, 0.01, 0.67, 1.97);
 
-		&.flip-self {
+		&--flip-self {
 			cursor: pointer;
 		}
 
@@ -52,51 +52,33 @@
 			-servicestudio--webkit-transform-style: initial;
 			-servicestudio-transform-style: initial;
 		}
-	}
 
-	&-front,
-	&-back {
-		backface-visibility: hidden;
-		left: 0;
-		top: 0;
+		&__front,
+		&__back {
+			backface-visibility: hidden;
+			left: 0;
+			top: 0;
 
-		&:empty {
-			// Service Studio preview
-			& {
-				-servicestudio-min-height: 80px;
+			&:empty {
+				// Service Studio preview
+				& {
+					-servicestudio-min-height: 80px;
+				}
 			}
 		}
-	}
 
-	&-front {
-		position: relative;
-		z-index: 2;
-	}
-
-	&-back {
-		position: absolute;
-		width: 100%;
-
-		// Service Studio preview
-		& {
-			-servicestudio-position: static;
+		&__front {
+			position: relative;
+			z-index: 2;
 		}
-	}
-}
 
-// IsRTL ---------------------------------------------------------------------------
-///
-.is-rtl {
-	.flip-content {
-		&.flipped {
-			.flip-content {
-				&-back {
-					transform: rotateY(-90deg);
-				}
+		&__back {
+			position: absolute;
+			width: 100%;
 
-				&-container {
-					transform: rotateY(90deg);
-				}
+			// Service Studio preview
+			& {
+				-servicestudio-position: static;
 			}
 		}
 	}

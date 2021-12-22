@@ -7,7 +7,6 @@
 .osui-submenu {
 	cursor: pointer;
 	display: inline-flex;
-	margin-left: var(--space-base);
 	position: relative;
 
 	// Service Studio Preview
@@ -180,7 +179,6 @@
 
 	.osui-submenu {
 		flex-direction: column;
-		margin-left: var(--space-none);
 		width: 100%;
 
 		&.active .osui-submenu__header {
@@ -245,9 +243,7 @@
 				color: var(--color-primary);
 			}
 		}
-	}
 
-	.osui-submenu {
 		&__header {
 			&:hover {
 				border-bottom: var(--border-size-m) solid var(--color-primary);
@@ -273,12 +269,22 @@
 			}
 		}
 	}
+
+	.layout:not(.layout-side) {
+		.app-menu-links {
+			.osui-submenu {
+				height: 100%;
+			}
+		}
+	}
 }
+
 .has-accessible-features .osui-submenu:focus-within {
 	-webkit-box-shadow: 0 0 0 3px var(--color-focus-outer);
 	box-shadow: 0 0 0 3px var(--color-focus-outer);
 	outline: 0;
 }
+
 ///
 .tablet,
 .phone {
@@ -290,11 +296,11 @@
 
 	.osui-submenu {
 		flex-direction: column;
-		margin-left: var(--space-none);
 		width: 100%;
 
 		&.active .osui-submenu__header {
 			border-left: var(--border-size-m) solid var(--color-primary);
+			border-bottom: 0;
 		}
 
 		&--is-open .osui-submenu__items {

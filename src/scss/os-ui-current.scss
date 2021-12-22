@@ -227,8 +227,7 @@
 @import '04-patterns/02-content/list-item-content';
 @import '04-patterns/02-content/section';
 @import '04-patterns/02-content/tag';
-// @import '../scripts/OSUIFramework/Pattern/Tooltip/scss/tooltip';
-@import '10-deprecated/tooltip-deprecated';
+@import '../scripts/OSUIFramework/Pattern/Tooltip/scss/tooltip';
 @import '04-patterns/02-content/user-avatar';
 
 /* ============================================================================ */
@@ -252,8 +251,7 @@
 //@import '../scripts/OSUIFramework/Pattern/RangeSlider/scss/rangeslider';
 @import '04-patterns/03-interaction/scrollable-area';
 @import '../scripts/OSUIFramework/Pattern/Search/scss/search';
-// @import '../scripts/OSUIFramework/Pattern/Sidebar/scss/sidebar';
-@import '10-deprecated/sidebar-deprecated';
+@import '../scripts/OSUIFramework/Pattern/Sidebar/scss/sidebar';
 @import '04-patterns/03-interaction/stacked-cards';
 @import '04-patterns/03-interaction/video';
 
@@ -264,9 +262,8 @@
 @import '04-patterns/04-navigation/breadcrumbs';
 @import '04-patterns/04-navigation/pagination';
 @import '04-patterns/04-navigation/section-index';
-// @import '../scripts/OSUIFramework/Pattern/Submenu/scss/submenu';
-@import '10-deprecated/submenu-deprecated';
-@import '04-patterns/04-navigation/tabs';
+@import '../scripts/OSUIFramework/Pattern/Submenu/scss/submenu';
+@import '10-deprecated/tabs-deprecated';
 @import '04-patterns/04-navigation/timeline';
 @import '04-patterns/04-navigation/wizard';
 
@@ -287,8 +284,7 @@
 /*      - Utilities                                                             */
 /* ============================================================================ */
 @import '04-patterns/06-utilities/align-center';
-// @import '../scripts/OSUIFramework/Pattern/ButtonLoading/scss/button-loading';
-@import '10-deprecated/button-loading-deprecated';
+@import '../scripts/OSUIFramework/Pattern/ButtonLoading/scss/button-loading';
 @import '04-patterns/06-utilities/center-content';
 @import '04-patterns/06-utilities/margin-container';
 @import '04-patterns/06-utilities/separator';
@@ -299,6 +295,11 @@
 /*! Deprecated Patterns                                                         */
 /*! =========================================================================== */
 @import '10-deprecated/horizontal-scroll-deprecated';
+@import '10-deprecated/tooltip-deprecated';
+@import '10-deprecated/sidebar-deprecated';
+@import '10-deprecated/flip-content-deprecated';
+@import '10-deprecated/button-loading-deprecated';
+@import '10-deprecated/submenu-deprecated';
 
 /*! =========================================================================== */
 /*! Usefull Classes                                                             */

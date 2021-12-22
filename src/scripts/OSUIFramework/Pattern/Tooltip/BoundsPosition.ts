@@ -63,12 +63,12 @@ namespace OSUIFramework.Patterns.Tooltip {
 		): string | undefined {
 			// Get Bounds element and sizes
 			const elemBound = elem.getBoundingClientRect();
-			const elemHeight = elem.clientHeight;
-			const elemWidth = elem.clientWidth;
+			const elemHeight = elemBound.height;
+			const elemWidth = elemBound.width;
 
 			const viewElemBound = viewElem.getBoundingClientRect();
-			const viewElemHeight = viewElem.clientHeight;
-			const viewElemWidth = viewElem.clientWidth;
+			const viewElemHeight = viewElemBound.height;
+			const viewElemWidth = viewElemBound.width;
 
 			// Check if it's out of the viewport on each side
 			const out = {
@@ -83,7 +83,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 				out.top = false;
 			}
 			// Since it has a smaller height than the viewElem and doesn't fit at top position, check if fits at bottom!
-			else if (out.top && Math.abs(elemBound.top - viewElemBound.top) < elemHeight) {
+			else if (out.top && elemBound.top >= 0 && elemBound.top - viewElemBound.top < elemHeight) {
 				out.top = false;
 			}
 
@@ -266,7 +266,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 				// If there are not a parentNode with the overflow hidden, check the body boudaries
 				_newItemPosition = BoundsPosition._isItemOutOfViewElemBounds(
 					elemToTest,
-					document.body,
+					document.querySelector('.screen-container > div'), // In oder to get the page fullHeight
 					_checkIfElementPosition
 				);
 			}

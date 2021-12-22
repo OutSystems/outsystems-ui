@@ -5,13 +5,16 @@ button.OSFillParent {
 	display: inline-flex;
 }
 
-.is--loading .btn {
-	&,
-	& * {
-		pointer-events: none;
-	}
+.is--loading {
+	position: relative;
+	.btn {
+		&,
+		& * {
+			pointer-events: none;
+		}
 
-	display: inline-block;
+		display: inline-block;
+	}
 }
 
 .btn-loading {
@@ -28,7 +31,9 @@ button.OSFillParent {
 }
 
 .is--loading:not(.btn-show-label) .btn-loading {
-	margin-right: var(--space-none);
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
 }
 
 .is--loading .btn-label {

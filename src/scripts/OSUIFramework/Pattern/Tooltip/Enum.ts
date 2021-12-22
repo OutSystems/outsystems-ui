@@ -4,9 +4,9 @@ namespace OSUIFramework.Patterns.Tooltip.Enum {
 	 * Tooltip Enum properties
 	 */
 	export enum Properties {
-		IsVisible = 'IsVisible',
 		IsHover = 'IsHover',
 		Position = 'Position',
+		StartVisible = 'StartVisible',
 	}
 
 	/**
@@ -14,10 +14,14 @@ namespace OSUIFramework.Patterns.Tooltip.Enum {
 	 */
 	export enum CssClass {
 		Pattern = 'osui-tooltip',
-		IsHover = 'is-hover',
-		IsVisible = 'is-opened',
-		Content = 'osui-tooltip_content',
-		BalloonWrapper = 'osui-tooltip_balloon-wrapper',
-		BalloonContent = 'osui-tooltip_balloon',
+		IsHover = 'osui-tooltip--is-hover',
+		StartVisible = 'osui-tooltip--is-opened',
+		Content = 'osui-tooltip__content',
+		BalloonWrapper = 'osui-tooltip__balloon-wrapper',
+		BalloonContent = 'osui-tooltip__balloon-wrapper__balloon',
+	}
+
+	export enum AriaLabelText {
+		Content = 'toggle tooltip',
 	}
 }

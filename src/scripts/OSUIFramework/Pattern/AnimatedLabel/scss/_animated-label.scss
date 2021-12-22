@@ -13,8 +13,14 @@
 			top: -10px;
 		}
 
-		.animated-label-input .form-control[data-input]::-webkit-datetime-edit {
-			color: var(--color-neutral-9);
+		.animated-label-input {
+			.form-control[data-input]::-webkit-datetime-edit {
+				color: var(--color-neutral-9);
+			}
+
+			[data-textarea] {
+				padding-top: var(--space-base);
+			}
 		}
 	}
 
@@ -89,7 +95,8 @@
 			}
 
 			&[data-textarea] {
-				padding-top: var(--space-s);
+				display: block;
+				margin-top: var(--space-s);
 
 				& + span.validation-message {
 					bottom: 7px;

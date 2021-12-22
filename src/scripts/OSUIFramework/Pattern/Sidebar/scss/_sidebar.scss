@@ -3,111 +3,148 @@
 /// @group Patterns-Sidebar
 /// Patterns - Interaction - Sidebar
 
-///
 .osui-sidebar {
-	display: contents;
+	//TODO: Validade the color of all overlays and create "global" variable for it.
+	$sidebar-overlay-background: rgba(0, 0, 0, 0.25);
+	--overlay-opacity: 0;
 
-	&.is-right {
-		.osui-sidebar_aside {
-			right: 0;
-			transform: translateX(102%);
+	background-color: var(--color-neutral-0);
+	box-shadow: var(--shadow-l);
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	margin: var(--space-none);
+	position: fixed;
+	top: 0;
+	transition: all 130ms ease-in;
+	width: var(--sidebar-width);
+	will-change: transform;
+	z-index: 140;
 
-			&:before {
-				left: -24px;
-			}
+	&:not(.osui-sidebar--is-open):not(.no-transition) {
+		opacity: 0;
+
+		& {
+			-servicestudio-opacity: 1;
 		}
 	}
 
-	&.is-left {
-		.osui-sidebar_aside {
-			left: 0;
-			transform: translateX(-102%);
-
-			&:before {
-				right: -24px;
-			}
-		}
-	}
-
-	&_aside {
-		background-color: var(--color-neutral-0);
-		box-shadow: var(--shadow-l);
-		display: flex;
-		flex-direction: column;
+	&:after {
+		background-color: transparent;
+		content: '';
 		height: 100%;
-		margin: var(--space-none);
 		position: fixed;
-		top: 0;
-		transition: all 130ms ease-in;
-		width: var(--sidebar-width);
-		will-change: transform;
-		z-index: 140;
+		width: 24px;
+	}
 
-		&:before {
-			background-color: transparent;
-			content: '';
-			height: 100%;
-			position: fixed;
-			width: 24px;
+	&--is-right {
+		right: 0;
+		transform: translateX(102%);
+
+		&:after {
+			left: -24px;
+		}
+
+		&.osui-sidebar--has-overlay {
+			&::before {
+				right: 100%;
+
+				& {
+					-servicestudio-right: 100%;
+				}
+			}
 		}
 
 		// Service Studio Preview
 		& {
-			-servicestudio-bottom: 20px;
-			-servicestudio-height: auto;
-			-servicestudio-margin-left: auto;
-			-servicestudio-position: relative;
-			-servicestudio-transform: none;
-			-servicestudio-webkit-transform: none;
+			-servicestudio-left: 100%;
+			-servicestudio-transform: translateX(-100%);
 		}
 	}
 
-	&_header,
-	&_content {
+	&--is-left {
+		left: 0;
+		transform: translateX(-102%);
+
+		&:after {
+			right: -24px;
+		}
+
+		&.osui-sidebar--has-overlay {
+			&::before {
+				left: 100%;
+
+				& {
+					-servicestudio-left: 100%;
+				}
+			}
+		}
+
+		// Service Studio Preview
+		& {
+			-servicestudio-left: 0;
+			-servicestudio-transform: none;
+		}
+	}
+
+	&__header,
+	&__content {
 		padding: var(--space-base) var(--space-m);
 	}
 
-	&_content {
+	&__content {
 		flex: 1;
 		overflow: auto;
 		-webkit-overflow-scrolling: touch;
 	}
 
-	&_overlay {
-		background-color: rgba(0, 0, 0, 0.25);
-		cursor: pointer;
-		height: 100vh;
-		opacity: 0;
-		pointer-events: none;
-		position: fixed;
-		right: 0;
-		top: 0;
-		transition: opacity 130ms ease-in;
-		width: 100vw;
-		will-change: opacity;
-		z-index: 130;
+	&--has-overlay {
+		&::before {
+			background-color: $sidebar-overlay-background;
+			content: '';
+			cursor: pointer;
+			display: block;
+			height: 100vh;
+			opacity: var(--overlay-opacity);
+			pointer-events: none;
+			position: fixed;
+			top: 0;
+			transition: opacity 130ms ease-in;
+			width: 100vw;
+			will-change: opacity;
+			z-index: 129;
 
-		// Service Studio Preview
-		& {
-			-servicestudio-display: none;
+			// Service Studio Preview
+			& {
+				-servicestudio-width: 100%;
+				-servicestudio-height: 100%;
+				-servicestudio-opacity: 1;
+			}
 		}
+	}
+
+	// Service Studio Preview
+	& {
+		-servicestudio-display: inline-block;
+		-servicestudio-position: relative;
+		-servicestudio-width: unset;
 	}
 }
 
 ///
 .active-screen {
 	.osui-sidebar {
-		&.is-open {
-			.osui-sidebar_aside {
-				opacity: 1;
-				transform: none;
-				transition: transform 330ms ease-out;
-				will-change: transform;
-			}
+		&--is-open {
+			opacity: 1;
+			transform: none;
+			transition: transform 330ms ease-out;
+			will-change: transform;
 
-			.osui-sidebar_overlay {
-				opacity: 1;
-				pointer-events: initial;
+			&.osui-sidebar--has-overlay {
+				&::before {
+					opacity: 1;
+					pointer-events: initial;
+				}
 			}
 		}
 	}
@@ -116,15 +153,17 @@
 // Responsive --------------------------------------------------------------------
 ///
 .desktop {
-	.osui-sidebar_aside {
-		opacity: 0;
+	.osui-sidebar {
+		&:after {
+			display: none;
+		}
 	}
 }
 
 ///
 .android[data-status-bar-height] {
 	.layout-native {
-		.osui-sidebar_aside {
+		.osui-sidebar {
 			padding-top: var(--status-bar-height);
 		}
 	}
@@ -133,7 +172,7 @@
 ///
 .ios {
 	.layout-native {
-		.osui-sidebar_aside {
+		.osui-sidebar {
 			padding-bottom: var(--os-safe-area-bottom);
 			padding-top: var(--os-safe-area-top);
 		}
@@ -142,7 +181,7 @@
 	.phone {
 		&.landscape {
 			.layout-native {
-				.osui-sidebar_aside:before {
+				.osui-sidebar:before {
 					left: calc((var(--os-safe-area-left) + 12px) * -1);
 					width: calc(var(--os-safe-area-left) + 12px);
 				}
@@ -154,7 +193,7 @@
 ///
 .landscape {
 	.layout-native {
-		.osui-sidebar_aside {
+		.osui-sidebar {
 			padding-bottom: var(--os-safe-area-bottom);
 		}
 	}
@@ -162,7 +201,7 @@
 
 ///
 .phone {
-	.osui-sidebar_aside {
+	.osui-sidebar {
 		max-width: 85vw;
 	}
 }

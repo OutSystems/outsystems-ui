@@ -13,13 +13,13 @@ namespace OSUIFramework.Patterns.Submenu {
 		private _globalEventOpen: Callbacks.Generic;
 		private _hasActiveLinks = false;
 		private _hasElements = false;
+		private _isActive = false;
 		private _isOpen = false;
 		private _submenuActiveLinksElement: HTMLElement;
 		private _submenuAllLinksElement: HTMLAnchorElement[];
 		private _submenuClickedElement: HTMLElement;
 		private _submenuEventType: GlobalEnum.HTMLEvent;
 		private _submenuHeaderElement: HTMLElement;
-		private _submenuItemElement: HTMLElement;
 		private _submenuLinksElement: HTMLElement;
 
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
@@ -36,17 +36,29 @@ namespace OSUIFramework.Patterns.Submenu {
 		 * @memberof Submenu
 		 */
 		private _bodyClickCallback(args: string, e: MouseEvent): void {
-			if (!this._selfElem.contains(e.target as HTMLElement)) {
-				if (Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen) && !this._isOpen) {
-					Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
-				} else if (this._isOpen) {
-					this.close();
+			if (this.isBuilt) {
+				if (!this._selfElem.contains(e.target as HTMLElement)) {
+					if (Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen) && !this._isOpen) {
+						Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
+					} else if (this._isOpen) {
+						this.close();
+					}
 				}
+
+				e.preventDefault();
+
+				e.stopPropagation();
 			}
+		}
 
-			e.preventDefault();
+		private _checkForActiveLinks(): void {
+			this._submenuActiveLinksElement = Helper.Dom.ClassSelector(
+				this._submenuLinksElement,
+				Enum.CssClass.PatternActive
+			);
 
-			e.stopPropagation();
+			// Check if submenu contains elements with active class
+			this._hasActiveLinks = !!this._submenuActiveLinksElement;
 		}
 
 		/**
@@ -139,6 +151,26 @@ namespace OSUIFramework.Patterns.Submenu {
 		}
 
 		/**
+		 * Remove submenu as active
+		 *
+		 * @memberof Submenu
+		 */
+		private _removeActive(): void {
+			Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternActive);
+			this._isActive = false;
+		}
+
+		/**
+		 * Set submenu as active
+		 *
+		 * @memberof Submenu
+		 */
+		private _setActive(): void {
+			Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternActive);
+			this._isActive = true;
+		}
+
+		/**
 		 * Trigger the submenu behavior based on visibility
 		 *
 		 * @private
@@ -188,10 +220,15 @@ namespace OSUIFramework.Patterns.Submenu {
 			}
 
 			// Apply the default A11Y
-			Helper.A11Y.RoleMenuItem(this._submenuHeaderElement);
+			Helper.A11Y.AriaHasPopupTrue(this._submenuHeaderElement);
 			Helper.A11Y.TabIndexTrue(this._submenuHeaderElement);
 			Helper.A11Y.AriaControls(this._submenuHeaderElement, this._submenuLinksElement.id);
-			Helper.A11Y.RoleButton(this._submenuItemElement);
+			Helper.A11Y.RoleButton(this._submenuHeaderElement);
+
+			// Set the role menuitem on each link
+			this._submenuAllLinksElement.forEach((item: HTMLElement) => {
+				Helper.A11Y.RoleMenuItem(item);
+			});
 
 			// Method that as the initial A11Y states and to be used on parameters changed
 			this._updateA11yProperties();
@@ -217,7 +254,7 @@ namespace OSUIFramework.Patterns.Submenu {
 				? GlobalEnum.HTMLEvent.TouchStart
 				: GlobalEnum.HTMLEvent.Click;
 
-			// Add events only if has links inside
+			// Add events only if has elements inside
 			if (this._hasElements) {
 				this._submenuHeaderElement.addEventListener(this._submenuEventType, this._eventClick);
 				this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
@@ -251,23 +288,16 @@ namespace OSUIFramework.Patterns.Submenu {
 		 */
 		protected setHtmlElements(): void {
 			this._submenuHeaderElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternHeader);
-			this._submenuItemElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternItem);
 			this._submenuLinksElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternLinks);
 			this._submenuAllLinksElement = [...this._submenuLinksElement.querySelectorAll(GlobalEnum.HTMLElement.Link)];
-			this._submenuActiveLinksElement = Helper.Dom.ClassSelector(
-				this._submenuLinksElement,
-				Enum.CssClass.PatternActive
-			);
 
 			// Check if submenu has childs
-			if (this._submenuAllLinksElement.length > 0) {
+			if (this._submenuLinksElement.children.length > 0) {
 				this._hasElements = true;
 			}
 
 			// Check if submenu contains elements with active class
-			if (this._submenuActiveLinksElement) {
-				this._hasActiveLinks = true;
-			}
+			Helper.AsyncInvocation(this._checkForActiveLinks.bind(this));
 		}
 
 		/**
@@ -277,12 +307,12 @@ namespace OSUIFramework.Patterns.Submenu {
 		 * @memberof Submenu
 		 */
 		protected setInitialStates(): void {
-			// Add active class to pattern based on links whit active state
+			// Add active class to pattern based on links whith active state
 			if (this._hasActiveLinks) {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternActive);
+				this._setActive();
 			}
 
-			// Add an identifier if the pattern as links
+			// Add an identifier if the pattern has childs
 			if (this._hasElements) {
 				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternIsDropdown);
 			} else {
@@ -343,7 +373,6 @@ namespace OSUIFramework.Patterns.Submenu {
 		 */
 		protected unsetHtmlElements(): void {
 			this._submenuHeaderElement = undefined;
-			this._submenuItemElement = undefined;
 			this._submenuLinksElement = undefined;
 			this._submenuAllLinksElement = undefined;
 			this._submenuActiveLinksElement = undefined;
@@ -399,13 +428,14 @@ namespace OSUIFramework.Patterns.Submenu {
 		 * @memberof Submenu
 		 */
 		public dispose(): void {
-			super.dispose();
-
 			// Remove event listners
 			this.unsetCallbacks();
 
 			// Remove unused HTML elements
 			this.unsetHtmlElements();
+
+			//Destroying the base of pattern
+			super.dispose();
 		}
 
 		/**
@@ -433,6 +463,24 @@ namespace OSUIFramework.Patterns.Submenu {
 				OSUIFramework.Event.Type.BodyOnClick,
 				this._globalEventBody
 			);
+		}
+
+		/**
+		 * Trigger on submenu onRender, to update active state
+		 *
+		 * @memberof Submenu
+		 */
+		public updateOnRender(): void {
+			if (this.isBuilt) {
+				// Check if there are active elements inside
+				this._checkForActiveLinks();
+
+				if (this._hasActiveLinks && this._isActive === false) {
+					this._setActive();
+				} else if (this._hasActiveLinks === false && this._isActive) {
+					this._removeActive();
+				}
+			}
 		}
 	}
 }

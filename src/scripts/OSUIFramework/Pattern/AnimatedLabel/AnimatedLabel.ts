@@ -31,13 +31,27 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		}
 
 		/**
+		 * Callback to the event onAnimationStart.
+		 *
+		 * @private
+		 * @memberof AnimatedLabel
+		 */
+		private _inputAnimationStartCallback(e: AnimationEvent): void {
+			if (e.animationName === Enum.AnimationEvent.OnAutoFillStart) {
+				this._inputStateToggle(true);
+			}
+		}
+
+		/**
 		 * Callback to the event "blur" of the input.
 		 *
 		 * @private
 		 * @memberof AnimatedLabel
 		 */
-		private _inputBlurCallback(): void {
-			this._inputStateToggle(false);
+		private _inputBlurCallback(evt: UIEvent): void {
+			if (evt.type === GlobalEnum.HTMLEvent.Blur) {
+				this._inputStateToggle(false);
+			}
 		}
 
 		/**
@@ -46,8 +60,10 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		 * @private
 		 * @memberof AnimatedLabel
 		 */
-		private _inputFocusCallback(): void {
-			this._inputStateToggle(true);
+		private _inputFocusCallback(evt: UIEvent): void {
+			if (evt.type === GlobalEnum.HTMLEvent.Focus) {
+				this._inputStateToggle(true);
+			}
 		}
 
 		/**
@@ -85,7 +101,7 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		protected setCallbacks(): void {
 			this._eventBlur = this._inputBlurCallback.bind(this);
 			this._eventFocus = this._inputFocusCallback.bind(this);
-			this._eventAnimationStart = this._inputFocusCallback.bind(this);
+			this._eventAnimationStart = this._inputAnimationStartCallback.bind(this);
 
 			this._inputElement.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventBlur);
 			this._inputElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventFocus);
@@ -110,6 +126,9 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 
 			// Check if the input exist
 			if (this._inputElement) {
+				// clear the input's prompt, as it not supported when used inside AnimatedLabel
+				this._inputElement.placeholder = '';
+
 				this._inputStateToggle(undefined);
 			} else {
 				throw new Error(Enum.Messages.InputNotFound);
@@ -173,9 +192,10 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		 * @memberof AnimatedLabel
 		 */
 		public dispose(): void {
-			super.dispose();
 			this.unsetCallbacks();
 			this.unsetHtmlElements();
+			//Destroying the base of pattern
+			super.dispose();
 		}
 
 		/**

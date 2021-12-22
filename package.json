@@ -1,6 +1,6 @@
 {
 	"name": "outsystems-ui",
-	"version": "2.7.2",
+	"version": "2.8.0",
 	"description": "OutSystems UI Base Theme",
 	"scripts": {
 		"setup": "npm i && tsc && webpack --env prefix=dev",
@@ -21,10 +21,8 @@
 		"@typescript-eslint/eslint-plugin": "^4.23.0",
 		"@typescript-eslint/parser": "^4.23.0",
 		"autoprefixer": "^9.8.6",
-		"azure-devops-node-api": "^11.0.1",
 		"browserslist": "^4.16.3",
 		"clean-webpack-plugin": "^4.0.0-alpha.0",
-		"command-line-args": "^5.2.0",
 		"css-loader": "^5.2.6",
 		"eslint": "^7.26.0",
 		"eslint-config-prettier": "^7.0.0",
