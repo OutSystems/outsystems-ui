@@ -3,7 +3,10 @@ namespace OSUIFramework.Patterns.DatePicker.Enum {
 	/**
 	 * DatePicker Enum for CSS Classes
 	 */
-	export enum CssClass {}
+	export enum CssClass {
+		Calendar = 'osui-datepicker-calendar',
+		Pattern = 'osui-datepicker',
+	}
 
 	/**
 	 * DatePicker Events
@@ -11,6 +14,12 @@ namespace OSUIFramework.Patterns.DatePicker.Enum {
 	export enum DatePickerEvents {
 		OnChange = 'OnChange',
 		OnInitialize = 'OnInitialize',
+	}
+
+	// Datepicker Mode Types
+	export enum Mode {
+		Range = 'range',
+		Single = 'single',
 	}
 
 	/**
@@ -21,9 +30,7 @@ namespace OSUIFramework.Patterns.DatePicker.Enum {
 		FirstWeekDay = 'FirstWeekDay',
 		MaxDate = 'MaxDate',
 		MinDate = 'MinDate',
-		ShowMonths = 'ShowMonths',
 		ShowTodayButton = 'ShowTodayButton',
-		ShowWeekNumbers = 'ShowWeekNumbers',
 		TimeFormat = 'TimeFormat',
 	}
 

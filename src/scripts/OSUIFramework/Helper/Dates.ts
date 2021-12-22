@@ -16,6 +16,10 @@ namespace OSUIFramework.Helper {
 		 * @memberof Dates
 		 */
 		public static Compare(date1: string, date2: string): boolean {
+			// Check if received dates are in right format
+			date1 = date1.indexOf('T') !== 10 ? date1.replace(' ', 'T') : date1;
+			date2 = date2.indexOf('T') !== 10 ? date2.replace(' ', 'T') : date2;
+
 			return Date.parse(date1) < Date.parse(date2);
 		}
 
