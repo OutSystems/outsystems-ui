@@ -58,9 +58,7 @@ namespace OSUIFramework.Patterns.Submenu {
 			);
 
 			// Check if submenu contains elements with active class
-			if (this._submenuActiveLinksElement) {
-				this._hasActiveLinks = true;
-			}
+			this._hasActiveLinks = !!this._submenuActiveLinksElement;
 		}
 
 		/**
@@ -474,11 +472,13 @@ namespace OSUIFramework.Patterns.Submenu {
 		 */
 		public updateOnRender(): void {
 			if (this.isBuilt) {
-				// Check if there are active element inside
+				// Check if there are active elements inside
 				this._checkForActiveLinks();
 
-				if (this._hasActiveLinks) {
-					this._isActive ? this._removeActive() : this._setActive();
+				if (this._hasActiveLinks && this._isActive === false) {
+					this._setActive();
+				} else if (this._hasActiveLinks === false && this._isActive) {
+					this._removeActive();
 				}
 			}
 		}
