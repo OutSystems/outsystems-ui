@@ -222,7 +222,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			// Checks if the state is the same when resetting the variable linked to the IsExpandedState - prevents a loop of OnParametersChanged.
-			const expandedState = this.configs.IsExpanded === propertyValue;
+			const expandedState = this.configs.IsExpanded;
 			super.changeProperty(propertyName, propertyValue);
 			if (this.isBuilt) {
 				switch (propertyName) {
