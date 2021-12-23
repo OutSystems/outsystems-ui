@@ -20,6 +20,10 @@
 
 	&-logo {
 		padding-right: var(--space-base);
+
+		.application-name {
+			word-break: break-word;
+		}
 	}
 
 	&-navigation {
