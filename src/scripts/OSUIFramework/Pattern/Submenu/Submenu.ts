@@ -258,11 +258,6 @@ namespace OSUIFramework.Patterns.Submenu {
 			if (this._hasElements) {
 				this._submenuHeaderElement.addEventListener(this._submenuEventType, this._eventClick);
 				this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
-			} else {
-				// Add event to force focus element when a user tap in an empty submenu on a iOS device
-				if (Helper.DeviceInfo.IsIos) {
-					this._submenuHeaderElement.addEventListener(this._submenuEventType, this._eventFocus);
-				}
 			}
 
 			// Add the handler to Event Manager
@@ -331,16 +326,6 @@ namespace OSUIFramework.Patterns.Submenu {
 			if (this._hasElements) {
 				this._submenuHeaderElement.removeEventListener(this._submenuEventType, this._eventClick);
 				this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
-			} else {
-				// Remove event to force focus element when a user tap in an empty submenu on a iOS device
-				if (Helper.DeviceInfo.IsIos) {
-					this._submenuHeaderElement.removeEventListener(this._submenuEventType, this._eventFocus);
-				}
-			}
-
-			// Remove event only if is iOS
-			if (Helper.DeviceInfo.IsIos) {
-				this._submenuLinksElement.removeEventListener(this._submenuEventType, this._eventClickLinks);
 			}
 
 			// Remove global handlers
@@ -410,11 +395,6 @@ namespace OSUIFramework.Patterns.Submenu {
 
 			this._updateA11yProperties();
 
-			// Remove event only if is iOS
-			if (Helper.DeviceInfo.IsIos) {
-				this._submenuLinksElement.removeEventListener(this._submenuEventType, this._eventClickLinks);
-			}
-
 			// Remove the handler from Event Manager when is closed
 			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
 				OSUIFramework.Event.Type.BodyOnClick,
@@ -451,11 +431,6 @@ namespace OSUIFramework.Patterns.Submenu {
 			this._isOpen = true;
 
 			this._updateA11yProperties();
-
-			// Add event only if is iOS
-			if (Helper.DeviceInfo.IsIos) {
-				this._submenuLinksElement.addEventListener(this._submenuEventType, this._eventClickLinks);
-			}
 
 			// Add the handler to Event Manager when is opened
 			OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
