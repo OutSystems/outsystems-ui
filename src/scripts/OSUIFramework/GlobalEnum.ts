@@ -107,8 +107,11 @@ namespace OSUIFramework.GlobalEnum {
 	 * OutSystemsUI elements inline styles
 	 */
 	export enum InlineStyle {
+		Display = 'display',
 		Height = 'height',
+		Opacity = 'opacity',
 		PointerEvents = 'pointerEvents',
+		Transform = 'transform',
 	}
 
 	/**
