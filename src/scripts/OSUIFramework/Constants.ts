@@ -68,4 +68,7 @@ namespace OSUIFramework.Constants {
 
 	/* OSUI Version */
 	export const OSUIVersion = '2.8.0';
+
+	/* css Class that is added in layout */
+	export const LayoutClass = 'layout';
 }
