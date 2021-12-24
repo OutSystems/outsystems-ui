@@ -40,6 +40,7 @@ declare global {
 	}
 
 	interface Navigator {
+		connection: any;
 		standalone: any;
 	}
 
