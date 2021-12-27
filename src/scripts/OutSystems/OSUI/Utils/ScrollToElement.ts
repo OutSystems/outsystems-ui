@@ -1,5 +1,35 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace OutSystems.OSUI.Utils {
+	/**
+	 * timeout needs to be added as a hack for the scrollIntoView to act
+	 *
+	 */
+	function scroll(elementToScrollTo: HTMLElement, IsSmooth: boolean): void {
+		if (IsSmooth) {
+			elementToScrollTo.scrollIntoView({
+				behavior: OSUIFramework.GlobalEnum.ScrollBehavior.Smooth,
+				block: 'start',
+			});
+		} else {
+			elementToScrollTo.scrollIntoView({
+				behavior: OSUIFramework.GlobalEnum.ScrollBehavior.Instant,
+				block: 'start',
+			});
+		}
+
+		// reset to the original position
+		OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
+			elementToScrollTo,
+			OSUIFramework.GlobalEnum.InlineStyle.Transform,
+			''
+		);
+		OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
+			elementToScrollTo,
+			OSUIFramework.GlobalEnum.InlineStyle.Display,
+			OSUIFramework.GlobalEnum.InlineStyleValue.Display.unset
+		);
+	}
+
 	export function ScrollToElement(ElementId: string, IsSmooth = true, OffSet = 0): void {
 		if (ElementId) {
 			const elementToScrollTo = document.getElementById(ElementId);
@@ -33,31 +63,7 @@ namespace OutSystems.OSUI.Utils {
 					);
 
 					// timeout needs to be added as a hack for the scrollIntoView to act
-					OSUIFramework.Helper.AsyncInvocation(() => {
-						if (IsSmooth) {
-							elementToScrollTo.scrollIntoView({
-								behavior: OSUIFramework.GlobalEnum.ScrollBehavior.Smooth,
-								block: 'start',
-							});
-						} else {
-							elementToScrollTo.scrollIntoView({
-								behavior: OSUIFramework.GlobalEnum.ScrollBehavior.Instant,
-								block: 'start',
-							});
-						}
-
-						// reset to the original position
-						OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
-							elementToScrollTo,
-							OSUIFramework.GlobalEnum.InlineStyle.Transform,
-							''
-						);
-						OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
-							elementToScrollTo,
-							OSUIFramework.GlobalEnum.InlineStyle.Display,
-							OSUIFramework.GlobalEnum.InlineStyleValue.Display.unset
-						);
-					});
+					OSUIFramework.Helper.AsyncInvocation(scroll, elementToScrollTo, IsSmooth);
 				}
 			}
 		}
