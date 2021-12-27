@@ -13,11 +13,17 @@ namespace OSUIFramework.Patterns.Search {
 		private _platformEventCollapse: Callbacks.OSSearchCollapseEvent;
 		private _searchGlass: HTMLElement;
 
-		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SearchConfig(configs));
 		}
 
+		/**
+		 * Close Search if user has clicked outside of it
+		 *
+		 * @private
+		 * @param {MouseEvent} e
+		 * @memberof Search
+		 */
 		private _bodyClickCallback(e: MouseEvent): void {
 			const _clickedElem: HTMLElement = e.target as HTMLElement;
 			const _closestElem: HTMLElement = _clickedElem.closest(Constants.Dot + Enum.CssProperty.Pattern);
@@ -30,12 +36,23 @@ namespace OSUIFramework.Patterns.Search {
 			}
 		}
 
-		// Check input value on search
+		/**
+		 * Check input value on search
+		 *
+		 * @private
+		 * @memberof Search
+		 */
 		private _checkInputValue(): void {
 			this._inputValue = this._inputElem.value;
 		}
 
-		// Trigger the search at toggle behaviour
+		/**
+		 * Trigger the search at toggle behaviour
+		 *
+		 * @private
+		 * @param {MouseEvent} e
+		 * @memberof Search
+		 */
 		private _onToggle(e: MouseEvent): void {
 			// Check in input has value
 			this._checkInputValue();
@@ -50,10 +67,22 @@ namespace OSUIFramework.Patterns.Search {
 			e.stopPropagation();
 		}
 
+		/**
+		 * Will trigger the platform event
+		 *
+		 * @private
+		 * @memberof Search
+		 */
 		private _triggerPlatformEvent(): void {
 			Helper.AsyncInvocation(this._platformEventCollapse, this.widgetId);
 		}
 
+		/**
+		 * Add the Accessibility Attributes values
+		 *
+		 * @protected
+		 * @memberof Search
+		 */
 		protected setA11yProperties(): void {
 			Helper.Attribute.Set(
 				this._selfElem,
@@ -62,6 +91,12 @@ namespace OSUIFramework.Patterns.Search {
 			);
 		}
 
+		/**
+		 * Sets the callbacks to be used by the pattern.
+		 *
+		 * @protected
+		 * @memberof Search
+		 */
 		protected setCallbacks(): void {
 			this._eventSearchGlassClick = this._onToggle.bind(this);
 			this._globalEventBody = this._bodyClickCallback.bind(this);
@@ -75,10 +110,23 @@ namespace OSUIFramework.Patterns.Search {
 			}
 		}
 
+		/**
+		 * Gets the HTML elements that will be used by the pattern.
+		 *
+		 * @protected
+		 * @memberof Search
+		 */
 		protected setHtmlElements(): void {
 			this._inputElem = Helper.Dom.TagSelector(this._selfElem, GlobalEnum.HTMLElement.Input) as HTMLInputElement;
 			this._searchGlass = Helper.Dom.ClassSelector(this._selfElem, Enum.CssProperty.SearchGlass);
 		}
+
+		/**
+		 * Set the cssClasses that should be assigned to the element on it's initialization
+		 *
+		 * @protected
+		 * @memberof Search
+		 */
 		protected setInitialStates(): void {
 			if (Helper.DeviceInfo.IsNative && this._inputValue !== '') {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssProperty.PatternIsOpen);
@@ -89,6 +137,12 @@ namespace OSUIFramework.Patterns.Search {
 			}
 		}
 
+		/**
+		 * Unsets the callbacks that were used by the pattern.
+		 *
+		 * @protected
+		 * @memberof Search
+		 */
 		protected unsetCallbacks(): void {
 			// Add events only in Native Applications
 			if (Helper.DeviceInfo.IsNative) {
@@ -103,11 +157,22 @@ namespace OSUIFramework.Patterns.Search {
 			this._globalEventBody = undefined;
 		}
 
+		/**
+		 * Unsets the HTML element used in the pattern.
+		 *
+		 * @protected
+		 * @memberof Search
+		 */
 		protected unsetHtmlElements(): void {
 			this._inputElem = undefined;
 			this._searchGlass = undefined;
 		}
 
+		/**
+		 * Makes the pattern ready to be used.
+		 *
+		 * @memberof Search
+		 */
 		public build(): void {
 			super.build();
 
@@ -129,7 +194,11 @@ namespace OSUIFramework.Patterns.Search {
 			super.changeProperty(propertyName, propertyValue);
 		}
 
-		// Close Search
+		/**
+		 * Closes the search.
+		 *
+		 * @memberof Search
+		 */
 		public close(): void {
 			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssProperty.PatternIsOpen);
 
@@ -142,7 +211,11 @@ namespace OSUIFramework.Patterns.Search {
 			this._isOpen = false;
 		}
 
-		// Destroy the Search
+		/**
+		 * Destroys the pattern.
+		 *
+		 * @memberof Search
+		 */
 		public dispose(): void {
 			this.unsetCallbacks();
 			this.unsetHtmlElements();
@@ -150,7 +223,11 @@ namespace OSUIFramework.Patterns.Search {
 			super.dispose();
 		}
 
-		// Open Search
+		/**
+		 * Opens the search.
+		 *
+		 * @memberof Search
+		 */
 		public open(): void {
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssProperty.PatternIsOpen);
 
@@ -160,7 +237,12 @@ namespace OSUIFramework.Patterns.Search {
 			this._isOpen = true;
 		}
 
-		// Set callbacks for the OnCollapse event
+		/**
+		 * Set callbacks for the OnCollapse event
+		 *
+		 * @param {Callbacks.OSSearchCollapseEvent} callback
+		 * @memberof Search
+		 */
 		public registerCallback(callback: Callbacks.OSSearchCollapseEvent): void {
 			if (this._platformEventCollapse === undefined) {
 				this._platformEventCollapse = callback;
