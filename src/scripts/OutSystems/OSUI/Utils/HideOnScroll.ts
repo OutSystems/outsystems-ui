@@ -53,7 +53,7 @@ namespace OutSystems.OSUI.Utils.HideOnScroll {
 	 * @export
 	 */
 	export function Init(): void {
-		const header = OSUIFramework.Helper.Dom.ClassSelector(document.body, 'header');
+		const header = OSUIFramework.Helper.Dom.ClassSelector(document.body, OSUIFramework.Constants.HeaderClass);
 		if (header) {
 			addEvents(header);
 		}

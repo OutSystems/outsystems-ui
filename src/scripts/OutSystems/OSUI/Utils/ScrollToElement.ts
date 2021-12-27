@@ -5,7 +5,7 @@ namespace OutSystems.OSUI.Utils {
 			const elementToScrollTo = document.getElementById(ElementId);
 
 			if (elementToScrollTo) {
-				const header = OSUIFramework.Helper.Dom.ClassSelector(document, 'header');
+				const header = OSUIFramework.Helper.Dom.ClassSelector(document, OSUIFramework.Constants.HeaderClass);
 				const layout = OSUIFramework.Helper.Dom.ClassSelector(document, OSUIFramework.Constants.LayoutClass);
 
 				if (layout) {
@@ -17,19 +17,19 @@ namespace OutSystems.OSUI.Utils {
 						OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
 							elementToScrollTo,
 							OSUIFramework.GlobalEnum.InlineStyle.Transform,
-							`translateY(${-header.offsetHeight + -OffSet}px)`
+							`translateY(${-header.offsetHeight + -OffSet}${OSUIFramework.GlobalEnum.Units.Pixel})`
 						);
 					} else {
 						OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
 							elementToScrollTo,
 							OSUIFramework.GlobalEnum.InlineStyle.Transform,
-							`translateY(${-OffSet}px)`
+							`translateY(${-OffSet}${OSUIFramework.GlobalEnum.Units.Pixel})`
 						);
 					}
 					OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
 						elementToScrollTo,
 						OSUIFramework.GlobalEnum.InlineStyle.Display,
-						'block'
+						OSUIFramework.GlobalEnum.InlineStyleValue.Display.block
 					);
 
 					// timeout needs to be added as a hack for the scrollIntoView to act
@@ -55,7 +55,7 @@ namespace OutSystems.OSUI.Utils {
 						OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
 							elementToScrollTo,
 							OSUIFramework.GlobalEnum.InlineStyle.Display,
-							''
+							OSUIFramework.GlobalEnum.InlineStyleValue.Display.unset
 						);
 					});
 				}

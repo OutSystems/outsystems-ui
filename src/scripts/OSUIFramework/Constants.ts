@@ -71,4 +71,7 @@ namespace OSUIFramework.Constants {
 
 	/* css Class that is added in layout */
 	export const LayoutClass = 'layout';
+
+	/* css Class that is added in header */
+	export const HeaderClass = 'header';
 }

@@ -114,6 +114,15 @@ namespace OSUIFramework.GlobalEnum {
 		Transform = 'transform',
 	}
 
+	export const InlineStyleValue = {
+		Display: {
+			block: 'block',
+			inline: 'inline',
+			none: 'none',
+			unset: '',
+		},
+	};
+
 	/**
 	 * OutSystemsUI event Keycodes
 	 */
