@@ -5,34 +5,28 @@ namespace OSUIFramework.Patterns.Search {
 	 */
 	export class Search extends AbstractPattern<SearchConfig> implements ISearch {
 		// Store the pattern locals
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventOnClick: any;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventWindowClick: any;
+		private _eventSearchGlassClick: Callbacks.Generic;
+		private _globalEventBody: Callbacks.Generic;
 		private _inputElem: HTMLInputElement;
 		private _inputValue: string;
-		private _isLayoutNative = false;
 		private _isOpen = false;
-		private _onCollapse: Callbacks.OSSearchCollapseEvent;
+		private _platformEventCollapse: Callbacks.OSSearchCollapseEvent;
 		private _searchGlass: HTMLElement;
 
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-		constructor(uniqueId: string, configs: any) {
+		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SearchConfig(configs));
-
-			this._eventOnClick = this._onToggle.bind(this);
-			this._eventWindowClick = this._windowClick.bind(this);
 		}
 
-		// Add Pattern Events
-		private _addEvents(): void {
-			// Add events only in Native Applications
-			if (this._isLayoutNative) {
-				this._searchGlass.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+		private _bodyClickCallback(e: MouseEvent): void {
+			const _clickedElem: HTMLElement = e.target as HTMLElement;
+			const _closestElem: HTMLElement = _clickedElem.closest(Constants.Dot + Enum.CssProperty.Pattern);
 
-				if (this._isOpen) {
-					window.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventWindowClick);
-				}
+			// If the click has occur outside of this tooltip
+			if (_closestElem !== this._selfElem && _closestElem !== this._searchGlass) {
+				// Close Search
+				this.close();
+				e.stopPropagation();
 			}
 		}
 
@@ -56,8 +50,11 @@ namespace OSUIFramework.Patterns.Search {
 			e.stopPropagation();
 		}
 
-		// Add the Accessibility Attributes values
-		private _setAccessibilityProps(): void {
+		private _triggerPlatformEvent(): void {
+			Helper.AsyncInvocation(this._platformEventCollapse, this.widgetId);
+		}
+
+		protected setA11yProperties(): void {
 			Helper.Attribute.Set(
 				this._selfElem,
 				Constants.A11YAttributes.Role.AttrName,
@@ -65,20 +62,26 @@ namespace OSUIFramework.Patterns.Search {
 			);
 		}
 
-		// Update info based on htmlContent
-		private _setHtmlElements(): void {
-			// Set the html references that will be used to manage the cssClasses and atribute properties
-			if (document.querySelector(Constants.Dot + Enum.CssProperty.LayoutNative)) {
-				this._isLayoutNative = true;
+		protected setCallbacks(): void {
+			this._eventSearchGlassClick = this._onToggle.bind(this);
+			this._globalEventBody = this._bodyClickCallback.bind(this);
+			// Add events only in Native Applications
+			if (Helper.DeviceInfo.IsNative) {
+				this._searchGlass.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventSearchGlassClick);
+
+				if (this._isOpen) {
+					Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
+				}
 			}
-			this._inputElem = this._selfElem.querySelector(GlobalEnum.HTMLElement.Input);
-			this._searchGlass = this._selfElem.querySelector(Constants.Dot + Enum.CssProperty.SearchGlass);
 		}
 
-		// Set the cssClasses that should be assigned to the element on it's initialization
-		private _setInitialCssClasses(): void {
-			if (this._isLayoutNative && this._inputValue !== '') {
-				Helper.Style.AddClass(this._selfElem, Enum.CssProperty.PatternIsOpen);
+		protected setHtmlElements(): void {
+			this._inputElem = Helper.Dom.TagSelector(this._selfElem, GlobalEnum.HTMLElement.Input) as HTMLInputElement;
+			this._searchGlass = Helper.Dom.ClassSelector(this._selfElem, Enum.CssProperty.SearchGlass);
+		}
+		protected setInitialStates(): void {
+			if (Helper.DeviceInfo.IsNative && this._inputValue !== '') {
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssProperty.PatternIsOpen);
 
 				this._inputElem.focus();
 
@@ -86,37 +89,37 @@ namespace OSUIFramework.Patterns.Search {
 			}
 		}
 
-		private _triggerOnCollapseEvent(): void {
-			if (this._onCollapse !== undefined) {
-				Helper.AsyncInvocation(this._onCollapse, this.widgetId);
+		protected unsetCallbacks(): void {
+			// Add events only in Native Applications
+			if (Helper.DeviceInfo.IsNative) {
+				this._searchGlass.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventSearchGlassClick);
+
+				if (this._isOpen) {
+					Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._globalEventBody);
+				}
 			}
+
+			this._eventSearchGlassClick = undefined;
+			this._globalEventBody = undefined;
 		}
 
-		// Close Search if user has clicked outside of it
-		private _windowClick(e: MouseEvent): void {
-			const _clickedElem: HTMLElement = e.target as HTMLElement;
-			const _closestElem: HTMLElement = _clickedElem.closest(Constants.Dot + Enum.CssProperty.Pattern);
-
-			// If the click has occur outside of this tooltip
-			if (_closestElem !== this._selfElem && _closestElem !== this._searchGlass) {
-				// Close Search
-				this.close();
-				e.stopPropagation();
-			}
+		protected unsetHtmlElements(): void {
+			this._inputElem = undefined;
+			this._searchGlass = undefined;
 		}
 
 		public build(): void {
 			super.build();
 
-			this._setHtmlElements();
+			this.setHtmlElements();
 
 			this._checkInputValue();
 
-			this._setInitialCssClasses();
+			this.setInitialStates();
 
-			this._setAccessibilityProps();
+			this.setA11yProperties();
 
-			this._addEvents();
+			this.setCallbacks();
 
 			this.finishBuild();
 		}
@@ -128,28 +131,30 @@ namespace OSUIFramework.Patterns.Search {
 
 		// Close Search
 		public close(): void {
-			Helper.Style.RemoveClass(this._selfElem, Enum.CssProperty.PatternIsOpen);
+			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssProperty.PatternIsOpen);
 
-			window.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventWindowClick);
+			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._globalEventBody);
 
 			this._inputElem.blur();
 
-			this._triggerOnCollapseEvent();
+			this._triggerPlatformEvent();
 
 			this._isOpen = false;
 		}
 
 		// Destroy the Search
 		public dispose(): void {
+			this.unsetCallbacks();
+			this.unsetHtmlElements();
+			//Destroying the base of pattern
 			super.dispose();
 		}
 
 		// Open Search
 		public open(): void {
-			Helper.Style.AddClass(this._selfElem, Enum.CssProperty.PatternIsOpen);
+			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssProperty.PatternIsOpen);
 
-			window.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventWindowClick);
-
+			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
 			this._inputElem.focus();
 
 			this._isOpen = true;
@@ -157,7 +162,9 @@ namespace OSUIFramework.Patterns.Search {
 
 		// Set callbacks for the OnCollapse event
 		public registerCallback(callback: Callbacks.OSSearchCollapseEvent): void {
-			this._onCollapse = callback;
+			if (this._platformEventCollapse === undefined) {
+				this._platformEventCollapse = callback;
+			}
 		}
 	}
 }
