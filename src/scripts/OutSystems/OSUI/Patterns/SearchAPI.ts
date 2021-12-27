@@ -10,8 +10,7 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	 * @param {string} propertyName Property name that will be updated
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ChangeProperty(searchId: string, propertyName: string, propertyValue: any): void {
+	export function ChangeProperty(searchId: string, propertyName: string, propertyValue: unknown): void {
 		const search = GetSearchById(searchId);
 
 		search.changeProperty(propertyName, propertyValue);
@@ -27,18 +26,6 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 		const search = GetSearchById(searchId);
 
 		search.close();
-	}
-
-	/**
-	 * Function that will open a given search.
-	 *
-	 * @export
-	 * @param {string} searchId ID of the search that will be closed
-	 */
-	export function Open(searchId: string): void {
-		const search = GetSearchById(searchId);
-
-		search.open();
 	}
 
 	/**
@@ -96,7 +83,7 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	 */
 	export function GetSearchById(searchId: string): OSUIFramework.Patterns.Search.ISearch {
 		return OSUIFramework.Helper.MapOperation.FindInMap(
-			'Search',
+			OSUIFramework.GlobalEnum.PatternsNames.Search,
 			searchId,
 			_searchsMap
 		) as OSUIFramework.Patterns.Search.ISearch;
@@ -118,13 +105,24 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	}
 
 	/**
+	 * Function that will open a given search.
+	 *
+	 * @export
+	 * @param {string} searchId ID of the search that will be closed
+	 */
+	export function Open(searchId: string): void {
+		const search = GetSearchById(searchId);
+
+		search.open();
+	}
+
+	/**
 	 * Function that trigger pattern event.
 	 *
 	 * @export
 	 * @param {string} searchId ID of the Search that will be initialized.
 	 * @return {*}  callback
 	 */
-
 	export function RegisterCallback(searchId: string, callback: OSUIFramework.Callbacks.OSSearchCollapseEvent): void {
 		const search = GetSearchById(searchId);
 		search.registerCallback(callback);
