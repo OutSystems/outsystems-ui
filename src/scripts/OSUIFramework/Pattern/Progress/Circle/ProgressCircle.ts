@@ -291,7 +291,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			super.dispose();
 
 			// Check if the resizeOberver already exist
-			if (!this._resizeOberver) {
+			if (this._resizeOberver) {
 				this._resizeOberver.disconnect();
 			}
 		}
