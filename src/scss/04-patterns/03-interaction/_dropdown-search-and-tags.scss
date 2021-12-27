@@ -179,7 +179,8 @@
 				&__item {
 					align-items: center;
 					display: flex;
-					height: 40px;
+					height: auto;
+					min-height: 40px;
 					padding: var(--space-none) var(--space-base);
 					position: relative;
 
