@@ -189,11 +189,6 @@ namespace OSUIFramework.Patterns.Search {
 			this.finishBuild();
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		public changeProperty(propertyName: string, propertyValue: any): void {
-			super.changeProperty(propertyName, propertyValue);
-		}
-
 		/**
 		 * Closes the search.
 		 *
