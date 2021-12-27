@@ -20,7 +20,6 @@ namespace OSUIFramework.Patterns.Tooltip {
 			super(uniqueId, new TooltipConfig(configs));
 
 			this._isOpen = this.configs.StartVisible;
-
 			this.setCallbacks();
 		}
 
@@ -98,7 +97,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 		}
 
 		// Trigger the tooltip at onClick behaviour
-		private _clickCallback(): void {
+		private _clickCallback(e: MouseEvent): void {
+			e.stopPropagation();
 			// Add a window event that will be responsible to close it, if it's opend by default
 			this.open();
 		}

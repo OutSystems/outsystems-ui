@@ -19,7 +19,7 @@
 		&-open {
 			border-top: var(--border-size-m) solid var(--color-primary);
 
-			.osui-accordion-item__title {
+			> .osui-accordion-item__title {
 				font-weight: var(--font-semi-bold);
 			}
 

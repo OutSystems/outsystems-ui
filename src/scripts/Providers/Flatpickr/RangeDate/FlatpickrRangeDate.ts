@@ -2,38 +2,49 @@
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.Flatpickr.RangeDate {
-	/**
-	 * Defines the interface for OutSystemsUI Patterns
-	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class OSUIFlatpickrRangeDate extends AbstractFlatpickr<FlatpickrRangeDateConfig> {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		constructor(uniqueId: string, configs: any) {
+		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new FlatpickrRangeDateConfig(configs));
-
-			// Set the default library Event handlers
-			this._configs.OnChange = this._onDateSelectedEvent.bind(this);
 		}
 
-		// Method that will create the provider
-		private _createProviderDatePicker(): void {
-			// Set inital library options
-			this._flatpickrOpts = this._configs.getProviderConfig();
+		// Method used to check if there is any selected date before changing the DateFormat
+		private _onUpdateDateFormat(): void {
+			// Check if any Date was selected
+			if (this._flatpickr.selectedDates.length > 0) {
+				// Set the new Start DefaultDate value
+				this.configs.StartDate = this._flatpickr.formatDate(
+					this._flatpickr.selectedDates[0],
+					this._flatpickrOpts.dateFormat
+				);
 
-			// Instance has been Created!
-			super._onReady();
+				// Set the new End DefaultDate value
+				if (this._flatpickr.selectedDates[1]) {
+					this.configs.EndDate = this._flatpickr.formatDate(
+						this._flatpickr.selectedDates[1],
+						this._flatpickrOpts.dateFormat
+					);
+				}
+			}
+
+			this.redraw();
 		}
 
-		// Method that will be triggered by library each time any date is selected
-		private _onDateSelectedEvent(selectedDates: string[], dateStr: string, fp: Flatpickr): void {
+		/**
+		 * Method that will be triggered by library each time any date is selected
+		 *
+		 * @protected
+		 * @memberof Flatpickr.RangeDate
+		 */
+		protected onDateSelectedEvent(selectedDates: string[]): void {
 			/* NOTE: dateStr param is not in use since the library has an issue arround it */
 			const _selectedDate = [];
 
 			// Check if any date has been selected, In case of Clear this will retunr empty array
 			if (selectedDates.length > 0) {
-				_selectedDate[0] = fp.formatDate(selectedDates[0], this._flatpickrOpts.dateFormat);
+				_selectedDate[0] = this._flatpickr.formatDate(selectedDates[0], this._flatpickrOpts.dateFormat);
 				if (selectedDates[1]) {
-					_selectedDate[1] = fp.formatDate(selectedDates[1], this._flatpickrOpts.dateFormat);
+					_selectedDate[1] = this._flatpickr.formatDate(selectedDates[1], this._flatpickrOpts.dateFormat);
 				}
 			}
 
@@ -46,74 +57,39 @@ namespace Providers.Flatpickr.RangeDate {
 			);
 		}
 
-		// Method used to check if tehre is any seelcted date before changing the DateFormat
-		private _onUpdateDateFormat(): void {
-			// Check if any Date was selected
-			if (this._flatpickr.selectedDates.length > 0) {
-				// Set the new Start DefaultDate value
-				this._configs.DefaultDate[0] = this._flatpickr.formatDate(
-					this._flatpickr.selectedDates[0],
-					this._flatpickrOpts.dateFormat
-				);
+		/**
+		 * Method that will set the provider configurations in order to properly create its instance
+		 *
+		 * @protected
+		 * @memberof Flatpickr.RangeDate
+		 */
+		protected prepareConfigs(): void {
+			// Get the library configurations
+			this._flatpickrOpts = this.configs.getProviderConfig();
 
-				// Set the new End DefaultDate value
-				if (this._flatpickr.selectedDates[1]) {
-					this._configs.DefaultDate[1] = this._flatpickr.formatDate(
-						this._flatpickr.selectedDates[1],
-						this._flatpickrOpts.dateFormat
-					);
-				}
-			}
+			// Instance will be Created!
+			super.createProviderInstance();
 		}
 
 		public build(): void {
 			super.build();
 
-			this._createProviderDatePicker();
+			this.prepareConfigs();
 
 			this.finishBuild();
 		}
 
 		// Method used to change given propertyName at OnParametersChange platform event
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		public changeProperty(propertyName: string, propertyValue: any): void {
-			switch (propertyName) {
-				case Enum.Properties.StartDate:
-					// Set the DefaultDate values
-					this._configs.StartDate = propertyValue;
-					this._configs.DefaultDate[0] = this._configs.StartDate;
+		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			super.changeProperty(propertyName, propertyValue);
 
-					break;
-
-				case Enum.Properties.EndDate:
-					// Set the DefaultDate values
-					this._configs.EndDate = propertyValue;
-					this._configs.DefaultDate[1] = this._configs.EndDate;
-
-					break;
-
-				case OSUIFramework.Patterns.DatePicker.Enum.Properties.DateFormat:
-					// Check if there is any selected date already
-					this._onUpdateDateFormat();
-					// Set the new InputDateFormat
-					this._configs.DateFormat = propertyValue;
-
-					break;
-
-				default:
-					super.changeProperty(propertyName, propertyValue);
-					break;
-			}
-		}
-
-		/* Method that will be responsible to redraw the calendar when it's needed */
-		public redraw(): void {
-			// Destroy the old flatpickr instance
 			if (this.isBuilt) {
-				this._flatpickr.destroy();
-
-				// Create a new flatpickr instance with the updated configs
-				OSUIFramework.Helper.AsyncInvocation(this._createProviderDatePicker.bind(this), '');
+				switch (propertyName) {
+					case OSUIFramework.Patterns.DatePicker.Enum.Properties.DateFormat:
+						// Check if there is any selected date already
+						this._onUpdateDateFormat();
+						break;
+				}
 			}
 		}
 	}

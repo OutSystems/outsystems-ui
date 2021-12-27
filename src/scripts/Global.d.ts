@@ -2,6 +2,7 @@
 import flatpickr from 'flatpickr';
 import { BaseOptions as flatpickrOpts } from 'flatpickr/dist/types/options';
 import { CustomLocale as flatpickrLocale } from 'flatpickr/dist/types/locale';
+import { Key as flatpickrLocaleKey } from 'flatpickr/dist/types/locale';
 
 // RangeSlider
 import noUiSlider from 'nouislider';
@@ -25,6 +26,7 @@ declare global {
 		flatpickr: typeof flatpickr;
 		flatpickrOpts: typeof flatpickrOpts;
 		flatpickrLocale: typeof flatpickrOpts;
+		flatpickrLocaleKey: typeof flatpickrLocaleKey;
 
 		// RangeSlider
 		noUiSlider: typeof noUiSlider;
@@ -55,4 +57,5 @@ declare global {
 	type Flatpickr = flatpickr;
 	type FlatpickrOptions = flatpickrOpts;
 	type FlatpickrLocale = flatpickrLocale;
+	type FlatpickrLocaleKey = flatpickrLocaleKey;
 }

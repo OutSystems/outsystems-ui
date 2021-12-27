@@ -4,6 +4,10 @@ namespace OSUIFramework.Patterns.AnimatedLabel.Enum {
 	 * AnimatedLabel Enums
 	 */
 
+	export enum AnimationEvent {
+		OnAutoFillStart = 'onAutoFillStart',
+	}
+
 	// Css Classes
 	export enum CssClasses {
 		InputPlaceholder = 'animated-label-input',
