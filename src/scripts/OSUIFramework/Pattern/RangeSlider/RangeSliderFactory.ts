@@ -10,8 +10,8 @@ namespace OSUIFramework.Patterns.RangeSlider.Factory {
 	 */
 	export function NewRangeSlider(
 		rangeSliderId: string,
-		configs: string,
-		provider: string
+		provider: string,
+		configs: string
 	): OSUIFramework.Patterns.RangeSlider.IRangeSlider {
 		let _rangeSliderItem = null;
 
