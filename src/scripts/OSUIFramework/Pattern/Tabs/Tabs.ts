@@ -342,10 +342,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		 * @memberof Tabs
 		 */
 		private _unsetDragObserver(): void {
-			// Set an observer on each contentItem, to detect when is being intersected by a drag gesture
-			this._tabsContentItemsElementsArray.forEach((item) => {
-				item.removeDragObserver(this._dragObserver);
-			});
+			this._dragObserver.disconnect();
 		}
 
 		/**
@@ -428,6 +425,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			if (this._addDragGestures) {
 				this._tabsContentElement.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, this._eventOnTouchstart);
 				this._eventOnTouchstart = undefined;
+				this._unsetDragObserver();
 			}
 		}
 
@@ -461,6 +459,10 @@ namespace OSUIFramework.Patterns.Tabs {
 				// If there's no active content element, assign it to this one
 				if (this._activeTabContentElement === undefined) {
 					this._activeTabContentElement = tabsContentItem;
+				}
+
+				if (this._addDragGestures) {
+					tabsContentItem.setOnDragObserver(this._dragObserver);
 				}
 			} else {
 				// Otherwise are items created before the tabs is built
@@ -529,8 +531,6 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._setInitialOptions();
 
 			this.finishBuild();
-
-			console.log('hey');
 		}
 
 		/**
@@ -690,8 +690,9 @@ namespace OSUIFramework.Patterns.Tabs {
 			// Remove it from the array
 			this._tabsContentItemsElementsArray.splice(currentIndex, 1);
 
+			// Unobserve this item on the IntersectionObserver
 			if (this._addDragGestures) {
-				tabsContentItem.removeDragObserver(this._dragObserver);
+				tabsContentItem.unobserveDragObserver(this._dragObserver);
 			}
 		}
 
