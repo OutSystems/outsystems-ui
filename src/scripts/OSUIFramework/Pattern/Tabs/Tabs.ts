@@ -223,6 +223,21 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		/**
+		 * Method to set the CSS variable that holds the number of header items
+		 *
+		 * @private
+		 * @memberof Tabs
+		 */
+		private _setHeaderItemsCustomProperty(): void {
+			// Create css variable
+			Helper.Style.SetStyleAttribute(
+				this._selfElem,
+				Enum.CssProperty.TabsHeaderItems,
+				this._tabsHeaderItemsElementsArray.length
+			);
+		}
+
+		/**
 		 * Method to set the Tabs Height
 		 *
 		 * @private
@@ -245,6 +260,8 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._setPosition(this._configs.TabsVerticalPosition);
 			this._setHeight(this._configs.Height);
 			this._setIsJustified(this._configs.JustifyHeaders);
+			// Set the HeaderItems css variable
+			this._setHeaderItemsCustomProperty();
 			// Setting as false, to avoid trigering changeTab event on screen load
 			this.changeTab(this.configs.StartingTab, undefined, false, true);
 
@@ -325,10 +342,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		 * @memberof Tabs
 		 */
 		private _unsetDragObserver(): void {
-			// Set an observer on each contentItem, to detect when is being intersected by a drag gesture
-			this._tabsContentItemsElementsArray.forEach((item) => {
-				item.removeDragObserver(this._dragObserver);
-			});
+			this._dragObserver.disconnect();
 		}
 
 		/**
@@ -411,6 +425,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			if (this._addDragGestures) {
 				this._tabsContentElement.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, this._eventOnTouchstart);
 				this._eventOnTouchstart = undefined;
+				this._unsetDragObserver();
 			}
 		}
 
@@ -444,6 +459,10 @@ namespace OSUIFramework.Patterns.Tabs {
 				// If there's no active content element, assign it to this one
 				if (this._activeTabContentElement === undefined) {
 					this._activeTabContentElement = tabsContentItem;
+				}
+
+				if (this._addDragGestures) {
+					tabsContentItem.setOnDragObserver(this._dragObserver);
 				}
 			} else {
 				// Otherwise are items created before the tabs is built
@@ -484,6 +503,8 @@ namespace OSUIFramework.Patterns.Tabs {
 						true
 					);
 				}
+
+				this._setHeaderItemsCustomProperty();
 			} else {
 				// Otherwise are items created before the tabs is built
 				// Set the correct data-tab, by using the items array, that correspond to the DOM order
@@ -669,8 +690,9 @@ namespace OSUIFramework.Patterns.Tabs {
 			// Remove it from the array
 			this._tabsContentItemsElementsArray.splice(currentIndex, 1);
 
+			// Unobserve this item on the IntersectionObserver
 			if (this._addDragGestures) {
-				tabsContentItem.removeDragObserver(this._dragObserver);
+				tabsContentItem.unobserveDragObserver(this._dragObserver);
 			}
 		}
 
@@ -692,6 +714,8 @@ namespace OSUIFramework.Patterns.Tabs {
 				this._activeTabHeaderElement = null;
 				Helper.AsyncInvocation(this.changeTab.bind(this), currentIndex - 1, undefined, false, true);
 			}
+
+			this._setHeaderItemsCustomProperty();
 		}
 
 		/**

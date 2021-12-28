@@ -114,17 +114,6 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		}
 
 		/**
-		 * Method to remove the intersection observer, called by the tabs
-		 *
-		 * @param {IntersectionObserver} observer
-		 * @memberof TabsContentItem
-		 */
-		public removeDragObserver(observer: IntersectionObserver): void {
-			// disconnect observer when destroyed from DOM
-			observer.disconnect();
-		}
-
-		/**
 		 * Method to set the element as active, called by the tabs
 		 *
 		 * @memberof TabsContentItem
@@ -166,6 +155,17 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		 */
 		public setOnDragObserver(observer: IntersectionObserver): void {
 			observer.observe(this._selfElem);
+		}
+
+		/**
+		 * Method to stop observing this element in the intersection observer, called by the tabs
+		 *
+		 * @param {IntersectionObserver} observer
+		 * @memberof TabsContentItem
+		 */
+		public unobserveDragObserver(observer: IntersectionObserver): void {
+			// disconnect observer when destroyed from DOM
+			observer.unobserve(this._selfElem);
 		}
 	}
 }
