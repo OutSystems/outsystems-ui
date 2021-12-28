@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace Providers.Dropdown.VirtualSelect.Factory {
+namespace Providers.Dropdown.Virtual_Select.Factory {
 	/**
 	 * Create the new Flatpickr instance object according given Mode
 	 *
@@ -17,7 +17,7 @@ namespace Providers.Dropdown.VirtualSelect.Factory {
 
 		switch (mode) {
 			case OSUIFramework.Patterns.Dropdown.Enum.Mode.Search:
-				_virtualSelectItem = new Providers.Dropdown.VirtualSelect.Search.OSUIVirtualSelectSearch(
+				_virtualSelectItem = new Providers.Dropdown.Virtual_Select.Search.OSUIVirtualSelectSearch(
 					dropdownId,
 					configs
 				);

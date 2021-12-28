@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.Dropdown.VirtualSelect {
+namespace Providers.Dropdown.Virtual_Select {
 	/**
 	 * Defines the interface for VirtualSelect provider based Patterns
 	 */

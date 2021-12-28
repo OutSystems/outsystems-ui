@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.Dropdown.VirtualSelect.Search {
+namespace Providers.Dropdown.Virtual_Select.Search {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class OSUIVirtualSelectSearch extends AbstractVirtualSelect<VirtualSelectSearchConfig> {
 		constructor(uniqueId: string, configs: JSON) {
@@ -15,21 +15,9 @@ namespace Providers.Dropdown.VirtualSelect.Search {
 		protected prepareConfigs(): void {
 			// Get the library configurations
 			this._virtualselectOpts = this.configs.getProviderConfig();
-			console.log(this._virtualselectOpts);
 
 			// Instance will be Created!
 			super.createProviderInstance();
-		}
-
-		/**
-		 * Builds the DropdownSearch based on provider.
-		 *
-		 * @memberof VirtualSelect.Search
-		 */
-		public build(): void {
-			super.build();
-
-			this.prepareConfigs();
 		}
 
 		/**

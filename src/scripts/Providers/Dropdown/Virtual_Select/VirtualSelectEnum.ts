@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.Dropdown.VirtualSelect.Enum {
+namespace Providers.Dropdown.Virtual_Select.Enum {
 	/**
 	 * CSS Classes
 	 */
@@ -13,5 +13,14 @@ namespace Providers.Dropdown.VirtualSelect.Enum {
 	 */
 	export enum Events {
 		Change = 'change',
+	}
+
+	/**
+	 * Options Figure types
+	 */
+	export enum FigureType {
+		Icon = 'Icon',
+		Image = 'Image',
+		None = 'None',
 	}
 }

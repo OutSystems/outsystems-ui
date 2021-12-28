@@ -18,7 +18,7 @@ namespace OSUIFramework.Patterns.Dropdown.Factory {
 
 		switch (provider) {
 			case Enum.Provider.VirtualSelect:
-				_dropdownItem = Providers.Dropdown.VirtualSelect.Factory.NewVirtualSelect(
+				_dropdownItem = Providers.Dropdown.Virtual_Select.Factory.NewVirtualSelect(
 					dropdownId,
 					JSON.parse(configs),
 					mode

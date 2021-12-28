@@ -1,20 +1,20 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.Dropdown.VirtualSelect {
-	export abstract class AbstractVirtualSelect<C extends Dropdown.VirtualSelect.AbstractVirtualSelectConfig>
+namespace Providers.Dropdown.Virtual_Select {
+	export abstract class AbstractVirtualSelect<C extends Dropdown.Virtual_Select.AbstractVirtualSelectConfig>
 		extends OSUIFramework.Patterns.Dropdown.AbstractDropdown<VirtualSelect, C>
 		implements IVirtualSelect
 	{
 		// Dropdown callback events
-		private _onInitializeCallbackEvent: OSUIFramework.Callbacks.OSGeneric;
-		private _onSelectedOptionCallbackEvent: OSUIFramework.Callbacks.OSDropdownOnSelectEvent;
 		private _onSelectedOptionEvent: OSUIFramework.Callbacks.Generic;
+		private _platformEventInitializedCallback: OSUIFramework.Callbacks.OSGeneric;
+		private _platformEventSelectedOptCallback: OSUIFramework.Callbacks.OSDropdownOnSelectEvent;
 
-		// Store the provider reference
-		protected _virtualselect: VirtualSelect;
 		// Store a reference of available provider methods
 		protected _virtualselectMethods: VirtualSelectMethods;
 		// Store the provider options
 		protected _virtualselectOpts: VirtualSelectOpts;
+		// Store the virtualSelect provider reference
+		protected _vsProvider: VirtualSelect;
 
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
@@ -22,13 +22,9 @@ namespace Providers.Dropdown.VirtualSelect {
 
 		// Manage the attributes to be added
 		private _manageAttributes(): void {
-			// Check if the pattenr should be in disabled mode
+			// Check if the pattern should be in disabled mode
 			if (this.configs.IsDisabled) {
-				OSUIFramework.Helper.Dom.Attribute.Set(
-					this._selfElem,
-					OSUIFramework.GlobalEnum.HTMLAttributes.Disabled,
-					''
-				);
+				this.disable();
 			}
 		}
 
@@ -50,7 +46,7 @@ namespace Providers.Dropdown.VirtualSelect {
 
 			// Trigger platform's SelectedOptionCallbackEvent client Action
 			OSUIFramework.Helper.AsyncInvocation(
-				this._onSelectedOptionCallbackEvent,
+				this._platformEventSelectedOptCallback,
 				this.widgetId,
 				JSON.stringify(optionsSelected)
 			);
@@ -70,14 +66,17 @@ namespace Providers.Dropdown.VirtualSelect {
 		 */
 		protected createProviderInstance(): void {
 			// Create the provider instance
-			this._virtualselect = window.VirtualSelect.init(this._virtualselectOpts);
-			this._virtualselectMethods = this._virtualselect.$ele;
+			this._vsProvider = window.VirtualSelect.init(this._virtualselectOpts);
+			this._virtualselectMethods = this._vsProvider.$ele;
 
 			// Add the events to be used at provider instance
 			this.setCallbacks();
 
+			// Add attributes to the element if needed
+			this._manageAttributes();
+
 			// Trigger platform's InstanceIntializedHandler client Action
-			OSUIFramework.Helper.AsyncInvocation(this._onInitializeCallbackEvent, this.widgetId);
+			OSUIFramework.Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
 		}
 
 		/**
@@ -111,7 +110,7 @@ namespace Providers.Dropdown.VirtualSelect {
 
 			this._setElementId();
 
-			this._manageAttributes();
+			this.prepareConfigs();
 
 			super.finishBuild();
 		}
@@ -138,14 +137,20 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * Set DropdownSearch as disabled
 		 */
 		public disable(): void {
-			console.log('disable()');
+			OSUIFramework.Helper.Dom.Attribute.Set(
+				this._selfElem,
+				OSUIFramework.GlobalEnum.HTMLAttributes.Disabled,
+				''
+			);
+
+			this.configs.IsDisabled = true;
 		}
 
 		/**
 		 * Destroy the DropdownSearch.
 		 */
 		public dispose(): void {
-			this._virtualselect.destroy();
+			this._vsProvider.destroy();
 
 			this.unsetCallbacks();
 
@@ -156,7 +161,9 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * Set DropdownSearch as enabled
 		 */
 		public enable(): void {
-			console.log('enable()');
+			OSUIFramework.Helper.Dom.Attribute.Remove(this._selfElem, OSUIFramework.GlobalEnum.HTMLAttributes.Disabled);
+
+			this.configs.IsDisabled = false;
 		}
 
 		/**
@@ -167,17 +174,23 @@ namespace Providers.Dropdown.VirtualSelect {
 		 */
 		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
 			switch (eventName) {
-				case OSUIFramework.Patterns.Dropdown.Enum.Events.OnInitialize:
-					this._onInitializeCallbackEvent = callback;
+				case OSUIFramework.Patterns.Dropdown.Enum.Events.Initialized:
+					if (this._platformEventInitializedCallback === undefined) {
+						this._platformEventInitializedCallback = callback;
+					}
 					break;
 
 				case OSUIFramework.Patterns.Dropdown.Enum.Events.OnSelected:
-					this._onSelectedOptionCallbackEvent = callback;
+					if (this._platformEventSelectedOptCallback === undefined) {
+						this._platformEventSelectedOptCallback = callback;
+					}
 					break;
 
 				default:
 					throw new Error(`The given '${eventName}' event name it's not defined.`);
 			}
 		}
+
+		protected abstract prepareConfigs(): void;
 	}
 }

@@ -9,8 +9,8 @@ namespace OSUIFramework.Patterns.Dropdown.Enum {
 	 * Events
 	 */
 	export enum Events {
+		Initialized = 'Initialized',
 		OnSelected = 'OnSelected',
-		OnInitialize = 'OnInitialize',
 	}
 
 	// Dropdown Mode Types
@@ -23,14 +23,13 @@ namespace OSUIFramework.Patterns.Dropdown.Enum {
 	 * Properties
 	 */
 	export enum Properties {
-		DropdownPrompt = 'DropdownPrompt',
 		IsDisabled = 'IsDisabled',
 		NoResultsText = 'NoResultsText',
 		OptionsList = 'OptionsList',
-		SearchText = 'SearchText',
+		Prompt = 'Prompt',
+		SearchPrompt = 'SearchPrompt',
 		SelectedOptions = 'SelectedOptions',
 		ShowCheckboxes = 'ShowCheckboxes',
-		Type = 'Type',
 	}
 
 	/**
@@ -38,13 +37,5 @@ namespace OSUIFramework.Patterns.Dropdown.Enum {
 	 */
 	export enum Provider {
 		VirtualSelect = 'virtual-select',
-	}
-
-	/**
-	 * Types
-	 */
-	export enum Type {
-		Search = 'search',
-		Tags = 'tags',
 	}
 }
