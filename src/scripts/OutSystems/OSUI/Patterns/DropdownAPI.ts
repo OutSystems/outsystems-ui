@@ -28,13 +28,14 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	export function Create(
 		dropdownId: string,
 		configs: string,
+		mode: string,
 		provider: string
 	): OSUIFramework.Patterns.Dropdown.IDropdown {
 		if (_dropdownItemsMap.has(dropdownId)) {
 			throw new Error(`There is already an Dropdown registered under id: ${dropdownId}`);
 		}
 
-		const _dropdownItem = OSUIFramework.Patterns.Dropdown.Factory.NewDropdown(dropdownId, configs, provider);
+		const _dropdownItem = OSUIFramework.Patterns.Dropdown.Factory.NewDropdown(dropdownId, configs, mode, provider);
 
 		_dropdownItemsMap.set(dropdownId, _dropdownItem);
 

@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.DropdownSearch.VirtualSelect.Enum {
+namespace Providers.Dropdown.VirtualSelect.Enum {
 	/**
 	 * CSS Classes
 	 */

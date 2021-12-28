@@ -13,6 +13,12 @@ namespace OSUIFramework.Patterns.Dropdown.Enum {
 		OnInitialize = 'OnInitialize',
 	}
 
+	// Dropdown Mode Types
+	export enum Mode {
+		Search = 'search',
+		Tags = 'tags',
+	}
+
 	/**
 	 * Properties
 	 */

@@ -5,6 +5,6 @@ namespace OSUIFramework.Patterns.Dropdown {
 	 */
 	export interface IDropdown extends Interface.IPattern {
 		//Implement you code here
-		// @ToDo: Add a possible open, close and clear methods!
+		// TODO - jRio: Add a possible open, close and clear methods!
 	}
 }

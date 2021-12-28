@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace Providers.DropdownSearch.VirtualSelect {
-	export class VirtualSelectConfig extends OSUIFramework.Patterns.Dropdown.AbstractDropdownConfig {
+namespace Providers.Dropdown.VirtualSelect {
+	/**
+	 * Class that represents the custom configurations received by the Dropdown.
+	 *
+	 * @export
+	 * @class AbstractVirtualSelectConfig
+	 * @extends {AbstractDropdownConfig}
+	 */
+	export abstract class AbstractVirtualSelectConfig extends OSUIFramework.Patterns.Dropdown.AbstractDropdownConfig {
 		public ElementId: string;
-
-		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-		constructor(config: any) {
-			super(config);
-		}
 
 		// Method used to check if an image or an icon should be added to the given option
 		private _checkForImageOrIcon(index: number): boolean | undefined {
@@ -31,22 +33,19 @@ namespace Providers.DropdownSearch.VirtualSelect {
 
 		// Method used to generate the HTML String to be attached at the option label
 		private _getOptionImagePrefix(index: number): string {
-			// TODO: Change this style into CSS!!!
+			// TODO - jRio: Change this style into CSS!!!
 			return `<img class="${Enum.CssClass.OptionItemImage}" style="width:20px; height: 20px;" src="${this.OptionsList[index].image_url_or_class}">`;
 		}
 
 		// Method used to generate the option info that will be added
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _getOptionInfo(data: any): string {
+		private _getOptionInfo(data: VirtualSelectOptionInfo): string {
 			let prefix = '';
 
 			// Check if an image should be added to the Option item
 			if (this._checkForImageOrIcon(data.index) === true) {
 				prefix = this._getOptionImagePrefix(data.index);
-			}
-
-			// Check if an icon should be added to the Option item
-			if (this._checkForImageOrIcon(data.index) === false) {
+			} else if (this._checkForImageOrIcon(data.index) === false) {
+				// If an icon should be added to the Option item
 				prefix = this._getOptionIconPrefix(data.index);
 			}
 
@@ -74,35 +73,26 @@ namespace Providers.DropdownSearch.VirtualSelect {
 			return selectedKeyvalues;
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		public getProviderConfig(): any {
-			// eslint-disable-next-line prefer-const
-			let providerOptions = {
+		// Method used to set all the common VirtualSelect properties across the different types of instances
+		public getCommonProviderConfigs(): VirtualSelectOpts {
+			const virtualSelectOpts = {
 				ele: this.ElementId,
 				labelRenderer: this._getOptionInfo.bind(this),
 				multiple: this.ShowCheckboxes,
 				noOptionsText: this.NoResultsText,
 				noSearchResultsText: this.NoResultsText,
 				options: this.OptionsList,
-				placeholder: this.DropdownPrompt,
-				search: this.Type === OSUIFramework.Patterns.Dropdown.Enum.Type.Search,
-				searchPlaceholderText: this.SearchText,
+				placeholder: this.Prompt,
+				searchPlaceholderText: this.SearchPrompt,
 				selectedValue: this._getSelectedValues(),
-				showValueAsTags: this.ShowCheckboxes && this.Type === OSUIFramework.Patterns.Dropdown.Enum.Type.Tags,
 				textDirection: OutSystems.OSUI.Utils.GetIsRTL()
 					? OSUIFramework.GlobalEnum.Direction.RTL
 					: OSUIFramework.GlobalEnum.Direction.LTR,
-
-				// hideClearButton: true,
+				hideClearButton: true,
 				// onServerSearch: this._onSampleSelectServerSearch, // => Trigger the OnServerSearch
 			};
 
-			//Cleaning undefined properties
-			Object.keys(providerOptions).forEach(
-				(key) => providerOptions[key] === undefined && delete providerOptions[key]
-			);
-
-			return providerOptions;
+			return virtualSelectOpts as VirtualSelectOpts;
 		}
 	}
 }

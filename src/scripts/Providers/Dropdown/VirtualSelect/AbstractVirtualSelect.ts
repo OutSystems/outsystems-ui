@@ -1,49 +1,23 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.DropdownSearch.VirtualSelect {
-	/**
-	 * Class that implements the Dropdown Search pattern using VirtualSelect as a provider.
-	 *
-	 * @export
-	 * @class OSUIVirtualSelect
-	 * @extends {AbstractDropdown<VirtualSelectConfig>}
-	 * @implements {IDropdown, IProviderPattern<IVirtualSelect>}
-	 */
-	// eslint-disable-next-line @typescript-eslint/naming-convention
-	export class OSUIVirtualSelect
-		extends OSUIFramework.Patterns.Dropdown.AbstractDropdown<VirtualSelectConfig>
-		implements OSUIFramework.Patterns.Dropdown.IDropdown, OSUIFramework.Interface.IProviderPattern<IVirtualSelect>
+namespace Providers.Dropdown.VirtualSelect {
+	export abstract class AbstractVirtualSelect<C extends Dropdown.VirtualSelect.AbstractVirtualSelectConfig>
+		extends OSUIFramework.Patterns.Dropdown.AbstractDropdown<VirtualSelect, C>
+		implements IVirtualSelect
 	{
 		// Dropdown callback events
 		private _onInitializeCallbackEvent: OSUIFramework.Callbacks.OSGeneric;
 		private _onSelectedOptionCallbackEvent: OSUIFramework.Callbacks.OSDropdownOnSelectEvent;
 		private _onSelectedOptionEvent: OSUIFramework.Callbacks.Generic;
 
-		// Provider reference
-		public provider: VirtualSelect;
-		public providerElementMethods: VirtualSelectElementMethods;
+		// Store the provider reference
+		protected _virtualselect: VirtualSelect;
+		// Store a reference of available provider methods
+		protected _virtualselectMethods: VirtualSelectMethods;
+		// Store the provider options
+		protected _virtualselectOpts: VirtualSelectOpts;
 
-		constructor(uniqueId: string, configs: JSON) {
-			super(uniqueId, new VirtualSelectConfig(configs));
-		}
-
-		// Create the provider instance
-		private _createProviderInstance(): void {
-			// Store the ElementId where the provider will create the DropdownSearch
-			this.configs.ElementId = '#' + this._selfElem.id;
-
-			// Create the provider instance
-			this.provider = window.VirtualSelect.init(this.configs.getProviderConfig());
-			this.providerElementMethods = this.provider.$ele;
-
-			// Add the events to be used at provider instance
-			this.setCallbacks();
-
-			// Trigger platform's InstanceIntializedHandler client Action
-			OSUIFramework.Helper.AsyncInvocation(this._onInitializeCallbackEvent, this.widgetId);
-
-			console.log(this.provider);
-			console.log(this.configs);
-			console.log('CreatedProviderInstance.', this.configs.getProviderConfig());
+		constructor(uniqueId: string, configs: C) {
+			super(uniqueId, configs);
 		}
 
 		// Manage the attributes to be added
@@ -65,12 +39,12 @@ namespace Providers.DropdownSearch.VirtualSelect {
 
 			// Check if it's multiple type
 			if (this.configs.ShowCheckboxes) {
-				optionsSelected = this.providerElementMethods.getSelectedOptions(); // It returns an array of selected options
+				optionsSelected = this._virtualselectMethods.getSelectedOptions(); // It returns an array of selected options
 			} else {
 				// It's single option type
 				// Check if there are any selected option
-				if (this.providerElementMethods.getSelectedOptions()) {
-					optionsSelected.push(this.providerElementMethods.getSelectedOptions()); // It returns an single object of selected option
+				if (this._virtualselectMethods.getSelectedOptions()) {
+					optionsSelected.push(this._virtualselectMethods.getSelectedOptions()); // It returns an single object of selected option
 				}
 			}
 
@@ -80,6 +54,30 @@ namespace Providers.DropdownSearch.VirtualSelect {
 				this.widgetId,
 				JSON.stringify(optionsSelected)
 			);
+		}
+
+		// Set the ElementId that is expected from VirtualSelect config
+		private _setElementId(): void {
+			// Store the ElementId where the provider will create the DropdownSearch
+			this.configs.ElementId = '#' + this._selfElem.id;
+		}
+
+		/**
+		 * Create the provider instance
+		 *
+		 * @protected
+		 * @memberof VirtualSelect
+		 */
+		protected createProviderInstance(): void {
+			// Create the provider instance
+			this._virtualselect = window.VirtualSelect.init(this._virtualselectOpts);
+			this._virtualselectMethods = this._virtualselect.$ele;
+
+			// Add the events to be used at provider instance
+			this.setCallbacks();
+
+			// Trigger platform's InstanceIntializedHandler client Action
+			OSUIFramework.Helper.AsyncInvocation(this._onInitializeCallbackEvent, this.widgetId);
 		}
 
 		/**
@@ -97,14 +95,21 @@ namespace Providers.DropdownSearch.VirtualSelect {
 		}
 
 		/**
-		 * Builds the DropdownSearch based on provider.
+		 * Unset callbacks that has been assigned to the element
 		 *
+		 * @protected
 		 * @memberof VirtualSelect
 		 */
+		protected unsetCallbacks(): void {
+			this._onSelectedOptionEvent = undefined;
+
+			this._selfElem.removeEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
+		}
+
 		public build(): void {
 			super.build();
 
-			this._createProviderInstance();
+			this._setElementId();
 
 			this._manageAttributes();
 
@@ -126,7 +131,7 @@ namespace Providers.DropdownSearch.VirtualSelect {
 		 * Clear any selected values from the DropdownSearch
 		 */
 		public clear(): void {
-			this.providerElementMethods.reset();
+			this._virtualselectMethods.reset();
 		}
 
 		/**
@@ -138,14 +143,11 @@ namespace Providers.DropdownSearch.VirtualSelect {
 
 		/**
 		 * Destroy the DropdownSearch.
-		 *
-		 * @memberof VirtualSelect
 		 */
 		public dispose(): void {
-			// Check if provider is ready
-			if (this.isBuilt) {
-				this.provider.destroy();
-			}
+			this._virtualselect.destroy();
+
+			this.unsetCallbacks();
 
 			super.dispose();
 		}

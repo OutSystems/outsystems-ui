@@ -38,7 +38,7 @@ declare global {
 		wNumb: typeof window.wNumb;
 
 		// DropdownSearch
-		VirtualSelect: typeof VirtualSelect;
+		VirtualSelect: any;
 	}
 
 	interface Navigator {
@@ -70,9 +70,20 @@ declare global {
 		}
 	];
 
-	// DropDown => Virtual Select
+	// DropDown => Virtual Select Provider
 	type VirtualSelect = any;
-	type VirtualSelectElementMethods = {
+	type VirtualSelectOptionInfo = {
+		alias: typeof alias;
+		index: typeof index;
+		isGroupTitle: typeof isGroupTitle;
+		isNew: typeof isNew;
+		isSelected: typeof isSelected;
+		isVisible: typeof isVisible;
+		label: typeof label;
+		value: typeof value;
+		visibleIndex: typeof visibleIndex;
+	};
+	type VirtualSelectMethods = {
 		addOption: typeof addOption;
 		close: typeof close;
 		destroy: typeof destroy;
@@ -88,5 +99,65 @@ declare global {
 		setValue: typeof setValue;
 		show: typeof show;
 		toggleSelectAll: typeof toggleSelectAll;
+	};
+	type VirtualSelectOpts = {
+		additionalClasses: typeof additionalClasses;
+		aliasKey: typeof aliasKey;
+		allOptionsSelectedText: typeof allOptionsSelectedText;
+		allowNewOption: typeof allowNewOption;
+		alwaysShowSelectedOptionsCount: typeof alwaysShowSelectedOptionsCount;
+		autofocus: typeof autofocus;
+		autoSelectFirstOption: typeof autoSelectFirstOption;
+		clearButtonText: typeof clearButtonText;
+		descriptionKey: typeof descriptionKey;
+		disableAllOptionsSelectedText: typeof disableAllOptionsSelectedText;
+		disabled: typeof disabled;
+		disabledOptions: typeof disabledOptions;
+		disableOptionGroupCheckbox: typeof disableOptionGroupCheckbox;
+		disableSelectAll: typeof disableSelectAll;
+		dropboxWidth: typeof dropboxWidth;
+		dropboxWrapper: typeof dropboxWrapper;
+		ele: typeof ele;
+		enableSecureText: typeof enableSecureText;
+		hasOptionDescription: typeof hasOptionDescription;
+		hideClearButton: typeof hideClearButton;
+		hideValueTooltipOnSelectAll: typeof hideValueTooltipOnSelectAll;
+		keepAlwaysOpen: typeof keepAlwaysOpen;
+		labelKey: typeof labelKey;
+		labelRenderer: typeof labelRenderer;
+		markSearchResults: typeof markSearchResults;
+		maxValues: typeof maxValues;
+		moreText: typeof moreText;
+		multiple: typeof multiple;
+		name: typeof name;
+		noOfDisplayValues: typeof noOfDisplayValues;
+		noOptionsText: typeof noOptionsText;
+		noSearchResultsText: typeof noSearchResultsText;
+		onServerSearch: typeof onServerSearch;
+		optionHeight: typeof optionHeight;
+		options: typeof options;
+		optionsCount: typeof optionsCount;
+		optionSelectedText: typeof optionSelectedText;
+		optionsSelectedText: typeof optionsSelectedText;
+		placeholder: typeof placeholder;
+		popupDropboxBreakpoint: typeof popupDropboxBreakpoint;
+		position: typeof position;
+		search: typeof search;
+		searchPlaceholderText: typeof searchPlaceholderText;
+		selectAllOnlyVisible: typeof selectAllOnlyVisible;
+		selectAllText: typeof selectAllText;
+		selectedValue: typeof selectedValue;
+		setValueAsArray: typeof setValueAsArray;
+		showDropboxAsPopup: typeof showDropboxAsPopup;
+		showOptionsOnlyOnSearch: typeof showOptionsOnlyOnSearch;
+		showSelectedOptionsFirst: typeof showSelectedOptionsFirst;
+		showValueAsTags: typeof showValueAsTags;
+		silentInitialValueSet: typeof silentInitialValueSet;
+		textDirection: typeof textDirection;
+		tooltipAlignment: typeof tooltipAlignment;
+		tooltipFontSize: typeof tooltipFontSize;
+		tooltipMaxWidth: typeof tooltipMaxWidth;
+		valueKey: typeof valueKey;
+		zIndex: typeof zIndex;
 	};
 }

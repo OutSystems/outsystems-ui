@@ -1,7 +1,7 @@
-/*! Patterns - Content - Dropdown */
+/*! Patterns - Interaction - Dropdown */
 ////
 /// @group Patterns-Dropdown
-/// Patterns - Content - Dropdown
+/// Patterns - Interaction - Dropdown
 
-/*! VirtualSelect Library Core Styles */
-// @ToDo: Import directly from the NodeModules folder
+/// Import VirtualSelect provider library styles
+@import '../../../../Providers/Dropdown/VirtualSelect/scss/virtualselect';
