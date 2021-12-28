@@ -15,7 +15,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		private _progressSvgElem: HTMLElement;
 
 		// ResizeOberver
-		private _resizeOberver: ResizeObserver;
+		private _resizeObserver: ResizeObserver;
 
 		// Store values to be assigned to the circle
 		private _strokeDasharray: number;
@@ -30,7 +30,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 
 		// Set the resizeObserver
 		private _addResizeOberser(): void {
-			this._resizeOberver = new ResizeObserver((entries) => {
+			this._resizeObserver = new ResizeObserver((entries) => {
 				// We wrap it in requestAnimationFrame to avoid this error - ResizeObserver loop limit exceeded
 				requestAnimationFrame(() => {
 					if (!Array.isArray(entries) || !entries.length) {
@@ -40,7 +40,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 					this._updateCircleProps();
 				});
 			});
-			this._resizeOberver.observe(this._selfElem);
+			this._resizeObserver.observe(this._selfElem);
 		}
 
 		// remove the added transitionEnd event and the cssClass added at the beginning
@@ -51,7 +51,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			Helper.Style.RemoveClass(this._progressSvgElem, ProgressEnum.CssClass.AnimateProgressChange);
 
 			// Check if the resizeOberver does not exist yet!
-			if (!this._resizeOberver) {
+			if (!this._resizeObserver) {
 				// Create the Oberver
 				this._addResizeOberser();
 			}
@@ -291,8 +291,8 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			super.dispose();
 
 			// Check if the resizeOberver already exist
-			if (!this._resizeOberver) {
-				this._resizeOberver.disconnect();
+			if (this._resizeObserver) {
+				this._resizeObserver.disconnect();
 			}
 		}
 	}

@@ -265,7 +265,7 @@ namespace OSUIFramework.Helper {
 		 * @return {*}  {(HTMLElement | undefined)} Return the HTMLElement found, of if not undefined.
 		 * @memberof Dom
 		 */
-		public static ClassSelector(element: HTMLElement, cssClass: string): HTMLElement | undefined {
+		public static ClassSelector(element: HTMLElement | Document, cssClass: string): HTMLElement | undefined {
 			let elementFound: HTMLElement = undefined;
 
 			if (element) {
