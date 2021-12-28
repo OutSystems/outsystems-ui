@@ -29,6 +29,7 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 	 */
 	export enum CssProperty {
 		TabsHeight = '--tabs-height',
+		TabsHeaderItems = '--tabs-header-items',
 	}
 
 	/**

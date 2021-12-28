@@ -223,6 +223,21 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		/**
+		 * Method to set the CSS variable that holds the number of header items
+		 *
+		 * @private
+		 * @memberof Tabs
+		 */
+		private _setHeaderItemsCustomProperty(): void {
+			// Create css variable
+			Helper.Style.SetStyleAttribute(
+				this._selfElem,
+				Enum.CssProperty.TabsHeaderItems,
+				this._tabsHeaderItemsElementsArray.length
+			);
+		}
+
+		/**
 		 * Method to set the Tabs Height
 		 *
 		 * @private
@@ -245,6 +260,8 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._setPosition(this._configs.TabsVerticalPosition);
 			this._setHeight(this._configs.Height);
 			this._setIsJustified(this._configs.JustifyHeaders);
+			// Set the HeaderItems css variable
+			this._setHeaderItemsCustomProperty();
 			// Setting as false, to avoid trigering changeTab event on screen load
 			this.changeTab(this.configs.StartingTab, undefined, false, true);
 
@@ -484,6 +501,8 @@ namespace OSUIFramework.Patterns.Tabs {
 						true
 					);
 				}
+
+				this._setHeaderItemsCustomProperty();
 			} else {
 				// Otherwise are items created before the tabs is built
 				// Set the correct data-tab, by using the items array, that correspond to the DOM order
@@ -510,6 +529,8 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._setInitialOptions();
 
 			this.finishBuild();
+
+			console.log('hey');
 		}
 
 		/**
@@ -692,6 +713,8 @@ namespace OSUIFramework.Patterns.Tabs {
 				this._activeTabHeaderElement = null;
 				Helper.AsyncInvocation(this.changeTab.bind(this), currentIndex - 1, undefined, false, true);
 			}
+
+			this._setHeaderItemsCustomProperty();
 		}
 
 		/**
