@@ -6,6 +6,7 @@
 ///
 .osui-tabs {
 	--header-item-width: fit-content(30%);
+	--header-item-alignment: auto;
 	display: grid;
 	height: var(--tabs-height);
 
@@ -90,7 +91,7 @@
 
 		.osui-tabs__header {
 			align-content: start;
-			grid-auto-flow: row;
+			grid-template-rows: repeat(var(--tabs-header-items), var(--header-item-alignment));
 			overflow-y: auto;
 			overflow-x: hidden;
 
@@ -116,7 +117,7 @@
 		grid-template-rows: auto 1fr;
 
 		.osui-tabs__header {
-			grid-auto-flow: column;
+			grid-template-columns: repeat(var(--tabs-header-items), var(--header-item-alignment));
 			justify-content: start;
 			overflow-y: hidden;
 			overflow-x: auto;
@@ -156,6 +157,8 @@
 	}
 
 	&--is-justified {
+		--header-item-alignment: 1fr;
+
 		&.osui-tabs--is-horizontal {
 			.osui-tabs__header {
 				justify-content: initial;
