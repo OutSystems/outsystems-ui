@@ -26,6 +26,23 @@ namespace OSUIFramework.Helper {
 		}
 
 		/**
+		 * Method that will check if a given attribute exists for the given html element.
+		 *
+		 * @static
+		 * @param {HTMLElement} element
+		 * @param {string} attrName
+		 * @return {*}  {boolean}
+		 * @memberof AttributeManipulation
+		 */
+		public static Has(element: HTMLElement, attrName: string): boolean {
+			if (element) {
+				return element.hasAttribute(attrName);
+			} else {
+				throw Error(`The element does not exist, when trying to check the attribute '${attrName}'.`);
+			}
+		}
+
+		/**
 		 * Method that will return the Id of the html element.
 		 *
 		 * @static
