@@ -14,10 +14,7 @@ namespace Providers.RangeSlider {
 				orientation: this.IsVertical
 					? OSUIFramework.GlobalEnum.Orientation.Vertical
 					: OSUIFramework.GlobalEnum.Orientation.Horizontal,
-				range: {
-					min: this.MinValue,
-					max: this.MaxValue === this.MinValue ? 100 : this.MaxValue,
-				},
+				range: this.getRangeConfig(),
 				tooltips: this.setTooltipVisibility(this.ShowTooltip),
 			};
 
@@ -29,8 +26,14 @@ namespace Providers.RangeSlider {
 			return providerOptions;
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		public setTooltipVisibility(showTooltip: boolean): any {
+		public getRangeConfig(): any {
+			return {
+				min: this.MinValue,
+				max: this.MaxValue === this.MinValue ? 100 : this.MaxValue,
+			};
+		}
+
+		public setTooltipVisibility(showTooltip: boolean): number[] {
 			const tooltipValue = showTooltip ? window.wNumb({ decimals: 0 }) : false;
 			return this.IsInterval ? [tooltipValue, tooltipValue] : [tooltipValue];
 		}
