@@ -4,6 +4,8 @@ namespace Providers.Dropdown.Virtual_Select.Enum {
 	 * CSS Classes
 	 */
 	export enum CssClass {
+		ErrorMessage = 'osui-dropdown-error-message',
+		NotValid = 'osui-dropdown--not-valid',
 		OptionItemIcon = 'osui-dropdown-option-icon',
 		OptionItemImage = 'osui-dropdown-option-image',
 	}

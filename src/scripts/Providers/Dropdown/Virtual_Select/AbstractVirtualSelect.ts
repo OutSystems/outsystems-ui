@@ -20,6 +20,16 @@ namespace Providers.Dropdown.Virtual_Select {
 			super(uniqueId, configs);
 		}
 
+		// Add error message container with a given text
+		private _addErrorMessage(text: string): void {
+			// Create the wrapper container
+			const textContainer = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Div);
+			textContainer.classList.add(Enum.CssClass.ErrorMessage);
+			textContainer.innerHTML = text;
+
+			this._selfElem.appendChild(textContainer);
+		}
+
 		// Manage the attributes to be added
 		private _manageAttributes(): void {
 			// Check if the pattern should be in disabled mode
@@ -62,7 +72,7 @@ namespace Providers.Dropdown.Virtual_Select {
 		 * Create the provider instance
 		 *
 		 * @protected
-		 * @memberof VirtualSelect
+		 * @memberof AbstractVirtualSelect
 		 */
 		protected createProviderInstance(): void {
 			// Create the provider instance
@@ -83,7 +93,7 @@ namespace Providers.Dropdown.Virtual_Select {
 		 * Set the callbacks that will be assigned to the window click event
 		 *
 		 * @protected
-		 * @memberof VirtualSelect
+		 * @memberof AbstractVirtualSelect
 		 */
 		protected setCallbacks(): void {
 			// Set the event callback reference
@@ -97,7 +107,7 @@ namespace Providers.Dropdown.Virtual_Select {
 		 * Unset callbacks that has been assigned to the element
 		 *
 		 * @protected
-		 * @memberof VirtualSelect
+		 * @memberof AbstractVirtualSelect
 		 */
 		protected unsetCallbacks(): void {
 			this._onSelectedOptionEvent = undefined;
@@ -118,24 +128,30 @@ namespace Providers.Dropdown.Virtual_Select {
 		/**
 		 * Update property value from a given property name at OnParametersChange
 		 *
-		 * @param propertyName the name of the property that will be changed
-		 * @param propertyValue the new value that should be assigned to the given property name
+		 * @param {string} propertyName the name of the property that will be changed
+		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
+		 * @memberof AbstractVirtualSelect
 		 */
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		public changeProperty(propertyName: string, propertyValue: any): void {
+		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			console.log('changeProperty()', propertyName, propertyValue);
 		}
 
 		/**
 		 * Clear any selected values from the DropdownSearch
+		 *
+		 * @memberof AbstractVirtualSelect
 		 */
+		// TODO - jRio: implement API method!
 		public clear(): void {
 			this._virtualselectMethods.reset();
 		}
 
 		/**
 		 * Set DropdownSearch as disabled
+		 *
+		 * @memberof AbstractVirtualSelect
 		 */
+		// TODO - jRio: implement API method!
 		public disable(): void {
 			OSUIFramework.Helper.Dom.Attribute.Set(
 				this._selfElem,
@@ -148,6 +164,8 @@ namespace Providers.Dropdown.Virtual_Select {
 
 		/**
 		 * Destroy the DropdownSearch.
+		 *
+		 * @memberof AbstractVirtualSelect
 		 */
 		public dispose(): void {
 			this._vsProvider.destroy();
@@ -159,7 +177,10 @@ namespace Providers.Dropdown.Virtual_Select {
 
 		/**
 		 * Set DropdownSearch as enabled
+		 *
+		 * @memberof AbstractVirtualSelect
 		 */
+		// TODO - jRio: implement API method!
 		public enable(): void {
 			OSUIFramework.Helper.Dom.Attribute.Remove(this._selfElem, OSUIFramework.GlobalEnum.HTMLAttributes.Disabled);
 
@@ -167,10 +188,23 @@ namespace Providers.Dropdown.Virtual_Select {
 		}
 
 		/**
+		 * Get the selected values
+		 *
+		 * @memberof AbstractVirtualSelect
+		 */
+		// TODO - jRio: implement API method!
+		public getSelectedValues(): string {
+			const selectedOptions = this._virtualselectMethods.getSelectedOptions();
+
+			return JSON.stringify(selectedOptions);
+		}
+
+		/**
 		 * Method used to register the provider callback
 		 *
-		 * @param eventName Event name that will be assigned
-		 * @param callback Function name that will be passed as a callback function to the event above
+		 * @param {string} eventName Event name that will be assigned
+		 * @param {OSUIFramework.Callbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
+		 * @memberof AbstractVirtualSelect
 		 */
 		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
 			switch (eventName) {
@@ -188,6 +222,29 @@ namespace Providers.Dropdown.Virtual_Select {
 
 				default:
 					throw new Error(`The given '${eventName}' event name it's not defined.`);
+			}
+		}
+
+		/**
+		 * Set the validation status, and also pass the message to show
+		 *
+		 * @param {boolean} [isValid=true] Set if the dropdown is valid or not
+		 * @param {string} [validationMessage=''] Pass the text message to show
+		 * @memberof AbstractVirtualSelect
+		 */
+		// TODO - jRio: implement API method!
+		public validation(isValid = true, validationMessage = ''): void {
+			if (isValid === false) {
+				OSUIFramework.Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.NotValid);
+				this._addErrorMessage(validationMessage);
+			} else {
+				const errorMessageElement = OSUIFramework.Helper.Dom.ClassSelector(
+					this._selfElem,
+					Enum.CssClass.NotValid
+				);
+
+				// If error message has been added already, remove it!
+				errorMessageElement !== undefined ? errorMessageElement.remove() : null;
 			}
 		}
 
