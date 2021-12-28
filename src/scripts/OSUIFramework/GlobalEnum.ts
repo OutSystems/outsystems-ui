@@ -107,9 +107,25 @@ namespace OSUIFramework.GlobalEnum {
 	 * OutSystemsUI elements inline styles
 	 */
 	export enum InlineStyle {
+		Display = 'display',
 		Height = 'height',
+		Opacity = 'opacity',
 		PointerEvents = 'pointerEvents',
+		Transform = 'transform',
 	}
+
+	/**
+	 * OutSystems UI inline style properties.
+	 */
+	//TODO: if more properties appear here, let's consider using https://css-tricks.com/css-in-typescript-with-vanilla-extract/
+	export const InlineStyleValue = {
+		Display: {
+			block: 'block',
+			inline: 'inline',
+			none: 'none',
+			unset: '',
+		},
+	};
 
 	/**
 	 * OutSystemsUI event Keycodes
