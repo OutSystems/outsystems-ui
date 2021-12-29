@@ -19,17 +19,5 @@ namespace Providers.Dropdown.Virtual_Select.Search {
 			// Instance will be Created!
 			super.createProviderInstance();
 		}
-
-		/**
-		 * Update property value from a given property name at OnParametersChange
-		 *
-		 * @param propertyName the name of the property that will be changed
-		 * @param propertyValue the new value that should be assigned to the given property name
-		 * @memberof VirtualSelect.Search
-		 */
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		public changeProperty(propertyName: string, propertyValue: any): void {
-			console.log('changeProperty()', propertyName, propertyValue);
-		}
 	}
 }

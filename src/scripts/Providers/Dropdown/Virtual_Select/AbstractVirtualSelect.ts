@@ -65,6 +65,22 @@ namespace Providers.Dropdown.Virtual_Select {
 			}
 		}
 
+		// Manage the disable status of the pattern
+		private _manageDisableStatus(): void {
+			if (this.configs.IsDisabled) {
+				OSUIFramework.Helper.Dom.Attribute.Set(
+					this._selfElem,
+					OSUIFramework.GlobalEnum.HTMLAttributes.Disabled,
+					''
+				);
+			} else {
+				OSUIFramework.Helper.Dom.Attribute.Remove(
+					this._selfElem,
+					OSUIFramework.GlobalEnum.HTMLAttributes.Disabled
+				);
+			}
+		}
+
 		// Get the selected options and pass them into callBack
 		private _onSelectedOption() {
 			// Trigger platform's SelectedOptionCallbackEvent client Action
@@ -99,6 +115,20 @@ namespace Providers.Dropdown.Virtual_Select {
 
 			// Trigger platform's InstanceIntializedHandler client Action
 			OSUIFramework.Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
+		}
+
+		/**
+		 * Method that will be responsible to redraw the dropdown when it's needed
+		 *
+		 * @protected
+		 * @memberof AbstractVirtualSelect
+		 */
+		protected redraw(): void {
+			// Destroy the old VirtualSelect instance
+			this._vsProvider.destroy();
+
+			// Create a new flatpickr instance with the updated configs
+			OSUIFramework.Helper.AsyncInvocation(this.prepareConfigs.bind(this));
 		}
 
 		/**
@@ -145,7 +175,33 @@ namespace Providers.Dropdown.Virtual_Select {
 		 * @memberof AbstractVirtualSelect
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
-			console.log('changeProperty()', propertyName, propertyValue);
+			super.changeProperty(propertyName, propertyValue);
+
+			if (this.isBuilt) {
+				switch (propertyName) {
+					case OSUIFramework.Patterns.Dropdown.Enum.Properties.AllowMultipleSelection:
+						this.redraw();
+						break;
+					case OSUIFramework.Patterns.Dropdown.Enum.Properties.IsDisabled:
+						this._manageDisableStatus();
+						break;
+					case OSUIFramework.Patterns.Dropdown.Enum.Properties.NoResultsText:
+						this.redraw();
+						break;
+					case OSUIFramework.Patterns.Dropdown.Enum.Properties.OptionsList:
+						this.redraw();
+						break;
+					case OSUIFramework.Patterns.Dropdown.Enum.Properties.Prompt:
+						this.redraw();
+						break;
+					case OSUIFramework.Patterns.Dropdown.Enum.Properties.SearchPrompt:
+						this.redraw();
+						break;
+					case OSUIFramework.Patterns.Dropdown.Enum.Properties.SelectedOptions:
+						this.redraw();
+						break;
+				}
+			}
 		}
 
 		/**
@@ -163,13 +219,9 @@ namespace Providers.Dropdown.Virtual_Select {
 		 * @memberof AbstractVirtualSelect
 		 */
 		public disable(): void {
-			OSUIFramework.Helper.Dom.Attribute.Set(
-				this._selfElem,
-				OSUIFramework.GlobalEnum.HTMLAttributes.Disabled,
-				''
-			);
-
 			this.configs.IsDisabled = true;
+
+			this._manageDisableStatus();
 		}
 
 		/**
@@ -191,9 +243,9 @@ namespace Providers.Dropdown.Virtual_Select {
 		 * @memberof AbstractVirtualSelect
 		 */
 		public enable(): void {
-			OSUIFramework.Helper.Dom.Attribute.Remove(this._selfElem, OSUIFramework.GlobalEnum.HTMLAttributes.Disabled);
-
 			this.configs.IsDisabled = false;
+
+			this._manageDisableStatus();
 		}
 
 		/**
