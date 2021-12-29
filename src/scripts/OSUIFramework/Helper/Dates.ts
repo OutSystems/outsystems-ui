@@ -34,7 +34,7 @@ namespace OSUIFramework.Helper {
 		 * @param {string} date
 		 */
 		public static IsNull(date: string): boolean {
-			// Check if the given date is a valid date
+			// Check if the given date is not a date object and if it's a valid date
 			if (typeof date === 'string' && isNaN(Date.parse(date.split(' ')[0]))) {
 				throw new Error(`The given date '${date}' it's not a valid date.`);
 			} else if (Date.parse(date) < 0 || date === 'undefined') {
