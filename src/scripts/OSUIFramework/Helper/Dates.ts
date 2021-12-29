@@ -33,16 +33,18 @@ namespace OSUIFramework.Helper {
 		 * @export
 		 * @param {string} date
 		 */
-		public static IsNull(date: string): boolean {
+		public static IsNull(date: string | Date): boolean {
 			// Check if the given date is not a date object and if it's a valid date
-			if (typeof date === 'string' && isNaN(Date.parse(date.split(' ')[0]))) {
-				throw new Error(`The given date '${date}' it's not a valid date.`);
-			} else if (Date.parse(date) < 0 || date === 'undefined') {
-				// 1st Jan 1970 is the actual Date baseline.
-				return true;
+			if (typeof date === 'string') {
+				if (isNaN(Date.parse(date.split(' ')[0]))) {
+					throw new Error(`The given date '${date}' it's not a valid date.`);
+				} else if (Date.parse(date) < 0 || date === 'undefined') {
+					// 1st Jan 1970 is the actual Date baseline.
+					return true;
+				}
 			}
 
-			const _date = new Date(Date.parse(date));
+			const _date = typeof date === 'string' ? new Date(Date.parse(date)) : date;
 
 			// Check if is an OutSystems Null date
 			if (_date.getFullYear() === 1900 && _date.getMonth() === 0 && _date.getDate() === 1) {
