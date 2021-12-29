@@ -127,8 +127,6 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	export function GetSelectedValues(dropdownId: string): string {
 		const _dropdownItem = GetDropdownById(dropdownId);
 
-		console.log('GetSelectedValues', _dropdownItem.getSelectedValues());
-
 		return _dropdownItem.getSelectedValues();
 	}
 

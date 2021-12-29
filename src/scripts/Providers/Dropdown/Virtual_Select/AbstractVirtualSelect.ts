@@ -23,7 +23,7 @@ namespace Providers.Dropdown.Virtual_Select {
 		// Add error message container with a given text
 		private _addErrorMessage(text: string): void {
 			const errorMessageElement = OSUIFramework.Helper.Dom.ClassSelector(
-				this._selfElem,
+				this._selfElem.parentElement,
 				Enum.CssClass.ErrorMessage
 			);
 
@@ -34,7 +34,7 @@ namespace Providers.Dropdown.Virtual_Select {
 				textContainer.classList.add(Enum.CssClass.ErrorMessage);
 				textContainer.innerHTML = text;
 
-				this._selfElem.appendChild(textContainer);
+				this._selfElem.parentElement.appendChild(textContainer);
 			}
 		}
 
@@ -246,7 +246,7 @@ namespace Providers.Dropdown.Virtual_Select {
 				OSUIFramework.Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.NotValid);
 
 				const errorMessageElement = OSUIFramework.Helper.Dom.ClassSelector(
-					this._selfElem,
+					this._selfElem.parentElement,
 					Enum.CssClass.ErrorMessage
 				);
 
