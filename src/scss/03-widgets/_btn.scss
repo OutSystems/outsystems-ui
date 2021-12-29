@@ -102,15 +102,13 @@
 		font-size: var(--font-size-base);
 		height: 48px;
 
-		&.btn {
-			&-small {
-				font-size: var(--font-size-s);
-				height: 40px;
-			}
+		&-small {
+			font-size: var(--font-size-s);
+			height: 40px;
+		}
 
-			&-large {
-				height: 56px;
-			}
+		&-large {
+			height: 56px;
 		}
 	}
 }
