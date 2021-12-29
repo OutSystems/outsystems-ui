@@ -35,9 +35,9 @@ namespace OSUIFramework.Helper {
 		 */
 		public static IsNull(date: string): boolean {
 			// Check if the given date is a valid date
-			if (isNaN(Date.parse(date.split(' ')[0]))) {
+			if (typeof date === 'string' && isNaN(Date.parse(date.split(' ')[0]))) {
 				throw new Error(`The given date '${date}' it's not a valid date.`);
-			} else if (Date.parse(date) < 0) {
+			} else if (Date.parse(date) < 0 || typeof date === 'undefined') {
 				// 1st Jan 1970 is the actual Date baseline.
 				return true;
 			}
