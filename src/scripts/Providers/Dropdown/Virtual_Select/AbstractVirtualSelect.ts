@@ -44,7 +44,7 @@ namespace Providers.Dropdown.Virtual_Select {
 			let optionsSelected = [];
 
 			// Check if it's multiple type
-			if (this.configs.ShowCheckboxes) {
+			if (this.configs.AllowMultipleSelection) {
 				optionsSelected = this._virtualselectMethods.getSelectedOptions(); // It returns an array of selected options
 			} else {
 				// It's single option type

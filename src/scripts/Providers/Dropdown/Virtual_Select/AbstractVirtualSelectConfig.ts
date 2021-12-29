@@ -62,7 +62,7 @@ namespace Providers.Dropdown.Virtual_Select {
 			// Has selected values
 			if (this.SelectedOptions.length > 0) {
 				// Check if it's multiple options
-				if (this.ShowCheckboxes) {
+				if (this.AllowMultipleSelection) {
 					// Get the selected key value
 					for (const option of this.SelectedOptions) {
 						selectedKeyvalues.push(option.value);
@@ -82,7 +82,7 @@ namespace Providers.Dropdown.Virtual_Select {
 				ele: this.ElementId,
 				hideClearButton: true,
 				labelRenderer: this._getOptionInfo.bind(this),
-				multiple: this.ShowCheckboxes,
+				multiple: this.AllowMultipleSelection,
 				noOptionsText: this.NoResultsText,
 				noSearchResultsText: this.NoResultsText,
 				options: this.OptionsList,
