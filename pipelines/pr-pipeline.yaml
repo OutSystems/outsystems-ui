@@ -68,10 +68,10 @@ stages:
                       echo "##vso[task.setvariable variable=branch;isoutput=true]$SYSTEM_PULLREQUEST_SOURCEBRANCH"
                   name: branch_name
 
-    - stage: safari_functional_tests
+    - stage: safari_functional_tests_legacy
       variables:
           - group: 'Services Credentials'
-      displayName: Execute tests on Safari
+      displayName: Execute tests for Legacy Components on Safari
       condition: ne(stageDependencies.CheckChanges.outputs['CheckChangesJob.check_changes.tags'], '')
       dependsOn: CheckChanges
       jobs:
@@ -90,10 +90,32 @@ stages:
                       LEGACY: true
                       BRANCH: $(branch)
 
-    - stage: chrome_functional_tests
+    - stage: safari_functional_tests
       variables:
           - group: 'Services Credentials'
-      displayName: Execute tests on Chrome
+      displayName: Execute tests on Safari
+      condition: ne(stageDependencies.CheckChanges.outputs['CheckChangesJob.check_changes.tags'], '')
+      dependsOn: safari_functional_tests_legacy
+      jobs:
+          - job: execute_tests
+            displayName: Build and run tests on Safari
+            variables:
+                tags: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['check_changes.tags'] ]
+                branch: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['branch_name.branch'] ]
+            steps:
+                - checkout: rd-outsystems-ui-qa-tests
+                - template: ./pipelines/templates/build-and-execute-functional-tests-template.yml@rd-outsystems-ui-qa-tests
+                  parameters:
+                      BROWSER: safari
+                      ENVIRONMENT: dev
+                      TAGS: not @legacy and not @skipSafari and ($(tags))
+                      LEGACY: false
+                      BRANCH: $(branch)
+
+    - stage: chrome_functional_tests_legacy
+      variables:
+          - group: 'Services Credentials'
+      displayName: Execute tests for Legacy Components on Chrome
       condition: ne(stageDependencies.CheckChanges.outputs['CheckChangesJob.check_changes.tags'], '')
       dependsOn: CheckChanges
       jobs:
@@ -112,9 +134,31 @@ stages:
                       LEGACY: true
                       BRANCH: $(branch)
 
+    - stage: chrome_functional_tests
+      variables:
+          - group: 'Services Credentials'
+      displayName: Execute tests on Chrome
+      condition: ne(stageDependencies.CheckChanges.outputs['CheckChangesJob.check_changes.tags'], '')
+      dependsOn: chrome_functional_tests_legacy
+      jobs:
+          - job: execute_tests
+            displayName: Build and run tests on Chrome
+            variables:
+                tags: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['check_changes.TAGS'] ]
+                branch: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['branch_name.branch'] ]
+            steps:
+                - checkout: rd-outsystems-ui-qa-tests
+                - template: ./pipelines/templates/build-and-execute-functional-tests-template.yml@rd-outsystems-ui-qa-tests
+                  parameters:
+                      BROWSER: chrome
+                      ENVIRONMENT: dev
+                      TAGS: not @legacy and not @skipChrome and ($(tags))
+                      LEGACY: false
+                      BRANCH: $(branch)
+
     - stage: publish_cucumber_results
       displayName: 'Publish cucumber results'
-      condition: ne(dependencies.CheckChangesStage.outputs['CheckChangesJob.CheckChanges.check_changes.TAGS'], '')
+      condition: ne(stageDependencies.CheckChanges.outputs['CheckChangesJob.check_changes.TAGS'], '')
       dependsOn:
           - safari_functional_tests
           - chrome_functional_tests
