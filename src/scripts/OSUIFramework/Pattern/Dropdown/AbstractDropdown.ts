@@ -14,5 +14,11 @@ namespace OSUIFramework.Patterns.Dropdown {
 		public get provider(): P {
 			return this._provider;
 		}
+
+		public abstract clear(): void;
+		public abstract disable(): void;
+		public abstract enable(): void;
+		public abstract getSelectedValues(): string;
+		public abstract validation(isValid: boolean, validationMessage: string): void;
 	}
 }

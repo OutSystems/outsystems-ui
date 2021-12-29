@@ -64,7 +64,7 @@ namespace Providers.Dropdown.Virtual_Select {
 
 		// Set the ElementId that is expected from VirtualSelect config
 		private _setElementId(): void {
-			// Store the ElementId where the provider will create the DropdownSearch
+			// Store the ElementId where the provider will create the Dropdown
 			this.configs.ElementId = '#' + this._selfElem.id;
 		}
 
@@ -137,7 +137,7 @@ namespace Providers.Dropdown.Virtual_Select {
 		}
 
 		/**
-		 * Clear any selected values from the DropdownSearch
+		 * Clear any selected values from the Dropdown
 		 *
 		 * @memberof AbstractVirtualSelect
 		 */
@@ -147,7 +147,7 @@ namespace Providers.Dropdown.Virtual_Select {
 		}
 
 		/**
-		 * Set DropdownSearch as disabled
+		 * Set Dropdown as disabled
 		 *
 		 * @memberof AbstractVirtualSelect
 		 */
@@ -163,7 +163,7 @@ namespace Providers.Dropdown.Virtual_Select {
 		}
 
 		/**
-		 * Destroy the DropdownSearch.
+		 * Destroy the Dropdown.
 		 *
 		 * @memberof AbstractVirtualSelect
 		 */
@@ -176,7 +176,7 @@ namespace Providers.Dropdown.Virtual_Select {
 		}
 
 		/**
-		 * Set DropdownSearch as enabled
+		 * Set Dropdown as enabled
 		 *
 		 * @memberof AbstractVirtualSelect
 		 */

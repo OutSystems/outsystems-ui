@@ -18,6 +18,18 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	}
 
 	/**
+	 * Function that will clear any selected values from the Dropdown with given Id
+	 *
+	 * @export
+	 * @param {string} dropdownId
+	 */
+	export function Clear(dropdownId: string): void {
+		const _dropdownItem = GetDropdownById(dropdownId);
+
+		_dropdownItem.clear();
+	}
+
+	/**
 	 * Create the new DropdownItem instance and add it to the dropdownItemsMap
 	 *
 	 * @export
@@ -43,6 +55,18 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	}
 
 	/**
+	 * Function that will set Dropdown with given ID as Disabled
+	 *
+	 * @export
+	 * @param {string} dropdownId
+	 */
+	export function Disable(dropdownId: string): void {
+		const _dropdownItem = GetDropdownById(dropdownId);
+
+		_dropdownItem.disable();
+	}
+
+	/**
 	 * Function that will dispose the instance of the given DropDownItem Id
 	 *
 	 * @export
@@ -54,6 +78,18 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 		_dropdownItem.dispose();
 
 		_dropdownItemsMap.delete(_dropdownItem.uniqueId);
+	}
+
+	/**
+	 * Function that will set Dropdown with given ID as enabled
+	 *
+	 * @export
+	 * @param {string} dropdownId
+	 */
+	export function Enable(dropdownId: string): void {
+		const _dropdownItem = GetDropdownById(dropdownId);
+
+		_dropdownItem.enable();
 	}
 
 	/**
@@ -79,6 +115,19 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			dropdownId,
 			_dropdownItemsMap
 		) as OSUIFramework.Patterns.Dropdown.IDropdown;
+	}
+
+	/**
+	 * Fucntion that will return all the selected values from a given Dropdown Id
+	 *
+	 * @export
+	 * @param {string} dropdownId
+	 * @return {*}  {string}
+	 */
+	export function GetSelectedValues(dropdownId: string): string {
+		const _dropdownItem = GetDropdownById(dropdownId);
+
+		return _dropdownItem.getSelectedValues();
 	}
 
 	/**
@@ -112,5 +161,19 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 		const _datePicker = this.GetDropdownById(dropdownId);
 
 		_datePicker.registerProviderCallback(eventName, callback);
+	}
+
+	/**
+	 * Function used to set the validation status to the given Dropdown Id
+	 *
+	 * @export
+	 * @param {string} dropdownId
+	 * @param {boolean} isValid
+	 * @param {string} validationMessage
+	 */
+	export function SetValidation(dropdownId: string, isValid: boolean, validationMessage: string): void {
+		const _dropdownItem = GetDropdownById(dropdownId);
+
+		_dropdownItem.validation(isValid, validationMessage);
 	}
 }
