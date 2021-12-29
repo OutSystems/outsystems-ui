@@ -260,7 +260,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._setPosition(this._configs.TabsVerticalPosition);
 			this._setHeight(this._configs.Height);
 			this._setIsJustified(this._configs.JustifyHeaders);
-			// Set the HeaderItems css variable
+			// Set the --tabs-header-items css variable
 			this._setHeaderItemsCustomProperty();
 			// Setting as false, to avoid trigering changeTab event on screen load
 			this.changeTab(this.configs.StartingTab, undefined, false, true);
