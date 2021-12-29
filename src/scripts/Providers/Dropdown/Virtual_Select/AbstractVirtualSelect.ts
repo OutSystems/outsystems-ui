@@ -22,24 +22,24 @@ namespace Providers.Dropdown.Virtual_Select {
 
 		// Add error message container with a given text
 		private _addErrorMessage(text: string): void {
-			// Create the wrapper container
-			const textContainer = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Div);
-			textContainer.classList.add(Enum.CssClass.ErrorMessage);
-			textContainer.innerHTML = text;
+			const errorMessageElement = OSUIFramework.Helper.Dom.ClassSelector(
+				this._selfElem,
+				Enum.CssClass.ErrorMessage
+			);
 
-			this._selfElem.appendChild(textContainer);
-		}
+			// Check if the element already exist!
+			if (errorMessageElement === undefined) {
+				// Create the wrapper container
+				const textContainer = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Div);
+				textContainer.classList.add(Enum.CssClass.ErrorMessage);
+				textContainer.innerHTML = text;
 
-		// Manage the attributes to be added
-		private _manageAttributes(): void {
-			// Check if the pattern should be in disabled mode
-			if (this.configs.IsDisabled) {
-				this.disable();
+				this._selfElem.appendChild(textContainer);
 			}
 		}
 
-		// Get the selected options and pass them into callBack
-		private _onSelectedOption() {
+		// Get the selected values options that will be used to pass into platform as a JSON string
+		private _getSelectedOptionsStructure(): string {
 			// Store the options selected
 			let optionsSelected = [];
 
@@ -54,11 +54,24 @@ namespace Providers.Dropdown.Virtual_Select {
 				}
 			}
 
+			return optionsSelected !== undefined && optionsSelected.length > 0 ? JSON.stringify(optionsSelected) : '';
+		}
+
+		// Manage the attributes to be added
+		private _manageAttributes(): void {
+			// Check if the pattern should be in disabled mode
+			if (this.configs.IsDisabled) {
+				this.disable();
+			}
+		}
+
+		// Get the selected options and pass them into callBack
+		private _onSelectedOption() {
 			// Trigger platform's SelectedOptionCallbackEvent client Action
 			OSUIFramework.Helper.AsyncInvocation(
 				this._platformEventSelectedOptCallback,
 				this.widgetId,
-				JSON.stringify(optionsSelected)
+				this._getSelectedOptionsStructure()
 			);
 		}
 
@@ -67,7 +80,6 @@ namespace Providers.Dropdown.Virtual_Select {
 			// Store the ElementId where the provider will create the Dropdown
 			this.configs.ElementId = '#' + this._selfElem.id;
 		}
-
 		/**
 		 * Create the provider instance
 		 *
@@ -141,7 +153,6 @@ namespace Providers.Dropdown.Virtual_Select {
 		 *
 		 * @memberof AbstractVirtualSelect
 		 */
-		// TODO - jRio: implement API method!
 		public clear(): void {
 			this._virtualselectMethods.reset();
 		}
@@ -151,7 +162,6 @@ namespace Providers.Dropdown.Virtual_Select {
 		 *
 		 * @memberof AbstractVirtualSelect
 		 */
-		// TODO - jRio: implement API method!
 		public disable(): void {
 			OSUIFramework.Helper.Dom.Attribute.Set(
 				this._selfElem,
@@ -180,7 +190,6 @@ namespace Providers.Dropdown.Virtual_Select {
 		 *
 		 * @memberof AbstractVirtualSelect
 		 */
-		// TODO - jRio: implement API method!
 		public enable(): void {
 			OSUIFramework.Helper.Dom.Attribute.Remove(this._selfElem, OSUIFramework.GlobalEnum.HTMLAttributes.Disabled);
 
@@ -192,11 +201,8 @@ namespace Providers.Dropdown.Virtual_Select {
 		 *
 		 * @memberof AbstractVirtualSelect
 		 */
-		// TODO - jRio: implement API method!
 		public getSelectedValues(): string {
-			const selectedOptions = this._virtualselectMethods.getSelectedOptions();
-
-			return JSON.stringify(selectedOptions);
+			return this._getSelectedOptionsStructure();
 		}
 
 		/**
@@ -228,19 +234,20 @@ namespace Providers.Dropdown.Virtual_Select {
 		/**
 		 * Set the validation status, and also pass the message to show
 		 *
-		 * @param {boolean} [isValid=true] Set if the dropdown is valid or not
-		 * @param {string} [validationMessage=''] Pass the text message to show
+		 * @param {boolean} Set if the dropdown is valid or not
+		 * @param {string} Pass the text message to show
 		 * @memberof AbstractVirtualSelect
 		 */
-		// TODO - jRio: implement API method!
-		public validation(isValid = true, validationMessage = ''): void {
+		public validation(isValid: boolean, validationMessage: string): void {
 			if (isValid === false) {
 				OSUIFramework.Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.NotValid);
 				this._addErrorMessage(validationMessage);
 			} else {
+				OSUIFramework.Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.NotValid);
+
 				const errorMessageElement = OSUIFramework.Helper.Dom.ClassSelector(
 					this._selfElem,
-					Enum.CssClass.NotValid
+					Enum.CssClass.ErrorMessage
 				);
 
 				// If error message has been added already, remove it!
