@@ -41,7 +41,7 @@ namespace OSUIFramework.Patterns {
 		 * @return {*}  {(string | Date)}
 		 * @memberof AbstractConfiguration
 		 */
-		protected validateDate(value: string, defaultValue: string): string | Date {
+		protected validateDate(value: string | Date, defaultValue: string): string | Date {
 			return Helper.Dates.IsNull(value) === false ? value : defaultValue;
 		}
 
