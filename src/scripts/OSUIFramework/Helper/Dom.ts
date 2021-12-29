@@ -26,6 +26,23 @@ namespace OSUIFramework.Helper {
 		}
 
 		/**
+		 * Method that will check if a given attribute exists for the given html element.
+		 *
+		 * @static
+		 * @param {HTMLElement} element
+		 * @param {string} attrName
+		 * @return {*}  {boolean}
+		 * @memberof AttributeManipulation
+		 */
+		public static Has(element: HTMLElement, attrName: string): boolean {
+			if (element) {
+				return element.hasAttribute(attrName);
+			} else {
+				throw Error(`The element does not exist, when trying to check the attribute '${attrName}'.`);
+			}
+		}
+
+		/**
 		 * Method that will return the Id of the html element.
 		 *
 		 * @static
@@ -279,6 +296,36 @@ namespace OSUIFramework.Helper {
 			}
 
 			return elementFound;
+		}
+
+		/**
+		 * Method that makes disables a given element.
+		 *
+		 * @static
+		 * @param {HTMLElement} element
+		 * @memberof Dom
+		 */
+		public static Disable(element: HTMLElement): void {
+			if (element) {
+				if (Dom.Attribute.Has(element, 'disabled') === false) {
+					Dom.Attribute.Set(element, 'disabled', true);
+				}
+			}
+		}
+
+		/**
+		 * Method that enables a given element.
+		 *
+		 * @static
+		 * @param {HTMLElement} element
+		 * @memberof Dom
+		 */
+		public static Enable(element: HTMLElement): void {
+			if (element) {
+				if (Dom.Attribute.Has(element, 'disabled')) {
+					Dom.Attribute.Remove(element, 'disabled');
+				}
+			}
 		}
 
 		/**

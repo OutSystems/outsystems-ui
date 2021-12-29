@@ -10,8 +10,8 @@ namespace OSUIFramework.Patterns.RangeSlider.Factory {
 	 */
 	export function NewRangeSlider(
 		rangeSliderId: string,
-		configs: string,
-		provider: string
+		provider: string,
+		configs: string
 	): OSUIFramework.Patterns.RangeSlider.IRangeSlider {
 		let _rangeSliderItem = null;
 
@@ -23,7 +23,7 @@ namespace OSUIFramework.Patterns.RangeSlider.Factory {
 
 			default:
 				throw new Error(
-					`There is no  ${OSUIFramework.GlobalEnum.PatternsNames.RangeSlider}  of the ${provider} provider`
+					`There is no ${OSUIFramework.GlobalEnum.PatternsNames.RangeSlider} of the ${provider} provider`
 				);
 		}
 
