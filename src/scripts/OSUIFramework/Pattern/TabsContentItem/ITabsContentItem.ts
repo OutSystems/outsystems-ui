@@ -7,10 +7,10 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		getDataTab();
 		getOffsetLeft();
 		removeActiveElement();
-		removeDragObserver(observer: IntersectionObserver);
 		setActiveElement();
 		setAriaLabelledByAttribute(headerItemId: string);
 		setDataTab(dataTab: number);
 		setOnDragObserver(observer: IntersectionObserver);
+		unobserveDragObserver(observer: IntersectionObserver);
 	}
 }
