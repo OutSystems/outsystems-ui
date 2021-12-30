@@ -260,7 +260,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._setPosition(this._configs.TabsVerticalPosition);
 			this._setHeight(this._configs.Height);
 			this._setIsJustified(this._configs.JustifyHeaders);
-			// Set the HeaderItems css variable
+			// Set the --tabs-header-items css variable
 			this._setHeaderItemsCustomProperty();
 			// Setting as false, to avoid trigering changeTab event on screen load
 			this.changeTab(this.configs.StartingTab, undefined, false, true);
@@ -709,13 +709,16 @@ namespace OSUIFramework.Patterns.Tabs {
 			// Remove it from the array
 			this._tabsHeaderItemsElementsArray.splice(currentIndex, 1);
 
-			// If this item removed was the active one, set a new one by calling changeTab()
-			if (isActiveItem && this.isBuilt) {
-				this._activeTabHeaderElement = null;
-				Helper.AsyncInvocation(this.changeTab.bind(this), currentIndex - 1, undefined, false, true);
-			}
+			if (this.isBuilt) {
+				// Update CSS Variable, as an item was removed
+				this._setHeaderItemsCustomProperty();
 
-			this._setHeaderItemsCustomProperty();
+				// If this item removed was the active one, set a new one by calling changeTab()
+				if (isActiveItem) {
+					this._activeTabHeaderElement = null;
+					Helper.AsyncInvocation(this.changeTab.bind(this), currentIndex - 1, undefined, false, true);
+				}
+			}
 		}
 
 		/**

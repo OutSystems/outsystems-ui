@@ -28,11 +28,6 @@
 			padding: var(--space-none) var(--space-m);
 			text-align: left;
 
-			// Service Studio Preview
-			& {
-				-servicestudio-width: 100%;
-			}
-
 			&:first-child {
 				border-radius: var(--border-radius-soft) var(--border-radius-none) var(--border-radius-none)
 					var(--border-radius-none);
