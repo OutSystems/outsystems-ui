@@ -24,6 +24,14 @@ namespace Providers.Dropdown.Virtual_Select.Factory {
 
 				break;
 
+			case OSUIFramework.Patterns.Dropdown.Enum.Mode.Tags:
+				_virtualSelectItem = new Providers.Dropdown.Virtual_Select.Tags.OSUIVirtualSelectTags(
+					dropdownId,
+					configs
+				);
+
+				break;
+
 			default:
 				throw new Error(`There is no Dropdown of ${mode} mode type`);
 		}

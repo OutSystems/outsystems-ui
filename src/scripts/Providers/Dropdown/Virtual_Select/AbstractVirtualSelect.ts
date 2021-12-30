@@ -38,25 +38,6 @@ namespace Providers.Dropdown.Virtual_Select {
 			}
 		}
 
-		// Get the selected values options that will be used to pass into platform as a JSON string
-		private _getSelectedOptionsStructure(): string {
-			// Store the options selected
-			let optionsSelected = [];
-
-			// Check if it's multiple type
-			if (this.configs.AllowMultipleSelection) {
-				optionsSelected = this._virtualselectMethods.getSelectedOptions(); // It returns an array of selected options
-			} else {
-				// It's single option type
-				// Check if there are any selected option
-				if (this._virtualselectMethods.getSelectedOptions()) {
-					optionsSelected.push(this._virtualselectMethods.getSelectedOptions()); // It returns an single object of selected option
-				}
-			}
-
-			return optionsSelected !== undefined && optionsSelected.length > 0 ? JSON.stringify(optionsSelected) : '';
-		}
-
 		// Manage the attributes to be added
 		private _manageAttributes(): void {
 			// Check if the pattern should be in disabled mode
@@ -87,7 +68,7 @@ namespace Providers.Dropdown.Virtual_Select {
 			OSUIFramework.Helper.AsyncInvocation(
 				this._platformEventSelectedOptCallback,
 				this.widgetId,
-				this._getSelectedOptionsStructure()
+				this.getSelectedOptionsStructure()
 			);
 		}
 
@@ -179,9 +160,6 @@ namespace Providers.Dropdown.Virtual_Select {
 
 			if (this.isBuilt) {
 				switch (propertyName) {
-					case OSUIFramework.Patterns.Dropdown.Enum.Properties.AllowMultipleSelection:
-						this.redraw();
-						break;
 					case OSUIFramework.Patterns.Dropdown.Enum.Properties.IsDisabled:
 						this._manageDisableStatus();
 						break;
@@ -192,9 +170,6 @@ namespace Providers.Dropdown.Virtual_Select {
 						this.redraw();
 						break;
 					case OSUIFramework.Patterns.Dropdown.Enum.Properties.Prompt:
-						this.redraw();
-						break;
-					case OSUIFramework.Patterns.Dropdown.Enum.Properties.SearchPrompt:
 						this.redraw();
 						break;
 					case OSUIFramework.Patterns.Dropdown.Enum.Properties.SelectedOptions:
@@ -254,7 +229,7 @@ namespace Providers.Dropdown.Virtual_Select {
 		 * @memberof AbstractVirtualSelect
 		 */
 		public getSelectedValues(): string {
-			return this._getSelectedOptionsStructure();
+			return this.getSelectedOptionsStructure();
 		}
 
 		/**
@@ -307,6 +282,7 @@ namespace Providers.Dropdown.Virtual_Select {
 			}
 		}
 
+		protected abstract getSelectedOptionsStructure(): string;
 		protected abstract prepareConfigs(): void;
 	}
 }

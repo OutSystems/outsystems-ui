@@ -23,12 +23,10 @@ namespace OSUIFramework.Patterns.Dropdown.Enum {
 	 * Properties
 	 */
 	export enum Properties {
-		AllowMultipleSelection = 'AllowMultipleSelection',
 		IsDisabled = 'IsDisabled',
 		NoResultsText = 'NoResultsText',
 		OptionsList = 'OptionsList',
 		Prompt = 'Prompt',
-		SearchPrompt = 'SearchPrompt',
 		SelectedOptions = 'SelectedOptions',
 	}
 

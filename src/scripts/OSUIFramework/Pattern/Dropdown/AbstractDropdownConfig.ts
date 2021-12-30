@@ -1,12 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Dropdown {
 	export abstract class AbstractDropdownConfig extends Patterns.AbstractProviderConfiguration {
-		public AllowMultipleSelection: boolean;
 		public IsDisabled: boolean;
 		public NoResultsText: string;
 		public OptionsList: DropDownOption[];
 		public Prompt: string;
-		public SearchPrompt: string;
 		public SelectedOptions: DropDownOption[];
 
 		constructor(config: JSON) {
@@ -17,9 +15,6 @@ namespace OSUIFramework.Patterns.Dropdown {
 			let validatedValue = undefined;
 
 			switch (key) {
-				case Enum.Properties.AllowMultipleSelection:
-					validatedValue = this.validateBoolean(value as boolean, false);
-					break;
 				case Enum.Properties.IsDisabled:
 					validatedValue = this.validateBoolean(value as boolean, false);
 					break;
@@ -27,16 +22,13 @@ namespace OSUIFramework.Patterns.Dropdown {
 					validatedValue = this.validateString(value as string, undefined);
 					break;
 				case Enum.Properties.OptionsList:
-					validatedValue = true;
+					validatedValue = value as DropDownOption;
 					break;
 				case Enum.Properties.Prompt:
 					validatedValue = this.validateString(value as string, undefined);
 					break;
-				case Enum.Properties.SearchPrompt:
-					validatedValue = this.validateString(value as string, undefined);
-					break;
 				case Enum.Properties.SelectedOptions:
-					validatedValue = true;
+					validatedValue = value as DropDownOption;
 					break;
 				default:
 					validatedValue = super.validateDefault(key, value);

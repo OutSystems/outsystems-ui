@@ -55,39 +55,15 @@ namespace Providers.Dropdown.Virtual_Select {
 			return `${prefix}${data.label}`;
 		}
 
-		// Method used to get the key values of the given selected values
-		private _getSelectedValues(): string[] {
-			const selectedKeyvalues = [];
-
-			// Has selected values
-			if (this.SelectedOptions.length > 0) {
-				// Check if it's multiple options
-				if (this.AllowMultipleSelection) {
-					// Get the selected key value
-					for (const option of this.SelectedOptions) {
-						selectedKeyvalues.push(option.value);
-					}
-				} else {
-					// It's Single option, set only the first given value
-					selectedKeyvalues.push(this.SelectedOptions[0].value);
-				}
-			}
-
-			return selectedKeyvalues;
-		}
-
 		// Method used to set all the common VirtualSelect properties across the different types of instances
 		public getProviderConfig(): VirtualSelectOpts {
 			const virtualSelectOpts = {
 				ele: this.ElementId,
 				hideClearButton: true,
 				labelRenderer: this._getOptionInfo.bind(this),
-				multiple: this.AllowMultipleSelection,
 				noOptionsText: this.NoResultsText,
-				noSearchResultsText: this.NoResultsText,
 				options: this.OptionsList,
 				placeholder: this.Prompt,
-				searchPlaceholderText: this.SearchPrompt,
 				selectedValue: this._getSelectedValues(),
 				textDirection: OutSystems.OSUI.Utils.GetIsRTL()
 					? OSUIFramework.GlobalEnum.Direction.RTL
@@ -96,5 +72,7 @@ namespace Providers.Dropdown.Virtual_Select {
 
 			return virtualSelectOpts as VirtualSelectOpts;
 		}
+
+		protected abstract _getSelectedValues(): string[];
 	}
 }
