@@ -9,7 +9,6 @@ namespace Providers.Dropdown.Virtual_Select.Search {
 	 */
 	export class VirtualSelectSearchConfig extends AbstractVirtualSelectConfig {
 		public AllowMultipleSelection: boolean;
-		public SearchPrompt: string;
 
 		constructor(config: JSON) {
 			super(config);
@@ -51,10 +50,6 @@ namespace Providers.Dropdown.Virtual_Select.Search {
 		public getProviderConfig(): VirtualSelectOpts {
 			const virtualSelectSearchOpts = {
 				multiple: this.AllowMultipleSelection,
-				noSearchResultsText: this.NoResultsText,
-				search: true,
-				searchPlaceholderText: this.SearchPrompt,
-				showValueAsTags: false,
 			};
 
 			// Merge both option objects => if objects have a property with the same name, then the right-most object property overwrites the previous one
@@ -84,9 +79,6 @@ namespace Providers.Dropdown.Virtual_Select.Search {
 			switch (key) {
 				case Enum.Properties.AllowMultipleSelection:
 					validatedValue = this.validateBoolean(value as boolean, false);
-					break;
-				case Enum.Properties.SearchPrompt:
-					validatedValue = this.validateString(value as string, undefined);
 					break;
 				default:
 					validatedValue = super.validateDefault(key, value);

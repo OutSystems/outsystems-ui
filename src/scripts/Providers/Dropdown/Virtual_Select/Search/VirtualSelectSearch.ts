@@ -60,9 +60,6 @@ namespace Providers.Dropdown.Virtual_Select.Search {
 					case Enum.Properties.AllowMultipleSelection:
 						this.redraw();
 						break;
-					case Enum.Properties.SearchPrompt:
-						this.redraw();
-						break;
 				}
 			}
 		}

@@ -27,6 +27,7 @@ namespace OSUIFramework.Patterns.Dropdown.Enum {
 		NoResultsText = 'NoResultsText',
 		OptionsList = 'OptionsList',
 		Prompt = 'Prompt',
+		SearchPrompt = 'SearchPrompt',
 		SelectedOptions = 'SelectedOptions',
 	}
 

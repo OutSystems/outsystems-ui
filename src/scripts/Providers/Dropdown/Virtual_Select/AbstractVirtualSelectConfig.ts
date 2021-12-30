@@ -15,7 +15,10 @@ namespace Providers.Dropdown.Virtual_Select {
 			let hasImage = Enum.FigureType.None;
 
 			// Check if image_url_or_class filed has info
-			if (this.OptionsList[index].image_url_or_class !== '') {
+			if (
+				this.OptionsList[index].image_url_or_class !== undefined &&
+				this.OptionsList[index].image_url_or_class !== ''
+			) {
 				// The given info doesn't have spaces on it, check if it's a valid URL
 				hasImage = OSUIFramework.Helper.URL.IsImage(this.OptionsList[index].image_url_or_class)
 					? Enum.FigureType.Image
@@ -57,20 +60,23 @@ namespace Providers.Dropdown.Virtual_Select {
 
 		// Method used to set all the common VirtualSelect properties across the different types of instances
 		public getProviderConfig(): VirtualSelectOpts {
-			const virtualSelectOpts = {
+			const vsOptions = {
 				ele: this.ElementId,
 				hideClearButton: true,
 				labelRenderer: this._getOptionInfo.bind(this),
 				noOptionsText: this.NoResultsText,
+				noSearchResultsText: this.NoResultsText,
 				options: this.OptionsList,
 				placeholder: this.Prompt,
+				search: true,
+				searchPlaceholderText: this.SearchPrompt,
 				selectedValue: this._getSelectedValues(),
 				textDirection: OutSystems.OSUI.Utils.GetIsRTL()
 					? OSUIFramework.GlobalEnum.Direction.RTL
 					: OSUIFramework.GlobalEnum.Direction.LTR,
 			};
 
-			return virtualSelectOpts as VirtualSelectOpts;
+			return vsOptions as VirtualSelectOpts;
 		}
 
 		protected abstract _getSelectedValues(): string[];

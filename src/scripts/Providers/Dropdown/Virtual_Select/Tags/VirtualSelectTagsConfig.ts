@@ -38,7 +38,6 @@ namespace Providers.Dropdown.Virtual_Select.Tags {
 		public getProviderConfig(): VirtualSelectOpts {
 			const virtualSelectSearchOpts = {
 				multiple: true,
-				search: false,
 				showValueAsTags: true,
 			};
 

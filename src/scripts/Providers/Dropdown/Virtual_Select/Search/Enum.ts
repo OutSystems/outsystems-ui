@@ -5,6 +5,5 @@ namespace Providers.Dropdown.Virtual_Select.Search.Enum {
 	 */
 	export enum Properties {
 		AllowMultipleSelection = 'AllowMultipleSelection',
-		SearchPrompt = 'SearchPrompt',
 	}
 }

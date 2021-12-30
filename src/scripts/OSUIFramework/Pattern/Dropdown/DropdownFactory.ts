@@ -10,9 +10,9 @@ namespace OSUIFramework.Patterns.Dropdown.Factory {
 	 */
 	export function NewDropdown(
 		dropdownId: string,
-		configs: string,
 		mode: string,
-		provider: string
+		provider: string,
+		configs: string
 	): OSUIFramework.Patterns.Dropdown.IDropdown {
 		let _dropdownItem = null;
 
@@ -20,8 +20,8 @@ namespace OSUIFramework.Patterns.Dropdown.Factory {
 			case Enum.Provider.VirtualSelect:
 				_dropdownItem = Providers.Dropdown.Virtual_Select.Factory.NewVirtualSelect(
 					dropdownId,
-					JSON.parse(configs),
-					mode
+					mode,
+					JSON.parse(configs)
 				);
 
 				break;

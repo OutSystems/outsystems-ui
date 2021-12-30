@@ -2,7 +2,171 @@
 /// Import VirtualSelect library styles
 @import 'virtualselect_lib';
 
-/// VirtualSelect overriding styles
-// .osui-dropdown
-// .osui-dropdown-search
-// .osui-dropdown-tags
+// VirtualSelect overriding styles
+// Parent wrapper container
+.vscomp-ele {
+	max-width: initial;
+
+	&.pop-comp-active {
+		.vscomp-toggle-button {
+			border-color: var(--color-primary);
+
+			&:after {
+				color: var(--color-primary);
+				transform: rotate(180deg);
+			}
+		}
+	}
+}
+
+// Wrapper container
+.vscomp-wrapper {
+	&.focused,
+	&:focus {
+		.vscomp-toggle-button {
+			box-shadow: none;
+		}
+	}
+
+	&.has-value {
+		&.show-value-as-tags {
+			.vscomp-toggle-button {
+				padding-left: var(--space-s);
+			}
+		}
+	}
+
+	&.show-value-as-tags {
+		.vscomp-toggle-button {
+			padding: var(--space-xs) var(--space-xxl) var(--space-none) var(--space-base);
+			height: auto;
+			min-height: 40px;
+		}
+	}
+}
+
+// Top part - Select to open dropdown
+.vscomp-toggle-button {
+	background-color: var(--color-neutral-0);
+	border-radius: var(--border-radius-soft);
+	border: var(--border-size-s) solid var(--color-neutral-5);
+	color: var(--color-neutral-9);
+	cursor: pointer;
+	display: inline-flex;
+	height: 40px;
+	line-height: 40px;
+	min-width: 180px;
+	padding: var(--space-xs) var(--space-xl) var(--space-xs) var(--space-base);
+	position: relative;
+	vertical-align: middle;
+	width: 100%;
+	transition: height, border-color 0.25s ease;
+
+	// Create new arrow for all dropdown types
+	&:after {
+		color: var(--color-neutral-7);
+		content: '';
+		font: normal normal normal 24px/1 FontAwesome;
+		font-family: 'FontAwesome';
+		position: absolute;
+		right: 16px;
+		top: 8px;
+		transform-origin: center;
+		transition: all 0.25s ease;
+	}
+
+	&:hover {
+		border-color: var(--color-neutral-6);
+	}
+}
+
+// Container with the selected value(s)
+.vscomp-value {
+	font-size: var(--font-size-s);
+}
+
+// Default dropdown arrow
+.vscomp-arrow {
+	display: none;
+}
+
+// Parent wrapper opptions container
+.vscomp-dropbox-container {
+	box-shadow: none;
+}
+
+// Wrapper options container
+.vscomp-dropbox {
+	background-color: var(--color-neutral-0);
+	border-radius: var(--border-radius-soft);
+	border: var(--border-size-s) solid var(--color-neutral-5);
+}
+
+// Opptions container input search wrapper
+.vscomp-search-container {
+	border-bottom: var(--border-size-s) solid var(--color-neutral-5);
+}
+
+// Opptions container input search
+.vscomp-search-input {
+	border: none;
+	width: calc(100% - 30px);
+	height: 38px;
+	padding: 10px 0;
+	font-size: 15px;
+	background-color: transparent;
+	color: inherit;
+}
+
+// Option Item
+.vscomp-option {
+	background-color: var(--color-neutral-0);
+	transition: background-color 0.25s ease;
+
+	&.focused,
+	&.selected {
+		background-color: var(--color-neutral-3);
+	}
+
+	&.focused {
+		background-color: var(--color-neutral-2);
+	}
+}
+
+// Accessibility -----------------------------------------------------------------
+///
+.has-accessible-features {
+	.vscomp-wrapper {
+		&:not(.has-value) {
+			.vscomp-value {
+				opacity: 0.8;
+			}
+		}
+	}
+
+	.vscomp-toggle-button {
+		border-color: var(--color-neutral-7);
+		color: var(--color-neutral-10);
+
+		&:after {
+			color: var(--color-neutral-9);
+		}
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+///
+.phone,
+.tablet {
+	.vscomp-wrapper {
+		&.show-value-as-tags {
+			.vscomp-toggle-button {
+				min-height: 48px;
+			}
+		}
+	}
+
+	.vscomp-toggle-button {
+		height: 48px;
+	}
+}

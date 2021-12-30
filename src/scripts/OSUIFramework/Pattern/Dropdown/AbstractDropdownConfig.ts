@@ -5,12 +5,21 @@ namespace OSUIFramework.Patterns.Dropdown {
 		public NoResultsText: string;
 		public OptionsList: DropDownOption[];
 		public Prompt: string;
+		public SearchPrompt: string;
 		public SelectedOptions: DropDownOption[];
 
 		constructor(config: JSON) {
 			super(config);
 		}
 
+		/**
+		 * Override, Validate configs key values
+		 *
+		 * @param {string} key
+		 * @param {unknown} value
+		 * @return {*}  {unknown}
+		 * @memberof AbstractDropdownConfig
+		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;
 
@@ -25,6 +34,9 @@ namespace OSUIFramework.Patterns.Dropdown {
 					validatedValue = value as DropDownOption;
 					break;
 				case Enum.Properties.Prompt:
+					validatedValue = this.validateString(value as string, undefined);
+					break;
+				case Enum.Properties.SearchPrompt:
 					validatedValue = this.validateString(value as string, undefined);
 					break;
 				case Enum.Properties.SelectedOptions:

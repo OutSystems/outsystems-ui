@@ -48,6 +48,9 @@ namespace Providers.Dropdown.Virtual_Select {
 
 		// Manage the disable status of the pattern
 		private _manageDisableStatus(): void {
+			// Ensure that is closed!
+			this._virtualselectMethods.close();
+
 			if (this.configs.IsDisabled) {
 				OSUIFramework.Helper.Dom.Attribute.Set(
 					this._selfElem,
@@ -156,6 +159,15 @@ namespace Providers.Dropdown.Virtual_Select {
 		 * @memberof AbstractVirtualSelect
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			// If/When we've the dropdown outside an IsDataFetched IF and OnParametersChannge where we're receiving (for both cases) a JSON string that must be parsed into an Object
+			if (
+				(propertyName === OSUIFramework.Patterns.Dropdown.Enum.Properties.OptionsList ||
+					propertyName === OSUIFramework.Patterns.Dropdown.Enum.Properties.SelectedOptions) &&
+				typeof propertyValue === 'string'
+			) {
+				propertyValue = JSON.parse(propertyValue);
+			}
+
 			super.changeProperty(propertyName, propertyValue);
 
 			if (this.isBuilt) {
@@ -170,6 +182,9 @@ namespace Providers.Dropdown.Virtual_Select {
 						this.redraw();
 						break;
 					case OSUIFramework.Patterns.Dropdown.Enum.Properties.Prompt:
+						this.redraw();
+						break;
+					case OSUIFramework.Patterns.Dropdown.Enum.Properties.SearchPrompt:
 						this.redraw();
 						break;
 					case OSUIFramework.Patterns.Dropdown.Enum.Properties.SelectedOptions:

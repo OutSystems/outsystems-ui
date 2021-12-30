@@ -10,8 +10,8 @@ namespace Providers.Dropdown.Virtual_Select.Factory {
 	 */
 	export function NewVirtualSelect(
 		dropdownId: string,
-		configs: JSON,
-		mode: string
+		mode: string,
+		configs: JSON
 	): OSUIFramework.Patterns.Dropdown.IDropdown {
 		let _virtualSelectItem = null;
 
