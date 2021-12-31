@@ -36,7 +36,7 @@ namespace Providers.Dropdown.Virtual_Select {
 		// Method used to generate the HTML String to be attached at the option label
 		private _getOptionImagePrefix(index: number): string {
 			// TODO - jRio: Change this style into CSS!!!
-			return `<img class="${Enum.CssClass.OptionItemImage}" style="width:20px; height: 20px;" src="${this.OptionsList[index].image_url_or_class}">`;
+			return `<img class="${Enum.CssClass.OptionItemImage}" src="${this.OptionsList[index].image_url_or_class}">`;
 		}
 
 		// Method used to generate the option info that will be added

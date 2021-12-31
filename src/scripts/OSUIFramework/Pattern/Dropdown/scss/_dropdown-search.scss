@@ -5,6 +5,14 @@
 
 ///
 .osui-dropdown-search {
+	// If not valid
+	&.osui-dropdown--not-valid {
+		// Virtual Select provider
+		.vscomp-toggle-button {
+			border-color: var(--color-error);
+		}
+	}
+
 	// Service Studio Preview
 	&-ss-preview {
 		-servicestudio-background-color: var(--color-neutral-0);

@@ -5,3 +5,41 @@
 
 /// Import VirtualSelect provider library styles
 @import '../../../../Providers/Dropdown/Virtual_Select/scss/virtualselect';
+
+/// Dropdown Option Item image
+.osui-dropdown {
+	&-option-image {
+		border-radius: 100%;
+		display: inline-block;
+		height: 24px;
+		margin-right: var(--space-s);
+		width: 24px;
+		background-color: var(--color-neutral-3);
+		overflow: hidden;
+	}
+
+	&-option-icon {
+		color: var(--color-neutral-9);
+		font-size: var(--font-size-h6);
+		margin-right: var(--space-s);
+	}
+}
+
+/// Error message
+.osui-dropdown-error-message {
+	color: var(--color-error);
+	font-size: var(--font-size-xs);
+	margin-left: var(--space-none);
+	margin-top: 3px;
+}
+
+// IsRTL -------------------------------------------------------------------------
+.is-rtl {
+	.osui-dropdown {
+		&-option-image,
+		&-option-icon {
+			margin-left: var(--space-s);
+			margin-right: initial;
+		}
+	}
+}

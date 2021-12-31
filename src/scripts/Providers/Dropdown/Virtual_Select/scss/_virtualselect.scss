@@ -21,10 +21,16 @@
 
 // Wrapper container
 .vscomp-wrapper {
+	position: relative;
+
 	&.focused,
 	&:focus {
 		.vscomp-toggle-button {
 			box-shadow: none;
+		}
+
+		.checkbox-icon {
+			border-color: var(--color-neutral-6);
 		}
 	}
 
@@ -36,11 +42,120 @@
 		}
 	}
 
+	&.multiple {
+		.vscomp-search-container {
+			padding-left: var(--space-base);
+
+			&:before {
+				display: none;
+			}
+		}
+
+		.vscomp-option {
+			&.selected {
+				.checkbox-icon {
+					background-color: var(--color-primary);
+					border-color: var(--color-primary);
+
+					&:after {
+						border-color: var(--color-neutral-0);
+						border-left-color: transparent;
+						border-top-color: transparent;
+						height: 80%;
+						opacity: 1;
+						transform: rotate(45deg) translate(3px, -3px);
+						width: 45%;
+					}
+				}
+			}
+
+			.vscomp-option-text {
+				flex: 1;
+				width: auto;
+			}
+		}
+	}
+
 	&.show-value-as-tags {
 		.vscomp-toggle-button {
-			padding: var(--space-xs) var(--space-xxl) var(--space-none) var(--space-base);
 			height: auto;
 			min-height: 40px;
+			padding: var(--space-xs) var(--space-xxl) var(--space-none) var(--space-base);
+		}
+
+		.vscomp-value-tag {
+			background-color: var(--color-neutral-3);
+			border: var(--border-size-none);
+			color: var(--color-neutral-7);
+			font-size: var(--font-size-xs);
+			font-weight: var(--font-semi-bold);
+			padding: 6px 35px 6px 10px;
+			position: relative;
+
+			.vscomp-value-tag-content {
+				width: 100%;
+			}
+
+			.vscomp-value-tag-clear-button {
+				background-color: var(--color-neutral-7);
+				border-radius: 100%;
+				height: 15px;
+				position: absolute;
+				right: 10px;
+				width: 15px;
+
+				.vscomp-clear-icon {
+					height: 11px;
+					left: 0px;
+					position: relative;
+					top: 0px;
+					width: 11px;
+
+					&:before,
+					&:after {
+						background-color: var(--color-neutral-3);
+						border-radius: 4px;
+						height: 100%;
+						width: 2px;
+					}
+				}
+			}
+		}
+	}
+
+	// Checkbox
+	.checkbox-icon {
+		background-color: var(--color-neutral-0);
+		border-radius: var(--border-radius-soft);
+		border: var(--border-size-s) solid var(--color-neutral-5);
+		height: 16px;
+		margin-right: var(--space-s);
+		overflow: hidden;
+		transition: background-color 0.25s ease;
+		width: 16px;
+
+		&:after {
+			backface-visibility: hidden;
+			border-color: transparent;
+			height: 85%;
+			opacity: 0;
+			transition: opacity 0.25s ease;
+			width: 40%;
+		}
+
+		&.checked {
+			background-color: var(--color-primary);
+			border-color: var(--color-primary);
+
+			&:after {
+				border-color: var(--color-neutral-0);
+				border-left-color: transparent;
+				border-top-color: transparent;
+				height: 80%;
+				opacity: 1;
+				transform: rotate(45deg) translate(3px, -3px);
+				width: 45%;
+			}
 		}
 	}
 }
@@ -58,16 +173,16 @@
 	min-width: 180px;
 	padding: var(--space-xs) var(--space-xl) var(--space-xs) var(--space-base);
 	position: relative;
+	transition: height, border-color 0.25s ease;
 	vertical-align: middle;
 	width: 100%;
-	transition: height, border-color 0.25s ease;
 
 	// Create new arrow for all dropdown types
 	&:after {
 		color: var(--color-neutral-7);
 		content: '';
-		font: normal normal normal 24px/1 FontAwesome;
 		font-family: 'FontAwesome';
+		font: normal normal normal 24px/1 FontAwesome;
 		position: absolute;
 		right: 16px;
 		top: 8px;
@@ -91,7 +206,7 @@
 }
 
 // Bottom part - Parent wrapper opptions container
-.vscomp-dropbox-container {
+.pop-comp-wrapper {
 	box-shadow: none;
 }
 
@@ -100,22 +215,36 @@
 	background-color: var(--color-neutral-0);
 	border-radius: var(--border-radius-soft);
 	border: var(--border-size-s) solid var(--color-neutral-5);
+	overflow: hidden;
 }
 
 // Opptions container input search wrapper
 .vscomp-search-container {
 	border-bottom: var(--border-size-s) solid var(--color-neutral-5);
+	padding: var(--space-none) var(--space-s) var(--space-none) var(--space-xl);
+	position: relative;
+
+	&:before {
+		align-items: center;
+		color: var(--color-neutral-6);
+		content: '';
+		display: flex;
+		font: normal normal normal 14px/1 FontAwesome;
+		height: 100%;
+		left: 16px;
+		position: absolute;
+		top: 0;
+	}
 }
 
 // Opptions container input search
 .vscomp-search-input {
-	border: none;
-	width: calc(100% - 30px);
-	height: 38px;
-	padding: 10px 0;
-	font-size: 15px;
-	background-color: transparent;
-	color: inherit;
+	font-size: var(--font-size-s);
+
+	&::placeholder {
+		color: var(--color-neutral-9);
+		opacity: 0.5;
+	}
 }
 
 // Option Item
@@ -131,6 +260,14 @@
 	&.focused {
 		background-color: var(--color-neutral-2);
 	}
+}
+
+// Option Item text
+.vscomp-option-text {
+	align-items: center;
+	color: var(--color-neutral-9);
+	display: flex;
+	font-size: var(--font-size-s);
 }
 
 // Accessibility -----------------------------------------------------------------
