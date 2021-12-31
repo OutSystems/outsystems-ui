@@ -92,7 +92,6 @@
 .tablet,
 .phone {
 	.choices[data-type*='select-one'] {
-		&:after,
 		&:after {
 			top: 14px;
 		}

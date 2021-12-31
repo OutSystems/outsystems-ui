@@ -293,7 +293,9 @@ namespace Providers.Dropdown.Virtual_Select {
 				);
 
 				// If error message has been added already, remove it!
-				errorMessageElement !== undefined ? errorMessageElement.remove() : null;
+				if (errorMessageElement) {
+					errorMessageElement.remove();
+				}
 			}
 		}
 

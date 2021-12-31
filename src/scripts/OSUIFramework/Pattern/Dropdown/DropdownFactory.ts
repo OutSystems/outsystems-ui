@@ -28,7 +28,6 @@ namespace OSUIFramework.Patterns.Dropdown.Factory {
 
 			default:
 				throw new Error(`There is no Dropdown of the ${provider} provider`);
-				break;
 		}
 
 		return _dropdownItem;
