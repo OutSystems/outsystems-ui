@@ -22,6 +22,11 @@ namespace OSUIFramework.Callbacks {
 		(datepickerId: string, selectedDate: string | string[]): void;
 	};
 
+	// Dropdown
+	export type OSDropdownOnSelectEvent = {
+		(dropdownId: string, selectedOptions: string[]): void;
+	};
+
 	// FlipContent
 	export type OSFlipContentFlipEvent = {
 		(flipId: string, isFlipped: boolean): void;

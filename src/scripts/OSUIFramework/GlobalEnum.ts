@@ -69,6 +69,7 @@ namespace OSUIFramework.GlobalEnum {
 	 */
 	export enum HTMLAttributes {
 		DataInput = 'data-input',
+		Disabled = 'disabled',
 		Id = 'id',
 		Style = 'style',
 	}
@@ -171,6 +172,7 @@ namespace OSUIFramework.GlobalEnum {
 		ButtonLoading = 'ButtonLoading',
 		Carousel = 'Carousel',
 		Datepicker = 'Datepicker',
+		Dropdown = 'Dropdown',
 		FlipContent = 'Flip Content',
 		FloatingActions = 'Floating Actions',
 		FloatingActionsItem = 'Floating Actions Item',
@@ -178,9 +180,9 @@ namespace OSUIFramework.GlobalEnum {
 		Notification = 'Notification',
 		ProgressBar = 'Progress Bar',
 		ProgressCircle = 'Progress Circle',
-		Rating = 'Rating',
 		RangeSlider = 'Range Slider',
 		RangeSliderInterval = 'Range Slider Interval',
+		Rating = 'Rating',
 		Search = 'Search',
 		SectionIndex = 'Section Index',
 		Sidebar = 'Sidebar',
