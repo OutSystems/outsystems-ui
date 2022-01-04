@@ -1,7 +1,7 @@
 /// <reference path="../AbstractFlatpickr.ts" />
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.Flatpickr.RangeDate {
+namespace Providers.Datepicker.Flatpickr.RangeDate {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class OSUIFlatpickrRangeDate extends AbstractFlatpickr<FlatpickrRangeDateConfig> {
 		constructor(uniqueId: string, configs: JSON) {

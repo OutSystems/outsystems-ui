@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.Flatpickr {
+namespace Providers.Datepicker.Flatpickr {
 	export abstract class AbstractFlatpickr<C extends Flatpickr.AbstractFlatpickrConfig>
 		extends OSUIFramework.Patterns.DatePicker.AbstractDatePicker<Flatpickr, C>
 		implements IFlatpickr
