@@ -18,7 +18,6 @@ namespace OSUIFramework.Patterns.Submenu {
 		private _submenuActiveLinksElement: HTMLElement;
 		private _submenuAllLinksElement: HTMLAnchorElement[];
 		private _submenuClickedElement: HTMLElement;
-		private _submenuEventType: GlobalEnum.HTMLEvent;
 		private _submenuHeaderElement: HTMLElement;
 		private _submenuLinksElement: HTMLElement;
 
@@ -249,14 +248,9 @@ namespace OSUIFramework.Patterns.Submenu {
 			this._globalEventOpen = this._openCallback.bind(this);
 			this._globalEventBody = this._bodyClickCallback.bind(this);
 
-			// Set event type based on device
-			this._submenuEventType = OSUIFramework.Helper.DeviceInfo.IsTouch
-				? GlobalEnum.HTMLEvent.TouchStart
-				: GlobalEnum.HTMLEvent.Click;
-
 			// Add events only if has elements inside
 			if (this._hasElements) {
-				this._submenuHeaderElement.addEventListener(this._submenuEventType, this._eventClick);
+				this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
 				this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
 			}
 
@@ -324,7 +318,7 @@ namespace OSUIFramework.Patterns.Submenu {
 		protected unsetCallbacks(): void {
 			// Remove events only if has elements inside
 			if (this._hasElements) {
-				this._submenuHeaderElement.removeEventListener(this._submenuEventType, this._eventClick);
+				this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
 				this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
 			}
 
