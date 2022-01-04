@@ -16,7 +16,6 @@ import { Options } from '@splidejs/splide/dist/types/types/options';
 /**
  * Set global declarations
  */
-
 declare global {
 	//eslint-disable-next-line @typescript-eslint/naming-convention
 	interface Window {
@@ -37,6 +36,9 @@ declare global {
 		Splide: typeof OriginalSplide;
 		SplideOpts: typeof OriginalSplide.defaults;
 		wNumb: typeof window.wNumb;
+
+		// DropdownSearch
+		VirtualSelect: any;
 	}
 
 	interface Navigator {
@@ -59,4 +61,7 @@ declare global {
 	type FlatpickrOptions = flatpickrOpts;
 	type FlatpickrLocale = flatpickrLocale;
 	type FlatpickrLocaleKey = flatpickrLocaleKey;
+
+	// DropDown => Virtual Select Provider
+	type VirtualSelect = any;
 }

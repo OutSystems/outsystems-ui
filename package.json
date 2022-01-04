@@ -45,6 +45,7 @@
 		"stylelint-config-prettier": "^8.0.2",
 		"stylelint-order": "^4.1.0",
 		"typescript": "^4.3.5",
+		"virtual-select-plugin": "^1.0.19",
 		"webpack": "^5.47.1",
 		"webpack-cli": "^4.7.2",
 		"webpack-dev-server": "^3.11.2",

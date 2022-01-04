@@ -24,10 +24,10 @@ namespace OSUIFramework.Patterns.DatePicker {
 					validatedValue = this.validateNumber(value as number, 0);
 					break;
 				case Enum.Properties.MaxDate:
-					validatedValue = this.validateString(value as string, undefined);
+					validatedValue = this.validateDate(value as string, undefined);
 					break;
 				case Enum.Properties.MinDate:
-					validatedValue = this.validateString(value as string, undefined);
+					validatedValue = this.validateDate(value as string, undefined);
 					break;
 				case Enum.Properties.ShowTodayButton:
 					validatedValue = this.validateBoolean(value as boolean, false);
