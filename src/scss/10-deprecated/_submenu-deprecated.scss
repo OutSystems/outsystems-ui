@@ -298,6 +298,7 @@
 
 		&.active .submenu-header {
 			border-left: var(--border-size-m) solid var(--color-primary);
+			border-bottom: 0;
 		}
 
 		&.open .submenu-items {
