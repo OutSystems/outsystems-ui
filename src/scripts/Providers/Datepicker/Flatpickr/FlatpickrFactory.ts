@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace Providers.Flatpickr.Factory {
+namespace Providers.Datepicker.Flatpickr.Factory {
 	/**
 	 * Create the new Flatpickr instance object according given Mode
 	 *
@@ -17,7 +17,7 @@ namespace Providers.Flatpickr.Factory {
 
 		switch (mode) {
 			case OSUIFramework.Patterns.DatePicker.Enum.Mode.Single:
-				_flatpickrItem = new Providers.Flatpickr.SingleDate.OSUIFlatpickrSingleDate(
+				_flatpickrItem = new Providers.Datepicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate(
 					datePickerId,
 					JSON.parse(configs)
 				);
@@ -25,7 +25,7 @@ namespace Providers.Flatpickr.Factory {
 				break;
 
 			case OSUIFramework.Patterns.DatePicker.Enum.Mode.Range:
-				_flatpickrItem = new Providers.Flatpickr.RangeDate.OSUIFlatpickrRangeDate(
+				_flatpickrItem = new Providers.Datepicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate(
 					datePickerId,
 					JSON.parse(configs)
 				);

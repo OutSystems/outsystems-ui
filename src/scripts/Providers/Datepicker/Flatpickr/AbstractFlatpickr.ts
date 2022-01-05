@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.Flatpickr {
+namespace Providers.Datepicker.Flatpickr {
 	export abstract class AbstractFlatpickr<C extends Flatpickr.AbstractFlatpickrConfig>
 		extends OSUIFramework.Patterns.DatePicker.AbstractDatePicker<Flatpickr, C>
 		implements IFlatpickr
@@ -8,12 +8,12 @@ namespace Providers.Flatpickr {
 		private _onInitializeCallbackEvent: OSUIFramework.Callbacks.OSGeneric;
 		// Store pattern input HTML element reference
 		protected _datePickerProviderInputElem: HTMLInputElement;
-		// Store the provider reference
-		protected _flatpickr: Flatpickr;
 		// Store the flatpickr input html element that will be added by library
 		protected _flatpickrInputElem: HTMLInputElement;
 		// Store the provider options
 		protected _flatpickrOpts: FlatpickrOptions;
+		// Store the provider reference
+		protected _fpProvider: Flatpickr;
 		// Flatpickr onChange (SelectedDate) event
 		protected _onChangeCallbackEvent: OSUIFramework.Callbacks.OSDatepickerOnChangeEvent;
 
@@ -28,7 +28,7 @@ namespace Providers.Flatpickr {
 		private _jumpIntoToday(event: MouseEvent) {
 			event.preventDefault();
 
-			this._flatpickr.jumpToDate(this._flatpickr.now);
+			this._fpProvider.jumpToDate(this._fpProvider.now);
 		}
 
 		// Method used to set the needed HTML attributes
@@ -47,14 +47,14 @@ namespace Providers.Flatpickr {
 		// Method used to set the CSS classes to the pattern HTML elements
 		private _setCalendarCssClasses(): void {
 			OSUIFramework.Helper.Dom.Styles.AddClass(
-				this._flatpickr.calendarContainer,
+				this._fpProvider.calendarContainer,
 				OSUIFramework.Patterns.DatePicker.Enum.CssClass.Calendar
 			);
 
 			// Check if there are any ExtendedClass to be added into our calendar elements
 			if (this._configs.ExtendedClass !== '') {
 				OSUIFramework.Helper.Dom.Styles.ExtendedClass(
-					this._flatpickr.calendarContainer,
+					this._fpProvider.calendarContainer,
 					'',
 					this._configs.ExtendedClass
 				);
@@ -92,7 +92,7 @@ namespace Providers.Flatpickr {
 
 			// Append elements to the proper containers
 			todayBtnWrapper.appendChild(todayBtn);
-			this._flatpickr.calendarContainer.appendChild(todayBtnWrapper);
+			this._fpProvider.calendarContainer.appendChild(todayBtnWrapper);
 		}
 
 		/**
@@ -103,13 +103,13 @@ namespace Providers.Flatpickr {
 		 */
 		protected createProviderInstance(): void {
 			// Init provider
-			this._flatpickr = window.flatpickr(this._datePickerProviderInputElem, this._flatpickrOpts);
+			this._fpProvider = window.flatpickr(this._datePickerProviderInputElem, this._flatpickrOpts);
 
 			// Set the needed HTML attributes
 			this._setAttributes();
 
-			// At phone we've native behaviour, so TodayBtn can't be added
-			if (OSUIFramework.Helper.DeviceInfo.IsPhone === false) {
+			// At phone and tablet we've native behaviour, so TodayBtn can't be added
+			if (OSUIFramework.Helper.DeviceInfo.IsDesktop) {
 				// Add TodayBtn
 				if (this._configs.ShowTodayButton) {
 					this.addTodayBtn();
@@ -131,7 +131,7 @@ namespace Providers.Flatpickr {
 		 */
 		protected redraw(): void {
 			// Destroy the old flatpickr instance
-			this._flatpickr.destroy();
+			this._fpProvider.destroy();
 
 			// Create a new flatpickr instance with the updated configs
 			OSUIFramework.Helper.AsyncInvocation(this.prepareConfigs.bind(this));
@@ -193,7 +193,7 @@ namespace Providers.Flatpickr {
 					case OSUIFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass:
 						// Since Calendar element will be added dynamically by the library outside the pattern context
 						OSUIFramework.Helper.Dom.Styles.ExtendedClass(
-							this._flatpickr.calendarContainer,
+							this._fpProvider.calendarContainer,
 							oldExtendedClass,
 							propertyValue as string
 						);
@@ -203,11 +203,11 @@ namespace Providers.Flatpickr {
 		}
 
 		public clear(): void {
-			this._flatpickr.clear();
+			this._fpProvider.clear();
 		}
 
 		public close(): void {
-			this._flatpickr.close();
+			this._fpProvider.close();
 		}
 
 		// Method to remove and destroy DatePicker instance
@@ -216,14 +216,14 @@ namespace Providers.Flatpickr {
 				this.unsetCallbacks();
 				this.unsetHtmlElements();
 
-				this._flatpickr.destroy();
+				this._fpProvider.destroy();
 			}
 
 			super.dispose();
 		}
 
 		public open(): void {
-			this._flatpickr.open();
+			this._fpProvider.open();
 		}
 
 		// Method used to regist callback events
