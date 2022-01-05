@@ -108,8 +108,8 @@ namespace Providers.Datepicker.Flatpickr {
 			// Set the needed HTML attributes
 			this._setAttributes();
 
-			// At phone we've native behaviour, so TodayBtn can't be added
-			if (OSUIFramework.Helper.DeviceInfo.IsPhone === false) {
+			// At phone and tablet we've native behaviour, so TodayBtn can't be added
+			if (OSUIFramework.Helper.DeviceInfo.IsDesktop) {
 				// Add TodayBtn
 				if (this._configs.ShowTodayButton) {
 					this.addTodayBtn();
