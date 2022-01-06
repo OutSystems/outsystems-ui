@@ -1,7 +1,7 @@
 /// <reference path="../AbstractFlatpickrConfig.ts" />
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace Providers.Flatpickr.SingleDate {
+namespace Providers.Datepicker.Flatpickr.SingleDate {
 	/**
 	 * Class that represents the custom configurations received by the Datepicker Single mode.
 	 *

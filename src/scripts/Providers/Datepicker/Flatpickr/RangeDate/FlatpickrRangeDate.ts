@@ -1,7 +1,7 @@
 /// <reference path="../AbstractFlatpickr.ts" />
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.Flatpickr.RangeDate {
+namespace Providers.Datepicker.Flatpickr.RangeDate {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class OSUIFlatpickrRangeDate extends AbstractFlatpickr<FlatpickrRangeDateConfig> {
 		constructor(uniqueId: string, configs: JSON) {
@@ -11,17 +11,17 @@ namespace Providers.Flatpickr.RangeDate {
 		// Method used to check if there is any selected date before changing the DateFormat
 		private _onUpdateDateFormat(): void {
 			// Check if any Date was selected
-			if (this._flatpickr.selectedDates.length > 0) {
+			if (this._fpProvider.selectedDates.length > 0) {
 				// Set the new Start DefaultDate value
-				this.configs.StartDate = this._flatpickr.formatDate(
-					this._flatpickr.selectedDates[0],
+				this.configs.StartDate = this._fpProvider.formatDate(
+					this._fpProvider.selectedDates[0],
 					this._flatpickrOpts.dateFormat
 				);
 
 				// Set the new End DefaultDate value
-				if (this._flatpickr.selectedDates[1]) {
-					this.configs.EndDate = this._flatpickr.formatDate(
-						this._flatpickr.selectedDates[1],
+				if (this._fpProvider.selectedDates[1]) {
+					this.configs.EndDate = this._fpProvider.formatDate(
+						this._fpProvider.selectedDates[1],
 						this._flatpickrOpts.dateFormat
 					);
 				}
@@ -42,9 +42,9 @@ namespace Providers.Flatpickr.RangeDate {
 
 			// Check if any date has been selected, In case of Clear this will retunr empty array
 			if (selectedDates.length > 0) {
-				_selectedDate[0] = this._flatpickr.formatDate(selectedDates[0], this._flatpickrOpts.dateFormat);
+				_selectedDate[0] = this._fpProvider.formatDate(selectedDates[0], this._flatpickrOpts.dateFormat);
 				if (selectedDates[1]) {
-					_selectedDate[1] = this._flatpickr.formatDate(selectedDates[1], this._flatpickrOpts.dateFormat);
+					_selectedDate[1] = this._fpProvider.formatDate(selectedDates[1], this._flatpickrOpts.dateFormat);
 				}
 			}
 

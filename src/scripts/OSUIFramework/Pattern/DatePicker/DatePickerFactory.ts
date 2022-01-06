@@ -18,7 +18,7 @@ namespace OSUIFramework.Patterns.DatePicker.Factory {
 
 		switch (provider) {
 			case Enum.Provider.FlatPicker:
-				_datePickerItem = Providers.Flatpickr.Factory.NewFlatpickr(datePickerId, mode, configs);
+				_datePickerItem = Providers.Datepicker.Flatpickr.Factory.NewFlatpickr(datePickerId, mode, configs);
 
 				break;
 
