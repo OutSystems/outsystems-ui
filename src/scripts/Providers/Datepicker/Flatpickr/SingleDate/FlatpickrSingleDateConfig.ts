@@ -37,5 +37,20 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 
 			return fpOptions;
 		}
+
+		public validateDefault(key: string, value: unknown): unknown {
+			let validatedValue = undefined;
+
+			switch (key) {
+				case Enum.Properties.InitialDate:
+					validatedValue = false;
+					break;
+				default:
+					validatedValue = super.validateDefault(key, value);
+					break;
+			}
+
+			return validatedValue;
+		}
 	}
 }

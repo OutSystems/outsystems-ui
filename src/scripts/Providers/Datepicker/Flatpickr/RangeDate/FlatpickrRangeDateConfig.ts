@@ -53,5 +53,23 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 
 			return fpOptions;
 		}
+
+		public validateDefault(key: string, value: unknown): unknown {
+			let validatedValue = undefined;
+
+			switch (key) {
+				case Enum.Properties.StartDate:
+					validatedValue = false;
+					break;
+				case Enum.Properties.EndDate:
+					validatedValue = false;
+					break;
+				default:
+					validatedValue = super.validateDefault(key, value);
+					break;
+			}
+
+			return validatedValue;
+		}
 	}
 }
