@@ -1,0 +1,34 @@
+/*! Deprecated Warning Block*/
+/* 
+	Notes:
+	- This section contains several styles that target the DeprecatedWarning block, 
+    used inside ServiceStudio to warn developers when a block is deprecated
+
+	- This section should not be visible at SASSDOCS.
+*/
+
+.osui-deprecated {
+	display: none;
+	-servicestudio-display: block;
+
+	&__content {
+		-servicestudio-align-items: center;
+		-servicestudio-background-color: #fff1dc;
+		-servicestudio-border: var(--border-radius-soft);
+		-servicestudio-display: inline-flex;
+		-servicestudio-font-size: 9px;
+		-servicestudio-font-weight: var(--font-semi-bold);
+		-servicestudio-padding: var(--space-xs);
+		-servicestudio-width: auto;
+
+		&__icon {
+			-servicestudio-color: #e58b00;
+			-servicestudio-font-size: 11px;
+		}
+
+		&__message {
+			-servicestudio-margin-left: var(--space-xs);
+			-servicestudio-text-transform: uppercase;
+		}
+	}
+}
