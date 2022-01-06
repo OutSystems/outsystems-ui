@@ -11,9 +11,9 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 	 */
 	export class FlatpickrRangeDateConfig extends AbstractFlatpickrConfig {
 		// Set the property EndDate
-		public EndDate: string;
+		public InitialEndDate: string;
 		// Set the property StartDate
-		public StartDate: string;
+		public InitialStartDate: string;
 
 		constructor(config: JSON) {
 			super(config);
@@ -24,16 +24,19 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 		// Method used to set the default value since we're dealing with on input to be assigned and 2 received dates!
 		private _setDefaultDate(): string[] | undefined {
 			// Check if any of the given dates are a null date
-			if (OSUIFramework.Helper.Dates.IsNull(this.StartDate) || OSUIFramework.Helper.Dates.IsNull(this.EndDate)) {
+			if (
+				OSUIFramework.Helper.Dates.IsNull(this.InitialStartDate) ||
+				OSUIFramework.Helper.Dates.IsNull(this.InitialEndDate)
+			) {
 				return undefined;
 			}
 
 			// Check if the Start Date is after than End Date
-			if (OSUIFramework.Helper.Dates.Compare(this.StartDate, this.EndDate) === false) {
-				throw new Error(`StartDate '${this.StartDate}' can't be after EndDate '${this.EndDate}'`);
+			if (OSUIFramework.Helper.Dates.Compare(this.InitialStartDate, this.InitialEndDate) === false) {
+				throw new Error(`StartDate '${this.InitialStartDate}' can't be after EndDate '${this.InitialEndDate}'`);
 			}
 
-			return [this.StartDate, this.EndDate];
+			return [this.InitialStartDate, this.InitialEndDate];
 		}
 
 		// Method used to set all the config properties for the RangeDate mode type
