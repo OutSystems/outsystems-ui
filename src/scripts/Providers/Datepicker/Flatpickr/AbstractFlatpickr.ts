@@ -108,8 +108,11 @@ namespace Providers.Datepicker.Flatpickr {
 			// Set the needed HTML attributes
 			this._setAttributes();
 
-			// At phone and tablet we've native behaviour, so TodayBtn can't be added
-			if (OSUIFramework.Helper.DeviceInfo.IsDesktop) {
+			// At phone and tablet we've native behaviour, so TodayBtn can't be added, unless we're using a datepicker range mode since there are no native behaviour for selecting a range date.
+			if (
+				OSUIFramework.Helper.DeviceInfo.IsDesktop ||
+				this.configs.calendarMode === OSUIFramework.Patterns.DatePicker.Enum.Mode.Range
+			) {
 				// Add TodayBtn
 				if (this._configs.ShowTodayButton) {
 					this.addTodayBtn();

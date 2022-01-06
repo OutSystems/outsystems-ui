@@ -17,6 +17,8 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 
 		constructor(config: JSON) {
 			super(config);
+
+			this.calendarMode = OSUIFramework.Patterns.DatePicker.Enum.Mode.Range;
 		}
 
 		// Method used to set the default value since we're dealing with on input to be assigned and 2 received dates!
