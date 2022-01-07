@@ -63,10 +63,10 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 			let validatedValue = undefined;
 
 			switch (key) {
-				case Enum.Properties.StartDate:
+				case Enum.Properties.InitialStartDate:
 					validatedValue = false;
 					break;
-				case Enum.Properties.EndDate:
+				case Enum.Properties.InitialEndDate:
 					validatedValue = false;
 					break;
 				default:
