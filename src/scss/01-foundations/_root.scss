@@ -4,7 +4,7 @@
 
 ///
 :root {
-	/* Typography - Size */
+	/*! Typography - Size */
 	@each $type, $value in $osui-typography-heading-sizes {
 		--font-size-h#{$type}: #{$value};
 	}
@@ -13,22 +13,22 @@
 		--font-size-#{$type}: #{$value};
 	}
 
-	/* Typography - Weight */
+	/*! Typography - Weight */
 	@each $type, $value in $osui-typography-weight {
 		--font-#{$type}: #{$value};
 	}
 
-	/* Color - Brand */
+	/*! Color - Brand */
 	@each $type, $value in $osui-colors-brand {
 		--color-#{$type}: #{$value};
 	}
 
-	/* Color - Focus */
+	/*! Color - Focus */
 	@each $type, $value in $osui-colors-focus {
 		--color-focus-#{$type}: #{$value};
 	}
 
-	/* Color - Extended */
+	/*! Color - Extended */
 	@each $color, $variations in $osui-colors-extended {
 		@each $type, $value in $variations {
 			@if ($type == '') {
@@ -39,37 +39,37 @@
 		}
 	}
 
-	/* Color - Neutral */
+	/*! Color - Neutral */
 	@each $type, $value in $osui-colors-neutral {
 		--color-neutral-#{$type}: #{$value};
 	}
 
-	/* Color - Semantic */
+	/*! Color - Semantic */
 	@each $type, $value in $osui-colors-semantic {
 		--color-#{$type}: #{$value};
 	}
 
-	/* Space - Sizes */
+	/*! Space - Sizes */
 	@each $type, $value in $osui-sizes {
 		--space-#{$type}: #{$value};
 	}
 
-	/* Border Radius */
+	/*! Border Radius */
 	@each $type, $value in $osui-border-radius-types {
 		--border-radius-#{$type}: #{$value};
 	}
 
-	/* Border Size */
+	/*! Border Size */
 	@each $type, $value in $osui-border-size {
 		--border-size-#{$type}: #{$value};
 	}
 
-	/* Elevation / Shadow */
+	/*! Elevation / Shadow */
 	@each $type, $value in $osui-shadow-types {
 		--shadow-#{$type}: #{$value};
 	}
 
-	/* App Settings */
+	/*! App Settings */
 	--header-color: #{$header-color};
 	--color-background-body: #{$color-background-body};
 	--color-background-login: #{$color-background-login};
@@ -79,7 +79,7 @@
 	--bottom-bar-size: #{$bottom-bar-size};
 	--footer-height: #{$footer-height};
 
-	/* iOS Safe Areas (Notch Support) */
+	/*! iOS Safe Areas (Notch Support) */
 	--os-safe-area-top: env(safe-area-inset-top);
 	--os-safe-area-right: env(safe-area-inset-right);
 	--os-safe-area-bottom: env(safe-area-inset-bottom);
