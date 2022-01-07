@@ -1,9 +1,6 @@
 /*! Patterns - Interaction - Dropdown Search */
-////
-/// @group Interaction-Dropdown_Search
-/// Patterns - Interaction - Dropdown Search
+/* Since this pattern is Deprecated, it should not appear at SASSDCS! */
 
-///
 .choices[data-type*='select-one'] {
 	cursor: pointer;
 
@@ -70,7 +67,6 @@
 	}
 }
 
-///
 .choices__list--single {
 	.choices__item {
 		color: var(--color-neutral-10);
@@ -82,13 +78,11 @@
 	}
 }
 
-///
 .dropdown-tag-select {
 	opacity: 0;
 }
 
 // Responsive --------------------------------------------------------------------
-///
 .tablet,
 .phone {
 	.choices[data-type*='select-one'] {
@@ -99,7 +93,6 @@
 }
 
 // IsRTL -------------------------------------------------------------------------
-///
 .choices[dir='rtl'] {
 	&[data-type*='select-one'] {
 		&:after {
@@ -122,7 +115,6 @@
 }
 
 // Accessibility -----------------------------------------------------------------
-///
 .has-accessible-features {
 	.choices[data-type*='select-one'] {
 		border-radius: var(--border-radius-soft);

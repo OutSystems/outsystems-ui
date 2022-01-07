@@ -103,7 +103,10 @@ $osui-tooltip-arrow-size: 9px;
 		position: inherit;
 
 		&:empty {
-			-servicestudio-min-width: 150px;
+			// ServiceStudio Preview
+			& {
+				-servicestudio-min-width: 150px;
+			}
 		}
 	}
 
@@ -308,7 +311,7 @@ $osui-tooltip-arrow-size: 9px;
 			-servicestudio-opacity: 1;
 			-servicestudio-top: 0;
 		}
-		$osui-tooltip-arrow-size-preview: 5px; //
+		$osui-tooltip-arrow-size-preview: 5px;
 		$osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		&:after {
 			-servicestudio-content: '';

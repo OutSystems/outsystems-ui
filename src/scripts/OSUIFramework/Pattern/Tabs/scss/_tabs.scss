@@ -1,4 +1,4 @@
-/*! Patterns - Navigation - Tabs */
+/*! Patterns - Navigation - Tabs 												*/
 ////
 /// @group Patterns-Tabs
 /// Patterns - Navigation - Tabs
@@ -386,11 +386,12 @@
 	}
 }
 
-/* Service Studio Preview Message*/
+// Service Studio Preview Message
 .osui-tabs__preview {
 	display: none;
 }
 
+// Hybrid Preview
 html[data-uieditorversion^='1'] .osui-tabs__preview {
 	&.osui-tabs__preview--is-active {
 		-servicestudio-display: block;

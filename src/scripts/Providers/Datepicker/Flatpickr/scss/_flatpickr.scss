@@ -1,8 +1,8 @@
-/*! Flatpickr Library Core Styles */
-/// Import Flatpickr library styles
+/* Flatpickr Library Core Styles */
+// Import Flatpickr library styles
 @import 'flatpickr_lib';
 
-/// Flatpickr overriding styles
+// Flatpickr overriding styles
 .flatpickr-calendar {
 	border-radius: var(--border-radius-soft);
 	border: var(--border-size-s) solid var(--color-neutral-5);
@@ -27,7 +27,7 @@
 	}
 }
 
-/// Flatpickr - Top info wrapper container
+// Flatpickr - Top info wrapper container
 .flatpickr-months {
 	padding: var(--space-base);
 	position: relative;
@@ -61,7 +61,7 @@
 	}
 }
 
-/// Flatpickr - Month and Year container
+// Flatpickr - Month and Year container
 .flatpickr-current-month {
 	align-items: center;
 	color: var(--color-primary);
@@ -101,7 +101,7 @@
 	}
 }
 
-/// Flatpickr - Days container
+// Flatpickr - Days container
 .flatpickr-innerContainer {
 	padding: var(--space-s) var(--space-base) var(--space-base);
 }
@@ -117,12 +117,12 @@
 	width: 100%;
 }
 
-/// Flatpickr - WeekDays
+// Flatpickr - WeekDays
 .flatpickr-weekdays {
 	padding-bottom: var(--space-base);
 }
 
-/// Flatpickr - WeekDay Element
+// Flatpickr - WeekDay Element
 span.flatpickr-weekday {
 	color: var(--color-neutral-7);
 	font-size: var(--font-size-s);
@@ -130,7 +130,7 @@ span.flatpickr-weekday {
 	user-select: none;
 }
 
-/// Flatpickr - DayElem
+// Flatpickr - DayElem
 .flatpickr-day {
 	color: var(--color-neutral-9);
 	font-size: var(--font-size-s);
@@ -264,7 +264,7 @@ span.flatpickr-weekday {
 	}
 }
 
-/// Flatpickr - Time container
+// Flatpickr - Time container
 .flatpickr-time {
 	display: flex;
 	position: relative;
@@ -325,7 +325,7 @@ span.flatpickr-weekday {
 	}
 }
 
-/// Flatpickr - TodayBtn
+// Flatpickr - TodayBtn
 .flatpickr-today-button {
 	padding: var(--space-none) var(--space-base) var(--space-base);
 
@@ -339,7 +339,7 @@ span.flatpickr-weekday {
 }
 
 // Responsive --------------------------------------------------------------------
-///
+//
 .phone {
 	.flatpickr-current-month,
 	.flatpickr-time {
