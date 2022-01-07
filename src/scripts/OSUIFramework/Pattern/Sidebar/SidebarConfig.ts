@@ -34,7 +34,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 					validatedValue = this.validateBoolean(value as boolean, false);
 					break;
 				case Enum.Properties.Width:
-					validatedValue = this.validateString(value as string, '300px');
+					validatedValue = this.validateString(value as string, '500px');
 					break;
 				default:
 					validatedValue = super.validateDefault(key, value);
