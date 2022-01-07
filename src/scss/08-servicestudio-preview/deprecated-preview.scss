@@ -1,0 +1,84 @@
+/*! Deprecated block preview */
+/* 
+	Notes:
+	- This section contains several styles that style the deprecated message on the deprecated blocks
+
+	- This sections should not be visible at SASSDOCS.
+*/
+
+.floating-actions-wrapper.osui-deprecated:after,
+.osui-deprecated:before {
+	display: none;
+	-servicestudio-background: #fff1dc;
+	-servicestudio-background: var(--color-yellow-lightest);
+	-servicestudio-border-radius: var(--border-radius-soft);
+	-servicestudio-color: #333;
+	-servicestudio-content: '⚠ DEPRECATED';
+	-servicestudio-font-weight: var(--font-semi-bold);
+	-servicestudio-display: block;
+	-servicestudio-font-size: 9px;
+	-servicestudio-line-height: 8px;
+	-servicestudio-margin-right: -83px;
+	-servicestudio-margin-bottom: -17px;
+	-servicestudio-padding: 4px 6px 4px 5px;
+	-servicestudio-position: relative;
+	-servicestudio-top: -9px;
+	-servicestudio-height: 9px;
+	-servicestudio-width: 72px;
+	-servicestudio-z-index: 3;
+}
+
+.submenu.osui-deprecated:before,
+.card-background.osui-deprecated:before,
+.split-screen-wrapper.osui-deprecated:before {
+	-servicestudio-position: absolute;
+}
+
+.split-screen-wrapper.osui-deprecated,
+.progress-bar.osui-deprecated,
+.horizontal-scroll.osui-deprecated,
+.carousel.osui-deprecated,
+.card-background.osui-deprecated {
+	-servicestudio-overflow: visible;
+}
+
+.osui-deprecated.icon-badge .osui-deprecated.badge:before {
+	-servicestudio-display: none;
+}
+
+.badge.osui-deprecated:before,
+.calendar-preview.osui-deprecated:before,
+.avatar.osui-deprecated:before {
+	-servicestudio-left: -11px;
+	-servicestudio-top: -18px;
+}
+
+.avatar.osui-deprecated:before {
+	-servicestudio-left: -8px;
+}
+
+.calendar-preview.osui-deprecated:before {
+	-servicestudio-margin-bottom: -27px;
+}
+
+.tag.osui-deprecated:before {
+	-servicestudio-top: -17px;
+	-servicestudio-margin-right: -17px;
+}
+
+.notification.osui-deprecated:before {
+	-servicestudio-top: -33px;
+	-servicestudio-left: -33px;
+}
+
+.floating-actions-wrapper.osui-deprecated:before {
+	-servicestudio-display: none;
+}
+
+.floating-actions-wrapper.osui-deprecated:after {
+	-servicestudio-left: -65px;
+}
+
+.floating-actions-item.osui-deprecated:before {
+	-servicestudio-top: 10px;
+}
