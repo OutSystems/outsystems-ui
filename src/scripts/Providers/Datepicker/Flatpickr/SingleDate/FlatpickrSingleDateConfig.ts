@@ -15,6 +15,8 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 
 		constructor(config: JSON) {
 			super(config);
+
+			this.calendarMode = OSUIFramework.Patterns.DatePicker.Enum.Mode.Single;
 		}
 
 		// Method used to set all the config properties for the SingleDate mode type
@@ -36,6 +38,21 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 			Object.keys(fpOptions).forEach((key) => fpOptions[key] === undefined && delete fpOptions[key]);
 
 			return fpOptions;
+		}
+
+		public validateDefault(key: string, value: unknown): unknown {
+			let validatedValue = undefined;
+
+			switch (key) {
+				case Enum.Properties.InitialDate:
+					validatedValue = false;
+					break;
+				default:
+					validatedValue = super.validateDefault(key, value);
+					break;
+			}
+
+			return validatedValue;
 		}
 	}
 }

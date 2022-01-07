@@ -13,14 +13,14 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 			// Check if any Date was selected
 			if (this._fpProvider.selectedDates.length > 0) {
 				// Set the new Start DefaultDate value
-				this.configs.StartDate = this._fpProvider.formatDate(
+				this.configs.InitialStartDate = this._fpProvider.formatDate(
 					this._fpProvider.selectedDates[0],
 					this._flatpickrOpts.dateFormat
 				);
 
 				// Set the new End DefaultDate value
 				if (this._fpProvider.selectedDates[1]) {
-					this.configs.EndDate = this._fpProvider.formatDate(
+					this.configs.InitialEndDate = this._fpProvider.formatDate(
 						this._fpProvider.selectedDates[1],
 						this._flatpickrOpts.dateFormat
 					);

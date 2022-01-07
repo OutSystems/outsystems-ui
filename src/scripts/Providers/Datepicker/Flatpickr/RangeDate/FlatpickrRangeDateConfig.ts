@@ -11,27 +11,32 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 	 */
 	export class FlatpickrRangeDateConfig extends AbstractFlatpickrConfig {
 		// Set the property EndDate
-		public EndDate: string;
+		public InitialEndDate: string;
 		// Set the property StartDate
-		public StartDate: string;
+		public InitialStartDate: string;
 
 		constructor(config: JSON) {
 			super(config);
+
+			this.calendarMode = OSUIFramework.Patterns.DatePicker.Enum.Mode.Range;
 		}
 
 		// Method used to set the default value since we're dealing with on input to be assigned and 2 received dates!
 		private _setDefaultDate(): string[] | undefined {
 			// Check if any of the given dates are a null date
-			if (OSUIFramework.Helper.Dates.IsNull(this.StartDate) || OSUIFramework.Helper.Dates.IsNull(this.EndDate)) {
+			if (
+				OSUIFramework.Helper.Dates.IsNull(this.InitialStartDate) ||
+				OSUIFramework.Helper.Dates.IsNull(this.InitialEndDate)
+			) {
 				return undefined;
 			}
 
 			// Check if the Start Date is after than End Date
-			if (OSUIFramework.Helper.Dates.Compare(this.StartDate, this.EndDate) === false) {
-				throw new Error(`StartDate '${this.StartDate}' can't be after EndDate '${this.EndDate}'`);
+			if (OSUIFramework.Helper.Dates.Compare(this.InitialStartDate, this.InitialEndDate) === false) {
+				throw new Error(`StartDate '${this.InitialStartDate}' can't be after EndDate '${this.InitialEndDate}'`);
 			}
 
-			return [this.StartDate, this.EndDate];
+			return [this.InitialStartDate, this.InitialEndDate];
 		}
 
 		// Method used to set all the config properties for the RangeDate mode type
@@ -52,6 +57,24 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 			Object.keys(fpOptions).forEach((key) => fpOptions[key] === undefined && delete fpOptions[key]);
 
 			return fpOptions;
+		}
+
+		public validateDefault(key: string, value: unknown): unknown {
+			let validatedValue = undefined;
+
+			switch (key) {
+				case Enum.Properties.InitialStartDate:
+					validatedValue = false;
+					break;
+				case Enum.Properties.InitialEndDate:
+					validatedValue = false;
+					break;
+				default:
+					validatedValue = super.validateDefault(key, value);
+					break;
+			}
+
+			return validatedValue;
 		}
 	}
 }
