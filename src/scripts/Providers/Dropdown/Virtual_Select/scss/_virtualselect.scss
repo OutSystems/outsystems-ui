@@ -230,10 +230,10 @@
 	&:after {
 		color: var(--color-neutral-7);
 		content: '';
-		font: normal normal normal 24px/1 FontAwesome;
+		font: normal normal normal 22px/1 FontAwesome;
 		position: absolute;
 		right: 16px;
-		top: 8px;
+		top: 9px;
 		transform-origin: center;
 		transition: all 0.25s ease;
 	}
@@ -295,6 +295,21 @@
 	}
 }
 
+// Options Container
+.vscomp-options-container {
+	&::-webkit-scrollbar {
+		width: 5px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: var(--color-neutral-4);
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: var(--color-neutral-6);
+	}
+}
+
 // Option Item
 .vscomp-option {
 	background-color: var(--color-neutral-0);
@@ -353,5 +368,9 @@
 
 	.vscomp-toggle-button {
 		height: 48px;
+
+		&:after {
+			top: 13px;
+		}
 	}
 }
