@@ -123,6 +123,55 @@
 		}
 	}
 
+	// RTL Text
+	&.text-direction-rtl {
+		&.multiple {
+			.vscomp-search-container {
+				padding-left: var(--space-s);
+			}
+
+			.vscomp-option {
+				&.selected {
+					.checkbox-icon {
+						&:after {
+							transform: rotate(45deg) translate(-2px, 2px);
+						}
+					}
+				}
+			}
+		}
+
+		&:not(.multiple) {
+			.vscomp-search-container {
+				padding: var(--space-none) var(--space-xl) var(--space-none) var(--space-s);
+
+				&:before {
+					left: auto;
+					right: 16px;
+				}
+			}
+		}
+
+		.vscomp-toggle-button {
+			padding: var(--space-xs) var(--space-base) var(--space-xs) var(--space-xl);
+
+			&:after {
+				left: 16px;
+				right: auto;
+			}
+		}
+
+		.checkbox-icon {
+			margin-left: var(--space-s);
+
+			&.checked {
+				&:after {
+					transform: rotate(45deg) translate(-2px, 2px);
+				}
+			}
+		}
+	}
+
 	// Checkbox
 	.checkbox-icon {
 		background-color: var(--color-neutral-0);
@@ -181,7 +230,6 @@
 	&:after {
 		color: var(--color-neutral-7);
 		content: '';
-		font-family: 'FontAwesome';
 		font: normal normal normal 24px/1 FontAwesome;
 		position: absolute;
 		right: 16px;

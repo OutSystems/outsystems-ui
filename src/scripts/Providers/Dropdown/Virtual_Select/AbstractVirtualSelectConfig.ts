@@ -70,9 +70,10 @@ namespace Providers.Dropdown.Virtual_Select {
 				search: true,
 				searchPlaceholderText: this.SearchPrompt,
 				selectedValue: this._getSelectedValues(),
-				textDirection: OutSystems.OSUI.Utils.GetIsRTL()
-					? OSUIFramework.GlobalEnum.Direction.RTL
-					: OSUIFramework.GlobalEnum.Direction.LTR,
+				textDirection: OSUIFramework.GlobalEnum.Direction.RTL,
+				// textDirection: OutSystems.OSUI.Utils.GetIsRTL()
+				// 	? OSUIFramework.GlobalEnum.Direction.RTL
+				// 	: OSUIFramework.GlobalEnum.Direction.LTR,
 			};
 
 			return vsOptions as VirtualSelectOpts;
