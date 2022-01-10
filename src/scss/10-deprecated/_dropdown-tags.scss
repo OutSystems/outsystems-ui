@@ -1,9 +1,6 @@
 /*! Patterns - Interaction - Dropdown Tags */
-////
-/// @group Interaction-Dropdown_Tags
-/// Patterns - Interaction - Dropdown Tags
+/* Since this pattern is Deprecated, it should not appear at SASSDCS! */
 
-///
 .choices__list--multiple {
 	display: inline;
 
@@ -31,7 +28,6 @@
 	}
 }
 
-///
 .choices[data-type*='select-multiple'] {
 	&.is-open {
 		&.is-focused {
@@ -134,7 +130,6 @@
 	}
 }
 
-///
 .is-disabled {
 	.choices__list--multiple {
 		.choices__item {
@@ -144,12 +139,10 @@
 	}
 }
 
-///
 .dropdown-tag-select {
 	opacity: 0;
 }
 
-///
 .dropdown-tag-preview {
 	.card {
 		padding: var(--space-xs);
@@ -157,7 +150,6 @@
 }
 
 // IsRTL -------------------------------------------------------------------------
-///
 .choices[dir='rtl'] {
 	.choices__list--multiple {
 		.choices__item {
@@ -176,7 +168,6 @@
 }
 
 // Accessibility -----------------------------------------------------------------
-///
 .has-accessible-features {
 	.choices[data-type='select-multiple'] {
 		&.is-open {

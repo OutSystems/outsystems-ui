@@ -1,13 +1,14 @@
+/*! =========================================================================== */
 /*!  OutSystems UI                                                              */
 /*!  For more information, visit www.outsystems.com/outsystems-ui               */
 /*!                                                                             */
-/*!   Root - CSS Variables                                                      */
-/*!   Resets                                                                    */
-/*!   HTML Elements                                                             */
+/*!  Root - CSS Variables                                                       */
+/*!  Resets                                                                     */
+/*!  HTML Elements                                                              */
 /*!     - Links                                                                 */
 /*!     - Images                                                                */
 /*!     - Headings                                                              */
-/*!   Page Layout                                                               */
+/*!  Page Layout                                                                */
 /*!     - Header                                                                */
 /*!     - Layout Native - Header                                                */
 /*!     - Layout Side - Header                                                  */
@@ -22,7 +23,7 @@
 /*!     - Section                                                               */
 /*!     - Login                                                                 */
 /*!     - iOS Scroll Bounce                                                     */
-/*!   Widgets                                                                   */
+/*!  Widgets                                                                    */
 /*!     - Inputs and TextAreas                                                  */
 /*!     - Switch                                                                */
 /*!     - Checkbox                                                              */
@@ -40,7 +41,7 @@
 /*!     - Popup                                                                 */
 /*!     - Feedback Message                                                      */
 /*!     - Radio Button                                                          */
-/*!   Patterns                                                                  */
+/*!  Patterns                                                                   */
 /*!     - Adaptive                                                              */
 /*!         - Columns                                                           */
 /*!         - Gallery                                                           */
@@ -66,16 +67,15 @@
 /*!         - Animate                                                           */
 /*!         - Animated Label                                                    */
 /*!         - Carousel                                                          */
-/*!         - Date Picker                                                       */
+/*!         - DatePicker                                                        */
 /*!         - Dropdown Search and Tags, common styles                           */
 /*!         - Dropdown Search                                                   */
 /*!         - Dropdown Tags                                                     */
 /*!         - Floating Actions                                                  */
-/*!         - Horizontal Scroll                                                 */
 /*!         - Input With Icon                                                   */
 /*!         - Lightbox Image                                                    */
 /*!         - Notification                                                      */
-/*!         - Range Slider                                                      */
+/*!         - RangeSlider                                                       */
 /*!         - Scrollable Area                                                   */
 /*!         - Search                                                            */
 /*!         - Sidebar                                                           */
@@ -86,6 +86,7 @@
 /*!         - Breadcrumbs                                                       */
 /*!         - Pagination                                                        */
 /*!         - Section Index                                                     */
+/*!         - Submenu                                                           */
 /*!         - Tabs                                                              */
 /*!         - Timeline                                                          */
 /*!         - Wizard                                                            */
@@ -105,32 +106,55 @@
 /*!         - Separator                                                         */
 /*!         - Pull to Refresh                                                   */
 /*!         - List Updating                                                     */
-/*!   Usefull Classes                                                           */
+/*!     - Deprecated Patterns                                                   */
+/*!         - Content                                                           */
+/*!             - Flip_Content                                                  */
+/*!             - Submenu                                                       */
+/*!             - Tooltip                                                       */
+/*!         - Interaction                                                       */
+/*!             - Horizontal Scroll                                             */
+/*!             - Sidebar                                                       */
+/*!         - Utilities                                                         */
+/*!             - ButtonLoading                                                 */
+/*!  Usefull Classes                                                            */
 /*!     - a11y (Accessibility)                                                  */
-/*!     - Colors Brand                                                          */
-/*!     - Colors Neutral                                                        */
-/*!     - Colors Palette                                                        */
-/*!     - Colors Semantic                                                       */
-/*!     - Colors Other                                                          */
+/*!     - Colors                                                                */
+/*!         - Colors Brand                                                      */
+/*!         - Colors Neutral                                                    */
+/*!         - Colors Palette                                                    */
+/*!         - Colors Semantic                                                   */
+/*!         - Colors Other                                                      */
 /*!     - Text                                                                  */
 /*!     - Typography                                                            */
-/*!     - Border Size                                                           */
-/*!     - Border Radius                                                         */
+/*!     - Border                                                                */
+/*!         - Border Size                                                       */
+/*!         - Border Radius                                                     */
 /*!     - Margin                                                                */
 /*!     - Padding                                                               */
 /*!     - Shadow                                                                */
-/*!     - Box Width                                                             */
-/*!     - Box Height                                                            */
+/*!     - Box                                                                   */
+/*!         - Box Width                                                         */
+/*!         - Box Height                                                        */
 /*!     - Display                                                               */
-/*!     - Display Flex                                                          */
-/*!     - Display Align                                                         */
+/*!         - Display Flex                                                      */
+/*!         - Display Align                                                     */
 /*!     - Images                                                                */
 /*!     - Overflow                                                              */
 /*!     - Visibility                                                            */
 /*!     - Position                                                              */
 /*!     - Position Absolute                                                     */
 /*!     - Miscellaneous                                                         */
-/*!                                                                             */
+/*!  Screen Transitions                                                         */
+/*!     - Keyframes                                                             */
+/*!         - Animations                                                        */
+/*!         - Animate                                                           */
+/*!         - Button Loading                                                    */
+/*!         - List Item                                                         */
+/*!         - Feedback Message                                                  */
+/*!         - Pull To Refresh                                                   */
+/*!         - Miscellaneous                                                     */
+/*!  Service Studio Preview                                                     */
+/*!     - Deprecated block preview                                              */
 /*! =========================================================================== */
 
 // SCSS Setup variables
@@ -214,7 +238,9 @@
 /* ============================================================================ */
 /*      - Content                                                               */
 /* ============================================================================ */
-@import '04-patterns/02-content/accordion';
+@import '10-deprecated/accordion-deprecated';
+// @import '../scripts/OSUIFramework/Pattern/Accordion/scss/accordion';
+// @import '../scripts/OSUIFramework/Pattern/AccordionItem/scss/accordion-item';
 @import '04-patterns/02-content/alert';
 @import '04-patterns/02-content/blank-slate';
 @import '04-patterns/02-content/card';
@@ -244,6 +270,9 @@
 @import '10-deprecated/dropdown-search-and-tags';
 @import '10-deprecated/dropdown-search';
 @import '10-deprecated/dropdown-tags';
+// @import '../scripts/OSUIFramework/Pattern/Dropdown/scss/dropdown';
+// @import '../scripts/OSUIFramework/Pattern/Dropdown/scss/dropdown-search';
+// @import '../scripts/OSUIFramework/Pattern/Dropdown/scss/dropdown-tags';
 @import '04-patterns/03-interaction/floating-actions';
 @import '04-patterns/03-interaction/input-with-icon';
 @import '04-patterns/03-interaction/lightbox-image';
@@ -257,9 +286,9 @@
 @import '04-patterns/03-interaction/stacked-cards';
 @import '04-patterns/03-interaction/video';
 
-/* ============================================================================== */
-/*      - Navigation                                                              */
-/* ============================================================================== */
+/* ============================================================================ */
+/*      - Navigation                                                            */
+/* ============================================================================ */
 @import '04-patterns/04-navigation/bottom-bar-item';
 @import '04-patterns/04-navigation/breadcrumbs';
 @import '04-patterns/04-navigation/pagination';
@@ -316,8 +345,6 @@
 @import '05-useful/typography';
 @import '05-useful/border-size';
 @import '05-useful/border-radius';
-// The next partial will add more than 1,2k css lines with all kind of border-colors
-// @import '05-useful/border-color';
 @import '05-useful/space-margin';
 @import '05-useful/space-padding';
 @import '05-useful/shadow';

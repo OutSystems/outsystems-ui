@@ -1,9 +1,6 @@
 /*! Patterns - Interaction - Dropdown Search and Tags, common styles */
-////
-/// @group Interaction-Dropdown_Search_And_Tags
-/// Patterns - Interaction - Dropdown Search and Tags, all the common styles
+/* Since this pattern is Deprecated, it should not appear at SASSDCS! */
 
-///
 .choices {
 	min-width: 150px;
 	position: relative;
@@ -252,7 +249,6 @@
 	}
 }
 
-///
 .is {
 	&-focused,
 	&-open {
@@ -287,7 +283,6 @@
 	}
 }
 
-///
 .search--wrapper {
 	position: relative;
 
@@ -311,7 +306,6 @@
 }
 
 // Reponsive ---------------------------------------------------------------------
-///
 .tablet,
 .phone {
 	.choices__inner {
@@ -321,7 +315,6 @@
 }
 
 // IsRTL -------------------------------------------------------------------------
-///
 .choices[dir='rtl'] {
 	&[data-type*='text'] {
 		.choices__button {
@@ -359,7 +352,6 @@
 }
 
 // Accessibility -----------------------------------------------------------------
-///
 .has-accessible-features {
 	.choices {
 		&__inner {
@@ -413,10 +405,8 @@
 	}
 }
 
-
 // Specific Cases -----------------------------------------------------------------
 // When located inside tabs, the dropdown component must be position relative
-///
 .layout-native {
 	.tabs {
 		.choices {

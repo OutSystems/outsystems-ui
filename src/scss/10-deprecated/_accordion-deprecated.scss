@@ -1,6 +1,6 @@
 /*! Patterns - Content - Accordion */
+/* Since this pattern is Deprecated, it should not appear at SASSDCS! */
 
-///
 [data-block*='AccordionItem'] {
 	&:first-of-type .section-expandable {
 		border-radius: var(--border-radius-soft) var(--border-radius-soft) var(--border-radius-none)
@@ -14,7 +14,6 @@
 	}
 }
 
-///
 .section-expandable {
 	background-color: var(--color-neutral-0);
 	border: var(--border-size-s) solid var(--color-neutral-4);
@@ -116,14 +115,12 @@
 }
 
 // Responsive -------------------------------------------------------------------------
-///
 .tablet {
 	.section-expandable .section-expandable-title {
 		font-size: calc(var(--font-size-h6) - 1px);
 	}
 }
 
-///
 .phone {
 	.section-expandable {
 		.section-expandable-title {
@@ -137,7 +134,6 @@
 	}
 }
 
-///
 .layout-native {
 	.section-expandable {
 		.section-expandable-title {
@@ -165,7 +161,6 @@
 }
 
 // Accessibility -------------------------------------------------------------------------
-///
 .has-accessible-features {
 	.section-expandable {
 		.section-expandable-title:focus,
