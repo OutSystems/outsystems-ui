@@ -106,9 +106,9 @@
 
 				.vscomp-clear-icon {
 					height: 11px;
-					left: 0px;
+					left: var(--space-none);
 					position: relative;
-					top: 0px;
+					top: var(--space-none);
 					width: 11px;
 
 					&:before,
@@ -147,7 +147,7 @@
 
 				&:before {
 					left: auto;
-					right: 16px;
+					right: var(--space-base);
 				}
 			}
 		}
@@ -156,7 +156,7 @@
 			padding: var(--space-xs) var(--space-base) var(--space-xs) var(--space-xl);
 
 			&:after {
-				left: 16px;
+				left: var(--space-base);
 				right: auto;
 			}
 		}
@@ -232,7 +232,7 @@
 		content: '';
 		font: normal normal normal 22px/1 FontAwesome;
 		position: absolute;
-		right: 16px;
+		right: var(--space-base);
 		top: 9px;
 		transform-origin: center;
 		transition: all 0.25s ease;
@@ -279,7 +279,7 @@
 		display: flex;
 		font: normal normal normal 14px/1 FontAwesome;
 		height: 100%;
-		left: 16px;
+		left: var(--space-base);
 		position: absolute;
 		top: 0;
 	}
