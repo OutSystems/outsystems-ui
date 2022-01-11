@@ -106,9 +106,9 @@
 
 				.vscomp-clear-icon {
 					height: 11px;
-					left: 0px;
+					left: var(--space-none);
 					position: relative;
-					top: 0px;
+					top: var(--space-none);
 					width: 11px;
 
 					&:before,
@@ -118,6 +118,55 @@
 						height: 100%;
 						width: 2px;
 					}
+				}
+			}
+		}
+	}
+
+	// RTL Text
+	&.text-direction-rtl {
+		&.multiple {
+			.vscomp-search-container {
+				padding-left: var(--space-s);
+			}
+
+			.vscomp-option {
+				&.selected {
+					.checkbox-icon {
+						&:after {
+							transform: rotate(45deg) translate(-2px, 2px);
+						}
+					}
+				}
+			}
+		}
+
+		&:not(.multiple) {
+			.vscomp-search-container {
+				padding: var(--space-none) var(--space-xl) var(--space-none) var(--space-s);
+
+				&:before {
+					left: auto;
+					right: var(--space-base);
+				}
+			}
+		}
+
+		.vscomp-toggle-button {
+			padding: var(--space-xs) var(--space-base) var(--space-xs) var(--space-xl);
+
+			&:after {
+				left: var(--space-base);
+				right: auto;
+			}
+		}
+
+		.checkbox-icon {
+			margin-left: var(--space-s);
+
+			&.checked {
+				&:after {
+					transform: rotate(45deg) translate(-2px, 2px);
 				}
 			}
 		}
@@ -181,11 +230,10 @@
 	&:after {
 		color: var(--color-neutral-7);
 		content: '';
-		font-family: 'FontAwesome';
-		font: normal normal normal 24px/1 FontAwesome;
+		font: normal normal normal 22px/1 FontAwesome;
 		position: absolute;
-		right: 16px;
-		top: 8px;
+		right: var(--space-base);
+		top: 9px;
 		transform-origin: center;
 		transition: all 0.25s ease;
 	}
@@ -231,7 +279,7 @@
 		display: flex;
 		font: normal normal normal 14px/1 FontAwesome;
 		height: 100%;
-		left: 16px;
+		left: var(--space-base);
 		position: absolute;
 		top: 0;
 	}
@@ -244,6 +292,21 @@
 	&::placeholder {
 		color: var(--color-neutral-9);
 		opacity: 0.5;
+	}
+}
+
+// Options Container
+.vscomp-options-container {
+	&::-webkit-scrollbar {
+		width: 5px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: var(--color-neutral-4);
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: var(--color-neutral-6);
 	}
 }
 
@@ -305,5 +368,9 @@
 
 	.vscomp-toggle-button {
 		height: 48px;
+
+		&:after {
+			top: 13px;
+		}
 	}
 }
