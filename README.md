@@ -22,16 +22,17 @@ Create modern experiences with fully customizable responsive Screen Templates an
 Find out more in [OutSystems UI website](www.outsystems.com/outsystems-ui).
 
 ### Where can you find the component?
-The OutSystems component, like all components, can be found in [OutSystems forge](https://www.outsystems.com/forge/component-overview/9764/data-grid-reactive). 
-There you can also find a [sample application](https://www.outsystems.com/forge/component-overview/9765/data-grid-sample-reactive) that show-cases several uses of the component, that is also [the documentation].
+The OutSystems UI component, like all components, can be found in [OutSystems forge](https://www.outsystems.com/forge/component-overview/1385/outsystems-ui). 
+
+### Where can you find documentation?
+The documentation can be found in the [OutSystems UI website](https://outsystemsui.outsystems.com/outsystemsuiwebsite/) and in [OutSystems product documentation](https://success.outsystems.com/Documentation/11/Developing_an_Application/Design_UI/Patterns).
 
 ### Why use this component?
-If you're using OutSystems, this is how you can use this component in your application:
-![Developer experience](https://www.outsystems.com/FroalaEditor/Download.aspx?GUID=2021216vzoTkL5piWLCGCv7VXgBkFoNdpCIye5Z9m2zyhV1gL)
+OutSystems UI allows you to create applications with great user experience and beautiful design at unbeatable speed. This is how all the pieces come together and how you can go from creating your first application to see it working in minutes!
 
 ## About this repository
-This repository contains the code that enable the usage of an external provider ([wijmo](https://www.grapecity.com/wijmo/)), to create grids in OutSystems applications with the least possible effort.
-The code is written in TypeScript🖤, and you branch it and PR your changes/proposals!
+This repository contains the code that is used to control/style the OutSystems UI patterns.
+The code is written in TypeScript🖤 and in SCSS, and you branch it and PR your changes/proposals!
 
 ### What tools should you use?
 We highly recommend the usage of the following tools:
@@ -83,11 +84,8 @@ To be accepted, a Pull Request needs to:
     * Avoid exposing sensible information of any kind (e.g. internal server link, process, etc).
 
 ## Useful Links
-* Download latest version in [OutSystems forge](https://www.outsystems.com/forge/component-versions/9764)
-* Test the latest changes in the [sample app](https://www.outsystems.com/forge/component-overview/9765/data-grid-sample-reactive)
-* Component [living documentation](https://personal-ww5hcsw8.outsystemscloud.com/DataGridSampleReactive/)
-* [Tutorial Data Grid in less than 4 minutes](https://www.youtube.com/watch?v=OFXOPrkRlrI)
-
+* Download latest version in [OutSystems forge](https://www.outsystems.com/forge/component-versions/1385)
+* Check the [online documentation](https://outsystemsui.outsystems.com/outsystemsuiwebsite/)
 
 ## 📫&nbsp; Have a question? Want to chat? Ran into a problem?
-Write us in [the component support page](https://www.outsystems.com/forge/component-discussions/9764/Data+Grid+Reactive)!
+Write us in [the component support page](https://www.outsystems.com/forge/component-discussions/1385/OutSystems+UI)!
