@@ -152,6 +152,17 @@
 			}
 		}
 
+		&.show-value-as-tags {
+			.vscomp-value-tag {
+				padding: 6px 10px 6px 35px;
+			}
+
+			.vscomp-value-tag-clear-button {
+				left: 10px;
+				right: auto;
+			}
+		}
+
 		.vscomp-toggle-button {
 			padding: var(--space-xs) var(--space-base) var(--space-xs) var(--space-xl);
 
