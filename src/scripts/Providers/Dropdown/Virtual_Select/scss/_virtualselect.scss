@@ -79,7 +79,7 @@
 	&.show-value-as-tags {
 		.vscomp-toggle-button {
 			height: auto;
-			min-height: 40px;
+			min-height: var(--vscomp-toogle-btn-height);
 			padding: var(--space-xs) var(--space-xxl) var(--space-none) var(--space-base);
 		}
 
@@ -211,14 +211,18 @@
 
 // Top part - Select to open dropdown
 .vscomp-toggle-button {
+	--vscomp-toogle-btn-arrow-size: 22px;
+	--vscomp-toogle-btn-height: 40px;
+	--vscomp-toogle-btn-mobile-height: 48px;
+
 	background-color: var(--color-neutral-0);
 	border-radius: var(--border-radius-soft);
 	border: var(--border-size-s) solid var(--color-neutral-5);
 	color: var(--color-neutral-9);
 	cursor: pointer;
 	display: inline-flex;
-	height: 40px;
-	line-height: 40px;
+	height: var(--vscomp-toogle-btn-height);
+	line-height: var(--vscomp-toogle-btn-height);
 	min-width: 180px;
 	padding: var(--space-xs) var(--space-xl) var(--space-xs) var(--space-base);
 	position: relative;
@@ -230,10 +234,10 @@
 	&:after {
 		color: var(--color-neutral-7);
 		content: '';
-		font: normal normal normal 22px/1 FontAwesome;
+		font: normal normal normal var(--vscomp-toogle-btn-arrow-size) / 1 FontAwesome;
 		position: absolute;
 		right: var(--space-base);
-		top: 9px;
+		top: calc((var(--vscomp-toogle-btn-height) - var(--vscomp-toogle-btn-arrow-size)) / 2);
 		transform-origin: center;
 		transition: all 0.25s ease;
 	}
@@ -361,16 +365,16 @@
 	.vscomp-wrapper {
 		&.show-value-as-tags {
 			.vscomp-toggle-button {
-				min-height: 48px;
+				min-height: var(--vscomp-toogle-btn-mobile-height);
 			}
 		}
 	}
 
 	.vscomp-toggle-button {
-		height: 48px;
+		height: var(--vscomp-toogle-btn-mobile-height);
 
 		&:after {
-			top: 13px;
+			top: calc((var(--vscomp-toogle-btn-mobile-height) - var(--vscomp-toogle-btn-arrow-size)) / 2);
 		}
 	}
 }
