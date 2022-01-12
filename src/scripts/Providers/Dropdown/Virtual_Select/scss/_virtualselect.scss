@@ -209,15 +209,12 @@
 	}
 }
 
-// Top part - CSS variables
+// Top part - Select to open dropdown
 .vscomp-toggle-button {
 	--vscomp-toogle-btn-arrow-size: 22px;
 	--vscomp-toogle-btn-height: 40px;
 	--vscomp-toogle-btn-mobile-height: 48px;
-}
 
-// Top part - Select to open dropdown
-.vscomp-toggle-button {
 	background-color: var(--color-neutral-0);
 	border-radius: var(--border-radius-soft);
 	border: var(--border-size-s) solid var(--color-neutral-5);
