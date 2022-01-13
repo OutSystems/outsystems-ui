@@ -1,4 +1,4 @@
-# OutSystems UI · [![GitHub license](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://github.com/OutSystems/outsystems-datagrid-reactive/blob/master/LICENSE) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+# OutSystems UI · ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 The OutSystems UI framework for Reactive Web and Mobile apps with dozens of responsive UI patterns on top of a solid design system, fully customizable to your Style Guide needs.
 
 ## About the component
@@ -42,7 +42,7 @@ We highly recommend the usage of the following tools:
   * ESLint
   * Prettier - Code formatter
 
-### How to use change this code?
+### How to change this code?
 1. Create a branch based in the branch **master** (lastest & greatest release)
 2. Open your Visual Code in your branch
 3. Run the following command in Visual Code terminal: `npm run setup` (this will install all the dependencies that you need and compile the code)
