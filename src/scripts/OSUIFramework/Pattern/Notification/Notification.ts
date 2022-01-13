@@ -111,14 +111,14 @@ namespace OSUIFramework.Patterns.Notification {
 			}
 
 			// Set width value for Notification
-			Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, this._configs.Width);
+			Helper.Dom.Styles.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, this._configs.Width);
 
 			// Set position initial class
-			Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternPosition + this._configs.Position);
+			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternPosition + this._configs.Position);
 
 			// Set HasOverlay class
 			if (this._configs.HasOverlay) {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternOverlay);
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternOverlay);
 			}
 
 			if (this._configs.IsOpen) {
@@ -129,7 +129,7 @@ namespace OSUIFramework.Patterns.Notification {
 				this._autoCloseNotification();
 			}
 
-			OSUIFramework.Helper.Element.Move(
+			OSUIFramework.Helper.Dom.Move(
 				this._selfElem,
 				document.querySelector(
 					Constants.Dot + GlobalEnum.Screen.Active + Constants.Dot + GlobalEnum.Screen.Container
@@ -239,19 +239,19 @@ namespace OSUIFramework.Patterns.Notification {
 			this._configs.HasOverlay = overlay;
 			// Reset overlay class
 			if (this._configs.HasOverlay) {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternOverlay);
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternOverlay);
 			} else {
-				Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternOverlay);
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternOverlay);
 			}
 		}
 
 		private _updatePosition(position: string): void {
 			// Reset direction class
 			if (this._configs.Position !== '') {
-				Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternPosition + this._configs.Position);
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternPosition + this._configs.Position);
 			}
 
-			Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternPosition + position);
+			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternPosition + position);
 			this._configs.Position = position;
 		}
 
@@ -260,7 +260,7 @@ namespace OSUIFramework.Patterns.Notification {
 			this._configs.Width = width;
 			if (width !== '') {
 				// Update css variable
-				Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, width);
+				Helper.Dom.Styles.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, width);
 				this._configs.Width = width;
 			}
 		}
@@ -320,7 +320,7 @@ namespace OSUIFramework.Patterns.Notification {
 		public hide(): void {
 			this._configs.IsOpen = false;
 
-			Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
+			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
 
 			// Trigger Notification event with new status
 			this._triggerOnToggleEvent(this._configs.IsOpen);
@@ -398,7 +398,7 @@ namespace OSUIFramework.Patterns.Notification {
 		public show(): void {
 			this._configs.IsOpen = true;
 
-			Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternIsOpen);
+			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsOpen);
 
 			// Trigger Notification event with new status
 			this._triggerOnToggleEvent(this._configs.IsOpen);

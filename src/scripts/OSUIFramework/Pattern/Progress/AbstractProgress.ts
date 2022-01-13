@@ -30,7 +30,7 @@ namespace OSUIFramework.Patterns.Progress {
 		protected updateValueNow(progressValue: string): void {
 			Helper.Dom.Attribute.Set(this._selfElem, 'aria-valuenow', progressValue);
 
-			Helper.Style.SetStyleAttribute(
+			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.ProgressValue,
 				progressValue + GlobalEnum.Units.Percentage

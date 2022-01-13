@@ -80,7 +80,7 @@ namespace OSUIFramework.Patterns.Rating {
 			this._isHalfValue = false;
 
 			// Check if the e.target is a label with the Enum.RatingCssClass.RatingInput class
-			const isInput = Helper.Style.ContainsClass(currentTarget, Enum.CssClass.RatingInput);
+			const isInput = Helper.Dom.Styles.ContainsClass(currentTarget, Enum.CssClass.RatingInput);
 			if (isInput) {
 				// If it is, then get the input:checked value
 				this._value = this.getValue();
@@ -127,17 +127,17 @@ namespace OSUIFramework.Patterns.Rating {
 		private _setInitialCssClasses(): void {
 			// Set IsHalf class
 			if (this._isHalfValue) {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsHalf);
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsHalf);
 			}
 
 			// Set IsEdit class
 			if (this._configs.IsEdit) {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsEdit);
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsEdit);
 			}
 
 			// Set Size class
 			if (this._configs.Size !== '') {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClass.Size + this._configs.Size);
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Size + this._configs.Size);
 			}
 		}
 
@@ -253,8 +253,8 @@ namespace OSUIFramework.Patterns.Rating {
 
 			// Toggle the is-edit class
 			IsEdit
-				? Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsEdit)
-				: Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.IsEdit);
+				? Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsEdit)
+				: Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsEdit);
 
 			// Review if there's a need to add/remove the click event, accordingly to the IsEdit value
 			this._manageRatingEvent();
@@ -278,14 +278,14 @@ namespace OSUIFramework.Patterns.Rating {
 
 			// Reset current class
 			if (this.configs.Size !== '') {
-				Helper.Style.RemoveClass(this._selfElem, this.configs.Size);
+				Helper.Dom.Styles.RemoveClass(this._selfElem, this.configs.Size);
 			}
 
 			// If size param is not empty, it means is either 'small' or 'medium', so we can add the class based on the size param
 			// This is done, as the Size entity in OutSystems has not a 'base' entity, just a NullIdentifier, which is the default size
 			if (size !== '') {
 				newSize = Enum.CssClass.Size + size;
-				Helper.Style.AddClass(this._selfElem, newSize);
+				Helper.Dom.Styles.AddClass(this._selfElem, newSize);
 			} else {
 				// If it's empty, it means is the default NullIdentifier, whihch corresponds to the 'base' size
 				newSize = '';
@@ -307,8 +307,8 @@ namespace OSUIFramework.Patterns.Rating {
 				const ratingItems = this._selfElem.querySelectorAll(GlobalEnum.HTMLElement.Input);
 
 				// Reset the is-half class
-				if (Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.IsHalf)) {
-					Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.IsHalf);
+				if (Helper.Dom.Styles.ContainsClass(this._selfElem, Enum.CssClass.IsHalf)) {
+					Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsHalf);
 				}
 
 				// If there's only one rating item, then there's no need for further checks, this one will be checked
@@ -332,7 +332,9 @@ namespace OSUIFramework.Patterns.Rating {
 				}
 
 				// If is-half add the appropriate class, otherwise just declare the this.isHalfValue, to complete the if statement
-				this._isHalfValue ? Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsHalf) : this._isHalfValue;
+				this._isHalfValue
+					? Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsHalf)
+					: this._isHalfValue;
 
 				// Update the variables with the new value
 				this._configs.RatingValue = this._isHalfValue ? value : newValue;

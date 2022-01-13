@@ -79,7 +79,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			if (!this._insideBottomBar && this._floatingActions) {
 				if (this._bottomBar) {
 					this._insideBottomBar = true;
-					Helper.Style.AddClass(this._floatingActions, Enum.CssClasses.BottomBarExists);
+					Helper.Dom.Styles.AddClass(this._floatingActions, Enum.CssClasses.BottomBarExists);
 				}
 			}
 		}
@@ -106,7 +106,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			//If ESC is pressed then close the floatiing action items
 			if (
 				e.key === GlobalEnum.Keycodes.Escape &&
-				Helper.Style.ContainsClass(this._floatingActions, Enum.CssClasses.Open)
+				Helper.Dom.Styles.ContainsClass(this._floatingActions, Enum.CssClasses.Open)
 			) {
 				this._toggleClick();
 			}
@@ -173,11 +173,11 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			);
 
 			if (this._isOpen) {
-				Helper.Style.AddClass(this._floatingActions, Enum.CssClasses.Open);
-				Helper.Style.AddClass(floatingOverlay, Enum.CssClasses.Open);
+				Helper.Dom.Styles.AddClass(this._floatingActions, Enum.CssClasses.Open);
+				Helper.Dom.Styles.AddClass(floatingOverlay, Enum.CssClasses.Open);
 			} else {
-				Helper.Style.RemoveClass(this._floatingActions, Enum.CssClasses.Open);
-				Helper.Style.RemoveClass(floatingOverlay, Enum.CssClasses.Open);
+				Helper.Dom.Styles.RemoveClass(this._floatingActions, Enum.CssClasses.Open);
+				Helper.Dom.Styles.RemoveClass(floatingOverlay, Enum.CssClasses.Open);
 			}
 		}
 
