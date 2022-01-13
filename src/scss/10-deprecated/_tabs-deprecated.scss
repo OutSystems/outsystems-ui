@@ -86,54 +86,54 @@
 			padding: var(--space-none) var(--space-m);
 		}
 	}
+}
 
-	.tabs-header {
-		&,
-		.list {
-			display: flex;
-			overflow-x: auto;
-			position: relative;
-			width: 100%;
-			z-index: 2;
-		}
-
-		&-tab {
-			align-items: center;
-			border-bottom: var(--border-size-m) solid transparent;
-			color: var(--color-neutral-8);
-			cursor: pointer;
-			display: flex;
-			justify-content: center;
-			margin-left: var(--space-l);
-			padding: var(--space-base) var(--space-xs);
-			transition: border 150ms linear;
-			white-space: nowrap;
-
-			&.active {
-				border-bottom: var(--border-size-m) solid var(--color-primary);
-				color: var(--color-neutral-10);
-				font-weight: var(--font-semi-bold);
-			}
-		}
-	}
-
-	.tabs-content {
-		border-top: var(--border-size-s) solid var(--color-neutral-5);
-		flex-grow: 1;
-		margin-top: -1px;
-		padding: var(--space-m) var(--space-none);
+.tabs-header {
+	&,
+	.list {
+		display: flex;
+		overflow-x: auto;
 		position: relative;
 		width: 100%;
-		z-index: auto;
+		z-index: 2;
+	}
 
-		&-tab {
-			&:not(.open) {
-				display: none;
+	&-tab {
+		align-items: center;
+		border-bottom: var(--border-size-m) solid transparent;
+		color: var(--color-neutral-8);
+		cursor: pointer;
+		display: flex;
+		justify-content: center;
+		margin-left: var(--space-l);
+		padding: var(--space-base) var(--space-xs);
+		transition: border 150ms linear;
+		white-space: nowrap;
 
-				// Service Studio Preview
-				& {
-					-servicestudio-display: block !important;
-				}
+		&.active {
+			border-bottom: var(--border-size-m) solid var(--color-primary);
+			color: var(--color-neutral-10);
+			font-weight: var(--font-semi-bold);
+		}
+	}
+}
+
+.tabs-content {
+	border-top: var(--border-size-s) solid var(--color-neutral-5);
+	flex-grow: 1;
+	margin-top: -1px;
+	padding: var(--space-m) var(--space-none);
+	position: relative;
+	width: 100%;
+	z-index: auto;
+
+	&-tab {
+		&:not(.open) {
+			display: none;
+
+			// Service Studio Preview
+			& {
+				-servicestudio-display: block !important;
 			}
 		}
 	}
