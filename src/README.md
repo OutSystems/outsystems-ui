@@ -54,7 +54,7 @@ The namespaces should follow application directories, this way we should find fi
     |   |   |   |   └── Flatpickr            # Flatpickr specific code.
     |   |   |   ├── Dropdown             # Contains the providers used by the **DropdownSearch** & **DropdownTags** pattern.
     |   |   |   |   └── Virtual_Select       # VirtualSelect specific code.
-    |   |   |   |       ├── Search               # Specific code for the Dropdown search.
+    |   |   |   |       ├── Search               # Specific code for the DropdownSearch.
     |   |   |   |       └── Tags                 # Specific code for the DropdownTags search.
     |   |   |   └── RangeSlider          # Contains the providers used by the **RangeSlider** & **RangeSliderInterval** pattern.
     |   |   |       └── NoUiSlider           # Flatpickr specific code.
