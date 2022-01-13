@@ -206,7 +206,7 @@ namespace OSUIFramework.Patterns.Tabs {
 					if (entry.isIntersecting && !this._disableObserver) {
 						// Get data-tab from active entry intersecting, to know the current contentItem index
 						const targetIndex = parseInt(
-							Helper.Attribute.Get(entry.target as HTMLElement, Enum.Attributes.DataTab)
+							Helper.Dom.Attribute.Get(entry.target as HTMLElement, Enum.Attributes.DataTab)
 						);
 						// get current headerItem
 						const currentHeaderItem = this._tabsHeaderItemsElementsArray[targetIndex];

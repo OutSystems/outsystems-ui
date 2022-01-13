@@ -163,7 +163,7 @@ namespace OSUIFramework.Patterns.Notification {
 
 		// Set accessibility atrributes on html elements
 		private _setAccessibilityProps(): void {
-			Helper.Attribute.Set(
+			Helper.Dom.Attribute.Set(
 				this._notificationContent,
 				Constants.A11YAttributes.Role.AttrName,
 				Constants.A11YAttributes.Role.Alert
@@ -187,13 +187,13 @@ namespace OSUIFramework.Patterns.Notification {
 
 		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _updateAccessibilityProps(): void {
-			Helper.Attribute.Set(
+			Helper.Dom.Attribute.Set(
 				this._notificationContent,
 				Constants.A11YAttributes.Aria.Hidden,
 				(!this._configs.IsOpen).toString()
 			);
 
-			Helper.Attribute.Set(
+			Helper.Dom.Attribute.Set(
 				this._notificationContent,
 				Constants.A11YAttributes.TabIndex,
 				this._configs.IsOpen

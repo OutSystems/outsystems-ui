@@ -143,7 +143,7 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		 * @memberof TabsContentItem
 		 */
 		public setDataTab(dataTab: number): void {
-			Helper.Attribute.Set(this._selfElem, Tabs.Enum.Attributes.DataTab, dataTab.toString());
+			Helper.Dom.Attribute.Set(this._selfElem, Tabs.Enum.Attributes.DataTab, dataTab.toString());
 			this._dataTab = dataTab;
 		}
 

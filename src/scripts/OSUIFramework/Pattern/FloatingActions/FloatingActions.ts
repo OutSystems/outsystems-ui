@@ -139,12 +139,12 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		private _setAccessibility(): void {
 			//Toggles accessibility 'aria-hidden' property on Floating Actions Items' container & 'aria-expanded' on Floating Actions Button
 			if (this._floatingActionsItem)
-				Helper.Attribute.Set(
+				Helper.Dom.Attribute.Set(
 					this._floatingActionsItem,
 					Constants.A11YAttributes.Aria.Hidden,
 					(!this._isOpen).toString()
 				);
-			Helper.Attribute.Set(
+			Helper.Dom.Attribute.Set(
 				this._floatingActionsButton,
 				Constants.A11YAttributes.Aria.Expanded,
 				this._isOpen.toString()
@@ -154,7 +154,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 			if (this._floatingAllLinks.length > 0) {
 				this._floatingAllLinks.forEach((item: HTMLElement) => {
-					Helper.Attribute.Set(
+					Helper.Dom.Attribute.Set(
 						item,
 						Constants.A11YAttributes.TabIndex,
 						this._isOpen

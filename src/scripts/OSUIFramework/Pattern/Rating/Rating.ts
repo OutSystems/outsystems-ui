@@ -108,12 +108,12 @@ namespace OSUIFramework.Patterns.Rating {
 
 		// Toggle fieldset disbaled status
 		private _setFieldsetDisabledStatus(isDisabled: boolean): void {
-			const isFieldsetDisabled = Helper.Attribute.Get(this._ratingFieldsetElem, 'disabled');
+			const isFieldsetDisabled = Helper.Dom.Attribute.Get(this._ratingFieldsetElem, 'disabled');
 
 			if (isDisabled) {
-				Helper.Attribute.Set(this._ratingFieldsetElem, 'disabled', 'true');
+				Helper.Dom.Attribute.Set(this._ratingFieldsetElem, 'disabled', 'true');
 			} else if (!isDisabled && isFieldsetDisabled) {
-				Helper.Attribute.Remove(this._ratingFieldsetElem, 'disabled');
+				Helper.Dom.Attribute.Remove(this._ratingFieldsetElem, 'disabled');
 			}
 		}
 

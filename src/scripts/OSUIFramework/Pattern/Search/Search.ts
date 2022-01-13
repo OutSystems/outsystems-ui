@@ -84,7 +84,7 @@ namespace OSUIFramework.Patterns.Search {
 		 * @memberof Search
 		 */
 		protected setA11yProperties(): void {
-			Helper.Attribute.Set(
+			Helper.Dom.Attribute.Set(
 				this._selfElem,
 				Constants.A11YAttributes.Role.AttrName,
 				Constants.A11YAttributes.Role.Search
