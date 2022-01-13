@@ -3,16 +3,21 @@
 /// @group Patterns-Accordion_Item
 /// Patterns - Content - Accordion Item
 
+/* NOTE:
+	- Do not forget this pattern can be used outside of the accordion pattern.
+	Thats why at accordion partial, there are styles that could be seen as duplicated, but threre aren't!
+*/
+
 ///
 .osui-accordion-item {
 	background-color: var(--color-neutral-0);
 	border: var(--border-size-s) solid var(--color-neutral-4);
 	border-bottom-width: var(--border-size-s);
-	border-radius: var(--border-radius-soft) var(--border-radius-soft) var(--border-radius-soft)
-		var(--border-radius-soft);
+	border-radius: var(--border-radius-soft);
 
 	// ServiceStudio Preview
 	& {
+		-servicestudio-border-bottom-width: var(--border-size-s);
 		-servicestudio-border-top: var(--border-size-m) solid var(--color-primary);
 	}
 
@@ -42,6 +47,19 @@
 			.osui-accordion-item__icon {
 				color: var(--color-neutral-6);
 			}
+		}
+
+		&-first-item {
+			border-radius: var(--border-radius-none);
+			border-top-left-radius: var(--border-radius-soft);
+			border-top-right-radius: var(--border-radius-soft);
+		}
+
+		&-last-item {
+			border-bottom-width: var(--border-size-s);
+			border-radius: var(--border-radius-none);
+			border-bottom-left-radius: var(--border-radius-soft);
+			border-bottom-right-radius: var(--border-radius-soft);
 		}
 	}
 
