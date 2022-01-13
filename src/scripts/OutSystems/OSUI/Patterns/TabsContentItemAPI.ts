@@ -14,7 +14,7 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 			tabs = TabsAPI.GetTabsById(_tabsMap.get(tabsContentItemId));
 		} else {
 			// Try to find its reference on DOM
-			const elem = OSUIFramework.Helper.GetElementByUniqueId(tabsContentItemId);
+			const elem = OSUIFramework.Helper.Dom.GetElementByUniqueId(tabsContentItemId);
 			const tabsElem = elem.closest(
 				OSUIFramework.Constants.Dot + OSUIFramework.Patterns.Tabs.Enum.CssClasses.TabsWrapper
 			);
