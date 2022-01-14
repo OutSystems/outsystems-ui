@@ -11,9 +11,6 @@
 		"create-pattern-base": "node ./custom-scripts/create-pattern-base.js"
 	},
 	"author": "OutSystems UI Team",
-	"browserslist": [
-		"last 5 versions"
-	],
 	"devDependencies": {
 		"@splidejs/splide": "^3.1.7",
 		"@typescript-eslint/eslint-plugin": "^4.23.0",

@@ -106,5 +106,4 @@ function watchFiles() {
 
 // Gulp tasks
 exports.startDevelopment = series(cleanOldFiles, parallel(cssTranspile, jsTranspile), parallel(watchFiles, initServer));
-
 exports.createProduction = series(cleanOldFiles, parallel(cssTranspile, jsTranspile));
