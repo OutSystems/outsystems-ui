@@ -12,6 +12,10 @@
 		border-radius: var(--border-radius-none) var(--border-radius-none) var(--border-radius-soft)
 			var(--border-radius-soft);
 	}
+
+	&:only-of-type .section-expandable {
+		border-radius: var(--border-radius-soft);
+	}
 }
 
 .section-expandable {
