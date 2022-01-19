@@ -37,8 +37,8 @@ namespace OSUIFramework.Patterns.Submenu {
 		private _bodyClickCallback(args: string, e: MouseEvent): void {
 			if (this.isBuilt) {
 				if (!this._selfElem.contains(e.target as HTMLElement)) {
-					if (Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen) && !this._isOpen) {
-						Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
+					if (Helper.Dom.Styles.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen) && !this._isOpen) {
+						Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
 					} else if (this._isOpen) {
 						this.close();
 					}
@@ -155,7 +155,7 @@ namespace OSUIFramework.Patterns.Submenu {
 		 * @memberof Submenu
 		 */
 		private _removeActive(): void {
-			Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternActive);
+			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternActive);
 			this._isActive = false;
 		}
 
@@ -165,7 +165,7 @@ namespace OSUIFramework.Patterns.Submenu {
 		 * @memberof Submenu
 		 */
 		private _setActive(): void {
-			Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternActive);
+			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternActive);
 			this._isActive = true;
 		}
 
@@ -214,7 +214,7 @@ namespace OSUIFramework.Patterns.Submenu {
 		 * @memberof Submenu
 		 */
 		protected setA11yProperties(): void {
-			if (Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen)) {
+			if (Helper.Dom.Styles.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen)) {
 				this._isOpen = true;
 			}
 
@@ -261,7 +261,7 @@ namespace OSUIFramework.Patterns.Submenu {
 			);
 
 			// For support reasons, the use case of adding the open class by ExtendedClass on submenu we will add the handler to close all on body click
-			if (Helper.Style.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen)) {
+			if (Helper.Dom.Styles.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen)) {
 				OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
 					OSUIFramework.Event.Type.BodyOnClick,
 					this._globalEventBody
@@ -303,9 +303,9 @@ namespace OSUIFramework.Patterns.Submenu {
 
 			// Add an identifier if the pattern has childs
 			if (this._hasElements) {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternIsDropdown);
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsDropdown);
 			} else {
-				Helper.Style.AddClass(this._submenuLinksElement, Enum.CssClass.PatternIsHidden);
+				Helper.Dom.Styles.AddClass(this._submenuLinksElement, Enum.CssClass.PatternIsHidden);
 			}
 		}
 
@@ -383,7 +383,7 @@ namespace OSUIFramework.Patterns.Submenu {
 		 * @memberof Submenu
 		 */
 		public close(): void {
-			Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
+			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
 
 			this._isOpen = false;
 
@@ -418,7 +418,7 @@ namespace OSUIFramework.Patterns.Submenu {
 		 * @memberof Submenu
 		 */
 		public open(): void {
-			Helper.Style.AddClass(this._selfElem, Enum.CssClass.PatternIsOpen);
+			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsOpen);
 
 			this._submenuHeaderElement.focus();
 

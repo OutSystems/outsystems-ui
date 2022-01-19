@@ -11,26 +11,26 @@ namespace OSUIFramework.Patterns.Progress {
 
 		// Set default Accessibility properties
 		private _setAccessibilityProps(): void {
-			Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.TabIndex, '0');
+			Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.TabIndex, '0');
 
-			Helper.Attribute.Set(
+			Helper.Dom.Attribute.Set(
 				this._selfElem,
 				Constants.A11YAttributes.Role.AttrName,
 				Constants.A11YAttributes.Role.Progressbar
 			);
 
-			Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Label, 'progress');
+			Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Label, 'progress');
 
-			Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.ValueMin, '0');
+			Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.ValueMin, '0');
 
-			Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.ValueMax, '100');
+			Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.ValueMax, '100');
 		}
 
 		// Update valuenow Accessibility property and CssVariable that will be used to set the progress value into pattern
 		protected updateValueNow(progressValue: string): void {
-			Helper.Attribute.Set(this._selfElem, 'aria-valuenow', progressValue);
+			Helper.Dom.Attribute.Set(this._selfElem, 'aria-valuenow', progressValue);
 
-			Helper.Style.SetStyleAttribute(
+			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.ProgressValue,
 				progressValue + GlobalEnum.Units.Percentage

@@ -177,6 +177,26 @@ namespace OSUIFramework.Helper {
 		}
 
 		/**
+		 * Method used to get the border radius value based on shape entity
+		 *
+		 * @param shapeName
+		 * @returns
+		 */
+		public static GetBorderRadiusValueFromShapeType(shapeName: string): string {
+			return getComputedStyle(document.documentElement).getPropertyValue('--border-radius-' + shapeName);
+		}
+
+		/**
+		 * Method used to get the color value based on color entity given color name
+		 *
+		 * @param colorName
+		 * @returns
+		 */
+		public static GetColorValueFromColorType(colorName: string): string {
+			return getComputedStyle(document.documentElement).getPropertyValue('--color-' + colorName);
+		}
+
+		/**
 		 * Returns the CSS classes that a a given element has
 		 *
 		 * @static
@@ -326,6 +346,16 @@ namespace OSUIFramework.Helper {
 					Dom.Attribute.Remove(element, 'disabled');
 				}
 			}
+		}
+
+		/**
+		 * Generate a Random String that could be assigned as a pattern UniqueId
+		 *
+		 * @export
+		 * @return {*}  {string}
+		 */
+		public static GenerateUniqueId(): string {
+			return Math.random().toString(36);
 		}
 
 		/**

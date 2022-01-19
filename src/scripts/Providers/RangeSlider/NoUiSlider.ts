@@ -187,7 +187,7 @@ namespace Providers.RangeSlider {
 		 * @memberof OSUINoUiSlider
 		 */
 		private _setVerticalHeight(): void {
-			OSUIFramework.Helper.Style.SetStyleAttribute(
+			OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				OSUIFramework.Patterns.RangeSlider.Enum.CssProperties.VerticalHeight,
 				this.configs.VerticalHeight + OSUIFramework.GlobalEnum.Units.Pixel

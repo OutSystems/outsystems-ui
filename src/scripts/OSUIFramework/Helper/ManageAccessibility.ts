@@ -205,7 +205,7 @@ namespace OSUIFramework.Helper {
 		 * @memberof A11Y
 		 */
 		public static AriaSelectedFalse(element: HTMLElement): void {
-			Helper.Attribute.Set(element, Constants.A11YAttributes.Aria.Selected, false);
+			Helper.Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Selected, false);
 		}
 
 		/**
@@ -216,7 +216,7 @@ namespace OSUIFramework.Helper {
 		 * @memberof A11Y
 		 */
 		public static AriaSelectedTrue(element: HTMLElement): void {
-			Helper.Attribute.Set(element, Constants.A11YAttributes.Aria.Selected, true);
+			Helper.Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Selected, true);
 		}
 
 		/**
@@ -318,7 +318,11 @@ namespace OSUIFramework.Helper {
 		 * @memberof A11Y
 		 */
 		public static RoleTab(element: HTMLElement): void {
-			Helper.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Tab);
+			Helper.Dom.Attribute.Set(
+				element,
+				Constants.A11YAttributes.Role.AttrName,
+				Constants.A11YAttributes.Role.Tab
+			);
 		}
 
 		/**
@@ -329,7 +333,7 @@ namespace OSUIFramework.Helper {
 		 * @memberof A11Y
 		 */
 		public static RoleTabList(element: HTMLElement): void {
-			Helper.Attribute.Set(
+			Helper.Dom.Attribute.Set(
 				element,
 				Constants.A11YAttributes.Role.AttrName,
 				Constants.A11YAttributes.Role.TabList
@@ -344,7 +348,7 @@ namespace OSUIFramework.Helper {
 		 * @memberof A11Y
 		 */
 		public static RoleTabPanel(element: HTMLElement): void {
-			Helper.Attribute.Set(
+			Helper.Dom.Attribute.Set(
 				element,
 				Constants.A11YAttributes.Role.AttrName,
 				Constants.A11YAttributes.Role.TabPanel
