@@ -12,7 +12,7 @@ The namespaces should follow application directories, this way we should find fi
     |   |   |   ├── Callbacks            # Contains the callbacks signatures of the OutSystems code to be invoked.
     |   |   |   ├── Event                # Contains the classes related with event management.
     |   |   |   ├── Helper               # Contains several classes that isolate behaviors and simplify the code.
-    |   |   |   ├── Interface            # Contains several generic interfaces to be used by different patterns. 
+    |   |   |   ├── Interface            # Contains several generic interfaces to be used by different patterns.
     |   |   |   ├── Pattern              # Contains the code (TS + SCSS partial) of each pattern of OutSystems UI - divided in folders with the pattern name.
     |   |   |   |   ├── Accordion
     |   |   |   |   ├── AccordionItem
@@ -45,9 +45,9 @@ The namespaces should follow application directories, this way we should find fi
     |   |   |   └── OSUI                 # OutSystems UI public APIs.
     |   |   |       ├── Network              # Contains the APIs to return the network type and status.
     |   |   |       ├── Patterns             # Patterns public APIs.
-    |   |   |       ├── Utils                # Useful APIs to be used in OutSystems code module. 
+    |   |   |       ├── Utils                # Useful APIs to be used in OutSystems code module.
     |   |   |       └── GetVersion.ts        # File that contains the API to return the OSUI version.
-    |   |   ├── Providers            # Folder containing provider specific code. 
+    |   |   ├── Providers            # Folder containing provider specific code.
     |   |   |   ├── Carousel             # Contains the providers used by the **Carousel** pattern.
     |   |   |   |   └── Splide               # Splide specific code.
     |   |   |   ├── Datepicker           # Contains the providers used by the **DatePicker** pattern.
@@ -61,5 +61,4 @@ The namespaces should follow application directories, this way we should find fi
     |   |   ├── Global.d.ts          # Used to declare development time variables and imports, that will not be *used* in runtime - for better intellisense in Visual Code.
     |   |   └── osui.ts              # Defines the (old) `osui` API, retrocompatibility, but now invoking the methods correctly organized under `OutSystems.OSUI`.
     |   ├── scss                 # Contains all the SCSS partials that are **not** related with any pattern.
-    |   └── static               # Folder to be removed in the future - contains all the JS used by the (now) Deprecated patterns.
     └── ...
