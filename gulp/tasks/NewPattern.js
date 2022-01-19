@@ -12,7 +12,7 @@ let destFolder = '',
 
 // Create Pattern Interface
 function createIPattern() {
-    return createTemplate(getTemplateSrc('IPattern'), 'I' + this.patternNamePC, getDestFolder('framework'));
+    return createTemplate(getTemplateSrc('IPattern'), 'I' + patternNamePC, getDestFolder('framework'));
 }
 
 // Create Pattern Base
@@ -20,53 +20,53 @@ function createPattern(cb) {
     // Create Pattern.ts
     createTemplate(
         getTemplateSrc('Pattern'), 
-        (this.hasProvider ? 'Abstract' : '') + this.patternNamePC, 
+        (hasProvider ? 'Abstract' : '') + patternNamePC, 
         getDestFolder('framework')
     );
     
     // Files to be added if HasProvider!
-    if(this.hasProvider) {
+    if(hasProvider) {
         // Create PatternFactory.ts
         createTemplate(
-            getTemplateSrc((this.hasMode ? 'Provider_HasMode' : 'Provider') + '/PatternFactory'), 
-            this.patternNamePC + 'Factory', 
+            getTemplateSrc((hasMode ? 'Provider_HasMode' : 'Provider') + '/PatternFactory'), 
+            patternNamePC + 'Factory', 
             getDestFolder('framework')
         );
 
         // Create ProviderEnum.ts
         createTemplate(
-            getTemplateSrc((this.hasMode ? 'Provider_HasMode' : 'Provider') + '/ProviderEnum'), 
-            (this.hasMode ? 'Abstrat' : '') + this.providerNamePC + 'Enum', 
+            getTemplateSrc((hasMode ? 'Provider_HasMode' : 'Provider') + '/ProviderEnum'), 
+            (hasMode ? 'Abstrat' : '') + providerNamePC + 'Enum', 
             getDestFolder('provider')
         );
 
         // Create Provider.ts
         createTemplate(
-            getTemplateSrc((this.hasMode ? 'Provider_HasMode' : 'Provider') + '/Provider'), 
-            (this.hasMode ? 'Abstrat' : '') + this.providerNamePC, 
+            getTemplateSrc((hasMode ? 'Provider_HasMode' : 'Provider') + '/Provider'), 
+            (hasMode ? 'Abstrat' : '') + providerNamePC, 
             getDestFolder('provider')
         );
 
         // Create ProviderConfig.ts
         createTemplate(
-            getTemplateSrc((this.hasMode ? 'Provider_HasMode' : 'Provider') + '/ProviderConfig'), 
-            (this.hasMode ? 'Abstrat' : '') + this.providerNamePC + 'Config', 
+            getTemplateSrc((hasMode ? 'Provider_HasMode' : 'Provider') + '/ProviderConfig'), 
+            (hasMode ? 'Abstrat' : '') + providerNamePC + 'Config', 
             getDestFolder('provider')
         );
 
         // Files to be added if HasMode!
-        if(this.hasMode) {
+        if(hasMode) {
             // Create ProviderFactory.ts
             createTemplate(
                 getTemplateSrc('Provider_HasMode/ProviderFactory'), 
-                this.providerNamePC + 'Factory', 
+                providerNamePC + 'Factory', 
                 getDestFolder('provider')
             );
 
             // Create IProvider.ts
             createTemplate(
                 getTemplateSrc('Provider_HasMode/IProvider'), 
-                'I' + this.providerNamePC, 
+                'I' + providerNamePC, 
                 getDestFolder('provider')
             );
 
@@ -80,14 +80,14 @@ function createPattern(cb) {
             // Create ProviderMode.ts
             createTemplate(
                 getTemplateSrc('Provider_HasMode/ProviderMode'), 
-                this.providerNamePC + this.modeNamePC,
+                providerNamePC + modeNamePC,
                 getDestFolder('providerHasMode')
             );
             
             // Create ProviderModeConfig.ts
             createTemplate(
                 getTemplateSrc('Provider_HasMode/ProviderModeConfig'), 
-                this.providerNamePC + this.modeNamePC + 'Config',
+                providerNamePC + modeNamePC + 'Config',
                 getDestFolder('providerHasMode')
             );
         }   
@@ -97,15 +97,15 @@ function createPattern(cb) {
 }
 
 // Create PatternAPI.ts
-function createPatternAPI() {    
-    return createTemplate(getTemplateSrc('PatternAPI'), this.patternNamePC+'API', getDestFolder('api'));
+function createPatternAPI() {
+    return createTemplate(getTemplateSrc('PatternAPI'), patternNamePC+'API', getDestFolder('api'));
 }
 
 // Create PatternConfig.ts
 function createPatternConfig() {
     return createTemplate(
                 getTemplateSrc('PatternConfig'),
-                (this.hasProvider ? 'Abstract' : '') + this.patternNamePC + 'Config', 
+                (hasProvider ? 'Abstract' : '') + patternNamePC + 'Config', 
                 getDestFolder('framework')
             );
 }
@@ -120,21 +120,21 @@ function createScss(cb) {
     // Create _pattern.scss
     createTemplate(
         getTemplateSrc('scss/_pattern'), 
-        '_'+this.patternNameLC,
+        '_'+patternNameLC,
         getDestFolder('framework')+'/scss'
     );
 
     // Files to be added if HasProvider!
-    if(this.hasProvider) {
+    if(hasProvider) {
         createTemplate(
             getTemplateSrc('scss/_provider-lib'), 
-            '_'+this.providerNameLC+'-lib',
+            '_'+providerNameLC+'-lib',
             getDestFolder('provider')+'/scss'
         );
 
         createTemplate(
             getTemplateSrc('scss/_provider'), 
-            '_'+this.providerNameLC,
+            '_'+providerNameLC,
             getDestFolder('provider')+'/scss'
         );
     }
@@ -146,14 +146,14 @@ function createScss(cb) {
 function createTemplate(templaceSrc, renameTo, destFolder) {
     return gulp.src(templaceSrc)
         .pipe(template({
-            modeName: this.modeName,
-            modeNamePC: this.modeNamePC,
-            patternName: this.patternName,
-            patternNameLC: this.patternNameLC,
-            patternNamePC: this.patternNamePC,
-            providerName: this.providerName,
-            providerNameLC: this.providerNameLC,
-            providerNamePC: this.providerNamePC
+            modeName: modeName,
+            modeNamePC: modeNamePC,
+            patternName: patternName,
+            patternNameLC: patternNameLC,
+            patternNamePC: patternNamePC,
+            providerName: providerName,
+            providerNameLC: providerNameLC,
+            providerNamePC: providerNamePC
         }))
         .pipe(rename({
             basename: renameTo
@@ -167,24 +167,24 @@ function getDestFolder(templateType) {
     
     switch (templateType) {
         case 'api':
-            destSrc = this.destFolder === undefined ? 
+            destSrc = destFolder === undefined ? 
                 './src/scripts/OutSystems/OSUI/Patterns/' : 
-                this.destFolder;
+                destFolder;
             break;
         case 'framework':
-            destSrc = this.destFolder === undefined ? 
-                './src/scripts/OSUIFramework/Pattern/'+this.patternNamePC :
-                this.destFolder+'/Pattern/'+this.patternNamePC;
+            destSrc = destFolder === undefined ? 
+                './src/scripts/OSUIFramework/Pattern/'+patternNamePC :
+                destFolder+'/Pattern/'+patternNamePC;
             break;
         case 'provider':
-            destSrc = this.destFolder === undefined ? 
-                './src/scripts/Providers/'+this.patternNamePC+'/'+this.providerNamePC : 
-                this.destFolder+'/Providers/'+this.patternNamePC+'/'+this.providerNamePC;
+            destSrc = destFolder === undefined ? 
+                './src/scripts/Providers/'+patternNamePC+'/'+providerNamePC : 
+                destFolder+'/Providers/'+patternNamePC+'/'+providerNamePC;
             break;
         case 'providerHasMode':
-            destSrc = this.destFolder === undefined ? 
-                './src/scripts/Providers/' + this.patternNamePC+'/'+this.providerNamePC+'/'+this.modeNamePC : 
-                this.destFolder+'/Providers/'+this.patternNamePC+'/'+this.providerNamePC+'/'+this.modeNamePC
+            destSrc = destFolder === undefined ? 
+                './src/scripts/Providers/' + patternNamePC+'/'+providerNamePC+'/'+modeNamePC : 
+                destFolder+'/Providers/'+patternNamePC+'/'+providerNamePC+'/'+modeNamePC
             break;
 
     }
@@ -197,11 +197,11 @@ function getTemplateSrc(templateName) {
     let templateSrc;
 
     if(templateName === 'PatternAPI') {
-        templateSrc = './gulp/templates/PatternAPI' + (this.hasProvider ? '_HasProvider' : '') +'.ts';
+        templateSrc = './gulp/templates/PatternAPI' + (hasProvider ? '_HasProvider' : '') +'.ts';
     }
     else {
         templateSrc = './gulp/templates/PatternFramework' + 
-                            (this.hasProvider ? '_HasProvider' : '') +'/'+ 
+                            (hasProvider ? '_HasProvider' : '') +'/'+ 
                             templateName + 
                             (templateName.indexOf('scss/') === -1 ? '.ts' : '.scss'); 
     }
@@ -212,12 +212,12 @@ function getTemplateSrc(templateName) {
 // Show info as final notes!
 function finalNotes(cb) {
     console.log('-----------------------------------------------------------------------------------\n');
-    console.log('   Created new "'+ this.patternNamePC +'" Pattern'+(this.hasProvider ? "," : "!"));
-    if(this.hasProvider){
-        console.log('   with "'+ this.providerNamePC +'" as a Provider'+(this.hasMode ? "," : "!"));
+    console.log('   Created new "'+ patternNamePC +'" Pattern'+(hasProvider ? "," : "!"));
+    if(hasProvider){
+        console.log('   with "'+ providerNamePC +'" as a Provider'+(hasMode ? "," : "!"));
 
-        if(this.hasMode){
-            console.log('   and "'+ this.modeNamePC +'" as a Mode!');
+        if(hasMode){
+            console.log('   and "'+ modeNamePC +'" as a Mode!');
         }
     }
     console.log('\n   NOTE:');
@@ -227,70 +227,68 @@ function finalNotes(cb) {
 }
 
 // Prepare info to create new pattern
-function setPatternConfig(cb) {
-    gulp.src('gulp/templates/PatternAPI.ts')
-        .pipe(confirm({
-            question: 'Pattern Name? (do not forget to use camelCase)',
-            proceed: function(answer) {
-                if(/[^a-zA-Z]/.test(answer)){
-                    cb(new Error('Pattern name must contain only letters without spaces!'));
-                }
+function setPatternConfig() {
+    return gulp.src('gulp/templates/PatternAPI.ts')
+            .pipe(confirm({
+                question: 'Pattern Name? (do not forget to use camelCase)',
+                proceed: function(answer) {
+                    if(/[^a-zA-Z]/.test(answer)){
+                        cb(new Error('Pattern name must contain only letters without spaces!'));
+                    }
 
-                this.patternName = answer[0].toLowerCase() + answer.substring(1, answer.length);
-                this.patternNameLC = answer.toLowerCase();
-                this.patternNamePC = answer[0].toUpperCase() + answer.substring(1, answer.length);
-                return true;
-            }
-        }))
-        .pipe(confirm({
-            question: 'Provider? Give it a name (camelCase), or hit ENTER',
-            proceed: function(answer) {
-                if(/[^a-zA-Z]/.test(answer)){
-                    cb(new Error('Provider name must contain only letters without spaces!'));
-                }
-                else if(!/\S+/.test(answer)) {
+                    patternName = answer[0].toLowerCase() + answer.substring(1, answer.length);
+                    patternNameLC = answer.toLowerCase();
+                    patternNamePC = answer[0].toUpperCase() + answer.substring(1, answer.length);
                     return true;
                 }
+            }))
+            .pipe(confirm({
+                question: 'Provider? Give it a name (camelCase), or hit ENTER',
+                proceed: function(answer) {
+                    if(/[^a-zA-Z]/.test(answer)){
+                        cb(new Error('Provider name must contain only letters without spaces!'));
+                    }
+                    else if(!/\S+/.test(answer)) {
+                        return true;
+                    }
 
-                this.hasProvider = true;
-                this.providerName = answer[0].toLowerCase() + answer.substring(1, answer.length);
-                this.providerNameLC = answer.toLowerCase();
-                this.providerNamePC = answer[0].toUpperCase() + answer.substring(1, answer.length);
-                return true;
-            }
-        }))
-        .pipe(confirm({
-            question: 'Mode? Give it a name (camelCase), or hit ENTER',
-            proceed: function(answer) {
-                if(/[^a-zA-Z]/.test(answer)){
-                    cb(new Error('Mode name must contain only letters without spaces!'));
-                }
-                else if(!/\S+/.test(answer)) {
+                    hasProvider = true;
+                    providerName = answer[0].toLowerCase() + answer.substring(1, answer.length);
+                    providerNameLC = answer.toLowerCase();
+                    providerNamePC = answer[0].toUpperCase() + answer.substring(1, answer.length);
                     return true;
                 }
+            }))
+            .pipe(confirm({
+                question: 'Mode? Give it a name (camelCase), or hit ENTER',
+                proceed: function(answer) {
+                    if(/[^a-zA-Z]/.test(answer)){
+                        cb(new Error('Mode name must contain only letters without spaces!'));
+                    }
+                    else if(!/\S+/.test(answer)) {
+                        return true;
+                    }
 
-                this.hasMode = true;
-                this.modeName = answer[0].toLowerCase() + answer.substring(1, answer.length);
-                this.modeNamePC = answer[0].toUpperCase() + answer.substring(1, answer.length);
-                return true;
-            }
-        }))
-        .pipe(confirm({
-            question: 'Custom destination Folder? Type folder source name, or hit ENTER',
-            proceed: function(answer) {
-                if(/[^A-Za-z/]/.test(answer)){
-                    cb(new Error('Destination src can not contain spaces and special chars (except "/")!'));
-                }
-                if(answer === '') {
+                    hasMode = true;
+                    modeName = answer[0].toLowerCase() + answer.substring(1, answer.length);
+                    modeNamePC = answer[0].toUpperCase() + answer.substring(1, answer.length);
                     return true;
                 }
+            }))
+            .pipe(confirm({
+                question: 'Custom destination Folder? Type folder source name, or hit ENTER',
+                proceed: function(answer) {
+                    if(/[^A-Za-z/]/.test(answer)){
+                        cb(new Error('Destination src can not contain spaces and special chars (except "/")!'));
+                    }
+                    if(answer === '') {
+                        return true;
+                    }
 
-                this.destFolder = answer;
-                return true;
-            }
-        }))
-
-    cb();
+                    destFolder = answer;
+                    return true;
+                }
+            }))
 }
 
 // Create new Pattern task

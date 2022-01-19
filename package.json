@@ -4,11 +4,11 @@
 	"description": "OutSystems UI Base Theme",
 	"scripts": {
 		"build": "NODE_ENV='prod' gulp createProduction",
+		"create-pattern": "gulp newPattern",
 		"dev": "NODE_ENV='dev' gulp startDevelopment",
 		"lint": "eslint . --ext .ts",
 		"lintfix": "eslint . --fix --ext .ts",
-		"new-pattern": "gulp newPattern",
-		"setup": "NODE_ENV='dev' npm i && npm run dev",
+		"setup": "NODE_ENV='dev' npm i && npm run dev"
 	},
 	"author": "OutSystems UI Team",
 	"devDependencies": {
