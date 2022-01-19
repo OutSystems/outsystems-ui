@@ -1,1 +1,0 @@
-$parameters.CarouselObj.updateCarousel();
