@@ -140,7 +140,7 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		 */
 		public removeActiveElement(): void {
 			if (this._selfElem) {
-				Helper.Style.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
 				this._isActive = false;
 				this.setA11YProperties();
 			}
@@ -153,7 +153,7 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		 */
 		public setActiveElement(): void {
 			if (this._selfElem) {
-				Helper.Style.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
+				Helper.Dom.Styles.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
 				this._isActive = true;
 				this.setA11YProperties();
 			}
@@ -176,7 +176,7 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		 * @memberof TabsHeaderItem
 		 */
 		public setDataTab(dataTab: number): void {
-			Helper.Attribute.Set(this._selfElem, Tabs.Enum.Attributes.DataTab, dataTab.toString());
+			Helper.Dom.Attribute.Set(this._selfElem, Tabs.Enum.Attributes.DataTab, dataTab.toString());
 			this._dataTab = dataTab;
 		}
 

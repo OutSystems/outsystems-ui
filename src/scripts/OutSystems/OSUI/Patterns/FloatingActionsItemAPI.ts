@@ -17,7 +17,7 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 			floatingActions = FloatingActionsAPI.GetFloatingActionsById(_floatingActionsMap.get(floatingActionsItemId));
 		} else {
 			// Try to find its reference on DOM
-			const elem = OSUIFramework.Helper.GetElementByUniqueId(floatingActionsItemId);
+			const elem = OSUIFramework.Helper.Dom.GetElementByUniqueId(floatingActionsItemId);
 			const floating = elem.closest(OSUIFramework.Patterns.FloatingActions.Enum.CssClasses.FloatingActionWrapper);
 
 			if (!floating) {

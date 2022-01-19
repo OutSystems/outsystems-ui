@@ -47,8 +47,8 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		private _animateEntranceEnd(): void {
 			this._progressSvgElem.removeEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._animateEntranceEnd);
 
-			Helper.Style.RemoveClass(this._progressSvgElem, ProgressEnum.CssClass.AddInitialAnimation);
-			Helper.Style.RemoveClass(this._progressSvgElem, ProgressEnum.CssClass.AnimateProgressChange);
+			Helper.Dom.Styles.RemoveClass(this._progressSvgElem, ProgressEnum.CssClass.AddInitialAnimation);
+			Helper.Dom.Styles.RemoveClass(this._progressSvgElem, ProgressEnum.CssClass.AnimateProgressChange);
 
 			// Check if the resizeOberver does not exist yet!
 			if (!this._resizeObserver) {
@@ -73,7 +73,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			}
 
 			// Set the css variable to
-			Helper.Style.SetStyleAttribute(
+			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				Enum.InlineStyleProp.CircleSize,
 				this._circletSize + GlobalEnum.Units.Pixel
@@ -86,13 +86,17 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			this._strokeDashoffset = this._strokeDasharray = this._circleCircumference;
 
 			// Set the css variables that will be used at ProgressCircle
-			Helper.Style.SetStyleAttribute(
+			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				Enum.InlineStyleProp.CircleRadius,
 				_radius + GlobalEnum.Units.Pixel
 			);
-			Helper.Style.SetStyleAttribute(this._selfElem, Enum.InlineStyleProp.StrokeDasharray, this._strokeDasharray);
-			Helper.Style.SetStyleAttribute(
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				Enum.InlineStyleProp.StrokeDasharray,
+				this._strokeDasharray
+			);
+			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				Enum.InlineStyleProp.StrokeDashoffset,
 				this._strokeDashoffset
@@ -108,19 +112,19 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 
 		// Set the default inline css variables
 		private _setCssVariables(): void {
-			Helper.Style.SetStyleAttribute(
+			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.Thickness,
 				this._configs.Thickness + GlobalEnum.Units.Pixel
 			);
 
-			Helper.Style.SetStyleAttribute(
+			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.ProgressColor,
-				Helper.Style.GetColorValueFromColorType(this._configs.ProgressColor)
+				Helper.Dom.Styles.GetColorValueFromColorType(this._configs.ProgressColor)
 			);
 
-			Helper.Style.SetStyleAttribute(
+			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.Shape,
 				this._configs.Shape === GlobalEnum.ShapeTypes.Sharp
@@ -128,10 +132,10 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 					: ProgressEnum.ShapeTypes.Round
 			);
 
-			Helper.Style.SetStyleAttribute(
+			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.TrailColor,
-				Helper.Style.GetColorValueFromColorType(this._configs.TrailColor)
+				Helper.Dom.Styles.GetColorValueFromColorType(this._configs.TrailColor)
 			);
 		}
 
@@ -166,7 +170,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			this._strokeDashoffset =
 				this._circleCircumference - (this._configs.Progress / 100) * this._circleCircumference;
 
-			Helper.Style.SetStyleAttribute(
+			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				Enum.InlineStyleProp.StrokeDashoffset,
 				this._strokeDashoffset
@@ -178,7 +182,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			// Check if the animation at init should be added
 			if (this._configs.AnimateInitialProgress) {
 				// Do the initial animation
-				Helper.Style.AddClass(this._progressSvgElem, ProgressEnum.CssClass.AddInitialAnimation);
+				Helper.Dom.Styles.AddClass(this._progressSvgElem, ProgressEnum.CssClass.AddInitialAnimation);
 
 				// Add the event to remove the cssClass responsible to add the initial animation
 				this._progressSvgElem.addEventListener(
@@ -214,7 +218,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 
 					this._updateCircleProps();
 
-					Helper.Style.SetStyleAttribute(
+					Helper.Dom.Styles.SetStyleAttribute(
 						this._selfElem,
 						ProgressEnum.InlineStyleProp.Thickness,
 						propertyValue + GlobalEnum.Units.Pixel
@@ -233,7 +237,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 					this._configs.Progress = propertyValue;
 
 					// Do the transition animation
-					Helper.Style.AddClass(this._progressSvgElem, ProgressEnum.CssClass.AnimateProgressChange);
+					Helper.Dom.Styles.AddClass(this._progressSvgElem, ProgressEnum.CssClass.AnimateProgressChange);
 
 					// Add the event that will remove the responsible cssClass that added animation
 					this._progressSvgElem.addEventListener(
@@ -248,10 +252,10 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 				case ProgressEnum.Properties.ProgressColor:
 					this._configs.ProgressColor = propertyValue;
 
-					Helper.Style.SetStyleAttribute(
+					Helper.Dom.Styles.SetStyleAttribute(
 						this._selfElem,
 						ProgressEnum.InlineStyleProp.ProgressColor,
-						Helper.Style.GetColorValueFromColorType(this._configs.ProgressColor)
+						Helper.Dom.Styles.GetColorValueFromColorType(this._configs.ProgressColor)
 					);
 
 					break;
@@ -259,7 +263,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 				case ProgressEnum.Properties.Shape:
 					this._configs.Shape = propertyValue;
 
-					Helper.Style.SetStyleAttribute(
+					Helper.Dom.Styles.SetStyleAttribute(
 						this._selfElem,
 						ProgressEnum.InlineStyleProp.Shape,
 						this._configs.Shape === GlobalEnum.ShapeTypes.Sharp
@@ -272,10 +276,10 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 				case ProgressEnum.Properties.TrailColor:
 					this._configs.TrailColor = propertyValue;
 
-					Helper.Style.SetStyleAttribute(
+					Helper.Dom.Styles.SetStyleAttribute(
 						this._selfElem,
 						ProgressEnum.InlineStyleProp.TrailColor,
-						Helper.Style.GetColorValueFromColorType(this._configs.TrailColor)
+						Helper.Dom.Styles.GetColorValueFromColorType(this._configs.TrailColor)
 					);
 
 					break;

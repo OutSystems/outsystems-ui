@@ -74,7 +74,7 @@ namespace Providers.Splide {
 				else transform += extraSpace;
 
 				// Adjust the Transform property correctly
-				OSUIFramework.Helper.Style.SetStyleAttribute(
+				OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
 					SplideList,
 					OSUIFramework.Patterns.Carousel.Enum.Properties.Transform,
 					'translateX(' + transform + OSUIFramework.GlobalEnum.Units.Pixel + ')'
@@ -171,7 +171,7 @@ namespace Providers.Splide {
 		// Ensure that the splide track maintains the correct width
 		private _setCarouselWidth(splideAdjusted = true): void {
 			OSUIFramework.Helper.AsyncInvocation(() => {
-				OSUIFramework.Helper.Style.SetStyleAttribute(
+				OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
 					this._splideTrack,
 					OSUIFramework.Patterns.Carousel.Enum.CssVariables.CarouselWidth,
 					this._selfElem.offsetWidth + OSUIFramework.GlobalEnum.Units.Pixel
@@ -198,13 +198,13 @@ namespace Providers.Splide {
 			// If using Carousel with a List, get one level below on the HTML, so that the List element is used on the structure expected by the library
 			// In this case, the osui-carousel won't be used, and the library will be mounted on the osui-carousel_track
 			if (this._hasList) {
-				OSUIFramework.Helper.Style.AddClass(this._splideTrack, Enum.CssClass.SplideWrapper);
-				OSUIFramework.Helper.Style.AddClass(this._placeholder, Enum.CssClass.SplideTrack);
-				OSUIFramework.Helper.Style.AddClass(this._listWidget, Enum.CssClass.SplideList);
+				OSUIFramework.Helper.Dom.Styles.AddClass(this._splideTrack, Enum.CssClass.SplideWrapper);
+				OSUIFramework.Helper.Dom.Styles.AddClass(this._placeholder, Enum.CssClass.SplideTrack);
+				OSUIFramework.Helper.Dom.Styles.AddClass(this._listWidget, Enum.CssClass.SplideList);
 			} else {
-				OSUIFramework.Helper.Style.AddClass(this._selfElem, Enum.CssClass.SplideWrapper);
-				OSUIFramework.Helper.Style.AddClass(this._splideTrack, Enum.CssClass.SplideTrack);
-				OSUIFramework.Helper.Style.AddClass(this._placeholder, Enum.CssClass.SplideList);
+				OSUIFramework.Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.SplideWrapper);
+				OSUIFramework.Helper.Dom.Styles.AddClass(this._splideTrack, Enum.CssClass.SplideTrack);
+				OSUIFramework.Helper.Dom.Styles.AddClass(this._placeholder, Enum.CssClass.SplideList);
 			}
 		}
 

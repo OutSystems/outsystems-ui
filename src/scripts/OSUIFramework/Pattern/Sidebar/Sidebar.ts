@@ -78,7 +78,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._isOpen = false;
 
 			if (this.isBuilt) {
-				Helper.Style.RemoveClass(this._selfElem, Enum.CssClass.IsOpen);
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsOpen);
 				Helper.A11Y.TabIndexFalse(this._selfElem);
 				Helper.A11Y.AriaHiddenTrue(this._selfElem);
 
@@ -100,7 +100,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		 * @memberof Sidebar
 		 */
 		private _openSidebar() {
-			Helper.Style.AddClass(this._selfElem, Enum.CssClass.IsOpen);
+			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsOpen);
 			Helper.A11Y.TabIndexTrue(this._selfElem);
 			Helper.A11Y.AriaHiddenFalse(this._selfElem);
 
@@ -221,7 +221,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			const newOpacity = Math.floor(percentage) / 100;
 
 			if (currentOpacity !== newOpacity && newOpacity % 1 !== 0) {
-				Helper.Style.SetStyleAttribute(this._selfElem, '--overlay-opacity', newOpacity);
+				Helper.Dom.Styles.SetStyleAttribute(this._selfElem, '--overlay-opacity', newOpacity);
 			}
 		}
 
@@ -466,7 +466,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._isMoving = false;
 
 			// Remove transitions
-			Helper.Style.RemoveClass(this._selfElem, Constants.NoTransition);
+			Helper.Dom.Styles.RemoveClass(this._selfElem, Constants.NoTransition);
 
 			// Just clicked or swiped in invalid direction?
 			if ((offsetX === 0 && offsetY === 0) || this._nativeGesturesParams.InvalidX) {
@@ -496,7 +496,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 
 			if (this.configs.HasOverlay) {
-				Helper.Style.SetStyleAttribute(this._selfElem, '--overlay-opacity', 0);
+				Helper.Dom.Styles.SetStyleAttribute(this._selfElem, '--overlay-opacity', 0);
 			}
 		}
 
