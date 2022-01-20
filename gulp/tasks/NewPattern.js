@@ -167,22 +167,22 @@ function getDestFolder(templateType) {
     
     switch (templateType) {
         case 'api':
-            destSrc = destFolder === undefined ? 
+            destSrc = destFolder === '' ? 
                 './src/scripts/OutSystems/OSUI/Patterns/' : 
                 destFolder;
             break;
         case 'framework':
-            destSrc = destFolder === undefined ? 
+            destSrc = destFolder === '' ? 
                 './src/scripts/OSUIFramework/Pattern/'+patternNamePC :
                 destFolder+'/Pattern/'+patternNamePC;
             break;
         case 'provider':
-            destSrc = destFolder === undefined ? 
+            destSrc = destFolder === '' ? 
                 './src/scripts/Providers/'+patternNamePC+'/'+providerNamePC : 
                 destFolder+'/Providers/'+patternNamePC+'/'+providerNamePC;
             break;
         case 'providerHasMode':
-            destSrc = destFolder === undefined ? 
+            destSrc = destFolder === '' ? 
                 './src/scripts/Providers/' + patternNamePC+'/'+providerNamePC+'/'+modeNamePC : 
                 destFolder+'/Providers/'+patternNamePC+'/'+providerNamePC+'/'+modeNamePC
             break;
