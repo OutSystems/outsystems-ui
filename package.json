@@ -8,6 +8,7 @@
 		"dev": "NODE_ENV='dev' gulp startDevelopment",
 		"lint": "eslint . --ext .ts",
 		"lintfix": "eslint . --fix --ext .ts",
+		"prettier": "prettier --config ./.prettierrc.json --write \"**/*.+(js|ts|css)\"",
 		"setup": "NODE_ENV='dev' npm i && npm run dev"
 	},
 	"author": "OutSystems UI Team",
