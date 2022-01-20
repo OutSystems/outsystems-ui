@@ -243,7 +243,7 @@ function setPatternConfig() {
                 }
             }))
             .pipe(confirm({
-                question: 'Provider? Give it a name (camelCase), or hit ENTER',
+                question: 'Provider? Give it a name (camelCase), or hit ENTER to skip',
                 proceed: function(answer) {
                     if(/[^a-zA-Z]/.test(answer)){
                         cb(new Error('Provider name must contain only letters without spaces!'));
@@ -260,7 +260,7 @@ function setPatternConfig() {
                 }
             }))
             .pipe(confirm({
-                question: 'Mode? Give it a name (camelCase), or hit ENTER',
+                question: 'Mode? Give it a name (camelCase), or hit ENTER to skip',
                 proceed: function(answer) {
                     if(/[^a-zA-Z]/.test(answer)){
                         cb(new Error('Mode name must contain only letters without spaces!'));
@@ -276,7 +276,7 @@ function setPatternConfig() {
                 }
             }))
             .pipe(confirm({
-                question: 'Custom destination Folder? Type folder source name, or hit ENTER',
+                question: 'Custom destination Folder? Type folder source name, or hit ENTER to skip',
                 proceed: function(answer) {
                     if(/[^A-Za-z/]/.test(answer)){
                         cb(new Error('Destination src can not contain spaces and special chars (except "/")!'));
