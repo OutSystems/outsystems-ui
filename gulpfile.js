@@ -47,7 +47,8 @@ exports.startDevelopment = series(
 
 exports.createProduction = series(
     cleanOldFiles,
-    parallel(cssTranspile.transpile, tsTranspile.transpile)
+    cssTranspile.transpile,
+    tsTranspile.transpile
 );
 
 exports.newPattern = pattern.create;

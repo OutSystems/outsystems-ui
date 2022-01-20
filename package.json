@@ -3,7 +3,7 @@
 	"version": "2.8.0",
 	"description": "OutSystems UI Base Theme",
 	"scripts": {
-		"build": "NODE_ENV='prod' gulp createProduction",
+		"build": "NODE_ENV='prod' gulp createProduction && npm run lint",
 		"create-pattern": "gulp newPattern",
 		"dev": "NODE_ENV='dev' gulp startDevelopment",
 		"lint": "eslint . --ext .ts",
@@ -41,7 +41,7 @@
 		"stylelint-config-prettier": "^8.0.2",
 		"stylelint-order": "^4.1.0",
 		"stylelint": "^13.12.0",
-		"typescript": "^4.5.4",
+		"typescript": "^4.5.0",
 		"virtual-select-plugin": "^1.0.19"
 	},
 	"dependencies": {}

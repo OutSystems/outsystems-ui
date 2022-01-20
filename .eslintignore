@@ -4,6 +4,8 @@ custom-scripts
 node_modules
 # don't lint build output (make sure it's set to your correct build folder name)
 dist
+# don't ever lint gulp
+gulp
 # don't lint libraries
 src/libraries/**
 src/static/**
