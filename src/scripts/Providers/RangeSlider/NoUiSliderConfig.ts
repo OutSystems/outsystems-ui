@@ -26,6 +26,7 @@ namespace Providers.RangeSlider {
 			return providerOptions;
 		}
 
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		public getRangeConfig(): any {
 			return {
 				min: this.MinValue,
