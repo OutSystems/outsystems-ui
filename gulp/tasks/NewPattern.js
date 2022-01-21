@@ -26,6 +26,13 @@ function createPattern(cb) {
     
     // Files to be added if HasProvider!
     if(hasProvider) {
+        // Create README.md
+        createTemplate(
+            getTemplateSrc('ProviderReadMe'), 
+            'README', 
+            getDestFolder('provider')
+        );
+
         // Create PatternFactory.ts
         createTemplate(
             getTemplateSrc((hasMode ? 'Provider_HasMode' : 'Provider') + '/PatternFactory'), 
@@ -143,7 +150,7 @@ function createScss(cb) {
 }
 
 // Create file based on given template
-function createTemplate(templaceSrc, renameTo, destFolder) {
+function createTemplate(templaceSrc, renameTo, addToFolder) {
     return gulp.src(templaceSrc)
         .pipe(template({
             modeName: modeName,
@@ -158,7 +165,7 @@ function createTemplate(templaceSrc, renameTo, destFolder) {
         .pipe(rename({
             basename: renameTo
         }))
-        .pipe(gulp.dest(destFolder));
+        .pipe(gulp.dest(addToFolder));
 }
 
 // Get the destination folder based on a templateType
@@ -196,11 +203,15 @@ function getDestFolder(templateType) {
 function getTemplateSrc(templateName) {
     let templateSrc;
 
-    if(templateName === 'PatternAPI') {
-        templateSrc = './gulp/templates/PatternAPI' + (hasProvider ? '_HasProvider' : '') +'.ts';
-    }
-    else {
-        templateSrc = './gulp/templates/PatternFramework' + 
+    switch (templateName) {
+        case 'PatternAPI':
+            templateSrc = './gulp/templates/PatternAPI' + (hasProvider ? '_HasProvider' : '') +'.ts';
+            break;
+        case 'ProviderReadMe':
+            templateSrc = './gulp/templates/PatternFramework_HasProvider/ProviderReadMe.md';
+            break;
+        default:
+            templateSrc = './gulp/templates/PatternFramework' + 
                             (hasProvider ? '_HasProvider' : '') +'/'+ 
                             templateName + 
                             (templateName.indexOf('scss/') === -1 ? '.ts' : '.scss'); 
