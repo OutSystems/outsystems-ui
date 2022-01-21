@@ -1,6 +1,14 @@
-## About this Gulp Folder
+# Gulp · ![Gulp CLI version](https://img.shields.io/badge/gulp--cli-v2.3.0-informational) ![Gulp Local version](https://img.shields.io/badge/gulp--local-v4.0.2-informational)
 
-This folder contains:
+<p align="center">
+  <a href="https://gulpjs.com">
+    <img height="113" width="50" src="https://raw.githubusercontent.com/gulpjs/artwork/master/gulp-2x.png">
+  </a>
+  <p align="center">Our streaming build system</p>
+</p>
+
+
+## This folder contains:
 
 <ul>
     <li>
@@ -14,9 +22,9 @@ This folder contains:
     <li>Templates used to automagically create new pattern:</li>
 </ul>
 
-## Folder Structure
+## Project Structure
 
-Bellow there is some comments about the project structure where this folder is better explained.
+Bellow there is some comments about the application structure.
 
 <strong>DatePicker</strong> with <strong>Flatpickr</strong> as a Provider and <strong>SingleDate</strong> as Mode will be in use at comments as an example.
 
@@ -61,6 +69,7 @@ Bellow there is some comments about the project structure where this folder is b
     |   |   |   |   ├── ProviderMode.ts             # Used to create FlatpickrSingleDate.ts that will be added to './.../Providers/DatePicker/Flatpickr/SingleDate/'
     |   |   |   |   ├── ProviderModeConfig.ts       # Used to create FlatpickrSingleDateConfig.ts that will be added to './.../Providers/DatePicker/Flatpickr/SingleDate/'
     |   |   |   |   ├── ProviderModeEnum.ts         # Used to create Enum.ts that will be added to './.../Providers/DatePicker/Flatpickr/SingleDate/'
+    |   |   |   |   ├── ProviderReadMe.md           # Used to create README.md that will be added to './.../Providers/DatePicker/Flatpickr/'
     |   |   |   |
     |   |   |   ├── scss
     |   |   |   |   ├── _pattern.scss               # Used to create _datepicker.scss
@@ -71,5 +80,5 @@ Bellow there is some comments about the project structure where this folder is b
     |   |   |   ├── Pattern.ts                      # Used to create AbstractDatePicker.ts
     |   |   |   ├── PatternConfig.ts                # Used to create AbstractDatePickerConfig.ts
     |   |   |   ├── PatternEnum.ts                  # Used to create AbstractDatePickerEnum.ts
-    |   |
+    |
     ├── ...
