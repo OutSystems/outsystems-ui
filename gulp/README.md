@@ -80,5 +80,5 @@ Bellow there is some comments about the application structure.
     |   |   |   ├── Pattern.ts                      # Used to create AbstractDatePicker.ts
     |   |   |   ├── PatternConfig.ts                # Used to create AbstractDatePickerConfig.ts
     |   |   |   ├── PatternEnum.ts                  # Used to create AbstractDatePickerEnum.ts
-    |   |
+    |
     ├── ...
