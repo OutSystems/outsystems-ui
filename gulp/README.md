@@ -1,4 +1,4 @@
-## About this Gulp Folder
+## About this Gulp Folder · ![Gulp CLI version](https://img.shields.io/badge/gulp--cli-v2.3.0-informational) ![Gulp Local version](https://img.shields.io/badge/gulp--local-v4.0.2-informational)
 
 This folder contains:
 
