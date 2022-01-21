@@ -69,6 +69,7 @@ Bellow there is some comments about the application structure.
     |   |   |   |   ├── ProviderMode.ts             # Used to create FlatpickrSingleDate.ts that will be added to './.../Providers/DatePicker/Flatpickr/SingleDate/'
     |   |   |   |   ├── ProviderModeConfig.ts       # Used to create FlatpickrSingleDateConfig.ts that will be added to './.../Providers/DatePicker/Flatpickr/SingleDate/'
     |   |   |   |   ├── ProviderModeEnum.ts         # Used to create Enum.ts that will be added to './.../Providers/DatePicker/Flatpickr/SingleDate/'
+    |   |   |   |   ├── ProviderReadMe.md           # Used to create README.md that will be added to './.../Providers/DatePicker/Flatpickr/'
     |   |   |   |
     |   |   |   ├── scss
     |   |   |   |   ├── _pattern.scss               # Used to create _datepicker.scss
