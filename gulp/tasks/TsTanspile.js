@@ -6,16 +6,25 @@ const ts = require('gulp-typescript');
 const envType = {'development':'dev', 'production':'prod'};
 const distFolder = './dist';
 
-const tsProject = ts.createProject('tsconfig.json', {
-                        outDir: distFolder,
-                        outFile: process.env.NODE_ENV + '-outsystems-ui.js',
-                    });
+// Set as Development Mode
+function tsTranspileDev() {
+    return tsTranspile(envType.development);
+}
+
+// Set as Production Mode
+function tsTranspileProd() {
+    return tsTranspile(envType.production);
+}
 
 // Compile TypeScript
-function tsTranspile() {
+function tsTranspile(envMode) {
     let tsResult;
+    let tsProject = ts.createProject('tsconfig.json', {
+        outDir: distFolder,
+        outFile: envMode + '-outsystems-ui.js',
+    });
 
-    if(process.env.NODE_ENV === envType.development) {
+    if(envMode === envType.development) {
         tsResult = tsProject
             .src()
             .pipe(sourcemaps.init())
@@ -33,4 +42,5 @@ function tsTranspile() {
 }
 
 // TypeScript Transpile Task
-exports.transpile = tsTranspile;
+exports.transpileDev = tsTranspileDev;
+exports.transpileProd = tsTranspileProd;

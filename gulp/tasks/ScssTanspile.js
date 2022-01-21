@@ -12,11 +12,21 @@ const envType = {'development':'dev', 'production':'prod'}
 const distFolder = './dist';
 const watchScssThemes = 'src/scss/*.scss';
 
+// Set as Development Mode
+function scssTranspileDev() {
+    return scssTranspile(envType.development);
+}
+
+// Set as Production Mode
+function scssTranspileProd() {
+    return scssTranspile(envType.production);
+}
+
 // Compile SCSS
-function scssTranspile() {
+function scssTranspile(envMode) {
     let cssResult;
 
-    if(process.env.NODE_ENV === envType.development) {
+    if(envMode === envType.development) {
         cssResult = gulp.src(watchScssThemes)
             .pipe(sourcemaps.init())
             .pipe(sass().on('error', sass.logError))
@@ -26,7 +36,7 @@ function scssTranspile() {
             }))
             .pipe(removeEmptyLines())
             .pipe(rename({
-                prefix: process.env.NODE_ENV + "-",
+                prefix: envMode + "-",
             }))
             .pipe(sourcemaps.write("."))
             .pipe(gulp.dest(distFolder));
@@ -39,7 +49,7 @@ function scssTranspile() {
             }))
             .pipe(removeEmptyLines())
             .pipe(rename({
-                prefix: process.env.NODE_ENV + "-",
+                prefix: envMode + "-",
             }))
             .pipe(gulp.dest(distFolder));    
     }
@@ -47,5 +57,6 @@ function scssTranspile() {
     return cssResult;
 }
 
-// SCSS Transpile Task
-exports.transpile = scssTranspile;
+// SCSS Transpile Tasks
+exports.transpileDev = scssTranspileDev;
+exports.transpileProd = scssTranspileProd;
