@@ -1,1 +1,0 @@
-$parameters.CalendarObj.destroy();

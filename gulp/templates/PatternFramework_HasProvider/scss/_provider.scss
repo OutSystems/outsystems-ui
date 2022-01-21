@@ -1,0 +1,34 @@
+// Import <%= providerNamePC %> Library Core Styles
+@import "<%= providerNameLC %>-lib";
+
+// <%= providerNamePC %> overriding styles
+/* 
+  TODO (by CreateNewPattern):
+    - Do all the override styles nedded at this partial file!
+*/
+
+// Accessibility -----------------------------------------------------------------
+.has-accessible-features {
+  // css props
+}
+
+// IsRTL -------------------------------------------------------------------------
+
+.is-rtl {
+  // css props
+}
+
+// Responsive --------------------------------------------------------------------
+
+.tablet,
+.phone {
+  // css props
+}
+
+.tablet {
+  // css props
+}
+
+.phone {
+  // css props
+}

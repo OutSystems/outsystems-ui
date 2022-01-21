@@ -109,3 +109,5 @@ dist
 # MacOS folder icon (hidden file)
 **/Icon?
 **/.DS_Store
+
+package-lock.json

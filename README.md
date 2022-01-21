@@ -1,5 +1,4 @@
-# OutSystems UI · ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
-The OutSystems UI framework for Reactive Web and Mobile apps with dozens of responsive UI patterns on top of a solid design system, fully customizable to your Style Guide needs.
+# OutSystems UI · ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg) ![NPM version](https://img.shields.io/badge/npm-v8.3.1-informational) ![Gulp CLI version](https://img.shields.io/badge/gulp--cli-v2.3.0-informational) ![Gulp Local version](https://img.shields.io/badge/gulp--local-v4.0.2-informational)
 
 ## About the component
 Create modern experiences with fully customizable responsive Screen Templates and UI Patterns for Native Mobile and Reactive Web Apps.
@@ -43,22 +42,44 @@ We highly recommend the usage of the following tools:
   * Prettier - Code formatter
 
 ### How to change this code?
-1. Create a branch based in the branch **master** (lastest & greatest release)
-2. Open your Visual Code in your branch
-3. Run the following command in Visual Code terminal: `npm run setup` (this will install all the dependencies that you need and compile the code)
-4. Do your magic! :)
-5. **Document your code** (with the extension "Document This", start typing `/**` and the extension will give you a good starting point
-6. Compile and fix errors and warnings (in Visual Code terminal: `npm run build`)
-7. Check if the code format is following our conventions (in Visual Code terminal: `npm run lint`)
-7.1 Some of the conventions can be fixed automatically by lint (in Visual Code terminal: `npm run lintfix`)
-7.2 Although the script above execute the prettier conventions, you may want to run it over all project files (in Visual Code terminal: `npm run prettier`)
-8. Fix all errors & warnings! :)
-9. Create a PR, describing what was the (mis)behavior, what you changed and please provide a sample 
+<ol>
+  <li>Create a branch based in the branch <strong>master</strong> (lastest & greatest release)</li>
+  <li>Open your Visual Code in your branch</li>
+  <li>Run the following command in Visual Code terminal: <code>npm run setup</code> (this will install all the dependencies that you need and compile the code)</li>
+  <li>Do your magic! :)</li>
+  <li><strong>Document your code</strong> (with the extension "Document This", start typing <code>/**</code> and the extension will give you a good starting point</li>
+  <li>Compile and fix errors and warnings (in Visual Code terminal: <code>npm run build</code>)</li>
+  <li>
+    Check if the code format is following our conventions (in Visual Code terminal: <code>npm run lint</code>)
+    <ol>
+      <li>Some of the conventions can be fixed automatically by lint (in Visual Code terminal: <code>npm run lintfix</code>)</li>
+      <li>Although the script above execute the prettier conventions, you may want to run it over all project files (in Visual Code terminal: <code>npm run prettier</code>)</li>
+    </ol>
+  </li>
+  <li>Fix all errors & warnings! :)</li>
+  <li>Create a PR, describing what was the (mis)behavior, what you changed and please provide a sample </li>
+</ol>
 
 ### How to add new feature/fix?
   * A new branch from **master** should be created.
   * If possible the branch should be kept updated with the master branch.
   * If possible unnecessary commit messages should be omitted.
+
+### How to create a New Pattern structure?
+  <ol>
+    <li>Create a branch based in the branch <strong>master</strong> (lastest & greatest release)</li>
+    <li>Run the following command in Visual Code terminal: <code>npm run create-pattern</code></li>
+    <li>
+      Answer to the following questions:
+      <ol>
+        <li><strong>Pattern Name?</strong> - <i>The name new pattern should have;</i></li>
+        <li><strong>Provider Name?</strong> - <i>If/When pattern have an external provider/library. An abstract layer will be added to the Pattern.</i></li>
+        <li><strong>Mode?</strong> - <i>If/When based on same provider, you will have multiple patterns like <strong>DatePicker</strong> that has <strong>Flatpickr</strong> as a provider and <strong>SingleDate</strong> and <strong>RangeDate</strong> as <strong>DatePicker</strong> modes; An abstract layer will be added to the Provider as well.</i></li>
+        <li><strong>Custom destination Folder?</strong> - <i>If you do not provide a folder name here all the pattern files (if already exist) <strong>will be overwritten</strong>, this way you prevent that by creating a new folder where all the files will be automagically added.</i></li>
+      </ol>
+     </li>
+     <li>Do your magic! :)<br><i>As mentioned above, all the nedded files (based in your answers) will be automagically created and added to right places.</i></li>
+  </ol>
 
 ### How to do a Pull Request?
 After completing your changes, and testing, please proceed with submitting a Pull Request.
