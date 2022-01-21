@@ -33,22 +33,22 @@ function initServer() {
 
 // Watch files changed
 function watchFiles() {
-    watch(watchScssFiles, series(cssTranspile.transpile));
-    watch(watchTsFiles, series(tsTranspile.transpile));
+    watch(watchScssFiles, series(cssTranspile.transpileDev));
+    watch(watchTsFiles, series(tsTranspile.transpileDev));
 };
 
 
 // Gulp tasks
 exports.startDevelopment = series(
     cleanOldFiles,
-    parallel(cssTranspile.transpile, tsTranspile.transpile),
+    parallel(cssTranspile.transpileDev, tsTranspile.transpileDev),
     parallel(watchFiles, initServer)
 );
 
 exports.createProduction = series(
     cleanOldFiles,
-    cssTranspile.transpile,
-    tsTranspile.transpile
+    cssTranspile.transpileProd,
+    tsTranspile.transpileProd
 );
 
 exports.newPattern = pattern.create;
