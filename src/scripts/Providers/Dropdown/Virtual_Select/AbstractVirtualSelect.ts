@@ -111,7 +111,7 @@ namespace Providers.Dropdown.Virtual_Select {
 			// Destroy the old VirtualSelect instance
 			this._vsProvider.destroy();
 
-			// Create a new flatpickr instance with the updated configs
+			// Create a new VirtualSelect instance with the updated configs
 			OSUIFramework.Helper.AsyncInvocation(this.prepareConfigs.bind(this));
 		}
 

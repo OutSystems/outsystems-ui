@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace Providers.Dropdown.Virtual_Select.Factory {
 	/**
-	 * Create the new Flatpickr instance object according given Mode
+	 * Create the new VirtualSelect instance object according given Mode
 	 *
 	 * @export
 	 * @param {string} dropdownId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSUIFramework.Patterns.Progress.IDatePicker}
+	 * @return {*}  {OSUIFramework.Patterns.Dropdown.IDropdown}
 	 */
 	export function NewVirtualSelect(
 		dropdownId: string,
