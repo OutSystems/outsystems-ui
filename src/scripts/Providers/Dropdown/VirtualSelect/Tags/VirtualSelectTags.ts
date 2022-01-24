@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.Dropdown.Virtual_Select.Tags {
+namespace Providers.Dropdown.VirtualSelect.Tags {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class OSUIVirtualSelectTags extends AbstractVirtualSelect<VirtualSelectTagsConfig> {
 		constructor(uniqueId: string, configs: JSON) {

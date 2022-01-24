@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace Providers.Dropdown.Virtual_Select.Tags {
+namespace Providers.Dropdown.VirtualSelect.Tags {
 	/**
 	 * Class that represents the custom configurations received by the Dropdown Tags mode.
 	 *

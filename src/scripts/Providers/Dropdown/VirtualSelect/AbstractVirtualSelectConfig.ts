@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace Providers.Dropdown.Virtual_Select {
+namespace Providers.Dropdown.VirtualSelect {
 	/**
 	 * Class that represents the custom configurations received by the Dropdown.
 	 *

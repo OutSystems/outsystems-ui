@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace Providers.Dropdown.Virtual_Select.Factory {
+namespace Providers.Dropdown.VirtualSelect.Factory {
 	/**
 	 * Create the new VirtualSelect instance object according given Mode
 	 *
@@ -17,7 +17,7 @@ namespace Providers.Dropdown.Virtual_Select.Factory {
 
 		switch (mode) {
 			case OSUIFramework.Patterns.Dropdown.Enum.Mode.Search:
-				_virtualSelectItem = new Providers.Dropdown.Virtual_Select.Search.OSUIVirtualSelectSearch(
+				_virtualSelectItem = new Providers.Dropdown.VirtualSelect.Search.OSUIVirtualSelectSearch(
 					dropdownId,
 					configs
 				);
@@ -25,7 +25,7 @@ namespace Providers.Dropdown.Virtual_Select.Factory {
 				break;
 
 			case OSUIFramework.Patterns.Dropdown.Enum.Mode.Tags:
-				_virtualSelectItem = new Providers.Dropdown.Virtual_Select.Tags.OSUIVirtualSelectTags(
+				_virtualSelectItem = new Providers.Dropdown.VirtualSelect.Tags.OSUIVirtualSelectTags(
 					dropdownId,
 					configs
 				);

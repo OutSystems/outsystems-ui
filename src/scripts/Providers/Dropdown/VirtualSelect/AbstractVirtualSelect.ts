@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.Dropdown.Virtual_Select {
-	export abstract class AbstractVirtualSelect<C extends Dropdown.Virtual_Select.AbstractVirtualSelectConfig>
+namespace Providers.Dropdown.VirtualSelect {
+	export abstract class AbstractVirtualSelect<C extends Dropdown.VirtualSelect.AbstractVirtualSelectConfig>
 		extends OSUIFramework.Patterns.Dropdown.AbstractDropdown<VirtualSelect, C>
 		implements IVirtualSelect
 	{
