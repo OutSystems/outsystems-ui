@@ -27,7 +27,7 @@
 		&-open {
 			border-top: var(--border-size-m) solid var(--color-primary);
 
-			.section-expandable-title {
+			> .section-expandable-title {
 				font-weight: var(--font-semi-bold);
 			}
 
