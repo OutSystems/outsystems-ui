@@ -13,8 +13,6 @@ namespace Providers.Dropdown.Virtual_Select {
 		protected _virtualselectMethods: VirtualSelectMethods;
 		// Store the provider options
 		protected _virtualselectOpts: VirtualSelectOpts;
-		// Store the virtualSelect provider reference
-		protected _vsProvider: VirtualSelect;
 
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
@@ -88,8 +86,8 @@ namespace Providers.Dropdown.Virtual_Select {
 		 */
 		protected createProviderInstance(): void {
 			// Create the provider instance
-			this._vsProvider = window.VirtualSelect.init(this._virtualselectOpts);
-			this._virtualselectMethods = this._vsProvider.$ele;
+			this.provider = window.VirtualSelect.init(this._virtualselectOpts);
+			this._virtualselectMethods = this.provider.$ele;
 
 			// Add the events to be used at provider instance
 			this.setCallbacks();
@@ -109,7 +107,7 @@ namespace Providers.Dropdown.Virtual_Select {
 		 */
 		protected redraw(): void {
 			// Destroy the old VirtualSelect instance
-			this._vsProvider.destroy();
+			this.provider.destroy();
 
 			// Create a new VirtualSelect instance with the updated configs
 			OSUIFramework.Helper.AsyncInvocation(this.prepareConfigs.bind(this));
@@ -220,7 +218,7 @@ namespace Providers.Dropdown.Virtual_Select {
 		 * @memberof AbstractVirtualSelect
 		 */
 		public dispose(): void {
-			this._vsProvider.destroy();
+			this.provider.destroy();
 
 			this.unsetCallbacks();
 
