@@ -11,17 +11,17 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 		// Method used to check if there is any selected date before changing the DateFormat
 		private _onUpdateDateFormat(): void {
 			// Check if any Date was selected
-			if (this._fpProvider.selectedDates.length > 0) {
+			if (this.provider.selectedDates.length > 0) {
 				// Set the new Start DefaultDate value
-				this.configs.InitialStartDate = this._fpProvider.formatDate(
-					this._fpProvider.selectedDates[0],
+				this.configs.InitialStartDate = this.provider.formatDate(
+					this.provider.selectedDates[0],
 					this._flatpickrOpts.dateFormat
 				);
 
 				// Set the new End DefaultDate value
-				if (this._fpProvider.selectedDates[1]) {
-					this.configs.InitialEndDate = this._fpProvider.formatDate(
-						this._fpProvider.selectedDates[1],
+				if (this.provider.selectedDates[1]) {
+					this.configs.InitialEndDate = this.provider.formatDate(
+						this.provider.selectedDates[1],
 						this._flatpickrOpts.dateFormat
 					);
 				}
@@ -42,9 +42,9 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 
 			// Check if any date has been selected, In case of Clear this will retunr empty array
 			if (selectedDates.length > 0) {
-				_selectedDate[0] = this._fpProvider.formatDate(selectedDates[0], this._flatpickrOpts.dateFormat);
+				_selectedDate[0] = this.provider.formatDate(selectedDates[0], this._flatpickrOpts.dateFormat);
 				if (selectedDates[1]) {
-					_selectedDate[1] = this._fpProvider.formatDate(selectedDates[1], this._flatpickrOpts.dateFormat);
+					_selectedDate[1] = this.provider.formatDate(selectedDates[1], this._flatpickrOpts.dateFormat);
 				}
 			}
 
