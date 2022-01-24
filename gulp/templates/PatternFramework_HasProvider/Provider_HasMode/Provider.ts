@@ -5,12 +5,8 @@ namespace Providers.<%= patternNamePC %>.<%= providerNamePC %> {
 	{
 		/* TODO (by CreateNewPattern):
 				Add provider as a module dependency and define:
-					- <%= providerNamePC %>;
 					- <%= providerNamePC %>Opts;
 		 */
-		
-		// Store the provider reference
-		protected _<%= providerName %>Provider: <%= providerNamePC %>;
 
 		// Store the provider options
 		protected _<%= providerName %>Opts: <%= providerNamePC %>Opts;
@@ -27,6 +23,7 @@ namespace Providers.<%= patternNamePC %>.<%= providerNamePC %> {
 		 */
 		protected createProviderInstance(): void {
 			// TODO (by CreateNewPattern): Update or Remove
+			// this.provider = ...
 		}
 
 		/**
@@ -96,7 +93,7 @@ namespace Providers.<%= patternNamePC %>.<%= providerNamePC %> {
 		 * @memberof Abstract<%= providerNamePC %>
 		 */
 		public dispose(): void {
-			this._<%= providerName %>Provider.destroy();
+			this.provider.destroy();
 
 			this.unsetCallbacks();
 
