@@ -38,7 +38,11 @@ namespace OSUIFramework.Helper {
 
 			// Check if the given date is not a date object and if it's a valid date
 			if (typeof date === 'string') {
-				if (isNaN(Date.parse(date.split(' ')[0]))) {
+				// Update the string into a string date format
+				date = date.indexOf('T') !== 10 ? date.replace(' ', 'T') : date;
+
+				// Check if string could be parsed into a date - If it has an expected dateformat
+				if (isNaN(Date.parse(date))) {
 					throw new Error(`The given date '${date}' it's not a valid date.`);
 				} else if (Date.parse(date) < 0) {
 					// 1st Jan 1970 is the actual Date baseline.

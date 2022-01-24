@@ -15,7 +15,7 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 			accordion = AccordionAPI.GetAccordionById(_accordionMap.get(accordionItemId));
 		} else {
 			// Try to find the accordion reference on DOM
-			const elem = OSUIFramework.Helper.GetElementByUniqueId(accordionItemId);
+			const elem = OSUIFramework.Helper.Dom.GetElementByUniqueId(accordionItemId);
 			const accordionElem = elem.closest(
 				OSUIFramework.Constants.Dot + OSUIFramework.Patterns.Accordion.Enum.CssClass.Pattern
 			);

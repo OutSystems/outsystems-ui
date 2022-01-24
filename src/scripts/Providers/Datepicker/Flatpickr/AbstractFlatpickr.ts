@@ -12,8 +12,6 @@ namespace Providers.Datepicker.Flatpickr {
 		protected _flatpickrInputElem: HTMLInputElement;
 		// Store the provider options
 		protected _flatpickrOpts: FlatpickrOptions;
-		// Store the provider reference
-		protected _fpProvider: Flatpickr;
 		// Flatpickr onChange (SelectedDate) event
 		protected _onChangeCallbackEvent: OSUIFramework.Callbacks.OSDatepickerOnChangeEvent;
 
@@ -28,7 +26,7 @@ namespace Providers.Datepicker.Flatpickr {
 		private _jumpIntoToday(event: MouseEvent) {
 			event.preventDefault();
 
-			this._fpProvider.jumpToDate(this._fpProvider.now);
+			this.provider.jumpToDate(this.provider.now);
 		}
 
 		// Method used to set the needed HTML attributes
@@ -47,14 +45,14 @@ namespace Providers.Datepicker.Flatpickr {
 		// Method used to set the CSS classes to the pattern HTML elements
 		private _setCalendarCssClasses(): void {
 			OSUIFramework.Helper.Dom.Styles.AddClass(
-				this._fpProvider.calendarContainer,
+				this.provider.calendarContainer,
 				OSUIFramework.Patterns.DatePicker.Enum.CssClass.Calendar
 			);
 
 			// Check if there are any ExtendedClass to be added into our calendar elements
 			if (this._configs.ExtendedClass !== '') {
 				OSUIFramework.Helper.Dom.Styles.ExtendedClass(
-					this._fpProvider.calendarContainer,
+					this.provider.calendarContainer,
 					'',
 					this._configs.ExtendedClass
 				);
@@ -92,7 +90,7 @@ namespace Providers.Datepicker.Flatpickr {
 
 			// Append elements to the proper containers
 			todayBtnWrapper.appendChild(todayBtn);
-			this._fpProvider.calendarContainer.appendChild(todayBtnWrapper);
+			this.provider.calendarContainer.appendChild(todayBtnWrapper);
 		}
 
 		/**
@@ -103,13 +101,16 @@ namespace Providers.Datepicker.Flatpickr {
 		 */
 		protected createProviderInstance(): void {
 			// Init provider
-			this._fpProvider = window.flatpickr(this._datePickerProviderInputElem, this._flatpickrOpts);
+			this.provider = window.flatpickr(this._datePickerProviderInputElem, this._flatpickrOpts);
 
 			// Set the needed HTML attributes
 			this._setAttributes();
 
-			// At phone and tablet we've native behaviour, so TodayBtn can't be added
-			if (OSUIFramework.Helper.DeviceInfo.IsDesktop) {
+			// At phone and tablet we've native behaviour, so TodayBtn can't be added, unless we're using a datepicker range mode since there are no native behaviour for selecting a range date.
+			if (
+				OSUIFramework.Helper.DeviceInfo.IsDesktop ||
+				this.configs.calendarMode === OSUIFramework.Patterns.DatePicker.Enum.Mode.Range
+			) {
 				// Add TodayBtn
 				if (this._configs.ShowTodayButton) {
 					this.addTodayBtn();
@@ -131,7 +132,7 @@ namespace Providers.Datepicker.Flatpickr {
 		 */
 		protected redraw(): void {
 			// Destroy the old flatpickr instance
-			this._fpProvider.destroy();
+			this.provider.destroy();
 
 			// Create a new flatpickr instance with the updated configs
 			OSUIFramework.Helper.AsyncInvocation(this.prepareConfigs.bind(this));
@@ -193,7 +194,7 @@ namespace Providers.Datepicker.Flatpickr {
 					case OSUIFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass:
 						// Since Calendar element will be added dynamically by the library outside the pattern context
 						OSUIFramework.Helper.Dom.Styles.ExtendedClass(
-							this._fpProvider.calendarContainer,
+							this.provider.calendarContainer,
 							oldExtendedClass,
 							propertyValue as string
 						);
@@ -203,11 +204,11 @@ namespace Providers.Datepicker.Flatpickr {
 		}
 
 		public clear(): void {
-			this._fpProvider.clear();
+			this.provider.clear();
 		}
 
 		public close(): void {
-			this._fpProvider.close();
+			this.provider.close();
 		}
 
 		// Method to remove and destroy DatePicker instance
@@ -216,14 +217,14 @@ namespace Providers.Datepicker.Flatpickr {
 				this.unsetCallbacks();
 				this.unsetHtmlElements();
 
-				this._fpProvider.destroy();
+				this.provider.destroy();
 			}
 
 			super.dispose();
 		}
 
 		public open(): void {
-			this._fpProvider.open();
+			this.provider.open();
 		}
 
 		// Method used to regist callback events

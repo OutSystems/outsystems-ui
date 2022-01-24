@@ -1,4 +1,6 @@
 dist
+gulp
+gulpfile.js
 dependencies
 node_modules
 custom-scripts/**

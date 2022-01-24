@@ -1,7 +1,7 @@
-/*! Patterns - Content - Submenu */
+/*! Patterns - Navigation - Submenu */
 ////
 /// @group Patterns-Submenu
-/// Patterns - Content - Submenu
+/// Patterns - Navigation - Submenu
 
 ///
 .osui-submenu {
@@ -15,7 +15,7 @@
 	}
 
 	&:hover {
-		.osui-submenu__icon:before {
+		.osui-submenu__header__icon:before {
 			border: var(--border-size-s) solid var(--color-neutral-9);
 			border-right: 0;
 			border-top: 0;
@@ -51,7 +51,7 @@
 
 	&--is-open {
 		.osui-submenu {
-			&__icon {
+			&__header__icon {
 				top: 3px;
 				transform: rotate(135deg);
 			}

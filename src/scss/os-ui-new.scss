@@ -1,13 +1,14 @@
+/*! =========================================================================== */
 /*!  OutSystems UI                                                              */
 /*!  For more information, visit www.outsystems.com/outsystems-ui               */
 /*!                                                                             */
-/*!   Root - CSS Variables                                                      */
-/*!   Resets                                                                    */
-/*!   HTML Elements                                                             */
+/*!  Root - CSS Variables                                                       */
+/*!  Resets                                                                     */
+/*!  HTML Elements                                                              */
 /*!     - Links                                                                 */
 /*!     - Images                                                                */
 /*!     - Headings                                                              */
-/*!   Page Layout                                                               */
+/*!  Page Layout                                                                */
 /*!     - Header                                                                */
 /*!     - Layout Native - Header                                                */
 /*!     - Layout Side - Header                                                  */
@@ -22,7 +23,7 @@
 /*!     - Section                                                               */
 /*!     - Login                                                                 */
 /*!     - iOS Scroll Bounce                                                     */
-/*!   Widgets                                                                   */
+/*!  Widgets                                                                    */
 /*!     - Inputs and TextAreas                                                  */
 /*!     - Switch                                                                */
 /*!     - Checkbox                                                              */
@@ -40,13 +41,14 @@
 /*!     - Popup                                                                 */
 /*!     - Feedback Message                                                      */
 /*!     - Radio Button                                                          */
-/*!   Patterns                                                                  */
+/*!  Patterns                                                                   */
 /*!     - Adaptive                                                              */
 /*!         - Columns                                                           */
 /*!         - Gallery                                                           */
 /*!         - Master Detail                                                     */
 /*!     - Content                                                               */
 /*!         - Accordion                                                         */
+/*!         - Accordion Item                                                    */
 /*!         - Alert                                                             */
 /*!         - Blank Slate                                                       */
 /*!         - Card                                                              */
@@ -66,12 +68,11 @@
 /*!         - Animate                                                           */
 /*!         - Animated Label                                                    */
 /*!         - Carousel                                                          */
-/*!         - Date Picker                                                       */
-/*!         - Dropdown Search and Tags, common styles                           */
-/*!         - Dropdown Search                                                   */
-/*!         - Dropdown Tags                                                     */
+/*!         - DatePicker                                                        */
+/*!         - Dropdown                                                          */
+/*!         - DropdownSearch                                                    */
+/*!         - DropdownTags                                                      */
 /*!         - Floating Actions                                                  */
-/*!         - Horizontal Scroll                                                 */
 /*!         - Input With Icon                                                   */
 /*!         - Lightbox Image                                                    */
 /*!         - Notification                                                      */
@@ -86,6 +87,7 @@
 /*!         - Breadcrumbs                                                       */
 /*!         - Pagination                                                        */
 /*!         - Section Index                                                     */
+/*!         - Submenu                                                           */
 /*!         - Tabs                                                              */
 /*!         - Timeline                                                          */
 /*!         - Wizard                                                            */
@@ -93,8 +95,8 @@
 /*!         - Badge                                                             */
 /*!         - Counter                                                           */
 /*!         - Icon Badge                                                        */
-/*!         - Progress Bar                                                      */
-/*!         - Progress Circle                                                   */
+/*!         - ProgressBar                                                       */
+/*!         - ProgressCircle                                                    */
 /*!         - Progress Circle Fraction                                          */
 /*!         - Rating                                                            */
 /*!     - Utilities                                                             */
@@ -105,32 +107,66 @@
 /*!         - Separator                                                         */
 /*!         - Pull to Refresh                                                   */
 /*!         - List Updating                                                     */
-/*!   Usefull Classes                                                           */
+/*!  Deprecated Patterns                                                        */
+/*!     - Content                                                               */
+/*!         - Accordion                                                         */
+/*!         - Submenu                                                           */
+/*!         - Tooltip                                                           */
+/*!     - Interaction                                                           */
+/*!         - Carousel                                                          */
+/*!         - DatePicker                                                        */
+/*!         - Dropdown Search and Tags, common styles                           */
+/*!         - Dropdown Search                                                   */
+/*!         - Dropdown Tags                                                     */
+/*!         - Horizontal Scroll                                                 */
+/*!         - Notification                                                      */
+/*!         - Sidebar                                                           */
+/*!     - Navigation                                                            */
+/*!         - Tabs                                                              */
+/*!     - Numbers                                                               */
+/*!         - Progress Bar                                                      */
+/*!         - Progress Circle                                                   */
+/*!     - Utilities                                                             */
+/*!         - ButtonLoading                                                     */
+/*!  Usefull Classes                                                            */
 /*!     - a11y (Accessibility)                                                  */
-/*!     - Colors Brand                                                          */
-/*!     - Colors Neutral                                                        */
-/*!     - Colors Palette                                                        */
-/*!     - Colors Semantic                                                       */
-/*!     - Colors Other                                                          */
+/*!     - Colors                                                                */
+/*!         - Colors Brand                                                      */
+/*!         - Colors Neutral                                                    */
+/*!         - Colors Palette                                                    */
+/*!         - Colors Semantic                                                   */
+/*!         - Colors Other                                                      */
 /*!     - Text                                                                  */
 /*!     - Typography                                                            */
-/*!     - Border Size                                                           */
-/*!     - Border Radius                                                         */
+/*!     - Border                                                                */
+/*!         - Border Size                                                       */
+/*!         - Border Radius                                                     */
 /*!     - Margin                                                                */
 /*!     - Padding                                                               */
 /*!     - Shadow                                                                */
-/*!     - Box Width                                                             */
-/*!     - Box Height                                                            */
+/*!     - Box                                                                   */
+/*!         - Box Width                                                         */
+/*!         - Box Height                                                        */
 /*!     - Display                                                               */
-/*!     - Display Flex                                                          */
-/*!     - Display Align                                                         */
+/*!         - Display Flex                                                      */
+/*!         - Display Align                                                     */
 /*!     - Images                                                                */
 /*!     - Overflow                                                              */
 /*!     - Visibility                                                            */
 /*!     - Position                                                              */
 /*!     - Position Absolute                                                     */
 /*!     - Miscellaneous                                                         */
-/*!                                                                             */
+/*!  Screen Transitions                                                         */
+/*!     - Keyframes                                                             */
+/*!         - Animations                                                        */
+/*!         - Animate                                                           */
+/*!         - Button Loading                                                    */
+/*!         - List Item                                                         */
+/*!         - Feedback Message                                                  */
+/*!         - Pull To Refresh                                                   */
+/*!         - Miscellaneous                                                     */
+/*!  Service Studio Preview                                                     */
+/*!     - Deprecated block preview                                              */
 /*! =========================================================================== */
 
 // SCSS Setup variables
@@ -214,6 +250,7 @@
 /* ============================================================================ */
 /*      - Content                                                               */
 /* ============================================================================ */
+// @import '10-deprecated/accordion-deprecated';
 @import '../scripts/OSUIFramework/Pattern/Accordion/scss/accordion';
 @import '../scripts/OSUIFramework/Pattern/AccordionItem/scss/accordion-item';
 @import '04-patterns/02-content/alert';
@@ -238,15 +275,15 @@
 @import '04-patterns/03-interaction/animate';
 @import '../scripts/OSUIFramework/Pattern/AnimatedLabel/scss/animated-label';
 @import '../scripts/OSUIFramework/Pattern/Carousel/scss/carousel';
-@import '../scripts/OSUIFramework/Pattern/DatePicker/scss/datepicker';
 // @import '04-patterns/03-interaction/date-picker';
-@import '../scripts/OSUIFramework/Pattern/Dropdown/scss/dropdown';
-@import '../scripts/OSUIFramework/Pattern/Dropdown/scss/dropdown-search';
-@import '../scripts/OSUIFramework/Pattern/Dropdown/scss/dropdown-tags';
+@import '../scripts/OSUIFramework/Pattern/DatePicker/scss/datepicker';
 // @import '04-patterns/03-interaction/dropdown-search-and-tags';
 // @import '04-patterns/03-interaction/dropdown-search';
 // @import '04-patterns/03-interaction/dropdown-tags';
-@import '../scripts/OSUIFramework/Pattern/FloatingActions/scss/floating-actions';
+@import '../scripts/OSUIFramework/Pattern/Dropdown/scss/dropdown';
+@import '../scripts/OSUIFramework/Pattern/Dropdown/scss/dropdown-search';
+@import '../scripts/OSUIFramework/Pattern/Dropdown/scss/dropdown-tags';
+@import '04-patterns/03-interaction/floating-actions';
 @import '04-patterns/03-interaction/input-with-icon';
 @import '04-patterns/03-interaction/lightbox-image';
 @import '../scripts/OSUIFramework/Pattern/Notification/scss/notification';
@@ -257,9 +294,9 @@
 @import '04-patterns/03-interaction/stacked-cards';
 @import '04-patterns/03-interaction/video';
 
-/* ============================================================================== */
-/*      - Navigation                                                              */
-/* ============================================================================== */
+/* ============================================================================ */
+/*      - Navigation                                                            */
+/* ============================================================================ */
 @import '04-patterns/04-navigation/bottom-bar-item';
 @import '04-patterns/04-navigation/breadcrumbs';
 @import '04-patterns/04-navigation/pagination';
@@ -295,20 +332,20 @@
 /*! Deprecated Patterns                                                         */
 /*! =========================================================================== */
 @import '10-deprecated/accordion-deprecated';
-@import '10-deprecated/horizontal-scroll-deprecated';
-@import '10-deprecated/carousel-deprecated';
-@import '10-deprecated/notification-deprecated';
 @import '10-deprecated/button-loading-deprecated';
-@import '10-deprecated/sidebar-deprecated';
-@import '10-deprecated/submenu-deprecated';
-@import '10-deprecated/tooltip-deprecated';
-@import '10-deprecated/progress-bar-deprecated';
-@import '10-deprecated/progress-circle-deprecated';
+@import '10-deprecated/carousel-deprecated';
 @import '10-deprecated/date-picker-deprecated';
 @import '10-deprecated/dropdown-search-and-tags';
 @import '10-deprecated/dropdown-search';
 @import '10-deprecated/dropdown-tags';
+@import '10-deprecated/horizontal-scroll-deprecated';
+@import '10-deprecated/notification-deprecated';
+@import '10-deprecated/progress-bar-deprecated';
+@import '10-deprecated/progress-circle-deprecated';
+@import '10-deprecated/sidebar-deprecated';
+@import '10-deprecated/submenu-deprecated';
 @import '10-deprecated/tabs-deprecated';
+@import '10-deprecated/tooltip-deprecated';
 
 /*! =========================================================================== */
 /*! Usefull Classes                                                             */
@@ -359,6 +396,7 @@
 /*! Service Studio Preview                                                      */
 /*! =========================================================================== */
 @import '08-servicestudio-preview/servicestudiopreview';
+@import '08-servicestudio-preview/deprecated-preview';
 
 /* ============================================================================ */
 /* Excluders                                                                    */

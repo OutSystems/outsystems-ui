@@ -4,8 +4,6 @@ namespace OSUIFramework.Patterns.TouchEvents {
 	 * Defines the interface for OutSystemsUI TouchEvents Pattern
 	 */
 	export interface ITouchEvents extends Interface.IPattern {
-		
-        //Implement you code here
-
+		//Implement you code here
 	}
 }

@@ -19,7 +19,7 @@ namespace OSUIFramework.Patterns.Gallery {
 		 * @private
 		 */
 		private _setGutterSize(): void {
-			Helper.Style.SetStyleAttribute(
+			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				Enum.CssProperty.GridGap,
 				`var(--space-${this.configs.GutterSize})`
@@ -32,11 +32,15 @@ namespace OSUIFramework.Patterns.Gallery {
 		 * @private
 		 */
 		private _setItemsInDesktop(): void {
-			Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.GridDesktop, this.configs.ItemsInDesktop);
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				Enum.CssProperty.GridDesktop,
+				this.configs.ItemsInDesktop
+			);
 			// Fix for Edge, as css calc() doesn't work on all scenarios for this browser
 			this.configs.ItemsInDesktop++;
 
-			Helper.Style.SetStyleAttribute(
+			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				Enum.CssProperty.GridListDesktop,
 				this.configs.ItemsInDesktop
@@ -49,12 +53,16 @@ namespace OSUIFramework.Patterns.Gallery {
 		 * @private
 		 */
 		private _setItemsInPhone(): void {
-			Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.GridPhone, this.configs.ItemsInPhone);
+			Helper.Dom.Styles.SetStyleAttribute(this._selfElem, Enum.CssProperty.GridPhone, this.configs.ItemsInPhone);
 
 			// Fix for Edge, as css calc() doesn't work on all scenarios for this browser
 			this.configs.ItemsInPhone++;
 
-			Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.GridListPhone, this.configs.ItemsInPhone);
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				Enum.CssProperty.GridListPhone,
+				this.configs.ItemsInPhone
+			);
 		}
 
 		/**
@@ -63,12 +71,20 @@ namespace OSUIFramework.Patterns.Gallery {
 		 * @private
 		 */
 		private _setItemsInTablet(): void {
-			Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.GridTablet, this.configs.ItemsInTablet);
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				Enum.CssProperty.GridTablet,
+				this.configs.ItemsInTablet
+			);
 
 			// Fix for Edge, as css calc() doesn't work on all scenarios for this browser
 			this.configs.ItemsInTablet++;
 
-			Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.GridListTablet, this.configs.ItemsInTablet);
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				Enum.CssProperty.GridListTablet,
+				this.configs.ItemsInTablet
+			);
 		}
 
 		public build(): void {

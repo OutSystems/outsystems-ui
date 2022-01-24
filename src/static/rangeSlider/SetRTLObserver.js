@@ -1,1 +1,0 @@
-$parameters.Action = $actions.OnParametersChanged;

@@ -1,0 +1,28 @@
+/*! Deprecated block preview */
+/* 
+	Notes:
+	- This section contains several styles that style the deprecated message on the deprecated blocks
+
+	- This sections should not be visible at SASSDOCS.
+*/
+
+.osui-deprecated:before {
+	display: none;
+	-servicestudio-background: #fff1dc;
+	-servicestudio-background: var(--color-yellow-lightest);
+	-servicestudio-border-radius: var(--border-radius-soft);
+	-servicestudio-color: #333;
+	-servicestudio-content: '⚠ DEPRECATED';
+	-servicestudio-font-weight: var(--font-semi-bold);
+	-servicestudio-display: block;
+	-servicestudio-font-size: 9px;
+	-servicestudio-line-height: 8px;
+	-servicestudio-margin-right: -83px;
+	-servicestudio-margin-bottom: -17px;
+	-servicestudio-padding: 4px 6px 4px 5px;
+	-servicestudio-position: relative;
+	-servicestudio-top: -9px;
+	-servicestudio-height: 9px;
+	-servicestudio-width: 72px;
+	-servicestudio-z-index: 3;
+}

@@ -1,14 +1,14 @@
-/*! Patterns - Content - DatePicker - Flatpickr */
+/*! Patterns - Interaction - DatePicker */
 ////
 /// @group Patterns-DatePicker
-/// Patterns - Content - DatePicker
+/// Patterns - Interaction - DatePicker
 
 /// Import Flatpickr library styles
 @import '../../../../Providers/Datepicker/Flatpickr/scss/flatpickr';
 
 @import 'datepicker_ss_preview_imgs';
 
-/*! Patterns - Content - DatePicker */
+///
 .osui-datepicker {
 	// Hack used to disable dateTime input pseudoElements (browser native placeholders)
 	input[type='date']::-webkit-inner-spin-button,

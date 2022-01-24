@@ -1,1 +1,0 @@
-clearTimeout($parameters.Timeout);

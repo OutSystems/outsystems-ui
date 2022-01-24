@@ -15,6 +15,10 @@ namespace OSUIFramework.Patterns.DatePicker {
 			return this._provider;
 		}
 
+		public set provider(p: P) {
+			this._provider = p;
+		}
+
 		public abstract clear(): void;
 		public abstract close(): void;
 		public abstract open(): void;

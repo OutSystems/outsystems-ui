@@ -1,6 +1,5 @@
-/*! Service Studio Preview */
-//
-// @group ServiceStudio_Preview
+////
+/// @group ServiceStudio_Preview
 /* 
 	Notes:
 	- This section contains several styles that improve the service studio blocks preview
@@ -34,6 +33,7 @@ body > .app-menu-content {
 	}
 }
 
+// ServiceStudio Hybrid
 html[data-uieditorversion^='1'] {
 	body {
 		&:not(.phone):not(.tablet) .layout-side aside {

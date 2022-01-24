@@ -3,6 +3,7 @@
 /// @group Patterns-Sidebar
 /// Patterns - Interaction - Sidebar
 
+///
 .osui-sidebar {
 	//TODO: Validade the color of all overlays and create "global" variable for it.
 	$sidebar-overlay-background: rgba(0, 0, 0, 0.25);
@@ -24,6 +25,7 @@
 	&:not(.osui-sidebar--is-open):not(.no-transition) {
 		opacity: 0;
 
+		// Service Studio Preview
 		& {
 			-servicestudio-opacity: 1;
 		}
@@ -49,6 +51,7 @@
 			&::before {
 				right: 100%;
 
+				// Service Studio Preview
 				& {
 					-servicestudio-right: 100%;
 				}
@@ -74,6 +77,7 @@
 			&::before {
 				left: 100%;
 
+				// Service Studio Preview
 				& {
 					-servicestudio-left: 100%;
 				}

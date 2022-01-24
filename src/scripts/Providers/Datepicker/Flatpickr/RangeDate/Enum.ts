@@ -2,7 +2,7 @@
 namespace Providers.Datepicker.Flatpickr.RangeDate.Enum {
 	//  Flatpickr Range Properties Enum
 	export enum Properties {
-		EndDate = 'EndDate',
-		StartDate = 'StartDate',
+		InitialEndDate = 'EndDate',
+		InitialStartDate = 'StartDate',
 	}
 }

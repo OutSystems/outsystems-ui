@@ -1,0 +1,44 @@
+// TODO (by CreateNewPattern): update section!
+/*! Patterns - section - <%= patternNamePC %> */
+////
+/// @group Patterns-<%= patternNamePC %>
+/// Patterns - section - <%= patternNamePC %>
+
+/// Import <%= providerNamePC %> library styles
+@import "../../../../Providers/<%= patternNamePC %>/<%= providerNamePC %>/scss/<%= providerNameLC %>";
+
+// TODO (by CreateNewPattern): Common styles for all <%= patternNamePC %> patterns based on <%= providerNamePC %> at this partial!
+
+///
+.osui-pattern-class {
+  // css props
+}
+
+// Accessibility -----------------------------------------------------------------
+///
+.has-accessible-features {
+  // css props
+}
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+  // css props
+}
+
+// Responsive --------------------------------------------------------------------
+///
+.tablet,
+.phone {
+  // css props
+}
+
+///
+.tablet {
+  // css props
+}
+
+///
+.phone {
+  // css props
+}

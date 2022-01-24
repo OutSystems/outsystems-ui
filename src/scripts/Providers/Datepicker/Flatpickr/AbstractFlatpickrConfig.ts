@@ -14,6 +14,9 @@ namespace Providers.Datepicker.Flatpickr {
 		// Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr
 		public ServerDateFormat: string;
 
+		// Store calendar mode is in use
+		public calendarMode: OSUIFramework.Patterns.DatePicker.Enum.Mode;
+
 		constructor(config: JSON) {
 			super(config);
 		}

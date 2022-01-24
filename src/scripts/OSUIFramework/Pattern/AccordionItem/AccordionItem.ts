@@ -116,7 +116,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				Helper.Dom.Styles.SetStyleAttribute(this._accordionTitle, GlobalEnum.InlineStyle.PointerEvents, '');
 
 				if (this._accordionContent.style.cssText.length === 0) {
-					Helper.Attribute.Remove(this._accordionContent, GlobalEnum.HTMLAttributes.Style);
+					Helper.Dom.Attribute.Remove(this._accordionContent, GlobalEnum.HTMLAttributes.Style);
 				}
 
 				this._accordionContent.removeEventListener(
@@ -138,7 +138,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			Helper.Dom.Attribute.Set(
 				this._selfElem,
 				Constants.A11YAttributes.Aria.Controls,
-				Helper.Attribute.Get(this._accordionPlaceholder, GlobalEnum.HTMLAttributes.Id)
+				Helper.Dom.Attribute.Get(this._accordionPlaceholder, GlobalEnum.HTMLAttributes.Id)
 			);
 
 			Helper.Dom.Attribute.Set(this._selfElem, 'role', Constants.A11YAttributes.Role.Tab);
@@ -164,7 +164,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			Helper.Dom.Attribute.Set(
 				this._accordionContent,
 				Constants.A11YAttributes.Aria.Labelledby,
-				Helper.Attribute.Get(this._accordionTitle, GlobalEnum.HTMLAttributes.Id)
+				Helper.Dom.Attribute.Get(this._accordionTitle, GlobalEnum.HTMLAttributes.Id)
 			);
 
 			Helper.Dom.Attribute.Set(
@@ -239,7 +239,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		// This method will open and then close the item to get its final value; then, it will run an animation
 		// from the item's inital height to 0
 		public close(): void {
-			Helper.Attribute.Remove(this._accordionContent, GlobalEnum.HTMLAttributes.Style);
+			Helper.Dom.Attribute.Remove(this._accordionContent, GlobalEnum.HTMLAttributes.Style);
 			const expandedHeight = this._accordionContent.getBoundingClientRect().height;
 			// We know the final height is 0 - it is being collapsed
 			const collapsedHeight = 0;

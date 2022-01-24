@@ -206,7 +206,7 @@ namespace OSUIFramework.Patterns.Tabs {
 					if (entry.isIntersecting && !this._disableObserver) {
 						// Get data-tab from active entry intersecting, to know the current contentItem index
 						const targetIndex = parseInt(
-							Helper.Attribute.Get(entry.target as HTMLElement, Enum.Attributes.DataTab)
+							Helper.Dom.Attribute.Get(entry.target as HTMLElement, Enum.Attributes.DataTab)
 						);
 						// get current headerItem
 						const currentHeaderItem = this._tabsHeaderItemsElementsArray[targetIndex];
@@ -230,7 +230,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		 */
 		private _setHeaderItemsCustomProperty(): void {
 			// Create css variable
-			Helper.Style.SetStyleAttribute(
+			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				Enum.CssProperty.TabsHeaderItems,
 				this._tabsHeaderItemsElementsArray.length
@@ -246,7 +246,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		 */
 		private _setHeight(height: string): void {
 			// Create css variable
-			Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.TabsHeight, height);
+			Helper.Dom.Styles.SetStyleAttribute(this._selfElem, Enum.CssProperty.TabsHeight, height);
 		}
 
 		/**
@@ -279,9 +279,9 @@ namespace OSUIFramework.Patterns.Tabs {
 		 */
 		private _setIsJustified(isJustified: boolean): void {
 			if (isJustified) {
-				Helper.Style.AddClass(this._selfElem, Enum.CssClasses.IsJustified);
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClasses.IsJustified);
 			} else {
-				Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.IsJustified);
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClasses.IsJustified);
 			}
 		}
 
@@ -293,8 +293,8 @@ namespace OSUIFramework.Patterns.Tabs {
 		 * @memberof Tabs
 		 */
 		private _setOrientation(orientation: GlobalEnum.Orientation): void {
-			Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._currentOrientation);
-			Helper.Style.AddClass(this._selfElem, Enum.CssClasses.Modifier + orientation);
+			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._currentOrientation);
+			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClasses.Modifier + orientation);
 			this._currentOrientation = orientation;
 		}
 
@@ -306,8 +306,8 @@ namespace OSUIFramework.Patterns.Tabs {
 		 * @memberof Tabs
 		 */
 		private _setPosition(position: GlobalEnum.Direction): void {
-			Helper.Style.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._currentVerticalPositon);
-			Helper.Style.AddClass(this._selfElem, Enum.CssClasses.Modifier + position);
+			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._currentVerticalPositon);
+			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClasses.Modifier + position);
 
 			this._currentVerticalPositon = position;
 		}
@@ -731,7 +731,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			// If running on native shell
 			if (addDragGestures) {
 				// Add class to prvent enable overflow-x
-				Helper.Style.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.HasDragGestures);
+				Helper.Dom.Styles.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.HasDragGestures);
 				this._addDragGestures = true;
 				// Set touchStart event to enable observer when starting dragging
 				this._setTouchEvents();
@@ -742,7 +742,7 @@ namespace OSUIFramework.Patterns.Tabs {
 				// If the gestures were already added
 			} else if (this._addDragGestures) {
 				// Remove class to prevent overflow-x
-				Helper.Style.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.HasDragGestures);
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.HasDragGestures);
 				this._addDragGestures = false;
 				// remove touch event
 				this._tabsContentElement.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, this._eventOnTouchstart);
