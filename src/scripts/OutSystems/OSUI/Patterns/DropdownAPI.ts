@@ -158,9 +158,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 		eventName: string,
 		callback: OSUIFramework.Callbacks.OSGeneric
 	): void {
-		const _datePicker = this.GetDropdownById(dropdownId);
+		const _dropdownItem = this.GetDropdownById(dropdownId);
 
-		_datePicker.registerProviderCallback(eventName, callback);
+		_dropdownItem.registerProviderCallback(eventName, callback);
 	}
 
 	/**
