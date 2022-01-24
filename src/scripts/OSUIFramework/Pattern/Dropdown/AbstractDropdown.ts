@@ -2,7 +2,7 @@
 namespace OSUIFramework.Patterns.Dropdown {
 	export abstract class AbstractDropdown<P, C extends AbstractDropdownConfig>
 		extends AbstractPattern<C>
-		implements IDropdown
+		implements IDropdown, Interface.IProviderPattern<P>
 	{
 		private _provider: P;
 
@@ -15,10 +15,15 @@ namespace OSUIFramework.Patterns.Dropdown {
 			return this._provider;
 		}
 
+		public set provider(p: P) {
+			this._provider = p;
+		}
+
 		public abstract clear(): void;
 		public abstract disable(): void;
 		public abstract enable(): void;
 		public abstract getSelectedValues(): string;
+		public abstract registerProviderCallback(eventName: string, callback: Callbacks.OSGeneric): void;
 		public abstract validation(isValid: boolean, validationMessage: string): void;
 	}
 }

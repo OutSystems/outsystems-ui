@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace Providers.Dropdown.Virtual_Select.Search {
+namespace Providers.Dropdown.VirtualSelect.Search {
 	/**
 	 * Class that represents the custom configurations received by the Dropdown Search mode.
 	 *

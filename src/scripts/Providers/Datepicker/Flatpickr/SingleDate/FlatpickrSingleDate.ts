@@ -15,7 +15,7 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 
 			// Check if any date has been selected, In case of Clear this will retunr empty array
 			if (selectedDates.length > 0) {
-				_selectedDate = this._fpProvider.formatDate(selectedDates[0], this._flatpickrOpts.dateFormat);
+				_selectedDate = this.provider.formatDate(selectedDates[0], this._flatpickrOpts.dateFormat);
 			}
 
 			// Trigger platform's onChange callback event
@@ -52,10 +52,10 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 				switch (propertyName) {
 					case OSUIFramework.Patterns.DatePicker.Enum.Properties.DateFormat:
 						// Check if any Date was selected
-						if (this._fpProvider.selectedDates.length > 0) {
+						if (this.provider.selectedDates.length > 0) {
 							// Set the new DefaultDate values
-							this.configs.InitialDate = this._fpProvider.formatDate(
-								this._fpProvider.selectedDates[0],
+							this.configs.InitialDate = this.provider.formatDate(
+								this.provider.selectedDates[0],
 								this._flatpickrOpts.dateFormat
 							);
 						}

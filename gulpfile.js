@@ -21,7 +21,7 @@ function cleanOldFiles() {
     return gulp.src(distFolder + "/*", {read: false}).pipe(clean());
 }
 
-// Starts a Brower instance
+// Starts a Browser instance
 function initServer() {
     // Create index.html
     gulp.src("./gulp/templates/index.html")

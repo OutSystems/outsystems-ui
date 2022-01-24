@@ -14,6 +14,10 @@ namespace OSUIFramework.Patterns.<%= patternNamePC %> {
 			return this._provider;
 		}
 
+		public set provider(p: P) {
+			this._provider = p;
+		}
+
 		// TODO (by CreateNewPattern): Implement abstract methods that all inherit instances should have
 
 		public abstract registerProviderCallback(eventName: string, callback: Callbacks.OSGeneric): void;

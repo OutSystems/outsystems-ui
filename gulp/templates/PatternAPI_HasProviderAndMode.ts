@@ -30,6 +30,7 @@ namespace OutSystems.OSUI.Patterns.<%= patternNamePC %>API {
 	export function Create(
 		<%= patternName %>Id: string,
 		configs: string,
+		mode: OSUIFramework.Patterns.<%= patternNamePC %>.Enum.Mode,
 		provider: string
 	): OSUIFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %> {
 		if (_<%= patternName %>ItemsMap.has(<%= patternName %>Id)) {
@@ -43,6 +44,7 @@ namespace OutSystems.OSUI.Patterns.<%= patternNamePC %>API {
 		const _<%= patternName %>Item = OSUIFramework.Patterns.<%= patternNamePC %>.Factory.New<%= patternNamePC %>(
 			<%= patternName %>Id,
 			configs,
+			mode,
 			provider
 		);
 

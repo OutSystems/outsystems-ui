@@ -205,7 +205,10 @@ function getTemplateSrc(templateName) {
 
     switch (templateName) {
         case 'PatternAPI':
-            templateSrc = './gulp/templates/PatternAPI' + (hasProvider ? '_HasProvider' : '') +'.ts';
+            templateSrc = './gulp/templates/PatternAPI' + 
+                            (hasProvider ? '_HasProvider' : '') +
+                            (hasProvider && hasMode ? 'AndMode' : '') +
+                            '.ts';
             break;
         case 'ProviderReadMe':
             templateSrc = './gulp/templates/PatternFramework_HasProvider/ProviderReadMe.md';
