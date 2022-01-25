@@ -104,7 +104,7 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	export function SetProgressBarValue(progressId: string, progress: number): void {
 		const _progressItem = GetProgressItemById(progressId);
 
-		_progressItem.SetProgressBarValue(progress);
+		_progressItem.SetProgressValue(progress);
 	}
 
 	/**
@@ -116,6 +116,6 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	export function SetProgressCircleValue(progressId: string, progress: number): void {
 		const _progressItem = GetProgressItemById(progressId);
 
-		_progressItem.SetProgressCircleValue(progress);
+		_progressItem.SetProgressValue(progress);
 	}
 }

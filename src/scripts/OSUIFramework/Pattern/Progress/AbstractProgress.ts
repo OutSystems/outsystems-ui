@@ -37,15 +37,6 @@ namespace OSUIFramework.Patterns.Progress {
 			);
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-empty-function
-		public SetProgressBarValue(value: number): void {
-			//To be implemented in ProgressBar
-		}
-		// eslint-disable-next-line @typescript-eslint/no-empty-function
-		public SetProgressCircleValue(value: number): void {
-			//To be implemented on ProgressCircle
-		}
-
 		public build(): void {
 			super.build();
 
@@ -53,5 +44,6 @@ namespace OSUIFramework.Patterns.Progress {
 		}
 		// Implement the _addInitialAnimation method since a transitionend event must be added, this must be implemented at childs level
 		protected abstract addInitialAnimation(): void;
+		abstract SetProgressValue(value: number): void;
 	}
 }

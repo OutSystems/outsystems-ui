@@ -198,7 +198,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			}
 		}
 
-		public SetProgressCircleValue(value: number): void {
+		public SetProgressValue(value: number): void {
 			// Ensure that progress has the min and max correct values
 			if (value < 0) {
 				value = 0;
@@ -246,7 +246,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 					break;
 
 				case ProgressEnum.Properties.Progress:
-					this.SetProgressCircleValue(propertyValue);
+					this.SetProgressValue(propertyValue);
 
 					break;
 
