@@ -25,7 +25,7 @@ namespace Providers.RangeSlider {
 		}
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		public getRangeConfig(): any {
+		public getRangeConfig(): unknown {
 			return {
 				min: this.MinValue,
 				max: this.MaxValue === this.MinValue ? 100 : this.MaxValue,
