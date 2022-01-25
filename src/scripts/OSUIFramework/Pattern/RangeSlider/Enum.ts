@@ -4,18 +4,17 @@ namespace OSUIFramework.Patterns.RangeSlider.Enum {
 	 * RangeSlider Enum properties
 	 */
 	export enum Properties {
-		ChangeEventDuringSlide = 'ChangeEventDuringSlide',
-		InitialValueEnd = 'InitialValueEnd',
-		InitialValueStart = 'InitialValueStart',
 		IsDisabled = 'IsDisabled',
-		IsVertical = 'IsVertical',
 		MaxValue = 'MaxValue',
 		MinValue = 'MinValue',
-		PipsStep = 'PipsStep',
-		ShowPips = 'ShowPips',
-		ShowTooltip = 'ShowTooltip',
+		Orientation = 'Orientation',
+		ShowTickMarks = 'ShowTickMarks',
+		ShowFloatingLabel = 'ShowFloatingLabel',
+		Size = 'Size',
+		StartingValueEnd = 'StartingValueEnd',
+		StartingValueStart = 'StartingValueStart',
 		Step = 'Step',
-		VerticalHeight = 'VerticalHeight',
+		TickMarksInterval = 'TickMarksInterval',
 	}
 
 	/**

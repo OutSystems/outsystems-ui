@@ -86,7 +86,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * @memberof OSUINoUiSlider
 		 */
 		private _handleRangePips(isUpdate = true): void {
-			let pipsValues = Math.floor(this.configs.PipsStep);
+			let pipsValues = Math.floor(this.configs.TickMarksInterval);
 
 			//To avoid performance issues
 			if (pipsValues > this.configs.MaxValue) {
@@ -176,7 +176,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * @memberof OSUINoUiSlider
 		 */
 		private _setValue(): void {
-			this.provider.set([this.configs.InitialValueStart, this.configs.InitialValueEnd]);
+			this.provider.set([this.configs.StartingValueStart, this.configs.StartingValueEnd]);
 			// Trigger platform event after setting the value
 			this._valueChangeCallback();
 		}
@@ -191,7 +191,7 @@ namespace Providers.RangeSlider.NoUISlider {
 			OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				OSUIFramework.Patterns.RangeSlider.Enum.CssProperties.VerticalHeight,
-				this.configs.VerticalHeight + OSUIFramework.GlobalEnum.Units.Pixel
+				this.configs.Size + OSUIFramework.GlobalEnum.Units.Pixel
 			);
 		}
 
@@ -227,10 +227,10 @@ namespace Providers.RangeSlider.NoUISlider {
 			const value = this.getValue();
 
 			if (this.configs.IsInterval) {
-				this.configs.InitialValueStart = value[0];
-				this.configs.InitialValueEnd = value[1];
+				this.configs.StartingValueStart = value[0];
+				this.configs.StartingValueEnd = value[1];
 			} else {
-				this.configs.InitialValueStart = value as number;
+				this.configs.StartingValueStart = value as number;
 			}
 
 			this.provider.destroy();
@@ -252,7 +252,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		// Method to update tooltips visibility on RangeSlider
 		private _updateTooltipVisibility(): void {
 			this.provider.updateOptions({
-				tooltips: this.configs.setTooltipVisibility(this.configs.ShowTooltip),
+				tooltips: this.configs.setTooltipVisibility(this.configs.ShowFloatingLabel),
 			});
 		}
 
@@ -266,9 +266,9 @@ namespace Providers.RangeSlider.NoUISlider {
 		private _valueChangeCallback(value?: number[]): void {
 			if (value !== undefined) {
 				//if we received value, means that this was a callback from the Provider. Let's update the values.
-				this.configs.InitialValueStart = value[0];
+				this.configs.StartingValueStart = value[0];
 				if (this.configs.IsInterval) {
-					this.configs.InitialValueEnd = value[1];
+					this.configs.StartingValueEnd = value[1];
 				}
 			}
 
@@ -278,8 +278,8 @@ namespace Providers.RangeSlider.NoUISlider {
 				this._trottleTimer = setTimeout(() => {
 					this._platformEventValueChange(
 						this.widgetId,
-						this.configs.InitialValueStart,
-						this.configs.IsInterval ? this.configs.InitialValueEnd : undefined
+						this.configs.StartingValueStart,
+						this.configs.IsInterval ? this.configs.StartingValueEnd : undefined
 					);
 					this._trottleTimer = undefined;
 				}, this._trottleTimeValue);
@@ -340,11 +340,11 @@ namespace Providers.RangeSlider.NoUISlider {
 
 			this.setA11yProperties();
 
-			if (this.configs.ShowPips) {
+			if (this.configs.ShowTickMarks) {
 				this._handleRangePips(false);
 			}
 
-			if (this.configs.IsVertical) {
+			if (this.configs.Orientation) {
 				this._setVerticalHeight();
 			}
 
@@ -398,15 +398,8 @@ namespace Providers.RangeSlider.NoUISlider {
 						this._handleRangePips();
 
 						break;
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.InitialValueStart:
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.InitialValueEnd:
-						if (!this._isSliding) {
-							this._setValue();
-						}
-
-						break;
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.IsVertical:
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowPips:
+					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.Orientation:
+					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
 						this._updateRangeSlider();
 
 						break;
@@ -414,7 +407,7 @@ namespace Providers.RangeSlider.NoUISlider {
 						this._setIsDisabled();
 
 						break;
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.PipsStep:
+					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.TickMarksInterval:
 						this._handleRangePips();
 
 						break;
@@ -422,11 +415,11 @@ namespace Providers.RangeSlider.NoUISlider {
 						this.provider.updateOptions({ step: this.configs.Step });
 
 						break;
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.VerticalHeight:
+					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.Size:
 						this._setVerticalHeight();
 
 						break;
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowTooltip:
+					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowFloatingLabel:
 						this._updateTooltipVisibility();
 
 						break;

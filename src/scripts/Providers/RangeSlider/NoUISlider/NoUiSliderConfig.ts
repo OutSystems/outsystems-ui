@@ -8,14 +8,12 @@ namespace Providers.RangeSlider {
 				direction: OutSystems.OSUI.Utils.GetIsRTL()
 					? OSUIFramework.GlobalEnum.Direction.RTL
 					: OSUIFramework.GlobalEnum.Direction.LTR,
-				start: this.IsInterval ? [this.InitialValueStart, this.InitialValueEnd] : [this.InitialValueStart],
+				start: this.IsInterval ? [this.StartingValueStart, this.StartingValueEnd] : [this.StartingValueStart],
 				step: this.Step,
 				connect: this.IsInterval ? true : Enum.NoUiSliderConnectOptions.Lower,
-				orientation: this.IsVertical
-					? OSUIFramework.GlobalEnum.Orientation.Vertical
-					: OSUIFramework.GlobalEnum.Orientation.Horizontal,
+				orientation: this.Orientation,
 				range: this.getRangeConfig(),
-				tooltips: this.setTooltipVisibility(this.ShowTooltip),
+				tooltips: this.setTooltipVisibility(this.ShowFloatingLabel),
 			};
 
 			//Cleanning undefined properties
