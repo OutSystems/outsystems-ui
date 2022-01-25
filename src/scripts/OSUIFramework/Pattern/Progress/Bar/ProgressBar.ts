@@ -106,9 +106,7 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 					break;
 
 				case ProgressEnum.Properties.Progress:
-					this._configs.Progress = propertyValue > 100 ? 100 : propertyValue;
-
-					this._updateProgressValue();
+					this.SetProgressBarValue(propertyValue);
 
 					break;
 
