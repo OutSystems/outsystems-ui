@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace Providers.RangeSlider {
 	export class NoUiSliderConfig extends OSUIFramework.Patterns.RangeSlider.AbstractRangeSliderConfig {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		public getProviderConfig(): any {
+		public getProviderConfig(): NoUiSliderOptions {
 			// eslint-disable-next-line prefer-const
 			let providerOptions = {
 				direction: OutSystems.OSUI.Utils.GetIsRTL()
@@ -24,7 +23,6 @@ namespace Providers.RangeSlider {
 			return providerOptions;
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		public getRangeConfig(): unknown {
 			return {
 				min: this.MinValue,
