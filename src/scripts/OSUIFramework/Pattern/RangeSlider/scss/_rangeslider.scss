@@ -4,7 +4,7 @@
 /// Patterns - Interaction - Range Slider
 
 /* NoUiSlider Library Core Styles */
-@import './NoUiSlider/noUiSlider';
+@import '../../../../Providers/RangeSlider/NoUISlider/scss/noUiSlider';
 
 ///
 .osui-range-slider {
@@ -27,8 +27,6 @@
 
 		&-origin {
 			background-color: var(--color-neutral-5);
-			height: 10%;
-			width: 10%;
 		}
 
 		&-target {
@@ -49,9 +47,6 @@
 				cursor: pointer;
 				display: inline-block;
 				height: 24px;
-				left: -10px;
-				position: relative;
-				top: -10px;
 				transition: transform 150ms ease-out;
 				width: 24px;
 			}
@@ -106,6 +101,7 @@
 			}
 
 			.noUi-handle {
+				bottom: -12px;
 				left: -14px;
 			}
 
@@ -128,6 +124,7 @@
 				left: auto;
 				position: absolute;
 				right: -12px;
+				top: -10px;
 			}
 
 			.noUi-pips {
@@ -290,7 +287,7 @@
 		}
 	}
 
-	.osui-range-slider_provider {
+	.osui-range-slider__provider {
 		&[disabled='true'] {
 			pointer-events: none;
 

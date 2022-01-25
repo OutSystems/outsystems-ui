@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.RangeSlider {
+namespace Providers.RangeSlider.NoUISlider {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
@@ -21,15 +21,15 @@ namespace Providers.RangeSlider {
 		private _providerOptions: NoUiSliderOptions;
 		// Store the provider target elem
 		private _rangeSliderProviderElem: HTMLElement;
-		// Trottle timer id
-		private _trottelTimer: unknown;
 		// Trottle before invoking the platform
 		private _trottleTimeValue = 200;
+		// Trottle timer id
+		private _trottleTimer: unknown;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new NoUiSliderConfig(configs));
 
-			this._trottelTimer = undefined;
+			this._trottleTimer = undefined;
 		}
 
 		/**
@@ -272,15 +272,15 @@ namespace Providers.RangeSlider {
 			}
 
 			//If we're not waiting to send the information
-			if (this._trottelTimer === undefined) {
+			if (this._trottleTimer === undefined) {
 				//Then let's wait _trottleTimeValue ms and send the latest value to the platform
-				this._trottelTimer = setTimeout(() => {
+				this._trottleTimer = setTimeout(() => {
 					this._platformEventValueChange(
 						this.widgetId,
 						this.configs.InitialValueStart,
 						this.configs.IsInterval ? this.configs.InitialValueEnd : undefined
 					);
-					this._trottelTimer = undefined;
+					this._trottleTimer = undefined;
 				}, this._trottleTimeValue);
 			}
 		}
@@ -376,6 +376,8 @@ namespace Providers.RangeSlider {
 			super.build();
 			this.setCallbacks();
 			this.setHtmlElements();
+
+			console.log('dev');
 
 			this._createProviderRangeSlider();
 

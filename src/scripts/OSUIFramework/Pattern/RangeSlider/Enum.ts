@@ -23,7 +23,7 @@ namespace OSUIFramework.Patterns.RangeSlider.Enum {
 	 */
 	export enum CssClass {
 		RangeSlider = 'osui-range-slider',
-		RangeSliderProviderElem = 'osui-range-slider_provider',
+		RangeSliderProviderElem = 'osui-range-slider__provider',
 	}
 
 	/**
