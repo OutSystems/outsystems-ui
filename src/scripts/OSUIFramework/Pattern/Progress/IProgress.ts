@@ -5,5 +5,6 @@ namespace OSUIFramework.Patterns.Progress {
 	 */
 	export interface IProgress extends Interface.IPattern {
 		SetProgressBarValue(value): void;
+		SetProgressCircleValue(value): void;
 	}
 }

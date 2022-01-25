@@ -37,7 +37,10 @@ namespace OSUIFramework.Patterns.Progress {
 			);
 		}
 
+		// eslint-disable-next-line @typescript-eslint/no-empty-function
 		public SetProgressBarValue(value: number): void {}
+		// eslint-disable-next-line @typescript-eslint/no-empty-function
+		public SetProgressCircleValue(value: number): void {}
 
 		public build(): void {
 			super.build();
