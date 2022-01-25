@@ -37,12 +37,13 @@ namespace OSUIFramework.Patterns.Progress {
 			);
 		}
 
+		public SetProgressBarValue(value: number): void {}
+
 		public build(): void {
 			super.build();
 
 			this._setAccessibilityProps();
 		}
-
 		// Implement the _addInitialAnimation method since a transitionend event must be added, this must be implemented at childs level
 		protected abstract addInitialAnimation(): void;
 	}
