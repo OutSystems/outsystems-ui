@@ -92,7 +92,8 @@
 		}
 
 		&-vertical {
-			height: var(--vertical-height);
+			--range-slider-size: 100px;
+			height: var(--range-slider-size);
 			margin: var(--space-m) var(--space-none);
 			width: 4px;
 
@@ -114,7 +115,9 @@
 		}
 
 		&-horizontal {
+			--range-slider-size: 100%;
 			height: 4px;
+			width: var(--range-slider-size);
 
 			.noUi-origin {
 				height: 0;

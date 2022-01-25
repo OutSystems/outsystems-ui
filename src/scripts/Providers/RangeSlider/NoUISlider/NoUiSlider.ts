@@ -170,6 +170,20 @@ namespace Providers.RangeSlider.NoUISlider {
 		}
 
 		/**
+		 * Method to create/update the Size CSS Variable
+		 *
+		 * @private
+		 * @memberof OSUINoUiSlider
+		 */
+		private _setSize(): void {
+			OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				OSUIFramework.Patterns.RangeSlider.Enum.CssProperties.Size,
+				this.configs.Size
+			);
+		}
+
+		/**
 		 * Method to set a new value to the RangeSlider
 		 *
 		 * @private
@@ -180,21 +194,6 @@ namespace Providers.RangeSlider.NoUISlider {
 			// Trigger platform event after setting the value
 			this._valueChangeCallback();
 		}
-
-		/**
-		 * Method to create/update the VerticalHieght CSS Variable
-		 *
-		 * @private
-		 * @memberof OSUINoUiSlider
-		 */
-		private _setVerticalHeight(): void {
-			OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
-				OSUIFramework.Patterns.RangeSlider.Enum.CssProperties.VerticalHeight,
-				this.configs.Size + OSUIFramework.GlobalEnum.Units.Pixel
-			);
-		}
-
 		/**
 		 * Handler to trigger the OnStart event
 		 *
@@ -345,7 +344,7 @@ namespace Providers.RangeSlider.NoUISlider {
 			}
 
 			if (this.configs.Orientation) {
-				this._setVerticalHeight();
+				this._setSize();
 			}
 
 			this._setIsDisabled();
@@ -416,7 +415,7 @@ namespace Providers.RangeSlider.NoUISlider {
 
 						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.Size:
-						this._setVerticalHeight();
+						this._setSize();
 
 						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowFloatingLabel:
