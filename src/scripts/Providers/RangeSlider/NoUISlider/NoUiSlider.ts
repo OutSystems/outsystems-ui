@@ -9,6 +9,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		implements OSUIFramework.Patterns.RangeSlider.IRangeSlider
 	{
+		private _changeEventDuringSlide: boolean;
 		private _eventProviderEnd: OSUIFramework.Callbacks.Generic;
 		private _eventProviderStart: OSUIFramework.Callbacks.Generic;
 		private _eventProviderValueChanged: OSUIFramework.Callbacks.Generic;
@@ -49,7 +50,7 @@ namespace Providers.RangeSlider.NoUISlider {
 			this._setOnInitializedEvent();
 
 			// Set the correct type of event to add (Change only triggers when stoping the drag)
-			const changeEvent = this.configs.ChangeEventDuringSlide
+			const changeEvent = this._changeEventDuringSlide
 				? Enum.NoUISliderEvents.Slide
 				: Enum.NoUISliderEvents.Change;
 
@@ -374,10 +375,9 @@ namespace Providers.RangeSlider.NoUISlider {
 
 		public build(): void {
 			super.build();
+
 			this.setCallbacks();
 			this.setHtmlElements();
-
-			console.log('dev');
 
 			this._createProviderRangeSlider();
 
@@ -405,7 +405,6 @@ namespace Providers.RangeSlider.NoUISlider {
 						}
 
 						break;
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ChangeEventDuringSlide:
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.IsVertical:
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowPips:
 						this._updateRangeSlider();
@@ -441,10 +440,12 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * @memberof OSUINoUiSlider
 		 */
 		public dispose(): void {
-			this.isBuilt && this.provider.destroy();
+			if (this.isBuilt) {
+				this.unsetCallbacks();
+				this.unsetHtmlElements();
 
-			this.unsetCallbacks();
-			this.unsetHtmlElements();
+				this.provider.destroy();
+			}
 
 			super.dispose();
 		}
