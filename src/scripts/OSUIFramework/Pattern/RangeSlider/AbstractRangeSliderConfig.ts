@@ -30,6 +30,7 @@ namespace OSUIFramework.Patterns.RangeSlider {
 
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;
+
 			switch (key) {
 				case Enum.Properties.Orientation:
 					validatedValue = this.validateInRange(
@@ -45,7 +46,10 @@ namespace OSUIFramework.Patterns.RangeSlider {
 					validatedValue = this.validateBoolean(value as boolean, false);
 					break;
 				case Enum.Properties.Size:
-					validatedValue = this.validateString(value as string, 'var(--range-slider-size)');
+					validatedValue = this.validateString(
+						value as string,
+						this.Orientation === (GlobalEnum.Orientation.Horizontal as string) ? '100%' : '100px'
+					);
 					break;
 				case Enum.Properties.Step:
 					validatedValue = this.validateNumber(value as number, 1);
