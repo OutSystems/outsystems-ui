@@ -404,6 +404,7 @@ namespace Providers.RangeSlider.NoUISlider {
 			this.setCallbacks();
 			this.setHtmlElements();
 			this.setInitialCSSClasses();
+			console.log('dev');
 
 			this._createProviderRangeSlider();
 
