@@ -74,12 +74,6 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 			this._updateProgressValue();
 		}
 
-		public setProgressValue(value: number): void {
-			this._configs.Progress = value > 100 ? 100 : value;
-
-			this._updateProgressValue();
-		}
-
 		public build(): void {
 			super.build();
 
@@ -147,6 +141,12 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 					super.changeProperty(propertyName, propertyValue);
 					break;
 			}
+		}
+
+		public setProgressValue(value: number): void {
+			this._configs.Progress = value > 100 ? 100 : value;
+
+			this._updateProgressValue();
 		}
 	}
 }
