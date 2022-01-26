@@ -44,6 +44,6 @@ namespace OSUIFramework.Patterns.Progress {
 		}
 		// Implement the _addInitialAnimation method since a transitionend event must be added, this must be implemented at childs level
 		protected abstract addInitialAnimation(): void;
-		abstract SetProgressValue(value: number): void;
+		public abstract setProgressValue(value: number): void;
 	}
 }

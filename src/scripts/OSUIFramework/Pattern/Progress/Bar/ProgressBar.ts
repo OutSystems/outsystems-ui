@@ -74,7 +74,7 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 			this._updateProgressValue();
 		}
 
-		public SetProgressValue(value: number): void {
+		public setProgressValue(value: number): void {
 			this._configs.Progress = value > 100 ? 100 : value;
 
 			this._updateProgressValue();
@@ -106,7 +106,7 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 					break;
 
 				case ProgressEnum.Properties.Progress:
-					this.SetProgressValue(propertyValue);
+					this.setProgressValue(propertyValue);
 
 					break;
 

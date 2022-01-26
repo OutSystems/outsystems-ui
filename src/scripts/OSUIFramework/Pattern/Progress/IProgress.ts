@@ -4,6 +4,6 @@ namespace OSUIFramework.Patterns.Progress {
 	 * Defines the interface for OutSystemsUI Progress Patterns
 	 */
 	export interface IProgress extends Interface.IPattern {
-		SetProgressValue(value): void;
+		setProgressValue(value): void;
 	}
 }

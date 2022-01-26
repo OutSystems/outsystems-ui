@@ -104,6 +104,6 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	export function SetProgressValue(progressId: string, progress: number): void {
 		const _progressItem = GetProgressItemById(progressId);
 
-		_progressItem.SetProgressValue(progress);
+		_progressItem.setProgressValue(progress);
 	}
 }
