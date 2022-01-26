@@ -94,6 +94,11 @@
 			.noUi-handle {
 				bottom: -12px;
 				left: -14px;
+
+				// Service Studio Preview
+				& {
+					left: -10px !important;
+				}
 			}
 		}
 

@@ -186,7 +186,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		}
 
 		/**
-		 * Method to set a new value to the RangeSlider
+		 * TODO (will be used for setValue client actions) Method to set a new value to the RangeSlider
 		 *
 		 * @private
 		 * @memberof OSUINoUiSlider
