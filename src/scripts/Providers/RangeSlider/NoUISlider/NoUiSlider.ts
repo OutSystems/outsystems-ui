@@ -31,6 +31,8 @@ namespace Providers.RangeSlider.NoUISlider {
 			super(uniqueId, new NoUiSliderConfig(configs));
 
 			this._trottleTimer = undefined;
+			/* TODO: change this for when client actin is created*/
+			this._changeEventDuringSlide = true;
 		}
 
 		/**
