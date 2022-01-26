@@ -24,8 +24,6 @@ namespace OSUIFramework.Patterns.Rating {
 		private _ratingIconStatesElem: HTMLElement;
 		// Store the input name to be used on clones
 		private _ratingInputName: string;
-		// Store current rating value
-		private _value: number;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new RatingConfig(configs));
@@ -94,9 +92,8 @@ namespace OSUIFramework.Patterns.Rating {
 			const isInput = Helper.Dom.Styles.ContainsClass(currentTarget, Enum.CssClass.RatingInput);
 			if (isInput) {
 				// If it is, then get the input:checked value
-				this._value = this._getValue();
+				this._configs.RatingValue = this._getValue();
 				// And use that value to set a new Rating Value
-				this._configs.RatingValue = this._value;
 				this._setValue(true);
 			}
 		}
@@ -149,7 +146,6 @@ namespace OSUIFramework.Patterns.Rating {
 
 		// Set the initial and local properties values
 		private _setInitialPropertiesValues(): void {
-			this._value = this.configs.RatingValue;
 			this._disabled = !this.configs.IsEdit;
 			this._ratingInputName = 'rating-' + this.uniqueId;
 			this._ratingHasEventAdded = false;
@@ -201,54 +197,51 @@ namespace OSUIFramework.Patterns.Rating {
 
 		// Set a rating value
 		private _setValue(triggerEvent = false): void {
-			if (this._configs.RatingValue !== null) {
-				// Check if passed value is decimal
-				this._decimalValue = this._getDecimalValue(this._configs.RatingValue);
-				// Check if passed value is half
-				this._isHalfValue = this._getIsHalfValue(this._configs.RatingValue);
-				// Get all inputs on rating, to properly add the :checked attribute on the correct one
-				const ratingItems = this._selfElem.querySelectorAll(GlobalEnum.HTMLElement.Input);
+			// Check if passed value is decimal
+			this._decimalValue = this._getDecimalValue(this._configs.RatingValue);
+			// Check if passed value is half
+			this._isHalfValue = this._getIsHalfValue(this._configs.RatingValue);
+			// Get all inputs on rating, to properly add the :checked attribute on the correct one
+			const ratingItems = this._selfElem.querySelectorAll(GlobalEnum.HTMLElement.Input);
 
-				// Reset the is-half class
-				if (Helper.Dom.Styles.ContainsClass(this._selfElem, Enum.CssClass.IsHalf)) {
-					Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsHalf);
-				}
+			// Reset the is-half class
+			if (Helper.Dom.Styles.ContainsClass(this._selfElem, Enum.CssClass.IsHalf)) {
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsHalf);
+			}
 
-				// If there's only one rating item, then there's no need for further checks, this one will be checked
-				if (this.configs.RatingScale === 1) {
-					ratingItems[1].checked = true;
-					return;
-				}
+			// If there's only one rating item, then there's no need for further checks, this one will be checked
+			if (this.configs.RatingScale === 1) {
+				ratingItems[1].checked = true;
+				return;
+			}
 
-				// Set the newValue const to the correct value
-				// If is-half or the decimal value is bigger than 0.7, that means that we will have to apply the :checked attribute on the next input
-				// Otherwise, the input :checked will correspond to the one clicked.
-				const newValue =
-					this._isHalfValue || this._decimalValue > 0.7
-						? Math.floor(this._configs.RatingValue) + 1
-						: Math.floor(this._configs.RatingValue);
+			// Set the newValue const to the correct value
+			// If is-half or the decimal value is bigger than 0.7, that means that we will have to apply the :checked attribute on the next input
+			// Otherwise, the input :checked will correspond to the one clicked.
+			const newValue =
+				this._isHalfValue || this._decimalValue > 0.7
+					? Math.floor(this._configs.RatingValue) + 1
+					: Math.floor(this._configs.RatingValue);
 
-				// Try if the input :checked exists, otherwise throw warn for trying to set a value bigger than the limit
-				try {
-					ratingItems[newValue].checked = true;
-				} catch (e) {
-					console.warn(`Value of Rating '${this.uniqueId}' exceeds the scale boundaries`);
-					return;
-				}
+			// Try if the input :checked exists, otherwise throw warn for trying to set a value bigger than the limit
+			try {
+				ratingItems[newValue].checked = true;
+			} catch (e) {
+				console.warn(`Value of Rating '${this.widgetId}' exceeds the scale boundaries`);
+				return;
+			}
 
-				// If is-half add the appropriate class, otherwise just declare the this.isHalfValue, to complete the if statement
-				this._isHalfValue
-					? Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsHalf)
-					: this._isHalfValue;
+			// If is-half add the appropriate class, otherwise just declare the this.isHalfValue, to complete the if statement
+			if (this._isHalfValue) {
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsHalf);
+			}
 
-				// Update the variables with the new value
-				this._configs.RatingValue = this._isHalfValue ? this._configs.RatingValue : newValue;
-				this._value = this._configs.RatingValue;
+			// Update the variables with the new value
+			this._configs.RatingValue = this._isHalfValue ? this._configs.RatingValue : newValue;
 
-				// Call calbackfor OnSelect event
-				if (triggerEvent) {
-					this._triggerOnSelectEvent(this._value);
-				}
+			// Call calbackfor OnSelect event
+			if (triggerEvent) {
+				this._triggerOnSelectEvent(this._configs.RatingValue);
 			}
 		}
 
