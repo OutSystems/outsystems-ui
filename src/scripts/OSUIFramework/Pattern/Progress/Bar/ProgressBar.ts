@@ -112,7 +112,7 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 					break;
 
 				case ProgressEnum.Properties.Progress:
-					this.setProgressValue(propertyValue);
+					this.setElementProgressValue(propertyValue);
 
 					break;
 
