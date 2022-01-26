@@ -282,7 +282,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			}
 		}
 
-		public setProgressValue(value: number): void {
+		public setElementProgressValue(value: number): void {
 			// Ensure that progress has the min and max correct values
 			if (value < 0) {
 				value = 0;

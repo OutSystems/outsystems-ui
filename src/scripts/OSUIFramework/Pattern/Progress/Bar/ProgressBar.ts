@@ -143,7 +143,7 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 			}
 		}
 
-		public setProgressValue(value: number): void {
+		public setElementProgressValue(value: number): void {
 			this._configs.Progress = value > 100 ? 100 : value;
 
 			this._updateProgressValue();
