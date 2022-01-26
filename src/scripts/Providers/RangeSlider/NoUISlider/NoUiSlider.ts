@@ -329,6 +329,30 @@ namespace Providers.RangeSlider.NoUISlider {
 		}
 
 		/**
+		 * Method to set the initial CSS Classes
+		 *
+		 * @protected
+		 * @memberof OSUINoUiSlider
+		 */
+		protected setInitialCSSClasses(): void {
+			// If Orientation is vertical add class
+			if (this._configs.Orientation === OSUIFramework.GlobalEnum.Orientation.Vertical) {
+				OSUIFramework.Helper.Dom.Styles.AddClass(
+					this._selfElem,
+					OSUIFramework.Patterns.RangeSlider.Enum.CssClass.ClassModifier +
+						OSUIFramework.GlobalEnum.Orientation.Vertical
+				);
+				// Otherwise it's horizontal and we don't need a class
+			} else if (OSUIFramework.GlobalEnum.Orientation.Horizontal) {
+				OSUIFramework.Helper.Dom.Styles.RemoveClass(
+					this._selfElem,
+					OSUIFramework.Patterns.RangeSlider.Enum.CssClass.ClassModifier +
+						OSUIFramework.GlobalEnum.Orientation.Vertical
+				);
+			}
+		}
+
+		/**
 		 * Method to set the library options from the config
 		 *
 		 * @private
@@ -377,6 +401,7 @@ namespace Providers.RangeSlider.NoUISlider {
 
 			this.setCallbacks();
 			this.setHtmlElements();
+			this.setInitialCSSClasses();
 
 			this._createProviderRangeSlider();
 
@@ -400,6 +425,7 @@ namespace Providers.RangeSlider.NoUISlider {
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.Orientation:
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
 						this._updateRangeSlider();
+						this.setInitialCSSClasses();
 
 						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.IsDisabled:

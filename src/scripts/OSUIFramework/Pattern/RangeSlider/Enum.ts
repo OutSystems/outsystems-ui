@@ -21,6 +21,7 @@ namespace OSUIFramework.Patterns.RangeSlider.Enum {
 	 * RangeSlider Enum for CSS Classes
 	 */
 	export enum CssClass {
+		ClassModifier = 'osui-range-slider--is-',
 		RangeSlider = 'osui-range-slider',
 		RangeSliderProviderElem = 'osui-range-slider__provider',
 	}

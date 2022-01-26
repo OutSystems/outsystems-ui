@@ -8,7 +8,11 @@
 
 ///
 .osui-range-slider {
-	display: contents;
+	padding: 0 12px;
+
+	&--is-vertical {
+		height: var(--range-slider-size);
+	}
 
 	// Service Studio Preview
 	& {
