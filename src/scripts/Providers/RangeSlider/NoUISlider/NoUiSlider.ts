@@ -250,7 +250,12 @@ namespace Providers.RangeSlider.NoUISlider {
 			});
 		}
 
-		// Method to update tooltips visibility on RangeSlider
+		/**
+		 * Method to update tooltips visibility on RangeSlider
+		 *
+		 * @private
+		 * @memberof OSUINoUiSlider
+		 */
 		private _updateTooltipVisibility(): void {
 			this.provider.updateOptions({
 				tooltips: this.configs.setTooltipVisibility(this.configs.ShowFloatingLabel),
