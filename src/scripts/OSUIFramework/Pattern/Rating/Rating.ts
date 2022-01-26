@@ -86,7 +86,7 @@ namespace OSUIFramework.Patterns.Rating {
 
 		// Method that handles the click event and set the new value, by checking the input:checked
 		private _ratingOnClick(e: MouseEvent): void {
-			const currentTarget: HTMLElement = e.target as HTMLElement;
+			const currentTarget = e.target as HTMLElement;
 			// Remove the is-half when clicking, as a click will never result in a half value
 			this._isHalfValue = false;
 
@@ -96,7 +96,8 @@ namespace OSUIFramework.Patterns.Rating {
 				// If it is, then get the input:checked value
 				this._value = this._getValue();
 				// And use that value to set a new Rating Value
-				this._setValue(this._value, true);
+				this._configs.RatingValue = this._value;
+				this._setValue(true);
 			}
 		}
 
@@ -146,6 +147,7 @@ namespace OSUIFramework.Patterns.Rating {
 			}
 		}
 
+		// Set the initial and local properties values
 		private _setInitialPropertiesValues(): void {
 			this._value = this.configs.RatingValue;
 			this._disabled = !this.configs.IsEdit;
@@ -181,7 +183,7 @@ namespace OSUIFramework.Patterns.Rating {
 			// Afteer the fieldset html is clean, create the items again
 			this._createItems();
 			// Set the rating value equal to the value before calling the _setScale method
-			this._setValue(this._value);
+			this._setValue();
 		}
 
 		// Set the Rating Size
@@ -198,12 +200,12 @@ namespace OSUIFramework.Patterns.Rating {
 		}
 
 		// Set a rating value
-		private _setValue(value: number, triggerEvent = false): void {
-			if (value !== null) {
+		private _setValue(triggerEvent = false): void {
+			if (this._configs.RatingValue !== null) {
 				// Check if passed value is decimal
-				this._decimalValue = this._getDecimalValue(value);
+				this._decimalValue = this._getDecimalValue(this._configs.RatingValue);
 				// Check if passed value is half
-				this._isHalfValue = this._getIsHalfValue(value);
+				this._isHalfValue = this._getIsHalfValue(this._configs.RatingValue);
 				// Get all inputs on rating, to properly add the :checked attribute on the correct one
 				const ratingItems = this._selfElem.querySelectorAll(GlobalEnum.HTMLElement.Input);
 
@@ -222,7 +224,9 @@ namespace OSUIFramework.Patterns.Rating {
 				// If is-half or the decimal value is bigger than 0.7, that means that we will have to apply the :checked attribute on the next input
 				// Otherwise, the input :checked will correspond to the one clicked.
 				const newValue =
-					this._isHalfValue || this._decimalValue > 0.7 ? Math.floor(value) + 1 : Math.floor(value);
+					this._isHalfValue || this._decimalValue > 0.7
+						? Math.floor(this._configs.RatingValue) + 1
+						: Math.floor(this._configs.RatingValue);
 
 				// Try if the input :checked exists, otherwise throw warn for trying to set a value bigger than the limit
 				try {
@@ -238,7 +242,7 @@ namespace OSUIFramework.Patterns.Rating {
 					: this._isHalfValue;
 
 				// Update the variables with the new value
-				this._configs.RatingValue = this._isHalfValue ? value : newValue;
+				this._configs.RatingValue = this._isHalfValue ? this._configs.RatingValue : newValue;
 				this._value = this._configs.RatingValue;
 
 				// Call calbackfor OnSelect event
@@ -329,7 +333,7 @@ namespace OSUIFramework.Patterns.Rating {
 
 			this._manageRatingEvent();
 
-			this._setValue(this._configs.RatingValue);
+			this._setValue();
 
 			this.finishBuild();
 		}
@@ -351,7 +355,7 @@ namespace OSUIFramework.Patterns.Rating {
 			if (this.isBuilt) {
 				switch (propertyName) {
 					case Enum.Properties.RatingValue:
-						this._setValue(propertyValue as number);
+						this._setValue();
 						break;
 
 					case Enum.Properties.RatingScale:
