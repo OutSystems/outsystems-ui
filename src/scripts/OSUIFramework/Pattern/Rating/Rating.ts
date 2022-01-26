@@ -29,12 +29,6 @@ namespace OSUIFramework.Patterns.Rating {
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new RatingConfig(configs));
-
-			this._value = this.configs.RatingValue;
-			this._disabled = !this.configs.IsEdit;
-			this._ratingInputName = 'rating-' + this.uniqueId;
-			this._ratingHasEventAdded = false;
-			this._eventOnRatingClick = this._ratingOnClick.bind(this);
 		}
 
 		// Medthod that will iterate on the RatingScale, to crate an item for each one
@@ -43,6 +37,25 @@ namespace OSUIFramework.Patterns.Rating {
 				// Store index to be used on the _renderItem method
 				this._renderItem(i);
 			}
+		}
+
+		// Get the rating decimal value
+		private _getDecimalValue(value: number): number {
+			return Math.round((value - Math.floor(value)) * 100) / 100;
+		}
+
+		// Get if the valie is-half
+		private _getIsHalfValue(value: number): boolean {
+			const decimalValue = this._getDecimalValue(value);
+			// If bigger than 0.3 and lower than 0.7 means it should be represented as a half value.
+			// This threshold was decided by UX principles
+			return !!(decimalValue >= 0.3 && decimalValue <= 0.7);
+		}
+
+		// Get the rating value
+		private _getValue(): number {
+			const inputChecked = Helper.Dom.TagSelector(this._selfElem, 'input:checked') as HTMLInputElement;
+			return parseInt(inputChecked.value);
 		}
 
 		// Method that handles the placeholders content storage and DOM lifecycle
@@ -81,9 +94,9 @@ namespace OSUIFramework.Patterns.Rating {
 			const isInput = Helper.Dom.Styles.ContainsClass(currentTarget, Enum.CssClass.RatingInput);
 			if (isInput) {
 				// If it is, then get the input:checked value
-				this._value = this.getValue();
+				this._value = this._getValue();
 				// And use that value to set a new Rating Value
-				this.setValue(this._value, true);
+				this._setValue(this._value, true);
 			}
 		}
 
@@ -115,12 +128,6 @@ namespace OSUIFramework.Patterns.Rating {
 			}
 		}
 
-		// Set the html references that will be used to manage the cssClasses and atribute properties
-		private _setHtmlElements(): void {
-			this._ratingIconStatesElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.IconStates);
-			this._ratingFieldsetElem = this._selfElem.querySelector(GlobalEnum.HTMLElement.FieldSet);
-		}
-
 		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _setInitialCssClasses(): void {
 			// Set IsHalf class
@@ -139,173 +146,24 @@ namespace OSUIFramework.Patterns.Rating {
 			}
 		}
 
-		// Method that triggers the OnSelect event
-		private _triggerOnSelectEvent(value: number): void {
-			if (this._onSelect !== undefined) {
-				Helper.AsyncInvocation(this._onSelect, this.widgetId, value);
-			}
+		private _setInitialPropertiesValues(): void {
+			this._value = this.configs.RatingValue;
+			this._disabled = !this.configs.IsEdit;
+			this._ratingInputName = 'rating-' + this.uniqueId;
+			this._ratingHasEventAdded = false;
 		}
 
-		/**
-		 * Building Rating
-		 *
-		 * @memberof Rating
-		 */
-		public build(): void {
-			super.build();
-
-			this._setHtmlElements();
-
-			this._setInitialCssClasses();
-
-			this._handlePlaceholders();
-
-			this._setFieldsetDisabledStatus(!this._configs.IsEdit);
-
-			this._createItems();
-
-			this._manageRatingEvent();
-
-			this.setValue(this._configs.RatingValue);
-
-			this.finishBuild();
-		}
-
-		/**
-		 * Update value when a parameters changed occurs
-		 *
-		 * @param {string} propertyName
-		 * @param {*} propertyValue
-		 * @memberof Rating
-		 */
-		public changeProperty(propertyName: string, propertyValue: unknown): void {
-			//Storing the current Size, before possibly changing this property.
-			//This will enable us to remove the previous added classes to the element.
-			const oldSize = this.configs.Size;
-
-			super.changeProperty(propertyName, propertyValue);
-
-			if (this.isBuilt) {
-				switch (propertyName) {
-					case Enum.Properties.RatingValue:
-						this.setValue(propertyValue as number);
-						break;
-
-					case Enum.Properties.RatingScale:
-						this.setScale();
-						break;
-
-					case Enum.Properties.IsEdit:
-						this.setIsEdit();
-						break;
-
-					case Enum.Properties.Size:
-						this.setSize(oldSize);
-						break;
-				}
-			}
-		}
-
-		/**
-		 * Destroy the Rating pattern
-		 *
-		 * @memberof Rating
-		 */
-		public dispose(): void {
-			// call super method, which deletes this rating class instance from the RatingMap
-			super.dispose();
-
-			// remove event listener if any was added
-			if (this._selfElem && this._ratingHasEventAdded) {
-				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnRatingClick);
-			}
-
-			// Remove html from the fieldset
-			this._ratingFieldsetElem.innerHTML = '';
-		}
-
-		/**
-		 * Get the rating decimal value
-		 *
-		 * @param {number} value
-		 * @return {*}  {number}
-		 * @memberof Rating
-		 */
-		// jRio: why is this public?
-		public getDecimalValue(value: number): number {
-			return Math.round((value - Math.floor(value)) * 100) / 100;
-		}
-
-		/**
-		 * Get disabled status
-		 *
-		 * @return {*}  {boolean}
-		 * @memberof Rating
-		 */
-		// jRio: why is this public?
-		public getIsDisabled(): boolean {
-			return this._disabled;
-		}
-
-		/**
-		 * Get if the valie is-half
-		 *
-		 * @param {number} value
-		 * @return {*}  {boolean}
-		 * @memberof Rating
-		 */
-		// jRio: why is this public?
-		public getIsHalfValue(value: number): boolean {
-			const decimalValue = this.getDecimalValue(value);
-			// If bigger than 0.3 and lower than 0.7 means it should be represented as a half value.
-			// This threshold was decided by UX principles
-			return !!(decimalValue >= 0.3 && decimalValue <= 0.7);
-		}
-
-		/**
-		 * Get the rating value
-		 *
-		 * @return {*}  {number}
-		 * @memberof Rating
-		 */
-		// jRio: why is this public?
-		public getValue(): number {
-			const inputChecked: HTMLInputElement = this._selfElem.querySelector('input:checked');
-			return parseInt(inputChecked.value);
-		}
-
-		/**
-		 * Set callbacks for the onSelect click event
-		 *
-		 * @param {Callbacks.OSRatingSelectEvent} callback
-		 * @memberof Rating
-		 */
-		public registerCallback(callback: Callbacks.OSRatingSelectEvent): void {
-			this._onSelect = callback;
-		}
-
-		/**
-		 * Set disabled status
-		 *
-		 * @param {boolean} isDisabled
-		 * @memberof Rating
-		 */
-		// jRio: why is this public?
-		public setIsDisabled(isDisabled: boolean): void {
+		// Set disabled status
+		private _setIsDisabled(isDisabled: boolean): void {
 			this._setFieldsetDisabledStatus(isDisabled);
 
 			this._disabled = isDisabled;
 		}
 
-		/**
-		 * Set the IsEdit option
-		 *
-		 * @memberof Rating
-		 */
-		// jRio: why is this public?
-		public setIsEdit(): void {
+		// Set the IsEdit option
+		private _setIsEdit(): void {
 			// Set the fieldset and input disabled attribute status
-			this.setIsDisabled(!this.configs.IsEdit);
+			this._setIsDisabled(!this.configs.IsEdit);
 
 			// Toggle the is-edit class
 			this.configs.IsEdit
@@ -316,28 +174,18 @@ namespace OSUIFramework.Patterns.Rating {
 			this._manageRatingEvent();
 		}
 
-		/**
-		 * Set a RatingScale
-		 *
-		 * @memberof Rating
-		 */
-		public setScale(): void {
+		// Set a RatingScale
+		private _setScale(): void {
 			// Call destroy, so that the html is deleted
 			this.dispose();
 			// Afteer the fieldset html is clean, create the items again
 			this._createItems();
-			// Set the rating value equal to the value before calling the setScale method
-			this.setValue(this._value);
+			// Set the rating value equal to the value before calling the _setScale method
+			this._setValue(this._value);
 		}
 
-		/**
-		 * Set the Rating Size
-		 *
-		 * @param {string} oldSize
-		 * @memberof Rating
-		 */
-		// jRio: why is this public?
-		public setSize(oldSize: string): void {
+		// Set the Rating Size
+		private _setSize(oldSize: string): void {
 			// Reset current class
 			if (oldSize !== '') {
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.Size + oldSize);
@@ -349,21 +197,13 @@ namespace OSUIFramework.Patterns.Rating {
 			}
 		}
 
-		/**
-		 * Set a rating value
-		 *
-		 * @param {number} value
-		 * @param {boolean} [triggerEvent=true]
-		 * @return {*}  {void}
-		 * @memberof Rating
-		 */
-		// jRio: why is this public?
-		public setValue(value: number, triggerEvent = false): void {
+		// Set a rating value
+		private _setValue(value: number, triggerEvent = false): void {
 			if (value !== null) {
 				// Check if passed value is decimal
-				this._decimalValue = this.getDecimalValue(value);
+				this._decimalValue = this._getDecimalValue(value);
 				// Check if passed value is half
-				this._isHalfValue = this.getIsHalfValue(value);
+				this._isHalfValue = this._getIsHalfValue(value);
 				// Get all inputs on rating, to properly add the :checked attribute on the correct one
 				const ratingItems = this._selfElem.querySelectorAll(GlobalEnum.HTMLElement.Input);
 
@@ -406,6 +246,149 @@ namespace OSUIFramework.Patterns.Rating {
 					this._triggerOnSelectEvent(this._value);
 				}
 			}
+		}
+
+		// Method that triggers the OnSelect event
+		private _triggerOnSelectEvent(value: number): void {
+			if (this._onSelect !== undefined) {
+				Helper.AsyncInvocation(this._onSelect, this.widgetId, value);
+			}
+		}
+
+		/**
+		 * Set the events
+		 *
+		 * @protected
+		 * @memberof Rating
+		 */
+		protected setCallbacks(): void {
+			this._eventOnRatingClick = this._ratingOnClick.bind(this);
+		}
+
+		/**
+		 * Set the html references that will be used to manage the cssClasses and atribute properties
+		 *
+		 * @protected
+		 * @memberof Rating
+		 */
+		protected setHtmlElements(): void {
+			this._ratingIconStatesElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.IconStates);
+			this._ratingFieldsetElem = Helper.Dom.TagSelector(this._selfElem, GlobalEnum.HTMLElement.FieldSet);
+		}
+
+		/**
+		 * Remove events
+		 *
+		 * @protected
+		 * @memberof Rating
+		 */
+		protected unsetCallbacks(): void {
+			// remove event listener if any was added
+			if (this._selfElem && this._ratingHasEventAdded) {
+				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnRatingClick);
+			}
+
+			this._eventOnRatingClick = undefined;
+		}
+
+		/**
+		 * UnSet the HTML elements
+		 *
+		 * @protected
+		 * @memberof Rating
+		 */
+		protected unsetHtmlElements(): void {
+			// Remove html from the fieldset
+			this._ratingFieldsetElem.innerHTML = '';
+
+			this._ratingIconStatesElem = undefined;
+			this._ratingFieldsetElem = undefined;
+		}
+
+		/**
+		 * Building Rating
+		 *
+		 * @memberof Rating
+		 */
+		public build(): void {
+			super.build();
+
+			this._setInitialPropertiesValues();
+
+			this.setCallbacks();
+
+			this.setHtmlElements();
+
+			this._setInitialCssClasses();
+
+			this._handlePlaceholders();
+
+			this._setFieldsetDisabledStatus(!this._configs.IsEdit);
+
+			this._createItems();
+
+			this._manageRatingEvent();
+
+			this._setValue(this._configs.RatingValue);
+
+			this.finishBuild();
+		}
+
+		/**
+		 * Update value when a parameters changed occurs
+		 *
+		 * @param {string} propertyName
+		 * @param {*} propertyValue
+		 * @memberof Rating
+		 */
+		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			//Storing the current Size, before possibly changing this property.
+			//This will enable us to remove the previous added classes to the element.
+			const oldSize = this.configs.Size;
+
+			super.changeProperty(propertyName, propertyValue);
+
+			if (this.isBuilt) {
+				switch (propertyName) {
+					case Enum.Properties.RatingValue:
+						this._setValue(propertyValue as number);
+						break;
+
+					case Enum.Properties.RatingScale:
+						this._setScale();
+						break;
+
+					case Enum.Properties.IsEdit:
+						this._setIsEdit();
+						break;
+
+					case Enum.Properties.Size:
+						this._setSize(oldSize);
+						break;
+				}
+			}
+		}
+
+		/**
+		 * Destroy the Rating pattern
+		 *
+		 * @memberof Rating
+		 */
+		public dispose(): void {
+			this.unsetCallbacks();
+			this.unsetHtmlElements();
+
+			super.dispose();
+		}
+
+		/**
+		 * Set callbacks for the onSelect click event
+		 *
+		 * @param {Callbacks.OSRatingSelectEvent} callback
+		 * @memberof Rating
+		 */
+		public registerCallback(callback: Callbacks.OSRatingSelectEvent): void {
+			this._onSelect = callback;
 		}
 	}
 }

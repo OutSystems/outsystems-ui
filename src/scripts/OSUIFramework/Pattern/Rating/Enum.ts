@@ -4,13 +4,9 @@ namespace OSUIFramework.Patterns.Rating.Enum {
 	 * CSS Classes
 	 */
 	export enum CssClass {
-		EmptyState = 'rating-item-empty',
-		FilledState = 'rating-item-filled',
-		HalfState = 'rating-item-half',
 		IconStates = 'icon-states',
 		IsEdit = 'is-edit',
 		IsHalf = 'is-half',
-		Rating = 'rating',
 		RatingInput = 'rating-input',
 		RatingItem = 'rating-item',
 		Size = 'rating-',
