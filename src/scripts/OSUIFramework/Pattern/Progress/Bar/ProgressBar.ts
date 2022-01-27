@@ -14,7 +14,7 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new ProgressBarConfig(configs));
 
-			this._eventAnimateEntranceEnd = this._animateEntranceEnd.bind(this);
+			this.setCallbacks();
 		}
 
 		// remove the added transitionEnd event and the cssClass added at the beginning
@@ -49,16 +49,6 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 				ProgressEnum.InlineStyleProp.TrailColor,
 				Helper.Dom.Styles.GetColorValueFromColorType(this._configs.TrailColor)
 			);
-		}
-
-		// Update info based on htmlContent
-		private _setHtmlElements(): void {
-			// Set the html references that will be used to manage the cssClasses and atribute properties
-			this._progressElem = this._selfElem.querySelector(Constants.Dot + ProgressEnum.CssClass.Container);
-		}
-
-		private _unsetHtmlElements(): void {
-			this._progressElem = undefined;
 		}
 
 		private _updateProgressColor(value: string): void {
@@ -118,10 +108,27 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 			this._updateProgressValue();
 		}
 
+		protected setCallbacks(): void {
+			this._eventAnimateEntranceEnd = this._animateEntranceEnd.bind(this);
+		}
+		// Update info based on htmlContent
+		protected setHtmlElements(): void {
+			// Set the html references that will be used to manage the cssClasses and atribute properties
+			this._progressElem = this._selfElem.querySelector(Constants.Dot + ProgressEnum.CssClass.Container);
+		}
+
+		protected unsetCallbacks(): void {
+			this._eventAnimateEntranceEnd = undefined;
+		}
+
+		protected unsetHtmlElements(): void {
+			this._progressElem = undefined;
+		}
+
 		public build(): void {
 			super.build();
 
-			this._setHtmlElements();
+			this.setHtmlElements();
 
 			this._setCssVariables();
 
@@ -165,7 +172,8 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 
 		public dispose(): void {
 			super.dispose();
-			this._unsetHtmlElements();
+			this.unsetHtmlElements();
+			this.unsetCallbacks();
 		}
 	}
 }
