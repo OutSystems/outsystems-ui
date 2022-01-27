@@ -9,9 +9,6 @@ namespace Providers.RangeSlider.NoUISlider {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		implements OSUIFramework.Patterns.RangeSlider.IRangeSlider
 	{
-		private _changeEventDuringSlide: boolean;
-		private _eventProviderEnd: OSUIFramework.Callbacks.Generic;
-		private _eventProviderStart: OSUIFramework.Callbacks.Generic;
 		private _eventProviderValueChanged: OSUIFramework.Callbacks.Generic;
 		// Store if the slider is being dragged
 		private _isSliding: boolean;
@@ -31,8 +28,6 @@ namespace Providers.RangeSlider.NoUISlider {
 			super(uniqueId, new NoUiSliderConfig(configs));
 
 			this._trottleTimer = undefined;
-			/* TODO: change this for when client action is created*/
-			this._changeEventDuringSlide = true;
 		}
 
 		/**
@@ -51,22 +46,8 @@ namespace Providers.RangeSlider.NoUISlider {
 			// Trigger platform's OnInitialize event (done by us, the library doesn't have a 'mount' event)
 			this._setOnInitializedEvent();
 
-			// Set the correct type of event to add (Change only triggers when stoping the drag)
-			const changeEvent = this._changeEventDuringSlide
-				? Enum.NoUISliderEvents.Slide
-				: Enum.NoUISliderEvents.Change;
-
 			// Set OnValueChange event
-			this._setOnValueChangeEvent(changeEvent);
-
-			// Add these events, to keep stored when the range slider is being dragged.
-			// This is later used on changeProperty for InitialValue, to prevent a loop being created when
-			// the developer is manipulating the IntialValue variable directly on the OnValueChange event
-			// (and by doing that triggering the parameterChange again, and creating a loop)
-			if (changeEvent === Enum.NoUISliderEvents.Slide) {
-				this.provider.on(Enum.NoUISliderEvents.Start, this._eventProviderStart);
-				this.provider.on(Enum.NoUISliderEvents.End, this._eventProviderEnd);
-			}
+			this._setOnValueChangeEvent(Enum.NoUISliderEvents.Slide);
 		}
 
 		/**
@@ -306,8 +287,6 @@ namespace Providers.RangeSlider.NoUISlider {
 		 */
 		protected setCallbacks(): void {
 			this._eventProviderValueChanged = this._valueChangeCallback.bind(this);
-			this._eventProviderEnd = this._endCallback.bind(this);
-			this._eventProviderStart = this._startCallback.bind(this);
 		}
 
 		/**
@@ -378,8 +357,6 @@ namespace Providers.RangeSlider.NoUISlider {
 		 */
 		protected unsetCallbacks(): void {
 			this._eventProviderValueChanged = undefined;
-			this._eventProviderEnd = undefined;
-			this._eventProviderStart = undefined;
 		}
 
 		/**
@@ -412,6 +389,24 @@ namespace Providers.RangeSlider.NoUISlider {
 
 			if (this.isBuilt) {
 				switch (propertyName) {
+					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueStart:
+						console.warn(
+							`RangeSlider${this._configs.IsInterval ? 'Interval' : ''} (${this.widgetId}): changes to ${
+								OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueStart
+							} parameter do not affect the RangeSlider${
+								this._configs.IsInterval ? 'Interval' : ''
+							}. Use a distinct variable to assign on the OnValueChange event`
+						);
+						break;
+					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueEnd:
+						console.warn(
+							`RangeSlider${this._configs.IsInterval ? 'Interval' : ''} (${this.widgetId}): changes to ${
+								OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueEnd
+							} parameter do not affect the RangeSlider${
+								this._configs.IsInterval ? 'Interval' : ''
+							}. Use a distinct variable to assign on the OnValueChange event`
+						);
+						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.MinValue:
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.MaxValue:
 						this._updateRangeValues();
@@ -494,6 +489,18 @@ namespace Providers.RangeSlider.NoUISlider {
 					}
 					break;
 			}
+		}
+
+		/**
+		 * Method to change the Range Slider trigger to on DragEnd
+		 *
+		 * @memberof OSUINoUiSlider
+		 */
+		public setRangeIntervalChangeOnDragEnd(): void {
+			// Remove slide default event
+			this.provider.off(Enum.NoUISliderEvents.Slide, this._eventProviderValueChanged);
+			// Set new Change event
+			this._setOnValueChangeEvent(Enum.NoUISliderEvents.Change);
 		}
 	}
 }
