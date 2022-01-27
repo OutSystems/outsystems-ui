@@ -141,7 +141,7 @@ stages:
           - job: execute_tests
             displayName: Build and run tests on Chrome
             variables:
-                tags: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['check_changes.TAGS'] ]
+                tags: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['check_changes.tags'] ]
                 branch: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['branch_name.branch'] ]
             steps:
                 - checkout: rd-outsystems-ui-qa-tests
@@ -163,7 +163,7 @@ stages:
           - job: execute_tests
             displayName: Build and run tests on Chrome
             variables:
-                tags: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['check_changes.TAGS'] ]
+                tags: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['check_changes.tags'] ]
                 branch: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['branch_name.branch'] ]
             steps:
                 - checkout: rd-outsystems-ui-qa-tests
