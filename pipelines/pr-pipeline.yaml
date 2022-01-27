@@ -26,20 +26,34 @@ stages:
 
                       for FILE in $CHANGED_FILES
                           do
-                              if [[ $FILE == *"src/scripts/OSUIFramework/Pattern"* ]] || [[ $FILE == *"src/scss/04-patterns"* ]]; then
+                              if [[ $FILE == *"src/scripts/OSUIFramework/Pattern"* ]] || [[ $FILE == *"src/scripts/OSUI/Pattern"* ]] || $FILE == *"src/scss/04-patterns"* ]]; then
                                   ELEMENT=$(echo $FILE| cut -d/ -f5)
-                                  if [[ $TAGS == *"$ELEMENT "* ]]; then
-                                      continue
-                                  fi
+
                                   if [[ $ELEMENT == *".scss"* ]]; then 
                                       ELEMENT=${ELEMENT:1:-5}
                                   fi
-                                  if [[ -z "$TAGS" ]]; then
-                                      TAGS="@$ELEMENT "
-                                  else
-                                      TAGS="$TAGS or @$ELEMENT "
+                                
+                                  if [[ $ELEMENT == *"API.ts"* ]]; then 
+                                      ELEMENT=${ELEMENT:0:-6}
                                   fi
-                                  continue
+                                  
+                                  if [[ $TAGS == *"$ELEMENT "* ]]; then
+                                      continue
+                                  fi
+
+                              fi
+
+                              if [[ $FILE == *"src/scss/10-deprecated"* ]]; then
+                                  ELEMENT=$(echo $FILE| cut -d/ -f4)
+                                  
+                                  if [[ $ELEMENT == *"-deprecated.scss"* ]]; then 
+                                      ELEMENT=${ELEMENT:1:-16}
+                                  fi
+
+                                  if [[ $TAGS == *"$ELEMENT "* ]]; then
+                                      continue
+                                  fi
+
                               fi
 
                               if [[ $FILE == *"src/static"* ]]; then
@@ -47,14 +61,19 @@ stages:
                                   if [[ $TAGS == *"$ELEMENT "* ]]; then
                                       continue
                                   fi
-                                  if [[ -z "$TAGS" ]]; then
-                                      TAGS="@$ELEMENT "
-                                  else
-                                      TAGS="$TAGS or @$ELEMENT "
-                                  fi
+                              fi
+
+                              if [[ -z "$ELEMENT" ]]; then
+                                  echo "IGNORE: ${FILE} changed"
                                   continue
                               fi
-                              echo "IGNORE: ${FILE} changed"
+                              
+                              if [[ -z "$TAGS" ]]; then
+                                  TAGS="@$ELEMENT "
+                              else
+                                  TAGS="$TAGS or @$ELEMENT "
+                              fi
+
                           done
                       echo "##vso[task.setvariable variable=tags;isoutput=true]$TAGS"
                   name: check_changes
