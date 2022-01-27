@@ -15,7 +15,7 @@ namespace OSUIFramework.Patterns.Rating {
 		// Store if the rating value is half
 		private _isHalfValue: boolean;
 		// Store the callback to be used on the OnSelect event
-		private _onSelect: Callbacks.OSRatingSelectEvent;
+		private _platformEventOnSelect: Callbacks.OSRatingSelectEvent;
 		// Store the fieldset html element
 		private _ratingFieldsetElem: HTMLElement;
 		// Store if the rating already has an event added
@@ -117,12 +117,15 @@ namespace OSUIFramework.Patterns.Rating {
 
 		// Toggle fieldset disbaled status
 		private _setFieldsetDisabledStatus(isDisabled: boolean): void {
-			const isFieldsetDisabled = Helper.Dom.Attribute.Get(this._ratingFieldsetElem, 'disabled');
+			const isFieldsetDisabled = Helper.Dom.Attribute.Get(
+				this._ratingFieldsetElem,
+				GlobalEnum.HTMLAttributes.Disabled
+			);
 
 			if (isDisabled) {
-				Helper.Dom.Attribute.Set(this._ratingFieldsetElem, 'disabled', 'true');
+				Helper.Dom.Attribute.Set(this._ratingFieldsetElem, GlobalEnum.HTMLAttributes.Disabled, 'true');
 			} else if (!isDisabled && isFieldsetDisabled) {
-				Helper.Dom.Attribute.Remove(this._ratingFieldsetElem, 'disabled');
+				Helper.Dom.Attribute.Remove(this._ratingFieldsetElem, GlobalEnum.HTMLAttributes.Disabled);
 			}
 		}
 
@@ -172,10 +175,10 @@ namespace OSUIFramework.Patterns.Rating {
 			this._manageRatingEvent();
 		}
 
-		// Set a RatingScale
+		// Set a RatingScale - The amout of stars pattern will have
 		private _setScale(): void {
-			// Call destroy, so that the html is deleted
-			this.dispose();
+			// Clean (if already exist) old Stars inside pattern
+			this._ratingFieldsetElem.innerHTML = '';
 			// Afteer the fieldset html is clean, create the items again
 			this._createItems();
 			// Set the rating value equal to the value before calling the _setScale method
@@ -247,8 +250,8 @@ namespace OSUIFramework.Patterns.Rating {
 
 		// Method that triggers the OnSelect event
 		private _triggerOnSelectEvent(value: number): void {
-			if (this._onSelect !== undefined) {
-				Helper.AsyncInvocation(this._onSelect, this.widgetId, value);
+			if (this._platformEventOnSelect !== undefined) {
+				Helper.AsyncInvocation(this._platformEventOnSelect, this.widgetId, value);
 			}
 		}
 
@@ -385,7 +388,7 @@ namespace OSUIFramework.Patterns.Rating {
 		 * @memberof Rating
 		 */
 		public registerCallback(callback: Callbacks.OSRatingSelectEvent): void {
-			this._onSelect = callback;
+			this._platformEventOnSelect = callback;
 		}
 	}
 }
