@@ -94,4 +94,16 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 
 		return _progressItem;
 	}
+
+	/**
+	 * Function that sets the value of the progress circle or the progress bar
+	 * @export
+	 * @param {string} widgetId of the progress circle or progress bar that will have its value set
+	 * @param {number} progress value of the circle
+	 */
+	export function SetProgressValue(progressId: string, progress: number): void {
+		const _progressItem = GetProgressItemById(progressId);
+
+		_progressItem.setProgressValue(progress);
+	}
 }

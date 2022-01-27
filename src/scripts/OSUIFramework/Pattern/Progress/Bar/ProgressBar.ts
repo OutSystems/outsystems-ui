@@ -109,6 +109,19 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 		protected setCallbacks(): void {
 			this._eventAnimateEntranceEnd = this._animateEntranceEnd.bind(this);
 		}
+
+		protected setElementProgressValue(value: number): void {
+			if (value > 0) {
+				this._configs.Progress = value;
+			} else if (value > 100) {
+				this._configs.Progress = 100;
+			} else {
+				this._configs.Progress = 0;
+			}
+
+			this._updateProgressValue();
+		}
+
 		// Update info based on htmlContent
 		protected setHtmlElements(): void {
 			// Set the html references that will be used to manage the cssClasses and atribute properties
@@ -134,7 +147,6 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 
 			this.finishBuild();
 		}
-
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			switch (propertyName) {
@@ -143,10 +155,7 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 					break;
 
 				case ProgressEnum.Properties.Progress:
-					// Will use the new action
-					this._configs.Progress = propertyValue > 100 ? 100 : (propertyValue as number);
-
-					this._updateProgressValue();
+					this.setElementProgressValue(propertyValue as number);
 
 					break;
 
