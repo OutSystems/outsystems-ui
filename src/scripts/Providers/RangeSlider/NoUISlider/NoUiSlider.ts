@@ -10,8 +10,6 @@ namespace Providers.RangeSlider.NoUISlider {
 		implements OSUIFramework.Patterns.RangeSlider.IRangeSlider
 	{
 		private _eventProviderValueChanged: OSUIFramework.Callbacks.Generic;
-		// Store if the slider is being dragged
-		private _isSliding: boolean;
 		// RangeSlider events
 		private _platformEventInitialize: OSUIFramework.Callbacks.OSRangeSliderInitializeEvent;
 		private _platformEventValueChange: OSUIFramework.Callbacks.OSRangeSliderOnValueChangeEvent;
@@ -48,16 +46,6 @@ namespace Providers.RangeSlider.NoUISlider {
 
 			// Set OnValueChange event
 			this._setOnValueChangeEvent(Enum.NoUISliderEvents.Slide);
-		}
-
-		/**
-		 * Handler to trigger the OnEnd event
-		 *
-		 * @private
-		 * @memberof OSUINoUiSlider
-		 */
-		private _endCallback(): void {
-			this._toggleSlideStatus(false);
 		}
 
 		/**
@@ -164,27 +152,6 @@ namespace Providers.RangeSlider.NoUISlider {
 				OSUIFramework.Patterns.RangeSlider.Enum.CssProperties.Size,
 				this.configs.Size
 			);
-		}
-
-		/**
-		 * Handler to trigger the OnStart event
-		 *
-		 * @private
-		 * @memberof OSUINoUiSlider
-		 */
-		private _startCallback(): void {
-			this._toggleSlideStatus(true);
-		}
-
-		/**
-		 * Method to toggle the _IsSliding property
-		 *
-		 * @private
-		 * @param {boolean} status
-		 * @memberof OSUINoUiSlider
-		 */
-		private _toggleSlideStatus(status: boolean): void {
-			this._isSliding = status;
 		}
 
 		/**
