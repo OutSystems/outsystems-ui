@@ -198,6 +198,18 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			}
 		}
 
+		protected setElementProgressValue(value: number): void {
+			this._configs.Progress = value;
+
+			// Do the transition animation
+			Helper.Dom.Styles.AddClass(this._progressSvgElem, ProgressEnum.CssClass.AnimateProgressChange);
+
+			// Add the event that will remove the responsible cssClass that added animation
+			this._progressSvgElem.addEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._eventAnimateEntranceEnd);
+
+			this._updateProgressValue();
+		}
+
 		public build(): void {
 			super.build();
 
@@ -227,25 +239,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 					break;
 
 				case ProgressEnum.Properties.Progress:
-					// Ensure that progress has the min and max correct values
-					if (propertyValue < 0) {
-						propertyValue = 0;
-					} else if (propertyValue > 100) {
-						propertyValue = 100;
-					}
-
-					this._configs.Progress = propertyValue;
-
-					// Do the transition animation
-					Helper.Dom.Styles.AddClass(this._progressSvgElem, ProgressEnum.CssClass.AnimateProgressChange);
-
-					// Add the event that will remove the responsible cssClass that added animation
-					this._progressSvgElem.addEventListener(
-						GlobalEnum.HTMLEvent.TransitionEnd,
-						this._eventAnimateEntranceEnd
-					);
-
-					this._updateProgressValue();
+					this.setProgressValue(propertyValue);
 
 					break;
 

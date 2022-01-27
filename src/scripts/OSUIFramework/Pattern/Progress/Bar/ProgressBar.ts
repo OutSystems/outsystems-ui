@@ -74,6 +74,18 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 			this._updateProgressValue();
 		}
 
+		protected setElementProgressValue(value: number): void {
+			if (value > 0) {
+				this._configs.Progress = value;
+			} else if (value > 100) {
+				this._configs.Progress = 100;
+			} else {
+				this._configs.Progress = 0;
+			}
+
+			this._updateProgressValue();
+		}
+
 		public build(): void {
 			super.build();
 
@@ -85,7 +97,6 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 
 			this.finishBuild();
 		}
-
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		public changeProperty(propertyName: string, propertyValue: any): void {
 			switch (propertyName) {
@@ -101,9 +112,7 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 					break;
 
 				case ProgressEnum.Properties.Progress:
-					this._configs.Progress = propertyValue > 100 ? 100 : propertyValue;
-
-					this._updateProgressValue();
+					this.setElementProgressValue(propertyValue);
 
 					break;
 
