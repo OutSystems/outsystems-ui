@@ -127,30 +127,30 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 		}
 
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-		public changeProperty(propertyName: string, propertyValue: any): void {
+		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			switch (propertyName) {
 				case ProgressEnum.Properties.Thickness:
-					this._updateThickness(propertyValue);
+					this._updateThickness(propertyValue as number);
 					break;
 
 				case ProgressEnum.Properties.Progress:
 					// Will use the new action
-					this._configs.Progress = propertyValue > 100 ? 100 : propertyValue;
+					this._configs.Progress = propertyValue > 100 ? 100 : (propertyValue as number);
 
 					this._updateProgressValue();
 
 					break;
 
 				case ProgressEnum.Properties.ProgressColor:
-					this._updateProgressColor(propertyValue);
+					this._updateProgressColor(propertyValue as string);
 					break;
 
 				case ProgressEnum.Properties.Shape:
-					this._updateShape(propertyValue);
+					this._updateShape(propertyValue as string);
 					break;
 
 				case ProgressEnum.Properties.TrailColor:
-					this._updateTrailColor(propertyValue);
+					this._updateTrailColor(propertyValue as string);
 					break;
 
 				default:
