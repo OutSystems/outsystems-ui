@@ -22,7 +22,7 @@ namespace OSUIFramework.Patterns.RangeSlider {
 			if (isBuilt) {
 				return (
 					key !== (Enum.Properties.StartingValueStart as string) ||
-					key !== (Enum.Properties.StartingValueStart as string)
+					key !== (Enum.Properties.StartingValueEnd as string)
 				);
 			}
 			return true;
