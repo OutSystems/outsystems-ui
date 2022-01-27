@@ -57,6 +57,10 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 			this._progressElem = this._selfElem.querySelector(Constants.Dot + ProgressEnum.CssClass.Container);
 		}
 
+		private _unsetHtmlElements(): void {
+			this._progressElem = undefined;
+		}
+
 		private _updateProgressColor(value: string): void {
 			this._configs.ProgressColor = value;
 
@@ -157,6 +161,11 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 					super.changeProperty(propertyName, propertyValue);
 					break;
 			}
+		}
+
+		public dispose(): void {
+			super.dispose();
+			this._unsetHtmlElements();
 		}
 	}
 }
