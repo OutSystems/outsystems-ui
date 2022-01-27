@@ -31,7 +31,7 @@ namespace Providers.RangeSlider.NoUISlider {
 			super(uniqueId, new NoUiSliderConfig(configs));
 
 			this._trottleTimer = undefined;
-			/* TODO: change this for when client actin is created*/
+			/* TODO: change this for when client action is created*/
 			this._changeEventDuringSlide = true;
 		}
 
@@ -185,17 +185,6 @@ namespace Providers.RangeSlider.NoUISlider {
 			);
 		}
 
-		/**
-		 * TODO (will be used for setValue client actions) Method to set a new value to the RangeSlider
-		 *
-		 * @private
-		 * @memberof OSUINoUiSlider
-		 */
-		private _setValue(): void {
-			this.provider.set([this.configs.StartingValueStart, this.configs.StartingValueEnd]);
-			// Trigger platform event after setting the value
-			this._valueChangeCallback();
-		}
 		/**
 		 * Handler to trigger the OnStart event
 		 *

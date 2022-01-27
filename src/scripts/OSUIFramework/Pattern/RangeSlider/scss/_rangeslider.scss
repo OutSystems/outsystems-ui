@@ -9,6 +9,10 @@
 ///
 .osui-range-slider {
 	--range-slider-handle-size: 24px;
+	--range-slider-thickness: 4px;
+	--range-slider-handle-size-half: calc(var(--range-slider-handle-size) / 2);
+	--range-slider-thickness-half: calc(var(--range-slider-thickness) / 2);
+	--range-slider-handle-sliding-position: calc(var(--range-slider-handle-size-half) * -1);
 	padding: 0 var(--space-base);
 
 	&--is-vertical {
@@ -89,27 +93,26 @@
 		&-vertical {
 			height: var(--range-slider-size);
 			margin: var(--space-m) var(--space-none);
-			width: 4px;
+			width: var(--range-slider-thickness);
 
 			.noUi-handle {
-				bottom: -12px;
-				left: -14px;
+				bottom: var(--range-slider-handle-sliding-position);
+				left: calc((var(--range-slider-handle-size-half) + var(--range-slider-thickness-half)) * -1);
 
 				// Service Studio Preview
 				& {
-					left: -10px !important;
+					-servicestudio-left: -10px !important;
 				}
 			}
 		}
 
 		&-horizontal {
-			height: 4px;
+			height: var(--range-slider-thickness);
 			width: var(--range-slider-size);
 
 			.noUi-handle {
-				left: auto;
-				right: -12px;
-				top: -10px;
+				right: var(--range-slider-handle-sliding-position);
+				top: calc((var(--range-slider-handle-size-half) - var(--range-slider-thickness-half)) * -1);
 			}
 
 			.noUi-pips {
@@ -126,7 +129,7 @@
 		}
 
 		&-connect {
-			background-color: var(--color-primary);
+			background: var(--color-primary);
 		}
 
 		&-background {
