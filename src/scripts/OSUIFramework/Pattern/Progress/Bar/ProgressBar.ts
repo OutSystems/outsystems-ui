@@ -57,9 +57,49 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 			this._progressElem = this._selfElem.querySelector(Constants.Dot + ProgressEnum.CssClass.Container);
 		}
 
+		private _updateProgressColor(value: string): void {
+			this._configs.ProgressColor = value;
+
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				ProgressEnum.InlineStyleProp.ProgressColor,
+				Helper.Dom.Styles.GetColorValueFromColorType(this._configs.ProgressColor)
+			);
+		}
+
 		// Update the valuenow accessibility property
 		private _updateProgressValue(): void {
 			this.updateValueNow(this._configs.Progress.toString());
+		}
+
+		private _updateShape(value: string): void {
+			this._configs.Shape = value;
+
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				ProgressEnum.InlineStyleProp.Shape,
+				Helper.Dom.Styles.GetBorderRadiusValueFromShapeType(this._configs.Shape)
+			);
+		}
+
+		private _updateThickness(value: number): void {
+			this._configs.Thickness = value;
+
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				ProgressEnum.InlineStyleProp.Thickness,
+				value + GlobalEnum.Units.Pixel
+			);
+		}
+
+		private _updateTrailColor(value: string): void {
+			this._configs.TrailColor = value;
+
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				ProgressEnum.InlineStyleProp.TrailColor,
+				Helper.Dom.Styles.GetColorValueFromColorType(this._configs.TrailColor)
+			);
 		}
 
 		// Add the initial animation to the pattern if it's applicable
@@ -90,17 +130,11 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 		public changeProperty(propertyName: string, propertyValue: any): void {
 			switch (propertyName) {
 				case ProgressEnum.Properties.Thickness:
-					this._configs.Thickness = propertyValue;
-
-					Helper.Dom.Styles.SetStyleAttribute(
-						this._selfElem,
-						ProgressEnum.InlineStyleProp.Thickness,
-						propertyValue + GlobalEnum.Units.Pixel
-					);
-
+					this._updateThickness(propertyValue);
 					break;
 
 				case ProgressEnum.Properties.Progress:
+					// Will use the new action
 					this._configs.Progress = propertyValue > 100 ? 100 : propertyValue;
 
 					this._updateProgressValue();
@@ -108,36 +142,15 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 					break;
 
 				case ProgressEnum.Properties.ProgressColor:
-					this._configs.ProgressColor = propertyValue;
-
-					Helper.Dom.Styles.SetStyleAttribute(
-						this._selfElem,
-						ProgressEnum.InlineStyleProp.ProgressColor,
-						Helper.Dom.Styles.GetColorValueFromColorType(this._configs.ProgressColor)
-					);
-
+					this._updateProgressColor(propertyValue);
 					break;
 
 				case ProgressEnum.Properties.Shape:
-					this._configs.Shape = propertyValue;
-
-					Helper.Dom.Styles.SetStyleAttribute(
-						this._selfElem,
-						ProgressEnum.InlineStyleProp.Shape,
-						Helper.Dom.Styles.GetBorderRadiusValueFromShapeType(this._configs.Shape)
-					);
-
+					this._updateShape(propertyValue);
 					break;
 
 				case ProgressEnum.Properties.TrailColor:
-					this._configs.TrailColor = propertyValue;
-
-					Helper.Dom.Styles.SetStyleAttribute(
-						this._selfElem,
-						ProgressEnum.InlineStyleProp.TrailColor,
-						Helper.Dom.Styles.GetColorValueFromColorType(this._configs.TrailColor)
-					);
-
+					this._updateTrailColor(propertyValue);
 					break;
 
 				default:
