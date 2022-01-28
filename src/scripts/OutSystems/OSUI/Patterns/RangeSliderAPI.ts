@@ -117,4 +117,16 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 
 		rangeSlider.registerProviderCallback(eventName, callback);
 	}
+
+	/**
+	 * Function to change the Range Slider trigger to on DragEnd
+	 *
+	 * @export
+	 * @param {string} rangeSliderId
+	 */
+	export function SetRangeIntervalChangeOnDragEnd(rangeSliderId: string): void {
+		const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
+
+		rangeSlider.setRangeIntervalChangeOnDragEnd();
+	}
 }

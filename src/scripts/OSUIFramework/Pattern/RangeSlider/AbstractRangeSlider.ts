@@ -7,5 +7,16 @@ namespace OSUIFramework.Patterns.RangeSlider {
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
 		}
+
+		public get provider(): P {
+			return this._provider;
+		}
+
+		public set provider(p: P) {
+			this._provider = p;
+		}
+
+		public abstract registerProviderCallback(eventName: string, callback: Callbacks.OSGeneric): void;
+		public abstract setRangeIntervalChangeOnDragEnd(): void;
 	}
 }

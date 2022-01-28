@@ -4,31 +4,31 @@
 /// Patterns - Interaction - Range Slider
 
 /* NoUiSlider Library Core Styles */
-@import './NoUiSlider/noUiSlider';
+@import '../../../../Providers/RangeSlider/NoUISlider/scss/noUiSlider';
 
 ///
 .osui-range-slider {
-	padding: 0 12px;
+	--range-slider-handle-size: 24px;
+	--range-slider-thickness: 4px;
+	--range-slider-handle-size-half: calc(var(--range-slider-handle-size) / 2);
+	--range-slider-thickness-half: calc(var(--range-slider-thickness) / 2);
+	--range-slider-handle-sliding-position: calc(var(--range-slider-handle-size-half) * -1);
+	padding: 0 var(--space-base);
+
+	&--is-vertical {
+		height: var(--range-slider-size);
+	}
 
 	// Service Studio Preview
 	& {
-		-servicestudio-margin-bottom: 16px;
+		-servicestudio-margin-bottom: var(--space-base);
+		-servicestudio-display: block;
 	}
 
 	.noUi {
 		&-base {
 			background-color: transparent;
 			border-radius: var(--border-radius-soft);
-		}
-
-		&-pips {
-			position: static;
-		}
-
-		&-origin {
-			background-color: var(--color-neutral-5);
-			height: 10%;
-			width: 10%;
 		}
 
 		&-target {
@@ -48,12 +48,9 @@
 				box-shadow: var(--shadow-xs);
 				cursor: pointer;
 				display: inline-block;
-				height: 24px;
-				left: -10px;
-				position: relative;
-				top: -10px;
+				height: var(--range-slider-handle-size);
 				transition: transform 150ms ease-out;
-				width: 24px;
+				width: var(--range-slider-handle-size);
 			}
 
 			.noUi-handle:before,
@@ -62,24 +59,21 @@
 				border-color: var(--color-neutral-6);
 				border-style: solid;
 				content: '';
-				height: 10px;
-				margin-top: -5px;
-				position: absolute;
+				height: calc(var(--range-slider-handle-size) / 2);
 				top: 50%;
+				transform: translateY(-50%);
 			}
 
 			.noUi-handle:before {
 				border-width: var(--border-size-none) var(--border-size-none) var(--border-size-none)
 					var(--border-size-s);
-				content: '';
-				left: 6px;
+				left: calc(var(--range-slider-handle-size) / 4);
 				right: auto;
 			}
 
 			.noUi-handle:after {
-				border-style: solid;
 				border-width: var(--border-size-none) var(--border-size-s);
-				left: 10px;
+				left: calc(var(--range-slider-handle-size) / 2.5);
 				width: 3px;
 			}
 
@@ -97,53 +91,36 @@
 		}
 
 		&-vertical {
-			height: var(--vertical-height);
+			height: var(--range-slider-size);
 			margin: var(--space-m) var(--space-none);
-			width: 4px;
-
-			.noUi-origin {
-				width: 0;
-			}
+			width: var(--range-slider-thickness);
 
 			.noUi-handle {
-				left: -14px;
-			}
+				bottom: var(--range-slider-handle-sliding-position);
+				left: calc((var(--range-slider-handle-size-half) + var(--range-slider-thickness-half)) * -1);
 
-			.noUi-tooltip {
-				right: 120%;
-				top: 50%;
-				-webkit-transform: translate(0, -50%);
-				transform: translate(0, -50%);
+				// Service Studio Preview
+				& {
+					-servicestudio-left: -10px !important;
+				}
 			}
 		}
 
 		&-horizontal {
-			height: 4px;
-
-			.noUi-origin {
-				height: 0;
-			}
+			height: var(--range-slider-thickness);
+			width: var(--range-slider-size);
 
 			.noUi-handle {
-				left: auto;
-				position: absolute;
-				right: -12px;
+				right: var(--range-slider-handle-sliding-position);
+				top: calc((var(--range-slider-handle-size-half) - var(--range-slider-thickness-half)) * -1);
 			}
 
 			.noUi-pips {
 				color: var(--color-neutral-8);
-				position: absolute;
 			}
 
 			.noUi-pips-margin {
 				margin-bottom: 60px;
-			}
-
-			.noUi-tooltip {
-				bottom: 120%;
-				left: 50%;
-				-webkit-transform: translate(-50%, 0);
-				transform: translate(-50%, 0);
 			}
 		}
 
@@ -152,20 +129,11 @@
 		}
 
 		&-connect {
-			background-color: var(--color-primary);
-			box-shadow: none;
-			height: 100%;
-			width: 100%;
+			background: var(--color-primary);
 		}
 
 		&-background {
 			box-shadow: none;
-		}
-
-		&-handle {
-			-webkit-backface-visibility: hidden;
-			backface-visibility: hidden;
-			position: absolute;
 		}
 
 		&-pips-horizontal {
@@ -185,12 +153,6 @@
 		}
 
 		&-marker {
-			position: absolute;
-
-			&-sub {
-				background-color: var(--color-neutral-5);
-			}
-
 			&-large {
 				background-color: var(--color-neutral-6);
 			}
@@ -198,30 +160,10 @@
 			&-horizontal {
 				&.noUi-marker {
 					height: 4px;
-					margin-left: -1px;
-					width: 2px;
-
-					&-sub {
-						height: 10px;
-					}
-
-					&-large {
-						height: 4px;
-					}
 				}
 			}
 
 			&-vertical {
-				&.noUi-marker {
-					height: 2px;
-					margin-top: -1px;
-					width: 5px;
-				}
-
-				&.noUi-marker-sub {
-					width: 10px;
-				}
-
 				&.noUi-marker-large {
 					width: 4px;
 				}
@@ -229,24 +171,13 @@
 		}
 
 		&-value {
-			position: absolute;
-			text-align: center;
-			white-space: nowrap;
-
-			&-sub {
-				background-color: var(--color-neutral-6);
-				font-size: 10px;
-			}
-
 			&-horizontal {
-				top: 6px;
-				transform: translate(-50%, 50%);
+				top: var(--space-s);
 			}
 		}
 
 		&-value-vertical {
 			padding-left: var(--space-s);
-			transform: translate(0, -50%);
 		}
 
 		&-tooltip {
@@ -258,16 +189,7 @@
 
 		&-rtl {
 			&.noUi-vertical .noUi-handle {
-				position: absolute;
 				right: unset;
-			}
-
-			.noUi-value-vertical {
-				transform: translate(0, 50%);
-			}
-
-			.noUi-value-horizontal {
-				transform: translate(50%, 50%);
 			}
 
 			.noUi-value.noUi-value-vertical {
@@ -290,7 +212,7 @@
 		}
 	}
 
-	.osui-range-slider_provider {
+	.osui-range-slider__provider {
 		&[disabled='true'] {
 			pointer-events: none;
 
