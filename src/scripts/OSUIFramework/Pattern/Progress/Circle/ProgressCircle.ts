@@ -228,10 +228,10 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		}
 
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-		public changeProperty(propertyName: string, propertyValue: any): void {
+		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			switch (propertyName) {
 				case ProgressEnum.Properties.Thickness:
-					this._configs.Thickness = propertyValue;
+					this._configs.Thickness = propertyValue as number;
 
 					this._updateCircleProps();
 
@@ -244,12 +244,12 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 					break;
 
 				case ProgressEnum.Properties.Progress:
-					this.setProgressValue(propertyValue);
+					this.setProgressValue(propertyValue as number);
 
 					break;
 
 				case ProgressEnum.Properties.ProgressColor:
-					this._configs.ProgressColor = propertyValue;
+					this._configs.ProgressColor = propertyValue as string;
 
 					Helper.Dom.Styles.SetStyleAttribute(
 						this._selfElem,
@@ -260,7 +260,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 					break;
 
 				case ProgressEnum.Properties.Shape:
-					this._configs.Shape = propertyValue;
+					this._configs.Shape = propertyValue as string;
 
 					Helper.Dom.Styles.SetStyleAttribute(
 						this._selfElem,
@@ -273,7 +273,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 					break;
 
 				case ProgressEnum.Properties.TrailColor:
-					this._configs.TrailColor = propertyValue;
+					this._configs.TrailColor = propertyValue as string;
 
 					Helper.Dom.Styles.SetStyleAttribute(
 						this._selfElem,
