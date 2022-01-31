@@ -49,59 +49,59 @@ namespace Providers.RangeSlider.NoUISlider {
 		}
 
 		/**
-		 * Method to handle the pips options from the library
+		 * Method to handle the ticks options from the library
 		 *
 		 * @private
 		 * @param {boolean} isUpdate
 		 * @return {*}  {void}
 		 * @memberof OSUINoUiSlider
 		 */
-		private _handleRangePips(isUpdate = true): void {
-			let pipsValues = Math.floor(this.configs.TickMarksInterval);
+		private _handleRangeTicks(isUpdate = true): void {
+			let tickMarksValues = Math.floor(this.configs.TickMarksInterval);
 
 			//To avoid performance issues
-			if (pipsValues > this.configs.MaxValue) {
-				pipsValues = this.configs.MaxValue;
+			if (tickMarksValues > this.configs.MaxValue) {
+				tickMarksValues = this.configs.MaxValue;
 			}
 
-			// Pips, when they exist, can't be less than 1 (library restraint)
-			if (pipsValues < 1) {
+			// Ticks, when they exist, can't be less than 1 (library restraint)
+			if (tickMarksValues < 1) {
 				console.warn(
-					'Pips, when they exist, can not be less than one (library restraint). If you do not want pips to show, set the ShowPips paramater to false.'
+					'TickMarks, when they exist, can not be less than one (library restraint). If you do not want TickMarks to show, set the ShowTickMarks paramater to false.'
 				);
 				return;
 			}
 
-			// To avoid the creation of minor pips, whatever the value
-			const pipsDensity = pipsValues * 100;
+			// To avoid the creation of minor ticks, whatever the value
+			const ticksDensity = tickMarksValues * 100;
 
-			// array to receive the list of pips
+			// array to receive the list of ticks
 			const list = [];
 
-			// pip iterator used on the while
-			let pip = this.configs.MinValue;
+			// tick iterator used on the while
+			let tick = this.configs.MinValue;
 
-			// Fill the array with the numbers from min to max values, respecting the interval set on the pipsStepParam
-			while (pip <= this.configs.MaxValue) {
-				list.push(pip);
-				pip += pipsValues;
+			// Fill the array with the numbers from min to max values, respecting the interval set on the TickMarksInterval
+			while (tick <= this.configs.MaxValue) {
+				list.push(tick);
+				tick += tickMarksValues;
 			}
 
-			// To make sure that a pip is always created for the MaxValue
-			if (pip !== this.configs.MaxValue) {
+			// To make sure that a tick is always created for the MaxValue
+			if (tick !== this.configs.MaxValue) {
 				list.push(this.configs.MaxValue);
 			}
 
-			const pips = {
+			const ticks = {
 				values: list,
-				density: pipsDensity,
+				density: ticksDensity,
 				mode: Enum.NoUiSliderModeOptions.Values,
 			};
 
 			if (isUpdate) {
-				this.provider.updateOptions({ pips });
+				this.provider.updateOptions({ pips: ticks });
 			} else {
-				this._providerOptions.pips = pips;
+				this._providerOptions.pips = ticks;
 			}
 		}
 
@@ -306,7 +306,7 @@ namespace Providers.RangeSlider.NoUISlider {
 			this.setA11yProperties();
 
 			if (this.configs.ShowTickMarks) {
-				this._handleRangePips(false);
+				this._handleRangeTicks(false);
 			}
 
 			if (this.configs.Orientation) {
@@ -377,7 +377,7 @@ namespace Providers.RangeSlider.NoUISlider {
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.MinValue:
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.MaxValue:
 						this._updateRangeValues();
-						this._handleRangePips();
+						this._handleRangeTicks();
 
 						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.Orientation:
@@ -391,7 +391,7 @@ namespace Providers.RangeSlider.NoUISlider {
 
 						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.TickMarksInterval:
-						this._handleRangePips();
+						this._handleRangeTicks();
 
 						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.Step:
