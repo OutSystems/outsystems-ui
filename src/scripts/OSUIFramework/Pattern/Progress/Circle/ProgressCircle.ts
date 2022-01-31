@@ -139,12 +139,6 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			);
 		}
 
-		// Update info based on htmlContent
-		private _setHtmlElements(): void {
-			// Set the html reference that will be used to do all the needed calcs
-			this._progressSvgElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Progress);
-		}
-
 		// Trigger all the meethods responsible to proper update the Circle
 		private _updateCircleProps(): void {
 			this._progressToOffset();
@@ -210,10 +204,21 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			this._updateProgressValue();
 		}
 
+		// Update info based on htmlContent
+		protected setHtmlElements(): void {
+			// Set the html reference that will be used to do all the needed calcs
+			this._progressSvgElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Progress);
+		}
+
+		protected unsetHtmlElements(): void {
+			// Set the html reference that will be used to do all the needed calcs
+			this._progressSvgElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Progress);
+		}
+
 		public build(): void {
 			super.build();
 
-			this._setHtmlElements();
+			this.setHtmlElements();
 
 			this._setCssVariables();
 
@@ -287,6 +292,8 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		// Destroy the ProgressCircle
 		public dispose(): void {
 			super.dispose();
+
+			this.unsetHtmlElements();
 
 			// Check if the resizeOberver already exist
 			if (this._resizeObserver) {
