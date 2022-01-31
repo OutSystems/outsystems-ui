@@ -215,6 +215,50 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			this._progressSvgElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Progress);
 		}
 
+		protected updateProgressColor(value: string): void {
+			this._configs.ProgressColor = value;
+
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				ProgressEnum.InlineStyleProp.ProgressColor,
+				Helper.Dom.Styles.GetColorValueFromColorType(this._configs.ProgressColor)
+			);
+		}
+
+		protected updateShape(value: string): void {
+			this._configs.Shape = value;
+
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				ProgressEnum.InlineStyleProp.Shape,
+				this._configs.Shape === GlobalEnum.ShapeTypes.Sharp
+					? ProgressEnum.ShapeTypes.Sharp
+					: ProgressEnum.ShapeTypes.Round
+			);
+		}
+
+		protected updateThickness(value: number): void {
+			this._configs.Thickness = value;
+
+			this._updateCircleProps();
+
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				ProgressEnum.InlineStyleProp.Thickness,
+				this._configs.Thickness + GlobalEnum.Units.Pixel
+			);
+		}
+
+		protected updateTrailColor(value: string): void {
+			this._configs.TrailColor = value;
+
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				ProgressEnum.InlineStyleProp.TrailColor,
+				Helper.Dom.Styles.GetColorValueFromColorType(this._configs.TrailColor)
+			);
+		}
+
 		public build(): void {
 			super.build();
 
@@ -231,56 +275,24 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			switch (propertyName) {
 				case ProgressEnum.Properties.Thickness:
-					this._configs.Thickness = propertyValue as number;
-
-					this._updateCircleProps();
-
-					Helper.Dom.Styles.SetStyleAttribute(
-						this._selfElem,
-						ProgressEnum.InlineStyleProp.Thickness,
-						propertyValue + GlobalEnum.Units.Pixel
-					);
-
+					this.updateThickness(propertyValue as number);
 					break;
 
 				case ProgressEnum.Properties.Progress:
 					this.setProgressValue(propertyValue as number);
-
 					break;
 
 				case ProgressEnum.Properties.ProgressColor:
-					this._configs.ProgressColor = propertyValue as string;
-
-					Helper.Dom.Styles.SetStyleAttribute(
-						this._selfElem,
-						ProgressEnum.InlineStyleProp.ProgressColor,
-						Helper.Dom.Styles.GetColorValueFromColorType(this._configs.ProgressColor)
-					);
-
+					this.updateProgressColor(propertyValue as string);
 					break;
 
 				case ProgressEnum.Properties.Shape:
-					this._configs.Shape = propertyValue as string;
-
-					Helper.Dom.Styles.SetStyleAttribute(
-						this._selfElem,
-						ProgressEnum.InlineStyleProp.Shape,
-						this._configs.Shape === GlobalEnum.ShapeTypes.Sharp
-							? ProgressEnum.ShapeTypes.Sharp
-							: ProgressEnum.ShapeTypes.Round
-					);
+					this.updateShape(propertyValue as string);
 
 					break;
 
 				case ProgressEnum.Properties.TrailColor:
-					this._configs.TrailColor = propertyValue as string;
-
-					Helper.Dom.Styles.SetStyleAttribute(
-						this._selfElem,
-						ProgressEnum.InlineStyleProp.TrailColor,
-						Helper.Dom.Styles.GetColorValueFromColorType(this._configs.TrailColor)
-					);
-
+					this.updateTrailColor(propertyValue as string);
 					break;
 
 				default:
