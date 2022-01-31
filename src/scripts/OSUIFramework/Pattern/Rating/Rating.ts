@@ -31,6 +31,13 @@ namespace OSUIFramework.Patterns.Rating {
 
 		// Medthod that will iterate on the RatingScale, to crate an item for each one
 		private _createItems(): void {
+			// Check if the the we should limit the amount of stars
+			this.configs.RatingScale =
+				this.configs.RatingScale > Enum.Properties.MaxRatingScale
+					? Enum.Properties.MaxRatingScale
+					: this.configs.RatingScale;
+
+			// Create star items!
 			for (let i = 0; i <= this.configs.RatingScale; i++) {
 				// Store index to be used on the _renderItem method
 				this._renderItem(i);
