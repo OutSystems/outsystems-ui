@@ -10,7 +10,7 @@
 		position: relative;
 
 		& {
-			-servicestudio-min-height: 16px;
+			-servicestudio-min-height: var(--thickness, 8px);
 		}
 	}
 
@@ -19,7 +19,7 @@
 		position: relative;
 
 		& {
-			-servicestudio-min-height: 16px;
+			-servicestudio-min-height: var(--thickness, 8px);
 		}
 
 		&.animate-entrance .osui-progress-value:before {
@@ -39,7 +39,7 @@
 		right: 0;
 
 		& {
-			-servicestudio-height: 16px;
+			-servicestudio-height: var(--thickness, 8px);
 		}
 
 		&:after,
@@ -52,7 +52,7 @@
 			top: 0;
 
 			& {
-				-servicestudio-border-radius: var(--border-radius-rounded);
+				-servicestudio-border-radius: var(--shape, var(--border-radius-rounded));
 			}
 		}
 
@@ -61,7 +61,7 @@
 			width: 100%;
 
 			& {
-				-servicestudio-background: var(--color-neutral-3);
+				-servicestudio-background: var(--trail-color, var(--color-neutral-3));
 			}
 		}
 
@@ -71,8 +71,8 @@
 			z-index: 1;
 
 			& {
-				-servicestudio-background: var(--color-primary);
-				-servicestudio-width: 75%;
+				-servicestudio-background: var(--progress-color, var(--color-primary));
+				-servicestudio-width: var(--progress-value, 50%);
 			}
 		}
 	}
