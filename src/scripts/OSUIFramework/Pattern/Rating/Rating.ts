@@ -33,8 +33,8 @@ namespace OSUIFramework.Patterns.Rating {
 		private _createItems(): void {
 			// Check if the the we should limit the amount of stars
 			this.configs.RatingScale =
-				this.configs.RatingScale > Enum.Properties.MaxStars
-					? Enum.Properties.MaxStars
+				this.configs.RatingScale > Enum.Properties.MaxRatingScale
+					? Enum.Properties.MaxRatingScale
 					: this.configs.RatingScale;
 
 			// Create star items!
