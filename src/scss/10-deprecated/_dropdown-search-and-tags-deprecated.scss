@@ -305,6 +305,15 @@
 	}
 }
 
+// If/When inside Accordion
+.section-expandable-content {
+	.choices__list--dropdown {
+		&.is-active {
+			position: relative;
+		}
+	}
+}
+
 // Reponsive ---------------------------------------------------------------------
 .tablet,
 .phone {
