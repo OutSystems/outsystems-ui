@@ -277,9 +277,9 @@
 @import '../scripts/OSUIFramework/Pattern/Carousel/scss/carousel';
 // @import '04-patterns/03-interaction/date-picker';
 @import '../scripts/OSUIFramework/Pattern/DatePicker/scss/datepicker';
-// @import '04-patterns/03-interaction/dropdown-search-and-tags';
-// @import '04-patterns/03-interaction/dropdown-search';
-// @import '04-patterns/03-interaction/dropdown-tags';
+// @import '04-patterns/03-interaction/dropdown-search-and-tags-deprecated';
+// @import '04-patterns/03-interaction/dropdown-search-deprecated';
+// @import '04-patterns/03-interaction/dropdown-tags-deprecated';
 @import '../scripts/OSUIFramework/Pattern/Dropdown/scss/dropdown';
 @import '../scripts/OSUIFramework/Pattern/Dropdown/scss/dropdown-search';
 @import '../scripts/OSUIFramework/Pattern/Dropdown/scss/dropdown-tags';
@@ -335,9 +335,9 @@
 @import '10-deprecated/button-loading-deprecated';
 @import '10-deprecated/carousel-deprecated';
 @import '10-deprecated/date-picker-deprecated';
-@import '10-deprecated/dropdown-search-and-tags';
-@import '10-deprecated/dropdown-search';
-@import '10-deprecated/dropdown-tags';
+@import '10-deprecated/dropdown-search-and-tags-deprecated';
+@import '10-deprecated/dropdown-search-deprecated';
+@import '10-deprecated/dropdown-tags-deprecated';
 @import '10-deprecated/horizontal-scroll-deprecated';
 @import '10-deprecated/notification-deprecated';
 @import '10-deprecated/progress-bar-deprecated';

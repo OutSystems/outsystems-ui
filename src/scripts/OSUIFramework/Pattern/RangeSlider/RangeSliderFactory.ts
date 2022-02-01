@@ -17,7 +17,10 @@ namespace OSUIFramework.Patterns.RangeSlider.Factory {
 
 		switch (provider) {
 			case Enum.Provider.NoUiSlider:
-				_rangeSliderItem = new Providers.RangeSlider.OSUINoUiSlider(rangeSliderId, JSON.parse(configs));
+				_rangeSliderItem = new Providers.RangeSlider.NoUISlider.OSUINoUiSlider(
+					rangeSliderId,
+					JSON.parse(configs)
+				);
 
 				break;
 
