@@ -25,7 +25,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new ProgressCircleConfig(configs));
 
-			this._eventAnimateEntranceEnd = this._animateEntranceEnd.bind(this);
+			this.setCallbacks();
 		}
 
 		// Set the resizeObserver
@@ -192,6 +192,10 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			}
 		}
 
+		protected setCallbacks(): void {
+			this._eventAnimateEntranceEnd = this._animateEntranceEnd.bind(this);
+		}
+
 		protected setElementProgressValue(value: number): void {
 			this._configs.Progress = value;
 
@@ -208,6 +212,10 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		protected setHtmlElements(): void {
 			// Set the html reference that will be used to do all the needed calcs
 			this._progressSvgElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Progress);
+		}
+
+		protected unsetCallbacks(): void {
+			this._eventAnimateEntranceEnd = undefined;
 		}
 
 		protected unsetHtmlElements(): void {
@@ -271,7 +279,6 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			this.finishBuild();
 		}
 
-		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			switch (propertyName) {
 				case ProgressEnum.Properties.Thickness:
@@ -307,7 +314,9 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 
 			this.unsetHtmlElements();
 
-			// Check if the resizeOberver already exist
+			this.unsetCallbacks();
+
+			// Check if the resizeOberver already exists
 			if (this._resizeObserver) {
 				this._resizeObserver.disconnect();
 			}
