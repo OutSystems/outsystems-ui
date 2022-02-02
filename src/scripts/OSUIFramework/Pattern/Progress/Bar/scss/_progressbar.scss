@@ -91,7 +91,7 @@
 // IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {
-	.osui-progress-value:before {
+	.osui-progress-bar__value:before {
 		left: inherit;
 		right: 0;
 	}
