@@ -31,11 +31,14 @@ namespace OSUIFramework.Patterns.Rating {
 
 		// Medthod that will iterate on the RatingScale, to crate an item for each one
 		private _createItems(): void {
-			// Check if the the we should limit the amount of stars
-			this.configs.RatingScale =
-				this.configs.RatingScale > Enum.Properties.MaxRatingScale
-					? Enum.Properties.MaxRatingScale
-					: this.configs.RatingScale;
+			// Check if the the we should limit the amount of items
+			if (this.configs.RatingScale > Enum.Properties.MaxRatingScale) {
+				this.configs.RatingScale = Enum.Properties.MaxRatingScale;
+
+				console.warn(
+					`The value of the RatingScale property of the '${this.widgetId}' Rating block is higher than supported (${Enum.Properties.MaxRatingScale}).`
+				);
+			}
 
 			// Create star items!
 			for (let i = 0; i <= this.configs.RatingScale; i++) {
@@ -99,7 +102,7 @@ namespace OSUIFramework.Patterns.Rating {
 			const isInput = Helper.Dom.Styles.ContainsClass(currentTarget, Enum.CssClass.RatingInput);
 			if (isInput) {
 				// If it is, then get the input:checked value
-				this._configs.RatingValue = this._getValue();
+				this.configs.RatingValue = this._getValue();
 				// And use that value to set a new Rating Value
 				this._setValue(true);
 			}
@@ -144,13 +147,13 @@ namespace OSUIFramework.Patterns.Rating {
 			}
 
 			// Set IsEdit class
-			if (this._configs.IsEdit) {
+			if (this.configs.IsEdit) {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsEdit);
 			}
 
 			// Set Size class
-			if (this._configs.Size !== '') {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Size + this._configs.Size);
+			if (this.configs.Size !== '') {
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Size + this.configs.Size);
 			}
 		}
 
@@ -208,9 +211,9 @@ namespace OSUIFramework.Patterns.Rating {
 		// Set a rating value
 		private _setValue(triggerEvent = false): void {
 			// Check if passed value is decimal
-			this._decimalValue = this._getDecimalValue(this._configs.RatingValue);
+			this._decimalValue = this._getDecimalValue(this.configs.RatingValue);
 			// Check if passed value is half
-			this._isHalfValue = this._getIsHalfValue(this._configs.RatingValue);
+			this._isHalfValue = this._getIsHalfValue(this.configs.RatingValue);
 			// Get all inputs on rating, to properly add the :checked attribute on the correct one
 			const ratingItems = this._selfElem.querySelectorAll(GlobalEnum.HTMLElement.Input);
 
@@ -228,19 +231,29 @@ namespace OSUIFramework.Patterns.Rating {
 			// Set the newValue const to the correct value
 			// If is-half or the decimal value is bigger than 0.7, that means that we will have to apply the :checked attribute on the next input
 			// Otherwise, the input :checked will correspond to the one clicked.
-			const newValue =
+			let newValue =
 				this._isHalfValue || this._decimalValue > 0.7
-					? Math.floor(this._configs.RatingValue) + 1
-					: Math.floor(this._configs.RatingValue);
+					? Math.floor(this.configs.RatingValue) + 1
+					: Math.floor(this.configs.RatingValue);
 
-			// Try if the input :checked exists, otherwise throw warn for trying to set a value bigger than the limit
-			try {
-				ratingItems[newValue].checked = true;
-			} catch (e) {
-				throw new Error(
-					`The value of the RatingValue property of the '${this.widgetId}' Rating block exceeds the scale boundaries. To ensure the correct behaviour, set a value smaller than ${Enum.Properties.MaxRatingScale}.`
+			if (newValue < 0) {
+				// If negative value, set it as 0 by default
+				newValue = 0;
+
+				console.warn(
+					`The value of the RatingValue property of the '${this.widgetId}' Rating can't be smaller than 0(Zero).`
+				);
+			} else if (newValue > this.configs.RatingScale) {
+				// If value is higher than the RatingScale, assume the maxRatingScale a value
+				newValue = this.configs.RatingScale;
+
+				console.warn(
+					`The value of the RatingValue property of the '${this.widgetId}' Rating block exceeds the scale boundaries. To ensure the correct behaviour, set a value smaller or equal to ${this.configs.RatingScale}.`
 				);
 			}
+
+			// Set the itemas as :checked
+			ratingItems[newValue].checked = true;
 
 			// If is-half add the appropriate class, otherwise just declare the this.isHalfValue, to complete the if statement
 			if (this._isHalfValue) {
@@ -248,11 +261,11 @@ namespace OSUIFramework.Patterns.Rating {
 			}
 
 			// Update the variables with the new value
-			this._configs.RatingValue = this._isHalfValue ? this._configs.RatingValue : newValue;
+			this.configs.RatingValue = this._isHalfValue ? this.configs.RatingValue : newValue;
 
 			// Call calbackfor OnSelect event
 			if (triggerEvent) {
-				this._triggerOnSelectEvent(this._configs.RatingValue);
+				this._triggerOnSelectEvent(this.configs.RatingValue);
 			}
 		}
 
@@ -331,7 +344,7 @@ namespace OSUIFramework.Patterns.Rating {
 
 			this._handlePlaceholders();
 
-			this._setFieldsetDisabledStatus(!this._configs.IsEdit);
+			this._setFieldsetDisabledStatus(!this.configs.IsEdit);
 
 			this._createItems();
 
