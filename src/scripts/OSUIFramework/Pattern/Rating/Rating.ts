@@ -237,8 +237,9 @@ namespace OSUIFramework.Patterns.Rating {
 			try {
 				ratingItems[newValue].checked = true;
 			} catch (e) {
-				console.warn(`Value of Rating '${this.widgetId}' exceeds the scale boundaries`);
-				return;
+				throw new Error(
+					`The value of the RatingValue property of the '${this.widgetId}' Rating block exceeds the scale boundaries. To ensure the correct behaviour, set a value smaller than ${Enum.Properties.MaxRatingScale}.`
+				);
 			}
 
 			// If is-half add the appropriate class, otherwise just declare the this.isHalfValue, to complete the if statement
