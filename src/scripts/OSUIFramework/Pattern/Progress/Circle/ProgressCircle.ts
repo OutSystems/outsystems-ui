@@ -220,7 +220,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 
 		protected unsetHtmlElements(): void {
 			// Set the html reference that will be used to do all the needed calcs
-			this._progressSvgElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Progress);
+			this._progressSvgElem = undefined;
 		}
 
 		protected updateProgressColor(value: string): void {
