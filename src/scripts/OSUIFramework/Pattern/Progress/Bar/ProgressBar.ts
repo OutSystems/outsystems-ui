@@ -11,8 +11,6 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new ProgressBarConfig(configs));
-
-			this.setCallbacks();
 		}
 
 		// remove the added transitionEnd event and the cssClass added at the beginning
@@ -145,10 +143,14 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 
 			this.addInitialAnimation();
 
+			this.setCallbacks();
+
 			this.finishBuild();
 		}
-		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
+
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			super.changeProperty(propertyName, propertyValue);
+
 			switch (propertyName) {
 				case ProgressEnum.Properties.Thickness:
 					this._updateThickness(propertyValue as number);
@@ -156,7 +158,6 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 
 				case ProgressEnum.Properties.Progress:
 					this.setElementProgressValue(propertyValue as number);
-
 					break;
 
 				case ProgressEnum.Properties.ProgressColor:
@@ -170,17 +171,13 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 				case ProgressEnum.Properties.TrailColor:
 					this._updateTrailColor(propertyValue as string);
 					break;
-
-				default:
-					super.changeProperty(propertyName, propertyValue);
-					break;
 			}
 		}
 
 		public dispose(): void {
-			super.dispose();
 			this.unsetHtmlElements();
 			this.unsetCallbacks();
+			super.dispose();
 		}
 	}
 }

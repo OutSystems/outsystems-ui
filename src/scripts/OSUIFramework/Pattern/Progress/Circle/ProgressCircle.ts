@@ -24,8 +24,6 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new ProgressCircleConfig(configs));
-
-			this.setCallbacks();
 		}
 
 		// Set the resizeObserver
@@ -275,6 +273,8 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			this._setCssVariables();
 
 			this._progressToOffset();
+
+			this.setCallbacks();
 
 			this.finishBuild();
 		}
