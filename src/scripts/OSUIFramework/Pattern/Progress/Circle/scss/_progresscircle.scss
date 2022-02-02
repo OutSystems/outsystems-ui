@@ -15,31 +15,66 @@
 	position: relative;
 	width: 100%;
 
-	.osui-progress {
-		&-container {
-			display: inline-block;
-			height: var(--circle-size);
-			margin: 0 auto;
-			position: relative;
-			width: var(--circle-size);
-			z-index: 0;
+	&__container {
+		display: inline-block;
+		height: var(--circle-size);
+		margin: 0 auto;
+		position: relative;
+		width: var(--circle-size);
+		z-index: 0;
 
-			> div {
-				display: block;
-				min-height: inherit;
-				min-width: inherit;
+		> div {
+			display: block;
+			min-height: inherit;
+			min-width: inherit;
+		}
+	}
+
+	&__content {
+		left: 50%;
+		position: absolute;
+		text-align: center;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		width: 80%;
+		z-index: 1;
+	}
+
+	&__progress-path,
+	&__trail-path {
+		cx: 50%;
+		cy: 50%;
+		fill: transparent;
+		left: 0;
+		position: absolute;
+		r: var(--radius);
+		stroke-width: var(--thickness);
+		top: 0;
+		transform: rotate(-90deg);
+		transform-origin: center;
+	}
+
+	&__progress-path {
+		stroke: var(--progress-color);
+		stroke-dasharray: var(--stroke-dasharray);
+		stroke-dashoffset: var(--stroke-dashoffset);
+		stroke-linecap: var(--shape);
+		transition: stroke-dashoffset 0;
+
+		&.animate {
+			&-entrance,
+			&-progress-change {
+				transition-duration: 0.35s;
+			}
+
+			&-entrance {
+				transition-delay: 0.5s;
 			}
 		}
+	}
 
-		&-content {
-			left: 50%;
-			position: absolute;
-			text-align: center;
-			top: 50%;
-			transform: translate(-50%, -50%);
-			width: 80%;
-			z-index: 1;
-		}
+	&__trail-path {
+		stroke: var(--trail-color);
 	}
 
 	.svg-wrapper {
@@ -52,45 +87,6 @@
 		svg {
 			height: var(--circle-size);
 			width: var(--circle-size);
-		}
-	}
-
-	.osui-progress {
-		&-progress-path,
-		&-trail-path {
-			cx: 50%;
-			cy: 50%;
-			fill: transparent;
-			left: 0;
-			position: absolute;
-			r: var(--radius);
-			stroke-width: var(--thickness);
-			top: 0;
-			transform: rotate(-90deg);
-			transform-origin: center;
-		}
-
-		&-progress-path {
-			stroke: var(--progress-color);
-			stroke-dasharray: var(--stroke-dasharray);
-			stroke-dashoffset: var(--stroke-dashoffset);
-			stroke-linecap: var(--shape);
-			transition: stroke-dashoffset 0;
-
-			&.animate {
-				&-entrance,
-				&-progress-change {
-					transition-duration: 0.35s;
-				}
-
-				&-entrance {
-					transition-delay: 0.5s;
-				}
-			}
-		}
-
-		&-trail-path {
-			stroke: var(--trail-color);
 		}
 	}
 }
