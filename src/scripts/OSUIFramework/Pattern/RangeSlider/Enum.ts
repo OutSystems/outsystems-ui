@@ -11,8 +11,8 @@ namespace OSUIFramework.Patterns.RangeSlider.Enum {
 		ShowTickMarks = 'ShowTickMarks',
 		ShowFloatingLabel = 'ShowFloatingLabel',
 		Size = 'Size',
-		StartingValueEnd = 'StartingValueEnd',
-		StartingValueStart = 'StartingValueStart',
+		StartingValueTo = 'StartingValueTo',
+		StartingValueFrom = 'StartingValueFrom',
 		Step = 'Step',
 		TickMarksInterval = 'TickMarksInterval',
 	}
