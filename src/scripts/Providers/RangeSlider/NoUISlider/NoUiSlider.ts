@@ -63,12 +63,12 @@ namespace Providers.RangeSlider.NoUISlider {
 			if (tickMarksValues > this.configs.MaxValue) {
 				tickMarksValues = this.configs.MaxValue;
 			}
-
 			// Ticks, when they exist, can't be decimal (library restraint)
 			if (tickMarksValues < 1) {
 				console.warn(
 					'The interval between tick marks, when they exist, can not be smaller than one or a decimal number (library restraint). If you do not want TickMarks to show, set the ShowTickMarks parameter to false.'
 				);
+				this.configs.TickMarksInterval = 1;
 				return;
 			}
 
@@ -342,7 +342,6 @@ namespace Providers.RangeSlider.NoUISlider {
 
 		public build(): void {
 			super.build();
-
 			this.setCallbacks();
 			this.setHtmlElements();
 			this.setInitialCSSClasses();
@@ -357,6 +356,7 @@ namespace Providers.RangeSlider.NoUISlider {
 			// Library only supports update on some options, so in most cases we need to
 			// destroy the object and create a new RangeSlider
 			super.changeProperty(propertyName, propertyValue);
+			console.log('deded');
 
 			if (this.isBuilt) {
 				switch (propertyName) {
