@@ -4,8 +4,8 @@ namespace OSUIFramework.Patterns.Progress.Circle.Enum {
 	 * ProgressCircle Enum CssClasses
 	 */
 	export enum CssClass {
-		Progress = 'osui-progress-circle__progress-path',
-		Trail = 'osui-progress-circle__trail-path',
+		Progress = 'osui-progress-circle__container__progress-path',
+		Trail = 'osui-progress-circle__container__trail-path',
 	}
 
 	/**
