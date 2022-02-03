@@ -356,7 +356,6 @@ namespace Providers.RangeSlider.NoUISlider {
 			// Library only supports update on some options, so in most cases we need to
 			// destroy the object and create a new RangeSlider
 			super.changeProperty(propertyName, propertyValue);
-			console.log('deded');
 
 			if (this.isBuilt) {
 				switch (propertyName) {
