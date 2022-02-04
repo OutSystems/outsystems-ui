@@ -109,12 +109,12 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 		}
 
 		protected setElementProgressValue(value: number): void {
-			if (value > 0) {
-				this._configs.Progress = value;
+			if (value <= 0) {
+				this._configs.Progress = 0;
 			} else if (value > 100) {
 				this._configs.Progress = 100;
 			} else {
-				this._configs.Progress = 0;
+				this._configs.Progress = value;
 			}
 
 			this._updateProgressValue();
@@ -138,6 +138,8 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 			super.build();
 
 			this.setHtmlElements();
+
+			this.setElementProgressValue(this.configs.Progress);
 
 			this._setCssVariables();
 

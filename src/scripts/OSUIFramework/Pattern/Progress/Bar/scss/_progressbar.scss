@@ -84,6 +84,10 @@
 			transform: translateY(-50%);
 			width: 100%;
 			z-index: 2;
+
+			& {
+				-servicestudio-text-align: center;
+			}
 		}
 	}
 }
