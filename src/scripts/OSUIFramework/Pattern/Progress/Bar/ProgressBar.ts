@@ -139,6 +139,8 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 
 			this.setHtmlElements();
 
+			this.setElementProgressValue(this.configs.Progress);
+
 			this._setCssVariables();
 
 			this.addInitialAnimation();
