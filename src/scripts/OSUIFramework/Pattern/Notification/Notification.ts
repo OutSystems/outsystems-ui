@@ -35,16 +35,16 @@ namespace OSUIFramework.Patterns.Notification {
 		// Close Notification after wait the time defined
 		private _autoCloseNotification(): void {
 			setTimeout(() => {
-				if (this._configs.IsOpen) {
+				if (this.configs.IsOpen) {
 					this.hide();
 				}
-			}, this._configs.CloseAfterTime);
+			}, this.configs.CloseAfterTime);
 		}
 
 		// Close Notification, when BodyOnCLick event is triggered
 		private _onBodyClick(args: string, e: MouseEvent): void {
 			if (!this._notificationContent.contains(e.target as HTMLElement)) {
-				if (this._configs.IsOpen) {
+				if (this.configs.IsOpen) {
 					this.hide();
 				}
 			}
@@ -56,7 +56,7 @@ namespace OSUIFramework.Patterns.Notification {
 		private _onNotificationClick(e: MouseEvent): void {
 			e.stopPropagation();
 			e.preventDefault();
-			this._onNotificationToggle(!this._configs.IsOpen);
+			this._onNotificationToggle(!this.configs.IsOpen);
 		}
 
 		// Call methods to open or close, based ok e.key and behavior applied
@@ -66,10 +66,10 @@ namespace OSUIFramework.Patterns.Notification {
 
 			//Open the Notification
 			if (_isEnterPressed) {
-				this._onNotificationToggle(!this._configs.IsOpen);
+				this._onNotificationToggle(!this.configs.IsOpen);
 			}
 			// Close the Notification when pressing Esc
-			if (_isEscapedPressed && this._configs.IsOpen) {
+			if (_isEscapedPressed && this.configs.IsOpen) {
 				this.hide();
 			}
 
@@ -79,7 +79,7 @@ namespace OSUIFramework.Patterns.Notification {
 		// Prevent close notification based on a uniqueID validation, when his event is triggered
 		private _onNotificationOpenEvent(elementId: string): void {
 			if (elementId !== this.uniqueId) {
-				if (this._configs.IsOpen) {
+				if (this.configs.IsOpen) {
 					this.hide();
 				}
 			}
@@ -87,9 +87,9 @@ namespace OSUIFramework.Patterns.Notification {
 
 		// Toggle visibility of Notification
 		private _onNotificationToggle(isOpen: boolean): void {
-			this._configs.IsOpen = isOpen;
+			this.configs.IsOpen = isOpen;
 
-			if (this._configs.IsOpen) {
+			if (this.configs.IsOpen) {
 				this.show();
 			} else {
 				this.hide();
@@ -111,21 +111,21 @@ namespace OSUIFramework.Patterns.Notification {
 			}
 
 			// Set width value for Notification
-			Helper.Dom.Styles.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, this._configs.Width);
+			Helper.Dom.Styles.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, this.configs.Width);
 
 			// Set position initial class
-			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternPosition + this._configs.Position);
+			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternPosition + this.configs.Position);
 
 			// Set HasOverlay class
-			if (this._configs.HasOverlay) {
+			if (this.configs.HasOverlay) {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternOverlay);
 			}
 
-			if (this._configs.IsOpen) {
-				this._onNotificationToggle(this._configs.IsOpen);
+			if (this.configs.IsOpen) {
+				this._onNotificationToggle(this.configs.IsOpen);
 			}
 
-			if (this._configs.CloseAfterTime > 0 && this._configs.IsOpen) {
+			if (this.configs.CloseAfterTime > 0 && this.configs.IsOpen) {
 				this._autoCloseNotification();
 			}
 
@@ -140,7 +140,7 @@ namespace OSUIFramework.Patterns.Notification {
 		// Remove all the assigned Events
 		private _removeEvents(): void {
 			// Remove listeners to toggle Notification
-			if (this._configs.ClickToClose) {
+			if (this.configs.ClickToClose) {
 				this._notificationContent.removeEventListener(
 					this._eventOnNotification,
 					this._eventOnNotificationClick
@@ -152,7 +152,7 @@ namespace OSUIFramework.Patterns.Notification {
 			}
 
 			// Remove handler from EventManager
-			if (this._configs.CloseOnBodyClick) {
+			if (this.configs.CloseOnBodyClick) {
 				OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
 					// eslint-disable-next-line @typescript-eslint/no-unused-vars
 					OSUIFramework.Event.Type.BodyOnClick,
@@ -190,13 +190,13 @@ namespace OSUIFramework.Patterns.Notification {
 			Helper.Dom.Attribute.Set(
 				this._notificationContent,
 				Constants.A11YAttributes.Aria.Hidden,
-				(!this._configs.IsOpen).toString()
+				(!this.configs.IsOpen).toString()
 			);
 
 			Helper.Dom.Attribute.Set(
 				this._notificationContent,
 				Constants.A11YAttributes.TabIndex,
-				this._configs.IsOpen
+				this.configs.IsOpen
 					? Constants.A11YAttributes.States.TabIndexShow
 					: Constants.A11YAttributes.States.TabIndexHidden
 			);
@@ -204,23 +204,23 @@ namespace OSUIFramework.Patterns.Notification {
 
 		// Update CloseAfterTime value
 		private _updateClickToClose(clickToClose: boolean): void {
-			this._configs.ClickToClose = clickToClose;
+			this.configs.ClickToClose = clickToClose;
 		}
 
 		// Update CloseAfterTime value
 		private _updateCloseAfterTime(value: number): void {
-			this._configs.CloseAfterTime = value;
-			if (this._configs.IsOpen) {
+			this.configs.CloseAfterTime = value;
+			if (this.configs.IsOpen) {
 				this._autoCloseNotification();
 			}
 		}
 
 		// Update CloseOnBodyClick value
 		private _updateCloseOnBodyClick(closeOnBodyClick: boolean): void {
-			this._configs.CloseOnBodyClick = closeOnBodyClick;
+			this.configs.CloseOnBodyClick = closeOnBodyClick;
 
 			// Toggle handlers from EventManager
-			if (this._configs.CloseOnBodyClick && this._configs.IsOpen) {
+			if (this.configs.CloseOnBodyClick && this.configs.IsOpen) {
 				OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
 					// eslint-disable-next-line @typescript-eslint/no-unused-vars
 					OSUIFramework.Event.Type.BodyOnClick,
@@ -236,9 +236,9 @@ namespace OSUIFramework.Patterns.Notification {
 		}
 
 		private _updateHasOverlay(overlay: boolean): void {
-			this._configs.HasOverlay = overlay;
+			this.configs.HasOverlay = overlay;
 			// Reset overlay class
-			if (this._configs.HasOverlay) {
+			if (this.configs.HasOverlay) {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternOverlay);
 			} else {
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternOverlay);
@@ -247,21 +247,21 @@ namespace OSUIFramework.Patterns.Notification {
 
 		private _updatePosition(position: string): void {
 			// Reset direction class
-			if (this._configs.Position !== '') {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternPosition + this._configs.Position);
+			if (this.configs.Position !== '') {
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternPosition + this.configs.Position);
 			}
 
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternPosition + position);
-			this._configs.Position = position;
+			this.configs.Position = position;
 		}
 
 		// Set the Notification width
 		private _updateWidth(width: string): void {
-			this._configs.Width = width;
+			this.configs.Width = width;
 			if (width !== '') {
 				// Update css variable
 				Helper.Dom.Styles.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, width);
-				this._configs.Width = width;
+				this.configs.Width = width;
 			}
 		}
 
@@ -318,12 +318,12 @@ namespace OSUIFramework.Patterns.Notification {
 
 		// Hide Notification
 		public hide(): void {
-			this._configs.IsOpen = false;
+			this.configs.IsOpen = false;
 
 			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
 
 			// Trigger Notification event with new status
-			this._triggerOnToggleEvent(this._configs.IsOpen);
+			this._triggerOnToggleEvent(this.configs.IsOpen);
 
 			// Update accessibility properties
 			this._updateAccessibilityProps();
@@ -332,7 +332,7 @@ namespace OSUIFramework.Patterns.Notification {
 			this._notificationContent.blur();
 
 			// Remove listeners to toggle Notification
-			if (this._configs.ClickToClose) {
+			if (this.configs.ClickToClose) {
 				this._notificationContent.removeEventListener(
 					this._eventOnNotification,
 					this._eventOnNotificationClick
@@ -353,10 +353,10 @@ namespace OSUIFramework.Patterns.Notification {
 		// Method to handle the swipe bottom
 		public onSwipeBottom(): void {
 			if (
-				this._configs.Position === GlobalEnum.Position.Bottom ||
-				this._configs.Position === GlobalEnum.Position.BottomLeft ||
-				this._configs.Position === GlobalEnum.Position.BottomRight ||
-				this._configs.Position === GlobalEnum.Position.Center
+				this.configs.Position === GlobalEnum.Position.Bottom ||
+				this.configs.Position === GlobalEnum.Position.BottomLeft ||
+				this.configs.Position === GlobalEnum.Position.BottomRight ||
+				this.configs.Position === GlobalEnum.Position.Center
 			) {
 				this.hide();
 			}
@@ -365,9 +365,9 @@ namespace OSUIFramework.Patterns.Notification {
 		// Method to handle the swipe left
 		public onSwipeLeft(): void {
 			if (
-				this._configs.Position === GlobalEnum.Position.Left ||
-				this._configs.Position === GlobalEnum.Position.BottomLeft ||
-				this._configs.Position === GlobalEnum.Position.TopLeft
+				this.configs.Position === GlobalEnum.Position.Left ||
+				this.configs.Position === GlobalEnum.Position.BottomLeft ||
+				this.configs.Position === GlobalEnum.Position.TopLeft
 			) {
 				this.hide();
 			}
@@ -376,9 +376,9 @@ namespace OSUIFramework.Patterns.Notification {
 		// Method to handle the swipe right
 		public onSwipeRight(): void {
 			if (
-				this._configs.Position === GlobalEnum.Position.Right ||
-				this._configs.Position === GlobalEnum.Position.BottomRight ||
-				this._configs.Position === GlobalEnum.Position.TopRight
+				this.configs.Position === GlobalEnum.Position.Right ||
+				this.configs.Position === GlobalEnum.Position.BottomRight ||
+				this.configs.Position === GlobalEnum.Position.TopRight
 			) {
 				this.hide();
 			}
@@ -396,18 +396,18 @@ namespace OSUIFramework.Patterns.Notification {
 
 		// Show Notification
 		public show(): void {
-			this._configs.IsOpen = true;
+			this.configs.IsOpen = true;
 
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsOpen);
 
 			// Trigger Notification event with new status
-			this._triggerOnToggleEvent(this._configs.IsOpen);
+			this._triggerOnToggleEvent(this.configs.IsOpen);
 
 			// Update accessibility properties
 			this._updateAccessibilityProps();
 
 			// Add listeners to toggle Notification
-			if (this._configs.ClickToClose) {
+			if (this.configs.ClickToClose) {
 				this._notificationContent.addEventListener(this._eventOnNotification, this._eventOnNotificationClick);
 				this._notificationContent.addEventListener(
 					GlobalEnum.HTMLEvent.keyDown,
@@ -418,11 +418,11 @@ namespace OSUIFramework.Patterns.Notification {
 			// Focus on element when Notification is open
 			this._notificationContent.focus();
 
-			if (this._configs.CloseAfterTime > 0) {
+			if (this.configs.CloseAfterTime > 0) {
 				this._autoCloseNotification();
 			}
 			// Add handler to EventManager for body click
-			if (this._configs.CloseOnBodyClick) {
+			if (this.configs.CloseOnBodyClick) {
 				OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
 					// eslint-disable-next-line @typescript-eslint/no-unused-vars
 					OSUIFramework.Event.Type.BodyOnClick,

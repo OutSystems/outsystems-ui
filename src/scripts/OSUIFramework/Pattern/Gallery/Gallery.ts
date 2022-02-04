@@ -103,22 +103,22 @@ namespace OSUIFramework.Patterns.Gallery {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
-			if (Enum.Property[propertyName] && this._configs.hasOwnProperty(propertyName)) {
+			if (Enum.Property[propertyName] && this.configs.hasOwnProperty(propertyName)) {
 				switch (propertyName) {
 					case Enum.Property.ItemsInDesktop:
-						this._configs.ItemsInDesktop = propertyValue;
+						this.configs.ItemsInDesktop = propertyValue;
 						this._setItemsInDesktop();
 						break;
 					case Enum.Property.ItemsInTablet:
-						this._configs.ItemsInTablet = propertyValue;
+						this.configs.ItemsInTablet = propertyValue;
 						this._setItemsInTablet();
 						break;
 					case Enum.Property.ItemsInPhone:
-						this._configs.ItemsInPhone = propertyValue;
+						this.configs.ItemsInPhone = propertyValue;
 						this._setItemsInPhone();
 						break;
 					case Enum.Property.GutterSize:
-						this._configs.GutterSize = propertyValue;
+						this.configs.GutterSize = propertyValue;
 						this._setGutterSize();
 						break;
 				}

@@ -25,55 +25,55 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.Thickness,
-				this._configs.Thickness + GlobalEnum.Units.Pixel
+				this.configs.Thickness + GlobalEnum.Units.Pixel
 			);
 
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.ProgressColor,
-				Helper.Dom.Styles.GetColorValueFromColorType(this._configs.ProgressColor)
+				Helper.Dom.Styles.GetColorValueFromColorType(this.configs.ProgressColor)
 			);
 
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.Shape,
-				Helper.Dom.Styles.GetBorderRadiusValueFromShapeType(this._configs.Shape)
+				Helper.Dom.Styles.GetBorderRadiusValueFromShapeType(this.configs.Shape)
 			);
 
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.TrailColor,
-				Helper.Dom.Styles.GetColorValueFromColorType(this._configs.TrailColor)
+				Helper.Dom.Styles.GetColorValueFromColorType(this.configs.TrailColor)
 			);
 		}
 
 		private _updateProgressColor(value: string): void {
-			this._configs.ProgressColor = value;
+			this.configs.ProgressColor = value;
 
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.ProgressColor,
-				Helper.Dom.Styles.GetColorValueFromColorType(this._configs.ProgressColor)
+				Helper.Dom.Styles.GetColorValueFromColorType(this.configs.ProgressColor)
 			);
 		}
 
 		// Update the valuenow accessibility property
 		private _updateProgressValue(): void {
-			this.updateValueNow(this._configs.Progress.toString());
+			this.updateValueNow(this.configs.Progress.toString());
 		}
 
 		private _updateShape(value: string): void {
-			this._configs.Shape = value;
+			this.configs.Shape = value;
 
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.Shape,
-				Helper.Dom.Styles.GetBorderRadiusValueFromShapeType(this._configs.Shape)
+				Helper.Dom.Styles.GetBorderRadiusValueFromShapeType(this.configs.Shape)
 			);
 		}
 
 		private _updateThickness(value: number): void {
-			this._configs.Thickness = value;
+			this.configs.Thickness = value;
 
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
@@ -83,19 +83,19 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 		}
 
 		private _updateTrailColor(value: string): void {
-			this._configs.TrailColor = value;
+			this.configs.TrailColor = value;
 
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.TrailColor,
-				Helper.Dom.Styles.GetColorValueFromColorType(this._configs.TrailColor)
+				Helper.Dom.Styles.GetColorValueFromColorType(this.configs.TrailColor)
 			);
 		}
 
 		// Add the initial animation to the pattern if it's applicable
 		protected addInitialAnimation(): void {
 			// Check if the animation at init should be added
-			if (this._configs.AnimateInitialProgress) {
+			if (this.configs.AnimateInitialProgress) {
 				Helper.Dom.Styles.AddClass(this._progressElem, ProgressEnum.CssClass.AddInitialAnimation);
 
 				this._progressElem.addEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._eventAnimateEntranceEnd);
@@ -110,11 +110,11 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 
 		protected setElementProgressValue(value: number): void {
 			if (value <= 0) {
-				this._configs.Progress = 0;
+				this.configs.Progress = 0;
 			} else if (value > 100) {
-				this._configs.Progress = 100;
+				this.configs.Progress = 100;
 			} else {
-				this._configs.Progress = value;
+				this.configs.Progress = value;
 			}
 
 			this._updateProgressValue();

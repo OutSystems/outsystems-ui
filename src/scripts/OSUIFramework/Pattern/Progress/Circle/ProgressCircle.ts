@@ -77,7 +77,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 				this._circletSize + GlobalEnum.Units.Pixel
 			);
 
-			const _radius = Math.floor(this._circletSize / 2 - this._configs.Thickness / 2);
+			const _radius = Math.floor(this._circletSize / 2 - this.configs.Thickness / 2);
 			this._circleCircumference = _radius * 2 * Math.PI;
 
 			// set the base values
@@ -113,19 +113,19 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.Thickness,
-				this._configs.Thickness + GlobalEnum.Units.Pixel
+				this.configs.Thickness + GlobalEnum.Units.Pixel
 			);
 
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.ProgressColor,
-				Helper.Dom.Styles.GetColorValueFromColorType(this._configs.ProgressColor)
+				Helper.Dom.Styles.GetColorValueFromColorType(this.configs.ProgressColor)
 			);
 
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.Shape,
-				this._configs.Shape === GlobalEnum.ShapeTypes.Sharp
+				this.configs.Shape === GlobalEnum.ShapeTypes.Sharp
 					? ProgressEnum.ShapeTypes.Sharp
 					: ProgressEnum.ShapeTypes.Round
 			);
@@ -133,7 +133,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.TrailColor,
-				Helper.Dom.Styles.GetColorValueFromColorType(this._configs.TrailColor)
+				Helper.Dom.Styles.GetColorValueFromColorType(this.configs.TrailColor)
 			);
 		}
 
@@ -146,21 +146,21 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		// Update the valuenow accessibility property
 		private _updateProgressValue(): void {
 			// Force Progress value to be 0 when receive negative values
-			if (this._configs.Progress < 0) {
-				this._configs.Progress = 0;
+			if (this.configs.Progress < 0) {
+				this.configs.Progress = 0;
 			}
 
 			// Force Progress value to be 100 when receive bigger than 100 values
-			if (this._configs.Progress > 100) {
-				this._configs.Progress = 100;
+			if (this.configs.Progress > 100) {
+				this.configs.Progress = 100;
 			}
 
 			// Update inline attributes based on new Progress value
-			this.updateValueNow(this._configs.Progress.toString());
+			this.updateValueNow(this.configs.Progress.toString());
 
 			// Update the offset value
 			this._strokeDashoffset =
-				this._circleCircumference - (this._configs.Progress / 100) * this._circleCircumference;
+				this._circleCircumference - (this.configs.Progress / 100) * this._circleCircumference;
 
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
@@ -172,7 +172,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		// Add the initial animation to the pattern if it's applicable
 		protected addInitialAnimation(): void {
 			// Check if the animation at init should be added
-			if (this._configs.AnimateInitialProgress) {
+			if (this.configs.AnimateInitialProgress) {
 				// Do the initial animation
 				Helper.Dom.Styles.AddClass(this._progressSvgElem, ProgressEnum.CssClass.AddInitialAnimation);
 
@@ -195,7 +195,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		}
 
 		protected setElementProgressValue(value: number): void {
-			this._configs.Progress = value;
+			this.configs.Progress = value;
 
 			// Do the transition animation
 			Helper.Dom.Styles.AddClass(this._progressSvgElem, ProgressEnum.CssClass.AnimateProgressChange);
@@ -222,46 +222,46 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		}
 
 		protected updateProgressColor(value: string): void {
-			this._configs.ProgressColor = value;
+			this.configs.ProgressColor = value;
 
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.ProgressColor,
-				Helper.Dom.Styles.GetColorValueFromColorType(this._configs.ProgressColor)
+				Helper.Dom.Styles.GetColorValueFromColorType(this.configs.ProgressColor)
 			);
 		}
 
 		protected updateShape(value: string): void {
-			this._configs.Shape = value;
+			this.configs.Shape = value;
 
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.Shape,
-				this._configs.Shape === GlobalEnum.ShapeTypes.Sharp
+				this.configs.Shape === GlobalEnum.ShapeTypes.Sharp
 					? ProgressEnum.ShapeTypes.Sharp
 					: ProgressEnum.ShapeTypes.Round
 			);
 		}
 
 		protected updateThickness(value: number): void {
-			this._configs.Thickness = value;
+			this.configs.Thickness = value;
 
 			this._updateCircleProps();
 
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.Thickness,
-				this._configs.Thickness + GlobalEnum.Units.Pixel
+				this.configs.Thickness + GlobalEnum.Units.Pixel
 			);
 		}
 
 		protected updateTrailColor(value: string): void {
-			this._configs.TrailColor = value;
+			this.configs.TrailColor = value;
 
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				ProgressEnum.InlineStyleProp.TrailColor,
-				Helper.Dom.Styles.GetColorValueFromColorType(this._configs.TrailColor)
+				Helper.Dom.Styles.GetColorValueFromColorType(this.configs.TrailColor)
 			);
 		}
 

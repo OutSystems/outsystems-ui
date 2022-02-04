@@ -50,11 +50,11 @@ namespace Providers.Datepicker.Flatpickr {
 			);
 
 			// Check if there are any ExtendedClass to be added into our calendar elements
-			if (this._configs.ExtendedClass !== '') {
+			if (this.configs.ExtendedClass !== '') {
 				OSUIFramework.Helper.Dom.Styles.ExtendedClass(
 					this.provider.calendarContainer,
 					'',
-					this._configs.ExtendedClass
+					this.configs.ExtendedClass
 				);
 			}
 		}
@@ -112,7 +112,7 @@ namespace Providers.Datepicker.Flatpickr {
 				this.configs.calendarMode === OSUIFramework.Patterns.DatePicker.Enum.Mode.Range
 			) {
 				// Add TodayBtn
-				if (this._configs.ShowTodayButton) {
+				if (this.configs.ShowTodayButton) {
 					this.addTodayBtn();
 				}
 
