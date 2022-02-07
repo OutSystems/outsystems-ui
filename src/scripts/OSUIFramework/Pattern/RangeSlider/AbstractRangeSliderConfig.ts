@@ -9,8 +9,8 @@ namespace OSUIFramework.Patterns.RangeSlider {
 		public ShowFloatingLabel: boolean;
 		public ShowTickMarks: boolean;
 		public Size: number;
-		public StartingValueEnd: number;
-		public StartingValueStart: number;
+		public StartingValueFrom: number;
+		public StartingValueTo: number;
 		public Step: number;
 		public TickMarksInterval: number;
 
@@ -21,8 +21,8 @@ namespace OSUIFramework.Patterns.RangeSlider {
 		public validateCanChange(isBuilt: boolean, key: string): boolean {
 			if (isBuilt) {
 				return (
-					key !== (Enum.Properties.StartingValueStart as string) ||
-					key !== (Enum.Properties.StartingValueEnd as string)
+					key !== (Enum.Properties.StartingValueFrom as string) ||
+					key !== (Enum.Properties.StartingValueTo as string)
 				);
 			}
 			return true;

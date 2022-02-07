@@ -6,7 +6,7 @@ namespace OSUIFramework.Patterns.Progress.ProgressEnum {
 	export enum CssClass {
 		AddInitialAnimation = 'animate-entrance',
 		AnimateProgressChange = 'animate-progress-change',
-		Container = 'osui-progress-container',
+		Container = 'osui-progress-bar__container',
 	}
 
 	/**

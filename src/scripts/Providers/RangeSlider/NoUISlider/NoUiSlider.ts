@@ -63,12 +63,12 @@ namespace Providers.RangeSlider.NoUISlider {
 			if (tickMarksValues > this.configs.MaxValue) {
 				tickMarksValues = this.configs.MaxValue;
 			}
-
-			// Ticks, when they exist, can't be less than 1 (library restraint)
+			// Ticks, when they exist, can't be decimal (library restraint)
 			if (tickMarksValues < 1) {
 				console.warn(
-					'TickMarks, when they exist, can not be less than one (library restraint). If you do not want TickMarks to show, set the ShowTickMarks paramater to false.'
+					'The interval between tick marks, when they exist, can not be smaller than one or a decimal number (library restraint). If you do not want TickMarks to show, set the ShowTickMarks parameter to false.'
 				);
+				this.configs.TickMarksInterval = 1;
 				return;
 			}
 
@@ -165,10 +165,10 @@ namespace Providers.RangeSlider.NoUISlider {
 			const value = this.getValue();
 
 			if (this.configs.IsInterval) {
-				this.configs.StartingValueStart = value[0];
-				this.configs.StartingValueEnd = value[1];
+				this.configs.StartingValueFrom = value[0];
+				this.configs.StartingValueTo = value[1];
 			} else {
-				this.configs.StartingValueStart = value as number;
+				this.configs.StartingValueFrom = value as number;
 			}
 
 			this.provider.destroy();
@@ -185,6 +185,10 @@ namespace Providers.RangeSlider.NoUISlider {
 			this.provider.updateOptions({
 				range: this.configs.getRangeConfig(),
 			});
+
+			if (this.configs.ShowTickMarks) {
+				this._handleRangeTicks();
+			}
 		}
 
 		/**
@@ -209,9 +213,9 @@ namespace Providers.RangeSlider.NoUISlider {
 		private _valueChangeCallback(value?: number[]): void {
 			if (value !== undefined) {
 				//if we received value, means that this was a callback from the Provider. Let's update the values.
-				this.configs.StartingValueStart = value[0];
+				this.configs.StartingValueFrom = value[0];
 				if (this.configs.IsInterval) {
-					this.configs.StartingValueEnd = value[1];
+					this.configs.StartingValueTo = value[1];
 				}
 			}
 
@@ -221,8 +225,8 @@ namespace Providers.RangeSlider.NoUISlider {
 				this._trottleTimer = setTimeout(() => {
 					this._platformEventValueChange(
 						this.widgetId,
-						this.configs.StartingValueStart,
-						this.configs.IsInterval ? this.configs.StartingValueEnd : undefined
+						this.configs.StartingValueFrom,
+						this.configs.IsInterval ? this.configs.StartingValueTo : undefined
 					);
 					this._trottleTimer = undefined;
 				}, this._trottleTimeValue);
@@ -338,7 +342,6 @@ namespace Providers.RangeSlider.NoUISlider {
 
 		public build(): void {
 			super.build();
-
 			this.setCallbacks();
 			this.setHtmlElements();
 			this.setInitialCSSClasses();
@@ -356,19 +359,19 @@ namespace Providers.RangeSlider.NoUISlider {
 
 			if (this.isBuilt) {
 				switch (propertyName) {
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueStart:
+					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueFrom:
 						console.warn(
 							`RangeSlider${this._configs.IsInterval ? 'Interval' : ''} (${this.widgetId}): changes to ${
-								OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueStart
+								OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueFrom
 							} parameter do not affect the RangeSlider${
 								this._configs.IsInterval ? 'Interval' : ''
 							}. Use a distinct variable to assign on the OnValueChange event`
 						);
 						break;
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueEnd:
+					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueTo:
 						console.warn(
 							`RangeSlider${this._configs.IsInterval ? 'Interval' : ''} (${this.widgetId}): changes to ${
-								OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueEnd
+								OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueTo
 							} parameter do not affect the RangeSlider${
 								this._configs.IsInterval ? 'Interval' : ''
 							}. Use a distinct variable to assign on the OnValueChange event`
@@ -377,7 +380,6 @@ namespace Providers.RangeSlider.NoUISlider {
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.MinValue:
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.MaxValue:
 						this._updateRangeValues();
-						this._handleRangeTicks();
 
 						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.Orientation:

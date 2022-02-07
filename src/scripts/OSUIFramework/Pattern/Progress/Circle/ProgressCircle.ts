@@ -24,8 +24,6 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new ProgressCircleConfig(configs));
-
-			this._eventAnimateEntranceEnd = this._animateEntranceEnd.bind(this);
 		}
 
 		// Set the resizeObserver
@@ -139,12 +137,6 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			);
 		}
 
-		// Update info based on htmlContent
-		private _setHtmlElements(): void {
-			// Set the html reference that will be used to do all the needed calcs
-			this._progressSvgElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Progress);
-		}
-
 		// Trigger all the meethods responsible to proper update the Circle
 		private _updateCircleProps(): void {
 			this._progressToOffset();
@@ -198,6 +190,10 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			}
 		}
 
+		protected setCallbacks(): void {
+			this._eventAnimateEntranceEnd = this._animateEntranceEnd.bind(this);
+		}
+
 		protected setElementProgressValue(value: number): void {
 			this._configs.Progress = value;
 
@@ -210,72 +206,100 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 			this._updateProgressValue();
 		}
 
+		// Update info based on htmlContent
+		protected setHtmlElements(): void {
+			// Set the html reference that will be used to do all the needed calcs
+			this._progressSvgElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Progress);
+		}
+
+		protected unsetCallbacks(): void {
+			this._eventAnimateEntranceEnd = undefined;
+		}
+
+		protected unsetHtmlElements(): void {
+			// Set the html reference that will be used to do all the needed calcs
+			this._progressSvgElem = undefined;
+		}
+
+		protected updateProgressColor(value: string): void {
+			this._configs.ProgressColor = value;
+
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				ProgressEnum.InlineStyleProp.ProgressColor,
+				Helper.Dom.Styles.GetColorValueFromColorType(this._configs.ProgressColor)
+			);
+		}
+
+		protected updateShape(value: string): void {
+			this._configs.Shape = value;
+
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				ProgressEnum.InlineStyleProp.Shape,
+				this._configs.Shape === GlobalEnum.ShapeTypes.Sharp
+					? ProgressEnum.ShapeTypes.Sharp
+					: ProgressEnum.ShapeTypes.Round
+			);
+		}
+
+		protected updateThickness(value: number): void {
+			this._configs.Thickness = value;
+
+			this._updateCircleProps();
+
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				ProgressEnum.InlineStyleProp.Thickness,
+				this._configs.Thickness + GlobalEnum.Units.Pixel
+			);
+		}
+
+		protected updateTrailColor(value: string): void {
+			this._configs.TrailColor = value;
+
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				ProgressEnum.InlineStyleProp.TrailColor,
+				Helper.Dom.Styles.GetColorValueFromColorType(this._configs.TrailColor)
+			);
+		}
+
 		public build(): void {
 			super.build();
 
-			this._setHtmlElements();
+			this.setHtmlElements();
 
 			this._setCssVariables();
 
 			this._progressToOffset();
 
+			this.setCallbacks();
+
 			this.finishBuild();
 		}
 
-		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-		public changeProperty(propertyName: string, propertyValue: any): void {
+		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			switch (propertyName) {
 				case ProgressEnum.Properties.Thickness:
-					this._configs.Thickness = propertyValue;
-
-					this._updateCircleProps();
-
-					Helper.Dom.Styles.SetStyleAttribute(
-						this._selfElem,
-						ProgressEnum.InlineStyleProp.Thickness,
-						propertyValue + GlobalEnum.Units.Pixel
-					);
-
+					this.updateThickness(propertyValue as number);
 					break;
 
 				case ProgressEnum.Properties.Progress:
-					this.setProgressValue(propertyValue);
-
+					this.setProgressValue(propertyValue as number);
 					break;
 
 				case ProgressEnum.Properties.ProgressColor:
-					this._configs.ProgressColor = propertyValue;
-
-					Helper.Dom.Styles.SetStyleAttribute(
-						this._selfElem,
-						ProgressEnum.InlineStyleProp.ProgressColor,
-						Helper.Dom.Styles.GetColorValueFromColorType(this._configs.ProgressColor)
-					);
-
+					this.updateProgressColor(propertyValue as string);
 					break;
 
 				case ProgressEnum.Properties.Shape:
-					this._configs.Shape = propertyValue;
-
-					Helper.Dom.Styles.SetStyleAttribute(
-						this._selfElem,
-						ProgressEnum.InlineStyleProp.Shape,
-						this._configs.Shape === GlobalEnum.ShapeTypes.Sharp
-							? ProgressEnum.ShapeTypes.Sharp
-							: ProgressEnum.ShapeTypes.Round
-					);
+					this.updateShape(propertyValue as string);
 
 					break;
 
 				case ProgressEnum.Properties.TrailColor:
-					this._configs.TrailColor = propertyValue;
-
-					Helper.Dom.Styles.SetStyleAttribute(
-						this._selfElem,
-						ProgressEnum.InlineStyleProp.TrailColor,
-						Helper.Dom.Styles.GetColorValueFromColorType(this._configs.TrailColor)
-					);
-
+					this.updateTrailColor(propertyValue as string);
 					break;
 
 				default:
@@ -288,7 +312,11 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 		public dispose(): void {
 			super.dispose();
 
-			// Check if the resizeOberver already exist
+			this.unsetHtmlElements();
+
+			this.unsetCallbacks();
+
+			// Check if the resizeOberver already exists
 			if (this._resizeObserver) {
 				this._resizeObserver.disconnect();
 			}
