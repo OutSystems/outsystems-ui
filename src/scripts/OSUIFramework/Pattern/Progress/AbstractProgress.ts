@@ -21,9 +21,17 @@ namespace OSUIFramework.Patterns.Progress {
 
 			Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Label, 'progress');
 
-			Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.ValueMin, '0');
+			Helper.Dom.Attribute.Set(
+				this._selfElem,
+				Constants.A11YAttributes.Aria.ValueMin,
+				ProgressEnum.Properties.MinProgressValue
+			);
 
-			Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.ValueMax, '100');
+			Helper.Dom.Attribute.Set(
+				this._selfElem,
+				Constants.A11YAttributes.Aria.ValueMax,
+				ProgressEnum.Properties.MaxProgressValue
+			);
 		}
 
 		// Update valuenow Accessibility property and CssVariable that will be used to set the progress value into pattern
