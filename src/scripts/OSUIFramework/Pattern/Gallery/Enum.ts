@@ -1,16 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Gallery.Enum {
 	/**
-	 * Gallery Enum properties
+	 * Gallery CSS Variables
 	 */
-	export enum Property {
-		ItemsInPhone = 'ItemsInPhone',
-		ItemsInTablet = 'ItemsInTablet',
-		ItemsInDesktop = 'ItemsInDesktop',
-		GutterSize = 'GutterSize',
-	}
-
-	export enum CssProperty {
+	export enum CssVariables {
 		GridDesktop = '--grid-desktop',
 		GridTablet = '--grid-tablet',
 		GridPhone = '--grid-phone',
@@ -18,5 +11,14 @@ namespace OSUIFramework.Patterns.Gallery.Enum {
 		GridListDesktop = '--grid-list-desktop',
 		GridListTablet = '--grid-list-tablet',
 		GridListPhone = '--grid-list-phone',
+	}
+	/**
+	 * Gallery Enum properties
+	 */
+	export enum Properties {
+		ItemsInPhone = 'ItemsInPhone',
+		ItemsInTablet = 'ItemsInTablet',
+		ItemsInDesktop = 'ItemsInDesktop',
+		GutterSize = 'GutterSize',
 	}
 }

@@ -4,7 +4,7 @@
 /// Patterns - Adaptive - Gallery
 
 ///
-.grid-gallery {
+.osui-grid-gallery {
 	&,
 	& > .list {
 		display: grid;
@@ -35,7 +35,7 @@
 // Responsive --------------------------------------------------------------------
 ///
 .tablet {
-	.grid-gallery {
+	.osui-grid-gallery {
 		&,
 		& > .list {
 			grid-template-columns: repeat(var(--grid-tablet), 1fr);
@@ -49,7 +49,7 @@
 
 ///
 .phone {
-	.grid-gallery {
+	.osui-grid-gallery {
 		&,
 		& > .list {
 			grid-template-columns: repeat(var(--grid-phone), 1fr);

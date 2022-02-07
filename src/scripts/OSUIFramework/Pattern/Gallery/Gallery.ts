@@ -21,7 +21,7 @@ namespace OSUIFramework.Patterns.Gallery {
 		private _setGutterSize(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
-				Enum.CssProperty.GridGap,
+				Enum.CssVariables.GridGap,
 				`var(--space-${this.configs.GutterSize})`
 			);
 		}
@@ -34,7 +34,7 @@ namespace OSUIFramework.Patterns.Gallery {
 		private _setItemsInDesktop(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
-				Enum.CssProperty.GridDesktop,
+				Enum.CssVariables.GridDesktop,
 				this.configs.ItemsInDesktop
 			);
 			// Fix for Edge, as css calc() doesn't work on all scenarios for this browser
@@ -42,7 +42,7 @@ namespace OSUIFramework.Patterns.Gallery {
 
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
-				Enum.CssProperty.GridListDesktop,
+				Enum.CssVariables.GridListDesktop,
 				this.configs.ItemsInDesktop
 			);
 		}
@@ -53,14 +53,14 @@ namespace OSUIFramework.Patterns.Gallery {
 		 * @private
 		 */
 		private _setItemsInPhone(): void {
-			Helper.Dom.Styles.SetStyleAttribute(this._selfElem, Enum.CssProperty.GridPhone, this.configs.ItemsInPhone);
+			Helper.Dom.Styles.SetStyleAttribute(this._selfElem, Enum.CssVariables.GridPhone, this.configs.ItemsInPhone);
 
 			// Fix for Edge, as css calc() doesn't work on all scenarios for this browser
 			this.configs.ItemsInPhone++;
 
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
-				Enum.CssProperty.GridListPhone,
+				Enum.CssVariables.GridListPhone,
 				this.configs.ItemsInPhone
 			);
 		}
@@ -73,7 +73,7 @@ namespace OSUIFramework.Patterns.Gallery {
 		private _setItemsInTablet(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
-				Enum.CssProperty.GridTablet,
+				Enum.CssVariables.GridTablet,
 				this.configs.ItemsInTablet
 			);
 
@@ -82,7 +82,7 @@ namespace OSUIFramework.Patterns.Gallery {
 
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
-				Enum.CssProperty.GridListTablet,
+				Enum.CssVariables.GridListTablet,
 				this.configs.ItemsInTablet
 			);
 		}
@@ -103,21 +103,21 @@ namespace OSUIFramework.Patterns.Gallery {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
-			if (Enum.Property[propertyName] && this._configs.hasOwnProperty(propertyName)) {
+			if (Enum.Properties[propertyName] && this._configs.hasOwnProperty(propertyName)) {
 				switch (propertyName) {
-					case Enum.Property.ItemsInDesktop:
+					case Enum.Properties.ItemsInDesktop:
 						this._configs.ItemsInDesktop = propertyValue;
 						this._setItemsInDesktop();
 						break;
-					case Enum.Property.ItemsInTablet:
+					case Enum.Properties.ItemsInTablet:
 						this._configs.ItemsInTablet = propertyValue;
 						this._setItemsInTablet();
 						break;
-					case Enum.Property.ItemsInPhone:
+					case Enum.Properties.ItemsInPhone:
 						this._configs.ItemsInPhone = propertyValue;
 						this._setItemsInPhone();
 						break;
-					case Enum.Property.GutterSize:
+					case Enum.Properties.GutterSize:
 						this._configs.GutterSize = propertyValue;
 						this._setGutterSize();
 						break;
