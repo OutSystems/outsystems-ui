@@ -37,8 +37,11 @@ declare global {
 		SplideOpts: typeof OriginalSplide.defaults;
 		wNumb: typeof window.wNumb;
 
-		// DropdownSearch
+		// Dropdown using VirtualSelect
 		VirtualSelect: any;
+
+		// Dropdown created from scratch
+		DropdownAdvanced: any;
 	}
 
 	interface Navigator {
@@ -64,4 +67,7 @@ declare global {
 
 	// DropDown => Virtual Select Provider
 	type VirtualSelect = any;
+
+	// DropDown => OutSystems Provider
+	type DropdownAdvanced = any;
 }

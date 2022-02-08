@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace Providers.Dropdown.OutSystems {
+namespace Providers.Dropdown.OsUiComponents {
 	/**
 	 * Class that represents the custom configurations received by the Dropdown.
 	 *
 	 * @export
-	 * @class OsUiDropdownAdvancedConfig
+	 * @class OSUIDropdownAdvancedConfig
 	 * @extends {DropdownConfig}
 	 */
-	export class OsUiDropdownAdvancedConfig extends OSUIFramework.Patterns.Dropdown.AbstractDropdownConfig {
+	// eslint-disable-next-line @typescript-eslint/naming-convention
+	export class OSUIDropdownAdvancedConfig extends OSUIFramework.Patterns.Dropdown.AbstractDropdownConfig {
 		/**
 		 * Set all the DropdownAdvanced properties
 		 *
@@ -33,19 +34,20 @@ namespace Providers.Dropdown.OutSystems {
 		 * @param {string} key
 		 * @param {unknown} value
 		 * @return {*}  {unknown}
-		 * @memberof OsUiDropdownAdvancedConfig
+		 * @memberof OSUIDropdownAdvancedConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
-			let validatedValue = undefined;
+			const validatedValue = undefined;
 
-			switch (key) {
-				case Enum.Properties.PROP_NAME1:
-					// TODO (by CreateNewPattern): Replace with expected property
-					break;
-				default:
-					validatedValue = super.validateDefault(key, value);
-					break;
-			}
+			console.log('DO THINGS HERE!');
+			// switch (key) {
+			// 	case Enum.Properties.PROP_NAME1:
+			// 		// TODO (by CreateNewPattern): Replace with expected property
+			// 		break;
+			// 	default:
+			// 		validatedValue = super.validateDefault(key, value);
+			// 		break;
+			// }
 
 			return validatedValue;
 		}

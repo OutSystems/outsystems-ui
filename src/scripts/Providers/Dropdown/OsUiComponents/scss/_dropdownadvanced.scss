@@ -1,34 +1,37 @@
-// Import DropdownAdvanced Library Core Styles
-@import "dropdownadvanced-lib";
+/*! Patterns - Interaction - DropdownAdvanced */
+////
+/// @group Patterns-DropdownAdvanced
+/// Patterns - Interaction - DropdownAdvanced
 
-// DropdownAdvanced overriding styles
-/* 
-  TODO (by CreateNewPattern):
-    - Do all the override styles nedded at this partial file!
-*/
+///
+.osui-dropdown-advanced {
+}
 
 // Accessibility -----------------------------------------------------------------
+///
 .has-accessible-features {
-  // css props
+	// css props
 }
 
 // IsRTL -------------------------------------------------------------------------
-
+///
 .is-rtl {
-  // css props
+	// css props
 }
 
 // Responsive --------------------------------------------------------------------
-
+///
 .tablet,
 .phone {
-  // css props
+	// css props
 }
 
+///
 .tablet {
-  // css props
+	// css props
 }
 
+///
 .phone {
-  // css props
+	// css props
 }

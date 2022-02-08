@@ -1,14 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.Dropdown.OutSystems {
-	export class OsUiDropdownAdvanced<C extends Dropdown.OutSystems.OsUiDropdownAdvancedConfig>
+namespace Providers.Dropdown.OsUiComponents {
+	// eslint-disable-next-line @typescript-eslint/naming-convention
+	export class OSUIDropdownAdvanced<C extends Dropdown.OsUiComponents.OSUIDropdownAdvancedConfig>
 		extends OSUIFramework.Patterns.Dropdown.AbstractDropdown<DropdownAdvanced, C>
 		implements OSUIFramework.Patterns.Dropdown.IDropdown
 	{
-		/* TODO (by CreateNewPattern):
-				Add provider as a module dependency and define:
-					- DropdownAdvancedOpts;
-		 */
-
 		// Store the provider options
 		protected _dropdownAdvancedOpts: DropdownAdvancedOpts;
 
@@ -74,13 +70,14 @@ namespace Providers.Dropdown.OutSystems {
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
 
-			if (this.isBuilt) {
-				switch (propertyName) {
-					case OSUIFramework.Patterns.Dropdown.Enum.Properties.PROP_NAME:
-						// TODO (by CreateNewPattern): Update or Remove
-						break;
-				}
-			}
+			console.log('DO SOMETHING HERE!');
+			// if (this.isBuilt) {
+			// 	switch (propertyName) {
+			// 		case OSUIFramework.Patterns.Dropdown.Enum.Properties.PROP_NAME:
+			// 			// TODO (by CreateNewPattern): Update or Remove
+			// 			break;
+			// 	}
+			// }
 		}
 
 		/**
@@ -140,18 +137,20 @@ namespace Providers.Dropdown.OutSystems {
 		 * @memberof OSUIDropdownAdvanced
 		 */
 		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
-			switch (eventName) {
-				case OSUIFramework.Patterns.Dropdown.Enum.Events.EVENT_NAME:
-					// TODO (by CreateNewPattern): Update or Remove
-					break;
+			console.log('DO SOMETHING HERE!');
 
-				default:
-					/* TODO (by CreateNewPattern): 
-						The line below is created by the CreateNewPattern mechanism, that is not able to replace values
-						as expected, that said, check other patterns to understand how to replace it!
-					*/
-					throw new Error("The givem '" + eventName + "' event name it's not defined.");
-			}
+			// switch (eventName) {
+			// 	case OSUIFramework.Patterns.Dropdown.Enum.Events.EVENT_NAME:
+			// 		// TODO (by CreateNewPattern): Update or Remove
+			// 		break;
+
+			// 	default:
+			// 		/* TODO (by CreateNewPattern):
+			// 			The line below is created by the CreateNewPattern mechanism, that is not able to replace values
+			// 			as expected, that said, check other patterns to understand how to replace it!
+			// 		*/
+			// 		throw new Error("The givem '" + eventName + "' event name it's not defined.");
+			// }
 		}
 
 		/**
