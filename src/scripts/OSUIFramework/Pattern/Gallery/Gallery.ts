@@ -1,22 +1,23 @@
-/// <reference path="../AbstractPattern.ts" />
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Gallery {
 	/**
-	 * Defines the interface for OutSystemsUI Patterns
+	 * Defines the interface for OutSystemsUI Gallery Pattern
+	 *
+	 * @export
+	 * @class Gallery
+	 * @extends {AbstractPattern<GalleryConfig>}
+	 * @implements {IGallery}
 	 */
 	export class Gallery extends AbstractPattern<GalleryConfig> implements IGallery {
-		// Store all the css property strings used by the pattern
-
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		constructor(uniqueId: string, configs: any) {
+		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new GalleryConfig(configs));
 		}
 
 		/**
-		 * Function used to set the Gallery's gutter size
+		 * Function used to set the Gallery's number of items per row in Desktop
 		 *
 		 * @private
+		 * @memberof Gallery
 		 */
 		private _setGutterSize(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
@@ -30,6 +31,7 @@ namespace OSUIFramework.Patterns.Gallery {
 		 * Function used to set the Gallery's number of items per row in Desktop
 		 *
 		 * @private
+		 * @memberof Gallery
 		 */
 		private _setItemsInDesktop(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
@@ -51,6 +53,7 @@ namespace OSUIFramework.Patterns.Gallery {
 		 * Function used to set the Gallery's number of items per row in Phone
 		 *
 		 * @private
+		 * @memberof Gallery
 		 */
 		private _setItemsInPhone(): void {
 			Helper.Dom.Styles.SetStyleAttribute(this._selfElem, Enum.CssVariables.GridPhone, this.configs.ItemsInPhone);
@@ -69,6 +72,7 @@ namespace OSUIFramework.Patterns.Gallery {
 		 * Function used to set the Gallery's number of items per row in Tablet
 		 *
 		 * @private
+		 * @memberof Gallery
 		 */
 		private _setItemsInTablet(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
@@ -90,40 +94,42 @@ namespace OSUIFramework.Patterns.Gallery {
 		public build(): void {
 			super.build();
 
-			// Set Items
 			this._setItemsInDesktop();
+
 			this._setItemsInTablet();
+
 			this._setItemsInPhone();
 
-			// Set Gutter
 			this._setGutterSize();
 
 			this.finishBuild();
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		public changeProperty(propertyName: string, propertyValue: any): void {
-			if (Enum.Properties[propertyName] && this._configs.hasOwnProperty(propertyName)) {
+		/**
+		 * Method to change the value of configs/current state.
+		 *
+		 * @param {string} propertyName
+		 * @param {unknown} propertyValue
+		 * @memberof Gallery
+		 */
+		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			super.changeProperty(propertyName, propertyValue);
+			if (this.isBuilt) {
+				// Check which property changed and call respective method to update it
 				switch (propertyName) {
 					case Enum.Properties.ItemsInDesktop:
-						this._configs.ItemsInDesktop = propertyValue;
 						this._setItemsInDesktop();
 						break;
 					case Enum.Properties.ItemsInTablet:
-						this._configs.ItemsInTablet = propertyValue;
 						this._setItemsInTablet();
 						break;
 					case Enum.Properties.ItemsInPhone:
-						this._configs.ItemsInPhone = propertyValue;
 						this._setItemsInPhone();
 						break;
 					case Enum.Properties.GutterSize:
-						this._configs.GutterSize = propertyValue;
 						this._setGutterSize();
 						break;
 				}
-			} else {
-				throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
 			}
 		}
 	}

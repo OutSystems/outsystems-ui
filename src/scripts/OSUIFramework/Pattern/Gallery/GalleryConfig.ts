@@ -1,14 +1,19 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Gallery {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	/**
+	 * Defines the interface for OutSystemsUI Gallery Pattern
+	 *
+	 * @export
+	 * @class GalleryConfig
+	 * @extends {AbstractConfiguration}
+	 */
 	export class GalleryConfig extends AbstractConfiguration {
 		public GutterSize: string;
 		public ItemsInDesktop: number;
 		public ItemsInPhone: number;
 		public ItemsInTablet: number;
 
-		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-		constructor(config: any) {
+		constructor(config: JSON) {
 			super(config);
 		}
 	}

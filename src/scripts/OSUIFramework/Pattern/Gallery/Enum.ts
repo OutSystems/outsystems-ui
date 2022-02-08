@@ -2,6 +2,9 @@
 namespace OSUIFramework.Patterns.Gallery.Enum {
 	/**
 	 * Gallery CSS Variables
+	 *
+	 * @export
+	 * @enum {number}
 	 */
 	export enum CssVariables {
 		GridDesktop = '--grid-desktop',
@@ -14,6 +17,9 @@ namespace OSUIFramework.Patterns.Gallery.Enum {
 	}
 	/**
 	 * Gallery Enum properties
+	 *
+	 * @export
+	 * @enum {number}
 	 */
 	export enum Properties {
 		ItemsInPhone = 'ItemsInPhone',
