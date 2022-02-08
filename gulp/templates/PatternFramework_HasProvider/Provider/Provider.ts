@@ -1,8 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.<%= patternNamePC %>.<%= providerNamePC %> {
-	export class OSUI<%= providerNamePC %><C extends <%= patternNamePC %>.<%= providerNamePC %>.OSUI<%= providerNamePC %>Config>
+	export class OsUi<%= providerNamePC %><C extends <%= patternNamePC %>.<%= providerNamePC %>.OsUi<%= providerNamePC %>Config>
 		extends OSUIFramework.Patterns.<%= patternNamePC %>.Abstract<%= patternNamePC %><<%= providerNamePC %>, C>
-		implements I<%= providerNamePC %>
+		implements OSUIFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %>
 	{
 		/* TODO (by CreateNewPattern):
 				Add provider as a module dependency and define:
@@ -26,7 +26,7 @@ namespace Providers.<%= patternNamePC %>.<%= providerNamePC %> {
 		 * Sets the callbacks to be used with the provider.
 		 *
 		 * @protected
-		 * @memberof OSUI<%= providerNamePC %>
+		 * @memberof OsUi<%= providerNamePC %>
 		 */
 		 protected setCallbacks(): void {
 			// TODO (by CreateNewPattern): Update or Remove
@@ -36,7 +36,7 @@ namespace Providers.<%= patternNamePC %>.<%= providerNamePC %> {
 		 * Method to set the html elements used
 		 *
 		 * @protected
-		 * @memberof OSUI<%= providerNamePC %>
+		 * @memberof OsUi<%= providerNamePC %>
 		 */
 		 protected setHtmlElements(): void {
 			// TODO (by CreateNewPattern): Update or Remove
@@ -46,7 +46,7 @@ namespace Providers.<%= patternNamePC %>.<%= providerNamePC %> {
 		 * Unset callbacks that has been assigned to the element
 		 *
 		 * @protected
-		 * @memberof OSUI<%= providerNamePC %>
+		 * @memberof OsUi<%= providerNamePC %>
 		 */
 		protected unsetCallbacks(): void {
 			// TODO (by CreateNewPattern): Update or Remove
@@ -69,14 +69,14 @@ namespace Providers.<%= patternNamePC %>.<%= providerNamePC %> {
 		 *
 		 * @param {string} propertyName the name of the property that will be changed
 		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
-		 * @memberof OSUI<%= providerNamePC %>
+		 * @memberof OsUi<%= providerNamePC %>
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
 
 			if (this.isBuilt) {
 				switch (propertyName) {
-					case OSUIFramework.Patterns.<%= patternNamePC %>.Enum.Properties.PROP_NAME:
+					case OsUiFramework.Patterns.<%= patternNamePC %>.Enum.Properties.PROP_NAME:
 						// TODO (by CreateNewPattern): Update or Remove
 					break;
 				}
@@ -86,7 +86,7 @@ namespace Providers.<%= patternNamePC %>.<%= providerNamePC %> {
 		/**
 		 * Destroy the <%= patternNamePC %>.
 		 *
-		 * @memberof OSUI<%= providerNamePC %>
+		 * @memberof OsUi<%= providerNamePC %>
 		 */
 		public dispose(): void {
 			this.provider.destroy();
@@ -100,12 +100,12 @@ namespace Providers.<%= patternNamePC %>.<%= providerNamePC %> {
 		 * Method used to register the provider callback
 		 *
 		 * @param {string} eventName Event name that will be assigned
-		 * @param {OSUIFramework.Callbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
-		 * @memberof OSUI<%= providerNamePC %>
+		 * @param {OsUiFramework.Callbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
+		 * @memberof OsUi<%= providerNamePC %>
 		 */
-		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
+		public registerProviderCallback(eventName: string, callback: OsUiFramework.Callbacks.OSGeneric): void {
 			switch (eventName) {
-				case OSUIFramework.Patterns.<%= patternNamePC %>.Enum.Events.EVENT_NAME:
+				case OsUiFramework.Patterns.<%= patternNamePC %>.Enum.Events.EVENT_NAME:
 						// TODO (by CreateNewPattern): Update or Remove
 					break;
 
