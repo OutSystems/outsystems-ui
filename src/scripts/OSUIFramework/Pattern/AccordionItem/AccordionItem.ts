@@ -68,7 +68,12 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 			//If enter or space use the onAccordionClick to validate
 			if (event.key === GlobalEnum.Keycodes.Enter || event.key === GlobalEnum.Keycodes.Space) {
-				this.open();
+				if (this._isOpen) {
+					this.close();
+				} else {
+					this.open();
+				}
+
 				event.preventDefault();
 				event.stopPropagation();
 			}
