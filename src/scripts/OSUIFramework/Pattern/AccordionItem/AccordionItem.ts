@@ -15,12 +15,13 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		// Stores the parent of the item (if it exists)
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		private _accordionParentElem: OSUIFramework.Patterns.Accordion.IAccordion;
+		// Store the click event with bind(this)
+		private _eventOnClick: Callbacks.Generic;
 		//Stores the transition end callback function
 		private _eventOnTransitionEnd: Callbacks.Generic;
 		//Stores the keyboard callback function
 		private _eventOnkeyPress: Callbacks.Generic;
-		// Store the click event with bind(this)
-		private _eventToggleAccordion: Callbacks.Generic;
+		private _isOpen: boolean;
 		// Callback function to trigger the click event on the platform
 		private _platformEventOnToggle: Callbacks.Generic;
 
@@ -28,23 +29,59 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		constructor(uniqueId: string, configs: any, accordion?: Patterns.Accordion.IAccordion) {
 			super(uniqueId, new AccordionItemConfig(configs));
 			this._accordionParentElem = accordion;
+			this._isOpen = this.configs.StartsExpanded;
+		}
+
+		/**
+		 * Method to handle the click event
+		 *
+		 * @private
+		 * @param {MouseEvent} [event]
+		 * @return {*}  {void}
+		 * @memberof AccordionItem
+		 */
+		private _accordionOnClickHandler(event?: MouseEvent): void {
+			//If we're not clicking on the title, the icon or the accordion title, we won't open the accordion
+			if (
+				event?.target !== this._accordionItemTitleElem &&
+				event?.target !== this._accordionItemIconElem &&
+				event?.target !== this._accordionItemTitleElem.firstChild
+			) {
+				return;
+			}
+
+			if (this._isOpen) {
+				this.close();
+			} else {
+				this.open();
+			}
 		}
 
 		// A11y keyboard navigation
 		private _onKeyboardPress(event: KeyboardEvent): void {
 			//If esc, Close AccordionItem
-			if (this.configs.StartsExpanded && event.key === GlobalEnum.Keycodes.Escape) {
-				this._toggleAccordion(this.configs.StartsExpanded);
+			if (this._isOpen && event.key === GlobalEnum.Keycodes.Escape) {
+				this.close();
 				event.preventDefault();
 				event.stopPropagation();
 			}
 
 			//If enter or space use the onAccordionClick to validate
 			if (event.key === GlobalEnum.Keycodes.Enter || event.key === GlobalEnum.Keycodes.Space) {
-				this._toggleAccordion(this.configs.StartsExpanded);
+				this.open();
 				event.preventDefault();
 				event.stopPropagation();
 			}
+		}
+
+		/**
+		 * Mthod that triggers the toggle event on the platform
+		 *
+		 * @private
+		 * @memberof AccordionItem
+		 */
+		private _onToggleCallback(): void {
+			Helper.AsyncInvocation(this._platformEventOnToggle, this.widgetId, this._isOpen);
 		}
 
 		// Method to apply the dynamic aria attributes
@@ -73,36 +110,8 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				this.unsetCallbacks();
 				return;
 			}
-			this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventToggleAccordion);
+			this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
-		}
-
-		// Method to toggle the collapse and expansion of the AccordionItem
-		// This method is to be used by the state of the Accordion & the ChangeProperty method
-		private _toggleAccordion(isExpanded: boolean): void {
-			if (isExpanded) {
-				//If open, let's close
-				this.close();
-			} else {
-				//If closed, let's open
-				this.open();
-			}
-		}
-
-		//This method below is used ONLY for checking if the event is cliked on the correct html element
-		private _toggleAccordionEvent(event?: MouseEvent): void {
-			//If we're not clicking on the title, the icon or the accordion title, we won't open the accordion
-			if (event) {
-				if (
-					event.target !== this._accordionItemTitleElem &&
-					event.target !== this._accordionItemIconElem &&
-					event.target !== this._accordionItemTitleElem.firstChild
-				) {
-					return;
-				}
-			}
-
-			this._toggleAccordion(this.configs.StartsExpanded);
 		}
 
 		private _transitionEndHandler(): void {
@@ -126,11 +135,6 @@ namespace OSUIFramework.Patterns.AccordionItem {
 					false
 				);
 			}
-		}
-
-		// Method that triggers the toggle event on the platform
-		private _triggerToggleClick(): void {
-			Helper.AsyncInvocation(this._platformEventOnToggle, this.widgetId, this.configs.StartsExpanded);
 		}
 
 		//Method to apply the static aria attributes
@@ -176,7 +180,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		}
 
 		protected setCallbacks(): void {
-			this._eventToggleAccordion = this._toggleAccordionEvent.bind(this);
+			this._eventOnClick = this._accordionOnClickHandler.bind(this);
 			this._eventOnTransitionEnd = this._transitionEndHandler.bind(this);
 			this._eventOnkeyPress = this._onKeyboardPress.bind(this);
 		}
@@ -190,7 +194,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		}
 
 		protected setInitialStates(): void {
-			if (this.configs.StartsExpanded) {
+			if (this._isOpen) {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Open);
 				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.Expanded);
 				this._setAriaExpanded(true, false);
@@ -209,10 +213,10 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		 * @memberof AccordionItem
 		 */
 		protected unsetCallbacks(): void {
-			this._accordionItemTitleElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventToggleAccordion);
+			this._accordionItemTitleElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			this._accordionItemTitleElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
 
-			this._eventToggleAccordion = undefined;
+			this._eventOnClick = undefined;
 			this._eventOnTransitionEnd = undefined;
 			this._eventOnkeyPress = undefined;
 		}
@@ -235,7 +239,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		}
 
 		public get isExpanded(): boolean {
-			return this.configs.StartsExpanded;
+			return this._isOpen;
 		}
 
 		/**
@@ -321,9 +325,9 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				clearTimeout(waitDomIterateTimeout);
 			}, 100);
 
-			this.configs.StartsExpanded = false;
+			this._isOpen = false;
 			this._setAriaExpanded(false, true);
-			this._triggerToggleClick();
+			this._onToggleCallback();
 		}
 
 		public dispose(): void {
@@ -385,9 +389,9 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				clearTimeout(waitDomIterateTimeout);
 			}, 100);
 
-			this.configs.StartsExpanded = true;
+			this._isOpen = true;
 			this._setAriaExpanded(true, false);
-			this._triggerToggleClick();
+			this._onToggleCallback();
 
 			if (this._accordionParentElem) this._accordionParentElem.triggerAccordionItemClose(this.uniqueId);
 		}
