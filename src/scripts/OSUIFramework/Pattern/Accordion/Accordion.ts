@@ -4,8 +4,10 @@ namespace OSUIFramework.Patterns.Accordion {
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	export class Accordion extends AbstractPattern<AccordionConfig> implements IAccordion {
+		private _accordionFirstItem: HTMLElement;
 		// Stores the Accordion Items of this Accordion
 		private _accordionItems: Map<string, OSUIFramework.Patterns.AccordionItem.IAccordionItem>;
+		private _accordionLastItem: HTMLElement;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new AccordionConfig(configs));
@@ -39,6 +41,28 @@ namespace OSUIFramework.Patterns.Accordion {
 			Helper.A11Y.RoleTabList(this._selfElem);
 		}
 
+		/**
+		 * Set the html references that will be used to manage the cssClasses and atribute properties
+		 *
+		 * @protected
+		 * @memberof Accordion
+		 */
+		protected setHTMLElements(): void {
+			this._accordionFirstItem = this._selfElem.firstChild.firstChild as HTMLElement;
+			this._accordionLastItem = this._selfElem.lastChild.firstChild as HTMLElement;
+		}
+
+		/**
+		 * Remove references to HTML elements.
+		 *
+		 * @protected
+		 * @memberof Accordion
+		 */
+		protected unsetHTMLElements(): void {
+			this._accordionFirstItem = undefined;
+			this._accordionLastItem = undefined;
+		}
+
 		public addAccordionItem(uniqueId: string, accordionItem: AccordionItem.IAccordionItem): void {
 			this._accordionItems.set(uniqueId, accordionItem);
 
@@ -66,15 +90,15 @@ namespace OSUIFramework.Patterns.Accordion {
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		public changeProperty(propertyName: string, propertyValue: any): void {
-			switch (propertyName) {
-				case Enum.Properties.MultipleItems:
-					this.configs.MultipleItems = propertyValue;
-					// If we're now not having multiple items, let's collapse everything.
-					if (!this.configs.MultipleItems) this.collapseAllItems();
-					break;
-				default:
-					super.changeProperty(propertyName, propertyValue);
-					break;
+			super.changeProperty(propertyName, propertyValue);
+
+			if (this.isBuilt) {
+				switch (propertyName) {
+					case Enum.Properties.MultipleItems:
+						// If we're now not having multiple items, let's collapse everything.
+						if (!this.configs.MultipleItems) this.collapseAllItems();
+						break;
+				}
 			}
 		}
 
