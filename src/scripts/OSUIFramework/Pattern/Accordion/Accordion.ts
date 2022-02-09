@@ -181,6 +181,10 @@ namespace OSUIFramework.Patterns.Accordion {
 						item.open();
 					}
 				});
+			} else {
+				console.warn(
+					`${GlobalEnum.PatternsNames.Accordion} (${this.widgetId}): if ${Enum.Properties.MultipleItems} parameter is set to false, this action doesn't work. Set the ${Enum.Properties.MultipleItems} parameter to true.`
+				);
 			}
 		}
 
