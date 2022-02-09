@@ -90,7 +90,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		}
 
 		// Method to apply the dynamic aria attributes
-		private _setAriaExpanded(status: boolean, ariaHidden: boolean): void {
+		private _setAriaAttributes(status: boolean, ariaHidden: boolean): void {
 			if (this._selfElem) {
 				Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Expanded, status);
 				Helper.Dom.Attribute.Set(this._accordionItemTitleElem, Constants.A11YAttributes.Aria.Expanded, status);
@@ -116,17 +116,6 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.Disabled);
 				this.setCallbacks();
 			}
-		}
-
-		private _setUpEvents(): void {
-			if (this.configs.IsDisabled) {
-				this.unsetCallbacks();
-				return;
-			} else {
-				this.setCallbacks();
-			}
-			// this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
-			// this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
 		}
 
 		private _transitionEndHandler(): void {
@@ -168,6 +157,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				Constants.A11YAttributes.TabIndex,
 				this.configs.IsDisabled ? '-1' : '0'
 			);
+
 			Helper.Dom.Attribute.Set(
 				this._accordionItemTitleElem,
 				Constants.A11YAttributes.Role.AttrName,
@@ -192,6 +182,12 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				Constants.A11YAttributes.Role.AttrName,
 				Constants.A11YAttributes.Role.TabPanel
 			);
+
+			if (this._isOpen) {
+				this._setAriaAttributes(true, false);
+			} else {
+				this._setAriaAttributes(false, true);
+			}
 		}
 
 		protected setCallbacks(): void {
@@ -215,12 +211,10 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			if (this._isOpen) {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Open);
 				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.Expanded);
-				this._setAriaExpanded(true, false);
 			} else {
 				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.Collapsed);
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.Open);
 				Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.Expanded);
-				this._setAriaExpanded(false, true);
 			}
 		}
 
@@ -267,10 +261,12 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		 */
 		public build(): void {
 			super.build();
+
 			this.setHtmlElements();
 			this.setInitialStates();
 			this._setIsDisabledState();
 			this.setA11yProperties();
+
 			super.finishBuild();
 		}
 
@@ -341,7 +337,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			}, 100);
 
 			this._isOpen = false;
-			this._setAriaExpanded(false, true);
+			this._setAriaAttributes(false, true);
 			this._onToggleCallback();
 		}
 
@@ -405,7 +401,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			}, 100);
 
 			this._isOpen = true;
-			this._setAriaExpanded(true, false);
+			this._setAriaAttributes(true, false);
 			this._onToggleCallback();
 
 			if (this._accordionParentElem) this._accordionParentElem.triggerAccordionItemClose(this.uniqueId);
@@ -414,6 +410,8 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		public registerCallback(callback: Callbacks.OSGeneric): void {
 			if (this._platformEventOnToggle === undefined) {
 				this._platformEventOnToggle = callback;
+			} else {
+				console.warn(`The ${GlobalEnum.PatternsNames.AccordionItem} already has the toggle callback set.`);
 			}
 		}
 	}
