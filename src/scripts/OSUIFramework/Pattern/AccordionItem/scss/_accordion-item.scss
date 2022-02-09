@@ -120,10 +120,6 @@
 			}
 		}
 
-		&.no-padding {
-			padding: var(--space-none);
-		}
-
 		/* Add a margin-top when animated label is the first child */
 		[data-block*='AnimatedLabel']:first-child .animated-label {
 			margin-top: var(--space-s);
@@ -162,10 +158,6 @@
 				&-expanded {
 					padding: var(--space-none) var(--space-base) var(--space-base);
 				}
-			}
-
-			&.no-padding {
-				padding: var(--space-none);
 			}
 		}
 	}
