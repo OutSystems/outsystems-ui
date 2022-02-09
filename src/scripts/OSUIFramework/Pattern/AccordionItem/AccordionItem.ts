@@ -208,14 +208,18 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			this._accordionItemPlaceholder = this._accordionItemContentElem.firstChild as HTMLElement;
 		}
 
-		protected setInitialStates(): void {
+		/**
+		 * Method to set the initial CSS Classes
+		 *
+		 * @protected
+		 * @memberof AccordionItem
+		 */
+		protected setInitialCssClasses(): void {
 			if (this._isOpen) {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Open);
 				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.Expanded);
 			} else {
 				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.Collapsed);
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.Open);
-				Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.Expanded);
 			}
 		}
 
@@ -264,7 +268,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			super.build();
 
 			this.setHtmlElements();
-			this.setInitialStates();
+			this.setInitialCssClasses();
 			this._setIsDisabledState();
 			this.setA11yProperties();
 
