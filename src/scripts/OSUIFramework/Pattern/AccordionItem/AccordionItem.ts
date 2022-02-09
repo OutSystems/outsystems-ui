@@ -191,6 +191,12 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			}
 		}
 
+		/**
+		 * Method to set the listeners and callbacks
+		 *
+		 * @protected
+		 * @memberof AccordionItem
+		 */
 		protected setCallbacks(): void {
 			this._eventOnClick = this._accordionOnClickHandler.bind(this);
 			this._eventOnTransitionEnd = this._transitionEndHandler.bind(this);
@@ -200,7 +206,12 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
 		}
 
-		// Method that gets & stores the HTML elements of the Accordion Item
+		/**
+		 * Method that sets the HTML elements of the Accordion Item
+		 *
+		 * @protected
+		 * @memberof AccordionItem
+		 */
 		protected setHtmlElements(): void {
 			this._accordionItemTitleElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternTitle);
 			this._accordionItemContentElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternContent);
@@ -346,6 +357,11 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			this._onToggleCallback();
 		}
 
+		/**
+		 * Method to remove event listener and destroy AccordionItem instance
+		 *
+		 * @memberof AccordionItem
+		 */
 		public dispose(): void {
 			this.unsetCallbacks();
 			this._accordionParentElem?.removeAccordionItem(this.uniqueId);
@@ -412,6 +428,12 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			if (this._accordionParentElem) this._accordionParentElem.triggerAccordionItemClose(this.uniqueId);
 		}
 
+		/**
+		 * Set callbacks for the onToggle event
+		 *
+		 * @param {Callbacks.OSGeneric} callback
+		 * @memberof AccordionItem
+		 */
 		public registerCallback(callback: Callbacks.OSGeneric): void {
 			if (this._platformEventOnToggle === undefined) {
 				this._platformEventOnToggle = callback;
