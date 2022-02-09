@@ -5,6 +5,7 @@ namespace Providers.<%= patternNamePC %>.<%= providerNamePC %>.Factory {
 	 *
 	 * @export
 	 * @param {string} <%= patternName %>Id ID of the Pattern that a new instance will be created.
+	 * @param {string} mode
 	 * @param {string} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSUIFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %>}
 	 */

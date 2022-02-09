@@ -4,10 +4,10 @@ namespace Providers.<%= patternNamePC %>.<%= providerNamePC %> {
 	 * Class that represents the custom configurations received by the <%= patternNamePC %>.
 	 *
 	 * @export
-	 * @class <%= providerNamePC %>Config
+	 * @class OSUI<%= providerNamePC %>Config
 	 * @extends {<%= patternNamePC %>Config}
 	 */
-	export class <%= providerNamePC %>Config extends OSUIFramework.Patterns.<%= patternNamePC %>.Abstract<%= patternNamePC %>Config {
+	export class OSUI<%= providerNamePC %>Config extends OSUIFramework.Patterns.<%= patternNamePC %>.Abstract<%= patternNamePC %>Config {
 
 		/**
 		 * Set all the <%= providerNamePC %> properties
@@ -32,7 +32,7 @@ namespace Providers.<%= patternNamePC %>.<%= providerNamePC %> {
 		 * @param {string} key
 		 * @param {unknown} value
 		 * @return {*}  {unknown}
-		 * @memberof <%= providerNamePC %>Config
+		 * @memberof OSUI<%= providerNamePC %>Config
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;
