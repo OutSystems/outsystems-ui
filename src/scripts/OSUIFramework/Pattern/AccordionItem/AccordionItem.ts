@@ -147,7 +147,13 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			}
 		}
 
-		//Method to apply the static aria attributes
+		/**
+		 * Method to handle Accessibility attributes
+		 *
+		 * @protected
+		 * @param {boolean} [isUpdate=true]
+		 * @memberof AccordionItem
+		 */
 		protected setA11yProperties(isUpdate = true): void {
 			// Set the static attributes on page load only
 			if (!isUpdate) {
@@ -219,6 +225,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Open);
 				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.Expanded);
 			} else {
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Closed);
 				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.Collapsed);
 			}
 		}
@@ -304,21 +311,21 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		public close(): void {
 			Helper.Dom.Attribute.Remove(this._accordionItemContentElem, GlobalEnum.HTMLAttributes.Style);
 			const expandedHeight = this._accordionItemContentElem.getBoundingClientRect().height;
-			// We know the final height is 0 - it is being collapsed
-			const collapsedHeight = 0;
 
-			Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.Closed);
+			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Closed);
 			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.Open);
+
+			// Removes collapsed class and adds the expanded class to animate
+			Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.Expanded);
+			Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.Collapsed);
+
+			const collapsedHeight = this._accordionItemContentElem.getBoundingClientRect().height;
 
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._accordionItemContentElem,
 				GlobalEnum.InlineStyle.Height,
 				expandedHeight + GlobalEnum.Units.Pixel
 			);
-
-			// Removes collapsed class and adds the expanded class to animate
-			Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.Expanded);
-			Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.Collapsed);
 
 			const waitDomIterateTimeout = setTimeout(() => {
 				// Adds is--animating class to current accordion item content to obtain the final height value
@@ -362,7 +369,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		// from 0 to the item's final height
 		public open(): void {
 			// We know the initial height is 0 - it is collapsed
-			const collapsedHeight = 0;
+			const collapsedHeight = this._accordionItemContentElem.getBoundingClientRect().height;
 
 			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.Closed);
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Open);
@@ -381,7 +388,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 			const expandedHeight = this._accordionItemContentElem.getBoundingClientRect().height;
 
-			Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.Collapsed);
+			//Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.Collapsed);
 			Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.Expanded);
 
 			Helper.Dom.Styles.SetStyleAttribute(
