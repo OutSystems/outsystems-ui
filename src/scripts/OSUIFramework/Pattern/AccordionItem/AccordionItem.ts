@@ -57,6 +57,20 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			}
 		}
 
+		/**
+		 * Method to handle the tabindex values
+		 *
+		 * @private
+		 * @memberof AccordionItem
+		 */
+		private _handleTabIndex(): void {
+			const titleTabindexValue = this.configs.IsDisabled ? '-1' : '0';
+			const contentTabindexValue = !this.configs.IsDisabled && this._isOpen ? '0' : '-1';
+
+			Helper.A11Y.TabIndex(this._accordionItemTitleElem, titleTabindexValue);
+			Helper.A11Y.TabIndex(this._accordionItemContentElem, contentTabindexValue);
+		}
+
 		// A11y keyboard navigation
 		private _onKeyboardPress(event: KeyboardEvent): void {
 			//If esc, Close AccordionItem
@@ -80,26 +94,13 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		}
 
 		/**
-		 * Mthod that triggers the toggle event on the platform
+		 * Method that triggers the toggle event on the platform
 		 *
 		 * @private
 		 * @memberof AccordionItem
 		 */
 		private _onToggleCallback(): void {
 			Helper.AsyncInvocation(this._platformEventOnToggle, this.widgetId, this._isOpen);
-		}
-
-		// Method to apply the dynamic aria attributes
-		private _setAriaAttributes(status: boolean, ariaHidden: boolean): void {
-			if (this._selfElem) {
-				Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Expanded, status);
-				Helper.Dom.Attribute.Set(this._accordionItemTitleElem, Constants.A11YAttributes.Aria.Expanded, status);
-				Helper.Dom.Attribute.Set(
-					this._accordionItemContentElem,
-					Constants.A11YAttributes.Aria.Hidden,
-					ariaHidden
-				);
-			}
 		}
 
 		/**
@@ -111,11 +112,16 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		private _setIsDisabledState(): void {
 			if (this.configs.IsDisabled) {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Disabled);
+				Helper.A11Y.AriaDisabledTrue(this._selfElem);
 				this.unsetCallbacks();
 			} else {
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.Disabled);
+				Helper.A11Y.AriaDisabledFalse(this._selfElem);
 				this.setCallbacks();
 			}
+
+			// Update tabindex values
+			this._handleTabIndex();
 		}
 
 		private _transitionEndHandler(): void {
@@ -142,52 +148,36 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		}
 
 		//Method to apply the static aria attributes
-		protected setA11yProperties(): void {
-			Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Disabled, this.configs.IsDisabled);
-			Helper.Dom.Attribute.Set(
-				this._selfElem,
-				Constants.A11YAttributes.Aria.Controls,
-				Helper.Dom.Attribute.Get(this._accordionItemPlaceholder, GlobalEnum.HTMLAttributes.Id)
-			);
+		protected setA11yProperties(isUpdate = true): void {
+			// Set the static attributes on page load only
+			if (!isUpdate) {
+				// Set ARIA Controls
+				Helper.A11Y.AriaControls(this._selfElem, this._accordionItemPlaceholder.id);
 
-			Helper.Dom.Attribute.Set(this._selfElem, 'role', Constants.A11YAttributes.Role.Tab);
+				// Set ARIA LabelledBy
+				Helper.A11Y.AriaLabelledBy(this._accordionItemContentElem, this._accordionItemTitleElem.id);
 
-			Helper.Dom.Attribute.Set(
-				this._accordionItemTitleElem,
-				Constants.A11YAttributes.TabIndex,
-				this.configs.IsDisabled ? '-1' : '0'
-			);
+				// Set aria-hidden to icon
+				Helper.A11Y.AriaHiddenTrue(this._accordionItemIconElem);
 
-			Helper.Dom.Attribute.Set(
-				this._accordionItemTitleElem,
-				Constants.A11YAttributes.Role.AttrName,
-				Constants.A11YAttributes.Role.Button
-			);
+				// Set ARIA Disabled
+				Helper.A11Y.AriaDisabled(this._selfElem, this.configs.IsDisabled);
 
-			Helper.Dom.Attribute.Set(this._accordionItemIconElem, Constants.A11YAttributes.Aria.Hidden, true);
-
-			Helper.Dom.Attribute.Set(
-				this._accordionItemContentElem,
-				Constants.A11YAttributes.TabIndex,
-				this.configs.IsDisabled ? '-1' : '0'
-			);
-			Helper.Dom.Attribute.Set(
-				this._accordionItemContentElem,
-				Constants.A11YAttributes.Aria.Labelledby,
-				Helper.Dom.Attribute.Get(this._accordionItemTitleElem, GlobalEnum.HTMLAttributes.Id)
-			);
-
-			Helper.Dom.Attribute.Set(
-				this._accordionItemPlaceholder,
-				Constants.A11YAttributes.Role.AttrName,
-				Constants.A11YAttributes.Role.TabPanel
-			);
-
-			if (this._isOpen) {
-				this._setAriaAttributes(true, false);
-			} else {
-				this._setAriaAttributes(false, true);
+				// Set roles
+				Helper.A11Y.RoleTab(this._selfElem);
+				Helper.A11Y.RoleButton(this._accordionItemTitleElem);
+				Helper.A11Y.RoleTabPanel(this._accordionItemPlaceholder);
 			}
+
+			// Set Tabindex
+			this._handleTabIndex();
+
+			// Set ARIA Expanded
+			Helper.A11Y.AriaExpanded(this._selfElem, this._isOpen.toString());
+			Helper.A11Y.AriaExpanded(this._accordionItemTitleElem, this._isOpen.toString());
+
+			// Set aria-hidden to content
+			Helper.A11Y.AriaHidden(this._accordionItemContentElem, (!this._isOpen).toString());
 		}
 
 		/**
@@ -280,7 +270,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			this.setHtmlElements();
 			this.setInitialCssClasses();
 			this._setIsDisabledState();
-			this.setA11yProperties();
+			this.setA11yProperties(false);
 
 			super.finishBuild();
 		}
@@ -352,7 +342,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			}, 100);
 
 			this._isOpen = false;
-			this._setAriaAttributes(false, true);
+			this.setA11yProperties();
 			this._onToggleCallback();
 		}
 
@@ -421,7 +411,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			}, 100);
 
 			this._isOpen = true;
-			this._setAriaAttributes(true, false);
+			this.setA11yProperties();
 			this._onToggleCallback();
 
 			if (this._accordionParentElem) this._accordionParentElem.triggerAccordionItemClose(this.uniqueId);
