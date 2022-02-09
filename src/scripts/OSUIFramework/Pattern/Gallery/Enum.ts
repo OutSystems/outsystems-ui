@@ -7,13 +7,13 @@ namespace OSUIFramework.Patterns.Gallery.Enum {
 	 * @enum {number}
 	 */
 	export enum CssVariables {
-		PatternItemsDesktop = '--gallery-desktop',
-		PatternItemsTablet = '--gallery-tablet',
-		PatternItemsPhone = '--gallery-phone',
+		PatternItemsDesktop = '--gallery-desktop-items',
+		PatternItemsTablet = '--gallery-tablet-items',
+		PatternItemsPhone = '--gallery-phone-items',
 		PatternItemsGap = '--gallery-gap',
-		PatternListItemsDesktop = '--gallery-list-desktop',
-		PatternListItemsTablet = '--gallery-list-tablet',
-		PatternListItemsPhone = '--gallery-list-phone',
+		PatternListItemsDesktop = '--gallery-list-desktop-items',
+		PatternListItemsTablet = '--gallery-list-tablet-items',
+		PatternListItemsPhone = '--gallery-list-phone-items',
 	}
 	/**
 	 * Gallery Enum properties

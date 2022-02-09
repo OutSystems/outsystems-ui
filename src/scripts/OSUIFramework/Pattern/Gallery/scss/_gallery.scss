@@ -9,7 +9,7 @@
 	& > .list {
 		display: grid;
 		grid-gap: var(--gallery-gap);
-		grid-template-columns: repeat(var(--gallery-desktop), 1fr);
+		grid-template-columns: repeat(var(--gallery-desktop-items), 1fr);
 	}
 
 	& > * {
@@ -17,7 +17,7 @@
 	}
 
 	& > .list {
-		grid-column-end: calc(var(--gallery-desktop) + 1);
+		grid-column-end: calc(var(--gallery-desktop-items) + 1);
 		grid-column-start: 1;
 		overflow: initial;
 
@@ -38,11 +38,11 @@
 	.osui-gallery {
 		&,
 		& > .list {
-			grid-template-columns: repeat(var(--gallery-tablet), 1fr);
+			grid-template-columns: repeat(var(--gallery-tablet-items), 1fr);
 		}
 
 		& > .list {
-			grid-column-end: calc(var(--gallery-tablet) + 1);
+			grid-column-end: calc(var(--gallery-tablet-items) + 1);
 		}
 	}
 }
@@ -52,11 +52,11 @@
 	.osui-gallery {
 		&,
 		& > .list {
-			grid-template-columns: repeat(var(--gallery-phone), 1fr);
+			grid-template-columns: repeat(var(--gallery-phone-items), 1fr);
 		}
 
 		& > .list {
-			grid-column-end: calc(var(--gallery-phone) + 1);
+			grid-column-end: calc(var(--gallery-phone-items) + 1);
 		}
 	}
 }
