@@ -1,8 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.<%= patternNamePC %>.<%= providerNamePC %> {
+	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class OSUI<%= providerNamePC %><C extends <%= patternNamePC %>.<%= providerNamePC %>.OSUI<%= providerNamePC %>Config>
 		extends OSUIFramework.Patterns.<%= patternNamePC %>.Abstract<%= patternNamePC %><<%= providerNamePC %>, C>
-		implements I<%= providerNamePC %>
+		implements OSUIFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %>
 	{
 		/* TODO (by CreateNewPattern):
 				Add provider as a module dependency and define:
