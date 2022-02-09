@@ -47,12 +47,6 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			}
 		}
 
-		// Method to be called when the pattern's destruction is required
-		private _removeEvents(): void {
-			this._accordionItemTitleElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventToggleAccordion);
-			this._accordionItemTitleElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
-		}
-
 		// Method to apply the dynamic aria attributes
 		private _setAriaExpanded(status: boolean, ariaHidden: boolean): void {
 			if (this._selfElem) {
@@ -76,7 +70,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 		private _setUpEvents(): void {
 			if (this.configs.IsDisabled) {
-				this._removeEvents();
+				this.unsetCallbacks();
 				return;
 			}
 			this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventToggleAccordion);
@@ -208,6 +202,34 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			}
 		}
 
+		/**
+		 * Method to remove the event listeners and unset callbacks
+		 *
+		 * @protected
+		 * @memberof AccordionItem
+		 */
+		protected unsetCallbacks(): void {
+			this._accordionItemTitleElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventToggleAccordion);
+			this._accordionItemTitleElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
+
+			this._eventToggleAccordion = undefined;
+			this._eventOnTransitionEnd = undefined;
+			this._eventOnkeyPress = undefined;
+		}
+
+		/**
+		 * Method to unset the html elements
+		 *
+		 * @protected
+		 * @memberof AccordionItem
+		 */
+		protected unsetHtmlElements(): void {
+			this._accordionItemTitleElem = undefined;
+			this._accordionItemContentElem = undefined;
+			this._accordionItemIconElem = undefined;
+			this._accordionItemPlaceholder = undefined;
+		}
+
 		public get isDisabled(): boolean {
 			return this.configs.IsDisabled;
 		}
@@ -216,6 +238,11 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			return this.configs.StartsExpanded;
 		}
 
+		/**
+		 * Method to build the pattern.
+		 *
+		 * @memberof AccordionItem
+		 */
 		public build(): void {
 			super.build();
 			this.setHtmlElements();
@@ -227,9 +254,16 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			super.finishBuild();
 		}
 
+		/**
+		 * Method to change the value of configs/current state.
+		 *
+		 * @param {string} propertyName
+		 * @param {unknown} propertyValue
+		 * @memberof AccordionItem
+		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
-			const expandedState = this.configs.StartsExpanded;
 			super.changeProperty(propertyName, propertyValue);
+
 			if (this.isBuilt) {
 				switch (propertyName) {
 					case Enum.Properties.IsDisabled:
@@ -237,7 +271,9 @@ namespace OSUIFramework.Patterns.AccordionItem {
 						this._setUpEvents();
 						break;
 					case Enum.Properties.StartsExpanded:
-						this._toggleAccordion(expandedState);
+						console.warn(
+							`${GlobalEnum.PatternsNames.AccordionItem} (${this.widgetId}): changes to ${Enum.Properties.StartsExpanded} parameter do not affect the ${GlobalEnum.PatternsNames.AccordionItem}. Use the client actions 'AccordionItemExpand' and 'AccordionItemCollapse' to affect the ${GlobalEnum.PatternsNames.AccordionItem}.`
+						);
 						break;
 				}
 			}
@@ -291,8 +327,9 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		}
 
 		public dispose(): void {
-			this._removeEvents();
+			this.unsetCallbacks();
 			this._accordionParentElem?.removeAccordionItem(this.uniqueId);
+			this.unsetHtmlElements();
 			super.dispose();
 		}
 
