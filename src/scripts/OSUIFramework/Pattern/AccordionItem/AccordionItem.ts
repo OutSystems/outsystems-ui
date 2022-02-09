@@ -28,6 +28,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any, accordion?: Patterns.Accordion.IAccordion) {
 			super(uniqueId, new AccordionItemConfig(configs));
+
 			this._accordionParentElem = accordion;
 			this._isOpen = this.configs.StartsExpanded;
 		}
@@ -250,7 +251,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			return this.configs.IsDisabled;
 		}
 
-		public get isExpanded(): boolean {
+		public get isOpen(): boolean {
 			return this._isOpen;
 		}
 
@@ -351,7 +352,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		// This method will open and then close the item to get its final value; then, it will run an animation
 		// from 0 to the item's final height
 		public open(): void {
-			// We know the initial height is 0 - it is  collapsed
+			// We know the initial height is 0 - it is collapsed
 			const collapsedHeight = 0;
 
 			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.Closed);

@@ -98,7 +98,7 @@ namespace OSUIFramework.Patterns.Accordion {
 
 			// If we're adding to an accordion w/Multiple Items set to false & this item is expanded,
 			// we have to close all the other items
-			if (accordionItem.isExpanded) {
+			if (accordionItem.isOpen) {
 				this.triggerAccordionItemClose(accordionItem.uniqueId);
 			}
 
@@ -151,7 +151,7 @@ namespace OSUIFramework.Patterns.Accordion {
 		 */
 		public collapseAllItems(): void {
 			this._accordionItems.forEach((item) => {
-				if (item.isExpanded && !item.isDisabled) {
+				if (item.isOpen && !item.isDisabled) {
 					item.close();
 				}
 			});
@@ -177,7 +177,7 @@ namespace OSUIFramework.Patterns.Accordion {
 			//If this accordion does not have multiple items, it means we can't expand all.
 			if (this.configs.MultipleItems) {
 				this._accordionItems.forEach((item) => {
-					if (!item.isExpanded && !item.isDisabled) {
+					if (!item.isOpen && !item.isDisabled) {
 						item.open();
 					}
 				});
@@ -213,7 +213,7 @@ namespace OSUIFramework.Patterns.Accordion {
 
 			this._accordionItems.forEach((item) => {
 				if (item.uniqueId !== accordionItemId) {
-					if (item.isExpanded) {
+					if (item.isOpen) {
 						item.close();
 					}
 				}
