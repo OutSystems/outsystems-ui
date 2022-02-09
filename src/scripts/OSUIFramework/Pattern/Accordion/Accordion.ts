@@ -14,21 +14,43 @@ namespace OSUIFramework.Patterns.Accordion {
 			this._accordionItems = new Map<string, OSUIFramework.Patterns.AccordionItem.IAccordionItem>();
 		}
 
-		// Method used to recalculate the position of items on the accordion
-		private _setUpAccordion(): void {
-			// Accordion > OSBlockWidget(Accordion Item) > AccordionItem
-			let firstAccordionItem = this._selfElem.firstChild.firstChild as HTMLElement;
-			let lastAccordionItem = this._selfElem.lastChild.firstChild as HTMLElement;
+		/**
+		 * Remove classes from first and last accordionItems
+		 *
+		 * @private
+		 * @memberof Accordion
+		 */
+		private _removeInitialCssClasses(): void {
+			Helper.Dom.Styles.RemoveClass(this._accordionFirstItem, Enum.CssClass.PatternFirstItem);
+			Helper.Dom.Styles.RemoveClass(this._accordionLastItem, Enum.CssClass.PatternLastItem);
+		}
 
-			if (firstAccordionItem) Helper.Dom.Styles.RemoveClass(firstAccordionItem, Enum.CssClass.PatternFirstItem);
-			if (lastAccordionItem) Helper.Dom.Styles.RemoveClass(lastAccordionItem, Enum.CssClass.PatternLastItem);
+		/**
+		 * Set initial classes to first and last accordionItems
+		 *
+		 * @private
+		 * @memberof Accordion
+		 */
+		private _setInitialCssClasses(): void {
+			Helper.Dom.Styles.AddClass(this._accordionFirstItem, Enum.CssClass.PatternFirstItem);
+			Helper.Dom.Styles.AddClass(this._accordionLastItem, Enum.CssClass.PatternLastItem);
+		}
 
-			// Accordion > OSBlockWidget(Accordion Item) > AccordionItem
-			firstAccordionItem = this._selfElem.firstChild.firstChild as HTMLElement;
-			lastAccordionItem = this._selfElem.lastChild.firstChild as HTMLElement;
-
-			Helper.Dom.Styles.AddClass(firstAccordionItem, Enum.CssClass.PatternFirstItem);
-			Helper.Dom.Styles.AddClass(lastAccordionItem, Enum.CssClass.PatternLastItem);
+		/**
+		 * Method used to recalculate the position of items on the accordion
+		 *
+		 * @private
+		 * @memberof Accordion
+		 */
+		private _updateFirstAndLastItems(): void {
+			// Remove classes form current items
+			this._removeInitialCssClasses();
+			// Unset those items
+			this.unsetHTMLElements();
+			// Set new first and last items
+			this.setHTMLElements();
+			// Set classes to the new first and last items
+			this._setInitialCssClasses();
 		}
 
 		/**
@@ -48,6 +70,7 @@ namespace OSUIFramework.Patterns.Accordion {
 		 * @memberof Accordion
 		 */
 		protected setHTMLElements(): void {
+			// Accordion > OSBlockWidget(Accordion Item) > AccordionItem
 			this._accordionFirstItem = this._selfElem.firstChild.firstChild as HTMLElement;
 			this._accordionLastItem = this._selfElem.lastChild.firstChild as HTMLElement;
 		}
@@ -75,14 +98,15 @@ namespace OSUIFramework.Patterns.Accordion {
 			// In case the accordion is built, it means we're adding an item dynamically, after it's first setup.
 			if (this.isBuilt) {
 				//Recalculate positions in the array.
-				this._setUpAccordion();
+				this._updateFirstAndLastItems();
 			}
 		}
 
 		public build(): void {
 			super.build();
 
-			this._setUpAccordion();
+			this.setHTMLElements();
+			this._updateFirstAndLastItems();
 			this.setA11YProperties();
 
 			super.finishBuild();
@@ -117,6 +141,8 @@ namespace OSUIFramework.Patterns.Accordion {
 		}
 
 		public dispose(): void {
+			this.unsetHTMLElements();
+
 			super.dispose();
 		}
 
