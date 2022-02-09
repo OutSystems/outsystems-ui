@@ -18,15 +18,25 @@ namespace OSUIFramework.Patterns.Accordion {
 			let firstAccordionItem = this._selfElem.firstChild.firstChild as HTMLElement;
 			let lastAccordionItem = this._selfElem.lastChild.firstChild as HTMLElement;
 
-			if (firstAccordionItem) Helper.Dom.Styles.RemoveClass(firstAccordionItem, Enum.CssClass.FirstItem);
-			if (lastAccordionItem) Helper.Dom.Styles.RemoveClass(lastAccordionItem, Enum.CssClass.LastItem);
+			if (firstAccordionItem) Helper.Dom.Styles.RemoveClass(firstAccordionItem, Enum.CssClass.PatternFirstItem);
+			if (lastAccordionItem) Helper.Dom.Styles.RemoveClass(lastAccordionItem, Enum.CssClass.PatternLastItem);
 
 			// Accordion > OSBlockWidget(Accordion Item) > AccordionItem
 			firstAccordionItem = this._selfElem.firstChild.firstChild as HTMLElement;
 			lastAccordionItem = this._selfElem.lastChild.firstChild as HTMLElement;
 
-			Helper.Dom.Styles.AddClass(firstAccordionItem, Enum.CssClass.FirstItem);
-			Helper.Dom.Styles.AddClass(lastAccordionItem, Enum.CssClass.LastItem);
+			Helper.Dom.Styles.AddClass(firstAccordionItem, Enum.CssClass.PatternFirstItem);
+			Helper.Dom.Styles.AddClass(lastAccordionItem, Enum.CssClass.PatternLastItem);
+		}
+
+		/**
+		 * Sets the A11Y properties when the pattern is built.
+		 *
+		 * @protected
+		 * @memberof Accordion
+		 */
+		protected setA11YProperties(): void {
+			Helper.A11Y.RoleTabList(this._selfElem);
 		}
 
 		public addAccordionItem(uniqueId: string, accordionItem: AccordionItem.IAccordionItem): void {
@@ -47,7 +57,10 @@ namespace OSUIFramework.Patterns.Accordion {
 
 		public build(): void {
 			super.build();
+
 			this._setUpAccordion();
+			this.setA11YProperties();
+
 			super.finishBuild();
 		}
 
