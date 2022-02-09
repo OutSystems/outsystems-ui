@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.AccordionItem {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
@@ -21,12 +20,12 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		private _eventOnTransitionEnd: Callbacks.Generic;
 		//Stores the keyboard callback function
 		private _eventOnkeyPress: Callbacks.Generic;
+		// Stores if the element is open
 		private _isOpen: boolean;
 		// Callback function to trigger the click event on the platform
 		private _platformEventOnToggle: Callbacks.Generic;
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		constructor(uniqueId: string, configs: any, accordion?: Patterns.Accordion.IAccordion) {
+		constructor(uniqueId: string, configs: JSON, accordion?: Patterns.Accordion.IAccordion) {
 			super(uniqueId, new AccordionItemConfig(configs));
 
 			this._accordionParentElem = accordion;
