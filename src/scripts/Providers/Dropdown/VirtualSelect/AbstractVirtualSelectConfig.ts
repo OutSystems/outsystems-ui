@@ -9,6 +9,11 @@ namespace Providers.Dropdown.VirtualSelect {
 	 */
 	export abstract class AbstractVirtualSelectConfig extends OSUIFramework.Patterns.Dropdown.AbstractDropdownConfig {
 		public ElementId: string;
+		public NoResultsText: string;
+		public OptionsList: DropDownOption[];
+		public Prompt: string;
+		public SearchPrompt: string;
+		public SelectedOptions: DropDownOption[];
 
 		// Method used to check if an image or an icon should be added to the given option
 		private _checkForFigType(index: number): Enum.FigureType {
@@ -76,6 +81,34 @@ namespace Providers.Dropdown.VirtualSelect {
 			};
 
 			return vsOptions as VirtualSelectOpts;
+		}
+
+		// Override, Validate configs key values
+		public validateDefault(key: string, value: unknown): unknown {
+			let validatedValue = undefined;
+
+			switch (key) {
+				case Enum.Properties.NoResultsText:
+					validatedValue = this.validateString(value as string, undefined);
+					break;
+				case Enum.Properties.OptionsList:
+					validatedValue = value as DropDownOption;
+					break;
+				case Enum.Properties.Prompt:
+					validatedValue = this.validateString(value as string, undefined);
+					break;
+				case Enum.Properties.SearchPrompt:
+					validatedValue = this.validateString(value as string, undefined);
+					break;
+				case Enum.Properties.SelectedOptions:
+					validatedValue = value as DropDownOption;
+					break;
+				default:
+					validatedValue = super.validateDefault(key, value);
+					break;
+			}
+
+			return validatedValue;
 		}
 
 		protected abstract _getSelectedValues(): string[];

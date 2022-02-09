@@ -5,16 +5,26 @@ namespace Providers.Dropdown.OSUIComponents {
 		extends OSUIFramework.Patterns.Dropdown.AbstractDropdown<DropdownAdvanced, C>
 		implements OSUIFramework.Patterns.Dropdown.IDropdown
 	{
+		// Store a collection of all DropdownServerSideItems ids inside this DropdownServerSide instance
+		private _dropdownServerSideItemItemsMap = new Map<
+			string,
+			OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem
+		>(); //DropdownServerSideItem.uniqueId -> DropdownServerSideItem obj
+
 		// Store the provider options
 		protected _dropdownAdvancedOpts: DropdownServerSideOpts;
-
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
+
+			console.log(this.uniqueId + ' DropdownServerSide - constructor()', this.configs);
 		}
 
 		// Create the provider instance
 		private _createProviderInstance(): void {
-			// TODO (by CreateNewPattern): create the provider instance
+			console.log(
+				this.uniqueId +
+					' DropdownServerSide - _createProviderInstance() => TODO (by CreateNewPattern): create the provider instance'
+			);
 			// this.provider = ...
 		}
 
@@ -25,7 +35,9 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		protected setCallbacks(): void {
-			// TODO (by CreateNewPattern): Update or Remove
+			console.log(
+				this.uniqueId + ' DropdownServerSide - setCallbacks() => TODO (by CreateNewPattern): Update or Remove'
+			);
 		}
 
 		/**
@@ -35,7 +47,10 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		protected setHtmlElements(): void {
-			// TODO (by CreateNewPattern): Update or Remove
+			console.log(
+				this.uniqueId +
+					' DropdownServerSide - setHtmlElements() => TODO (by CreateNewPattern): Update or Remove'
+			);
 		}
 
 		/**
@@ -45,10 +60,14 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		protected unsetCallbacks(): void {
-			// TODO (by CreateNewPattern): Update or Remove
+			console.log(
+				this.uniqueId + ' DropdownServerSide - unsetCallbacks() => TODO (by CreateNewPattern): Update or Remove'
+			);
 		}
 
 		public build(): void {
+			console.log(this.uniqueId + ' DropdownServerSide - build()');
+
 			super.build();
 
 			this.setCallbacks();
@@ -68,9 +87,10 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			// console.log(this.uniqueId + ' DropdownServerSide - changeProperty()');
+
 			super.changeProperty(propertyName, propertyValue);
 
-			console.log('DO SOMETHING HERE!');
 			// if (this.isBuilt) {
 			// 	switch (propertyName) {
 			// 		case OSUIFramework.Patterns.Dropdown.Enum.Properties.PROP_NAME:
@@ -95,7 +115,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		public disable(): void {
-			console.log('DO SOMETHING HERE');
+			// console.log(this.uniqueId + ' DropdownServerSide - disable()');
 		}
 
 		/**
@@ -117,7 +137,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		public enable(): void {
-			console.log('DO SOMETHING HERE');
+			// console.log(this.uniqueId + ' DropdownServerSide - enable()');
 		}
 
 		/**
@@ -137,13 +157,11 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
-			console.log('DO SOMETHING HERE!');
-
+			// console.log(this.uniqueId + ' DropdownServerSide - registerProviderCallback()');
 			// switch (eventName) {
 			// 	case OSUIFramework.Patterns.Dropdown.Enum.Events.EVENT_NAME:
 			// 		// TODO (by CreateNewPattern): Update or Remove
 			// 		break;
-
 			// 	default:
 			// 		/* TODO (by CreateNewPattern):
 			// 			The line below is created by the CreateNewPattern mechanism, that is not able to replace values

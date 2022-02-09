@@ -16,6 +16,17 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new DropdownServerSideItemConfig(configs));
+
+			console.log(this.uniqueId + ' DropdownServerSideItem - constructor()');
+		}
+
+		private _notifyDropdownServerSideParent(): void {
+			const parentElementId = Helper.Dom.Attribute.Get(
+				this._selfElem.closest('.osui-dropdown-serverside'),
+				'name'
+			);
+			const parentElement = OutSystems.OSUI.Patterns.DropdownAPI.GetDropdownById(parentElementId);
+			console.log(parentElement);
 		}
 
 		/**
@@ -25,7 +36,10 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 * @memberof DropdownServerSideItem
 		 */
 		protected setA11yProperties(): void {
-			// TODO (by CreateNewPattern) Update or Remove
+			// console.log(
+			// 	this.uniqueId +
+			// 		' DropdownServerSideItem - setA11yProperties => TODO (by CreateNewPattern) Update or Remove'
+			// );
 		}
 
 		/**
@@ -35,7 +49,10 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 * @memberof DropdownServerSideItem
 		 */
 		protected setHtmlElements(): void {
-			// TODO (by CreateNewPattern) Update or Remove
+			// console.log(
+			// 	this.uniqueId +
+			// 		' DropdownServerSideItem - setHtmlElements => TODO (by CreateNewPattern) Update or Remove'
+			// );
 		}
 
 		/**
@@ -45,7 +62,10 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 * @memberof DropdownServerSideItem
 		 */
 		protected unsetHtmlElements(): void {
-			// TODO (by CreateNewPattern) Update or Remove
+			// console.log(
+			// 	this.uniqueId +
+			// 		' DropdownServerSideItem - unsetHtmlElements => TODO (by CreateNewPattern) Update or Remove'
+			// );
 		}
 
 		/**
@@ -54,7 +74,11 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 * @memberof DropdownServerSideItem
 		 */
 		public build(): void {
+			console.log(this.uniqueId + ' DropdownServerSideItem - build()');
+
 			super.build();
+
+			this._notifyDropdownServerSideParent();
 
 			this.setHtmlElements();
 
@@ -71,9 +95,10 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 * @memberof DropdownServerSideItem
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			// console.log(this.uniqueId + ' DropdownServerSideItem - changeProperty()');
+
 			super.changeProperty(propertyName, propertyValue);
 
-			console.log('DO THINGS HERE!');
 			// if (this.isBuilt) {
 			// 	switch (propertyName) {
 			// 		case Enum.Properties.PROP_NAME:
@@ -101,8 +126,8 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 * @param {OSUIFramework.Callbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
 		 * @memberof DropdownServerSideItem
 		 */
-		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
-			console.log('DO THINGS HERE!');
+		public registerCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
+			// console.log(this.uniqueId + ' DropdownServerSideItem - registerCallback()');
 			// switch (eventName) {
 			// 	case OSUIFramework.Patterns.Dropdown.Enum.Events.Initialized:
 			// 		if (this._platformEventInitializedCallback === undefined) {

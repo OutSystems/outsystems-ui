@@ -9,6 +9,12 @@ namespace Providers.Dropdown.OSUIComponents {
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class OSUIDropdownServerSideConfig extends OSUIFramework.Patterns.Dropdown.AbstractDropdownConfig {
+		public AllowMultipleSelection: boolean;
+
+		constructor(config: JSON) {
+			super(config);
+		}
+
 		/**
 		 * Set all the DropdownAdvanced properties
 		 *

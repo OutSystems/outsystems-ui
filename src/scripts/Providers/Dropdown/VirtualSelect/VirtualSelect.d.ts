@@ -1,5 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.Dropdown.VirtualSelect {
+	// DropDown => Option type
+	export type DropDownOption = {
+		image_url_or_class: string;
+		label: string;
+		value: string;
+	};
+
 	// VirtualSelect => Option Item, options type
 	export type VirtualSelectOptionInfo = {
 		alias: string;

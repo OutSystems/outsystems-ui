@@ -13,5 +13,8 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem.Enum {
 	/**
 	 * DropdownServerSideItem Enum properties
 	 */
-	export enum Properties {}
+	export enum Properties {
+		IsSelected = 'IsSelected',
+		ItemId = 'ItemId',
+	}
 }

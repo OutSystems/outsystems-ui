@@ -8,7 +8,8 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 	 * @extends {AbstractConfiguration}
 	 */
 	export class DropdownServerSideItemConfig extends AbstractConfiguration {
-		// TODO (by CreateNewPattern): add all properties received as config (JSON from platform)
+		public IsSelected: boolean;
+		public ItemId: string;
 
 		constructor(config: JSON) {
 			super(config);
@@ -23,15 +24,21 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 * @memberof AbstractDropdownServerSideItemConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
-			const validatedValue = undefined;
+			let validatedValue = undefined;
 
-			console.log('DO THINGS HERE!');
-			// switch (key) {
-			// 	case Enum.Properties.PROP_NAME1:
-			// 		// TODO (by CreateNewPattern): Replace with expected property
-			// 		// validatedValue = this.validateBoolean(value as boolean, false);
-			// 		break;
-			// }
+			switch (key) {
+				case Enum.Properties.IsSelected:
+					validatedValue = this.validateBoolean(value as boolean, false);
+					break;
+
+				case Enum.Properties.ItemId:
+					validatedValue = this.validateString(value as string, undefined);
+					break;
+
+				default:
+					validatedValue = super.validateDefault(key, value);
+					break;
+			}
 
 			return validatedValue;
 		}

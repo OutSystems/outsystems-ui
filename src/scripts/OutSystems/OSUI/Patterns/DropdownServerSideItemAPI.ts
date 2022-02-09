@@ -123,7 +123,7 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 		eventName: string,
 		callback: OSUIFramework.Callbacks.OSGeneric
 	): void {
-		const _dropdownServerSideItemItem = this.GetDropdownById(dropdownServerSideItemId);
+		const _dropdownServerSideItemItem = this.GetDropdownServerSideItemItemById(dropdownServerSideItemId);
 
 		_dropdownServerSideItemItem.registerCallback(eventName, callback);
 	}
