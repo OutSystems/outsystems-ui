@@ -2,7 +2,7 @@
 namespace OSUIFramework.Patterns.AccordionItem {
 	export class AccordionItemConfig extends AbstractConfiguration {
 		public IsDisabled: boolean;
-		public IsExpanded: boolean;
+		public StartsExpanded: boolean;
 
 		constructor(config: JSON) {
 			super(config);

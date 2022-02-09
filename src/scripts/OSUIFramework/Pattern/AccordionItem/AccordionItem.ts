@@ -34,15 +34,15 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		// A11y keyboard navigation
 		private _onKeyboardPress(event: KeyboardEvent): void {
 			//If esc, Close AccordionItem
-			if (this.configs.IsExpanded && event.key === GlobalEnum.Keycodes.Escape) {
-				this._toggleAccordion(this.configs.IsExpanded);
+			if (this.configs.StartsExpanded && event.key === GlobalEnum.Keycodes.Escape) {
+				this._toggleAccordion(this.configs.StartsExpanded);
 				event.preventDefault();
 				event.stopPropagation();
 			}
 
 			//If enter or space use the onAccordionClick to validate
 			if (event.key === GlobalEnum.Keycodes.Enter || event.key === GlobalEnum.Keycodes.Space) {
-				this._toggleAccordion(this.configs.IsExpanded);
+				this._toggleAccordion(this.configs.StartsExpanded);
 				event.preventDefault();
 				event.stopPropagation();
 			}
@@ -105,7 +105,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				}
 			}
 
-			this._toggleAccordion(this.configs.IsExpanded);
+			this._toggleAccordion(this.configs.StartsExpanded);
 		}
 
 		private _transitionEndHandler(): void {
@@ -129,7 +129,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 		// Method that triggers the toggle event on the platform
 		private _triggerToggleClick(): void {
-			Helper.AsyncInvocation(this._onToggleCallback, this.widgetId, this.configs.IsExpanded);
+			Helper.AsyncInvocation(this._onToggleCallback, this.widgetId, this.configs.StartsExpanded);
 		}
 
 		//Method to apply the static aria attributes
@@ -189,7 +189,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		}
 
 		protected setInitialStates(): void {
-			if (this.configs.IsExpanded) {
+			if (this.configs.StartsExpanded) {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Open);
 				Helper.Dom.Styles.AddClass(this._accordionContent, Enum.CssClass.Expanded);
 				this._setAriaExpanded(true, false);
@@ -206,7 +206,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		}
 
 		public get isExpanded(): boolean {
-			return this.configs.IsExpanded;
+			return this.configs.StartsExpanded;
 		}
 
 		public build(): void {
@@ -221,7 +221,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		}
 
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
-			const expandedState = this.configs.IsExpanded;
+			const expandedState = this.configs.StartsExpanded;
 			super.changeProperty(propertyName, propertyValue);
 			if (this.isBuilt) {
 				switch (propertyName) {
@@ -229,7 +229,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 						this._setUpDisabledState();
 						this._setUpEvents();
 						break;
-					case Enum.Properties.IsExpanded:
+					case Enum.Properties.StartsExpanded:
 						this._toggleAccordion(expandedState);
 						break;
 				}
@@ -275,7 +275,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				clearTimeout(waitDomIterateTimeout);
 			}, 100);
 
-			this.configs.IsExpanded = false;
+			this.configs.StartsExpanded = false;
 			this._setAriaExpanded(false, true);
 			this._triggerToggleClick();
 		}
@@ -335,7 +335,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				clearTimeout(waitDomIterateTimeout);
 			}, 100);
 
-			this.configs.IsExpanded = true;
+			this.configs.StartsExpanded = true;
 			this._setAriaExpanded(true, false);
 			this._triggerToggleClick();
 

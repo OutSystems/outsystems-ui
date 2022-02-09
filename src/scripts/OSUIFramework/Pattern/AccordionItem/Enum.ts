@@ -4,7 +4,7 @@ namespace OSUIFramework.Patterns.AccordionItem.Enum {
 	 * AccordionItem Enum properties
 	 */
 	export enum Properties {
-		IsExpanded = 'IsExpanded',
+		StartsExpanded = 'StartsExpanded',
 		IsDisabled = 'IsDisabled',
 		UsePadding = 'UsePadding',
 	}
