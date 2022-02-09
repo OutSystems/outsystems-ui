@@ -86,6 +86,13 @@ namespace OSUIFramework.Patterns.Accordion {
 			this._accordionLastItem = undefined;
 		}
 
+		/**
+		 * Method to add a new accordionItem
+		 *
+		 * @param {string} uniqueId
+		 * @param {AccordionItem.IAccordionItem} accordionItem
+		 * @memberof Accordion
+		 */
 		public addAccordionItem(uniqueId: string, accordionItem: AccordionItem.IAccordionItem): void {
 			this._accordionItems.set(uniqueId, accordionItem);
 
@@ -102,6 +109,11 @@ namespace OSUIFramework.Patterns.Accordion {
 			}
 		}
 
+		/**
+		 * Method to build the pattern.
+		 *
+		 * @memberof Accordion
+		 */
 		public build(): void {
 			super.build();
 
@@ -132,6 +144,11 @@ namespace OSUIFramework.Patterns.Accordion {
 			}
 		}
 
+		/**
+		 * Method to close all accordionItems
+		 *
+		 * @memberof Accordion
+		 */
 		public collapseAllItems(): void {
 			this._accordionItems.forEach((item) => {
 				if (item.isExpanded && !item.isDisabled) {
@@ -140,12 +157,22 @@ namespace OSUIFramework.Patterns.Accordion {
 			});
 		}
 
+		/**
+		 * Method to destroy accordion instance
+		 *
+		 * @memberof Accordion
+		 */
 		public dispose(): void {
 			this.unsetHTMLElements();
 
 			super.dispose();
 		}
 
+		/**
+		 * Method to open all accordionItems
+		 *
+		 * @memberof Accordion
+		 */
 		public expandAllItems(): void {
 			//If this accordion does not have multiple items, it means we can't expand all.
 			if (this.configs.MultipleItems) {
@@ -157,10 +184,23 @@ namespace OSUIFramework.Patterns.Accordion {
 			}
 		}
 
+		/**
+		 * Method to remove an accordionItem
+		 *
+		 * @param {string} accordionItemId
+		 * @memberof Accordion
+		 */
 		public removeAccordionItem(accordionItemId: string): void {
 			this._accordionItems.delete(accordionItemId);
 		}
 
+		/**
+		 * Method to close all accordionItems but one
+		 *
+		 * @param {string} accordionItemId
+		 * @return {*}  {void}
+		 * @memberof Accordion
+		 */
 		public triggerAccordionItemClose(accordionItemId: string): void {
 			//If this accordion has multiple items, it means we don't want to close the other items.
 			if (this.configs.MultipleItems) {
