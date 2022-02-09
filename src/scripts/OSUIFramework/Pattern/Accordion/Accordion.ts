@@ -88,8 +88,14 @@ namespace OSUIFramework.Patterns.Accordion {
 			super.finishBuild();
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		public changeProperty(propertyName: string, propertyValue: any): void {
+		/**
+		 * Method to change the value of configs/current state.
+		 *
+		 * @param {string} propertyName
+		 * @param {*} propertyValue
+		 * @memberof Accordion
+		 */
+		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
 
 			if (this.isBuilt) {
