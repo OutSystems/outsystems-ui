@@ -73,6 +73,11 @@
 		line-height: 1;
 		padding: var(--space-m);
 		width: 100%;
+
+		&__placeholder {
+			text-overflow: ellipsis;
+			width: 100%;
+		}
 	}
 
 	&__icon {
