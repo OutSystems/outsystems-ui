@@ -102,11 +102,19 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			}
 		}
 
-		private _setUpDisabledState(): void {
+		/**
+		 * Method to handle the IsDisabled state
+		 *
+		 * @private
+		 * @memberof AccordionItem
+		 */
+		private _setIsDisabledState(): void {
 			if (this.configs.IsDisabled) {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Disabled);
+				this.unsetCallbacks();
 			} else {
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.Disabled);
+				this.setCallbacks();
 			}
 		}
 
@@ -114,9 +122,11 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			if (this.configs.IsDisabled) {
 				this.unsetCallbacks();
 				return;
+			} else {
+				this.setCallbacks();
 			}
-			this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
-			this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
+			// this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			// this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
 		}
 
 		private _transitionEndHandler(): void {
@@ -188,6 +198,9 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			this._eventOnClick = this._accordionOnClickHandler.bind(this);
 			this._eventOnTransitionEnd = this._transitionEndHandler.bind(this);
 			this._eventOnkeyPress = this._onKeyboardPress.bind(this);
+
+			this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
 		}
 
 		// Method that gets & stores the HTML elements of the Accordion Item
@@ -256,10 +269,8 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			super.build();
 			this.setHtmlElements();
 			this.setInitialStates();
-			this._setUpDisabledState();
+			this._setIsDisabledState();
 			this.setA11yProperties();
-			this.setCallbacks();
-			this._setUpEvents();
 			super.finishBuild();
 		}
 
@@ -276,8 +287,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			if (this.isBuilt) {
 				switch (propertyName) {
 					case Enum.Properties.IsDisabled:
-						this._setUpDisabledState();
-						this._setUpEvents();
+						this._setIsDisabledState();
 						break;
 					case Enum.Properties.StartsExpanded:
 						console.warn(
