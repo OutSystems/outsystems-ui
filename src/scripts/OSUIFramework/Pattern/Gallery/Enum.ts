@@ -7,13 +7,13 @@ namespace OSUIFramework.Patterns.Gallery.Enum {
 	 * @enum {number}
 	 */
 	export enum CssVariables {
-		GridDesktop = '--grid-desktop',
-		GridTablet = '--grid-tablet',
-		GridPhone = '--grid-phone',
-		GridGap = '--grid-gap',
-		GridListDesktop = '--grid-list-desktop',
-		GridListTablet = '--grid-list-tablet',
-		GridListPhone = '--grid-list-phone',
+		PatternItemsDesktop = '--gallery-desktop',
+		PatternItemsTablet = '--gallery-tablet',
+		PatternItemsPhone = '--gallery-phone',
+		PatternItemsGap = '--gallery-gap',
+		PatternListItemsDesktop = '--gallery-list-desktop',
+		PatternListItemsTablet = '--gallery-list-tablet',
+		PatternListItemsPhone = '--gallery-list-phone',
 	}
 	/**
 	 * Gallery Enum properties
@@ -22,9 +22,9 @@ namespace OSUIFramework.Patterns.Gallery.Enum {
 	 * @enum {number}
 	 */
 	export enum Properties {
-		ItemsInPhone = 'ItemsInPhone',
-		ItemsInTablet = 'ItemsInTablet',
-		ItemsInDesktop = 'ItemsInDesktop',
-		GutterSize = 'GutterSize',
+		ItemsGap = 'ItemsGap',
+		RowItemsDesktop = 'RowItemsDesktop',
+		RowItemsPhone = 'RowItemsPhone',
+		RowItemsTablet = 'RowItemsTablet',
 	}
 }

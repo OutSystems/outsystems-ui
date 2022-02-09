@@ -8,10 +8,10 @@ namespace OSUIFramework.Patterns.Gallery {
 	 * @extends {AbstractConfiguration}
 	 */
 	export class GalleryConfig extends AbstractConfiguration {
-		public GutterSize: string;
-		public ItemsInDesktop: number;
-		public ItemsInPhone: number;
-		public ItemsInTablet: number;
+		public ItemsGap: string;
+		public RowItemsDesktop: number;
+		public RowItemsPhone: number;
+		public RowItemsTablet: number;
 
 		constructor(config: JSON) {
 			super(config);

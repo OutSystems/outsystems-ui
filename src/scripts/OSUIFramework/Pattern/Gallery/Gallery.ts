@@ -14,16 +14,16 @@ namespace OSUIFramework.Patterns.Gallery {
 		}
 
 		/**
-		 * Function used to set the Gallery's number of items per row in Desktop
+		 * Function used to set the Gallery's items gap
 		 *
 		 * @private
 		 * @memberof Gallery
 		 */
-		private _setGutterSize(): void {
+		private _setItemsGap(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
-				Enum.CssVariables.GridGap,
-				`var(--space-${this.configs.GutterSize})`
+				Enum.CssVariables.PatternItemsGap,
+				`var(--space-${this.configs.ItemsGap})`
 			);
 		}
 
@@ -33,19 +33,17 @@ namespace OSUIFramework.Patterns.Gallery {
 		 * @private
 		 * @memberof Gallery
 		 */
-		private _setItemsInDesktop(): void {
+		private _setRowItemsDesktop(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
-				Enum.CssVariables.GridDesktop,
-				this.configs.ItemsInDesktop
+				Enum.CssVariables.PatternItemsDesktop,
+				this.configs.RowItemsDesktop
 			);
-			// Fix for Edge, as css calc() doesn't work on all scenarios for this browser
-			this.configs.ItemsInDesktop++;
 
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
-				Enum.CssVariables.GridListDesktop,
-				this.configs.ItemsInDesktop
+				Enum.CssVariables.PatternListItemsDesktop,
+				this.configs.RowItemsDesktop
 			);
 		}
 
@@ -55,16 +53,16 @@ namespace OSUIFramework.Patterns.Gallery {
 		 * @private
 		 * @memberof Gallery
 		 */
-		private _setItemsInPhone(): void {
-			Helper.Dom.Styles.SetStyleAttribute(this._selfElem, Enum.CssVariables.GridPhone, this.configs.ItemsInPhone);
-
-			// Fix for Edge, as css calc() doesn't work on all scenarios for this browser
-			this.configs.ItemsInPhone++;
-
+		private _setRowItemsPhone(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
-				Enum.CssVariables.GridListPhone,
-				this.configs.ItemsInPhone
+				Enum.CssVariables.PatternItemsPhone,
+				this.configs.RowItemsPhone
+			);
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				Enum.CssVariables.PatternListItemsPhone,
+				this.configs.RowItemsPhone
 			);
 		}
 
@@ -74,33 +72,30 @@ namespace OSUIFramework.Patterns.Gallery {
 		 * @private
 		 * @memberof Gallery
 		 */
-		private _setItemsInTablet(): void {
+		private _setRowItemsTablet(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
-				Enum.CssVariables.GridTablet,
-				this.configs.ItemsInTablet
+				Enum.CssVariables.PatternItemsTablet,
+				this.configs.RowItemsTablet
 			);
 
-			// Fix for Edge, as css calc() doesn't work on all scenarios for this browser
-			this.configs.ItemsInTablet++;
-
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
-				Enum.CssVariables.GridListTablet,
-				this.configs.ItemsInTablet
+				Enum.CssVariables.PatternListItemsTablet,
+				this.configs.RowItemsTablet
 			);
 		}
 
 		public build(): void {
 			super.build();
 
-			this._setItemsInDesktop();
+			this._setRowItemsDesktop();
 
-			this._setItemsInTablet();
+			this._setRowItemsTablet();
 
-			this._setItemsInPhone();
+			this._setRowItemsPhone();
 
-			this._setGutterSize();
+			this._setItemsGap();
 
 			this.finishBuild();
 		}
@@ -117,17 +112,17 @@ namespace OSUIFramework.Patterns.Gallery {
 			if (this.isBuilt) {
 				// Check which property changed and call respective method to update it
 				switch (propertyName) {
-					case Enum.Properties.ItemsInDesktop:
-						this._setItemsInDesktop();
+					case Enum.Properties.RowItemsDesktop:
+						this._setRowItemsDesktop();
 						break;
-					case Enum.Properties.ItemsInTablet:
-						this._setItemsInTablet();
+					case Enum.Properties.RowItemsTablet:
+						this._setRowItemsTablet();
 						break;
-					case Enum.Properties.ItemsInPhone:
-						this._setItemsInPhone();
+					case Enum.Properties.RowItemsPhone:
+						this._setRowItemsPhone();
 						break;
-					case Enum.Properties.GutterSize:
-						this._setGutterSize();
+					case Enum.Properties.ItemsGap:
+						this._setItemsGap();
 						break;
 				}
 			}
