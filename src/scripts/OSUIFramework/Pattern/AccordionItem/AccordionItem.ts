@@ -22,6 +22,8 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		private _eventOnTransitionEnd: Callbacks.Generic;
 		//Stores the keyboard callback function
 		private _eventOnkeyPress: Callbacks.Generic;
+		// Store the expanded height value
+		private _expandedHeight: number;
 		// Stores if the element is open
 		private _isOpen: boolean;
 		// Callback function to trigger the click event on the platform
@@ -58,6 +60,48 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			} else {
 				this.open();
 			}
+		}
+
+		/**
+		 * Method to handle async animation
+		 *
+		 * @private
+		 * @param {boolean} isExpand
+		 * @memberof AccordionItem
+		 */
+		private _animationAsync(isExpand: boolean): void {
+			const finalHeight = isExpand ? this._expandedHeight : this._collapsedHeight;
+
+			// Adds is--animating class to current accordion item content to obtain the final height value
+			Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternAnimating);
+
+			if (!isExpand) {
+				Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.PatternExpanded);
+			}
+
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._accordionItemContentElem,
+				GlobalEnum.InlineStyle.Height,
+				finalHeight + GlobalEnum.Units.Pixel
+			);
+
+			this._accordionItemContentElem.addEventListener(
+				GlobalEnum.HTMLEvent.TransitionEnd,
+				this._eventOnTransitionEnd
+			);
+
+			if (isExpand) {
+				// End of animation, item is expanded
+				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternExpanded);
+				this._isOpen = true;
+			} else {
+				// End of animation, item is collapsed
+				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternCollapsed);
+				this._isOpen = false;
+			}
+
+			this.setA11yProperties();
+			this._onToggleCallback();
 		}
 
 		/**
@@ -347,7 +391,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			}
 
 			Helper.Dom.Attribute.Remove(this._accordionItemContentElem, GlobalEnum.HTMLAttributes.Style);
-			const expandedHeight = this._accordionItemContentElem.getBoundingClientRect().height;
+			this._expandedHeight = this._accordionItemContentElem.getBoundingClientRect().height;
 
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternClosed);
 			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternOpen);
@@ -358,34 +402,12 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._accordionItemContentElem,
 				GlobalEnum.InlineStyle.Height,
-				expandedHeight + GlobalEnum.Units.Pixel
+				this._expandedHeight + GlobalEnum.Units.Pixel
 			);
 
-			const waitDomIterateTimeout = setTimeout(() => {
-				// Adds is--animating class to current accordion item content to obtain the final height value
-				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternAnimating);
-				Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.PatternExpanded);
-
-				Helper.Dom.Styles.SetStyleAttribute(
-					this._accordionItemContentElem,
-					GlobalEnum.InlineStyle.Height,
-					this._collapsedHeight
-				);
-
-				this._accordionItemContentElem.addEventListener(
-					GlobalEnum.HTMLEvent.TransitionEnd,
-					this._eventOnTransitionEnd
-				);
-
-				// End of animation, item is collapsed
-				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternCollapsed);
-
-				clearTimeout(waitDomIterateTimeout);
-			}, 100);
-
-			this._isOpen = false;
-			this.setA11yProperties();
-			this._onToggleCallback();
+			Helper.AsyncInvocation(() => {
+				this._animationAsync(false);
+			});
 		}
 
 		/**
@@ -426,7 +448,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 			Helper.Dom.Attribute.Remove(this._accordionItemTitleElem, GlobalEnum.HTMLAttributes.Style);
 
-			const expandedHeight = this._accordionItemContentElem.getBoundingClientRect().height;
+			this._expandedHeight = this._accordionItemContentElem.getBoundingClientRect().height;
 
 			//Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.Collapsed);
 			Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.PatternExpanded);
@@ -437,29 +459,9 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				this._collapsedHeight
 			);
 
-			const waitDomIterateTimeout = setTimeout(() => {
-				// Adds is--animating class to current accordion item content to obtain the final height value
-				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternAnimating);
-				Helper.Dom.Styles.SetStyleAttribute(
-					this._accordionItemContentElem,
-					GlobalEnum.InlineStyle.Height,
-					expandedHeight + GlobalEnum.Units.Pixel
-				);
-
-				this._accordionItemContentElem.addEventListener(
-					GlobalEnum.HTMLEvent.TransitionEnd,
-					this._eventOnTransitionEnd
-				);
-
-				// End of animation, item is expanded
-				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternExpanded);
-
-				clearTimeout(waitDomIterateTimeout);
-			}, 100);
-
-			this._isOpen = true;
-			this.setA11yProperties();
-			this._onToggleCallback();
+			Helper.AsyncInvocation(() => {
+				this._animationAsync(true);
+			});
 
 			if (this._accordionParentElem) this._accordionParentElem.triggerAccordionItemClose(this.uniqueId);
 		}
