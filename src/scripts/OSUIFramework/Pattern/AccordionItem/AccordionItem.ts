@@ -14,6 +14,8 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		// Stores the parent of the item (if it exists)
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		private _accordionParentElem: OSUIFramework.Patterns.Accordion.IAccordion;
+		// Store the collapsed height value
+		private _collapsedHeight: number;
 		// Store the click event with bind(this)
 		private _eventOnClick: Callbacks.Generic;
 		//Stores the transition end callback function
@@ -30,6 +32,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 			this._accordionParentElem = accordion;
 			this._isOpen = this.configs.StartsExpanded;
+			this._collapsedHeight = 0;
 		}
 
 		/**
@@ -349,8 +352,6 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.Expanded);
 			Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.Collapsed);
 
-			const collapsedHeight = this._accordionItemContentElem.getBoundingClientRect().height;
-
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._accordionItemContentElem,
 				GlobalEnum.InlineStyle.Height,
@@ -365,7 +366,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				Helper.Dom.Styles.SetStyleAttribute(
 					this._accordionItemContentElem,
 					GlobalEnum.InlineStyle.Height,
-					collapsedHeight + GlobalEnum.Units.Pixel
+					this._collapsedHeight
 				);
 
 				this._accordionItemContentElem.addEventListener(
@@ -402,9 +403,6 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		 * @memberof AccordionItem
 		 */
 		public open(): void {
-			// We know the initial height is 0 - it is collapsed
-			const collapsedHeight = this._accordionItemContentElem.getBoundingClientRect().height;
-
 			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.Closed);
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Open);
 
@@ -428,7 +426,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._accordionItemContentElem,
 				GlobalEnum.InlineStyle.Height,
-				collapsedHeight + GlobalEnum.Units.Pixel
+				this._collapsedHeight
 			);
 
 			const waitDomIterateTimeout = setTimeout(() => {
