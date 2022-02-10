@@ -49,7 +49,7 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 * @export
 	 * @param {string} accordionItemId
 	 */
-	export function Close(accordionItemId: string): void {
+	export function Collapse(accordionItemId: string): void {
 		const accordionItem = GetAccordionItemById(accordionItemId);
 
 		accordionItem.close();
@@ -107,6 +107,18 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	}
 
 	/**
+	 * Function to open the accordionItem
+	 *
+	 * @export
+	 * @param {string} accordionItemId
+	 */
+	export function Expand(accordionItemId: string): void {
+		const accordionItem = GetAccordionItemById(accordionItemId);
+
+		accordionItem.open();
+	}
+
+	/**
 	 * Function that will return the Map with all the Accordion Item instances at the page
 	 *
 	 * @export
@@ -144,18 +156,6 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 		accordionItem.build();
 
 		return accordionItem;
-	}
-
-	/**
-	 * Function to open the accordionItem
-	 *
-	 * @export
-	 * @param {string} accordionItemId
-	 */
-	export function Open(accordionItemId: string): void {
-		const accordionItem = GetAccordionItemById(accordionItemId);
-
-		accordionItem.open();
 	}
 
 	/**
