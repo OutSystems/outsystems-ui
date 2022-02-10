@@ -354,7 +354,6 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 			// Removes collapsed class and adds the expanded class to animate
 			Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.Expanded);
-			Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.Collapsed);
 
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._accordionItemContentElem,
