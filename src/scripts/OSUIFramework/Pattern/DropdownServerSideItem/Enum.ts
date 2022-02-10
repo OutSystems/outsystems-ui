@@ -13,6 +13,14 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem.Enum {
 	export enum Events {}
 
 	/**
+	 * DropdownServerSideItem Notification Types
+	 */
+	export enum NotificationType {
+		Add = 'add',
+		Remove = 'remove',
+	}
+
+	/**
 	 * DropdownServerSideItem Enum properties
 	 */
 	export enum Properties {

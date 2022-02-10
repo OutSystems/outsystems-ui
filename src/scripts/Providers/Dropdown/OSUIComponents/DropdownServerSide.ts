@@ -11,15 +11,15 @@ namespace Providers.Dropdown.OSUIComponents {
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
 
-			console.log(this.uniqueId + ' DropdownServerSide - constructor()', this.configs);
+			console.log('NEW DropdownSS', this.uniqueId);
 		}
 
 		// Create the provider instance
 		private _createProviderInstance(): void {
-			console.log(
-				this.uniqueId +
-					' DropdownServerSide - _createProviderInstance() => TODO (by CreateNewPattern): create the provider instance'
-			);
+			// console.log(
+			// 	this.uniqueId +
+			// 		' DropdownServerSide - _createProviderInstance() => TODO (by CreateNewPattern): create the provider instance'
+			// );
 			// this.provider = ...
 		}
 
@@ -30,9 +30,9 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		protected setCallbacks(): void {
-			console.log(
-				this.uniqueId + ' DropdownServerSide - setCallbacks() => TODO (by CreateNewPattern): Update or Remove'
-			);
+			// console.log(
+			// 	this.uniqueId + ' DropdownServerSide - setCallbacks() => TODO (by CreateNewPattern): Update or Remove'
+			// );
 		}
 
 		/**
@@ -42,10 +42,10 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		protected setHtmlElements(): void {
-			console.log(
-				this.uniqueId +
-					' DropdownServerSide - setHtmlElements() => TODO (by CreateNewPattern): Update or Remove'
-			);
+			// console.log(
+			// 	this.uniqueId +
+			// 		' DropdownServerSide - setHtmlElements() => TODO (by CreateNewPattern): Update or Remove'
+			// );
 		}
 
 		/**
@@ -61,8 +61,6 @@ namespace Providers.Dropdown.OSUIComponents {
 		}
 
 		public build(): void {
-			console.log(this.uniqueId + ' DropdownServerSide - build()');
-
 			super.build();
 
 			this.setCallbacks();
@@ -175,31 +173,17 @@ namespace Providers.Dropdown.OSUIComponents {
 		}
 
 		/**
-		 * Method used to check if the given OptionItemId could be added as a Dropdown OptionItem
+		 * Method used to store a given DropdownOption into optionItems list
 		 *
 		 * @param optionItemId Id of the OptionItem to be added to the Dropdown instance
-		 * @returns {boolean} Option has been added as an OptionItem of Dropdown instance
 		 */
-		public setNewOptionItem(optionItemId: string): boolean {
+		public setNewOptionItem(optionItemId: string): void {
 			// Get the DropdownOptionItem reference
 			const optionItem =
 				OutSystems.OSUI.Patterns.DropdownServerSideItemAPI.GetDropdownServerSideItemItemById(optionItemId);
 
-			console.log('optionItem', optionItem);
-
-			// if (this._selfElem.contains(optionItem))
-			// try {
-			// 	console.log('optionItem', optionItem);
-			// } catch (e) {
-			// 	// Was not able to get DropdownOptionItem element!
-			// 	throw new Error(
-			// 		OSUIFramework.ErrorCodes.Dropdown.FailSetNewOptionItem +
-			// 			': ' +
-			// 			`${OSUIFramework.GlobalEnum.PatternsNames.DropdownServerSideItem} under id: '${optionItemId}' can not be added as an OptionItem of ${OSUIFramework.GlobalEnum.PatternsNames.Dropdown} with id '${this.widgetId}'!`
-			// 	);
-			// }
-
-			return true;
+			// Store DropDownOption Item
+			this._optionItems.set(optionItemId, optionItem);
 		}
 
 		/**

@@ -24,7 +24,7 @@ namespace OSUIFramework.Patterns.Dropdown {
 		public abstract enable(): void;
 		public abstract getSelectedValues(): string;
 		public abstract registerProviderCallback(eventName: string, callback: Callbacks.OSGeneric): void;
-		public abstract setNewOptionItem(optionItemId: string): boolean;
+		public abstract setNewOptionItem(optionItemId: string): void;
 		public abstract validation(isValid: boolean, validationMessage: string): void;
 	}
 }

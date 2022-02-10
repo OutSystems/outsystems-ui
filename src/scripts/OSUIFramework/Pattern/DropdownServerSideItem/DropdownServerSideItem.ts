@@ -12,12 +12,13 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		extends AbstractPattern<DropdownServerSideItemConfig>
 		implements IDropdownServerSideItem
 	{
+		// Store a referent to item Dropdpwn parent instance
 		private _dropdownParent: OSUIFramework.Patterns.Dropdown.IDropdown;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new DropdownServerSideItemConfig(configs));
 
-			console.log(this.uniqueId + ' DropdownServerSideItem - constructor()');
+			console.log('NEW DropdownSS___Item', this.uniqueId);
 		}
 
 		// Function used to get the reference of Dropdown parent
@@ -32,7 +33,8 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 				// Get the Dropdown parent reference
 				this._dropdownParent = OutSystems.OSUI.Patterns.DropdownAPI.GetDropdownById(dropdownParentId);
 
-				this._notifyDropdownParent();
+				// Notify parent about a new instance of this child has been created!
+				this._notifyDropdownParent(Enum.NotificationType.Add);
 			} catch (e) {
 				// Was not able to get Dropdown parent element!
 				throw new Error(
@@ -43,11 +45,13 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			}
 		}
 
-		// Method that will notify Dropdpwn parent about this new instance has been created!
-		private _notifyDropdownParent(): void {
-			// Notify parent and receive OK from it that this instance is really a child of it!
-			// console.log('NOTIFY:', this._dropdownParent);
-			this._dropdownParent.setNewOptionItem(this.uniqueId);
+		// Method that will notify Dropdpwn parent in order to update it's references to DropdownOptionItems!
+		private _notifyDropdownParent(type: Enum.NotificationType): void {
+			switch (type) {
+				case Enum.NotificationType.Add:
+					this._dropdownParent.setNewOptionItem(this.uniqueId);
+					break;
+			}
 		}
 
 		/**
@@ -95,8 +99,6 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 * @memberof DropdownServerSideItem
 		 */
 		public build(): void {
-			console.log(this.uniqueId + ' DropdownServerSideItem - build()');
-
 			super.build();
 
 			this._getDropdownParent();
@@ -136,6 +138,8 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 */
 		public dispose(): void {
 			this.unsetHtmlElements();
+
+			// TODO: notify DropdownParent in order to manage the Options
 
 			//Destroying the base of pattern
 			super.dispose();
