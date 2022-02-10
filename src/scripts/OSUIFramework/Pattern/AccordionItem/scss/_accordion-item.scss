@@ -17,12 +17,6 @@
 	border-radius: var(--border-radius-soft);
 	position: relative;
 
-	// ServiceStudio Preview
-	& {
-		-servicestudio-border-bottom-width: var(--border-size-s);
-		-servicestudio-border-top: var(--border-size-m) solid var(--color-primary);
-	}
-
 	// Active border-top
 	&:after {
 		background-color: transparent;
@@ -68,12 +62,6 @@
 			color: var(--color-neutral-7);
 			pointer-events: none;
 
-			// Service Studio Preview
-			& {
-				-servicestudio-color: var(--color-neutral-9);
-				-servicestudio-pointer-events: auto;
-			}
-
 			.osui-accordion-item__icon {
 				color: var(--color-neutral-6);
 			}
@@ -116,12 +104,6 @@
 			&-collapsed {
 				height: 0;
 				visibility: hidden;
-
-				// Service Studio Preview
-				& {
-					-servicestudio-height: auto;
-					-servicestudio-padding: var(--space-none) var(--space-m) var(--space-m);
-				}
 			}
 
 			&-expanded {
