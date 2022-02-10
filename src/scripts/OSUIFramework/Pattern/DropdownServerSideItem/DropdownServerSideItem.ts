@@ -12,7 +12,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		extends AbstractPattern<DropdownServerSideItemConfig>
 		implements IDropdownServerSideItem
 	{
-		// Properties
+		private _dropdownParent: OSUIFramework.Patterns.Dropdown.IDropdown;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new DropdownServerSideItemConfig(configs));
@@ -20,13 +20,33 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			console.log(this.uniqueId + ' DropdownServerSideItem - constructor()');
 		}
 
-		private _notifyDropdownServerSideParent(): void {
-			const parentElementId = Helper.Dom.Attribute.Get(
-				this._selfElem.closest('.osui-dropdown-serverside'),
-				'name'
-			);
-			const parentElement = OutSystems.OSUI.Patterns.DropdownAPI.GetDropdownById(parentElementId);
-			console.log(parentElement);
+		// Function used to get the reference of Dropdown parent
+		private _getDropdownParent(): void {
+			try {
+				// Get the uniqueId from the dropdownParent
+				const dropdownParentId = Helper.Dom.Attribute.Get(
+					this._selfElem.closest(Constants.Dot + Enum.CssClass.DropdownParent),
+					GlobalEnum.HTMLAttributes.Name
+				);
+
+				// Get the Dropdown parent reference
+				this._dropdownParent = OutSystems.OSUI.Patterns.DropdownAPI.GetDropdownById(dropdownParentId);
+
+				this._notifyDropdownParent();
+			} catch (e) {
+				// Was not able to get Dropdown parent element!
+				throw new Error(
+					OSUIFramework.ErrorCodes.DropdownServerSideItem.DropdownParentNotFound.code +
+						': ' +
+						`${GlobalEnum.PatternsNames.Dropdown} parent of ${GlobalEnum.PatternsNames.DropdownServerSideItem} id: '${this.widgetId}' was not found!`
+				);
+			}
+		}
+
+		// Method that will notify Dropdpwn parent about this new instance has been created!
+		private _notifyDropdownParent(): void {
+			// Notify parent and receive OK from it that this instance is really a child of it!
+			console.log('NOTIFY:', this._dropdownParent);
 		}
 
 		/**
@@ -78,7 +98,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 
 			super.build();
 
-			this._notifyDropdownServerSideParent();
+			this._getDropdownParent();
 
 			this.setHtmlElements();
 

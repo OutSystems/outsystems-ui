@@ -6,13 +6,8 @@ namespace Providers.Dropdown.OSUIComponents {
 		implements OSUIFramework.Patterns.Dropdown.IDropdown
 	{
 		// Store a collection of all DropdownServerSideItems ids inside this DropdownServerSide instance
-		private _dropdownServerSideItemItemsMap = new Map<
-			string,
-			OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem
-		>(); //DropdownServerSideItem.uniqueId -> DropdownServerSideItem obj
+		private _optionItems = new Map<string, OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem>(); //DropdownServerSideItem.uniqueId -> DropdownServerSideItem obj
 
-		// Store the provider options
-		protected _dropdownAdvancedOpts: DropdownServerSideOpts;
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
 
@@ -101,12 +96,16 @@ namespace Providers.Dropdown.OSUIComponents {
 		}
 
 		/**
-		 * This method have no implementation.
+		 * This method has no implementation on this context.
 		 *
 		 * @memberof OSUIDropdownServerSide
 		 */
 		public clear(): void {
-			console.warn(OSUIFramework.ErrorMessages.DropdownAdvanced.HasNoImplementation);
+			throw new Error(
+				OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.code +
+					': ' +
+					OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.message
+			);
 		}
 
 		/**
@@ -141,12 +140,16 @@ namespace Providers.Dropdown.OSUIComponents {
 		}
 
 		/**
-		 * This method have no implementation.
+		 * This method has no implementation on this context.
 		 *
 		 * @memberof OSUIDropdownServerSide
 		 */
 		public getSelectedValues(): string {
-			return OSUIFramework.ErrorMessages.DropdownAdvanced.HasNoImplementation;
+			throw new Error(
+				OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.code +
+					': ' +
+					OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.message
+			);
 		}
 
 		/**
@@ -172,13 +175,17 @@ namespace Providers.Dropdown.OSUIComponents {
 		}
 
 		/**
-		 * This method have no implementation.
+		 * This method has no implementation on this context.
 		 *
 		 * @memberof OSUIDropdownServerSide
 		 */
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		public validation(isValid: boolean, validationMessage: string): void {
-			console.log(OSUIFramework.ErrorMessages.DropdownAdvanced.HasNoImplementation);
+			throw new Error(
+				OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.code +
+					': ' +
+					OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.message
+			);
 		}
 	}
 }

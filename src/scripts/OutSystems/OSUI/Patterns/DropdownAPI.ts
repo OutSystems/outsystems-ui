@@ -10,8 +10,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @param {string} propertyName Property name that will be updated
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ChangeProperty(dropdownId: string, propertyName: string, propertyValue: any): void {
+	export function ChangeProperty(dropdownId: string, propertyName: string, propertyValue: unknown): void {
 		const _dropdownItem = GetDropdownById(dropdownId);
 
 		_dropdownItem.changeProperty(propertyName, propertyValue);

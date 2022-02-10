@@ -71,6 +71,7 @@ namespace OSUIFramework.GlobalEnum {
 		DataInput = 'data-input',
 		Disabled = 'disabled',
 		Id = 'id',
+		Name = 'name',
 		Style = 'style',
 	}
 
@@ -173,6 +174,7 @@ namespace OSUIFramework.GlobalEnum {
 		Carousel = 'Carousel',
 		Datepicker = 'Datepicker',
 		Dropdown = 'Dropdown',
+		DropdownServerSideItem = 'DropdownServerSideItem',
 		FlipContent = 'Flip Content',
 		FloatingActions = 'Floating Actions',
 		FloatingActionsItem = 'Floating Actions Item',

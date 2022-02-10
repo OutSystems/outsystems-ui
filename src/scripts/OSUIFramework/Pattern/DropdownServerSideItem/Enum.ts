@@ -3,7 +3,9 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem.Enum {
 	/**
 	 * DropdownServerSideItem Enum for CSS Classes
 	 */
-	export enum CssClass {}
+	export enum CssClass {
+		DropdownParent = 'osui-dropdown-serverside',
+	}
 
 	/**
 	 * DropdownServerSideItem Events
