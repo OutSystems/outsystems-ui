@@ -10,7 +10,6 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 * @param {string} propertyName Property name that will be updated
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 	export function ChangeProperty(accordionId: string, propertyName: string, propertyValue: unknown): void {
 		const accordion = GetAccordionById(accordionId);
 

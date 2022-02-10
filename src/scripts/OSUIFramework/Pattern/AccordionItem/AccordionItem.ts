@@ -342,6 +342,10 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		 * @memberof AccordionItem
 		 */
 		public close(): void {
+			if (!this._isOpen) {
+				return;
+			}
+
 			Helper.Dom.Attribute.Remove(this._accordionItemContentElem, GlobalEnum.HTMLAttributes.Style);
 			const expandedHeight = this._accordionItemContentElem.getBoundingClientRect().height;
 
@@ -403,6 +407,10 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		 * @memberof AccordionItem
 		 */
 		public open(): void {
+			if (this._isOpen) {
+				return;
+			}
+
 			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.Closed);
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Open);
 
