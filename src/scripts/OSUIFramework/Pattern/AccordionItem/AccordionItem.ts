@@ -131,6 +131,12 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			this._handleTabIndex();
 		}
 
+		/**
+		 * Method to handle the onTransitionEnd on accordion toggle animation
+		 *
+		 * @private
+		 * @memberof AccordionItem
+		 */
 		private _transitionEndHandler(): void {
 			if (this._accordionItemContentElem) {
 				Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.Animation);
@@ -265,10 +271,24 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			this._accordionItemPlaceholder = undefined;
 		}
 
+		/**
+		 * isDisabled getter
+		 *
+		 * @readonly
+		 * @type {boolean}
+		 * @memberof AccordionItem
+		 */
 		public get isDisabled(): boolean {
 			return this.configs.IsDisabled;
 		}
 
+		/**
+		 * IsOpen getter
+		 *
+		 * @readonly
+		 * @type {boolean}
+		 * @memberof AccordionItem
+		 */
 		public get isOpen(): boolean {
 			return this._isOpen;
 		}
@@ -313,8 +333,11 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			}
 		}
 
-		// This method will open and then close the item to get its final value; then, it will run an animation
-		// from the item's inital height to 0
+		/**
+		 * Method to close the AccordionItem
+		 *
+		 * @memberof AccordionItem
+		 */
 		public close(): void {
 			Helper.Dom.Attribute.Remove(this._accordionItemContentElem, GlobalEnum.HTMLAttributes.Style);
 			const expandedHeight = this._accordionItemContentElem.getBoundingClientRect().height;
@@ -349,6 +372,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 					GlobalEnum.HTMLEvent.TransitionEnd,
 					this._eventOnTransitionEnd
 				);
+
 				// End of animation, item is collapsed
 				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.Collapsed);
 
@@ -372,8 +396,11 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			super.dispose();
 		}
 
-		// This method will open and then close the item to get its final value; then, it will run an animation
-		// from 0 to the item's final height
+		/**
+		 * Method to open the AccordionItem
+		 *
+		 * @memberof AccordionItem
+		 */
 		public open(): void {
 			// We know the initial height is 0 - it is collapsed
 			const collapsedHeight = this._accordionItemContentElem.getBoundingClientRect().height;
