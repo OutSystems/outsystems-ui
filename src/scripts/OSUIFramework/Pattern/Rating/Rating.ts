@@ -36,7 +36,7 @@ namespace OSUIFramework.Patterns.Rating {
 				this.configs.RatingScale = Enum.Properties.MaxRatingScale;
 
 				console.warn(
-					`The value of the RatingScale property of the '${this.widgetId}' Rating block is higher than supported (${Enum.Properties.MaxRatingScale}).`
+					`The value of the RatingScale property on the '${this.widgetId}' Rating is higher than supported (${Enum.Properties.MaxRatingScale}).`
 				);
 			}
 
@@ -236,19 +236,19 @@ namespace OSUIFramework.Patterns.Rating {
 					? Math.floor(this.configs.RatingValue) + 1
 					: Math.floor(this.configs.RatingValue);
 
-			if (newValue < 0) {
+			if (newValue < Enum.Properties.MinRatingScale) {
 				// If negative value, set it as 0 by default
-				newValue = 0;
+				newValue = Enum.Properties.MinRatingScale;
 
 				console.warn(
-					`The value of the RatingValue property of the '${this.widgetId}' Rating can't be smaller than 0(Zero).`
+					`The value of RatingValue property on the '${this.widgetId}' Rating can't be smaller than '${Enum.Properties.MinRatingScale}'.`
 				);
 			} else if (newValue > this.configs.RatingScale) {
 				// If value is higher than the RatingScale, assume the maxRatingScale a value
 				newValue = this.configs.RatingScale;
 
 				console.warn(
-					`The value of the RatingValue property of the '${this.widgetId}' Rating block exceeds the scale boundaries. To ensure the correct behaviour, set a value smaller or equal to ${this.configs.RatingScale}.`
+					`The value of the RatingValue property on the '${this.widgetId}' Rating exceeds the scale boundaries. To ensure its correct behaviour, set a value smaller or equal to '${this.configs.RatingScale}'.`
 				);
 			}
 
