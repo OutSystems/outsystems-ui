@@ -121,11 +121,11 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		 */
 		private _setIsDisabledState(): void {
 			if (this.configs.IsDisabled) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Disabled);
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternDisabled);
 				Helper.A11Y.AriaDisabledTrue(this._selfElem);
 				this.unsetCallbacks();
 			} else {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.Disabled);
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternDisabled);
 				Helper.A11Y.AriaDisabledFalse(this._selfElem);
 				this.setCallbacks();
 			}
@@ -142,7 +142,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		 */
 		private _transitionEndHandler(): void {
 			if (this._accordionItemContentElem) {
-				Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.Animation);
+				Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.PatternAnimating);
 
 				Helper.Dom.Styles.SetStyleAttribute(this._accordionItemContentElem, GlobalEnum.InlineStyle.Height, '');
 				Helper.Dom.Styles.SetStyleAttribute(
@@ -238,11 +238,11 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		 */
 		protected setInitialCssClasses(): void {
 			if (this._isOpen) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Open);
-				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.Expanded);
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternOpen);
+				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternExpanded);
 			} else {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Closed);
-				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.Collapsed);
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternClosed);
+				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternCollapsed);
 			}
 		}
 
@@ -349,11 +349,11 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			Helper.Dom.Attribute.Remove(this._accordionItemContentElem, GlobalEnum.HTMLAttributes.Style);
 			const expandedHeight = this._accordionItemContentElem.getBoundingClientRect().height;
 
-			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Closed);
-			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.Open);
+			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternClosed);
+			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternOpen);
 
 			// Removes collapsed class and adds the expanded class to animate
-			Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.Expanded);
+			Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.PatternExpanded);
 
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._accordionItemContentElem,
@@ -363,8 +363,8 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 			const waitDomIterateTimeout = setTimeout(() => {
 				// Adds is--animating class to current accordion item content to obtain the final height value
-				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.Animation);
-				Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.Expanded);
+				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternAnimating);
+				Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.PatternExpanded);
 
 				Helper.Dom.Styles.SetStyleAttribute(
 					this._accordionItemContentElem,
@@ -378,7 +378,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				);
 
 				// End of animation, item is collapsed
-				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.Collapsed);
+				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternCollapsed);
 
 				clearTimeout(waitDomIterateTimeout);
 			}, 100);
@@ -411,8 +411,8 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				return;
 			}
 
-			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.Closed);
-			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Open);
+			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternClosed);
+			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternOpen);
 
 			// While the animation is running, we don't want any clicks happening on the title
 			Helper.Dom.Styles.SetStyleAttribute(
@@ -421,15 +421,15 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				GlobalEnum.CssProperties.None
 			);
 
-			Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.Collapsed);
-			Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.Expanded);
+			Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.PatternCollapsed);
+			Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternExpanded);
 
 			Helper.Dom.Attribute.Remove(this._accordionItemTitleElem, GlobalEnum.HTMLAttributes.Style);
 
 			const expandedHeight = this._accordionItemContentElem.getBoundingClientRect().height;
 
 			//Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.Collapsed);
-			Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.Expanded);
+			Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.PatternExpanded);
 
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._accordionItemContentElem,
@@ -439,7 +439,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 			const waitDomIterateTimeout = setTimeout(() => {
 				// Adds is--animating class to current accordion item content to obtain the final height value
-				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.Animation);
+				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternAnimating);
 				Helper.Dom.Styles.SetStyleAttribute(
 					this._accordionItemContentElem,
 					GlobalEnum.InlineStyle.Height,
@@ -452,7 +452,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				);
 
 				// End of animation, item is expanded
-				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.Expanded);
+				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternExpanded);
 
 				clearTimeout(waitDomIterateTimeout);
 			}, 100);
