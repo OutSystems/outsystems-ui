@@ -105,7 +105,7 @@ namespace OSUIFramework.Patterns {
 		 * @type {(HTMLElement | undefined)}
 		 * @memberof AbstractPattern
 		 */
-		protected get selfElement(): HTMLElement {
+		public get selfElement(): HTMLElement {
 			return this._selfElem;
 		}
 
