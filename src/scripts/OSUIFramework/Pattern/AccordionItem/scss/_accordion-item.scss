@@ -10,10 +10,12 @@
 
 ///
 .osui-accordion-item {
+	--accordion-active-border-size: 2px;
 	background-color: var(--color-neutral-0);
 	border: var(--border-size-s) solid var(--color-neutral-4);
 	border-bottom-width: var(--border-size-s);
 	border-radius: var(--border-radius-soft);
+	position: relative;
 
 	// ServiceStudio Preview
 	& {
@@ -21,16 +23,44 @@
 		-servicestudio-border-top: var(--border-size-m) solid var(--color-primary);
 	}
 
+	// Active border-top
+	&:after {
+		border: var(--accordion-active-border-size) solid transparent;
+		content: '';
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background-color: transparent;
+		top: calc(var(--accordion-active-border-size) * -1);
+		left: 0;
+		border-bottom-width: var(--border-size-none);
+		border-left-width: var(--border-size-none);
+		border-right-width: var(--border-size-none);
+		pointer-events: none;
+		opacity: 0;
+	}
+
 	&--is {
 		&-open {
-			box-shadow: inset 0 var(--border-size-m) 0 0 var(--color-primary);
-
 			> .osui-accordion-item__title {
 				font-weight: var(--font-semi-bold);
 			}
 
 			& > .osui-accordion-item__title > .osui-accordion-item__icon {
 				transform: rotate(180deg);
+			}
+
+			&::after {
+				border-color: var(--color-primary);
+				opacity: 1;
+				transition: opacity 300ms ease-in;
+			}
+		}
+
+		&-first-item {
+			&::after {
+				border-top-left-radius: var(--border-radius-soft);
+				border-top-right-radius: var(--border-radius-soft);
 			}
 		}
 
