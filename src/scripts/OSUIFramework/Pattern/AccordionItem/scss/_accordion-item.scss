@@ -95,11 +95,11 @@
 	&__content {
 		display: block;
 		overflow: hidden;
+		padding: var(--space-none) var(--space-m);
 
 		&--is {
 			&-collapsed {
 				height: 0;
-				padding: var(--space-none) var(--space-m);
 				visibility: hidden;
 
 				// Service Studio Preview
