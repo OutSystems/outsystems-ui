@@ -271,6 +271,20 @@ namespace Providers.Dropdown.VirtualSelect {
 		}
 
 		/**
+		 * This method has no implementation on this context.
+		 *
+		 * @memberof AbstractVirtualSelect
+		 */
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		public setNewOptionItem(optionItemId: string): boolean {
+			throw new Error(
+				OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.code +
+					': ' +
+					OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.message
+			);
+		}
+
+		/**
 		 * Set the validation status, and also pass the message to show
 		 *
 		 * @param {boolean} Set if the dropdown is valid or not

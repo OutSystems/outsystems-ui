@@ -8,6 +8,7 @@ namespace OSUIFramework.ErrorCodes {
 			code: 'OSUI-GEN-01001',
 			message: 'This method has no implementation on this Dropdow Type.',
 		},
+		FailSetNewOptionItem: 'OSUI-GEN-01001',
 	};
 
 	export const DropdownServerSideItem = {

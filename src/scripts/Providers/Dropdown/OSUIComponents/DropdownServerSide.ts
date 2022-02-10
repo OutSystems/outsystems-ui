@@ -175,6 +175,34 @@ namespace Providers.Dropdown.OSUIComponents {
 		}
 
 		/**
+		 * Method used to check if the given OptionItemId could be added as a Dropdown OptionItem
+		 *
+		 * @param optionItemId Id of the OptionItem to be added to the Dropdown instance
+		 * @returns {boolean} Option has been added as an OptionItem of Dropdown instance
+		 */
+		public setNewOptionItem(optionItemId: string): boolean {
+			// Get the DropdownOptionItem reference
+			const optionItem =
+				OutSystems.OSUI.Patterns.DropdownServerSideItemAPI.GetDropdownServerSideItemItemById(optionItemId);
+
+			console.log('optionItem', optionItem);
+
+			// if (this._selfElem.contains(optionItem))
+			// try {
+			// 	console.log('optionItem', optionItem);
+			// } catch (e) {
+			// 	// Was not able to get DropdownOptionItem element!
+			// 	throw new Error(
+			// 		OSUIFramework.ErrorCodes.Dropdown.FailSetNewOptionItem +
+			// 			': ' +
+			// 			`${OSUIFramework.GlobalEnum.PatternsNames.DropdownServerSideItem} under id: '${optionItemId}' can not be added as an OptionItem of ${OSUIFramework.GlobalEnum.PatternsNames.Dropdown} with id '${this.widgetId}'!`
+			// 	);
+			// }
+
+			return true;
+		}
+
+		/**
 		 * This method has no implementation on this context.
 		 *
 		 * @memberof OSUIDropdownServerSide

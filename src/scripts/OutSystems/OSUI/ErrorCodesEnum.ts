@@ -10,12 +10,14 @@ namespace OutSystems.OSUI.ErrorCodes {
 	};
 
 	export const Dropdown = {
-		FailChangeProperty: 'osui-API-01001',
-		FailClear: 'OSUI-API-01002',
-		FailDisable: 'OSUI-API-01003',
-		FailDispose: 'OSUI-API-01004',
-		FailEnable: 'OSUI-API-01005',
-		FailRegisterCallback: 'OSUI-API-01006',
-		FailSetValidation: 'OSUI-API-01007',
+		FailAddDropdownOptionItem: 'osui-API-01001',
+		FailChangeProperty: 'osui-API-01002',
+		FailClear: 'OSUI-API-01003',
+		FailDisable: 'OSUI-API-01004',
+		FailDispose: 'OSUI-API-01005',
+		FailEnable: 'OSUI-API-01006',
+		FailGetSelectedValues: 'OSUI-API-01007',
+		FailRegisterCallback: 'OSUI-API-01008',
+		FailSetValidation: 'OSUI-API-01009',
 	};
 }

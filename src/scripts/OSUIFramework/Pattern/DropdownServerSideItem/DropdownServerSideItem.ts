@@ -46,7 +46,8 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		// Method that will notify Dropdpwn parent about this new instance has been created!
 		private _notifyDropdownParent(): void {
 			// Notify parent and receive OK from it that this instance is really a child of it!
-			console.log('NOTIFY:', this._dropdownParent);
+			// console.log('NOTIFY:', this._dropdownParent);
+			this._dropdownParent.setNewOptionItem(this.uniqueId);
 		}
 
 		/**

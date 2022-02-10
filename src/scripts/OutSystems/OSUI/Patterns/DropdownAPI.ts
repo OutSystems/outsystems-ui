@@ -199,9 +199,24 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @return {*}  {string}
 	 */
 	export function GetSelectedValues(dropdownId: string): string {
+		const responseObj = {
+			code: ErrorCodes.Success.code,
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			selectedValues: '',
+		};
+
 		const _dropdownItem = GetDropdownById(dropdownId);
 
-		return _dropdownItem.getSelectedValues();
+		try {
+			responseObj.selectedValues = _dropdownItem.getSelectedValues();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Dropdown.FailGetSelectedValues;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**

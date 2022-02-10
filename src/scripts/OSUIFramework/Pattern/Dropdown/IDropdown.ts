@@ -33,6 +33,13 @@ namespace OSUIFramework.Patterns.Dropdown {
 		getSelectedValues(): string;
 
 		/**
+		 * Method used to set a given dropdownOptionId as an option item from Dropdown instance
+		 *
+		 * @param optionItemId Dropdown Option Item Id to be stored
+		 */
+		setNewOptionItem(optionItemId: string): boolean;
+
+		/**
 		 * Method used to set the validation status, and also pass the message to show
 		 *
 		 * @param {boolean} isValid
