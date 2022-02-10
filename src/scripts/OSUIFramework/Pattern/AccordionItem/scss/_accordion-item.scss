@@ -25,19 +25,19 @@
 
 	// Active border-top
 	&:after {
-		border: var(--accordion-active-border-size) solid transparent;
-		content: '';
-		position: absolute;
-		width: 100%;
-		height: 100%;
 		background-color: transparent;
-		top: calc(var(--accordion-active-border-size) * -1);
+		border-color: transparent;
+		border-style: solid;
+		border-width: var(--accordion-active-border-size) var(--border-size-none) var(--border-size-none)
+			var(--border-size-none);
+		content: '';
 		left: 0;
-		border-bottom-width: var(--border-size-none);
-		border-left-width: var(--border-size-none);
-		border-right-width: var(--border-size-none);
+		height: 100%;
 		pointer-events: none;
+		position: absolute;
 		opacity: 0;
+		top: calc(var(--accordion-active-border-size) * -1);
+		width: 100%;
 	}
 
 	&--is {
@@ -81,10 +81,8 @@
 	}
 
 	&__title {
-		align-items: flex-start;
+		align-items: center;
 		cursor: pointer;
-		display: -webkit-box;
-		display: -ms-flexbox;
 		display: flex;
 		font-size: var(--font-size-h6);
 		line-height: 1;
@@ -100,7 +98,7 @@
 	&__icon {
 		color: var(--color-primary);
 		font-family: FontAwesome;
-		font-size: 24px;
+		font-size: var(--font-size-h4);
 		font-weight: var(--font-regular);
 		transition: all 300ms ease-in-out;
 
@@ -146,6 +144,11 @@
 	.choices__list.choices__list--dropdown,
 	[data-dropdown] > div.dropdown-list {
 		position: initial;
+	}
+
+	// Accordion inside accordion
+	.osui-accordion {
+		margin-top: var(--accordion-active-border-size);
 	}
 }
 
