@@ -398,6 +398,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			this.unsetCallbacks();
 			this._accordionParentElem?.removeAccordionItem(this.uniqueId);
 			this.unsetHtmlElements();
+
 			super.dispose();
 		}
 
