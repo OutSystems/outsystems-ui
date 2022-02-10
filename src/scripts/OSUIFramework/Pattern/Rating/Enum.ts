@@ -19,6 +19,7 @@ namespace OSUIFramework.Patterns.Rating.Enum {
 	export enum Properties {
 		IsEdit = 'IsEdit',
 		MaxRatingScale = 100,
+		MinRatingScale = 0,
 		RatingScale = 'RatingScale',
 		RatingValue = 'RatingValue',
 		Size = 'Size',
