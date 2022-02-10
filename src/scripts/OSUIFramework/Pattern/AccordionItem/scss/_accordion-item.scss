@@ -48,19 +48,6 @@
 				color: var(--color-neutral-6);
 			}
 		}
-
-		&-first-item {
-			border-radius: var(--border-radius-none);
-			border-top-left-radius: var(--border-radius-soft);
-			border-top-right-radius: var(--border-radius-soft);
-		}
-
-		&-last-item {
-			border-bottom-width: var(--border-size-s);
-			border-radius: var(--border-radius-none);
-			border-bottom-left-radius: var(--border-radius-soft);
-			border-bottom-right-radius: var(--border-radius-soft);
-		}
 	}
 
 	&__title {
