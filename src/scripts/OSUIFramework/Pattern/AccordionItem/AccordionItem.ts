@@ -71,25 +71,32 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			Helper.A11Y.TabIndex(this._accordionItemContentElem, contentTabindexValue);
 		}
 
-		// A11y keyboard navigation
+		/**
+		 * Method to handle the keyboard interactions
+		 *
+		 * @private
+		 * @param {KeyboardEvent} event
+		 * @return {*}  {void}
+		 * @memberof AccordionItem
+		 */
 		private _onKeyboardPress(event: KeyboardEvent): void {
-			//If esc, Close AccordionItem
-			if (this._isOpen && event.key === GlobalEnum.Keycodes.Escape) {
-				this.close();
+			const isEscapedKey = event.key === GlobalEnum.Keycodes.Escape;
+			const isEnterOrSpaceKey =
+				event.key === GlobalEnum.Keycodes.Enter || event.key === GlobalEnum.Keycodes.Space;
+
+			if (isEscapedKey || isEnterOrSpaceKey) {
 				event.preventDefault();
 				event.stopPropagation();
+			} else {
+				return;
 			}
 
-			//If enter or space use the onAccordionClick to validate
-			if (event.key === GlobalEnum.Keycodes.Enter || event.key === GlobalEnum.Keycodes.Space) {
-				if (this._isOpen) {
-					this.close();
-				} else {
-					this.open();
-				}
-
-				event.preventDefault();
-				event.stopPropagation();
+			//If open, close AccordionItem
+			if (this._isOpen) {
+				this.close();
+				// If close, and Enter/Space pressed, open Acordion
+			} else if (isEnterOrSpaceKey && !this._isOpen) {
+				this.open();
 			}
 		}
 
