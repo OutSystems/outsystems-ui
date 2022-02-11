@@ -87,7 +87,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 				this._setFocusableElementsTabindex();
 
-				if (this._configs.HasOverlay) {
+				if (this.configs.HasOverlay) {
 					Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOverlayClick);
 				}
 			}
