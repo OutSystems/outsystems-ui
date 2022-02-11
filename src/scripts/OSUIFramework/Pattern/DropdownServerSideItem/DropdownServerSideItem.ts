@@ -23,18 +23,14 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 
 		// Function used to get the reference of Dropdown parent
 		private _getDropdownParent(): void {
+			let dropdownParentId = '';
+
 			try {
 				// Get the uniqueId from the dropdownParent
-				const dropdownParentId = Helper.Dom.Attribute.Get(
+				dropdownParentId = Helper.Dom.Attribute.Get(
 					this._selfElem.closest(Constants.Dot + Enum.CssClass.DropdownParent),
 					GlobalEnum.HTMLAttributes.Name
 				);
-
-				// Get the Dropdown parent reference
-				this._dropdownParent = OutSystems.OSUI.Patterns.DropdownAPI.GetDropdownById(dropdownParentId);
-
-				// Notify parent about a new instance of this child has been created!
-				this._notifyDropdownParent(Enum.NotificationType.Add);
 			} catch (e) {
 				// Was not able to get Dropdown parent element!
 				throw new Error(
@@ -43,6 +39,12 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 						`${GlobalEnum.PatternsNames.Dropdown} parent of ${GlobalEnum.PatternsNames.DropdownServerSideItem} id: '${this.widgetId}' was not found!`
 				);
 			}
+
+			// Get the Dropdown parent reference
+			this._dropdownParent = OutSystems.OSUI.Patterns.DropdownAPI.GetDropdownById(dropdownParentId);
+
+			// Notify parent about a new instance of this child has been created!
+			this._notifyDropdownParent(Enum.NotificationType.Add);
 		}
 
 		// Method that will notify Dropdpwn parent in order to update it's references to DropdownOptionItems!
@@ -50,6 +52,9 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			switch (type) {
 				case Enum.NotificationType.Add:
 					this._dropdownParent.setNewOptionItem(this.uniqueId);
+					break;
+				case Enum.NotificationType.Remove:
+					this._dropdownParent.unsetNewOptionItem(this.uniqueId);
 					break;
 			}
 		}
@@ -139,7 +144,8 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		public dispose(): void {
 			this.unsetHtmlElements();
 
-			// TODO: notify DropdownParent in order to manage the Options
+			// Notify parent about this instance will be destroyed
+			this._notifyDropdownParent(Enum.NotificationType.Remove);
 
 			//Destroying the base of pattern
 			super.dispose();

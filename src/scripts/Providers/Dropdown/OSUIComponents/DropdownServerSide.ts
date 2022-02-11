@@ -100,9 +100,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		 */
 		public clear(): void {
 			throw new Error(
-				OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.code +
-					': ' +
-					OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.message
+				`${OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.code}:	${OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.message}`
 			);
 		}
 
@@ -144,9 +142,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		 */
 		public getSelectedValues(): string {
 			throw new Error(
-				OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.code +
-					': ' +
-					OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.message
+				`${OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.code}:	${OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.message}`
 			);
 		}
 
@@ -173,7 +169,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		}
 
 		/**
-		 * Method used to store a given DropdownOption into optionItems list
+		 * Method used to store a given DropdownOption into optionItems list, it's triggered by DropdownServerSideItem
 		 *
 		 * @param optionItemId Id of the OptionItem to be added to the Dropdown instance
 		 */
@@ -182,8 +178,31 @@ namespace Providers.Dropdown.OSUIComponents {
 			const optionItem =
 				OutSystems.OSUI.Patterns.DropdownServerSideItemAPI.GetDropdownServerSideItemItemById(optionItemId);
 
-			// Store DropDownOption Item
-			this._optionItems.set(optionItemId, optionItem);
+			// Check if the given OptionId has been already added
+			if (this._optionItems.has(optionItemId)) {
+				throw new Error(
+					`${OSUIFramework.ErrorCodes.Dropdown.FailSetNewOptionItem}: There is already a ${OSUIFramework.GlobalEnum.PatternsNames.DropdownServerSideItem} under Id: '${optionItem.widgetId}' added to ${OSUIFramework.GlobalEnum.PatternsNames.Dropdown} with uniqueId: ${this.uniqueId}.`
+				);
+			} else {
+				// Store DropDownOption Item
+				this._optionItems.set(optionItemId, optionItem);
+			}
+		}
+
+		/**
+		 * Method used to remove a given DropdownOption from optionItems list, it's triggered by DropdownServerSideItem
+		 *
+		 * @param optionItemId Id of the OptionItem to be added to the Dropdown instance
+		 */
+		public unsetNewOptionItem(optionItemId: string): void {
+			// Check if the given OptionId exist at optionsList
+			if (this._optionItems.has(optionItemId)) {
+				this._optionItems.delete(optionItemId);
+			} else {
+				throw new Error(
+					`${OSUIFramework.ErrorCodes.Dropdown.FailUnsetNewOptionItem}: The ${OSUIFramework.GlobalEnum.PatternsNames.DropdownServerSideItem} under uniqueId: '${optionItemId}' does not exist has a OptionItem from ${OSUIFramework.GlobalEnum.PatternsNames.Dropdown} with Id: ${this.widgetId}.`
+				);
+			}
 		}
 
 		/**
@@ -194,9 +213,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		public validation(isValid: boolean, validationMessage: string): void {
 			throw new Error(
-				OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.code +
-					': ' +
-					OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.message
+				`${OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.code}:	${OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.message}`
 			);
 		}
 	}
