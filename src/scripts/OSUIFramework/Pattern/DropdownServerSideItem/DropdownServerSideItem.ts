@@ -73,32 +73,6 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		}
 
 		/**
-		 * Update info based on htmlContent
-		 *
-		 * @protected
-		 * @memberof DropdownServerSideItem
-		 */
-		protected setHtmlElements(): void {
-			// console.log(
-			// 	this.uniqueId +
-			// 		' DropdownServerSideItem - setHtmlElements => TODO (by CreateNewPattern) Update or Remove'
-			// );
-		}
-
-		/**
-		 * Removes the local value of the variables pointing to HTML elements;
-		 *
-		 * @protected
-		 * @memberof DropdownServerSideItem
-		 */
-		protected unsetHtmlElements(): void {
-			// console.log(
-			// 	this.uniqueId +
-			// 		' DropdownServerSideItem - unsetHtmlElements => TODO (by CreateNewPattern) Update or Remove'
-			// );
-		}
-
-		/**
 		 *  Builds the DropdownServerSideItem.
 		 *
 		 * @memberof DropdownServerSideItem
@@ -107,8 +81,6 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			super.build();
 
 			this._getDropdownParent();
-
-			this.setHtmlElements();
 
 			this.setA11yProperties();
 
@@ -142,8 +114,6 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 * @memberof DropdownServerSideItem
 		 */
 		public dispose(): void {
-			this.unsetHtmlElements();
-
 			// Notify parent about this instance will be destroyed
 			this._notifyDropdownParent(Enum.NotificationType.Remove);
 
