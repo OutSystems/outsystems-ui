@@ -450,7 +450,6 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 			this._expandedHeight = this._accordionItemContentElem.getBoundingClientRect().height;
 
-			//Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.Collapsed);
 			Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.PatternExpanded);
 
 			Helper.Dom.Styles.SetStyleAttribute(
