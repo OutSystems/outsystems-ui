@@ -18,8 +18,10 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		private _dropdownParentId: string;
 		// Store a reference to item Dropdpwn parent Element
 		private _dropdownParentReference: Patterns.Dropdown.IDropdown;
-		// Click Event
-		private _platformEventOnClickCallback: Callbacks.OSGeneric;
+		// OptionItem Click Event
+		private _eventOnClick: Callbacks.Generic;
+		// Platform Click Event Callback
+		private _platformEventOnClickCallback: Callbacks.OSDropdownServerSideItemOnSelectEvent;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new DropdownServerSideItemConfig(configs));
@@ -74,6 +76,26 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			}
 		}
 
+		// Triggered by the OnClick event action
+		private _onClick(): void {
+			// Trigger the platform callback method
+			Helper.AsyncInvocation(
+				this._platformEventOnClickCallback,
+				this._dropdownParentReference.widgetId,
+				this.configs.ItemId
+			);
+		}
+
+		// Remove Pattern Events
+		private _removeEvents(): void {
+			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+		}
+
+		// Set Pattern Events
+		private _setUpEvents(): void {
+			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+		}
+
 		/**
 		 * Add the Accessibility Attributes values
 		 *
@@ -88,15 +110,23 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		}
 
 		/**
+		 * Sets the callbacks to be used with the provider.
+		 *
+		 * @protected
+		 * @memberof DropdownServerSideItem
+		 */
+		protected setCallbacks(): void {
+			this._eventOnClick = this._onClick.bind(this);
+		}
+
+		/**
 		 * Unset callbacks that has been assigned to the element
 		 *
 		 * @protected
 		 * @memberof DropdownServerSideItem
 		 */
 		protected unsetCallbacks(): void {
-			console.log(
-				this.uniqueId + ' DropdownServerSide - unsetCallbacks() => TODO (by CreateNewPattern): Update or Remove'
-			);
+			this._platformEventOnClickCallback = null;
 		}
 
 		/**
@@ -120,6 +150,10 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			super.build();
 
 			this._getDropdownParent();
+
+			this.setCallbacks();
+
+			this._setUpEvents();
 
 			this.setA11yProperties();
 
@@ -153,6 +187,10 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 * @memberof DropdownServerSideItem
 		 */
 		public dispose(): void {
+			this.unsetCallbacks();
+
+			this._removeEvents();
+
 			this.unsetHtmlElements();
 
 			// Notify parent about this instance will be destroyed

@@ -42,11 +42,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @protected
 		 * @memberof OSUIDropdownServerSide
 		 */
-		protected setCallbacks(): void {
-			// console.log(
-			// 	this.uniqueId + ' DropdownServerSide - setCallbacks() => TODO (by CreateNewPattern): Update or Remove'
-			// );
-		}
+		protected setCallbacks(): void {}
 
 		/**
 		 * Method to set the html elements used
