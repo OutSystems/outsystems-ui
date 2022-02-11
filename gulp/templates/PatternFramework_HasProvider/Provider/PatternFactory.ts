@@ -5,6 +5,7 @@ namespace OSUIFramework.Patterns.<%= patternNamePC %>.Factory {
 	 *
 	 * @export
 	 * @param {string} <%= patternName %>Id ID of the Pattern that a new instance will be created.
+	 * @param {string} provider
 	 * @param {string} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSUIFramework.Patterns.Progress.I<%= patternNamePC %>}
 	 */

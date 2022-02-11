@@ -1,22 +1,30 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Gallery.Enum {
 	/**
-	 * Gallery Enum properties
+	 * Gallery CSS Variables
+	 *
+	 * @export
+	 * @enum {number}
 	 */
-	export enum Property {
-		ItemsInPhone = 'ItemsInPhone',
-		ItemsInTablet = 'ItemsInTablet',
-		ItemsInDesktop = 'ItemsInDesktop',
-		GutterSize = 'GutterSize',
+	export enum CssVariables {
+		PatternItemsDesktop = '--gallery-desktop-items',
+		PatternItemsTablet = '--gallery-tablet-items',
+		PatternItemsPhone = '--gallery-phone-items',
+		PatternItemsGap = '--gallery-gap',
+		PatternListItemsDesktop = '--gallery-list-desktop-items',
+		PatternListItemsTablet = '--gallery-list-tablet-items',
+		PatternListItemsPhone = '--gallery-list-phone-items',
 	}
-
-	export enum CssProperty {
-		GridDesktop = '--grid-desktop',
-		GridTablet = '--grid-tablet',
-		GridPhone = '--grid-phone',
-		GridGap = '--grid-gap',
-		GridListDesktop = '--grid-list-desktop',
-		GridListTablet = '--grid-list-tablet',
-		GridListPhone = '--grid-list-phone',
+	/**
+	 * Gallery Enum properties
+	 *
+	 * @export
+	 * @enum {number}
+	 */
+	export enum Properties {
+		ItemsGap = 'ItemsGap',
+		RowItemsDesktop = 'RowItemsDesktop',
+		RowItemsPhone = 'RowItemsPhone',
+		RowItemsTablet = 'RowItemsTablet',
 	}
 }

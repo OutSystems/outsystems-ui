@@ -5,15 +5,16 @@ namespace OSUIFramework.Patterns.<%= patternNamePC %>.Factory {
 	 *
 	 * @export
 	 * @param {string} <%= patternName %>Id ID of the Pattern that a new instance will be created.
+	 * @param {string} provider
 	 * @param {OSUIFramework.Patterns.<%= patternNamePC %>.Enum.Mode} mode
 	 * @param {string} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSUIFramework.Patterns.Progress.I<%= patternNamePC %>}
 	 */
 	export function New<%= patternNamePC %>(
 		<%= patternName %>Id: string,
-		configs: string,
+		provider: string,
 		mode: OSUIFramework.Patterns.<%= patternNamePC %>.Enum.Mode,
-		provider: string
+		configs: string
 	): OSUIFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %> {
 		let _<%= patternName %>Item = null;
 
