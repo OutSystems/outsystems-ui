@@ -109,10 +109,20 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 		}
 
 		protected setElementProgressValue(value: number): void {
-			if (value <= 0) {
-				this.configs.Progress = 0;
-			} else if (value > 100) {
-				this.configs.Progress = 100;
+			// If negative value, set it as minimum progress value by default
+			if (value < ProgressEnum.Properties.MinProgressValue) {
+				this.configs.Progress = ProgressEnum.Properties.MinProgressValue;
+
+				console.warn(
+					`The value of the Progress property on the '${this.widgetId}' Progress Bar can't be smaller than '${ProgressEnum.Properties.MinProgressValue}'.`
+				);
+			} else if (value > ProgressEnum.Properties.MaxProgressValue) {
+				// If value is higher than the maximum progress value, assume the maximum progress value
+				this.configs.Progress = ProgressEnum.Properties.MaxProgressValue;
+
+				console.warn(
+					`The value of the Progress property on the '${this.widgetId}' Progress Bar is higher than supported (${ProgressEnum.Properties.MaxProgressValue}).`
+				);
 			} else {
 				this.configs.Progress = value;
 			}

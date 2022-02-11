@@ -145,14 +145,22 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 
 		// Update the valuenow accessibility property
 		private _updateProgressValue(): void {
-			// Force Progress value to be 0 when receive negative values
-			if (this.configs.Progress < 0) {
-				this.configs.Progress = 0;
+			// If negative value, set it as minimum progress value by default
+			if (this.configs.Progress < ProgressEnum.Properties.MinProgressValue) {
+				this.configs.Progress = ProgressEnum.Properties.MinProgressValue;
+
+				console.warn(
+					`The value of the Progress property on the '${this.widgetId}' Progress Circle can't be smaller than '${ProgressEnum.Properties.MinProgressValue}'.`
+				);
 			}
 
-			// Force Progress value to be 100 when receive bigger than 100 values
-			if (this.configs.Progress > 100) {
-				this.configs.Progress = 100;
+			// If value is higher than the maximum progress value, assume the maximum progress value
+			if (this.configs.Progress > ProgressEnum.Properties.MaxProgressValue) {
+				this.configs.Progress = ProgressEnum.Properties.MaxProgressValue;
+
+				console.warn(
+					`The value of the Progress property on the '${this.widgetId}' Progress Circle is higher than supported (${ProgressEnum.Properties.MaxProgressValue}).`
+				);
 			}
 
 			// Update inline attributes based on new Progress value

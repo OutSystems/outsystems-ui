@@ -1,0 +1,62 @@
+/*! Patterns - Adaptive - Gallery */
+////
+/// @group Patterns-Gallery
+/// Patterns - Adaptive - Gallery
+
+///
+.grid-gallery {
+	&,
+	& > .list {
+		display: grid;
+		grid-gap: var(--grid-gap);
+		grid-template-columns: repeat(var(--grid-desktop), 1fr);
+	}
+
+	& > * {
+		margin-top: 0;
+	}
+
+	& > .list {
+		grid-column-end: calc(var(--grid-desktop) + 1);
+		grid-column-start: 1;
+		overflow: initial;
+
+		.card,
+		.animate {
+			height: 100%;
+		}
+	}
+
+	& > img {
+		object-fit: cover;
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+///
+.tablet {
+	.grid-gallery {
+		&,
+		& > .list {
+			grid-template-columns: repeat(var(--grid-tablet), 1fr);
+		}
+
+		& > .list {
+			grid-column-end: calc(var(--grid-tablet) + 1);
+		}
+	}
+}
+
+///
+.phone {
+	.grid-gallery {
+		&,
+		& > .list {
+			grid-template-columns: repeat(var(--grid-phone), 1fr);
+		}
+
+		& > .list {
+			grid-column-end: calc(var(--grid-phone) + 1);
+		}
+	}
+}

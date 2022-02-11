@@ -22,16 +22,16 @@ namespace OutSystems.OSUI.Patterns.<%= patternNamePC %>API {
 	 *
 	 * @export
 	 * @param {string} <%= patternName %>Id ID of the Pattern that a new instance will be created.
+	 * @param {string} provider Set which provider should be used to create the <%= patternNamePC %> instance.
+	 * @param {string} mode Set which <%= patternNamePC %> type should be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @param {string} mode Set which calendar type should be created (SingleDate, RangeDate).
-	 * @param {string} provider Set which provider should be used to create the calendar instance.
 	 * @return {*}  {OSUIFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %>}
 	 */
 	export function Create(
 		<%= patternName %>Id: string,
-		configs: string,
+		provider: string,
 		mode: OSUIFramework.Patterns.<%= patternNamePC %>.Enum.Mode,
-		provider: string
+		configs: string
 	): OSUIFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %> {
 		if (_<%= patternName %>ItemsMap.has(<%= patternName %>Id)) {
 			/* TODO (by CreateNewPattern): 
@@ -43,9 +43,9 @@ namespace OutSystems.OSUI.Patterns.<%= patternNamePC %>API {
 
 		const _<%= patternName %>Item = OSUIFramework.Patterns.<%= patternNamePC %>.Factory.New<%= patternNamePC %>(
 			<%= patternName %>Id,
-			configs,
+			provider,
 			mode,
-			provider
+			configs
 		);
 
 		_<%= patternName %>ItemsMap.set(<%= patternName %>Id, _<%= patternName %>Item);
