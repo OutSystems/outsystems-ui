@@ -238,8 +238,9 @@
 /* ============================================================================ */
 /*      - Content                                                               */
 /* ============================================================================ */
-@import '../scripts/OSUIFramework/Pattern/Accordion/scss/accordion';
-@import '../scripts/OSUIFramework/Pattern/AccordionItem/scss/accordion-item';
+@import '10-deprecated/accordion-deprecated';
+// @import '../scripts/OSUIFramework/Pattern/Accordion/scss/accordion';
+// @import '../scripts/OSUIFramework/Pattern/AccordionItem/scss/accordion-item';
 @import '04-patterns/02-content/alert';
 @import '04-patterns/02-content/blank-slate';
 @import '04-patterns/02-content/card';
@@ -323,7 +324,6 @@
 /*! =========================================================================== */
 /*! Deprecated Patterns                                                         */
 /*! =========================================================================== */
-@import '10-deprecated/accordion-deprecated';
 @import '10-deprecated/button-loading-deprecated';
 @import '10-deprecated/flip-content-deprecated';
 @import '10-deprecated/gallery-deprecated';
