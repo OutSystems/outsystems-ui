@@ -12,8 +12,14 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		extends AbstractPattern<DropdownServerSideItemConfig>
 		implements IDropdownServerSideItem
 	{
-		// Store a referent to item Dropdpwn parent instance
-		private _dropdownParent: OSUIFramework.Patterns.Dropdown.IDropdown;
+		// Store a reference to the Dropdpown parent Element
+		private _dropdownParentElement: HTMLElement;
+		// Store the id of of the Dropdown parent
+		private _dropdownParentId: string;
+		// Store a reference to item Dropdpwn parent Element
+		private _dropdownParentReference: Patterns.Dropdown.IDropdown;
+		// Click Event
+		private _platformEventOnClickCallback: Callbacks.OSGeneric;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new DropdownServerSideItemConfig(configs));
@@ -23,39 +29,48 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 
 		// Function used to get the reference of Dropdown parent
 		private _getDropdownParent(): void {
-			let dropdownParentId = '';
-
 			try {
-				// Get the uniqueId from the dropdownParent
-				dropdownParentId = Helper.Dom.Attribute.Get(
-					this._selfElem.closest(Constants.Dot + Enum.CssClass.DropdownParent),
-					GlobalEnum.HTMLAttributes.Name
-				);
+				const dropdownParentBallonElement = this._selfElem.closest(
+					Constants.Dot + Enum.CssClass.DropdownParentBallon
+				) as HTMLElement;
+
+				this._dropdownParentId = dropdownParentBallonElement.dataset.dropdownUniqueid;
 			} catch (e) {
 				// Was not able to get Dropdown parent element!
 				throw new Error(
-					OSUIFramework.ErrorCodes.DropdownServerSideItem.DropdownParentNotFound.code +
-						': ' +
-						`${GlobalEnum.PatternsNames.Dropdown} parent of ${GlobalEnum.PatternsNames.DropdownServerSideItem} id: '${this.widgetId}' was not found!`
+					`${ErrorCodes.DropdownServerSideItem.DropdownParentNotFound}: ${GlobalEnum.PatternsNames.Dropdown} parent of ${GlobalEnum.PatternsNames.DropdownServerSideItem} id: '${this.widgetId}' was not found!`
 				);
 			}
 
-			// Get the Dropdown parent reference
-			this._dropdownParent = OutSystems.OSUI.Patterns.DropdownAPI.GetDropdownById(dropdownParentId);
-
 			// Notify parent about a new instance of this child has been created!
-			this._notifyDropdownParent(Enum.NotificationType.Add);
+			this._notifyDropdownParent(Enum.ActionType.Add);
 		}
 
 		// Method that will notify Dropdpwn parent in order to update it's references to DropdownOptionItems!
-		private _notifyDropdownParent(type: Enum.NotificationType): void {
-			switch (type) {
-				case Enum.NotificationType.Add:
-					this._dropdownParent.setNewOptionItem(this.uniqueId);
-					break;
-				case Enum.NotificationType.Remove:
-					this._dropdownParent.unsetNewOptionItem(this.uniqueId);
-					break;
+		private _notifyDropdownParent(type: Enum.ActionType): void {
+			// Get the Dropdown parent HTML element
+			this._dropdownParentElement = Helper.Dom.GetElementByUniqueId(this._dropdownParentId);
+
+			// If Dropdown Exist at Dom
+			if (this._dropdownParentElement !== undefined) {
+				// Get the DropdownParent reference
+				this._dropdownParentReference = OutSystems.OSUI.Patterns.DropdownAPI.GetDropdownById(
+					this._dropdownParentId
+				);
+
+				// Trigger the notification into parent
+				switch (type) {
+					case Enum.ActionType.Add:
+						this._dropdownParentReference.setNewOptionItem(this.uniqueId);
+						break;
+					case Enum.ActionType.Remove:
+						this._dropdownParentReference.unsetNewOptionItem(this.uniqueId);
+						break;
+				}
+			} else if (Enum.ActionType.Add) {
+				throw new Error(
+					`${ErrorCodes.DropdownServerSideItem.DropdownParentNotFound}: ${GlobalEnum.PatternsNames.Dropdown} parent of ${GlobalEnum.PatternsNames.DropdownServerSideItem} id: '${this.widgetId}' was not found!`
+				);
 			}
 		}
 
@@ -70,6 +85,30 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			// 	this.uniqueId +
 			// 		' DropdownServerSideItem - setA11yProperties => TODO (by CreateNewPattern) Update or Remove'
 			// );
+		}
+
+		/**
+		 * Unset callbacks that has been assigned to the element
+		 *
+		 * @protected
+		 * @memberof DropdownServerSideItem
+		 */
+		protected unsetCallbacks(): void {
+			console.log(
+				this.uniqueId + ' DropdownServerSide - unsetCallbacks() => TODO (by CreateNewPattern): Update or Remove'
+			);
+		}
+
+		/**
+		 * Method to unset the html elements used
+		 *
+		 * @protected
+		 * @memberof DropdownServerSideItem
+		 */
+		protected unsetHtmlElements(): void {
+			this._dropdownParentElement = undefined;
+			this._dropdownParentId = undefined;
+			this._dropdownParentReference = undefined;
 		}
 
 		/**
@@ -114,8 +153,10 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 * @memberof DropdownServerSideItem
 		 */
 		public dispose(): void {
+			this.unsetHtmlElements();
+
 			// Notify parent about this instance will be destroyed
-			this._notifyDropdownParent(Enum.NotificationType.Remove);
+			this._notifyDropdownParent(Enum.ActionType.Remove);
 
 			//Destroying the base of pattern
 			super.dispose();
@@ -127,17 +168,16 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 * @param {OSUIFramework.Callbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
 		 * @memberof DropdownServerSideItem
 		 */
-		public registerCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
-			// console.log(this.uniqueId + ' DropdownServerSideItem - registerCallback()');
-			// switch (eventName) {
-			// 	case OSUIFramework.Patterns.Dropdown.Enum.Events.Initialized:
-			// 		if (this._platformEventInitializedCallback === undefined) {
-			// 			this._platformEventInitializedCallback = callback;
-			// 		}
-			// 		break;
-			// 	default:
-			// 		throw new Error(`The given '${eventName}' event name it's not defined.`);
-			// }
+		public registerCallback(eventName: string, callback: Callbacks.OSGeneric): void {
+			switch (eventName) {
+				case Enum.Events.OnSelected:
+					if (this._platformEventOnClickCallback === undefined) {
+						this._platformEventOnClickCallback = callback;
+					}
+					break;
+				default:
+					throw new Error(`The given '${eventName}' event name it's not defined.`);
+			}
 		}
 	}
 }

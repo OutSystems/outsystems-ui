@@ -14,8 +14,6 @@ namespace OSUIFramework.ErrorCodes {
 	};
 
 	export const DropdownServerSideItem = {
-		DropdownParentNotFound: {
-			code: 'OSUI-GEN-02001',
-		},
+		DropdownParentNotFound: 'OSUI-GEN-02001',
 	};
 }

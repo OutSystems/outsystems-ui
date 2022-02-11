@@ -5,6 +5,9 @@ namespace Providers.Dropdown.OSUIComponents {
 		extends OSUIFramework.Patterns.Dropdown.AbstractDropdown<DropdownAdvanced, C>
 		implements OSUIFramework.Patterns.Dropdown.IDropdown
 	{
+		// Store the HTML element for the DropdownBaloon
+		private _dropdownBaloonElement: HTMLElement;
+
 		// Store a collection of all DropdownServerSideItems ids inside this DropdownServerSide instance
 		private _optionItems = new Map<string, OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem>(); //DropdownServerSideItem.uniqueId -> DropdownServerSideItem obj
 
@@ -21,6 +24,16 @@ namespace Providers.Dropdown.OSUIComponents {
 			// 		' DropdownServerSide - _createProviderInstance() => TODO (by CreateNewPattern): create the provider instance'
 			// );
 			// this.provider = ...
+		}
+
+		// Move ballon element to outside of the pattern context
+		private _moveBallonElement(): void {
+			const layoutElement = OSUIFramework.Helper.Dom.TagSelector(
+				document.body,
+				OSUIFramework.Constants.Dot + OSUIFramework.Constants.LayoutClass
+			) as HTMLElement;
+
+			OSUIFramework.Helper.Dom.Move(this._dropdownBaloonElement, layoutElement);
 		}
 
 		/**
@@ -42,10 +55,14 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		protected setHtmlElements(): void {
-			// console.log(
-			// 	this.uniqueId +
-			// 		' DropdownServerSide - setHtmlElements() => TODO (by CreateNewPattern): Update or Remove'
-			// );
+			this._dropdownBaloonElement = OSUIFramework.Helper.Dom.TagSelector(
+				this.selfElement,
+				OSUIFramework.Constants.Dot + Enum.Class.DropdownBallonWrapper
+			);
+
+			// TODO
+			// Ensure that the Move only happens after HTML elements has been set!
+			// this._moveBallonElement();
 		}
 
 		/**
@@ -58,6 +75,20 @@ namespace Providers.Dropdown.OSUIComponents {
 			console.log(
 				this.uniqueId + ' DropdownServerSide - unsetCallbacks() => TODO (by CreateNewPattern): Update or Remove'
 			);
+		}
+
+		/**
+		 * Method to unset the html elements used
+		 *
+		 * @protected
+		 * @memberof OSUIDropdownServerSide
+		 */
+		protected unsetHtmlElements(): void {
+			// Ensure that the ballon has been removed from the DOM since it has been Moved to outside of pattern context.
+			this._dropdownBaloonElement.remove();
+
+			// unset the local property
+			this._dropdownBaloonElement = undefined;
 		}
 
 		public build(): void {
@@ -119,9 +150,11 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		public dispose(): void {
-			this.provider.destroy();
-
 			this.unsetCallbacks();
+
+			this.unsetHtmlElements();
+
+			this.provider.destroy();
 
 			super.dispose();
 		}
