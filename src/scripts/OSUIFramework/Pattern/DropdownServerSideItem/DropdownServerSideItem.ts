@@ -18,15 +18,15 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		private _dropdownParentId: string;
 		// Store a reference to item Dropdpwn parent Element
 		private _dropdownParentReference: Patterns.Dropdown.IDropdown;
-		// OptionItem Click Event
+		// Click Event
 		private _eventOnClick: Callbacks.Generic;
+		// Keyboard Key Press Event
+		private _eventOnkeyBoardPress: Callbacks.Generic;
 		// Platform Click Event Callback
 		private _platformEventOnClickCallback: Callbacks.OSDropdownServerSideItemOnSelectEvent;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new DropdownServerSideItemConfig(configs));
-
-			console.log('NEW DropdownSS___Item', this.uniqueId);
 		}
 
 		// Function used to get the reference of Dropdown parent
@@ -76,9 +76,8 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			}
 		}
 
-		// Triggered by the OnClick event action
+		// Trigger the platform callback method
 		private _onClick(): void {
-			// Trigger the platform callback method
 			Helper.AsyncInvocation(
 				this._platformEventOnClickCallback,
 				this._dropdownParentReference.widgetId,
@@ -86,14 +85,26 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			);
 		}
 
+		// A11y keyboard Event
+		private _onKeyboardPress(event: KeyboardEvent): void {
+			// If enter or space Keys trigger as a click event!
+			if (event.key === GlobalEnum.Keycodes.Enter || event.key === GlobalEnum.Keycodes.Space) {
+				event.preventDefault();
+				event.stopPropagation();
+				this._onClick();
+			}
+		}
+
 		// Remove Pattern Events
 		private _removeEvents(): void {
 			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
 		}
 
 		// Set Pattern Events
 		private _setUpEvents(): void {
 			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
 		}
 
 		/**
@@ -103,10 +114,12 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 * @memberof DropdownServerSideItem
 		 */
 		protected setA11yProperties(): void {
-			// console.log(
-			// 	this.uniqueId +
-			// 		' DropdownServerSideItem - setA11yProperties => TODO (by CreateNewPattern) Update or Remove'
-			// );
+			// By default set disable to tabIndex
+			Helper.A11Y.TabIndexFalse(this.selfElement);
+
+			// TODO
+			// - Criar um method que seja triggered via DropDown cada vez que o pai é clicado, de forma a dar set do Tabindex=0;
+			// - Set also the aria-label to the option item
 		}
 
 		/**
@@ -117,6 +130,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 */
 		protected setCallbacks(): void {
 			this._eventOnClick = this._onClick.bind(this);
+			this._eventOnkeyBoardPress = this._onKeyboardPress.bind(this);
 		}
 
 		/**
@@ -168,8 +182,6 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 * @memberof DropdownServerSideItem
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
-			// console.log(this.uniqueId + ' DropdownServerSideItem - changeProperty()');
-
 			super.changeProperty(propertyName, propertyValue);
 
 			// if (this.isBuilt) {
