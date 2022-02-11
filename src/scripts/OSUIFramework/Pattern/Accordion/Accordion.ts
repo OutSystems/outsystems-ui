@@ -6,12 +6,11 @@ namespace OSUIFramework.Patterns.Accordion {
 	export class Accordion extends AbstractPattern<AccordionConfig> implements IAccordion {
 		private _accordionFirstItem: HTMLElement;
 		// Stores the Accordion Items of this Accordion
-		private _accordionItems: Map<string, OSUIFramework.Patterns.AccordionItem.IAccordionItem>;
+		private _accordionItems = new Map<string, OSUIFramework.Patterns.AccordionItem.IAccordionItem>();
 		private _accordionLastItem: HTMLElement;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new AccordionConfig(configs));
-			this._accordionItems = new Map<string, OSUIFramework.Patterns.AccordionItem.IAccordionItem>();
 		}
 
 		/**
