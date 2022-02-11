@@ -34,6 +34,15 @@ namespace OSUIFramework.Patterns.Gallery {
 		 * @memberof Gallery
 		 */
 		private _setRowItemsDesktop(): void {
+			//The number must be greater than 0
+			if (this.configs.RowItemsDesktop < Enum.Properties.MinRowItemsAllowed) {
+				this.configs.RowItemsDesktop = Enum.Properties.MinRowItemsAllowed;
+
+				console.warn(
+					`${GlobalEnum.PatternsNames.Gallery} (${this.widgetId}): The value of the ${Enum.Properties.RowItemsDesktop} property is less than supported (${Enum.Properties.MinRowItemsAllowed}). To ensure the correct behaviour, set a value greater than ${Enum.Properties.ValueZero}.`
+				);
+			}
+
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				Enum.CssVariables.PatternItemsDesktop,
@@ -54,6 +63,15 @@ namespace OSUIFramework.Patterns.Gallery {
 		 * @memberof Gallery
 		 */
 		private _setRowItemsPhone(): void {
+			//The number must be greater than 0
+			if (this.configs.RowItemsPhone < Enum.Properties.MinRowItemsAllowed) {
+				this.configs.RowItemsPhone = Enum.Properties.MinRowItemsAllowed;
+
+				console.warn(
+					`${GlobalEnum.PatternsNames.Gallery} (${this.widgetId}): The value of the ${Enum.Properties.RowItemsPhone} property is less than supported (${Enum.Properties.MinRowItemsAllowed}). To ensure the correct behaviour, set a value greater than ${Enum.Properties.ValueZero}.`
+				);
+			}
+
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				Enum.CssVariables.PatternItemsPhone,
@@ -73,6 +91,15 @@ namespace OSUIFramework.Patterns.Gallery {
 		 * @memberof Gallery
 		 */
 		private _setRowItemsTablet(): void {
+			//The number must be greater than 0
+			if (this.configs.RowItemsTablet < Enum.Properties.MinRowItemsAllowed) {
+				this.configs.RowItemsTablet = Enum.Properties.MinRowItemsAllowed;
+
+				console.warn(
+					`${GlobalEnum.PatternsNames.Gallery} (${this.widgetId}): The value of the ${Enum.Properties.RowItemsTablet} property is less than supported (${Enum.Properties.MinRowItemsAllowed}). To ensure the correct behaviour, set a value greater than ${Enum.Properties.ValueZero}.`
+				);
+			}
+
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				Enum.CssVariables.PatternItemsTablet,
