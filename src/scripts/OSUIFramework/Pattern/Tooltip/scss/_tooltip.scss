@@ -3,13 +3,13 @@
 /// @group Patterns-Tooltip
 /// Patterns - Content - Tooltip
 
-// myCustom tooltip variables
+// tooltip arrow size
 $osui-tooltip-arrow-size: 9px;
 
 ///
 .osui-tooltip {
-	--tooltip-transition-distance: 10px;
-	--tooltip-inverted-transition-distance: -10px;
+	--tooltip-transition-distance: 12px;
+	--tooltip-inverted-transition-distance: -12px;
 	display: inline-block;
 	position: relative;
 
