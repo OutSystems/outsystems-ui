@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.AccordionItem {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
@@ -12,8 +13,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		// Stores the HTML element of the pattern's title
 		private _accordionItemTitleElem: HTMLElement;
 		// Stores the parent of the item (if it exists)
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		private _accordionParentElem: OSUIFramework.Patterns.Accordion.IAccordion;
+		private _accordionParentElem: Patterns.Accordion.IAccordion;
 		// Store the collapsed height value
 		private _collapsedHeight: number;
 		// Store the click event with bind(this)
