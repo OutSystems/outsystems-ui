@@ -44,6 +44,40 @@ namespace OSUIFramework.Helper {
 		}
 
 		/**
+		 * Method that will define the aria-disabled
+		 *
+		 * @static
+		 * @param {HTMLElement} element
+		 * @param {boolean} isDisabled
+		 * @memberof A11Y
+		 */
+		public static AriaDisabled(element: HTMLElement, isDisabled: boolean): void {
+			Helper.Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Disabled, isDisabled);
+		}
+
+		/**
+		 * Method that will set the aria-disabled to false
+		 *
+		 * @static
+		 * @param {HTMLElement} element
+		 * @memberof A11Y
+		 */
+		public static AriaDisabledFalse(element: HTMLElement): void {
+			Helper.Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Disabled, false);
+		}
+
+		/**
+		 * Method that will set the aria-disabled to true
+		 *
+		 * @static
+		 * @param {HTMLElement} element
+		 * @memberof A11Y
+		 */
+		public static AriaDisabledTrue(element: HTMLElement): void {
+			Helper.Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Disabled, true);
+		}
+
+		/**
 		 * Method that will set the aria-expanded
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
