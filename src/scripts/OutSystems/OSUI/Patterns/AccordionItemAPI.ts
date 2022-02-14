@@ -28,6 +28,7 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 
 		return accordion;
 	}
+
 	/**
 	 * Function that will change the property of a given Accordion Item pattern.
 	 *
@@ -36,11 +37,22 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 * @param {string} propertyName Property name that will be updated
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 	export function ChangeProperty(accordionItemId: string, propertyName: string, propertyValue: unknown): void {
 		const accordionItem = GetAccordionItemById(accordionItemId);
 
 		accordionItem.changeProperty(propertyName, propertyValue);
+	}
+
+	/**
+	 * Function to close the accordionItem
+	 *
+	 * @export
+	 * @param {string} accordionItemId
+	 */
+	export function Collapse(accordionItemId: string): void {
+		const accordionItem = GetAccordionItemById(accordionItemId);
+
+		accordionItem.close();
 	}
 
 	/**
@@ -92,6 +104,18 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 
 		_accordionItemMap.delete(accordionItem.uniqueId);
 		_accordionMap.delete(accordionItem.uniqueId);
+	}
+
+	/**
+	 * Function to open the accordionItem
+	 *
+	 * @export
+	 * @param {string} accordionItemId
+	 */
+	export function Expand(accordionItemId: string): void {
+		const accordionItem = GetAccordionItemById(accordionItemId);
+
+		accordionItem.open();
 	}
 
 	/**

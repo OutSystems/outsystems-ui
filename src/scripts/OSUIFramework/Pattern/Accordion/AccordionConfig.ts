@@ -6,5 +6,19 @@ namespace OSUIFramework.Patterns.Accordion {
 		constructor(config: JSON) {
 			super(config);
 		}
+
+		public validateDefault(key: string, value: unknown): unknown {
+			let validatedValue = undefined;
+			switch (key) {
+				case Enum.Properties.MultipleItems:
+					validatedValue = this.validateBoolean(value as boolean, false);
+					break;
+				default:
+					validatedValue = super.validateDefault(key, value);
+					break;
+			}
+
+			return validatedValue;
+		}
 	}
 }

@@ -150,7 +150,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 				this.configs.Progress = ProgressEnum.Properties.MinProgressValue;
 
 				console.warn(
-					`The value of the Progress property on the '${this.widgetId}' Progress Circle can't be smaller than '${ProgressEnum.Properties.MinProgressValue}'.`
+					`The value of the Progress property on the '${this.widgetId}' ${GlobalEnum.PatternsNames.ProgressCircle} can't be smaller than '${ProgressEnum.Properties.MinProgressValue}'.`
 				);
 			}
 
@@ -159,7 +159,7 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 				this.configs.Progress = ProgressEnum.Properties.MaxProgressValue;
 
 				console.warn(
-					`The value of the Progress property on the '${this.widgetId}' Progress Circle is higher than supported (${ProgressEnum.Properties.MaxProgressValue}).`
+					`The value of the Progress property on the '${this.widgetId}' ${GlobalEnum.PatternsNames.ProgressCircle} is higher than supported (${ProgressEnum.Properties.MaxProgressValue}).`
 				);
 			}
 

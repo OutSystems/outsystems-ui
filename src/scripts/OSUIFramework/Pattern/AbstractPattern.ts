@@ -11,6 +11,15 @@ namespace OSUIFramework.Patterns {
 	 */
 	export abstract class AbstractPattern<C extends AbstractConfiguration> implements Interface.IPattern {
 		/**
+		 * Pattern configurations (doubling as current state). Extends AbstractConfiguration.
+		 *
+		 * @protected
+		 * @type {C}
+		 * @memberof AbstractPattern
+		 */
+		private _configs: C;
+
+		/**
 		 * Indicates if the pattern has been built or not.
 		 *
 		 * @private
@@ -26,15 +35,6 @@ namespace OSUIFramework.Patterns {
 		 * @memberof AbstractPattern
 		 */
 		private _uniqueId: string;
-
-		/**
-		 * Pattern configurations (doubling as current state). Extends AbstractConfiguration.
-		 *
-		 * @protected
-		 * @type {C}
-		 * @memberof AbstractPattern
-		 */
-		protected _configs: C; //TODO: change to private
 
 		/**
 		 * Refence for the base HTML of the element of this pattern;

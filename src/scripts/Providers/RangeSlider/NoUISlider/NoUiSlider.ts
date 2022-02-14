@@ -282,7 +282,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 */
 		protected setInitialCSSClasses(): void {
 			// If Orientation is vertical add class
-			if (this._configs.Orientation === OSUIFramework.GlobalEnum.Orientation.Vertical) {
+			if (this.configs.Orientation === OSUIFramework.GlobalEnum.Orientation.Vertical) {
 				OSUIFramework.Helper.Dom.Styles.AddClass(
 					this._selfElem,
 					OSUIFramework.Patterns.RangeSlider.Enum.CssClass.ClassModifier +
@@ -361,19 +361,19 @@ namespace Providers.RangeSlider.NoUISlider {
 				switch (propertyName) {
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueFrom:
 						console.warn(
-							`RangeSlider${this._configs.IsInterval ? 'Interval' : ''} (${this.widgetId}): changes to ${
+							`RangeSlider${this.configs.IsInterval ? 'Interval' : ''} (${this.widgetId}): changes to ${
 								OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueFrom
 							} parameter do not affect the RangeSlider${
-								this._configs.IsInterval ? 'Interval' : ''
+								this.configs.IsInterval ? 'Interval' : ''
 							}. Use a distinct variable to assign on the OnValueChange event`
 						);
 						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueTo:
 						console.warn(
-							`RangeSlider${this._configs.IsInterval ? 'Interval' : ''} (${this.widgetId}): changes to ${
+							`RangeSlider${this.configs.IsInterval ? 'Interval' : ''} (${this.widgetId}): changes to ${
 								OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueTo
 							} parameter do not affect the RangeSlider${
-								this._configs.IsInterval ? 'Interval' : ''
+								this.configs.IsInterval ? 'Interval' : ''
 							}. Use a distinct variable to assign on the OnValueChange event`
 						);
 						break;

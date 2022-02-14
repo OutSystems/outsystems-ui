@@ -114,14 +114,14 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 				this.configs.Progress = ProgressEnum.Properties.MinProgressValue;
 
 				console.warn(
-					`The value of the Progress property on the '${this.widgetId}' Progress Bar can't be smaller than '${ProgressEnum.Properties.MinProgressValue}'.`
+					`The value of the Progress property on the '${this.widgetId}' ${GlobalEnum.PatternsNames.ProgressBar} can't be smaller than '${ProgressEnum.Properties.MinProgressValue}'.`
 				);
 			} else if (value > ProgressEnum.Properties.MaxProgressValue) {
 				// If value is higher than the maximum progress value, assume the maximum progress value
 				this.configs.Progress = ProgressEnum.Properties.MaxProgressValue;
 
 				console.warn(
-					`The value of the Progress property on the '${this.widgetId}' Progress Bar is higher than supported (${ProgressEnum.Properties.MaxProgressValue}).`
+					`The value of the Progress property on the '${this.widgetId}' ${GlobalEnum.PatternsNames.ProgressBar} is higher than supported (${ProgressEnum.Properties.MaxProgressValue}).`
 				);
 			} else {
 				this.configs.Progress = value;
