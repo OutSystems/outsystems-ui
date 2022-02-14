@@ -8,6 +8,8 @@ $osui-tooltip-arrow-size: 9px;
 
 ///
 .osui-tooltip {
+	--tooltip-transition-distance: 10px;
+	--tooltip-inverted-transition-distance: -10px;
 	display: inline-block;
 	position: relative;
 
@@ -175,7 +177,7 @@ $osui-tooltip-arrow-size: 9px;
 		&.bottom-left,
 		&.bottom-right {
 			.osui-tooltip__balloon-wrapper__balloon {
-				transform: translateY(-100%);
+				transform: translateY(var(--tooltip-inverted-transition-distance));
 			}
 		}
 
@@ -187,7 +189,7 @@ $osui-tooltip-arrow-size: 9px;
 			top: initial;
 
 			.osui-tooltip__balloon-wrapper__balloon {
-				transform: translateY(100%);
+				transform: translateY(var(--tooltip-transition-distance));
 
 				&:before {
 					border-color: var(--color-neutral-9) transparent transparent transparent;
@@ -245,8 +247,6 @@ $osui-tooltip-arrow-size: 9px;
 			transform: translateY(-50%);
 
 			.osui-tooltip__balloon-wrapper__balloon {
-				transform: translateX(-100%);
-
 				&:before {
 					border-color: transparent var(--color-neutral-9) transparent transparent;
 					border-width: $osui-tooltip-arrow-size $osui-tooltip-arrow-size $osui-tooltip-arrow-size 0;
@@ -260,7 +260,7 @@ $osui-tooltip-arrow-size: 9px;
 
 		&.right {
 			.osui-tooltip__balloon-wrapper__balloon {
-				transform: translateX(-100%);
+				transform: translateX(var(--tooltip-inverted-transition-distance));
 			}
 		}
 
@@ -272,7 +272,7 @@ $osui-tooltip-arrow-size: 9px;
 			right: 100%;
 
 			.osui-tooltip__balloon-wrapper__balloon {
-				transform: translateX(100%);
+				transform: translateX(var(--tooltip-transition-distance));
 
 				&:before {
 					border-color: transparent transparent transparent var(--color-neutral-9);
