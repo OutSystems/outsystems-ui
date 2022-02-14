@@ -72,24 +72,46 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			}
 		}
 
-		// A11y keyboard Event
+		// A11y keyboard keys
 		private _onKeyboardPress(event: KeyboardEvent): void {
-			// If Snter or Space Keys trigger as a click event!
-			// If ArrowUp or ArrowDown keys notify parent to move to prev/next option item!
-			if (
-				event.key === GlobalEnum.Keycodes.Enter ||
-				event.key === GlobalEnum.Keycodes.Space ||
-				event.key === GlobalEnum.Keycodes.ArrowUp ||
-				event.key === GlobalEnum.Keycodes.ArrowDown
-			) {
-				event.preventDefault();
-				event.stopPropagation();
+			event.preventDefault();
+			event.stopPropagation();
 
-				// Set KeyCode
-				this.keyordTriggerdKey = event.key;
+			switch (event.key) {
+				// If Snter or Space Keys trigger as a click event!
+				case GlobalEnum.Keycodes.Enter:
+				case GlobalEnum.Keycodes.Space:
+					// Unset KeyCode
+					this.keyordTriggerdKey = undefined;
 
-				// Triggered as it was clicked!
-				this._onSelected(event);
+					// Triggered as it was clicked!
+					this._onSelected(event);
+					break;
+
+				// If ArrowUp or ArrowDown keys notify parent to move to prev/next option item!
+				case GlobalEnum.Keycodes.ArrowUp:
+				case GlobalEnum.Keycodes.ArrowDown:
+					// Set KeyCode
+					this.keyordTriggerdKey = event.key;
+
+					// Notify parent about the selected key
+					this._notifyDropdownParent(Patterns.Dropdown.Enum.OptionItemNotificationType.KeyPressed);
+					break;
+
+				// If Tab!
+				case GlobalEnum.Keycodes.Tab:
+					// If Shift + Tab
+					if (event.shiftKey) {
+						// Set KeyCode
+						this.keyordTriggerdKey = GlobalEnum.Keycodes.ShiftTab;
+					} else {
+						// Set KeyCode
+						this.keyordTriggerdKey = GlobalEnum.Keycodes.Tab;
+					}
+
+					// Notify parent about the selected key
+					this._notifyDropdownParent(Patterns.Dropdown.Enum.OptionItemNotificationType.KeyPressed);
+					break;
 			}
 		}
 
@@ -132,10 +154,6 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			// By default set disable to tabIndex
 			// Helper.A11Y.TabIndexFalse(this.selfElement);
 			Helper.A11Y.TabIndexTrue(this.selfElement);
-
-			// TODO
-			// - Criar um method que seja triggered via DropDown cada vez que o pai é clicado, de forma a dar set do Tabindex=0;
-			// - Set also the aria-label to the option item
 		}
 
 		/**
@@ -244,6 +262,42 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 				default:
 					throw new Error(`The given '${eventName}' event name it's not defined.`);
 			}
+		}
+
+		/**
+		 * Method used to set the tabindex attribute
+		 *
+		 * @memberof DropdownServerSideItem
+		 */
+		public setA11yTabindex(): void {
+			Helper.A11Y.TabIndexTrue(this.selfElement);
+		}
+
+		/**
+		 * Method used to set item as blur state
+		 *
+		 * @memberof DropdownServerSideItem
+		 */
+		public setBlur(): void {
+			this.selfElement.blur();
+		}
+
+		/**
+		 * Method used to set item as focus state
+		 *
+		 * @memberof DropdownServerSideItem
+		 */
+		public setFocus(): void {
+			this.selfElement.focus();
+		}
+
+		/**
+		 * Method used to unset the tabindex attribute
+		 *
+		 * @memberof DropdownServerSideItem
+		 */
+		public unsetA11yTabindex(): void {
+			Helper.A11Y.TabIndexFalse(this.selfElement);
 		}
 	}
 }

@@ -8,8 +8,10 @@ namespace Providers.Dropdown.OSUIComponents {
 		// Store the HTML element for the DropdownBaloon
 		private _dropdownBaloonElement: HTMLElement;
 
-		// Store a collection of all DropdownServerSideItems ids inside this DropdownServerSide instance
+		// Store a collection of all DropdownServerSideItems inside this DropdownServerSide instance
 		private _optionItems = new Map<string, OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem>(); //DropdownServerSideItem.uniqueId -> DropdownServerSideItem obj
+		// Store all the optionItems Ids to help on understanding the options positions
+		private _optionItemsIds = [];
 
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
@@ -19,11 +21,7 @@ namespace Providers.Dropdown.OSUIComponents {
 
 		// Create the provider instance
 		private _createProviderInstance(): void {
-			// console.log(
-			// 	this.uniqueId +
-			// 		' DropdownServerSide - _createProviderInstance() => TODO (by CreateNewPattern): create the provider instance'
-			// );
-			// this.provider = ...
+			console.log('this.provider');
 		}
 
 		// Move ballon element to outside of the pattern context
@@ -34,6 +32,69 @@ namespace Providers.Dropdown.OSUIComponents {
 			) as HTMLElement;
 
 			OSUIFramework.Helper.Dom.Move(this._dropdownBaloonElement, layoutElement);
+		}
+
+		// Method to deal with the click at a DropdpownOptionItem
+		private _optionItemClicked(optionItemId: string): void {
+			// Check if the given OptionId exist at optionsList
+			if (this._optionItems.has(optionItemId)) {
+				// Check if Dropdown must close!
+				if (this.configs.AllowMultipleSelection === false) {
+					console.log(`Clicked optionId: ${optionItemId}, Dropdown ${this.widgetId} must close!`);
+				}
+			} else {
+				throw new Error(
+					`${OSUIFramework.ErrorCodes.Dropdown.FailOptionItemClicked}: The ${OSUIFramework.GlobalEnum.PatternsNames.DropdownServerSideItem} under uniqueId: '${optionItemId}' does not exist as an OptionItem from ${OSUIFramework.GlobalEnum.PatternsNames.Dropdown} with Id: ${this.widgetId}.`
+				);
+			}
+		}
+
+		// Method used to deal with the keyPressed naviagtion between DropdownOptionItems
+		private _optionItemKeyPressed(optionItemId: string): void {
+			// Get the optionItem reference based on the given Id
+			const optionItem = this._optionItems.get(optionItemId);
+
+			// Check if the given OptionId exist at optionsList
+			if (optionItem !== undefined) {
+				// Get the option item index position
+				const getOptionItemIndex = this._optionItemsIds.indexOf(optionItemId);
+
+				// Ensure that code wont run if key was not defined!
+				if (optionItem.keyordTriggerdKey === undefined) {
+					return;
+				}
+
+				switch (optionItem.keyordTriggerdKey) {
+					// ArrowUp
+					case OSUIFramework.GlobalEnum.Keycodes.ArrowUp:
+						// Check If focused item is not the first one!
+						if (getOptionItemIndex > 0) {
+							this._updateOptionItemFocuState(optionItem, getOptionItemIndex - 1);
+						}
+						break;
+
+					// ArrowDown
+					case OSUIFramework.GlobalEnum.Keycodes.ArrowDown:
+						if (getOptionItemIndex < this._optionItems.size - 1) {
+							this._updateOptionItemFocuState(optionItem, getOptionItemIndex + 1);
+						}
+						break;
+
+					// Shift + Tab
+					case OSUIFramework.GlobalEnum.Keycodes.ShiftTab:
+						console.log('Move Out to Top!');
+						break;
+
+					// Tab
+					case OSUIFramework.GlobalEnum.Keycodes.Tab:
+						console.log('Move Out to Bottom!');
+						break;
+				}
+			} else {
+				throw new Error(
+					`${OSUIFramework.ErrorCodes.Dropdown.FailOptionItemKeyPressed}: The ${OSUIFramework.GlobalEnum.PatternsNames.DropdownServerSideItem} under uniqueId: '${optionItemId}' does not exist as an OptionItem from ${OSUIFramework.GlobalEnum.PatternsNames.Dropdown} with Id: ${this.widgetId}.`
+				);
+			}
 		}
 
 		// Method used to store a given DropdownOption into optionItems list, it's triggered by DropdownServerSideItem
@@ -50,6 +111,7 @@ namespace Providers.Dropdown.OSUIComponents {
 			} else {
 				// Store DropDownOption Item
 				this._optionItems.set(optionItemId, optionItem);
+				this._optionItemsIds.push(optionItemId);
 			}
 		}
 
@@ -57,12 +119,30 @@ namespace Providers.Dropdown.OSUIComponents {
 		private _unsetNewOptionItem(optionItemId: string): void {
 			// Check if the given OptionId exist at optionsList
 			if (this._optionItems.has(optionItemId)) {
+				// Remove item from Map
 				this._optionItems.delete(optionItemId);
+
+				// Remove item fom Ids Array
+				const getIndexPosition = this._optionItemsIds.indexOf(optionItemId);
+				this._optionItemsIds.splice(getIndexPosition, 1);
 			} else {
 				throw new Error(
-					`${OSUIFramework.ErrorCodes.Dropdown.FailUnsetNewOptionItem}: The ${OSUIFramework.GlobalEnum.PatternsNames.DropdownServerSideItem} under uniqueId: '${optionItemId}' does not exist has a OptionItem from ${OSUIFramework.GlobalEnum.PatternsNames.Dropdown} with Id: ${this.widgetId}.`
+					`${OSUIFramework.ErrorCodes.Dropdown.FailUnsetNewOptionItem}: The ${OSUIFramework.GlobalEnum.PatternsNames.DropdownServerSideItem} under uniqueId: '${optionItemId}' does not exist as an OptionItem from ${OSUIFramework.GlobalEnum.PatternsNames.Dropdown} with Id: ${this.widgetId}.`
 				);
 			}
+		}
+
+		// Method to (un)set option item focus statue
+		private _updateOptionItemFocuState(
+			optionItem: OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem,
+			itemIndex: number
+		): void {
+			// Set Blur to the current one!
+			optionItem.setBlur();
+			// Set Focus to the prev/next one!
+			const itemId = this._optionItemsIds[itemIndex];
+			const item = this._optionItems.get(itemId);
+			item.setFocus();
 		}
 
 		/**
@@ -72,7 +152,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		protected setCallbacks(): void {
-			console.log('SetCallbacks');
+			// console.log('SetCallbacks');
 		}
 
 		/**
@@ -134,10 +214,10 @@ namespace Providers.Dropdown.OSUIComponents {
 					this._setNewOptionItem(optionItemId);
 					break;
 				case OSUIFramework.Patterns.Dropdown.Enum.OptionItemNotificationType.Click:
-					console.log('Option Has Been Clicked!');
+					this._optionItemClicked(optionItemId);
 					break;
 				case OSUIFramework.Patterns.Dropdown.Enum.OptionItemNotificationType.KeyPressed:
-					console.log('Option Has Been Selected by KeyBoard!');
+					this._optionItemKeyPressed(optionItemId);
 					break;
 				case OSUIFramework.Patterns.Dropdown.Enum.OptionItemNotificationType.Removed:
 					this._unsetNewOptionItem(optionItemId);

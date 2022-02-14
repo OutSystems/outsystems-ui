@@ -140,6 +140,7 @@ namespace OSUIFramework.GlobalEnum {
 		Enter = 'Enter',
 		Escape = 'Escape',
 		Shift = 'Shift',
+		ShiftTab = 'ShiftTab', // Do not exist as a keyboard key, but used to manage this behaviour
 		Space = ' ',
 		Tab = 'Tab',
 	}

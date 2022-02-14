@@ -5,11 +5,13 @@ namespace OSUIFramework.ErrorCodes {
 	 */
 
 	export const Dropdown = {
-		FailSetNewOptionItem: 'OSUI-GEN-01001',
-		FailToSetOptionItemAction: 'OSUI-GEN-01002',
-		FailUnsetNewOptionItem: 'OSUI-GEN-01003',
+		FailOptionItemClicked: 'OSUI-GEN-01001',
+		FailOptionItemKeyPressed: 'OSUI-GEN-01002',
+		FailSetNewOptionItem: 'OSUI-GEN-01003',
+		FailToSetOptionItemAction: 'OSUI-GEN-01004',
+		FailUnsetNewOptionItem: 'OSUI-GEN-01005',
 		HasNoImplementation: {
-			code: 'OSUI-GEN-01004',
+			code: 'OSUI-GEN-01006',
 			message: 'This method has no implementation on this Dropdow Type.',
 		},
 	};
