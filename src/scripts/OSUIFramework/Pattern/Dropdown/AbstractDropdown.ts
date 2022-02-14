@@ -19,13 +19,15 @@ namespace OSUIFramework.Patterns.Dropdown {
 			this._provider = p;
 		}
 
+		public abstract beNotifiedFromOptionItem(
+			optionItemId: string,
+			notifiedTo: Enum.OptionItemNotificationType
+		): void;
 		public abstract clear(): void;
 		public abstract disable(): void;
 		public abstract enable(): void;
 		public abstract getSelectedValues(): string;
 		public abstract registerProviderCallback(eventName: string, callback: Callbacks.OSGeneric): void;
-		public abstract setNewOptionItem(optionItemId: string): void;
-		public abstract unsetNewOptionItem(optionItemId: string): void;
 		public abstract validation(isValid: boolean, validationMessage: string): void;
 	}
 }

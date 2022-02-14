@@ -133,13 +133,15 @@ namespace OSUIFramework.GlobalEnum {
 	 * OutSystemsUI event Keycodes
 	 */
 	export enum Keycodes {
-		ArrowRight = 'ArrowRight',
+		ArrowDown = 'ArrowDown',
 		ArrowLeft = 'ArrowLeft',
-		Escape = 'Escape',
+		ArrowRight = 'ArrowRight',
+		ArrowUp = 'ArrowUp',
 		Enter = 'Enter',
-		Tab = 'Tab',
+		Escape = 'Escape',
 		Shift = 'Shift',
 		Space = ' ',
+		Tab = 'Tab',
 	}
 
 	/**

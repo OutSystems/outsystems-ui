@@ -36,13 +36,44 @@ namespace Providers.Dropdown.OSUIComponents {
 			OSUIFramework.Helper.Dom.Move(this._dropdownBaloonElement, layoutElement);
 		}
 
+		// Method used to store a given DropdownOption into optionItems list, it's triggered by DropdownServerSideItem
+		private _setNewOptionItem(optionItemId: string): void {
+			// Get the DropdownOptionItem reference
+			const optionItem =
+				OutSystems.OSUI.Patterns.DropdownServerSideItemAPI.GetDropdownServerSideItemItemById(optionItemId);
+
+			// Check if the given OptionId has been already added
+			if (this._optionItems.has(optionItemId)) {
+				throw new Error(
+					`${OSUIFramework.ErrorCodes.Dropdown.FailSetNewOptionItem}: There is already a ${OSUIFramework.GlobalEnum.PatternsNames.DropdownServerSideItem} under Id: '${optionItem.widgetId}' added to ${OSUIFramework.GlobalEnum.PatternsNames.Dropdown} with uniqueId: ${this.uniqueId}.`
+				);
+			} else {
+				// Store DropDownOption Item
+				this._optionItems.set(optionItemId, optionItem);
+			}
+		}
+
+		// Method used to remove a given DropdownOption from optionItems list, it's triggered by DropdownServerSideItem
+		private _unsetNewOptionItem(optionItemId: string): void {
+			// Check if the given OptionId exist at optionsList
+			if (this._optionItems.has(optionItemId)) {
+				this._optionItems.delete(optionItemId);
+			} else {
+				throw new Error(
+					`${OSUIFramework.ErrorCodes.Dropdown.FailUnsetNewOptionItem}: The ${OSUIFramework.GlobalEnum.PatternsNames.DropdownServerSideItem} under uniqueId: '${optionItemId}' does not exist has a OptionItem from ${OSUIFramework.GlobalEnum.PatternsNames.Dropdown} with Id: ${this.widgetId}.`
+				);
+			}
+		}
+
 		/**
 		 * Sets the callbacks to be used with the provider.
 		 *
 		 * @protected
 		 * @memberof OSUIDropdownServerSide
 		 */
-		protected setCallbacks(): void {}
+		protected setCallbacks(): void {
+			console.log('SetCallbacks');
+		}
 
 		/**
 		 * Method to set the html elements used
@@ -85,6 +116,37 @@ namespace Providers.Dropdown.OSUIComponents {
 
 			// unset the local property
 			this._dropdownBaloonElement = undefined;
+		}
+
+		/**
+		 * Method used to be notified by a given dropdownOptionId about a given action and act accordingly
+		 *
+		 * @param optionItemId Dropdown Option Item Id to be stored
+		 * @param notifiedTo {Enum.OptionItemNotificationType} triggered notification type
+		 * @memberof OSUIDropdownServerSide
+		 */
+		public beNotifiedFromOptionItem(
+			optionItemId: string,
+			notifiedTo: OSUIFramework.Patterns.Dropdown.Enum.OptionItemNotificationType
+		): void {
+			switch (notifiedTo) {
+				case OSUIFramework.Patterns.Dropdown.Enum.OptionItemNotificationType.Add:
+					this._setNewOptionItem(optionItemId);
+					break;
+				case OSUIFramework.Patterns.Dropdown.Enum.OptionItemNotificationType.Click:
+					console.log('Option Has Been Clicked!');
+					break;
+				case OSUIFramework.Patterns.Dropdown.Enum.OptionItemNotificationType.KeyPressed:
+					console.log('Option Has Been Selected by KeyBoard!');
+					break;
+				case OSUIFramework.Patterns.Dropdown.Enum.OptionItemNotificationType.Removed:
+					this._unsetNewOptionItem(optionItemId);
+					break;
+				default:
+					throw new Error(
+						`${OSUIFramework.ErrorCodes.Dropdown.FailToSetOptionItemAction}: There no exist a '${notifiedTo}' notification type.`
+					);
+			}
 		}
 
 		public build(): void {
@@ -195,43 +257,6 @@ namespace Providers.Dropdown.OSUIComponents {
 			// 		*/
 			// 		throw new Error("The givem '" + eventName + "' event name it's not defined.");
 			// }
-		}
-
-		/**
-		 * Method used to store a given DropdownOption into optionItems list, it's triggered by DropdownServerSideItem
-		 *
-		 * @param optionItemId Id of the OptionItem to be added to the Dropdown instance
-		 */
-		public setNewOptionItem(optionItemId: string): void {
-			// Get the DropdownOptionItem reference
-			const optionItem =
-				OutSystems.OSUI.Patterns.DropdownServerSideItemAPI.GetDropdownServerSideItemItemById(optionItemId);
-
-			// Check if the given OptionId has been already added
-			if (this._optionItems.has(optionItemId)) {
-				throw new Error(
-					`${OSUIFramework.ErrorCodes.Dropdown.FailSetNewOptionItem}: There is already a ${OSUIFramework.GlobalEnum.PatternsNames.DropdownServerSideItem} under Id: '${optionItem.widgetId}' added to ${OSUIFramework.GlobalEnum.PatternsNames.Dropdown} with uniqueId: ${this.uniqueId}.`
-				);
-			} else {
-				// Store DropDownOption Item
-				this._optionItems.set(optionItemId, optionItem);
-			}
-		}
-
-		/**
-		 * Method used to remove a given DropdownOption from optionItems list, it's triggered by DropdownServerSideItem
-		 *
-		 * @param optionItemId Id of the OptionItem to be added to the Dropdown instance
-		 */
-		public unsetNewOptionItem(optionItemId: string): void {
-			// Check if the given OptionId exist at optionsList
-			if (this._optionItems.has(optionItemId)) {
-				this._optionItems.delete(optionItemId);
-			} else {
-				throw new Error(
-					`${OSUIFramework.ErrorCodes.Dropdown.FailUnsetNewOptionItem}: The ${OSUIFramework.GlobalEnum.PatternsNames.DropdownServerSideItem} under uniqueId: '${optionItemId}' does not exist has a OptionItem from ${OSUIFramework.GlobalEnum.PatternsNames.Dropdown} with Id: ${this.widgetId}.`
-				);
-			}
 		}
 
 		/**

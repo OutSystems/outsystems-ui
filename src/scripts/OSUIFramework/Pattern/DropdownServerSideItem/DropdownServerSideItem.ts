@@ -25,6 +25,9 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		// Platform Click Event Callback
 		private _platformEventOnClickCallback: Callbacks.OSDropdownServerSideItemOnSelectEvent;
 
+		// Store the Key used to trigger the notification into Dropdown parent
+		public keyordTriggerdKey: GlobalEnum.Keycodes;
+
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new DropdownServerSideItemConfig(configs));
 		}
@@ -45,11 +48,11 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			}
 
 			// Notify parent about a new instance of this child has been created!
-			this._notifyDropdownParent(Enum.ActionType.Add);
+			this._notifyDropdownParent(Patterns.Dropdown.Enum.OptionItemNotificationType.Add);
 		}
 
 		// Method that will notify Dropdpwn parent in order to update it's references to DropdownOptionItems!
-		private _notifyDropdownParent(type: Enum.ActionType): void {
+		private _notifyDropdownParent(type: Patterns.Dropdown.Enum.OptionItemNotificationType): void {
 			// Get the Dropdown parent HTML element
 			this._dropdownParentElement = Helper.Dom.GetElementByUniqueId(this._dropdownParentId);
 
@@ -61,38 +64,50 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 				);
 
 				// Trigger the notification into parent
-				switch (type) {
-					case Enum.ActionType.Add:
-						this._dropdownParentReference.setNewOptionItem(this.uniqueId);
-						break;
-					case Enum.ActionType.Remove:
-						this._dropdownParentReference.unsetNewOptionItem(this.uniqueId);
-						break;
-				}
-			} else if (Enum.ActionType.Add) {
+				this._dropdownParentReference.beNotifiedFromOptionItem(this.uniqueId, type);
+			} else if (Patterns.Dropdown.Enum.OptionItemNotificationType.Add) {
 				throw new Error(
 					`${ErrorCodes.DropdownServerSideItem.DropdownParentNotFound}: ${GlobalEnum.PatternsNames.Dropdown} parent of ${GlobalEnum.PatternsNames.DropdownServerSideItem} id: '${this.widgetId}' was not found!`
 				);
 			}
 		}
 
+		// A11y keyboard Event
+		private _onKeyboardPress(event: KeyboardEvent): void {
+			// If Snter or Space Keys trigger as a click event!
+			// If ArrowUp or ArrowDown keys notify parent to move to prev/next option item!
+			if (
+				event.key === GlobalEnum.Keycodes.Enter ||
+				event.key === GlobalEnum.Keycodes.Space ||
+				event.key === GlobalEnum.Keycodes.ArrowUp ||
+				event.key === GlobalEnum.Keycodes.ArrowDown
+			) {
+				event.preventDefault();
+				event.stopPropagation();
+
+				// Set KeyCode
+				this.keyordTriggerdKey = event.key;
+
+				// Triggered as it was clicked!
+				this._onSelected(event);
+			}
+		}
+
 		// Trigger the platform callback method
-		private _onClick(): void {
+		private _onSelected(event: MouseEvent | KeyboardEvent): void {
+			// Notify parent about this Option Click
+			this._notifyDropdownParent(
+				event.type === 'click'
+					? Patterns.Dropdown.Enum.OptionItemNotificationType.Click
+					: Patterns.Dropdown.Enum.OptionItemNotificationType.KeyPressed
+			);
+
+			// Trigger platform callback about Option has been selected!
 			Helper.AsyncInvocation(
 				this._platformEventOnClickCallback,
 				this._dropdownParentReference.widgetId,
 				this.configs.ItemId
 			);
-		}
-
-		// A11y keyboard Event
-		private _onKeyboardPress(event: KeyboardEvent): void {
-			// If enter or space Keys trigger as a click event!
-			if (event.key === GlobalEnum.Keycodes.Enter || event.key === GlobalEnum.Keycodes.Space) {
-				event.preventDefault();
-				event.stopPropagation();
-				this._onClick();
-			}
 		}
 
 		// Remove Pattern Events
@@ -115,7 +130,8 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 */
 		protected setA11yProperties(): void {
 			// By default set disable to tabIndex
-			Helper.A11Y.TabIndexFalse(this.selfElement);
+			// Helper.A11Y.TabIndexFalse(this.selfElement);
+			Helper.A11Y.TabIndexTrue(this.selfElement);
 
 			// TODO
 			// - Criar um method que seja triggered via DropDown cada vez que o pai é clicado, de forma a dar set do Tabindex=0;
@@ -129,7 +145,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 * @memberof DropdownServerSideItem
 		 */
 		protected setCallbacks(): void {
-			this._eventOnClick = this._onClick.bind(this);
+			this._eventOnClick = this._onSelected.bind(this);
 			this._eventOnkeyBoardPress = this._onKeyboardPress.bind(this);
 		}
 
@@ -206,7 +222,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			this.unsetHtmlElements();
 
 			// Notify parent about this instance will be destroyed
-			this._notifyDropdownParent(Enum.ActionType.Remove);
+			this._notifyDropdownParent(Patterns.Dropdown.Enum.OptionItemNotificationType.Removed);
 
 			//Destroying the base of pattern
 			super.dispose();

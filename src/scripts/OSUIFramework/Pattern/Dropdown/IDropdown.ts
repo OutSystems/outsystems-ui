@@ -5,6 +5,14 @@ namespace OSUIFramework.Patterns.Dropdown {
 	 */
 	export interface IDropdown extends Interface.IPattern {
 		/**
+		 * Method used to be notified by a given dropdownOptionId about a given action and act accordingly
+		 *
+		 * @param optionItemId Dropdown Option Item Id to be stored
+		 * @param notifiedTo {Enum.OptionItemNotificationType} triggered notification type
+		 */
+		beNotifiedFromOptionItem(optionItemId: string, notifiedTo: Enum.OptionItemNotificationType): void;
+
+		/**
 		 * Method used to clear any selected values from the Dropdown
 		 *
 		 * @memberof IDropdown
@@ -31,20 +39,6 @@ namespace OSUIFramework.Patterns.Dropdown {
 		 * @memberof IDropdown
 		 */
 		getSelectedValues(): string;
-
-		/**
-		 * Method used to set a given dropdownOptionId as an option item from Dropdown instance
-		 *
-		 * @param optionItemId Dropdown Option Item Id to be stored
-		 */
-		setNewOptionItem(optionItemId: string): void;
-
-		/**
-		 * Method used to set a given dropdownOptionId as an option item from Dropdown instance
-		 *
-		 * @param optionItemId Dropdown Option Item Id to be stored
-		 */
-		unsetNewOptionItem(optionItemId: string): void;
 
 		/**
 		 * Method used to set the validation status, and also pass the message to show
