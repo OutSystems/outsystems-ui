@@ -30,9 +30,7 @@ $osui-tooltip-arrow-size: 9px;
 				top: initial;
 
 				.osui-tooltip__balloon-wrapper__balloon {
-					bottom: initial;
-					top: 0;
-					transform: translateY(0);
+					transform: translateY(100%);
 
 					&:before {
 						opacity: 1;
@@ -60,9 +58,17 @@ $osui-tooltip-arrow-size: 9px;
 				max-width: 50vw;
 				padding-left: var(--space-base);
 				padding-top: var(--space-none);
+			}
 
+			&.left {
 				.osui-tooltip__balloon-wrapper__balloon {
-					left: 0;
+					transform: translateX(100%);
+				}
+			}
+
+			&.right {
+				.osui-tooltip__balloon-wrapper__balloon {
+					transform: translateX(-100%);
 				}
 			}
 
@@ -82,7 +88,7 @@ $osui-tooltip-arrow-size: 9px;
 
 		.osui-tooltip__balloon-wrapper__balloon {
 			opacity: 1;
-			top: 0;
+			transform: translateY(0);
 
 			&:before {
 				opacity: 1;
@@ -170,6 +176,15 @@ $osui-tooltip-arrow-size: 9px;
 			}
 		}
 
+		&.center,
+		&.bottom,
+		&.bottom-left,
+		&.bottom-right {
+			.osui-tooltip__balloon-wrapper__balloon {
+				transform: translateY(-100%);
+			}
+		}
+
 		// if opens to top
 		&.top,
 		&.top-left,
@@ -178,9 +193,7 @@ $osui-tooltip-arrow-size: 9px;
 			top: initial;
 
 			.osui-tooltip__balloon-wrapper__balloon {
-				bottom: initial;
-				top: var(--space-base);
-				transform: translateY(-100%);
+				transform: translateY(100%);
 
 				&:before {
 					border-color: var(--color-neutral-9) transparent transparent transparent;
@@ -238,8 +251,7 @@ $osui-tooltip-arrow-size: 9px;
 			transform: translateY(-50%);
 
 			.osui-tooltip__balloon-wrapper__balloon {
-				left: calc(-1 * var(--space-s));
-				top: initial;
+				transform: translateX(-100%);
 
 				&:before {
 					border-color: transparent var(--color-neutral-9) transparent transparent;
@@ -300,8 +312,7 @@ $osui-tooltip-arrow-size: 9px;
 		opacity: 0;
 		padding: var(--space-s);
 		position: relative;
-		top: calc(-1 * var(--space-base));
-		transition: top 0.25s, right 0.25s, bottom 0.25s, left 0.25s;
+		transition: transform 0.25s;
 		width: fit-content;
 
 		// Service Studio Preview
