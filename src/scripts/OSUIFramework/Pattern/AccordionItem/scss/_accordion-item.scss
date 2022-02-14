@@ -38,10 +38,10 @@
 		&-open {
 			> .osui-accordion-item__title {
 				font-weight: var(--font-semi-bold);
-			}
 
-			& > .osui-accordion-item__title > .osui-accordion-item__icon {
-				transform: rotate(180deg);
+				> .osui-accordion-item__icon {
+					transform: rotate(180deg);
+				}
 			}
 
 			&::after {
