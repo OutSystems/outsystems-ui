@@ -241,14 +241,14 @@ namespace OSUIFramework.Patterns.Rating {
 				newValue = Enum.Properties.MinRatingScale;
 
 				console.warn(
-					`The value of RatingValue property on the '${this.widgetId}' Rating can't be smaller than '${Enum.Properties.MinRatingScale}'.`
+					`The value of RatingValue property on the '${this.widgetId}' ${GlobalEnum.PatternsNames.Rating} can't be smaller than '${Enum.Properties.MinRatingScale}'.`
 				);
 			} else if (newValue > this.configs.RatingScale) {
 				// If value is higher than the RatingScale, assume the maxRatingScale a value
 				newValue = this.configs.RatingScale;
 
 				console.warn(
-					`The value of the RatingValue property on the '${this.widgetId}' Rating exceeds the scale boundaries. To ensure its correct behaviour, set a value smaller or equal to '${this.configs.RatingScale}'.`
+					`The value of the RatingValue property on the '${this.widgetId}' ${GlobalEnum.PatternsNames.Rating} exceeds the scale boundaries. To ensure its correct behaviour, set a value smaller or equal to '${this.configs.RatingScale}'.`
 				);
 			}
 
