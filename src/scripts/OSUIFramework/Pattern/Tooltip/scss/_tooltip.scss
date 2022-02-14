@@ -30,7 +30,7 @@ $osui-tooltip-arrow-size: 9px;
 				top: initial;
 
 				.osui-tooltip__balloon-wrapper__balloon {
-					transform: translateY(100%);
+					transform: translateY(0);
 
 					&:before {
 						opacity: 1;
@@ -62,13 +62,13 @@ $osui-tooltip-arrow-size: 9px;
 
 			&.left {
 				.osui-tooltip__balloon-wrapper__balloon {
-					transform: translateX(100%);
+					transform: translateX(0);
 				}
 			}
 
 			&.right {
 				.osui-tooltip__balloon-wrapper__balloon {
-					transform: translateX(-100%);
+					transform: translateX(0);
 				}
 			}
 
@@ -77,12 +77,6 @@ $osui-tooltip-arrow-size: 9px;
 				padding-left: initial;
 				padding-right: var(--space-base);
 				right: 100%;
-
-				.osui-tooltip__balloon-wrapper__balloon {
-					left: initial;
-					right: 0;
-					transform: translatex(0);
-				}
 			}
 		}
 
@@ -264,6 +258,12 @@ $osui-tooltip-arrow-size: 9px;
 			}
 		}
 
+		&.right {
+			.osui-tooltip__balloon-wrapper__balloon {
+				transform: translateX(-100%);
+			}
+		}
+
 		// if opens to right
 		&.left {
 			left: initial;
@@ -272,9 +272,7 @@ $osui-tooltip-arrow-size: 9px;
 			right: 100%;
 
 			.osui-tooltip__balloon-wrapper__balloon {
-				left: initial;
-				right: calc(-1 * var(--space-s));
-				transform: translateX(-100%);
+				transform: translateX(100%);
 
 				&:before {
 					border-color: transparent transparent transparent var(--color-neutral-9);
