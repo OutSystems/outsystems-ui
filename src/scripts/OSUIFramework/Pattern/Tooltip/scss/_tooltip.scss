@@ -58,17 +58,18 @@ $osui-tooltip-arrow-size: 9px;
 				max-width: 50vw;
 				padding-left: var(--space-base);
 				padding-top: var(--space-none);
-			}
 
-			&.left {
 				.osui-tooltip__balloon-wrapper__balloon {
 					transform: translateX(0);
 				}
 			}
 
-			&.right {
+			&.center,
+			&.bottom,
+			&.bottom-left,
+			&.bottom-right {
 				.osui-tooltip__balloon-wrapper__balloon {
-					transform: translateX(0);
+					transform: translateY(0);
 				}
 			}
 
@@ -82,7 +83,6 @@ $osui-tooltip-arrow-size: 9px;
 
 		.osui-tooltip__balloon-wrapper__balloon {
 			opacity: 1;
-			transform: translateY(0);
 
 			&:before {
 				opacity: 1;
