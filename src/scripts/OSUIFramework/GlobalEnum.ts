@@ -246,4 +246,11 @@ namespace OSUIFramework.GlobalEnum {
 		phone = 'phone',
 		tablet = 'tablet',
 	}
+
+	/**
+	 * OutSystems UI global constants used across patterns
+	 */
+	export enum GlobalConstant {
+		ZeroValue = 0,
+	}
 }

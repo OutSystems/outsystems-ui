@@ -27,6 +27,5 @@ namespace OSUIFramework.Patterns.Gallery.Enum {
 		RowItemsPhone = 'RowItemsPhone',
 		RowItemsTablet = 'RowItemsTablet',
 		MinRowItemsAllowed = 1,
-		ValueZero = 0,
 	}
 }
