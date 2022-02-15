@@ -15,5 +15,7 @@ namespace Providers.Dropdown.OSUIComponents.Enum {
 	/**
 	 * DropdownAdvanced Enum properties
 	 */
-	export enum Properties {}
+	export enum Properties {
+		AllowMultipleSelection = 'AllowMultipleSelection',
+	}
 }

@@ -16,22 +16,14 @@ namespace Providers.Dropdown.OSUIComponents {
 		}
 
 		/**
-		 * Set all the DropdownAdvanced properties
+		 * This method has no implementation on this context.
 		 *
-		 * @return {*}  {DropdownServerSideOpts}
 		 * @memberof DropdownAdvancedSearchConfig
 		 */
-		public getProviderConfig(): DropdownServerSideOpts {
-			const providerOptions = {
-				// TODO (by CreateNewPattern): add all the provider props that must mus assigned to create the provider instance
-			};
-
-			//Clean undefined properties
-			Object.keys(providerOptions).forEach(
-				(key) => providerOptions[key] === undefined && delete providerOptions[key]
+		public getProviderConfig(): void {
+			throw new Error(
+				`${OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.code}:	${OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.message}`
 			);
-
-			return providerOptions as DropdownServerSideOpts;
 		}
 
 		/**
@@ -43,17 +35,16 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSideConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
-			const validatedValue = undefined;
+			let validatedValue = undefined;
 
-			console.log('DO THINGS HERE!');
-			// switch (key) {
-			// 	case Enum.Properties.PROP_NAME1:
-			// 		// TODO (by CreateNewPattern): Replace with expected property
-			// 		break;
-			// 	default:
-			// 		validatedValue = super.validateDefault(key, value);
-			// 		break;
-			// }
+			switch (key) {
+				case Enum.Properties.AllowMultipleSelection:
+					validatedValue = this.validateBoolean(value as boolean, false);
+					break;
+				default:
+					validatedValue = super.validateDefault(key, value);
+					break;
+			}
 
 			return validatedValue;
 		}
