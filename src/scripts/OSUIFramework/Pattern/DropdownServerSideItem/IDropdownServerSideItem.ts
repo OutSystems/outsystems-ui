@@ -14,6 +14,6 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 *
 		 * @memberof IDropdownServerSideItem
 		 */
-		keyordTriggerdKey: GlobalEnum.Keycodes;
+		keybordTriggerdKey: GlobalEnum.Keycodes;
 	}
 }

@@ -20,7 +20,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		private _platformEventOnClickCallback: Callbacks.OSDropdownServerSideItemOnSelectEvent;
 
 		// Store the Key used to trigger the notification into Dropdown parent
-		public keyordTriggerdKey: GlobalEnum.Keycodes;
+		public keybordTriggerdKey: GlobalEnum.Keycodes;
 		// Store a reference to the Dropdpown parent Element
 		public parentElement: HTMLElement;
 		// Store the id of of the Dropdown parent
@@ -33,7 +33,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		}
 
 		// A11y keyboard keys
-		private _onKeyboardPress(event: KeyboardEvent): void {
+		private _onKeyboardPressed(event: KeyboardEvent): void {
 			event.preventDefault();
 			event.stopPropagation();
 
@@ -42,7 +42,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 				case GlobalEnum.Keycodes.Enter:
 				case GlobalEnum.Keycodes.Space:
 					// Unset KeyCode
-					this.keyordTriggerdKey = undefined;
+					this.keybordTriggerdKey = undefined;
 
 					// Triggered as it was clicked!
 					this._onSelected(event);
@@ -52,7 +52,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 				case GlobalEnum.Keycodes.ArrowUp:
 				case GlobalEnum.Keycodes.ArrowDown:
 					// Set KeyCode
-					this.keyordTriggerdKey = event.key;
+					this.keybordTriggerdKey = event.key;
 
 					// Notify parent about the selected key
 					this.notifyParent(GlobalEnum.ChildNotifyActionParent.KeyPressed);
@@ -63,10 +63,10 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 					// If Shift + Tab
 					if (event.shiftKey) {
 						// Set KeyCode
-						this.keyordTriggerdKey = GlobalEnum.Keycodes.ShiftTab;
+						this.keybordTriggerdKey = GlobalEnum.Keycodes.ShiftTab;
 					} else {
 						// Set KeyCode
-						this.keyordTriggerdKey = GlobalEnum.Keycodes.Tab;
+						this.keybordTriggerdKey = GlobalEnum.Keycodes.Tab;
 					}
 
 					// Notify parent about the selected key
@@ -77,6 +77,8 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 
 		// Trigger the platform callback method
 		private _onSelected(event: MouseEvent | KeyboardEvent): void {
+			event.stopPropagation();
+
 			// Notify parent about this Option Click
 			this.notifyParent(
 				event.type === 'click'
@@ -108,8 +110,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 */
 		protected setA11yProperties(): void {
 			// By default set disable to tabIndex
-			// Helper.A11Y.TabIndexFalse(this.selfElement);
-			Helper.A11Y.TabIndexTrue(this.selfElement);
+			Helper.A11Y.TabIndexFalse(this.selfElement);
 		}
 
 		/**
@@ -120,7 +121,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 */
 		protected setCallbacks(): void {
 			this._eventOnClick = this._onSelected.bind(this);
-			this._eventOnkeyBoardPress = this._onKeyboardPress.bind(this);
+			this._eventOnkeyBoardPress = this._onKeyboardPressed.bind(this);
 		}
 
 		/**
@@ -243,7 +244,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 				) as Providers.Dropdown.OSUIComponents.IDropdownServerSide;
 
 				// Trigger the notification into parent
-				this.parentObject.beNotifiedFromChildItem(this.uniqueId, actionType);
+				this.parentObject.beNotifiedByChild(this.uniqueId, actionType);
 			} else if (GlobalEnum.ChildNotifyActionParent.Add) {
 				throw new Error(
 					`${ErrorCodes.DropdownServerSideItem.DropdownParentNotFound}: ${GlobalEnum.PatternsNames.Dropdown} parent of ${GlobalEnum.PatternsNames.DropdownServerSideItem} id: '${this.widgetId}' was not found!`

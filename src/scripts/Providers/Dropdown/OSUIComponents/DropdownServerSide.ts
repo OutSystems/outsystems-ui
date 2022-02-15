@@ -5,8 +5,27 @@ namespace Providers.Dropdown.OSUIComponents {
 		extends OSUIFramework.Patterns.Dropdown.AbstractDropdown<DropdownAdvanced, C>
 		implements IDropdownServerSide
 	{
-		// Store the HTML element for the DropdownBaloon
-		private _dropdownBaloonElement: HTMLElement;
+		// Store the HTML element for the DropdownBaloonFooter
+		private _baloonFooterElement: HTMLElement;
+		// Store the HTML element for the DropdownBaloonSearch
+		private _baloonSearchElement: HTMLElement;
+		// Store the HTML element for the DropdownBaloonWrapper
+		private _baloonWrapperElement: HTMLElement;
+		// Click Event
+		private _eventOnClick: OSUIFramework.Callbacks.Generic;
+		// OnFocus Event at ballon custom span elements
+		private _eventOnSpanFocus: OSUIFramework.Callbacks.Generic;
+		// Keyboard Key Press Event
+		private _eventOnkeyBoardPress: OSUIFramework.Callbacks.Generic;
+		// Platform OnInitialize Callback
+		private _platformEventInitializedCallback: OSUIFramework.Callbacks.OSGeneric;
+		// Platform OnClose Callback
+		private _platformEventOnClosedCallback: OSUIFramework.Callbacks.OSGeneric;
+		// Store the HTML element for the Dropdown Select Wrapper
+		private _selectWrapper: HTMLElement;
+		// HTML Elements that will help to deal with keyboard tab navigation
+		private _spanBottomFocusElement: HTMLElement;
+		private _spanTopFocusElement: HTMLElement;
 
 		// Store a collection of all DropdownServerSideItems inside this DropdownServerSide instance
 		public childItems = new Map<string, OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem>(); //DropdownServerSideItem.uniqueId -> DropdownServerSideItem obj
@@ -19,9 +38,25 @@ namespace Providers.Dropdown.OSUIComponents {
 			console.log('NEW DropdownSS', this.uniqueId);
 		}
 
-		// Create the provider instance
-		private _createProviderInstance(): void {
-			console.log('this.provider');
+		// Add Custom HTML elements to the DropdownBallon in order to help on deal with keyboard navigation (Accessibility)
+		private _addSpanHtmlElements(): void {
+			// Add top focus item
+			this._spanTopFocusElement = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Span);
+			this._spanTopFocusElement.classList.add(
+				Enum.Class.FocusTopHtmlElement,
+				OSUIFramework.Constants.AccessibilityHideElementClass
+			);
+			OSUIFramework.Helper.A11Y.AriaHiddenFalse(this._spanTopFocusElement);
+			this._baloonWrapperElement.prepend(this._spanTopFocusElement);
+
+			// Add bottom focus item
+			this._spanBottomFocusElement = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Span);
+			this._spanBottomFocusElement.classList.add(
+				Enum.Class.FocusBottomHtmlElement,
+				OSUIFramework.Constants.AccessibilityHideElementClass
+			);
+			OSUIFramework.Helper.A11Y.AriaHiddenTrue(this._spanBottomFocusElement);
+			this._baloonWrapperElement.append(this._spanBottomFocusElement);
 		}
 
 		// Move ballon element to outside of the pattern context
@@ -31,16 +66,45 @@ namespace Providers.Dropdown.OSUIComponents {
 				OSUIFramework.Constants.Dot + OSUIFramework.Constants.LayoutClass
 			) as HTMLElement;
 
-			OSUIFramework.Helper.Dom.Move(this._dropdownBaloonElement, layoutElement);
+			OSUIFramework.Helper.Dom.Move(this._baloonWrapperElement, layoutElement);
+		}
+
+		// A11y keyboard keys
+		private _onKeyboardPressed(event: KeyboardEvent): void {
+			event.stopPropagation();
+
+			// If Enter or Space Keys and Single Option
+			if (
+				(event.key === OSUIFramework.GlobalEnum.Keycodes.Enter ||
+					event.key === OSUIFramework.GlobalEnum.Keycodes.Space) &&
+				this.configs.AllowMultipleSelection === false
+			) {
+				console.log('Dropdown must CLOSE!');
+			}
+		}
+
+		// Used to apply the logic when user click to open the Dropdown
+		private _onSelectWrapperClicked() {
+			console.log('Dropdown must OPEN!');
+		}
+
+		// Manage the behaviour to leave baloon using tabNavigation
+		private _onSpanElementFocus(event: FocusEvent): void {
+			const targetElement = event.target as HTMLElement;
+			targetElement.blur();
+
+			this._baloonWrapperElement.focus();
+
+			console.log('Dropdown must CLOSE!');
 		}
 
 		// Method to deal with the click at a DropdpownOptionItem
-		private _optionItemClicked(optionItemId: string): void {
+		private _optionItemHasBeenClicked(optionItemId: string): void {
 			// Check if the given OptionId exist at optionsList
 			if (this.childItems.has(optionItemId)) {
 				// Check if Dropdown must close!
 				if (this.configs.AllowMultipleSelection === false) {
-					console.log(`Clicked optionId: ${optionItemId}, Dropdown ${this.widgetId} must close!`);
+					console.log('Dropdown must CLOSE!');
 				}
 			} else {
 				throw new Error(
@@ -60,11 +124,11 @@ namespace Providers.Dropdown.OSUIComponents {
 				const getOptionItemIndex = this.childItemsIds.indexOf(optionItemId);
 
 				// Ensure that code wont run if key was not defined!
-				if (optionItem.keyordTriggerdKey === undefined) {
+				if (optionItem.keybordTriggerdKey === undefined) {
 					return;
 				}
 
-				switch (optionItem.keyordTriggerdKey) {
+				switch (optionItem.keybordTriggerdKey) {
 					// ArrowUp
 					case OSUIFramework.GlobalEnum.Keycodes.ArrowUp:
 						// Check If focused item is not the first one!
@@ -97,6 +161,23 @@ namespace Providers.Dropdown.OSUIComponents {
 			}
 		}
 
+		// Remove Pattern Events
+		private _removeEvents(): void {
+			this._selectWrapper.removeEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			this._selectWrapper.removeEventListener(
+				OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
+				this._eventOnkeyBoardPress
+			);
+			this._spanTopFocusElement.removeEventListener(
+				OSUIFramework.GlobalEnum.HTMLEvent.Focus,
+				this._eventOnSpanFocus
+			);
+			this._spanBottomFocusElement.removeEventListener(
+				OSUIFramework.GlobalEnum.HTMLEvent.Focus,
+				this._eventOnSpanFocus
+			);
+		}
+
 		// Method used to store a given DropdownOption into optionItems list, it's triggered by DropdownServerSideItem
 		private _setNewOptionItem(optionItemId: string): void {
 			// Get the DropdownOptionItem reference
@@ -113,6 +194,23 @@ namespace Providers.Dropdown.OSUIComponents {
 				this.childItems.set(optionItemId, optionItem);
 				this.childItemsIds.push(optionItemId);
 			}
+		}
+
+		// Set Pattern Events
+		private _setUpEvents(): void {
+			this._selectWrapper.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			this._selectWrapper.addEventListener(
+				OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
+				this._eventOnkeyBoardPress
+			);
+			this._spanTopFocusElement.addEventListener(
+				OSUIFramework.GlobalEnum.HTMLEvent.Focus,
+				this._eventOnSpanFocus
+			);
+			this._spanBottomFocusElement.addEventListener(
+				OSUIFramework.GlobalEnum.HTMLEvent.Focus,
+				this._eventOnSpanFocus
+			);
 		}
 
 		// Method used to remove a given DropdownOption from optionItems list, it's triggered by DropdownServerSideItem
@@ -146,13 +244,28 @@ namespace Providers.Dropdown.OSUIComponents {
 		}
 
 		/**
-		 * Sets the callbacks to be used with the provider.
+		 * Add the Accessibility Attributes values
+		 *
+		 * @protected
+		 * @memberof OSUIDropdownServerSide
+		 */
+		protected setA11yProperties(): void {
+			OSUIFramework.Helper.A11Y.TabIndexTrue(this._spanBottomFocusElement);
+			OSUIFramework.Helper.A11Y.TabIndexTrue(this._spanTopFocusElement);
+
+			OSUIFramework.Helper.A11Y.TabIndexTrue(this._selectWrapper);
+		}
+
+		/**
+		 * Method to set the calbacks
 		 *
 		 * @protected
 		 * @memberof OSUIDropdownServerSide
 		 */
 		protected setCallbacks(): void {
-			// console.log('SetCallbacks');
+			this._eventOnClick = this._onSelectWrapperClicked.bind(this);
+			this._eventOnkeyBoardPress = this._onKeyboardPressed.bind(this);
+			this._eventOnSpanFocus = this._onSpanElementFocus.bind(this);
 		}
 
 		/**
@@ -162,14 +275,34 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		protected setHtmlElements(): void {
-			this._dropdownBaloonElement = OSUIFramework.Helper.Dom.TagSelector(
+			this._baloonFooterElement = OSUIFramework.Helper.Dom.TagSelector(
 				this.selfElement,
-				OSUIFramework.Constants.Dot + Enum.Class.DropdownBallonWrapper
+				OSUIFramework.Constants.Dot + Enum.Class.BallonFooter
+			);
+			this._baloonSearchElement = OSUIFramework.Helper.Dom.TagSelector(
+				this.selfElement,
+				OSUIFramework.Constants.Dot + Enum.Class.BallonSearch
+			);
+			this._baloonWrapperElement = OSUIFramework.Helper.Dom.TagSelector(
+				this.selfElement,
+				OSUIFramework.Constants.Dot + Enum.Class.BallonWrapper
+			);
+			this._selectWrapper = OSUIFramework.Helper.Dom.TagSelector(
+				this.selfElement,
+				OSUIFramework.Constants.Dot + Enum.Class.SelectWrapper
 			);
 
-			// TODO
+			// Add custom SPAN HTML
+			this._addSpanHtmlElements();
+			// Add Accessibility properties
+			this.setA11yProperties();
+			// Add the pattern Events
+			this._setUpEvents();
 			// Ensure that the Move only happens after HTML elements has been set!
-			// this._moveBallonElement();
+			this._moveBallonElement();
+
+			// Trigger platform's _platformEventInitializedCallback client Action
+			OSUIFramework.Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
 		}
 
 		/**
@@ -179,9 +312,9 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		protected unsetCallbacks(): void {
-			console.log(
-				this.uniqueId + ' DropdownServerSide - unsetCallbacks() => TODO (by CreateNewPattern): Update or Remove'
-			);
+			this._platformEventInitializedCallback = undefined;
+			this._platformEventOnClosedCallback = undefined;
+			this._eventOnSpanFocus = undefined;
 		}
 
 		/**
@@ -192,10 +325,13 @@ namespace Providers.Dropdown.OSUIComponents {
 		 */
 		protected unsetHtmlElements(): void {
 			// Ensure that the ballon has been removed from the DOM since it has been Moved to outside of pattern context.
-			this._dropdownBaloonElement.remove();
+			this._baloonWrapperElement.remove();
 
-			// unset the local property
-			this._dropdownBaloonElement = undefined;
+			// unset the local properties
+			this._baloonFooterElement = undefined;
+			this._baloonSearchElement = undefined;
+			this._baloonWrapperElement = undefined;
+			this._selectWrapper = undefined;
 		}
 
 		/**
@@ -205,16 +341,13 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @param notifiedTo {OSUIFramework.GlobalEnum.ChildNotifyActionParent} triggered notification type
 		 * @memberof OSUIDropdownServerSide
 		 */
-		public beNotifiedFromChildItem(
-			childId: string,
-			notifiedTo: OSUIFramework.GlobalEnum.ChildNotifyActionParent
-		): void {
+		public beNotifiedByChild(childId: string, notifiedTo: OSUIFramework.GlobalEnum.ChildNotifyActionParent): void {
 			switch (notifiedTo) {
 				case OSUIFramework.GlobalEnum.ChildNotifyActionParent.Add:
 					this._setNewOptionItem(childId);
 					break;
 				case OSUIFramework.GlobalEnum.ChildNotifyActionParent.Click:
-					this._optionItemClicked(childId);
+					this._optionItemHasBeenClicked(childId);
 					break;
 				case OSUIFramework.GlobalEnum.ChildNotifyActionParent.KeyPressed:
 					this._optionItemKeyPressed(childId);
@@ -231,13 +364,8 @@ namespace Providers.Dropdown.OSUIComponents {
 
 		public build(): void {
 			super.build();
-
 			this.setCallbacks();
-
 			this.setHtmlElements();
-
-			this._createProviderInstance();
-
 			super.finishBuild();
 		}
 
@@ -288,12 +416,9 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		public dispose(): void {
+			this._removeEvents();
 			this.unsetCallbacks();
-
 			this.unsetHtmlElements();
-
-			this.provider.destroy();
-
 			super.dispose();
 		}
 
@@ -325,18 +450,24 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
-			// console.log(this.uniqueId + ' DropdownServerSide - registerProviderCallback()');
-			// switch (eventName) {
-			// 	case OSUIFramework.Patterns.Dropdown.Enum.Events.EVENT_NAME:
-			// 		// TODO (by CreateNewPattern): Update or Remove
-			// 		break;
-			// 	default:
-			// 		/* TODO (by CreateNewPattern):
-			// 			The line below is created by the CreateNewPattern mechanism, that is not able to replace values
-			// 			as expected, that said, check other patterns to understand how to replace it!
-			// 		*/
-			// 		throw new Error("The givem '" + eventName + "' event name it's not defined.");
-			// }
+			switch (eventName) {
+				case OSUIFramework.Patterns.Dropdown.Enum.Events.Initialized:
+					if (this._platformEventInitializedCallback === undefined) {
+						this._platformEventInitializedCallback = callback;
+					}
+					break;
+
+				case Enum.Events.OnClosed:
+					if (this._platformEventOnClosedCallback === undefined) {
+						this._platformEventOnClosedCallback = callback;
+					}
+					break;
+
+				default:
+					throw new Error(
+						`${OSUIFramework.ErrorCodes.Dropdown.FailRegisterCallback}:	The given '${eventName}' event name it's not defined.`
+					);
+			}
 		}
 
 		/**
