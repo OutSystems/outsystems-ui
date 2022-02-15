@@ -5,6 +5,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem.Enum {
 	 */
 	export enum CssClass {
 		DropdownParentBallon = 'osui-dropdown-serverside__ballon-wrapper',
+		IsSelected = 'osui-dropdown-serverside-item--is-selected',
 	}
 
 	/**

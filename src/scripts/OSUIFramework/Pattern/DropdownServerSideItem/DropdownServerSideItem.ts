@@ -175,13 +175,13 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
 
-			// if (this.isBuilt) {
-			// 	switch (propertyName) {
-			// 		case Enum.Properties.PROP_NAME:
-			// 			// TODO (by CreateNewPattern) Update or Remove
-			// 			break;
-			// 	}
-			// }
+			if (this.isBuilt) {
+				switch (propertyName) {
+					case Enum.Properties.IsSelected:
+						Helper.Dom.Styles.ToggleClass(this.selfElement, Enum.CssClass.IsSelected);
+						break;
+				}
+			}
 		}
 
 		/**
