@@ -3,15 +3,15 @@ namespace Providers.Dropdown.OSUIComponents {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class OSUIDropdownServerSide<C extends Dropdown.OSUIComponents.OSUIDropdownServerSideConfig>
 		extends OSUIFramework.Patterns.Dropdown.AbstractDropdown<DropdownAdvanced, C>
-		implements OSUIFramework.Patterns.Dropdown.IDropdown
+		implements IDropdownServerSide
 	{
 		// Store the HTML element for the DropdownBaloon
 		private _dropdownBaloonElement: HTMLElement;
 
 		// Store a collection of all DropdownServerSideItems inside this DropdownServerSide instance
-		private _optionItems = new Map<string, OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem>(); //DropdownServerSideItem.uniqueId -> DropdownServerSideItem obj
+		public childItems = new Map<string, OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem>(); //DropdownServerSideItem.uniqueId -> DropdownServerSideItem obj
 		// Store all the optionItems Ids to help on understanding the options positions
-		private _optionItemsIds = [];
+		public childItemsIds = [];
 
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
@@ -37,7 +37,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		// Method to deal with the click at a DropdpownOptionItem
 		private _optionItemClicked(optionItemId: string): void {
 			// Check if the given OptionId exist at optionsList
-			if (this._optionItems.has(optionItemId)) {
+			if (this.childItems.has(optionItemId)) {
 				// Check if Dropdown must close!
 				if (this.configs.AllowMultipleSelection === false) {
 					console.log(`Clicked optionId: ${optionItemId}, Dropdown ${this.widgetId} must close!`);
@@ -52,12 +52,12 @@ namespace Providers.Dropdown.OSUIComponents {
 		// Method used to deal with the keyPressed naviagtion between DropdownOptionItems
 		private _optionItemKeyPressed(optionItemId: string): void {
 			// Get the optionItem reference based on the given Id
-			const optionItem = this._optionItems.get(optionItemId);
+			const optionItem = this.childItems.get(optionItemId);
 
 			// Check if the given OptionId exist at optionsList
 			if (optionItem !== undefined) {
 				// Get the option item index position
-				const getOptionItemIndex = this._optionItemsIds.indexOf(optionItemId);
+				const getOptionItemIndex = this.childItemsIds.indexOf(optionItemId);
 
 				// Ensure that code wont run if key was not defined!
 				if (optionItem.keyordTriggerdKey === undefined) {
@@ -75,7 +75,7 @@ namespace Providers.Dropdown.OSUIComponents {
 
 					// ArrowDown
 					case OSUIFramework.GlobalEnum.Keycodes.ArrowDown:
-						if (getOptionItemIndex < this._optionItems.size - 1) {
+						if (getOptionItemIndex < this.childItems.size - 1) {
 							this._updateOptionItemFocuState(optionItem, getOptionItemIndex + 1);
 						}
 						break;
@@ -104,27 +104,27 @@ namespace Providers.Dropdown.OSUIComponents {
 				OutSystems.OSUI.Patterns.DropdownServerSideItemAPI.GetDropdownServerSideItemItemById(optionItemId);
 
 			// Check if the given OptionId has been already added
-			if (this._optionItems.has(optionItemId)) {
+			if (this.childItems.has(optionItemId)) {
 				throw new Error(
 					`${OSUIFramework.ErrorCodes.Dropdown.FailSetNewOptionItem}: There is already a ${OSUIFramework.GlobalEnum.PatternsNames.DropdownServerSideItem} under Id: '${optionItem.widgetId}' added to ${OSUIFramework.GlobalEnum.PatternsNames.Dropdown} with uniqueId: ${this.uniqueId}.`
 				);
 			} else {
 				// Store DropDownOption Item
-				this._optionItems.set(optionItemId, optionItem);
-				this._optionItemsIds.push(optionItemId);
+				this.childItems.set(optionItemId, optionItem);
+				this.childItemsIds.push(optionItemId);
 			}
 		}
 
 		// Method used to remove a given DropdownOption from optionItems list, it's triggered by DropdownServerSideItem
 		private _unsetNewOptionItem(optionItemId: string): void {
 			// Check if the given OptionId exist at optionsList
-			if (this._optionItems.has(optionItemId)) {
+			if (this.childItems.has(optionItemId)) {
 				// Remove item from Map
-				this._optionItems.delete(optionItemId);
+				this.childItems.delete(optionItemId);
 
 				// Remove item fom Ids Array
-				const getIndexPosition = this._optionItemsIds.indexOf(optionItemId);
-				this._optionItemsIds.splice(getIndexPosition, 1);
+				const getIndexPosition = this.childItemsIds.indexOf(optionItemId);
+				this.childItemsIds.splice(getIndexPosition, 1);
 			} else {
 				throw new Error(
 					`${OSUIFramework.ErrorCodes.Dropdown.FailUnsetNewOptionItem}: The ${OSUIFramework.GlobalEnum.PatternsNames.DropdownServerSideItem} under uniqueId: '${optionItemId}' does not exist as an OptionItem from ${OSUIFramework.GlobalEnum.PatternsNames.Dropdown} with Id: ${this.widgetId}.`
@@ -140,8 +140,8 @@ namespace Providers.Dropdown.OSUIComponents {
 			// Set Blur to the current one!
 			optionItem.setBlur();
 			// Set Focus to the prev/next one!
-			const itemId = this._optionItemsIds[itemIndex];
-			const item = this._optionItems.get(itemId);
+			const itemId = this.childItemsIds[itemIndex];
+			const item = this.childItems.get(itemId);
 			item.setFocus();
 		}
 
@@ -201,26 +201,26 @@ namespace Providers.Dropdown.OSUIComponents {
 		/**
 		 * Method used to be notified by a given dropdownOptionId about a given action and act accordingly
 		 *
-		 * @param optionItemId Dropdown Option Item Id to be stored
-		 * @param notifiedTo {Enum.OptionItemNotificationType} triggered notification type
+		 * @param childId Dropdown Option Item Id to be stored
+		 * @param notifiedTo {OSUIFramework.GlobalEnum.ChildNotifyActionParent} triggered notification type
 		 * @memberof OSUIDropdownServerSide
 		 */
-		public beNotifiedFromOptionItem(
-			optionItemId: string,
-			notifiedTo: OSUIFramework.Patterns.Dropdown.Enum.OptionItemNotificationType
+		public beNotifiedFromChildItem(
+			childId: string,
+			notifiedTo: OSUIFramework.GlobalEnum.ChildNotifyActionParent
 		): void {
 			switch (notifiedTo) {
-				case OSUIFramework.Patterns.Dropdown.Enum.OptionItemNotificationType.Add:
-					this._setNewOptionItem(optionItemId);
+				case OSUIFramework.GlobalEnum.ChildNotifyActionParent.Add:
+					this._setNewOptionItem(childId);
 					break;
-				case OSUIFramework.Patterns.Dropdown.Enum.OptionItemNotificationType.Click:
-					this._optionItemClicked(optionItemId);
+				case OSUIFramework.GlobalEnum.ChildNotifyActionParent.Click:
+					this._optionItemClicked(childId);
 					break;
-				case OSUIFramework.Patterns.Dropdown.Enum.OptionItemNotificationType.KeyPressed:
-					this._optionItemKeyPressed(optionItemId);
+				case OSUIFramework.GlobalEnum.ChildNotifyActionParent.KeyPressed:
+					this._optionItemKeyPressed(childId);
 					break;
-				case OSUIFramework.Patterns.Dropdown.Enum.OptionItemNotificationType.Removed:
-					this._unsetNewOptionItem(optionItemId);
+				case OSUIFramework.GlobalEnum.ChildNotifyActionParent.Removed:
+					this._unsetNewOptionItem(childId);
 					break;
 				default:
 					throw new Error(

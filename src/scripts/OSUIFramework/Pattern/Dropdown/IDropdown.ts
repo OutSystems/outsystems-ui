@@ -5,14 +5,6 @@ namespace OSUIFramework.Patterns.Dropdown {
 	 */
 	export interface IDropdown extends Interface.IPattern {
 		/**
-		 * Method used to be notified by a given dropdownOptionId about a given action and act accordingly
-		 *
-		 * @param optionItemId Dropdown Option Item Id to be stored
-		 * @param notifiedTo {Enum.OptionItemNotificationType} triggered notification type
-		 */
-		beNotifiedFromOptionItem(optionItemId: string, notifiedTo: Enum.OptionItemNotificationType): void;
-
-		/**
 		 * Method used to clear any selected values from the Dropdown
 		 *
 		 * @memberof IDropdown

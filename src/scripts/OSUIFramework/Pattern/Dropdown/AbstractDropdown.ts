@@ -17,10 +17,6 @@ namespace OSUIFramework.Patterns.Dropdown {
 			this.provider = p;
 		}
 
-		public abstract beNotifiedFromOptionItem(
-			optionItemId: string,
-			notifiedTo: Enum.OptionItemNotificationType
-		): void;
 		public abstract clear(): void;
 		public abstract disable(): void;
 		public abstract enable(): void;

@@ -20,16 +20,6 @@ namespace OSUIFramework.Patterns.Dropdown.Enum {
 	}
 
 	/**
-	 * Dropdown Option item notification type
-	 */
-	export enum OptionItemNotificationType {
-		Add = 'add',
-		Click = 'click',
-		KeyPressed = 'keyPressed',
-		Removed = 'removed',
-	}
-
-	/**
 	 * Properties
 	 */
 	export enum Properties {

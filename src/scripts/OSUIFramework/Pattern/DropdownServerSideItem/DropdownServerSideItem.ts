@@ -12,12 +12,6 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		extends AbstractPattern<DropdownServerSideItemConfig>
 		implements IDropdownServerSideItem
 	{
-		// Store a reference to the Dropdpown parent Element
-		private _dropdownParentElement: HTMLElement;
-		// Store the id of of the Dropdown parent
-		private _dropdownParentId: string;
-		// Store a reference to item Dropdpwn parent Element
-		private _dropdownParentReference: Patterns.Dropdown.IDropdown;
 		// Click Event
 		private _eventOnClick: Callbacks.Generic;
 		// Keyboard Key Press Event
@@ -27,49 +21,15 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 
 		// Store the Key used to trigger the notification into Dropdown parent
 		public keyordTriggerdKey: GlobalEnum.Keycodes;
+		// Store a reference to the Dropdpown parent Element
+		public parentElement: HTMLElement;
+		// Store the id of of the Dropdown parent
+		public parentId: string;
+		// Store a reference to item Dropdpwn parent Element
+		public parentObject: Providers.Dropdown.OSUIComponents.IDropdownServerSide;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new DropdownServerSideItemConfig(configs));
-		}
-
-		// Function used to get the reference of Dropdown parent
-		private _getDropdownParent(): void {
-			try {
-				const dropdownParentBallonElement = this._selfElem.closest(
-					Constants.Dot + Enum.CssClass.DropdownParentBallon
-				) as HTMLElement;
-
-				this._dropdownParentId = dropdownParentBallonElement.dataset.dropdownUniqueid;
-			} catch (e) {
-				// Was not able to get Dropdown parent element!
-				throw new Error(
-					`${ErrorCodes.DropdownServerSideItem.DropdownParentNotFound}: ${GlobalEnum.PatternsNames.Dropdown} parent of ${GlobalEnum.PatternsNames.DropdownServerSideItem} id: '${this.widgetId}' was not found!`
-				);
-			}
-
-			// Notify parent about a new instance of this child has been created!
-			this._notifyDropdownParent(Patterns.Dropdown.Enum.OptionItemNotificationType.Add);
-		}
-
-		// Method that will notify Dropdpwn parent in order to update it's references to DropdownOptionItems!
-		private _notifyDropdownParent(type: Patterns.Dropdown.Enum.OptionItemNotificationType): void {
-			// Get the Dropdown parent HTML element
-			this._dropdownParentElement = Helper.Dom.GetElementByUniqueId(this._dropdownParentId);
-
-			// If Dropdown Exist at Dom
-			if (this._dropdownParentElement !== undefined) {
-				// Get the DropdownParent reference
-				this._dropdownParentReference = OutSystems.OSUI.Patterns.DropdownAPI.GetDropdownById(
-					this._dropdownParentId
-				);
-
-				// Trigger the notification into parent
-				this._dropdownParentReference.beNotifiedFromOptionItem(this.uniqueId, type);
-			} else if (Patterns.Dropdown.Enum.OptionItemNotificationType.Add) {
-				throw new Error(
-					`${ErrorCodes.DropdownServerSideItem.DropdownParentNotFound}: ${GlobalEnum.PatternsNames.Dropdown} parent of ${GlobalEnum.PatternsNames.DropdownServerSideItem} id: '${this.widgetId}' was not found!`
-				);
-			}
 		}
 
 		// A11y keyboard keys
@@ -95,7 +55,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 					this.keyordTriggerdKey = event.key;
 
 					// Notify parent about the selected key
-					this._notifyDropdownParent(Patterns.Dropdown.Enum.OptionItemNotificationType.KeyPressed);
+					this.notifyParent(GlobalEnum.ChildNotifyActionParent.KeyPressed);
 					break;
 
 				// If Tab!
@@ -110,7 +70,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 					}
 
 					// Notify parent about the selected key
-					this._notifyDropdownParent(Patterns.Dropdown.Enum.OptionItemNotificationType.KeyPressed);
+					this.notifyParent(GlobalEnum.ChildNotifyActionParent.KeyPressed);
 					break;
 			}
 		}
@@ -118,18 +78,14 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		// Trigger the platform callback method
 		private _onSelected(event: MouseEvent | KeyboardEvent): void {
 			// Notify parent about this Option Click
-			this._notifyDropdownParent(
+			this.notifyParent(
 				event.type === 'click'
-					? Patterns.Dropdown.Enum.OptionItemNotificationType.Click
-					: Patterns.Dropdown.Enum.OptionItemNotificationType.KeyPressed
+					? GlobalEnum.ChildNotifyActionParent.Click
+					: GlobalEnum.ChildNotifyActionParent.KeyPressed
 			);
 
 			// Trigger platform callback about Option has been selected!
-			Helper.AsyncInvocation(
-				this._platformEventOnClickCallback,
-				this._dropdownParentReference.widgetId,
-				this.configs.ItemId
-			);
+			Helper.AsyncInvocation(this._platformEventOnClickCallback, this.parentObject.widgetId, this.configs.ItemId);
 		}
 
 		// Remove Pattern Events
@@ -184,9 +140,9 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 * @memberof DropdownServerSideItem
 		 */
 		protected unsetHtmlElements(): void {
-			this._dropdownParentElement = undefined;
-			this._dropdownParentId = undefined;
-			this._dropdownParentReference = undefined;
+			this.parentElement = undefined;
+			this.parentId = undefined;
+			this.parentObject = undefined;
 		}
 
 		/**
@@ -197,7 +153,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		public build(): void {
 			super.build();
 
-			this._getDropdownParent();
+			this.checkForParentId();
 
 			this.setCallbacks();
 
@@ -228,6 +184,29 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		}
 
 		/**
+		 * Function used to get the reference of Dropdown parent and set it
+		 *
+		 * @memberof DropdownServerSideItem
+		 */
+		public checkForParentId(): void {
+			try {
+				const dropdownParentBallonElement = this._selfElem.closest(
+					Constants.Dot + Enum.CssClass.DropdownParentBallon
+				) as HTMLElement;
+
+				this.parentId = dropdownParentBallonElement.dataset.dropdownUniqueid;
+			} catch (e) {
+				// Was not able to get Dropdown parent element!
+				throw new Error(
+					`${ErrorCodes.DropdownServerSideItem.DropdownParentNotFound}: ${GlobalEnum.PatternsNames.Dropdown} parent of ${GlobalEnum.PatternsNames.DropdownServerSideItem} id: '${this.widgetId}' was not found!`
+				);
+			}
+
+			// Notify parent about a new instance of this child has been created!
+			this.notifyParent(GlobalEnum.ChildNotifyActionParent.Add);
+		}
+
+		/**
 		 * Disposes the current pattern.
 		 *
 		 * @memberof DropdownServerSideItem
@@ -240,11 +219,38 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			this.unsetHtmlElements();
 
 			// Notify parent about this instance will be destroyed
-			this._notifyDropdownParent(Patterns.Dropdown.Enum.OptionItemNotificationType.Removed);
+			this.notifyParent(GlobalEnum.ChildNotifyActionParent.Removed);
 
 			//Destroying the base of pattern
 			super.dispose();
 		}
+
+		/**
+		 * Method used to notify parent about the action that was performed
+		 *
+		 * @param actionType Action Type name
+		 * @memberof IPatternIsPatternChild
+		 */
+		public notifyParent(actionType: GlobalEnum.ChildNotifyActionParent): void {
+			// Get the Dropdown parent HTML element
+			this.parentElement = Helper.Dom.GetElementByUniqueId(this.parentId);
+
+			// If Dropdown Exist at Dom
+			if (this.parentElement !== undefined) {
+				// Get the DropdownParent reference
+				this.parentObject = OutSystems.OSUI.Patterns.DropdownAPI.GetDropdownById(
+					this.parentId
+				) as Providers.Dropdown.OSUIComponents.IDropdownServerSide;
+
+				// Trigger the notification into parent
+				this.parentObject.beNotifiedFromChildItem(this.uniqueId, actionType);
+			} else if (GlobalEnum.ChildNotifyActionParent.Add) {
+				throw new Error(
+					`${ErrorCodes.DropdownServerSideItem.DropdownParentNotFound}: ${GlobalEnum.PatternsNames.Dropdown} parent of ${GlobalEnum.PatternsNames.DropdownServerSideItem} id: '${this.widgetId}' was not found!`
+				);
+			}
+		}
+
 		/**
 		 * Method used to register the callback
 		 *
@@ -262,15 +268,6 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 				default:
 					throw new Error(`The given '${eventName}' event name it's not defined.`);
 			}
-		}
-
-		/**
-		 * Method used to set the tabindex attribute
-		 *
-		 * @memberof DropdownServerSideItem
-		 */
-		public setA11yTabindex(): void {
-			Helper.A11Y.TabIndexTrue(this.selfElement);
 		}
 
 		/**
@@ -292,11 +289,20 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		}
 
 		/**
+		 * Method used to set the tabindex attribute
+		 *
+		 * @memberof DropdownServerSideItem
+		 */
+		public setTabindex(): void {
+			Helper.A11Y.TabIndexTrue(this.selfElement);
+		}
+
+		/**
 		 * Method used to unset the tabindex attribute
 		 *
 		 * @memberof DropdownServerSideItem
 		 */
-		public unsetA11yTabindex(): void {
+		public unsetTabindex(): void {
 			Helper.A11Y.TabIndexFalse(this.selfElement);
 		}
 	}

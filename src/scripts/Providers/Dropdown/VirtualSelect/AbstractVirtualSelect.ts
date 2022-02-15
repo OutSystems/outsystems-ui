@@ -139,22 +139,6 @@ namespace Providers.Dropdown.VirtualSelect {
 			this._selfElem.removeEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
 		}
 
-		/**
-		 * This method has no implementation on this context.
-		 *
-		 * @memberof AbstractVirtualSelect
-		 */
-		public beNotifiedFromOptionItem(
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			optionItemId: string,
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			notifiedTo: OSUIFramework.Patterns.Dropdown.Enum.OptionItemNotificationType
-		): void {
-			throw new Error(
-				`${OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.code}:	${OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.message}`
-			);
-		}
-
 		public build(): void {
 			super.build();
 
