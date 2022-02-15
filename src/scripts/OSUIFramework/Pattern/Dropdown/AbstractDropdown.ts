@@ -4,19 +4,17 @@ namespace OSUIFramework.Patterns.Dropdown {
 		extends AbstractPattern<C>
 		implements IDropdown, Interface.IProviderPattern<P>
 	{
-		private _provider: P;
-
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
 		}
 
 		public get provider(): P {
-			return this._provider;
+			return this.provider;
 		}
 
 		public set provider(p: P) {
-			this._provider = p;
+			this.provider = p;
 		}
 
 		public abstract beNotifiedFromOptionItem(
