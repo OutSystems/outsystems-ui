@@ -3,11 +3,16 @@
 /// @group Patterns-Tooltip
 /// Patterns - Content - Tooltip
 
-// myCustom tooltip variables
+// tooltip arrow size
 $osui-tooltip-arrow-size: 9px;
+// Service Studio preview arrow size
+$osui-tooltip-arrow-size-preview: 5px;
+$osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 
 ///
 .osui-tooltip {
+	--tooltip-transition-distance: 12px;
+	--tooltip-inverted-transition-distance: -12px;
 	display: inline-block;
 	position: relative;
 
@@ -30,8 +35,6 @@ $osui-tooltip-arrow-size: 9px;
 				top: initial;
 
 				.osui-tooltip__balloon-wrapper__balloon {
-					bottom: initial;
-					top: 0;
 					transform: translateY(0);
 
 					&:before {
@@ -62,7 +65,16 @@ $osui-tooltip-arrow-size: 9px;
 				padding-top: var(--space-none);
 
 				.osui-tooltip__balloon-wrapper__balloon {
-					left: 0;
+					transform: translateX(0);
+				}
+			}
+
+			&.center,
+			&.bottom,
+			&.bottom-left,
+			&.bottom-right {
+				.osui-tooltip__balloon-wrapper__balloon {
+					transform: translateY(0);
 				}
 			}
 
@@ -71,18 +83,11 @@ $osui-tooltip-arrow-size: 9px;
 				padding-left: initial;
 				padding-right: var(--space-base);
 				right: 100%;
-
-				.osui-tooltip__balloon-wrapper__balloon {
-					left: initial;
-					right: 0;
-					transform: translatex(0);
-				}
 			}
 		}
 
 		.osui-tooltip__balloon-wrapper__balloon {
 			opacity: 1;
-			top: 0;
 
 			&:before {
 				opacity: 1;
@@ -120,7 +125,7 @@ $osui-tooltip-arrow-size: 9px;
 		pointer-events: none;
 		position: absolute;
 		top: 100%;
-		transition: opacity 0.25s;
+		transition: opacity 250ms;
 		z-index: 2;
 
 		// Service Studio Preview
@@ -170,6 +175,15 @@ $osui-tooltip-arrow-size: 9px;
 			}
 		}
 
+		&.center,
+		&.bottom,
+		&.bottom-left,
+		&.bottom-right {
+			.osui-tooltip__balloon-wrapper__balloon {
+				transform: translateY(var(--tooltip-inverted-transition-distance));
+			}
+		}
+
 		// if opens to top
 		&.top,
 		&.top-left,
@@ -178,9 +192,7 @@ $osui-tooltip-arrow-size: 9px;
 			top: initial;
 
 			.osui-tooltip__balloon-wrapper__balloon {
-				bottom: initial;
-				top: var(--space-base);
-				transform: translateY(-100%);
+				transform: translateY(var(--tooltip-transition-distance));
 
 				&:before {
 					border-color: var(--color-neutral-9) transparent transparent transparent;
@@ -238,9 +250,6 @@ $osui-tooltip-arrow-size: 9px;
 			transform: translateY(-50%);
 
 			.osui-tooltip__balloon-wrapper__balloon {
-				left: calc(-1 * var(--space-s));
-				top: initial;
-
 				&:before {
 					border-color: transparent var(--color-neutral-9) transparent transparent;
 					border-width: $osui-tooltip-arrow-size $osui-tooltip-arrow-size $osui-tooltip-arrow-size 0;
@@ -252,6 +261,12 @@ $osui-tooltip-arrow-size: 9px;
 			}
 		}
 
+		&.right {
+			.osui-tooltip__balloon-wrapper__balloon {
+				transform: translateX(var(--tooltip-inverted-transition-distance));
+			}
+		}
+
 		// if opens to right
 		&.left {
 			left: initial;
@@ -260,9 +275,7 @@ $osui-tooltip-arrow-size: 9px;
 			right: 100%;
 
 			.osui-tooltip__balloon-wrapper__balloon {
-				left: initial;
-				right: calc(-1 * var(--space-s));
-				transform: translateX(-100%);
+				transform: translateX(var(--tooltip-transition-distance));
 
 				&:before {
 					border-color: transparent transparent transparent var(--color-neutral-9);
@@ -300,8 +313,7 @@ $osui-tooltip-arrow-size: 9px;
 		opacity: 0;
 		padding: var(--space-s);
 		position: relative;
-		top: calc(-1 * var(--space-base));
-		transition: top 0.25s, right 0.25s, bottom 0.25s, left 0.25s;
+		transition: transform 250ms;
 		width: fit-content;
 
 		// Service Studio Preview
@@ -311,8 +323,6 @@ $osui-tooltip-arrow-size: 9px;
 			-servicestudio-opacity: 1;
 			-servicestudio-top: 0;
 		}
-		$osui-tooltip-arrow-size-preview: 5px;
-		$osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		&:after {
 			-servicestudio-content: '';
 			-servicestudio-position: absolute;
