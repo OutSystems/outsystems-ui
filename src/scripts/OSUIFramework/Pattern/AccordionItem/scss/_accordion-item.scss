@@ -44,6 +44,12 @@
 				}
 			}
 
+			&.osui-accordion-item--is-disabled {
+				&::after {
+					border-color: var(--color-neutral-6);
+				}
+			}
+
 			&::after {
 				border-color: var(--color-primary);
 				opacity: 1;
