@@ -5,6 +5,5 @@ namespace Providers.Dropdown.OSUIComponents {
 	 */
 	export interface IDropdownServerSide
 		extends OSUIFramework.Patterns.Dropdown.IDropdown,
-			OSUIFramework.Interface
-				.IPatternHasPatternsAsChild<OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem> {}
+			OSUIFramework.Interface.IParent {}
 }

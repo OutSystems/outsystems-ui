@@ -5,25 +5,15 @@ namespace Providers.Dropdown.OSUIComponents {
 	 *
 	 * @export
 	 * @class OSUIDropdownServerSideConfig
-	 * @extends {OSUIFramework.Patterns.Dropdown.AbstractDropdownConfig}
+	 * @extends {OSUIFramework.Patterns.AbstractConfiguration}
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
-	export class OSUIDropdownServerSideConfig extends OSUIFramework.Patterns.Dropdown.AbstractDropdownConfig {
+	export class OSUIDropdownServerSideConfig extends OSUIFramework.Patterns.AbstractConfiguration {
 		public AllowMultipleSelection: boolean;
+		public IsDisabled: boolean;
 
 		constructor(config: JSON) {
 			super(config);
-		}
-
-		/**
-		 * This method has no implementation on this context.
-		 *
-		 * @memberof DropdownAdvancedSearchConfig
-		 */
-		public getProviderConfig(): void {
-			throw new Error(
-				`${OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.code}:	${OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.message}`
-			);
 		}
 
 		/**
@@ -39,6 +29,9 @@ namespace Providers.Dropdown.OSUIComponents {
 
 			switch (key) {
 				case Enum.Properties.AllowMultipleSelection:
+					validatedValue = this.validateBoolean(value as boolean, false);
+					break;
+				case Enum.Properties.IsDisabled:
 					validatedValue = this.validateBoolean(value as boolean, false);
 					break;
 				default:

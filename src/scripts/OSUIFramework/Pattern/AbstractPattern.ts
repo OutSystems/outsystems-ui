@@ -13,7 +13,7 @@ namespace OSUIFramework.Patterns {
 		/**
 		 * Pattern configurations (doubling as current state). Extends AbstractConfiguration.
 		 *
-		 * @protected
+		 * @private
 		 * @type {C}
 		 * @memberof AbstractPattern
 		 */

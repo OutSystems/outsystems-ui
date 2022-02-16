@@ -2,7 +2,10 @@
 namespace Providers.Dropdown.OSUIComponents {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class OSUIDropdownServerSide<C extends Dropdown.OSUIComponents.OSUIDropdownServerSideConfig>
-		extends OSUIFramework.Patterns.Dropdown.AbstractDropdown<DropdownAdvanced, C>
+		extends OSUIFramework.Patterns.AbstractParent<
+			Dropdown.OSUIComponents.OSUIDropdownServerSideConfig,
+			OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem
+		>
 		implements IDropdownServerSide
 	{
 		// Store the HTML element for the DropdownBaloonFooter
@@ -26,11 +29,6 @@ namespace Providers.Dropdown.OSUIComponents {
 		// HTML Elements that will help to deal with keyboard tab navigation
 		private _spanBottomFocusElement: HTMLElement;
 		private _spanTopFocusElement: HTMLElement;
-
-		// Store a collection of all DropdownServerSideItems inside this DropdownServerSide instance
-		public childItems = new Map<string, OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem>(); //DropdownServerSideItem.uniqueId -> DropdownServerSideItem obj
-		// Store all the optionItems Ids to help on understanding the options positions
-		public childItemsIds = [];
 
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
@@ -101,7 +99,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		// Method to deal with the click at a DropdpownOptionItem
 		private _optionItemHasBeenClicked(optionItemId: string): void {
 			// Check if the given OptionId exist at optionsList
-			if (this.childItems.has(optionItemId)) {
+			if (this.getChild(optionItemId)) {
 				// Check if Dropdown must close!
 				if (this.configs.AllowMultipleSelection === false) {
 					console.log('Dropdown must CLOSE!');
@@ -116,12 +114,12 @@ namespace Providers.Dropdown.OSUIComponents {
 		// Method used to deal with the keyPressed naviagtion between DropdownOptionItems
 		private _optionItemKeyPressed(optionItemId: string): void {
 			// Get the optionItem reference based on the given Id
-			const optionItem = this.childItems.get(optionItemId);
+			const optionItem = this.getChild(optionItemId);
 
 			// Check if the given OptionId exist at optionsList
 			if (optionItem !== undefined) {
 				// Get the option item index position
-				const getOptionItemIndex = this.childItemsIds.indexOf(optionItemId);
+				const getOptionItemIndex = this.getChildIndex(optionItemId);
 
 				// Ensure that code wont run if key was not defined!
 				if (optionItem.keybordTriggerdKey === undefined) {
@@ -139,7 +137,7 @@ namespace Providers.Dropdown.OSUIComponents {
 
 					// ArrowDown
 					case OSUIFramework.GlobalEnum.Keycodes.ArrowDown:
-						if (getOptionItemIndex < this.childItems.size - 1) {
+						if (getOptionItemIndex < this.childItems.length - 1) {
 							this._updateOptionItemFocuState(optionItem, getOptionItemIndex + 1);
 						}
 						break;
@@ -185,14 +183,13 @@ namespace Providers.Dropdown.OSUIComponents {
 				OutSystems.OSUI.Patterns.DropdownServerSideItemAPI.GetDropdownServerSideItemItemById(optionItemId);
 
 			// Check if the given OptionId has been already added
-			if (this.childItems.has(optionItemId)) {
+			if (this.getChild(optionItemId)) {
 				throw new Error(
 					`${OSUIFramework.ErrorCodes.Dropdown.FailSetNewOptionItem}: There is already a ${OSUIFramework.GlobalEnum.PatternsNames.DropdownServerSideItem} under Id: '${optionItem.widgetId}' added to ${OSUIFramework.GlobalEnum.PatternsNames.Dropdown} with uniqueId: ${this.uniqueId}.`
 				);
 			} else {
 				// Store DropDownOption Item
-				this.childItems.set(optionItemId, optionItem);
-				this.childItemsIds.push(optionItemId);
+				this.setChild(optionItemId, optionItem);
 			}
 		}
 
@@ -216,13 +213,9 @@ namespace Providers.Dropdown.OSUIComponents {
 		// Method used to remove a given DropdownOption from optionItems list, it's triggered by DropdownServerSideItem
 		private _unsetNewOptionItem(optionItemId: string): void {
 			// Check if the given OptionId exist at optionsList
-			if (this.childItems.has(optionItemId)) {
-				// Remove item from Map
-				this.childItems.delete(optionItemId);
-
-				// Remove item fom Ids Array
-				const getIndexPosition = this.childItemsIds.indexOf(optionItemId);
-				this.childItemsIds.splice(getIndexPosition, 1);
+			if (this.getChild(optionItemId)) {
+				// Remove item
+				this.unsetChild(optionItemId);
 			} else {
 				throw new Error(
 					`${OSUIFramework.ErrorCodes.Dropdown.FailUnsetNewOptionItem}: The ${OSUIFramework.GlobalEnum.PatternsNames.DropdownServerSideItem} under uniqueId: '${optionItemId}' does not exist as an OptionItem from ${OSUIFramework.GlobalEnum.PatternsNames.Dropdown} with Id: ${this.widgetId}.`
@@ -238,9 +231,7 @@ namespace Providers.Dropdown.OSUIComponents {
 			// Set Blur to the current one!
 			optionItem.setBlur();
 			// Set Focus to the prev/next one!
-			const itemId = this.childItemsIds[itemIndex];
-			const item = this.childItems.get(itemId);
-			item.setFocus();
+			this.getChildByIndex(itemIndex).setFocus();
 		}
 
 		/**

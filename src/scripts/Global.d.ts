@@ -41,7 +41,7 @@ declare global {
 		VirtualSelect: any;
 
 		// Dropdown created from scratch
-		DropdownAdvanced: any;
+		OSUIComponents: any;
 	}
 
 	interface Navigator {
@@ -69,5 +69,5 @@ declare global {
 	type VirtualSelect = any;
 
 	// DropDown => OutSystems Provider
-	type DropdownAdvanced = any;
+	type OSUIComponents = any;
 }

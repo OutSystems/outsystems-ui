@@ -196,6 +196,10 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 				) as HTMLElement;
 
 				this.parentId = dropdownParentBallonElement.dataset.dropdownUniqueid;
+
+				this.parentObject = OutSystems.OSUI.Patterns.DropdownAPI.GetDropdownById(
+					this.parentId
+				) as Providers.Dropdown.OSUIComponents.IDropdownServerSide;
 			} catch (e) {
 				// Was not able to get Dropdown parent element!
 				throw new Error(
@@ -233,23 +237,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 * @memberof IPatternIsPatternChild
 		 */
 		public notifyParent(actionType: GlobalEnum.ChildNotifyActionParent): void {
-			// Get the Dropdown parent HTML element
-			this.parentElement = Helper.Dom.GetElementByUniqueId(this.parentId);
-
-			// If Dropdown Exist at Dom
-			if (this.parentElement !== undefined) {
-				// Get the DropdownParent reference
-				this.parentObject = OutSystems.OSUI.Patterns.DropdownAPI.GetDropdownById(
-					this.parentId
-				) as Providers.Dropdown.OSUIComponents.IDropdownServerSide;
-
-				// Trigger the notification into parent
-				this.parentObject.beNotifiedByChild(this.uniqueId, actionType);
-			} else if (GlobalEnum.ChildNotifyActionParent.Add) {
-				throw new Error(
-					`${ErrorCodes.DropdownServerSideItem.DropdownParentNotFound}: ${GlobalEnum.PatternsNames.Dropdown} parent of ${GlobalEnum.PatternsNames.DropdownServerSideItem} id: '${this.widgetId}' was not found!`
-				);
-			}
+			this.parentObject.beNotifiedByChild(this.uniqueId, actionType);
 		}
 
 		/**
