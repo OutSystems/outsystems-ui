@@ -49,7 +49,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 					this.keybordTriggerdKey = event.key;
 
 					// Notify parent about the selected key
-					this.notifyParent(GlobalEnum.ChildNotifyActionParent.KeyPressed);
+					this.notifyParent(Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.KeyPressed);
 					break;
 
 				// If Tab!
@@ -64,7 +64,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 					}
 
 					// Notify parent about the selected key
-					this.notifyParent(GlobalEnum.ChildNotifyActionParent.KeyPressed);
+					this.notifyParent(Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.KeyPressed);
 					break;
 			}
 		}
@@ -76,8 +76,8 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			// Notify parent about this Option Click
 			this.notifyParent(
 				event.type === 'click'
-					? GlobalEnum.ChildNotifyActionParent.Click
-					: GlobalEnum.ChildNotifyActionParent.KeyPressed
+					? Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.Click
+					: Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.KeyPressed
 			);
 
 			// Trigger platform callback about Option has been selected!
@@ -150,7 +150,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			);
 
 			// Notify parent about a new instance of this child has been created!
-			this.notifyParent(GlobalEnum.ChildNotifyActionParent.Add);
+			this.notifyParent(Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.Add);
 
 			this.setCallbacks();
 
@@ -193,7 +193,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			this.unsetHtmlElements();
 
 			// Notify parent about this instance will be destroyed
-			this.notifyParent(GlobalEnum.ChildNotifyActionParent.Removed);
+			this.notifyParent(Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.Removed);
 
 			//Destroying the base of pattern
 			super.dispose();

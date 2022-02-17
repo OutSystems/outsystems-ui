@@ -329,21 +329,21 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * Method used to be notified by a given dropdownOptionId about a given action and act accordingly
 		 *
 		 * @param childId Dropdown Option Item Id to be stored
-		 * @param notifiedTo {OSUIFramework.GlobalEnum.ChildNotifyActionParent} triggered notification type
+		 * @param notifiedTo {Enum.ChildNotifyActionType} triggered notification type
 		 * @memberof OSUIDropdownServerSide
 		 */
-		public beNotifiedByChild(childId: string, notifiedTo: OSUIFramework.GlobalEnum.ChildNotifyActionParent): void {
+		public beNotifiedByChild(childId: string, notifiedTo: Enum.ChildNotifyActionType): void {
 			switch (notifiedTo) {
-				case OSUIFramework.GlobalEnum.ChildNotifyActionParent.Add:
+				case Enum.ChildNotifyActionType.Add:
 					this._setNewOptionItem(childId);
 					break;
-				case OSUIFramework.GlobalEnum.ChildNotifyActionParent.Click:
+				case Enum.ChildNotifyActionType.Click:
 					this._optionItemHasBeenClicked(childId);
 					break;
-				case OSUIFramework.GlobalEnum.ChildNotifyActionParent.KeyPressed:
+				case Enum.ChildNotifyActionType.KeyPressed:
 					this._optionItemKeyPressed(childId);
 					break;
-				case OSUIFramework.GlobalEnum.ChildNotifyActionParent.Removed:
+				case Enum.ChildNotifyActionType.Removed:
 					this._unsetNewOptionItem(childId);
 					break;
 				default:

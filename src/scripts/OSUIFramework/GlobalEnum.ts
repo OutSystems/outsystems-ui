@@ -218,16 +218,6 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
-	 * Communication between Patterns - Notification Type
-	 */
-	export enum ChildNotifyActionParent {
-		Add = 'add',
-		Click = 'click',
-		KeyPressed = 'keyPressed',
-		Removed = 'removed',
-	}
-
-	/**
 	 * OutSystemsUI Units
 	 */
 	export enum Units {

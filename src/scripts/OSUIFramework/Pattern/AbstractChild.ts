@@ -47,16 +47,16 @@ namespace OSUIFramework.Patterns {
 		 * Method that will Get and Set parent element info.
 		 *
 		 * @param parentSelector Selector to find for parent Element
-		 * @param getPaternAPI API reference method that will return the PatternById
+		 * @param getPatternByIdAPI API reference method from Parent Pattern that will return the PatternById
 		 */
 		// eslint-disable-next-line @typescript-eslint/ban-types
-		protected setParent(parentSelector: string, getPaternFromAPI: Function): void {
+		protected setParent(parentSelector: string, getPatternByIdAPI: Function): void {
 			try {
 				const findedElement = this._selfElem.closest(parentSelector) as HTMLElement;
 				// Find for Id at Name or data-uniqueid attribite, data-uniqueid attribute is used at the elements that will be moved outside parent context
 				this._parentId = Helper.Dom.Attribute.Get(findedElement, 'name') || findedElement.dataset.uniqueid;
 
-				this._parentObject = getPaternFromAPI(this._parentId) as PT;
+				this._parentObject = getPatternByIdAPI(this._parentId) as PT;
 			} catch (e) {
 				// Was not able to get Dropdown parent element!
 				throw new Error(
