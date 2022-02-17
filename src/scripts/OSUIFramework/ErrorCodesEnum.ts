@@ -4,20 +4,22 @@ namespace OSUIFramework.ErrorCodes {
 	 * OutSystemsUI Framework Error Messages
 	 */
 
+	export const AbstractChild = {
+		DropdownParentNotFound: 'OSUI-GEN-01001',
+	};
+
 	export const Dropdown = {
-		FailOptionItemClicked: 'OSUI-GEN-01001',
-		FailOptionItemKeyPressed: 'OSUI-GEN-01002',
-		FailRegisterCallback: 'OSUI-GEN-01003',
-		FailSetNewOptionItem: 'OSUI-GEN-01004',
-		FailToSetOptionItemAction: 'OSUI-GEN-01005',
-		FailUnsetNewOptionItem: 'OSUI-GEN-01006',
+		FailOptionItemClicked: 'OSUI-GEN-02001',
+		FailOptionItemKeyPressed: 'OSUI-GEN-02002',
+		FailRegisterCallback: 'OSUI-GEN-02003',
+		FailSetNewOptionItem: 'OSUI-GEN-02004',
+		FailToSetOptionItemAction: 'OSUI-GEN-02005',
+		FailUnsetNewOptionItem: 'OSUI-GEN-02006',
 		HasNoImplementation: {
-			code: 'OSUI-GEN-01007',
+			code: 'OSUI-GEN-02007',
 			message: 'This method has no implementation on this Dropdow Type.',
 		},
 	};
 
-	export const DropdownServerSideItem = {
-		DropdownParentNotFound: 'OSUI-GEN-02001',
-	};
+	export const DropdownServerSideItem = {};
 }

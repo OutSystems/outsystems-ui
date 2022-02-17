@@ -12,8 +12,8 @@ namespace OSUIFramework.Interface {
 		 * Method used to be notified by a given dropdownOptionId about a given action and act accordingly
 		 *
 		 * @param childId Dropdown Option Item Id to be stored
-		 * @param notifiedTo {GlobalEnum.ChildNotifyActionParent} triggered notification type
+		 * @param notifiedTo triggered notification type name
 		 */
-		beNotifiedByChild(childId: string, notifiedTo: OSUIFramework.GlobalEnum.ChildNotifyActionParent): void;
+		beNotifiedByChild(childId: string, notifiedTo: string): void;
 	}
 }

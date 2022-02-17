@@ -84,6 +84,13 @@ namespace OSUIFramework.Patterns {
 			return Helper.MapOperation.ExportKeys(this._childItems);
 		}
 
+		/**
+		 * Method used to be notified by a given ChildId about a given action and act accordingly
+		 *
+		 * @param childId Child Item Id
+		 * @param notifiedTo Notification name (Should be based on an Enum)
+		 * @memberof OSUIDropdownServerSide
+		 */
 		public abstract beNotifiedByChild(childId: string, notifiedTo: unknown): void;
 	}
 }

@@ -9,7 +9,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 	 * @implements {IDropdownServerSideItem}
 	 */
 	export class DropdownServerSideItem
-		extends AbstractPattern<DropdownServerSideItemConfig>
+		extends AbstractChild<DropdownServerSideItemConfig, Providers.Dropdown.OSUIComponents.IDropdownServerSide>
 		implements IDropdownServerSideItem
 	{
 		// Click Event
@@ -21,12 +21,6 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 
 		// Store the Key used to trigger the notification into Dropdown parent
 		public keybordTriggerdKey: GlobalEnum.Keycodes;
-		// Store a reference to the Dropdpown parent Element
-		public parentElement: HTMLElement;
-		// Store the id of of the Dropdown parent
-		public parentId: string;
-		// Store a reference to item Dropdpwn parent Element
-		public parentObject: Providers.Dropdown.OSUIComponents.IDropdownServerSide;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new DropdownServerSideItemConfig(configs));
@@ -140,11 +134,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 * @protected
 		 * @memberof DropdownServerSideItem
 		 */
-		protected unsetHtmlElements(): void {
-			this.parentElement = undefined;
-			this.parentId = undefined;
-			this.parentObject = undefined;
-		}
+		protected unsetHtmlElements(): void {}
 
 		/**
 		 *  Builds the DropdownServerSideItem.
@@ -154,7 +144,13 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		public build(): void {
 			super.build();
 
-			this.checkForParentId();
+			this.setParent(
+				Constants.Dot + Enum.CssClass.DropdownParentBallon,
+				OutSystems.OSUI.Patterns.DropdownAPI.GetDropdownById
+			);
+
+			// Notify parent about a new instance of this child has been created!
+			this.notifyParent(GlobalEnum.ChildNotifyActionParent.Add);
 
 			this.setCallbacks();
 
@@ -185,33 +181,6 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		}
 
 		/**
-		 * Function used to get the reference of Dropdown parent and set it
-		 *
-		 * @memberof DropdownServerSideItem
-		 */
-		public checkForParentId(): void {
-			try {
-				const dropdownParentBallonElement = this._selfElem.closest(
-					Constants.Dot + Enum.CssClass.DropdownParentBallon
-				) as HTMLElement;
-
-				this.parentId = dropdownParentBallonElement.dataset.dropdownUniqueid;
-
-				this.parentObject = OutSystems.OSUI.Patterns.DropdownAPI.GetDropdownById(
-					this.parentId
-				) as Providers.Dropdown.OSUIComponents.IDropdownServerSide;
-			} catch (e) {
-				// Was not able to get Dropdown parent element!
-				throw new Error(
-					`${ErrorCodes.DropdownServerSideItem.DropdownParentNotFound}: ${GlobalEnum.PatternsNames.Dropdown} parent of ${GlobalEnum.PatternsNames.DropdownServerSideItem} id: '${this.widgetId}' was not found!`
-				);
-			}
-
-			// Notify parent about a new instance of this child has been created!
-			this.notifyParent(GlobalEnum.ChildNotifyActionParent.Add);
-		}
-
-		/**
 		 * Disposes the current pattern.
 		 *
 		 * @memberof DropdownServerSideItem
@@ -228,16 +197,6 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 
 			//Destroying the base of pattern
 			super.dispose();
-		}
-
-		/**
-		 * Method used to notify parent about the action that was performed
-		 *
-		 * @param actionType Action Type name
-		 * @memberof IPatternIsPatternChild
-		 */
-		public notifyParent(actionType: GlobalEnum.ChildNotifyActionParent): void {
-			this.parentObject.beNotifiedByChild(this.uniqueId, actionType);
 		}
 
 		/**

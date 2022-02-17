@@ -7,8 +7,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 	 * @interface IDropdownServerSideItem
 	 * @extends {Interface.IPattern}
 	 */
-	export interface IDropdownServerSideItem
-		extends Interface.IChild<Providers.Dropdown.OSUIComponents.IDropdownServerSide> {
+	export interface IDropdownServerSideItem extends Interface.IChild {
 		/**
 		 * Key used to trigger the notification into Dropdown parent
 		 *
