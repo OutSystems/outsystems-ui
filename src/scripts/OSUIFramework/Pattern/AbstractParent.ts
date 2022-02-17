@@ -91,6 +91,6 @@ namespace OSUIFramework.Patterns {
 		 * @param notifiedTo Notification name (Should be based on an Enum)
 		 * @memberof OSUIDropdownServerSide
 		 */
-		public abstract beNotifiedByChild(childId: string, notifiedTo: unknown): void;
+		public abstract beNotifiedByChild(childId: string, notifiedTo: string): void;
 	}
 }

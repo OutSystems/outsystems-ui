@@ -129,14 +129,6 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		}
 
 		/**
-		 * Method to unset the html elements used
-		 *
-		 * @protected
-		 * @memberof DropdownServerSideItem
-		 */
-		protected unsetHtmlElements(): void {}
-
-		/**
 		 *  Builds the DropdownServerSideItem.
 		 *
 		 * @memberof DropdownServerSideItem
@@ -189,8 +181,6 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			this.unsetCallbacks();
 
 			this._removeEvents();
-
-			this.unsetHtmlElements();
 
 			// Notify parent about this instance will be destroyed
 			this.notifyParent(Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.Removed);
