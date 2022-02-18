@@ -1,0 +1,117 @@
+// TODO (by CreateNewPattern): update section!
+/*! Patterns - section - SectionIndex */
+////
+/// @group Patterns-SectionIndex
+/// Patterns - section - SectionIndex
+
+// TODO (by CreateNewPattern): do all css styles for the SectionIndex at this partial!
+
+///
+.osui-section-index {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	position: relative;
+
+	&::before {
+		background-color: var(--color-neutral-5);
+		bottom: 0;
+		content: '';
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 1px;
+	}
+
+	&.sticky {
+		position: -webkit-sticky;
+		position: sticky;
+		top: var(--top-position);
+	}
+}
+
+.osui-section-index-item {
+	&,
+	&:visited {
+		color: var(--color-neutral-8);
+		cursor: pointer;
+		display: flex;
+		padding-bottom: var(--space-xs);
+		padding-left: var(--space-m);
+		padding-top: var(--space-xs);
+		position: relative;
+	}
+
+	&:hover {
+		color: var(--color-neutral-9);
+	}
+
+	.osui-section-index-item--is-active {
+		color: var(--color-neutral-9);
+		font-weight: var(--font-semi-bold);
+		&::before {
+			background-color: var(--color-primary);
+			bottom: 0;
+			content: '';
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 2px;
+		}
+	}
+}
+
+// Accessibility -----------------------------------------------------------------
+///
+.has-accessible-features {
+	.osui-section-index {
+		a {
+			&:focus {
+				background-color: transparent;
+				box-shadow: 0 0 0 3px var(--color-focus-outer);
+			}
+		}
+	}
+}
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	// css props
+}
+
+// Responsive --------------------------------------------------------------------
+.android[data-status-bar-height] {
+	.layout-native {
+		.osui-section-index {
+			&.sticky {
+				top: calc(
+					var(--header-size) + var(--header-size-content) + var(--top-position) + var(--status-bar-height)
+				);
+			}
+		}
+	}
+}
+
+///
+.ios {
+	.layout-native {
+		.osui-section-index {
+			&.sticky {
+				position: fixed;
+			}
+		}
+	}
+}
+
+///
+// Fixes the sticky problem on Safari 14.1
+.safari {
+	[data-block*='SectionIndex'] {
+		display: contents;
+	}
+}
