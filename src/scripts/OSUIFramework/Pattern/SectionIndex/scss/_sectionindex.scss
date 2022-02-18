@@ -1,19 +1,11 @@
-// TODO (by CreateNewPattern): update section!
 /*! Patterns - section - SectionIndex */
 ////
 /// @group Patterns-SectionIndex
 /// Patterns - section - SectionIndex
 
-// TODO (by CreateNewPattern): do all css styles for the SectionIndex at this partial!
-
 ///
 .osui-section-index {
-	display: -webkit-box;
-	display: -ms-flexbox;
 	display: flex;
-	-webkit-box-orient: vertical;
-	-webkit-box-direction: normal;
-	-ms-flex-direction: column;
 	flex-direction: column;
 	position: relative;
 
@@ -27,8 +19,7 @@
 		width: 1px;
 	}
 
-	&.sticky {
-		position: -webkit-sticky;
+	&.osui-section-index--is-sticky {
 		position: sticky;
 		top: var(--top-position);
 	}

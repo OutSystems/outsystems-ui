@@ -35,10 +35,10 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		 */
 		private _setIsFixed(): void {
 			if (this.configs.IsFixed) {
-				Helper.Dom.Styles.AddClass(this._selfElem, 'sticky');
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.UsefulSticky);
 				this._selfElem.style.setProperty('--top-position', this._offset + 'px');
 			} else {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, 'sticky');
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.UsefulSticky);
 			}
 		}
 
@@ -48,9 +48,12 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		 * @memberof SectionIndex
 		 */
 		private _setUpSectionIndex(): void {
-			const Header = document.querySelector('.header') as HTMLElement;
+			const Header = Helper.Dom.ClassSelector(document, 'header');
+
 			this._contentPaddingTop = parseInt(
-				window.getComputedStyle(document.querySelector('.main-content')).getPropertyValue('padding-top')
+				window
+					.getComputedStyle(Helper.Dom.ClassSelector(document, 'main-content'))
+					.getPropertyValue('padding-top')
 			);
 			if (Header) {
 				this._headerHeight = Header.offsetHeight;
@@ -62,9 +65,7 @@ namespace OSUIFramework.Patterns.SectionIndex {
 
 			this._setIsFixed();
 
-			this._isUnsupportedBrowser =
-				Helper.Dom.Styles.ContainsClass(document.body, 'edge') ||
-				Helper.Dom.Styles.ContainsClass(document.body, 'safari');
+			this._isUnsupportedBrowser = Helper.Dom.Styles.ContainsClass(document.body, GlobalEnum.Browser.safari);
 
 			// Check for browsers that don't support ScrollIntoView to call Polyfill
 			if (this.configs.SmoothScrolling && this._isUnsupportedBrowser) {

@@ -4,15 +4,16 @@ namespace OSUIFramework.Patterns.SectionIndex.Enum {
 	 * SectionIndex Enum properties
 	 */
 	export enum Properties {
-		SmoothScrolling = 'SmoothScrolling',
 		IsFixed = 'IsFixed',
+		SmoothScrolling = 'SmoothScrolling',
 	}
 
 	/**
 	 * Accordion Enum for CSS Classes
 	 */
 	export enum CssClass {
-		Pattern = 'osui-section-index',
 		ActiveItem = 'osui-section-index-item--is-active',
+		Pattern = 'osui-section-index',
+		UsefulSticky = 'osui-section-index--is-sticky',
 	}
 }

@@ -48,7 +48,7 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		 */
 		private _handleOnKeyboardPress(event: KeyboardEvent): void {
 			//If esc, Close AccordionItem
-			if (event.key === '32' || event.key === '13') {
+			if (event.key === GlobalEnum.Keycodes.Space || event.key === GlobalEnum.Keycodes.Enter) {
 				this._handleClickEvent(event);
 			}
 		}
@@ -139,8 +139,8 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		 * @memberof SectionIndexItem
 		 */
 		public removeActiveElement(): void {
-			this._isActive = false;
 			if (this._selfElem) {
+				this._isActive = false;
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Patterns.SectionIndex.Enum.CssClass.ActiveItem);
 			}
 		}
