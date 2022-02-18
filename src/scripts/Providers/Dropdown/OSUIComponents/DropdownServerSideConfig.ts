@@ -12,10 +12,6 @@ namespace Providers.Dropdown.OSUIComponents {
 		public AllowMultipleSelection: boolean;
 		public IsDisabled: boolean;
 
-		constructor(config: JSON) {
-			super(config);
-		}
-
 		/**
 		 * Override, validate configs key values
 		 *
