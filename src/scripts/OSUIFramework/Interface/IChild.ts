@@ -5,7 +5,6 @@ namespace OSUIFramework.Interface {
 	 *
 	 * @export
 	 * @interface IChild
-	 * @template PT (as ParentType)
 	 */
 	export interface IChild extends IPattern {
 		/**
