@@ -71,6 +71,7 @@ namespace OSUIFramework.GlobalEnum {
 		DataInput = 'data-input',
 		Disabled = 'disabled',
 		Id = 'id',
+		Name = 'name',
 		Style = 'style',
 	}
 
@@ -132,13 +133,16 @@ namespace OSUIFramework.GlobalEnum {
 	 * OutSystemsUI event Keycodes
 	 */
 	export enum Keycodes {
-		ArrowRight = 'ArrowRight',
+		ArrowDown = 'ArrowDown',
 		ArrowLeft = 'ArrowLeft',
-		Escape = 'Escape',
+		ArrowRight = 'ArrowRight',
+		ArrowUp = 'ArrowUp',
 		Enter = 'Enter',
-		Tab = 'Tab',
+		Escape = 'Escape',
 		Shift = 'Shift',
+		ShiftTab = 'ShiftTab', // Do not exist as a keyboard key, but used to manage this behaviour
 		Space = ' ',
+		Tab = 'Tab',
 	}
 
 	/**
@@ -173,6 +177,7 @@ namespace OSUIFramework.GlobalEnum {
 		Carousel = 'Carousel',
 		Datepicker = 'Datepicker',
 		Dropdown = 'Dropdown',
+		DropdownServerSideItem = 'DropdownServerSideItem',
 		FlipContent = 'Flip Content',
 		FloatingActions = 'Floating Actions',
 		FloatingActionsItem = 'Floating Actions Item',

@@ -60,6 +60,9 @@ namespace OSUIFramework.Constants {
 	/* cssClass to be checked if the Accessibility Feature is enabled */
 	export const HasAccessibilityClass = 'has-accessible-features';
 
+	/* cssClass to be added to elements that must visible yet hidded for accessibility purposes */
+	export const AccessibilityHideElementClass = 'wcag-hide-text';
+
 	/* cssClass to be checked if the RTL Feature is enabled */
 	export const IsRTLClass = 'is-rtl';
 
@@ -67,7 +70,7 @@ namespace OSUIFramework.Constants {
 	export const NoTransition = 'no-transition';
 
 	/* OSUI Version */
-	export const OSUIVersion = '2.8.0';
+	export const OSUIVersion = '2.8.1';
 
 	/* css Class that is added in layout */
 	export const LayoutClass = 'layout';

@@ -27,6 +27,11 @@ namespace OSUIFramework.Callbacks {
 		(dropdownId: string, selectedOptions: string[]): void;
 	};
 
+	// DropdownServerSideItem
+	export type OSDropdownServerSideItemOnSelectEvent = {
+		(dropdownId: string, itemId): void;
+	};
+
 	// FlipContent
 	export type OSFlipContentFlipEvent = {
 		(flipId: string, isFlipped: boolean): void;
