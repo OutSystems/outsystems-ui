@@ -97,14 +97,25 @@
 .tablet,
 .phone {
 	.form-control {
-		&[data-input]:not(.input-small) {
+		&[data-input] {
 			font-size: var(--font-size-base);
 			height: 48px;
+
+			// Repeated selector since the properties above will ends up in a selector with more specificity
+			&.input-small {
+				font-size: var(--font-size-xs);
+				height: 32px;
+			}
 		}
 
-		&[data-textarea]:not(.input-small) {
+		&[data-textarea] {
 			font-size: var(--font-size-base);
 			height: auto;
+
+			// Repeated selector since the properties above will ends up in a selector with more specificity
+			&.input-small {
+				font-size: var(--font-size-xs);
+			}
 		}
 	}
 }

@@ -57,11 +57,21 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
+	 * OutSystemsUI Scroll Options
+	 */
+	export enum ScrollBehavior {
+		Instant = 'auto',
+		Smooth = 'smooth',
+	}
+
+	/**
 	 * OutSystemsUI HTML Attributes
 	 */
 	export enum HTMLAttributes {
 		DataInput = 'data-input',
+		Disabled = 'disabled',
 		Id = 'id',
+		Name = 'name',
 		Style = 'style',
 	}
 
@@ -69,6 +79,7 @@ namespace OSUIFramework.GlobalEnum {
 	 * OutSystemsUI HTML Elements
 	 */
 	export enum HTMLElement {
+		Div = 'div',
 		FieldSet = 'fieldset',
 		Input = 'input',
 		Link = 'a',
@@ -98,19 +109,40 @@ namespace OSUIFramework.GlobalEnum {
 	 * OutSystemsUI elements inline styles
 	 */
 	export enum InlineStyle {
+		Display = 'display',
 		Height = 'height',
+		Opacity = 'opacity',
 		PointerEvents = 'pointerEvents',
+		Transform = 'transform',
 	}
+
+	/**
+	 * OutSystems UI inline style properties.
+	 */
+	//TODO: if more properties appear here, let's consider using https://css-tricks.com/css-in-typescript-with-vanilla-extract/
+	export const InlineStyleValue = {
+		Display: {
+			block: 'block',
+			inline: 'inline',
+			none: 'none',
+			unset: '',
+		},
+	};
 
 	/**
 	 * OutSystemsUI event Keycodes
 	 */
 	export enum Keycodes {
-		Escape = 'Escape',
+		ArrowDown = 'ArrowDown',
+		ArrowLeft = 'ArrowLeft',
+		ArrowRight = 'ArrowRight',
+		ArrowUp = 'ArrowUp',
 		Enter = 'Enter',
-		Tab = 'Tab',
+		Escape = 'Escape',
 		Shift = 'Shift',
+		ShiftTab = 'ShiftTab', // Do not exist as a keyboard key, but used to manage this behaviour
 		Space = ' ',
+		Tab = 'Tab',
 	}
 
 	/**
@@ -144,6 +176,8 @@ namespace OSUIFramework.GlobalEnum {
 		ButtonLoading = 'ButtonLoading',
 		Carousel = 'Carousel',
 		Datepicker = 'Datepicker',
+		Dropdown = 'Dropdown',
+		DropdownServerSideItem = 'DropdownServerSideItem',
 		FlipContent = 'Flip Content',
 		FloatingActions = 'Floating Actions',
 		FloatingActionsItem = 'Floating Actions Item',
@@ -151,14 +185,17 @@ namespace OSUIFramework.GlobalEnum {
 		Notification = 'Notification',
 		ProgressBar = 'Progress Bar',
 		ProgressCircle = 'Progress Circle',
-		Rating = 'Rating',
 		RangeSlider = 'Range Slider',
 		RangeSliderInterval = 'Range Slider Interval',
+		Rating = 'Rating',
 		Search = 'Search',
 		SectionIndex = 'Section Index',
 		Sidebar = 'Sidebar',
 		Submenu = 'Submenu',
 		SwipeEvents = 'SwipeEvents',
+		Tabs = 'Tabs',
+		TabsHeaderItem = 'TabsHeaderItem',
+		TabsContentItem = 'TabsContentItem',
 		Tooltip = 'Tooltip',
 		TouchEvents = 'TouchEvents',
 	}

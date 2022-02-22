@@ -79,7 +79,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			if (!this._insideBottomBar && this._floatingActions) {
 				if (this._bottomBar) {
 					this._insideBottomBar = true;
-					Helper.Style.AddClass(this._floatingActions, Enum.CssClasses.BottomBarExists);
+					Helper.Dom.Styles.AddClass(this._floatingActions, Enum.CssClasses.BottomBarExists);
 				}
 			}
 		}
@@ -106,7 +106,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			//If ESC is pressed then close the floatiing action items
 			if (
 				e.key === GlobalEnum.Keycodes.Escape &&
-				Helper.Style.ContainsClass(this._floatingActions, Enum.CssClasses.Open)
+				Helper.Dom.Styles.ContainsClass(this._floatingActions, Enum.CssClasses.Open)
 			) {
 				this._toggleClick();
 			}
@@ -139,12 +139,12 @@ namespace OSUIFramework.Patterns.FloatingActions {
 		private _setAccessibility(): void {
 			//Toggles accessibility 'aria-hidden' property on Floating Actions Items' container & 'aria-expanded' on Floating Actions Button
 			if (this._floatingActionsItem)
-				Helper.Attribute.Set(
+				Helper.Dom.Attribute.Set(
 					this._floatingActionsItem,
 					Constants.A11YAttributes.Aria.Hidden,
 					(!this._isOpen).toString()
 				);
-			Helper.Attribute.Set(
+			Helper.Dom.Attribute.Set(
 				this._floatingActionsButton,
 				Constants.A11YAttributes.Aria.Expanded,
 				this._isOpen.toString()
@@ -154,7 +154,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 			if (this._floatingAllLinks.length > 0) {
 				this._floatingAllLinks.forEach((item: HTMLElement) => {
-					Helper.Attribute.Set(
+					Helper.Dom.Attribute.Set(
 						item,
 						Constants.A11YAttributes.TabIndex,
 						this._isOpen
@@ -173,11 +173,11 @@ namespace OSUIFramework.Patterns.FloatingActions {
 			);
 
 			if (this._isOpen) {
-				Helper.Style.AddClass(this._floatingActions, Enum.CssClasses.Open);
-				Helper.Style.AddClass(floatingOverlay, Enum.CssClasses.Open);
+				Helper.Dom.Styles.AddClass(this._floatingActions, Enum.CssClasses.Open);
+				Helper.Dom.Styles.AddClass(floatingOverlay, Enum.CssClasses.Open);
 			} else {
-				Helper.Style.RemoveClass(this._floatingActions, Enum.CssClasses.Open);
-				Helper.Style.RemoveClass(floatingOverlay, Enum.CssClasses.Open);
+				Helper.Dom.Styles.RemoveClass(this._floatingActions, Enum.CssClasses.Open);
+				Helper.Dom.Styles.RemoveClass(floatingOverlay, Enum.CssClasses.Open);
 			}
 		}
 
@@ -210,7 +210,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 		// Set the IsExpanded option
 		private _setIsExpanded(IsExpanded: boolean): void {
-			this._configs.IsExpanded = IsExpanded;
+			this.configs.IsExpanded = IsExpanded;
 			this._isOpen = IsExpanded;
 
 			this._setClasses();
@@ -219,7 +219,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 		// Set the IsHover option
 		private _setIsHover(IsHover: boolean): void {
-			this._configs.IsHover = IsHover;
+			this.configs.IsHover = IsHover;
 
 			this._setUpEvents();
 		}

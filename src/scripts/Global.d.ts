@@ -2,6 +2,7 @@
 import flatpickr from 'flatpickr';
 import { BaseOptions as flatpickrOpts } from 'flatpickr/dist/types/options';
 import { CustomLocale as flatpickrLocale } from 'flatpickr/dist/types/locale';
+import { Key as flatpickrLocaleKey } from 'flatpickr/dist/types/locale';
 
 // RangeSlider
 import noUiSlider from 'nouislider';
@@ -15,7 +16,6 @@ import { Options } from '@splidejs/splide/dist/types/types/options';
 /**
  * Set global declarations
  */
-
 declare global {
 	//eslint-disable-next-line @typescript-eslint/naming-convention
 	interface Window {
@@ -25,6 +25,7 @@ declare global {
 		flatpickr: typeof flatpickr;
 		flatpickrOpts: typeof flatpickrOpts;
 		flatpickrLocale: typeof flatpickrOpts;
+		flatpickrLocaleKey: typeof flatpickrLocaleKey;
 
 		// RangeSlider
 		noUiSlider: typeof noUiSlider;
@@ -35,9 +36,16 @@ declare global {
 		Splide: typeof OriginalSplide;
 		SplideOpts: typeof OriginalSplide.defaults;
 		wNumb: typeof window.wNumb;
+
+		// Dropdown using VirtualSelect
+		VirtualSelect: any;
+
+		// Dropdown created from scratch
+		OSUIComponents: any;
 	}
 
 	interface Navigator {
+		connection: any;
 		standalone: any;
 	}
 
@@ -55,4 +63,11 @@ declare global {
 	type Flatpickr = flatpickr;
 	type FlatpickrOptions = flatpickrOpts;
 	type FlatpickrLocale = flatpickrLocale;
+	type FlatpickrLocaleKey = flatpickrLocaleKey;
+
+	// DropDown => Virtual Select Provider
+	type VirtualSelect = any;
+
+	// DropDown => OutSystems Provider
+	type OSUIComponents = any;
 }

@@ -270,16 +270,16 @@
 .phone {
 	.layout-native {
 		.floating-content {
-            &.floating-content-full {
-            	&-height.absolute-top {
-            		top: var(--os-safe-area-top);
-            	}
-            	
-            	&-width {
-            		left: 0;
-            		right: 0;
-            	}
-            }
+			&.floating-content-full {
+				&-height.absolute-top {
+					top: var(--os-safe-area-top);
+				}
+
+				&-width {
+					left: 0;
+					right: 0;
+				}
+			}
 
 			&.absolute-bottom {
 				bottom: var(--os-safe-area-bottom);

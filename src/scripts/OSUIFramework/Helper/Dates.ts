@@ -16,6 +16,10 @@ namespace OSUIFramework.Helper {
 		 * @memberof Dates
 		 */
 		public static Compare(date1: string, date2: string): boolean {
+			// Check if received dates are in right format
+			date1 = date1.indexOf('T') !== 10 ? date1.replace(' ', 'T') : date1;
+			date2 = date2.indexOf('T') !== 10 ? date2.replace(' ', 'T') : date2;
+
 			return Date.parse(date1) < Date.parse(date2);
 		}
 
@@ -29,16 +33,29 @@ namespace OSUIFramework.Helper {
 		 * @export
 		 * @param {string} date
 		 */
-		public static IsNull(date: string): boolean {
-			// Check if the given date is a valid date
-			if (isNaN(Date.parse(date.split(' ')[0]))) {
-				throw new Error(`The given date '${date}' it's not a valid date.`);
-			} else if (Date.parse(date) < 0) {
-				// 1st Jan 1970 is the actual Date baseline.
+		public static IsNull(date: string | Date): boolean {
+			let _date: Date;
+
+			// Check if the given date is not a date object and if it's a valid date
+			if (typeof date === 'string') {
+				// Update the string into a string date format
+				date = date.indexOf('T') !== 10 ? date.replace(' ', 'T') : date;
+
+				// Check if string could be parsed into a date - If it has an expected dateformat
+				if (isNaN(Date.parse(date))) {
+					throw new Error(`The given date '${date}' it's not a valid date.`);
+				} else if (Date.parse(date) < 0) {
+					// 1st Jan 1970 is the actual Date baseline.
+					return true;
+				}
+				_date = new Date(Date.parse(date));
+			} else if (date instanceof Date) {
+				//we received a date
+				_date = date;
+			} else {
+				//we received a undefined or anything else
 				return true;
 			}
-
-			const _date = new Date(Date.parse(date));
 
 			// Check if is an OutSystems Null date
 			if (_date.getFullYear() === 1900 && _date.getMonth() === 0 && _date.getDate() === 1) {

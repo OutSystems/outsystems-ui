@@ -22,6 +22,16 @@ namespace OSUIFramework.Callbacks {
 		(datepickerId: string, selectedDate: string | string[]): void;
 	};
 
+	// Dropdown
+	export type OSDropdownOnSelectEvent = {
+		(dropdownId: string, selectedOptions: string[]): void;
+	};
+
+	// DropdownServerSideItem
+	export type OSDropdownServerSideItemOnSelectEvent = {
+		(dropdownId: string, itemId): void;
+	};
+
 	// FlipContent
 	export type OSFlipContentFlipEvent = {
 		(flipId: string, isFlipped: boolean): void;
@@ -54,5 +64,10 @@ namespace OSUIFramework.Callbacks {
 	// Sidebar
 	export type OSSidebarToggleEvent = {
 		(sidebarId: string, isOpen: boolean): void;
+	};
+
+	// Tabs
+	export type OSTabsOnChangeEvent = {
+		(tabsId: string, ActiveTab: number): void;
 	};
 }

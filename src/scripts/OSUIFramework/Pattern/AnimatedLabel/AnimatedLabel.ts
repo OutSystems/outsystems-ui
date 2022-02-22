@@ -31,6 +31,18 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		}
 
 		/**
+		 * Callback to the event onAnimationStart.
+		 *
+		 * @private
+		 * @memberof AnimatedLabel
+		 */
+		private _inputAnimationStartCallback(e: AnimationEvent): void {
+			if (e.animationName === Enum.AnimationEvent.OnAutoFillStart) {
+				this._inputStateToggle(true);
+			}
+		}
+
+		/**
 		 * Callback to the event "blur" of the input.
 		 *
 		 * @private
@@ -89,7 +101,7 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		protected setCallbacks(): void {
 			this._eventBlur = this._inputBlurCallback.bind(this);
 			this._eventFocus = this._inputFocusCallback.bind(this);
-			this._eventAnimationStart = this._inputFocusCallback.bind(this);
+			this._eventAnimationStart = this._inputAnimationStartCallback.bind(this);
 
 			this._inputElement.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventBlur);
 			this._inputElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventFocus);
@@ -114,6 +126,9 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 
 			// Check if the input exist
 			if (this._inputElement) {
+				// clear the input's prompt, as it not supported when used inside AnimatedLabel
+				this._inputElement.placeholder = '';
+
 				this._inputStateToggle(undefined);
 			} else {
 				throw new Error(Enum.Messages.InputNotFound);

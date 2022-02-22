@@ -33,6 +33,19 @@ namespace OSUIFramework.Patterns {
 		}
 
 		/**
+		 * Method that helps to validate if a given value is a valida date
+		 *
+		 * @protected
+		 * @param {string} value
+		 * @param {string} defaultValue
+		 * @return {*}  {(string | Date)}
+		 * @memberof AbstractConfiguration
+		 */
+		protected validateDate(value: string | Date, defaultValue: string): string | Date {
+			return Helper.Dates.IsNull(value) === false ? value : defaultValue;
+		}
+
+		/**
 		 * Method that helps to validate if a given value is within a range of values.
 		 *
 		 * @protected
@@ -53,6 +66,19 @@ namespace OSUIFramework.Patterns {
 			}
 
 			return defaultValue;
+		}
+
+		/**
+		 * Method that helps to validate if a number is not empty or undefined.
+		 *
+		 * @protected
+		 * @param {number} value
+		 * @param {number} defaultValue
+		 * @return {*}  {number}
+		 * @memberof AbstractConfiguration
+		 */
+		protected validateNumber(value: number, defaultValue: number): number {
+			return typeof value === 'number' ? value : defaultValue;
 		}
 
 		/**

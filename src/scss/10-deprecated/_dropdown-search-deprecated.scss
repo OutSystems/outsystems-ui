@@ -1,0 +1,122 @@
+/*! Patterns - Interaction - Dropdown Search */
+/* Since this pattern is Deprecated, it should not appear at SASSDCS! */
+
+.choices[data-type*='select-one'] {
+	cursor: pointer;
+
+	&:after {
+		color: var(--color-neutral-7);
+		content: '\f107';
+		font: normal normal normal 24px/1 FontAwesome;
+		font-family: 'FontAwesome';
+		position: absolute;
+		right: 16px;
+		top: 8px;
+		transform-origin: center;
+		transition: all 300ms ease;
+	}
+
+	&.is {
+		&-open {
+			&:after {
+				color: var(--color-primary);
+				transform: rotate(180deg);
+			}
+		}
+
+		&-disabled {
+			&:after {
+				color: var(--color-neutral-5);
+			}
+
+			.choices__list--single {
+				.choices__item {
+					color: var(--color-neutral-6);
+				}
+			}
+		}
+	}
+
+	.choices__button {
+		display: none;
+		height: auto;
+		margin-right: var(--space-m);
+		margin-top: -10px;
+		padding: var(--space-none);
+		position: absolute;
+		right: 0;
+		top: 50%;
+		width: 20px;
+
+		&:hover,
+		&:focus {
+			opacity: 1;
+		}
+
+		&:focus {
+			box-shadow: 0 0 0 2px var(--shadow-xs);
+		}
+	}
+
+	.search--wrapper {
+		input:not(.btn):not(.checkbox):not(.radio-button),
+		.input {
+			max-width: 100%;
+			padding-left: var(--space-l);
+		}
+	}
+}
+
+.choices__list--single {
+	.choices__item {
+		color: var(--color-neutral-10);
+		overflow: hidden;
+		padding-right: var(--space-base);
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 99%;
+	}
+}
+
+.dropdown-tag-select {
+	opacity: 0;
+}
+
+// Responsive --------------------------------------------------------------------
+.tablet,
+.phone {
+	.choices[data-type*='select-one'] {
+		&:after {
+			top: 14px;
+		}
+	}
+}
+
+// IsRTL -------------------------------------------------------------------------
+.choices[dir='rtl'] {
+	&[data-type*='select-one'] {
+		&:after {
+			left: 16px;
+			right: auto;
+		}
+
+		.choices__button {
+			left: 0;
+			margin-left: var(--space-m);
+			margin-right: var(--space-none);
+			right: auto;
+		}
+	}
+
+	.choices__list--single {
+		padding-left: var(--space-base);
+		padding-right: var(--space-xs);
+	}
+}
+
+// Accessibility -----------------------------------------------------------------
+.has-accessible-features {
+	.choices[data-type*='select-one'] {
+		border-radius: var(--border-radius-soft);
+	}
+}

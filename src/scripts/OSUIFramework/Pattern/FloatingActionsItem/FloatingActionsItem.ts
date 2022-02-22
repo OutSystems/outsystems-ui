@@ -21,11 +21,11 @@ namespace OSUIFramework.Patterns.FloatingActionsItem {
 		}
 
 		public setAnimationDelay(value: number): void {
-			Helper.Attribute.Set(this._selfElem, 'style', '--delay: ' + value.toString());
+			Helper.Dom.Attribute.Set(this._selfElem, 'style', '--delay: ' + value.toString());
 		}
 
 		public setTabindex(value: string): void {
-			Helper.Attribute.Set(this._selfElem, Constants.A11YAttributes.TabIndex, value);
+			Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.TabIndex, value);
 		}
 	}
 }

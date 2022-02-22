@@ -5,6 +5,11 @@
 
 ///
 .osui-btn-loading {
+	// Service Studio Preview
+	& {
+		-servicestudio-display: inline-flex;
+	}
+
 	&-show-spinner {
 		&.osui-btn-loading--is-loading {
 			.btn {
@@ -12,6 +17,10 @@
 
 				.osui-btn-loading__spinner-animation {
 					margin-right: var(--space-none);
+				}
+
+				& > span[data-expression] {
+					display: none;
 				}
 			}
 		}
@@ -24,8 +33,6 @@
 		}
 
 		.btn {
-			display: inline-flex;
-
 			.osui-btn-loading__spinner-animation {
 				display: inline-block;
 			}
@@ -33,8 +40,10 @@
 	}
 
 	.btn {
-		transition: none;
 		display: inline-block;
+		transition: none;
+		vertical-align: middle;
+		white-space: nowrap;
 
 		// ServiceStudio Preview
 		& {
@@ -42,11 +51,12 @@
 		}
 
 		& > * {
+			display: inline-block;
 			font-size: var(--font-size-s);
 			vertical-align: middle;
 		}
 
-		& > *:not(.osui-btn-loading__spinner-animation) {
+		& > *:not(.osui-btn-loading__spinner-animation)*:not(span[data-expression]) {
 			display: none;
 		}
 
@@ -65,6 +75,10 @@
 			& {
 				-servicestudio-margin-right: var(--space-s);
 			}
+		}
+
+		& > span[data-expression] {
+			white-space: nowrap;
 		}
 	}
 }

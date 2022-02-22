@@ -1,1 +1,0 @@
-$parameters.LightboxObj = new Lightbox();

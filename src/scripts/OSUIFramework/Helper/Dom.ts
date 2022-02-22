@@ -26,6 +26,23 @@ namespace OSUIFramework.Helper {
 		}
 
 		/**
+		 * Method that will check if a given attribute exists for the given html element.
+		 *
+		 * @static
+		 * @param {HTMLElement} element
+		 * @param {string} attrName
+		 * @return {*}  {boolean}
+		 * @memberof AttributeManipulation
+		 */
+		public static Has(element: HTMLElement, attrName: string): boolean {
+			if (element) {
+				return element.hasAttribute(attrName);
+			} else {
+				throw Error(`The element does not exist, when trying to check the attribute '${attrName}'.`);
+			}
+		}
+
+		/**
 		 * Method that will return the Id of the html element.
 		 *
 		 * @static
@@ -113,6 +130,70 @@ namespace OSUIFramework.Helper {
 			} else {
 				throw Error(`The element does not exist, when trying to check if it has the class '${cssClass}'.`);
 			}
+		}
+
+		/**
+		 * Method that knows how to update the Extended class of the pattern.
+		 *
+		 * @static
+		 * @param {HTMLElement} element Element where the class will be toggled.
+		 * @param {string} currentCssClasses Css classes that are assigned to the given element
+		 * @param {string} newCssClass Css classes that will be assigned to the given element
+		 * @memberof StyleManipulation
+		 */
+		public static ExtendedClass(element: HTMLElement, currentCssClasses: string, newCssClass: string): void {
+			if (element) {
+				const currentClassesList = currentCssClasses.split(' ');
+				const newClassesList = newCssClass.split(' ');
+				let classesToRemove = [];
+				let classesToAdd = [];
+
+				if (currentCssClasses !== '') {
+					classesToRemove = currentClassesList.filter(
+						(currClass) => newClassesList.indexOf(currClass) === -1
+					);
+				}
+
+				if (newCssClass !== '') {
+					classesToAdd = newClassesList.filter((newClass) => currentClassesList.indexOf(newClass) === -1);
+				}
+
+				//Let's remove only the classes that are to do so.
+				if (classesToRemove.length > 0) {
+					classesToRemove.forEach((classToRemove) => {
+						Helper.Dom.Styles.RemoveClass(element, classToRemove);
+					});
+				}
+
+				//Let's add only the new classes
+				if (classesToAdd.length > 0) {
+					classesToAdd.forEach((classToAdd) => {
+						Helper.Dom.Styles.AddClass(element, classToAdd);
+					});
+				}
+			} else {
+				throw Error(`The element does not exist, when trying to update EntendedClass '${newCssClass}'.`);
+			}
+		}
+
+		/**
+		 * Method used to get the border radius value based on shape entity
+		 *
+		 * @param shapeName
+		 * @returns
+		 */
+		public static GetBorderRadiusValueFromShapeType(shapeName: string): string {
+			return getComputedStyle(document.documentElement).getPropertyValue('--border-radius-' + shapeName);
+		}
+
+		/**
+		 * Method used to get the color value based on color entity given color name
+		 *
+		 * @param colorName
+		 * @returns
+		 */
+		public static GetColorValueFromColorType(colorName: string): string {
+			return getComputedStyle(document.documentElement).getPropertyValue('--color-' + colorName);
 		}
 
 		/**
@@ -221,7 +302,7 @@ namespace OSUIFramework.Helper {
 		 * @return {*}  {(HTMLElement | undefined)} Return the HTMLElement found, of if not undefined.
 		 * @memberof Dom
 		 */
-		public static ClassSelector(element: HTMLElement, cssClass: string): HTMLElement | undefined {
+		public static ClassSelector(element: HTMLElement | Document, cssClass: string): HTMLElement | undefined {
 			let elementFound: HTMLElement = undefined;
 
 			if (element) {
@@ -235,6 +316,46 @@ namespace OSUIFramework.Helper {
 			}
 
 			return elementFound;
+		}
+
+		/**
+		 * Method that makes disables a given element.
+		 *
+		 * @static
+		 * @param {HTMLElement} element
+		 * @memberof Dom
+		 */
+		public static Disable(element: HTMLElement): void {
+			if (element) {
+				if (Dom.Attribute.Has(element, 'disabled') === false) {
+					Dom.Attribute.Set(element, 'disabled', true);
+				}
+			}
+		}
+
+		/**
+		 * Method that enables a given element.
+		 *
+		 * @static
+		 * @param {HTMLElement} element
+		 * @memberof Dom
+		 */
+		public static Enable(element: HTMLElement): void {
+			if (element) {
+				if (Dom.Attribute.Has(element, 'disabled')) {
+					Dom.Attribute.Remove(element, 'disabled');
+				}
+			}
+		}
+
+		/**
+		 * Generate a Random String that could be assigned as a pattern UniqueId
+		 *
+		 * @export
+		 * @return {*}  {string}
+		 */
+		public static GenerateUniqueId(): string {
+			return Math.random().toString(36);
 		}
 
 		/**
@@ -275,7 +396,7 @@ namespace OSUIFramework.Helper {
 		 *
 		 * @static
 		 * @param {HTMLElement} element Element to be queried.
-		 * @param {string} htmlTag HTML elementto be searched for.
+		 * @param {string} htmlTag HTML element to be searched for.
 		 * @return {*}  {(HTMLElement | undefined)}
 		 * @memberof Dom
 		 */

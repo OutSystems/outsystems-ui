@@ -28,11 +28,6 @@
 			padding: var(--space-none) var(--space-m);
 			text-align: left;
 
-			// Service Studio Preview
-			& {
-				-servicestudio-width: 100%;
-			}
-
 			&:first-child {
 				border-radius: var(--border-radius-soft) var(--border-radius-none) var(--border-radius-none)
 					var(--border-radius-none);
@@ -92,6 +87,8 @@
 	.table-row:last-child {
 		&:last-child td {
 			border-bottom: none;
+			border-radius: var(--border-radius-none) var(--border-radius-none) var(--border-radius-soft)
+				var(--border-radius-none);
 		}
 
 		td:first-child {
@@ -136,6 +133,7 @@
 		&-no-responsive {
 			overflow-x: auto;
 			word-break: break-all;
+
 			// Service Studio Preview
 			& {
 				-servicestudio-word-break: normal;

@@ -11,6 +11,15 @@ namespace OSUIFramework.Patterns {
 	 */
 	export abstract class AbstractPattern<C extends AbstractConfiguration> implements Interface.IPattern {
 		/**
+		 * Pattern configurations (doubling as current state). Extends AbstractConfiguration.
+		 *
+		 * @private
+		 * @type {C}
+		 * @memberof AbstractPattern
+		 */
+		private _configs: C;
+
+		/**
 		 * Indicates if the pattern has been built or not.
 		 *
 		 * @private
@@ -26,15 +35,6 @@ namespace OSUIFramework.Patterns {
 		 * @memberof AbstractPattern
 		 */
 		private _uniqueId: string;
-
-		/**
-		 * Pattern configurations (doubling as current state). Extends AbstractConfiguration.
-		 *
-		 * @protected
-		 * @type {C}
-		 * @memberof AbstractPattern
-		 */
-		protected _configs: C; //TODO: change to private
 
 		/**
 		 * Refence for the base HTML of the element of this pattern;
@@ -70,7 +70,7 @@ namespace OSUIFramework.Patterns {
 			this._widgetId = this._selfElem.closest(GlobalEnum.DataBlocksTag.DataBlock).id;
 
 			if (this._configs.ExtendedClass !== '') {
-				this._updateExtendedClass('', this._configs.ExtendedClass);
+				Helper.Dom.Styles.ExtendedClass(this._selfElem, '', this._configs.ExtendedClass);
 			}
 		}
 
@@ -82,43 +82,6 @@ namespace OSUIFramework.Patterns {
 		 */
 		private _unsetCommonHtmlElements(): void {
 			this._selfElem = undefined;
-		}
-
-		/**
-		 * Method that knows how to update the Extended class of the pattern.
-		 *
-		 * @private
-		 * @param {string} currentCssClasses
-		 * @param {string} newCssClass
-		 * @memberof AbstractPattern
-		 */
-		private _updateExtendedClass(currentCssClasses: string, newCssClass: string): void {
-			const currentClassesList = currentCssClasses.split(' ');
-			const newClassesList = newCssClass.split(' ');
-			let classesToRemove = [];
-			let classesToAdd = [];
-
-			if (currentCssClasses !== '') {
-				classesToRemove = currentClassesList.filter((currClass) => newClassesList.indexOf(currClass) === -1);
-			}
-
-			if (newCssClass !== '') {
-				classesToAdd = newClassesList.filter((newClass) => currentClassesList.indexOf(newClass) === -1);
-			}
-
-			//Let's remove only the classes that are to do so.
-			if (classesToRemove.length > 0) {
-				classesToRemove.forEach((classToRemove) => {
-					Helper.Dom.Styles.RemoveClass(this._selfElem, classToRemove);
-				});
-			}
-
-			//Let's add only the new classes
-			if (classesToAdd.length > 0) {
-				classesToAdd.forEach((classToAdd) => {
-					Helper.Dom.Styles.AddClass(this._selfElem, classToAdd);
-				});
-			}
 		}
 
 		/**
@@ -142,7 +105,7 @@ namespace OSUIFramework.Patterns {
 		 * @type {(HTMLElement | undefined)}
 		 * @memberof AbstractPattern
 		 */
-		protected get selfElement(): HTMLElement {
+		public get selfElement(): HTMLElement {
 			return this._selfElem;
 		}
 
@@ -223,7 +186,11 @@ namespace OSUIFramework.Patterns {
 				if (this._isBuilt) {
 					switch (propertyName) {
 						case GlobalEnum.CommonPatternsProperties.ExtendedClass:
-							this._updateExtendedClass(this._configs.ExtendedClass, propertyValue as string);
+							Helper.Dom.Styles.ExtendedClass(
+								this._selfElem,
+								this._configs.ExtendedClass,
+								propertyValue as string
+							);
 							break;
 					}
 				}

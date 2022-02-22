@@ -4,33 +4,34 @@ namespace OSUIFramework.Patterns.RangeSlider.Enum {
 	 * RangeSlider Enum properties
 	 */
 	export enum Properties {
-		ChangeEventDuringSlide = 'ChangeEventDuringSlide',
-		InitialValueEnd = 'InitialValueEnd',
-		InitialValueStart = 'InitialValueStart',
 		IsDisabled = 'IsDisabled',
-		IsVertical = 'IsVertical',
 		MaxValue = 'MaxValue',
 		MinValue = 'MinValue',
-		PipsStep = 'PipsStep',
-		ShowPips = 'ShowPips',
-		ShowTooltip = 'ShowTooltip',
+		Orientation = 'Orientation',
+		ShowTickMarks = 'ShowTickMarks',
+		ShowFloatingLabel = 'ShowFloatingLabel',
+		Size = 'Size',
+		StartingValueTo = 'StartingValueTo',
+		StartingValueFrom = 'StartingValueFrom',
 		Step = 'Step',
-		VerticalHeight = 'VerticalHeight',
+		TickMarksInterval = 'TickMarksInterval',
 	}
 
 	/**
 	 * RangeSlider Enum for CSS Classes
 	 */
 	export enum CssClass {
+		ClassModifier = 'osui-range-slider--is-',
+		IsInterval = 'osui-range-slider--is-interval',
 		RangeSlider = 'osui-range-slider',
-		RangeSliderProviderElem = 'osui-range-slider_provider',
+		RangeSliderProviderElem = 'osui-range-slider__provider',
 	}
 
 	/**
 	 * RangeSlider Enum for CSS Properties
 	 */
 	export enum CssProperties {
-		VerticalHeight = '--vertical-height',
+		Size = '--range-slider-size',
 	}
 
 	/**

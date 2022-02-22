@@ -37,7 +37,7 @@ h,
 	font-size: var(--font-size-display);
 }
 
-// Default .font-size-h1-6 values 
+// Default .font-size-h1-6 values
 @each $type, $value in $osui-typography-heading-sizes {
 	.font-size-h#{$type} {
 		font-size: var(--font-size-h#{$type});

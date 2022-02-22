@@ -10,8 +10,7 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 * @param {string} propertyName Property name that will be updated
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ChangeProperty(rangeSliderId: string, propertyName: string, propertyValue: any): void {
+	export function ChangeProperty(rangeSliderId: string, propertyName: string, propertyValue: unknown): void {
 		const _rangeSliderItem = GetRangeSliderItemById(rangeSliderId);
 
 		_rangeSliderItem.changeProperty(propertyName, propertyValue);
@@ -28,7 +27,7 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	export function Create(
 		rangeSliderId: string,
 		configs: string,
-		provider: string
+		provider: string //TODO: change the order of parameters in OutSystems code
 	): OSUIFramework.Patterns.RangeSlider.IRangeSlider {
 		if (_rangeSliderItemsMap.has(rangeSliderId)) {
 			throw new Error(
@@ -38,8 +37,8 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 
 		const _rangeSliderItem = OSUIFramework.Patterns.RangeSlider.Factory.NewRangeSlider(
 			rangeSliderId,
-			configs,
-			provider
+			provider,
+			configs
 		);
 
 		_rangeSliderItemsMap.set(rangeSliderId, _rangeSliderItem);
@@ -80,7 +79,7 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 */
 	export function GetRangeSliderItemById(rangeSliderId: string): OSUIFramework.Patterns.RangeSlider.IRangeSlider {
 		return OSUIFramework.Helper.MapOperation.FindInMap(
-			'RangeSlider',
+			OSUIFramework.GlobalEnum.PatternsNames.RangeSlider,
 			rangeSliderId,
 			_rangeSliderItemsMap
 		) as OSUIFramework.Patterns.RangeSlider.IRangeSlider;
@@ -117,5 +116,17 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 		const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
 
 		rangeSlider.registerProviderCallback(eventName, callback);
+	}
+
+	/**
+	 * Function to change the Range Slider trigger to on DragEnd
+	 *
+	 * @export
+	 * @param {string} rangeSliderId
+	 */
+	export function SetRangeIntervalChangeOnDragEnd(rangeSliderId: string): void {
+		const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
+
+		rangeSlider.setRangeIntervalChangeOnDragEnd();
 	}
 }

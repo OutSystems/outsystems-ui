@@ -11,13 +11,14 @@ namespace OSUIFramework.Patterns.DatePicker.Factory {
 	export function NewDatePicker(
 		datePickerId: string,
 		configs: string,
+		mode: Enum.Mode,
 		provider: string
 	): OSUIFramework.Patterns.DatePicker.IDatePicker {
 		let _datePickerItem = null;
 
 		switch (provider) {
 			case Enum.Provider.FlatPicker:
-				_datePickerItem = Providers.Flatpickr.Factory.NewFlatpickr(datePickerId, configs);
+				_datePickerItem = Providers.Datepicker.Flatpickr.Factory.NewFlatpickr(datePickerId, mode, configs);
 
 				break;
 

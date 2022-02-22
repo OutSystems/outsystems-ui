@@ -5,121 +5,201 @@ namespace OSUIFramework.Patterns.AccordionItem {
 	 */
 	export class AccordionItem extends AbstractPattern<AccordionItemConfig> implements IAccordionItem {
 		// Stores the HTML element of the pattern's content
-		private _accordionContent: HTMLElement;
+		private _accordionItemContentElem: HTMLElement;
 		// Stores the HTML element of the pattern's icon
-		private _accordionIcon: HTMLElement;
-		// Stores the parent of the item (if it exists)
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		private _accordionParent: OSUIFramework.Patterns.Accordion.IAccordion;
+		private _accordionItemIconElem: HTMLElement;
 		// Stores the HTML element of the pattern's placeholder
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _accordionPlaceholder: HTMLElement;
+		private _accordionItemPlaceholder: HTMLElement;
 		// Stores the HTML element of the pattern's title
-		private _accordionTitle: HTMLElement;
+		private _accordionItemTitleElem: HTMLElement;
+		// Stores the parent of the item (if it exists)
+		private _accordionParentElem: Patterns.Accordion.IAccordion;
+		// Store the collapsed height value
+		private _collapsedHeight: number;
 		// Store the click event with bind(this)
-		private _eventToggleAccordion: Callbacks.Generic;
-		//Stores the keyboard callback function
-		private _keyBoardCallback: Callbacks.Generic;
-		// Callback function to trigger the click event on the platform
-		private _onToggleCallback: Callbacks.Generic;
+		private _eventOnClick: Callbacks.Generic;
 		//Stores the transition end callback function
-		private _transitionEnd: Callbacks.Generic;
+		private _eventOnTransitionEnd: Callbacks.Generic;
+		//Stores the keyboard callback function
+		private _eventOnkeyPress: Callbacks.Generic;
+		// Store the expanded height value
+		private _expandedHeight: number;
+		// Stores if the element is open
+		private _isOpen: boolean;
+		// Callback function to trigger the click event on the platform
+		private _platformEventOnToggle: Callbacks.Generic;
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		constructor(uniqueId: string, configs: any, accordion?: Patterns.Accordion.IAccordion) {
+		constructor(uniqueId: string, configs: JSON, accordion?: Patterns.Accordion.IAccordion) {
 			super(uniqueId, new AccordionItemConfig(configs));
-			this._accordionParent = accordion;
+
+			this._accordionParentElem = accordion;
+			this._isOpen = this.configs.StartsExpanded;
+			this._collapsedHeight = 0;
 		}
 
-		// A11y keyboard navigation
-		private _onKeyboardPress(event: KeyboardEvent): void {
-			//If esc, Close AccordionItem
-			if (this.configs.IsExpanded && event.key === GlobalEnum.Keycodes.Escape) {
-				this._toggleAccordion(this.configs.IsExpanded);
-				event.preventDefault();
-				event.stopPropagation();
-			}
-
-			//If enter or space use the onAccordionClick to validate
-			if (event.key === GlobalEnum.Keycodes.Enter || event.key === GlobalEnum.Keycodes.Space) {
-				this._toggleAccordion(this.configs.IsExpanded);
-				event.preventDefault();
-				event.stopPropagation();
-			}
-		}
-
-		// Method to be called when the pattern's destruction is required
-		private _removeEvents(): void {
-			this._accordionTitle.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventToggleAccordion);
-			this._accordionTitle.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._keyBoardCallback);
-		}
-
-		// Method to apply the dynamic aria attributes
-		private _setAriaExpanded(status: boolean, ariaHidden: boolean): void {
-			if (this._selfElem) {
-				Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Expanded, status);
-				Helper.Dom.Attribute.Set(this._accordionTitle, Constants.A11YAttributes.Aria.Expanded, status);
-				Helper.Dom.Attribute.Set(this._accordionContent, Constants.A11YAttributes.Aria.Hidden, ariaHidden);
-			}
-		}
-
-		private _setUpDisabledState(): void {
-			if (this.configs.IsDisabled) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Disabled);
-			} else {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.Disabled);
-			}
-		}
-
-		private _setUpEvents(): void {
-			if (this.configs.IsDisabled) {
-				this._removeEvents();
+		/**
+		 * Method to handle the click event
+		 *
+		 * @private
+		 * @param {MouseEvent} [event]
+		 * @return {*}  {void}
+		 * @memberof AccordionItem
+		 */
+		private _accordionOnClickHandler(event?: MouseEvent): void {
+			//If we're not clicking on the title, the icon or the accordion title, we won't open the accordion
+			if (
+				event?.target !== this._accordionItemTitleElem &&
+				event?.target !== this._accordionItemIconElem &&
+				event?.target !== this._accordionItemTitleElem.firstChild
+			) {
 				return;
 			}
-			this._accordionTitle.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventToggleAccordion);
-			this._accordionTitle.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._keyBoardCallback);
-		}
 
-		// Method to toggle the collapse and expansion of the AccordionItem
-		// This method is to be used by the state of the Accordion & the ChangeProperty method
-		private _toggleAccordion(isExpanded: boolean): void {
-			if (isExpanded) {
-				//If open, let's close
+			if (this._isOpen) {
 				this.close();
 			} else {
-				//If closed, let's open
 				this.open();
 			}
 		}
 
-		//This method below is used ONLY for checking if the event is cliked on the correct html element
-		private _toggleAccordionEvent(event?: MouseEvent): void {
-			//If we're not clicking on the title, the icon or the accordion title, we won't open the accordion
-			if (event) {
-				if (
-					event.target !== this._accordionTitle &&
-					event.target !== this._accordionIcon &&
-					event.target !== this._accordionTitle.firstChild
-				) {
-					return;
-				}
+		/**
+		 * Method to handle async animation
+		 *
+		 * @private
+		 * @param {boolean} isExpand
+		 * @memberof AccordionItem
+		 */
+		private _animationAsync(isExpand: boolean): void {
+			const finalHeight = isExpand ? this._expandedHeight : this._collapsedHeight;
+
+			// Adds is--animating class to current accordion item content to obtain the final height value
+			Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternAnimating);
+
+			if (!isExpand) {
+				Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.PatternExpanded);
 			}
 
-			this._toggleAccordion(this.configs.IsExpanded);
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._accordionItemContentElem,
+				GlobalEnum.InlineStyle.Height,
+				finalHeight + GlobalEnum.Units.Pixel
+			);
+
+			this._accordionItemContentElem.addEventListener(
+				GlobalEnum.HTMLEvent.TransitionEnd,
+				this._eventOnTransitionEnd
+			);
+
+			if (isExpand) {
+				// End of animation, item is expanded
+				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternExpanded);
+				this._isOpen = true;
+			} else {
+				// End of animation, item is collapsed
+				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternCollapsed);
+				this._isOpen = false;
+			}
+
+			this.setA11yProperties();
+			this._onToggleCallback();
 		}
 
+		/**
+		 * Method to handle the tabindex values
+		 *
+		 * @private
+		 * @memberof AccordionItem
+		 */
+		private _handleTabIndex(): void {
+			const titleTabindexValue = this.configs.IsDisabled ? '-1' : '0';
+			const contentTabindexValue = !this.configs.IsDisabled && this._isOpen ? '0' : '-1';
+
+			Helper.A11Y.TabIndex(this._accordionItemTitleElem, titleTabindexValue);
+			Helper.A11Y.TabIndex(this._accordionItemContentElem, contentTabindexValue);
+		}
+
+		/**
+		 * Method to handle the keyboard interactions
+		 *
+		 * @private
+		 * @param {KeyboardEvent} event
+		 * @return {*}  {void}
+		 * @memberof AccordionItem
+		 */
+		private _onKeyboardPress(event: KeyboardEvent): void {
+			const isEscapedKey = event.key === GlobalEnum.Keycodes.Escape;
+			const isEnterOrSpaceKey =
+				event.key === GlobalEnum.Keycodes.Enter || event.key === GlobalEnum.Keycodes.Space;
+
+			if (isEscapedKey || isEnterOrSpaceKey) {
+				event.preventDefault();
+				event.stopPropagation();
+			} else {
+				return;
+			}
+
+			//If open, close AccordionItem
+			if (this._isOpen) {
+				this.close();
+				// If close, and Enter/Space pressed, open Acordion
+			} else if (isEnterOrSpaceKey && !this._isOpen) {
+				this.open();
+			}
+		}
+
+		/**
+		 * Method that triggers the toggle event on the platform
+		 *
+		 * @private
+		 * @memberof AccordionItem
+		 */
+		private _onToggleCallback(): void {
+			Helper.AsyncInvocation(this._platformEventOnToggle, this.widgetId, this._isOpen);
+		}
+
+		/**
+		 * Method to handle the IsDisabled state
+		 *
+		 * @private
+		 * @memberof AccordionItem
+		 */
+		private _setIsDisabledState(): void {
+			if (this.configs.IsDisabled) {
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternDisabled);
+				Helper.A11Y.AriaDisabledTrue(this._selfElem);
+				this.unsetCallbacks();
+			} else {
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternDisabled);
+				Helper.A11Y.AriaDisabledFalse(this._selfElem);
+				this.setCallbacks();
+			}
+
+			// Update tabindex values
+			this._handleTabIndex();
+		}
+
+		/**
+		 * Method to handle the onTransitionEnd on accordion toggle animation
+		 *
+		 * @private
+		 * @memberof AccordionItem
+		 */
 		private _transitionEndHandler(): void {
-			if (this._accordionContent) {
-				Helper.Dom.Styles.RemoveClass(this._accordionContent, Enum.CssClass.Animation);
+			if (this._accordionItemContentElem) {
+				Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.PatternAnimating);
 
-				Helper.Dom.Styles.SetStyleAttribute(this._accordionContent, GlobalEnum.InlineStyle.Height, '');
-				Helper.Dom.Styles.SetStyleAttribute(this._accordionTitle, GlobalEnum.InlineStyle.PointerEvents, '');
+				Helper.Dom.Styles.SetStyleAttribute(this._accordionItemContentElem, GlobalEnum.InlineStyle.Height, '');
+				Helper.Dom.Styles.SetStyleAttribute(
+					this._accordionItemTitleElem,
+					GlobalEnum.InlineStyle.PointerEvents,
+					''
+				);
 
-				if (this._accordionContent.style.cssText.length === 0) {
-					Helper.Attribute.Remove(this._accordionContent, GlobalEnum.HTMLAttributes.Style);
+				if (this._accordionItemContentElem.style.cssText.length === 0) {
+					Helper.Dom.Attribute.Remove(this._accordionItemContentElem, GlobalEnum.HTMLAttributes.Style);
 				}
 
-				this._accordionContent.removeEventListener(
+				this._accordionItemContentElem.removeEventListener(
 					GlobalEnum.HTMLEvent.TransitionEnd,
 					this._transitionEndHandler,
 					false
@@ -127,224 +207,275 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			}
 		}
 
-		// Method that triggers the toggle event on the platform
-		private _triggerToggleClick(): void {
-			Helper.AsyncInvocation(this._onToggleCallback, this.widgetId, this.configs.IsExpanded);
+		/**
+		 * Method to handle Accessibility attributes
+		 *
+		 * @protected
+		 * @param {boolean} [isUpdate=true]
+		 * @memberof AccordionItem
+		 */
+		protected setA11yProperties(isUpdate = true): void {
+			// Set the static attributes on page load only
+			if (!isUpdate) {
+				// Set ARIA Controls
+				Helper.A11Y.AriaControls(this._selfElem, this._accordionItemPlaceholder.id);
+
+				// Set ARIA LabelledBy
+				Helper.A11Y.AriaLabelledBy(this._accordionItemContentElem, this._accordionItemTitleElem.id);
+
+				// Set aria-hidden to icon
+				Helper.A11Y.AriaHiddenTrue(this._accordionItemIconElem);
+
+				// Set ARIA Disabled
+				Helper.A11Y.AriaDisabled(this._selfElem, this.configs.IsDisabled);
+
+				// Set roles
+				Helper.A11Y.RoleTab(this._selfElem);
+				Helper.A11Y.RoleButton(this._accordionItemTitleElem);
+				Helper.A11Y.RoleTabPanel(this._accordionItemPlaceholder);
+			}
+
+			// Set Tabindex
+			this._handleTabIndex();
+
+			// Set ARIA Expanded
+			Helper.A11Y.AriaExpanded(this._selfElem, this._isOpen.toString());
+			Helper.A11Y.AriaExpanded(this._accordionItemTitleElem, this._isOpen.toString());
+
+			// Set aria-hidden to content
+			Helper.A11Y.AriaHidden(this._accordionItemContentElem, (!this._isOpen).toString());
 		}
 
-		//Method to apply the static aria attributes
-		protected setA11yProperties(): void {
-			Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Disabled, this.configs.IsDisabled);
-			Helper.Dom.Attribute.Set(
-				this._selfElem,
-				Constants.A11YAttributes.Aria.Controls,
-				Helper.Attribute.Get(this._accordionPlaceholder, GlobalEnum.HTMLAttributes.Id)
-			);
-
-			Helper.Dom.Attribute.Set(this._selfElem, 'role', Constants.A11YAttributes.Role.Tab);
-
-			Helper.Dom.Attribute.Set(
-				this._accordionTitle,
-				Constants.A11YAttributes.TabIndex,
-				this.configs.IsDisabled ? '-1' : '0'
-			);
-			Helper.Dom.Attribute.Set(
-				this._accordionTitle,
-				Constants.A11YAttributes.Role.AttrName,
-				Constants.A11YAttributes.Role.Button
-			);
-
-			Helper.Dom.Attribute.Set(this._accordionIcon, Constants.A11YAttributes.Aria.Hidden, true);
-
-			Helper.Dom.Attribute.Set(
-				this._accordionContent,
-				Constants.A11YAttributes.TabIndex,
-				this.configs.IsDisabled ? '-1' : '0'
-			);
-			Helper.Dom.Attribute.Set(
-				this._accordionContent,
-				Constants.A11YAttributes.Aria.Labelledby,
-				Helper.Attribute.Get(this._accordionTitle, GlobalEnum.HTMLAttributes.Id)
-			);
-
-			Helper.Dom.Attribute.Set(
-				this._accordionPlaceholder,
-				Constants.A11YAttributes.Role.AttrName,
-				Constants.A11YAttributes.Role.TabPanel
-			);
-		}
-
+		/**
+		 * Method to set the listeners and callbacks
+		 *
+		 * @protected
+		 * @memberof AccordionItem
+		 */
 		protected setCallbacks(): void {
-			this._eventToggleAccordion = this._toggleAccordionEvent.bind(this);
-			this._transitionEnd = this._transitionEndHandler.bind(this);
-			this._keyBoardCallback = this._onKeyboardPress.bind(this);
+			this._eventOnClick = this._accordionOnClickHandler.bind(this);
+			this._eventOnTransitionEnd = this._transitionEndHandler.bind(this);
+			this._eventOnkeyPress = this._onKeyboardPress.bind(this);
+
+			this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
 		}
 
-		// Method that gets & stores the HTML elements of the Accordion Item
+		/**
+		 * Method that sets the HTML elements of the Accordion Item
+		 *
+		 * @protected
+		 * @memberof AccordionItem
+		 */
 		protected setHtmlElements(): void {
-			this._accordionTitle = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternTitle);
-			this._accordionContent = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternContent);
-			this._accordionIcon = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternIcon);
-			this._accordionPlaceholder = this._accordionContent.firstChild as HTMLElement;
+			this._accordionItemTitleElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternTitle);
+			this._accordionItemContentElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternContent);
+			this._accordionItemIconElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternIcon);
+			this._accordionItemPlaceholder = this._accordionItemContentElem.firstChild as HTMLElement;
 		}
 
-		protected setInitialStates(): void {
-			if (this.configs.IsExpanded) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Open);
-				Helper.Dom.Styles.AddClass(this._accordionContent, Enum.CssClass.Expanded);
-				this._setAriaExpanded(true, false);
+		/**
+		 * Method to set the initial CSS Classes
+		 *
+		 * @protected
+		 * @memberof AccordionItem
+		 */
+		protected setInitialCssClasses(): void {
+			if (this._isOpen) {
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternOpen);
+				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternExpanded);
 			} else {
-				Helper.Dom.Styles.AddClass(this._accordionContent, Enum.CssClass.Collapsed);
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.Open);
-				Helper.Dom.Styles.RemoveClass(this._accordionContent, Enum.CssClass.Expanded);
-				this._setAriaExpanded(false, true);
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternClosed);
+				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternCollapsed);
 			}
 		}
 
+		/**
+		 * Method to remove the event listeners and unset callbacks
+		 *
+		 * @protected
+		 * @memberof AccordionItem
+		 */
+		protected unsetCallbacks(): void {
+			this._accordionItemTitleElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			this._accordionItemTitleElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
+
+			this._eventOnClick = undefined;
+			this._eventOnTransitionEnd = undefined;
+			this._eventOnkeyPress = undefined;
+		}
+
+		/**
+		 * Method to unset the html elements
+		 *
+		 * @protected
+		 * @memberof AccordionItem
+		 */
+		protected unsetHtmlElements(): void {
+			this._accordionItemTitleElem = undefined;
+			this._accordionItemContentElem = undefined;
+			this._accordionItemIconElem = undefined;
+			this._accordionItemPlaceholder = undefined;
+		}
+
+		/**
+		 * isDisabled getter
+		 *
+		 * @readonly
+		 * @type {boolean}
+		 * @memberof AccordionItem
+		 */
 		public get isDisabled(): boolean {
 			return this.configs.IsDisabled;
 		}
 
-		public get isExpanded(): boolean {
-			return this.configs.IsExpanded;
+		/**
+		 * IsOpen getter
+		 *
+		 * @readonly
+		 * @type {boolean}
+		 * @memberof AccordionItem
+		 */
+		public get isOpen(): boolean {
+			return this._isOpen;
 		}
 
+		/**
+		 * Method to build the pattern.
+		 *
+		 * @memberof AccordionItem
+		 */
 		public build(): void {
 			super.build();
+
 			this.setHtmlElements();
-			this.setInitialStates();
-			this._setUpDisabledState();
-			this.setA11yProperties();
-			this.setCallbacks();
-			this._setUpEvents();
+			this.setInitialCssClasses();
+			this._setIsDisabledState();
+			this.setA11yProperties(false);
+
 			super.finishBuild();
 		}
 
+		/**
+		 * Method to change the value of configs/current state.
+		 *
+		 * @param {string} propertyName
+		 * @param {unknown} propertyValue
+		 * @memberof AccordionItem
+		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
-			const expandedState = this.configs.IsExpanded;
 			super.changeProperty(propertyName, propertyValue);
+
 			if (this.isBuilt) {
 				switch (propertyName) {
 					case Enum.Properties.IsDisabled:
-						this._setUpDisabledState();
-						this._setUpEvents();
+						this._setIsDisabledState();
 						break;
-					case Enum.Properties.IsExpanded:
-						this._toggleAccordion(expandedState);
+					case Enum.Properties.StartsExpanded:
+						console.warn(
+							`${GlobalEnum.PatternsNames.AccordionItem} (${this.widgetId}): changes to ${Enum.Properties.StartsExpanded} parameter do not affect the ${GlobalEnum.PatternsNames.AccordionItem}. Use the client actions 'AccordionItemExpand' and 'AccordionItemCollapse' to affect the ${GlobalEnum.PatternsNames.AccordionItem}.`
+						);
 						break;
 				}
 			}
 		}
 
-		// This method will open and then close the item to get its final value; then, it will run an animation
-		// from the item's inital height to 0
+		/**
+		 * Method to close the AccordionItem
+		 *
+		 * @memberof AccordionItem
+		 */
 		public close(): void {
-			Helper.Attribute.Remove(this._accordionContent, GlobalEnum.HTMLAttributes.Style);
-			const expandedHeight = this._accordionContent.getBoundingClientRect().height;
-			// We know the final height is 0 - it is being collapsed
-			const collapsedHeight = 0;
+			if (!this._isOpen) {
+				return;
+			}
 
-			Helper.Dom.Styles.AddClass(this._accordionContent, Enum.CssClass.Closed);
-			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.Open);
+			Helper.Dom.Attribute.Remove(this._accordionItemContentElem, GlobalEnum.HTMLAttributes.Style);
+			this._expandedHeight = this._accordionItemContentElem.getBoundingClientRect().height;
 
-			Helper.Dom.Styles.SetStyleAttribute(
-				this._accordionContent,
-				GlobalEnum.InlineStyle.Height,
-				expandedHeight + GlobalEnum.Units.Pixel
-			);
+			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternClosed);
+			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternOpen);
 
 			// Removes collapsed class and adds the expanded class to animate
-			Helper.Dom.Styles.AddClass(this._accordionContent, Enum.CssClass.Expanded);
-			Helper.Dom.Styles.RemoveClass(this._accordionContent, Enum.CssClass.Collapsed);
+			Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.PatternExpanded);
 
-			const waitDomIterateTimeout = setTimeout(() => {
-				// Adds is--animating class to current accordion item content to obtain the final height value
-				Helper.Dom.Styles.AddClass(this._accordionContent, Enum.CssClass.Animation);
-				Helper.Dom.Styles.RemoveClass(this._accordionContent, Enum.CssClass.Expanded);
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._accordionItemContentElem,
+				GlobalEnum.InlineStyle.Height,
+				this._expandedHeight + GlobalEnum.Units.Pixel
+			);
 
-				Helper.Dom.Styles.SetStyleAttribute(
-					this._accordionContent,
-					GlobalEnum.InlineStyle.Height,
-					collapsedHeight + GlobalEnum.Units.Pixel
-				);
-
-				this._accordionContent.addEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._transitionEnd);
-				// End of animation, item is collapsed
-				Helper.Dom.Styles.AddClass(this._accordionContent, Enum.CssClass.Collapsed);
-
-				clearTimeout(waitDomIterateTimeout);
-			}, 100);
-
-			this.configs.IsExpanded = false;
-			this._setAriaExpanded(false, true);
-			this._triggerToggleClick();
+			Helper.AsyncInvocation(() => {
+				this._animationAsync(false);
+			});
 		}
 
+		/**
+		 * Method to remove event listener and destroy AccordionItem instance
+		 *
+		 * @memberof AccordionItem
+		 */
 		public dispose(): void {
-			this._removeEvents();
-			this._accordionParent?.removeAccordionItem(this.uniqueId);
+			this.unsetCallbacks();
+			this._accordionParentElem?.removeAccordionItem(this.uniqueId);
+			this.unsetHtmlElements();
+
 			super.dispose();
 		}
 
-		// This method will open and then close the item to get its final value; then, it will run an animation
-		// from 0 to the item's final height
+		/**
+		 * Method to open the AccordionItem
+		 *
+		 * @memberof AccordionItem
+		 */
 		public open(): void {
-			// We know the initial height is 0 - it is  collapsed
-			const collapsedHeight = 0;
+			if (this._isOpen) {
+				return;
+			}
 
-			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.Closed);
-			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Open);
+			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternClosed);
+			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternOpen);
 
 			// While the animation is running, we don't want any clicks happening on the title
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._accordionTitle,
+				this._accordionItemTitleElem,
 				GlobalEnum.InlineStyle.PointerEvents,
 				GlobalEnum.CssProperties.None
 			);
 
-			Helper.Dom.Styles.RemoveClass(this._accordionContent, Enum.CssClass.Collapsed);
-			Helper.Dom.Styles.AddClass(this._accordionContent, Enum.CssClass.Expanded);
+			Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.PatternCollapsed);
+			Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternExpanded);
 
-			Helper.Dom.Attribute.Remove(this._accordionTitle, GlobalEnum.HTMLAttributes.Style);
+			Helper.Dom.Attribute.Remove(this._accordionItemTitleElem, GlobalEnum.HTMLAttributes.Style);
 
-			const expandedHeight = this._accordionContent.getBoundingClientRect().height;
+			this._expandedHeight = this._accordionItemContentElem.getBoundingClientRect().height;
 
-			Helper.Dom.Styles.AddClass(this._accordionContent, Enum.CssClass.Collapsed);
-			Helper.Dom.Styles.RemoveClass(this._accordionContent, Enum.CssClass.Expanded);
+			Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.PatternExpanded);
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._accordionContent,
+				this._accordionItemContentElem,
 				GlobalEnum.InlineStyle.Height,
-				collapsedHeight + GlobalEnum.Units.Pixel
+				this._collapsedHeight
 			);
 
-			const waitDomIterateTimeout = setTimeout(() => {
-				// Adds is--animating class to current accordion item content to obtain the final height value
-				Helper.Dom.Styles.AddClass(this._accordionContent, Enum.CssClass.Animation);
-				Helper.Dom.Styles.SetStyleAttribute(
-					this._accordionContent,
-					GlobalEnum.InlineStyle.Height,
-					expandedHeight + GlobalEnum.Units.Pixel
-				);
+			Helper.AsyncInvocation(() => {
+				this._animationAsync(true);
+			});
 
-				this._accordionContent.addEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._transitionEnd);
-
-				// End of animation, item is expanded
-				Helper.Dom.Styles.AddClass(this._accordionContent, Enum.CssClass.Expanded);
-
-				clearTimeout(waitDomIterateTimeout);
-			}, 100);
-
-			this.configs.IsExpanded = true;
-			this._setAriaExpanded(true, false);
-			this._triggerToggleClick();
-
-			if (this._accordionParent) this._accordionParent.triggerAccordionItemClose(this.uniqueId);
+			if (this._accordionParentElem) this._accordionParentElem.triggerAccordionItemClose(this.uniqueId);
 		}
 
+		/**
+		 * Set callbacks for the onToggle event
+		 *
+		 * @param {Callbacks.OSGeneric} callback
+		 * @memberof AccordionItem
+		 */
 		public registerCallback(callback: Callbacks.OSGeneric): void {
-			if (this._onToggleCallback === undefined) {
-				this._onToggleCallback = callback;
+			if (this._platformEventOnToggle === undefined) {
+				this._platformEventOnToggle = callback;
+			} else {
+				console.warn(`The ${GlobalEnum.PatternsNames.AccordionItem} already has the toggle callback set.`);
 			}
 		}
 	}

@@ -7,13 +7,14 @@ namespace OSUIFramework.Constants {
 		Aria: {
 			Atomic: 'atomic',
 			Controls: 'aria-controls',
-			Describedby: 'describedby',
 			Disabled: 'aria-disabled',
+			Describedby: 'describedby',
 			Expanded: 'aria-expanded',
 			Haspopup: 'aria-haspopup',
 			Hidden: 'aria-hidden',
 			Label: 'aria-label',
 			Labelledby: 'labelledby',
+			Selected: 'aria-selected',
 			ValueMax: 'valuemax',
 			ValueMin: 'valuemin',
 		},
@@ -32,6 +33,7 @@ namespace OSUIFramework.Constants {
 			Progressbar: 'progressbar',
 			Search: 'search',
 			Tab: 'tab',
+			TabList: 'tablist',
 			TabPanel: 'tabpanel',
 			Tooltip: 'tooltip',
 		},
@@ -58,6 +60,9 @@ namespace OSUIFramework.Constants {
 	/* cssClass to be checked if the Accessibility Feature is enabled */
 	export const HasAccessibilityClass = 'has-accessible-features';
 
+	/* cssClass to be added to elements that must visible yet hidded for accessibility purposes */
+	export const AccessibilityHideElementClass = 'wcag-hide-text';
+
 	/* cssClass to be checked if the RTL Feature is enabled */
 	export const IsRTLClass = 'is-rtl';
 
@@ -65,5 +70,14 @@ namespace OSUIFramework.Constants {
 	export const NoTransition = 'no-transition';
 
 	/* OSUI Version */
-	export const OSUIVersion = '2.8.0';
+	export const OSUIVersion = '2.8.1';
+
+	/* css Class that is added in layout */
+	export const LayoutClass = 'layout';
+
+	/* css Class that is added in header */
+	export const HeaderClass = 'header';
+
+	/*Constant to be used across project as the zero value*/
+	export const ZeroValue = 0;
 }

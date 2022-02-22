@@ -1,28 +1,29 @@
-/// <reference path="../AbstractPattern.ts" />
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Gallery {
 	/**
-	 * Defines the interface for OutSystemsUI Patterns
+	 * Defines the interface for OutSystemsUI Gallery Pattern
+	 *
+	 * @export
+	 * @class Gallery
+	 * @extends {AbstractPattern<GalleryConfig>}
+	 * @implements {IGallery}
 	 */
 	export class Gallery extends AbstractPattern<GalleryConfig> implements IGallery {
-		// Store all the css property strings used by the pattern
-
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		constructor(uniqueId: string, configs: any) {
+		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new GalleryConfig(configs));
 		}
 
 		/**
-		 * Function used to set the Gallery's gutter size
+		 * Function used to set the Gallery's items gap
 		 *
 		 * @private
+		 * @memberof Gallery
 		 */
-		private _setGutterSize(): void {
-			Helper.Style.SetStyleAttribute(
+		private _setItemsGap(): void {
+			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
-				Enum.CssProperty.GridGap,
-				`var(--space-${this.configs.GutterSize})`
+				Enum.CssVariables.PatternItemsGap,
+				`var(--space-${this.configs.ItemsGap})`
 			);
 		}
 
@@ -30,16 +31,28 @@ namespace OSUIFramework.Patterns.Gallery {
 		 * Function used to set the Gallery's number of items per row in Desktop
 		 *
 		 * @private
+		 * @memberof Gallery
 		 */
-		private _setItemsInDesktop(): void {
-			Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.GridDesktop, this.configs.ItemsInDesktop);
-			// Fix for Edge, as css calc() doesn't work on all scenarios for this browser
-			this.configs.ItemsInDesktop++;
+		private _setRowItemsDesktop(): void {
+			//The number must be greater than 0
+			if (this.configs.RowItemsDesktop < Enum.Properties.MinRowItemsAllowed) {
+				this.configs.RowItemsDesktop = Enum.Properties.MinRowItemsAllowed;
 
-			Helper.Style.SetStyleAttribute(
+				console.warn(
+					`${GlobalEnum.PatternsNames.Gallery} (${this.widgetId}): The value of the ${Enum.Properties.RowItemsDesktop} property is less than supported (${Enum.Properties.MinRowItemsAllowed}). To ensure the correct behaviour, set a value greater than ${Constants.ZeroValue}.`
+				);
+			}
+
+			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
-				Enum.CssProperty.GridListDesktop,
-				this.configs.ItemsInDesktop
+				Enum.CssVariables.PatternItemsDesktop,
+				this.configs.RowItemsDesktop
+			);
+
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				Enum.CssVariables.PatternListItemsDesktop,
+				this.configs.RowItemsDesktop
 			);
 		}
 
@@ -47,67 +60,98 @@ namespace OSUIFramework.Patterns.Gallery {
 		 * Function used to set the Gallery's number of items per row in Phone
 		 *
 		 * @private
+		 * @memberof Gallery
 		 */
-		private _setItemsInPhone(): void {
-			Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.GridPhone, this.configs.ItemsInPhone);
+		private _setRowItemsPhone(): void {
+			//The number must be greater than 0
+			if (this.configs.RowItemsPhone < Enum.Properties.MinRowItemsAllowed) {
+				this.configs.RowItemsPhone = Enum.Properties.MinRowItemsAllowed;
 
-			// Fix for Edge, as css calc() doesn't work on all scenarios for this browser
-			this.configs.ItemsInPhone++;
+				console.warn(
+					`${GlobalEnum.PatternsNames.Gallery} (${this.widgetId}): The value of the ${Enum.Properties.RowItemsPhone} property is less than supported (${Enum.Properties.MinRowItemsAllowed}). To ensure the correct behaviour, set a value greater than ${Constants.ZeroValue}.`
+				);
+			}
 
-			Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.GridListPhone, this.configs.ItemsInPhone);
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				Enum.CssVariables.PatternItemsPhone,
+				this.configs.RowItemsPhone
+			);
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				Enum.CssVariables.PatternListItemsPhone,
+				this.configs.RowItemsPhone
+			);
 		}
 
 		/**
 		 * Function used to set the Gallery's number of items per row in Tablet
 		 *
 		 * @private
+		 * @memberof Gallery
 		 */
-		private _setItemsInTablet(): void {
-			Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.GridTablet, this.configs.ItemsInTablet);
+		private _setRowItemsTablet(): void {
+			//The number must be greater than 0
+			if (this.configs.RowItemsTablet < Enum.Properties.MinRowItemsAllowed) {
+				this.configs.RowItemsTablet = Enum.Properties.MinRowItemsAllowed;
 
-			// Fix for Edge, as css calc() doesn't work on all scenarios for this browser
-			this.configs.ItemsInTablet++;
+				console.warn(
+					`${GlobalEnum.PatternsNames.Gallery} (${this.widgetId}): The value of the ${Enum.Properties.RowItemsTablet} property is less than supported (${Enum.Properties.MinRowItemsAllowed}). To ensure the correct behaviour, set a value greater than ${Constants.ZeroValue}.`
+				);
+			}
 
-			Helper.Style.SetStyleAttribute(this._selfElem, Enum.CssProperty.GridListTablet, this.configs.ItemsInTablet);
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				Enum.CssVariables.PatternItemsTablet,
+				this.configs.RowItemsTablet
+			);
+
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				Enum.CssVariables.PatternListItemsTablet,
+				this.configs.RowItemsTablet
+			);
 		}
 
 		public build(): void {
 			super.build();
 
-			// Set Items
-			this._setItemsInDesktop();
-			this._setItemsInTablet();
-			this._setItemsInPhone();
+			this._setRowItemsDesktop();
 
-			// Set Gutter
-			this._setGutterSize();
+			this._setRowItemsTablet();
+
+			this._setRowItemsPhone();
+
+			this._setItemsGap();
 
 			this.finishBuild();
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		public changeProperty(propertyName: string, propertyValue: any): void {
-			if (Enum.Property[propertyName] && this._configs.hasOwnProperty(propertyName)) {
+		/**
+		 * Method to change the value of configs/current state.
+		 *
+		 * @param {string} propertyName
+		 * @param {unknown} propertyValue
+		 * @memberof Gallery
+		 */
+		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			super.changeProperty(propertyName, propertyValue);
+			if (this.isBuilt) {
+				// Check which property changed and call respective method to update it
 				switch (propertyName) {
-					case Enum.Property.ItemsInDesktop:
-						this._configs.ItemsInDesktop = propertyValue;
-						this._setItemsInDesktop();
+					case Enum.Properties.RowItemsDesktop:
+						this._setRowItemsDesktop();
 						break;
-					case Enum.Property.ItemsInTablet:
-						this._configs.ItemsInTablet = propertyValue;
-						this._setItemsInTablet();
+					case Enum.Properties.RowItemsTablet:
+						this._setRowItemsTablet();
 						break;
-					case Enum.Property.ItemsInPhone:
-						this._configs.ItemsInPhone = propertyValue;
-						this._setItemsInPhone();
+					case Enum.Properties.RowItemsPhone:
+						this._setRowItemsPhone();
 						break;
-					case Enum.Property.GutterSize:
-						this._configs.GutterSize = propertyValue;
-						this._setGutterSize();
+					case Enum.Properties.ItemsGap:
+						this._setItemsGap();
 						break;
 				}
-			} else {
-				throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);
 			}
 		}
 	}

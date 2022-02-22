@@ -1,7 +1,7 @@
-/*! Patterns - Content - ProgressCircle */
+/*! Patterns - Numbers - ProgressCircle */
 ////
 /// @group Patterns-ProgressCircle
-/// Patterns - Content - ProgressCircle
+/// Patterns - Numbers - ProgressCircle
 
 [data-block*='ProgressCircle'] {
 	display: block;
@@ -15,49 +15,22 @@
 	position: relative;
 	width: 100%;
 
-	.osui-progress {
-		&-container {
-			display: inline-block;
-			height: var(--circle-size);
-			margin: 0 auto;
-			position: relative;
-			width: var(--circle-size);
-			z-index: 0;
-
-			> div {
-				display: block;
-				min-height: inherit;
-				min-width: inherit;
-			}
-		}
-
-		&-content {
-			left: 50%;
-			position: absolute;
-			text-align: center;
-			top: 50%;
-			transform: translate(-50%, -50%);
-			width: 80%;
-			z-index: 1;
-		}
-	}
-
-	.svg-wrapper {
-		display: inline-flex;
-		// the !important is used to override the inline style
-		height: var(--circle-size) !important;
+	&__container {
+		display: inline-block;
+		height: var(--circle-size);
+		margin: 0 auto;
 		position: relative;
 		width: var(--circle-size);
+		z-index: 0;
 
-		svg {
-			height: var(--circle-size);
-			width: var(--circle-size);
+		> div {
+			display: block;
+			min-height: inherit;
+			min-width: inherit;
 		}
-	}
 
-	.osui-progress {
-		&-progress-path,
-		&-trail-path {
+		&__progress-path,
+		&__trail-path {
 			cx: 50%;
 			cy: 50%;
 			fill: transparent;
@@ -70,7 +43,7 @@
 			transform-origin: center;
 		}
 
-		&-progress-path {
+		&__progress-path {
 			stroke: var(--progress-color);
 			stroke-dasharray: var(--stroke-dasharray);
 			stroke-dashoffset: var(--stroke-dashoffset);
@@ -89,8 +62,31 @@
 			}
 		}
 
-		&-trail-path {
+		&__trail-path {
 			stroke: var(--trail-color);
+		}
+	}
+
+	&__content {
+		left: 50%;
+		position: absolute;
+		text-align: center;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		width: 80%;
+		z-index: 1;
+	}
+
+	.svg-wrapper {
+		display: inline-flex;
+		// the !important is used to override the inline style
+		height: var(--circle-size) !important;
+		position: relative;
+		width: var(--circle-size);
+
+		svg {
+			height: var(--circle-size);
+			width: var(--circle-size);
 		}
 	}
 }

@@ -256,8 +256,8 @@ namespace OSUIFramework.Patterns.FlipContent {
 		 */
 		public toggleFlipContent(): void {
 			this.configs.IsFlipped = !this.configs.IsFlipped;
-
-			this._toggleClasses();
+			// Async to improve animation smoothness
+			Helper.AsyncInvocation(this._toggleClasses.bind(this));
 
 			this._triggerPlatformEvent();
 		}
