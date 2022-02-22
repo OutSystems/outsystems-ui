@@ -72,11 +72,11 @@ namespace Providers.Splide {
 				else transform += extraSpace;
 
 				// Adjust the Transform property correctly
-				OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
-					SplideList,
-					OSUIFramework.Patterns.Carousel.Enum.Properties.Transform,
-					'translateX(' + transform + OSUIFramework.GlobalEnum.Units.Pixel + ')'
-				);
+				// OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
+				// 	SplideList,
+				// 	OSUIFramework.Patterns.Carousel.Enum.Properties.Transform,
+				// 	'translateX(' + transform + OSUIFramework.GlobalEnum.Units.Pixel + ')'
+				// );
 			}
 		}
 
@@ -118,7 +118,7 @@ namespace Providers.Splide {
 			this._setOnSlideMovedEvent();
 
 			// Adjust carousel width
-			this._setCarouselWidth(false);
+			//this._setCarouselWidth(false);
 		}
 
 		// Method to toggle the blockRender status
@@ -156,27 +156,27 @@ namespace Providers.Splide {
 		private _setBreakpointsOptions(): void {
 			this._providerOptions.breakpoints = {
 				768: {
-					perPage: this.configs.ItemsPerSlide.Phone,
+					perPage: this.configs.ItemsPhone,
 				},
 				1024: {
-					perPage: this.configs.ItemsPerSlide.Tablet,
+					perPage: this.configs.ItemsTablet,
 				},
 			};
 		}
 
 		// Ensure that the splide track maintains the correct width
 		private _setCarouselWidth(splideAdjusted = true): void {
-			OSUIFramework.Helper.AsyncInvocation(() => {
-				OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
-					this._splideTrack,
-					OSUIFramework.Patterns.Carousel.Enum.CssVariables.CarouselWidth,
-					this._selfElem.offsetWidth + OSUIFramework.GlobalEnum.Units.Pixel
-				);
-				if (!splideAdjusted) {
-					// splide should be adjusted when rendering the splide component
-					this._adjustSplideList();
-				}
-			});
+			// OSUIFramework.Helper.AsyncInvocation(() => {
+			// 	OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
+			// 		this._splideTrack,
+			// 		OSUIFramework.Patterns.Carousel.Enum.CssVariables.CarouselWidth,
+			// 		this._selfElem.offsetWidth + OSUIFramework.GlobalEnum.Units.Pixel
+			// 	);
+			// 	if (!splideAdjusted) {
+			// 		// splide should be adjusted when rendering the splide component
+			// 		this._adjustSplideList();
+			// 	}
+			// });
 		}
 
 		// Set the html references that will be used to manage the cssClasses and atribute properties
@@ -212,7 +212,7 @@ namespace Providers.Splide {
 			this._setBreakpointsOptions();
 
 			// Method to handle the Navigation, and it will need to be called again on changeProperty
-			this.setNavigation(this.configs.Navigation);
+			//this.setNavigation(this.configs.Navigation);
 		}
 
 		// Method to set the OnInitializeEvent
@@ -248,6 +248,7 @@ namespace Providers.Splide {
 		 */
 		public build(): void {
 			super.build();
+			console.log('override');
 
 			this._setHtmlElements();
 
@@ -283,12 +284,14 @@ namespace Providers.Splide {
 						);
 						break;
 					case OSUIFramework.Patterns.Carousel.Enum.Properties.Navigation:
-					case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsDesktop:
-					case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsTablet:
-					case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsPhone:
 					case OSUIFramework.Patterns.Carousel.Enum.Properties.AutoPlay:
 					case OSUIFramework.Patterns.Carousel.Enum.Properties.Loop:
 						this.updateCarousel();
+						break;
+					case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsDesktop:
+					case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsTablet:
+					case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsPhone:
+						this._provider.options = { perPage: propertyValue as number };
 						break;
 					case OSUIFramework.Patterns.Carousel.Enum.Properties.Padding:
 						this._provider.options = { padding: propertyValue };
@@ -345,30 +348,6 @@ namespace Providers.Splide {
 				case OSUIFramework.Patterns.Carousel.Enum.CarouselEvents.OnInitialize:
 					this._onInitialize = callback;
 					break;
-			}
-		}
-
-		// Method to set the correct configuration for the Navigation option
-		public setNavigation(navigation: string): void {
-			switch (navigation) {
-				case Enum.Navigation.None:
-					this._providerOptions.arrows = false;
-					this._providerOptions.pagination = false;
-					break;
-				case Enum.Navigation.Dots:
-					this._providerOptions.arrows = false;
-					this._providerOptions.pagination = true;
-					break;
-				case Enum.Navigation.Arrows:
-					this._providerOptions.arrows = true;
-					this._providerOptions.pagination = false;
-					break;
-				case Enum.Navigation.Both:
-					this._providerOptions.arrows = true;
-					this._providerOptions.pagination = true;
-					break;
-				default:
-					throw new Error(`setNavigation - Option '${navigation}' can't be set.`);
 			}
 		}
 

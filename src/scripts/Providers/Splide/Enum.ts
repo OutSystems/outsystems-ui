@@ -11,14 +11,6 @@ namespace Providers.Splide.Enum {
 	}
 
 	/**
-	 * Splide focus API options
-	 */
-	export enum FocusOnItem {
-		Center = 'center',
-		FirstOnSlide = 'first',
-		LastOnSlide = 'last',
-	}
-	/**
 	 * Splide go API options
 	 */
 	export enum Go {
@@ -31,16 +23,6 @@ namespace Providers.Splide.Enum {
 	 */
 	export enum KeyboardOptions {
 		Focused = 'focused',
-	}
-
-	/**
-	 * Splide Navigation options
-	 */
-	export enum Navigation {
-		None = 'none',
-		Arrows = 'arrows',
-		Dots = 'dots',
-		Both = 'both',
 	}
 
 	/**
