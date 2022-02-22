@@ -11,12 +11,7 @@ namespace Providers.Splide {
 					: OSUIFramework.GlobalEnum.Direction.LTR,
 
 				type: this.Loop ? Enum.TypeOptions.Loop : Enum.TypeOptions.Slide,
-
-				focus: Providers.Splide.OSUISplide.prototype.setFocusOnItemOption(
-					this.FocusOnItem,
-					this.ItemsPerSlide.Desktop
-				),
-
+				focus: 0,
 				perPage: this.ItemsPerSlide.Desktop,
 				autoplay: this.AutoPlay,
 				padding: this.Padding,

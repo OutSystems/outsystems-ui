@@ -37,7 +37,6 @@ namespace OSUIFramework.Patterns.Carousel.Enum {
 		Padding = 'padding',
 		Gap = 'gap',
 		InitialPosition = 'initialPosition',
-		Focus = 'focus',
 		Transform = 'transform',
 	}
 

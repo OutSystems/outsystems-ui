@@ -3,7 +3,6 @@
 namespace OSUIFramework.Patterns.Carousel {
 	export abstract class AbstractCarouselConfig extends Patterns.AbstractProviderConfiguration {
 		public AutoPlay: boolean;
-		public FocusOnItem: string;
 		public Gap: string;
 		public InitialPosition: number;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -12,8 +11,7 @@ namespace OSUIFramework.Patterns.Carousel {
 		public Navigation: string;
 		public Padding: string;
 
-		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-		constructor(config: any) {
+		constructor(config: JSON) {
 			super(config);
 		}
 	}

@@ -32,13 +32,11 @@ namespace Providers.Splide {
 		// Store the element that will be used to init the provider
 		private _providerContainer: HTMLElement;
 		// Store initial provider options
-		// eslint-disable-next-line @typescript-eslint/explicit-member-accessibility, @typescript-eslint/no-explicit-any
 		private _providerOptions: SplideOpts;
 		// Store the splide__track element from the provider
 		private _splideTrack: HTMLElement;
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		constructor(uniqueId: string, configs: any) {
+		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SplideConfig(configs));
 
 			// As the Splider library only has the SplideOptions as an interface, and not an object
@@ -159,11 +157,9 @@ namespace Providers.Splide {
 			this._providerOptions.breakpoints = {
 				768: {
 					perPage: this.configs.ItemsPerSlide.Phone,
-					focus: this.setFocusOnItemOption(this.configs.FocusOnItem, this.configs.ItemsPerSlide.Phone),
 				},
 				1024: {
 					perPage: this.configs.ItemsPerSlide.Tablet,
-					focus: this.setFocusOnItemOption(this.configs.FocusOnItem, this.configs.ItemsPerSlide.Tablet),
 				},
 			};
 		}
@@ -241,7 +237,6 @@ namespace Providers.Splide {
 			this._setBreakpointsOptions();
 
 			this._provider.options = {
-				focus: this.setFocusOnItemOption(this.configs.FocusOnItem, this.configs.ItemsPerSlide.Desktop),
 				breakpoints: this._providerOptions.breakpoints,
 			};
 		}
@@ -310,10 +305,6 @@ namespace Providers.Splide {
 					this.configs.InitialPosition = propertyValue;
 					this.updateCarousel(false);
 					break;
-				case OSUIFramework.Patterns.Carousel.Enum.Properties.Focus:
-					this.configs.FocusOnItem = propertyValue;
-					this._updateBreakpoints();
-					break;
 				default:
 					super.changeProperty(propertyName, propertyValue);
 					break;
@@ -352,7 +343,6 @@ namespace Providers.Splide {
 		}
 
 		// Provider getter
-		// eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
 		public get provider(): Splide {
 			return this._provider;
 		}
@@ -367,24 +357,6 @@ namespace Providers.Splide {
 					this._onInitialize = callback;
 					break;
 			}
-		}
-
-		// Method to set the correct FocusOnItem option, as the library only supports 'center' or an index
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		public setFocusOnItemOption(value: string, itemsPerSlide: number): any {
-			let currentFocus;
-			switch (value) {
-				case Enum.FocusOnItem.Center:
-					currentFocus = Enum.FocusOnItem.Center;
-					break;
-				case Enum.FocusOnItem.FirstOnSlide:
-					currentFocus = 0;
-					break;
-				case Enum.FocusOnItem.LastOnSlide:
-					currentFocus = itemsPerSlide - 1; // last on each page
-			}
-
-			return currentFocus;
 		}
 
 		// Method to set the correct configuration for the Navigation option

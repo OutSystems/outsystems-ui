@@ -28,7 +28,7 @@ function initServer() {
         .pipe(template({}))
         .pipe(gulp.dest(distFolder));
 
-    browser.init({server: distFolder, port: serverPort, cors: true});
+    browser.init({server: distFolder, port: serverPort});
 }
 
 // Watch files changed
