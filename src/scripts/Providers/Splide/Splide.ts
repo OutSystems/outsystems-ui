@@ -241,6 +241,11 @@ namespace Providers.Splide {
 			};
 		}
 
+		/**
+		 * Method to build the pattern.
+		 *
+		 * @memberof OSUISplide
+		 */
 		public build(): void {
 			super.build();
 
@@ -257,57 +262,41 @@ namespace Providers.Splide {
 			this.finishBuild();
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		public changeProperty(propertyName: string, propertyValue: any): void {
-			// Check if provider is ready
-			if (!this.isBuilt) {
-				return;
-			}
+		/**
+		 * Method to change the value of configs/current state.
+		 *
+		 * @param {string} propertyName
+		 * @param {unknown} propertyValue
+		 * @memberof OSUISplide
+		 */
+		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			super.changeProperty(propertyName, propertyValue);
 
-			// Block UpdateOnRender to avoid multiple triggers of provider.refresh()
-			this._blockRender = true;
+			if (this.isBuilt) {
+				// Block UpdateOnRender to avoid multiple triggers of provider.refresh()
+				this._blockRender = true;
 
-			// Check which property changed and call respective method to update it
-			switch (propertyName) {
-				case OSUIFramework.Patterns.Carousel.Enum.Properties.Navigation:
-					this.configs.Navigation = propertyValue;
-					this.updateCarousel();
-					break;
-				case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsDesktop:
-					this.configs.ItemsPerSlide.Desktop = propertyValue;
-					this.updateCarousel();
-					break;
-				case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsTablet:
-					this.configs.ItemsPerSlide.Tablet = propertyValue;
-					this.updateCarousel();
-					break;
-				case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsPhone:
-					this.configs.ItemsPerSlide.Phone = propertyValue;
-					this.updateCarousel();
-					break;
-				case OSUIFramework.Patterns.Carousel.Enum.Properties.AutoPlay:
-					this.configs.AutoPlay = propertyValue;
-					this.updateCarousel();
-					break;
-				case OSUIFramework.Patterns.Carousel.Enum.Properties.Loop:
-					this.configs.Loop = propertyValue;
-					this.updateCarousel();
-					break;
-				case OSUIFramework.Patterns.Carousel.Enum.Properties.Padding:
-					this.configs.Padding = propertyValue;
-					this._provider.options = { padding: propertyValue };
-					break;
-				case OSUIFramework.Patterns.Carousel.Enum.Properties.Gap:
-					this.configs.Gap = propertyValue;
-					this._provider.options = { gap: propertyValue };
-					break;
-				case OSUIFramework.Patterns.Carousel.Enum.Properties.InitialPosition:
-					this.configs.InitialPosition = propertyValue;
-					this.updateCarousel(false);
-					break;
-				default:
-					super.changeProperty(propertyName, propertyValue);
-					break;
+				switch (propertyName) {
+					case OSUIFramework.Patterns.Carousel.Enum.Properties.StartingPosition:
+						console.warn(
+							`Carousel (${this.widgetId}): changes to ${OSUIFramework.Patterns.Carousel.Enum.Properties.StartingPosition} parameter do not affect the carousel. Use the client action 'CarouselGoTo' to change the current item.`
+						);
+						break;
+					case OSUIFramework.Patterns.Carousel.Enum.Properties.Navigation:
+					case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsDesktop:
+					case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsTablet:
+					case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsPhone:
+					case OSUIFramework.Patterns.Carousel.Enum.Properties.AutoPlay:
+					case OSUIFramework.Patterns.Carousel.Enum.Properties.Loop:
+						this.updateCarousel();
+						break;
+					case OSUIFramework.Patterns.Carousel.Enum.Properties.Padding:
+						this._provider.options = { padding: propertyValue };
+						break;
+					case OSUIFramework.Patterns.Carousel.Enum.Properties.Gap:
+						this._provider.options = { gap: propertyValue as number };
+						break;
+				}
 			}
 
 			// Unblock UpdateOnRender so that it is able to update on DOM changes inside Carousel content
@@ -397,7 +386,7 @@ namespace Providers.Splide {
 
 			if (keepCurrentIndex) {
 				// Keep same position after update
-				this.configs.InitialPosition = this._currentIndex;
+				this.configs.StartingPosition = this._currentIndex;
 			}
 			// Create Carousel again
 			this._createProviderCarousel(triggerInitialize);

@@ -16,7 +16,7 @@ namespace Providers.Splide {
 				autoplay: this.AutoPlay,
 				padding: this.Padding,
 				gap: this.Gap,
-				start: this.InitialPosition,
+				start: this.StartingPosition,
 			};
 
 			//Cleanning undefined properties

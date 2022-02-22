@@ -36,7 +36,7 @@ namespace OSUIFramework.Patterns.Carousel.Enum {
 		Loop = 'loop',
 		Padding = 'padding',
 		Gap = 'gap',
-		InitialPosition = 'initialPosition',
+		StartingPosition = 'StartingPosition',
 		Transform = 'transform',
 	}
 
