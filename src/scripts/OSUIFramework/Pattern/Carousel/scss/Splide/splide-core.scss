@@ -16,13 +16,13 @@
 	display: block;
 }
 .splide__pagination {
+	-ms-flex-align: center;
 	align-items: center;
 	display: -ms-flexbox;
 	display: flex;
-	-ms-flex-align: center;
-	-ms-flex-pack: center;
 	-ms-flex-wrap: wrap;
 	flex-wrap: wrap;
+	-ms-flex-pack: center;
 	justify-content: center;
 	margin: 0;
 	pointer-events: none;
@@ -69,6 +69,7 @@
 	border-left-color: transparent;
 	border-radius: 50%;
 	bottom: 0;
+	contain: strict;
 	display: inline-block;
 	height: 20px;
 	left: 0;
@@ -123,6 +124,7 @@
 	display: block;
 }
 .splide__arrow {
+	-ms-flex-align: center;
 	align-items: center;
 	background: #ccc;
 	border: 0;
@@ -130,9 +132,8 @@
 	cursor: pointer;
 	display: -ms-flexbox;
 	display: flex;
-	-ms-flex-align: center;
-	-ms-flex-pack: center;
 	height: 2em;
+	-ms-flex-pack: center;
 	justify-content: center;
 	opacity: 0.7;
 	padding: 0;
