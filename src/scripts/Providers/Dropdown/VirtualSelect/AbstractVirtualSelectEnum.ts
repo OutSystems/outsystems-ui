@@ -15,6 +15,18 @@ namespace Providers.Dropdown.VirtualSelect.Enum {
 	 */
 	export enum Events {
 		Change = 'change',
+		OnSelected = 'OnSelected',
+	}
+
+	/**
+	 * Properties
+	 */
+	export enum Properties {
+		NoResultsText = 'NoResultsText',
+		OptionsList = 'OptionsList',
+		Prompt = 'Prompt',
+		SearchPrompt = 'SearchPrompt',
+		SelectedOptions = 'SelectedOptions',
 	}
 
 	/**

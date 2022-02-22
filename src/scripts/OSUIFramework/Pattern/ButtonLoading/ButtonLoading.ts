@@ -28,9 +28,9 @@ namespace OSUIFramework.Patterns.ButtonLoading {
 		 */
 		private _setInitialButtonState(): void {
 			// Set default IsLoading cssClass property value
-			this._setIsLoading(this._configs.IsLoading);
+			this._setIsLoading(this.configs.IsLoading);
 			// Set default ShowLoadingAndLabel cssClass property value
-			this._setLoadingLabel(this._configs.ShowLoadingAndLabel);
+			this._setLoadingLabel(this.configs.ShowLoadingAndLabel);
 		}
 
 		/**

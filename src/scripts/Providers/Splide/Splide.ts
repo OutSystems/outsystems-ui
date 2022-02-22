@@ -158,12 +158,12 @@ namespace Providers.Splide {
 		private _setBreakpointsOptions(): void {
 			this._providerOptions.breakpoints = {
 				768: {
-					perPage: this._configs.ItemsPerSlide.Phone,
-					focus: this.setFocusOnItemOption(this._configs.FocusOnItem, this._configs.ItemsPerSlide.Phone),
+					perPage: this.configs.ItemsPerSlide.Phone,
+					focus: this.setFocusOnItemOption(this.configs.FocusOnItem, this.configs.ItemsPerSlide.Phone),
 				},
 				1024: {
-					perPage: this._configs.ItemsPerSlide.Tablet,
-					focus: this.setFocusOnItemOption(this._configs.FocusOnItem, this._configs.ItemsPerSlide.Tablet),
+					perPage: this.configs.ItemsPerSlide.Tablet,
+					focus: this.setFocusOnItemOption(this.configs.FocusOnItem, this.configs.ItemsPerSlide.Tablet),
 				},
 			};
 		}
@@ -210,13 +210,13 @@ namespace Providers.Splide {
 
 		// Method to set the initial provider options, when created by the first time or after a destroy()
 		private _setInitialLibraryOptions(): void {
-			this._providerOptions = this._configs.getProviderConfig();
+			this._providerOptions = this.configs.getProviderConfig();
 
 			// Method to handle the breakpoints, and it will need to be called again on changeProperty
 			this._setBreakpointsOptions();
 
 			// Method to handle the Navigation, and it will need to be called again on changeProperty
-			this.setNavigation(this._configs.Navigation);
+			this.setNavigation(this.configs.Navigation);
 		}
 
 		// Method to set the OnInitializeEvent
@@ -241,7 +241,7 @@ namespace Providers.Splide {
 			this._setBreakpointsOptions();
 
 			this._provider.options = {
-				focus: this.setFocusOnItemOption(this._configs.FocusOnItem, this._configs.ItemsPerSlide.Desktop),
+				focus: this.setFocusOnItemOption(this.configs.FocusOnItem, this.configs.ItemsPerSlide.Desktop),
 				breakpoints: this._providerOptions.breakpoints,
 			};
 		}
@@ -275,43 +275,43 @@ namespace Providers.Splide {
 			// Check which property changed and call respective method to update it
 			switch (propertyName) {
 				case OSUIFramework.Patterns.Carousel.Enum.Properties.Navigation:
-					this._configs.Navigation = propertyValue;
+					this.configs.Navigation = propertyValue;
 					this.updateCarousel();
 					break;
 				case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsDesktop:
-					this._configs.ItemsPerSlide.Desktop = propertyValue;
+					this.configs.ItemsPerSlide.Desktop = propertyValue;
 					this.updateCarousel();
 					break;
 				case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsTablet:
-					this._configs.ItemsPerSlide.Tablet = propertyValue;
+					this.configs.ItemsPerSlide.Tablet = propertyValue;
 					this.updateCarousel();
 					break;
 				case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsPhone:
-					this._configs.ItemsPerSlide.Phone = propertyValue;
+					this.configs.ItemsPerSlide.Phone = propertyValue;
 					this.updateCarousel();
 					break;
 				case OSUIFramework.Patterns.Carousel.Enum.Properties.AutoPlay:
-					this._configs.AutoPlay = propertyValue;
+					this.configs.AutoPlay = propertyValue;
 					this.updateCarousel();
 					break;
 				case OSUIFramework.Patterns.Carousel.Enum.Properties.Loop:
-					this._configs.Loop = propertyValue;
+					this.configs.Loop = propertyValue;
 					this.updateCarousel();
 					break;
 				case OSUIFramework.Patterns.Carousel.Enum.Properties.Padding:
-					this._configs.Padding = propertyValue;
+					this.configs.Padding = propertyValue;
 					this._provider.options = { padding: propertyValue };
 					break;
 				case OSUIFramework.Patterns.Carousel.Enum.Properties.Gap:
-					this._configs.Gap = propertyValue;
+					this.configs.Gap = propertyValue;
 					this._provider.options = { gap: propertyValue };
 					break;
 				case OSUIFramework.Patterns.Carousel.Enum.Properties.InitialPosition:
-					this._configs.InitialPosition = propertyValue;
+					this.configs.InitialPosition = propertyValue;
 					this.updateCarousel(false);
 					break;
 				case OSUIFramework.Patterns.Carousel.Enum.Properties.Focus:
-					this._configs.FocusOnItem = propertyValue;
+					this.configs.FocusOnItem = propertyValue;
 					this._updateBreakpoints();
 					break;
 				default:
@@ -425,7 +425,7 @@ namespace Providers.Splide {
 
 			if (keepCurrentIndex) {
 				// Keep same position after update
-				this._configs.InitialPosition = this._currentIndex;
+				this.configs.InitialPosition = this._currentIndex;
 			}
 			// Create Carousel again
 			this._createProviderCarousel(triggerInitialize);

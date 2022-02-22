@@ -17,6 +17,15 @@ namespace OSUIFramework.Interface {
 		 * @memberof IPattern
 		 */
 		isBuilt: boolean;
+
+		/**
+		 * Pattern HTML element
+		 *
+		 * @type {string}
+		 * @memberof IPattern
+		 */
+		selfElement: HTMLElement;
+
 		/**
 		 * Internal Id of the instance of the pattern.
 		 *
@@ -24,6 +33,7 @@ namespace OSUIFramework.Interface {
 		 * @memberof IPattern
 		 */
 		uniqueId: string;
+
 		/**
 		 * External Id of the instance of the pattern
 		 *

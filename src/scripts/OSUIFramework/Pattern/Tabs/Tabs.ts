@@ -87,8 +87,8 @@ namespace OSUIFramework.Patterns.Tabs {
 			if (this._tabsHeaderItemsElementsArray[tabIndex]) {
 				newTabIndex = tabIndex;
 				// Otherwise, try the current configs_ActiveTab
-			} else if (this._tabsHeaderItemsElementsArray[this._configs.StartingTab]) {
-				newTabIndex = this._configs.StartingTab;
+			} else if (this._tabsHeaderItemsElementsArray[this.configs.StartingTab]) {
+				newTabIndex = this.configs.StartingTab;
 				// In last case, set it to the first on the list
 			} else {
 				newTabIndex = 0;
@@ -110,7 +110,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			switch (e.key) {
 				case GlobalEnum.Keycodes.ArrowRight:
 					// If is right arrow, navigate to current active tabs + 1 (next item)
-					targetHeaderItemIndex = this._configs.StartingTab + 1;
+					targetHeaderItemIndex = this.configs.StartingTab + 1;
 					// To prevent triggerinh changeTab, if already on last item
 					if (targetHeaderItemIndex < this._tabsHeaderItemsElementsArray.length) {
 						this.changeTab(targetHeaderItemIndex, undefined, true, true);
@@ -119,7 +119,7 @@ namespace OSUIFramework.Patterns.Tabs {
 					break;
 				case GlobalEnum.Keycodes.ArrowLeft:
 					// If is left arrow, navigate to current active tabs - 1 (previous item)
-					targetHeaderItemIndex = this._configs.StartingTab - 1;
+					targetHeaderItemIndex = this.configs.StartingTab - 1;
 					// To prevent triggerinh changeTab, if already on first item
 					if (targetHeaderItemIndex >= 0) {
 						this.changeTab(targetHeaderItemIndex, undefined, true, true);
@@ -145,13 +145,13 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._hasSingleContent = this._tabsContentItemsElementsArray.length === 1;
 
 			// Set initial active tab, based on the configs_ActiveTab
-			this._activeTabHeaderElement = this._tabsHeaderItemsElementsArray[this._configs.StartingTab];
+			this._activeTabHeaderElement = this._tabsHeaderItemsElementsArray[this.configs.StartingTab];
 
 			// If the Tabs only have one content, the active will be the first, otherwise
 			// respect the active tab from the config
 			this._activeTabContentElement = this._hasSingleContent
 				? this._tabsContentItemsElementsArray[0]
-				: this._tabsContentItemsElementsArray[this._configs.StartingTab];
+				: this._tabsContentItemsElementsArray[this.configs.StartingTab];
 
 			// Call the method to immediatelly set the single content as active,
 			// as it won't be needed to wait for more content items
@@ -257,9 +257,9 @@ namespace OSUIFramework.Patterns.Tabs {
 		 */
 		private _setInitialOptions(): void {
 			this._setOrientation(this.configs.TabsOrientation);
-			this._setPosition(this._configs.TabsVerticalPosition);
-			this._setHeight(this._configs.Height);
-			this._setIsJustified(this._configs.JustifyHeaders);
+			this._setPosition(this.configs.TabsVerticalPosition);
+			this._setHeight(this.configs.Height);
+			this._setIsJustified(this.configs.JustifyHeaders);
 			// Set the --tabs-header-items css variable
 			this._setHeaderItemsCustomProperty();
 			// Setting as false, to avoid trigering changeTab event on screen load
@@ -490,14 +490,14 @@ namespace OSUIFramework.Patterns.Tabs {
 				// If there's no active header element, assign it to this one
 				if (
 					(this._activeTabHeaderElement === undefined || this._activeTabHeaderElement === null) &&
-					currentIndex === this._configs.StartingTab
+					currentIndex === this.configs.StartingTab
 				) {
 					// And call changeTab, to make sure there's an active tab
 					// undefined passed, as we don't necessarily want this item to be set as active,
 					// but the one passed on the configs.activeTab, if available
 					Helper.AsyncInvocation(
 						this.changeTab.bind(this),
-						this._configs.StartingTab,
+						this.configs.StartingTab,
 						tabsHeaderItem,
 						false,
 						true
@@ -569,7 +569,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		/**
 		 * Method to change between tabs
 		 *
-		 * @param {*} [tabIndex=this._configs.ActiveTab]
+		 * @param {*} [tabIndex=this.configs.ActiveTab]
 		 * @param {Patterns.TabsHeaderItem.ITabsHeaderItem} [tabsHeaderItem]
 		 * @param {boolean} [triggerEvent]
 		 * @param {boolean} [blockObserver]
@@ -577,7 +577,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		 * @memberof Tabs
 		 */
 		public changeTab(
-			tabIndex = this._configs.StartingTab,
+			tabIndex = this.configs.StartingTab,
 			tabsHeaderItem?: Patterns.TabsHeaderItem.ITabsHeaderItem,
 			triggerEvent?: boolean,
 			blockObserver?: boolean
@@ -642,7 +642,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			}
 
 			// Update configs
-			this._configs.StartingTab = newTabIndex;
+			this.configs.StartingTab = newTabIndex;
 
 			// Trigger onTabChange event
 			if (triggerEvent) {

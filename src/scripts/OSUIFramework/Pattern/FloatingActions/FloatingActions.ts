@@ -210,7 +210,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 		// Set the IsExpanded option
 		private _setIsExpanded(IsExpanded: boolean): void {
-			this._configs.IsExpanded = IsExpanded;
+			this.configs.IsExpanded = IsExpanded;
 			this._isOpen = IsExpanded;
 
 			this._setClasses();
@@ -219,7 +219,7 @@ namespace OSUIFramework.Patterns.FloatingActions {
 
 		// Set the IsHover option
 		private _setIsHover(IsHover: boolean): void {
-			this._configs.IsHover = IsHover;
+			this.configs.IsHover = IsHover;
 
 			this._setUpEvents();
 		}

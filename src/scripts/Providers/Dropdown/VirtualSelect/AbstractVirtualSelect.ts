@@ -159,8 +159,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			// If/When we've the dropdown outside an IsDataFetched IF and OnParametersChannge where we're receiving (for both cases) a JSON string that must be parsed into an Object
 			if (
-				(propertyName === OSUIFramework.Patterns.Dropdown.Enum.Properties.OptionsList ||
-					propertyName === OSUIFramework.Patterns.Dropdown.Enum.Properties.SelectedOptions) &&
+				(propertyName === Enum.Properties.OptionsList || propertyName === Enum.Properties.SelectedOptions) &&
 				typeof propertyValue === 'string'
 			) {
 				propertyValue = JSON.parse(propertyValue);
@@ -173,19 +172,19 @@ namespace Providers.Dropdown.VirtualSelect {
 					case OSUIFramework.Patterns.Dropdown.Enum.Properties.IsDisabled:
 						this._manageDisableStatus();
 						break;
-					case OSUIFramework.Patterns.Dropdown.Enum.Properties.NoResultsText:
+					case Enum.Properties.NoResultsText:
 						this.redraw();
 						break;
-					case OSUIFramework.Patterns.Dropdown.Enum.Properties.OptionsList:
+					case Enum.Properties.OptionsList:
 						this.redraw();
 						break;
-					case OSUIFramework.Patterns.Dropdown.Enum.Properties.Prompt:
+					case Enum.Properties.Prompt:
 						this.redraw();
 						break;
-					case OSUIFramework.Patterns.Dropdown.Enum.Properties.SearchPrompt:
+					case Enum.Properties.SearchPrompt:
 						this.redraw();
 						break;
-					case OSUIFramework.Patterns.Dropdown.Enum.Properties.SelectedOptions:
+					case Enum.Properties.SelectedOptions:
 						this.redraw();
 						break;
 				}
@@ -260,7 +259,7 @@ namespace Providers.Dropdown.VirtualSelect {
 					}
 					break;
 
-				case OSUIFramework.Patterns.Dropdown.Enum.Events.OnSelected:
+				case Enum.Events.OnSelected:
 					if (this._platformEventSelectedOptCallback === undefined) {
 						this._platformEventSelectedOptCallback = callback;
 					}

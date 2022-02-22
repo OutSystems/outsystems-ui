@@ -25,6 +25,10 @@
 		.animate {
 			height: 100%;
 		}
+
+		.card-background {
+			-servicestudio-height: 100% !important;
+		}
 	}
 
 	& > img {

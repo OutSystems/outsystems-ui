@@ -396,7 +396,7 @@ namespace OSUIFramework.Helper {
 		 *
 		 * @static
 		 * @param {HTMLElement} element Element to be queried.
-		 * @param {string} htmlTag HTML elementto be searched for.
+		 * @param {string} htmlTag HTML element to be searched for.
 		 * @return {*}  {(HTMLElement | undefined)}
 		 * @memberof Dom
 		 */

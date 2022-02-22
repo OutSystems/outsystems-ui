@@ -6,6 +6,9 @@
 /// Import VirtualSelect provider library styles
 @import '../../../../Providers/Dropdown/VirtualSelect/scss/virtualselect';
 
+/// Import OsUiComponents provider styles
+@import '../../../../Providers/Dropdown/OsUiComponents/scss/dropdownadvanced';
+
 /// Dropdown Option Item image
 .osui-dropdown {
 	&-option-image {
