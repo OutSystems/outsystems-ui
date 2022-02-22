@@ -82,7 +82,7 @@ namespace Providers.Splide {
 
 		// Add event listener to update the correct width of the pattern
 		private _adjustWidthOnResize(): void {
-			window.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Resize, this._onResizeWidth);
+			//window.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Resize, this._onResizeWidth);
 		}
 
 		// Method to check if a List Widget is used inside the placeholder and assign the _listWidget variable
@@ -152,18 +152,6 @@ namespace Providers.Splide {
 			}
 		}
 
-		// Method that handles the breakpoint options from the library
-		private _setBreakpointsOptions(): void {
-			this._providerOptions.breakpoints = {
-				768: {
-					perPage: this.configs.ItemsPhone,
-				},
-				1024: {
-					perPage: this.configs.ItemsTablet,
-				},
-			};
-		}
-
 		// Ensure that the splide track maintains the correct width
 		private _setCarouselWidth(splideAdjusted = true): void {
 			// OSUIFramework.Helper.AsyncInvocation(() => {
@@ -209,7 +197,7 @@ namespace Providers.Splide {
 			this._providerOptions = this.configs.getProviderConfig();
 
 			// Method to handle the breakpoints, and it will need to be called again on changeProperty
-			this._setBreakpointsOptions();
+			//this._setBreakpointsOptions();
 
 			// Method to handle the Navigation, and it will need to be called again on changeProperty
 			//this.setNavigation(this.configs.Navigation);
@@ -234,7 +222,7 @@ namespace Providers.Splide {
 
 		// Method to update Breakpoints options
 		private _updateBreakpoints(): void {
-			this._setBreakpointsOptions();
+			//this._setBreakpointsOptions();
 
 			this._provider.options = {
 				breakpoints: this._providerOptions.breakpoints,
@@ -256,7 +244,7 @@ namespace Providers.Splide {
 
 			this._setInitialCssClasses();
 
-			this._adjustWidthOnResize();
+			//this._adjustWidthOnResize();
 
 			this._createProviderCarousel();
 
@@ -286,12 +274,10 @@ namespace Providers.Splide {
 					case OSUIFramework.Patterns.Carousel.Enum.Properties.Navigation:
 					case OSUIFramework.Patterns.Carousel.Enum.Properties.AutoPlay:
 					case OSUIFramework.Patterns.Carousel.Enum.Properties.Loop:
-						this.updateCarousel();
-						break;
 					case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsDesktop:
 					case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsTablet:
 					case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsPhone:
-						this._provider.options = { perPage: propertyValue as number };
+						this.updateCarousel();
 						break;
 					case OSUIFramework.Patterns.Carousel.Enum.Properties.Padding:
 						this._provider.options = { padding: propertyValue };

@@ -46,6 +46,14 @@ namespace Providers.Splide {
 			// eslint-disable-next-line prefer-const
 			let providerOptions = {
 				arrows: this._getArrowConfig(),
+				breakpoints: {
+					768: {
+						perPage: this.ItemsPhone,
+					},
+					1024: {
+						perPage: this.ItemsTablet,
+					},
+				},
 				keyboard: Enum.KeyboardOptions.Focused,
 				direction: OutSystems.OSUI.Utils.GetIsRTL()
 					? OSUIFramework.GlobalEnum.Direction.RTL
