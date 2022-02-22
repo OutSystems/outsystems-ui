@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace Providers.Splide {
 	export class SplideConfig extends OSUIFramework.Patterns.Carousel.AbstractCarouselConfig {

@@ -5,144 +5,117 @@ namespace Providers.Splide {
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class OSUISplide
-		extends OSUIFramework.Patterns.Carousel.AbstractCarousel<Splide.SplideConfig>
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		implements OSUIFramework.Patterns.Carousel.ICarousel, OSUIFramework.Interface.IProviderPattern<Splide>
+		extends OSUIFramework.Patterns.Carousel.AbstractCarousel<Splide, Splide.SplideConfig>
+		implements OSUIFramework.Patterns.Carousel.ICarousel
 	{
 		// Store if the render callback should be prevented
 		private _blockRender: boolean;
+		// Store the List widget element
+		private _carouselListWidgetElem: HTMLElement;
+		// Store the placholder element
+		private _carouselPlaceholderElem: HTMLElement;
+		// Store the element that will be used to init the provider
+		private _carouselProviderElem: HTMLElement;
+		// Store the splide__track element from the provider
+		private _carouselTrackElem: HTMLElement;
 		// Store current carousel index;
 		private _currentIndex: number;
+		// Store the disable render async callback
+		private _eventOnDisableRender: OSUIFramework.Callbacks.Generic;
 		// Store if a List widget is used inside the CarouselItems placeholder
 		private _hasList: boolean;
-		// Store the List widget element
-		private _listWidget: HTMLElement;
-		// Store the disable render async callback
-		private _onDisableRender: OSUIFramework.Callbacks.Generic;
 		// Store the onInitialized event
-		private _onInitialize: OSUIFramework.Callbacks.OSCarouselOnInitializeEvent;
-		// Store the onResizeWidth event
-		private _onResizeWidth: OSUIFramework.Callbacks.Generic;
+		private _platformEventInitialized: OSUIFramework.Callbacks.OSCarouselOnInitializeEvent;
 		// Store the onSlideMoved event
-		private _onSlideMoved: OSUIFramework.Callbacks.OSCarouselSlideMovedEvent;
-		// Store the placholder element
-		private _placeholder: HTMLElement;
-		// Store the provider reference
-		private _provider: Splide;
-		// Store the element that will be used to init the provider
-		private _providerContainer: HTMLElement;
+		private _platformEventOnSlideMoved: OSUIFramework.Callbacks.OSCarouselSlideMovedEvent;
 		// Store initial provider options
 		private _providerOptions: SplideOpts;
-		// Store the splide__track element from the provider
-		private _splideTrack: HTMLElement;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SplideConfig(configs));
-
-			// As the Splider library only has the SplideOptions as an interface, and not an object
-			// we decided to create an empty object of type SplideOpts, as already give us the intellisense, without the need to create
-			// a SplideOptions class on our side.
-			this._providerOptions = {};
-
-			// Bind this to the async callback
-			this._onDisableRender = this._disableBlockRender.bind(this);
-			this._onResizeWidth = this._setCarouselWidth.bind(this);
 		}
 
-		// Method to adjust the splide list to the correct offset width
-		private _adjustSplideList() {
-			// Get the splide list element after render
-			const SplideList = document.querySelector(
-				OSUIFramework.Constants.Dot + Enum.CssClass.SplideList
-			) as HTMLElement;
-
-			const computedStyle = window.getComputedStyle(SplideList);
-			// Select the value of the translateX property
-			let transform = new WebKitCSSMatrix(computedStyle.transform).m41;
-			// Calculate extra space left on the slider
-			const extraSpace = Math.abs(Number((transform % this._splideTrack.offsetWidth).toFixed(2)));
-
-			// If extra space exists, previous/next element in the slider will be visible
-			if (extraSpace !== 0) {
-				// Calculate the gap to eliminate
-				const sliderGap = this._splideTrack.offsetWidth - extraSpace;
-
-				// Check if the extra space is located in the left or right side of the slider
-				if (extraSpace > sliderGap) transform -= sliderGap;
-				else transform += extraSpace;
-
-				// Adjust the Transform property correctly
-				// OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
-				// 	SplideList,
-				// 	OSUIFramework.Patterns.Carousel.Enum.Properties.Transform,
-				// 	'translateX(' + transform + OSUIFramework.GlobalEnum.Units.Pixel + ')'
-				// );
-			}
-		}
-
-		// Add event listener to update the correct width of the pattern
-		private _adjustWidthOnResize(): void {
-			//window.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Resize, this._onResizeWidth);
-		}
-
-		// Method to check if a List Widget is used inside the placeholder and assign the _listWidget variable
+		/**
+		 * Method to check if a List Widget is used inside the placeholder and assign the _listWidget variable
+		 *
+		 * @private
+		 * @memberof OSUISplide
+		 */
 		private _checkListWidget(): void {
 			const listElements = OutSystems.OSUI.Utils.ChildrenMatches(
-				this._placeholder,
+				this._carouselPlaceholderElem,
 				OSUIFramework.Constants.Dot + OSUIFramework.GlobalEnum.CssClassElements.List
 			);
 
 			this._hasList = listElements.length > 0;
 
 			if (this._hasList) {
-				this._listWidget = this._selfElem.querySelector(
+				this._carouselListWidgetElem = this._selfElem.querySelector(
 					OSUIFramework.Constants.Dot + OSUIFramework.GlobalEnum.CssClassElements.List
 				);
 
-				this._providerContainer = this._splideTrack;
+				this._carouselProviderElem = this._carouselTrackElem;
 			} else {
-				this._providerContainer = this._selfElem;
+				this._carouselProviderElem = this._selfElem;
 			}
 		}
 
-		// Method that encapsulates all methods needed to create a new Carousel
+		/**
+		 * Method that encapsulates all methods needed to create a new Carousel
+		 *
+		 * @private
+		 * @param {boolean} [triggerInitialize=true]
+		 * @memberof OSUISplide
+		 */
 		private _createProviderCarousel(triggerInitialize = true): void {
 			// Call the following methods here, so that all DOM elements are iterated and ready to init the library
 			this._prepareCarouselItems();
-			this._setInitialLibraryOptions();
+			this._providerOptions = this.configs.getProviderConfig();
 
 			// Init the Library
 			this._initProvider(triggerInitialize);
 
 			// Set the OnSlideMoved event
 			this._setOnSlideMovedEvent();
-
-			// Adjust carousel width
-			//this._setCarouselWidth(false);
 		}
 
-		// Method to toggle the blockRender status
+		/**
+		 * Method to toggle the blockRender status
+		 *
+		 * @private
+		 * @memberof OSUISplide
+		 */
 		private _disableBlockRender(): void {
 			this._blockRender = false;
 		}
 
-		// Method to init the provider
+		/**
+		 * Method to init the provider
+		 *
+		 * @private
+		 * @param {boolean} [triggerInitialize=true]
+		 * @memberof OSUISplide
+		 */
 		private _initProvider(triggerInitialize = true): void {
-			this._provider = new window.Splide(this._providerContainer, this._providerOptions);
+			this._provider = new window.Splide(this._carouselProviderElem, this._providerOptions);
 
 			if (triggerInitialize) {
 				// Set the OnInitialized event, before the provider is mounted
 				this._setOnInitializedEvent();
 			}
-
 			// Init the provider
 			this._provider.mount();
 		}
 
-		// Method to add the splide__slide class on each carousel item
+		/**
+		 * Method to add the splide__slide class on each carousel item
+		 *
+		 * @private
+		 * @memberof OSUISplide
+		 */
 		private _prepareCarouselItems(): void {
 			// Define the element that has the items. The List widget if dynamic content, otherwise get from the placeholder directly
-			const targetList = this._hasList ? this._listWidget : this._placeholder;
+			const targetList = this._hasList ? this._carouselListWidgetElem : this._carouselPlaceholderElem;
 
 			// Add the placeholder content already with the correct html structure per item, expected by the library
 			for (const item of targetList.children) {
@@ -152,81 +125,100 @@ namespace Providers.Splide {
 			}
 		}
 
-		// Ensure that the splide track maintains the correct width
-		private _setCarouselWidth(splideAdjusted = true): void {
-			// OSUIFramework.Helper.AsyncInvocation(() => {
-			// 	OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
-			// 		this._splideTrack,
-			// 		OSUIFramework.Patterns.Carousel.Enum.CssVariables.CarouselWidth,
-			// 		this._selfElem.offsetWidth + OSUIFramework.GlobalEnum.Units.Pixel
-			// 	);
-			// 	if (!splideAdjusted) {
-			// 		// splide should be adjusted when rendering the splide component
-			// 		this._adjustSplideList();
-			// 	}
-			// });
-		}
-
-		// Set the html references that will be used to manage the cssClasses and atribute properties
-		private _setHtmlElements(): void {
-			this._placeholder = this._selfElem.querySelector(
-				OSUIFramework.Constants.Dot + OSUIFramework.Patterns.Carousel.Enum.CssClass.Content
-			);
-			this._splideTrack = this._selfElem.querySelector(
-				OSUIFramework.Constants.Dot + OSUIFramework.Patterns.Carousel.Enum.CssClass.Track
-			);
-		}
-
-		// Set the cssClasses that should be assigned to the element on it's initialization
-		private _setInitialCssClasses(): void {
-			// If using Carousel with a List, get one level below on the HTML, so that the List element is used on the structure expected by the library
-			// In this case, the osui-carousel won't be used, and the library will be mounted on the osui-carousel_track
-			if (this._hasList) {
-				OSUIFramework.Helper.Dom.Styles.AddClass(this._splideTrack, Enum.CssClass.SplideWrapper);
-				OSUIFramework.Helper.Dom.Styles.AddClass(this._placeholder, Enum.CssClass.SplideTrack);
-				OSUIFramework.Helper.Dom.Styles.AddClass(this._listWidget, Enum.CssClass.SplideList);
-			} else {
-				OSUIFramework.Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.SplideWrapper);
-				OSUIFramework.Helper.Dom.Styles.AddClass(this._splideTrack, Enum.CssClass.SplideTrack);
-				OSUIFramework.Helper.Dom.Styles.AddClass(this._placeholder, Enum.CssClass.SplideList);
-			}
-		}
-
-		// Method to set the initial provider options, when created by the first time or after a destroy()
-		private _setInitialLibraryOptions(): void {
-			this._providerOptions = this.configs.getProviderConfig();
-
-			// Method to handle the breakpoints, and it will need to be called again on changeProperty
-			//this._setBreakpointsOptions();
-
-			// Method to handle the Navigation, and it will need to be called again on changeProperty
-			//this.setNavigation(this.configs.Navigation);
-		}
-
-		// Method to set the OnInitializeEvent
+		/**
+		 * Method to set the OnInitializeEvent
+		 *
+		 * @private
+		 * @memberof OSUISplide
+		 */
 		private _setOnInitializedEvent(): void {
 			this._provider.on(Enum.SpliderEvents.Mounted, () => {
-				OSUIFramework.Helper.AsyncInvocation(this._onInitialize, this.widgetId);
+				OSUIFramework.Helper.AsyncInvocation(this._platformEventInitialized, this.widgetId);
 			});
 		}
 
-		// Method to set the OnSlideMoved event
+		/**
+		 * Method to set the OnSlideMoved event
+		 *
+		 * @private
+		 * @memberof OSUISplide
+		 */
 		private _setOnSlideMovedEvent(): void {
 			this._provider.on(Enum.SpliderEvents.Moved, (index) => {
 				if (index !== this._currentIndex) {
-					OSUIFramework.Helper.AsyncInvocation(this._onSlideMoved, this.widgetId, index);
+					OSUIFramework.Helper.AsyncInvocation(this._platformEventOnSlideMoved, this.widgetId, index);
 					this._currentIndex = index;
 				}
 			});
 		}
 
-		// Method to update Breakpoints options
-		private _updateBreakpoints(): void {
-			//this._setBreakpointsOptions();
+		/**
+		 * Sets the callbacks to be used.
+		 *
+		 * @protected
+		 * @memberof OSUISplide
+		 */
+		protected setCallbacks(): void {
+			// Bind this to the async callback
+			this._eventOnDisableRender = this._disableBlockRender.bind(this);
+		}
 
-			this._provider.options = {
-				breakpoints: this._providerOptions.breakpoints,
-			};
+		/**
+		 * Method to set the html elements used
+		 *
+		 * @protected
+		 * @memberof OSUISplide
+		 */
+		protected setHtmlElements(): void {
+			this._carouselPlaceholderElem = this._selfElem.querySelector(
+				OSUIFramework.Constants.Dot + OSUIFramework.Patterns.Carousel.Enum.CssClass.Content
+			);
+			this._carouselTrackElem = this._selfElem.querySelector(
+				OSUIFramework.Constants.Dot + OSUIFramework.Patterns.Carousel.Enum.CssClass.Track
+			);
+		}
+
+		/**
+		 * Method to set the initial CSS Classes
+		 *
+		 * @protected
+		 * @memberof OSUISplide
+		 */
+		protected setInitialCssClasses(): void {
+			// If using Carousel with a List, get one level below on the HTML, so that the List element is used on the structure expected by the library
+			// In this case, the osui-carousel won't be used, and the library will be mounted on the osui-carousel_track
+			if (this._hasList) {
+				OSUIFramework.Helper.Dom.Styles.AddClass(this._carouselTrackElem, Enum.CssClass.SplideWrapper);
+				OSUIFramework.Helper.Dom.Styles.AddClass(this._carouselPlaceholderElem, Enum.CssClass.SplideTrack);
+				OSUIFramework.Helper.Dom.Styles.AddClass(this._carouselListWidgetElem, Enum.CssClass.SplideList);
+			} else {
+				OSUIFramework.Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.SplideWrapper);
+				OSUIFramework.Helper.Dom.Styles.AddClass(this._carouselTrackElem, Enum.CssClass.SplideTrack);
+				OSUIFramework.Helper.Dom.Styles.AddClass(this._carouselPlaceholderElem, Enum.CssClass.SplideList);
+			}
+		}
+
+		/**
+		 * Unsets the callbacks.
+		 *
+		 * @protected
+		 * @memberof OSUISplide
+		 */
+		protected unsetCallbacks(): void {
+			this._eventOnDisableRender = undefined;
+			this._platformEventInitialized = undefined;
+			this._platformEventOnSlideMoved = undefined;
+		}
+
+		/**
+		 * Unsets the HTML elements.
+		 *
+		 * @protected
+		 * @memberof OSUISplide
+		 */
+		protected unsetHtmlElements(): void {
+			this._carouselPlaceholderElem = undefined;
+			this._carouselTrackElem = undefined;
 		}
 
 		/**
@@ -238,11 +230,11 @@ namespace Providers.Splide {
 			super.build();
 			console.log('override');
 
-			this._setHtmlElements();
+			this.setHtmlElements();
 
 			this._checkListWidget();
 
-			this._setInitialCssClasses();
+			this.setInitialCssClasses();
 
 			//this._adjustWidthOnResize();
 
@@ -289,60 +281,89 @@ namespace Providers.Splide {
 			}
 
 			// Unblock UpdateOnRender so that it is able to update on DOM changes inside Carousel content
-			OSUIFramework.Helper.AsyncInvocation(this._onDisableRender, this.widgetId);
+			OSUIFramework.Helper.AsyncInvocation(this._eventOnDisableRender, this.widgetId);
 		}
 
-		// Method to remove and destroy Carousel Splide instance
+		/**
+		 * Method to remove and destroy Carousel Splide instance
+		 *
+		 * @memberof OSUISplide
+		 */
 		public dispose(): void {
 			// Check if provider is ready
 			if (this.isBuilt) {
 				this._provider.destroy();
 			}
 
-			// remove event listener
-			window.removeEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Resize, this._onResizeWidth);
+			this.unsetCallbacks();
+			this.unsetHtmlElements();
 
 			super.dispose();
 		}
 
-		// Method to call the go API from the provider
+		/**
+		 * Method to call the go API from the provider
+		 *
+		 * @param {number} index
+		 * @memberof OSUISplide
+		 */
 		public goTo(index: number): void {
 			this._provider.go(index);
 		}
 
-		// Method to call the go API from the provider. With '>' it will go to the next page
+		/**
+		 * Method to call the go API from the provider. With '>' it will go to the next page
+		 *
+		 * @memberof OSUISplide
+		 */
 		public next(): void {
 			this._provider.go(Enum.Go.Next);
 		}
 
-		// Method to call the go API from the provider. With '<' it will go to the previous page
+		/**
+		 * Method to call the go API from the provider. With '<' it will go to the previous page
+		 *
+		 * @memberof OSUISplide
+		 */
 		public previous(): void {
 			this._provider.go(Enum.Go.Previous);
 		}
 
-		// Provider getter
-		public get provider(): Splide {
-			return this._provider;
-		}
-
-		// Set callbacks for the onChange event
+		/**
+		 * Set callbacks for the onChange event
+		 *
+		 * @param {string} eventName
+		 * @param {OSUIFramework.Callbacks.OSGeneric} callback
+		 * @memberof OSUISplide
+		 */
 		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
 			switch (eventName) {
 				case OSUIFramework.Patterns.Carousel.Enum.CarouselEvents.OnSlideMoved:
-					this._onSlideMoved = callback;
+					this._platformEventOnSlideMoved = callback;
 					break;
 				case OSUIFramework.Patterns.Carousel.Enum.CarouselEvents.OnInitialize:
-					this._onInitialize = callback;
+					this._platformEventInitialized = callback;
 					break;
 			}
 		}
 
-		// Method to call the option API from the provider to toggle drag events
+		/**
+		 * Method to call the option API from the provider to toggle drag events
+		 *
+		 * @param {boolean} hasDrag
+		 * @memberof OSUISplide
+		 */
 		public toggleDrag(hasDrag: boolean): void {
 			this._provider.options = { drag: hasDrag };
 		}
 
-		// Method used on the changeProperty for the options that require the Carousel to be destroyd and created again to properly update
+		/**
+		 * Method used on the changeProperty for the options that require the Carousel to be destroyd and created again to properly update
+		 *
+		 * @param {boolean} [keepCurrentIndex=true]
+		 * @param {boolean} [triggerInitialize=true]
+		 * @memberof OSUISplide
+		 */
 		public updateCarousel(keepCurrentIndex = true, triggerInitialize = true): void {
 			// Check if provider is ready
 			if (typeof this._provider === 'object') {
@@ -357,10 +378,14 @@ namespace Providers.Splide {
 			this._createProviderCarousel(triggerInitialize);
 		}
 
-		// Method to run when there's a platform onRender
+		/**
+		 * Method to run when there's a platform onRender
+		 *
+		 * @memberof OSUISplide
+		 */
 		public updateOnRender(): void {
 			if (!this._blockRender) {
-				this._setInitialCssClasses();
+				this.setInitialCssClasses();
 
 				// Check if provider is ready
 				if (typeof this._provider === 'object') {
