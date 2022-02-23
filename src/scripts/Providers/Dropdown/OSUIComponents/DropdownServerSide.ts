@@ -65,6 +65,13 @@ namespace Providers.Dropdown.OSUIComponents {
 			this._balloonWrapperElement.append(this._spanBottomFocusElement);
 		}
 
+		// Close the Balloon
+		private _close(): void {
+			this._isOpened = false;
+
+			this._updatePatternState();
+		}
+
 		// Move ballon element to outside of the pattern context
 		private _moveBallonElement(): void {
 			const layoutElement = OSUIFramework.Helper.Dom.TagSelector(
@@ -92,7 +99,7 @@ namespace Providers.Dropdown.OSUIComponents {
 
 		// Used to apply the logic when user click to open the Dropdown
 		private _onSelectWrapperClicked() {
-			this._updatePatternState();
+			this._isOpened ? this._close() : this._open();
 		}
 
 		// Manage the behaviour to leave balloon using tabNavigation
@@ -101,6 +108,14 @@ namespace Providers.Dropdown.OSUIComponents {
 			this.selfElement.focus();
 
 			// Close the Balloon
+			this._close();
+		}
+
+		// Open the Balloon
+		private _open(): void {
+			this._isOpened = true;
+
+			this._updatePatternState();
 		}
 
 		// Method to deal with the click at a DropdpownOptionItem
@@ -109,7 +124,7 @@ namespace Providers.Dropdown.OSUIComponents {
 			if (this.getChild(optionItemId)) {
 				// Check if Dropdown must close!
 				if (this.configs.AllowMultipleSelection === false) {
-					console.log('Dropdown must CLOSE!');
+					this._close();
 				}
 			} else {
 				throw new Error(
@@ -278,24 +293,25 @@ namespace Providers.Dropdown.OSUIComponents {
 
 		// Method that will update the pattern state
 		private _updatePatternState(): void {
-			// Update the state property
-			this._isOpened = !this._isOpened;
-
-			// Toggle IsOpend Class!
-			OSUIFramework.Helper.Dom.Styles.ToggleClass(this.selfElement, Enum.Class.IsOpened);
-			OSUIFramework.Helper.Dom.Styles.ToggleClass(this._balloonWrapperElement, Enum.Class.IsOpened);
-
 			// Update the TabIndex for the items inside Balloon
 			this._updateBallonElementsTabIndex();
 
 			// If balloon must open
 			if (this._isOpened) {
+				// Add IsOpend Class!
+				OSUIFramework.Helper.Dom.Styles.AddClass(this.selfElement, Enum.Class.IsOpened);
+				OSUIFramework.Helper.Dom.Styles.AddClass(this._balloonWrapperElement, Enum.Class.IsOpened);
+
 				// Check if inputSearch exist
 				if (this._balloonSearchInputElement) {
 					this._balloonSearchInputElement.focus();
 				} else {
 					this._balloonOptionsWrapperElement.focus();
 				}
+			} else {
+				// Remove IsOpend Class!
+				OSUIFramework.Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.Class.IsOpened);
+				OSUIFramework.Helper.Dom.Styles.RemoveClass(this._balloonWrapperElement, Enum.Class.IsOpened);
 			}
 		}
 
