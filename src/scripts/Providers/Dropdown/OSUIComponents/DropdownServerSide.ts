@@ -8,18 +8,26 @@ namespace Providers.Dropdown.OSUIComponents {
 		>
 		implements IDropdownServerSide
 	{
-		// Store the HTML element for the DropdownBaloonFooter
-		private _baloonFooterElement: HTMLElement;
-		// Store the HTML element for the DropdownBaloonSearch
-		private _baloonSearchElement: HTMLElement;
-		// Store the HTML element for the DropdownBaloonWrapper
-		private _baloonWrapperElement: HTMLElement;
+		// Store all the focusable elements inside footer if it's the case!
+		private _balloonFocusableElemsInFooter: HTMLElement[];
+		// Store the HTML element for the DropdownBalloonFooter
+		private _balloonFooterElement: HTMLElement;
+		// Store the HTML element for the Dropdown otpions
+		private _balloonOptionsWrapperElement: HTMLElement;
+		// Store the HTML element for the DropdownBalloonSearch
+		private _balloonSearchElement: HTMLElement;
+		// Store the HTML element for the Search input at Dropdown Balloon
+		private _balloonSearchInputElement: HTMLElement;
+		// Store the HTML element for the DropdownBalloonWrapper
+		private _balloonWrapperElement: HTMLElement;
 		// Click Event
 		private _eventOnClick: OSUIFramework.Callbacks.Generic;
 		// OnFocus Event at ballon custom span elements
 		private _eventOnSpanFocus: OSUIFramework.Callbacks.Generic;
 		// Keyboard Key Press Event
 		private _eventOnkeyBoardPress: OSUIFramework.Callbacks.Generic;
+		// Store the Element State, by default is closed!
+		private _isOpened = false;
 		// Platform OnInitialize Callback
 		private _platformEventInitializedCallback: OSUIFramework.Callbacks.OSGeneric;
 		// Platform OnClose Callback
@@ -45,7 +53,7 @@ namespace Providers.Dropdown.OSUIComponents {
 				OSUIFramework.Constants.AccessibilityHideElementClass
 			);
 			OSUIFramework.Helper.A11Y.AriaHiddenFalse(this._spanTopFocusElement);
-			this._baloonWrapperElement.prepend(this._spanTopFocusElement);
+			this._balloonWrapperElement.prepend(this._spanTopFocusElement);
 
 			// Add bottom focus item
 			this._spanBottomFocusElement = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Span);
@@ -54,7 +62,7 @@ namespace Providers.Dropdown.OSUIComponents {
 				OSUIFramework.Constants.AccessibilityHideElementClass
 			);
 			OSUIFramework.Helper.A11Y.AriaHiddenTrue(this._spanBottomFocusElement);
-			this._baloonWrapperElement.append(this._spanBottomFocusElement);
+			this._balloonWrapperElement.append(this._spanBottomFocusElement);
 		}
 
 		// Move ballon element to outside of the pattern context
@@ -64,7 +72,7 @@ namespace Providers.Dropdown.OSUIComponents {
 				OSUIFramework.Constants.Dot + OSUIFramework.Constants.LayoutClass
 			) as HTMLElement;
 
-			OSUIFramework.Helper.Dom.Move(this._baloonWrapperElement, layoutElement);
+			OSUIFramework.Helper.Dom.Move(this._balloonWrapperElement, layoutElement);
 		}
 
 		// A11y keyboard keys
@@ -77,23 +85,22 @@ namespace Providers.Dropdown.OSUIComponents {
 					event.key === OSUIFramework.GlobalEnum.Keycodes.Space) &&
 				this.configs.AllowMultipleSelection === false
 			) {
-				console.log('Dropdown must CLOSE!');
+				// Trigger the click in order to be captured also by DOM (body onClick) in order to close other Dropdowns in page if they are open!
+				this._selectWrapper.click();
 			}
 		}
 
 		// Used to apply the logic when user click to open the Dropdown
 		private _onSelectWrapperClicked() {
-			console.log('Dropdown must OPEN!');
+			this._updatePatternState();
 		}
 
-		// Manage the behaviour to leave baloon using tabNavigation
-		private _onSpanElementFocus(event: FocusEvent): void {
-			const targetElement = event.target as HTMLElement;
-			targetElement.blur();
+		// Manage the behaviour to leave balloon using tabNavigation
+		private _onSpanElementFocus(): void {
+			// Set focus to the base element
+			this.selfElement.focus();
 
-			this._baloonWrapperElement.focus();
-
-			console.log('Dropdown must CLOSE!');
+			// Close the Balloon
 		}
 
 		// Method to deal with the click at a DropdpownOptionItem
@@ -131,25 +138,36 @@ namespace Providers.Dropdown.OSUIComponents {
 					case OSUIFramework.GlobalEnum.Keycodes.ArrowUp:
 						// Check If focused item is not the first one!
 						if (getOptionItemIndex > 0) {
-							this._updateOptionItemFocuState(optionItem, getOptionItemIndex - 1);
+							this._updateOptionItemFocuStateOnKeyPress(optionItem, getOptionItemIndex - 1);
 						}
 						break;
 
 					// ArrowDown
 					case OSUIFramework.GlobalEnum.Keycodes.ArrowDown:
 						if (getOptionItemIndex < this.childItems.length - 1) {
-							this._updateOptionItemFocuState(optionItem, getOptionItemIndex + 1);
+							this._updateOptionItemFocuStateOnKeyPress(optionItem, getOptionItemIndex + 1);
 						}
 						break;
 
 					// Shift + Tab
 					case OSUIFramework.GlobalEnum.Keycodes.ShiftTab:
-						console.log('Move Out to Top!');
+						// Check if search input exist
+						if (this._balloonSearchInputElement) {
+							this._balloonSearchInputElement.focus();
+						} else {
+							this._spanTopFocusElement.focus();
+						}
 						break;
 
 					// Tab
 					case OSUIFramework.GlobalEnum.Keycodes.Tab:
-						console.log('Move Out to Bottom!');
+						// Check if there are focusable elements inside footer
+						if (this._balloonFocusableElemsInFooter.length > 0) {
+							// set focus the the first one
+							this._balloonFocusableElemsInFooter[0].focus();
+						} else {
+							this._spanBottomFocusElement.focus();
+						}
 						break;
 				}
 			} else {
@@ -223,8 +241,32 @@ namespace Providers.Dropdown.OSUIComponents {
 			}
 		}
 
+		// Method that will be used to set/unset the TabIndex to the DropdownBallon elements according it's opened/closed
+		private _updateBallonElementsTabIndex(): void {
+			const tabIndexValue = this._isOpened ? '0' : '-1';
+
+			// If there is the Search input
+			if (this._balloonSearchInputElement !== undefined) {
+				OSUIFramework.Helper.A11Y.TabIndex(this._balloonSearchInputElement, tabIndexValue);
+			}
+
+			// Added SpanElements at Balloon Top and Bottom
+			OSUIFramework.Helper.A11Y.TabIndex(this._spanBottomFocusElement, tabIndexValue);
+			OSUIFramework.Helper.A11Y.TabIndex(this._spanTopFocusElement, tabIndexValue);
+
+			// Ballon Options Wrapper
+			OSUIFramework.Helper.A11Y.TabIndex(this._balloonOptionsWrapperElement, tabIndexValue);
+
+			// If there are items inside Ballon Footer
+			if (this._balloonFocusableElemsInFooter.length > 0) {
+				for (const item of this._balloonFocusableElemsInFooter) {
+					OSUIFramework.Helper.A11Y.TabIndex(item, tabIndexValue);
+				}
+			}
+		}
+
 		// Method to (un)set option item focus statue
-		private _updateOptionItemFocuState(
+		private _updateOptionItemFocuStateOnKeyPress(
 			optionItem: OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem,
 			itemIndex: number
 		): void {
@@ -234,6 +276,29 @@ namespace Providers.Dropdown.OSUIComponents {
 			this.getChildByIndex(itemIndex).setFocus();
 		}
 
+		// Method that will update the pattern state
+		private _updatePatternState(): void {
+			// Update the state property
+			this._isOpened = !this._isOpened;
+
+			// Toggle IsOpend Class!
+			OSUIFramework.Helper.Dom.Styles.ToggleClass(this.selfElement, Enum.Class.IsOpened);
+			OSUIFramework.Helper.Dom.Styles.ToggleClass(this._balloonWrapperElement, Enum.Class.IsOpened);
+
+			// Update the TabIndex for the items inside Balloon
+			this._updateBallonElementsTabIndex();
+
+			// If balloon must open
+			if (this._isOpened) {
+				// Check if inputSearch exist
+				if (this._balloonSearchInputElement) {
+					this._balloonSearchInputElement.focus();
+				} else {
+					this._balloonOptionsWrapperElement.focus();
+				}
+			}
+		}
+
 		/**
 		 * Add the Accessibility Attributes values
 		 *
@@ -241,9 +306,10 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		protected setA11yProperties(): void {
-			OSUIFramework.Helper.A11Y.TabIndexTrue(this._spanBottomFocusElement);
-			OSUIFramework.Helper.A11Y.TabIndexTrue(this._spanTopFocusElement);
+			// Update Tabindex Ballon elements
+			this._updateBallonElementsTabIndex();
 
+			// Enabled TabIndex
 			OSUIFramework.Helper.A11Y.TabIndexTrue(this._selectWrapper);
 		}
 
@@ -266,17 +332,29 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		protected setHtmlElements(): void {
-			this._baloonFooterElement = OSUIFramework.Helper.Dom.TagSelector(
+			this._balloonFooterElement = OSUIFramework.Helper.Dom.TagSelector(
 				this.selfElement,
-				OSUIFramework.Constants.Dot + Enum.Class.BallonFooter
+				OSUIFramework.Constants.Dot + Enum.Class.BalloonFooter
 			);
-			this._baloonSearchElement = OSUIFramework.Helper.Dom.TagSelector(
-				this.selfElement,
-				OSUIFramework.Constants.Dot + Enum.Class.BallonSearch
+			this._balloonFocusableElemsInFooter = OSUIFramework.Helper.Dom.TagSelectorAll(
+				this._balloonFooterElement,
+				OSUIFramework.Constants.FocusableElems
 			);
-			this._baloonWrapperElement = OSUIFramework.Helper.Dom.TagSelector(
+			this._balloonSearchElement = OSUIFramework.Helper.Dom.TagSelector(
 				this.selfElement,
-				OSUIFramework.Constants.Dot + Enum.Class.BallonWrapper
+				OSUIFramework.Constants.Dot + Enum.Class.BalloonSearch
+			);
+			this._balloonSearchInputElement = OSUIFramework.Helper.Dom.TagSelector(
+				this._balloonSearchElement,
+				OSUIFramework.GlobalEnum.HTMLElement.Input
+			);
+			this._balloonWrapperElement = OSUIFramework.Helper.Dom.TagSelector(
+				this.selfElement,
+				OSUIFramework.Constants.Dot + Enum.Class.BalloonWrapper
+			);
+			this._balloonOptionsWrapperElement = OSUIFramework.Helper.Dom.TagSelector(
+				this._balloonWrapperElement,
+				OSUIFramework.Constants.Dot + Enum.Class.BalloonContent
 			);
 			this._selectWrapper = OSUIFramework.Helper.Dom.TagSelector(
 				this.selfElement,
@@ -303,9 +381,9 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		protected unsetCallbacks(): void {
+			this._eventOnSpanFocus = undefined;
 			this._platformEventInitializedCallback = undefined;
 			this._platformEventOnClosedCallback = undefined;
-			this._eventOnSpanFocus = undefined;
 		}
 
 		/**
@@ -316,12 +394,15 @@ namespace Providers.Dropdown.OSUIComponents {
 		 */
 		protected unsetHtmlElements(): void {
 			// Ensure that the ballon has been removed from the DOM since it has been Moved to outside of pattern context.
-			this._baloonWrapperElement.remove();
+			this._balloonWrapperElement.remove();
 
 			// unset the local properties
-			this._baloonFooterElement = undefined;
-			this._baloonSearchElement = undefined;
-			this._baloonWrapperElement = undefined;
+			this._balloonFocusableElemsInFooter = [];
+			this._balloonFooterElement = undefined;
+			this._balloonOptionsWrapperElement = undefined;
+			this._balloonSearchElement = undefined;
+			this._balloonSearchInputElement = undefined;
+			this._balloonWrapperElement = undefined;
 			this._selectWrapper = undefined;
 		}
 
