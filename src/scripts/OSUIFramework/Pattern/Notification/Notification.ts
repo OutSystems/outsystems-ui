@@ -28,10 +28,19 @@ namespace OSUIFramework.Patterns.Notification {
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new NotificationConfig(configs));
 
+			// Set the pattern default values if is empty
 			this.configs.Width = this.configs.Width !== '' ? this.configs.Width : Enum.Defaults.DefaultWidth;
 			this.configs.Position =
 				this.configs.Position !== '' ? this.configs.Position : Enum.Defaults.DefaultPosition;
+		}
 
+		/**
+		 *
+		 *
+		 * @protected
+		 * @memberof Notification
+		 */
+		protected setCallbacks(): void {
 			this._eventOnNotificationClick = this._onNotificationClick.bind(this);
 			this._eventOnNotificationKeypress = this._onNotificationKeypress.bind(this);
 			this._globalEventOnBodyClick = this._onBodyClick.bind(this);
@@ -110,9 +119,13 @@ namespace OSUIFramework.Patterns.Notification {
 				this.hide();
 			}
 		}
-
-		// Set the cssClasses that should be assigned to the element on it's initialization
-		private _prepareElements(): void {
+		/**
+		 * Set the cssClasses that should be assigned to the element on it's initialization
+		 *
+		 * @protected
+		 * @memberof Notification
+		 */
+		protected setInitialStates(): void {
 			this._isMobile = !!(
 				document.querySelector(Constants.Dot + GlobalEnum.MobileOS.Android) ||
 				document.querySelector(Constants.Dot + GlobalEnum.MobileOS.IOS)
@@ -149,6 +162,8 @@ namespace OSUIFramework.Patterns.Notification {
 				this._autoCloseNotification();
 			}
 
+			console.log('function called');
+
 			OSUIFramework.Helper.Dom.Move(
 				this._selfElem,
 				document.querySelector(
@@ -157,8 +172,13 @@ namespace OSUIFramework.Patterns.Notification {
 			);
 		}
 
-		// Remove all the assigned Events
-		private _removeEvents(): void {
+		/**
+		 * Remove all the assigned Events
+		 *
+		 * @protected
+		 * @memberof Notification
+		 */
+		protected unsetCallbacks(): void {
 			// Remove listeners to toggle Notification
 			if (this.configs.ClickToClose) {
 				this._notificationContent.removeEventListener(
@@ -181,8 +201,13 @@ namespace OSUIFramework.Patterns.Notification {
 			}
 		}
 
-		// Set accessibility atrributes on html elements
-		private _setAccessibilityProps(): void {
+		/**
+		 * Sets the A11Y properties when the pattern is built.
+		 *
+		 * @protected
+		 * @memberof Notification
+		 */
+		protected setA11YProperties(): void {
 			Helper.Dom.Attribute.Set(
 				this._notificationContent,
 				Constants.A11YAttributes.Role.AttrName,
@@ -190,7 +215,7 @@ namespace OSUIFramework.Patterns.Notification {
 			);
 
 			// Update accessibility properties
-			this._updateAccessibilityProps();
+			this._updateA11yProperties();
 		}
 
 		// Set focusable elements
@@ -202,9 +227,24 @@ namespace OSUIFramework.Patterns.Notification {
 			this._lastFocusableElem = this._focusableElems[this._focusableElems.length - 1];
 		}
 
-		// Set the html references that will be used to manage the cssClasses and atribute properties
-		private _setHtmlElements(): void {
+		/**
+		 * Set the html references that will be used to manage the cssClasses and atribute properties
+		 *
+		 * @protected
+		 * @memberof Notification
+		 */
+		protected setHtmlElements(): void {
 			this._notificationContent = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.PatternContent);
+		}
+
+		/**
+		 * Reassign the HTML elements to undefined, preventing memory leaks
+		 *
+		 * @protected
+		 * @memberof Notification
+		 */
+		protected unsetHtmlElements(): void {
+			this._notificationContent = undefined;
 		}
 
 		// Method that triggers the OnToggle event
@@ -215,7 +255,7 @@ namespace OSUIFramework.Patterns.Notification {
 		}
 
 		// Set the cssClasses that should be assigned to the element on it's initialization
-		private _updateAccessibilityProps(): void {
+		private _updateA11yProperties(): void {
 			Helper.Dom.Attribute.Set(
 				this._notificationContent,
 				Constants.A11YAttributes.Aria.Hidden,
@@ -297,55 +337,78 @@ namespace OSUIFramework.Patterns.Notification {
 		public build(): void {
 			super.build();
 
+			this.setCallbacks();
+
+			this.setHtmlElements();
+
 			// Add timeout to make this method call asynchronous to wait for the classes of device detection
-			this._setHtmlElements();
+			Helper.AsyncInvocation(this.setInitialStates.bind(this));
 
-			this._prepareElements();
-
-			this._setAccessibilityProps();
+			this.setA11YProperties();
 
 			this.finishBuild();
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+		/**
+		 * Update value when a parameters changed occurs
+		 *
+		 * @param {string} propertyName
+		 * @param {unknown} propertyValue
+		 * @memberof Notification
+		 */
+		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		public changeProperty(propertyName: string, propertyValue: any): void {
-			// Check which property changed and call respective method to update it
-			switch (propertyName) {
-				case Enum.Properties.ClickToClose:
-					this._updateClickToClose(propertyValue);
-					break;
-				case Enum.Properties.CloseAfterTime:
-					this._updateCloseAfterTime(propertyValue);
-					break;
-				case Enum.Properties.CloseOnBodyClick:
-					this._updateCloseOnBodyClick(propertyValue);
-					break;
-				case Enum.Properties.HasOverlay:
-					this._updateHasOverlay(propertyValue);
-					break;
-				case Enum.Properties.IsOpen:
-					this._onNotificationToggle(propertyValue);
-					break;
-				case Enum.Properties.Position:
-					this._updatePosition(propertyValue);
-					break;
-				case Enum.Properties.Width:
-					this._updateWidth(propertyValue);
-					break;
-				default:
-					super.changeProperty(propertyName, propertyValue);
-					break;
+			super.changeProperty(propertyName, propertyValue);
+
+			if (this.isBuilt) {
+				// Check which property changed and call respective method to update it
+				switch (propertyName) {
+					case Enum.Properties.ClickToClose:
+						this._updateClickToClose(propertyValue);
+						break;
+					case Enum.Properties.CloseAfterTime:
+						this._updateCloseAfterTime(propertyValue);
+						break;
+					case Enum.Properties.CloseOnBodyClick:
+						this._updateCloseOnBodyClick(propertyValue);
+						break;
+					case Enum.Properties.HasOverlay:
+						this._updateHasOverlay(propertyValue);
+						break;
+					case Enum.Properties.IsOpen:
+						this._onNotificationToggle(propertyValue);
+						break;
+					case Enum.Properties.Position:
+						this._updatePosition(propertyValue);
+						break;
+					case Enum.Properties.Width:
+						this._updateWidth(propertyValue);
+						break;
+				}
 			}
 		}
 
-		// Method to remove event listener and destroy notification instance
+		/**
+		 * Destroy the Notification
+		 *
+		 * @memberof Notification
+		 */
 		public dispose(): void {
-			this._removeEvents();
+			// Remove event listners
+			this.unsetCallbacks();
 
+			// Remove unused HTML elements
+			this.unsetHtmlElements();
+
+			//Destroying the base of pattern
 			super.dispose();
 		}
 
-		// Hide Notification
+		/**
+		 * Hide Notification
+		 *
+		 * @memberof Notification
+		 */
 		public hide(): void {
 			this.configs.IsOpen = false;
 
@@ -356,7 +419,7 @@ namespace OSUIFramework.Patterns.Notification {
 			this._triggerOnToggleEvent(this.configs.IsOpen);
 
 			// Update accessibility properties
-			this._updateAccessibilityProps();
+			this._updateA11yProperties();
 
 			// Remove focus when a Notification is closed
 			this._notificationContent.blur();
@@ -419,12 +482,21 @@ namespace OSUIFramework.Patterns.Notification {
 			this.hide();
 		}
 
-		// Set callbacks for the onToggle event
+		/**
+		 * Set callbacks for the onToggle event
+		 *
+		 * @param {Callbacks.OSNotificationToggleEvent} callback
+		 * @memberof Notification
+		 */
 		public registerCallback(callback: Callbacks.OSNotificationToggleEvent): void {
 			this._onToggle = callback;
 		}
 
-		// Show Notification
+		/**
+		 * Show Notification
+		 *
+		 * @memberof Notification
+		 */
 		public show(): void {
 			this.configs.IsOpen = true;
 
@@ -434,7 +506,7 @@ namespace OSUIFramework.Patterns.Notification {
 			this._triggerOnToggleEvent(this.configs.IsOpen);
 
 			// Update accessibility properties
-			this._updateAccessibilityProps();
+			this._updateA11yProperties();
 
 			// Add listeners to toggle Notification
 			if (this.configs.ClickToClose) {
