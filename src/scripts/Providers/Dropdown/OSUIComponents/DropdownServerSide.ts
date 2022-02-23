@@ -41,7 +41,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
 
-			console.log('NEW DropdownSS', this.uniqueId);
+			console.log('NEW', this.uniqueId);
 		}
 
 		// Add Custom HTML elements to the DropdownBallon in order to help on deal with keyboard navigation (Accessibility)
@@ -105,7 +105,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		// Manage the behaviour to leave balloon using tabNavigation
 		private _onSpanElementFocus(): void {
 			// Set focus to the base element
-			this.selfElement.focus();
+			this._selectWrapper.focus();
 
 			// Close the Balloon
 			this._close();
