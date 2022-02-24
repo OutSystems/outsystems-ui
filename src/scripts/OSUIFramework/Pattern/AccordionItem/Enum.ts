@@ -13,8 +13,8 @@ namespace OSUIFramework.Patterns.AccordionItem.Enum {
 	 * AccordionItem Enum for Icon Positions
 	 */
 	export enum IconPositions {
-		Right = 'right',
-		Left = 'left',
+		Right = 'Right',
+		Left = 'Left',
 	}
 
 	/**

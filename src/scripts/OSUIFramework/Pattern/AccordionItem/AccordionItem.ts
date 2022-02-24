@@ -290,7 +290,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			}
 
 			if (this.configs.IconPosition === Enum.IconPositions.Left) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIconPosition);
+				Helper.Dom.Styles.AddClass(this._accordionItemTitleElem, Enum.CssClass.PatternIconPosition);
 			}
 		}
 
