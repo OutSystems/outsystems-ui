@@ -6,6 +6,15 @@ namespace OSUIFramework.Patterns.AccordionItem.Enum {
 	export enum Properties {
 		StartsExpanded = 'StartsExpanded',
 		IsDisabled = 'IsDisabled',
+		IconPosition = 'IconPosition',
+	}
+
+	/**
+	 * AccordionItem Enum for Icon Positions
+	 */
+	export enum IconPositions {
+		Right = 'right',
+		Left = 'left',
 	}
 
 	/**
@@ -23,5 +32,6 @@ namespace OSUIFramework.Patterns.AccordionItem.Enum {
 		PatternDisabled = 'osui-accordion-item--is-disabled',
 		PatternFirstItem = 'osui-accordion-item--is-first-item',
 		PatternLastItem = 'osui-accordion-item--is-last-item',
+		PatternIconPosition = 'osui-accordion-item__title--is-left',
 	}
 }

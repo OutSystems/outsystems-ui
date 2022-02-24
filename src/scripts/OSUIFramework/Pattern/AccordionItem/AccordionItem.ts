@@ -288,6 +288,10 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternClosed);
 				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternCollapsed);
 			}
+
+			if (this.configs.IconPosition === Enum.IconPositions.Left) {
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIconPosition);
+			}
 		}
 
 		/**

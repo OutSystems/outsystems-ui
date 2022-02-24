@@ -87,6 +87,14 @@
 			text-overflow: ellipsis;
 			width: 100%;
 		}
+
+		&&--is-left{
+			flex-direction: row-reverse;
+
+			.osui-accordion-item__icon{
+				padding-left: var(--space-s);
+			}
+		}
 	}
 
 	&__icon {
@@ -99,6 +107,8 @@
 		&:after {
 			content: '\f107';
 		}
+
+		&--
 	}
 
 	&__content {
