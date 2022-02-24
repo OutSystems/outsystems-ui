@@ -384,8 +384,8 @@ namespace Providers.RangeSlider.NoUISlider {
 						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.Orientation:
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
-						this._updateRangeSlider();
 						this.setInitialCSSClasses();
+						this._updateRangeSlider();
 
 						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.IsDisabled:

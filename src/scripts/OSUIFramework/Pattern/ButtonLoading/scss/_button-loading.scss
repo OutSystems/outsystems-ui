@@ -87,9 +87,16 @@
 ///
 .is-rtl {
 	.osui-btn-loading {
+		&-show-spinner {
+			.btn {
+				.osui-btn-loading__spinner-animation {
+					margin-left: var(--space-s);
+				}
+			}
+		}
+
 		.btn {
 			.osui-btn-loading__spinner-animation {
-				margin-left: var(--space-s);
 				margin-right: var(--space-none);
 			}
 		}
