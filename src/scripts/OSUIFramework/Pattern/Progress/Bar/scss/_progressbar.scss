@@ -6,6 +6,8 @@
 ///
 .osui-progress {
 	&-bar {
+		--progress-value: 0%;
+
 		min-height: var(--thickness);
 		position: relative;
 
@@ -21,12 +23,12 @@
 				-servicestudio-min-height: var(--thickness, 8px);
 			}
 
-			&.animate-entrance .osui-progress-value:before {
+			&.animate-entrance .osui-progress-bar__value:before {
 				transition-delay: 0.5s;
 				transition-duration: 0.35s;
 			}
 
-			&:not(.animate-entrance) .osui-progress-value:before {
+			&:not(.animate-entrance) .osui-progress-bar__value:before {
 				transition: all 130ms ease-in;
 			}
 		}
