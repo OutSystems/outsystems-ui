@@ -106,6 +106,16 @@
 	}
 }
 
+///
+.form {
+	.animated-label {
+		&-input .form-control[data-textarea] + span.validation-message {
+			position: relative;
+			bottom: 24px;
+		}
+	}
+}
+
 /* Chrome autofill hack ----------------------------------------
 	This is an hack to solve the autoFill when Chrome at windows.
 	An event added throught JS was added to proper manage the input behaviour based on this animation.
