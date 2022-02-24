@@ -88,10 +88,10 @@
 			width: 100%;
 		}
 
-		&&--is-left{
+		&--is-left {
 			flex-direction: row-reverse;
 
-			.osui-accordion-item__icon{
+			.osui-accordion-item__title__placeholder {
 				padding-left: var(--space-s);
 			}
 		}
@@ -107,8 +107,6 @@
 		&:after {
 			content: '\f107';
 		}
-
-		&--
 	}
 
 	&__content {
