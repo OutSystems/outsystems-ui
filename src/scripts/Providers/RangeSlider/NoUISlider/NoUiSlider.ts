@@ -147,6 +147,16 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * @memberof OSUINoUiSlider
 		 */
 		private _setSize(): void {
+			if (this.configs.Size.indexOf('%') > -1 && parseFloat(this.configs.Size) > 100) {
+				this.configs.Size = OSUIFramework.Patterns.RangeSlider.Enum.DefaultValues.PercentualSize;
+
+				console.warn(
+					`The value of the Size property on the '${this.widgetId}' ${OSUIFramework.GlobalEnum.PatternsNames.RangeSlider} can't be smaller than '${OSUIFramework.Patterns.RangeSlider.Enum.DefaultValues.PercentualSize}'.`
+				);
+			}
+
+			console.log('this.configs.Orientation', this.configs.Orientation, 'this.configs.Size', this.configs.Size);
+
 			OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				OSUIFramework.Patterns.RangeSlider.Enum.CssProperties.Size,
@@ -383,9 +393,18 @@ namespace Providers.RangeSlider.NoUISlider {
 
 						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.Orientation:
+						console.warn(
+							`RangeSlider${this.configs.IsInterval ? 'Interval' : ''} (${this.widgetId}): changes to ${
+								OSUIFramework.Patterns.RangeSlider.Enum.Properties.Orientation
+							} parameter do not affect the RangeSlider${
+								this.configs.IsInterval ? 'Interval' : ''
+							}. Use a distinct variable to assign on the OnValueChange event`
+						);
+
+						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
-						this.setInitialCSSClasses();
 						this._updateRangeSlider();
+						this.setInitialCSSClasses();
 
 						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.IsDisabled:
