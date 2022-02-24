@@ -83,3 +83,21 @@
 		}
 	}
 }
+
+// IsRTL ---------------------------------------------------------------------------
+///
+.is-rtl {
+	.osui-flip-content {
+		&--flipped {
+			.osui-flip-content {
+				&__container {
+					transform: rotateY(90deg);
+
+					&__back {
+						transform: rotateY(-90deg);
+					}
+				}
+			}
+		}
+	}
+}
