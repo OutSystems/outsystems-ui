@@ -165,12 +165,12 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		 */
 		private _setIconPosition(): void {
 			//If the page we're on is RTL, the icon's position has to change accordingly.
-			if (this.configs.IconPosition === GlobalEnum.Direction.Right && OutSystems.OSUI.Utils.GetIsRTL()) {
-				Helper.Dom.Styles.AddClass(this._accordionItemTitleElem, Enum.CssClass.PatternIconPositionIsLeft);
-			} else if (this.configs.IconPosition === GlobalEnum.Direction.Left && !OutSystems.OSUI.Utils.GetIsRTL()) {
-				Helper.Dom.Styles.AddClass(this._accordionItemTitleElem, Enum.CssClass.PatternIconPositionIsLeft);
-			} else {
+			if (this.configs.IconPosition === GlobalEnum.Direction.Right) {
 				Helper.Dom.Styles.RemoveClass(this._accordionItemTitleElem, Enum.CssClass.PatternIconPositionIsLeft);
+				Helper.Dom.Styles.AddClass(this._accordionItemTitleElem, Enum.CssClass.PatternIconPositionIsRight);
+			} else {
+				Helper.Dom.Styles.RemoveClass(this._accordionItemTitleElem, Enum.CssClass.PatternIconPositionIsRight);
+				Helper.Dom.Styles.AddClass(this._accordionItemTitleElem, Enum.CssClass.PatternIconPositionIsLeft);
 			}
 		}
 
