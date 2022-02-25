@@ -32,11 +32,11 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			event.stopPropagation();
 
 			switch (event.key) {
-				// If Snter or Space Keys trigger as a click event!
+				// If Enter or Space Keys trigger as a click event!
 				case GlobalEnum.Keycodes.Enter:
 				case GlobalEnum.Keycodes.Space:
-					// Unset KeyCode
-					this.keybordTriggerdKey = undefined;
+					// Set KeyCode
+					this.keybordTriggerdKey = event.key;
 
 					// Triggered as it was clicked!
 					this._onSelected(event);
@@ -105,6 +105,12 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		protected setA11yProperties(): void {
 			// By default set disable to tabIndex
 			Helper.A11Y.TabIndexFalse(this.selfElement);
+
+			// Set balloon option items container with listbox as a role
+			Helper.A11Y.RoleOption(this.selfElement);
+
+			// Continue at here! -------------
+			Helper.A11Y.AriaSelectedFalse(this.selfElement);
 		}
 
 		/**
