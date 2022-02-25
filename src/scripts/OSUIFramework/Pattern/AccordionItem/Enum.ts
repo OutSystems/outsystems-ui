@@ -10,14 +10,6 @@ namespace OSUIFramework.Patterns.AccordionItem.Enum {
 	}
 
 	/**
-	 * AccordionItem Enum for Icon Positions
-	 */
-	export enum IconPositions {
-		Right = 'Right',
-		Left = 'Left',
-	}
-
-	/**
 	 * AccordionItem Enum for CSS Classes
 	 */
 	export enum CssClass {
@@ -32,6 +24,6 @@ namespace OSUIFramework.Patterns.AccordionItem.Enum {
 		PatternDisabled = 'osui-accordion-item--is-disabled',
 		PatternFirstItem = 'osui-accordion-item--is-first-item',
 		PatternLastItem = 'osui-accordion-item--is-last-item',
-		PatternIconPosition = 'osui-accordion-item__title--is-left',
+		PatternIconPositionIsLeft = 'osui-accordion-item__title--is-left',
 	}
 }
