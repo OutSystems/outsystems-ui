@@ -155,8 +155,6 @@ namespace Providers.RangeSlider.NoUISlider {
 				);
 			}
 
-			console.log('this.configs.Orientation', this.configs.Orientation, 'this.configs.Size', this.configs.Size);
-
 			OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				OSUIFramework.Patterns.RangeSlider.Enum.CssProperties.Size,
