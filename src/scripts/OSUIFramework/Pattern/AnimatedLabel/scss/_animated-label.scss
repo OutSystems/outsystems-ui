@@ -110,7 +110,7 @@
 	.animated-label {
 		&-input .form-control[data-textarea] + span.validation-message {
 			position: relative;
-			bottom: 24px;
+			bottom: var(--space-m);
 		}
 	}
 }
