@@ -40,7 +40,13 @@
 				font-weight: var(--font-semi-bold);
 
 				> .osui-accordion-item__icon {
-					transform: rotate(180deg);
+					&--caret {
+						transform: rotate(180deg);
+					}
+
+					&--plus-minus:after {
+						transform: translateX(-50%) rotate(90deg);
+					}
 				}
 			}
 
@@ -94,10 +100,46 @@
 		font-family: FontAwesome;
 		font-size: var(--font-size-h4);
 		font-weight: var(--font-regular);
+		position: relative;
 		transition: all 300ms ease-in-out;
 
-		&:after {
-			content: '\f107';
+		&--caret {
+			&:after {
+				content: '\f107';
+			}
+		}
+
+		&--plus-minus {
+			height: 15px;
+			width: 15px;
+
+			&:after {
+				background-color: var(--color-primary);
+				content: ' ';
+				height: 14px;
+				left: 50%;
+				position: absolute;
+				// 1px is half the size of the element
+				transform: translateX(calc(-50% - 1px));
+				transition: transform 300ms ease-in-out;
+				width: 2px;
+			}
+
+			&:before {
+				background-color: var(--color-primary);
+				content: ' ';
+				height: 2px;
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				width: 14px;
+			}
+		}
+
+		&-custom {
+			& {
+				-servicestudio-display: none;
+			}
 		}
 	}
 
