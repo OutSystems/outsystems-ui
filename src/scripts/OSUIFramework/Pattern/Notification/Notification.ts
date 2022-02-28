@@ -17,6 +17,7 @@ namespace OSUIFramework.Patterns.Notification {
 		private _focusableElems: HTMLElement[];
 		private _firstFocusableElem: HTMLElement;
 		private _lastFocusableElem: HTMLElement;
+		private _focusableActiveElement: HTMLElement;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
@@ -84,12 +85,16 @@ namespace OSUIFramework.Patterns.Notification {
 			const isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
 			const isShiftPressed = e.key === GlobalEnum.Keycodes.Shift;
 			const isTabPressed = e.key === GlobalEnum.Keycodes.Tab;
-			if (!isTabPressed && !isEscapedPressed) {
+			if (!isTabPressed && !isShiftPressed && !isEscapedPressed) {
 				return;
 			}
 
-			if (isTabPressed && document.activeElement === this._notificationContent) {
+			if (isTabPressed) {
 				console.log('tab pressed');
+			}
+
+			if (isShiftPressed && document.activeElement === this._firstFocusableElem) {
+				console.log('shift & tab pressed');
 			}
 
 			// Close the Notification when pressing Esc
@@ -261,7 +266,6 @@ namespace OSUIFramework.Patterns.Notification {
 		 * @memberof Notification
 		 */
 		private _updatePosition(position: string): void {
-			console.log(this.configs.Position);
 			// Reset direction class
 			if (this.configs.Position !== '') {
 				Helper.Dom.Styles.RemoveClass(
@@ -358,8 +362,6 @@ namespace OSUIFramework.Patterns.Notification {
 
 			// Handle the old position of notification
 			this._oldNotificationPosition = this.configs.Position;
-
-			console.log('function called');
 
 			OSUIFramework.Helper.Dom.Move(
 				this._selfElem,
@@ -515,7 +517,6 @@ namespace OSUIFramework.Patterns.Notification {
 		public hide(): void {
 			this.configs.IsOpen = false;
 
-			console.log(document.querySelectorAll(Constants.FocusableElems));
 			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
 
 			// Trigger Notification event with new status
@@ -526,6 +527,9 @@ namespace OSUIFramework.Patterns.Notification {
 
 			// Remove focus when a Notification is closed
 			this._notificationContent.blur();
+
+			// Focus on last element clicked
+			this._focusableActiveElement.focus();
 
 			// Remove listeners to toggle Notification
 			if (this.configs.ClickToClose) {
@@ -613,6 +617,7 @@ namespace OSUIFramework.Patterns.Notification {
 		 * @memberof Notification
 		 */
 		public show(): void {
+			this._focusableActiveElement = document.activeElement as HTMLElement;
 			this.configs.IsOpen = true;
 
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsOpen);
@@ -632,7 +637,6 @@ namespace OSUIFramework.Patterns.Notification {
 
 			// Focus on element when Notification is open
 			this._notificationContent.focus();
-			console.log(this._notificationContent.querySelectorAll("[tabindex='0'],a,button"));
 
 			if (this.configs.CloseAfterTime > 0) {
 				this._autoCloseNotification();
