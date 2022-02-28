@@ -288,6 +288,18 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternClosed);
 				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternCollapsed);
 			}
+
+			switch (this.configs.Icon) {
+				case Enum.IconType.Caret:
+					Helper.Dom.Styles.AddClass(this._accordionItemIconElem, Enum.CssClass.PatternIconCaret);
+					break;
+				case Enum.IconType.PlusMinus:
+					Helper.Dom.Styles.AddClass(this._accordionItemIconElem, Enum.CssClass.PatternIconPlusMinus);
+					break;
+				case Enum.IconType.Custom:
+					Helper.Dom.Styles.AddClass(this._accordionItemIconElem, Enum.CssClass.PatternIconCustom);
+					break;
+			}
 		}
 
 		/**

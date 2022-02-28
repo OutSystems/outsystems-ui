@@ -6,6 +6,7 @@ namespace OSUIFramework.Patterns.AccordionItem.Enum {
 	export enum Properties {
 		StartsExpanded = 'StartsExpanded',
 		IsDisabled = 'IsDisabled',
+		Icon = 'Icon',
 	}
 
 	/**
@@ -13,6 +14,9 @@ namespace OSUIFramework.Patterns.AccordionItem.Enum {
 	 */
 	export enum CssClass {
 		PatternIcon = 'osui-accordion-item__icon',
+		PatternIconCaret = 'osui-accordion-item__icon--caret',
+		PatternIconPlusMinus = 'osui-accordion-item__icon--plus-minus',
+		PatternIconCustom = 'osui-accordion-item__icon--custom',
 		PatternTitle = 'osui-accordion-item__title',
 		PatternContent = 'osui-accordion-item__content',
 		PatternOpen = 'osui-accordion-item--is-open',
@@ -23,5 +27,11 @@ namespace OSUIFramework.Patterns.AccordionItem.Enum {
 		PatternDisabled = 'osui-accordion-item--is-disabled',
 		PatternFirstItem = 'osui-accordion-item--is-first-item',
 		PatternLastItem = 'osui-accordion-item--is-last-item',
+	}
+
+	export enum IconType {
+		Caret = 'Caret',
+		PlusMinus = 'PlusMinus',
+		Custom = 'Custom',
 	}
 }
