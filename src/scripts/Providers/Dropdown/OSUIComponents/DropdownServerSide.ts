@@ -52,8 +52,8 @@ namespace Providers.Dropdown.OSUIComponents {
 				Enum.Class.FocusTopHtmlElement,
 				OSUIFramework.Constants.AccessibilityHideElementClass
 			);
-			OSUIFramework.Helper.A11Y.AriaHiddenFalse(this._spanTopFocusElement);
 			this._balloonWrapperElement.prepend(this._spanTopFocusElement);
+			OSUIFramework.Helper.A11Y.AriaHiddenTrue(this._spanTopFocusElement);
 
 			// Add bottom focus item
 			this._spanBottomFocusElement = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Span);
@@ -61,8 +61,8 @@ namespace Providers.Dropdown.OSUIComponents {
 				Enum.Class.FocusBottomHtmlElement,
 				OSUIFramework.Constants.AccessibilityHideElementClass
 			);
-			OSUIFramework.Helper.A11Y.AriaHiddenTrue(this._spanBottomFocusElement);
 			this._balloonWrapperElement.append(this._spanBottomFocusElement);
+			OSUIFramework.Helper.A11Y.AriaHiddenTrue(this._spanBottomFocusElement);
 		}
 
 		// Close the Balloon
