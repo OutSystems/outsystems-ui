@@ -42,9 +42,10 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 					this._onSelected(event);
 					break;
 
-				// If ArrowUp or ArrowDown keys notify parent to move to prev/next option item!
+				// If ArrowUp, ArrowDown or Escape keys, notify parent to move to prev/next option item!
 				case GlobalEnum.Keycodes.ArrowUp:
 				case GlobalEnum.Keycodes.ArrowDown:
+				case GlobalEnum.Keycodes.Escape:
 					// Set KeyCode
 					this.keybordTriggerdKey = event.key;
 
@@ -110,6 +111,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			Helper.A11Y.RoleOption(this.selfElement);
 
 			// Continue at here! -------------
+			// https://www.w3.org/TR/wai-aria-practices-1.1/examples/listbox/listbox-rearrangeable.html
 			Helper.A11Y.AriaSelectedFalse(this.selfElement);
 		}
 

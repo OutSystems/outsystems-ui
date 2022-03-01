@@ -22,7 +22,7 @@ namespace Providers.Dropdown.OSUIComponents.Enum {
 		FocusTopHtmlElement = 'osui-dropdown-serverside__balloon-focus-top',
 		IsOpened = 'osui-dropdown-serverside--is-opened',
 		SelectText = 'osui-dropdown-serverside__text',
-		SelectWrapper = 'osui-dropdown-serverside__input',
+		SelectValuesWrapper = 'osui-dropdown-serverside__input',
 	}
 
 	/**

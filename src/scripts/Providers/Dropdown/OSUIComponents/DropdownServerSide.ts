@@ -33,7 +33,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		// Platform OnClose Callback
 		private _platformEventOnClosedCallback: OSUIFramework.Callbacks.OSGeneric;
 		// Store the HTML element for the Dropdown Select Wrapper
-		private _selectWrapper: HTMLElement;
+		private _selectValuesWrapper: HTMLElement;
 		// HTML Elements that will help to deal with keyboard tab navigation
 		private _spanBottomFocusElement: HTMLElement;
 		private _spanTopFocusElement: HTMLElement;
@@ -67,8 +67,11 @@ namespace Providers.Dropdown.OSUIComponents {
 
 		// Close the Balloon
 		private _close(): void {
+			// Set focus to the base element
+			this._selectValuesWrapper.focus();
+			// Update status property
 			this._isOpened = false;
-
+			// Update pattern status!
 			this._updatePatternState();
 		}
 
@@ -86,47 +89,64 @@ namespace Providers.Dropdown.OSUIComponents {
 		private _onKeyboardPressed(event: KeyboardEvent): void {
 			event.stopPropagation();
 
-			// Check if the SelectWrapper container has been pressed!
-			if (event.target === this._selectWrapper) {
-				// If Enter or Space Keys and Single Option
-				if (
-					(event.key === OSUIFramework.GlobalEnum.Keycodes.Enter ||
-						event.key === OSUIFramework.GlobalEnum.Keycodes.Space) &&
-					this.configs.AllowMultipleSelection === false
-				) {
-					// Trigger the click in order to be captured also by DOM (body onClick) in order to close other Dropdowns in page if they are open!
-					this._selectWrapper.click();
-				}
-			}
-
-			// Check if the Balloon Options container has been pressed!
-			if (event.target === this._balloonOptionsWrapperElement) {
-				// If ArrowDown Key
-				if (event.key === OSUIFramework.GlobalEnum.Keycodes.ArrowUp) {
-					// Check if search input exist
-					if (this._balloonSearchInputElement) {
-						this._balloonSearchInputElement.focus();
-					} else {
-						this._spanTopFocusElement.focus();
+			// Check which element has been pressed!
+			switch (event.target) {
+				// Check if the SelectValuesWrapper container has been pressed!
+				case this._selectValuesWrapper:
+					// If Escape Key
+					if (event.key === OSUIFramework.GlobalEnum.Keycodes.Escape) {
+						this._close();
 					}
-				} else if (event.key === OSUIFramework.GlobalEnum.Keycodes.ArrowDown) {
+
+					// If Enter or Space Keys and Single Option
+					if (
+						event.key === OSUIFramework.GlobalEnum.Keycodes.Enter ||
+						event.key === OSUIFramework.GlobalEnum.Keycodes.Space
+					) {
+						// Trigger the click in order to be captured also by DOM (body onClick) in order to close other Dropdowns in page if they are open!
+						this._selectValuesWrapper.click();
+					}
+					break;
+
+				// Check if the Balloon Options container has been pressed!
+				case this._balloonOptionsWrapperElement:
+					// If Escape Key
+					if (event.key === OSUIFramework.GlobalEnum.Keycodes.Escape) {
+						this._close();
+					}
+
 					// If ArrowDown Key
-					// Focus the first option item!
-					this.getChildByIndex(0).setFocus();
-				}
+					if (event.key === OSUIFramework.GlobalEnum.Keycodes.ArrowUp) {
+						// Check if search input exist
+						if (this._balloonSearchInputElement) {
+							this._balloonSearchInputElement.focus();
+						} else {
+							this._spanTopFocusElement.focus();
+						}
+					} else if (event.key === OSUIFramework.GlobalEnum.Keycodes.ArrowDown) {
+						// If ArrowDown Key
+						// Focus the first option item!
+						this.getChildByIndex(0).setFocus();
+					}
+					break;
+
+				// Check if the input Search has been pressed!
+				case this._balloonSearchInputElement:
+					// If Escape Key
+					if (event.key === OSUIFramework.GlobalEnum.Keycodes.Escape) {
+						this._close();
+					}
+					break;
 			}
 		}
 
 		// Used to apply the logic when user click to open the Dropdown
-		private _onSelectWrapperClicked() {
+		private _onSelectValuesWrapperClicked() {
 			this._isOpened ? this._close() : this._open();
 		}
 
 		// Manage the behaviour to leave balloon using tabNavigation
 		private _onSpanElementFocus(): void {
-			// Set focus to the base element
-			this._selectWrapper.focus();
-
 			// Close the Balloon
 			this._close();
 		}
@@ -144,8 +164,6 @@ namespace Providers.Dropdown.OSUIComponents {
 			if (this.getChild(optionItemId)) {
 				// Check if Dropdown must close!
 				if (this.configs.AllowMultipleSelection === false) {
-					// Set focus to the base element
-					this._selectWrapper.focus();
 					// Close it!
 					this._close();
 				}
@@ -209,11 +227,17 @@ namespace Providers.Dropdown.OSUIComponents {
 					case OSUIFramework.GlobalEnum.Keycodes.Tab:
 						// Check if there are focusable elements inside footer
 						if (this._balloonFocusableElemsInFooter.length > 0) {
-							// set focus the the first one
+							// Set focus the the first one
 							this._balloonFocusableElemsInFooter[0].focus();
 						} else {
 							this._spanBottomFocusElement.focus();
 						}
+						break;
+
+					// Escape
+					case OSUIFramework.GlobalEnum.Keycodes.Escape:
+						// Close Dropdown
+						this._close();
 						break;
 				}
 			} else {
@@ -225,8 +249,8 @@ namespace Providers.Dropdown.OSUIComponents {
 
 		// Remove Pattern Events
 		private _removeEvents(): void {
-			this._selectWrapper.removeEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
-			this._selectWrapper.removeEventListener(
+			this._selectValuesWrapper.removeEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			this._selectValuesWrapper.removeEventListener(
 				OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
 				this._eventOnkeyBoardPress
 			);
@@ -263,10 +287,10 @@ namespace Providers.Dropdown.OSUIComponents {
 
 		// Set Pattern Events
 		private _setUpEvents(): void {
-			// Add OnClick Event to the SelectWrapper
-			this._selectWrapper.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
-			// Add KeyDown Event to the SelectWrapper (A11y - stuff)
-			this._selectWrapper.addEventListener(
+			// Add OnClick Event to the SelectValuesWrapper
+			this._selectValuesWrapper.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			// Add KeyDown Event to the SelectValuesWrapper (A11y - stuff)
+			this._selectValuesWrapper.addEventListener(
 				OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
 				this._eventOnkeyBoardPress
 			);
@@ -280,12 +304,19 @@ namespace Providers.Dropdown.OSUIComponents {
 				OSUIFramework.GlobalEnum.HTMLEvent.Focus,
 				this._eventOnSpanFocus
 			);
-
 			// Add Focus Event to the added Bottom Span Element (A11y - stuff)
 			this._spanBottomFocusElement.addEventListener(
 				OSUIFramework.GlobalEnum.HTMLEvent.Focus,
 				this._eventOnSpanFocus
 			);
+			// If search input exist
+			if (this._balloonSearchInputElement) {
+				// Add keyPress event
+				this._balloonSearchInputElement.addEventListener(
+					OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
+					this._eventOnkeyBoardPress
+				);
+			}
 		}
 
 		// Method used to remove a given DropdownOption from optionItems list, it's triggered by DropdownServerSideItem
@@ -370,12 +401,12 @@ namespace Providers.Dropdown.OSUIComponents {
 			// Update Tabindex Ballon elements
 			this._updateBallonElementsTabIndex();
 
-			// Enabled TabIndex to the SelectWrapper
-			OSUIFramework.Helper.A11Y.TabIndexTrue(this._selectWrapper);
-			// Set balloon option items container with listbox as a role
-			OSUIFramework.Helper.A11Y.RoleListox(this._selectWrapper);
-			OSUIFramework.Helper.A11Y.AriaLabelledBy(this._selectWrapper, this.widgetId);
+			// Enabled TabIndex to the SelectValuesWrapper
+			OSUIFramework.Helper.A11Y.TabIndexTrue(this._selectValuesWrapper);
+			// Set SelectValuesWrapper with listbox as a role
+			OSUIFramework.Helper.A11Y.RoleListox(this._selectValuesWrapper);
 
+			// Set balloon option items container with listbox as a role
 			OSUIFramework.Helper.A11Y.RoleListox(this._balloonOptionsWrapperElement);
 		}
 
@@ -386,7 +417,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		protected setCallbacks(): void {
-			this._eventOnClick = this._onSelectWrapperClicked.bind(this);
+			this._eventOnClick = this._onSelectValuesWrapperClicked.bind(this);
 			this._eventOnkeyBoardPress = this._onKeyboardPressed.bind(this);
 			this._eventOnSpanFocus = this._onSpanElementFocus.bind(this);
 		}
@@ -422,9 +453,9 @@ namespace Providers.Dropdown.OSUIComponents {
 				this._balloonWrapperElement,
 				OSUIFramework.Constants.Dot + Enum.Class.BalloonContent
 			);
-			this._selectWrapper = OSUIFramework.Helper.Dom.TagSelector(
+			this._selectValuesWrapper = OSUIFramework.Helper.Dom.TagSelector(
 				this.selfElement,
-				OSUIFramework.Constants.Dot + Enum.Class.SelectWrapper
+				OSUIFramework.Constants.Dot + Enum.Class.SelectValuesWrapper
 			);
 
 			// Add custom SPAN HTML
@@ -469,7 +500,7 @@ namespace Providers.Dropdown.OSUIComponents {
 			this._balloonSearchElement = undefined;
 			this._balloonSearchInputElement = undefined;
 			this._balloonWrapperElement = undefined;
-			this._selectWrapper = undefined;
+			this._selectValuesWrapper = undefined;
 		}
 
 		/**
@@ -505,6 +536,9 @@ namespace Providers.Dropdown.OSUIComponents {
 			this.setCallbacks();
 			this.setHtmlElements();
 			super.finishBuild();
+
+			console.log('To REMOVE! - document.body.classList.add("has-accessible-features2);');
+			document.body.classList.add('has-accessible-features');
 		}
 
 		/**
@@ -515,7 +549,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
-			// console.log(this.uniqueId + ' DropdownServerSide - changeProperty()');
+			console.log(this.uniqueId + ' DropdownServerSide - changeProperty()');
 
 			super.changeProperty(propertyName, propertyValue);
 
@@ -545,7 +579,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		public disable(): void {
-			// console.log(this.uniqueId + ' DropdownServerSide - disable()');
+			console.log(this.uniqueId + ' DropdownServerSide - disable()');
 		}
 
 		/**
@@ -566,7 +600,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		public enable(): void {
-			// console.log(this.uniqueId + ' DropdownServerSide - enable()');
+			console.log(this.uniqueId + ' DropdownServerSide - enable()');
 		}
 
 		/**
