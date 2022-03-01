@@ -276,6 +276,34 @@ namespace OSUIFramework.Helper {
 		}
 
 		/**
+		 * Method that will set the aria-multiselectable as True
+		 *
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @returns
+		 */
+		public static MultiselectableFalse(element: HTMLElement): void {
+			Dom.Attribute.Set(
+				element,
+				Constants.A11YAttributes.Aria.Multiselectable,
+				Constants.A11YAttributes.States.False
+			);
+		}
+
+		/**
+		 * Method that will set the aria-multiselectable as False
+		 *
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @returns
+		 */
+		public static MultiselectableTrue(element: HTMLElement): void {
+			Dom.Attribute.Set(
+				element,
+				Constants.A11YAttributes.Aria.Multiselectable,
+				Constants.A11YAttributes.States.True
+			);
+		}
+
+		/**
 		 * Method that will set the alert role
 		 *
 		 * @param {HTMLElement} element Target element to receive the role atributte

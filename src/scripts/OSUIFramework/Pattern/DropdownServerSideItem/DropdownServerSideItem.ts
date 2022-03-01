@@ -20,7 +20,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		private _platformEventOnClickCallback: Callbacks.OSDropdownServerSideItemOnSelectEvent;
 
 		// Store the Key used to trigger the notification into Dropdown parent
-		public keybordTriggerdKey: GlobalEnum.Keycodes;
+		public keybordTriggerdKey: string;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new DropdownServerSideItemConfig(configs));
@@ -31,13 +31,13 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			event.preventDefault();
 			event.stopPropagation();
 
+			// Set KeyCode
+			this.keybordTriggerdKey = event.key;
+
 			switch (event.key) {
 				// If Enter or Space Keys trigger as a click event!
 				case GlobalEnum.Keycodes.Enter:
 				case GlobalEnum.Keycodes.Space:
-					// Set KeyCode
-					this.keybordTriggerdKey = event.key;
-
 					// Triggered as it was clicked!
 					this._onSelected(event);
 					break;
@@ -46,16 +46,13 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 				case GlobalEnum.Keycodes.ArrowUp:
 				case GlobalEnum.Keycodes.ArrowDown:
 				case GlobalEnum.Keycodes.Escape:
-					// Set KeyCode
-					this.keybordTriggerdKey = event.key;
-
 					// Notify parent about the selected key
 					this.notifyParent(Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.KeyPressed);
 					break;
 
 				// If Tab!
 				case GlobalEnum.Keycodes.Tab:
-					// If Shift + Tab
+					// If Shift + Tab (Since it doesn't exist as a unique key, it must be 'fabricated')
 					if (event.shiftKey) {
 						// Set KeyCode
 						this.keybordTriggerdKey = GlobalEnum.Keycodes.ShiftTab;
@@ -110,8 +107,6 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			// Set balloon option items container with listbox as a role
 			Helper.A11Y.RoleOption(this.selfElement);
 
-			// Continue at here! -------------
-			// https://www.w3.org/TR/wai-aria-practices-1.1/examples/listbox/listbox-rearrangeable.html
 			Helper.A11Y.AriaSelectedFalse(this.selfElement);
 		}
 
@@ -174,7 +169,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			if (this.isBuilt) {
 				switch (propertyName) {
 					case Enum.Properties.IsSelected:
-						Helper.Dom.Styles.ToggleClass(this.selfElement, Enum.CssClass.IsSelected);
+						this.updateSelected();
 						break;
 				}
 			}
@@ -250,6 +245,25 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 */
 		public unsetTabindex(): void {
 			Helper.A11Y.TabIndexFalse(this.selfElement);
+		}
+
+		/**
+		 * Method used to update the selected status
+		 *
+		 * @memberof DropdownServerSideItem
+		 */
+		public updateSelected(): void {
+			// Toggle status variable
+			this.configs.IsSelected = !this.configs.IsSelected;
+
+			// Update accessible property accordingly
+			if (this.configs.IsSelected) {
+				Helper.A11Y.AriaSelectedTrue(this.selfElement);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsSelected);
+			} else {
+				Helper.A11Y.AriaSelectedFalse(this.selfElement);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsSelected);
+			}
 		}
 	}
 }

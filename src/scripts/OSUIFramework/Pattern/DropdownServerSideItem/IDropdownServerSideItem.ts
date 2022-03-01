@@ -13,6 +13,13 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 *
 		 * @memberof IDropdownServerSideItem
 		 */
-		keybordTriggerdKey: GlobalEnum.Keycodes;
+		keybordTriggerdKey: string;
+
+		/**
+		 * Method used to update the DropdownOptionItem selected state
+		 *
+		 * @memberof IDropdownServerSideItem
+		 */
+		updateSelected(): void;
 	}
 }

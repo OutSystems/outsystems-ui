@@ -160,13 +160,12 @@ namespace Providers.Dropdown.OSUIComponents {
 
 		// Method to deal with the click at a DropdpownOptionItem
 		private _optionItemHasBeenClicked(optionItemId: string): void {
+			const clickedItem = this.getChild(optionItemId);
+
 			// Check if the given OptionId exist at optionsList
-			if (this.getChild(optionItemId)) {
-				// Check if Dropdown must close!
-				if (this.configs.AllowMultipleSelection === false) {
-					// Close it!
-					this._close();
-				}
+			if (clickedItem) {
+				// Udpate the Option Item selected State!
+				clickedItem.updateSelected();
 			} else {
 				throw new Error(
 					`${OSUIFramework.ErrorCodes.Dropdown.FailOptionItemClicked}: The ${OSUIFramework.GlobalEnum.PatternsNames.DropdownServerSideItem} under uniqueId: '${optionItemId}' does not exist as an OptionItem from ${OSUIFramework.GlobalEnum.PatternsNames.Dropdown} with Id: ${this.widgetId}.`
@@ -247,27 +246,6 @@ namespace Providers.Dropdown.OSUIComponents {
 			}
 		}
 
-		// Remove Pattern Events
-		private _removeEvents(): void {
-			this._selectValuesWrapper.removeEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
-			this._selectValuesWrapper.removeEventListener(
-				OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
-				this._eventOnkeyBoardPress
-			);
-			this._balloonOptionsWrapperElement.removeEventListener(
-				OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
-				this._eventOnkeyBoardPress
-			);
-			this._spanTopFocusElement.removeEventListener(
-				OSUIFramework.GlobalEnum.HTMLEvent.Focus,
-				this._eventOnSpanFocus
-			);
-			this._spanBottomFocusElement.removeEventListener(
-				OSUIFramework.GlobalEnum.HTMLEvent.Focus,
-				this._eventOnSpanFocus
-			);
-		}
-
 		// Method used to store a given DropdownOption into optionItems list, it's triggered by DropdownServerSideItem
 		private _setNewOptionItem(optionItemId: string): void {
 			// Get the DropdownOptionItem reference
@@ -313,6 +291,33 @@ namespace Providers.Dropdown.OSUIComponents {
 			if (this._balloonSearchInputElement) {
 				// Add keyPress event
 				this._balloonSearchInputElement.addEventListener(
+					OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
+					this._eventOnkeyBoardPress
+				);
+			}
+		}
+
+		// Remove Pattern Events
+		private _unsetEvents(): void {
+			this._selectValuesWrapper.removeEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			this._selectValuesWrapper.removeEventListener(
+				OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
+				this._eventOnkeyBoardPress
+			);
+			this._balloonOptionsWrapperElement.removeEventListener(
+				OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
+				this._eventOnkeyBoardPress
+			);
+			this._spanTopFocusElement.removeEventListener(
+				OSUIFramework.GlobalEnum.HTMLEvent.Focus,
+				this._eventOnSpanFocus
+			);
+			this._spanBottomFocusElement.removeEventListener(
+				OSUIFramework.GlobalEnum.HTMLEvent.Focus,
+				this._eventOnSpanFocus
+			);
+			if (this._balloonSearchInputElement) {
+				this._balloonSearchInputElement.removeEventListener(
 					OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
 					this._eventOnkeyBoardPress
 				);
@@ -400,14 +405,22 @@ namespace Providers.Dropdown.OSUIComponents {
 		protected setA11yProperties(): void {
 			// Update Tabindex Ballon elements
 			this._updateBallonElementsTabIndex();
-
 			// Enabled TabIndex to the SelectValuesWrapper
 			OSUIFramework.Helper.A11Y.TabIndexTrue(this._selectValuesWrapper);
-			// Set SelectValuesWrapper with listbox as a role
-			OSUIFramework.Helper.A11Y.RoleListox(this._selectValuesWrapper);
-
+			// Set SelectValuesWrapper with button as a role
+			OSUIFramework.Helper.A11Y.RoleButton(this._selectValuesWrapper);
+			// Set SelectValuesWrapper with aria-haspopup='listbox'
+			OSUIFramework.Helper.A11Y.AriaHasPopup(
+				this._selectValuesWrapper,
+				OSUIFramework.Constants.A11YAttributes.Role.Listbox
+			);
 			// Set balloon option items container with listbox as a role
 			OSUIFramework.Helper.A11Y.RoleListox(this._balloonOptionsWrapperElement);
+			// Check if the Dropdown allow multiselect
+			if (this.configs.AllowMultipleSelection) {
+				// Set the aria-multiselectable attribute to the options wrapper element
+				OSUIFramework.Helper.A11Y.MultiselectableTrue(this._balloonOptionsWrapperElement);
+			}
 		}
 
 		/**
@@ -588,7 +601,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		public dispose(): void {
-			this._removeEvents();
+			this._unsetEvents();
 			this.unsetCallbacks();
 			this.unsetHtmlElements();
 			super.dispose();
