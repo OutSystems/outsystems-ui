@@ -15,7 +15,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		// Store the HTML element for the Dropdown otpions
 		private _balloonOptionsWrapperElement: HTMLElement;
 		// Store the HTML element for the DropdownBalloonSearch
-		private _balloonSearchElement: HTMLElement;
+		private _balloonSearchInputWrapperElement: HTMLElement;
 		// Store the HTML element for the Search input at Dropdown Balloon
 		private _balloonSearchInputElement: HTMLElement;
 		// Store the HTML element for the DropdownBalloonWrapper
@@ -442,33 +442,33 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		protected setHtmlElements(): void {
-			this._balloonFooterElement = OSUIFramework.Helper.Dom.TagSelector(
+			this._balloonFooterElement = OSUIFramework.Helper.Dom.ClassSelector(
 				this.selfElement,
-				OSUIFramework.Constants.Dot + Enum.Class.BalloonFooter
+				Enum.Class.BalloonFooter
 			);
 			this._balloonFocusableElemsInFooter = OSUIFramework.Helper.Dom.TagSelectorAll(
 				this._balloonFooterElement,
 				OSUIFramework.Constants.FocusableElems
 			);
-			this._balloonSearchElement = OSUIFramework.Helper.Dom.TagSelector(
+			this._balloonSearchInputWrapperElement = OSUIFramework.Helper.Dom.ClassSelector(
 				this.selfElement,
-				OSUIFramework.Constants.Dot + Enum.Class.BalloonSearch
+				Enum.Class.BalloonSearch
 			);
 			this._balloonSearchInputElement = OSUIFramework.Helper.Dom.TagSelector(
-				this._balloonSearchElement,
+				this._balloonSearchInputWrapperElement,
 				OSUIFramework.GlobalEnum.HTMLElement.Input
 			);
-			this._balloonWrapperElement = OSUIFramework.Helper.Dom.TagSelector(
+			this._balloonWrapperElement = OSUIFramework.Helper.Dom.ClassSelector(
 				this.selfElement,
-				OSUIFramework.Constants.Dot + Enum.Class.BalloonWrapper
+				Enum.Class.BalloonWrapper
 			);
-			this._balloonOptionsWrapperElement = OSUIFramework.Helper.Dom.TagSelector(
+			this._balloonOptionsWrapperElement = OSUIFramework.Helper.Dom.ClassSelector(
 				this._balloonWrapperElement,
-				OSUIFramework.Constants.Dot + Enum.Class.BalloonContent
+				Enum.Class.BalloonContent
 			);
-			this._selectValuesWrapper = OSUIFramework.Helper.Dom.TagSelector(
+			this._selectValuesWrapper = OSUIFramework.Helper.Dom.ClassSelector(
 				this.selfElement,
-				OSUIFramework.Constants.Dot + Enum.Class.SelectValuesWrapper
+				Enum.Class.SelectValuesWrapper
 			);
 
 			// Add custom SPAN HTML
@@ -510,7 +510,7 @@ namespace Providers.Dropdown.OSUIComponents {
 			this._balloonFocusableElemsInFooter = [];
 			this._balloonFooterElement = undefined;
 			this._balloonOptionsWrapperElement = undefined;
-			this._balloonSearchElement = undefined;
+			this._balloonSearchInputWrapperElement = undefined;
 			this._balloonSearchInputElement = undefined;
 			this._balloonWrapperElement = undefined;
 			this._selectValuesWrapper = undefined;

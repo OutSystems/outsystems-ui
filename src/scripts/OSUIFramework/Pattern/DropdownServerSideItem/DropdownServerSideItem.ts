@@ -139,6 +139,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		public build(): void {
 			super.build();
 
+			// Store all the parent info
 			this.setParentInfo(
 				Constants.Dot + Enum.CssClass.DropdownParentBalloon,
 				OutSystems.OSUI.Patterns.DropdownAPI.GetDropdownById
