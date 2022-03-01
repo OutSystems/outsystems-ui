@@ -592,7 +592,14 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		public disable(): void {
-			console.log(this.uniqueId + ' DropdownServerSide - disable()');
+			// Assign disabled status.
+			OSUIFramework.Helper.Dom.Attribute.Set(
+				this.selfElement,
+				OSUIFramework.GlobalEnum.HTMLAttributes.Disabled,
+				''
+			);
+			// Assign IsDisabled class
+			OSUIFramework.Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.Class.IsDisabled);
 		}
 
 		/**
@@ -613,7 +620,13 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		public enable(): void {
-			console.log(this.uniqueId + ' DropdownServerSide - enable()');
+			// Remove disabled status.
+			OSUIFramework.Helper.Dom.Attribute.Remove(
+				this.selfElement,
+				OSUIFramework.GlobalEnum.HTMLAttributes.Disabled
+			);
+			// Remove IsDisabled class
+			OSUIFramework.Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.Class.IsDisabled);
 		}
 
 		/**
