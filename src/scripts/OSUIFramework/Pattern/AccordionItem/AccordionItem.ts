@@ -175,6 +175,32 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		}
 
 		/**
+		 * Method that changes the icon's type (Caret, Plus/Minus, Custom)
+		 *
+		 * @private
+		 * @memberof AccordionItem
+		 */
+		private _setIconType(): void {
+			switch (this.configs.Icon) {
+				case Enum.IconType.Caret:
+					Helper.Dom.Styles.RemoveClass(this._accordionItemIconElem, Enum.CssClass.PatternIconPlusMinus);
+					Helper.Dom.Styles.RemoveClass(this._accordionItemIconElem, Enum.CssClass.PatternIconCustom);
+					Helper.Dom.Styles.AddClass(this._accordionItemIconElem, Enum.CssClass.PatternIconCaret);
+					break;
+				case Enum.IconType.PlusMinus:
+					Helper.Dom.Styles.RemoveClass(this._accordionItemIconElem, Enum.CssClass.PatternIconCaret);
+					Helper.Dom.Styles.RemoveClass(this._accordionItemIconElem, Enum.CssClass.PatternIconCustom);
+					Helper.Dom.Styles.AddClass(this._accordionItemIconElem, Enum.CssClass.PatternIconPlusMinus);
+					break;
+				case Enum.IconType.Custom:
+					Helper.Dom.Styles.RemoveClass(this._accordionItemIconElem, Enum.CssClass.PatternIconPlusMinus);
+					Helper.Dom.Styles.RemoveClass(this._accordionItemIconElem, Enum.CssClass.PatternIconCaret);
+					Helper.Dom.Styles.AddClass(this._accordionItemIconElem, Enum.CssClass.PatternIconCustom);
+					break;
+			}
+		}
+
+		/**
 		 * Method to handle the IsDisabled state
 		 *
 		 * @private
@@ -306,17 +332,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternCollapsed);
 			}
 
-			switch (this.configs.Icon) {
-				case Enum.IconType.Caret:
-					Helper.Dom.Styles.AddClass(this._accordionItemIconElem, Enum.CssClass.PatternIconCaret);
-					break;
-				case Enum.IconType.PlusMinus:
-					Helper.Dom.Styles.AddClass(this._accordionItemIconElem, Enum.CssClass.PatternIconPlusMinus);
-					break;
-				case Enum.IconType.Custom:
-					Helper.Dom.Styles.AddClass(this._accordionItemIconElem, Enum.CssClass.PatternIconCustom);
-					break;
-			}
+			this._setIconType();
 			this._setIconPosition();
 		}
 
@@ -408,6 +424,9 @@ namespace OSUIFramework.Patterns.AccordionItem {
 						break;
 					case Enum.Properties.IconPosition:
 						this._setIconPosition();
+						break;
+					case Enum.Properties.Icon:
+						this._setIconType();
 				}
 			}
 		}
