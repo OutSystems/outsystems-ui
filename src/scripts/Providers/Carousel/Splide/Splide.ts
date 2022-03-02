@@ -71,7 +71,6 @@ namespace Providers.Splide {
 			// Call the following methods here, so that all DOM elements are iterated and ready to init the library
 			this._prepareCarouselItems();
 			this._providerOptions = this.configs.getProviderConfig();
-			console.log(this._providerOptions);
 
 			// Init the Library
 			this._initProvider(triggerInitialize);
