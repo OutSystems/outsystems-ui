@@ -2,8 +2,8 @@
 namespace OSUIFramework.Patterns.Carousel {
 	export abstract class AbstractCarouselConfig extends Patterns.AbstractProviderConfiguration {
 		public AutoPlay: boolean;
-		public Gap: string;
 		public ItemsDesktop: number;
+		public ItemsGap: string;
 		public ItemsPhone: number;
 		public ItemsTablet: number;
 		public Loop: boolean;
@@ -42,14 +42,14 @@ namespace OSUIFramework.Patterns.Carousel {
 				case Enum.Properties.AutoPlay:
 					validatedValue = this.validateBoolean(value as boolean, false);
 					break;
-				case Enum.Properties.Gap:
-					validatedValue = this.validateString(value as string, '0');
+				case Enum.Properties.ItemsGap:
+					validatedValue = this.validateString(value as string, '0px');
 					break;
 				case Enum.Properties.Loop:
 					validatedValue = this.validateBoolean(value as boolean, true);
 					break;
 				case Enum.Properties.Padding:
-					validatedValue = this.validateString(value as string, '0');
+					validatedValue = this.validateString(value as string, '0px');
 					break;
 				default:
 					validatedValue = super.validateDefault(key, value);

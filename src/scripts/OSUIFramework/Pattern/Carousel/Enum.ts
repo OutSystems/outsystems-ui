@@ -20,8 +20,8 @@ namespace OSUIFramework.Patterns.Carousel.Enum {
 	 */
 	export enum CssClass {
 		CarouselWrapper = 'osui-carousel',
-		Content = 'osui-carousel_content',
-		Track = 'osui-carousel_track',
+		Content = 'osui-carousel__content',
+		Track = 'osui-carousel__track',
 	}
 
 	/**
@@ -35,7 +35,7 @@ namespace OSUIFramework.Patterns.Carousel.Enum {
 		AutoPlay = 'AutoPlay',
 		Loop = 'Loop',
 		Padding = 'Padding',
-		Gap = 'Gap',
+		ItemsGap = 'ItemsGap',
 		StartingPosition = 'StartingPosition',
 	}
 

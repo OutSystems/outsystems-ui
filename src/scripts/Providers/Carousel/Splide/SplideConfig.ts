@@ -42,8 +42,7 @@ namespace Providers.Splide {
 		}
 
 		public getProviderConfig(): SplideOpts {
-			// eslint-disable-next-line prefer-const
-			let providerOptions = {
+			const providerOptions = {
 				arrows: this._getArrowConfig(),
 				breakpoints: {
 					768: {
@@ -64,7 +63,7 @@ namespace Providers.Splide {
 				autoplay: this.AutoPlay,
 				padding: this.Padding,
 				pagination: this._getPaginationConfig(),
-				gap: this.Gap,
+				gap: this.ItemsGap,
 				start: this.StartingPosition,
 			};
 

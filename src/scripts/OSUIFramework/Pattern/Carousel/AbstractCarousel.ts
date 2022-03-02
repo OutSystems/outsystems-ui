@@ -4,7 +4,6 @@ namespace OSUIFramework.Patterns.Carousel {
 		extends AbstractProviderPattern<P, C>
 		implements ICarousel, Interface.IProviderPattern<P>
 	{
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
 		}
