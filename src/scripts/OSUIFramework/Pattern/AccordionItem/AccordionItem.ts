@@ -158,6 +158,23 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		}
 
 		/**
+		 * Method that changes the icon's position
+		 *
+		 * @private
+		 * @memberof AccordionItem
+		 */
+		private _setIconPosition(): void {
+			//If the page we're on is RTL, the icon's position has to change accordingly.
+			if (this.configs.IconPosition === GlobalEnum.Direction.Right) {
+				Helper.Dom.Styles.RemoveClass(this._accordionItemTitleElem, Enum.CssClass.PatternIconPositionIsLeft);
+				Helper.Dom.Styles.AddClass(this._accordionItemTitleElem, Enum.CssClass.PatternIconPositionIsRight);
+			} else {
+				Helper.Dom.Styles.RemoveClass(this._accordionItemTitleElem, Enum.CssClass.PatternIconPositionIsRight);
+				Helper.Dom.Styles.AddClass(this._accordionItemTitleElem, Enum.CssClass.PatternIconPositionIsLeft);
+			}
+		}
+
+		/**
 		 * Method to handle the IsDisabled state
 		 *
 		 * @private
@@ -288,6 +305,8 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternClosed);
 				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternCollapsed);
 			}
+
+			this._setIconPosition();
 		}
 
 		/**
@@ -376,6 +395,8 @@ namespace OSUIFramework.Patterns.AccordionItem {
 							`${GlobalEnum.PatternsNames.AccordionItem} (${this.widgetId}): changes to ${Enum.Properties.StartsExpanded} parameter do not affect the ${GlobalEnum.PatternsNames.AccordionItem}. Use the client actions 'AccordionItemExpand' and 'AccordionItemCollapse' to affect the ${GlobalEnum.PatternsNames.AccordionItem}.`
 						);
 						break;
+					case Enum.Properties.IconPosition:
+						this._setIconPosition();
 				}
 			}
 		}
