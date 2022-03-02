@@ -98,8 +98,14 @@
 		&--is-left {
 			flex-direction: row-reverse;
 
-			.osui-accordion-item__title__placeholder {
-				padding-left: var(--space-s);
+			.osui-accordion-item {
+				&__title__placeholder {
+					padding-left: var(--space-s);
+				}
+
+				&__icon--plus-minus:after {
+					transform: translateX(-50%);
+				}
 			}
 		}
 	}
@@ -143,6 +149,12 @@
 				transform: translateY(-50%);
 				width: 14px;
 			}
+		}
+
+		&--hidden {
+			-servicestudio-display: none;
+			-servicestudio-height: 0;
+			-servicestudio-width: 0;
 		}
 	}
 
