@@ -2,6 +2,7 @@
 namespace OSUIFramework.Patterns.AccordionItem {
 	export class AccordionItemConfig extends AbstractConfiguration {
 		public Icon: string;
+		public IconPosition: string;
 		public IsDisabled: boolean;
 		public StartsExpanded: boolean;
 
