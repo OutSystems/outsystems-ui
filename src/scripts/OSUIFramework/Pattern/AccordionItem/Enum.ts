@@ -14,27 +14,27 @@ namespace OSUIFramework.Patterns.AccordionItem.Enum {
 	 * AccordionItem Enum for CSS Classes
 	 */
 	export enum CssClass {
-		PatternIcon = 'osui-accordion-item__icon',
-		PatternIconCaret = 'osui-accordion-item__icon--caret',
-		PatternIconPlusMinus = 'osui-accordion-item__icon--plus-minus',
-		PatternIconCustom = 'osui-accordion-item__icon--custom',
-		PatternTitle = 'osui-accordion-item__title',
-		PatternOpen = 'osui-accordion-item--is-open',
 		PatternAnimating = 'osui-accordion-item__content--is-animating',
 		PatternClosed = 'osui-accordion-item--is-closed',
 		PatternCollapsed = 'osui-accordion-item__content--is-collapsed',
-		PatternContent = 'osui-accordion-item__content',
 		PatternDisabled = 'osui-accordion-item--is-disabled',
 		PatternExpanded = 'osui-accordion-item__content--is-expanded',
+		PatternContent = 'osui-accordion-item__content',
 		PatternFirstItem = 'osui-accordion-item--is-first-item',
+		PatternIcon = 'osui-accordion-item__icon',
+		PatternIconCaret = 'osui-accordion-item__icon--caret',
+		PatternIconCustom = 'osui-accordion-item__icon--custom',
+		PatternIconPlusMinus = 'osui-accordion-item__icon--plus-minus',
 		PatternIconPositionIsLeft = 'osui-accordion-item__title--is-left',
 		PatternIconPositionIsRight = 'osui-accordion-item__title--is-right',
 		PatternLastItem = 'osui-accordion-item--is-last-item',
+		PatternOpen = 'osui-accordion-item--is-open',
+		PatternTitle = 'osui-accordion-item__title',
 	}
 
 	export enum IconType {
 		Caret = 'Caret',
-		PlusMinus = 'PlusMinus',
 		Custom = 'Custom',
+		PlusMinus = 'PlusMinus',
 	}
 }
