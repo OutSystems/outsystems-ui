@@ -4,12 +4,10 @@ namespace OSUIFramework.Patterns.Notification.Enum {
 	 * Notification Enum properties
 	 */
 	export enum Properties {
-		IsOpen = 'IsOpen',
+		StartsOpen = 'StartsOpen',
 		Position = 'Position',
 		Width = 'Width',
-		HasOverlay = 'HasOverlay',
 		CloseAfterTime = 'CloseAfterTime',
-		CloseOnBodyClick = 'CloseOnBodyClick',
 		ClickToClose = 'ClickToClose',
 	}
 
@@ -27,10 +25,9 @@ namespace OSUIFramework.Patterns.Notification.Enum {
 
 	export enum CssClass {
 		Pattern = 'osui-notification',
-		PatternContent = 'osui-notification-content',
-		PatternIsOpen = 'is-open',
-		PatternOverlay = 'has-overlay',
-		PatternPosition = 'is-',
+		PatternContent = 'osui-notification__content',
+		PatternIsOpen = 'osui-notification--is-open',
+		PatternPosition = 'osui-notification--is-',
 	}
 
 	/**
