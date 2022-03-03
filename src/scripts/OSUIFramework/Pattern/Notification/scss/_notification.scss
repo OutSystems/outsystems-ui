@@ -207,8 +207,7 @@
 .layout-native {
 	.osui-notification {
 		left: 50%;
-		margin-left: -185px;
-		transform: translateY(-120%) translateX(0);
+		transform: translateY(-120%) translateX(-50%);
 
 		// Service Studio Preview
 		& {
@@ -218,29 +217,20 @@
 		}
 
 		&--is-open {
-			transform: translateY(24px) translateX(0);
+			transform: translateY(var(--space-m)) translateX(0);
 		}
 	}
 }
 
 // Responsive --------------------------------------------------------------------
-///
-.tablet {
-	.layout-native {
-		.osui-notification {
-			left: 50%;
-			margin-left: -185px;
-		}
-	}
-}
 
 ///
 .phone {
 	.layout-native {
 		.osui-notification {
-			left: 16px;
+			left: var(--space-base);
 			margin-left: 0;
-			right: 16px;
+			right: var(--space-base);
 			width: auto;
 		}
 	}
@@ -265,8 +255,8 @@
 		&.landscape {
 			.layout-native {
 				.osui-notification {
-					left: calc(var(--os-safe-area-left) + 16px);
-					right: calc(var(--os-safe-area-right) + 16px);
+					left: calc(var(--os-safe-area-left) + var(--space-base));
+					right: calc(var(--os-safe-area-right) + var(--space-base));
 				}
 			}
 		}

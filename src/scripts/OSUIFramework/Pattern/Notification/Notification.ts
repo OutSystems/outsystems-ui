@@ -7,16 +7,15 @@ namespace OSUIFramework.Patterns.Notification {
 		private _eventApplyType: string;
 		private _eventClick: Callbacks.Generic;
 		private _eventKeypress: Callbacks.Generic;
+		private _firstFocusableElem: HTMLElement;
+		private _focusableActiveElement: HTMLElement;
+		private _focusableElems: HTMLElement[];
 		private _globalEventOpen: Callbacks.Generic;
 		private _isMobile = false;
+		private _lastFocusableElem: HTMLElement;
 		private _notificationContent: HTMLElement;
 		private _oldNotificationPosition: string;
-		private _onToggle: Callbacks.OSNotificationToggleEvent;
-
-		private _focusableElems: HTMLElement[];
-		private _firstFocusableElem: HTMLElement;
-		private _lastFocusableElem: HTMLElement;
-		private _focusableActiveElement: HTMLElement;
+		private _platformEventOnToggle: Callbacks.OSNotificationToggleEvent;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
@@ -43,28 +42,10 @@ namespace OSUIFramework.Patterns.Notification {
 		}
 
 		/**
-		 * Close Notification, when BodyOnCLick event is triggered
-		 *
-		 * @private
-		 * @param {string} args
-		 * @param {MouseEvent} e
-		 * @memberof Notification
-		 */
-		private _bodyClickCallback(args: string, e: MouseEvent): void {
-			if (!this._notificationContent.contains(e.target as HTMLElement)) {
-				if (this.configs.StartsOpen) {
-					this.hide();
-				}
-			}
-
-			e.stopPropagation();
-		}
-
-		/**
 		 * Trigger the notification at toggle behaviour
 		 *
 		 * @private
-		 * @param {MouseEvent} e
+		 * @param {MouseEvent}
 		 * @memberof Notification
 		 */
 		private _clickCallback(e: MouseEvent): void {
@@ -150,7 +131,7 @@ namespace OSUIFramework.Patterns.Notification {
 		// Method that triggers the OnToggle event
 		private _triggerOnToggleEvent(isOpen: boolean): void {
 			setTimeout(() => {
-				this._onToggle(this.widgetId, isOpen);
+				this._platformEventOnToggle(this.widgetId, isOpen);
 			}, 0);
 		}
 
@@ -245,17 +226,8 @@ namespace OSUIFramework.Patterns.Notification {
 			}
 		}
 
-		// Set focusable elements
-		private _setFocusedElements(): void {
-			this._focusableElems = [...this._selfElem.querySelectorAll(Constants.FocusableElems)] as HTMLElement[];
-
-			// to handle focusable element's tabindex when toggling the notification
-			this._firstFocusableElem = this._focusableElems[0];
-			this._lastFocusableElem = this._focusableElems[this._focusableElems.length - 1];
-		}
-
 		/**
-		 *
+		 *  Sets the callbacks to be used in the pattern.
 		 *
 		 * @protected
 		 * @memberof Notification
@@ -529,7 +501,7 @@ namespace OSUIFramework.Patterns.Notification {
 		 * @memberof Notification
 		 */
 		public registerCallback(callback: Callbacks.OSNotificationToggleEvent): void {
-			this._onToggle = callback;
+			this._platformEventOnToggle = callback;
 		}
 
 		/**
