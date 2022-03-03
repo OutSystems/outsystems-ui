@@ -59,8 +59,7 @@
 			&-right,
 			&-left {
 				.osui-notification__content {
-					margin-top: var(--space-m);
-					top: 0;
+					top: var(--space-m) 0;
 				}
 			}
 
@@ -83,8 +82,7 @@
 			&-right,
 			&-left {
 				.osui-notification__content {
-					bottom: 0;
-					margin-bottom: var(--space-m);
+					bottom: var(--space-m);
 				}
 			}
 
@@ -125,57 +123,49 @@
 				&--is {
 					&-top {
 						.osui-notification__content {
-							margin-top: var(--space-m);
-							top: 0;
-							transform: translate(-50%, 0%);
+							top: var(--space-m);
+							transform: translate(-50%, var(--space-m));
 						}
 
 						&-right .osui-notification__content {
-							margin-right: var(--space-m);
-							right: 0;
+							right: var(--space-m);
 						}
 
 						&-left .osui-notification__content {
-							left: 0;
-							margin-left: var(--space-m);
+							left: var(--space-m);
 						}
 					}
 
 					&-bottom {
 						.osui-notification__content {
-							bottom: 0;
-							margin-bottom: var(--space-m);
+							bottom: var(--space-m);
 							transform: translateX(-50%);
 						}
 
 						&-right,
 						&-left {
 							.osui-notification__content {
-								bottom: 0;
+								bottom: var(--space-m);
 							}
 						}
 
 						&-right .osui-notification__content {
-							margin: var(--space-none) var(--space-m) var(--space-m) var(--space-none);
-							right: 0;
+							right: var(--space-m);
 						}
 
 						&-left .osui-notification__content {
-							left: 0;
-							margin: var(--space-none) var(--space-none) var(--space-m) var(--space-m);
+							left: var(--space-m);
 						}
 					}
 
 					&-right .osui-notification__content {
-						margin-right: var(--space-m);
-						right: 0;
+						right: var(--space-m);
 						top: 50%;
 						transform: translateY(-50%);
 					}
 
 					&-left .osui-notification__content {
-						left: 0;
-						margin-left: var(--space-m);
+						left: var(--space-m);
 						top: 50%;
 						transform: translateY(-50%);
 					}
