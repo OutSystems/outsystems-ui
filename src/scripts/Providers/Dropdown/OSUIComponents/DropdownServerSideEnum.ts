@@ -18,10 +18,13 @@ namespace Providers.Dropdown.OSUIComponents.Enum {
 		BalloonFooter = 'osui-dropdown-serverside__balloon-footer',
 		BalloonSearch = 'osui-dropdown-serverside__balloon-search',
 		BalloonWrapper = 'osui-dropdown-serverside__balloon-wrapper',
+		BalloonWrapperIsDisabled = 'osui-dropdown-serverside__balloon-wrapper--is-disabled',
+		ErrorMessage = 'osui-dropdown-serverside-error-message',
 		FocusBottomHtmlElement = 'osui-dropdown-serverside__balloon-focus-bottom',
 		FocusTopHtmlElement = 'osui-dropdown-serverside__balloon-focus-top',
 		IsDisabled = 'osui-dropdown-serverside--is-disabled',
 		IsOpened = 'osui-dropdown-serverside--is-opened',
+		NotValid = 'osui-dropdown-serverside--not-valid',
 		SelectText = 'osui-dropdown-serverside__text',
 		SelectValuesWrapper = 'osui-dropdown-serverside__input',
 	}

@@ -14,10 +14,10 @@ namespace Providers.Dropdown.OSUIComponents {
 		private _balloonFooterElement: HTMLElement;
 		// Store the HTML element for the Dropdown otpions
 		private _balloonOptionsWrapperElement: HTMLElement;
-		// Store the HTML element for the DropdownBalloonSearch
-		private _balloonSearchInputWrapperElement: HTMLElement;
 		// Store the HTML element for the Search input at Dropdown Balloon
 		private _balloonSearchInputElement: HTMLElement;
+		// Store the HTML element for the DropdownBalloonSearch
+		private _balloonSearchInputWrapperElement: HTMLElement;
 		// Store the HTML element for the DropdownBalloonWrapper
 		private _balloonWrapperElement: HTMLElement;
 		// Click Event
@@ -42,6 +42,24 @@ namespace Providers.Dropdown.OSUIComponents {
 			super(uniqueId, configs);
 
 			console.log('NEW', this.uniqueId);
+		}
+
+		// Add error message container with a given text
+		private _addErrorMessage(text: string): void {
+			const errorMessageElement = OSUIFramework.Helper.Dom.ClassSelector(
+				this._selfElem.parentElement,
+				Enum.Class.ErrorMessage
+			);
+
+			// Check if the element already exist!
+			if (errorMessageElement === undefined) {
+				// Create the wrapper container
+				const textContainer = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Div);
+				textContainer.classList.add(Enum.Class.ErrorMessage);
+				textContainer.innerHTML = text;
+
+				this._selfElem.parentElement.appendChild(textContainer);
+			}
 		}
 
 		// Add Custom HTML elements to the DropdownBallon in order to help on deal with keyboard navigation (Accessibility)
@@ -165,7 +183,7 @@ namespace Providers.Dropdown.OSUIComponents {
 			// Check if the given OptionId exist at optionsList
 			if (clickedItem) {
 				// Udpate the Option Item selected State!
-				clickedItem.updateSelected();
+				clickedItem.toggleSelected();
 			} else {
 				throw new Error(
 					`${OSUIFramework.ErrorCodes.Dropdown.FailOptionItemClicked}: The ${OSUIFramework.GlobalEnum.PatternsNames.DropdownServerSideItem} under uniqueId: '${optionItemId}' does not exist as an OptionItem from ${OSUIFramework.GlobalEnum.PatternsNames.Dropdown} with Id: ${this.widgetId}.`
@@ -471,7 +489,7 @@ namespace Providers.Dropdown.OSUIComponents {
 				Enum.Class.SelectValuesWrapper
 			);
 
-			// Add custom SPAN HTML
+			// Add custom SPAN HTML Elements that will help on Accessibility keyboard navigation
 			this._addSpanHtmlElements();
 			// Add Accessibility properties
 			this.setA11yProperties();
@@ -576,14 +594,18 @@ namespace Providers.Dropdown.OSUIComponents {
 		}
 
 		/**
-		 * This method has no implementation on this context.
+		 * Method that will check for all Selected OptionItems and Unselect them
 		 *
 		 * @memberof OSUIDropdownServerSide
 		 */
 		public clear(): void {
-			throw new Error(
-				`${OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.code}:	${OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.message}`
-			);
+			// Get all Selected Items
+			const selectedOptions = this.childItems.filter((item) => item.IsSelected);
+			// Go through all the seected option items
+			for (const optionItem of selectedOptions) {
+				// Unselect it!
+				optionItem.toggleSelected();
+			}
 		}
 
 		/**
@@ -598,8 +620,14 @@ namespace Providers.Dropdown.OSUIComponents {
 				OSUIFramework.GlobalEnum.HTMLAttributes.Disabled,
 				''
 			);
+			OSUIFramework.Helper.Dom.Attribute.Set(
+				this._balloonWrapperElement,
+				OSUIFramework.GlobalEnum.HTMLAttributes.Disabled,
+				''
+			);
 			// Assign IsDisabled class
-			OSUIFramework.Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.Class.IsDisabled);
+			OSUIFramework.Helper.Dom.Styles.AddClass(this.selfElement, Enum.Class.IsDisabled);
+			OSUIFramework.Helper.Dom.Styles.AddClass(this._balloonWrapperElement, Enum.Class.BalloonWrapperIsDisabled);
 		}
 
 		/**
@@ -625,8 +653,16 @@ namespace Providers.Dropdown.OSUIComponents {
 				this.selfElement,
 				OSUIFramework.GlobalEnum.HTMLAttributes.Disabled
 			);
+			OSUIFramework.Helper.Dom.Attribute.Remove(
+				this._balloonWrapperElement,
+				OSUIFramework.GlobalEnum.HTMLAttributes.Disabled
+			);
 			// Remove IsDisabled class
 			OSUIFramework.Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.Class.IsDisabled);
+			OSUIFramework.Helper.Dom.Styles.RemoveClass(
+				this._balloonWrapperElement,
+				Enum.Class.BalloonWrapperIsDisabled
+			);
 		}
 
 		/**
@@ -669,15 +705,29 @@ namespace Providers.Dropdown.OSUIComponents {
 		}
 
 		/**
-		 * This method has no implementation on this context.
+		 * Set the validation status, and also pass the message to show
 		 *
+		 * @param {boolean} Set if the dropdown is valid or not
+		 * @param {string} Text message to be added
 		 * @memberof OSUIDropdownServerSide
 		 */
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		public validation(isValid: boolean, validationMessage: string): void {
-			throw new Error(
-				`${OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.code}:	${OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.message}`
-			);
+			if (isValid === false) {
+				OSUIFramework.Helper.Dom.Styles.AddClass(this._selfElem, Enum.Class.NotValid);
+				this._addErrorMessage(validationMessage);
+			} else {
+				OSUIFramework.Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.Class.NotValid);
+
+				const errorMessageElement = OSUIFramework.Helper.Dom.ClassSelector(
+					this._selfElem.parentElement,
+					Enum.Class.ErrorMessage
+				);
+
+				// If error message has been added already, remove it!
+				if (errorMessageElement) {
+					errorMessageElement.remove();
+				}
+			}
 		}
 	}
 }

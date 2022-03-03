@@ -11,15 +11,34 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		/**
 		 * Key used to trigger the notification into Dropdown parent
 		 *
+		 * @type {string}
 		 * @memberof IDropdownServerSideItem
 		 */
 		keybordTriggerdKey: string;
+
+		/**
+		 * Getter that allows to obtain the IsSelectd status value.
+		 *
+		 * @readonly
+		 * @type {boolean}
+		 * @memberof IDropdownServerSideItem
+		 */
+		get IsSelected(): boolean;
+
+		/**
+		 * Getter that allows to obtain the ItemId value.
+		 *
+		 * @readonly
+		 * @type {boolean}
+		 * @memberof IDropdownServerSideItem
+		 */
+		get ItemId(): string;
 
 		/**
 		 * Method used to update the DropdownOptionItem selected state
 		 *
 		 * @memberof IDropdownServerSideItem
 		 */
-		updateSelected(): void;
+		toggleSelected(): void;
 	}
 }

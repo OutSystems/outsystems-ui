@@ -77,9 +77,6 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 					? Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.Click
 					: Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.KeyPressed
 			);
-
-			// Trigger platform callback about Option has been selected!
-			Helper.AsyncInvocation(this._platformEventOnClickCallback, this.parentObject.widgetId, this.configs.ItemId);
 		}
 
 		// Remove Pattern Events
@@ -92,6 +89,21 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		private _setUpEvents(): void {
 			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
+		}
+
+		// Update the Selected Status value based on a given Status
+		private _updateSelectedStatus(status: boolean): void {
+			// Set IsSelected status variable
+			this.configs.IsSelected = status;
+
+			// Update accessible property accordingly
+			if (this.configs.IsSelected) {
+				Helper.A11Y.AriaSelectedTrue(this.selfElement);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsSelected);
+			} else {
+				Helper.A11Y.AriaSelectedFalse(this.selfElement);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsSelected);
+			}
 		}
 
 		/**
@@ -170,7 +182,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			if (this.isBuilt) {
 				switch (propertyName) {
 					case Enum.Properties.IsSelected:
-						this.updateSelected();
+						this._updateSelectedStatus(propertyValue as boolean);
 						break;
 				}
 			}
@@ -191,6 +203,28 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 
 			//Destroying the base of pattern
 			super.dispose();
+		}
+
+		/**
+		 * Getter that allows to obtain the IsSelectd status value.
+		 *
+		 * @readonly
+		 * @type {boolean}
+		 * @memberof DropdownServerSideItem
+		 */
+		public get IsSelected(): boolean {
+			return this.configs.IsSelected;
+		}
+
+		/**
+		 * Getter that allows to obtain the ItemId value.
+		 *
+		 * @readonly
+		 * @type {boolean}
+		 * @memberof DropdownServerSideItem
+		 */
+		public get ItemId(): string {
+			return this.configs.ItemId;
 		}
 
 		/**
@@ -240,31 +274,25 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		}
 
 		/**
+		 * Method used to update the selected status
+		 *
+		 * @memberof DropdownServerSideItem
+		 */
+		public toggleSelected(): void {
+			// Update the Status value with the it's Toggled value
+			this._updateSelectedStatus(!this.configs.IsSelected);
+
+			// Trigger platform callback about Option has been selected!
+			Helper.AsyncInvocation(this._platformEventOnClickCallback, this.parentObject.widgetId, this.configs.ItemId);
+		}
+
+		/**
 		 * Method used to unset the tabindex attribute
 		 *
 		 * @memberof DropdownServerSideItem
 		 */
 		public unsetTabindex(): void {
 			Helper.A11Y.TabIndexFalse(this.selfElement);
-		}
-
-		/**
-		 * Method used to update the selected status
-		 *
-		 * @memberof DropdownServerSideItem
-		 */
-		public updateSelected(): void {
-			// Toggle status variable
-			this.configs.IsSelected = !this.configs.IsSelected;
-
-			// Update accessible property accordingly
-			if (this.configs.IsSelected) {
-				Helper.A11Y.AriaSelectedTrue(this.selfElement);
-				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsSelected);
-			} else {
-				Helper.A11Y.AriaSelectedFalse(this.selfElement);
-				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsSelected);
-			}
 		}
 	}
 }
