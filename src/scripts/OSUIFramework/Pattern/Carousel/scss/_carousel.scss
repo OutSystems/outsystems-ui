@@ -48,7 +48,7 @@
 		transform-style: flat;
 	}
 
-	.osui-carousel__content {
+	&__content {
 		& > .list {
 			overflow: unset;
 
@@ -57,6 +57,10 @@
 				-servicestudio-display: inline-flex;
 			}
 		}
+	}
+
+	&__track {
+		-servicestudio-position: relative;
 	}
 
 	.splide--draggable,
