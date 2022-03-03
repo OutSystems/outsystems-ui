@@ -45,7 +45,7 @@
 					}
 
 					&--plus-minus:after {
-						transform: translateX(-50%) rotate(90deg);
+						transform: rotate(90deg);
 					}
 				}
 			}
@@ -102,21 +102,21 @@
 				&__title__placeholder {
 					padding-left: var(--space-s);
 				}
-
-				&__icon--plus-minus:after {
-					transform: translateX(-50%);
-				}
 			}
 		}
 	}
 
 	&__icon {
+		align-items: center;
 		color: var(--color-primary);
+		display: flex;
 		font-family: FontAwesome;
 		font-size: var(--font-size-h4);
 		font-weight: var(--font-regular);
-		position: relative;
+		height: 16px;
+		justify-content: center;
 		transition: all 300ms ease-in-out;
+		width: 16px;
 
 		&--caret {
 			&:after {
@@ -132,10 +132,6 @@
 				background-color: var(--color-primary);
 				content: ' ';
 				height: 14px;
-				left: 50%;
-				position: absolute;
-				// 1px is half the size of the element
-				transform: translateX(calc(-50% - 1px));
 				transition: transform 300ms ease-in-out;
 				width: 2px;
 			}
@@ -145,8 +141,6 @@
 				content: ' ';
 				height: 2px;
 				position: absolute;
-				top: 50%;
-				transform: translateY(-50%);
 				width: 14px;
 			}
 		}
