@@ -77,6 +77,7 @@
 	&__title {
 		align-items: center;
 		cursor: pointer;
+		direction: ltr;
 		display: flex;
 		font-size: var(--font-size-h6);
 		line-height: 1;
@@ -86,6 +87,14 @@
 		&__placeholder {
 			text-overflow: ellipsis;
 			width: 100%;
+		}
+
+		&--is-left {
+			flex-direction: row-reverse;
+
+			.osui-accordion-item__title__placeholder {
+				padding-left: var(--space-s);
+			}
 		}
 	}
 
@@ -171,7 +180,7 @@
 	}
 }
 
-// Accessibility -------------------------------------------------------------------------
+// Accessibility -----------------------------------------------------------------
 ///
 .has-accessible-features {
 	.osui-accordion-item {
@@ -185,5 +194,14 @@
 				outline: var(--border-size-l) solid var(--color-focus-outer);
 			}
 		}
+	}
+}
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	.osui-accordion-item__title__placeholder {
+		direction: rtl;
+		margin-right: var(--space-s);
 	}
 }
