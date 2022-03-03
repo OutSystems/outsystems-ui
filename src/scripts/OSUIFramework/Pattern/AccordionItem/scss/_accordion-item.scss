@@ -125,13 +125,10 @@
 		}
 
 		&--plus-minus {
-			height: 15px;
-			width: 15px;
-
 			&:after {
 				background-color: var(--color-primary);
 				content: ' ';
-				height: 14px;
+				height: 100%;
 				transition: transform 300ms ease-in-out;
 				width: 2px;
 			}
@@ -141,7 +138,7 @@
 				content: ' ';
 				height: 2px;
 				position: absolute;
-				width: 14px;
+				width: 100%;
 			}
 		}
 
