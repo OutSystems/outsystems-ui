@@ -34,7 +34,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		private _platformEventOnClosedCallback: OSUIFramework.Callbacks.OSGeneric;
 		// Store the HTML element for the Dropdown Select Wrapper
 		private _selectValuesWrapper: HTMLElement;
-		// HTML Elements that will help to deal with keyboard tab navigation
+		// HTML Elements that will help to deal with keyboard tab navigation (A11y - stuff)
 		private _spanBottomFocusElement: HTMLElement;
 		private _spanTopFocusElement: HTMLElement;
 
@@ -91,6 +91,8 @@ namespace Providers.Dropdown.OSUIComponents {
 			this._isOpened = false;
 			// Update pattern status!
 			this._updatePatternState();
+			// Trigger platform's _platformEventOnClosedCallback client Action
+			OSUIFramework.Helper.AsyncInvocation(this._platformEventOnClosedCallback, this.widgetId);
 		}
 
 		// Move ballon element to outside of the pattern context
@@ -107,7 +109,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		private _onKeyboardPressed(event: KeyboardEvent): void {
 			event.stopPropagation();
 
-			// Check which element has been pressed!
+			// Check which element has been key pressed!
 			switch (event.target) {
 				// Check if the SelectValuesWrapper container has been pressed!
 				case this._selectValuesWrapper:
@@ -281,6 +283,14 @@ namespace Providers.Dropdown.OSUIComponents {
 			}
 		}
 
+		// Set the Prompt text
+		private _setPrompt(): void {
+			// Check if user set text to be placed
+			if (this.configs.Prompt !== '') {
+				console.log('_setPrompt()', this.uniqueId, this.configs.Prompt);
+			}
+		}
+
 		// Set Pattern Events
 		private _setUpEvents(): void {
 			// Add OnClick Event to the SelectValuesWrapper
@@ -305,9 +315,9 @@ namespace Providers.Dropdown.OSUIComponents {
 				OSUIFramework.GlobalEnum.HTMLEvent.Focus,
 				this._eventOnSpanFocus
 			);
-			// If search input exist
+			// If search input exist (A11y - stuff)
 			if (this._balloonSearchInputElement) {
-				// Add keyPress event
+				// Add keyPress event in order to capture Escape key
 				this._balloonSearchInputElement.addEventListener(
 					OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
 					this._eventOnkeyBoardPress
@@ -357,7 +367,9 @@ namespace Providers.Dropdown.OSUIComponents {
 
 		// Method that will be used to set/unset the TabIndex to the DropdownBallon elements according it's opened/closed
 		private _updateBallonElementsTabIndex(): void {
-			const tabIndexValue = this._isOpened ? '0' : '-1';
+			const tabIndexValue = this._isOpened
+				? OSUIFramework.Constants.A11YAttributes.States.TabIndexShow
+				: OSUIFramework.Constants.A11YAttributes.States.TabIndexHidden;
 
 			// If there is the Search input
 			if (this._balloonSearchInputElement !== undefined) {
@@ -489,6 +501,8 @@ namespace Providers.Dropdown.OSUIComponents {
 				Enum.Class.SelectValuesWrapper
 			);
 
+			// Set Prompt text
+			this._setPrompt();
 			// Add custom SPAN HTML Elements that will help on Accessibility keyboard navigation
 			this._addSpanHtmlElements();
 			// Add Accessibility properties
@@ -580,17 +594,18 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
-			console.log(this.uniqueId + ' DropdownServerSide - changeProperty()');
-
 			super.changeProperty(propertyName, propertyValue);
 
-			// if (this.isBuilt) {
-			// 	switch (propertyName) {
-			// 		case OSUIFramework.Patterns.Dropdown.Enum.Properties.PROP_NAME:
-			// 			// TODO (by CreateNewPattern): Update or Remove
-			// 			break;
-			// 	}
-			// }
+			if (this.isBuilt) {
+				switch (propertyName) {
+					case Enum.Properties.IsDisabled:
+						propertyValue ? this.disable() : this.enable();
+						break;
+					case Enum.Properties.Prompt:
+						this._setPrompt();
+						break;
+				}
+			}
 		}
 
 		/**
