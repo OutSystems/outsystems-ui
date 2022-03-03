@@ -56,6 +56,12 @@
 	}
 
 	&__content {
+		// Service Studio Preview
+		& {
+			-servicestudio-display: grid;
+			-servicestudio-grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+		}
+
 		& > .list {
 			overflow: unset;
 

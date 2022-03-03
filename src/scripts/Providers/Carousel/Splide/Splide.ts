@@ -228,7 +228,7 @@ namespace Providers.Splide {
 		 */
 		public build(): void {
 			super.build();
-			console.log('override');
+
 			this.setHtmlElements();
 
 			this._checkListWidget();
