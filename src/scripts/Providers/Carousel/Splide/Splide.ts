@@ -22,6 +22,8 @@ namespace Providers.Splide {
 		private _currentIndex: number;
 		// Store the disable render async callback
 		private _eventOnDisableRender: OSUIFramework.Callbacks.Generic;
+		// Store the onResize event
+		private _eventOnResize: OSUIFramework.Callbacks.Generic;
 		// Store if a List widget is used inside the CarouselItems placeholder
 		private _hasList: boolean;
 		// Store the onInitialized event
@@ -126,6 +128,24 @@ namespace Providers.Splide {
 		}
 
 		/**
+		 * Ensure that the splide track maintains the correct width
+		 *
+		 * @private
+		 * @memberof OSUISplide
+		 */
+		private _setCarouselWidth(): void {
+			// Update UI on window resize
+			this.provider.refresh();
+
+			// Update css variable
+			OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
+				this._carouselTrackElem,
+				OSUIFramework.Patterns.Carousel.Enum.CssVariables.CarouselWidth,
+				this._selfElem.offsetWidth + OSUIFramework.GlobalEnum.Units.Pixel
+			);
+		}
+
+		/**
 		 * Method to set the OnInitializeEvent
 		 *
 		 * @private
@@ -161,6 +181,10 @@ namespace Providers.Splide {
 		protected setCallbacks(): void {
 			// Bind this to the async callback
 			this._eventOnDisableRender = this._disableBlockRender.bind(this);
+			this._eventOnResize = this._setCarouselWidth.bind(this);
+
+			// Add event listener for window resize
+			window.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Resize, this._eventOnResize);
 		}
 
 		/**
@@ -206,8 +230,12 @@ namespace Providers.Splide {
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnDisableRender = undefined;
+			this._eventOnResize = undefined;
 			this._platformEventInitialized = undefined;
 			this._platformEventOnSlideMoved = undefined;
+
+			// remove event listener
+			window.removeEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Resize, this._eventOnResize);
 		}
 
 		/**
@@ -230,6 +258,8 @@ namespace Providers.Splide {
 			super.build();
 
 			this.setHtmlElements();
+
+			this.setCallbacks();
 
 			this._checkListWidget();
 
