@@ -2,13 +2,14 @@
 namespace OSUIFramework.Patterns.Carousel {
 	export abstract class AbstractCarouselConfig extends Patterns.AbstractProviderConfiguration {
 		public AutoPlay: boolean;
+		public Height: string | number;
 		public ItemsDesktop: number;
-		public ItemsGap: string;
+		public ItemsGap: string | number;
 		public ItemsPhone: number;
 		public ItemsTablet: number;
 		public Loop: boolean;
 		public Navigation: Enum.Navigation;
-		public Padding: string;
+		public Padding: string | number;
 		public StartingPosition: number;
 
 		constructor(config: JSON) {
@@ -38,6 +39,9 @@ namespace OSUIFramework.Patterns.Carousel {
 				case Enum.Properties.ItemsTablet:
 				case Enum.Properties.ItemsPhone:
 					validatedValue = this.validateNumber(value as number, 1);
+					break;
+				case Enum.Properties.Height:
+					validatedValue = this.validateString(value as string, 'auto');
 					break;
 				case Enum.Properties.AutoPlay:
 					validatedValue = this.validateBoolean(value as boolean, false);

@@ -228,7 +228,7 @@ namespace Providers.Splide {
 		 */
 		public build(): void {
 			super.build();
-
+			console.log('override');
 			this.setHtmlElements();
 
 			this._checkListWidget();
@@ -268,11 +268,14 @@ namespace Providers.Splide {
 					case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsPhone:
 						this.updateCarousel();
 						break;
+					case OSUIFramework.Patterns.Carousel.Enum.Properties.Height:
+						this._provider.options = { height: propertyValue as string | number };
+						break;
 					case OSUIFramework.Patterns.Carousel.Enum.Properties.Padding:
-						this._provider.options = { padding: propertyValue as number | string };
+						this._provider.options = { padding: propertyValue as string | number };
 						break;
 					case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsGap:
-						this._provider.options = { gap: propertyValue as number | string };
+						this._provider.options = { gap: propertyValue as string | number };
 						break;
 				}
 			}

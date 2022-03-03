@@ -28,14 +28,15 @@ namespace OSUIFramework.Patterns.Carousel.Enum {
 	 * Carousel Enum for Properties
 	 */
 	export enum Properties {
-		Navigation = 'Navigation',
-		ItemsDesktop = 'ItemsDesktop',
-		ItemsTablet = 'ItemsTablet',
-		ItemsPhone = 'ItemsPhone',
 		AutoPlay = 'AutoPlay',
-		Loop = 'Loop',
-		Padding = 'Padding',
+		Height = 'Height',
+		ItemsDesktop = 'ItemsDesktop',
 		ItemsGap = 'ItemsGap',
+		ItemsPhone = 'ItemsPhone',
+		ItemsTablet = 'ItemsTablet',
+		Loop = 'Loop',
+		Navigation = 'Navigation',
+		Padding = 'Padding',
 		StartingPosition = 'StartingPosition',
 	}
 
@@ -50,9 +51,9 @@ namespace OSUIFramework.Patterns.Carousel.Enum {
 	 * Carousel Navigation options
 	 */
 	export enum Navigation {
-		None = 'none',
 		Arrows = 'arrows',
-		Dots = 'dots',
 		Both = 'both',
+		Dots = 'dots',
+		None = 'none',
 	}
 }

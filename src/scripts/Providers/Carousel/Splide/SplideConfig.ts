@@ -56,7 +56,7 @@ namespace Providers.Splide {
 				direction: OutSystems.OSUI.Utils.GetIsRTL()
 					? OSUIFramework.GlobalEnum.Direction.RTL
 					: OSUIFramework.GlobalEnum.Direction.LTR,
-
+				height: this.Height,
 				type: this.Loop ? Enum.TypeOptions.Loop : Enum.TypeOptions.Slide,
 				focus: 0,
 				perPage: this.ItemsDesktop,
