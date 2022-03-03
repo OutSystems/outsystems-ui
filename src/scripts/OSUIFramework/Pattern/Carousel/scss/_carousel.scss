@@ -6,6 +6,8 @@
 /* Splide Library Core Default Styles */
 @import '../../../../Providers/Carousel/Splide/scss/splide-core.scss';
 
+@import 'carousel_ss_preview_imgs';
+
 /* OutSystems UI Carousel customization */
 ///
 .osui-carousel {
@@ -71,6 +73,26 @@
 	.splide--draggable,
 	&.splide--draggable {
 		cursor: grab;
+	}
+
+	.list:not([data-virtualization-disabled]),
+	.list:not([data-animation-disabled]) {
+		-servicestudio-pointer-events: none;
+		-servicestudio-min-height: 100px;
+
+		&:after {
+			-servicestudio-content: '';
+			-servicestudio-position: absolute;
+			-servicestudio-top: 0;
+			-servicestudio-left: 0;
+			-servicestudio-width: 100%;
+			-servicestudio-height: 100%;
+			-servicestudio-background-color: var(--color-neutral-0);
+			-servicestudio-background-image: $carousel_helper_img_base64;
+			-servicestudio-background-repeat: no-repeat;
+			-servicestudio-background-position: center;
+			-servicestudio-z-index: 2;
+		}
 	}
 }
 
