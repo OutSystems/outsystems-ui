@@ -107,6 +107,9 @@ namespace Providers.Splide {
 			}
 			// Init the provider
 			this._provider.mount();
+
+			// Set initial carousel width
+			this._setCarouselWidth();
 		}
 
 		/**

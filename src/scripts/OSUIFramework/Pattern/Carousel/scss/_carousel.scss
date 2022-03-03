@@ -13,48 +13,60 @@
 .osui-carousel {
 	--osui-carousel-track-width: 100%;
 
-	.splide__arrow {
-		background-color: var(--color-neutral-0);
-		box-shadow: var(--shadow-xs);
-		height: 40px;
-		opacity: 1;
-		transition: opacity 150ms linear;
-		width: 40px;
-		will-change: opacity;
+	.splide {
+		&__arrow {
+			background-color: var(--color-neutral-0);
+			box-shadow: var(--shadow-xs);
+			height: 40px;
+			opacity: 1;
+			transition: opacity 150ms linear;
+			width: 40px;
+			will-change: opacity;
 
-		&[disabled] {
-			cursor: default;
-			opacity: 0.3;
-		}
+			&[disabled] {
+				cursor: default;
+				opacity: 0.3;
+			}
 
-		svg {
-			height: 14px;
-			width: 14px;
+			svg {
+				height: 14px;
+				width: 14px;
 
-			path {
-				fill: var(--color-neutral-7);
+				path {
+					fill: var(--color-neutral-7);
+				}
+			}
+
+			/* Service Studio Preview*/
+			& {
+				-servicestudio-transform: translateY(calc(-50% + 20px));
 			}
 		}
 
-		/* Service Studio Preview*/
-		& {
-			-servicestudio-transform: translateY(calc(-50% + 20px));
-		}
-	}
+		&__pagination {
+			margin: 0;
 
-	.splide__pagination {
-		margin: 0;
-
-		.splide__pagination__page {
-			&.is-active {
-				background-color: var(--color-primary);
+			&__page {
+				&.is-active {
+					background-color: var(--color-primary);
+				}
 			}
 		}
-	}
 
-	.splide__list {
-		/* To avoid flickering with multiple items and gap 0*/
-		transform-style: flat;
+		&__list {
+			/* To avoid flickering with multiple items and gap 0*/
+			transform-style: flat;
+		}
+
+		&__slide {
+			/* To avoid 1px offset render when width has decimals values*/
+			transform: translateZ(0);
+		}
+
+		&--draggable,
+		&.splide--draggable {
+			cursor: grab;
+		}
 	}
 
 	&__content {
@@ -75,13 +87,9 @@
 	}
 
 	&__track {
+		max-width: 100%;
 		width: var(--osui-carousel-track-width);
 		-servicestudio-position: relative;
-	}
-
-	.splide--draggable,
-	&.splide--draggable {
-		cursor: grab;
 	}
 
 	.list:not([data-virtualization-disabled]),
