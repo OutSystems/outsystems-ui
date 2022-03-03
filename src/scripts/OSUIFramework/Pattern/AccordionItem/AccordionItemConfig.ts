@@ -23,6 +23,12 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				case Enum.Properties.IsDisabled:
 					validatedValue = this.validateBoolean(value as boolean, false);
 					break;
+				case Enum.Properties.Icon:
+					validatedValue = this.validateString(value as string, Enum.IconType.Caret);
+					break;
+				case Enum.Properties.IconPosition:
+					validatedValue = this.validateString(value as string, GlobalEnum.Direction.Right);
+					break;
 				default:
 					validatedValue = super.validateDefault(key, value);
 					break;
