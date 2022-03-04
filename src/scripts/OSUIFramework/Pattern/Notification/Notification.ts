@@ -129,11 +129,6 @@ namespace OSUIFramework.Patterns.Notification {
 			}
 		}
 
-		// Method that triggers the OnInitialize event
-		private _triggerOnInitializeEvent(): void {
-			Helper.AsyncInvocation(this._platformEventOnInitialize.bind(this), this.widgetId);
-		}
-
 		// Method that triggers the OnToggle event
 		private _triggerOnToggleEvent(isOpen: boolean): void {
 			Helper.AsyncInvocation(this._platformEventOnToggle.bind(this), this.widgetId, isOpen);
@@ -325,6 +320,10 @@ namespace OSUIFramework.Patterns.Notification {
 			// to handle focusable element's tabindex when toggling the Notification
 			this._firstFocusableElement = this._focusableElements[0];
 			this._lastFocusableElement = this._focusableElements[this._focusableElements.length - 1];
+
+			this.setA11YProperties();
+
+			Helper.AsyncInvocation(this._platformEventOnInitialize.bind(this), this.widgetId);
 		}
 
 		/**
@@ -343,17 +342,12 @@ namespace OSUIFramework.Patterns.Notification {
 		public build(): void {
 			super.build();
 
-			this.setCallbacks();
-
-			this.setHtmlElements();
-
 			// Add timeout to make this method call asynchronous to wait for the classes of device detection
 			Helper.AsyncInvocation(this.setInitialStates.bind(this));
 
-			this.setA11YProperties();
+			this.setCallbacks();
 
-			// Trigger Notification OnInitialize event
-			this._triggerOnInitializeEvent();
+			this.setHtmlElements();
 
 			this.finishBuild();
 		}
@@ -496,19 +490,30 @@ namespace OSUIFramework.Patterns.Notification {
 		}
 
 		/**
-		 * Set callbacks for the onToggle event
+		 * Method used to register the provider callback
 		 *
-		 * @param {Callbacks.OSNotificationToggleEvent} callback
-		 * @memberof Notification
+		 * @param {string} eventName Event name that will be assigned
+		 * @param {OSUIFramework.Callbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
+		 * @memberof OSUIDropdownServerSide
 		 */
 		public registerProviderCallback(eventName: string, callback: Callbacks.OSGeneric): void {
 			switch (eventName) {
-				case Patterns.Notification.Enum.Events.OnToggle:
-					this._platformEventOnToggle = callback;
-					break;
 				case Patterns.Notification.Enum.Events.OnInitialize:
-					this._platformEventOnInitialize = callback;
+					if (this._platformEventOnInitialize === undefined) {
+						this._platformEventOnInitialize = callback;
+					}
 					break;
+
+				case Patterns.Notification.Enum.Events.OnToggle:
+					if (this._platformEventOnToggle === undefined) {
+						this._platformEventOnToggle = callback;
+					}
+					break;
+
+				default:
+					throw new Error(
+						`${ErrorCodes.Notification.FailRegisterCallback}:	The given '${eventName}' event name it's not defined.`
+					);
 			}
 		}
 
