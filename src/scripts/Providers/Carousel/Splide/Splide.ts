@@ -37,12 +37,7 @@ namespace Providers.Splide {
 			super(uniqueId, new SplideConfig(configs));
 		}
 
-		/**
-		 * Method to check if a List Widget is used inside the placeholder and assign the _listWidget variable
-		 *
-		 * @private
-		 * @memberof OSUISplide
-		 */
+		// Method to check if a List Widget is used inside the placeholder and assign the _listWidget variable
 		private _checkListWidget(): void {
 			const listElements = OutSystems.OSUI.Utils.ChildrenMatches(
 				this._carouselPlaceholderElem,
@@ -62,13 +57,7 @@ namespace Providers.Splide {
 			}
 		}
 
-		/**
-		 * Method that encapsulates all methods needed to create a new Carousel
-		 *
-		 * @private
-		 * @param {boolean} [triggerInitialize=true]
-		 * @memberof OSUISplide
-		 */
+		// Method that encapsulates all methods needed to create a new Carousel
 		private _createProviderCarousel(triggerInitialize = true): void {
 			// Call the following methods here, so that all DOM elements are iterated and ready to init the library
 			this._prepareCarouselItems();
@@ -81,23 +70,12 @@ namespace Providers.Splide {
 			this._setOnSlideMovedEvent();
 		}
 
-		/**
-		 * Method to toggle the blockRender status
-		 *
-		 * @private
-		 * @memberof OSUISplide
-		 */
+		// Method to toggle the blockRender status, to avoid multiple renderings triggering changeProperty
 		private _disableBlockRender(): void {
 			this._blockRender = false;
 		}
 
-		/**
-		 * Method to init the provider
-		 *
-		 * @private
-		 * @param {boolean} [triggerInitialize=true]
-		 * @memberof OSUISplide
-		 */
+		// Method to init the provider
 		private _initProvider(triggerInitialize = true): void {
 			this._provider = new window.Splide(this._carouselProviderElem, this._providerOptions);
 
@@ -112,12 +90,7 @@ namespace Providers.Splide {
 			this._setCarouselWidth();
 		}
 
-		/**
-		 * Method to add the splide__slide class on each carousel item
-		 *
-		 * @private
-		 * @memberof OSUISplide
-		 */
+		// Method to add the splide__slide class on each carousel item
 		private _prepareCarouselItems(): void {
 			// Define the element that has the items. The List widget if dynamic content, otherwise get from the placeholder directly
 			const targetList = this._hasList ? this._carouselListWidgetElem : this._carouselPlaceholderElem;
@@ -130,12 +103,7 @@ namespace Providers.Splide {
 			}
 		}
 
-		/**
-		 * Ensure that the splide track maintains the correct width
-		 *
-		 * @private
-		 * @memberof OSUISplide
-		 */
+		// Ensure that the splide track maintains the correct width
 		private _setCarouselWidth(): void {
 			// Update UI on window resize
 			this.provider.refresh();
@@ -148,24 +116,14 @@ namespace Providers.Splide {
 			);
 		}
 
-		/**
-		 * Method to set the OnInitializeEvent
-		 *
-		 * @private
-		 * @memberof OSUISplide
-		 */
+		// Method to set the OnInitializeEvent
 		private _setOnInitializedEvent(): void {
 			this._provider.on(Enum.SpliderEvents.Mounted, () => {
 				OSUIFramework.Helper.AsyncInvocation(this._platformEventInitialized, this.widgetId);
 			});
 		}
 
-		/**
-		 * Method to set the OnSlideMoved event
-		 *
-		 * @private
-		 * @memberof OSUISplide
-		 */
+		// Method to set the OnSlideMoved event
 		private _setOnSlideMovedEvent(): void {
 			this._provider.on(Enum.SpliderEvents.Moved, (index) => {
 				if (index !== this._currentIndex) {
