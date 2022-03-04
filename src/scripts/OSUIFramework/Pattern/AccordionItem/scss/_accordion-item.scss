@@ -40,7 +40,13 @@
 				font-weight: var(--font-semi-bold);
 
 				> .osui-accordion-item__icon {
-					transform: rotate(180deg);
+					&--caret {
+						transform: rotate(180deg);
+					}
+
+					&--plus-minus:after {
+						transform: rotate(90deg);
+					}
 				}
 			}
 
@@ -92,21 +98,55 @@
 		&--is-left {
 			flex-direction: row-reverse;
 
-			.osui-accordion-item__title__placeholder {
-				padding-left: var(--space-s);
+			.osui-accordion-item {
+				&__title__placeholder {
+					padding-left: var(--space-s);
+				}
 			}
 		}
 	}
 
 	&__icon {
+		align-items: center;
 		color: var(--color-primary);
+		display: flex;
 		font-family: FontAwesome;
 		font-size: var(--font-size-h4);
 		font-weight: var(--font-regular);
+		height: 16px;
+		justify-content: center;
 		transition: all 300ms ease-in-out;
+		width: 16px;
 
-		&:after {
-			content: '\f107';
+		&--caret {
+			&:after {
+				content: '\f107';
+			}
+		}
+
+		&--plus-minus {
+			&:after {
+				background-color: var(--color-primary);
+				content: ' ';
+				height: 100%;
+				transition: transform 300ms ease-in-out;
+				width: 2px;
+			}
+
+			&:before {
+				background-color: var(--color-primary);
+				content: ' ';
+				height: 2px;
+				position: absolute;
+				width: 16px;
+			}
+		}
+
+		&--hidden {
+			-servicestudio-display: none;
+			-servicestudio-height: 0;
+			-servicestudio-width: 0;
+			-servicestudio-z-index: -1;
 		}
 	}
 
