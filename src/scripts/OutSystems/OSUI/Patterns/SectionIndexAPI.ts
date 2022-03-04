@@ -11,10 +11,24 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ChangeProperty(sectionIndexId: string, propertyName: string, propertyValue: any): void {
+	export function ChangeProperty(sectionIndexId: string, propertyName: string, propertyValue: any): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const _sectionIndexItem = GetSectionIndexById(sectionIndexId);
 
-		_sectionIndexItem.changeProperty(propertyName, propertyValue);
+		try {
+			_sectionIndexItem.changeProperty(propertyName, propertyValue);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.SectionIndex.FailChangeProperty;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -27,11 +41,7 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 	 */
 	export function Create(sectionIndexId: string, configs: string): OSUIFramework.Patterns.SectionIndex.ISectionIndex {
 		if (_sectionIndexItemsMap.has(sectionIndexId)) {
-			/* TODO (by CreateNewPattern): 
-				The line below is created by the CreateNewPattern mechanism, that is not able to replace values
-				as expected, that said, check other patterns to understand how to replace it!
-			*/
-			throw new Error('There is already an SectionIndex registered under id: ' + sectionIndexId);
+			throw new Error(`There is already an SectionIndex registered under id: ${sectionIndexId}`);
 		}
 
 		const _sectionIndexItem = new OSUIFramework.Patterns.SectionIndex.SectionIndex(
@@ -50,12 +60,26 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 	 * @export
 	 * @param {string} sectionIndexId
 	 */
-	export function Dispose(sectionIndexId: string): void {
+	export function Dispose(sectionIndexId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const _sectionIndexItem = GetSectionIndexById(sectionIndexId);
 
-		_sectionIndexItem.dispose();
+		try {
+			_sectionIndexItem.dispose();
 
-		_sectionIndexItemsMap.delete(_sectionIndexItem.uniqueId);
+			_sectionIndexItemsMap.delete(_sectionIndexItem.uniqueId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.SectionIndex.FailDispose;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -77,7 +101,7 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 	 */
 	export function GetSectionIndexById(sectionIndexId: string): OSUIFramework.Patterns.SectionIndex.ISectionIndex {
 		return OSUIFramework.Helper.MapOperation.FindInMap(
-			'SectionIndex',
+			OSUIFramework.GlobalEnum.PatternsNames.SectionIndex,
 			sectionIndexId,
 			_sectionIndexItemsMap
 		) as OSUIFramework.Patterns.SectionIndex.ISectionIndex;

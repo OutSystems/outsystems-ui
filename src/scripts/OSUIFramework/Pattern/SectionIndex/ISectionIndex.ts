@@ -7,8 +7,7 @@ namespace OSUIFramework.Patterns.SectionIndex {
 	 * @interface ISectionIndex
 	 * @extends {Interface.IPattern}
 	 */
-	export interface ISectionIndex extends Interface.IPattern {
-		addSectionIndexItem(uniqueId: string, sectionIndexItem: SectionIndexItem.ISectionIndexItem);
+	export interface ISectionIndex extends Interface.IParent {
 		setActiveElement(targetElement: Patterns.SectionIndexItem.ISectionIndexItem);
 	}
 }

@@ -5,9 +5,9 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 	 *
 	 * @export
 	 * @interface ISectionIndexItem
-	 * @extends {Interface.IPattern}
+	 * @extends {Interface.IChild}
 	 */
-	export interface ISectionIndexItem extends Interface.IPattern {
+	export interface ISectionIndexItem extends Interface.IChild {
 		sectionIndexItemTargetId: string;
 		removeActiveElement();
 		setActiveElement();

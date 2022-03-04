@@ -5,12 +5,15 @@ namespace OSUIFramework.Patterns.SectionIndex {
 	 *
 	 * @export
 	 * @class SectionIndex
-	 * @extends {AbstractPattern<SectionIndexConfig>}
+	 * @extends {AbstractPattern<SectionIndexConfig, SectionIndexItem.ISectionIndexItem>}
 	 * @implements {ISectionIndex}
 	 */
-	export class SectionIndex extends AbstractPattern<SectionIndexConfig> implements ISectionIndex {
+	export class SectionIndex<C extends SectionIndexConfig>
+		extends AbstractParent<SectionIndexConfig, SectionIndexItem.ISectionIndexItem>
+		implements ISectionIndex
+	{
 		// Store the current sectionIndexItem active
-		private _activeSectionIndexItem: Patterns.SectionIndexItem.ISectionIndexItem;
+		private _activeSectionIndexItem: SectionIndexItem.ISectionIndexItem;
 		// Store the content padding
 		private _contentPaddingTop: number;
 		// Store the header height
@@ -19,12 +22,63 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		private _isUnsupportedBrowser: boolean;
 		// Store the distance between the window top and the content
 		private _offset: number;
-		// Store the SectionIndex Items of this SectionIndex
-		private _sectionIndexItems: Map<string, Patterns.SectionIndexItem.ISectionIndexItem>;
 
-		constructor(uniqueId: string, configs: JSON) {
-			super(uniqueId, new SectionIndexConfig(configs));
-			this._sectionIndexItems = new Map<string, Patterns.SectionIndexItem.ISectionIndexItem>();
+		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
+		constructor(uniqueId: string, configs: C) {
+			super(uniqueId, configs);
+		}
+
+		/**
+		 * Method to add Item to the list
+		 *
+		 * @param {string} uniqueId
+		 * @param {SectionIndexItem.ISectionIndexItem} sectionIndexItem
+		 * @memberof SectionIndex
+		 */
+		private _addSectionIndexItem(optionItemId: string): void {
+			// Get the DropdownOptionItem reference
+			const optionItem = OutSystems.OSUI.Patterns.SectionIndexItemAPI.GetSectionIndexItemById(optionItemId);
+
+			if (this.getChild(optionItemId)) {
+				throw new Error(
+					`${ErrorCodes.SectionIndex.FailSetNewOptionItem}: There is already a ${GlobalEnum.PatternsNames.SectionIndexItem} under Id: '${optionItem.widgetId}' added to ${GlobalEnum.PatternsNames.SectionIndex} with uniqueId: ${this.uniqueId}.`
+				);
+			} else {
+				// Store DropDownOption Item
+				this.setChild(optionItemId, optionItem);
+			}
+			// In case the accordion is built, it means we're adding an item dynamically, after it's first setup.
+			if (this.isBuilt) {
+				//Recalculate positions in the array.
+				this._setUpSectionIndex();
+			}
+		}
+
+		// Method to deal with the click at a DropdpownOptionItem
+		private _optionItemHasBeenClicked(optionItemId: string): void {
+			const childReference = this.getChild(optionItemId);
+			// Check if the given OptionId exist at optionsList
+			if (childReference) {
+				// Check if Dropdown must close!
+				this.setActiveElement(childReference);
+			} else {
+				throw new Error(
+					`${ErrorCodes.SectionIndex.FailOptionItemClicked}: The ${GlobalEnum.PatternsNames.SectionIndexItem} under uniqueId: '${optionItemId}' does not exist as an OptionItem from ${GlobalEnum.PatternsNames.SectionIndex} with Id: ${this.widgetId}.`
+				);
+			}
+		}
+
+		// Method used to remove a given SectionIndexItem from optionItems list, it's triggered by SectionIndexItem
+		private _removeSectionIndexItem(optionItemId: string): void {
+			// Check if the given OptionId exist at optionsList
+			if (this.getChild(optionItemId)) {
+				// Remove item
+				this.unsetChild(optionItemId);
+			} else {
+				throw new Error(
+					`${ErrorCodes.SectionIndex.FailUnsetNewOptionItem}: The ${GlobalEnum.PatternsNames.SectionIndexItem} under uniqueId: '${optionItemId}' does not exist as an OptionItem from ${GlobalEnum.PatternsNames.SectionIndex} with Id: ${this.widgetId}.`
+				);
+			}
 		}
 
 		/**
@@ -74,19 +128,30 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		}
 
 		/**
-		 * Method to add Item to the list
+		 * Method used to be notified by a given dropdownOptionId about a given action and act accordingly
 		 *
-		 * @param {string} uniqueId
-		 * @param {SectionIndexItem.ISectionIndexItem} sectionIndexItem
-		 * @memberof SectionIndex
+		 * @param childId Dropdown Option Item Id to be stored
+		 * @param notifiedTo {Enum.ChildNotifyActionType} triggered notification type
+		 * @memberof OSUIDropdownServerSide
 		 */
-		public addSectionIndexItem(uniqueId: string, sectionIndexItem: SectionIndexItem.ISectionIndexItem): void {
-			this._sectionIndexItems.set(uniqueId, sectionIndexItem);
-
-			// In case the accordion is built, it means we're adding an item dynamically, after it's first setup.
-			if (this.isBuilt) {
-				//Recalculate positions in the array.
-				this._setUpSectionIndex();
+		public beNotifiedByChild(childId: string, notifiedTo: Enum.ChildNotifyActionType): void {
+			switch (notifiedTo) {
+				case Enum.ChildNotifyActionType.Add:
+					this._addSectionIndexItem(childId);
+					break;
+				case Enum.ChildNotifyActionType.Click:
+					this._optionItemHasBeenClicked(childId);
+					break;
+				case Enum.ChildNotifyActionType.KeyPressed:
+					//this._optionItemKeyPressed(childId);
+					break;
+				case Enum.ChildNotifyActionType.Removed:
+					this._removeSectionIndexItem(childId);
+					break;
+				default:
+					throw new Error(
+						`${ErrorCodes.SectionIndex.FailToSetOptionItemAction}: There no exist a '${notifiedTo}' notification type.`
+					);
 			}
 		}
 
@@ -112,7 +177,6 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
-
 			if (this.isBuilt) {
 				switch (propertyName) {
 					case Enum.Properties.IsFixed:
@@ -153,6 +217,18 @@ namespace OSUIFramework.Patterns.SectionIndex {
 				targetElement.setActiveElement();
 				this._activeSectionIndexItem = targetElement;
 			}
+		}
+
+		/**
+		 * This method has no implementation on this context.
+		 *
+		 * @memberof OSUIDropdownServerSide
+		 */
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		public validation(isValid: boolean, validationMessage: string): void {
+			throw new Error(
+				`${ErrorCodes.SectionIndex.HasNoImplementation.code}:	${ErrorCodes.SectionIndex.HasNoImplementation.message}`
+			);
 		}
 	}
 }

@@ -8,35 +8,22 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 	 * @extends {AbstractPattern<SectionIndexItemConfig>}
 	 * @implements {ISectionIndexItem}
 	 */
-	export class SectionIndexItem extends AbstractPattern<SectionIndexItemConfig> implements ISectionIndexItem {
+
+	export class SectionIndexItem
+		extends AbstractChild<SectionIndexItemConfig, SectionIndex.ISectionIndex>
+		implements ISectionIndexItem
+	{
 		// Store the on click event
-		private _eventOnSectionIndexItemClick: Callbacks.Generic;
+		private _eventOnClick: Callbacks.Generic;
+		//Stores the keyboard callback function
+		private _eventOnkeyBoardPress: Callbacks.Generic;
 		// Store if this is the current active item
 		private _isActive = false;
-		//Stores the keyboard callback function
-		private _keyBoardCallback: Callbacks.Generic;
-		// Stores the parent of the item (if it exists)
-		private _sectionIndexItemParent: Patterns.SectionIndex.ISectionIndex;
 		// Stores the Target element Id of this item
 		public sectionIndexItemTargetId: string;
 
-		constructor(uniqueId: string, configs: JSON, sectionIndex?: Patterns.SectionIndex.ISectionIndex) {
+		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SectionIndexItemConfig(configs));
-			this._sectionIndexItemParent = sectionIndex;
-		}
-
-		/**
-		 * Method to handle the click event
-		 *
-		 * @private
-		 * @param {Event} event
-		 * @memberof SectionIndexItem
-		 */
-		private _handleClickEvent(event: Event): void {
-			event.preventDefault();
-			event.stopPropagation();
-
-			this._sectionIndexItemParent.setActiveElement(this);
 		}
 
 		/**
@@ -46,11 +33,39 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		 * @param {KeyboardEvent} event
 		 * @memberof SectionIndexItem
 		 */
-		private _handleOnKeyboardPress(event: KeyboardEvent): void {
-			//If esc, Close AccordionItem
-			if (event.key === GlobalEnum.Keycodes.Space || event.key === GlobalEnum.Keycodes.Enter) {
-				this._handleClickEvent(event);
+		private _onKeyboardPressed(event: KeyboardEvent): void {
+			event.preventDefault();
+			event.stopPropagation();
+
+			switch (event.key) {
+				// If Enter or Space Keys trigger as a click event!
+				case GlobalEnum.Keycodes.Enter:
+				case GlobalEnum.Keycodes.Space:
+					// Triggered as it was clicked!
+					this._onSelected(event);
+					break;
 			}
+		}
+
+		/**
+		 * Method to handle the click event
+		 *
+		 * @private
+		 * @param {Event} event
+		 * @memberof SectionIndexItem
+		 */
+		private _onSelected(event: Event): void {
+			event.preventDefault();
+			event.stopPropagation();
+
+			// Notify parent about this Option Click
+			this.notifyParent(Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.Click);
+		}
+
+		// Remove Pattern Events
+		private _removeEvents(): void {
+			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
 		}
 
 		/**
@@ -60,8 +75,8 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		 * @memberof SectionIndexItem
 		 */
 		private _setUpEvents(): void {
-			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnSectionIndexItemClick);
-			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._keyBoardCallback);
+			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
 		}
 
 		/**
@@ -71,8 +86,8 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		 * @memberof SectionIndexItem
 		 */
 		protected setCallbacks(): void {
-			this._eventOnSectionIndexItemClick = this._handleClickEvent.bind(this);
-			this._keyBoardCallback = this._handleOnKeyboardPress.bind(this);
+			this._eventOnClick = this._onSelected.bind(this);
+			this._eventOnkeyBoardPress = this._onKeyboardPressed.bind(this);
 		}
 
 		/**
@@ -94,6 +109,14 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		 */
 		public build(): void {
 			super.build();
+
+			this.setParent(
+				Constants.Dot + SectionIndex.Enum.CssClass.Pattern,
+				OutSystems.OSUI.Patterns.SectionIndexAPI.GetSectionIndexById
+			);
+
+			// Notify parent about a new instance of this child has been created!
+			this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Add);
 
 			this.setUpSectionItemIndex();
 
@@ -129,6 +152,11 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		 * @memberof SectionIndexItem
 		 */
 		public dispose(): void {
+			this._removeEvents();
+
+			// Notify parent about this instance will be destroyed
+			this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Removed);
+
 			//Destroying the base of pattern
 			super.dispose();
 		}

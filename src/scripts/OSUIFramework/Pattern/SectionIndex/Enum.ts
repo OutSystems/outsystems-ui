@@ -1,6 +1,16 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.SectionIndex.Enum {
 	/**
+	 * Communication between Patterns - Notification Type
+	 */
+	export enum ChildNotifyActionType {
+		Add = 'add',
+		Click = 'click',
+		KeyPressed = 'keyPressed',
+		Removed = 'removed',
+	}
+
+	/**
 	 * SectionIndex Enum properties
 	 */
 	export enum Properties {

@@ -1,7 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.SectionIndexItemAPI {
-	const _sectionIndexMap = new Map<string, string>(); //sectionIndexItem.uniqueId -> SectionIndex.uniqueId
-	const _sectionIndexItemItemsMap = new Map<string, OSUIFramework.Patterns.SectionIndexItem.ISectionIndexItem>(); //SectionIndexItem.uniqueId -> SectionIndexItem obj
+	const _sectionIndexItemMap = new Map<string, OSUIFramework.Patterns.SectionIndexItem.ISectionIndexItem>(); //SectionIndexItem.uniqueId -> SectionIndexItem obj
 
 	/**
 	 * Function that will change the property of a given SectionIndexItem Id.
@@ -13,9 +12,9 @@ namespace OutSystems.OSUI.Patterns.SectionIndexItemAPI {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 	export function ChangeProperty(sectionIndexItemId: string, propertyName: string, propertyValue: any): void {
-		const _sectionIndexItemItem = GetSectionIndexItemItemById(sectionIndexItemId);
+		const _sectionIndexItem = GetSectionIndexItemById(sectionIndexItemId);
 
-		_sectionIndexItemItem.changeProperty(propertyName, propertyValue);
+		_sectionIndexItem.changeProperty(propertyName, propertyValue);
 	}
 
 	/**
@@ -30,31 +29,22 @@ namespace OutSystems.OSUI.Patterns.SectionIndexItemAPI {
 		sectionIndexItemId: string,
 		configs: string
 	): OSUIFramework.Patterns.SectionIndexItem.ISectionIndexItem {
-		if (_sectionIndexItemItemsMap.has(sectionIndexItemId)) {
+		if (_sectionIndexItemMap.has(sectionIndexItemId)) {
 			/* TODO (by CreateNewPattern): 
 				The line below is created by the CreateNewPattern mechanism, that is not able to replace values
 				as expected, that said, check other patterns to understand how to replace it!
 			*/
-			throw new Error('There is already an SectionIndexItem registered under id: ' + sectionIndexItemId);
+			throw new Error('There is already a SectionIndexItem registered under id: ' + sectionIndexItemId);
 		}
 
-		const sectionIndex = GetSectionIndexByItem(sectionIndexItemId);
-
-		const _sectionIndexItemItem = new OSUIFramework.Patterns.SectionIndexItem.SectionIndexItem(
+		const _sectionIndexItem = new OSUIFramework.Patterns.SectionIndexItem.SectionIndexItem(
 			sectionIndexItemId,
-			JSON.parse(configs),
-			sectionIndex
+			JSON.parse(configs)
 		);
 
-		_sectionIndexItemItemsMap.set(sectionIndexItemId, _sectionIndexItemItem);
-		_sectionIndexItemItem.build();
+		_sectionIndexItemMap.set(sectionIndexItemId, _sectionIndexItem);
 
-		if (sectionIndex !== undefined) {
-			_sectionIndexMap.set(sectionIndexItemId, sectionIndex.uniqueId);
-			sectionIndex.addSectionIndexItem(_sectionIndexItemItem.uniqueId, _sectionIndexItemItem);
-		}
-
-		return _sectionIndexItemItem;
+		return _sectionIndexItem;
 	}
 
 	/**
@@ -64,11 +54,11 @@ namespace OutSystems.OSUI.Patterns.SectionIndexItemAPI {
 	 * @param {string} sectionIndexItemId
 	 */
 	export function Dispose(sectionIndexItemId: string): void {
-		const _sectionIndexItemItem = GetSectionIndexItemItemById(sectionIndexItemId);
+		const _sectionIndexItemItem = GetSectionIndexItemById(sectionIndexItemId);
 
 		_sectionIndexItemItem.dispose();
 
-		_sectionIndexItemItemsMap.delete(_sectionIndexItemItem.uniqueId);
+		_sectionIndexItemMap.delete(_sectionIndexItemItem.uniqueId);
 	}
 
 	/**
@@ -78,35 +68,7 @@ namespace OutSystems.OSUI.Patterns.SectionIndexItemAPI {
 	 * @return {*}  Array<string>
 	 */
 	export function GetAllSectionIndexItemItemsMap(): Array<string> {
-		return OSUIFramework.Helper.MapOperation.ExportKeys(_sectionIndexItemItemsMap);
-	}
-
-	/**
-	 * Gets the Accordion pattern the Item belongs to
-	 *
-	 * @return {*}  {Map<string, OSUIFramework.Patterns.SectionIndex.ISectionIndex>}
-	 */
-	export function GetSectionIndexByItem(
-		sectionIndexItemId: string
-	): OSUIFramework.Patterns.SectionIndex.ISectionIndex {
-		let sectionIndex: OSUIFramework.Patterns.SectionIndex.ISectionIndex;
-
-		if (_sectionIndexMap.has(sectionIndexItemId)) {
-			sectionIndex = SectionIndexAPI.GetSectionIndexById(_sectionIndexMap.get(sectionIndexItemId));
-		} else {
-			// Try to find the sectionIndex reference on DOM
-			const elem = OSUIFramework.Helper.Dom.GetElementByUniqueId(sectionIndexItemId);
-			const sectionIndexElem = elem.closest(
-				OSUIFramework.Constants.Dot + OSUIFramework.Patterns.SectionIndex.Enum.CssClass.Pattern
-			);
-			if (sectionIndexElem) {
-				const uniqueId = sectionIndexElem.getAttribute('name');
-				sectionIndex = SectionIndexAPI.GetSectionIndexById(uniqueId);
-			}
-			// Else, it's a 'free' sectionIndex item, no sectionIndex as parent
-		}
-
-		return sectionIndex;
+		return OSUIFramework.Helper.MapOperation.ExportKeys(_sectionIndexItemMap);
 	}
 
 	/**
@@ -116,13 +78,46 @@ namespace OutSystems.OSUI.Patterns.SectionIndexItemAPI {
 	 * @param {string} sectionIndexItemId ID of the SectionIndexItem that will be looked for.
 	 * @return {*}  {OSUIFramework.Patterns.SectionIndexItem.ISectionIndexItem;}
 	 */
-	export function GetSectionIndexItemItemById(
+	export function GetSectionIndexItemById(
 		sectionIndexItemId: string
 	): OSUIFramework.Patterns.SectionIndexItem.ISectionIndexItem {
 		return OSUIFramework.Helper.MapOperation.FindInMap(
 			'SectionIndexItem',
 			sectionIndexItemId,
-			_sectionIndexItemItemsMap
+			_sectionIndexItemMap
 		) as OSUIFramework.Patterns.SectionIndexItem.ISectionIndexItem;
+	}
+
+	/**
+	 * Function that will initialize the pattern instance.
+	 *
+	 * @export
+	 * @param {string} sectionIndexItemId ID of the SectionIndexItem that will be initialized.
+	 * @return {*}  {OSUIFramework.Patterns.SectionIndexItem.ISectionIndexItem}
+	 */
+	export function Initialize(sectionIndexItemId: string): OSUIFramework.Patterns.SectionIndexItem.ISectionIndexItem {
+		const _sectionIndexItem = GetSectionIndexItemById(sectionIndexItemId);
+
+		_sectionIndexItem.build();
+
+		return _sectionIndexItem;
+	}
+
+	/**
+	 * Function to register a provider callback
+	 *
+	 * @export
+	 * @param {string} sectionIndexItemId
+	 * @param {string} eventName
+	 * @param {OSUIFramework.Callbacks.OSGeneric} callback
+	 */
+	export function RegisterCallback(
+		sectionIndexItemId: string,
+		eventName: string,
+		callback: OSUIFramework.Callbacks.OSGeneric
+	): void {
+		const _sectionIndexItem = this.GetSectionIndexItemById(sectionIndexItemId);
+
+		_sectionIndexItem.registerCallback(eventName, callback);
 	}
 }

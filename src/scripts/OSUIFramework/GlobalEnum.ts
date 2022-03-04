@@ -190,6 +190,7 @@ namespace OSUIFramework.GlobalEnum {
 		Rating = 'Rating',
 		Search = 'Search',
 		SectionIndex = 'Section Index',
+		SectionIndexItem = 'Section Index Item',
 		Sidebar = 'Sidebar',
 		Submenu = 'Submenu',
 		SwipeEvents = 'SwipeEvents',
