@@ -65,9 +65,6 @@ namespace Providers.Splide {
 
 			// Init the Library
 			this._initProvider(triggerInitialize);
-
-			// Set the OnSlideMoved event
-			this._setOnSlideMovedEvent();
 		}
 
 		// Method to toggle the blockRender status, to avoid multiple renderings triggering changeProperty
@@ -85,6 +82,9 @@ namespace Providers.Splide {
 			}
 			// Init the provider
 			this._provider.mount();
+
+			// Set the OnSlideMoved event
+			this._setOnSlideMovedEvent();
 
 			// Set initial carousel width
 			this._setCarouselWidth();
@@ -155,11 +155,13 @@ namespace Providers.Splide {
 		 * @memberof OSUISplide
 		 */
 		protected setHtmlElements(): void {
-			this._carouselPlaceholderElem = this._selfElem.querySelector(
-				OSUIFramework.Constants.Dot + OSUIFramework.Patterns.Carousel.Enum.CssClass.Content
+			this._carouselPlaceholderElem = OSUIFramework.Helper.Dom.ClassSelector(
+				this._selfElem,
+				OSUIFramework.Patterns.Carousel.Enum.CssClass.Content
 			);
-			this._carouselTrackElem = this._selfElem.querySelector(
-				OSUIFramework.Constants.Dot + OSUIFramework.Patterns.Carousel.Enum.CssClass.Track
+			this._carouselTrackElem = OSUIFramework.Helper.Dom.ClassSelector(
+				this._selfElem,
+				OSUIFramework.Patterns.Carousel.Enum.CssClass.Track
 			);
 		}
 
@@ -332,7 +334,7 @@ namespace Providers.Splide {
 				case OSUIFramework.Patterns.Carousel.Enum.CarouselEvents.OnSlideMoved:
 					this._platformEventOnSlideMoved = callback;
 					break;
-				case OSUIFramework.Patterns.Carousel.Enum.CarouselEvents.OnInitialize:
+				case OSUIFramework.Patterns.Carousel.Enum.CarouselEvents.Initialized:
 					this._platformEventInitialized = callback;
 					break;
 			}
