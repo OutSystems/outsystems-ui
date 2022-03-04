@@ -22,8 +22,8 @@ namespace OSUIFramework.Patterns.Notification.Enum {
 	 * Notification default properties
 	 */
 	export enum Defaults {
-		DefaultWidth = '370px',
 		DefaultPosition = 'top',
+		DefaultWidth = '370px',
 	}
 
 	/**
@@ -37,10 +37,11 @@ namespace OSUIFramework.Patterns.Notification.Enum {
 	 * Notification Enum properties
 	 */
 	export enum Properties {
-		StartsOpen = 'StartsOpen',
-		Position = 'Position',
-		Width = 'Width',
-		CloseAfterTime = 'CloseAfterTime',
 		ClickToClose = 'ClickToClose',
+		CloseAfterTime = 'CloseAfterTime',
+		NeedsSwipes = 'NeedsSwipes',
+		Position = 'Position',
+		StartsOpen = 'StartsOpen',
+		Width = 'Width',
 	}
 }

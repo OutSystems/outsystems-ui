@@ -17,8 +17,7 @@ namespace OSUIFramework.Patterns.Notification {
 		private _platformEventOnInitialize: Callbacks.OSNotificationInitializedEvent;
 		private _platformEventOnToggle: Callbacks.OSNotificationToggleEvent;
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		constructor(uniqueId: string, configs: any) {
+		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new NotificationConfig(configs));
 
 			// Set the pattern default values if is empty
@@ -59,7 +58,7 @@ namespace OSUIFramework.Patterns.Notification {
 		 * Call methods to open or close, based ok e.key and behavior applied
 		 *
 		 * @private
-		 * @param {KeyboardEvent} e
+		 * @param {KeyboardEvent}
 		 * @memberof Notification
 		 */
 		private _keypressCallback(e: KeyboardEvent): void {
@@ -98,21 +97,6 @@ namespace OSUIFramework.Patterns.Notification {
 		}
 
 		/**
-		 * Prevent close notification based on a uniqueID validation, when his event is triggered
-		 *
-		 * @private
-		 * @param {string} elementId
-		 * @memberof Notification
-		 */
-		private _openCallback(elementId: string): void {
-			if (elementId !== this.uniqueId) {
-				if (this._isOpen) {
-					this.hide();
-				}
-			}
-		}
-
-		/**
 		 * Toggle visibility of Notification
 		 *
 		 * @private
@@ -131,7 +115,7 @@ namespace OSUIFramework.Patterns.Notification {
 
 		// Method that triggers the OnToggle event
 		private _triggerOnToggleEvent(isOpen: boolean): void {
-			Helper.AsyncInvocation(this._platformEventOnToggle.bind(this), this.widgetId, isOpen);
+			Helper.AsyncInvocation(this._platformEventOnToggle, this.widgetId, isOpen);
 		}
 
 		/**
@@ -161,17 +145,6 @@ namespace OSUIFramework.Patterns.Notification {
 			for (const item of this._focusableElements) {
 				setA11YtabIndex(item);
 			}
-		}
-
-		/**
-		 * Update click to close
-		 *
-		 * @private
-		 * @param {boolean} clickToClose
-		 * @memberof Notification
-		 */
-		private _updateClickToClose(clickToClose: boolean): void {
-			this.configs.ClickToClose = clickToClose;
 		}
 
 		/**
@@ -221,6 +194,23 @@ namespace OSUIFramework.Patterns.Notification {
 		}
 
 		/**
+		 * Sets the A11Y properties when the pattern is built.
+		 *
+		 * @protected
+		 * @memberof Notification
+		 */
+		protected setA11YProperties(): void {
+			Helper.Dom.Attribute.Set(
+				this._notificationContentElement,
+				Constants.A11YAttributes.Role.AttrName,
+				Constants.A11YAttributes.Role.Alert
+			);
+
+			// Update accessibility properties
+			this._updateA11yProperties();
+		}
+
+		/**
 		 *  Sets the callbacks to be used in the pattern.
 		 *
 		 * @protected
@@ -232,14 +222,34 @@ namespace OSUIFramework.Patterns.Notification {
 		}
 
 		/**
+		 * Set the html references that will be used to manage the cssClasses and atribute properties
+		 *
+		 * @protected
+		 * @memberof Notification
+		 */
+		protected setHtmlElements(): void {
+			this._notificationContentElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternContent);
+
+			this._focusableElements = [...this._selfElem.querySelectorAll(Constants.FocusableElems)] as HTMLElement[];
+
+			// to handle focusable element's tabindex when toggling the Notification
+			this._firstFocusableElement = this._focusableElements[0];
+			this._lastFocusableElement = this._focusableElements[this._focusableElements.length - 1];
+
+			this.setA11YProperties();
+
+			Helper.AsyncInvocation(this._platformEventOnInitialize, this.widgetId);
+		}
+
+		/**
 		 * Set the cssClasses that should be assigned to the element on it's initialization
 		 *
 		 * @protected
 		 * @memberof Notification
 		 */
 		protected setInitialStates(): void {
-			// Set event type based on device
-			if (Helper.DeviceInfo.GetOperatingSystem()) {
+			// Set event if device is touch
+			if (Helper.DeviceInfo.IsTouch) {
 				this._eventType = GlobalEnum.HTMLEvent.TouchStart;
 			} else {
 				this._eventType = GlobalEnum.HTMLEvent.Click;
@@ -290,53 +300,18 @@ namespace OSUIFramework.Patterns.Notification {
 		}
 
 		/**
-		 * Sets the A11Y properties when the pattern is built.
-		 *
-		 * @protected
-		 * @memberof Notification
-		 */
-		protected setA11YProperties(): void {
-			Helper.Dom.Attribute.Set(
-				this._notificationContentElement,
-				Constants.A11YAttributes.Role.AttrName,
-				Constants.A11YAttributes.Role.Alert
-			);
-
-			// Update accessibility properties
-			this._updateA11yProperties();
-		}
-
-		/**
-		 * Set the html references that will be used to manage the cssClasses and atribute properties
-		 *
-		 * @protected
-		 * @memberof Notification
-		 */
-		protected setHtmlElements(): void {
-			this._notificationContentElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternContent);
-
-			this._focusableElements = [...this._selfElem.querySelectorAll(Constants.FocusableElems)] as HTMLElement[];
-
-			// to handle focusable element's tabindex when toggling the Notification
-			this._firstFocusableElement = this._focusableElements[0];
-			this._lastFocusableElement = this._focusableElements[this._focusableElements.length - 1];
-
-			this.setA11YProperties();
-
-			Helper.AsyncInvocation(this._platformEventOnInitialize.bind(this), this.widgetId);
-		}
-
-		/**
 		 * Reassign the HTML elements to undefined, preventing memory leaks
 		 *
 		 * @protected
 		 * @memberof Notification
 		 */
 		protected unsetHtmlElements(): void {
-			this._notificationContentElement = undefined;
-			this._focusableElements = undefined;
 			this._firstFocusableElement = undefined;
+			this._focusableElements = undefined;
 			this._lastFocusableElement = undefined;
+			this._notificationContentElement = undefined;
+			this._platformEventOnInitialize = undefined;
+			this._platformEventOnToggle = undefined;
 		}
 
 		public build(): void {
@@ -368,7 +343,7 @@ namespace OSUIFramework.Patterns.Notification {
 				// Check which property changed and call respective method to update it
 				switch (propertyName) {
 					case Enum.Properties.ClickToClose:
-						this._updateClickToClose(propertyValue);
+						this.configs.ClickToClose = propertyValue;
 						break;
 					case Enum.Properties.CloseAfterTime:
 						this._updateCloseAfterTime(propertyValue);

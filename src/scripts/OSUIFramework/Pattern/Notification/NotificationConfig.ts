@@ -12,5 +12,46 @@ namespace OSUIFramework.Patterns.Notification {
 		constructor(config: any) {
 			super(config);
 		}
+
+		/**
+		 * Override, Validate configs key values
+		 *
+		 * @param {string} key
+		 * @param {unknown} value
+		 * @return {*}  {unknown}
+		 * @memberof AbstractDropdownServerSideItemConfig
+		 */
+		public validateDefault(key: string, value: unknown): unknown {
+			let validatedValue = undefined;
+
+			switch (key) {
+				case Enum.Properties.ClickToClose:
+					validatedValue = this.validateBoolean(value as boolean, true);
+					break;
+
+				case Enum.Properties.NeedsSwipes:
+				case Enum.Properties.StartsOpen:
+					validatedValue = this.validateBoolean(value as boolean, false);
+					break;
+
+				case Enum.Properties.Position:
+					validatedValue = this.validateString(value as string, Enum.Defaults.DefaultPosition);
+					break;
+
+				case Enum.Properties.Width:
+					validatedValue = this.validateString(value as string, Enum.Defaults.DefaultWidth);
+					break;
+
+				case Enum.Properties.CloseAfterTime:
+					validatedValue = this.validateNumber(value as number, undefined);
+					break;
+
+				default:
+					validatedValue = super.validateDefault(key, value);
+					break;
+			}
+
+			return validatedValue;
+		}
 	}
 }
