@@ -14,6 +14,7 @@ namespace OSUIFramework.Patterns.Notification {
 		private _isOpen: boolean;
 		private _lastFocusableElement: HTMLElement;
 		private _notificationContentElement: HTMLElement;
+		private _platformEventOnInitialize: Callbacks.OSNotificationInitializedEvent;
 		private _platformEventOnToggle: Callbacks.OSNotificationToggleEvent;
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
@@ -126,6 +127,11 @@ namespace OSUIFramework.Patterns.Notification {
 			} else {
 				this.hide();
 			}
+		}
+
+		// Method that triggers the OnInitialize event
+		private _triggerOnInitializeEvent(): void {
+			Helper.AsyncInvocation(this._platformEventOnInitialize.bind(this), this.widgetId);
 		}
 
 		// Method that triggers the OnToggle event
@@ -346,6 +352,9 @@ namespace OSUIFramework.Patterns.Notification {
 
 			this.setA11YProperties();
 
+			// Trigger Notification OnInitialize event
+			this._triggerOnInitializeEvent();
+
 			this.finishBuild();
 		}
 
@@ -492,8 +501,15 @@ namespace OSUIFramework.Patterns.Notification {
 		 * @param {Callbacks.OSNotificationToggleEvent} callback
 		 * @memberof Notification
 		 */
-		public registerCallback(callback: Callbacks.OSNotificationToggleEvent): void {
-			this._platformEventOnToggle = callback;
+		public registerProviderCallback(eventName: string, callback: Callbacks.OSGeneric): void {
+			switch (eventName) {
+				case Patterns.Notification.Enum.Events.OnToggle:
+					this._platformEventOnToggle = callback;
+					break;
+				case Patterns.Notification.Enum.Events.OnInitialize:
+					this._platformEventOnInitialize = callback;
+					break;
+			}
 		}
 
 		/**

@@ -105,19 +105,21 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	}
 
 	/**
-	 * Function that will register a pattern callback.
+	 * Function to register a provider callback
 	 *
 	 * @export
 	 * @param {string} notificationId
-	 * @param {OSUIFramework.Callbacks.OSNotificationToggleEvent} callback
+	 * @param {string} eventName
+	 * @param {OSUIFramework.Callbacks.OSGeneric} callback
 	 */
-	export function RegisterCallback(
+	export function RegisterProviderCallback(
 		notificationId: string,
-		callback: OSUIFramework.Callbacks.OSNotificationToggleEvent
+		eventName: string,
+		callback: OSUIFramework.Callbacks.OSGeneric
 	): void {
-		const notification = GetNotificationById(notificationId);
+		const notification = this.GetNotificationById(notificationId);
 
-		notification.registerCallback(callback);
+		notification.registerProviderCallback(eventName, callback);
 	}
 
 	/**
