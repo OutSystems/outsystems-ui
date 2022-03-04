@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.Dropdown.OSUIComponents {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
-	export class OSUIDropdownServerSide<C extends Dropdown.OSUIComponents.OSUIDropdownServerSideConfig>
+	export class OSUIDropdownServerSide
 		extends OSUIFramework.Patterns.AbstractParent<
 			Dropdown.OSUIComponents.OSUIDropdownServerSideConfig,
 			OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem
@@ -38,8 +38,8 @@ namespace Providers.Dropdown.OSUIComponents {
 		private _spanBottomFocusElement: HTMLElement;
 		private _spanTopFocusElement: HTMLElement;
 
-		constructor(uniqueId: string, configs: C) {
-			super(uniqueId, configs);
+		constructor(uniqueId: string, configs: JSON) {
+			super(uniqueId, new OSUIDropdownServerSideConfig(configs));
 
 			console.log('NEW', this.uniqueId);
 		}
@@ -147,6 +147,11 @@ namespace Providers.Dropdown.OSUIComponents {
 						// If ArrowDown Key
 						// Focus the first option item!
 						this.getChildByIndex(0).setFocus();
+						// Check if Dropdown should only allow single option selected
+						if (this.configs.AllowMultipleSelection === false) {
+							// Set also the first option item as IsSelected!
+							this.getChildByIndex(0).toggleSelected();
+						}
 					}
 					break;
 
@@ -186,6 +191,12 @@ namespace Providers.Dropdown.OSUIComponents {
 			if (clickedItem) {
 				// Udpate the Option Item selected State!
 				clickedItem.toggleSelected();
+
+				// Check if Dropdown should only allow single option selected
+				if (this.configs.AllowMultipleSelection === false) {
+					// Close the Dropdown!
+					this._close();
+				}
 			} else {
 				throw new Error(
 					`${OSUIFramework.ErrorCodes.Dropdown.FailOptionItemClicked}: The ${OSUIFramework.GlobalEnum.PatternsNames.DropdownServerSideItem} under uniqueId: '${optionItemId}' does not exist as an OptionItem from ${OSUIFramework.GlobalEnum.PatternsNames.Dropdown} with Id: ${this.widgetId}.`
@@ -278,16 +289,8 @@ namespace Providers.Dropdown.OSUIComponents {
 					`${OSUIFramework.ErrorCodes.Dropdown.FailSetNewOptionItem}: There is already a ${OSUIFramework.GlobalEnum.PatternsNames.DropdownServerSideItem} under Id: '${optionItem.widgetId}' added to ${OSUIFramework.GlobalEnum.PatternsNames.Dropdown} with uniqueId: ${this.uniqueId}.`
 				);
 			} else {
-				// Store DropDownOption Item
+				// Store DropDownOption Child Item
 				this.setChild(optionItemId, optionItem);
-			}
-		}
-
-		// Set the Prompt text
-		private _setPrompt(): void {
-			// Check if user set text to be placed
-			if (this.configs.Prompt !== '') {
-				console.log('_setPrompt()', this.uniqueId, this.configs.Prompt);
 			}
 		}
 
@@ -396,6 +399,14 @@ namespace Providers.Dropdown.OSUIComponents {
 			optionItem: OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem,
 			itemIndex: number
 		): void {
+			// Check if Dropdown should only allow single option selected!
+			if (this.configs.AllowMultipleSelection === false) {
+				// Unset IsSelected to the previous Item
+				optionItem.toggleSelected();
+				// Set IsSelected to the next item
+				this.getChildByIndex(itemIndex).toggleSelected();
+			}
+
 			// Set Blur to the current one!
 			optionItem.setBlur();
 			// Set Focus to the prev/next one!
@@ -501,8 +512,6 @@ namespace Providers.Dropdown.OSUIComponents {
 				Enum.Class.SelectValuesWrapper
 			);
 
-			// Set Prompt text
-			this._setPrompt();
 			// Add custom SPAN HTML Elements that will help on Accessibility keyboard navigation
 			this._addSpanHtmlElements();
 			// Add Accessibility properties
@@ -600,9 +609,6 @@ namespace Providers.Dropdown.OSUIComponents {
 				switch (propertyName) {
 					case Enum.Properties.IsDisabled:
 						propertyValue ? this.disable() : this.enable();
-						break;
-					case Enum.Properties.Prompt:
-						this._setPrompt();
 						break;
 				}
 			}

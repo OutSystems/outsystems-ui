@@ -26,7 +26,7 @@ namespace Providers.Dropdown.OSUIComponents.Enum {
 		IsOpened = 'osui-dropdown-serverside--is-opened',
 		NotValid = 'osui-dropdown-serverside--not-valid',
 		SelectText = 'osui-dropdown-serverside__text',
-		SelectValuesWrapper = 'osui-dropdown-serverside__input',
+		SelectValuesWrapper = 'osui-dropdown-serverside__selected-values-wrapper',
 	}
 
 	/**
@@ -42,6 +42,5 @@ namespace Providers.Dropdown.OSUIComponents.Enum {
 	export enum Properties {
 		AllowMultipleSelection = 'AllowMultipleSelection',
 		IsDisabled = 'IsDisabled',
-		Prompt = 'Prompt',
 	}
 }

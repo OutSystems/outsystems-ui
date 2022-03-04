@@ -11,7 +11,6 @@ namespace Providers.Dropdown.OSUIComponents {
 	export class OSUIDropdownServerSideConfig extends OSUIFramework.Patterns.AbstractConfiguration {
 		public AllowMultipleSelection: boolean;
 		public IsDisabled: boolean;
-		public Prompt: string;
 
 		/**
 		 * Override, validate configs key values
@@ -28,9 +27,6 @@ namespace Providers.Dropdown.OSUIComponents {
 				case Enum.Properties.AllowMultipleSelection:
 				case Enum.Properties.IsDisabled:
 					validatedValue = this.validateBoolean(value as boolean, false);
-					break;
-				case Enum.Properties.Prompt:
-					validatedValue = this.validateString(value as string, '');
 					break;
 				default:
 					validatedValue = super.validateDefault(key, value);
