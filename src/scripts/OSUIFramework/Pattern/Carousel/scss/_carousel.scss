@@ -58,14 +58,14 @@
 			transform-style: flat;
 		}
 
-		&__slide {
-			/* To avoid 1px offset render when width has decimals values*/
-			transform: translateZ(0);
-		}
-
 		&--draggable,
 		&.splide--draggable {
 			cursor: grab;
+		}
+
+		img {
+			height: 100%;
+			object-fit: cover;
 		}
 	}
 
