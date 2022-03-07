@@ -20,7 +20,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		private _platformEventOnClickCallback: Callbacks.OSDropdownServerSideItemOnSelectEvent;
 
 		// Store the Key used to trigger the notification into Dropdown parent
-		public keybordTriggerdKey: GlobalEnum.Keycodes;
+		public keybordTriggerdKey: string;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new DropdownServerSideItemConfig(configs));
@@ -31,30 +31,28 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			event.preventDefault();
 			event.stopPropagation();
 
+			// Set KeyCode
+			this.keybordTriggerdKey = event.key;
+
 			switch (event.key) {
-				// If Snter or Space Keys trigger as a click event!
+				// If Enter or Space Keys trigger as a click event!
 				case GlobalEnum.Keycodes.Enter:
 				case GlobalEnum.Keycodes.Space:
-					// Unset KeyCode
-					this.keybordTriggerdKey = undefined;
-
 					// Triggered as it was clicked!
 					this._onSelected(event);
 					break;
 
-				// If ArrowUp or ArrowDown keys notify parent to move to prev/next option item!
+				// If ArrowUp, ArrowDown or Escape keys, notify parent to move to prev/next option item!
 				case GlobalEnum.Keycodes.ArrowUp:
 				case GlobalEnum.Keycodes.ArrowDown:
-					// Set KeyCode
-					this.keybordTriggerdKey = event.key;
-
+				case GlobalEnum.Keycodes.Escape:
 					// Notify parent about the selected key
 					this.notifyParent(Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.KeyPressed);
 					break;
 
 				// If Tab!
 				case GlobalEnum.Keycodes.Tab:
-					// If Shift + Tab
+					// If Shift + Tab (Since it doesn't exist as a unique key, it must be 'fabricated')
 					if (event.shiftKey) {
 						// Set KeyCode
 						this.keybordTriggerdKey = GlobalEnum.Keycodes.ShiftTab;
@@ -79,9 +77,6 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 					? Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.Click
 					: Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.KeyPressed
 			);
-
-			// Trigger platform callback about Option has been selected!
-			Helper.AsyncInvocation(this._platformEventOnClickCallback, this.parentObject.widgetId, this.configs.ItemId);
 		}
 
 		// Remove Pattern Events
@@ -96,6 +91,21 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
 		}
 
+		// Update the Selected Status value based on a given Status
+		private _updateSelectedStatus(status: boolean): void {
+			// Set IsSelected status variable
+			this.configs.IsSelected = status;
+
+			// Update accessible property accordingly
+			if (this.configs.IsSelected) {
+				Helper.A11Y.AriaSelectedTrue(this.selfElement);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsSelected);
+			} else {
+				Helper.A11Y.AriaSelectedFalse(this.selfElement);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsSelected);
+			}
+		}
+
 		/**
 		 * Add the Accessibility Attributes values
 		 *
@@ -105,6 +115,11 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		protected setA11yProperties(): void {
 			// By default set disable to tabIndex
 			Helper.A11Y.TabIndexFalse(this.selfElement);
+
+			// Set balloon option items container with listbox as a role
+			Helper.A11Y.RoleOption(this.selfElement);
+
+			Helper.A11Y.AriaSelectedFalse(this.selfElement);
 		}
 
 		/**
@@ -136,8 +151,9 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		public build(): void {
 			super.build();
 
-			this.setParent(
-				Constants.Dot + Enum.CssClass.DropdownParentBallon,
+			// Store all the parent info
+			this.setParentInfo(
+				Constants.Dot + Enum.CssClass.DropdownParentBalloon,
 				OutSystems.OSUI.Patterns.DropdownAPI.GetDropdownById
 			);
 
@@ -166,7 +182,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			if (this.isBuilt) {
 				switch (propertyName) {
 					case Enum.Properties.IsSelected:
-						Helper.Dom.Styles.ToggleClass(this.selfElement, Enum.CssClass.IsSelected);
+						this._updateSelectedStatus(propertyValue as boolean);
 						break;
 				}
 			}
@@ -187,6 +203,28 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 
 			//Destroying the base of pattern
 			super.dispose();
+		}
+
+		/**
+		 * Getter that allows to obtain the IsSelectd status value.
+		 *
+		 * @readonly
+		 * @type {boolean}
+		 * @memberof DropdownServerSideItem
+		 */
+		public get IsSelected(): boolean {
+			return this.configs.IsSelected;
+		}
+
+		/**
+		 * Getter that allows to obtain the ItemId value.
+		 *
+		 * @readonly
+		 * @type {boolean}
+		 * @memberof DropdownServerSideItem
+		 */
+		public get ItemId(): string {
+			return this.configs.ItemId;
 		}
 
 		/**
@@ -233,6 +271,19 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 */
 		public setTabindex(): void {
 			Helper.A11Y.TabIndexTrue(this.selfElement);
+		}
+
+		/**
+		 * Method used to update the selected status
+		 *
+		 * @memberof DropdownServerSideItem
+		 */
+		public toggleSelected(): void {
+			// Update the Status value with the it's Toggled value
+			this._updateSelectedStatus(!this.configs.IsSelected);
+
+			// Trigger platform callback about Option has been selected!
+			Helper.AsyncInvocation(this._platformEventOnClickCallback, this.parentObject.widgetId, this.configs.ItemId);
 		}
 
 		/**
