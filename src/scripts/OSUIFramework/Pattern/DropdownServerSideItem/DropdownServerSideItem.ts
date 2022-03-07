@@ -73,7 +73,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 
 			// Notify parent about this Option Click
 			this.notifyParent(
-				event.type === 'click'
+				event.type === GlobalEnum.HTMLEvent.Click
 					? Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.Click
 					: Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.KeyPressed
 			);

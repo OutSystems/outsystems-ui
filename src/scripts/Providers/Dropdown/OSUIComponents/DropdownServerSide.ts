@@ -26,6 +26,8 @@ namespace Providers.Dropdown.OSUIComponents {
 		private _eventOnSpanFocus: OSUIFramework.Callbacks.Generic;
 		// Keyboard Key Press Event
 		private _eventOnkeyBoardPress: OSUIFramework.Callbacks.Generic;
+		// Store a Flag property that will control if the dropdown is blocked (in case it's under closing animation for instance)
+		private _isBlocked = false;
 		// Store the Element State, by default is closed!
 		private _isOpened = false;
 		// Platform OnInitialize Callback
@@ -91,11 +93,21 @@ namespace Providers.Dropdown.OSUIComponents {
 			this._isOpened = false;
 			// Update pattern status!
 			this._updatePatternState();
+		}
 
-			// TODO: Adicionar transition end para depois dar trigger do callback
-			// Aplicar a mesma cena para o this._open();
-			// Trigger platform's _platformEventOnToggleCallback client Action
-			OSUIFramework.Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, this._isOpened);
+		// Update stuff at end of close animation
+		private _endOfCloseAnimation() {
+			// Remove the TransitionEnd event
+			this._balloonWrapperElement.removeEventListener(
+				OSUIFramework.GlobalEnum.HTMLEvent.TransitionEnd,
+				this._endOfCloseAnimation
+			);
+
+			// Since animation already ended let's unblock the pattern to be possible open it again
+			this._isBlocked = false;
+
+			// Trigger the toggle callback event
+			this._triggerToogleCalbackEvent();
 		}
 
 		// Move ballon element to outside of the pattern context
@@ -170,7 +182,10 @@ namespace Providers.Dropdown.OSUIComponents {
 
 		// Used to apply the logic when user click to open the Dropdown
 		private _onSelectValuesWrapperClicked() {
-			this._isOpened ? this._close() : this._open();
+			// Ensure that dropdown can open or close
+			if (this._isBlocked === false) {
+				this._isOpened ? this._close() : this._open();
+			}
 		}
 
 		// Manage the behaviour to leave balloon using tabNavigation
@@ -331,6 +346,12 @@ namespace Providers.Dropdown.OSUIComponents {
 			}
 		}
 
+		// Mehod used to trigger the _platformEventOnToggleCallback callback!
+		private _triggerToogleCalbackEvent(): void {
+			console.log('_triggerToogleCalbackEvent()', this._isOpened);
+			OSUIFramework.Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, this._isOpened);
+		}
+
 		// Remove Pattern Events
 		private _unsetEvents(): void {
 			this._selectValuesWrapper.removeEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
@@ -433,10 +454,22 @@ namespace Providers.Dropdown.OSUIComponents {
 				} else {
 					this._balloonOptionsWrapperElement.focus();
 				}
+
+				// Trigger the toggle callback event
+				this._triggerToogleCalbackEvent();
 			} else {
 				// Remove IsOpend Class!
 				OSUIFramework.Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.Class.IsOpened);
 				OSUIFramework.Helper.Dom.Styles.RemoveClass(this._balloonWrapperElement, Enum.Class.IsOpened);
+
+				// Block the pattern in order to avoid user click to open it again before animation ends!
+				this._isBlocked = true;
+
+				// Add the TransitionEnd event
+				this._balloonWrapperElement.addEventListener(
+					OSUIFramework.GlobalEnum.HTMLEvent.TransitionEnd,
+					this._endOfCloseAnimation
+				);
 			}
 		}
 
