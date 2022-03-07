@@ -33,7 +33,7 @@ namespace Providers.Dropdown.OSUIComponents.Enum {
 	 * DropdownServerSide Events
 	 */
 	export enum Events {
-		OnClosed = 'OnClosed',
+		OnToggle = 'OnToggle',
 	}
 
 	/**

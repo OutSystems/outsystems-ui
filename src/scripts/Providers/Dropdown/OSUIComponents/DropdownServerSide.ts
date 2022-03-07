@@ -31,7 +31,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		// Platform OnInitialize Callback
 		private _platformEventInitializedCallback: OSUIFramework.Callbacks.OSGeneric;
 		// Platform OnClose Callback
-		private _platformEventOnClosedCallback: OSUIFramework.Callbacks.OSGeneric;
+		private _platformEventOnToggleCallback: OSUIFramework.Callbacks.OSGeneric;
 		// Store the HTML element for the Dropdown Select Wrapper
 		private _selectValuesWrapper: HTMLElement;
 		// HTML Elements that will help to deal with keyboard tab navigation (A11y - stuff)
@@ -91,8 +91,11 @@ namespace Providers.Dropdown.OSUIComponents {
 			this._isOpened = false;
 			// Update pattern status!
 			this._updatePatternState();
-			// Trigger platform's _platformEventOnClosedCallback client Action
-			OSUIFramework.Helper.AsyncInvocation(this._platformEventOnClosedCallback, this.widgetId);
+
+			// TODO: Adicionar transition end para depois dar trigger do callback
+			// Aplicar a mesma cena para o this._open();
+			// Trigger platform's _platformEventOnToggleCallback client Action
+			OSUIFramework.Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, this._isOpened);
 		}
 
 		// Move ballon element to outside of the pattern context
@@ -534,7 +537,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		protected unsetCallbacks(): void {
 			this._eventOnSpanFocus = undefined;
 			this._platformEventInitializedCallback = undefined;
-			this._platformEventOnClosedCallback = undefined;
+			this._platformEventOnToggleCallback = undefined;
 		}
 
 		/**
@@ -712,9 +715,9 @@ namespace Providers.Dropdown.OSUIComponents {
 					}
 					break;
 
-				case Enum.Events.OnClosed:
-					if (this._platformEventOnClosedCallback === undefined) {
-						this._platformEventOnClosedCallback = callback;
+				case Enum.Events.OnToggle:
+					if (this._platformEventOnToggleCallback === undefined) {
+						this._platformEventOnToggleCallback = callback;
 					}
 					break;
 
