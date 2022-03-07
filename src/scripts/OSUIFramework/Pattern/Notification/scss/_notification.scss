@@ -215,15 +215,15 @@
 
 	.osui-notification--is {
 		&-top .osui-notification__content {
-			transform: translate(0%, -100%);
+			transform: translate(0, -100%);
 		}
 
 		&-center .osui-notification__content {
-			transform: translate(0%, -100%);
+			transform: translate(0, -100%);
 		}
 
 		&-bottom .osui-notification__content {
-			transform: translate(0%, 100%);
+			transform: translate(0, 100%);
 		}
 
 		&-open {
@@ -234,7 +234,7 @@
 				}
 
 				&-center .osui-notification__content {
-					transform: translate(0%, -50%);
+					transform: translate(0, -50%);
 				}
 			}
 		}
