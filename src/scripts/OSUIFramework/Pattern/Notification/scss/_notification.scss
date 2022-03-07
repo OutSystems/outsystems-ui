@@ -143,13 +143,13 @@
 				&--is {
 					&-top {
 						.osui-notification__content {
-							transform: translate(-50%, 0%);
+							transform: translate(-50%);
 						}
 
 						&-right,
 						&-left {
 							.osui-notification__content {
-								transform: translate(0%, 0%);
+								transform: translate(0, 0);
 							}
 						}
 					}
@@ -163,19 +163,19 @@
 					&-right,
 					&-left {
 						.osui-notification__content {
-							transform: translate(0%, -50%);
+							transform: translate(0, -50%);
 						}
 					}
 
 					&-bottom {
 						.osui-notification__content {
-							transform: translate(-50%, 0%);
+							transform: translate(-50%, 0);
 						}
 
 						&-right,
 						&-left {
 							.osui-notification__content {
-								transform: translateX(0%);
+								transform: translateX(0);
 							}
 						}
 					}
@@ -203,40 +203,41 @@
 	}
 }
 
-///
-.layout-native {
-	.osui-notification {
-		left: 50%;
-		transform: translateY(-120%) translateX(-50%);
-
-		// Service Studio Preview
-		& {
-			-servicestudio-left: 0;
-			-servicestudio-margin-left: 0;
-			-servicestudio-transform: none;
-		}
-
-		&--is-open {
-			transform: translateY(var(--space-m)) translateX(0);
-		}
-	}
-}
-
 // Responsive --------------------------------------------------------------------
 
 ///
 .phone {
-	.layout-native {
-		.osui-notification {
-			left: var(--space-base);
-			margin-left: 0;
-			right: var(--space-base);
-			width: auto;
-		}
+	.osui-notification__content {
+		left: var(--space-base);
+		right: var(--space-base);
+		width: inherit;
 	}
 
-	.osui-notification__content {
-		max-width: calc(100% - var(--space-xl));
+	.osui-notification--is {
+		&-top .osui-notification__content {
+			transform: translate(0%, -100%);
+		}
+
+		&-center .osui-notification__content {
+			transform: translate(0%, -100%);
+		}
+
+		&-bottom .osui-notification__content {
+			transform: translate(0%, 100%);
+		}
+
+		&-open {
+			&.osui-notification--is {
+				&-top .osui-notification__content,
+				&-bottom .osui-notification__content {
+					transform: translate(0, 0);
+				}
+
+				&-center .osui-notification__content {
+					transform: translate(0%, -50%);
+				}
+			}
+		}
 	}
 }
 
