@@ -15,7 +15,7 @@
 		padding: var(--space-m);
 		pointer-events: none;
 		position: fixed;
-		transition: all 300ms ease-out;
+		transition: transform 300ms ease-out, opacity 300ms ease-out;
 		user-select: none;
 		width: var(--notification-width);
 		z-index: 300;
@@ -52,10 +52,10 @@
 		&-top {
 			.osui-notification__content {
 				left: 50%;
-				top: calc(var(--space-xxl) * -1);
 				transform: translate(-50%, -100%);
 			}
 
+			&,
 			&-right,
 			&-left {
 				.osui-notification__content {
@@ -63,22 +63,55 @@
 				}
 			}
 
-			&-right .osui-notification__content {
-				right: -100%;
+			&-right {
+				.osui-notification__content {
+					right: var(--space-m);
+					transform: translateX(100%);
+				}
 			}
+			&-left {
+				.osui-notification__content {
+					left: var(--space-m);
+					transform: translateX(-100%);
+				}
+			}
+		}
 
-			&-left .osui-notification__content {
-				left: -100%;
+		&-center {
+			.osui-notification__content {
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -100%);
+			}
+		}
+
+		&-right,
+		&-left {
+			.osui-notification__content {
+				top: 50%;
+			}
+		}
+
+		&-right {
+			.osui-notification__content {
+				right: var(--space-m);
+				transform: translate(100%, -50%);
+			}
+		}
+		&-left {
+			.osui-notification__content {
+				left: var(--space-m);
+				transform: translate(-100%, -50%);
 			}
 		}
 
 		&-bottom {
 			.osui-notification__content {
-				bottom: calc(var(--space-xxl) * -1);
 				left: 50%;
 				transform: translate(-50%, 100%);
 			}
 
+			&,
 			&-right,
 			&-left {
 				.osui-notification__content {
@@ -86,31 +119,18 @@
 				}
 			}
 
-			&-right .osui-notification__content {
-				right: -100%;
+			&-right {
+				.osui-notification__content {
+					right: var(--space-m);
+					transform: translateX(100%);
+				}
 			}
-
-			&-left .osui-notification__content {
-				left: -100%;
+			&-left {
+				.osui-notification__content {
+					left: var(--space-m);
+					transform: translateX(-100%);
+				}
 			}
-		}
-
-		&-center .osui-notification__content {
-			left: 50%;
-			top: 50%;
-			transform: translate(-50%, -50%);
-		}
-
-		&-right .osui-notification__content {
-			right: -100%;
-			top: 50%;
-			transform: translateY(-50%);
-		}
-
-		&-left .osui-notification__content {
-			left: -100%;
-			top: 50%;
-			transform: translateY(-50%);
 		}
 
 		&-open {
@@ -123,51 +143,41 @@
 				&--is {
 					&-top {
 						.osui-notification__content {
-							top: var(--space-m);
-							transform: translate(-50%, var(--space-m));
-						}
-
-						&-right .osui-notification__content {
-							right: var(--space-m);
-						}
-
-						&-left .osui-notification__content {
-							left: var(--space-m);
-						}
-					}
-
-					&-bottom {
-						.osui-notification__content {
-							bottom: var(--space-m);
-							transform: translateX(-50%);
+							transform: translate(-50%, 0%);
 						}
 
 						&-right,
 						&-left {
 							.osui-notification__content {
-								bottom: var(--space-m);
+								transform: translate(0%, 0%);
 							}
 						}
+					}
 
-						&-right .osui-notification__content {
-							right: var(--space-m);
-						}
-
-						&-left .osui-notification__content {
-							left: var(--space-m);
+					&-center {
+						.osui-notification__content {
+							transform: translate(-50%, -50%);
 						}
 					}
 
-					&-right .osui-notification__content {
-						right: var(--space-m);
-						top: 50%;
-						transform: translateY(-50%);
+					&-right,
+					&-left {
+						.osui-notification__content {
+							transform: translate(0%, -50%);
+						}
 					}
 
-					&-left .osui-notification__content {
-						left: var(--space-m);
-						top: 50%;
-						transform: translateY(-50%);
+					&-bottom {
+						.osui-notification__content {
+							transform: translate(-50%, 0%);
+						}
+
+						&-right,
+						&-left {
+							.osui-notification__content {
+								transform: translateX(0%);
+							}
+						}
 					}
 				}
 			}
