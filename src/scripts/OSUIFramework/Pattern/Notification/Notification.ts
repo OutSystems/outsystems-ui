@@ -467,9 +467,9 @@ namespace OSUIFramework.Patterns.Notification {
 		/**
 		 * Method used to register the provider callback
 		 *
-		 * @param {string} eventName Event name that will be assigned
-		 * @param {OSUIFramework.Callbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
-		 * @memberof OSUIDropdownServerSide
+		 * @param {string} eventName
+		 * @param {Callbacks.OSGeneric} callback
+		 * @memberof Notification
 		 */
 		public registerProviderCallback(eventName: string, callback: Callbacks.OSGeneric): void {
 			switch (eventName) {

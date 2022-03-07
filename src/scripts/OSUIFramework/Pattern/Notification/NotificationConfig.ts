@@ -19,7 +19,7 @@ namespace OSUIFramework.Patterns.Notification {
 		 * @param {string} key
 		 * @param {unknown} value
 		 * @return {*}  {unknown}
-		 * @memberof AbstractDropdownServerSideItemConfig
+		 * @memberof NotificationConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;
