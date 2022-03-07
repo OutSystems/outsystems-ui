@@ -348,6 +348,11 @@ namespace Providers.RangeSlider.NoUISlider {
 			this._rangeSliderProviderElem = undefined;
 		}
 
+		/**
+		 * Method to build the pattern.
+		 *
+		 * @memberof OSUINoUiSlider
+		 */
 		public build(): void {
 			super.build();
 			this.setCallbacks();
@@ -359,6 +364,13 @@ namespace Providers.RangeSlider.NoUISlider {
 			this.finishBuild();
 		}
 
+		/**
+		 * Method to change the value of configs/current state.
+		 *
+		 * @param {string} propertyName
+		 * @param {unknown} propertyValue
+		 * @memberof OSUINoUiSlider
+		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			// Check which property changed and call respective method to update it
 			// Library only supports update on some options, so in most cases we need to

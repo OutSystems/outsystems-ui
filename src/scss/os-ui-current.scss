@@ -262,8 +262,7 @@
 @import '04-patterns/03-interaction/action-sheet';
 @import '04-patterns/03-interaction/animate';
 @import '../scripts/OSUIFramework/Pattern/AnimatedLabel/scss/animated-label';
-//@import '../scripts/OSUIFramework/Pattern/Carousel/scss/carousel';
-@import '10-deprecated/carousel-deprecated';
+@import '../scripts/OSUIFramework/Pattern/Carousel/scss/carousel';
 // @import '../scripts/OSUIFramework/Pattern/DatePicker/scss/datepicker';
 @import '10-deprecated/date-picker-deprecated';
 // @import '../scripts/OSUIFramework/Pattern/Dropdown/scss/dropdown';
@@ -331,6 +330,7 @@
 @import '10-deprecated/sidebar-deprecated';
 @import '10-deprecated/submenu-deprecated';
 @import '10-deprecated/tooltip-deprecated';
+@import '10-deprecated/carousel-deprecated';
 
 /*! =========================================================================== */
 /*! Usefull Classes                                                             */
