@@ -169,12 +169,15 @@ namespace OSUIFramework.Patterns.Notification {
 		 * @memberof Notification
 		 */
 		private _updatePosition(position: string): void {
-			// Reset direction class
-			if (this.configs.Position !== '') {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternPosition + position);
-			}
+			// Only change classes if are different
+			if (this.configs.Position !== position) {
+				// Reset direction class
+				if (this.configs.Position !== '') {
+					Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternPosition + position);
+				}
 
-			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternPosition + this.configs.Position);
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternPosition + this.configs.Position);
+			}
 		}
 
 		/**
@@ -274,10 +277,12 @@ namespace OSUIFramework.Patterns.Notification {
 				this._autoCloseNotification();
 			}
 
+			// Move Notification element to outside of layout
 			Helper.Dom.Move(
 				this._selfElem,
-				document.querySelector(
-					Constants.Dot + GlobalEnum.Screen.Active + Constants.Dot + GlobalEnum.Screen.Container
+				Helper.Dom.ClassSelector(
+					document.body,
+					GlobalEnum.Screen.Active + Constants.Dot + GlobalEnum.Screen.Container
 				)
 			);
 		}
