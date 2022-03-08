@@ -4,48 +4,78 @@
 /// Patterns - Interaction - Carousel
 
 /* Splide Library Core Default Styles */
-@import './Splide/splide-core.scss';
+@import '../../../../Providers/Carousel/Splide/scss/splide-core.scss';
+
+@import 'carousel_ss_preview_imgs';
 
 /* OutSystems UI Carousel customization */
 ///
 .osui-carousel {
 	--osui-carousel-track-width: 100%;
 
-	.splide__arrow {
-		background-color: var(--color-neutral-0);
-		box-shadow: var(--shadow-xs);
-		height: 40px;
-		opacity: 1;
-		transition: opacity 150ms linear;
-		width: 40px;
-		will-change: opacity;
+	.splide {
+		&__arrow {
+			background-color: var(--color-neutral-0);
+			box-shadow: var(--shadow-xs);
+			height: 40px;
+			opacity: 1;
+			transition: opacity 150ms linear;
+			width: 40px;
+			will-change: opacity;
 
-		&[disabled] {
-			cursor: default;
-			opacity: 0.3;
+			&[disabled] {
+				cursor: default;
+				opacity: 0.3;
+			}
+
+			svg {
+				height: 14px;
+				width: 14px;
+
+				path {
+					fill: var(--color-neutral-7);
+				}
+			}
+
+			/* Service Studio Preview*/
+			& {
+				-servicestudio-transform: translateY(calc(-50% + 20px));
+			}
 		}
 
-		svg {
-			height: 14px;
-			width: 14px;
+		&__pagination {
+			margin: 0;
 
-			path {
-				fill: var(--color-neutral-7);
+			&__page {
+				&.is-active {
+					background-color: var(--color-primary);
+				}
 			}
+		}
+
+		&__list {
+			/* To avoid flickering with multiple items and gap 0*/
+			transform-style: flat;
+		}
+
+		&--draggable,
+		&.splide--draggable {
+			cursor: grab;
+		}
+
+		img {
+			height: 100%;
+			object-fit: cover;
 		}
 	}
 
-	.splide__pagination {
-		margin: 0;
-
-		.splide__pagination__page {
-			&.is-active {
-				background-color: var(--color-primary);
-			}
+	&__content {
+		// Service Studio Preview
+		& {
+			-servicestudio-display: grid;
+			-servicestudio-grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 		}
-	}
 
-	.osui-carousel_content {
 		& > .list {
 			overflow: unset;
 
@@ -56,26 +86,29 @@
 		}
 	}
 
-	.osui-carousel_track {
+	&__track {
+		max-width: 100%;
 		width: var(--osui-carousel-track-width);
+		-servicestudio-position: relative;
 	}
 
-	.splide--draggable,
-	&.splide--draggable {
-		cursor: grab;
-	}
+	.list:not([data-virtualization-disabled]),
+	.list:not([data-animation-disabled]) {
+		-servicestudio-pointer-events: none;
+		-servicestudio-min-height: 100px;
 
-	.library-link {
-		// Service Studio Preview
-		& {
-			-servicestudio-background-color: var(--color-neutral-3);
-		}
-
-		// Service Studio Preview
-		&::before {
-			-servicestudio-color: var(--color-neutral-7);
-			-servicestudio-content: 'The Carousel uses an external library - Splide.js. For extended options or general documentation check the link below:';
-			-servicestudio-display: block;
+		&:after {
+			-servicestudio-content: '';
+			-servicestudio-position: absolute;
+			-servicestudio-top: 0;
+			-servicestudio-left: 0;
+			-servicestudio-width: 100%;
+			-servicestudio-height: 100%;
+			-servicestudio-background-color: var(--color-neutral-0);
+			-servicestudio-background-image: $carousel_helper_img_base64;
+			-servicestudio-background-repeat: no-repeat;
+			-servicestudio-background-position: center;
+			-servicestudio-z-index: 2;
 		}
 	}
 }

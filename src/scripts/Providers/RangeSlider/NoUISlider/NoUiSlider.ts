@@ -147,6 +147,14 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * @memberof OSUINoUiSlider
 		 */
 		private _setSize(): void {
+			if (this.configs.Size.indexOf('%') > -1 && parseFloat(this.configs.Size) > 100) {
+				this.configs.Size = OSUIFramework.Patterns.RangeSlider.Enum.DefaultValues.PercentualSize;
+
+				console.warn(
+					`The value of the Size property on the '${this.widgetId}' ${OSUIFramework.GlobalEnum.PatternsNames.RangeSlider} can't be smaller than '${OSUIFramework.Patterns.RangeSlider.Enum.DefaultValues.PercentualSize}'.`
+				);
+			}
+
 			OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				OSUIFramework.Patterns.RangeSlider.Enum.CssProperties.Size,
@@ -340,6 +348,11 @@ namespace Providers.RangeSlider.NoUISlider {
 			this._rangeSliderProviderElem = undefined;
 		}
 
+		/**
+		 * Method to build the pattern.
+		 *
+		 * @memberof OSUINoUiSlider
+		 */
 		public build(): void {
 			super.build();
 			this.setCallbacks();
@@ -351,6 +364,13 @@ namespace Providers.RangeSlider.NoUISlider {
 			this.finishBuild();
 		}
 
+		/**
+		 * Method to change the value of configs/current state.
+		 *
+		 * @param {string} propertyName
+		 * @param {unknown} propertyValue
+		 * @memberof OSUINoUiSlider
+		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			// Check which property changed and call respective method to update it
 			// Library only supports update on some options, so in most cases we need to
@@ -383,6 +403,15 @@ namespace Providers.RangeSlider.NoUISlider {
 
 						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.Orientation:
+						console.warn(
+							`RangeSlider${this.configs.IsInterval ? 'Interval' : ''} (${this.widgetId}): changes to ${
+								OSUIFramework.Patterns.RangeSlider.Enum.Properties.Orientation
+							} parameter do not affect the RangeSlider${
+								this.configs.IsInterval ? 'Interval' : ''
+							}. Use a distinct variable to assign on the OnValueChange event`
+						);
+
+						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
 						this._updateRangeSlider();
 						this.setInitialCSSClasses();

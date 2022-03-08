@@ -276,6 +276,34 @@ namespace OSUIFramework.Helper {
 		}
 
 		/**
+		 * Method that will set the aria-multiselectable as True
+		 *
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @returns
+		 */
+		public static MultiselectableFalse(element: HTMLElement): void {
+			Dom.Attribute.Set(
+				element,
+				Constants.A11YAttributes.Aria.Multiselectable,
+				Constants.A11YAttributes.States.False
+			);
+		}
+
+		/**
+		 * Method that will set the aria-multiselectable as False
+		 *
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @returns
+		 */
+		public static MultiselectableTrue(element: HTMLElement): void {
+			Dom.Attribute.Set(
+				element,
+				Constants.A11YAttributes.Aria.Multiselectable,
+				Constants.A11YAttributes.States.True
+			);
+		}
+
+		/**
 		 * Method that will set the alert role
 		 *
 		 * @param {HTMLElement} element Target element to receive the role atributte
@@ -311,6 +339,16 @@ namespace OSUIFramework.Helper {
 		}
 
 		/**
+		 * Method that will set the list box role
+		 *
+		 * @param {HTMLElement} element Target element to receive the role atributte
+		 * @returns
+		 */
+		public static RoleListox(element: HTMLElement): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Listbox);
+		}
+
+		/**
 		 * Method that will set the button role
 		 *
 		 * @param {HTMLElement} element Target element to receive the role atributte
@@ -318,6 +356,16 @@ namespace OSUIFramework.Helper {
 		 */
 		public static RoleMenuItem(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.MenuItem);
+		}
+
+		/**
+		 * Method that will set the option role
+		 *
+		 * @param {HTMLElement} element Target element to receive the role atributte
+		 * @returns
+		 */
+		public static RoleOption(element: HTMLElement): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Option);
 		}
 
 		/**

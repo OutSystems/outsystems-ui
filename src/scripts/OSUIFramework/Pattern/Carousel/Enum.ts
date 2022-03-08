@@ -4,7 +4,7 @@ namespace OSUIFramework.Patterns.Carousel.Enum {
 	 * Carousel Events
 	 */
 	export enum CarouselEvents {
-		OnInitialize = 'OnInitialize',
+		Initialized = 'Initialized',
 		OnSlideMoved = 'OnSlideMoved',
 	}
 
@@ -20,25 +20,24 @@ namespace OSUIFramework.Patterns.Carousel.Enum {
 	 */
 	export enum CssClass {
 		CarouselWrapper = 'osui-carousel',
-		Content = 'osui-carousel_content',
-		Track = 'osui-carousel_track',
+		Content = 'osui-carousel__content',
+		Track = 'osui-carousel__track',
 	}
 
 	/**
 	 * Carousel Enum for Properties
 	 */
 	export enum Properties {
-		Navigation = 'navigation',
-		ItemsDesktop = 'itemsDesktop',
-		ItemsTablet = 'itemsTablet',
-		ItemsPhone = 'itemsPhone',
-		AutoPlay = 'autoplay',
-		Loop = 'loop',
-		Padding = 'padding',
-		Gap = 'gap',
-		InitialPosition = 'initialPosition',
-		Focus = 'focus',
-		Transform = 'transform',
+		AutoPlay = 'AutoPlay',
+		Height = 'Height',
+		ItemsDesktop = 'ItemsDesktop',
+		ItemsGap = 'ItemsGap',
+		ItemsPhone = 'ItemsPhone',
+		ItemsTablet = 'ItemsTablet',
+		Loop = 'Loop',
+		Navigation = 'Navigation',
+		Padding = 'Padding',
+		StartingPosition = 'StartingPosition',
 	}
 
 	/**
@@ -46,5 +45,15 @@ namespace OSUIFramework.Patterns.Carousel.Enum {
 	 */
 	export enum Provider {
 		Splide = 'Splide',
+	}
+
+	/**
+	 * Carousel Navigation options
+	 */
+	export enum Navigation {
+		Arrows = 'arrows',
+		Both = 'both',
+		Dots = 'dots',
+		None = 'none',
 	}
 }

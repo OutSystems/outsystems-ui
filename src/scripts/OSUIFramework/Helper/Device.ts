@@ -80,6 +80,7 @@ namespace OSUIFramework.Helper {
 		/******************** PRIVATE CACHE VARIABLES ********************/
 		private static _browser = GlobalEnum.Browser.unknown;
 		private static _iphoneDetails: iphoneDetails = undefined;
+		private static _isAndroid: boolean | undefined = undefined;
 		private static _isIos: boolean | undefined = undefined;
 		private static _isIphoneWithNotch: boolean | undefined = undefined;
 		private static _isNativeApp: boolean | undefined = undefined;
@@ -379,6 +380,13 @@ namespace OSUIFramework.Helper {
 				DeviceInfo._isNativeApp = window.cordova !== undefined && !DeviceInfo.IsPwa;
 			}
 			return DeviceInfo._isNativeApp;
+		}
+
+		public static get IsAndroid(): boolean {
+			if (DeviceInfo._isAndroid === undefined) {
+				DeviceInfo._isAndroid = Dom.Styles.ContainsClass(document.body, GlobalEnum.MobileOS.Android);
+			}
+			return DeviceInfo._isAndroid;
 		}
 
 		public static get IsIos(): boolean {

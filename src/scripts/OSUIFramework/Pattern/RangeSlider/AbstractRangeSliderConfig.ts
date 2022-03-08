@@ -5,10 +5,10 @@ namespace OSUIFramework.Patterns.RangeSlider {
 		public IsInterval: boolean;
 		public MaxValue: number;
 		public MinValue: number;
-		public Orientation: GlobalEnum.Orientation;
+		public Orientation: string;
 		public ShowFloatingLabel: boolean;
 		public ShowTickMarks: boolean;
-		public Size: number;
+		public Size: string;
 		public StartingValueFrom: number;
 		public StartingValueTo: number;
 		public Step: number;
@@ -20,10 +20,12 @@ namespace OSUIFramework.Patterns.RangeSlider {
 
 		public validateCanChange(isBuilt: boolean, key: string): boolean {
 			if (isBuilt) {
-				return (
-					key !== (Enum.Properties.StartingValueFrom as string) ||
-					key !== (Enum.Properties.StartingValueTo as string)
-				);
+				switch (key) {
+					case Enum.Properties.StartingValueFrom:
+					case Enum.Properties.StartingValueTo:
+					case Enum.Properties.Orientation:
+						return false;
+				}
 			}
 			return true;
 		}
@@ -36,8 +38,7 @@ namespace OSUIFramework.Patterns.RangeSlider {
 					validatedValue = this.validateInRange(
 						value,
 						GlobalEnum.Orientation.Horizontal,
-						GlobalEnum.Orientation.Vertical,
-						GlobalEnum.Orientation.Horizontal
+						GlobalEnum.Orientation.Vertical
 					);
 					break;
 				case Enum.Properties.IsDisabled:
@@ -48,7 +49,9 @@ namespace OSUIFramework.Patterns.RangeSlider {
 				case Enum.Properties.Size:
 					validatedValue = this.validateString(
 						value as string,
-						this.Orientation === (GlobalEnum.Orientation.Horizontal as string) ? '100%' : '100px'
+						this.Orientation === (GlobalEnum.Orientation.Horizontal as string)
+							? Enum.DefaultValues.PercentualSize
+							: Enum.DefaultValues.PixelSize
 					);
 					break;
 				case Enum.Properties.Step:
