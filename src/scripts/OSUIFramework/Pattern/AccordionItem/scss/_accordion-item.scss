@@ -142,10 +142,14 @@
 			}
 		}
 
+		&--custom {
+			pointer-events: none;
+		}
+
 		&--hidden {
-			-servicestudio-display: none;
-			-servicestudio-height: 0;
-			-servicestudio-width: 0;
+			display: none;
+			height: 0;
+			width: 0;
 			-servicestudio-z-index: -1;
 		}
 	}
