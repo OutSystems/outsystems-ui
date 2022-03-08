@@ -15,7 +15,7 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		// Store the current sectionIndexItem active
 		private _activeSectionIndexItem: SectionIndexItem.ISectionIndexItem;
 		// Store the content padding
-		private _contentPaddingTop: number;
+		private _contentPaddingTop: string;
 
 		private _didMoveByPattern: boolean;
 
@@ -23,7 +23,7 @@ namespace OSUIFramework.Patterns.SectionIndex {
 
 		private _globalEventScrollBody: Callbacks.Generic;
 		// Store the header height
-		private _headerHeight: number;
+		private _headerHeight = 0;
 		// Store flag that shows if we are leading with a browser that needs polyfill
 		private _isUnsupportedBrowser: boolean;
 		// Store the distance between the window top and the content
@@ -110,7 +110,10 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		private _setIsFixed(): void {
 			if (this.configs.IsFixed) {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.UsefulSticky);
-				this._selfElem.style.setProperty('--top-position', this._offset + 'px');
+				this._selfElem.style.setProperty(
+					'--top-position',
+					'calc(' + this._headerHeight + 'px + ' + this._contentPaddingTop + ')'
+				);
 			} else {
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.UsefulSticky);
 			}
@@ -123,22 +126,17 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		 */
 		private _setUpSectionIndex(): void {
 			const Header = Helper.Dom.ClassSelector(document, 'header');
-
-			this._contentPaddingTop = parseInt(
-				window
-					.getComputedStyle(Helper.Dom.ClassSelector(document, 'main-content'))
-					.getPropertyValue('padding-top')
-			);
 			if (Header) {
 				this._headerHeight = Header.offsetHeight;
-			} else {
-				this._headerHeight = 0;
 			}
 
-			this._offset = this._headerHeight + this._contentPaddingTop;
+			this._contentPaddingTop = window
+				.getComputedStyle(Helper.Dom.ClassSelector(document, 'main-content'))
+				.getPropertyValue('padding-top');
 
 			this._setIsFixed();
 
+			// TODO:
 			this._isUnsupportedBrowser = Helper.Dom.Styles.ContainsClass(document.body, GlobalEnum.Browser.safari);
 
 			// Check for browsers that don't support ScrollIntoView to call Polyfill
@@ -148,7 +146,8 @@ namespace OSUIFramework.Patterns.SectionIndex {
 
 			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnScroll, this._globalEventScrollBody);
 
-			this.setActiveElement(this.getChildByIndex(0));
+			// TODO: waiting...
+			// this.setActiveElement(this.getChildByIndex(0));
 		}
 
 		/**

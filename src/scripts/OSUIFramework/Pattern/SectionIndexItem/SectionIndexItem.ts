@@ -19,8 +19,6 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		private _eventOnkeyBoardPress: Callbacks.Generic;
 		// Store if this is the current active item
 		private _isActive = false;
-		// Stores the Target element Id of this item
-		public sectionIndexItemTargetId: string;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SectionIndexItemConfig(configs));
@@ -80,6 +78,17 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		}
 
 		/**
+		 * Add the Accessibility Attributes values
+		 *
+		 * @protected
+		 * @memberof SectionIndexItem
+		 */
+		protected setA11yProperties(): void {
+			// By default set disable to tabIndex
+			Helper.A11Y.TabIndexTrue(this.selfElement);
+		}
+
+		/**
 		 * Method to set the callbacks and event listeners
 		 *
 		 * @protected
@@ -88,18 +97,6 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		protected setCallbacks(): void {
 			this._eventOnClick = this._onSelected.bind(this);
 			this._eventOnkeyBoardPress = this._onKeyboardPressed.bind(this);
-		}
-
-		/**
-		 * Method to set the variables needed on this pattern
-		 *
-		 * @protected
-		 * @memberof SectionIndexItem
-		 */
-		protected setUpSectionItemIndex(): void {
-			if (this.sectionIndexItemTargetId === undefined) {
-				this.sectionIndexItemTargetId = this.configs.ScrollToWidgetId;
-			}
 		}
 
 		/**
@@ -118,11 +115,11 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 			// Notify parent about a new instance of this child has been created!
 			this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Add);
 
-			this.setUpSectionItemIndex();
-
 			this.setCallbacks();
 
 			this._setUpEvents();
+
+			this.setA11yProperties();
 
 			this.finishBuild();
 		}
@@ -183,6 +180,17 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 				this._isActive = true;
 				Helper.Dom.Styles.AddClass(this._selfElem, Patterns.SectionIndex.Enum.CssClass.ActiveItem);
 			}
+		}
+
+		/**
+		 * Readable property to get sectionIndexItemTargetId property name
+		 *
+		 * @readonly
+		 * @type {string}
+		 * @memberof SectionIndexItem
+		 */
+		public get sectionIndexItemTargetId(): string {
+			return this.configs.ScrollToWidgetId;
 		}
 	}
 }

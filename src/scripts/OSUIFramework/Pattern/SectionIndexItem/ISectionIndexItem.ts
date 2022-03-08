@@ -8,8 +8,8 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 	 * @extends {Interface.IChild}
 	 */
 	export interface ISectionIndexItem extends Interface.IChild {
-		sectionIndexItemTargetId: string;
 		removeActiveElement();
+		get sectionIndexItemTargetId(): string;
 		setActiveElement();
 	}
 }
