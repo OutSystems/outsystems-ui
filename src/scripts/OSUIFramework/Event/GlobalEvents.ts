@@ -43,4 +43,34 @@ namespace OSUIFramework.Event {
 			return;
 		}
 	}
+
+	/**
+	 * Class that represents the scroll on the body event.
+	 *
+	 * @export
+	 * @class BodyOnScroll
+	 * @extends {Event.AbstractEvent<string>}
+	 */
+	export class BodyOnScroll extends Event.AbstractEvent<string> {
+		constructor() {
+			super();
+			document.body.addEventListener(GlobalEnum.HTMLEvent.Scroll, this._bodyTrigger.bind(this), true);
+		}
+		private _bodyTrigger(evt: PointerEvent): void {
+			super.trigger('scroll', evt);
+		}
+
+		/**
+		 * Override the default trigger method from AbstractEvent
+		 *
+		 * @param {string} [data]
+		 * @param {*} args
+		 * @return {*}  {void}
+		 * @memberof BodyOnClick
+		 */
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		public trigger(data?: string, ...args: unknown[]): void {
+			return;
+		}
+	}
 }

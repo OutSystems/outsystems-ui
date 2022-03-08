@@ -8,7 +8,7 @@ namespace OSUIFramework.Patterns.SectionIndex {
 	 * @extends {AbstractPattern<SectionIndexConfig, SectionIndexItem.ISectionIndexItem>}
 	 * @implements {ISectionIndex}
 	 */
-	export class SectionIndex<C extends SectionIndexConfig>
+	export class SectionIndex
 		extends AbstractParent<SectionIndexConfig, SectionIndexItem.ISectionIndexItem>
 		implements ISectionIndex
 	{
@@ -16,6 +16,12 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		private _activeSectionIndexItem: SectionIndexItem.ISectionIndexItem;
 		// Store the content padding
 		private _contentPaddingTop: number;
+
+		private _didMoveByPattern: boolean;
+
+		private _didScroll: boolean;
+
+		private _globalEventScrollBody: Callbacks.Generic;
 		// Store the header height
 		private _headerHeight: number;
 		// Store flag that shows if we are leading with a browser that needs polyfill
@@ -23,9 +29,8 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		// Store the distance between the window top and the content
 		private _offset: number;
 
-		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-		constructor(uniqueId: string, configs: C) {
-			super(uniqueId, configs);
+		constructor(uniqueId: string, configs: JSON) {
+			super(uniqueId, new SectionIndexConfig(configs));
 		}
 
 		/**
@@ -54,6 +59,16 @@ namespace OSUIFramework.Patterns.SectionIndex {
 			}
 		}
 
+		// Close tooltip if user has clicked outside of it
+		private _bodyScrollCallback(): void {
+			if (this._didMoveByPattern) {
+				// reset did move;
+				this._didMoveByPattern = false;
+			} else {
+				this._didScroll = true;
+			}
+		}
+
 		// Method to deal with the click at a DropdpownOptionItem
 		private _optionItemHasBeenClicked(optionItemId: string): void {
 			const childReference = this.getChild(optionItemId);
@@ -66,6 +81,11 @@ namespace OSUIFramework.Patterns.SectionIndex {
 					`${ErrorCodes.SectionIndex.FailOptionItemClicked}: The ${GlobalEnum.PatternsNames.SectionIndexItem} under uniqueId: '${optionItemId}' does not exist as an OptionItem from ${GlobalEnum.PatternsNames.SectionIndex} with Id: ${this.widgetId}.`
 				);
 			}
+		}
+
+		// Remove Pattern Events
+		private _removeEvents(): void {
+			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnScroll, this._globalEventScrollBody);
 		}
 
 		// Method used to remove a given SectionIndexItem from optionItems list, it's triggered by SectionIndexItem
@@ -125,6 +145,30 @@ namespace OSUIFramework.Patterns.SectionIndex {
 			if (this.configs.SmoothScrolling && this._isUnsupportedBrowser) {
 				//callPolyfill();
 			}
+
+			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnScroll, this._globalEventScrollBody);
+
+			this.setActiveElement(this.getChildByIndex(0));
+		}
+
+		/**
+		 * Method to set the calbacks
+		 *
+		 * @protected
+		 * @memberof SectionIndex
+		 */
+		protected setCallbacks(): void {
+			this._globalEventScrollBody = this._bodyScrollCallback.bind(this);
+		}
+
+		/**
+		 * Unset callbacks that has been assigned to the element
+		 *
+		 * @protected
+		 * @memberof SectionIndex
+		 */
+		protected unsetCallbacks(): void {
+			this._globalEventScrollBody = undefined;
 		}
 
 		/**
@@ -132,7 +176,7 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		 *
 		 * @param childId Dropdown Option Item Id to be stored
 		 * @param notifiedTo {Enum.ChildNotifyActionType} triggered notification type
-		 * @memberof OSUIDropdownServerSide
+		 * @memberof SectionIndex
 		 */
 		public beNotifiedByChild(childId: string, notifiedTo: Enum.ChildNotifyActionType): void {
 			switch (notifiedTo) {
@@ -163,6 +207,8 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		public build(): void {
 			super.build();
 
+			this.setCallbacks();
+
 			this._setUpSectionIndex();
 
 			this.finishBuild();
@@ -192,6 +238,8 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		 * @memberof SectionIndex
 		 */
 		public dispose(): void {
+			this._removeEvents();
+			this.unsetCallbacks();
 			//Destroying the base of pattern
 			super.dispose();
 		}
@@ -204,18 +252,21 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		 */
 		public setActiveElement(targetElement: SectionIndexItem.ISectionIndexItem): void {
 			if (targetElement) {
-				// Remove old sectionIndexItem as active
-				if (this._activeSectionIndexItem) {
-					this._activeSectionIndexItem.removeActiveElement();
+				if (targetElement !== this._activeSectionIndexItem || this._didScroll === true) {
+					// Remove old sectionIndexItem as active
+					if (this._activeSectionIndexItem) {
+						this._activeSectionIndexItem.removeActiveElement();
+					}
+					OutSystems.OSUI.Utils.ScrollToElement(
+						targetElement.sectionIndexItemTargetId,
+						this.configs.SmoothScrolling
+					);
+					// Set new sectionIndexItem as active
+					targetElement.setActiveElement();
+					this._didMoveByPattern = true;
+					this._didScroll = false;
+					this._activeSectionIndexItem = targetElement;
 				}
-				OutSystems.OSUI.Utils.ScrollToElement(
-					targetElement.sectionIndexItemTargetId,
-					this.configs.SmoothScrolling,
-					this._offset
-				);
-				// Set new sectionIndexItem as active
-				targetElement.setActiveElement();
-				this._activeSectionIndexItem = targetElement;
 			}
 		}
 
