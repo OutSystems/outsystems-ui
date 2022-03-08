@@ -1,36 +1,14 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Notification.Enum {
 	/**
-	 * Notification Enum properties
-	 */
-	export enum Properties {
-		IsOpen = 'IsOpen',
-		Position = 'Position',
-		Width = 'Width',
-		HasOverlay = 'HasOverlay',
-		CloseAfterTime = 'CloseAfterTime',
-		CloseOnBodyClick = 'CloseOnBodyClick',
-		ClickToClose = 'ClickToClose',
-	}
-
-	/**
-	 * Notification default properties
-	 */
-	export enum Defaults {
-		DefaultWidth = '370px',
-		DefaultPosition = 'top',
-	}
-
-	/**
 	 * Notification Enum for CSS Classes
 	 */
 
 	export enum CssClass {
 		Pattern = 'osui-notification',
-		PatternContent = 'osui-notification-content',
-		PatternIsOpen = 'is-open',
-		PatternOverlay = 'has-overlay',
-		PatternPosition = 'is-',
+		PatternContent = 'osui-notification__content',
+		PatternIsOpen = 'osui-notification--is-open',
+		PatternPosition = 'osui-notification--is-',
 	}
 
 	/**
@@ -38,5 +16,32 @@ namespace OSUIFramework.Patterns.Notification.Enum {
 	 */
 	export enum CssProperty {
 		Width = '--notification-width',
+	}
+
+	/**
+	 * Notification default properties
+	 */
+	export enum Defaults {
+		DefaultPosition = 'top',
+		DefaultWidth = '370px',
+	}
+
+	/**
+	 * Notification Events
+	 */
+	export enum Events {
+		OnInitialize = 'Initialized',
+		OnToggle = 'OnToggle',
+	}
+	/**
+	 * Notification Enum properties
+	 */
+	export enum Properties {
+		ClickToClose = 'ClickToClose',
+		CloseAfterTime = 'CloseAfterTime',
+		NeedsSwipes = 'NeedsSwipes',
+		Position = 'Position',
+		StartsOpen = 'StartsOpen',
+		Width = 'Width',
 	}
 }

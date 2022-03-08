@@ -5,7 +5,7 @@
 
 ///
 .osui-notification {
-	&-content {
+	&__content {
 		background-color: var(--color-neutral-0);
 		border: var(--border-size-s) solid var(--color-neutral-4);
 		border-radius: var(--border-radius-soft);
@@ -15,166 +15,170 @@
 		padding: var(--space-m);
 		pointer-events: none;
 		position: fixed;
-		transition: all 300ms ease-out;
+		transition: transform 300ms ease-out, opacity 300ms ease-out;
 		user-select: none;
 		width: var(--notification-width);
 		z-index: 300;
 
 		// Service Studio Preview
 		& {
-			-servicestudio-min-width: calc(100% - 64px);
 			-servicestudio-opacity: 1;
 			-servicestudio-position: relative;
 		}
 	}
 
-	&.is {
+	// Service Studio Preview
+	&-preview {
+		-servicestudio-position: relative;
+
+		&.bottom .is-bottom,
+		&.bottom-right .is-bottom-right,
+		&.bottom-left .is-bottom-left,
+		&.center .is-center,
+		&.right .is-right,
+		&.left .is-left,
+		&.top .is-top,
+		&.top-right .is-top-right,
+		&.top-left .is-top-left {
+			-servicestudio-display: block;
+		}
+
+		[class*='is-'] {
+			-servicestudio-display: none;
+		}
+	}
+
+	&--is {
 		&-top {
-			.osui-notification-content {
+			.osui-notification__content {
 				left: 50%;
-				top: calc(var(--space-xxl) * -1);
 				transform: translate(-50%, -100%);
 			}
 
+			&,
 			&-right,
 			&-left {
-				.osui-notification-content {
-					margin-top: var(--space-m);
-					top: 0;
+				.osui-notification__content {
+					top: var(--space-m);
 				}
 			}
 
-			&-right .osui-notification-content {
-				right: -100%;
+			&-right {
+				.osui-notification__content {
+					right: var(--space-m);
+					transform: translateX(100%);
+				}
 			}
+			&-left {
+				.osui-notification__content {
+					left: var(--space-m);
+					transform: translateX(-100%);
+				}
+			}
+		}
 
-			&-left .osui-notification-content {
-				left: -100%;
+		&-center {
+			.osui-notification__content {
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -100%);
+			}
+		}
+
+		&-right,
+		&-left {
+			.osui-notification__content {
+				top: 50%;
+			}
+		}
+
+		&-right {
+			.osui-notification__content {
+				right: var(--space-m);
+				transform: translate(100%, -50%);
+			}
+		}
+		&-left {
+			.osui-notification__content {
+				left: var(--space-m);
+				transform: translate(-100%, -50%);
 			}
 		}
 
 		&-bottom {
-			.osui-notification-content {
-				bottom: calc(var(--space-xxl) * -1);
+			.osui-notification__content {
 				left: 50%;
 				transform: translate(-50%, 100%);
 			}
 
+			&,
 			&-right,
 			&-left {
-				.osui-notification-content {
-					bottom: 0;
-					margin-bottom: var(--space-m);
+				.osui-notification__content {
+					bottom: var(--space-m);
 				}
 			}
 
-			&-right .osui-notification-content {
-				right: -100%;
+			&-right {
+				.osui-notification__content {
+					right: var(--space-m);
+					transform: translateX(100%);
+				}
 			}
-
-			&-left .osui-notification-content {
-				left: -100%;
+			&-left {
+				.osui-notification__content {
+					left: var(--space-m);
+					transform: translateX(-100%);
+				}
 			}
-		}
-
-		&-center .osui-notification-content {
-			left: 50%;
-			opacity: 0;
-			top: 50%;
-			transform: translate(-50%, -50%);
-		}
-
-		&-right .osui-notification-content {
-			right: -100%;
-			top: 50%;
-			transform: translateY(-50%);
-		}
-
-		&-left .osui-notification-content {
-			left: -100%;
-			top: 50%;
-			transform: translateY(-50%);
 		}
 
 		&-open {
-			.osui-notification-content {
+			.osui-notification__content {
 				opacity: 1;
 				pointer-events: auto;
 			}
-			&.has-overlay {
-				&:before {
-					background-color: rgba(0, 0, 0, 0.25);
-					content: '';
-					display: block;
-					height: 100vh;
-					left: 0;
-					position: fixed;
-					top: 0;
-					width: 100vw;
-					z-index: 100;
-				}
-			}
 
-			&.is {
-				&-top {
-					.osui-notification-content {
-						margin-top: var(--space-m);
-						top: 0;
-						transform: translate(-50%, 0%);
+			&.osui-notification {
+				&--is {
+					&-top {
+						.osui-notification__content {
+							transform: translate(-50%);
+						}
+
+						&-right,
+						&-left {
+							.osui-notification__content {
+								transform: translate(0, 0);
+							}
+						}
 					}
 
-					&-right .osui-notification-content {
-						margin-right: var(--space-m);
-						right: 0;
-					}
-
-					&-left .osui-notification-content {
-						left: 0;
-						margin-left: var(--space-m);
-					}
-				}
-
-				&-bottom {
-					.osui-notification-content {
-						bottom: 0;
-						margin-bottom: var(--space-m);
-						transform: translateX(-50%);
+					&-center {
+						.osui-notification__content {
+							transform: translate(-50%, -50%);
+						}
 					}
 
 					&-right,
 					&-left {
-						.osui-notification-content {
-							bottom: 0;
+						.osui-notification__content {
+							transform: translate(0, -50%);
 						}
 					}
 
-					&-right .osui-notification-content {
-						margin: var(--space-none) var(--space-m) var(--space-m) var(--space-none);
-						right: 0;
+					&-bottom {
+						.osui-notification__content {
+							transform: translate(-50%, 0);
+						}
+
+						&-right,
+						&-left {
+							.osui-notification__content {
+								transform: translateX(0);
+							}
+						}
 					}
-
-					&-left .osui-notification-content {
-						left: 0;
-						margin: var(--space-none) var(--space-none) var(--space-m) var(--space-m);
-					}
-				}
-
-				&-center .osui-notification-content {
-					opacity: 1;
-				}
-
-				&-right .osui-notification-content {
-					margin-right: var(--space-m);
-					right: 0;
-					top: 50%;
-					transform: translateY(-50%);
-				}
-
-				&-left .osui-notification-content {
-					left: 0;
-					margin-left: var(--space-m);
-					top: 50%;
-					transform: translateY(-50%);
 				}
 			}
 		}
@@ -199,57 +203,48 @@
 	}
 }
 
-///
-.layout-native {
-	.osui-notification {
-		left: 50%;
-		margin-left: -185px;
-		transform: translateY(-120%) translateX(0);
-
-		// Service Studio Preview
-		& {
-			-servicestudio-left: 0;
-			-servicestudio-margin-left: 0;
-			-servicestudio-transform: none;
-		}
-
-		&.is-open {
-			transform: translateY(24px) translateX(0);
-		}
-	}
-}
-
 // Responsive --------------------------------------------------------------------
-///
-.tablet {
-	.layout-native {
-		.osui-notification {
-			left: 50%;
-			margin-left: -185px;
-		}
-	}
-}
 
 ///
 .phone {
-	.layout-native {
-		.osui-notification {
-			left: 16px;
-			margin-left: 0;
-			right: 16px;
-			width: auto;
-		}
+	.osui-notification__content {
+		left: var(--space-base);
+		right: var(--space-base);
+		width: inherit;
 	}
 
-	.osui-notification-content {
-		max-width: calc(100% - var(--space-xl));
+	.osui-notification--is {
+		&-top .osui-notification__content {
+			transform: translate(0, -100%);
+		}
+
+		&-center .osui-notification__content {
+			transform: translate(0, -100%);
+		}
+
+		&-bottom .osui-notification__content {
+			transform: translate(0, 100%);
+		}
+
+		&-open {
+			&.osui-notification--is {
+				&-top .osui-notification__content,
+				&-bottom .osui-notification__content {
+					transform: translate(0, 0);
+				}
+
+				&-center .osui-notification__content {
+					transform: translate(0, -50%);
+				}
+			}
+		}
 	}
 }
 
 ///
 .android[data-status-bar-height] {
 	.layout-native {
-		.osui-notification.is-open {
+		.osui-notification--is-open {
 			margin-top: var(--status-bar-height);
 		}
 	}
@@ -261,15 +256,15 @@
 		&.landscape {
 			.layout-native {
 				.osui-notification {
-					left: calc(var(--os-safe-area-left) + 16px);
-					right: calc(var(--os-safe-area-right) + 16px);
+					left: calc(var(--os-safe-area-left) + var(--space-base));
+					right: calc(var(--os-safe-area-right) + var(--space-base));
 				}
 			}
 		}
 	}
 
 	.layout-native {
-		.osui-notification.is-open {
+		.osui-notification--is-open {
 			margin-top: var(--status-bar-height);
 		}
 	}
