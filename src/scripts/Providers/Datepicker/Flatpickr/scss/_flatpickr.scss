@@ -339,7 +339,7 @@ span.flatpickr-weekday {
 }
 
 // Responsive --------------------------------------------------------------------
-//
+///
 .phone {
 	.flatpickr-current-month,
 	.flatpickr-time {
@@ -348,6 +348,54 @@ span.flatpickr-weekday {
 				// Hack to disable zoom focus on mobile
 				font-size: var(--font-size-base);
 			}
+		}
+	}
+}
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	.flatpickr-months,
+	.flatpickr-weekdays,
+	.flatpickr-days {
+		direction: rtl;
+	}
+
+	.flatpickr-prev-month {
+		// !important used to override selector that is more specific!
+		left: unset !important;
+		margin: var(--space-none);
+		right: var(--space-base);
+		transform: scaleX(-1) translateY(-50%);
+	}
+
+	.flatpickr-next-month {
+		// !important used to override selector that is more specific!
+		left: var(--space-base);
+		margin: var(--space-none);
+		right: unset !important;
+		transform: scaleX(-1) translateY(-50%);
+	}
+
+	.numInputWrapper {
+		span {
+			left: 0;
+			padding: 0 2px 0 4px; // This values are defined at library as well!
+			right: unset;
+		}
+	}
+
+	.flatpickr-current-month {
+		.numInputWrapper {
+			input {
+				padding-left: var(--space-base);
+				padding-right: var(--space-s);
+			}
+		}
+
+		.flatpickr-monthDropdown-months {
+			margin-left: var(--space-base);
+			margin-right: var(--space-none);
 		}
 	}
 }
