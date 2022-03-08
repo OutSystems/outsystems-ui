@@ -33,12 +33,8 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 		configs: string
 	): OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem {
 		if (_dropdownServerSideItemItemsMap.has(dropdownServerSideItemId)) {
-			/* TODO (by CreateNewPattern): 
-				The line below is created by the CreateNewPattern mechanism, that is not able to replace values
-				as expected, that said, check other patterns to understand how to replace it!
-			*/
 			throw new Error(
-				'There is already an DropdownServerSideItem registered under id: ' + dropdownServerSideItemId
+				`There is already an DropdownServerSideItem registered under id: ${dropdownServerSideItemId}`
 			);
 		}
 

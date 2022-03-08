@@ -26,7 +26,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		private _eventOnSpanFocus: OSUIFramework.Callbacks.Generic;
 		// Keyboard Key Press Event
 		private _eventOnkeyBoardPress: OSUIFramework.Callbacks.Generic;
-		// Store a Flag property that will control if the dropdown is blocked (in case it's under closing animation for instance)
+		// Store a Flag property that will control if the dropdown is blocked (like it's under closing animation)
 		private _isBlocked = false;
 		// Store the Element State, by default is closed!
 		private _isOpened = false;
