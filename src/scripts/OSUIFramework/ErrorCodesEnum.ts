@@ -22,4 +22,8 @@ namespace OSUIFramework.ErrorCodes {
 	};
 
 	export const DropdownServerSideItem = {};
+
+	export const Notification = {
+		FailRegisterCallback: 'OSUI-GEN-03001',
+	};
 }
