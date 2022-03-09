@@ -354,7 +354,9 @@ namespace OSUIFramework.Patterns.Notification {
 						this._updateCloseAfterTime(propertyValue);
 						break;
 					case Enum.Properties.StartsOpen:
-						this._onNotificationToggle(propertyValue);
+						console.warn(
+							`${GlobalEnum.PatternsNames.Notification} (${this.widgetId}): changes to ${Enum.Properties.StartsOpen} parameter do not affect the ${GlobalEnum.PatternsNames.Notification}. Use the client actions 'NotificationShow' and 'NotificationHide' to affect the ${GlobalEnum.PatternsNames.Notification}.`
+						);
 						break;
 					case Enum.Properties.Position:
 						this._updatePosition(_oldNotificationPosition);
