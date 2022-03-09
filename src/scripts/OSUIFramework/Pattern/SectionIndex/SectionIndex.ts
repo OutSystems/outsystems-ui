@@ -69,17 +69,6 @@ namespace OSUIFramework.Patterns.SectionIndex {
 			}
 		}
 
-		// Used to perform the Scroll into the given offset position
-		private _scrollInto(scrollTo: number): void {
-			// Trigger the Scroll navigation
-			this._mainScrollContainerElement.scroll({
-				top: scrollTo,
-				behavior: this.configs.SmoothScrolling
-					? GlobalEnum.ScrollBehavior.Smooth
-					: GlobalEnum.ScrollBehavior.Auto,
-			});
-		}
-
 		// Method to set the SectionIndex IsFixed
 		private _toggleIsFixed(): void {
 			if (this.configs.IsFixed) {
@@ -124,7 +113,7 @@ namespace OSUIFramework.Patterns.SectionIndex {
 			this._activeSectionIndexItem = child;
 
 			// Trigger the Scroll navigation
-			this._scrollInto(child.targetElementOffset.top);
+			Helper.Scroll(this._mainScrollContainerElement, child.targetElementOffset, this.configs.SmoothScrolling);
 		}
 
 		/**

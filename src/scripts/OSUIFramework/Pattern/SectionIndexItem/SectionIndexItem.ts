@@ -20,7 +20,7 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		// Store TargetElement HTML object
 		private _targetElement: HTMLElement = undefined;
 		// Store offset top/bottom from TargetElement HTML object
-		private _targetElementOffset: SectionIndexItemOffsetInfo = {
+		private _targetElementOffset: OffsetValues = {
 			bottom: 0,
 			top: 0,
 		};
@@ -229,10 +229,10 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		 * Readable property to get targetElementOffset info
 		 *
 		 * @readonly
-		 * @type {SectionIndexItemOffsetInfo}
+		 * @type {OffsetValues}
 		 * @memberof SectionIndexItem
 		 */
-		public get targetElementOffset(): SectionIndexItemOffsetInfo {
+		public get targetElementOffset(): OffsetValues {
 			return this._targetElementOffset;
 		}
 	}

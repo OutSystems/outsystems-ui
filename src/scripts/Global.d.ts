@@ -49,6 +49,14 @@ declare global {
 		standalone: any;
 	}
 
+	// Offset Type
+	type OffsetValues = {
+		bottom?: number;
+		left?: number;
+		right?: number;
+		top?: number;
+	};
+
 	// RangeSlider
 	type NoUiSlider = noUiSlider;
 	type NoUiSliderOptions = noUiSliderOptions;
@@ -70,10 +78,4 @@ declare global {
 
 	// DropDown => OutSystems Provider
 	type OSUIComponents = any;
-
-	// SectionIndex => SectionIndexItem
-	type SectionIndexItemOffsetInfo = {
-		top: number;
-		bottom: number;
-	};
 }

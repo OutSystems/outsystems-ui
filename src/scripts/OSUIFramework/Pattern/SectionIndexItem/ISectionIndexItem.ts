@@ -10,7 +10,7 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 	export interface ISectionIndexItem extends Interface.IChild {
 		setIsActive();
 		get targetElement(): HTMLElement;
-		get targetElementOffset(): SectionIndexItemOffsetInfo;
+		get targetElementOffset(): OffsetValues;
 		unsetIsActive();
 	}
 }
