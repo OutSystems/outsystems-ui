@@ -51,7 +51,39 @@ namespace OSUIFramework.Patterns.Notification {
 		private _clickCallback(e: MouseEvent): void {
 			e.stopPropagation();
 			e.preventDefault();
-			this._onNotificationToggle(!this._isOpen);
+			this.hide();
+		}
+		/**
+		 * Hide Notification
+		 *
+		 * @private
+		 * @memberof Notification
+		 */
+		private _hideNotification(): void {
+			this._isOpen = false;
+
+			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
+
+			// Trigger Notification event with new status
+			this._triggerOnToggleEvent(this._isOpen);
+
+			// Update accessibility properties
+			this._updateA11yProperties();
+
+			// Remove focus when a Notification is closed
+			this._notificationContentElement.blur();
+
+			// Focus on last element clicked
+			this._focusableActiveElement.focus();
+
+			// Remove listeners to toggle Notification
+			if (this.configs.ClickToClose) {
+				this._notificationContentElement.removeEventListener(this._eventType, this._eventOnClick);
+				this._notificationContentElement.removeEventListener(
+					GlobalEnum.HTMLEvent.keyDown,
+					this._eventOnKeypress
+				);
+			}
 		}
 
 		/**
@@ -97,23 +129,45 @@ namespace OSUIFramework.Patterns.Notification {
 		}
 
 		/**
-		 * Toggle visibility of Notification
+		 * Show Notification
+		 *
+		 * @private
+		 * @memberof Notification
+		 */
+		private _showNotification(): void {
+			this._focusableActiveElement = document.activeElement as HTMLElement;
+			this._isOpen = true;
+
+			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsOpen);
+
+			// Trigger Notification event with new status
+			this._triggerOnToggleEvent(this._isOpen);
+
+			// Update accessibility properties
+			this._updateA11yProperties();
+
+			// Add listeners to toggle Notification
+			if (this.configs.ClickToClose) {
+				this._notificationContentElement.addEventListener(this._eventType, this._eventOnClick);
+			}
+
+			this._notificationContentElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
+
+			// Focus on element when Notification is open
+			this._notificationContentElement.focus();
+
+			if (this.configs.CloseAfterTime > 0) {
+				this._autoCloseNotification();
+			}
+		}
+
+		/**
+		 * Method that triggers the OnToggle event
 		 *
 		 * @private
 		 * @param {boolean} isOpen
 		 * @memberof Notification
 		 */
-		private _onNotificationToggle(isOpen: boolean): void {
-			this._isOpen = isOpen;
-
-			if (this._isOpen) {
-				this.show();
-			} else {
-				this.hide();
-			}
-		}
-
-		// Method that triggers the OnToggle event
 		private _triggerOnToggleEvent(isOpen: boolean): void {
 			Helper.AsyncInvocation(this._platformEventOnToggle, this.widgetId, isOpen);
 		}
@@ -144,6 +198,24 @@ namespace OSUIFramework.Patterns.Notification {
 			// On each element, toggle the tabindex value, depending if notification is open or closed
 			for (const item of this._focusableElements) {
 				setA11YtabIndex(item);
+			}
+		}
+
+		/**
+		 * Update time to apply on AutoClose
+		 *
+		 * @private
+		 * @param {number} value
+		 * @memberof Notification
+		 */
+		private _updateClickToClose(value: boolean): void {
+			if (this.configs.ClickToClose !== value) {
+				this.configs.ClickToClose = value;
+				if (this.configs.ClickToClose) {
+					this._notificationContentElement.addEventListener(this._eventType, this._eventOnClick);
+				} else {
+					this._notificationContentElement.removeEventListener(this._eventType, this._eventOnClick);
+				}
 			}
 		}
 
@@ -258,11 +330,6 @@ namespace OSUIFramework.Patterns.Notification {
 				this._eventType = GlobalEnum.HTMLEvent.Click;
 			}
 
-			// Add A11Y class to body if feature is enabled because the styles are only in the layout context and we move the notification to outside of layout
-			if (Helper.DeviceInfo.HasAccessibilityEnabled) {
-				Helper.Dom.Styles.AddClass(document.body, Constants.HasAccessibilityClass);
-			}
-
 			// Set width value for Notification
 			Helper.Dom.Styles.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, this.configs.Width);
 
@@ -270,21 +337,12 @@ namespace OSUIFramework.Patterns.Notification {
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternPosition + this.configs.Position);
 
 			if (this._isOpen) {
-				this._onNotificationToggle(this._isOpen);
+				this._showNotification();
 			}
 
 			if (this.configs.CloseAfterTime > 0 && this._isOpen) {
 				this._autoCloseNotification();
 			}
-
-			// Move Notification element to outside of layout
-			Helper.Dom.Move(
-				this._selfElem,
-				Helper.Dom.ClassSelector(
-					document.body,
-					GlobalEnum.Screen.Active + Constants.Dot + GlobalEnum.Screen.Container
-				)
-			);
 		}
 
 		/**
@@ -348,7 +406,7 @@ namespace OSUIFramework.Patterns.Notification {
 				// Check which property changed and call respective method to update it
 				switch (propertyName) {
 					case Enum.Properties.ClickToClose:
-						this.configs.ClickToClose = propertyValue;
+						this._updateClickToClose(propertyValue);
 						break;
 					case Enum.Properties.CloseAfterTime:
 						this._updateCloseAfterTime(propertyValue);
@@ -385,34 +443,13 @@ namespace OSUIFramework.Patterns.Notification {
 		}
 
 		/**
-		 * Hide Notification
+		 * Public method to hide the notification, if it's visible.
 		 *
 		 * @memberof Notification
 		 */
 		public hide(): void {
-			this._isOpen = false;
-
-			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
-
-			// Trigger Notification event with new status
-			this._triggerOnToggleEvent(this._isOpen);
-
-			// Update accessibility properties
-			this._updateA11yProperties();
-
-			// Remove focus when a Notification is closed
-			this._notificationContentElement.blur();
-
-			// Focus on last element clicked
-			this._focusableActiveElement.focus();
-
-			// Remove listeners to toggle Notification
-			if (this.configs.ClickToClose) {
-				this._notificationContentElement.removeEventListener(this._eventType, this._eventOnClick);
-				this._notificationContentElement.removeEventListener(
-					GlobalEnum.HTMLEvent.keyDown,
-					this._eventOnKeypress
-				);
+			if (this._isOpen) {
+				this._hideNotification();
 			}
 		}
 
@@ -500,34 +537,13 @@ namespace OSUIFramework.Patterns.Notification {
 		}
 
 		/**
-		 * Show Notification
+		 * Public method to show the notification, if it's closed.
 		 *
 		 * @memberof Notification
 		 */
 		public show(): void {
-			this._focusableActiveElement = document.activeElement as HTMLElement;
-			this._isOpen = true;
-
-			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsOpen);
-
-			// Trigger Notification event with new status
-			this._triggerOnToggleEvent(this._isOpen);
-
-			// Update accessibility properties
-			this._updateA11yProperties();
-
-			// Add listeners to toggle Notification
-			if (this.configs.ClickToClose) {
-				this._notificationContentElement.addEventListener(this._eventType, this._eventOnClick);
-			}
-
-			this._notificationContentElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
-
-			// Focus on element when Notification is open
-			this._notificationContentElement.focus();
-
-			if (this.configs.CloseAfterTime > 0) {
-				this._autoCloseNotification();
+			if (this._isOpen === false) {
+				this._showNotification();
 			}
 		}
 	}
