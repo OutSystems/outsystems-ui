@@ -24,12 +24,10 @@ namespace OSUIFramework.ErrorCodes {
 	export const DropdownServerSideItem = {};
 
 	export const SectionIndex = {
-		FailOptionItemClicked: 'OSUI-GEN-04001',
-		FailOptionItemKeyPressed: 'OSUI-GEN-04002',
-		FailRegisterCallback: 'OSUI-GEN-04003',
-		FailSetNewOptionItem: 'OSUI-GEN-04004',
-		FailToSetOptionItemAction: 'OSUI-GEN-04005',
-		FailUnsetNewOptionItem: 'OSUI-GEN-04006',
+		FailChildItemClicked: 'OSUI-GEN-04001',
+		FailSetNewChildItem: 'OSUI-GEN-04002',
+		FailToSetChildItemAction: 'OSUI-GEN-04003',
+		FailUnsetNewChildItem: 'OSUI-GEN-04004',
 	};
 
 	export const SectionIndexItem = {

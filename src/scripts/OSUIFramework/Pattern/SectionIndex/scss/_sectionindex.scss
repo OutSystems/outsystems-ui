@@ -41,7 +41,7 @@
 		color: var(--color-neutral-9);
 	}
 
-	.osui-section-index-item--is-active {
+	&--is-active {
 		color: var(--color-neutral-9);
 		font-weight: var(--font-semi-bold);
 		&::before {
@@ -59,12 +59,10 @@
 // Accessibility -----------------------------------------------------------------
 ///
 .has-accessible-features {
-	.osui-section-index {
-		a {
-			&:focus {
-				background-color: transparent;
-				box-shadow: 0 0 0 3px var(--color-focus-outer);
-			}
+	.osui-section-index-item {
+		&:focus {
+			background-color: transparent;
+			box-shadow: 0 0 0 3px var(--color-focus-outer);
 		}
 	}
 }
@@ -72,14 +70,34 @@
 // IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {
-	// css props
+	.osui-section-index {
+		&::before {
+			left: auto;
+			right: 0;
+		}
+	}
+
+	.osui-section-index-item {
+		&,
+		&:visited {
+			padding-left: var(--space-none);
+			padding-right: var(--space-m);
+		}
+
+		&--is-active {
+			&::before {
+				left: auto;
+				right: 0;
+			}
+		}
+	}
 }
 
 // Responsive --------------------------------------------------------------------
 .android[data-status-bar-height] {
 	.layout-native {
 		.osui-section-index {
-			&.sticky {
+			&--is-sticky {
 				top: calc(
 					var(--header-size) + var(--header-size-content) + var(--top-position) + var(--status-bar-height)
 				);
@@ -92,7 +110,7 @@
 .ios {
 	.layout-native {
 		.osui-section-index {
-			&.sticky {
+			&--is-sticky {
 				position: fixed;
 			}
 		}

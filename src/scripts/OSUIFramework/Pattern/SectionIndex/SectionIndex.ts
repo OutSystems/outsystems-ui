@@ -30,41 +30,41 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		 */
 		private _addSectionIndexItem(childId: string): void {
 			// Get the ChildItem reference
-			const optionItem = OutSystems.OSUI.Patterns.SectionIndexItemAPI.GetSectionIndexItemById(childId);
+			const childItem = OutSystems.OSUI.Patterns.SectionIndexItemAPI.GetSectionIndexItemById(childId);
 
 			if (this.getChild(childId)) {
 				throw new Error(
-					`${ErrorCodes.SectionIndex.FailSetNewOptionItem}: There is already a ${GlobalEnum.PatternsNames.SectionIndexItem} under Id: '${optionItem.widgetId}' added to ${GlobalEnum.PatternsNames.SectionIndex} with uniqueId: ${this.uniqueId}.`
+					`${ErrorCodes.SectionIndex.FailSetNewChildItem}: There is already a ${GlobalEnum.PatternsNames.SectionIndexItem} under Id: '${childItem.widgetId}' added to ${GlobalEnum.PatternsNames.SectionIndex} with uniqueId: ${this.uniqueId}.`
 				);
 			} else {
 				// Store Child Item
-				this.setChild(childId, optionItem);
+				this.setChild(childId, childItem);
 			}
 		}
 
 		// Method to deal with the click at a SectionIndexItem
 		private _childItemHasBeenClicked(childId: string): void {
 			const childReference = this.getChild(childId);
-			// Check if the given OptionId exist as an child item
+			// Check if the given ChildId exist as an child item
 			if (childReference) {
 				// Update child status
 				this._updateIsActiveChildItem(childReference);
 			} else {
 				throw new Error(
-					`${ErrorCodes.SectionIndex.FailOptionItemClicked}: The ${GlobalEnum.PatternsNames.SectionIndexItem} under uniqueId: '${childId}' does not exist as an OptionItem from ${GlobalEnum.PatternsNames.SectionIndex} with Id: ${this.widgetId}.`
+					`${ErrorCodes.SectionIndex.FailChildItemClicked}: The ${GlobalEnum.PatternsNames.SectionIndexItem} under uniqueId: '${childId}' does not exist as an SectionIndexItem from ${GlobalEnum.PatternsNames.SectionIndex} with Id: ${this.widgetId}.`
 				);
 			}
 		}
 
-		// Method used to remove a given SectionIndexItem from optionItems list, it's triggered by SectionIndexItem
+		// Method used to remove a given SectionIndexItem from sectionIndexItems list, it's triggered by SectionIndexItem
 		private _removeSectionIndexItem(childId: string): void {
-			// Check if the given OptionId exist at optionsList
+			// Check if the given ChildId exist at childList
 			if (this.getChild(childId)) {
 				// Remove item
 				this.unsetChild(childId);
 			} else {
 				throw new Error(
-					`${ErrorCodes.SectionIndex.FailUnsetNewOptionItem}: The ${GlobalEnum.PatternsNames.SectionIndexItem} under uniqueId: '${childId}' does not exist as an OptionItem from ${GlobalEnum.PatternsNames.SectionIndex} with Id: ${this.widgetId}.`
+					`${ErrorCodes.SectionIndex.FailUnsetNewChildItem}: The ${GlobalEnum.PatternsNames.SectionIndexItem} under uniqueId: '${childId}' does not exist as an SectionIndexItem from ${GlobalEnum.PatternsNames.SectionIndex} with Id: ${this.widgetId}.`
 				);
 			}
 		}
@@ -167,7 +167,7 @@ namespace OSUIFramework.Patterns.SectionIndex {
 					break;
 				default:
 					throw new Error(
-						`${ErrorCodes.SectionIndex.FailToSetOptionItemAction}: There no exist a '${notifiedTo}' notification type.`
+						`${ErrorCodes.SectionIndex.FailToSetChildItemAction}: There no exist a '${notifiedTo}' notification type.`
 					);
 			}
 		}

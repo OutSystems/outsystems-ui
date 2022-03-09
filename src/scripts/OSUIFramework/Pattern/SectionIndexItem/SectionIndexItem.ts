@@ -64,8 +64,8 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 			// Update the offsetInfo when clicked since we could have expandable containers that will change this values accoring the scroll content height
 			this._setTargetOffsetInfo();
 
-			// Notify parent about this Option Click
-			this.notifyParent(Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.Click);
+			// Notify parent about this Item Click
+			this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Click);
 		}
 
 		// Remove Pattern Events
