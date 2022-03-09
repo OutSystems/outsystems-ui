@@ -11,19 +11,26 @@ namespace OSUIFramework.Patterns.SectionIndex.Enum {
 	}
 
 	/**
-	 * SectionIndex Enum properties
+	 * CSS Classes Enum
+	 */
+	export enum CssClass {
+		IsActiveItem = 'osui-section-index-item--is-active',
+		IsSticky = 'osui-section-index--is-sticky',
+		Pattern = 'osui-section-index',
+	}
+
+	/**
+	 * CSS Variables Enum
+	 */
+	export enum CssVariable {
+		TopPosition = '--top-position',
+	}
+
+	/**
+	 * Properties Enum
 	 */
 	export enum Properties {
 		IsFixed = 'IsFixed',
 		SmoothScrolling = 'SmoothScrolling',
-	}
-
-	/**
-	 * Accordion Enum for CSS Classes
-	 */
-	export enum CssClass {
-		ActiveItem = 'osui-section-index-item--is-active',
-		Pattern = 'osui-section-index',
-		UsefulSticky = 'osui-section-index--is-sticky',
 	}
 }

@@ -231,6 +231,24 @@ namespace OSUIFramework.Helper {
 		}
 
 		/**
+		 * Method that remove a style attribute to a given html element.
+		 *
+		 * @static
+		 * @param {HTMLElement} element Element where the class will be toggled.
+		 * @param {string} cssRule Css rule that will be removed.
+		 * @memberof StyleManipulation
+		 */
+		public static RemoveStyleAttribute(element: HTMLElement, cssRule: string): void {
+			if (element) {
+				if (cssRule !== '') {
+					element.style.removeProperty(cssRule);
+				}
+			} else {
+				throw Error(`The element does not exist, when trying to remove the rule '${cssRule}'.`);
+			}
+		}
+
+		/**
 		 * Method that add a style attribute to a given html element.
 		 *
 		 * @static
@@ -356,6 +374,24 @@ namespace OSUIFramework.Helper {
 		 */
 		public static GenerateUniqueId(): string {
 			return Math.random().toString(36);
+		}
+
+		/**
+		 * Responsable for finding a DOM Element by its Id.
+		 *
+		 * @static
+		 * @param {string} id Id of the element to be returned.
+		 * @return {*}  {HTMLElement} The respective DOM Element.
+		 * @memberof Dom
+		 */
+		public static GetElementById(id: string): HTMLElement {
+			const obj = document.getElementById(id);
+
+			if (obj) {
+				return obj;
+			} else {
+				throw new Error(`Object with Id '${id}' not found.`);
+			}
 		}
 
 		/**

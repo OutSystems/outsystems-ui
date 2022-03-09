@@ -19,6 +19,13 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		private _eventOnkeyBoardPress: Callbacks.Generic;
 		// Store if this is the current active item
 		private _isActive = false;
+		// Store TargetElement HTML object
+		private _targetElement: HTMLElement = undefined;
+		// Store offset top/bottom from TargetElement HTML object
+		private _targetElementOffset: SectionIndexItemOffsetInfo = {
+			bottom: 0,
+			top: 0,
+		};
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SectionIndexItemConfig(configs));
@@ -56,6 +63,9 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 			event.preventDefault();
 			event.stopPropagation();
 
+			// Update the offsetInfo when clicked since we could have expandable containers that will change this values accoring the scroll content height
+			this._setTargetOffsetInfo();
+
 			// Notify parent about this Option Click
 			this.notifyParent(Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.Click);
 		}
@@ -64,6 +74,32 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		private _removeEvents(): void {
 			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
+		}
+
+		// Set TargetElement
+		private _setTargetElement(): void {
+			// Check if the element has been already defined!
+			if (this._targetElement === undefined) {
+				try {
+					// Can't be used the Helper.Dom.GetElementById since we don't want a through error if the element does not exist!
+					this._targetElement = document.getElementById(this.configs.ScrollToWidgetId);
+				} catch (e) {
+					// Was not able to get Target element!
+					throw new Error(
+						`${ErrorCodes.SectionIndexItem.FailToSetTargetElement}: Target Element with the Id '${this.configs.ScrollToWidgetId}' does not exist!`
+					);
+				}
+			}
+		}
+
+		// Set offset info related with TargetElement
+		private _setTargetOffsetInfo(): void {
+			// Check if TargetElement has been already defined, otherwise define it!
+			this._setTargetElement();
+
+			// Set the target element offset top/bottom values
+			this._targetElementOffset.bottom = this._targetElement.offsetTop + this._targetElement.offsetHeight;
+			this._targetElementOffset.top = this._targetElement.offsetTop;
 		}
 
 		/**
@@ -86,6 +122,7 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		protected setA11yProperties(): void {
 			// By default set disable to tabIndex
 			Helper.A11Y.TabIndexTrue(this.selfElement);
+			Helper.A11Y.RoleButton(this.selfElement);
 		}
 
 		/**
@@ -159,38 +196,45 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		}
 
 		/**
-		 * Removes active class from pattern.
-		 *
-		 * @memberof SectionIndexItem
-		 */
-		public removeActiveElement(): void {
-			if (this._selfElem) {
-				this._isActive = false;
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Patterns.SectionIndex.Enum.CssClass.ActiveItem);
-			}
-		}
-
-		/**
 		 * Adds active class from pattern.
 		 *
 		 * @memberof SectionIndexItem
 		 */
-		public setActiveElement(): void {
-			if (this._selfElem) {
-				this._isActive = true;
-				Helper.Dom.Styles.AddClass(this._selfElem, Patterns.SectionIndex.Enum.CssClass.ActiveItem);
-			}
+		public setIsActive(): void {
+			this._isActive = true;
+			Helper.Dom.Styles.AddClass(this._selfElem, Patterns.SectionIndex.Enum.CssClass.IsActiveItem);
 		}
 
 		/**
-		 * Readable property to get sectionIndexItemTargetId property name
+		 * Removes active class from pattern.
 		 *
-		 * @readonly
-		 * @type {string}
 		 * @memberof SectionIndexItem
 		 */
-		public get sectionIndexItemTargetId(): string {
-			return this.configs.ScrollToWidgetId;
+		public unsetIsActive(): void {
+			this._isActive = false;
+			Helper.Dom.Styles.RemoveClass(this._selfElem, Patterns.SectionIndex.Enum.CssClass.IsActiveItem);
+		}
+
+		/**
+		 * Readable property to get targetElement object
+		 *
+		 * @readonly
+		 * @type {HTMLElement}
+		 * @memberof SectionIndexItem
+		 */
+		public get targetElement(): HTMLElement {
+			return this._targetElement;
+		}
+
+		/**
+		 * Readable property to get targetElementOffset info
+		 *
+		 * @readonly
+		 * @type {SectionIndexItemOffsetInfo}
+		 * @memberof SectionIndexItem
+		 */
+		public get targetElementOffset(): SectionIndexItemOffsetInfo {
+			return this._targetElementOffset;
 		}
 	}
 }

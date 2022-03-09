@@ -70,4 +70,10 @@ declare global {
 
 	// DropDown => OutSystems Provider
 	type OSUIComponents = any;
+
+	// SectionIndex => SectionIndexItem
+	type SectionIndexItemOffsetInfo = {
+		top: number;
+		bottom: number;
+	};
 }

@@ -30,9 +30,9 @@ namespace OSUIFramework.ErrorCodes {
 		FailSetNewOptionItem: 'OSUI-GEN-04004',
 		FailToSetOptionItemAction: 'OSUI-GEN-04005',
 		FailUnsetNewOptionItem: 'OSUI-GEN-04006',
-		HasNoImplementation: {
-			code: 'OSUI-GEN-04007',
-			message: 'This method has no implementation on this Dropdow Type.',
-		},
+	};
+
+	export const SectionIndexItem = {
+		FailToSetTargetElement: 'OSUI-GEN-05001',
 	};
 }
