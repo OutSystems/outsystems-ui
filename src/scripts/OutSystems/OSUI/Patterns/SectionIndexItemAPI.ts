@@ -30,11 +30,7 @@ namespace OutSystems.OSUI.Patterns.SectionIndexItemAPI {
 		configs: string
 	): OSUIFramework.Patterns.SectionIndexItem.ISectionIndexItem {
 		if (_sectionIndexItemMap.has(sectionIndexItemId)) {
-			/* TODO (by CreateNewPattern): 
-				The line below is created by the CreateNewPattern mechanism, that is not able to replace values
-				as expected, that said, check other patterns to understand how to replace it!
-			*/
-			throw new Error('There is already a SectionIndexItem registered under id: ' + sectionIndexItemId);
+			throw new Error(`There is already a SectionIndexItem registered under id: ${sectionIndexItemId}`);
 		}
 
 		const _sectionIndexItem = new OSUIFramework.Patterns.SectionIndexItem.SectionIndexItem(

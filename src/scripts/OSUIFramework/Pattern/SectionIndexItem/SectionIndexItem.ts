@@ -118,9 +118,10 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		 * @memberof SectionIndexItem
 		 */
 		protected setA11yProperties(): void {
-			// By default set disable to tabIndex
-			Helper.A11Y.TabIndexTrue(this.selfElement);
+			// Set RoleButton attribute
 			Helper.A11Y.RoleButton(this.selfElement);
+			// Set TabIndex
+			Helper.A11Y.TabIndexTrue(this.selfElement);
 		}
 
 		/**
@@ -172,7 +173,9 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 			if (this.isBuilt) {
 				switch (propertyName) {
 					case Enum.Properties.ScrollToWidgetId:
-						// TODO (by CreateNewPattern) Update or Remove
+						console.warn(
+							`${GlobalEnum.PatternsNames.SectionIndex} (${this.widgetId}): change to ${Enum.Properties.ScrollToWidgetId} on property ${Enum.Properties.ScrollToWidgetId} is not editable at OnParametersChange.`
+						);
 						break;
 				}
 			}

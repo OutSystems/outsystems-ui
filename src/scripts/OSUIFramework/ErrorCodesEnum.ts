@@ -5,7 +5,7 @@ namespace OSUIFramework.ErrorCodes {
 	 */
 
 	export const AbstractChild = {
-		DropdownParentNotFound: 'OSUI-GEN-01001',
+		ParentNotFound: 'OSUI-GEN-01001',
 	};
 
 	export const Dropdown = {
