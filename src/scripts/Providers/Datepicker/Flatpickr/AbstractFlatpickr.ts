@@ -108,7 +108,7 @@ namespace Providers.Datepicker.Flatpickr {
 
 			// At phone and tablet we've native behaviour, so TodayBtn can't be added, unless we're using a datepicker range mode since there are no native behaviour for selecting a range date.
 			if (
-				OSUIFramework.Helper.DeviceInfo.IsDesktop ||
+				OSUIFramework.Helper.DeviceInfo.IsNative === false ||
 				this.configs.calendarMode === OSUIFramework.Patterns.DatePicker.Enum.Mode.Range
 			) {
 				// Add TodayBtn
