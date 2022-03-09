@@ -330,11 +330,6 @@ namespace OSUIFramework.Patterns.Notification {
 				this._eventType = GlobalEnum.HTMLEvent.Click;
 			}
 
-			// Add A11Y class to body if feature is enabled because the styles are only in the layout context and we move the notification to outside of layout
-			if (Helper.DeviceInfo.HasAccessibilityEnabled) {
-				Helper.Dom.Styles.AddClass(document.body, Constants.HasAccessibilityClass);
-			}
-
 			// Set width value for Notification
 			Helper.Dom.Styles.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, this.configs.Width);
 
