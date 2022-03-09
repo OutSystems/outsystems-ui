@@ -112,21 +112,19 @@ namespace OSUIFramework.Patterns.SectionIndex {
 
 		// Method that will update the IsActive child item status.
 		private _updateIsActiveChildItem(child: SectionIndexItem.ISectionIndexItem): void {
-			if (child !== this._activeSectionIndexItem) {
-				// Remove old sectionIndexItem as active if exist
-				if (this._activeSectionIndexItem) {
-					this._activeSectionIndexItem.unsetIsActive();
-				}
-
-				// Set new sectionIndexItem as active
-				child.setIsActive();
-
-				// Set the current IsActive Child
-				this._activeSectionIndexItem = child;
-
-				// Trigger the Scroll navigation
-				this._scrollInto(child.targetElementOffset.top);
+			// Remove old sectionIndexItem as active if exist
+			if (this._activeSectionIndexItem) {
+				this._activeSectionIndexItem.unsetIsActive();
 			}
+
+			// Set new sectionIndexItem as active
+			child.setIsActive();
+
+			// Set the current IsActive Child
+			this._activeSectionIndexItem = child;
+
+			// Trigger the Scroll navigation
+			this._scrollInto(child.targetElementOffset.top);
 		}
 
 		/**
