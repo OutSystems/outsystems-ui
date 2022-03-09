@@ -17,8 +17,6 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		private _eventOnClick: Callbacks.Generic;
 		//Stores the keyboard callback function
 		private _eventOnkeyBoardPress: Callbacks.Generic;
-		// Store if this is the current active item
-		private _isActive = false;
 		// Store TargetElement HTML object
 		private _targetElement: HTMLElement = undefined;
 		// Store offset top/bottom from TargetElement HTML object
@@ -201,7 +199,6 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		 * @memberof SectionIndexItem
 		 */
 		public setIsActive(): void {
-			this._isActive = true;
 			Helper.Dom.Styles.AddClass(this._selfElem, Patterns.SectionIndex.Enum.CssClass.IsActiveItem);
 		}
 
@@ -211,7 +208,6 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		 * @memberof SectionIndexItem
 		 */
 		public unsetIsActive(): void {
-			this._isActive = false;
 			Helper.Dom.Styles.RemoveClass(this._selfElem, Patterns.SectionIndex.Enum.CssClass.IsActiveItem);
 		}
 
