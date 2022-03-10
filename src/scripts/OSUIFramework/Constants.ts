@@ -81,6 +81,9 @@ namespace OSUIFramework.Constants {
 	/* css Class that is added in header */
 	export const HeaderClass = 'header';
 
+	/* css Class that represents a placeholder */
+	export const Placeholder = 'ph';
+
 	/*Constant to be used across project as the zero value*/
 	export const ZeroValue = 0;
 }
