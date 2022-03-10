@@ -41,6 +41,9 @@ namespace OSUIFramework.Callbacks {
 	export type OSNotificationToggleEvent = {
 		(notificationId: string, isOpen: boolean): void;
 	};
+	export type OSNotificationInitializedEvent = {
+		(notificationId: string): void;
+	};
 
 	// RangeSlider
 	export type OSRangeSliderInitializeEvent = {
