@@ -21,13 +21,7 @@ namespace OSUIFramework.Patterns.SectionIndex {
 			super(uniqueId, new SectionIndexConfig(configs));
 		}
 
-		/**
-		 * Method to add Item to the list
-		 *
-		 * @param {string} uniqueId
-		 * @param {SectionIndexItem.ISectionIndexItem} sectionIndexItem
-		 * @memberof SectionIndex
-		 */
+		// Method to add Item to the list
 		private _addSectionIndexItem(childId: string): void {
 			// Get the ChildItem reference
 			const childItem = OutSystems.OSUI.Patterns.SectionIndexItemAPI.GetSectionIndexItemById(childId);

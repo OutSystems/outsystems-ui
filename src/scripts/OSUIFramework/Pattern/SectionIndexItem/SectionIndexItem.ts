@@ -29,13 +29,7 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 			super(uniqueId, new SectionIndexItemConfig(configs));
 		}
 
-		/**
-		 * A11y keyboard navigation
-		 *
-		 * @private
-		 * @param {KeyboardEvent} event
-		 * @memberof SectionIndexItem
-		 */
+		// A11y keyboard navigation
 		private _onKeyboardPressed(event: KeyboardEvent): void {
 			event.preventDefault();
 			event.stopPropagation();
@@ -50,13 +44,7 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 			}
 		}
 
-		/**
-		 * Method to handle the click event
-		 *
-		 * @private
-		 * @param {Event} event
-		 * @memberof SectionIndexItem
-		 */
+		// Method to handle the click event
 		private _onSelected(event: Event): void {
 			event.preventDefault();
 			event.stopPropagation();
@@ -100,12 +88,7 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 			this._targetElementOffset.top = this._targetElement.offsetTop;
 		}
 
-		/**
-		 * Method to set the event listeners
-		 *
-		 * @private
-		 * @memberof SectionIndexItem
-		 */
+		// Method to set the event listeners
 		private _setUpEvents(): void {
 			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
