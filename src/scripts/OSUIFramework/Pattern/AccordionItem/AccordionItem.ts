@@ -39,12 +39,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 		/**
 		 * Method to handle the click event
-		 *
-		 * @private
-		 * @param {MouseEvent} [event]
-		 * @return {*}  {void}
-		 * @memberof AccordionItem
-		 */
+		 * */
 		private _accordionOnClickHandler(event?: MouseEvent): void {
 			//If we're not clicking on the title, the icon or the accordion title, we won't open the accordion
 			if (
@@ -64,11 +59,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 		/**
 		 * Method to handle async animation
-		 *
-		 * @private
-		 * @param {boolean} isExpand
-		 * @memberof AccordionItem
-		 */
+		 **/
 		private _animationAsync(isExpand: boolean): void {
 			const finalHeight = isExpand ? this._expandedHeight : this._collapsedHeight;
 
@@ -106,26 +97,20 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 		/**
 		 * Method to handle the tabindex values
-		 *
-		 * @private
-		 * @memberof AccordionItem
-		 */
+		 **/
 		private _handleTabIndex(): void {
-			const titleTabindexValue = this.configs.IsDisabled ? '-1' : '0';
-			const contentTabindexValue = !this.configs.IsDisabled && this._isOpen ? '0' : '-1';
+			const titleTabindexValue = this.configs.IsDisabled
+				? OSUIFramework.Constants.A11YAttributes.States.TabIndexHidden
+				: OSUIFramework.Constants.A11YAttributes.States.TabIndexShow;
+			const contentTabindexValue =
+				!this.configs.IsDisabled && this._isOpen
+					? OSUIFramework.Constants.A11YAttributes.States.TabIndexShow
+					: OSUIFramework.Constants.A11YAttributes.States.TabIndexHidden;
 
 			Helper.A11Y.TabIndex(this._accordionItemTitleElem, titleTabindexValue);
 			Helper.A11Y.TabIndex(this._accordionItemContentElem, contentTabindexValue);
 		}
 
-		/**
-		 * Method to handle the keyboard interactions
-		 *
-		 * @private
-		 * @param {KeyboardEvent} event
-		 * @return {*}  {void}
-		 * @memberof AccordionItem
-		 */
 		private _onKeyboardPress(event: KeyboardEvent): void {
 			const isEscapedKey = event.key === GlobalEnum.Keycodes.Escape;
 			const isEnterOrSpaceKey =
@@ -148,21 +133,52 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		}
 
 		/**
-		 * Method that triggers the toggle event on the platform
-		 *
-		 * @private
-		 * @memberof AccordionItem
-		 */
+		 * Method to handle the keyboard interactions
+		 **/
 		private _onToggleCallback(): void {
 			Helper.AsyncInvocation(this._platformEventOnToggle, this.widgetId, this._isOpen);
 		}
 
 		/**
+		 * Method that changes the icon's position
+		 **/
+		private _setIconPosition(): void {
+			//If the page we're on is RTL, the icon's position has to change accordingly.
+			if (this.configs.IconPosition === GlobalEnum.Direction.Right) {
+				Helper.Dom.Styles.RemoveClass(this._accordionItemTitleElem, Enum.CssClass.PatternIconPositionIsLeft);
+				Helper.Dom.Styles.AddClass(this._accordionItemTitleElem, Enum.CssClass.PatternIconPositionIsRight);
+			} else {
+				Helper.Dom.Styles.RemoveClass(this._accordionItemTitleElem, Enum.CssClass.PatternIconPositionIsRight);
+				Helper.Dom.Styles.AddClass(this._accordionItemTitleElem, Enum.CssClass.PatternIconPositionIsLeft);
+			}
+		}
+
+		/**
+		 * Method that changes the icon's type (Caret, Plus/Minus, Custom)
+		 **/
+		private _setIconType(): void {
+			switch (this.configs.Icon) {
+				case Enum.IconType.PlusMinus:
+					Helper.Dom.Styles.RemoveClass(this._accordionItemIconElem, Enum.CssClass.PatternIconCaret);
+					Helper.Dom.Styles.RemoveClass(this._accordionItemIconElem, Enum.CssClass.PatternIconCustom);
+					Helper.Dom.Styles.AddClass(this._accordionItemIconElem, Enum.CssClass.PatternIconPlusMinus);
+					break;
+				case Enum.IconType.Custom:
+					Helper.Dom.Styles.RemoveClass(this._accordionItemIconElem, Enum.CssClass.PatternIconPlusMinus);
+					Helper.Dom.Styles.RemoveClass(this._accordionItemIconElem, Enum.CssClass.PatternIconCaret);
+					Helper.Dom.Styles.AddClass(this._accordionItemIconElem, Enum.CssClass.PatternIconCustom);
+					break;
+				default:
+					Helper.Dom.Styles.RemoveClass(this._accordionItemIconElem, Enum.CssClass.PatternIconPlusMinus);
+					Helper.Dom.Styles.RemoveClass(this._accordionItemIconElem, Enum.CssClass.PatternIconCustom);
+					Helper.Dom.Styles.AddClass(this._accordionItemIconElem, Enum.CssClass.PatternIconCaret);
+					break;
+			}
+		}
+
+		/**
 		 * Method to handle the IsDisabled state
-		 *
-		 * @private
-		 * @memberof AccordionItem
-		 */
+		 **/
 		private _setIsDisabledState(): void {
 			if (this.configs.IsDisabled) {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternDisabled);
@@ -180,10 +196,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 		/**
 		 * Method to handle the onTransitionEnd on accordion toggle animation
-		 *
-		 * @private
-		 * @memberof AccordionItem
-		 */
+		 **/
 		private _transitionEndHandler(): void {
 			if (this._accordionItemContentElem) {
 				Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.PatternAnimating);
@@ -288,6 +301,9 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternClosed);
 				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternCollapsed);
 			}
+
+			this._setIconType();
+			this._setIconPosition();
 		}
 
 		/**
@@ -376,6 +392,11 @@ namespace OSUIFramework.Patterns.AccordionItem {
 							`${GlobalEnum.PatternsNames.AccordionItem} (${this.widgetId}): changes to ${Enum.Properties.StartsExpanded} parameter do not affect the ${GlobalEnum.PatternsNames.AccordionItem}. Use the client actions 'AccordionItemExpand' and 'AccordionItemCollapse' to affect the ${GlobalEnum.PatternsNames.AccordionItem}.`
 						);
 						break;
+					case Enum.Properties.IconPosition:
+						this._setIconPosition();
+						break;
+					case Enum.Properties.Icon:
+						this._setIconType();
 				}
 			}
 		}

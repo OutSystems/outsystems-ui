@@ -21,18 +21,16 @@
 	}
 
 	&--flipped {
-		.osui-flip-content {
-			&__container {
-				transform: rotateY(-90deg);
+		.osui-flip-content__container {
+			transform: rotateY(-90deg);
 
-				&__front {
-					position: absolute;
-				}
+			&__front {
+				position: absolute;
+			}
 
-				&__back {
-					position: relative;
-					transform: rotateY(90deg);
-				}
+			&__back {
+				position: relative;
+				transform: rotateY(90deg);
 			}
 		}
 	}
@@ -79,6 +77,22 @@
 			// Service Studio preview
 			& {
 				-servicestudio-position: static;
+			}
+		}
+	}
+}
+
+// IsRTL ---------------------------------------------------------------------------
+///
+.is-rtl {
+	.osui-flip-content {
+		&--flipped {
+			.osui-flip-content__container {
+				transform: rotateY(90deg);
+
+				&__back {
+					transform: rotateY(-90deg);
+				}
 			}
 		}
 	}

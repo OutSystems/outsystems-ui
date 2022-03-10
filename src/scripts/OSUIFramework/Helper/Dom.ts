@@ -451,5 +451,30 @@ namespace OSUIFramework.Helper {
 
 			return elementFound;
 		}
+
+		/**
+		 * Function that performs a querySelectorAll of a given html tag in a given element.
+		 *
+		 * @static
+		 * @param {HTMLElement} element Element to be queried.
+		 * @param {string} htmlTag HTML element to be searched for.
+		 * @return {*}  {(HTMLElement | undefined)}
+		 * @memberof Dom
+		 */
+		public static TagSelectorAll(element: HTMLElement, htmlTag: string): HTMLElement[] | undefined {
+			let elementFound: HTMLElement[];
+
+			if (element) {
+				if (htmlTag !== '') {
+					elementFound = Array.from(element.querySelectorAll(htmlTag));
+				}
+				//this is to make sure that we are only returning the element or undefined.
+				elementFound = elementFound ? elementFound : undefined;
+			} else {
+				console.error(`The element doesnot exist.`);
+			}
+
+			return elementFound;
+		}
 	}
 }

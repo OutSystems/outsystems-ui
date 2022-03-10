@@ -14,20 +14,26 @@ namespace Providers.Dropdown.OSUIComponents.Enum {
 	 * DropdownServerSide Class
 	 */
 	export enum Class {
-		BallonFooter = 'osui-dropdown-serverside__ballon-footer',
-		BallonSearch = 'osui-dropdown-serverside__ballon-search',
-		BallonWrapper = 'osui-dropdown-serverside__ballon-wrapper',
-		FocusBottomHtmlElement = 'osui-dropdown-serverside__ballon-focus-bottom',
-		FocusTopHtmlElement = 'osui-dropdown-serverside__ballon-focus-top',
+		BalloonContent = 'osui-dropdown-serverside__balloon-content',
+		BalloonFooter = 'osui-dropdown-serverside__balloon-footer',
+		BalloonSearch = 'osui-dropdown-serverside__balloon-search',
+		BalloonWrapper = 'osui-dropdown-serverside__balloon-wrapper',
+		BalloonWrapperIsDisabled = 'osui-dropdown-serverside__balloon-wrapper--is-disabled',
+		ErrorMessage = 'osui-dropdown-serverside-error-message',
+		FocusBottomHtmlElement = 'osui-dropdown-serverside__balloon-focus-bottom',
+		FocusTopHtmlElement = 'osui-dropdown-serverside__balloon-focus-top',
+		IsDisabled = 'osui-dropdown-serverside--is-disabled',
+		IsOpened = 'osui-dropdown-serverside--is-opened',
+		NotValid = 'osui-dropdown-serverside--not-valid',
 		SelectText = 'osui-dropdown-serverside__text',
-		SelectWrapper = 'osui-dropdown-serverside__input',
+		SelectValuesWrapper = 'osui-dropdown-serverside__selected-values-wrapper',
 	}
 
 	/**
 	 * DropdownServerSide Events
 	 */
 	export enum Events {
-		OnClosed = 'OnClosed',
+		OnToggle = 'OnToggle',
 	}
 
 	/**

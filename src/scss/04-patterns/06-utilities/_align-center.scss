@@ -9,7 +9,9 @@
 	display: flex;
 	flex-direction: row;
 
-	> span {
+	// Fix width of input when is used inside the AlignCenter pattern
+	> span.input-text,
+	> label ~ span {
 		flex: 1;
 	}
 
