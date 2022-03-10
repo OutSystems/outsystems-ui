@@ -11,7 +11,9 @@ namespace OSUIFramework.GlobalEnum {
 	 * OutSystemsUI elements cssClasses
 	 */
 	export enum CssClassElements {
+		Header = 'header',
 		List = 'list',
+		MainContent = 'main-content',
 	}
 
 	/**
@@ -34,6 +36,7 @@ namespace OSUIFramework.GlobalEnum {
 	 */
 	export enum CssProperties {
 		None = 'none',
+		PaddingTop = 'padding-top',
 	}
 
 	/**
@@ -60,7 +63,7 @@ namespace OSUIFramework.GlobalEnum {
 	 * OutSystemsUI Scroll Options
 	 */
 	export enum ScrollBehavior {
-		Instant = 'auto',
+		Auto = 'auto',
 		Smooth = 'smooth',
 	}
 
@@ -99,6 +102,7 @@ namespace OSUIFramework.GlobalEnum {
 		MouseEnter = 'mouseenter',
 		MouseLeave = 'mouseleave',
 		Resize = 'resize',
+		Scroll = 'scroll',
 		TouchEnd = 'touchend',
 		TouchMove = 'touchmove',
 		TouchStart = 'touchstart',
@@ -190,6 +194,7 @@ namespace OSUIFramework.GlobalEnum {
 		Rating = 'Rating',
 		Search = 'Search',
 		SectionIndex = 'Section Index',
+		SectionIndexItem = 'Section Index Item',
 		Sidebar = 'Sidebar',
 		Submenu = 'Submenu',
 		SwipeEvents = 'SwipeEvents',

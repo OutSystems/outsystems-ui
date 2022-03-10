@@ -8,60 +8,103 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 	 * @extends {AbstractPattern<SectionIndexItemConfig>}
 	 * @implements {ISectionIndexItem}
 	 */
-	export class SectionIndexItem extends AbstractPattern<SectionIndexItemConfig> implements ISectionIndexItem {
-		// Store the on click event
-		private _eventOnSectionIndexItemClick: Callbacks.Generic;
-		// Store if this is the current active item
-		private _isActive = false;
-		//Stores the keyboard callback function
-		private _keyBoardCallback: Callbacks.Generic;
-		// Stores the parent of the item (if it exists)
-		private _sectionIndexItemParent: Patterns.SectionIndex.ISectionIndex;
-		// Stores the Target element Id of this item
-		public sectionIndexItemTargetId: string;
 
-		constructor(uniqueId: string, configs: JSON, sectionIndex?: Patterns.SectionIndex.ISectionIndex) {
+	export class SectionIndexItem
+		extends AbstractChild<SectionIndexItemConfig, SectionIndex.ISectionIndex>
+		implements ISectionIndexItem
+	{
+		// Store the on click event
+		private _eventOnClick: Callbacks.Generic;
+		//Stores the keyboard callback function
+		private _eventOnkeyBoardPress: Callbacks.Generic;
+		// Store TargetElement HTML object
+		private _targetElement: HTMLElement = undefined;
+		// Store offset top/bottom from TargetElement HTML object
+		private _targetElementOffset: OffsetValues = {
+			bottom: 0,
+			top: 0,
+		};
+
+		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SectionIndexItemConfig(configs));
-			this._sectionIndexItemParent = sectionIndex;
 		}
 
-		/**
-		 * Method to handle the click event
-		 *
-		 * @private
-		 * @param {Event} event
-		 * @memberof SectionIndexItem
-		 */
-		private _handleClickEvent(event: Event): void {
+		// A11y keyboard navigation
+		private _onKeyboardPressed(event: KeyboardEvent): void {
 			event.preventDefault();
 			event.stopPropagation();
 
-			this._sectionIndexItemParent.setActiveElement(this);
-		}
-
-		/**
-		 * A11y keyboard navigation
-		 *
-		 * @private
-		 * @param {KeyboardEvent} event
-		 * @memberof SectionIndexItem
-		 */
-		private _handleOnKeyboardPress(event: KeyboardEvent): void {
-			//If esc, Close AccordionItem
-			if (event.key === GlobalEnum.Keycodes.Space || event.key === GlobalEnum.Keycodes.Enter) {
-				this._handleClickEvent(event);
+			switch (event.key) {
+				// If Enter or Space Keys trigger as a click event!
+				case GlobalEnum.Keycodes.Enter:
+				case GlobalEnum.Keycodes.Space:
+					// Triggered as it was clicked!
+					this._onSelected(event);
+					break;
 			}
 		}
 
+		// Method to handle the click event
+		private _onSelected(event: Event): void {
+			event.preventDefault();
+			event.stopPropagation();
+
+			// Update the offsetInfo when clicked since we could have expandable containers that will change this values accoring the scroll content height
+			this._setTargetOffsetInfo();
+
+			// Notify parent about this Item Click
+			this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Click);
+		}
+
+		// Remove Pattern Events
+		private _removeEvents(): void {
+			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
+		}
+
+		// Set TargetElement
+		private _setTargetElement(): void {
+			// Check if the element has been already defined!
+			if (this._targetElement === undefined) {
+				try {
+					// Can't be used the Helper.Dom.GetElementById since we don't want a through error if the element does not exist!
+					this._targetElement = document.getElementById(this.configs.ScrollToWidgetId);
+				} catch (e) {
+					// Was not able to get Target element!
+					throw new Error(
+						`${ErrorCodes.SectionIndexItem.FailToSetTargetElement}: Target Element with the Id '${this.configs.ScrollToWidgetId}' does not exist!`
+					);
+				}
+			}
+		}
+
+		// Set offset info related with TargetElement
+		private _setTargetOffsetInfo(): void {
+			// Check if TargetElement has been already defined, otherwise define it!
+			this._setTargetElement();
+
+			// Set the target element offset top/bottom values
+			this._targetElementOffset.bottom = this._targetElement.offsetTop + this._targetElement.offsetHeight;
+			this._targetElementOffset.top = this._targetElement.offsetTop;
+		}
+
+		// Method to set the event listeners
+		private _setUpEvents(): void {
+			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
+		}
+
 		/**
-		 * Method to set the event listeners
+		 * Add the Accessibility Attributes values
 		 *
-		 * @private
+		 * @protected
 		 * @memberof SectionIndexItem
 		 */
-		private _setUpEvents(): void {
-			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnSectionIndexItemClick);
-			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._keyBoardCallback);
+		protected setA11yProperties(): void {
+			// Set RoleButton attribute
+			Helper.A11Y.RoleButton(this.selfElement);
+			// Set TabIndex
+			Helper.A11Y.TabIndexTrue(this.selfElement);
 		}
 
 		/**
@@ -71,20 +114,8 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		 * @memberof SectionIndexItem
 		 */
 		protected setCallbacks(): void {
-			this._eventOnSectionIndexItemClick = this._handleClickEvent.bind(this);
-			this._keyBoardCallback = this._handleOnKeyboardPress.bind(this);
-		}
-
-		/**
-		 * Method to set the variables needed on this pattern
-		 *
-		 * @protected
-		 * @memberof SectionIndexItem
-		 */
-		protected setUpSectionItemIndex(): void {
-			if (this.sectionIndexItemTargetId === undefined) {
-				this.sectionIndexItemTargetId = this.configs.ScrollToWidgetId;
-			}
+			this._eventOnClick = this._onSelected.bind(this);
+			this._eventOnkeyBoardPress = this._onKeyboardPressed.bind(this);
 		}
 
 		/**
@@ -95,11 +126,19 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		public build(): void {
 			super.build();
 
-			this.setUpSectionItemIndex();
+			this.setParent(
+				Constants.Dot + SectionIndex.Enum.CssClass.Pattern,
+				OutSystems.OSUI.Patterns.SectionIndexAPI.GetSectionIndexById
+			);
+
+			// Notify parent about a new instance of this child has been created!
+			this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Add);
 
 			this.setCallbacks();
 
 			this._setUpEvents();
+
+			this.setA11yProperties();
 
 			this.finishBuild();
 		}
@@ -117,7 +156,9 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 			if (this.isBuilt) {
 				switch (propertyName) {
 					case Enum.Properties.ScrollToWidgetId:
-						// TODO (by CreateNewPattern) Update or Remove
+						console.warn(
+							`${GlobalEnum.PatternsNames.SectionIndex} (${this.widgetId}): change to ${Enum.Properties.ScrollToWidgetId} on property ${Enum.Properties.ScrollToWidgetId} is not editable at OnParametersChange.`
+						);
 						break;
 				}
 			}
@@ -129,20 +170,13 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		 * @memberof SectionIndexItem
 		 */
 		public dispose(): void {
+			this._removeEvents();
+
+			// Notify parent about this instance will be destroyed
+			this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Removed);
+
 			//Destroying the base of pattern
 			super.dispose();
-		}
-
-		/**
-		 * Removes active class from pattern.
-		 *
-		 * @memberof SectionIndexItem
-		 */
-		public removeActiveElement(): void {
-			if (this._selfElem) {
-				this._isActive = false;
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Patterns.SectionIndex.Enum.CssClass.ActiveItem);
-			}
 		}
 
 		/**
@@ -150,11 +184,39 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		 *
 		 * @memberof SectionIndexItem
 		 */
-		public setActiveElement(): void {
-			if (this._selfElem) {
-				this._isActive = true;
-				Helper.Dom.Styles.AddClass(this._selfElem, Patterns.SectionIndex.Enum.CssClass.ActiveItem);
-			}
+		public setIsActive(): void {
+			Helper.Dom.Styles.AddClass(this._selfElem, Patterns.SectionIndex.Enum.CssClass.IsActiveItem);
+		}
+
+		/**
+		 * Removes active class from pattern.
+		 *
+		 * @memberof SectionIndexItem
+		 */
+		public unsetIsActive(): void {
+			Helper.Dom.Styles.RemoveClass(this._selfElem, Patterns.SectionIndex.Enum.CssClass.IsActiveItem);
+		}
+
+		/**
+		 * Readable property to get targetElement object
+		 *
+		 * @readonly
+		 * @type {HTMLElement}
+		 * @memberof SectionIndexItem
+		 */
+		public get targetElement(): HTMLElement {
+			return this._targetElement;
+		}
+
+		/**
+		 * Readable property to get targetElementOffset info
+		 *
+		 * @readonly
+		 * @type {OffsetValues}
+		 * @memberof SectionIndexItem
+		 */
+		public get targetElementOffset(): OffsetValues {
+			return this._targetElementOffset;
 		}
 	}
 }

@@ -60,7 +60,7 @@ namespace OSUIFramework.Patterns {
 			} catch (e) {
 				// Was not able to get Dropdown parent element!
 				throw new Error(
-					`${ErrorCodes.AbstractChild.DropdownParentNotFound}: ${GlobalEnum.PatternsNames.Dropdown} parent of ${GlobalEnum.PatternsNames.DropdownServerSideItem} id: '${this.widgetId}' was not found!`
+					`${ErrorCodes.AbstractChild.ParentNotFound}: Parent of Child with Id: '${this.widgetId}' was not found!`
 				);
 			}
 		}
