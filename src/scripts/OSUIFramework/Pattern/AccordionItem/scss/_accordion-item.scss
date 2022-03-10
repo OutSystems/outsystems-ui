@@ -144,6 +144,8 @@
 
 		&--custom {
 			pointer-events: none;
+			-servicestudio-height: auto;
+			-servicestudio-width: auto;
 		}
 
 		&--hidden {
