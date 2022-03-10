@@ -100,12 +100,12 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		 **/
 		private _handleTabIndex(): void {
 			const titleTabindexValue = this.configs.IsDisabled
-				? OSUIFramework.Constants.A11YAttributes.States.TabIndexHidden
-				: OSUIFramework.Constants.A11YAttributes.States.TabIndexShow;
+				? Constants.A11YAttributes.States.TabIndexHidden
+				: Constants.A11YAttributes.States.TabIndexShow;
 			const contentTabindexValue =
 				!this.configs.IsDisabled && this._isOpen
-					? OSUIFramework.Constants.A11YAttributes.States.TabIndexShow
-					: OSUIFramework.Constants.A11YAttributes.States.TabIndexHidden;
+					? Constants.A11YAttributes.States.TabIndexShow
+					: Constants.A11YAttributes.States.TabIndexHidden;
 
 			Helper.A11Y.TabIndex(this._accordionItemTitleElem, titleTabindexValue);
 			Helper.A11Y.TabIndex(this._accordionItemContentElem, contentTabindexValue);
