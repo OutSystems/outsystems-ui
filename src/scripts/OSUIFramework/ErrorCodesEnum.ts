@@ -23,11 +23,10 @@ namespace OSUIFramework.ErrorCodes {
 
 	export const DropdownServerSideItem = {};
 
-  export const Notification = {
+	export const Notification = {
 		FailRegisterCallback: 'OSUI-GEN-03001',
-
 	};
-  
+
 	export const SectionIndex = {
 		FailChildItemClicked: 'OSUI-GEN-04001',
 		FailSetNewChildItem: 'OSUI-GEN-04002',
@@ -37,5 +36,5 @@ namespace OSUIFramework.ErrorCodes {
 
 	export const SectionIndexItem = {
 		FailToSetTargetElement: 'OSUI-GEN-05001',
-  };
+	};
 }

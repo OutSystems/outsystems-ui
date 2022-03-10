@@ -20,18 +20,17 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailSetValidation: 'OSUI-API-01008',
 	};
 
-  export const Notification = {
+	export const Notification = {
 		FailChangeProperty: 'OSUI-API-02001',
 		FailDispose: 'OSUI-API-02002',
 		FailRegisterCallback: 'OSUI-API-02003',
-
 	};
-  
+
 	export const SectionIndex = {
 		FailChangeProperty: 'OSUI-API-03001',
 		FailDisable: 'OSUI-API-03002',
 		FailDispose: 'OSUI-API-03003',
 		FailEnable: 'OSUI-API-03004',
 		FailRegisterCallback: 'OSUI-API-03005',
-  };
+	};
 }

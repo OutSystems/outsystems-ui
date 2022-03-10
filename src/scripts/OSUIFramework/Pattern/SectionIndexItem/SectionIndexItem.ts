@@ -8,7 +8,6 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 	 * @extends {AbstractPattern<SectionIndexItemConfig>}
 	 * @implements {ISectionIndexItem}
 	 */
-
 	export class SectionIndexItem
 		extends AbstractChild<SectionIndexItemConfig, SectionIndex.ISectionIndex>
 		implements ISectionIndexItem
@@ -126,7 +125,7 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		public build(): void {
 			super.build();
 
-			this.setParent(
+			this.setParentInfo(
 				Constants.Dot + SectionIndex.Enum.CssClass.Pattern,
 				OutSystems.OSUI.Patterns.SectionIndexAPI.GetSectionIndexById
 			);
