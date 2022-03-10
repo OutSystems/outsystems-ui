@@ -12,7 +12,7 @@ namespace OutSystems.OSUI.Utils {
 			});
 		} else {
 			elementToScrollTo.scrollIntoView({
-				behavior: OSUIFramework.GlobalEnum.ScrollBehavior.Instant,
+				behavior: OSUIFramework.GlobalEnum.ScrollBehavior.Auto,
 				block: 'start',
 			});
 		}

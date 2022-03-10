@@ -5,88 +5,153 @@ namespace OSUIFramework.Patterns.SectionIndex {
 	 *
 	 * @export
 	 * @class SectionIndex
-	 * @extends {AbstractPattern<SectionIndexConfig>}
+	 * @extends {AbstractPattern<SectionIndexConfig, SectionIndexItem.ISectionIndexItem>}
 	 * @implements {ISectionIndex}
 	 */
-	export class SectionIndex extends AbstractPattern<SectionIndexConfig> implements ISectionIndex {
+	export class SectionIndex
+		extends AbstractParent<SectionIndexConfig, SectionIndexItem.ISectionIndexItem>
+		implements ISectionIndex
+	{
 		// Store the current sectionIndexItem active
-		private _activeSectionIndexItem: Patterns.SectionIndexItem.ISectionIndexItem;
-		// Store the content padding
-		private _contentPaddingTop: number;
-		// Store the header height
-		private _headerHeight: number;
-		// Store flag that shows if we are leading with a browser that needs polyfill
-		private _isUnsupportedBrowser: boolean;
-		// Store the distance between the window top and the content
-		private _offset: number;
-		// Store the SectionIndex Items of this SectionIndex
-		private _sectionIndexItems: Map<string, Patterns.SectionIndexItem.ISectionIndexItem>;
+		private _activeSectionIndexItem: SectionIndexItem.ISectionIndexItem;
+		// Store the mainContent reference - The one that will have the scroll
+		private _mainScrollContainerElement: HTMLElement;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SectionIndexConfig(configs));
-			this._sectionIndexItems = new Map<string, Patterns.SectionIndexItem.ISectionIndexItem>();
 		}
 
-		/**
-		 * Method to set the SectionIndex IsFixed
-		 *
-		 * @private
-		 * @memberof SectionIndex
-		 */
-		private _setIsFixed(): void {
+		// Method to add Item to the list
+		private _addSectionIndexItem(childId: string): void {
+			// Get the ChildItem reference
+			const childItem = OutSystems.OSUI.Patterns.SectionIndexItemAPI.GetSectionIndexItemById(childId);
+
+			if (this.getChild(childId)) {
+				throw new Error(
+					`${ErrorCodes.SectionIndex.FailSetNewChildItem}: There is already a ${GlobalEnum.PatternsNames.SectionIndexItem} under Id: '${childItem.widgetId}' added to ${GlobalEnum.PatternsNames.SectionIndex} with uniqueId: ${this.uniqueId}.`
+				);
+			} else {
+				// Store Child Item
+				this.setChild(childId, childItem);
+			}
+		}
+
+		// Method to deal with the click at a SectionIndexItem
+		private _childItemHasBeenClicked(childId: string): void {
+			const childReference = this.getChild(childId);
+			// Check if the given ChildId exist as an child item
+			if (childReference) {
+				// Update child status
+				this._updateIsActiveChildItem(childReference);
+			} else {
+				throw new Error(
+					`${ErrorCodes.SectionIndex.FailChildItemClicked}: The ${GlobalEnum.PatternsNames.SectionIndexItem} under uniqueId: '${childId}' does not exist as an SectionIndexItem from ${GlobalEnum.PatternsNames.SectionIndex} with Id: ${this.widgetId}.`
+				);
+			}
+		}
+
+		// Method used to remove a given SectionIndexItem from sectionIndexItems list, it's triggered by SectionIndexItem
+		private _removeSectionIndexItem(childId: string): void {
+			// Check if the given ChildId exist at childList
+			if (this.getChild(childId)) {
+				// Remove item
+				this.unsetChild(childId);
+			} else {
+				throw new Error(
+					`${ErrorCodes.SectionIndex.FailUnsetNewChildItem}: The ${GlobalEnum.PatternsNames.SectionIndexItem} under uniqueId: '${childId}' does not exist as an SectionIndexItem from ${GlobalEnum.PatternsNames.SectionIndex} with Id: ${this.widgetId}.`
+				);
+			}
+		}
+
+		// Method to set the SectionIndex IsFixed
+		private _toggleIsFixed(): void {
 			if (this.configs.IsFixed) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.UsefulSticky);
-				this._selfElem.style.setProperty('--top-position', this._offset + 'px');
+				// Get Header height
+				const headerHeight =
+					Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.Header).offsetHeight || 0;
+
+				// Get (if exist) the paddingTop value for the mainContent (the one with Scroll)
+				const contentPaddingTop =
+					window
+						.getComputedStyle(Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.MainContent))
+						.getPropertyValue(GlobalEnum.CssProperties.PaddingTop) || 0;
+
+				// Set inline css variable that will affect the pattern sticky position top value
+				Helper.Dom.Styles.SetStyleAttribute(
+					this._selfElem,
+					Enum.CssVariable.TopPosition,
+					'calc(' + headerHeight + 'px + ' + contentPaddingTop + ')'
+				);
+
+				// Set the Sticky class
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsSticky);
 			} else {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.UsefulSticky);
+				// Remove inline added css variable
+				Helper.Dom.Styles.RemoveStyleAttribute(this._selfElem, Enum.CssVariable.TopPosition);
+				// Remove the Sticky class
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsSticky);
 			}
 		}
 
-		/**
-		 * Method used to recalculate the position of items on the sectionIndex
-		 *
-		 * @memberof SectionIndex
-		 */
-		private _setUpSectionIndex(): void {
-			const Header = Helper.Dom.ClassSelector(document, 'header');
-
-			this._contentPaddingTop = parseInt(
-				window
-					.getComputedStyle(Helper.Dom.ClassSelector(document, 'main-content'))
-					.getPropertyValue('padding-top')
-			);
-			if (Header) {
-				this._headerHeight = Header.offsetHeight;
-			} else {
-				this._headerHeight = 0;
+		// Method that will update the IsActive child item status.
+		private _updateIsActiveChildItem(child: SectionIndexItem.ISectionIndexItem): void {
+			// Remove old sectionIndexItem as active if exist
+			if (this._activeSectionIndexItem) {
+				this._activeSectionIndexItem.unsetIsActive();
 			}
 
-			this._offset = this._headerHeight + this._contentPaddingTop;
+			// Set new sectionIndexItem as active
+			child.setIsActive();
 
-			this._setIsFixed();
+			// Set the current IsActive Child
+			this._activeSectionIndexItem = child;
 
-			this._isUnsupportedBrowser = Helper.Dom.Styles.ContainsClass(document.body, GlobalEnum.Browser.safari);
-
-			// Check for browsers that don't support ScrollIntoView to call Polyfill
-			if (this.configs.SmoothScrolling && this._isUnsupportedBrowser) {
-				//callPolyfill();
-			}
+			// Trigger the Scroll navigation
+			Helper.Scroll(this._mainScrollContainerElement, child.targetElementOffset, this.configs.SmoothScrolling);
 		}
 
 		/**
-		 * Method to add Item to the list
+		 * Method to set the HTMLElements used
 		 *
-		 * @param {string} uniqueId
-		 * @param {SectionIndexItem.ISectionIndexItem} sectionIndexItem
+		 * @protected
 		 * @memberof SectionIndex
 		 */
-		public addSectionIndexItem(uniqueId: string, sectionIndexItem: SectionIndexItem.ISectionIndexItem): void {
-			this._sectionIndexItems.set(uniqueId, sectionIndexItem);
+		protected setHtmlElements(): void {
+			this._mainScrollContainerElement = Helper.Dom.ClassSelector(document, GlobalEnum.Screen.Active);
+		}
 
-			// In case the accordion is built, it means we're adding an item dynamically, after it's first setup.
-			if (this.isBuilt) {
-				//Recalculate positions in the array.
-				this._setUpSectionIndex();
+		/**
+		 * Method to unset the HTMLElements used
+		 *
+		 * @protected
+		 * @memberof SectionIndex
+		 */
+		protected unsetHtmlElements(): void {
+			this._mainScrollContainerElement = undefined;
+		}
+
+		/**
+		 * Method used to be notified by a given ChildId about a given action and act accordingly
+		 *
+		 * @param childId Child Item Id to be stored/managed
+		 * @param notifiedTo {Enum.ChildNotifyActionType} triggered notification type
+		 * @memberof SectionIndex
+		 */
+		public beNotifiedByChild(childId: string, notifiedTo: Enum.ChildNotifyActionType): void {
+			switch (notifiedTo) {
+				case Enum.ChildNotifyActionType.Add:
+					this._addSectionIndexItem(childId);
+					break;
+				case Enum.ChildNotifyActionType.Click:
+					this._childItemHasBeenClicked(childId);
+					break;
+				case Enum.ChildNotifyActionType.Removed:
+					this._removeSectionIndexItem(childId);
+					break;
+				default:
+					throw new Error(
+						`${ErrorCodes.SectionIndex.FailToSetChildItemAction}: There no exist a '${notifiedTo}' notification type.`
+					);
 			}
 		}
 
@@ -98,7 +163,9 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		public build(): void {
 			super.build();
 
-			this._setUpSectionIndex();
+			this.setHtmlElements();
+
+			this._toggleIsFixed();
 
 			this.finishBuild();
 		}
@@ -112,11 +179,10 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
-
 			if (this.isBuilt) {
 				switch (propertyName) {
 					case Enum.Properties.IsFixed:
-						this._setIsFixed();
+						this._toggleIsFixed();
 						break;
 				}
 			}
@@ -128,31 +194,9 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		 * @memberof SectionIndex
 		 */
 		public dispose(): void {
+			this.unsetHtmlElements();
 			//Destroying the base of pattern
 			super.dispose();
-		}
-
-		/**
-		 * Actual method that will do the scroll.
-		 *
-		 * @param {SectionIndexItem.ISectionIndexItem} targetElement
-		 * @memberof SectionIndex
-		 */
-		public setActiveElement(targetElement: SectionIndexItem.ISectionIndexItem): void {
-			if (targetElement) {
-				// Remove old sectionIndexItem as active
-				if (this._activeSectionIndexItem) {
-					this._activeSectionIndexItem.removeActiveElement();
-				}
-				OutSystems.OSUI.Utils.ScrollToElement(
-					targetElement.sectionIndexItemTargetId,
-					this.configs.SmoothScrolling,
-					this._offset
-				);
-				// Set new sectionIndexItem as active
-				targetElement.setActiveElement();
-				this._activeSectionIndexItem = targetElement;
-			}
 		}
 	}
 }

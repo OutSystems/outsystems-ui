@@ -182,7 +182,7 @@ namespace OSUIFramework.Patterns.Tabs {
 				this._tabsContentElement.scrollTo({
 					top: 0,
 					left: targetOffeset,
-					behavior: GlobalEnum.ScrollBehavior.Instant,
+					behavior: GlobalEnum.ScrollBehavior.Auto,
 				});
 			}
 		}

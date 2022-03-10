@@ -5,11 +5,12 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 	 *
 	 * @export
 	 * @interface ISectionIndexItem
-	 * @extends {Interface.IPattern}
+	 * @extends {Interface.IChild}
 	 */
-	export interface ISectionIndexItem extends Interface.IPattern {
-		sectionIndexItemTargetId: string;
-		removeActiveElement();
-		setActiveElement();
+	export interface ISectionIndexItem extends Interface.IChild {
+		setIsActive();
+		get targetElement(): HTMLElement;
+		get targetElementOffset(): OffsetValues;
+		unsetIsActive();
 	}
 }

@@ -49,6 +49,14 @@ declare global {
 		standalone: any;
 	}
 
+	// Offset Type
+	type OffsetValues = {
+		bottom?: number;
+		left?: number;
+		right?: number;
+		top?: number;
+	};
+
 	// RangeSlider
 	type NoUiSlider = noUiSlider;
 	type NoUiSliderOptions = noUiSliderOptions;
