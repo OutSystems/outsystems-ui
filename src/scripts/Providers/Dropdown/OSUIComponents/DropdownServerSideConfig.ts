@@ -25,8 +25,6 @@ namespace Providers.Dropdown.OSUIComponents {
 
 			switch (key) {
 				case Enum.Properties.AllowMultipleSelection:
-					validatedValue = this.validateBoolean(value as boolean, false);
-					break;
 				case Enum.Properties.IsDisabled:
 					validatedValue = this.validateBoolean(value as boolean, false);
 					break;

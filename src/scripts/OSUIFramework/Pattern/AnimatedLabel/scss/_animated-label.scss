@@ -19,7 +19,7 @@
 			}
 
 			[data-textarea] {
-				padding-top: var(--space-base);
+				padding-bottom: var(--space-xs);
 			}
 		}
 	}
@@ -95,13 +95,22 @@
 			}
 
 			&[data-textarea] {
-				display: block;
 				margin-top: var(--space-s);
 
 				& + span.validation-message {
 					bottom: 7px;
 				}
 			}
+		}
+	}
+}
+
+///
+.form {
+	.animated-label {
+		&-input .form-control[data-textarea] + span.validation-message {
+			position: relative;
+			bottom: var(--space-m);
 		}
 	}
 }

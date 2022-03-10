@@ -105,19 +105,36 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	}
 
 	/**
-	 * Function that will register a pattern callback.
+	 * Function to register a provider callback
 	 *
 	 * @export
 	 * @param {string} notificationId
-	 * @param {OSUIFramework.Callbacks.OSNotificationToggleEvent} callback
+	 * @param {string} eventName
+	 * @param {OSUIFramework.Callbacks.OSGeneric} callback
+	 * @return {*} {string} Return Message Success or message of error info if it's the case.
 	 */
-	export function RegisterCallback(
+	export function RegisterProviderCallback(
 		notificationId: string,
-		callback: OSUIFramework.Callbacks.OSNotificationToggleEvent
-	): void {
-		const notification = GetNotificationById(notificationId);
+		eventName: string,
+		callback: OSUIFramework.Callbacks.OSGeneric
+	): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		notification.registerCallback(callback);
+		const _notificationItem = this.GetNotificationById(notificationId);
+
+		try {
+			_notificationItem.registerProviderCallback(eventName, callback);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Notification.FailRegisterCallback;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**

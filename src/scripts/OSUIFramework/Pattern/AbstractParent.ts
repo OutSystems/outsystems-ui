@@ -41,7 +41,7 @@ namespace OSUIFramework.Patterns {
 		 * @returns Child Reference
 		 */
 		protected getChildByIndex(index: number): CT {
-			return this.getChild(this.childItems[index]);
+			return this.getChild(Helper.MapOperation.ExportKeys(this._childItems)[index]);
 		}
 
 		/**
@@ -51,7 +51,7 @@ namespace OSUIFramework.Patterns {
 		 * @returns Index value
 		 */
 		protected getChildIndex(childId: string): number {
-			return this.childItems.indexOf(childId);
+			return Helper.MapOperation.ExportKeys(this._childItems).indexOf(childId);
 		}
 
 		/**
@@ -77,11 +77,11 @@ namespace OSUIFramework.Patterns {
 		 * Getter that allows to obtain all the child Ids inside Dropdown.
 		 *
 		 * @readonly
-		 * @type {Array<string>}
+		 * @type {Array<CT>}
 		 * @memberof AbstractParent
 		 */
-		public get childItems(): Array<string> {
-			return Helper.MapOperation.ExportKeys(this._childItems);
+		public get childItems(): Array<CT> {
+			return [...this._childItems.values()];
 		}
 
 		/**

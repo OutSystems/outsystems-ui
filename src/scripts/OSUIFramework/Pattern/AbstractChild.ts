@@ -50,7 +50,7 @@ namespace OSUIFramework.Patterns {
 		 * @param getPatternByIdAPI API reference method from Parent Pattern that will return the PatternById
 		 */
 		// eslint-disable-next-line @typescript-eslint/ban-types
-		protected setParent(parentSelector: string, getPatternByIdAPI: Function): void {
+		protected setParentInfo(parentSelector: string, getPatternByIdAPI: Function): void {
 			try {
 				const findedElement = this._selfElem.closest(parentSelector) as HTMLElement;
 				// Find for Id at Name or data-uniqueid attribite, data-uniqueid attribute is used at the elements that will be moved outside parent context

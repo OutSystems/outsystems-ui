@@ -101,7 +101,7 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 				this._progressElem.addEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._eventAnimateEntranceEnd);
 			}
 
-			this._updateProgressValue();
+			this.setElementProgressValue(this.configs.Progress);
 		}
 
 		protected setCallbacks(): void {
@@ -149,13 +149,11 @@ namespace OSUIFramework.Patterns.Progress.Bar {
 
 			this.setHtmlElements();
 
-			this.setElementProgressValue(this.configs.Progress);
-
 			this._setCssVariables();
 
-			this.addInitialAnimation();
-
 			this.setCallbacks();
+
+			Helper.AsyncInvocation(this.addInitialAnimation.bind(this));
 
 			this.finishBuild();
 		}
