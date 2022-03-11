@@ -77,14 +77,12 @@ namespace OSUIFramework.Patterns.Notification {
 			this._focusableActiveElement.focus();
 
 			// Remove listeners to toggle Notification
-			if (Helper.DeviceInfo.IsNative === false) {
-				if (this.configs.InteractToClose) {
-					this._notificationContentElement.removeEventListener(this._eventType, this._eventOnClick);
-					this._notificationContentElement.removeEventListener(
-						GlobalEnum.HTMLEvent.keyDown,
-						this._eventOnKeypress
-					);
-				}
+			if (Helper.DeviceInfo.IsNative === false && this.configs.InteractToClose) {
+				this._notificationContentElement.removeEventListener(this._eventType, this._eventOnClick);
+				this._notificationContentElement.removeEventListener(
+					GlobalEnum.HTMLEvent.keyDown,
+					this._eventOnKeypress
+				);
 			}
 		}
 
@@ -149,10 +147,8 @@ namespace OSUIFramework.Patterns.Notification {
 			this._updateA11yProperties();
 
 			// Add listeners to toggle Notification
-			if (Helper.DeviceInfo.IsNative === false) {
-				if (this.configs.InteractToClose) {
-					this._notificationContentElement.addEventListener(this._eventType, this._eventOnClick);
-				}
+			if (Helper.DeviceInfo.IsNative === false && this.configs.InteractToClose) {
+				this._notificationContentElement.addEventListener(this._eventType, this._eventOnClick);
 			}
 
 			this._notificationContentElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
@@ -359,14 +355,12 @@ namespace OSUIFramework.Patterns.Notification {
 		 */
 		protected unsetCallbacks(): void {
 			// Remove listeners to toggle Notification
-			if (Helper.DeviceInfo.IsNative === false) {
-				if (this.configs.InteractToClose) {
-					this._notificationContentElement.removeEventListener(this._eventType, this._eventOnClick);
-					this._notificationContentElement.removeEventListener(
-						GlobalEnum.HTMLEvent.keyDown,
-						this._eventOnKeypress
-					);
-				}
+			if (Helper.DeviceInfo.IsNative === false && this.configs.InteractToClose) {
+				this._notificationContentElement.removeEventListener(this._eventType, this._eventOnClick);
+				this._notificationContentElement.removeEventListener(
+					GlobalEnum.HTMLEvent.keyDown,
+					this._eventOnKeypress
+				);
 			}
 		}
 
