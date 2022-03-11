@@ -77,7 +77,7 @@ namespace OSUIFramework.Patterns.Notification {
 			this._focusableActiveElement.focus();
 
 			// Remove listeners to toggle Notification
-			if (!Helper.DeviceInfo.IsNative) {
+			if (Helper.DeviceInfo.IsNative === false) {
 				if (this.configs.InteractToClose) {
 					this._notificationContentElement.removeEventListener(this._eventType, this._eventOnClick);
 					this._notificationContentElement.removeEventListener(
@@ -149,7 +149,7 @@ namespace OSUIFramework.Patterns.Notification {
 			this._updateA11yProperties();
 
 			// Add listeners to toggle Notification
-			if (!Helper.DeviceInfo.IsNative) {
+			if (Helper.DeviceInfo.IsNative === false) {
 				if (this.configs.InteractToClose) {
 					this._notificationContentElement.addEventListener(this._eventType, this._eventOnClick);
 				}
@@ -229,7 +229,7 @@ namespace OSUIFramework.Patterns.Notification {
 		private _updateInteractToClose(value: boolean): void {
 			if (this.configs.InteractToClose !== value) {
 				this.configs.InteractToClose = value;
-				if (!Helper.DeviceInfo.IsNative) {
+				if (Helper.DeviceInfo.IsNative === false) {
 					if (this.configs.InteractToClose) {
 						this._notificationContentElement.addEventListener(this._eventType, this._eventOnClick);
 					} else {
@@ -359,7 +359,7 @@ namespace OSUIFramework.Patterns.Notification {
 		 */
 		protected unsetCallbacks(): void {
 			// Remove listeners to toggle Notification
-			if (!Helper.DeviceInfo.IsNative) {
+			if (Helper.DeviceInfo.IsNative === false) {
 				if (this.configs.InteractToClose) {
 					this._notificationContentElement.removeEventListener(this._eventType, this._eventOnClick);
 					this._notificationContentElement.removeEventListener(

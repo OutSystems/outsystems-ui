@@ -214,10 +214,7 @@
 	}
 
 	.osui-notification--is {
-		&-top .osui-notification__content {
-			transform: translate(0, -100%);
-		}
-
+		&-top .osui-notification__content,
 		&-center .osui-notification__content {
 			transform: translate(0, -100%);
 		}
