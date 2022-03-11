@@ -25,6 +25,22 @@
 			padding: var(--space-none) var(--space-base) var(--space-base);
 		}
 	}
+
+	.numInputWrapper {
+		span {
+			&.arrowUp,
+			&.arrowDown {
+				border: none;
+			}
+
+			&.arrowUp:after {
+				border-bottom-color: var(--color-primary);
+			}
+			&.arrowDown:after {
+				border-top-color: var(--color-primary);
+			}
+		}
+	}
 }
 
 // Flatpickr - Top info wrapper container
@@ -72,14 +88,13 @@
 
 	// Month Select
 	.flatpickr-monthDropdown-months {
-		appearance: none;
 		font-weight: var(--font-regular);
 		height: 30px;
 		margin-right: var(--space-base);
 		padding: var(--space-none);
 
 		&:hover {
-			background-color: var(--color-neutral-0);
+			background-color: var(--color-neutral-2);
 		}
 	}
 
@@ -95,7 +110,7 @@
 			padding-right: var(--space-base);
 
 			&:hover {
-				background-color: var(--color-neutral-0);
+				background-color: var(--color-neutral-2);
 			}
 		}
 	}
