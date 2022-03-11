@@ -207,36 +207,34 @@
 
 ///
 .phone {
-	&.portrait {
-		.osui-notification__content {
-			left: var(--space-base);
-			right: var(--space-base);
-			width: inherit;
+	.osui-notification__content {
+		left: var(--space-base);
+		right: var(--space-base);
+		width: inherit;
+	}
+
+	.osui-notification--is {
+		&-top .osui-notification__content {
+			transform: translate(0, -100%);
 		}
 
-		.osui-notification--is {
-			&-top .osui-notification__content {
-				transform: translate(0, -100%);
-			}
+		&-center .osui-notification__content {
+			transform: translate(0, -100%);
+		}
 
-			&-center .osui-notification__content {
-				transform: translate(0, -100%);
-			}
+		&-bottom .osui-notification__content {
+			transform: translate(0, 100%);
+		}
 
-			&-bottom .osui-notification__content {
-				transform: translate(0, 100%);
-			}
+		&-open {
+			&.osui-notification--is {
+				&-top .osui-notification__content,
+				&-bottom .osui-notification__content {
+					transform: translate(0, 0);
+				}
 
-			&-open {
-				&.osui-notification--is {
-					&-top .osui-notification__content,
-					&-bottom .osui-notification__content {
-						transform: translate(0, 0);
-					}
-
-					&-center .osui-notification__content {
-						transform: translate(0, -50%);
-					}
+				&-center .osui-notification__content {
+					transform: translate(0, -50%);
 				}
 			}
 		}

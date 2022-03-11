@@ -37,8 +37,8 @@ namespace OSUIFramework.Patterns.Notification.Enum {
 	 * Notification Enum properties
 	 */
 	export enum Properties {
-		ClickToClose = 'ClickToClose',
 		CloseAfterTime = 'CloseAfterTime',
+		InteractToClose = 'InteractToClose',
 		NeedsSwipes = 'NeedsSwipes',
 		Position = 'Position',
 		StartsOpen = 'StartsOpen',
