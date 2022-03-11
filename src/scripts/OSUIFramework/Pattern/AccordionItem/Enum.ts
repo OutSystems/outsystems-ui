@@ -24,6 +24,7 @@ namespace OSUIFramework.Patterns.AccordionItem.Enum {
 		PatternIcon = 'osui-accordion-item__icon',
 		PatternIconCaret = 'osui-accordion-item__icon--caret',
 		PatternIconCustom = 'osui-accordion-item__icon--custom',
+		PatternIconHidden = 'osui-accordion-item__icon--hidden',
 		PatternIconPlusMinus = 'osui-accordion-item__icon--plus-minus',
 		PatternIconPositionIsLeft = 'osui-accordion-item__title--is-left',
 		PatternIconPositionIsRight = 'osui-accordion-item__title--is-right',

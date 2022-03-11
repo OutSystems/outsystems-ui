@@ -8,6 +8,8 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		private _accordionItemContentElem: HTMLElement;
 		// Stores the HTML element of the pattern's icon
 		private _accordionItemIconElem: HTMLElement;
+		// Stores the HTML element of the pattern's icon
+		private _accordionItemIconCustomElem: HTMLElement;
 		// Stores the HTML element of the pattern's placeholder
 		private _accordionItemPlaceholder: HTMLElement;
 		// Stores the HTML element of the pattern's title
@@ -160,17 +162,23 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			switch (this.configs.Icon) {
 				case Enum.IconType.PlusMinus:
 					Helper.Dom.Styles.RemoveClass(this._accordionItemIconElem, Enum.CssClass.PatternIconCaret);
-					Helper.Dom.Styles.RemoveClass(this._accordionItemIconElem, Enum.CssClass.PatternIconCustom);
+					Helper.Dom.Styles.RemoveClass(this._accordionItemIconCustomElem, Enum.CssClass.PatternIconCustom);
+					Helper.Dom.Styles.RemoveClass(this._accordionItemIconElem, Enum.CssClass.PatternIconHidden);
+					Helper.Dom.Styles.AddClass(this._accordionItemIconCustomElem, Enum.CssClass.PatternIconHidden);
 					Helper.Dom.Styles.AddClass(this._accordionItemIconElem, Enum.CssClass.PatternIconPlusMinus);
 					break;
 				case Enum.IconType.Custom:
 					Helper.Dom.Styles.RemoveClass(this._accordionItemIconElem, Enum.CssClass.PatternIconPlusMinus);
 					Helper.Dom.Styles.RemoveClass(this._accordionItemIconElem, Enum.CssClass.PatternIconCaret);
-					Helper.Dom.Styles.AddClass(this._accordionItemIconElem, Enum.CssClass.PatternIconCustom);
+					Helper.Dom.Styles.RemoveClass(this._accordionItemIconCustomElem, Enum.CssClass.PatternIconHidden);
+					Helper.Dom.Styles.AddClass(this._accordionItemIconElem, Enum.CssClass.PatternIconHidden);
+					Helper.Dom.Styles.AddClass(this._accordionItemIconCustomElem, Enum.CssClass.PatternIconCustom);
 					break;
 				default:
 					Helper.Dom.Styles.RemoveClass(this._accordionItemIconElem, Enum.CssClass.PatternIconPlusMinus);
-					Helper.Dom.Styles.RemoveClass(this._accordionItemIconElem, Enum.CssClass.PatternIconCustom);
+					Helper.Dom.Styles.RemoveClass(this._accordionItemIconCustomElem, Enum.CssClass.PatternIconCustom);
+					Helper.Dom.Styles.RemoveClass(this._accordionItemIconElem, Enum.CssClass.PatternIconHidden);
+					Helper.Dom.Styles.AddClass(this._accordionItemIconCustomElem, Enum.CssClass.PatternIconHidden);
 					Helper.Dom.Styles.AddClass(this._accordionItemIconElem, Enum.CssClass.PatternIconCaret);
 					break;
 			}
@@ -284,6 +292,11 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			this._accordionItemTitleElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternTitle);
 			this._accordionItemContentElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternContent);
 			this._accordionItemIconElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternIcon);
+			// Getting the custom icon that is also a placeholder (ph)
+			this._accordionItemIconCustomElem = Helper.Dom.ClassSelector(
+				this._selfElem,
+				Enum.CssClass.PatternIcon + '.' + Constants.Placeholder
+			);
 			this._accordionItemPlaceholder = this._accordionItemContentElem.firstChild as HTMLElement;
 		}
 
