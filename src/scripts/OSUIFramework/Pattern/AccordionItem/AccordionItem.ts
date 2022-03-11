@@ -7,9 +7,9 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		// Stores the HTML element of the pattern's content
 		private _accordionItemContentElem: HTMLElement;
 		// Stores the HTML element of the pattern's icon
-		private _accordionItemIconElem: HTMLElement;
-		// Stores the HTML element of the pattern's icon
 		private _accordionItemIconCustomElem: HTMLElement;
+		// Stores the HTML element of the pattern's icon
+		private _accordionItemIconElem: HTMLElement;
 		// Stores the HTML element of the pattern's placeholder
 		private _accordionItemPlaceholder: HTMLElement;
 		// Stores the HTML element of the pattern's title
