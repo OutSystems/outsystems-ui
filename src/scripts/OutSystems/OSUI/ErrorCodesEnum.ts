@@ -25,4 +25,12 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailDispose: 'OSUI-API-02002',
 		FailRegisterCallback: 'OSUI-API-02003',
 	};
+
+	export const SectionIndex = {
+		FailChangeProperty: 'OSUI-API-03001',
+		FailDisable: 'OSUI-API-03002',
+		FailDispose: 'OSUI-API-03003',
+		FailEnable: 'OSUI-API-03004',
+		FailRegisterCallback: 'OSUI-API-03005',
+	};
 }

@@ -10,8 +10,19 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 	export class SectionIndexItemConfig extends AbstractConfiguration {
 		public ScrollToWidgetId: string;
 
-		constructor(config: JSON) {
-			super(config);
+		/**
+		 * Method that validates if a given property can be changed.
+		 *
+		 * @param {boolean} isBuilt
+		 * @param {string} key
+		 * @return {*}  {boolean}
+		 * @memberof SectionIndexItemConfig
+		 */
+		public validateCanChange(isBuilt: boolean, key: string): boolean {
+			if (isBuilt) {
+				return key !== Enum.Properties.ScrollToWidgetId;
+			}
+			return true;
 		}
 	}
 }

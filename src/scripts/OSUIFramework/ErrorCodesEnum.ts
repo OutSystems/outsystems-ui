@@ -5,7 +5,7 @@ namespace OSUIFramework.ErrorCodes {
 	 */
 
 	export const AbstractChild = {
-		DropdownParentNotFound: 'OSUI-GEN-01001',
+		ParentNotFound: 'OSUI-GEN-01001',
 	};
 
 	export const Dropdown = {
@@ -25,5 +25,16 @@ namespace OSUIFramework.ErrorCodes {
 
 	export const Notification = {
 		FailRegisterCallback: 'OSUI-GEN-03001',
+	};
+
+	export const SectionIndex = {
+		FailChildItemClicked: 'OSUI-GEN-04001',
+		FailSetNewChildItem: 'OSUI-GEN-04002',
+		FailToSetChildItemAction: 'OSUI-GEN-04003',
+		FailUnsetNewChildItem: 'OSUI-GEN-04004',
+	};
+
+	export const SectionIndexItem = {
+		FailToSetTargetElement: 'OSUI-GEN-05001',
 	};
 }

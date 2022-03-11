@@ -9,6 +9,8 @@ namespace OSUIFramework.Event {
 					return new Patterns.Submenu.Open();
 				case Type.BodyOnClick:
 					return new Event.BodyOnClick();
+				case Type.BodyOnScroll:
+					return new Event.BodyOnScroll();
 				default:
 					throw new Error(`The event ${eventType} is not supported.`);
 			}

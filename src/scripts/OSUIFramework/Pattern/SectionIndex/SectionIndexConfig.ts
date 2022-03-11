@@ -11,10 +11,6 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		public IsFixed: boolean;
 		public SmoothScrolling: boolean;
 
-		constructor(config: JSON) {
-			super(config);
-		}
-
 		/**
 		 * Override, Validate configs key values
 		 *
