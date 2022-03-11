@@ -1,16 +1,26 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Notification {
 	export class NotificationConfig extends AbstractConfiguration {
-		public ClickToClose: boolean;
 		public CloseAfterTime: number;
+		public InteractToClose: boolean;
 		public NeedsSwipes: boolean;
 		public Position: string;
 		public StartsOpen: boolean;
 		public Width: string;
 
-		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-		constructor(config: any) {
-			super(config);
+		/**
+		 * Validate if the parameters can change
+		 *
+		 * @param {boolean} isBuilt
+		 * @param {string} key
+		 * @return {*}  {boolean}
+		 * @memberof NotificationConfig
+		 */
+		public validateCanChange(isBuilt: boolean, key: string): boolean {
+			if (isBuilt) {
+				return key !== Enum.Properties.StartsOpen;
+			}
+			return true;
 		}
 
 		/**
@@ -25,7 +35,7 @@ namespace OSUIFramework.Patterns.Notification {
 			let validatedValue = undefined;
 
 			switch (key) {
-				case Enum.Properties.ClickToClose:
+				case Enum.Properties.InteractToClose:
 					validatedValue = this.validateBoolean(value as boolean, true);
 					break;
 

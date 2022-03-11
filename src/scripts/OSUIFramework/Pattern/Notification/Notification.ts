@@ -77,7 +77,7 @@ namespace OSUIFramework.Patterns.Notification {
 			this._focusableActiveElement.focus();
 
 			// Remove listeners to toggle Notification
-			if (this.configs.ClickToClose) {
+			if (Helper.DeviceInfo.IsNative === false && this.configs.InteractToClose) {
 				this._notificationContentElement.removeEventListener(this._eventType, this._eventOnClick);
 				this._notificationContentElement.removeEventListener(
 					GlobalEnum.HTMLEvent.keyDown,
@@ -147,7 +147,7 @@ namespace OSUIFramework.Patterns.Notification {
 			this._updateA11yProperties();
 
 			// Add listeners to toggle Notification
-			if (this.configs.ClickToClose) {
+			if (Helper.DeviceInfo.IsNative === false && this.configs.InteractToClose) {
 				this._notificationContentElement.addEventListener(this._eventType, this._eventOnClick);
 			}
 
@@ -208,14 +208,10 @@ namespace OSUIFramework.Patterns.Notification {
 		 * @param {number} value
 		 * @memberof Notification
 		 */
-		private _updateClickToClose(value: boolean): void {
-			if (this.configs.ClickToClose !== value) {
-				this.configs.ClickToClose = value;
-				if (this.configs.ClickToClose) {
-					this._notificationContentElement.addEventListener(this._eventType, this._eventOnClick);
-				} else {
-					this._notificationContentElement.removeEventListener(this._eventType, this._eventOnClick);
-				}
+		private _updateCloseAfterTime(value: number): void {
+			this.configs.CloseAfterTime = value;
+			if (this._isOpen) {
+				this._autoCloseNotification();
 			}
 		}
 
@@ -226,10 +222,16 @@ namespace OSUIFramework.Patterns.Notification {
 		 * @param {number} value
 		 * @memberof Notification
 		 */
-		private _updateCloseAfterTime(value: number): void {
-			this.configs.CloseAfterTime = value;
-			if (this._isOpen) {
-				this._autoCloseNotification();
+		private _updateInteractToClose(value: boolean): void {
+			if (this.configs.InteractToClose !== value) {
+				this.configs.InteractToClose = value;
+				if (Helper.DeviceInfo.IsNative === false) {
+					if (this.configs.InteractToClose) {
+						this._notificationContentElement.addEventListener(this._eventType, this._eventOnClick);
+					} else {
+						this._notificationContentElement.removeEventListener(this._eventType, this._eventOnClick);
+					}
+				}
 			}
 		}
 
@@ -353,7 +355,7 @@ namespace OSUIFramework.Patterns.Notification {
 		 */
 		protected unsetCallbacks(): void {
 			// Remove listeners to toggle Notification
-			if (this.configs.ClickToClose) {
+			if (Helper.DeviceInfo.IsNative === false && this.configs.InteractToClose) {
 				this._notificationContentElement.removeEventListener(this._eventType, this._eventOnClick);
 				this._notificationContentElement.removeEventListener(
 					GlobalEnum.HTMLEvent.keyDown,
@@ -399,14 +401,19 @@ namespace OSUIFramework.Patterns.Notification {
 		 */
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		public changeProperty(propertyName: string, propertyValue: any): void {
-			const _oldNotificationPosition: string = this.configs.Position;
-			super.changeProperty(propertyName, propertyValue);
+			const _oldNotificationPosition = this.configs.Position;
+
+			// The ExtendeClass is applied in a different element than the other patterns
+			// so we prevent to execute the super.changeProperty when the ExtendedClass is changed
+			if (propertyName !== GlobalEnum.CommonPatternsProperties.ExtendedClass) {
+				super.changeProperty(propertyName, propertyValue);
+			}
 
 			if (this.isBuilt) {
 				// Check which property changed and call respective method to update it
 				switch (propertyName) {
-					case Enum.Properties.ClickToClose:
-						this._updateClickToClose(propertyValue);
+					case Enum.Properties.InteractToClose:
+						this._updateInteractToClose(propertyValue);
 						break;
 					case Enum.Properties.CloseAfterTime:
 						this._updateCloseAfterTime(propertyValue);
@@ -421,6 +428,13 @@ namespace OSUIFramework.Patterns.Notification {
 						break;
 					case Enum.Properties.Width:
 						this._updateWidth(propertyValue);
+						break;
+					case GlobalEnum.CommonPatternsProperties.ExtendedClass:
+						Helper.Dom.Styles.ExtendedClass(
+							this._notificationContentElement,
+							this.configs.ExtendedClass,
+							propertyValue as string
+						);
 						break;
 				}
 			}
