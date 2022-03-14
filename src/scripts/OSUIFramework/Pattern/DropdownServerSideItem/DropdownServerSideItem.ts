@@ -115,10 +115,9 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		protected setA11yProperties(): void {
 			// By default set disable to tabIndex
 			Helper.A11Y.TabIndexFalse(this.selfElement);
-
 			// Set balloon option items container with listbox as a role
 			Helper.A11Y.RoleOption(this.selfElement);
-
+			// Set Item as Unselected by default
 			Helper.A11Y.AriaSelectedFalse(this.selfElement);
 		}
 

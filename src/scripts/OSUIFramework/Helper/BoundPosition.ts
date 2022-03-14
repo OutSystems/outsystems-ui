@@ -6,25 +6,32 @@ namespace OSUIFramework.Helper {
 		 *
 		 * @param element Element to check if is outside of boundaries
 		 * @param testAgainstElement Element where the boundaries will be tested
-		 * @param elementOffset Element Offset values to ba take in consideration
+		 * @param elementOffset Element Offset values to be taken in consideration
 		 * @returns {OutOfBoundaries}
 		 */
 		public static Check(
 			element: HTMLElement,
 			testAgainstElement: HTMLElement = document.body,
-			elementOffset: OffsetValues = { top: 0, right: 0, bottom: 0, left: 0 }
+			elementOffset: number | OffsetValues = { top: 0, right: 0, bottom: 0, left: 0 }
 		): OutOfBoundaries {
 			// Set element Bounds
 			const elementBounds = element.getBoundingClientRect();
 			// Set AgainstElement Bounds
 			const againstElementBounds = testAgainstElement.getBoundingClientRect();
+			// Set the offset values according it's same value for all sides or different value for each side
+			const offSetValues = {
+				top: typeof elementOffset === 'number' ? elementOffset : elementOffset.top,
+				right: typeof elementOffset === 'number' ? elementOffset : elementOffset.right,
+				bottom: typeof elementOffset === 'number' ? elementOffset : elementOffset.bottom,
+				left: typeof elementOffset === 'number' ? elementOffset : elementOffset.left,
+			};
 
 			// Check if Element it's out of the AgainstElement boundaries
 			const isOut: OutOfBoundaries = {
-				top: elementBounds.top - elementOffset.top < againstElementBounds.top,
-				right: elementBounds.right + elementOffset.right > againstElementBounds.right,
-				bottom: elementBounds.bottom + elementOffset.bottom > againstElementBounds.bottom,
-				left: elementBounds.left - elementOffset.left < againstElementBounds.left,
+				top: elementBounds.top + offSetValues.top < againstElementBounds.top,
+				right: elementBounds.right - offSetValues.right > againstElementBounds.right,
+				bottom: elementBounds.bottom - offSetValues.bottom > againstElementBounds.bottom,
+				left: elementBounds.left + offSetValues.left < againstElementBounds.left,
 			};
 
 			return isOut;
@@ -41,7 +48,7 @@ namespace OSUIFramework.Helper {
 		public static GetRecomendedPosition(
 			element: HTMLElement,
 			testAgainstElement: HTMLElement = document.body,
-			elementOffset: OffsetValues = { top: 0, right: 0, bottom: 0, left: 0 }
+			elementOffset: number | OffsetValues = { top: 0, right: 0, bottom: 0, left: 0 }
 		): string | undefined {
 			// Store the recomended position
 			let recomendedPosition = undefined;

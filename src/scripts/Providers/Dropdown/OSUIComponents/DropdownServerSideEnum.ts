@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.Dropdown.OSUIComponents.Enum {
 	/**
-	 * Communication between Patterns - Notification Type
+	 * Notifications Type, From Child (DropdownServerSideItem) to Parent (DropdownServerSide)
 	 */
 	export enum ChildNotifyActionType {
 		Add = 'add',
@@ -11,7 +11,7 @@ namespace Providers.Dropdown.OSUIComponents.Enum {
 	}
 
 	/**
-	 * DropdownServerSide Class
+	 * Class
 	 */
 	export enum Class {
 		BalloonContent = 'osui-dropdown-serverside__balloon-content',
@@ -25,19 +25,30 @@ namespace Providers.Dropdown.OSUIComponents.Enum {
 		IsDisabled = 'osui-dropdown-serverside--is-disabled',
 		IsOpened = 'osui-dropdown-serverside--is-opened',
 		NotValid = 'osui-dropdown-serverside--not-valid',
+		Pattern = 'osui-dropdown-serverside',
 		SelectText = 'osui-dropdown-serverside__text',
 		SelectValuesWrapper = 'osui-dropdown-serverside__selected-values-wrapper',
 	}
 
 	/**
-	 * DropdownServerSide Events
+	 * Events
 	 */
 	export enum Events {
 		OnToggle = 'OnToggle',
 	}
 
 	/**
-	 * DropdownServerSide Enum properties
+	 * Inline CSS variables!
+	 */
+	export enum InlineCssVariables {
+		InputHeight = '--osui-dropdown-ss-input-height',
+		Left = '--osui-dropdown-ss-left',
+		Top = '--osui-dropdown-ss-top',
+		Width = '--osui-dropdown-ss-width',
+	}
+
+	/**
+	 * Enum properties
 	 */
 	export enum Properties {
 		AllowMultipleSelection = 'AllowMultipleSelection',
