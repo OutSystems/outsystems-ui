@@ -76,6 +76,11 @@
 			content: '\f104'/ var(--pseudo-icons-alt-text);
 			font-size: var(--font-size-h5);
 			position: relative;
+
+			// ServiceStudio Preview
+			& {
+				-servicestudio-content: '\f104';
+			}
 		}
 	}
 
@@ -92,6 +97,11 @@
 			content: '\f105'/ var(--pseudo-icons-alt-text);
 			font-size: var(--font-size-h5);
 			position: relative;
+
+			// ServiceStudio Preview
+			& {
+				-servicestudio-content: '\f105';
+			}
 		}
 	}
 
@@ -416,12 +426,22 @@ input.OSFillParent.calendar-input {
 
 			&:before {
 				content: '\f104'/ var(--pseudo-icons-alt-text);
+
+				// ServiceStudio Preview
+				& {
+					-servicestudio-content: '\f104';
+				}
 			}
 		}
 
 		&-prev {
 			&:before {
 				content: '\f105'/ var(--pseudo-icons-alt-text);
+
+				// ServiceStudio Preview
+				& {
+					-servicestudio-content: '\f105';
+				}
 			}
 		}
 

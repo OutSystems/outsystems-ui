@@ -36,6 +36,11 @@
 			left: 16px;
 			position: absolute;
 			top: 0;
+
+			// ServiceStudio Preview
+			& {
+				-servicestudio-content: '\f002';
+			}
 		}
 	}
 

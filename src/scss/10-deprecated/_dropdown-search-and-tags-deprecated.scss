@@ -295,6 +295,11 @@
 		position: absolute;
 		top: 50%;
 		transform: translateY(-50%);
+
+		// ServiceStudio Preview
+		& {
+			-servicestudio-content: '\f002';
+		}
 	}
 
 	input {
