@@ -103,7 +103,6 @@ namespace Providers.Datepicker.Flatpickr {
 					this.TimeFormat !== OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable
 						? this.ServerDateFormat + ' H:i'
 						: this.ServerDateFormat,
-				enableTime: this.TimeFormat !== OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable,
 				locale: this._checkLocale(),
 				maxDate: OSUIFramework.Helper.Dates.IsNull(this.MaxDate) ? undefined : this.MaxDate,
 				minDate: OSUIFramework.Helper.Dates.IsNull(this.MinDate) ? undefined : this.MinDate,
