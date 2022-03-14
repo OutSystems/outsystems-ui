@@ -6,7 +6,7 @@
 
 	&:after {
 		color: var(--color-neutral-7);
-		content: '\f107';
+		content: '\f107'/ var(--pseudo-icons-alt-text);
 		font: normal normal normal 24px/1 FontAwesome;
 		font-family: 'FontAwesome';
 		position: absolute;

@@ -73,7 +73,7 @@
 		padding: var(--space-none) var(--space-s);
 
 		&:before {
-			content: '\f104';
+			content: '\f104'/ var(--pseudo-icons-alt-text);
 			font-size: var(--font-size-h5);
 			position: relative;
 		}
@@ -89,7 +89,7 @@
 		padding: var(--space-none) var(--space-s);
 
 		&:before {
-			content: '\f105';
+			content: '\f105'/ var(--pseudo-icons-alt-text);
 			font-size: var(--font-size-h5);
 			position: relative;
 		}
@@ -415,13 +415,13 @@ input.OSFillParent.calendar-input {
 			padding: var(--space-none) var(--space-xs);
 
 			&:before {
-				content: '\f104';
+				content: '\f104'/ var(--pseudo-icons-alt-text);
 			}
 		}
 
 		&-prev {
 			&:before {
-				content: '\f105';
+				content: '\f105'/ var(--pseudo-icons-alt-text);
 			}
 		}
 
