@@ -14,6 +14,8 @@ namespace Providers.Dropdown.OSUIComponents {
 		private _balloonFooterElement: HTMLElement;
 		// Store the HTML element for the Dropdown otpions
 		private _balloonOptionsWrapperElement: HTMLElement;
+		// Store the balloon position when/if a recomended position has been added!
+		private _balloonPositionClass = '';
 		// Store the HTML element for the Search input at Dropdown Balloon
 		private _balloonSearchInputElement: HTMLElement;
 		// Store the HTML element for the DropdownBalloonSearch
@@ -119,6 +121,44 @@ namespace Providers.Dropdown.OSUIComponents {
 
 			// Trigger the toggle callback event
 			this._triggerToogleCalbackEvent();
+		}
+
+		// Check the recomended position to open the balloon
+		private _getRecomendedPosition(): void {
+			// Get the recomended position to open the balloon
+			const recomendedPosition = OSUIFramework.Helper.BoundPosition.GetRecomendedPosition(
+				this._balloonWrapperElement
+			);
+
+			// Check if there are a any recomended position
+			if (recomendedPosition !== undefined) {
+				let newClassPosition = '';
+
+				switch (recomendedPosition) {
+					case OSUIFramework.GlobalEnum.Position.Top:
+						newClassPosition = Enum.Class.BalloonPositionTop;
+						break;
+					case OSUIFramework.GlobalEnum.Position.Bottom:
+						newClassPosition = Enum.Class.BalloonPositionBottom;
+						break;
+				}
+
+				// Check if the position has changed
+				if (newClassPosition !== this._balloonPositionClass) {
+					// If there was an old position, remove it
+					if (this._balloonPositionClass !== '') {
+						OSUIFramework.Helper.Dom.Styles.RemoveClass(
+							this._balloonWrapperElement,
+							this._balloonPositionClass
+						);
+					}
+
+					// Store the current position
+					this._balloonPositionClass = newClassPosition;
+					// Set the new position
+					OSUIFramework.Helper.Dom.Styles.AddClass(this._balloonWrapperElement, newClassPosition);
+				}
+			}
 		}
 
 		// Move ballon element to outside of the pattern context
@@ -233,6 +273,7 @@ namespace Providers.Dropdown.OSUIComponents {
 			this._closeDynamically = false;
 			this._isOpened = true;
 
+			this._getRecomendedPosition();
 			this._updatePatternState();
 		}
 
