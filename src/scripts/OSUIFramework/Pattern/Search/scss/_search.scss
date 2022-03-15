@@ -29,18 +29,13 @@
 		&:after {
 			align-items: center;
 			color: var(--color-neutral-6);
-			content: '\f002'/ var(--pseudo-icons-alt-text);
+			content: '\f002';
 			display: flex;
 			font: normal normal normal 14px/1 FontAwesome;
 			height: 100%;
 			left: 16px;
 			position: absolute;
 			top: 0;
-
-			// ServiceStudio Preview
-			& {
-				-servicestudio-content: '\f002';
-			}
 		}
 	}
 

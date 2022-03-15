@@ -73,12 +73,7 @@
 			transition: all 300ms ease-in-out;
 
 			&:after {
-				content: '\f107'/ var(--pseudo-icons-alt-text);
-
-				// ServiceStudio Preview
-				& {
-					-servicestudio-content: '\f107';
-				}
+				content: '\f107';
 			}
 		}
 
