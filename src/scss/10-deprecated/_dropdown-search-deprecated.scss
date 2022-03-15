@@ -6,7 +6,7 @@
 
 	&:after {
 		color: var(--color-neutral-7);
-		content: '\f107'/ var(--pseudo-icons-alt-text);
+		content: '\f107';
 		font: normal normal normal 24px/1 FontAwesome;
 		font-family: 'FontAwesome';
 		position: absolute;
@@ -14,11 +14,6 @@
 		top: 8px;
 		transform-origin: center;
 		transition: all 300ms ease;
-
-		// ServiceStudio Preview
-		& {
-			-servicestudio-content: '\f107';
-		}
 	}
 
 	&.is {
