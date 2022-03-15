@@ -19,9 +19,7 @@ namespace Providers.RangeSlider.NoUiSlider {
 				direction: OutSystems.OSUI.Utils.GetIsRTL()
 					? OSUIFramework.GlobalEnum.Direction.RTL
 					: OSUIFramework.GlobalEnum.Direction.LTR,
-				start: this.IsInterval ? [this.StartingValueFrom, this.StartingValueTo] : [this.StartingValueFrom],
 				step: this.Step,
-				connect: this.IsInterval ? true : NoUiSlider.Enum.NoUiSliderConnectOptions.Lower,
 				orientation: this.Orientation,
 				range: this.getRangeConfig(),
 				tooltips: this.setTooltipVisibility(this.ShowFloatingLabel),

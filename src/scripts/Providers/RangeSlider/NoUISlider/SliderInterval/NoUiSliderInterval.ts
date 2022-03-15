@@ -1,18 +1,19 @@
 /// <reference path="../AbstractNoUiSlider.ts" />
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.RangeSlider.NoUISlider.SingleSlider {
+namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
-	export class OSUINoUiSliderSingleSlider extends AbstractNoUiSlider<NoUISlider.SliderSingle.NoUiSliderSingleConfig> {
+	export class OSUINoUiSliderInterval extends AbstractNoUiSlider<NoUISlider.SliderInterval.NoUiSliderIntervalConfig> {
 		constructor(uniqueId: string, configs: JSON) {
-			super(uniqueId, new NoUISlider.SliderSingle.NoUiSliderSingleConfig(configs));
+			super(uniqueId, new NoUISlider.SliderInterval.NoUiSliderIntervalConfig(configs));
 		}
 
 		private _updateRangeSlider(): void {
 			// Get values so the the Range Slider keeps the same values as before is destroyed
 			const value = this.getValue();
 
-			this.configs.StartingValueFrom = value as number;
+			this.configs.StartingValueFrom = value[0];
+			this.configs.StartingValueTo = value[1];
 
 			super.updateRangeSlider();
 		}
@@ -24,13 +25,18 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 			if (value !== undefined) {
 				//if we received value, means that this was a callback from the Provider. Let's update the values.
 				this.configs.StartingValueFrom = value[0];
+				this.configs.StartingValueTo = value[1];
 			}
 
 			//If we're not waiting to send the information
 			if (this.trottleTimer === undefined) {
 				//Then let's wait _trottleTimeValue ms and send the latest value to the platform
 				this.trottleTimer = setTimeout(() => {
-					this.platformEventValueChange(this.widgetId, this.configs.StartingValueFrom, undefined);
+					this.platformEventValueChange(
+						this.widgetId,
+						this.configs.StartingValueFrom,
+						this.configs.StartingValueTo
+					);
 					this.trottleTimer = undefined;
 				}, this.trottleTimeValue);
 			}
@@ -50,6 +56,13 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 			super.createProviderInstance();
 		}
 
+		protected setA11yProperties(): void {
+			this.providerOptions.handleAttributes = [
+				{ 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Lower },
+				{ 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Upper },
+			];
+		}
+
 		/**
 		 * Sets the callbacks to be used with the provider.
 		 *
@@ -64,6 +77,8 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 			super.build();
 
 			this.prepareConfigs();
+
+			this.setA11yProperties();
 
 			this.finishBuild();
 		}

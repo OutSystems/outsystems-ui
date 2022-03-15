@@ -169,37 +169,6 @@ namespace Providers.RangeSlider.NoUISlider {
 				tooltips: this.configs.setTooltipVisibility(this.configs.ShowFloatingLabel),
 			});
 		}
-
-		/**
-		 * Handler to trigger the OnValueChange event
-		 *
-		 * @private
-		 * @param {(number | number[])} value
-		 * @memberof OSUINoUiSlider
-		 */
-		/* 		private _valueChangeCallback(value?: number[]): void {
-			if (value !== undefined) {
-				//if we received value, means that this was a callback from the Provider. Let's update the values.
-				this.configs.StartingValueFrom = value[0];
-				if (this.configs.IsInterval) {
-					this.configs.StartingValueTo = value[1];
-				}
-			}
-
-			//If we're not waiting to send the information
-			if (this._trottleTimer === undefined) {
-				//Then let's wait _trottleTimeValue ms and send the latest value to the platform
-				this._trottleTimer = setTimeout(() => {
-					this.platformEventValueChange(
-						this.widgetId,
-						this.configs.StartingValueFrom,
-						this.configs.IsInterval ? this.configs.StartingValueTo : undefined
-					);
-					this._trottleTimer = undefined;
-				}, this._trottleTimeValue);
-			}
-		} */
-
 		/**
 		 * Method that will create the provider
 		 *
@@ -218,25 +187,6 @@ namespace Providers.RangeSlider.NoUISlider {
 
 			// Set OnValueChange event
 			this._setOnValueChangeEvent(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Slide);
-		}
-
-		/**
-		 * Method to set a default to aria-label on handles, to avoid Lighthouse audit errors
-		 *
-		 * @protected
-		 * @memberof OSUINoUiSlider
-		 */
-		protected setA11yProperties(): void {
-			if (this.configs.IsInterval) {
-				this.providerOptions.handleAttributes = [
-					{ 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Lower },
-					{ 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Upper },
-				];
-			} else {
-				this.providerOptions.handleAttributes = [
-					{ 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Single },
-				];
-			}
 		}
 
 		/**
@@ -294,9 +244,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * @memberof OSUINoUiSlider
 		 */
 		protected setInitialStates(): void {
-			this.providerOptions = this.configs.getProviderConfig();
-
-			this.setA11yProperties();
+			this.providerOptions = this.configs.getCommonProviderConfig();
 
 			if (this.configs.ShowTickMarks) {
 				this._handleRangeTicks(false);
@@ -336,16 +284,6 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * @memberof OSUINoUiSlider
 		 */
 		protected updateRangeSlider(): void {
-			// Get values so the the Range Slider keeps the same values as before is destroyed
-			const value = this.getValue();
-
-			if (this.configs.IsInterval) {
-				this.configs.StartingValueFrom = value[0];
-				this.configs.StartingValueTo = value[1];
-			} else {
-				this.configs.StartingValueFrom = value as number;
-			}
-
 			this.provider.destroy();
 			this.createProviderInstance();
 			this.setInitialCSSClasses();

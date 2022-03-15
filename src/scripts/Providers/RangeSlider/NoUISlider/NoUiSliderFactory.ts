@@ -9,7 +9,7 @@ namespace Providers.RangeSlider.NoUiSlider.Factory {
 
 		switch (mode) {
 			case OSUIFramework.Patterns.RangeSlider.Enum.Mode.Single:
-				_rangeSliderItem = new Providers.Datepicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate(
+				_rangeSliderItem = new Providers.RangeSlider.NoUISlider.SingleSlider.OSUINoUiSliderSingle(
 					rangeSliderId,
 					JSON.parse(configs)
 				);
@@ -17,7 +17,7 @@ namespace Providers.RangeSlider.NoUiSlider.Factory {
 				break;
 
 			case OSUIFramework.Patterns.RangeSlider.Enum.Mode.Interval:
-				_rangeSliderItem = new Providers.Datepicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate(
+				_rangeSliderItem = new Providers.RangeSlider.NoUISlider.IntervalSlider.OSUINoUiSliderInterval(
 					rangeSliderId,
 					JSON.parse(configs)
 				);
@@ -25,7 +25,7 @@ namespace Providers.RangeSlider.NoUiSlider.Factory {
 				break;
 
 			default:
-				throw new Error(`There is no Flatpickr of ${mode} type`);
+				throw new Error(`There is no RangeSlider of ${mode} type`);
 		}
 
 		return _rangeSliderItem;

@@ -30,7 +30,7 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 		rangeSliderId: string,
 		configs: string,
 		mode: OSUIFramework.Patterns.RangeSlider.Enum.Mode,
-		provider: string //TODO: change the order of parameters in OutSystems code
+		provider: string
 	): OSUIFramework.Patterns.RangeSlider.IRangeSlider {
 		if (_rangeSliderItemsMap.has(rangeSliderId)) {
 			throw new Error(
