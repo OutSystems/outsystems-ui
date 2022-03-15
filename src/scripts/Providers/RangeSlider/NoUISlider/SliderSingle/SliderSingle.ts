@@ -8,6 +8,34 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 			super(uniqueId, new NoUISlider.SliderSingle.NoUiSliderSingleConfig(configs));
 		}
 
+		private _updateRangeSlider(): void {
+			// Get values so the the Range Slider keeps the same values as before is destroyed
+			const value = this.getValue();
+
+			this.configs.StartingValueFrom = value as number;
+
+			super.updateRangeSlider();
+		}
+
+		/**
+		 * Handler to trigger the OnValueChange event
+		 */
+		private _valueChangeCallback(value?: number[]): void {
+			if (value !== undefined) {
+				//if we received value, means that this was a callback from the Provider. Let's update the values.
+				this.configs.StartingValueFrom = value[0];
+			}
+
+			//If we're not waiting to send the information
+			if (this.trottleTimer === undefined) {
+				//Then let's wait _trottleTimeValue ms and send the latest value to the platform
+				this.trottleTimer = setTimeout(() => {
+					this.platformEventValueChange(this.widgetId, this.configs.StartingValueFrom, undefined);
+					this.trottleTimer = undefined;
+				}, this.trottleTimeValue);
+			}
+		}
+
 		/**
 		 * Method that will set the provider configurations in order to properly create its instance
 		 *
@@ -22,6 +50,16 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 			super.createProviderInstance();
 		}
 
+		/**
+		 * Sets the callbacks to be used with the provider.
+		 *
+		 * @protected
+		 * @memberof OSUINoUiSlider
+		 */
+		protected setCallbacks(): void {
+			this.eventProviderValueChanged = this._valueChangeCallback.bind(this);
+		}
+
 		public build(): void {
 			super.build();
 
@@ -33,6 +71,13 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 		// Method used to change given propertyName at OnParametersChange platform event
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
+
+			if (this.isBuilt) {
+				switch (propertyName) {
+					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
+						this._updateRangeSlider();
+				}
+			}
 		}
 	}
 }

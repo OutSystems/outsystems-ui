@@ -8,23 +8,24 @@ namespace Providers.RangeSlider.NoUISlider {
 		extends OSUIFramework.Patterns.RangeSlider.AbstractRangeSlider<NoUiSlider, C>
 		implements INoUiSlider
 	{
-		private _eventProviderValueChanged: OSUIFramework.Callbacks.Generic;
-		// RangeSlider events
-		private _platformEventInitialize: OSUIFramework.Callbacks.OSRangeSliderInitializeEvent;
-		private _platformEventValueChange: OSUIFramework.Callbacks.OSRangeSliderOnValueChangeEvent;
 		// Store the provider target elem
 		private _rangeSliderProviderElem: HTMLElement;
-		// Trottle before invoking the platform
-		private _trottleTimeValue = 200;
-		// Trottle timer id
-		private _trottleTimer: unknown;
+
+		protected eventProviderValueChanged: OSUIFramework.Callbacks.Generic;
+		// RangeSlider events
+		protected platformEventInitialize: OSUIFramework.Callbacks.OSRangeSliderInitializeEvent;
+		protected platformEventValueChange: OSUIFramework.Callbacks.OSRangeSliderOnValueChangeEvent;
 		// Store the provider options
 		protected providerOptions: NoUiSliderOptions;
+		// Trottle before invoking the platform
+		protected trottleTimeValue = 200;
+		// Trottle timer id
+		protected trottleTimer: unknown;
 
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
 
-			this._trottleTimer = undefined;
+			this.trottleTimer = undefined;
 		}
 
 		/**
@@ -105,7 +106,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * @memberof OSUINoUiSlider
 		 */
 		private _setOnInitializedEvent(): void {
-			OSUIFramework.Helper.AsyncInvocation(this._platformEventInitialize, this.widgetId);
+			OSUIFramework.Helper.AsyncInvocation(this.platformEventInitialize, this.widgetId);
 		}
 
 		/**
@@ -116,7 +117,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * @memberof OSUINoUiSlider
 		 */
 		private _setOnValueChangeEvent(changeEvent: RangeSlider.NoUiSlider.Enum.NoUISliderEvents): void {
-			this.provider.on(changeEvent, this._eventProviderValueChanged);
+			this.provider.on(changeEvent, this.eventProviderValueChanged);
 		}
 
 		/**
@@ -139,27 +140,6 @@ namespace Providers.RangeSlider.NoUISlider {
 				OSUIFramework.Patterns.RangeSlider.Enum.CssProperties.Size,
 				this.configs.Size
 			);
-		}
-
-		/**
-		 * Method to remove and destroy RangeSlider instance
-		 *
-		 * @private
-		 * @memberof OSUINoUiSlider
-		 */
-		private _updateRangeSlider(): void {
-			// Get values so the the Range Slider keeps the same values as before is destroyed
-			const value = this.getValue();
-
-			if (this.configs.IsInterval) {
-				this.configs.StartingValueFrom = value[0];
-				this.configs.StartingValueTo = value[1];
-			} else {
-				this.configs.StartingValueFrom = value as number;
-			}
-
-			this.provider.destroy();
-			this.createProviderInstance();
 		}
 
 		/**
@@ -197,7 +177,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * @param {(number | number[])} value
 		 * @memberof OSUINoUiSlider
 		 */
-		private _valueChangeCallback(value?: number[]): void {
+		/* 		private _valueChangeCallback(value?: number[]): void {
 			if (value !== undefined) {
 				//if we received value, means that this was a callback from the Provider. Let's update the values.
 				this.configs.StartingValueFrom = value[0];
@@ -210,7 +190,7 @@ namespace Providers.RangeSlider.NoUISlider {
 			if (this._trottleTimer === undefined) {
 				//Then let's wait _trottleTimeValue ms and send the latest value to the platform
 				this._trottleTimer = setTimeout(() => {
-					this._platformEventValueChange(
+					this.platformEventValueChange(
 						this.widgetId,
 						this.configs.StartingValueFrom,
 						this.configs.IsInterval ? this.configs.StartingValueTo : undefined
@@ -218,7 +198,7 @@ namespace Providers.RangeSlider.NoUISlider {
 					this._trottleTimer = undefined;
 				}, this._trottleTimeValue);
 			}
-		}
+		} */
 
 		/**
 		 * Method that will create the provider
@@ -266,7 +246,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * @memberof OSUINoUiSlider
 		 */
 		protected setCallbacks(): void {
-			this._eventProviderValueChanged = this._valueChangeCallback.bind(this);
+			//this.eventProviderValueChanged = this._valueChangeCallback.bind(this);
 		}
 
 		/**
@@ -336,7 +316,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * @memberof OSUINoUiSlider
 		 */
 		protected unsetCallbacks(): void {
-			this._eventProviderValueChanged = undefined;
+			this.eventProviderValueChanged = undefined;
 		}
 
 		/**
@@ -347,6 +327,28 @@ namespace Providers.RangeSlider.NoUISlider {
 		 */
 		protected unsetHtmlElements(): void {
 			this._rangeSliderProviderElem = undefined;
+		}
+
+		/**
+		 * Method to remove and destroy RangeSlider instance
+		 *
+		 * @private
+		 * @memberof OSUINoUiSlider
+		 */
+		protected updateRangeSlider(): void {
+			// Get values so the the Range Slider keeps the same values as before is destroyed
+			const value = this.getValue();
+
+			if (this.configs.IsInterval) {
+				this.configs.StartingValueFrom = value[0];
+				this.configs.StartingValueTo = value[1];
+			} else {
+				this.configs.StartingValueFrom = value as number;
+			}
+
+			this.provider.destroy();
+			this.createProviderInstance();
+			this.setInitialCSSClasses();
 		}
 
 		/**
@@ -411,12 +413,6 @@ namespace Providers.RangeSlider.NoUISlider {
 								this.configs.IsInterval ? 'Interval' : ''
 							}. Use a distinct variable to assign on the OnValueChange event`
 						);
-
-						break;
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
-						this._updateRangeSlider();
-						this.setInitialCSSClasses();
-
 						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.IsDisabled:
 						this._setIsDisabled();
@@ -478,13 +474,13 @@ namespace Providers.RangeSlider.NoUISlider {
 		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
 			switch (eventName) {
 				case OSUIFramework.Patterns.RangeSlider.Enum.RangeSliderEvents.OnInitialize:
-					if (this._platformEventInitialize === undefined) {
-						this._platformEventInitialize = callback;
+					if (this.platformEventInitialize === undefined) {
+						this.platformEventInitialize = callback;
 					}
 					break;
 				case OSUIFramework.Patterns.RangeSlider.Enum.RangeSliderEvents.OnValueChange:
-					if (this._platformEventValueChange === undefined) {
-						this._platformEventValueChange = callback;
+					if (this.platformEventValueChange === undefined) {
+						this.platformEventValueChange = callback;
 					}
 					break;
 			}
@@ -497,7 +493,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 */
 		public setRangeIntervalChangeOnDragEnd(): void {
 			// Remove slide default event
-			this.provider.off(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Slide, this._eventProviderValueChanged);
+			this.provider.off(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Slide, this.eventProviderValueChanged);
 			// Set new Change event
 			this._setOnValueChangeEvent(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Change);
 		}
