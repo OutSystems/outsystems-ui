@@ -4,48 +4,27 @@ namespace Providers.RangeSlider.NoUISlider {
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
-	export class OSUINoUiSlider
-		extends OSUIFramework.Patterns.RangeSlider.AbstractRangeSlider<NoUiSlider, RangeSlider.NoUiSliderConfig>
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		implements OSUIFramework.Patterns.RangeSlider.IRangeSlider
+	export abstract class AbstractNoUiSlider<C extends NoUiSlider.AbstractNoUiSliderConfig>
+		extends OSUIFramework.Patterns.RangeSlider.AbstractRangeSlider<NoUiSlider, C>
+		implements INoUiSlider
 	{
 		private _eventProviderValueChanged: OSUIFramework.Callbacks.Generic;
 		// RangeSlider events
 		private _platformEventInitialize: OSUIFramework.Callbacks.OSRangeSliderInitializeEvent;
 		private _platformEventValueChange: OSUIFramework.Callbacks.OSRangeSliderOnValueChangeEvent;
-		// Store the provider options
-		private _providerOptions: NoUiSliderOptions;
 		// Store the provider target elem
 		private _rangeSliderProviderElem: HTMLElement;
 		// Trottle before invoking the platform
 		private _trottleTimeValue = 200;
 		// Trottle timer id
 		private _trottleTimer: unknown;
+		// Store the provider options
+		protected providerOptions: NoUiSliderOptions;
 
-		constructor(uniqueId: string, configs: JSON) {
-			super(uniqueId, new NoUiSliderConfig(configs));
+		constructor(uniqueId: string, configs: C) {
+			super(uniqueId, configs);
 
 			this._trottleTimer = undefined;
-		}
-
-		/**
-		 * Method that will create the provider
-		 *
-		 * @private
-		 * @memberof OSUINoUiSlider
-		 */
-		private _createProviderRangeSlider(): void {
-			// Set inital library options
-			this.setInitialStates();
-
-			// Init provider
-			this._provider = window.noUiSlider.create(this._rangeSliderProviderElem, this._providerOptions);
-
-			// Trigger platform's OnInitialize event (done by us, the library doesn't have a 'mount' event)
-			this._setOnInitializedEvent();
-
-			// Set OnValueChange event
-			this._setOnValueChangeEvent(Enum.NoUISliderEvents.Slide);
 		}
 
 		/**
@@ -95,13 +74,13 @@ namespace Providers.RangeSlider.NoUISlider {
 			const ticks = {
 				values: list,
 				density: ticksDensity,
-				mode: Enum.NoUiSliderModeOptions.Values,
+				mode: RangeSlider.NoUiSlider.Enum.NoUiSliderModeOptions.Values,
 			};
 
 			if (isUpdate) {
 				this.provider.updateOptions({ pips: ticks });
 			} else {
-				this._providerOptions.pips = ticks;
+				this.providerOptions.pips = ticks;
 			}
 		}
 
@@ -136,7 +115,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * @param {Enum.NoUISliderEvents} changeEvent
 		 * @memberof OSUINoUiSlider
 		 */
-		private _setOnValueChangeEvent(changeEvent: Enum.NoUISliderEvents): void {
+		private _setOnValueChangeEvent(changeEvent: RangeSlider.NoUiSlider.Enum.NoUISliderEvents): void {
 			this.provider.on(changeEvent, this._eventProviderValueChanged);
 		}
 
@@ -180,7 +159,7 @@ namespace Providers.RangeSlider.NoUISlider {
 			}
 
 			this.provider.destroy();
-			this._createProviderRangeSlider();
+			this.createProviderInstance();
 		}
 
 		/**
@@ -242,6 +221,26 @@ namespace Providers.RangeSlider.NoUISlider {
 		}
 
 		/**
+		 * Method that will create the provider
+		 *
+		 * @private
+		 * @memberof OSUINoUiSlider
+		 */
+		protected createProviderInstance(): void {
+			// Set inital library options
+			this.setInitialStates();
+
+			// Init provider
+			this.provider = window.noUiSlider.create(this._rangeSliderProviderElem, this.providerOptions);
+
+			// Trigger platform's OnInitialize event (done by us, the library doesn't have a 'mount' event)
+			this._setOnInitializedEvent();
+
+			// Set OnValueChange event
+			this._setOnValueChangeEvent(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Slide);
+		}
+
+		/**
 		 * Method to set a default to aria-label on handles, to avoid Lighthouse audit errors
 		 *
 		 * @protected
@@ -249,12 +248,14 @@ namespace Providers.RangeSlider.NoUISlider {
 		 */
 		protected setA11yProperties(): void {
 			if (this.configs.IsInterval) {
-				this._providerOptions.handleAttributes = [
-					{ 'aria-label': Enum.NoUISliderLabels.Lower },
-					{ 'aria-label': Enum.NoUISliderLabels.Upper },
+				this.providerOptions.handleAttributes = [
+					{ 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Lower },
+					{ 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Upper },
 				];
 			} else {
-				this._providerOptions.handleAttributes = [{ 'aria-label': Enum.NoUISliderLabels.Single }];
+				this.providerOptions.handleAttributes = [
+					{ 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Single },
+				];
 			}
 		}
 
@@ -313,7 +314,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * @memberof OSUINoUiSlider
 		 */
 		protected setInitialStates(): void {
-			this._providerOptions = this.configs.getProviderConfig();
+			this.providerOptions = this.configs.getProviderConfig();
 
 			this.setA11yProperties();
 
@@ -359,7 +360,7 @@ namespace Providers.RangeSlider.NoUISlider {
 			this.setHtmlElements();
 			this.setInitialCSSClasses();
 
-			this._createProviderRangeSlider();
+			this.createProviderInstance();
 
 			this.finishBuild();
 		}
@@ -496,9 +497,11 @@ namespace Providers.RangeSlider.NoUISlider {
 		 */
 		public setRangeIntervalChangeOnDragEnd(): void {
 			// Remove slide default event
-			this.provider.off(Enum.NoUISliderEvents.Slide, this._eventProviderValueChanged);
+			this.provider.off(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Slide, this._eventProviderValueChanged);
 			// Set new Change event
-			this._setOnValueChangeEvent(Enum.NoUISliderEvents.Change);
+			this._setOnValueChangeEvent(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Change);
 		}
+
+		protected abstract prepareConfigs(): void;
 	}
 }

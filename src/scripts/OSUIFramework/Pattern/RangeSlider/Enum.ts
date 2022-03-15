@@ -22,6 +22,11 @@ namespace OSUIFramework.Patterns.RangeSlider.Enum {
 		PixelSize = '100px',
 	}
 
+	export enum Mode {
+		Single = 'single',
+		Interval = 'intervaL',
+	}
+
 	/**
 	 * RangeSlider Enum properties
 	 */

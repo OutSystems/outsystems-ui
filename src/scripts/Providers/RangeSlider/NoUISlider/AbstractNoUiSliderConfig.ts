@@ -1,7 +1,19 @@
+/// <reference path="./AbstractNoUiSlider.ts" />
+
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace Providers.RangeSlider {
-	export class NoUiSliderConfig extends OSUIFramework.Patterns.RangeSlider.AbstractRangeSliderConfig {
-		public getProviderConfig(): NoUiSliderOptions {
+namespace Providers.RangeSlider.NoUiSlider {
+	/**
+	 * Class that represents the custom configurations received by the RangeSlider.
+	 *
+	 * @export
+	 * @abstract
+	 * @class AbstractNoUiSliderConfig
+	 * @extends {OSUIFramework.Patterns.RangeSlider
+	 * 		.AbstractRangeSliderConfig}
+	 */
+	export abstract class AbstractNoUiSliderConfig extends OSUIFramework.Patterns.RangeSlider
+		.AbstractRangeSliderConfig {
+		public getCommonProviderConfig(): NoUiSliderOptions {
 			// eslint-disable-next-line prefer-const
 			let providerOptions = {
 				direction: OutSystems.OSUI.Utils.GetIsRTL()
@@ -9,7 +21,7 @@ namespace Providers.RangeSlider {
 					: OSUIFramework.GlobalEnum.Direction.LTR,
 				start: this.IsInterval ? [this.StartingValueFrom, this.StartingValueTo] : [this.StartingValueFrom],
 				step: this.Step,
-				connect: this.IsInterval ? true : Enum.NoUiSliderConnectOptions.Lower,
+				connect: this.IsInterval ? true : NoUiSlider.Enum.NoUiSliderConnectOptions.Lower,
 				orientation: this.Orientation,
 				range: this.getRangeConfig(),
 				tooltips: this.setTooltipVisibility(this.ShowFloatingLabel),

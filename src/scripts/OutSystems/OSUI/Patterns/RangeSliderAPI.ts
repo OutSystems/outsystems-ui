@@ -20,13 +20,16 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 * Create the new RangeSliderItem instance and add it to the rangeSliderItemsMap
 	 *
 	 * @export
-	 * @param {string} rangeSliderId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
+	 * @param {string} rangeSliderId
+	 * @param {string} configs
+	 * @param {OSUIFramework.Patterns.RangeSlider.Enum.Mode} mode
+	 * @param {string} provider
 	 * @return {*}  {OSUIFramework.Patterns.RangeSlider.IRangeSlider}
 	 */
 	export function Create(
 		rangeSliderId: string,
 		configs: string,
+		mode: OSUIFramework.Patterns.RangeSlider.Enum.Mode,
 		provider: string //TODO: change the order of parameters in OutSystems code
 	): OSUIFramework.Patterns.RangeSlider.IRangeSlider {
 		if (_rangeSliderItemsMap.has(rangeSliderId)) {
@@ -37,8 +40,9 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 
 		const _rangeSliderItem = OSUIFramework.Patterns.RangeSlider.Factory.NewRangeSlider(
 			rangeSliderId,
-			provider,
-			configs
+			configs,
+			mode,
+			provider
 		);
 
 		_rangeSliderItemsMap.set(rangeSliderId, _rangeSliderItem);
