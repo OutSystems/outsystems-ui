@@ -288,18 +288,13 @@
 
 	&:before {
 		color: var(--color-neutral-6);
-		content: '\f002'/ var(--pseudo-icons-alt-text);
+		content: '\f002';
 		font: normal normal normal 14px/1 FontAwesome;
 		font-family: 'FontAwesome';
 		left: var(--space-base);
 		position: absolute;
 		top: 50%;
 		transform: translateY(-50%);
-
-		// ServiceStudio Preview
-		& {
-			-servicestudio-content: '\f002';
-		}
 	}
 
 	input {
