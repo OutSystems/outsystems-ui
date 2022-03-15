@@ -13,6 +13,9 @@ namespace Providers.RangeSlider.NoUiSlider {
 	 */
 	export abstract class AbstractNoUiSliderConfig extends OSUIFramework.Patterns.RangeSlider
 		.AbstractRangeSliderConfig {
+		// Store rangeslider mode is in use
+		public rangeSliderMode: OSUIFramework.Patterns.RangeSlider.Enum.Mode;
+
 		public getCommonProviderConfig(): NoUiSliderOptions {
 			// eslint-disable-next-line prefer-const
 			let providerOptions = {
@@ -22,7 +25,6 @@ namespace Providers.RangeSlider.NoUiSlider {
 				step: this.Step,
 				orientation: this.Orientation,
 				range: this.getRangeConfig(),
-				tooltips: this.setTooltipVisibility(this.ShowFloatingLabel),
 			};
 
 			//Cleanning undefined properties
@@ -38,11 +40,6 @@ namespace Providers.RangeSlider.NoUiSlider {
 				min: this.MinValue,
 				max: this.MaxValue === this.MinValue ? 100 : this.MaxValue,
 			};
-		}
-
-		public setTooltipVisibility(showTooltip: boolean): number[] {
-			const tooltipValue = showTooltip ? window.wNumb({ decimals: 0 }) : false;
-			return this.IsInterval ? [tooltipValue, tooltipValue] : [tooltipValue];
 		}
 	}
 }

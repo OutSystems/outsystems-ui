@@ -8,6 +8,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		extends OSUIFramework.Patterns.RangeSlider.AbstractRangeSlider<NoUiSlider, C>
 		implements INoUiSlider
 	{
+		private _isInterval: boolean;
 		// Store the provider target elem
 		private _rangeSliderProviderElem: HTMLElement;
 
@@ -26,6 +27,7 @@ namespace Providers.RangeSlider.NoUISlider {
 			super(uniqueId, configs);
 
 			this.trottleTimer = undefined;
+			this._isInterval = this.configs.rangeSliderMode === OSUIFramework.Patterns.RangeSlider.Enum.Mode.Interval;
 		}
 
 		/**
@@ -142,6 +144,15 @@ namespace Providers.RangeSlider.NoUISlider {
 			);
 		}
 
+		private _setTooltipVisibility(showTooltip: boolean): void {
+			const tooltipValue = showTooltip ? window.wNumb({ decimals: 0 }) : false;
+			const tooltips = this._isInterval ? [tooltipValue, tooltipValue] : [tooltipValue];
+
+			this.provider.updateOptions({
+				tooltips: tooltips,
+			});
+		}
+
 		/**
 		 * Method to update range values on RangeSlider
 		 *
@@ -158,17 +169,6 @@ namespace Providers.RangeSlider.NoUISlider {
 			}
 		}
 
-		/**
-		 * Method to update tooltips visibility on RangeSlider
-		 *
-		 * @private
-		 * @memberof OSUINoUiSlider
-		 */
-		private _updateTooltipVisibility(): void {
-			this.provider.updateOptions({
-				tooltips: this.configs.setTooltipVisibility(this.configs.ShowFloatingLabel),
-			});
-		}
 		/**
 		 * Method that will create the provider
 		 *
@@ -250,6 +250,10 @@ namespace Providers.RangeSlider.NoUISlider {
 				this._handleRangeTicks(false);
 			}
 
+			if (this.configs.ShowFloatingLabel) {
+				this._setTooltipVisibility(true);
+			}
+
 			if (this.configs.Orientation) {
 				this._setSize();
 			}
@@ -329,15 +333,6 @@ namespace Providers.RangeSlider.NoUISlider {
 							}. Use a distinct variable to assign on the OnValueChange event`
 						);
 						break;
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueTo:
-						console.warn(
-							`RangeSlider${this.configs.IsInterval ? 'Interval' : ''} (${this.widgetId}): changes to ${
-								OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueTo
-							} parameter do not affect the RangeSlider${
-								this.configs.IsInterval ? 'Interval' : ''
-							}. Use a distinct variable to assign on the OnValueChange event`
-						);
-						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.MinValue:
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.MaxValue:
 						this._updateRangeValues();
@@ -369,7 +364,7 @@ namespace Providers.RangeSlider.NoUISlider {
 
 						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowFloatingLabel:
-						this._updateTooltipVisibility();
+						this._setTooltipVisibility(propertyValue as boolean);
 
 						break;
 				}

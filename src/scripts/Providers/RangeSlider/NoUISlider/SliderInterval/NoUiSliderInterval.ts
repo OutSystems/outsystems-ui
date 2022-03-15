@@ -89,8 +89,14 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 
 			if (this.isBuilt) {
 				switch (propertyName) {
+					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueTo:
+						console.warn(
+							`RangeSliderInterval': (${this.widgetId}): changes to ${OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueTo} parameter do not affect the RangeSliderInterval'. Use a distinct variable to assign on the OnValueChange event`
+						);
+						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
 						this._updateRangeSlider();
+						break;
 				}
 			}
 		}
