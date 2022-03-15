@@ -187,18 +187,9 @@ namespace Providers.Datepicker.Flatpickr {
 			if (this.isBuilt) {
 				switch (propertyName) {
 					case OSUIFramework.Patterns.DatePicker.Enum.Properties.FirstWeekDay:
-						this.redraw();
-						break;
 					case OSUIFramework.Patterns.DatePicker.Enum.Properties.MaxDate:
-						this.redraw();
-						break;
 					case OSUIFramework.Patterns.DatePicker.Enum.Properties.MinDate:
-						this.redraw();
-						break;
 					case OSUIFramework.Patterns.DatePicker.Enum.Properties.ShowTodayButton:
-						this.redraw();
-						break;
-					case OSUIFramework.Patterns.DatePicker.Enum.Properties.TimeFormat:
 						this.redraw();
 						break;
 					case OSUIFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass:

@@ -59,9 +59,11 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 								this._flatpickrOpts.dateFormat
 							);
 						}
-
 						this.redraw();
+						break;
 
+					case OSUIFramework.Patterns.DatePicker.Enum.Properties.TimeFormat:
+						this.redraw();
 						break;
 				}
 			}
