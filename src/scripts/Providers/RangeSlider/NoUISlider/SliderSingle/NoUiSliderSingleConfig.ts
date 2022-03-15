@@ -7,7 +7,7 @@ namespace Providers.RangeSlider.NoUISlider.SliderSingle {
 
 		public getProviderConfig(): NoUiSliderOptions {
 			// eslint-disable-next-line prefer-const
-			let rangeSliderOptions = {
+			let singleSliderOptions = {
 				start: [this.StartingValueFrom],
 				connect: NoUiSlider.Enum.NoUiSliderConnectOptions.Lower,
 			};
@@ -16,7 +16,7 @@ namespace Providers.RangeSlider.NoUISlider.SliderSingle {
 			// eslint-disable-next-line prefer-const
 			let noUiSliderOptions = {
 				...super.getCommonProviderConfig(),
-				...rangeSliderOptions,
+				...singleSliderOptions,
 			};
 
 			//Cleanning undefined properties
