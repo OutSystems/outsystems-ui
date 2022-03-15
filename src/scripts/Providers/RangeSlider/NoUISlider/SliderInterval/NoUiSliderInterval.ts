@@ -76,6 +76,8 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 		public build(): void {
 			super.build();
 
+			console.log('Interval Class');
+
 			this.prepareConfigs();
 
 			this.setA11yProperties();

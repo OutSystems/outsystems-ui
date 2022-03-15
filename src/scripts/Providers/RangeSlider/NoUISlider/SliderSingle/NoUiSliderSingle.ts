@@ -13,6 +13,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 			const value = this.getValue();
 
 			this.configs.StartingValueFrom = value as number;
+			this.providerOptions = this.configs.getProviderConfig();
 
 			super.updateRangeSlider();
 		}
@@ -46,6 +47,8 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 			// Get the library configurations
 			this.providerOptions = this.configs.getProviderConfig();
 
+			console.log(this.providerOptions);
+
 			// Instance will be Created!
 			super.createProviderInstance();
 		}
@@ -69,6 +72,8 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 		public build(): void {
 			super.build();
 
+			console.log('Single Class');
+
 			this.prepareConfigs();
 
 			this.setA11yProperties();
@@ -84,6 +89,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 				switch (propertyName) {
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
 						this._updateRangeSlider();
+						break;
 				}
 			}
 		}

@@ -24,7 +24,7 @@ namespace OSUIFramework.Patterns.RangeSlider.Enum {
 
 	export enum Mode {
 		Single = 'single',
-		Interval = 'intervaL',
+		Interval = 'interval',
 	}
 
 	/**

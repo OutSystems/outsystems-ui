@@ -24,7 +24,7 @@ namespace Providers.RangeSlider.NoUISlider.SliderSingle {
 				(key) => noUiSliderOptions[key] === undefined && delete noUiSliderOptions[key]
 			);
 
-			return rangeSliderOptions;
+			return noUiSliderOptions;
 		}
 	}
 }

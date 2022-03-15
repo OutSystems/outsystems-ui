@@ -144,13 +144,17 @@ namespace Providers.RangeSlider.NoUISlider {
 			);
 		}
 
-		private _setTooltipVisibility(showTooltip: boolean): void {
+		private _setTooltipVisibility(showTooltip: boolean, isUpdate = true): void {
 			const tooltipValue = showTooltip ? window.wNumb({ decimals: 0 }) : false;
 			const tooltips = this._isInterval ? [tooltipValue, tooltipValue] : [tooltipValue];
 
-			this.provider.updateOptions({
-				tooltips: tooltips,
-			});
+			if (isUpdate) {
+				this.provider.updateOptions({
+					tooltips: tooltips,
+				});
+			} else {
+				this.providerOptions.tooltips = tooltips;
+			}
 		}
 
 		/**
@@ -178,7 +182,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		protected createProviderInstance(): void {
 			// Set inital library options
 			this.setInitialStates();
-
+			console.log(this.providerOptions);
 			// Init provider
 			this.provider = window.noUiSlider.create(this._rangeSliderProviderElem, this.providerOptions);
 
@@ -244,15 +248,11 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * @memberof OSUINoUiSlider
 		 */
 		protected setInitialStates(): void {
-			this.providerOptions = this.configs.getCommonProviderConfig();
-
 			if (this.configs.ShowTickMarks) {
 				this._handleRangeTicks(false);
 			}
 
-			if (this.configs.ShowFloatingLabel) {
-				this._setTooltipVisibility(true);
-			}
+			this._setTooltipVisibility(this.configs.ShowFloatingLabel, false);
 
 			if (this.configs.Orientation) {
 				this._setSize();
@@ -300,13 +300,10 @@ namespace Providers.RangeSlider.NoUISlider {
 		 */
 		public build(): void {
 			super.build();
+			console.log('Abstract Class');
 			this.setCallbacks();
 			this.setHtmlElements();
 			this.setInitialCSSClasses();
-
-			this.createProviderInstance();
-
-			this.finishBuild();
 		}
 
 		/**
