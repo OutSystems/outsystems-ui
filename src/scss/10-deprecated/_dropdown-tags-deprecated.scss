@@ -65,7 +65,7 @@
 
 			&::after {
 				color: var(--color-neutral-7);
-				content: '\f00d';
+				content: '\f00d'/ var(--pseudo-icons-alt-text);
 				font: normal normal normal 14px/1 FontAwesome;
 				font-family: 'FontAwesome';
 				left: 0;
@@ -73,6 +73,11 @@
 				text-indent: 0;
 				top: 50%;
 				transform: translateY(-50%);
+
+				// ServiceStudio Preview
+				& {
+					-servicestudio-content: '\f00d';
+				}
 			}
 
 			&:hover,

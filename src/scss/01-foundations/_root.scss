@@ -84,4 +84,9 @@
 	--os-safe-area-right: env(safe-area-inset-right);
 	--os-safe-area-bottom: env(safe-area-inset-bottom);
 	--os-safe-area-left: env(safe-area-inset-left);
+
+	/*! Needed for Accessibility ADA Compliance. This is used on pseudo elements that have icons, with no way to add aria-hidden on html
+	By default, all these cases represent decorative elements, so an empty string is recommended. 
+	More info on: https://www.w3.org/TR/css-content-3/#alt*/
+	--pseudo-icons-alt-text: '';
 }

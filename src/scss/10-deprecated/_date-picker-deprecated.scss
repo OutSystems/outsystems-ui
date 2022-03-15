@@ -73,9 +73,14 @@
 		padding: var(--space-none) var(--space-s);
 
 		&:before {
-			content: '\f104';
+			content: '\f104'/ var(--pseudo-icons-alt-text);
 			font-size: var(--font-size-h5);
 			position: relative;
+
+			// ServiceStudio Preview
+			& {
+				-servicestudio-content: '\f104';
+			}
 		}
 	}
 
@@ -89,9 +94,14 @@
 		padding: var(--space-none) var(--space-s);
 
 		&:before {
-			content: '\f105';
+			content: '\f105'/ var(--pseudo-icons-alt-text);
 			font-size: var(--font-size-h5);
 			position: relative;
+
+			// ServiceStudio Preview
+			& {
+				-servicestudio-content: '\f105';
+			}
 		}
 	}
 
@@ -415,13 +425,23 @@ input.OSFillParent.calendar-input {
 			padding: var(--space-none) var(--space-xs);
 
 			&:before {
-				content: '\f104';
+				content: '\f104'/ var(--pseudo-icons-alt-text);
+
+				// ServiceStudio Preview
+				& {
+					-servicestudio-content: '\f104';
+				}
 			}
 		}
 
 		&-prev {
 			&:before {
-				content: '\f105';
+				content: '\f105'/ var(--pseudo-icons-alt-text);
+
+				// ServiceStudio Preview
+				& {
+					-servicestudio-content: '\f105';
+				}
 			}
 		}
 
