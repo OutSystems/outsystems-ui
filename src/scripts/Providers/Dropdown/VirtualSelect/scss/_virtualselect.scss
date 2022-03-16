@@ -123,6 +123,26 @@
 		}
 	}
 
+	// When Show as Popup (mobile behaviour)
+	&.show-as-popup {
+		.vscomp-dropbox {
+			border-radius: var(--border-radius-soft);
+			box-shadow: var(--shadow-xl);
+
+			&-container {
+				background-color: rgba(0, 0, 0, 0.25);
+			}
+
+			.vscomp-search-container {
+				height: 48px;
+			}
+
+			.vscomp-search-input {
+				height: inherit;
+			}
+		}
+	}
+
 	// RTL Text
 	&.text-direction-rtl {
 		&.multiple {
