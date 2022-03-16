@@ -85,10 +85,13 @@
 	}
 
 	.table-row:last-child {
-		&:last-child td {
+		& td {
 			border-bottom: none;
-			border-radius: var(--border-radius-none) var(--border-radius-none) var(--border-radius-soft)
-				var(--border-radius-none);
+
+			&:last-child {
+				border-radius: var(--border-radius-none) var(--border-radius-none) var(--border-radius-soft)
+					var(--border-radius-none);
+			}
 		}
 
 		td:first-child {
