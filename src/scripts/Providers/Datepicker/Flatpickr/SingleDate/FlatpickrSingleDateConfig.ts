@@ -24,6 +24,7 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 			const flatpickrSingleDateOpts = {
 				defaultDate: OSUIFramework.Helper.Dates.IsNull(this.InitialDate) ? undefined : this.InitialDate,
 				mode: OSUIFramework.Patterns.DatePicker.Enum.Mode.Single,
+				enableTime: this.TimeFormat !== OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable,
 				onChange: this.OnChange,
 			};
 
