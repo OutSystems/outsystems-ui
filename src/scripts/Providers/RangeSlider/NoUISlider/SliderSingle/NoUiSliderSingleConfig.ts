@@ -7,6 +7,12 @@ namespace Providers.RangeSlider.NoUISlider.SliderSingle {
 			this.rangeSliderMode = OSUIFramework.Patterns.RangeSlider.Enum.Mode.Single;
 		}
 
+		/**
+		 * Method to set provider configs for the Single Slider mode
+		 *
+		 * @return {*}  {NoUiSliderOptions}
+		 * @memberof NoUiSliderSingleConfig
+		 */
 		public getProviderConfig(): NoUiSliderOptions {
 			// eslint-disable-next-line prefer-const
 			let singleSliderOptions = {

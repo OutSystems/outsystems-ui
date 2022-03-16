@@ -8,6 +8,7 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 			super(uniqueId, new NoUISlider.SliderInterval.NoUiSliderIntervalConfig(configs));
 		}
 
+		// Method to trigger the a destroy & creation of new provider instance, with configs updated
 		private _updateRangeSlider(): void {
 			// Get values so the the Range Slider keeps the same values as before is destroyed
 			const value = this.getValue();
@@ -20,9 +21,7 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 			super.updateRangeSlider();
 		}
 
-		/**
-		 * Handler to trigger the OnValueChange event
-		 */
+		// Handler to trigger the OnValueChange event
 		private _valueChangeCallback(value?: number[]): void {
 			if (value !== undefined) {
 				//if we received value, means that this was a callback from the Provider. Let's update the values.
@@ -58,6 +57,12 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 			super.createProviderInstance();
 		}
 
+		/**
+		 * Method to set the Accessibility attributes
+		 *
+		 * @protected
+		 * @memberof OSUINoUiSliderInterval
+		 */
 		protected setA11yProperties(): void {
 			this.providerOptions.handleAttributes = [
 				{ 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Lower },
@@ -75,6 +80,11 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 			this.eventProviderValueChanged = this._valueChangeCallback.bind(this);
 		}
 
+		/**
+		 * Method to build the pattern
+		 *
+		 * @memberof OSUINoUiSliderInterval
+		 */
 		public build(): void {
 			super.build();
 
@@ -87,7 +97,13 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 			this.finishBuild();
 		}
 
-		// Method used to change given propertyName at OnParametersChange platform event
+		/**
+		 * Method used to change given propertyName at OnParametersChange platform event
+		 *
+		 * @param {string} propertyName
+		 * @param {unknown} propertyValue
+		 * @memberof OSUINoUiSliderInterval
+		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
 
@@ -99,6 +115,8 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 						);
 						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
+						// Library only supports update on some options, so we need to
+						// destroy the object and create a new RangeSlider
 						this._updateRangeSlider();
 						break;
 				}

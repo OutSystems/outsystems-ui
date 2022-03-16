@@ -8,12 +8,12 @@ namespace Providers.RangeSlider.NoUISlider {
 		extends OSUIFramework.Patterns.RangeSlider.AbstractRangeSlider<NoUiSlider, C>
 		implements INoUiSlider
 	{
+		// Store if the mode is Interval
 		private _isInterval: boolean;
 		// Store the provider target elem
 		private _rangeSliderProviderElem: HTMLElement;
-
-		protected eventProviderValueChanged: OSUIFramework.Callbacks.Generic;
 		// RangeSlider events
+		protected eventProviderValueChanged: OSUIFramework.Callbacks.Generic;
 		protected platformEventInitialize: OSUIFramework.Callbacks.OSRangeSliderInitializeEvent;
 		protected platformEventValueChange: OSUIFramework.Callbacks.OSRangeSliderOnValueChangeEvent;
 		// Store the provider options
@@ -21,78 +21,15 @@ namespace Providers.RangeSlider.NoUISlider {
 		// Trottle before invoking the platform
 		protected trottleTimeValue = 200;
 		// Trottle timer id
-		protected trottleTimer: unknown;
+		protected trottleTimer = undefined;
 
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
 
-			this.trottleTimer = undefined;
 			this._isInterval = this.configs.rangeSliderMode === OSUIFramework.Patterns.RangeSlider.Enum.Mode.Interval;
 		}
 
-		/**
-		 * Method to handle the ticks options from the library
-		 *
-		 * @private
-		 * @param {boolean} isUpdate
-		 * @return {*}  {void}
-		 * @memberof OSUINoUiSlider
-		 */
-		private _handleRangeTicks(isUpdate = true): void {
-			let tickMarksValues = Math.floor(this.configs.TickMarksInterval);
-
-			//To avoid performance issues
-			if (tickMarksValues > this.configs.MaxValue) {
-				tickMarksValues = this.configs.MaxValue;
-			}
-			// Ticks, when they exist, can't be decimal (library restraint)
-			if (tickMarksValues < 1) {
-				console.warn(
-					'The interval between tick marks, when they exist, can not be smaller than one or a decimal number (library restraint). If you do not want TickMarks to show, set the ShowTickMarks parameter to false.'
-				);
-				this.configs.TickMarksInterval = 1;
-				return;
-			}
-
-			// To avoid the creation of minor ticks, whatever the value
-			const ticksDensity = tickMarksValues * 100;
-
-			// array to receive the list of ticks
-			const list = [];
-
-			// tick iterator used on the while
-			let tick = this.configs.MinValue;
-
-			// Fill the array with the numbers from min to max values, respecting the interval set on the TickMarksInterval
-			while (tick <= this.configs.MaxValue) {
-				list.push(tick);
-				tick += tickMarksValues;
-			}
-
-			// To make sure that a tick is always created for the MaxValue
-			if (tick !== this.configs.MaxValue) {
-				list.push(this.configs.MaxValue);
-			}
-
-			const ticks = {
-				values: list,
-				density: ticksDensity,
-				mode: RangeSlider.NoUiSlider.Enum.NoUiSliderModeOptions.Values,
-			};
-
-			if (isUpdate) {
-				this.provider.updateOptions({ pips: ticks });
-			} else {
-				this.providerOptions.pips = ticks;
-			}
-		}
-
-		/**
-		 * Method to togghe the disabled attribute
-		 *
-		 * @private
-		 * @memberof OSUINoUiSlider
-		 */
+		// Method to togghe the disabled attribute
 		private _setIsDisabled(): void {
 			if (this.configs.IsDisabled) {
 				OSUIFramework.Helper.Dom.Disable(this._rangeSliderProviderElem);
@@ -101,33 +38,17 @@ namespace Providers.RangeSlider.NoUISlider {
 			}
 		}
 
-		/**
-		 * Method to set the OnInitializeEvent
-		 *
-		 * @private
-		 * @memberof OSUINoUiSlider
-		 */
+		// Method to set the OnInitializeEvent
 		private _setOnInitializedEvent(): void {
 			OSUIFramework.Helper.AsyncInvocation(this.platformEventInitialize, this.widgetId);
 		}
 
-		/**
-		 * Method to set the OnValueChangeEvent
-		 *
-		 * @private
-		 * @param {Enum.NoUISliderEvents} changeEvent
-		 * @memberof OSUINoUiSlider
-		 */
+		// Method to set the OnValueChangeEvent
 		private _setOnValueChangeEvent(changeEvent: RangeSlider.NoUiSlider.Enum.NoUISliderEvents): void {
 			this.provider.on(changeEvent, this.eventProviderValueChanged);
 		}
 
-		/**
-		 * Method to create/update the Size CSS Variable
-		 *
-		 * @private
-		 * @memberof OSUINoUiSlider
-		 */
+		// Method to create/update the Size CSS Variable
 		private _setSize(): void {
 			if (this.configs.Size.indexOf('%') > -1 && parseFloat(this.configs.Size) > 100) {
 				this.configs.Size = OSUIFramework.Patterns.RangeSlider.Enum.DefaultValues.PercentualSize;
@@ -144,32 +65,14 @@ namespace Providers.RangeSlider.NoUISlider {
 			);
 		}
 
-		private _setTooltipVisibility(showTooltip: boolean, isUpdate = true): void {
-			const tooltipValue = showTooltip ? window.wNumb({ decimals: 0 }) : false;
-			const tooltips = this._isInterval ? [tooltipValue, tooltipValue] : [tooltipValue];
-
-			if (isUpdate) {
-				this.provider.updateOptions({
-					tooltips: tooltips,
-				});
-			} else {
-				this.providerOptions.tooltips = tooltips;
-			}
-		}
-
-		/**
-		 * Method to update range values on RangeSlider
-		 *
-		 * @private
-		 * @memberof OSUINoUiSlider
-		 */
+		// Method to update range values on RangeSlider
 		private _updateRangeValues(): void {
 			this.provider.updateOptions({
 				range: this.configs.getRangeConfig(),
 			});
 
 			if (this.configs.ShowTickMarks) {
-				this._handleRangeTicks();
+				this.provider.updateOptions({ pips: this.configs.getPipsConfig() });
 			}
 		}
 
@@ -191,16 +94,6 @@ namespace Providers.RangeSlider.NoUISlider {
 
 			// Set OnValueChange event
 			this._setOnValueChangeEvent(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Slide);
-		}
-
-		/**
-		 * Sets the callbacks to be used with the provider.
-		 *
-		 * @protected
-		 * @memberof OSUINoUiSlider
-		 */
-		protected setCallbacks(): void {
-			//this.eventProviderValueChanged = this._valueChangeCallback.bind(this);
 		}
 
 		/**
@@ -248,15 +141,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * @memberof OSUINoUiSlider
 		 */
 		protected setInitialStates(): void {
-			if (this.configs.ShowTickMarks) {
-				this._handleRangeTicks(false);
-			}
-
-			this._setTooltipVisibility(this.configs.ShowFloatingLabel, false);
-
-			if (this.configs.Orientation) {
-				this._setSize();
-			}
+			this._setSize();
 
 			this._setIsDisabled();
 		}
@@ -313,8 +198,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			// Check which property changed and call respective method to update it
-			// Library only supports update on some options, so in most cases we need to
-			// destroy the object and create a new RangeSlider
+
 			super.changeProperty(propertyName, propertyValue);
 
 			if (this.isBuilt) {
@@ -347,7 +231,7 @@ namespace Providers.RangeSlider.NoUISlider {
 
 						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.TickMarksInterval:
-						this._handleRangeTicks();
+						this.provider.updateOptions({ pips: this.configs.getPipsConfig() });
 
 						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.Step:
@@ -359,7 +243,7 @@ namespace Providers.RangeSlider.NoUISlider {
 
 						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowFloatingLabel:
-						this._setTooltipVisibility(propertyValue as boolean);
+						this.provider.updateOptions({ tooltips: this.configs.getTooltipFormat() });
 
 						break;
 				}
@@ -411,6 +295,10 @@ namespace Providers.RangeSlider.NoUISlider {
 						this.platformEventValueChange = callback;
 					}
 					break;
+				default:
+					throw new Error(
+						`${OSUIFramework.ErrorCodes.RangeSlider.FailRegisterCallback}:	The given '${eventName}' event name it's not defined.`
+					);
 			}
 		}
 

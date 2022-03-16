@@ -7,6 +7,12 @@ namespace Providers.RangeSlider.NoUISlider.SliderInterval {
 			this.rangeSliderMode = OSUIFramework.Patterns.RangeSlider.Enum.Mode.Interval;
 		}
 
+		/**
+		 * Method to set provider configs for the Interval Slider mode
+		 *
+		 * @return {*}  {NoUiSliderOptions}
+		 * @memberof NoUiSliderIntervalConfig
+		 */
 		public getProviderConfig(): NoUiSliderOptions {
 			// eslint-disable-next-line prefer-const
 			let rangeSliderOptions = {
