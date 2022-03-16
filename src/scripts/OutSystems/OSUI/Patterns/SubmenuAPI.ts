@@ -13,7 +13,6 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 	export function ChangeProperty(submenuId: string, propertyName: string, propertyValue: any): void {
 		const submenu = GetSubmenuById(submenuId);
-
 		submenu.changeProperty(propertyName, propertyValue);
 	}
 
@@ -25,7 +24,6 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	 */
 	export function Close(submenuId: string): void {
 		const submenu = GetSubmenuById(submenuId);
-
 		submenu.close();
 	}
 
@@ -37,7 +35,6 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	 */
 	export function Open(submenuId: string): void {
 		const submenu = GetSubmenuById(submenuId);
-
 		submenu.open();
 	}
 
