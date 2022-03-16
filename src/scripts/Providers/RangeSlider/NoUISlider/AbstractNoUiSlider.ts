@@ -205,10 +205,12 @@ namespace Providers.RangeSlider.NoUISlider {
 				switch (propertyName) {
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueFrom:
 						console.warn(
-							`RangeSlider${this._isInterval ? 'Interval' : ''} (${this.widgetId}): changes to ${
+							`RangeSlider${
+								this._isInterval ? OSUIFramework.Patterns.RangeSlider.Enum.Mode.Interval : ''
+							} (${this.widgetId}): changes to ${
 								OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueFrom
 							} parameter do not affect the RangeSlider${
-								this._isInterval ? 'Interval' : ''
+								this._isInterval ? OSUIFramework.Patterns.RangeSlider.Enum.Mode.Interval : ''
 							}. Use a distinct variable to assign on the OnValueChange event`
 						);
 						break;
@@ -219,10 +221,12 @@ namespace Providers.RangeSlider.NoUISlider {
 						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.Orientation:
 						console.warn(
-							`RangeSlider${this._isInterval ? 'Interval' : ''} (${this.widgetId}): changes to ${
+							`RangeSlider${
+								this._isInterval ? OSUIFramework.Patterns.RangeSlider.Enum.Mode.Interval : ''
+							} (${this.widgetId}): changes to ${
 								OSUIFramework.Patterns.RangeSlider.Enum.Properties.Orientation
 							} parameter do not affect the RangeSlider${
-								this._isInterval ? 'Interval' : ''
+								this._isInterval ? OSUIFramework.Patterns.RangeSlider.Enum.Mode.Interval : ''
 							}. Use a distinct variable to assign on the OnValueChange event`
 						);
 						break;
