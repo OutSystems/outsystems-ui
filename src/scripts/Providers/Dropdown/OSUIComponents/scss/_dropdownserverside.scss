@@ -1,0 +1,298 @@
+/*! Patterns - Interaction - DropdownServerSide */
+////
+/// @group Patterns-DropdownServerSide
+/// Patterns - Interaction - DropdownServerSide
+
+///
+.osui-dropdown-serverside {
+	// "Input" section - SelectedValues container
+	&__selected-values {
+		align-items: center;
+		display: flex;
+		flex: 1;
+		height: inherit;
+		margin-right: var(--space-base);
+		overflow: hidden;
+
+		&:hover {
+			border-color: var(--color-neutral-6);
+		}
+
+		&:after {
+			border: var(--border-size-m) solid var(--color-neutral-7);
+			border-right-width: var(--border-size-none);
+			border-top-width: var(--border-size-none);
+			bottom: 0;
+			box-sizing: border-box;
+			content: '';
+			height: var(--space-s);
+			left: auto;
+			pointer-events: none;
+			position: absolute;
+			right: var(--space-base);
+			top: calc(50% - (var(--space-s) / 2));
+			transform-origin: center;
+			transform: rotate(-45deg);
+			transition: transform 200ms ease-in-out;
+			width: var(--space-s);
+		}
+
+		& > * {
+			&::selection {
+				background-color: transparent;
+			}
+
+			&:first-child {
+				width: 100%;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
+
+		&-wrapper {
+			align-items: center;
+			background-color: var(--color-neutral-0);
+			border-radius: var(--border-radius-soft);
+			border: var(--border-size-s) solid var(--color-neutral-5);
+			color: var(--color-neutral-9);
+			cursor: pointer;
+			display: flex;
+			font-size: var(--font-size-s);
+			height: 40px;
+			padding: var(--space-none) var(--space-base);
+			position: relative;
+			width: 100%;
+		}
+	}
+
+	// Balloon section
+	&__balloon {
+		// Wrapper
+		&-wrapper {
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+			left: var(--osui-dropdown-ss-left);
+			max-height: 0;
+			max-width: var(--osui-dropdown-ss-width);
+			overflow: hidden;
+			position: absolute;
+			top: calc(var(--osui-dropdown-ss-top) + var(--osui-dropdown-ss-input-height) + 2px);
+			transition: max-height 300ms ease-in-out;
+			width: 100%;
+		}
+
+		&-focus-top {
+			top: 0;
+		}
+
+		&-focus-bottom {
+			bottom: 0;
+		}
+
+		// Content Container
+		&-container {
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+			overflow: hidden;
+			background-color: var(--color-neutral-0);
+			border-radius: var(--border-radius-soft);
+			border: var(--border-size-s) solid var(--color-neutral-5);
+			opacity: 0;
+			transition: opacity 250ms ease, transform 300ms ease-in-out;
+			transform: translateY(-20px);
+		}
+
+		// Search placeholder
+		&-search {
+			border-bottom: var(--border-size-s) solid var(--color-neutral-5);
+			padding: var(--space-none);
+			position: relative;
+
+			&:before {
+				align-items: center;
+				color: var(--color-neutral-6);
+				content: '\f002';
+				display: flex;
+				font: normal normal normal 14px/1 FontAwesome;
+				height: 100%;
+				left: var(--space-base);
+				position: absolute;
+				top: 0;
+			}
+
+			input,
+			.form-control[data-input] {
+				background-color: transparent;
+				border: none;
+				border-radius: var(--border-size-none);
+				color: inherit;
+				font-size: var(--font-size-s);
+				height: 40px;
+				padding: var(--space-none) var(--space-s) var(--space-none) var(--space-xl);
+				width: 100%;
+			}
+		}
+
+		// Options placeholder
+		&-content {
+			flex: 1;
+			overflow-x: hidden;
+			overflow-y: auto;
+			padding: var(--space-s) var(--space-none);
+
+			&::-webkit-scrollbar {
+				width: 5px;
+			}
+
+			&::-webkit-scrollbar-track {
+				background: var(--color-neutral-4);
+			}
+
+			&::-webkit-scrollbar-thumb {
+				background-color: var(--color-neutral-6);
+			}
+		}
+
+		// Footer placeholder
+		&-footer {
+			align-items: center;
+			border-top: var(--border-size-s) solid var(--color-neutral-5);
+			display: flex;
+			padding: var(--space-s) var(--space-base);
+		}
+	}
+
+	// Balloon States
+	&--is-opened {
+		.osui-dropdown-serverside {
+			// "Input" section wrapper - SelectedValues container wrapper
+			&__selected-values-wrapper {
+				border-color: var(--color-primary);
+			}
+
+			// "Input" section - SelectedValues container
+			&__selected-values {
+				&:after {
+					border-color: var(--color-primary);
+					transform: rotate(135deg);
+				}
+			}
+
+			// Balloon section
+			&__balloon {
+				// Content Container
+				&-container {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+		}
+
+		// Ballon wrapper
+		&.osui-dropdown-serverside__balloon-wrapper {
+			max-height: 320px;
+		}
+	}
+}
+
+// Accessibility -----------------------------------------------------------------
+///
+.has-accessible-features {
+	.osui-dropdown-serverside {
+		&__selected-values {
+			&:hover,
+			&:after,
+			&-wrapper,
+			&-footer {
+				border-color: var(--color-neutral-7);
+			}
+		}
+
+		&__balloon {
+			&-container {
+				border-color: var(--color-neutral-7);
+			}
+
+			&-search {
+				&:before {
+					color: var(--color-neutral-7);
+				}
+			}
+
+			&-content {
+				&::-webkit-scrollbar-thumb {
+					background-color: var(--color-neutral-7);
+				}
+			}
+		}
+	}
+}
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	.osui-dropdown-serverside {
+		&__selected-values {
+			&:after {
+				left: var(--space-base);
+				right: auto;
+			}
+		}
+
+		// Balloon States
+		&--is-opened {
+			.osui-dropdown-serverside {
+				&__selected-values {
+					&:after {
+						transform: rotate(-225deg);
+					}
+				}
+			}
+		}
+
+		&__balloon {
+			&-search {
+				&:before {
+					left: auto;
+					right: var(--space-base);
+				}
+
+				input,
+				.form-control[data-input] {
+					padding: var(--space-none) var(--space-xl) var(--space-none) var(--space-s);
+				}
+			}
+		}
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+///
+.tablet,
+.phone {
+	.osui-dropdown-serverside {
+		&__selected-values-wrapper {
+			height: 48px;
+		}
+
+		&__balloon-search {
+			input,
+			.form-control[data-input] {
+				height: 48px;
+			}
+		}
+	}
+}
+
+///
+.tablet {
+	// css props
+}
+
+///
+.phone {
+	// css props
+}

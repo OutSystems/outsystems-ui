@@ -759,9 +759,6 @@ namespace Providers.Dropdown.OSUIComponents {
 			this.setCallbacks();
 			this.setHtmlElements();
 			super.finishBuild();
-
-			console.log('To REMOVE! - document.body.classList.add("has-accessible-features2);');
-			document.body.classList.add('has-accessible-features');
 		}
 
 		/**

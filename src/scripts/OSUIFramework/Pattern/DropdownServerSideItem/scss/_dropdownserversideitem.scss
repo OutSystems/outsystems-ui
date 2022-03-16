@@ -7,35 +7,40 @@
 // TODO (by CreateNewPattern): do all css styles for the DropdownServerSideItem at this partial!
 
 ///
-.osui-pattern-class {
-  // css props
+.osui-dropdown-serverside-item {
+	background-color: var(--color-neutral-0);
+	color: var(--color-neutral-9);
+	padding: var(--space-s) var(--space-base);
+
+	&__content {
+	}
 }
 
 // Accessibility -----------------------------------------------------------------
 ///
 .has-accessible-features {
-  // css props
+	// css props
 }
 
 // IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {
-  // css props
+	// css props
 }
 
 // Responsive --------------------------------------------------------------------
 ///
 .tablet,
 .phone {
-  // css props
+	// css props
 }
 
 ///
 .tablet {
-  // css props
+	// css props
 }
 
 ///
 .phone {
-  // css props
+	// css props
 }
