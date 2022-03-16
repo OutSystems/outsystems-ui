@@ -182,7 +182,9 @@ namespace Providers.RangeSlider.NoUISlider {
 		protected createProviderInstance(): void {
 			// Set inital library options
 			this.setInitialStates();
+
 			console.log(this.providerOptions);
+
 			// Init provider
 			this.provider = window.noUiSlider.create(this._rangeSliderProviderElem, this.providerOptions);
 
@@ -300,8 +302,6 @@ namespace Providers.RangeSlider.NoUISlider {
 		 */
 		public build(): void {
 			super.build();
-			console.log('Abstract Class');
-			this.setCallbacks();
 			this.setHtmlElements();
 			this.setInitialCSSClasses();
 		}
@@ -323,10 +323,10 @@ namespace Providers.RangeSlider.NoUISlider {
 				switch (propertyName) {
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueFrom:
 						console.warn(
-							`RangeSlider${this.configs.IsInterval ? 'Interval' : ''} (${this.widgetId}): changes to ${
+							`RangeSlider${this._isInterval ? 'Interval' : ''} (${this.widgetId}): changes to ${
 								OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueFrom
 							} parameter do not affect the RangeSlider${
-								this.configs.IsInterval ? 'Interval' : ''
+								this._isInterval ? 'Interval' : ''
 							}. Use a distinct variable to assign on the OnValueChange event`
 						);
 						break;
@@ -337,10 +337,10 @@ namespace Providers.RangeSlider.NoUISlider {
 						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.Orientation:
 						console.warn(
-							`RangeSlider${this.configs.IsInterval ? 'Interval' : ''} (${this.widgetId}): changes to ${
+							`RangeSlider${this._isInterval ? 'Interval' : ''} (${this.widgetId}): changes to ${
 								OSUIFramework.Patterns.RangeSlider.Enum.Properties.Orientation
 							} parameter do not affect the RangeSlider${
-								this.configs.IsInterval ? 'Interval' : ''
+								this._isInterval ? 'Interval' : ''
 							}. Use a distinct variable to assign on the OnValueChange event`
 						);
 						break;

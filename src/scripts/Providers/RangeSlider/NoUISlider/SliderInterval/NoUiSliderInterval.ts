@@ -15,6 +15,8 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 			this.configs.StartingValueFrom = value[0];
 			this.configs.StartingValueTo = value[1];
 
+			this.providerOptions = this.configs.getProviderConfig();
+
 			super.updateRangeSlider();
 		}
 
@@ -52,6 +54,8 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 			// Get the library configurations
 			this.providerOptions = this.configs.getProviderConfig();
 
+			console.log(this.providerOptions);
+
 			// Instance will be Created!
 			super.createProviderInstance();
 		}
@@ -77,6 +81,8 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 			super.build();
 
 			console.log('Interval Class');
+
+			this.setCallbacks();
 
 			this.prepareConfigs();
 

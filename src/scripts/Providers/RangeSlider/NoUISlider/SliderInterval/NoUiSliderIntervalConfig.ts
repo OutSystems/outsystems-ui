@@ -3,6 +3,8 @@ namespace Providers.RangeSlider.NoUISlider.SliderInterval {
 	export class NoUiSliderIntervalConfig extends Providers.RangeSlider.NoUiSlider.AbstractNoUiSliderConfig {
 		constructor(config: JSON) {
 			super(config);
+
+			this.rangeSliderMode = OSUIFramework.Patterns.RangeSlider.Enum.Mode.Interval;
 		}
 
 		public getProviderConfig(): NoUiSliderOptions {
@@ -24,7 +26,7 @@ namespace Providers.RangeSlider.NoUISlider.SliderInterval {
 				(key) => noUiSliderOptions[key] === undefined && delete noUiSliderOptions[key]
 			);
 
-			return rangeSliderOptions;
+			return noUiSliderOptions;
 		}
 	}
 }

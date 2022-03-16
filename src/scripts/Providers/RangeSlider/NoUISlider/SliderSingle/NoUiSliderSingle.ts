@@ -47,8 +47,6 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 			// Get the library configurations
 			this.providerOptions = this.configs.getProviderConfig();
 
-			console.log(this.providerOptions);
-
 			// Instance will be Created!
 			super.createProviderInstance();
 		}
@@ -72,7 +70,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 		public build(): void {
 			super.build();
 
-			console.log('Single Class');
+			this.setCallbacks();
 
 			this.prepareConfigs();
 

@@ -3,6 +3,8 @@ namespace Providers.RangeSlider.NoUISlider.SliderSingle {
 	export class NoUiSliderSingleConfig extends Providers.RangeSlider.NoUiSlider.AbstractNoUiSliderConfig {
 		constructor(config: JSON) {
 			super(config);
+
+			this.rangeSliderMode = OSUIFramework.Patterns.RangeSlider.Enum.Mode.Single;
 		}
 
 		public getProviderConfig(): NoUiSliderOptions {
