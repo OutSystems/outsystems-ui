@@ -5,7 +5,7 @@ namespace OSUIFramework.Patterns.Submenu {
 	 */
 	export class Submenu extends AbstractPattern<SubmenuConfig> implements ISubmenu {
 		// Store the pattern locals
-		private _dynamiclyOpening = false;
+		private _dynamicallyOpening = false;
 		private _eventClick: Callbacks.Generic;
 		private _eventKeypress: Callbacks.Generic;
 		private _globalEventBody: Callbacks.Generic;
@@ -25,7 +25,7 @@ namespace OSUIFramework.Patterns.Submenu {
 
 		// Close submenu, when BodyOnCLick event is triggered
 		private _bodyClickCallback(args: string, e: MouseEvent): void {
-			if (this.isBuilt && this._isOpen && this._dynamiclyOpening === false) {
+			if (this.isBuilt && this._isOpen && this._dynamicallyOpening === false) {
 				if (!this._selfElem.contains(e.target as HTMLElement)) {
 					this.close();
 				}
@@ -35,8 +35,8 @@ namespace OSUIFramework.Patterns.Submenu {
 			}
 
 			//this flag _dynamiclyOpening is just needed one time per interaction
-			if (this._dynamiclyOpening) {
-				this._dynamiclyOpening = false;
+			if (this._dynamicallyOpening) {
+				this._dynamicallyOpening = false;
 			}
 		}
 
@@ -97,14 +97,18 @@ namespace OSUIFramework.Patterns.Submenu {
 
 		// Remove submenu as active
 		private _removeActive(): void {
-			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternActive);
-			this._isActive = false;
+			if (this._isActive) {
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternActive);
+				this._isActive = false;
+			}
 		}
 
 		// Set submenu as active
 		private _setActive(): void {
-			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternActive);
-			this._isActive = true;
+			if (this._isActive === false) {
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternActive);
+				this._isActive = true;
+			}
 		}
 
 		// Show submenu
@@ -305,7 +309,7 @@ namespace OSUIFramework.Patterns.Submenu {
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
 
 				this._isOpen = false;
-				this._dynamiclyOpening = false;
+				this._dynamicallyOpening = false;
 
 				this._updateA11yProperties();
 			}
@@ -334,7 +338,7 @@ namespace OSUIFramework.Patterns.Submenu {
 		 */
 		public open(): void {
 			// Need to prevent the submenu will not be closed by the body click, use this flag to check.
-			this._dynamiclyOpening = true;
+			this._dynamicallyOpening = true;
 			this._show();
 
 			setTimeout(function () {
