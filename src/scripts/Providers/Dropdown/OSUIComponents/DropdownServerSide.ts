@@ -273,6 +273,7 @@ namespace Providers.Dropdown.OSUIComponents {
 			this._closeDynamically = false;
 			this._isOpened = true;
 
+			this._setBalloonCoordinates();
 			this._getRecomendedPosition();
 			this._updatePatternState();
 		}
