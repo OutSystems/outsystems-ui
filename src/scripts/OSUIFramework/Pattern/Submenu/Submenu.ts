@@ -5,9 +5,8 @@ namespace OSUIFramework.Patterns.Submenu {
 	 */
 	export class Submenu extends AbstractPattern<SubmenuConfig> implements ISubmenu {
 		// Store the pattern locals
+		private _dynamiclyOpening = false;
 		private _eventClick: Callbacks.Generic;
-		private _eventClickLinks: Callbacks.Generic;
-		private _eventFocus: Callbacks.Generic;
 		private _eventKeypress: Callbacks.Generic;
 		private _globalEventBody: Callbacks.Generic;
 		private _globalEventOpen: Callbacks.Generic;
@@ -17,36 +16,27 @@ namespace OSUIFramework.Patterns.Submenu {
 		private _isOpen = false;
 		private _submenuActiveLinksElement: HTMLElement;
 		private _submenuAllLinksElement: HTMLAnchorElement[];
-		private _submenuClickedElement: HTMLElement;
 		private _submenuHeaderElement: HTMLElement;
 		private _submenuLinksElement: HTMLElement;
 
-		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-		constructor(uniqueId: string, configs: any) {
+		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SubmenuConfig(configs));
 		}
 
-		/**
-		 * Close submenu, when BodyOnCLick event is triggered
-		 *
-		 * @private
-		 * @param {string} args
-		 * @param {MouseEvent} e
-		 * @memberof Submenu
-		 */
+		// Close submenu, when BodyOnCLick event is triggered
 		private _bodyClickCallback(args: string, e: MouseEvent): void {
-			if (this.isBuilt) {
+			if (this.isBuilt && this._isOpen && this._dynamiclyOpening === false) {
 				if (!this._selfElem.contains(e.target as HTMLElement)) {
-					if (Helper.Dom.Styles.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen) && !this._isOpen) {
-						Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
-					} else if (this._isOpen) {
-						this.close();
-					}
+					this.close();
 				}
 
 				e.preventDefault();
-
 				e.stopPropagation();
+			}
+
+			//this flag _dynamiclyOpening is just needed one time per interaction
+			if (this._dynamiclyOpening) {
+				this._dynamiclyOpening = false;
 			}
 		}
 
@@ -60,51 +50,13 @@ namespace OSUIFramework.Patterns.Submenu {
 			this._hasActiveLinks = !!this._submenuActiveLinksElement;
 		}
 
-		/**
-		 * Trigger the submenu at toggle behaviour
-		 *
-		 * @private
-		 * @param {MouseEvent} e
-		 * @memberof Submenu
-		 */
+		// Trigger the submenu at toggle behaviour
 		private _clickCallback(e: MouseEvent): void {
 			this._toggleSubmenu();
 			e.stopPropagation();
 		}
 
-		/**
-		 * This event was created to fix the issue on Native builds that can't focus on element clicked.
-		 *
-		 * @private
-		 * @param {MouseEvent} e
-		 * @memberof Submenu
-		 */
-		private _clickLinksCallback(e: MouseEvent): void {
-			this._submenuClickedElement = e.target as HTMLElement;
-			this._submenuClickedElement.focus();
-
-			e.preventDefault();
-		}
-
-		/**
-		 * Trigger the submenu at toggle behaviour
-		 *
-		 * @private
-		 * @param {MouseEvent} e
-		 * @memberof Submenu
-		 */
-		private _focusCallback(e: MouseEvent): void {
-			this._submenuHeaderElement.focus();
-			e.stopPropagation();
-		}
-
-		/**
-		 * Call methods to open or close, based ok e.key and behavior applied
-		 *
-		 * @private
-		 * @param {KeyboardEvent} e
-		 * @memberof Submenu
-		 */
+		// Call methods to open or close, based ok e.key and behavior applied
 		private _keypressCallback(e: KeyboardEvent): void {
 			const _clickedElem: HTMLElement = e.target as HTMLElement;
 			const _closestElem: HTMLElement = _clickedElem.closest(Constants.Dot + Enum.CssClass.Pattern);
@@ -134,13 +86,7 @@ namespace OSUIFramework.Patterns.Submenu {
 			e.stopPropagation();
 		}
 
-		/**
-		 * Prevent close submenu based on a uniqueID validation, when his event is triggered
-		 *
-		 * @private
-		 * @param {string} element
-		 * @memberof Submenu
-		 */
+		// Prevent close submenu based on a uniqueID validation, when his event is triggered
 		private _openCallback(element: string): void {
 			if (element !== this.uniqueId) {
 				if (this._isOpen) {
@@ -149,54 +95,44 @@ namespace OSUIFramework.Patterns.Submenu {
 			}
 		}
 
-		/**
-		 * Remove submenu as active
-		 *
-		 * @memberof Submenu
-		 */
+		// Remove submenu as active
 		private _removeActive(): void {
 			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternActive);
 			this._isActive = false;
 		}
 
-		/**
-		 * Set submenu as active
-		 *
-		 * @memberof Submenu
-		 */
+		// Set submenu as active
 		private _setActive(): void {
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternActive);
 			this._isActive = true;
 		}
 
-		/**
-		 * Trigger the submenu behavior based on visibility
-		 *
-		 * @private
-		 * @memberof Submenu
-		 */
+		// Show submenu
+		private _show(): void {
+			if (this._isOpen === false) {
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsOpen);
+
+				this._submenuHeaderElement.focus();
+				this._isOpen = true;
+
+				this._updateA11yProperties();
+			}
+		}
+
+		// Trigger the submenu behavior based on visibility
 		private _toggleSubmenu(): void {
 			if (this._isOpen) {
 				this.close();
 			} else {
 				// Trigger event to close other submenu instances
-				OSUIFramework.Event.GlobalEventManager.Instance.trigger(
-					// eslint-disable-next-line @typescript-eslint/no-unused-vars
-					OSUIFramework.Event.Type.SubmenuOpen,
-					this.uniqueId
-				);
+				Event.GlobalEventManager.Instance.trigger(Event.Type.SubmenuOpen, this.uniqueId);
 
 				// Make async the method call
-				Helper.AsyncInvocation(this.open.bind(this));
+				Helper.AsyncInvocation(this._show.bind(this));
 			}
 		}
 
-		/**
-		 * Set the cssClasses that should be assigned to the element on it's initialization
-		 *
-		 * @private
-		 * @memberof Submenu
-		 */
+		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _updateA11yProperties(): void {
 			Helper.A11Y.AriaExpanded(this._submenuHeaderElement, this._isOpen.toString());
 			Helper.A11Y.AriaHidden(this._submenuLinksElement, (!this._isOpen).toString());
@@ -214,10 +150,6 @@ namespace OSUIFramework.Patterns.Submenu {
 		 * @memberof Submenu
 		 */
 		protected setA11yProperties(): void {
-			if (Helper.Dom.Styles.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen)) {
-				this._isOpen = true;
-			}
-
 			// Apply the default A11Y
 			Helper.A11Y.AriaHasPopupTrue(this._submenuHeaderElement);
 			Helper.A11Y.TabIndexTrue(this._submenuHeaderElement);
@@ -242,11 +174,12 @@ namespace OSUIFramework.Patterns.Submenu {
 		protected setCallbacks(): void {
 			// Define the callbacks that will be used
 			this._eventClick = this._clickCallback.bind(this);
-			this._eventClickLinks = this._clickLinksCallback.bind(this);
-			this._eventFocus = this._focusCallback.bind(this);
 			this._eventKeypress = this._keypressCallback.bind(this);
 			this._globalEventOpen = this._openCallback.bind(this);
 			this._globalEventBody = this._bodyClickCallback.bind(this);
+
+			// For support reasons, the use case of adding the open class by ExtendedClass on submenu we will add the handler to close all on body click
+			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
 
 			// Add events only if has elements inside
 			if (this._hasElements) {
@@ -255,18 +188,7 @@ namespace OSUIFramework.Patterns.Submenu {
 			}
 
 			// Add the handler to Event Manager
-			OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
-				OSUIFramework.Event.Type.SubmenuOpen,
-				this._globalEventOpen
-			);
-
-			// For support reasons, the use case of adding the open class by ExtendedClass on submenu we will add the handler to close all on body click
-			if (Helper.Dom.Styles.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen)) {
-				OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
-					OSUIFramework.Event.Type.BodyOnClick,
-					this._globalEventBody
-				);
-			}
+			Event.GlobalEventManager.Instance.addHandler(Event.Type.SubmenuOpen, this._globalEventOpen);
 		}
 
 		/**
@@ -307,6 +229,11 @@ namespace OSUIFramework.Patterns.Submenu {
 			} else {
 				Helper.Dom.Styles.AddClass(this._submenuLinksElement, Enum.CssClass.PatternIsHidden);
 			}
+
+			// In case the class modifier was added by extended class
+			if (Helper.Dom.Styles.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen) && !this._isOpen) {
+				this._isOpen = true;
+			}
 		}
 
 		/**
@@ -323,22 +250,13 @@ namespace OSUIFramework.Patterns.Submenu {
 			}
 
 			// Remove global handlers
-			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
-				OSUIFramework.Event.Type.SubmenuOpen,
-				this._globalEventOpen
-			);
+			Event.GlobalEventManager.Instance.removeHandler(Event.Type.SubmenuOpen, this._globalEventOpen);
 
 			// Remove handler from Event Manager
-			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
-				// eslint-disable-next-line @typescript-eslint/no-unused-vars
-				OSUIFramework.Event.Type.BodyOnClick,
-				this._globalEventBody
-			);
+			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._globalEventBody);
 
 			// Reassign the elements to undefined, preventing memory leaks
 			this._eventClick = undefined;
-			this._eventClickLinks = undefined;
-			this._eventFocus = undefined;
 			this._eventKeypress = undefined;
 			this._globalEventOpen = undefined;
 			this._globalEventBody = undefined;
@@ -383,17 +301,14 @@ namespace OSUIFramework.Patterns.Submenu {
 		 * @memberof Submenu
 		 */
 		public close(): void {
-			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
+			if (this._isOpen) {
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
 
-			this._isOpen = false;
+				this._isOpen = false;
+				this._dynamiclyOpening = false;
 
-			this._updateA11yProperties();
-
-			// Remove the handler from Event Manager when is closed
-			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
-				OSUIFramework.Event.Type.BodyOnClick,
-				this._globalEventBody
-			);
+				this._updateA11yProperties();
+			}
 		}
 
 		/**
@@ -413,25 +328,20 @@ namespace OSUIFramework.Patterns.Submenu {
 		}
 
 		/**
-		 * Open Submenu
+		 * Public Open Submenu
 		 *
 		 * @memberof Submenu
 		 */
 		public open(): void {
-			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsOpen);
+			// Need to prevent the submenu will not be closed by the body click, use this flag to check.
+			this._dynamiclyOpening = true;
+			this._show();
 
-			this._submenuHeaderElement.focus();
-
-			this._isOpen = true;
-
-			this._updateA11yProperties();
-
-			// Add the handler to Event Manager when is opened
-			OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
-				// eslint-disable-next-line @typescript-eslint/no-unused-vars
-				OSUIFramework.Event.Type.BodyOnClick,
-				this._globalEventBody
-			);
+			setTimeout(function () {
+				if (!this._dynamiclyOpening) {
+					this._dynamiclyOpening = false;
+				}
+			}, 500);
 		}
 
 		/**
