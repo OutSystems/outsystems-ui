@@ -54,8 +54,6 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 			// Get the library configurations
 			this.providerOptions = this.configs.getProviderConfig();
 
-			console.log(this.providerOptions);
-
 			// Instance will be Created!
 			super.createProviderInstance();
 		}
@@ -79,8 +77,6 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 
 		public build(): void {
 			super.build();
-
-			console.log('Interval Class');
 
 			this.setCallbacks();
 

@@ -183,8 +183,6 @@ namespace Providers.RangeSlider.NoUISlider {
 			// Set inital library options
 			this.setInitialStates();
 
-			console.log(this.providerOptions);
-
 			// Init provider
 			this.provider = window.noUiSlider.create(this._rangeSliderProviderElem, this.providerOptions);
 
