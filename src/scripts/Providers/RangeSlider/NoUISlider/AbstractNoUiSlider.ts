@@ -50,7 +50,7 @@ namespace Providers.RangeSlider.NoUISlider {
 
 		// Method to create/update the Size CSS Variable
 		private _setSize(): void {
-			if (this.configs.Size.indexOf('%') > -1 && parseFloat(this.configs.Size) > 100) {
+			if (this.configs.Size.includes('%') && parseFloat(this.configs.Size) > 100) {
 				this.configs.Size = OSUIFramework.Patterns.RangeSlider.Enum.DefaultValues.PercentualSize;
 
 				console.warn(
