@@ -301,7 +301,7 @@ namespace Providers.RangeSlider.NoUISlider {
 					break;
 				default:
 					throw new Error(
-						`${OSUIFramework.ErrorCodes.RangeSlider.FailRegisterCallback}:	The given '${eventName}' event name it's not defined.`
+						`${OSUIFramework.ErrorCodes.RangeSlider.FailRegisterCallback}:	The given '${eventName}' event name is not defined.`
 					);
 			}
 		}
