@@ -27,12 +27,12 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 			}
 
 			//If we're not waiting to send the information
-			if (this.trottleTimer === undefined) {
-				//Then let's wait _trottleTimeValue ms and send the latest value to the platform
-				this.trottleTimer = setTimeout(() => {
+			if (this.throttleTimer === undefined) {
+				//Then let's wait _throttleTimeValue ms and send the latest value to the platform
+				this.throttleTimer = setTimeout(() => {
 					this.platformEventValueChange(this.widgetId, this.configs.StartingValueFrom, undefined);
-					this.trottleTimer = undefined;
-				}, this.trottleTimeValue);
+					this.throttleTimer = undefined;
+				}, this.throttleTimeValue);
 			}
 		}
 

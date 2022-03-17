@@ -18,10 +18,10 @@ namespace Providers.RangeSlider.NoUISlider {
 		protected platformEventValueChange: OSUIFramework.Callbacks.OSRangeSliderOnValueChangeEvent;
 		// Store the provider options
 		protected providerOptions: NoUiSliderOptions;
-		// Trottle before invoking the platform
-		protected trottleTimeValue = 200;
-		// Trottle timer id
-		protected trottleTimer = undefined;
+		// throttle before invoking the platform
+		protected throttleTimeValue = 200;
+		// throttle timer id
+		protected throttleTimer = undefined;
 
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
