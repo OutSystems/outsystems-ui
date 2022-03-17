@@ -86,13 +86,11 @@ namespace Providers.RangeSlider.NoUiSlider {
 				list.push(this.MaxValue);
 			}
 
-			const ticks = {
+			return {
 				values: list,
 				density: ticksDensity,
 				mode: RangeSlider.NoUiSlider.Enum.NoUiSliderModeOptions.Values,
 			};
-
-			return ticks;
 		}
 
 		/**
@@ -116,12 +114,15 @@ namespace Providers.RangeSlider.NoUiSlider {
 		 */
 		public getTooltipFormat(): string[] {
 			const tooltipValue = this.ShowFloatingLabel ? window.wNumb({ decimals: 0 }) : false;
-			const tooltips =
-				this.rangeSliderMode === OSUIFramework.Patterns.RangeSlider.Enum.Mode.Interval
-					? [tooltipValue, tooltipValue]
-					: [tooltipValue];
+			let tooltipsFormat;
 
-			return tooltips;
+			if (this.rangeSliderMode === OSUIFramework.Patterns.RangeSlider.Enum.Mode.Interval) {
+				tooltipsFormat = [tooltipValue, tooltipValue];
+			} else {
+				tooltipsFormat = [tooltipValue];
+			}
+
+			return tooltipsFormat;
 		}
 	}
 }
