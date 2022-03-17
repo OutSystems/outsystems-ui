@@ -48,6 +48,10 @@
 				&:hover {
 					border: var(--border-size-s) solid var(--color-neutral-6);
 				}
+
+				&:focus {
+					border: var(--border-size-s) solid var(--color-primary);
+				}
 			}
 		}
 
