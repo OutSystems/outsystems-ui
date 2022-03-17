@@ -203,13 +203,13 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			code: ErrorCodes.Success.code,
 			isSuccess: true,
 			message: ErrorCodes.Success.message,
-			selectedValues: '',
+			value: '',
 		};
 
 		const _dropdownItem = GetDropdownById(dropdownId);
 
 		try {
-			responseObj.selectedValues = _dropdownItem.getSelectedValues();
+			responseObj.value = _dropdownItem.getSelectedValues();
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
