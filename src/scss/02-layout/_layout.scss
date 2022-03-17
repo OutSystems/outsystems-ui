@@ -23,11 +23,9 @@ body,
 	min-height: 100vh;
 
 	&.layout {
-		&-top {
-			&,
-			&:not(.layout-native) {
-				flex-direction: column;
-			}
+		&-top,
+		&-side:not(.layout-native) {
+			flex-direction: column;
 		}
 
 		&-left {
