@@ -364,14 +364,9 @@ namespace OSUIFramework.Patterns.Submenu {
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
-
-			if (this.isBuilt) {
-				// Check which property changed and call respective method to update it
-				switch (propertyName) {
-					case Enum.Properties.OpenOnHover:
-						this._setOpenOnHover();
-						break;
-				}
+			// Check which property changed and call respective method to update it
+			if (this.isBuilt && propertyName === Enum.Properties.OpenOnHover) {
+				this._setOpenOnHover();
 			}
 		}
 
