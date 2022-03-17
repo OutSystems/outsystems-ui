@@ -6,7 +6,6 @@ namespace OSUIFramework.Patterns.Notification.Enum {
 
 	export enum CssClass {
 		Pattern = 'osui-notification',
-		PatternContent = 'osui-notification__content',
 		PatternIsOpen = 'osui-notification--is-open',
 		PatternPosition = 'osui-notification--is-',
 	}
