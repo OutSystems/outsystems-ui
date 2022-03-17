@@ -1,5 +1,5 @@
 /*!
- * Virtual Select v1.0.22
+ * Virtual Select v1.0.26
  * https://sa-si-dev.github.io/virtual-select
  * Licensed under MIT (https://github.com/sa-si-dev/virtual-select/blob/master/LICENSE)
  */
@@ -397,6 +397,7 @@ body.vscomp-popup-active {
 	overflow: auto;
 	opacity: 1;
 	background-color: rgba(0, 0, 0, 0.5);
+	padding: 0 10px;
 }
 
 .vscomp-wrapper.show-as-popup .vscomp-dropbox {
@@ -409,6 +410,14 @@ body.vscomp-popup-active {
 
 .vscomp-wrapper.show-as-popup .vscomp-dropbox-close-button {
 	display: flex;
+}
+
+.vscomp-wrapper.popup-position-left .vscomp-dropbox-container {
+	justify-content: flex-start;
+}
+
+.vscomp-wrapper.popup-position-right .vscomp-dropbox-container {
+	justify-content: flex-end;
 }
 
 .vscomp-wrapper.has-select-all .vscomp-toggle-all-button {
@@ -531,6 +540,10 @@ body.vscomp-popup-active {
 
 .vscomp-wrapper.server-searching .vscomp-options-loader {
 	display: block;
+}
+
+.vscomp-wrapper.has-error .vscomp-toggle-button {
+	border-color: #b00020;
 }
 
 .vscomp-wrapper.show-value-as-tags .vscomp-toggle-button {
