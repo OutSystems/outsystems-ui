@@ -233,7 +233,7 @@ namespace Providers.RangeSlider.NoUISlider {
 								this._isInterval
 									? OSUIFramework.GlobalEnum.PatternsNames.RangeSliderInterval
 									: OSUIFramework.GlobalEnum.PatternsNames.RangeSlider
-							}. Use a distinct variable to assign on the OnValueChange event`
+							}. Use a distinct variable to assign on the OnValueChange event.`
 						);
 						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.IsDisabled:
