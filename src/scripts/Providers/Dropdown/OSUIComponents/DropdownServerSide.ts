@@ -8,6 +8,8 @@ namespace Providers.Dropdown.OSUIComponents {
 		>
 		implements IDropdownServerSide
 	{
+		// Store the HTML element for the DropdownBalloonContainer
+		private _balloonContainerElement: HTMLElement;
 		// Store all the focusable elements inside footer if it's the case!
 		private _balloonFocusableElemsInFooter: HTMLElement[];
 		// Store the HTML element for the DropdownBalloonFooter
@@ -53,7 +55,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new OSUIDropdownServerSideConfig(configs));
 
-			console.log('NEW', this.uniqueId);
+			console.log(this.uniqueId);
 		}
 
 		// Add error message container with a given text
@@ -127,8 +129,10 @@ namespace Providers.Dropdown.OSUIComponents {
 		private _getRecomendedPosition(): void {
 			// Get the recomended position to open the balloon
 			const recomendedPosition = OSUIFramework.Helper.BoundPosition.GetRecomendedPosition(
-				this._balloonWrapperElement
+				this._balloonContainerElement
 			);
+
+			console.log('recomendedPosition', recomendedPosition);
 
 			// Check if there are a any recomended position
 			if (recomendedPosition !== undefined) {
@@ -661,6 +665,10 @@ namespace Providers.Dropdown.OSUIComponents {
 				this._balloonSearchInputWrapperElement,
 				OSUIFramework.GlobalEnum.HTMLElement.Input
 			);
+			this._balloonContainerElement = OSUIFramework.Helper.Dom.ClassSelector(
+				this.selfElement,
+				Enum.Class.BalloonContainer
+			);
 			this._balloonWrapperElement = OSUIFramework.Helper.Dom.ClassSelector(
 				this.selfElement,
 				Enum.Class.BalloonWrapper
@@ -717,11 +725,12 @@ namespace Providers.Dropdown.OSUIComponents {
 			this._balloonWrapperElement.remove();
 
 			// unset the local properties
+			this._balloonContainerElement = undefined;
 			this._balloonFocusableElemsInFooter = [];
 			this._balloonFooterElement = undefined;
 			this._balloonOptionsWrapperElement = undefined;
-			this._balloonSearchInputWrapperElement = undefined;
 			this._balloonSearchInputElement = undefined;
+			this._balloonSearchInputWrapperElement = undefined;
 			this._balloonWrapperElement = undefined;
 			this._selectValuesWrapper = undefined;
 		}

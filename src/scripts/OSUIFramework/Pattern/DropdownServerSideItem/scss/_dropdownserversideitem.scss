@@ -1,46 +1,59 @@
-// TODO (by CreateNewPattern): update section!
 /*! Patterns - section - DropdownServerSideItem */
 ////
 /// @group Patterns-DropdownServerSideItem
 /// Patterns - section - DropdownServerSideItem
 
-// TODO (by CreateNewPattern): do all css styles for the DropdownServerSideItem at this partial!
-
 ///
 .osui-dropdown-serverside-item {
+	align-items: center;
 	background-color: var(--color-neutral-0);
 	color: var(--color-neutral-9);
+	cursor: pointer;
+	display: flex;
+	flex: 1;
+	height: 40px;
+	overflow: hidden;
 	padding: var(--space-s) var(--space-base);
+	transition: background 250ms ease;
+	width: 100%;
+
+	&:hover,
+	&--is-selected {
+		background-color: var(--color-neutral-2);
+	}
 
 	&__content {
+		align-items: center;
+		display: flex;
+		flex: 1;
+		height: inherit;
+		overflow: hidden;
+		pointer-events: none;
+
+		& *:first-child {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			width: 100%;
+		}
 	}
 }
 
 // Accessibility -----------------------------------------------------------------
 ///
 .has-accessible-features {
-	// css props
-}
-
-// IsRTL -------------------------------------------------------------------------
-///
-.is-rtl {
-	// css props
+	.osui-dropdown-serverside-item {
+		&:hover {
+			background-color: var(--color-neutral-4);
+		}
+	}
 }
 
 // Responsive --------------------------------------------------------------------
 ///
 .tablet,
 .phone {
-	// css props
-}
-
-///
-.tablet {
-	// css props
-}
-
-///
-.phone {
-	// css props
+	.osui-dropdown-serverside-item {
+		height: 48px;
+	}
 }

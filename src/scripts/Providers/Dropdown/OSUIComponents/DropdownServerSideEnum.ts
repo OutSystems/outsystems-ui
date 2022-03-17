@@ -14,6 +14,7 @@ namespace Providers.Dropdown.OSUIComponents.Enum {
 	 * Class
 	 */
 	export enum Class {
+		BalloonContainer = 'osui-dropdown-serverside__balloon-container',
 		BalloonContent = 'osui-dropdown-serverside__balloon-content',
 		BalloonFooter = 'osui-dropdown-serverside__balloon-footer',
 		BalloonPositionBottom = 'osui-dropdown-serverside__balloon--is-bottom',
