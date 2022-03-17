@@ -6,10 +6,6 @@ namespace OSUIFramework.Patterns.Submenu {
 		/** PUBLIC PROPERTIES **/
 		public OpenOnHover = false;
 
-		constructor(config: JSON) {
-			super(config);
-		}
-
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;
 			switch (key) {

@@ -135,14 +135,14 @@ namespace OSUIFramework.Patterns.Submenu {
 		// Manage Callbacks needed to show submenu on hover
 		private _setOpenOnHover(): void {
 			// OpenOnHover is only available for devices where the hover exists
-			if (Helper.DeviceInfo.IsPhone === false && Helper.DeviceInfo.IsTablet === false) {
+			if (Helper.DeviceInfo.IsTouch === false) {
 				if (this._hasElements) {
 					this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
 					this._eventClick = undefined;
-				}
 
-				this._selfElem.addEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
-				this._selfElem.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
+					this._selfElem.addEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
+					this._selfElem.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
+				}
 			}
 		}
 
@@ -225,11 +225,7 @@ namespace OSUIFramework.Patterns.Submenu {
 			// Add events only if has elements inside
 			if (this._hasElements) {
 				// OpenOnHover is only available for devices where the hover exists
-				if (
-					this.configs.OpenOnHover === false &&
-					Helper.DeviceInfo.IsPhone === false &&
-					Helper.DeviceInfo.IsTablet === false
-				) {
+				if (this.configs.OpenOnHover === false || Helper.DeviceInfo.IsTouch) {
 					this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
 				}
 
@@ -292,21 +288,18 @@ namespace OSUIFramework.Patterns.Submenu {
 		 * @memberof Submenu
 		 */
 		protected unsetCallbacks(): void {
-			// Remove events only if has elements inside
-			if (this._hasElements && this.configs.OpenOnHover === false) {
-				this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
-				this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
-			}
+			// Remove events only if has elements inside and OpenOnHover is not available
+			if (this._hasElements) {
+				if (this.configs.OpenOnHover === false || Helper.DeviceInfo.IsTouch) {
+					this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
+					this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
+				}
 
-			if (
-				this.configs.OpenOnHover &&
-				Helper.DeviceInfo.IsPhone === false &&
-				Helper.DeviceInfo.IsTablet === false
-			) {
-				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
-				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
+				if (this.configs.OpenOnHover && Helper.DeviceInfo.IsTouch === false) {
+					this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
+					this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
+				}
 			}
-
 			// Remove global handlers
 			Event.GlobalEventManager.Instance.removeHandler(Event.Type.SubmenuOpen, this._globalEventOpen);
 
@@ -365,8 +358,13 @@ namespace OSUIFramework.Patterns.Submenu {
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
 			// Check which property changed and call respective method to update it
-			if (this.isBuilt && propertyName === Enum.Properties.OpenOnHover) {
-				this._setOpenOnHover();
+			if (this.isBuilt) {
+				// Check which property changed and call respective method to update it
+				switch (propertyName) {
+					case Enum.Properties.OpenOnHover:
+						this._setOpenOnHover();
+						break;
+				}
 			}
 		}
 
