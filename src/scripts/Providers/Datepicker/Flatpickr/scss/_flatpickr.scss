@@ -413,4 +413,30 @@ span.flatpickr-weekday {
 			margin-right: var(--space-none);
 		}
 	}
+
+	.flatpickr-day {
+		&.selected.startRange,
+		&.startRange.startRange,
+		&.endRange.startRange {
+			border-radius: 50px;
+
+			&:before {
+				border-radius: 0 50px 50px 0;
+				left: -2px;
+				right: 0;
+			}
+		}
+
+		&.selected.endRange,
+		&.startRange.endRange,
+		&.endRange.endRange {
+			border-radius: 50px;
+
+			&:before {
+				border-radius: 50px 0 0 50px;
+				left: 0;
+				right: -2px;
+			}
+		}
+	}
 }
