@@ -3,6 +3,9 @@ namespace OSUIFramework.Patterns.Submenu.Enum {
 	/**
 	 * Submenu Enum properties
 	 */
+	export enum Properties {
+		OpenOnHover = 'OpenOnHover',
+	}
 
 	// Css Classes
 	export enum CssClass {
