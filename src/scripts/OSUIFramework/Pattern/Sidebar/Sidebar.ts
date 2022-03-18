@@ -45,14 +45,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._currentDirectionCssClass = Enum.CssClass.ClassModifier + this.configs.Direction;
 		}
 
-		/**
-		 * Method to check if current gesture is withing sidebar boundaries
-		 *
-		 * @private
-		 * @param {number} x
-		 * @return {*}  {boolean}
-		 * @memberof Sidebar
-		 */
+		// Method to check if current gesture is withing sidebar boundaries
 		private _checkIsDraggingInsideBounds(x: number): boolean {
 			const isLeft = this.configs.Direction === GlobalEnum.Direction.Left;
 
@@ -68,12 +61,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			return directionThreshold;
 		}
 
-		/**
-		 * Actual method that knows what is to close the sidebar.
-		 *
-		 * @private
-		 * @memberof Sidebar
-		 */
+		// Actual method that knows what is to close the sidebar
 		private _closeSidebar(): void {
 			this._isOpen = false;
 
@@ -93,12 +81,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 		}
 
-		/**
-		 * Actual method that knows what is to open the sidebar.
-		 *
-		 * @private
-		 * @memberof Sidebar
-		 */
+		// Actual method that knows what is to open the sidebar
 		private _openSidebar() {
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsOpen);
 			Helper.A11Y.TabIndexTrue(this._selfElem);
@@ -120,12 +103,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._setFocusableElementsTabindex();
 		}
 
-		/**
-		 * Overlay onClick event to close the Sidebar
-		 *
-		 * @private
-		 * @memberof Sidebar
-		 */
+		// Overlay onClick event to close the Sidebar
 		private _overlayClickCallback(args: string, e: MouseEvent): void {
 			if (this._selfElem === e.target) {
 				if (this._isOpen) {
@@ -136,12 +114,13 @@ namespace OSUIFramework.Patterns.Sidebar {
 			e.stopPropagation();
 		}
 
-		/**
-		 * Set the Sidebar opening/closing direction.
-		 *
-		 * @private
-		 * @memberof Sidebar
-		 */
+		// Method to remove the event listeners
+		private _removeEvents(): void {
+			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
+			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOverlayClick);
+		}
+
+		// Set the Sidebar opening/closing direction
 		private _setDirection(): void {
 			// Reset direction class
 			if (this._currentDirectionCssClass !== '') {
@@ -151,12 +130,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			Helper.Dom.Styles.AddClass(this._selfElem, this._currentDirectionCssClass);
 		}
 
-		/**
-		 * Method that will handle the tabindex value of the elements inside the Sidebar.
-		 *
-		 * @private
-		 * @memberof Sidebar
-		 */
+		// Method that will handle the tabindex value of the elements inside the Sidebar
 		private _setFocusableElementsTabindex(): void {
 			const setA11YtabIndex = this._isOpen ? Helper.A11Y.TabIndexTrue : Helper.A11Y.TabIndexFalse;
 
@@ -166,12 +140,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			});
 		}
 
-		/**
-		 * Sets the Sidebar overlay.
-		 *
-		 * @private
-		 * @memberof Sidebar
-		 */
+		// Sets the Sidebar overlay
 		private _setHasOverlay(): void {
 			const alreadyHasOverlayClass = Helper.Dom.Styles.ContainsClass(this._selfElem, Enum.CssClass.HasOverlay);
 
@@ -188,12 +157,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 		}
 
-		/**
-		 * Set the cssClasses that should be assigned to the element on it's initialization.
-		 *
-		 * @private
-		 * @memberof Sidebar
-		 */
+		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _setInitialCssClasses(): void {
 			this._setDirection();
 			this._setWidth();
@@ -204,13 +168,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 		}
 
-		/**
-		 * Method to handle the overlay transition on gestures.
-		 *
-		 * @private
-		 * @param {number} x
-		 * @memberof Sidebar
-		 */
+		// Method to handle the overlay transition on gestures
 		private _setOverlayTransition(x: number): void {
 			const isLeft = this.configs.Direction === GlobalEnum.Direction.Left;
 			const currentOpacity = parseInt(this._selfElem.style.getPropertyValue('--overlay-opacity'));
@@ -225,24 +183,12 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 		}
 
-		/**
-		 * Set the Sidebar width.
-		 *
-		 * @private
-		 * @memberof Sidebar
-		 */
+		// Set the Sidebar width
 		private _setWidth(): void {
 			Helper.Dom.Styles.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, this.configs.Width);
 		}
 
-		/**
-		 * Method that will handle the tab navigation and sidebar closing on Escape.
-		 *
-		 * @private
-		 * @param {KeyboardEvent} e
-		 * @return {*}  {void}
-		 * @memberof Sidebar
-		 */
+		// Method that will handle the tab navigation and sidebar closing on Escape
 		private _sidebarKeypressCallback(e: KeyboardEvent): void {
 			const isTabPressed = e.key === GlobalEnum.Keycodes.Tab;
 			const isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
@@ -269,35 +215,18 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 		}
 
-		/**
-		 * Method that triggers the OnToggle event.
-		 *
-		 * @private
-		 * @memberof Sidebar
-		 */
+		// Method that triggers the OnToggle event
 		private _triggerOnToggleEvent(): void {
 			Helper.AsyncInvocation(this._onToggle, this.widgetId, this._isOpen);
 		}
 
-		/**
-		 * Method that updates the last positions on a gesture move.
-		 *
-		 * @private
-		 * @param {number} x
-		 * @param {number} y
-		 * @memberof Sidebar
-		 */
+		// Method that updates the last positions on a gesture move
 		private _updateLastPositions(x: number, y: number): void {
 			this._nativeGesturesParams.LastX = x;
 			this._nativeGesturesParams.LastY = y;
 		}
 
-		/**
-		 * Method to update the UI when doing a gesture.
-		 *
-		 * @private
-		 * @memberof Sidebar
-		 */
+		// Method to update the UI when doing a gesture
 		// eslint-disable-next-line @typescript-eslint/naming-convention
 		private _updateUI(): void {
 			if (this._isMoving) {
@@ -353,14 +282,13 @@ namespace OSUIFramework.Patterns.Sidebar {
 		}
 
 		/**
-		 * Removes event listeners and callbacks.
+		 * Method to remove all assigned callbacks
 		 *
 		 * @protected
 		 * @memberof Sidebar
 		 */
 		protected unsetCallbacks(): void {
-			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOverlayClick);
+			this._removeEvents();
 
 			this._eventSidebarKeypress = undefined;
 			this._eventOverlayClick = undefined;
