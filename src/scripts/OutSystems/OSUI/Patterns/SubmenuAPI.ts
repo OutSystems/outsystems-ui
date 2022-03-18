@@ -39,6 +39,17 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	}
 
 	/**
+	 * Function that will set the hover trigger to a given submenu.
+	 *
+	 * @export
+	 * @param {string} submenuId
+	 */
+	export function SubmenuOpenOnHover(submenuId: string): void {
+		const submenu = GetSubmenuById(submenuId);
+		submenu.changeProperty(OSUIFramework.Patterns.Submenu.Enum.Properties.OpenOnHover, true);
+	}
+
+	/**
 	 * Create the new submenu instance and add it to the submenusMap
 	 *
 	 * @export

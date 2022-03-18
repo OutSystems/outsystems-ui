@@ -8,6 +8,8 @@ namespace OSUIFramework.Patterns.Submenu {
 		private _dynamicallyOpening = false;
 		private _eventClick: Callbacks.Generic;
 		private _eventKeypress: Callbacks.Generic;
+		private _eventOnMouseEnter: Callbacks.Generic;
+		private _eventOnMouseLeave: Callbacks.Generic;
 		private _globalEventBody: Callbacks.Generic;
 		private _globalEventOpen: Callbacks.Generic;
 		private _hasActiveLinks = false;
@@ -86,6 +88,25 @@ namespace OSUIFramework.Patterns.Submenu {
 			e.stopPropagation();
 		}
 
+		// Trigger the submenu after an hover behaviour
+		private _onMouseEnterCallback(e: MouseEvent) {
+			this._show();
+			e.stopPropagation();
+		}
+
+		// Close the submenu when the cursor leaves the element
+		private _onMouseLeaveCallback(e: MouseEvent) {
+			// Leave event is triggered each time we moved from the scope;
+			// Here we are validating if we hovering any element under _selfElem
+			// If we are not hovering it means that we leave the component
+			if (this._selfElem.querySelector(':hover') === null) {
+				this.close();
+			}
+
+			e.preventDefault();
+			e.stopPropagation();
+		}
+
 		// Prevent close submenu based on a uniqueID validation, when his event is triggered
 		private _openCallback(element: string): void {
 			if (element !== this.uniqueId) {
@@ -108,6 +129,20 @@ namespace OSUIFramework.Patterns.Submenu {
 			if (this._isActive === false) {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternActive);
 				this._isActive = true;
+			}
+		}
+
+		// Manage Callbacks needed to show submenu on hover
+		private _setOpenOnHover(): void {
+			// OpenOnHover is only available for devices where the hover exists
+			if (Helper.DeviceInfo.IsTouch === false) {
+				if (this._hasElements) {
+					this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
+					this._eventClick = undefined;
+
+					this._selfElem.addEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
+					this._selfElem.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
+				}
 			}
 		}
 
@@ -181,13 +216,19 @@ namespace OSUIFramework.Patterns.Submenu {
 			this._eventKeypress = this._keypressCallback.bind(this);
 			this._globalEventOpen = this._openCallback.bind(this);
 			this._globalEventBody = this._bodyClickCallback.bind(this);
+			this._eventOnMouseEnter = this._onMouseEnterCallback.bind(this);
+			this._eventOnMouseLeave = this._onMouseLeaveCallback.bind(this);
 
 			// For support reasons, the use case of adding the open class by ExtendedClass on submenu we will add the handler to close all on body click
 			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
 
 			// Add events only if has elements inside
 			if (this._hasElements) {
-				this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
+				// OpenOnHover is only available for devices where the hover exists
+				if (this.configs.OpenOnHover === false || Helper.DeviceInfo.IsTouch) {
+					this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
+				}
+
 				this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
 			}
 
@@ -247,12 +288,18 @@ namespace OSUIFramework.Patterns.Submenu {
 		 * @memberof Submenu
 		 */
 		protected unsetCallbacks(): void {
-			// Remove events only if has elements inside
+			// Remove events only if has elements inside and OpenOnHover is not available
 			if (this._hasElements) {
-				this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
-				this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
-			}
+				if (this.configs.OpenOnHover === false || Helper.DeviceInfo.IsTouch) {
+					this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
+					this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
+				}
 
+				if (this.configs.OpenOnHover && Helper.DeviceInfo.IsTouch === false) {
+					this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
+					this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
+				}
+			}
 			// Remove global handlers
 			Event.GlobalEventManager.Instance.removeHandler(Event.Type.SubmenuOpen, this._globalEventOpen);
 
@@ -264,6 +311,8 @@ namespace OSUIFramework.Patterns.Submenu {
 			this._eventKeypress = undefined;
 			this._globalEventOpen = undefined;
 			this._globalEventBody = undefined;
+			this._eventOnMouseEnter = undefined;
+			this._eventOnMouseLeave = undefined;
 		}
 
 		/**
@@ -297,6 +346,26 @@ namespace OSUIFramework.Patterns.Submenu {
 			Helper.AsyncInvocation(this.setCallbacks.bind(this));
 
 			this.finishBuild();
+		}
+
+		/**
+		 * Method to change the value of configs/current state.
+		 *
+		 * @param {string} propertyName
+		 * @param {unknown} propertyValue
+		 * @memberof Submenu
+		 */
+		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			super.changeProperty(propertyName, propertyValue);
+			// Check which property changed and call respective method to update it
+			if (this.isBuilt) {
+				// Check which property changed and call respective method to update it
+				switch (propertyName) {
+					case Enum.Properties.OpenOnHover:
+						this._setOpenOnHover();
+						break;
+				}
+			}
 		}
 
 		/**
