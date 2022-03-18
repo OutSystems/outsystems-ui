@@ -18,13 +18,7 @@ namespace OSUIFramework.Patterns.FlipContent {
 			super(uniqueId, new FlipContentConfig(configs));
 		}
 
-		/**
-		 * Toggle pattern on keypress
-		 *
-		 * @private
-		 * @param {KeyboardEvent}
-		 * @memberof FlipContent
-		 */
+		// Toggle pattern on keypress
 		private _keydownCallback(e: KeyboardEvent): void {
 			//If ENTER or SPACE use toggle to validate & If ESC is pressed then we need to close Flip
 			if (
@@ -38,12 +32,13 @@ namespace OSUIFramework.Patterns.FlipContent {
 			}
 		}
 
-		/**
-		 * Setting the handlers and the classes for when the FlipSelf is active or not.
-		 *
-		 * @private
-		 * @memberof FlipContent
-		 */
+		// Method to remove the event listeners
+		private _removeEvents(): void {
+			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
+			this._flipWrapperElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
+		}
+
+		// Setting the handlers and the classes for when the FlipSelf is active or not
 		private _setEventHandlers(): void {
 			if (this.configs.FlipSelf) {
 				this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
@@ -58,22 +53,14 @@ namespace OSUIFramework.Patterns.FlipContent {
 			}
 		}
 
-		/**
-		 *
-		 *
-		 * @memberof FlipContent
-		 */
+		// Toggle FlipContent if is to start flipped
 		private _setStartsFlipped() {
 			if (this.isBuilt === false) {
 				this._toggleClasses();
 			}
 		}
 
-		/**
-		 * Set the classes on the pattern's first render, toggle click & parameters changed
-		 *
-		 * @memberof FlipContent
-		 */
+		// Set the classes on the pattern's first render, toggle click & parameters changed
 		private _toggleClasses(): void {
 			if (this.configs.IsFlipped) {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsFlipped);
@@ -82,22 +69,14 @@ namespace OSUIFramework.Patterns.FlipContent {
 			}
 		}
 
-		/**
-		 * Triggers the toggle event on the platform
-		 *
-		 * @memberof FlipContent
-		 */
+		// Triggers the toggle event on the platform
 		private _triggerPlatformEvent(): void {
 			if (this._plataformEventFlip) {
 				Helper.AsyncInvocation(this._plataformEventFlip.bind(this), this.widgetId, this.configs.IsFlipped);
 			}
 		}
 
-		/**
-		 * Update the A11Y attributes
-		 *
-		 * @memberof FlipContent
-		 */
+		// Update the A11Y attributes
 		private _updateA11yProperties(): void {
 			if (this.configs.FlipSelf) {
 				Helper.A11Y.AriaAtomicTrue(this._selfElem);
@@ -144,13 +123,12 @@ namespace OSUIFramework.Patterns.FlipContent {
 		}
 
 		/**
-		 * Remove the events
+		 * Method to remove all assigned callbacks
 		 *
 		 * @memberof FlipContent
 		 */
 		protected unsetCallbacks(): void {
-			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
-			this._flipWrapperElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
+			this._removeEvents();
 
 			this._eventKeydown = undefined;
 			this._eventClick = undefined;

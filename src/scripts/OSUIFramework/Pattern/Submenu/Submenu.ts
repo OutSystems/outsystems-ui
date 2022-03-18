@@ -124,6 +124,27 @@ namespace OSUIFramework.Patterns.Submenu {
 			}
 		}
 
+		// Method to remove the event listeners
+		private _removeEvents(): void {
+			// Remove events only if has elements inside and OpenOnHover is not available
+			if (this._hasElements) {
+				if (this.configs.OpenOnHover === false || Helper.DeviceInfo.IsTouch) {
+					this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
+					this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
+				}
+
+				if (this.configs.OpenOnHover && Helper.DeviceInfo.IsTouch === false) {
+					this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
+					this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
+				}
+			}
+			// Remove global handlers
+			Event.GlobalEventManager.Instance.removeHandler(Event.Type.SubmenuOpen, this._globalEventOpen);
+
+			// Remove handler from Event Manager
+			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._globalEventBody);
+		}
+
 		// Set submenu as active
 		private _setActive(): void {
 			if (this._isActive === false) {
@@ -288,23 +309,7 @@ namespace OSUIFramework.Patterns.Submenu {
 		 * @memberof Submenu
 		 */
 		protected unsetCallbacks(): void {
-			// Remove events only if has elements inside and OpenOnHover is not available
-			if (this._hasElements) {
-				if (this.configs.OpenOnHover === false || Helper.DeviceInfo.IsTouch) {
-					this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
-					this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
-				}
-
-				if (this.configs.OpenOnHover && Helper.DeviceInfo.IsTouch === false) {
-					this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
-					this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
-				}
-			}
-			// Remove global handlers
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.SubmenuOpen, this._globalEventOpen);
-
-			// Remove handler from Event Manager
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._globalEventBody);
+			this._removeEvents();
 
 			// Reassign the elements to undefined, preventing memory leaks
 			this._eventClick = undefined;

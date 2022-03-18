@@ -107,6 +107,13 @@ namespace OSUIFramework.Patterns.Rating {
 				this._setValue(true);
 			}
 		}
+		// Method to remove the event listeners
+		private _removeEvents(): void {
+			// remove event listener if any was added
+			if (this._selfElem && this._ratingHasEventAdded) {
+				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnRatingClick);
+			}
+		}
 
 		// Method called on createItems() to render the correct HTML structure for each item
 		private _renderItem(index: number): void {
@@ -298,16 +305,13 @@ namespace OSUIFramework.Patterns.Rating {
 		}
 
 		/**
-		 * Remove events
+		 * Method to remove all assigned callbacks
 		 *
 		 * @protected
 		 * @memberof Rating
 		 */
 		protected unsetCallbacks(): void {
-			// remove event listener if any was added
-			if (this._selfElem && this._ratingHasEventAdded) {
-				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnRatingClick);
-			}
+			this._removeEvents();
 
 			this._eventOnRatingClick = undefined;
 		}
