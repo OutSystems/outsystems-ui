@@ -177,6 +177,7 @@
 
 		// Content Container
 		.osui-dropdown-serverside__balloon-container {
+			transform: translateY(0);
 			transition: opacity 250ms ease;
 		}
 	}

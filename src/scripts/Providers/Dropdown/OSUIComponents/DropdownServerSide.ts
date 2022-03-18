@@ -31,6 +31,8 @@ namespace Providers.Dropdown.OSUIComponents {
 		private _closeDynamically = false;
 		// Click On Body
 		private _eventOnBodyClick: OSUIFramework.Callbacks.Generic;
+		// Event OnBodyScroll
+		private _eventOnBodyScroll: OSUIFramework.Callbacks.Generic;
 		// Click Event
 		private _eventOnClick: OSUIFramework.Callbacks.Generic;
 		private _eventOnClickInputSearch: OSUIFramework.Callbacks.Generic;
@@ -101,6 +103,15 @@ namespace Providers.Dropdown.OSUIComponents {
 			OSUIFramework.Helper.A11Y.AriaHiddenTrue(this._spanBottomFocusElement);
 		}
 
+		// Remove the position if has been already set
+		private _cleanPosition(): void {
+			// If there was an old position, remove it!
+			if (this._balloonPositionClass !== '') {
+				OSUIFramework.Helper.Dom.Styles.RemoveClass(this._balloonWrapperElement, this._balloonPositionClass);
+				this._balloonPositionClass = '';
+			}
+		}
+
 		// Close the Balloon
 		private _close(): void {
 			// Check if the close will be done by logic instead of user interaction
@@ -123,11 +134,8 @@ namespace Providers.Dropdown.OSUIComponents {
 				this._eventOnCloseTransitionEnd
 			);
 
-			// If there was an old position, remove it!
-			if (this._balloonPositionClass !== '') {
-				OSUIFramework.Helper.Dom.Styles.RemoveClass(this._balloonWrapperElement, this._balloonPositionClass);
-				this._balloonPositionClass = '';
-			}
+			// If there was an old position, remove it
+			this._cleanPosition();
 
 			// Since animation already ended let's unblock the pattern to be possible open it again
 			this._isBlocked = false;
@@ -188,6 +196,19 @@ namespace Providers.Dropdown.OSUIComponents {
 			if (this._isOpened && getBaseElement !== this._selfElem) {
 				this._closeDynamically = true;
 				this._close();
+			}
+		}
+
+		// Update the balloon coordinates
+		private _onBodyScroll(): void {
+			// If the balloon is open
+			if (this._isOpened) {
+				// Update the coordinates
+				this._setBalloonCoordinates();
+				// Clean the position if has been defined
+				this._cleanPosition();
+				// Update/Get the recomended position
+				this._getRecomendedPosition();
 			}
 		}
 
@@ -487,6 +508,11 @@ namespace Providers.Dropdown.OSUIComponents {
 				OSUIFramework.Event.Type.BodyOnClick,
 				this._eventOnBodyClick
 			);
+			// Add the BodyScroll callback that will be used to update the balloon coodinates
+			OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
+				OSUIFramework.Event.Type.BodyOnScroll,
+				this._eventOnBodyScroll
+			);
 			// Add the window resize callback that will be used update the balloon position!
 			OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
 				OSUIFramework.Event.Type.WindowResize,
@@ -531,6 +557,10 @@ namespace Providers.Dropdown.OSUIComponents {
 			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
 				OSUIFramework.Event.Type.BodyOnClick,
 				this._eventOnBodyClick
+			);
+			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
+				OSUIFramework.Event.Type.BodyOnScroll,
+				this._eventOnBodyScroll
 			);
 			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
 				OSUIFramework.Event.Type.WindowResize,
@@ -667,6 +697,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		 */
 		protected setCallbacks(): void {
 			this._eventOnBodyClick = this._onBodyClick.bind(this);
+			this._eventOnBodyScroll = this._onBodyScroll.bind(this);
 			this._eventOnClick = this._onSelectValuesWrapperClicked.bind(this);
 			this._eventOnClickInputSearch = this._onSearchInputClicked.bind(this);
 			this._eventOnCloseTransitionEnd = this._endOfCloseAnimation.bind(this);
@@ -740,6 +771,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnBodyClick = undefined;
+			this._eventOnBodyScroll = undefined;
 			this._eventOnClick = undefined;
 			this._eventOnClickInputSearch = undefined;
 			this._eventOnCloseTransitionEnd = undefined;
