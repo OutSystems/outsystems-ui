@@ -17,13 +17,7 @@ namespace OSUIFramework.Patterns.Search {
 			super(uniqueId, new SearchConfig(configs));
 		}
 
-		/**
-		 * Close Search if user has clicked outside of it
-		 *
-		 * @private
-		 * @param {MouseEvent} e
-		 * @memberof Search
-		 */
+		// Close Search if user has clicked outside of it
 		private _bodyClickCallback(e: MouseEvent): void {
 			const _clickedElem: HTMLElement = e.target as HTMLElement;
 			const _closestElem: HTMLElement = _clickedElem.closest(Constants.Dot + Enum.CssProperty.Pattern);
@@ -36,23 +30,12 @@ namespace OSUIFramework.Patterns.Search {
 			}
 		}
 
-		/**
-		 * Check input value on search
-		 *
-		 * @private
-		 * @memberof Search
-		 */
+		// Check input value on search
 		private _checkInputValue(): void {
 			this._inputValue = this._inputElem.value;
 		}
 
-		/**
-		 * Trigger the search at toggle behaviour
-		 *
-		 * @private
-		 * @param {MouseEvent} e
-		 * @memberof Search
-		 */
+		// Trigger the search at toggle behaviour
 		private _onToggle(e: MouseEvent): void {
 			// Check in input has value
 			this._checkInputValue();
@@ -67,12 +50,7 @@ namespace OSUIFramework.Patterns.Search {
 			e.stopPropagation();
 		}
 
-		/**
-		 * Method to remove the event listeners
-		 *
-		 * @private
-		 * @memberof Search
-		 */
+		// Method to remove the event listeners
 		private _removeEvents(): void {
 			// Add events only in Native Applications
 			if (Helper.DeviceInfo.IsNative) {
@@ -84,12 +62,7 @@ namespace OSUIFramework.Patterns.Search {
 			}
 		}
 
-		/**
-		 * Will trigger the platform event
-		 *
-		 * @private
-		 * @memberof Search
-		 */
+		// Will trigger the platform event
 		private _triggerPlatformEvent(): void {
 			Helper.AsyncInvocation(this._platformEventCollapse, this.widgetId);
 		}

@@ -26,12 +26,7 @@ namespace OSUIFramework.Patterns.Notification {
 			this._isOpen = this.configs.StartsOpen;
 		}
 
-		/**
-		 * Close Notification after wait the time defined
-		 *
-		 * @private
-		 * @memberof Notification
-		 */
+		// Close Notification after wait the time defined
 		private _autoCloseNotification(): void {
 			setTimeout(() => {
 				if (this._isOpen) {
@@ -40,24 +35,14 @@ namespace OSUIFramework.Patterns.Notification {
 			}, this.configs.CloseAfterTime);
 		}
 
-		/**
-		 * Trigger the notification at toggle behaviour
-		 *
-		 * @private
-		 * @param {MouseEvent}
-		 * @memberof Notification
-		 */
+		// Trigger the notification at toggle behaviour
 		private _clickCallback(e: MouseEvent): void {
 			e.stopPropagation();
 			e.preventDefault();
 			this.hide();
 		}
-		/**
-		 * Hide Notification
-		 *
-		 * @private
-		 * @memberof Notification
-		 */
+
+		// Hide Notification
 		private _hideNotification(): void {
 			this._isOpen = false;
 
@@ -82,13 +67,7 @@ namespace OSUIFramework.Patterns.Notification {
 			}
 		}
 
-		/**
-		 * Call methods to open or close, based ok e.key and behavior applied
-		 *
-		 * @private
-		 * @param {KeyboardEvent}
-		 * @memberof Notification
-		 */
+		// Call methods to open or close, based ok e.key and behavior applied
 		private _keypressCallback(e: KeyboardEvent): void {
 			const isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
 			const isShiftPressed = e.key === GlobalEnum.Keycodes.Shift;
@@ -124,23 +103,13 @@ namespace OSUIFramework.Patterns.Notification {
 			}
 		}
 
-		/**
-		 * Remove all the assigned Events
-		 *
-		 * @private
-		 * @memberof Notification
-		 */
+		// Remove all the assigned Events
 		private _removeEvents(): void {
 			this._selfElem.removeEventListener(this._eventType, this._eventOnClick);
 			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
 		}
 
-		/**
-		 * Show Notification
-		 *
-		 * @private
-		 * @memberof Notification
-		 */
+		// Show Notification
 		private _showNotification(): void {
 			this._focusableActiveElement = document.activeElement as HTMLElement;
 			this._isOpen = true;
@@ -168,23 +137,12 @@ namespace OSUIFramework.Patterns.Notification {
 			}
 		}
 
-		/**
-		 * Method that triggers the OnToggle event
-		 *
-		 * @private
-		 * @param {boolean} isOpen
-		 * @memberof Notification
-		 */
+		// Method that triggers the OnToggle event
 		private _triggerOnToggleEvent(isOpen: boolean): void {
 			Helper.AsyncInvocation(this._platformEventOnToggle, this.widgetId, isOpen);
 		}
 
-		/**
-		 * Set the cssClasses that should be assigned to the element on it's initialization
-		 *
-		 * @private
-		 * @memberof Notification
-		 */
+		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _updateA11yProperties(): void {
 			const setA11YtabIndex = this._isOpen ? Helper.A11Y.TabIndexTrue : Helper.A11Y.TabIndexFalse;
 
@@ -204,13 +162,7 @@ namespace OSUIFramework.Patterns.Notification {
 			}
 		}
 
-		/**
-		 * Update time to apply on AutoClose
-		 *
-		 * @private
-		 * @param {number} value
-		 * @memberof Notification
-		 */
+		// Update time to apply on AutoClose
 		private _updateCloseAfterTime(value: number): void {
 			this.configs.CloseAfterTime = value;
 			if (this._isOpen) {
@@ -218,13 +170,7 @@ namespace OSUIFramework.Patterns.Notification {
 			}
 		}
 
-		/**
-		 * Update time to apply on AutoClose
-		 *
-		 * @private
-		 * @param {number} value
-		 * @memberof Notification
-		 */
+		// Update time to apply on AutoClose
 		private _updateInteractToClose(value: boolean): void {
 			if (this.configs.InteractToClose !== value) {
 				this.configs.InteractToClose = value;
@@ -238,13 +184,7 @@ namespace OSUIFramework.Patterns.Notification {
 			}
 		}
 
-		/**
-		 * Update position
-		 *
-		 * @private
-		 * @param {string} position
-		 * @memberof Notification
-		 */
+		// Update position
 		private _updatePosition(position: string): void {
 			// Only change classes if are different
 			if (this.configs.Position !== position) {
@@ -257,13 +197,7 @@ namespace OSUIFramework.Patterns.Notification {
 			}
 		}
 
-		/**
-		 * Update width
-		 *
-		 * @private
-		 * @param {string} width
-		 * @memberof Notification
-		 */
+		// Update width
 		private _updateWidth(width: string): void {
 			this.configs.Width = width;
 			if (width !== '') {
