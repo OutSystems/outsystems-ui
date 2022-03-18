@@ -24,36 +24,24 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 			this._tabsElem = tabsElem;
 		}
 
-		/**
-		 * Method to add this element to the respective Tabs
-		 *
-		 * @private
-		 * @memberof TabsHeaderItem
-		 */
+		// Method to add this element to the respective Tabs
 		private _addElementToTabs(): void {
 			this._tabsElem.addHeaderItem(this);
 		}
 
-		/**
-		 * Method to handle the click event
-		 *
-		 * @private
-		 * @return {*}  {void}
-		 * @memberof TabsHeaderItem
-		 */
+		// Method to handle the click event
 		private _handleClickEvent(): void {
 			if (this._isActive === false) {
 				this._tabsElem.changeTab(this._dataTab, this, true, true);
 			}
 		}
 
-		/**
-		 * Method to handle the Accessibility attributes
-		 *
-		 * @protected
-		 * @param {boolean} [isUpdate=true]
-		 * @memberof TabsHeaderItem
-		 */
+		// Method to remove the event listeners
+		private _removeEvents(): void {
+			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnTabsClick);
+		}
+
+		// Method to handle the Accessibility attributes
 		protected setA11YProperties(isUpdate = true): void {
 			// Static attribute to be added when the item is created
 			if (!isUpdate) {
@@ -82,13 +70,13 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		}
 
 		/**
-		 * Method to remove the callbacks and event listeners
+		 * Method to remove all assigned callbacks
 		 *
 		 * @protected
 		 * @memberof TabsHeaderItem
 		 */
 		protected unsetCallbacks(): void {
-			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnTabsClick);
+			this._removeEvents();
 			this._eventOnTabsClick = undefined;
 		}
 
