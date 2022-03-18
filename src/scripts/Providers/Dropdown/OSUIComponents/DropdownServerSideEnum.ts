@@ -17,11 +17,11 @@ namespace Providers.Dropdown.OSUIComponents.Enum {
 		BalloonContainer = 'osui-dropdown-serverside__balloon-container',
 		BalloonContent = 'osui-dropdown-serverside__balloon-content',
 		BalloonFooter = 'osui-dropdown-serverside__balloon-footer',
+		BalloonHasNotSearchInput = 'osui-dropdown-serverside__balloon--has-not-search-input',
 		BalloonPositionBottom = 'osui-dropdown-serverside__balloon--is-bottom',
 		BalloonPositionTop = 'osui-dropdown-serverside__balloon--is-top',
 		BalloonSearch = 'osui-dropdown-serverside__balloon-search',
 		BalloonWrapper = 'osui-dropdown-serverside__balloon-wrapper',
-		BalloonWrapperIsDisabled = 'osui-dropdown-serverside__balloon-wrapper--is-disabled',
 		ErrorMessage = 'osui-dropdown-serverside-error-message',
 		FocusBottomHtmlElement = 'osui-dropdown-serverside__balloon-focus-bottom',
 		FocusTopHtmlElement = 'osui-dropdown-serverside__balloon-focus-top',
@@ -44,6 +44,7 @@ namespace Providers.Dropdown.OSUIComponents.Enum {
 	 * Inline CSS variables!
 	 */
 	export enum InlineCssVariables {
+		BalloonMaxHeight = '--osui-dropdown-ss-balloon-max-height',
 		InputHeight = '--osui-dropdown-ss-input-height',
 		Left = '--osui-dropdown-ss-left',
 		Top = '--osui-dropdown-ss-top',
@@ -56,5 +57,12 @@ namespace Providers.Dropdown.OSUIComponents.Enum {
 	export enum Properties {
 		AllowMultipleSelection = 'AllowMultipleSelection',
 		IsDisabled = 'IsDisabled',
+	}
+
+	/**
+	 * Enum properties values
+	 */
+	export enum PropertiesValues {
+		MaxHeight = 320,
 	}
 }

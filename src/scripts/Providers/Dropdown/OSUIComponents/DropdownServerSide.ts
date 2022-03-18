@@ -30,6 +30,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		private _eventOnBodyClick: OSUIFramework.Callbacks.Generic;
 		// Click Event
 		private _eventOnClick: OSUIFramework.Callbacks.Generic;
+		private _eventOnClickInputSearch: OSUIFramework.Callbacks.Generic;
 		// Event OnTransitionEnd applied to the Balloon
 		private _eventOnCloseTransitionEnd: OSUIFramework.Callbacks.Generic;
 		// OnFocus Event at ballon custom span elements
@@ -104,6 +105,7 @@ namespace Providers.Dropdown.OSUIComponents {
 				// Set focus to the base element
 				this._selectValuesWrapper.focus();
 			}
+
 			// Update status property
 			this._isOpened = false;
 			// Update pattern status!
@@ -118,6 +120,12 @@ namespace Providers.Dropdown.OSUIComponents {
 				this._eventOnCloseTransitionEnd
 			);
 
+			// If there was an old position, remove it!
+			if (this._balloonPositionClass !== '') {
+				OSUIFramework.Helper.Dom.Styles.RemoveClass(this._balloonWrapperElement, this._balloonPositionClass);
+				this._balloonPositionClass = '';
+			}
+
 			// Since animation already ended let's unblock the pattern to be possible open it again
 			this._isBlocked = false;
 
@@ -127,12 +135,15 @@ namespace Providers.Dropdown.OSUIComponents {
 
 		// Check the recomended position to open the balloon
 		private _getRecomendedPosition(): void {
-			// Get the recomended position to open the balloon
-			const recomendedPosition = OSUIFramework.Helper.BoundPosition.GetRecomendedPosition(
-				this._balloonContainerElement
-			);
+			// Get the Boundaries for the balloon container
+			const balloonBounds = this._balloonContainerElement.getBoundingClientRect();
+			balloonBounds.height = this.configs.balloonMaxHeight;
 
-			console.log('recomendedPosition', recomendedPosition);
+			// Get the recomended position to open the balloon
+			const recomendedPosition = OSUIFramework.Helper.BoundPosition.GetRecomendedPositionByBounds(
+				balloonBounds,
+				document.body.getBoundingClientRect()
+			);
 
 			// Check if there are a any recomended position
 			if (recomendedPosition !== undefined) {
@@ -147,21 +158,10 @@ namespace Providers.Dropdown.OSUIComponents {
 						break;
 				}
 
-				// Check if the position has changed
-				if (newClassPosition !== this._balloonPositionClass) {
-					// If there was an old position, remove it
-					if (this._balloonPositionClass !== '') {
-						OSUIFramework.Helper.Dom.Styles.RemoveClass(
-							this._balloonWrapperElement,
-							this._balloonPositionClass
-						);
-					}
-
-					// Store the current position
-					this._balloonPositionClass = newClassPosition;
-					// Set the new position
-					OSUIFramework.Helper.Dom.Styles.AddClass(this._balloonWrapperElement, newClassPosition);
-				}
+				// Store the current position
+				this._balloonPositionClass = newClassPosition;
+				// Set the new position
+				OSUIFramework.Helper.Dom.Styles.AddClass(this._balloonWrapperElement, newClassPosition);
 			}
 		}
 
@@ -248,8 +248,13 @@ namespace Providers.Dropdown.OSUIComponents {
 			}
 		}
 
+		// Used to set a stopPropagation when click at search input
+		private _onSearchInputClicked(e): void {
+			e.stopPropagation();
+		}
+
 		// Used to apply the logic when user click to open the Dropdown
-		private _onSelectValuesWrapperClicked() {
+		private _onSelectValuesWrapperClicked(): void {
 			// Ensure that dropdown can open or close
 			if (this._isBlocked === false) {
 				this._isOpened ? this._close() : this._open();
@@ -402,6 +407,23 @@ namespace Providers.Dropdown.OSUIComponents {
 				Enum.InlineCssVariables.InputHeight,
 				selfElement.height + OSUIFramework.GlobalEnum.Units.Pixel
 			);
+			OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
+				this._balloonWrapperElement,
+				Enum.InlineCssVariables.BalloonMaxHeight,
+				this.configs.balloonMaxHeight + OSUIFramework.GlobalEnum.Units.Pixel
+			);
+		}
+
+		// Method used to add CSS classes to pattern elements
+		private _setCssClasses(): void {
+			// If search input exist add a class to the balloon
+			if (this._balloonSearchInputElement === undefined) {
+				// Needed to style the balloon height once at phone
+				OSUIFramework.Helper.Dom.Styles.AddClass(
+					this._balloonWrapperElement,
+					Enum.Class.BalloonHasNotSearchInput
+				);
+			}
 		}
 
 		// Method used to store a given DropdownOption into optionItems list, it's triggered by DropdownServerSideItem
@@ -447,6 +469,10 @@ namespace Providers.Dropdown.OSUIComponents {
 			);
 			// If search input exist (A11y - stuff)
 			if (this._balloonSearchInputElement) {
+				this._balloonSearchInputElement.addEventListener(
+					OSUIFramework.GlobalEnum.HTMLEvent.Click,
+					this._eventOnClickInputSearch
+				);
 				// Add keyPress event in order to capture Escape key
 				this._balloonSearchInputElement.addEventListener(
 					OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
@@ -467,7 +493,6 @@ namespace Providers.Dropdown.OSUIComponents {
 
 		// Mehod used to trigger the _platformEventOnToggleCallback callback!
 		private _triggerToogleCalbackEvent(): void {
-			console.log('_triggerToogleCalbackEvent()', this._isOpened);
 			OSUIFramework.Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, this._isOpened);
 		}
 
@@ -491,6 +516,10 @@ namespace Providers.Dropdown.OSUIComponents {
 				this._eventOnSpanFocus
 			);
 			if (this._balloonSearchInputElement) {
+				this._balloonSearchInputElement.removeEventListener(
+					OSUIFramework.GlobalEnum.HTMLEvent.Click,
+					this._eventOnClickInputSearch
+				);
 				this._balloonSearchInputElement.removeEventListener(
 					OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
 					this._eventOnkeyBoardPress
@@ -636,6 +665,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		protected setCallbacks(): void {
 			this._eventOnBodyClick = this._onBodyClick.bind(this);
 			this._eventOnClick = this._onSelectValuesWrapperClicked.bind(this);
+			this._eventOnClickInputSearch = this._onSearchInputClicked.bind(this);
 			this._eventOnCloseTransitionEnd = this._endOfCloseAnimation.bind(this);
 			this._eventOnkeyBoardPress = this._onKeyboardPressed.bind(this);
 			this._eventOnSpanFocus = this._onSpanElementFocus.bind(this);
@@ -688,6 +718,8 @@ namespace Providers.Dropdown.OSUIComponents {
 			this.setA11yProperties();
 			// Add the pattern Events
 			this._setUpEvents();
+			// Add CSS classes
+			this._setCssClasses();
 			// Ensure that the Move only happens after HTML elements has been set!
 			this._moveBallonElement();
 			// Set the balloon coordinates
@@ -706,6 +738,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		protected unsetCallbacks(): void {
 			this._eventOnBodyClick = undefined;
 			this._eventOnClick = undefined;
+			this._eventOnClickInputSearch = undefined;
 			this._eventOnCloseTransitionEnd = undefined;
 			this._eventOnkeyBoardPress = undefined;
 			this._eventOnSpanFocus = undefined;
@@ -823,7 +856,6 @@ namespace Providers.Dropdown.OSUIComponents {
 			);
 			// Assign IsDisabled class
 			OSUIFramework.Helper.Dom.Styles.AddClass(this.selfElement, Enum.Class.IsDisabled);
-			OSUIFramework.Helper.Dom.Styles.AddClass(this._balloonWrapperElement, Enum.Class.BalloonWrapperIsDisabled);
 		}
 
 		/**
@@ -855,10 +887,6 @@ namespace Providers.Dropdown.OSUIComponents {
 			);
 			// Remove IsDisabled class
 			OSUIFramework.Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.Class.IsDisabled);
-			OSUIFramework.Helper.Dom.Styles.RemoveClass(
-				this._balloonWrapperElement,
-				Enum.Class.BalloonWrapperIsDisabled
-			);
 		}
 
 		/**

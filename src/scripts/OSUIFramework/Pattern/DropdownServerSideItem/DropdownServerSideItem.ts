@@ -150,7 +150,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		public build(): void {
 			super.build();
 
-			// Store all the parent info
+			// Store parent info
 			this.setParentInfo(
 				Constants.Dot + Enum.CssClass.DropdownParentBalloon,
 				OutSystems.OSUI.Patterns.DropdownAPI.GetDropdownById
@@ -160,11 +160,8 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			this.notifyParent(Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.Add);
 
 			this.setCallbacks();
-
 			this._setUpEvents();
-
 			this.setA11yProperties();
-
 			this.finishBuild();
 		}
 
@@ -193,37 +190,16 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 * @memberof DropdownServerSideItem
 		 */
 		public dispose(): void {
-			this.unsetCallbacks();
+			if (this.isBuilt) {
+				this.unsetCallbacks();
+				this._removeEvents();
 
-			this._removeEvents();
-
-			// Notify parent about this instance will be destroyed
-			this.notifyParent(Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.Removed);
+				// Notify parent about this instance will be destroyed
+				this.notifyParent(Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.Removed);
+			}
 
 			//Destroying the base of pattern
 			super.dispose();
-		}
-
-		/**
-		 * Getter that allows to obtain the IsSelectd status value.
-		 *
-		 * @readonly
-		 * @type {boolean}
-		 * @memberof DropdownServerSideItem
-		 */
-		public get IsSelected(): boolean {
-			return this.configs.IsSelected;
-		}
-
-		/**
-		 * Getter that allows to obtain the ItemId value.
-		 *
-		 * @readonly
-		 * @type {boolean}
-		 * @memberof DropdownServerSideItem
-		 */
-		public get ItemId(): string {
-			return this.configs.ItemId;
 		}
 
 		/**
@@ -292,6 +268,28 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 */
 		public unsetTabindex(): void {
 			Helper.A11Y.TabIndexFalse(this.selfElement);
+		}
+
+		/**
+		 * Getter that allows to obtain the IsSelectd status value.
+		 *
+		 * @readonly
+		 * @type {boolean}
+		 * @memberof DropdownServerSideItem
+		 */
+		public get IsSelected(): boolean {
+			return this.configs.IsSelected;
+		}
+
+		/**
+		 * Getter that allows to obtain the ItemId value.
+		 *
+		 * @readonly
+		 * @type {boolean}
+		 * @memberof DropdownServerSideItem
+		 */
+		public get ItemId(): string {
+			return this.configs.ItemId;
 		}
 	}
 }
