@@ -923,7 +923,7 @@ namespace Providers.Dropdown.OSUIComponents {
 
 				default:
 					throw new Error(
-						`${OSUIFramework.ErrorCodes.Dropdown.FailRegisterCallback}:	The given '${eventName}' event name it's not defined.`
+						`${OSUIFramework.ErrorCodes.Dropdown.FailRegisterCallback}:	The given '${eventName}' event name is not defined.`
 					);
 			}
 		}

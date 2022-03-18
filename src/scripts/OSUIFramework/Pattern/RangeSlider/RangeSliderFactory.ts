@@ -10,17 +10,15 @@ namespace OSUIFramework.Patterns.RangeSlider.Factory {
 	 */
 	export function NewRangeSlider(
 		rangeSliderId: string,
-		provider: string,
-		configs: string
+		configs: string,
+		mode: Enum.Mode,
+		provider: string
 	): OSUIFramework.Patterns.RangeSlider.IRangeSlider {
 		let _rangeSliderItem = null;
 
 		switch (provider) {
 			case Enum.Provider.NoUiSlider:
-				_rangeSliderItem = new Providers.RangeSlider.NoUISlider.OSUINoUiSlider(
-					rangeSliderId,
-					JSON.parse(configs)
-				);
+				_rangeSliderItem = Providers.RangeSlider.NoUiSlider.Factory.NewNoUiSlider(rangeSliderId, configs, mode);
 
 				break;
 

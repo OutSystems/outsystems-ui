@@ -13,7 +13,6 @@ namespace OSUIFramework.Patterns.Notification {
 		private _focusableElements: HTMLElement[];
 		private _isOpen: boolean;
 		private _lastFocusableElement: HTMLElement;
-		private _notificationContentElement: HTMLElement;
 		private _platformEventOnInitialize: Callbacks.OSNotificationInitializedEvent;
 		private _platformEventOnToggle: Callbacks.OSNotificationToggleEvent;
 
@@ -71,18 +70,15 @@ namespace OSUIFramework.Patterns.Notification {
 			this._updateA11yProperties();
 
 			// Remove focus when a Notification is closed
-			this._notificationContentElement.blur();
+			this._selfElem.blur();
 
 			// Focus on last element clicked
 			this._focusableActiveElement.focus();
 
 			// Remove listeners to toggle Notification
 			if (Helper.DeviceInfo.IsNative === false && this.configs.InteractToClose) {
-				this._notificationContentElement.removeEventListener(this._eventType, this._eventOnClick);
-				this._notificationContentElement.removeEventListener(
-					GlobalEnum.HTMLEvent.keyDown,
-					this._eventOnKeypress
-				);
+				this._selfElem.removeEventListener(this._eventType, this._eventOnClick);
+				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
 			}
 		}
 
@@ -102,9 +98,9 @@ namespace OSUIFramework.Patterns.Notification {
 			}
 
 			// Prevent the focus to outside of Notification
-			if (document.activeElement === this._notificationContentElement) {
+			if (document.activeElement === this._selfElem) {
 				if (!this._lastFocusableElement) {
-					this._notificationContentElement.focus();
+					this._selfElem.focus();
 				} else {
 					this._lastFocusableElement.focus();
 				}
@@ -129,6 +125,17 @@ namespace OSUIFramework.Patterns.Notification {
 		}
 
 		/**
+		 * Remove all the assigned Events
+		 *
+		 * @private
+		 * @memberof Notification
+		 */
+		private _removeEvents(): void {
+			this._selfElem.removeEventListener(this._eventType, this._eventOnClick);
+			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
+		}
+
+		/**
 		 * Show Notification
 		 *
 		 * @private
@@ -148,13 +155,13 @@ namespace OSUIFramework.Patterns.Notification {
 
 			// Add listeners to toggle Notification
 			if (Helper.DeviceInfo.IsNative === false && this.configs.InteractToClose) {
-				this._notificationContentElement.addEventListener(this._eventType, this._eventOnClick);
+				this._selfElem.addEventListener(this._eventType, this._eventOnClick);
 			}
 
-			this._notificationContentElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
+			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
 
 			// Focus on element when Notification is open
-			this._notificationContentElement.focus();
+			this._selfElem.focus();
 
 			if (this.configs.CloseAfterTime > 0) {
 				this._autoCloseNotification();
@@ -181,14 +188,10 @@ namespace OSUIFramework.Patterns.Notification {
 		private _updateA11yProperties(): void {
 			const setA11YtabIndex = this._isOpen ? Helper.A11Y.TabIndexTrue : Helper.A11Y.TabIndexFalse;
 
-			Helper.Dom.Attribute.Set(
-				this._notificationContentElement,
-				Constants.A11YAttributes.Aria.Hidden,
-				(!this._isOpen).toString()
-			);
+			Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Hidden, (!this._isOpen).toString());
 
 			Helper.Dom.Attribute.Set(
-				this._notificationContentElement,
+				this._selfElem,
 				Constants.A11YAttributes.TabIndex,
 				this._isOpen
 					? Constants.A11YAttributes.States.TabIndexShow
@@ -227,9 +230,9 @@ namespace OSUIFramework.Patterns.Notification {
 				this.configs.InteractToClose = value;
 				if (Helper.DeviceInfo.IsNative === false) {
 					if (this.configs.InteractToClose) {
-						this._notificationContentElement.addEventListener(this._eventType, this._eventOnClick);
+						this._selfElem.addEventListener(this._eventType, this._eventOnClick);
 					} else {
-						this._notificationContentElement.removeEventListener(this._eventType, this._eventOnClick);
+						this._selfElem.removeEventListener(this._eventType, this._eventOnClick);
 					}
 				}
 			}
@@ -278,7 +281,7 @@ namespace OSUIFramework.Patterns.Notification {
 		 */
 		protected setA11YProperties(): void {
 			Helper.Dom.Attribute.Set(
-				this._notificationContentElement,
+				this._selfElem,
 				Constants.A11YAttributes.Role.AttrName,
 				Constants.A11YAttributes.Role.Alert
 			);
@@ -305,8 +308,6 @@ namespace OSUIFramework.Patterns.Notification {
 		 * @memberof Notification
 		 */
 		protected setHtmlElements(): void {
-			this._notificationContentElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternContent);
-
 			this._focusableElements = [...this._selfElem.querySelectorAll(Constants.FocusableElems)] as HTMLElement[];
 
 			// to handle focusable element's tabindex when toggling the Notification
@@ -348,19 +349,18 @@ namespace OSUIFramework.Patterns.Notification {
 		}
 
 		/**
-		 * Remove all the assigned Events
+		 * Remove all the assigned Callbacks
 		 *
 		 * @protected
 		 * @memberof Notification
 		 */
 		protected unsetCallbacks(): void {
-			// Remove listeners to toggle Notification
+			// Reassign the elements to undefined, preventing memory leaks and remove events
 			if (Helper.DeviceInfo.IsNative === false && this.configs.InteractToClose) {
-				this._notificationContentElement.removeEventListener(this._eventType, this._eventOnClick);
-				this._notificationContentElement.removeEventListener(
-					GlobalEnum.HTMLEvent.keyDown,
-					this._eventOnKeypress
-				);
+				this._removeEvents();
+
+				this._eventOnClick = undefined;
+				this._eventOnKeypress = undefined;
 			}
 		}
 
@@ -374,7 +374,6 @@ namespace OSUIFramework.Patterns.Notification {
 			this._firstFocusableElement = undefined;
 			this._focusableElements = undefined;
 			this._lastFocusableElement = undefined;
-			this._notificationContentElement = undefined;
 			this._platformEventOnInitialize = undefined;
 			this._platformEventOnToggle = undefined;
 		}
@@ -403,11 +402,7 @@ namespace OSUIFramework.Patterns.Notification {
 		public changeProperty(propertyName: string, propertyValue: any): void {
 			const _oldNotificationPosition = this.configs.Position;
 
-			// The ExtendeClass is applied in a different element than the other patterns
-			// so we prevent to execute the super.changeProperty when the ExtendedClass is changed
-			if (propertyName !== GlobalEnum.CommonPatternsProperties.ExtendedClass) {
-				super.changeProperty(propertyName, propertyValue);
-			}
+			super.changeProperty(propertyName, propertyValue);
 
 			if (this.isBuilt) {
 				// Check which property changed and call respective method to update it
@@ -431,7 +426,7 @@ namespace OSUIFramework.Patterns.Notification {
 						break;
 					case GlobalEnum.CommonPatternsProperties.ExtendedClass:
 						Helper.Dom.Styles.ExtendedClass(
-							this._notificationContentElement,
+							this._selfElem,
 							this.configs.ExtendedClass,
 							propertyValue as string
 						);
@@ -446,7 +441,7 @@ namespace OSUIFramework.Patterns.Notification {
 		 * @memberof Notification
 		 */
 		public dispose(): void {
-			// Remove event listners
+			// Remove Callbacks
 			this.unsetCallbacks();
 
 			// Remove unused HTML elements
@@ -545,7 +540,7 @@ namespace OSUIFramework.Patterns.Notification {
 
 				default:
 					throw new Error(
-						`${ErrorCodes.Notification.FailRegisterCallback}:	The given '${eventName}' event name it's not defined.`
+						`${ErrorCodes.Notification.FailRegisterCallback}:	The given '${eventName}' event name is not defined.`
 					);
 			}
 		}

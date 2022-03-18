@@ -25,14 +25,18 @@ namespace OSUIFramework.ErrorCodes {
 		FailRegisterCallback: 'OSUI-GEN-03001',
 	};
 
+	export const RangeSlider = {
+		FailRegisterCallback: 'OSUI-GEN-04001',
+	};
+
 	export const SectionIndex = {
-		FailChildItemClicked: 'OSUI-GEN-04001',
-		FailSetNewChildItem: 'OSUI-GEN-04002',
-		FailToSetChildItemAction: 'OSUI-GEN-04003',
-		FailUnsetNewChildItem: 'OSUI-GEN-04004',
+		FailChildItemClicked: 'OSUI-GEN-05001',
+		FailSetNewChildItem: 'OSUI-GEN-05002',
+		FailToSetChildItemAction: 'OSUI-GEN-05003',
+		FailUnsetNewChildItem: 'OSUI-GEN-05004',
 	};
 
 	export const SectionIndexItem = {
-		FailToSetTargetElement: 'OSUI-GEN-05001',
+		FailToSetTargetElement: 'OSUI-GEN-06001',
 	};
 }
