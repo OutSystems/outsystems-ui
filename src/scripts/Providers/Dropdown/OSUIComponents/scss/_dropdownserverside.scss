@@ -4,7 +4,6 @@
 /// Patterns - Interaction - DropdownServerSide
 
 ///
-/*! jRio --------------------------------- */
 .osui-dropdown-serverside {
 	// "Input" section - SelectedValues container
 	&__selected-values {
@@ -285,6 +284,9 @@
 .is-rtl {
 	.osui-dropdown-serverside {
 		&__selected-values {
+			margin-left: var(--space-base);
+			margin-right: initial;
+
 			&:after {
 				left: var(--space-base);
 				right: auto;
@@ -363,7 +365,7 @@
 			}
 
 			// If do not exist a input search inside balloon
-			&--has-not-search-input {
+			&--has-not-search {
 				.osui-dropdown-serverside__balloon-container {
 					margin-top: 10vh;
 					max-height: 70vh;

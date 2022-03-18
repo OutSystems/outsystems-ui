@@ -15,12 +15,12 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		// Click Event
 		private _eventOnClick: Callbacks.Generic;
 		// Keyboard Key Press Event
-		private _eventOnkeyBoardPress: Callbacks.Generic;
+		private _eventOnkeyboardPress: Callbacks.Generic;
 		// Platform Click Event Callback
 		private _platformEventOnClickCallback: Callbacks.OSDropdownServerSideItemOnSelectEvent;
 
 		// Store the Key used to trigger the notification into Dropdown parent
-		public keybordTriggerdKey: string;
+		public keyboardTriggerdKey: string;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new DropdownServerSideItemConfig(configs));
@@ -32,7 +32,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			event.stopPropagation();
 
 			// Set KeyCode
-			this.keybordTriggerdKey = event.key;
+			this.keyboardTriggerdKey = event.key;
 
 			switch (event.key) {
 				// If Enter or Space Keys trigger as a click event!
@@ -55,10 +55,10 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 					// If Shift + Tab (Since it doesn't exist as a unique key, it must be 'fabricated')
 					if (event.shiftKey) {
 						// Set KeyCode
-						this.keybordTriggerdKey = GlobalEnum.Keycodes.ShiftTab;
+						this.keyboardTriggerdKey = GlobalEnum.Keycodes.ShiftTab;
 					} else {
 						// Set KeyCode
-						this.keybordTriggerdKey = GlobalEnum.Keycodes.Tab;
+						this.keyboardTriggerdKey = GlobalEnum.Keycodes.Tab;
 					}
 
 					// Notify parent about the selected key
@@ -82,13 +82,13 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		// Remove Pattern Events
 		private _removeEvents(): void {
 			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
-			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
+			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyboardPress);
 		}
 
 		// Set Pattern Events
 		private _setUpEvents(): void {
 			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
-			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
+			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyboardPress);
 		}
 
 		// Update the Selected Status value based on a given Status
@@ -129,7 +129,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 */
 		protected setCallbacks(): void {
 			this._eventOnClick = this._onSelected.bind(this);
-			this._eventOnkeyBoardPress = this._onKeyboardPressed.bind(this);
+			this._eventOnkeyboardPress = this._onKeyboardPressed.bind(this);
 		}
 
 		/**

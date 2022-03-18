@@ -2,7 +2,7 @@
 namespace OSUIFramework.Helper {
 	export abstract class BoundPosition {
 		// Check the state of boundaries position between two given Bound values
-		private static _setIsOutBounds(elementBounds: DOMRect, testAgainstElementBounds: DOMRect): OutOfBoundaries {
+		private static _checkIsOutBounds(elementBounds: DOMRect, testAgainstElementBounds: DOMRect): OutOfBoundaries {
 			return {
 				top: elementBounds.top < testAgainstElementBounds.top,
 				right: elementBounds.right > testAgainstElementBounds.right,
@@ -62,7 +62,7 @@ namespace OSUIFramework.Helper {
 			}
 
 			// Check if Element it's out of the AgainstElement boundaries
-			const isOut = this._setIsOutBounds(elementBounds, testAgainstElementBounds);
+			const isOut = this._checkIsOutBounds(elementBounds, testAgainstElementBounds);
 
 			// Is Out of Left boundary?
 			if (isOut.left) {
@@ -145,7 +145,7 @@ namespace OSUIFramework.Helper {
 				y: elementBounds.y,
 			};
 
-			return this._setIsOutBounds(offSetValuesUpdated as DOMRect, testAgainstElement.getBoundingClientRect());
+			return this._checkIsOutBounds(offSetValuesUpdated as DOMRect, testAgainstElement.getBoundingClientRect());
 		}
 	}
 }

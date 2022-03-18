@@ -17,7 +17,7 @@ namespace Providers.Dropdown.OSUIComponents.Enum {
 		BalloonContainer = 'osui-dropdown-serverside__balloon-container',
 		BalloonContent = 'osui-dropdown-serverside__balloon-content',
 		BalloonFooter = 'osui-dropdown-serverside__balloon-footer',
-		BalloonHasNotSearchInput = 'osui-dropdown-serverside__balloon--has-not-search-input',
+		BalloonHasNotSearchInput = 'osui-dropdown-serverside__balloon--has-not-search',
 		BalloonPositionBottom = 'osui-dropdown-serverside__balloon--is-bottom',
 		BalloonPositionTop = 'osui-dropdown-serverside__balloon--is-top',
 		BalloonSearch = 'osui-dropdown-serverside__balloon-search',

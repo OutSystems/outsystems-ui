@@ -1,3 +1,6 @@
+// TODO: EventOnScroll!
+// TODO: Invert when Top using Flex order!
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.Dropdown.OSUIComponents {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
@@ -38,7 +41,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		// On WindowResize Event
 		private _eventOnWindowResize: OSUIFramework.Callbacks.Generic;
 		// Keyboard Key Press Event
-		private _eventOnkeyBoardPress: OSUIFramework.Callbacks.Generic;
+		private _eventOnkeyboardPress: OSUIFramework.Callbacks.Generic;
 		// Store a Flag property that will control if the dropdown is blocked (like it's under closing animation)
 		private _isBlocked = false;
 		// Store the Element State, by default is closed!
@@ -319,12 +322,12 @@ namespace Providers.Dropdown.OSUIComponents {
 				const getOptionItemIndex = this.getChildIndex(optionItemId);
 
 				// Ensure that code wont run if key was not defined!
-				if (optionItem.keybordTriggerdKey === undefined) {
+				if (optionItem.keyboardTriggerdKey === undefined) {
 					return;
 				}
 
 				// Check which Keyboard key has been pressed
-				switch (optionItem.keybordTriggerdKey) {
+				switch (optionItem.keyboardTriggerdKey) {
 					// If Enter or Space Keys trigger as a click event!
 					case OSUIFramework.GlobalEnum.Keycodes.Enter:
 					case OSUIFramework.GlobalEnum.Keycodes.Space:
@@ -450,12 +453,12 @@ namespace Providers.Dropdown.OSUIComponents {
 			// Add KeyDown Event to the SelectValuesWrapper (A11y - stuff)
 			this._selectValuesWrapper.addEventListener(
 				OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
-				this._eventOnkeyBoardPress
+				this._eventOnkeyboardPress
 			);
 			// Add KeyDown Event to the BalloonContent (OptionsWrapper) (A11y - stuff)
 			this._balloonOptionsWrapperElement.addEventListener(
 				OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
-				this._eventOnkeyBoardPress
+				this._eventOnkeyboardPress
 			);
 			// Add Focus Event to the added Top Span Element (A11y - stuff)
 			this._spanTopFocusElement.addEventListener(
@@ -476,7 +479,7 @@ namespace Providers.Dropdown.OSUIComponents {
 				// Add keyPress event in order to capture Escape key
 				this._balloonSearchInputElement.addEventListener(
 					OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
-					this._eventOnkeyBoardPress
+					this._eventOnkeyboardPress
 				);
 			}
 			// Add the BodyClick callback that will be used Close open Dropdown!
@@ -501,11 +504,11 @@ namespace Providers.Dropdown.OSUIComponents {
 			this._selectValuesWrapper.removeEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			this._selectValuesWrapper.removeEventListener(
 				OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
-				this._eventOnkeyBoardPress
+				this._eventOnkeyboardPress
 			);
 			this._balloonOptionsWrapperElement.removeEventListener(
 				OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
-				this._eventOnkeyBoardPress
+				this._eventOnkeyboardPress
 			);
 			this._spanTopFocusElement.removeEventListener(
 				OSUIFramework.GlobalEnum.HTMLEvent.Focus,
@@ -522,7 +525,7 @@ namespace Providers.Dropdown.OSUIComponents {
 				);
 				this._balloonSearchInputElement.removeEventListener(
 					OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
-					this._eventOnkeyBoardPress
+					this._eventOnkeyboardPress
 				);
 			}
 			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
@@ -667,7 +670,7 @@ namespace Providers.Dropdown.OSUIComponents {
 			this._eventOnClick = this._onSelectValuesWrapperClicked.bind(this);
 			this._eventOnClickInputSearch = this._onSearchInputClicked.bind(this);
 			this._eventOnCloseTransitionEnd = this._endOfCloseAnimation.bind(this);
-			this._eventOnkeyBoardPress = this._onKeyboardPressed.bind(this);
+			this._eventOnkeyboardPress = this._onKeyboardPressed.bind(this);
 			this._eventOnSpanFocus = this._onSpanElementFocus.bind(this);
 			this._eventOnWindowResize = this._onWindowResize.bind(this);
 		}
@@ -740,7 +743,7 @@ namespace Providers.Dropdown.OSUIComponents {
 			this._eventOnClick = undefined;
 			this._eventOnClickInputSearch = undefined;
 			this._eventOnCloseTransitionEnd = undefined;
-			this._eventOnkeyBoardPress = undefined;
+			this._eventOnkeyboardPress = undefined;
 			this._eventOnSpanFocus = undefined;
 			this._eventOnWindowResize = undefined;
 			this._platformEventInitializedCallback = undefined;

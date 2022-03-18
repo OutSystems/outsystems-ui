@@ -14,7 +14,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 * @type {string}
 		 * @memberof IDropdownServerSideItem
 		 */
-		keybordTriggerdKey: string;
+		keyboardTriggerdKey: string;
 
 		/**
 		 * Getter that allows to obtain the IsSelectd status value.
