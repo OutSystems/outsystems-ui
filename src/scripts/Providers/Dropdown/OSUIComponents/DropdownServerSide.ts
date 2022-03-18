@@ -1,6 +1,3 @@
-// TODO: EventOnScroll!
-// TODO: Invert when Top using Flex order!
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.Dropdown.OSUIComponents {
 	// eslint-disable-next-line @typescript-eslint/naming-convention

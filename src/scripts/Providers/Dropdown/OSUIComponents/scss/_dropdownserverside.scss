@@ -163,6 +163,7 @@
 			align-items: center;
 			border-top: var(--border-size-s) solid var(--color-neutral-5);
 			display: flex;
+			order: 3;
 			padding: var(--space-s) var(--space-base);
 		}
 	}
@@ -176,9 +177,19 @@
 		}
 
 		// Content Container
-		.osui-dropdown-serverside__balloon-container {
-			transform: translateY(0);
-			transition: opacity 250ms ease;
+		.osui-dropdown-serverside {
+			&__balloon {
+				&-container {
+					transform: translateY(0);
+					transition: opacity 250ms ease;
+				}
+
+				&-search {
+					border-bottom: var(--border-size-none);
+					border-top: var(--border-size-s) solid var(--color-neutral-5);
+					order: 2;
+				}
+			}
 		}
 	}
 
