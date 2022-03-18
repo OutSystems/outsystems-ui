@@ -349,7 +349,7 @@ namespace OSUIFramework.Patterns.Notification {
 		}
 
 		/**
-		 * Remove all the assigned Callbacks
+		 * Method to remove all assigned callbacks
 		 *
 		 * @protected
 		 * @memberof Notification

@@ -48,6 +48,16 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		}
 
 		/**
+		 * Method to remove the event listeners
+		 *
+		 * @private
+		 * @memberof TabsHeaderItem
+		 */
+		private _removeEvents(): void {
+			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnTabsClick);
+		}
+
+		/**
 		 * Method to handle the Accessibility attributes
 		 *
 		 * @protected
@@ -82,13 +92,13 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		}
 
 		/**
-		 * Method to remove the callbacks and event listeners
+		 * Method to remove all assigned callbacks
 		 *
 		 * @protected
 		 * @memberof TabsHeaderItem
 		 */
 		protected unsetCallbacks(): void {
-			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnTabsClick);
+			this._removeEvents();
 			this._eventOnTabsClick = undefined;
 		}
 

@@ -137,6 +137,17 @@ namespace OSUIFramework.Patterns.Sidebar {
 		}
 
 		/**
+		 * Method to remove the event listeners
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
+		private _removeEvents(): void {
+			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
+			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOverlayClick);
+		}
+
+		/**
 		 * Set the Sidebar opening/closing direction.
 		 *
 		 * @private
@@ -353,14 +364,13 @@ namespace OSUIFramework.Patterns.Sidebar {
 		}
 
 		/**
-		 * Removes event listeners and callbacks.
+		 * Method to remove all assigned callbacks
 		 *
 		 * @protected
 		 * @memberof Sidebar
 		 */
 		protected unsetCallbacks(): void {
-			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOverlayClick);
+			this._removeEvents();
 
 			this._eventSidebarKeypress = undefined;
 			this._eventOverlayClick = undefined;

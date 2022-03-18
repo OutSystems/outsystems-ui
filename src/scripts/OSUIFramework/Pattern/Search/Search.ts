@@ -68,6 +68,23 @@ namespace OSUIFramework.Patterns.Search {
 		}
 
 		/**
+		 * Method to remove the event listeners
+		 *
+		 * @private
+		 * @memberof Search
+		 */
+		private _removeEvents(): void {
+			// Add events only in Native Applications
+			if (Helper.DeviceInfo.IsNative) {
+				this._searchGlass.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventSearchGlassClick);
+
+				if (this._isOpen) {
+					Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._globalEventBody);
+				}
+			}
+		}
+
+		/**
 		 * Will trigger the platform event
 		 *
 		 * @private
@@ -138,20 +155,13 @@ namespace OSUIFramework.Patterns.Search {
 		}
 
 		/**
-		 * Unsets the callbacks that were used by the pattern.
+		 * Method to remove all assigned callbacks
 		 *
 		 * @protected
 		 * @memberof Search
 		 */
 		protected unsetCallbacks(): void {
-			// Add events only in Native Applications
-			if (Helper.DeviceInfo.IsNative) {
-				this._searchGlass.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventSearchGlassClick);
-
-				if (this._isOpen) {
-					Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._globalEventBody);
-				}
-			}
+			this._removeEvents();
 
 			this._eventSearchGlassClick = undefined;
 			this._globalEventBody = undefined;

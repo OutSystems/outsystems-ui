@@ -39,6 +39,17 @@ namespace OSUIFramework.Patterns.FlipContent {
 		}
 
 		/**
+		 * Method to remove the event listeners
+		 *
+		 * @private
+		 * @memberof FlipContent
+		 */
+		private _removeEvents(): void {
+			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
+			this._flipWrapperElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
+		}
+
+		/**
 		 * Setting the handlers and the classes for when the FlipSelf is active or not.
 		 *
 		 * @private
@@ -144,13 +155,12 @@ namespace OSUIFramework.Patterns.FlipContent {
 		}
 
 		/**
-		 * Remove the events
+		 * Method to remove all assigned callbacks
 		 *
 		 * @memberof FlipContent
 		 */
 		protected unsetCallbacks(): void {
-			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
-			this._flipWrapperElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
+			this._removeEvents();
 
 			this._eventKeydown = undefined;
 			this._eventClick = undefined;
