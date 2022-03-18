@@ -62,6 +62,16 @@
 				transform: translateY(0px);
 			}
 		}
+
+		// This is needed for the OpenOnHover feature, to fit in the gap between submenu_header and items
+		&:after {
+			content: '';
+			height: 100%;
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: 100%;
+		}
 	}
 
 	&--is-dropdown {
@@ -139,16 +149,6 @@
 			-servicestudio-pointer-events: auto !important;
 			-servicestudio-top: 100% !important;
 			-servicestudio-transform: translateY(0px) !important;
-		}
-
-		// This is needed for the OpenOnHover feature, to fit in the gap between submenu_header and items
-		&:before {
-			position: absolute;
-			top: -5px;
-			content: ' ';
-			left: 0;
-			right: 0;
-			height: 5px;
 		}
 
 		a {
