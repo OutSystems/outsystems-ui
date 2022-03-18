@@ -540,7 +540,7 @@ namespace OSUIFramework.Patterns.Notification {
 
 				default:
 					throw new Error(
-						`${ErrorCodes.Notification.FailRegisterCallback}:	The given '${eventName}' event name it's not defined.`
+						`${ErrorCodes.Notification.FailRegisterCallback}:	The given '${eventName}' event name is not defined.`
 					);
 			}
 		}

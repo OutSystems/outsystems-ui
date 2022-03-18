@@ -1,9 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.RangeSlider {
 	export abstract class AbstractRangeSlider<P, C extends AbstractRangeSliderConfig>
-		extends AbstractProviderPattern<P, C>
+		extends AbstractPattern<C>
 		implements IRangeSlider, Interface.IProviderPattern<P>
 	{
+		private _provider: P;
+
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
 		}
