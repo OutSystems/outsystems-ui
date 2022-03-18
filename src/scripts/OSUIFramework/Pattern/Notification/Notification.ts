@@ -125,6 +125,20 @@ namespace OSUIFramework.Patterns.Notification {
 		}
 
 		/**
+		 * Remove all the assigned Events
+		 *
+		 * @private
+		 * @memberof Notification
+		 */
+		private _removeEvents(): void {
+			// Remove listeners to toggle Notification
+			if (Helper.DeviceInfo.IsNative === false && this.configs.InteractToClose) {
+				this._selfElem.removeEventListener(this._eventType, this._eventOnClick);
+				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
+			}
+		}
+
+		/**
 		 * Show Notification
 		 *
 		 * @private
@@ -348,22 +362,8 @@ namespace OSUIFramework.Patterns.Notification {
 			if (Helper.DeviceInfo.IsNative === false && this.configs.InteractToClose) {
 				this._eventOnClick = undefined;
 				this._eventOnKeypress = undefined;
-			}
-		}
 
-		/**
-		 * Remove all the assigned Events
-		 *
-		 * @protected
-		 * @memberof Notification
-		 */
-		protected unsetEvents(): void {
-			// Remove listeners to toggle Notification
-			if (Helper.DeviceInfo.IsNative === false && this.configs.InteractToClose) {
-				this._selfElem.removeEventListener(this._eventType, this._eventOnClick);
-				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
-
-				this.unsetCallbacks();
+				this._removeEvents();
 			}
 		}
 
@@ -444,8 +444,8 @@ namespace OSUIFramework.Patterns.Notification {
 		 * @memberof Notification
 		 */
 		public dispose(): void {
-			// Remove event listners
-			this.unsetEvents();
+			// Remove Callbacks
+			this.unsetCallbacks();
 
 			// Remove unused HTML elements
 			this.unsetHtmlElements();
