@@ -131,11 +131,8 @@ namespace OSUIFramework.Patterns.Notification {
 		 * @memberof Notification
 		 */
 		private _removeEvents(): void {
-			// Remove listeners to toggle Notification
-			if (Helper.DeviceInfo.IsNative === false && this.configs.InteractToClose) {
-				this._selfElem.removeEventListener(this._eventType, this._eventOnClick);
-				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
-			}
+			this._selfElem.removeEventListener(this._eventType, this._eventOnClick);
+			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
 		}
 
 		/**
@@ -358,12 +355,12 @@ namespace OSUIFramework.Patterns.Notification {
 		 * @memberof Notification
 		 */
 		protected unsetCallbacks(): void {
-			// Reassign the elements to undefined, preventing memory leaks
+			// Reassign the elements to undefined, preventing memory leaks and remove events
 			if (Helper.DeviceInfo.IsNative === false && this.configs.InteractToClose) {
+				this._removeEvents();
+
 				this._eventOnClick = undefined;
 				this._eventOnKeypress = undefined;
-
-				this._removeEvents();
 			}
 		}
 
