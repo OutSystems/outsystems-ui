@@ -57,8 +57,6 @@ namespace Providers.Dropdown.OSUIComponents {
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new OSUIDropdownServerSideConfig(configs));
-
-			console.log(this.uniqueId);
 		}
 
 		// Add error message container with a given text
@@ -198,8 +196,8 @@ namespace Providers.Dropdown.OSUIComponents {
 
 		// Update the balloon coordinates
 		private _onBodyScroll(): void {
-			// If the balloon is open
-			if (this._isOpened) {
+			// If the balloon is open and not IsPhone
+			if (this._isOpened && OSUIFramework.Helper.DeviceInfo.IsPhone === false) {
 				// Update the coordinates
 				this._setBalloonCoordinates();
 				// Clean the position if has been defined
@@ -270,8 +268,8 @@ namespace Providers.Dropdown.OSUIComponents {
 		}
 
 		// Used to set a stopPropagation when click at search input
-		private _onSearchInputClicked(e): void {
-			e.stopPropagation();
+		private _onSearchInputClicked(event: MouseEvent): void {
+			event.stopPropagation();
 		}
 
 		// Used to apply the logic when user click to open the Dropdown
@@ -303,9 +301,9 @@ namespace Providers.Dropdown.OSUIComponents {
 			this._closeDynamically = false;
 			this._isOpened = true;
 
+			this._updatePatternState();
 			this._setBalloonCoordinates();
 			this._getRecomendedPosition();
-			this._updatePatternState();
 		}
 
 		// Method to deal with the click at a DropdpownOptionItem

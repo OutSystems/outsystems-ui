@@ -83,6 +83,14 @@
 			transition: max-height 300ms ease-in-out;
 			width: 100%;
 			z-index: 1;
+
+			// Service Studio Preview
+			& {
+				-servicestudio-left: initial;
+				-servicestudio-max-height: 320px;
+				-servicestudio-position: relative;
+				-servicestudio-top: 2px;
+			}
 		}
 
 		&-focus-top {
@@ -105,6 +113,12 @@
 			overflow: hidden;
 			transform: translateY(-20px);
 			transition: opacity 250ms ease, transform 300ms ease-in-out;
+
+			// Service Studio Preview
+			& {
+				-servicestudio-opacity: 1;
+				-servicestudio-transform: none;
+			}
 		}
 
 		// Search placeholder
@@ -366,6 +380,15 @@
 				top: 0;
 				transition: opacity 250ms ease;
 				z-index: 101;
+
+				// Service Studio Preview
+				& {
+					-servicestudio-background-color: var(--color-neutral-0);
+					-servicestudio-left: initial;
+					-servicestudio-opacity: 1;
+					-servicestudio-position: relative;
+					-servicestudio-top: 2px;
+				}
 			}
 
 			// Content Container
@@ -374,6 +397,14 @@
 				margin-top: 10vh;
 				max-height: 40vh;
 				width: 85vw;
+
+				// Service Studio Preview
+				& {
+					-servicestudio-box-shadow: none;
+					-servicestudio-margin-top: initial;
+					-servicestudio-opacity: 1;
+					-servicestudio-width: 100%;
+				}
 			}
 
 			// If do not exist a input search inside balloon
