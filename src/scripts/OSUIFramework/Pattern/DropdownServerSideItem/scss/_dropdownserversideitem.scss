@@ -20,6 +20,11 @@
 	&:hover,
 	&--is-selected {
 		background-color: var(--color-neutral-2);
+
+		// Service Studio Preview
+		& {
+			-servicestudio-background-color: var(--color-neutral-0);
+		}
 	}
 
 	&__content {
