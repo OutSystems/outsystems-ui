@@ -20,7 +20,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		private _platformEventOnClickCallback: Callbacks.OSDropdownServerSideItemOnSelectEvent;
 
 		// Store the Key used to trigger the notification into Dropdown parent
-		public keyboardTriggerdKey: string;
+		public keyboardTriggeredKey: string;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new DropdownServerSideItemConfig(configs));
@@ -32,7 +32,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			event.stopPropagation();
 
 			// Set KeyCode
-			this.keyboardTriggerdKey = event.key;
+			this.keyboardTriggeredKey = event.key;
 
 			switch (event.key) {
 				// If Enter or Space Keys trigger as a click event!
@@ -55,10 +55,10 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 					// If Shift + Tab (Since it doesn't exist as a unique key, it must be 'fabricated')
 					if (event.shiftKey) {
 						// Set KeyCode
-						this.keyboardTriggerdKey = GlobalEnum.Keycodes.ShiftTab;
+						this.keyboardTriggeredKey = GlobalEnum.Keycodes.ShiftTab;
 					} else {
 						// Set KeyCode
-						this.keyboardTriggerdKey = GlobalEnum.Keycodes.Tab;
+						this.keyboardTriggeredKey = GlobalEnum.Keycodes.Tab;
 					}
 
 					// Notify parent about the selected key
