@@ -4,6 +4,6 @@ namespace OSUIFramework.Event {
 		BodyOnClick = 'body.onclick',
 		BodyOnScroll = 'body.onscroll',
 		SubmenuOpen = 'submenu.open',
-		NotificationOpen = 'notification.open',
+		WindowResize = 'window.onresize',
 	}
 }

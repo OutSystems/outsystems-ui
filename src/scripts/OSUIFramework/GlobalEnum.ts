@@ -115,9 +115,12 @@ namespace OSUIFramework.GlobalEnum {
 	export enum InlineStyle {
 		Display = 'display',
 		Height = 'height',
+		Left = 'left',
 		Opacity = 'opacity',
 		PointerEvents = 'pointerEvents',
+		Top = 'top',
 		Transform = 'transform',
+		Width = 'width',
 	}
 
 	/**

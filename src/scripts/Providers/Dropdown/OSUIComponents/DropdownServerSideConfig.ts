@@ -9,6 +9,9 @@ namespace Providers.Dropdown.OSUIComponents {
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class OSUIDropdownServerSideConfig extends OSUIFramework.Patterns.AbstractConfiguration {
+		// Store the MaxHeight for the balloon
+		private _balloonMaxHeight = Enum.PropertiesValues.MaxHeight;
+		// Properties
 		public AllowMultipleSelection: boolean;
 		public IsDisabled: boolean;
 
@@ -34,6 +37,17 @@ namespace Providers.Dropdown.OSUIComponents {
 			}
 
 			return validatedValue;
+		}
+
+		/**
+		 * Getter that allows to obtain the MaxHeight that ballon should have.
+		 *
+		 * @readonly
+		 * @type {number}
+		 * @memberof OSUIDropdownServerSideConfig
+		 */
+		public get balloonMaxHeight(): number {
+			return this._balloonMaxHeight;
 		}
 	}
 }
