@@ -4,9 +4,11 @@ namespace OSUIFramework.Patterns.SectionIndex.Enum {
 	 * Communication between Patterns - Notification Type
 	 */
 	export enum ChildNotifyActionType {
+		Active = 'active',
 		Add = 'add',
 		Click = 'click',
 		KeyPressed = 'keyPressed',
+		Inactive = 'unactive',
 		Removed = 'removed',
 	}
 
