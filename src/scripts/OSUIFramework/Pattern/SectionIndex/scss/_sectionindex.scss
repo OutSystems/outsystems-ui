@@ -111,7 +111,9 @@
 	.layout-native {
 		.osui-section-index {
 			&--is-sticky {
+				left: calc(var(--os-safe-area-right) + var(--space-base));
 				position: fixed;
+				right: 0;
 			}
 		}
 	}
