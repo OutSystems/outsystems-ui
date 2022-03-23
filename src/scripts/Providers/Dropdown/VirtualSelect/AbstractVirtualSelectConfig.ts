@@ -74,6 +74,8 @@ namespace Providers.Dropdown.VirtualSelect {
 				placeholder: this.Prompt,
 				search: true,
 				searchPlaceholderText: this.SearchPrompt,
+				selectAllOnlyVisible: true,
+				silentInitialValueSet: true,
 				selectedValue: this._getSelectedValues(),
 				textDirection: OutSystems.OSUI.Utils.GetIsRTL()
 					? OSUIFramework.GlobalEnum.Direction.RTL

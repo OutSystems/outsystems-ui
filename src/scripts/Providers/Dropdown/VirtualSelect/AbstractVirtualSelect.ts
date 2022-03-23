@@ -78,6 +78,18 @@ namespace Providers.Dropdown.VirtualSelect {
 			// Store the ElementId where the provider will create the Dropdown
 			this.configs.ElementId = '#' + this._selfElem.id;
 		}
+
+		// Set Pattern Events
+		private _setUpEvents(): void {
+			// Add the event that will get the selected options values
+			this._selfElem.addEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
+		}
+
+		// Remove Pattern Events
+		private _unsetEvents(): void {
+			this._selfElem.removeEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
+		}
+
 		/**
 		 * Create the provider instance
 		 *
@@ -89,8 +101,8 @@ namespace Providers.Dropdown.VirtualSelect {
 			this.provider = window.VirtualSelect.init(this._virtualselectOpts);
 			this._virtualselectMethods = this.provider.$ele;
 
-			// Add the events to be used at provider instance
-			this.setCallbacks();
+			// Add the pattern Events!
+			this._setUpEvents();
 
 			// Add attributes to the element if needed
 			this._manageAttributes();
@@ -122,9 +134,6 @@ namespace Providers.Dropdown.VirtualSelect {
 		protected setCallbacks(): void {
 			// Set the event callback reference
 			this._onSelectedOptionEvent = this._onSelectedOption.bind(this);
-
-			// Add the event that will get the selected options values
-			this._selfElem.addEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
 		}
 
 		/**
@@ -135,14 +144,14 @@ namespace Providers.Dropdown.VirtualSelect {
 		 */
 		protected unsetCallbacks(): void {
 			this._onSelectedOptionEvent = undefined;
-
-			this._selfElem.removeEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
 		}
 
 		public build(): void {
 			super.build();
 
 			this._setElementId();
+
+			this.setCallbacks();
 
 			this.prepareConfigs();
 
@@ -220,6 +229,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			this.provider.destroy();
 
 			this.unsetCallbacks();
+			this._unsetEvents();
 
 			super.dispose();
 		}
