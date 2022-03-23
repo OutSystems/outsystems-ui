@@ -40,7 +40,9 @@ namespace Providers.Dropdown.VirtualSelect {
 
 		// Method used to generate the HTML String to be attached at the option label
 		private _getOptionImagePrefix(index: number): string {
-			return `<img class="${Enum.CssClass.OptionItemImage}" src="${this.OptionsList[index].image_url_or_class}">`;
+			// Since we'lll add a src attribute, lets sanitize the given url to avoid XSS
+			const snitizedUrl = OSUIFramework.Helper.Sanitize(this.OptionsList[index].image_url_or_class);
+			return `<img class="${Enum.CssClass.OptionItemImage}" src="${snitizedUrl}">`;
 		}
 
 		// Method used to generate the option info that will be added
@@ -59,7 +61,8 @@ namespace Providers.Dropdown.VirtualSelect {
 					break;
 			}
 
-			return `${prefix}${data.label}`;
+			// In order to avoid XSS let's sanitize the given label text
+			return `${prefix}${OSUIFramework.Helper.Sanitize(data.label)}`;
 		}
 
 		// Method used to set all the common VirtualSelect properties across the different types of instances
