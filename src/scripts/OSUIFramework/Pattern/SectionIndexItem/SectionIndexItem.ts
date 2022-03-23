@@ -93,6 +93,21 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
 		}
 
+		// Method to check if targetElement is visible
+		private _setUpScrollSpy(): void {
+			const headerHeight = document.querySelector('.header').clientHeight;
+			const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+			const sectionRect = this._targetElement.getBoundingClientRect();
+			const isInViewport = sectionRect.top <= viewportHeight && sectionRect.bottom >= headerHeight;
+
+			//console.log(`isVisible: ${isInViewport} | scroll: ${winScroll} | SRTop: ${sectionRect.top} | SRBottom: ${sectionRect.bottom}`);
+			if (isInViewport) {
+				this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Active);
+			} else {
+				this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Inactive);
+			}
+		}
+
 		/**
 		 * Add the Accessibility Attributes values
 		 *

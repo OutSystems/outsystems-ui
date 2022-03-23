@@ -138,6 +138,8 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		 * @memberof SectionIndex
 		 */
 		public beNotifiedByChild(childId: string, notifiedTo: Enum.ChildNotifyActionType): void {
+			const child = OutSystems.OSUI.Patterns.SectionIndexItemAPI.GetSectionIndexItemById(childId);
+
 			switch (notifiedTo) {
 				case Enum.ChildNotifyActionType.Add:
 					this._addSectionIndexItem(childId);
@@ -147,6 +149,12 @@ namespace OSUIFramework.Patterns.SectionIndex {
 					break;
 				case Enum.ChildNotifyActionType.Removed:
 					this._removeSectionIndexItem(childId);
+					break;
+				case Enum.ChildNotifyActionType.Active:
+					child.setIsActive();
+					break;
+				case Enum.ChildNotifyActionType.Inactive:
+					child.unsetIsActive;
 					break;
 				default:
 					throw new Error(
