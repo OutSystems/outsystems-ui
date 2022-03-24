@@ -12,6 +12,8 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		extends AbstractChild<SectionIndexItemConfig, SectionIndex.ISectionIndex>
 		implements ISectionIndexItem
 	{
+		// Event OnBodyScroll
+		private _eventOnBodyScroll: OSUIFramework.Callbacks.Generic;
 		// Store the on click event
 		private _eventOnClick: Callbacks.Generic;
 		//Stores the keyboard callback function
@@ -26,6 +28,27 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SectionIndexItemConfig(configs));
+		}
+
+		// spies the scroll to know if the target element is visible and sets the item as active
+		private _onBodyScroll(): void {
+			const headerHeight = document.querySelector('.header').clientHeight;
+			const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+			const sectionRect = document.getElementById(this.configs.ScrollToWidgetId).getBoundingClientRect();
+			const isInViewport = sectionRect.top <= viewportHeight && sectionRect.bottom >= headerHeight;
+
+			const halfScroll = viewportHeight / 2;
+
+			if (isInViewport) {
+				console.log(`${this.configs.ScrollToWidgetId} i am in viewport`);
+				if (sectionRect.top <= halfScroll) {
+					this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Active);
+				} else if (sectionRect.bottom < halfScroll) {
+					this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Inactive);
+				}
+			} else {
+				this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Inactive);
+			}
 		}
 
 		// A11y keyboard navigation
@@ -91,21 +114,11 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		private _setUpEvents(): void {
 			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
-		}
-
-		// Method to check if targetElement is visible
-		private _setUpScrollSpy(): void {
-			const headerHeight = document.querySelector('.header').clientHeight;
-			const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-			const sectionRect = this._targetElement.getBoundingClientRect();
-			const isInViewport = sectionRect.top <= viewportHeight && sectionRect.bottom >= headerHeight;
-
-			//console.log(`isVisible: ${isInViewport} | scroll: ${winScroll} | SRTop: ${sectionRect.top} | SRBottom: ${sectionRect.bottom}`);
-			if (isInViewport) {
-				this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Active);
-			} else {
-				this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Inactive);
-			}
+			// Add the BodyScroll callback that will be used to update the balloon coodinates
+			OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
+				OSUIFramework.Event.Type.BodyOnScroll,
+				this._eventOnBodyScroll
+			);
 		}
 
 		/**
@@ -130,6 +143,7 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		protected setCallbacks(): void {
 			this._eventOnClick = this._onSelected.bind(this);
 			this._eventOnkeyBoardPress = this._onKeyboardPressed.bind(this);
+			this._eventOnBodyScroll = this._onBodyScroll.bind(this);
 		}
 
 		/**

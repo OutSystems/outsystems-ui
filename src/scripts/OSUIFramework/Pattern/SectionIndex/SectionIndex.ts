@@ -12,7 +12,7 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		extends AbstractParent<SectionIndexConfig, SectionIndexItem.ISectionIndexItem>
 		implements ISectionIndex
 	{
-		// Store the current sectionIndexItem active
+		// Store the current active sectionIndexItem
 		private _activeSectionIndexItem: SectionIndexItem.ISectionIndexItem;
 		// Store the mainContent reference - The one that will have the scroll
 		private _mainScrollContainerElement: HTMLElement;
@@ -94,7 +94,7 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		}
 
 		// Method that will update the IsActive child item status.
-		private _updateIsActiveChildItem(child: SectionIndexItem.ISectionIndexItem): void {
+		private _updateIsActiveChildItem(child: SectionIndexItem.ISectionIndexItem, isScroll = true): void {
 			// Remove old sectionIndexItem as active if exist
 			if (this._activeSectionIndexItem) {
 				this._activeSectionIndexItem.unsetIsActive();
@@ -107,7 +107,13 @@ namespace OSUIFramework.Patterns.SectionIndex {
 			this._activeSectionIndexItem = child;
 
 			// Trigger the Scroll navigation
-			Helper.Scroll(this._mainScrollContainerElement, child.targetElementOffset, this.configs.SmoothScrolling);
+			if (isScroll) {
+				Helper.Scroll(
+					this._mainScrollContainerElement,
+					child.targetElementOffset,
+					this.configs.SmoothScrolling
+				);
+			}
 		}
 
 		/**
@@ -151,10 +157,10 @@ namespace OSUIFramework.Patterns.SectionIndex {
 					this._removeSectionIndexItem(childId);
 					break;
 				case Enum.ChildNotifyActionType.Active:
-					child.setIsActive();
+					this._updateIsActiveChildItem(child, false);
 					break;
 				case Enum.ChildNotifyActionType.Inactive:
-					child.unsetIsActive;
+					child.unsetIsActive();
 					break;
 				default:
 					throw new Error(
