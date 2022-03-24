@@ -40,7 +40,6 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 			const halfScroll = viewportHeight / 2;
 
 			if (isInViewport) {
-				console.log(`${this.configs.ScrollToWidgetId} i am in viewport`);
 				if (sectionRect.top <= halfScroll) {
 					this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Active);
 				} else if (sectionRect.bottom < halfScroll) {
