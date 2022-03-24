@@ -34,18 +34,16 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		private _onBodyScroll(): void {
 			const headerHeight = document.querySelector('.header').clientHeight;
 			const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
 			const sectionRect = document.getElementById(this.configs.ScrollToWidgetId).getBoundingClientRect();
 			const isInViewport = sectionRect.top <= viewportHeight && sectionRect.bottom >= headerHeight;
 
+			//This is half of the screen - the threshold for showing the next one
 			const halfScroll = viewportHeight / 2;
 
-			if (isInViewport) {
-				if (sectionRect.top <= halfScroll) {
-					this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Active);
-				} else if (sectionRect.bottom < halfScroll) {
-					this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Inactive);
-				}
-			} else {
+			if (isInViewport && sectionRect.top <= halfScroll) {
+				this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Active);
+			} else if (isInViewport && sectionRect.bottom < halfScroll) {
 				this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Inactive);
 			}
 		}
