@@ -10,10 +10,6 @@ namespace Providers.Dropdown.VirtualSelect.Search {
 	export class VirtualSelectSearchConfig extends AbstractVirtualSelectConfig {
 		public AllowMultipleSelection: boolean;
 
-		constructor(config: JSON) {
-			super(config);
-		}
-
 		/**
 		 * Method used to get the key values of the given selected values
 		 *

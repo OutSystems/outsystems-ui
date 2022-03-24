@@ -61,12 +61,19 @@ namespace Providers.Dropdown.VirtualSelect {
 					break;
 			}
 
-			// In order to avoid XSS let's sanitize the given label text
-			return `${prefix}${OSUIFramework.Helper.Sanitize(data.label)}`;
+			return `${prefix}${data.label}`;
 		}
 
 		// Method used to set all the common VirtualSelect properties across the different types of instances
 		public getProviderConfig(): VirtualSelectOpts {
+			/* In order to avoid XSS let's sanitize the label of each all options
+			- This must be done here since If we do this at the renderer option we will remain with the
+			library value unSanitized, that said we must do it before adding the list of options to the library! */
+			for (const option of this.OptionsList) {
+				option.label = OSUIFramework.Helper.Sanitize(option.label);
+			}
+
+			// Set the library options
 			const vsOptions = {
 				ele: this.ElementId,
 				hideClearButton: true,
