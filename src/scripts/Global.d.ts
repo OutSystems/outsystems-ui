@@ -57,6 +57,14 @@ declare global {
 		top?: number;
 	};
 
+	// Is Out Of Boundaries Type
+	type OutOfBoundaries = {
+		bottom: boolean;
+		left: boolean;
+		right: boolean;
+		top: boolean;
+	};
+
 	// RangeSlider
 	type NoUiSlider = noUiSlider;
 	type NoUiSliderOptions = noUiSliderOptions;
