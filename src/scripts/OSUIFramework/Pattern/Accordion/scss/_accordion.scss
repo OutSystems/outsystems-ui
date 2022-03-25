@@ -27,5 +27,10 @@
 			border-bottom-left-radius: var(--border-radius-soft);
 			border-bottom-right-radius: var(--border-radius-soft);
 		}
+
+		&--is-first-item.osui-accordion-item--is-last-item {
+			border-top-left-radius: var(--border-radius-soft);
+			border-top-right-radius: var(--border-radius-soft);
+		}
 	}
 }
