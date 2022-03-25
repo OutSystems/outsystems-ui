@@ -40,16 +40,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		}
 
 		// Method to handle the click event
-		private _accordionOnClickHandler(event?: MouseEvent): void {
-			//If we're not clicking on the title, the icon or the accordion title, we won't open the accordion
-			if (
-				event?.target !== this._accordionItemTitleElem &&
-				event?.target !== this._accordionItemIconElem &&
-				event?.target !== this._accordionItemTitleElem.firstChild
-			) {
-				return;
-			}
-
+		private _accordionOnClickHandler(): void {
 			if (this._isOpen) {
 				this.close();
 			} else {
