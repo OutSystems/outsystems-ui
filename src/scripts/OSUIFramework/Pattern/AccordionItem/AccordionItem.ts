@@ -57,6 +57,12 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			}
 		}
 
+		// Method to add the event listeners
+		private _addEvents(): void {
+			this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
+		}
+
 		// Method to handle async animation
 		private _animationAsync(isExpand: boolean): void {
 			const finalHeight = isExpand ? this._expandedHeight : this._collapsedHeight;
@@ -185,10 +191,12 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternDisabled);
 				Helper.A11Y.AriaDisabledTrue(this._selfElem);
 				this.unsetCallbacks();
+				this._removeEvents();
 			} else {
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternDisabled);
 				Helper.A11Y.AriaDisabledFalse(this._selfElem);
 				this.setCallbacks();
+				this._addEvents();
 			}
 
 			// Update tabindex values
@@ -268,9 +276,6 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			this._eventOnClick = this._accordionOnClickHandler.bind(this);
 			this._eventOnTransitionEnd = this._transitionEndHandler.bind(this);
 			this._eventOnkeyPress = this._onKeyboardPress.bind(this);
-
-			this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
-			this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
 		}
 
 		/**
@@ -317,8 +322,6 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		 * @memberof AccordionItem
 		 */
 		protected unsetCallbacks(): void {
-			this._removeEvents();
-
 			this._eventOnClick = undefined;
 			this._eventOnTransitionEnd = undefined;
 			this._eventOnkeyPress = undefined;
@@ -441,6 +444,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		 */
 		public dispose(): void {
 			this.unsetCallbacks();
+			this._removeEvents();
 			this._accordionParentElem?.removeAccordionItem(this.uniqueId);
 			this.unsetHtmlElements();
 
