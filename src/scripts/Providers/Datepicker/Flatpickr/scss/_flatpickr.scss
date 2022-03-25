@@ -88,8 +88,10 @@
 
 	// Month Select
 	.flatpickr-monthDropdown-months {
+		appearance: none;
 		font-weight: var(--font-regular);
 		height: 30px;
+		line-height: normal;
 		margin-right: var(--space-base);
 		padding: var(--space-none);
 
@@ -356,14 +358,11 @@ span.flatpickr-weekday {
 // Responsive --------------------------------------------------------------------
 ///
 .phone {
-	.flatpickr-current-month,
-	.flatpickr-time {
-		.numInputWrapper {
-			.numInput {
-				// Hack to disable zoom focus on mobile
-				font-size: var(--font-size-base);
-			}
-		}
+	.flatpickr-current-month .flatpickr-monthDropdown-months,
+	.flatpickr-current-month .numInputWrapper .numInput,
+	.flatpickr-time .numInputWrapper .numInput {
+		// Hack to disable zoom focus on mobile
+		font-size: var(--font-size-base);
 	}
 }
 

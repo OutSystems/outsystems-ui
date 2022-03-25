@@ -3,14 +3,14 @@ namespace OSUIFramework.Event {
 	export class EventManager extends AbstractEventsManager<Type, string> {
 		protected getInstanceOfEventType(eventType: Type): IEvent<string> {
 			switch (eventType) {
-				case Type.NotificationOpen:
-					return new Patterns.Notification.Open();
-				case Type.SubmenuOpen:
-					return new Patterns.Submenu.Open();
 				case Type.BodyOnClick:
 					return new Event.BodyOnClick();
 				case Type.BodyOnScroll:
 					return new Event.BodyOnScroll();
+				case Type.SubmenuOpen:
+					return new Patterns.Submenu.Open();
+				case Type.WindowResize:
+					return new Event.WindowResize();
 				default:
 					throw new Error(`The event ${eventType} is not supported.`);
 			}

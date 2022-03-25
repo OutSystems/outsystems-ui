@@ -15,6 +15,10 @@ namespace OSUIFramework.Patterns {
 	{
 		protected _provider: P;
 
+		public set provider(p: P) {
+			this._provider = p;
+		}
+
 		public get provider(): P {
 			return this._provider;
 		}

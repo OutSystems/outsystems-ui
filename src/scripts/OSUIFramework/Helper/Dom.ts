@@ -235,16 +235,16 @@ namespace OSUIFramework.Helper {
 		 *
 		 * @static
 		 * @param {HTMLElement} element Element where the class will be toggled.
-		 * @param {string} cssRule Css rule that will be removed.
+		 * @param {string} cssProperty Css property that will be removed.
 		 * @memberof StyleManipulation
 		 */
-		public static RemoveStyleAttribute(element: HTMLElement, cssRule: string): void {
+		public static RemoveStyleAttribute(element: HTMLElement, cssProperty: string): void {
 			if (element) {
-				if (cssRule !== '') {
-					element.style.removeProperty(cssRule);
+				if (cssProperty !== '') {
+					element.style.removeProperty(cssProperty);
 				}
 			} else {
-				throw Error(`The element does not exist, when trying to remove the rule '${cssRule}'.`);
+				throw Error(`The element does not exist, when trying to remove the rule '${cssProperty}'.`);
 			}
 		}
 
@@ -253,17 +253,17 @@ namespace OSUIFramework.Helper {
 		 *
 		 * @static
 		 * @param {HTMLElement} element Element where the class will be toggled.
-		 * @param {string} cssRule Css rule that will be added.
-		 * @param {(number | string)} ruleValue Value of the CSS rule.
+		 * @param {string} cssProperty Css property that will be added.
+		 * @param {(number | string)} ruleValue Value of the CSS property.
 		 * @memberof StyleManipulation
 		 */
-		public static SetStyleAttribute(element: HTMLElement, cssRule: string, ruleValue: number | string): void {
+		public static SetStyleAttribute(element: HTMLElement, cssProperty: string, ruleValue: number | string): void {
 			if (element) {
-				if (cssRule !== '' && ruleValue !== undefined) {
-					element.style.setProperty(cssRule, ruleValue.toString());
+				if (cssProperty !== '' && ruleValue !== undefined) {
+					element.style.setProperty(cssProperty, ruleValue.toString());
 				}
 			} else {
-				throw Error(`The element does not exist, when trying to apply the rule '${cssRule}'.`);
+				throw Error(`The element does not exist, when trying to apply the rule '${cssProperty}'.`);
 			}
 		}
 
