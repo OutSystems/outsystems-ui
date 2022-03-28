@@ -17,6 +17,8 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		// Store the mainContent reference - The one that will have the scroll
 		private _mainScrollContainerElement: HTMLElement;
 
+		private _navigateOnClick = false;
+
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SectionIndexConfig(configs));
 		}
@@ -42,7 +44,7 @@ namespace OSUIFramework.Patterns.SectionIndex {
 			// Check if the given ChildId exist as an child item
 			if (childReference) {
 				// Update child status
-				this._updateIsActiveChildItem(childReference);
+				this._setActiveChildOnClick(childReference);
 			} else {
 				throw new Error(
 					`${ErrorCodes.SectionIndex.FailChildItemClicked}: The ${GlobalEnum.PatternsNames.SectionIndexItem} under uniqueId: '${childId}' does not exist as an SectionIndexItem from ${GlobalEnum.PatternsNames.SectionIndex} with Id: ${this.widgetId}.`
@@ -61,6 +63,50 @@ namespace OSUIFramework.Patterns.SectionIndex {
 					`${ErrorCodes.SectionIndex.FailUnsetNewChildItem}: The ${GlobalEnum.PatternsNames.SectionIndexItem} under uniqueId: '${childId}' does not exist as an SectionIndexItem from ${GlobalEnum.PatternsNames.SectionIndex} with Id: ${this.widgetId}.`
 				);
 			}
+		}
+
+		// Method that will update the IsActive child item status
+		private _setActiveChildOnClick(child: SectionIndexItem.ISectionIndexItem): void {
+			this._navigateOnClick = true;
+
+			// Remove old sectionIndexItem as active if exist
+			if (this._activeSectionIndexItem) {
+				this._activeSectionIndexItem.unsetIsActive();
+			}
+
+			// Set new sectionIndexItem as active
+			child.setIsActive();
+
+			// Set the current IsActive Child
+			this._activeSectionIndexItem = child;
+
+			// Trigger the Scroll navigation
+			Helper.Scroll(this._mainScrollContainerElement, child.TargetElementOffset, this.configs.SmoothScrolling);
+		}
+
+		// Method used to set the IsActive child item at the onBodyScroll
+		private _setActiveChildOnScroll(child: SectionIndexItem.ISectionIndexItem) {
+			if (this._navigateOnClick && this._activeSectionIndexItem !== child) {
+				return;
+			}
+
+			this._navigateOnClick = false;
+
+			// Get all IsActive Items
+			const isActiveChilds = this.childItems.filter((item) => item.IsSelected);
+			// Go through all the IsActive items
+			for (const optionItem of isActiveChilds) {
+				// In case we've multiple IsActive items, unselect all unless last one!
+				if (isActiveChilds.length === 1 || optionItem !== isActiveChilds[isActiveChilds.length - 1]) {
+					this._activeSectionIndexItem.unsetIsActive();
+				}
+			}
+
+			// Set new sectionIndexItem as active
+			child.setIsActive();
+
+			// Set the current IsActive Child
+			this._activeSectionIndexItem = child;
 		}
 
 		// Method to set the SectionIndex IsFixed
@@ -93,29 +139,6 @@ namespace OSUIFramework.Patterns.SectionIndex {
 			}
 		}
 
-		// Method that will update the IsActive child item status.
-		private _updateIsActiveChildItem(child: SectionIndexItem.ISectionIndexItem, isScroll = true): void {
-			// Remove old sectionIndexItem as active if exist
-			if (this._activeSectionIndexItem) {
-				this._activeSectionIndexItem.unsetIsActive();
-			}
-
-			// Set new sectionIndexItem as active
-			child.setIsActive();
-
-			// Set the current IsActive Child
-			this._activeSectionIndexItem = child;
-
-			// Trigger the Scroll navigation
-			if (isScroll) {
-				Helper.Scroll(
-					this._mainScrollContainerElement,
-					child.targetElementOffset,
-					this.configs.SmoothScrolling
-				);
-			}
-		}
-
 		/**
 		 * Method to set the HTMLElements used
 		 *
@@ -144,8 +167,6 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		 * @memberof SectionIndex
 		 */
 		public beNotifiedByChild(childId: string, notifiedTo: Enum.ChildNotifyActionType): void {
-			const child = OutSystems.OSUI.Patterns.SectionIndexItemAPI.GetSectionIndexItemById(childId);
-
 			switch (notifiedTo) {
 				case Enum.ChildNotifyActionType.Add:
 					this._addSectionIndexItem(childId);
@@ -157,10 +178,7 @@ namespace OSUIFramework.Patterns.SectionIndex {
 					this._removeSectionIndexItem(childId);
 					break;
 				case Enum.ChildNotifyActionType.Active:
-					this._updateIsActiveChildItem(child, false);
-					break;
-				case Enum.ChildNotifyActionType.Inactive:
-					child.unsetIsActive();
+					this._setActiveChildOnScroll(this.getChild(childId));
 					break;
 				default:
 					throw new Error(

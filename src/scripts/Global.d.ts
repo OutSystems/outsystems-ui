@@ -65,6 +65,12 @@ declare global {
 		top: boolean;
 	};
 
+	// Set the scroll position type
+	type ScrollPosition = {
+		percentage: number;
+		pixel: number;
+	};
+
 	// RangeSlider
 	type NoUiSlider = noUiSlider;
 	type NoUiSliderOptions = noUiSliderOptions;

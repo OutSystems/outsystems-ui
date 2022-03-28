@@ -13,11 +13,13 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		implements ISectionIndexItem
 	{
 		// Event OnBodyScroll
-		private _eventOnBodyScroll: OSUIFramework.Callbacks.Generic;
+		private _eventOnBodyScroll: Callbacks.Generic;
 		// Store the on click event
 		private _eventOnClick: Callbacks.Generic;
 		//Stores the keyboard callback function
 		private _eventOnkeyBoardPress: Callbacks.Generic;
+		// Store the state
+		private _isActive = false;
 		// Store TargetElement HTML object
 		private _targetElement: HTMLElement = undefined;
 		// Store offset top/bottom from TargetElement HTML object
@@ -32,19 +34,23 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 
 		// spies the scroll to know if the target element is visible and sets the item as active
 		private _onBodyScroll(): void {
-			const headerHeight = document.querySelector('.header').clientHeight;
-			const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+			// Set target element if does not exist yet!
+			this._setTargetElement();
 
-			const sectionRect = document.getElementById(this.configs.ScrollToWidgetId).getBoundingClientRect();
-			const isInViewport = sectionRect.top <= viewportHeight && sectionRect.bottom >= headerHeight;
+			// Get the header Height
+			const headerHeight = Helper.Dom.ClassSelector(
+				document.body,
+				GlobalEnum.CssClassElements.Header
+			).offsetHeight;
 
-			//This is half of the screen - the threshold for showing the next one
-			const halfScroll = viewportHeight / 2;
+			// Get the vertical scroll position value
+			const scrollYPosition = Helper.ScrollVerticalPosition().pixel - headerHeight;
+			// Get target element bounds values
+			const targetElementBounds = this.TargetElement.getBoundingClientRect();
 
-			if (isInViewport && sectionRect.top <= halfScroll) {
+			// Check if the element is hiting the vertical position
+			if (targetElementBounds.top <= scrollYPosition && targetElementBounds.bottom >= scrollYPosition) {
 				this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Active);
-			} else if (isInViewport && sectionRect.bottom < halfScroll) {
-				this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Inactive);
 			}
 		}
 
@@ -103,7 +109,6 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 			this._setTargetElement();
 
 			// Set the target element offset top/bottom values
-			this._targetElementOffset.bottom = this._targetElement.offsetTop + this._targetElement.offsetHeight;
 			this._targetElementOffset.top = this._targetElement.offsetTop;
 		}
 
@@ -112,10 +117,7 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
 			// Add the BodyScroll callback that will be used to update the balloon coodinates
-			OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
-				OSUIFramework.Event.Type.BodyOnScroll,
-				this._eventOnBodyScroll
-			);
+			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
 		}
 
 		/**
@@ -210,6 +212,7 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		 * @memberof SectionIndexItem
 		 */
 		public setIsActive(): void {
+			this._isActive = true;
 			Helper.Dom.Styles.AddClass(this._selfElem, Patterns.SectionIndex.Enum.CssClass.IsActiveItem);
 		}
 
@@ -219,7 +222,19 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		 * @memberof SectionIndexItem
 		 */
 		public unsetIsActive(): void {
+			this._isActive = false;
 			Helper.Dom.Styles.RemoveClass(this._selfElem, Patterns.SectionIndex.Enum.CssClass.IsActiveItem);
+		}
+
+		/**
+		 * Readable property to get the active state of the element
+		 *
+		 * @readonly
+		 * @type {boolean}
+		 * @memberof SectionIndexItem
+		 */
+		public get IsSelected(): boolean {
+			return this._isActive;
 		}
 
 		/**
@@ -229,7 +244,7 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		 * @type {HTMLElement}
 		 * @memberof SectionIndexItem
 		 */
-		public get targetElement(): HTMLElement {
+		public get TargetElement(): HTMLElement {
 			return this._targetElement;
 		}
 
@@ -240,7 +255,7 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		 * @type {OffsetValues}
 		 * @memberof SectionIndexItem
 		 */
-		public get targetElementOffset(): OffsetValues {
+		public get TargetElementOffset(): OffsetValues {
 			return this._targetElementOffset;
 		}
 	}

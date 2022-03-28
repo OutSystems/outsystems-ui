@@ -19,4 +19,24 @@ namespace OSUIFramework.Helper {
 			element.scroll(scrollOpts);
 		}
 	}
+
+	/**
+	 * Get the Sroll Vertical position based on viewport height
+	 *
+	 * @param scrollableElement Element where the scroll will happen
+	 * @returns
+	 */
+	export function ScrollVerticalPosition(
+		scrollableElement: HTMLElement = Helper.Dom.ClassSelector(document.body, GlobalEnum.Screen.Active)
+	): ScrollPosition {
+		const winScroll = scrollableElement.scrollTop;
+		const height = scrollableElement.scrollHeight - scrollableElement.clientHeight;
+		const scrolled = Math.round((winScroll / height) * 100);
+		const scrolledPx = (scrollableElement.clientHeight * scrolled) / 100;
+
+		return {
+			percentage: scrolled,
+			pixel: scrolledPx,
+		};
+	}
 }
