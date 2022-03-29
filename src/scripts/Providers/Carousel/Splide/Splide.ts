@@ -39,12 +39,7 @@ namespace Providers.Splide {
 
 		// Method to check if a List Widget is used inside the placeholder and assign the _listWidget variable
 		private _checkListWidget(): void {
-			const listElements = OutSystems.OSUI.Utils.ChildrenMatches(
-				this._carouselPlaceholderElem,
-				OSUIFramework.Constants.Dot + OSUIFramework.GlobalEnum.CssClassElements.List
-			);
-
-			this._hasList = listElements.length > 0;
+			this._hasList = OutSystems.OSUI.Utils.GetHasListInside(this._carouselPlaceholderElem);
 
 			if (this._hasList) {
 				this._carouselListWidgetElem = this._selfElem.querySelector(
