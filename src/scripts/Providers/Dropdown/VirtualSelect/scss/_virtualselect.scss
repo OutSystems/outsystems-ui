@@ -126,8 +126,7 @@
 	// When Show as Popup (mobile behaviour)
 	&.show-as-popup {
 		.vscomp-dropbox {
-			border-radius: var(--border-radius-soft);
-			box-shadow: var(--shadow-xl);
+			border: none;
 
 			&-container {
 				background-color: rgba(0, 0, 0, 0.25);
