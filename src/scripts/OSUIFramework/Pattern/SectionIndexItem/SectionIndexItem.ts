@@ -87,6 +87,11 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
 		}
 
+		// Adds a data attribute to be used in automated tests and to have info on DOM of which element the index is pointing
+		private _setLinkAttribute(): void {
+			Helper.Dom.Attribute.Set(this._selfElem, 'data-item', this.configs.ScrollToWidgetId);
+		}
+
 		// Set TargetElement
 		private _setTargetElement(): void {
 			// Check if the element has been already defined!
@@ -166,6 +171,8 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 			this._setUpEvents();
 
 			this.setA11yProperties();
+
+			this._setLinkAttribute();
 
 			this.finishBuild();
 		}
