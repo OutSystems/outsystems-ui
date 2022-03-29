@@ -254,6 +254,18 @@
 			}
 		}
 
+		&__header {
+			&:hover {
+				border-bottom: var(--border-size-m) solid var(--color-primary);
+			}
+
+			&__item {
+				a:hover {
+					color: var(--color-neutral-9);
+				}
+			}
+		}
+
 		&__items {
 			a {
 				&:hover {
@@ -272,18 +284,6 @@
 		.app-menu-links {
 			.osui-submenu {
 				height: 100%;
-
-				&__header {
-					&:hover {
-						border-bottom: var(--border-size-m) solid var(--color-primary);
-					}
-
-					&__item {
-						a:hover {
-							color: var(--color-neutral-9);
-						}
-					}
-				}
 			}
 		}
 	}
@@ -293,6 +293,7 @@
 			.osui-submenu {
 				&__header {
 					&:hover {
+						border-bottom: none;
 						border-left: var(--border-size-m) solid var(--color-primary);
 					}
 				}
