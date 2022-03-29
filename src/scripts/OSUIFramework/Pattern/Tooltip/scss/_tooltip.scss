@@ -5,18 +5,18 @@
 
 // tooltip arrow size
 $osui-tooltip-arrow-size: 9px;
+// tooltip transition distance
+$osui-tooltip-transition-distance: 12px;
 // Service Studio preview arrow size
 $osui-tooltip-arrow-size-preview: 5px;
 $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 
 ///
 .osui-tooltip {
-	--tooltip-transition-distance: 12px;
-	--tooltip-inverted-transition-distance: -12px;
 	display: inline-block;
 	position: relative;
 
-	///
+	//
 	&.osui-tooltip--is-hover:hover,
 	&.osui-tooltip--is-opened {
 		.osui-tooltip__balloon-wrapper {
@@ -96,14 +96,14 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		}
 	}
 
-	///
+	//
 	&:not(.osui-tooltip--is-hover) {
 		.osui-tooltip__content {
 			cursor: pointer;
 		}
 	}
 
-	///
+	//
 	.osui-tooltip__content {
 		position: inherit;
 
@@ -115,7 +115,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		}
 	}
 
-	///
+	//
 	.osui-tooltip__balloon-wrapper {
 		left: calc(50% - var(--space-base));
 		max-height: 0;
@@ -180,7 +180,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		&.bottom-left,
 		&.bottom-right {
 			.osui-tooltip__balloon-wrapper__balloon {
-				transform: translateY(var(--tooltip-inverted-transition-distance));
+				transform: translateY(-$osui-tooltip-transition-distance);
 			}
 		}
 
@@ -192,7 +192,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 			top: initial;
 
 			.osui-tooltip__balloon-wrapper__balloon {
-				transform: translateY(var(--tooltip-transition-distance));
+				transform: translateY(calc(-100% + $osui-tooltip-transition-distance));
 
 				&:before {
 					border-color: var(--color-neutral-9) transparent transparent transparent;
@@ -263,7 +263,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 
 		&.right {
 			.osui-tooltip__balloon-wrapper__balloon {
-				transform: translateX(var(--tooltip-inverted-transition-distance));
+				transform: translateX(-$osui-tooltip-transition-distance);
 			}
 		}
 
@@ -275,7 +275,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 			right: 100%;
 
 			.osui-tooltip__balloon-wrapper__balloon {
-				transform: translateX(var(--tooltip-transition-distance));
+				transform: translateX(-100%);
 
 				&:before {
 					border-color: transparent transparent transparent var(--color-neutral-9);
@@ -392,6 +392,22 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 			top: 1px;
 			transform: translateY(0);
 			width: 0;
+		}
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+///
+.phone {
+	.osui-tooltip {
+		&.osui-tooltip--is-hover:hover,
+		&.osui-tooltip--is-opened {
+			.osui-tooltip__balloon-wrapper {
+				&.left,
+				&.right {
+					max-width: 100vw;
+				}
+			}
 		}
 	}
 }
