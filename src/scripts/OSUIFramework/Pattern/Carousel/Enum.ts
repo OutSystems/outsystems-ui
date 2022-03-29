@@ -21,6 +21,7 @@ namespace OSUIFramework.Patterns.Carousel.Enum {
 	export enum CssClass {
 		CarouselWrapper = 'osui-carousel',
 		Content = 'osui-carousel__content',
+		HasPagination = 'osui-carousel--has-pagination',
 		Track = 'osui-carousel__track',
 	}
 

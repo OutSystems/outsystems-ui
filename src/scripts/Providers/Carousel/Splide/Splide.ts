@@ -83,6 +83,9 @@ namespace Providers.Splide {
 
 			// Set initial carousel width
 			this._setCarouselWidth();
+
+			// Update pagination class, in case navigation was changed
+			this._togglePaginationClass();
 		}
 
 		// Method to add the splide__slide class on each carousel item
@@ -126,6 +129,25 @@ namespace Providers.Splide {
 					this._currentIndex = index;
 				}
 			});
+		}
+
+		// Method to toggle class when pagination is present
+		private _togglePaginationClass(): void {
+			// If Dots is being used, add a class, to be able to change container padding-bottom on these conditions
+			if (
+				this.configs.Navigation === OSUIFramework.Patterns.Carousel.Enum.Navigation.Dots ||
+				this.configs.Navigation === OSUIFramework.Patterns.Carousel.Enum.Navigation.Both
+			) {
+				OSUIFramework.Helper.Dom.Styles.AddClass(
+					this._selfElem,
+					OSUIFramework.Patterns.Carousel.Enum.CssClass.HasPagination
+				);
+			} else {
+				OSUIFramework.Helper.Dom.Styles.RemoveClass(
+					this._selfElem,
+					OSUIFramework.Patterns.Carousel.Enum.CssClass.HasPagination
+				);
+			}
 		}
 
 		/**
@@ -178,6 +200,8 @@ namespace Providers.Splide {
 				OSUIFramework.Helper.Dom.Styles.AddClass(this._carouselTrackElem, Enum.CssClass.SplideTrack);
 				OSUIFramework.Helper.Dom.Styles.AddClass(this._carouselPlaceholderElem, Enum.CssClass.SplideList);
 			}
+
+			this._togglePaginationClass();
 		}
 
 		/**
