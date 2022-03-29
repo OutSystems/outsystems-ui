@@ -99,17 +99,17 @@
 			.vscomp-value-tag-clear-button {
 				background-color: var(--color-neutral-7);
 				border-radius: 100%;
-				height: 15px;
+				height: 14px;
 				position: absolute;
 				right: 10px;
-				width: 15px;
+				width: 14px;
 
 				.vscomp-clear-icon {
-					height: 11px;
+					height: 12px;
 					left: var(--space-none);
 					position: relative;
 					top: var(--space-none);
-					width: 11px;
+					width: 12px;
 
 					&:before,
 					&:after {
@@ -126,8 +126,7 @@
 	// When Show as Popup (mobile behaviour)
 	&.show-as-popup {
 		.vscomp-dropbox {
-			border-radius: var(--border-radius-soft);
-			box-shadow: var(--shadow-xl);
+			border: none;
 
 			&-container {
 				background-color: rgba(0, 0, 0, 0.25);
