@@ -12,6 +12,7 @@
 ///
 .osui-carousel {
 	--osui-carousel-track-width: 100%;
+	--osui-carousel-pagination-margin: 30px;
 
 	.splide {
 		&__arrow {
@@ -66,6 +67,14 @@
 		img {
 			height: 100%;
 			object-fit: cover;
+		}
+	}
+
+	&--has-pagination {
+		padding-bottom: var(--osui-carousel-pagination-margin);
+
+		.splide__pagination {
+			bottom: calc(var(--osui-carousel-pagination-margin) * -1);
 		}
 	}
 

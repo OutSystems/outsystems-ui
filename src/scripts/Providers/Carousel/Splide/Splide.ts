@@ -83,6 +83,9 @@ namespace Providers.Splide {
 
 			// Set initial carousel width
 			this._setCarouselWidth();
+
+			// Update pagination class, in case navigation was changed
+			this._togglePaginationClass();
 		}
 
 		// Method to add the splide__slide class on each carousel item
@@ -102,7 +105,6 @@ namespace Providers.Splide {
 		private _setCarouselWidth(): void {
 			// Update UI on window resize
 			this.provider.refresh();
-
 			// Update css variable
 			OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
 				this._carouselTrackElem,
@@ -128,6 +130,25 @@ namespace Providers.Splide {
 			});
 		}
 
+		// Method to toggle class when pagination is present
+		private _togglePaginationClass(): void {
+			// If Dots is being used, add a class, to be able to change container padding-bottom on these conditions
+			if (
+				this.configs.Navigation === OSUIFramework.Patterns.Carousel.Enum.Navigation.Dots ||
+				this.configs.Navigation === OSUIFramework.Patterns.Carousel.Enum.Navigation.Both
+			) {
+				OSUIFramework.Helper.Dom.Styles.AddClass(
+					this._selfElem,
+					OSUIFramework.Patterns.Carousel.Enum.CssClass.HasPagination
+				);
+			} else {
+				OSUIFramework.Helper.Dom.Styles.RemoveClass(
+					this._selfElem,
+					OSUIFramework.Patterns.Carousel.Enum.CssClass.HasPagination
+				);
+			}
+		}
+
 		/**
 		 * Sets the callbacks to be used.
 		 *
@@ -140,7 +161,10 @@ namespace Providers.Splide {
 			this._eventOnResize = this._setCarouselWidth.bind(this);
 
 			// Add event listener for window resize
-			window.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Resize, this._eventOnResize);
+			OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
+				OSUIFramework.Event.Type.WindowResize,
+				this._eventOnResize
+			);
 		}
 
 		/**
@@ -178,6 +202,8 @@ namespace Providers.Splide {
 				OSUIFramework.Helper.Dom.Styles.AddClass(this._carouselTrackElem, Enum.CssClass.SplideTrack);
 				OSUIFramework.Helper.Dom.Styles.AddClass(this._carouselPlaceholderElem, Enum.CssClass.SplideList);
 			}
+
+			this._togglePaginationClass();
 		}
 
 		/**
@@ -187,13 +213,16 @@ namespace Providers.Splide {
 		 * @memberof OSUISplide
 		 */
 		protected unsetCallbacks(): void {
+			// remove event listener
+			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
+				OSUIFramework.Event.Type.WindowResize,
+				this._eventOnResize
+			);
+
 			this._eventOnDisableRender = undefined;
 			this._eventOnResize = undefined;
 			this._platformEventInitialized = undefined;
 			this._platformEventOnSlideMoved = undefined;
-
-			// remove event listener
-			window.removeEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Resize, this._eventOnResize);
 		}
 
 		/**

@@ -287,6 +287,19 @@
 			}
 		}
 	}
+
+	.layout-side {
+		.app-menu-links {
+			.osui-submenu {
+				&__header {
+					&:hover {
+						border-bottom: none;
+						border-left: var(--border-size-m) solid var(--color-primary);
+					}
+				}
+			}
+		}
+	}
 }
 
 .has-accessible-features .osui-submenu:focus-within {
