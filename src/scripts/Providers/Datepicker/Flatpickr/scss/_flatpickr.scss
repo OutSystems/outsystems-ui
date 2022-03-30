@@ -45,21 +45,40 @@
 
 // Flatpickr - Top info wrapper container
 .flatpickr-months {
+	align-items: center;
+	display: grid;
+	grid-template-areas: 'date prev next';
+	grid-template-columns: 1fr 34px 34px;
 	padding: var(--space-base);
 	position: relative;
+
+	.flatpickr-month {
+		justify-self: flex-start;
+		flex: none;
+		grid-area: date;
+	}
 
 	// Arrows left and right
 	.flatpickr-prev-month,
 	.flatpickr-next-month {
-		top: 50%;
-		transform: translateY(-50%);
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		justify-self: flex-end;
+		height: 34px;
+		padding: 0;
+		position: static;
+		top: unset;
 		width: 34px;
 
+		&:hover {
+			background-color: var(--color-neutral-2);
+			border-radius: var(--border-radius-circle);
+		}
+
 		svg {
-			left: 50%;
-			position: absolute;
-			top: 50%;
-			transform: translate(-50%, -50%);
+			height: 12px;
+			width: 12px;
 
 			path {
 				stroke-width: 1px;
@@ -69,11 +88,13 @@
 	}
 
 	.flatpickr-prev-month {
-		margin-left: var(--space-base);
+		left: unset;
+		grid-area: prev;
 	}
 
 	.flatpickr-next-month {
-		margin-right: var(--space-base);
+		grid-area: next;
+		right: unset;
 	}
 }
 
@@ -83,33 +104,49 @@
 	color: var(--color-primary);
 	display: inline-flex;
 	font-size: var(--font-size-s);
-	justify-content: center;
+	justify-content: flex-start;
+	left: unset;
 	padding: 0;
+	position: static;
+	text-align: unset;
+	transform: none;
+	width: unset;
 
 	// Month Select
 	.flatpickr-monthDropdown-months {
 		appearance: none;
-		font-weight: var(--font-regular);
+		border-radius: var(--border-radius-soft);
+		font-weight: var(--font-semi-bold);
 		height: 30px;
 		line-height: normal;
-		margin-right: var(--space-base);
-		padding: var(--space-none);
+		margin: 0;
+		order: 2;
+		padding: var(--space-none) var(--space-s);
 
-		&:hover {
+		&:hover,
+		&:focus {
 			background-color: var(--color-neutral-2);
 		}
 	}
 
 	// Year stepper
 	.numInputWrapper {
+		padding: var(--space-none) var(--space-s);
 		width: 60px;
 
+		&:hover,
+		&:focus {
+			background-color: var(--color-neutral-2);
+			border-radius: var(--border-radius-soft);
+		}
+
 		input {
+			border: var(--border-size-s) solid transparent;
+			border-radius: var(--border-radius-soft);
 			font-size: var(--font-size-s);
-			font-weight: var(--font-regular);
+			font-weight: var(--font-semi-bold);
 			height: 30px;
-			padding-left: var(--space-s);
-			padding-right: var(--space-base);
+			padding: 0;
 
 			&:hover {
 				background-color: var(--color-neutral-2);
@@ -300,9 +337,13 @@ span.flatpickr-weekday {
 	.numInputWrapper {
 		flex: initial;
 		height: 30px;
-		padding-left: var(--space-s);
-		padding-right: var(--space-base);
+		padding: 0 var(--space-base);
 		width: 48px;
+
+		&:hover,
+		&:focus {
+			border-radius: var(--border-radius-soft);
+		}
 
 		.numInput {
 			font-size: var(--font-size-s);
@@ -313,11 +354,6 @@ span.flatpickr-weekday {
 		.numInputWrapper {
 			width: inherit;
 		}
-	}
-
-	// Hour separator
-	.flatpickr-time-separator {
-		margin-right: var(--space-s);
 	}
 
 	// AM/PM selector
@@ -345,6 +381,7 @@ span.flatpickr-weekday {
 // Flatpickr - TodayBtn
 .flatpickr-today-button {
 	padding: var(--space-none) var(--space-base) var(--space-base);
+	user-select: none;
 
 	a {
 		cursor: pointer;
@@ -375,20 +412,9 @@ span.flatpickr-weekday {
 		direction: rtl;
 	}
 
-	.flatpickr-prev-month {
-		// !important used to override selector that is more specific!
-		left: unset !important;
-		margin: var(--space-none);
-		right: var(--space-base);
-		transform: scaleX(-1) translateY(-50%);
-	}
-
+	.flatpickr-prev-month,
 	.flatpickr-next-month {
-		// !important used to override selector that is more specific!
-		left: var(--space-base);
-		margin: var(--space-none);
-		right: unset !important;
-		transform: scaleX(-1) translateY(-50%);
+		transform: scaleX(-1);
 	}
 
 	.numInputWrapper {
@@ -400,13 +426,6 @@ span.flatpickr-weekday {
 	}
 
 	.flatpickr-current-month {
-		.numInputWrapper {
-			input {
-				padding-left: var(--space-base);
-				padding-right: var(--space-s);
-			}
-		}
-
 		.flatpickr-monthDropdown-months {
 			margin-left: var(--space-base);
 			margin-right: var(--space-none);
