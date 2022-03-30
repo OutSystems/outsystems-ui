@@ -24,6 +24,7 @@ namespace OSUIFramework.Event {
 			super();
 			document.body.addEventListener(GlobalEnum.HTMLEvent.Click, this._bodyTrigger.bind(this));
 		}
+
 		private _bodyTrigger(evt: PointerEvent): void {
 			super.trigger('click', evt);
 		}
@@ -41,7 +42,8 @@ namespace OSUIFramework.Event {
 			super();
 			document.body.addEventListener(GlobalEnum.HTMLEvent.Scroll, this._bodyTrigger.bind(this), true);
 		}
-		private _bodyTrigger(evt: PointerEvent): void {
+
+		private _bodyTrigger(evt: Event): void {
 			super.trigger('scroll', evt);
 		}
 	}
@@ -54,12 +56,22 @@ namespace OSUIFramework.Event {
 	 * @extends {Event.AbstractEvent<string>}
 	 */
 	export class WindowResize extends Event.AbstractEvent<string> {
+		private _timeout: number;
+
 		constructor() {
 			super();
 			window.addEventListener(GlobalEnum.HTMLEvent.Resize, this._windowTrigger.bind(this), true);
 		}
-		private _windowTrigger(evt: PointerEvent): void {
+
+		private _triggerWindowResize(evt: WindowResize): void {
 			super.trigger(GlobalEnum.HTMLEvent.Resize, evt);
+		}
+
+		private _windowTrigger(evt: WindowResize): void {
+			window.clearTimeout(this._timeout);
+			this._timeout = window.setTimeout(() => {
+				this._triggerWindowResize(evt);
+			}, 100);
 		}
 	}
 }
