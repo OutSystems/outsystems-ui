@@ -105,7 +105,6 @@ namespace Providers.Splide {
 		private _setCarouselWidth(): void {
 			// Update UI on window resize
 			this.provider.refresh();
-
 			// Update css variable
 			OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
 				this._carouselTrackElem,
@@ -211,13 +210,13 @@ namespace Providers.Splide {
 		 * @memberof OSUISplide
 		 */
 		protected unsetCallbacks(): void {
+			// remove event listener
+			window.removeEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Resize, this._eventOnResize);
+
 			this._eventOnDisableRender = undefined;
 			this._eventOnResize = undefined;
 			this._platformEventInitialized = undefined;
 			this._platformEventOnSlideMoved = undefined;
-
-			// remove event listener
-			window.removeEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Resize, this._eventOnResize);
 		}
 
 		/**
