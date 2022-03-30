@@ -9,9 +9,9 @@ namespace OSUIFramework.Patterns {
 	 * @abstract
 	 * @class AbstractParent
 	 * @implements {Interface.IParent}
-	 * @template {C extends AbstractConfiguration, CT extends Interface.IPattern}
+	 * @template {C extends AbstractConfiguration, CT extends Interface.IChild}
 	 */
-	export abstract class AbstractParent<C extends AbstractConfiguration, CT extends Interface.IPattern>
+	export abstract class AbstractParent<C extends AbstractConfiguration, CT extends Interface.IChild>
 		extends AbstractPattern<C>
 		implements Interface.IParent
 	{
@@ -61,6 +61,18 @@ namespace OSUIFramework.Patterns {
 		 * @param optionItem Reference to be added
 		 */
 		protected setChild(childId: string, optionItem: CT): void {
+			// Check if we have only one item
+			if (this._childItems.size === 0) {
+				// Set that item is the First and Last child
+				optionItem.isFirstChild = true;
+				optionItem.isLastChild = true;
+			} else {
+				// Get the previous child and unset it as lastChild
+				this.getChildByIndex(this._childItems.size - 1).isLastChild = false;
+				// Set the current one as lastChild
+				optionItem.isLastChild = true;
+			}
+
 			this._childItems.set(childId, optionItem);
 		}
 
