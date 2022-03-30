@@ -45,22 +45,32 @@
 
 // Flatpickr - Top info wrapper container
 .flatpickr-months {
-	padding: var(--space-base);
+	align-items: center;
+	display: grid;
+	grid-template-areas: 'date prev next';
+	grid-template-columns: 1fr 34px 34px;
+	padding: var(--space-base) var(--space-m);
 	position: relative;
+
+	.flatpickr-month {
+		justify-self: flex-start;
+		flex: none;
+		grid-area: date;
+	}
 
 	// Arrows left and right
 	.flatpickr-prev-month,
 	.flatpickr-next-month {
-		top: 50%;
-		transform: translateY(-50%);
+		align-items: center;
+		display: flex;
+		height: 34px;
+		justify-content: flex-end;
+		padding: 0;
+		position: static;
+		top: unset;
 		width: 34px;
 
 		svg {
-			left: 50%;
-			position: absolute;
-			top: 50%;
-			transform: translate(-50%, -50%);
-
 			path {
 				stroke-width: 1px;
 				stroke: var(--color-primary);
@@ -69,11 +79,13 @@
 	}
 
 	.flatpickr-prev-month {
-		margin-left: var(--space-base);
+		left: unset;
+		grid-area: prev;
 	}
 
 	.flatpickr-next-month {
-		margin-right: var(--space-base);
+		grid-area: next;
+		right: unset;
 	}
 }
 
@@ -83,16 +95,20 @@
 	color: var(--color-primary);
 	display: inline-flex;
 	font-size: var(--font-size-s);
-	justify-content: center;
+	justify-content: flex-start;
+	left: unset;
 	padding: 0;
+	position: static;
+	text-align: unset;
+	transform: none;
+	width: unset;
 
 	// Month Select
 	.flatpickr-monthDropdown-months {
 		appearance: none;
-		font-weight: var(--font-regular);
+		font-weight: var(--font-semi-bold);
 		height: 30px;
 		line-height: normal;
-		margin-right: var(--space-base);
 		padding: var(--space-none);
 
 		&:hover {
@@ -106,10 +122,8 @@
 
 		input {
 			font-size: var(--font-size-s);
-			font-weight: var(--font-regular);
+			font-weight: var(--font-semi-bold);
 			height: 30px;
-			padding-left: var(--space-s);
-			padding-right: var(--space-base);
 
 			&:hover {
 				background-color: var(--color-neutral-2);
@@ -375,20 +389,10 @@ span.flatpickr-weekday {
 		direction: rtl;
 	}
 
-	.flatpickr-prev-month {
-		// !important used to override selector that is more specific!
-		left: unset !important;
-		margin: var(--space-none);
-		right: var(--space-base);
-		transform: scaleX(-1) translateY(-50%);
-	}
-
+	.flatpickr-prev-month,
 	.flatpickr-next-month {
-		// !important used to override selector that is more specific!
-		left: var(--space-base);
-		margin: var(--space-none);
-		right: unset !important;
-		transform: scaleX(-1) translateY(-50%);
+		justify-content: flex-start;
+		transform: scaleX(-1);
 	}
 
 	.numInputWrapper {
