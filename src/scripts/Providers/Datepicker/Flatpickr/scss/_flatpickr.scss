@@ -381,6 +381,7 @@ span.flatpickr-weekday {
 // Flatpickr - TodayBtn
 .flatpickr-today-button {
 	padding: var(--space-none) var(--space-base) var(--space-base);
+	user-select: none;
 
 	a {
 		cursor: pointer;
