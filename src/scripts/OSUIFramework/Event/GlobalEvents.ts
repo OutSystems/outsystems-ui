@@ -27,19 +27,6 @@ namespace OSUIFramework.Event {
 		private _bodyTrigger(evt: PointerEvent): void {
 			super.trigger('click', evt);
 		}
-
-		/**
-		 * Override the default trigger method from AbstractEvent
-		 *
-		 * @param {string} [data]
-		 * @param {*} args
-		 * @return {*}  {void}
-		 * @memberof BodyOnClick
-		 */
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		public trigger(data?: string, ...args: unknown[]): void {
-			return;
-		}
 	}
 
 	/**
@@ -57,19 +44,6 @@ namespace OSUIFramework.Event {
 		private _bodyTrigger(evt: PointerEvent): void {
 			super.trigger('scroll', evt);
 		}
-
-		/**
-		 * Override the default trigger method from AbstractEvent
-		 *
-		 * @param {string} [data]
-		 * @param {*} args
-		 * @return {*}  {void}
-		 * @memberof BodyOnClick
-		 */
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		public trigger(data?: string, ...args: unknown[]): void {
-			return;
-		}
 	}
 
 	/**
@@ -86,19 +60,6 @@ namespace OSUIFramework.Event {
 		}
 		private _windowTrigger(evt: PointerEvent): void {
 			super.trigger(GlobalEnum.HTMLEvent.Resize, evt);
-		}
-
-		/**
-		 * Override the default trigger method from AbstractEvent
-		 *
-		 * @param {string} [data]
-		 * @param {*} args
-		 * @return {*}  {void}
-		 * @memberof BodyOnClick
-		 */
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		public trigger(data?: string, ...args: unknown[]): void {
-			return;
 		}
 	}
 }

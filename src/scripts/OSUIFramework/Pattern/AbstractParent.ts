@@ -61,13 +61,13 @@ namespace OSUIFramework.Patterns {
 		 * @param optionItem Reference to be added
 		 */
 		protected setChild(childId: string, optionItem: CT): void {
-			// Check if we have only one item
+			// Check if we have no items yet
 			if (this._childItems.size === 0) {
-				// Set that item is the First and Last child
+				// Set item as First and Last child
 				optionItem.isFirstChild = true;
 				optionItem.isLastChild = true;
 			} else {
-				// Get the previous child and unset it as lastChild
+				// Since we've more than one child, get the previous and unset it as lastChild
 				this.getChildByIndex(this._childItems.size - 1).isLastChild = false;
 				// Set the current one as lastChild
 				optionItem.isLastChild = true;
