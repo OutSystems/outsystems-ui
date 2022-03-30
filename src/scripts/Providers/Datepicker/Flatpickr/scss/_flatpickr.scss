@@ -49,7 +49,7 @@
 	display: grid;
 	grid-template-areas: 'date prev next';
 	grid-template-columns: 1fr 34px 34px;
-	padding: var(--space-base) var(--space-m);
+	padding: var(--space-base);
 	position: relative;
 
 	.flatpickr-month {
@@ -63,14 +63,23 @@
 	.flatpickr-next-month {
 		align-items: center;
 		display: flex;
+		justify-content: center;
+		justify-self: flex-end;
 		height: 34px;
-		justify-content: flex-end;
 		padding: 0;
 		position: static;
 		top: unset;
 		width: 34px;
 
+		&:hover {
+			background-color: var(--color-neutral-2);
+			border-radius: var(--border-radius-circle);
+		}
+
 		svg {
+			height: 12px;
+			width: 12px;
+
 			path {
 				stroke-width: 1px;
 				stroke: var(--color-primary);
@@ -106,24 +115,38 @@
 	// Month Select
 	.flatpickr-monthDropdown-months {
 		appearance: none;
+		border-radius: var(--border-radius-soft);
 		font-weight: var(--font-semi-bold);
 		height: 30px;
 		line-height: normal;
-		padding: var(--space-none);
+		margin: 0;
+		order: 2;
+		padding: var(--space-none) var(--space-s);
 
-		&:hover {
+		&:hover,
+		&:focus {
 			background-color: var(--color-neutral-2);
 		}
 	}
 
 	// Year stepper
 	.numInputWrapper {
+		padding: var(--space-none) var(--space-s);
 		width: 60px;
 
+		&:hover,
+		&:focus {
+			background-color: var(--color-neutral-2);
+			border-radius: var(--border-radius-soft);
+		}
+
 		input {
+			border: var(--border-size-s) solid transparent;
+			border-radius: var(--border-radius-soft);
 			font-size: var(--font-size-s);
 			font-weight: var(--font-semi-bold);
 			height: 30px;
+			padding: 0;
 
 			&:hover {
 				background-color: var(--color-neutral-2);
@@ -391,7 +414,6 @@ span.flatpickr-weekday {
 
 	.flatpickr-prev-month,
 	.flatpickr-next-month {
-		justify-content: flex-start;
 		transform: scaleX(-1);
 	}
 
@@ -404,13 +426,6 @@ span.flatpickr-weekday {
 	}
 
 	.flatpickr-current-month {
-		.numInputWrapper {
-			input {
-				padding-left: var(--space-base);
-				padding-right: var(--space-s);
-			}
-		}
-
 		.flatpickr-monthDropdown-months {
 			margin-left: var(--space-base);
 			margin-right: var(--space-none);
