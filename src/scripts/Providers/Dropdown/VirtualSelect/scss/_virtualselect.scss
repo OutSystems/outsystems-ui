@@ -363,10 +363,15 @@
 
 // Option Item text
 .vscomp-option-text {
-	align-items: center;
 	color: var(--color-neutral-9);
-	display: flex;
+	display: inline-block;
 	font-size: var(--font-size-s);
+
+	// To keep vertical align using inline-block.
+	// This is used so that the text can  get ellipsis if too long
+	* {
+		vertical-align: middle;
+	}
 }
 
 // Accessibility -----------------------------------------------------------------
