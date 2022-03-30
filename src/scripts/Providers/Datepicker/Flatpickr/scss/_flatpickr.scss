@@ -337,9 +337,13 @@ span.flatpickr-weekday {
 	.numInputWrapper {
 		flex: initial;
 		height: 30px;
-		padding-left: var(--space-s);
-		padding-right: var(--space-base);
+		padding: 0 var(--space-base);
 		width: 48px;
+
+		&:hover,
+		&:focus {
+			border-radius: var(--border-radius-soft);
+		}
 
 		.numInput {
 			font-size: var(--font-size-s);
@@ -350,11 +354,6 @@ span.flatpickr-weekday {
 		.numInputWrapper {
 			width: inherit;
 		}
-	}
-
-	// Hour separator
-	.flatpickr-time-separator {
-		margin-right: var(--space-s);
 	}
 
 	// AM/PM selector
