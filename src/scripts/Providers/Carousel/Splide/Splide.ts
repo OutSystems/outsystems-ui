@@ -165,7 +165,6 @@ namespace Providers.Splide {
 				OSUIFramework.Event.Type.WindowResize,
 				this._eventOnResize
 			);
-			//window.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Resize, this._eventOnResize);
 		}
 
 		/**
@@ -215,7 +214,6 @@ namespace Providers.Splide {
 		 */
 		protected unsetCallbacks(): void {
 			// remove event listener
-			//window.removeEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Resize, this._eventOnResize);
 			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
 				OSUIFramework.Event.Type.WindowResize,
 				this._eventOnResize
