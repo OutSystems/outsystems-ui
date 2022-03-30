@@ -63,14 +63,10 @@ namespace OSUIFramework.Event {
 			window.addEventListener(GlobalEnum.HTMLEvent.Resize, this._windowTrigger.bind(this), true);
 		}
 
-		private _triggerWindowResize(evt: WindowResize): void {
-			super.trigger(GlobalEnum.HTMLEvent.Resize, evt);
-		}
-
 		private _windowTrigger(evt: WindowResize): void {
 			window.clearTimeout(this._timeout);
 			this._timeout = window.setTimeout(() => {
-				this._triggerWindowResize(evt);
+				super.trigger(GlobalEnum.HTMLEvent.Resize, evt);
 			}, 100);
 		}
 	}
