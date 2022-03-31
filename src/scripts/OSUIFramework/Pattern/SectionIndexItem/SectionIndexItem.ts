@@ -34,14 +34,19 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 
 		// spies the scroll to know if the target element is visible and sets the item as active
 		private _onBodyScroll(): void {
+			const headerProperty = Helper.Dom.ClassSelector(document.body, 'fixed-header');
+			let headerHeight;
+
 			// Set target element if does not exist yet!
 			this._setTargetElement();
 
 			// Get the header Height
-			const headerHeight = Helper.Dom.ClassSelector(
-				document.body,
-				GlobalEnum.CssClassElements.Header
-			).offsetHeight;
+			// TODO check if header is not fixed
+			if (headerProperty !== null) {
+				headerHeight = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.Header).offsetHeight;
+			} else {
+				headerHeight = 0;
+			}
 
 			// Get the vertical scroll position value
 			const scrollYPosition = Helper.ScrollVerticalPosition().pixel - headerHeight;
@@ -85,6 +90,7 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		private _removeEvents(): void {
 			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
+			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
 		}
 
 		// Adds a data attribute to be used in automated tests and to have info on DOM of which element the index is pointing
