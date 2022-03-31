@@ -41,12 +41,13 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 			this._setTargetElement();
 
 			// Get the header Height
-			// TODO check if header is not fixed
-			if (headerProperty !== null) {
+			if (headerProperty) {
 				headerHeight = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.Header).offsetHeight;
 			} else {
 				headerHeight = 0;
 			}
+
+			console.log(headerHeight);
 
 			// Get the vertical scroll position value
 			const scrollYPosition = Helper.ScrollVerticalPosition().pixel - headerHeight;
