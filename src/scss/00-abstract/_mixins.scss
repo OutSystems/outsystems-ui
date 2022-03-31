@@ -1,6 +1,14 @@
 ////
 /// @group global
 
+/// AppLogo
+@mixin app-logo {
+	border-radius: var(--border-radius-soft);
+	margin-right: var(--space-s);
+	max-height: var(--header-size);
+	max-width: 120px;
+}
+
 ///
 @mixin absolute-center() {
 	left: 50%;

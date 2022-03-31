@@ -17,7 +17,6 @@ h5,
 h6,
 .heading6,
 .font-size-display {
-	color: var(--color-neutral-10);
 	font-weight: var(--font-semi-bold);
 	line-height: 1.25;
 	margin: 0;
@@ -36,6 +35,13 @@ h,
 /// Default size display value
 .font-size-display {
 	font-size: var(--font-size-display);
+}
+
+// Default .font-size-h1-6 values
+@each $type, $value in $osui-typography-heading-sizes {
+	.font-size-h#{$type} {
+		font-size: var(--font-size-h#{$type});
+	}
 }
 
 ///

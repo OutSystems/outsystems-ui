@@ -1,0 +1,55 @@
+/*! Patterns - Utilities - ButtonLoading */
+/* Since this pattern is Deprecated, it should not appear at SASSDCS! */
+
+button.OSFillParent {
+	display: inline-flex;
+}
+
+.is--loading {
+	position: relative;
+	.btn {
+		&,
+		& * {
+			pointer-events: none;
+		}
+
+		display: inline-block;
+	}
+}
+
+.btn-loading {
+	display: none;
+	position: absolute;
+}
+
+.btn-show-label .btn-loading {
+	position: relative;
+}
+
+.is--loading .btn-loading {
+	display: inline-flex;
+}
+
+.is--loading:not(.btn-show-label) .btn-loading {
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.is--loading .btn-label {
+	opacity: 0;
+}
+
+.btn-show-label .btn-label {
+	opacity: 1;
+}
+
+.btn-loading .loading-spinner {
+	animation: loadingSpinner 850ms cubic-bezier(0.7, 1.05, 0.78, 0.78) infinite;
+	border: var(--border-size-m) solid currentColor;
+	border-radius: var(--border-radius-circle);
+	border-top: var(--border-size-m) solid transparent;
+	height: 16px;
+	width: 16px;
+	will-change: transform;
+}

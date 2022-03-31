@@ -1,0 +1,33 @@
+/*! Patterns - Numbers - Progress Circle */
+/* Since this pattern is Deprecated, it should not appear at SASSDCS! */
+
+.progress-circle {
+	position: relative;
+
+	svg {
+		height: 100%;
+		stroke-linecap: round;
+	}
+
+	.progressbar-text {
+		text-align: center;
+	}
+
+	&-outer {
+		display: flex;
+		justify-content: center;
+		padding: var(--space-base);
+	}
+
+	&-small .progressbar-text {
+		font-size: var(--font-size-h4);
+	}
+
+	&-medium .progressbar-text {
+		font-size: var(--font-size-h3);
+	}
+
+	&-large .progressbar-text {
+		font-size: var(--font-size-display);
+	}
+}

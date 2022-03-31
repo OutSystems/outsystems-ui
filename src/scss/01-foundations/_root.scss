@@ -1,4 +1,3 @@
-/* Root */
 ////
 /// @group Root
 /// Root - Defined all the CSS variables
@@ -24,7 +23,7 @@
 		--color-#{$type}: #{$value};
 	}
 
-	/* Color - Focus */
+	/*! Color - Focus */
 	@each $type, $value in $osui-colors-focus {
 		--color-focus-#{$type}: #{$value};
 	}

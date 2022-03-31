@@ -1,0 +1,413 @@
+/*! Patterns - Content - Tooltip */
+////
+/// @group Patterns-Tooltip
+/// Patterns - Content - Tooltip
+
+// tooltip arrow size
+$osui-tooltip-arrow-size: 9px;
+// tooltip transition distance
+$osui-tooltip-transition-distance: 12px;
+// Service Studio preview arrow size
+$osui-tooltip-arrow-size-preview: 5px;
+$osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
+
+///
+.osui-tooltip {
+	display: inline-block;
+	position: relative;
+
+	//
+	&.osui-tooltip--is-hover:hover,
+	&.osui-tooltip--is-opened {
+		.osui-tooltip__balloon-wrapper {
+			max-height: 50vh;
+			opacity: 1;
+			padding-top: var(--space-base);
+			pointer-events: initial;
+
+			// if opens to top
+			&.top,
+			&.top-left,
+			&.top-right {
+				bottom: 100%;
+				padding-bottom: var(--space-base);
+				padding-top: initial;
+				top: initial;
+
+				.osui-tooltip__balloon-wrapper__balloon {
+					transform: translateY(0);
+
+					&:before {
+						opacity: 1;
+						transform: translateY(100%);
+					}
+				}
+			}
+
+			&.top {
+				left: 50%;
+				transform: translateX(-50%);
+
+				.osui-tooltip__balloon-wrapper__balloon {
+					&:before {
+						left: 50%;
+						transform: translate(-50%, 100%);
+					}
+				}
+			}
+
+			// if opens to left or right
+			&.left,
+			&.right {
+				max-height: initial;
+				max-width: 50vw;
+				padding-left: var(--space-base);
+				padding-top: var(--space-none);
+
+				.osui-tooltip__balloon-wrapper__balloon {
+					transform: translateX(0);
+				}
+			}
+
+			&.center,
+			&.bottom,
+			&.bottom-left,
+			&.bottom-right {
+				.osui-tooltip__balloon-wrapper__balloon {
+					transform: translateY(0);
+				}
+			}
+
+			// if opens to left
+			&.left {
+				padding-left: initial;
+				padding-right: var(--space-base);
+				right: 100%;
+			}
+		}
+
+		.osui-tooltip__balloon-wrapper__balloon {
+			opacity: 1;
+
+			&:before {
+				opacity: 1;
+				transform: translateY(-100%);
+			}
+		}
+	}
+
+	//
+	&:not(.osui-tooltip--is-hover) {
+		.osui-tooltip__content {
+			cursor: pointer;
+		}
+	}
+
+	//
+	.osui-tooltip__content {
+		position: inherit;
+
+		&:empty {
+			// ServiceStudio Preview
+			& {
+				-servicestudio-min-width: 150px;
+			}
+		}
+	}
+
+	//
+	.osui-tooltip__balloon-wrapper {
+		left: calc(50% - var(--space-base));
+		max-height: 0;
+		opacity: 0;
+		overflow: hidden;
+		padding-top: var(--space-none);
+		pointer-events: none;
+		position: absolute;
+		top: 100%;
+		transition: opacity 250ms;
+		z-index: 2;
+
+		// Service Studio Preview
+		& {
+			-servicestudio-left: initial;
+			-servicestudio-max-height: initial;
+			-servicestudio-opacity: 1;
+			-servicestudio-overflow: initial;
+			-servicestudio-position: relative;
+			-servicestudio-top: initial;
+		}
+
+		// open states
+		&.bottom {
+			left: 50%;
+			transform: translateX(-50%);
+
+			.osui-tooltip__balloon-wrapper__balloon {
+				&:before {
+					left: 50%;
+					transform: translate(-50%, -100%);
+				}
+			}
+		}
+
+		// if opens to bottom-left
+		&.bottom-left {
+			left: initial;
+			right: calc(-1 * var(--space-s));
+
+			.osui-tooltip__balloon-wrapper__balloon {
+				&:before {
+					left: initial;
+					right: var(--space-s);
+				}
+			}
+		}
+
+		// if opens to bottom-left
+		&.bottom-right {
+			left: calc(-1 * var(--space-s));
+
+			.osui-tooltip__balloon-wrapper__balloon {
+				&:before {
+					left: var(--space-s);
+				}
+			}
+		}
+
+		&.center,
+		&.bottom,
+		&.bottom-left,
+		&.bottom-right {
+			.osui-tooltip__balloon-wrapper__balloon {
+				transform: translateY(-$osui-tooltip-transition-distance);
+			}
+		}
+
+		// if opens to top
+		&.top,
+		&.top-left,
+		&.top-right {
+			bottom: 100%;
+			top: initial;
+
+			.osui-tooltip__balloon-wrapper__balloon {
+				transform: translateY(calc(-100% + $osui-tooltip-transition-distance));
+
+				&:before {
+					border-color: var(--color-neutral-9) transparent transparent transparent;
+					border-width: $osui-tooltip-arrow-size $osui-tooltip-arrow-size 0 $osui-tooltip-arrow-size;
+					bottom: 1px;
+					top: initial;
+				}
+			}
+		}
+
+		&.top {
+			left: 50%;
+			transform: translateX(-50%);
+
+			.osui-tooltip__balloon-wrapper__balloon {
+				&:before {
+					left: 50%;
+					transform: translate(-50%, -100%);
+				}
+			}
+		}
+
+		// if opens to top-left
+		&.top-left {
+			left: initial;
+			right: calc(-1 * var(--space-s));
+
+			.osui-tooltip__balloon-wrapper__balloon {
+				&:before {
+					left: initial;
+					right: var(--space-s);
+				}
+			}
+		}
+
+		// if opens to top-left
+		&.top-right {
+			left: calc(-1 * var(--space-s));
+
+			.osui-tooltip__balloon-wrapper__balloon {
+				&:before {
+					left: var(--space-s);
+				}
+			}
+		}
+
+		// if opens to left or right
+		&.left,
+		&.right {
+			left: 100%;
+			max-height: initial;
+			max-width: 0;
+			padding-left: var(--space-none);
+			top: 50%;
+			transform: translateY(-50%);
+
+			.osui-tooltip__balloon-wrapper__balloon {
+				&:before {
+					border-color: transparent var(--color-neutral-9) transparent transparent;
+					border-width: $osui-tooltip-arrow-size $osui-tooltip-arrow-size $osui-tooltip-arrow-size 0;
+					left: initial;
+					right: calc(100% - 1px);
+					top: 50%;
+					transform: translate(0, -50%);
+				}
+			}
+		}
+
+		&.right {
+			.osui-tooltip__balloon-wrapper__balloon {
+				transform: translateX(-$osui-tooltip-transition-distance);
+			}
+		}
+
+		// if opens to right
+		&.left {
+			left: initial;
+			padding-left: initial;
+			padding-right: var(--space-none);
+			right: 100%;
+
+			.osui-tooltip__balloon-wrapper__balloon {
+				transform: translateX(-100%);
+
+				&:before {
+					border-color: transparent transparent transparent var(--color-neutral-9);
+					border-width: $osui-tooltip-arrow-size 0 $osui-tooltip-arrow-size $osui-tooltip-arrow-size;
+					left: calc(100% - 1px);
+					right: initial;
+				}
+			}
+		}
+
+		// if opens to center
+		&.center {
+			left: 50%;
+			top: 40%;
+			transform: translate(-50%, 0);
+
+			.osui-tooltip__balloon-wrapper__balloon {
+				&:before {
+					left: 50%;
+					transform: translate(-50%, -100%);
+				}
+			}
+		}
+	}
+
+	///
+	.osui-tooltip__balloon-wrapper__balloon {
+		background-color: var(--color-neutral-9);
+		border-radius: var(--border-radius-soft);
+		color: var(--color-neutral-0);
+		font-size: var(--font-size-s);
+		font-weight: var(--font-regular);
+		line-height: initial;
+		min-width: 150px;
+		opacity: 0;
+		padding: var(--space-s);
+		position: relative;
+		transition: transform 250ms;
+		width: fit-content;
+
+		// Service Studio Preview
+		& {
+			-servicestudio-max-width: 200px;
+			-servicestudio-min-height: 36px;
+			-servicestudio-opacity: 1;
+			-servicestudio-top: 0;
+		}
+		&:after {
+			-servicestudio-content: '';
+			-servicestudio-position: absolute;
+			-servicestudio-width: 0;
+			-servicestudio-height: 0;
+			-servicestudio-border-left: $osui-tooltip-arrow-size-preview solid transparent;
+			-servicestudio-border-right: $osui-tooltip-arrow-size-preview solid transparent;
+			-servicestudio-border-bottom: $osui-tooltip-arrow-size-preview solid var(--color-neutral-9);
+		}
+
+		&.left:after {
+			-servicestudio-right: -($osui-tooltip-arrow-size-preview + 2px);
+			-servicestudio-top: $osui-tooltip-arrow-middle-preview;
+			-servicestudio-transform: rotate(90deg);
+		}
+
+		&.right:after {
+			-servicestudio-left: -($osui-tooltip-arrow-size-preview + 2px);
+			-servicestudio-top: $osui-tooltip-arrow-middle-preview;
+			-servicestudio-transform: rotate(-90deg);
+		}
+
+		&.center:after,
+		&.bottom:after {
+			-servicestudio-left: $osui-tooltip-arrow-middle-preview;
+			-servicestudio-top: -$osui-tooltip-arrow-size-preview;
+		}
+
+		&.bottom-left:after {
+			-servicestudio-left: $osui-tooltip-arrow-size-preview;
+			-servicestudio-top: -$osui-tooltip-arrow-size-preview;
+		}
+
+		&.bottom-right:after {
+			-servicestudio-right: $osui-tooltip-arrow-size-preview;
+			-servicestudio-top: -$osui-tooltip-arrow-size-preview;
+		}
+
+		&.top:after {
+			-servicestudio-left: $osui-tooltip-arrow-middle-preview;
+			-servicestudio-bottom: -($osui-tooltip-arrow-size-preview - 1);
+			-servicestudio-transform: rotate(180deg);
+		}
+
+		&.top-left:after {
+			-servicestudio-left: $osui-tooltip-arrow-size-preview;
+			-servicestudio-bottom: -($osui-tooltip-arrow-size-preview - 1);
+			-servicestudio-transform: rotate(180deg);
+		}
+
+		&.top-right:after {
+			-servicestudio-right: $osui-tooltip-arrow-size-preview;
+			-servicestudio-bottom: -($osui-tooltip-arrow-size-preview - 1);
+			-servicestudio-transform: rotate(180deg);
+		}
+
+		&:before {
+			border-color: transparent transparent var(--color-neutral-9) transparent;
+			border-style: solid;
+			border-width: 0 $osui-tooltip-arrow-size $osui-tooltip-arrow-size $osui-tooltip-arrow-size;
+			content: '';
+			display: block;
+			height: 0;
+			left: var(--space-s);
+			opacity: 0;
+			position: absolute;
+			top: 1px;
+			transform: translateY(0);
+			width: 0;
+		}
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+///
+.phone {
+	.osui-tooltip {
+		&.osui-tooltip--is-hover:hover,
+		&.osui-tooltip--is-opened {
+			.osui-tooltip__balloon-wrapper {
+				&.left,
+				&.right {
+					max-width: 100vw;
+				}
+			}
+		}
+	}
+}

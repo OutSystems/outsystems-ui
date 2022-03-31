@@ -1,0 +1,20 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+namespace OSUIFramework.Patterns.Progress.Circle.Enum {
+	/**
+	 * ProgressCircle Enum CssClasses
+	 */
+	export enum CssClass {
+		Progress = 'osui-progress-circle__container__progress-path',
+		Trail = 'osui-progress-circle__container__trail-path',
+	}
+
+	/**
+	 * ProgressCircle Enum Inline Style Attributes
+	 */
+	export enum InlineStyleProp {
+		CircleRadius = '--radius',
+		CircleSize = '--circle-size',
+		StrokeDasharray = '--stroke-dasharray',
+		StrokeDashoffset = '--stroke-dashoffset',
+	}
+}

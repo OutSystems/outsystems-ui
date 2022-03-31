@@ -1,6 +1,5 @@
-/*! Service Studio Preview */
-//
-// @group ServiceStudio_Preview
+////
+/// @group ServiceStudio_Preview
 /* 
 	Notes:
 	- This section contains several styles that improve the service studio blocks preview
@@ -34,6 +33,7 @@ body > .app-menu-content {
 	}
 }
 
+// ServiceStudio Hybrid
 html[data-uieditorversion^='1'] {
 	body {
 		&:not(.phone):not(.tablet) .layout-side aside {
@@ -78,9 +78,18 @@ html[data-uieditorversion^='1'] {
 
 	body.phone .layout .app-menu-content,
 	body.tablet .layout .app-menu-content,
-	.layout-side .header .app-menu-content,
 	body:not(.phone):not(.tablet) .layout-side .menu-icon {
 		-servicestudio-display: none;
+	}
+
+	.ph:empty {
+		-servicestudio-display: block;
+	}
+
+	.table {
+		tr:empty {
+			-servicestudio-display: block !important;
+		}
 	}
 
 	.blank-slate {
@@ -111,9 +120,68 @@ html[data-uieditorversion^='1'] {
 		}
 	}
 
-	.section-background {
-		&:empty {
-			-servicestudio-height: auto;
+	.phone {
+		.table:not(.table-responsive) {
+			display: block;
 		}
+
+		.layout:not(.layout-native) {
+			.table {
+				-servicestudio-display: block;
+
+				td {
+					-servicestudio-min-width: 10vw;
+				}
+
+				&:not(.table-no-responsive) {
+					th {
+						-servicestudio-display: none;
+					}
+				}
+			}
+
+			.table-no-responsive {
+				thead {
+					& > tr:not(:empty):before {
+						-servicestudio-display: none;
+					}
+				}
+			}
+
+			thead {
+				-servicestudio-display: initial !important;
+			}
+		}
+	}
+
+	.phone,
+	.tablet {
+		.layout:not(.layout-native) {
+			thead {
+				& > tr {
+					-servicestudio-position: relative;
+				}
+
+				& > tr:not(:empty):before {
+					-servicestudio-display: none;
+				}
+			}
+
+			.table-no-responsive {
+				thead {
+					-servicestudio-display: table-header-group !important;
+				}
+			}
+		}
+	}
+}
+
+html:not([data-uieditorversion^='1']) {
+	.phone td,
+	.tablet td {
+		-servicestudio-display: table-cell;
+	}
+	.table {
+		-servicestudio-white-space: unset;
 	}
 }

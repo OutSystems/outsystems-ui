@@ -10,6 +10,7 @@
 	}
 
 	.header {
+		position: -webkit-sticky; //Fix for older iPhones
 		position: sticky;
 		top: 0;
 
@@ -39,6 +40,11 @@
 			justify-content: flex-end;
 			margin-left: var(--space-base);
 			margin-right: auto;
+
+			// ServiceStudio Preview
+			& {
+				-servicestudio-min-width: fit-content;
+			}
 		}
 	}
 
@@ -52,6 +58,7 @@
 
 	.content-bottom {
 		bottom: 0;
+		position: -webkit-sticky; //Fix for older iPhones
 		position: sticky;
 		z-index: 100;
 	}
@@ -63,8 +70,8 @@
 
 ///
 .landscape {
-	.layout-native {
-		&.header,
+	.layout.layout-native {
+		.header,
 		&:not(.blank) .main-content,
 		.bottom-bar-wrapper {
 			padding-left: var(--os-safe-area-left);

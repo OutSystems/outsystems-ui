@@ -41,54 +41,45 @@
 	}
 
 	// States
-	&.btn {
-		&-primary {
-			background-color: var(--color-primary);
-			border: var(--border-size-s) solid var(--color-primary);
-			color: var(--color-neutral-0);
-		}
+	&-primary {
+		background-color: var(--color-primary);
+		border: var(--border-size-s) solid var(--color-primary);
+		color: var(--color-neutral-0);
+	}
 
-		&-small {
-			font-size: var(--font-size-xs);
-			height: 32px;
-			padding: var(--space-none) var(--space-s);
-		}
+	&-small {
+		font-size: var(--font-size-xs);
+		height: 32px;
+		padding: var(--space-none) var(--space-s);
+	}
 
-		&-large {
-			font-size: var(--font-size-base);
-			height: 48px;
-		}
+	&-large {
+		font-size: var(--font-size-base);
+		height: 48px;
+	}
 
-		&-cancel {
-			background-color: var(--color-neutral-0);
-			border: var(--border-size-s) solid var(--color-neutral-8);
-			color: var(--color-neutral-7);
-		}
+	&-cancel {
+		background-color: var(--color-neutral-0);
+		border: var(--border-size-s) solid var(--color-neutral-8);
+		color: var(--color-neutral-7);
+	}
 
-		&-success {
-			background-color: var(--color-success);
-			border: var(--border-size-s) solid var(--color-success);
-			color: var(--color-neutral-0);
-		}
+	&-success {
+		background-color: var(--color-success);
+		border: var(--border-size-s) solid var(--color-success);
+		color: var(--color-neutral-0);
+	}
 
-		&-error {
-			background-color: var(--color-error);
-			border: var(--border-size-s) solid var(--color-error);
-			color: var(--color-neutral-0);
-		}
+	&-error {
+		background-color: var(--color-error);
+		border: var(--border-size-s) solid var(--color-error);
+		color: var(--color-neutral-0);
 	}
 
 	&[disabled] {
 		background-color: var(--color-neutral-2);
 		border: var(--border-size-s) solid var(--color-neutral-4);
 		color: var(--color-neutral-6);
-		pointer-events: none;
-	}
-}
-
-///
-.is--loading {
-	.btn {
 		pointer-events: none;
 	}
 }
@@ -111,15 +102,13 @@
 		font-size: var(--font-size-base);
 		height: 48px;
 
-		&.btn {
-			&-small {
-				font-size: var(--font-size-s);
-				height: 40px;
-			}
+		&-small {
+			font-size: var(--font-size-s);
+			height: 40px;
+		}
 
-			&-large {
-				height: 56px;
-			}
+		&-large {
+			height: 56px;
 		}
 	}
 }
@@ -177,8 +166,7 @@
 
 	.bottom-bar {
 		.btn {
-			border-radius: 0;
-			height: 100%;
+			padding-bottom: var(--space-none);
 		}
 	}
 }

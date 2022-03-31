@@ -48,15 +48,11 @@
 
 ///
 .phone {
-	.layout-native {
-		.main-content.ThemeGrid_Container {
-			padding: 0;
+	.header {
+		.ThemeGrid_Container {
+			padding-left: calc(var(--os-safe-area-left) + var(--space-base));
+			padding-right: calc(var(--os-safe-area-right) + var(--space-base));
 		}
-	}
-
-	.header.ThemeGrid_Container {
-		padding-left: calc(var(--os-safe-area-left) + var(--space-base));
-		padding-right: calc(var(--os-safe-area-right) + var(--space-base));
 	}
 
 	.main-content.ThemeGrid_Container {
@@ -69,5 +65,14 @@
 	.footer.ThemeGrid_Container {
 		padding-left: calc(var(--os-safe-area-left) + var(--space-base));
 		padding-right: calc(var(--os-safe-area-right) + var(--space-base));
+	}
+}
+
+// Layout --------------------------------------------------------------------
+// The default order of the selectors had to be changed, since some legacy cases were not loading the partials correctly.
+///
+.layout-native {
+	.main-content.ThemeGrid_Container {
+		padding: var(--space-none);
 	}
 }

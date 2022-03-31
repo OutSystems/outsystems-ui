@@ -20,6 +20,10 @@
 
 	&-logo {
 		padding-right: var(--space-base);
+
+		.application-name {
+			word-break: break-word;
+		}
 	}
 
 	&-navigation {
@@ -32,13 +36,10 @@
 		& > [data-block*='ApplicationTitle'] .application-name {
 			margin-right: var(--space-m);
 		}
+	}
 
-		.app-logo {
-			border-radius: var(--border-radius-soft);
-			margin-right: var(--space-s);
-			max-height: var(--header-size);
-			max-width: 120px;
-		}
+	.app-logo {
+		@include app-logo;
 	}
 }
 
@@ -46,6 +47,7 @@
 .fixed-header {
 	.header {
 		left: 0;
+		position: -webkit-sticky; //Fix for older iPhones
 		position: sticky;
 		right: 0;
 		top: 0;

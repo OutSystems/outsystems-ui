@@ -1,0 +1,58 @@
+/*! Patterns - Content - Flip_Content */
+/* Since this pattern is Deprecated, it should not appear at SASSDCS! */
+
+.flip-content {
+	position: relative;
+	-webkit-perspective: 1000;
+	perspective: 1000;
+	-servicestudio--webkit-perspective: initial;
+	-servicestudio-perspective: initial;
+}
+
+.flip-content-container {
+	position: relative;
+	transition: all 630ms cubic-bezier(0.03, 0.01, 0.67, 1.97);
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+	-servicestudio--webkit-transform-style: initial;
+	-servicestudio-transform-style: initial;
+}
+
+.flip-content-front,
+.flip-content-back {
+	left: 0;
+	top: 0;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+.flip-content-front:empty,
+.flip-content-back:empty {
+	-servicestudio-min-height: 80px;
+}
+
+.flip-content-front {
+	position: relative;
+	z-index: 2;
+}
+
+.flip-content-back {
+	position: absolute;
+	width: 100%;
+	-servicestudio-position: static;
+}
+
+.flip-content.flipped .flip-content-front {
+	position: absolute;
+}
+
+.flip-content.flipped .flip-content-back {
+	position: relative;
+	-webkit-transform: rotateY(90deg);
+	transform: rotateY(90deg);
+}
+
+.flip-content.flipped .flip-content-container {
+	-webkit-transform: rotateY(-90deg);
+	transform: rotateY(-90deg);
+}

@@ -4,25 +4,27 @@
 /// Widgets - Table - Bulk Actions
 
 ///
-.table [data-checkbox] {
-	display: block;
-	height: 16px;
-	width: 16px;
-
-	&:before {
-		height: 14px;
-		width: 14px;
-	}
-
-	&:checked:after {
-		border: var(--border-size-m) solid var(--color-neutral-0);
-		border-right: var(--border-size-none) !important;
-		border-top: var(--border-size-none) !important;
+.table {
+	[data-checkbox] {
 		display: block;
-		height: 2px;
-		left: 4px;
-		top: 5px;
-		width: 7px;
+		height: 16px;
+		width: 16px;
+
+		&:before {
+			height: 14px;
+			width: 14px;
+		}
+
+		&:checked:after {
+			border: var(--border-size-m) solid var(--color-neutral-0);
+			border-right: var(--border-size-none) !important;
+			border-top: var(--border-size-none) !important;
+			display: block;
+			height: 2px;
+			left: 4px;
+			top: 5px;
+			width: 7px;
+		}
 	}
 
 	.checkbox-intermediate {

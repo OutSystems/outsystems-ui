@@ -8,57 +8,51 @@
 	background-color: var(--color-neutral-0);
 	border-top: var(--border-size-s) solid var(--color-neutral-3);
 	height: 100%;
+}
 
-	.bottom-bar {
+///
+.bottom-bar {
+	display: flex;
+	&:empty:after {
+		color: var(--color-neutral-7);
+		content: 'Add Bottom Bar Items to this Container';
+		display: block;
+		font-size: 12px;
+		padding: 20px;
+		text-align: center;
+	}
+	& > a,
+	& > div {
+		flex: 1;
+		max-width: 150px;
+		overflow: hidden;
+	}
+	& > a {
+		color: var(--color-neutral-8);
+		&.active {
+			color: var(--color-primary);
+		}
+	}
+	&-item {
 		display: flex;
-
-		&:empty:after {
-			color: var(--color-neutral-7);
-			content: 'Add Bottom Bar Items to this Container';
-			display: block;
-			font-size: 12px;
-			padding: 20px;
-			text-align: center;
-		}
-
-		& > a,
-		& > div {
-			flex: 1;
-			max-width: 150px;
-			overflow: hidden;
-		}
-
-		& > a {
-			color: var(--color-neutral-8);
-
-			&.active {
-				color: var(--color-primary);
-			}
-		}
-
-		&-item {
-			display: flex;
-			flex-direction: column;
-			height: 100%;
+		flex-direction: column;
+		height: 100%;
+		justify-content: center;
+		overflow: hidden;
+		padding: 0 var(--space-s);
+		position: relative;
+		&-icon {
+			display: inline-flex;
+			font-size: var(--font-size-h6);
+			height: auto;
 			justify-content: center;
+		}
+		&-text {
+			font-size: 10px;
 			overflow: hidden;
-			padding: 0 var(--space-s);
-			position: relative;
-
-			&-icon {
-				display: inline-flex;
-				font-size: var(--font-size-h6);
-				height: auto;
-				justify-content: center;
-			}
-
-			&-text {
-				font-size: 10px;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
-				word-wrap: break-word;
-			}
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			word-wrap: break-word;
 		}
 	}
 }
@@ -67,13 +61,11 @@
 .layout-native {
 	.bottom-bar-wrapper {
 		padding-bottom: var(--os-safe-area-bottom);
-
-		.bottom-bar {
-			height: 100%;
-			justify-content: center;
-		}
 	}
-
+	.bottom-bar {
+		height: 100%;
+		justify-content: center;
+	}
 	.footer {
 		height: var(--bottom-bar-size);
 	}

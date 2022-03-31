@@ -50,6 +50,9 @@ typings/
 # Optional npm cache directory
 .npm
 
+# Optional files
+package-lock.json
+
 # Optional eslint cache
 .eslintcache
 
@@ -106,3 +109,5 @@ dist
 # MacOS folder icon (hidden file)
 **/Icon?
 **/.DS_Store
+
+package-lock.json
