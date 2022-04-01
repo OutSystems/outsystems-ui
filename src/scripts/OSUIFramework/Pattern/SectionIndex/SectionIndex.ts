@@ -118,9 +118,16 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		// Method to set the SectionIndex IsFixed
 		private _toggleIsFixed(): void {
 			if (this.configs.IsFixed) {
+				let headerHeight = 0;
 				// Get Header height
-				const headerHeight =
-					Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.Header).offsetHeight || 0;
+				const hasFixedHeder = Helper.Dom.ClassSelector(
+					document.body,
+					GlobalEnum.CssClassElements.HeaderIsFixed
+				);
+				if (hasFixedHeder) {
+					headerHeight =
+						Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.Header).offsetHeight || 0;
+				}
 
 				// Get (if exist) the paddingTop value for the mainContent (the one with Scroll)
 				const contentPaddingTop =
