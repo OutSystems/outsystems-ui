@@ -47,3 +47,11 @@
 		}
 	}
 }
+
+// Popup Mode inside Tabs --------------------------------------------------------
+body.vscomp-popup-active .tabs-content-wrapper {
+	display: contents;
+}
+body.vscomp-popup-active .tabs-content-wrapper .OSBlockWidget {
+	display: flex;
+}
