@@ -18,6 +18,7 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		private _mainScrollContainerElement: HTMLElement;
 
 		private _navigateOnClick = false;
+		private _scrollTimeout: number;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SectionIndexConfig(configs));
@@ -67,7 +68,13 @@ namespace OSUIFramework.Patterns.SectionIndex {
 
 		// Method that will update the IsActive child item status
 		private _setActiveChildOnClick(child: SectionIndexItem.ISectionIndexItem): void {
+			// Clean the timeout
 			this._navigateOnClick = true;
+			window.clearTimeout(this._scrollTimeout);
+			this._scrollTimeout = window.setTimeout(() => {
+				// Reset flag in order to understand navigation by click has ended!
+				this._navigateOnClick = false;
+			}, 800); // enought time to deal with the scroll
 
 			// Remove old sectionIndexItem as active if exist
 			if (this._activeSectionIndexItem) {
@@ -86,11 +93,10 @@ namespace OSUIFramework.Patterns.SectionIndex {
 
 		// Method used to set the IsActive child item at the onBodyScroll
 		private _setActiveChildOnScroll(child: SectionIndexItem.ISectionIndexItem) {
-			if (this._navigateOnClick && this._activeSectionIndexItem !== child) {
+			// Prevent logic happen if the scroll has been triggerd by click on the item
+			if (this._navigateOnClick) {
 				return;
 			}
-
-			this._navigateOnClick = false;
 
 			// Get all IsActive Items
 			const isActiveChilds = this.childItems.filter((item) => item.IsSelected);

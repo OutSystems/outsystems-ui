@@ -67,8 +67,11 @@ declare global {
 
 	// Set the scroll position type
 	type ScrollPosition = {
-		percentage: number;
-		pixel: number;
+		percentageInView: number;
+		pixelInView: number;
+		scrollableHeight: number;
+		value: number;
+		viewHeight: number;
 	};
 
 	// RangeSlider

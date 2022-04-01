@@ -18,6 +18,8 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		private _eventOnClick: Callbacks.Generic;
 		//Stores the keyboard callback function
 		private _eventOnkeyBoardPress: Callbacks.Generic;
+		// Store the header size if it's fixed!
+		private _headerHeight = 0;
 		// Store the state
 		private _isActive = false;
 		// Store TargetElement HTML object
@@ -34,28 +36,28 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 
 		// spies the scroll to know if the target element is visible and sets the item as active
 		private _onBodyScroll(): void {
-			const headerProperty = Helper.Dom.ClassSelector(document.body, 'fixed-header');
-			let headerHeight;
-
 			// Set target element if does not exist yet!
 			this._setTargetElement();
-
-			// Get the header Height
-			if (headerProperty) {
-				headerHeight = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.Header).offsetHeight;
-			} else {
-				headerHeight = 0;
-			}
-
-			console.log(headerHeight);
-
 			// Get the vertical scroll position value
-			const scrollYPosition = Helper.ScrollVerticalPosition().pixel - headerHeight;
-			// Get target element bounds values
-			const targetElementBounds = this.TargetElement.getBoundingClientRect();
+			const scrollYPosition = Helper.ScrollVerticalPosition();
+			// Threshold value to set element as Active
+			const thresholdVal = 30;
+			// Store the offSetValue to be checked
+			const elementOffsetTopVal = this.TargetElement.offsetTop + this._headerHeight - scrollYPosition.value;
 
-			// Check if the element is hiting the vertical position
-			if (targetElementBounds.top <= scrollYPosition && targetElementBounds.bottom >= scrollYPosition) {
+			/* Logic behind position validation:
+				- If click to nanvigate into element the calc
+					this.TargetElement.offsetTop - scrollYPosition.value
+				will return 0(zero). That said we're setting a threshold to set as IsActive when
+				this calc will between -thresholdVal and thresholdVal from that offset!
+				- AND;
+				- If scroll has hit the bottom and element doesn't have height enought to be placed at that
+				offset it should set it as IsActive since it will be the last item in screen inside the scrollContainer.
+			 */
+			if (
+				(elementOffsetTopVal >= -thresholdVal && elementOffsetTopVal <= thresholdVal) ||
+				scrollYPosition.percentageInView === 100
+			) {
 				this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Active);
 			}
 		}
@@ -94,11 +96,22 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
 		}
 
+		// Check if the HeaderIsFixed
+		private _setHeaderSize(): void {
+			const hasFixedHeder = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.HeaderIsFixed);
+			if (hasFixedHeder) {
+				// Since Header is Fixed, lets get it's height into consideration!
+				this._headerHeight = Helper.Dom.ClassSelector(
+					document.body,
+					GlobalEnum.CssClassElements.Header
+				).offsetHeight;
+			}
+		}
+
 		// Adds a data attribute to be used in automated tests and to have info on DOM of which element the index is pointing
 		private _setLinkAttribute(): void {
 			Helper.Dom.Attribute.Set(this._selfElem, Enum.DataTypes.dataItem, this.configs.ScrollToWidgetId);
 		}
-
 		// Set TargetElement
 		private _setTargetElement(): void {
 			// Check if the element has been already defined!
@@ -120,8 +133,11 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 			// Check if TargetElement has been already defined, otherwise define it!
 			this._setTargetElement();
 
+			// Get the headerSize
+			this._setHeaderSize();
+
 			// Set the target element offset top/bottom values
-			this._targetElementOffset.top = this._targetElement.offsetTop;
+			this._targetElementOffset.top = this._targetElement.offsetTop + this._headerHeight;
 		}
 
 		// Method to set the event listeners
