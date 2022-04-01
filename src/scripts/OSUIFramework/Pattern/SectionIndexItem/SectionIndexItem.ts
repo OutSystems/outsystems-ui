@@ -98,8 +98,8 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 
 		// Check if the HeaderIsFixed
 		private _setHeaderSize(): void {
-			const hasFixedHeder = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.HeaderIsFixed);
-			if (hasFixedHeder) {
+			const hasFixedHeader = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.HeaderIsFixed);
+			if (hasFixedHeader) {
 				// Since Header is Fixed, lets get it's height into consideration!
 				this._headerHeight = Helper.Dom.ClassSelector(
 					document.body,

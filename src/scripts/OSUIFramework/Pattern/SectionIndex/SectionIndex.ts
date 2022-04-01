@@ -120,11 +120,11 @@ namespace OSUIFramework.Patterns.SectionIndex {
 			if (this.configs.IsFixed) {
 				let headerHeight = 0;
 				// Get Header height
-				const hasFixedHeder = Helper.Dom.ClassSelector(
+				const hasFixedHeader = Helper.Dom.ClassSelector(
 					document.body,
 					GlobalEnum.CssClassElements.HeaderIsFixed
 				);
-				if (hasFixedHeder) {
+				if (hasFixedHeader) {
 					headerHeight =
 						Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.Header).offsetHeight || 0;
 				}
