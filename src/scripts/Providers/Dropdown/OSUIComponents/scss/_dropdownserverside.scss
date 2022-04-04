@@ -3,6 +3,9 @@
 /// @group Patterns-DropdownServerSide
 /// Patterns - Interaction - DropdownServerSide
 
+// Balloon margin value related with selectedValuesWrapper
+$balloonMarginToSelectValuesWrapper: 2px;
+
 ///
 .osui-dropdown-serverside {
 	// "Input" section - SelectedValues container
@@ -19,22 +22,17 @@
 		}
 
 		&:after {
-			border: var(--border-size-m) solid var(--color-neutral-7);
-			border-right-width: var(--border-size-none);
-			border-top-width: var(--border-size-none);
-			bottom: 0;
-			box-sizing: border-box;
-			content: '';
-			height: var(--space-s);
-			left: auto;
+			align-items: center;
+			color: var(--color-neutral-7);
+			content: '\f107';
+			display: flex;
+			font: normal normal normal 20px/1 FontAwesome;
+			height: 100%;
 			pointer-events: none;
 			position: absolute;
-			right: var(--space-base);
-			top: calc(50% - (var(--space-s) / 2));
-			transform-origin: center;
-			transform: rotate(-45deg);
+			right: 16px;
+			top: 0;
 			transition: transform 200ms ease-in-out;
-			width: var(--space-s);
 		}
 
 		& > * {
@@ -79,7 +77,9 @@
 			max-width: var(--osui-dropdown-ss-width);
 			overflow: hidden;
 			position: absolute;
-			top: calc(var(--osui-dropdown-ss-top) + var(--osui-dropdown-ss-input-height) + 2px);
+			top: calc(
+				var(--osui-dropdown-ss-top) + var(--osui-dropdown-ss-input-height) + $balloonMarginToSelectValuesWrapper
+			);
 			transition: max-height 300ms ease-in-out;
 			width: 100%;
 			z-index: 1;
@@ -111,6 +111,7 @@
 			height: 100%;
 			opacity: 0;
 			overflow: hidden;
+			// -20px is the value used as a threshold value to animate down the balloon
 			transform: translateY(-20px);
 			transition: opacity 250ms ease, transform 300ms ease-in-out;
 
@@ -186,7 +187,7 @@
 	&__balloon--is-top {
 		// Wrapper
 		&.osui-dropdown-serverside__balloon-wrapper {
-			top: calc(var(--osui-dropdown-ss-top) - 2px);
+			top: calc(var(--osui-dropdown-ss-top) - $balloonMarginToSelectValuesWrapper);
 			transform: translateY(-100%);
 		}
 
@@ -218,8 +219,8 @@
 			// "Input" section - SelectedValues container
 			&__selected-values {
 				&:after {
-					border-color: var(--color-primary);
-					transform: rotate(135deg);
+					color: var(--color-primary);
+					transform: rotate(180deg);
 				}
 			}
 
