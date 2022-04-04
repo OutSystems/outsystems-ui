@@ -7,6 +7,11 @@ namespace OSUIFramework.Interface {
 	 * @interface IChild
 	 */
 	export interface IChild extends IPattern {
+		get isFirstChild(): boolean;
+		set isFirstChild(value: boolean);
+		get isLastChild(): boolean;
+		set isLastChild(value: boolean);
+
 		/**
 		 * Method used to set item as focus state
 		 *
