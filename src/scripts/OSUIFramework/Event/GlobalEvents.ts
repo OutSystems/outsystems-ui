@@ -24,21 +24,9 @@ namespace OSUIFramework.Event {
 			super();
 			document.body.addEventListener(GlobalEnum.HTMLEvent.Click, this._bodyTrigger.bind(this));
 		}
+
 		private _bodyTrigger(evt: PointerEvent): void {
 			super.trigger('click', evt);
-		}
-
-		/**
-		 * Override the default trigger method from AbstractEvent
-		 *
-		 * @param {string} [data]
-		 * @param {*} args
-		 * @return {*}  {void}
-		 * @memberof BodyOnClick
-		 */
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		public trigger(data?: string, ...args: unknown[]): void {
-			return;
 		}
 	}
 
@@ -54,21 +42,9 @@ namespace OSUIFramework.Event {
 			super();
 			document.body.addEventListener(GlobalEnum.HTMLEvent.Scroll, this._bodyTrigger.bind(this), true);
 		}
-		private _bodyTrigger(evt: PointerEvent): void {
-			super.trigger('scroll', evt);
-		}
 
-		/**
-		 * Override the default trigger method from AbstractEvent
-		 *
-		 * @param {string} [data]
-		 * @param {*} args
-		 * @return {*}  {void}
-		 * @memberof BodyOnClick
-		 */
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		public trigger(data?: string, ...args: unknown[]): void {
-			return;
+		private _bodyTrigger(evt: Event): void {
+			super.trigger('scroll', evt);
 		}
 	}
 
@@ -80,25 +56,18 @@ namespace OSUIFramework.Event {
 	 * @extends {Event.AbstractEvent<string>}
 	 */
 	export class WindowResize extends Event.AbstractEvent<string> {
+		private _timeout: number;
+
 		constructor() {
 			super();
 			window.addEventListener(GlobalEnum.HTMLEvent.Resize, this._windowTrigger.bind(this), true);
 		}
-		private _windowTrigger(evt: PointerEvent): void {
-			super.trigger(GlobalEnum.HTMLEvent.Resize, evt);
-		}
 
-		/**
-		 * Override the default trigger method from AbstractEvent
-		 *
-		 * @param {string} [data]
-		 * @param {*} args
-		 * @return {*}  {void}
-		 * @memberof BodyOnClick
-		 */
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		public trigger(data?: string, ...args: unknown[]): void {
-			return;
+		private _windowTrigger(evt: WindowResize): void {
+			window.clearTimeout(this._timeout);
+			this._timeout = window.setTimeout(() => {
+				super.trigger(GlobalEnum.HTMLEvent.Resize, evt);
+			}, 100);
 		}
 	}
 }

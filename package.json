@@ -42,6 +42,6 @@
 		"stylelint-config-prettier": "^8.0.2",
 		"stylelint-order": "^4.1.0",
 		"typescript": "^4.5.0",
-		"virtual-select-plugin": "^1.0.27"	
+		"virtual-select-plugin": "^1.0.26"
 	}
 }

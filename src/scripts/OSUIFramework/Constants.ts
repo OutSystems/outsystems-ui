@@ -73,7 +73,7 @@ namespace OSUIFramework.Constants {
 	export const NoTransition = 'no-transition';
 
 	/* OSUI Version */
-	export const OSUIVersion = '2.8.1';
+	export const OSUIVersion = '2.8.2';
 
 	/* css Class that is added in layout */
 	export const LayoutClass = 'layout';

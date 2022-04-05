@@ -3,7 +3,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns {
 	/**
-	 * Defines the Default props and methods for Patterns that will have other Patterns as its childs
+	 * Defines the Default props and methods for Patterns that will be added into other Patterns as its childs
 	 *
 	 * @export
 	 * @abstract
@@ -15,22 +15,16 @@ namespace OSUIFramework.Patterns {
 		extends AbstractPattern<C>
 		implements Interface.IChild
 	{
-		/**
-		 * Store the Pattern Id.
-		 *
-		 * @private
-		 * @type {string}
-		 * @memberof AbstractChild
-		 */
+		// Store if it's the First Child
+		private _isFirstChild = false;
+
+		// Store if it's the Last Child
+		private _isLastChild = false;
+
+		// Store the Pattern Id.
 		private _parentId: string;
 
-		/**
-		 * Store the Parent reference.
-		 *
-		 * @private
-		 * @type {PT}
-		 * @memberof AbstractChild
-		 */
+		// Store the Parent reference.
 		private _parentObject: PT;
 
 		/**
@@ -63,6 +57,46 @@ namespace OSUIFramework.Patterns {
 					`${ErrorCodes.AbstractChild.ParentNotFound}: Parent of Child with Id: '${this.widgetId}' was not found!`
 				);
 			}
+		}
+
+		/**
+		 * Getter that allows to check if it's the first child.
+		 *
+		 * @readonly
+		 * @type {string}
+		 * @memberof AbstractChild
+		 */
+		public get isFirstChild(): boolean {
+			return this._isFirstChild;
+		}
+
+		/**
+		 * Setter that allows to define it's the first child.
+		 *
+		 * @readonly
+		 * @type {string}
+		 * @memberof AbstractChild
+		 */
+		public set isFirstChild(value: boolean) {
+			this._isFirstChild = value;
+		}
+
+		/**
+		 * Getter that allows to check if it's the last child.
+		 *
+		 * @memberof AbstractChild
+		 */
+		public get isLastChild(): boolean {
+			return this._isLastChild;
+		}
+
+		/**
+		 * Setter that allows to define it's the last child.
+		 *
+		 * @memberof AbstractChild
+		 */
+		public set isLastChild(value: boolean) {
+			this._isLastChild = value;
 		}
 
 		/**

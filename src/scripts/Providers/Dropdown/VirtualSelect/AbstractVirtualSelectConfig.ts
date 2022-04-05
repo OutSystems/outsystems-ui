@@ -40,7 +40,9 @@ namespace Providers.Dropdown.VirtualSelect {
 
 		// Method used to generate the HTML String to be attached at the option label
 		private _getOptionImagePrefix(index: number): string {
-			return `<img class="${Enum.CssClass.OptionItemImage}" src="${this.OptionsList[index].image_url_or_class}">`;
+			// Since we'll add a src attribute, lets sanitize the given url to avoid XSS
+			const sanitizedUrl = OSUIFramework.Helper.Sanitize(this.OptionsList[index].image_url_or_class);
+			return `<img class="${Enum.CssClass.OptionItemImage}" src="${sanitizedUrl}">`;
 		}
 
 		// Method used to generate the option info that will be added
@@ -64,6 +66,14 @@ namespace Providers.Dropdown.VirtualSelect {
 
 		// Method used to set all the common VirtualSelect properties across the different types of instances
 		public getProviderConfig(): VirtualSelectOpts {
+			/* In order to avoid XSS let's sanitize the label of each all options
+			- This must be done here since If we do this at the renderer option we will remain with the
+			library value unSanitized, that said we must do it before adding the list of options to the library! */
+			for (const option of this.OptionsList) {
+				option.label = OSUIFramework.Helper.Sanitize(option.label);
+			}
+
+			// Set the library options
 			const vsOptions = {
 				ele: this.ElementId,
 				hideClearButton: true,

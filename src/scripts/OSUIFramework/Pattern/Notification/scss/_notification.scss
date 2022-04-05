@@ -5,12 +5,14 @@
 
 ///
 .osui-notification {
+	--osui-notification-margin: var(--space-m);
+
 	background-color: var(--color-neutral-0);
 	border-radius: var(--border-radius-soft);
 	border: var(--border-size-s) solid var(--color-neutral-4);
 	box-shadow: var(--shadow-xl);
 	color: var(--color-neutral-10);
-	max-width: 100%;
+	max-width: calc(100vw - (var(--osui-notification-margin) * 2));
 	opacity: 0;
 	padding: var(--space-m);
 	pointer-events: none;
@@ -55,15 +57,15 @@
 			&,
 			&-right,
 			&-left {
-				top: calc(var(--os-safe-area-top) + var(--space-m));
+				top: calc(var(--os-safe-area-top) + var(--osui-notification-margin));
 			}
 
 			&-right {
-				right: calc(var(--os-safe-area-right) + var(--space-m));
+				right: calc(var(--os-safe-area-right) + var(--osui-notification-margin));
 				transform: translateX(100%);
 			}
 			&-left {
-				left: calc(var(--os-safe-area-left) + var(--space-m));
+				left: calc(var(--os-safe-area-left) + var(--osui-notification-margin));
 				transform: translateX(-100%);
 			}
 		}
@@ -80,11 +82,11 @@
 		}
 
 		&-right {
-			right: calc(var(--os-safe-area-right) + var(--space-m));
+			right: calc(var(--os-safe-area-right) + var(--osui-notification-margin));
 			transform: translate(100%, -50%);
 		}
 		&-left {
-			left: calc(var(--os-safe-area-left) + var(--space-m));
+			left: calc(var(--os-safe-area-left) + var(--osui-notification-margin));
 			transform: translate(-100%, -50%);
 		}
 
@@ -95,15 +97,15 @@
 			&,
 			&-right,
 			&-left {
-				bottom: calc(var(--os-safe-area-bottom) + var(--space-m));
+				bottom: calc(var(--os-safe-area-bottom) + var(--osui-notification-margin));
 			}
 
 			&-right {
-				right: calc(var(--os-safe-area-right) + var(--space-m));
+				right: calc(var(--os-safe-area-right) + var(--osui-notification-margin));
 				transform: translateX(100%);
 			}
 			&-left {
-				left: calc(var(--os-safe-area-left) + var(--space-m));
+				left: calc(var(--os-safe-area-left) + var(--osui-notification-margin));
 				transform: translateX(-100%);
 			}
 		}
@@ -165,6 +167,11 @@
 }
 
 // Responsive --------------------------------------------------------------------
+.phone {
+	.osui-notification {
+		--osui-notification-margin: var(--space-base);
+	}
+}
 
 ///
 .android[data-status-bar-height] {

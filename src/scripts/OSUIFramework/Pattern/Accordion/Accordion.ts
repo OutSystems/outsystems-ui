@@ -8,9 +8,26 @@ namespace OSUIFramework.Patterns.Accordion {
 		// Stores the Accordion Items of this Accordion
 		private _accordionItems = new Map<string, OSUIFramework.Patterns.AccordionItem.IAccordionItem>();
 		private _accordionLastItem: HTMLElement;
+		private _hasList: boolean;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new AccordionConfig(configs));
+		}
+
+		// Method to prepare the accordion classes and attributes
+		private _prepareAccordion(): void {
+			// Check if it's inside a list.
+			this._hasList = OutSystems.OSUI.Utils.GetHasListInside(this._selfElem);
+
+			// If there's a list, these will be updated every time a new item enters the DOM
+			// Otherwise, it can be done now, as the accordionItem have already been all rendered
+			if (this._hasList === false) {
+				this.setHTMLElements();
+
+				this._updateFirstAndLastItems();
+			}
+
+			this.setA11YProperties();
 		}
 
 		/**
@@ -20,8 +37,13 @@ namespace OSUIFramework.Patterns.Accordion {
 		 * @memberof Accordion
 		 */
 		private _removeInitialCssClasses(): void {
-			Helper.Dom.Styles.RemoveClass(this._accordionFirstItem, Enum.CssClass.PatternFirstItem);
-			Helper.Dom.Styles.RemoveClass(this._accordionLastItem, Enum.CssClass.PatternLastItem);
+			if (this._accordionFirstItem) {
+				Helper.Dom.Styles.RemoveClass(this._accordionFirstItem, Enum.CssClass.PatternFirstItem);
+			}
+
+			if (this._accordionLastItem) {
+				Helper.Dom.Styles.RemoveClass(this._accordionLastItem, Enum.CssClass.PatternLastItem);
+			}
 		}
 
 		/**
@@ -31,8 +53,13 @@ namespace OSUIFramework.Patterns.Accordion {
 		 * @memberof Accordion
 		 */
 		private _setInitialCssClasses(): void {
-			Helper.Dom.Styles.AddClass(this._accordionFirstItem, Enum.CssClass.PatternFirstItem);
-			Helper.Dom.Styles.AddClass(this._accordionLastItem, Enum.CssClass.PatternLastItem);
+			if (this._accordionFirstItem) {
+				Helper.Dom.Styles.AddClass(this._accordionFirstItem, Enum.CssClass.PatternFirstItem);
+			}
+
+			if (this._accordionLastItem) {
+				Helper.Dom.Styles.AddClass(this._accordionLastItem, Enum.CssClass.PatternLastItem);
+			}
 		}
 
 		/**
@@ -42,10 +69,14 @@ namespace OSUIFramework.Patterns.Accordion {
 		 * @memberof Accordion
 		 */
 		private _updateFirstAndLastItems(): void {
-			// Remove classes form current items
-			this._removeInitialCssClasses();
-			// Unset those items
-			this.unsetHTMLElements();
+			// If first item, no need to remove or unset anything
+			if (this._accordionItems.size > 0) {
+				// Remove classes form current items
+				this._removeInitialCssClasses();
+				// Unset those items
+				this.unsetHTMLElements();
+			}
+
 			// Set new first and last items
 			this.setHTMLElements();
 			// Set classes to the new first and last items
@@ -69,9 +100,10 @@ namespace OSUIFramework.Patterns.Accordion {
 		 * @memberof Accordion
 		 */
 		protected setHTMLElements(): void {
-			// Accordion > OSBlockWidget(Accordion Item) > AccordionItem
-			this._accordionFirstItem = this._selfElem.firstChild.firstChild as HTMLElement;
-			this._accordionLastItem = this._selfElem.lastChild.firstChild as HTMLElement;
+			const targetElem = this._hasList ? this._selfElem.firstChild : this._selfElem;
+
+			this._accordionFirstItem = targetElem.firstChild.firstChild as HTMLElement;
+			this._accordionLastItem = targetElem.lastChild.firstChild as HTMLElement;
 		}
 
 		/**
@@ -116,9 +148,7 @@ namespace OSUIFramework.Patterns.Accordion {
 		public build(): void {
 			super.build();
 
-			this.setHTMLElements();
-			this._updateFirstAndLastItems();
-			this.setA11YProperties();
+			this._prepareAccordion();
 
 			super.finishBuild();
 		}
