@@ -55,6 +55,7 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 				offset it should set it as IsActive since it will be the last item in screen inside the scrollContainer.
 			 */
 			if (
+				(this.isFirstChild && scrollYPosition.percentageInView === 0) ||
 				(elementOffsetTopVal >= -thresholdVal && elementOffsetTopVal <= thresholdVal) ||
 				scrollYPosition.percentageInView === 100
 			) {
