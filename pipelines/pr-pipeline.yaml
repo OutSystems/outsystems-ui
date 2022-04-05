@@ -1,8 +1,8 @@
 resources:
     repositories:
-        - repository: rd-outsystems-ui-qa-tests
+        - repository: outsystems-ui-tests
           type: github
-          name: OutSystems/rd-outsystems-ui-qa-tests
+          name: OutSystems/outsystems-ui-tests
           endpoint: OutSystems
 
 trigger: none
@@ -25,36 +25,33 @@ stages:
                       declare TAGS
 
                       for FILE in $CHANGED_FILES
-                          do
+                          do    
                               if [[ $FILE == *"src/scripts/OutSystems/OSUI/Patterns"* ]]; then
                                   
-                                  ELEMENT=$(echo $FILE| cut -d/ -f6)
+                                  ELEMENT=$(echo $FILE| cut -d/ -f6) # 6th file name in the file path
 
                                   if [[ $ELEMENT == *"API.ts"* ]]; then 
-                                      ELEMENT=${ELEMENT:0:-6}
+                                      ELEMENT=${ELEMENT:0:-6} # cut API.ts from file name
                                   fi
 
                               fi
-                              if [[ $FILE == *"src/scripts/OSUIFramework/Pattern"* ]] || $FILE == *"src/scss/04-patterns"* ]]; then
-                                  ELEMENT=$(echo $FILE| cut -d/ -f5)
+
+                              if [[ $FILE == *"src/scripts/OSUIFramework/Pattern"* || $FILE == *"src/scss/04-patterns"* ]]; then
+                                  ELEMENT=$(echo $FILE| cut -d/ -f5) # 5th file/folder name in the file path
 
                                   if [[ $ELEMENT == *".scss"* ]]; then 
-                                      ELEMENT=${ELEMENT:1:-5}
+                                      ELEMENT=${ELEMENT:1:-5} # cut .scss from file name
                                   fi
 
                               fi
 
-                              if [[ $FILE == *"src/scss/10-deprecated"* ]]; then
-                                  ELEMENT=$(echo $FILE| cut -d/ -f4)
+                              if [[ $FILE == *"src/scss/10-deprecated"* || $FILE == *"src/scripts/Providers"* ]]; then
+                                  ELEMENT=$(echo $FILE| cut -d/ -f4) # 4th file/folder name in the file path
                                   
                                   if [[ $ELEMENT == *"-deprecated.scss"* ]]; then 
-                                      ELEMENT=${ELEMENT:1:-16}
+                                      ELEMENT=${ELEMENT:1:-16}  # cut -deprecated.scss from file name
                                   fi
 
-                              fi
-
-                              if [[ $FILE == *"src/static"* ]]; then
-                                  ELEMENT=$(echo $FILE| cut -d/ -f3)
                               fi
 
                               if [[ -z "$ELEMENT" ]]; then
@@ -98,8 +95,8 @@ stages:
                 tags: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['check_changes.tags'] ]
                 branch: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['branch_name.branch'] ]
             steps:
-                - checkout: rd-outsystems-ui-qa-tests
-                - template: ./pipelines/templates/build-and-execute-functional-tests-template.yml@rd-outsystems-ui-qa-tests
+                - checkout: outsystems-ui-tests
+                - template: ./pipelines/templates/build-and-execute-functional-tests-template.yml@outsystems-ui-tests
                   parameters:
                       BROWSER: safari
                       ENVIRONMENT: dev
@@ -122,8 +119,8 @@ stages:
                 tags: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['check_changes.tags'] ]
                 branch: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['branch_name.branch'] ]
             steps:
-                - checkout: rd-outsystems-ui-qa-tests
-                - template: ./pipelines/templates/build-and-execute-functional-tests-template.yml@rd-outsystems-ui-qa-tests
+                - checkout: outsystems-ui-tests
+                - template: ./pipelines/templates/build-and-execute-functional-tests-template.yml@outsystems-ui-tests
                   parameters:
                       BROWSER: safari
                       ENVIRONMENT: dev
@@ -144,8 +141,8 @@ stages:
                 tags: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['check_changes.tags'] ]
                 branch: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['branch_name.branch'] ]
             steps:
-                - checkout: rd-outsystems-ui-qa-tests
-                - template: ./pipelines/templates/build-and-execute-functional-tests-template.yml@rd-outsystems-ui-qa-tests
+                - checkout: outsystems-ui-tests
+                - template: ./pipelines/templates/build-and-execute-functional-tests-template.yml@outsystems-ui-tests
                   parameters:
                       BROWSER: chrome
                       ENVIRONMENT: dev
@@ -168,8 +165,8 @@ stages:
                 tags: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['check_changes.tags'] ]
                 branch: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['branch_name.branch'] ]
             steps:
-                - checkout: rd-outsystems-ui-qa-tests
-                - template: ./pipelines/templates/build-and-execute-functional-tests-template.yml@rd-outsystems-ui-qa-tests
+                - checkout: outsystems-ui-tests
+                - template: ./pipelines/templates/build-and-execute-functional-tests-template.yml@outsystems-ui-tests
                   parameters:
                       BROWSER: chrome
                       ENVIRONMENT: dev
