@@ -312,13 +312,20 @@ namespace Providers.Dropdown.OSUIComponents {
 
 			// Check if the given OptionId exist at optionsList
 			if (clickedItem) {
-				// Udpate the Option Item selected State!
-				clickedItem.toggleSelected();
+				// Check if Dropdown should only allow single option selected
+				if (this.configs.AllowMultipleSelection) {
+					// Udpate the Option Item selected State!
+					clickedItem.toggleSelected();
+				}
 
 				// Check if Dropdown should only allow single option selected
 				if (this.configs.AllowMultipleSelection === false) {
 					// Close the Dropdown!
 					this._close();
+
+					if (clickedItem.IsSelected === false) {
+						clickedItem.toggleSelected();
+					}
 				}
 			} else {
 				throw new Error(
@@ -863,7 +870,7 @@ namespace Providers.Dropdown.OSUIComponents {
 			// Go through all the seected option items
 			for (const optionItem of selectedOptions) {
 				// Unselect it!
-				optionItem.toggleSelected();
+				optionItem.toggleSelected(false);
 			}
 		}
 
