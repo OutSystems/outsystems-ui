@@ -12,6 +12,7 @@ namespace OSUIFramework.GlobalEnum {
 	 */
 	export enum CssClassElements {
 		Header = 'header',
+		HeaderIsFixed = 'fixed-header',
 		List = 'list',
 		MainContent = 'main-content',
 	}

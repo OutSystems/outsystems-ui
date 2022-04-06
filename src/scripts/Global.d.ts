@@ -65,6 +65,15 @@ declare global {
 		top: boolean;
 	};
 
+	// Set the scroll position type
+	type ScrollPosition = {
+		percentageInView: number;
+		pixelInView: number;
+		scrollableHeight: number;
+		value: number;
+		viewHeight: number;
+	};
+
 	// RangeSlider
 	type NoUiSlider = noUiSlider;
 	type NoUiSliderOptions = noUiSliderOptions;
