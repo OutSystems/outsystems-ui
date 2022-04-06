@@ -139,6 +139,8 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 * @memberof DropdownServerSideItem
 		 */
 		protected unsetCallbacks(): void {
+			this._eventOnClick = null;
+			this._eventOnkeyboardPress = null;
 			this._platformEventOnClickCallback = null;
 		}
 
