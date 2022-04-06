@@ -143,7 +143,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		private _getRecomendedPosition(): void {
 			// Get the Boundaries for the balloon container
 			const balloonBounds = this._balloonContainerElement.getBoundingClientRect();
-			balloonBounds.height = this.configs.balloonMaxHeight;
+			balloonBounds.height = this.configs.balloonMaxHeight + Enum.PropertiesValues.ThresholVerticalAnimateValue;
 
 			// Get the recomended position to open the balloon
 			const recomendedPosition = OSUIFramework.Helper.BoundPosition.GetRecomendedPositionByBounds(
@@ -437,6 +437,11 @@ namespace Providers.Dropdown.OSUIComponents {
 				this._balloonWrapperElement,
 				Enum.InlineCssVariables.BalloonMaxHeight,
 				this.configs.balloonMaxHeight + OSUIFramework.GlobalEnum.Units.Pixel
+			);
+			OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
+				this._balloonWrapperElement,
+				Enum.InlineCssVariables.ThresholVerticalAnimate,
+				Enum.PropertiesValues.ThresholVerticalAnimateValue + OSUIFramework.GlobalEnum.Units.Pixel
 			);
 		}
 
