@@ -11,7 +11,7 @@
 	cursor: pointer;
 	display: flex;
 	flex: 1;
-	height: 40px;
+	min-height: 40px;
 	overflow: hidden;
 	padding: var(--space-s) var(--space-base);
 	transition: background 250ms ease;

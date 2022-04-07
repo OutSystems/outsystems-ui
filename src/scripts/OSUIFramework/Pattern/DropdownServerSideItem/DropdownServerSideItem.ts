@@ -139,6 +139,8 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 * @memberof DropdownServerSideItem
 		 */
 		protected unsetCallbacks(): void {
+			this._eventOnClick = null;
+			this._eventOnkeyboardPress = null;
 			this._platformEventOnClickCallback = null;
 		}
 
@@ -251,14 +253,21 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		/**
 		 * Method used to update the selected status
 		 *
+		 * @param triggerCallback True by default, used to block the callback when needed
 		 * @memberof DropdownServerSideItem
 		 */
-		public toggleSelected(): void {
+		public toggleSelected(triggerCallback = true): void {
 			// Update the Status value with the it's Toggled value
 			this._updateSelectedStatus(!this.configs.IsSelected);
 
-			// Trigger platform callback about Option has been selected!
-			Helper.AsyncInvocation(this._platformEventOnClickCallback, this.parentObject.widgetId, this.configs.ItemId);
+			if (triggerCallback) {
+				// Trigger platform callback about Option has been selected!
+				Helper.AsyncInvocation(
+					this._platformEventOnClickCallback,
+					this.parentObject.widgetId,
+					this.configs.ItemId
+				);
+			}
 		}
 
 		/**
