@@ -112,13 +112,13 @@ namespace OutSystems.OSUI.Patterns.<%= patternNamePC %>API {
 	 * @param {string} eventName
 	 * @param {OSUIFramework.Callbacks.OSGeneric} callback
 	 */
-	export function RegisterProviderCallback(
+	export function RegisterCallback(
 		<%= patternName %>Id: string,
 		eventName: string,
 		callback: OSUIFramework.Callbacks.OSGeneric
 	): void {
 		const _<%= patternName %> = this.Get<%= patternNamePC %>ItemById(<%= patternName %>Id);
 
-		_<%= patternName %>.registerProviderCallback(eventName, callback);
+		_<%= patternName %>.registerCallback(eventName, callback);
 	}
 }

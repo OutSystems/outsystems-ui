@@ -20,6 +20,6 @@ namespace OSUIFramework.Patterns.<%= patternNamePC %> {
 
 		// TODO (by CreateNewPattern): Implement abstract methods that all inherit instances should have
 
-		public abstract registerProviderCallback(eventName: string, callback: Callbacks.OSGeneric): void;
+		public abstract registerCallback(eventName: string, callback: Callbacks.OSGeneric): void;
 	}
 }
