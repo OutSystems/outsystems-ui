@@ -172,7 +172,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @export
 	 * @return {*}  Array<string>
 	 */
-	export function GetAllDropDownItemsMap(): Array<string> {
+	export function GetAllDropDownItemsInScreen(): Array<string> {
 		return OSUIFramework.Helper.MapOperation.ExportKeys(_dropdownItemsMap);
 	}
 
