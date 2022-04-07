@@ -7,7 +7,7 @@ namespace OSUIFramework.Patterns.Carousel {
 		goTo(index: number);
 		next();
 		previous();
-		registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void;
+		registerCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void;
 		toggleDrag(hasDrag: boolean);
 		updateOnRender();
 	}

@@ -353,7 +353,7 @@ namespace Providers.Splide {
 		 * @param {OSUIFramework.Callbacks.OSGeneric} callback
 		 * @memberof OSUISplide
 		 */
-		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
+		public registerCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
 			switch (eventName) {
 				case OSUIFramework.Patterns.Carousel.Enum.CarouselEvents.OnSlideMoved:
 					this._platformEventOnSlideMoved = callback;

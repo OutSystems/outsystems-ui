@@ -261,7 +261,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * @param {OSUIFramework.Callbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
 		 * @memberof AbstractVirtualSelect
 		 */
-		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
+		public registerCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
 			switch (eventName) {
 				case OSUIFramework.Patterns.Dropdown.Enum.Events.Initialized:
 					if (this._platformEventInitializedCallback === undefined) {

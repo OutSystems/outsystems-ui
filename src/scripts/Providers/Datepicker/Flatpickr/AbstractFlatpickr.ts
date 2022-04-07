@@ -229,7 +229,7 @@ namespace Providers.Datepicker.Flatpickr {
 		}
 
 		// Method used to regist callback events
-		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
+		public registerCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
 			switch (eventName) {
 				case OSUIFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnChange:
 					this._onChangeCallbackEvent = callback;

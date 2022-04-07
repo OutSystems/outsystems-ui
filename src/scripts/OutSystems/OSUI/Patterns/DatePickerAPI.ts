@@ -153,14 +153,14 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @param {string} eventName
 	 * @param {OSUIFramework.Callbacks.OSGeneric} callback
 	 */
-	export function RegisterProviderCallback(
+	export function RegisterCallback(
 		datePickerId: string,
 		eventName: string,
 		callback: OSUIFramework.Callbacks.OSGeneric
 	): void {
 		const _datePicker = this.GetDatePickerItemById(datePickerId);
 
-		_datePicker.registerProviderCallback(eventName, callback);
+		_datePicker.registerCallback(eventName, callback);
 	}
 
 	/**

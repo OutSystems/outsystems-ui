@@ -243,7 +243,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @param {OSUIFramework.Callbacks.OSGeneric} callback
 	 * @return {*} {string} Return Message Success or message of error info if it's the case.
 	 */
-	export function RegisterProviderCallback(
+	export function RegisterCallback(
 		dropdownId: string,
 		eventName: string,
 		callback: OSUIFramework.Callbacks.OSGeneric
@@ -257,7 +257,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 		const _dropdownItem = this.GetDropdownById(dropdownId);
 
 		try {
-			_dropdownItem.registerProviderCallback(eventName, callback);
+			_dropdownItem.registerCallback(eventName, callback);
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
