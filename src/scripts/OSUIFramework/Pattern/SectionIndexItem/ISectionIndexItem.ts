@@ -8,15 +8,7 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 	 * @extends {Interface.IChild}
 	 */
 	export interface ISectionIndexItem extends Interface.IChild {
-		/**
-		 * Getter that allows to obtain the IsSelectd status value.
-		 *
-		 * @readonly
-		 * @type {boolean}
-		 * @memberof IDropdownServerSideItem
-		 */
 		get IsSelected(): boolean;
-
 		get TargetElement(): HTMLElement;
 		get TargetElementOffset(): OffsetValues;
 
