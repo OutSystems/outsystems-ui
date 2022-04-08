@@ -37,8 +37,9 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		/**
 		 * Method used to update the DropdownOptionItem selected state
 		 *
+		 * @param triggerCallback True by default, used to block the callback when needed
 		 * @memberof IDropdownServerSideItem
 		 */
-		toggleSelected(): void;
+		toggleSelected(triggerCallback?: boolean): void;
 	}
 }

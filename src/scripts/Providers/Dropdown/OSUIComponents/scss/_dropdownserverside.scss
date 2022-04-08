@@ -63,6 +63,10 @@ $balloonMarginToSelectValuesWrapper: 2px;
 			transition: border 250ms ease-in-out;
 			width: 100%;
 		}
+
+		[data-expression] {
+			white-space: nowrap;
+		}
 	}
 
 	// Balloon section
@@ -82,7 +86,7 @@ $balloonMarginToSelectValuesWrapper: 2px;
 			);
 			transition: max-height 300ms ease-in-out;
 			width: 100%;
-			z-index: 1;
+			z-index: 2;
 
 			// Service Studio Preview
 			& {
@@ -111,8 +115,8 @@ $balloonMarginToSelectValuesWrapper: 2px;
 			height: 100%;
 			opacity: 0;
 			overflow: hidden;
-			// -20px is the value used as a threshold value to animate down the balloon
-			transform: translateY(-20px);
+			// --osui-dropdown-ss-thresholdanimateval is the value used as a threshold to animate down the balloon
+			transform: translateY(calc(-1 * var(--osui-dropdown-ss-thresholdanimateval)));
 			transition: opacity 250ms ease, transform 300ms ease-in-out;
 
 			// Service Studio Preview
