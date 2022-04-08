@@ -57,7 +57,7 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 			if (
 				(this.isFirstChild && scrollYPosition.percentageInView === 0) ||
 				(elementOffsetTopVal >= -thresholdVal && elementOffsetTopVal <= thresholdVal) ||
-				scrollYPosition.percentageInView === 100
+				(this.isLastChild && scrollYPosition.percentageInView === 100)
 			) {
 				this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Active);
 			}
