@@ -49,6 +49,9 @@
 		--color-#{$type}: #{$value};
 	}
 
+	/*! Overlays */
+	--overlay-background: #{$osui-overlay-background};
+
 	/*! Space - Sizes */
 	@each $type, $value in $osui-sizes {
 		--space-#{$type}: #{$value};

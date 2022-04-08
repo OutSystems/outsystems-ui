@@ -166,3 +166,9 @@ $osui-colors-neutral: '0' #ffffff, '1' #f8f9fa, '2' #f1f3f5, '3' #e9ecef, '4' #d
 /// Predefined Colors - Semantic
 $osui-colors-semantic: 'error-light' #fceaea, 'error' #dc2020, 'warning-light' #fdf6e5, 'warning' #e9a100,
 	'success-light' #eaf3eb, 'success' #29823b, 'info-light' #e5f5fc, 'info' #017aad;
+
+/* ---------------------------------------------------------------------------- */
+/* Overlays                                                                     */
+/* ---------------------------------------------------------------------------- */
+/// Predefined Background
+$osui-overlay-background: rgba(0, 0, 0, 0.25);
