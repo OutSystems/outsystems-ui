@@ -112,14 +112,14 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 * @param {string} eventName
 	 * @param {OSUIFramework.Callbacks.OSGeneric} callback
 	 */
-	export function RegisterProviderCallback(
+	export function RegisterCallback(
 		rangeSliderId: string,
 		eventName: string,
 		callback: OSUIFramework.Callbacks.OSGeneric
 	): void {
 		const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
 
-		rangeSlider.registerProviderCallback(eventName, callback);
+		rangeSlider.registerCallback(eventName, callback);
 	}
 
 	/**

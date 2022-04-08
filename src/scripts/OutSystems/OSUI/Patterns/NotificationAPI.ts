@@ -113,7 +113,7 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	 * @param {OSUIFramework.Callbacks.OSGeneric} callback
 	 * @return {*} {string} Return Message Success or message of error info if it's the case.
 	 */
-	export function RegisterProviderCallback(
+	export function RegisterCallback(
 		notificationId: string,
 		eventName: string,
 		callback: OSUIFramework.Callbacks.OSGeneric
@@ -127,7 +127,7 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 		const _notificationItem = this.GetNotificationById(notificationId);
 
 		try {
-			_notificationItem.registerProviderCallback(eventName, callback);
+			_notificationItem.registerCallback(eventName, callback);
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
