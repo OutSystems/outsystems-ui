@@ -138,7 +138,6 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		 * @memberof AnimatedLabel
 		 */
 		protected unsetCallbacks(): void {
-			// Reassign the elements to undefined, preventing memory leaks and remove events
 			this._removeEvents();
 
 			this._eventBlur = undefined;

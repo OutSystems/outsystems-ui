@@ -175,13 +175,12 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		}
 
 		/**
-		 *  Method to remove all assigned callbacks
+		 *  Removes the listeners that were added in the code and unsets the callbacks.
 		 *
 		 * @protected
 		 * @memberof SectionIndexItem
 		 */
 		protected unsetCallbacks(): void {
-			// Reassign the elements to undefined, preventing memory leaks and remove events
 			this._removeEvents();
 
 			this._eventOnClick = undefined;
