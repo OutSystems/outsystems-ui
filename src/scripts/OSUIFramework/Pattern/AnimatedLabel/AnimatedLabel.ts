@@ -30,50 +30,36 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 			this._isLabelFocus = false;
 		}
 
-		/**
-		 * Callback to the event onAnimationStart.
-		 *
-		 * @private
-		 * @memberof AnimatedLabel
-		 */
+		// Add Pattern Events
+		private _addEvents(): void {
+			this._inputElement.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventBlur);
+			this._inputElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventFocus);
+			this._inputElement.addEventListener(GlobalEnum.HTMLEvent.AnimationStart, this._eventAnimationStart);
+		}
+
+		// Callback to the event onAnimationStart
 		private _inputAnimationStartCallback(e: AnimationEvent): void {
 			if (e.animationName === Enum.AnimationEvent.OnAutoFillStart) {
 				this._inputStateToggle(true);
 			}
 		}
 
-		/**
-		 * Callback to the event "blur" of the input.
-		 *
-		 * @private
-		 * @memberof AnimatedLabel
-		 */
+		//  Callback to the event "blur" of the input
 		private _inputBlurCallback(evt: UIEvent): void {
 			if (evt.type === GlobalEnum.HTMLEvent.Blur) {
 				this._inputStateToggle(false);
 			}
 		}
 
-		/**
-		 * Callback to the event "focus" of the input.
-		 *
-		 * @private
-		 * @memberof AnimatedLabel
-		 */
+		//  Callback to the event "focus" of the input
 		private _inputFocusCallback(evt: UIEvent): void {
 			if (evt.type === GlobalEnum.HTMLEvent.Focus) {
 				this._inputStateToggle(true);
 			}
 		}
 
-		/**
-		 * Method that implements the toggle of the state of the input.
-		 * It can either add or remove the class "active" of the input.
-		 *
-		 * @private
-		 * @param {boolean} isFocus
-		 * @memberof AnimatedLabel
-		 */
+		// Method that implements the toggle of the state of the input.
+		// It can either add or remove the class "active" of the input.
 		private _inputStateToggle(isFocus: boolean | undefined): void {
 			const inputHasText = this._inputElement && this._inputElement.value !== '';
 
@@ -92,6 +78,13 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 			}
 		}
 
+		// Remove Pattern Events
+		private _removeEvents(): void {
+			this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.Blur, this._eventBlur);
+			this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventFocus);
+			this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.AnimationStart, this._eventAnimationStart);
+		}
+
 		/**
 		 * Set the callbacks that will be assigned to the window click event
 		 *
@@ -103,9 +96,7 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 			this._eventFocus = this._inputFocusCallback.bind(this);
 			this._eventAnimationStart = this._inputAnimationStartCallback.bind(this);
 
-			this._inputElement.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventBlur);
-			this._inputElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventFocus);
-			this._inputElement.addEventListener(GlobalEnum.HTMLEvent.AnimationStart, this._eventAnimationStart);
+			this._addEvents();
 		}
 
 		/**
@@ -147,9 +138,8 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		 * @memberof AnimatedLabel
 		 */
 		protected unsetCallbacks(): void {
-			this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.Blur, this._eventBlur);
-			this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventFocus);
-			this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.AnimationStart, this._eventAnimationStart);
+			// Reassign the elements to undefined, preventing memory leaks and remove events
+			this._removeEvents();
 
 			this._eventBlur = undefined;
 			this._eventFocus = undefined;
@@ -193,7 +183,9 @@ namespace OSUIFramework.Patterns.AnimatedLabel {
 		 */
 		public dispose(): void {
 			this.unsetCallbacks();
+
 			this.unsetHtmlElements();
+
 			//Destroying the base of pattern
 			super.dispose();
 		}
