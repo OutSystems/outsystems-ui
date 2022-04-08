@@ -143,7 +143,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		private _getRecomendedPosition(): void {
 			// Get the Boundaries for the balloon container
 			const balloonBounds = this._balloonContainerElement.getBoundingClientRect();
-			balloonBounds.height = this.configs.balloonMaxHeight;
+			balloonBounds.height = this.configs.balloonMaxHeight + Enum.PropertiesValues.ThresholVerticalAnimateValue;
 
 			// Get the recomended position to open the balloon
 			const recomendedPosition = OSUIFramework.Helper.BoundPosition.GetRecomendedPositionByBounds(
@@ -312,13 +312,20 @@ namespace Providers.Dropdown.OSUIComponents {
 
 			// Check if the given OptionId exist at optionsList
 			if (clickedItem) {
-				// Udpate the Option Item selected State!
-				clickedItem.toggleSelected();
+				// Check if Dropdown should only allow single option selected
+				if (this.configs.AllowMultipleSelection) {
+					// Udpate the Option Item selected State!
+					clickedItem.toggleSelected();
+				}
 
 				// Check if Dropdown should only allow single option selected
 				if (this.configs.AllowMultipleSelection === false) {
 					// Close the Dropdown!
 					this._close();
+
+					if (clickedItem.IsSelected === false) {
+						clickedItem.toggleSelected();
+					}
 				}
 			} else {
 				throw new Error(
@@ -430,6 +437,11 @@ namespace Providers.Dropdown.OSUIComponents {
 				this._balloonWrapperElement,
 				Enum.InlineCssVariables.BalloonMaxHeight,
 				this.configs.balloonMaxHeight + OSUIFramework.GlobalEnum.Units.Pixel
+			);
+			OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
+				this._balloonWrapperElement,
+				Enum.InlineCssVariables.ThresholVerticalAnimate,
+				Enum.PropertiesValues.ThresholVerticalAnimateValue + OSUIFramework.GlobalEnum.Units.Pixel
 			);
 		}
 
@@ -863,7 +875,7 @@ namespace Providers.Dropdown.OSUIComponents {
 			// Go through all the seected option items
 			for (const optionItem of selectedOptions) {
 				// Unselect it!
-				optionItem.toggleSelected();
+				optionItem.toggleSelected(false);
 			}
 		}
 

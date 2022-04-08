@@ -47,6 +47,7 @@ namespace Providers.Dropdown.OSUIComponents.Enum {
 		BalloonMaxHeight = '--osui-dropdown-ss-balloon-max-height',
 		InputHeight = '--osui-dropdown-ss-input-height',
 		Left = '--osui-dropdown-ss-left',
+		ThresholVerticalAnimate = '--osui-dropdown-ss-thresholdanimateval',
 		Top = '--osui-dropdown-ss-top',
 		Width = '--osui-dropdown-ss-width',
 	}
@@ -64,5 +65,6 @@ namespace Providers.Dropdown.OSUIComponents.Enum {
 	 */
 	export enum PropertiesValues {
 		MaxHeight = 320,
+		ThresholVerticalAnimateValue = 20,
 	}
 }
