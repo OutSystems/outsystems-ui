@@ -458,7 +458,7 @@ namespace OSUIFramework.Patterns.Notification {
 		 * @param {Callbacks.OSGeneric} callback
 		 * @memberof Notification
 		 */
-		public registerProviderCallback(eventName: string, callback: Callbacks.OSGeneric): void {
+		public registerCallback(eventName: string, callback: Callbacks.OSGeneric): void {
 			switch (eventName) {
 				case Patterns.Notification.Enum.Events.OnInitialize:
 					if (this._platformEventOnInitialize === undefined) {

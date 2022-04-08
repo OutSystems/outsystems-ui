@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace OSUIFramework.Helper {
+	const _controllScroll = {
+		yValue: 0,
+		yDirection: '',
+	};
+
 	/**
 	 * Trigger a scroll navigation into a given offset position
 	 *
@@ -38,7 +43,16 @@ namespace OSUIFramework.Helper {
 		// Get the pixel value of Scroll
 		const scrolledPx = (scrollableElement.clientHeight * scrolled) / 100;
 
+		// Check the scroll direction
+		if (_controllScroll.yValue < winScroll) {
+			_controllScroll.yDirection = GlobalEnum.Direction.Bottom;
+		} else if (_controllScroll.yValue > winScroll) {
+			_controllScroll.yDirection = GlobalEnum.Direction.Top;
+		}
+		_controllScroll.yValue = winScroll;
+
 		return {
+			direction: _controllScroll.yDirection as GlobalEnum.Direction,
 			percentageInView: scrolled,
 			pixelInView: scrolledPx,
 			scrollableHeight: scrollableElement.scrollHeight,

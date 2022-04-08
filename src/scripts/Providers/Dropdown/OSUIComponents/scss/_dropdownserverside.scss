@@ -376,7 +376,7 @@ $balloonMarginToSelectValuesWrapper: 2px;
 			// Wrapper
 			&-wrapper {
 				align-items: center;
-				background-color: rgba(0, 0, 0, 0.25);
+				background-color: var(--overlay-background);
 				display: flex;
 				left: 0;
 				max-width: 100vw;

@@ -143,7 +143,7 @@
 	}
 
 	&-overlay {
-		background-color: rgba(0, 0, 0, 0.25);
+		background-color: var(--overlay-background);
 		cursor: pointer;
 		height: 100vh;
 		opacity: 0;

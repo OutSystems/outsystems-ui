@@ -23,7 +23,7 @@ namespace OSUIFramework.Patterns.Carousel {
 		public abstract goTo(index: number): void;
 		public abstract next(): void;
 		public abstract previous(): void;
-		public abstract registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void;
+		public abstract registerCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void;
 		public abstract toggleDrag(hasDrag: boolean): void;
 		public abstract updateOnRender(): void;
 	}
