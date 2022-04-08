@@ -94,7 +94,7 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		// Method used to set the IsActive child item at the onBodyScroll
 		private _setActiveChildOnScroll(child: SectionIndexItem.ISectionIndexItem) {
 			// Prevent logic happen if the scroll has been triggerd by click on the item
-			if (this._navigateOnClick) {
+			if (this._navigateOnClick || !this.configs.IsFixed) {
 				return;
 			}
 
