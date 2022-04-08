@@ -67,6 +67,7 @@ declare global {
 
 	// Set the scroll position type
 	type ScrollPosition = {
+		direction: OSUIFramework.GlobalEnum.Direction;
 		percentageInView: number;
 		pixelInView: number;
 		scrollableHeight: number;

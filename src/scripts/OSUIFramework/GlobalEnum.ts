@@ -54,10 +54,12 @@ namespace OSUIFramework.GlobalEnum {
 	 * OutSystemsUI Direction options
 	 */
 	export enum Direction {
+		Bottom = 'bottom',
 		Left = 'left',
 		LTR = 'ltr',
 		Right = 'right',
 		RTL = 'rtl',
+		Top = 'top',
 	}
 
 	/**

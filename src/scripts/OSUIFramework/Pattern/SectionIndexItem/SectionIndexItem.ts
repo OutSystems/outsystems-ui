@@ -40,11 +40,23 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 			this._setTargetElement();
 			// Get the vertical scroll position value
 			const scrollYPosition = Helper.ScrollVerticalPosition();
+			// Threshold value to set element as Active
+			const thresholdVal = 30;
+			// Store the offSetValue to be checked
+			const elementOffsetTopVal = this.TargetElement.offsetTop + this._headerHeight - scrollYPosition.value;
 
-			// Check if the element should notify parent about it's active!
+			/* Logic behind position validation:
+				- If click to nanvigate into element the calc
+					this.TargetElement.offsetTop - scrollYPosition.value
+				will return 0(zero). That said we're setting a threshold to set as IsActive when
+				this calc will between -thresholdVal and thresholdVal from that offset!
+				- AND;
+				- If scroll has hit the bottom and element doesn't have height enought to be placed at that
+				offset it should set it as IsActive since it will be the last item in screen inside the scrollContainer.
+			 */
 			if (
 				(this.isFirstChild && scrollYPosition.percentageInView === 0) ||
-				scrollYPosition.value >= this.TargetElement.offsetTop + this._headerHeight ||
+				(elementOffsetTopVal >= -thresholdVal && elementOffsetTopVal <= thresholdVal) ||
 				scrollYPosition.percentageInView === 100
 			) {
 				this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Active);
