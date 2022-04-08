@@ -33,4 +33,11 @@
 			border-top-right-radius: var(--border-radius-soft);
 		}
 	}
+
+	// Fix virtual-select behavior inside overflow hidden, as dropboxWrapper: 'body' option has other issues.
+	// This is the same fix that was applied on accordion-deprecated.scss
+	.pop-comp-wrapper {
+		position: relative;
+		transform: translate3d(0px, var(--space-xs), 0px) !important;
+	}
 }
