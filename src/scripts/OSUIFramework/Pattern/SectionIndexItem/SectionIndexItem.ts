@@ -175,6 +175,21 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		}
 
 		/**
+		 *  Method to remove all assigned callbacks
+		 *
+		 * @protected
+		 * @memberof SectionIndexItem
+		 */
+		protected unsetCallbacks(): void {
+			// Reassign the elements to undefined, preventing memory leaks and remove events
+			this._removeEvents();
+
+			this._eventOnClick = undefined;
+			this._eventOnkeyBoardPress = undefined;
+			this._eventOnBodyScroll = undefined;
+		}
+
+		/**
 		 *  Builds the SectionIndexItem.
 		 *
 		 * @memberof SectionIndexItem
@@ -228,7 +243,7 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		 * @memberof SectionIndexItem
 		 */
 		public dispose(): void {
-			this._removeEvents();
+			this.unsetCallbacks();
 
 			// Notify parent about this instance will be destroyed
 			this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Removed);
