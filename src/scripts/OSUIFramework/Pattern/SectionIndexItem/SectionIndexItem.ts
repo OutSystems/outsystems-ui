@@ -97,11 +97,11 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
 		}
 
-		// Check if the HeaderIsFixed
+		// Check if header IsFixed
 		private _setHeaderSize(): void {
 			const hasFixedHeader = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.HeaderIsFixed);
 			if (hasFixedHeader) {
-				// Since Header is Fixed, lets get it's height into consideration!
+				// Since Header is Fixed, let's get its height into consideration!
 				this._headerHeight = Helper.Dom.ClassSelector(
 					document.body,
 					GlobalEnum.CssClassElements.Header
@@ -134,7 +134,7 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 			// Check if TargetElement has been already defined, otherwise define it!
 			this._setTargetElement();
 
-			// Get the headerSize
+			// Takes into account the headerSize
 			this._setHeaderSize();
 
 			// Set the target element offset top/bottom values

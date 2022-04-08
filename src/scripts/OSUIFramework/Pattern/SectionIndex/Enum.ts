@@ -8,7 +8,6 @@ namespace OSUIFramework.Patterns.SectionIndex.Enum {
 		Add = 'add',
 		Click = 'click',
 		KeyPressed = 'keyPressed',
-		Inactive = 'unactive',
 		Removed = 'removed',
 	}
 
