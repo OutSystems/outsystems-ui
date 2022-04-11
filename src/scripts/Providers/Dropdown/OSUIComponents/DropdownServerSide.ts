@@ -445,6 +445,16 @@ namespace Providers.Dropdown.OSUIComponents {
 			);
 		}
 
+		// Method used to set the ExtendedClass to the balloon wrapper as well
+		private _setBalloonWrapperExtendedClass(newExtendedClass: string, preExtendedClass = '') {
+			// Since balloon wrapper will not be at the pattern context, let's also set/update the extendedClass to it!
+			OSUIFramework.Helper.Dom.Styles.ExtendedClass(
+				this._balloonWrapperElement,
+				preExtendedClass,
+				newExtendedClass
+			);
+		}
+
 		// Method used to add CSS classes to pattern elements
 		private _setCssClasses(): void {
 			// If search input exist add a class to the balloon
@@ -454,6 +464,11 @@ namespace Providers.Dropdown.OSUIComponents {
 					this._balloonWrapperElement,
 					Enum.CssClass.BalloonHasNotSearchInput
 				);
+			}
+
+			// Check if the ExtendedClass attribute must be set since balloon will be moved outise of pattern context
+			if (this.configs.ExtendedClass !== '') {
+				this._setBalloonWrapperExtendedClass(this.configs.ExtendedClass);
 			}
 		}
 
@@ -853,12 +868,19 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			// Store previous extended class before change it!
+			const prevBalloonExtendedClass = this.configs.ExtendedClass;
+
 			super.changeProperty(propertyName, propertyValue);
 
 			if (this.isBuilt) {
 				switch (propertyName) {
 					case Enum.Properties.IsDisabled:
 						propertyValue ? this.disable() : this.enable();
+						break;
+
+					case OSUIFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass:
+						this._setBalloonWrapperExtendedClass(propertyValue as string, prevBalloonExtendedClass);
 						break;
 				}
 			}
