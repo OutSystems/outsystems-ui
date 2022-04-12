@@ -1,10 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.Dropdown.OSUIComponents {
+namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class OSUIDropdownServerSide
-		extends OSUIFramework.Patterns.AbstractParent<
-			Dropdown.OSUIComponents.OSUIDropdownServerSideConfig,
-			OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem
+		extends Patterns.AbstractParent<
+			OSUIDropdownServerSideConfig,
+			Patterns.DropdownServerSideItem.IDropdownServerSideItem
 		>
 		implements IDropdownServerSide
 	{
@@ -27,28 +27,28 @@ namespace Providers.Dropdown.OSUIComponents {
 		// Store a Flag property that will help dealing with the focus state at the close moment
 		private _closeDynamically = false;
 		// Click On Body
-		private _eventOnBodyClick: OSUIFramework.Callbacks.Generic;
+		private _eventOnBodyClick: Callbacks.Generic;
 		// Event OnBodyScroll
-		private _eventOnBodyScroll: OSUIFramework.Callbacks.Generic;
+		private _eventOnBodyScroll: Callbacks.Generic;
 		// Click Event
-		private _eventOnClick: OSUIFramework.Callbacks.Generic;
-		private _eventOnClickInputSearch: OSUIFramework.Callbacks.Generic;
+		private _eventOnClick: Callbacks.Generic;
+		private _eventOnClickInputSearch: Callbacks.Generic;
 		// Event OnTransitionEnd applied to the Balloon
-		private _eventOnCloseTransitionEnd: OSUIFramework.Callbacks.Generic;
+		private _eventOnCloseTransitionEnd: Callbacks.Generic;
 		// OnFocus Event at ballon custom span elements
-		private _eventOnSpanFocus: OSUIFramework.Callbacks.Generic;
+		private _eventOnSpanFocus: Callbacks.Generic;
 		// On WindowResize Event
-		private _eventOnWindowResize: OSUIFramework.Callbacks.Generic;
+		private _eventOnWindowResize: Callbacks.Generic;
 		// Keyboard Key Press Event
-		private _eventOnkeyboardPress: OSUIFramework.Callbacks.Generic;
+		private _eventOnkeyboardPress: Callbacks.Generic;
 		// Store a Flag property that will control if the dropdown is blocked (like it's under closing animation)
 		private _isBlocked = false;
 		// Store the Element State, by default is closed!
 		private _isOpened = false;
 		// Platform OnInitialize Callback
-		private _platformEventInitializedCallback: OSUIFramework.Callbacks.OSGeneric;
+		private _platformEventInitializedCallback: Callbacks.OSGeneric;
 		// Platform OnClose Callback
-		private _platformEventOnToggleCallback: OSUIFramework.Callbacks.OSGeneric;
+		private _platformEventOnToggleCallback: Callbacks.OSGeneric;
 		// Store the HTML element for the Dropdown Select Wrapper
 		private _selectValuesWrapper: HTMLElement;
 		// HTML Elements that will help to deal with keyboard tab navigation (A11y - stuff)
@@ -61,7 +61,7 @@ namespace Providers.Dropdown.OSUIComponents {
 
 		// Add error message container with a given text
 		private _addErrorMessage(text: string): void {
-			const errorMessageElement = OSUIFramework.Helper.Dom.ClassSelector(
+			const errorMessageElement = Helper.Dom.ClassSelector(
 				this._selfElem.parentElement,
 				Enum.CssClass.ErrorMessage
 			);
@@ -69,7 +69,7 @@ namespace Providers.Dropdown.OSUIComponents {
 			// Check if the element already exist!
 			if (errorMessageElement === undefined) {
 				// Create the wrapper container
-				const textContainer = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Div);
+				const textContainer = document.createElement(GlobalEnum.HTMLElement.Div);
 				textContainer.classList.add(Enum.CssClass.ErrorMessage);
 				textContainer.innerHTML = text;
 
@@ -80,29 +80,29 @@ namespace Providers.Dropdown.OSUIComponents {
 		// Add Custom HTML elements to the DropdownBallon in order to help on deal with keyboard navigation (Accessibility)
 		private _addSpanHtmlElements(): void {
 			// Add top focus item
-			this._spanTopFocusElement = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Span);
+			this._spanTopFocusElement = document.createElement(GlobalEnum.HTMLElement.Span);
 			this._spanTopFocusElement.classList.add(
 				Enum.CssClass.FocusTopHtmlElement,
-				OSUIFramework.Constants.AccessibilityHideElementClass
+				Constants.AccessibilityHideElementClass
 			);
 			this._balloonWrapperElement.prepend(this._spanTopFocusElement);
-			OSUIFramework.Helper.A11Y.AriaHiddenTrue(this._spanTopFocusElement);
+			Helper.A11Y.AriaHiddenTrue(this._spanTopFocusElement);
 
 			// Add bottom focus item
-			this._spanBottomFocusElement = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Span);
+			this._spanBottomFocusElement = document.createElement(GlobalEnum.HTMLElement.Span);
 			this._spanBottomFocusElement.classList.add(
 				Enum.CssClass.FocusBottomHtmlElement,
-				OSUIFramework.Constants.AccessibilityHideElementClass
+				Constants.AccessibilityHideElementClass
 			);
 			this._balloonWrapperElement.append(this._spanBottomFocusElement);
-			OSUIFramework.Helper.A11Y.AriaHiddenTrue(this._spanBottomFocusElement);
+			Helper.A11Y.AriaHiddenTrue(this._spanBottomFocusElement);
 		}
 
 		// Remove the position if has been already set
 		private _cleanPosition(): void {
 			// If there was an old position, remove it!
 			if (this._balloonPositionClass !== '') {
-				OSUIFramework.Helper.Dom.Styles.RemoveClass(this._balloonWrapperElement, this._balloonPositionClass);
+				Helper.Dom.Styles.RemoveClass(this._balloonWrapperElement, this._balloonPositionClass);
 				this._balloonPositionClass = '';
 			}
 		}
@@ -125,7 +125,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		private _endOfCloseAnimation(): void {
 			// Remove the TransitionEnd event
 			this._balloonWrapperElement.removeEventListener(
-				OSUIFramework.GlobalEnum.HTMLEvent.TransitionEnd,
+				GlobalEnum.HTMLEvent.TransitionEnd,
 				this._eventOnCloseTransitionEnd
 			);
 
@@ -146,7 +146,7 @@ namespace Providers.Dropdown.OSUIComponents {
 			balloonBounds.height = this.configs.balloonMaxHeight + Enum.PropertiesValues.ThresholVerticalAnimateValue;
 
 			// Get the recomended position to open the balloon
-			const recomendedPosition = OSUIFramework.Helper.BoundPosition.GetRecomendedPositionByBounds(
+			const recomendedPosition = Helper.BoundPosition.GetRecomendedPositionByBounds(
 				balloonBounds,
 				document.body.getBoundingClientRect()
 			);
@@ -156,10 +156,10 @@ namespace Providers.Dropdown.OSUIComponents {
 				let newClassPosition = '';
 
 				switch (recomendedPosition) {
-					case OSUIFramework.GlobalEnum.Position.Top:
+					case GlobalEnum.Position.Top:
 						newClassPosition = Enum.CssClass.BalloonPositionTop;
 						break;
-					case OSUIFramework.GlobalEnum.Position.Bottom:
+					case GlobalEnum.Position.Bottom:
 						newClassPosition = Enum.CssClass.BalloonPositionBottom;
 						break;
 				}
@@ -167,18 +167,18 @@ namespace Providers.Dropdown.OSUIComponents {
 				// Store the current position
 				this._balloonPositionClass = newClassPosition;
 				// Set the new position
-				OSUIFramework.Helper.Dom.Styles.AddClass(this._balloonWrapperElement, newClassPosition);
+				Helper.Dom.Styles.AddClass(this._balloonWrapperElement, newClassPosition);
 			}
 		}
 
 		// Move ballon element to outside of the pattern context
 		private _moveBallonElement(): void {
-			const layoutElement = OSUIFramework.Helper.Dom.TagSelector(
+			const layoutElement = Helper.Dom.TagSelector(
 				document.body,
-				OSUIFramework.Constants.Dot + OSUIFramework.Constants.LayoutClass
+				Constants.Dot + Constants.LayoutClass
 			) as HTMLElement;
 
-			OSUIFramework.Helper.Dom.Move(this._balloonWrapperElement, layoutElement);
+			Helper.Dom.Move(this._balloonWrapperElement, layoutElement);
 		}
 
 		// Close when click outside of pattern
@@ -186,7 +186,7 @@ namespace Providers.Dropdown.OSUIComponents {
 			// Get the target element
 			const targetElement = event.target as HTMLElement;
 			// Get the closest based on pattern base selector
-			const getBaseElement = targetElement.closest(OSUIFramework.Constants.Dot + Enum.CssClass.Pattern);
+			const getBaseElement = targetElement.closest(Constants.Dot + Enum.CssClass.Pattern);
 			// If the click occurs outside of this instance and if it's open, close it!
 			if (this._isOpened && getBaseElement !== this._selfElem) {
 				this._closeDynamically = true;
@@ -197,7 +197,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		// Update the balloon coordinates
 		private _onBodyScroll(): void {
 			// If the balloon is open and not IsPhone
-			if (this._isOpened && OSUIFramework.Helper.DeviceInfo.IsPhone === false) {
+			if (this._isOpened && Helper.DeviceInfo.IsPhone === false) {
 				// Update the coordinates
 				this._setBalloonCoordinates();
 				// Clean the position if has been defined
@@ -216,15 +216,12 @@ namespace Providers.Dropdown.OSUIComponents {
 				// Check if the SelectValuesWrapper container has been pressed!
 				case this._selectValuesWrapper:
 					// If Escape Key
-					if (event.key === OSUIFramework.GlobalEnum.Keycodes.Escape) {
+					if (event.key === GlobalEnum.Keycodes.Escape) {
 						this._close();
 					}
 
 					// If Enter or Space Keys and Single Option
-					if (
-						event.key === OSUIFramework.GlobalEnum.Keycodes.Enter ||
-						event.key === OSUIFramework.GlobalEnum.Keycodes.Space
-					) {
+					if (event.key === GlobalEnum.Keycodes.Enter || event.key === GlobalEnum.Keycodes.Space) {
 						// Trigger the click in order to be captured also by DOM (body onClick) in order to close other Dropdowns in page if they are open!
 						this._selectValuesWrapper.click();
 					}
@@ -234,19 +231,19 @@ namespace Providers.Dropdown.OSUIComponents {
 				// Check if the Balloon Options container has been pressed!
 				case this._balloonOptionsWrapperElement:
 					// If Escape Key
-					if (event.key === OSUIFramework.GlobalEnum.Keycodes.Escape) {
+					if (event.key === GlobalEnum.Keycodes.Escape) {
 						this._close();
 					}
 
 					// If ArrowDown Key
-					if (event.key === OSUIFramework.GlobalEnum.Keycodes.ArrowUp) {
+					if (event.key === GlobalEnum.Keycodes.ArrowUp) {
 						// Check if search input exist
 						if (this._balloonSearchInputElement) {
 							this._balloonSearchInputElement.focus();
 						} else {
 							this._spanTopFocusElement.focus();
 						}
-					} else if (event.key === OSUIFramework.GlobalEnum.Keycodes.ArrowDown) {
+					} else if (event.key === GlobalEnum.Keycodes.ArrowDown) {
 						// If ArrowDown Key
 						// Focus the first option item!
 						this.getChildByIndex(0).setFocus();
@@ -261,7 +258,7 @@ namespace Providers.Dropdown.OSUIComponents {
 				// Check if the input Search has been pressed!
 				case this._balloonSearchInputElement:
 					// If Escape Key
-					if (event.key === OSUIFramework.GlobalEnum.Keycodes.Escape) {
+					if (event.key === GlobalEnum.Keycodes.Escape) {
 						this._close();
 					}
 					break;
@@ -330,7 +327,7 @@ namespace Providers.Dropdown.OSUIComponents {
 				}
 			} else {
 				throw new Error(
-					`${OSUIFramework.ErrorCodes.Dropdown.FailOptionItemClicked}: The ${OSUIFramework.GlobalEnum.PatternsNames.DropdownServerSideItem} under uniqueId: '${optionItemId}' does not exist as an OptionItem from ${OSUIFramework.GlobalEnum.PatternsNames.Dropdown} with Id: ${this.widgetId}.`
+					`${ErrorCodes.Dropdown.FailOptionItemClicked}: The ${GlobalEnum.PatternsNames.DropdownServerSideItem} under uniqueId: '${optionItemId}' does not exist as an OptionItem from ${GlobalEnum.PatternsNames.Dropdown} with Id: ${this.widgetId}.`
 				);
 			}
 		}
@@ -353,14 +350,14 @@ namespace Providers.Dropdown.OSUIComponents {
 				// Check which Keyboard key has been pressed
 				switch (optionItem.keyboardTriggeredKey) {
 					// If Enter or Space Keys trigger as a click event!
-					case OSUIFramework.GlobalEnum.Keycodes.Enter:
-					case OSUIFramework.GlobalEnum.Keycodes.Space:
+					case GlobalEnum.Keycodes.Enter:
+					case GlobalEnum.Keycodes.Space:
 						// Act like option item has been clicked!
 						this._optionItemHasBeenClicked(optionItemId);
 						break;
 
 					// ArrowUp
-					case OSUIFramework.GlobalEnum.Keycodes.ArrowUp:
+					case GlobalEnum.Keycodes.ArrowUp:
 						// Check If focused item is not the first one!
 						if (getOptionItemIndex > 0) {
 							this._updateOptionItemFocuStateOnKeyPress(optionItem, getOptionItemIndex - 1);
@@ -368,14 +365,14 @@ namespace Providers.Dropdown.OSUIComponents {
 						break;
 
 					// ArrowDown
-					case OSUIFramework.GlobalEnum.Keycodes.ArrowDown:
+					case GlobalEnum.Keycodes.ArrowDown:
 						if (getOptionItemIndex < this.childItems.length - 1) {
 							this._updateOptionItemFocuStateOnKeyPress(optionItem, getOptionItemIndex + 1);
 						}
 						break;
 
 					// Shift + Tab
-					case OSUIFramework.GlobalEnum.Keycodes.ShiftTab:
+					case GlobalEnum.Keycodes.ShiftTab:
 						// Check if search input exist
 						if (this._balloonSearchInputElement) {
 							this._balloonSearchInputElement.focus();
@@ -385,7 +382,7 @@ namespace Providers.Dropdown.OSUIComponents {
 						break;
 
 					// Tab
-					case OSUIFramework.GlobalEnum.Keycodes.Tab:
+					case GlobalEnum.Keycodes.Tab:
 						// Check if there are focusable elements inside footer
 						if (this._balloonFocusableElemsInFooter.length > 0) {
 							// Set focus the the first one
@@ -396,14 +393,14 @@ namespace Providers.Dropdown.OSUIComponents {
 						break;
 
 					// Escape
-					case OSUIFramework.GlobalEnum.Keycodes.Escape:
+					case GlobalEnum.Keycodes.Escape:
 						// Close Dropdown
 						this._close();
 						break;
 				}
 			} else {
 				throw new Error(
-					`${OSUIFramework.ErrorCodes.Dropdown.FailOptionItemKeyPressed}: The ${OSUIFramework.GlobalEnum.PatternsNames.DropdownServerSideItem} under uniqueId: '${optionItemId}' does not exist as an OptionItem from ${OSUIFramework.GlobalEnum.PatternsNames.Dropdown} with Id: ${this.widgetId}.`
+					`${ErrorCodes.Dropdown.FailOptionItemKeyPressed}: The ${GlobalEnum.PatternsNames.DropdownServerSideItem} under uniqueId: '${optionItemId}' does not exist as an OptionItem from ${GlobalEnum.PatternsNames.Dropdown} with Id: ${this.widgetId}.`
 				);
 			}
 		}
@@ -414,46 +411,42 @@ namespace Providers.Dropdown.OSUIComponents {
 			const selfElement = this._selfElem.getBoundingClientRect();
 
 			// Set Css inline variables
-			OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
+			Helper.Dom.Styles.SetStyleAttribute(
 				this._balloonWrapperElement,
 				Enum.InlineCssVariables.Top,
-				selfElement.top + OSUIFramework.GlobalEnum.Units.Pixel
+				selfElement.top + GlobalEnum.Units.Pixel
 			);
-			OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
+			Helper.Dom.Styles.SetStyleAttribute(
 				this._balloonWrapperElement,
 				Enum.InlineCssVariables.Left,
-				selfElement.left + OSUIFramework.GlobalEnum.Units.Pixel
+				selfElement.left + GlobalEnum.Units.Pixel
 			);
-			OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
+			Helper.Dom.Styles.SetStyleAttribute(
 				this._balloonWrapperElement,
 				Enum.InlineCssVariables.Width,
-				selfElement.width + OSUIFramework.GlobalEnum.Units.Pixel
+				selfElement.width + GlobalEnum.Units.Pixel
 			);
-			OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
+			Helper.Dom.Styles.SetStyleAttribute(
 				this._balloonWrapperElement,
 				Enum.InlineCssVariables.InputHeight,
-				selfElement.height + OSUIFramework.GlobalEnum.Units.Pixel
+				selfElement.height + GlobalEnum.Units.Pixel
 			);
-			OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
+			Helper.Dom.Styles.SetStyleAttribute(
 				this._balloonWrapperElement,
 				Enum.InlineCssVariables.BalloonMaxHeight,
-				this.configs.balloonMaxHeight + OSUIFramework.GlobalEnum.Units.Pixel
+				this.configs.balloonMaxHeight + GlobalEnum.Units.Pixel
 			);
-			OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
+			Helper.Dom.Styles.SetStyleAttribute(
 				this._balloonWrapperElement,
 				Enum.InlineCssVariables.ThresholVerticalAnimate,
-				Enum.PropertiesValues.ThresholVerticalAnimateValue + OSUIFramework.GlobalEnum.Units.Pixel
+				Enum.PropertiesValues.ThresholVerticalAnimateValue + GlobalEnum.Units.Pixel
 			);
 		}
 
 		// Method used to set the ExtendedClass to the balloon wrapper as well
 		private _setBalloonWrapperExtendedClass(newExtendedClass: string, preExtendedClass = '') {
 			// Since balloon wrapper will not be at the pattern context, let's also set/update the extendedClass to it!
-			OSUIFramework.Helper.Dom.Styles.ExtendedClass(
-				this._balloonWrapperElement,
-				preExtendedClass,
-				newExtendedClass
-			);
+			Helper.Dom.Styles.ExtendedClass(this._balloonWrapperElement, preExtendedClass, newExtendedClass);
 		}
 
 		// Method used to add CSS classes to pattern elements
@@ -461,10 +454,7 @@ namespace Providers.Dropdown.OSUIComponents {
 			// If search input exist add a class to the balloon
 			if (this._balloonSearchInputElement === undefined) {
 				// Needed to style the balloon height once at phone
-				OSUIFramework.Helper.Dom.Styles.AddClass(
-					this._balloonWrapperElement,
-					Enum.CssClass.BalloonHasNotSearchInput
-				);
+				Helper.Dom.Styles.AddClass(this._balloonWrapperElement, Enum.CssClass.BalloonHasNotSearchInput);
 			}
 
 			// Check if the ExtendedClass attribute must be set since balloon will be moved outise of pattern context
@@ -482,7 +472,7 @@ namespace Providers.Dropdown.OSUIComponents {
 			// Check if the given OptionId has been already added
 			if (this.getChild(optionItemId)) {
 				throw new Error(
-					`${OSUIFramework.ErrorCodes.Dropdown.FailSetNewOptionItem}: There is already a ${OSUIFramework.GlobalEnum.PatternsNames.DropdownServerSideItem} under Id: '${optionItem.widgetId}' added to ${OSUIFramework.GlobalEnum.PatternsNames.Dropdown} with uniqueId: ${this.uniqueId}.`
+					`${ErrorCodes.Dropdown.FailSetNewOptionItem}: There is already a ${GlobalEnum.PatternsNames.DropdownServerSideItem} under Id: '${optionItem.widgetId}' added to ${GlobalEnum.PatternsNames.Dropdown} with uniqueId: ${this.uniqueId}.`
 				);
 			} else {
 				// Store DropDownOption Child Item
@@ -493,102 +483,66 @@ namespace Providers.Dropdown.OSUIComponents {
 		// Set Pattern Events
 		private _setUpEvents(): void {
 			// Add OnClick Event to the SelectValuesWrapper
-			this._selectValuesWrapper.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			this._selectValuesWrapper.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			// Add KeyDown Event to the SelectValuesWrapper (A11y - stuff)
-			this._selectValuesWrapper.addEventListener(
-				OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
-				this._eventOnkeyboardPress
-			);
+			this._selectValuesWrapper.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyboardPress);
 			// Add KeyDown Event to the BalloonContent (OptionsWrapper) (A11y - stuff)
 			this._balloonOptionsWrapperElement.addEventListener(
-				OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
+				GlobalEnum.HTMLEvent.keyDown,
 				this._eventOnkeyboardPress
 			);
 			// Add Focus Event to the added Top Span Element (A11y - stuff)
-			this._spanTopFocusElement.addEventListener(
-				OSUIFramework.GlobalEnum.HTMLEvent.Focus,
-				this._eventOnSpanFocus
-			);
+			this._spanTopFocusElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnSpanFocus);
 			// Add Focus Event to the added Bottom Span Element (A11y - stuff)
-			this._spanBottomFocusElement.addEventListener(
-				OSUIFramework.GlobalEnum.HTMLEvent.Focus,
-				this._eventOnSpanFocus
-			);
+			this._spanBottomFocusElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnSpanFocus);
 			// If search input exist (A11y - stuff)
 			if (this._balloonSearchInputElement) {
 				this._balloonSearchInputElement.addEventListener(
-					OSUIFramework.GlobalEnum.HTMLEvent.Click,
+					GlobalEnum.HTMLEvent.Click,
 					this._eventOnClickInputSearch
 				);
 				// Add keyPress event in order to capture Escape key
 				this._balloonSearchInputElement.addEventListener(
-					OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
+					GlobalEnum.HTMLEvent.keyDown,
 					this._eventOnkeyboardPress
 				);
 			}
 			// Add the BodyClick callback that will be used Close open Dropdown!
-			OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
-				OSUIFramework.Event.Type.BodyOnClick,
-				this._eventOnBodyClick
-			);
+			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
 			// Add the BodyScroll callback that will be used to update the balloon coodinates
-			OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
-				OSUIFramework.Event.Type.BodyOnScroll,
-				this._eventOnBodyScroll
-			);
+			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
 			// Add the window resize callback that will be used update the balloon position!
-			OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
-				OSUIFramework.Event.Type.WindowResize,
-				this._eventOnWindowResize
-			);
+			Event.GlobalEventManager.Instance.addHandler(Event.Type.WindowResize, this._eventOnWindowResize);
 		}
 
 		// Mehod used to trigger the _platformEventOnToggleCallback callback!
 		private _triggerToogleCalbackEvent(): void {
-			OSUIFramework.Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, this._isOpened);
+			Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, this._isOpened);
 		}
 
 		// Remove Pattern Events
 		private _unsetEvents(): void {
-			this._selectValuesWrapper.removeEventListener(OSUIFramework.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
-			this._selectValuesWrapper.removeEventListener(
-				OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
-				this._eventOnkeyboardPress
-			);
+			this._selectValuesWrapper.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			this._selectValuesWrapper.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyboardPress);
 			this._balloonOptionsWrapperElement.removeEventListener(
-				OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
+				GlobalEnum.HTMLEvent.keyDown,
 				this._eventOnkeyboardPress
 			);
-			this._spanTopFocusElement.removeEventListener(
-				OSUIFramework.GlobalEnum.HTMLEvent.Focus,
-				this._eventOnSpanFocus
-			);
-			this._spanBottomFocusElement.removeEventListener(
-				OSUIFramework.GlobalEnum.HTMLEvent.Focus,
-				this._eventOnSpanFocus
-			);
+			this._spanTopFocusElement.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnSpanFocus);
+			this._spanBottomFocusElement.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnSpanFocus);
 			if (this._balloonSearchInputElement) {
 				this._balloonSearchInputElement.removeEventListener(
-					OSUIFramework.GlobalEnum.HTMLEvent.Click,
+					GlobalEnum.HTMLEvent.Click,
 					this._eventOnClickInputSearch
 				);
 				this._balloonSearchInputElement.removeEventListener(
-					OSUIFramework.GlobalEnum.HTMLEvent.keyDown,
+					GlobalEnum.HTMLEvent.keyDown,
 					this._eventOnkeyboardPress
 				);
 			}
-			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
-				OSUIFramework.Event.Type.BodyOnClick,
-				this._eventOnBodyClick
-			);
-			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
-				OSUIFramework.Event.Type.BodyOnScroll,
-				this._eventOnBodyScroll
-			);
-			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
-				OSUIFramework.Event.Type.WindowResize,
-				this._eventOnWindowResize
-			);
+			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
+			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
+			Event.GlobalEventManager.Instance.removeHandler(Event.Type.WindowResize, this._eventOnWindowResize);
 		}
 
 		// Method used to remove a given DropdownOption from optionItems list, it's triggered by DropdownServerSideItem
@@ -599,7 +553,7 @@ namespace Providers.Dropdown.OSUIComponents {
 				this.unsetChild(optionItemId);
 			} else {
 				throw new Error(
-					`${OSUIFramework.ErrorCodes.Dropdown.FailUnsetNewOptionItem}: The ${OSUIFramework.GlobalEnum.PatternsNames.DropdownServerSideItem} under uniqueId: '${optionItemId}' does not exist as an OptionItem from ${OSUIFramework.GlobalEnum.PatternsNames.Dropdown} with Id: ${this.widgetId}.`
+					`${ErrorCodes.Dropdown.FailUnsetNewOptionItem}: The ${GlobalEnum.PatternsNames.DropdownServerSideItem} under uniqueId: '${optionItemId}' does not exist as an OptionItem from ${GlobalEnum.PatternsNames.Dropdown} with Id: ${this.widgetId}.`
 				);
 			}
 		}
@@ -607,32 +561,32 @@ namespace Providers.Dropdown.OSUIComponents {
 		// Method that will be used to set/unset the TabIndex to the DropdownBallon elements according it's opened/closed
 		private _updateBallonElementsTabIndex(): void {
 			const tabIndexValue = this._isOpened
-				? OSUIFramework.Constants.A11YAttributes.States.TabIndexShow
-				: OSUIFramework.Constants.A11YAttributes.States.TabIndexHidden;
+				? Constants.A11YAttributes.States.TabIndexShow
+				: Constants.A11YAttributes.States.TabIndexHidden;
 
 			// If there is the Search input
 			if (this._balloonSearchInputElement !== undefined) {
-				OSUIFramework.Helper.A11Y.TabIndex(this._balloonSearchInputElement, tabIndexValue);
+				Helper.A11Y.TabIndex(this._balloonSearchInputElement, tabIndexValue);
 			}
 
 			// Added SpanElements at Balloon Top and Bottom
-			OSUIFramework.Helper.A11Y.TabIndex(this._spanBottomFocusElement, tabIndexValue);
-			OSUIFramework.Helper.A11Y.TabIndex(this._spanTopFocusElement, tabIndexValue);
+			Helper.A11Y.TabIndex(this._spanBottomFocusElement, tabIndexValue);
+			Helper.A11Y.TabIndex(this._spanTopFocusElement, tabIndexValue);
 
 			// Ballon Options Wrapper
-			OSUIFramework.Helper.A11Y.TabIndex(this._balloonOptionsWrapperElement, tabIndexValue);
+			Helper.A11Y.TabIndex(this._balloonOptionsWrapperElement, tabIndexValue);
 
 			// If there are items inside Ballon Footer
 			if (this._balloonFocusableElemsInFooter.length > 0) {
 				for (const item of this._balloonFocusableElemsInFooter) {
-					OSUIFramework.Helper.A11Y.TabIndex(item, tabIndexValue);
+					Helper.A11Y.TabIndex(item, tabIndexValue);
 				}
 			}
 		}
 
 		// Method to (un)set option item focus statue
 		private _updateOptionItemFocuStateOnKeyPress(
-			optionItem: OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem,
+			optionItem: Patterns.DropdownServerSideItem.IDropdownServerSideItem,
 			itemIndex: number
 		): void {
 			// Check if Dropdown should only allow single option selected!
@@ -657,8 +611,8 @@ namespace Providers.Dropdown.OSUIComponents {
 			// If balloon will open
 			if (this._isOpened) {
 				// Add IsOpend Class!
-				OSUIFramework.Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsOpened);
-				OSUIFramework.Helper.Dom.Styles.AddClass(this._balloonWrapperElement, Enum.CssClass.IsOpened);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsOpened);
+				Helper.Dom.Styles.AddClass(this._balloonWrapperElement, Enum.CssClass.IsOpened);
 
 				// Check if inputSearch exist
 				if (this._balloonSearchInputElement) {
@@ -671,15 +625,15 @@ namespace Providers.Dropdown.OSUIComponents {
 				this._triggerToogleCalbackEvent();
 			} else {
 				// Remove IsOpend Class => Close it!
-				OSUIFramework.Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpened);
-				OSUIFramework.Helper.Dom.Styles.RemoveClass(this._balloonWrapperElement, Enum.CssClass.IsOpened);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpened);
+				Helper.Dom.Styles.RemoveClass(this._balloonWrapperElement, Enum.CssClass.IsOpened);
 
 				// Block the pattern in order to avoid user click to open it again before animation ends!
 				this._isBlocked = true;
 
 				// Add the TransitionEnd event
 				this._balloonWrapperElement.addEventListener(
-					OSUIFramework.GlobalEnum.HTMLEvent.TransitionEnd,
+					GlobalEnum.HTMLEvent.TransitionEnd,
 					this._eventOnCloseTransitionEnd
 				);
 			}
@@ -695,20 +649,17 @@ namespace Providers.Dropdown.OSUIComponents {
 			// Update Tabindex Ballon elements
 			this._updateBallonElementsTabIndex();
 			// Enabled TabIndex to the SelectValuesWrapper
-			OSUIFramework.Helper.A11Y.TabIndexTrue(this._selectValuesWrapper);
+			Helper.A11Y.TabIndexTrue(this._selectValuesWrapper);
 			// Set SelectValuesWrapper with button as a role
-			OSUIFramework.Helper.A11Y.RoleButton(this._selectValuesWrapper);
+			Helper.A11Y.RoleButton(this._selectValuesWrapper);
 			// Set SelectValuesWrapper with aria-haspopup='listbox'
-			OSUIFramework.Helper.A11Y.AriaHasPopup(
-				this._selectValuesWrapper,
-				OSUIFramework.Constants.A11YAttributes.Role.Listbox
-			);
+			Helper.A11Y.AriaHasPopup(this._selectValuesWrapper, Constants.A11YAttributes.Role.Listbox);
 			// Set balloon option items container with listbox as a role
-			OSUIFramework.Helper.A11Y.RoleListox(this._balloonOptionsWrapperElement);
+			Helper.A11Y.RoleListox(this._balloonOptionsWrapperElement);
 			// Check if the Dropdown allow multiselect
 			if (this.configs.AllowMultipleSelection) {
 				// Set the aria-multiselectable attribute to the options wrapper element
-				OSUIFramework.Helper.A11Y.MultiselectableTrue(this._balloonOptionsWrapperElement);
+				Helper.A11Y.MultiselectableTrue(this._balloonOptionsWrapperElement);
 			}
 		}
 
@@ -736,38 +687,26 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		protected setHtmlElements(): void {
-			this._balloonFooterElement = OSUIFramework.Helper.Dom.ClassSelector(
-				this.selfElement,
-				Enum.CssClass.BalloonFooter
-			);
-			this._balloonFocusableElemsInFooter = OSUIFramework.Helper.Dom.TagSelectorAll(
+			this._balloonFooterElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.BalloonFooter);
+			this._balloonFocusableElemsInFooter = Helper.Dom.TagSelectorAll(
 				this._balloonFooterElement,
-				OSUIFramework.Constants.FocusableElems
+				Constants.FocusableElems
 			);
-			this._balloonSearchInputWrapperElement = OSUIFramework.Helper.Dom.ClassSelector(
+			this._balloonSearchInputWrapperElement = Helper.Dom.ClassSelector(
 				this.selfElement,
 				Enum.CssClass.BalloonSearch
 			);
-			this._balloonSearchInputElement = OSUIFramework.Helper.Dom.TagSelector(
+			this._balloonSearchInputElement = Helper.Dom.TagSelector(
 				this._balloonSearchInputWrapperElement,
-				OSUIFramework.GlobalEnum.HTMLElement.Input
+				GlobalEnum.HTMLElement.Input
 			);
-			this._balloonContainerElement = OSUIFramework.Helper.Dom.ClassSelector(
-				this.selfElement,
-				Enum.CssClass.BalloonContainer
-			);
-			this._balloonWrapperElement = OSUIFramework.Helper.Dom.ClassSelector(
-				this.selfElement,
-				Enum.CssClass.BalloonWrapper
-			);
-			this._balloonOptionsWrapperElement = OSUIFramework.Helper.Dom.ClassSelector(
+			this._balloonContainerElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.BalloonContainer);
+			this._balloonWrapperElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.BalloonWrapper);
+			this._balloonOptionsWrapperElement = Helper.Dom.ClassSelector(
 				this._balloonWrapperElement,
 				Enum.CssClass.BalloonContent
 			);
-			this._selectValuesWrapper = OSUIFramework.Helper.Dom.ClassSelector(
-				this.selfElement,
-				Enum.CssClass.SelectValuesWrapper
-			);
+			this._selectValuesWrapper = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.SelectValuesWrapper);
 
 			// Add custom SPAN HTML Elements that will help on Accessibility keyboard navigation
 			this._addSpanHtmlElements();
@@ -783,7 +722,7 @@ namespace Providers.Dropdown.OSUIComponents {
 			this._setBalloonCoordinates();
 
 			// Trigger platform's _platformEventInitializedCallback client Action
-			OSUIFramework.Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
+			Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
 		}
 
 		/**
@@ -849,7 +788,7 @@ namespace Providers.Dropdown.OSUIComponents {
 					break;
 				default:
 					throw new Error(
-						`${OSUIFramework.ErrorCodes.Dropdown.FailToSetOptionItemAction}: There no exist a '${notifiedTo}' notification type.`
+						`${ErrorCodes.Dropdown.FailToSetOptionItemAction}: There no exist a '${notifiedTo}' notification type.`
 					);
 			}
 		}
@@ -880,7 +819,7 @@ namespace Providers.Dropdown.OSUIComponents {
 						propertyValue ? this.disable() : this.enable();
 						break;
 
-					case OSUIFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass:
+					case GlobalEnum.CommonPatternsProperties.ExtendedClass:
 						this._setBalloonWrapperExtendedClass(propertyValue as string, prevBalloonExtendedClass);
 						break;
 				}
@@ -909,18 +848,10 @@ namespace Providers.Dropdown.OSUIComponents {
 		 */
 		public disable(): void {
 			// Assign disabled status.
-			OSUIFramework.Helper.Dom.Attribute.Set(
-				this.selfElement,
-				OSUIFramework.GlobalEnum.HTMLAttributes.Disabled,
-				''
-			);
-			OSUIFramework.Helper.Dom.Attribute.Set(
-				this._balloonWrapperElement,
-				OSUIFramework.GlobalEnum.HTMLAttributes.Disabled,
-				''
-			);
+			Helper.Dom.Attribute.Set(this.selfElement, GlobalEnum.HTMLAttributes.Disabled, '');
+			Helper.Dom.Attribute.Set(this._balloonWrapperElement, GlobalEnum.HTMLAttributes.Disabled, '');
 			// Assign IsDisabled class
-			OSUIFramework.Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsDisabled);
+			Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsDisabled);
 		}
 
 		/**
@@ -942,16 +873,10 @@ namespace Providers.Dropdown.OSUIComponents {
 		 */
 		public enable(): void {
 			// Remove disabled status.
-			OSUIFramework.Helper.Dom.Attribute.Remove(
-				this.selfElement,
-				OSUIFramework.GlobalEnum.HTMLAttributes.Disabled
-			);
-			OSUIFramework.Helper.Dom.Attribute.Remove(
-				this._balloonWrapperElement,
-				OSUIFramework.GlobalEnum.HTMLAttributes.Disabled
-			);
+			Helper.Dom.Attribute.Remove(this.selfElement, GlobalEnum.HTMLAttributes.Disabled);
+			Helper.Dom.Attribute.Remove(this._balloonWrapperElement, GlobalEnum.HTMLAttributes.Disabled);
 			// Remove IsDisabled class
-			OSUIFramework.Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsDisabled);
+			Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsDisabled);
 		}
 
 		/**
@@ -961,7 +886,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		 */
 		public getSelectedValues(): string {
 			throw new Error(
-				`${OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.code}:	${OSUIFramework.ErrorCodes.Dropdown.HasNoImplementation.message}`
+				`${ErrorCodes.Dropdown.HasNoImplementation.code}:	${ErrorCodes.Dropdown.HasNoImplementation.message}`
 			);
 		}
 
@@ -969,12 +894,12 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * Method used to register the provider callback
 		 *
 		 * @param {string} eventName Event name that will be assigned
-		 * @param {OSUIFramework.Callbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
+		 * @param {Callbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
 		 * @memberof OSUIDropdownServerSide
 		 */
-		public registerCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
+		public registerCallback(eventName: string, callback: Callbacks.OSGeneric): void {
 			switch (eventName) {
-				case OSUIFramework.Patterns.Dropdown.Enum.Events.Initialized:
+				case Patterns.Dropdown.Enum.Events.Initialized:
 					if (this._platformEventInitializedCallback === undefined) {
 						this._platformEventInitializedCallback = callback;
 					}
@@ -988,7 +913,7 @@ namespace Providers.Dropdown.OSUIComponents {
 
 				default:
 					throw new Error(
-						`${OSUIFramework.ErrorCodes.Dropdown.FailRegisterCallback}:	The given '${eventName}' event name is not defined.`
+						`${ErrorCodes.Dropdown.FailRegisterCallback}:	The given '${eventName}' event name is not defined.`
 					);
 			}
 		}
@@ -1002,12 +927,12 @@ namespace Providers.Dropdown.OSUIComponents {
 		 */
 		public validation(isValid: boolean, validationMessage: string): void {
 			if (isValid === false) {
-				OSUIFramework.Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.NotValid);
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.NotValid);
 				this._addErrorMessage(validationMessage);
 			} else {
-				OSUIFramework.Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.NotValid);
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.NotValid);
 
-				const errorMessageElement = OSUIFramework.Helper.Dom.ClassSelector(
+				const errorMessageElement = Helper.Dom.ClassSelector(
 					this._selfElem.parentElement,
 					Enum.CssClass.ErrorMessage
 				);

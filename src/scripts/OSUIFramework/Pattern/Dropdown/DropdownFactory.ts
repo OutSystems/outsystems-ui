@@ -27,10 +27,7 @@ namespace OSUIFramework.Patterns.Dropdown.Factory {
 				break;
 
 			case Enum.Provider.OSUIComponents:
-				_dropdownItem = new Providers.Dropdown.OSUIComponents.OSUIDropdownServerSide(
-					dropdownId,
-					JSON.parse(configs)
-				);
+				_dropdownItem = new ServerSide.OSUIDropdownServerSide(dropdownId, JSON.parse(configs));
 
 				break;
 
