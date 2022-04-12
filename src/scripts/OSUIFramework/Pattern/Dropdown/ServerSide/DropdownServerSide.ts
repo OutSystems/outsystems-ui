@@ -54,6 +54,8 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		// HTML Elements that will help to deal with keyboard tab navigation (A11y - stuff)
 		private _spanBottomFocusElement: HTMLElement;
 		private _spanTopFocusElement: HTMLElement;
+		// Store the window width value in order to check if has changed at windowResize
+		private _windowWidth: number;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new OSUIDropdownServerSideConfig(configs));
@@ -284,12 +286,14 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			this._close();
 		}
 
-		// Manage the behaviour when there are a window resise!
+		// Manage the behaviour when there is a window resise!
 		private _onWindowResize(): void {
-			// If there are a resize and the Dropdown is open, close it!
-			if (this._isOpened) {
+			// If there is a horizontal resize and the Dropdown is open, close it!
+			if (this._isOpened && this._windowWidth !== window.innerWidth) {
 				this._close();
 			}
+			// Update windowWidth value
+			this._windowWidth = window.innerWidth;
 			// Update the Balloon coordinates!
 			this._setBalloonCoordinates();
 		}
