@@ -228,6 +228,7 @@ namespace Providers.Dropdown.OSUIComponents {
 						// Trigger the click in order to be captured also by DOM (body onClick) in order to close other Dropdowns in page if they are open!
 						this._selectValuesWrapper.click();
 					}
+
 					break;
 
 				// Check if the Balloon Options container has been pressed!
