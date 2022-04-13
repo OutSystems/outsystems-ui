@@ -303,6 +303,9 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			this._closeDynamically = false;
 			this._isOpened = true;
 
+			// Set the windown width value
+			this._windowWidth = window.innerWidth;
+
 			this._updatePatternState();
 			this._setBalloonCoordinates();
 			this._getRecomendedPosition();
