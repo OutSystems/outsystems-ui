@@ -376,6 +376,12 @@ $balloonMarginToSelectValuesWrapper: 2px;
 }
 
 .phone {
+	&.android {
+		.osui-dropdown-serverside__balloon-container {
+			max-height: calc(100vh - 10vh - var(--header-size));
+		}
+	}
+
 	.osui-dropdown-serverside {
 		// Balloon section
 		&__balloon {
@@ -432,20 +438,6 @@ $balloonMarginToSelectValuesWrapper: 2px;
 			&.osui-dropdown-serverside__balloon-wrapper {
 				min-height: 100vh;
 				opacity: 1;
-			}
-		}
-	}
-}
-
-.phone {
-	&.android {
-		.osui-dropdown-serverside {
-			// Balloon section
-			&__balloon {
-				// Content Container
-				&-container {
-					max-height: calc(100vh - 10vh - var(--header-size));
-				}
 			}
 		}
 	}
