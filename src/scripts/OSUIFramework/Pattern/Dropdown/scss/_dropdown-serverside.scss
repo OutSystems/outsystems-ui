@@ -128,7 +128,6 @@ $balloonMarginToSelectValuesWrapper: 2px;
 
 		// Search placeholder
 		&-search {
-			border-bottom: var(--border-size-s) solid var(--color-neutral-5);
 			padding: var(--space-none);
 			position: relative;
 
@@ -142,6 +141,12 @@ $balloonMarginToSelectValuesWrapper: 2px;
 				left: var(--space-base);
 				position: absolute;
 				top: 0;
+			}
+
+			/* Used this approach in order to avoid renderization issues since at andoird the 
+			border-bottom assigned to the search element was not getting applied due to list renderization */
+			&:empty + .osui-dropdown-serverside__balloon-content {
+				border-top: none;
 			}
 
 			input,
@@ -159,6 +164,7 @@ $balloonMarginToSelectValuesWrapper: 2px;
 
 		// Options placeholder
 		&-content {
+			border-top: var(--border-size-s) solid var(--color-neutral-5);
 			flex: 1;
 			overflow-x: hidden;
 			overflow-y: auto;
@@ -370,6 +376,12 @@ $balloonMarginToSelectValuesWrapper: 2px;
 }
 
 .phone {
+	&.android {
+		.osui-dropdown-serverside__balloon-container {
+			max-height: calc(100vh - 10vh - var(--header-size));
+		}
+	}
+
 	.osui-dropdown-serverside {
 		// Balloon section
 		&__balloon {
@@ -399,8 +411,9 @@ $balloonMarginToSelectValuesWrapper: 2px;
 			// Content Container
 			&-container {
 				box-shadow: var(--shadow-xl);
-				margin-top: 10vh;
-				max-height: 40vh;
+				margin-top: 5vh;
+				// 100vw because ios split in half the vertical height when keyboard is open!
+				max-height: calc(100vw - 5vh - var(--header-size));
 				width: 85vw;
 
 				// Service Studio Preview
@@ -415,8 +428,8 @@ $balloonMarginToSelectValuesWrapper: 2px;
 			// If do not exist a input search inside balloon
 			&--has-not-search {
 				.osui-dropdown-serverside__balloon-container {
-					margin-top: 10vh;
-					max-height: 70vh;
+					margin-top: 5vh;
+					max-height: calc(var(--viewport-height) - 5vh - var(--header-size));
 				}
 			}
 		}

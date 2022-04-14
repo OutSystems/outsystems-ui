@@ -7,7 +7,7 @@
 @import '../../../../Providers/Dropdown/VirtualSelect/scss/virtualselect';
 
 /// Import OsUiComponents provider styles
-@import '../../../../Providers/Dropdown/OsUiComponents/scss/dropdownserverside';
+@import './dropdown-serverside';
 @import '../../DropdownServerSideItem/scss/dropdownserversideitem';
 
 /// Dropdown Option Item image

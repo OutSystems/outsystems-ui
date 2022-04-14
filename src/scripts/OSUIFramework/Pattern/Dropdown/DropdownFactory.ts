@@ -27,10 +27,11 @@ namespace OSUIFramework.Patterns.Dropdown.Factory {
 				break;
 
 			case Enum.Provider.OSUIComponents:
-				_dropdownItem = new Providers.Dropdown.OSUIComponents.OSUIDropdownServerSide(
-					dropdownId,
-					JSON.parse(configs)
-				);
+				if (mode === Enum.Mode.ServerSide) {
+					_dropdownItem = new ServerSide.OSUIDropdownServerSide(dropdownId, JSON.parse(configs));
+				} else {
+					throw new Error(`There is no Dropdown of the ${provider} provider with ${mode} type`);
+				}
 
 				break;
 
