@@ -14,7 +14,7 @@ namespace OSUIFramework.Event {
 		}
 
 		private _bodyTrigger(evt: Event): void {
-			super.trigger('scroll', evt);
+			super.trigger(GlobalEnum.HTMLEvent.Scroll, evt);
 		}
 	}
 }

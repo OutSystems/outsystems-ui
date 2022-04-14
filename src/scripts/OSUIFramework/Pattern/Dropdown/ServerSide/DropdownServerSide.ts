@@ -286,7 +286,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			this._close();
 		}
 
-		// Manage the behaviour when there is a window resise!
+		// Manage the behaviour when there is a window resize!
 		private _onWindowResize(): void {
 			// If there is a horizontal resize and the Dropdown is open, close it!
 			if (this._isOpened && this._windowWidth !== window.innerWidth) {

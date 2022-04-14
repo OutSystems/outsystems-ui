@@ -26,7 +26,7 @@ namespace OSUIFramework.Event {
 		}
 
 		private _bodyTrigger(evt: PointerEvent): void {
-			super.trigger('click', evt);
+			super.trigger(GlobalEnum.HTMLEvent.Click, evt);
 		}
 	}
 }
