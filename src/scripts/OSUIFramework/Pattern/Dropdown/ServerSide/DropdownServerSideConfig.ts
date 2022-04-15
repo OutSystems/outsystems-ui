@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace Providers.Dropdown.OSUIComponents {
+namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 	/**
 	 * Class that represents the custom configurations received by the Dropdown.
 	 *
