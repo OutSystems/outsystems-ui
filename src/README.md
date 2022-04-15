@@ -21,12 +21,15 @@ The namespaces should follow application directories, this way we should find fi
     |   |   |   |   ├── Carousel
     |   |   |   |   ├── DatePicker
     |   |   |   |   ├── Dropdown
+    |   |   |   |   |   └── ServerSide
     |   |   |   |   ├── FlipContent
     |   |   |   |   ├── FloatingActions
     |   |   |   |   ├── FloatingActionsItem
     |   |   |   |   ├── Gallery
     |   |   |   |   ├── Notification
     |   |   |   |   ├── Progress
+    |   |   |   |   |   ├── Bar
+    |   |   |   |   |   └── Circle
     |   |   |   |   ├── RangeSlider
     |   |   |   |   ├── Rating
     |   |   |   |   ├── Search

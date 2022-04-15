@@ -11,7 +11,10 @@ namespace OutSystems.OSUI.Menu {
 	}
 
 	export function Hide(): void {
-		const layout = OSUIFramework.Helper.Dom.ClassSelector(document, OSUIFramework.Constants.LayoutClass);
+		const layout = OSUIFramework.Helper.Dom.ClassSelector(
+			document,
+			OSUIFramework.GlobalEnum.CssClassElements.Layout
+		);
 
 		if (layout) {
 			OSUIFramework.Helper.Dom.Styles.RemoveClass(layout, menuCssClasses.visible);
@@ -22,7 +25,10 @@ namespace OutSystems.OSUI.Menu {
 	}
 
 	export function Show(): void {
-		const layout = OSUIFramework.Helper.Dom.ClassSelector(document, OSUIFramework.Constants.LayoutClass);
+		const layout = OSUIFramework.Helper.Dom.ClassSelector(
+			document,
+			OSUIFramework.GlobalEnum.CssClassElements.Layout
+		);
 
 		if (layout) {
 			OSUIFramework.Helper.Dom.Styles.AddClass(layout, menuCssClasses.visible);
@@ -33,7 +39,10 @@ namespace OutSystems.OSUI.Menu {
 	}
 
 	export function Toggle(): void {
-		const layout = OSUIFramework.Helper.Dom.ClassSelector(document, OSUIFramework.Constants.LayoutClass);
+		const layout = OSUIFramework.Helper.Dom.ClassSelector(
+			document,
+			OSUIFramework.GlobalEnum.CssClassElements.Layout
+		);
 
 		if (layout) {
 			const isExpanded = OSUIFramework.Helper.Dom.Styles.ContainsClass(layout, menuCssClasses.visible);

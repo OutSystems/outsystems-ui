@@ -290,7 +290,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			// Getting the custom icon that is also a placeholder (ph)
 			this._accordionItemIconCustomElem = Helper.Dom.ClassSelector(
 				this._selfElem,
-				Enum.CssClass.PatternIcon + '.' + Constants.Placeholder
+				Enum.CssClass.PatternIcon + '.' + GlobalEnum.CssClassElements.Placeholder
 			);
 			this._accordionItemPlaceholder = this._accordionItemContentElem.firstChild as HTMLElement;
 		}

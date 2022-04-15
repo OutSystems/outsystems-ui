@@ -175,7 +175,7 @@ namespace Providers.Dropdown.OSUIComponents {
 		private _moveBallonElement(): void {
 			const layoutElement = OSUIFramework.Helper.Dom.TagSelector(
 				document.body,
-				OSUIFramework.Constants.Dot + OSUIFramework.Constants.LayoutClass
+				OSUIFramework.Constants.Dot + OSUIFramework.GlobalEnum.CssClassElements.Layout
 			) as HTMLElement;
 
 			OSUIFramework.Helper.Dom.Move(this._balloonWrapperElement, layoutElement);
