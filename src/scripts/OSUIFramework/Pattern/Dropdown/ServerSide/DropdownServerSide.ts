@@ -175,11 +175,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 
 		// Move ballon element to outside of the pattern context
 		private _moveBallonElement(): void {
-			const layoutElement = Helper.Dom.TagSelector(
-				document.body,
-				Constants.Dot + Constants.LayoutClass
-			) as HTMLElement;
-
+			const layoutElement = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.Layout);
 			Helper.Dom.Move(this._balloonWrapperElement, layoutElement);
 		}
 

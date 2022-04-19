@@ -11,10 +11,14 @@ namespace OSUIFramework.GlobalEnum {
 	 * OutSystemsUI elements cssClasses
 	 */
 	export enum CssClassElements {
+		ActiveScreen = 'active-screen',
+		Container = 'screen-container',
 		Header = 'header',
 		HeaderIsFixed = 'fixed-header',
+		Layout = 'layout',
 		List = 'list',
 		MainContent = 'main-content',
+		Placeholder = 'ph',
 	}
 
 	/**
@@ -209,14 +213,6 @@ namespace OSUIFramework.GlobalEnum {
 		TabsContentItem = 'TabsContentItem',
 		Tooltip = 'Tooltip',
 		TouchEvents = 'TouchEvents',
-	}
-
-	/**
-	 * OutSystemsUI Units
-	 */
-	export enum Screen {
-		Active = 'active-screen',
-		Container = 'screen-container',
 	}
 
 	/**
