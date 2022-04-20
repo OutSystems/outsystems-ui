@@ -37,10 +37,24 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 * @param {string} propertyName Property name that will be updated
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
-	export function ChangeProperty(accordionItemId: string, propertyName: string, propertyValue: unknown): void {
+	export function ChangeProperty(accordionItemId: string, propertyName: string, propertyValue: unknown): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const accordionItem = GetAccordionItemById(accordionItemId);
 
-		accordionItem.changeProperty(propertyName, propertyValue);
+		try {
+			accordionItem.changeProperty(propertyName, propertyValue);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.AccordionItem.FailChangeProperty;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -49,10 +63,24 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 * @export
 	 * @param {string} accordionItemId
 	 */
-	export function Collapse(accordionItemId: string): void {
+	export function Collapse(accordionItemId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const accordionItem = GetAccordionItemById(accordionItemId);
 
-		accordionItem.close();
+		try {
+			accordionItem.close();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.AccordionItem.FailCollapseItem;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -97,13 +125,27 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 * @export
 	 * @param {string} accordrionItemId
 	 */
-	export function Dispose(accordionItemId: string): void {
+	export function Dispose(accordionItemId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const accordionItem = GetAccordionItemById(accordionItemId);
 
-		accordionItem.dispose();
+		try {
+			accordionItem.dispose();
 
-		_accordionItemMap.delete(accordionItem.uniqueId);
-		_accordionMap.delete(accordionItem.uniqueId);
+			_accordionItemMap.delete(accordionItem.uniqueId);
+			_accordionMap.delete(accordionItem.uniqueId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.AccordionItem.FailDispose;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -112,10 +154,24 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 * @export
 	 * @param {string} accordionItemId
 	 */
-	export function Expand(accordionItemId: string): void {
+	export function Expand(accordionItemId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const accordionItem = GetAccordionItemById(accordionItemId);
 
-		accordionItem.open();
+		try {
+			accordionItem.open();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.AccordionItem.FailExpandItem;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -165,9 +221,23 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 * @param {string} accordionItemId
 	 * @param {*} callback
 	 */
-	export function RegisterCallback(accordionItemId: string, callback: OSUIFramework.Callbacks.Generic): void {
+	export function RegisterCallback(accordionItemId: string, callback: OSUIFramework.Callbacks.Generic): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const accordionItem = GetAccordionItemById(accordionItemId);
 
-		accordionItem.registerCallback(callback);
+		try {
+			accordionItem.registerCallback(callback);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.AccordionItem.FailRegisterCallback;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 }
