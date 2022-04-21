@@ -11,9 +11,24 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ChangeProperty(submenuId: string, propertyName: string, propertyValue: any): void {
+	export function ChangeProperty(submenuId: string, propertyName: string, propertyValue: any): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const submenu = GetSubmenuById(submenuId);
-		submenu.changeProperty(propertyName, propertyValue);
+
+		try {
+			submenu.changeProperty(propertyName, propertyValue);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Submenu.FailChangeProperty;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -22,9 +37,24 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	 * @export
 	 * @param {string} submenuId ID of the submenu that will be closed
 	 */
-	export function Close(submenuId: string): void {
+	export function Close(submenuId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const submenu = GetSubmenuById(submenuId);
-		submenu.close();
+
+		try {
+			submenu.close();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Submenu.FailClose;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -33,9 +63,24 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	 * @export
 	 * @param {string} submenuId ID of the submenu that will be closed
 	 */
-	export function Open(submenuId: string): void {
+	export function Open(submenuId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const submenu = GetSubmenuById(submenuId);
-		submenu.open();
+
+		try {
+			submenu.open();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Submenu.FailOpen;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -44,9 +89,24 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	 * @export
 	 * @param {string} submenuId
 	 */
-	export function SubmenuOpenOnHover(submenuId: string): void {
+	export function SubmenuOpenOnHover(submenuId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const submenu = GetSubmenuById(submenuId);
-		submenu.changeProperty(OSUIFramework.Patterns.Submenu.Enum.Properties.OpenOnHover, true);
+
+		try {
+			submenu.changeProperty(OSUIFramework.Patterns.Submenu.Enum.Properties.OpenOnHover, true);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Submenu.FailOpenOnHover;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -77,12 +137,26 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	 * @export
 	 * @param {string} submenuId
 	 */
-	export function Destroy(submenuId: string): void {
+	export function Destroy(submenuId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const submenu = GetSubmenuById(submenuId);
 
-		submenu.dispose();
+		try {
+			submenu.dispose();
 
-		_submenusMap.delete(submenuId);
+			_submenusMap.delete(submenuId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Submenu.FailOpenOnHover;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -132,11 +206,23 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	 * @param {string} submenuId
 	 * @return {*}  {OSUIFramework.Patterns.Submenu.ISubmenu}
 	 */
-	export function UpdateOnRender(submenuId: string): OSUIFramework.Patterns.Submenu.ISubmenu {
+	export function UpdateOnRender(submenuId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const submenu = GetSubmenuById(submenuId);
 
-		submenu.updateOnRender();
+		try {
+			submenu.updateOnRender();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Submenu.FailUpdate;
+		}
 
-		return submenu;
+		return JSON.stringify(responseObj);
 	}
 }
