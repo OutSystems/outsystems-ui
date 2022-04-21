@@ -272,11 +272,23 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * @param {string} carouselId
 	 * @return {*}  {OSUIFramework.Patterns.Carousel.ICarousel}
 	 */
-	export function UpdateOnRender(carouselId: string): OSUIFramework.Patterns.Carousel.ICarousel {
+	export function UpdateOnRender(carouselId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const carousel = GetCarouselItemById(carouselId);
 
-		carousel.updateOnRender();
+		try {
+			carousel.updateOnRender();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Carousel.FailUpdate;
+		}
 
-		return carousel;
+		return JSON.stringify(responseObj);
 	}
 }
