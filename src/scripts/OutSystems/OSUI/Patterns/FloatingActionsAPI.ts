@@ -11,10 +11,24 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ChangeProperty(floatingActionsId: string, propertyName: string, propertyValue: any): void {
+	export function ChangeProperty(floatingActionsId: string, propertyName: string, propertyValue: any): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const floatingActions = GetFloatingActionsById(floatingActionsId);
 
-		floatingActions.changeProperty(propertyName, propertyValue);
+		try {
+			floatingActions.changeProperty(propertyName, propertyValue);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.FloatingActions.FailChangeProperty;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -51,12 +65,26 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsAPI {
 	 * @export
 	 * @param {string} floatingActionsId
 	 */
-	export function Dispose(floatingActionsId: string): void {
+	export function Dispose(floatingActionsId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const floatingAction = GetFloatingActionsById(floatingActionsId);
 
-		floatingAction.dispose();
+		try {
+			floatingAction.dispose();
 
-		_floatingActionsMap.delete(floatingAction.uniqueId);
+			_floatingActionsMap.delete(floatingAction.uniqueId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.FloatingActions.FailDispose;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -108,9 +136,23 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsAPI {
 	 * @param {string} ratingId
 	 * @param {*} callback
 	 */
-	export function RegisterCallback(floatingActionId: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
+	export function RegisterCallback(floatingActionId: string, callback: OSUIFramework.Callbacks.OSGeneric): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const floatingAction = GetFloatingActionsById(floatingActionId);
 
-		floatingAction.registerCallback(callback);
+		try {
+			floatingAction.registerCallback(callback);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.FloatingActions.FailRegisterCallback;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 }
