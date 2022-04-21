@@ -154,12 +154,18 @@ html[data-uieditorversion^='1'] {
 	.tablet {
 		.layout:not(.layout-native) {
 			thead {
+				display: initial;
+
 				& > tr {
 					-servicestudio-position: relative;
 				}
+			}
 
-				& > tr:not(:empty):before {
-					-servicestudio-display: none;
+			table.table > thead > tr {
+				display: none;
+
+				&:empty {
+					display: block;
 				}
 			}
 
