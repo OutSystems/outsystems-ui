@@ -44,7 +44,7 @@ namespace OutSystems.OSUI.Patterns.GalleryAPI {
 	 * @export
 	 * @param {string} galleryId
 	 */
-	export function Destroy(galleryId: string): void {
+	export function Dispose(galleryId: string): void {
 		const gallery = GetGalleryById(galleryId);
 
 		gallery.dispose();

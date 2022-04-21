@@ -137,7 +137,7 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	 * @export
 	 * @param {string} submenuId
 	 */
-	export function Destroy(submenuId: string): string {
+	export function Dispose(submenuId: string): string {
 		const responseObj = {
 			isSuccess: true,
 			message: ErrorCodes.Success.message,

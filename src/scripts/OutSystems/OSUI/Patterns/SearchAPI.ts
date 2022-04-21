@@ -56,7 +56,7 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	 * @export
 	 * @param {string} searchId
 	 */
-	export function Destroy(searchId: string): void {
+	export function Dispose(searchId: string): void {
 		const search = GetSearchById(searchId);
 
 		search.dispose();

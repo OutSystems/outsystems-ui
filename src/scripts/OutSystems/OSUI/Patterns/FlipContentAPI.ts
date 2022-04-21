@@ -59,7 +59,7 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 * @export
 	 * @param {string} flipId
 	 */
-	export function Destroy(flipId: string): string {
+	export function Dispose(flipId: string): string {
 		const responseObj = {
 			isSuccess: true,
 			message: ErrorCodes.Success.message,

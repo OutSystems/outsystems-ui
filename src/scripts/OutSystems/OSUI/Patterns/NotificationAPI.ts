@@ -59,7 +59,7 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	 * @export
 	 * @param {string} notificationId
 	 */
-	export function Destroy(notificationId: string): string {
+	export function Dispose(notificationId: string): string {
 		const responseObj = {
 			isSuccess: true,
 			message: ErrorCodes.Success.message,

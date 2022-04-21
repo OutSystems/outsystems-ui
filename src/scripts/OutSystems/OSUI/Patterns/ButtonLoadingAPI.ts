@@ -50,7 +50,7 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	 * @export
 	 * @param {string} ButtonLoadingId
 	 */
-	export function Destroy(buttonLoadingId: string): void {
+	export function Dispose(buttonLoadingId: string): void {
 		const buttonLoading = GetButtonLoadingById(buttonLoadingId);
 
 		buttonLoading.dispose();

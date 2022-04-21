@@ -81,7 +81,7 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * @export
 	 * @param {string} sidebarId
 	 */
-	export function Destroy(sidebarId: string): string {
+	export function Dispose(sidebarId: string): string {
 		const responseObj = {
 			isSuccess: true,
 			message: ErrorCodes.Success.message,

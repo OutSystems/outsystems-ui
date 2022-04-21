@@ -43,7 +43,7 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 * @param {string} ratingId
 	 * @return {*}  {*}
 	 */
-	export function Destroy(ratingId: string): void {
+	export function Dispose(ratingId: string): void {
 		const rating = GetRatingById(ratingId);
 
 		rating.dispose();
