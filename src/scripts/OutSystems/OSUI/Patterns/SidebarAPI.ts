@@ -9,9 +9,24 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * @param {string} propertyName
 	 * @param {*} propertyValue
 	 */
-	export function ChangeProperty(sidebarId: string, propertyName: string, propertyValue: unknown): void {
+	export function ChangeProperty(sidebarId: string, propertyName: string, propertyValue: unknown): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const sidebar = GetSidebarById(sidebarId);
-		sidebar.changeProperty(propertyName, propertyValue);
+
+		try {
+			sidebar.changeProperty(propertyName, propertyValue);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Sidebar.FailChangeProperty;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -20,9 +35,24 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * @export
 	 * @param {string} sidebarId
 	 */
-	export function Close(sidebarId: string): void {
+	export function Close(sidebarId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const sidebar = GetSidebarById(sidebarId);
-		sidebar.close();
+
+		try {
+			sidebar.close();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Sidebar.FailClose;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -51,12 +81,26 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * @export
 	 * @param {string} sidebarId
 	 */
-	export function Destroy(sidebarId: string): void {
+	export function Destroy(sidebarId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const sidebar = GetSidebarById(sidebarId);
 
-		sidebar.dispose();
+		try {
+			sidebar.dispose();
 
-		_sidebarMap.delete(sidebarId);
+			_sidebarMap.delete(sidebarId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Sidebar.FailDispose;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -106,10 +150,27 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * @param {string} sidebarId
 	 * @param {OSUIFramework.Callbacks.OSSidebarToggleEvent} callback
 	 */
-	export function RegisterCallback(sidebarId: string, callback: OSUIFramework.Callbacks.OSSidebarToggleEvent): void {
+	export function RegisterCallback(
+		sidebarId: string,
+		callback: OSUIFramework.Callbacks.OSSidebarToggleEvent
+	): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const sidebar = GetSidebarById(sidebarId);
 
-		sidebar.registerCallback(callback);
+		try {
+			sidebar.registerCallback(callback);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Sidebar.FailRegisterCallback;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -118,8 +179,23 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * @export
 	 * @param {string} sidebarId
 	 */
-	export function Open(sidebarId: string): void {
+	export function Open(sidebarId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const sidebar = GetSidebarById(sidebarId);
-		sidebar.open();
+
+		try {
+			sidebar.open();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Sidebar.FailOpen;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 }
