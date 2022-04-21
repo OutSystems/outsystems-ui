@@ -117,4 +117,70 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailDispose: 'OSUI-API-13003',
 		FailOpen: 'OSUI-API-13004',
 	};
+
+	export const AnimatedLabel = {
+		FailChangeProperty: 'OSUI-API-14001',
+		FailDispose: 'OSUI-API-14002',
+		FailUpdate: 'OSUI-API-14003',
+	};
+
+	export const ButtonLoading = {
+		FailChangeProperty: 'OSUI-API-15001',
+		FailDispose: 'OSUI-API-15002',
+	};
+
+	export const DropdownServerSideItem = {
+		FailChangeProperty: 'OSUI-API-16001',
+		FailDispose: 'OSUI-API-16002',
+		FailRegisterCallback: 'OSUI-API-16003',
+	};
+
+	export const FloatingActions = {
+		FailChangeProperty: 'OSUI-API-17001',
+		FailDispose: 'OSUI-API-17002',
+		FailRegisterCallback: 'OSUI-API-17003',
+	};
+
+	export const Gallery = {
+		FailChangeProperty: 'OSUI-API-18001',
+		FailDispose: 'OSUI-API-18002',
+	};
+
+	export const Rating = {
+		FailChangeProperty: 'OSUI-API-19001',
+		FailDispose: 'OSUI-API-19002',
+		FailRegisterCallback: 'OSUI-API-19003',
+	};
+
+	export const Search = {
+		FailChangeProperty: 'OSUI-API-20001',
+		FailClose: 'OSUI-API-20002',
+		FailDispose: 'OSUI-API-20003',
+		FailOpen: 'OSUI-API-20004',
+		FailRegisterCallback: 'OSUI-API-20005',
+	};
+
+	export const SectionIndexItem = {
+		FailChangeProperty: 'OSUI-API-21001',
+		FailDispose: 'OSUI-API-21002',
+		FailRegisterCallback: 'OSUI-API-21003',
+	};
+
+	export const Tabs = {
+		FailChangeProperty: 'OSUI-API-22001',
+		FailDispose: 'OSUI-API-22002',
+		FailRegisterCallback: 'OSUI-API-22003',
+		FailSetActive: 'OSUI-API-22004',
+		FailToggleSwipe: 'OSUI-API-22005',
+	};
+
+	export const TabsContentItem = {
+		FailChangeProperty: 'OSUI-API-23001',
+		FailDispose: 'OSUI-API-23002',
+	};
+
+	export const TabsHeaderItem = {
+		FailChangeProperty: 'OSUI-API-24001',
+		FailDispose: 'OSUI-API-24002',
+	};
 }
