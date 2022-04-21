@@ -14,10 +14,24 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ChangeProperty(dropdownServerSideItemId: string, propertyName: string, propertyValue: any): void {
+	export function ChangeProperty(dropdownServerSideItemId: string, propertyName: string, propertyValue: any): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const _dropdownServerSideItemItem = GetDropdownServerSideItemItemById(dropdownServerSideItemId);
 
-		_dropdownServerSideItemItem.changeProperty(propertyName, propertyValue);
+		try {
+			_dropdownServerSideItemItem.changeProperty(propertyName, propertyValue);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.DropdownServerSideItem.FailChangeProperty;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -54,12 +68,26 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 	 * @export
 	 * @param {string} dropdownServerSideItemId
 	 */
-	export function Dispose(dropdownServerSideItemId: string): void {
+	export function Dispose(dropdownServerSideItemId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const _dropdownServerSideItemItem = GetDropdownServerSideItemItemById(dropdownServerSideItemId);
 
-		_dropdownServerSideItemItem.dispose();
+		try {
+			_dropdownServerSideItemItem.dispose();
 
-		_dropdownServerSideItemItemsMap.delete(_dropdownServerSideItemItem.uniqueId);
+			_dropdownServerSideItemItemsMap.delete(_dropdownServerSideItemItem.uniqueId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.DropdownServerSideItem.FailDispose;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -118,9 +146,23 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 		dropdownServerSideItemId: string,
 		eventName: string,
 		callback: OSUIFramework.Callbacks.OSGeneric
-	): void {
+	): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const _dropdownServerSideItemItem = this.GetDropdownServerSideItemItemById(dropdownServerSideItemId);
 
-		_dropdownServerSideItemItem.registerCallback(eventName, callback);
+		try {
+			_dropdownServerSideItemItem.registerCallback(eventName, callback);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.DropdownServerSideItem.FailDispose;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 }
