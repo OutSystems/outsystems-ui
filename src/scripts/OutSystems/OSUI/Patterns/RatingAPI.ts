@@ -11,9 +11,24 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-	export function ChangeProperty(ratingId: string, propertyName: string, propertyValue: any): void {
+	export function ChangeProperty(ratingId: string, propertyName: string, propertyValue: any): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const rating = GetRatingById(ratingId);
-		rating.changeProperty(propertyName, propertyValue);
+
+		try {
+			rating.changeProperty(propertyName, propertyValue);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Rating.FailChangeProperty;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -43,12 +58,26 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 * @param {string} ratingId
 	 * @return {*}  {*}
 	 */
-	export function Dispose(ratingId: string): void {
+	export function Dispose(ratingId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const rating = GetRatingById(ratingId);
 
-		rating.dispose();
+		try {
+			rating.dispose();
 
-		_ratingsMap.delete(ratingId);
+			_ratingsMap.delete(ratingId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Rating.FailDispose;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -98,9 +127,23 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 * @param {string} ratingId
 	 * @param {*} callback
 	 */
-	export function RegisterCallback(ratingId: string, callback: OSUIFramework.Callbacks.OSRatingSelectEvent): void {
+	export function RegisterCallback(ratingId: string, callback: OSUIFramework.Callbacks.OSRatingSelectEvent): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const rating = GetRatingById(ratingId);
 
-		rating.registerCallback(callback);
+		try {
+			rating.registerCallback(callback);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Rating.FailRegisterCallback;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 }
