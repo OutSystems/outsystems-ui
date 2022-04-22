@@ -21,7 +21,7 @@ namespace osui {
 
 	export function FixInputs(): void {
 		console.warn('osui.FixInputs(...), is deprecated. Please use the API `OutSystems.OSUI.Utils.FixInputs(...)`.');
-		OutSystems.OSUI.Utils.FixInputs();
+		OutSystems.OSUI.LayoutPrivate.FixInputs();
 	}
 
 	export function HasMasterDetail(): boolean {
