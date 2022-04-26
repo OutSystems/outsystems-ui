@@ -10,10 +10,24 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	 * @param {string} propertyName Property name that will be updated
 	 * @param {unknown} propertyValue Value that will be set to the property
 	 */
-	export function ChangeProperty(buttonLoadingId: string, propertyName: string, propertyValue: unknown): void {
-		const ButtonLoading = GetButtonLoadingById(buttonLoadingId);
+	export function ChangeProperty(buttonLoadingId: string, propertyName: string, propertyValue: unknown): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		ButtonLoading.changeProperty(propertyName, propertyValue);
+		const buttonLoading = GetButtonLoadingById(buttonLoadingId);
+
+		try {
+			buttonLoading.changeProperty(propertyName, propertyValue);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.ButtonLoading.FailChangeProperty;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -50,12 +64,26 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	 * @export
 	 * @param {string} ButtonLoadingId
 	 */
-	export function Destroy(buttonLoadingId: string): void {
+	export function Dispose(buttonLoadingId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const buttonLoading = GetButtonLoadingById(buttonLoadingId);
 
-		buttonLoading.dispose();
+		try {
+			buttonLoading.dispose();
 
-		_buttonsLoadingMap.delete(buttonLoading.uniqueId);
+			_buttonsLoadingMap.delete(buttonLoading.uniqueId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.ButtonLoading.FailChangeProperty;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**

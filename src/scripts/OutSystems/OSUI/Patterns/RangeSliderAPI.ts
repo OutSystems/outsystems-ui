@@ -10,10 +10,24 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 * @param {string} propertyName Property name that will be updated
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
-	export function ChangeProperty(rangeSliderId: string, propertyName: string, propertyValue: unknown): void {
+	export function ChangeProperty(rangeSliderId: string, propertyName: string, propertyValue: unknown): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const _rangeSliderItem = GetRangeSliderItemById(rangeSliderId);
 
-		_rangeSliderItem.changeProperty(propertyName, propertyValue);
+		try {
+			_rangeSliderItem.changeProperty(propertyName, propertyValue);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.RangeSlider.FailChangeProperty;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -56,12 +70,26 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 * @export
 	 * @param {string} rangeSliderId
 	 */
-	export function Dispose(rangeSliderId: string): void {
+	export function Dispose(rangeSliderId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const _rangeSliderItem = GetRangeSliderItemById(rangeSliderId);
 
-		_rangeSliderItem.dispose();
+		try {
+			_rangeSliderItem.dispose();
 
-		_rangeSliderItemsMap.delete(_rangeSliderItem.uniqueId);
+			_rangeSliderItemsMap.delete(_rangeSliderItem.uniqueId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.RangeSlider.FailDispose;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -116,10 +144,24 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 		rangeSliderId: string,
 		eventName: string,
 		callback: OSUIFramework.Callbacks.OSGeneric
-	): void {
+	): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
 
-		rangeSlider.registerCallback(eventName, callback);
+		try {
+			rangeSlider.registerCallback(eventName, callback);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.RangeSlider.FailRegisterCallback;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -128,9 +170,23 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 * @export
 	 * @param {string} rangeSliderId
 	 */
-	export function SetRangeIntervalChangeOnDragEnd(rangeSliderId: string): void {
+	export function SetRangeIntervalChangeOnDragEnd(rangeSliderId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
 
-		rangeSlider.setRangeIntervalChangeOnDragEnd();
+		try {
+			rangeSlider.setRangeIntervalChangeOnDragEnd();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.RangeSlider.FailOnDragEnd;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 }

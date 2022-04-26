@@ -11,10 +11,24 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ChangeProperty(tooltipId: string, propertyName: string, propertyValue: any): void {
+	export function ChangeProperty(tooltipId: string, propertyName: string, propertyValue: any): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const tooltip = GetTooltipById(tooltipId);
 
-		tooltip.changeProperty(propertyName, propertyValue);
+		try {
+			tooltip.changeProperty(propertyName, propertyValue);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Tooltip.FailChangeProperty;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -23,10 +37,24 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 * @export
 	 * @param {string} tooltipId ID of the tooltip that will be closed
 	 */
-	export function Close(tooltipId: string): void {
+	export function Close(tooltipId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const tooltip = GetTooltipById(tooltipId);
 
-		tooltip.close();
+		try {
+			tooltip.close();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Tooltip.FailClose;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -57,12 +85,26 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 * @export
 	 * @param {string} tooltipId
 	 */
-	export function Destroy(tooltipId: string): void {
+	export function Dispose(tooltipId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const tooltip = GetTooltipById(tooltipId);
 
-		tooltip.dispose();
+		try {
+			tooltip.dispose();
 
-		_tooltipsMap.delete(tooltip.uniqueId);
+			_tooltipsMap.delete(tooltip.uniqueId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Tooltip.FailDispose;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -111,9 +153,23 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 * @export
 	 * @param {string} tooltipId ID of the tooltip that will be opened
 	 */
-	export function Open(tooltipId: string): void {
+	export function Open(tooltipId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const tooltip = GetTooltipById(tooltipId);
 
-		tooltip.open();
+		try {
+			tooltip.open();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Tooltip.FailOpen;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 }

@@ -11,10 +11,24 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ChangeProperty(datePickerId: string, propertyName: string, propertyValue: any): void {
+	export function ChangeProperty(datePickerId: string, propertyName: string, propertyValue: any): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const _datePickerItem = GetDatePickerItemById(datePickerId);
 
-		_datePickerItem.changeProperty(propertyName, propertyValue);
+		try {
+			_datePickerItem.changeProperty(propertyName, propertyValue);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.DatePicker.FailChangeProperty;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -23,12 +37,24 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @param {string} datePickerId ID of the DatePickerItem that will be initialized.
 	 * @return {*}  {OSUIFramework.Patterns.DatePicker.IDatePicker}
 	 */
-	export function Clear(datePickerId: string): OSUIFramework.Patterns.DatePicker.IDatePicker {
+	export function Clear(datePickerId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const _datePickerItem = GetDatePickerItemById(datePickerId);
 
-		_datePickerItem.clear();
+		try {
+			_datePickerItem.clear();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.DatePicker.FailClear;
+		}
 
-		return _datePickerItem;
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -37,12 +63,24 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @param {string} datePickerId ID of the DatePickerItem that will be initialized.
 	 * @return {*}  {OSUIFramework.Patterns.DatePicker.IDatePicker}
 	 */
-	export function Close(datePickerId: string): OSUIFramework.Patterns.DatePicker.IDatePicker {
+	export function Close(datePickerId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const _datePickerItem = GetDatePickerItemById(datePickerId);
 
-		_datePickerItem.close();
+		try {
+			_datePickerItem.close();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.DatePicker.FailClose;
+		}
 
-		return _datePickerItem;
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -83,12 +121,26 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @export
 	 * @param {string} datePickerId
 	 */
-	export function Dispose(datePickerId: string): void {
+	export function Dispose(datePickerId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const _datePickerItem = GetDatePickerItemById(datePickerId);
 
-		_datePickerItem.dispose();
+		try {
+			_datePickerItem.dispose();
 
-		_datePickerItemsMap.delete(_datePickerItem.uniqueId);
+			_datePickerItemsMap.delete(_datePickerItem.uniqueId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.DatePicker.FailDispose;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -137,12 +189,24 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @param {string} datePickerId ID of the DatePickerItem that will be initialized.
 	 * @return {*}  {OSUIFramework.Patterns.DatePicker.IDatePicker}
 	 */
-	export function Open(datePickerId: string): OSUIFramework.Patterns.DatePicker.IDatePicker {
+	export function Open(datePickerId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const _datePickerItem = GetDatePickerItemById(datePickerId);
 
-		_datePickerItem.open();
+		try {
+			_datePickerItem.open();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.DatePicker.FailOpen;
+		}
 
-		return _datePickerItem;
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -157,10 +221,24 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 		datePickerId: string,
 		eventName: string,
 		callback: OSUIFramework.Callbacks.OSGeneric
-	): void {
+	): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const _datePicker = this.GetDatePickerItemById(datePickerId);
 
-		_datePicker.registerCallback(eventName, callback);
+		try {
+			_datePicker.registerCallback(eventName, callback);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.DatePicker.FailRegisterCallback;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -169,9 +247,23 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @export
 	 * @param {string} datePickerId
 	 */
-	export function Redraw(datePickerId: string): void {
+	export function Redraw(datePickerId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
 		const _datePicker = this.GetDatePickerItemById(datePickerId);
 
-		_datePicker.redraw();
+		try {
+			_datePicker.redraw();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.DatePicker.FailRedraw;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 }
