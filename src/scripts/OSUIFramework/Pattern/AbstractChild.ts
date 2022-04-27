@@ -44,7 +44,7 @@ namespace OSUIFramework.Patterns {
 		 * @param getPatternByIdAPI API reference method from Parent Pattern that will return the PatternById
 		 */
 		// eslint-disable-next-line @typescript-eslint/ban-types
-		protected setParentInfo(parentSelector: string, getPatternByIdAPI: Function): void {
+		protected setParentInfo(parentSelector: string, getPatternByIdAPI: Function, canBeOrphan?: boolean): void {
 			try {
 				const findedElement = this._selfElem.closest(parentSelector) as HTMLElement;
 				// Find for Id at Name or data-uniqueid attribite, data-uniqueid attribute is used at the elements that will be moved outside parent context
@@ -52,10 +52,15 @@ namespace OSUIFramework.Patterns {
 
 				this._parentObject = getPatternByIdAPI(this._parentId) as PT;
 			} catch (e) {
-				// Was not able to get Dropdown parent element!
-				throw new Error(
-					`${ErrorCodes.AbstractChild.ParentNotFound}: Parent of Child with Id: '${this.widgetId}' was not found!`
-				);
+				// It means the pattern can be used without the parent, so lets not throw error (ex: accordionItem)
+				if (canBeOrphan) {
+					this._parentObject = undefined;
+				} else {
+					// Was not able to get parent element!
+					throw new Error(
+						`${ErrorCodes.AbstractChild.ParentNotFound}: Parent of Child with Id: '${this.widgetId}' was not found!`
+					);
+				}
 			}
 		}
 

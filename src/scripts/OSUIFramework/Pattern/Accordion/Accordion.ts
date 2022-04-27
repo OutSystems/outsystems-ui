@@ -3,10 +3,8 @@ namespace OSUIFramework.Patterns.Accordion {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
-	export class Accordion extends AbstractPattern<AccordionConfig> implements IAccordion {
+	export class Accordion extends AbstractParent<AccordionConfig, AccordionItem.IAccordionItem> implements IAccordion {
 		private _accordionFirstItem: HTMLElement;
-		// Stores the Accordion Items of this Accordion
-		private _accordionItems = new Map<string, OSUIFramework.Patterns.AccordionItem.IAccordionItem>();
 		private _accordionLastItem: HTMLElement;
 		private _hasList: boolean;
 
@@ -70,7 +68,7 @@ namespace OSUIFramework.Patterns.Accordion {
 		 */
 		private _updateFirstAndLastItems(): void {
 			// If first item, no need to remove or unset anything
-			if (this._accordionItems.size > 0) {
+			if (this.childItems.length > 0) {
 				// Remove classes form current items
 				this._removeInitialCssClasses();
 				// Unset those items
@@ -124,19 +122,54 @@ namespace OSUIFramework.Patterns.Accordion {
 		 * @param {AccordionItem.IAccordionItem} accordionItem
 		 * @memberof Accordion
 		 */
-		public addAccordionItem(uniqueId: string, accordionItem: AccordionItem.IAccordionItem): void {
-			this._accordionItems.set(uniqueId, accordionItem);
+		public addAccordionItem(childId: string): void {
+			// Get the ChildItem reference
+			const childItem = OutSystems.OSUI.Patterns.AccordionItemAPI.GetAccordionItemById(childId);
+
+			if (this.getChild(childId)) {
+				throw new Error(
+					`${ErrorCodes.Accordion.FailSetNewChildItem}: There is already a ${GlobalEnum.PatternsNames.AccordionItem} under Id: '${childItem.widgetId}' added to ${GlobalEnum.PatternsNames.Accordion} with uniqueId: ${this.uniqueId}.`
+				);
+			} else {
+				// Store Child Item
+				this.setChild(childId, childItem);
+			}
 
 			// If we're adding to an accordion w/Multiple Items set to false & this item is expanded,
 			// we have to close all the other items
-			if (accordionItem.isOpen) {
-				this.triggerAccordionItemClose(accordionItem.uniqueId);
+			if (childItem.isOpen) {
+				this.triggerAccordionItemClose(childItem.uniqueId);
 			}
 
 			// In case the accordion is built, it means we're adding an item dynamically, after it's first setup.
 			if (this.isBuilt) {
 				//Recalculate positions in the array.
 				this._updateFirstAndLastItems();
+			}
+		}
+
+		/**
+		 * Method used to be notified by a given ChildId about a given action and act accordingly
+		 *
+		 * @param childId Child Item Id to be stored/managed
+		 * @param notifiedTo {Enum.ChildNotifyActionType} triggered notification type
+		 * @memberof SectionIndex
+		 */
+		public beNotifiedByChild(childId: string, notifiedTo: Enum.ChildNotifyActionType): void {
+			switch (notifiedTo) {
+				case Enum.ChildNotifyActionType.Add:
+					this.addAccordionItem(childId);
+					break;
+				case Enum.ChildNotifyActionType.Click:
+					this.triggerAccordionItemClose(childId);
+					break;
+				case Enum.ChildNotifyActionType.Removed:
+					this.removeAccordionItem(childId);
+					break;
+				default:
+					throw new Error(
+						`${ErrorCodes.Accordion.FailToSetChildItemAction}: There no exist a '${notifiedTo}' notification type.`
+					);
 			}
 		}
 
@@ -179,7 +212,7 @@ namespace OSUIFramework.Patterns.Accordion {
 		 * @memberof Accordion
 		 */
 		public collapseAllItems(): void {
-			this._accordionItems.forEach((item) => {
+			this.childItems.forEach((item) => {
 				if (item.isOpen && !item.isDisabled) {
 					item.close();
 				}
@@ -205,7 +238,7 @@ namespace OSUIFramework.Patterns.Accordion {
 		public expandAllItems(): void {
 			//If this accordion does not have multiple items, it means we can't expand all.
 			if (this.configs.MultipleItems) {
-				this._accordionItems.forEach((item) => {
+				this.childItems.forEach((item) => {
 					if (!item.isOpen && !item.isDisabled) {
 						item.open();
 					}
@@ -223,8 +256,16 @@ namespace OSUIFramework.Patterns.Accordion {
 		 * @param {string} accordionItemId
 		 * @memberof Accordion
 		 */
-		public removeAccordionItem(accordionItemId: string): void {
-			this._accordionItems.delete(accordionItemId);
+		public removeAccordionItem(childId: string): void {
+			// Check if the given ChildId exist at childList
+			if (this.getChild(childId)) {
+				// Remove item
+				this.unsetChild(childId);
+			} else {
+				throw new Error(
+					`${ErrorCodes.Accordion.FailUnsetNewChildItem}: The ${GlobalEnum.PatternsNames.AccordionItem} under uniqueId: '${childId}' does not exist as an ${GlobalEnum.PatternsNames.AccordionItem} from ${GlobalEnum.PatternsNames.Accordion} with Id: ${this.widgetId}.`
+				);
+			}
 		}
 
 		/**
@@ -234,19 +275,28 @@ namespace OSUIFramework.Patterns.Accordion {
 		 * @return {*}  {void}
 		 * @memberof Accordion
 		 */
-		public triggerAccordionItemClose(accordionItemId: string): void {
+		public triggerAccordionItemClose(childId: string): void {
 			//If this accordion has multiple items, it means we don't want to close the other items.
 			if (this.configs.MultipleItems) {
 				return;
 			}
 
-			this._accordionItems.forEach((item) => {
-				if (item.uniqueId !== accordionItemId) {
-					if (item.isOpen) {
-						item.close();
+			const childReference = this.getChild(childId);
+			// Check if the given ChildId exist as an child item
+			if (childReference) {
+				// Close all other open items
+				this.childItems.forEach((item) => {
+					if (item.uniqueId !== childId) {
+						if (item.isOpen) {
+							item.close();
+						}
 					}
-				}
-			});
+				});
+			} else {
+				throw new Error(
+					`${ErrorCodes.Accordion.FailChildItemClicked}: The ${GlobalEnum.PatternsNames.AccordionItem} under uniqueId: '${childId}' does not exist as an ${GlobalEnum.PatternsNames.AccordionItem} from ${GlobalEnum.PatternsNames.Accordion} with Id: ${this.widgetId}.`
+				);
+			}
 		}
 	}
 }

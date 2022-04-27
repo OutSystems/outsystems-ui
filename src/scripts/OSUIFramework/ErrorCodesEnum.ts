@@ -17,7 +17,7 @@ namespace OSUIFramework.ErrorCodes {
 		FailUnsetNewOptionItem: 'OSUI-GEN-02006',
 		HasNoImplementation: {
 			code: 'OSUI-GEN-02007',
-			message: 'This method has no implementation on this Dropdow Type.',
+			message: 'This method has no implementation on this Dropdown Type.',
 		},
 	};
 
@@ -38,5 +38,12 @@ namespace OSUIFramework.ErrorCodes {
 
 	export const SectionIndexItem = {
 		FailToSetTargetElement: 'OSUI-GEN-06001',
+	};
+
+	export const Accordion = {
+		FailChildItemClicked: 'OSUI-GEN-07001',
+		FailSetNewChildItem: 'OSUI-GEN-07002',
+		FailToSetChildItemAction: 'OSUI-GEN-07003',
+		FailUnsetNewChildItem: 'OSUI-GEN-07004',
 	};
 }

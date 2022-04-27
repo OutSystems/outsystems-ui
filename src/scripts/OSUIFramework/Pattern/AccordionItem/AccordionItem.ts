@@ -3,7 +3,10 @@ namespace OSUIFramework.Patterns.AccordionItem {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
-	export class AccordionItem extends AbstractPattern<AccordionItemConfig> implements IAccordionItem {
+	export class AccordionItem
+		extends AbstractChild<AccordionItemConfig, Accordion.IAccordion>
+		implements IAccordionItem
+	{
 		// Stores the HTML element of the pattern's content
 		private _accordionItemContentElem: HTMLElement;
 		// Stores the HTML element of the pattern's icon
@@ -14,8 +17,6 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		private _accordionItemPlaceholder: HTMLElement;
 		// Stores the HTML element of the pattern's title
 		private _accordionItemTitleElem: HTMLElement;
-		// Stores the parent of the item (if it exists)
-		private _accordionParentElem: Patterns.Accordion.IAccordion;
 		// Store the collapsed height value
 		private _collapsedHeight: number;
 		// Store the click event with bind(this)
@@ -26,15 +27,16 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		private _eventOnkeyPress: Callbacks.Generic;
 		// Store the expanded height value
 		private _expandedHeight: number;
+		// Stores if parent exists
+		private _hasAccordionWrapper: boolean;
 		// Stores if the element is open
 		private _isOpen: boolean;
 		// Callback function to trigger the click event on the platform
 		private _platformEventOnToggle: Callbacks.Generic;
 
-		constructor(uniqueId: string, configs: JSON, accordion?: Patterns.Accordion.IAccordion) {
+		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new AccordionItemConfig(configs));
 
-			this._accordionParentElem = accordion;
 			this._isOpen = this.configs.StartsExpanded;
 			this._collapsedHeight = 0;
 		}
@@ -371,6 +373,21 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 			this.setHtmlElements();
 			this.setInitialCssClasses();
+			// Get parent info
+			this.setParentInfo(
+				Constants.Dot + Accordion.Enum.CssClass.Pattern,
+				OutSystems.OSUI.Patterns.AccordionAPI.GetAccordionById,
+				true
+			);
+
+			// Check if its being used with Accordion
+			this._hasAccordionWrapper = this.parentObject !== undefined;
+
+			// Notify parent about a new instance of this child has been created!
+			if (this._hasAccordionWrapper) {
+				this.notifyParent(Accordion.Enum.ChildNotifyActionType.Add);
+			}
+
 			this._setIsDisabledState();
 			this.setA11yProperties(false);
 
@@ -444,7 +461,12 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		public dispose(): void {
 			this.unsetCallbacks();
 			this._removeEvents();
-			this._accordionParentElem?.removeAccordionItem(this.uniqueId);
+			//REMOVE - this._accordionParentElem?.removeAccordionItem(this.uniqueId);
+			if (this._hasAccordionWrapper) {
+				// Notify parent about this instance will be destroyed
+				this.notifyParent(Accordion.Enum.ChildNotifyActionType.Removed);
+			}
+
 			this.unsetHtmlElements();
 
 			super.dispose();
@@ -489,7 +511,11 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				this._animationAsync(true);
 			});
 
-			if (this._accordionParentElem) this._accordionParentElem.triggerAccordionItemClose(this.uniqueId);
+			// REMOVE - if (this._accordionParentElem) this._accordionParentElem.triggerAccordionItemClose(this.uniqueId);
+			// Notify parent about this Item toggled
+			if (this._hasAccordionWrapper) {
+				this.notifyParent(Accordion.Enum.ChildNotifyActionType.Click);
+			}
 		}
 
 		/**

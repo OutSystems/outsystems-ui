@@ -95,26 +95,18 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 		accordionItemId: string,
 		configs: string
 	): OSUIFramework.Patterns.AccordionItem.IAccordionItem {
-		const config = JSON.parse(configs);
 		if (_accordionItemMap.has(accordionItemId)) {
 			throw new Error(
 				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.AccordionItem} registered under id: ${accordionItemId}`
 			);
 		}
-		const accordion = GetAccordionByItem(accordionItemId);
 
 		const _newAccordionItem = new OSUIFramework.Patterns.AccordionItem.AccordionItem(
 			accordionItemId,
-			config,
-			accordion
+			JSON.parse(configs)
 		);
 
 		_accordionItemMap.set(accordionItemId, _newAccordionItem);
-		_newAccordionItem.build();
-		if (accordion !== undefined) {
-			_accordionMap.set(accordionItemId, accordion.uniqueId);
-			accordion.addAccordionItem(_newAccordionItem.uniqueId, _newAccordionItem);
-		}
 
 		return _newAccordionItem;
 	}
