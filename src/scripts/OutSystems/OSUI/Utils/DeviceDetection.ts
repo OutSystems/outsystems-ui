@@ -1,22 +1,47 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.DeviceDetection {
+	/**
+	 * Get the current device orientation
+	 */
 	export function GetDeviceOrientation(): string {
 		return OSUIFramework.Helper.DeviceInfo.GetDeviceOrientation();
 	}
+
+	/**
+	 * Get the current device type
+	 */
 	export function GetDeviceType(): string {
 		return OSUIFramework.Helper.DeviceInfo.GetDeviceType();
 	}
+
+	/**
+	 * Identifies if the device has a touchscreen.
+	 */
 	export function IsTouch(): boolean {
 		return OSUIFramework.Helper.DeviceInfo.IsTouch;
 	}
 
+	/**
+	 * Identifies the operating system being used.
+	 * @param UserAgent
+	 * @returns
+	 */
 	export function GetOperatingSystem(UserAgent: string): string {
 		return OSUIFramework.Helper.DeviceInfo.GetOperatingSystem(UserAgent);
 	}
 
+	/**
+	 * Check if the current device is desktop
+	 * @returns
+	 */
 	export function IsDesktop(): boolean {
 		return OSUIFramework.Helper.DeviceInfo.IsDesktop;
 	}
+
+	/**
+	 * Check if is the layout native is being used
+	 * @returns
+	 */
 	export function CheckIsLayoutNative(): boolean {
 		const layout = OSUIFramework.Helper.Dom.ClassSelector(document.body, 'layout');
 
@@ -26,22 +51,43 @@ namespace OutSystems.OSUI.DeviceDetection {
 		}
 	}
 
+	/**
+	 * Check if running as PWA.
+	 * @returns
+	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export function IsRunningAsPWA(): boolean {
 		return OSUIFramework.Helper.DeviceInfo.IsPwa;
 	}
 
+	/**
+	 * Check if the current device is phone
+	 * @returns
+	 */
 	export function IsPhone(): boolean {
 		return OSUIFramework.Helper.DeviceInfo.IsPhone;
 	}
 
+	/**
+	 * Action to check if App is currently running as a Native App.
+	 * @returns
+	 */
 	export function IsRunningAsNativeApp(): boolean {
 		return OSUIFramework.Helper.DeviceInfo.IsNative;
 	}
 
+	/**
+	 * Check if the current device is tablet
+	 * @returns
+	 */
 	export function IsTablet(): boolean {
 		return OSUIFramework.Helper.DeviceInfo.IsTablet;
 	}
+
+	/**
+	 * Returns true if using a WebApp Template
+	 * @returns
+	 */
 	export function IsWebApp(): boolean {
 		const layout = OSUIFramework.Helper.Dom.ClassSelector(document.body, 'layout');
 		if (layout) {

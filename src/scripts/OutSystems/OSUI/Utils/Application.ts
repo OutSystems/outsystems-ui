@@ -1,5 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Application {
+	/**
+	 * Set SideMenu and Sticky classes when the layout needs them
+	 */
 	export function SetExpandableExceptions(): void {
 		const layout = OSUIFramework.Helper.Dom.ClassSelector(document, 'layout');
 		const body = document.body;

@@ -1,9 +1,16 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Menu {
+	/**
+	 * Check if the menu can be draggable
+	 * @returns
+	 */
 	export function IsMenuDraggable(): boolean {
 		return window.cordova !== undefined && DeviceDetection.IsRunningAsPWA() === false;
 	}
 
+	/**
+	 * Closes the extended menu content.
+	 */
 	export function MenuHide(): void {
 		const menu = OSUIFramework.Helper.Dom.ClassSelector(document, 'menu');
 		const appMenu = OSUIFramework.Helper.Dom.ClassSelector(document, 'app-menu-container');
@@ -31,6 +38,9 @@ namespace OutSystems.OSUI.Menu {
 		SetMenuAttributes();
 	}
 
+	/**
+	 * Opens the extended menu content.
+	 */
 	export function MenuShow(): void {
 		const myMenu = OSUIFramework.Helper.Dom.ClassSelector(document, 'menu');
 
@@ -40,6 +50,12 @@ namespace OutSystems.OSUI.Menu {
 		SetMenuAttributes();
 	}
 
+	/**
+	 * Adds the selected states to menu items.
+	 * @param WidgetId
+	 * @param ActiveItem
+	 * @param ActiveSubItem
+	 */
 	export function SetActiveMenuItems(WidgetId: string, ActiveItem: number, ActiveSubItem: number): void {
 		let widgetSelector = '';
 		if (WidgetId !== '') {
@@ -74,6 +90,11 @@ namespace OutSystems.OSUI.Menu {
 		}
 	}
 
+	/**
+	 * Use this action on a BottomBar block to set an active state to a BottomBarItem.
+	 * Used by default on the BottomBar block inside the OutSystems UI Mobile Templates.
+	 * @param ActiveItem
+	 */
 	export function SetBottomBarActiveElement(ActiveItem = -1): void {
 		const bottomBar = OSUIFramework.Helper.Dom.ClassSelector(document, 'bottom-bar');
 		const bottomBarChild = (bottomBar ? bottomBar.children[ActiveItem] : undefined) as HTMLElement;
@@ -83,6 +104,9 @@ namespace OutSystems.OSUI.Menu {
 		}
 	}
 
+	/**
+	 * Supports the items accessible on the menu.
+	 */
 	export function SetMenuAttributes(): void {
 		const layout = OSUIFramework.Helper.Dom.ClassSelector(document, 'layout');
 		const menu =
@@ -119,6 +143,10 @@ namespace OutSystems.OSUI.Menu {
 		}
 	}
 
+	/**
+	 * Changes the menu icon automatic behavior.
+	 * @param MenuAction
+	 */
 	export function SetMenuIcon(MenuAction: string): void {
 		if (MenuAction === 'Auto') {
 			const appMenu = Array.prototype.slice.call(
@@ -157,6 +185,9 @@ namespace OutSystems.OSUI.Menu {
 		}
 	}
 
+	/**
+	 * Makes the menu accessibility-ready.
+	 */
 	export function SetMenuIconListeners(): void {
 		const menuIcon = OSUIFramework.Helper.Dom.ClassSelector(document, 'menu-icon');
 
@@ -174,6 +205,10 @@ namespace OutSystems.OSUI.Menu {
 		}
 	}
 
+	/**
+	 * Makes the menu navigation accessibility-ready.
+	 * @param WidgetId
+	 */
 	export function SetMenuListeners(WidgetId: string): void {
 		let widgetSelector = '';
 		if (WidgetId !== '') {
@@ -272,6 +307,9 @@ namespace OutSystems.OSUI.Menu {
 		}
 	}
 
+	/**
+	 * Expands the menu.
+	 */
 	export function ToggleSideMenu(): void {
 		const layout = document.querySelector('.layout');
 		const menu = document.querySelector('.app-menu-content') as HTMLElement;

@@ -1,5 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Utils {
+	/**
+	 * Add a favicon to your web application by providing the icon's URL. This action should be used in the Layout OnReady event or on an OnApplicationStart event.
+	 * @param URL
+	 */
 	export function AddFavicon(URL: string): void {
 		const link = (OSUIFramework.Helper.Dom.TagSelector(document.head, "link[rel*='icon']") ||
 			document.createElement('link')) as HTMLLinkElement;
@@ -9,11 +13,24 @@ namespace OutSystems.OSUI.Utils {
 		document.getElementsByTagName('head')[0].appendChild(link);
 	}
 
+	/**
+	 * Function that exposes if RTL is applied.
+	 * @returns
+	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export function GetIsRTL(): boolean {
 		return OSUIFramework.Helper.Dom.Styles.ContainsClass(document.body, OSUIFramework.Constants.IsRTLClass);
 	}
 
+	/**
+	 * Action to hint users that the list item has swipe actions available to use, either on the left or right side.
+	 * In case of both left and right actions, the default animation is on the left.
+	 * This animation will be active when there are left and/or right actions available, based on the animation time parameter.
+	 * @param ListId
+	 * @param HasLeftAction
+	 * @param HasRightAction
+	 * @param AnimationTime
+	 */
 	export function ListItemAnimate(
 		ListId: string,
 		HasLeftAction: boolean,
@@ -106,6 +123,13 @@ namespace OutSystems.OSUI.Utils {
 		waitListRender();
 	}
 
+	/**
+	 * Action that moves elements on the DOM tree.
+	 * Define the WidgetID of the element to be moved and the Target selector that will receive the element.
+	 * Example: $actions.MoveElement($parameters.WidgetId, ".active-screen .screen");
+	 * @param ElementId
+	 * @param TargetSelector
+	 */
 	export function MoveElement(ElementId: string, TargetSelector: string): void {
 		if (TargetSelector && ElementId) {
 			const elementToMove = OSUIFramework.Helper.Dom.GetElementById(ElementId);
@@ -119,6 +143,12 @@ namespace OutSystems.OSUI.Utils {
 		}
 	}
 
+	/**
+	 * Allows to change the selected state of Cards and List Items.
+	 * Set a Widget Id and the Active state to change an element on the screen.
+	 * @param ElementId
+	 * @param IsActive
+	 */
 	export function SetActiveElement(ElementId: string, IsActive: boolean): void {
 		const elem = OSUIFramework.Helper.Dom.GetElementById(ElementId);
 
@@ -129,6 +159,13 @@ namespace OutSystems.OSUI.Utils {
 		}
 	}
 
+	/**
+	 * To be used to complement Bulk Actions logic. Drag this action to your checkbox OnChange action.
+	 * This will afftect the styles of the checkbox used, and the selected table rows, containing a checked checkbox.
+	 * @param TableId
+	 * @param RowNumber
+	 * @param IsSelected
+	 */
 	export function SetSelectedTableRow(TableId: string, RowNumber: number, IsSelected: boolean): void {
 		const tableRow = OSUIFramework.Helper.Dom.TagSelectorAll(document, '#' + TableId + ' .table-row')[
 			RowNumber
@@ -142,6 +179,9 @@ namespace OutSystems.OSUI.Utils {
 		}
 	}
 
+	/**
+	 * Action to be used on the Login screen to enable users to show or hide the password characters.
+	 */
 	export function ShowPassword(): void {
 		const inputPassword = OSUIFramework.Helper.Dom.ClassSelector(document, 'login-password') as HTMLInputElement;
 		const typeInputPassword = inputPassword.type;
