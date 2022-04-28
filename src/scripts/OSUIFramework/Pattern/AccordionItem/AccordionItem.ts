@@ -27,8 +27,6 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		private _eventOnkeyPress: Callbacks.Generic;
 		// Store the expanded height value
 		private _expandedHeight: number;
-		// Stores if parent exists
-		private _hasAccordionWrapper: boolean;
 		// Stores if the element is open
 		private _isOpen: boolean;
 		// Callback function to trigger the click event on the platform
@@ -155,11 +153,8 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				true
 			);
 
-			// Check if its being used with Accordion
-			this._hasAccordionWrapper = this.parentObject !== undefined;
-
 			// Notify parent about a new instance of this child has been created!
-			if (this._hasAccordionWrapper) {
+			if (this.parentObject) {
 				this.notifyParent(Accordion.Enum.ChildNotifyActionType.Add);
 			}
 		}
@@ -467,7 +462,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			this.unsetCallbacks();
 			this._removeEvents();
 
-			if (this._hasAccordionWrapper) {
+			if (this.parentObject) {
 				// Notify parent about this instance will be destroyed
 				this.notifyParent(Accordion.Enum.ChildNotifyActionType.Removed);
 			}
@@ -517,7 +512,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			});
 
 			// Notify parent about this Item toggled
-			if (this._hasAccordionWrapper) {
+			if (this.parentObject) {
 				this.notifyParent(Accordion.Enum.ChildNotifyActionType.Click);
 			}
 		}
