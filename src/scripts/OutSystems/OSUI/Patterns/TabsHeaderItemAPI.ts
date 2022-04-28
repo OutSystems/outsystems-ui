@@ -47,9 +47,9 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
-
 		try {
+			const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
+
 			tabsHeaderItem.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -108,9 +108,9 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
-
 		try {
+			const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
+
 			tabsHeaderItem.dispose();
 
 			_tabsHeaderItemMap.delete(tabsHeaderItem.uniqueId);

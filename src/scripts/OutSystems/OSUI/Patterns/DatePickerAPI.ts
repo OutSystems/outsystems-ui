@@ -18,9 +18,9 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _datePickerItem = GetDatePickerItemById(datePickerId);
-
 		try {
+			const _datePickerItem = GetDatePickerItemById(datePickerId);
+
 			_datePickerItem.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -44,9 +44,9 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _datePickerItem = GetDatePickerItemById(datePickerId);
-
 		try {
+			const _datePickerItem = GetDatePickerItemById(datePickerId);
+
 			_datePickerItem.clear();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -70,9 +70,9 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _datePickerItem = GetDatePickerItemById(datePickerId);
-
 		try {
+			const _datePickerItem = GetDatePickerItemById(datePickerId);
+
 			_datePickerItem.close();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -128,9 +128,9 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _datePickerItem = GetDatePickerItemById(datePickerId);
-
 		try {
+			const _datePickerItem = GetDatePickerItemById(datePickerId);
+
 			_datePickerItem.dispose();
 
 			_datePickerItemsMap.delete(_datePickerItem.uniqueId);
@@ -196,9 +196,9 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _datePickerItem = GetDatePickerItemById(datePickerId);
-
 		try {
+			const _datePickerItem = GetDatePickerItemById(datePickerId);
+
 			_datePickerItem.open();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -228,9 +228,9 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _datePicker = this.GetDatePickerItemById(datePickerId);
-
 		try {
+			const _datePicker = this.GetDatePickerItemById(datePickerId);
+
 			_datePicker.registerCallback(eventName, callback);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -254,9 +254,9 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _datePicker = this.GetDatePickerItemById(datePickerId);
-
 		try {
+			const _datePicker = this.GetDatePickerItemById(datePickerId);
+
 			_datePicker.redraw();
 		} catch (error) {
 			responseObj.isSuccess = false;

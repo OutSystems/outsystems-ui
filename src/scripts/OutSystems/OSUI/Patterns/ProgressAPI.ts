@@ -18,9 +18,9 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _progressItem = GetProgressItemById(progressId);
-
 		try {
+			const _progressItem = GetProgressItemById(progressId);
+
 			_progressItem.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -68,9 +68,9 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _progressItem = GetProgressItemById(progressId);
-
 		try {
+			const _progressItem = GetProgressItemById(progressId);
+
 			_progressItem.dispose();
 
 			_progressItemsMap.delete(_progressItem.uniqueId);
@@ -136,9 +136,9 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _progressItem = GetProgressItemById(progressId);
-
 		try {
+			const _progressItem = GetProgressItemById(progressId);
+
 			_progressItem.setProgressValue(progress);
 		} catch (error) {
 			responseObj.isSuccess = false;

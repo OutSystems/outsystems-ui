@@ -18,9 +18,9 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const rating = GetRatingById(ratingId);
-
 		try {
+			const rating = GetRatingById(ratingId);
+
 			rating.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -65,9 +65,9 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const rating = GetRatingById(ratingId);
-
 		try {
+			const rating = GetRatingById(ratingId);
+
 			rating.dispose();
 
 			_ratingsMap.delete(ratingId);
@@ -134,9 +134,9 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const rating = GetRatingById(ratingId);
-
 		try {
+			const rating = GetRatingById(ratingId);
+
 			rating.registerCallback(callback);
 		} catch (error) {
 			responseObj.isSuccess = false;

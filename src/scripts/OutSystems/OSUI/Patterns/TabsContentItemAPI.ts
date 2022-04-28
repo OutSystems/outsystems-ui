@@ -47,9 +47,9 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const tabsContentItem = GetTabsContentItemById(tabsContentItemId);
-
 		try {
+			const tabsContentItem = GetTabsContentItemById(tabsContentItemId);
+
 			tabsContentItem.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -108,9 +108,9 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const tabsContentItem = GetTabsContentItemById(tabsContentItemId);
-
 		try {
+			const tabsContentItem = GetTabsContentItemById(tabsContentItemId);
+
 			tabsContentItem.dispose();
 
 			_tabsContentItemMap.delete(tabsContentItem.uniqueId);

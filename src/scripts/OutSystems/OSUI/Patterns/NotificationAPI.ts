@@ -17,9 +17,9 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const notification = GetNotificationById(notificationId);
-
 		try {
+			const notification = GetNotificationById(notificationId);
+
 			notification.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -66,9 +66,9 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const notification = GetNotificationById(notificationId);
-
 		try {
+			const notification = GetNotificationById(notificationId);
+
 			notification.dispose();
 
 			_notificationMap.delete(notificationId);
@@ -119,9 +119,9 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const notification = GetNotificationById(notificationId);
-
 		try {
+			const notification = GetNotificationById(notificationId);
+
 			notification.hide();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -167,9 +167,9 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _notificationItem = this.GetNotificationById(notificationId);
-
 		try {
+			const _notificationItem = this.GetNotificationById(notificationId);
+
 			_notificationItem.registerCallback(eventName, callback);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -193,9 +193,9 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const notification = GetNotificationById(notificationId);
-
 		try {
+			const notification = GetNotificationById(notificationId);
+
 			notification.show();
 		} catch (error) {
 			responseObj.isSuccess = false;

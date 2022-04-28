@@ -21,9 +21,9 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _dropdownServerSideItemItem = GetDropdownServerSideItemItemById(dropdownServerSideItemId);
-
 		try {
+			const _dropdownServerSideItemItem = GetDropdownServerSideItemItemById(dropdownServerSideItemId);
+
 			_dropdownServerSideItemItem.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -75,9 +75,9 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _dropdownServerSideItemItem = GetDropdownServerSideItemItemById(dropdownServerSideItemId);
-
 		try {
+			const _dropdownServerSideItemItem = GetDropdownServerSideItemItemById(dropdownServerSideItemId);
+
 			_dropdownServerSideItemItem.dispose();
 
 			_dropdownServerSideItemItemsMap.delete(_dropdownServerSideItemItem.uniqueId);
@@ -153,9 +153,9 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _dropdownServerSideItemItem = this.GetDropdownServerSideItemItemById(dropdownServerSideItemId);
-
 		try {
+			const _dropdownServerSideItemItem = this.GetDropdownServerSideItemItemById(dropdownServerSideItemId);
+
 			_dropdownServerSideItemItem.registerCallback(eventName, callback);
 		} catch (error) {
 			responseObj.isSuccess = false;

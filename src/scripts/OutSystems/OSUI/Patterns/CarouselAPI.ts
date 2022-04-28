@@ -18,9 +18,9 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _carouselItem = GetCarouselItemById(carouselId);
-
 		try {
+			const _carouselItem = GetCarouselItemById(carouselId);
+
 			_carouselItem.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -70,9 +70,9 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _carouselItem = GetCarouselItemById(carouselId);
-
 		try {
+			const _carouselItem = GetCarouselItemById(carouselId);
+
 			_carouselItem.dispose();
 
 			_carouselItemsMap.delete(_carouselItem.uniqueId);
@@ -124,9 +124,9 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const carousel = GetCarouselItemById(carouselId);
-
 		try {
+			const carousel = GetCarouselItemById(carouselId);
+
 			carousel.goTo(index);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -166,9 +166,9 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const carousel = GetCarouselItemById(carouselId);
-
 		try {
+			const carousel = GetCarouselItemById(carouselId);
+
 			carousel.next();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -193,9 +193,9 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const carousel = GetCarouselItemById(carouselId);
-
 		try {
+			const carousel = GetCarouselItemById(carouselId);
+
 			carousel.previous();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -225,9 +225,9 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const carousel = GetCarouselItemById(carouselId);
-
 		try {
+			const carousel = GetCarouselItemById(carouselId);
+
 			carousel.registerCallback(eventName, callback);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -252,9 +252,9 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const carousel = GetCarouselItemById(carouselId);
-
 		try {
+			const carousel = GetCarouselItemById(carouselId);
+
 			carousel.toggleDrag(hasDrag);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -279,9 +279,9 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const carousel = GetCarouselItemById(carouselId);
-
 		try {
+			const carousel = GetCarouselItemById(carouselId);
+
 			carousel.updateOnRender();
 		} catch (error) {
 			responseObj.isSuccess = false;

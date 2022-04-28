@@ -16,9 +16,9 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const sidebar = GetSidebarById(sidebarId);
-
 		try {
+			const sidebar = GetSidebarById(sidebarId);
+
 			sidebar.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -42,9 +42,9 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const sidebar = GetSidebarById(sidebarId);
-
 		try {
+			const sidebar = GetSidebarById(sidebarId);
+
 			sidebar.close();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -88,9 +88,9 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const sidebar = GetSidebarById(sidebarId);
-
 		try {
+			const sidebar = GetSidebarById(sidebarId);
+
 			sidebar.dispose();
 
 			_sidebarMap.delete(sidebarId);
@@ -160,9 +160,9 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const sidebar = GetSidebarById(sidebarId);
-
 		try {
+			const sidebar = GetSidebarById(sidebarId);
+
 			sidebar.registerCallback(callback);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -186,9 +186,9 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const sidebar = GetSidebarById(sidebarId);
-
 		try {
+			const sidebar = GetSidebarById(sidebarId);
+
 			sidebar.open();
 		} catch (error) {
 			responseObj.isSuccess = false;

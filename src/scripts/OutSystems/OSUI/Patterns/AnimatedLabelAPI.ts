@@ -17,9 +17,9 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const animatedlabel = GetAnimatedLabelById(animatedLabelId);
-
 		try {
+			const animatedlabel = GetAnimatedLabelById(animatedLabelId);
+
 			animatedlabel.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -71,9 +71,9 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const animatedlabel = GetAnimatedLabelById(animatedLabelId);
-
 		try {
+			const animatedlabel = GetAnimatedLabelById(animatedLabelId);
+
 			animatedlabel.dispose();
 
 			_animatedLabelsMap.delete(animatedlabel.uniqueId);
@@ -140,9 +140,9 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const animatedlabel = GetAnimatedLabelById(animatedLabelId);
-
 		try {
+			const animatedlabel = GetAnimatedLabelById(animatedLabelId);
+
 			animatedlabel.updateOnRender();
 		} catch (error) {
 			responseObj.isSuccess = false;

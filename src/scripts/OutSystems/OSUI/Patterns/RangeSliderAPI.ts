@@ -17,9 +17,9 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _rangeSliderItem = GetRangeSliderItemById(rangeSliderId);
-
 		try {
+			const _rangeSliderItem = GetRangeSliderItemById(rangeSliderId);
+
 			_rangeSliderItem.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -77,9 +77,9 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _rangeSliderItem = GetRangeSliderItemById(rangeSliderId);
-
 		try {
+			const _rangeSliderItem = GetRangeSliderItemById(rangeSliderId);
+
 			_rangeSliderItem.dispose();
 
 			_rangeSliderItemsMap.delete(_rangeSliderItem.uniqueId);
@@ -151,9 +151,9 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
-
 		try {
+			const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
+
 			rangeSlider.registerCallback(eventName, callback);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -177,9 +177,9 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
-
 		try {
+			const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
+
 			rangeSlider.setRangeIntervalChangeOnDragEnd();
 		} catch (error) {
 			responseObj.isSuccess = false;

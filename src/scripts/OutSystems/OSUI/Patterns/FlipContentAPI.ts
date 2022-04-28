@@ -18,9 +18,9 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const flipContent = GetFlipContentById(flipId);
-
 		try {
+			const flipContent = GetFlipContentById(flipId);
+
 			flipContent.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -66,9 +66,9 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const flipContent = GetFlipContentById(flipId);
-
 		try {
+			const flipContent = GetFlipContentById(flipId);
+
 			flipContent.dispose();
 
 			_flipContentMap.delete(flipContent.uniqueId);
@@ -135,9 +135,9 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const flipContent = GetFlipContentById(flipId);
-
 		try {
+			const flipContent = GetFlipContentById(flipId);
+
 			flipContent.registerCallback(callback);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -160,9 +160,9 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const flipContent = GetFlipContentById(flipId);
-
 		try {
+			const flipContent = GetFlipContentById(flipId);
+
 			flipContent.showBackContent();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -186,9 +186,9 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const flipContent = GetFlipContentById(flipId);
-
 		try {
+			const flipContent = GetFlipContentById(flipId);
+
 			flipContent.showFrontContent();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -212,9 +212,9 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const flipContent = GetFlipContentById(flipId);
-
 		try {
+			const flipContent = GetFlipContentById(flipId);
+
 			flipContent.toggleFlipContent();
 		} catch (error) {
 			responseObj.isSuccess = false;

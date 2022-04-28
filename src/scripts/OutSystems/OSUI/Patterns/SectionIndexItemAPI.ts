@@ -18,9 +18,9 @@ namespace OutSystems.OSUI.Patterns.SectionIndexItemAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _sectionIndexItem = GetSectionIndexItemById(sectionIndexItemId);
-
 		try {
+			const _sectionIndexItem = GetSectionIndexItemById(sectionIndexItemId);
+
 			_sectionIndexItem.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -70,8 +70,9 @@ namespace OutSystems.OSUI.Patterns.SectionIndexItemAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _sectionIndexItemItem = GetSectionIndexItemById(sectionIndexItemId);
 		try {
+			const _sectionIndexItemItem = GetSectionIndexItemById(sectionIndexItemId);
+
 			_sectionIndexItemItem.dispose();
 
 			_sectionIndexItemMap.delete(_sectionIndexItemItem.uniqueId);
@@ -145,8 +146,9 @@ namespace OutSystems.OSUI.Patterns.SectionIndexItemAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _sectionIndexItem = this.GetSectionIndexItemById(sectionIndexItemId);
 		try {
+			const _sectionIndexItem = this.GetSectionIndexItemById(sectionIndexItemId);
+
 			_sectionIndexItem.registerCallback(eventName, callback);
 		} catch (error) {
 			responseObj.isSuccess = false;

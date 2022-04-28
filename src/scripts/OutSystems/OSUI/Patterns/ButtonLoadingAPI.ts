@@ -17,9 +17,9 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const buttonLoading = GetButtonLoadingById(buttonLoadingId);
-
 		try {
+			const buttonLoading = GetButtonLoadingById(buttonLoadingId);
+
 			buttonLoading.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -71,9 +71,9 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const buttonLoading = GetButtonLoadingById(buttonLoadingId);
-
 		try {
+			const buttonLoading = GetButtonLoadingById(buttonLoadingId);
+
 			buttonLoading.dispose();
 
 			_buttonsLoadingMap.delete(buttonLoading.uniqueId);
