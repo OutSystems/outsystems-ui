@@ -15,20 +15,20 @@
 			-servicestudio-border-bottom-width: var(--border-size-s);
 		}
 
-		&--is-first-item {
+		&.is--first-child {
 			border-radius: var(--border-radius-none);
 			border-top-left-radius: var(--border-radius-soft);
 			border-top-right-radius: var(--border-radius-soft);
 		}
 
-		&--is-last-item {
+		&.is--last-child {
 			border-bottom-width: var(--border-size-s);
 			border-radius: var(--border-radius-none);
 			border-bottom-left-radius: var(--border-radius-soft);
 			border-bottom-right-radius: var(--border-radius-soft);
 		}
 
-		&--is-first-item.osui-accordion-item--is-last-item {
+		&.is--first-child.is--last-child {
 			border-top-left-radius: var(--border-radius-soft);
 			border-top-right-radius: var(--border-radius-soft);
 		}

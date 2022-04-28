@@ -63,13 +63,6 @@
 			}
 		}
 
-		&-first-item {
-			&::after {
-				border-top-left-radius: var(--border-radius-soft);
-				border-top-right-radius: var(--border-radius-soft);
-			}
-		}
-
 		&-disabled {
 			color: var(--color-neutral-7);
 			pointer-events: none;
@@ -77,6 +70,13 @@
 			.osui-accordion-item__icon {
 				color: var(--color-neutral-6);
 			}
+		}
+	}
+
+	&.is--first-child {
+		&::after {
+			border-top-left-radius: var(--border-radius-soft);
+			border-top-right-radius: var(--border-radius-soft);
 		}
 	}
 

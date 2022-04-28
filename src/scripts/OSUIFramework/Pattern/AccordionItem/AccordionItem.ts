@@ -18,7 +18,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		// Stores the HTML element of the pattern's title
 		private _accordionItemTitleElem: HTMLElement;
 		// Store the collapsed height value
-		private _collapsedHeight: number;
+		private _collapsedHeight = 0;
 		// Store the click event with bind(this)
 		private _eventOnClick: Callbacks.Generic;
 		//Stores the transition end callback function
@@ -38,7 +38,6 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			super(uniqueId, new AccordionItemConfig(configs));
 
 			this._isOpen = this.configs.StartsExpanded;
-			this._collapsedHeight = 0;
 		}
 
 		// Method to handle the click event
@@ -145,6 +144,24 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		private _removeEvents(): void {
 			this._accordionItemTitleElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			this._accordionItemTitleElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
+		}
+
+		// Method to set the parent Info, if an accordion wrapper is being used
+		private _setAccordionParent(): void {
+			// Get parent info
+			this.setParentInfo(
+				Constants.Dot + Accordion.Enum.CssClass.Pattern,
+				OutSystems.OSUI.Patterns.AccordionAPI.GetAccordionById,
+				true
+			);
+
+			// Check if its being used with Accordion
+			this._hasAccordionWrapper = this.parentObject !== undefined;
+
+			// Notify parent about a new instance of this child has been created!
+			if (this._hasAccordionWrapper) {
+				this.notifyParent(Accordion.Enum.ChildNotifyActionType.Add);
+			}
 		}
 
 		// Method that changes the icon's position
@@ -373,20 +390,8 @@ namespace OSUIFramework.Patterns.AccordionItem {
 
 			this.setHtmlElements();
 			this.setInitialCssClasses();
-			// Get parent info
-			this.setParentInfo(
-				Constants.Dot + Accordion.Enum.CssClass.Pattern,
-				OutSystems.OSUI.Patterns.AccordionAPI.GetAccordionById,
-				true
-			);
 
-			// Check if its being used with Accordion
-			this._hasAccordionWrapper = this.parentObject !== undefined;
-
-			// Notify parent about a new instance of this child has been created!
-			if (this._hasAccordionWrapper) {
-				this.notifyParent(Accordion.Enum.ChildNotifyActionType.Add);
-			}
+			this._setAccordionParent();
 
 			this._setIsDisabledState();
 			this.setA11yProperties(false);

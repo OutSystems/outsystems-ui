@@ -4,81 +4,8 @@ namespace OSUIFramework.Patterns.Accordion {
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	export class Accordion extends AbstractParent<AccordionConfig, AccordionItem.IAccordionItem> implements IAccordion {
-		private _accordionFirstItem: HTMLElement;
-		private _accordionLastItem: HTMLElement;
-		private _hasList: boolean;
-
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new AccordionConfig(configs));
-		}
-
-		// Method to prepare the accordion classes and attributes
-		private _prepareAccordion(): void {
-			// Check if it's inside a list.
-			this._hasList = OutSystems.OSUI.Utils.GetHasListInside(this._selfElem);
-
-			// If there's a list, these will be updated every time a new item enters the DOM
-			// Otherwise, it can be done now, as the accordionItem have already been all rendered
-			if (this._hasList === false) {
-				this.setHTMLElements();
-
-				this._updateFirstAndLastItems();
-			}
-
-			this.setA11YProperties();
-		}
-
-		/**
-		 * Remove classes from first and last accordionItems
-		 *
-		 * @private
-		 * @memberof Accordion
-		 */
-		private _removeInitialCssClasses(): void {
-			if (this._accordionFirstItem) {
-				Helper.Dom.Styles.RemoveClass(this._accordionFirstItem, Enum.CssClass.PatternFirstItem);
-			}
-
-			if (this._accordionLastItem) {
-				Helper.Dom.Styles.RemoveClass(this._accordionLastItem, Enum.CssClass.PatternLastItem);
-			}
-		}
-
-		/**
-		 * Set initial classes to first and last accordionItems
-		 *
-		 * @private
-		 * @memberof Accordion
-		 */
-		private _setInitialCssClasses(): void {
-			if (this._accordionFirstItem) {
-				Helper.Dom.Styles.AddClass(this._accordionFirstItem, Enum.CssClass.PatternFirstItem);
-			}
-
-			if (this._accordionLastItem) {
-				Helper.Dom.Styles.AddClass(this._accordionLastItem, Enum.CssClass.PatternLastItem);
-			}
-		}
-
-		/**
-		 * Method used to recalculate the position of items on the accordion
-		 *
-		 * @private
-		 * @memberof Accordion
-		 */
-		private _updateFirstAndLastItems(): void {
-			// If first item, no need to remove or unset anything
-			if (this.childItems.length > 0) {
-				// Remove classes form current items
-				this._removeInitialCssClasses();
-				// Unset those items
-				this.unsetHTMLElements();
-			}
-
-			// Set new first and last items
-			this.setHTMLElements();
-			// Set classes to the new first and last items
-			this._setInitialCssClasses();
 		}
 
 		/**
@@ -89,30 +16,6 @@ namespace OSUIFramework.Patterns.Accordion {
 		 */
 		protected setA11YProperties(): void {
 			Helper.A11Y.RoleTabList(this._selfElem);
-		}
-
-		/**
-		 * Set the html references that will be used to manage the cssClasses and atribute properties
-		 *
-		 * @protected
-		 * @memberof Accordion
-		 */
-		protected setHTMLElements(): void {
-			const targetElem = this._hasList ? this._selfElem.firstChild : this._selfElem;
-
-			this._accordionFirstItem = targetElem.firstChild.firstChild as HTMLElement;
-			this._accordionLastItem = targetElem.lastChild.firstChild as HTMLElement;
-		}
-
-		/**
-		 * Remove references to HTML elements.
-		 *
-		 * @protected
-		 * @memberof Accordion
-		 */
-		protected unsetHTMLElements(): void {
-			this._accordionFirstItem = undefined;
-			this._accordionLastItem = undefined;
 		}
 
 		/**
@@ -139,12 +42,6 @@ namespace OSUIFramework.Patterns.Accordion {
 			// we have to close all the other items
 			if (childItem.isOpen) {
 				this.triggerAccordionItemClose(childItem.uniqueId);
-			}
-
-			// In case the accordion is built, it means we're adding an item dynamically, after it's first setup.
-			if (this.isBuilt) {
-				//Recalculate positions in the array.
-				this._updateFirstAndLastItems();
 			}
 		}
 
@@ -181,7 +78,7 @@ namespace OSUIFramework.Patterns.Accordion {
 		public build(): void {
 			super.build();
 
-			this._prepareAccordion();
+			this.setA11YProperties();
 
 			super.finishBuild();
 		}
@@ -225,8 +122,6 @@ namespace OSUIFramework.Patterns.Accordion {
 		 * @memberof Accordion
 		 */
 		public dispose(): void {
-			this.unsetHTMLElements();
-
 			super.dispose();
 		}
 
