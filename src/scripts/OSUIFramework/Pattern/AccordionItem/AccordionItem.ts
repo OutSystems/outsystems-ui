@@ -466,7 +466,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		public dispose(): void {
 			this.unsetCallbacks();
 			this._removeEvents();
-			//REMOVE - this._accordionParentElem?.removeAccordionItem(this.uniqueId);
+
 			if (this._hasAccordionWrapper) {
 				// Notify parent about this instance will be destroyed
 				this.notifyParent(Accordion.Enum.ChildNotifyActionType.Removed);
