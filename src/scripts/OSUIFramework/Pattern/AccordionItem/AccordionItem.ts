@@ -516,7 +516,6 @@ namespace OSUIFramework.Patterns.AccordionItem {
 				this._animationAsync(true);
 			});
 
-			// REMOVE - if (this._accordionParentElem) this._accordionParentElem.triggerAccordionItemClose(this.uniqueId);
 			// Notify parent about this Item toggled
 			if (this._hasAccordionWrapper) {
 				this.notifyParent(Accordion.Enum.ChildNotifyActionType.Click);
