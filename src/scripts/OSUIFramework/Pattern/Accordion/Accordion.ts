@@ -109,10 +109,12 @@ namespace OSUIFramework.Patterns.Accordion {
 		 * @memberof Accordion
 		 */
 		public collapseAllItems(): void {
-			this.childItems.forEach((item) => {
-				if (item.isOpen && !item.isDisabled) {
-					item.close();
-				}
+			// Filter all items that are open and not disabled
+			const itemsToClose = this.childItems.filter((item) => item.isOpen && !item.isDisabled);
+
+			// Close all of them
+			itemsToClose.forEach((item) => {
+				item.close();
 			});
 		}
 
@@ -133,10 +135,12 @@ namespace OSUIFramework.Patterns.Accordion {
 		public expandAllItems(): void {
 			//If this accordion does not have multiple items, it means we can't expand all.
 			if (this.configs.MultipleItems) {
-				this.childItems.forEach((item) => {
-					if (!item.isOpen && !item.isDisabled) {
-						item.open();
-					}
+				// Filter all items that are open and not disabled
+				const itemsToOpen = this.childItems.filter((item) => !item.isOpen && !item.isDisabled);
+
+				// Close all of them
+				itemsToOpen.forEach((item) => {
+					item.open();
 				});
 			} else {
 				console.warn(
