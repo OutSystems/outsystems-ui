@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OutSystems.OSUI.Menu {
+namespace OutSystems.OSUI.Utils.Menu {
 	/**
 	 * Check if the menu can be draggable
 	 * @returns
@@ -117,9 +117,7 @@ namespace OutSystems.OSUI.Menu {
 			OSUIFramework.Helper.Dom.Styles.ContainsClass(layout, 'menu--visible');
 
 		if (menu) {
-			let focusableEls = menu.querySelectorAll(
-				'a[href]:not([disabled]),[tabindex], [role=button],button:not([disabled]),textarea:not([disabled]),input[type="text"]:not([disabled]),input[type="radio"]:not([disabled]),input[type="checkbox"]:not([disabled]),input[type="submit"]:not([disabled]),select:not([disabled])'
-			);
+			let focusableEls = menu.querySelectorAll(OSUIFramework.Constants.FocusableElems);
 			focusableEls = [].slice.call(focusableEls);
 			if (isExpanded) {
 				menu.setAttribute('tabindex', '0');

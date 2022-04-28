@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OutSystems.OSUI.Accessibility {
+namespace OutSystems.OSUI.Utils.Accessibility {
 	/**
 	 * Use this action to set the aria-role of an element, for better Accessibility compliance.
 	 *
@@ -41,7 +41,7 @@ namespace OutSystems.OSUI.Accessibility {
 		const elem = OSUIFramework.Helper.Dom.GetElementById(widgetId);
 
 		if (elem) {
-			OSUIFramework.Helper.Dom.Attribute.Set(elem, 'aria-hidden', isHidden);
+			OSUIFramework.Helper.A11Y.AriaHidden(elem, `${isHidden}`);
 		}
 	}
 

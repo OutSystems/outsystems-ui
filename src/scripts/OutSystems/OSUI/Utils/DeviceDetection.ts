@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OutSystems.OSUI.DeviceDetection {
+namespace OutSystems.OSUI.Utils.DeviceDetection {
 	/**
 	 * Get the current device orientation
 	 */

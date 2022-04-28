@@ -13,8 +13,13 @@ namespace OSUIFramework.GlobalEnum {
 	export enum CssClassElements {
 		Header = 'header',
 		HeaderIsFixed = 'fixed-header',
+		HeaderHideOnScroll = 'hide-header-on-scroll',
+		HeaderIsVisible = 'header-is--visible',
 		List = 'list',
 		MainContent = 'main-content',
+		Layout = 'layout',
+		LayoutNative = 'layout-native',
+		AsideExpandable = 'aside-expandable',
 	}
 
 	/**

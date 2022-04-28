@@ -662,7 +662,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			// Set SelectValuesWrapper with aria-haspopup='listbox'
 			Helper.A11Y.AriaHasPopup(this._selectValuesWrapper, Constants.A11YAttributes.Role.Listbox);
 			// Set balloon option items container with listbox as a role
-			Helper.A11Y.RoleListox(this._balloonOptionsWrapperElement);
+			Helper.A11Y.RoleListbox(this._balloonOptionsWrapperElement);
 			// Check if the Dropdown allow multiselect
 			if (this.configs.AllowMultipleSelection) {
 				// Set the aria-multiselectable attribute to the options wrapper element

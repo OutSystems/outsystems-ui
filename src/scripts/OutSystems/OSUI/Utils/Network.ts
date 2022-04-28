@@ -1,10 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OutSystems.OSUI.Network {
+namespace OutSystems.OSUI.Utils.Network {
 	/**
 	 * Check if device is online
 	 * @returns
 	 */
-	export function CheckDeviceOnline(): boolean {
+	export function IsOnline(): boolean {
 		// Uses navigator to check if device is online
 		return navigator.onLine;
 	}
@@ -13,18 +13,14 @@ namespace OutSystems.OSUI.Network {
 	 * Get connection type
 	 * @returns
 	 */
-	export function CheckNetworkType(): string {
-		if (typeof navigator.connection !== 'undefined') {
+	export function Type(): string {
+		let typeofConnection = 'webbrowser';
+
+		if (navigator.connection !== undefined && navigator.connection.type !== undefined) {
 			//In a mobile device
-			if (typeof navigator.connection.type !== 'undefined') {
-				return navigator.connection.type;
-			} else {
-				//In a web browser
-				return 'webbrowser';
-			}
-		} else {
-			//In a web browser
-			return 'webbrowser';
+			typeofConnection = navigator.connection.type;
 		}
+
+		return typeofConnection;
 	}
 }

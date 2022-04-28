@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OutSystems.OSUI.LayoutPrivate {
+namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	export function SetDeviceClass(IsWebApp: boolean): void {
 		const operatingSystem = OSUIFramework.Helper.DeviceInfo.GetOperatingSystem();
 		const body = document.querySelector('body');
@@ -79,9 +79,7 @@ namespace OutSystems.OSUI.LayoutPrivate {
 		let originalPosition = 0;
 		let currentPosition = 0;
 		const content: HTMLElement = OSUIFramework.Helper.Dom.ClassSelector(document, 'content');
-		const inputs: NodeListOf<HTMLElement> = document.querySelectorAll(
-			'input:not([type=button]):not([type=checkbox]):not([type=color]):not([type=file]):not([type=hidden]):not([type=image]):not([type=image]):not([type=radio]):not([type=range]):not([type=reset]):not([type=submit]), textarea'
-		);
+		const inputs: NodeListOf<HTMLElement> = document.querySelectorAll(OSUIFramework.Constants.JustInputs);
 
 		if (inputs.length !== 0) {
 			for (let i = inputs.length - 1; i >= 0; i--) {
@@ -132,6 +130,8 @@ namespace OutSystems.OSUI.LayoutPrivate {
 		}
 	}
 
+	//TODO - This is not being used.
+	// We need to check if the client action is needed on the current version
 	export function IphoneXpreview(): void {
 		const previewCss = `
             /* iPhoneX Preview in Devices */
@@ -378,13 +378,13 @@ namespace OutSystems.OSUI.LayoutPrivate {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export function RTLObserver(callback: OSUIFramework.Callbacks.OSGeneric): MutationObserver {
 		const elemToObserve = document.body;
-		let hasAlreadyRTL = elemToObserve.classList.contains('is-rtl');
+		let hasAlreadyRTL = elemToObserve.classList.contains(OSUIFramework.Constants.IsRTLClass);
 
 		const observer = new MutationObserver(function (mutations) {
 			mutations.forEach(function (mutation) {
 				if (mutation.attributeName === 'class') {
 					const mutationTarget = mutation.target as HTMLElement;
-					const hasRTLNow = mutationTarget.classList.contains('is-rtl');
+					const hasRTLNow = mutationTarget.classList.contains(OSUIFramework.Constants.IsRTLClass);
 					if (hasAlreadyRTL !== hasRTLNow) {
 						hasAlreadyRTL = hasRTLNow;
 						OSUIFramework.Helper.AsyncInvocation(callback);
@@ -402,9 +402,9 @@ namespace OutSystems.OSUI.LayoutPrivate {
 
 		const observer = new IntersectionObserver(function (entries) {
 			if (entries[0].isIntersecting) {
-				layout.classList.add('header-is--visible');
+				layout.classList.add(OSUIFramework.GlobalEnum.CssClassElements.HeaderIsVisible);
 			} else {
-				layout.classList.remove('header-is--visible');
+				layout.classList.remove(OSUIFramework.GlobalEnum.CssClassElements.HeaderIsVisible);
 			}
 		});
 
