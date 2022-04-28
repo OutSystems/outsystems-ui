@@ -14,7 +14,7 @@ namespace OSUIFramework.Helper.MapOperation {
 	): OSUIFramework.Interface.IPattern {
 		let pattern: OSUIFramework.Interface.IPattern;
 
-		//animatedLabelId is the UniqueId
+		// Pattern is the UniqueId
 		if (map.has(patternId)) {
 			pattern = map.get(patternId);
 		} else {
