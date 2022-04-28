@@ -40,8 +40,11 @@ namespace OSUIFramework.Patterns {
 		/**
 		 * Method that will Get and Set parent element info.
 		 *
-		 * @param parentSelector Selector to find for parent Element
-		 * @param getPatternByIdAPI API reference method from Parent Pattern that will return the PatternById
+		 * @protected
+		 * @param {string} parentSelector Selector to find for parent Element
+		 * @param {Function} getPatternByIdAPI API reference method from Parent Pattern that will return the PatternById
+		 * @param {boolean} [canBeOrphan] option for patterns that can work without a parent
+		 * @memberof AbstractChild
 		 */
 		// eslint-disable-next-line @typescript-eslint/ban-types
 		protected setParentInfo(parentSelector: string, getPatternByIdAPI: Function, canBeOrphan?: boolean): void {
