@@ -18,9 +18,9 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const floatingActions = GetFloatingActionsById(floatingActionsId);
-
 		try {
+			const floatingActions = GetFloatingActionsById(floatingActionsId);
+
 			floatingActions.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -72,9 +72,9 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const floatingAction = GetFloatingActionsById(floatingActionsId);
-
 		try {
+			const floatingAction = GetFloatingActionsById(floatingActionsId);
+
 			floatingAction.dispose();
 
 			_floatingActionsMap.delete(floatingAction.uniqueId);
@@ -143,9 +143,9 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const floatingAction = GetFloatingActionsById(floatingActionId);
-
 		try {
+			const floatingAction = GetFloatingActionsById(floatingActionId);
+
 			floatingAction.registerCallback(callback);
 		} catch (error) {
 			responseObj.isSuccess = false;

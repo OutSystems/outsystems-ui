@@ -17,9 +17,9 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const accordion = GetAccordionById(accordionId);
-
 		try {
+			const accordion = GetAccordionById(accordionId);
+
 			accordion.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -44,9 +44,9 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const accordion = GetAccordionById(accordionId);
-
 		try {
+			const accordion = GetAccordionById(accordionId);
+
 			accordion.collapseAllItems();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -92,9 +92,9 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const accordion = GetAccordionById(accordionId);
-
 		try {
+			const accordion = GetAccordionById(accordionId);
+
 			accordion.dispose();
 
 			_accordionMap.delete(accordion.uniqueId);
@@ -121,9 +121,9 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const accordion = GetAccordionById(accordionId);
-
 		try {
+			const accordion = GetAccordionById(accordionId);
+
 			accordion.expandAllItems();
 		} catch (error) {
 			responseObj.isSuccess = false;

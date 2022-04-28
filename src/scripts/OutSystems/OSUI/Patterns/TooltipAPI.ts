@@ -18,9 +18,9 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const tooltip = GetTooltipById(tooltipId);
-
 		try {
+			const tooltip = GetTooltipById(tooltipId);
+
 			tooltip.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -44,9 +44,9 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const tooltip = GetTooltipById(tooltipId);
-
 		try {
+			const tooltip = GetTooltipById(tooltipId);
+
 			tooltip.close();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -92,9 +92,9 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const tooltip = GetTooltipById(tooltipId);
-
 		try {
+			const tooltip = GetTooltipById(tooltipId);
+
 			tooltip.dispose();
 
 			_tooltipsMap.delete(tooltip.uniqueId);
@@ -160,9 +160,9 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const tooltip = GetTooltipById(tooltipId);
-
 		try {
+			const tooltip = GetTooltipById(tooltipId);
+
 			tooltip.open();
 		} catch (error) {
 			responseObj.isSuccess = false;

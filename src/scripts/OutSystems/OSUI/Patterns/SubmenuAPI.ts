@@ -18,9 +18,9 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const submenu = GetSubmenuById(submenuId);
-
 		try {
+			const submenu = GetSubmenuById(submenuId);
+
 			submenu.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -44,9 +44,9 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const submenu = GetSubmenuById(submenuId);
-
 		try {
+			const submenu = GetSubmenuById(submenuId);
+
 			submenu.close();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -70,9 +70,9 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const submenu = GetSubmenuById(submenuId);
-
 		try {
+			const submenu = GetSubmenuById(submenuId);
+
 			submenu.open();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -96,9 +96,9 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const submenu = GetSubmenuById(submenuId);
-
 		try {
+			const submenu = GetSubmenuById(submenuId);
+
 			submenu.changeProperty(OSUIFramework.Patterns.Submenu.Enum.Properties.OpenOnHover, true);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -144,9 +144,9 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const submenu = GetSubmenuById(submenuId);
-
 		try {
+			const submenu = GetSubmenuById(submenuId);
+
 			submenu.dispose();
 
 			_submenusMap.delete(submenuId);
@@ -213,9 +213,9 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const submenu = GetSubmenuById(submenuId);
-
 		try {
+			const submenu = GetSubmenuById(submenuId);
+
 			submenu.updateOnRender();
 		} catch (error) {
 			responseObj.isSuccess = false;
