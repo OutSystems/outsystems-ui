@@ -17,7 +17,7 @@ namespace OSUIFramework.ErrorCodes {
 		FailUnsetNewOptionItem: 'OSUI-GEN-02006',
 		HasNoImplementation: {
 			code: 'OSUI-GEN-02007',
-			message: 'This method has no implementation on this Dropdown Type.',
+			message: 'This method has no implementation on this Dropdow Type.',
 		},
 	};
 

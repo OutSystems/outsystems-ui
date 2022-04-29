@@ -10,24 +10,10 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 * @param {string} propertyName Property name that will be updated
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
-	export function ChangeProperty(accordionId: string, propertyName: string, propertyValue: unknown): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+	export function ChangeProperty(accordionId: string, propertyName: string, propertyValue: unknown): void {
+		const accordion = GetAccordionById(accordionId);
 
-		try {
-			const accordion = GetAccordionById(accordionId);
-
-			accordion.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Accordion.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		accordion.changeProperty(propertyName, propertyValue);
 	}
 
 	/**
@@ -37,24 +23,9 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 * @param {string} accordionId ID of the Accordion pattern.
 	 *
 	 */
-	export function CollapseAllItems(accordionId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
-
-		try {
-			const accordion = GetAccordionById(accordionId);
-
-			accordion.collapseAllItems();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Accordion.FailCollapseAll;
-		}
-
-		return JSON.stringify(responseObj);
+	export function CollapseAllItems(accordionId: string): void {
+		const accordion = GetAccordionById(accordionId);
+		accordion.collapseAllItems();
 	}
 
 	/**
@@ -85,26 +56,12 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 * @export
 	 * @param {string} accordionId
 	 */
-	export function Dispose(accordionId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+	export function Dispose(accordionId: string): void {
+		const accordion = GetAccordionById(accordionId);
 
-		try {
-			const accordion = GetAccordionById(accordionId);
+		accordion.dispose();
 
-			accordion.dispose();
-
-			_accordionMap.delete(accordion.uniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Accordion.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		_accordionMap.delete(accordion.uniqueId);
 	}
 
 	/**
@@ -114,24 +71,9 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 * @param {string} accordionId ID of the Accordion pattern.
 	 *
 	 */
-	export function ExpandAllItems(accordionId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
-
-		try {
-			const accordion = GetAccordionById(accordionId);
-
-			accordion.expandAllItems();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Accordion.FailExpandAll;
-		}
-
-		return JSON.stringify(responseObj);
+	export function ExpandAllItems(accordionId: string): void {
+		const accordion = GetAccordionById(accordionId);
+		accordion.expandAllItems();
 	}
 
 	/**

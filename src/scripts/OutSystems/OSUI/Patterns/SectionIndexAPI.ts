@@ -18,9 +18,9 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		try {
-			const _sectionIndexItem = GetSectionIndexById(sectionIndexId);
+		const _sectionIndexItem = GetSectionIndexById(sectionIndexId);
 
+		try {
 			_sectionIndexItem.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -67,9 +67,9 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		try {
-			const _sectionIndexItem = GetSectionIndexById(sectionIndexId);
+		const _sectionIndexItem = GetSectionIndexById(sectionIndexId);
 
+		try {
 			_sectionIndexItem.dispose();
 
 			_sectionIndexItemsMap.delete(_sectionIndexItem.uniqueId);

@@ -35,14 +35,8 @@ namespace OutSystems.OSUI.Utils {
 			const elementToScrollTo = document.getElementById(ElementId);
 
 			if (elementToScrollTo) {
-				const header = OSUIFramework.Helper.Dom.ClassSelector(
-					document,
-					OSUIFramework.GlobalEnum.CssClassElements.Header
-				);
-				const layout = OSUIFramework.Helper.Dom.ClassSelector(
-					document,
-					OSUIFramework.GlobalEnum.CssClassElements.Layout
-				);
+				const header = OSUIFramework.Helper.Dom.ClassSelector(document, OSUIFramework.Constants.HeaderClass);
+				const layout = OSUIFramework.Helper.Dom.ClassSelector(document, OSUIFramework.Constants.LayoutClass);
 
 				if (layout) {
 					const isFixed = OSUIFramework.Helper.Dom.Styles.ContainsClass(layout, 'fixed-header');

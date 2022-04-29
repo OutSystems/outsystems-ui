@@ -32,10 +32,7 @@ namespace OSUIFramework.Helper {
 	 * @returns
 	 */
 	export function ScrollVerticalPosition(
-		scrollableElement: HTMLElement = Helper.Dom.ClassSelector(
-			document.body,
-			GlobalEnum.CssClassElements.ActiveScreen
-		)
+		scrollableElement: HTMLElement = Helper.Dom.ClassSelector(document.body, GlobalEnum.Screen.Active)
 	): ScrollPosition {
 		// Get Scroll value
 		const winScroll = scrollableElement.scrollTop;

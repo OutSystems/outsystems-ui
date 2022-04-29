@@ -16,10 +16,7 @@ namespace OutSystems.OSUI.Utils.HideOnScroll {
 			)?.scrollHeight;
 
 			const threshold = 60;
-			const layout = OSUIFramework.Helper.Dom.ClassSelector(
-				document.body,
-				OSUIFramework.GlobalEnum.CssClassElements.Layout
-			);
+			const layout = OSUIFramework.Helper.Dom.ClassSelector(document.body, OSUIFramework.Constants.LayoutClass);
 
 			if (mainContentHeight - threshold > content.offsetHeight) {
 				content.addEventListener(
@@ -56,10 +53,7 @@ namespace OutSystems.OSUI.Utils.HideOnScroll {
 	 * @export
 	 */
 	export function Init(): void {
-		const header = OSUIFramework.Helper.Dom.ClassSelector(
-			document.body,
-			OSUIFramework.GlobalEnum.CssClassElements.Header
-		);
+		const header = OSUIFramework.Helper.Dom.ClassSelector(document.body, OSUIFramework.Constants.HeaderClass);
 		if (header) {
 			addEvents(header);
 		}

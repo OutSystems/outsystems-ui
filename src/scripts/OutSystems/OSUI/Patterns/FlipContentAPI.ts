@@ -11,24 +11,10 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ChangeProperty(flipId: string, propertyName: string, propertyValue: any): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+	export function ChangeProperty(flipId: string, propertyName: string, propertyValue: any): void {
+		const flipContent = GetFlipContentById(flipId);
 
-		try {
-			const flipContent = GetFlipContentById(flipId);
-
-			flipContent.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.FlipContent.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		flipContent.changeProperty(propertyName, propertyValue);
 	}
 
 	/**
@@ -59,26 +45,12 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 * @export
 	 * @param {string} flipId
 	 */
-	export function Dispose(flipId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+	export function Destroy(flipId: string): void {
+		const flipContent = GetFlipContentById(flipId);
 
-		try {
-			const flipContent = GetFlipContentById(flipId);
+		flipContent.dispose();
 
-			flipContent.dispose();
-
-			_flipContentMap.delete(flipContent.uniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.FlipContent.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		_flipContentMap.delete(flipContent.uniqueId);
 	}
 
 	/**
@@ -128,24 +100,10 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 * @param {string} flipId
 	 * @param {OSUIFramework.Callbacks.OSFlipContentFlipEvent} callback
 	 */
-	export function RegisterCallback(flipId: string, callback: OSUIFramework.Callbacks.OSFlipContentFlipEvent): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+	export function RegisterCallback(flipId: string, callback: OSUIFramework.Callbacks.OSFlipContentFlipEvent): void {
+		const flipContent = GetFlipContentById(flipId);
 
-		try {
-			const flipContent = GetFlipContentById(flipId);
-
-			flipContent.registerCallback(callback);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.FlipContent.FailRegisterCallback;
-		}
-
-		return JSON.stringify(responseObj);
+		flipContent.registerCallback(callback);
 	}
 	/**
 	 * Function that will show the back part of the content.
@@ -153,24 +111,10 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 * @export
 	 * @param {string} flipId
 	 */
-	export function ShowBackContent(flipId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+	export function ShowBackContent(flipId: string): void {
+		const flipContent = GetFlipContentById(flipId);
 
-		try {
-			const flipContent = GetFlipContentById(flipId);
-
-			flipContent.showBackContent();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.FlipContent.FailShowBack;
-		}
-
-		return JSON.stringify(responseObj);
+		flipContent.showBackContent();
 	}
 
 	/**
@@ -179,24 +123,10 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 * @export
 	 * @param {string} flipId
 	 */
-	export function ShowFrontContent(flipId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+	export function ShowFrontContent(flipId: string): void {
+		const flipContent = GetFlipContentById(flipId);
 
-		try {
-			const flipContent = GetFlipContentById(flipId);
-
-			flipContent.showFrontContent();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.FlipContent.FailShowFront;
-		}
-
-		return JSON.stringify(responseObj);
+		flipContent.showFrontContent();
 	}
 
 	/**
@@ -205,23 +135,9 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 * @export
 	 * @param {string} flipId
 	 */
-	export function ToggleFlipContent(flipId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+	export function ToggleFlipContent(flipId: string): void {
+		const flipContent = GetFlipContentById(flipId);
 
-		try {
-			const flipContent = GetFlipContentById(flipId);
-
-			flipContent.toggleFlipContent();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.FlipContent.FailToggle;
-		}
-
-		return JSON.stringify(responseObj);
+		flipContent.toggleFlipContent();
 	}
 }
