@@ -119,9 +119,10 @@ namespace OSUIFramework.Patterns {
 		/**
 		 * Method used to be notified by a given ChildId about a given action and act accordingly
 		 *
-		 * @param childId Child Item Id
-		 * @param notifiedTo Notification name (Should be based on an Enum)
-		 * @memberof OSUIDropdownServerSide
+		 * @abstract
+		 * @param {string} childId Child Item Id
+		 * @param {string} notifiedTo Notification name (Should be based on an Enum)
+		 * @memberof AbstractParent
 		 */
 		public abstract beNotifiedByChild(childId: string, notifiedTo: string): void;
 	}
