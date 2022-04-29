@@ -12,7 +12,10 @@ namespace OSUIFramework.GlobalEnum {
 	 */
 	export enum CssClassElements {
 		AcessibilityStyleTag = 'acessibility-style-tag',
+		ActiveScreen = 'active-screen',
 		AsideExpandable = 'aside-expandable',
+		Container = 'screen-container',
+		Content = 'content',
 		Header = 'header',
 		HeaderHideOnScroll = 'hide-header-on-scroll',
 		HeaderIsFixed = 'fixed-header',
@@ -21,7 +24,7 @@ namespace OSUIFramework.GlobalEnum {
 		LayoutNative = 'layout-native',
 		List = 'list',
 		MainContent = 'main-content',
-		Content = 'content',
+		Placeholder = 'ph',
 	}
 
 	/**
@@ -216,14 +219,6 @@ namespace OSUIFramework.GlobalEnum {
 		TabsContentItem = 'TabsContentItem',
 		Tooltip = 'Tooltip',
 		TouchEvents = 'TouchEvents',
-	}
-
-	/**
-	 * OutSystemsUI Units
-	 */
-	export enum Screen {
-		Active = 'active-screen',
-		Container = 'screen-container',
 	}
 
 	/**
