@@ -49,11 +49,10 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 		);
 
 		if (layout) {
-			const isNative = OSUIFramework.Helper.Dom.Styles.ContainsClass(
+			return OSUIFramework.Helper.Dom.Styles.ContainsClass(
 				layout,
 				OSUIFramework.GlobalEnum.CssClassElements.LayoutNative
 			);
-			return isNative;
 		}
 	}
 
