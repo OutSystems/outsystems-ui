@@ -40,10 +40,24 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ChangeProperty(tabsContentItemId: string, propertyName: string, propertyValue: any): void {
-		const tabsContentItem = GetTabsContentItemById(tabsContentItemId);
+	export function ChangeProperty(tabsContentItemId: string, propertyName: string, propertyValue: any): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		tabsContentItem.changeProperty(propertyName, propertyValue);
+		try {
+			const tabsContentItem = GetTabsContentItemById(tabsContentItemId);
+
+			tabsContentItem.changeProperty(propertyName, propertyValue);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.TabsContentItem.FailChangeProperty;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -87,12 +101,26 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 	 * @export
 	 * @param {string} tabsContentItemId
 	 */
-	export function Dispose(tabsContentItemId: string): void {
-		const tabsContentItem = GetTabsContentItemById(tabsContentItemId);
+	export function Dispose(tabsContentItemId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		tabsContentItem.dispose();
+		try {
+			const tabsContentItem = GetTabsContentItemById(tabsContentItemId);
 
-		_tabsContentItemMap.delete(tabsContentItem.uniqueId);
+			tabsContentItem.dispose();
+
+			_tabsContentItemMap.delete(tabsContentItem.uniqueId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.TabsContentItem.FailDispose;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**

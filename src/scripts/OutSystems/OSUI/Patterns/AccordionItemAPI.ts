@@ -27,7 +27,7 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 			responseObj.code = ErrorCodes.AccordionItem.FailChangeProperty;
 		}
 
-		accordionItem.changeProperty(propertyName, propertyValue);
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -53,7 +53,7 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 			responseObj.code = ErrorCodes.AccordionItem.FailCollapseItem;
 		}
 
-		accordionItem.close();
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -109,8 +109,7 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 			responseObj.code = ErrorCodes.AccordionItem.FailDispose;
 		}
 
-		_accordionItemMap.delete(accordionItem.uniqueId);
-		_accordionMap.delete(accordionItem.uniqueId);
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -136,7 +135,7 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 			responseObj.code = ErrorCodes.AccordionItem.FailExpandItem;
 		}
 
-		accordionItem.open();
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -203,6 +202,6 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 			responseObj.code = ErrorCodes.AccordionItem.FailRegisterCallback;
 		}
 
-		accordionItem.registerCallback(callback);
+		return JSON.stringify(responseObj);
 	}
 }

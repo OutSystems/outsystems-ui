@@ -10,10 +10,24 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	 * @param {string} propertyName Property name that will be updated
 	 * @param {unknown} propertyValue Value that will be set to the property
 	 */
-	export function ChangeProperty(animatedLabelId: string, propertyName: string, propertyValue: unknown): void {
-		const animatedlabel = GetAnimatedLabelById(animatedLabelId);
+	export function ChangeProperty(animatedLabelId: string, propertyName: string, propertyValue: unknown): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		animatedlabel.changeProperty(propertyName, propertyValue);
+		try {
+			const animatedlabel = GetAnimatedLabelById(animatedLabelId);
+
+			animatedlabel.changeProperty(propertyName, propertyValue);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.AnimatedLabel.FailChangeProperty;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -50,12 +64,26 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	 * @export
 	 * @param {string} animatedLabelId
 	 */
-	export function Dispose(animatedLabelId: string): void {
-		const animatedlabel = GetAnimatedLabelById(animatedLabelId);
+	export function Dispose(animatedLabelId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		animatedlabel.dispose();
+		try {
+			const animatedlabel = GetAnimatedLabelById(animatedLabelId);
 
-		_animatedLabelsMap.delete(animatedlabel.uniqueId);
+			animatedlabel.dispose();
+
+			_animatedLabelsMap.delete(animatedlabel.uniqueId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.AnimatedLabel.FailDispose;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -105,11 +133,23 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	 * @param {string} animatedLabelId ID of the Animatedlabel that will be updated.
 	 * @return {*}  {OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel}
 	 */
-	export function UpdateOnRender(animatedLabelId: string): OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel {
-		const animatedlabel = GetAnimatedLabelById(animatedLabelId);
+	export function UpdateOnRender(animatedLabelId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		animatedlabel.updateOnRender();
+		try {
+			const animatedlabel = GetAnimatedLabelById(animatedLabelId);
 
-		return animatedlabel;
+			animatedlabel.updateOnRender();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.AnimatedLabel.FailUpdate;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 }

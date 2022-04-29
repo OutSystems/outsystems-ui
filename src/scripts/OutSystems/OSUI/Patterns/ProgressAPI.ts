@@ -11,10 +11,24 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ChangeProperty(progressId: string, propertyName: string, propertyValue: any): void {
-		const _progressItem = GetProgressItemById(progressId);
+	export function ChangeProperty(progressId: string, propertyName: string, propertyValue: any): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		_progressItem.changeProperty(propertyName, propertyValue);
+		try {
+			const _progressItem = GetProgressItemById(progressId);
+
+			_progressItem.changeProperty(propertyName, propertyValue);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Progress.FailChangeProperty;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -47,12 +61,26 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 * @export
 	 * @param {string} progressId
 	 */
-	export function Dispose(progressId: string): void {
-		const _progressItem = GetProgressItemById(progressId);
+	export function Dispose(progressId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		_progressItem.dispose();
+		try {
+			const _progressItem = GetProgressItemById(progressId);
 
-		_progressItemsMap.delete(_progressItem.uniqueId);
+			_progressItem.dispose();
+
+			_progressItemsMap.delete(_progressItem.uniqueId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Progress.FailDispose;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -101,9 +129,23 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 * @param {string} widgetId of the progress circle or progress bar that will have its value set
 	 * @param {number} progress value of the circle
 	 */
-	export function SetProgressValue(progressId: string, progress: number): void {
-		const _progressItem = GetProgressItemById(progressId);
+	export function SetProgressValue(progressId: string, progress: number): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		_progressItem.setProgressValue(progress);
+		try {
+			const _progressItem = GetProgressItemById(progressId);
+
+			_progressItem.setProgressValue(progress);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Progress.FailProgressValue;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 }
