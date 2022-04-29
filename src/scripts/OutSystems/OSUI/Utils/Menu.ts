@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Utils.Menu {
 	/**
-	 * Check if the menu can be draggable
+	 * Checks if the menu can be draggable
 	 * @returns
 	 */
 	export function IsMenuDraggable(): boolean {

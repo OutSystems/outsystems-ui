@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Utils.Network {
 	/**
-	 * Check if device is online
+	 * Checks if device is online
 	 * @returns
 	 */
 	export function IsOnline(): boolean {

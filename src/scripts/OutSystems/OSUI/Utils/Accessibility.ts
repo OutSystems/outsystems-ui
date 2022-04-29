@@ -94,11 +94,17 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 	 * Use this action to increase the letter spacing, word spacing and line-height across the application
 	 */
 	export function ToggleTextSpacing(): void {
-		let spacingStyles = OSUIFramework.Helper.Dom.ClassSelector(document, 'acessibility-style-tag');
+		let spacingStyles = OSUIFramework.Helper.Dom.ClassSelector(
+			document,
+			OSUIFramework.GlobalEnum.CssClassElements.AcessibilityStyleTag
+		);
 
 		if (spacingStyles === undefined) {
 			spacingStyles = document.createElement('style');
-			OSUIFramework.Helper.Dom.Styles.AddClass(spacingStyles, 'acessibility-style-tag');
+			OSUIFramework.Helper.Dom.Styles.AddClass(
+				spacingStyles,
+				OSUIFramework.GlobalEnum.CssClassElements.AcessibilityStyleTag
+			);
 			spacingStyles.textContent =
 				' * { line-height: 1.5 !important; letter-spacing: 0.12em !important; word-spacing: 0.16em !important; } p { margin-bottom: 2em !important; } ';
 			OSUIFramework.Helper.Dom.Move(spacingStyles, document.head);

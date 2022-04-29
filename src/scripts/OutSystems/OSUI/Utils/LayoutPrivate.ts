@@ -2,7 +2,7 @@
 namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	export function SetDeviceClass(IsWebApp: boolean): void {
 		const operatingSystem = OSUIFramework.Helper.DeviceInfo.GetOperatingSystem();
-		const body = document.querySelector('body');
+		const body = document.body;
 		if (body) {
 			if (operatingSystem !== OSUIFramework.GlobalEnum.MobileOS.Unknown) {
 				OSUIFramework.Helper.Dom.Styles.AddClass(body, operatingSystem);
@@ -78,7 +78,10 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	export function FixInputs(): void {
 		let originalPosition = 0;
 		let currentPosition = 0;
-		const content: HTMLElement = OSUIFramework.Helper.Dom.ClassSelector(document, 'content');
+		const content: HTMLElement = OSUIFramework.Helper.Dom.ClassSelector(
+			document,
+			OSUIFramework.GlobalEnum.CssClassElements.Content
+		);
 		const inputs: NodeListOf<HTMLElement> = document.querySelectorAll(OSUIFramework.Constants.JustInputs);
 
 		if (inputs.length !== 0) {

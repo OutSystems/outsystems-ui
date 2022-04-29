@@ -31,7 +31,7 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	}
 
 	/**
-	 * Check if the current device is desktop
+	 * Checks if the current device is desktop
 	 * @returns
 	 */
 	export function IsDesktop(): boolean {
@@ -39,20 +39,26 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	}
 
 	/**
-	 * Check if is the layout native is being used
+	 * Checks if is the layout native is being used
 	 * @returns
 	 */
 	export function CheckIsLayoutNative(): boolean {
-		const layout = OSUIFramework.Helper.Dom.ClassSelector(document.body, 'layout');
+		const layout = OSUIFramework.Helper.Dom.ClassSelector(
+			document.body,
+			OSUIFramework.GlobalEnum.CssClassElements.Layout
+		);
 
 		if (layout) {
-			const isNative = OSUIFramework.Helper.Dom.Styles.ContainsClass(layout, 'layout-native');
+			const isNative = OSUIFramework.Helper.Dom.Styles.ContainsClass(
+				layout,
+				OSUIFramework.GlobalEnum.CssClassElements.LayoutNative
+			);
 			return isNative;
 		}
 	}
 
 	/**
-	 * Check if running as PWA.
+	 * Checks if running as PWA.
 	 * @returns
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
@@ -61,7 +67,7 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	}
 
 	/**
-	 * Check if the current device is phone
+	 * Checks if the current device is phone
 	 * @returns
 	 */
 	export function IsPhone(): boolean {
@@ -77,7 +83,7 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	}
 
 	/**
-	 * Check if the current device is tablet
+	 * Checks if the current device is tablet
 	 * @returns
 	 */
 	export function IsTablet(): boolean {
@@ -89,7 +95,10 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	 * @returns
 	 */
 	export function IsWebApp(): boolean {
-		const layout = OSUIFramework.Helper.Dom.ClassSelector(document.body, 'layout');
+		const layout = OSUIFramework.Helper.Dom.ClassSelector(
+			document.body,
+			OSUIFramework.GlobalEnum.CssClassElements.Layout
+		);
 		if (layout) {
 			const isNotOldNativeLayouts =
 				OSUIFramework.Helper.Dom.TagSelector(document.body, '.active-screen .layout.layout-top') ||
