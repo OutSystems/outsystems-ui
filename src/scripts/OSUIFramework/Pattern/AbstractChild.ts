@@ -50,7 +50,7 @@ namespace OSUIFramework.Patterns {
 		protected setParentInfo(parentSelector: string, getPatternByIdAPI: Function, canBeOrphan?: boolean): void {
 			try {
 				const findedElement = this._selfElem.closest(parentSelector) as HTMLElement;
-				// Find for Id at Name or data-uniqueid attribite, data-uniqueid attribute is used at the elements that will be moved outside parent context
+				// Find for Id at Name or data-uniqueid attribute, data-uniqueid attribute is used at the elements that will be moved outside parent context
 				this._parentId = Helper.Dom.Attribute.Get(findedElement, 'name') || findedElement.dataset.uniqueid;
 
 				this._parentObject = getPatternByIdAPI(this._parentId) as PT;
