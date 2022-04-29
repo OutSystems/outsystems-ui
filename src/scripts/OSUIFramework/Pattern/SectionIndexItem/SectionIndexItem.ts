@@ -20,8 +20,6 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 		private _eventOnkeyBoardPress: Callbacks.Generic;
 		// Store the header size if it's fixed!
 		private _headerHeight = 0;
-		// Store a flag that will be used to check if the header is fixed!
-		private _headerIsFixed = true;
 		// Store the state
 		private _isActive = false;
 		// Store TargetElement HTML object
@@ -38,14 +36,14 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 
 		// spies the scroll to know if the target element is visible and sets the item as active
 		private _onBodyScroll(): void {
-			// Set target element offset info!
-			this._setTargetOffsetInfo();
+			// Set target element if does not exist yet!
+			this._setTargetElement();
 			// Get the vertical scroll position value
 			const scrollYPosition = Helper.ScrollVerticalPosition();
 			// Threshold value to set element as Active
-			const thresholdVal = 40;
+			const thresholdVal = 30;
 			// Store the offSetValue to be checked
-			const elementOffsetTopVal = this._targetElementOffset.top - scrollYPosition.value;
+			const elementOffsetTopVal = this.TargetElement.offsetTop + this._headerHeight - scrollYPosition.value;
 
 			/* Logic behind position validation:
 				- If click to nanvigate into element the calc
@@ -101,12 +99,13 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 
 		// Check if header IsFixed
 		private _setHeaderSize(): void {
-			const header = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.Header);
-			this._headerIsFixed = !!Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.HeaderIsFixed);
-
-			// If header exist and it's fixed store its height
-			if (header) {
-				this._headerHeight = this._headerIsFixed ? header.offsetHeight : 2 * header.offsetHeight;
+			const hasFixedHeader = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.HeaderIsFixed);
+			if (hasFixedHeader) {
+				// Since Header is Fixed, let's get its height into consideration!
+				this._headerHeight = Helper.Dom.ClassSelector(
+					document.body,
+					GlobalEnum.CssClassElements.Header
+				).offsetHeight;
 			}
 		}
 
@@ -138,16 +137,8 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 			// Takes into account the headerSize
 			this._setHeaderSize();
 
-			// Get the MainContent paddingTop value in order to remove it's value from the calcs
-			const contentPaddingTop =
-				parseFloat(
-					window
-						.getComputedStyle(Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.MainContent))
-						.getPropertyValue(GlobalEnum.CssProperties.PaddingTop)
-				) || 0;
-
-			// Set the target element offset top values
-			this._targetElementOffset.top = this._targetElement.offsetTop + this._headerHeight + contentPaddingTop;
+			// Set the target element offset top/bottom values
+			this._targetElementOffset.top = this._targetElement.offsetTop + this._headerHeight;
 		}
 
 		// Method to set the event listeners

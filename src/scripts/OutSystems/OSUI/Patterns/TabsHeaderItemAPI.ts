@@ -40,24 +40,10 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ChangeProperty(tabsHeaderItemId: string, propertyName: string, propertyValue: any): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+	export function ChangeProperty(tabsHeaderItemId: string, propertyName: string, propertyValue: any): void {
+		const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
 
-		try {
-			const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
-
-			tabsHeaderItem.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.TabsHeaderItem.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		tabsHeaderItem.changeProperty(propertyName, propertyValue);
 	}
 
 	/**
@@ -101,26 +87,12 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	 * @export
 	 * @param {string} tabsHeaderItemId
 	 */
-	export function Dispose(tabsHeaderItemId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+	export function Dispose(tabsHeaderItemId: string): void {
+		const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
 
-		try {
-			const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
+		tabsHeaderItem.dispose();
 
-			tabsHeaderItem.dispose();
-
-			_tabsHeaderItemMap.delete(tabsHeaderItem.uniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.TabsHeaderItem.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		_tabsHeaderItemMap.delete(tabsHeaderItem.uniqueId);
 	}
 
 	/**

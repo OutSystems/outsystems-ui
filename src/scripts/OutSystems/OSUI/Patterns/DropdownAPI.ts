@@ -18,9 +18,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		try {
-			const _dropdownItem = GetDropdownById(dropdownId);
+		const _dropdownItem = GetDropdownById(dropdownId);
 
+		try {
 			_dropdownItem.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -45,9 +45,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		try {
-			const _dropdownItem = GetDropdownById(dropdownId);
+		const _dropdownItem = GetDropdownById(dropdownId);
 
+		try {
 			_dropdownItem.clear();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -97,9 +97,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		try {
-			const _dropdownItem = GetDropdownById(dropdownId);
+		const _dropdownItem = GetDropdownById(dropdownId);
 
+		try {
 			_dropdownItem.disable();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -124,9 +124,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		try {
-			const _dropdownItem = GetDropdownById(dropdownId);
+		const _dropdownItem = GetDropdownById(dropdownId);
 
+		try {
 			_dropdownItem.dispose();
 
 			_dropdownItemsMap.delete(_dropdownItem.uniqueId);
@@ -153,9 +153,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		try {
-			const _dropdownItem = GetDropdownById(dropdownId);
+		const _dropdownItem = GetDropdownById(dropdownId);
 
+		try {
 			_dropdownItem.enable();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -206,9 +206,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			value: '',
 		};
 
-		try {
-			const _dropdownItem = GetDropdownById(dropdownId);
+		const _dropdownItem = GetDropdownById(dropdownId);
 
+		try {
 			responseObj.value = _dropdownItem.getSelectedValues();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -254,9 +254,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		try {
-			const _dropdownItem = this.GetDropdownById(dropdownId);
+		const _dropdownItem = this.GetDropdownById(dropdownId);
 
+		try {
 			_dropdownItem.registerCallback(eventName, callback);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -283,9 +283,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		try {
-			const _dropdownItem = GetDropdownById(dropdownId);
+		const _dropdownItem = GetDropdownById(dropdownId);
 
+		try {
 			_dropdownItem.validation(isValid, validationMessage);
 		} catch (error) {
 			responseObj.isSuccess = false;

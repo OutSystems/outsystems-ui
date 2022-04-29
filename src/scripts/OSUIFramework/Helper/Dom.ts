@@ -446,7 +446,7 @@ namespace OSUIFramework.Helper {
 				//this is to make sure that we are only returning the element or undefined.
 				elementFound = elementFound ? elementFound : undefined;
 			} else {
-				console.error(`The element doesnot exist.`);
+				console.error(`The element does not exist.`);
 			}
 
 			return elementFound;
@@ -461,7 +461,7 @@ namespace OSUIFramework.Helper {
 		 * @return {*}  {(HTMLElement | undefined)}
 		 * @memberof Dom
 		 */
-		public static TagSelectorAll(element: HTMLElement, htmlTag: string): HTMLElement[] | undefined {
+		public static TagSelectorAll(element: HTMLElement | Document, htmlTag: string): HTMLElement[] | undefined {
 			let elementFound: HTMLElement[];
 
 			if (element) {

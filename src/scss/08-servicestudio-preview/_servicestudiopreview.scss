@@ -147,6 +147,10 @@ html[data-uieditorversion^='1'] {
 					}
 				}
 			}
+
+			thead {
+				-servicestudio-display: initial !important;
+			}
 		}
 	}
 
@@ -154,18 +158,12 @@ html[data-uieditorversion^='1'] {
 	.tablet {
 		.layout:not(.layout-native) {
 			thead {
-				display: initial;
-
 				& > tr {
 					-servicestudio-position: relative;
 				}
-			}
 
-			table.table > thead > tr {
-				display: none;
-
-				&:empty {
-					display: block;
+				& > tr:not(:empty):before {
+					-servicestudio-display: none;
 				}
 			}
 

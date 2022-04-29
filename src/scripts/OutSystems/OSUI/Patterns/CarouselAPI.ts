@@ -11,24 +11,10 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ChangeProperty(carouselId: string, propertyName: string, propertyValue: any): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+	export function ChangeProperty(carouselId: string, propertyName: string, propertyValue: any): void {
+		const _carouselItem = GetCarouselItemById(carouselId);
 
-		try {
-			const _carouselItem = GetCarouselItemById(carouselId);
-
-			_carouselItem.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Carousel.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		_carouselItem.changeProperty(propertyName, propertyValue);
 	}
 
 	/**
@@ -63,26 +49,12 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * @export
 	 * @param {string} carouselId
 	 */
-	export function Dispose(carouselId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+	export function Dispose(carouselId: string): void {
+		const _carouselItem = GetCarouselItemById(carouselId);
 
-		try {
-			const _carouselItem = GetCarouselItemById(carouselId);
+		_carouselItem.dispose();
 
-			_carouselItem.dispose();
-
-			_carouselItemsMap.delete(_carouselItem.uniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Carousel.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		_carouselItemsMap.delete(_carouselItem.uniqueId);
 	}
 
 	/**
@@ -117,24 +89,10 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * @param {string} carouselId
 	 * @param {number} index
 	 */
-	export function GoTo(carouselId: string, index: number): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+	export function GoTo(carouselId: string, index: number): void {
+		const carousel = GetCarouselItemById(carouselId);
 
-		try {
-			const carousel = GetCarouselItemById(carouselId);
-
-			carousel.goTo(index);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Carousel.FailGoTo;
-		}
-
-		return JSON.stringify(responseObj);
+		carousel.goTo(index);
 	}
 
 	/**
@@ -159,24 +117,10 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * @param {string} carouselId
 	 * @param {string} target
 	 */
-	export function Next(carouselId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+	export function Next(carouselId: string): void {
+		const carousel = GetCarouselItemById(carouselId);
 
-		try {
-			const carousel = GetCarouselItemById(carouselId);
-
-			carousel.next();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Carousel.FailNext;
-		}
-
-		return JSON.stringify(responseObj);
+		carousel.next();
 	}
 
 	/**
@@ -186,24 +130,10 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * @param {string} carouselId
 	 * @param {string} target
 	 */
-	export function Previous(carouselId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+	export function Previous(carouselId: string): void {
+		const carousel = GetCarouselItemById(carouselId);
 
-		try {
-			const carousel = GetCarouselItemById(carouselId);
-
-			carousel.previous();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Carousel.FailPrevious;
-		}
-
-		return JSON.stringify(responseObj);
+		carousel.previous();
 	}
 
 	/**
@@ -218,24 +148,10 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 		carouselId: string,
 		eventName: string,
 		callback: OSUIFramework.Callbacks.OSGeneric
-	): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+	): void {
+		const carousel = GetCarouselItemById(carouselId);
 
-		try {
-			const carousel = GetCarouselItemById(carouselId);
-
-			carousel.registerCallback(eventName, callback);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Carousel.FailRegisterCallback;
-		}
-
-		return JSON.stringify(responseObj);
+		carousel.registerCallback(eventName, callback);
 	}
 
 	/**
@@ -245,24 +161,10 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * @param {string} carouselId
 	 * @param {boolean} hasDrag
 	 */
-	export function ToggleDrag(carouselId: string, hasDrag: boolean): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+	export function ToggleDrag(carouselId: string, hasDrag: boolean): void {
+		const carousel = GetCarouselItemById(carouselId);
 
-		try {
-			const carousel = GetCarouselItemById(carouselId);
-
-			carousel.toggleDrag(hasDrag);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Carousel.FailToggleDrag;
-		}
-
-		return JSON.stringify(responseObj);
+		carousel.toggleDrag(hasDrag);
 	}
 
 	/**
@@ -272,23 +174,11 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * @param {string} carouselId
 	 * @return {*}  {OSUIFramework.Patterns.Carousel.ICarousel}
 	 */
-	export function UpdateOnRender(carouselId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+	export function UpdateOnRender(carouselId: string): OSUIFramework.Patterns.Carousel.ICarousel {
+		const carousel = GetCarouselItemById(carouselId);
 
-		try {
-			const carousel = GetCarouselItemById(carouselId);
+		carousel.updateOnRender();
 
-			carousel.updateOnRender();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Carousel.FailUpdate;
-		}
-
-		return JSON.stringify(responseObj);
+		return carousel;
 	}
 }

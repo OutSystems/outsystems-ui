@@ -11,24 +11,9 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-	export function ChangeProperty(ratingId: string, propertyName: string, propertyValue: any): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
-
-		try {
-			const rating = GetRatingById(ratingId);
-
-			rating.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Rating.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+	export function ChangeProperty(ratingId: string, propertyName: string, propertyValue: any): void {
+		const rating = GetRatingById(ratingId);
+		rating.changeProperty(propertyName, propertyValue);
 	}
 
 	/**
@@ -58,26 +43,12 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 * @param {string} ratingId
 	 * @return {*}  {*}
 	 */
-	export function Dispose(ratingId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+	export function Destroy(ratingId: string): void {
+		const rating = GetRatingById(ratingId);
 
-		try {
-			const rating = GetRatingById(ratingId);
+		rating.dispose();
 
-			rating.dispose();
-
-			_ratingsMap.delete(ratingId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Rating.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		_ratingsMap.delete(ratingId);
 	}
 
 	/**
@@ -127,23 +98,9 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 * @param {string} ratingId
 	 * @param {*} callback
 	 */
-	export function RegisterCallback(ratingId: string, callback: OSUIFramework.Callbacks.OSRatingSelectEvent): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+	export function RegisterCallback(ratingId: string, callback: OSUIFramework.Callbacks.OSRatingSelectEvent): void {
+		const rating = GetRatingById(ratingId);
 
-		try {
-			const rating = GetRatingById(ratingId);
-
-			rating.registerCallback(callback);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Rating.FailRegisterCallback;
-		}
-
-		return JSON.stringify(responseObj);
+		rating.registerCallback(callback);
 	}
 }
