@@ -18,9 +18,9 @@ namespace OutSystems.OSUI.Patterns.GalleryAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const gallery = GetGalleryById(galleryId);
-
 		try {
+			const gallery = GetGalleryById(galleryId);
+
 			gallery.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -65,9 +65,9 @@ namespace OutSystems.OSUI.Patterns.GalleryAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const gallery = GetGalleryById(galleryId);
-
 		try {
+			const gallery = GetGalleryById(galleryId);
+
 			gallery.dispose();
 
 			_galleryMap.delete(galleryId);

@@ -17,9 +17,9 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const tabs = GetTabsById(tabsId);
-
 		try {
+			const tabs = GetTabsById(tabsId);
+
 			tabs.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -65,9 +65,9 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const tabs = GetTabsById(tabsId);
-
 		try {
+			const tabs = GetTabsById(tabsId);
+
 			tabs.dispose();
 
 			_tabsMap.delete(tabs.uniqueId);
@@ -134,9 +134,9 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const tabs = GetTabsById(tabsId);
-
 		try {
+			const tabs = GetTabsById(tabsId);
+
 			tabs.registerCallback(callback);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -161,9 +161,9 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const tabs = GetTabsById(tabsId);
-
 		try {
+			const tabs = GetTabsById(tabsId);
+
 			tabs.toggleDragGestures(enableSwipe);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -188,9 +188,9 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const tabs = GetTabsById(tabsId);
-
 		try {
+			const tabs = GetTabsById(tabsId);
+
 			tabs.changeTab(tabsNumber, undefined, true, true);
 		} catch (error) {
 			responseObj.isSuccess = false;

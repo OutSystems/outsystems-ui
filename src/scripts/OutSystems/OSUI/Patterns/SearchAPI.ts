@@ -17,9 +17,9 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const search = GetSearchById(searchId);
-
 		try {
+			const search = GetSearchById(searchId);
+
 			search.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -43,9 +43,9 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const search = GetSearchById(searchId);
-
 		try {
+			const search = GetSearchById(searchId);
+
 			search.close();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -91,9 +91,9 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const search = GetSearchById(searchId);
-
 		try {
+			const search = GetSearchById(searchId);
+
 			search.dispose();
 
 			_searchsMap.delete(searchId);
@@ -159,9 +159,9 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const search = GetSearchById(searchId);
-
 		try {
+			const search = GetSearchById(searchId);
+
 			search.open();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -189,9 +189,9 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const search = GetSearchById(searchId);
-
 		try {
+			const search = GetSearchById(searchId);
+
 			search.registerCallback(callback);
 		} catch (error) {
 			responseObj.isSuccess = false;
