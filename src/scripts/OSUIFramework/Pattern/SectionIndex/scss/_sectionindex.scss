@@ -94,6 +94,31 @@
 }
 
 // Responsive --------------------------------------------------------------------
+///
+.phone {
+	.osui-section-index {
+		&--is-sticky {
+			left: calc(var(--os-safe-area-right) + var(--space-base));
+			padding: 0 var(--space-base) 0 0;
+			position: fixed;
+			top: var(--header-size);
+			z-index: 1;
+		}
+	}
+
+	.is-rtl {
+		.osui-section-index {
+			&--is-sticky {
+				left: initial;
+				right: calc(var(--os-safe-area-right) + var(--space-base));
+				padding: 0 0 var(--space-base) 0;
+			}
+		}
+	}
+}
+
+// Browser -----------------------------------------------------------------------
+///
 .android[data-status-bar-height] {
 	.layout-native {
 		.osui-section-index {
@@ -106,22 +131,8 @@
 	}
 }
 
-///
-.phone {
-	.osui-section-index {
-		&--is-sticky {
-			left: 0;
-			padding: 0 calc(var(--os-safe-area-right) + var(--space-base));
-			position: fixed;
-			right: 0;
-			top: var(--header-size);
-			z-index: 1;
-		}
-	}
-}
-
-///
 // Fixes the sticky problem on Safari 14.1
+///
 .safari {
 	[data-block*='SectionIndex'] {
 		display: contents;

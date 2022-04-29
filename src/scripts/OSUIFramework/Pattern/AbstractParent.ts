@@ -90,7 +90,10 @@ namespace OSUIFramework.Patterns {
 				// unSet it as firstChild
 				childItem.isFirstChild = false;
 				// Set the 2nd child as firsChild since it will turns into the first one!
-				this.getChildByIndex(1).isFirstChild = true;
+				const nextSibling = this.getChildByIndex(1);
+				if (nextSibling) {
+					nextSibling.isFirstChild = true;
+				}
 			}
 
 			// Check if it's the lastChild
@@ -98,7 +101,10 @@ namespace OSUIFramework.Patterns {
 				// unSet it as lastChild
 				childItem.isLastChild = false;
 				// Set the previous child as lastChild since it will turns into the last one!
-				this.getChildByIndex(this._childItems.size - 1).isLastChild = true;
+				const prevSibling = this.getChildByIndex(this._childItems.size - 1);
+				if (prevSibling) {
+					prevSibling.isLastChild = true;
+				}
 			}
 
 			// Remove it from _childItems map
