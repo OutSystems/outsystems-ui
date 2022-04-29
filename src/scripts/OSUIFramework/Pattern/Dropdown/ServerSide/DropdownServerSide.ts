@@ -175,11 +175,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 
 		// Move ballon element to outside of the pattern context
 		private _moveBallonElement(): void {
-			const layoutElement = Helper.Dom.TagSelector(
-				document.body,
-				Constants.Dot + Constants.LayoutClass
-			) as HTMLElement;
-
+			const layoutElement = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.Layout);
 			Helper.Dom.Move(this._balloonWrapperElement, layoutElement);
 		}
 
@@ -662,7 +658,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			// Set SelectValuesWrapper with aria-haspopup='listbox'
 			Helper.A11Y.AriaHasPopup(this._selectValuesWrapper, Constants.A11YAttributes.Role.Listbox);
 			// Set balloon option items container with listbox as a role
-			Helper.A11Y.RoleListbox(this._balloonOptionsWrapperElement);
+			Helper.A11Y.RoleListox(this._balloonOptionsWrapperElement);
 			// Check if the Dropdown allow multiselect
 			if (this.configs.AllowMultipleSelection) {
 				// Set the aria-multiselectable attribute to the options wrapper element

@@ -79,15 +79,6 @@ namespace OSUIFramework.Constants {
 	/* OSUI Version */
 	export const OSUIVersion = '2.8.3';
 
-	/* css Class that is added in layout */
-	export const LayoutClass = 'layout';
-
-	/* css Class that is added in header */
-	export const HeaderClass = 'header';
-
-	/* css Class that represents a placeholder */
-	export const Placeholder = 'ph';
-
 	/*Constant to be used across project as the zero value*/
 	export const ZeroValue = 0;
 }

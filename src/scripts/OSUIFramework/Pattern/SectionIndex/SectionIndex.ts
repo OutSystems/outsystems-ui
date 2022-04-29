@@ -93,8 +93,8 @@ namespace OSUIFramework.Patterns.SectionIndex {
 
 		// Method used to set the IsActive child item at the onBodyScroll
 		private _setActiveChildOnScroll(child: SectionIndexItem.ISectionIndexItem) {
-			// Prevent logic happen if the scroll has been triggerd by click on the item
-			if (this._navigateOnClick || !this.configs.IsFixed) {
+			// Prevent logic happen if the scroll has been triggered by click on the item
+			if (this._navigateOnClick || this.configs.IsFixed === false) {
 				return;
 			}
 
@@ -159,7 +159,10 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		 * @memberof SectionIndex
 		 */
 		protected setHtmlElements(): void {
-			this._mainScrollContainerElement = Helper.Dom.ClassSelector(document, GlobalEnum.Screen.Active);
+			this._mainScrollContainerElement = Helper.Dom.ClassSelector(
+				document,
+				GlobalEnum.CssClassElements.ActiveScreen
+			);
 		}
 
 		/**
