@@ -22,14 +22,6 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
-	 * OutSystemsUI child elements cssClasses
-	 */
-	export enum CssClassChildElements {
-		FirstChild = 'is--first-child',
-		LastChild = 'is--last-child',
-	}
-
-	/**
 	 * OutSystemsUI position cssClasses and identifiers of position
 	 */
 	export enum Position {
