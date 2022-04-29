@@ -22,6 +22,8 @@
 		background-color: transparent;
 		border-color: transparent;
 		border-style: solid;
+		border-top-left-radius: var(--border-radius-soft);
+		border-top-right-radius: var(--border-radius-soft);
 		border-width: var(--accordion-active-border-size) var(--border-size-none) var(--border-size-none)
 			var(--border-size-none);
 		content: '';
@@ -60,13 +62,6 @@
 				border-color: var(--color-primary);
 				opacity: 1;
 				transition: opacity 300ms ease-in;
-			}
-		}
-
-		&-first-item {
-			&::after {
-				border-top-left-radius: var(--border-radius-soft);
-				border-top-right-radius: var(--border-radius-soft);
 			}
 		}
 
