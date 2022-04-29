@@ -11,17 +11,11 @@ namespace OSUIFramework.GlobalEnum {
 	 * OutSystemsUI elements cssClasses
 	 */
 	export enum CssClassElements {
-		AcessibilityStyleTag = 'acessibility-style-tag',
 		ActiveScreen = 'active-screen',
-		AsideExpandable = 'aside-expandable',
 		Container = 'screen-container',
-		Content = 'content',
 		Header = 'header',
-		HeaderHideOnScroll = 'hide-header-on-scroll',
 		HeaderIsFixed = 'fixed-header',
-		HeaderIsVisible = 'header-is--visible',
 		Layout = 'layout',
-		LayoutNative = 'layout-native',
 		List = 'list',
 		MainContent = 'main-content',
 		Placeholder = 'ph',
