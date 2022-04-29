@@ -1,33 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
-	const _accordionMap = new Map<string, string>(); //accordionItem.uniqueId -> Accordion.uniqueId
 	const _accordionItemMap = new Map<string, OSUIFramework.Patterns.AccordionItem.IAccordionItem>(); //accordionItem.uniqueId -> AccordionItem obj
-
-	/**
-	 * Gets the Accordion pattern the Item belongs to
-	 *
-	 * @return {*}  {Map<string, OSUIFramework.Patterns.Accordion.IAccordion>}
-	 */
-	export function GetAccordionByItem(accordionItemId: string): OSUIFramework.Patterns.Accordion.IAccordion {
-		let accordion: OSUIFramework.Patterns.Accordion.IAccordion;
-
-		if (_accordionMap.has(accordionItemId)) {
-			accordion = AccordionAPI.GetAccordionById(_accordionMap.get(accordionItemId));
-		} else {
-			// Try to find the accordion reference on DOM
-			const elem = OSUIFramework.Helper.Dom.GetElementByUniqueId(accordionItemId);
-			const accordionElem = elem.closest(
-				OSUIFramework.Constants.Dot + OSUIFramework.Patterns.Accordion.Enum.CssClass.Pattern
-			);
-			if (accordionElem) {
-				const uniqueId = accordionElem.getAttribute('name');
-				accordion = AccordionAPI.GetAccordionById(uniqueId);
-			}
-			// Else, it's a 'free' accordion item, no accordion as parent
-		}
-
-		return accordion;
-	}
 
 	/**
 	 * Function that will change the property of a given Accordion Item pattern.
@@ -44,9 +17,9 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		try {
-			const accordionItem = GetAccordionItemById(accordionItemId);
+		const accordionItem = GetAccordionItemById(accordionItemId);
 
+		try {
 			accordionItem.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -70,9 +43,9 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		try {
-			const accordionItem = GetAccordionItemById(accordionItemId);
+		const accordionItem = GetAccordionItemById(accordionItemId);
 
+		try {
 			accordionItem.close();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -95,26 +68,18 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 		accordionItemId: string,
 		configs: string
 	): OSUIFramework.Patterns.AccordionItem.IAccordionItem {
-		const config = JSON.parse(configs);
 		if (_accordionItemMap.has(accordionItemId)) {
 			throw new Error(
 				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.AccordionItem} registered under id: ${accordionItemId}`
 			);
 		}
-		const accordion = GetAccordionByItem(accordionItemId);
 
 		const _newAccordionItem = new OSUIFramework.Patterns.AccordionItem.AccordionItem(
 			accordionItemId,
-			config,
-			accordion
+			JSON.parse(configs)
 		);
 
 		_accordionItemMap.set(accordionItemId, _newAccordionItem);
-		_newAccordionItem.build();
-		if (accordion !== undefined) {
-			_accordionMap.set(accordionItemId, accordion.uniqueId);
-			accordion.addAccordionItem(_newAccordionItem.uniqueId, _newAccordionItem);
-		}
 
 		return _newAccordionItem;
 	}
@@ -132,14 +97,12 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		try {
-			const accordionItem = GetAccordionItemById(accordionItemId);
+		const accordionItem = GetAccordionItemById(accordionItemId);
 
+		try {
 			accordionItem.dispose();
 
 			_accordionItemMap.delete(accordionItem.uniqueId);
-
-			_accordionMap.delete(accordionItem.uniqueId);
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
@@ -162,9 +125,9 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		try {
-			const accordionItem = GetAccordionItemById(accordionItemId);
+		const accordionItem = GetAccordionItemById(accordionItemId);
 
+		try {
 			accordionItem.open();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -229,9 +192,9 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		try {
-			const accordionItem = GetAccordionItemById(accordionItemId);
+		const accordionItem = GetAccordionItemById(accordionItemId);
 
+		try {
 			accordionItem.registerCallback(callback);
 		} catch (error) {
 			responseObj.isSuccess = false;
