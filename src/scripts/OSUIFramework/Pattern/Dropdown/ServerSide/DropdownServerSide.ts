@@ -51,6 +51,8 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		private _platformEventOnToggleCallback: Callbacks.OSGeneric;
 		// Store the HTML element for the Dropdown Select Wrapper
 		private _selectValuesWrapper: HTMLElement;
+		// Store the SelectValuesWrapper AriaLabel text
+		private _selectValuesWrapperAriaLabelText: string;
 		// HTML Elements that will help to deal with keyboard tab navigation (A11y - stuff)
 		private _spanBottomFocusElement: HTMLElement;
 		private _spanTopFocusElement: HTMLElement;
@@ -657,6 +659,8 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			Helper.A11Y.RoleButton(this._selectValuesWrapper);
 			// Set SelectValuesWrapper with aria-haspopup='listbox'
 			Helper.A11Y.AriaHasPopup(this._selectValuesWrapper, Constants.A11YAttributes.Role.Listbox);
+			// Set Aria Label for the SelectValuesWrapper
+			this.setAriaLabelText();
 			// Set balloon option items container with listbox as a role
 			Helper.A11Y.RoleListbox(this._balloonOptionsWrapperElement);
 			// Check if the Dropdown allow multiselect
@@ -919,6 +923,18 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 						`${ErrorCodes.Dropdown.FailRegisterCallback}:	The given '${eventName}' event name is not defined.`
 					);
 			}
+		}
+
+		/**
+		 * Method used to set the AriaLabelText that will be applied to the SelectValuesWrapper "input" element
+		 *
+		 * @param value Text to be added
+		 */
+		public setAriaLabelText(value?: string): void {
+			this._selectValuesWrapperAriaLabelText =
+				value === undefined ? this.configs.selectValuesWrapperAriaLabelText : value;
+
+			Helper.A11Y.AriaLabel(this._selectValuesWrapper, this._selectValuesWrapperAriaLabelText);
 		}
 
 		/**
