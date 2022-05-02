@@ -369,6 +369,7 @@ $balloonMarginToSelectValuesWrapper: 2px;
 		&__balloon-search {
 			input,
 			.form-control[data-input] {
+				font-size: var(--font-size-base);
 				height: 48px;
 			}
 		}
@@ -377,8 +378,33 @@ $balloonMarginToSelectValuesWrapper: 2px;
 
 .phone {
 	&.android {
+		&.landscape {
+			.osui-dropdown-serverside__balloon-container {
+				max-height: 90vh;
+			}
+		}
+
 		.osui-dropdown-serverside__balloon-container {
-			max-height: calc(100vh - 10vh - var(--header-size));
+			max-height: 90vh;
+		}
+	}
+
+	&.landscape {
+		.osui-dropdown-serverside {
+			// Balloon section
+			&__balloon {
+				// Content Container
+				&-container {
+					max-height: 50vh;
+				}
+
+				// If do not exist a input search inside balloon
+				&--has-not-search {
+					.osui-dropdown-serverside__balloon-container {
+						max-height: 90vh;
+					}
+				}
+			}
 		}
 	}
 
@@ -434,6 +460,7 @@ $balloonMarginToSelectValuesWrapper: 2px;
 			}
 		}
 
+		/*! jRio  */
 		&--is-opened {
 			&.osui-dropdown-serverside__balloon-wrapper {
 				min-height: 100vh;
