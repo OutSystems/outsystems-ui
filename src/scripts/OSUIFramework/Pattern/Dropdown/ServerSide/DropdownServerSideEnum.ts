@@ -66,5 +66,6 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide.Enum {
 	export enum PropertiesValues {
 		MaxHeight = 320,
 		ThresholVerticalAnimateValue = 20,
+		SelectValuesWrapperAriaLabelValue = 'Select an option.',
 	}
 }
