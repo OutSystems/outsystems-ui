@@ -47,7 +47,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._tabsHeaderItemsElementsArray = [];
 			this._tabsContentItemsElementsArray = [];
 			// Check if running on native shell, to enable drag gestures
-			this._addDragGestures = OutSystems.OSUI.Utils.IsRunningAsNativeApp();
+			this._addDragGestures = OutSystems.OSUI.Utils.DeviceDetection.IsRunningAsNativeApp();
 			// Block observer by default, to prevent it from running on page load
 			this._disableObserver = true;
 		}
