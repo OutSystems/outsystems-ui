@@ -106,13 +106,13 @@ namespace OSUIFramework.Helper {
 				localOs = GlobalEnum.MobileOS.Android;
 			} else if (userAgentLocal.includes(OperatingSystemKeyword.Windows)) {
 				localOs = GlobalEnum.MobileOS.Windows;
-			} else if (userAgentLocal.includes(OperatingSystemKeyword.MacOS)) {
-				localOs = GlobalEnum.MobileOS.MacOS;
 			} else if (
 				userAgentLocal.includes(OperatingSystemKeyword.Ipad) ||
 				userAgentLocal.includes(OperatingSystemKeyword.Iphone)
 			) {
 				localOs = GlobalEnum.MobileOS.IOS;
+			} else if (userAgentLocal.includes(OperatingSystemKeyword.MacOS)) {
+				localOs = GlobalEnum.MobileOS.MacOS;
 			}
 			return localOs;
 		}
