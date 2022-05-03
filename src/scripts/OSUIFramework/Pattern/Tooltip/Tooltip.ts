@@ -290,14 +290,10 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		public build(): void {
 			super.build();
-
 			this.setHtmlElements();
-
 			this._setInitialCssClasses();
-
 			this.setA11YProperties();
 			this._setA11YEvents();
-
 			this._addEvents();
 
 			//OS takes a while to set the Widget Classes
@@ -316,17 +312,14 @@ namespace OSUIFramework.Patterns.Tooltip {
 				switch (propertyName) {
 					case Enum.Properties.IsHover:
 						this._setIsHover();
-
 						break;
 
 					case Enum.Properties.StartVisible:
 						this._setIsVisible();
-
 						break;
 
 					case Enum.Properties.Position:
 						this._setPosition(oldPosition);
-
 						break;
 				}
 			}
@@ -361,7 +354,29 @@ namespace OSUIFramework.Patterns.Tooltip {
 				Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
 
 				this._focusCallback();
+
+				// Get all Tooltips Ids in order to close them!
+				OutSystems.OSUI.Patterns.TooltipAPI.GetAllTooltips().forEach((tpId) => {
+					// Get the Tooltip object
+					const tp = OutSystems.OSUI.Patterns.TooltipAPI.GetTooltipById(tpId);
+					// Check if it's open and not the one has been clicked!
+					if (tp.IsOpen && tp.widgetId !== this.widgetId) {
+						// Close it!
+						tp.close();
+					}
+				});
 			}
+		}
+
+		/**
+		 * Getter that allows to obtain the IsOpen status.
+		 *
+		 * @readonly
+		 * @type {boolean}
+		 * @memberof Tooltip
+		 */
+		public get IsOpen(): boolean {
+			return this._isOpen;
 		}
 	}
 }
