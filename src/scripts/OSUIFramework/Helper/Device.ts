@@ -242,6 +242,19 @@ namespace OSUIFramework.Helper {
 		}
 
 		/**
+		 * Checks if it's running inside Safari browser.
+		 *
+		 * @private
+		 * @static
+		 * @param {string} ua
+		 * @return {*}  {boolean}
+		 * @memberof DeviceInfo
+		 */
+		private static _isSafari(ua: string): boolean {
+			return ua.includes(UAKeyword.safari);
+		}
+
+		/**
 		 * Checks if it's running inside Samsung browser.
 		 *
 		 * @private
@@ -449,6 +462,7 @@ namespace OSUIFramework.Helper {
 				//this way we are sure,that even though the UserAgent has chrome, it's not one of the previous browsers.
 				else if (DeviceInfo._isChrome(userAgentLocal)) browser = GlobalEnum.Browser.chrome;
 				else if (DeviceInfo._isFirefox(userAgentLocal)) browser = GlobalEnum.Browser.firefox;
+				else if (DeviceInfo._isSafari(userAgentLocal)) browser = GlobalEnum.Browser.safari;
 				else if (DeviceInfo._isIE(userAgentLocal)) browser = GlobalEnum.Browser.ie;
 				else if (DeviceInfo._isUC(userAgentLocal)) browser = GlobalEnum.Browser.uc;
 			} else {
