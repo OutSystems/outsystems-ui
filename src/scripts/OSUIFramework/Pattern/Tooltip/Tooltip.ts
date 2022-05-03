@@ -5,9 +5,12 @@ namespace OSUIFramework.Patterns.Tooltip {
 		private _eventBlur: Callbacks.Generic;
 		private _eventClick: Callbacks.Generic;
 		private _eventFocus: Callbacks.Generic;
-		private _globalEventBody: Callbacks.Generic;
+		private _eventOnBodyClick: Callbacks.Generic;
 		private _isOpen: boolean;
-
+		// Platform OnInitialize Callback
+		private _platformEventInitializedCallback: Callbacks.OSGeneric;
+		// Platform OnClose Callback
+		private _platformEventOnToggleCallback: Callbacks.OSGeneric;
 		// Store the ballon html element
 		private _tooltipBallonContentActiveElem: HTMLElement;
 		private _tooltipBallonContentElem: HTMLElement;
@@ -28,7 +31,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 			// If tooltip should behave onMouseOver and it's visible by default
 			if (this.configs.IsHover || this._isOpen) {
 				// Add a window event that will be responsible to close it, if it's opend by default
-				Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
+				Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
 			}
 
 			// If tooltip should behave at onMouseClick, or if it's on tablet or phone
@@ -39,6 +42,9 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// Used to update the tooltip position after it's closed
 		private _ballonCloseCallback(): void {
+			// Trigger the _platformEventOnToggleCallback callback!
+			Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, false);
+
 			this._tooltipBallonContentElem.removeEventListener(
 				GlobalEnum.HTMLEvent.TransitionEnd,
 				this._eventBallonContentClose
@@ -88,7 +94,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 				// If the click has occur outside of this tooltip
 				if (_closestElem !== this._selfElem) {
 					// Remove the Event
-					Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._globalEventBody);
+					Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
 
 					// Close Tooltip
 					this.close();
@@ -108,8 +114,10 @@ namespace OSUIFramework.Patterns.Tooltip {
 			this._managePosition();
 
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.StartVisible);
-
 			this._isOpen = true;
+
+			// Trigger the _platformEventOnToggleCallback callback!
+			Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, true);
 		}
 
 		/**
@@ -137,7 +145,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 		}
 
 		private _removeEvents(): void {
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._globalEventBody);
+			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
 
 			this._tooltipContentElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
 
@@ -245,7 +253,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 		 * @memberof Tooltip
 		 */
 		protected setCallbacks(): void {
-			this._globalEventBody = this._bodyClickCallback.bind(this);
+			this._eventOnBodyClick = this._bodyClickCallback.bind(this);
 			this._eventBlur = this._blurCallback.bind(this);
 			this._eventClick = this._clickCallback.bind(this);
 			this._eventFocus = this._focusCallback.bind(this);
@@ -270,7 +278,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 			this._removeEvents();
 			this._unsetA11YEvents();
 
-			this._globalEventBody = undefined;
+			this._eventOnBodyClick = undefined;
 			this._eventBlur = undefined;
 			this._eventClick = undefined;
 			this._eventFocus = undefined;
@@ -301,6 +309,9 @@ namespace OSUIFramework.Patterns.Tooltip {
 				this._managePosition();
 				this.finishBuild();
 			});
+
+			// Trigger platform's _platformEventInitializedCallback client Action
+			Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
 		}
 
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
@@ -351,11 +362,16 @@ namespace OSUIFramework.Patterns.Tooltip {
 		public open(): void {
 			// Check if tooltip is closed
 			if (this._isOpen === false) {
-				Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
+				// Trigger the _platformEventOnToggleCallback callback!
+				Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, true);
+
+				Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
 
 				this._focusCallback();
 
 				// Get all Tooltips Ids in order to close them!
+				/* NOTE: This approach must be follow since we're using a stopPropagation at the 
+				click to open moment we can't use the BodyOnClick to close other open Tooltips! */
 				OutSystems.OSUI.Patterns.TooltipAPI.GetAllTooltips().forEach((tpId) => {
 					// Get the Tooltip object
 					const tp = OutSystems.OSUI.Patterns.TooltipAPI.GetTooltipById(tpId);
@@ -365,6 +381,34 @@ namespace OSUIFramework.Patterns.Tooltip {
 						tp.close();
 					}
 				});
+			}
+		}
+
+		/**
+		 * Method used to register the provider callback
+		 *
+		 * @param {string} eventName Event name that will be assigned
+		 * @param {Callbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
+		 * @memberof OSUIDropdownServerSide
+		 */
+		public registerCallback(eventName: string, callback: Callbacks.OSGeneric): void {
+			switch (eventName) {
+				case Enum.Events.Initialized:
+					if (this._platformEventInitializedCallback === undefined) {
+						this._platformEventInitializedCallback = callback;
+					}
+					break;
+
+				case Enum.Events.OnToggle:
+					if (this._platformEventOnToggleCallback === undefined) {
+						this._platformEventOnToggleCallback = callback;
+					}
+					break;
+
+				default:
+					throw new Error(
+						`${ErrorCodes.Tooltip.FailRegisterCallback}: The given '${eventName}' event name is not defined.`
+					);
 			}
 		}
 

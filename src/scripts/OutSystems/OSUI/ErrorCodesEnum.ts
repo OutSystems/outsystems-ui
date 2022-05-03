@@ -116,6 +116,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailClose: 'OSUI-API-13002',
 		FailDispose: 'OSUI-API-13003',
 		FailOpen: 'OSUI-API-13004',
+		FailRegisterCallback: 'OSUI-GEN-13005',
 	};
 
 	export const AnimatedLabel = {
