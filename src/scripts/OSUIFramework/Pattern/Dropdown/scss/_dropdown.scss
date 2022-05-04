@@ -10,6 +10,32 @@
 @import './dropdown-serverside';
 @import '../../DropdownServerSideItem/scss/dropdownserversideitem';
 
+/// Disable states
+.osui-dropdown {
+	&-search,
+	&-serverside,
+	&-tags {
+		&.vscomp-ele[disabled] {
+			// Override of library cursor on disable states
+			cursor: initial;
+
+			.vscomp {
+				&-toggle-button {
+					background-color: var(--color-neutral-2);
+					border: var(--border-size-s) solid var(--color-neutral-4);
+					color: var(--color-neutral-6);
+					pointer-events: none;
+				}
+
+				&-wrapper,
+				&-wrapper:not(.has-value) .vscomp-value {
+					opacity: inherit;
+				}
+			}
+		}
+	}
+}
+
 /// Dropdown Option Item image
 .osui-dropdown {
 	&-option-image {
