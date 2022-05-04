@@ -12,6 +12,15 @@
 
 /// Dropdown Option Item image
 .osui-dropdown {
+	// Override the font-family of provider
+	&-search,
+	&-serverside,
+	&-tags {
+		.vscomp-wrapper {
+			font-family: inherit;
+		}
+	}
+
 	&-option-image {
 		border-radius: 100%;
 		display: inline-block;
