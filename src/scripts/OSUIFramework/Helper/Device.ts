@@ -106,13 +106,13 @@ namespace OSUIFramework.Helper {
 				localOs = GlobalEnum.MobileOS.Android;
 			} else if (userAgentLocal.includes(OperatingSystemKeyword.Windows)) {
 				localOs = GlobalEnum.MobileOS.Windows;
-			} else if (userAgentLocal.includes(OperatingSystemKeyword.MacOS)) {
-				localOs = GlobalEnum.MobileOS.MacOS;
 			} else if (
 				userAgentLocal.includes(OperatingSystemKeyword.Ipad) ||
 				userAgentLocal.includes(OperatingSystemKeyword.Iphone)
 			) {
 				localOs = GlobalEnum.MobileOS.IOS;
+			} else if (userAgentLocal.includes(OperatingSystemKeyword.MacOS)) {
+				localOs = GlobalEnum.MobileOS.MacOS;
 			}
 			return localOs;
 		}
@@ -239,6 +239,19 @@ namespace OSUIFramework.Helper {
 		 */
 		private static _isOpera(ua: string): boolean {
 			return ua.includes(UAKeyword.opr) || ua.includes(UAKeyword.opera) || ua.includes(UAKeyword.opios);
+		}
+
+		/**
+		 * Checks if it's running inside Safari browser.
+		 *
+		 * @private
+		 * @static
+		 * @param {string} ua
+		 * @return {*}  {boolean}
+		 * @memberof DeviceInfo
+		 */
+		private static _isSafari(ua: string): boolean {
+			return ua.includes(UAKeyword.safari);
 		}
 
 		/**
@@ -449,6 +462,7 @@ namespace OSUIFramework.Helper {
 				//this way we are sure,that even though the UserAgent has chrome, it's not one of the previous browsers.
 				else if (DeviceInfo._isChrome(userAgentLocal)) browser = GlobalEnum.Browser.chrome;
 				else if (DeviceInfo._isFirefox(userAgentLocal)) browser = GlobalEnum.Browser.firefox;
+				else if (DeviceInfo._isSafari(userAgentLocal)) browser = GlobalEnum.Browser.safari;
 				else if (DeviceInfo._isIE(userAgentLocal)) browser = GlobalEnum.Browser.ie;
 				else if (DeviceInfo._isUC(userAgentLocal)) browser = GlobalEnum.Browser.uc;
 			} else {
