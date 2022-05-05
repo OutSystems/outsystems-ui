@@ -33,6 +33,11 @@
 				}
 			}
 		}
+
+		// Override the font-family of provider
+		.vscomp-wrapper {
+			font-family: inherit;
+		}
 	}
 
 	/// Dropdown Option Item image
