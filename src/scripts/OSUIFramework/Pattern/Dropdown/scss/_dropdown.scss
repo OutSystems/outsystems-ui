@@ -10,11 +10,11 @@
 @import './dropdown-serverside';
 @import '../../DropdownServerSideItem/scss/dropdownserversideitem';
 
-/// Disable states
 .osui-dropdown {
 	&-search,
 	&-serverside,
 	&-tags {
+		/// Disable states for dropdowns
 		&.vscomp-ele[disabled] {
 			// Override of library cursor on disable states
 			cursor: initial;
@@ -34,33 +34,33 @@
 			}
 		}
 	}
-}
 
-/// Dropdown Option Item image
-.osui-dropdown {
-	&-option-image {
-		border-radius: 100%;
-		display: inline-block;
-		height: 24px;
-		margin-right: var(--space-s);
-		width: 24px;
-		background-color: var(--color-neutral-3);
-		overflow: hidden;
+	/// Dropdown Option Item image
+	&-option {
+		&-image {
+			border-radius: 100%;
+			display: inline-block;
+			height: 24px;
+			margin-right: var(--space-s);
+			width: 24px;
+			background-color: var(--color-neutral-3);
+			overflow: hidden;
+		}
+
+		&-icon {
+			color: var(--color-neutral-9);
+			font-size: var(--font-size-h6);
+			margin-right: var(--space-s);
+		}
 	}
 
-	&-option-icon {
-		color: var(--color-neutral-9);
-		font-size: var(--font-size-h6);
-		margin-right: var(--space-s);
+	/// Error message
+	&-error-message {
+		color: var(--color-error);
+		font-size: var(--font-size-xs);
+		margin-left: var(--space-none);
+		margin-top: 3px;
 	}
-}
-
-/// Error message
-.osui-dropdown-error-message {
-	color: var(--color-error);
-	font-size: var(--font-size-xs);
-	margin-left: var(--space-none);
-	margin-top: 3px;
 }
 
 // IsRTL -------------------------------------------------------------------------
