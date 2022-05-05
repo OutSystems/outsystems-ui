@@ -10,15 +10,27 @@
 
 ///
 .osui-datepicker {
-	// Hack used to disable dateTime input pseudoElements (browser native placeholders)
-	input[type='date']::-webkit-inner-spin-button,
-	input[type='date']::-webkit-calendar-picker-indicator,
-	input[type='date']::-webkit-datetime-edit-year-field,
-	input[type='date']::-webkit-datetime-edit-month-field,
-	input[type='date']::-webkit-datetime-edit-day-field,
-	input[type='date']::-webkit-datetime-edit-fields-wrapper {
-		display: none;
-		-moz-appearance: none;
+	input {
+		// Hack used to disable dateTime input pseudoElements (browser native placeholders)
+		&[type='date'] {
+			&::-webkit-inner-spin-button,
+			&::-webkit-calendar-picker-indicator,
+			&::-webkit-datetime-edit-year-field,
+			&::-webkit-datetime-edit-month-field,
+			&::-webkit-datetime-edit-day-field,
+			&::-webkit-datetime-edit-fields-wrapper {
+				display: none;
+				-moz-appearance: none;
+			}
+		}
+
+		// Disable states for Datepicker
+		&.flatpickr-input[disabled] + input {
+			background-color: var(--color-neutral-2);
+			border: var(--border-size-s) solid var(--color-neutral-4);
+			color: var(--color-neutral-6);
+			pointer-events: none;
+		}
 	}
 
 	// Service Studio Preview Container Styles
