@@ -6,5 +6,6 @@ namespace OSUIFramework.Patterns.AccordionItem {
 	export interface IAccordionItem extends Interface.IChild, Interface.IOpenable, Interface.ICallback {
 		isDisabled: boolean;
 		isOpen: boolean;
+		allowTitleEvents();
 	}
 }
