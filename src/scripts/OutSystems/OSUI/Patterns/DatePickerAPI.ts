@@ -268,7 +268,34 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	}
 
 	/**
-	 * Fucntion that will update the InitialDate fot a given DatepickerId
+	 * Function that will set a different language to a given DatePickerId
+	 *
+	 * @param datePickerId
+	 * @param isoCode ISO Code language that will be assigned
+	 * @returns
+	 */
+	export function SetLanguage(datePickerId: string, isoCode: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const _datePicker = this.GetDatePickerItemById(datePickerId);
+
+			_datePicker.setLanguage(isoCode);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.DatePicker.FailRedraw;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
+	 * Function that will update the InitialDate fot a given DatepickerId
 	 * 	When:
 	 * 		SingleDate
 	 * 			=> Date1 = InitialDate

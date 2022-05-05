@@ -6,10 +6,26 @@ namespace OSUIFramework.Helper {
 		 */
 		private static _lang = 'en-US';
 
+		/**
+		 * Getter that allows to obtain the App Language based on SetLocale Action from platform!
+		 *
+		 * @readonly
+		 * @static
+		 * @type {string}
+		 * @memberof Language
+		 */
 		public static get Lang(): string {
 			return Language._lang;
 		}
 
+		/**
+		 * Getter that allows to obtain the App Language with 2 characters only
+		 *
+		 * @readonly
+		 * @static
+		 * @type {string}
+		 * @memberof Language
+		 */
 		public static get ShortLang(): string {
 			return Language._lang.substring(0, 2);
 		}
@@ -19,7 +35,7 @@ namespace OSUIFramework.Helper {
 		 *
 		 * @param language The value returned by platform GetCurrentLocale() method
 		 */
-		public static SetLanguage(language: string): void {
+		public static Set(language: string): void {
 			Language._lang = language;
 		}
 	}

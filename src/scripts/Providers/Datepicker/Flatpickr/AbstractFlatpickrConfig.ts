@@ -8,6 +8,8 @@ namespace Providers.Datepicker.Flatpickr {
 	 * @extends {AbstractDatePickerConfig}
 	 */
 	export abstract class AbstractFlatpickrConfig extends OSUIFramework.Patterns.DatePicker.AbstractDatePickerConfig {
+		// Store the language that will be assigned as a locale to the DatePicker
+		private _lang: string;
 		// Set the OnChange Event that will be defined in the specific context for each Flatpickr mode
 		public OnChange: OSUIFramework.Callbacks.Generic;
 
@@ -19,6 +21,12 @@ namespace Providers.Datepicker.Flatpickr {
 
 		constructor(config: JSON) {
 			super(config);
+
+			console.warn('REMOVE PT');
+			OSUIFramework.Helper.Language.Set('pt-PT');
+
+			// Set the lang based on the language that has been defined already
+			this._lang = OSUIFramework.Helper.Language.ShortLang;
 		}
 
 		// Method used to manage the AM/PM time when it's on use
@@ -40,7 +48,7 @@ namespace Providers.Datepicker.Flatpickr {
 		private _checkLocale(): FlatpickrLocale {
 			// FlatpickrLocale script file is already loaded
 			// Set the locale in order to define the calendar language
-			const _locale = window.flatpickr.l10ns[OSUIFramework.Helper.Language.ShortLang];
+			const _locale = window.flatpickr.l10ns[this._lang];
 			// Set the calendar first week day
 			_locale.firstDayOfWeek = this.FirstWeekDay;
 
@@ -111,6 +119,27 @@ namespace Providers.Datepicker.Flatpickr {
 			};
 
 			return _flatpickrOpts as FlatpickrOptions;
+		}
+
+		/**
+		 * Getter that allows to obtain the DatePicker Locale language
+		 *
+		 * @readonly
+		 * @type {string}
+		 * @memberof AbstractFlatpickrConfig
+		 */
+		public get Lang(): string {
+			return this._lang;
+		}
+
+		/**
+		 * Set DatePicker Locale
+		 *
+		 * @memberof AbstractFlatpickrConfig
+		 */
+		public set Lang(value: string) {
+			// substring is needed to avoid passing values like "en-EN" since we must use only "en"
+			this._lang = value.substring(0, 2);
 		}
 	}
 }
