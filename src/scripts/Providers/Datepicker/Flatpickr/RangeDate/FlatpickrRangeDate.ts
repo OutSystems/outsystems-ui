@@ -102,8 +102,8 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 		/**
 		 * Method used to update the StartInitialDate and EndInitialDate values
 		 *
-		 * @param start The new StartInitialDate value
-		 * @param end The new EndInitialDate value
+		 * @param startDate The new StartInitialDate value
+		 * @param endDate The new EndInitialDate value
 		 * @memberof Flatpickr.RangeDate
 		 */
 		public updateInitialDate(startDate: string, endDate: string): void {
