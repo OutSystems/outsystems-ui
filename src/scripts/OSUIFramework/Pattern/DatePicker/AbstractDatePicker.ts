@@ -23,5 +23,6 @@ namespace OSUIFramework.Patterns.DatePicker {
 		public abstract close(): void;
 		public abstract open(): void;
 		public abstract registerCallback(eventName: string, callback: Callbacks.OSGeneric): void;
+		public abstract updateInitialDate(date1: string, date2?: string): void;
 	}
 }

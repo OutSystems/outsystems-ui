@@ -79,7 +79,13 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 			this.finishBuild();
 		}
 
-		// Method used to change given propertyName at OnParametersChange platform event
+		/**
+		 * Method used to change given propertyName at OnParametersChange platform event
+		 *
+		 * @param {string} propertyName the name of the property that will be changed
+		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
+		 * @memberof Flatpickr.RangeDate
+		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
 
@@ -91,6 +97,21 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 						break;
 				}
 			}
+		}
+
+		/**
+		 * Method used to update the StartInitialDate and EndInitialDate values
+		 *
+		 * @param start The new StartInitialDate value
+		 * @param end The new EndInitialDate value
+		 * @memberof Flatpickr.RangeDate
+		 */
+		public updateInitialDate(startDate: string, endDate: string): void {
+			// Redefine the Initial dates
+			this.configs.InitialStartDate = startDate;
+			this.configs.InitialEndDate = endDate;
+			// Trigger the Redraw method in order to update calendar with these new values
+			this.redraw();
 		}
 	}
 }

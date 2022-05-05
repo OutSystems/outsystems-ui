@@ -266,4 +266,39 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 
 		return JSON.stringify(responseObj);
 	}
+
+	/**
+	 * Fucntion that will update the InitialDate fot a given DatepickerId
+	 * 	When:
+	 * 		SingleDate
+	 * 			=> Date1 = InitialDate
+	 * 			=> Date2 = Ignored!
+	 *
+	 * 		RangeDate
+	 * 			=> Date1 = InitialStartDate
+	 * 			=> Date2 = InitialEndDate
+	 *
+	 * @param {string} datePickerId
+	 * @param {string} date1 The value for the date1
+	 * @param {string} date2 The value for the date2
+	 */
+	export function UpdateInitialDate(datePickerId: string, date1: string, date2?: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const _datePicker = this.GetDatePickerItemById(datePickerId);
+
+			_datePicker.updateInitialDate(date1, date2);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.DatePicker.FailRedraw;
+		}
+
+		return JSON.stringify(responseObj);
+	}
 }
