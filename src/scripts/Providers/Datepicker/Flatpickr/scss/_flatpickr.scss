@@ -26,6 +26,11 @@
 		}
 	}
 
+	&.hasWeeks {
+		// to take into account the padding we're adding after flatpickr has calculated its width
+		min-width: min-content;
+	}
+
 	.numInputWrapper {
 		span {
 			&.arrowUp,
@@ -189,8 +194,10 @@ span.flatpickr-weekday {
 	color: var(--color-neutral-9);
 	font-size: var(--font-size-s);
 	font-weight: var(--font-regular);
+	height: 35px;
+	line-height: 34px;
+	max-width: 35px;
 	user-select: none;
-	line-height: 37px;
 
 	&.prevMonthDay,
 	&.nextMonthDay {
