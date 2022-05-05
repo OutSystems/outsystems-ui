@@ -22,9 +22,6 @@ namespace Providers.Datepicker.Flatpickr {
 		constructor(config: JSON) {
 			super(config);
 
-			console.warn('REMOVE PT');
-			OSUIFramework.Helper.Language.Set('pt-PT');
-
 			// Set the lang based on the language that has been defined already
 			this._lang = OSUIFramework.Helper.Language.ShortLang;
 		}
