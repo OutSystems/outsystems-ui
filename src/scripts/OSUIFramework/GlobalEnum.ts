@@ -264,4 +264,8 @@ namespace OSUIFramework.GlobalEnum {
 		phone = 'phone',
 		tablet = 'tablet',
 	}
+
+	export enum NotchClasses {
+		IPhoneX = 'iphonex',
+	}
 }

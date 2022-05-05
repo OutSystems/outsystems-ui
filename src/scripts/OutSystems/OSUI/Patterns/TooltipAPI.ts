@@ -172,4 +172,37 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 
 		return JSON.stringify(responseObj);
 	}
+
+	/**
+	 * Function to register a provider callback
+	 *
+	 * @export
+	 * @param {string} tooltipId
+	 * @param {string} eventName
+	 * @param {OSUIFramework.Callbacks.OSGeneric} callback
+	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 */
+	export function RegisterCallback(
+		tooltipId: string,
+		eventName: string,
+		callback: OSUIFramework.Callbacks.OSGeneric
+	): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const tooltip = this.GetTooltipById(tooltipId);
+
+			tooltip.registerCallback(eventName, callback);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Tooltip.FailRegisterCallback;
+		}
+
+		return JSON.stringify(responseObj);
+	}
 }

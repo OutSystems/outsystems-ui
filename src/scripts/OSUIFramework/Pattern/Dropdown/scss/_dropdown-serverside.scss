@@ -252,8 +252,6 @@ $balloonMarginToSelectValuesWrapper: 2px;
 
 	// When it's disabled
 	&--is-disabled {
-		cursor: not-allowed;
-
 		.osui-dropdown-serverside__selected-values {
 			&:after {
 				border-color: var(--color-neutral-6);
@@ -262,7 +260,7 @@ $balloonMarginToSelectValuesWrapper: 2px;
 			&-wrapper {
 				background-color: var(--color-neutral-2);
 				border-color: var(--color-neutral-4);
-				color: var(--color-neutral-7);
+				color: var(--color-neutral-6);
 				pointer-events: none;
 			}
 		}

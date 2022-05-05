@@ -8,6 +8,13 @@ namespace OSUIFramework.ErrorCodes {
 		ParentNotFound: 'OSUI-GEN-01001',
 	};
 
+	export const Accordion = {
+		FailChildItemClicked: 'OSUI-GEN-07001',
+		FailSetNewChildItem: 'OSUI-GEN-07002',
+		FailToSetChildItemAction: 'OSUI-GEN-07003',
+		FailUnsetNewChildItem: 'OSUI-GEN-07004',
+	};
+
 	export const Dropdown = {
 		FailOptionItemClicked: 'OSUI-GEN-02001',
 		FailOptionItemKeyPressed: 'OSUI-GEN-02002',
@@ -40,10 +47,7 @@ namespace OSUIFramework.ErrorCodes {
 		FailToSetTargetElement: 'OSUI-GEN-06001',
 	};
 
-	export const Accordion = {
-		FailChildItemClicked: 'OSUI-GEN-07001',
-		FailSetNewChildItem: 'OSUI-GEN-07002',
-		FailToSetChildItemAction: 'OSUI-GEN-07003',
-		FailUnsetNewChildItem: 'OSUI-GEN-07004',
+	export const Tooltip = {
+		FailRegisterCallback: 'OSUI-GEN-08001',
 	};
 }

@@ -7,6 +7,14 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			if (operatingSystem !== OSUIFramework.GlobalEnum.MobileOS.Unknown) {
 				OSUIFramework.Helper.Dom.Styles.AddClass(body, operatingSystem);
 			}
+			// Add iphonex class for ios devices with notch
+			if (
+				operatingSystem === OSUIFramework.GlobalEnum.MobileOS.IOS &&
+				OSUIFramework.Helper.DeviceInfo.IsIphoneWithNotch
+			) {
+				OSUIFramework.Helper.Dom.Styles.AddClass(body, OSUIFramework.GlobalEnum.NotchClasses.IPhoneX);
+			}
+
 			if (IsWebApp) {
 				const browser = OSUIFramework.Helper.DeviceInfo.GetBrowser();
 
