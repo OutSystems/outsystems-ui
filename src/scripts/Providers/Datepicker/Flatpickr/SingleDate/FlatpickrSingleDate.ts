@@ -44,7 +44,13 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 			this.finishBuild();
 		}
 
-		// Method used to change given propertyName at OnParametersChange platform event
+		/**
+		 * Method used to change given propertyName at OnParametersChange platform event
+		 *
+		 * @param {string} propertyName the name of the property that will be changed
+		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
+		 * @memberof Flatpickr.SingleDate
+		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
 
@@ -67,6 +73,19 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 						break;
 				}
 			}
+		}
+
+		/**
+		 * Method used to update the InitialDate config value
+		 *
+		 * @param value The new InitialDate value that will be set
+		 * @memberof Flatpickr.SingleDate
+		 */
+		public updateInitialDate(value: string): void {
+			// Redefine the Initial date
+			this.configs.InitialDate = value;
+			// Trigger the Redraw method in order to update calendar with this new value
+			this.redraw();
 		}
 	}
 }

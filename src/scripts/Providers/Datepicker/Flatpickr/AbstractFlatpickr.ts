@@ -246,5 +246,6 @@ namespace Providers.Datepicker.Flatpickr {
 
 		protected abstract onDateSelectedEvent(selectedDates: string[], dateStr: string, fp: Flatpickr): void;
 		protected abstract prepareConfigs(): void;
+		public abstract updateInitialDate(start: string, end?: string): void;
 	}
 }

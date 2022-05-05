@@ -7,5 +7,6 @@ namespace OSUIFramework.Patterns.DatePicker {
 		clear(): void;
 		close(): void;
 		open(): void;
+		updateInitialDate(date1: string, date2?: string): void;
 	}
 }
