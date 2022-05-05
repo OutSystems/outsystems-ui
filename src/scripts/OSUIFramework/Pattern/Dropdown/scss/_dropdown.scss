@@ -14,10 +14,6 @@
 	&-search,
 	&-serverside,
 	&-tags {
-    // Override the font-family of provider
-		.vscomp-wrapper {
-			font-family: inherit;
-		}
 		/// Disable states for dropdowns
 		&.vscomp-ele[disabled] {
 			// Override of library cursor on disable states
@@ -36,6 +32,11 @@
 					opacity: inherit;
 				}
 			}
+		}
+
+		// Override the font-family of provider
+		.vscomp-wrapper {
+			font-family: inherit;
 		}
 	}
 
