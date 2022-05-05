@@ -44,10 +44,16 @@ namespace Providers.Datepicker.Flatpickr {
 		// Method used to check the language and also map it into Flatpickr expected format
 		private _checkLocale(): FlatpickrLocale {
 			// FlatpickrLocale script file is already loaded
-			// Set the locale in order to define the calendar language
-			const _locale = window.flatpickr.l10ns[this._lang];
-			// Set the calendar first week day
-			_locale.firstDayOfWeek = this.FirstWeekDay;
+			let _locale: FlatpickrLocale;
+			try {
+				// Set the locale in order to define the calendar language
+				_locale = window.flatpickr.l10ns[this._lang];
+
+				// Set the calendar first week day
+				_locale.firstDayOfWeek = this.FirstWeekDay;
+			} catch (error) {
+				throw new Error(`${Providers.ErrorCodes.Flatpickr.FailSetLocale}: Locale '${this._lang}' not found!`);
+			}
 
 			return _locale;
 		}
