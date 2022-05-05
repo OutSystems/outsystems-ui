@@ -19,6 +19,12 @@ namespace OSUIFramework.Patterns {
 		 */
 		private _configs: C;
 
+		// Gesture Events instances created
+		private _gestureEventInstance: {
+			drag: Event.DragEvent;
+			swipe: Event.DragEvent;
+		};
+
 		/**
 		 * Indicates if the pattern has been built or not.
 		 *
@@ -151,6 +157,27 @@ namespace OSUIFramework.Patterns {
 		 */
 		public get widgetId(): string {
 			return this._widgetId;
+		}
+
+		protected addGestureEvents(
+			type: GlobalEnum.GestureEvents,
+			target: HTMLElement,
+			onStartCallback: Callbacks.Generic,
+			onMoveCallback: Callbacks.Generic,
+			onEndCallback: Callbacks.Generic
+		): void {
+			switch (type) {
+				case GlobalEnum.GestureEvents.Swipe:
+					//this._gestureEventInstance = new touch(callback);
+					break;
+				case GlobalEnum.GestureEvents.Drag:
+					this._gestureEventInstance.drag = new Event.DragEvent(
+						target,
+						onStartCallback,
+						onMoveCallback,
+						onEndCallback
+					);
+			}
 		}
 
 		/**

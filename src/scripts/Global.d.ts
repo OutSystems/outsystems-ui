@@ -49,6 +49,12 @@ declare global {
 		standalone: any;
 	}
 
+	// Gesture Events Type
+	type GestureEvents = {
+		Swipe: TouchEvent;
+		Touch: TouchEvent;
+	};
+
 	// Offset Type
 	type OffsetValues = {
 		bottom?: number;
