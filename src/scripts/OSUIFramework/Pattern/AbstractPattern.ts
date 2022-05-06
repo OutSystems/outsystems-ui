@@ -20,10 +20,7 @@ namespace OSUIFramework.Patterns {
 		private _configs: C;
 
 		// Gesture Events instances created
-		private _gestureEventInstance: {
-			drag: Event.DragEvent;
-			swipe: Event.DragEvent;
-		};
+		private _gestureEventInstance: GestureEvents;
 
 		/**
 		 * Indicates if the pattern has been built or not.
@@ -137,6 +134,10 @@ namespace OSUIFramework.Patterns {
 			return this._configs;
 		}
 
+		public get gestureEventInstance(): GestureEvents {
+			return this._gestureEventInstance;
+		}
+
 		/**
 		 * Unique id of the pattern. Internal use only.
 		 *
@@ -171,11 +172,11 @@ namespace OSUIFramework.Patterns {
 					//this._gestureEventInstance = new touch(callback);
 					break;
 				case GlobalEnum.GestureEvents.Drag:
-					this._gestureEventInstance.drag = new Event.DragEvent(
-						target,
-						onStartCallback,
-						onMoveCallback,
-						onEndCallback
+					this._gestureEventInstance = new Event.DragEvent(target);
+					this._gestureEventInstance.setTouchEvents(
+						onStartCallback.bind(this),
+						onMoveCallback.bind(this),
+						onEndCallback.bind(this)
 					);
 			}
 		}

@@ -50,10 +50,7 @@ declare global {
 	}
 
 	// Gesture Events Type
-	type GestureEvents = {
-		Swipe: TouchEvent;
-		Touch: TouchEvent;
-	};
+	type GestureEvents = Event.DragEvent;
 
 	// Offset Type
 	type OffsetValues = {

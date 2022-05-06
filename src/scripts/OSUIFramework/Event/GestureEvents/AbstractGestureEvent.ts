@@ -31,16 +31,11 @@ namespace OSUIFramework.Event {
 			TouchingElement: false,
 			OffsetX: 0,
 			OffsetY: 0,
-			Event: TouchEvent,
+			Event: undefined,
 		};
 
-		constructor(
-			target: HTMLElement,
-			onStartCallback: Callbacks.Generic,
-			onMoveCallback: Callbacks.Generic,
-			onEndCallback: Callbacks.Generic
-		) {
-			this.setTouchEvents(target, onStartCallback, onMoveCallback, onEndCallback);
+		constructor(target: HTMLElement) {
+			this._trackableElement = target;
 		}
 
 		private _eventTouchEnd(): void {
@@ -49,7 +44,11 @@ namespace OSUIFramework.Event {
 				this._gestureParams.OffsetX = this._gestureParams.CurrentX - this._gestureParams.StartX;
 				this._gestureParams.OffsetY = this._gestureParams.CurrentY - this._gestureParams.StartY;
 				this._gestureParams.TimeTaken = new Date().getTime() - this._gestureParams.StartTime;
-				this._endTriggerCallback();
+				this._endTriggerCallback(
+					this._gestureParams.OffsetX,
+					this._gestureParams.OffsetY,
+					this._gestureParams.TimeTaken
+				);
 			}
 		}
 
@@ -61,7 +60,13 @@ namespace OSUIFramework.Event {
 				this._gestureParams.OffsetY = this._gestureParams.CurrentY - this._gestureParams.StartY;
 				// Prevent scrolling the page while doing gesture
 				evt.preventDefault();
-				this._moveTriggerCallback();
+				this._moveTriggerCallback(
+					this._gestureParams.CurrentX,
+					this._gestureParams.CurrentY,
+					this._gestureParams.OffsetX,
+					this._gestureParams.OffsetY,
+					this._gestureParams.Event
+				);
 			}
 		}
 
@@ -72,7 +77,8 @@ namespace OSUIFramework.Event {
 			this._gestureParams.StartY = evt.changedTouches[0].pageY;
 			this._gestureParams.CurrentY = this._gestureParams.StartY;
 			this._gestureParams.TouchingElement = true;
-			this._startTriggerCallback();
+			this._gestureParams.Event = evt;
+			this._startTriggerCallback(this._gestureParams.StartX, this._gestureParams.StartY);
 		}
 
 		protected setCallbacks(
@@ -91,7 +97,7 @@ namespace OSUIFramework.Event {
 			this.setEventListeners();
 		}
 
-		public removeEventListeners(): void {
+		protected removeEventListeners(): void {
 			if (this._trackableElement) {
 				this._trackableElement.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, this._startEvent);
 				this._trackableElement.removeEventListener(GlobalEnum.HTMLEvent.TouchMove, this._moveEvent);
@@ -99,7 +105,7 @@ namespace OSUIFramework.Event {
 			}
 		}
 
-		public setEventListeners(): void {
+		protected setEventListeners(): void {
 			if (this._trackableElement) {
 				this._trackableElement.addEventListener(GlobalEnum.HTMLEvent.TouchStart, this._startEvent);
 				this._trackableElement.addEventListener(GlobalEnum.HTMLEvent.TouchMove, this._moveEvent);
@@ -108,12 +114,10 @@ namespace OSUIFramework.Event {
 		}
 
 		public setTouchEvents(
-			targetElement: HTMLElement,
 			onStartCallback: Callbacks.Generic,
 			onMoveCallback: Callbacks.Generic,
 			onEndCallback: Callbacks.Generic
 		): void {
-			this._trackableElement = targetElement;
 			this.setCallbacks(onStartCallback, onMoveCallback, onEndCallback);
 		}
 	}

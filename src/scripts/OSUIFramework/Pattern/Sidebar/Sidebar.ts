@@ -8,7 +8,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 	 * @extends {AbstractPattern<SidebarConfig>}
 	 * @implements {ISidebar}
 	 */
-	export class Sidebar extends AbstractPattern<SidebarConfig> implements ISidebar {
+	export class Sidebar extends AbstractPattern<SidebarConfig> implements ISidebar, Interface.IGestureEventPattern {
 		// Store the Sidebar direction
 		private _currentDirectionCssClass: string;
 		// Store current drag direction
@@ -265,6 +265,16 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._eventOverlayClick = this._overlayClickCallback.bind(this);
 		}
 
+		protected setGestureEvents(): void {
+			this.addGestureEvents(
+				GlobalEnum.GestureEvents.Drag,
+				this._selfElem,
+				this.onGestureStart,
+				this.onGestureMove,
+				this.onGestureEnd
+			);
+		}
+
 		/**
 		 * Set the html references that will be used to manage the cssClasses and atribute properties
 		 *
@@ -322,6 +332,8 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._setInitialCssClasses();
 
 			this.setA11YProperties();
+
+			this.setGestureEvents();
 
 			this.finishBuild();
 		}
@@ -382,7 +394,6 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 		/**
 		 * Method to handle the start of a gesture
-		 * //TODO: Make this method private when touchEvent block becomes available in TypeScript.
 		 *
 		 * @param {number} offsetX
 		 * @param {number} offsetY
@@ -430,7 +441,6 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 		/**
 		 * Method to handle the gesture move
-		 * //TODO: Make this method private when touchEvent block becomes available in TypeScript.
 		 *
 		 * @param {number} x
 		 * @param {number} y
@@ -490,7 +500,6 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 		/**
 		 * Method to handle the end of a gesture
-		 * //TODO: Make this method private when touchEvent block becomes available in TypeScript.
 		 *
 		 * @param {number} x
 		 * @param {number} y
