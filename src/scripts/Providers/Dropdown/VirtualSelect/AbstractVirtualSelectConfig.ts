@@ -75,7 +75,6 @@ namespace Providers.Dropdown.VirtualSelect {
 
 			// Set the library options
 			const vsOptions = {
-				dropboxWrapper: 'body',
 				ele: this.ElementId,
 				hideClearButton: true,
 				labelRenderer: this._getOptionInfo.bind(this),
