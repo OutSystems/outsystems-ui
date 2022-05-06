@@ -179,6 +179,13 @@ namespace Providers.Datepicker.Flatpickr {
 			this._setHtmllElements();
 		}
 
+		/**
+		 * Method used to change given propertyName at OnParametersChange platform event
+		 *
+		 * @param {string} propertyName the name of the property that will be changed
+		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
+		 * @memberof AbstractFlatpickr
+		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			//Storing the current ExtendedClass, before possibly changing this property.
 			//This will enable us to remove the previous added classes to the element.
@@ -206,15 +213,29 @@ namespace Providers.Datepicker.Flatpickr {
 			}
 		}
 
+		/**
+		 * Method used to clear the selected date
+		 *
+		 * @memberof AbstractFlatpickr
+		 */
 		public clear(): void {
 			this.provider.clear();
 		}
 
+		/**
+		 * Method used to close DatePicker
+		 *
+		 * @memberof AbstractFlatpickr
+		 */
 		public close(): void {
 			this.provider.close();
 		}
 
-		// Method to remove and destroy DatePicker instance
+		/**
+		 * Method to remove and destroy DatePicker instance
+		 *
+		 * @memberof AbstractFlatpickr
+		 */
 		public dispose(): void {
 			if (this.isBuilt) {
 				this.unsetCallbacks();
@@ -226,11 +247,20 @@ namespace Providers.Datepicker.Flatpickr {
 			super.dispose();
 		}
 
+		/**
+		 * Method used to open DatePicker
+		 *
+		 * @memberof AbstractFlatpickr
+		 */
 		public open(): void {
 			this.provider.open();
 		}
 
-		// Method used to regist callback events
+		/**
+		 * Method used to regist callback events
+		 *
+		 * @memberof AbstractFlatpickr
+		 */
 		public registerCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
 			switch (eventName) {
 				case OSUIFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnChange:
@@ -243,6 +273,21 @@ namespace Providers.Datepicker.Flatpickr {
 
 				default:
 					throw new Error(`The given '${eventName}' event name it's not defined.`);
+			}
+		}
+
+		/**
+		 * Method used to set the DatePicker language
+		 *
+		 * @memberof AbstractFlatpickr
+		 */
+		public setLanguage(value: string): void {
+			// Set the new Language
+			this.configs.Lang = value;
+
+			// If provider has been already defined, calendar must be redrawed!
+			if (this.provider !== undefined) {
+				this.redraw();
 			}
 		}
 
