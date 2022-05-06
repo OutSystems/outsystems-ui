@@ -283,7 +283,7 @@ namespace Providers.Datepicker.Flatpickr {
 			// Set the new Language
 			this.configs.Lang = value;
 
-			// If provider has been already defined calendar mus be redrawed!
+			// If provider has been already defined, calendar must be redrawed!
 			if (this.provider !== undefined) {
 				this.redraw();
 			}
