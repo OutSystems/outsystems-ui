@@ -123,6 +123,16 @@
 	}
 }
 
+// New Dropdown Search an Tags when inside AccordionItem
+.section-expandable {
+	// Virtual Select dropdown content
+	.pop-comp-wrapper {
+		position: relative;
+		// The !important is need to overwrite an inline style
+		transform: translate3d(0px, var(--space-xs), 0px) !important;
+	}
+}
+
 // Responsive -------------------------------------------------------------------------
 .tablet {
 	.section-expandable .section-expandable-title {
