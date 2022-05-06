@@ -266,13 +266,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		}
 
 		protected setGestureEvents(): void {
-			this.addGestureEvents(
-				GlobalEnum.GestureEvents.Drag,
-				this._selfElem,
-				this.onGestureStart,
-				this.onGestureMove,
-				this.onGestureEnd
-			);
+			this.addDragEvents(this._selfElem, this.onGestureStart, this.onGestureMove, this.onGestureEnd);
 		}
 
 		/**

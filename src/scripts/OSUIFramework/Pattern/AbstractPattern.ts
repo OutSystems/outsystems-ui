@@ -19,8 +19,11 @@ namespace OSUIFramework.Patterns {
 		 */
 		private _configs: C;
 
-		// Gesture Events instances created
-		private _gestureEventInstance: GestureEvents;
+		// Drag Events instances created
+		private _dragEventInstance: DragEvents;
+
+		// // Swipe Events instances created
+		private _swipeEventInstance: SwipeEvents;
 
 		/**
 		 * Indicates if the pattern has been built or not.
@@ -134,9 +137,9 @@ namespace OSUIFramework.Patterns {
 			return this._configs;
 		}
 
-		public get gestureEventInstance(): GestureEvents {
-			return this._gestureEventInstance;
-		}
+		// public get gestureEventInstance(): DragEvents {
+		// 	return this._gestureEventsIntances;
+		// }
 
 		/**
 		 * Unique id of the pattern. Internal use only.
@@ -160,25 +163,34 @@ namespace OSUIFramework.Patterns {
 			return this._widgetId;
 		}
 
-		protected addGestureEvents(
-			type: GlobalEnum.GestureEvents,
+		protected addDragEvents(
 			target: HTMLElement,
 			onStartCallback: Callbacks.Generic,
 			onMoveCallback: Callbacks.Generic,
-			onEndCallback: Callbacks.Generic
+			onEndCallback?: Callbacks.Generic
 		): void {
-			switch (type) {
-				case GlobalEnum.GestureEvents.Swipe:
-					//this._gestureEventInstance = new touch(callback);
-					break;
-				case GlobalEnum.GestureEvents.Drag:
-					this._gestureEventInstance = new Event.DragEvent(target);
-					this._gestureEventInstance.setTouchEvents(
-						onStartCallback.bind(this),
-						onMoveCallback.bind(this),
-						onEndCallback.bind(this)
-					);
-			}
+			this._dragEventInstance = new Event.DragEvent(target);
+			this._dragEventInstance.setTouchEvents(
+				onStartCallback.bind(this),
+				onMoveCallback.bind(this),
+				onEndCallback.bind(this)
+			);
+		}
+
+		protected addSwipeEvents(
+			target: HTMLElement,
+			swipeDownCallback: Callbacks.Generic,
+			swipeLeftCallback: Callbacks.Generic,
+			swipeRightCallback: Callbacks.Generic,
+			swipeUpCallback: Callbacks.Generic
+		): void {
+			this._swipeEventInstance = new Event.SwipeEvent(target);
+			this._swipeEventInstance.setSwipeEvents(
+				swipeDownCallback.bind(this),
+				swipeLeftCallback.bind(this),
+				swipeRightCallback.bind(this),
+				swipeUpCallback.bind(this)
+			);
 		}
 
 		/**

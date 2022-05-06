@@ -235,6 +235,16 @@ namespace OSUIFramework.Patterns.Notification {
 			this._eventOnKeypress = this._keypressCallback.bind(this);
 		}
 
+		protected setGestureEvents(): void {
+			this.addSwipeEvents(
+				this._selfElem,
+				this.onSwipeBottom,
+				this.onSwipeLeft,
+				this.onSwipeRight,
+				this.onSwipeTop
+			);
+		}
+
 		/**
 		 * Set the html references that will be used to manage the cssClasses and atribute properties
 		 *
@@ -321,6 +331,8 @@ namespace OSUIFramework.Patterns.Notification {
 			this.setCallbacks();
 
 			this.setHtmlElements();
+
+			this.setGestureEvents();
 
 			this.finishBuild();
 		}

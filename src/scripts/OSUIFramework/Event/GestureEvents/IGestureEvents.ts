@@ -4,7 +4,7 @@ namespace OSUIFramework.Event {
 		setTouchEvents(
 			onStartCallback: Callbacks.Generic,
 			onMoveCallback: Callbacks.Generic,
-			onEndCallback: Callbacks.Generic
+			onEndCallback?: Callbacks.Generic
 		);
 	}
 }
