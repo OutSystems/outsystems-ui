@@ -180,6 +180,11 @@
 .flatpickr-weekdays {
 	padding-bottom: var(--space-base);
 }
+.flatpickr-weekwrapper {
+	.flatpickr-weekday {
+		visibility: hidden;
+	}
+}
 
 // Flatpickr - WeekDay Element
 span.flatpickr-weekday {
