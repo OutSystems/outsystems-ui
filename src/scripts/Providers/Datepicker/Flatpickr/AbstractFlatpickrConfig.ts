@@ -108,6 +108,7 @@ namespace Providers.Datepicker.Flatpickr {
 				minDate: OSUIFramework.Helper.Dates.IsNull(this.MinDate) ? undefined : this.MinDate,
 				onChange: this.OnChange,
 				time_24hr: this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat,
+				weekNumbers: this.ShowWeekNumbers,
 			};
 
 			return _flatpickrOpts as FlatpickrOptions;
