@@ -76,7 +76,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			// Set the library options
 			const vsOptions = {
 				ele: this.ElementId,
-				hideClearButton: true,
+				hideClearButton: false,
 				labelRenderer: this._getOptionInfo.bind(this),
 				noOptionsText: this.NoResultsText,
 				noSearchResultsText: this.NoResultsText,
