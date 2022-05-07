@@ -7,7 +7,7 @@ namespace OSUIFramework.Event {
 	 * @class GestureEvent
 	 * @extends {Event.AbstractEvent<string>}
 	 */
-	export class DragEvent extends Event.GestureEvent implements IGestureEvent {
+	export class DragEvent extends Event.GestureEvent {
 		constructor(target: HTMLElement) {
 			super(target);
 		}
