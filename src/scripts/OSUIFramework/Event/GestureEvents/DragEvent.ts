@@ -12,12 +12,13 @@ namespace OSUIFramework.Event {
 			super(target);
 		}
 
-		public setTouchEvents(
+		public setEvents(
 			onStartCallback: Callbacks.Generic,
 			onMoveCallback: Callbacks.Generic,
-			onEndCallback: Callbacks.Generic
+			onEndCallback?: Callbacks.Generic
 		): void {
-			super.setTouchEvents(onStartCallback, onMoveCallback, onEndCallback);
+			super.setCallbacks(onStartCallback, onMoveCallback, onEndCallback);
+			super.setEventListeners();
 		}
 	}
 }

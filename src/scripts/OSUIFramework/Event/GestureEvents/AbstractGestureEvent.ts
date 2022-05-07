@@ -10,15 +10,14 @@ namespace OSUIFramework.Event {
 	export abstract class GestureEvent implements IGestureEvent {
 		// Stores the touch event with bind(this)
 		private _endEvent: Callbacks.Generic;
-		// Stores the touch event with bind(this)
-		protected moveEvent: Callbacks.Generic;
-		// Stores the touch event with bind(this)
-		protected startEvent: Callbacks.Generic;
-		// eslint-disable-next-line @typescript-eslint/member-ordering
 		private _endTriggerCallback: Callbacks.Generic;
+		// Stores the touch event with bind(this)
+		private _moveEvent: Callbacks.Generic;
 		private _moveTriggerCallback: Callbacks.Generic;
+		// Stores the touch event with bind(this)
+		private _startEvent: Callbacks.Generic;
 		private _startTriggerCallback: Callbacks.Generic;
-		protected trackableElement;
+		private _targetElement: HTMLElement;
 
 		// eslint-disable-next-line @typescript-eslint/member-ordering
 		protected readonly _gestureParams = {
@@ -35,42 +34,27 @@ namespace OSUIFramework.Event {
 		};
 
 		constructor(target: HTMLElement) {
-			this.trackableElement = target;
+			this._targetElement = target;
 		}
 
-		private _removeEventListeners(): void {
-			if (this.trackableElement) {
-				this.trackableElement.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, this.startEvent);
-				this.trackableElement.removeEventListener(GlobalEnum.HTMLEvent.TouchMove, this.moveEvent);
-				this.trackableElement.removeEventListener(GlobalEnum.HTMLEvent.TouchEnd, this._endEvent);
-			}
-		}
-
-		private _unsetCallbacks(): void {
-			this._endEvent = undefined;
-			this.moveEvent = undefined;
-			this.startEvent = undefined;
-
-			this._startTriggerCallback = undefined;
-			this._moveTriggerCallback = undefined;
-			this._endTriggerCallback = undefined;
-		}
-
-		protected eventTouchEnd(): void {
+		private _eventTouchEnd(): void {
 			if (this._gestureParams.TouchingElement) {
 				this._gestureParams.TouchingElement = false;
 				this._gestureParams.OffsetX = this._gestureParams.CurrentX - this._gestureParams.StartX;
 				this._gestureParams.OffsetY = this._gestureParams.CurrentY - this._gestureParams.StartY;
 				this._gestureParams.TimeTaken = new Date().getTime() - this._gestureParams.StartTime;
-				this._endTriggerCallback(
-					this._gestureParams.OffsetX,
-					this._gestureParams.OffsetY,
-					this._gestureParams.TimeTaken
-				);
+
+				if (this._endTriggerCallback) {
+					this._endTriggerCallback(
+						this._gestureParams.OffsetX,
+						this._gestureParams.OffsetY,
+						this._gestureParams.TimeTaken
+					);
+				}
 			}
 		}
 
-		protected eventTouchMove(evt: TouchEvent): void {
+		private _eventTouchMove(evt: TouchEvent): void {
 			if (this._gestureParams.TouchingElement) {
 				this._gestureParams.CurrentX = evt.changedTouches[0].pageX;
 				this._gestureParams.CurrentY = evt.changedTouches[0].pageY;
@@ -78,17 +62,19 @@ namespace OSUIFramework.Event {
 				this._gestureParams.OffsetY = this._gestureParams.CurrentY - this._gestureParams.StartY;
 				// Prevent scrolling the page while doing gesture
 				evt.preventDefault();
-				this._moveTriggerCallback(
-					this._gestureParams.CurrentX,
-					this._gestureParams.CurrentY,
-					this._gestureParams.OffsetX,
-					this._gestureParams.OffsetY,
-					this._gestureParams.Event
-				);
+				if (this._moveTriggerCallback !== undefined) {
+					this._moveTriggerCallback(
+						this._gestureParams.CurrentX,
+						this._gestureParams.CurrentY,
+						this._gestureParams.OffsetX,
+						this._gestureParams.OffsetY,
+						this._gestureParams.Event
+					);
+				}
 			}
 		}
 
-		protected eventTouchStart(evt: TouchEvent): void {
+		private _eventTouchStart(evt: TouchEvent): void {
 			this._gestureParams.StartTime = new Date().getTime();
 			this._gestureParams.StartX = evt.changedTouches[0].pageX;
 			this._gestureParams.CurrentX = this._gestureParams.StartX;
@@ -96,17 +82,37 @@ namespace OSUIFramework.Event {
 			this._gestureParams.CurrentY = this._gestureParams.StartY;
 			this._gestureParams.TouchingElement = true;
 			this._gestureParams.Event = evt;
-			this._startTriggerCallback(this._gestureParams.StartX, this._gestureParams.StartY);
+			if (this._startTriggerCallback !== undefined) {
+				this._startTriggerCallback(this._gestureParams.StartX, this._gestureParams.StartY);
+			}
+		}
+
+		private _removeEventListeners(): void {
+			if (this._targetElement) {
+				this._targetElement.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, this._startEvent);
+				this._targetElement.removeEventListener(GlobalEnum.HTMLEvent.TouchMove, this._moveEvent);
+				this._targetElement.removeEventListener(GlobalEnum.HTMLEvent.TouchEnd, this._endEvent);
+			}
+		}
+
+		private _unsetCallbacks(): void {
+			this._endEvent = undefined;
+			this._moveEvent = undefined;
+			this._startEvent = undefined;
+
+			this._startTriggerCallback = undefined;
+			this._moveTriggerCallback = undefined;
+			this._endTriggerCallback = undefined;
 		}
 
 		protected setCallbacks(
-			onStartCallback: Callbacks.Generic,
-			onMoveCallback: Callbacks.Generic,
+			onStartCallback?: Callbacks.Generic,
+			onMoveCallback?: Callbacks.Generic,
 			onEndCallback?: Callbacks.Generic
 		): void {
-			this._endEvent = this.eventTouchEnd.bind(this);
-			this.moveEvent = this.eventTouchMove.bind(this);
-			this.startEvent = this.eventTouchStart.bind(this);
+			this._endEvent = this._eventTouchEnd.bind(this);
+			this._moveEvent = this._eventTouchMove.bind(this);
+			this._startEvent = this._eventTouchStart.bind(this);
 
 			this._startTriggerCallback = onStartCallback;
 			this._moveTriggerCallback = onMoveCallback;
@@ -114,25 +120,22 @@ namespace OSUIFramework.Event {
 		}
 
 		protected setEventListeners(): void {
-			if (this.trackableElement) {
-				this.trackableElement.addEventListener(GlobalEnum.HTMLEvent.TouchStart, this.startEvent);
-				this.trackableElement.addEventListener(GlobalEnum.HTMLEvent.TouchMove, this.moveEvent);
-				this.trackableElement.addEventListener(GlobalEnum.HTMLEvent.TouchEnd, this._endEvent);
+			if (this._targetElement) {
+				this._targetElement.addEventListener(GlobalEnum.HTMLEvent.TouchStart, this._startEvent);
+				this._targetElement.addEventListener(GlobalEnum.HTMLEvent.TouchMove, this._moveEvent);
+				this._targetElement.addEventListener(GlobalEnum.HTMLEvent.TouchEnd, this._endEvent);
 			}
 		}
 
-		public setTouchEvents(
-			onStartCallback: Callbacks.Generic,
-			onMoveCallback: Callbacks.Generic,
-			onEndCallback?: Callbacks.Generic
-		): void {
-			this.setCallbacks(onStartCallback, onMoveCallback, onEndCallback);
-			this.setEventListeners();
+		public get targetElement(): HTMLElement {
+			return this._targetElement;
 		}
 
 		public unsetTouchEvents(): void {
 			this._removeEventListeners();
 			this._unsetCallbacks();
 		}
+
+		protected abstract setEvents(...args: Callbacks.Generic[]): void;
 	}
 }
