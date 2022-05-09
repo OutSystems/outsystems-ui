@@ -12,6 +12,14 @@ namespace OSUIFramework.Event {
 			super(target);
 		}
 
+		/**
+		 * Method to set the expected callbacks and add eventListeners to the target element
+		 *
+		 * @param {Callbacks.Generic} onStartCallback
+		 * @param {Callbacks.Generic} onMoveCallback
+		 * @param {Callbacks.Generic} [onEndCallback]
+		 * @memberof DragEvent
+		 */
 		public setEvents(
 			onStartCallback: Callbacks.Generic,
 			onMoveCallback: Callbacks.Generic,
