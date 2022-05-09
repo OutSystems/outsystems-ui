@@ -81,14 +81,6 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
-	 * OutSystemsUI Gesture Events types
-	 */
-	export enum GestureEvents {
-		Drag = 'drag',
-		Swipe = 'swipe',
-	}
-
-	/**
 	 * OutSystemsUI HTML Attributes
 	 */
 	export enum HTMLAttributes {
