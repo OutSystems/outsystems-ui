@@ -26,6 +26,21 @@
 		}
 	}
 
+	&.hasWeeks {
+		// to take into account the padding we're adding after flatpickr has calculated its width
+		min-width: min-content;
+
+		.dayContainer {
+			margin-left: 5px;
+		}
+
+		span.flatpickr-day {
+			height: 35px;
+			line-height: 34px;
+			max-width: 35px;
+		}
+	}
+
 	.numInputWrapper {
 		span {
 			&.arrowUp,
