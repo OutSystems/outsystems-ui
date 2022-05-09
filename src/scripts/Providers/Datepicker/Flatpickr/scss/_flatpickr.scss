@@ -31,7 +31,7 @@
 		min-width: min-content;
 
 		.dayContainer {
-			margin-left: 5px;
+			margin-left: var(--space-xs);
 		}
 
 		span.flatpickr-day {
