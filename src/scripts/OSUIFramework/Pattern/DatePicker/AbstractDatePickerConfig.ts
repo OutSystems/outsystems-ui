@@ -6,6 +6,7 @@ namespace OSUIFramework.Patterns.DatePicker {
 		public MaxDate: string;
 		public MinDate: string;
 		public ShowTodayButton: boolean;
+		public ShowWeekNumbers: boolean;
 		public TimeFormat: string;
 
 		constructor(config: JSON) {
