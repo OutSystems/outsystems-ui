@@ -17,6 +17,8 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		private _accordionItemPlaceholder: HTMLElement;
 		// Stores the HTML element of the pattern's title
 		private _accordionItemTitleElem: HTMLElement;
+		// Stores if should be aware of elements clickable inside the title
+		private _allowTitleEvents: boolean;
 		// Store the collapsed height value
 		private _collapsedHeight = 0;
 		// Store the click event with bind(this)
@@ -39,15 +41,17 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		}
 
 		// Method to handle the click event
-		private _accordionOnClickHandler(event?: MouseEvent): void {
-			//If we're not clicking on the title, the icon or the accordion title, we won't open the accordion
-			if (
-				event?.target !== this._accordionItemTitleElem &&
-				event?.target !== this._accordionItemIconElem &&
-				event?.target !== this._accordionItemTitleElem.firstChild
-			) {
-				return;
+		private _accordionOnClickHandler(event: MouseEvent): void {
+			if (this._allowTitleEvents) {
+				if (
+					event?.target !== this._accordionItemTitleElem &&
+					event?.target !== this._accordionItemIconElem &&
+					event?.target !== this._accordionItemTitleElem.firstChild
+				) {
+					return;
+				}
 			}
+
 			if (this._isOpen) {
 				this.close();
 			} else {
@@ -373,6 +377,15 @@ namespace OSUIFramework.Patterns.AccordionItem {
 		 */
 		public get isOpen(): boolean {
 			return this._isOpen;
+		}
+
+		/**
+		 * Method to prevent clicks inside thte title to open the accordion
+		 *
+		 * @memberof AccordionItem
+		 */
+		public allowTitleEvents(): void {
+			this._allowTitleEvents = true;
 		}
 
 		/**

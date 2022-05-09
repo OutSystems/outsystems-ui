@@ -44,11 +44,12 @@ namespace OutSystems.OSUI.ErrorCodes {
 	};
 
 	export const AccordionItem = {
-		FailChangeProperty: 'OSUI-API-05001',
-		FailCollapseItem: 'OSUI-API-05002',
-		FailDispose: 'OSUI-API-05003',
-		FailExpandItem: 'OSUI-API-05004',
-		FailRegisterCallback: 'OSUI-API-05005',
+		FailAllowTitleEvents: 'OSUI-API-05001',
+		FailChangeProperty: 'OSUI-API-05002',
+		FailCollapseItem: 'OSUI-API-05003',
+		FailDispose: 'OSUI-API-05004',
+		FailExpandItem: 'OSUI-API-05005',
+		FailRegisterCallback: 'OSUI-API-05006',
 	};
 
 	export const Carousel = {
