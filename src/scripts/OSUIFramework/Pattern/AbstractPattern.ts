@@ -182,7 +182,8 @@ namespace OSUIFramework.Patterns {
 		}
 
 		/**
-		 * Method that creates a new drag event intance and listeners
+		 * Method that creates a new drag event intance and listeners. This is separated from addSwipeEvents,
+		 * so that we can have better typification of the needed callbacks
 		 *
 		 * @protected
 		 * @param {HTMLElement} target
@@ -207,7 +208,8 @@ namespace OSUIFramework.Patterns {
 		}
 
 		/**
-		 * Method that creates a new swipe event intance and listeners
+		 * Method that creates a new swipe event intance and listeners. This is separated from addDragEvents,
+		 * so that we can have better typification of the needed callbacks
 		 *
 		 * @protected
 		 * @param {HTMLElement} target

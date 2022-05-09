@@ -7,7 +7,7 @@ namespace OSUIFramework.Event {
 	 * @class GestureEvent
 	 * @extends {Event.AbstractEvent<string>}
 	 */
-	export class SwipeEvent extends Event.GestureEvent {
+	export class SwipeEvent extends Event.AbstractGestureEvent {
 		// Store the swipe callbacks for each direction
 		private _swipeDownCallback: Callbacks.Generic;
 		private _swipeLeftCallback: Callbacks.Generic;

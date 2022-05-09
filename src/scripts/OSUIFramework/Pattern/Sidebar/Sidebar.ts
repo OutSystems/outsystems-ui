@@ -327,7 +327,9 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 			this.setA11YProperties();
 
-			this.setGestureEvents();
+			if (Helper.DeviceInfo.IsNative) {
+				this.setGestureEvents();
+			}
 
 			this.finishBuild();
 		}

@@ -7,7 +7,7 @@ namespace OSUIFramework.Event {
 	 * @class GestureEvent
 	 * @extends {Event.AbstractEvent<string>}
 	 */
-	export abstract class GestureEvent {
+	export abstract class AbstractGestureEvent {
 		// Stores the end touch event with bind(this)
 		private _endEvent: Callbacks.Generic;
 		private _endTriggerCallback: Callbacks.Generic;
