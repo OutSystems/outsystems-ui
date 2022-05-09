@@ -39,6 +39,10 @@
 			.vscomp-toggle-button {
 				padding-left: var(--space-s);
 			}
+
+			.vscomp-clear-button {
+				right: var(--space-l);
+			}
 		}
 	}
 
@@ -119,6 +123,11 @@
 						width: 2px;
 					}
 				}
+			}
+
+			.vscomp-clear-button {
+				margin-top: 0;
+				top: 12px;
 			}
 		}
 	}
