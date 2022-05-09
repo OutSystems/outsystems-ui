@@ -332,7 +332,9 @@ namespace OSUIFramework.Patterns.Notification {
 
 			this.setHtmlElements();
 
-			this.setGestureEvents();
+			if (Helper.DeviceInfo.IsDesktop === false) {
+				this.setGestureEvents();
+			}
 
 			this.finishBuild();
 		}
