@@ -30,8 +30,8 @@
 		// to take into account the padding we're adding after flatpickr has calculated its width
 		min-width: min-content;
 
-		.dayContainer {
-			margin-left: var(--space-xs);
+		.flatpickr-weekwrapper .flatpickr-weeks {
+			margin-right: var(--space-xs);
 		}
 
 		span.flatpickr-day {
