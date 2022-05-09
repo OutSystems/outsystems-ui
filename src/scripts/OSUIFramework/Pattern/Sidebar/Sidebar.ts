@@ -265,6 +265,12 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._eventOverlayClick = this._overlayClickCallback.bind(this);
 		}
 
+		/**
+		 * Sets the gesture events to open/close the Sidebar on Native Apps
+		 *
+		 * @protected
+		 * @memberof Sidebar
+		 */
 		protected setGestureEvents(): void {
 			this.addDragEvents(this._selfElem, this.onGestureStart, this.onGestureMove, this.onGestureEnd);
 		}
