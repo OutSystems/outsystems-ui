@@ -3,6 +3,33 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	const _accordionItemMap = new Map<string, OSUIFramework.Patterns.AccordionItem.IAccordionItem>(); //accordionItem.uniqueId -> AccordionItem obj
 
 	/**
+	 * Function that will allow elements inside the title to be clicked without triggering the pattern toggle.
+	 *
+	 * @export
+	 * @param {string} accordionItemId
+	 * @return {*}  {string}
+	 */
+	export function AllowTitleEvents(accordionItemId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const accordionItem = GetAccordionItemById(accordionItemId);
+
+			accordionItem.allowTitleEvents();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.AccordionItem.FailExpandItem;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
 	 * Function that will change the property of a given Accordion Item pattern.
 	 *
 	 * @export

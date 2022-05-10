@@ -66,6 +66,10 @@
 					user-select: none;
 				}
 
+				&__input::placeholder {
+					color: var(--color-neutral-6);
+				}
+
 				&__item {
 					cursor: not-allowed;
 
