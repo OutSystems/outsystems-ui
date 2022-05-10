@@ -236,7 +236,7 @@ namespace OSUIFramework.Patterns.Notification {
 		}
 
 		protected setGestureEvents(): void {
-			this.addSwipeEvents(
+			super.addSwipeEvents(
 				this._selfElem,
 				this.onSwipeBottom,
 				this.onSwipeLeft,

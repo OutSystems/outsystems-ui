@@ -272,7 +272,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		 * @memberof Sidebar
 		 */
 		protected setGestureEvents(): void {
-			this.addDragEvents(this._selfElem, this.onGestureStart, this.onGestureMove, this.onGestureEnd);
+			super.addDragEvents(this._selfElem, this.onGestureStart, this.onGestureMove, this.onGestureEnd);
 		}
 
 		/**
