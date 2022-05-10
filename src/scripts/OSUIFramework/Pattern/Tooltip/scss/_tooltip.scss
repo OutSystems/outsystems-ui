@@ -151,8 +151,8 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 			}
 		}
 
-		// if opens to bottom-left
-		&.bottom-left {
+		// if opens to bottom-right
+		&.bottom-right {
 			left: initial;
 			right: calc(-1 * var(--space-s));
 
@@ -165,7 +165,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		}
 
 		// if opens to bottom-left
-		&.bottom-right {
+		&.bottom-left {
 			left: calc(-1 * var(--space-s));
 
 			.osui-tooltip__balloon-wrapper__balloon {
@@ -215,8 +215,8 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 			}
 		}
 
-		// if opens to top-left
-		&.top-left {
+		// if opens to top-right
+		&.top-right {
 			left: initial;
 			right: calc(-1 * var(--space-s));
 
@@ -229,7 +229,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		}
 
 		// if opens to top-left
-		&.top-right {
+		&.top-left {
 			left: calc(-1 * var(--space-s));
 
 			.osui-tooltip__balloon-wrapper__balloon {
