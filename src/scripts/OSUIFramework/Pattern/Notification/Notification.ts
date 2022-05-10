@@ -235,6 +235,12 @@ namespace OSUIFramework.Patterns.Notification {
 			this._eventOnKeypress = this._keypressCallback.bind(this);
 		}
 
+		/**
+		 * Sets the gesture events to open/close the Notification on Touch devices
+		 *
+		 * @protected
+		 * @memberof Notification
+		 */
 		protected setGestureEvents(): void {
 			super.addSwipeEvents(
 				this._selfElem,
