@@ -11,8 +11,6 @@ namespace OSUIFramework.Patterns.Sidebar {
 	export class Sidebar extends AbstractPattern<SidebarConfig> implements ISidebar, Interface.IGestureEventPattern {
 		// Store the Sidebar direction
 		private _currentDirectionCssClass: string;
-		// Store current drag direction
-		private _dragOrientation: string;
 		// Store the click event with bind(this)
 		private _eventOverlayClick: Callbacks.Generic;
 		// Store the keypress event with bind(this)
@@ -27,38 +25,16 @@ namespace OSUIFramework.Patterns.Sidebar {
 		private _isOpen: boolean;
 		// Store the last element to receive focus in the sidebar
 		private _lastFocusableElem: HTMLElement;
-		// Store the values used between gesture methods
-		private readonly _nativeGesturesParams = {
-			LastX: 0,
-			LastY: 0,
-			MoveX: 0,
-			InvalidX: false,
-		};
 		// Store if the Sidebar is Open
 		private _onToggle: Callbacks.OSSidebarToggleEvent;
-		// Store the minimal speed for a swipe to be triggered
-		private readonly _swipeTriggerSpeed = 0.3;
+
+		// eslint-disable-next-line @typescript-eslint/member-ordering
+		private _animateOnDrag: any;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SidebarConfig(configs));
 			this._isOpen = this.configs.StartsOpen;
 			this._currentDirectionCssClass = Enum.CssClass.ClassModifier + this.configs.Direction;
-		}
-
-		// Method to check if current gesture is withing sidebar boundaries
-		private _checkIsDraggingInsideBounds(x: number): boolean {
-			const isLeft = this.configs.Direction === GlobalEnum.Direction.Left;
-
-			const baseThreshold = this._nativeGesturesParams.MoveX + (x - this._nativeGesturesParams.LastX);
-
-			// Check correct threshold for each direction
-			const directionThreshold = isLeft
-				? baseThreshold > -parseInt(this.configs.Width) &&
-				  this._nativeGesturesParams.MoveX + (x - this._nativeGesturesParams.LastX) <= 0
-				: baseThreshold < parseInt(this.configs.Width) &&
-				  this._nativeGesturesParams.MoveX + (x - this._nativeGesturesParams.LastX) >= 0;
-
-			return directionThreshold;
 		}
 
 		// Actual method that knows what is to close the sidebar
@@ -215,24 +191,18 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 		}
 
+		// Method to toggle the Sidebar
+		private _toggle(): void {
+			if (this._isOpen) {
+				this.close();
+			} else {
+				this.open();
+			}
+		}
+
 		// Method that triggers the OnToggle event
 		private _triggerOnToggleEvent(): void {
 			Helper.AsyncInvocation(this._onToggle, this.widgetId, this._isOpen);
-		}
-
-		// Method that updates the last positions on a gesture move
-		private _updateLastPositions(x: number, y: number): void {
-			this._nativeGesturesParams.LastX = x;
-			this._nativeGesturesParams.LastY = y;
-		}
-
-		// Method to update the UI when doing a gesture
-		// eslint-disable-next-line @typescript-eslint/naming-convention
-		private _updateUI(): void {
-			if (this._isMoving) {
-				this._selfElem.style.transform = `translateX(${this._nativeGesturesParams.MoveX}px)`;
-				requestAnimationFrame(this._updateUI.bind(this));
-			}
 		}
 
 		/**
@@ -273,6 +243,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		 */
 		protected setGestureEvents(): void {
 			super.addDragEvents(this._selfElem, this.onGestureStart, this.onGestureMove, this.onGestureEnd);
+			this._animateOnDrag = new Helper.AnimateOnDrag(this._selfElem);
 		}
 
 		/**
@@ -336,6 +307,8 @@ namespace OSUIFramework.Patterns.Sidebar {
 			if (Helper.DeviceInfo.IsNative) {
 				this.setGestureEvents();
 			}
+
+			this.setGestureEvents();
 
 			this.finishBuild();
 		}
@@ -404,37 +377,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		 * @memberof Sidebar
 		 */
 		public onGestureEnd(offsetX: number, offsetY: number, timeTaken: number): void {
-			this._isMoving = false;
-
-			// Remove transitions
-			Helper.Dom.Styles.RemoveClass(this._selfElem, Constants.NoTransition);
-
-			// Just clicked or swiped in invalid direction?
-			if ((offsetX === 0 && offsetY === 0) || this._nativeGesturesParams.InvalidX) {
-				return;
-			}
-
-			const checkSwipeSpeed = Math.abs(offsetX) / timeTaken > this._swipeTriggerSpeed;
-
-			const sizeThreshold = -parseInt(this.configs.Width) / 2;
-
-			// Define a interval for later checks, depending on Sidebar visibility
-			const swipedHalfWidth = this._isOpen
-				? this._nativeGesturesParams.MoveX < sizeThreshold
-				: this._nativeGesturesParams.MoveX > sizeThreshold;
-
-			// If swipe was fast enough or with sufficient move, procede to toggleSidebar
-			const isReadyToToggle = swipedHalfWidth || checkSwipeSpeed;
-
-			this._selfElem.style.transform = '';
-
-			if (isReadyToToggle) {
-				if (this._isOpen) {
-					this.close();
-				} else {
-					this.open();
-				}
-			}
+			this._animateOnDrag.onDragEnd(offsetX, offsetY, timeTaken, this._toggle.bind(this));
 
 			if (this.configs.HasOverlay) {
 				Helper.Dom.Styles.SetStyleAttribute(this._selfElem, '--overlay-opacity', 0);
@@ -453,47 +396,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		 * @memberof Sidebar
 		 */
 		public onGestureMove(x: number, y: number, offsetX: number, offsetY: number, evt: TouchEvent): void {
-			// Check X axis direction
-			const _dragDirection = offsetX > 0 ? GlobalEnum.Direction.Right : GlobalEnum.Direction.Left;
-			// Set direction as invalid if isOpen and swipe is on opposite direction
-			this._nativeGesturesParams.InvalidX = this._isOpen && _dragDirection !== this.configs.Direction;
-
-			// Swiped in wrong direction?
-			if (this._nativeGesturesParams.InvalidX) {
-				this._updateLastPositions(x, y);
-				return;
-			}
-
-			// No orientation set?
-			if (this._dragOrientation === '') {
-				const isHorizontal = Math.abs(offsetX) >= Math.abs(offsetY);
-
-				this._dragOrientation = isHorizontal
-					? GlobalEnum.Orientation.Horizontal
-					: GlobalEnum.Orientation.Vertical;
-
-				requestAnimationFrame(this._updateUI.bind(this));
-			}
-
-			// Is Scrolling?
-			if (this._dragOrientation === GlobalEnum.Orientation.Vertical) {
-				this._updateLastPositions(x, y);
-				return;
-			}
-
-			// Prevent scrolling the page while doing gesture
-			evt.preventDefault();
-
-			const IsDraggingInsideBounds = this._checkIsDraggingInsideBounds(x);
-
-			// Dragging inside bounds?
-			if (IsDraggingInsideBounds) {
-				const updateXaxis = this._nativeGesturesParams.MoveX + (x - this._nativeGesturesParams.LastX);
-				// Update x axis offset
-				this._nativeGesturesParams.MoveX = updateXaxis;
-			}
-
-			this._updateLastPositions(x, y);
+			this._animateOnDrag.onDragMove(offsetX, offsetY, x, y, evt);
 
 			if (this.configs.HasOverlay) {
 				this._setOverlayTransition(x);
@@ -508,21 +411,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		 * @memberof Sidebar
 		 */
 		public onGestureStart(x: number, y: number): void {
-			// Set defaults
-			this._isMoving = true;
-			this._dragOrientation = '';
-			this._nativeGesturesParams.LastX = x;
-			this._nativeGesturesParams.LastY = y;
-
-			if (this._isOpen) {
-				this._nativeGesturesParams.MoveX = 0;
-			} else if (this.configs.Direction === GlobalEnum.Direction.Left) {
-				this._nativeGesturesParams.MoveX = -parseInt(this.configs.Width);
-			} else {
-				this._nativeGesturesParams.MoveX = parseInt(this.configs.Width);
-			}
-
-			Helper.Dom.Styles.AddClass(this._selfElem, Constants.NoTransition);
+			this._animateOnDrag.onDragStart(false, GlobalEnum.Direction.Right, x, y, this._isOpen, this.configs.Width);
 		}
 
 		/**
