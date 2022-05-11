@@ -129,6 +129,17 @@
 			margin-top: 0;
 			top: 50%;
 			transform: translateY(-50%);
+
+			&:hover {
+				background: var(--color-neutral-6);
+
+				.vscomp-clear-icon {
+					:before,
+					:after {
+						background-color: var(--color-neutral-7);
+					}
+				}
+			}
 		}
 	}
 
