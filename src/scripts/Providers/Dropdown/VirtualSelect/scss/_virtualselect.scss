@@ -134,9 +134,9 @@
 				background: var(--color-neutral-6);
 
 				.vscomp-clear-icon {
-					:before,
-					:after {
-						background-color: var(--color-neutral-7);
+					&:before,
+					&:after {
+						background-color: var(--color-neutral-3);
 					}
 				}
 			}
