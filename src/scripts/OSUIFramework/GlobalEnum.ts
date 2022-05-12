@@ -28,6 +28,13 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
+	 * OutSystemsUI common css variables
+	 */
+	export enum CSSVariables {
+		OverlayOpacity = '--overlay-opacity',
+	}
+
+	/**
 	 * OutSystemsUI position cssClasses and identifiers of position
 	 */
 	export enum Position {
