@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSUIFramework.Event {
+namespace OSUIFramework.Event.GestureEvent {
 	/**
 	 * Class that represents the gesture events.
 	 *
@@ -7,7 +7,7 @@ namespace OSUIFramework.Event {
 	 * @class GestureEvent
 	 * @extends {Event.AbstractEvent<string>}
 	 */
-	export class DragEvent extends Event.AbstractGestureEvent {
+	export class DragEvent extends Event.GestureEvent.AbstractGestureEvent {
 		constructor(target: HTMLElement) {
 			super(target);
 		}

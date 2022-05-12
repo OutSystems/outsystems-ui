@@ -1,5 +1,24 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSUIFramework.Event {
+namespace OSUIFramework.Event.GestureEvent {
+	/**
+	 * lass that represents the gesture events information between start, move and end.
+	 *
+	 * @export
+	 * @class GestureParams
+	 */
+	export class GestureParams {
+		public currentX: number;
+		public currentY: number;
+		public event: TouchEvent;
+		public offsetX: number;
+		public offsetY: number;
+		public startTime: number;
+		public startX: number;
+		public startY: number;
+		public timeTaken: number;
+		public touchingElement: boolean;
+	}
+
 	/**
 	 * Class that represents the gesture events.
 	 *
@@ -11,6 +30,8 @@ namespace OSUIFramework.Event {
 		// Stores the end touch event with bind(this)
 		private _endEvent: Callbacks.Generic;
 		private _endTriggerCallback: Callbacks.Generic;
+		// Holds all the neccessary values on the start, move, end events lifecycle
+		private _gestureParams: GestureParams;
 		// Stores the move touch event with bind(this)
 		private _moveEvent: Callbacks.Generic;
 		private _moveTriggerCallback: Callbacks.Generic;
@@ -20,42 +41,24 @@ namespace OSUIFramework.Event {
 		// Store the target element that receives the lsiteners
 		private _targetElement: HTMLElement;
 
-		/**
-		 * Holds all the neccessary values on the start, move, end events lifecycle
-		 *
-		 * @protected
-		 * @memberof GestureEvent
-		 */
-		protected readonly gestureParams = {
-			CurrentX: 0,
-			CurrentY: 0,
-			StartTime: 0,
-			StartX: 0,
-			StartY: 0,
-			TimeTaken: 0,
-			TouchingElement: false,
-			OffsetX: 0,
-			OffsetY: 0,
-			Event: undefined,
-		};
-
 		constructor(target: HTMLElement) {
 			this._targetElement = target;
+			this._gestureParams = new GestureParams();
 		}
 
 		// Callback method for the ontouchend event, that triggers the passed callback to the target
 		private _eventTouchEnd(): void {
-			if (this.gestureParams.TouchingElement) {
-				this.gestureParams.TouchingElement = false;
-				this.gestureParams.OffsetX = this.gestureParams.CurrentX - this.gestureParams.StartX;
-				this.gestureParams.OffsetY = this.gestureParams.CurrentY - this.gestureParams.StartY;
-				this.gestureParams.TimeTaken = new Date().getTime() - this.gestureParams.StartTime;
+			if (this._gestureParams.touchingElement) {
+				this._gestureParams.touchingElement = false;
+				this._gestureParams.offsetX = this._gestureParams.currentX - this._gestureParams.startX;
+				this._gestureParams.offsetY = this._gestureParams.currentY - this._gestureParams.startY;
+				this._gestureParams.timeTaken = new Date().getTime() - this._gestureParams.startTime;
 
 				if (this._endTriggerCallback) {
 					this._endTriggerCallback(
-						this.gestureParams.OffsetX,
-						this.gestureParams.OffsetY,
-						this.gestureParams.TimeTaken
+						this._gestureParams.offsetX,
+						this._gestureParams.offsetY,
+						this._gestureParams.timeTaken
 					);
 				}
 			}
@@ -63,20 +66,20 @@ namespace OSUIFramework.Event {
 
 		// Callback method for the ontouchmove event, that triggers the passed callback to the target
 		private _eventTouchMove(evt: TouchEvent): void {
-			if (this.gestureParams.TouchingElement) {
-				this.gestureParams.CurrentX = evt.changedTouches[0].pageX;
-				this.gestureParams.CurrentY = evt.changedTouches[0].pageY;
-				this.gestureParams.OffsetX = this.gestureParams.CurrentX - this.gestureParams.StartX;
-				this.gestureParams.OffsetY = this.gestureParams.CurrentY - this.gestureParams.StartY;
+			if (this._gestureParams.touchingElement) {
+				this._gestureParams.currentX = evt.changedTouches[0].pageX;
+				this._gestureParams.currentY = evt.changedTouches[0].pageY;
+				this._gestureParams.offsetX = this._gestureParams.currentX - this._gestureParams.startX;
+				this._gestureParams.offsetY = this._gestureParams.currentY - this._gestureParams.startY;
 				// Prevent scrolling the page while doing gesture
 				evt.preventDefault();
 				if (this._moveTriggerCallback !== undefined) {
 					this._moveTriggerCallback(
-						this.gestureParams.CurrentX,
-						this.gestureParams.CurrentY,
-						this.gestureParams.OffsetX,
-						this.gestureParams.OffsetY,
-						this.gestureParams.Event
+						this._gestureParams.currentX,
+						this._gestureParams.currentY,
+						this._gestureParams.offsetX,
+						this._gestureParams.offsetY,
+						this._gestureParams.event
 					);
 				}
 			}
@@ -84,15 +87,15 @@ namespace OSUIFramework.Event {
 
 		// Callback method for the ontouchstart event, that triggers the passed callback to the target
 		private _eventTouchStart(evt: TouchEvent): void {
-			this.gestureParams.StartTime = new Date().getTime();
-			this.gestureParams.StartX = evt.changedTouches[0].pageX;
-			this.gestureParams.CurrentX = this.gestureParams.StartX;
-			this.gestureParams.StartY = evt.changedTouches[0].pageY;
-			this.gestureParams.CurrentY = this.gestureParams.StartY;
-			this.gestureParams.TouchingElement = true;
-			this.gestureParams.Event = evt;
+			this._gestureParams.startTime = new Date().getTime();
+			this._gestureParams.startX = evt.changedTouches[0].pageX;
+			this._gestureParams.currentX = this._gestureParams.startX;
+			this._gestureParams.startY = evt.changedTouches[0].pageY;
+			this._gestureParams.currentY = this._gestureParams.startY;
+			this._gestureParams.touchingElement = true;
+			this._gestureParams.event = evt;
 			if (this._startTriggerCallback !== undefined) {
-				this._startTriggerCallback(this.gestureParams.StartX, this.gestureParams.StartY);
+				this._startTriggerCallback(this._gestureParams.startX, this._gestureParams.startY);
 			}
 		}
 

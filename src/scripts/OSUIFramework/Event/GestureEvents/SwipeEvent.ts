@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSUIFramework.Event {
+namespace OSUIFramework.Event.GestureEvent {
 	/**
 	 * Class that represents the gesture events.
 	 *
@@ -7,7 +7,7 @@ namespace OSUIFramework.Event {
 	 * @class GestureEvent
 	 * @extends {Event.AbstractEvent<string>}
 	 */
-	export class SwipeEvent extends Event.AbstractGestureEvent {
+	export class SwipeEvent extends Event.GestureEvent.AbstractGestureEvent {
 		// Store the swipe callbacks for each direction
 		private _swipeDownCallback: Callbacks.Generic;
 		private _swipeLeftCallback: Callbacks.Generic;
