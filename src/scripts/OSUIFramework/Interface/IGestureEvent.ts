@@ -1,11 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Interface {
-	export interface IGestureEventPattern {
+	export interface IGestureEvent {
 		/**
 		 * Store if the pattern has gesture events
 		 *
 		 * @type {boolean}
-		 * @memberof IGestureEventPattern
+		 * @memberof IGestureEvent
 		 */
 		hasGestureEvents: boolean;
 

@@ -1,11 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Interface {
-	export interface ISwipeEventPattern extends IGestureEventPattern {
+	export interface ISwipeEvent extends IGestureEvent {
 		/**
 		 * Gesture Events Instance
 		 *
 		 * @type {Event.GestureEvent.SwipeEvent}
-		 * @memberof ISwipeEventPattern
+		 * @memberof ISwipeEvent
 		 */
 		gestureEventInstance: Event.GestureEvent.SwipeEvent;
 
@@ -16,7 +16,7 @@ namespace OSUIFramework.Interface {
 		 * @param {Callbacks.onSwipeLeft} swipeLeftCallback
 		 * @param {Callbacks.onSwipeRight} swipeRightCallback
 		 * @param {Callbacks.onSwipeUp} swipeUpCallback
-		 * @memberof ISwipeEventPattern
+		 * @memberof ISwipeEvent
 		 */
 		setGestureEvents(
 			swipeDownCallback: Callbacks.onSwipeDown,

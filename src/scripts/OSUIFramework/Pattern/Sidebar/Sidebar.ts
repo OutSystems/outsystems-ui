@@ -8,7 +8,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 	 * @extends {AbstractPattern<SidebarConfig>}
 	 * @implements {ISidebar}
 	 */
-	export class Sidebar extends AbstractPattern<SidebarConfig> implements ISidebar, Interface.IDragEventPattern {
+	export class Sidebar extends AbstractPattern<SidebarConfig> implements ISidebar, Interface.IDragEvent {
 		// Hold the animateOnDrag intance, that helps transition the sidebar on drag
 		private _animateOnDragInstance: Animation.AnimateOnDrag;
 		// Store the Sidebar direction

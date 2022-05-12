@@ -42,13 +42,11 @@ namespace OSUIFramework.Animation {
 			const baseThreshold = this._dragParams.MoveX + (x - this._dragParams.LastX);
 
 			// Check correct threshold for each direction
-			const directionThreshold = isLeft
+			return isLeft
 				? baseThreshold > -parseInt(this._dragParams.Size) &&
-				  this._dragParams.MoveX + (x - this._dragParams.LastX) <= 0
+						this._dragParams.MoveX + (x - this._dragParams.LastX) <= 0
 				: baseThreshold < parseInt(this._dragParams.Size) &&
-				  this._dragParams.MoveX + (x - this._dragParams.LastX) >= 0;
-
-			return directionThreshold;
+						this._dragParams.MoveX + (x - this._dragParams.LastX) >= 0;
 		}
 
 		// Method to update the last x and y positions

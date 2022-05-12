@@ -5,7 +5,7 @@ namespace OSUIFramework.Patterns.Notification {
 	 */
 	export class Notification
 		extends AbstractPattern<NotificationConfig>
-		implements INotification, Interface.ISwipeEventPattern
+		implements INotification, Interface.ISwipeEvent
 	{
 		private _eventOnClick: Callbacks.Generic;
 		private _eventOnKeypress: Callbacks.Generic;
