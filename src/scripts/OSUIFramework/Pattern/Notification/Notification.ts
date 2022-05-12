@@ -14,12 +14,30 @@ namespace OSUIFramework.Patterns.Notification {
 		private _firstFocusableElement: HTMLElement;
 		private _focusableActiveElement: HTMLElement;
 		private _focusableElements: HTMLElement[];
+		// Store gesture events instance
 		private _gestureEventInstance: Event.GestureEvent.SwipeEvent;
+		// Store if the pattern has gesture events added
 		private _hasGestureEvents: boolean;
 		private _isOpen: boolean;
 		private _lastFocusableElement: HTMLElement;
 		private _platformEventOnInitialize: Callbacks.OSNotificationInitializedEvent;
 		private _platformEventOnToggle: Callbacks.OSNotificationToggleEvent;
+
+		/**
+		 * Get Gesture Events Instance
+		 *
+		 * @readonly
+		 * @type {Event.GestureEvent.SwipeEvent}
+		 * @memberof Notification
+		 */
+		public get gestureEventInstance(): Event.GestureEvent.SwipeEvent {
+			return this._gestureEventInstance;
+		}
+
+		// Get if has gesture events
+		public get hasGestureEvents(): boolean {
+			return this._hasGestureEvents;
+		}
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new NotificationConfig(configs));
@@ -50,8 +68,10 @@ namespace OSUIFramework.Patterns.Notification {
 		// Method to hadnle the creation of the GestureEvents
 		private _handleGestureEvents(): void {
 			if (!Helper.DeviceInfo.IsDesktop) {
-				// Create and save instance
-				this.createGestureEventInstance();
+				// Create and save gesture event instance. Created here and not on constructor,
+				// as we need to pass this._selfElem, only available after super.build()
+				this._gestureEventInstance = new Event.GestureEvent.SwipeEvent(this._selfElem);
+
 				//Set event listeners and callbacks
 				this.setGestureEvents(
 					this.onSwipeBottom.bind(this),
@@ -392,15 +412,6 @@ namespace OSUIFramework.Patterns.Notification {
 		}
 
 		/**
-		 * Method to create gesture events instance
-		 *
-		 * @memberof Sidebar
-		 */
-		public createGestureEventInstance(): void {
-			this._gestureEventInstance = new Event.GestureEvent.SwipeEvent(this._selfElem);
-		}
-
-		/**
 		 * Destroy the Notification
 		 *
 		 * @memberof Notification
@@ -534,10 +545,10 @@ namespace OSUIFramework.Patterns.Notification {
 		 * @memberof Sidebar
 		 */
 		public setGestureEvents(
-			onSwipeDownCallback: Callbacks.Generic,
-			onSwipeLeftCallback: Callbacks.Generic,
-			onSwipeRightCallback: Callbacks.Generic,
-			onSwipeUpCallback: Callbacks.Generic
+			onSwipeDownCallback: Callbacks.onSwipeDown,
+			onSwipeLeftCallback: Callbacks.onSwipeLeft,
+			onSwipeRightCallback: Callbacks.onSwipeRight,
+			onSwipeUpCallback: Callbacks.onSwipeUp
 		): void {
 			this._gestureEventInstance.setEvents(
 				onSwipeDownCallback,

@@ -21,7 +21,9 @@ namespace OSUIFramework.Patterns.Sidebar {
 		private _firstFocusableElem: HTMLElement;
 		// Store focusable element inside sidebar
 		private _focusableElems: HTMLElement[];
+		// Store gesture events instance
 		private _gestureEventInstance: Event.GestureEvent.DragEvent;
+		// Store if the pattern has gesture events added
 		private _hasGestureEvents: boolean;
 		// Stores the current status of the sidebar
 		private _isOpen: boolean;
@@ -29,6 +31,28 @@ namespace OSUIFramework.Patterns.Sidebar {
 		private _lastFocusableElem: HTMLElement;
 		// Store if the Sidebar is Open
 		private _onToggle: Callbacks.OSSidebarToggleEvent;
+
+		/**
+		 * Get Gesture Events Instance
+		 *
+		 * @readonly
+		 * @type {Event.GestureEvent.DragEvent}
+		 * @memberof Sidebar
+		 */
+		public get gestureEventInstance(): Event.GestureEvent.DragEvent {
+			return this._gestureEventInstance;
+		}
+
+		/**
+		 * Get if has gesture events
+		 *
+		 * @readonly
+		 * @type {boolean}
+		 * @memberof Sidebar
+		 */
+		public get hasGestureEvents(): boolean {
+			return this._hasGestureEvents;
+		}
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SidebarConfig(configs));
@@ -60,17 +84,49 @@ namespace OSUIFramework.Patterns.Sidebar {
 		private _handleGestureEvents(): void {
 			//TODO Helper.DeviceInfo.IsNative
 			if (!Helper.DeviceInfo.IsNative) {
-				// Create and save instance
-				this.createGestureEventInstance();
+				// Create and save gesture event instance. Created here and not on constructor,
+				// as we need to pass this._selfElem, only available after super.build()
+				this._gestureEventInstance = new Event.GestureEvent.DragEvent(this._selfElem);
+
 				//Set event listeners and callbacks
 				this.setGestureEvents(
-					this.onGestureStart.bind(this),
-					this.onGestureMove.bind(this),
-					this.onGestureEnd.bind(this)
+					this._onGestureStart.bind(this),
+					this._onGestureMove.bind(this),
+					this._onGestureEnd.bind(this)
 				);
 				// WIP - class with the code needed to apply transform on a element and perform animation
 				this._animateOnDragInstance = new Animation.AnimateOnDrag(this._selfElem);
 			}
+		}
+
+		// Method to handle the start of a gesture
+		private _onGestureEnd(offsetX: number, offsetY: number, timeTaken: number): void {
+			this._animateOnDragInstance.onDragEnd(offsetX, offsetY, timeTaken, this._toggle.bind(this));
+
+			if (this.configs.HasOverlay) {
+				Helper.Dom.Styles.SetStyleAttribute(this._selfElem, '--overlay-opacity', 0);
+			}
+		}
+
+		// Method to handle the gesture move
+		private _onGestureMove(x: number, y: number, offsetX: number, offsetY: number, evt: TouchEvent): void {
+			this._animateOnDragInstance.onDragMove(offsetX, offsetY, x, y, evt);
+
+			if (this.configs.HasOverlay) {
+				this._setOverlayTransition(x);
+			}
+		}
+
+		// Method to handle the end of a gesture
+		private _onGestureStart(x: number, y: number): void {
+			this._animateOnDragInstance.onDragStart(
+				false,
+				GlobalEnum.Direction.Right,
+				x,
+				y,
+				this._isOpen,
+				this.configs.Width
+			);
 		}
 
 		// Actual method that knows what is to open the sidebar
@@ -357,15 +413,6 @@ namespace OSUIFramework.Patterns.Sidebar {
 		}
 
 		/**
-		 * Method to create gesture events instance
-		 *
-		 * @memberof Sidebar
-		 */
-		public createGestureEventInstance(): void {
-			this._gestureEventInstance = new Event.GestureEvent.DragEvent(this._selfElem);
-		}
-
-		/**
 		 * Method to remove event listener and destroy sidebar instance
 		 *
 		 * @memberof Sidebar
@@ -373,66 +420,13 @@ namespace OSUIFramework.Patterns.Sidebar {
 		public dispose(): void {
 			this.unsetCallbacks();
 			this.unsetHtmlElements();
+			// Remove gesture events
 			if (this._hasGestureEvents) {
 				this.removeGestureEvents();
 			}
 
 			//Destroying the base of pattern
 			super.dispose();
-		}
-
-		/**
-		 * Method to handle the start of a gesture
-		 *
-		 * @param {number} offsetX
-		 * @param {number} offsetY
-		 * @param {number} timeTaken
-		 * @return {*}  {void}
-		 * @memberof Sidebar
-		 */
-		public onGestureEnd(offsetX: number, offsetY: number, timeTaken: number): void {
-			this._animateOnDragInstance.onDragEnd(offsetX, offsetY, timeTaken, this._toggle.bind(this));
-
-			if (this.configs.HasOverlay) {
-				Helper.Dom.Styles.SetStyleAttribute(this._selfElem, '--overlay-opacity', 0);
-			}
-		}
-
-		/**
-		 * Method to handle the gesture move
-		 *
-		 * @param {number} x
-		 * @param {number} y
-		 * @param {number} offsetX
-		 * @param {number} offsetY
-		 * @param {TouchEvent} evt
-		 * @return {*}  {void}
-		 * @memberof Sidebar
-		 */
-		public onGestureMove(x: number, y: number, offsetX: number, offsetY: number, evt: TouchEvent): void {
-			this._animateOnDragInstance.onDragMove(offsetX, offsetY, x, y, evt);
-
-			if (this.configs.HasOverlay) {
-				this._setOverlayTransition(x);
-			}
-		}
-
-		/**
-		 * Method to handle the end of a gesture
-		 *
-		 * @param {number} x
-		 * @param {number} y
-		 * @memberof Sidebar
-		 */
-		public onGestureStart(x: number, y: number): void {
-			this._animateOnDragInstance.onDragStart(
-				false,
-				GlobalEnum.Direction.Right,
-				x,
-				y,
-				this._isOpen,
-				this.configs.Width
-			);
 		}
 
 		/**
@@ -479,9 +473,9 @@ namespace OSUIFramework.Patterns.Sidebar {
 		 * @memberof Sidebar
 		 */
 		public setGestureEvents(
-			onGestureStart: Callbacks.Generic,
-			onGestureMove: Callbacks.Generic,
-			onGestureEnd: Callbacks.Generic
+			onGestureStart: Callbacks.onGestureStart,
+			onGestureMove: Callbacks.onGestureMove,
+			onGestureEnd: Callbacks.onGestureEnd
 		): void {
 			this._gestureEventInstance.setEvents(onGestureStart, onGestureMove, onGestureEnd);
 			this._hasGestureEvents = true;

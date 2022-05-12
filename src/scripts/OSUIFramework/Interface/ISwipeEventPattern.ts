@@ -2,47 +2,27 @@
 namespace OSUIFramework.Interface {
 	export interface ISwipeEventPattern extends IGestureEventPattern {
 		/**
-		 * Signature Method to act as callback for swipe bottom event
+		 * Gesture Events Instance
 		 *
+		 * @type {Event.GestureEvent.SwipeEvent}
 		 * @memberof ISwipeEventPattern
 		 */
-		onSwipeBottom(): void;
-
-		/**
-		 * Signature Method to act as callback for swipe left event
-		 *
-		 * @memberof ISwipeEventPattern
-		 */
-		onSwipeLeft(): void;
-
-		/**
-		 * Signature Method to act as callback for swipe right event
-		 *
-		 * @memberof ISwipeEventPattern
-		 */
-		onSwipeRight(): void;
-
-		/**
-		 * Signature Method to act as callback for swipe up event
-		 *
-		 * @memberof ISwipeEventPattern
-		 */
-		onSwipeUp(): void;
+		gestureEventInstance: Event.GestureEvent.SwipeEvent;
 
 		/**
 		 * Signature Method to add swipe events
 		 *
-		 * @param {Callbacks.Generic} swipeDownCallback
-		 * @param {Callbacks.Generic} swipeLeftCallback
-		 * @param {Callbacks.Generic} swipeRightCallback
-		 * @param {Callbacks.Generic} swipeUpCallback
+		 * @param {Callbacks.onSwipeDown} swipeDownCallback
+		 * @param {Callbacks.onSwipeLeft} swipeLeftCallback
+		 * @param {Callbacks.onSwipeRight} swipeRightCallback
+		 * @param {Callbacks.onSwipeUp} swipeUpCallback
 		 * @memberof ISwipeEventPattern
 		 */
 		setGestureEvents(
-			swipeDownCallback: Callbacks.Generic,
-			swipeLeftCallback: Callbacks.Generic,
-			swipeRightCallback: Callbacks.Generic,
-			swipeUpCallback: Callbacks.Generic
+			swipeDownCallback: Callbacks.onSwipeDown,
+			swipeLeftCallback: Callbacks.onSwipeLeft,
+			swipeRightCallback: Callbacks.onSwipeRight,
+			swipeUpCallback: Callbacks.onSwipeUp
 		);
 	}
 }

@@ -2,17 +2,18 @@
 namespace OSUIFramework.Interface {
 	export interface IGestureEventPattern {
 		/**
-		 * Signature Method to create the gesture events instance
+		 * Store if the pattern has gesture events
 		 *
+		 * @type {boolean}
 		 * @memberof IGestureEventPattern
 		 */
-		createGestureEventInstance(): void;
+		hasGestureEvents: boolean;
 
 		/**
 		 * Signature Method to remove the gesture events
 		 *
 		 * @memberof IGestureEventPattern
 		 */
-		removeGestureEvents();
+		removeGestureEvents(): void;
 	}
 }

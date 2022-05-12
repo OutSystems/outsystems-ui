@@ -3,10 +3,9 @@ namespace OSUIFramework.Event.GestureEvent {
 	/**
 	 * lass that represents the gesture events information between start, move and end.
 	 *
-	 * @export
 	 * @class GestureParams
 	 */
-	export class GestureParams {
+	class GestureParams {
 		public currentX: number;
 		public currentY: number;
 		public event: TouchEvent;
@@ -26,7 +25,7 @@ namespace OSUIFramework.Event.GestureEvent {
 	 * @class GestureEvent
 	 * @extends {Event.AbstractEvent<string>}
 	 */
-	export abstract class AbstractGestureEvent {
+	export abstract class AbstractGestureEvent implements GestureEvent.IAbstractGestureEvent {
 		// Stores the end touch event with bind(this)
 		private _endEvent: Callbacks.Generic;
 		private _endTriggerCallback: Callbacks.Generic;

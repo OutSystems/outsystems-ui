@@ -1,21 +1,28 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Animation {
+	/**
+	 * Class to hold the drag information
+	 *
+	 * @class DragParams
+	 */
+	class DragParams {
+		public DragDirection = '';
+		public ExpectedDirection = GlobalEnum.Direction.Right;
+		public InvalidDrag = false;
+		public IsMoving = false;
+		public IsOpen = false;
+		public IsReadyToTriggerCallback = false;
+		public LastX = 0;
+		public LastY = 0;
+		public MoveX = 0;
+		public MoveY = 0;
+		public Size = undefined;
+		public VerticalDrag = false;
+	}
+
 	export class AnimateOnDrag {
 		// Store the transition information
-		private readonly _dragParams = {
-			InvalidDrag: false,
-			LastX: 0,
-			LastY: 0,
-			MoveY: 0,
-			MoveX: 0,
-			IsMoving: false,
-			IsReadyToTriggerCallback: false,
-			VerticalDrag: false,
-			IsOpen: false,
-			DragDirection: '',
-			ExpectedDirection: GlobalEnum.Direction.Right,
-			Size: undefined,
-		};
+		private _dragParams: DragParams;
 
 		// Store the minimal speed for a swipe to be triggered
 		private readonly _swipeTriggerSpeed = 0.3;
@@ -25,6 +32,7 @@ namespace OSUIFramework.Animation {
 
 		constructor(target: HTMLElement) {
 			this._targetElement = target;
+			this._dragParams = new DragParams();
 		}
 
 		// Method to check if current gesture is withing sidebar boundaries
