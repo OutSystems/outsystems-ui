@@ -37,6 +37,7 @@
 					&,
 					a {
 						color: var(--color-primary);
+						text-decoration: none;
 					}
 				}
 
@@ -121,6 +122,10 @@
 				color: var(--color-neutral-8);
 				display: flex;
 				height: 100%;
+
+				&:hover {
+					text-decoration: none;
+				}
 			}
 		}
 	}
