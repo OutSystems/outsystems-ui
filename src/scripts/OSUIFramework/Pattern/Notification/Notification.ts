@@ -242,13 +242,13 @@ namespace OSUIFramework.Patterns.Notification {
 		 * @memberof Notification
 		 */
 		protected setGestureEvents(): void {
-			super.addSwipeEvents(
-				this._selfElem,
-				this.onSwipeBottom,
-				this.onSwipeLeft,
-				this.onSwipeRight,
-				this.onSwipeTop
-			);
+			// super.addSwipeEvents(
+			// 	this._selfElem,
+			// 	this.onSwipeBottom,
+			// 	this.onSwipeLeft,
+			// 	this.onSwipeRight,
+			// 	this.onSwipeTop
+			// );
 		}
 
 		/**

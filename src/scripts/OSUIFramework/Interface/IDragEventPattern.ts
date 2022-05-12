@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Interface {
-	export interface IGestureEventPattern {
+	export interface IDragEventPattern extends IGestureEventPattern {
 		/**
 		 * Signature Method to handle on gesture event end
 		 *
@@ -31,5 +31,19 @@ namespace OSUIFramework.Interface {
 		 * @memberof IGestureEventPattern
 		 */
 		onGestureStart(x: number, y: number);
+
+		/**
+		 * Signature Method to add drag events
+		 *
+		 * @param {Callbacks.Generic} onGestureStart
+		 * @param {Callbacks.Generic} onGestureMove
+		 * @param {Callbacks.Generic} onGestureEnd
+		 * @memberof IDragEventPattern
+		 */
+		setGestureEvents(
+			onGestureStart: Callbacks.Generic,
+			onGestureMove: Callbacks.Generic,
+			onGestureEnd: Callbacks.Generic
+		);
 	}
 }

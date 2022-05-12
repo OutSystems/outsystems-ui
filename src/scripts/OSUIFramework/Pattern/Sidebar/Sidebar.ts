@@ -8,7 +8,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 	 * @extends {AbstractPattern<SidebarConfig>}
 	 * @implements {ISidebar}
 	 */
-	export class Sidebar extends AbstractPattern<SidebarConfig> implements ISidebar, Interface.IGestureEventPattern {
+	export class Sidebar extends AbstractPattern<SidebarConfig> implements ISidebar, Interface.IDragEventPattern {
 		// Store the Sidebar direction
 		private _currentDirectionCssClass: string;
 		// Store the click event with bind(this)
@@ -19,8 +19,8 @@ namespace OSUIFramework.Patterns.Sidebar {
 		private _firstFocusableElem: HTMLElement;
 		// Store focusable element inside sidebar
 		private _focusableElems: HTMLElement[];
-		// Store the if the Sidebar is moving on Native Gestures
-		private _isMoving: boolean;
+		private _gestureEventInstance: Event.DragEvent;
+		private _hasGestureEvents: boolean;
 		// Stores the current status of the sidebar
 		private _isOpen: boolean;
 		// Store the last element to receive focus in the sidebar
@@ -29,7 +29,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		private _onToggle: Callbacks.OSSidebarToggleEvent;
 
 		// eslint-disable-next-line @typescript-eslint/member-ordering
-		private _animateOnDrag: any;
+		private _animateOnDrag: Animation.AnimateOnDrag;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SidebarConfig(configs));
@@ -54,6 +54,23 @@ namespace OSUIFramework.Patterns.Sidebar {
 				if (this.configs.HasOverlay) {
 					Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOverlayClick);
 				}
+			}
+		}
+
+		// Method to hadnle the creation of the GestureEvents
+		private _handleGestureEvents(): void {
+			//TODO Helper.DeviceInfo.IsNative
+			if (!Helper.DeviceInfo.IsNative) {
+				// Create and save instance
+				this.createGestureEventInstance();
+				//Set event listeners and callbacks
+				this.setGestureEvents(
+					this.onGestureStart.bind(this),
+					this.onGestureMove.bind(this),
+					this.onGestureEnd.bind(this)
+				);
+				// WIP - class with the code needed to apply transform on a element and perform animation
+				this._animateOnDrag = new Animation.AnimateOnDrag(this._selfElem);
 			}
 		}
 
@@ -236,17 +253,6 @@ namespace OSUIFramework.Patterns.Sidebar {
 		}
 
 		/**
-		 * Sets the gesture events to open/close the Sidebar on Native Apps
-		 *
-		 * @protected
-		 * @memberof Sidebar
-		 */
-		protected setGestureEvents(): void {
-			super.addDragEvents(this._selfElem, this.onGestureStart, this.onGestureMove, this.onGestureEnd);
-			this._animateOnDrag = new Helper.AnimateOnDrag(this._selfElem);
-		}
-
-		/**
 		 * Set the html references that will be used to manage the cssClasses and atribute properties
 		 *
 		 * @protected
@@ -304,11 +310,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 			this.setA11YProperties();
 
-			if (Helper.DeviceInfo.IsNative) {
-				this.setGestureEvents();
-			}
-
-			this.setGestureEvents();
+			this._handleGestureEvents();
 
 			this.finishBuild();
 		}
@@ -355,6 +357,10 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 		}
 
+		public createGestureEventInstance(): void {
+			this._gestureEventInstance = new Event.DragEvent(this._selfElem);
+		}
+
 		/**
 		 * Method to remove event listener and destroy sidebar instance
 		 *
@@ -363,6 +369,10 @@ namespace OSUIFramework.Patterns.Sidebar {
 		public dispose(): void {
 			this.unsetCallbacks();
 			this.unsetHtmlElements();
+			if (this._hasGestureEvents) {
+				this.removeGestureEvents();
+			}
+
 			//Destroying the base of pattern
 			super.dispose();
 		}
@@ -437,6 +447,33 @@ namespace OSUIFramework.Patterns.Sidebar {
 			} else {
 				console.warn(`The ${GlobalEnum.PatternsNames.Sidebar} already has the toggle callback set.`);
 			}
+		}
+
+		/**
+		 * Removes the gesture events to open/close the Sidebar on Native Apps
+		 *
+		 * @memberof Sidebar
+		 */
+		public removeGestureEvents(): void {
+			if (this._gestureEventInstance !== undefined) {
+				this._gestureEventInstance.unsetTouchEvents();
+				this._hasGestureEvents = false;
+			}
+		}
+
+		/**
+		 * Sets the gesture events to open/close the Sidebar on Native Apps
+		 *
+		 * @protected
+		 * @memberof Sidebar
+		 */
+		public setGestureEvents(
+			onGestureStart: Callbacks.Generic,
+			onGestureMove: Callbacks.Generic,
+			onGestureEnd: Callbacks.Generic
+		): void {
+			this._gestureEventInstance.setEvents(onGestureStart, onGestureMove, onGestureEnd);
+			this._hasGestureEvents = true;
 		}
 	}
 }

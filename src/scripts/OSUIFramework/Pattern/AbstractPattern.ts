@@ -19,12 +19,6 @@ namespace OSUIFramework.Patterns {
 		 */
 		private _configs: C;
 
-		// Gesture Events instance created
-		private _gestureEventInstance: SwipeEvents | DragEvents;
-
-		// Holds if any drag or swipe instance was added to this pattern
-		private _hasGestureEvents: boolean;
-
 		/**
 		 * Indicates if the pattern has been built or not.
 		 *
@@ -138,28 +132,6 @@ namespace OSUIFramework.Patterns {
 		}
 
 		/**
-		 * Get if a gesture event was added
-		 *
-		 * @readonly
-		 * @type {boolean}
-		 * @memberof AbstractPattern
-		 */
-		public get hasGestureEvents(): boolean {
-			return this._hasGestureEvents;
-		}
-
-		/**
-		 * Get gesture event instance
-		 *
-		 * @readonly
-		 * @type {(DragEvents | SwipeEvents)}
-		 * @memberof AbstractPattern
-		 */
-		public get gestureEventInstance(): DragEvents | SwipeEvents {
-			return this._gestureEventInstance;
-		}
-
-		/**
 		 * Unique id of the pattern. Internal use only.
 		 *
 		 * @readonly
@@ -182,32 +154,6 @@ namespace OSUIFramework.Patterns {
 		}
 
 		/**
-		 * Method that creates a new drag event intance and listeners. This is separated from addSwipeEvents,
-		 * so that we can have better typification of the needed callbacks
-		 *
-		 * @protected
-		 * @param {HTMLElement} target
-		 * @param {Callbacks.Generic} onStartCallback
-		 * @param {Callbacks.Generic} onMoveCallback
-		 * @param {Callbacks.Generic} onEndCallback
-		 * @memberof AbstractPattern
-		 */
-		protected addDragEvents(
-			target: HTMLElement,
-			onStartCallback: Callbacks.Generic,
-			onMoveCallback: Callbacks.Generic,
-			onEndCallback: Callbacks.Generic
-		): void {
-			this._gestureEventInstance = new Event.DragEvent(target);
-			this._gestureEventInstance.setEvents(
-				onStartCallback.bind(this),
-				onMoveCallback.bind(this),
-				onEndCallback.bind(this)
-			);
-			this._hasGestureEvents = true;
-		}
-
-		/**
 		 * Method that creates a new swipe event intance and listeners. This is separated from addDragEvents,
 		 * so that we can have better typification of the needed callbacks
 		 *
@@ -219,22 +165,22 @@ namespace OSUIFramework.Patterns {
 		 * @param {Callbacks.Generic} swipeUpCallback
 		 * @memberof AbstractPattern
 		 */
-		protected addSwipeEvents(
-			target: HTMLElement,
-			swipeDownCallback: Callbacks.Generic,
-			swipeLeftCallback: Callbacks.Generic,
-			swipeRightCallback: Callbacks.Generic,
-			swipeUpCallback: Callbacks.Generic
-		): void {
-			this._gestureEventInstance = new Event.SwipeEvent(target);
-			this._gestureEventInstance.setEvents(
-				swipeDownCallback.bind(this),
-				swipeLeftCallback.bind(this),
-				swipeRightCallback.bind(this),
-				swipeUpCallback.bind(this)
-			);
-			this._hasGestureEvents = true;
-		}
+		// protected addSwipeEvents(
+		// 	target: HTMLElement,
+		// 	swipeDownCallback: Callbacks.Generic,
+		// 	swipeLeftCallback: Callbacks.Generic,
+		// 	swipeRightCallback: Callbacks.Generic,
+		// 	swipeUpCallback: Callbacks.Generic
+		// ): void {
+		// 	this._gestureEventInstance = new Event.SwipeEvent(target);
+		// 	this._gestureEventInstance.setEvents(
+		// 		swipeDownCallback.bind(this),
+		// 		swipeLeftCallback.bind(this),
+		// 		swipeRightCallback.bind(this),
+		// 		swipeUpCallback.bind(this)
+		// 	);
+		// 	this._hasGestureEvents = true;
+		// }
 
 		/**
 		 * Marks the built as being finished.
@@ -245,19 +191,6 @@ namespace OSUIFramework.Patterns {
 		protected finishBuild(): void {
 			//In the future we can trigger an initialized event.
 			this._isBuilt = true;
-		}
-
-		/**
-		 * Method that removes any gestureEvents added by addDragEvents or addSwipeEvents
-		 *
-		 * @protected
-		 * @memberof AbstractPattern
-		 */
-		protected removeGestureEvents(): void {
-			if (this._gestureEventInstance !== undefined) {
-				this._gestureEventInstance.unsetTouchEvents();
-				this._hasGestureEvents = false;
-			}
 		}
 
 		/**
@@ -311,10 +244,6 @@ namespace OSUIFramework.Patterns {
 			this._isBuilt = false;
 			this._unsetCommonHtmlElements();
 			this._configs = undefined;
-
-			if (this._hasGestureEvents && this._gestureEventInstance !== undefined) {
-				this.removeGestureEvents();
-			}
 		}
 
 		/**
