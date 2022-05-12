@@ -154,35 +154,6 @@ namespace OSUIFramework.Patterns {
 		}
 
 		/**
-		 * Method that creates a new swipe event intance and listeners. This is separated from addDragEvents,
-		 * so that we can have better typification of the needed callbacks
-		 *
-		 * @protected
-		 * @param {HTMLElement} target
-		 * @param {Callbacks.Generic} swipeDownCallback
-		 * @param {Callbacks.Generic} swipeLeftCallback
-		 * @param {Callbacks.Generic} swipeRightCallback
-		 * @param {Callbacks.Generic} swipeUpCallback
-		 * @memberof AbstractPattern
-		 */
-		// protected addSwipeEvents(
-		// 	target: HTMLElement,
-		// 	swipeDownCallback: Callbacks.Generic,
-		// 	swipeLeftCallback: Callbacks.Generic,
-		// 	swipeRightCallback: Callbacks.Generic,
-		// 	swipeUpCallback: Callbacks.Generic
-		// ): void {
-		// 	this._gestureEventInstance = new Event.SwipeEvent(target);
-		// 	this._gestureEventInstance.setEvents(
-		// 		swipeDownCallback.bind(this),
-		// 		swipeLeftCallback.bind(this),
-		// 		swipeRightCallback.bind(this),
-		// 		swipeUpCallback.bind(this)
-		// 	);
-		// 	this._hasGestureEvents = true;
-		// }
-
-		/**
 		 * Marks the built as being finished.
 		 *
 		 * @protected
