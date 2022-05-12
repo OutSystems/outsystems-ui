@@ -215,21 +215,6 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 		}
 
-		// Method to handle the overlay transition on gestures
-		private _setOverlayTransition(x: number): void {
-			const isLeft = this.configs.Direction === GlobalEnum.Direction.Left;
-			const currentOpacity = parseInt(this._selfElem.style.getPropertyValue('--overlay-opacity'));
-
-			const percentageBeforeDif = (Math.abs(x) * 100) / parseInt(this.configs.Width);
-			const percentage = isLeft ? 0 + percentageBeforeDif : 100 - percentageBeforeDif;
-
-			const newOpacity = Math.floor(percentage) / 100;
-
-			if (currentOpacity !== newOpacity && newOpacity % 1 !== 0) {
-				Helper.Dom.Styles.SetStyleAttribute(this._selfElem, '--overlay-opacity', newOpacity);
-			}
-		}
-
 		// Set the Sidebar width
 		private _setWidth(): void {
 			Helper.Dom.Styles.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, this.configs.Width);
