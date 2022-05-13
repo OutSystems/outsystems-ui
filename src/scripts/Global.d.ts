@@ -49,10 +49,10 @@ declare global {
 		standalone: any;
 	}
 
-	// Gesture Events Type
+	// Drag Events Type
 	type DragEvents = Event.DragEvent;
 
-	// Gesture Events Type
+	// Swipe Events Type
 	type SwipeEvents = Event.SwipeEvent;
 
 	// Offset Type

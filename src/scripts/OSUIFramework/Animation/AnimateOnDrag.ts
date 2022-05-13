@@ -55,7 +55,7 @@ namespace OSUIFramework.Animation {
 			this._dragParams.LastY = y;
 		}
 
-		// Mettod to apply the transform property on target, depending of the orientation
+		// Method to apply the transform property on target, depending on the orientation
 		// eslint-disable-next-line @typescript-eslint/naming-convention
 		private _updateUI(): void {
 			if (this._dragParams.IsMoving) {
