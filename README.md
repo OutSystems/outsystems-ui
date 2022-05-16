@@ -1,4 +1,4 @@
-# OutSystems UI · ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg) ![NPM version](https://img.shields.io/badge/npm-v8.3.1-informational) ![version](https://img.shields.io/badge/OutSystemsUI-2.8.3-informational)
+# OutSystems UI · ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg) ![NPM version](https://img.shields.io/badge/npm-v8.3.1-informational) · ![version](https://img.shields.io/badge/OutSystemsUI-2.8.3-informational)
 
 ## About the component
 Create modern experiences with fully customizable responsive Screen Templates and UI Patterns for Native Mobile and Reactive Web Apps.
