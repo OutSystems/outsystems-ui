@@ -355,9 +355,15 @@
 		font-size: var(--font-size-h5);
 		font-weight: var(--font-semi-bold);
 		height: 24px;
-		line-height: 1.1;
+		line-height: 1;
 		text-align: center;
 		width: 24px;
+
+		// Fix vertical alignemnt differences due to system fonts usage
+		.osx &,
+		.ios & {
+			line-height: 1.1;
+		}
 
 		&:hover {
 			background-color: var(--color-neutral-7);
