@@ -13,7 +13,7 @@
 
 			&:after {
 				color: var(--color-primary);
-				transform: rotate(180deg);
+				transform: rotate(180deg) translateY(50%);
 			}
 		}
 	}
@@ -41,7 +41,7 @@
 			}
 
 			.vscomp-clear-button {
-				right: var(--space-l);
+				right: var(--space-xl);
 			}
 		}
 	}
@@ -118,7 +118,7 @@
 					&:before,
 					&:after {
 						background-color: var(--color-neutral-3);
-						border-radius: 4px;
+						border-radius: var(--border-radius-soft);
 						height: 100%;
 						width: 2px;
 					}
@@ -130,8 +130,15 @@
 			top: 50%;
 			transform: translateY(-50%);
 
+			.vscomp-clear-icon {
+				&:before,
+				&:after {
+					background-color: var(--color-neutral-7);
+				}
+			}
+
 			&:hover {
-				background: var(--color-neutral-6);
+				background: var(--color-neutral-7);
 
 				.vscomp-clear-icon {
 					&:before,
@@ -289,7 +296,8 @@
 		font: normal normal normal var(--vscomp-toogle-btn-arrow-size) / 1 FontAwesome;
 		position: absolute;
 		right: var(--space-base);
-		top: calc((var(--vscomp-toogle-btn-height) - var(--vscomp-toogle-btn-arrow-size)) / 2);
+		top: 50%;
+		transform: translateY(-50%);
 		transform-origin: center;
 		transition: all 0.25s ease;
 	}
@@ -330,7 +338,7 @@
 
 	&:before {
 		align-items: center;
-		color: var(--color-neutral-6);
+		color: var(--color-neutral-7);
 		content: '';
 		display: flex;
 		font: normal normal normal 14px/1 FontAwesome;
@@ -338,6 +346,29 @@
 		left: var(--space-base);
 		position: absolute;
 		top: 0;
+	}
+
+	.vscomp-search-clear {
+		border-radius: var(--border-radius-circle);
+		color: var(--color-neutral-7);
+		display: table;
+		font-size: var(--font-size-h5);
+		font-weight: var(--font-semi-bold);
+		height: 24px;
+		line-height: 1;
+		text-align: center;
+		width: 24px;
+
+		// Fix vertical alignemnt differences due to system fonts usage
+		.osx &,
+		.ios & {
+			line-height: 1.1;
+		}
+
+		&:hover {
+			background-color: var(--color-neutral-7);
+			color: var(--color-neutral-3);
+		}
 	}
 }
 
@@ -429,10 +460,6 @@
 
 	.vscomp-toggle-button {
 		height: var(--vscomp-toogle-btn-mobile-height);
-
-		&:after {
-			top: calc((var(--vscomp-toogle-btn-mobile-height) - var(--vscomp-toogle-btn-arrow-size)) / 2);
-		}
 	}
 }
 
