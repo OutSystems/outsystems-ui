@@ -53,6 +53,8 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 				layout,
 				OSUIFramework.GlobalEnum.CssClassElements.LayoutNative
 			);
+		} else {
+			return false;
 		}
 	}
 
@@ -106,6 +108,8 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 				OSUIFramework.Helper.Dom.TagSelector(document.body, '.active-screen .layout.layout-blank');
 
 			return isNotOldNativeLayouts && CheckIsLayoutNative() === false;
+		} else {
+			return false;
 		}
 	}
 	/**
