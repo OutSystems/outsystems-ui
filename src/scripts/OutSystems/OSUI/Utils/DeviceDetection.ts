@@ -107,7 +107,7 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 				OSUIFramework.Helper.Dom.TagSelector(document.body, '.active-screen .layout.blank') ||
 				OSUIFramework.Helper.Dom.TagSelector(document.body, '.active-screen .layout.layout-blank');
 
-			return isNotOldNativeLayouts && CheckIsLayoutNative() === false;
+			return isNotOldNativeLayouts === undefined && CheckIsLayoutNative() === false;
 		} else {
 			return false;
 		}
