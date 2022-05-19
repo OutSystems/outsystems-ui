@@ -62,11 +62,7 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 	 * @param lang
 	 */
 	export function SetLang(lang: string): void {
-		const hasLangAttribute = document.documentElement.lang !== '';
-
-		if (hasLangAttribute === false && lang !== '') {
-			document.documentElement.lang = lang;
-		}
+		document.documentElement.lang = lang;
 	}
 
 	/**
