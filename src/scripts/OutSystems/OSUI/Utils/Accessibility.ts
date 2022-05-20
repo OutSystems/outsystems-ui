@@ -63,6 +63,7 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 	 */
 	export function SetLang(lang: string): void {
 		document.documentElement.lang = lang;
+		OSUIFramework.Helper.Language.Set(lang);
 	}
 
 	/**
