@@ -16,6 +16,13 @@ namespace OSUIFramework.Patterns.Notification {
 		private _platformEventOnInitialize: Callbacks.OSNotificationInitializedEvent;
 		private _platformEventOnToggle: Callbacks.OSNotificationToggleEvent;
 
+		// Focus trap elements
+		// eslint-disable-next-line @typescript-eslint/member-ordering
+		private _bottomElement: HTMLElement;
+		private _topElement: HTMLElement;
+		// eslint-disable-next-line @typescript-eslint/member-ordering
+		private _parentSelf: HTMLElement;
+
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new NotificationConfig(configs));
 
@@ -24,6 +31,20 @@ namespace OSUIFramework.Patterns.Notification {
 			this.configs.Position =
 				this.configs.Position !== '' ? this.configs.Position : Enum.Defaults.DefaultPosition;
 			this._isOpen = this.configs.StartsOpen;
+		}
+
+		private _addElementsFocusTrap(): void {
+			this._parentSelf = this._selfElem.parentElement;
+			this._topElement = document.createElement('div');
+			this._bottomElement = document.createElement('div');
+
+			Helper.Dom.Styles.AddClass(this._topElement, 'focus-top');
+			Helper.Dom.Styles.AddClass(this._bottomElement, 'focus-bottom');
+
+			this._parentSelf.insertBefore(this._topElement, this._selfElem);
+			this._parentSelf.appendChild(this._bottomElement);
+
+			console.log(this._selfElem, this._parentSelf);
 		}
 
 		// Close Notification after wait the time defined
@@ -321,6 +342,8 @@ namespace OSUIFramework.Patterns.Notification {
 			this.setCallbacks();
 
 			this.setHtmlElements();
+
+			this._addElementsFocusTrap();
 
 			this.finishBuild();
 		}
