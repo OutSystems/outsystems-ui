@@ -19,6 +19,22 @@
 		height: var(--range-slider-size);
 	}
 
+	&--has-ticks {
+		.noUi {
+			&-target {
+				margin: var(--space-m) var(--space-none) var(--space-xl);
+			}
+		}
+	}
+
+	&:not(.osui-range-slider--has-ticks) {
+		.noUi {
+			&-target {
+				margin: var(--space-m) var(--space-none);
+			}
+		}
+	}
+
 	// Service Studio Preview
 	& {
 		-servicestudio-margin-bottom: var(--space-base);
@@ -37,7 +53,6 @@
 			border: var(--border-size-none);
 			border-radius: var(--border-radius-soft);
 			box-shadow: none;
-			margin: var(--space-m) var(--space-none) 45px;
 		}
 
 		&-horizontal,
