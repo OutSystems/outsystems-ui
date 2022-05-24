@@ -24,10 +24,9 @@ namespace OutSystems.OSUI.Utils.Menu {
 			}
 
 			appMenu.style.transform = '';
+			appMenu.style.webkitTransform = '';
 
 			menu.addEventListener('transitionend', OnTransitionEnd, false);
-		} else {
-			console.warn('The menu element is not present in the screen');
 		}
 
 		function OnTransitionEnd() {
@@ -45,14 +44,10 @@ namespace OutSystems.OSUI.Utils.Menu {
 	export function MenuShow(): void {
 		const myMenu = OSUIFramework.Helper.Dom.ClassSelector(document, 'menu');
 
-		if (myMenu) {
-			OSUIFramework.Helper.Dom.Styles.AddClass(myMenu, 'menu--visible');
-			OSUIFramework.Helper.Dom.Styles.AddClass(myMenu, 'menu--animatable');
+		OSUIFramework.Helper.Dom.Styles.AddClass(myMenu, 'menu--visible');
+		OSUIFramework.Helper.Dom.Styles.AddClass(myMenu, 'menu--animatable');
 
-			SetMenuAttributes();
-		} else {
-			console.warn('The menu element is not present in the screen');
-		}
+		SetMenuAttributes();
 	}
 
 	/**
