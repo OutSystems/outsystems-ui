@@ -6,6 +6,7 @@ namespace OSUIFramework.Patterns.RangeSlider.Enum {
 	export enum CssClass {
 		ClassModifier = 'osui-range-slider--is-',
 		IsInterval = 'osui-range-slider--is-interval',
+		HasTicks = 'osui-range-slider--has-ticks',
 		RangeSlider = 'osui-range-slider',
 		RangeSliderProviderElem = 'osui-range-slider__provider',
 	}
