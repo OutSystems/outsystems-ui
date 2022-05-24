@@ -132,6 +132,18 @@ namespace Providers.RangeSlider.NoUISlider {
 						OSUIFramework.GlobalEnum.Orientation.Vertical
 				);
 			}
+
+			if (this.configs.ShowTickMarks) {
+				OSUIFramework.Helper.Dom.Styles.AddClass(
+					this._selfElem,
+					OSUIFramework.Patterns.RangeSlider.Enum.CssClass.HasTicks
+				);
+			} else {
+				OSUIFramework.Helper.Dom.Styles.RemoveClass(
+					this._selfElem,
+					OSUIFramework.Patterns.RangeSlider.Enum.CssClass.HasTicks
+				);
+			}
 		}
 
 		/**
