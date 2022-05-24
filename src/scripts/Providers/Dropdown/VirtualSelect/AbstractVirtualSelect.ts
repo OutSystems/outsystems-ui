@@ -99,7 +99,10 @@ namespace Providers.Dropdown.VirtualSelect {
 		protected createProviderInstance(): void {
 			// Create the provider instance
 			this.provider = window.VirtualSelect.init(this._virtualselectOpts);
-			this._virtualselectMethods = this.provider.$ele;
+
+			/* NOTE: When user change the URL and then click at browser back button we're getting an error. This happen because library (VS - VirtualSelect) creates a new instance of the same object and assign it into an array of VS objects that are in the same screen (in this case 2 equal VS objects since we're creating a new VS instance for each Dropdown), that said and in order to avoid this issue, we must follow this approach. 
+			Again, this only happens when user change directly the URL! */
+			this._virtualselectMethods = Array.isArray(this.provider) ? this.provider[0].$ele : this.provider.$ele;
 
 			// Add the pattern Events!
 			this._setUpEvents();
@@ -226,12 +229,14 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * @memberof AbstractVirtualSelect
 		 */
 		public dispose(): void {
-			this.provider.destroy();
+			if (this.isBuilt) {
+				this.provider.destroy();
 
-			this.unsetCallbacks();
-			this._unsetEvents();
+				this.unsetCallbacks();
+				this._unsetEvents();
 
-			super.dispose();
+				super.dispose();
+			}
 		}
 
 		/**
