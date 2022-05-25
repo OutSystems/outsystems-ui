@@ -6,7 +6,7 @@ namespace OSUIFramework.DynamicElements.Trapping {
 	 * @export
 	 * @class Trapping
 	 */
-	export class FocusTrap {
+	export class FocusTrap implements Interface.IFocusTrap {
 		private _bottomElement: HTMLElement;
 		private _eventFocusBottomElement: Callbacks.Generic;
 		private _eventFocusTopElement: Callbacks.Generic;
@@ -14,6 +14,9 @@ namespace OSUIFramework.DynamicElements.Trapping {
 		private _focusTopCallback: Callbacks.Generic;
 		private _targetElement: HTMLElement;
 		private _topElement: HTMLElement;
+
+		// eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
+		focusTrapInstance: FocusTrap;
 
 		constructor(target: HTMLElement) {
 			this._targetElement = target;
@@ -65,6 +68,13 @@ namespace OSUIFramework.DynamicElements.Trapping {
 		 */
 		public setEvents(focusBottomCallback: Callbacks.Generic, focusTopCallback: Callbacks.Generic): void {
 			this.setFocusCallbacks(focusBottomCallback, focusTopCallback);
+		}
+
+		setFocusTrap(
+			focusBottomCallback: Callbacks.FocusTrapBottomEvent,
+			focusTopCallback: Callbacks.FocusTrapTopEvent
+		) {
+			throw new Error('Method not implemented.');
 		}
 
 		/**

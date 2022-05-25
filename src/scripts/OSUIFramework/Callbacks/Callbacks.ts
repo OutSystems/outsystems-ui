@@ -75,6 +75,6 @@ namespace OSUIFramework.Callbacks {
 	};
 
 	// Focus Trap
-	export type OnFocusTopElement = { (): void };
-	export type OnFocusBottomElement = { (): void };
+	export type FocusTrapTopEvent = { (): void };
+	export type FocusTrapBottomEvent = { (): void };
 }

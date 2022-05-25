@@ -2,7 +2,7 @@
 namespace OSUIFramework.Interface {
 	export interface IFocusTrap {
 		/**
-		 * Gesture Events Instance
+		 * Focus Trap Instance
 		 *
 		 * @type {DynamicElements.Trapping.FocusTrap}
 		 * @memberof IFocusTrap
@@ -10,15 +10,23 @@ namespace OSUIFramework.Interface {
 		focusTrapInstance: DynamicElements.Trapping.FocusTrap;
 
 		/**
-		 * Signature Method to add focus trap
+		 * Target element that will apply the FOcus Trap
 		 *
-		 * @param {Callbacks.onSwipeDown} swipeDownCallback
-		 * @param {Callbacks.onSwipeLeft} swipeLeftCallback
+		 * @type {HTMLElement}
 		 * @memberof IFocusTrap
 		 */
-		setGestureEvents(
-			focusTopCallback: Callbacks.OnFocusTopElement,
-			focusBottomCallback: Callbacks.OnFocusBottomElement
+		targetElement: HTMLElement;
+
+		/**
+		 * Signature Method to add focus trap
+		 *
+		 * @param {Callbacks.FocusTrapBottomEvent} focusBottomCallback
+		 * @param {Callbacks.FocusTrapTopEvent} focusTopCallback
+		 * @memberof IFocusTrap
+		 */
+		setFocusTrap(
+			focusBottomCallback: Callbacks.FocusTrapBottomEvent,
+			focusTopCallback: Callbacks.FocusTrapTopEvent
 		);
 	}
 }

@@ -20,8 +20,8 @@ namespace OSUIFramework.Patterns.Notification {
 		private _bottomElement: HTMLElement;
 		private _topElement: HTMLElement;
 		private _parentSelf: HTMLElement;
-		private _eventFocusBottomElement: Callbacks.OnFocusBottomElement;
-		private _eventFocusTopElement: Callbacks.OnFocusTopElement;
+		private _eventFocusBottomElement: Callbacks.FocusTrapBottomEvent;
+		private _eventFocusTopElement: Callbacks.FocusTrapTopEvent;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new NotificationConfig(configs));
