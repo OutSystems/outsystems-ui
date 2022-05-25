@@ -10,6 +10,14 @@ namespace OSUIFramework.Interface {
 		focusTrapInstance: DynamicElements.Trapping.FocusTrap;
 
 		/**
+		 * Target element that will apply the Focus Trap
+		 *
+		 * @type {HTMLElement}
+		 * @memberof IFocusTrap
+		 */
+		targetChildElement: HTMLElement;
+
+		/**
 		 * Target element that will apply the FOcus Trap
 		 *
 		 * @type {HTMLElement}
