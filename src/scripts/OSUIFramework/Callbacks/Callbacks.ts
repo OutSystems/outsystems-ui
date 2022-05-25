@@ -73,4 +73,8 @@ namespace OSUIFramework.Callbacks {
 	export type OSTabsOnChangeEvent = {
 		(tabsId: string, ActiveTab: number): void;
 	};
+
+	// Focus Trap
+	export type OnFocusTopElement = { (): void };
+	export type OnFocusBottomElement = { (): void };
 }
