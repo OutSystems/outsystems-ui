@@ -52,8 +52,8 @@ namespace OSUIFramework.DynamicElements.FocusTrap {
 		// Method to add properties to HTML elements
 		private _setFocusableProperties(): void {
 			// Set CSS classes
-			Helper.Dom.Styles.AddClass(this._topElement, 'focus-top');
-			Helper.Dom.Styles.AddClass(this._bottomElement, 'focus-bottom');
+			Helper.Dom.Styles.AddClass(this._bottomElement, GlobalEnum.FocusTrapClasses.FocusTrapBottom);
+			Helper.Dom.Styles.AddClass(this._topElement, GlobalEnum.FocusTrapClasses.FocusTrapTop);
 
 			// Hide by default the focusable elements
 			this.unsetA11yProperties();

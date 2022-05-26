@@ -269,4 +269,9 @@ namespace OSUIFramework.GlobalEnum {
 	export enum NotchClasses {
 		IPhoneX = 'iphonex',
 	}
+
+	export enum FocusTrapClasses {
+		FocusTrapBottom = 'focus-trap-bottom',
+		FocusTrapTop = 'focus-trap-top',
+	}
 }
