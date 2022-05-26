@@ -9,19 +9,14 @@ namespace OSUIFramework.Patterns.Notification {
 		// Define the event to be applied based on device
 		private _eventType: string;
 		private _firstFocusableElement: HTMLElement;
+		private _focusTrapInstance: DynamicElements.FocusTrap.FocusTrap;
 		private _focusableActiveElement: HTMLElement;
 		private _focusableElements: HTMLElement[];
 		private _isOpen: boolean;
 		private _lastFocusableElement: HTMLElement;
+		private _parentSelf: HTMLElement;
 		private _platformEventOnInitialize: Callbacks.OSNotificationInitializedEvent;
 		private _platformEventOnToggle: Callbacks.OSNotificationToggleEvent;
-
-		// Focus trap elements
-		private _bottomElement: HTMLElement;
-		private _topElement: HTMLElement;
-		private _parentSelf: HTMLElement;
-		private _eventFocusBottomElement: Callbacks.FocusTrapBottomEvent;
-		private _eventFocusTopElement: Callbacks.FocusTrapTopEvent;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new NotificationConfig(configs));
@@ -31,55 +26,6 @@ namespace OSUIFramework.Patterns.Notification {
 			this.configs.Position =
 				this.configs.Position !== '' ? this.configs.Position : Enum.Defaults.DefaultPosition;
 			this._isOpen = this.configs.StartsOpen;
-		}
-
-		private _addElementsFocusTrap(): void {
-			// Set elements
-			this._parentSelf = Helper.Dom.GetElementById(this._widgetId);
-			this._topElement = document.createElement('span');
-			this._bottomElement = document.createElement('span');
-
-			// Add CSS classes
-			Helper.Dom.Styles.AddClass(this._topElement, 'focus-top');
-			Helper.Dom.Styles.AddClass(this._bottomElement, 'focus-bottom');
-
-			// Add A11Y to elements created
-			this._toggleA11yOnFocus(this._topElement);
-			this._toggleA11yOnFocus(this._bottomElement);
-
-			// Add elements to DOM
-			this._parentSelf.insertBefore(this._topElement, this._selfElem);
-			this._parentSelf.appendChild(this._bottomElement);
-
-			// Add callbacks
-			this._eventFocusBottomElement = this._focusBottomCallback.bind(this);
-			this._eventFocusTopElement = this._focusTopCallback.bind(this);
-
-			// Add events
-			this._topElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventFocusTopElement);
-			this._bottomElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventFocusBottomElement);
-
-			console.log(this._selfElem, this._parentSelf);
-		}
-
-		// Create enable and disable methods
-		private _toggleA11yOnFocus(element: HTMLElement): void {
-			if (this._isOpen) {
-				Helper.A11Y.TabIndexTrue(element);
-			} else {
-				Helper.A11Y.TabIndexFalse(element);
-			}
-			Helper.A11Y.AriaHidden(element, (!this._isOpen).toString());
-		}
-
-		private _focusBottomCallback(e: MouseEvent): void {
-			this._firstFocusableElement.focus();
-			console.log('Focus Bottom element');
-		}
-
-		private _focusTopCallback(e: MouseEvent): void {
-			this._lastFocusableElement.focus();
-			console.log('Focus Top element');
 		}
 
 		// Close Notification after wait the time defined
@@ -98,9 +44,40 @@ namespace OSUIFramework.Patterns.Notification {
 			this.hide();
 		}
 
+		// Focus on first focusable element on Notification
+		private _focusBottomCallback(): void {
+			if (this._firstFocusableElement) {
+				this._firstFocusableElement.focus();
+			} else {
+				this._selfElem.focus();
+			}
+		}
+
+		// Focus on last focusable element on Notification
+		private _focusTopCallback(): void {
+			if (this._lastFocusableElement) {
+				this._lastFocusableElement.focus();
+			} else {
+				this._selfElem.focus();
+			}
+		}
+
+		// Add Focus Trap to Pattern
+		private _hasFocusTrap(): void {
+			const opts = {
+				focusBottomCallback: this._focusBottomCallback.bind(this),
+				focusTopCallback: this._focusTopCallback.bind(this),
+				focusTargetElement: this._parentSelf,
+			} as FocusTrapOpts;
+
+			this._focusTrapInstance = new DynamicElements.FocusTrap.FocusTrap(opts);
+		}
+
 		// Hide Notification
 		private _hideNotification(): void {
 			this._isOpen = false;
+
+			this._focusTrapInstance.unsetA11yProperties();
 
 			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
 
@@ -109,10 +86,6 @@ namespace OSUIFramework.Patterns.Notification {
 
 			// Update accessibility properties
 			this._updateA11yProperties();
-
-			// Add trap focus a11y
-			this._toggleA11yOnFocus(this._topElement);
-			this._toggleA11yOnFocus(this._bottomElement);
 
 			// Remove focus when a Notification is closed
 			this._selfElem.blur();
@@ -130,37 +103,11 @@ namespace OSUIFramework.Patterns.Notification {
 		// Call methods to open or close, based ok e.key and behavior applied
 		private _keypressCallback(e: KeyboardEvent): void {
 			const isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
-			const isShiftPressed = e.key === GlobalEnum.Keycodes.Shift;
-			const isTabPressed = e.key === GlobalEnum.Keycodes.Tab;
-			if (!isTabPressed && !isShiftPressed && !isEscapedPressed) {
-				return;
-			}
-
-			/* // Prevent the focus to outside of Notification
-			if (document.activeElement === this._selfElem) {
-				if (!this._lastFocusableElement) {
-					this._selfElem.focus();
-				} else {
-					this._lastFocusableElement.focus();
-				}
-				e.preventDefault();
-			} */
 
 			// Close the Notification when pressing Esc
 			if (isEscapedPressed && this._isOpen) {
 				this.hide();
 			}
-
-			// If pressing shift + tab do a focus trap inside the notification
-			/* if (isShiftPressed) {
-				if (document.activeElement === this._firstFocusableElement) {
-					this._lastFocusableElement.focus();
-					e.preventDefault();
-				}
-			} else if (document.activeElement === this._lastFocusableElement) {
-				this._firstFocusableElement.focus();
-				e.preventDefault();
-			} */
 		}
 
 		// Remove all the assigned Events
@@ -174,6 +121,8 @@ namespace OSUIFramework.Patterns.Notification {
 			this._focusableActiveElement = document.activeElement as HTMLElement;
 			this._isOpen = true;
 
+			this._focusTrapInstance.setA11yProperties();
+
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsOpen);
 
 			// Trigger Notification event with new status
@@ -181,10 +130,6 @@ namespace OSUIFramework.Patterns.Notification {
 
 			// Update accessibility properties
 			this._updateA11yProperties();
-
-			// Add trap focus a11y
-			this._toggleA11yOnFocus(this._topElement);
-			this._toggleA11yOnFocus(this._bottomElement);
 
 			// Add listeners to toggle Notification
 			if (Helper.DeviceInfo.IsNative === false && this.configs.InteractToClose) {
@@ -306,6 +251,7 @@ namespace OSUIFramework.Patterns.Notification {
 		 * @memberof Notification
 		 */
 		protected setHtmlElements(): void {
+			this._parentSelf = Helper.Dom.GetElementById(this._widgetId);
 			this._focusableElements = [...this._selfElem.querySelectorAll(Constants.FocusableElems)] as HTMLElement[];
 
 			// to handle focusable element's tabindex when toggling the Notification
@@ -386,7 +332,7 @@ namespace OSUIFramework.Patterns.Notification {
 
 			this.setHtmlElements();
 
-			this._addElementsFocusTrap();
+			this._hasFocusTrap();
 
 			this.finishBuild();
 		}
@@ -441,14 +387,19 @@ namespace OSUIFramework.Patterns.Notification {
 		 * @memberof Notification
 		 */
 		public dispose(): void {
-			// Remove Callbacks
-			this.unsetCallbacks();
+			if (this.isBuilt) {
+				// Remove Callbacks
+				this.unsetCallbacks();
 
-			// Remove unused HTML elements
-			this.unsetHtmlElements();
+				// Remove unused HTML elements
+				this.unsetHtmlElements();
 
-			//Destroying the base of pattern
-			super.dispose();
+				// Remove focus trap events and callbacks
+				this._focusTrapInstance.dispose();
+
+				//Destroying the base of pattern
+				super.dispose();
+			}
 		}
 
 		/**
