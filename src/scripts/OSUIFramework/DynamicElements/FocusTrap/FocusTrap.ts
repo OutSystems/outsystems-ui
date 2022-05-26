@@ -26,8 +26,8 @@ namespace OSUIFramework.DynamicElements.FocusTrap {
 		// Method to create elements
 		private _buildFocusableElements(): void {
 			// Create the focusable elements
-			this._topElement = document.createElement('span');
-			this._bottomElement = document.createElement('span');
+			this._topElement = document.createElement(GlobalEnum.HTMLElement.Span);
+			this._bottomElement = document.createElement(GlobalEnum.HTMLElement.Span);
 
 			// Add the created elements to DOM
 			this._targetElement.prepend(this._topElement);
