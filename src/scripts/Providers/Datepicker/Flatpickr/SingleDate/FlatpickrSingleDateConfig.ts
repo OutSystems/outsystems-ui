@@ -16,8 +16,6 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 		constructor(config: JSON) {
 			super(config);
 
-			console.log('CENAS');
-
 			this.calendarMode = OSUIFramework.Patterns.DatePicker.Enum.Mode.Single;
 		}
 
