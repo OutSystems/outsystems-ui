@@ -63,11 +63,11 @@ namespace OSUIFramework.Patterns.Notification {
 		}
 
 		// Add Focus Trap to Pattern
-		private _hasFocusTrap(): void {
+		private _handleFocusTrap(): void {
 			const opts = {
 				focusBottomCallback: this._focusBottomCallback.bind(this),
-				focusTopCallback: this._focusTopCallback.bind(this),
 				focusTargetElement: this._parentSelf,
+				focusTopCallback: this._focusTopCallback.bind(this),
 			} as FocusTrapOpts;
 
 			this._focusTrapInstance = new DynamicElements.FocusTrap.FocusTrap(opts);
@@ -332,7 +332,7 @@ namespace OSUIFramework.Patterns.Notification {
 
 			this.setHtmlElements();
 
-			this._hasFocusTrap();
+			this._handleFocusTrap();
 
 			this.finishBuild();
 		}
