@@ -12,6 +12,7 @@ namespace OSUIFramework.Patterns.Tooltip.Enum {
 	 */
 	export enum CssClass {
 		BalloonContent = 'osui-tooltip__balloon-wrapper__balloon',
+		BalloonIsOpened = 'osui-tooltip__balloon-wrapper--is-opened',
 		BalloonWrapper = 'osui-tooltip__balloon-wrapper',
 		Content = 'osui-tooltip__content',
 		IsHover = 'osui-tooltip--is-hover',

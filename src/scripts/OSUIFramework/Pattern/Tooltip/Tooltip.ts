@@ -1,25 +1,29 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Tooltip {
 	export class Tooltip extends AbstractPattern<TooltipConfig> implements ITooltip {
-		private _eventBlur: Callbacks.Generic;
-		private _eventClick: Callbacks.Generic;
-		private _eventFocus: Callbacks.Generic;
+		// Event OnPatternBlur (combined with focus)
+		private _eventOnBlur: Callbacks.Generic;
+		// Event OnBodyClick
 		private _eventOnBodyClick: Callbacks.Generic;
 		// Event OnBodyScroll
 		private _eventOnBodyScroll: Callbacks.Generic;
-		private _eventOnClosedBallon: Callbacks.Generic;
+		// Event OnPatternClick
+		private _eventOnClick: Callbacks.Generic;
+		// Event OnClosedBalloon
+		private _eventOnClosedBalloon: Callbacks.Generic;
+		// Event OnPatternFocus
+		private _eventOnFocus: Callbacks.Generic;
+		// Flag used to manage id it's open or closed!
 		private _isOpen: boolean;
 		// Platform OnInitialize Callback
 		private _platformEventInitializedCallback: Callbacks.OSGeneric;
 		// Platform OnClose Callback
 		private _platformEventOnToggleCallback: Callbacks.OSGeneric;
-		// Store the ballon html element
-		private _tooltipBallonContentActiveElem: HTMLElement;
-		private _tooltipBallonContentElem: HTMLElement;
-		private _tooltipBallonWrapperElem: HTMLElement;
-
-		// Store the content html element
-		private _tooltipContentElem: HTMLElement;
+		// Store the HTML elements
+		private _tooltipBalloonContentActiveElem: HTMLElement;
+		private _tooltipBalloonContentElem: HTMLElement;
+		private _tooltipBalloonWrapperElem: HTMLElement;
+		private _tooltipIconElem: HTMLElement;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new TooltipConfig(configs));
@@ -30,7 +34,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 		// Check the recomended position to open the balloon
 		private _getRecomendedPosition(): void {
 			// Get the Boundaries for the balloon container
-			const balloonBounds = this._tooltipBallonContentElem.getBoundingClientRect();
+			const balloonBounds = this._tooltipBalloonContentElem.getBoundingClientRect();
 
 			// Get the recomended position to open the balloon
 			const recomendedPosition = Helper.BoundPosition.GetRecomendedPositionByBounds(
@@ -43,20 +47,20 @@ namespace OSUIFramework.Patterns.Tooltip {
 				// If the recomendedPosition is differently the position assigned...
 				if (recomendedPosition !== this.configs.Position) {
 					// Remove the older position
-					Helper.Dom.Styles.RemoveClass(this._tooltipBallonWrapperElem, this.configs.Position);
+					Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, this.configs.Position);
 				}
 
 				// Store the current one!
 				this.configs.Position = recomendedPosition as GlobalEnum.Position;
 				// Set the new one
-				Helper.Dom.Styles.AddClass(this._tooltipBallonWrapperElem, this.configs.Position);
+				Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, this.configs.Position);
 			}
 		}
 
-		// Move ballon element to outside of the pattern context
-		private _moveBallonElement(): void {
+		// Move balloon element to outside of the pattern context
+		private _moveBalloonElement(): void {
 			const layoutElement = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.Layout);
-			Helper.Dom.Move(this._tooltipBallonWrapperElem, layoutElement);
+			Helper.Dom.Move(this._tooltipBalloonWrapperElem, layoutElement);
 
 			// Wait for next activeElement be active
 			Helper.AsyncInvocation(() => {
@@ -69,22 +73,25 @@ namespace OSUIFramework.Patterns.Tooltip {
 			// Wait for next activeElement be active
 			Helper.AsyncInvocation(() => {
 				// Check if a previous active element has been assigned
-				if (this._tooltipBallonContentActiveElem) {
-					this._tooltipBallonContentActiveElem.removeEventListener(
+				if (this._tooltipBalloonContentActiveElem) {
+					this._tooltipBalloonContentActiveElem.removeEventListener(
 						GlobalEnum.HTMLEvent.Blur,
-						this._eventBlur
+						this._eventOnBlur
 					);
 				}
 
-				// Get the closest element in order to check if the activeElement is inside this TooltipBallon
+				// Get the closest element in order to check if the activeElement is inside this TooltipBalloon
 				const _closestElem = document.activeElement.closest(Constants.Dot + Enum.CssClass.Pattern);
 				if (_closestElem !== this._selfElem) {
 					// Close Tooltip
 					this._triggerClose();
 				} else {
 					// Add the blur event in order to proper close the tooltip after its blur
-					this._tooltipBallonContentActiveElem = document.activeElement as HTMLElement;
-					this._tooltipBallonContentActiveElem.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventBlur);
+					this._tooltipBalloonContentActiveElem = document.activeElement as HTMLElement;
+					this._tooltipBalloonContentActiveElem.addEventListener(
+						GlobalEnum.HTMLEvent.Blur,
+						this._eventOnBlur
+					);
 				}
 			});
 		}
@@ -120,19 +127,18 @@ namespace OSUIFramework.Patterns.Tooltip {
 		// Trigger the tooltip at onClick behaviour
 		private _onClick(e: MouseEvent): void {
 			e.stopPropagation();
-			// Add a window event that will be responsible to close it, if it's opend by default
-			this.open();
+			this._triggerOpen();
 		}
 
 		// Used to update the tooltip position after it's closed
-		private _onClosedBallon(): void {
+		private _onClosedBalloon(): void {
 			// Trigger the _platformEventOnToggleCallback callback!
 			Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, false);
 
 			// Remove the transition event!
-			this._tooltipBallonContentElem.removeEventListener(
+			this._tooltipBalloonContentElem.removeEventListener(
 				GlobalEnum.HTMLEvent.TransitionEnd,
-				this._eventOnClosedBallon
+				this._eventOnClosedBalloon
 			);
 
 			// Update/Get the recomended position
@@ -151,22 +157,22 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 			// Set Css inline variables
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._tooltipBallonWrapperElem,
+				this._tooltipBalloonWrapperElem,
 				Enum.InlineCssVariables.Top,
 				selfElement.top + GlobalEnum.Units.Pixel
 			);
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._tooltipBallonWrapperElem,
+				this._tooltipBalloonWrapperElem,
 				Enum.InlineCssVariables.Left,
 				selfElement.left + GlobalEnum.Units.Pixel
 			);
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._tooltipBallonWrapperElem,
+				this._tooltipBalloonWrapperElem,
 				Enum.InlineCssVariables.Width,
 				selfElement.width + GlobalEnum.Units.Pixel
 			);
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._tooltipBallonWrapperElem,
+				this._tooltipBalloonWrapperElem,
 				Enum.InlineCssVariables.Height,
 				selfElement.height + GlobalEnum.Units.Pixel
 			);
@@ -182,18 +188,18 @@ namespace OSUIFramework.Patterns.Tooltip {
 			// Set default IsVisible cssClass property value
 			if (this._isOpen) {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsOpened);
-				Helper.Dom.Styles.AddClass(this._tooltipBallonWrapperElem, Enum.CssClass.IsOpened);
+				Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpened);
 			}
 
 			// Set default Position cssClass property value
-			Helper.Dom.Styles.AddClass(this._tooltipBallonWrapperElem, this.configs.Position);
+			Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, this.configs.Position);
 		}
 
 		// Add the tooltip Events
 		private _setUpEvents(): void {
-			// Add the focus event in order to show the tooltip ballon when the toolTip content is focused
-			this._tooltipContentElem.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventBlur);
-			this._tooltipContentElem.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventFocus);
+			// Add the focus event in order to show the tooltip balloon when the toolTip content is focused
+			this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
+			this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
 
 			// Add the BodyScroll callback that will be used to update the balloon coodinates
 			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
@@ -206,35 +212,35 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 			// If tooltip should behave at onMouseClick, or if it's on tablet or phone
 			if (this.configs.IsHover === false || Helper.DeviceInfo.IsDesktop === false) {
-				this._tooltipContentElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
+				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			}
 		}
 
-		// Close the Baloon
+		// Close the Balloon
 		private _triggerClose() {
 			// Check if the tooltip is open
 			if (this._isOpen) {
 				this._isOpen = false;
 
 				// Add the transition envent in order to trigger the closeCallback only after totally closed!
-				this._tooltipBallonContentElem.addEventListener(
+				this._tooltipBalloonContentElem.addEventListener(
 					GlobalEnum.HTMLEvent.TransitionEnd,
-					this._eventOnClosedBallon
+					this._eventOnClosedBalloon
 				);
 
 				// Remove the IsOpned selector
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsOpened);
-				Helper.Dom.Styles.RemoveClass(this._tooltipBallonWrapperElem, Enum.CssClass.IsOpened);
+				Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpened);
 			}
 		}
 
-		// Open the Baloon
+		// Open the Balloon
 		private _triggerOpen() {
 			// Check if the tooltip is closed
-			if (this._isOpen) {
+			if (this._isOpen === false) {
 				this._isOpen = true;
 
-				// Check if the baloon could be opened at the place it's defined!
+				// Check if the balloon could be opened at the place it's defined!
 				this._getRecomendedPosition();
 
 				// Add the Event responsible to close it when click outside!
@@ -242,7 +248,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 				// Add the IsOpned Class Selector
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsOpened);
-				Helper.Dom.Styles.AddClass(this._tooltipBallonWrapperElem, Enum.CssClass.IsOpened);
+				Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpened);
 
 				// Trigger the _platformEventOnToggleCallback callback!
 				Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, true);
@@ -264,18 +270,16 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// Remove Pattern Events
 		private _unsetEvents(): void {
-			this._tooltipContentElem.removeEventListener(GlobalEnum.HTMLEvent.Blur, this._eventBlur);
-			this._tooltipContentElem.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventFocus);
+			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
+			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
 
 			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
-
 			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
 
-			this._tooltipContentElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
-
-			this._tooltipBallonContentElem.removeEventListener(
+			this._tooltipBalloonContentElem.removeEventListener(
 				GlobalEnum.HTMLEvent.TransitionEnd,
-				this._eventOnClosedBallon
+				this._eventOnClosedBalloon
 			);
 		}
 
@@ -286,6 +290,11 @@ namespace OSUIFramework.Patterns.Tooltip {
 			} else {
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsHover);
 			}
+
+			// Remove previous added events
+			this._unsetEvents();
+			// Reset events according to the new position!
+			this._setUpEvents();
 		}
 
 		// Update Pattern visibility accordingly IsVisible status
@@ -308,15 +317,15 @@ namespace OSUIFramework.Patterns.Tooltip {
 		 */
 		protected setA11YProperties(): void {
 			// Set Role to the tooltipContent
-			Helper.A11Y.RoleTooltip(this._tooltipContentElem);
+			Helper.A11Y.RoleTooltip(this._tooltipIconElem);
 			// Set Aria Label to the tooltipContent
-			Helper.A11Y.AriaLabel(this._tooltipContentElem, Enum.AriaLabelText.Content);
-			// Set TabIndex to the TooltipBallon
-			Helper.A11Y.TabIndexTrue(this._tooltipContentElem);
-			// Set AriaDescribedBy to the TooltipBallon
-			Helper.A11Y.AriaDescribedBy(this._tooltipContentElem, this._tooltipBallonWrapperElem.id);
-			// Set LabelledBy to the TooltipBallon
-			Helper.A11Y.AriaLabelledBy(this._tooltipContentElem, this._tooltipBallonWrapperElem.id);
+			Helper.A11Y.AriaLabel(this._tooltipIconElem, Enum.AriaLabelText.Content);
+			// Set TabIndex to the TooltipBalloon
+			Helper.A11Y.TabIndexTrue(this._tooltipIconElem);
+			// Set AriaDescribedBy to the TooltipBalloon
+			Helper.A11Y.AriaDescribedBy(this._tooltipIconElem, this._tooltipBalloonWrapperElem.id);
+			// Set LabelledBy to the TooltipBalloon
+			Helper.A11Y.AriaLabelledBy(this._tooltipIconElem, this._tooltipBalloonWrapperElem.id);
 		}
 
 		/**
@@ -326,20 +335,20 @@ namespace OSUIFramework.Patterns.Tooltip {
 		 * @memberof Tooltip
 		 */
 		protected setCallbacks(): void {
-			this._eventBlur = this._onBlur.bind(this);
-			this._eventClick = this._onClick.bind(this);
-			this._eventFocus = this._onFocus.bind(this);
+			this._eventOnBlur = this._onBlur.bind(this);
+			this._eventOnClick = this._onClick.bind(this);
+			this._eventOnFocus = this._onFocus.bind(this);
 			this._eventOnBodyClick = this._onBodyClick.bind(this);
 			this._eventOnBodyScroll = this._onBodyScroll.bind(this);
-			this._eventOnClosedBallon = this._onClosedBallon.bind(this);
+			this._eventOnClosedBalloon = this._onClosedBalloon.bind(this);
 		}
 
 		// Update info based on htmlContent
 		protected setHtmlElements(): void {
 			// Set the html references that will be used to manage the cssClasses and atribute properties
-			this._tooltipContentElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.Content);
-			this._tooltipBallonContentElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.BalloonContent);
-			this._tooltipBallonWrapperElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.BalloonWrapper);
+			this._tooltipIconElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.Content);
+			this._tooltipBalloonContentElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.BalloonContent);
+			this._tooltipBalloonWrapperElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.BalloonWrapper);
 
 			// Add Accessibility properties
 			this.setA11YProperties();
@@ -348,7 +357,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 			// Set the Initial CSS class selectors
 			this._setCssClasses();
 			// Ensure that the Move only happens after HTML elements has been set!
-			this._moveBallonElement();
+			this._moveBalloonElement();
 			// Set the balloon coordinates
 			this._setBalloonCoordinates();
 
@@ -363,12 +372,12 @@ namespace OSUIFramework.Patterns.Tooltip {
 		 * @memberof Tooltip
 		 */
 		protected unsetCallbacks(): void {
-			this._eventBlur = undefined;
-			this._eventClick = undefined;
-			this._eventFocus = undefined;
+			this._eventOnBlur = undefined;
+			this._eventOnClick = undefined;
+			this._eventOnFocus = undefined;
 			this._eventOnBodyClick = undefined;
 			this._eventOnBodyScroll = undefined;
-			this._eventOnClosedBallon = undefined;
+			this._eventOnClosedBalloon = undefined;
 		}
 		/**
 		 * Unsets the refences to the HTML elements.
@@ -377,9 +386,9 @@ namespace OSUIFramework.Patterns.Tooltip {
 		 * @memberof Tooltip
 		 */
 		protected unsetHtmlElements(): void {
-			this._tooltipContentElem = undefined;
-			this._tooltipBallonContentElem = undefined;
-			this._tooltipBallonWrapperElem = undefined;
+			this._tooltipIconElem = undefined;
+			this._tooltipBalloonContentElem = undefined;
+			this._tooltipBalloonWrapperElem = undefined;
 		}
 
 		public build(): void {
@@ -415,9 +424,9 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 					case Enum.Properties.Position:
 						// Remove the old Position CSS Class
-						Helper.Dom.Styles.RemoveClass(this._tooltipBallonWrapperElem, oldPosition);
+						Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, oldPosition);
 						// Set the new one!
-						Helper.Dom.Styles.AddClass(this._tooltipBallonWrapperElem, propertyValue as string);
+						Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, propertyValue as string);
 						// Check if the new poition can be set!
 						this._getRecomendedPosition();
 						break;
