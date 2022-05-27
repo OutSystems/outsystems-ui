@@ -33,19 +33,23 @@ namespace OSUIFramework.Patterns.Tooltip {
 			const balloonBounds = this._tooltipBallonContentElem.getBoundingClientRect();
 
 			// Get the recomended position to open the balloon
-			let recomendedPosition = Helper.BoundPosition.GetRecomendedPositionByBounds(
+			const recomendedPosition = Helper.BoundPosition.GetRecomendedPositionByBounds(
 				balloonBounds,
 				document.body.getBoundingClientRect()
 			);
 
 			// Check if there are a any recomended position
 			if (recomendedPosition !== undefined) {
-				recomendedPosition = `${Enum.CssClass.Pattern}'--is-'${recomendedPosition}`;
+				// If the recomendedPosition is differently the position assigned...
+				if (recomendedPosition !== this.configs.Position) {
+					// Remove the older position
+					Helper.Dom.Styles.RemoveClass(this._tooltipBallonWrapperElem, this.configs.Position);
+				}
 
-				// Store the current position
+				// Store the current one!
 				this.configs.Position = recomendedPosition as GlobalEnum.Position;
-				// Set the new position
-				Helper.Dom.Styles.AddClass(this._tooltipBallonWrapperElem, recomendedPosition);
+				// Set the new one
+				Helper.Dom.Styles.AddClass(this._tooltipBallonWrapperElem, this.configs.Position);
 			}
 		}
 
@@ -131,12 +135,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 				this._eventOnClosedBallon
 			);
 
-			// Check if the tooltip has a defined cssClass position
-			const hasPosition = BoundsPosition.GetElementPositionClass(this._tooltipBallonWrapperElem);
-
-			if (hasPosition && hasPosition !== this.configs.Position) {
-				Helper.Dom.Styles.RemoveClass(this._tooltipBallonWrapperElem, hasPosition);
-			}
+			// Update/Get the recomended position
+			this._getRecomendedPosition();
 		}
 
 		// Open the tooltip
