@@ -13,15 +13,22 @@ namespace OSUIFramework.Patterns.Tooltip {
 		private _eventOnClosedBalloon: Callbacks.Generic;
 		// Event OnPatternFocus
 		private _eventOnFocus: Callbacks.Generic;
+		// On WindowResize Event
+		private _eventOnWindowResize: Callbacks.Generic;
 		// Flag used to manage id it's open or closed!
 		private _isOpen: boolean;
 		// Platform OnInitialize Callback
 		private _platformEventInitializedCallback: Callbacks.OSGeneric;
 		// Platform OnClose Callback
 		private _platformEventOnToggleCallback: Callbacks.OSGeneric;
+		// Store the RequestAnimationFrame (aka raf) that will be triggered at OnBodyScroll
+		private _rafOnBodyScroll: number;
+		// Store the RequestAnimationFrame (aka raf) that will be triggered at OnWindowResize
+		private _rafOnWindowResize: number;
 		// Store the HTML elements
 		private _tooltipBalloonContentActiveElem: HTMLElement;
 		private _tooltipBalloonContentElem: HTMLElement;
+		private _tooltipBalloonRecomendedPosition: string;
 		private _tooltipBalloonWrapperElem: HTMLElement;
 		private _tooltipIconElem: HTMLElement;
 
@@ -49,10 +56,19 @@ namespace OSUIFramework.Patterns.Tooltip {
 					// Remove the older position
 					Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, this.configs.Position);
 				}
-
-				// Store the current one!
-				this.configs.Position = recomendedPosition as GlobalEnum.Position;
+				// Update the recomended Position!
+				this._tooltipBalloonRecomendedPosition = recomendedPosition as GlobalEnum.Position;
 				// Set the new one
+				Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, recomendedPosition);
+			} else if (
+				this._tooltipBalloonRecomendedPosition !== '' &&
+				this._tooltipBalloonRecomendedPosition !== this.configs.Position
+			) {
+				// Clear oldRecomendedPosition
+				this._tooltipBalloonRecomendedPosition = '';
+				// Remove the older position
+				Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, this._tooltipBalloonRecomendedPosition);
+				// Reset to the default one!
 				Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, this.configs.Position);
 			}
 		}
@@ -122,6 +138,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 				this._setBalloonCoordinates();
 				// Update/Get the recomended position
 				this._getRecomendedPosition();
+				// Update the "animation" before the next repaint
+				this._rafOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
 			}
 		}
 
@@ -149,6 +167,19 @@ namespace OSUIFramework.Patterns.Tooltip {
 		// Open the tooltip
 		private _onFocus(): void {
 			this._triggerOpen();
+		}
+
+		// Manage the behaviour when there is a window resize!
+		private _onWindowResize(): void {
+			// If there is a horizontal resize and the Dropdown is open, close it!
+			if (this._isOpen) {
+				// Update Coordinates
+				this._setBalloonCoordinates();
+				// Check the recomended position
+				this._getRecomendedPosition();
+				// Update the "animation" before the next repaint
+				this._rafOnWindowResize = requestAnimationFrame(this._eventOnWindowResize);
+			}
 		}
 
 		// Set balloon position and coordinates based on pattern SelfElement
@@ -200,13 +231,20 @@ namespace OSUIFramework.Patterns.Tooltip {
 		private _setUpEvents(): void {
 			// If the accessibility feature is enabled
 			if (Helper.DeviceInfo.HasAccessibilityEnabled) {
-				// // Add the focus event in order to show the tooltip balloon when the toolTip content is focused
-				// this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
-				// this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
+				// Add the focus event in order to show the tooltip balloon when the toolTip content is focused
+				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
+				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
 			}
 
 			// Add the BodyScroll callback that will be used to update the balloon coodinates
 			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
+			// Update "animation" before the next repaint
+			this._rafOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
+
+			// Add the window resize callback that will be used update the balloon position!
+			Event.GlobalEventManager.Instance.addHandler(Event.Type.WindowResize, this._eventOnWindowResize);
+			// Update "animation" before the next repaint
+			this._rafOnWindowResize = requestAnimationFrame(this._eventOnWindowResize);
 
 			// If tooltip should behave onMouseOver and it's visible by default
 			if (this.configs.IsHover || this._isOpen) {
@@ -216,11 +254,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 			// If tooltip should behave at onMouseClick, or if it's on tablet or phone
 			if (this.configs.IsHover === false || Helper.DeviceInfo.IsDesktop === false) {
-				// this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
-
-				// Add the focus event in order to show the tooltip balloon when the toolTip content is focused
-				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
-				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
+				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			}
 		}
 
@@ -282,13 +316,18 @@ namespace OSUIFramework.Patterns.Tooltip {
 			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
 			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
 
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
 			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
+			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
+
+			Event.GlobalEventManager.Instance.removeHandler(Event.Type.WindowResize, this._eventOnWindowResize);
 
 			this._tooltipBalloonContentElem.removeEventListener(
 				GlobalEnum.HTMLEvent.TransitionEnd,
 				this._eventOnClosedBalloon
 			);
+
+			cancelAnimationFrame(this._rafOnBodyScroll);
+			cancelAnimationFrame(this._rafOnWindowResize);
 		}
 
 		// Update Pattern behaviour accordingly IsHover status
@@ -349,6 +388,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 			this._eventOnBodyClick = this._onBodyClick.bind(this);
 			this._eventOnBodyScroll = this._onBodyScroll.bind(this);
 			this._eventOnClosedBalloon = this._onClosedBalloon.bind(this);
+			this._eventOnWindowResize = this._onWindowResize.bind(this);
 		}
 
 		// Update info based on htmlContent
@@ -386,6 +426,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 			this._eventOnBodyClick = undefined;
 			this._eventOnBodyScroll = undefined;
 			this._eventOnClosedBalloon = undefined;
+			this._eventOnWindowResize = undefined;
 		}
 		/**
 		 * Unsets the refences to the HTML elements.
