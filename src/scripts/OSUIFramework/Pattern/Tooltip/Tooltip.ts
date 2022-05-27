@@ -101,9 +101,10 @@ namespace OSUIFramework.Patterns.Tooltip {
 			if (this.isBuilt) {
 				const _clickedElem = e.target as HTMLElement;
 				const _closestElem = _clickedElem.closest(Constants.Dot + Enum.CssClass.Pattern);
+				const _closestBalloonElem = _clickedElem.closest(Constants.Dot + Enum.CssClass.BalloonWrapper);
 
-				// If the click has occur outside of this tooltip
-				if (_closestElem !== this._selfElem) {
+				// If the click has occur outside of this tooltip, or tooltipBalloon!
+				if (_closestElem !== this._selfElem && _closestBalloonElem !== this._tooltipBalloonWrapperElem) {
 					// Remove the Event
 					Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
 
@@ -197,9 +198,12 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// Add the tooltip Events
 		private _setUpEvents(): void {
-			// Add the focus event in order to show the tooltip balloon when the toolTip content is focused
-			this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
-			this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
+			// If the accessibility feature is enabled
+			if (Helper.DeviceInfo.HasAccessibilityEnabled) {
+				// // Add the focus event in order to show the tooltip balloon when the toolTip content is focused
+				// this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
+				// this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
+			}
 
 			// Add the BodyScroll callback that will be used to update the balloon coodinates
 			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
@@ -212,7 +216,11 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 			// If tooltip should behave at onMouseClick, or if it's on tablet or phone
 			if (this.configs.IsHover === false || Helper.DeviceInfo.IsDesktop === false) {
-				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+				// this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+
+				// Add the focus event in order to show the tooltip balloon when the toolTip content is focused
+				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
+				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
 			}
 		}
 
