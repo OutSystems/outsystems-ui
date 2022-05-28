@@ -28,7 +28,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 		// Store the HTML elements
 		private _tooltipBalloonContentActiveElem: HTMLElement;
 		private _tooltipBalloonContentElem: HTMLElement;
-		private _tooltipBalloonRecomendedPosition: string;
+		private _tooltipBalloonRecomendedPosition = '';
 		private _tooltipBalloonWrapperElem: HTMLElement;
 		private _tooltipIconElem: HTMLElement;
 
