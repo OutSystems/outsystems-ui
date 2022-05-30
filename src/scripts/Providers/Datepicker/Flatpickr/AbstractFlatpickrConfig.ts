@@ -33,7 +33,7 @@ namespace Providers.Datepicker.Flatpickr {
 
 			// Time must behave in 12h format with AM/PM or in 24h format
 			if (this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time12hFormat) {
-				_altFormat = _altFormat + ' - h:i K';
+				_altFormat = _altFormat + ' - H:i K';
 			} else if (this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat) {
 				_altFormat = _altFormat + ' - H:i';
 			}

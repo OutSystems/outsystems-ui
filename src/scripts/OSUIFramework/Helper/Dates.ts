@@ -17,9 +17,6 @@ namespace OSUIFramework.Helper {
 		 */
 		public static Compare(date1: string, date2: string): boolean {
 			// Check if received dates are in right format
-			date1 = date1.indexOf('T') !== 10 ? date1.replace(' ', 'T') : date1;
-			date2 = date2.indexOf('T') !== 10 ? date2.replace(' ', 'T') : date2;
-
 			return Date.parse(date1) < Date.parse(date2);
 		}
 
@@ -38,9 +35,6 @@ namespace OSUIFramework.Helper {
 
 			// Check if the given date is not a date object and if it's a valid date
 			if (typeof date === 'string') {
-				// Update the string into a string date format
-				date = date.indexOf('T') !== 10 ? date.replace(' ', 'T') : date;
-
 				// Check if string could be parsed into a date - If it has an expected dateformat
 				if (isNaN(Date.parse(date))) {
 					throw new Error(`The given date '${date}' it's not a valid date.`);
