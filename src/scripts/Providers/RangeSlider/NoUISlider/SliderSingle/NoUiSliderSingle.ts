@@ -109,5 +109,15 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 				}
 			}
 		}
+
+		/**
+		 * Method to set current RangeSlider value
+		 *
+		 * @param {number} value
+		 * @memberof OSUINoUiSlider
+		 */
+		public setValue(value: number): void {
+			this.provider.set(value);
+		}
 	}
 }

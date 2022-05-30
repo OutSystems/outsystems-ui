@@ -189,4 +189,55 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 
 		return JSON.stringify(responseObj);
 	}
+
+	/**
+	 * Function to set the Range Slider value
+	 *
+	 * @export
+	 * @param {string} rangeSliderId
+	 * @param {number} value
+	 */
+	export function SetRangeSliderValue(rangeSliderId: string, value: number): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
+			rangeSlider.setValue(value);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.RangeSlider.FailRegisterCallback;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
+	 * Function to reset the Range Slider
+	 *
+	 * @export
+	 * @param {string} rangeSliderId
+	 */
+	export function ResetRangeSliderValue(rangeSliderId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
+			rangeSlider.reset();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.RangeSlider.FailRegisterCallback;
+		}
+
+		return JSON.stringify(responseObj);
+	}
 }

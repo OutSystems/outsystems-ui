@@ -122,5 +122,15 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 				}
 			}
 		}
+
+		/**
+		 * Method to set current RangeSliderInterval values
+		 *
+		 * @param {number} value
+		 * @memberof OSUINoUiSlider
+		 */
+		public setValue(intervalStart: number, intervalEnd: number): void {
+			this.provider.set([intervalStart, intervalEnd]);
+		}
 	}
 }
