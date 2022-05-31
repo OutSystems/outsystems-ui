@@ -16,7 +16,7 @@ namespace OSUIFramework.Event.GestureEvent {
 
 		// Dustance threshold expected to be cosidered a swipe event
 		private _threshold = 10;
-		// Velocity expected to be cosidered a swipe event
+		// Velocity expected to be considered a swipe event
 		private _velocity = 0.3;
 
 		constructor(target: HTMLElement) {
@@ -33,23 +33,23 @@ namespace OSUIFramework.Event.GestureEvent {
 		 * @memberof SwipeEvent
 		 */
 		private _onGestureEnd(offsetX: number, offsetY: number, timeTaken: number): void {
-			// Was this a swipe?
+			// CHeck if this a swipe
 			if (
-				// Was the gesture done inside the boulds of the expected threshold?
+				// CHeck if the gesture done inside the bounds of the expected threshold
 				(Math.abs(offsetX) > this._threshold || Math.abs(offsetY) > this._threshold) &&
-				// Was the gesture fast enough (this._velocity) to be considered a swipe?
+				// Check if the gesture fast enough (this._velocity) to be considered a swipe
 				(Math.abs(offsetX) / timeTaken > this._velocity || Math.abs(offsetY) / timeTaken > this._velocity)
 			) {
-				//Is the swipe horizontal?
+				// Check if the swipe is horizontal
 				if (Math.abs(offsetX) > Math.abs(offsetY)) {
-					// swipe right?
+					// Check if is swipe right
 					if (offsetX > 0) {
 						this._swipeRightCallback();
 					} else {
 						this._swipeLeftCallback();
 					}
 				} else if (offsetY > 0) {
-					// swipe down?
+					// Check if the swipe is down
 					this._swipeDownCallback();
 				} else {
 					this._swipeUpCallback();

@@ -102,7 +102,7 @@ namespace OSUIFramework.Patterns.Notification {
 			this._focusTrapInstance = new DynamicElements.FocusTrap.FocusTrap(opts);
 		}
 
-		// Method to hadnle the creation of the GestureEvents
+		// Method to handle the creation of the GestureEvents
 		private _handleGestureEvents(): void {
 			if (!Helper.DeviceInfo.IsDesktop) {
 				// Create and save gesture event instance. Created here and not on constructor,

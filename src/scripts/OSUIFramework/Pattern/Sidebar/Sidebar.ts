@@ -87,13 +87,13 @@ namespace OSUIFramework.Patterns.Sidebar {
 				// as we need to pass this._selfElem, only available after super.build()
 				this._gestureEventInstance = new Event.GestureEvent.DragEvent(this._selfElem);
 
-				//Set event listeners and callbacks
+				// Set event listeners and callbacks
 				this.setGestureEvents(
 					this._onGestureStart.bind(this),
 					this._onGestureMove.bind(this),
 					this._onGestureEnd.bind(this)
 				);
-				// WIP - class with the code needed to apply transform on a element and perform animation
+				// Apply transform on an element and perform animation
 				this._animateOnDragInstance = new Animation.AnimateOnDrag(this._selfElem);
 			}
 		}
