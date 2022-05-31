@@ -102,7 +102,7 @@ namespace OSUIFramework.Animation {
 			// Remove transitions
 			Helper.Dom.Styles.RemoveClass(this._targetElement, Constants.NoTransition);
 
-			// Just clicked or swiped in invalid direction?
+			// Check if just clicked or swiped in invalid direction
 			if ((offsetX === 0 && offsetY === 0) || this._dragParams.InvalidDrag) {
 				return;
 			}
@@ -148,13 +148,13 @@ namespace OSUIFramework.Animation {
 			this._dragParams.InvalidDrag =
 				this._dragParams.IsOpen && _dragDirection !== this._dragParams.ExpectedDirection;
 
-			// Swiped in wrong direction?
+			// CHeck if swiped in wrong direction
 			if (this._dragParams.InvalidDrag) {
 				this._updateLastPositions(currentX, currentY);
 				return;
 			}
 
-			// No orientation set?
+			// Check if orientation is set
 			if (this._dragParams.DragOrientation === '') {
 				const isHorizontal = Math.abs(offsetX) >= Math.abs(offsetY);
 
@@ -165,7 +165,7 @@ namespace OSUIFramework.Animation {
 				requestAnimationFrame(this._updateUI.bind(this));
 			}
 
-			// Is Scrolling?
+			// Check if is scrolling
 			if (this._dragParams.DragOrientation === GlobalEnum.Orientation.Vertical) {
 				this._updateLastPositions(currentX, currentY);
 				return;
@@ -176,7 +176,7 @@ namespace OSUIFramework.Animation {
 
 			const IsDraggingInsideBounds = this._checkIsDraggingInsideBounds(currentX);
 
-			// Dragging inside bounds?
+			// Checking if dragging inside bounds
 			if (IsDraggingInsideBounds) {
 				const updateXaxis = this._dragParams.MoveX + (currentX - this._dragParams.LastX);
 				// Update x axis offset
