@@ -64,12 +64,13 @@ namespace OSUIFramework.Patterns.Tooltip {
 				this._tooltipBalloonRecomendedPosition !== '' &&
 				this._tooltipBalloonRecomendedPosition !== this.configs.Position
 			) {
-				// Clear oldRecomendedPosition
-				this._tooltipBalloonRecomendedPosition = '';
 				// Remove the older position
 				Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, this._tooltipBalloonRecomendedPosition);
 				// Reset to the default one!
 				Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, this.configs.Position);
+
+				// Clear oldRecomendedPosition
+				this._tooltipBalloonRecomendedPosition = '';
 			}
 		}
 
@@ -281,6 +282,9 @@ namespace OSUIFramework.Patterns.Tooltip {
 			// Check if the tooltip is closed
 			if (this._isOpen === false) {
 				this._isOpen = true;
+
+				// Set the Balloon Coordinates
+				this._setBalloonCoordinates();
 
 				// Check if the balloon could be opened at the place it's defined!
 				this._getRecomendedPosition();
