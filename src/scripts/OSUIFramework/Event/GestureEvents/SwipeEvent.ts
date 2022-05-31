@@ -14,7 +14,7 @@ namespace OSUIFramework.Event.GestureEvent {
 		private _swipeRightCallback: Callbacks.Generic;
 		private _swipeUpCallback: Callbacks.Generic;
 
-		// Distance threshold expected to be cosidered a swipe event
+		// Distance threshold expected to be considered a swipe event
 		private _threshold = 10;
 		// Velocity expected to be considered a swipe event
 		private _velocity = 0.3;
