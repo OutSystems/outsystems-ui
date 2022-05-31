@@ -32,6 +32,8 @@ namespace OSUIFramework.Patterns.RangeSlider.Enum {
 	 * RangeSlider Enum properties
 	 */
 	export enum Properties {
+		InitialValueTo = 'InitialValueTo',
+		InitialValueFrom = 'InitialValueFrom',
 		IsDisabled = 'IsDisabled',
 		MaxValue = 'MaxValue',
 		MinValue = 'MinValue',

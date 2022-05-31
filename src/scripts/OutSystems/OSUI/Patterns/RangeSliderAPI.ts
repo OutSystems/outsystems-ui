@@ -231,7 +231,7 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 
 		try {
 			const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
-			rangeSlider.reset();
+			rangeSlider.resetValue();
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;

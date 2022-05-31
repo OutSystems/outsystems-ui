@@ -336,8 +336,6 @@ namespace Providers.RangeSlider.NoUISlider {
 			this._setOnValueChangeEvent(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Change);
 		}
 
-		public resetValue(): void {}
-
 		protected abstract prepareConfigs(): void;
 	}
 }
