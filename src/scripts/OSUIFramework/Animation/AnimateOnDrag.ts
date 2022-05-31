@@ -206,14 +206,14 @@ namespace OSUIFramework.Animation {
 			width: string
 		): void {
 			// Set defaults
-			this._dragParams.IsMoving = true;
 			this._dragParams.DragOrientation = GlobalEnum.Orientation.None;
+			this._dragParams.ExpectedDirection = expectedDirection;
+			this._dragParams.IsMoving = true;
+			this._dragParams.IsOpen = isOpen;
 			this._dragParams.LastX = currentX;
 			this._dragParams.LastY = currentY;
 			this._dragParams.Size = width;
-			this._dragParams.ExpectedDirection = expectedDirection;
 			this._dragParams.VerticalDrag = verticalDrag;
-			this._dragParams.IsOpen = isOpen;
 
 			if (this._dragParams.IsOpen) {
 				this._dragParams.MoveX = 0;
