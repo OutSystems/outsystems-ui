@@ -16,13 +16,21 @@ namespace OSUIFramework.Patterns {
 		implements Interface.IParent
 	{
 		/**
-		 * Store a collection about all the child items in the parent scope
+		 * Store a collection about all the child items <childId, childType> in the parent scope
 		 *
 		 * @private
-		 * @type {Map<string, CT>}
+		 * @type {Map<string, string>} // Map<childId, childType>
 		 * @memberof AbstractParent
 		 */
-		private _childItems: Map<string, CT> = new Map<string, CT>();
+		private _childIdsByType: Map<string, string> = new Map<string, string>();
+
+		/**
+		 * Associative Array that will contain the childType as keyName and a map with all childs of same type!
+		 *
+		 * @private
+		 * @memberof AbstractParent
+		 */
+		private _childItemsByType = {};
 
 		/**
 		 * Get the child reference based on given Id
@@ -31,17 +39,34 @@ namespace OSUIFramework.Patterns {
 		 * @returns Child Reference
 		 */
 		protected getChild(childId: string): CT {
-			return this._childItems.get(childId);
+			// Get ChildType
+			const childType = this._childIdsByType.get(childId);
+
+			// Check if there are childs of the given ChildId type!
+			if (this._childItemsByType[childType]) {
+				return this._childItemsByType[childType].get(childId);
+			} else {
+				return undefined;
+			}
 		}
 
 		/**
 		 * Get a child reference by a given Index position
 		 *
 		 * @param index Index of the item to be returned
+		 * @param childType To be based on childType childs collection, otherwise will assume parent only contains one child type!
 		 * @returns Child Reference
 		 */
-		protected getChildByIndex(index: number): CT {
-			return this.getChild(Helper.MapOperation.ExportKeys(this._childItems)[index]);
+		protected getChildByIndex(index: number, childType?: string): CT {
+			// If childType undefined, get the first key object name!
+			if (childType === undefined) {
+				childType = Object.keys(this._childItemsByType)[0];
+			}
+
+			// Get the correct map based on the given childType
+			const childsMap = this._childItemsByType[childType];
+
+			return this.getChild(Helper.MapOperation.ExportKeys(childsMap)[index]);
 		}
 
 		/**
@@ -51,7 +76,12 @@ namespace OSUIFramework.Patterns {
 		 * @returns Index value
 		 */
 		protected getChildIndex(childId: string): number {
-			return Helper.MapOperation.ExportKeys(this._childItems).indexOf(childId);
+			// Get ChildType
+			const childType = this._childIdsByType.get(childId);
+			// Get the correct map based on the given childType
+			const childsMap = this._childItemsByType[childType];
+
+			return Helper.MapOperation.ExportKeys(childsMap).indexOf(childId);
 		}
 
 		/**
@@ -61,19 +91,29 @@ namespace OSUIFramework.Patterns {
 		 * @param childItem Reference to be added
 		 */
 		protected setChild(childId: string, childItem: CT): void {
+			// const childType = this._childIdsByType.size >= 20 ? 'batatas' : childItem.constructor.name;
+			const childType = childItem.constructor.name;
+
+			if (this._childItemsByType[childType] === undefined) {
+				this._childItemsByType[childType] = new Map<string, CT>();
+			}
+
 			// Check if we have no items yet
-			if (this._childItems.size === 0) {
+			if (this._childItemsByType[childType].size === 0) {
 				// Set item as First and Last child
 				childItem.isFirstChild = true;
 				childItem.isLastChild = true;
 			} else {
 				// Since we've more than one child, get the previous and unset it as lastChild
-				this.getChildByIndex(this._childItems.size - 1).isLastChild = false;
+				this.getChildByIndex(this._childItemsByType[childType].size - 1, childType).isLastChild = false;
 				// Set the current one as lastChild
 				childItem.isLastChild = true;
 			}
 
-			this._childItems.set(childId, childItem);
+			// Set the child into the global _childIdsByType
+			this._childIdsByType.set(childId, childType);
+			// Set the given child into the map with the same type
+			this._childItemsByType[childType].set(childId, childItem);
 		}
 
 		/**
@@ -82,6 +122,10 @@ namespace OSUIFramework.Patterns {
 		 * @param childId Id of the item that will be removed
 		 */
 		protected unsetChild(childId: string): void {
+			// Get ChildType
+			const childType = this._childIdsByType.get(childId);
+			// Get the correct map based on the given childType
+			const childsMap = this._childItemsByType[childType];
 			// Get the child reference
 			const childItem = this.getChild(childId);
 
@@ -90,7 +134,7 @@ namespace OSUIFramework.Patterns {
 				// unSet it as firstChild
 				childItem.isFirstChild = false;
 				// Set the 2nd child as firsChild since it will turns into the first one!
-				const nextSibling = this.getChildByIndex(1);
+				const nextSibling = this.getChildByIndex(1, childType);
 				if (nextSibling) {
 					nextSibling.isFirstChild = true;
 				}
@@ -101,25 +145,36 @@ namespace OSUIFramework.Patterns {
 				// unSet it as lastChild
 				childItem.isLastChild = false;
 				// Set the previous child as lastChild since it will turns into the last one!
-				const prevSibling = this.getChildByIndex(this._childItems.size - 1);
+				const prevSibling = this.getChildByIndex(childsMap.size - 1, childType);
 				if (prevSibling) {
 					prevSibling.isLastChild = true;
 				}
 			}
 
-			// Remove it from _childItems map
-			this._childItems.delete(childId);
+			// Remove child from it's Map of all child items global reference!
+			this._childIdsByType.delete(childId);
+			// Remove child from it's Map of items with the same type!
+			childsMap.delete(childId);
 		}
 
 		/**
-		 * Getter that allows to obtain all the child Ids inside Dropdown.
+		 * Getter that allows to obtain all the childs when parent only contains childs of one type,
+		 * otherwise a type must be passed in order to return all child of the given type!
 		 *
-		 * @readonly
-		 * @type {Array<CT>}
+		 * @param type To be based on childType childs collection, otherwise will assume parent only contains one child type!
+		 * @returns
 		 * @memberof AbstractParent
 		 */
-		public get childItems(): Array<CT> {
-			return [...this._childItems.values()];
+		public getChildItems(type?: string): Array<CT> {
+			// If type undefined, get the first key object name!
+			if (type === undefined) {
+				type = Object.keys(this._childItemsByType)[0];
+			}
+
+			// Get the correct map based on the given type
+			const childsMap = this._childItemsByType[type];
+
+			return [...childsMap.values()];
 		}
 
 		/**

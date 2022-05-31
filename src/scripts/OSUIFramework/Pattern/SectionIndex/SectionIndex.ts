@@ -99,7 +99,7 @@ namespace OSUIFramework.Patterns.SectionIndex {
 			}
 
 			// Get all IsActive Items
-			const isActiveChilds = this.childItems.filter((item) => item.IsSelected);
+			const isActiveChilds = this.getChildItems().filter((item) => item.IsSelected);
 			// Go through all the IsActive items
 			for (const optionItem of isActiveChilds) {
 				// In case we've multiple IsActive items, unselect all unless last one!
