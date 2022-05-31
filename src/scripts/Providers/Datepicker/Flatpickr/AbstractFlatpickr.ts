@@ -244,8 +244,8 @@ namespace Providers.Datepicker.Flatpickr {
 		public dispose(): void {
 			if (this.isBuilt) {
 				/* In order to avoid platform warnings due to DateFormat changes when DateFormar different from YYYY-MM-DD,
-				remove the input element from the DOM, this will avoid library update the input into a date with a different date format! */
-				this._datePickerProviderInputElem.remove();
+				remove the input element value, this will avoid library update it's value into a date with a different date format! */
+				this._datePickerProviderInputElem.value = '';
 
 				this.unsetCallbacks();
 				this.unsetHtmlElements();
