@@ -82,7 +82,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 		// Method to hadnle the creation of the GestureEvents
 		private _handleGestureEvents(): void {
-			if (!Helper.DeviceInfo.IsNative) {
+			if (Helper.DeviceInfo.IsNative) {
 				// Create and save gesture event instance. Created here and not on constructor,
 				// as we need to pass this._selfElem, only available after super.build()
 				this._gestureEventInstance = new Event.GestureEvent.DragEvent(this._selfElem);
