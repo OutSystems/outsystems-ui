@@ -42,7 +42,7 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	export function Create(flipId: string, configs: string): OSUIFramework.Patterns.FlipContent.IFlipContent {
 		if (_flipContentMap.has(flipId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.FlipContent} registered under id: ${flipId}`
+				`There is already a ${OSUIFramework.GlobalEnum.PatternName.FlipContent} registered under id: ${flipId}`
 			);
 		}
 

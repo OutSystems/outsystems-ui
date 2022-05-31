@@ -15,15 +15,15 @@ namespace OSUIFramework.Event.GestureEvent {
 		/**
 		 * Method to set the expected callbacks and add eventListeners to the target element
 		 *
-		 * @param {Callbacks.Generic} onStartCallback
-		 * @param {Callbacks.Generic} onMoveCallback
-		 * @param {Callbacks.Generic} [onEndCallback]
+		 * @param {Callbacks.onGestureStart} onStartCallback
+		 * @param {Callbacks.onGestureMove} onMoveCallback
+		 * @param {Callbacks.onGestureEnd} [onEndCallback]
 		 * @memberof DragEvent
 		 */
 		public setEvents(
-			onStartCallback: Callbacks.Generic,
-			onMoveCallback: Callbacks.Generic,
-			onEndCallback?: Callbacks.Generic
+			onStartCallback: Callbacks.onGestureStart,
+			onMoveCallback: Callbacks.onGestureMove,
+			onEndCallback?: Callbacks.onGestureEnd
 		): void {
 			super.setCallbacks(onStartCallback, onMoveCallback, onEndCallback);
 			super.setEventListeners();

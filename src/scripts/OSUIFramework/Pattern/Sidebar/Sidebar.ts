@@ -82,7 +82,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 		// Method to hadnle the creation of the GestureEvents
 		private _handleGestureEvents(): void {
-			if (Helper.DeviceInfo.IsNative) {
+			if (!Helper.DeviceInfo.IsNative) {
 				// Create and save gesture event instance. Created here and not on constructor,
 				// as we need to pass this._selfElem, only available after super.build()
 				this._gestureEventInstance = new Event.GestureEvent.DragEvent(this._selfElem);
@@ -103,7 +103,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._animateOnDragInstance.onDragEnd(offsetX, offsetY, timeTaken, this._toggle.bind(this));
 
 			if (this.configs.HasOverlay) {
-				Animation.OverlayTransition.UnSet(this._selfElem);
+				Animation.OverlayTransitionOnDrag.UnSet(this._selfElem);
 			}
 		}
 
@@ -112,7 +112,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._animateOnDragInstance.onDragMove(offsetX, offsetY, x, y, evt);
 
 			if (this.configs.HasOverlay) {
-				Animation.OverlayTransition.Set(this._selfElem, x, this.configs.Direction, this.configs.Width);
+				Animation.OverlayTransitionOnDrag.Set(this._selfElem, x, this.configs.Direction, this.configs.Width);
 			}
 		}
 
@@ -120,7 +120,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		private _onGestureStart(x: number, y: number): void {
 			this._animateOnDragInstance.onDragStart(
 				false,
-				GlobalEnum.Direction.Right,
+				this.configs.Direction,
 				x,
 				y,
 				this._isOpen,
@@ -434,7 +434,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			if (this._onToggle === undefined) {
 				this._onToggle = callback;
 			} else {
-				console.warn(`The ${GlobalEnum.PatternsNames.Sidebar} already has the toggle callback set.`);
+				console.warn(`The ${GlobalEnum.PatternName.Sidebar} already has the toggle callback set.`);
 			}
 		}
 

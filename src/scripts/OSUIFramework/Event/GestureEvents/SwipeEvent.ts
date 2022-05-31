@@ -84,17 +84,17 @@ namespace OSUIFramework.Event.GestureEvent {
 		/**
 		 * Method to set the expected callbacks and add eventListeners to the target element
 		 *
-		 * @param {Callbacks.Generic} swipeDownCallback
-		 * @param {Callbacks.Generic} swipeLeftCallback
-		 * @param {Callbacks.Generic} swipeRightCallback
-		 * @param {Callbacks.Generic} swipeUpCallback
+		 * @param {Callbacks.onSwipeDown} swipeDownCallback
+		 * @param {Callbacks.onSwipeLeft} swipeLeftCallback
+		 * @param {Callbacks.onSwipeRight} swipeRightCallback
+		 * @param {Callbacks.onSwipeUp} swipeUpCallback
 		 * @memberof SwipeEvent
 		 */
 		public setEvents(
-			swipeDownCallback: Callbacks.Generic,
-			swipeLeftCallback: Callbacks.Generic,
-			swipeRightCallback: Callbacks.Generic,
-			swipeUpCallback: Callbacks.Generic
+			swipeDownCallback: Callbacks.onSwipeDown,
+			swipeLeftCallback: Callbacks.onSwipeLeft,
+			swipeRightCallback: Callbacks.onSwipeRight,
+			swipeUpCallback: Callbacks.onSwipeUp
 		): void {
 			this.setSwipeCallbacks(swipeDownCallback, swipeLeftCallback, swipeRightCallback, swipeUpCallback);
 			super.setEventListeners();

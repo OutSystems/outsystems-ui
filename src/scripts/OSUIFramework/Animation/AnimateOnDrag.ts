@@ -6,7 +6,7 @@ namespace OSUIFramework.Animation {
 	 * @class DragParams
 	 */
 	class DragParams {
-		public DragDirection = '';
+		public DragOrientation = GlobalEnum.Orientation.None;
 		public ExpectedDirection = GlobalEnum.Direction.Right;
 		public InvalidDrag = false;
 		public IsMoving = false;
@@ -20,6 +20,12 @@ namespace OSUIFramework.Animation {
 		public VerticalDrag = false;
 	}
 
+	/**
+	 * Class to manage an element's transform animation on drag
+	 *
+	 * @export
+	 * @class AnimateOnDrag
+	 */
 	export class AnimateOnDrag {
 		// Store the transition information
 		private _dragParams: DragParams;
@@ -149,10 +155,10 @@ namespace OSUIFramework.Animation {
 			}
 
 			// No orientation set?
-			if (this._dragParams.DragDirection === '') {
+			if (this._dragParams.DragOrientation === '') {
 				const isHorizontal = Math.abs(offsetX) >= Math.abs(offsetY);
 
-				this._dragParams.DragDirection = isHorizontal
+				this._dragParams.DragOrientation = isHorizontal
 					? GlobalEnum.Orientation.Horizontal
 					: GlobalEnum.Orientation.Vertical;
 
@@ -160,7 +166,7 @@ namespace OSUIFramework.Animation {
 			}
 
 			// Is Scrolling?
-			if (this._dragParams.DragDirection === GlobalEnum.Orientation.Vertical) {
+			if (this._dragParams.DragOrientation === GlobalEnum.Orientation.Vertical) {
 				this._updateLastPositions(currentX, currentY);
 				return;
 			}
@@ -201,7 +207,7 @@ namespace OSUIFramework.Animation {
 		): void {
 			// Set defaults
 			this._dragParams.IsMoving = true;
-			this._dragParams.DragDirection = '';
+			this._dragParams.DragOrientation = GlobalEnum.Orientation.None;
 			this._dragParams.LastX = currentX;
 			this._dragParams.LastY = currentY;
 			this._dragParams.Size = width;
@@ -211,13 +217,57 @@ namespace OSUIFramework.Animation {
 
 			if (this._dragParams.IsOpen) {
 				this._dragParams.MoveX = 0;
-			} else if (this._dragParams.DragDirection === GlobalEnum.Direction.Left) {
+			} else if (this._dragParams.ExpectedDirection === GlobalEnum.Direction.Left) {
 				this._dragParams.MoveX = -parseInt(this._dragParams.Size);
 			} else {
 				this._dragParams.MoveX = parseInt(this._dragParams.Size);
 			}
 
 			Helper.Dom.Styles.AddClass(this._targetElement, Constants.NoTransition);
+		}
+	}
+
+	/**
+	 * Class to manage the overlay opacity on a drag transition
+	 *
+	 * @export
+	 * @abstract
+	 * @class OverlayTransition
+	 */
+	export abstract class OverlayTransitionOnDrag {
+		/**
+		 * Set overlay opacity
+		 *
+		 * @static
+		 * @param {HTMLElement} target
+		 * @param {number} x
+		 * @param {GlobalEnum.Direction} direction
+		 * @param {string} size
+		 * @memberof OverlayTransition
+		 */
+		public static Set(target: HTMLElement, x: number, direction: GlobalEnum.Direction, size: string): void {
+			const isLeft = direction === GlobalEnum.Direction.Left;
+			const currentOpacity = parseInt(target.style.getPropertyValue(GlobalEnum.CSSVariables.OverlayOpacity));
+
+			const percentageBeforeDif = (Math.abs(x) * 100) / parseInt(size);
+			const percentage = isLeft ? 0 + percentageBeforeDif : 100 - percentageBeforeDif;
+
+			const newOpacity = Math.floor(percentage) / 100;
+
+			if (currentOpacity !== newOpacity && newOpacity % 1 !== 0) {
+				Helper.Dom.Styles.SetStyleAttribute(target, GlobalEnum.CSSVariables.OverlayOpacity, newOpacity);
+			}
+		}
+
+		/**
+		 * Unset overlay opacity
+		 *
+		 * @static
+		 * @param {HTMLElement} target
+		 * @memberof OverlayTransition
+		 */
+		public static UnSet(target: HTMLElement): void {
+			Helper.Dom.Styles.SetStyleAttribute(target, GlobalEnum.CSSVariables.OverlayOpacity, 0);
 		}
 	}
 }

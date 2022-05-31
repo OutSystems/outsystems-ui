@@ -39,7 +39,7 @@ namespace OSUIFramework.Patterns.Gallery {
 				this.configs.RowItemsDesktop = Enum.Properties.MinRowItemsAllowed;
 
 				console.warn(
-					`${GlobalEnum.PatternsNames.Gallery} (${this.widgetId}): The value of the ${Enum.Properties.RowItemsDesktop} property is less than supported (${Enum.Properties.MinRowItemsAllowed}). To ensure the correct behaviour, set a value greater than ${Constants.ZeroValue}.`
+					`${GlobalEnum.PatternName.Gallery} (${this.widgetId}): The value of the ${Enum.Properties.RowItemsDesktop} property is less than supported (${Enum.Properties.MinRowItemsAllowed}). To ensure the correct behaviour, set a value greater than ${Constants.ZeroValue}.`
 				);
 			}
 
@@ -68,7 +68,7 @@ namespace OSUIFramework.Patterns.Gallery {
 				this.configs.RowItemsPhone = Enum.Properties.MinRowItemsAllowed;
 
 				console.warn(
-					`${GlobalEnum.PatternsNames.Gallery} (${this.widgetId}): The value of the ${Enum.Properties.RowItemsPhone} property is less than supported (${Enum.Properties.MinRowItemsAllowed}). To ensure the correct behaviour, set a value greater than ${Constants.ZeroValue}.`
+					`${GlobalEnum.PatternName.Gallery} (${this.widgetId}): The value of the ${Enum.Properties.RowItemsPhone} property is less than supported (${Enum.Properties.MinRowItemsAllowed}). To ensure the correct behaviour, set a value greater than ${Constants.ZeroValue}.`
 				);
 			}
 
@@ -96,7 +96,7 @@ namespace OSUIFramework.Patterns.Gallery {
 				this.configs.RowItemsTablet = Enum.Properties.MinRowItemsAllowed;
 
 				console.warn(
-					`${GlobalEnum.PatternsNames.Gallery} (${this.widgetId}): The value of the ${Enum.Properties.RowItemsTablet} property is less than supported (${Enum.Properties.MinRowItemsAllowed}). To ensure the correct behaviour, set a value greater than ${Constants.ZeroValue}.`
+					`${GlobalEnum.PatternName.Gallery} (${this.widgetId}): The value of the ${Enum.Properties.RowItemsTablet} property is less than supported (${Enum.Properties.MinRowItemsAllowed}). To ensure the correct behaviour, set a value greater than ${Constants.ZeroValue}.`
 				);
 			}
 

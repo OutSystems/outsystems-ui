@@ -361,7 +361,7 @@ namespace OSUIFramework.Patterns.Notification {
 						break;
 					case Enum.Properties.StartsOpen:
 						console.warn(
-							`${GlobalEnum.PatternsNames.Notification} (${this.widgetId}): changes to ${Enum.Properties.StartsOpen} parameter do not affect the ${GlobalEnum.PatternsNames.Notification}. Use the client actions 'NotificationShow' and 'NotificationHide' to affect the ${GlobalEnum.PatternsNames.Notification}.`
+							`${GlobalEnum.PatternName.Notification} (${this.widgetId}): changes to ${Enum.Properties.StartsOpen} parameter do not affect the ${GlobalEnum.PatternName.Notification}. Use the client actions 'NotificationShow' and 'NotificationHide' to affect the ${GlobalEnum.PatternName.Notification}.`
 						);
 						break;
 					case Enum.Properties.Position:

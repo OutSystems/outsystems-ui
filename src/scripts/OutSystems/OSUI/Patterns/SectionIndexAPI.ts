@@ -101,7 +101,7 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 	 */
 	export function GetSectionIndexById(sectionIndexId: string): OSUIFramework.Patterns.SectionIndex.ISectionIndex {
 		return OSUIFramework.Helper.MapOperation.FindInMap(
-			OSUIFramework.GlobalEnum.PatternsNames.SectionIndex,
+			OSUIFramework.GlobalEnum.PatternName.SectionIndex,
 			sectionIndexId,
 			_sectionIndexItemsMap
 		) as OSUIFramework.Patterns.SectionIndex.ISectionIndex;

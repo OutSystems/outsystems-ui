@@ -75,6 +75,7 @@ namespace OSUIFramework.GlobalEnum {
 		Down = 'down',
 		Left = 'left',
 		LTR = 'ltr',
+		None = '',
 		Right = 'right',
 		RTL = 'rtl',
 		Top = 'top',
@@ -191,15 +192,15 @@ namespace OSUIFramework.GlobalEnum {
 	 */
 	export enum Orientation {
 		Horizontal = 'horizontal',
+		None = '',
 		Vertical = 'vertical',
 	}
 
-	//TODO: change the name of the enum to singular? PatternName or PatternsName
 	/**
 	 * OutSystemsUI patterns names
 	 * Note: Can be used for logging purposes
 	 */
-	export enum PatternsNames {
+	export enum PatternName {
 		Accordion = 'Accordion',
 		AccordionItem = 'Accordion Item',
 		AnimatedLabel = 'Animated Label',
