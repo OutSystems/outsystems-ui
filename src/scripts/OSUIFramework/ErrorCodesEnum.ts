@@ -50,4 +50,11 @@ namespace OSUIFramework.ErrorCodes {
 	export const Tooltip = {
 		FailRegisterCallback: 'OSUI-GEN-08001',
 	};
+
+	export const Tabs = {
+		FailChildItemClicked: 'OSUI-GEN-09001',
+		FailSetNewChildItem: 'OSUI-GEN-09002',
+		FailToSetChildItemAction: 'OSUI-GEN-09003',
+		FailUnsetNewChildItem: 'OSUI-GEN-09004',
+	};
 }

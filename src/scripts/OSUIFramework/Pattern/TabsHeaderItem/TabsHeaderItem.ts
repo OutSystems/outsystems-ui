@@ -8,7 +8,7 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 	 * @extends {AbstractPattern<TabsHeaderItemConfig>}
 	 * @implements {ITabsHeaderItem}
 	 */
-	export class TabsHeaderItem extends AbstractPattern<TabsHeaderItemConfig> implements ITabsHeaderItem {
+	export class TabsHeaderItem extends AbstractChild<TabsHeaderItemConfig, Tabs.ITabs> implements ITabsHeaderItem {
 		// Store the data-tab attribute
 		private _dataTab: number;
 		// Store the on click event
@@ -88,6 +88,11 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		public build(): void {
 			super.build();
 
+			this.setParentInfo(
+				Constants.Dot + Tabs.Enum.CssClasses.TabsWrapper,
+				OutSystems.OSUI.Patterns.TabsAPI.GetTabsById
+			);
+
 			this._addElementToTabs();
 
 			this.setA11YProperties(false);
@@ -105,6 +110,9 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		public dispose(): void {
 			// Remove this item from the tabs pattern array
 			this._tabsElem.removeHeaderItem(this, this._isActive);
+
+			// Notify parent about this instance will be destroyed
+			this.notifyParent(Tabs.Enum.ChildNotifyActionType.Removed);
 
 			this.unsetCallbacks();
 

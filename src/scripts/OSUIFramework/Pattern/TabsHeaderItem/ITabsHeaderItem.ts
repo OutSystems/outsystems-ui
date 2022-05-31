@@ -3,7 +3,7 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 	/**
 	 * Defines the interface for OutSystemsUI TabsHeaderItem Pattern
 	 */
-	export interface ITabsHeaderItem extends Interface.IPattern {
+	export interface ITabsHeaderItem extends Interface.IChild {
 		getDataTab();
 		removeActiveElement();
 		setActiveElement();

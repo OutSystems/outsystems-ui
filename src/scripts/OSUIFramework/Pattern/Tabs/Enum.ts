@@ -1,6 +1,16 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Tabs.Enum {
 	/**
+	 * Communication between Patterns - Notification Type
+	 */
+	export enum ChildNotifyActionType {
+		Active = 'active',
+		Add = 'add',
+		Inactive = 'unactive',
+		Removed = 'removed',
+	}
+
+	/**
 	 * Tabs Enum for CSS Classes
 	 */
 	export enum CssClasses {

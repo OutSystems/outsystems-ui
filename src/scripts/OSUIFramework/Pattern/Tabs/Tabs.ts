@@ -8,7 +8,10 @@ namespace OSUIFramework.Patterns.Tabs {
 	 * @extends {AbstractPattern<TabsConfig>}
 	 * @implements {ITabs}
 	 */
-	export class Tabs extends AbstractPattern<TabsConfig> implements ITabs {
+	export class Tabs
+		extends AbstractParent<TabsConfig, TabsContentItem.ITabsContentItem | TabsHeaderItem.ITabsHeaderItem>
+		implements ITabs
+	{
 		// Store the current contentItem active
 		private _activeTabContentElement: Patterns.TabsContentItem.ITabsContentItem;
 		// Store the current headerItem active
@@ -361,12 +364,25 @@ namespace OSUIFramework.Patterns.Tabs {
 		/**
 		 * Method that it's called whenever a new TabsContentItem is rendered
 		 *
-		 * @param {TabsContentItem.ITabsContentItem} tabsContentItem
+		 * @param {string} tabsContentChildId
 		 * @memberof Tabs
 		 */
-		public addContentItem(tabsContentItem: TabsContentItem.ITabsContentItem): void {
+		public addContentItem(tabsContentChildId: string): void {
+			// Get the ContentChildItem reference
+			const tabsContentChildItem =
+				OutSystems.OSUI.Patterns.TabsContentItemAPI.GetTabsContentItemById(tabsContentChildId);
+
+			if (this.getChild(tabsContentChildId)) {
+				throw new Error(
+					`${ErrorCodes.Tabs.FailSetNewChildItem}: There is already a ${GlobalEnum.PatternsNames.TabsContentItem} under Id: '${tabsContentChildItem.widgetId}' added to ${GlobalEnum.PatternsNames.Tabs} with uniqueId: ${this.uniqueId}.`
+				);
+			} else {
+				// Store Child Item
+				this.setChild(tabsContentChildId, tabsContentChildItem);
+			}
+
 			// Add this item to the array
-			this._tabsContentItemsElementsArray.push(tabsContentItem);
+			this._tabsContentItemsElementsArray.push(tabsContentChildItem);
 
 			// If tabs are already built, then this is dynamic content being added later
 			if (this.isBuilt) {
@@ -376,28 +392,41 @@ namespace OSUIFramework.Patterns.Tabs {
 
 				// If there's no active content element, assign it to this one
 				if (this._activeTabContentElement === undefined) {
-					this._activeTabContentElement = tabsContentItem;
+					this._activeTabContentElement = tabsContentChildItem;
 				}
 
 				if (this._addDragGestures) {
-					tabsContentItem.setOnDragObserver(this._dragObserver);
+					tabsContentChildItem.setOnDragObserver(this._dragObserver);
 				}
 			} else {
 				// Otherwise are items created before the tabs is built
 				// Set the correct data-tab, by using the items array, that correspond to the DOM order
-				tabsContentItem.setDataTab(this._tabsContentItemsElementsArray.length - 1);
+				tabsContentChildItem.setDataTab(this._tabsContentItemsElementsArray.length - 1);
 			}
 		}
 
 		/**
 		 * Method that it's called whenever a new TabsHeaderItem is rendered
 		 *
-		 * @param {TabsHeaderItem.ITabsHeaderItem} tabsHeaderItem
+		 * @param {string} tabsHeaderChildId
 		 * @memberof Tabs
 		 */
-		public addHeaderItem(tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem): void {
+		public addHeaderItem(tabsHeaderChildId: string): void {
+			// Get the ContentChildItem reference
+			const tabsHeaderChildItem =
+				OutSystems.OSUI.Patterns.TabsHeaderItemAPI.GetTabsHeaderItemById(tabsHeaderChildId);
+
+			if (this.getChild(tabsHeaderChildId)) {
+				throw new Error(
+					`${ErrorCodes.Tabs.FailSetNewChildItem}: There is already a ${GlobalEnum.PatternsNames.TabsHeaderItem} under Id: '${tabsHeaderChildItem.widgetId}' added to ${GlobalEnum.PatternsNames.Tabs} with uniqueId: ${this.uniqueId}.`
+				);
+			} else {
+				// Store Child Item
+				this.setChild(tabsHeaderChildId, tabsHeaderChildItem);
+			}
+
 			// Add this item to the array
-			this._tabsHeaderItemsElementsArray.push(tabsHeaderItem);
+			this._tabsHeaderItemsElementsArray.push(tabsHeaderChildItem);
 			const currentIndex = this._tabsHeaderItemsElementsArray.length - 1;
 
 			// If tabs are already built, then this is dynamic content being added later
@@ -416,7 +445,7 @@ namespace OSUIFramework.Patterns.Tabs {
 					Helper.AsyncInvocation(
 						this.changeTab.bind(this),
 						this.configs.StartingTab,
-						tabsHeaderItem,
+						tabsHeaderChildItem,
 						false,
 						true
 					);
@@ -426,7 +455,23 @@ namespace OSUIFramework.Patterns.Tabs {
 			} else {
 				// Otherwise are items created before the tabs is built
 				// Set the correct data-tab, by using the items array, that correspond to the DOM order
-				tabsHeaderItem.setDataTab(currentIndex);
+				tabsHeaderChildItem.setDataTab(currentIndex);
+			}
+		}
+
+		/**
+		 * Method used to be notified by a given ChildId about a given action and act accordingly
+		 *
+		 * @param childId Child Item Id to be stored/managed
+		 * @param notifiedTo {Enum.ChildNotifyActionType} triggered notification type
+		 * @memberof SectionIndex
+		 */
+		public beNotifiedByChild(childId: string, notifiedTo: Enum.ChildNotifyActionType): void {
+			switch (notifiedTo) {
+				default:
+					throw new Error(
+						`${ErrorCodes.SectionIndex.FailToSetChildItemAction}: There no exist a '${notifiedTo}' notification type.`
+					);
 			}
 		}
 

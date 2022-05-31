@@ -8,7 +8,7 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 	 * @extends {AbstractPattern<TabsContentItemConfig>}
 	 * @implements {ITabsContentItem}
 	 */
-	export class TabsContentItem extends AbstractPattern<TabsContentItemConfig> implements ITabsContentItem {
+	export class TabsContentItem extends AbstractChild<TabsContentItemConfig, Tabs.ITabs> implements ITabsContentItem {
 		// Store the data-tab attribute
 		private _dataTab: number;
 		// Store if this is the current active item
@@ -61,6 +61,11 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		public build(): void {
 			super.build();
 
+			this.setParentInfo(
+				Constants.Dot + Tabs.Enum.CssClasses.TabsWrapper,
+				OutSystems.OSUI.Patterns.TabsAPI.GetTabsById
+			);
+
 			this._addElementToTabs();
 
 			this.setA11YProperties(false);
@@ -76,6 +81,9 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		public dispose(): void {
 			// Remove this item from the tabs pattern array
 			this._tabsElem.removeContentItem(this);
+
+			// Notify parent about this instance will be destroyed
+			this.notifyParent(Tabs.Enum.ChildNotifyActionType.Removed);
 
 			super.dispose();
 		}
