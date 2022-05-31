@@ -240,16 +240,21 @@ namespace OSUIFramework.Animation {
 		 *
 		 * @static
 		 * @param {HTMLElement} target
-		 * @param {number} x
+		 * @param {number} currentDragValue
 		 * @param {GlobalEnum.Direction} direction
 		 * @param {string} size
 		 * @memberof OverlayTransition
 		 */
-		public static Set(target: HTMLElement, x: number, direction: GlobalEnum.Direction, size: string): void {
+		public static Set(
+			target: HTMLElement,
+			currentDragValue: number,
+			direction: GlobalEnum.Direction,
+			size: string
+		): void {
 			const isLeft = direction === GlobalEnum.Direction.Left;
 			const currentOpacity = parseInt(target.style.getPropertyValue(GlobalEnum.CSSVariables.OverlayOpacity));
 
-			const percentageBeforeDif = (Math.abs(x) * 100) / parseInt(size);
+			const percentageBeforeDif = (Math.abs(currentDragValue) * 100) / parseInt(size);
 			const percentage = isLeft ? 0 + percentageBeforeDif : 100 - percentageBeforeDif;
 
 			const newOpacity = Math.floor(percentage) / 100;
