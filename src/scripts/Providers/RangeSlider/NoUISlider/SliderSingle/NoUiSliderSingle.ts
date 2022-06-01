@@ -127,8 +127,14 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 		 * @memberof OSUINoUiSlider
 		 */
 		public setValue(value: number): void {
-			this.configs.StartingValueFrom = value;
-			this.provider.set(value);
+			if (value >= this.configs.MinValue && value <= this.configs.MaxValue) {
+				this.configs.StartingValueFrom = value;
+				this.provider.set(value);
+			} else {
+				throw new Error(
+					`${OSUIFramework.ErrorCodes.RangeSlider.FailSetValue}:	The value must be between the minium value and maximum value set.`
+				);
+			}
 		}
 	}
 }

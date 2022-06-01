@@ -124,13 +124,36 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 		}
 
 		/**
+		 * Method to set current RangeSliderInterval value
+		 *
+		 * @memberof OSUINoUiSlider
+		 */
+		public resetValue(): void {
+			this.configs.StartingValueFrom = this.configs.InitialValueFrom;
+			this.configs.StartingValueTo = this.configs.InitialValueTo;
+			this.provider.set([this.configs.InitialValueFrom, this.configs.InitialValueTo]);
+		}
+
+		/**
 		 * Method to set current RangeSliderInterval values
 		 *
 		 * @param {number} value
 		 * @memberof OSUINoUiSlider
 		 */
 		public setValue(intervalStart: number, intervalEnd: number): void {
-			this.provider.set([intervalStart, intervalEnd]);
+			if (intervalStart < intervalEnd) {
+				this.configs.StartingValueFrom = intervalStart;
+				this.configs.StartingValueTo = intervalEnd;
+				this.provider.set([intervalStart, intervalEnd]);
+			} else if (intervalStart > this.configs.MinValue && intervalEnd < this.configs.MaxValue) {
+				throw new Error(
+					`${OSUIFramework.ErrorCodes.RangeSlider.FailSetValue}:	The values must be within the specified range.`
+				);
+			} else {
+				throw new Error(
+					`${OSUIFramework.ErrorCodes.RangeSlider.FailSetValue}:	The start value cannot be bigger than the end value.`
+				);
+			}
 		}
 	}
 }

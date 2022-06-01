@@ -197,7 +197,7 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 * @param {string} rangeSliderId
 	 * @param {number} value
 	 */
-	export function SetRangeSliderValue(rangeSliderId: string, value: number): string {
+	export function SetRangeSliderValue(rangeSliderId: string, valueFrom: number, valueTo?: number): string {
 		const responseObj = {
 			isSuccess: true,
 			message: ErrorCodes.Success.message,
@@ -206,11 +206,11 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 
 		try {
 			const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
-			rangeSlider.setValue(value);
+			rangeSlider.setValue(valueFrom, valueTo);
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.RangeSlider.FailRegisterCallback;
+			responseObj.code = ErrorCodes.RangeSlider.FailSetValues;
 		}
 
 		return JSON.stringify(responseObj);
@@ -235,7 +235,7 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.RangeSlider.FailRegisterCallback;
+			responseObj.code = ErrorCodes.RangeSlider.FailResetValues;
 		}
 
 		return JSON.stringify(responseObj);
