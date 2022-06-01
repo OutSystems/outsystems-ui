@@ -3,7 +3,10 @@ namespace OSUIFramework.Patterns.Notification {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
-	export class Notification extends AbstractPattern<NotificationConfig> implements INotification {
+	export class Notification
+		extends AbstractPattern<NotificationConfig>
+		implements INotification, Interface.ISwipeEvent
+	{
 		private _eventOnClick: Callbacks.Generic;
 		private _eventOnKeypress: Callbacks.Generic;
 		// Define the event to be applied based on device
@@ -12,11 +15,37 @@ namespace OSUIFramework.Patterns.Notification {
 		private _focusTrapInstance: DynamicElements.FocusTrap.FocusTrap;
 		private _focusableActiveElement: HTMLElement;
 		private _focusableElements: HTMLElement[];
+		// Store gesture events instance
+		private _gestureEventInstance: Event.GestureEvent.SwipeEvent;
+		// Store if the pattern has gesture events added
+		private _hasGestureEvents: boolean;
 		private _isOpen: boolean;
 		private _lastFocusableElement: HTMLElement;
 		private _parentSelf: HTMLElement;
 		private _platformEventOnInitialize: Callbacks.OSNotificationInitializedEvent;
 		private _platformEventOnToggle: Callbacks.OSNotificationToggleEvent;
+
+		/**
+		 * Get Gesture Events Instance
+		 *
+		 * @readonly
+		 * @type {Event.GestureEvent.SwipeEvent}
+		 * @memberof Notification
+		 */
+		public get gestureEventInstance(): Event.GestureEvent.SwipeEvent {
+			return this._gestureEventInstance;
+		}
+
+		/**
+		 * Get if has gesture events
+		 *
+		 * @readonly
+		 * @type {boolean}
+		 * @memberof Notification
+		 */
+		public get hasGestureEvents(): boolean {
+			return this._hasGestureEvents;
+		}
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new NotificationConfig(configs));
@@ -71,6 +100,23 @@ namespace OSUIFramework.Patterns.Notification {
 			} as FocusTrapOpts;
 
 			this._focusTrapInstance = new DynamicElements.FocusTrap.FocusTrap(opts);
+		}
+
+		// Method to handle the creation of the GestureEvents
+		private _handleGestureEvents(): void {
+			if (!Helper.DeviceInfo.IsDesktop) {
+				// Create and save gesture event instance. Created here and not on constructor,
+				// as we need to pass this._selfElem, only available after super.build()
+				this._gestureEventInstance = new Event.GestureEvent.SwipeEvent(this._selfElem);
+
+				//Set event listeners and callbacks
+				this.setGestureEvents(
+					this.onSwipeBottom.bind(this),
+					this.onSwipeLeft.bind(this),
+					this.onSwipeRight.bind(this),
+					this.onSwipeUp.bind(this)
+				);
+			}
 		}
 
 		// Hide Notification
@@ -334,6 +380,8 @@ namespace OSUIFramework.Patterns.Notification {
 
 			this._handleFocusTrap();
 
+			this._handleGestureEvents();
+
 			this.finishBuild();
 		}
 
@@ -361,7 +409,7 @@ namespace OSUIFramework.Patterns.Notification {
 						break;
 					case Enum.Properties.StartsOpen:
 						console.warn(
-							`${GlobalEnum.PatternsNames.Notification} (${this.widgetId}): changes to ${Enum.Properties.StartsOpen} parameter do not affect the ${GlobalEnum.PatternsNames.Notification}. Use the client actions 'NotificationShow' and 'NotificationHide' to affect the ${GlobalEnum.PatternsNames.Notification}.`
+							`${GlobalEnum.PatternName.Notification} (${this.widgetId}): changes to ${Enum.Properties.StartsOpen} parameter do not affect the ${GlobalEnum.PatternName.Notification}. Use the client actions 'NotificationShow' and 'NotificationHide' to affect the ${GlobalEnum.PatternName.Notification}.`
 						);
 						break;
 					case Enum.Properties.Position:
@@ -396,6 +444,11 @@ namespace OSUIFramework.Patterns.Notification {
 
 				// Remove focus trap events and callbacks
 				this._focusTrapInstance.dispose();
+
+				// Remove gestures events intances
+				if (this._hasGestureEvents) {
+					this.removeGestureEvents();
+				}
 
 				//Destroying the base of pattern
 				super.dispose();
@@ -464,7 +517,7 @@ namespace OSUIFramework.Patterns.Notification {
 		 *
 		 * @memberof Notification
 		 */
-		public onSwipeTop(): void {
+		public onSwipeUp(): void {
 			this.hide();
 		}
 
@@ -494,6 +547,39 @@ namespace OSUIFramework.Patterns.Notification {
 						`${ErrorCodes.Notification.FailRegisterCallback}:	The given '${eventName}' event name is not defined.`
 					);
 			}
+		}
+
+		/**
+		 * Removes the gesture events to open/close the Notification on Mobile Apps
+		 *
+		 * @memberof Sidebar
+		 */
+		public removeGestureEvents(): void {
+			if (this._gestureEventInstance !== undefined) {
+				this._gestureEventInstance.unsetTouchEvents();
+				this._hasGestureEvents = false;
+			}
+		}
+
+		/**
+		 * Sets the gesture events to open/close the Sidebar on Native Apps
+		 *
+		 * @protected
+		 * @memberof Sidebar
+		 */
+		public setGestureEvents(
+			onSwipeDownCallback: Callbacks.onSwipeDown,
+			onSwipeLeftCallback: Callbacks.onSwipeLeft,
+			onSwipeRightCallback: Callbacks.onSwipeRight,
+			onSwipeUpCallback: Callbacks.onSwipeUp
+		): void {
+			this._gestureEventInstance.setEvents(
+				onSwipeDownCallback,
+				onSwipeLeftCallback,
+				onSwipeRightCallback,
+				onSwipeUpCallback
+			);
+			this._hasGestureEvents = true;
 		}
 
 		/**

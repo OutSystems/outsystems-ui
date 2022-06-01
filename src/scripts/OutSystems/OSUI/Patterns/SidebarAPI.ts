@@ -66,7 +66,7 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	export function Create(sidebarId: string, configs: string): OSUIFramework.Patterns.Sidebar.ISidebar {
 		if (_sidebarMap.has(sidebarId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.Sidebar} registered under id: ${sidebarId}`
+				`There is already a ${OSUIFramework.GlobalEnum.PatternName.Sidebar} registered under id: ${sidebarId}`
 			);
 		}
 
@@ -122,7 +122,7 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 */
 	export function GetSidebarById(sidebarId: string): OSUIFramework.Patterns.Sidebar.ISidebar {
 		return OSUIFramework.Helper.MapOperation.FindInMap(
-			OSUIFramework.GlobalEnum.PatternsNames.Sidebar,
+			OSUIFramework.GlobalEnum.PatternName.Sidebar,
 			sidebarId,
 			_sidebarMap
 		) as OSUIFramework.Patterns.Sidebar.ISidebar;

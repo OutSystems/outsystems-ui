@@ -48,7 +48,7 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	): OSUIFramework.Patterns.RangeSlider.IRangeSlider {
 		if (_rangeSliderItemsMap.has(rangeSliderId)) {
 			throw new Error(
-				`There is already an ${OSUIFramework.GlobalEnum.PatternsNames.RangeSlider} registered under id: ${rangeSliderId}`
+				`There is already an ${OSUIFramework.GlobalEnum.PatternName.RangeSlider} registered under id: ${rangeSliderId}`
 			);
 		}
 
@@ -111,7 +111,7 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 */
 	export function GetRangeSliderItemById(rangeSliderId: string): OSUIFramework.Patterns.RangeSlider.IRangeSlider {
 		return OSUIFramework.Helper.MapOperation.FindInMap(
-			OSUIFramework.GlobalEnum.PatternsNames.RangeSlider,
+			OSUIFramework.GlobalEnum.PatternName.RangeSlider,
 			rangeSliderId,
 			_rangeSliderItemsMap
 		) as OSUIFramework.Patterns.RangeSlider.IRangeSlider;

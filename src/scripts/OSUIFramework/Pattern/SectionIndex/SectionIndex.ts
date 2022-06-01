@@ -31,7 +31,7 @@ namespace OSUIFramework.Patterns.SectionIndex {
 
 			if (this.getChild(childId)) {
 				throw new Error(
-					`${ErrorCodes.SectionIndex.FailSetNewChildItem}: There is already a ${GlobalEnum.PatternsNames.SectionIndexItem} under Id: '${childItem.widgetId}' added to ${GlobalEnum.PatternsNames.SectionIndex} with uniqueId: ${this.uniqueId}.`
+					`${ErrorCodes.SectionIndex.FailSetNewChildItem}: There is already a ${GlobalEnum.PatternName.SectionIndexItem} under Id: '${childItem.widgetId}' added to ${GlobalEnum.PatternName.SectionIndex} with uniqueId: ${this.uniqueId}.`
 				);
 			} else {
 				// Store Child Item
@@ -48,7 +48,7 @@ namespace OSUIFramework.Patterns.SectionIndex {
 				this._setActiveChildOnClick(childReference);
 			} else {
 				throw new Error(
-					`${ErrorCodes.SectionIndex.FailChildItemClicked}: The ${GlobalEnum.PatternsNames.SectionIndexItem} under uniqueId: '${childId}' does not exist as an SectionIndexItem from ${GlobalEnum.PatternsNames.SectionIndex} with Id: ${this.widgetId}.`
+					`${ErrorCodes.SectionIndex.FailChildItemClicked}: The ${GlobalEnum.PatternName.SectionIndexItem} under uniqueId: '${childId}' does not exist as an SectionIndexItem from ${GlobalEnum.PatternName.SectionIndex} with Id: ${this.widgetId}.`
 				);
 			}
 		}
@@ -61,7 +61,7 @@ namespace OSUIFramework.Patterns.SectionIndex {
 				this.unsetChild(childId);
 			} else {
 				throw new Error(
-					`${ErrorCodes.SectionIndex.FailUnsetNewChildItem}: The ${GlobalEnum.PatternsNames.SectionIndexItem} under uniqueId: '${childId}' does not exist as an SectionIndexItem from ${GlobalEnum.PatternsNames.SectionIndex} with Id: ${this.widgetId}.`
+					`${ErrorCodes.SectionIndex.FailUnsetNewChildItem}: The ${GlobalEnum.PatternName.SectionIndexItem} under uniqueId: '${childId}' does not exist as an SectionIndexItem from ${GlobalEnum.PatternName.SectionIndex} with Id: ${this.widgetId}.`
 				);
 			}
 		}

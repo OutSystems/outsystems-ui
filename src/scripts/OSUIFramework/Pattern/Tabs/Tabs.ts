@@ -592,7 +592,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			if (this._eventTabsChange === undefined) {
 				this._eventTabsChange = callback;
 			} else {
-				console.warn(`The ${GlobalEnum.PatternsNames.Tabs} already has the tabs change callback set.`);
+				console.warn(`The ${GlobalEnum.PatternName.Tabs} already has the tabs change callback set.`);
 			}
 		}
 

@@ -49,6 +49,12 @@ declare global {
 		standalone: any;
 	}
 
+	// Drag Events Type
+	type DragEvents = Event.DragEvent;
+
+	// Swipe Events Type
+	type SwipeEvents = Event.SwipeEvent;
+
 	// Offset Type
 	type OffsetValues = {
 		bottom?: number;

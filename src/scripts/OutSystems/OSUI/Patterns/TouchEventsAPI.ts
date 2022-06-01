@@ -13,7 +13,7 @@ namespace OutSystems.OSUI.Patterns.TouchEventsAPI {
 	export function Create(touchEventsId: string, configs: string): OSUIFramework.Patterns.TouchEvents.ITouchEvents {
 		if (_touchEventsMap.has(touchEventsId)) {
 			throw new Error(
-				`There is already an ${OSUIFramework.GlobalEnum.PatternsNames.TouchEvents} registered under id: ${touchEventsId}`
+				`There is already an ${OSUIFramework.GlobalEnum.PatternName.TouchEvents} registered under id: ${touchEventsId}`
 			);
 		}
 
