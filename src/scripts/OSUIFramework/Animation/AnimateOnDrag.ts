@@ -42,17 +42,19 @@ namespace OSUIFramework.Animation {
 		}
 
 		// Method to check if current gesture is withing sidebar boundaries
-		private _checkIsDraggingInsideBounds(x: number): boolean {
-			const isLeft = this._dragParams.ExpectedDirection === GlobalEnum.Direction.Left;
+		private _checkIsDraggingInsideBounds(currentDrag: number): boolean {
+			const move = this._dragParams.VerticalDrag ? this._dragParams.MoveY : this._dragParams.MoveX;
+			const last = this._dragParams.VerticalDrag ? this._dragParams.LastY : this._dragParams.LastX;
+			const isLeftOrDown =
+				this._dragParams.ExpectedDirection === GlobalEnum.Direction.Left ||
+				this._dragParams.ExpectedDirection === GlobalEnum.Direction.Up;
 
-			const baseThreshold = this._dragParams.MoveX + (x - this._dragParams.LastX);
+			const baseThreshold = move + (currentDrag - last);
 
 			// Check correct threshold for each direction
-			return isLeft
-				? baseThreshold > -parseInt(this._dragParams.Size) &&
-						this._dragParams.MoveX + (x - this._dragParams.LastX) <= 0
-				: baseThreshold < parseInt(this._dragParams.Size) &&
-						this._dragParams.MoveX + (x - this._dragParams.LastX) >= 0;
+			return isLeftOrDown
+				? baseThreshold > -parseInt(this._dragParams.Size) && move + (currentDrag - last) <= 0
+				: baseThreshold < parseInt(this._dragParams.Size) && move + (currentDrag - last) >= 0;
 		}
 
 		// Method to update the last x and y positions
@@ -107,12 +109,16 @@ namespace OSUIFramework.Animation {
 				return;
 			}
 
-			const checkSwipeSpeed = Math.abs(offsetX) / timeTaken > this._swipeTriggerSpeed;
+			const checkSwipeSpeed =
+				(this._dragParams.VerticalDrag ? Math.abs(offsetY) : Math.abs(offsetX)) / timeTaken >
+				this._swipeTriggerSpeed;
 
 			const sizeThreshold = -parseInt(this._dragParams.Size) / 2;
 
+			const axisToValidate = this._dragParams.VerticalDrag ? this._dragParams.MoveY : this._dragParams.MoveX;
+
 			// Define a interval for later checks, depending on Sidebar visibility
-			const swipedHalfWidth = this._dragParams.MoveX < sizeThreshold;
+			const swipedHalfWidth = axisToValidate < sizeThreshold;
 
 			// If swipe was fast enough or with sufficient move, procede to toggleSidebar
 			this._dragParams.IsReadyToTriggerCallback = swipedHalfWidth || checkSwipeSpeed;
@@ -142,8 +148,15 @@ namespace OSUIFramework.Animation {
 			currentY: number,
 			event: TouchEvent
 		): void {
-			// Check X axis direction
-			const _dragDirection = offsetX > 0 ? GlobalEnum.Direction.Right : GlobalEnum.Direction.Left;
+			let _dragDirection;
+
+			// Check X axis direction if not vertical drag
+			if (!this._dragParams.VerticalDrag) {
+				_dragDirection = offsetX > 0 ? GlobalEnum.Direction.Right : GlobalEnum.Direction.Left;
+			} else {
+				_dragDirection = offsetY < 0 ? GlobalEnum.Direction.Up : GlobalEnum.Direction.Down;
+			}
+
 			// Set direction as invalid if isOpen and swipe is on opposite direction
 			this._dragParams.InvalidDrag =
 				this._dragParams.IsOpen && _dragDirection !== this._dragParams.ExpectedDirection;
@@ -166,7 +179,10 @@ namespace OSUIFramework.Animation {
 			}
 
 			// Check if is scrolling
-			if (this._dragParams.DragOrientation === GlobalEnum.Orientation.Vertical) {
+			if (
+				this._dragParams.VerticalDrag === false &&
+				this._dragParams.DragOrientation === GlobalEnum.Orientation.Vertical
+			) {
 				this._updateLastPositions(currentX, currentY);
 				return;
 			}
@@ -174,13 +190,19 @@ namespace OSUIFramework.Animation {
 			// Prevent scrolling the page while doing gesture
 			event.preventDefault();
 
-			const IsDraggingInsideBounds = this._checkIsDraggingInsideBounds(currentX);
+			const IsDraggingInsideBounds = this._checkIsDraggingInsideBounds(
+				this._dragParams.VerticalDrag ? currentY : currentX
+			);
 
 			// Checking if dragging inside bounds
 			if (IsDraggingInsideBounds) {
-				const updateXaxis = this._dragParams.MoveX + (currentX - this._dragParams.LastX);
-				// Update x axis offset
-				this._dragParams.MoveX = updateXaxis;
+				if (this._dragParams.VerticalDrag) {
+					// Update y axis offset
+					this._dragParams.MoveY = this._dragParams.MoveY + (currentY - this._dragParams.LastY);
+				} else {
+					// Update x axis offset
+					this._dragParams.MoveX = this._dragParams.MoveX + (currentX - this._dragParams.LastX);
+				}
 			}
 
 			this._updateLastPositions(currentX, currentY);
@@ -194,7 +216,7 @@ namespace OSUIFramework.Animation {
 		 * @param {number} currentX
 		 * @param {number} currentY
 		 * @param {boolean} isOpen
-		 * @param {string} width
+		 * @param {string} size
 		 * @memberof AnimateOnDrag
 		 */
 		public onDragStart(
@@ -203,7 +225,7 @@ namespace OSUIFramework.Animation {
 			currentX: number,
 			currentY: number,
 			isOpen: boolean,
-			width: string
+			size: string
 		): void {
 			// Set defaults
 			this._dragParams.DragOrientation = GlobalEnum.Orientation.None;
@@ -212,15 +234,18 @@ namespace OSUIFramework.Animation {
 			this._dragParams.IsOpen = isOpen;
 			this._dragParams.LastX = currentX;
 			this._dragParams.LastY = currentY;
-			this._dragParams.Size = width;
+			this._dragParams.Size = size;
 			this._dragParams.VerticalDrag = verticalDrag;
 
 			if (this._dragParams.IsOpen) {
 				this._dragParams.MoveX = 0;
+				this._dragParams.MoveY = 0;
 			} else if (this._dragParams.ExpectedDirection === GlobalEnum.Direction.Left) {
 				this._dragParams.MoveX = -parseInt(this._dragParams.Size);
+				this._dragParams.MoveY = -parseInt(this._dragParams.Size);
 			} else {
 				this._dragParams.MoveX = parseInt(this._dragParams.Size);
+				this._dragParams.MoveY = parseInt(this._dragParams.Size);
 			}
 
 			Helper.Dom.Styles.AddClass(this._targetElement, Constants.NoTransition);

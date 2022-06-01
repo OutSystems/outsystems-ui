@@ -57,8 +57,8 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		private _handleGestureEvents(): void {
 			if (!Helper.DeviceInfo.IsDesktop) {
 				// Create and save gesture event instance. Created here and not on constructor,
-				// as we need to pass this._selfElem, only available after super.build()
-				this._gestureEventInstance = new Event.GestureEvent.DragEvent(this._selfElem);
+				// as we need to pass element, only available after super.build()
+				this._gestureEventInstance = new Event.GestureEvent.DragEvent(this._bottomSheetHeaderElem);
 
 				// Set event listeners and callbacks
 				this.setGestureEvents(
@@ -91,11 +91,11 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		// Method to handle the end of a gesture
 		private _onGestureStart(x: number, y: number): void {
 			this._animateOnDragInstance.onDragStart(
-				false,
-				GlobalEnum.Direction.Up,
+				true,
+				GlobalEnum.Direction.Down,
 				x,
 				y,
-				this._isOpen,
+				true,
 				this._height.toString()
 			);
 		}
@@ -127,7 +127,8 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		 * @memberof BottomSheet
 		 */
 		protected setHtmlElements(): void {
-			this._bottomSheetOverlayElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternOverlay);
+			// TO CHANGE
+			this._bottomSheetOverlayElem = Helper.Dom.ClassSelector(document.body, Enum.CssClass.PatternOverlay);
 			this._bottomSheetTopBarElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternTopBar);
 			this._bottomSheetContentElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternContent);
 			this._bottomSheetHeaderElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternHeader);
