@@ -7,5 +7,7 @@ namespace OSUIFramework.Patterns.BottomSheet {
 	 * @interface IBottomSheet
 	 * @extends {Interface.IPattern}
 	 */
-	export interface IBottomSheet extends Interface.IPattern {}
+	export interface IBottomSheet extends Interface.IPattern {
+		registerCallback(callback: Callbacks.Generic);
+	}
 }

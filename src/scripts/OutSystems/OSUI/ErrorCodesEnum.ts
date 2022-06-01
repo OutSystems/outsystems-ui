@@ -185,4 +185,10 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailChangeProperty: 'OSUI-API-24001',
 		FailDispose: 'OSUI-API-24002',
 	};
+
+	export const BottomSheet = {
+		FailChangeProperty: 'OSUI-API-25001',
+		FailDispose: 'OSUI-API-25002',
+		FailRegisterCallback: 'OSUI-API-25003',
+	};
 }

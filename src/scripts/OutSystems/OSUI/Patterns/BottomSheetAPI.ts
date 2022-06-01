@@ -94,4 +94,31 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 
 		return _bottomSheetItem;
 	}
+
+	/**
+	 * Function to register a callback on this pattern
+	 *
+	 * @export
+	 * @param {string} bottomSheetId
+	 * @param {*} callback
+	 */
+	export function RegisterCallback(bottomSheetId: string, callback: OSUIFramework.Callbacks.Generic): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const bottomSheet = GetBottomSheetItemById(bottomSheetId);
+
+			bottomSheet.registerCallback(callback);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.BottomSheet.FailRegisterCallback;
+		}
+
+		return JSON.stringify(responseObj);
+	}
 }

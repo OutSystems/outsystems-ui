@@ -23,7 +23,15 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		 * @memberof AbstractBottomSheetConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
-			const validatedValue = undefined;
+			let validatedValue = undefined;
+			switch (key) {
+				case Enum.Properties.ShowHandler:
+					validatedValue = this.validateBoolean(value as boolean, false);
+					break;
+				default:
+					validatedValue = super.validateDefault(key, value);
+					break;
+			}
 
 			return validatedValue;
 		}

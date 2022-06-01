@@ -21,6 +21,9 @@ namespace OSUIFramework.Patterns.BottomSheet.Enum {
 	/**
 	 * BottomSheet Enum properties
 	 */
-	export enum Properties {}
+	export enum Properties {
+		Shape = 'Shape',
+		ShowHandler = 'ShowHandler',
+	}
 	// TODO (by CreateNewPattern): Add all pattern properties
 }
