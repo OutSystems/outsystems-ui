@@ -8,6 +8,8 @@ namespace OSUIFramework.Patterns.BottomSheet {
 	 * @extends {Interface.IPattern}
 	 */
 	export interface IBottomSheet extends Interface.IPattern {
+		close();
+		open();
 		registerCallback(callback: Callbacks.Generic);
 	}
 }

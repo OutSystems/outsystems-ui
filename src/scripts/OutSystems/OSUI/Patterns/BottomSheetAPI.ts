@@ -95,16 +95,44 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 		return _bottomSheetItem;
 	}
 
-	export function Open(bottomSheetId: string): void {
-		const _bottomSheetItem = GetBottomSheetItemById(bottomSheetId);
+	export function Open(bottomSheetId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		//_bottomSheetItem.open();
+		try {
+			const _bottomSheetItem = GetBottomSheetItemById(bottomSheetId);
+
+			_bottomSheetItem.open();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.BottomSheet.FailRegisterCallback;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
-	export function Close(bottomSheetId: string): void {
-		const _bottomSheetItem = GetBottomSheetItemById(bottomSheetId);
+	export function Close(bottomSheetId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		//_bottomSheetItem.close();
+		try {
+			const _bottomSheetItem = GetBottomSheetItemById(bottomSheetId);
+
+			_bottomSheetItem.close();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.BottomSheet.FailRegisterCallback;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**

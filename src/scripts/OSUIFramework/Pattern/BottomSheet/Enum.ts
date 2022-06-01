@@ -4,19 +4,20 @@ namespace OSUIFramework.Patterns.BottomSheet.Enum {
 	 * BottomSheet Enum for CSS Classes
 	 */
 	export enum CssClass {
-		PatternOverlay = 'osui-bottom-sheet-overlay',
-		PatternHeader = 'osui-bottom-sheet__header',
-		PatternTopBar = 'osui-bottom-sheet__header__top-bar',
-		PatternContent = 'osui-bottom-sheet__content',
+		HasHandler = 'osui-bottom-sheet--has-handler',
 		IsOpen = 'osui-bottom-sheet--is-open',
+		PatternContent = 'osui-bottom-sheet__content',
+		PatternHeader = 'osui-bottom-sheet__header',
+		PatternOverlay = 'osui-bottom-sheet-overlay',
+		PatternTopBar = 'osui-bottom-sheet__header__top-bar',
 	}
-	// TODO (by CreateNewPattern): Add CssClasses values
 
 	/**
 	 * BottomSheet Events
 	 */
-	export enum Events {}
-	// TODO (by CreateNewPattern): Add Events reference
+	export enum Events {
+		Open = 'Open',
+	}
 
 	/**
 	 * BottomSheet Enum properties
@@ -25,5 +26,4 @@ namespace OSUIFramework.Patterns.BottomSheet.Enum {
 		Shape = 'Shape',
 		ShowHandler = 'ShowHandler',
 	}
-	// TODO (by CreateNewPattern): Add all pattern properties
 }

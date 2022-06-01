@@ -8,7 +8,8 @@ namespace OSUIFramework.Patterns.BottomSheet {
 	 * @extends {AbstractConfiguration}
 	 */
 	export class BottomSheetConfig extends AbstractConfiguration {
-		// TODO (by CreateNewPattern): add all properties received as config (JSON from platform)
+		public Shape: GlobalEnum.ShapeTypes;
+		public ShowHandler: boolean;
 
 		constructor(config: JSON) {
 			super(config);
@@ -25,6 +26,14 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;
 			switch (key) {
+				case Enum.Properties.Shape:
+					validatedValue = this.validateInRange(
+						value,
+						GlobalEnum.ShapeTypes.SoftRounded,
+						GlobalEnum.ShapeTypes.Sharp,
+						GlobalEnum.ShapeTypes.Rounded
+					);
+					break;
 				case Enum.Properties.ShowHandler:
 					validatedValue = this.validateBoolean(value as boolean, false);
 					break;

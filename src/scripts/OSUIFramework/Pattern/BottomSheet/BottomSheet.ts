@@ -52,11 +52,16 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		 * @memberof BottomSheet
 		 */
 		protected setHtmlElements(): void {
-			// TO CHANGE THIS
-			this._bottomSheetOverlayElem = Helper.Dom.ClassSelector(document.body, Enum.CssClass.PatternOverlay);
+			this._bottomSheetOverlayElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternOverlay);
 			this._bottomSheetTopBarElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternTopBar);
 			this._bottomSheetContentElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternContent);
 			this._bottomSheetHeaderElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternHeader);
+		}
+
+		protected setInitialCssClasses(): void {
+			if (this.configs.ShowHandler) {
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.HasHandler);
+			}
 		}
 
 		/**
@@ -76,12 +81,12 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		 */
 		public build(): void {
 			super.build();
-
+			this.setHtmlElements();
+			this.setInitialCssClasses();
 			this.setA11yProperties();
 			this._height = this._selfElem.clientHeight;
-			this.finishBuild();
-			this.setHtmlElements();
 			this.setListeners();
+			this.finishBuild();
 		}
 
 		/**
