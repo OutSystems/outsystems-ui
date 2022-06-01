@@ -3,7 +3,13 @@ namespace OSUIFramework.Patterns.BottomSheet.Enum {
 	/**
 	 * BottomSheet Enum for CSS Classes
 	 */
-	export enum CssClass {}
+	export enum CssClass {
+		PatternOverlay = 'osui-bottom-sheet-overlay',
+		PatternHeader = 'osui-bottom-sheet__header',
+		PatternTopBar = 'osui-bottom-sheet__header__top-bar',
+		PatternContent = 'osui-bottom-sheet__content',
+		IsOpen = 'osui-bottom-sheet--is-open',
+	}
 	// TODO (by CreateNewPattern): Add CssClasses values
 
 	/**
