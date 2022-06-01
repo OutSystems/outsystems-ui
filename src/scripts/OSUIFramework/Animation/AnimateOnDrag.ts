@@ -45,14 +45,14 @@ namespace OSUIFramework.Animation {
 		private _checkIsDraggingInsideBounds(currentDrag: number): boolean {
 			const move = this._dragParams.VerticalDrag ? this._dragParams.MoveY : this._dragParams.MoveX;
 			const last = this._dragParams.VerticalDrag ? this._dragParams.LastY : this._dragParams.LastX;
-			const isLeftOrDown =
+			const isLeftOrUp =
 				this._dragParams.ExpectedDirection === GlobalEnum.Direction.Left ||
 				this._dragParams.ExpectedDirection === GlobalEnum.Direction.Up;
 
 			const baseThreshold = move + (currentDrag - last);
 
 			// Check correct threshold for each direction
-			return isLeftOrDown
+			return isLeftOrUp
 				? baseThreshold > -parseInt(this._dragParams.Size) && move + (currentDrag - last) <= 0
 				: baseThreshold < parseInt(this._dragParams.Size) && move + (currentDrag - last) >= 0;
 		}
@@ -276,11 +276,11 @@ namespace OSUIFramework.Animation {
 			direction: GlobalEnum.Direction,
 			size: string
 		): void {
-			const isLeft = direction === GlobalEnum.Direction.Left;
+			const isLeftOrUp = direction === GlobalEnum.Direction.Left || direction === GlobalEnum.Direction.Up;
 			const currentOpacity = parseInt(target.style.getPropertyValue(GlobalEnum.CSSVariables.OverlayOpacity));
 
 			const percentageBeforeDif = (Math.abs(currentDragValue) * 100) / parseInt(size);
-			const percentage = isLeft ? 0 + percentageBeforeDif : 100 - percentageBeforeDif;
+			const percentage = isLeftOrUp ? 0 + percentageBeforeDif : 100 - percentageBeforeDif;
 
 			const newOpacity = Math.floor(percentage) / 100;
 

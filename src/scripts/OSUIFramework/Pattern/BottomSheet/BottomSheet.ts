@@ -74,18 +74,11 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		// Method to handle the start of a gesture
 		private _onGestureEnd(offsetX: number, offsetY: number, timeTaken: number): void {
 			this._animateOnDragInstance.onDragEnd(offsetX, offsetY, timeTaken, this.close.bind(this));
-			Animation.OverlayTransitionOnDrag.UnSet(this._selfElem);
 		}
 
 		// Method to handle the gesture move
 		private _onGestureMove(x: number, y: number, offsetX: number, offsetY: number, evt: TouchEvent): void {
 			this._animateOnDragInstance.onDragMove(offsetX, offsetY, x, y, evt);
-			Animation.OverlayTransitionOnDrag.Set(
-				this._selfElem,
-				x,
-				GlobalEnum.Direction.Left,
-				this._height.toString()
-			);
 		}
 
 		// Method to handle the end of a gesture
@@ -127,8 +120,10 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		 * @memberof BottomSheet
 		 */
 		protected setHtmlElements(): void {
-			// TO CHANGE
-			this._bottomSheetOverlayElem = Helper.Dom.ClassSelector(document.body, Enum.CssClass.PatternOverlay);
+			this._bottomSheetOverlayElem = Helper.Dom.ClassSelector(
+				Helper.Dom.GetElementById(this._widgetId),
+				Enum.CssClass.PatternOverlay
+			);
 			this._bottomSheetTopBarElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternTopBar);
 			this._bottomSheetContentElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternContent);
 			this._bottomSheetHeaderElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternHeader);

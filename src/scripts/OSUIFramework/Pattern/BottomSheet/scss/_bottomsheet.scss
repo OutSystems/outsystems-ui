@@ -25,6 +25,10 @@
 	z-index: 300;
 }
 
+.osui-bottom-sheet:not(.osui-bottom-sheet--is-open) {
+	transition: transform 200ms ease-out;
+}
+
 .osui-bottom-sheet.osui-bottom-sheet--is-open {
 	transform: translateY(0);
 }
