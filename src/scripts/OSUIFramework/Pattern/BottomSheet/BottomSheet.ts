@@ -8,7 +8,9 @@ namespace OSUIFramework.Patterns.BottomSheet {
 	 * @extends {AbstractPattern<BottomSheetConfig>}
 	 * @implements {IBottomSheet}
 	 */
-	export class BottomSheet extends AbstractPattern<BottomSheetConfig> implements IBottomSheet {
+	export class BottomSheet extends AbstractPattern<BottomSheetConfig> implements IBottomSheet, Interface.IDragEvent {
+		// Hold the animateOnDrag intance, that helps transition the sidebar on drag
+		private _animateOnDragInstance: Animation.AnimateOnDrag;
 		private _isOpen: boolean;
 		// eslint-disable-next-line @typescript-eslint/member-ordering
 		private _bottomSheetOverlayElem: HTMLElement;
@@ -18,11 +20,84 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		private _bottomSheetHeaderElem: HTMLElement;
 		// eslint-disable-next-line @typescript-eslint/member-ordering
 		private _bottomSheetTopBarElem: HTMLElement;
+		// Store gesture events instance
+		private _gestureEventInstance: Event.GestureEvent.DragEvent;
+		// Store if the pattern has gesture events added
+		private _hasGestureEvents: boolean;
 		// eslint-disable-next-line @typescript-eslint/member-ordering
 		private _height: number;
 
+		/**
+		 * Get Gesture Events Instance
+		 *
+		 * @readonly
+		 * @type {Event.GestureEvent.DragEvent}
+		 * @memberof Sidebar
+		 */
+		public get gestureEventInstance(): Event.GestureEvent.DragEvent {
+			return this._gestureEventInstance;
+		}
+
+		/**
+		 * Get if has gesture events
+		 *
+		 * @readonly
+		 * @type {boolean}
+		 * @memberof Sidebar
+		 */
+		public get hasGestureEvents(): boolean {
+			return this._hasGestureEvents;
+		}
+
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new BottomSheetConfig(configs));
+		}
+
+		// Method to hadnle the creation of the GestureEvents
+		private _handleGestureEvents(): void {
+			if (!Helper.DeviceInfo.IsDesktop) {
+				// Create and save gesture event instance. Created here and not on constructor,
+				// as we need to pass this._selfElem, only available after super.build()
+				this._gestureEventInstance = new Event.GestureEvent.DragEvent(this._selfElem);
+
+				// Set event listeners and callbacks
+				this.setGestureEvents(
+					this._onGestureStart.bind(this),
+					this._onGestureMove.bind(this),
+					this._onGestureEnd.bind(this)
+				);
+				// Apply transform on an element and perform animation
+				this._animateOnDragInstance = new Animation.AnimateOnDrag(this._selfElem);
+			}
+		}
+
+		// Method to handle the start of a gesture
+		private _onGestureEnd(offsetX: number, offsetY: number, timeTaken: number): void {
+			this._animateOnDragInstance.onDragEnd(offsetX, offsetY, timeTaken, this.close.bind(this));
+			Animation.OverlayTransitionOnDrag.UnSet(this._selfElem);
+		}
+
+		// Method to handle the gesture move
+		private _onGestureMove(x: number, y: number, offsetX: number, offsetY: number, evt: TouchEvent): void {
+			this._animateOnDragInstance.onDragMove(offsetX, offsetY, x, y, evt);
+			Animation.OverlayTransitionOnDrag.Set(
+				this._selfElem,
+				x,
+				GlobalEnum.Direction.Left,
+				this._height.toString()
+			);
+		}
+
+		// Method to handle the end of a gesture
+		private _onGestureStart(x: number, y: number): void {
+			this._animateOnDragInstance.onDragStart(
+				false,
+				GlobalEnum.Direction.Up,
+				x,
+				y,
+				this._isOpen,
+				this._height.toString()
+			);
 		}
 
 		/**
@@ -86,6 +161,7 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			this.setA11yProperties();
 			this._height = this._selfElem.clientHeight;
 			this.setListeners();
+			this._handleGestureEvents();
 			this.finishBuild();
 		}
 
@@ -127,6 +203,33 @@ namespace OSUIFramework.Patterns.BottomSheet {
 
 		public registerCallback(callback: Callbacks.Generic): void {
 			console.log(callback);
+		}
+
+		/**
+		 * Removes the gesture events to open/close the Sidebar on Native Apps
+		 *
+		 * @memberof Sidebar
+		 */
+		public removeGestureEvents(): void {
+			if (this._gestureEventInstance !== undefined) {
+				this._gestureEventInstance.unsetTouchEvents();
+				this._hasGestureEvents = false;
+			}
+		}
+
+		/**
+		 * Sets the gesture events to open/close the Sidebar on Native Apps
+		 *
+		 * @protected
+		 * @memberof Sidebar
+		 */
+		public setGestureEvents(
+			onGestureStart: Callbacks.onGestureStart,
+			onGestureMove: Callbacks.onGestureMove,
+			onGestureEnd: Callbacks.onGestureEnd
+		): void {
+			this._gestureEventInstance.setEvents(onGestureStart, onGestureMove, onGestureEnd);
+			this._hasGestureEvents = true;
 		}
 	}
 }
