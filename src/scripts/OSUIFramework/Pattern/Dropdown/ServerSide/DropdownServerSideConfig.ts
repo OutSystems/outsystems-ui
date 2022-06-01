@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace Providers.Dropdown.OSUIComponents {
+namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 	/**
 	 * Class that represents the custom configurations received by the Dropdown.
 	 *
@@ -11,6 +11,8 @@ namespace Providers.Dropdown.OSUIComponents {
 	export class OSUIDropdownServerSideConfig extends OSUIFramework.Patterns.AbstractConfiguration {
 		// Store the MaxHeight for the balloon
 		private _balloonMaxHeight = Enum.PropertiesValues.MaxHeight;
+		// Store the SelectValuesWrapper AriaLabel text
+		private _selectValuesWrapperAriaLabelText = Enum.PropertiesValues.SelectValuesWrapperAriaLabelValue;
 		// Properties
 		public AllowMultipleSelection: boolean;
 		public IsDisabled: boolean;
@@ -47,7 +49,11 @@ namespace Providers.Dropdown.OSUIComponents {
 		 * @memberof OSUIDropdownServerSideConfig
 		 */
 		public get balloonMaxHeight(): number {
-			return this._balloonMaxHeight;
+			return this._balloonMaxHeight as number;
+		}
+
+		public get selectValuesWrapperAriaLabelText(): string {
+			return this._selectValuesWrapperAriaLabelText as string;
 		}
 	}
 }

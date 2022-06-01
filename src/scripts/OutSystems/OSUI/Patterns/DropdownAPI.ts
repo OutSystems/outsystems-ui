@@ -18,9 +18,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _dropdownItem = GetDropdownById(dropdownId);
-
 		try {
+			const _dropdownItem = GetDropdownById(dropdownId);
+
 			_dropdownItem.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -45,9 +45,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _dropdownItem = GetDropdownById(dropdownId);
-
 		try {
+			const _dropdownItem = GetDropdownById(dropdownId);
+
 			_dropdownItem.clear();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -97,9 +97,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _dropdownItem = GetDropdownById(dropdownId);
-
 		try {
+			const _dropdownItem = GetDropdownById(dropdownId);
+
 			_dropdownItem.disable();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -124,9 +124,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _dropdownItem = GetDropdownById(dropdownId);
-
 		try {
+			const _dropdownItem = GetDropdownById(dropdownId);
+
 			_dropdownItem.dispose();
 
 			_dropdownItemsMap.delete(_dropdownItem.uniqueId);
@@ -153,9 +153,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _dropdownItem = GetDropdownById(dropdownId);
-
 		try {
+			const _dropdownItem = GetDropdownById(dropdownId);
+
 			_dropdownItem.enable();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -172,7 +172,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @export
 	 * @return {*}  Array<string>
 	 */
-	export function GetAllDropDownItemsMap(): Array<string> {
+	export function GetAllDropDownItemsInScreen(): Array<string> {
 		return OSUIFramework.Helper.MapOperation.ExportKeys(_dropdownItemsMap);
 	}
 
@@ -206,9 +206,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			value: '',
 		};
 
-		const _dropdownItem = GetDropdownById(dropdownId);
-
 		try {
+			const _dropdownItem = GetDropdownById(dropdownId);
+
 			responseObj.value = _dropdownItem.getSelectedValues();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -243,7 +243,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @param {OSUIFramework.Callbacks.OSGeneric} callback
 	 * @return {*} {string} Return Message Success or message of error info if it's the case.
 	 */
-	export function RegisterProviderCallback(
+	export function RegisterCallback(
 		dropdownId: string,
 		eventName: string,
 		callback: OSUIFramework.Callbacks.OSGeneric
@@ -254,10 +254,10 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _dropdownItem = this.GetDropdownById(dropdownId);
-
 		try {
-			_dropdownItem.registerProviderCallback(eventName, callback);
+			const _dropdownItem = this.GetDropdownById(dropdownId);
+
+			_dropdownItem.registerCallback(eventName, callback);
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
@@ -283,9 +283,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _dropdownItem = GetDropdownById(dropdownId);
-
 		try {
+			const _dropdownItem = GetDropdownById(dropdownId);
+
 			_dropdownItem.validation(isValid, validationMessage);
 		} catch (error) {
 			responseObj.isSuccess = false;

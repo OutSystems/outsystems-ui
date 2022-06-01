@@ -8,6 +8,8 @@ namespace Providers.Datepicker.Flatpickr {
 	 * @extends {AbstractDatePickerConfig}
 	 */
 	export abstract class AbstractFlatpickrConfig extends OSUIFramework.Patterns.DatePicker.AbstractDatePickerConfig {
+		// Store the language that will be assigned as a locale to the DatePicker
+		private _lang: string;
 		// Set the OnChange Event that will be defined in the specific context for each Flatpickr mode
 		public OnChange: OSUIFramework.Callbacks.Generic;
 
@@ -19,6 +21,9 @@ namespace Providers.Datepicker.Flatpickr {
 
 		constructor(config: JSON) {
 			super(config);
+
+			// Set the lang based on the language that has been defined already
+			this._lang = OSUIFramework.Helper.Language.ShortLang;
 		}
 
 		// Method used to manage the AM/PM time when it's on use
@@ -28,7 +33,7 @@ namespace Providers.Datepicker.Flatpickr {
 
 			// Time must behave in 12h format with AM/PM or in 24h format
 			if (this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time12hFormat) {
-				_altFormat = _altFormat + ' - h:i K';
+				_altFormat = _altFormat + ' - H:i K';
 			} else if (this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat) {
 				_altFormat = _altFormat + ' - H:i';
 			}
@@ -39,10 +44,16 @@ namespace Providers.Datepicker.Flatpickr {
 		// Method used to check the language and also map it into Flatpickr expected format
 		private _checkLocale(): FlatpickrLocale {
 			// FlatpickrLocale script file is already loaded
-			// Set the locale in order to define the calendar language
-			const _locale = window.flatpickr.l10ns[OSUIFramework.Helper.Language.ShortLang];
-			// Set the calendar first week day
-			_locale.firstDayOfWeek = this.FirstWeekDay;
+			let _locale: FlatpickrLocale;
+			try {
+				// Set the locale in order to define the calendar language
+				_locale = window.flatpickr.l10ns[this._lang];
+
+				// Set the calendar first week day
+				_locale.firstDayOfWeek = this.FirstWeekDay;
+			} catch (error) {
+				throw new Error(`${Providers.ErrorCodes.Flatpickr.FailSetLocale}: Locale '${this._lang}' not found!`);
+			}
 
 			return _locale;
 		}
@@ -108,9 +119,31 @@ namespace Providers.Datepicker.Flatpickr {
 				minDate: OSUIFramework.Helper.Dates.IsNull(this.MinDate) ? undefined : this.MinDate,
 				onChange: this.OnChange,
 				time_24hr: this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat,
+				weekNumbers: this.ShowWeekNumbers,
 			};
 
 			return _flatpickrOpts as FlatpickrOptions;
+		}
+
+		/**
+		 * Getter that allows to obtain the DatePicker Locale language
+		 *
+		 * @readonly
+		 * @type {string}
+		 * @memberof AbstractFlatpickrConfig
+		 */
+		public get Lang(): string {
+			return this._lang;
+		}
+
+		/**
+		 * Set DatePicker Locale
+		 *
+		 * @memberof AbstractFlatpickrConfig
+		 */
+		public set Lang(value: string) {
+			// substring is needed to avoid passing values like "en-EN" since we must use only "en"
+			this._lang = value.substring(0, 2);
 		}
 	}
 }

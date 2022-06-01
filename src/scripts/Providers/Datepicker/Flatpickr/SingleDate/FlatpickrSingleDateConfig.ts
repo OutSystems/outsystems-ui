@@ -41,19 +41,13 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 			return fpOptions;
 		}
 
-		public validateDefault(key: string, value: unknown): unknown {
-			let validatedValue = undefined;
-
-			switch (key) {
-				case Enum.Properties.InitialDate:
-					validatedValue = false;
-					break;
-				default:
-					validatedValue = super.validateDefault(key, value);
-					break;
+		// Method that validates if a given property can be changed.
+		public validateCanChange(isBuilt: boolean, key: string): boolean {
+			// Block updating InitialDate after pattern is built (OnParameters Change)!
+			if (isBuilt) {
+				return key !== Enum.Properties.InitialDate;
 			}
-
-			return validatedValue;
+			return true;
 		}
 	}
 }

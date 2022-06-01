@@ -47,39 +47,27 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._tabsHeaderItemsElementsArray = [];
 			this._tabsContentItemsElementsArray = [];
 			// Check if running on native shell, to enable drag gestures
-			this._addDragGestures = OutSystems.OSUI.Utils.IsRunningAsNativeApp();
+			this._addDragGestures = OutSystems.OSUI.Utils.DeviceDetection.IsRunningAsNativeApp();
 			// Block observer by default, to prevent it from running on page load
 			this._disableObserver = true;
 		}
 
-		/**
-		 * Method to block the observer
-		 *
-		 * @private
-		 * @memberof Tabs
-		 */
+		// Add event listener for arrow navigation
+		private _addEvents(): void {
+			this._tabsHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
+		}
+
+		// Method to block the observer
 		private _disableDragObserver(): void {
 			this._disableObserver = true;
 		}
 
-		/**
-		 * Method to enable the observer
-		 *
-		 * @private
-		 * @memberof Tabs
-		 */
+		// Method to enable the observer
 		private _enableDragObserver(): void {
 			this._disableObserver = false;
 		}
 
-		/**
-		 * Method to determine the next target index on changeTab method
-		 *
-		 * @private
-		 * @param {number} tabIndex
-		 * @return {*}  {number}
-		 * @memberof Tabs
-		 */
+		// Method to determine the next target index on changeTab method
 		private _getTargetIndex(tabIndex: number): number {
 			let newTabIndex;
 
@@ -97,13 +85,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			return newTabIndex;
 		}
 
-		/**
-		 * Method that handles the Keypress Event, for tabs navigation using arrows
-		 *
-		 * @private
-		 * @param {KeyboardEvent} e
-		 * @memberof Tabs
-		 */
+		// Method that handles the Keypress Event, for tabs navigation using arrows
 		private _handleKeypressEvent(e: KeyboardEvent): void {
 			let targetHeaderItemIndex;
 
@@ -134,12 +116,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			}
 		}
 
-		/**
-		 * Method to make neccessary preparations for header and content items, that can't be done on their scope
-		 *
-		 * @private
-		 * @memberof Tabs
-		 */
+		// Method to make neccessary preparations for header and content items, that can't be done on their scope
 		private _prepareHeaderAndContentItems(): void {
 			// Set if the Tabs has only one Content
 			this._hasSingleContent = this._tabsContentItemsElementsArray.length === 1;
@@ -166,13 +143,16 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._updateItemsConnection(false);
 		}
 
-		/**
-		 * Method to scroll to new target content item
-		 *
-		 * @private
-		 * @param {Patterns.TabsContentItem.ITabsContentItem} newContentItem
-		 * @memberof Tabs
-		 */
+		// Remove Pattern Events
+		private _removeEvents(): void {
+			this._tabsHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
+
+			if (this._addDragGestures) {
+				this._tabsContentElement.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, this._eventOnTouchstart);
+			}
+		}
+
+		// Method to scroll to new target content item
 		private _scrollToTargetContent(newContentItem: Patterns.TabsContentItem.ITabsContentItem): void {
 			if (newContentItem) {
 				// Get the left offset, to use on the ScrollTo
@@ -187,12 +167,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			}
 		}
 
-		/**
-		 * Method to set an IntersectionObserver when drag gestures are enable, to detect the activeItem on drag
-		 *
-		 * @private
-		 * @memberof Tabs
-		 */
+		// Method to set an IntersectionObserver when drag gestures are enable, to detect the activeItem on drag
 		private _setDragObserver(): void {
 			// Observer options
 			const observerOptions = {
@@ -222,12 +197,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			});
 		}
 
-		/**
-		 * Method to set the CSS variable that holds the number of header items
-		 *
-		 * @private
-		 * @memberof Tabs
-		 */
+		// Method to set the CSS variable that holds the number of header items
 		private _setHeaderItemsCustomProperty(): void {
 			// Create css variable
 			Helper.Dom.Styles.SetStyleAttribute(
@@ -237,24 +207,13 @@ namespace OSUIFramework.Patterns.Tabs {
 			);
 		}
 
-		/**
-		 * Method to set the Tabs Height
-		 *
-		 * @private
-		 * @param {string} height
-		 * @memberof Tabs
-		 */
+		// Method to set the Tabs Height
 		private _setHeight(height: string): void {
 			// Create css variable
 			Helper.Dom.Styles.SetStyleAttribute(this._selfElem, Enum.CssProperty.TabsHeight, height);
 		}
 
-		/**
-		 * Method to set the initial options on screen load
-		 *
-		 * @private
-		 * @memberof Tabs
-		 */
+		// Method to set the initial options on screen load
 		private _setInitialOptions(): void {
 			this._setOrientation(this.configs.TabsOrientation);
 			this._setPosition(this.configs.TabsVerticalPosition);
@@ -270,13 +229,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			}
 		}
 
-		/**
-		 * Method to set if the Tabs are justified
-		 *
-		 * @private
-		 * @param {boolean} isJustified
-		 * @memberof Tabs
-		 */
+		// Method to set if the Tabs are justified
 		private _setIsJustified(isJustified: boolean): void {
 			if (isJustified) {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClasses.IsJustified);
@@ -285,26 +238,14 @@ namespace OSUIFramework.Patterns.Tabs {
 			}
 		}
 
-		/**
-		 * Method to set the Tabs Orientation
-		 *
-		 * @private
-		 * @param {GlobalEnum.Orientation} orientation
-		 * @memberof Tabs
-		 */
+		// Method to set the Tabs Orientation
 		private _setOrientation(orientation: GlobalEnum.Orientation): void {
 			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._currentOrientation);
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClasses.Modifier + orientation);
 			this._currentOrientation = orientation;
 		}
 
-		/**
-		 * Method to set the Tabs Position
-		 *
-		 * @private
-		 * @param {GlobalEnum.Direction} position
-		 * @memberof Tabs
-		 */
+		// Method to set the Tabs Position
 		private _setPosition(position: GlobalEnum.Direction): void {
 			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._currentVerticalPositon);
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClasses.Modifier + position);
@@ -312,46 +253,24 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._currentVerticalPositon = position;
 		}
 
-		/**
-		 * Method to set a touchstart event on tabsContent
-		 *
-		 * @private
-		 * @memberof Tabs
-		 */
+		// Method to set a touchstart event on tabsContent
 		private _setTouchEvents(): void {
 			this._tabsContentElement.addEventListener(GlobalEnum.HTMLEvent.TouchStart, this._eventOnTouchstart);
 		}
 
-		/**
-		 * Method that triggers the OnTabsChange event
-		 *
-		 * @private
-		 * @param {number} activeTab
-		 * @memberof Tabs
-		 */
+		// Method that triggers the OnTabsChange event
 		private _triggerOnChangeEvent(activeTab: number): void {
 			if (this._eventTabsChange !== undefined) {
 				Helper.AsyncInvocation(this._eventTabsChange, this.widgetId, activeTab);
 			}
 		}
 
-		/**
-		 * Method to remove the drag Observer on each contentItem
-		 *
-		 * @private
-		 * @memberof Tabs
-		 */
+		// Method to remove the drag Observer on each contentItem
 		private _unsetDragObserver(): void {
 			this._dragObserver.disconnect();
 		}
 
-		/**
-		 * Method that handles the connection between HeaderItems and ContentItem, related to data-tab and aria-controls/labbeledby
-		 *
-		 * @private
-		 * @param {boolean} [updateDataTab=true]
-		 * @memberof Tabs
-		 */
+		// Method that handles the connection between HeaderItems and ContentItem, related to data-tab and aria-controls/labbeledby
 		private _updateItemsConnection(updateDataTab = true): void {
 			// By default look to the first content item.
 			let currentContentItem = this._tabsContentItemsElementsArray[0];
@@ -394,11 +313,10 @@ namespace OSUIFramework.Patterns.Tabs {
 		 * @memberof Tabs
 		 */
 		protected setCallbacks(): void {
+			this._addEvents();
+
 			this._eventOnHeaderKeypress = this._handleKeypressEvent.bind(this);
 			this._eventOnTouchstart = this._enableDragObserver.bind(this);
-
-			// Add event listener for arrow navigation
-			this._tabsHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
 		}
 
 		/**
@@ -413,17 +331,17 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		/**
-		 * Method to remove the event listener on the Tabs header
+		 * Removes the listeners that were added in the code and unsets the callbacks.
 		 *
 		 * @protected
 		 * @memberof Tabs
 		 */
 		protected unsetCallbacks(): void {
-			this._tabsHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
+			this._removeEvents();
+
 			this._eventOnHeaderKeypress = undefined;
 
 			if (this._addDragGestures) {
-				this._tabsContentElement.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, this._eventOnTouchstart);
 				this._eventOnTouchstart = undefined;
 				this._unsetDragObserver();
 			}

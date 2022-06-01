@@ -5,7 +5,7 @@ namespace OSUIFramework.Patterns.Notification {
 	 */
 	export interface INotification extends Interface.IPattern {
 		hide(): void;
-		registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void;
+		registerCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void;
 		show(): void;
 	}
 }

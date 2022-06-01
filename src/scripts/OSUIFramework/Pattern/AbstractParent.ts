@@ -58,22 +58,22 @@ namespace OSUIFramework.Patterns {
 		 * Method that is used to set a given child as a Parent child.
 		 *
 		 * @param childId Id that should be added
-		 * @param optionItem Reference to be added
+		 * @param childItem Reference to be added
 		 */
-		protected setChild(childId: string, optionItem: CT): void {
+		protected setChild(childId: string, childItem: CT): void {
 			// Check if we have no items yet
 			if (this._childItems.size === 0) {
 				// Set item as First and Last child
-				optionItem.isFirstChild = true;
-				optionItem.isLastChild = true;
+				childItem.isFirstChild = true;
+				childItem.isLastChild = true;
 			} else {
 				// Since we've more than one child, get the previous and unset it as lastChild
 				this.getChildByIndex(this._childItems.size - 1).isLastChild = false;
 				// Set the current one as lastChild
-				optionItem.isLastChild = true;
+				childItem.isLastChild = true;
 			}
 
-			this._childItems.set(childId, optionItem);
+			this._childItems.set(childId, childItem);
 		}
 
 		/**
@@ -82,6 +82,32 @@ namespace OSUIFramework.Patterns {
 		 * @param childId Id of the item that will be removed
 		 */
 		protected unsetChild(childId: string): void {
+			// Get the child reference
+			const childItem = this.getChild(childId);
+
+			// Check if it's the firstChild
+			if (childItem.isFirstChild) {
+				// unSet it as firstChild
+				childItem.isFirstChild = false;
+				// Set the 2nd child as firsChild since it will turns into the first one!
+				const nextSibling = this.getChildByIndex(1);
+				if (nextSibling) {
+					nextSibling.isFirstChild = true;
+				}
+			}
+
+			// Check if it's the lastChild
+			if (childItem.isLastChild) {
+				// unSet it as lastChild
+				childItem.isLastChild = false;
+				// Set the previous child as lastChild since it will turns into the last one!
+				const prevSibling = this.getChildByIndex(this._childItems.size - 1);
+				if (prevSibling) {
+					prevSibling.isLastChild = true;
+				}
+			}
+
+			// Remove it from _childItems map
 			this._childItems.delete(childId);
 		}
 
@@ -99,9 +125,10 @@ namespace OSUIFramework.Patterns {
 		/**
 		 * Method used to be notified by a given ChildId about a given action and act accordingly
 		 *
-		 * @param childId Child Item Id
-		 * @param notifiedTo Notification name (Should be based on an Enum)
-		 * @memberof OSUIDropdownServerSide
+		 * @abstract
+		 * @param {string} childId Child Item Id
+		 * @param {string} notifiedTo Notification name (Should be based on an Enum)
+		 * @memberof AbstractParent
 		 */
 		public abstract beNotifiedByChild(childId: string, notifiedTo: string): void;
 	}

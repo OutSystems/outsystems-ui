@@ -344,7 +344,7 @@ namespace OSUIFramework.Helper {
 		 * @param {HTMLElement} element Target element to receive the role atributte
 		 * @returns
 		 */
-		public static RoleListox(element: HTMLElement): void {
+		public static RoleListbox(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Listbox);
 		}
 

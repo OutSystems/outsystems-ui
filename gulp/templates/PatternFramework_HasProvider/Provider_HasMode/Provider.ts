@@ -107,7 +107,7 @@ namespace Providers.<%= patternNamePC %>.<%= providerNamePC %> {
 		 * @param {OSUIFramework.Callbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
 		 * @memberof Abstract<%= providerNamePC %>
 		 */
-		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
+		public registerCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
 			switch (eventName) {
 				case OSUIFramework.Patterns.<%= patternNamePC %>.Enum.Events.EVENT_NAME:
 						// TODO (by CreateNewPattern): Update or Remove

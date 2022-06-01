@@ -9,7 +9,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 	 * @implements {IDropdownServerSideItem}
 	 */
 	export class DropdownServerSideItem
-		extends AbstractChild<DropdownServerSideItemConfig, Providers.Dropdown.OSUIComponents.IDropdownServerSide>
+		extends AbstractChild<DropdownServerSideItemConfig, Dropdown.ServerSide.IDropdownServerSide>
 		implements IDropdownServerSideItem
 	{
 		// Click Event
@@ -47,7 +47,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 				case GlobalEnum.Keycodes.ArrowDown:
 				case GlobalEnum.Keycodes.Escape:
 					// Notify parent about the selected key
-					this.notifyParent(Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.KeyPressed);
+					this.notifyParent(Dropdown.ServerSide.Enum.ChildNotifyActionType.KeyPressed);
 					break;
 
 				// If Tab!
@@ -62,7 +62,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 					}
 
 					// Notify parent about the selected key
-					this.notifyParent(Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.KeyPressed);
+					this.notifyParent(Dropdown.ServerSide.Enum.ChildNotifyActionType.KeyPressed);
 					break;
 			}
 		}
@@ -74,8 +74,8 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			// Notify parent about this Option Click
 			this.notifyParent(
 				event.type === GlobalEnum.HTMLEvent.Click
-					? Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.Click
-					: Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.KeyPressed
+					? Dropdown.ServerSide.Enum.ChildNotifyActionType.Click
+					: Dropdown.ServerSide.Enum.ChildNotifyActionType.KeyPressed
 			);
 		}
 
@@ -139,6 +139,8 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		 * @memberof DropdownServerSideItem
 		 */
 		protected unsetCallbacks(): void {
+			this._eventOnClick = null;
+			this._eventOnkeyboardPress = null;
 			this._platformEventOnClickCallback = null;
 		}
 
@@ -157,7 +159,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 			);
 
 			// Notify parent about a new instance of this child has been created!
-			this.notifyParent(Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.Add);
+			this.notifyParent(Dropdown.ServerSide.Enum.ChildNotifyActionType.Add);
 
 			this.setCallbacks();
 			this._setUpEvents();
@@ -195,7 +197,7 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 				this._removeEvents();
 
 				// Notify parent about this instance will be destroyed
-				this.notifyParent(Providers.Dropdown.OSUIComponents.Enum.ChildNotifyActionType.Removed);
+				this.notifyParent(Dropdown.ServerSide.Enum.ChildNotifyActionType.Removed);
 			}
 
 			//Destroying the base of pattern
@@ -251,14 +253,21 @@ namespace OSUIFramework.Patterns.DropdownServerSideItem {
 		/**
 		 * Method used to update the selected status
 		 *
+		 * @param triggerCallback True by default, used to block the callback when needed
 		 * @memberof DropdownServerSideItem
 		 */
-		public toggleSelected(): void {
+		public toggleSelected(triggerCallback = true): void {
 			// Update the Status value with the it's Toggled value
 			this._updateSelectedStatus(!this.configs.IsSelected);
 
-			// Trigger platform callback about Option has been selected!
-			Helper.AsyncInvocation(this._platformEventOnClickCallback, this.parentObject.widgetId, this.configs.ItemId);
+			if (triggerCallback) {
+				// Trigger platform callback about Option has been selected!
+				Helper.AsyncInvocation(
+					this._platformEventOnClickCallback,
+					this.parentObject.widgetId,
+					this.configs.ItemId
+				);
+			}
 		}
 
 		/**

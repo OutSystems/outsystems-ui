@@ -43,10 +43,9 @@ namespace OSUIFramework.Patterns.Submenu {
 		}
 
 		private _checkForActiveLinks(): void {
-			this._submenuActiveLinksElement = Helper.Dom.ClassSelector(
-				this._submenuLinksElement,
-				Enum.CssClass.PatternActive
-			);
+			this._submenuActiveLinksElement =
+				Helper.Dom.ClassSelector(this._submenuLinksElement, Enum.CssClass.PatternActive) ||
+				Helper.Dom.ClassSelector(this._submenuHeaderElement, Enum.CssClass.PatternActive);
 
 			// Check if submenu contains elements with active class
 			this._hasActiveLinks = !!this._submenuActiveLinksElement;

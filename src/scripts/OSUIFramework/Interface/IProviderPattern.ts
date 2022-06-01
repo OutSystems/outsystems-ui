@@ -24,6 +24,6 @@ namespace OSUIFramework.Interface {
 		 * @param {OSUIFramework.Callbacks.OSGeneric} callback
 		 * @memberof IProviderPattern
 		 */
-		registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void;
+		registerCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void;
 	}
 }

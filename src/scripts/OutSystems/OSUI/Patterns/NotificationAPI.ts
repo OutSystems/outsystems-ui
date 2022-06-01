@@ -10,9 +10,24 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	 * @param {*} propertyValue
 	 */
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-	export function ChangeProperty(notificationId: string, propertyName: string, propertyValue: any): void {
-		const notification = GetNotificationById(notificationId);
-		notification.changeProperty(propertyName, propertyValue);
+	export function ChangeProperty(notificationId: string, propertyName: string, propertyValue: any): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const notification = GetNotificationById(notificationId);
+
+			notification.changeProperty(propertyName, propertyValue);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Notification.FailChangeProperty;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -44,12 +59,26 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	 * @export
 	 * @param {string} notificationId
 	 */
-	export function Destroy(notificationId: string): void {
-		const notification = GetNotificationById(notificationId);
+	export function Dispose(notificationId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		notification.dispose();
+		try {
+			const notification = GetNotificationById(notificationId);
 
-		_notificationMap.delete(notificationId);
+			notification.dispose();
+
+			_notificationMap.delete(notificationId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Notification.FailDispose;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -83,10 +112,24 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	 * @export
 	 * @param {string} notificationId ID of the notification that will be hidden
 	 */
-	export function Hide(notificationId: string): void {
-		const notification = GetNotificationById(notificationId);
+	export function Hide(notificationId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		notification.hide();
+		try {
+			const notification = GetNotificationById(notificationId);
+
+			notification.hide();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Notification.FailHide;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -113,7 +156,7 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	 * @param {OSUIFramework.Callbacks.OSGeneric} callback
 	 * @return {*} {string} Return Message Success or message of error info if it's the case.
 	 */
-	export function RegisterProviderCallback(
+	export function RegisterCallback(
 		notificationId: string,
 		eventName: string,
 		callback: OSUIFramework.Callbacks.OSGeneric
@@ -124,10 +167,10 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _notificationItem = this.GetNotificationById(notificationId);
-
 		try {
-			_notificationItem.registerProviderCallback(eventName, callback);
+			const _notificationItem = this.GetNotificationById(notificationId);
+
+			_notificationItem.registerCallback(eventName, callback);
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
@@ -143,9 +186,23 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	 * @export
 	 * @param {string} notificationId ID of the notification that will be shown
 	 */
-	export function Show(notificationId: string): void {
-		const notification = GetNotificationById(notificationId);
+	export function Show(notificationId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		notification.show();
+		try {
+			const notification = GetNotificationById(notificationId);
+
+			notification.show();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Notification.FailShow;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 }

@@ -11,9 +11,20 @@ namespace OSUIFramework.GlobalEnum {
 	 * OutSystemsUI elements cssClasses
 	 */
 	export enum CssClassElements {
+		AcessibilityStyleTag = 'acessibility-style-tag',
+		ActiveScreen = 'active-screen',
+		AsideExpandable = 'aside-expandable',
+		Container = 'screen-container',
+		Content = 'content',
 		Header = 'header',
+		HeaderHideOnScroll = 'hide-header-on-scroll',
+		HeaderIsFixed = 'fixed-header',
+		HeaderIsVisible = 'header-is--visible',
+		Layout = 'layout',
+		LayoutNative = 'layout-native',
 		List = 'list',
 		MainContent = 'main-content',
+		Placeholder = 'ph',
 	}
 
 	/**
@@ -53,10 +64,12 @@ namespace OSUIFramework.GlobalEnum {
 	 * OutSystemsUI Direction options
 	 */
 	export enum Direction {
+		Bottom = 'bottom',
 		Left = 'left',
 		LTR = 'ltr',
 		Right = 'right',
 		RTL = 'rtl',
+		Top = 'top',
 	}
 
 	/**
@@ -82,6 +95,7 @@ namespace OSUIFramework.GlobalEnum {
 	 * OutSystemsUI HTML Elements
 	 */
 	export enum HTMLElement {
+		Button = 'button',
 		Div = 'div',
 		FieldSet = 'fieldset',
 		Input = 'input',
@@ -209,14 +223,6 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
-	 * OutSystemsUI Units
-	 */
-	export enum Screen {
-		Active = 'active-screen',
-		Container = 'screen-container',
-	}
-
-	/**
 	 * OutSystemsUI Shape Types
 	 */
 	export enum ShapeTypes {
@@ -258,5 +264,9 @@ namespace OSUIFramework.GlobalEnum {
 		desktop = 'desktop',
 		phone = 'phone',
 		tablet = 'tablet',
+	}
+
+	export enum NotchClasses {
+		IPhoneX = 'iphonex',
 	}
 }

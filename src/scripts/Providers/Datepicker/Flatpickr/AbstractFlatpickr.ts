@@ -100,6 +100,11 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @memberof AbstractFlatpickr
 		 */
 		protected createProviderInstance(): void {
+			/* In order to avoid dateFormat convert issues done by provider when InitialDate was not defined and input has a default date lets clean that value before creating provider instance. This happen when DateFormat is different from YYYY-MM-DD */
+			if (this._datePickerProviderInputElem && this._flatpickrOpts.defaultDate === undefined) {
+				this._datePickerProviderInputElem.value = '';
+			}
+
 			// Init provider
 			this.provider = window.flatpickr(this._datePickerProviderInputElem, this._flatpickrOpts);
 
@@ -107,27 +112,29 @@ namespace Providers.Datepicker.Flatpickr {
 			this._setAttributes();
 
 			// Since Flatpickr has a native behaviour (by default) if a mobile device is in use, we must ensure we can add our Classes and TodayBtn to it, since if it's native behaviour we can't do it!
-			if (
-				this.configs.calendarMode === OSUIFramework.Patterns.DatePicker.Enum.Mode.Range ||
-				(OSUIFramework.Helper.DeviceInfo.IsDesktop && OSUIFramework.Helper.DeviceInfo.IsNative === false)
-			) {
-				/* NOTE:
-					If it's not a native app, could we add our stuff to the calendar?
-						- If RangeDate calendar => We do not have a native behaviour for it, so => YES!
-						- If Desktop we also be able to add them
-					
-					Seams confused but we can be at:
-						- iPad Safari (rendered as desktop)
-						- iPad Chrome (rendered as native)
-				*/
+			if (this.provider.calendarContainer !== undefined) {
+				if (
+					this.configs.calendarMode === OSUIFramework.Patterns.DatePicker.Enum.Mode.Range ||
+					(OSUIFramework.Helper.DeviceInfo.IsDesktop && OSUIFramework.Helper.DeviceInfo.IsNative === false)
+				) {
+					/* NOTE:
+						If it's not a native app, could we add our stuff to the calendar?
+							- If RangeDate calendar => We do not have a native behaviour for it, so => YES!
+							- If Desktop we also be able to add them
+						
+						Seams confused but we can be at:
+							- iPad Safari (rendered as desktop)
+							- iPad Chrome (rendered as native)
+					*/
 
-				// Add TodayBtn
-				if (this.configs.ShowTodayButton) {
-					this.addTodayBtn();
+					// Add TodayBtn
+					if (this.configs.ShowTodayButton) {
+						this.addTodayBtn();
+					}
+
+					// Set Calendar CSS classes
+					this._setCalendarCssClasses();
 				}
-
-				// Set Calendar CSS classes
-				this._setCalendarCssClasses();
 			}
 
 			// Trigger platform's InstanceIntializedHandler client Action
@@ -177,6 +184,13 @@ namespace Providers.Datepicker.Flatpickr {
 			this._setHtmllElements();
 		}
 
+		/**
+		 * Method used to change given propertyName at OnParametersChange platform event
+		 *
+		 * @param {string} propertyName the name of the property that will be changed
+		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
+		 * @memberof AbstractFlatpickr
+		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			//Storing the current ExtendedClass, before possibly changing this property.
 			//This will enable us to remove the previous added classes to the element.
@@ -204,32 +218,60 @@ namespace Providers.Datepicker.Flatpickr {
 			}
 		}
 
+		/**
+		 * Method used to clear the selected date
+		 *
+		 * @memberof AbstractFlatpickr
+		 */
 		public clear(): void {
 			this.provider.clear();
 		}
 
+		/**
+		 * Method used to close DatePicker
+		 *
+		 * @memberof AbstractFlatpickr
+		 */
 		public close(): void {
 			this.provider.close();
 		}
 
-		// Method to remove and destroy DatePicker instance
+		/**
+		 * Method to remove and destroy DatePicker instance
+		 *
+		 * @memberof AbstractFlatpickr
+		 */
 		public dispose(): void {
 			if (this.isBuilt) {
+				/* In order to avoid platform warnings due to DateFormat changes when DateFormar different from YYYY-MM-DD,
+				remove the input element from the DOM, this will avoid library update the input into a date with a different date format! */
+				this._datePickerProviderInputElem.remove();
+
 				this.unsetCallbacks();
 				this.unsetHtmlElements();
 
-				this.provider.destroy();
+				// Wait for _datePickerProviderInputElem be removed from DOM, before detroy the provider instance!
+				OSUIFramework.Helper.AsyncInvocation(this.provider.destroy);
 			}
 
 			super.dispose();
 		}
 
+		/**
+		 * Method used to open DatePicker
+		 *
+		 * @memberof AbstractFlatpickr
+		 */
 		public open(): void {
 			this.provider.open();
 		}
 
-		// Method used to regist callback events
-		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
+		/**
+		 * Method used to regist callback events
+		 *
+		 * @memberof AbstractFlatpickr
+		 */
+		public registerCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
 			switch (eventName) {
 				case OSUIFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnChange:
 					this._onChangeCallbackEvent = callback;
@@ -244,7 +286,23 @@ namespace Providers.Datepicker.Flatpickr {
 			}
 		}
 
+		/**
+		 * Method used to set the DatePicker language
+		 *
+		 * @memberof AbstractFlatpickr
+		 */
+		public setLanguage(value: string): void {
+			// Set the new Language
+			this.configs.Lang = value;
+
+			// If provider has been already defined, calendar must be redrawed!
+			if (this.provider !== undefined) {
+				this.redraw();
+			}
+		}
+
 		protected abstract onDateSelectedEvent(selectedDates: string[], dateStr: string, fp: Flatpickr): void;
 		protected abstract prepareConfigs(): void;
+		public abstract updateInitialDate(start: string, end?: string): void;
 	}
 }

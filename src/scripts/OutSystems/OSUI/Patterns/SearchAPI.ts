@@ -10,10 +10,24 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	 * @param {string} propertyName Property name that will be updated
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
-	export function ChangeProperty(searchId: string, propertyName: string, propertyValue: unknown): void {
-		const search = GetSearchById(searchId);
+	export function ChangeProperty(searchId: string, propertyName: string, propertyValue: unknown): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		search.changeProperty(propertyName, propertyValue);
+		try {
+			const search = GetSearchById(searchId);
+
+			search.changeProperty(propertyName, propertyValue);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Search.FailChangeProperty;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -22,10 +36,24 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	 * @export
 	 * @param {string} searchId ID of the search that will be closed
 	 */
-	export function Close(searchId: string): void {
-		const search = GetSearchById(searchId);
+	export function Close(searchId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		search.close();
+		try {
+			const search = GetSearchById(searchId);
+
+			search.close();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Search.FailClose;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -56,12 +84,26 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	 * @export
 	 * @param {string} searchId
 	 */
-	export function Destroy(searchId: string): void {
-		const search = GetSearchById(searchId);
+	export function Dispose(searchId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		search.dispose();
+		try {
+			const search = GetSearchById(searchId);
 
-		_searchsMap.delete(searchId);
+			search.dispose();
+
+			_searchsMap.delete(searchId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Search.FailDispose;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -110,10 +152,24 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	 * @export
 	 * @param {string} searchId ID of the search that will be closed
 	 */
-	export function Open(searchId: string): void {
-		const search = GetSearchById(searchId);
+	export function Open(searchId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		search.open();
+		try {
+			const search = GetSearchById(searchId);
+
+			search.open();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Search.FailOpen;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -123,8 +179,26 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	 * @param {string} searchId ID of the Search that will be initialized.
 	 * @return {*}  callback
 	 */
-	export function RegisterCallback(searchId: string, callback: OSUIFramework.Callbacks.OSSearchCollapseEvent): void {
-		const search = GetSearchById(searchId);
-		search.registerCallback(callback);
+	export function RegisterCallback(
+		searchId: string,
+		callback: OSUIFramework.Callbacks.OSSearchCollapseEvent
+	): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const search = GetSearchById(searchId);
+
+			search.registerCallback(callback);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Search.FailOpen;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 }

@@ -60,6 +60,10 @@ namespace OSUIFramework.Constants {
 	export const FocusableElems =
 		'a[href]:not([disabled]),[tabindex="0"], button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]),input[type="submit"]:not([disabled]), select:not([disabled])';
 
+	/* Store strict inputs elements excluding buttons, checkboxes... */
+	export const JustInputs =
+		'input:not([type=button]):not([type=checkbox]):not([type=color]):not([type=file]):not([type=hidden]):not([type=image]):not([type=image]):not([type=radio]):not([type=range]):not([type=reset]):not([type=submit]), textarea';
+
 	/* cssClass to be checked if the Accessibility Feature is enabled */
 	export const HasAccessibilityClass = 'has-accessible-features';
 
@@ -73,16 +77,7 @@ namespace OSUIFramework.Constants {
 	export const NoTransition = 'no-transition';
 
 	/* OSUI Version */
-	export const OSUIVersion = '2.8.3';
-
-	/* css Class that is added in layout */
-	export const LayoutClass = 'layout';
-
-	/* css Class that is added in header */
-	export const HeaderClass = 'header';
-
-	/* css Class that represents a placeholder */
-	export const Placeholder = 'ph';
+	export const OSUIVersion = '2.9.0';
 
 	/*Constant to be used across project as the zero value*/
 	export const ZeroValue = 0;

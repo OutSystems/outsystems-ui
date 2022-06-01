@@ -132,6 +132,18 @@ namespace Providers.RangeSlider.NoUISlider {
 						OSUIFramework.GlobalEnum.Orientation.Vertical
 				);
 			}
+
+			if (this.configs.ShowTickMarks) {
+				OSUIFramework.Helper.Dom.Styles.AddClass(
+					this._selfElem,
+					OSUIFramework.Patterns.RangeSlider.Enum.CssClass.HasTicks
+				);
+			} else {
+				OSUIFramework.Helper.Dom.Styles.RemoveClass(
+					this._selfElem,
+					OSUIFramework.Patterns.RangeSlider.Enum.CssClass.HasTicks
+				);
+			}
 		}
 
 		/**
@@ -293,7 +305,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * @param {OSUIFramework.Callbacks.OSGeneric} callback
 		 * @memberof OSUINoUiSlider
 		 */
-		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
+		public registerCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
 			switch (eventName) {
 				case OSUIFramework.Patterns.RangeSlider.Enum.RangeSliderEvents.OnInitialize:
 					if (this.platformEventInitialize === undefined) {

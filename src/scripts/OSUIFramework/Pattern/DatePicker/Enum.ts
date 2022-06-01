@@ -31,6 +31,7 @@ namespace OSUIFramework.Patterns.DatePicker.Enum {
 		MaxDate = 'MaxDate',
 		MinDate = 'MinDate',
 		ShowTodayButton = 'ShowTodayButton',
+		ShowWeekNumbers = 'ShowWeekNumbers',
 		TimeFormat = 'TimeFormat',
 	}
 

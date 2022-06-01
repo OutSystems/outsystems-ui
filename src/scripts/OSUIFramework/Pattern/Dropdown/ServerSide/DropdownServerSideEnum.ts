@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.Dropdown.OSUIComponents.Enum {
+namespace OSUIFramework.Patterns.Dropdown.ServerSide.Enum {
 	/**
 	 * Notifications Type, From Child (DropdownServerSideItem) to Parent (DropdownServerSide)
 	 */
@@ -47,6 +47,7 @@ namespace Providers.Dropdown.OSUIComponents.Enum {
 		BalloonMaxHeight = '--osui-dropdown-ss-balloon-max-height',
 		InputHeight = '--osui-dropdown-ss-input-height',
 		Left = '--osui-dropdown-ss-left',
+		ThresholVerticalAnimate = '--osui-dropdown-ss-thresholdanimateval',
 		Top = '--osui-dropdown-ss-top',
 		Width = '--osui-dropdown-ss-width',
 	}
@@ -64,5 +65,7 @@ namespace Providers.Dropdown.OSUIComponents.Enum {
 	 */
 	export enum PropertiesValues {
 		MaxHeight = 320,
+		ThresholVerticalAnimateValue = 20,
+		SelectValuesWrapperAriaLabelValue = 'Select an option.',
 	}
 }

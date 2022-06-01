@@ -8,9 +8,11 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 	 * @extends {Interface.IChild}
 	 */
 	export interface ISectionIndexItem extends Interface.IChild {
+		get IsSelected(): boolean;
+		get TargetElement(): HTMLElement;
+		get TargetElementOffset(): OffsetValues;
+
 		setIsActive();
-		get targetElement(): HTMLElement;
-		get targetElementOffset(): OffsetValues;
 		unsetIsActive();
 	}
 }

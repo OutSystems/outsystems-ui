@@ -76,7 +76,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			// Set the library options
 			const vsOptions = {
 				ele: this.ElementId,
-				hideClearButton: true,
+				hideClearButton: false,
 				labelRenderer: this._getOptionInfo.bind(this),
 				noOptionsText: this.NoResultsText,
 				noSearchResultsText: this.NoResultsText,
@@ -85,8 +85,8 @@ namespace Providers.Dropdown.VirtualSelect {
 				search: true,
 				searchPlaceholderText: this.SearchPrompt,
 				selectAllOnlyVisible: true,
-				silentInitialValueSet: true,
 				selectedValue: this._getSelectedValues(),
+				silentInitialValueSet: true,
 				textDirection: OutSystems.OSUI.Utils.GetIsRTL()
 					? OSUIFramework.GlobalEnum.Direction.RTL
 					: OSUIFramework.GlobalEnum.Direction.LTR,

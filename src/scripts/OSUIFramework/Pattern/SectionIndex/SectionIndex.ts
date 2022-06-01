@@ -12,10 +12,13 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		extends AbstractParent<SectionIndexConfig, SectionIndexItem.ISectionIndexItem>
 		implements ISectionIndex
 	{
-		// Store the current sectionIndexItem active
+		// Store the current active sectionIndexItem
 		private _activeSectionIndexItem: SectionIndexItem.ISectionIndexItem;
 		// Store the mainContent reference - The one that will have the scroll
 		private _mainScrollContainerElement: HTMLElement;
+
+		private _navigateOnClick = false;
+		private _scrollTimeout: number;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SectionIndexConfig(configs));
@@ -42,7 +45,7 @@ namespace OSUIFramework.Patterns.SectionIndex {
 			// Check if the given ChildId exist as an child item
 			if (childReference) {
 				// Update child status
-				this._updateIsActiveChildItem(childReference);
+				this._setActiveChildOnClick(childReference);
 			} else {
 				throw new Error(
 					`${ErrorCodes.SectionIndex.FailChildItemClicked}: The ${GlobalEnum.PatternsNames.SectionIndexItem} under uniqueId: '${childId}' does not exist as an SectionIndexItem from ${GlobalEnum.PatternsNames.SectionIndex} with Id: ${this.widgetId}.`
@@ -63,12 +66,68 @@ namespace OSUIFramework.Patterns.SectionIndex {
 			}
 		}
 
+		// Method that will update the IsActive child item status
+		private _setActiveChildOnClick(child: SectionIndexItem.ISectionIndexItem): void {
+			// Clean the timeout
+			this._navigateOnClick = true;
+			window.clearTimeout(this._scrollTimeout);
+			this._scrollTimeout = window.setTimeout(() => {
+				// Reset flag in order to understand navigation by click has ended!
+				this._navigateOnClick = false;
+			}, 800); // enought time to deal with the scroll
+
+			// Remove old sectionIndexItem as active if exist
+			if (this._activeSectionIndexItem) {
+				this._activeSectionIndexItem.unsetIsActive();
+			}
+
+			// Set new sectionIndexItem as active
+			child.setIsActive();
+
+			// Set the current IsActive Child
+			this._activeSectionIndexItem = child;
+
+			// Trigger the Scroll navigation
+			Helper.Scroll(this._mainScrollContainerElement, child.TargetElementOffset, this.configs.SmoothScrolling);
+		}
+
+		// Method used to set the IsActive child item at the onBodyScroll
+		private _setActiveChildOnScroll(child: SectionIndexItem.ISectionIndexItem) {
+			// Prevent logic happen if the scroll has been triggered by click on the item
+			if (this._navigateOnClick || this.configs.IsFixed === false) {
+				return;
+			}
+
+			// Get all IsActive Items
+			const isActiveChilds = this.childItems.filter((item) => item.IsSelected);
+			// Go through all the IsActive items
+			for (const optionItem of isActiveChilds) {
+				// In case we've multiple IsActive items, unselect all unless last one!
+				if (isActiveChilds.length === 1 || optionItem !== isActiveChilds[isActiveChilds.length - 1]) {
+					this._activeSectionIndexItem.unsetIsActive();
+				}
+			}
+
+			// Set new sectionIndexItem as active
+			child.setIsActive();
+
+			// Set the current IsActive Child
+			this._activeSectionIndexItem = child;
+		}
+
 		// Method to set the SectionIndex IsFixed
 		private _toggleIsFixed(): void {
 			if (this.configs.IsFixed) {
+				let headerHeight = 0;
 				// Get Header height
-				const headerHeight =
-					Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.Header).offsetHeight || 0;
+				const hasFixedHeader = Helper.Dom.ClassSelector(
+					document.body,
+					GlobalEnum.CssClassElements.HeaderIsFixed
+				);
+				if (hasFixedHeader) {
+					headerHeight =
+						Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.Header).offsetHeight || 0;
+				}
 
 				// Get (if exist) the paddingTop value for the mainContent (the one with Scroll)
 				const contentPaddingTop =
@@ -93,23 +152,6 @@ namespace OSUIFramework.Patterns.SectionIndex {
 			}
 		}
 
-		// Method that will update the IsActive child item status.
-		private _updateIsActiveChildItem(child: SectionIndexItem.ISectionIndexItem): void {
-			// Remove old sectionIndexItem as active if exist
-			if (this._activeSectionIndexItem) {
-				this._activeSectionIndexItem.unsetIsActive();
-			}
-
-			// Set new sectionIndexItem as active
-			child.setIsActive();
-
-			// Set the current IsActive Child
-			this._activeSectionIndexItem = child;
-
-			// Trigger the Scroll navigation
-			Helper.Scroll(this._mainScrollContainerElement, child.targetElementOffset, this.configs.SmoothScrolling);
-		}
-
 		/**
 		 * Method to set the HTMLElements used
 		 *
@@ -117,7 +159,10 @@ namespace OSUIFramework.Patterns.SectionIndex {
 		 * @memberof SectionIndex
 		 */
 		protected setHtmlElements(): void {
-			this._mainScrollContainerElement = Helper.Dom.ClassSelector(document, GlobalEnum.Screen.Active);
+			this._mainScrollContainerElement = Helper.Dom.ClassSelector(
+				document,
+				GlobalEnum.CssClassElements.ActiveScreen
+			);
 		}
 
 		/**
@@ -147,6 +192,9 @@ namespace OSUIFramework.Patterns.SectionIndex {
 					break;
 				case Enum.ChildNotifyActionType.Removed:
 					this._removeSectionIndexItem(childId);
+					break;
+				case Enum.ChildNotifyActionType.Active:
+					this._setActiveChildOnScroll(this.getChild(childId));
 					break;
 				default:
 					throw new Error(
