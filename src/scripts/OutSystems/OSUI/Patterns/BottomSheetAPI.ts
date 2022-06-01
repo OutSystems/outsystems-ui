@@ -95,6 +95,18 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 		return _bottomSheetItem;
 	}
 
+	export function Open(bottomSheetId: string): void {
+		const _bottomSheetItem = GetBottomSheetItemById(bottomSheetId);
+
+		//_bottomSheetItem.open();
+	}
+
+	export function Close(bottomSheetId: string): void {
+		const _bottomSheetItem = GetBottomSheetItemById(bottomSheetId);
+
+		//_bottomSheetItem.close();
+	}
+
 	/**
 	 * Function to register a callback on this pattern
 	 *
