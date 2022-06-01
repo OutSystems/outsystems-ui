@@ -7,10 +7,6 @@ namespace OSUIFramework.Patterns.Tabs {
 		public TabsOrientation: GlobalEnum.Orientation;
 		public TabsVerticalPosition: GlobalEnum.Direction;
 
-		constructor(config: JSON) {
-			super(config);
-		}
-
 		public validateCanChange(isBuilt: boolean, key: string): boolean {
 			if (isBuilt) {
 				return key !== Enum.Properties.StartingTab;

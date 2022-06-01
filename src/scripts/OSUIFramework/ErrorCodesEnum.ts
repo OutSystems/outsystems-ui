@@ -53,8 +53,10 @@ namespace OSUIFramework.ErrorCodes {
 
 	export const Tabs = {
 		FailChildItemClicked: 'OSUI-GEN-09001',
-		FailSetNewChildItem: 'OSUI-GEN-09002',
-		FailToSetChildItemAction: 'OSUI-GEN-09003',
-		FailUnsetNewChildItem: 'OSUI-GEN-09004',
+		FailSetNewChildContentItem: 'OSUI-GEN-09002',
+		FailSetNewChildHeaderItem: 'OSUI-GEN-09003',
+		FailToSetChildItemAction: 'OSUI-GEN-09004',
+		FailUnsetNewChildContentItem: 'OSUI-GEN-09005',
+		FailUnsetNewChildHeaderItem: 'OSUI-GEN-09006',
 	};
 }

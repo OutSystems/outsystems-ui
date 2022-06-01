@@ -13,23 +13,9 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		private _dataTab: number;
 		// Store if this is the current active item
 		private _isActive: boolean;
-		// Store this item's tab pattern
-		private _tabsElem: Patterns.Tabs.ITabs;
 
 		constructor(uniqueId: string, tabsElem: Patterns.Tabs.ITabs, configs: JSON) {
 			super(uniqueId, new TabsContentItemConfig(configs));
-
-			this._tabsElem = tabsElem;
-		}
-
-		/**
-		 * Method to add this element to the respective Tabs
-		 *
-		 * @private
-		 * @memberof TabsContentItem
-		 */
-		private _addElementToTabs(): void {
-			this._tabsElem.addContentItem(this);
 		}
 
 		/**
@@ -66,7 +52,8 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 				OutSystems.OSUI.Patterns.TabsAPI.GetTabsById
 			);
 
-			this._addElementToTabs();
+			// Notify parent about a new instance of this child has been created!
+			this.notifyParent(Tabs.Enum.ChildNotifyActionType.AddContentItem);
 
 			this.setA11YProperties(false);
 
@@ -79,11 +66,8 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		 * @memberof TabsContentItem
 		 */
 		public dispose(): void {
-			// Remove this item from the tabs pattern array
-			this._tabsElem.removeContentItem(this);
-
 			// Notify parent about this instance will be destroyed
-			this.notifyParent(Tabs.Enum.ChildNotifyActionType.Removed);
+			this.notifyParent(Tabs.Enum.ChildNotifyActionType.RemovedContentItem);
 
 			super.dispose();
 		}
@@ -109,32 +93,6 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		}
 
 		/**
-		 * Method to set the element as active, called by the tabs
-		 *
-		 * @memberof TabsContentItem
-		 */
-		public removeActiveElement(): void {
-			if (this._selfElem) {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
-				this._isActive = false;
-				this.setA11YProperties();
-			}
-		}
-
-		/**
-		 * Method to set the element as active, called by the tabs
-		 *
-		 * @memberof TabsContentItem
-		 */
-		public setActiveElement(): void {
-			if (this._selfElem) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
-				this._isActive = true;
-				this.setA11YProperties();
-			}
-		}
-
-		/**
 		 * Method to set the aria-labbeledby attribute, called by the tabs
 		 *
 		 * @param {string} headerItemId
@@ -156,6 +114,19 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		}
 
 		/**
+		 * Method to set the element as active, called by the tabs
+		 *
+		 * @memberof TabsContentItem
+		 */
+		public setIsActive(): void {
+			if (this._selfElem) {
+				Helper.Dom.Styles.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
+				this._isActive = true;
+				this.setA11YProperties();
+			}
+		}
+
+		/**
 		 * Method to set the intersection observer, called by the tabs
 		 *
 		 * @param {IntersectionObserver} observer
@@ -174,6 +145,19 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		public unobserveDragObserver(observer: IntersectionObserver): void {
 			// disconnect observer when destroyed from DOM
 			observer.unobserve(this._selfElem);
+		}
+
+		/**
+		 * Method to set the element as active, called by the tabs
+		 *
+		 * @memberof TabsContentItem
+		 */
+		public unsetIsActive(): void {
+			if (this._selfElem) {
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
+				this._isActive = false;
+				this.setA11YProperties();
+			}
 		}
 	}
 }
