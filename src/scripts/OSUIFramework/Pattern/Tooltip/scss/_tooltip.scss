@@ -10,8 +10,6 @@ $osui-tooltip-baloon-min-width: 150px;
 
 // tooltip arrow size
 $osui-tooltip-arrow-size: 9px;
-// tooltip transition distance
-$osui-tooltip-transition-distance: 12px;
 // Service Studio preview arrow size
 $osui-tooltip-arrow-size-preview: 5px;
 $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
@@ -64,7 +62,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 }
 
 /* ---------------------------------------------------------------------------- */
-// Tooltip BaloonWrapper
+// Tooltip Baloon
 /* ---------------------------------------------------------------------------- */
 ///
 .osui-tooltip__balloon-wrapper__balloon {
@@ -109,7 +107,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 .osui-tooltip__balloon-wrapper {
 	// Is left
 	&.left {
-		left: var(--osui-tooltip-left);
+		left: calc(var(--osui-tooltip-left) + var(--space-xs));
 		max-width: 0;
 		min-width: 0;
 		padding-right: var(--space-none);
@@ -117,7 +115,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		transform: translateX(-100%) translateY(-50%);
 
 		.osui-tooltip__balloon-wrapper__balloon {
-			transform: translateX(var(--space-s));
+			transform: translateX(calc(-1 * (100% - var(--space-s))));
 			width: $osui-tooltip-baloon-max-width;
 
 			// Baloon Arrow!
@@ -181,12 +179,12 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	&.top,
 	&.top-left,
 	&.top-right {
+		bottom: calc((100vh - (var(--osui-tooltip-top) + var(--space-s))) - var(--space-s));
 		max-height: 0;
 		padding-bottom: var(--space-none);
-		bottom: calc(100vh - (var(--osui-tooltip-top) + var(--space-s)));
 
 		.osui-tooltip__balloon-wrapper__balloon {
-			transform: translateY(var(--space-s));
+			transform: translateY(-100%);
 
 			// Baloon Arrow!
 			&:before {
@@ -331,6 +329,36 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 }
 
 /* ---------------------------------------------------------------------------- */
+// BalloonWrapper IsOpening!
+/* ---------------------------------------------------------------------------- */
+///
+.osui-tooltip__balloon-wrapper--is-opening {
+	// Is left
+	&.left {
+		// used the left position to animate only at when at left in order to avoid animation issues related with position!
+		transition: left 250ms;
+
+		.osui-tooltip__balloon-wrapper__balloon {
+			// disabled transform animation in order to avoid animation issues related with the position!
+			transition: opacity 250ms;
+		}
+	}
+
+	// Is general top
+	&.top,
+	&.top-left,
+	&.top-right {
+		// used the left position to animate only at when at left in order to avoid animation issues related with position!
+		transition: bottom 250ms;
+
+		.osui-tooltip__balloon-wrapper__balloon {
+			// disabled transform animation in order to avoid animation issues related with the position!
+			transition: opacity 250ms;
+		}
+	}
+}
+
+/* ---------------------------------------------------------------------------- */
 // BalloonWrapper IsOpened!
 /* ---------------------------------------------------------------------------- */
 ///
@@ -347,6 +375,24 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		}
 	}
 
+	// Is left
+	&.left {
+		left: var(--osui-tooltip-left);
+		max-width: $osui-tooltip-baloon-max-width;
+		min-width: $osui-tooltip-baloon-min-width;
+		padding-right: var(--space-base);
+
+		.osui-tooltip__balloon-wrapper__balloon {
+			transform: translateX(0);
+			width: fit-content;
+
+			// Baloon Arrow!
+			&:before {
+				transform: translateX(0) translateY(-50%);
+			}
+		}
+	}
+
 	// Is right or position is empty!
 	&.right {
 		max-width: $osui-tooltip-baloon-max-width;
@@ -355,28 +401,11 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 
 		.osui-tooltip__balloon-wrapper__balloon {
 			transform: translateX(0);
-			width: auto;
+			width: fit-content;
 
 			// Baloon Arrow!
 			&:before {
 				transform: translateX(-100%) translateY(-50%);
-			}
-		}
-	}
-
-	// Is left
-	&.left {
-		max-width: $osui-tooltip-baloon-max-width;
-		min-width: $osui-tooltip-baloon-min-width;
-		padding-right: var(--space-base);
-
-		.osui-tooltip__balloon-wrapper__balloon {
-			transform: translateX(0);
-			width: auto;
-
-			// Baloon Arrow!
-			&:before {
-				transform: translateX(0) translateY(-50%);
 			}
 		}
 	}
@@ -400,6 +429,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	&.top,
 	&.top-left,
 	&.top-right {
+		bottom: calc(100vh - (var(--osui-tooltip-top) + var(--space-s)));
 		max-height: $osui-tooltip-baloon-max-height;
 		padding-bottom: var(--space-base);
 
@@ -503,14 +533,13 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 // Responsive --------------------------------------------------------------------
 ///
 .phone {
-	.osui-tooltip {
-		&.osui-tooltip--is-hover:hover,
-		&.osui-tooltip--is-opened {
-			.osui-tooltip__balloon-wrapper {
-				&.left,
-				&.right {
-					max-width: 100vw;
-				}
+	.osui-tooltip__balloon-wrapper--is-opened {
+		&.left,
+		&.right {
+			.osui-tooltip__balloon-wrapper__balloon {
+				max-width: initial;
+				min-width: initial;
+				width: 40vw;
 			}
 		}
 	}
