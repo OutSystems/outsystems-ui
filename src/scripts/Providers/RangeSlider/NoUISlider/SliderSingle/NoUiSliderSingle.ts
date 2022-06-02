@@ -132,7 +132,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 				this.provider.set(value);
 			} else {
 				throw new Error(
-					`${OSUIFramework.ErrorCodes.RangeSlider.FailSetValue}:	The value must be between the minium value and maximum value set.`
+					`${OSUIFramework.ErrorCodes.RangeSlider.FailSetValue}:	The value must be between the minimum value and maximum value set.`
 				);
 			}
 		}
