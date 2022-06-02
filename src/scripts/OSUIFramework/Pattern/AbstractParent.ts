@@ -122,58 +122,57 @@ namespace OSUIFramework.Patterns {
 		protected unsetChild(childId: string): void {
 			// Get ChildType
 			const childType = this._childIdsByType.get(childId);
-			if (childType) {
-				// Get the correct map based on the given childType
-				const childsMap = this._childItemsByType[childType];
-				if (childsMap) {
-					// Get the child reference
-					const childItem = this.getChild(childId);
-
-					if (childItem) {
-						// Check if it's the firstChild
-						if (childItem.isFirstChild) {
-							// unSet it as firstChild
-							childItem.isFirstChild = false;
-							// Set the 2nd child as firsChild since it will turns into the first one!
-							const nextSibling = this.getChildByIndex(1, childType);
-							if (nextSibling) {
-								nextSibling.isFirstChild = true;
-							}
-						}
-
-						// Check if it's the lastChild
-						if (childItem.isLastChild) {
-							// unSet it as lastChild
-							childItem.isLastChild = false;
-							// Set the previous child as lastChild since it will turns into the last one!
-							const prevSibling = this.getChildByIndex(childsMap.size - 1, childType);
-							if (prevSibling) {
-								prevSibling.isLastChild = true;
-							}
-						}
-
-						// Remove child from it's Map of all child items global reference!
-						this._childIdsByType.delete(childId);
-						// Remove child from it's Map of items with the same type!
-						childsMap.delete(childId);
-					} else {
-						// Was not able to get child by id!
-						throw new Error(
-							`${ErrorCodes.AbstractParent.FailChildNotFound}:Child of Id ('${childId}') was not found!`
-						);
-					}
-				} else {
-					// Was not able to get childs of type!
-					throw new Error(
-						`${ErrorCodes.AbstractParent.FailChildsNotFound}:Childs of Type ('${childType}') were not found!`
-					);
-				}
-			} else {
+			if (childType === undefined) {
 				// Was not able to get type!
 				throw new Error(
 					`${ErrorCodes.AbstractParent.FailTypeNotFound}:Child Type of Child ('${childId}') was not found!`
 				);
 			}
+
+			// Get the correct map based on the given childType
+			const childsMap = this._childItemsByType[childType];
+			if (childsMap === undefined) {
+				// Was not able to get childs of type!
+				throw new Error(
+					`${ErrorCodes.AbstractParent.FailChildsNotFound}:Childs of Type ('${childType}') were not found!`
+				);
+			}
+
+			// Get the child reference
+			const childItem = this.getChild(childId);
+			if (childItem === undefined) {
+				// Was not able to get child by id!
+				throw new Error(
+					`${ErrorCodes.AbstractParent.FailChildNotFound}:Child of Id ('${childId}') was not found!`
+				);
+			}
+
+			// Check if it's the firstChild
+			if (childItem.isFirstChild) {
+				// unSet it as firstChild
+				childItem.isFirstChild = false;
+				// Set the 2nd child as firsChild since it will turns into the first one!
+				const nextSibling = this.getChildByIndex(1, childType);
+				if (nextSibling) {
+					nextSibling.isFirstChild = true;
+				}
+			}
+
+			// Check if it's the lastChild
+			if (childItem.isLastChild) {
+				// unSet it as lastChild
+				childItem.isLastChild = false;
+				// Set the previous child as lastChild since it will turns into the last one!
+				const prevSibling = this.getChildByIndex(childsMap.size - 1, childType);
+				if (prevSibling) {
+					prevSibling.isLastChild = true;
+				}
+			}
+
+			// Remove child from it's Map of all child items global reference!
+			this._childIdsByType.delete(childId);
+			// Remove child from it's Map of items with the same type!
+			childsMap.delete(childId);
 		}
 
 		/**
