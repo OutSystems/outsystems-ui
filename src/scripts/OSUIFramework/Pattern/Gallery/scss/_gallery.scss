@@ -9,7 +9,7 @@
 	& > .list {
 		display: grid;
 		grid-gap: var(--gallery-gap);
-		grid-template-columns: repeat(var(--gallery-desktop-items), 1fr);
+		grid-template-columns: repeat(var(--gallery-desktop-items), minmax(0, 1fr));
 	}
 
 	& > * {
@@ -42,7 +42,7 @@
 	.osui-gallery {
 		&,
 		& > .list {
-			grid-template-columns: repeat(var(--gallery-tablet-items), 1fr);
+			grid-template-columns: repeat(var(--gallery-tablet-items), minmax(0, 1fr));
 		}
 
 		& > .list {
@@ -56,7 +56,7 @@
 	.osui-gallery {
 		&,
 		& > .list {
-			grid-template-columns: repeat(var(--gallery-phone-items), 1fr);
+			grid-template-columns: repeat(var(--gallery-phone-items), minmax(0, 1fr));
 		}
 
 		& > .list {
