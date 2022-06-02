@@ -30,7 +30,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 		// Store the HTML elements
 		private _tooltipBalloonContentActiveElem: HTMLElement;
 		private _tooltipBalloonContentElem: HTMLElement;
-		private _tooltipBalloonCurrentPosition = '';
+		private _tooltipBalloonPositionClass = '';
 		private _tooltipBalloonWrapperElem: HTMLElement;
 		private _tooltipIconElem: HTMLElement;
 
@@ -38,7 +38,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 			super(uniqueId, new TooltipConfig(configs));
 
 			this._isOpen = this.configs.StartVisible;
-			this._tooltipBalloonCurrentPosition = this.configs.Position;
+			this._tooltipBalloonPositionClass = this.configs.Position;
 		}
 
 		// Check the recomended position to open the balloon
@@ -53,10 +53,45 @@ namespace OSUIFramework.Patterns.Tooltip {
 			);
 
 			// Check if there are a any recomended position
-			if (recomendedPosition !== undefined) {
-				// Update BalloonWrapper position
-				this._updateBalloonWrapperPosition(this._tooltipBalloonCurrentPosition, recomendedPosition);
+			if (recomendedPosition === undefined || this.IsOpen === false) {
+				return;
 			}
+
+			console.log(recomendedPosition);
+			// Remove the older vertical position!
+			Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, this._tooltipBalloonPositionClass);
+			// Store the current position
+			this._tooltipBalloonPositionClass = recomendedPosition;
+			// Set the new position
+			Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, recomendedPosition);
+		}
+
+		// Check the recomended position to open the balloon
+		private _getRecomendedPositionOnVerticalScroll(): void {
+			// Get the Boundaries for the balloon container
+			const balloonBounds = this._tooltipBalloonContentElem.getBoundingClientRect();
+
+			// Get the recomended position to open the balloon
+			const recomendedPosition = Helper.BoundPosition.GetRecomendedPositionByBounds(
+				balloonBounds,
+				document.body.getBoundingClientRect()
+			);
+
+			if (
+				recomendedPosition === undefined ||
+				(recomendedPosition !== GlobalEnum.Position.Left && recomendedPosition !== GlobalEnum.Position.Right)
+			) {
+				return;
+			}
+
+			console.log('CENAS', recomendedPosition);
+
+			// Remove the older vertical position!
+			Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, this._tooltipBalloonPositionClass);
+			// Store the current position
+			this._tooltipBalloonPositionClass = recomendedPosition;
+			// Set the new position
+			Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, recomendedPosition);
 		}
 
 		// Move balloon element to outside of the pattern context
@@ -118,7 +153,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 				// Update the coordinates
 				this._setBalloonCoordinates();
 				// Update/Get the recomended position
-				this._getRecomendedPosition();
+				this._getRecomendedPositionOnVerticalScroll();
 				// Update the "animation" before the next repaint
 				this._rafOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
 			}
@@ -228,7 +263,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 			}
 
 			// Set default Position cssClass property value
-			Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, this._tooltipBalloonCurrentPosition);
+			Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, this._tooltipBalloonPositionClass);
 		}
 		// Add the tooltip Events
 		private _setUpEvents(): void {
@@ -347,16 +382,6 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 			cancelAnimationFrame(this._rafOnBodyScroll);
 			cancelAnimationFrame(this._rafOnWindowResize);
-		}
-
-		// Update Balloon Wrapper position
-		private _updateBalloonWrapperPosition(oldPosition: string, newPosition: string): void {
-			// Remove the older position
-			Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, oldPosition);
-			// Set the new one
-			Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, newPosition);
-			// Update the recomended Position!
-			this._tooltipBalloonCurrentPosition = newPosition;
 		}
 
 		// Update Pattern behaviour accordingly IsHover status
@@ -505,12 +530,12 @@ namespace OSUIFramework.Patterns.Tooltip {
 						// Remove the old Position CSS Class
 						Helper.Dom.Styles.RemoveClass(
 							this._tooltipBalloonWrapperElem,
-							this._tooltipBalloonCurrentPosition
+							this._tooltipBalloonPositionClass
 						);
 						// Set the new one!
 						Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, propertyValue as string);
 						// Update local current position
-						this._tooltipBalloonCurrentPosition = propertyValue as string;
+						this._tooltipBalloonPositionClass = propertyValue as string;
 						break;
 
 					case GlobalEnum.CommonPatternsProperties.ExtendedClass:
