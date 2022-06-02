@@ -4,7 +4,7 @@
 /// Patterns - Content - Tooltip
 
 // Baloon Size
-$osui-tooltip-baloon-max-height: 200px;
+$osui-tooltip-baloon-max-height: 50vh;
 $osui-tooltip-baloon-max-width: 250px;
 $osui-tooltip-baloon-min-width: 150px;
 
@@ -22,10 +22,15 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	position: relative;
 }
 
+/* ---------------------------------------------------------------------------- */
 // Tooltip IconWrapper
+/* ---------------------------------------------------------------------------- */
 ///
 .osui-tooltip__content {
+	cursor: pointer;
 	position: inherit;
+
+	background-color: red;
 
 	&:empty {
 		// ServiceStudio Preview
@@ -35,18 +40,16 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	}
 }
 
+/* ---------------------------------------------------------------------------- */
 // Tooltip BaloonWrapper
+/* ---------------------------------------------------------------------------- */
 //
 .osui-tooltip__balloon-wrapper {
-	left: var(--osui-tooltip-left);
-	max-height: 0;
-	// opacity: 0; //todo
-	// overflow: hidden; //todo
-	padding-top: var(--space-none);
+	max-height: $osui-tooltip-baloon-max-height;
+	opacity: 0;
+	overflow: hidden;
 	pointer-events: none;
 	position: absolute;
-	top: calc(var(--osui-tooltip-top) + var(--osui-tooltip-height));
-	transition: opacity 250ms;
 	z-index: 2;
 
 	// Service Studio Preview
@@ -60,10 +63,11 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	}
 }
 
-// Tooltip BaloonContent
+/* ---------------------------------------------------------------------------- */
+// Tooltip BaloonWrapper
+/* ---------------------------------------------------------------------------- */
 ///
 .osui-tooltip__balloon-wrapper__balloon {
-	// opacity: 0; //todo
 	background-color: var(--color-neutral-9);
 	border-radius: var(--border-radius-soft);
 	color: var(--color-neutral-0);
@@ -72,9 +76,10 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	line-height: initial;
 	max-width: $osui-tooltip-baloon-max-width;
 	min-width: $osui-tooltip-baloon-min-width;
+	opacity: 0;
 	padding: var(--space-s);
 	position: relative;
-	transition: transform 250ms;
+	transition: transform 250ms, opacity 250ms;
 	width: fit-content;
 
 	// Service Studio Preview
@@ -84,475 +89,413 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		-servicestudio-opacity: 1;
 		-servicestudio-top: 0;
 	}
-	&:after {
-		-servicestudio-content: '';
-		-servicestudio-position: absolute;
-		-servicestudio-width: 0;
-		-servicestudio-height: 0;
-		-servicestudio-border-left: $osui-tooltip-arrow-size-preview solid transparent;
-		-servicestudio-border-right: $osui-tooltip-arrow-size-preview solid transparent;
-		-servicestudio-border-bottom: $osui-tooltip-arrow-size-preview solid var(--color-neutral-9);
-	}
-
-	&.left:after {
-		-servicestudio-right: -($osui-tooltip-arrow-size-preview + 2px);
-		-servicestudio-top: $osui-tooltip-arrow-middle-preview;
-		-servicestudio-transform: rotate(90deg);
-	}
-
-	&.right:after {
-		-servicestudio-left: -($osui-tooltip-arrow-size-preview + 2px);
-		-servicestudio-top: $osui-tooltip-arrow-middle-preview;
-		-servicestudio-transform: rotate(-90deg);
-	}
-
-	&.center:after,
-	&.bottom:after {
-		-servicestudio-left: $osui-tooltip-arrow-middle-preview;
-		-servicestudio-top: -$osui-tooltip-arrow-size-preview;
-	}
-
-	&.bottom-left:after {
-		-servicestudio-left: $osui-tooltip-arrow-size-preview;
-		-servicestudio-top: -$osui-tooltip-arrow-size-preview;
-	}
-
-	&.bottom-right:after {
-		-servicestudio-right: $osui-tooltip-arrow-size-preview;
-		-servicestudio-top: -$osui-tooltip-arrow-size-preview;
-	}
-
-	&.top:after {
-		-servicestudio-left: $osui-tooltip-arrow-middle-preview;
-		-servicestudio-bottom: -($osui-tooltip-arrow-size-preview - 1);
-		-servicestudio-transform: rotate(180deg);
-	}
-
-	&.top-left:after {
-		-servicestudio-left: $osui-tooltip-arrow-size-preview;
-		-servicestudio-bottom: -($osui-tooltip-arrow-size-preview - 1);
-		-servicestudio-transform: rotate(180deg);
-	}
-
-	&.top-right:after {
-		-servicestudio-right: $osui-tooltip-arrow-size-preview;
-		-servicestudio-bottom: -($osui-tooltip-arrow-size-preview - 1);
-		-servicestudio-transform: rotate(180deg);
-	}
 
 	// Baloon Arrow!
 	&:before {
-		border-color: transparent transparent var(--color-neutral-9) transparent;
 		border-style: solid;
-		border-width: 0 $osui-tooltip-arrow-size $osui-tooltip-arrow-size $osui-tooltip-arrow-size;
 		content: '';
 		display: block;
 		height: 0;
-		left: var(--space-s);
 		opacity: 0;
 		position: absolute;
-		top: 1px;
-		transform: translateY(0);
 		width: 0;
 	}
 }
 
+/* ---------------------------------------------------------------------------- */
+// BalloonWrapper Positions
+/* ---------------------------------------------------------------------------- */
 ///
-///
-///
-///
-///
-///
-///
-///
-///
-///
-///
-///
-///
-///
-///
-///
-.old_osui-tooltip {
-	display: inline-block;
-	position: relative;
-
-	//
-	&.osui-tooltip--is-hover:hover,
-	&.osui-tooltip--is-opened {
-		.osui-tooltip__balloon-wrapper {
-			max-height: 50vh;
-			opacity: 1;
-			padding-top: var(--space-base);
-			pointer-events: initial;
-
-			// if opens to top
-			&.top,
-			&.top-left,
-			&.top-right {
-				bottom: 100%;
-				padding-bottom: var(--space-base);
-				padding-top: initial;
-				top: initial;
-
-				.osui-tooltip__balloon-wrapper__balloon {
-					transform: translateY(0);
-
-					&:before {
-						opacity: 1;
-						transform: translateY(100%);
-					}
-				}
-			}
-
-			&.top {
-				left: 50%;
-				transform: translateX(-50%);
-
-				.osui-tooltip__balloon-wrapper__balloon {
-					&:before {
-						left: 50%;
-						transform: translate(-50%, 100%);
-					}
-				}
-			}
-
-			// if opens to left or right
-			&.left,
-			&.right {
-				max-height: initial;
-				max-width: 50vw;
-				padding-left: var(--space-base);
-				padding-top: var(--space-none);
-
-				.osui-tooltip__balloon-wrapper__balloon {
-					transform: translateX(0);
-				}
-			}
-
-			&.center,
-			&.bottom,
-			&.bottom-left,
-			&.bottom-right {
-				.osui-tooltip__balloon-wrapper__balloon {
-					transform: translateY(0);
-				}
-			}
-
-			// if opens to left
-			&.left {
-				padding-left: initial;
-				padding-right: var(--space-base);
-				right: 100%;
-			}
-		}
+.osui-tooltip__balloon-wrapper {
+	// Is left
+	&.left {
+		left: var(--osui-tooltip-left);
+		max-width: 0;
+		min-width: 0;
+		padding-right: var(--space-none);
+		top: calc(var(--osui-tooltip-top) + (var(--osui-tooltip-height) / 2));
+		transform: translateX(-100%) translateY(-50%);
 
 		.osui-tooltip__balloon-wrapper__balloon {
-			opacity: 1;
+			transform: translateX(var(--space-s));
+			width: $osui-tooltip-baloon-max-width;
 
+			// Baloon Arrow!
 			&:before {
-				opacity: 1;
-				transform: translateY(-100%);
+				border-color: transparent transparent transparent var(--color-neutral-9);
+				border-width: $osui-tooltip-arrow-size 0 $osui-tooltip-arrow-size $osui-tooltip-arrow-size;
+				left: 100%;
+				top: 50%;
+				transform: translateX(-50%) translateY(-50%);
 			}
 		}
 	}
 
-	//
-	&:not(.osui-tooltip--is-hover) {
-		.osui-tooltip__content {
-			cursor: pointer;
-		}
-	}
+	// Is right or position is empty!
+	&.right {
+		left: calc(var(--osui-tooltip-left) + var(--osui-tooltip-width));
+		max-width: 0;
+		min-width: 0;
+		padding-left: var(--space-none);
+		top: calc(var(--osui-tooltip-top) + (var(--osui-tooltip-height) / 2));
+		transform: translateX(0) translateY(-50%);
 
-	//
-	.osui-tooltip__content {
-		position: inherit;
+		.osui-tooltip__balloon-wrapper__balloon {
+			transform: translateX(calc(-1 * var(--space-s)));
+			width: $osui-tooltip-baloon-max-width;
 
-		&:empty {
-			// ServiceStudio Preview
-			& {
-				-servicestudio-min-width: 150px;
+			// Baloon Arrow!
+			&:before {
+				border-color: transparent var(--color-neutral-9) transparent transparent;
+				border-width: $osui-tooltip-arrow-size $osui-tooltip-arrow-size $osui-tooltip-arrow-size 0;
+				left: 0;
+				top: 50%;
+				transform: translateX(-50%) translateY(-50%);
 			}
 		}
 	}
 
-	//
-	.osui-tooltip__balloon-wrapper {
-		left: calc(50% - var(--space-base));
+	// Is center
+	&.center {
+		left: calc(var(--osui-tooltip-left) + (var(--osui-tooltip-width) / 2));
 		max-height: 0;
-		opacity: 0;
-		overflow: hidden;
 		padding-top: var(--space-none);
-		pointer-events: none;
-		position: absolute;
-		top: 100%;
-		transition: opacity 250ms;
-		z-index: 2;
+		top: calc(var(--osui-tooltip-top) + (var(--osui-tooltip-height) / 2));
+		transform: translateX(-50%) translateY(0);
 
-		// Service Studio Preview
-		& {
-			-servicestudio-left: initial;
-			-servicestudio-max-height: initial;
-			-servicestudio-opacity: 1;
-			-servicestudio-overflow: initial;
-			-servicestudio-position: relative;
-			-servicestudio-top: initial;
-		}
+		.osui-tooltip__balloon-wrapper__balloon {
+			transform: translateY(calc(-1 * var(--space-s)));
 
-		// open states
-		&.bottom {
-			left: 50%;
-			transform: translateX(-50%);
-
-			.osui-tooltip__balloon-wrapper__balloon {
-				&:before {
-					left: 50%;
-					transform: translate(-50%, -100%);
-				}
-			}
-		}
-
-		// if opens to bottom-right
-		&.bottom-right {
-			left: initial;
-			right: calc(-1 * var(--space-s));
-
-			.osui-tooltip__balloon-wrapper__balloon {
-				&:before {
-					left: initial;
-					right: var(--space-s);
-				}
-			}
-		}
-
-		// if opens to bottom-left
-		&.bottom-left {
-			left: calc(-1 * var(--space-s));
-
-			.osui-tooltip__balloon-wrapper__balloon {
-				&:before {
-					left: var(--space-s);
-				}
-			}
-		}
-
-		&.center,
-		&.bottom,
-		&.bottom-left,
-		&.bottom-right {
-			.osui-tooltip__balloon-wrapper__balloon {
-				transform: translateY(-$osui-tooltip-transition-distance);
-			}
-		}
-
-		// if opens to top
-		&.top,
-		&.top-left,
-		&.top-right {
-			bottom: 100%;
-			top: initial;
-
-			.osui-tooltip__balloon-wrapper__balloon {
-				transform: translateY(calc(-100% + $osui-tooltip-transition-distance));
-
-				&:before {
-					border-color: var(--color-neutral-9) transparent transparent transparent;
-					border-width: $osui-tooltip-arrow-size $osui-tooltip-arrow-size 0 $osui-tooltip-arrow-size;
-					bottom: 1px;
-					top: initial;
-				}
-			}
-		}
-
-		&.top {
-			left: 50%;
-			transform: translateX(-50%);
-
-			.osui-tooltip__balloon-wrapper__balloon {
-				&:before {
-					left: 50%;
-					transform: translate(-50%, -100%);
-				}
-			}
-		}
-
-		// if opens to top-right
-		&.top-right {
-			left: initial;
-			right: calc(-1 * var(--space-s));
-
-			.osui-tooltip__balloon-wrapper__balloon {
-				&:before {
-					left: initial;
-					right: var(--space-s);
-				}
-			}
-		}
-
-		// if opens to top-left
-		&.top-left {
-			left: calc(-1 * var(--space-s));
-
-			.osui-tooltip__balloon-wrapper__balloon {
-				&:before {
-					left: var(--space-s);
-				}
-			}
-		}
-
-		// if opens to left or right
-		&.left,
-		&.right {
-			left: 100%;
-			max-height: initial;
-			max-width: 0;
-			padding-left: var(--space-none);
-			top: 50%;
-			transform: translateY(-50%);
-
-			.osui-tooltip__balloon-wrapper__balloon {
-				&:before {
-					border-color: transparent var(--color-neutral-9) transparent transparent;
-					border-width: $osui-tooltip-arrow-size $osui-tooltip-arrow-size $osui-tooltip-arrow-size 0;
-					left: initial;
-					right: calc(100% - 1px);
-					top: 50%;
-					transform: translate(0, -50%);
-				}
-			}
-		}
-
-		&.right {
-			.osui-tooltip__balloon-wrapper__balloon {
-				transform: translateX(-$osui-tooltip-transition-distance);
-			}
-		}
-
-		// if opens to right
-		&.left {
-			left: initial;
-			padding-left: initial;
-			padding-right: var(--space-none);
-			right: 100%;
-
-			.osui-tooltip__balloon-wrapper__balloon {
-				transform: translateX(-100%);
-
-				&:before {
-					border-color: transparent transparent transparent var(--color-neutral-9);
-					border-width: $osui-tooltip-arrow-size 0 $osui-tooltip-arrow-size $osui-tooltip-arrow-size;
-					left: calc(100% - 1px);
-					right: initial;
-				}
-			}
-		}
-
-		// if opens to center
-		&.center {
-			left: 50%;
-			top: 40%;
-			transform: translate(-50%, 0);
-
-			.osui-tooltip__balloon-wrapper__balloon {
-				&:before {
-					left: 50%;
-					transform: translate(-50%, -100%);
-				}
+			// Baloon Arrow!
+			&:before {
+				border-color: transparent transparent var(--color-neutral-9) transparent;
+				border-width: 0 $osui-tooltip-arrow-size $osui-tooltip-arrow-size $osui-tooltip-arrow-size;
+				left: 50%;
+				top: 0;
+				transform: translateX(-50%) translateY(-50%);
 			}
 		}
 	}
 
-	///
+	// Is general top
+	&.top,
+	&.top-left,
+	&.top-right {
+		max-height: 0;
+		padding-bottom: var(--space-none);
+		bottom: calc(100vh - (var(--osui-tooltip-top) + var(--space-s)));
+
+		.osui-tooltip__balloon-wrapper__balloon {
+			transform: translateY(var(--space-s));
+
+			// Baloon Arrow!
+			&:before {
+				border-color: var(--color-neutral-9) transparent transparent transparent;
+				border-width: $osui-tooltip-arrow-size $osui-tooltip-arrow-size 0 $osui-tooltip-arrow-size;
+			}
+		}
+	}
+
+	// Is top
+	&.top {
+		left: calc(var(--osui-tooltip-left) + (var(--osui-tooltip-width) / 2));
+		transform: translateX(-50%) translateY(calc(-1 * var(--space-s)));
+
+		.osui-tooltip__balloon-wrapper__balloon {
+			// Baloon Arrow!
+			&:before {
+				left: 50%;
+				top: 100%;
+				transform: translateX(-50%) translateY(-50%);
+			}
+		}
+	}
+
+	// Is top-left
+	&.top-left {
+		left: calc(var(--osui-tooltip-left) + var(--osui-tooltip-width) + var(--space-xs));
+		transform: translateX(-100%) translateY(calc(-1 * var(--space-s)));
+
+		.osui-tooltip__balloon-wrapper__balloon {
+			// Baloon Arrow!
+			&:before {
+				left: calc(100% - var(--space-s));
+				top: 100%;
+				transform: translateX(-100%) translateY(-50%);
+			}
+		}
+	}
+
+	// top-right
+	&.top-right {
+		left: calc(var(--osui-tooltip-left) - var(--space-xs));
+		transform: translateX(0) translateY(calc(-1 * var(--space-s)));
+
+		.osui-tooltip__balloon-wrapper__balloon {
+			// Baloon Arrow!
+			&:before {
+				left: var(--space-s);
+				top: 100%;
+				transform: translateX(0) translateY(-50%);
+			}
+		}
+	}
+
+	// Is general bottom
+	&.bottom,
+	&.bottom-left,
+	&.bottom-right {
+		max-height: 0;
+		padding-top: var(--space-none);
+		top: calc(var(--osui-tooltip-top) + var(--osui-tooltip-height));
+
+		.osui-tooltip__balloon-wrapper__balloon {
+			transform: translateY(calc(-1 * var(--space-s)));
+
+			// Baloon Arrow!
+			&:before {
+				border-color: transparent transparent var(--color-neutral-9) transparent;
+				border-width: 0 $osui-tooltip-arrow-size $osui-tooltip-arrow-size $osui-tooltip-arrow-size;
+			}
+		}
+	}
+
+	// Is bottom
+	&.bottom {
+		left: calc(var(--osui-tooltip-left) + (var(--osui-tooltip-width) / 2));
+		transform: translateX(-50%) translateY(0);
+
+		.osui-tooltip__balloon-wrapper__balloon {
+			// Baloon Arrow!
+			&:before {
+				left: 50%;
+				top: 0;
+				transform: translateX(-50%) translateY(-50%);
+			}
+		}
+	}
+
+	// Is bottom-left
+	&.bottom-left {
+		left: calc(var(--osui-tooltip-left) + var(--osui-tooltip-width) + var(--space-xs));
+		transform: translateX(-100%) translateY(0);
+
+		.osui-tooltip__balloon-wrapper__balloon {
+			// Baloon Arrow!
+			&:before {
+				left: calc(100% - var(--space-s));
+				top: 0;
+				transform: translateX(-100%) translateY(-50%);
+			}
+		}
+	}
+
+	// Is bottom-right
+	&.bottom-right {
+		left: calc(var(--osui-tooltip-left) - var(--space-xs));
+		transform: translateX(0) translateY(0);
+
+		.osui-tooltip__balloon-wrapper__balloon {
+			// Baloon Arrow!
+			&:before {
+				left: var(--space-s);
+				top: 0;
+				transform: translateX(0) translateY(-50%);
+			}
+		}
+	}
+
+	// Is empty
+	&:not(.left):not(.right):not(.center):not(.top):not(.top-left):not(.top-right):not(.bottom):not(.bottom-left):not(.bottom-right) {
+		left: calc(var(--osui-tooltip-left) + var(--osui-tooltip-width));
+		max-width: 0;
+		min-width: 0;
+		padding-left: var(--space-none);
+		top: calc(var(--osui-tooltip-top) + (var(--osui-tooltip-height) / 2));
+		transform: translateX(0) translateY(-50%);
+
+		.osui-tooltip__balloon-wrapper__balloon {
+			transform: translateX(calc(-1 * var(--space-s)));
+			width: $osui-tooltip-baloon-max-width;
+
+			// Baloon Arrow!
+			&:before {
+				border-color: transparent var(--color-neutral-9) transparent transparent;
+				border-width: $osui-tooltip-arrow-size $osui-tooltip-arrow-size $osui-tooltip-arrow-size 0;
+				left: 0;
+				top: 50%;
+				transform: translateX(-50%) translateY(-50%);
+			}
+		}
+	}
+}
+
+/* ---------------------------------------------------------------------------- */
+// BalloonWrapper IsOpened!
+/* ---------------------------------------------------------------------------- */
+///
+.osui-tooltip__balloon-wrapper--is-opened {
+	opacity: 1;
+	pointer-events: initial;
+
+	// Default Balloon Styles!
 	.osui-tooltip__balloon-wrapper__balloon {
-		background-color: var(--color-neutral-9);
-		border-radius: var(--border-radius-soft);
-		color: var(--color-neutral-0);
-		font-size: var(--font-size-s);
-		font-weight: var(--font-regular);
-		line-height: initial;
-		min-width: 150px;
-		opacity: 0;
-		padding: var(--space-s);
-		position: relative;
-		transition: transform 250ms;
-		width: fit-content;
-
-		// Service Studio Preview
-		& {
-			-servicestudio-max-width: 200px;
-			-servicestudio-min-height: 36px;
-			-servicestudio-opacity: 1;
-			-servicestudio-top: 0;
-		}
-		&:after {
-			-servicestudio-content: '';
-			-servicestudio-position: absolute;
-			-servicestudio-width: 0;
-			-servicestudio-height: 0;
-			-servicestudio-border-left: $osui-tooltip-arrow-size-preview solid transparent;
-			-servicestudio-border-right: $osui-tooltip-arrow-size-preview solid transparent;
-			-servicestudio-border-bottom: $osui-tooltip-arrow-size-preview solid var(--color-neutral-9);
-		}
-
-		&.left:after {
-			-servicestudio-right: -($osui-tooltip-arrow-size-preview + 2px);
-			-servicestudio-top: $osui-tooltip-arrow-middle-preview;
-			-servicestudio-transform: rotate(90deg);
-		}
-
-		&.right:after {
-			-servicestudio-left: -($osui-tooltip-arrow-size-preview + 2px);
-			-servicestudio-top: $osui-tooltip-arrow-middle-preview;
-			-servicestudio-transform: rotate(-90deg);
-		}
-
-		&.center:after,
-		&.bottom:after {
-			-servicestudio-left: $osui-tooltip-arrow-middle-preview;
-			-servicestudio-top: -$osui-tooltip-arrow-size-preview;
-		}
-
-		&.bottom-left:after {
-			-servicestudio-left: $osui-tooltip-arrow-size-preview;
-			-servicestudio-top: -$osui-tooltip-arrow-size-preview;
-		}
-
-		&.bottom-right:after {
-			-servicestudio-right: $osui-tooltip-arrow-size-preview;
-			-servicestudio-top: -$osui-tooltip-arrow-size-preview;
-		}
-
-		&.top:after {
-			-servicestudio-left: $osui-tooltip-arrow-middle-preview;
-			-servicestudio-bottom: -($osui-tooltip-arrow-size-preview - 1);
-			-servicestudio-transform: rotate(180deg);
-		}
-
-		&.top-left:after {
-			-servicestudio-left: $osui-tooltip-arrow-size-preview;
-			-servicestudio-bottom: -($osui-tooltip-arrow-size-preview - 1);
-			-servicestudio-transform: rotate(180deg);
-		}
-
-		&.top-right:after {
-			-servicestudio-right: $osui-tooltip-arrow-size-preview;
-			-servicestudio-bottom: -($osui-tooltip-arrow-size-preview - 1);
-			-servicestudio-transform: rotate(180deg);
-		}
+		opacity: 1;
 
 		&:before {
-			border-color: transparent transparent var(--color-neutral-9) transparent;
-			border-style: solid;
-			border-width: 0 $osui-tooltip-arrow-size $osui-tooltip-arrow-size $osui-tooltip-arrow-size;
-			content: '';
-			display: block;
-			height: 0;
-			left: var(--space-s);
-			opacity: 0;
-			position: absolute;
-			top: 1px;
+			opacity: 1;
+		}
+	}
+
+	// Is right or position is empty!
+	&.right {
+		max-width: $osui-tooltip-baloon-max-width;
+		min-width: $osui-tooltip-baloon-min-width;
+		padding-left: var(--space-base);
+
+		.osui-tooltip__balloon-wrapper__balloon {
+			transform: translateX(0);
+			width: auto;
+
+			// Baloon Arrow!
+			&:before {
+				transform: translateX(-100%) translateY(-50%);
+			}
+		}
+	}
+
+	// Is left
+	&.left {
+		max-width: $osui-tooltip-baloon-max-width;
+		min-width: $osui-tooltip-baloon-min-width;
+		padding-right: var(--space-base);
+
+		.osui-tooltip__balloon-wrapper__balloon {
+			transform: translateX(0);
+			width: auto;
+
+			// Baloon Arrow!
+			&:before {
+				transform: translateX(0) translateY(-50%);
+			}
+		}
+	}
+
+	// Is center
+	&.center {
+		max-height: $osui-tooltip-baloon-max-height;
+		padding-top: var(--space-base);
+
+		.osui-tooltip__balloon-wrapper__balloon {
 			transform: translateY(0);
-			width: 0;
+
+			// Baloon Arrow!
+			&:before {
+				transform: translateX(-50%) translateY(-100%);
+			}
+		}
+	}
+
+	// Is general top
+	&.top,
+	&.top-left,
+	&.top-right {
+		max-height: $osui-tooltip-baloon-max-height;
+		padding-bottom: var(--space-base);
+
+		// general top Baloon
+		.osui-tooltip__balloon-wrapper__balloon {
+			transform: translateY(0);
+		}
+	}
+
+	// Is top
+	&.top {
+		.osui-tooltip__balloon-wrapper__balloon {
+			// Baloon Arrow!
+			&:before {
+				transform: translateX(-50%) translateY(0);
+			}
+		}
+	}
+
+	// Is top-left
+	&.top-left {
+		.osui-tooltip__balloon-wrapper__balloon {
+			// Baloon Arrow!
+			&:before {
+				transform: translateX(-100%) translateY(0);
+			}
+		}
+	}
+
+	// top-right
+	&.top-right {
+		.osui-tooltip__balloon-wrapper__balloon {
+			// Baloon Arrow!
+			&:before {
+				transform: translateX(0) translateY(0);
+			}
+		}
+	}
+
+	// Is general bottom
+	&.bottom,
+	&.bottom-left,
+	&.bottom-right {
+		max-height: $osui-tooltip-baloon-max-height;
+		padding-top: var(--space-base);
+
+		// general bottom Baloon
+		.osui-tooltip__balloon-wrapper__balloon {
+			transform: translateY(0);
+		}
+	}
+
+	// Is bottom
+	&.bottom {
+		.osui-tooltip__balloon-wrapper__balloon {
+			// Baloon Arrow!
+			&:before {
+				transform: translateX(-50%) translateY(-100%);
+			}
+		}
+	}
+
+	// Is bottom-left
+	&.bottom-left {
+		.osui-tooltip__balloon-wrapper__balloon {
+			// Baloon Arrow!
+			&:before {
+				transform: translateX(-100%) translateY(-100%);
+			}
+		}
+	}
+
+	// Is bottom-right
+	&.bottom-right {
+		.osui-tooltip__balloon-wrapper__balloon {
+			// Baloon Arrow!
+			&:before {
+				transform: translateX(0) translateY(-100%);
+			}
+		}
+	}
+
+	// Is empty
+	&:not(.left):not(.right):not(.center):not(.top):not(.top-left):not(.top-right):not(.bottom):not(.bottom-left):not(.bottom-right) {
+		max-width: $osui-tooltip-baloon-max-width;
+		min-width: $osui-tooltip-baloon-min-width;
+		padding-left: var(--space-base);
+
+		.osui-tooltip__balloon-wrapper__balloon {
+			transform: translateX(0);
+			width: auto;
+
+			// Baloon Arrow!
+			&:before {
+				transform: translateX(-100%) translateY(-50%);
+			}
 		}
 	}
 }

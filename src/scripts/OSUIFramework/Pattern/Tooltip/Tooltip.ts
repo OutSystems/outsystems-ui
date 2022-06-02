@@ -79,10 +79,10 @@ namespace OSUIFramework.Patterns.Tooltip {
 			const layoutElement = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.Layout);
 			Helper.Dom.Move(this._tooltipBalloonWrapperElem, layoutElement);
 
-			// Wait for next activeElement be active
-			Helper.AsyncInvocation(() => {
-				this._getRecomendedPosition();
-			});
+			// // Wait for next activeElement be active
+			// Helper.AsyncInvocation(() => {
+			// 	this._getRecomendedPosition();
+			// });
 		}
 
 		// Method to close the tooltip at onBlur
@@ -133,12 +133,12 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// Update the balloon coordinates
 		private _onBodyScroll(): void {
+			// Update the coordinates
+			this._setBalloonCoordinates();
+			// // Update/Get the recomended position
+			// this._getRecomendedPosition();
 			// If the balloon is open and not IsPhone
 			if (this._isOpen) {
-				// Update the coordinates
-				this._setBalloonCoordinates();
-				// Update/Get the recomended position
-				this._getRecomendedPosition();
 				// Update the "animation" before the next repaint
 				this._rafOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
 			}
@@ -162,7 +162,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 			);
 
 			// Update/Get the recomended position
-			this._getRecomendedPosition();
+			// this._getRecomendedPosition();
 		}
 
 		// Open the tooltip
@@ -172,12 +172,12 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// Manage the behaviour when there is a window resize!
 		private _onWindowResize(): void {
+			// Update Coordinates
+			this._setBalloonCoordinates();
 			// If there is a horizontal resize and the Dropdown is open, close it!
 			if (this._isOpen) {
-				// Update Coordinates
-				this._setBalloonCoordinates();
-				// Check the recomended position
-				this._getRecomendedPosition();
+				// // Check the recomended position
+				// this._getRecomendedPosition();
 				// Update the "animation" before the next repaint
 				this._rafOnWindowResize = requestAnimationFrame(this._eventOnWindowResize);
 			}
@@ -481,7 +481,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 						// Set the new one!
 						Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, propertyValue as string);
 						// Check if the new poition can be set!
-						this._getRecomendedPosition();
+						// this._getRecomendedPosition();
 						break;
 				}
 			}
