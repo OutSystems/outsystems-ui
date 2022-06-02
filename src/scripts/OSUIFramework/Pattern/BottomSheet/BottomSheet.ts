@@ -20,12 +20,11 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		private _bottomSheetHeaderElem: HTMLElement;
 		// eslint-disable-next-line @typescript-eslint/member-ordering
 		private _bottomSheetTopBarElem: HTMLElement;
+		private _eventOnContentScroll: Callbacks.Generic;
 		// Store gesture events instance
 		private _gestureEventInstance: Event.GestureEvent.DragEvent;
 		// Store if the pattern has gesture events added
 		private _hasGestureEvents: boolean;
-		// eslint-disable-next-line @typescript-eslint/member-ordering
-		private _height: number;
 
 		/**
 		 * Get Gesture Events Instance
@@ -60,14 +59,24 @@ namespace OSUIFramework.Patterns.BottomSheet {
 				// as we need to pass element, only available after super.build()
 				this._gestureEventInstance = new Event.GestureEvent.DragEvent(this._bottomSheetHeaderElem);
 
-				// Set event listeners and callbacks
-				this.setGestureEvents(
-					this._onGestureStart.bind(this),
-					this._onGestureMove.bind(this),
-					this._onGestureEnd.bind(this)
-				);
 				// Apply transform on an element and perform animation
 				this._animateOnDragInstance = new Animation.AnimateOnDrag(this._selfElem);
+			}
+		}
+
+		private _handleShape(shape: GlobalEnum.ShapeTypes): void {
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				Enum.CssCustomProperties.Shape,
+				'var(--border-radius-' + shape + ')'
+			);
+		}
+
+		private _onContentScrollCallback(): void {
+			if (this._bottomSheetContentElem.scrollTop === 0) {
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.HasSCroll);
+			} else {
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.HasSCroll);
 			}
 		}
 
@@ -89,8 +98,22 @@ namespace OSUIFramework.Patterns.BottomSheet {
 				x,
 				y,
 				true,
-				this._height.toString()
+				this._selfElem.clientHeight.toString()
 			);
+		}
+
+		private _toggleHandler(ShowHandler: boolean): void {
+			if (ShowHandler) {
+				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.HasHandler);
+			} else {
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.HasHandler);
+			}
+		}
+
+		protected removeEventListeners(): void {
+			this._bottomSheetContentElem.removeEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnContentScroll);
+
+			this.removeGestureEvents();
 		}
 
 		/**
@@ -103,14 +126,21 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			// TODO (by CreateNewPattern) Update or Remove
 		}
 
-		protected setListeners(): void {
-			this._bottomSheetContentElem.addEventListener('scroll', () => {
-				if (this._bottomSheetContentElem.scrollTop === 0) {
-					this._selfElem.classList.remove('osui-bottom-sheet--has-scroll');
-				} else {
-					this._selfElem.classList.add('osui-bottom-sheet--has-scroll');
-				}
-			});
+		protected setCallbacks(): void {
+			this._eventOnContentScroll = this._onContentScrollCallback.bind(this);
+		}
+
+		protected setEventListeners(): void {
+			this._bottomSheetContentElem.addEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnContentScroll);
+
+			if (!Helper.DeviceInfo.IsDesktop) {
+				// Set event listeners and callbacks
+				this.setGestureEvents(
+					this._onGestureStart.bind(this),
+					this._onGestureMove.bind(this),
+					this._onGestureEnd.bind(this)
+				);
+			}
 		}
 
 		/**
@@ -130,9 +160,16 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		}
 
 		protected setInitialCssClasses(): void {
-			if (this.configs.ShowHandler) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.HasHandler);
-			}
+			//
+		}
+
+		protected setInitialOptions(): void {
+			this._toggleHandler(this.configs.ShowHandler);
+			this._handleShape(this.configs.Shape);
+		}
+
+		protected unsetCallbacks(): void {
+			this._eventOnContentScroll = undefined;
 		}
 
 		/**
@@ -142,7 +179,10 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		 * @memberof BottomSheet
 		 */
 		protected unsetHtmlElements(): void {
-			// TODO (by CreateNewPattern) Update or Remove
+			this._bottomSheetOverlayElem = undefined;
+			this._bottomSheetTopBarElem = undefined;
+			this._bottomSheetContentElem = undefined;
+			this._bottomSheetHeaderElem = undefined;
 		}
 
 		/**
@@ -154,9 +194,9 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			super.build();
 			this.setHtmlElements();
 			this.setInitialCssClasses();
+			this.setInitialOptions();
+			this.setCallbacks();
 			this.setA11yProperties();
-			this._height = this._selfElem.clientHeight;
-			this.setListeners();
 			this._handleGestureEvents();
 			this.finishBuild();
 		}
@@ -170,6 +210,18 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
+
+			if (this.isBuilt) {
+				// Check which property changed and call respective method to update it
+				switch (propertyName) {
+					case Enum.Properties.ShowHandler:
+						this._toggleHandler(this.configs.ShowHandler);
+						break;
+					case Enum.Properties.Shape:
+						this._handleShape(this.configs.Shape);
+						break;
+				}
+			}
 		}
 
 		/**
@@ -178,7 +230,12 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		 * @memberof BottomSheet
 		 */
 		public dispose(): void {
+			if (this._isOpen) {
+				this.removeEventListeners();
+			}
+
 			this.unsetHtmlElements();
+			this.unsetCallbacks();
 
 			//Destroying the base of pattern
 			super.dispose();
@@ -186,15 +243,15 @@ namespace OSUIFramework.Patterns.BottomSheet {
 
 		public open(): void {
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsOpen);
-			Helper.Dom.Styles.AddClass(this._bottomSheetOverlayElem, Enum.CssClass.IsOpen);
 			this._isOpen = true;
+			this.setEventListeners();
 		}
 
 		// eslint-disable-next-line @typescript-eslint/member-ordering
 		public close(): void {
 			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsOpen);
-			Helper.Dom.Styles.RemoveClass(this._bottomSheetOverlayElem, Enum.CssClass.IsOpen);
 			this._isOpen = false;
+			this.removeEventListeners();
 		}
 
 		public registerCallback(callback: Callbacks.Generic): void {
