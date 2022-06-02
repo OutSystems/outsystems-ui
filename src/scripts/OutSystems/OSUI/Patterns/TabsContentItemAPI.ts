@@ -81,7 +81,6 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 
 		const _newTabsContentItem = new OSUIFramework.Patterns.TabsContentItem.TabsContentItem(
 			tabsContentItemId,
-			tabs,
 			JSON.parse(configs)
 		);
 

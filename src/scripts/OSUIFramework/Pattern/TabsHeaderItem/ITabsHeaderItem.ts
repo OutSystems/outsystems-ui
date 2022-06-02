@@ -5,10 +5,10 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 	 */
 	export interface ITabsHeaderItem extends Interface.IChild {
 		getDataTab();
-		unsetIsActive();
-		setIsActive();
 		setAriaControlsAttribute(contentItemId: string);
 		setDataTab(dataTab: number);
 		setFocus();
+		setIsActive();
+		unsetIsActive();
 	}
 }

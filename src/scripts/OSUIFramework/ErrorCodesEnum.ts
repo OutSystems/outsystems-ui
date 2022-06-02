@@ -5,7 +5,7 @@ namespace OSUIFramework.ErrorCodes {
 	 */
 
 	export const AbstractChild = {
-		ParentNotFound: 'OSUI-GEN-01001',
+		FailParentNotFound: 'OSUI-GEN-01001',
 	};
 
 	export const Accordion = {
@@ -58,5 +58,11 @@ namespace OSUIFramework.ErrorCodes {
 		FailToSetChildItemAction: 'OSUI-GEN-09004',
 		FailUnsetNewChildContentItem: 'OSUI-GEN-09005',
 		FailUnsetNewChildHeaderItem: 'OSUI-GEN-09006',
+	};
+
+	export const AbstractParent = {
+		FailChildNotFound: 'OSUI-GEN-10001',
+		FailChildsNotFound: 'OSUI-GEN-10002',
+		FailTypeNotFound: 'OSUI-GEN-10003',
 	};
 }

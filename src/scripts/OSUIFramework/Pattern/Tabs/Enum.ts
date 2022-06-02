@@ -60,4 +60,12 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 	export enum ObserverOptions {
 		RootMargin = '1px',
 	}
+
+	/**
+	 * Tabs Enum for Tabs child types
+	 */
+	export enum ChildTypes {
+		TabsContentItem = 'TabsContentItem',
+		TabsHeaderItem = 'TabsHeaderItem',
+	}
 }

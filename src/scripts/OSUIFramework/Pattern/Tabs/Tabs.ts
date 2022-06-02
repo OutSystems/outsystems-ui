@@ -30,25 +30,18 @@ namespace OSUIFramework.Patterns.Tabs {
 		// Store the events with bind(this)
 		private _eventOnHeaderKeypress: Callbacks.Generic;
 		private _eventOnTouchstart: Callbacks.Generic;
-		// Store the onTabsChange platform callback
-		private _eventTabsChange: Callbacks.OSTabsOnChangeEvent;
 		// Store if the Tabs has only one ContentItem, to prevebt unnecessary usages of ScrollTo
 		private _hasSingleContent: boolean;
+		// Store the onTabsChange platform callback
+		private _platformEventTabsOnChange: Callbacks.OSTabsOnChangeEvent;
 		// Store the contentItems wrapper -- osui-tabs__content
 		private _tabsContentElement: HTMLElement;
-		// Store all the contentItems that are created
-		private _tabsContentItemsElementsArray: Patterns.TabsContentItem.ITabsContentItem[];
 		// Store the headerItems wrapper -- osui-tabs__header
 		private _tabsHeaderElement: HTMLElement;
-		// Store all the headerItems that are created
-		private _tabsHeaderItemsElementsArray: Patterns.TabsHeaderItem.ITabsHeaderItem[];
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new TabsConfig(configs));
 
-			// Start with the arrays empty
-			this._tabsHeaderItemsElementsArray = [];
-			this._tabsContentItemsElementsArray = [];
 			// Check if running on native shell, to enable drag gestures
 			this._addDragGestures = OutSystems.OSUI.Utils.DeviceDetection.IsRunningAsNativeApp();
 			// Block observer by default, to prevent it from running on page load
@@ -70,9 +63,6 @@ namespace OSUIFramework.Patterns.Tabs {
 				this.setChild(tabsContentChildId, tabsContentChildItem);
 			}
 
-			// Add this item to the array
-			this._tabsContentItemsElementsArray.push(tabsContentChildItem);
-
 			// If tabs are already built, then this is dynamic content being added later
 			if (this.isBuilt) {
 				// So make again the connection between header items and content items,
@@ -90,7 +80,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			} else {
 				// Otherwise are items created before the tabs is built
 				// Set the correct data-tab, by using the items array, that correspond to the DOM order
-				tabsContentChildItem.setDataTab(this._tabsContentItemsElementsArray.length - 1);
+				tabsContentChildItem.setDataTab(this.getChildItems(Enum.ChildTypes.TabsContentItem).length - 1);
 			}
 		}
 
@@ -114,9 +104,7 @@ namespace OSUIFramework.Patterns.Tabs {
 				this.setChild(tabsHeaderChildId, tabsHeaderChildItem);
 			}
 
-			// Add this item to the array
-			this._tabsHeaderItemsElementsArray.push(tabsHeaderChildItem);
-			const currentIndex = this._tabsHeaderItemsElementsArray.length - 1;
+			const currentIndex = this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length - 1;
 
 			// If tabs are already built, then this is dynamic content being added later
 			if (this.isBuilt) {
@@ -162,10 +150,10 @@ namespace OSUIFramework.Patterns.Tabs {
 			let newTabIndex;
 
 			// If element exists on the array, set it to tabindex passed
-			if (this._tabsHeaderItemsElementsArray[tabIndex]) {
+			if (this.getChildByIndex(tabIndex, Enum.ChildTypes.TabsHeaderItem)) {
 				newTabIndex = tabIndex;
 				// Otherwise, try the current configs_ActiveTab
-			} else if (this._tabsHeaderItemsElementsArray[this.configs.StartingTab]) {
+			} else if (this.getChildByIndex(this.configs.StartingTab, Enum.ChildTypes.TabsHeaderItem)) {
 				newTabIndex = this.configs.StartingTab;
 				// In last case, set it to the first on the list
 			} else {
@@ -184,7 +172,7 @@ namespace OSUIFramework.Patterns.Tabs {
 					// If is right arrow, navigate to current active tabs + 1 (next item)
 					targetHeaderItemIndex = this.configs.StartingTab + 1;
 					// To prevent triggerinh changeTab, if already on last item
-					if (targetHeaderItemIndex < this._tabsHeaderItemsElementsArray.length) {
+					if (targetHeaderItemIndex < this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length) {
 						this.changeTab(targetHeaderItemIndex, undefined, true);
 					}
 
@@ -199,7 +187,7 @@ namespace OSUIFramework.Patterns.Tabs {
 					break;
 			}
 
-			const targetHeaderItem = this._tabsHeaderItemsElementsArray[targetHeaderItemIndex];
+			const targetHeaderItem = this.getChildByIndex(targetHeaderItemIndex, Enum.ChildTypes.TabsHeaderItem);
 			// Focus on the new activeHeader, after changeTab
 			if (targetHeaderItem) {
 				targetHeaderItem.setFocus();
@@ -209,16 +197,22 @@ namespace OSUIFramework.Patterns.Tabs {
 		// Method to make neccessary preparations for header and content items, that can't be done on their scope
 		private _prepareHeaderAndContentItems(): void {
 			// Set if the Tabs has only one Content
-			this._hasSingleContent = this._tabsContentItemsElementsArray.length === 1;
+			this._hasSingleContent = this.getChildItems(Enum.ChildTypes.TabsContentItem).length === 1;
 
 			// Set initial active tab, based on the configs_ActiveTab
-			this._activeTabHeaderElement = this._tabsHeaderItemsElementsArray[this.configs.StartingTab];
+			this._activeTabHeaderElement = this.getChildByIndex(
+				this.configs.StartingTab,
+				Enum.ChildTypes.TabsHeaderItem
+			) as TabsHeaderItem.ITabsHeaderItem;
 
 			// If the Tabs only have one content, the active will be the first, otherwise
 			// respect the active tab from the config
 			this._activeTabContentElement = this._hasSingleContent
-				? this._tabsContentItemsElementsArray[0]
-				: this._tabsContentItemsElementsArray[this.configs.StartingTab];
+				? (this.getChildByIndex(0, Enum.ChildTypes.TabsContentItem) as TabsContentItem.ITabsContentItem)
+				: (this.getChildByIndex(
+						this.configs.StartingTab,
+						Enum.ChildTypes.TabsContentItem
+				  ) as TabsContentItem.ITabsContentItem);
 
 			// Call the method to immediatelly set the single content as active,
 			// as it won't be needed to wait for more content items
@@ -277,6 +271,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			if (this.isBuilt) {
 				// Update CSS Variable, as an item was removed
 				this._setHeaderItemsCustomProperty();
+				this._activeTabHeaderElement = null;
 			}
 		}
 
@@ -306,13 +301,13 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			this._dragObserver = new IntersectionObserver((entries) => {
 				entries.forEach((entry) => {
-					if (entry.isIntersecting && !this._disableObserver) {
+					if (entry.isIntersecting && this._disableObserver === false) {
 						// Get data-tab from active entry intersecting, to know the current contentItem index
 						const targetIndex = parseInt(
 							Helper.Dom.Attribute.Get(entry.target as HTMLElement, Enum.Attributes.DataTab)
 						);
 						// get current headerItem
-						const currentHeaderItem = this._tabsHeaderItemsElementsArray[targetIndex];
+						const currentHeaderItem = this.getChildByIndex(targetIndex, Enum.ChildTypes.TabsHeaderItem);
 						// changeTab using the index obtained above,
 						Helper.AsyncInvocation(this.changeTab.bind(this), targetIndex, currentHeaderItem, false);
 					}
@@ -320,7 +315,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			}, observerOptions);
 
 			// Set an observer on each contentItem, to detect when is being intersected by a drag gesture
-			this._tabsContentItemsElementsArray.forEach((item) => {
+			this.getChildItems(Enum.ChildTypes.TabsContentItem).forEach((item: TabsContentItem.ITabsContentItem) => {
 				item.setOnDragObserver(this._dragObserver);
 			});
 		}
@@ -331,7 +326,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				Enum.CssProperty.TabsHeaderItems,
-				this._tabsHeaderItemsElementsArray.length
+				this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length
 			);
 		}
 
@@ -390,7 +385,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _tabHeaderItemHasBeenClicked(childHeaderId: string): void {
 			const newHeaderItem = this.getChild(childHeaderId) as TabsHeaderItem.ITabsHeaderItem;
 
-			if (newHeaderItem) {
+			if (newHeaderItem === undefined) {
 				throw new Error(
 					`${ErrorCodes.Tabs.FailChildItemClicked}: The ${GlobalEnum.PatternsNames.TabsHeaderItem} under uniqueId: '${childHeaderId}' does not exist as an TabsHeaderItem from ${GlobalEnum.PatternsNames.Tabs} with Id: ${this.widgetId}.`
 				);
@@ -406,9 +401,12 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			// If there're more than one content item or changeTab doesn't come from a drag gesture,
 			// then do scrollTo and change active content item
-			if (!this._hasSingleContent || this._disableObserver) {
+			if (this._hasSingleContent === false || this._disableObserver) {
 				// Get the contentItem, based on the newTabIndex
-				const newContentItem = this._tabsContentItemsElementsArray[newTabIndex];
+				const newContentItem = this.getChildByIndex(
+					newTabIndex,
+					Enum.ChildTypes.TabsContentItem
+				) as TabsContentItem.ITabsContentItem;
 
 				if (newContentItem) {
 					// Remove old contentitem as active
@@ -431,7 +429,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			if (newHeaderItem) {
 				// Set new headerItem as active
 				newHeaderItem.setIsActive();
-				this._activeTabHeaderElement = newHeaderItem as Patterns.TabsHeaderItem.ITabsHeaderItem;
+				this._activeTabHeaderElement = newHeaderItem;
 			}
 
 			// Update configs
@@ -443,8 +441,8 @@ namespace OSUIFramework.Patterns.Tabs {
 
 		// Method that triggers the OnTabsChange event
 		private _triggerOnChangeEvent(activeTab: number): void {
-			if (this._eventTabsChange !== undefined) {
-				Helper.AsyncInvocation(this._eventTabsChange, this.widgetId, activeTab);
+			if (this._platformEventTabsOnChange !== undefined) {
+				Helper.AsyncInvocation(this._platformEventTabsOnChange, this.widgetId, activeTab);
 			}
 		}
 
@@ -456,26 +454,34 @@ namespace OSUIFramework.Patterns.Tabs {
 		// Method that handles the connection between HeaderItems and ContentItem, related to data-tab and aria-controls/labbeledby
 		private _updateItemsConnection(updateDataTab = true): void {
 			// By default look to the first content item.
-			let currentContentItem = this._tabsContentItemsElementsArray[0];
+			let currentContentItem = this.getChildByIndex(
+				0,
+				Enum.ChildTypes.TabsContentItem
+			) as TabsContentItem.ITabsContentItem;
 
-			this._tabsHeaderItemsElementsArray.forEach((item, index) => {
-				// If there are more that one content item, then look at the current index
-				if (!this._hasSingleContent) {
-					currentContentItem = this._tabsContentItemsElementsArray[index];
+			this.getChildItems(Enum.ChildTypes.TabsHeaderItem).forEach(
+				(item: TabsHeaderItem.ITabsHeaderItem, index) => {
+					// If there are more that one content item, then look at the current index
+					if (this._hasSingleContent === false) {
+						currentContentItem = this.getChildByIndex(
+							index,
+							Enum.ChildTypes.TabsContentItem
+						) as TabsContentItem.ITabsContentItem;
+					}
+
+					// set aria-controls to current header item, by passing the current content item's widgetId
+					item.setAriaControlsAttribute(currentContentItem.widgetId);
+
+					// set aria-labbeledby to current content item, by passing the current header item's widgetId
+					currentContentItem.setAriaLabelledByAttribute(item.widgetId);
+
+					// If param is true, set the data-tab on the current header and content items, using the index
+					if (updateDataTab) {
+						item.setDataTab(index);
+						currentContentItem.setDataTab(index);
+					}
 				}
-
-				// set aria-controls to current header item, by passing the current content item's widgetId
-				item.setAriaControlsAttribute(currentContentItem.widgetId);
-
-				// set aria-labbeledby to current content item, by passing the current header item's widgetId
-				currentContentItem.setAriaLabelledByAttribute(item.widgetId);
-
-				// If param is true, set the data-tab on the current header and content items, using the index
-				if (updateDataTab) {
-					item.setDataTab(index);
-					currentContentItem.setDataTab(index);
-				}
-			});
+			);
 		}
 
 		/**
@@ -664,7 +670,7 @@ namespace OSUIFramework.Patterns.Tabs {
 				newTabIndex = this._getTargetIndex(tabIndex);
 
 				// Get the headerItem, based on the newTabIndex
-				newHeaderItem = this._tabsHeaderItemsElementsArray[newTabIndex];
+				newHeaderItem = this.getChildByIndex(newTabIndex, Enum.ChildTypes.TabsHeaderItem);
 			} else {
 				newTabIndex = tabIndex;
 				newHeaderItem = tabsHeaderItem;
@@ -672,9 +678,12 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			// If there're more than one content item or changeTab doesn't come from a drag gesture,
 			// then do scrollTo and change active content item
-			if (!this._hasSingleContent || this._disableObserver) {
+			if (this._hasSingleContent === false || this._disableObserver) {
 				// Get the contentItem, based on the newTabIndex
-				const newContentItem = this._tabsContentItemsElementsArray[newTabIndex];
+				const newContentItem = this.getChildByIndex(
+					newTabIndex,
+					Enum.ChildTypes.TabsContentItem
+				) as TabsContentItem.ITabsContentItem;
 
 				if (newContentItem) {
 					// Remove old contentitem as active
@@ -696,7 +705,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			}
 			if (newHeaderItem) {
 				// Set new headerItem as active
-				newHeaderItem.setActiveElement();
+				newHeaderItem.setIsActive();
 				this._activeTabHeaderElement = newHeaderItem;
 			}
 
@@ -725,8 +734,8 @@ namespace OSUIFramework.Patterns.Tabs {
 		 * @memberof Tabs
 		 */
 		public registerCallback(callback: Callbacks.OSTabsOnChangeEvent): void {
-			if (this._eventTabsChange === undefined) {
-				this._eventTabsChange = callback;
+			if (this._platformEventTabsOnChange === undefined) {
+				this._platformEventTabsOnChange = callback;
 			} else {
 				console.warn(`The ${GlobalEnum.PatternsNames.Tabs} already has the tabs change callback set.`);
 			}

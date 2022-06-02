@@ -16,7 +16,7 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		// Store if this is the current active item
 		private _isActive = false;
 
-		constructor(uniqueId: string, tabsElem: Patterns.Tabs.ITabs, configs: JSON) {
+		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new TabsHeaderItemConfig(configs));
 		}
 

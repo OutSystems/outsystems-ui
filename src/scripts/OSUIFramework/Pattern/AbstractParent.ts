@@ -65,8 +65,7 @@ namespace OSUIFramework.Patterns {
 
 			// Get the correct map based on the given childType
 			const childsMap = this._childItemsByType[childType];
-
-			return this.getChild(Helper.MapOperation.ExportKeys(childsMap)[index]);
+			return childsMap ? this.getChild(Helper.MapOperation.ExportKeys(childsMap)[index]) : undefined;
 		}
 
 		/**
@@ -91,7 +90,6 @@ namespace OSUIFramework.Patterns {
 		 * @param childItem Reference to be added
 		 */
 		protected setChild(childId: string, childItem: CT): void {
-			// const childType = this._childIdsByType.size >= 20 ? 'batatas' : childItem.constructor.name;
 			const childType = childItem.constructor.name;
 
 			if (this._childItemsByType[childType] === undefined) {
@@ -124,37 +122,58 @@ namespace OSUIFramework.Patterns {
 		protected unsetChild(childId: string): void {
 			// Get ChildType
 			const childType = this._childIdsByType.get(childId);
-			// Get the correct map based on the given childType
-			const childsMap = this._childItemsByType[childType];
-			// Get the child reference
-			const childItem = this.getChild(childId);
+			if (childType) {
+				// Get the correct map based on the given childType
+				const childsMap = this._childItemsByType[childType];
+				if (childsMap) {
+					// Get the child reference
+					const childItem = this.getChild(childId);
 
-			// Check if it's the firstChild
-			if (childItem.isFirstChild) {
-				// unSet it as firstChild
-				childItem.isFirstChild = false;
-				// Set the 2nd child as firsChild since it will turns into the first one!
-				const nextSibling = this.getChildByIndex(1, childType);
-				if (nextSibling) {
-					nextSibling.isFirstChild = true;
+					if (childItem) {
+						// Check if it's the firstChild
+						if (childItem.isFirstChild) {
+							// unSet it as firstChild
+							childItem.isFirstChild = false;
+							// Set the 2nd child as firsChild since it will turns into the first one!
+							const nextSibling = this.getChildByIndex(1, childType);
+							if (nextSibling) {
+								nextSibling.isFirstChild = true;
+							}
+						}
+
+						// Check if it's the lastChild
+						if (childItem.isLastChild) {
+							// unSet it as lastChild
+							childItem.isLastChild = false;
+							// Set the previous child as lastChild since it will turns into the last one!
+							const prevSibling = this.getChildByIndex(childsMap.size - 1, childType);
+							if (prevSibling) {
+								prevSibling.isLastChild = true;
+							}
+						}
+
+						// Remove child from it's Map of all child items global reference!
+						this._childIdsByType.delete(childId);
+						// Remove child from it's Map of items with the same type!
+						childsMap.delete(childId);
+					} else {
+						// Was not able to get child by id!
+						throw new Error(
+							`${ErrorCodes.AbstractParent.FailChildNotFound}:Child of Id ('${childId}') was not found!`
+						);
+					}
+				} else {
+					// Was not able to get childs of type!
+					throw new Error(
+						`${ErrorCodes.AbstractParent.FailChildsNotFound}:Childs of Type ('${childType}') were not found!`
+					);
 				}
+			} else {
+				// Was not able to get type!
+				throw new Error(
+					`${ErrorCodes.AbstractParent.FailTypeNotFound}:Child Type of Child ('${childId}') was not found!`
+				);
 			}
-
-			// Check if it's the lastChild
-			if (childItem.isLastChild) {
-				// unSet it as lastChild
-				childItem.isLastChild = false;
-				// Set the previous child as lastChild since it will turns into the last one!
-				const prevSibling = this.getChildByIndex(childsMap.size - 1, childType);
-				if (prevSibling) {
-					prevSibling.isLastChild = true;
-				}
-			}
-
-			// Remove child from it's Map of all child items global reference!
-			this._childIdsByType.delete(childId);
-			// Remove child from it's Map of items with the same type!
-			childsMap.delete(childId);
 		}
 
 		/**
@@ -173,8 +192,7 @@ namespace OSUIFramework.Patterns {
 
 			// Get the correct map based on the given type
 			const childsMap = this._childItemsByType[type];
-
-			return [...childsMap.values()];
+			return childsMap === undefined ? [] : [...childsMap.values()];
 		}
 
 		/**
