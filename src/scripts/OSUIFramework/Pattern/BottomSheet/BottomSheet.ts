@@ -21,10 +21,17 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		// eslint-disable-next-line @typescript-eslint/member-ordering
 		private _bottomSheetTopBarElem: HTMLElement;
 		private _eventOnContentScroll: Callbacks.Generic;
+		private _eventOnKeypress: Callbacks.Generic;
+		private _firstFocusableElement: HTMLElement;
+		private _focusTrapInstance: DynamicElements.FocusTrap.FocusTrap;
+		private _focusableActiveElement: HTMLElement;
+		private _focusableElements: HTMLElement[];
 		// Store gesture events instance
 		private _gestureEventInstance: Event.GestureEvent.DragEvent;
 		// Store if the pattern has gesture events added
 		private _hasGestureEvents: boolean;
+		private _lastFocusableElement: HTMLElement;
+		private _parentSelf: HTMLElement;
 
 		/**
 		 * Get Gesture Events Instance
@@ -50,6 +57,35 @@ namespace OSUIFramework.Patterns.BottomSheet {
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new BottomSheetConfig(configs));
+		}
+
+		// Focus on first focusable element on Notification
+		private _focusBottomCallback(): void {
+			if (this._firstFocusableElement) {
+				this._firstFocusableElement.focus();
+			} else {
+				this._selfElem.focus();
+			}
+		}
+
+		// Focus on last focusable element on Notification
+		private _focusTopCallback(): void {
+			if (this._lastFocusableElement) {
+				this._lastFocusableElement.focus();
+			} else {
+				this._selfElem.focus();
+			}
+		}
+
+		// Add Focus Trap to Pattern
+		private _handleFocusTrap(): void {
+			const opts = {
+				focusBottomCallback: this._focusBottomCallback.bind(this),
+				focusTargetElement: this._parentSelf,
+				focusTopCallback: this._focusTopCallback.bind(this),
+			} as FocusTrapOpts;
+
+			this._focusTrapInstance = new DynamicElements.FocusTrap.FocusTrap(opts);
 		}
 
 		// Method to hadnle the creation of the GestureEvents
@@ -102,6 +138,16 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			);
 		}
 
+		// Call methods to open or close, based ok e.key and behavior applied
+		private _onkeypressCallback(e: KeyboardEvent): void {
+			const isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
+
+			// Close the Notification when pressing Esc
+			if (isEscapedPressed && this._isOpen) {
+				this.close();
+			}
+		}
+
 		private _toggleHandler(ShowHandler: boolean): void {
 			if (ShowHandler) {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.HasHandler);
@@ -112,6 +158,7 @@ namespace OSUIFramework.Patterns.BottomSheet {
 
 		protected removeEventListeners(): void {
 			this._bottomSheetContentElem.removeEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnContentScroll);
+			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
 
 			this.removeGestureEvents();
 		}
@@ -123,15 +170,36 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		 * @memberof BottomSheet
 		 */
 		protected setA11yProperties(): void {
-			// TODO (by CreateNewPattern) Update or Remove
+			if (!this.isBuilt) {
+				Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Role.Complementary, true);
+			}
+
+			const setA11YtabIndex = this._isOpen ? Helper.A11Y.TabIndexTrue : Helper.A11Y.TabIndexFalse;
+
+			Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Hidden, (!this._isOpen).toString());
+
+			Helper.Dom.Attribute.Set(
+				this._selfElem,
+				Constants.A11YAttributes.TabIndex,
+				this._isOpen
+					? Constants.A11YAttributes.States.TabIndexShow
+					: Constants.A11YAttributes.States.TabIndexHidden
+			);
+
+			// On each element, toggle the tabindex value, depending if notification is open or closed
+			for (const item of this._focusableElements) {
+				setA11YtabIndex(item);
+			}
 		}
 
 		protected setCallbacks(): void {
 			this._eventOnContentScroll = this._onContentScrollCallback.bind(this);
+			this._eventOnKeypress = this._onkeypressCallback.bind(this);
 		}
 
 		protected setEventListeners(): void {
 			this._bottomSheetContentElem.addEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnContentScroll);
+			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
 
 			if (!Helper.DeviceInfo.IsDesktop) {
 				// Set event listeners and callbacks
@@ -150,17 +218,16 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		 * @memberof BottomSheet
 		 */
 		protected setHtmlElements(): void {
-			this._bottomSheetOverlayElem = Helper.Dom.ClassSelector(
-				Helper.Dom.GetElementById(this._widgetId),
-				Enum.CssClass.PatternOverlay
-			);
+			this._parentSelf = Helper.Dom.GetElementById(this._widgetId);
+			this._bottomSheetOverlayElem = Helper.Dom.ClassSelector(this._parentSelf, Enum.CssClass.PatternOverlay);
 			this._bottomSheetTopBarElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternTopBar);
 			this._bottomSheetContentElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternContent);
 			this._bottomSheetHeaderElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternHeader);
-		}
 
-		protected setInitialCssClasses(): void {
-			//
+			this._focusableElements = [...this._selfElem.querySelectorAll(Constants.FocusableElems)] as HTMLElement[];
+			// to handle focusable element's tabindex when toggling the BottomSheet
+			this._firstFocusableElement = this._focusableElements[0];
+			this._lastFocusableElement = this._focusableElements[this._focusableElements.length - 1];
 		}
 
 		protected setInitialOptions(): void {
@@ -170,6 +237,7 @@ namespace OSUIFramework.Patterns.BottomSheet {
 
 		protected unsetCallbacks(): void {
 			this._eventOnContentScroll = undefined;
+			this._eventOnKeypress = undefined;
 		}
 
 		/**
@@ -179,10 +247,15 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		 * @memberof BottomSheet
 		 */
 		protected unsetHtmlElements(): void {
+			this._parentSelf = undefined;
 			this._bottomSheetOverlayElem = undefined;
 			this._bottomSheetTopBarElem = undefined;
 			this._bottomSheetContentElem = undefined;
 			this._bottomSheetHeaderElem = undefined;
+			this._focusableElements = undefined;
+			// to handle focusable element's tabindex when toggling the BottomSheet
+			this._firstFocusableElement = undefined;
+			this._lastFocusableElement = undefined;
 		}
 
 		/**
@@ -193,10 +266,10 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		public build(): void {
 			super.build();
 			this.setHtmlElements();
-			this.setInitialCssClasses();
 			this.setInitialOptions();
 			this.setCallbacks();
 			this.setA11yProperties();
+			this._handleFocusTrap();
 			this._handleGestureEvents();
 			this.finishBuild();
 		}
@@ -237,6 +310,9 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			this.unsetHtmlElements();
 			this.unsetCallbacks();
 
+			// Remove focus trap events and callbacks
+			this._focusTrapInstance.dispose();
+
 			//Destroying the base of pattern
 			super.dispose();
 		}
@@ -245,6 +321,11 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsOpen);
 			this._isOpen = true;
 			this.setEventListeners();
+			this.setA11yProperties();
+			this._focusableActiveElement = document.activeElement as HTMLElement;
+			this._focusTrapInstance.setA11yProperties();
+			// Focus on element when pattern is open
+			this._selfElem.focus();
 		}
 
 		// eslint-disable-next-line @typescript-eslint/member-ordering
@@ -252,6 +333,12 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsOpen);
 			this._isOpen = false;
 			this.removeEventListeners();
+			this.setA11yProperties();
+			this._focusTrapInstance.unsetA11yProperties();
+			// Remove focus when a pattern is closed
+			this._selfElem.blur();
+			// Focus on last element clicked
+			this._focusableActiveElement.focus();
 		}
 
 		public registerCallback(callback: Callbacks.Generic): void {
