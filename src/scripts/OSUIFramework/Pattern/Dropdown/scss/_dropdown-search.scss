@@ -13,6 +13,7 @@
 		}
 	}
 
+	// Added this selector to override the z-index because the Virtual Select adds inline z-index to vscomp-wrapper and prevents the visibility of pattern above other patterns
 	.vscomp-wrapper {
 		z-index: 3;
 	}
