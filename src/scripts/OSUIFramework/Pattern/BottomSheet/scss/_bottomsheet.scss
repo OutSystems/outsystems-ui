@@ -92,6 +92,7 @@
 	}
 
 	&__header {
+		height: 100%;
 		position: relative;
 
 		&::after {
@@ -126,6 +127,6 @@
 		height: 100%;
 		padding: var(--space-base);
 		overflow-y: scroll;
-		padding-bottom: calc(var(--bottom-bar-size) + var(--space-base) + var(--os-safe-area-bottom));
+		padding-bottom: calc(var(--bottom-bar-size) + var(--space-m) + var(--os-safe-area-bottom));
 	}
 }
