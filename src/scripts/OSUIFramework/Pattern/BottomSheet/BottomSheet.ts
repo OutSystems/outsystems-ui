@@ -11,15 +11,8 @@ namespace OSUIFramework.Patterns.BottomSheet {
 	export class BottomSheet extends AbstractPattern<BottomSheetConfig> implements IBottomSheet, Interface.IDragEvent {
 		// Hold the animateOnDrag intance, that helps transition the sidebar on drag
 		private _animateOnDragInstance: Animation.AnimateOnDrag;
-		private _isOpen: boolean;
-		// eslint-disable-next-line @typescript-eslint/member-ordering
-		private _bottomSheetOverlayElem: HTMLElement;
-		// eslint-disable-next-line @typescript-eslint/member-ordering
 		private _bottomSheetContentElem: HTMLElement;
-		// eslint-disable-next-line @typescript-eslint/member-ordering
 		private _bottomSheetHeaderElem: HTMLElement;
-		// eslint-disable-next-line @typescript-eslint/member-ordering
-		private _bottomSheetTopBarElem: HTMLElement;
 		private _eventOnContentScroll: Callbacks.Generic;
 		private _eventOnKeypress: Callbacks.Generic;
 		private _firstFocusableElement: HTMLElement;
@@ -30,6 +23,7 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		private _gestureEventInstance: Event.GestureEvent.DragEvent;
 		// Store if the pattern has gesture events added
 		private _hasGestureEvents: boolean;
+		private _isOpen: boolean;
 		private _lastFocusableElement: HTMLElement;
 		private _parentSelf: HTMLElement;
 
@@ -219,8 +213,6 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		 */
 		protected setHtmlElements(): void {
 			this._parentSelf = Helper.Dom.GetElementById(this._widgetId);
-			this._bottomSheetOverlayElem = Helper.Dom.ClassSelector(this._parentSelf, Enum.CssClass.PatternOverlay);
-			this._bottomSheetTopBarElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternTopBar);
 			this._bottomSheetContentElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternContent);
 			this._bottomSheetHeaderElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternHeader);
 
@@ -248,8 +240,6 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		 */
 		protected unsetHtmlElements(): void {
 			this._parentSelf = undefined;
-			this._bottomSheetOverlayElem = undefined;
-			this._bottomSheetTopBarElem = undefined;
 			this._bottomSheetContentElem = undefined;
 			this._bottomSheetHeaderElem = undefined;
 			this._focusableElements = undefined;
