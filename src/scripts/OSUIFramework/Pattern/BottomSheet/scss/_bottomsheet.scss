@@ -5,6 +5,7 @@
 
 ///
 .osui-bottom-sheet {
+	--bottom-sheet-max-height: 80vh;
 	--border-radius-sharp: none;
 	--border-radius-rounded: 16px;
 	--osui-bottom-sheet-draggable-area: 56px;
@@ -16,7 +17,7 @@
 	bottom: 0;
 	box-shadow: var(--shadow-l);
 	left: 0;
-	max-height: 80vh;
+	max-height: var(--bottom-sheet-max-height);
 	min-height: 50vh;
 	position: fixed;
 	text-align: center;
@@ -122,7 +123,7 @@
 	}
 
 	&__content {
-		max-height: 80vh;
+		max-height: var(--bottom-sheet-max-height);
 		overflow-y: scroll;
 		padding: var(--space-base);
 		padding-bottom: calc(var(--bottom-bar-size) + var(--space-m) + var(--os-safe-area-bottom));
