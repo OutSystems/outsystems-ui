@@ -14,6 +14,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		public Prompt: string;
 		public SearchPrompt: string;
 		public SelectedOptions: DropDownOption[];
+		public ShowDropboxAsPopup = true;
 
 		// Method used to check if an image or an icon should be added to the given option
 		private _checkForFigType(index: number): Enum.FigureType {
@@ -86,6 +87,7 @@ namespace Providers.Dropdown.VirtualSelect {
 				searchPlaceholderText: this.SearchPrompt,
 				selectAllOnlyVisible: true,
 				selectedValue: this._getSelectedValues(),
+				showDropboxAsPopup: this.ShowDropboxAsPopup,
 				silentInitialValueSet: true,
 				textDirection: OutSystems.OSUI.Utils.GetIsRTL()
 					? OSUIFramework.GlobalEnum.Direction.RTL
