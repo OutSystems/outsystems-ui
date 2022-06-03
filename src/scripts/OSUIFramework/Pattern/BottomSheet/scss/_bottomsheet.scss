@@ -15,10 +15,9 @@
 	border-top-right-radius: var(--bottom-sheet-shape);
 	bottom: 0;
 	box-shadow: var(--shadow-l);
-	height: 85vh;
 	left: 0;
-	max-height: 85vh;
-	min-height: 30vh;
+	max-height: 80vh;
+	min-height: 50vh;
 	position: fixed;
 	text-align: center;
 	transition: transform 450ms var(--osui-bottom-sheet-transition-function);
@@ -92,7 +91,6 @@
 	}
 
 	&__header {
-		height: 100%;
 		position: relative;
 
 		&::after {
@@ -124,9 +122,9 @@
 	}
 
 	&__content {
-		height: 100%;
-		padding: var(--space-base);
+		max-height: 80vh;
 		overflow-y: scroll;
+		padding: var(--space-base);
 		padding-bottom: calc(var(--bottom-bar-size) + var(--space-m) + var(--os-safe-area-bottom));
 	}
 }

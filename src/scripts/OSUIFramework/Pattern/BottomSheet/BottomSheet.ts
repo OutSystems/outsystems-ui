@@ -26,6 +26,7 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		private _isOpen: boolean;
 		private _lastFocusableElement: HTMLElement;
 		private _parentSelf: HTMLElement;
+		private _platformEventOnToggle: Callbacks.OSBottomSheetOnToggleEvent;
 
 		/**
 		 * Get Gesture Events Instance
@@ -150,6 +151,11 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			}
 		}
 
+		// Method that triggers the OnToggle event
+		private _triggerOnToggleEvent(): void {
+			Helper.AsyncInvocation(this._platformEventOnToggle, this.widgetId, this._isOpen);
+		}
+
 		protected removeEventListeners(): void {
 			this._bottomSheetContentElem.removeEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnContentScroll);
 			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
@@ -230,6 +236,7 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		protected unsetCallbacks(): void {
 			this._eventOnContentScroll = undefined;
 			this._eventOnKeypress = undefined;
+			this._platformEventOnToggle = undefined;
 		}
 
 		/**
@@ -316,6 +323,7 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			this._focusTrapInstance.setA11yProperties();
 			// Focus on element when pattern is open
 			this._selfElem.focus();
+			this._triggerOnToggleEvent();
 		}
 
 		// eslint-disable-next-line @typescript-eslint/member-ordering
@@ -325,14 +333,18 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			this.removeEventListeners();
 			this.setA11yProperties();
 			this._focusTrapInstance.unsetA11yProperties();
-			// Remove focus when a pattern is closed
 			this._selfElem.blur();
 			// Focus on last element clicked
 			this._focusableActiveElement.focus();
+			this._triggerOnToggleEvent();
 		}
 
 		public registerCallback(callback: Callbacks.Generic): void {
-			console.log(callback);
+			if (this._platformEventOnToggle === undefined) {
+				this._platformEventOnToggle = callback;
+			} else {
+				console.warn(`The ${GlobalEnum.PatternName.BottomSheet} already has the toggle callback set.`);
+			}
 		}
 
 		/**
