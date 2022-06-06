@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSUIFramework.Animation {
+namespace OSUIFramework.Animations {
 	/**
 	 * Class to hold the drag information
 	 *
@@ -17,6 +17,7 @@ namespace OSUIFramework.Animation {
 		public MoveX = 0;
 		public MoveY = 0;
 		public Size = undefined;
+		public SpringAnimation: Animation;
 		public VerticalDrag = false;
 	}
 
@@ -39,6 +40,74 @@ namespace OSUIFramework.Animation {
 		constructor(target: HTMLElement) {
 			this._targetElement = target;
 			this._dragParams = new DragParams();
+		}
+
+		// based on: https://www.kirillvasiltsov.com/writing/how-to-create-a-spring-animation-with-web-animation-api/
+		private _addSpringEffect(dx: number, dy: number): SpringAnimation {
+			if (dx === 0 && dy === 0) return { positions: [], frames: 0 };
+
+			const stiffness = 400;
+			const damping = 7;
+			const mass = 1;
+
+			const spring_length = 0;
+			const k = -stiffness;
+			const d = -damping;
+			const frame_rate = 1 / 60;
+			const displacement_threshold = 3; // Damping is the force that slows down and eventually stops an oscillation by dissipating energy
+
+			const x = dx;
+			const y = dy;
+
+			let velocity = 0;
+
+			const positions = [];
+
+			let frames = 0;
+			let frames_below_threshold = 0;
+			let largest_displ;
+			let directionDisplacement = this._dragParams.VerticalDrag ? y : x;
+
+			for (let step = 0; step <= 1000; step += 1) {
+				const Fspring = k * (directionDisplacement - spring_length);
+
+				const Fdamping = d * velocity;
+
+				const accel = (Fspring + Fdamping) / mass;
+
+				velocity += accel * frame_rate;
+
+				directionDisplacement += velocity * frame_rate;
+
+				positions.push({
+					transform: this._dragParams.VerticalDrag
+						? `translateY(${directionDisplacement}px)`
+						: `translateX(${directionDisplacement}px)`,
+				});
+
+				// Save the last largest displacement so that we can compare it with threshold later
+				largest_displ =
+					largest_displ < 0
+						? Math.max(largest_displ || -Infinity, Math.sqrt(directionDisplacement ** 2))
+						: Math.min(largest_displ || Infinity, Math.sqrt(directionDisplacement ** 2));
+
+				if (Math.abs(largest_displ) < displacement_threshold) {
+					frames_below_threshold += 1;
+				} else {
+					frames_below_threshold = 0; // Reset the frame counter
+				}
+
+				if (frames_below_threshold >= 60) {
+					frames = step;
+					break;
+				}
+			}
+
+			if (frames === 0) {
+				frames = 1000;
+			}
+
+			return { positions, frames };
 		}
 
 		// Method to check if current gesture is withing sidebar boundaries
@@ -98,7 +167,13 @@ namespace OSUIFramework.Animation {
 		 * @return {*}  {void}
 		 * @memberof AnimateOnDrag
 		 */
-		public onDragEnd(offsetX: number, offsetY: number, timeTaken: number, callback: Callbacks.Generic): void {
+		public onDragEnd(
+			offsetX: number,
+			offsetY: number,
+			timeTaken: number,
+			callback: Callbacks.Generic,
+			addSpringEffect = false
+		): void {
 			this._dragParams.IsMoving = false;
 
 			// Remove transitions
@@ -123,11 +198,26 @@ namespace OSUIFramework.Animation {
 			// If swipe was fast enough or with sufficient move, procede to toggleSidebar
 			this._dragParams.IsReadyToTriggerCallback = swipedHalfWidth || checkSwipeSpeed;
 
-			this._targetElement.style.transform = '';
-
 			if (this._dragParams.IsReadyToTriggerCallback) {
+				this._targetElement.style.transform = '';
 				callback();
+			} else if (addSpringEffect && this._dragParams.IsOpen) {
+				const { positions, frames } = this._addSpringEffect(offsetX, offsetY);
+
+				const keyframes = new KeyframeEffect(this._targetElement, positions, {
+					duration: (frames / 60) * 1000,
+					fill: 'both',
+					easing: 'linear',
+					iterations: 1,
+				});
+
+				this._dragParams.SpringAnimation = new Animation(keyframes);
+
+				this._dragParams.SpringAnimation.play();
+				this._targetElement.style.transform = '';
 			}
+
+			this._targetElement.style.transform = '';
 		}
 
 		/**
@@ -236,6 +326,10 @@ namespace OSUIFramework.Animation {
 			this._dragParams.LastY = currentY;
 			this._dragParams.Size = size;
 			this._dragParams.VerticalDrag = verticalDrag;
+
+			if (this._dragParams.SpringAnimation) {
+				this._dragParams.SpringAnimation.cancel();
+			}
 
 			if (this._dragParams.IsOpen) {
 				this._dragParams.MoveX = 0;

@@ -64,6 +64,17 @@
 	&--is-open {
 		transform: translateY(0);
 
+		// to simulate bigger height extended when spring animation is playing
+		&::before {
+			background-color: var(--color-neutral-0);
+			content: '';
+			height: 100%;
+			left: 0;
+			position: absolute;
+			top: 100%;
+			width: 100%;
+		}
+
 		+ .osui-bottom-sheet-overlay {
 			opacity: 0.5;
 			pointer-events: all;

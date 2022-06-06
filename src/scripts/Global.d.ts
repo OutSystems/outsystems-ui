@@ -88,6 +88,12 @@ declare global {
 		viewHeight: number;
 	};
 
+	// SpringAnimation type
+	type SpringAnimation = {
+		positions: Keyframe[];
+		frames: number;
+	};
+
 	// RangeSlider
 	type NoUiSlider = noUiSlider;
 	type NoUiSliderOptions = noUiSliderOptions;

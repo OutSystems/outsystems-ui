@@ -10,7 +10,7 @@ namespace OSUIFramework.Patterns.BottomSheet {
 	 */
 	export class BottomSheet extends AbstractPattern<BottomSheetConfig> implements IBottomSheet, Interface.IDragEvent {
 		// Hold the animateOnDrag intance, that helps transition the sidebar on drag
-		private _animateOnDragInstance: Animation.AnimateOnDrag;
+		private _animateOnDragInstance: Animations.AnimateOnDrag;
 		private _bottomSheetContentElem: HTMLElement;
 		private _bottomSheetHeaderElem: HTMLElement;
 		private _eventOnContentScroll: Callbacks.Generic;
@@ -91,7 +91,7 @@ namespace OSUIFramework.Patterns.BottomSheet {
 				this._gestureEventInstance = new Event.GestureEvent.DragEvent(this._bottomSheetHeaderElem);
 
 				// Apply transform on an element and perform animation
-				this._animateOnDragInstance = new Animation.AnimateOnDrag(this._selfElem);
+				this._animateOnDragInstance = new Animations.AnimateOnDrag(this._selfElem);
 			}
 		}
 
@@ -113,7 +113,7 @@ namespace OSUIFramework.Patterns.BottomSheet {
 
 		// Method to handle the start of a gesture
 		private _onGestureEnd(offsetX: number, offsetY: number, timeTaken: number): void {
-			this._animateOnDragInstance.onDragEnd(offsetX, offsetY, timeTaken, this.close.bind(this));
+			this._animateOnDragInstance.onDragEnd(offsetX, offsetY, timeTaken, this.close.bind(this), true);
 		}
 
 		// Method to handle the gesture move
