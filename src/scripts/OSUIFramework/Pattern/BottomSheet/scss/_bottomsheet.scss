@@ -5,7 +5,7 @@
 
 ///
 .osui-bottom-sheet {
-	--bottom-sheet-max-height: 80vh;
+	--bottom-sheet-max-height: calc(100vh - 54px) /*  general value to account for notch and a bit more extra space*/;
 	--border-radius-sharp: none;
 	--border-radius-rounded: 16px;
 	--osui-bottom-sheet-draggable-area: 56px;

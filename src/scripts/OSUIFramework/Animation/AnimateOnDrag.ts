@@ -46,8 +46,8 @@ namespace OSUIFramework.Animations {
 		private _addSpringEffect(dx: number, dy: number): SpringAnimation {
 			if (dx === 0 && dy === 0) return { positions: [], frames: 0 };
 
-			const stiffness = 400;
-			const damping = 7;
+			const stiffness = 300;
+			const damping = 10;
 			const mass = 1;
 
 			const spring_length = 0;
@@ -216,8 +216,6 @@ namespace OSUIFramework.Animations {
 				this._dragParams.SpringAnimation.play();
 				this._targetElement.style.transform = '';
 			}
-
-			this._targetElement.style.transform = '';
 		}
 
 		/**
