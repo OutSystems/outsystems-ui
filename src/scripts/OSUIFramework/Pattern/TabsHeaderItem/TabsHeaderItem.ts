@@ -179,5 +179,16 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 				this.setA11YProperties();
 			}
 		}
+
+		/**
+		 * Readable property to get the active state of the element
+		 *
+		 * @readonly
+		 * @type {boolean}
+		 * @memberof TabsHeaderItem
+		 */
+		public get IsActive(): boolean {
+			return this._isActive;
+		}
 	}
 }

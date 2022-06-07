@@ -31,7 +31,7 @@ namespace OSUIFramework.Patterns.Tabs {
 					validatedValue = this.validateBoolean(value as boolean, false);
 					break;
 				case Enum.Properties.Height:
-					validatedValue = this.validateString(value as string, 'auto');
+					validatedValue = this.validateString(value as string, GlobalEnum.CssProperties.Auto);
 					break;
 				default:
 					validatedValue = super.validateDefault(key, value);

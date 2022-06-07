@@ -4,6 +4,7 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 	 * Defines the interface for OutSystemsUI TabsContentItem Pattern
 	 */
 	export interface ITabsContentItem extends Interface.IChild {
+		get IsActive(): boolean;
 		getDataTab();
 		getOffsetLeft();
 		setAriaLabelledByAttribute(headerItemId: string);

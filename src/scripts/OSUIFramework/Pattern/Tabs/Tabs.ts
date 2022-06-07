@@ -30,7 +30,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		// Store the events with bind(this)
 		private _eventOnHeaderKeypress: Callbacks.Generic;
 		private _eventOnTouchstart: Callbacks.Generic;
-		// Store if the Tabs has only one ContentItem, to prevebt unnecessary usages of ScrollTo
+		// Store if the Tabs has only one ContentItem, to prevent unnecessary usages of ScrollTo
 		private _hasSingleContent: boolean;
 		// Store the onTabsChange platform callback
 		private _platformEventTabsOnChange: Callbacks.OSTabsOnChangeEvent;
@@ -180,7 +180,7 @@ namespace OSUIFramework.Patterns.Tabs {
 				case GlobalEnum.Keycodes.ArrowLeft:
 					// If is left arrow, navigate to current active tabs - 1 (previous item)
 					targetHeaderItemIndex = this.configs.StartingTab - 1;
-					// To prevent triggerinh changeTab, if already on first item
+					// To prevent triggering changeTab, if already on first item
 					if (targetHeaderItemIndex >= 0) {
 						this.changeTab(targetHeaderItemIndex, undefined, true);
 					}
@@ -229,6 +229,8 @@ namespace OSUIFramework.Patterns.Tabs {
 
 		// Method that it's called whenever a new TabsContentItem is destroyed
 		private _removeContentItem(childContentId: string): void {
+			const auxIndex = this.getChildIndex(childContentId);
+			const wasActive = this.getChild(childContentId).IsActive;
 			// Check if the given ChildId exist at childList
 			if (this.getChild(childContentId)) {
 				// Remove item
@@ -245,6 +247,23 @@ namespace OSUIFramework.Patterns.Tabs {
 			if (this._addDragGestures) {
 				tabsContentItem.unobserveDragObserver(this._dragObserver);
 			}
+
+			if (wasActive) {
+				if (this.getChildByIndex(auxIndex)) {
+					this._activeTabContentElement = this.getChildByIndex(
+						auxIndex,
+						Enum.ChildTypes.TabsContentItem
+					) as TabsContentItem.ITabsContentItem;
+					this._activeTabContentElement.setIsActive();
+				} else if (this.getChildItems(Enum.ChildTypes.TabsContentItem).length > 0) {
+					this._activeTabContentElement = this.getChildItems(Enum.ChildTypes.TabsContentItem).filter(
+						(item) => item.isLastChild
+					)[0] as TabsContentItem.ITabsContentItem;
+					this._activeTabContentElement.setIsActive();
+				} else {
+					this._activeTabContentElement = null;
+				}
+			}
 		}
 
 		// Remove Pattern Events
@@ -258,6 +277,8 @@ namespace OSUIFramework.Patterns.Tabs {
 
 		// Method that it's called whenever a new TabsHeaderItem is destroyed
 		private _removeHeaderItem(childHeaderId: string): void {
+			const auxIndex = this.getChildIndex(childHeaderId);
+			const wasActive = this.getChild(childHeaderId).IsActive;
 			// Check if the given ChildId exist at childList
 			if (this.getChild(childHeaderId)) {
 				// Remove item
@@ -271,7 +292,22 @@ namespace OSUIFramework.Patterns.Tabs {
 			if (this.isBuilt) {
 				// Update CSS Variable, as an item was removed
 				this._setHeaderItemsCustomProperty();
-				this._activeTabHeaderElement = null;
+				if (wasActive) {
+					if (this.getChildByIndex(auxIndex)) {
+						this._activeTabHeaderElement = this.getChildByIndex(
+							auxIndex,
+							Enum.ChildTypes.TabsHeaderItem
+						) as TabsHeaderItem.ITabsHeaderItem;
+						this._activeTabHeaderElement.setIsActive();
+					} else if (this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length > 0) {
+						this._activeTabHeaderElement = this.getChildItems(Enum.ChildTypes.TabsHeaderItem).filter(
+							(item) => item.isLastChild
+						)[0] as TabsHeaderItem.ITabsHeaderItem;
+						this._activeTabHeaderElement.setIsActive();
+					} else {
+						this._activeTabHeaderElement = null;
+					}
+				}
 			}
 		}
 
@@ -332,6 +368,21 @@ namespace OSUIFramework.Patterns.Tabs {
 
 		// Method to set the Tabs Height
 		private _setHeight(height: string): void {
+			if (height && height.trim()) {
+				height = height.toLowerCase();
+				if (
+					// Check if string has units?
+					height.indexOf(GlobalEnum.Units.Percentage) === -1 &&
+					height.indexOf(GlobalEnum.Units.Pixel) === -1 &&
+					height.indexOf(GlobalEnum.Units.Em) === -1
+				) {
+					// Check if string is only digits? adds units, else return default;
+					height = /^\d+$/.test(height) ? height + GlobalEnum.Units.Pixel : GlobalEnum.CssProperties.Auto;
+				}
+			} else {
+				height = GlobalEnum.CssProperties.Auto;
+			}
+
 			// Create css variable
 			Helper.Dom.Styles.SetStyleAttribute(this._selfElem, Enum.CssProperty.TabsHeight, height);
 		}
@@ -410,7 +461,7 @@ namespace OSUIFramework.Patterns.Tabs {
 
 				if (newContentItem) {
 					// Remove old contentitem as active
-					this._activeTabContentElement.unsetIsActive();
+					this._activeTabContentElement?.unsetIsActive();
 					// Set new content item as active
 					newContentItem.setIsActive();
 					this._activeTabContentElement = newContentItem;
@@ -424,7 +475,7 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			// Remove old headerItem as active
 			if (this._activeTabHeaderElement) {
-				this._activeTabHeaderElement.unsetIsActive();
+				this._activeTabHeaderElement?.unsetIsActive();
 			}
 			if (newHeaderItem) {
 				// Set new headerItem as active
@@ -687,7 +738,7 @@ namespace OSUIFramework.Patterns.Tabs {
 
 				if (newContentItem) {
 					// Remove old contentitem as active
-					this._activeTabContentElement.unsetIsActive();
+					this._activeTabContentElement?.unsetIsActive();
 					// Set new content item as active
 					newContentItem.setIsActive();
 					this._activeTabContentElement = newContentItem;
@@ -701,7 +752,7 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			// Remove old headerItem as active
 			if (this._activeTabHeaderElement) {
-				this._activeTabHeaderElement.unsetIsActive();
+				this._activeTabHeaderElement?.unsetIsActive();
 			}
 			if (newHeaderItem) {
 				// Set new headerItem as active

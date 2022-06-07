@@ -163,7 +163,8 @@ namespace OSUIFramework.Patterns {
 				// unSet it as lastChild
 				childItem.isLastChild = false;
 				// Set the previous child as lastChild since it will turns into the last one!
-				const prevSibling = this.getChildByIndex(childsMap.size - 1, childType);
+				// The current last child (childsMap.size - 1), the prevSibling will be the child before (-2)
+				const prevSibling = this.getChildByIndex(childsMap.size - 2, childType);
 				if (prevSibling) {
 					prevSibling.isLastChild = true;
 				}
