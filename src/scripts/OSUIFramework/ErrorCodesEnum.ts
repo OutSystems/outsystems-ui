@@ -34,6 +34,7 @@ namespace OSUIFramework.ErrorCodes {
 
 	export const RangeSlider = {
 		FailRegisterCallback: 'OSUI-GEN-04001',
+		FailSetValue: 'OSUI-GEN-04002',
 	};
 
 	export const SectionIndex = {

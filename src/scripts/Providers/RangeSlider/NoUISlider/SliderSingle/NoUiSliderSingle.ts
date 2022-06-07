@@ -109,5 +109,32 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 				}
 			}
 		}
+
+		/**
+		 * Method to set current RangeSlider value
+		 *
+		 * @memberof OSUINoUiSlider
+		 */
+		public resetValue(): void {
+			this.configs.StartingValueFrom = this.configs.InitialValueFrom;
+			this.provider.set(this.configs.InitialValueFrom);
+		}
+
+		/**
+		 * Method to set current RangeSlider value
+		 *
+		 * @param {number} value
+		 * @memberof OSUINoUiSlider
+		 */
+		public setValue(value: number): void {
+			if (value >= this.configs.MinValue && value <= this.configs.MaxValue) {
+				this.configs.StartingValueFrom = value;
+				this.provider.set(value);
+			} else {
+				throw new Error(
+					`${OSUIFramework.ErrorCodes.RangeSlider.FailSetValue}:	The value must be between the minimum value and maximum value set.`
+				);
+			}
+		}
 	}
 }
