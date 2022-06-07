@@ -21,7 +21,7 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 
 			if (!tabsElem) {
 				throw Error(
-					`This ${OSUIFramework.GlobalEnum.PatternsNames.TabsContentItem} does not belong to any ${OSUIFramework.GlobalEnum.PatternsNames.Tabs} pattern.`
+					`This ${OSUIFramework.GlobalEnum.PatternName.TabsContentItem} does not belong to any ${OSUIFramework.GlobalEnum.PatternName.Tabs} pattern.`
 				);
 			}
 			const uniqueId = tabsElem.getAttribute('name');
@@ -74,7 +74,7 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 	): OSUIFramework.Patterns.TabsContentItem.ITabsContentItem {
 		if (_tabsContentItemMap.has(tabsContentItemId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.TabsHeaderItem} registered under id: ${tabsContentItemId}`
+				`There is already a ${OSUIFramework.GlobalEnum.PatternName.TabsHeaderItem} registered under id: ${tabsContentItemId}`
 			);
 		}
 		const tabs = GetTabsByItem(tabsContentItemId);

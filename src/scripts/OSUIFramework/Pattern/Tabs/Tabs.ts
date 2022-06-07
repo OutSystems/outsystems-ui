@@ -56,7 +56,7 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			if (this.getChild(tabsContentChildId)) {
 				throw new Error(
-					`${ErrorCodes.Tabs.FailSetNewChildContentItem}: There is already a ${GlobalEnum.PatternsNames.TabsContentItem} under Id: '${tabsContentChildItem.widgetId}' added to ${GlobalEnum.PatternsNames.Tabs} with uniqueId: ${this.uniqueId}.`
+					`${ErrorCodes.Tabs.FailSetNewChildContentItem}: There is already a ${GlobalEnum.PatternName.TabsContentItem} under Id: '${tabsContentChildItem.widgetId}' added to ${GlobalEnum.PatternName.Tabs} with uniqueId: ${this.uniqueId}.`
 				);
 			} else {
 				// Store Child Item
@@ -97,7 +97,7 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			if (this.getChild(tabsHeaderChildId)) {
 				throw new Error(
-					`${ErrorCodes.Tabs.FailSetNewChildHeaderItem}: There is already a ${GlobalEnum.PatternsNames.TabsHeaderItem} under Id: '${tabsHeaderChildItem.widgetId}' added to ${GlobalEnum.PatternsNames.Tabs} with uniqueId: ${this.uniqueId}.`
+					`${ErrorCodes.Tabs.FailSetNewChildHeaderItem}: There is already a ${GlobalEnum.PatternName.TabsHeaderItem} under Id: '${tabsHeaderChildItem.widgetId}' added to ${GlobalEnum.PatternName.Tabs} with uniqueId: ${this.uniqueId}.`
 				);
 			} else {
 				// Store Child Item
@@ -237,7 +237,7 @@ namespace OSUIFramework.Patterns.Tabs {
 				this.unsetChild(childContentId);
 			} else {
 				throw new Error(
-					`${ErrorCodes.Tabs.FailUnsetNewChildContentItem}: The ${GlobalEnum.PatternsNames.TabsContentItem} under uniqueId: '${childContentId}' does not exist as an TabsContentItem from ${GlobalEnum.PatternsNames.Tabs} with Id: ${this.widgetId}.`
+					`${ErrorCodes.Tabs.FailUnsetNewChildContentItem}: The ${GlobalEnum.PatternName.TabsContentItem} under uniqueId: '${childContentId}' does not exist as an TabsContentItem from ${GlobalEnum.PatternName.Tabs} with Id: ${this.widgetId}.`
 				);
 			}
 
@@ -285,7 +285,7 @@ namespace OSUIFramework.Patterns.Tabs {
 				this.unsetChild(childHeaderId);
 			} else {
 				throw new Error(
-					`${ErrorCodes.Tabs.FailUnsetNewChildHeaderItem}: The ${GlobalEnum.PatternsNames.TabsHeaderItem} under uniqueId: '${childHeaderId}' does not exist as an TabsHeaderItem from ${GlobalEnum.PatternsNames.Tabs} with Id: ${this.widgetId}.`
+					`${ErrorCodes.Tabs.FailUnsetNewChildHeaderItem}: The ${GlobalEnum.PatternName.TabsHeaderItem} under uniqueId: '${childHeaderId}' does not exist as an TabsHeaderItem from ${GlobalEnum.PatternName.Tabs} with Id: ${this.widgetId}.`
 				);
 			}
 
@@ -438,7 +438,7 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			if (newHeaderItem === undefined) {
 				throw new Error(
-					`${ErrorCodes.Tabs.FailChildItemClicked}: The ${GlobalEnum.PatternsNames.TabsHeaderItem} under uniqueId: '${childHeaderId}' does not exist as an TabsHeaderItem from ${GlobalEnum.PatternsNames.Tabs} with Id: ${this.widgetId}.`
+					`${ErrorCodes.Tabs.FailChildItemClicked}: The ${GlobalEnum.PatternName.TabsHeaderItem} under uniqueId: '${childHeaderId}' does not exist as an TabsHeaderItem from ${GlobalEnum.PatternName.Tabs} with Id: ${this.widgetId}.`
 				);
 			}
 
@@ -788,7 +788,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			if (this._platformEventTabsOnChange === undefined) {
 				this._platformEventTabsOnChange = callback;
 			} else {
-				console.warn(`The ${GlobalEnum.PatternsNames.Tabs} already has the tabs change callback set.`);
+				console.warn(`The ${GlobalEnum.PatternName.Tabs} already has the tabs change callback set.`);
 			}
 		}
 

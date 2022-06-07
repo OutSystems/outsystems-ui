@@ -31,7 +31,7 @@ namespace OSUIFramework.Patterns.Accordion {
 
 			if (this.getChild(childId)) {
 				throw new Error(
-					`${ErrorCodes.Accordion.FailSetNewChildItem}: There is already a ${GlobalEnum.PatternsNames.AccordionItem} under Id: '${childItem.widgetId}' added to ${GlobalEnum.PatternsNames.Accordion} with uniqueId: ${this.uniqueId}.`
+					`${ErrorCodes.Accordion.FailSetNewChildItem}: There is already a ${GlobalEnum.PatternName.AccordionItem} under Id: '${childItem.widgetId}' added to ${GlobalEnum.PatternName.Accordion} with uniqueId: ${this.uniqueId}.`
 				);
 			} else {
 				// Store Child Item
@@ -144,7 +144,7 @@ namespace OSUIFramework.Patterns.Accordion {
 				});
 			} else {
 				console.warn(
-					`${GlobalEnum.PatternsNames.Accordion} (${this.widgetId}): if ${Enum.Properties.MultipleItems} parameter is set to false, this action doesn't work. Set the ${Enum.Properties.MultipleItems} parameter to true.`
+					`${GlobalEnum.PatternName.Accordion} (${this.widgetId}): if ${Enum.Properties.MultipleItems} parameter is set to false, this action doesn't work. Set the ${Enum.Properties.MultipleItems} parameter to true.`
 				);
 			}
 		}
@@ -162,7 +162,7 @@ namespace OSUIFramework.Patterns.Accordion {
 				this.unsetChild(childId);
 			} else {
 				throw new Error(
-					`${ErrorCodes.Accordion.FailUnsetNewChildItem}: The ${GlobalEnum.PatternsNames.AccordionItem} under uniqueId: '${childId}' does not exist as an ${GlobalEnum.PatternsNames.AccordionItem} from ${GlobalEnum.PatternsNames.Accordion} with Id: ${this.widgetId}.`
+					`${ErrorCodes.Accordion.FailUnsetNewChildItem}: The ${GlobalEnum.PatternName.AccordionItem} under uniqueId: '${childId}' does not exist as an ${GlobalEnum.PatternName.AccordionItem} from ${GlobalEnum.PatternName.Accordion} with Id: ${this.widgetId}.`
 				);
 			}
 		}
@@ -193,7 +193,7 @@ namespace OSUIFramework.Patterns.Accordion {
 				});
 			} else {
 				throw new Error(
-					`${ErrorCodes.Accordion.FailChildItemClicked}: The ${GlobalEnum.PatternsNames.AccordionItem} under uniqueId: '${childId}' does not exist as an ${GlobalEnum.PatternsNames.AccordionItem} from ${GlobalEnum.PatternsNames.Accordion} with Id: ${this.widgetId}.`
+					`${ErrorCodes.Accordion.FailChildItemClicked}: The ${GlobalEnum.PatternName.AccordionItem} under uniqueId: '${childId}' does not exist as an ${GlobalEnum.PatternName.AccordionItem} from ${GlobalEnum.PatternName.Accordion} with Id: ${this.widgetId}.`
 				);
 			}
 		}

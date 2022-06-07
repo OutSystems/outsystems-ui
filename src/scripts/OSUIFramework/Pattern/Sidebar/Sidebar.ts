@@ -535,7 +535,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			if (this._onToggle === undefined) {
 				this._onToggle = callback;
 			} else {
-				console.warn(`The ${GlobalEnum.PatternsNames.Sidebar} already has the toggle callback set.`);
+				console.warn(`The ${GlobalEnum.PatternName.Sidebar} already has the toggle callback set.`);
 			}
 		}
 	}

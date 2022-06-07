@@ -185,7 +185,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 */
 	export function GetDropdownById(dropdownId: string): OSUIFramework.Patterns.Dropdown.IDropdown {
 		return OSUIFramework.Helper.MapOperation.FindInMap(
-			OSUIFramework.GlobalEnum.PatternsNames.Dropdown,
+			OSUIFramework.GlobalEnum.PatternName.Dropdown,
 			dropdownId,
 			_dropdownItemsMap
 		) as OSUIFramework.Patterns.Dropdown.IDropdown;

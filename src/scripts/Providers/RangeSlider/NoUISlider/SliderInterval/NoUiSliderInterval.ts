@@ -111,7 +111,7 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 				switch (propertyName) {
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueTo:
 						console.warn(
-							`${OSUIFramework.GlobalEnum.PatternsNames.RangeSliderInterval}': (${this.widgetId}): changes to ${OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueTo} parameter do not affect the ${OSUIFramework.GlobalEnum.PatternsNames.RangeSliderInterval}'. Use a distinct variable to assign on the OnValueChange event`
+							`${OSUIFramework.GlobalEnum.PatternName.RangeSliderInterval}': (${this.widgetId}): changes to ${OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueTo} parameter do not affect the ${OSUIFramework.GlobalEnum.PatternName.RangeSliderInterval}'. Use a distinct variable to assign on the OnValueChange event`
 						);
 						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:

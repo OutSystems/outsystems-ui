@@ -48,7 +48,7 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 	): OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem {
 		if (_dropdownServerSideItemItemsMap.has(dropdownServerSideItemId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.DropdownServerSideItem} registered under id: ${dropdownServerSideItemId}`
+				`There is already a ${OSUIFramework.GlobalEnum.PatternName.DropdownServerSideItem} registered under id: ${dropdownServerSideItemId}`
 			);
 		}
 
