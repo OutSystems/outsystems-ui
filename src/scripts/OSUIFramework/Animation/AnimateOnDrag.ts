@@ -42,31 +42,33 @@ namespace OSUIFramework.Animations {
 			this._dragParams = new DragParams();
 		}
 
+		// Method to add a spring effect on dragEnd, when the callback expected is not triggered
 		// based on: https://www.kirillvasiltsov.com/writing/how-to-create-a-spring-animation-with-web-animation-api/
 		private _addSpringEffect(dx: number, dy: number): SpringAnimation {
 			if (dx === 0 && dy === 0) return { positions: [], frames: 0 };
 
-			const stiffness = 300;
-			const damping = 10;
-			const mass = 1;
+			// These 3 are used to configure the effect and are common on any spring animation
+			const tension = 300; // Tension, as it refers to how tightly-wound the spring is. The tighter the spring, the more energy is released, leading to a snappy, bouncy animation
+			const friction = 10; // friction is the force that dampens the motion. LIke hgravity, as you sprinkle more friction into the universe, the spring becomes less and less bouncy.
+			const mass = 1; // Mass refers to the heft of the thing we're moving. A heavier object will move more slowly, but it also has more inertia. We use 1 here for a more simple approach
 
 			const spring_length = 0;
-			const k = -stiffness;
-			const d = -damping;
-			const frame_rate = 1 / 60;
+			const k = -tension;
+			const d = -friction;
+			const frame_rate = 1 / 60; // Framerate: we want 60 fps hence the framerate here is at 1/60
 			const displacement_threshold = 3; // Damping is the force that slows down and eventually stops an oscillation by dissipating energy
-
-			const x = dx;
-			const y = dy;
 
 			let velocity = 0;
 
+			// positions is an array of numbers where each number represents the position of the object in a spring motion at a specific frame
 			const positions = [];
 
 			let frames = 0;
 			let frames_below_threshold = 0;
 			let largest_displ;
-			let directionDisplacement = this._dragParams.VerticalDrag ? y : x;
+
+			// CHange value to be used, depending if is a vertical or horizontal drag
+			let directionDisplacement = this._dragParams.VerticalDrag ? dy : dx;
 
 			for (let step = 0; step <= 1000; step += 1) {
 				const Fspring = k * (directionDisplacement - spring_length);
