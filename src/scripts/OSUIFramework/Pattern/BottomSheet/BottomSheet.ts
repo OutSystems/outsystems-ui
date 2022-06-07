@@ -11,10 +11,13 @@ namespace OSUIFramework.Patterns.BottomSheet {
 	export class BottomSheet extends AbstractPattern<BottomSheetConfig> implements IBottomSheet, Interface.IDragEvent {
 		// Hold the animateOnDrag intance, that helps transition the sidebar on drag
 		private _animateOnDragInstance: Animations.AnimateOnDrag;
+		// HTML elements
 		private _bottomSheetContentElem: HTMLElement;
 		private _bottomSheetHeaderElem: HTMLElement;
+		// Listener callbacks
 		private _eventOnContentScroll: Callbacks.Generic;
 		private _eventOnKeypress: Callbacks.Generic;
+		// FicusTrap Properties
 		private _firstFocusableElement: HTMLElement;
 		private _focusTrapInstance: DynamicElements.FocusTrap.FocusTrap;
 		private _focusableActiveElement: HTMLElement;
@@ -23,9 +26,13 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		private _gestureEventInstance: Event.GestureEvent.DragEvent;
 		// Store if the pattern has gesture events added
 		private _hasGestureEvents: boolean;
+		// Store if the pattern is open
 		private _isOpen: boolean;
+		// Last element to receive focus on BottomSheet
 		private _lastFocusableElement: HTMLElement;
+		// WidgetId element
 		private _parentSelf: HTMLElement;
+		// OnToggle event callback
 		private _platformEventOnToggle: Callbacks.OSBottomSheetOnToggleEvent;
 
 		/**
@@ -54,7 +61,7 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			super(uniqueId, new BottomSheetConfig(configs));
 		}
 
-		// Focus on first focusable element on Notification
+		// Focus on first focusable element on BottomSheet
 		private _focusBottomCallback(): void {
 			if (this._firstFocusableElement) {
 				this._firstFocusableElement.focus();
@@ -63,7 +70,7 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			}
 		}
 
-		// Focus on last focusable element on Notification
+		// Focus on last focusable element on BottomSheet
 		private _focusTopCallback(): void {
 			if (this._lastFocusableElement) {
 				this._lastFocusableElement.focus();
@@ -83,7 +90,7 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			this._focusTrapInstance = new DynamicElements.FocusTrap.FocusTrap(opts);
 		}
 
-		// Method to hadnle the creation of the GestureEvents
+		// Method to handle the creation of the GestureEvents
 		private _handleGestureEvents(): void {
 			if (!Helper.DeviceInfo.IsDesktop) {
 				// Create and save gesture event instance. Created here and not on constructor,
@@ -95,6 +102,7 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			}
 		}
 
+		// Method to hadnle the Shape config css variable
 		private _handleShape(shape: GlobalEnum.ShapeTypes): void {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
@@ -103,6 +111,7 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			);
 		}
 
+		// Method to be called as callback on scroll event, to toggle class on BottomSheet when it has scroll active
 		private _onContentScrollCallback(): void {
 			if (this._bottomSheetContentElem.scrollTop === 0) {
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.HasSCroll);
@@ -143,6 +152,7 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			}
 		}
 
+		// Method that toggles the showHandler config
 		private _toggleHandler(ShowHandler: boolean): void {
 			if (ShowHandler) {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.HasHandler);
@@ -156,6 +166,12 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			Helper.AsyncInvocation(this._platformEventOnToggle, this.widgetId, this._isOpen);
 		}
 
+		/**
+		 * Method to remove the event listeners
+		 *
+		 * @protected
+		 * @memberof BottomSheet
+		 */
 		protected removeEventListeners(): void {
 			this._bottomSheetContentElem.removeEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnContentScroll);
 			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
@@ -192,11 +208,23 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			}
 		}
 
+		/**
+		 * Method to set the listeners and platform event callbacks
+		 *
+		 * @protected
+		 * @memberof BottomSheet
+		 */
 		protected setCallbacks(): void {
 			this._eventOnContentScroll = this._onContentScrollCallback.bind(this);
 			this._eventOnKeypress = this._onkeypressCallback.bind(this);
 		}
 
+		/**
+		 * Method to add event listeners
+		 *
+		 * @protected
+		 * @memberof BottomSheet
+		 */
 		protected setEventListeners(): void {
 			this._bottomSheetContentElem.addEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnContentScroll);
 			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
@@ -228,11 +256,23 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			this._lastFocusableElement = this._focusableElements[this._focusableElements.length - 1];
 		}
 
+		/**
+		 * Method to set initial options
+		 *
+		 * @protected
+		 * @memberof BottomSheet
+		 */
 		protected setInitialOptions(): void {
 			this._toggleHandler(this.configs.ShowHandler);
 			this._handleShape(this.configs.Shape);
 		}
 
+		/**
+		 * Method to unset callbacks
+		 *
+		 * @protected
+		 * @memberof BottomSheet
+		 */
 		protected unsetCallbacks(): void {
 			this._eventOnContentScroll = undefined;
 			this._eventOnKeypress = undefined;
@@ -295,6 +335,23 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		}
 
 		/**
+		 * Method to close the BottomSHeet
+		 *
+		 * @memberof BottomSheet
+		 */
+		public close(): void {
+			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsOpen);
+			this._isOpen = false;
+			this.removeEventListeners();
+			this.setA11yProperties();
+			this._focusTrapInstance.unsetA11yProperties();
+			this._selfElem.blur();
+			// Focus on last element clicked
+			this._focusableActiveElement.focus();
+			this._triggerOnToggleEvent();
+		}
+
+		/**
 		 * Disposes the current pattern.
 		 *
 		 * @memberof BottomSheet
@@ -314,6 +371,11 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			super.dispose();
 		}
 
+		/**
+		 * Method to open the BottomSheet
+		 *
+		 * @memberof BottomSheet
+		 */
 		public open(): void {
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsOpen);
 			this._isOpen = true;
@@ -326,19 +388,12 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			this._triggerOnToggleEvent();
 		}
 
-		// eslint-disable-next-line @typescript-eslint/member-ordering
-		public close(): void {
-			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsOpen);
-			this._isOpen = false;
-			this.removeEventListeners();
-			this.setA11yProperties();
-			this._focusTrapInstance.unsetA11yProperties();
-			this._selfElem.blur();
-			// Focus on last element clicked
-			this._focusableActiveElement.focus();
-			this._triggerOnToggleEvent();
-		}
-
+		/**
+		 * Set callbacks for the onToggle event
+		 *
+		 * @param {Callbacks.Generic} callback
+		 * @memberof BottomSheet
+		 */
 		public registerCallback(callback: Callbacks.Generic): void {
 			if (this._platformEventOnToggle === undefined) {
 				this._platformEventOnToggle = callback;
