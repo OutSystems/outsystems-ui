@@ -368,21 +368,6 @@ namespace OSUIFramework.Patterns.Tabs {
 
 		// Method to set the Tabs Height
 		private _setHeight(height: string): void {
-			if (height && height.trim()) {
-				height = height.toLowerCase();
-				if (
-					// Check if string has units?
-					height.indexOf(GlobalEnum.Units.Percentage) === -1 &&
-					height.indexOf(GlobalEnum.Units.Pixel) === -1 &&
-					height.indexOf(GlobalEnum.Units.Em) === -1
-				) {
-					// Check if string is only digits? adds units, else return default;
-					height = /^\d+$/.test(height) ? height + GlobalEnum.Units.Pixel : GlobalEnum.CssProperties.Auto;
-				}
-			} else {
-				height = GlobalEnum.CssProperties.Auto;
-			}
-
 			// Create css variable
 			Helper.Dom.Styles.SetStyleAttribute(this._selfElem, Enum.CssProperty.TabsHeight, height);
 		}
