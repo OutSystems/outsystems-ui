@@ -204,17 +204,21 @@ namespace OSUIFramework.Animations {
 				this._targetElement.style.transform = '';
 				callback();
 			} else if (addSpringEffect && this._dragParams.IsOpen) {
+				// Create the the position for each frame
 				const { positions, frames } = this._addSpringEffect(offsetX, offsetY);
 
+				// Create the keyframe object
 				const keyframes = new KeyframeEffect(this._targetElement, positions, {
 					duration: (frames / 60) * 1000,
-					fill: 'both',
-					easing: 'linear',
+					fill: GlobalEnum.KeyframesEffectOptions.FillBoth,
+					easing: GlobalEnum.KeyframesEffectOptions.EasingLinear,
 					iterations: 1,
 				});
 
+				// Create the animation object
 				this._dragParams.SpringAnimation = new Animation(keyframes);
 
+				// Play the animation
 				this._dragParams.SpringAnimation.play();
 				this._targetElement.style.transform = '';
 			}

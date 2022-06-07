@@ -177,6 +177,14 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
+	 * OutSystemsUI KeyframesEffect options
+	 */
+	export enum KeyframesEffectOptions {
+		EasingLinear = 'linear',
+		FillBoth = 'both',
+	}
+
+	/**
 	 * OutSystems mobile operating systems
 	 */
 	export enum MobileOS {
