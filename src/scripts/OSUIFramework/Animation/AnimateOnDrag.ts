@@ -42,76 +42,6 @@ namespace OSUIFramework.Animations {
 			this._dragParams = new DragParams();
 		}
 
-		// Method to add a spring effect on dragEnd, when the callback expected is not triggered
-		// based on: https://www.kirillvasiltsov.com/writing/how-to-create-a-spring-animation-with-web-animation-api/
-		private _addSpringEffect(dx: number, dy: number): SpringAnimation {
-			if (dx === 0 && dy === 0) return { positions: [], frames: 0 };
-
-			// These 3 are used to configure the effect and are common on any spring animation
-			const tension = 300; // Tension, as it refers to how tightly-wound the spring is. The tighter the spring, the more energy is released, leading to a snappy, bouncy animation
-			const friction = 10; // friction is the force that dampens the motion. LIke hgravity, as you sprinkle more friction into the universe, the spring becomes less and less bouncy.
-			const mass = 1; // Mass refers to the heft of the thing we're moving. A heavier object will move more slowly, but it also has more inertia. We use 1 here for a more simple approach
-
-			const spring_length = 0;
-			const k = -tension;
-			const d = -friction;
-			const frame_rate = 1 / 60; // Framerate: we want 60 fps hence the framerate here is at 1/60
-			const displacement_threshold = 3; // Damping is the force that slows down and eventually stops an oscillation by dissipating energy
-
-			let velocity = 0;
-
-			// positions is an array of numbers where each number represents the position of the object in a spring motion at a specific frame
-			const positions = [];
-
-			let frames = 0;
-			let frames_below_threshold = 0;
-			let largest_displ;
-
-			// CHange value to be used, depending if is a vertical or horizontal drag
-			let directionDisplacement = this._dragParams.VerticalDrag ? dy : dx;
-
-			for (let step = 0; step <= 1000; step += 1) {
-				const Fspring = k * (directionDisplacement - spring_length);
-
-				const Fdamping = d * velocity;
-
-				const accel = (Fspring + Fdamping) / mass;
-
-				velocity += accel * frame_rate;
-
-				directionDisplacement += velocity * frame_rate;
-
-				positions.push({
-					transform: this._dragParams.VerticalDrag
-						? `translateY(${directionDisplacement}px)`
-						: `translateX(${directionDisplacement}px)`,
-				});
-
-				// Save the last largest displacement so that we can compare it with threshold later
-				largest_displ =
-					largest_displ < 0
-						? Math.max(largest_displ || -Infinity, Math.sqrt(directionDisplacement ** 2))
-						: Math.min(largest_displ || Infinity, Math.sqrt(directionDisplacement ** 2));
-
-				if (Math.abs(largest_displ) < displacement_threshold) {
-					frames_below_threshold += 1;
-				} else {
-					frames_below_threshold = 0; // Reset the frame counter
-				}
-
-				if (frames_below_threshold >= 60) {
-					frames = step;
-					break;
-				}
-			}
-
-			if (frames === 0) {
-				frames = 1000;
-			}
-
-			return { positions, frames };
-		}
-
 		// Method to check if current gesture is withing sidebar boundaries
 		private _checkIsDraggingInsideBounds(currentDrag: number): boolean {
 			const move = this._dragParams.VerticalDrag ? this._dragParams.MoveY : this._dragParams.MoveX;
@@ -160,12 +90,13 @@ namespace OSUIFramework.Animations {
 		}
 
 		/**
-		 *
+		 * Method to handle the gesture end callback
 		 *
 		 * @param {number} offsetX
 		 * @param {number} offsetY
 		 * @param {number} timeTaken
 		 * @param {Callbacks.Generic} callback
+		 * @param {SpringAnimationConfigs} [springProperties]
 		 * @return {*}  {void}
 		 * @memberof AnimateOnDrag
 		 */
@@ -174,7 +105,7 @@ namespace OSUIFramework.Animations {
 			offsetY: number,
 			timeTaken: number,
 			callback: Callbacks.Generic,
-			addSpringEffect = false
+			springProperties?: SpringAnimationConfigs
 		): void {
 			this._dragParams.IsMoving = false;
 
@@ -203,29 +134,26 @@ namespace OSUIFramework.Animations {
 			if (this._dragParams.IsReadyToTriggerCallback) {
 				this._targetElement.style.transform = '';
 				callback();
-			} else if (addSpringEffect && this._dragParams.IsOpen) {
-				// Create the the position for each frame
-				const { positions, frames } = this._addSpringEffect(offsetX, offsetY);
-
-				// Create the keyframe object
-				const keyframes = new KeyframeEffect(this._targetElement, positions, {
-					duration: (frames / 60) * 1000,
-					fill: GlobalEnum.KeyframesEffectOptions.FillBoth,
-					easing: GlobalEnum.KeyframesEffectOptions.EasingLinear,
-					iterations: 1,
-				});
-
+			} else if (springProperties?.addSpringAnimation && this._dragParams.IsOpen) {
 				// Create the animation object
-				this._dragParams.SpringAnimation = new Animation(keyframes);
+				this._dragParams.SpringAnimation = SpringAnimation.CreateSpringAnimation(
+					this._targetElement,
+					offsetX,
+					offsetY,
+					this._dragParams.DragOrientation,
+					springProperties.springAnimationProperties
+				);
 
 				// Play the animation
 				this._dragParams.SpringAnimation.play();
+				this._targetElement.style.transform = '';
+			} else {
 				this._targetElement.style.transform = '';
 			}
 		}
 
 		/**
-		 *
+		 * Method to handle the gesture move callback
 		 *
 		 * @param {number} offsetX
 		 * @param {number} offsetY
@@ -303,7 +231,7 @@ namespace OSUIFramework.Animations {
 		}
 
 		/**
-		 *
+		 * Method to handle the gesture start callback
 		 *
 		 * @param {boolean} verticalDrag
 		 * @param {GlobalEnum.Direction} expectedDirection
@@ -396,6 +324,125 @@ namespace OSUIFramework.Animations {
 		 */
 		public static UnSet(target: HTMLElement): void {
 			Helper.Dom.Styles.SetStyleAttribute(target, GlobalEnum.CSSVariables.OverlayOpacity, 0);
+		}
+	}
+
+	/**
+	 * Class to manage the creation of a SpringAnimation
+	 *
+	 * @export
+	 * @abstract
+	 * @class SpringAnimation
+	 */
+	export abstract class SpringAnimation {
+		// Method to add a spring effect on dragEnd, when the callback expected is not triggered
+		// based on: https://www.kirillvasiltsov.com/writing/how-to-create-a-spring-animation-with-web-animation-api/
+		private static _createSpringEffect(
+			dx: number,
+			dy: number,
+			orientation: GlobalEnum.Orientation,
+			springProperties: SpringAnimationProperties
+		): SpringAnimationKeyframes {
+			if (dx === 0 && dy === 0) return { positions: [], frames: 0 };
+
+			// These 3 are used to configure the effect and are common on any spring animation
+			const tension = springProperties.tension; // Tension, as it refers to how tightly-wound the spring is. The tighter the spring, the more energy is released, leading to a snappy, bouncy animation
+			const friction = springProperties.friction; // friction is the force that dampens the motion. Like gravity, as you sprinkle more friction into the universe, the spring becomes less and less bouncy.
+			const mass = springProperties.mass; // Mass refers to the heft of the thing we're moving. A heavier object will move more slowly, but it also has more inertia. We use 1 here for a more simple approach
+
+			const spring_length = 0;
+			const k = -tension;
+			const d = -friction;
+			const frame_rate = 1 / 60; // Framerate: we want 60 fps hence the framerate here is at 1/60
+			const displacement_threshold = 3; // Damping is the force that slows down and eventually stops an oscillation by dissipating energy
+			const isVertical = orientation === GlobalEnum.Orientation.Vertical;
+
+			let velocity = 0;
+
+			// positions is an array of numbers where each number represents the position of the object in a spring motion at a specific frame
+			const positions = [];
+
+			let frames = 0;
+			let frames_below_threshold = 0;
+			let largest_displ;
+
+			// CHange value to be used, depending if is a vertical or horizontal drag
+			let directionDisplacement = isVertical ? dy : dx;
+
+			for (let step = 0; step <= 1000; step += 1) {
+				const Fspring = k * (directionDisplacement - spring_length);
+
+				const Fdamping = d * velocity;
+
+				const accel = (Fspring + Fdamping) / mass;
+
+				velocity += accel * frame_rate;
+
+				directionDisplacement += velocity * frame_rate;
+
+				positions.push({
+					transform: isVertical
+						? `translateY(${directionDisplacement}px)`
+						: `translateX(${directionDisplacement}px)`,
+				});
+
+				// Save the last largest displacement so that we can compare it with threshold later
+				largest_displ =
+					largest_displ < 0
+						? Math.max(largest_displ || -Infinity, Math.sqrt(directionDisplacement ** 2))
+						: Math.min(largest_displ || Infinity, Math.sqrt(directionDisplacement ** 2));
+
+				if (Math.abs(largest_displ) < displacement_threshold) {
+					frames_below_threshold += 1;
+				} else {
+					frames_below_threshold = 0; // Reset the frame counter
+				}
+
+				if (frames_below_threshold >= 60) {
+					frames = step;
+					break;
+				}
+			}
+
+			if (frames === 0) {
+				frames = 1000;
+			}
+
+			return { positions, frames };
+		}
+
+		/**
+		 * Method to create a Spring Animation
+		 *
+		 * @static
+		 * @param {HTMLElement} target
+		 * @param {number} offsetX
+		 * @param {number} offsetY
+		 * @param {GlobalEnum.Orientation} orientation
+		 * @param {SpringAnimationProperties} springProperties
+		 * @return {*}  {Animation}
+		 * @memberof SpringAnimation
+		 */
+		public static CreateSpringAnimation(
+			target: HTMLElement,
+			offsetX: number,
+			offsetY: number,
+			orientation: GlobalEnum.Orientation,
+			springProperties: SpringAnimationProperties
+		): Animation {
+			// Create the the position for each frame
+			const { positions, frames } = this._createSpringEffect(offsetX, offsetY, orientation, springProperties);
+
+			// Create the keyframe object
+			const keyframes = new KeyframeEffect(target, positions, {
+				duration: (frames / 60) * 1000,
+				fill: GlobalEnum.KeyframesEffectOptions.FillBoth,
+				easing: GlobalEnum.KeyframesEffectOptions.EasingLinear,
+				iterations: 1,
+			});
+
+			// Create the animation object
+			return new Animation(keyframes);
 		}
 	}
 }

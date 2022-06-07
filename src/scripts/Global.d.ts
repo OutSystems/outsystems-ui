@@ -89,9 +89,22 @@ declare global {
 	};
 
 	// SpringAnimation type
-	type SpringAnimation = {
+	type SpringAnimationKeyframes = {
 		positions: Keyframe[];
 		frames: number;
+	};
+
+	// Spring Animation properties
+	type SpringAnimationProperties = {
+		tension: number;
+		friction: number;
+		mass: number;
+	};
+
+	// Spring Animation configs
+	type SpringAnimationConfigs = {
+		addSpringAnimation: boolean;
+		springAnimationProperties: SpringAnimationProperties;
 	};
 
 	// RangeSlider

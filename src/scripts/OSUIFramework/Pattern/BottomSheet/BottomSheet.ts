@@ -35,6 +35,16 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		// OnToggle event callback
 		private _platformEventOnToggle: Callbacks.OSBottomSheetOnToggleEvent;
 
+		// Stores SpringAnimation configs used on drag end. This is public to allow ability to change animation or even disable this effect
+		public springAnimationConfigs = {
+			addSpringAnimation: true,
+			springAnimationProperties: {
+				tension: 300,
+				friction: 10,
+				mass: 1,
+			},
+		};
+
 		/**
 		 * Get Gesture Events Instance
 		 *
@@ -122,7 +132,13 @@ namespace OSUIFramework.Patterns.BottomSheet {
 
 		// Method to handle the start of a gesture
 		private _onGestureEnd(offsetX: number, offsetY: number, timeTaken: number): void {
-			this._animateOnDragInstance.onDragEnd(offsetX, offsetY, timeTaken, this.close.bind(this), true);
+			this._animateOnDragInstance.onDragEnd(
+				offsetX,
+				offsetY,
+				timeTaken,
+				this.close.bind(this),
+				this.springAnimationConfigs
+			);
 		}
 
 		// Method to handle the gesture move
