@@ -100,6 +100,11 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @memberof AbstractFlatpickr
 		 */
 		protected createProviderInstance(): void {
+			/* In order to avoid dateFormat convert issues done by provider when InitialDate was not defined and input has a default date lets clean that value before creating provider instance. This happen when DateFormat is different from YYYY-MM-DD */
+			if (this._datePickerProviderInputElem && this._flatpickrOpts.defaultDate === undefined) {
+				this._datePickerProviderInputElem.value = '';
+			}
+
 			// Init provider
 			this.provider = window.flatpickr(this._datePickerProviderInputElem, this._flatpickrOpts);
 
@@ -238,10 +243,15 @@ namespace Providers.Datepicker.Flatpickr {
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
+				/* In order to avoid platform warnings due to DateFormat changes when DateFormar different from YYYY-MM-DD,
+				remove the input element value, this will avoid library update it's value into a date with a different date format! */
+				this._datePickerProviderInputElem.value = '';
+
 				this.unsetCallbacks();
 				this.unsetHtmlElements();
 
-				this.provider.destroy();
+				// Wait for _datePickerProviderInputElem be removed from DOM, before detroy the provider instance!
+				OSUIFramework.Helper.AsyncInvocation(this.provider.destroy);
 			}
 
 			super.dispose();

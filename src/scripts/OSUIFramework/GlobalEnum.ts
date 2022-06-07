@@ -28,6 +28,13 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
+	 * OutSystemsUI common css variables
+	 */
+	export enum CSSVariables {
+		OverlayOpacity = '--overlay-opacity',
+	}
+
+	/**
 	 * OutSystemsUI position cssClasses and identifiers of position
 	 */
 	export enum Position {
@@ -66,11 +73,14 @@ namespace OSUIFramework.GlobalEnum {
 	 */
 	export enum Direction {
 		Bottom = 'bottom',
+		Down = 'down',
 		Left = 'left',
 		LTR = 'ltr',
+		None = '',
 		Right = 'right',
 		RTL = 'rtl',
 		Top = 'top',
+		Up = 'up',
 	}
 
 	/**
@@ -183,6 +193,7 @@ namespace OSUIFramework.GlobalEnum {
 	 */
 	export enum Orientation {
 		Horizontal = 'horizontal',
+		None = '',
 		Vertical = 'vertical',
 	}
 

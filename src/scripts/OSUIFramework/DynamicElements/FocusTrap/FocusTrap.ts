@@ -55,6 +55,10 @@ namespace OSUIFramework.DynamicElements.FocusTrap {
 			Helper.Dom.Styles.AddClass(this._bottomElement, GlobalEnum.FocusTrapClasses.FocusTrapBottom);
 			Helper.Dom.Styles.AddClass(this._topElement, GlobalEnum.FocusTrapClasses.FocusTrapTop);
 
+			// Set aria hidden to prevent the readability from screen readers
+			Helper.A11Y.AriaHiddenTrue(this._bottomElement);
+			Helper.A11Y.AriaHiddenTrue(this._topElement);
+
 			// Hide by default the focusable elements
 			this.unsetA11yProperties();
 
@@ -84,13 +88,9 @@ namespace OSUIFramework.DynamicElements.FocusTrap {
 		 * @memberof FocusTrap
 		 */
 		public setA11yProperties(): void {
-			// Set A11Y properties to bottom focusable element
+			// Set A11Y properties to bottom & top focusable element
 			Helper.A11Y.TabIndexTrue(this._bottomElement);
-			Helper.A11Y.AriaHiddenTrue(this._bottomElement);
-
-			// Set A11Y properties to top focusable element
 			Helper.A11Y.TabIndexTrue(this._topElement);
-			Helper.A11Y.AriaHiddenTrue(this._topElement);
 		}
 
 		/**
@@ -99,13 +99,9 @@ namespace OSUIFramework.DynamicElements.FocusTrap {
 		 * @memberof FocusTrap
 		 */
 		public unsetA11yProperties(): void {
-			// Unset A11Y properties from bottom focusable element
+			// Unset A11Y properties from bottom & top focusable element
 			Helper.A11Y.TabIndexFalse(this._bottomElement);
-			Helper.A11Y.AriaHiddenFalse(this._bottomElement);
-
-			// Unset A11Y properties from top focusable element
 			Helper.A11Y.TabIndexFalse(this._topElement);
-			Helper.A11Y.AriaHiddenFalse(this._topElement);
 		}
 	}
 }
