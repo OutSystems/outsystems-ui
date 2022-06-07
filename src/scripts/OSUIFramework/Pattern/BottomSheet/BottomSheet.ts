@@ -152,6 +152,37 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			}
 		}
 
+		// Method to toggle the open/close the BottomSheet
+		private _toggleBottomSheet(isOpen: boolean): void {
+			// Toggle class
+			isOpen
+				? Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsOpen)
+				: Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsOpen);
+
+			// Update property
+			this._isOpen = isOpen;
+
+			// Update listeners and A11y properties
+			this.setEventListeners();
+			this.setA11yProperties();
+
+			// Handle focus trap logic
+			if (isOpen) {
+				this._focusableActiveElement = document.activeElement as HTMLElement;
+				this._focusTrapInstance.setA11yProperties();
+				// Focus on element when pattern is open
+				this._selfElem.focus();
+			} else {
+				this._focusTrapInstance.unsetA11yProperties();
+				this._selfElem.blur();
+				// Focus on last element clicked
+				this._focusableActiveElement.focus();
+			}
+
+			// Trigger platform event
+			this._triggerOnToggleEvent();
+		}
+
 		// Method that toggles the showHandler config
 		private _toggleHandler(ShowHandler: boolean): void {
 			if (ShowHandler) {
@@ -340,15 +371,7 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		 * @memberof BottomSheet
 		 */
 		public close(): void {
-			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsOpen);
-			this._isOpen = false;
-			this.removeEventListeners();
-			this.setA11yProperties();
-			this._focusTrapInstance.unsetA11yProperties();
-			this._selfElem.blur();
-			// Focus on last element clicked
-			this._focusableActiveElement.focus();
-			this._triggerOnToggleEvent();
+			this._toggleBottomSheet(false);
 		}
 
 		/**
@@ -377,15 +400,7 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		 * @memberof BottomSheet
 		 */
 		public open(): void {
-			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsOpen);
-			this._isOpen = true;
-			this.setEventListeners();
-			this.setA11yProperties();
-			this._focusableActiveElement = document.activeElement as HTMLElement;
-			this._focusTrapInstance.setA11yProperties();
-			// Focus on element when pattern is open
-			this._selfElem.focus();
-			this._triggerOnToggleEvent();
+			this._toggleBottomSheet(true);
 		}
 
 		/**
