@@ -1,5 +1,24 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Animations {
+	// SpringAnimation type
+	type SpringAnimationKeyframes = {
+		frames: number;
+		positions: Keyframe[];
+	};
+
+	// Spring Animation properties
+	type SpringAnimationProperties = {
+		friction: number;
+		mass: number;
+		tension: number;
+	};
+
+	// Spring Animation configs
+	type SpringAnimationConfigs = {
+		addSpringAnimation: boolean;
+		springAnimationProperties: SpringAnimationProperties;
+	};
+
 	/**
 	 * Class to hold the drag information
 	 *
