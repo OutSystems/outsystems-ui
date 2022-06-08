@@ -27,10 +27,6 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	 */
 	export function Create(bottomSheetId: string, configs: string): OSUIFramework.Patterns.BottomSheet.IBottomSheet {
 		if (_bottomSheetItemsMap.has(bottomSheetId)) {
-			/* TODO (by CreateNewPattern): 
-				The line below is created by the CreateNewPattern mechanism, that is not able to replace values
-				as expected, that said, check other patterns to understand how to replace it!
-			*/
 			throw new Error('There is already an BottomSheet registered under id: ' + bottomSheetId);
 		}
 
