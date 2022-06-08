@@ -55,6 +55,7 @@ namespace OSUIFramework.GlobalEnum {
 	export enum CssProperties {
 		None = 'none',
 		PaddingTop = 'padding-top',
+		Auto = 'auto',
 	}
 
 	/**
@@ -256,6 +257,7 @@ namespace OSUIFramework.GlobalEnum {
 	export enum Units {
 		Percentage = '%',
 		Pixel = 'px',
+		Em = 'em',
 	}
 
 	export enum Browser {

@@ -93,6 +93,8 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailDispose: 'OSUI-API-10002',
 		FailOnDragEnd: 'OSUI-API-10003',
 		FailRegisterCallback: 'OSUI-API-10004',
+		FailSetValues: 'OSUI-API-10005',
+		FailResetValues: 'OSUI-API-10006',
 	};
 
 	export const Sidebar = {

@@ -371,7 +371,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 
 					// ArrowDown
 					case GlobalEnum.Keycodes.ArrowDown:
-						if (getOptionItemIndex < this.childItems.length - 1) {
+						if (getOptionItemIndex < this.getChildItems().length - 1) {
 							this._updateOptionItemFocuStateOnKeyPress(optionItem, getOptionItemIndex + 1);
 						}
 						break;
@@ -840,7 +840,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		 */
 		public clear(): void {
 			// Get all Selected Items
-			const selectedOptions = this.childItems.filter((item) => item.IsSelected);
+			const selectedOptions = this.getChildItems().filter((item) => item.IsSelected);
 			// Go through all the seected option items
 			for (const optionItem of selectedOptions) {
 				// Unselect it!

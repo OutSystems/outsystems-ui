@@ -224,6 +224,16 @@ namespace Providers.Dropdown.VirtualSelect {
 		}
 
 		/**
+		 * Disable the dropbox as popup on small screen like mobile
+		 *
+		 * @memberof AbstractVirtualSelect
+		 */
+		public disableOpenAsPopUp(): void {
+			this.configs.ShowDropboxAsPopup = false;
+			this.redraw();
+		}
+
+		/**
 		 * Destroy the Dropdown.
 		 *
 		 * @memberof AbstractVirtualSelect

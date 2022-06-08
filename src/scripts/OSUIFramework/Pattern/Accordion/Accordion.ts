@@ -110,7 +110,7 @@ namespace OSUIFramework.Patterns.Accordion {
 		 */
 		public collapseAllItems(): void {
 			// Filter all items that are open and not disabled
-			const itemsToClose = this.childItems.filter((item) => item.isOpen && !item.isDisabled);
+			const itemsToClose = this.getChildItems().filter((item) => item.isOpen && !item.isDisabled);
 
 			// Close all of them
 			itemsToClose.forEach((item) => {
@@ -136,7 +136,7 @@ namespace OSUIFramework.Patterns.Accordion {
 			//If this accordion does not have multiple items, it means we can't expand all.
 			if (this.configs.MultipleItems) {
 				// Filter all items that are open and not disabled
-				const itemsToOpen = this.childItems.filter((item) => !item.isOpen && !item.isDisabled);
+				const itemsToOpen = this.getChildItems().filter((item) => !item.isOpen && !item.isDisabled);
 
 				// Close all of them
 				itemsToOpen.forEach((item) => {
@@ -184,7 +184,7 @@ namespace OSUIFramework.Patterns.Accordion {
 			// Check if the given ChildId exist as an child item
 			if (childReference) {
 				// Close all other open items
-				this.childItems.forEach((item) => {
+				this.getChildItems().forEach((item) => {
 					if (item.uniqueId !== childId) {
 						if (item.isOpen) {
 							item.close();

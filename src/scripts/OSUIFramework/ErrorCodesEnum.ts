@@ -5,7 +5,7 @@ namespace OSUIFramework.ErrorCodes {
 	 */
 
 	export const AbstractChild = {
-		ParentNotFound: 'OSUI-GEN-01001',
+		FailParentNotFound: 'OSUI-GEN-01001',
 	};
 
 	export const Accordion = {
@@ -34,6 +34,7 @@ namespace OSUIFramework.ErrorCodes {
 
 	export const RangeSlider = {
 		FailRegisterCallback: 'OSUI-GEN-04001',
+		FailSetValue: 'OSUI-GEN-04002',
 	};
 
 	export const SectionIndex = {
@@ -49,5 +50,20 @@ namespace OSUIFramework.ErrorCodes {
 
 	export const Tooltip = {
 		FailRegisterCallback: 'OSUI-GEN-08001',
+	};
+
+	export const Tabs = {
+		FailChildItemClicked: 'OSUI-GEN-09001',
+		FailSetNewChildContentItem: 'OSUI-GEN-09002',
+		FailSetNewChildHeaderItem: 'OSUI-GEN-09003',
+		FailToSetChildItemAction: 'OSUI-GEN-09004',
+		FailUnsetNewChildContentItem: 'OSUI-GEN-09005',
+		FailUnsetNewChildHeaderItem: 'OSUI-GEN-09006',
+	};
+
+	export const AbstractParent = {
+		FailChildNotFound: 'OSUI-GEN-10001',
+		FailChildsNotFound: 'OSUI-GEN-10002',
+		FailTypeNotFound: 'OSUI-GEN-10003',
 	};
 }
