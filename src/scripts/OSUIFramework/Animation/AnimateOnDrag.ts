@@ -42,7 +42,7 @@ namespace OSUIFramework.Animations {
 			this._dragParams = new DragParams();
 		}
 
-		// Method to check if current gesture is withing sidebar boundaries
+		// Method to check if current gesture is within pattern boundaries
 		private _checkIsDraggingInsideBounds(currentDrag: number): boolean {
 			const move = this._dragParams.VerticalDrag ? this._dragParams.MoveY : this._dragParams.MoveX;
 			const last = this._dragParams.VerticalDrag ? this._dragParams.LastY : this._dragParams.LastX;
