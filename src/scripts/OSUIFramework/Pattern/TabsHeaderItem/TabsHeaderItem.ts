@@ -8,31 +8,22 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 	 * @extends {AbstractPattern<TabsHeaderItemConfig>}
 	 * @implements {ITabsHeaderItem}
 	 */
-	export class TabsHeaderItem extends AbstractPattern<TabsHeaderItemConfig> implements ITabsHeaderItem {
+	export class TabsHeaderItem extends AbstractChild<TabsHeaderItemConfig, Tabs.ITabs> implements ITabsHeaderItem {
 		// Store the data-tab attribute
 		private _dataTab: number;
 		// Store the on click event
 		private _eventOnTabsClick: Callbacks.Generic;
 		// Store if this is the current active item
 		private _isActive = false;
-		// Store this item's tab pattern
-		private _tabsElem: Patterns.Tabs.ITabs;
 
-		constructor(uniqueId: string, tabsElem: Patterns.Tabs.ITabs, configs: JSON) {
+		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new TabsHeaderItemConfig(configs));
-
-			this._tabsElem = tabsElem;
-		}
-
-		// Method to add this element to the respective Tabs
-		private _addElementToTabs(): void {
-			this._tabsElem.addHeaderItem(this);
 		}
 
 		// Method to handle the click event
 		private _handleClickEvent(): void {
 			if (this._isActive === false) {
-				this._tabsElem.changeTab(this._dataTab, this, true, true);
+				this.notifyParent(Tabs.Enum.ChildNotifyActionType.Click);
 			}
 		}
 
@@ -41,10 +32,15 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnTabsClick);
 		}
 
+		// Method to set the event listeners
+		private _setUpEvents(): void {
+			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnTabsClick);
+		}
+
 		// Method to handle the Accessibility attributes
 		protected setA11YProperties(isUpdate = true): void {
 			// Static attribute to be added when the item is created
-			if (!isUpdate) {
+			if (isUpdate === false) {
 				Helper.A11Y.RoleTab(this._selfElem);
 			}
 
@@ -66,7 +62,6 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		 */
 		protected setCallbacks(): void {
 			this._eventOnTabsClick = this._handleClickEvent.bind(this);
-			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnTabsClick);
 		}
 
 		/**
@@ -88,11 +83,19 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		public build(): void {
 			super.build();
 
-			this._addElementToTabs();
+			this.setParentInfo(
+				Constants.Dot + Tabs.Enum.CssClasses.TabsWrapper,
+				OutSystems.OSUI.Patterns.TabsAPI.GetTabsById
+			);
+
+			// Notify parent about a new instance of this child has been created!
+			this.notifyParent(Tabs.Enum.ChildNotifyActionType.AddHeaderItem);
 
 			this.setA11YProperties(false);
 
 			this.setCallbacks();
+
+			this._setUpEvents();
 
 			super.finishBuild();
 		}
@@ -103,8 +106,8 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		 * @memberof TabsHeaderItem
 		 */
 		public dispose(): void {
-			// Remove this item from the tabs pattern array
-			this._tabsElem.removeHeaderItem(this, this._isActive);
+			// Notify parent about this instance will be destroyed
+			this.notifyParent(Tabs.Enum.ChildNotifyActionType.RemovedHeaderItem);
 
 			this.unsetCallbacks();
 
@@ -119,32 +122,6 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		 */
 		public getDataTab(): number {
 			return this._dataTab;
-		}
-
-		/**
-		 * Method to remove this element as active
-		 *
-		 * @memberof TabsHeaderItem
-		 */
-		public removeActiveElement(): void {
-			if (this._selfElem) {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
-				this._isActive = false;
-				this.setA11YProperties();
-			}
-		}
-
-		/**
-		 * Method to set this element as active
-		 *
-		 * @memberof TabsHeaderItem
-		 */
-		public setActiveElement(): void {
-			if (this._selfElem) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
-				this._isActive = true;
-				this.setA11YProperties();
-			}
 		}
 
 		/**
@@ -175,6 +152,43 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		 */
 		public setFocus(): void {
 			this._selfElem.focus();
+		}
+
+		/**
+		 * Method to set this element as active
+		 *
+		 * @memberof TabsHeaderItem
+		 */
+		public setIsActive(): void {
+			if (this._selfElem) {
+				Helper.Dom.Styles.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
+				this._isActive = true;
+				this.setA11YProperties();
+			}
+		}
+
+		/**
+		 * Method to remove this element as active
+		 *
+		 * @memberof TabsHeaderItem
+		 */
+		public unsetIsActive(): void {
+			if (this._selfElem) {
+				Helper.Dom.Styles.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
+				this._isActive = false;
+				this.setA11YProperties();
+			}
+		}
+
+		/**
+		 * Readable property to get the active state of the element
+		 *
+		 * @readonly
+		 * @type {boolean}
+		 * @memberof TabsHeaderItem
+		 */
+		public get IsActive(): boolean {
+			return this._isActive;
 		}
 	}
 }

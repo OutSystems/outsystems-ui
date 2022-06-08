@@ -61,7 +61,7 @@ namespace OSUIFramework.Patterns {
 				} else {
 					// Was not able to get parent element!
 					throw new Error(
-						`${ErrorCodes.AbstractChild.ParentNotFound}: Parent of Child with Id: '${this.widgetId}' was not found!`
+						`${ErrorCodes.AbstractChild.FailParentNotFound}: Parent of Child with Id: '${this.widgetId}' was not found!`
 					);
 				}
 			}

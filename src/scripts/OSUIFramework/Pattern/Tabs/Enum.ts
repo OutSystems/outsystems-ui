@@ -1,6 +1,17 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Tabs.Enum {
 	/**
+	 * Communication between Patterns - Notification Type
+	 */
+	export enum ChildNotifyActionType {
+		AddContentItem = 'add-content-item',
+		AddHeaderItem = 'add-header-item',
+		Click = 'click',
+		RemovedContentItem = 'removed-content-item',
+		RemovedHeaderItem = 'removed-header-item',
+	}
+
+	/**
 	 * Tabs Enum for CSS Classes
 	 */
 	export enum CssClasses {
@@ -48,5 +59,13 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 	 */
 	export enum ObserverOptions {
 		RootMargin = '1px',
+	}
+
+	/**
+	 * Tabs Enum for Tabs child types
+	 */
+	export enum ChildTypes {
+		TabsContentItem = 'TabsContentItem',
+		TabsHeaderItem = 'TabsHeaderItem',
 	}
 }
