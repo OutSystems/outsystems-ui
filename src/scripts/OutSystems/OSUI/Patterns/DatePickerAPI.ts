@@ -338,7 +338,6 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 
 		try {
 			const _datePicker = this.GetDatePickerItemById(datePickerId);
-			console.log(_datePicker);
 			_datePicker.setEditableInput(IsEditable);
 		} catch (error) {
 			responseObj.isSuccess = false;
