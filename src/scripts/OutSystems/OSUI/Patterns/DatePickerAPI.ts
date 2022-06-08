@@ -328,4 +328,24 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 
 		return JSON.stringify(responseObj);
 	}
+
+	export function SetEditableInput(datePickerId: string, IsEditable: boolean): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const _datePicker = this.GetDatePickerItemById(datePickerId);
+			console.log(_datePicker);
+			//_datePicker.setEditableInput(datePickerId, IsEditable);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.DatePicker.FailRedraw;
+		}
+
+		return JSON.stringify(responseObj);
+	}
 }
