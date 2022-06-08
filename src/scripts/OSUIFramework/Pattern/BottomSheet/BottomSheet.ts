@@ -171,7 +171,7 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		// Method to toggle the open/close the BottomSheet
 		private _toggleBottomSheet(isOpen: boolean): void {
 			// Cancel animation if active
-			if (this._animateOnDragInstance.dragParams.SpringAnimation) {
+			if (this._animateOnDragInstance?.dragParams.SpringAnimation) {
 				this._animateOnDragInstance.dragParams.SpringAnimation.cancel();
 			}
 
