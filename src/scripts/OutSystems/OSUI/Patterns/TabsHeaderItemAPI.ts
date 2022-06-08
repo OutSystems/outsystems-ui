@@ -94,6 +94,13 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 		return _newTabsHeaderItem;
 	}
 
+	/**
+	 * Funtion that will disable a specific TabHeaderItem by its Id
+	 *
+	 * @export
+	 * @param {string} tabsHeaderItemId
+	 * @return {*}  {string}
+	 */
 	export function DisableTabItem(tabsHeaderItemId: string): string {
 		const responseObj = {
 			isSuccess: true,
@@ -141,6 +148,13 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 		return JSON.stringify(responseObj);
 	}
 
+	/**
+	 * Funtion that will enable a specific TabHeaderItem by its Id
+	 *
+	 * @export
+	 * @param {string} tabsHeaderItemId
+	 * @return {*}  {string}
+	 */
 	export function EnableTabItem(tabsHeaderItemId: string): string {
 		const responseObj = {
 			isSuccess: true,

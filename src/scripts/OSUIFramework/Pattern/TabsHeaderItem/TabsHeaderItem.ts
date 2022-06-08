@@ -101,7 +101,7 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		}
 
 		/**
-		 *
+		 * Method to disable TabHeaderItem
 		 *
 		 * @memberof TabsHeaderItem
 		 */
@@ -123,6 +123,11 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 			super.dispose();
 		}
 
+		/**
+		 * Method to enable TabHeaderItem
+		 *
+		 * @memberof TabsHeaderItem
+		 */
 		public enable(): void {
 			this.notifyParent(Tabs.Enum.ChildNotifyActionType.EnabledHeaderItem);
 		}
