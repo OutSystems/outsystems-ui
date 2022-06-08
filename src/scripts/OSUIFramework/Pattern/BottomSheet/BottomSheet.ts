@@ -40,7 +40,7 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			addSpringAnimation: true,
 			springAnimationProperties: {
 				tension: 300,
-				friction: 10,
+				friction: 15,
 				mass: 1,
 			},
 		};
@@ -50,7 +50,7 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		 *
 		 * @readonly
 		 * @type {Event.GestureEvent.DragEvent}
-		 * @memberof Sidebar
+		 * @memberof BottomSheet
 		 */
 		public get gestureEventInstance(): Event.GestureEvent.DragEvent {
 			return this._gestureEventInstance;
@@ -61,7 +61,7 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof Sidebar
+		 * @memberof BottomSheet
 		 */
 		public get hasGestureEvents(): boolean {
 			return this._hasGestureEvents;
@@ -170,6 +170,11 @@ namespace OSUIFramework.Patterns.BottomSheet {
 
 		// Method to toggle the open/close the BottomSheet
 		private _toggleBottomSheet(isOpen: boolean): void {
+			// Cancel animation if active
+			if (this._animateOnDragInstance.dragParams.SpringAnimation) {
+				this._animateOnDragInstance.dragParams.SpringAnimation.cancel();
+			}
+
 			// Toggle class
 			isOpen
 				? Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsOpen)
@@ -190,9 +195,12 @@ namespace OSUIFramework.Patterns.BottomSheet {
 				this._selfElem.focus();
 			} else {
 				this._focusTrapInstance.unsetA11yProperties();
-				this._selfElem.blur();
-				// Focus on last element clicked
-				this._focusableActiveElement.focus();
+
+				// Focus on last element clicked. Async to avoid conflict with closing animation
+				Helper.AsyncInvocation(() => {
+					this._selfElem.blur();
+					this._focusableActiveElement.focus();
+				});
 			}
 
 			// Trigger platform event

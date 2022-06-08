@@ -85,7 +85,7 @@ namespace OSUIFramework.Animations {
 		 * @type {unknown}
 		 * @memberof AnimateOnDrag
 		 */
-		public get dragParams(): unknown {
+		public get dragParams(): DragParams {
 			return this._dragParams;
 		}
 
@@ -140,7 +140,7 @@ namespace OSUIFramework.Animations {
 					this._targetElement,
 					offsetX,
 					offsetY,
-					this._dragParams.DragOrientation,
+					this._dragParams.VerticalDrag ? GlobalEnum.Orientation.Vertical : GlobalEnum.Orientation.Horizontal,
 					springProperties.springAnimationProperties
 				);
 
