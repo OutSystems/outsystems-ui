@@ -9,6 +9,8 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 		Click = 'click',
 		RemovedContentItem = 'removed-content-item',
 		RemovedHeaderItem = 'removed-header-item',
+		DisabledHeaderItem = 'disabled-header-item',
+		EnabledHeaderItem = 'enabled-header-item',
 	}
 
 	/**
