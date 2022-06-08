@@ -73,20 +73,12 @@ namespace OSUIFramework.Patterns.BottomSheet {
 
 		// Focus on first focusable element on BottomSheet
 		private _focusBottomCallback(): void {
-			if (this._firstFocusableElement) {
-				this._firstFocusableElement.focus();
-			} else {
-				this._selfElem.focus();
-			}
+			Helper.FocusTrap.FocusOnFirstFocusableElement(this._firstFocusableElement, this._selfElem);
 		}
 
 		// Focus on last focusable element on BottomSheet
 		private _focusTopCallback(): void {
-			if (this._lastFocusableElement) {
-				this._lastFocusableElement.focus();
-			} else {
-				this._selfElem.focus();
-			}
+			Helper.FocusTrap.FocusOnLastFocusableElement(this._lastFocusableElement, this._selfElem);
 		}
 
 		// Add Focus Trap to Pattern
