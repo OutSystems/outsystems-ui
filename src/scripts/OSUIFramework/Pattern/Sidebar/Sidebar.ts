@@ -10,7 +10,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 	 */
 	export class Sidebar extends AbstractPattern<SidebarConfig> implements ISidebar, Interface.IDragEvent {
 		// Hold the animateOnDrag intance, that helps transition the sidebar on drag
-		private _animateOnDragInstance: Animation.AnimateOnDrag;
+		private _animateOnDragInstance: Animations.AnimateOnDrag;
 		// Store the Sidebar direction
 		private _currentDirectionCssClass: string;
 		// Store the click event with bind(this)
@@ -94,7 +94,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 					this._onGestureEnd.bind(this)
 				);
 				// Apply transform on an element and perform animation
-				this._animateOnDragInstance = new Animation.AnimateOnDrag(this._selfElem);
+				this._animateOnDragInstance = new Animations.AnimateOnDrag(this._selfElem);
 			}
 		}
 
@@ -103,7 +103,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._animateOnDragInstance.onDragEnd(offsetX, offsetY, timeTaken, this._toggle.bind(this));
 
 			if (this.configs.HasOverlay) {
-				Animation.OverlayTransitionOnDrag.UnSet(this._selfElem);
+				Animations.OverlayTransitionOnDrag.UnSet(this._selfElem);
 			}
 		}
 
@@ -112,7 +112,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 			this._animateOnDragInstance.onDragMove(offsetX, offsetY, x, y, evt);
 
 			if (this.configs.HasOverlay) {
-				Animation.OverlayTransitionOnDrag.Set(this._selfElem, x, this.configs.Direction, this.configs.Width);
+				Animations.OverlayTransitionOnDrag.Set(this._selfElem, x, this.configs.Direction, this.configs.Width);
 			}
 		}
 

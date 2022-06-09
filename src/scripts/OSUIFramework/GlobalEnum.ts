@@ -178,6 +178,14 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
+	 * OutSystemsUI KeyframesEffect options
+	 */
+	export enum KeyframesEffectOptions {
+		EasingLinear = 'linear',
+		FillBoth = 'both',
+	}
+
+	/**
 	 * OutSystems mobile operating systems
 	 */
 	export enum MobileOS {
@@ -205,6 +213,7 @@ namespace OSUIFramework.GlobalEnum {
 		Accordion = 'Accordion',
 		AccordionItem = 'Accordion Item',
 		AnimatedLabel = 'Animated Label',
+		BottomSheet = 'Bottom Sheet',
 		ButtonLoading = 'ButtonLoading',
 		Carousel = 'Carousel',
 		Datepicker = 'Datepicker',

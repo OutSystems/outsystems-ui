@@ -19,6 +19,11 @@ namespace OSUIFramework.Callbacks {
 	export type onSwipeRight = { (): void };
 	export type onSwipeUp = { (): void };
 
+	// Notificaction
+	export type OSBottomSheetOnToggleEvent = {
+		(bottomsheetId: string, isOpen: boolean): void;
+	};
+
 	// Carousel
 	export type OSCarouselSlideMovedEvent = {
 		(carouselId: string, index: number): void;
@@ -48,7 +53,7 @@ namespace OSUIFramework.Callbacks {
 		(flipId: string, isFlipped: boolean): void;
 	};
 
-	// Notifficaction
+	// Notificaction
 	export type OSNotificationToggleEvent = {
 		(notificationId: string, isOpen: boolean): void;
 	};
