@@ -434,9 +434,9 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		}
 
 		/**
-		 * Removes the gesture events to open/close the Sidebar on Native Apps
+		 * Removes the gesture events to open/close the BottomSheet on Native Apps
 		 *
-		 * @memberof Sidebar
+		 * @memberof BottomSheet
 		 */
 		public removeGestureEvents(): void {
 			if (this._gestureEventInstance !== undefined) {
@@ -446,10 +446,10 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		}
 
 		/**
-		 * Sets the gesture events to open/close the Sidebar on Native Apps
+		 * Sets the gesture events to open/close the BottomSheet on Native Apps
 		 *
 		 * @protected
-		 * @memberof Sidebar
+		 * @memberof BottomSheet
 		 */
 		public setGestureEvents(
 			onGestureStart: Callbacks.onGestureStart,
