@@ -17,7 +17,7 @@ namespace OSUIFramework.Patterns.BottomSheet {
 		// Listener callbacks
 		private _eventOnContentScroll: Callbacks.Generic;
 		private _eventOnKeypress: Callbacks.Generic;
-		// FicusTrap Properties
+		// FocusTrap Properties
 		private _firstFocusableElement: HTMLElement;
 		private _focusTrapInstance: DynamicElements.FocusTrap.FocusTrap;
 		private _focusableActiveElement: HTMLElement;
