@@ -269,7 +269,7 @@
 				position: absolute;
 				transform: scaleX(0);
 				transform-origin: center;
-				transition: transform 150ms ease-in;
+				transition: transform 150ms linear;
 				width: 100%;
 				z-index: 1;
 			}
