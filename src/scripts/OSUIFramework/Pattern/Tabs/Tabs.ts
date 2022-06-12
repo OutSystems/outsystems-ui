@@ -435,6 +435,9 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			const newTabIndex = this.getChildIndex(childHeaderId);
 
+			// Reset direction atribute
+			Helper.Dom.Attribute.Set(this._selfElem, Enum.Attributes.DataDirection, Enum.Attributes.None);
+
 			// If there're more than one content item or changeTab doesn't come from a drag gesture,
 			// then do scrollTo and change active content item
 			if (this._hasSingleContent === false || this._disableObserver) {
@@ -743,6 +746,13 @@ namespace OSUIFramework.Patterns.Tabs {
 				// Set new headerItem as active
 				newHeaderItem.setIsActive();
 				this._activeTabHeaderElement = newHeaderItem;
+			}
+
+			// Update direction attribute
+			if (this.configs.StartingTab < newTabIndex) {
+				Helper.Dom.Attribute.Set(this._selfElem, Enum.Attributes.DataDirection, Enum.Attributes.Next);
+			} else if (this.configs.StartingTab > newTabIndex) {
+				Helper.Dom.Attribute.Set(this._selfElem, Enum.Attributes.DataDirection, Enum.Attributes.Previous);
 			}
 
 			// Update configs

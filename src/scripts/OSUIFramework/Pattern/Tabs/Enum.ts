@@ -33,6 +33,10 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 	 */
 	export enum Attributes {
 		DataTab = 'data-tab',
+		DataDirection = 'data-direction',
+		Next = 'next',
+		Previous = 'previous',
+		None = 'none',
 	}
 
 	/**

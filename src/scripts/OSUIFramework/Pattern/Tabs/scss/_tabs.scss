@@ -11,6 +11,18 @@
 	height: var(--tabs-height);
 
 	&--is-vertical {
+		&[data-direction='next'] {
+			.osui-tabs__header-item::after {
+				transform-origin: top;
+			}
+		}
+
+		&[data-direction='previous'] {
+			.osui-tabs__header-item::after {
+				transform-origin: bottom;
+			}
+		}
+
 		&.osui-tabs--is-right {
 			grid-auto-flow: dense;
 			grid-template-columns: 1fr var(--header-item-width);
@@ -115,6 +127,18 @@
 	&--is-horizontal {
 		grid-auto-flow: column;
 		grid-template-rows: auto 1fr;
+
+		&[data-direction='next'] {
+			.osui-tabs__header-item::after {
+				transform-origin: left;
+			}
+		}
+
+		&[data-direction='previous'] {
+			.osui-tabs__header-item::after {
+				transform-origin: right;
+			}
+		}
 
 		.osui-tabs__header {
 			grid-template-columns: repeat(var(--tabs-header-items), var(--header-item-alignment));
@@ -232,6 +256,10 @@
 
 			&.osui-tabs--is-active {
 				color: var(--color-primary);
+
+				&::after {
+					transform: scaleX(1);
+				}
 			}
 
 			&::after {
@@ -239,7 +267,9 @@
 				height: 100%;
 				pointer-events: none;
 				position: absolute;
-				transition: opacity 150ms ease-in;
+				transform: scaleX(0);
+				transform-origin: center;
+				transition: transform 150ms ease-in;
 				width: 100%;
 				z-index: 1;
 			}
@@ -259,6 +289,7 @@
 
 	&__content {
 		display: grid;
+		height: 100%;
 		overflow-x: hidden;
 		width: 100%;
 
