@@ -11,18 +11,6 @@
 	height: var(--tabs-height);
 
 	&--is-vertical {
-		&[data-direction='next'] {
-			.osui-tabs__header-item::after {
-				transform-origin: top;
-			}
-		}
-
-		&[data-direction='previous'] {
-			.osui-tabs__header-item::after {
-				transform-origin: bottom;
-			}
-		}
-
 		&.osui-tabs--is-right {
 			grid-auto-flow: dense;
 			grid-template-columns: 1fr var(--header-item-width);
@@ -110,16 +98,24 @@
 				border-right: var(--border-size-m) solid transparent;
 				flex: none;
 
+				&::after {
+					transform: scaleY(0);
+				}
+
 				&.osui-tabs--is-active::after {
 					height: 100%;
+					transform: scaleY(1);
 				}
 			}
 		}
 
 		.osui-tabs__content {
 			overflow-y: auto;
-			padding: var(--space-none) var(--space-m);
 			width: auto;
+
+			&-item {
+				padding: var(--space-none) var(--space-m);
+			}
 		}
 	}
 
@@ -154,6 +150,7 @@
 				&::after {
 					bottom: calc(0px - var(--border-size-m));
 					left: 0;
+					transform: scaleX(0);
 				}
 
 				&:not(.osui-tabs--is-active)::after {
@@ -167,6 +164,7 @@
 
 				&.osui-tabs--is-active::after {
 					border-bottom: var(--border-size-m) solid var(--color-primary);
+					transform: scaleX(1);
 				}
 			}
 		}
@@ -175,7 +173,6 @@
 			border-top: var(--border-size-s) solid var(--color-neutral-5);
 			margin-top: -1px;
 			overflow-y: hidden;
-			padding: var(--space-m) var(--space-none);
 		}
 	}
 
@@ -255,10 +252,6 @@
 
 			&.osui-tabs--is-active {
 				color: var(--color-primary);
-
-				&::after {
-					transform: scaleX(1);
-				}
 			}
 
 			&::after {
@@ -266,7 +259,6 @@
 				height: 100%;
 				pointer-events: none;
 				position: absolute;
-				transform: scaleX(0);
 				transform-origin: center;
 				transition: transform 150ms linear;
 				width: 100%;
@@ -298,6 +290,7 @@
 
 		&-item {
 			overflow-y: auto;
+			padding: var(--space-m) var(--space-none);
 
 			// Service Studio Preview
 			& {
