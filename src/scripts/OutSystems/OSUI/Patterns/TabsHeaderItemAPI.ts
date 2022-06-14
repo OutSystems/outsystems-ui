@@ -95,6 +95,32 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	}
 
 	/**
+	 * Funtion that will disable a specific TabHeaderItem by its Id
+	 *
+	 * @export
+	 * @param {string} tabsHeaderItemId
+	 * @return {*}  {string}
+	 */
+	export function DisableTabItem(tabsHeaderItemId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
+			tabsHeaderItem.disable();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.TabsHeaderItem.FailDisableTabHeader;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
 	 * Function that will dispose the instance of the given Tabs
 	 *
 	 * @export
@@ -117,6 +143,32 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
 			responseObj.code = ErrorCodes.TabsHeaderItem.FailDispose;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
+	 * Funtion that will enable a specific TabHeaderItem by its Id
+	 *
+	 * @export
+	 * @param {string} tabsHeaderItemId
+	 * @return {*}  {string}
+	 */
+	export function EnableTabItem(tabsHeaderItemId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
+			tabsHeaderItem.enable();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.TabsHeaderItem.FailEnableTabHeader;
 		}
 
 		return JSON.stringify(responseObj);

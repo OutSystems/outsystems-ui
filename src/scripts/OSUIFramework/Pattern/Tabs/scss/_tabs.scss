@@ -29,11 +29,6 @@
 
 					&:not(.osui-tabs--is-active)::after {
 						border-left: var(--border-size-m) solid var(--color-neutral-6);
-						opacity: 0;
-					}
-
-					&:hover:not(.osui-tabs--is-active)::after {
-						opacity: 1;
 					}
 
 					&.osui-tabs--is-active::after {
@@ -52,28 +47,21 @@
 			grid-auto-flow: row;
 			grid-template-columns: var(--header-item-width) 1fr;
 
-			.osui-tabs__header {
-				&-item {
-					justify-content: flex-start;
-					padding: var(--space-xs) var(--space-base) var(--space-xs) 0;
+			.osui-tabs__header-item {
+				justify-content: flex-start;
+				padding: var(--space-xs) var(--space-base) var(--space-xs) 0;
 
-					&::after {
-						right: calc(0px - var(--border-size-m));
-						top: 0;
-					}
+				&::after {
+					right: calc(0px - var(--border-size-m));
+					top: 0;
+				}
 
-					&:not(.osui-tabs--is-active)::after {
-						border-right: var(--border-size-m) solid var(--color-neutral-6);
-						opacity: 0;
-					}
+				&:not(.osui-tabs--is-active)::after {
+					border-right: var(--border-size-m) solid var(--color-neutral-6);
+				}
 
-					&:hover:not(.osui-tabs--is-active)::after {
-						opacity: 1;
-					}
-
-					&.osui-tabs--is-active::after {
-						border-right: var(--border-size-m) solid var(--color-primary);
-					}
+				&.osui-tabs--is-active::after {
+					border-right: var(--border-size-m) solid var(--color-primary);
 				}
 			}
 
@@ -135,11 +123,6 @@
 
 				&:not(.osui-tabs--is-active)::after {
 					border-bottom: var(--border-size-m) solid var(--color-neutral-6);
-					opacity: 0;
-				}
-
-				&:hover:not(.osui-tabs--is-active)::after {
-					opacity: 1;
 				}
 
 				&.osui-tabs--is-active::after {
@@ -173,10 +156,8 @@
 	}
 
 	&:not(.osui-tabs--has-drag) {
-		.osui-tabs__content {
-			&-item:not(.osui-tabs--is-active) {
-				display: none;
-			}
+		.osui-tabs__content-item:not(.osui-tabs--is-active) {
+			display: none;
 		}
 	}
 
@@ -202,10 +183,8 @@
 		}
 
 		&.osui-tabs--is-vertical {
-			.osui-tabs__content {
-				&-item:not(.osui-tabs--is-active) {
-					display: none;
-				}
+			.osui-tabs__content-item:not(.osui-tabs--is-active) {
+				display: none;
 			}
 		}
 	}
@@ -226,12 +205,31 @@
 			text-align: unset;
 			width: 100%;
 
-			&:hover:not(.osui-tabs--is-active) {
-				color: var(--color-neutral-10);
+			&:hover {
+				&:not(.osui-tabs--is-active) {
+					color: var(--color-neutral-10);
+					&::after {
+						opacity: 1;
+					}
+				}
+				&[disabled] {
+					color: var(--color-neutral-6);
+					&::after {
+						border-width: var(--border-size-none);
+					}
+				}
 			}
 
 			&.osui-tabs--is-active {
 				color: var(--color-primary);
+
+				&[disabled]::after {
+					border-width: var(--border-size-none);
+				}
+			}
+
+			&:not(.osui-tabs--is-active)::after {
+				opacity: 0;
 			}
 
 			&::after {
@@ -242,6 +240,11 @@
 				transition: opacity 150ms ease-in;
 				width: 100%;
 				z-index: 1;
+			}
+
+			&[disabled] {
+				color: var(--color-neutral-6);
+				cursor: auto;
 			}
 		}
 
@@ -300,22 +303,20 @@
 	.osui-tabs {
 		&.osui-tabs--is-vertical {
 			&.osui-tabs--is-right {
-				.osui-tabs__header {
-					&-item {
-						justify-content: flex-start;
-						padding: var(--space-xs) var(--space-base) var(--space-xs) 0;
+				.osui-tabs__header-item {
+					justify-content: flex-start;
+					padding: var(--space-xs) var(--space-base) var(--space-xs) 0;
 
-						&::after {
-							right: calc(0px - var(--border-size-m));
-						}
+					&::after {
+						right: calc(0px - var(--border-size-m));
+					}
 
-						&:not(.osui-tabs--is-active)::after {
-							border-right: var(--border-size-m) solid var(--color-neutral-6);
-						}
+					&:not(.osui-tabs--is-active)::after {
+						border-right: var(--border-size-m) solid var(--color-neutral-6);
+					}
 
-						&.osui-tabs--is-active::after {
-							border-right: var(--border-size-m) solid var(--color-primary);
-						}
+					&.osui-tabs--is-active::after {
+						border-right: var(--border-size-m) solid var(--color-primary);
 					}
 				}
 
@@ -363,10 +364,8 @@
 .has-accessible-features {
 	.osui-tabs {
 		&--is-vertical {
-			.osui-tabs__header-item {
-				&::after {
-					width: calc(100% + var(--border-size-m));
-				}
+			.osui-tabs__header-item::after {
+				width: calc(100% + var(--border-size-m));
 			}
 		}
 
