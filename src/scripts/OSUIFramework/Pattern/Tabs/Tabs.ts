@@ -29,7 +29,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _dragObserver: IntersectionObserver;
 		// Store the events with bind(this)
 		private _eventOnHeaderKeypress: Callbacks.Generic;
-		private _eventOnTouchstart: Callbacks.Generic;
+		private _eventOnScroll: Callbacks.Generic;
 		// Store if the Tabs has only one ContentItem, to prevent unnecessary usages of ScrollTo
 		private _hasSingleContent: boolean;
 		// Store the onTabsChange platform callback
@@ -271,7 +271,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._tabsHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
 
 			if (this._addDragGestures) {
-				this._tabsContentElement.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, this._eventOnTouchstart);
+				this._tabsContentElement.removeEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnScroll);
 			}
 		}
 
@@ -412,9 +412,9 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._currentVerticalPositon = position;
 		}
 
-		// Method to set a touchstart event on tabsContent
-		private _setTouchEvents(): void {
-			this._tabsContentElement.addEventListener(GlobalEnum.HTMLEvent.TouchStart, this._eventOnTouchstart);
+		// Method to set a scroll event on tabsContent, to simulate drag
+		private _setScrollEvent(): void {
+			this._tabsContentElement.addEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnScroll);
 		}
 
 		// Method to change between tabs
@@ -544,7 +544,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._addEvents();
 
 			this._eventOnHeaderKeypress = this._handleKeypressEvent.bind(this);
-			this._eventOnTouchstart = this._enableDragObserver.bind(this);
+			this._eventOnScroll = this._enableDragObserver.bind(this);
 		}
 
 		/**
@@ -570,7 +570,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._eventOnHeaderKeypress = undefined;
 
 			if (this._addDragGestures) {
-				this._eventOnTouchstart = undefined;
+				this._eventOnScroll = undefined;
 				this._unsetDragObserver();
 			}
 		}
@@ -733,6 +733,7 @@ namespace OSUIFramework.Patterns.Tabs {
 				}
 
 				if (this._addDragGestures) {
+					this._activeTabHeaderElement.setFocus();
 					// Scroll to new content item and set it as active
 					this._scrollToTargetContent(newContentItem);
 				}
@@ -799,8 +800,8 @@ namespace OSUIFramework.Patterns.Tabs {
 				// Add class to prvent enable overflow-x
 				Helper.Dom.Styles.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.HasDragGestures);
 				this._addDragGestures = true;
-				// Set touchStart event to enable observer when starting dragging
-				this._setTouchEvents();
+				// Set scroll event to enable observer when starting dragging
+				this._setScrollEvent();
 				// Set observer on each contentItem to detect current content being intersected
 				this._setDragObserver();
 				// Update content position, due to change to display grid
@@ -810,8 +811,8 @@ namespace OSUIFramework.Patterns.Tabs {
 				// Remove class to prevent overflow-x
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.HasDragGestures);
 				this._addDragGestures = false;
-				// remove touch event
-				this._tabsContentElement.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, this._eventOnTouchstart);
+				// remove scroll event
+				this._tabsContentElement.removeEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnScroll);
 				// Disconnect observer
 				this._unsetDragObserver();
 			}
