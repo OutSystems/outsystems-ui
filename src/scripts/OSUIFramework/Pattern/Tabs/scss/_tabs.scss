@@ -12,9 +12,7 @@
 	position: relative;
 
 	&_indicator {
-		height: 2px;
 		background: var(--color-primary);
-		width: var(--indicator-size);
 		transition: transform 150ms ease;
 		will-change: transform;
 	}
@@ -73,6 +71,11 @@
 			}
 		}
 
+		.osui-tabs_indicator {
+			height: var(--indicator-size);
+			width: 2px;
+		}
+
 		.osui-tabs__content {
 			overflow-y: auto;
 			width: auto;
@@ -99,6 +102,11 @@
 				justify-content: center;
 				padding: var(--space-base) var(--space-xs);
 			}
+		}
+
+		.osui-tabs_indicator {
+			height: 2px;
+			width: var(--indicator-size);
 		}
 
 		.osui-tabs__content {
