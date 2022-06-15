@@ -203,11 +203,18 @@ namespace OSUIFramework.Patterns.Tabs {
 			const isVertical = this.configs.TabsOrientation === GlobalEnum.Orientation.Vertical;
 			// Apply transform
 			requestAnimationFrame(() => {
-				this._tabsIndicatorElement.style.transform = `translate${isVertical ? 'Y' : 'X'}(${
-					isVertical
+				// this._tabsIndicatorElement.style.transform = `translate${isVertical ? 'Y' : 'X'}(${
+				// 	isVertical
+				// 		? this._activeTabHeaderElement.selfElement.offsetTop
+				// 		: this._activeTabHeaderElement.selfElement.offsetLeft
+				// }px)`;
+				Helper.Dom.Styles.SetStyleAttribute(
+					this._tabsIndicatorElement,
+					Enum.CssProperty.TabsIndicatorTransform,
+					(isVertical
 						? this._activeTabHeaderElement.selfElement.offsetTop
-						: this._activeTabHeaderElement.selfElement.offsetLeft
-				}px)`;
+						: this._activeTabHeaderElement.selfElement.offsetLeft) + GlobalEnum.Units.Pixel
+				);
 			});
 
 			// Update size css variable
