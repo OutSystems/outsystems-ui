@@ -9,6 +9,7 @@
 	--header-item-alignment: auto;
 	display: grid;
 	height: var(--tabs-height);
+	overflow: hidden;
 	position: relative;
 
 	&_indicator {
