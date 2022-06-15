@@ -34,9 +34,6 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 	export enum Attributes {
 		DataTab = 'data-tab',
 		DataDirection = 'data-direction',
-		Next = 'next',
-		Previous = 'previous',
-		None = 'none',
 	}
 
 	/**
@@ -45,6 +42,7 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 	export enum CssProperty {
 		TabsHeight = '--tabs-height',
 		TabsHeaderItems = '--tabs-header-items',
+		TabsIndicatorSize = '--indicator-size',
 	}
 
 	/**

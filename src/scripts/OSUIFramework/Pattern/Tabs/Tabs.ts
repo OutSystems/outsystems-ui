@@ -194,6 +194,16 @@ namespace OSUIFramework.Patterns.Tabs {
 			}
 		}
 
+		private _handleTabIndicator(): void {
+			const tabindicator = this._selfElem.querySelector('.osui-tabs_indicator') as HTMLElement;
+			tabindicator.style.transform = `translateX(${this._activeTabHeaderElement.selfElement.offsetLeft}px)`;
+			Helper.Dom.Styles.SetStyleAttribute(
+				tabindicator,
+				Enum.CssProperty.TabsIndicatorSize,
+				this._activeTabHeaderElement.selfElement.offsetWidth + GlobalEnum.Units.Pixel
+			);
+		}
+
 		// Method to make neccessary preparations for header and content items, that can't be done on their scope
 		private _prepareHeaderAndContentItems(): void {
 			// Set if the Tabs has only one Content
@@ -427,55 +437,7 @@ namespace OSUIFramework.Patterns.Tabs {
 				);
 			}
 
-			Helper.AsyncInvocation(this._disableDragObserver.bind(this));
-
-			if (this._activeTabHeaderElement === newHeaderItem) {
-				return;
-			}
-
-			const newTabIndex = this.getChildIndex(childHeaderId);
-
-			// Reset direction atribute
-			Helper.Dom.Attribute.Set(this._selfElem, Enum.Attributes.DataDirection, Enum.Attributes.None);
-
-			// If there're more than one content item or changeTab doesn't come from a drag gesture,
-			// then do scrollTo and change active content item
-			if (this._hasSingleContent === false || this._disableObserver) {
-				// Get the contentItem, based on the newTabIndex
-				const newContentItem = this.getChildByIndex(
-					newTabIndex,
-					Enum.ChildTypes.TabsContentItem
-				) as TabsContentItem.ITabsContentItem;
-
-				if (newContentItem) {
-					// Remove old contentitem as active
-					this._activeTabContentElement?.unsetIsActive();
-					// Set new content item as active
-					newContentItem.setIsActive();
-					this._activeTabContentElement = newContentItem;
-				}
-
-				if (this._addDragGestures) {
-					// Scroll to new content item and set it as active
-					this._scrollToTargetContent(newContentItem);
-				}
-			}
-
-			// Remove old headerItem as active
-			if (this._activeTabHeaderElement) {
-				this._activeTabHeaderElement?.unsetIsActive();
-			}
-			if (newHeaderItem) {
-				// Set new headerItem as active
-				newHeaderItem.setIsActive();
-				this._activeTabHeaderElement = newHeaderItem;
-			}
-
-			// Update configs
-			this.configs.StartingTab = newTabIndex;
-
-			// Trigger onTabChange event
-			this._triggerOnChangeEvent(newTabIndex);
+			this.changeTab(this.getChildIndex(childHeaderId), newHeaderItem, true);
 		}
 
 		// Method that triggers the OnTabsChange event
@@ -715,6 +677,18 @@ namespace OSUIFramework.Patterns.Tabs {
 				newHeaderItem = tabsHeaderItem;
 			}
 
+			// Remove old headerItem as active
+			if (this._activeTabHeaderElement) {
+				this._activeTabHeaderElement?.unsetIsActive();
+			}
+			if (newHeaderItem) {
+				// Set new headerItem as active
+				newHeaderItem.setIsActive();
+				this._activeTabHeaderElement = newHeaderItem;
+			}
+
+			this._handleTabIndicator();
+
 			// If there're more than one content item or changeTab doesn't come from a drag gesture,
 			// then do scrollTo and change active content item
 			if (this._hasSingleContent === false || this._disableObserver) {
@@ -739,25 +713,10 @@ namespace OSUIFramework.Patterns.Tabs {
 				}
 			}
 
-			// Remove old headerItem as active
-			if (this._activeTabHeaderElement) {
-				this._activeTabHeaderElement?.unsetIsActive();
-			}
-			if (newHeaderItem) {
-				// Set new headerItem as active
-				newHeaderItem.setIsActive();
-				this._activeTabHeaderElement = newHeaderItem;
-			}
-
-			// Update direction attribute
-			if (this.configs.StartingTab < newTabIndex) {
-				Helper.Dom.Attribute.Set(this._selfElem, Enum.Attributes.DataDirection, Enum.Attributes.Next);
-			} else if (this.configs.StartingTab > newTabIndex) {
-				Helper.Dom.Attribute.Set(this._selfElem, Enum.Attributes.DataDirection, Enum.Attributes.Previous);
-			}
-
 			// Update configs
 			this.configs.StartingTab = newTabIndex;
+
+			this._triggerOnChangeEvent(newTabIndex);
 		}
 
 		/**

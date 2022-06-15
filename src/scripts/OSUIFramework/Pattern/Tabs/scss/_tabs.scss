@@ -9,35 +9,26 @@
 	--header-item-alignment: auto;
 	display: grid;
 	height: var(--tabs-height);
+	position: relative;
+
+	&_indicator {
+		height: 2px;
+		background: var(--color-primary);
+		width: var(--indicator-size);
+		transition: transform 150ms ease;
+		will-change: transform;
+	}
 
 	&--is-vertical {
 		&.osui-tabs--is-right {
 			grid-auto-flow: dense;
-			grid-template-columns: 1fr var(--header-item-width);
+			grid-template-columns: 1fr auto var(--header-item-width);
 
 			.osui-tabs__header {
 				grid-column: 2;
 
 				&-item {
 					padding: var(--space-xs) 0 var(--space-xs) var(--space-base);
-
-					&::after {
-						left: 0;
-						top: 0;
-					}
-
-					&:not(.osui-tabs--is-active)::after {
-						border-left: var(--border-size-m) solid var(--color-neutral-6);
-						opacity: 0;
-					}
-
-					&:hover:not(.osui-tabs--is-active)::after {
-						opacity: 1;
-					}
-
-					&.osui-tabs--is-active::after {
-						border-left: var(--border-size-m) solid var(--color-primary);
-					}
 				}
 			}
 
@@ -49,30 +40,12 @@
 
 		&.osui-tabs--is-left {
 			grid-auto-flow: row;
-			grid-template-columns: var(--header-item-width) 1fr;
+			grid-template-columns: var(--header-item-width) auto 1fr;
 
 			.osui-tabs__header {
 				&-item {
 					justify-content: flex-start;
 					padding: var(--space-xs) var(--space-base) var(--space-xs) 0;
-
-					&::after {
-						right: calc(0px - var(--border-size-m));
-						top: 0;
-					}
-
-					&:not(.osui-tabs--is-active)::after {
-						border-right: var(--border-size-m) solid var(--color-neutral-6);
-						opacity: 0;
-					}
-
-					&:hover:not(.osui-tabs--is-active)::after {
-						opacity: 1;
-					}
-
-					&.osui-tabs--is-active::after {
-						border-right: var(--border-size-m) solid var(--color-primary);
-					}
 				}
 			}
 
@@ -97,15 +70,6 @@
 			&-item {
 				border-right: var(--border-size-m) solid transparent;
 				flex: none;
-
-				&::after {
-					transform: scaleY(0);
-				}
-
-				&.osui-tabs--is-active::after {
-					height: 100%;
-					transform: scaleY(1);
-				}
 			}
 		}
 
@@ -121,19 +85,7 @@
 
 	&--is-horizontal {
 		grid-auto-flow: column;
-		grid-template-rows: auto 1fr;
-
-		&[data-direction='next'] {
-			.osui-tabs__header-item::after {
-				transform-origin: left;
-			}
-		}
-
-		&[data-direction='previous'] {
-			.osui-tabs__header-item::after {
-				transform-origin: right;
-			}
-		}
+		grid-template-rows: auto auto 1fr;
 
 		.osui-tabs__header {
 			grid-template-columns: repeat(var(--tabs-header-items), var(--header-item-alignment));
@@ -146,26 +98,6 @@
 				border-bottom: var(--border-size-m) solid transparent;
 				justify-content: center;
 				padding: var(--space-base) var(--space-xs);
-
-				&::after {
-					bottom: calc(0px - var(--border-size-m));
-					left: 0;
-					transform: scaleX(0);
-				}
-
-				&:not(.osui-tabs--is-active)::after {
-					border-bottom: var(--border-size-m) solid var(--color-neutral-6);
-					opacity: 0;
-				}
-
-				&:hover:not(.osui-tabs--is-active)::after {
-					opacity: 1;
-				}
-
-				&.osui-tabs--is-active::after {
-					border-bottom: var(--border-size-m) solid var(--color-primary);
-					transform: scaleX(1);
-				}
 			}
 		}
 
@@ -253,17 +185,6 @@
 			&.osui-tabs--is-active {
 				color: var(--color-primary);
 			}
-
-			&::after {
-				content: '';
-				height: 100%;
-				pointer-events: none;
-				position: absolute;
-				transform-origin: center;
-				transition: transform 150ms linear;
-				width: 100%;
-				z-index: 1;
-			}
 		}
 
 		// Service Studio preview
@@ -327,18 +248,6 @@
 					&-item {
 						justify-content: flex-start;
 						padding: var(--space-xs) var(--space-base) var(--space-xs) 0;
-
-						&::after {
-							right: calc(0px - var(--border-size-m));
-						}
-
-						&:not(.osui-tabs--is-active)::after {
-							border-right: var(--border-size-m) solid var(--color-neutral-6);
-						}
-
-						&.osui-tabs--is-active::after {
-							border-right: var(--border-size-m) solid var(--color-primary);
-						}
 					}
 				}
 
@@ -355,20 +264,6 @@
 
 					&-item {
 						padding: var(--space-xs) 0 var(--space-xs) var(--space-base);
-
-						&::after {
-							left: 0;
-							right: unset;
-							top: 0;
-						}
-
-						&:not(.osui-tabs--is-active)::after {
-							border-left: var(--border-size-m) solid var(--color-neutral-6);
-						}
-
-						&.osui-tabs--is-active::after {
-							border-left: var(--border-size-m) solid var(--color-primary);
-						}
 					}
 				}
 
@@ -385,25 +280,9 @@
 ///
 .has-accessible-features {
 	.osui-tabs {
-		&--is-vertical {
-			.osui-tabs__header-item {
-				&::after {
-					width: calc(100% + var(--border-size-m));
-				}
-			}
-		}
-
 		&__header-item {
 			&:focus {
 				box-shadow: none;
-			}
-
-			&::after {
-				box-sizing: border-box;
-			}
-
-			&.osui-tabs--is-active:focus-visible::after {
-				border: var(--border-size-m) solid var(--color-focus-outer);
 			}
 		}
 	}
