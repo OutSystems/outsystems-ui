@@ -199,7 +199,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			}
 		}
 
-		private _handleTabIndicator(): void {
+		private _handleTabIndicator(updateSize?: boolean): void {
 			const isVertical = this.configs.TabsOrientation === GlobalEnum.Orientation.Vertical;
 			// Apply transform
 			requestAnimationFrame(() => {
@@ -212,14 +212,16 @@ namespace OSUIFramework.Patterns.Tabs {
 				);
 			});
 
-			// Update size css variable
-			Helper.Dom.Styles.SetStyleAttribute(
-				this._tabsIndicatorElement,
-				Enum.CssProperty.TabsIndicatorSize,
-				(isVertical
-					? this._activeTabHeaderElement.selfElement.offsetHeight
-					: this._activeTabHeaderElement.selfElement.offsetWidth) + GlobalEnum.Units.Pixel
-			);
+			if (this.configs.JustifyHeaders === false || updateSize) {
+				// Update size css variable
+				Helper.Dom.Styles.SetStyleAttribute(
+					this._tabsIndicatorElement,
+					Enum.CssProperty.TabsIndicatorSize,
+					(isVertical
+						? this._activeTabHeaderElement.selfElement.offsetHeight
+						: this._activeTabHeaderElement.selfElement.offsetWidth) + GlobalEnum.Units.Pixel
+				);
+			}
 		}
 
 		// Method to make neccessary preparations for header and content items, that can't be done on their scope
@@ -420,8 +422,23 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _setIsJustified(isJustified: boolean): void {
 			if (isJustified) {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClasses.IsJustified);
+				// Set tabs-indicator size this one time, as it won't need to adjust dynamically,
+				// as each item will have the same size
+				const isVertical = this.configs.TabsOrientation === GlobalEnum.Orientation.Vertical;
+				// Update size css variable
+				Helper.Dom.Styles.SetStyleAttribute(
+					this._tabsIndicatorElement,
+					Enum.CssProperty.TabsIndicatorSize,
+					(isVertical
+						? this._activeTabHeaderElement.selfElement.offsetHeight
+						: this._activeTabHeaderElement.selfElement.offsetWidth) + GlobalEnum.Units.Pixel
+				);
 			} else {
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClasses.IsJustified);
+				if (this.isBuilt) {
+					// Update indicator size
+					this._handleTabIndicator();
+				}
 			}
 		}
 
@@ -430,6 +447,11 @@ namespace OSUIFramework.Patterns.Tabs {
 			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._currentOrientation);
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClasses.Modifier + orientation);
 			this._currentOrientation = orientation;
+
+			if (this.isBuilt) {
+				// Update indicator size
+				this._handleTabIndicator(true);
+			}
 		}
 
 		// Method to set the Tabs Position
