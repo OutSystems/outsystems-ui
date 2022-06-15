@@ -38,6 +38,8 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _tabsContentElement: HTMLElement;
 		// Store the headerItems wrapper -- osui-tabs__header
 		private _tabsHeaderElement: HTMLElement;
+		// Store the tabs-indicator element -- osui-tabs_indicator
+		private _tabsIndicatorElement: HTMLElement;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new TabsConfig(configs));
@@ -138,11 +140,14 @@ namespace OSUIFramework.Patterns.Tabs {
 		// Method to block the observer
 		private _disableDragObserver(): void {
 			this._disableObserver = true;
+			this._tabsContentElement.addEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnScroll);
 		}
 
 		// Method to enable the observer
 		private _enableDragObserver(): void {
 			this._disableObserver = false;
+
+			this._tabsContentElement.removeEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnScroll);
 		}
 
 		// Method to determine the next target index on changeTab method
@@ -195,10 +200,14 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		private _handleTabIndicator(): void {
-			const tabindicator = this._selfElem.querySelector('.osui-tabs_indicator') as HTMLElement;
-			tabindicator.style.transform = `translateX(${this._activeTabHeaderElement.selfElement.offsetLeft}px)`;
+			// Apply transform
+			requestAnimationFrame(() => {
+				this._tabsIndicatorElement.style.transform = `translateX(${this._activeTabHeaderElement.selfElement.offsetLeft}px)`;
+			});
+
+			// Update size css variable
 			Helper.Dom.Styles.SetStyleAttribute(
-				tabindicator,
+				this._tabsIndicatorElement,
 				Enum.CssProperty.TabsIndicatorSize,
 				this._activeTabHeaderElement.selfElement.offsetWidth + GlobalEnum.Units.Pixel
 			);
@@ -518,6 +527,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		protected setHtmlElements(): void {
 			this._tabsHeaderElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClasses.TabsHeader);
 			this._tabsContentElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClasses.TabsContent);
+			this._tabsIndicatorElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClasses.TabsIndicatorElem);
 		}
 
 		/**
@@ -546,6 +556,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		protected unsetHtmlElements(): void {
 			this._tabsHeaderElement = undefined;
 			this._tabsContentElement = undefined;
+			this._tabsIndicatorElement = undefined;
 		}
 
 		/**

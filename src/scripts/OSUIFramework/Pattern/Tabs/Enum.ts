@@ -26,6 +26,7 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 		TabsContent = 'osui-tabs__content',
 		TabsHeaderItem = 'osui-tabs__header-item',
 		TabsContentItem = 'osui-tabs__content-item',
+		TabsIndicatorElem = 'osui-tabs_indicator',
 	}
 
 	/**
