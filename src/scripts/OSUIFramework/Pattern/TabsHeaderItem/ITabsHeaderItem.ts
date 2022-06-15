@@ -5,6 +5,8 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 	 */
 	export interface ITabsHeaderItem extends Interface.IChild {
 		get IsActive(): boolean;
+		disable();
+		enable();
 		getDataTab();
 		setAriaControlsAttribute(contentItemId: string);
 		setDataTab(dataTab: number);

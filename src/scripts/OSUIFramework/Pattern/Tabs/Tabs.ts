@@ -467,6 +467,36 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._tabsContentElement.addEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnScroll);
 		}
 
+		// Toggle TableHeaderItem disbaled status
+		private _setTabHeaderItemDisabledStatus(childHeaderId: string, isDisabled: boolean): void {
+			const TabHeaderItemElement = Helper.Dom.GetElementByUniqueId(childHeaderId);
+			const TabItemIndex = this.getChildIndex(childHeaderId);
+			const TabContentItemId = this.getChildByIndex(TabItemIndex, Enum.ChildTypes.TabsContentItem).widgetId;
+			const TabContentItemElement = Helper.Dom.GetElementById(TabContentItemId);
+
+			const isTabHeaderItemDisabled = Helper.Dom.Attribute.Get(
+				TabHeaderItemElement,
+				GlobalEnum.HTMLAttributes.Disabled
+			);
+
+			if (isDisabled) {
+				Helper.Dom.Attribute.Set(TabHeaderItemElement, GlobalEnum.HTMLAttributes.Disabled, 'true');
+				// Let's hide TabContentItem, to prevent it appears when the tabs are swippable
+				Helper.Dom.Styles.SetStyleAttribute(
+					TabContentItemElement,
+					GlobalEnum.InlineStyle.Display,
+					GlobalEnum.InlineStyleValue.Display.none
+				);
+			} else if (!isDisabled && isTabHeaderItemDisabled) {
+				Helper.Dom.Attribute.Remove(TabHeaderItemElement, GlobalEnum.HTMLAttributes.Disabled);
+				Helper.Dom.Styles.SetStyleAttribute(
+					TabContentItemElement,
+					GlobalEnum.InlineStyle.Display,
+					GlobalEnum.InlineStyleValue.Display.block
+				);
+			}
+		}
+
 		// Method to change between tabs
 		private _tabHeaderItemHasBeenClicked(childHeaderId: string): void {
 			const newHeaderItem = this.getChild(childHeaderId) as TabsHeaderItem.ITabsHeaderItem;
@@ -607,6 +637,12 @@ namespace OSUIFramework.Patterns.Tabs {
 					break;
 				case Enum.ChildNotifyActionType.Click:
 					this._tabHeaderItemHasBeenClicked(childId);
+					break;
+				case Enum.ChildNotifyActionType.DisabledHeaderItem:
+					this._setTabHeaderItemDisabledStatus(childId, true);
+					break;
+				case Enum.ChildNotifyActionType.EnabledHeaderItem:
+					this._setTabHeaderItemDisabledStatus(childId, false);
 					break;
 				case Enum.ChildNotifyActionType.RemovedContentItem:
 					this._removeContentItem(childId);

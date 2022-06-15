@@ -193,12 +193,23 @@
 			text-align: unset;
 			width: 100%;
 
-			&:hover:not(.osui-tabs--is-active) {
-				color: var(--color-neutral-10);
+			&:hover {
+				&:not(.osui-tabs--is-active) {
+					color: var(--color-neutral-10);
+				}
+
+				&[disabled] {
+					color: var(--color-neutral-6);
+				}
 			}
 
 			&.osui-tabs--is-active {
 				color: var(--color-primary);
+			}
+
+			&[disabled] {
+				color: var(--color-neutral-6);
+				cursor: auto;
 			}
 		}
 
