@@ -310,6 +310,11 @@
 			&:focus {
 				box-shadow: none;
 			}
+
+			&:focus-visible {
+				background-color: var(--color-focus-outer);
+				color: var(--color-neutral-10);
+			}
 		}
 	}
 }

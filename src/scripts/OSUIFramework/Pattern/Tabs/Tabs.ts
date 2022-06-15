@@ -573,10 +573,9 @@ namespace OSUIFramework.Patterns.Tabs {
 		 * @memberof Tabs
 		 */
 		protected setCallbacks(): void {
-			this._addEvents();
-
 			this._eventOnHeaderKeypress = this._handleKeypressEvent.bind(this);
 			this._eventOnScroll = this._enableDragObserver.bind(this);
+			this._addEvents();
 		}
 
 		/**
