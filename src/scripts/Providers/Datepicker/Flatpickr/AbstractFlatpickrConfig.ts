@@ -16,9 +16,6 @@ namespace Providers.Datepicker.Flatpickr {
 		// Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr
 		public ServerDateFormat: string;
 
-		// Stores the ability to allow inputs to be editable or not
-		public allowInput = false;
-
 		// Store calendar mode is in use
 		public calendarMode: OSUIFramework.Patterns.DatePicker.Enum.Mode;
 
@@ -113,7 +110,6 @@ namespace Providers.Datepicker.Flatpickr {
 			const _flatpickrOpts = {
 				altFormat: this._checkAltFormat(),
 				altInput: true,
-				allowInput: this.allowInput,
 				dateFormat:
 					this.TimeFormat !== OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable
 						? this.ServerDateFormat + ' H:i'

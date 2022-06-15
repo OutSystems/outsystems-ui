@@ -101,15 +101,6 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 		}
 
 		/**
-		 * Method to disable TabHeaderItem
-		 *
-		 * @memberof TabsHeaderItem
-		 */
-		public disable(): void {
-			this.notifyParent(Tabs.Enum.ChildNotifyActionType.DisabledHeaderItem);
-		}
-
-		/**
 		 * Method to remove event listener and destroy TabsHeaderItem instance
 		 *
 		 * @memberof TabsHeaderItem
@@ -121,15 +112,6 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 			this.unsetCallbacks();
 
 			super.dispose();
-		}
-
-		/**
-		 * Method to enable TabHeaderItem
-		 *
-		 * @memberof TabsHeaderItem
-		 */
-		public enable(): void {
-			this.notifyParent(Tabs.Enum.ChildNotifyActionType.EnabledHeaderItem);
 		}
 
 		/**

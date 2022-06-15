@@ -154,19 +154,3 @@
 		padding-bottom: calc(var(--bottom-bar-size) + var(--space-m) + var(--os-safe-area-bottom));
 	}
 }
-
-///
-.layout:not(.layout-native) {
-	.osui-bottom-sheet {
-		--bottom-sheet-max-height: 85vh;
-	}
-}
-
-///
-.landscape {
-	.osui-bottom-sheet__header__top-bar,
-	.osui-bottom-sheet__content {
-		padding-right: calc(var(--space-base) + var(--os-safe-area-right));
-		padding-left: calc(var(--space-base) + var(--os-safe-area-left));
-	}
-}

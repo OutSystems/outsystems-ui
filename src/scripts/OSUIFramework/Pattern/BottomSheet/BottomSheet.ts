@@ -276,7 +276,7 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			this._bottomSheetContentElem.addEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnContentScroll);
 			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
 
-			if (!Helper.DeviceInfo.IsDesktop && this.gestureEventInstance !== undefined) {
+			if (!Helper.DeviceInfo.IsDesktop) {
 				// Set event listeners and callbacks
 				this.setGestureEvents(
 					this._onGestureStart.bind(this),
