@@ -203,11 +203,6 @@ namespace OSUIFramework.Patterns.Tabs {
 			const isVertical = this.configs.TabsOrientation === GlobalEnum.Orientation.Vertical;
 			// Apply transform
 			requestAnimationFrame(() => {
-				// this._tabsIndicatorElement.style.transform = `translate${isVertical ? 'Y' : 'X'}(${
-				// 	isVertical
-				// 		? this._activeTabHeaderElement.selfElement.offsetTop
-				// 		: this._activeTabHeaderElement.selfElement.offsetLeft
-				// }px)`;
 				Helper.Dom.Styles.SetStyleAttribute(
 					this._tabsIndicatorElement,
 					Enum.CssProperty.TabsIndicatorTransform,
