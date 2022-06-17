@@ -141,6 +141,11 @@ namespace OSUIFramework.Patterns.Tabs {
 				}
 
 				this._setHeaderItemsCustomProperty();
+
+				// Update indicator size
+				if (this.configs.JustifyHeaders) {
+					this._handleTabIndicator();
+				}
 			} else {
 				// Otherwise are items created before the tabs is built
 				// Set the correct data-tab, by using the items array, that correspond to the DOM order
