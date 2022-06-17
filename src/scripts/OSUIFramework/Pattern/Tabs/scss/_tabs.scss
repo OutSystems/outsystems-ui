@@ -10,30 +10,22 @@
 	display: grid;
 	height: var(--tabs-height);
 	overflow: hidden;
-	position: relative;
-
-	&__indicator {
-		background: var(--color-primary);
-		transition: transform 200ms ease;
-		transform-origin: 0 0;
-		will-change: transform;
-	}
 
 	&--is-vertical {
 		&.osui-tabs--is-right {
 			grid-auto-flow: dense;
-			grid-template-columns: 1fr auto var(--header-item-width);
+			grid-template-columns: 1fr var(--header-item-width);
 
-			.osui-tabs__header {
-				grid-column: 3;
+			& > .osui-tabs__header {
+				grid-column: 2;
 
-				&-item {
+				.osui-tabs__header-item {
 					padding: var(--space-xs) 0 var(--space-xs) var(--space-base);
 				}
-			}
 
-			.osui-tabs__indicator {
-				grid-column: 2;
+				& > .osui-tabs__header__indicator {
+					left: 0;
+				}
 			}
 
 			.osui-tabs__content {
@@ -44,12 +36,16 @@
 
 		&.osui-tabs--is-left {
 			grid-auto-flow: row;
-			grid-template-columns: var(--header-item-width) auto 1fr;
+			grid-template-columns: var(--header-item-width) 1fr;
 
-			.osui-tabs__header {
-				&-item {
+			& > .osui-tabs__header {
+				.osui-tabs__header-item {
 					justify-content: flex-start;
 					padding: var(--space-xs) var(--space-base) var(--space-xs) 0;
+				}
+
+				& > .osui-tabs__header__indicator {
+					right: 0;
 				}
 			}
 
@@ -65,22 +61,25 @@
 			}
 		}
 
-		.osui-tabs__header {
+		& > .osui-tabs__header {
 			align-content: start;
 			grid-template-rows: repeat(var(--tabs-header-items), var(--header-item-alignment));
 			overflow-y: auto;
 			overflow-x: hidden;
 
-			&-item {
+			.osui-tabs__header-item {
 				border-right: var(--border-size-m) solid transparent;
 				flex: none;
 			}
-		}
 
-		.osui-tabs__indicator {
-			transform: translateY(var(--tabs-indicator-transform)) translateX(0) translateZ(0)
-				scaleY(var(--tabs-indicator-scale));
-			width: 2px;
+			& > .osui-tabs__header__indicator {
+				min-height: 1px;
+				transform: translateY(var(--tabs-indicator-transform)) translateX(0) translateZ(0)
+					scaleY(var(--tabs-indicator-scale));
+				width: 2px;
+				position: absolute;
+				top: 0;
+			}
 		}
 
 		.osui-tabs__content {
@@ -95,23 +94,23 @@
 
 	&--is-horizontal {
 		grid-auto-flow: column;
-		grid-template-rows: auto auto 1fr;
+		grid-template-rows: auto 1fr;
 
-		.osui-tabs__header {
+		& > .osui-tabs__header {
 			grid-template-columns: repeat(var(--tabs-header-items), var(--header-item-alignment));
 			justify-content: start;
 			overflow-y: hidden;
 			overflow-x: auto;
 			word-break: keep-all;
 
-			&-item {
+			.osui-tabs__header-item {
 				border-bottom: var(--border-size-m) solid transparent;
 				justify-content: center;
 				padding: var(--space-base) var(--space-xs);
 			}
 		}
 
-		.osui-tabs__indicator {
+		.osui-tabs__header__indicator {
 			height: 2px;
 			transform: translateX(var(--tabs-indicator-transform)) translateY(0) translateZ(0)
 				scaleX(var(--tabs-indicator-scale));
@@ -184,6 +183,7 @@
 
 	&__header {
 		display: grid;
+		position: relative;
 
 		&-item {
 			align-items: center;
@@ -216,6 +216,13 @@
 				color: var(--color-neutral-6);
 				cursor: auto;
 			}
+		}
+
+		&__indicator {
+			background: var(--color-primary);
+			transition: transform 200ms ease;
+			transform-origin: 0 0;
+			will-change: transform;
 		}
 
 		// Service Studio preview
@@ -331,7 +338,7 @@
 
 // Service Studio Preview
 .osui-tabs {
-	&__indicator {
+	&__header__indicator {
 		-servicestudio-display: none;
 	}
 

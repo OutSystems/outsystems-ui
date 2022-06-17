@@ -211,7 +211,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		// Method that handles the indicator size and transition
-		private _handleTabIndicator(updateSize?: boolean): void {
+		private _handleTabIndicator(): void {
 			if (this._activeTabHeaderElement) {
 				const isVertical = this.configs.TabsOrientation === GlobalEnum.Orientation.Vertical;
 
@@ -228,13 +228,8 @@ namespace OSUIFramework.Patterns.Tabs {
 				// translate pixel sized value to a scale value
 				const newScaleValue = newWidth / currentWidth;
 
-				// If the scale value is valid and both sizes are equal, no need to update
-				if (!isNaN(newScaleValue) && currentWidth === newWidth) {
-					return;
-				}
-
 				// Update the css variables, that will trigger a transform transition
-				function updateUI(): void {
+				requestAnimationFrame(() => {
 					// Apply transform: translate
 					Helper.Dom.Styles.SetStyleAttribute(
 						this._tabsIndicatorElement,
@@ -245,17 +240,12 @@ namespace OSUIFramework.Patterns.Tabs {
 					);
 
 					// Apply transform scale
-					if (this.configs.JustifyHeaders === false || updateSize) {
-						Helper.Dom.Styles.SetStyleAttribute(
-							this._tabsIndicatorElement,
-							Enum.CssProperty.TabsIndicatorScale,
-							newScaleValue
-						);
-					}
-				}
-
-				// Call UpdateUI on next available frame
-				requestAnimationFrame(updateUI.bind(this));
+					Helper.Dom.Styles.SetStyleAttribute(
+						this._tabsIndicatorElement,
+						Enum.CssProperty.TabsIndicatorScale,
+						newScaleValue
+					);
+				});
 
 				// If at this moment the active item has no size (NaN), set an observer to run this method when its size is changed
 				// This happens, as an example, when there're tabs inside tabs, and inner one has no size when it's built, due to being on a non-active tab
@@ -263,7 +253,7 @@ namespace OSUIFramework.Patterns.Tabs {
 					const resizeObserver = new ResizeObserver((entries) => {
 						for (const entry of entries) {
 							if (entry.contentBoxSize) {
-								this._handleTabIndicator(true);
+								this._handleTabIndicator();
 								// We just need this once, so lets remove the observer
 								resizeObserver.unobserve(this._activeTabHeaderElement.selfElement);
 							}
@@ -403,7 +393,7 @@ namespace OSUIFramework.Patterns.Tabs {
 					}
 
 					// Update scale size variable
-					this._handleTabIndicator(true);
+					this._handleTabIndicator();
 				}
 			}
 		}
@@ -496,7 +486,7 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			if (this.isBuilt) {
 				// Update scale size variable
-				this._handleTabIndicator(true);
+				this._handleTabIndicator();
 			}
 		}
 
@@ -508,7 +498,7 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			if (this.isBuilt) {
 				// Update scale size variable
-				this._handleTabIndicator(true);
+				this._handleTabIndicator();
 			}
 		}
 
@@ -824,9 +814,6 @@ namespace OSUIFramework.Patterns.Tabs {
 				this._activeTabHeaderElement = newHeaderItem;
 			}
 
-			// Update active indicator
-			this._handleTabIndicator();
-
 			// If there're more than one content item or changeTab doesn't come from a drag gesture,
 			// then do scrollTo and change active content item
 			if (this._hasSingleContent === false || this._disableObserver) {
@@ -849,6 +836,9 @@ namespace OSUIFramework.Patterns.Tabs {
 					// Scroll to new content item and set it as active
 					this._scrollToTargetContent(newContentItem);
 				}
+
+				// Update active indicator
+				this._handleTabIndicator();
 			}
 
 			// Update configs
