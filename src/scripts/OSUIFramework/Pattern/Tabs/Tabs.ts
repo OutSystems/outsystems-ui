@@ -203,19 +203,27 @@ namespace OSUIFramework.Patterns.Tabs {
 			if (this._activeTabHeaderElement) {
 				const isVertical = this.configs.TabsOrientation === GlobalEnum.Orientation.Vertical;
 
-				const currenWidth = isVertical
+				// Check current indicator size
+				const currentWidth = isVertical
 					? this._tabsIndicatorElement.offsetHeight
 					: this._tabsIndicatorElement.offsetWidth;
 
+				// Check current active item size
 				const newWidth = isVertical
 					? this._activeTabHeaderElement.selfElement.offsetHeight
 					: this._activeTabHeaderElement.selfElement.offsetWidth;
 
-				const newScaleValue = newWidth / currenWidth;
+				// translate pixel sized value to a scale value
+				const newScaleValue = newWidth / currentWidth;
+
+				// If the scale value is valid and both sizes are equal, no need to update
+				if (!isNaN(newScaleValue) && currentWidth === newWidth) {
+					return;
+				}
 
 				// Update the css variables, that will trigger a transform transition
 				function updateUI(): void {
-					// Apply transform
+					// Apply transform: translate
 					Helper.Dom.Styles.SetStyleAttribute(
 						this._tabsIndicatorElement,
 						Enum.CssProperty.TabsIndicatorTransform,
@@ -224,6 +232,7 @@ namespace OSUIFramework.Patterns.Tabs {
 							: this._activeTabHeaderElement.selfElement.offsetLeft) + GlobalEnum.Units.Pixel
 					);
 
+					// Apply transform scale
 					if (this.configs.JustifyHeaders === false || updateSize) {
 						Helper.Dom.Styles.SetStyleAttribute(
 							this._tabsIndicatorElement,
@@ -243,8 +252,8 @@ namespace OSUIFramework.Patterns.Tabs {
 						for (const entry of entries) {
 							if (entry.contentBoxSize) {
 								this._handleTabIndicator(true);
-								// We just need this once, so lets remove the observe
-								resizeObserver.unobserve;
+								// We just need this once, so lets remove the observer
+								resizeObserver.unobserve(this._activeTabHeaderElement.selfElement);
 							}
 						}
 					});
