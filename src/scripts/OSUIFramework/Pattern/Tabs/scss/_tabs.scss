@@ -228,7 +228,6 @@
 
 	&__content {
 		display: grid;
-		height: 100%;
 		overflow-x: hidden;
 		width: 100%;
 
@@ -237,6 +236,7 @@
 		}
 
 		&-item {
+			height: 100%;
 			overflow-y: auto;
 			padding: var(--space-m) var(--space-none);
 
