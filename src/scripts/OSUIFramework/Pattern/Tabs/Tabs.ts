@@ -564,6 +564,8 @@ namespace OSUIFramework.Patterns.Tabs {
 		protected setA11YProperties(): void {
 			// Set aria-role to TabsHeader
 			Helper.A11Y.RoleTabList(this._tabsHeaderElement);
+			// Set aria-hidden to tabs indicator
+			Helper.A11Y.AriaHiddenTrue(this._tabsIndicatorElement);
 		}
 
 		/**
