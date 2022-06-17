@@ -89,6 +89,8 @@ namespace OSUIFramework.Patterns.Tabs {
 		// Add event listener for arrow navigation
 		private _addEvents(): void {
 			this._tabsHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
+			// Add event listener for window resize, to update active indicator size
+			Event.GlobalEventManager.Instance.addHandler(Event.Type.WindowResize, this._handleTabIndicator.bind(this));
 		}
 
 		// Method that it's called whenever a new TabsHeaderItem is rendered
@@ -337,6 +339,10 @@ namespace OSUIFramework.Patterns.Tabs {
 		// Remove Pattern Events
 		private _removeEvents(): void {
 			this._tabsHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
+			Event.GlobalEventManager.Instance.removeHandler(
+				Event.Type.WindowResize,
+				this._handleTabIndicator.bind(this)
+			);
 
 			if (this._addDragGestures) {
 				this._tabsContentElement.removeEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnScroll);
