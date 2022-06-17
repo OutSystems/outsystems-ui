@@ -45,7 +45,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			super(uniqueId, new TabsConfig(configs));
 
 			// Check if running on native shell, to enable drag gestures
-			this._addDragGestures = OutSystems.OSUI.Utils.DeviceDetection.IsRunningAsNativeApp();
+			this._addDragGestures = Helper.DeviceInfo.IsNative;
 			// Block observer by default, to prevent it from running on page load
 			this._disableObserver = true;
 		}
@@ -89,8 +89,17 @@ namespace OSUIFramework.Patterns.Tabs {
 		// Add event listener for arrow navigation
 		private _addEvents(): void {
 			this._tabsHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
+
 			// Add event listener for window resize, to update active indicator size
 			Event.GlobalEventManager.Instance.addHandler(Event.Type.WindowResize, this._handleTabIndicator.bind(this));
+
+			// Add orientationchange listener to update active indicator size, on touch devices
+			if (Helper.DeviceInfo.IsPhone || Helper.DeviceInfo.IsTablet) {
+				Event.GlobalEventManager.Instance.addHandler(
+					Event.Type.OrientationChange,
+					this._handleTabIndicator.bind(this)
+				);
+			}
 		}
 
 		// Method that it's called whenever a new TabsHeaderItem is rendered
@@ -201,6 +210,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			}
 		}
 
+		// Method that handles the indicator size and transition
 		private _handleTabIndicator(updateSize?: boolean): void {
 			if (this._activeTabHeaderElement) {
 				const isVertical = this.configs.TabsOrientation === GlobalEnum.Orientation.Vertical;
@@ -339,10 +349,20 @@ namespace OSUIFramework.Patterns.Tabs {
 		// Remove Pattern Events
 		private _removeEvents(): void {
 			this._tabsHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
+
+			// Remove resize event
 			Event.GlobalEventManager.Instance.removeHandler(
 				Event.Type.WindowResize,
 				this._handleTabIndicator.bind(this)
 			);
+
+			// Remove orientationchange listener
+			if (Helper.DeviceInfo.IsPhone || Helper.DeviceInfo.IsTablet) {
+				Event.GlobalEventManager.Instance.removeHandler(
+					Event.Type.OrientationChange,
+					this._handleTabIndicator.bind(this)
+				);
+			}
 
 			if (this._addDragGestures) {
 				this._tabsContentElement.removeEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnScroll);
