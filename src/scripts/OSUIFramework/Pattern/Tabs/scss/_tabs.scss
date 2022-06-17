@@ -162,7 +162,7 @@
 					scroll-snap-stop: always;
 
 					&:not(.osui-tabs--is-active) {
-						display: initial;
+						display: block;
 					}
 				}
 
