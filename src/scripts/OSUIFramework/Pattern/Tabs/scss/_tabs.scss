@@ -12,7 +12,7 @@
 	overflow: hidden;
 	position: relative;
 
-	&_indicator {
+	&__indicator {
 		background: var(--color-primary);
 		transition: transform 150ms ease;
 		will-change: transform;
@@ -31,7 +31,7 @@
 				}
 			}
 
-			.osui-tabs_indicator {
+			.osui-tabs__indicator {
 				grid-column: 2;
 			}
 
@@ -76,7 +76,7 @@
 			}
 		}
 
-		.osui-tabs_indicator {
+		.osui-tabs__indicator {
 			height: var(--tabs-indicator-size);
 			transform: translateY(var(--tabs-indicator-transform)) translateX(0) translateZ(0);
 			width: 2px;
@@ -110,7 +110,7 @@
 			}
 		}
 
-		.osui-tabs_indicator {
+		.osui-tabs__indicator {
 			height: 2px;
 			transform: translateX(var(--tabs-indicator-transform)) translateY(0) translateZ(0);
 			width: var(--tabs-indicator-size);
@@ -322,6 +322,46 @@
 // Service Studio Preview Message
 .osui-tabs__preview {
 	display: none;
+}
+
+// Service Studio Preview
+.osui-tabs {
+	&__indicator {
+		-servicestudio-display: none;
+	}
+
+	&--is-vertical {
+		.osui-tabs__header {
+			-servicestudio-display: flex;
+			-servicestudio-flex-direction: column;
+
+			&-item {
+				-servicestudio-height: auto;
+			}
+		}
+
+		.osui-tabs--is-active::after {
+			-servicestudio-left: unset;
+			-servicestudio-right: 0;
+			-servicestudio-width: 2px;
+			-servicestudio-height: 100%;
+		}
+
+		&.osui-tabs--is-right .osui-tabs--is-active::after {
+			-servicestudio-left: 0;
+			-servicestudio-right: unset;
+		}
+	}
+
+	&--is-active::after {
+		-servicestudio-content: '';
+		-servicestudio-bottom: 0;
+		-servicestudio-left: 0;
+		-servicestudio-width: 100%;
+		-servicestudio-height: 2px;
+		-servicestudio-background-color: var(--color-primary);
+		-servicestudio-position: absolute;
+	}
 }
 
 // Hybrid Preview
