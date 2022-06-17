@@ -200,27 +200,56 @@ namespace OSUIFramework.Patterns.Tabs {
 		}
 
 		private _handleTabIndicator(updateSize?: boolean): void {
-			const isVertical = this.configs.TabsOrientation === GlobalEnum.Orientation.Vertical;
-			// Apply transform
-			requestAnimationFrame(() => {
-				Helper.Dom.Styles.SetStyleAttribute(
-					this._tabsIndicatorElement,
-					Enum.CssProperty.TabsIndicatorTransform,
-					(isVertical
-						? this._activeTabHeaderElement.selfElement.offsetTop
-						: this._activeTabHeaderElement.selfElement.offsetLeft) + GlobalEnum.Units.Pixel
-				);
-			});
+			if (this._activeTabHeaderElement) {
+				const isVertical = this.configs.TabsOrientation === GlobalEnum.Orientation.Vertical;
 
-			if (this.configs.JustifyHeaders === false || updateSize) {
-				// Update size css variable
-				Helper.Dom.Styles.SetStyleAttribute(
-					this._tabsIndicatorElement,
-					Enum.CssProperty.TabsIndicatorSize,
-					(isVertical
-						? this._activeTabHeaderElement.selfElement.offsetHeight
-						: this._activeTabHeaderElement.selfElement.offsetWidth) + GlobalEnum.Units.Pixel
-				);
+				const currenWidth = isVertical
+					? this._tabsIndicatorElement.offsetHeight
+					: this._tabsIndicatorElement.offsetWidth;
+
+				const newWidth = isVertical
+					? this._activeTabHeaderElement.selfElement.offsetHeight
+					: this._activeTabHeaderElement.selfElement.offsetWidth;
+
+				const newScaleValue = newWidth / currenWidth;
+
+				// Update the css variables, that will trigger a transform transition
+				function updateUI(): void {
+					// Apply transform
+					Helper.Dom.Styles.SetStyleAttribute(
+						this._tabsIndicatorElement,
+						Enum.CssProperty.TabsIndicatorTransform,
+						(isVertical
+							? this._activeTabHeaderElement.selfElement.offsetTop
+							: this._activeTabHeaderElement.selfElement.offsetLeft) + GlobalEnum.Units.Pixel
+					);
+
+					if (this.configs.JustifyHeaders === false || updateSize) {
+						Helper.Dom.Styles.SetStyleAttribute(
+							this._tabsIndicatorElement,
+							Enum.CssProperty.TabsIndicatorScale,
+							newScaleValue
+						);
+					}
+				}
+
+				// Call UpdateUI on next available frame
+				requestAnimationFrame(updateUI.bind(this));
+
+				// If at this moment the active item has no size (NaN), set an observer to run this method when its size is changed
+				// This happens, as an example, when there're tabs inside tabs, and inner one has no size when it's built, due to being on a non-active tab
+				if (isNaN(newScaleValue)) {
+					const resizeObserver = new ResizeObserver((entries) => {
+						for (const entry of entries) {
+							if (entry.contentBoxSize) {
+								this._handleTabIndicator(true);
+								// We just need this once, so lets remove the observe
+								resizeObserver.unobserve;
+							}
+						}
+					});
+					resizeObserver.observe(this._activeTabHeaderElement.selfElement);
+				}
 			}
 		}
 
@@ -337,6 +366,9 @@ namespace OSUIFramework.Patterns.Tabs {
 					} else {
 						this._activeTabHeaderElement = null;
 					}
+
+					// Update scale size variable
+					this._handleTabIndicator(true);
 				}
 			}
 		}
@@ -408,6 +440,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._setPosition(this.configs.TabsVerticalPosition);
 			this._setHeight(this.configs.Height);
 			this._setIsJustified(this.configs.JustifyHeaders);
+			this._handleTabIndicator();
 			// Set the --tabs-header-items css variable
 			this._setHeaderItemsCustomProperty();
 			// Setting as false, to avoid trigering changeTab event on screen load
@@ -422,23 +455,13 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _setIsJustified(isJustified: boolean): void {
 			if (isJustified) {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClasses.IsJustified);
-				// Set tabs-indicator size this one time, as it won't need to adjust dynamically,
-				// as each item will have the same size
-				const isVertical = this.configs.TabsOrientation === GlobalEnum.Orientation.Vertical;
-				// Update size css variable
-				Helper.Dom.Styles.SetStyleAttribute(
-					this._tabsIndicatorElement,
-					Enum.CssProperty.TabsIndicatorSize,
-					(isVertical
-						? this._activeTabHeaderElement.selfElement.offsetHeight
-						: this._activeTabHeaderElement.selfElement.offsetWidth) + GlobalEnum.Units.Pixel
-				);
 			} else {
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClasses.IsJustified);
-				if (this.isBuilt) {
-					// Update indicator size
-					this._handleTabIndicator();
-				}
+			}
+
+			if (this.isBuilt) {
+				// Update scale size variable
+				this._handleTabIndicator(true);
 			}
 		}
 
@@ -449,7 +472,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._currentOrientation = orientation;
 
 			if (this.isBuilt) {
-				// Update indicator size
+				// Update scale size variable
 				this._handleTabIndicator(true);
 			}
 		}
@@ -766,6 +789,7 @@ namespace OSUIFramework.Patterns.Tabs {
 				this._activeTabHeaderElement = newHeaderItem;
 			}
 
+			// Update active indicator
 			this._handleTabIndicator();
 
 			// If there're more than one content item or changeTab doesn't come from a drag gesture,

@@ -14,7 +14,8 @@
 
 	&__indicator {
 		background: var(--color-primary);
-		transition: transform 150ms ease;
+		transition: transform 200ms ease;
+		transform-origin: 0 0;
 		will-change: transform;
 	}
 
@@ -77,8 +78,8 @@
 		}
 
 		.osui-tabs__indicator {
-			height: var(--tabs-indicator-size);
-			transform: translateY(var(--tabs-indicator-transform)) translateX(0) translateZ(0);
+			transform: translateY(var(--tabs-indicator-transform)) translateX(0) translateZ(0)
+				scaleY(var(--tabs-indicator-scale));
 			width: 2px;
 		}
 
@@ -112,8 +113,8 @@
 
 		.osui-tabs__indicator {
 			height: 2px;
-			transform: translateX(var(--tabs-indicator-transform)) translateY(0) translateZ(0);
-			width: var(--tabs-indicator-size);
+			transform: translateX(var(--tabs-indicator-transform)) translateY(0) translateZ(0)
+				scaleX(var(--tabs-indicator-scale));
 		}
 
 		.osui-tabs__content {
