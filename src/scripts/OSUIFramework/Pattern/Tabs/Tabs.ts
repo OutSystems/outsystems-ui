@@ -32,6 +32,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _eventOnScroll: Callbacks.Generic;
 		// Store if the Tabs has only one ContentItem, to prevent unnecessary usages of ScrollTo
 		private _hasSingleContent: boolean;
+		private _headerHasScroll: boolean;
 		// Store the onTabsChange platform callback
 		private _platformEventTabsOnChange: Callbacks.OSTabsOnChangeEvent;
 		// Store the contentItems wrapper -- osui-tabs__content
@@ -89,6 +90,12 @@ namespace OSUIFramework.Patterns.Tabs {
 		// Add event listener for arrow navigation
 		private _addEvents(): void {
 			this._tabsHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
+
+			this._tabsHeaderElement.addEventListener(GlobalEnum.HTMLEvent.Scroll, () => {
+				if (this._tabsHeaderElement.scrollLeft === this._tabsHeaderElement.scrollWidth) {
+					console.log('scroll end');
+				}
+			});
 
 			// Add event listener for window resize, to update active indicator size
 			Event.GlobalEventManager.Instance.addHandler(Event.Type.WindowResize, this._handleTabIndicator.bind(this));
@@ -150,6 +157,31 @@ namespace OSUIFramework.Patterns.Tabs {
 				// Otherwise are items created before the tabs is built
 				// Set the correct data-tab, by using the items array, that correspond to the DOM order
 				tabsHeaderChildItem.setDataTab(currentIndex);
+			}
+
+			// Check if has scroll
+			this._checkHeaderScroll();
+		}
+
+		// Method to check if header has scroll
+		private _checkHeaderScroll(): void {
+			if (this._tabsHeaderElement) {
+				const isVertical = this.configs.TabsOrientation === GlobalEnum.Orientation.Vertical;
+				let currentScroll = this._tabsHeaderElement.scrollWidth;
+				let currentSize = this._tabsHeaderElement.offsetWidth;
+
+				if (isVertical) {
+					currentScroll = this._tabsHeaderElement.scrollHeight;
+					currentSize = this._tabsHeaderElement.offsetHeight;
+				}
+
+				if (!this._headerHasScroll && currentScroll > currentSize) {
+					Helper.Dom.Styles.AddClass(this._tabsHeaderElement, Enum.CssClasses.HasScroll);
+					this._headerHasScroll = true;
+				} else if (this._headerHasScroll && currentScroll <= currentSize) {
+					Helper.Dom.Styles.RemoveClass(this._tabsHeaderElement, Enum.CssClasses.HasScroll);
+					this._headerHasScroll = false;
+				}
 			}
 		}
 
@@ -235,21 +267,23 @@ namespace OSUIFramework.Patterns.Tabs {
 
 				// Update the css variables, that will trigger a transform transition
 				requestAnimationFrame(() => {
-					// Apply transform: translate
-					Helper.Dom.Styles.SetStyleAttribute(
-						this._tabsIndicatorElement,
-						Enum.CssProperty.TabsIndicatorTransform,
-						(isVertical
-							? this._activeTabHeaderElement.selfElement.offsetTop
-							: this._activeTabHeaderElement.selfElement.offsetLeft) + GlobalEnum.Units.Pixel
-					);
+					if (this._activeTabHeaderElement) {
+						// Apply transform: translate
+						Helper.Dom.Styles.SetStyleAttribute(
+							this._tabsIndicatorElement,
+							Enum.CssProperty.TabsIndicatorTransform,
+							(isVertical
+								? this._activeTabHeaderElement.selfElement.offsetTop
+								: this._activeTabHeaderElement.selfElement.offsetLeft) + GlobalEnum.Units.Pixel
+						);
 
-					// Apply transform scale
-					Helper.Dom.Styles.SetStyleAttribute(
-						this._tabsIndicatorElement,
-						Enum.CssProperty.TabsIndicatorScale,
-						newScaleValue
-					);
+						// Apply transform scale
+						Helper.Dom.Styles.SetStyleAttribute(
+							this._tabsIndicatorElement,
+							Enum.CssProperty.TabsIndicatorScale,
+							newScaleValue
+						);
+					}
 				});
 
 				// If at this moment the active item has no size (NaN), set an observer to run this method when its size is changed
@@ -401,6 +435,9 @@ namespace OSUIFramework.Patterns.Tabs {
 					this._handleTabIndicator();
 				}
 			}
+
+			// Check if has scroll
+			this._checkHeaderScroll();
 		}
 
 		// Method to scroll to new target content item
@@ -470,7 +507,6 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._setPosition(this.configs.TabsVerticalPosition);
 			this._setHeight(this.configs.Height);
 			this._setIsJustified(this.configs.JustifyHeaders);
-			this._handleTabIndicator();
 			// Set the --tabs-header-items css variable
 			this._setHeaderItemsCustomProperty();
 			// Setting as false, to avoid trigering changeTab event on screen load
