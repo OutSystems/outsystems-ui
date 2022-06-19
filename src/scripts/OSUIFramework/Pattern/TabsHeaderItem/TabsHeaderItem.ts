@@ -46,8 +46,10 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 
 			// Dynamic values that need to be changed when toggling the active state
 			if (this._isActive) {
+				Helper.A11Y.TabIndexTrue(this._selfElem);
 				Helper.A11Y.AriaSelectedTrue(this._selfElem);
 			} else {
+				Helper.A11Y.TabIndexFalse(this._selfElem);
 				Helper.A11Y.AriaSelectedFalse(this._selfElem);
 			}
 		}
