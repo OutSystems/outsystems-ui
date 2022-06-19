@@ -328,6 +328,12 @@
 				color: var(--color-neutral-10);
 			}
 		}
+
+		&__content-item {
+			&:focus-visible {
+				box-shadow: 0 0 0 1px var(--color-focus-outer) inset;
+			}
+		}
 	}
 }
 
