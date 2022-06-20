@@ -322,6 +322,14 @@
 				}
 			}
 		}
+
+		&.osui-tabs--is-horizontal {
+			.osui-tabs__header {
+				& > .osui-tabs__header__indicator {
+					transform-origin: right;
+				}
+			}
+		}
 	}
 }
 

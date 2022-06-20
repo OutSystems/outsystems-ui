@@ -220,6 +220,14 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _handleTabIndicator(): void {
 			if (this._activeTabHeaderElement) {
 				const isVertical = this.configs.TabsOrientation === GlobalEnum.Orientation.Vertical;
+				const activeElement = this._activeTabHeaderElement.selfElement;
+
+				// Get transform value based on orientation and rtl value
+				const transformValue = isVertical
+					? activeElement.offsetTop
+					: OutSystems.OSUI.Utils.GetIsRTL()
+					? -(this._tabsHeaderElement.offsetWidth - activeElement.offsetLeft - activeElement.offsetWidth)
+					: activeElement.offsetLeft;
 
 				// Check current indicator size
 				const currentSize = isVertical
@@ -227,9 +235,7 @@ namespace OSUIFramework.Patterns.Tabs {
 					: this._tabsIndicatorElement.offsetWidth;
 
 				// Check current active item size
-				const newSize = isVertical
-					? this._activeTabHeaderElement.selfElement.offsetHeight
-					: this._activeTabHeaderElement.selfElement.offsetWidth;
+				const newSize = isVertical ? activeElement.offsetHeight : activeElement.offsetWidth;
 
 				// translate pixel sized value to a scale value
 				const newScaleValue = newSize / currentSize;
@@ -241,9 +247,7 @@ namespace OSUIFramework.Patterns.Tabs {
 						Helper.Dom.Styles.SetStyleAttribute(
 							this._tabsIndicatorElement,
 							Enum.CssProperty.TabsIndicatorTransform,
-							(isVertical
-								? this._activeTabHeaderElement.selfElement.offsetTop
-								: this._activeTabHeaderElement.selfElement.offsetLeft) + GlobalEnum.Units.Pixel
+							transformValue + GlobalEnum.Units.Pixel
 						);
 
 						// Apply transform scale
@@ -267,11 +271,11 @@ namespace OSUIFramework.Patterns.Tabs {
 							if (entry.contentBoxSize) {
 								this._handleTabIndicator();
 								// We just need this once, so lets remove the observer
-								resizeObserver.unobserve(this._activeTabHeaderElement.selfElement);
+								resizeObserver.unobserve(activeElement);
 							}
 						}
 					});
-					resizeObserver.observe(this._activeTabHeaderElement.selfElement);
+					resizeObserver.observe(activeElement);
 				}
 			}
 		}
