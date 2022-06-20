@@ -32,7 +32,6 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _eventOnScroll: Callbacks.Generic;
 		// Store if the Tabs has only one ContentItem, to prevent unnecessary usages of ScrollTo
 		private _hasSingleContent: boolean;
-		private _headerHasScroll: boolean;
 		// Store the onTabsChange platform callback
 		private _platformEventTabsOnChange: Callbacks.OSTabsOnChangeEvent;
 		// Store the contentItems wrapper -- osui-tabs__content
@@ -90,12 +89,6 @@ namespace OSUIFramework.Patterns.Tabs {
 		// Add event listener for arrow navigation
 		private _addEvents(): void {
 			this._tabsHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
-
-			this._tabsHeaderElement.addEventListener(GlobalEnum.HTMLEvent.Scroll, () => {
-				if (this._tabsHeaderElement.scrollLeft === this._tabsHeaderElement.scrollWidth) {
-					console.log('scroll end');
-				}
-			});
 
 			// Add event listener for window resize, to update active indicator size
 			Event.GlobalEventManager.Instance.addHandler(Event.Type.WindowResize, this._handleTabIndicator.bind(this));
@@ -158,31 +151,6 @@ namespace OSUIFramework.Patterns.Tabs {
 				// Set the correct data-tab, by using the items array, that correspond to the DOM order
 				tabsHeaderChildItem.setDataTab(currentIndex);
 			}
-
-			// Check if has scroll
-			this._checkHeaderScroll();
-		}
-
-		// Method to check if header has scroll
-		private _checkHeaderScroll(): void {
-			if (this._tabsHeaderElement) {
-				const isVertical = this.configs.TabsOrientation === GlobalEnum.Orientation.Vertical;
-				let currentScroll = this._tabsHeaderElement.scrollWidth;
-				let currentSize = this._tabsHeaderElement.offsetWidth;
-
-				if (isVertical) {
-					currentScroll = this._tabsHeaderElement.scrollHeight;
-					currentSize = this._tabsHeaderElement.offsetHeight;
-				}
-
-				if (!this._headerHasScroll && currentScroll > currentSize) {
-					Helper.Dom.Styles.AddClass(this._tabsHeaderElement, Enum.CssClasses.HasScroll);
-					this._headerHasScroll = true;
-				} else if (this._headerHasScroll && currentScroll <= currentSize) {
-					Helper.Dom.Styles.RemoveClass(this._tabsHeaderElement, Enum.CssClasses.HasScroll);
-					this._headerHasScroll = false;
-				}
-			}
 		}
 
 		// Method to block the observer
@@ -194,7 +162,6 @@ namespace OSUIFramework.Patterns.Tabs {
 		// Method to enable the observer
 		private _enableDragObserver(): void {
 			this._disableObserver = false;
-
 			this._tabsContentElement.removeEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnScroll);
 		}
 
@@ -435,9 +402,6 @@ namespace OSUIFramework.Patterns.Tabs {
 					this._handleTabIndicator();
 				}
 			}
-
-			// Check if has scroll
-			this._checkHeaderScroll();
 		}
 
 		// Method to scroll to new target content item
@@ -885,6 +849,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			// Update configs
 			this.configs.StartingTab = newTabIndex;
 
+			// Trigger platform event
 			this._triggerOnChangeEvent(newTabIndex);
 		}
 

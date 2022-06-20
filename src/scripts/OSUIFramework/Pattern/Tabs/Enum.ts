@@ -22,7 +22,6 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 		IsHorizontal = 'osui-tabs--is-horizontal',
 		IsJustified = 'osui-tabs--is-justified',
 		HasDragGestures = 'osui-tabs--has-drag',
-		HasScroll = 'osui-tabs__header--has-scroll',
 		Modifier = 'osui-tabs--is-',
 		TabsWrapper = 'osui-tabs',
 		TabsHeader = 'osui-tabs__header',
