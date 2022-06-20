@@ -34,6 +34,8 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _hasSingleContent: boolean;
 		// Store the onTabsChange platform callback
 		private _platformEventTabsOnChange: Callbacks.OSTabsOnChangeEvent;
+		// Store the id of the requestAnimationFrame called to animate the indicator
+		private _requestAnimationFrameOnIndicatorResize: number;
 		// Store the contentItems wrapper -- osui-tabs__content
 		private _tabsContentElement: HTMLElement;
 		// Store the headerItems wrapper -- osui-tabs__header
@@ -233,7 +235,7 @@ namespace OSUIFramework.Patterns.Tabs {
 				const newScaleValue = newSize / currentSize;
 
 				// Update the css variables, that will trigger a transform transition
-				requestAnimationFrame(() => {
+				function updateIndicatorUI() {
 					if (this._activeTabHeaderElement) {
 						// Apply transform: translate
 						Helper.Dom.Styles.SetStyleAttribute(
@@ -251,7 +253,11 @@ namespace OSUIFramework.Patterns.Tabs {
 							newScaleValue
 						);
 					}
-				});
+
+					this._requestAnimationFrameOnIndicatorResize = undefined;
+				}
+
+				this._requestAnimationFrameOnIndicatorResize = requestAnimationFrame(updateIndicatorUI.bind(this));
 
 				// If at this moment the active item has no size (NaN), set an observer to run this method when its size is changed
 				// This happens, as an example, when there're tabs inside tabs, and inner one has no size when it's built, due to being on a non-active tab
@@ -660,6 +666,8 @@ namespace OSUIFramework.Patterns.Tabs {
 				this._eventOnScroll = undefined;
 				this._unsetDragObserver();
 			}
+
+			this._requestAnimationFrameOnIndicatorResize = undefined;
 		}
 
 		/**
