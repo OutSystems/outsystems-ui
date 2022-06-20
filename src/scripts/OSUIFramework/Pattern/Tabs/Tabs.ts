@@ -253,6 +253,28 @@ namespace OSUIFramework.Patterns.Tabs {
 					}
 				});
 
+				const updateUI = () => {
+					if (this._activeTabHeaderElement) {
+						// Apply transform: translate
+						Helper.Dom.Styles.SetStyleAttribute(
+							this._tabsIndicatorElement,
+							Enum.CssProperty.TabsIndicatorTransform,
+							(isVertical
+								? this._activeTabHeaderElement.selfElement.offsetTop
+								: this._activeTabHeaderElement.selfElement.offsetLeft) + GlobalEnum.Units.Pixel
+						);
+
+						// Apply transform scale
+						Helper.Dom.Styles.SetStyleAttribute(
+							this._tabsIndicatorElement,
+							Enum.CssProperty.TabsIndicatorScale,
+							newScaleValue
+						);
+					}
+				};
+
+				requestAnimationFrame(updateUI.bind(this));
+
 				// If at this moment the active item has no size (NaN), set an observer to run this method when its size is changed
 				// This happens, as an example, when there're tabs inside tabs, and inner one has no size when it's built, due to being on a non-active tab
 				if (isNaN(newScaleValue)) {
