@@ -252,9 +252,9 @@ namespace OSUIFramework.Patterns.Tabs {
 							Enum.CssProperty.TabsIndicatorScale,
 							newScaleValue
 						);
+					} else {
+						cancelAnimationFrame(this._requestAnimationFrameOnIndicatorResize);
 					}
-
-					this._requestAnimationFrameOnIndicatorResize = undefined;
 				}
 
 				this._requestAnimationFrameOnIndicatorResize = requestAnimationFrame(updateIndicatorUI.bind(this));
@@ -599,16 +599,18 @@ namespace OSUIFramework.Patterns.Tabs {
 						) as TabsContentItem.ITabsContentItem;
 					}
 
-					// set aria-controls to current header item, by passing the current content item's widgetId
-					item.setAriaControlsAttribute(currentContentItem.widgetId);
+					if (item && currentContentItem) {
+						// set aria-controls to current header item, by passing the current content item's widgetId
+						item.setAriaControlsAttribute(currentContentItem.widgetId);
 
-					// set aria-labbeledby to current content item, by passing the current header item's widgetId
-					currentContentItem.setAriaLabelledByAttribute(item.widgetId);
+						// set aria-labbeledby to current content item, by passing the current header item's widgetId
+						currentContentItem.setAriaLabelledByAttribute(item.widgetId);
 
-					// If param is true, set the data-tab on the current header and content items, using the index
-					if (updateDataTab) {
-						item.setDataTab(index);
-						currentContentItem.setDataTab(index);
+						// If param is true, set the data-tab on the current header and content items, using the index
+						if (updateDataTab) {
+							item.setDataTab(index);
+							currentContentItem.setDataTab(index);
+						}
 					}
 				}
 			);
