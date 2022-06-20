@@ -160,10 +160,6 @@
 				&-item {
 					scroll-snap-align: start;
 					scroll-snap-stop: always;
-
-					&:not(.osui-tabs--is-active) {
-						display: block;
-					}
 				}
 
 				.ph > .list {
