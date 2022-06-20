@@ -193,7 +193,7 @@ namespace OSUIFramework.Patterns.Tabs {
 					targetHeaderItemIndex = this.configs.StartingTab + 1;
 					// To prevent triggerinh changeTab, if already on last item
 					if (targetHeaderItemIndex < this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length) {
-						this.changeTab(targetHeaderItemIndex, undefined, true);
+						this.changeTab(targetHeaderItemIndex, undefined, true, true);
 					}
 
 					break;
@@ -202,7 +202,7 @@ namespace OSUIFramework.Patterns.Tabs {
 					targetHeaderItemIndex = this.configs.StartingTab - 1;
 					// To prevent triggering changeTab, if already on first item
 					if (targetHeaderItemIndex >= 0) {
-						this.changeTab(targetHeaderItemIndex, undefined, true);
+						this.changeTab(targetHeaderItemIndex, undefined, true, true);
 					}
 					break;
 			}
@@ -438,7 +438,7 @@ namespace OSUIFramework.Patterns.Tabs {
 						// get current headerItem
 						const currentHeaderItem = this.getChildByIndex(targetIndex, Enum.ChildTypes.TabsHeaderItem);
 						// changeTab using the index obtained above,
-						Helper.AsyncInvocation(this.changeTab.bind(this), targetIndex, currentHeaderItem, false);
+						Helper.AsyncInvocation(this.changeTab.bind(this), targetIndex, currentHeaderItem, false, true);
 					}
 				});
 			}, observerOptions);
@@ -560,7 +560,7 @@ namespace OSUIFramework.Patterns.Tabs {
 				);
 			}
 
-			this.changeTab(this.getChildIndex(childHeaderId), newHeaderItem, true);
+			this.changeTab(this.getChildIndex(childHeaderId), newHeaderItem, true, true);
 		}
 
 		// Method that triggers the OnTabsChange event
@@ -768,17 +768,18 @@ namespace OSUIFramework.Patterns.Tabs {
 		/**
 		 * Method to change between tabs
 		 *
-		 * @param {*} [tabIndex=this.configs.ActiveTab]
+		 * @param {*} [tabIndex=this.configs.StartingTab]
 		 * @param {Patterns.TabsHeaderItem.ITabsHeaderItem} [tabsHeaderItem]
-		 * @param {boolean} [triggerEvent]
 		 * @param {boolean} [blockObserver]
+		 * @param {boolean} [triggerEvent=false]
 		 * @return {*}  {void}
 		 * @memberof Tabs
 		 */
 		public changeTab(
 			tabIndex = this.configs.StartingTab,
 			tabsHeaderItem?: Patterns.TabsHeaderItem.ITabsHeaderItem,
-			blockObserver?: boolean
+			blockObserver?: boolean,
+			triggerEvent = false
 		): void {
 			if (blockObserver) {
 				Helper.AsyncInvocation(this._disableDragObserver.bind(this));
@@ -850,7 +851,9 @@ namespace OSUIFramework.Patterns.Tabs {
 			this.configs.StartingTab = newTabIndex;
 
 			// Trigger platform event
-			this._triggerOnChangeEvent(newTabIndex);
+			if (triggerEvent) {
+				this._triggerOnChangeEvent(newTabIndex);
+			}
 		}
 
 		/**
