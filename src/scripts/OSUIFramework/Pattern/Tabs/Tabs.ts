@@ -220,17 +220,17 @@ namespace OSUIFramework.Patterns.Tabs {
 				const isVertical = this.configs.TabsOrientation === GlobalEnum.Orientation.Vertical;
 
 				// Check current indicator size
-				const currentWidth = isVertical
+				const currentSize = isVertical
 					? this._tabsIndicatorElement.offsetHeight
 					: this._tabsIndicatorElement.offsetWidth;
 
 				// Check current active item size
-				const newWidth = isVertical
+				const newSize = isVertical
 					? this._activeTabHeaderElement.selfElement.offsetHeight
 					: this._activeTabHeaderElement.selfElement.offsetWidth;
 
 				// translate pixel sized value to a scale value
-				const newScaleValue = newWidth / currentWidth;
+				const newScaleValue = newSize / currentSize;
 
 				// Update the css variables, that will trigger a transform transition
 				requestAnimationFrame(() => {
