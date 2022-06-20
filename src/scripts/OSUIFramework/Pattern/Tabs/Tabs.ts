@@ -233,7 +233,7 @@ namespace OSUIFramework.Patterns.Tabs {
 				const newScaleValue = newSize / currentSize;
 
 				// Update the css variables, that will trigger a transform transition
-				const updateUI = () => {
+				requestAnimationFrame(() => {
 					if (this._activeTabHeaderElement) {
 						// Apply transform: translate
 						Helper.Dom.Styles.SetStyleAttribute(
@@ -251,9 +251,7 @@ namespace OSUIFramework.Patterns.Tabs {
 							newScaleValue
 						);
 					}
-				};
-
-				requestAnimationFrame(updateUI.bind(this));
+				});
 
 				// If at this moment the active item has no size (NaN), set an observer to run this method when its size is changed
 				// This happens, as an example, when there're tabs inside tabs, and inner one has no size when it's built, due to being on a non-active tab
