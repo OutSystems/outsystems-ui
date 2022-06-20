@@ -233,26 +233,6 @@ namespace OSUIFramework.Patterns.Tabs {
 				const newScaleValue = newSize / currentSize;
 
 				// Update the css variables, that will trigger a transform transition
-				requestAnimationFrame(() => {
-					if (this._activeTabHeaderElement) {
-						// Apply transform: translate
-						Helper.Dom.Styles.SetStyleAttribute(
-							this._tabsIndicatorElement,
-							Enum.CssProperty.TabsIndicatorTransform,
-							(isVertical
-								? this._activeTabHeaderElement.selfElement.offsetTop
-								: this._activeTabHeaderElement.selfElement.offsetLeft) + GlobalEnum.Units.Pixel
-						);
-
-						// Apply transform scale
-						Helper.Dom.Styles.SetStyleAttribute(
-							this._tabsIndicatorElement,
-							Enum.CssProperty.TabsIndicatorScale,
-							newScaleValue
-						);
-					}
-				});
-
 				const updateUI = () => {
 					if (this._activeTabHeaderElement) {
 						// Apply transform: translate
