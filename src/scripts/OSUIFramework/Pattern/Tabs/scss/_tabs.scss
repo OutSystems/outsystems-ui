@@ -221,7 +221,7 @@
 		&__indicator {
 			background: var(--color-primary);
 			transition: transform 200ms linear;
-			transform-origin: 0;
+			transform-origin: 0 0;
 			will-change: transform;
 		}
 
