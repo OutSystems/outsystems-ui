@@ -287,6 +287,11 @@
 						justify-content: flex-start;
 						padding: var(--space-xs) var(--space-base) var(--space-xs) 0;
 					}
+
+					& > .osui-tabs__header__indicator {
+						left: unset;
+						right: 0;
+					}
 				}
 
 				.osui-tabs__content {
@@ -302,6 +307,11 @@
 
 					&-item {
 						padding: var(--space-xs) 0 var(--space-xs) var(--space-base);
+					}
+
+					& > .osui-tabs__header__indicator {
+						left: 0;
+						right: unset;
 					}
 				}
 
