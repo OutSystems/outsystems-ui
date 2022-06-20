@@ -74,11 +74,11 @@
 
 			& > .osui-tabs__header__indicator {
 				min-height: 1px;
+				position: absolute;
+				top: 0;
 				transform: translateY(var(--tabs-indicator-transform)) translateX(0) translateZ(0)
 					scaleY(var(--tabs-indicator-scale));
 				width: 2px;
-				position: absolute;
-				top: 0;
 			}
 		}
 
@@ -220,8 +220,8 @@
 
 		&__indicator {
 			background: var(--color-primary);
-			transition: transform 200ms ease;
-			transform-origin: 0 0;
+			transition: transform 200ms linear;
+			transform-origin: 0;
 			will-change: transform;
 		}
 
