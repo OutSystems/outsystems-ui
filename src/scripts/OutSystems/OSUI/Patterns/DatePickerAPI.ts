@@ -328,4 +328,31 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 
 		return JSON.stringify(responseObj);
 	}
+
+	/**
+	 * Function that will set the input as editable
+	 *
+	 * @export
+	 * @param {string} datePickerId
+	 * @param {boolean} IsEditable
+	 * @return {*}  {string}
+	 */
+	export function SetEditableInput(datePickerId: string, IsEditable: boolean): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const _datePicker = this.GetDatePickerItemById(datePickerId);
+			_datePicker.setEditableInput(IsEditable);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.DatePicker.FailRedraw;
+		}
+
+		return JSON.stringify(responseObj);
+	}
 }

@@ -287,6 +287,18 @@ namespace Providers.Datepicker.Flatpickr {
 		}
 
 		/**
+		 * Method used to set the DatePicker as editable on its input
+		 *
+		 * @memberof AbstractFlatpickr
+		 */
+		public setEditableInput(isEditable: boolean): void {
+			if (this.configs.allowInput !== isEditable) {
+				this.configs.allowInput = isEditable;
+				this.redraw();
+			}
+		}
+
+		/**
 		 * Method used to set the DatePicker language
 		 *
 		 * @memberof AbstractFlatpickr
