@@ -279,6 +279,7 @@ namespace Providers.Splide {
 						break;
 					case OSUIFramework.Patterns.Carousel.Enum.Properties.Navigation:
 					case OSUIFramework.Patterns.Carousel.Enum.Properties.AutoPlay:
+					case OSUIFramework.Patterns.Carousel.Enum.Properties.Direction:
 					case OSUIFramework.Patterns.Carousel.Enum.Properties.Loop:
 					case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsDesktop:
 					case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsTablet:

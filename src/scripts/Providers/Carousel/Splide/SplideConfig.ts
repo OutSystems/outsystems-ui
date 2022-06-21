@@ -24,10 +24,12 @@ namespace Providers.Splide {
 		private _getDirectionConfig(): string {
 			let direction;
 
-			if (this.Direction === OSUIFramework.Patterns.Carousel.Enum.Direction.LeftToRight) {
-				direction = OSUIFramework.GlobalEnum.Direction.LTR;
-			} else {
+			if (this.Direction === '' && OutSystems.OSUI.Utils.GetIsRTL()) {
+				direction = direction = OSUIFramework.GlobalEnum.Direction.RTL;
+			} else if (this.Direction === OSUIFramework.Patterns.Carousel.Enum.Direction.RightToLeft && this.AutoPlay) {
 				direction = OSUIFramework.GlobalEnum.Direction.RTL;
+			} else {
+				direction = OSUIFramework.GlobalEnum.Direction.LTR;
 			}
 
 			return direction;

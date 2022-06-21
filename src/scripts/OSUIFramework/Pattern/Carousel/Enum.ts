@@ -38,6 +38,7 @@ namespace OSUIFramework.Patterns.Carousel.Enum {
 	 */
 	export enum Properties {
 		AutoPlay = 'AutoPlay',
+		Direction = 'Direction',
 		Height = 'Height',
 		ItemsDesktop = 'ItemsDesktop',
 		ItemsGap = 'ItemsGap',
