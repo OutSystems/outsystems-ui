@@ -297,6 +297,7 @@ namespace Providers.Datepicker.Flatpickr {
 				this.redraw();
 			}
 		}
+
 		/**
 		 * Method used to set the DatePicker language
 		 *
@@ -311,6 +312,7 @@ namespace Providers.Datepicker.Flatpickr {
 				this.redraw();
 			}
 		}
+
 		protected abstract onDateSelectedEvent(selectedDates: string[], dateStr: string, fp: Flatpickr): void;
 		protected abstract prepareConfigs(): void;
 		public abstract updateInitialDate(start: string, end?: string): void;

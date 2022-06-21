@@ -126,6 +126,7 @@ namespace OSUIFramework.GlobalEnum {
 		keyDown = 'keydown',
 		MouseEnter = 'mouseenter',
 		MouseLeave = 'mouseleave',
+		OrientationChange = 'orientationchange',
 		Resize = 'resize',
 		Scroll = 'scroll',
 		TouchEnd = 'touchend',

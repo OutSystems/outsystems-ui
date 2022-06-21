@@ -9,31 +9,22 @@
 	--header-item-alignment: auto;
 	display: grid;
 	height: var(--tabs-height);
+	overflow: hidden;
 
 	&--is-vertical {
 		&.osui-tabs--is-right {
 			grid-auto-flow: dense;
 			grid-template-columns: 1fr var(--header-item-width);
 
-			.osui-tabs__header {
+			& > .osui-tabs__header {
 				grid-column: 2;
 
-				&-item {
-					justify-content: flex-end;
+				.osui-tabs__header-item {
 					padding: var(--space-xs) 0 var(--space-xs) var(--space-base);
+				}
 
-					&::after {
-						left: 0;
-						top: 0;
-					}
-
-					&:not(.osui-tabs--is-active)::after {
-						border-left: var(--border-size-m) solid var(--color-neutral-6);
-					}
-
-					&.osui-tabs--is-active::after {
-						border-left: var(--border-size-m) solid var(--color-primary);
-					}
+				& > .osui-tabs__header__indicator {
+					left: 0;
 				}
 			}
 
@@ -47,21 +38,14 @@
 			grid-auto-flow: row;
 			grid-template-columns: var(--header-item-width) 1fr;
 
-			.osui-tabs__header-item {
-				justify-content: flex-start;
-				padding: var(--space-xs) var(--space-base) var(--space-xs) 0;
-
-				&::after {
-					right: calc(0px - var(--border-size-m));
-					top: 0;
+			& > .osui-tabs__header {
+				.osui-tabs__header-item {
+					justify-content: flex-start;
+					padding: var(--space-xs) var(--space-base) var(--space-xs) 0;
 				}
 
-				&:not(.osui-tabs--is-active)::after {
-					border-right: var(--border-size-m) solid var(--color-neutral-6);
-				}
-
-				&.osui-tabs--is-active::after {
-					border-right: var(--border-size-m) solid var(--color-primary);
+				& > .osui-tabs__header__indicator {
+					right: 0;
 				}
 			}
 
@@ -77,26 +61,34 @@
 			}
 		}
 
-		.osui-tabs__header {
+		& > .osui-tabs__header {
 			align-content: start;
 			grid-template-rows: repeat(var(--tabs-header-items), var(--header-item-alignment));
 			overflow-y: auto;
 			overflow-x: hidden;
 
-			&-item {
+			.osui-tabs__header-item {
 				border-right: var(--border-size-m) solid transparent;
 				flex: none;
+			}
 
-				&.osui-tabs--is-active::after {
-					height: 100%;
-				}
+			& > .osui-tabs__header__indicator {
+				min-height: 1px;
+				position: absolute;
+				top: 0;
+				transform: translateY(var(--tabs-indicator-transform)) translateX(0) translateZ(0)
+					scaleY(var(--tabs-indicator-scale));
+				width: 2px;
 			}
 		}
 
 		.osui-tabs__content {
 			overflow-y: auto;
-			padding: var(--space-none) var(--space-m);
 			width: auto;
+
+			&-item {
+				padding: var(--space-none) var(--space-m);
+			}
 		}
 	}
 
@@ -104,38 +96,30 @@
 		grid-auto-flow: column;
 		grid-template-rows: auto 1fr;
 
-		.osui-tabs__header {
+		& > .osui-tabs__header {
 			grid-template-columns: repeat(var(--tabs-header-items), var(--header-item-alignment));
 			justify-content: start;
 			overflow-y: hidden;
 			overflow-x: auto;
 			word-break: keep-all;
 
-			&-item {
+			.osui-tabs__header-item {
 				border-bottom: var(--border-size-m) solid transparent;
 				justify-content: center;
 				padding: var(--space-base) var(--space-xs);
-
-				&::after {
-					bottom: calc(0px - var(--border-size-m));
-					left: 0;
-				}
-
-				&:not(.osui-tabs--is-active)::after {
-					border-bottom: var(--border-size-m) solid var(--color-neutral-6);
-				}
-
-				&.osui-tabs--is-active::after {
-					border-bottom: var(--border-size-m) solid var(--color-primary);
-				}
 			}
+		}
+
+		.osui-tabs__header__indicator {
+			height: 2px;
+			transform: translateX(var(--tabs-indicator-transform)) translateY(0) translateZ(0)
+				scaleX(var(--tabs-indicator-scale));
 		}
 
 		.osui-tabs__content {
 			border-top: var(--border-size-s) solid var(--color-neutral-5);
 			margin-top: -1px;
 			overflow-y: hidden;
-			padding: var(--space-m) var(--space-none);
 		}
 	}
 
@@ -156,8 +140,10 @@
 	}
 
 	&:not(.osui-tabs--has-drag) {
-		.osui-tabs__content-item:not(.osui-tabs--is-active) {
-			display: none;
+		.osui-tabs__content {
+			&-item:not(.osui-tabs--is-active) {
+				display: none;
+			}
 		}
 	}
 
@@ -183,14 +169,17 @@
 		}
 
 		&.osui-tabs--is-vertical {
-			.osui-tabs__content-item:not(.osui-tabs--is-active) {
-				display: none;
+			.osui-tabs__content {
+				&-item:not(.osui-tabs--is-active) {
+					display: none;
+				}
 			}
 		}
 	}
 
 	&__header {
 		display: grid;
+		position: relative;
 
 		&-item {
 			align-items: center;
@@ -208,44 +197,28 @@
 			&:hover {
 				&:not(.osui-tabs--is-active) {
 					color: var(--color-neutral-10);
-					&::after {
-						opacity: 1;
-					}
 				}
+
 				&[disabled] {
 					color: var(--color-neutral-6);
-					&::after {
-						border-width: var(--border-size-none);
-					}
 				}
 			}
 
 			&.osui-tabs--is-active {
 				color: var(--color-primary);
-
-				&[disabled]::after {
-					border-width: var(--border-size-none);
-				}
-			}
-
-			&:not(.osui-tabs--is-active)::after {
-				opacity: 0;
-			}
-
-			&::after {
-				content: '';
-				height: 100%;
-				pointer-events: none;
-				position: absolute;
-				transition: opacity 150ms ease-in;
-				width: 100%;
-				z-index: 1;
 			}
 
 			&[disabled] {
 				color: var(--color-neutral-6);
 				cursor: auto;
 			}
+		}
+
+		&__indicator {
+			background: var(--color-primary);
+			transition: transform 200ms linear;
+			transform-origin: 0 0;
+			will-change: transform;
 		}
 
 		// Service Studio preview
@@ -270,7 +243,9 @@
 		}
 
 		&-item {
+			height: 100%;
 			overflow-y: auto;
+			padding: var(--space-m) var(--space-none);
 
 			// Service Studio Preview
 			& {
@@ -303,20 +278,15 @@
 	.osui-tabs {
 		&.osui-tabs--is-vertical {
 			&.osui-tabs--is-right {
-				.osui-tabs__header-item {
-					justify-content: flex-start;
-					padding: var(--space-xs) var(--space-base) var(--space-xs) 0;
-
-					&::after {
-						right: calc(0px - var(--border-size-m));
+				.osui-tabs__header {
+					&-item {
+						justify-content: flex-start;
+						padding: var(--space-xs) var(--space-base) var(--space-xs) 0;
 					}
 
-					&:not(.osui-tabs--is-active)::after {
-						border-right: var(--border-size-m) solid var(--color-neutral-6);
-					}
-
-					&.osui-tabs--is-active::after {
-						border-right: var(--border-size-m) solid var(--color-primary);
+					& > .osui-tabs__header__indicator {
+						left: unset;
+						right: 0;
 					}
 				}
 
@@ -333,20 +303,11 @@
 
 					&-item {
 						padding: var(--space-xs) 0 var(--space-xs) var(--space-base);
+					}
 
-						&::after {
-							left: 0;
-							right: unset;
-							top: 0;
-						}
-
-						&:not(.osui-tabs--is-active)::after {
-							border-left: var(--border-size-m) solid var(--color-neutral-6);
-						}
-
-						&.osui-tabs--is-active::after {
-							border-left: var(--border-size-m) solid var(--color-primary);
-						}
+					& > .osui-tabs__header__indicator {
+						left: 0;
+						right: unset;
 					}
 				}
 
@@ -357,29 +318,34 @@
 				}
 			}
 		}
+
+		&.osui-tabs--is-horizontal {
+			.osui-tabs__header {
+				& > .osui-tabs__header__indicator {
+					transform-origin: right;
+				}
+			}
+		}
 	}
 }
 
 ///
 .has-accessible-features {
 	.osui-tabs {
-		&--is-vertical {
-			.osui-tabs__header-item::after {
-				width: calc(100% + var(--border-size-m));
-			}
-		}
-
 		&__header-item {
 			&:focus {
 				box-shadow: none;
 			}
 
-			&::after {
-				box-sizing: border-box;
+			&:focus-visible {
+				background-color: var(--color-focus-outer);
+				color: var(--color-neutral-10);
 			}
+		}
 
-			&.osui-tabs--is-active:focus-visible::after {
-				border: var(--border-size-m) solid var(--color-focus-outer);
+		&__content-item {
+			&:focus-visible {
+				box-shadow: 0 0 0 1px var(--color-focus-outer) inset;
 			}
 		}
 	}
@@ -388,6 +354,46 @@
 // Service Studio Preview Message
 .osui-tabs__preview {
 	display: none;
+}
+
+// Service Studio Preview
+.osui-tabs {
+	&__header__indicator {
+		-servicestudio-display: none;
+	}
+
+	&--is-vertical {
+		.osui-tabs__header {
+			-servicestudio-display: flex;
+			-servicestudio-flex-direction: column;
+
+			&-item {
+				-servicestudio-height: auto;
+			}
+		}
+
+		.osui-tabs--is-active::after {
+			-servicestudio-left: unset;
+			-servicestudio-right: 0;
+			-servicestudio-width: 2px;
+			-servicestudio-height: 100%;
+		}
+
+		&.osui-tabs--is-right .osui-tabs--is-active::after {
+			-servicestudio-left: 0;
+			-servicestudio-right: unset;
+		}
+	}
+
+	&--is-active::after {
+		-servicestudio-content: '';
+		-servicestudio-bottom: 0;
+		-servicestudio-left: 0;
+		-servicestudio-width: 100%;
+		-servicestudio-height: 2px;
+		-servicestudio-background-color: var(--color-primary);
+		-servicestudio-position: absolute;
+	}
 }
 
 // Hybrid Preview

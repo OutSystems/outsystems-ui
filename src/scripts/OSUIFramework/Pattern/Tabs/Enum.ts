@@ -28,6 +28,7 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 		TabsContent = 'osui-tabs__content',
 		TabsHeaderItem = 'osui-tabs__header-item',
 		TabsContentItem = 'osui-tabs__content-item',
+		TabsIndicatorElem = 'osui-tabs__header__indicator',
 	}
 
 	/**
@@ -35,6 +36,7 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 	 */
 	export enum Attributes {
 		DataTab = 'data-tab',
+		DataDirection = 'data-direction',
 	}
 
 	/**
@@ -43,6 +45,8 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 	export enum CssProperty {
 		TabsHeight = '--tabs-height',
 		TabsHeaderItems = '--tabs-header-items',
+		TabsIndicatorScale = '--tabs-indicator-scale',
+		TabsIndicatorTransform = '--tabs-indicator-transform',
 	}
 
 	/**
