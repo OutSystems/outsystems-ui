@@ -237,6 +237,16 @@ namespace Providers.Datepicker.Flatpickr {
 		}
 
 		/**
+		 * Method used to disable the default native behavior of DatePicker
+		 *
+		 * @memberof AbstractFlatpickr
+		 */
+		public disableOpenAsNative(): void {
+			this.configs.disableMobile = true;
+			this.redraw();
+		}
+
+		/**
 		 * Method to remove and destroy DatePicker instance
 		 *
 		 * @memberof AbstractFlatpickr

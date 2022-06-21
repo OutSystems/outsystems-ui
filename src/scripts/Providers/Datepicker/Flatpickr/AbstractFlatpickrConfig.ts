@@ -22,6 +22,9 @@ namespace Providers.Datepicker.Flatpickr {
 		// Store calendar mode is in use
 		public calendarMode: OSUIFramework.Patterns.DatePicker.Enum.Mode;
 
+		// Stores the ability to disable the mobile flatpickr behavior
+		public disableMobile = false;
+
 		constructor(config: JSON) {
 			super(config);
 
@@ -114,6 +117,7 @@ namespace Providers.Datepicker.Flatpickr {
 				altFormat: this._checkAltFormat(),
 				altInput: true,
 				allowInput: this.allowInput,
+				disableMobile: this.disableMobile,
 				dateFormat:
 					this.TimeFormat !== OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable
 						? this.ServerDateFormat + ' H:i'
