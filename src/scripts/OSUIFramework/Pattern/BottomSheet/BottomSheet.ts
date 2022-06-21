@@ -442,6 +442,9 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			if (this._gestureEventInstance !== undefined) {
 				this._gestureEventInstance.unsetTouchEvents();
 				this._hasGestureEvents = false;
+
+				// Unset the event instance of gesture  events
+				this._gestureEventInstance = undefined;
 			}
 		}
 

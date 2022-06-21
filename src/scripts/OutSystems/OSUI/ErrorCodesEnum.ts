@@ -103,6 +103,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailDispose: 'OSUI-API-11003',
 		FailOpen: 'OSUI-API-11004',
 		FailRegisterCallback: 'OSUI-API-11005',
+		FailToggleSwipes: 'OSUI-API-11006',
 	};
 
 	export const Submenu = {

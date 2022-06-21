@@ -256,6 +256,17 @@ namespace OSUIFramework.Patterns.Sidebar {
 			}
 		}
 
+		// Method to toggle swipes on Sidebvar
+		private _toggleSwipesSidebar(enableSwipes: boolean): void {
+			if (enableSwipes) {
+				if (this._gestureEventInstance === undefined) {
+					this._handleGestureEvents();
+				}
+			} else {
+				this.removeGestureEvents();
+			}
+		}
+
 		// Method that triggers the OnToggle event
 		private _triggerOnToggleEvent(): void {
 			Helper.AsyncInvocation(this._onToggle, this.widgetId, this._isOpen);
@@ -447,6 +458,9 @@ namespace OSUIFramework.Patterns.Sidebar {
 			if (this._gestureEventInstance !== undefined) {
 				this._gestureEventInstance.unsetTouchEvents();
 				this._hasGestureEvents = false;
+
+				// Unset the event instance of gesture  events
+				this._gestureEventInstance = undefined;
 			}
 		}
 
@@ -463,6 +477,15 @@ namespace OSUIFramework.Patterns.Sidebar {
 		): void {
 			this._gestureEventInstance.setEvents(onGestureStart, onGestureMove, onGestureEnd);
 			this._hasGestureEvents = true;
+		}
+
+		/**
+		 * Method that toggle swipes on sidebar.
+		 *
+		 * @memberof Sidebar
+		 */
+		public toggleSwipes(enableSwipe: boolean): void {
+			this._toggleSwipesSidebar(enableSwipe);
 		}
 	}
 }
