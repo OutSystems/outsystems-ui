@@ -14,6 +14,6 @@ namespace OSUIFramework.Patterns.Sidebar {
 		 *
 		 * @memberof ISidebar
 		 */
-		toggleSwipes(enableSwipe): void;
+		toggleGestures(enableSwipe): void;
 	}
 }

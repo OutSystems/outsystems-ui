@@ -258,11 +258,11 @@ namespace OSUIFramework.Patterns.Sidebar {
 
 		// Method to toggle swipes on Sidebvar
 		private _toggleSwipesSidebar(enableSwipes: boolean): void {
-			if (enableSwipes) {
+			if (enableSwipes && this._hasGestureEvents === false) {
 				if (this._gestureEventInstance === undefined) {
 					this._handleGestureEvents();
 				}
-			} else {
+			} else if (enableSwipes === false && this._hasGestureEvents) {
 				this.removeGestureEvents();
 			}
 		}
@@ -484,7 +484,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 		 *
 		 * @memberof Sidebar
 		 */
-		public toggleSwipes(enableSwipe: boolean): void {
+		public toggleGestures(enableSwipe: boolean): void {
 			this._toggleSwipesSidebar(enableSwipe);
 		}
 	}

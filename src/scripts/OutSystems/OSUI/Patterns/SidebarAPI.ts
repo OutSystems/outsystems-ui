@@ -205,7 +205,7 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * @export
 	 * @param {string} sidebarId
 	 */
-	export function ToggleSwipes(sidebarId: string, enableSwipe: boolean): string {
+	export function ToggleGestures(sidebarId: string, enableSwipe: boolean): string {
 		const responseObj = {
 			isSuccess: true,
 			message: ErrorCodes.Success.message,
@@ -215,7 +215,7 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 		try {
 			const sidebar = GetSidebarById(sidebarId);
 
-			sidebar.toggleSwipes(enableSwipe);
+			sidebar.toggleGestures(enableSwipe);
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
