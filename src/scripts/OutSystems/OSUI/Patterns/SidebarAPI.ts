@@ -219,7 +219,7 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Sidebar.FailToggleSwipes;
+			responseObj.code = ErrorCodes.Sidebar.FailToggleSwipe;
 		}
 
 		return JSON.stringify(responseObj);
