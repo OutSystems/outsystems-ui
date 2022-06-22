@@ -364,6 +364,21 @@ namespace Providers.Splide {
 			}
 		}
 
+		public setCarouselDirection(direction: string): void {
+			if (direction === OSUIFramework.Patterns.Carousel.Enum.Direction.None && OutSystems.OSUI.Utils.GetIsRTL()) {
+				this.configs.Direction = OSUIFramework.GlobalEnum.Direction.RTL;
+			} else if (
+				direction === OSUIFramework.Patterns.Carousel.Enum.Direction.RightToLeft &&
+				this.configs.AutoPlay
+			) {
+				this.configs.Direction = OSUIFramework.GlobalEnum.Direction.RTL;
+			} else {
+				this.configs.Direction = OSUIFramework.GlobalEnum.Direction.LTR;
+			}
+
+			this.updateCarousel();
+		}
+
 		/**
 		 * Method to call the option API from the provider to toggle drag events
 		 *
