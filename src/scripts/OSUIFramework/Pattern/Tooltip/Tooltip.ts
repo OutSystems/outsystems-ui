@@ -15,10 +15,22 @@ namespace OSUIFramework.Patterns.Tooltip {
 		private _eventOnOpenedBalloon: Callbacks.Generic;
 		// On WindowResize Event
 		private _eventOnWindowResize: Callbacks.Generic;
+		// Event OnMouseEnter at _tooltipBalloonWrapperElem (Tpbwe)
+		private _eventTpbweOnMouseEnter: Callbacks.Generic;
+		// Event OnMouseLeave at at _tooltipBalloonWrapperElem (Tpbwe)
+		private _eventTpbweOnMouseLeave: Callbacks.Generic;
+		// Event OnMouseEnter at _tooltipIconElem (Tpie)
+		private _eventTpieOnMouseEnter: Callbacks.Generic;
+		// Event OnMouseLeave at at _tooltipIconElem (Tpie)
+		private _eventTpieOnMouseLeave: Callbacks.Generic;
 		// Set the observer that will check if the balloon is inside screen boundaries!
 		private _iObserver: IntersectionObserver;
-		// Flag used to manage id it's open or closed!
+		// Flag used to manage if it's open or closed!
 		private _isOpen: boolean;
+		// Flag used to manage if it's _tooltipBalloonWrapperElem (Tpbwe) has been MouseEnter
+		private _isTpbweMouseEnter = false;
+		// Flag used to manage if it's _tooltipIconElem (Tpie) has been MouseEnter
+		private _isTpieMouseEnter = false;
 		// Platform OnInitialize Callback
 		private _platformEventInitializedCallback: Callbacks.OSGeneric;
 		// Platform OnClose Callback
@@ -130,6 +142,42 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 			// Remove the selector that add transitions to the balloon!
 			Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpening);
+		}
+
+		// OnMouseLeave at _tooltipBalloonWrapperElem (Tpbwe)
+		private _onTpbweMouseLeave(): void {
+			this._isTpbweMouseEnter = false;
+
+			setTimeout(() => {
+				if (this._isTpieMouseEnter === false) {
+					this._triggerClose();
+				}
+			}, 0);
+		}
+
+		// OnMouseEnter at _tooltipBalloonWrapperElem (Tpbwe)
+		private _onTpbweOnMouseEnter(): void {
+			this._isTpbweMouseEnter = true;
+		}
+
+		// OnMouseLeave at _tooltipIconElem (Tpie)
+		private _onTpieMouseLeave(): void {
+			this._isTpieMouseEnter = false;
+
+			setTimeout(() => {
+				if (this._isTpbweMouseEnter === false) {
+					this._triggerClose();
+				}
+			}, 0);
+		}
+
+		// OnMouseEnter at _tooltipIconElem (Tpie)
+		private _onTpieOnMouseEnter(): void {
+			this._isTpieMouseEnter = true;
+
+			if (this.IsOpen === false) {
+				this._triggerOpen();
+			}
 		}
 
 		// Manage the behaviour when there is a window resize!
@@ -262,8 +310,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 			// Update "animation" before the next repaint
 			this._rafOnWindowResize = requestAnimationFrame(this._eventOnWindowResize);
 
-			// If tooltip should behave onMouseOver and it's visible by default
-			if (this.configs.IsHover || this._isOpen) {
+			// If it's open by default!
+			if (this._isOpen) {
 				// Add a window event that will be responsible to close it, if it's opend by default
 				Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
 			}
@@ -271,6 +319,23 @@ namespace OSUIFramework.Patterns.Tooltip {
 			// If tooltip should behave at onMouseClick, or if it's on tablet or phone
 			if (this.configs.IsHover === false || Helper.DeviceInfo.IsDesktop === false) {
 				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			}
+
+			// If trigger to open the tooltip must be MouseOver (only works at desktop)
+			if (this.configs.IsHover && Helper.DeviceInfo.IsDesktop === true) {
+				// Set Mouse Hover to the tooltip icon wrapper!
+				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventTpieOnMouseEnter);
+				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventTpieOnMouseLeave);
+
+				// Set Mouse Hover to the tooltip balloon!
+				this._tooltipBalloonWrapperElem.addEventListener(
+					GlobalEnum.HTMLEvent.MouseEnter,
+					this._eventTpbweOnMouseEnter
+				);
+				this._tooltipBalloonWrapperElem.addEventListener(
+					GlobalEnum.HTMLEvent.MouseLeave,
+					this._eventTpbweOnMouseLeave
+				);
 			}
 		}
 
@@ -364,6 +429,18 @@ namespace OSUIFramework.Patterns.Tooltip {
 				this._eventOnOpenedBalloon
 			);
 
+			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventTpieOnMouseEnter);
+			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventTpieOnMouseLeave);
+
+			this._tooltipBalloonWrapperElem.removeEventListener(
+				GlobalEnum.HTMLEvent.MouseEnter,
+				this._eventTpbweOnMouseEnter
+			);
+			this._tooltipBalloonWrapperElem.removeEventListener(
+				GlobalEnum.HTMLEvent.MouseLeave,
+				this._eventTpbweOnMouseLeave
+			);
+
 			cancelAnimationFrame(this._rafOnBodyScroll);
 			cancelAnimationFrame(this._rafOnWindowResize);
 
@@ -432,12 +509,16 @@ namespace OSUIFramework.Patterns.Tooltip {
 		 */
 		protected setCallbacks(): void {
 			this._eventOnBlur = this._onBlur.bind(this);
-			this._eventOnClick = this._onClick.bind(this);
-			this._eventOnFocus = this._onFocus.bind(this);
 			this._eventOnBodyClick = this._onBodyClick.bind(this);
 			this._eventOnBodyScroll = this._onBodyScroll.bind(this);
+			this._eventOnClick = this._onClick.bind(this);
+			this._eventOnFocus = this._onFocus.bind(this);
 			this._eventOnOpenedBalloon = this._onOpenedBalloon.bind(this);
 			this._eventOnWindowResize = this._onWindowResize.bind(this);
+			this._eventTpbweOnMouseEnter = this._onTpbweOnMouseEnter.bind(this);
+			this._eventTpbweOnMouseLeave = this._onTpbweMouseLeave.bind(this);
+			this._eventTpieOnMouseEnter = this._onTpieOnMouseEnter.bind(this);
+			this._eventTpieOnMouseLeave = this._onTpieMouseLeave.bind(this);
 		}
 
 		// Update info based on htmlContent
@@ -470,12 +551,16 @@ namespace OSUIFramework.Patterns.Tooltip {
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnBlur = undefined;
-			this._eventOnClick = undefined;
-			this._eventOnFocus = undefined;
 			this._eventOnBodyClick = undefined;
 			this._eventOnBodyScroll = undefined;
+			this._eventOnClick = undefined;
+			this._eventOnFocus = undefined;
 			this._eventOnOpenedBalloon = undefined;
 			this._eventOnWindowResize = undefined;
+			this._eventTpbweOnMouseEnter = undefined;
+			this._eventTpbweOnMouseLeave = undefined;
+			this._eventTpieOnMouseEnter = undefined;
+			this._eventTpieOnMouseLeave = undefined;
 		}
 		/**
 		 * Unsets the refences to the HTML elements.
