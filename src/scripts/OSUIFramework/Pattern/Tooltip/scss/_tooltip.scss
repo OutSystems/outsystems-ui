@@ -77,7 +77,6 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	opacity: 0;
 	padding: var(--space-s);
 	position: relative;
-	transition: transform 250ms, opacity 250ms;
 	width: fit-content;
 
 	// Service Studio Preview
@@ -115,7 +114,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		transform: translateX(-100%) translateY(-50%);
 
 		.osui-tooltip__balloon-wrapper__balloon {
-			transform: translateX(calc(-1 * (100% - var(--space-s))));
+			transform: translateX(0);
 			width: $osui-tooltip-baloon-max-width;
 
 			// Baloon Arrow!
@@ -340,7 +339,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 
 		.osui-tooltip__balloon-wrapper__balloon {
 			// disabled transform animation in order to avoid animation issues related with the position!
-			transition: opacity 250ms;
+			transition: transform 250ms, opacity 250ms;
 		}
 	}
 
@@ -383,7 +382,6 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		padding-right: var(--space-base);
 
 		.osui-tooltip__balloon-wrapper__balloon {
-			transform: translateX(0);
 			width: fit-content;
 
 			// Baloon Arrow!

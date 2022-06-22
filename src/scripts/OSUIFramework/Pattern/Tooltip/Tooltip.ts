@@ -9,14 +9,14 @@ namespace OSUIFramework.Patterns.Tooltip {
 		private _eventOnBodyScroll: Callbacks.Generic;
 		// Event OnPatternClick
 		private _eventOnClick: Callbacks.Generic;
-		// Event OnClosedBalloon
-		private _eventOnClosedBalloon: Callbacks.Generic;
 		// Event OnPatternFocus
 		private _eventOnFocus: Callbacks.Generic;
 		// Event OnOpendBalloon
 		private _eventOnOpenedBalloon: Callbacks.Generic;
 		// On WindowResize Event
 		private _eventOnWindowResize: Callbacks.Generic;
+		// Set the observer that will check if the balloon is inside screen boundaries!
+		private _iObserver: IntersectionObserver;
 		// Flag used to manage id it's open or closed!
 		private _isOpen: boolean;
 		// Platform OnInitialize Callback
@@ -39,59 +39,6 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 			this._isOpen = this.configs.StartVisible;
 			this._tooltipBalloonPositionClass = this.configs.Position;
-		}
-
-		// Check the recomended position to open the balloon
-		private _getRecomendedPosition(): void {
-			// Get the Boundaries for the balloon container
-			const balloonBounds = this._tooltipBalloonContentElem.getBoundingClientRect();
-
-			// Get the recomended position to open the balloon
-			const recomendedPosition = Helper.BoundPosition.GetRecomendedPositionByBounds(
-				balloonBounds,
-				document.body.getBoundingClientRect()
-			);
-
-			// Check if there are a any recomended position
-			if (recomendedPosition === undefined || this.IsOpen === false) {
-				return;
-			}
-
-			console.log(recomendedPosition);
-			// Remove the older vertical position!
-			Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, this._tooltipBalloonPositionClass);
-			// Store the current position
-			this._tooltipBalloonPositionClass = recomendedPosition;
-			// Set the new position
-			Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, recomendedPosition);
-		}
-
-		// Check the recomended position to open the balloon
-		private _getRecomendedPositionOnVerticalScroll(): void {
-			// Get the Boundaries for the balloon container
-			const balloonBounds = this._tooltipBalloonContentElem.getBoundingClientRect();
-
-			// Get the recomended position to open the balloon
-			const recomendedPosition = Helper.BoundPosition.GetRecomendedPositionByBounds(
-				balloonBounds,
-				document.body.getBoundingClientRect()
-			);
-
-			if (
-				recomendedPosition === undefined ||
-				(recomendedPosition !== GlobalEnum.Position.Left && recomendedPosition !== GlobalEnum.Position.Right)
-			) {
-				return;
-			}
-
-			console.log('CENAS', recomendedPosition);
-
-			// Remove the older vertical position!
-			Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, this._tooltipBalloonPositionClass);
-			// Store the current position
-			this._tooltipBalloonPositionClass = recomendedPosition;
-			// Set the new position
-			Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, recomendedPosition);
 		}
 
 		// Move balloon element to outside of the pattern context
@@ -148,14 +95,15 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// Update the balloon coordinates
 		private _onBodyScroll(): void {
-			// If the balloon is open and not IsPhone
-			if (this._isOpen) {
+			if (this.isBuilt) {
 				// Update the coordinates
 				this._setBalloonCoordinates();
-				// Update/Get the recomended position
-				this._getRecomendedPositionOnVerticalScroll();
-				// Update the "animation" before the next repaint
-				this._rafOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
+
+				// If the balloon is open and not IsPhone
+				if (this._isOpen) {
+					// Update the "animation" before the next repaint
+					this._rafOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
+				}
 			}
 		}
 
@@ -163,21 +111,6 @@ namespace OSUIFramework.Patterns.Tooltip {
 		private _onClick(e: MouseEvent): void {
 			e.stopPropagation();
 			this._triggerOpen();
-		}
-
-		// Used to update the tooltip position after it's closed
-		private _onClosedBalloon(): void {
-			// Trigger the _platformEventOnToggleCallback callback!
-			Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, false);
-
-			// Remove the transition event!
-			this._tooltipBalloonContentElem.removeEventListener(
-				GlobalEnum.HTMLEvent.TransitionEnd,
-				this._eventOnClosedBalloon
-			);
-
-			// Update/Get the recomended position
-			// this._getRecomendedPosition();
 		}
 
 		// Open the tooltip
@@ -199,12 +132,11 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// Manage the behaviour when there is a window resize!
 		private _onWindowResize(): void {
+			// Update Coordinates
+			this._setBalloonCoordinates();
+
 			// If there is a horizontal resize and the Dropdown is open, close it!
 			if (this._isOpen) {
-				// Update Coordinates
-				this._setBalloonCoordinates();
-				// Check the recomended position
-				this._getRecomendedPosition();
 				// Update the "animation" before the next repaint
 				this._rafOnWindowResize = requestAnimationFrame(this._eventOnWindowResize);
 			}
@@ -238,6 +170,29 @@ namespace OSUIFramework.Patterns.Tooltip {
 			);
 		}
 
+		// Set the recomended position to open the balloon
+		private _setBalloonPosition(isIntersecting: boolean, boundingClientRect: DOMRect): void {
+			// Ensure it's open!!!
+			if (this.IsOpen === false) {
+				return;
+			}
+
+			// Get the recomended position to open the balloon
+			const recomendedPosition = Helper.BoundPosition.GetRecomendedPositionByBounds(
+				boundingClientRect,
+				document.body.getBoundingClientRect()
+			);
+
+			if (recomendedPosition !== undefined && recomendedPosition !== this._tooltipBalloonPositionClass) {
+				// Remove the older vertical position!
+				Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, this._tooltipBalloonPositionClass);
+				// Store the current position
+				this._tooltipBalloonPositionClass = recomendedPosition;
+				// Set the new position
+				Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, recomendedPosition);
+			}
+		}
+
 		// Method used to set the ExtendedClass to the balloon wrapper as well
 		private _setBalloonWrapperExtendedClass(newExtendedClass: string, preExtendedClass = '') {
 			// Since balloon wrapper will not be at the pattern context, let's also set/update the extendedClass to it!
@@ -265,6 +220,25 @@ namespace OSUIFramework.Patterns.Tooltip {
 			// Set default Position cssClass property value
 			Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, this._tooltipBalloonPositionClass);
 		}
+
+		// Set the Observer
+		private _setObserver() {
+			// Check if browser has the IntersectionObserver capability!
+			if (window.IntersectionObserver) {
+				this._iObserver = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							this._setBalloonPosition(entry.isIntersecting, entry.boundingClientRect);
+						});
+					},
+					{ threshold: 1 }
+				);
+
+				// Start observing it!
+				this._iObserver.observe(this._tooltipBalloonContentElem);
+			}
+		}
+
 		// Add the tooltip Events
 		private _setUpEvents(): void {
 			// If the accessibility feature is enabled
@@ -302,15 +276,25 @@ namespace OSUIFramework.Patterns.Tooltip {
 			if (this._isOpen) {
 				this._isOpen = false;
 
-				// Add the transition envent in order to trigger the closeCallback only after totally closed!
-				this._tooltipBalloonContentElem.addEventListener(
-					GlobalEnum.HTMLEvent.TransitionEnd,
-					this._eventOnClosedBalloon
-				);
-
 				// Remove the IsOpned selector
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsOpened);
 				Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpened);
+
+				// Cancel the Observer!
+				this._unsetObserver();
+
+				// Reset to the default position!
+				if (this._tooltipBalloonPositionClass !== this.configs.Position) {
+					// Remove the older vertical position!
+					Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, this._tooltipBalloonPositionClass);
+					// Store the current position
+					this._tooltipBalloonPositionClass = this.configs.Position;
+					// Set the new position
+					Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, this.configs.Position);
+				}
+
+				// Trigger the _platformEventOnToggleCallback callback!
+				Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, false);
 			}
 		}
 
@@ -322,7 +306,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 				// Get all Tooltips Ids in order to close them!
 				/* NOTE: This approach must be follow since we're using a stopPropagation at the 
-			click to open moment we can't use the BodyOnClick to close other open Tooltips! */
+				click to open we can't use the BodyOnClick to close other open Tooltips! */
 				OutSystems.OSUI.Patterns.TooltipAPI.GetAllTooltips().forEach((tpId) => {
 					// Get the Tooltip object
 					const tp = OutSystems.OSUI.Patterns.TooltipAPI.GetTooltipById(tpId);
@@ -336,10 +320,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 				// Set the Balloon Coordinates
 				this._setBalloonCoordinates();
 
-				// Check if the balloon could be opened at the place it's defined!
-				this._getRecomendedPosition();
-
-				// Since we're updating the balloon position dynamically and during those momments we do not want animation occur!
+				// Since we're updating the balloon position dynamically, during those momments we do not want animation occur!
 				// - Add the selector that will allow annimation occur only during the opening momment!
 				Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpening);
 				// - Add the event which help on removing the animation after is open
@@ -354,6 +335,9 @@ namespace OSUIFramework.Patterns.Tooltip {
 				// Add the IsOpned Class Selector
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsOpened);
 				Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpened);
+
+				// Set the Observer that will be checking if the balloon must change its position!
+				this._setObserver();
 
 				// Trigger the _platformEventOnToggleCallback callback!
 				Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, true);
@@ -373,15 +357,19 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 			this._tooltipBalloonContentElem.removeEventListener(
 				GlobalEnum.HTMLEvent.TransitionEnd,
-				this._eventOnClosedBalloon
-			);
-			this._tooltipBalloonContentElem.removeEventListener(
-				GlobalEnum.HTMLEvent.TransitionEnd,
 				this._eventOnOpenedBalloon
 			);
 
 			cancelAnimationFrame(this._rafOnBodyScroll);
 			cancelAnimationFrame(this._rafOnWindowResize);
+		}
+
+		// Stop Observer
+		private _unsetObserver(): void {
+			if (this._iObserver !== undefined) {
+				this._iObserver.disconnect();
+				this._iObserver = undefined;
+			}
 		}
 
 		// Update Pattern behaviour accordingly IsHover status
@@ -441,7 +429,6 @@ namespace OSUIFramework.Patterns.Tooltip {
 			this._eventOnFocus = this._onFocus.bind(this);
 			this._eventOnBodyClick = this._onBodyClick.bind(this);
 			this._eventOnBodyScroll = this._onBodyScroll.bind(this);
-			this._eventOnClosedBalloon = this._onClosedBalloon.bind(this);
 			this._eventOnOpenedBalloon = this._onOpenedBalloon.bind(this);
 			this._eventOnWindowResize = this._onWindowResize.bind(this);
 		}
@@ -480,7 +467,6 @@ namespace OSUIFramework.Patterns.Tooltip {
 			this._eventOnFocus = undefined;
 			this._eventOnBodyClick = undefined;
 			this._eventOnBodyScroll = undefined;
-			this._eventOnClosedBalloon = undefined;
 			this._eventOnOpenedBalloon = undefined;
 			this._eventOnWindowResize = undefined;
 		}
@@ -491,6 +477,9 @@ namespace OSUIFramework.Patterns.Tooltip {
 		 * @memberof Tooltip
 		 */
 		protected unsetHtmlElements(): void {
+			// Remove the detached balloon html element!
+			this._tooltipBalloonWrapperElem.remove();
+
 			this._tooltipIconElem = undefined;
 			this._tooltipBalloonContentElem = undefined;
 			this._tooltipBalloonWrapperElem = undefined;
@@ -561,6 +550,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 		 */
 		public dispose(): void {
 			this._unsetEvents();
+			this._unsetObserver();
 			this.unsetCallbacks();
 			this.unsetHtmlElements();
 			super.dispose();
