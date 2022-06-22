@@ -122,7 +122,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @param {string} datePickerId
 	 * @return {*}  {string}
 	 */
-	export function DisableOpenAsNative(datePickerId: string): string {
+	export function ToggleOpenAsNative(datePickerId: string, IsEnabled: boolean): string {
 		const responseObj = {
 			isSuccess: true,
 			message: ErrorCodes.Success.message,
@@ -131,7 +131,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 
 		try {
 			const _datePicker = this.GetDatePickerItemById(datePickerId);
-			_datePicker.disableOpenAsNative();
+			_datePicker.disableOpenAsNative(IsEnabled);
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;

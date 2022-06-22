@@ -237,16 +237,6 @@ namespace Providers.Datepicker.Flatpickr {
 		}
 
 		/**
-		 * Method used to disable the default native behavior of DatePicker
-		 *
-		 * @memberof AbstractFlatpickr
-		 */
-		public disableOpenAsNative(): void {
-			this.configs.disableMobile = true;
-			this.redraw();
-		}
-
-		/**
 		 * Method to remove and destroy DatePicker instance
 		 *
 		 * @memberof AbstractFlatpickr
@@ -321,6 +311,16 @@ namespace Providers.Datepicker.Flatpickr {
 			if (this.provider !== undefined) {
 				this.redraw();
 			}
+		}
+
+		/**
+		 * Method used to toggle the default native behavior of DatePicker
+		 *
+		 * @memberof AbstractFlatpickr
+		 */
+		public toggleOpenAsNative(isEnabled: boolean): void {
+			this.configs.disableMobile = isEnabled;
+			this.redraw();
 		}
 
 		protected abstract onDateSelectedEvent(selectedDates: string[], dateStr: string, fp: Flatpickr): void;
