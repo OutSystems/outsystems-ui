@@ -131,7 +131,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 
 		try {
 			const _datePicker = this.GetDatePickerItemById(datePickerId);
-			_datePicker.disableOpenAsNative(IsEnabled);
+			_datePicker.toggleOpenAsNative(IsEnabled);
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
