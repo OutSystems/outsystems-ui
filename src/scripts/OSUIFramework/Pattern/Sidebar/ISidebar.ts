@@ -10,7 +10,7 @@ namespace OSUIFramework.Patterns.Sidebar {
 	 */
 	export interface ISidebar extends Interface.IPattern, Interface.ICallback, Interface.IOpenable {
 		/**
-		 * Method signature to toggle swipes the pattern.
+		 * Method signature to enable or disable the gestures on the pattern.
 		 *
 		 * @memberof ISidebar
 		 */
