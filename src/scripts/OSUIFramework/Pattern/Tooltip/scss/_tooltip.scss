@@ -3,6 +3,9 @@
 /// @group Patterns-Tooltip
 /// Patterns - Content - Tooltip
 
+// Transition Time
+$transition-time: 250ms;
+
 // Baloon Size
 $osui-tooltip-baloon-max-height: 50vh;
 $osui-tooltip-baloon-max-width: 250px;
@@ -78,6 +81,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	padding: var(--space-s);
 	position: relative;
 	width: fit-content;
+	transition: opacity $transition-time;
 
 	// Service Studio Preview
 	& {
@@ -114,7 +118,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		transform: translateX(-100%) translateY(-50%);
 
 		.osui-tooltip__balloon-wrapper__balloon {
-			transform: translateX(0);
+			transform: translateX(-100%);
 			width: $osui-tooltip-baloon-max-width;
 
 			// Baloon Arrow!
@@ -130,12 +134,12 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 
 	// Is right or position is empty!
 	&.right {
-		left: calc(var(--osui-tooltip-left) + var(--osui-tooltip-width));
 		max-width: 0;
 		min-width: 0;
 		padding-left: var(--space-none);
+		right: calc(100vw - var(--osui-tooltip-left) - var(--osui-tooltip-width) + var(--space-xs));
 		top: calc(var(--osui-tooltip-top) + (var(--osui-tooltip-height) / 2));
-		transform: translateX(0) translateY(-50%);
+		transform: translateX(100%) translateY(-50%);
 
 		.osui-tooltip__balloon-wrapper__balloon {
 			transform: translateX(calc(-1 * var(--space-s)));
@@ -157,7 +161,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		left: calc(var(--osui-tooltip-left) + (var(--osui-tooltip-width) / 2));
 		max-height: 0;
 		padding-top: var(--space-none);
-		top: calc(var(--osui-tooltip-top) + (var(--osui-tooltip-height) / 2));
+		top: calc(var(--osui-tooltip-top) + var(--space-s));
 		transform: translateX(-50%) translateY(0);
 
 		.osui-tooltip__balloon-wrapper__balloon {
@@ -178,7 +182,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	&.top,
 	&.top-left,
 	&.top-right {
-		bottom: calc((100vh - (var(--osui-tooltip-top) + var(--space-s))) - var(--space-s));
+		bottom: calc((100vh - (var(--osui-tooltip-top) + var(--space-s))) - var(--space-xs));
 		max-height: 0;
 		padding-bottom: var(--space-none);
 
@@ -244,7 +248,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	&.bottom-right {
 		max-height: 0;
 		padding-top: var(--space-none);
-		top: calc(var(--osui-tooltip-top) + var(--osui-tooltip-height));
+		top: calc(var(--osui-tooltip-top) + var(--osui-tooltip-height) - var(--space-xs));
 
 		.osui-tooltip__balloon-wrapper__balloon {
 			transform: translateY(calc(-1 * var(--space-s)));
@@ -334,26 +338,36 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 .osui-tooltip__balloon-wrapper--is-opening {
 	// Is left
 	&.left {
-		// used the left position to animate only at when at left in order to avoid animation issues related with position!
-		transition: left 250ms;
+		transition: left $transition-time;
+	}
 
-		.osui-tooltip__balloon-wrapper__balloon {
-			// disabled transform animation in order to avoid animation issues related with the position!
-			transition: transform 250ms, opacity 250ms;
-		}
+	// Is Right
+	&.right {
+		transition: right $transition-time;
+	}
+
+	// Is Center
+	&.center {
+		transition: top $transition-time;
 	}
 
 	// Is general top
 	&.top,
 	&.top-left,
 	&.top-right {
-		// used the left position to animate only at when at left in order to avoid animation issues related with position!
-		transition: bottom 250ms;
+		transition: bottom $transition-time;
+	}
 
-		.osui-tooltip__balloon-wrapper__balloon {
-			// disabled transform animation in order to avoid animation issues related with the position!
-			transition: opacity 250ms;
-		}
+	// Is general bottom
+	&.bottom,
+	&.bottom-left,
+	&.bottom-right {
+		transition: top $transition-time;
+	}
+
+	// General balloon content
+	.osui-tooltip__balloon-wrapper__balloon {
+		transition: opacity $transition-time;
 	}
 }
 
@@ -382,6 +396,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		padding-right: var(--space-base);
 
 		.osui-tooltip__balloon-wrapper__balloon {
+			transform: translateX(0);
 			width: fit-content;
 
 			// Baloon Arrow!
@@ -396,6 +411,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		max-width: $osui-tooltip-baloon-max-width;
 		min-width: $osui-tooltip-baloon-min-width;
 		padding-left: var(--space-base);
+		right: calc(100vw - var(--osui-tooltip-left) - var(--osui-tooltip-width));
 
 		.osui-tooltip__balloon-wrapper__balloon {
 			transform: translateX(0);
@@ -412,6 +428,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	&.center {
 		max-height: $osui-tooltip-baloon-max-height;
 		padding-top: var(--space-base);
+		top: calc(var(--osui-tooltip-top) + (var(--osui-tooltip-height) / 2));
 
 		.osui-tooltip__balloon-wrapper__balloon {
 			transform: translateY(0);
@@ -473,6 +490,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	&.bottom-right {
 		max-height: $osui-tooltip-baloon-max-height;
 		padding-top: var(--space-base);
+		top: calc(var(--osui-tooltip-top) + var(--osui-tooltip-height));
 
 		// general bottom Baloon
 		.osui-tooltip__balloon-wrapper__balloon {

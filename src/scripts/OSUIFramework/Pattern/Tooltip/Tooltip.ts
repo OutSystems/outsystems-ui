@@ -103,6 +103,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 				if (this._isOpen) {
 					// Update the "animation" before the next repaint
 					this._rafOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
+				} else {
+					cancelAnimationFrame(this._rafOnBodyScroll);
 				}
 			}
 		}
@@ -139,6 +141,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 			if (this._isOpen) {
 				// Update the "animation" before the next repaint
 				this._rafOnWindowResize = requestAnimationFrame(this._eventOnWindowResize);
+			} else {
+				cancelAnimationFrame(this._rafOnWindowResize);
 			}
 		}
 
@@ -362,6 +366,9 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 			cancelAnimationFrame(this._rafOnBodyScroll);
 			cancelAnimationFrame(this._rafOnWindowResize);
+
+			this._rafOnBodyScroll = undefined;
+			this._rafOnWindowResize = undefined;
 		}
 
 		// Stop Observer
