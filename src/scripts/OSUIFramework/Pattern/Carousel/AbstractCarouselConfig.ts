@@ -2,7 +2,6 @@
 namespace OSUIFramework.Patterns.Carousel {
 	export abstract class AbstractCarouselConfig extends Patterns.AbstractProviderConfiguration {
 		public AutoPlay: boolean;
-		public Direction: string;
 		public Height: string | number;
 		public ItemsDesktop: number;
 		public ItemsGap: string | number;
