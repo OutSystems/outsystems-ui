@@ -144,6 +144,32 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	}
 
 	/**
+	 * Function that opens the sidebar.
+	 *
+	 * @export
+	 * @param {string} sidebarId
+	 */
+	export function Open(sidebarId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const sidebar = GetSidebarById(sidebarId);
+
+			sidebar.open();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Sidebar.FailOpen;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
 	 * Function that will register a pattern callback.
 	 *
 	 * @export
@@ -174,12 +200,12 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	}
 
 	/**
-	 * Function that opens the sidebar.
+	 * Function that toggle swipes on sidebar.
 	 *
 	 * @export
 	 * @param {string} sidebarId
 	 */
-	export function Open(sidebarId: string): string {
+	export function ToggleGestures(sidebarId: string, enableSwipe: boolean): string {
 		const responseObj = {
 			isSuccess: true,
 			message: ErrorCodes.Success.message,
@@ -189,11 +215,11 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 		try {
 			const sidebar = GetSidebarById(sidebarId);
 
-			sidebar.open();
+			sidebar.toggleGestures(enableSwipe);
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Sidebar.FailOpen;
+			responseObj.code = ErrorCodes.Sidebar.FailToggleSwipe;
 		}
 
 		return JSON.stringify(responseObj);

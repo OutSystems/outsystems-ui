@@ -96,7 +96,7 @@ namespace OSUIFramework.Patterns.Notification {
 
 		// Method to handle the creation of the GestureEvents
 		private _handleGestureEvents(): void {
-			if (!Helper.DeviceInfo.IsDesktop) {
+			if (Helper.DeviceInfo.IsNative) {
 				// Create and save gesture event instance. Created here and not on constructor,
 				// as we need to pass this._selfElem, only available after super.build()
 				this._gestureEventInstance = new Event.GestureEvent.SwipeEvent(this._selfElem);
@@ -544,12 +544,15 @@ namespace OSUIFramework.Patterns.Notification {
 		/**
 		 * Removes the gesture events to open/close the Notification on Mobile Apps
 		 *
-		 * @memberof Sidebar
+		 * @memberof Notification
 		 */
 		public removeGestureEvents(): void {
 			if (this._gestureEventInstance !== undefined) {
 				this._gestureEventInstance.unsetTouchEvents();
 				this._hasGestureEvents = false;
+
+				// Unset the event instance of gesture  events
+				this._gestureEventInstance = undefined;
 			}
 		}
 
