@@ -219,6 +219,16 @@ namespace OSUIFramework.Patterns.Tabs {
 		// Method that handles the indicator size and transition
 		private _handleTabIndicator(): void {
 			if (this._activeTabHeaderElement) {
+				// Check if it comes form a disabled tab, to remove the disable class
+				if (
+					!Helper.Dom.Attribute.Get(
+						this._activeTabHeaderElement.selfElement,
+						GlobalEnum.HTMLAttributes.Disabled
+					)
+				) {
+					Helper.Dom.Attribute.Remove(this._tabsIndicatorElement, GlobalEnum.HTMLAttributes.Disabled);
+				}
+
 				const isVertical = this.configs.TabsOrientation === GlobalEnum.Orientation.Vertical;
 				const activeElement = this._activeTabHeaderElement.selfElement;
 
@@ -550,6 +560,10 @@ namespace OSUIFramework.Patterns.Tabs {
 					GlobalEnum.InlineStyle.Display,
 					GlobalEnum.InlineStyleValue.Display.none
 				);
+
+				if (this._activeTabHeaderElement.selfElement === TabHeaderItemElement) {
+					Helper.Dom.Attribute.Set(this._tabsIndicatorElement, GlobalEnum.HTMLAttributes.Disabled, true);
+				}
 			} else if (!isDisabled && isTabHeaderItemDisabled) {
 				Helper.Dom.Attribute.Remove(TabHeaderItemElement, GlobalEnum.HTMLAttributes.Disabled);
 				Helper.Dom.Styles.SetStyleAttribute(
@@ -557,6 +571,10 @@ namespace OSUIFramework.Patterns.Tabs {
 					GlobalEnum.InlineStyle.Display,
 					GlobalEnum.InlineStyleValue.Display.block
 				);
+
+				if (this._activeTabHeaderElement.selfElement === TabHeaderItemElement) {
+					Helper.Dom.Attribute.Remove(this._tabsIndicatorElement, GlobalEnum.HTMLAttributes.Disabled);
+				}
 			}
 		}
 

@@ -215,10 +215,14 @@
 		}
 
 		&__indicator {
-			background: var(--color-primary);
+			background-color: var(--color-primary);
 			transition: transform 200ms linear;
 			transform-origin: 0 0;
 			will-change: transform;
+
+			&[disabled] {
+				background-color: var(--color-neutral-6);
+			}
 		}
 
 		// Service Studio preview
