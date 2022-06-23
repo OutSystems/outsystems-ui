@@ -288,6 +288,10 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 				// Start observing it!
 				this._iObserver.observe(this._tooltipBalloonContentElem);
+			} else {
+				console.warn(
+					`${ErrorCodes.Tooltip.FailOnSetIntersectionObserver}: The browser in use does not support IntersectionObserver. Tooltip balloon positions wont be properly calculated.`
+				);
 			}
 		}
 
@@ -405,6 +409,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsOpened);
 				Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpened);
 
+				// Unset the Observer if we've it running already!
+				this._unsetObserver();
 				// Set the Observer that will be checking if the balloon must change its position!
 				this._setObserver();
 
@@ -538,8 +544,14 @@ namespace OSUIFramework.Patterns.Tooltip {
 			this._moveBalloonElement();
 			// Set the balloon coordinates
 			this._setBalloonCoordinates();
-			// Check and Update the Balloon position if needed!
-			this._setBalloonPosition(this._tooltipBalloonContentElem.getBoundingClientRect());
+
+			// Check if it's open by default!
+			if (this.IsOpen) {
+				// Update the balloon position if needed!
+				this._setBalloonPosition(this._tooltipBalloonContentElem.getBoundingClientRect());
+				// Set the Observer in order to update it's position if balloon is out of bouds!
+				Helper.AsyncInvocation(this._setObserver.bind(this));
+			}
 
 			// Trigger platform's _platformEventInitializedCallback client Action
 			Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);

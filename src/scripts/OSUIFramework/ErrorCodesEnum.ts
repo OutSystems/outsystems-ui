@@ -50,6 +50,7 @@ namespace OSUIFramework.ErrorCodes {
 
 	export const Tooltip = {
 		FailRegisterCallback: 'OSUI-GEN-08001',
+		FailOnSetIntersectionObserver: 'OSUI-GEN-08002',
 	};
 
 	export const Tabs = {
