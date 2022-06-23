@@ -405,15 +405,6 @@ namespace OSUIFramework.Patterns.Tooltip {
 					}
 				});
 
-				// Since we're updating the balloon position dynamically, during those momments we do not want animation occur!
-				// - Add the selector that will allow annimation occur only during the opening momment!
-				Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpening);
-				// - Add the event which help on removing the animation after is open
-				this._tooltipBalloonContentElem.addEventListener(
-					GlobalEnum.HTMLEvent.TransitionEnd,
-					this._eventOnOpenedBalloon
-				);
-
 				// Unset the Observer if we've it running already!
 				this._unsetObserver();
 				// Set the Balloon Coordinates
@@ -423,6 +414,15 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 				// wait for BalloonPosition end...
 				Helper.AsyncInvocation(() => {
+					// Since we're updating the balloon position dynamically, during those momments we do not want animation occur!
+					// - Add the selector that will allow annimation occur only during the opening momment!
+					Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpening);
+					// - Add the event which help on removing the animation after is open
+					this._tooltipBalloonContentElem.addEventListener(
+						GlobalEnum.HTMLEvent.TransitionEnd,
+						this._eventOnOpenedBalloon
+					);
+
 					// Add the IsOpned Class Selector
 					Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsOpened);
 					Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpened);
