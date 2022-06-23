@@ -3,23 +3,28 @@ namespace OSUIFramework.Helper {
 	export abstract class BoundPosition {
 		// Check the state of boundaries position between two given Bound values
 		private static _checkIsOutBounds(elementBounds: DOMRect, testAgainstElementBounds: DOMRect): OutOfBoundaries {
+			// NOTE: the 1.5 value will be used in order to check if the element also fit at it's current right/left position!
 			return {
 				top: elementBounds.top < testAgainstElementBounds.top,
-				right: elementBounds.right > testAgainstElementBounds.right,
+				right:
+					elementBounds.right > testAgainstElementBounds.right ||
+					elementBounds.right + elementBounds.width / 1.5 > testAgainstElementBounds.right,
 				bottom: elementBounds.bottom > testAgainstElementBounds.bottom,
-				left: elementBounds.left < testAgainstElementBounds.left,
+				left:
+					elementBounds.left < testAgainstElementBounds.left ||
+					elementBounds.left - elementBounds.width / 1.5 < testAgainstElementBounds.left,
 			};
 		}
 
 		/**
-		 * Method that could be used to get a Recomended position from an element if it is ouside of boudaries of a given testAgainstElement
+		 * Method that could be used to get a Recommended position from an element if it is ouside of boudaries of a given testAgainstElement
 		 *
 		 * @param element Element to check if is outside of boundaries
 		 * @param testAgainstElement Element where the boundaries will be tested
 		 * @param elementOffset Element Offset values to ba take in consideration
 		 * @returns {string | undefined} Suggested position (Based on GlobalEnum.Position)
 		 */
-		public static GetRecomendedPosition(
+		public static GetRecommendedPosition(
 			element: HTMLElement,
 			testAgainstElement: HTMLElement = document.body,
 			elementOffset: number | OffsetValues = { top: 0, right: 0, bottom: 0, left: 0 }
@@ -32,7 +37,7 @@ namespace OSUIFramework.Helper {
 				return undefined;
 			}
 
-			return this.GetRecomendedPositionByBounds(
+			return this.GetRecommendedPositionByBounds(
 				element.getBoundingClientRect(),
 				testAgainstElement.getBoundingClientRect()
 			);
@@ -45,12 +50,12 @@ namespace OSUIFramework.Helper {
 		 * @param testAgainstElementBounds Element bounds values that will be tested against
 		 * @returns {string | undefined} Suggested position (Based on GlobalEnum.Position)
 		 */
-		public static GetRecomendedPositionByBounds(
+		public static GetRecommendedPositionByBounds(
 			elementBounds: DOMRect,
 			testAgainstElementBounds: DOMRect
 		): string | undefined {
-			// Store the recomended position
-			let recomendedPosition = undefined;
+			// Store the recommended position
+			let recommendedPosition = undefined;
 
 			// If Element size (width or height) higher AgainstElement
 			if (
@@ -58,7 +63,7 @@ namespace OSUIFramework.Helper {
 				elementBounds.width > testAgainstElementBounds.width
 			) {
 				// Doesn't matter if it's out of boundaries since it doesn't fit inside AgainstElement
-				return recomendedPosition;
+				return recommendedPosition;
 			}
 
 			// Check if Element it's out of the AgainstElement boundaries
@@ -67,46 +72,46 @@ namespace OSUIFramework.Helper {
 			// Is Out of Left boundary?
 			if (isOut.left) {
 				// Recomend open it at Right!
-				recomendedPosition = GlobalEnum.Position.Right;
+				recommendedPosition = GlobalEnum.Position.Right;
 			}
 
 			// Is Out of Right boundary?
 			if (isOut.right) {
 				// Recomend open it at Left!
-				recomendedPosition = GlobalEnum.Position.Left;
+				recommendedPosition = GlobalEnum.Position.Left;
 			}
 
 			// Is Out of Left boundary?
 			if (isOut.top) {
 				// By default, recomend open it at Right!
-				recomendedPosition = GlobalEnum.Position.Bottom;
+				recommendedPosition = GlobalEnum.Position.Bottom;
 				// Is Out of TopLeft boundary?
 				if (isOut.left) {
 					// Recomend open it at BottomRight!
-					recomendedPosition = GlobalEnum.Position.BottomRight;
+					recommendedPosition = GlobalEnum.Position.BottomRight;
 					// Is Out of TopRight boundary?
 				} else if (isOut.right) {
 					// Recomend open it at BottomLeft!
-					recomendedPosition = GlobalEnum.Position.BottomLeft;
+					recommendedPosition = GlobalEnum.Position.BottomLeft;
 				}
 			}
 
 			// Is Out of Bottom boundary?
 			if (isOut.bottom) {
 				// By default, recomend open it at Top!
-				recomendedPosition = GlobalEnum.Position.Top;
+				recommendedPosition = GlobalEnum.Position.Top;
 				// Is Out of BottomLeft boundary?
 				if (isOut.left) {
 					// Recomend open it at TopRight!
-					recomendedPosition = GlobalEnum.Position.TopRight;
+					recommendedPosition = GlobalEnum.Position.TopRight;
 					// Is Out of BottomRight boundary?
 				} else if (isOut.right) {
 					// Recomend open it at TopLeft!
-					recomendedPosition = GlobalEnum.Position.TopLeft;
+					recommendedPosition = GlobalEnum.Position.TopLeft;
 				}
 			}
 
-			return recomendedPosition;
+			return recommendedPosition;
 		}
 
 		/**

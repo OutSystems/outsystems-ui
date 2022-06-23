@@ -16,7 +16,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		private _balloonFooterElement: HTMLElement;
 		// Store the HTML element for the Dropdown otpions
 		private _balloonOptionsWrapperElement: HTMLElement;
-		// Store the balloon position when/if a recomended position has been added!
+		// Store the balloon position when/if a recommended position has been added!
 		private _balloonPositionClass = '';
 		// Store the HTML element for the Search input at Dropdown Balloon
 		private _balloonSearchInputElement: HTMLElement;
@@ -143,23 +143,23 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			this._triggerToogleCalbackEvent();
 		}
 
-		// Check the recomended position to open the balloon
-		private _getRecomendedPosition(): void {
+		// Check the recommended position to open the balloon
+		private _getRecommendedPosition(): void {
 			// Get the Boundaries for the balloon container
 			const balloonBounds = this._balloonContainerElement.getBoundingClientRect();
 			balloonBounds.height = this.configs.balloonMaxHeight + Enum.PropertiesValues.ThresholVerticalAnimateValue;
 
-			// Get the recomended position to open the balloon
-			const recomendedPosition = Helper.BoundPosition.GetRecomendedPositionByBounds(
+			// Get the recommended position to open the balloon
+			const recommendedPosition = Helper.BoundPosition.GetRecommendedPositionByBounds(
 				balloonBounds,
 				document.body.getBoundingClientRect()
 			);
 
-			// Check if there are a any recomended position
-			if (recomendedPosition !== undefined) {
+			// Check if there are a any recommended position
+			if (recommendedPosition !== undefined) {
 				let newClassPosition = '';
 
-				switch (recomendedPosition) {
+				switch (recommendedPosition) {
 					case GlobalEnum.Position.Top:
 						newClassPosition = Enum.CssClass.BalloonPositionTop;
 						break;
@@ -202,8 +202,8 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 				this._setBalloonCoordinates();
 				// Clean the position if has been defined
 				this._cleanPosition();
-				// Update/Get the recomended position
-				this._getRecomendedPosition();
+				// Update/Get the recommended position
+				this._getRecommendedPosition();
 			}
 		}
 
@@ -306,7 +306,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 
 			this._updatePatternState();
 			this._setBalloonCoordinates();
-			this._getRecomendedPosition();
+			this._getRecommendedPosition();
 		}
 
 		// Method to deal with the click at a DropdpownOptionItem

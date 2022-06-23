@@ -222,26 +222,30 @@ namespace OSUIFramework.Patterns.Tooltip {
 			);
 		}
 
-		// Set the recomended position to open the balloon
-		private _setBalloonPosition(boundingClientRect: DOMRect): void {
+		// Set the recommended position to open the balloon
+		private _setBalloonPosition(isIntersecting: boolean, boundingClientRect: DOMRect): void {
 			// Ensure it's open!!!
 			if (this.IsOpen === false) {
 				return;
 			}
 
-			// Get the recomended position to open the balloon
-			const recomendedPosition = Helper.BoundPosition.GetRecomendedPositionByBounds(
+			// Get the recommended position to open the balloon
+			const recommendedPosition = Helper.BoundPosition.GetRecommendedPositionByBounds(
 				boundingClientRect,
 				document.body.getBoundingClientRect()
 			);
 
-			if (recomendedPosition !== undefined && recomendedPosition !== this._tooltipBalloonPositionClass) {
+			if (
+				isIntersecting === false &&
+				recommendedPosition !== undefined &&
+				recommendedPosition !== this._tooltipBalloonPositionClass
+			) {
 				// Remove the older vertical position!
 				Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, this._tooltipBalloonPositionClass);
 				// Store the current position
-				this._tooltipBalloonPositionClass = recomendedPosition;
+				this._tooltipBalloonPositionClass = recommendedPosition;
 				// Set the new position
-				Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, recomendedPosition);
+				Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, recommendedPosition);
 			}
 		}
 
@@ -280,7 +284,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 				this._iObserver = new IntersectionObserver(
 					(entries) => {
 						entries.forEach((entry) => {
-							this._setBalloonPosition(entry.boundingClientRect);
+							this._setBalloonPosition(entry.isIntersecting, entry.boundingClientRect);
 						});
 					},
 					{ threshold: 1 }
@@ -548,7 +552,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 			// Check if it's open by default!
 			if (this.IsOpen) {
 				// Update the balloon position if needed!
-				this._setBalloonPosition(this._tooltipBalloonContentElem.getBoundingClientRect());
+				this._setBalloonPosition(true, this._tooltipBalloonContentElem.getBoundingClientRect());
 				// Set the Observer in order to update it's position if balloon is out of bouds!
 				Helper.AsyncInvocation(this._setObserver.bind(this));
 			}
