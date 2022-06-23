@@ -21,6 +21,11 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 .osui-tooltip {
 	display: inline-block;
 	position: relative;
+
+	// ServiceStudio Preview
+	& {
+		-servicestudio-vertical-align: middle;
+	}
 }
 
 /* ---------------------------------------------------------------------------- */
@@ -34,7 +39,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	&:empty {
 		// ServiceStudio Preview
 		& {
-			-servicestudio-min-width: 150px;
+			-servicestudio-min-width: 80px;
 		}
 	}
 }
@@ -53,12 +58,12 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 
 	// Service Studio Preview
 	& {
+		-servicestudio-position: relative;
 		-servicestudio-left: initial;
 		-servicestudio-max-height: initial;
 		-servicestudio-opacity: 1;
 		-servicestudio-overflow: initial;
-		-servicestudio-position: relative;
-		-servicestudio-top: initial;
+		-servicestudio-pointer-events: initial;
 	}
 }
 
@@ -84,9 +89,9 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	// Service Studio Preview
 	& {
 		-servicestudio-max-width: 200px;
-		-servicestudio-min-height: 36px;
+		-servicestudio-min-height: 50px;
 		-servicestudio-opacity: 1;
-		-servicestudio-top: 0;
+		-servicestudio-position: relative;
 	}
 
 	// Baloon Arrow!
@@ -309,9 +314,19 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		top: calc(var(--osui-tooltip-top) + (var(--osui-tooltip-height) / 2));
 		transform: translateX(0) translateY(-50%);
 
+		// Service Studio Preview
+		& {
+			-servicestudio-transform: none;
+		}
+
 		.osui-tooltip__balloon-wrapper__balloon {
 			transform: translateX(calc(-1 * var(--space-s)));
 			width: $osui-tooltip-baloon-max-width;
+
+			// Service Studio Preview
+			& {
+				-servicestudio-transform: none;
+			}
 
 			// Baloon Arrow!
 			&:before {

@@ -39,6 +39,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 		private _rafOnBodyScroll: number;
 		// Store the RequestAnimationFrame (aka raf) that will be triggered at OnWindowResize
 		private _rafOnWindowResize: number;
+		// Store the selfElementBounds in order to check if they changed!
+		private _selfElementBoundingClientRect: DOMRect = new DOMRect(0, 0);
 		// Store the HTML elements
 		private _tooltipBalloonContentActiveElem: HTMLElement;
 		private _tooltipBalloonContentElem: HTMLElement;
@@ -199,6 +201,19 @@ namespace OSUIFramework.Patterns.Tooltip {
 			// Get all info from the pattern self element
 			const selfElement = this._selfElem.getBoundingClientRect();
 
+			// Check if the position didn't change!
+			if (
+				selfElement.x === this._selfElementBoundingClientRect.x &&
+				selfElement.y === this._selfElementBoundingClientRect.y
+			) {
+				cancelAnimationFrame(this._rafOnBodyScroll);
+				return;
+			}
+
+			// Store the new selElement coordinates
+			this._selfElementBoundingClientRect.x = selfElement.x;
+			this._selfElementBoundingClientRect.y = selfElement.y;
+
 			// Set Css inline variables
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._tooltipBalloonWrapperElem,
@@ -241,8 +256,10 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 				// Check if the recomended position is Top/Bottom!
 				if (
-					recommendedPosition === GlobalEnum.Position.Top ||
-					recommendedPosition === GlobalEnum.Position.Bottom
+					(recommendedPosition === GlobalEnum.Position.Top ||
+						recommendedPosition === GlobalEnum.Position.Bottom) &&
+					this._tooltipBalloonPositionClass !== GlobalEnum.Position.Top &&
+					this._tooltipBalloonPositionClass !== GlobalEnum.Position.Bottom
 				) {
 					// Clean top/bottom positions from Balloon position class if they exist!
 					this._tooltipBalloonPositionClass = this._tooltipBalloonPositionClass
@@ -412,7 +429,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 				// Update the balloon position if needed!
 				this._setBalloonPosition(false, this._tooltipBalloonContentElem.getBoundingClientRect());
 
-				// wait for BalloonPosition end...
+				// wait for _setBalloonPosition ends...
 				Helper.AsyncInvocation(() => {
 					// Since we're updating the balloon position dynamically, during those momments we do not want animation occur!
 					// - Add the selector that will allow annimation occur only during the opening momment!
@@ -431,7 +448,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 				// Add the Event responsible to close it when click outside!
 				Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
 
-				// Set the Observer in order to update it's position if balloon is out of bouds!
+				// ReSet the Observer in order to update it's position if balloon run out of bounds!
 				Helper.AsyncInvocation(this._setObserver.bind(this));
 
 				// Trigger the _platformEventOnToggleCallback callback!
