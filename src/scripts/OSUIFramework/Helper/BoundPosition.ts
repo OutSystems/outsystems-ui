@@ -3,16 +3,11 @@ namespace OSUIFramework.Helper {
 	export abstract class BoundPosition {
 		// Check the state of boundaries position between two given Bound values
 		private static _checkIsOutBounds(elementBounds: DOMRect, testAgainstElementBounds: DOMRect): OutOfBoundaries {
-			// NOTE: the 1.5 value will be used in order to check if the element also fit at it's current right/left position!
 			return {
 				top: elementBounds.top < testAgainstElementBounds.top,
-				right:
-					elementBounds.right > testAgainstElementBounds.right ||
-					elementBounds.right + elementBounds.width / 1.5 > testAgainstElementBounds.right,
+				right: elementBounds.right > testAgainstElementBounds.right,
 				bottom: elementBounds.bottom > testAgainstElementBounds.bottom,
-				left:
-					elementBounds.left < testAgainstElementBounds.left ||
-					elementBounds.left - elementBounds.width / 1.5 < testAgainstElementBounds.left,
+				left: elementBounds.left < testAgainstElementBounds.left,
 			};
 		}
 
@@ -68,6 +63,7 @@ namespace OSUIFramework.Helper {
 
 			// Check if Element it's out of the AgainstElement boundaries
 			const isOut = this._checkIsOutBounds(elementBounds, testAgainstElementBounds);
+			console.log(isOut);
 
 			// Is Out of Left boundary?
 			if (isOut.left) {
