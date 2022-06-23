@@ -238,10 +238,25 @@ namespace OSUIFramework.Patterns.Tooltip {
 			if (recommendedPosition !== undefined && recommendedPosition !== this._tooltipBalloonPositionClass) {
 				// Remove the older vertical position!
 				Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, this._tooltipBalloonPositionClass);
-				// Store the current position
-				this._tooltipBalloonPositionClass = recommendedPosition;
+
+				// Check if the recomended position is Top/Bottom!
+				if (
+					recommendedPosition === GlobalEnum.Position.Top ||
+					recommendedPosition === GlobalEnum.Position.Bottom
+				) {
+					// Clean top/bottom positions from Balloon position class if they exist!
+					this._tooltipBalloonPositionClass = this._tooltipBalloonPositionClass
+						.replace(GlobalEnum.Position.Top + '-', '')
+						.replace(GlobalEnum.Position.Bottom + '-', '');
+
+					// Let's also use the previous left/right as well...
+					this._tooltipBalloonPositionClass = recommendedPosition + '-' + this._tooltipBalloonPositionClass;
+				} else {
+					this._tooltipBalloonPositionClass = recommendedPosition;
+				}
+
 				// Set the new position
-				Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, recommendedPosition);
+				Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, this._tooltipBalloonPositionClass);
 			}
 		}
 
@@ -280,7 +295,6 @@ namespace OSUIFramework.Patterns.Tooltip {
 				this._iObserver = new IntersectionObserver(
 					(entries) => {
 						entries.forEach((entry) => {
-							console.log(entry);
 							this._setBalloonPosition(entry.isIntersecting, entry.boundingClientRect);
 						});
 					},
@@ -391,9 +405,6 @@ namespace OSUIFramework.Patterns.Tooltip {
 					}
 				});
 
-				// Set the Balloon Coordinates
-				this._setBalloonCoordinates();
-
 				// Since we're updating the balloon position dynamically, during those momments we do not want animation occur!
 				// - Add the selector that will allow annimation occur only during the opening momment!
 				Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpening);
@@ -403,17 +414,25 @@ namespace OSUIFramework.Patterns.Tooltip {
 					this._eventOnOpenedBalloon
 				);
 
+				// Unset the Observer if we've it running already!
+				this._unsetObserver();
+				// Set the Balloon Coordinates
+				this._setBalloonCoordinates();
+				// Update the balloon position if needed!
+				this._setBalloonPosition(false, this._tooltipBalloonContentElem.getBoundingClientRect());
+
+				// wait for BalloonPosition end...
+				Helper.AsyncInvocation(() => {
+					// Add the IsOpned Class Selector
+					Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsOpened);
+					Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpened);
+				});
+
 				// Add the Event responsible to close it when click outside!
 				Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
 
-				// Add the IsOpned Class Selector
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsOpened);
-				Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpened);
-
-				// Unset the Observer if we've it running already!
-				this._unsetObserver();
-				// Set the Observer that will be checking if the balloon must change its position!
-				this._setObserver();
+				// Set the Observer in order to update it's position if balloon is out of bouds!
+				Helper.AsyncInvocation(this._setObserver.bind(this));
 
 				// Trigger the _platformEventOnToggleCallback callback!
 				Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, true);
@@ -549,7 +568,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 			// Check if it's open by default!
 			if (this.IsOpen) {
 				// Update the balloon position if needed!
-				this._setBalloonPosition(true, this._tooltipBalloonContentElem.getBoundingClientRect());
+				this._setBalloonPosition(false, this._tooltipBalloonContentElem.getBoundingClientRect());
 				// Set the Observer in order to update it's position if balloon is out of bouds!
 				Helper.AsyncInvocation(this._setObserver.bind(this));
 			}

@@ -63,7 +63,6 @@ namespace OSUIFramework.Helper {
 
 			// Check if Element it's out of the AgainstElement boundaries
 			const isOut = this._checkIsOutBounds(elementBounds, testAgainstElementBounds);
-			console.log(isOut);
 
 			// Is Out of Left boundary?
 			if (isOut.left) {

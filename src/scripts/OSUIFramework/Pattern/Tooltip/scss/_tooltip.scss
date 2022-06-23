@@ -540,14 +540,30 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	}
 }
 
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	.osui-tooltip__balloon-wrapper {
+		// Is left
+		&.left {
+			.osui-tooltip__balloon-wrapper__balloon {
+				transform: translateX(0);
+			}
+		}
+	}
+}
+
 // Responsive --------------------------------------------------------------------
 ///
 .phone {
-	.osui-tooltip__balloon-wrapper--is-opened {
-		.osui-tooltip__balloon-wrapper__balloon {
-			max-width: initial;
-			min-width: initial;
-			width: 40vw;
+	.osui-tooltip__balloon-wrapper {
+		&,
+		&--is-opened {
+			.osui-tooltip__balloon-wrapper__balloon {
+				max-width: initial;
+				min-width: initial;
+				width: 40vw;
+			}
 		}
 	}
 }
