@@ -31,8 +31,6 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	cursor: pointer;
 	position: inherit;
 
-	background-color: red;
-
 	&:empty {
 		// ServiceStudio Preview
 		& {

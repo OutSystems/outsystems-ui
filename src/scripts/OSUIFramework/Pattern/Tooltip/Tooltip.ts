@@ -223,7 +223,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 		}
 
 		// Set the recomended position to open the balloon
-		private _setBalloonPosition(isIntersecting: boolean, boundingClientRect: DOMRect): void {
+		private _setBalloonPosition(boundingClientRect: DOMRect): void {
 			// Ensure it's open!!!
 			if (this.IsOpen === false) {
 				return;
@@ -280,7 +280,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 				this._iObserver = new IntersectionObserver(
 					(entries) => {
 						entries.forEach((entry) => {
-							this._setBalloonPosition(entry.isIntersecting, entry.boundingClientRect);
+							this._setBalloonPosition(entry.boundingClientRect);
 						});
 					},
 					{ threshold: 1 }
@@ -538,6 +538,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 			this._moveBalloonElement();
 			// Set the balloon coordinates
 			this._setBalloonCoordinates();
+			// Check and Update the Balloon position if needed!
+			this._setBalloonPosition(this._tooltipBalloonContentElem.getBoundingClientRect());
 
 			// Trigger platform's _platformEventInitializedCallback client Action
 			Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
