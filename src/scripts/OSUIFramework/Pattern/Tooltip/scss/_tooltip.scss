@@ -123,7 +123,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 			&:before {
 				border-color: transparent transparent transparent var(--color-neutral-9);
 				border-width: $osui-tooltip-arrow-size 0 $osui-tooltip-arrow-size $osui-tooltip-arrow-size;
-				left: 100%;
+				left: calc(100% - 1px);
 				top: 50%;
 				transform: translateX(-50%) translateY(-50%);
 			}
@@ -147,7 +147,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 			&:before {
 				border-color: transparent var(--color-neutral-9) transparent transparent;
 				border-width: $osui-tooltip-arrow-size $osui-tooltip-arrow-size $osui-tooltip-arrow-size 0;
-				left: 0;
+				left: 1px;
 				top: 50%;
 				transform: translateX(-50%) translateY(-50%);
 			}
@@ -170,7 +170,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 				border-color: transparent transparent var(--color-neutral-9) transparent;
 				border-width: 0 $osui-tooltip-arrow-size $osui-tooltip-arrow-size $osui-tooltip-arrow-size;
 				left: 50%;
-				top: 0;
+				top: 1px;
 				transform: translateX(-50%) translateY(-50%);
 			}
 		}
@@ -191,6 +191,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 			&:before {
 				border-color: var(--color-neutral-9) transparent transparent transparent;
 				border-width: $osui-tooltip-arrow-size $osui-tooltip-arrow-size 0 $osui-tooltip-arrow-size;
+				top: calc(100% - 1px);
 			}
 		}
 	}
@@ -204,7 +205,6 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 			// Baloon Arrow!
 			&:before {
 				left: 50%;
-				top: 100%;
 				transform: translateX(-50%) translateY(-50%);
 			}
 		}
@@ -219,7 +219,6 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 			// Baloon Arrow!
 			&:before {
 				left: calc(100% - var(--space-s));
-				top: 100%;
 				transform: translateX(-100%) translateY(-50%);
 			}
 		}
@@ -234,7 +233,6 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 			// Baloon Arrow!
 			&:before {
 				left: var(--space-s);
-				top: 100%;
 				transform: translateX(0) translateY(-50%);
 			}
 		}
@@ -255,6 +253,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 			&:before {
 				border-color: transparent transparent var(--color-neutral-9) transparent;
 				border-width: 0 $osui-tooltip-arrow-size $osui-tooltip-arrow-size $osui-tooltip-arrow-size;
+				top: 1px;
 			}
 		}
 	}
@@ -268,7 +267,6 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 			// Baloon Arrow!
 			&:before {
 				left: 50%;
-				top: 0;
 				transform: translateX(-50%) translateY(-50%);
 			}
 		}
@@ -283,7 +281,6 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 			// Baloon Arrow!
 			&:before {
 				left: calc(100% - var(--space-s));
-				top: 0;
 				transform: translateX(-100%) translateY(-50%);
 			}
 		}
@@ -298,7 +295,6 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 			// Baloon Arrow!
 			&:before {
 				left: var(--space-s);
-				top: 0;
 				transform: translateX(0) translateY(-50%);
 			}
 		}
