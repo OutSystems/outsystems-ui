@@ -45,7 +45,7 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsAPI {
 	): OSUIFramework.Patterns.FloatingActions.IFloatingActions {
 		if (_floatingActionsMap.has(floatingActionsId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.FloatingActions} registered under id: ${floatingActionsId}`
+				`There is already a ${OSUIFramework.GlobalEnum.PatternName.FloatingActions} registered under id: ${floatingActionsId}`
 			);
 		}
 

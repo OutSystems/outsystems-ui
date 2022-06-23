@@ -37,7 +37,7 @@ namespace OSUIFramework.Patterns {
 		private _uniqueId: string;
 
 		/**
-		 * Refence for the base HTML of the element of this pattern;
+		 * Reference for the base HTML of the element of this pattern;
 		 *
 		 * @protected
 		 * @type {HTMLElement}

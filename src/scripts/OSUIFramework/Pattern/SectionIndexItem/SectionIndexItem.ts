@@ -238,7 +238,7 @@ namespace OSUIFramework.Patterns.SectionIndexItem {
 				switch (propertyName) {
 					case Enum.Properties.ScrollToWidgetId:
 						console.warn(
-							`${GlobalEnum.PatternsNames.SectionIndex} (${this.widgetId}): change to ${Enum.Properties.ScrollToWidgetId} on property ${Enum.Properties.ScrollToWidgetId} is not editable at OnParametersChange.`
+							`${GlobalEnum.PatternName.SectionIndex} (${this.widgetId}): change to ${Enum.Properties.ScrollToWidgetId} on property ${Enum.Properties.ScrollToWidgetId} is not editable at OnParametersChange.`
 						);
 						break;
 				}

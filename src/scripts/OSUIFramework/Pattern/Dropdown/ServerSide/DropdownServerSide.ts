@@ -332,7 +332,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 				}
 			} else {
 				throw new Error(
-					`${ErrorCodes.Dropdown.FailOptionItemClicked}: The ${GlobalEnum.PatternsNames.DropdownServerSideItem} under uniqueId: '${optionItemId}' does not exist as an OptionItem from ${GlobalEnum.PatternsNames.Dropdown} with Id: ${this.widgetId}.`
+					`${ErrorCodes.Dropdown.FailOptionItemClicked}: The ${GlobalEnum.PatternName.DropdownServerSideItem} under uniqueId: '${optionItemId}' does not exist as an OptionItem from ${GlobalEnum.PatternName.Dropdown} with Id: ${this.widgetId}.`
 				);
 			}
 		}
@@ -371,7 +371,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 
 					// ArrowDown
 					case GlobalEnum.Keycodes.ArrowDown:
-						if (getOptionItemIndex < this.childItems.length - 1) {
+						if (getOptionItemIndex < this.getChildItems().length - 1) {
 							this._updateOptionItemFocuStateOnKeyPress(optionItem, getOptionItemIndex + 1);
 						}
 						break;
@@ -405,7 +405,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 				}
 			} else {
 				throw new Error(
-					`${ErrorCodes.Dropdown.FailOptionItemKeyPressed}: The ${GlobalEnum.PatternsNames.DropdownServerSideItem} under uniqueId: '${optionItemId}' does not exist as an OptionItem from ${GlobalEnum.PatternsNames.Dropdown} with Id: ${this.widgetId}.`
+					`${ErrorCodes.Dropdown.FailOptionItemKeyPressed}: The ${GlobalEnum.PatternName.DropdownServerSideItem} under uniqueId: '${optionItemId}' does not exist as an OptionItem from ${GlobalEnum.PatternName.Dropdown} with Id: ${this.widgetId}.`
 				);
 			}
 		}
@@ -477,7 +477,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			// Check if the given OptionId has been already added
 			if (this.getChild(optionItemId)) {
 				throw new Error(
-					`${ErrorCodes.Dropdown.FailSetNewOptionItem}: There is already a ${GlobalEnum.PatternsNames.DropdownServerSideItem} under Id: '${optionItem.widgetId}' added to ${GlobalEnum.PatternsNames.Dropdown} with uniqueId: ${this.uniqueId}.`
+					`${ErrorCodes.Dropdown.FailSetNewOptionItem}: There is already a ${GlobalEnum.PatternName.DropdownServerSideItem} under Id: '${optionItem.widgetId}' added to ${GlobalEnum.PatternName.Dropdown} with uniqueId: ${this.uniqueId}.`
 				);
 			} else {
 				// Store DropDownOption Child Item
@@ -558,7 +558,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 				this.unsetChild(optionItemId);
 			} else {
 				throw new Error(
-					`${ErrorCodes.Dropdown.FailUnsetNewOptionItem}: The ${GlobalEnum.PatternsNames.DropdownServerSideItem} under uniqueId: '${optionItemId}' does not exist as an OptionItem from ${GlobalEnum.PatternsNames.Dropdown} with Id: ${this.widgetId}.`
+					`${ErrorCodes.Dropdown.FailUnsetNewOptionItem}: The ${GlobalEnum.PatternName.DropdownServerSideItem} under uniqueId: '${optionItemId}' does not exist as an OptionItem from ${GlobalEnum.PatternName.Dropdown} with Id: ${this.widgetId}.`
 				);
 			}
 		}
@@ -840,7 +840,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		 */
 		public clear(): void {
 			// Get all Selected Items
-			const selectedOptions = this.childItems.filter((item) => item.IsSelected);
+			const selectedOptions = this.getChildItems().filter((item) => item.IsSelected);
 			// Go through all the seected option items
 			for (const optionItem of selectedOptions) {
 				// Unselect it!

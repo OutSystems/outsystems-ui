@@ -28,6 +28,13 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
+	 * OutSystemsUI common css variables
+	 */
+	export enum CSSVariables {
+		OverlayOpacity = '--overlay-opacity',
+	}
+
+	/**
 	 * OutSystemsUI position cssClasses and identifiers of position
 	 */
 	export enum Position {
@@ -48,6 +55,7 @@ namespace OSUIFramework.GlobalEnum {
 	export enum CssProperties {
 		None = 'none',
 		PaddingTop = 'padding-top',
+		Auto = 'auto',
 	}
 
 	/**
@@ -65,11 +73,14 @@ namespace OSUIFramework.GlobalEnum {
 	 */
 	export enum Direction {
 		Bottom = 'bottom',
+		Down = 'down',
 		Left = 'left',
 		LTR = 'ltr',
+		None = '',
 		Right = 'right',
 		RTL = 'rtl',
 		Top = 'top',
+		Up = 'up',
 	}
 
 	/**
@@ -115,6 +126,7 @@ namespace OSUIFramework.GlobalEnum {
 		keyDown = 'keydown',
 		MouseEnter = 'mouseenter',
 		MouseLeave = 'mouseleave',
+		OrientationChange = 'orientationchange',
 		Resize = 'resize',
 		Scroll = 'scroll',
 		TouchEnd = 'touchend',
@@ -167,6 +179,14 @@ namespace OSUIFramework.GlobalEnum {
 	}
 
 	/**
+	 * OutSystemsUI KeyframesEffect options
+	 */
+	export enum KeyframesEffectOptions {
+		EasingLinear = 'linear',
+		FillBoth = 'both',
+	}
+
+	/**
 	 * OutSystems mobile operating systems
 	 */
 	export enum MobileOS {
@@ -182,18 +202,19 @@ namespace OSUIFramework.GlobalEnum {
 	 */
 	export enum Orientation {
 		Horizontal = 'horizontal',
+		None = '',
 		Vertical = 'vertical',
 	}
 
-	//TODO: change the name of the enum to singular? PatternName or PatternsName
 	/**
 	 * OutSystemsUI patterns names
 	 * Note: Can be used for logging purposes
 	 */
-	export enum PatternsNames {
+	export enum PatternName {
 		Accordion = 'Accordion',
 		AccordionItem = 'Accordion Item',
 		AnimatedLabel = 'Animated Label',
+		BottomSheet = 'Bottom Sheet',
 		ButtonLoading = 'ButtonLoading',
 		Carousel = 'Carousel',
 		Datepicker = 'Datepicker',
@@ -237,6 +258,7 @@ namespace OSUIFramework.GlobalEnum {
 	export enum Units {
 		Percentage = '%',
 		Pixel = 'px',
+		Em = 'em',
 	}
 
 	export enum Browser {
@@ -268,5 +290,10 @@ namespace OSUIFramework.GlobalEnum {
 
 	export enum NotchClasses {
 		IPhoneX = 'iphonex',
+	}
+
+	export enum FocusTrapClasses {
+		FocusTrapBottom = 'focus-trap-bottom',
+		FocusTrapTop = 'focus-trap-top',
 	}
 }

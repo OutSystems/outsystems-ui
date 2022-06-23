@@ -68,7 +68,7 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	export function Create(accordionId: string, configs: string): OSUIFramework.Patterns.Accordion.IAccordion {
 		if (_accordionMap.has(accordionId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.Accordion} registered under id: ${accordionId}`
+				`There is already a ${OSUIFramework.GlobalEnum.PatternName.Accordion} registered under id: ${accordionId}`
 			);
 		}
 

@@ -1,6 +1,19 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Tabs.Enum {
 	/**
+	 * Communication between Patterns - Notification Type
+	 */
+	export enum ChildNotifyActionType {
+		AddContentItem = 'add-content-item',
+		AddHeaderItem = 'add-header-item',
+		Click = 'click',
+		RemovedContentItem = 'removed-content-item',
+		RemovedHeaderItem = 'removed-header-item',
+		DisabledHeaderItem = 'disabled-header-item',
+		EnabledHeaderItem = 'enabled-header-item',
+	}
+
+	/**
 	 * Tabs Enum for CSS Classes
 	 */
 	export enum CssClasses {
@@ -15,6 +28,7 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 		TabsContent = 'osui-tabs__content',
 		TabsHeaderItem = 'osui-tabs__header-item',
 		TabsContentItem = 'osui-tabs__content-item',
+		TabsIndicatorElem = 'osui-tabs__header__indicator',
 	}
 
 	/**
@@ -22,6 +36,7 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 	 */
 	export enum Attributes {
 		DataTab = 'data-tab',
+		DataDirection = 'data-direction',
 	}
 
 	/**
@@ -30,6 +45,8 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 	export enum CssProperty {
 		TabsHeight = '--tabs-height',
 		TabsHeaderItems = '--tabs-header-items',
+		TabsIndicatorScale = '--tabs-indicator-scale',
+		TabsIndicatorTransform = '--tabs-indicator-transform',
 	}
 
 	/**
@@ -48,5 +65,13 @@ namespace OSUIFramework.Patterns.Tabs.Enum {
 	 */
 	export enum ObserverOptions {
 		RootMargin = '1px',
+	}
+
+	/**
+	 * Tabs Enum for Tabs child types
+	 */
+	export enum ChildTypes {
+		TabsContentItem = 'TabsContentItem',
+		TabsHeaderItem = 'TabsHeaderItem',
 	}
 }

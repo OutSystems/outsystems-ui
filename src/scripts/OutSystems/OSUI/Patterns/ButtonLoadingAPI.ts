@@ -44,7 +44,7 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	): OSUIFramework.Patterns.ButtonLoading.IButtonLoading {
 		if (_buttonsLoadingMap.has(buttonLoadingId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.ButtonLoading} registered under id: ${buttonLoadingId}`
+				`There is already a ${OSUIFramework.GlobalEnum.PatternName.ButtonLoading} registered under id: ${buttonLoadingId}`
 			);
 		}
 
@@ -105,7 +105,7 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	 */
 	export function GetButtonLoadingById(buttonLoadingId: string): OSUIFramework.Patterns.ButtonLoading.IButtonLoading {
 		return OSUIFramework.Helper.MapOperation.FindInMap(
-			OSUIFramework.GlobalEnum.PatternsNames.ButtonLoading,
+			OSUIFramework.GlobalEnum.PatternName.ButtonLoading,
 			buttonLoadingId,
 			_buttonsLoadingMap
 		) as OSUIFramework.Patterns.ButtonLoading.IButtonLoading;

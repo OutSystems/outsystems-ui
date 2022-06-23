@@ -67,7 +67,7 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	export function Create(searchId: string, configs: string): OSUIFramework.Patterns.Search.ISearch {
 		if (_searchsMap.has(searchId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.Search} registered under id: ${searchId}`
+				`There is already a ${OSUIFramework.GlobalEnum.PatternName.Search} registered under id: ${searchId}`
 			);
 		}
 
@@ -125,7 +125,7 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	 */
 	export function GetSearchById(searchId: string): OSUIFramework.Patterns.Search.ISearch {
 		return OSUIFramework.Helper.MapOperation.FindInMap(
-			OSUIFramework.GlobalEnum.PatternsNames.Search,
+			OSUIFramework.GlobalEnum.PatternName.Search,
 			searchId,
 			_searchsMap
 		) as OSUIFramework.Patterns.Search.ISearch;

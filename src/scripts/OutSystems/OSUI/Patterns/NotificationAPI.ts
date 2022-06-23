@@ -41,7 +41,7 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	export function Create(notificationId: string, configs: string): OSUIFramework.Patterns.Notification.INotification {
 		if (_notificationMap.has(notificationId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.Notification} registered under id: ${notificationId}`
+				`There is already a ${OSUIFramework.GlobalEnum.PatternName.Notification} registered under id: ${notificationId}`
 			);
 		}
 

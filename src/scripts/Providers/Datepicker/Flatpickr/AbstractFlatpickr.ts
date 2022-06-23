@@ -100,6 +100,11 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @memberof AbstractFlatpickr
 		 */
 		protected createProviderInstance(): void {
+			/* In order to avoid dateFormat convert issues done by provider when InitialDate was not defined and input has a default date lets clean that value before creating provider instance. This happen when DateFormat is different from YYYY-MM-DD */
+			if (this._datePickerProviderInputElem && this._flatpickrOpts.defaultDate === undefined) {
+				this._datePickerProviderInputElem.value = '';
+			}
+
 			// Init provider
 			this.provider = window.flatpickr(this._datePickerProviderInputElem, this._flatpickrOpts);
 
@@ -245,7 +250,8 @@ namespace Providers.Datepicker.Flatpickr {
 				this.unsetCallbacks();
 				this.unsetHtmlElements();
 
-				this.provider.destroy();
+				// Wait for _datePickerProviderInputElem be removed from DOM, before detroy the provider instance!
+				OSUIFramework.Helper.AsyncInvocation(this.provider.destroy);
 			}
 
 			super.dispose();
@@ -277,6 +283,18 @@ namespace Providers.Datepicker.Flatpickr {
 
 				default:
 					throw new Error(`The given '${eventName}' event name it's not defined.`);
+			}
+		}
+
+		/**
+		 * Method used to set the DatePicker as editable on its input
+		 *
+		 * @memberof AbstractFlatpickr
+		 */
+		public setEditableInput(isEditable: boolean): void {
+			if (this.configs.allowInput !== isEditable) {
+				this.configs.allowInput = isEditable;
+				this.redraw();
 			}
 		}
 

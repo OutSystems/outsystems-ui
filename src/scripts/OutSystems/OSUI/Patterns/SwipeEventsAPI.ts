@@ -13,7 +13,7 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 	export function Create(swipeEventsId: string, configs: string): OSUIFramework.Patterns.SwipeEvents.ISwipeEvents {
 		if (_swipeEventsMap.has(swipeEventsId)) {
 			throw new Error(
-				`There is already an ${OSUIFramework.GlobalEnum.PatternsNames.SwipeEvents} registered under id: ${swipeEventsId}`
+				`There is already an ${OSUIFramework.GlobalEnum.PatternName.SwipeEvents} registered under id: ${swipeEventsId}`
 			);
 		}
 

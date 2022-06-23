@@ -41,7 +41,7 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	export function Create(tabsId: string, configs: string): OSUIFramework.Patterns.Tabs.ITabs {
 		if (_tabsMap.has(tabsId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.Tabs} registered under id: ${tabsId}`
+				`There is already a ${OSUIFramework.GlobalEnum.PatternName.Tabs} registered under id: ${tabsId}`
 			);
 		}
 

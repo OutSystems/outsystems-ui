@@ -22,7 +22,7 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 
 			if (!floating) {
 				throw Error(
-					`This ${OSUIFramework.GlobalEnum.PatternsNames.FloatingActionsItem} does not belong to any ${OSUIFramework.GlobalEnum.PatternsNames.FloatingActions} pattern.`
+					`This ${OSUIFramework.GlobalEnum.PatternName.FloatingActionsItem} does not belong to any ${OSUIFramework.GlobalEnum.PatternName.FloatingActions} pattern.`
 				);
 			}
 			const uniqueId = floating.getAttribute('name');
@@ -61,7 +61,7 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 	): OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem {
 		if (_floatingActionsItemMap.has(floatingActionsItemId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.FloatingActions} registered under id: ${floatingActionsItemId}`
+				`There is already a ${OSUIFramework.GlobalEnum.PatternName.FloatingActions} registered under id: ${floatingActionsItemId}`
 			);
 		}
 		const floatingAction = GetFloatingActionsByItem(floatingActionsItemId);

@@ -91,6 +91,7 @@ stages:
       jobs:
           - job: execute_tests
             displayName: Build and run tests on Safari
+            timeoutInMinutes: 120
             variables:
                 tags: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['check_changes.tags'] ]
                 branch: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['branch_name.branch'] ]
@@ -115,6 +116,7 @@ stages:
       jobs:
           - job: execute_tests
             displayName: Build and run tests on Safari
+            timeoutInMinutes: 120
             variables:
                 tags: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['check_changes.tags'] ]
                 branch: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['branch_name.branch'] ]
@@ -137,6 +139,7 @@ stages:
       jobs:
           - job: execute_tests
             displayName: Build and run tests on Chrome
+            timeoutInMinutes: 120
             variables:
                 tags: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['check_changes.tags'] ]
                 branch: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['branch_name.branch'] ]
@@ -161,6 +164,7 @@ stages:
       jobs:
           - job: execute_tests
             displayName: Build and run tests on Chrome
+            timeoutInMinutes: 120
             variables:
                 tags: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['check_changes.tags'] ]
                 branch: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['branch_name.branch'] ]

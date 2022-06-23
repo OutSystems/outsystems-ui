@@ -59,22 +59,13 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 			return fpOptions;
 		}
 
-		public validateDefault(key: string, value: unknown): unknown {
-			let validatedValue = undefined;
-
-			switch (key) {
-				case Enum.Properties.InitialStartDate:
-					validatedValue = false;
-					break;
-				case Enum.Properties.InitialEndDate:
-					validatedValue = false;
-					break;
-				default:
-					validatedValue = super.validateDefault(key, value);
-					break;
+		// Method that validates if a given property can be changed.
+		public validateCanChange(isBuilt: boolean, key: string): boolean {
+			// Block updating InitialStartDate and InitialEndDate after pattern is built (OnParameters Change)
+			if (isBuilt) {
+				return key !== Enum.Properties.InitialStartDate && key !== Enum.Properties.InitialEndDate;
 			}
-
-			return validatedValue;
+			return true;
 		}
 	}
 }

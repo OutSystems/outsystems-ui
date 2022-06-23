@@ -11,6 +11,8 @@ namespace OSUIFramework.Event {
 					return new Patterns.Submenu.Open();
 				case Type.WindowResize:
 					return new Event.WindowResize();
+				case Type.OrientationChange:
+					return new Event.OrientationChange();
 				default:
 					throw new Error(`The event ${eventType} is not supported.`);
 			}

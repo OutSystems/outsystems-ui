@@ -3,12 +3,15 @@ namespace OSUIFramework.Patterns.TabsHeaderItem {
 	/**
 	 * Defines the interface for OutSystemsUI TabsHeaderItem Pattern
 	 */
-	export interface ITabsHeaderItem extends Interface.IPattern {
+	export interface ITabsHeaderItem extends Interface.IChild {
+		get IsActive(): boolean;
+		disable();
+		enable();
 		getDataTab();
-		removeActiveElement();
-		setActiveElement();
 		setAriaControlsAttribute(contentItemId: string);
 		setDataTab(dataTab: number);
 		setFocus();
+		setIsActive();
+		unsetIsActive();
 	}
 }

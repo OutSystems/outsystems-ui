@@ -8,6 +8,22 @@ namespace OSUIFramework.Callbacks {
 	//This type is used to define callbacks that will be actions in OutSystems code side.
 	export type OSGeneric = { (patternId: string, ...args: unknown[]): void };
 
+	// DragEvent callback types
+	export type onGestureStart = { (x: number, y: number): void };
+	export type onGestureMove = { (x: number, y: number, offsetX: number, offsetY: number, evt: TouchEvent): void };
+	export type onGestureEnd = { (offsetX: number, offsetY: number, timeTaken: number): void };
+
+	// SwipeEvent callback types
+	export type onSwipeDown = { (): void };
+	export type onSwipeLeft = { (): void };
+	export type onSwipeRight = { (): void };
+	export type onSwipeUp = { (): void };
+
+	// Notificaction
+	export type OSBottomSheetOnToggleEvent = {
+		(bottomsheetId: string, isOpen: boolean): void;
+	};
+
 	// Carousel
 	export type OSCarouselSlideMovedEvent = {
 		(carouselId: string, index: number): void;
@@ -37,7 +53,7 @@ namespace OSUIFramework.Callbacks {
 		(flipId: string, isFlipped: boolean): void;
 	};
 
-	// Notifficaction
+	// Notificaction
 	export type OSNotificationToggleEvent = {
 		(notificationId: string, isOpen: boolean): void;
 	};

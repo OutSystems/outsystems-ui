@@ -44,7 +44,7 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	): OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel {
 		if (_animatedLabelsMap.has(animatedLabelId)) {
 			throw new Error(
-				`There is already an ${OSUIFramework.GlobalEnum.PatternsNames.AnimatedLabel} registered under id: ${animatedLabelId}`
+				`There is already an ${OSUIFramework.GlobalEnum.PatternName.AnimatedLabel} registered under id: ${animatedLabelId}`
 			);
 		}
 
@@ -105,7 +105,7 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	 */
 	export function GetAnimatedLabelById(animatedLabelId: string): OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel {
 		return OSUIFramework.Helper.MapOperation.FindInMap(
-			OSUIFramework.GlobalEnum.PatternsNames.AnimatedLabel,
+			OSUIFramework.GlobalEnum.PatternName.AnimatedLabel,
 			animatedLabelId,
 			_animatedLabelsMap
 		) as OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel;

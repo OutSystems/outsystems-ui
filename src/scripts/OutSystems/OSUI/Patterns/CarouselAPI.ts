@@ -46,7 +46,7 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	): OSUIFramework.Patterns.Carousel.ICarousel {
 		if (_carouselItemsMap.has(carouselId)) {
 			throw new Error(
-				`There is already an ${OSUIFramework.GlobalEnum.PatternsNames.Carousel} registered under id: ${carouselId}`
+				`There is already an ${OSUIFramework.GlobalEnum.PatternName.Carousel} registered under id: ${carouselId}`
 			);
 		}
 

@@ -2,6 +2,7 @@
 namespace OSUIFramework.Patterns.Dropdown {
 	export abstract class AbstractDropdownConfig extends Patterns.AbstractProviderConfiguration {
 		public IsDisabled: boolean;
+		public ShowDropboxAsPopup: boolean;
 
 		constructor(config: JSON) {
 			super(config);

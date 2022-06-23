@@ -24,7 +24,7 @@ namespace OSUIFramework.Patterns.RangeSlider.Factory {
 
 			default:
 				throw new Error(
-					`There is no ${OSUIFramework.GlobalEnum.PatternsNames.RangeSlider} of the ${provider} provider`
+					`There is no ${OSUIFramework.GlobalEnum.PatternName.RangeSlider} of the ${provider} provider`
 				);
 		}
 
