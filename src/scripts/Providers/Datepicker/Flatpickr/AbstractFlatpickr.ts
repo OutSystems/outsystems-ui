@@ -114,7 +114,7 @@ namespace Providers.Datepicker.Flatpickr {
 			// Since Flatpickr has a native behaviour (by default) if a mobile device is in use, we must ensure we can add our Classes and TodayBtn to it, since if it's native behaviour we can't do it!
 			if (this.provider.calendarContainer !== undefined) {
 				if (
-					this.configs.calendarMode === OSUIFramework.Patterns.DatePicker.Enum.Mode.Range ||
+					this.configs.CalendarMode === OSUIFramework.Patterns.DatePicker.Enum.Mode.Range ||
 					(OSUIFramework.Helper.DeviceInfo.IsDesktop && OSUIFramework.Helper.DeviceInfo.IsNative === false)
 				) {
 					/* NOTE:
@@ -292,8 +292,8 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @memberof AbstractFlatpickr
 		 */
 		public setEditableInput(isEditable: boolean): void {
-			if (this.configs.allowInput !== isEditable) {
-				this.configs.allowInput = isEditable;
+			if (this.configs.AllowInput !== isEditable) {
+				this.configs.AllowInput = isEditable;
 				this.redraw();
 			}
 		}
@@ -309,6 +309,19 @@ namespace Providers.Datepicker.Flatpickr {
 
 			// If provider has been already defined, calendar must be redrawed!
 			if (this.provider !== undefined) {
+				this.redraw();
+			}
+		}
+
+		/**
+		 * Method used to toggle the default native behavior of DatePicker
+		 *
+		 * @memberof AbstractFlatpickr
+		 */
+		public toggleNativeBehavior(isNative: boolean): void {
+			// Invert the boolean value of IsNative because of provider option
+			if (this.configs.DisableMobile !== !isNative) {
+				this.configs.DisableMobile = !isNative;
 				this.redraw();
 			}
 		}
