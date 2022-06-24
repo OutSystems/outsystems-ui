@@ -112,6 +112,13 @@ namespace OSUIFramework.Patterns.Tooltip {
 		// Update the balloon coordinates
 		private _onBodyScroll(): void {
 			if (this.isBuilt) {
+				// If it's open and not at Desktop, close it!
+				if (this._isOpen && Helper.DeviceInfo.IsDesktop === false) {
+					cancelAnimationFrame(this._rafOnBodyScroll);
+					this._triggerClose();
+					return;
+				}
+
 				// If the balloon is open and not IsPhone
 				if (this._isOpen) {
 					// Update the coordinates
