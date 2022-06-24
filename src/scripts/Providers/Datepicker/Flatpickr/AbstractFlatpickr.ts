@@ -319,9 +319,11 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @memberof AbstractFlatpickr
 		 */
 		public toggleNativeBehavior(isNative: boolean): void {
-			// Invert the boolean value because of provider option
-			this.configs.disableMobile = !isNative;
-			this.redraw();
+			// Invert the boolean value of IsNative because of provider option
+			if (this.configs.disableMobile !== !isNative) {
+				this.configs.disableMobile = !isNative;
+				this.redraw();
+			}
 		}
 
 		protected abstract onDateSelectedEvent(selectedDates: string[], dateStr: string, fp: Flatpickr): void;
