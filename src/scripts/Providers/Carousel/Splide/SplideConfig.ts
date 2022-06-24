@@ -24,8 +24,8 @@ namespace Providers.Splide {
 		private _getDirectionConfig(): string {
 			let direction: string;
 			if (
-				this.Direction === undefined &&
-				this.Direction === OSUIFramework.Patterns.Carousel.Enum.Direction.None &&
+				(this.Direction === undefined ||
+					this.Direction === OSUIFramework.Patterns.Carousel.Enum.Direction.None) &&
 				OutSystems.OSUI.Utils.GetIsRTL()
 			) {
 				direction = OSUIFramework.GlobalEnum.Direction.RTL;
