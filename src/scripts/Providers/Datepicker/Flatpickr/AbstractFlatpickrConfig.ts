@@ -10,17 +10,21 @@ namespace Providers.Datepicker.Flatpickr {
 	export abstract class AbstractFlatpickrConfig extends OSUIFramework.Patterns.DatePicker.AbstractDatePickerConfig {
 		// Store the language that will be assigned as a locale to the DatePicker
 		private _lang: string;
+
+		// Stores the ability to allow inputs to be editable or not
+		public AllowInput = false;
+
+		// Store calendar mode is in use
+		public CalendarMode: OSUIFramework.Patterns.DatePicker.Enum.Mode;
+
+		// Stores the ability to disable the mobile flatpickr behavior. False is the default provider option
+		public DisableMobile = false;
+
 		// Set the OnChange Event that will be defined in the specific context for each Flatpickr mode
 		public OnChange: OSUIFramework.Callbacks.Generic;
 
 		// Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr
 		public ServerDateFormat: string;
-
-		// Stores the ability to allow inputs to be editable or not
-		public allowInput = false;
-
-		// Store calendar mode is in use
-		public calendarMode: OSUIFramework.Patterns.DatePicker.Enum.Mode;
 
 		constructor(config: JSON) {
 			super(config);
@@ -113,7 +117,8 @@ namespace Providers.Datepicker.Flatpickr {
 			const _flatpickrOpts = {
 				altFormat: this._checkAltFormat(),
 				altInput: true,
-				allowInput: this.allowInput,
+				allowInput: this.AllowInput,
+				disableMobile: this.DisableMobile,
 				dateFormat:
 					this.TimeFormat !== OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable
 						? this.ServerDateFormat + ' H:i'
