@@ -54,6 +54,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	overflow: hidden;
 	pointer-events: none;
 	position: absolute;
+	will-change: top, right, bottom, left, opacity, transform;
 	z-index: 2;
 
 	// Service Studio Preview
@@ -185,9 +186,9 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	&.top,
 	&.top-left,
 	&.top-right {
-		bottom: calc((100vh - (var(--osui-tooltip-top) + var(--space-s))) - var(--space-xs));
 		max-height: 0;
 		padding-bottom: var(--space-none);
+		top: var(--osui-tooltip-top);
 
 		.osui-tooltip__balloon-wrapper__balloon {
 			transform: translateY(-100%);
@@ -204,7 +205,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	// Is top
 	&.top {
 		left: calc(var(--osui-tooltip-left) + (var(--osui-tooltip-width) / 2));
-		transform: translateX(-50%) translateY(calc(-1 * var(--space-s)));
+		transform: translateX(-50%) translateY(calc(-100% + var(--space-s)));
 
 		.osui-tooltip__balloon-wrapper__balloon {
 			// Baloon Arrow!
@@ -218,7 +219,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	// Is top-left
 	&.top-left {
 		left: calc(var(--osui-tooltip-left) + var(--osui-tooltip-width) + var(--space-xs));
-		transform: translateX(-100%) translateY(calc(-1 * var(--space-s)));
+		transform: translateX(-100%) translateY(calc(-100% + var(--space-s)));
 
 		.osui-tooltip__balloon-wrapper__balloon {
 			// Baloon Arrow!
@@ -232,7 +233,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	// top-right
 	&.top-right {
 		left: calc(var(--osui-tooltip-left) - var(--space-xs));
-		transform: translateX(0) translateY(calc(-1 * var(--space-s)));
+		transform: translateX(0) translateY(calc(-100% + var(--space-s)));
 
 		.osui-tooltip__balloon-wrapper__balloon {
 			// Baloon Arrow!
@@ -364,7 +365,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	&.top,
 	&.top-left,
 	&.top-right {
-		transition: bottom $transition-time;
+		transition: top $transition-time;
 	}
 
 	// Is general bottom
@@ -453,9 +454,9 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	&.top,
 	&.top-left,
 	&.top-right {
-		bottom: calc(100vh - (var(--osui-tooltip-top) + var(--space-s)));
 		max-height: $osui-tooltip-baloon-max-height;
 		padding-bottom: var(--space-base);
+		top: calc(var(--osui-tooltip-top) - var(--space-s));
 
 		// general top Baloon
 		.osui-tooltip__balloon-wrapper__balloon {

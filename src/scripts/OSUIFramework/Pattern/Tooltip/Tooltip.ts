@@ -27,6 +27,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 		private _iObserver: IntersectionObserver;
 		// Flag used to manage if it's open or closed!
 		private _isOpen: boolean;
+		// Flag used to deal with onBodyClick and open api concurrency methods!
+		private _isOpenedByApi = false;
 		// Flag used to manage if it's _tooltipBalloonWrapperElem (Tpbwe) has been MouseEnter
 		private _isTpbweMouseEnter = false;
 		// Flag used to manage if it's _tooltipIconElem (Tpie) has been MouseEnter
@@ -91,7 +93,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 		// Close tooltip if user has clicked outside of it
 		private _onBodyClick(eventName: string, e: MouseEvent): void {
-			if (this.isBuilt) {
+			if (this.isBuilt && this._isOpenedByApi === false) {
 				const _clickedElem = e.target as HTMLElement;
 				const _closestElem = _clickedElem.closest(Constants.Dot + Enum.CssClass.Pattern);
 				const _closestBalloonElem = _clickedElem.closest(Constants.Dot + Enum.CssClass.BalloonWrapper);
@@ -110,11 +112,10 @@ namespace OSUIFramework.Patterns.Tooltip {
 		// Update the balloon coordinates
 		private _onBodyScroll(): void {
 			if (this.isBuilt) {
-				// Update the coordinates
-				this._setBalloonCoordinates();
-
 				// If the balloon is open and not IsPhone
 				if (this._isOpen) {
+					// Update the coordinates
+					this._setBalloonCoordinates();
 					// Update the "animation" before the next repaint
 					this._rafOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
 				} else {
@@ -150,11 +151,11 @@ namespace OSUIFramework.Patterns.Tooltip {
 		private _onTpbweMouseLeave(): void {
 			this._isTpbweMouseEnter = false;
 
-			setTimeout(() => {
+			Helper.AsyncInvocation(() => {
 				if (this._isTpieMouseEnter === false) {
 					this._triggerClose();
 				}
-			}, 0);
+			});
 		}
 
 		// OnMouseEnter at _tooltipBalloonWrapperElem (Tpbwe)
@@ -166,18 +167,18 @@ namespace OSUIFramework.Patterns.Tooltip {
 		private _onTpieMouseLeave(): void {
 			this._isTpieMouseEnter = false;
 
-			setTimeout(() => {
+			Helper.AsyncInvocation(() => {
 				if (this._isTpbweMouseEnter === false) {
 					this._triggerClose();
 				}
-			}, 0);
+			});
 		}
 
 		// OnMouseEnter at _tooltipIconElem (Tpie)
 		private _onTpieOnMouseEnter(): void {
 			this._isTpieMouseEnter = true;
 
-			if (this.IsOpen === false) {
+			if (this._isOpen === false) {
 				this._triggerOpen();
 			}
 		}
@@ -240,7 +241,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 		// Set the recommended position to open the balloon
 		private _setBalloonPosition(isIntersecting: boolean, boundingClientRect: DOMRect): void {
 			// Ensure it's open and inside screen!!!
-			if (isIntersecting || this.IsOpen === false) {
+			if (isIntersecting || this._isOpen === false) {
 				return;
 			}
 
@@ -453,6 +454,11 @@ namespace OSUIFramework.Patterns.Tooltip {
 
 				// Trigger the _platformEventOnToggleCallback callback!
 				Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, true);
+
+				// Delay the _isOpenedByApi assignement in order to deal with clickOnBody() and open() api concurrency!
+				Helper.AsyncInvocation(() => {
+					this._isOpenedByApi = false;
+				});
 			}
 		}
 
@@ -583,7 +589,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 			this._setBalloonCoordinates();
 
 			// Check if it's open by default!
-			if (this.IsOpen) {
+			if (this._isOpen) {
 				// Update the balloon position if needed!
 				this._setBalloonPosition(false, this._tooltipBalloonContentElem.getBoundingClientRect());
 				// Set the Observer in order to update it's position if balloon is out of bouds!
@@ -705,6 +711,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 		 * @memberof Tooltip
 		 */
 		public open(): void {
+			this._isOpenedByApi = true;
 			this._triggerOpen();
 		}
 
