@@ -385,7 +385,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 // BalloonWrapper IsOpened!
 /* ---------------------------------------------------------------------------- */
 ///
-.osui-tooltip__balloon-wrapper--is-opened {
+.osui-tooltip__balloon-wrapper--is-open {
 	opacity: 1;
 	pointer-events: initial;
 
@@ -574,7 +574,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 .phone {
 	.osui-tooltip__balloon-wrapper {
 		&,
-		&--is-opened {
+		&--is-open {
 			.osui-tooltip__balloon-wrapper__balloon {
 				max-width: initial;
 				min-width: initial;

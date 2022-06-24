@@ -1,6 +1,14 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.Tooltip {
 	export class Tooltip extends AbstractPattern<TooltipConfig> implements ITooltip {
+		// Event OnMouseEnter at _tooltipBalloonWrapperElem
+		private _eventBalloonWrapperOnMouseEnter: Callbacks.Generic;
+		// Event OnMouseLeave at at _tooltipBalloonWrapperElem
+		private _eventBalloonWrapperOnMouseLeave: Callbacks.Generic;
+		// Event OnMouseEnter at _tooltipIconElem
+		private _eventIconOnMouseEnter: Callbacks.Generic;
+		// Event OnMouseLeave at at _tooltipIconElem
+		private _eventIconOnMouseLeave: Callbacks.Generic;
 		// Event OnPatternBlur (combined with focus)
 		private _eventOnBlur: Callbacks.Generic;
 		// Event OnBodyClick
@@ -15,32 +23,24 @@ namespace OSUIFramework.Patterns.Tooltip {
 		private _eventOnOpenedBalloon: Callbacks.Generic;
 		// On WindowResize Event
 		private _eventOnWindowResize: Callbacks.Generic;
-		// Event OnMouseEnter at _tooltipBalloonWrapperElem (Tpbwe)
-		private _eventTpbweOnMouseEnter: Callbacks.Generic;
-		// Event OnMouseLeave at at _tooltipBalloonWrapperElem (Tpbwe)
-		private _eventTpbweOnMouseLeave: Callbacks.Generic;
-		// Event OnMouseEnter at _tooltipIconElem (Tpie)
-		private _eventTpieOnMouseEnter: Callbacks.Generic;
-		// Event OnMouseLeave at at _tooltipIconElem (Tpie)
-		private _eventTpieOnMouseLeave: Callbacks.Generic;
 		// Set the observer that will check if the balloon is inside screen boundaries!
-		private _iObserver: IntersectionObserver;
+		private _intersectionObserver: IntersectionObserver;
+		// Flag used to manage if it's _tooltipBalloonWrapperElem  has been MouseEnter
+		private _isBalloonWrapperMouseEnter = false;
+		// Flag used to manage if it's _tooltipIconElem  has been MouseEnter
+		private _isIconMouseEnter = false;
 		// Flag used to manage if it's open or closed!
 		private _isOpen: boolean;
 		// Flag used to deal with onBodyClick and open api concurrency methods!
 		private _isOpenedByApi = false;
-		// Flag used to manage if it's _tooltipBalloonWrapperElem (Tpbwe) has been MouseEnter
-		private _isTpbweMouseEnter = false;
-		// Flag used to manage if it's _tooltipIconElem (Tpie) has been MouseEnter
-		private _isTpieMouseEnter = false;
 		// Platform OnInitialize Callback
 		private _platformEventInitializedCallback: Callbacks.OSGeneric;
 		// Platform OnClose Callback
 		private _platformEventOnToggleCallback: Callbacks.OSGeneric;
-		// Store the RequestAnimationFrame (aka raf) that will be triggered at OnBodyScroll
-		private _rafOnBodyScroll: number;
-		// Store the RequestAnimationFrame (aka raf) that will be triggered at OnWindowResize
-		private _rafOnWindowResize: number;
+		// Store the RequestAnimationFrame that will be triggered at OnBodyScroll
+		private _requestAnimationOnBodyScroll: number;
+		// Store the RequestAnimationFrame that will be triggered at OnWindowResize
+		private _requestAnimationOnWindowResize: number;
 		// Store the selfElementBounds in order to check if they changed!
 		private _selfElementBoundingClientRect: DOMRect = new DOMRect(0, 0);
 		// Store the HTML elements
@@ -61,6 +61,22 @@ namespace OSUIFramework.Patterns.Tooltip {
 		private _moveBalloonElement(): void {
 			const layoutElement = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.Layout);
 			Helper.Dom.Move(this._tooltipBalloonWrapperElem, layoutElement);
+		}
+
+		// OnMouseEnter at _tooltipBalloonWrapperElem
+		private _onBalloonWrapperMouseEnter(): void {
+			this._isBalloonWrapperMouseEnter = true;
+		}
+
+		// OnMouseLeave at _tooltipBalloonWrapperElem
+		private _onBalloonWrapperMouseLeave(): void {
+			this._isBalloonWrapperMouseEnter = false;
+
+			Helper.AsyncInvocation(() => {
+				if (this._isIconMouseEnter === false) {
+					this._triggerClose();
+				}
+			});
 		}
 
 		// Method to close the tooltip at onBlur
@@ -114,7 +130,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 			if (this.isBuilt) {
 				// If it's open and not at Desktop, close it!
 				if (this._isOpen && Helper.DeviceInfo.IsDesktop === false) {
-					cancelAnimationFrame(this._rafOnBodyScroll);
+					cancelAnimationFrame(this._requestAnimationOnBodyScroll);
 					this._triggerClose();
 					return;
 				}
@@ -124,9 +140,9 @@ namespace OSUIFramework.Patterns.Tooltip {
 					// Update the coordinates
 					this._setBalloonCoordinates();
 					// Update the "animation" before the next repaint
-					this._rafOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
+					this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
 				} else {
-					cancelAnimationFrame(this._rafOnBodyScroll);
+					cancelAnimationFrame(this._requestAnimationOnBodyScroll);
 				}
 			}
 		}
@@ -142,6 +158,26 @@ namespace OSUIFramework.Patterns.Tooltip {
 			this._triggerOpen();
 		}
 
+		// OnMouseEnter at _tooltipIconElem
+		private _onIconMouseEnter(): void {
+			this._isIconMouseEnter = true;
+
+			if (this._isOpen === false) {
+				this._triggerOpen();
+			}
+		}
+
+		// OnMouseLeave at _tooltipIconElem
+		private _onIconMouseLeave(): void {
+			this._isIconMouseEnter = false;
+
+			Helper.AsyncInvocation(() => {
+				if (this._isBalloonWrapperMouseEnter === false) {
+					this._triggerClose();
+				}
+			});
+		}
+
 		// Used to update the tooltip position after it's closed
 		private _onOpenedBalloon(): void {
 			// Remove the transition event!
@@ -154,42 +190,6 @@ namespace OSUIFramework.Patterns.Tooltip {
 			Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpening);
 		}
 
-		// OnMouseLeave at _tooltipBalloonWrapperElem (Tpbwe)
-		private _onTpbweMouseLeave(): void {
-			this._isTpbweMouseEnter = false;
-
-			Helper.AsyncInvocation(() => {
-				if (this._isTpieMouseEnter === false) {
-					this._triggerClose();
-				}
-			});
-		}
-
-		// OnMouseEnter at _tooltipBalloonWrapperElem (Tpbwe)
-		private _onTpbweOnMouseEnter(): void {
-			this._isTpbweMouseEnter = true;
-		}
-
-		// OnMouseLeave at _tooltipIconElem (Tpie)
-		private _onTpieMouseLeave(): void {
-			this._isTpieMouseEnter = false;
-
-			Helper.AsyncInvocation(() => {
-				if (this._isTpbweMouseEnter === false) {
-					this._triggerClose();
-				}
-			});
-		}
-
-		// OnMouseEnter at _tooltipIconElem (Tpie)
-		private _onTpieOnMouseEnter(): void {
-			this._isTpieMouseEnter = true;
-
-			if (this._isOpen === false) {
-				this._triggerOpen();
-			}
-		}
-
 		// Manage the behaviour when there is a window resize!
 		private _onWindowResize(): void {
 			// Update Coordinates
@@ -198,9 +198,9 @@ namespace OSUIFramework.Patterns.Tooltip {
 			// If there is a horizontal resize and the Dropdown is open, close it!
 			if (this._isOpen) {
 				// Update the "animation" before the next repaint
-				this._rafOnWindowResize = requestAnimationFrame(this._eventOnWindowResize);
+				this._requestAnimationOnWindowResize = requestAnimationFrame(this._eventOnWindowResize);
 			} else {
-				cancelAnimationFrame(this._rafOnWindowResize);
+				cancelAnimationFrame(this._requestAnimationOnWindowResize);
 			}
 		}
 
@@ -214,7 +214,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 				selfElement.x === this._selfElementBoundingClientRect.x &&
 				selfElement.y === this._selfElementBoundingClientRect.y
 			) {
-				cancelAnimationFrame(this._rafOnBodyScroll);
+				cancelAnimationFrame(this._requestAnimationOnBodyScroll);
 				return;
 			}
 
@@ -317,7 +317,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 		private _setObserver() {
 			// Check if browser has the IntersectionObserver capability!
 			if (window.IntersectionObserver) {
-				this._iObserver = new IntersectionObserver(
+				this._intersectionObserver = new IntersectionObserver(
 					(entries) => {
 						entries.forEach((entry) => {
 							this._setBalloonPosition(entry.isIntersecting, entry.boundingClientRect);
@@ -327,7 +327,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 				);
 
 				// Start observing it!
-				this._iObserver.observe(this._tooltipBalloonContentElem);
+				this._intersectionObserver.observe(this._tooltipBalloonContentElem);
 			} else {
 				console.warn(
 					`${ErrorCodes.Tooltip.FailOnSetIntersectionObserver}: The browser in use does not support IntersectionObserver. Tooltip balloon positions wont be properly calculated.`
@@ -347,12 +347,12 @@ namespace OSUIFramework.Patterns.Tooltip {
 			// Add the BodyScroll callback that will be used to update the balloon coodinates
 			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
 			// Update "animation" before the next repaint
-			this._rafOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
+			this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
 
 			// Add the window resize callback that will be used update the balloon position!
 			Event.GlobalEventManager.Instance.addHandler(Event.Type.WindowResize, this._eventOnWindowResize);
 			// Update "animation" before the next repaint
-			this._rafOnWindowResize = requestAnimationFrame(this._eventOnWindowResize);
+			this._requestAnimationOnWindowResize = requestAnimationFrame(this._eventOnWindowResize);
 
 			// If it's open by default!
 			if (this._isOpen) {
@@ -368,17 +368,17 @@ namespace OSUIFramework.Patterns.Tooltip {
 			// If trigger to open the tooltip must be MouseOver (only works at desktop)
 			if (this.configs.IsHover && Helper.DeviceInfo.IsDesktop === true) {
 				// Set Mouse Hover to the tooltip icon wrapper!
-				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventTpieOnMouseEnter);
-				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventTpieOnMouseLeave);
+				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventIconOnMouseEnter);
+				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventIconOnMouseLeave);
 
 				// Set Mouse Hover to the tooltip balloon!
 				this._tooltipBalloonWrapperElem.addEventListener(
 					GlobalEnum.HTMLEvent.MouseEnter,
-					this._eventTpbweOnMouseEnter
+					this._eventBalloonWrapperOnMouseEnter
 				);
 				this._tooltipBalloonWrapperElem.addEventListener(
 					GlobalEnum.HTMLEvent.MouseLeave,
-					this._eventTpbweOnMouseLeave
+					this._eventBalloonWrapperOnMouseLeave
 				);
 			}
 		}
@@ -485,30 +485,30 @@ namespace OSUIFramework.Patterns.Tooltip {
 				this._eventOnOpenedBalloon
 			);
 
-			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventTpieOnMouseEnter);
-			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventTpieOnMouseLeave);
+			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventIconOnMouseEnter);
+			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventIconOnMouseLeave);
 
 			this._tooltipBalloonWrapperElem.removeEventListener(
 				GlobalEnum.HTMLEvent.MouseEnter,
-				this._eventTpbweOnMouseEnter
+				this._eventBalloonWrapperOnMouseEnter
 			);
 			this._tooltipBalloonWrapperElem.removeEventListener(
 				GlobalEnum.HTMLEvent.MouseLeave,
-				this._eventTpbweOnMouseLeave
+				this._eventBalloonWrapperOnMouseLeave
 			);
 
-			cancelAnimationFrame(this._rafOnBodyScroll);
-			cancelAnimationFrame(this._rafOnWindowResize);
+			cancelAnimationFrame(this._requestAnimationOnBodyScroll);
+			cancelAnimationFrame(this._requestAnimationOnWindowResize);
 
-			this._rafOnBodyScroll = undefined;
-			this._rafOnWindowResize = undefined;
+			this._requestAnimationOnBodyScroll = undefined;
+			this._requestAnimationOnWindowResize = undefined;
 		}
 
 		// Stop Observer
 		private _unsetObserver(): void {
-			if (this._iObserver !== undefined) {
-				this._iObserver.disconnect();
-				this._iObserver = undefined;
+			if (this._intersectionObserver !== undefined) {
+				this._intersectionObserver.disconnect();
+				this._intersectionObserver = undefined;
 			}
 		}
 
@@ -571,10 +571,10 @@ namespace OSUIFramework.Patterns.Tooltip {
 			this._eventOnFocus = this._onFocus.bind(this);
 			this._eventOnOpenedBalloon = this._onOpenedBalloon.bind(this);
 			this._eventOnWindowResize = this._onWindowResize.bind(this);
-			this._eventTpbweOnMouseEnter = this._onTpbweOnMouseEnter.bind(this);
-			this._eventTpbweOnMouseLeave = this._onTpbweMouseLeave.bind(this);
-			this._eventTpieOnMouseEnter = this._onTpieOnMouseEnter.bind(this);
-			this._eventTpieOnMouseLeave = this._onTpieMouseLeave.bind(this);
+			this._eventBalloonWrapperOnMouseEnter = this._onBalloonWrapperMouseEnter.bind(this);
+			this._eventBalloonWrapperOnMouseLeave = this._onBalloonWrapperMouseLeave.bind(this);
+			this._eventIconOnMouseEnter = this._onIconMouseEnter.bind(this);
+			this._eventIconOnMouseLeave = this._onIconMouseLeave.bind(this);
 		}
 
 		// Update info based on htmlContent
@@ -621,10 +621,10 @@ namespace OSUIFramework.Patterns.Tooltip {
 			this._eventOnFocus = undefined;
 			this._eventOnOpenedBalloon = undefined;
 			this._eventOnWindowResize = undefined;
-			this._eventTpbweOnMouseEnter = undefined;
-			this._eventTpbweOnMouseLeave = undefined;
-			this._eventTpieOnMouseEnter = undefined;
-			this._eventTpieOnMouseLeave = undefined;
+			this._eventBalloonWrapperOnMouseEnter = undefined;
+			this._eventBalloonWrapperOnMouseLeave = undefined;
+			this._eventIconOnMouseEnter = undefined;
+			this._eventIconOnMouseLeave = undefined;
 		}
 		/**
 		 * Unsets the refences to the HTML elements.
