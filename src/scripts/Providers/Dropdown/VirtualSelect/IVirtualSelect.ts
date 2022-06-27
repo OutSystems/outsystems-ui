@@ -4,6 +4,6 @@ namespace Providers.Dropdown.VirtualSelect {
 	 * Defines the interface for VirtualSelect provider based Patterns
 	 */
 	export interface IVirtualSelect extends OSUIFramework.Patterns.Dropdown.IDropdown {
-		disableOpenAsPopUp(): void;
+		togglePopup(isEnabled: boolean): void;
 	}
 }

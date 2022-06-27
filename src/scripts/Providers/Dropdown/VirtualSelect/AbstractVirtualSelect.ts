@@ -224,16 +224,6 @@ namespace Providers.Dropdown.VirtualSelect {
 		}
 
 		/**
-		 * Disable the dropbox as popup on small screen like mobile
-		 *
-		 * @memberof AbstractVirtualSelect
-		 */
-		public disableOpenAsPopUp(): void {
-			this.configs.ShowDropboxAsPopup = false;
-			this.redraw();
-		}
-
-		/**
 		 * Destroy the Dropdown.
 		 *
 		 * @memberof AbstractVirtualSelect
@@ -293,6 +283,16 @@ namespace Providers.Dropdown.VirtualSelect {
 				default:
 					throw new Error(`The given '${eventName}' event name it's not defined.`);
 			}
+		}
+
+		/**
+		 * Toggle the dropbox as popup on small screen like mobile
+		 *
+		 * @memberof AbstractVirtualSelect
+		 */
+		public togglePopup(isEnabled: boolean): void {
+			this.configs.ShowDropboxAsPopup = isEnabled;
+			this.redraw();
 		}
 
 		/**
