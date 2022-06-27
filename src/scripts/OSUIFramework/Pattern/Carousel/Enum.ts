@@ -26,6 +26,15 @@ namespace OSUIFramework.Patterns.Carousel.Enum {
 	}
 
 	/**
+	 * Carousel Direction options
+	 */
+	export enum Direction {
+		None = '',
+		LeftToRight = 'LeftToRight',
+		RightToLeft = 'RightToLeft',
+	}
+
+	/**
 	 * Carousel Enum for Properties
 	 */
 	export enum Properties {

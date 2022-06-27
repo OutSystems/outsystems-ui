@@ -291,4 +291,31 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 
 		return JSON.stringify(responseObj);
 	}
+
+	/**
+	 * Function that will update the direction of the carousel
+	 *
+	 * @export
+	 * @param {string} carouselId
+	 * @return {*}  {OSUIFramework.Patterns.Carousel.ICarousel}
+	 */
+	export function SetCarouselDirection(carouselId: string, direction: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const carousel = GetCarouselItemById(carouselId);
+
+			carousel.setCarouselDirection(direction);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Carousel.FailDirection;
+		}
+
+		return JSON.stringify(responseObj);
+	}
 }

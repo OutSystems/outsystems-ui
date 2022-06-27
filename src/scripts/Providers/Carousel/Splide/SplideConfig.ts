@@ -21,6 +21,21 @@ namespace Providers.Splide {
 			return arrows;
 		}
 
+		private _getDirectionConfig(): string {
+			let direction: string;
+			if (
+				(this.Direction === undefined ||
+					this.Direction === OSUIFramework.Patterns.Carousel.Enum.Direction.None) &&
+				OutSystems.OSUI.Utils.GetIsRTL()
+			) {
+				direction = OSUIFramework.GlobalEnum.Direction.RTL;
+			} else {
+				direction = this.Direction || OSUIFramework.GlobalEnum.Direction.LTR;
+			}
+
+			return direction;
+		}
+
 		private _getPaginationConfig(): boolean {
 			let pagination: boolean;
 			switch (this.Navigation) {
@@ -53,9 +68,7 @@ namespace Providers.Splide {
 					},
 				},
 				keyboard: Enum.KeyboardOptions.Focused,
-				direction: OutSystems.OSUI.Utils.GetIsRTL()
-					? OSUIFramework.GlobalEnum.Direction.RTL
-					: OSUIFramework.GlobalEnum.Direction.LTR,
+				direction: this._getDirectionConfig(),
 				height: this.Height,
 				type: this.Loop ? Enum.TypeOptions.Loop : Enum.TypeOptions.Slide,
 				focus: 0,

@@ -55,12 +55,13 @@ namespace OutSystems.OSUI.ErrorCodes {
 	export const Carousel = {
 		FailChangeProperty: 'OSUI-API-06001',
 		FailDispose: 'OSUI-API-06002',
-		FailGoTo: 'OSUI-API-06003',
-		FailNext: 'OSUI-API-06004',
-		FailPrevious: 'OSUI-API-06005',
-		FailRegisterCallback: 'OSUI-API-06006',
-		FailToggleDrag: 'OSUI-API-06007',
-		FailUpdate: 'OSUI-API-06008',
+		FailDirection: 'OSUI-API-06003',
+		FailGoTo: 'OSUI-API-06004',
+		FailNext: 'OSUI-API-06005',
+		FailPrevious: 'OSUI-API-06006',
+		FailRegisterCallback: 'OSUI-API-06007',
+		FailToggleDrag: 'OSUI-API-06008',
+		FailUpdate: 'OSUI-API-06009',
 	};
 
 	export const DatePicker = {

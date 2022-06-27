@@ -144,3 +144,17 @@
 		box-shadow: none;
 	}
 }
+
+///
+// RTL for dynamic changes of direction
+.is-rtl {
+	.splide.splide {
+		&--ltr {
+			direction: ltr;
+		}
+
+		&--rtl {
+			direction: rtl;
+		}
+	}
+}
