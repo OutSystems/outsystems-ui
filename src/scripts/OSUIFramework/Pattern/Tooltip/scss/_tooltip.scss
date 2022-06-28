@@ -17,6 +17,7 @@ $osui-tooltip-arrow-size: 9px;
 $osui-tooltip-arrow-size-preview: 5px;
 $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 
+/*! jRio  */
 ///
 .osui-tooltip {
 	display: inline-block;
@@ -59,7 +60,6 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 
 	// Service Studio Preview
 	& {
-		-servicestudio-position: relative;
 		-servicestudio-left: initial;
 		-servicestudio-max-height: initial;
 		-servicestudio-opacity: 1;
@@ -89,10 +89,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 
 	// Service Studio Preview
 	& {
-		-servicestudio-max-width: 200px;
-		-servicestudio-min-height: 50px;
 		-servicestudio-opacity: 1;
-		-servicestudio-position: relative;
 	}
 
 	// Baloon Arrow!
@@ -104,6 +101,11 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		opacity: 0;
 		position: absolute;
 		width: 0;
+
+		// Service Studio Preview
+		& {
+			-servicestudio-opacity: 1;
+		}
 	}
 }
 
@@ -121,9 +123,24 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		top: calc(var(--osui-tooltip-top) + (var(--osui-tooltip-height) / 2));
 		transform: translateX(-100%) translateY(-50%);
 
+		// Service Studio Preview
+		& {
+			-servicestudio-left: var(--osui-tooltip-left);
+			-servicestudio-max-width: $osui-tooltip-baloon-max-width;
+			-servicestudio-min-width: $osui-tooltip-baloon-min-width;
+			-servicestudio-padding-right: var(--space-base);
+			-servicestudio-top: 50%;
+		}
+
 		.osui-tooltip__balloon-wrapper__balloon {
 			transform: translateX(-100%);
 			width: $osui-tooltip-baloon-max-width;
+
+			// Service Studio Preview
+			& {
+				-servicestudio-transform: translateX(0);
+				-servicestudio-width: fit-content;
+			}
 
 			// Baloon Arrow!
 			&:before {
@@ -132,6 +149,11 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 				left: calc(100% - 1px);
 				top: 50%;
 				transform: translateX(-50%) translateY(-50%);
+
+				// Service Studio Preview
+				& {
+					-servicestudio-transform: translateX(0) translateY(-50%);
+				}
 			}
 		}
 	}
@@ -145,9 +167,24 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		top: calc(var(--osui-tooltip-top) + (var(--osui-tooltip-height) / 2));
 		transform: translateX(100%) translateY(-50%);
 
+		// Service Studio Preview
+		& {
+			-servicestudio-max-width: $osui-tooltip-baloon-max-width;
+			-servicestudio-min-width: $osui-tooltip-baloon-min-width;
+			-servicestudio-padding-left: var(--space-base);
+			-servicestudio-right: 0;
+			-servicestudio-top: 50%;
+		}
+
 		.osui-tooltip__balloon-wrapper__balloon {
 			transform: translateX(calc(-1 * var(--space-s)));
 			width: $osui-tooltip-baloon-max-width;
+
+			// Service Studio Preview
+			& {
+				-servicestudio-transform: translateX(0);
+				-servicestudio-width: fit-content;
+			}
 
 			// Baloon Arrow!
 			&:before {
@@ -156,6 +193,11 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 				left: 1px;
 				top: 50%;
 				transform: translateX(-50%) translateY(-50%);
+
+				// Service Studio Preview
+				& {
+					-servicestudio-transform: translateX(-100%) translateY(-50%);
+				}
 			}
 		}
 	}
@@ -168,8 +210,21 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		top: calc(var(--osui-tooltip-top) + var(--space-s));
 		transform: translateX(-50%) translateY(0);
 
+		// Service Studio Preview
+		& {
+			-servicestudio-left: 50%;
+			-servicestudio-max-height: 50vh;
+			-servicestudio-padding-top: var(--space-base);
+			-servicestudio-top: 50%;
+		}
+
 		.osui-tooltip__balloon-wrapper__balloon {
 			transform: translateY(calc(-1 * var(--space-s)));
+
+			// Service Studio Preview
+			& {
+				-servicestudio-transform: translateY(0);
+			}
 
 			// Baloon Arrow!
 			&:before {
@@ -178,6 +233,11 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 				left: 50%;
 				top: 1px;
 				transform: translateX(-50%) translateY(-50%);
+
+				// Service Studio Preview
+				& {
+					-servicestudio-transform: translateX(-50%) translateY(-100%);
+				}
 			}
 		}
 	}
@@ -190,8 +250,20 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		padding-bottom: var(--space-none);
 		top: var(--osui-tooltip-top);
 
+		// Service Studio Preview
+		& {
+			-servicestudio-max-height: $osui-tooltip-baloon-max-height;
+			-servicestudio-padding-bottom: var(--space-base);
+			-servicestudio-top: 0;
+		}
+
 		.osui-tooltip__balloon-wrapper__balloon {
 			transform: translateY(-100%);
+
+			// Service Studio Preview
+			& {
+				-servicestudio-transform: translateY(0);
+			}
 
 			// Baloon Arrow!
 			&:before {
@@ -207,25 +279,21 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		left: calc(var(--osui-tooltip-left) + (var(--osui-tooltip-width) / 2));
 		transform: translateX(-50%) translateY(calc(-100% + var(--space-s)));
 
+		// Service Studio Preview
+		& {
+			-servicestudio-left: 50%;
+		}
+
 		.osui-tooltip__balloon-wrapper__balloon {
 			// Baloon Arrow!
 			&:before {
 				left: 50%;
 				transform: translateX(-50%) translateY(-50%);
-			}
-		}
-	}
 
-	// Is top-right
-	&.top-right {
-		left: calc(var(--osui-tooltip-left) + var(--osui-tooltip-width) + var(--space-xs));
-		transform: translateX(-100%) translateY(calc(-100% + var(--space-s)));
-
-		.osui-tooltip__balloon-wrapper__balloon {
-			// Baloon Arrow!
-			&:before {
-				left: calc(100% - var(--space-s));
-				transform: translateX(-100%) translateY(-50%);
+				// Service Studio Preview
+				& {
+					-servicestudio-transform: translateX(-50%) translateY(0);
+				}
 			}
 		}
 	}
@@ -235,11 +303,45 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		left: calc(var(--osui-tooltip-left) - var(--space-xs));
 		transform: translateX(0) translateY(calc(-100% + var(--space-s)));
 
+		// Service Studio Preview
+		& {
+			-servicestudio-left: calc(-1 * var(--space-xs));
+		}
+
 		.osui-tooltip__balloon-wrapper__balloon {
 			// Baloon Arrow!
 			&:before {
 				left: var(--space-s);
 				transform: translateX(0) translateY(-50%);
+
+				// Service Studio Preview
+				& {
+					-servicestudio-transform: translateX(0) translateY(0);
+				}
+			}
+		}
+	}
+
+	// Is top-right
+	&.top-right {
+		left: calc(var(--osui-tooltip-left) + var(--osui-tooltip-width) + var(--space-xs));
+		transform: translateX(-100%) translateY(calc(-100% + var(--space-s)));
+
+		// Service Studio Preview
+		& {
+			-servicestudio-left: calc(100% + var(--space-xs));
+		}
+
+		.osui-tooltip__balloon-wrapper__balloon {
+			// Baloon Arrow!
+			&:before {
+				left: calc(100% - var(--space-s));
+				transform: translateX(-100%) translateY(-50%);
+
+				// Service Studio Preview
+				& {
+					-servicestudio-transform: translateX(-100%) translateY(0);
+				}
 			}
 		}
 	}
@@ -252,8 +354,20 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		padding-top: var(--space-none);
 		top: calc(var(--osui-tooltip-top) + var(--osui-tooltip-height) - var(--space-xs));
 
+		// Service Studio Preview
+		& {
+			-servicestudio-max-height: $osui-tooltip-baloon-max-height;
+			-servicestudio-padding-top: var(--space-base);
+			-servicestudio-top: calc(100% + var(--osui-tooltip-height));
+		}
+
 		.osui-tooltip__balloon-wrapper__balloon {
 			transform: translateY(calc(-1 * var(--space-s)));
+
+			// Service Studio Preview
+			& {
+				-servicestudio-transform: translateY(0);
+			}
 
 			// Baloon Arrow!
 			&:before {
@@ -269,25 +383,21 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		left: calc(var(--osui-tooltip-left) + (var(--osui-tooltip-width) / 2));
 		transform: translateX(-50%) translateY(0);
 
+		// Service Studio Preview
+		& {
+			-servicestudio-left: 50%;
+		}
+
 		.osui-tooltip__balloon-wrapper__balloon {
 			// Baloon Arrow!
 			&:before {
 				left: 50%;
 				transform: translateX(-50%) translateY(-50%);
-			}
-		}
-	}
 
-	// Is bottom-right
-	&.bottom-right {
-		left: calc(var(--osui-tooltip-left) + var(--osui-tooltip-width) + var(--space-xs));
-		transform: translateX(-100%) translateY(0);
-
-		.osui-tooltip__balloon-wrapper__balloon {
-			// Baloon Arrow!
-			&:before {
-				left: calc(100% - var(--space-s));
-				transform: translateX(-100%) translateY(-50%);
+				// Service Studio Preview
+				& {
+					-servicestudio-transform: translateX(-50%) translateY(-100%);
+				}
 			}
 		}
 	}
@@ -297,11 +407,45 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		left: calc(var(--osui-tooltip-left) - var(--space-xs));
 		transform: translateX(0) translateY(0);
 
+		// Service Studio Preview
+		& {
+			-servicestudio-left: calc(-1 * var(--space-xs));
+		}
+
 		.osui-tooltip__balloon-wrapper__balloon {
 			// Baloon Arrow!
 			&:before {
 				left: var(--space-s);
 				transform: translateX(0) translateY(-50%);
+
+				// Service Studio Preview
+				& {
+					-servicestudio-transform: translateX(0) translateY(-100%);
+				}
+			}
+		}
+	}
+
+	// Is bottom-right
+	&.bottom-right {
+		left: calc(var(--osui-tooltip-left) + var(--osui-tooltip-width) + var(--space-xs));
+		transform: translateX(-100%) translateY(0);
+
+		// Service Studio Preview
+		& {
+			-servicestudio-left: calc(100% + var(--space-xs));
+		}
+
+		.osui-tooltip__balloon-wrapper__balloon {
+			// Baloon Arrow!
+			&:before {
+				left: calc(100% - var(--space-s));
+				transform: translateX(-100%) translateY(-50%);
+
+				// Service Studio Preview
+				& {
+					-servicestudio-transform: translateX(-100%) translateY(-100%);
+				}
 			}
 		}
 	}
@@ -474,22 +618,22 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		}
 	}
 
-	// Is top-right
-	&.top-right {
-		.osui-tooltip__balloon-wrapper__balloon {
-			// Baloon Arrow!
-			&:before {
-				transform: translateX(-100%) translateY(0);
-			}
-		}
-	}
-
 	// top-left
 	&.top-left {
 		.osui-tooltip__balloon-wrapper__balloon {
 			// Baloon Arrow!
 			&:before {
 				transform: translateX(0) translateY(0);
+			}
+		}
+	}
+
+	// Is top-right
+	&.top-right {
+		.osui-tooltip__balloon-wrapper__balloon {
+			// Baloon Arrow!
+			&:before {
+				transform: translateX(-100%) translateY(0);
 			}
 		}
 	}
@@ -518,22 +662,22 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		}
 	}
 
-	// Is bottom-right
-	&.bottom-right {
-		.osui-tooltip__balloon-wrapper__balloon {
-			// Baloon Arrow!
-			&:before {
-				transform: translateX(-100%) translateY(-100%);
-			}
-		}
-	}
-
 	// Is bottom-left
 	&.bottom-left {
 		.osui-tooltip__balloon-wrapper__balloon {
 			// Baloon Arrow!
 			&:before {
 				transform: translateX(0) translateY(-100%);
+			}
+		}
+	}
+
+	// Is bottom-right
+	&.bottom-right {
+		.osui-tooltip__balloon-wrapper__balloon {
+			// Baloon Arrow!
+			&:before {
+				transform: translateX(-100%) translateY(-100%);
 			}
 		}
 	}
@@ -583,3 +727,4 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 		}
 	}
 }
+/*! jRio  */
