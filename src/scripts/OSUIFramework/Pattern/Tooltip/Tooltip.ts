@@ -427,6 +427,9 @@ namespace OSUIFramework.Patterns.Tooltip {
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsOpened);
 				Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpened);
 
+				// Update the AriaHidden to the balloon!
+				Helper.A11Y.AriaHiddenTrue(this._tooltipBalloonWrapperElem);
+
 				// Cancel the Observer!
 				this._unsetObserver();
 
@@ -470,6 +473,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 				this._setBalloonCoordinates();
 				// Update the balloon position if needed!
 				this._setBalloonPosition(false, this._tooltipBalloonContentElem.getBoundingClientRect());
+				// Update the AriaHidden to the balloon!
+				Helper.A11Y.AriaHiddenFalse(this._tooltipBalloonWrapperElem);
 
 				// wait for _setBalloonPosition ends...
 				Helper.AsyncInvocation(() => {
@@ -590,6 +595,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 			Helper.A11Y.AriaDescribedBy(this._tooltipIconElem, this._tooltipBalloonWrapperElem.id);
 			// Set LabelledBy to the TooltipBalloon
 			Helper.A11Y.AriaLabelledBy(this._tooltipIconElem, this._tooltipBalloonWrapperElem.id);
+			// Set the AriaHidden to the balloon!
+			Helper.A11Y.AriaHiddenTrue(this._tooltipBalloonWrapperElem);
 		}
 
 		/**
@@ -637,6 +644,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 				this._setBalloonPosition(false, this._tooltipBalloonContentElem.getBoundingClientRect());
 				// Set the Observer in order to update it's position if balloon is out of bouds!
 				Helper.AsyncInvocation(this._setObserver.bind(this));
+				// Update the AriaHidden to the balloon!
+				Helper.A11Y.AriaHiddenFalse(this._tooltipBalloonWrapperElem);
 			}
 
 			// Trigger platform's _platformEventInitializedCallback client Action
