@@ -51,9 +51,14 @@ namespace OSUIFramework.Patterns.Progress {
 			this._setAccessibilityProps();
 		}
 
+		public resetProgressValue(): void {
+			this.setElementProgressValue(this.configs.InitialProgress);
+		}
+
 		public setProgressValue(value: number): void {
 			this.setElementProgressValue(value);
 		}
+
 		// Implement the _addInitialAnimation method since a transitionend event must be added, this must be implemented at childs level
 		protected abstract addInitialAnimation(): void;
 
