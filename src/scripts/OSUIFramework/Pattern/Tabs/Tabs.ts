@@ -81,27 +81,6 @@ namespace OSUIFramework.Patterns.Tabs {
 				if (this._addDragGestures) {
 					tabsContentChildItem.setOnDragObserver(this._dragObserver);
 				}
-
-				const isHeightAuto = this.configs.Height === 'auto';
-
-				// if (isHeightAuto) {
-				// 	if (this.getChildItems.length === 1) {
-				// 		// Update height if set to height: auto
-				// 		Helper.Dom.Styles.SetStyleAttribute(
-				// 			this._selfElem,
-				// 			Enum.CssProperty.TabsHeight,
-				// 			tabsContentChildItem.selfElement.offsetHeight + GlobalEnum.Units.Pixel
-				// 		);
-				// 	} else {
-				// 		if (tabsContentChildItem.selfElement.offsetHeight > this._selfElem.offsetHeight) {
-				// 			Helper.Dom.Styles.SetStyleAttribute(
-				// 				this._selfElem,
-				// 				Enum.CssProperty.TabsHeight,
-				// 				tabsContentChildItem.selfElement.offsetHeight + GlobalEnum.Units.Pixel
-				// 			);
-				// 		}
-				// 	}
-				// }
 			} else {
 				// Otherwise are items created before the tabs is built
 				// Set the correct data-tab, by using the items array, that correspond to the DOM order
@@ -448,18 +427,12 @@ namespace OSUIFramework.Patterns.Tabs {
 		// Method to scroll to new target content item
 		private _scrollToTargetContent(newContentItem: Patterns.TabsContentItem.ITabsContentItem): void {
 			if (newContentItem) {
-				const isVertical = false;
-				// Get the left offset, to use on the ScrollTo
-				const targetOffeset = isVertical ? newContentItem.getOffsetTop() : newContentItem.getOffsetLeft();
-
-				const scrollOptions = {
-					top: isVertical ? targetOffeset : 0,
-					left: isVertical ? 0 : targetOffeset,
-					behavior: GlobalEnum.ScrollBehavior.Auto,
-				};
-				console.log(newContentItem.selfElement + ' ' + targetOffeset);
 				// Scroll to new content item
-				this._tabsContentElement.scrollTo(scrollOptions);
+				this._tabsContentElement.scrollTo({
+					top: 0,
+					left: newContentItem.getOffsetLeft(),
+					behavior: GlobalEnum.ScrollBehavior.Auto,
+				});
 			}
 		}
 
@@ -548,6 +521,8 @@ namespace OSUIFramework.Patterns.Tabs {
 			if (this.isBuilt) {
 				// Update scale size variable
 				this._handleTabIndicator();
+				// Update content position
+				this._scrollToTargetContent(this._activeTabContentElement);
 			}
 		}
 

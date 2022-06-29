@@ -93,16 +93,6 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		}
 
 		/**
-		 * Method to get the element offsetTop value, called by the Tabs
-		 *
-		 * @return {*}  {number}
-		 * @memberof TabsContentItem
-		 */
-		public getOffsetTop(): number {
-			return this._selfElem.offsetTop;
-		}
-
-		/**
 		 * Method to set the aria-labbeledby attribute, called by the tabs
 		 *
 		 * @param {string} headerItemId

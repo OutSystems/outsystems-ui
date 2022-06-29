@@ -7,7 +7,6 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		get IsActive(): boolean;
 		getDataTab();
 		getOffsetLeft();
-		getOffsetTop();
 		setAriaLabelledByAttribute(headerItemId: string);
 		setDataTab(dataTab: number);
 		setIsActive();
