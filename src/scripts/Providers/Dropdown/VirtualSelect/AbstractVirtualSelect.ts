@@ -291,8 +291,10 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * @memberof AbstractVirtualSelect
 		 */
 		public togglePopup(isEnabled: boolean): void {
-			this.configs.ShowDropboxAsPopup = isEnabled;
-			this.redraw();
+			if (this.configs.ShowDropboxAsPopup !== isEnabled) {
+				this.configs.ShowDropboxAsPopup = isEnabled;
+				this.redraw();
+			}
 		}
 
 		/**
