@@ -9,6 +9,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 		private _eventIconOnMouseEnter: Callbacks.Generic;
 		// Event OnMouseLeave at at _tooltipIconElem
 		private _eventIconOnMouseLeave: Callbacks.Generic;
+		// Event OnBalloonClick - Manage the balloon click!
+		private _eventOnBalloonClick: Callbacks.Generic;
 		// Event OnPatternBlur (combined with focus)
 		private _eventOnBlur: Callbacks.Generic;
 		// Event OnBodyClick
@@ -61,6 +63,37 @@ namespace OSUIFramework.Patterns.Tooltip {
 		private _moveBalloonElement(): void {
 			const layoutElement = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.Layout);
 			Helper.Dom.Move(this._tooltipBalloonWrapperElem, layoutElement);
+		}
+
+		// Check if a clickable item has been clicked, otherwise stop the propagation!
+		private _onBalloonClick(e: MouseEvent): void {
+			// Get all possible clickable items inside tooltip balloon
+			const clickableItems = Array.from(
+				this._tooltipBalloonContentElem.querySelectorAll(Constants.FocusableElems)
+			);
+
+			// If there no clickable items, do not let the click be propagated!
+			if (clickableItems.length === 0) {
+				e.stopPropagation();
+				return;
+			}
+
+			// Flag used to help on go through all the clickable items to ensure we check all!
+			let isItemClickableItem = false;
+
+			// Check each clickable item
+			for (const item of clickableItems) {
+				// If the clicked item exist as a clickableItem!
+				if (e.target === item) {
+					isItemClickableItem = true;
+					break;
+				}
+			}
+
+			// If we found the clicked item does not exist as a clickableItem, do no let the click be propagated!
+			if (isItemClickableItem === false) {
+				e.stopPropagation();
+			}
 		}
 
 		// OnMouseEnter at _tooltipBalloonWrapperElem
@@ -363,6 +396,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 			// If tooltip should behave at onMouseClick, or if it's on tablet or phone
 			if (this.configs.IsHover === false || Helper.DeviceInfo.IsDesktop === false) {
 				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+				this._tooltipBalloonContentElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnBalloonClick);
 			}
 
 			// If trigger to open the tooltip must be MouseOver (only works at desktop)
@@ -392,6 +426,9 @@ namespace OSUIFramework.Patterns.Tooltip {
 				// Remove the IsOpned selector
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsOpened);
 				Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpened);
+
+				// Update the AriaHidden to the balloon!
+				Helper.A11Y.AriaHiddenTrue(this._tooltipBalloonWrapperElem);
 
 				// Cancel the Observer!
 				this._unsetObserver();
@@ -436,6 +473,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 				this._setBalloonCoordinates();
 				// Update the balloon position if needed!
 				this._setBalloonPosition(false, this._tooltipBalloonContentElem.getBoundingClientRect());
+				// Update the AriaHidden to the balloon!
+				Helper.A11Y.AriaHiddenFalse(this._tooltipBalloonWrapperElem);
 
 				// wait for _setBalloonPosition ends...
 				Helper.AsyncInvocation(() => {
@@ -474,6 +513,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
 			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
+			this._tooltipBalloonContentElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnBalloonClick);
 
 			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
 			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
@@ -555,6 +595,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 			Helper.A11Y.AriaDescribedBy(this._tooltipIconElem, this._tooltipBalloonWrapperElem.id);
 			// Set LabelledBy to the TooltipBalloon
 			Helper.A11Y.AriaLabelledBy(this._tooltipIconElem, this._tooltipBalloonWrapperElem.id);
+			// Set the AriaHidden to the balloon!
+			Helper.A11Y.AriaHiddenTrue(this._tooltipBalloonWrapperElem);
 		}
 
 		/**
@@ -564,6 +606,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 		 * @memberof Tooltip
 		 */
 		protected setCallbacks(): void {
+			this._eventOnBalloonClick = this._onBalloonClick.bind(this);
 			this._eventOnBlur = this._onBlur.bind(this);
 			this._eventOnBodyClick = this._onBodyClick.bind(this);
 			this._eventOnBodyScroll = this._onBodyScroll.bind(this);
@@ -601,6 +644,8 @@ namespace OSUIFramework.Patterns.Tooltip {
 				this._setBalloonPosition(false, this._tooltipBalloonContentElem.getBoundingClientRect());
 				// Set the Observer in order to update it's position if balloon is out of bouds!
 				Helper.AsyncInvocation(this._setObserver.bind(this));
+				// Update the AriaHidden to the balloon!
+				Helper.A11Y.AriaHiddenFalse(this._tooltipBalloonWrapperElem);
 			}
 
 			// Trigger platform's _platformEventInitializedCallback client Action
@@ -614,6 +659,7 @@ namespace OSUIFramework.Patterns.Tooltip {
 		 * @memberof Tooltip
 		 */
 		protected unsetCallbacks(): void {
+			this._eventOnBalloonClick = undefined;
 			this._eventOnBlur = undefined;
 			this._eventOnBodyClick = undefined;
 			this._eventOnBodyScroll = undefined;
