@@ -11,11 +11,16 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 	export class TabsContentItem extends AbstractChild<TabsContentItemConfig, Tabs.ITabs> implements ITabsContentItem {
 		// Store the data-tab attribute
 		private _dataTab: number;
+		private _focusableElements: HTMLElement[];
 		// Store if this is the current active item
 		private _isActive: boolean;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new TabsContentItemConfig(configs));
+		}
+
+		private _setHtmlElements(): void {
+			this._focusableElements = [...this._selfElem.querySelectorAll(Constants.FocusableElems)] as HTMLElement[];
 		}
 
 		/**
@@ -33,9 +38,17 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 			if (this._isActive) {
 				Helper.A11Y.TabIndexTrue(this._selfElem);
 				Helper.A11Y.AriaHiddenFalse(this._selfElem);
+				// On each element, toggle the tabindex value, depending if is active
+				for (const item of this._focusableElements) {
+					Helper.A11Y.TabIndexTrue(item);
+				}
 			} else {
 				Helper.A11Y.TabIndexFalse(this._selfElem);
 				Helper.A11Y.AriaHiddenTrue(this._selfElem);
+				// On each element, toggle the tabindex value, depending if is active
+				for (const item of this._focusableElements) {
+					Helper.A11Y.TabIndexFalse(item);
+				}
 			}
 		}
 
@@ -46,6 +59,8 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		 */
 		public build(): void {
 			super.build();
+
+			this._setHtmlElements();
 
 			this.setParentInfo(
 				Constants.Dot + Tabs.Enum.CssClasses.TabsWrapper,
