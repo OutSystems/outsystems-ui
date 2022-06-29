@@ -63,66 +63,48 @@ namespace OSUIFramework.Patterns.Progress.Circle {
 					? this._selfElem.parentElement.clientHeight
 					: this._selfElem.parentElement.clientWidth;
 
-			if (_elementSize === 0 && this.isBuilt === false) {
-				// If at this moment the active item has no size (NaN), set an observer to run this method when its size is changed
-				// This happens, as an example, when there're tabs inside tabs, and inner one has no size when it's built, due to being on a non-active tab
-				const resizeObserver = new ResizeObserver((entries) => {
-					for (const entry of entries) {
-						if (entry.contentBoxSize) {
-							this._progressToOffset();
-							// Make async to ensure that all css variables are assigned
-							// Update according initial style
-							Helper.AsyncInvocation(this.addInitialAnimation.bind(this));
-							// We just need this once, so lets remove the observer
-							resizeObserver.unobserve(this._selfElem);
-						}
-					}
-				});
-				resizeObserver.observe(this._selfElem);
+			// Check the maxValue that the circle must have
+			if (this._selfElem.clientHeight < this._selfElem.parentElement.clientWidth) {
+				this._circletSize = this._selfElem.parentElement.clientWidth;
 			} else {
-				// Check the maxValue that the circle must have
-				if (this._selfElem.clientHeight < this._selfElem.parentElement.clientWidth) {
-					this._circletSize = this._selfElem.parentElement.clientWidth;
-				} else {
-					this._circletSize = _elementSize;
-				}
+				this._circletSize = _elementSize;
+			}
 
-				// Set the css variable to
-				Helper.Dom.Styles.SetStyleAttribute(
-					this._selfElem,
-					Enum.InlineStyleProp.CircleSize,
-					this._circletSize + GlobalEnum.Units.Pixel
-				);
+			// Set the css variable to
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				Enum.InlineStyleProp.CircleSize,
+				this._circletSize + GlobalEnum.Units.Pixel
+			);
 
-				const _radius = Math.floor(this._circletSize / 2 - this.configs.Thickness / 2);
-				this._circleCircumference = _radius * 2 * Math.PI;
+			const _radius = Math.floor(this._circletSize / 2 - this.configs.Thickness / 2);
+			this._circleCircumference = _radius * 2 * Math.PI;
 
-				// set the base values
-				this._strokeDashoffset = this._strokeDasharray = this._circleCircumference;
+			// set the base values
+			this._strokeDashoffset = this._strokeDasharray = this._circleCircumference;
 
-				// Set the css variables that will be used at ProgressCircle
-				Helper.Dom.Styles.SetStyleAttribute(
-					this._selfElem,
-					Enum.InlineStyleProp.CircleRadius,
-					_radius + GlobalEnum.Units.Pixel
-				);
-				Helper.Dom.Styles.SetStyleAttribute(
-					this._selfElem,
-					Enum.InlineStyleProp.StrokeDasharray,
-					this._strokeDasharray
-				);
-				Helper.Dom.Styles.SetStyleAttribute(
-					this._selfElem,
-					Enum.InlineStyleProp.StrokeDashoffset,
-					this._strokeDashoffset
-				);
+			// Set the css variables that will be used at ProgressCircle
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				Enum.InlineStyleProp.CircleRadius,
+				_radius + GlobalEnum.Units.Pixel
+			);
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				Enum.InlineStyleProp.StrokeDasharray,
+				this._strokeDasharray
+			);
+			Helper.Dom.Styles.SetStyleAttribute(
+				this._selfElem,
+				Enum.InlineStyleProp.StrokeDashoffset,
+				this._strokeDashoffset
+			);
 
-				// Ensure that this will run only at the Initialization
-				if (!this.isBuilt) {
-					// Make async to ensure that all css variables are assigned
-					// Update according initial style
-					Helper.AsyncInvocation(this.addInitialAnimation.bind(this));
-				}
+			// Ensure that this will run only at the Initialization
+			if (!this.isBuilt) {
+				// Make async to ensure that all css variables are assigned
+				// Update according initial style
+				Helper.AsyncInvocation(this.addInitialAnimation.bind(this));
 			}
 		}
 

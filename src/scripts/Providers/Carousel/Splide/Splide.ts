@@ -57,22 +57,8 @@ namespace Providers.Splide {
 			// Call the following methods here, so that all DOM elements are iterated and ready to init the library
 			this._prepareCarouselItems();
 			this._providerOptions = this.configs.getProviderConfig();
-
-			if (this._selfElem.offsetWidth === 0) {
-				const resizeObserver = new ResizeObserver((entries) => {
-					for (const entry of entries) {
-						if (entry.contentBoxSize) {
-							this._initProvider(triggerInitialize);
-							// We just need this once, so lets remove the observer
-							resizeObserver.unobserve(this._selfElem);
-						}
-					}
-				});
-				resizeObserver.observe(this._selfElem);
-			} else {
-				// Init the Library
-				this._initProvider(triggerInitialize);
-			}
+			// Init the Library
+			this._initProvider(triggerInitialize);
 		}
 
 		// Method to toggle the blockRender status, to avoid multiple renderings triggering changeProperty
