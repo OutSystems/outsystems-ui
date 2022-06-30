@@ -87,6 +87,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailChangeProperty: 'OSUI-API-09001',
 		FailDispose: 'OSUI-API-09002',
 		FailProgressValue: 'OSUI-API-09003',
+		FailProgressReset: 'OSUI-API-09004',
 	};
 
 	export const RangeSlider = {
