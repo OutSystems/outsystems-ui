@@ -147,6 +147,9 @@ namespace Providers.Dropdown.VirtualSelect {
 		 */
 		protected unsetCallbacks(): void {
 			this._onSelectedOptionEvent = undefined;
+			this._virtualselectMethods = undefined;
+			this._virtualselectOpts = undefined;
+			this.provider = undefined;
 		}
 
 		public build(): void {
@@ -230,7 +233,18 @@ namespace Providers.Dropdown.VirtualSelect {
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
-				this.provider.destroy();
+				/* Due to VirtualSelect (VS) library implementation we must check if the provider is an array of elements in screen...
+				- by default, library will have an object instance containing all the Dropdowns (DDs) that has been added to screen, which we're not using since we're creating an instance for each DD added and store it at **this.provider**;
+				- this was only happens when there are DDs in several screens and we're navigating through them;
+				- during screen navigation, platform will create the new screen before removing the old one, at that moment VS will add a new instance to it's context (our this.provider), that way we ends up on having an array of items that we must destroy instead only one as we had before this fix!
+				- that's why we must check if we have an array of items at our this.provider and destroy all of them! */
+				if (Array.isArray(this.provider)) {
+					for (const element of this.provider) {
+						element.destroy();
+					}
+				} else {
+					this.provider.destroy();
+				}
 
 				this.unsetCallbacks();
 				this._unsetEvents();
