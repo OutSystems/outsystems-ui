@@ -20,14 +20,10 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _currentOrientation: GlobalEnum.Orientation;
 		// Store current position config, to be able to remove current active option
 		private _currentVerticalPositon: GlobalEnum.Direction;
-		// Store if the observer should observe
-		// This is usefull to prevent observer on clicks and changeProperty of changeTab method
-		private _disableObserver: boolean;
 		// Store the IntersectionObserver callback
 		private _dragObserver: IntersectionObserver;
 		// Store the events with bind(this)
 		private _eventOnHeaderKeypress: Callbacks.Generic;
-		private _eventOnScroll: Callbacks.Generic;
 		// Store if has drag gestures
 		private _hasDragGestures: boolean;
 		// Store if the Tabs has only one ContentItem, to prevent unnecessary usages of ScrollTo
@@ -47,9 +43,8 @@ namespace OSUIFramework.Patterns.Tabs {
 			super(uniqueId, new TabsConfig(configs));
 
 			// Check if running on native shell, to enable drag gestures
-			this._hasDragGestures = Helper.DeviceInfo.IsNative;
-			// Block observer by default, to prevent it from running on page load
-			this._disableObserver = true;
+			this._hasDragGestures =
+				Helper.DeviceInfo.IsNative && this.configs.TabsOrientation !== GlobalEnum.Orientation.Vertical;
 		}
 
 		// Method that it's called whenever a new TabsContentItem is rendered
@@ -134,12 +129,7 @@ namespace OSUIFramework.Patterns.Tabs {
 					// And call changeTab, to make sure there's an active tab
 					// undefined passed, as we don't necessarily want this item to be set as active,
 					// but the one passed on the configs.activeTab, if available
-					Helper.AsyncInvocation(
-						this.changeTab.bind(this),
-						this.configs.StartingTab,
-						tabsHeaderChildItem,
-						true
-					);
+					Helper.AsyncInvocation(this.changeTab.bind(this), this.configs.StartingTab, tabsHeaderChildItem);
 				}
 
 				this._setHeaderItemsCustomProperty();
@@ -153,18 +143,6 @@ namespace OSUIFramework.Patterns.Tabs {
 				// Set the correct data-tab, by using the items array, that correspond to the DOM order
 				tabsHeaderChildItem.setDataTab(currentIndex);
 			}
-		}
-
-		// Method to block the observer
-		private _disableDragObserver(): void {
-			this._disableObserver = true;
-			this._tabsContentElement.addEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnScroll);
-		}
-
-		// Method to enable the observer
-		private _enableDragObserver(): void {
-			this._disableObserver = false;
-			this._tabsContentElement.removeEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnScroll);
 		}
 
 		// Method to determine the next target index on changeTab method
@@ -195,7 +173,7 @@ namespace OSUIFramework.Patterns.Tabs {
 					targetHeaderItemIndex = this.configs.StartingTab + 1;
 					// To prevent triggerinh changeTab, if already on last item
 					if (targetHeaderItemIndex < this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length) {
-						this.changeTab(targetHeaderItemIndex, undefined, true, true);
+						this.changeTab(targetHeaderItemIndex, undefined, true);
 					}
 
 					break;
@@ -204,7 +182,7 @@ namespace OSUIFramework.Patterns.Tabs {
 					targetHeaderItemIndex = this.configs.StartingTab - 1;
 					// To prevent triggering changeTab, if already on first item
 					if (targetHeaderItemIndex >= 0) {
-						this.changeTab(targetHeaderItemIndex, undefined, true, true);
+						this.changeTab(targetHeaderItemIndex, undefined, true);
 					}
 					break;
 			}
@@ -379,10 +357,6 @@ namespace OSUIFramework.Patterns.Tabs {
 					this._handleTabIndicator.bind(this)
 				);
 			}
-
-			if (this._hasDragGestures) {
-				this._tabsContentElement.removeEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnScroll);
-			}
 		}
 
 		// Method that it's called whenever a new TabsHeaderItem is destroyed
@@ -447,15 +421,16 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			this._dragObserver = new IntersectionObserver((entries) => {
 				entries.forEach((entry) => {
-					if (entry.isIntersecting && this._disableObserver === false) {
+					if (entry.isIntersecting) {
 						// Get data-tab from active entry intersecting, to know the current contentItem index
 						const targetIndex = parseInt(
 							Helper.Dom.Attribute.Get(entry.target as HTMLElement, Enum.Attributes.DataTab)
 						);
 						// get current headerItem
 						const currentHeaderItem = this.getChildByIndex(targetIndex, Enum.ChildTypes.TabsHeaderItem);
+
 						// changeTab using the index obtained above,
-						Helper.AsyncInvocation(this.changeTab.bind(this), targetIndex, currentHeaderItem, false, true);
+						Helper.AsyncInvocation(this.changeTab.bind(this), targetIndex, currentHeaderItem, true, true);
 					}
 				});
 			}, observerOptions);
@@ -490,8 +465,8 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._setIsJustified(this.configs.JustifyHeaders);
 			// Set the --tabs-header-items css variable
 			this._setHeaderItemsCustomProperty();
-			// Setting as false, to avoid trigering changeTab event on screen load
-			this.changeTab(this.configs.StartingTab, undefined, true);
+			// Set startingTab
+			this.changeTab(this.configs.StartingTab, undefined);
 
 			if (this._hasDragGestures) {
 				this.toggleDragGestures(true);
@@ -532,11 +507,6 @@ namespace OSUIFramework.Patterns.Tabs {
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClasses.Modifier + position);
 
 			this._currentVerticalPositon = position;
-		}
-
-		// Method to set a scroll event on tabsContent, to simulate drag
-		private _setScrollEvent(): void {
-			this._tabsContentElement.addEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnScroll);
 		}
 
 		// Toggle TableHeaderItem disbaled status
@@ -587,7 +557,7 @@ namespace OSUIFramework.Patterns.Tabs {
 				);
 			}
 
-			this.changeTab(this.getChildIndex(childHeaderId), newHeaderItem, true, true);
+			this.changeTab(this.getChildIndex(childHeaderId), newHeaderItem, true);
 		}
 
 		// Method that triggers the OnTabsChange event
@@ -658,7 +628,6 @@ namespace OSUIFramework.Patterns.Tabs {
 		 */
 		protected setCallbacks(): void {
 			this._eventOnHeaderKeypress = this._handleKeypressEvent.bind(this);
-			this._eventOnScroll = this._enableDragObserver.bind(this);
 			this._addEvents();
 		}
 
@@ -686,7 +655,6 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._eventOnHeaderKeypress = undefined;
 
 			if (this._hasDragGestures) {
-				this._eventOnScroll = undefined;
 				this._unsetDragObserver();
 			}
 
@@ -809,13 +777,9 @@ namespace OSUIFramework.Patterns.Tabs {
 		public changeTab(
 			tabIndex = this.configs.StartingTab,
 			tabsHeaderItem?: Patterns.TabsHeaderItem.ITabsHeaderItem,
-			blockObserver?: boolean,
-			triggerEvent = false
+			triggerEvent = false,
+			triggeredByObserver = false
 		): void {
-			if (blockObserver) {
-				Helper.AsyncInvocation(this._disableDragObserver.bind(this));
-			}
-
 			// If selecting the same element as the active one, prevent tabsChange
 			if (
 				this._activeTabHeaderElement === tabsHeaderItem ||
@@ -851,9 +815,9 @@ namespace OSUIFramework.Patterns.Tabs {
 				this._activeTabHeaderElement = newHeaderItem;
 			}
 
-			// If there're more than one content item or changeTab doesn't come from a drag gesture,
+			// If there're more than one content item,
 			// then do scrollTo and change active content item
-			if (this._hasSingleContent === false || this._disableObserver) {
+			if (this._hasSingleContent === false) {
 				// Get the contentItem, based on the newTabIndex
 				const newContentItem = this.getChildByIndex(
 					newTabIndex,
@@ -872,8 +836,11 @@ namespace OSUIFramework.Patterns.Tabs {
 					this._activeTabHeaderElement.setFocus();
 				}
 
-				// Scroll to new content item and set it as active
-				this._scrollToTargetContent(newContentItem);
+				// Scroll to new content item and set it as active,
+				// if changeTab deosn't come from drag/scroll
+				if (triggeredByObserver === false) {
+					this._scrollToTargetContent(newContentItem);
+				}
 
 				// Update active indicator
 				this._handleTabIndicator();
@@ -928,19 +895,13 @@ namespace OSUIFramework.Patterns.Tabs {
 				// Add class to prevent enable overflow-x
 				Helper.Dom.Styles.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.HasDragGestures);
 				this._hasDragGestures = true;
-				// Set scroll event to enable observer when starting dragging
-				this._setScrollEvent();
 				// Set observer on each contentItem to detect current content being intersected
 				this._setDragObserver();
-				// Update content position, due to change to display grid
-				this._scrollToTargetContent(this._activeTabContentElement);
 				// If the gestures were already added
 			} else if (this._hasDragGestures) {
 				// Remove class to prevent overflow-x
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.HasDragGestures);
 				this._hasDragGestures = false;
-				// remove scroll event
-				this._tabsContentElement.removeEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnScroll);
 				// Disconnect observer
 				this._unsetDragObserver();
 			}

@@ -19,10 +19,6 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 			super(uniqueId, new TabsContentItemConfig(configs));
 		}
 
-		private _setHtmlElements(): void {
-			this._focusableElements = [...this._selfElem.querySelectorAll(Constants.FocusableElems)] as HTMLElement[];
-		}
-
 		/**
 		 * Method to handle the Accessibility attributes
 		 *
@@ -53,6 +49,26 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		}
 
 		/**
+		 * Method to set the HTML Elements
+		 *
+		 * @protected
+		 * @memberof TabsContentItem
+		 */
+		protected setHtmlElements(): void {
+			this._focusableElements = [...this._selfElem.querySelectorAll(Constants.FocusableElems)] as HTMLElement[];
+		}
+
+		/**
+		 * Method to unset the HTML Elements
+		 *
+		 * @protected
+		 * @memberof TabsContentItem
+		 */
+		protected unsetHtmlElements(): void {
+			this._focusableElements = undefined;
+		}
+
+		/**
 		 * Method to build the pattern
 		 *
 		 * @memberof TabsContentItem
@@ -60,7 +76,7 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		public build(): void {
 			super.build();
 
-			this._setHtmlElements();
+			this.setHtmlElements();
 
 			this.setParentInfo(
 				Constants.Dot + Tabs.Enum.CssClasses.TabsWrapper,
@@ -81,6 +97,7 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		 * @memberof TabsContentItem
 		 */
 		public dispose(): void {
+			this.unsetHtmlElements();
 			// Notify parent about this instance will be destroyed
 			this.notifyParent(Tabs.Enum.ChildNotifyActionType.RemovedContentItem);
 

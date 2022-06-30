@@ -20,7 +20,7 @@
 				grid-column: 2;
 
 				.osui-tabs__header-item {
-					padding: var(--space-xs) 0 var(--space-xs) var(--space-base);
+					padding: var(--space-s) 0 var(--space-s) var(--space-base);
 				}
 
 				& > .osui-tabs__header__indicator {
@@ -41,7 +41,7 @@
 			& > .osui-tabs__header {
 				.osui-tabs__header-item {
 					justify-content: flex-start;
-					padding: var(--space-xs) var(--space-base) var(--space-xs) 0;
+					padding: var(--space-s) var(--space-base) var(--space-s) 0;
 				}
 
 				& > .osui-tabs__header__indicator {
@@ -62,7 +62,6 @@
 			overflow-x: hidden;
 
 			.osui-tabs__header-item {
-				border-right: var(--border-size-m) solid transparent;
 				flex: none;
 			}
 
@@ -97,9 +96,8 @@
 			word-break: keep-all;
 
 			.osui-tabs__header-item {
-				border-bottom: var(--border-size-m) solid transparent;
 				justify-content: center;
-				padding: var(--space-base) var(--space-xs);
+				padding: var(--space-s) var(--space-base);
 			}
 		}
 
@@ -173,7 +171,8 @@
 			}
 
 			&.osui-tabs--is-active {
-				color: var(--color-primary);
+				color: var(--color-neutral-10);
+				text-shadow: 0.5px 0 0 currentColor;
 			}
 
 			&[disabled] {
