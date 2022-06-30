@@ -769,8 +769,8 @@ namespace OSUIFramework.Patterns.Tabs {
 		 *
 		 * @param {*} [tabIndex=this.configs.StartingTab]
 		 * @param {Patterns.TabsHeaderItem.ITabsHeaderItem} [tabsHeaderItem]
-		 * @param {boolean} [blockObserver]
 		 * @param {boolean} [triggerEvent=false]
+		 * @param {boolean} [triggeredByObserver=false]
 		 * @return {*}  {void}
 		 * @memberof Tabs
 		 */
