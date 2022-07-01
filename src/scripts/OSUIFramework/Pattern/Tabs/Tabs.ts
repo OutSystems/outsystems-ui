@@ -135,9 +135,7 @@ namespace OSUIFramework.Patterns.Tabs {
 				this._setHeaderItemsCustomProperty();
 
 				// Update indicator size
-				if (this.configs.JustifyHeaders) {
-					this._handleTabIndicator();
-				}
+				this._handleTabIndicator();
 			} else {
 				// Otherwise are items created before the tabs is built
 				// Set the correct data-tab, by using the items array, that correspond to the DOM order
@@ -466,7 +464,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			// Set the --tabs-header-items css variable
 			this._setHeaderItemsCustomProperty();
 			// Set startingTab
-			this.changeTab(this.configs.StartingTab, undefined);
+			this.changeTab(this.configs.StartingTab);
 
 			if (this._hasDragGestures) {
 				this.toggleDragGestures(true);
