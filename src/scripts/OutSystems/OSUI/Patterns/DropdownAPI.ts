@@ -111,13 +111,14 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	}
 
 	/**
-	 * Function that disables the dropbox as popup on small screen like mobile
+	 * Function that toggle the dropbox as popup on small screen like mobile
 	 *
 	 * @export
 	 * @param {string} dropdownId
+	 * @param {boolean} isEnabled
 	 * @return {*} {string} Return Message Success or message of error info if it's the case.
 	 */
-	export function DisableOpenAsPopUp(dropdownId: string): string {
+	export function TogglePopup(dropdownId: string, isEnabled: boolean): string {
 		const responseObj = {
 			isSuccess: true,
 			message: ErrorCodes.Success.message,
@@ -127,7 +128,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 		try {
 			const _dropdownItem = GetDropdownById(dropdownId) as VirtualSelect;
 
-			_dropdownItem.disableOpenAsPopUp();
+			_dropdownItem.togglePopup(isEnabled);
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
