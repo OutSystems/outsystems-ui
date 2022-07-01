@@ -44,7 +44,7 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			// Check if running on native shell, to enable drag gestures
 			this._hasDragGestures =
-				Helper.DeviceInfo.IsNative && this.configs.TabsOrientation !== GlobalEnum.Orientation.Vertical;
+				Helper.DeviceInfo.IsNative && this.configs.TabsOrientation === GlobalEnum.Orientation.Horizontal;
 		}
 
 		// Method that it's called whenever a new TabsContentItem is rendered
