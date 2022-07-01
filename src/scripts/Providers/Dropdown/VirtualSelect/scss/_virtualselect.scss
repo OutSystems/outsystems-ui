@@ -463,15 +463,11 @@
 	}
 }
 
-// Popup Mode inside Tabs --------------------------------------------------------
+// Popup Mode --------------------------------------------------------
 body {
 	&.vscomp-popup-active {
-		.tabs-content-wrapper {
-			display: contents;
-
-			.OSBlockWidget {
-				display: flex;
-			}
+		.vscomp-wrapper:not(.focused) {
+			z-index: 0;
 		}
 	}
 }
