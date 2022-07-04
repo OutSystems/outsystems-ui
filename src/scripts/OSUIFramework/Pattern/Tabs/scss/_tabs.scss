@@ -20,7 +20,7 @@
 				grid-column: 2;
 
 				.osui-tabs__header-item {
-					padding: var(--space-xs) 0 var(--space-xs) var(--space-base);
+					padding: var(--space-s) 0 var(--space-s) var(--space-base);
 				}
 
 				& > .osui-tabs__header__indicator {
@@ -41,7 +41,7 @@
 			& > .osui-tabs__header {
 				.osui-tabs__header-item {
 					justify-content: flex-start;
-					padding: var(--space-xs) var(--space-base) var(--space-xs) 0;
+					padding: var(--space-s) var(--space-base) var(--space-s) 0;
 				}
 
 				& > .osui-tabs__header__indicator {
@@ -55,12 +55,6 @@
 			}
 		}
 
-		&.osui-tabs--has-drag {
-			.osui-tabs__content {
-				overflow-x: hidden;
-			}
-		}
-
 		& > .osui-tabs__header {
 			align-content: start;
 			grid-template-rows: repeat(var(--tabs-header-items), var(--header-item-alignment));
@@ -68,7 +62,6 @@
 			overflow-x: hidden;
 
 			.osui-tabs__header-item {
-				border-right: var(--border-size-m) solid transparent;
 				flex: none;
 			}
 
@@ -83,7 +76,6 @@
 		}
 
 		.osui-tabs__content {
-			overflow-y: auto;
 			width: auto;
 
 			&-item {
@@ -104,9 +96,8 @@
 			word-break: keep-all;
 
 			.osui-tabs__header-item {
-				border-bottom: var(--border-size-m) solid transparent;
 				justify-content: center;
-				padding: var(--space-base) var(--space-xs);
+				padding: var(--space-s) var(--space-base);
 			}
 		}
 
@@ -119,7 +110,6 @@
 		.osui-tabs__content {
 			border-top: var(--border-size-s) solid var(--color-neutral-5);
 			margin-top: -1px;
-			overflow-y: hidden;
 		}
 	}
 
@@ -139,40 +129,15 @@
 		}
 	}
 
-	&:not(.osui-tabs--has-drag) {
+	&--has-drag:not(.osui-tabs--is-vertical) {
 		.osui-tabs__content {
-			&-item:not(.osui-tabs--is-active) {
-				display: none;
-			}
-		}
-	}
+			overflow-x: auto;
+			overscroll-behavior-x: contain;
+			scroll-snap-type: x mandatory;
 
-	&--has-drag {
-		&.osui-tabs--is-horizontal {
-			.osui-tabs__content {
-				grid-auto-flow: column;
-				grid-auto-columns: 100%;
-				overflow-y: hidden;
-				overflow-x: auto;
-				overscroll-behavior-x: contain;
-				scroll-snap-type: x mandatory;
-
-				&-item {
-					scroll-snap-align: start;
-					scroll-snap-stop: always;
-				}
-
-				.ph > .list {
-					display: contents;
-				}
-			}
-		}
-
-		&.osui-tabs--is-vertical {
-			.osui-tabs__content {
-				&-item:not(.osui-tabs--is-active) {
-					display: none;
-				}
+			&-item {
+				scroll-snap-align: start;
+				scroll-snap-stop: always;
 			}
 		}
 	}
@@ -180,6 +145,7 @@
 	&__header {
 		display: grid;
 		position: relative;
+		z-index: 1;
 
 		&-item {
 			align-items: center;
@@ -205,7 +171,8 @@
 			}
 
 			&.osui-tabs--is-active {
-				color: var(--color-primary);
+				color: var(--color-neutral-10);
+				text-shadow: 0.5px 0 0 currentColor; /* This is used instead of font-weight, to prevent layout-shifts */
 			}
 
 			&[disabled] {
@@ -231,16 +198,16 @@
 			-servicestudio-grid-auto-flow: column;
 			-servicestudio-gap: var(--space-s);
 		}
-
-		.ph > .list {
-			display: contents;
-		}
 	}
 
 	&__content {
 		display: grid;
-		overflow-x: hidden;
+		grid-auto-flow: column;
+		grid-auto-columns: 100%;
+		overflow: hidden;
+		position: relative;
 		width: 100%;
+		z-index: 0;
 
 		&::-webkit-scrollbar {
 			display: none;
@@ -261,7 +228,8 @@
 
 	&__header,
 	&__content {
-		.ph > .OSBlockWidget {
+		& > .ph > .OSBlockWidget,
+		& > .ph > .list.list-group {
 			display: contents;
 		}
 	}
