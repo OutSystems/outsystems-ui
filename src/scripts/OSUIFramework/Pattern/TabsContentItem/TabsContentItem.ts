@@ -11,6 +11,7 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 	export class TabsContentItem extends AbstractChild<TabsContentItemConfig, Tabs.ITabs> implements ITabsContentItem {
 		// Store the data-tab attribute
 		private _dataTab: number;
+		private _focusableElements: HTMLElement[];
 		// Store if this is the current active item
 		private _isActive: boolean;
 
@@ -33,10 +34,38 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 			if (this._isActive) {
 				Helper.A11Y.TabIndexTrue(this._selfElem);
 				Helper.A11Y.AriaHiddenFalse(this._selfElem);
+				// On each element, toggle the tabindex value, depending if is active
+				for (const item of this._focusableElements) {
+					Helper.A11Y.TabIndexTrue(item);
+				}
 			} else {
 				Helper.A11Y.TabIndexFalse(this._selfElem);
 				Helper.A11Y.AriaHiddenTrue(this._selfElem);
+				// On each element, toggle the tabindex value, depending if is active
+				for (const item of this._focusableElements) {
+					Helper.A11Y.TabIndexFalse(item);
+				}
 			}
+		}
+
+		/**
+		 * Method to set the HTML Elements
+		 *
+		 * @protected
+		 * @memberof TabsContentItem
+		 */
+		protected setHtmlElements(): void {
+			this._focusableElements = [...this._selfElem.querySelectorAll(Constants.FocusableElems)] as HTMLElement[];
+		}
+
+		/**
+		 * Method to unset the HTML Elements
+		 *
+		 * @protected
+		 * @memberof TabsContentItem
+		 */
+		protected unsetHtmlElements(): void {
+			this._focusableElements = undefined;
 		}
 
 		/**
@@ -46,6 +75,8 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		 */
 		public build(): void {
 			super.build();
+
+			this.setHtmlElements();
 
 			this.setParentInfo(
 				Constants.Dot + Tabs.Enum.CssClasses.TabsWrapper,
@@ -66,6 +97,7 @@ namespace OSUIFramework.Patterns.TabsContentItem {
 		 * @memberof TabsContentItem
 		 */
 		public dispose(): void {
+			this.unsetHtmlElements();
 			// Notify parent about this instance will be destroyed
 			this.notifyParent(Tabs.Enum.ChildNotifyActionType.RemovedContentItem);
 
