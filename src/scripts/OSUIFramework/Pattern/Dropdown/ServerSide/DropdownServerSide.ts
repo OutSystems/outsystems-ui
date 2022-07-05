@@ -35,7 +35,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		private _eventOnClickInputSearch: Callbacks.Generic;
 		// Event OnTransitionEnd applied to the Balloon
 		private _eventOnCloseTransitionEnd: Callbacks.Generic;
-		// On WindowResize Event
+		// Event OnOrientationChange Event
 		private _eventOnOrientationChange: Callbacks.Generic;
 		// OnFocus Event at ballon custom span elements
 		private _eventOnSpanFocus: Callbacks.Generic;
@@ -559,7 +559,10 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
 			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
 			Event.GlobalEventManager.Instance.removeHandler(Event.Type.WindowResize, this._eventOnWindowResize);
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.WindowResize, this._eventOnOrientationChange);
+			Event.GlobalEventManager.Instance.removeHandler(
+				Event.Type.OrientationChange,
+				this._eventOnOrientationChange
+			);
 		}
 
 		// Method used to remove a given DropdownOption from optionItems list, it's triggered by DropdownServerSideItem
