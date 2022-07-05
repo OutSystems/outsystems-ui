@@ -375,6 +375,7 @@ $balloonMarginToSelectValuesWrapper: 2px;
 	}
 }
 
+///
 .phone {
 	&.android {
 		&.landscape {
@@ -384,7 +385,7 @@ $balloonMarginToSelectValuesWrapper: 2px;
 		}
 
 		.osui-dropdown-serverside__balloon-container {
-			max-height: 90vh;
+			max-height: calc(90vh - 5vh - var(--header-size));
 		}
 	}
 

@@ -35,6 +35,8 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		private _eventOnClickInputSearch: Callbacks.Generic;
 		// Event OnTransitionEnd applied to the Balloon
 		private _eventOnCloseTransitionEnd: Callbacks.Generic;
+		// On WindowResize Event
+		private _eventOnOrientationChange: Callbacks.Generic;
 		// OnFocus Event at ballon custom span elements
 		private _eventOnSpanFocus: Callbacks.Generic;
 		// On WindowResize Event
@@ -262,6 +264,13 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 						this._close();
 					}
 					break;
+			}
+		}
+
+		// Close the balloon if it's open!
+		private _onOrientationChange(): void {
+			if (this._isOpened) {
+				this._close();
 			}
 		}
 
@@ -516,8 +525,10 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
 			// Add the BodyScroll callback that will be used to update the balloon coodinates
 			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
-			// Add the window resize callback that will be used update the balloon position!
+			// Add the window resize callback that will be used to update the balloon position!
 			Event.GlobalEventManager.Instance.addHandler(Event.Type.WindowResize, this._eventOnWindowResize);
+			// Add the OnOrientationChange callback that will be used to close the balloon position!
+			Event.GlobalEventManager.Instance.addHandler(Event.Type.OrientationChange, this._eventOnOrientationChange);
 		}
 
 		// Mehod used to trigger the _platformEventOnToggleCallback callback!
@@ -548,6 +559,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
 			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
 			Event.GlobalEventManager.Instance.removeHandler(Event.Type.WindowResize, this._eventOnWindowResize);
+			Event.GlobalEventManager.Instance.removeHandler(Event.Type.WindowResize, this._eventOnOrientationChange);
 		}
 
 		// Method used to remove a given DropdownOption from optionItems list, it's triggered by DropdownServerSideItem
@@ -683,6 +695,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			this._eventOnClickInputSearch = this._onSearchInputClicked.bind(this);
 			this._eventOnCloseTransitionEnd = this._endOfCloseAnimation.bind(this);
 			this._eventOnkeyboardPress = this._onKeyboardPressed.bind(this);
+			this._eventOnOrientationChange = this._onOrientationChange.bind(this);
 			this._eventOnSpanFocus = this._onSpanElementFocus.bind(this);
 			this._eventOnWindowResize = this._onWindowResize.bind(this);
 		}
@@ -745,6 +758,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			this._eventOnClickInputSearch = undefined;
 			this._eventOnCloseTransitionEnd = undefined;
 			this._eventOnkeyboardPress = undefined;
+			this._eventOnOrientationChange = undefined;
 			this._eventOnSpanFocus = undefined;
 			this._eventOnWindowResize = undefined;
 			this._platformEventInitializedCallback = undefined;
