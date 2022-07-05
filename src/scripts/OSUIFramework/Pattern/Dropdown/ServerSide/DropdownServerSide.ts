@@ -451,7 +451,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		// Method used to set the ExtendedClass to the balloon wrapper as well
 		private _setBalloonWrapperExtendedClass(newExtendedClass: string, preExtendedClass = '') {
 			// Since balloon wrapper will not be at the pattern context, let's also set/update the extendedClass to it!
-			Helper.Dom.Styles.ExtendedClass(this._balloonWrapperElement, preExtendedClass, newExtendedClass);
+			Helper.Dom.Styles.ExtendedClass(this._balloonContainerElement, preExtendedClass, newExtendedClass);
 		}
 
 		// Method used to add CSS classes to pattern elements
