@@ -76,8 +76,8 @@ namespace Providers.Dropdown.VirtualSelect {
 
 			// Set the library options
 			const vsOptions = {
-				dropboxWrapper: this.ShowDropboxAsPopup ? 'body' : 'self',
 				ele: this.ElementId,
+				dropboxWrapper: this.setDropboxWrapperConfig(this.ShowDropboxAsPopup),
 				hideClearButton: false,
 				labelRenderer: this._getOptionInfo.bind(this),
 				noOptionsText: this.NoResultsText,
@@ -96,6 +96,19 @@ namespace Providers.Dropdown.VirtualSelect {
 			};
 
 			return vsOptions as VirtualSelectOpts;
+		}
+
+		/**
+		 * Method to set the dropboxWrapper config
+		 *
+		 * @param {boolean} showAsPopup
+		 * @return {*}  {string}
+		 * @memberof AbstractVirtualSelectConfig
+		 */
+		public setDropboxWrapperConfig(showAsPopup: boolean): string {
+			return showAsPopup && OSUIFramework.Helper.DeviceInfo.IsPhone
+				? Enum.DropboxWrapperOptions.Body
+				: Enum.DropboxWrapperOptions.Self;
 		}
 
 		// Override, Validate configs key values
