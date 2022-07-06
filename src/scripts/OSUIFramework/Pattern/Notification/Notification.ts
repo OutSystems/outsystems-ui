@@ -115,7 +115,7 @@ namespace OSUIFramework.Patterns.Notification {
 		private _hideNotification(): void {
 			this._isOpen = false;
 
-			this._focusTrapInstance.unsetA11yProperties();
+			this._focusTrapInstance.disableForA11y();
 
 			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
 
@@ -159,7 +159,7 @@ namespace OSUIFramework.Patterns.Notification {
 			this._focusableActiveElement = document.activeElement as HTMLElement;
 			this._isOpen = true;
 
-			this._focusTrapInstance.setA11yProperties();
+			this._focusTrapInstance.enableForA11y();
 
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsOpen);
 

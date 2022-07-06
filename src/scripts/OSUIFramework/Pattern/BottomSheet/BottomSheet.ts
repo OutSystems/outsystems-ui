@@ -182,11 +182,11 @@ namespace OSUIFramework.Patterns.BottomSheet {
 			// Handle focus trap logic
 			if (isOpen) {
 				this._focusableActiveElement = document.activeElement as HTMLElement;
-				this._focusTrapInstance.setA11yProperties();
+				this._focusTrapInstance.enableForA11y();
 				// Focus on element when pattern is open
 				this._selfElem.focus();
 			} else {
-				this._focusTrapInstance.unsetA11yProperties();
+				this._focusTrapInstance.disableForA11y();
 
 				// Focus on last element clicked. Async to avoid conflict with closing animation
 				Helper.AsyncInvocation(() => {

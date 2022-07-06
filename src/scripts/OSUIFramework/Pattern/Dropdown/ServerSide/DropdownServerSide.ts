@@ -45,6 +45,8 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		private _eventOnWindowResize: Callbacks.Generic;
 		// Keyboard Key Press Event
 		private _eventOnkeyboardPress: Callbacks.Generic;
+		// Store the instance of the Object responsible to Add Custom HTML elements to the DropdownBallon that will help on deal with keyboard navigation (Accessibility)
+		private _focusTrapObject: DynamicElements.FocusTrap.FocusTrap;
 		// Store a Flag property that will control if the dropdown is blocked (like it's under closing animation)
 		private _isBlocked = false;
 		// Store the Element State, by default is closed!
@@ -57,9 +59,6 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		private _selectValuesWrapper: HTMLElement;
 		// Store the SelectValuesWrapper AriaLabel text
 		private _selectValuesWrapperAriaLabel: string;
-		// HTML Elements that will help to deal with keyboard tab navigation (A11y - stuff)
-		private _spanBottomFocusElement: HTMLElement;
-		private _spanTopFocusElement: HTMLElement;
 		// Store the window width value in order to check if has changed at windowResize
 		private _windowWidth: number;
 
@@ -83,27 +82,6 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 
 				this._selfElem.parentElement.appendChild(textContainer);
 			}
-		}
-
-		// Add Custom HTML elements to the DropdownBallon in order to help on deal with keyboard navigation (Accessibility)
-		private _addSpanHtmlElements(): void {
-			// Add top focus item
-			this._spanTopFocusElement = document.createElement(GlobalEnum.HTMLElement.Span);
-			this._spanTopFocusElement.classList.add(
-				Enum.CssClass.FocusTopHtmlElement,
-				Constants.AccessibilityHideElementClass
-			);
-			this._balloonWrapperElement.prepend(this._spanTopFocusElement);
-			Helper.A11Y.AriaHiddenTrue(this._spanTopFocusElement);
-
-			// Add bottom focus item
-			this._spanBottomFocusElement = document.createElement(GlobalEnum.HTMLElement.Span);
-			this._spanBottomFocusElement.classList.add(
-				Enum.CssClass.FocusBottomHtmlElement,
-				Constants.AccessibilityHideElementClass
-			);
-			this._balloonWrapperElement.append(this._spanBottomFocusElement);
-			Helper.A11Y.AriaHiddenTrue(this._spanBottomFocusElement);
 		}
 
 		// Remove the position if has been already set
@@ -245,7 +223,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 						if (this._balloonSearchInputElement) {
 							this._balloonSearchInputElement.focus();
 						} else {
-							this._spanTopFocusElement.focus();
+							this._focusTrapObject.topElement.focus();
 						}
 					} else if (event.key === GlobalEnum.Keycodes.ArrowDown) {
 						// If ArrowDown Key
@@ -393,7 +371,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 						if (this._balloonSearchInputElement) {
 							this._balloonSearchInputElement.focus();
 						} else {
-							this._spanTopFocusElement.focus();
+							this._focusTrapObject.topElement.focus();
 						}
 						break;
 
@@ -404,7 +382,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 							// Set focus the the first one
 							this._balloonFocusableElemsInFooter[0].focus();
 						} else {
-							this._spanBottomFocusElement.focus();
+							this._focusTrapObject.bottomElement.focus();
 						}
 						break;
 
@@ -479,6 +457,17 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			}
 		}
 
+		// Add Custom HTML elements to the DropdownBallon in order to help on deal with keyboard navigation (Accessibility)
+		private _setFocusSpanElements(): void {
+			const opts = {
+				focusBottomCallback: this._eventOnSpanFocus.bind(this),
+				focusTargetElement: this._balloonWrapperElement,
+				focusTopCallback: this._eventOnSpanFocus.bind(this),
+			} as FocusTrapOpts;
+
+			this._focusTrapObject = new DynamicElements.FocusTrap.FocusTrap(opts);
+		}
+
 		// Method used to store a given DropdownOption into optionItems list, it's triggered by DropdownServerSideItem
 		private _setNewOptionItem(optionItemId: string): void {
 			// Get the DropdownOptionItem reference
@@ -507,10 +496,6 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 				GlobalEnum.HTMLEvent.keyDown,
 				this._eventOnkeyboardPress
 			);
-			// Add Focus Event to the added Top Span Element (A11y - stuff)
-			this._spanTopFocusElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnSpanFocus);
-			// Add Focus Event to the added Bottom Span Element (A11y - stuff)
-			this._spanBottomFocusElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnSpanFocus);
 			// If search input exist (A11y - stuff)
 			if (this._balloonSearchInputElement) {
 				this._balloonSearchInputElement.addEventListener(
@@ -546,8 +531,6 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 				GlobalEnum.HTMLEvent.keyDown,
 				this._eventOnkeyboardPress
 			);
-			this._spanTopFocusElement.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnSpanFocus);
-			this._spanBottomFocusElement.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnSpanFocus);
 			if (this._balloonSearchInputElement) {
 				this._balloonSearchInputElement.removeEventListener(
 					GlobalEnum.HTMLEvent.Click,
@@ -591,10 +574,6 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 				Helper.A11Y.TabIndex(this._balloonSearchInputElement, tabIndexValue);
 			}
 
-			// Added SpanElements at Balloon Top and Bottom
-			Helper.A11Y.TabIndex(this._spanBottomFocusElement, tabIndexValue);
-			Helper.A11Y.TabIndex(this._spanTopFocusElement, tabIndexValue);
-
 			// Ballon Options Wrapper
 			Helper.A11Y.TabIndex(this._balloonOptionsWrapperElement, tabIndexValue);
 
@@ -605,17 +584,13 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 				}
 			}
 
-			// Update AriaHidden attribute
+			// Update FocusHTML elements attributes
 			if (this._isOpened) {
-				// Added SpanElements at Balloon Top and Bottom
-				Helper.A11Y.AriaHiddenFalse(this._spanTopFocusElement);
-				Helper.A11Y.AriaHiddenFalse(this._spanBottomFocusElement);
+				this._focusTrapObject.enableForA11y();
 				// Ballon Options Wrapper
 				Helper.A11Y.AriaHiddenFalse(this._balloonOptionsWrapperElement);
 			} else {
-				// Added SpanElements at Balloon Top and Bottom
-				Helper.A11Y.AriaHiddenTrue(this._spanTopFocusElement);
-				Helper.A11Y.AriaHiddenTrue(this._spanBottomFocusElement);
+				this._focusTrapObject.disableForA11y();
 				// Ballon Options Wrapper
 				Helper.A11Y.AriaHiddenTrue(this._balloonOptionsWrapperElement);
 			}
@@ -753,7 +728,8 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			this._selectValuesWrapper = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.SelectValuesWrapper);
 
 			// Add custom SPAN HTML Elements that will help on Accessibility keyboard navigation
-			this._addSpanHtmlElements();
+			// this._addSpanHtmlElements();
+			this._setFocusSpanElements();
 			// Add Accessibility properties
 			this.setA11yProperties();
 			// Add the pattern Events
@@ -905,6 +881,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		public dispose(): void {
+			this._focusTrapObject.dispose();
 			this._unsetEvents();
 			this.unsetCallbacks();
 			this.unsetHtmlElements();

@@ -62,10 +62,22 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			return this._balloonMaxHeight as number;
 		}
 
+		/**
+		 * Getter that allows to obtain the AriaLabel default text value to be added to balloon options container.
+		 *
+		 * @readonly
+		 * @memberof OSUIDropdownServerSideConfig
+		 */
 		public get balloonOptionsArialabel(): string {
 			return this._balloonOptionsArialabel as string;
 		}
 
+		/**
+		 * Getter that allows to obtain the AriaLabel default text value to be added to select "input" container.
+		 *
+		 * @readonly
+		 * @memberof OSUIDropdownServerSideConfig
+		 */
 		public get selectValuesWrapperAriaLabel(): string {
 			return this._selectValuesWrapperAriaLabel as string;
 		}

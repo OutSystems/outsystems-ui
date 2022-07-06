@@ -21,8 +21,10 @@ namespace OSUIFramework.DynamicElements.FocusTrap {
 			this._focusBottomCallback = opts.focusBottomCallback;
 			this._focusTopCallback = opts.focusTopCallback;
 
+			// Create the elements needed!
 			this._buildFocusableElements();
 		}
+
 		// Method to create elements
 		private _buildFocusableElements(): void {
 			// Create the focusable elements
@@ -53,14 +55,12 @@ namespace OSUIFramework.DynamicElements.FocusTrap {
 		private _setFocusableProperties(): void {
 			// Set CSS classes
 			Helper.Dom.Styles.AddClass(this._bottomElement, GlobalEnum.FocusTrapClasses.FocusTrapBottom);
+			Helper.Dom.Styles.AddClass(this._bottomElement, Constants.AccessibilityHideElementClass);
 			Helper.Dom.Styles.AddClass(this._topElement, GlobalEnum.FocusTrapClasses.FocusTrapTop);
-
-			// Set aria hidden to prevent the readability from screen readers
-			Helper.A11Y.AriaHiddenTrue(this._bottomElement);
-			Helper.A11Y.AriaHiddenTrue(this._topElement);
+			Helper.Dom.Styles.AddClass(this._topElement, Constants.AccessibilityHideElementClass);
 
 			// Hide by default the focusable elements
-			this.unsetA11yProperties();
+			this.disableForA11y();
 
 			// Add event listeneres to focusable elements
 			this._setEventListeners();
@@ -73,35 +73,71 @@ namespace OSUIFramework.DynamicElements.FocusTrap {
 		}
 
 		/**
+		 *  Set elemet disabled for A11Y
+		 *
+		 * @memberof FocusTrap
+		 */
+		public disableForA11y(): void {
+			// Unset A11Y properties from bottom & top focusable element
+			Helper.A11Y.TabIndexFalse(this._bottomElement);
+			Helper.A11Y.TabIndexFalse(this._topElement);
+
+			// Set A11Y AriaHidden as true
+			Helper.A11Y.AriaHiddenTrue(this._bottomElement);
+			Helper.A11Y.AriaHiddenTrue(this._topElement);
+		}
+
+		/**
 		 * Method to remove the event listeners and unset the callbacks
 		 *
 		 * @memberof FocusTrap
 		 */
 		public dispose(): void {
+			// remove events added
 			this._removeEventListeners();
+			// unset defined callback
 			this._unsetCallbacks();
+
+			// ensure we also remove the html elements
+			this._topElement.remove();
+			this._bottomElement.remove();
 		}
 
 		/**
-		 * Add the A11Y properties to element
+		 *  Set elemet enabled for A11Y
 		 *
 		 * @memberof FocusTrap
 		 */
-		public setA11yProperties(): void {
+		public enableForA11y(): void {
 			// Set A11Y properties to bottom & top focusable element
 			Helper.A11Y.TabIndexTrue(this._bottomElement);
 			Helper.A11Y.TabIndexTrue(this._topElement);
+
+			// Set A11Y AriaHidden as false
+			Helper.A11Y.AriaHiddenFalse(this._bottomElement);
+			Helper.A11Y.AriaHiddenFalse(this._topElement);
 		}
 
 		/**
-		 *  Remove the A11Y properties of element
+		 * Getter that allows to obtain the bottomElement reference
 		 *
+		 * @readonly
+		 * @type {HTMLElement}
 		 * @memberof FocusTrap
 		 */
-		public unsetA11yProperties(): void {
-			// Unset A11Y properties from bottom & top focusable element
-			Helper.A11Y.TabIndexFalse(this._bottomElement);
-			Helper.A11Y.TabIndexFalse(this._topElement);
+		public get bottomElement(): HTMLElement {
+			return this._bottomElement;
+		}
+
+		/**
+		 * Getter that allows to obtain the bottomElement reference
+		 *
+		 * @readonly
+		 * @type {HTMLElement}
+		 * @memberof FocusTrap
+		 */
+		public get topElement(): HTMLElement {
+			return this._topElement;
 		}
 	}
 }
