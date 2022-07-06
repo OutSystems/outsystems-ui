@@ -98,6 +98,8 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 				this._selectValuesWrapper.focus();
 			}
 
+			// Cancel the requestAnimationFrame
+			cancelAnimationFrame(this._requestAnimationOnBodyScroll);
 			// Update status property
 			this._isOpen = false;
 			// Update pattern status!
@@ -290,7 +292,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			// Update windowWidth value
 			this._windowWidth = window.innerWidth;
 			// Update the Balloon coordinates!
-			this._setBalloonCoordinates();
+			this._setBalloonCoordinates(true);
 		}
 
 		// Open the Balloon
@@ -411,14 +413,16 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		}
 
 		// Set balloon position and coordinates based on pattern SelfElement
-		private _setBalloonCoordinates(): void {
+		private _setBalloonCoordinates(lookAtXPosition = false): void {
 			// Get all info from the pattern self element
 			const selfElement = this._selfElem.getBoundingClientRect();
 
 			// Check if the position didn't change!
 			if (
-				selfElement.x === this._selfElementBoundingClientRect.x &&
-				selfElement.y === this._selfElementBoundingClientRect.y
+				(lookAtXPosition === false && selfElement.y === this._selfElementBoundingClientRect.y) ||
+				(lookAtXPosition &&
+					selfElement.x === this._selfElementBoundingClientRect.x &&
+					selfElement.y === this._selfElementBoundingClientRect.y)
 			) {
 				cancelAnimationFrame(this._requestAnimationOnBodyScroll);
 				return;
