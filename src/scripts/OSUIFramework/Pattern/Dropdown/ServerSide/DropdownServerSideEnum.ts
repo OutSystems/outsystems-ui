@@ -64,8 +64,10 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide.Enum {
 	 * Enum properties values
 	 */
 	export enum PropertiesValues {
+		BalloonOptionsWrapperAriaLabelMultipleValue = 'Select one or more options',
+		BalloonOptionsWrapperAriaLabelSingleValue = 'Select an option',
 		MaxHeight = 320,
+		SelectValuesWrapperAriaLabelValue = 'Select an option',
 		ThresholVerticalAnimateValue = 20,
-		SelectValuesWrapperAriaLabelValue = 'Select an option.',
 	}
 }

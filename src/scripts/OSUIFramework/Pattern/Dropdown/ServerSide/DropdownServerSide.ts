@@ -14,6 +14,8 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		private _balloonFocusableElemsInFooter: HTMLElement[];
 		// Store the HTML element for the DropdownBalloonFooter
 		private _balloonFooterElement: HTMLElement;
+		// Store the BalloonOptions container AriaLabel text
+		private _balloonOptionsAriaLabel: string;
 		// Store the HTML element for the Dropdown otpions
 		private _balloonOptionsWrapperElement: HTMLElement;
 		// Store the balloon position when/if a recommended position has been added!
@@ -54,7 +56,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		// Store the HTML element for the Dropdown Select Wrapper
 		private _selectValuesWrapper: HTMLElement;
 		// Store the SelectValuesWrapper AriaLabel text
-		private _selectValuesWrapperAriaLabelText: string;
+		private _selectValuesWrapperAriaLabel: string;
 		// HTML Elements that will help to deal with keyboard tab navigation (A11y - stuff)
 		private _spanBottomFocusElement: HTMLElement;
 		private _spanTopFocusElement: HTMLElement;
@@ -579,7 +581,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		}
 
 		// Method that will be used to set/unset the TabIndex to the DropdownBallon elements according it's opened/closed
-		private _updateBallonElementsTabIndex(): void {
+		private _updateBalloonAccessibilityElements(): void {
 			const tabIndexValue = this._isOpened
 				? Constants.A11YAttributes.States.TabIndexShow
 				: Constants.A11YAttributes.States.TabIndexHidden;
@@ -601,6 +603,21 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 				for (const item of this._balloonFocusableElemsInFooter) {
 					Helper.A11Y.TabIndex(item, tabIndexValue);
 				}
+			}
+
+			// Update AriaHidden attribute
+			if (this._isOpened) {
+				// Added SpanElements at Balloon Top and Bottom
+				Helper.A11Y.AriaHiddenFalse(this._spanTopFocusElement);
+				Helper.A11Y.AriaHiddenFalse(this._spanBottomFocusElement);
+				// Ballon Options Wrapper
+				Helper.A11Y.AriaHiddenFalse(this._balloonOptionsWrapperElement);
+			} else {
+				// Added SpanElements at Balloon Top and Bottom
+				Helper.A11Y.AriaHiddenTrue(this._spanTopFocusElement);
+				Helper.A11Y.AriaHiddenTrue(this._spanBottomFocusElement);
+				// Ballon Options Wrapper
+				Helper.A11Y.AriaHiddenTrue(this._balloonOptionsWrapperElement);
 			}
 		}
 
@@ -626,7 +643,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		// Method that will update the pattern state
 		private _updatePatternState(): void {
 			// Update the TabIndex for the items inside Balloon
-			this._updateBallonElementsTabIndex();
+			this._updateBalloonAccessibilityElements();
 
 			// If balloon will open
 			if (this._isOpened) {
@@ -667,22 +684,26 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		 */
 		protected setA11yProperties(): void {
 			// Update Tabindex Ballon elements
-			this._updateBallonElementsTabIndex();
+			this._updateBalloonAccessibilityElements();
 			// Enabled TabIndex to the SelectValuesWrapper
 			Helper.A11Y.TabIndexTrue(this._selectValuesWrapper);
 			// Set SelectValuesWrapper with button as a role
 			Helper.A11Y.RoleButton(this._selectValuesWrapper);
 			// Set SelectValuesWrapper with aria-haspopup='listbox'
 			Helper.A11Y.AriaHasPopup(this._selectValuesWrapper, Constants.A11YAttributes.Role.Listbox);
-			// Set Aria Label for the SelectValuesWrapper
-			this.setAriaLabelText();
-			// Set balloon option items container with listbox as a role
+			// Set balloon option items container properties
 			Helper.A11Y.RoleListbox(this._balloonOptionsWrapperElement);
+			Helper.A11Y.TabIndexFalse(this._balloonOptionsWrapperElement);
+			Helper.A11Y.AriaHiddenTrue(this._balloonOptionsWrapperElement);
 			// Check if the Dropdown allow multiselect
 			if (this.configs.AllowMultipleSelection) {
 				// Set the aria-multiselectable attribute to the options wrapper element
 				Helper.A11Y.MultiselectableTrue(this._balloonOptionsWrapperElement);
 			}
+			// Set Aria Label for the SelectValuesWrapper
+			this.setSelectAriaLabel();
+			// Set Aria Label for the BalloonOptionsWrapper
+			this.setBalloonOptionsAriaLabel();
 		}
 
 		/**
@@ -943,15 +964,30 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		}
 
 		/**
-		 * Method used to set the AriaLabelText that will be applied to the SelectValuesWrapper "input" element
+		 * Method used to set the balloon AriaLabelText that will be applied to the balloon options container element
 		 *
 		 * @param value Text to be added
 		 */
-		public setAriaLabelText(value?: string): void {
-			this._selectValuesWrapperAriaLabelText =
-				value === undefined ? this.configs.selectValuesWrapperAriaLabelText : value;
+		public setBalloonOptionsAriaLabel(value?: string): void {
+			this._balloonOptionsAriaLabel = value === undefined ? this.configs.balloonOptionsArialabel : value;
 
-			Helper.A11Y.AriaLabel(this._selectValuesWrapper, this._selectValuesWrapperAriaLabelText);
+			if (this._balloonOptionsAriaLabel !== undefined) {
+				Helper.A11Y.AriaLabel(this._balloonOptionsWrapperElement, this._balloonOptionsAriaLabel);
+			}
+		}
+
+		/**
+		 * Method used to set the AriaLabel text that will be applied to the SelectValuesWrapper "input" element
+		 *
+		 * @param value Text to be added
+		 */
+		public setSelectAriaLabel(value?: string): void {
+			this._selectValuesWrapperAriaLabel =
+				value === undefined ? this.configs.selectValuesWrapperAriaLabel : value;
+
+			if (this._selectValuesWrapperAriaLabel !== undefined) {
+				Helper.A11Y.AriaLabel(this._selectValuesWrapper, this._selectValuesWrapperAriaLabel);
+			}
 		}
 
 		/**
