@@ -104,6 +104,9 @@ namespace Providers.Dropdown.VirtualSelect {
 			Again, this only happens when user change directly the URL! */
 			this._virtualselectMethods = Array.isArray(this.provider) ? this.provider[0].$ele : this.provider.$ele;
 
+			// Add the uniqueId to the wrapper to have an association between elements. Useful for automated tests
+			this.provider.$dropboxWrapper.setAttribute(OSUIFramework.GlobalEnum.HTMLAttributes.UniqueId, this.uniqueId);
+
 			// Add the pattern Events!
 			this._setUpEvents();
 
@@ -307,6 +310,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		public togglePopup(isEnabled: boolean): void {
 			if (this.configs.ShowDropboxAsPopup !== isEnabled) {
 				this.configs.ShowDropboxAsPopup = isEnabled;
+				this.configs.setDropboxWrapperConfig(isEnabled);
 				this.redraw();
 			}
 		}
