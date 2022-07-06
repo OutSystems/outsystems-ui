@@ -119,6 +119,13 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			// Since animation already ended let's unblock the pattern to be possible open it again
 			this._isBlocked = false;
 
+			// Reset to the default position...
+			if (this._balloonPositionClass !== '') {
+				Helper.Dom.Styles.RemoveClass(this._balloonWrapperElement, this._balloonPositionClass);
+				this._balloonPositionClass = Enum.CssClass.BalloonPositionBottom;
+				Helper.Dom.Styles.AddClass(this._balloonWrapperElement, this._balloonPositionClass);
+			}
+
 			// Trigger the toggle callback event
 			this._triggerToogleCalbackEvent();
 		}
