@@ -105,7 +105,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			this._virtualselectMethods = Array.isArray(this.provider) ? this.provider[0].$ele : this.provider.$ele;
 
 			// Add the uniqueId to the wrapper to have an association between elements. Useful for automated tests
-			this.provider.$dropboxWrapper.setAttribute(OSUIFramework.GlobalEnum.HTMLAttributes.UniqueId, this.uniqueId);
+			this.provider.$dropboxWrapper.setAttribute(OSUIFramework.GlobalEnum.HTMLAttributes.Name, this.uniqueId);
 
 			// Add the pattern Events!
 			this._setUpEvents();
