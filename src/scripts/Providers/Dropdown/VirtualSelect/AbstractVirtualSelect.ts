@@ -104,6 +104,9 @@ namespace Providers.Dropdown.VirtualSelect {
 			Again, this only happens when user change directly the URL! */
 			this._virtualselectMethods = Array.isArray(this.provider) ? this.provider[0].$ele : this.provider.$ele;
 
+			// Add the uniqueId to the wrapper to have an association between elements. Useful for automated tests
+			this.provider.$dropboxWrapper.setAttribute('uniqueId', this.uniqueId);
+
 			// Add the pattern Events!
 			this._setUpEvents();
 
