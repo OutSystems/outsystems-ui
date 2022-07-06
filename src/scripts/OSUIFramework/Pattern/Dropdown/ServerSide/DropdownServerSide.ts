@@ -190,7 +190,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 				// If the balloon is open and not IsPhone
 				if (this._isOpen) {
 					// Update the coordinates
-					this._setBalloonCoordinates();
+					this._setBalloonCoordinates(false);
 					// Update the "animation" before the next repaint
 					this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
 				} else {
@@ -292,7 +292,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			// Update windowWidth value
 			this._windowWidth = window.innerWidth;
 			// Update the Balloon coordinates!
-			this._setBalloonCoordinates(true);
+			this._setBalloonCoordinates();
 		}
 
 		// Open the Balloon
@@ -413,7 +413,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		}
 
 		// Set balloon position and coordinates based on pattern SelfElement
-		private _setBalloonCoordinates(lookAtXPosition = false): void {
+		private _setBalloonCoordinates(lookAtXPosition = true): void {
 			// Get all info from the pattern self element
 			const selfElement = this._selfElem.getBoundingClientRect();
 
