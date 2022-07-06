@@ -47,18 +47,24 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		private _eventOnkeyboardPress: Callbacks.Generic;
 		// Store the instance of the Object responsible to Add Custom HTML elements to the DropdownBallon that will help on deal with keyboard navigation (Accessibility)
 		private _focusTrapObject: DynamicElements.FocusTrap.FocusTrap;
+		// Set the observer that will check if the balloon is inside screen boundaries!
+		private _intersectionObserver: IntersectionObserver;
 		// Store a Flag property that will control if the dropdown is blocked (like it's under closing animation)
 		private _isBlocked = false;
 		// Store the Element State, by default is closed!
-		private _isOpened = false;
+		private _isOpen = false;
 		// Platform OnInitialize Callback
 		private _platformEventInitializedCallback: Callbacks.OSGeneric;
 		// Platform OnClose Callback
 		private _platformEventOnToggleCallback: Callbacks.OSGeneric;
+		// Store the RequestAnimationFrame that will be triggered at OnBodyScroll
+		private _requestAnimationOnBodyScroll: number;
 		// Store the HTML element for the Dropdown Select Wrapper
 		private _selectValuesWrapper: HTMLElement;
 		// Store the SelectValuesWrapper AriaLabel text
 		private _selectValuesWrapperAriaLabel: string;
+		// Store the selfElementBounds in order to check if they changed!
+		private _selfElementBoundingClientRect: DOMRect = new DOMRect(0, 0);
 		// Store the window width value in order to check if has changed at windowResize
 		private _windowWidth: number;
 
@@ -84,15 +90,6 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			}
 		}
 
-		// Remove the position if has been already set
-		private _cleanPosition(): void {
-			// If there was an old position, remove it!
-			if (this._balloonPositionClass !== '') {
-				Helper.Dom.Styles.RemoveClass(this._balloonWrapperElement, this._balloonPositionClass);
-				this._balloonPositionClass = '';
-			}
-		}
-
 		// Close the Balloon
 		private _close(): void {
 			// Check if the close will be done by logic instead of user interaction
@@ -102,9 +99,11 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			}
 
 			// Update status property
-			this._isOpened = false;
+			this._isOpen = false;
 			// Update pattern status!
 			this._updatePatternState();
+			// Cancel the Observer!
+			this._unsetObserver();
 		}
 
 		// Update stuff at end of close animation
@@ -115,9 +114,6 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 				this._eventOnCloseTransitionEnd
 			);
 
-			// If there was an old position, remove it
-			this._cleanPosition();
-
 			// Since animation already ended let's unblock the pattern to be possible open it again
 			this._isBlocked = false;
 
@@ -125,35 +121,38 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			this._triggerToogleCalbackEvent();
 		}
 
-		// Check the recommended position to open the balloon
-		private _getRecommendedPosition(): void {
-			// Get the Boundaries for the balloon container
-			const balloonBounds = this._balloonContainerElement.getBoundingClientRect();
-			balloonBounds.height = this.configs.balloonMaxHeight + Enum.PropertiesValues.ThresholVerticalAnimateValue;
+		// Set the recommended position to open the balloon
+		private _getRecommendedPosition(isIntersecting: boolean, boundingClientRect: DOMRect): void {
+			// Ensure it's open and inside screen!!!
+			if (isIntersecting || this._isOpen === false) {
+				return;
+			}
 
 			// Get the recommended position to open the balloon
 			const recommendedPosition = Helper.BoundPosition.GetRecommendedPositionByBounds(
-				balloonBounds,
+				boundingClientRect,
 				document.body.getBoundingClientRect()
 			);
 
-			// Check if there are a any recommended position
-			if (recommendedPosition !== undefined) {
-				let newClassPosition = '';
+			let newClassPosition = '';
 
-				switch (recommendedPosition) {
-					case GlobalEnum.Position.Top:
-						newClassPosition = Enum.CssClass.BalloonPositionTop;
-						break;
-					case GlobalEnum.Position.Bottom:
-						newClassPosition = Enum.CssClass.BalloonPositionBottom;
-						break;
-				}
+			switch (recommendedPosition) {
+				case GlobalEnum.Position.Top:
+					newClassPosition = Enum.CssClass.BalloonPositionTop;
+					break;
+				case GlobalEnum.Position.Bottom:
+					newClassPosition = Enum.CssClass.BalloonPositionBottom;
+					break;
+			}
 
-				// Store the current position
+			if (recommendedPosition !== undefined && newClassPosition !== this._balloonPositionClass) {
+				// Remove the older vertical position!
+				Helper.Dom.Styles.RemoveClass(this._balloonWrapperElement, this._balloonPositionClass);
+
 				this._balloonPositionClass = newClassPosition;
+
 				// Set the new position
-				Helper.Dom.Styles.AddClass(this._balloonWrapperElement, newClassPosition);
+				Helper.Dom.Styles.AddClass(this._balloonWrapperElement, this._balloonPositionClass);
 			}
 		}
 
@@ -170,7 +169,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			// Get the closest based on pattern base selector
 			const getBaseElement = targetElement.closest(Constants.Dot + Enum.CssClass.Pattern);
 			// If the click occurs outside of this instance and if it's open, close it!
-			if (this._isOpened && getBaseElement !== this._selfElem) {
+			if (this._isOpen && getBaseElement !== this._selfElem) {
 				this._closeDynamically = true;
 				this._close();
 			}
@@ -178,14 +177,23 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 
 		// Update the balloon coordinates
 		private _onBodyScroll(): void {
-			// If the balloon is open and not IsPhone
-			if (this._isOpened && Helper.DeviceInfo.IsPhone === false) {
-				// Update the coordinates
-				this._setBalloonCoordinates();
-				// Clean the position if has been defined
-				this._cleanPosition();
-				// Update/Get the recommended position
-				this._getRecommendedPosition();
+			if (this.isBuilt) {
+				// If it's open and not at Desktop, close it!
+				if (this._isOpen && Helper.DeviceInfo.IsDesktop === false) {
+					cancelAnimationFrame(this._requestAnimationOnBodyScroll);
+					this._close();
+					return;
+				}
+
+				// If the balloon is open and not IsPhone
+				if (this._isOpen) {
+					// Update the coordinates
+					this._setBalloonCoordinates();
+					// Update the "animation" before the next repaint
+					this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
+				} else {
+					cancelAnimationFrame(this._requestAnimationOnBodyScroll);
+				}
 			}
 		}
 
@@ -249,7 +257,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 
 		// Close the balloon if it's open!
 		private _onOrientationChange(): void {
-			if (this._isOpened) {
+			if (this._isOpen) {
 				this._close();
 			}
 		}
@@ -263,7 +271,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		private _onSelectValuesWrapperClicked(): void {
 			// Ensure that dropdown can open or close
 			if (this._isBlocked === false) {
-				this._isOpened ? this._close() : this._open();
+				this._isOpen ? this._close() : this._open();
 			}
 		}
 
@@ -276,7 +284,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		// Manage the behaviour when there is a window resize!
 		private _onWindowResize(): void {
 			// If there is a horizontal resize and the Dropdown is open, close it!
-			if (this._isOpened && this._windowWidth !== window.innerWidth) {
+			if (this._isOpen && this._windowWidth !== window.innerWidth) {
 				this._close();
 			}
 			// Update windowWidth value
@@ -288,14 +296,17 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		// Open the Balloon
 		private _open(): void {
 			this._closeDynamically = false;
-			this._isOpened = true;
+			this._isOpen = true;
 
 			// Set the windown width value
 			this._windowWidth = window.innerWidth;
 
 			this._updatePatternState();
 			this._setBalloonCoordinates();
-			this._getRecommendedPosition();
+
+			// Set the Observer in order to update it's position if balloon is out of bouds!
+			// Helper.AsyncInvocation(this._setObserver.bind(this));
+			this._setObserver();
 		}
 
 		// Method to deal with the click at a DropdpownOptionItem
@@ -404,6 +415,19 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			// Get all info from the pattern self element
 			const selfElement = this._selfElem.getBoundingClientRect();
 
+			// Check if the position didn't change!
+			if (
+				selfElement.x === this._selfElementBoundingClientRect.x &&
+				selfElement.y === this._selfElementBoundingClientRect.y
+			) {
+				cancelAnimationFrame(this._requestAnimationOnBodyScroll);
+				return;
+			}
+
+			// Store the new selElement coordinates
+			this._selfElementBoundingClientRect.x = selfElement.x;
+			this._selfElementBoundingClientRect.y = selfElement.y;
+
 			// Set Css inline variables
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._balloonWrapperElement,
@@ -485,6 +509,28 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			}
 		}
 
+		// Set the Observer
+		private _setObserver() {
+			// Check if browser has the IntersectionObserver capability!
+			if (window.IntersectionObserver) {
+				this._intersectionObserver = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							this._getRecommendedPosition(entry.isIntersecting, entry.boundingClientRect);
+						});
+					},
+					{ threshold: 1 }
+				);
+
+				// Start observing it!
+				this._intersectionObserver.observe(this._balloonWrapperElement);
+			} else {
+				console.warn(
+					`${ErrorCodes.Tooltip.FailOnSetIntersectionObserver}: The browser in use does not support IntersectionObserver. Dropdown balloon position wont be properly updated.`
+				);
+			}
+		}
+
 		// Set Pattern Events
 		private _setUpEvents(): void {
 			// Add OnClick Event to the SelectValuesWrapper
@@ -512,6 +558,8 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
 			// Add the BodyScroll callback that will be used to update the balloon coodinates
 			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
+			// Update "animation" before the next repaint
+			this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
 			// Add the window resize callback that will be used to update the balloon position!
 			Event.GlobalEventManager.Instance.addHandler(Event.Type.WindowResize, this._eventOnWindowResize);
 			// Add the OnOrientationChange callback that will be used to close the balloon position!
@@ -520,7 +568,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 
 		// Mehod used to trigger the _platformEventOnToggleCallback callback!
 		private _triggerToogleCalbackEvent(): void {
-			Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, this._isOpened);
+			Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, this._isOpen);
 		}
 
 		// Remove Pattern Events
@@ -563,9 +611,17 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			}
 		}
 
+		// Stop Observer
+		private _unsetObserver(): void {
+			if (this._intersectionObserver !== undefined) {
+				this._intersectionObserver.disconnect();
+				this._intersectionObserver = undefined;
+			}
+		}
+
 		// Method that will be used to set/unset the TabIndex to the DropdownBallon elements according it's opened/closed
 		private _updateBalloonAccessibilityElements(): void {
-			const tabIndexValue = this._isOpened
+			const tabIndexValue = this._isOpen
 				? Constants.A11YAttributes.States.TabIndexShow
 				: Constants.A11YAttributes.States.TabIndexHidden;
 
@@ -585,7 +641,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			}
 
 			// Update FocusHTML elements attributes
-			if (this._isOpened) {
+			if (this._isOpen) {
 				this._focusTrapObject.enableForA11y();
 				// Ballon Options Wrapper
 				Helper.A11Y.AriaHiddenFalse(this._balloonOptionsWrapperElement);
@@ -621,7 +677,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			this._updateBalloonAccessibilityElements();
 
 			// If balloon will open
-			if (this._isOpened) {
+			if (this._isOpen) {
 				// Add IsOpend Class!
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsOpened);
 				Helper.Dom.Styles.AddClass(this._balloonWrapperElement, Enum.CssClass.IsOpened);
@@ -632,9 +688,6 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 				} else {
 					this._balloonOptionsWrapperElement.focus();
 				}
-
-				// Trigger the toggle callback event
-				this._triggerToogleCalbackEvent();
 			} else {
 				// Remove IsOpend Class => Close it!
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpened);
@@ -649,6 +702,9 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 					this._eventOnCloseTransitionEnd
 				);
 			}
+
+			// Trigger the toggle callback event
+			this._triggerToogleCalbackEvent();
 		}
 
 		/**
@@ -728,7 +784,6 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			this._selectValuesWrapper = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.SelectValuesWrapper);
 
 			// Add custom SPAN HTML Elements that will help on Accessibility keyboard navigation
-			// this._addSpanHtmlElements();
 			this._setFocusSpanElements();
 			// Add Accessibility properties
 			this.setA11yProperties();
