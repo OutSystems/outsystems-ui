@@ -100,7 +100,6 @@ namespace OSUIFramework.GlobalEnum {
 		Id = 'id',
 		Name = 'name',
 		Style = 'style',
-		UniqueId = 'uniqueId',
 	}
 
 	/**
