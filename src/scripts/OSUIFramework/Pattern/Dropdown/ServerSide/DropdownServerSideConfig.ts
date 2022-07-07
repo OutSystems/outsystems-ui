@@ -69,7 +69,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		 * @memberof OSUIDropdownServerSideConfig
 		 */
 		public get balloonOptionsArialabel(): string {
-			return this._balloonOptionsArialabel as string;
+			return this._balloonOptionsArialabel;
 		}
 
 		/**
