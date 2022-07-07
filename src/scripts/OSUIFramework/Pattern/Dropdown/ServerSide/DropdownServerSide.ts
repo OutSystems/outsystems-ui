@@ -136,7 +136,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 
 		// Set the recommended position to open the balloon
 		private _getRecommendedPosition(isIntersecting: boolean, boundingClientRect: DOMRect): void {
-			// Ensure it's open and inside screen!!!
+			// Ensure it's inside screen and it's open
 			if (isIntersecting || this._isOpen === false) {
 				return;
 			}
