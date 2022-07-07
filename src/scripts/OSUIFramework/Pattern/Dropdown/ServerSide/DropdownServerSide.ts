@@ -327,8 +327,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			this._updatePatternState();
 			this._setBalloonCoordinates();
 
-			// Set the Observer in order to update it's position if balloon is out of bouds!
-			// Helper.AsyncInvocation(this._setObserver.bind(this));
+			// Set the Observer in order to update it's position if balloon is out of bounds!
 			this._setObserver();
 		}
 
@@ -551,7 +550,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 				this._intersectionObserver.observe(this._balloonWrapperElement);
 			} else {
 				console.warn(
-					`${ErrorCodes.Tooltip.FailOnSetIntersectionObserver}: The browser in use does not support IntersectionObserver. Dropdown balloon position wont be properly updated.`
+					`${ErrorCodes.DropdownServerSide.FailOnSetIntersectionObserver}: The browser in use does not support IntersectionObserver. Dropdown balloon position won't be properly updated.`
 				);
 			}
 		}
@@ -1028,10 +1027,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		 */
 		public setBalloonOptionsAriaLabel(value?: string): void {
 			this._balloonOptionsAriaLabel = value === undefined ? this.configs.balloonOptionsArialabel : value;
-
-			if (this._balloonOptionsAriaLabel !== undefined) {
-				Helper.A11Y.AriaLabel(this._balloonOptionsWrapperElement, this._balloonOptionsAriaLabel);
-			}
+			Helper.A11Y.AriaLabel(this._balloonOptionsWrapperElement, this._balloonOptionsAriaLabel);
 		}
 
 		/**
@@ -1042,10 +1038,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		public setSelectAriaLabel(value?: string): void {
 			this._selectValuesWrapperAriaLabel =
 				value === undefined ? this.configs.selectValuesWrapperAriaLabel : value;
-
-			if (this._selectValuesWrapperAriaLabel !== undefined) {
-				Helper.A11Y.AriaLabel(this._selectValuesWrapper, this._selectValuesWrapperAriaLabel);
-			}
+			Helper.A11Y.AriaLabel(this._selectValuesWrapper, this._selectValuesWrapperAriaLabel);
 		}
 
 		/**

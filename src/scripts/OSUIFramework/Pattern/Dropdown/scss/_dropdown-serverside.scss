@@ -5,6 +5,7 @@
 
 // Balloon margin value related with selectedValuesWrapper
 $balloonMarginToSelectValuesWrapper: 2px;
+$balloonMobileTopMargin: 5vh;
 
 ///
 .osui-dropdown-serverside {
@@ -381,7 +382,7 @@ $balloonMarginToSelectValuesWrapper: 2px;
 		}
 
 		.osui-dropdown-serverside__balloon-container {
-			max-height: calc(90vh - 5vh - var(--header-size));
+			max-height: calc(90vh - $balloonMobileTopMargin - var(--header-size));
 		}
 	}
 
@@ -433,9 +434,9 @@ $balloonMarginToSelectValuesWrapper: 2px;
 			// Content Container
 			&-container {
 				box-shadow: var(--shadow-xl);
-				margin-top: 5vh;
+				margin-top: $balloonMobileTopMargin;
 				// 100vw because ios split in half the vertical height when keyboard is open!
-				max-height: calc(100vw - 5vh - var(--header-size));
+				max-height: calc(100vw - $balloonMobileTopMargin - var(--header-size));
 				width: 85vw;
 
 				// Service Studio Preview
@@ -450,8 +451,8 @@ $balloonMarginToSelectValuesWrapper: 2px;
 			// If do not exist a input search inside balloon
 			&--has-not-search {
 				.osui-dropdown-serverside__balloon-container {
-					margin-top: 5vh;
-					max-height: calc(var(--viewport-height) - 5vh - var(--header-size));
+					margin-top: $balloonMobileTopMargin;
+					max-height: calc(var(--viewport-height) - $balloonMobileTopMargin - var(--header-size));
 				}
 			}
 		}

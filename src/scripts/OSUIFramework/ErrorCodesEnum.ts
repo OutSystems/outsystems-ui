@@ -28,6 +28,10 @@ namespace OSUIFramework.ErrorCodes {
 		},
 	};
 
+	export const DropdownServerSide = {
+		FailOnSetIntersectionObserver: 'OSUI-GEN-11001',
+	};
+
 	export const Notification = {
 		FailRegisterCallback: 'OSUI-GEN-03001',
 	};

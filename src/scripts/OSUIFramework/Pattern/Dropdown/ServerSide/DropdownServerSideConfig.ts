@@ -63,7 +63,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		}
 
 		/**
-		 * Getter that allows to obtain the AriaLabel default text value to be added to balloon options container.
+		 * Getter that allows to obtain the string that should be added to the balloon options container by default
 		 *
 		 * @readonly
 		 * @memberof OSUIDropdownServerSideConfig
@@ -73,7 +73,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		}
 
 		/**
-		 * Getter that allows to obtain the AriaLabel default text value to be added to select "input" container.
+		 * Getter that allows to obtain the string that should be added to the select "input" container.
 		 *
 		 * @readonly
 		 * @memberof OSUIDropdownServerSideConfig

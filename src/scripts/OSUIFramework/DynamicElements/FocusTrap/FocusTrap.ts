@@ -73,7 +73,7 @@ namespace OSUIFramework.DynamicElements.FocusTrap {
 		}
 
 		/**
-		 *  Set elemet disabled for A11Y
+		 *  Set element disabled for A11Y
 		 *
 		 * @memberof FocusTrap
 		 */
@@ -104,7 +104,7 @@ namespace OSUIFramework.DynamicElements.FocusTrap {
 		}
 
 		/**
-		 *  Set elemet enabled for A11Y
+		 *  Set element enabled for A11Y
 		 *
 		 * @memberof FocusTrap
 		 */
