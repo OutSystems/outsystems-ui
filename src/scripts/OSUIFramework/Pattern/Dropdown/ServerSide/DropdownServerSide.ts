@@ -10,6 +10,8 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 	{
 		// Store the HTML element for the DropdownBalloonContainer
 		private _balloonContainerElement: HTMLElement;
+		// Store the HTML element for the DropdownBalloonContent
+		private _balloonContentElement: HTMLElement;
 		// Store all the focusable elements inside footer if it's the case!
 		private _balloonFocusableElemsInFooter: HTMLElement[];
 		// Store the HTML element for the DropdownBalloonFooter
@@ -49,6 +51,8 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		private _focusTrapObject: DynamicElements.FocusTrap.FocusTrap;
 		// Set the observer that will check if the balloon is inside screen boundaries!
 		private _intersectionObserver: IntersectionObserver;
+		// Flag variable used to prevent close the balloon at onBodyScroll when inside tablet!
+		private _isBalloonContentScrolling = false;
 		// Store a Flag property that will control if the dropdown is blocked (like it's under closing animation)
 		private _isBlocked = false;
 		// Store the Element State, by default is closed!
@@ -185,12 +189,22 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		}
 
 		// Update the balloon coordinates
-		private _onBodyScroll(): void {
+		private _onBodyScroll(eventType: string, event: UIEvent): void {
 			if (this.isBuilt) {
-				// If it's open and not at Desktop, close it!
+				// If the scroll occcurs inside balloonContent, stop all the forward logic!
+				if (event !== undefined && event.target === this._balloonContentElement) {
+					cancelAnimationFrame(this._requestAnimationOnBodyScroll);
+					return;
+				}
+
+				// If it's open and not at Desktop
 				if (this._isOpen && Helper.DeviceInfo.IsDesktop === false) {
 					cancelAnimationFrame(this._requestAnimationOnBodyScroll);
-					this._close();
+
+					// If it's tablet close it in order to prevent flickering on updating it's position!
+					if (Helper.DeviceInfo.IsTablet) {
+						this._close();
+					}
 					return;
 				}
 
@@ -787,6 +801,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 				GlobalEnum.HTMLElement.Input
 			);
 			this._balloonContainerElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.BalloonContainer);
+			this._balloonContentElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.BalloonContent);
 			this._balloonWrapperElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.BalloonWrapper);
 			this._balloonOptionsWrapperElement = Helper.Dom.ClassSelector(
 				this._balloonWrapperElement,
