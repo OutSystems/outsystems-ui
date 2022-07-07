@@ -961,6 +961,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		public dispose(): void {
+			this._unsetObserver();
 			this._focusTrapObject.dispose();
 			this._unsetEvents();
 			this.unsetCallbacks();
