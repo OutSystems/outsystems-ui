@@ -106,10 +106,7 @@ namespace Providers.Dropdown.VirtualSelect {
 
 			this._virtualselectMethods = this.provider.$ele;
 			// Since at native devices we're detaching the balloon from pattern context we must set this attribute to it in order to be possible create a relation between pattern default structure and the detached balloon!
-			this.provider.$dropboxContainer.setAttribute(
-				OSUIFramework.GlobalEnum.HTMLAttributes.UniqueId,
-				this.uniqueId
-			);
+			this.provider.$dropboxContainer.setAttribute(OSUIFramework.GlobalEnum.HTMLAttributes.Name, this.uniqueId);
 
 			// Add the pattern Events!
 			this._setUpEvents();
