@@ -144,7 +144,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			// Get the recommended position to open the balloon
 			const recommendedPosition = Helper.BoundPosition.GetRecommendedPositionByBounds(
 				boundingClientRect,
-				Helper.BoundPosition.GetBodyBouds()
+				Helper.BoundPosition.GetBodyBounds()
 			);
 
 			let newClassPosition = '';

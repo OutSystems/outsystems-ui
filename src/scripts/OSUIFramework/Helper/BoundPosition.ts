@@ -16,7 +16,7 @@ namespace OSUIFramework.Helper {
 		 *
 		 * @returns {DOMRect} Body OffsetValues
 		 */
-		public static GetBodyBouds(): DOMRect {
+		public static GetBodyBounds(): DOMRect {
 			let bodyOffSetValues: DOMRect;
 
 			const layoutElement = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.Layout);
@@ -183,7 +183,7 @@ namespace OSUIFramework.Helper {
 
 			// Check if the testAgainstElement is the BODY and if there is a headerTop in order to remove it's height from calcs
 			if (testAgainstElement === document.body) {
-				testAgainstElementOffSetValues = this.GetBodyBouds();
+				testAgainstElementOffSetValues = this.GetBodyBounds();
 			} else {
 				testAgainstElementOffSetValues = testAgainstElement.getBoundingClientRect();
 			}
