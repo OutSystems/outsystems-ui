@@ -24,6 +24,8 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _dragObserver: IntersectionObserver;
 		// Store the events with bind(this)
 		private _eventOnHeaderKeypress: Callbacks.Generic;
+		// On WindowResize Event
+		private _eventOnResize: Callbacks.Generic;
 		// Store if has drag gestures
 		private _hasDragGestures: boolean;
 		// Store if the Tabs has only one ContentItem, to prevent unnecessary usages of ScrollTo
@@ -88,14 +90,11 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._tabsHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
 
 			// Add event listener for window resize, to update active indicator size
-			Event.GlobalEventManager.Instance.addHandler(Event.Type.WindowResize, this._handleTabIndicator.bind(this));
+			Event.GlobalEventManager.Instance.addHandler(Event.Type.WindowResize, this._eventOnResize);
 
 			// Add orientationchange listener to update active indicator size, on touch devices
 			if (Helper.DeviceInfo.IsPhone || Helper.DeviceInfo.IsTablet) {
-				Event.GlobalEventManager.Instance.addHandler(
-					Event.Type.OrientationChange,
-					this._handleTabIndicator.bind(this)
-				);
+				Event.GlobalEventManager.Instance.addHandler(Event.Type.OrientationChange, this._eventOnResize);
 			}
 		}
 
@@ -190,6 +189,12 @@ namespace OSUIFramework.Patterns.Tabs {
 			if (targetHeaderItem) {
 				targetHeaderItem.setFocus();
 			}
+		}
+
+		// Methid to adjust the tabs css active item on resize or orientation-change
+		private _handleOnResizeEvend(): void {
+			this._scrollToTargetContent(this._activeTabContentElement);
+			this._handleTabIndicator();
 		}
 
 		// Method that handles the indicator size and transition
@@ -343,17 +348,11 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._tabsHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
 
 			// Remove resize event
-			Event.GlobalEventManager.Instance.removeHandler(
-				Event.Type.WindowResize,
-				this._handleTabIndicator.bind(this)
-			);
+			Event.GlobalEventManager.Instance.removeHandler(Event.Type.WindowResize, this._eventOnResize);
 
 			// Remove orientationchange listener
 			if (Helper.DeviceInfo.IsPhone || Helper.DeviceInfo.IsTablet) {
-				Event.GlobalEventManager.Instance.removeHandler(
-					Event.Type.OrientationChange,
-					this._handleTabIndicator.bind(this)
-				);
+				Event.GlobalEventManager.Instance.removeHandler(Event.Type.OrientationChange, this._eventOnResize);
 			}
 		}
 
@@ -626,6 +625,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		 */
 		protected setCallbacks(): void {
 			this._eventOnHeaderKeypress = this._handleKeypressEvent.bind(this);
+			this._eventOnResize = this._handleOnResizeEvend.bind(this);
 			this._addEvents();
 		}
 
@@ -651,6 +651,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._removeEvents();
 
 			this._eventOnHeaderKeypress = undefined;
+			this._eventOnResize = undefined;
 
 			if (this._hasDragGestures) {
 				this._unsetDragObserver();
