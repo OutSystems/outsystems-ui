@@ -327,16 +327,6 @@ $balloonMobileTopMargin: 5vh;
 		}
 
 		// Balloon States
-		&--is-opened {
-			.osui-dropdown-serverside {
-				&__selected-values {
-					&:after {
-						transform: rotate(-225deg);
-					}
-				}
-			}
-		}
-
 		&__balloon {
 			&-search {
 				&:before {
