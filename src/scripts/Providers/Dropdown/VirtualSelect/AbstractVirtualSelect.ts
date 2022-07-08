@@ -102,14 +102,20 @@ namespace Providers.Dropdown.VirtualSelect {
 
 			/* NOTE: When user change the URL and then click at browser back button we're getting an error. This happen because library (VS - VirtualSelect) creates a new instance of the same object and assign it into an array of VS objects that are in the same screen (in this case 2 equal VS objects since we're creating a new VS instance for each Dropdown), that said and in order to avoid this issue, we must follow this approach. 
 			Again, this only happens when user change directly the URL! */
-			this._virtualselectMethods = Array.isArray(this.provider) ? this.provider[0].$ele : this.provider.$ele;
+			this.provider = Array.isArray(this.provider) ? this.provider[0] : this.provider;
+
+			this._virtualselectMethods = this.provider.$ele;
+			// Since at native devices we're detaching the balloon from pattern context we must set this attribute to it in order to be possible create a relation between pattern default structure and the detached balloon!
+			this.provider.$dropboxContainer.setAttribute(
+				OSUIFramework.GlobalEnum.HTMLAttributes.UniqueId,
+				this.uniqueId
+			);
 
 			// Add the pattern Events!
 			this._setUpEvents();
 
 			// Add attributes to the element if needed
 			this._manageAttributes();
-
 			// Trigger platform's InstanceIntializedHandler client Action
 			OSUIFramework.Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
 		}
