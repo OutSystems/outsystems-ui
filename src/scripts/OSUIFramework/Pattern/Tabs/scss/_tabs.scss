@@ -132,13 +132,6 @@
 	&--has-drag:not(.osui-tabs--is-vertical) {
 		.osui-tabs__content {
 			overflow-x: auto;
-			overscroll-behavior-x: contain;
-			scroll-snap-type: x mandatory;
-
-			&-item {
-				scroll-snap-align: start;
-				scroll-snap-stop: always;
-			}
 		}
 	}
 
@@ -205,7 +198,9 @@
 		grid-auto-flow: column;
 		grid-auto-columns: 100%;
 		overflow: hidden;
+		overscroll-behavior-x: contain;
 		position: relative;
+		scroll-snap-type: x mandatory;
 		width: 100%;
 		z-index: 0;
 
@@ -217,6 +212,8 @@
 			height: 100%;
 			overflow-y: auto;
 			padding: var(--space-m) var(--space-none);
+			scroll-snap-align: start;
+			scroll-snap-stop: always;
 
 			// Service Studio Preview
 			& {
