@@ -24,7 +24,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		private _dragObserver: IntersectionObserver;
 		// Store the events with bind(this)
 		private _eventOnHeaderKeypress: Callbacks.Generic;
-		// On WindowResize Event
+		// On WindowResize and OrientationChange Event
 		private _eventOnResize: Callbacks.Generic;
 		// Store if has drag gestures
 		private _hasDragGestures: boolean;
@@ -191,7 +191,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			}
 		}
 
-		// Methid to adjust the tabs css active item on resize or orientation-change
+		// Method to adjust the tabs css active item on resize or orientation-change
 		private _handleOnResizeEvend(): void {
 			this._scrollToTargetContent(this._activeTabContentElement);
 			this._handleTabIndicator();
