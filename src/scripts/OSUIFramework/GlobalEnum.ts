@@ -22,6 +22,7 @@ namespace OSUIFramework.GlobalEnum {
 		HeaderIsVisible = 'header-is--visible',
 		Layout = 'layout',
 		LayoutNative = 'layout-native',
+		LayoutTop = 'layout-top',
 		List = 'list',
 		MainContent = 'main-content',
 		Placeholder = 'ph',

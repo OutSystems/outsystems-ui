@@ -144,7 +144,7 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			// Get the recommended position to open the balloon
 			const recommendedPosition = Helper.BoundPosition.GetRecommendedPositionByBounds(
 				boundingClientRect,
-				document.body.getBoundingClientRect()
+				Helper.BoundPosition.GetBodyBounds()
 			);
 
 			let newClassPosition = '';
@@ -324,8 +324,8 @@ namespace OSUIFramework.Patterns.Dropdown.ServerSide {
 			// Set the windown width value
 			this._windowWidth = window.innerWidth;
 
-			this._updatePatternState();
 			this._setBalloonCoordinates();
+			this._updatePatternState();
 
 			// Set the Observer in order to update it's position if balloon is out of bounds!
 			this._setObserver();
