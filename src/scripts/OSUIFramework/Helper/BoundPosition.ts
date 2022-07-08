@@ -12,6 +12,40 @@ namespace OSUIFramework.Helper {
 		}
 
 		/**
+		 * Get the Body offset values counting with Header height if is there
+		 *
+		 * @returns {DOMRect} Body OffsetValues
+		 */
+		public static GetBodyBouds(): DOMRect {
+			let bodyOffSetValues: DOMRect;
+
+			const layoutElement = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.Layout);
+			const isLayoutTop = layoutElement.classList.contains(GlobalEnum.CssClassElements.LayoutTop);
+			const isFixedHeader = layoutElement.classList.contains(GlobalEnum.CssClassElements.HeaderIsFixed);
+
+			if (isLayoutTop && isFixedHeader) {
+				const headerElement = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.Header);
+				const headerHeight = headerElement.getBoundingClientRect().height;
+				const bodyRect = document.body.getBoundingClientRect();
+
+				bodyOffSetValues = {
+					bottom: bodyRect.bottom,
+					height: bodyRect.height - headerHeight,
+					left: bodyRect.left,
+					right: bodyRect.right,
+					top: headerHeight,
+					width: bodyRect.width,
+					x: bodyRect.x,
+					y: headerHeight,
+				} as DOMRect;
+			} else {
+				bodyOffSetValues = document.body.getBoundingClientRect();
+			}
+
+			return bodyOffSetValues;
+		}
+
+		/**
 		 * Method that could be used to get a Recommended position from an element if it is ouside of boudaries of a given testAgainstElement
 		 *
 		 * @param element Element to check if is outside of boundaries
@@ -145,7 +179,16 @@ namespace OSUIFramework.Helper {
 				y: elementBounds.y,
 			};
 
-			return this._checkIsOutBounds(offSetValuesUpdated as DOMRect, testAgainstElement.getBoundingClientRect());
+			let testAgainstElementOffSetValues: DOMRect;
+
+			// Check if the testAgainstElement is the BODY and if there is a headerTop in order to remove it's height from calcs
+			if (testAgainstElement === document.body) {
+				testAgainstElementOffSetValues = this.GetBodyBouds();
+			} else {
+				testAgainstElementOffSetValues = testAgainstElement.getBoundingClientRect();
+			}
+
+			return this._checkIsOutBounds(offSetValuesUpdated as DOMRect, testAgainstElementOffSetValues);
 		}
 	}
 }

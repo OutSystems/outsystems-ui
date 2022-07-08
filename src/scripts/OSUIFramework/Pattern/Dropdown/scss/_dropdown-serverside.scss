@@ -74,18 +74,19 @@ $balloonMobileTopMargin: 5vh;
 	&__balloon {
 		// Wrapper
 		&-wrapper {
+			top: calc(
+				var(--osui-dropdown-ss-top) + var(--osui-dropdown-ss-input-height) + $balloonMarginToSelectValuesWrapper
+			);
 			display: flex;
 			flex-direction: column;
 			flex: 1;
 			left: var(--osui-dropdown-ss-left);
 			max-height: 0;
 			max-width: var(--osui-dropdown-ss-width);
+			opacity: 0;
 			overflow: hidden;
 			position: absolute;
-			top: calc(
-				var(--osui-dropdown-ss-top) + var(--osui-dropdown-ss-input-height) + $balloonMarginToSelectValuesWrapper
-			);
-			transition: max-height 300ms ease-in-out;
+			transition: opacity 300ms ease;
 			width: 100%;
 			z-index: 2;
 
@@ -191,8 +192,8 @@ $balloonMobileTopMargin: 5vh;
 	&__balloon--is-top {
 		// Wrapper
 		&.osui-dropdown-serverside__balloon-wrapper {
-			top: calc(var(--osui-dropdown-ss-top) - $balloonMarginToSelectValuesWrapper);
-			transform: translateY(-100%);
+			bottom: calc(100vh - var(--osui-dropdown-ss-top) + $balloonMarginToSelectValuesWrapper);
+			top: unset;
 		}
 
 		// Content Container
@@ -245,6 +246,13 @@ $balloonMobileTopMargin: 5vh;
 		// Ballon wrapper
 		&.osui-dropdown-serverside__balloon-wrapper {
 			max-height: var(--osui-dropdown-ss-balloon-max-height);
+			opacity: 1;
+
+			// Used to help triggering the IntersectionObserver before going behind header!
+			&.osui-dropdown-serverside__balloon--is-top {
+				max-height: calc(var(--osui-dropdown-ss-balloon-max-height) + var(--header-size));
+				padding-top: var(--header-size);
+			}
 		}
 	}
 
