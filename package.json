@@ -1,7 +1,7 @@
 {
 	"name": "outsystems-ui",
-	"version": "2.10.0",
-	"description": "OutSystems UI Base Theme",
+	"version": "2.11.0",
+	"description": "OutSystems UI Framework",
 	"scripts": {
 		"build": "gulp createProduction && npm run lint",
 		"create-pattern": "gulp newPattern",
