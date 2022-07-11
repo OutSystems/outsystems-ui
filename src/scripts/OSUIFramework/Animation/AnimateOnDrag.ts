@@ -58,6 +58,7 @@ namespace OSUIFramework.Animations {
 
 		constructor(target: HTMLElement) {
 			this._targetElement = target;
+			console.log('oi');
 			this._dragParams = new DragParams();
 		}
 
