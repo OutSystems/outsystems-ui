@@ -20,6 +20,9 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 		try {
 			const animatedlabel = GetAnimatedLabelById(animatedLabelId);
 
+			const test = 'test';
+			test.toUpperCase();
+
 			animatedlabel.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
