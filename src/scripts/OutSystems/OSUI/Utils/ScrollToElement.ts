@@ -7,26 +7,26 @@ namespace OutSystems.OSUI.Utils {
 	function scroll(elementToScrollTo: HTMLElement, IsSmooth: boolean): void {
 		if (IsSmooth) {
 			elementToScrollTo.scrollIntoView({
-				behavior: OSUIFramework.GlobalEnum.ScrollBehavior.Smooth,
+				behavior: OSFramework.GlobalEnum.ScrollBehavior.Smooth,
 				block: 'start',
 			});
 		} else {
 			elementToScrollTo.scrollIntoView({
-				behavior: OSUIFramework.GlobalEnum.ScrollBehavior.Auto,
+				behavior: OSFramework.GlobalEnum.ScrollBehavior.Auto,
 				block: 'start',
 			});
 		}
 
 		// reset to the original position
-		OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
+		OSFramework.Helper.Dom.Styles.SetStyleAttribute(
 			elementToScrollTo,
-			OSUIFramework.GlobalEnum.InlineStyle.Transform,
+			OSFramework.GlobalEnum.InlineStyle.Transform,
 			''
 		);
-		OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
+		OSFramework.Helper.Dom.Styles.SetStyleAttribute(
 			elementToScrollTo,
-			OSUIFramework.GlobalEnum.InlineStyle.Display,
-			OSUIFramework.GlobalEnum.InlineStyleValue.Display.unset
+			OSFramework.GlobalEnum.InlineStyle.Display,
+			OSFramework.GlobalEnum.InlineStyleValue.Display.unset
 		);
 	}
 
@@ -35,41 +35,41 @@ namespace OutSystems.OSUI.Utils {
 			const elementToScrollTo = document.getElementById(ElementId);
 
 			if (elementToScrollTo) {
-				const header = OSUIFramework.Helper.Dom.ClassSelector(
+				const header = OSFramework.Helper.Dom.ClassSelector(
 					document,
-					OSUIFramework.GlobalEnum.CssClassElements.Header
+					OSFramework.GlobalEnum.CssClassElements.Header
 				);
-				const layout = OSUIFramework.Helper.Dom.ClassSelector(
+				const layout = OSFramework.Helper.Dom.ClassSelector(
 					document,
-					OSUIFramework.GlobalEnum.CssClassElements.Layout
+					OSFramework.GlobalEnum.CssClassElements.Layout
 				);
 
 				if (layout) {
-					const isFixed = OSUIFramework.Helper.Dom.Styles.ContainsClass(layout, 'fixed-header');
+					const isFixed = OSFramework.Helper.Dom.Styles.ContainsClass(layout, 'fixed-header');
 
 					// pull the target up from its original position, pulling it the header amount so in the end it won't be covered by the header
 					// it removes the height from whatever offset you might want to remove from the top
 					if (isFixed) {
-						OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
+						OSFramework.Helper.Dom.Styles.SetStyleAttribute(
 							elementToScrollTo,
-							OSUIFramework.GlobalEnum.InlineStyle.Transform,
-							`translateY(${-header.offsetHeight + -OffSet}${OSUIFramework.GlobalEnum.Units.Pixel})`
+							OSFramework.GlobalEnum.InlineStyle.Transform,
+							`translateY(${-header.offsetHeight + -OffSet}${OSFramework.GlobalEnum.Units.Pixel})`
 						);
 					} else {
-						OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
+						OSFramework.Helper.Dom.Styles.SetStyleAttribute(
 							elementToScrollTo,
-							OSUIFramework.GlobalEnum.InlineStyle.Transform,
-							`translateY(${-OffSet}${OSUIFramework.GlobalEnum.Units.Pixel})`
+							OSFramework.GlobalEnum.InlineStyle.Transform,
+							`translateY(${-OffSet}${OSFramework.GlobalEnum.Units.Pixel})`
 						);
 					}
-					OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
+					OSFramework.Helper.Dom.Styles.SetStyleAttribute(
 						elementToScrollTo,
-						OSUIFramework.GlobalEnum.InlineStyle.Display,
-						OSUIFramework.GlobalEnum.InlineStyleValue.Display.block
+						OSFramework.GlobalEnum.InlineStyle.Display,
+						OSFramework.GlobalEnum.InlineStyleValue.Display.block
 					);
 
 					// timeout needs to be added as a hack for the scrollIntoView to act
-					OSUIFramework.Helper.AsyncInvocation(scroll, elementToScrollTo, IsSmooth);
+					OSFramework.Helper.AsyncInvocation(scroll, elementToScrollTo, IsSmooth);
 				}
 			}
 		}

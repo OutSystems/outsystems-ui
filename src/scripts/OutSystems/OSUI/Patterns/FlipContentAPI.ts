@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.FlipContentAPI {
-	const _flipContentMap = new Map<string, OSUIFramework.Patterns.FlipContent.IFlipContent>(); //flipContent.uniqueId -> FlipContent obj
+	const _flipContentMap = new Map<string, OSFramework.Patterns.FlipContent.IFlipContent>(); //flipContent.uniqueId -> FlipContent obj
 
 	/**
 	 * Function that will change the property of a flip content pattern.
@@ -37,16 +37,16 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 * @export
 	 * @param {string} flipId ID of the Flip Content where the instance will be created.
 	 * @param {string} configs configurations for the Flip Content in JSON format.
-	 * @return {*}  {OSUIFramework.Patterns.FlipContent.IFlipContent}
+	 * @return {*}  {OSFramework.Patterns.FlipContent.IFlipContent}
 	 */
-	export function Create(flipId: string, configs: string): OSUIFramework.Patterns.FlipContent.IFlipContent {
+	export function Create(flipId: string, configs: string): OSFramework.Patterns.FlipContent.IFlipContent {
 		if (_flipContentMap.has(flipId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternName.FlipContent} registered under id: ${flipId}`
+				`There is already a ${OSFramework.GlobalEnum.PatternName.FlipContent} registered under id: ${flipId}`
 			);
 		}
 
-		const _newFlip = new OSUIFramework.Patterns.FlipContent.FlipContent(flipId, JSON.parse(configs));
+		const _newFlip = new OSFramework.Patterns.FlipContent.FlipContent(flipId, JSON.parse(configs));
 
 		_flipContentMap.set(flipId, _newFlip);
 
@@ -85,10 +85,10 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 * Function that will return the Map with all the Flip Content instances at the page
 	 *
 	 * @export
-	 * @return {*}  {Map<string, OSUIFramework.Patterns.FlipContent.IFlipContent>}
+	 * @return {*}  {Map<string, OSFramework.Patterns.FlipContent.IFlipContent>}
 	 */
 	export function GetAllFlipContent(): Array<string> {
-		return OSUIFramework.Helper.MapOperation.ExportKeys(_flipContentMap);
+		return OSFramework.Helper.MapOperation.ExportKeys(_flipContentMap);
 	}
 
 	/**
@@ -96,14 +96,14 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 *
 	 * @export
 	 * @param {string} flipId ID of the Flip Content that will be looked for.
-	 * @return {*}  {OSUIFramework.Patterns.FlipContent.IFlipContent}
+	 * @return {*}  {OSFramework.Patterns.FlipContent.IFlipContent}
 	 */
-	export function GetFlipContentById(flipId: string): OSUIFramework.Patterns.FlipContent.IFlipContent {
-		return OSUIFramework.Helper.MapOperation.FindInMap(
+	export function GetFlipContentById(flipId: string): OSFramework.Patterns.FlipContent.IFlipContent {
+		return OSFramework.Helper.MapOperation.FindInMap(
 			'FlipContent',
 			flipId,
 			_flipContentMap
-		) as OSUIFramework.Patterns.FlipContent.IFlipContent;
+		) as OSFramework.Patterns.FlipContent.IFlipContent;
 	}
 
 	/**
@@ -111,9 +111,9 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 *
 	 * @export
 	 * @param {string} flipId ID of the Flip Content that will be initialized.
-	 * @return {*}  {OSUIFramework.Patterns.FlipContent.IFlipContent}
+	 * @return {*}  {OSFramework.Patterns.FlipContent.IFlipContent}
 	 */
-	export function Initialize(flipId: string): OSUIFramework.Patterns.FlipContent.IFlipContent {
+	export function Initialize(flipId: string): OSFramework.Patterns.FlipContent.IFlipContent {
 		const flipContent = GetFlipContentById(flipId);
 
 		flipContent.build();
@@ -126,9 +126,9 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 *
 	 * @export
 	 * @param {string} flipId
-	 * @param {OSUIFramework.Callbacks.OSFlipContentFlipEvent} callback
+	 * @param {OSFramework.Callbacks.OSFlipContentFlipEvent} callback
 	 */
-	export function RegisterCallback(flipId: string, callback: OSUIFramework.Callbacks.OSFlipContentFlipEvent): string {
+	export function RegisterCallback(flipId: string, callback: OSFramework.Callbacks.OSFlipContentFlipEvent): string {
 		const responseObj = {
 			isSuccess: true,
 			message: ErrorCodes.Success.message,

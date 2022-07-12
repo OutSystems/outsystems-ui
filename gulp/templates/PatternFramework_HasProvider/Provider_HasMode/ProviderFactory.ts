@@ -7,17 +7,17 @@ namespace Providers.<%= patternNamePC %>.<%= providerNamePC %>.Factory {
 	 * @param {string} <%= patternName %>Id ID of the Pattern that a new instance will be created.
 	 * @param {string} mode
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSUIFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %>}
+	 * @return {*}  {OSFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %>}
 	 */
 	export function New<%= providerNamePC %>(
 		<%= patternName %>Id: string,
 		mode: string,
 		configs: JSON
-	): OSUIFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %> {
+	): OSFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %> {
 		let _<%= providerName %>Item = null;
 
 		switch (mode) {
-			case OSUIFramework.Patterns.<%= patternNamePC %>.Enum.Mode.<%= modeNamePC %>:
+			case OSFramework.Patterns.<%= patternNamePC %>.Enum.Mode.<%= modeNamePC %>:
 				_<%= providerName %>Item = new Providers.<%= patternNamePC %>.<%= providerNamePC %>.<%= modeNamePC %>.OSUI<%= providerNamePC %><%= modeNamePC %>(
 					<%= patternName %>Id,
 					configs

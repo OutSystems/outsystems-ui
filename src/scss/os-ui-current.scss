@@ -235,14 +235,14 @@
 /*      - Adaptive                                                              */
 /* ============================================================================ */
 @import '04-patterns/01-adaptive/columns';
-@import '../scripts/OSUIFramework/Pattern/Gallery/scss/gallery';
+@import '../scripts/OSFramework/Pattern/Gallery/scss/gallery';
 @import '04-patterns/01-adaptive/master-detail';
 
 /* ============================================================================ */
 /*      - Content                                                               */
 /* ============================================================================ */
-@import '../scripts/OSUIFramework/Pattern/Accordion/scss/accordion';
-@import '../scripts/OSUIFramework/Pattern/AccordionItem/scss/accordion-item';
+@import '../scripts/OSFramework/Pattern/Accordion/scss/accordion';
+@import '../scripts/OSFramework/Pattern/AccordionItem/scss/accordion-item';
 @import '04-patterns/02-content/alert';
 @import '04-patterns/02-content/blank-slate';
 @import '04-patterns/02-content/card';
@@ -250,12 +250,12 @@
 @import '04-patterns/02-content/card-item';
 @import '04-patterns/02-content/card-sectioned';
 @import '04-patterns/02-content/chat-message';
-@import '../scripts/OSUIFramework/Pattern/FlipContent/scss/flipcontent';
+@import '../scripts/OSFramework/Pattern/FlipContent/scss/flipcontent';
 @import '04-patterns/02-content/floating-content';
 @import '04-patterns/02-content/list-item-content';
 @import '04-patterns/02-content/section';
 @import '04-patterns/02-content/tag';
-@import '../scripts/OSUIFramework/Pattern/Tooltip/scss/tooltip';
+@import '../scripts/OSFramework/Pattern/Tooltip/scss/tooltip';
 @import '04-patterns/02-content/user-avatar';
 
 /* ============================================================================ */
@@ -263,21 +263,21 @@
 /* ============================================================================ */
 @import '04-patterns/03-interaction/action-sheet';
 @import '04-patterns/03-interaction/animate';
-@import '../scripts/OSUIFramework/Pattern/AnimatedLabel/scss/animated-label';
-@import '../scripts/OSUIFramework/Pattern/BottomSheet/scss/bottomsheet';
-@import '../scripts/OSUIFramework/Pattern/Carousel/scss/carousel';
-@import '../scripts/OSUIFramework/Pattern/DatePicker/scss/datepicker';
-@import '../scripts/OSUIFramework/Pattern/Dropdown/scss/dropdown';
-@import '../scripts/OSUIFramework/Pattern/Dropdown/scss/dropdown-search';
-@import '../scripts/OSUIFramework/Pattern/Dropdown/scss/dropdown-tags';
+@import '../scripts/OSFramework/Pattern/AnimatedLabel/scss/animated-label';
+@import '../scripts/OSFramework/Pattern/BottomSheet/scss/bottomsheet';
+@import '../scripts/OSFramework/Pattern/Carousel/scss/carousel';
+@import '../scripts/OSFramework/Pattern/DatePicker/scss/datepicker';
+@import '../scripts/OSFramework/Pattern/Dropdown/scss/dropdown';
+@import '../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-search';
+@import '../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-tags';
 @import '04-patterns/03-interaction/floating-actions';
 @import '04-patterns/03-interaction/input-with-icon';
 @import '04-patterns/03-interaction/lightbox-image';
-@import '../scripts/OSUIFramework/Pattern/Notification/scss/notification';
-@import '../scripts/OSUIFramework/Pattern/RangeSlider/scss/rangeslider';
+@import '../scripts/OSFramework/Pattern/Notification/scss/notification';
+@import '../scripts/OSFramework/Pattern/RangeSlider/scss/rangeslider';
 @import '04-patterns/03-interaction/scrollable-area';
-@import '../scripts/OSUIFramework/Pattern/Search/scss/search';
-@import '../scripts/OSUIFramework/Pattern/Sidebar/scss/sidebar';
+@import '../scripts/OSFramework/Pattern/Search/scss/search';
+@import '../scripts/OSFramework/Pattern/Sidebar/scss/sidebar';
 @import '04-patterns/03-interaction/stacked-cards';
 @import '04-patterns/03-interaction/video';
 
@@ -287,9 +287,9 @@
 @import '04-patterns/04-navigation/bottom-bar-item';
 @import '04-patterns/04-navigation/breadcrumbs';
 @import '04-patterns/04-navigation/pagination';
-@import '../scripts/OSUIFramework/Pattern/SectionIndex/scss/sectionindex';
-@import '../scripts/OSUIFramework/Pattern/Submenu/scss/submenu';
-@import '../scripts/OSUIFramework/Pattern/Tabs/scss/tabs';
+@import '../scripts/OSFramework/Pattern/SectionIndex/scss/sectionindex';
+@import '../scripts/OSFramework/Pattern/Submenu/scss/submenu';
+@import '../scripts/OSFramework/Pattern/Tabs/scss/tabs';
 @import '04-patterns/04-navigation/timeline';
 @import '04-patterns/04-navigation/wizard';
 
@@ -299,15 +299,15 @@
 @import '04-patterns/05-numbers/badge';
 @import '04-patterns/05-numbers/counter';
 @import '04-patterns/05-numbers/icon-badge';
-@import '../scripts/OSUIFramework/Pattern/Progress/Bar/scss/progressbar';
-@import '../scripts/OSUIFramework/Pattern/Progress/Circle/scss/progresscircle';
-@import '../scripts/OSUIFramework/Pattern/Rating/scss/rating';
+@import '../scripts/OSFramework/Pattern/Progress/Bar/scss/progressbar';
+@import '../scripts/OSFramework/Pattern/Progress/Circle/scss/progresscircle';
+@import '../scripts/OSFramework/Pattern/Rating/scss/rating';
 
 /* ============================================================================ */
 /*      - Utilities                                                             */
 /* ============================================================================ */
 @import '04-patterns/06-utilities/align-center';
-@import '../scripts/OSUIFramework/Pattern/ButtonLoading/scss/button-loading';
+@import '../scripts/OSFramework/Pattern/ButtonLoading/scss/button-loading';
 @import '04-patterns/06-utilities/center-content';
 @import '04-patterns/06-utilities/margin-container';
 @import '04-patterns/06-utilities/separator';

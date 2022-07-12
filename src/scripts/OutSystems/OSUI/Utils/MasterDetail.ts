@@ -9,11 +9,11 @@ namespace OutSystems.OSUI.Utils {
 	export function HasMasterDetail(): boolean {
 		let returnOutput = false;
 
-		const masterDetail = OSUIFramework.Helper.Dom.ClassSelector(document.body, 'split-screen-wrapper');
+		const masterDetail = OSFramework.Helper.Dom.ClassSelector(document.body, 'split-screen-wrapper');
 		const content: HTMLElement = document.querySelector('.active-screen .content');
 
 		if (content && content.contains(masterDetail)) {
-			OSUIFramework.Helper.Dom.Styles.AddClass(content, 'has-master-detail');
+			OSFramework.Helper.Dom.Styles.AddClass(content, 'has-master-detail');
 			returnOutput = true;
 		}
 
@@ -27,10 +27,10 @@ namespace OutSystems.OSUI.Utils {
 	 */
 	export function SetFocusBehaviour(contentId: string, triggerItem: string): void {
 		// Set focus in the container
-		const element = OSUIFramework.Helper.Dom.GetElementById(contentId);
-		const isPhone = OSUIFramework.Helper.Dom.Styles.ContainsClass(document.body, 'phone');
+		const element = OSFramework.Helper.Dom.GetElementById(contentId);
+		const isPhone = OSFramework.Helper.Dom.Styles.ContainsClass(document.body, 'phone');
 
-		OSUIFramework.Helper.Dom.Attribute.Set(element, 'tabindex', '0');
+		OSFramework.Helper.Dom.Attribute.Set(element, 'tabindex', '0');
 		element.focus();
 
 		if (isPhone === false) {
@@ -38,22 +38,22 @@ namespace OutSystems.OSUI.Utils {
 			const focusItemTop: HTMLElement = element
 				.closest('.split-right-content')
 				.querySelector('span.focus-item.top');
-			OSUIFramework.Helper.Dom.Attribute.Set(focusItemTop, 'tabindex', '0');
-			OSUIFramework.Helper.Dom.Attribute.Set(focusItemTop, 'focusItemId', triggerItem);
+			OSFramework.Helper.Dom.Attribute.Set(focusItemTop, 'tabindex', '0');
+			OSFramework.Helper.Dom.Attribute.Set(focusItemTop, 'focusItemId', triggerItem);
 
 			const focusItemBottom: HTMLElement = element
 				.closest('.split-right-content')
 				.querySelector('span.focus-item.bottom');
-			const itemChild = OSUIFramework.Helper.Dom.TagSelector(
-				OSUIFramework.Helper.Dom.GetElementById(triggerItem),
+			const itemChild = OSFramework.Helper.Dom.TagSelector(
+				OSFramework.Helper.Dom.GetElementById(triggerItem),
 				'div'
 			);
 			if (itemChild) {
-				OSUIFramework.Helper.Dom.Attribute.Set(focusItemBottom, 'tabindex', '0');
-				OSUIFramework.Helper.Dom.Attribute.Set(focusItemBottom, 'focusItemId', itemChild.id);
+				OSFramework.Helper.Dom.Attribute.Set(focusItemBottom, 'tabindex', '0');
+				OSFramework.Helper.Dom.Attribute.Set(focusItemBottom, 'focusItemId', itemChild.id);
 			} else {
-				OSUIFramework.Helper.Dom.Attribute.Set(focusItemBottom, 'tabindex', '-1');
-				OSUIFramework.Helper.Dom.Attribute.Remove(focusItemBottom, 'focusItemId');
+				OSFramework.Helper.Dom.Attribute.Set(focusItemBottom, 'tabindex', '-1');
+				OSFramework.Helper.Dom.Attribute.Remove(focusItemBottom, 'focusItemId');
 			}
 		}
 	}

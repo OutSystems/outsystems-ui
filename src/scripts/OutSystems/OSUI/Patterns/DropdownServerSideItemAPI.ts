@@ -2,7 +2,7 @@
 namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 	const _dropdownServerSideItemItemsMap = new Map<
 		string,
-		OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem
+		OSFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem
 	>(); //DropdownServerSideItem.uniqueId -> DropdownServerSideItem obj
 
 	/**
@@ -40,19 +40,19 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 	 * @export
 	 * @param {string} dropdownServerSideItemId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem}
+	 * @return {*}  {OSFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem}
 	 */
 	export function Create(
 		dropdownServerSideItemId: string,
 		configs: string
-	): OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem {
+	): OSFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem {
 		if (_dropdownServerSideItemItemsMap.has(dropdownServerSideItemId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternName.DropdownServerSideItem} registered under id: ${dropdownServerSideItemId}`
+				`There is already a ${OSFramework.GlobalEnum.PatternName.DropdownServerSideItem} registered under id: ${dropdownServerSideItemId}`
 			);
 		}
 
-		const _dropdownServerSideItemItem = new OSUIFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem(
+		const _dropdownServerSideItemItem = new OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem(
 			dropdownServerSideItemId,
 			JSON.parse(configs)
 		);
@@ -97,7 +97,7 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 	 * @return {*}  Array<string>
 	 */
 	export function GetAllDropdownServerSideItemItemsMap(): Array<string> {
-		return OSUIFramework.Helper.MapOperation.ExportKeys(_dropdownServerSideItemItemsMap);
+		return OSFramework.Helper.MapOperation.ExportKeys(_dropdownServerSideItemItemsMap);
 	}
 
 	/**
@@ -105,16 +105,16 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 	 *
 	 * @export
 	 * @param {string} dropdownServerSideItemId ID of the DropdownServerSideItem that will be looked for.
-	 * @return {*}  {OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem;}
+	 * @return {*}  {OSFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem;}
 	 */
 	export function GetDropdownServerSideItemItemById(
 		dropdownServerSideItemId: string
-	): OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem {
-		return OSUIFramework.Helper.MapOperation.FindInMap(
+	): OSFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem {
+		return OSFramework.Helper.MapOperation.FindInMap(
 			'DropdownServerSideItem',
 			dropdownServerSideItemId,
 			_dropdownServerSideItemItemsMap
-		) as OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem;
+		) as OSFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem;
 	}
 
 	/**
@@ -122,11 +122,11 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 	 *
 	 * @export
 	 * @param {string} dropdownServerSideItemId ID of the DropdownServerSideItemItem that will be initialized.
-	 * @return {*}  {OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem}
+	 * @return {*}  {OSFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem}
 	 */
 	export function Initialize(
 		dropdownServerSideItemId: string
-	): OSUIFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem {
+	): OSFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem {
 		const _dropdownServerSideItemItem = GetDropdownServerSideItemItemById(dropdownServerSideItemId);
 
 		_dropdownServerSideItemItem.build();
@@ -140,12 +140,12 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 	 * @export
 	 * @param {string} dropdownServerSideItemId
 	 * @param {string} eventName
-	 * @param {OSUIFramework.Callbacks.OSGeneric} callback
+	 * @param {OSFramework.Callbacks.OSGeneric} callback
 	 */
 	export function RegisterCallback(
 		dropdownServerSideItemId: string,
 		eventName: string,
-		callback: OSUIFramework.Callbacks.OSGeneric
+		callback: OSFramework.Callbacks.OSGeneric
 	): string {
 		const responseObj = {
 			isSuccess: true,

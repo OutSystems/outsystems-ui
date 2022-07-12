@@ -4,7 +4,7 @@ namespace Providers.RangeSlider.NoUISlider.SliderSingle {
 		constructor(config: JSON) {
 			super(config);
 
-			this.rangeSliderMode = OSUIFramework.Patterns.RangeSlider.Enum.Mode.Single;
+			this.rangeSliderMode = OSFramework.Patterns.RangeSlider.Enum.Mode.Single;
 		}
 
 		/**

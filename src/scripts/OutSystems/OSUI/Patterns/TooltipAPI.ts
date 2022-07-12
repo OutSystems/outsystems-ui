@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.TooltipAPI {
-	const _tooltipsMap = new Map<string, OSUIFramework.Patterns.Tooltip.ITooltip>(); //tooltip.uniqueId -> Tooltip obj
+	const _tooltipsMap = new Map<string, OSFramework.Patterns.Tooltip.ITooltip>(); //tooltip.uniqueId -> Tooltip obj
 
 	/**
 	 * Function that will change the property of a given tooltip.
@@ -63,16 +63,16 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 * @export
 	 * @param {string} tooltipId ID of the Tooltip where the instance will be created.
 	 * @param {string} configs configurations for the Tooltip in JSON format.
-	 * @return {*}  {OSUIFramework.Patterns.ITooltip}
+	 * @return {*}  {OSFramework.Patterns.ITooltip}
 	 */
-	export function Create(tooltipId: string, configs: string): OSUIFramework.Patterns.Tooltip.ITooltip {
+	export function Create(tooltipId: string, configs: string): OSFramework.Patterns.Tooltip.ITooltip {
 		if (_tooltipsMap.has(tooltipId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternName.Tooltip} registered under id: ${tooltipId}`
+				`There is already a ${OSFramework.GlobalEnum.PatternName.Tooltip} registered under id: ${tooltipId}`
 			);
 		}
 
-		const _newTooltip = new OSUIFramework.Patterns.Tooltip.Tooltip(tooltipId, JSON.parse(configs));
+		const _newTooltip = new OSFramework.Patterns.Tooltip.Tooltip(tooltipId, JSON.parse(configs));
 
 		_tooltipsMap.set(tooltipId, _newTooltip);
 
@@ -111,10 +111,10 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 * Fucntion that will return the Map with all the Tooltip instances at the page
 	 *
 	 * @export
-	 * @return {*}  {Map<string, OSUIFramework.Patterns.ITooltip>}
+	 * @return {*}  {Map<string, OSFramework.Patterns.ITooltip>}
 	 */
 	export function GetAllTooltips(): Array<string> {
-		return OSUIFramework.Helper.MapOperation.ExportKeys(_tooltipsMap);
+		return OSFramework.Helper.MapOperation.ExportKeys(_tooltipsMap);
 	}
 
 	/**
@@ -122,14 +122,14 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 *
 	 * @export
 	 * @param {string} tooltipId ID of the Tooltip that will be looked for.
-	 * @return {*}  {OSUIFramework.Patterns.ITooltip}
+	 * @return {*}  {OSFramework.Patterns.ITooltip}
 	 */
-	export function GetTooltipById(tooltipId: string): OSUIFramework.Patterns.Tooltip.ITooltip {
-		return OSUIFramework.Helper.MapOperation.FindInMap(
-			OSUIFramework.GlobalEnum.PatternName.Tooltip,
+	export function GetTooltipById(tooltipId: string): OSFramework.Patterns.Tooltip.ITooltip {
+		return OSFramework.Helper.MapOperation.FindInMap(
+			OSFramework.GlobalEnum.PatternName.Tooltip,
 			tooltipId,
 			_tooltipsMap
-		) as OSUIFramework.Patterns.Tooltip.ITooltip;
+		) as OSFramework.Patterns.Tooltip.ITooltip;
 	}
 
 	/**
@@ -137,9 +137,9 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 *
 	 * @export
 	 * @param {string} tooltipId ID of the Tooltip that will be initialized.
-	 * @return {*}  {OSUIFramework.Patterns.ITooltip}
+	 * @return {*}  {OSFramework.Patterns.ITooltip}
 	 */
-	export function Initialize(tooltipId: string): OSUIFramework.Patterns.Tooltip.ITooltip {
+	export function Initialize(tooltipId: string): OSFramework.Patterns.Tooltip.ITooltip {
 		const tooltip = GetTooltipById(tooltipId);
 
 		tooltip.build();
@@ -179,13 +179,13 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 * @export
 	 * @param {string} tooltipId
 	 * @param {string} eventName
-	 * @param {OSUIFramework.Callbacks.OSGeneric} callback
+	 * @param {OSFramework.Callbacks.OSGeneric} callback
 	 * @return {*} {string} Return Message Success or message of error info if it's the case.
 	 */
 	export function RegisterCallback(
 		tooltipId: string,
 		eventName: string,
-		callback: OSUIFramework.Callbacks.OSGeneric
+		callback: OSFramework.Callbacks.OSGeneric
 	): string {
 		const responseObj = {
 			isSuccess: true,

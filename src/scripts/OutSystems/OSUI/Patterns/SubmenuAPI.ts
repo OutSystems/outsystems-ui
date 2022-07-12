@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.SubmenuAPI {
-	const _submenusMap = new Map<string, OSUIFramework.Patterns.Submenu.ISubmenu>(); //Submenu.uniqueId -> Submenu obj
+	const _submenusMap = new Map<string, OSFramework.Patterns.Submenu.ISubmenu>(); //Submenu.uniqueId -> Submenu obj
 
 	/**
 	 * Function that will change the property of a given Submenu.
@@ -99,7 +99,7 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 		try {
 			const submenu = GetSubmenuById(submenuId);
 
-			submenu.changeProperty(OSUIFramework.Patterns.Submenu.Enum.Properties.OpenOnHover, true);
+			submenu.changeProperty(OSFramework.Patterns.Submenu.Enum.Properties.OpenOnHover, true);
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
@@ -115,16 +115,16 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	 * @export
 	 * @param {string} submenuId ID of the Submenu where the instance will be created.
 	 * @param {string} configs configurations for the Submenu in JSON format.
-	 * @return {*}  {OSUIFramework.Patterns.ISubmenu}
+	 * @return {*}  {OSFramework.Patterns.ISubmenu}
 	 */
-	export function Create(submenuId: string, configs: string): OSUIFramework.Patterns.Submenu.ISubmenu {
+	export function Create(submenuId: string, configs: string): OSFramework.Patterns.Submenu.ISubmenu {
 		if (_submenusMap.has(submenuId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternName.Submenu} registered under id: ${submenuId}`
+				`There is already a ${OSFramework.GlobalEnum.PatternName.Submenu} registered under id: ${submenuId}`
 			);
 		}
 
-		const _newSubmenu = new OSUIFramework.Patterns.Submenu.Submenu(submenuId, JSON.parse(configs));
+		const _newSubmenu = new OSFramework.Patterns.Submenu.Submenu(submenuId, JSON.parse(configs));
 
 		_submenusMap.set(submenuId, _newSubmenu);
 
@@ -163,10 +163,10 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	 * Function that will return the Map with all the Submenu instances at the page
 	 *
 	 * @export
-	 * @return {*}  {Map<string, OSUIFramework.Patterns.Isubmenu>}
+	 * @return {*}  {Map<string, OSFramework.Patterns.Isubmenu>}
 	 */
 	export function GetAllSubmenus(): Array<string> {
-		return OSUIFramework.Helper.MapOperation.ExportKeys(_submenusMap);
+		return OSFramework.Helper.MapOperation.ExportKeys(_submenusMap);
 	}
 
 	/**
@@ -174,14 +174,14 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	 *
 	 * @export
 	 * @param {string} submenuId ID of the Submenu that will be looked for.
-	 * @return {*}  {OSUIFramework.Patterns.ISubmenu}
+	 * @return {*}  {OSFramework.Patterns.ISubmenu}
 	 */
-	export function GetSubmenuById(submenuId: string): OSUIFramework.Patterns.Submenu.ISubmenu {
-		return OSUIFramework.Helper.MapOperation.FindInMap(
-			OSUIFramework.GlobalEnum.PatternName.Submenu,
+	export function GetSubmenuById(submenuId: string): OSFramework.Patterns.Submenu.ISubmenu {
+		return OSFramework.Helper.MapOperation.FindInMap(
+			OSFramework.GlobalEnum.PatternName.Submenu,
 			submenuId,
 			_submenusMap
-		) as OSUIFramework.Patterns.Submenu.ISubmenu;
+		) as OSFramework.Patterns.Submenu.ISubmenu;
 	}
 
 	/**
@@ -189,9 +189,9 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	 *
 	 * @export
 	 * @param {string} submenuId ID of the Submenu that will be initialized.
-	 * @return {*}  {OSUIFramework.Patterns.ISubmenu}
+	 * @return {*}  {OSFramework.Patterns.ISubmenu}
 	 */
-	export function Initialize(submenuId: string): OSUIFramework.Patterns.Submenu.ISubmenu {
+	export function Initialize(submenuId: string): OSFramework.Patterns.Submenu.ISubmenu {
 		const submenu = GetSubmenuById(submenuId);
 
 		submenu.build();
@@ -204,7 +204,7 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	 *
 	 * @export
 	 * @param {string} submenuId
-	 * @return {*}  {OSUIFramework.Patterns.Submenu.ISubmenu}
+	 * @return {*}  {OSFramework.Patterns.Submenu.ISubmenu}
 	 */
 	export function UpdateOnRender(submenuId: string): string {
 		const responseObj = {

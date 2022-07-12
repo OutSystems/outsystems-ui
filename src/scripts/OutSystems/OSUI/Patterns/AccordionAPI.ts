@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace OutSystems.OSUI.Patterns.AccordionAPI {
-	const _accordionMap = new Map<string, OSUIFramework.Patterns.Accordion.IAccordion>(); //Accordion.uniqueId -> Accordion obj
+	const _accordionMap = new Map<string, OSFramework.Patterns.Accordion.IAccordion>(); //Accordion.uniqueId -> Accordion obj
 
 	/**
 	 * Function that will change the property of a given Accordion pattern.
@@ -63,16 +63,16 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 * @export
 	 * @param {string} accordionId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSUIFramework.Patterns.Accordion.IAccordion}
+	 * @return {*}  {OSFramework.Patterns.Accordion.IAccordion}
 	 */
-	export function Create(accordionId: string, configs: string): OSUIFramework.Patterns.Accordion.IAccordion {
+	export function Create(accordionId: string, configs: string): OSFramework.Patterns.Accordion.IAccordion {
 		if (_accordionMap.has(accordionId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternName.Accordion} registered under id: ${accordionId}`
+				`There is already a ${OSFramework.GlobalEnum.PatternName.Accordion} registered under id: ${accordionId}`
 			);
 		}
 
-		const _newAccordion = new OSUIFramework.Patterns.Accordion.Accordion(accordionId, JSON.parse(configs));
+		const _newAccordion = new OSFramework.Patterns.Accordion.Accordion(accordionId, JSON.parse(configs));
 
 		_accordionMap.set(accordionId, _newAccordion);
 
@@ -138,10 +138,10 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 * Fucntion that will return the Map with all the Accordion instances at the page
 	 *
 	 * @export
-	 * @return {*}  {Map<string, OSUIFramework.Patterns.Accordion.IAccordion>}
+	 * @return {*}  {Map<string, OSFramework.Patterns.Accordion.IAccordion>}
 	 */
 	export function GetAllAccordions(): Array<string> {
-		return OSUIFramework.Helper.MapOperation.ExportKeys(_accordionMap);
+		return OSFramework.Helper.MapOperation.ExportKeys(_accordionMap);
 	}
 
 	/**
@@ -149,16 +149,16 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 *
 	 * @export
 	 * @param {string} AccordionId ID of the Accordion that will be looked for.
-	 * @return {*}  {OSUIFramework.Patterns.Accordion.IAccordion}
+	 * @return {*}  {OSFramework.Patterns.Accordion.IAccordion}
 	 */
-	export function GetAccordionById(AccordionId: string): OSUIFramework.Patterns.Accordion.IAccordion {
+	export function GetAccordionById(AccordionId: string): OSFramework.Patterns.Accordion.IAccordion {
 		// Protects the code when you have the pattern of removing children and parents
 		// In this case, FloatingActionsItem, when destorying itself, will have a hard time looking for something that has already been disposed.
-		return OSUIFramework.Helper.MapOperation.FindInMap(
+		return OSFramework.Helper.MapOperation.FindInMap(
 			'Accordion',
 			AccordionId,
 			_accordionMap
-		) as OSUIFramework.Patterns.Accordion.IAccordion;
+		) as OSFramework.Patterns.Accordion.IAccordion;
 	}
 
 	/**
@@ -166,9 +166,9 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 *
 	 * @export
 	 * @param {string} accordionId ID of the Accordion pattern that will be initialized.
-	 * @return {*}  {OSUIFramework.Patterns.Accordion.IAccordion}
+	 * @return {*}  {OSFramework.Patterns.Accordion.IAccordion}
 	 */
-	export function Initialize(accordionId: string): OSUIFramework.Patterns.Accordion.IAccordion {
+	export function Initialize(accordionId: string): OSFramework.Patterns.Accordion.IAccordion {
 		const accordion = GetAccordionById(accordionId);
 
 		accordion.build();

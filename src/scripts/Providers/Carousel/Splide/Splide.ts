@@ -5,8 +5,8 @@ namespace Providers.Splide {
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class OSUISplide
-		extends OSUIFramework.Patterns.Carousel.AbstractCarousel<Splide, Splide.SplideConfig>
-		implements OSUIFramework.Patterns.Carousel.ICarousel
+		extends OSFramework.Patterns.Carousel.AbstractCarousel<Splide, Splide.SplideConfig>
+		implements OSFramework.Patterns.Carousel.ICarousel
 	{
 		// Store if the render callback should be prevented
 		private _blockRender: boolean;
@@ -21,15 +21,15 @@ namespace Providers.Splide {
 		// Store current carousel index;
 		private _currentIndex: number;
 		// Store the disable render async callback
-		private _eventOnDisableRender: OSUIFramework.Callbacks.Generic;
+		private _eventOnDisableRender: OSFramework.Callbacks.Generic;
 		// Store the onResize event
-		private _eventOnResize: OSUIFramework.Callbacks.Generic;
+		private _eventOnResize: OSFramework.Callbacks.Generic;
 		// Store if a List widget is used inside the CarouselItems placeholder
 		private _hasList: boolean;
 		// Store the onInitialized event
-		private _platformEventInitialized: OSUIFramework.Callbacks.OSCarouselOnInitializeEvent;
+		private _platformEventInitialized: OSFramework.Callbacks.OSCarouselOnInitializeEvent;
 		// Store the onSlideMoved event
-		private _platformEventOnSlideMoved: OSUIFramework.Callbacks.OSCarouselSlideMovedEvent;
+		private _platformEventOnSlideMoved: OSFramework.Callbacks.OSCarouselSlideMovedEvent;
 		// Store initial provider options
 		private _providerOptions: SplideOpts;
 
@@ -43,7 +43,7 @@ namespace Providers.Splide {
 
 			if (this._hasList) {
 				this._carouselListWidgetElem = this._selfElem.querySelector(
-					OSUIFramework.Constants.Dot + OSUIFramework.GlobalEnum.CssClassElements.List
+					OSFramework.Constants.Dot + OSFramework.GlobalEnum.CssClassElements.List
 				);
 
 				this._carouselProviderElem = this._carouselTrackElem;
@@ -105,17 +105,17 @@ namespace Providers.Splide {
 			// Update UI on window resize
 			this.provider.refresh();
 			// Update css variable
-			OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
+			OSFramework.Helper.Dom.Styles.SetStyleAttribute(
 				this._carouselTrackElem,
-				OSUIFramework.Patterns.Carousel.Enum.CssVariables.CarouselWidth,
-				this._selfElem.offsetWidth + OSUIFramework.GlobalEnum.Units.Pixel
+				OSFramework.Patterns.Carousel.Enum.CssVariables.CarouselWidth,
+				this._selfElem.offsetWidth + OSFramework.GlobalEnum.Units.Pixel
 			);
 		}
 
 		// Method to set the OnInitializeEvent
 		private _setOnInitializedEvent(): void {
 			this._provider.on(Enum.SpliderEvents.Mounted, () => {
-				OSUIFramework.Helper.AsyncInvocation(this._platformEventInitialized, this.widgetId);
+				OSFramework.Helper.AsyncInvocation(this._platformEventInitialized, this.widgetId);
 			});
 		}
 
@@ -123,7 +123,7 @@ namespace Providers.Splide {
 		private _setOnSlideMovedEvent(): void {
 			this._provider.on(Enum.SpliderEvents.Moved, (index) => {
 				if (index !== this._currentIndex) {
-					OSUIFramework.Helper.AsyncInvocation(this._platformEventOnSlideMoved, this.widgetId, index);
+					OSFramework.Helper.AsyncInvocation(this._platformEventOnSlideMoved, this.widgetId, index);
 					this._currentIndex = index;
 				}
 			});
@@ -133,17 +133,17 @@ namespace Providers.Splide {
 		private _togglePaginationClass(): void {
 			// If Dots is being used, add a class, to be able to change container padding-bottom on these conditions
 			if (
-				this.configs.Navigation === OSUIFramework.Patterns.Carousel.Enum.Navigation.Dots ||
-				this.configs.Navigation === OSUIFramework.Patterns.Carousel.Enum.Navigation.Both
+				this.configs.Navigation === OSFramework.Patterns.Carousel.Enum.Navigation.Dots ||
+				this.configs.Navigation === OSFramework.Patterns.Carousel.Enum.Navigation.Both
 			) {
-				OSUIFramework.Helper.Dom.Styles.AddClass(
+				OSFramework.Helper.Dom.Styles.AddClass(
 					this._selfElem,
-					OSUIFramework.Patterns.Carousel.Enum.CssClass.HasPagination
+					OSFramework.Patterns.Carousel.Enum.CssClass.HasPagination
 				);
 			} else {
-				OSUIFramework.Helper.Dom.Styles.RemoveClass(
+				OSFramework.Helper.Dom.Styles.RemoveClass(
 					this._selfElem,
-					OSUIFramework.Patterns.Carousel.Enum.CssClass.HasPagination
+					OSFramework.Patterns.Carousel.Enum.CssClass.HasPagination
 				);
 			}
 		}
@@ -160,8 +160,8 @@ namespace Providers.Splide {
 			this._eventOnResize = this._setCarouselWidth.bind(this);
 
 			// Add event listener for window resize
-			OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
-				OSUIFramework.Event.Type.WindowResize,
+			OSFramework.Event.GlobalEventManager.Instance.addHandler(
+				OSFramework.Event.Type.WindowResize,
 				this._eventOnResize
 			);
 		}
@@ -173,13 +173,13 @@ namespace Providers.Splide {
 		 * @memberof OSUISplide
 		 */
 		protected setHtmlElements(): void {
-			this._carouselPlaceholderElem = OSUIFramework.Helper.Dom.ClassSelector(
+			this._carouselPlaceholderElem = OSFramework.Helper.Dom.ClassSelector(
 				this._selfElem,
-				OSUIFramework.Patterns.Carousel.Enum.CssClass.Content
+				OSFramework.Patterns.Carousel.Enum.CssClass.Content
 			);
-			this._carouselTrackElem = OSUIFramework.Helper.Dom.ClassSelector(
+			this._carouselTrackElem = OSFramework.Helper.Dom.ClassSelector(
 				this._selfElem,
-				OSUIFramework.Patterns.Carousel.Enum.CssClass.Track
+				OSFramework.Patterns.Carousel.Enum.CssClass.Track
 			);
 		}
 
@@ -193,13 +193,13 @@ namespace Providers.Splide {
 			// If using Carousel with a List, get one level below on the HTML, so that the List element is used on the structure expected by the library
 			// In this case, the osui-carousel won't be used, and the library will be mounted on the osui-carousel_track
 			if (this._hasList) {
-				OSUIFramework.Helper.Dom.Styles.AddClass(this._carouselTrackElem, Enum.CssClass.SplideWrapper);
-				OSUIFramework.Helper.Dom.Styles.AddClass(this._carouselPlaceholderElem, Enum.CssClass.SplideTrack);
-				OSUIFramework.Helper.Dom.Styles.AddClass(this._carouselListWidgetElem, Enum.CssClass.SplideList);
+				OSFramework.Helper.Dom.Styles.AddClass(this._carouselTrackElem, Enum.CssClass.SplideWrapper);
+				OSFramework.Helper.Dom.Styles.AddClass(this._carouselPlaceholderElem, Enum.CssClass.SplideTrack);
+				OSFramework.Helper.Dom.Styles.AddClass(this._carouselListWidgetElem, Enum.CssClass.SplideList);
 			} else {
-				OSUIFramework.Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.SplideWrapper);
-				OSUIFramework.Helper.Dom.Styles.AddClass(this._carouselTrackElem, Enum.CssClass.SplideTrack);
-				OSUIFramework.Helper.Dom.Styles.AddClass(this._carouselPlaceholderElem, Enum.CssClass.SplideList);
+				OSFramework.Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.SplideWrapper);
+				OSFramework.Helper.Dom.Styles.AddClass(this._carouselTrackElem, Enum.CssClass.SplideTrack);
+				OSFramework.Helper.Dom.Styles.AddClass(this._carouselPlaceholderElem, Enum.CssClass.SplideList);
 			}
 
 			this._togglePaginationClass();
@@ -213,8 +213,8 @@ namespace Providers.Splide {
 		 */
 		protected unsetCallbacks(): void {
 			// remove event listener
-			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
-				OSUIFramework.Event.Type.WindowResize,
+			OSFramework.Event.GlobalEventManager.Instance.removeHandler(
+				OSFramework.Event.Type.WindowResize,
 				this._eventOnResize
 			);
 
@@ -271,33 +271,33 @@ namespace Providers.Splide {
 				this._blockRender = true;
 
 				switch (propertyName) {
-					case OSUIFramework.Patterns.Carousel.Enum.Properties.StartingPosition:
+					case OSFramework.Patterns.Carousel.Enum.Properties.StartingPosition:
 						console.warn(
-							`Carousel (${this.widgetId}): changes to ${OSUIFramework.Patterns.Carousel.Enum.Properties.StartingPosition} parameter do not affect the carousel. Use the client action 'CarouselGoTo' to change the current item.`
+							`Carousel (${this.widgetId}): changes to ${OSFramework.Patterns.Carousel.Enum.Properties.StartingPosition} parameter do not affect the carousel. Use the client action 'CarouselGoTo' to change the current item.`
 						);
 						break;
-					case OSUIFramework.Patterns.Carousel.Enum.Properties.Navigation:
-					case OSUIFramework.Patterns.Carousel.Enum.Properties.AutoPlay:
-					case OSUIFramework.Patterns.Carousel.Enum.Properties.Loop:
-					case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsDesktop:
-					case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsTablet:
-					case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsPhone:
+					case OSFramework.Patterns.Carousel.Enum.Properties.Navigation:
+					case OSFramework.Patterns.Carousel.Enum.Properties.AutoPlay:
+					case OSFramework.Patterns.Carousel.Enum.Properties.Loop:
+					case OSFramework.Patterns.Carousel.Enum.Properties.ItemsDesktop:
+					case OSFramework.Patterns.Carousel.Enum.Properties.ItemsTablet:
+					case OSFramework.Patterns.Carousel.Enum.Properties.ItemsPhone:
 						this.updateCarousel();
 						break;
-					case OSUIFramework.Patterns.Carousel.Enum.Properties.Height:
+					case OSFramework.Patterns.Carousel.Enum.Properties.Height:
 						this._provider.options = { height: propertyValue as string | number };
 						break;
-					case OSUIFramework.Patterns.Carousel.Enum.Properties.Padding:
+					case OSFramework.Patterns.Carousel.Enum.Properties.Padding:
 						this._provider.options = { padding: propertyValue as string | number };
 						break;
-					case OSUIFramework.Patterns.Carousel.Enum.Properties.ItemsGap:
+					case OSFramework.Patterns.Carousel.Enum.Properties.ItemsGap:
 						this._provider.options = { gap: propertyValue as string | number };
 						break;
 				}
 			}
 
 			// Unblock UpdateOnRender so that it is able to update on DOM changes inside Carousel content
-			OSUIFramework.Helper.AsyncInvocation(this._eventOnDisableRender, this.widgetId);
+			OSFramework.Helper.AsyncInvocation(this._eventOnDisableRender, this.widgetId);
 		}
 
 		/**
@@ -349,30 +349,30 @@ namespace Providers.Splide {
 		 * Set callbacks for the onChange event
 		 *
 		 * @param {string} eventName
-		 * @param {OSUIFramework.Callbacks.OSGeneric} callback
+		 * @param {OSFramework.Callbacks.OSGeneric} callback
 		 * @memberof OSUISplide
 		 */
-		public registerCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
+		public registerCallback(eventName: string, callback: OSFramework.Callbacks.OSGeneric): void {
 			switch (eventName) {
-				case OSUIFramework.Patterns.Carousel.Enum.CarouselEvents.OnSlideMoved:
+				case OSFramework.Patterns.Carousel.Enum.CarouselEvents.OnSlideMoved:
 					this._platformEventOnSlideMoved = callback;
 					break;
-				case OSUIFramework.Patterns.Carousel.Enum.CarouselEvents.Initialized:
+				case OSFramework.Patterns.Carousel.Enum.CarouselEvents.Initialized:
 					this._platformEventInitialized = callback;
 					break;
 			}
 		}
 
 		public setCarouselDirection(direction: string): void {
-			if (direction === OSUIFramework.Patterns.Carousel.Enum.Direction.None && OutSystems.OSUI.Utils.GetIsRTL()) {
-				this.configs.Direction = OSUIFramework.GlobalEnum.Direction.RTL;
+			if (direction === OSFramework.Patterns.Carousel.Enum.Direction.None && OutSystems.OSUI.Utils.GetIsRTL()) {
+				this.configs.Direction = OSFramework.GlobalEnum.Direction.RTL;
 			} else if (
-				direction === OSUIFramework.Patterns.Carousel.Enum.Direction.RightToLeft &&
+				direction === OSFramework.Patterns.Carousel.Enum.Direction.RightToLeft &&
 				this.configs.AutoPlay
 			) {
-				this.configs.Direction = OSUIFramework.GlobalEnum.Direction.RTL;
+				this.configs.Direction = OSFramework.GlobalEnum.Direction.RTL;
 			} else {
-				this.configs.Direction = OSUIFramework.GlobalEnum.Direction.LTR;
+				this.configs.Direction = OSFramework.GlobalEnum.Direction.LTR;
 			}
 
 			this.updateCarousel();

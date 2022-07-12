@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSUIFramework.Patterns.<%= patternNamePC %> {
+namespace OSFramework.Patterns.<%= patternNamePC %> {
 	export abstract class Abstract<%= patternNamePC %><P, C extends Abstract<%= patternNamePC %>Config>
 		extends AbstractPattern<C>
 		implements I<%= patternNamePC %>, Interface.IProviderPattern<P>
