@@ -165,7 +165,7 @@
 
 			&.osui-tabs--is-active {
 				color: var(--color-neutral-10);
-				text-shadow: 0.5px 0 0 currentColor; /* This is used instead of font-weight, to prevent layout-shifts */
+				text-shadow: 0 0 0.5px currentColor; /* This is used instead of font-weight, to prevent layout-shifts */
 			}
 
 			&[disabled] {
