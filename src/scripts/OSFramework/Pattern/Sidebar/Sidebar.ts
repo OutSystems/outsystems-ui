@@ -151,7 +151,7 @@ namespace OSFramework.Patterns.Sidebar {
 		}
 
 		// Overlay onClick event to close the Sidebar
-		private _overlayClickCallback(args: string, e: MouseEvent): void {
+		private _overlayClickCallback(_args: string, e: MouseEvent): void {
 			if (this._selfElem === e.target) {
 				if (this._isOpen) {
 					this.close();

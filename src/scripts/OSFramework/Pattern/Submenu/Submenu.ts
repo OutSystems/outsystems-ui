@@ -26,7 +26,7 @@ namespace OSFramework.Patterns.Submenu {
 		}
 
 		// Close submenu, when BodyOnCLick event is triggered
-		private _bodyClickCallback(args: string, e: MouseEvent): void {
+		private _bodyClickCallback(_args: string, e: MouseEvent): void {
 			if (this.isBuilt && this._isOpen && this._dynamicallyOpening === false) {
 				if (!this._selfElem.contains(e.target as HTMLElement)) {
 					this.close();

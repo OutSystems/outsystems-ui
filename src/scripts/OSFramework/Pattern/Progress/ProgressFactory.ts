@@ -25,7 +25,6 @@ namespace OSFramework.Patterns.Progress.Factory {
 
 			default:
 				throw new Error(`There is any Progress of ${type} type`);
-				break;
 		}
 
 		return _progressItem;

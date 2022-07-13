@@ -523,7 +523,7 @@ namespace OSFramework.Helper {
 		 * @memberof DeviceInfo
 		 */
 		public static GetOperatingSystem(userAgent = ''): GlobalEnum.MobileOS {
-			let localOs = GlobalEnum.MobileOS.Unknown;
+			let localOs;
 
 			//If the developer passed an UA, let's not use the cached value, but always calculate it. Useful
 			if (userAgent.trim() !== '') {

@@ -59,6 +59,15 @@
 			position: absolute;
 			top: 0;
 			transition: opacity linear 150ms;
+
+			// Service Studio Preview
+			& {
+				-servicestudio-margin-right: var(--space-s);
+				-servicestudio-min-height: 24px;
+				-servicestudio-min-width: 24px;
+				-servicestudio-opacity: 1 !important;
+				-servicestudio-position: relative;
+			}
 		}
 
 		&-filled {
@@ -75,19 +84,6 @@
 
 	.rating-item[class*='rating-']:last-of-type {
 		padding-right: 0;
-	}
-
-	&-item-filled,
-	&-item-half,
-	&-item-empty {
-		// Service Studio Preview
-		& {
-			-servicestudio-margin-right: var(--space-s);
-			-servicestudio-min-height: 24px;
-			-servicestudio-min-width: 24px;
-			-servicestudio-opacity: 1 !important;
-			-servicestudio-position: relative;
-		}
 	}
 
 	// These need to be separated, to keep exact CSS specificty, for the hover/ checked styles to work as intended

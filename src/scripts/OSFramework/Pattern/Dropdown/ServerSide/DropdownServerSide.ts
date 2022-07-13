@@ -176,7 +176,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		}
 
 		// Close when click outside of pattern
-		private _onBodyClick(eventType: string, event: MouseEvent): void {
+		private _onBodyClick(_eventType: string, event: MouseEvent): void {
 			// Get the target element
 			const targetElement = event.target as HTMLElement;
 			// Get the closest based on pattern base selector
@@ -189,7 +189,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		}
 
 		// Update the balloon coordinates
-		private _onBodyScroll(eventType: string, event: UIEvent): void {
+		private _onBodyScroll(_eventType: string, event: UIEvent): void {
 			if (this.isBuilt) {
 				// If the scroll occcurs inside balloonContent, stop all the forward logic!
 				if (event !== undefined && event.target === this._balloonContentElement) {

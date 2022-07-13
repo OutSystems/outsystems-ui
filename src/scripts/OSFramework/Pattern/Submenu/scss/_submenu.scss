@@ -340,12 +340,10 @@
 			border-left: var(--border-size-m) solid transparent;
 			border-top: 0;
 			padding: var(--space-s) var(--space-m);
-		}
-	}
 
-	.osui-submenu {
-		&__header__item {
-			flex: 1;
+			&__item {
+				flex: 1;
+			}
 		}
 
 		&__items {
@@ -371,6 +369,11 @@
 				border-left: 0;
 				border-right: var(--border-size-m) solid transparent;
 			}
+
+			&.active .osui-submenu__header {
+				border-left: var(--border-size-none);
+				border-right: var(--border-size-m) solid var(--color-primary);
+			}
 		}
 	}
 
@@ -392,14 +395,5 @@
 	.osui-submenu__header__icon {
 		margin-left: var(--space-none);
 		margin-right: var(--space-s);
-	}
-
-	.layout-side {
-		.osui-submenu {
-			&.active .osui-submenu__header {
-				border-left: var(--border-size-none);
-				border-right: var(--border-size-m) solid var(--color-primary);
-			}
-		}
 	}
 }

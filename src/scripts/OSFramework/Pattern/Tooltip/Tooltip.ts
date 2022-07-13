@@ -141,7 +141,7 @@ namespace OSFramework.Patterns.Tooltip {
 		}
 
 		// Close tooltip if user has clicked outside of it
-		private _onBodyClick(eventName: string, e: MouseEvent): void {
+		private _onBodyClick(_eventName: string, e: MouseEvent): void {
 			if (this.isBuilt && this._isOpenedByApi === false) {
 				const _clickedElem = e.target as HTMLElement;
 				const _closestElem = _clickedElem.closest(Constants.Dot + Enum.CssClass.Pattern);

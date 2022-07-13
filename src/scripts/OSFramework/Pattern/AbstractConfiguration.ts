@@ -97,26 +97,26 @@ namespace OSFramework.Patterns {
 		/**
 		 * Method that validates if a given property can be changed.
 		 *
-		 * @param {boolean} isBuilt
-		 * @param {string} key
+		 * @param {boolean} _isBuilt
+		 * @param {string} _key
 		 * @return {*}  {boolean}
 		 * @memberof AbstractConfiguration
 		 */
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		public validateCanChange(isBuilt: boolean, key: string): boolean {
+		public validateCanChange(_isBuilt: boolean, _key: string): boolean {
 			return true;
 		}
 
 		/**
 		 * Method that assures that the values being set as configurations respect the defaults.
 		 *
-		 * @param {string} key
+		 * @param {string} _key
 		 * @param {unknown} value
 		 * @return {*}  {unknown}
 		 * @memberof AbstractConfiguration
 		 */
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		public validateDefault(key: string, value: unknown): unknown {
+		public validateDefault(_key: string, value: unknown): unknown {
 			return value;
 		}
 	}
