@@ -7,7 +7,7 @@ namespace Providers.Datepicker.Flatpickr {
 	 * @class AbstractFlatpickrConfig
 	 * @extends {AbstractDatePickerConfig}
 	 */
-	export abstract class AbstractFlatpickrConfig extends OSUIFramework.Patterns.DatePicker.AbstractDatePickerConfig {
+	export abstract class AbstractFlatpickrConfig extends OSFramework.Patterns.DatePicker.AbstractDatePickerConfig {
 		// Store the language that will be assigned as a locale to the DatePicker
 		private _lang: string;
 
@@ -15,13 +15,13 @@ namespace Providers.Datepicker.Flatpickr {
 		public AllowInput = false;
 
 		// Store calendar mode is in use
-		public CalendarMode: OSUIFramework.Patterns.DatePicker.Enum.Mode;
+		public CalendarMode: OSFramework.Patterns.DatePicker.Enum.Mode;
 
 		// Stores the ability to disable the mobile flatpickr behavior. False is the default provider option
 		public DisableMobile = false;
 
 		// Set the OnChange Event that will be defined in the specific context for each Flatpickr mode
-		public OnChange: OSUIFramework.Callbacks.Generic;
+		public OnChange: OSFramework.Callbacks.Generic;
 
 		// Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr
 		public ServerDateFormat: string;
@@ -30,7 +30,7 @@ namespace Providers.Datepicker.Flatpickr {
 			super(config);
 
 			// Set the lang based on the language that has been defined already
-			this._lang = OSUIFramework.Helper.Language.ShortLang;
+			this._lang = OSFramework.Helper.Language.ShortLang;
 		}
 
 		// Method used to manage the AM/PM time when it's on use
@@ -39,9 +39,9 @@ namespace Providers.Datepicker.Flatpickr {
 			let _altFormat = this.DateFormat !== '' ? this._mapProviderDateFormat() : this.ServerDateFormat;
 
 			// Time must behave in 12h format with AM/PM or in 24h format
-			if (this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time12hFormat) {
+			if (this.TimeFormat === OSFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time12hFormat) {
 				_altFormat = _altFormat + ' - h:i K';
-			} else if (this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat) {
+			} else if (this.TimeFormat === OSFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat) {
 				_altFormat = _altFormat + ' - H:i';
 			}
 
@@ -67,7 +67,7 @@ namespace Providers.Datepicker.Flatpickr {
 
 		// Method used to check the serverDateFormat and map it into the Flatpickr expected format
 		private _checkServerDateFormat(): void {
-			this.ServerDateFormat = OSUIFramework.Helper.Dates.ServerFormat.replace('YYYY', 'Y')
+			this.ServerDateFormat = OSFramework.Helper.Dates.ServerFormat.replace('YYYY', 'Y')
 				.replace('MM', 'm')
 				.replace('DD', 'd');
 		}
@@ -120,14 +120,14 @@ namespace Providers.Datepicker.Flatpickr {
 				allowInput: this.AllowInput,
 				disableMobile: this.DisableMobile,
 				dateFormat:
-					this.TimeFormat !== OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable
+					this.TimeFormat !== OSFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable
 						? this.ServerDateFormat + ' H:i'
 						: this.ServerDateFormat,
 				locale: this._checkLocale(),
-				maxDate: OSUIFramework.Helper.Dates.IsNull(this.MaxDate) ? undefined : this.MaxDate,
-				minDate: OSUIFramework.Helper.Dates.IsNull(this.MinDate) ? undefined : this.MinDate,
+				maxDate: OSFramework.Helper.Dates.IsNull(this.MaxDate) ? undefined : this.MaxDate,
+				minDate: OSFramework.Helper.Dates.IsNull(this.MinDate) ? undefined : this.MinDate,
 				onChange: this.OnChange,
-				time_24hr: this.TimeFormat === OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat,
+				time_24hr: this.TimeFormat === OSFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat,
 				weekNumbers: this.ShowWeekNumbers,
 			};
 

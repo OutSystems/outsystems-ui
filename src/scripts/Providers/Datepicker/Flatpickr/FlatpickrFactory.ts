@@ -6,17 +6,17 @@ namespace Providers.Datepicker.Flatpickr.Factory {
 	 * @export
 	 * @param {string} datePickerId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSUIFramework.Patterns.Progress.IDatePicker}
+	 * @return {*}  {OSFramework.Patterns.Progress.IDatePicker}
 	 */
 	export function NewFlatpickr(
 		datePickerId: string,
-		mode: OSUIFramework.Patterns.DatePicker.Enum.Mode,
+		mode: OSFramework.Patterns.DatePicker.Enum.Mode,
 		configs: string
-	): OSUIFramework.Patterns.DatePicker.IDatePicker {
+	): OSFramework.Patterns.DatePicker.IDatePicker {
 		let _flatpickrItem = null;
 
 		switch (mode) {
-			case OSUIFramework.Patterns.DatePicker.Enum.Mode.Single:
+			case OSFramework.Patterns.DatePicker.Enum.Mode.Single:
 				_flatpickrItem = new Providers.Datepicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate(
 					datePickerId,
 					JSON.parse(configs)
@@ -24,7 +24,7 @@ namespace Providers.Datepicker.Flatpickr.Factory {
 
 				break;
 
-			case OSUIFramework.Patterns.DatePicker.Enum.Mode.Range:
+			case OSFramework.Patterns.DatePicker.Enum.Mode.Range:
 				_flatpickrItem = new Providers.Datepicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate(
 					datePickerId,
 					JSON.parse(configs)

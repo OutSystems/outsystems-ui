@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.FloatingActionsAPI {
-	const _floatingActionsMap = new Map<string, OSUIFramework.Patterns.FloatingActions.IFloatingActions>(); //floatingActions.uniqueId -> FloatingActions obj
+	const _floatingActionsMap = new Map<string, OSFramework.Patterns.FloatingActions.IFloatingActions>(); //floatingActions.uniqueId -> FloatingActions obj
 
 	/**
 	 * Function that will change the property of a given Floating Actions pattern.
@@ -37,19 +37,19 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsAPI {
 	 * @export
 	 * @param {string} floatingActionsId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSUIFramework.Patterns.FloatingActions.IFloatingActions}
+	 * @return {*}  {OSFramework.Patterns.FloatingActions.IFloatingActions}
 	 */
 	export function Create(
 		floatingActionsId: string,
 		configs: string
-	): OSUIFramework.Patterns.FloatingActions.IFloatingActions {
+	): OSFramework.Patterns.FloatingActions.IFloatingActions {
 		if (_floatingActionsMap.has(floatingActionsId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternName.FloatingActions} registered under id: ${floatingActionsId}`
+				`There is already a ${OSFramework.GlobalEnum.PatternName.FloatingActions} registered under id: ${floatingActionsId}`
 			);
 		}
 
-		const _newFloatingActions = new OSUIFramework.Patterns.FloatingActions.FloatingActions(
+		const _newFloatingActions = new OSFramework.Patterns.FloatingActions.FloatingActions(
 			floatingActionsId,
 			JSON.parse(configs)
 		);
@@ -91,10 +91,10 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsAPI {
 	 * Fucntion that will return the Map with all the Floating Actions instances at the page
 	 *
 	 * @export
-	 * @return {*}  {Map<string, OSUIFramework.Patterns.FloatingActions.IFloatingActions>}
+	 * @return {*}  {Map<string, OSFramework.Patterns.FloatingActions.IFloatingActions>}
 	 */
 	export function GetAllFloatingActions(): Array<string> {
-		return OSUIFramework.Helper.MapOperation.ExportKeys(_floatingActionsMap);
+		return OSFramework.Helper.MapOperation.ExportKeys(_floatingActionsMap);
 	}
 
 	/**
@@ -102,16 +102,16 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsAPI {
 	 *
 	 * @export
 	 * @param {string} floatingActionsId ID of the Floating Action that will be looked for.
-	 * @return {*}  {OSUIFramework.Patterns.FloatingActions.IFloatingActions}
+	 * @return {*}  {OSFramework.Patterns.FloatingActions.IFloatingActions}
 	 */
 	export function GetFloatingActionsById(
 		floatingActionsId: string
-	): OSUIFramework.Patterns.FloatingActions.IFloatingActions {
-		return OSUIFramework.Helper.MapOperation.FindInMap(
+	): OSFramework.Patterns.FloatingActions.IFloatingActions {
+		return OSFramework.Helper.MapOperation.FindInMap(
 			'FloatingAction',
 			floatingActionsId,
 			_floatingActionsMap
-		) as OSUIFramework.Patterns.FloatingActions.IFloatingActions;
+		) as OSFramework.Patterns.FloatingActions.IFloatingActions;
 	}
 
 	/**
@@ -119,9 +119,9 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsAPI {
 	 *
 	 * @export
 	 * @param {string} floatingActionId ID of the Floating Action pattern that will be initialized.
-	 * @return {*}  {OSUIFramework.Patterns.FloatingActions.IFloatingActions}
+	 * @return {*}  {OSFramework.Patterns.FloatingActions.IFloatingActions}
 	 */
-	export function Initialize(floatingActionId: string): OSUIFramework.Patterns.FloatingActions.IFloatingActions {
+	export function Initialize(floatingActionId: string): OSFramework.Patterns.FloatingActions.IFloatingActions {
 		const floatingAction = GetFloatingActionsById(floatingActionId);
 
 		floatingAction.build();
@@ -136,7 +136,7 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsAPI {
 	 * @param {string} ratingId
 	 * @param {*} callback
 	 */
-	export function RegisterCallback(floatingActionId: string, callback: OSUIFramework.Callbacks.OSGeneric): string {
+	export function RegisterCallback(floatingActionId: string, callback: OSFramework.Callbacks.OSGeneric): string {
 		const responseObj = {
 			isSuccess: true,
 			message: ErrorCodes.Success.message,

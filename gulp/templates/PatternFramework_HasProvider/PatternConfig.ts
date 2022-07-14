@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSUIFramework.Patterns.<%= patternNamePC %> {
+namespace OSFramework.Patterns.<%= patternNamePC %> {
 	/**
 	 * Class that represents the custom configurations received by the <%= patternNamePC %>.
 	 *

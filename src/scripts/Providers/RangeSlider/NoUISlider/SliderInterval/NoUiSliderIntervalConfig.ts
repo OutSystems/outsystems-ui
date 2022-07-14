@@ -4,7 +4,7 @@ namespace Providers.RangeSlider.NoUISlider.SliderInterval {
 		constructor(config: JSON) {
 			super(config);
 
-			this.rangeSliderMode = OSUIFramework.Patterns.RangeSlider.Enum.Mode.Interval;
+			this.rangeSliderMode = OSFramework.Patterns.RangeSlider.Enum.Mode.Interval;
 		}
 
 		/**

@@ -10,7 +10,7 @@ namespace OutSystems.OSUI.Utils {
 	export function GetHasListInside(targetElem: HTMLElement): boolean {
 		const listElements = OSUI.Utils.ChildrenMatches(
 			targetElem,
-			OSUIFramework.Constants.Dot + OSUIFramework.GlobalEnum.CssClassElements.List
+			OSFramework.Constants.Dot + OSFramework.GlobalEnum.CssClassElements.List
 		);
 
 		return listElements.length > 0;

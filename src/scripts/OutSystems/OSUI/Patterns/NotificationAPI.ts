@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.NotificationAPI {
-	const _notificationMap = new Map<string, OSUIFramework.Patterns.Notification.INotification>();
+	const _notificationMap = new Map<string, OSFramework.Patterns.Notification.INotification>();
 	/**
 	 * Function that will change the property of a given Notification.
 	 *
@@ -36,16 +36,16 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	 * @export
 	 * @param {string} notificationId
 	 * @param {string} configs
-	 * @return {*}  {OSUIFramework.Patterns.Notification.INotification}
+	 * @return {*}  {OSFramework.Patterns.Notification.INotification}
 	 */
-	export function Create(notificationId: string, configs: string): OSUIFramework.Patterns.Notification.INotification {
+	export function Create(notificationId: string, configs: string): OSFramework.Patterns.Notification.INotification {
 		if (_notificationMap.has(notificationId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternName.Notification} registered under id: ${notificationId}`
+				`There is already a ${OSFramework.GlobalEnum.PatternName.Notification} registered under id: ${notificationId}`
 			);
 		}
 
-		const _newNotification = new OSUIFramework.Patterns.Notification.Notification(
+		const _newNotification = new OSFramework.Patterns.Notification.Notification(
 			notificationId,
 			JSON.parse(configs)
 		);
@@ -88,7 +88,7 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	 * @return {*}  {Array<string>}
 	 */
 	export function GetAllNotifications(): Array<string> {
-		return OSUIFramework.Helper.MapOperation.ExportKeys(_notificationMap);
+		return OSFramework.Helper.MapOperation.ExportKeys(_notificationMap);
 	}
 
 	/**
@@ -96,14 +96,14 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	 *
 	 * @export
 	 * @param {string} notificationId
-	 * @return {*}  {OSUIFramework.Patterns.Notification.INotification}
+	 * @return {*}  {OSFramework.Patterns.Notification.INotification}
 	 */
-	export function GetNotificationById(notificationId: string): OSUIFramework.Patterns.Notification.INotification {
-		return OSUIFramework.Helper.MapOperation.FindInMap(
+	export function GetNotificationById(notificationId: string): OSFramework.Patterns.Notification.INotification {
+		return OSFramework.Helper.MapOperation.FindInMap(
 			'Notification',
 			notificationId,
 			_notificationMap
-		) as OSUIFramework.Patterns.Notification.INotification;
+		) as OSFramework.Patterns.Notification.INotification;
 	}
 
 	/**
@@ -137,9 +137,9 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	 *
 	 * @export
 	 * @param {string} notificationId
-	 * @return {*}  {OSUIFramework.Patterns.Notification.INotification}
+	 * @return {*}  {OSFramework.Patterns.Notification.INotification}
 	 */
-	export function Initialize(notificationId: string): OSUIFramework.Patterns.Notification.INotification {
+	export function Initialize(notificationId: string): OSFramework.Patterns.Notification.INotification {
 		const notification = GetNotificationById(notificationId);
 
 		notification.build();
@@ -153,13 +153,13 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	 * @export
 	 * @param {string} notificationId
 	 * @param {string} eventName
-	 * @param {OSUIFramework.Callbacks.OSGeneric} callback
+	 * @param {OSFramework.Callbacks.OSGeneric} callback
 	 * @return {*} {string} Return Message Success or message of error info if it's the case.
 	 */
 	export function RegisterCallback(
 		notificationId: string,
 		eventName: string,
-		callback: OSUIFramework.Callbacks.OSGeneric
+		callback: OSFramework.Callbacks.OSGeneric
 	): string {
 		const responseObj = {
 			isSuccess: true,

@@ -1,13 +1,13 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.Dropdown.VirtualSelect {
 	export abstract class AbstractVirtualSelect<C extends Dropdown.VirtualSelect.AbstractVirtualSelectConfig>
-		extends OSUIFramework.Patterns.Dropdown.AbstractDropdown<VirtualSelect, C>
+		extends OSFramework.Patterns.Dropdown.AbstractDropdown<VirtualSelect, C>
 		implements IVirtualSelect
 	{
 		// Dropdown callback events
-		private _onSelectedOptionEvent: OSUIFramework.Callbacks.Generic;
-		private _platformEventInitializedCallback: OSUIFramework.Callbacks.OSGeneric;
-		private _platformEventSelectedOptCallback: OSUIFramework.Callbacks.OSDropdownOnSelectEvent;
+		private _onSelectedOptionEvent: OSFramework.Callbacks.Generic;
+		private _platformEventInitializedCallback: OSFramework.Callbacks.OSGeneric;
+		private _platformEventSelectedOptCallback: OSFramework.Callbacks.OSDropdownOnSelectEvent;
 
 		// Store a reference of available provider methods
 		protected _virtualselectMethods: VirtualSelectMethods;
@@ -20,7 +20,7 @@ namespace Providers.Dropdown.VirtualSelect {
 
 		// Add error message container with a given text
 		private _addErrorMessage(text: string): void {
-			const errorMessageElement = OSUIFramework.Helper.Dom.ClassSelector(
+			const errorMessageElement = OSFramework.Helper.Dom.ClassSelector(
 				this._selfElem.parentElement,
 				Enum.CssClass.ErrorMessage
 			);
@@ -28,7 +28,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			// Check if the element already exist!
 			if (errorMessageElement === undefined) {
 				// Create the wrapper container
-				const textContainer = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Div);
+				const textContainer = document.createElement(OSFramework.GlobalEnum.HTMLElement.Div);
 				textContainer.classList.add(Enum.CssClass.ErrorMessage);
 				textContainer.innerHTML = text;
 
@@ -50,23 +50,20 @@ namespace Providers.Dropdown.VirtualSelect {
 			this._virtualselectMethods.close();
 
 			if (this.configs.IsDisabled) {
-				OSUIFramework.Helper.Dom.Attribute.Set(
+				OSFramework.Helper.Dom.Attribute.Set(
 					this._selfElem,
-					OSUIFramework.GlobalEnum.HTMLAttributes.Disabled,
+					OSFramework.GlobalEnum.HTMLAttributes.Disabled,
 					''
 				);
 			} else {
-				OSUIFramework.Helper.Dom.Attribute.Remove(
-					this._selfElem,
-					OSUIFramework.GlobalEnum.HTMLAttributes.Disabled
-				);
+				OSFramework.Helper.Dom.Attribute.Remove(this._selfElem, OSFramework.GlobalEnum.HTMLAttributes.Disabled);
 			}
 		}
 
 		// Get the selected options and pass them into callBack
 		private _onSelectedOption() {
 			// Trigger platform's SelectedOptionCallbackEvent client Action
-			OSUIFramework.Helper.AsyncInvocation(
+			OSFramework.Helper.AsyncInvocation(
 				this._platformEventSelectedOptCallback,
 				this.widgetId,
 				this.getSelectedOptionsStructure()
@@ -106,7 +103,7 @@ namespace Providers.Dropdown.VirtualSelect {
 
 			this._virtualselectMethods = this.provider.$ele;
 			// Since at native devices we're detaching the balloon from pattern context we must set this attribute to it in order to be possible create a relation between pattern default structure and the detached balloon!
-			this.provider.$dropboxContainer.setAttribute(OSUIFramework.GlobalEnum.HTMLAttributes.Name, this.uniqueId);
+			this.provider.$dropboxContainer.setAttribute(OSFramework.GlobalEnum.HTMLAttributes.Name, this.uniqueId);
 
 			// Add the pattern Events!
 			this._setUpEvents();
@@ -114,7 +111,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			// Add attributes to the element if needed
 			this._manageAttributes();
 			// Trigger platform's InstanceIntializedHandler client Action
-			OSUIFramework.Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
+			OSFramework.Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
 		}
 
 		/**
@@ -128,7 +125,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			this.provider.destroy();
 
 			// Create a new VirtualSelect instance with the updated configs
-			OSUIFramework.Helper.AsyncInvocation(this.prepareConfigs.bind(this));
+			OSFramework.Helper.AsyncInvocation(this.prepareConfigs.bind(this));
 		}
 
 		/**
@@ -187,7 +184,7 @@ namespace Providers.Dropdown.VirtualSelect {
 
 			if (this.isBuilt) {
 				switch (propertyName) {
-					case OSUIFramework.Patterns.Dropdown.Enum.Properties.IsDisabled:
+					case OSFramework.Patterns.Dropdown.Enum.Properties.IsDisabled:
 						this._manageDisableStatus();
 						break;
 					case Enum.Properties.NoResultsText:
@@ -280,12 +277,12 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * Method used to register the provider callback
 		 *
 		 * @param {string} eventName Event name that will be assigned
-		 * @param {OSUIFramework.Callbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
+		 * @param {OSFramework.Callbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
 		 * @memberof AbstractVirtualSelect
 		 */
-		public registerCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
+		public registerCallback(eventName: string, callback: OSFramework.Callbacks.OSGeneric): void {
 			switch (eventName) {
-				case OSUIFramework.Patterns.Dropdown.Enum.Events.Initialized:
+				case OSFramework.Patterns.Dropdown.Enum.Events.Initialized:
 					if (this._platformEventInitializedCallback === undefined) {
 						this._platformEventInitializedCallback = callback;
 					}
@@ -324,12 +321,12 @@ namespace Providers.Dropdown.VirtualSelect {
 		 */
 		public validation(isValid: boolean, validationMessage: string): void {
 			if (isValid === false) {
-				OSUIFramework.Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.NotValid);
+				OSFramework.Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.NotValid);
 				this._addErrorMessage(validationMessage);
 			} else {
-				OSUIFramework.Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.NotValid);
+				OSFramework.Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.NotValid);
 
-				const errorMessageElement = OSUIFramework.Helper.Dom.ClassSelector(
+				const errorMessageElement = OSFramework.Helper.Dom.ClassSelector(
 					this._selfElem.parentElement,
 					Enum.CssClass.ErrorMessage
 				);

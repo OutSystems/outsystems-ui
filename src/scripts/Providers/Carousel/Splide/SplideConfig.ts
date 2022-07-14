@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace Providers.Splide {
-	export class SplideConfig extends OSUIFramework.Patterns.Carousel.AbstractCarouselConfig {
+	export class SplideConfig extends OSFramework.Patterns.Carousel.AbstractCarouselConfig {
 		private _getArrowConfig(): boolean {
 			let arrows: boolean;
 			switch (this.Navigation) {
-				case OSUIFramework.Patterns.Carousel.Enum.Navigation.None:
+				case OSFramework.Patterns.Carousel.Enum.Navigation.None:
 					arrows = false;
 					break;
-				case OSUIFramework.Patterns.Carousel.Enum.Navigation.Dots:
+				case OSFramework.Patterns.Carousel.Enum.Navigation.Dots:
 					arrows = false;
 					break;
-				case OSUIFramework.Patterns.Carousel.Enum.Navigation.Arrows:
+				case OSFramework.Patterns.Carousel.Enum.Navigation.Arrows:
 					arrows = true;
 					break;
-				case OSUIFramework.Patterns.Carousel.Enum.Navigation.Both:
+				case OSFramework.Patterns.Carousel.Enum.Navigation.Both:
 					arrows = true;
 					break;
 			}
@@ -25,12 +25,12 @@ namespace Providers.Splide {
 			let direction: string;
 			if (
 				(this.Direction === undefined ||
-					this.Direction === OSUIFramework.Patterns.Carousel.Enum.Direction.None) &&
+					this.Direction === OSFramework.Patterns.Carousel.Enum.Direction.None) &&
 				OutSystems.OSUI.Utils.GetIsRTL()
 			) {
-				direction = OSUIFramework.GlobalEnum.Direction.RTL;
+				direction = OSFramework.GlobalEnum.Direction.RTL;
 			} else {
-				direction = this.Direction || OSUIFramework.GlobalEnum.Direction.LTR;
+				direction = this.Direction || OSFramework.GlobalEnum.Direction.LTR;
 			}
 
 			return direction;
@@ -39,16 +39,16 @@ namespace Providers.Splide {
 		private _getPaginationConfig(): boolean {
 			let pagination: boolean;
 			switch (this.Navigation) {
-				case OSUIFramework.Patterns.Carousel.Enum.Navigation.None:
+				case OSFramework.Patterns.Carousel.Enum.Navigation.None:
 					pagination = false;
 					break;
-				case OSUIFramework.Patterns.Carousel.Enum.Navigation.Dots:
+				case OSFramework.Patterns.Carousel.Enum.Navigation.Dots:
 					pagination = true;
 					break;
-				case OSUIFramework.Patterns.Carousel.Enum.Navigation.Arrows:
+				case OSFramework.Patterns.Carousel.Enum.Navigation.Arrows:
 					pagination = false;
 					break;
-				case OSUIFramework.Patterns.Carousel.Enum.Navigation.Both:
+				case OSFramework.Patterns.Carousel.Enum.Navigation.Both:
 					pagination = true;
 					break;
 			}

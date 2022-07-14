@@ -4,21 +4,21 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	 * Get the current device orientation
 	 */
 	export function GetDeviceOrientation(): string {
-		return OSUIFramework.Helper.DeviceInfo.GetDeviceOrientation();
+		return OSFramework.Helper.DeviceInfo.GetDeviceOrientation();
 	}
 
 	/**
 	 * Get the current device type
 	 */
 	export function GetDeviceType(): string {
-		return OSUIFramework.Helper.DeviceInfo.GetDeviceType();
+		return OSFramework.Helper.DeviceInfo.GetDeviceType();
 	}
 
 	/**
 	 * Identifies if the device has a touchscreen.
 	 */
 	export function IsTouch(): boolean {
-		return OSUIFramework.Helper.DeviceInfo.IsTouch;
+		return OSFramework.Helper.DeviceInfo.IsTouch;
 	}
 
 	/**
@@ -27,7 +27,7 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	 * @returns
 	 */
 	export function GetOperatingSystem(UserAgent: string): string {
-		return OSUIFramework.Helper.DeviceInfo.GetOperatingSystem(UserAgent);
+		return OSFramework.Helper.DeviceInfo.GetOperatingSystem(UserAgent);
 	}
 
 	/**
@@ -35,7 +35,7 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	 * @returns
 	 */
 	export function IsDesktop(): boolean {
-		return OSUIFramework.Helper.DeviceInfo.IsDesktop;
+		return OSFramework.Helper.DeviceInfo.IsDesktop;
 	}
 
 	/**
@@ -43,15 +43,15 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	 * @returns
 	 */
 	export function CheckIsLayoutNative(): boolean {
-		const layout = OSUIFramework.Helper.Dom.ClassSelector(
+		const layout = OSFramework.Helper.Dom.ClassSelector(
 			document.body,
-			OSUIFramework.GlobalEnum.CssClassElements.Layout
+			OSFramework.GlobalEnum.CssClassElements.Layout
 		);
 
 		if (layout) {
-			return OSUIFramework.Helper.Dom.Styles.ContainsClass(
+			return OSFramework.Helper.Dom.Styles.ContainsClass(
 				layout,
-				OSUIFramework.GlobalEnum.CssClassElements.LayoutNative
+				OSFramework.GlobalEnum.CssClassElements.LayoutNative
 			);
 		} else {
 			return false;
@@ -64,7 +64,7 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export function IsRunningAsPWA(): boolean {
-		return OSUIFramework.Helper.DeviceInfo.IsPwa;
+		return OSFramework.Helper.DeviceInfo.IsPwa;
 	}
 
 	/**
@@ -72,7 +72,7 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	 * @returns
 	 */
 	export function IsPhone(): boolean {
-		return OSUIFramework.Helper.DeviceInfo.IsPhone;
+		return OSFramework.Helper.DeviceInfo.IsPhone;
 	}
 
 	/**
@@ -80,7 +80,7 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	 * @returns
 	 */
 	export function IsRunningAsNativeApp(): boolean {
-		return OSUIFramework.Helper.DeviceInfo.IsNative;
+		return OSFramework.Helper.DeviceInfo.IsNative;
 	}
 
 	/**
@@ -88,7 +88,7 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	 * @returns
 	 */
 	export function IsTablet(): boolean {
-		return OSUIFramework.Helper.DeviceInfo.IsTablet;
+		return OSFramework.Helper.DeviceInfo.IsTablet;
 	}
 
 	/**
@@ -96,16 +96,16 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	 * @returns
 	 */
 	export function IsWebApp(): boolean {
-		const layout = OSUIFramework.Helper.Dom.ClassSelector(
+		const layout = OSFramework.Helper.Dom.ClassSelector(
 			document.body,
-			OSUIFramework.GlobalEnum.CssClassElements.Layout
+			OSFramework.GlobalEnum.CssClassElements.Layout
 		);
 		if (layout) {
 			const isNotOldNativeLayouts =
-				OSUIFramework.Helper.Dom.TagSelector(document.body, '.active-screen .layout.layout-top') ||
-				OSUIFramework.Helper.Dom.TagSelector(document.body, '.active-screen .layout.layout-side') ||
-				OSUIFramework.Helper.Dom.TagSelector(document.body, '.active-screen .layout.blank') ||
-				OSUIFramework.Helper.Dom.TagSelector(document.body, '.active-screen .layout.layout-blank');
+				OSFramework.Helper.Dom.TagSelector(document.body, '.active-screen .layout.layout-top') ||
+				OSFramework.Helper.Dom.TagSelector(document.body, '.active-screen .layout.layout-side') ||
+				OSFramework.Helper.Dom.TagSelector(document.body, '.active-screen .layout.blank') ||
+				OSFramework.Helper.Dom.TagSelector(document.body, '.active-screen .layout.layout-blank');
 
 			return !!isNotOldNativeLayouts && CheckIsLayoutNative() === false;
 		} else {
@@ -127,9 +127,9 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 			const windowHeight = window.innerHeight || document.documentElement.clientHeight;
 			const orient =
 				windowWidth > windowHeight
-					? OSUIFramework.GlobalEnum.DeviceOrientation.landscape
-					: OSUIFramework.GlobalEnum.DeviceOrientation.portrait;
-			const isLandscape = orient === OSUIFramework.GlobalEnum.DeviceOrientation.landscape;
+					? OSFramework.GlobalEnum.DeviceOrientation.landscape
+					: OSFramework.GlobalEnum.DeviceOrientation.portrait;
+			const isLandscape = orient === OSFramework.GlobalEnum.DeviceOrientation.landscape;
 
 			const userValues = {
 				phone: phoneWidth,
@@ -140,9 +140,9 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 			const tabletMax = userValues.tablet ? userValues.tablet : 1024;
 
 			const deviceList = [
-				OSUIFramework.GlobalEnum.DeviceType.phone,
-				OSUIFramework.GlobalEnum.DeviceType.tablet,
-				OSUIFramework.GlobalEnum.DeviceType.desktop,
+				OSFramework.GlobalEnum.DeviceType.phone,
+				OSFramework.GlobalEnum.DeviceType.tablet,
+				OSFramework.GlobalEnum.DeviceType.desktop,
 			];
 
 			let device;

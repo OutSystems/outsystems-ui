@@ -101,7 +101,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 
 			if (this.isBuilt) {
 				switch (propertyName) {
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
+					case OSFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
 						// Library only supports update on some options, so we need to
 						// destroy the object and create a new RangeSlider
 						this._updateRangeSlider();
@@ -132,7 +132,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 				this.provider.set(value);
 			} else {
 				throw new Error(
-					`${OSUIFramework.ErrorCodes.RangeSlider.FailSetValue}:	The value must be between the minimum value and maximum value set.`
+					`${OSFramework.ErrorCodes.RangeSlider.FailSetValue}:	The value must be between the minimum value and maximum value set.`
 				);
 			}
 		}
