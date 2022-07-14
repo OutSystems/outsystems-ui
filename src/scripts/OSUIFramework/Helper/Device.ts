@@ -89,6 +89,51 @@ namespace OSUIFramework.Helper {
 		private static _operatingSystem = GlobalEnum.MobileOS.Unknown;
 
 		/******************** PRIVATE METHODS ********************/
+
+		/**
+		 * Gets the Notch Position.
+		 *
+		 * @private
+		 * @static
+		 * @returns GlobalEnum.Position
+		 * @memberof DeviceInfo
+		 */
+		private static _getNotchPosition(): GlobalEnum.Position {
+			// store the notch position value
+			let notchPosition = undefined;
+			// Store the window object where the orientation can be checked!
+			let windowOrientation = undefined;
+
+			if ('orientation' in window) {
+				// safari browers
+				windowOrientation = window.orientation;
+			} else if ('orientation' in window.screen) {
+				// check for other browers
+				windowOrientation = window.screen.orientation.angle;
+			}
+
+			// If there are not an orientation...
+			if (windowOrientation === undefined) {
+				return notchPosition;
+			}
+
+			if (windowOrientation === 90) {
+				notchPosition = GlobalEnum.Position.Left;
+			} else if (windowOrientation === -90) {
+				notchPosition = GlobalEnum.Position.Right;
+			} else {
+				notchPosition = GlobalEnum.Position.Top;
+			}
+
+			// For retrocompatibility we must add this next line
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore: notch is not a knowned attribute from window object
+			window.notch = notchPosition;
+
+			// retrieve it's position!
+			return notchPosition;
+		}
+
 		/**
 		 * Gets the operating system based on the user agent.
 		 *
@@ -126,7 +171,7 @@ namespace OSUIFramework.Helper {
 		 * @return {*}
 		 * @memberof DeviceInfo
 		 */
-		private static _getUserAgent(userAgent = '') {
+		private static _getUserAgent(userAgent = ''): string {
 			return userAgent.replace(' ', '') === ''
 				? window.navigator.userAgent.toLowerCase()
 				: userAgent.toLowerCase();
@@ -347,6 +392,11 @@ namespace OSUIFramework.Helper {
 				});
 
 				DeviceInfo._isIphoneWithNotch = DeviceInfo._iphoneDetails !== undefined;
+
+				// Set the Notch Position for retrocompatibility
+				if (DeviceInfo._isIphoneWithNotch) {
+					this._getNotchPosition();
+				}
 			}
 			return DeviceInfo._isIphoneWithNotch;
 		}
