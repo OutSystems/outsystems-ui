@@ -4,9 +4,11 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 		const operatingSystem = OSUIFramework.Helper.DeviceInfo.GetOperatingSystem();
 		const body = document.body;
 		if (body) {
+			// Add operatingSystem class
 			if (operatingSystem !== OSUIFramework.GlobalEnum.MobileOS.Unknown) {
 				OSUIFramework.Helper.Dom.Styles.AddClass(body, operatingSystem);
 			}
+
 			// Add iphonex class for ios devices with notch
 			if (
 				operatingSystem === OSUIFramework.GlobalEnum.MobileOS.IOS &&
@@ -15,15 +17,64 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 				OSUIFramework.Helper.Dom.Styles.AddClass(body, OSUIFramework.GlobalEnum.NotchClasses.IPhoneX);
 			}
 
-			if (IsWebApp) {
-				const browser = OSUIFramework.Helper.DeviceInfo.GetBrowser();
+			// Check if the onorientationchange exist at the browser we're using
+			if ('onorientationchange' in window) {
+				window.addEventListener('orientationchange', function () {
+					setTimeout(() => {
+						// If it's an ipphoneX, and platform says it's tablet (due to screen resolution), remove the tablet class and add phone one instead
+						if (
+							OSUIFramework.Helper.Dom.Styles.ContainsClass(
+								body,
+								OSUIFramework.GlobalEnum.NotchClasses.IPhoneX
+							)
+						) {
+							OSUIFramework.Helper.Dom.Styles.RemoveClass(
+								body,
+								OSUIFramework.GlobalEnum.DeviceType.tablet
+							);
+							OSUIFramework.Helper.Dom.Styles.AddClass(body, OSUIFramework.GlobalEnum.DeviceType.phone);
+						}
 
+						// Add the desktop class if not phone/tablet
+						if (
+							OSUIFramework.Helper.Dom.Styles.ContainsClass(
+								body,
+								OSUIFramework.GlobalEnum.DeviceType.phone
+							) === false &&
+							OSUIFramework.Helper.Dom.Styles.ContainsClass(
+								body,
+								OSUIFramework.GlobalEnum.DeviceType.tablet
+							) === false
+						) {
+							OSUIFramework.Helper.Dom.Styles.AddClass(body, OSUIFramework.GlobalEnum.DeviceType.desktop);
+						} else if (
+							OSUIFramework.Helper.Dom.Styles.ContainsClass(
+								body,
+								OSUIFramework.GlobalEnum.DeviceType.desktop
+							) &&
+							OSUIFramework.Helper.Dom.Styles.ContainsClass(
+								body,
+								OSUIFramework.GlobalEnum.DeviceType.tablet
+							)
+						) {
+							OSUIFramework.Helper.Dom.Styles.RemoveClass(
+								body,
+								OSUIFramework.GlobalEnum.DeviceType.desktop
+							);
+						}
+					}, 500);
+				});
+			}
+
+			if (IsWebApp) {
+				// if it's a mobile app we do not need to set browser info!
+				const browser = OSUIFramework.Helper.DeviceInfo.GetBrowser();
 				if (browser !== OSUIFramework.GlobalEnum.Browser.unknown) {
 					OSUIFramework.Helper.Dom.Styles.AddClass(body, browser);
 				}
-
+				// also same as above!
 				if (OSUIFramework.Helper.DeviceInfo.IsTouch) {
-					OSUIFramework.Helper.Dom.Styles.AddClass(body, 'is--touch');
+					OSUIFramework.Helper.Dom.Styles.AddClass(body, OSUIFramework.GlobalEnum.CssClassElements.IsTouch);
 				}
 			} else {
 				// Detect IpadPro to add desktop class
@@ -34,39 +85,6 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 						false
 				) {
 					body.classList.add(OSUIFramework.GlobalEnum.DeviceType.desktop);
-				}
-
-				if (
-					OSUIFramework.Helper.Dom.Styles.ContainsClass(body, OSUIFramework.GlobalEnum.DeviceType.tablet) ||
-					OSUIFramework.Helper.Dom.Styles.ContainsClass(body, OSUIFramework.GlobalEnum.DeviceType.desktop)
-				) {
-					window.addEventListener('orientationchange', function () {
-						setTimeout(function () {
-							if (
-								OSUIFramework.Helper.Dom.Styles.ContainsClass(
-									body,
-									OSUIFramework.GlobalEnum.DeviceType.phone
-								) === false &&
-								OSUIFramework.Helper.Dom.Styles.ContainsClass(
-									body,
-									OSUIFramework.GlobalEnum.DeviceType.tablet
-								) === false
-							) {
-								body.classList.add(OSUIFramework.GlobalEnum.DeviceType.desktop);
-							} else if (
-								OSUIFramework.Helper.Dom.Styles.ContainsClass(
-									body,
-									OSUIFramework.GlobalEnum.DeviceType.desktop
-								) &&
-								OSUIFramework.Helper.Dom.Styles.ContainsClass(
-									body,
-									OSUIFramework.GlobalEnum.DeviceType.tablet
-								)
-							) {
-								body.classList.remove(OSUIFramework.GlobalEnum.DeviceType.desktop);
-							}
-						}, 500);
-					});
 				}
 			}
 		}

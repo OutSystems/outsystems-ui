@@ -20,6 +20,7 @@ namespace OSUIFramework.GlobalEnum {
 		HeaderHideOnScroll = 'hide-header-on-scroll',
 		HeaderIsFixed = 'fixed-header',
 		HeaderIsVisible = 'header-is--visible',
+		IsTouch = 'is--touch',
 		Layout = 'layout',
 		LayoutNative = 'layout-native',
 		LayoutTop = 'layout-top',
