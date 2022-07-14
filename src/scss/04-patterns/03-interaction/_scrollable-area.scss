@@ -12,6 +12,19 @@
 		height: var(--scrollable-area-height);
 		width: var(--scrollable-area-width);
 
+		&.horizontal-scroll,
+		&.vertical-scroll {
+			.osui {
+				&-deprecated.carousel,
+				&-carousel {
+					.list.list-group {
+						overflow-x: initial;
+						overflow-y: initial;
+					}
+				}
+			}
+		}
+
 		&.none {
 			-ms-overflow-style: none; /* IE and Edge */
 			scrollbar-width: none; /* Firefox */
