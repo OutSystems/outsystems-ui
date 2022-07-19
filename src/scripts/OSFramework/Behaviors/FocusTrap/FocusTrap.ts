@@ -105,7 +105,7 @@ namespace OSFramework.Behaviors.FocusTrap {
 		private _setFocusableElements(): void {
 			this._focusableElements = Helper.Dom.FocusableElements(this._targetElement);
 
-			// to handle focusable element's tabindex when toggling the Notification
+			// Remove the first and last element, because of span elements added to handle focusable element's tabindex when toggling
 			this._firstFocusableElement = this._focusableElements[1];
 			this._lastFocusableElement = this._focusableElements[this._focusableElements.length - 2];
 		}
