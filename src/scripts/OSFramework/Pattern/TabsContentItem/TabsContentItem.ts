@@ -55,7 +55,7 @@ namespace OSFramework.Patterns.TabsContentItem {
 		 * @memberof TabsContentItem
 		 */
 		protected setHtmlElements(): void {
-			this._focusableElements = [...this._selfElem.querySelectorAll(Constants.FocusableElems)] as HTMLElement[];
+			this._focusableElements = Helper.Dom.FocusableElements(this._selfElem);
 		}
 
 		/**
