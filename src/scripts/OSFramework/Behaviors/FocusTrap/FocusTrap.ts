@@ -37,14 +37,14 @@ namespace OSFramework.Behaviors.FocusTrap {
 			this._focusTopCallback = opts.focusTopCallback;
 
 			// Create the elements needed!
-			this._buildFocusableElements();
+			this._buildPredictableElements();
 
 			// Set focusable elements
 			this._setFocusableElements();
 		}
 
 		// Method to create elements
-		private _buildFocusableElements(): void {
+		private _buildPredictableElements(): void {
 			// Create the focusable elements
 			this._topElement = document.createElement(GlobalEnum.HTMLElement.Span);
 			this._bottomElement = document.createElement(GlobalEnum.HTMLElement.Span);
