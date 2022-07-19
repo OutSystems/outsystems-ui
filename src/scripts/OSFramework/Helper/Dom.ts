@@ -367,6 +367,18 @@ namespace OSFramework.Helper {
 		}
 
 		/**
+		 * Method to set the list of focusable elements
+		 *
+		 * @readonly
+		 * @static
+		 * @memberof Dom
+		 */
+		public static FocusableElements(element: HTMLElement): HTMLElement[] {
+			const focusableElements = [...element.querySelectorAll(Constants.FocusableElems)] as HTMLElement[];
+			return focusableElements;
+		}
+
+		/**
 		 * Generate a Random String that could be assigned as a pattern UniqueId
 		 *
 		 * @export
