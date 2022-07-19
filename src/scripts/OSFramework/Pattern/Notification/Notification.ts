@@ -7,18 +7,25 @@ namespace OSFramework.Patterns.Notification {
 		extends AbstractPattern<NotificationConfig>
 		implements INotification, Interface.ISwipeEvent
 	{
+		// Store the click event with bind(this)
 		private _eventOnClick: Callbacks.Generic;
+		// Store the keypress event with bind(this)
 		private _eventOnKeypress: Callbacks.Generic;
 		// Define the event to be applied based on device
 		private _eventType: string;
+		// Store focus trap instance
 		private _focusTrapInstance: Behaviors.FocusTrap.FocusTrap;
+		// Store the active element focused
 		private _focusableActiveElement: HTMLElement;
 		// Store gesture events instance
 		private _gestureEventInstance: Event.GestureEvent.SwipeEvent;
 		// Store if the pattern has gesture events added
 		private _hasGestureEvents: boolean;
+		// Store pattern visibility
 		private _isOpen: boolean;
+		// Store the parent element
 		private _parentSelf: HTMLElement;
+		// Store the platform events
 		private _platformEventOnInitialize: Callbacks.OSNotificationInitializedEvent;
 		private _platformEventOnToggle: Callbacks.OSNotificationToggleEvent;
 
