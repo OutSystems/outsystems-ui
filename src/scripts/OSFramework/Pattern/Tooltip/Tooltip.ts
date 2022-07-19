@@ -286,7 +286,7 @@ namespace OSFramework.Patterns.Tooltip {
 			}
 
 			// Get the recommended position to open the balloon
-			const recommendedPosition = Helper.BoundPosition.GetRecommendedPositionByBounds(
+			const recommendedPosition = Behaviors.BoundPosition.GetRecommendedPositionByBounds(
 				boundingClientRect,
 				document.body.getBoundingClientRect()
 			);

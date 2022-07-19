@@ -142,9 +142,9 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 			}
 
 			// Get the recommended position to open the balloon
-			const recommendedPosition = Helper.BoundPosition.GetRecommendedPositionByBounds(
+			const recommendedPosition = Behaviors.BoundPosition.GetRecommendedPositionByBounds(
 				boundingClientRect,
-				Helper.BoundPosition.GetBodyBounds()
+				Behaviors.BoundPosition.GetBodyBounds()
 			);
 
 			let newClassPosition = '';

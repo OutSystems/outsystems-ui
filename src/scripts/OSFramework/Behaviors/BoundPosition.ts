@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSFramework.Helper {
+namespace OSFramework.Behaviors {
 	export abstract class BoundPosition {
 		// Check the state of boundaries position between two given Bound values
 		private static _checkIsOutBounds(elementBounds: DOMRect, testAgainstElementBounds: DOMRect): OutOfBoundaries {

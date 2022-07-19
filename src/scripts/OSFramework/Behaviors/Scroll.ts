@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace OSFramework.Helper {
+namespace OSFramework.Behaviors {
 	const _controllScroll = {
 		yValue: 0,
 		yDirection: '',
