@@ -3,13 +3,13 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	export abstract class CssBodyVariables {
 		// Fucntion that will set the css variables to body element
 		private static _setCssVars(): void {
-			const headerContent = OSUIFramework.Helper.Dom.ClassSelector(
+			const headerContent = OSFramework.Helper.Dom.ClassSelector(
 				document,
-				OSUIFramework.GlobalEnum.CssClassElements.HeaderTopContent
+				OSFramework.GlobalEnum.CssClassElements.HeaderTopContent
 			);
-			const footer = OSUIFramework.Helper.Dom.ClassSelector(
+			const footer = OSFramework.Helper.Dom.ClassSelector(
 				document,
-				OSUIFramework.GlobalEnum.CssClassElements.Footer
+				OSFramework.GlobalEnum.CssClassElements.Footer
 			);
 			const body = document.body;
 
@@ -17,9 +17,9 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 
 			if (OSUI.Utils.DeviceDetection.IsWebApp() === false) {
 				if (headerContent) {
-					stylesToBeAdded += `${OSUIFramework.GlobalEnum.CSSVariables.HeaderContentHeight}: ${
+					stylesToBeAdded += `${OSFramework.GlobalEnum.CSSVariables.HeaderContentHeight}: ${
 						headerContent.getBoundingClientRect().height
-					}${OSUIFramework.GlobalEnum.Units.Pixel}`;
+					}${OSFramework.GlobalEnum.Units.Pixel}`;
 				}
 
 				if (footer) {
@@ -27,28 +27,24 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 						stylesToBeAdded === ''
 							? ''
 							: '; ' +
-							  `${OSUIFramework.GlobalEnum.CSSVariables.FooterHeight}: ${
+							  `${OSFramework.GlobalEnum.CSSVariables.FooterHeight}: ${
 									footer.getBoundingClientRect().height
-							  }${OSUIFramework.GlobalEnum.Units.Pixel}`;
+							  }${OSFramework.GlobalEnum.Units.Pixel}`;
 				}
 			}
 
 			if (
-				OSUIFramework.Helper.Dom.Styles.ContainsClass(body, OSUIFramework.GlobalEnum.DeviceType.phone) ||
-				OSUIFramework.Helper.Dom.Styles.ContainsClass(body, OSUIFramework.GlobalEnum.DeviceType.tablet)
+				OSFramework.Helper.Dom.Styles.ContainsClass(body, OSFramework.GlobalEnum.DeviceType.phone) ||
+				OSFramework.Helper.Dom.Styles.ContainsClass(body, OSFramework.GlobalEnum.DeviceType.tablet)
 			) {
 				stylesToBeAdded +=
 					stylesToBeAdded === ''
 						? ''
 						: '; ' +
-						  `${OSUIFramework.GlobalEnum.CSSVariables.ViewportHeight}: ${window.innerHeight}${OSUIFramework.GlobalEnum.Units.Pixel}`;
+						  `${OSFramework.GlobalEnum.CSSVariables.ViewportHeight}: ${window.innerHeight}${OSFramework.GlobalEnum.Units.Pixel}`;
 			}
 
-			OSUIFramework.Helper.Dom.Attribute.Set(
-				body,
-				OSUIFramework.GlobalEnum.HTMLAttributes.Style,
-				stylesToBeAdded
-			);
+			OSFramework.Helper.Dom.Attribute.Set(body, OSFramework.GlobalEnum.HTMLAttributes.Style, stylesToBeAdded);
 		}
 
 		/**
