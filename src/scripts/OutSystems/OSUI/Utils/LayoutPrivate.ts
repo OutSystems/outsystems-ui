@@ -5,7 +5,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	 */
 	export function Dispose(): void {
 		// Remove the onOrientationChange Event!
-		LayoutPrivate.OnOrientationChange.UnSet();
+		LayoutPrivate.OnOrientationChange.Unset();
 	}
 
 	/**

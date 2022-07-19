@@ -59,7 +59,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 		/**
 		 * Function used to unset the orientation event
 		 */
-		public static UnSet(): void {
+		public static Unset(): void {
 			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
 				OSUIFramework.Event.Type.OrientationChange,
 				this._onOrientationChange
