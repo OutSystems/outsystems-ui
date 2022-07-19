@@ -16,10 +16,12 @@ namespace OSUIFramework.GlobalEnum {
 		AsideExpandable = 'aside-expandable',
 		Container = 'screen-container',
 		Content = 'content',
+		Footer = 'footer',
 		Header = 'header',
 		HeaderHideOnScroll = 'hide-header-on-scroll',
 		HeaderIsFixed = 'fixed-header',
 		HeaderIsVisible = 'header-is--visible',
+		HeaderTopContent = 'header-top-content',
 		IsTouch = 'is--touch',
 		Layout = 'layout',
 		LayoutNative = 'layout-native',
@@ -33,7 +35,10 @@ namespace OSUIFramework.GlobalEnum {
 	 * OutSystemsUI common css variables
 	 */
 	export enum CSSVariables {
+		FooterHeight = '--footer-height',
+		HeaderContentHeight = '--header-size-content',
 		OverlayOpacity = '--overlay-opacity',
+		ViewportHeight = '--viewport-height',
 	}
 
 	/**
