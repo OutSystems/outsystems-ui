@@ -1,5 +1,13 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSFramework.DynamicElements.FocusTrap {
+namespace OSFramework.Behaviors.FocusTrap {
+	// FocusTrap type
+	export type FocusTrapParams = {
+		focusBottomCallback: Callbacks.Generic;
+		focusTargetElement: HTMLElement;
+		focusTopCallback: Callbacks.Generic;
+		focusTrapEnabled: boolean;
+	};
+
 	/**
 	 * Class that represents the focus trap.
 	 *
@@ -8,14 +16,21 @@ namespace OSFramework.DynamicElements.FocusTrap {
 	 */
 	export class FocusTrap {
 		private _bottomElement: HTMLElement;
+		private _firstFocusableElement: HTMLElement;
 		private _focusBottomCallback: Callbacks.Generic;
 		private _focusTopCallback: Callbacks.Generic;
+		private _focusableElements: HTMLElement[];
+		private _isFocusTrap = true;
+		private _lastFocusableElement: HTMLElement;
 		private _targetElement: HTMLElement;
 		private _topElement: HTMLElement;
 
-		constructor(opts: FocusTrapOpts) {
+		constructor(opts: FocusTrapParams) {
 			// Store the focus target element
 			this._targetElement = opts.focusTargetElement;
+
+			// Toggle the focus trap behavior
+			this._isFocusTrap = opts.focusTrapEnabled;
 
 			// Set the callbacks to focusable elements
 			this._focusBottomCallback = opts.focusBottomCallback;
@@ -23,6 +38,9 @@ namespace OSFramework.DynamicElements.FocusTrap {
 
 			// Create the elements needed!
 			this._buildFocusableElements();
+
+			// Set focusable elements
+			this._setFocusableElements();
 		}
 
 		// Method to create elements
@@ -39,16 +57,57 @@ namespace OSFramework.DynamicElements.FocusTrap {
 			this._setFocusableProperties();
 		}
 
+		// Handler for bottom on top element
+		private _focusBottomHandler(): void {
+			if (this._isFocusTrap) {
+				// Update focusable elements
+				this._setFocusableElements();
+
+				// Focus on element
+				this.setFocusOnElement(this._firstFocusableElement, this._targetElement);
+			}
+
+			// Trigger the methods on pattern
+			if (this._focusBottomCallback !== undefined) {
+				this._focusBottomCallback();
+			}
+		}
+
+		// Handler for focus on top element
+		private _focusTopHandler(): void {
+			if (this._isFocusTrap) {
+				// Update focusable elements
+				this._setFocusableElements();
+
+				// Focus on element
+				this.setFocusOnElement(this._lastFocusableElement, this._targetElement);
+			}
+
+			// Trigger the methods on pattern
+			if (this._focusTopCallback !== undefined) {
+				this._focusTopCallback();
+			}
+		}
+
 		// Method that removes the added event listeners
 		private _removeEventListeners(): void {
-			this._bottomElement.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._focusBottomCallback.bind(this));
-			this._topElement.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._focusTopCallback.bind(this));
+			this._bottomElement.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._focusBottomHandler.bind(this));
+			this._topElement.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._focusTopHandler.bind(this));
 		}
 
 		// Method to add the event listeners to the created elements
 		private _setEventListeners(): void {
-			this._bottomElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._focusBottomCallback);
-			this._topElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._focusTopCallback);
+			this._bottomElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._focusBottomHandler.bind(this));
+			this._topElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._focusTopHandler.bind(this));
+		}
+
+		// Method to set the focusable elements to be used
+		private _setFocusableElements(): void {
+			this._focusableElements = Helper.Dom.FocusableElements(this._targetElement);
+
+			// to handle focusable element's tabindex when toggling the Notification
+			this._firstFocusableElement = this._focusableElements[1];
+			this._lastFocusableElement = this._focusableElements[this._focusableElements.length - 2];
 		}
 
 		// Method to add properties to HTML elements
@@ -69,7 +128,9 @@ namespace OSFramework.DynamicElements.FocusTrap {
 		// Method that unsets all the callback defined
 		private _unsetCallbacks(): void {
 			this._focusBottomCallback = undefined;
+			this._focusBottomHandler = undefined;
 			this._focusTopCallback = undefined;
+			this._focusTopHandler = undefined;
 		}
 
 		/**
@@ -119,6 +180,21 @@ namespace OSFramework.DynamicElements.FocusTrap {
 		}
 
 		/**
+		 * Method to focus on element inside the block
+		 *
+		 * @param {HTMLElement} focusableElement
+		 * @param {HTMLElement} selfElement
+		 * @memberof FocusTrap
+		 */
+		public setFocusOnElement(focusableElement: HTMLElement, selfElement: HTMLElement): void {
+			if (focusableElement) {
+				focusableElement.focus();
+			} else {
+				selfElement?.focus();
+			}
+		}
+
+		/**
 		 * Getter that allows to obtain the bottomElement reference
 		 *
 		 * @readonly
@@ -138,6 +214,17 @@ namespace OSFramework.DynamicElements.FocusTrap {
 		 */
 		public get topElement(): HTMLElement {
 			return this._topElement;
+		}
+
+		/**
+		 * Getter that allows to obtain the list of focusable elements
+		 *
+		 * @readonly
+		 * @type {HTMLElement}
+		 * @memberof FocusTrap
+		 */
+		public get focusableElements(): HTMLElement[] {
+			return this._focusableElements;
 		}
 	}
 }
