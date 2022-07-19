@@ -448,6 +448,24 @@ namespace OSFramework.Helper {
 		}
 
 		/**
+		 * Method that will change the tabindex on an array of elements
+		 *
+		 * @param {boolean} state
+		 * @param {HTMLElement[]} elements
+		 * @returns
+		 */
+		public static SetElementsTabindex(state: boolean, elements: HTMLElement[]): void {
+			const tabIndexValue = state
+				? Constants.A11YAttributes.States.TabIndexShow
+				: Constants.A11YAttributes.States.TabIndexHidden;
+
+			// On each element, toggle the tabindex value
+			for (const item of elements) {
+				Helper.A11Y.TabIndex(item, tabIndexValue);
+			}
+		}
+
+		/**
 		 * Method that will set the tabindex
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
