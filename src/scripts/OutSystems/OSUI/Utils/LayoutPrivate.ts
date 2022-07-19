@@ -1,93 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Utils.LayoutPrivate {
-	export function SetDeviceClass(IsWebApp: boolean): void {
-		const operatingSystem = OSUIFramework.Helper.DeviceInfo.GetOperatingSystem();
-		const body = document.body;
-		if (body) {
-			// Add operatingSystem class
-			if (operatingSystem !== OSUIFramework.GlobalEnum.MobileOS.Unknown) {
-				OSUIFramework.Helper.Dom.Styles.AddClass(body, operatingSystem);
-			}
-
-			// Add iphonex class for ios devices with notch
-			if (
-				operatingSystem === OSUIFramework.GlobalEnum.MobileOS.IOS &&
-				OSUIFramework.Helper.DeviceInfo.IsIphoneWithNotch
-			) {
-				OSUIFramework.Helper.Dom.Styles.AddClass(body, OSUIFramework.GlobalEnum.NotchClasses.IPhoneX);
-			}
-
-			// Check if the onorientationchange exist at the browser we're using
-			if ('onorientationchange' in window) {
-				window.addEventListener('orientationchange', function () {
-					setTimeout(() => {
-						// If it's an ipphoneX, and platform says it's tablet (due to screen resolution), remove the tablet class and add phone one instead
-						if (
-							OSUIFramework.Helper.Dom.Styles.ContainsClass(
-								body,
-								OSUIFramework.GlobalEnum.NotchClasses.IPhoneX
-							)
-						) {
-							OSUIFramework.Helper.Dom.Styles.RemoveClass(
-								body,
-								OSUIFramework.GlobalEnum.DeviceType.tablet
-							);
-							OSUIFramework.Helper.Dom.Styles.AddClass(body, OSUIFramework.GlobalEnum.DeviceType.phone);
-						}
-
-						// Add the desktop class if not phone/tablet
-						if (
-							OSUIFramework.Helper.Dom.Styles.ContainsClass(
-								body,
-								OSUIFramework.GlobalEnum.DeviceType.phone
-							) === false &&
-							OSUIFramework.Helper.Dom.Styles.ContainsClass(
-								body,
-								OSUIFramework.GlobalEnum.DeviceType.tablet
-							) === false
-						) {
-							OSUIFramework.Helper.Dom.Styles.AddClass(body, OSUIFramework.GlobalEnum.DeviceType.desktop);
-						} else if (
-							OSUIFramework.Helper.Dom.Styles.ContainsClass(
-								body,
-								OSUIFramework.GlobalEnum.DeviceType.desktop
-							) &&
-							OSUIFramework.Helper.Dom.Styles.ContainsClass(
-								body,
-								OSUIFramework.GlobalEnum.DeviceType.tablet
-							)
-						) {
-							OSUIFramework.Helper.Dom.Styles.RemoveClass(
-								body,
-								OSUIFramework.GlobalEnum.DeviceType.desktop
-							);
-						}
-					}, 500);
-				});
-			}
-
-			if (IsWebApp) {
-				// if it's a mobile app we do not need to set browser info!
-				const browser = OSUIFramework.Helper.DeviceInfo.GetBrowser();
-				if (browser !== OSUIFramework.GlobalEnum.Browser.unknown) {
-					OSUIFramework.Helper.Dom.Styles.AddClass(body, browser);
-				}
-				// also same as above!
-				if (OSUIFramework.Helper.DeviceInfo.IsTouch) {
-					OSUIFramework.Helper.Dom.Styles.AddClass(body, OSUIFramework.GlobalEnum.CssClassElements.IsTouch);
-				}
-			} else {
-				// Detect IpadPro to add desktop class
-				if (
-					OSUIFramework.Helper.Dom.Styles.ContainsClass(body, OSUIFramework.GlobalEnum.DeviceType.phone) ===
-						false &&
-					OSUIFramework.Helper.Dom.Styles.ContainsClass(body, OSUIFramework.GlobalEnum.DeviceType.tablet) ===
-						false
-				) {
-					body.classList.add(OSUIFramework.GlobalEnum.DeviceType.desktop);
-				}
-			}
-		}
+	/**
+	 * Function used to unset all the events has been added at the OnDestroy Layout!
+	 */
+	export function Dispose(): void {
+		// Remove the onOrientationChange Event!
+		LayoutPrivate.OnOrientationChange.UnSet();
 	}
 
 	/**
@@ -146,6 +64,12 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			}
 		}
 	}
+
+	/**
+	 * Function used to set HideHeader on Scroll
+	 *
+	 * @param HideHeader
+	 */
 	export function HideHeader(HideHeader: boolean): void {
 		if (HideHeader) {
 			// window.performance.timing is deprecated but the technology that MDN suggest to use is stil experimental and does not work on IE and Safari. Please visit the following link for context:
@@ -159,6 +83,12 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 		}
 	}
 
+	/**
+	 * Function used to set the RTL observer
+	 *
+	 * @param callback
+	 * @returns
+	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export function RTLObserver(callback: OSUIFramework.Callbacks.OSGeneric): MutationObserver {
 		const elemToObserve = document.body;
@@ -180,6 +110,60 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 		return observer;
 	}
 
+	/**
+	 * Function used to Set and Update the Device Classes and CSS inline variables to body!
+	 *
+	 * @param IsWebApp
+	 *
+	 */
+	export function SetDeviceClass(IsWebApp: boolean): void {
+		const operatingSystem = OSUIFramework.Helper.DeviceInfo.GetOperatingSystem();
+		const body = document.body;
+
+		if (body) {
+			// Add operatingSystem class
+			if (operatingSystem !== OSUIFramework.GlobalEnum.MobileOS.Unknown) {
+				OSUIFramework.Helper.Dom.Styles.AddClass(body, operatingSystem);
+			}
+
+			// Add iphonex class for ios devices with notch
+			if (
+				operatingSystem === OSUIFramework.GlobalEnum.MobileOS.IOS &&
+				OSUIFramework.Helper.DeviceInfo.IsIphoneWithNotch
+			) {
+				OSUIFramework.Helper.Dom.Styles.AddClass(body, OSUIFramework.GlobalEnum.NotchClasses.IPhoneX);
+			}
+
+			if (IsWebApp) {
+				// if it's a mobile app we do not need to set browser info!
+				const browser = OSUIFramework.Helper.DeviceInfo.GetBrowser();
+				if (browser !== OSUIFramework.GlobalEnum.Browser.unknown) {
+					OSUIFramework.Helper.Dom.Styles.AddClass(body, browser);
+				}
+				// also same as above!
+				if (OSUIFramework.Helper.DeviceInfo.IsTouch) {
+					OSUIFramework.Helper.Dom.Styles.AddClass(body, OSUIFramework.GlobalEnum.CssClassElements.IsTouch);
+				}
+			} else {
+				// Detect IpadPro to add desktop class
+				if (
+					OSUIFramework.Helper.Dom.Styles.ContainsClass(body, OSUIFramework.GlobalEnum.DeviceType.phone) ===
+						false &&
+					OSUIFramework.Helper.Dom.Styles.ContainsClass(body, OSUIFramework.GlobalEnum.DeviceType.tablet) ===
+						false
+				) {
+					body.classList.add(OSUIFramework.GlobalEnum.DeviceType.desktop);
+				}
+			}
+
+			// Set the orientation change event
+			LayoutPrivate.OnOrientationChange.Set();
+		}
+	}
+
+	/**
+	 * Function used to set the IntersectionObserver in order to manage if the header is visible!
+	 */
 	export function SetStickyObserver(): void {
 		const layout = document.querySelector('.active-screen .layout');
 		const stickyObserver = document.querySelector('.active-screen .sticky-observer');
