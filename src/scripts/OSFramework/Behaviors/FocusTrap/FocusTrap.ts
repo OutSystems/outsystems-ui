@@ -20,7 +20,7 @@ namespace OSFramework.Behaviors.FocusTrap {
 		private _focusBottomCallback: Callbacks.Generic;
 		private _focusTopCallback: Callbacks.Generic;
 		private _focusableElements: HTMLElement[];
-		private _isFocusTrap = true;
+		private _isFocusTrap: boolean;
 		private _lastFocusableElement: HTMLElement;
 		private _targetElement: HTMLElement;
 		private _topElement: HTMLElement;
@@ -30,7 +30,7 @@ namespace OSFramework.Behaviors.FocusTrap {
 			this._targetElement = opts.focusTargetElement;
 
 			// Toggle the focus trap behavior
-			this._isFocusTrap = opts.focusTrapEnabled;
+			this._isFocusTrap = opts.focusTrapEnabled || true;
 
 			// Set the callbacks to focusable elements
 			this._focusBottomCallback = opts.focusBottomCallback;
