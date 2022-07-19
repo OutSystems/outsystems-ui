@@ -107,6 +107,7 @@ namespace OSFramework.Patterns.Notification {
 		private _hideNotification(): void {
 			this._isOpen = false;
 
+			// Remove the A11Y states to focus trap
 			this._focusTrapInstance.disableForA11y();
 
 			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
@@ -151,6 +152,7 @@ namespace OSFramework.Patterns.Notification {
 			this._focusableActiveElement = document.activeElement as HTMLElement;
 			this._isOpen = true;
 
+			// Add the A11Y states to focus trap
 			this._focusTrapInstance.enableForA11y();
 
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsOpen);
@@ -183,8 +185,6 @@ namespace OSFramework.Patterns.Notification {
 
 		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _updateA11yProperties(): void {
-			const setA11YtabIndex = this._isOpen ? Helper.A11Y.TabIndexTrue : Helper.A11Y.TabIndexFalse;
-
 			Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Hidden, (!this._isOpen).toString());
 
 			Helper.Dom.Attribute.Set(
@@ -195,10 +195,8 @@ namespace OSFramework.Patterns.Notification {
 					: Constants.A11YAttributes.States.TabIndexHidden
 			);
 
-			// On each element, toggle the tabindex value, depending if notification is open or closed
-			for (const item of this._focusTrapInstance.focusableElements) {
-				setA11YtabIndex(item);
-			}
+			// Will handle the tabindex value of the elements inside pattern
+			Helper.A11Y.SetElementsTabindex(this._isOpen, this._focusTrapInstance.focusableElements);
 		}
 
 		// Update time to apply on AutoClose
@@ -338,6 +336,7 @@ namespace OSFramework.Patterns.Notification {
 		 * @memberof Notification
 		 */
 		protected unsetHtmlElements(): void {
+			this._parentSelf = undefined;
 			this._platformEventOnInitialize = undefined;
 			this._platformEventOnToggle = undefined;
 		}
