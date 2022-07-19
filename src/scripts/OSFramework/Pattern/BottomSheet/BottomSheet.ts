@@ -221,8 +221,6 @@ namespace OSFramework.Patterns.BottomSheet {
 				Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Role.Complementary, true);
 			}
 
-			const setA11YtabIndex = this._isOpen ? Helper.A11Y.TabIndexTrue : Helper.A11Y.TabIndexFalse;
-
 			Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Hidden, (!this._isOpen).toString());
 
 			Helper.Dom.Attribute.Set(
@@ -233,10 +231,8 @@ namespace OSFramework.Patterns.BottomSheet {
 					: Constants.A11YAttributes.States.TabIndexHidden
 			);
 
-			// On each element, toggle the tabindex value, depending if bottomsheet is open or closed
-			for (const item of this._focusTrapInstance.focusableElements) {
-				setA11YtabIndex(item);
-			}
+			// Will handle the tabindex value of the elements inside pattern
+			Helper.A11Y.SetElementsTabindex(this._isOpen, this._focusTrapInstance.focusableElements);
 		}
 
 		/**
