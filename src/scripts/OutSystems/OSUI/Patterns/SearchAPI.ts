@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.SearchAPI {
-	const _searchsMap = new Map<string, OSUIFramework.Patterns.Search.ISearch>(); //search.uniqueId -> Search obj
+	const _searchsMap = new Map<string, OSFramework.Patterns.Search.ISearch>(); //search.uniqueId -> Search obj
 
 	/**
 	 * Function that will change the property of a given search.
@@ -62,16 +62,16 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	 * @export
 	 * @param {string} searchId ID of the Search where the instance will be created.
 	 * @param {string} configs configurations for the Search in JSON format.
-	 * @return {*}  {OSUIFramework.Patterns.ISearch}
+	 * @return {*}  {OSFramework.Patterns.ISearch}
 	 */
-	export function Create(searchId: string, configs: string): OSUIFramework.Patterns.Search.ISearch {
+	export function Create(searchId: string, configs: string): OSFramework.Patterns.Search.ISearch {
 		if (_searchsMap.has(searchId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternName.Search} registered under id: ${searchId}`
+				`There is already a ${OSFramework.GlobalEnum.PatternName.Search} registered under id: ${searchId}`
 			);
 		}
 
-		const _newSearch = new OSUIFramework.Patterns.Search.Search(searchId, JSON.parse(configs));
+		const _newSearch = new OSFramework.Patterns.Search.Search(searchId, JSON.parse(configs));
 
 		_searchsMap.set(searchId, _newSearch);
 
@@ -110,10 +110,10 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	 * Function that will return the Map with all the Search instances at the page
 	 *
 	 * @export
-	 * @return {*}  {Map<string, OSUIFramework.Patterns.ISearch>}
+	 * @return {*}  {Map<string, OSFramework.Patterns.ISearch>}
 	 */
 	export function GetAllSearches(): Array<string> {
-		return OSUIFramework.Helper.MapOperation.ExportKeys(_searchsMap);
+		return OSFramework.Helper.MapOperation.ExportKeys(_searchsMap);
 	}
 
 	/**
@@ -121,14 +121,14 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	 *
 	 * @export
 	 * @param {string} searchId ID of the Search that will be looked for.
-	 * @return {*}  {OSUIFramework.Patterns.ISearch}
+	 * @return {*}  {OSFramework.Patterns.ISearch}
 	 */
-	export function GetSearchById(searchId: string): OSUIFramework.Patterns.Search.ISearch {
-		return OSUIFramework.Helper.MapOperation.FindInMap(
-			OSUIFramework.GlobalEnum.PatternName.Search,
+	export function GetSearchById(searchId: string): OSFramework.Patterns.Search.ISearch {
+		return OSFramework.Helper.MapOperation.FindInMap(
+			OSFramework.GlobalEnum.PatternName.Search,
 			searchId,
 			_searchsMap
-		) as OSUIFramework.Patterns.Search.ISearch;
+		) as OSFramework.Patterns.Search.ISearch;
 	}
 
 	/**
@@ -136,9 +136,9 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	 *
 	 * @export
 	 * @param {string} searchId ID of the Search that will be initialized.
-	 * @return {*}  {OSUIFramework.Patterns.ISearch}
+	 * @return {*}  {OSFramework.Patterns.ISearch}
 	 */
-	export function Initialize(searchId: string): OSUIFramework.Patterns.Search.ISearch {
+	export function Initialize(searchId: string): OSFramework.Patterns.Search.ISearch {
 		const search = GetSearchById(searchId);
 
 		search.build();
@@ -179,10 +179,7 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	 * @param {string} searchId ID of the Search that will be initialized.
 	 * @return {*}  callback
 	 */
-	export function RegisterCallback(
-		searchId: string,
-		callback: OSUIFramework.Callbacks.OSSearchCollapseEvent
-	): string {
+	export function RegisterCallback(searchId: string, callback: OSFramework.Callbacks.OSSearchCollapseEvent): string {
 		const responseObj = {
 			isSuccess: true,
 			message: ErrorCodes.Success.message,

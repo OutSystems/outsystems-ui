@@ -22,11 +22,11 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	export function FixInputs(): void {
 		let originalPosition = 0;
 		let currentPosition = 0;
-		const content: HTMLElement = OSUIFramework.Helper.Dom.ClassSelector(
+		const content: HTMLElement = OSFramework.Helper.Dom.ClassSelector(
 			document,
-			OSUIFramework.GlobalEnum.CssClassElements.Content
+			OSFramework.GlobalEnum.CssClassElements.Content
 		);
-		const inputs: NodeListOf<HTMLElement> = document.querySelectorAll(OSUIFramework.Constants.JustInputs);
+		const inputs: NodeListOf<HTMLElement> = document.querySelectorAll(OSFramework.Constants.JustInputs);
 
 		if (inputs.length !== 0) {
 			for (let i = inputs.length - 1; i >= 0; i--) {
@@ -34,14 +34,14 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			}
 
 			if (content) {
-				content.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.TouchStart, function (e) {
+				content.addEventListener(OSFramework.GlobalEnum.HTMLEvent.TouchStart, function (e) {
 					originalPosition = e.changedTouches[0].pageY;
 					for (let i = inputs.length - 1; i >= 0; i--) {
 						inputs[i].style.webkitUserSelect = 'auto';
 					}
 				});
 
-				content.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.TouchMove, function (e) {
+				content.addEventListener(OSFramework.GlobalEnum.HTMLEvent.TouchMove, function (e) {
 					currentPosition = e.touches[0].pageY;
 					if (Math.abs(originalPosition - currentPosition) > 10) {
 						for (let i = inputs.length - 1; i >= 0; i--) {
@@ -54,7 +54,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 					}
 				});
 
-				content.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.TouchEnd, function () {
+				content.addEventListener(OSFramework.GlobalEnum.HTMLEvent.TouchEnd, function () {
 					setTimeout(function () {
 						for (let i = inputs.length - 1; i >= 0; i--) {
 							inputs[i].style.webkitUserSelect = 'auto';
@@ -90,18 +90,18 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	 * @returns
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
-	export function RTLObserver(callback: OSUIFramework.Callbacks.OSGeneric): MutationObserver {
+	export function RTLObserver(callback: OSFramework.Callbacks.OSGeneric): MutationObserver {
 		const elemToObserve = document.body;
-		let hasAlreadyRTL = elemToObserve.classList.contains(OSUIFramework.Constants.IsRTLClass);
+		let hasAlreadyRTL = elemToObserve.classList.contains(OSFramework.Constants.IsRTLClass);
 
 		const observer = new MutationObserver(function (mutations) {
 			mutations.forEach(function (mutation) {
 				if (mutation.attributeName === 'class') {
 					const mutationTarget = mutation.target as HTMLElement;
-					const hasRTLNow = mutationTarget.classList.contains(OSUIFramework.Constants.IsRTLClass);
+					const hasRTLNow = mutationTarget.classList.contains(OSFramework.Constants.IsRTLClass);
 					if (hasAlreadyRTL !== hasRTLNow) {
 						hasAlreadyRTL = hasRTLNow;
-						OSUIFramework.Helper.AsyncInvocation(callback);
+						OSFramework.Helper.AsyncInvocation(callback);
 					}
 				}
 			});
@@ -117,42 +117,42 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	 *
 	 */
 	export function SetDeviceClass(IsWebApp: boolean): void {
-		const operatingSystem = OSUIFramework.Helper.DeviceInfo.GetOperatingSystem();
+		const operatingSystem = OSFramework.Helper.DeviceInfo.GetOperatingSystem();
 		const body = document.body;
 
 		if (body) {
 			// Add operatingSystem class
-			if (operatingSystem !== OSUIFramework.GlobalEnum.MobileOS.Unknown) {
-				OSUIFramework.Helper.Dom.Styles.AddClass(body, operatingSystem);
+			if (operatingSystem !== OSFramework.GlobalEnum.MobileOS.Unknown) {
+				OSFramework.Helper.Dom.Styles.AddClass(body, operatingSystem);
 			}
 
 			// Add iphonex class for ios devices with notch
 			if (
-				operatingSystem === OSUIFramework.GlobalEnum.MobileOS.IOS &&
-				OSUIFramework.Helper.DeviceInfo.IsIphoneWithNotch
+				operatingSystem === OSFramework.GlobalEnum.MobileOS.IOS &&
+				OSFramework.Helper.DeviceInfo.IsIphoneWithNotch
 			) {
-				OSUIFramework.Helper.Dom.Styles.AddClass(body, OSUIFramework.GlobalEnum.NotchClasses.IPhoneX);
+				OSFramework.Helper.Dom.Styles.AddClass(body, OSFramework.GlobalEnum.NotchClasses.IPhoneX);
 			}
 
 			if (IsWebApp) {
 				// if it's a mobile app we do not need to set browser info!
-				const browser = OSUIFramework.Helper.DeviceInfo.GetBrowser();
-				if (browser !== OSUIFramework.GlobalEnum.Browser.unknown) {
-					OSUIFramework.Helper.Dom.Styles.AddClass(body, browser);
+				const browser = OSFramework.Helper.DeviceInfo.GetBrowser();
+				if (browser !== OSFramework.GlobalEnum.Browser.unknown) {
+					OSFramework.Helper.Dom.Styles.AddClass(body, browser);
 				}
 				// also same as above!
-				if (OSUIFramework.Helper.DeviceInfo.IsTouch) {
-					OSUIFramework.Helper.Dom.Styles.AddClass(body, OSUIFramework.GlobalEnum.CssClassElements.IsTouch);
+				if (OSFramework.Helper.DeviceInfo.IsTouch) {
+					OSFramework.Helper.Dom.Styles.AddClass(body, OSFramework.GlobalEnum.CssClassElements.IsTouch);
 				}
 			} else {
 				// Detect IpadPro to add desktop class
 				if (
-					OSUIFramework.Helper.Dom.Styles.ContainsClass(body, OSUIFramework.GlobalEnum.DeviceType.phone) ===
+					OSFramework.Helper.Dom.Styles.ContainsClass(body, OSFramework.GlobalEnum.DeviceType.phone) ===
 						false &&
-					OSUIFramework.Helper.Dom.Styles.ContainsClass(body, OSUIFramework.GlobalEnum.DeviceType.tablet) ===
+					OSFramework.Helper.Dom.Styles.ContainsClass(body, OSFramework.GlobalEnum.DeviceType.tablet) ===
 						false
 				) {
-					body.classList.add(OSUIFramework.GlobalEnum.DeviceType.desktop);
+					body.classList.add(OSFramework.GlobalEnum.DeviceType.desktop);
 				}
 			}
 
@@ -170,9 +170,9 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 
 		const observer = new IntersectionObserver(function (entries) {
 			if (entries[0].isIntersecting) {
-				layout.classList.add(OSUIFramework.GlobalEnum.CssClassElements.HeaderIsVisible);
+				layout.classList.add(OSFramework.GlobalEnum.CssClassElements.HeaderIsVisible);
 			} else {
-				layout.classList.remove(OSUIFramework.GlobalEnum.CssClassElements.HeaderIsVisible);
+				layout.classList.remove(OSFramework.GlobalEnum.CssClassElements.HeaderIsVisible);
 			}
 		});
 

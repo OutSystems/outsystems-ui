@@ -1,28 +1,28 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 	const _floatingActionsMap = new Map<string, string>(); //floatingActionsItem.uniqueId -> FloatingActions.uniqueId
-	const _floatingActionsItemMap = new Map<string, OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem>(); //floatingActionsItem.uniqueId -> FloatingActionsItem obj
+	const _floatingActionsItemMap = new Map<string, OSFramework.Patterns.FloatingActionsItem.IFloatingActionsItem>(); //floatingActionsItem.uniqueId -> FloatingActionsItem obj
 
 	/**
 	 * Gets the Floating Action pattern the Item belongs to
 	 *
-	 * @return {*}  {Map<string, OSUIFramework.Patterns.FloatingActions.IFloatingActions>}
+	 * @return {*}  {Map<string, OSFramework.Patterns.FloatingActions.IFloatingActions>}
 	 */
 	export function GetFloatingActionsByItem(
 		floatingActionsItemId: string
-	): OSUIFramework.Patterns.FloatingActions.IFloatingActions {
-		let floatingActions: OSUIFramework.Patterns.FloatingActions.IFloatingActions;
+	): OSFramework.Patterns.FloatingActions.IFloatingActions {
+		let floatingActions: OSFramework.Patterns.FloatingActions.IFloatingActions;
 
 		if (_floatingActionsMap.has(floatingActionsItemId)) {
 			floatingActions = FloatingActionsAPI.GetFloatingActionsById(_floatingActionsMap.get(floatingActionsItemId));
 		} else {
 			// Try to find its reference on DOM
-			const elem = OSUIFramework.Helper.Dom.GetElementByUniqueId(floatingActionsItemId);
-			const floating = elem.closest(OSUIFramework.Patterns.FloatingActions.Enum.CssClasses.FloatingActionWrapper);
+			const elem = OSFramework.Helper.Dom.GetElementByUniqueId(floatingActionsItemId);
+			const floating = elem.closest(OSFramework.Patterns.FloatingActions.Enum.CssClasses.FloatingActionWrapper);
 
 			if (!floating) {
 				throw Error(
-					`This ${OSUIFramework.GlobalEnum.PatternName.FloatingActionsItem} does not belong to any ${OSUIFramework.GlobalEnum.PatternName.FloatingActions} pattern.`
+					`This ${OSFramework.GlobalEnum.PatternName.FloatingActionsItem} does not belong to any ${OSFramework.GlobalEnum.PatternName.FloatingActions} pattern.`
 				);
 			}
 			const uniqueId = floating.getAttribute('name');
@@ -53,20 +53,20 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 	 * @export
 	 * @param {string} floatingActionsItemId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSUIFramework.Patterns.FloatingActions.IFloatingActions}
+	 * @return {*}  {OSFramework.Patterns.FloatingActions.IFloatingActions}
 	 */
 	export function Create(
 		floatingActionsItemId: string,
 		configs: string
-	): OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem {
+	): OSFramework.Patterns.FloatingActionsItem.IFloatingActionsItem {
 		if (_floatingActionsItemMap.has(floatingActionsItemId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternName.FloatingActions} registered under id: ${floatingActionsItemId}`
+				`There is already a ${OSFramework.GlobalEnum.PatternName.FloatingActions} registered under id: ${floatingActionsItemId}`
 			);
 		}
 		const floatingAction = GetFloatingActionsByItem(floatingActionsItemId);
 
-		const _newFloatingActionsItem = new OSUIFramework.Patterns.FloatingActionsItem.FloatingActionsItem(
+		const _newFloatingActionsItem = new OSFramework.Patterns.FloatingActionsItem.FloatingActionsItem(
 			floatingActionsItemId,
 			JSON.parse(configs),
 			floatingAction
@@ -101,10 +101,10 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 	 * Function that will return the Map with all the Floating Actions instances at the page
 	 *
 	 * @export
-	 * @return {*}  {Map<string, OSUIFramework.Patterns.FloatingActions.IFloatingActions>}
+	 * @return {*}  {Map<string, OSFramework.Patterns.FloatingActions.IFloatingActions>}
 	 */
 	export function GetAllFloatingActionsItems(): Array<string> {
-		return OSUIFramework.Helper.MapOperation.ExportKeys(_floatingActionsItemMap);
+		return OSFramework.Helper.MapOperation.ExportKeys(_floatingActionsItemMap);
 	}
 
 	/**
@@ -112,15 +112,15 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsItemAPI {
 	 *
 	 * @export
 	 * @param {string} floatingActionsId ID of the Floating Action that will be looked for.
-	 * @return {*}  {OSUIFramework.Patterns.FloatingActions.IFloatingActions}
+	 * @return {*}  {OSFramework.Patterns.FloatingActions.IFloatingActions}
 	 */
 	export function GetFloatingActionsItemById(
 		floatingActionsItemId: string
-	): OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem {
-		return OSUIFramework.Helper.MapOperation.FindInMap(
+	): OSFramework.Patterns.FloatingActionsItem.IFloatingActionsItem {
+		return OSFramework.Helper.MapOperation.FindInMap(
 			'FloatingActionItem',
 			floatingActionsItemId,
 			_floatingActionsItemMap
-		) as OSUIFramework.Patterns.FloatingActionsItem.IFloatingActionsItem;
+		) as OSFramework.Patterns.FloatingActionsItem.IFloatingActionsItem;
 	}
 }

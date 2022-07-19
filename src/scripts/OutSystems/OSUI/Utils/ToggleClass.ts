@@ -13,11 +13,11 @@ namespace OutSystems.OSUI.Utils {
 		if (!state) {
 			setTimeout(function () {
 				if (!state) {
-					OSUIFramework.Helper.Dom.Styles.RemoveClass(element, className);
+					OSFramework.Helper.Dom.Styles.RemoveClass(element, className);
 				}
 			}, 500);
 		} else {
-			OSUIFramework.Helper.Dom.Styles.AddClass(element, className);
+			OSFramework.Helper.Dom.Styles.AddClass(element, className);
 			element.offsetHeight;
 		}
 	}

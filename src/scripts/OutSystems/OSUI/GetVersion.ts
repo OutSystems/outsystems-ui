@@ -10,6 +10,6 @@ namespace OutSystems.OSUI {
 	 * @return {*}  {string}
 	 */
 	export function GetVersion(): string {
-		return OSUIFramework.Constants.OSUIVersion;
+		return OSFramework.Constants.OSUIVersion;
 	}
 }

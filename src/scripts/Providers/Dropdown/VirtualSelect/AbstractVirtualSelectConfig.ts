@@ -7,7 +7,7 @@ namespace Providers.Dropdown.VirtualSelect {
 	 * @class AbstractVirtualSelectConfig
 	 * @extends {AbstractDropdownConfig}
 	 */
-	export abstract class AbstractVirtualSelectConfig extends OSUIFramework.Patterns.Dropdown.AbstractDropdownConfig {
+	export abstract class AbstractVirtualSelectConfig extends OSFramework.Patterns.Dropdown.AbstractDropdownConfig {
 		public ElementId: string;
 		public NoResultsText: string;
 		public OptionsList: DropDownOption[];
@@ -26,7 +26,7 @@ namespace Providers.Dropdown.VirtualSelect {
 				this.OptionsList[index].image_url_or_class !== ''
 			) {
 				// The given info doesn't have spaces on it, check if it's a valid URL
-				hasImage = OSUIFramework.Helper.URL.IsImage(this.OptionsList[index].image_url_or_class)
+				hasImage = OSFramework.Helper.URL.IsImage(this.OptionsList[index].image_url_or_class)
 					? Enum.FigureType.Image
 					: Enum.FigureType.Icon;
 			}
@@ -42,7 +42,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		// Method used to generate the HTML String to be attached at the option label
 		private _getOptionImagePrefix(index: number): string {
 			// Since we'll add a src attribute, lets sanitize the given url to avoid XSS
-			const sanitizedUrl = OSUIFramework.Helper.Sanitize(this.OptionsList[index].image_url_or_class);
+			const sanitizedUrl = OSFramework.Helper.Sanitize(this.OptionsList[index].image_url_or_class);
 			return `<img class="${Enum.CssClass.OptionItemImage}" src="${sanitizedUrl}">`;
 		}
 
@@ -71,7 +71,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			- This must be done here since If we do this at the renderer option we will remain with the
 			library value unSanitized, that said we must do it before adding the list of options to the library! */
 			for (const option of this.OptionsList) {
-				option.label = OSUIFramework.Helper.Sanitize(option.label);
+				option.label = OSFramework.Helper.Sanitize(option.label);
 			}
 
 			// Set the library options
@@ -91,8 +91,8 @@ namespace Providers.Dropdown.VirtualSelect {
 				showDropboxAsPopup: this.ShowDropboxAsPopup,
 				silentInitialValueSet: true,
 				textDirection: OutSystems.OSUI.Utils.GetIsRTL()
-					? OSUIFramework.GlobalEnum.Direction.RTL
-					: OSUIFramework.GlobalEnum.Direction.LTR,
+					? OSFramework.GlobalEnum.Direction.RTL
+					: OSFramework.GlobalEnum.Direction.LTR,
 			};
 
 			return vsOptions as VirtualSelectOpts;
@@ -106,7 +106,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * @memberof AbstractVirtualSelectConfig
 		 */
 		public setDropboxWrapperConfig(showAsPopup: boolean): string {
-			return showAsPopup && OSUIFramework.Helper.DeviceInfo.IsPhone
+			return showAsPopup && OSFramework.Helper.DeviceInfo.IsPhone
 				? Enum.DropboxWrapperOptions.Body
 				: Enum.DropboxWrapperOptions.Self;
 		}

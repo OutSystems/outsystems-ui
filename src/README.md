@@ -8,7 +8,7 @@ The namespaces should follow application directories, this way we should find fi
     ├── ...
     ├── src                                     # Where the code lives
     |   ├── scripts                             # Contains the TS code (+ patterns partials) of the framework.
-    |   |   ├── OSUIFramework                   # Internal code to orchestrate the usage of provider. **Should not** be invoked directly.
+    |   |   ├── OSFramework                     # Internal code to orchestrate the usage of provider. **Should not** be invoked directly.
     |   |   |   ├── Callbacks                   # Contains the callbacks signatures of the OutSystems code to be invoked.
     |   |   |   ├── Event                       # Contains the classes related with event management.
     |   |   |   ├── Helper                      # Contains several classes that isolate behaviors and simplify the code.

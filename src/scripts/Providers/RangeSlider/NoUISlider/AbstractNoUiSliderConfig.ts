@@ -8,13 +8,12 @@ namespace Providers.RangeSlider.NoUiSlider {
 	 * @export
 	 * @abstract
 	 * @class AbstractNoUiSliderConfig
-	 * @extends {OSUIFramework.Patterns.RangeSlider
+	 * @extends {OSFramework.Patterns.RangeSlider
 	 * 		.AbstractRangeSliderConfig}
 	 */
-	export abstract class AbstractNoUiSliderConfig extends OSUIFramework.Patterns.RangeSlider
-		.AbstractRangeSliderConfig {
+	export abstract class AbstractNoUiSliderConfig extends OSFramework.Patterns.RangeSlider.AbstractRangeSliderConfig {
 		// Store rangeslider mode is in use
-		public rangeSliderMode: OSUIFramework.Patterns.RangeSlider.Enum.Mode;
+		public rangeSliderMode: OSFramework.Patterns.RangeSlider.Enum.Mode;
 
 		/**
 		 * Method to set the common configs for the provider
@@ -27,8 +26,8 @@ namespace Providers.RangeSlider.NoUiSlider {
 			// eslint-disable-next-line prefer-const
 			let providerOptions = {
 				direction: OutSystems.OSUI.Utils.GetIsRTL()
-					? OSUIFramework.GlobalEnum.Direction.RTL
-					: OSUIFramework.GlobalEnum.Direction.LTR,
+					? OSFramework.GlobalEnum.Direction.RTL
+					: OSFramework.GlobalEnum.Direction.LTR,
 				step: this.Step,
 				orientation: this.Orientation,
 				pips: this.ShowTickMarks ? this.getPipsConfig() : false,
@@ -116,7 +115,7 @@ namespace Providers.RangeSlider.NoUiSlider {
 			const tooltipValue = this.ShowFloatingLabel ? window.wNumb({ decimals: 0 }) : false;
 			let tooltipsFormat;
 
-			if (this.rangeSliderMode === OSUIFramework.Patterns.RangeSlider.Enum.Mode.Interval) {
+			if (this.rangeSliderMode === OSFramework.Patterns.RangeSlider.Enum.Mode.Interval) {
 				tooltipsFormat = [tooltipValue, tooltipValue];
 			} else {
 				tooltipsFormat = [tooltipValue];

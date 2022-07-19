@@ -109,12 +109,12 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 
 			if (this.isBuilt) {
 				switch (propertyName) {
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueTo:
+					case OSFramework.Patterns.RangeSlider.Enum.Properties.StartingValueTo:
 						console.warn(
-							`${OSUIFramework.GlobalEnum.PatternName.RangeSliderInterval}': (${this.widgetId}): changes to ${OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueTo} parameter do not affect the ${OSUIFramework.GlobalEnum.PatternName.RangeSliderInterval}'. Use a distinct variable to assign on the OnValueChange event`
+							`${OSFramework.GlobalEnum.PatternName.RangeSliderInterval}': (${this.widgetId}): changes to ${OSFramework.Patterns.RangeSlider.Enum.Properties.StartingValueTo} parameter do not affect the ${OSFramework.GlobalEnum.PatternName.RangeSliderInterval}'. Use a distinct variable to assign on the OnValueChange event`
 						);
 						break;
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
+					case OSFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
 						// Library only supports update on some options, so we need to
 						// destroy the object and create a new RangeSlider
 						this._updateRangeSlider();
@@ -147,11 +147,11 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 				this.provider.set([intervalStart, intervalEnd]);
 			} else if (intervalStart > this.configs.MinValue && intervalEnd < this.configs.MaxValue) {
 				throw new Error(
-					`${OSUIFramework.ErrorCodes.RangeSlider.FailSetValue}:	The values must be within the specified range.`
+					`${OSFramework.ErrorCodes.RangeSlider.FailSetValue}:	The values must be within the specified range.`
 				);
 			} else {
 				throw new Error(
-					`${OSUIFramework.ErrorCodes.RangeSlider.FailSetValue}:	The start value cannot be bigger than the end value.`
+					`${OSFramework.ErrorCodes.RangeSlider.FailSetValue}:	The start value cannot be bigger than the end value.`
 				);
 			}
 		}
