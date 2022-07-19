@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.Event.GestureEvent {
 	/**
-	 * lass that represents the gesture events information between start, move and end.
+	 * Class that represents the gesture events information between start, move and end.
 	 *
 	 * @class GestureParams
 	 */
