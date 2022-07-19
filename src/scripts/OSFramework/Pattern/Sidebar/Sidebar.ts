@@ -10,27 +10,25 @@ namespace OSFramework.Patterns.Sidebar {
 	 */
 	export class Sidebar extends AbstractPattern<SidebarConfig> implements ISidebar, Interface.IDragEvent {
 		// Hold the animateOnDrag intance, that helps transition the sidebar on drag
-		private _animateOnDragInstance: Animations.AnimateOnDrag;
+		private _animateOnDragInstance: Behaviors.AnimateOnDrag;
 		// Store the Sidebar direction
 		private _currentDirectionCssClass: string;
 		// Store the click event with bind(this)
 		private _eventOverlayClick: Callbacks.Generic;
 		// Store the keypress event with bind(this)
 		private _eventSidebarKeypress: Callbacks.Generic;
-		// Store the first element to receive focus in the sidebar
-		private _firstFocusableElem: HTMLElement;
-		// Store focusable element inside sidebar
-		private _focusableElems: HTMLElement[];
+		// Store focus trap instance
+		private _focusTrapInstance: Behaviors.FocusTrap.FocusTrap;
 		// Store gesture events instance
 		private _gestureEventInstance: Event.GestureEvent.DragEvent;
 		// Store if the pattern has gesture events added
 		private _hasGestureEvents: boolean;
 		// Stores the current status of the sidebar
 		private _isOpen: boolean;
-		// Store the last element to receive focus in the sidebar
-		private _lastFocusableElem: HTMLElement;
 		// Store if the Sidebar is Open
 		private _onToggle: Callbacks.OSSidebarToggleEvent;
+		// Store the parent element
+		private _parentSelf: HTMLElement;
 
 		/**
 		 * Get Gesture Events Instance
@@ -64,6 +62,9 @@ namespace OSFramework.Patterns.Sidebar {
 		private _closeSidebar(): void {
 			this._isOpen = false;
 
+			// Remove the A11Y states to focus trap
+			this._focusTrapInstance.disableForA11y();
+
 			if (this.isBuilt) {
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsOpen);
 				Helper.A11Y.TabIndexFalse(this._selfElem);
@@ -72,12 +73,22 @@ namespace OSFramework.Patterns.Sidebar {
 				this._triggerOnToggleEvent();
 				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
 
-				this._setFocusableElementsTabindex();
+				// Will handle the tabindex value of the elements inside pattern
+				Helper.A11Y.SetElementsTabindex(this._isOpen, this._focusTrapInstance.focusableElements);
 
 				if (this.configs.HasOverlay) {
 					Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOverlayClick);
 				}
 			}
+		}
+
+		// Add Focus Trap to Pattern
+		private _handleFocusTrap(): void {
+			const opts = {
+				focusTargetElement: this._parentSelf,
+			} as Behaviors.FocusTrap.FocusTrapParams;
+
+			this._focusTrapInstance = new Behaviors.FocusTrap.FocusTrap(opts);
 		}
 
 		// Method to hadnle the creation of the GestureEvents
@@ -94,7 +105,7 @@ namespace OSFramework.Patterns.Sidebar {
 					this._onGestureEnd.bind(this)
 				);
 				// Apply transform on an element and perform animation
-				this._animateOnDragInstance = new Animations.AnimateOnDrag(this._selfElem);
+				this._animateOnDragInstance = new Behaviors.AnimateOnDrag(this._selfElem);
 			}
 		}
 
@@ -103,7 +114,7 @@ namespace OSFramework.Patterns.Sidebar {
 			this._animateOnDragInstance.onDragEnd(offsetX, offsetY, timeTaken, this._toggle.bind(this));
 
 			if (this.configs.HasOverlay) {
-				Animations.OverlayTransitionOnDrag.UnSet(this._selfElem);
+				Behaviors.OverlayTransitionOnDrag.UnSet(this._selfElem);
 			}
 		}
 
@@ -112,7 +123,7 @@ namespace OSFramework.Patterns.Sidebar {
 			this._animateOnDragInstance.onDragMove(offsetX, offsetY, x, y, evt);
 
 			if (this.configs.HasOverlay) {
-				Animations.OverlayTransitionOnDrag.Set(this._selfElem, x, this.configs.Direction, this.configs.Width);
+				Behaviors.OverlayTransitionOnDrag.Set(this._selfElem, x, this.configs.Direction, this.configs.Width);
 			}
 		}
 
@@ -134,6 +145,9 @@ namespace OSFramework.Patterns.Sidebar {
 			Helper.A11Y.TabIndexTrue(this._selfElem);
 			Helper.A11Y.AriaHiddenFalse(this._selfElem);
 
+			// Add the A11Y states to focus trap
+			this._focusTrapInstance.enableForA11y();
+
 			if (this.isBuilt) {
 				//let's only change the property and trigger the OS event IF the pattern is already built.
 				this._isOpen = true;
@@ -147,7 +161,8 @@ namespace OSFramework.Patterns.Sidebar {
 			this._selfElem.focus();
 			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
 
-			this._setFocusableElementsTabindex();
+			// Will handle the tabindex value of the elements inside pattern
+			Helper.A11Y.SetElementsTabindex(this._isOpen, this._focusTrapInstance.focusableElements);
 		}
 
 		// Overlay onClick event to close the Sidebar
@@ -175,16 +190,6 @@ namespace OSFramework.Patterns.Sidebar {
 			}
 			this._currentDirectionCssClass = Enum.CssClass.ClassModifier + this.configs.Direction;
 			Helper.Dom.Styles.AddClass(this._selfElem, this._currentDirectionCssClass);
-		}
-
-		// Method that will handle the tabindex value of the elements inside the Sidebar
-		private _setFocusableElementsTabindex(): void {
-			const setA11YtabIndex = this._isOpen ? Helper.A11Y.TabIndexTrue : Helper.A11Y.TabIndexFalse;
-
-			// On each element, toggle the tabindex value, depending if sidebar is open or closed
-			this._focusableElems.slice().forEach((item: HTMLElement) => {
-				setA11YtabIndex(item);
-			});
 		}
 
 		// Sets the Sidebar overlay
@@ -222,28 +227,11 @@ namespace OSFramework.Patterns.Sidebar {
 
 		// Method that will handle the tab navigation and sidebar closing on Escape
 		private _sidebarKeypressCallback(e: KeyboardEvent): void {
-			const isTabPressed = e.key === GlobalEnum.Keycodes.Tab;
 			const isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
-			const isShiftPressed = e.shiftKey;
-
-			if (!isTabPressed && !isEscapedPressed) {
-				return;
-			}
 
 			// Close the sidebar when pressing Esc
 			if (isEscapedPressed) {
 				this.close();
-			}
-
-			// If pressing shift + tab do a focus trap inside the sidebar
-			if (isShiftPressed) {
-				if (document.activeElement === this._firstFocusableElem) {
-					this._lastFocusableElem.focus();
-					e.preventDefault();
-				}
-			} else if (document.activeElement === this._lastFocusableElem) {
-				this._firstFocusableElem.focus();
-				e.preventDefault();
 			}
 		}
 
@@ -309,11 +297,7 @@ namespace OSFramework.Patterns.Sidebar {
 		 * @memberof Sidebar
 		 */
 		protected setHtmlElements(): void {
-			this._focusableElems = [...this._selfElem.querySelectorAll(Constants.FocusableElems)] as HTMLElement[];
-
-			// to handle focusable element's tabindex when toggling the sidebar
-			this._firstFocusableElem = this._focusableElems[0];
-			this._lastFocusableElem = this._focusableElems[this._focusableElems.length - 1];
+			this._parentSelf = Helper.Dom.GetElementById(this._widgetId);
 
 			this._setWidth();
 		}
@@ -338,10 +322,7 @@ namespace OSFramework.Patterns.Sidebar {
 		 * @memberof Sidebar
 		 */
 		protected unsetHtmlElements(): void {
-			this._focusableElems = undefined;
-			// to handle focusable element's tabindex when toggling the sidebar
-			this._firstFocusableElem = undefined;
-			this._lastFocusableElem = undefined;
+			this._parentSelf = undefined;
 		}
 
 		/**
@@ -355,6 +336,8 @@ namespace OSFramework.Patterns.Sidebar {
 			this.setCallbacks();
 
 			this.setHtmlElements();
+
+			this._handleFocusTrap();
 
 			this._setInitialCssClasses();
 
@@ -414,7 +397,12 @@ namespace OSFramework.Patterns.Sidebar {
 		 */
 		public dispose(): void {
 			this.unsetCallbacks();
+
 			this.unsetHtmlElements();
+
+			// Remove focus trap events and callbacks
+			this._focusTrapInstance.dispose();
+
 			// Remove gesture events
 			if (this._hasGestureEvents) {
 				this.removeGestureEvents();
