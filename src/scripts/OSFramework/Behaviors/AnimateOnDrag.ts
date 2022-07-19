@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSFramework.Animations {
+namespace OSFramework.Behaviors {
 	// SpringAnimation type
 	type SpringAnimationKeyframes = {
 		frames: number;
