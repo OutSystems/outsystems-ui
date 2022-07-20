@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	export abstract class CssBodyVariables {
-		// Fucntion that will set the css variables to body element
+		// Function that will set the css variables to body element
 		private static _setCssVars(): void {
 			const headerContent = OSFramework.Helper.Dom.ClassSelector(
 				document,
