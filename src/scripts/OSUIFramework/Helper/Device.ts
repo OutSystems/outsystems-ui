@@ -463,12 +463,15 @@ namespace OSUIFramework.Helper {
 				return notchPosition;
 			}
 
-			if (windowOrientation === 90) {
-				notchPosition = GlobalEnum.Position.Left;
-			} else if (windowOrientation === -90) {
-				notchPosition = GlobalEnum.Position.Right;
-			} else {
-				notchPosition = GlobalEnum.Position.Top;
+			switch (windowOrientation) {
+				case 90:
+					notchPosition = GlobalEnum.Position.Left;
+					break;
+				case -90:
+					notchPosition = GlobalEnum.Position.Right;
+					break;
+				default:
+					notchPosition = GlobalEnum.Position.Top;
 			}
 
 			// retrieve it's position!
