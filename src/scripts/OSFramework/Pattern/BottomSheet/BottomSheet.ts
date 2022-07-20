@@ -321,10 +321,10 @@ namespace OSFramework.Patterns.BottomSheet {
 		public build(): void {
 			super.build();
 			this.setHtmlElements();
+			this._handleFocusTrap();
 			this.setInitialOptions();
 			this.setCallbacks();
 			this.setA11yProperties();
-			this._handleFocusTrap();
 			this._handleGestureEvents();
 			this.finishBuild();
 		}
