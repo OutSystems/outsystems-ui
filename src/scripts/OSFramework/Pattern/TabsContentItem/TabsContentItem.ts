@@ -40,7 +40,7 @@ namespace OSFramework.Patterns.TabsContentItem {
 			}
 
 			// Will handle the tabindex value of the elements inside pattern, depending if is active
-			Helper.A11Y.SetElementsTabindex(this._isActive, this._focusableElements);
+			Helper.A11Y.SetElementsTabIndex(this._isActive, this._focusableElements);
 		}
 
 		/**

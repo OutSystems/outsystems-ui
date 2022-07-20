@@ -660,7 +660,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 			// If there are items inside Ballon Footer
 			if (this._balloonFocusableElemsInFooter.length > 0) {
 				// Will handle the tabindex value of the elements inside pattern
-				Helper.A11Y.SetElementsTabindex(this._isOpen, this._balloonFocusableElemsInFooter);
+				Helper.A11Y.SetElementsTabIndex(this._isOpen, this._balloonFocusableElemsInFooter);
 			}
 
 			// Update FocusHTML elements attributes

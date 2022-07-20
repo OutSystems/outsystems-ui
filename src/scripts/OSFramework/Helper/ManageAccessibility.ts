@@ -454,7 +454,7 @@ namespace OSFramework.Helper {
 		 * @param {HTMLElement[]} elements
 		 * @returns
 		 */
-		public static SetElementsTabindex(state: boolean, elements: HTMLElement[]): void {
+		public static SetElementsTabIndex(state: boolean, elements: HTMLElement[]): void {
 			const tabIndexValue = state
 				? Constants.A11YAttributes.States.TabIndexShow
 				: Constants.A11YAttributes.States.TabIndexHidden;

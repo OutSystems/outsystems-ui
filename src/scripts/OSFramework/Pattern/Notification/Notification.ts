@@ -196,7 +196,7 @@ namespace OSFramework.Patterns.Notification {
 			);
 
 			// Will handle the tabindex value of the elements inside pattern
-			Helper.A11Y.SetElementsTabindex(this._isOpen, this._focusTrapInstance.focusableElements);
+			Helper.A11Y.SetElementsTabIndex(this._isOpen, this._focusTrapInstance.focusableElements);
 		}
 
 		// Update time to apply on AutoClose

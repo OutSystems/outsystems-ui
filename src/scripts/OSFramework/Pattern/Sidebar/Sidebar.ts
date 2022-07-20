@@ -74,7 +74,7 @@ namespace OSFramework.Patterns.Sidebar {
 				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
 
 				// Will handle the tabindex value of the elements inside pattern
-				Helper.A11Y.SetElementsTabindex(this._isOpen, this._focusTrapInstance.focusableElements);
+				Helper.A11Y.SetElementsTabIndex(this._isOpen, this._focusTrapInstance.focusableElements);
 
 				if (this.configs.HasOverlay) {
 					Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOverlayClick);
@@ -162,7 +162,7 @@ namespace OSFramework.Patterns.Sidebar {
 			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
 
 			// Will handle the tabindex value of the elements inside pattern
-			Helper.A11Y.SetElementsTabindex(this._isOpen, this._focusTrapInstance.focusableElements);
+			Helper.A11Y.SetElementsTabIndex(this._isOpen, this._focusTrapInstance.focusableElements);
 		}
 
 		// Overlay onClick event to close the Sidebar
