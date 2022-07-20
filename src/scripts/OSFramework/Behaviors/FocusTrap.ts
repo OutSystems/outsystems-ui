@@ -73,6 +73,21 @@ namespace OSFramework.Behaviors {
 			}
 		}
 
+		private _focusHandler(focusableElement: HTMLElement, callback: Callbacks.Generic): void {
+			if (this._isFocusTrap) {
+				// Update focusable elements
+				this._setFocusableElements();
+
+				// Focus on element
+				this._setFocusOnElement(focusableElement, this._targetElement);
+			}
+
+			// Trigger the methods on pattern
+			if (callback !== undefined) {
+				callback();
+			}
+		}
+
 		// Handler for focus on top element
 		private _focusTopHandler(): void {
 			if (this._isFocusTrap) {
