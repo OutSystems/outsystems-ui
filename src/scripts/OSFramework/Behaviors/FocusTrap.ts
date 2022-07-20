@@ -59,18 +59,7 @@ namespace OSFramework.Behaviors {
 
 		// Handler for bottom on top element
 		private _focusBottomHandler(): void {
-			if (this._isFocusTrap) {
-				// Update focusable elements
-				this._setFocusableElements();
-
-				// Focus on element
-				this._setFocusOnElement(this._firstFocusableElement, this._targetElement);
-			}
-
-			// Trigger the methods on pattern
-			if (this._focusBottomCallback !== undefined) {
-				this._focusBottomCallback();
-			}
+			this._focusHandler(this._firstFocusableElement, this._focusBottomCallback);
 		}
 
 		private _focusHandler(focusableElement: HTMLElement, callback: Callbacks.Generic): void {
@@ -90,18 +79,7 @@ namespace OSFramework.Behaviors {
 
 		// Handler for focus on top element
 		private _focusTopHandler(): void {
-			if (this._isFocusTrap) {
-				// Update focusable elements
-				this._setFocusableElements();
-
-				// Focus on element
-				this._setFocusOnElement(this._lastFocusableElement, this._targetElement);
-			}
-
-			// Trigger the methods on pattern
-			if (this._focusTopCallback !== undefined) {
-				this._focusTopCallback();
-			}
+			this._focusHandler(this._lastFocusableElement, this._focusTopCallback);
 		}
 
 		// Method that removes the added event listeners
