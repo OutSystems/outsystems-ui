@@ -9,9 +9,9 @@ namespace OSUIFramework.Event {
 	 */
 	export class OrientationChange extends Event.AbstractEvent<string> {
 		constructor() {
+			super();
 			// ensure window has orientationchange event since it's only available for mobile
 			if ('onorientationchange' in window) {
-				super();
 				window.addEventListener(
 					GlobalEnum.HTMLEvent.OrientationChange,
 					this._orientationTrigger.bind(this),
