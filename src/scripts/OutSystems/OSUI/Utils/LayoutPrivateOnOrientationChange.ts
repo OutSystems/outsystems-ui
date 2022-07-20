@@ -7,7 +7,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 
 			if (body) {
 				setTimeout(() => {
-					// If it's an ipphoneX, and platform says it's tablet (due to screen resolution), remove the tablet class and add phone one instead
+					// If it's an iphoneX, and platform says it's tablet (due to screen resolution), remove the tablet class and add phone one instead
 					if (
 						OSFramework.Helper.Dom.Styles.ContainsClass(body, OSFramework.GlobalEnum.NotchClasses.IPhoneX)
 					) {
@@ -30,7 +30,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 						OSFramework.Helper.Dom.Styles.RemoveClass(body, OSFramework.GlobalEnum.DeviceType.desktop);
 					}
 
-					// Update the CSS body variables!
+					// Update the CSS body variables
 					LayoutPrivate.CssBodyVariables.Set();
 				}, 500);
 			}
