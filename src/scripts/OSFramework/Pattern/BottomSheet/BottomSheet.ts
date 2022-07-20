@@ -18,7 +18,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		private _eventOnContentScroll: Callbacks.Generic;
 		private _eventOnKeypress: Callbacks.Generic;
 		// FocusTrap Properties
-		private _focusTrapInstance: Behaviors.FocusTrap.FocusTrap;
+		private _focusTrapInstance: Behaviors.FocusTrap;
 		private _focusableActiveElement: HTMLElement;
 		// Store gesture events instance
 		private _gestureEventInstance: Event.GestureEvent.DragEvent;
@@ -71,9 +71,9 @@ namespace OSFramework.Patterns.BottomSheet {
 		private _handleFocusTrap(): void {
 			const opts = {
 				focusTargetElement: this._parentSelf,
-			} as Behaviors.FocusTrap.FocusTrapParams;
+			} as Behaviors.FocusTrapParams;
 
-			this._focusTrapInstance = new Behaviors.FocusTrap.FocusTrap(opts);
+			this._focusTrapInstance = new Behaviors.FocusTrap(opts);
 		}
 
 		// Method to handle the creation of the GestureEvents

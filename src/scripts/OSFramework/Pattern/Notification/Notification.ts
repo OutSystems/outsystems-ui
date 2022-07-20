@@ -14,7 +14,7 @@ namespace OSFramework.Patterns.Notification {
 		// Define the event to be applied based on device
 		private _eventType: string;
 		// Store focus trap instance
-		private _focusTrapInstance: Behaviors.FocusTrap.FocusTrap;
+		private _focusTrapInstance: Behaviors.FocusTrap;
 		// Store the active element focused
 		private _focusableActiveElement: HTMLElement;
 		// Store gesture events instance
@@ -81,9 +81,9 @@ namespace OSFramework.Patterns.Notification {
 		private _handleFocusTrap(): void {
 			const opts = {
 				focusTargetElement: this._parentSelf,
-			} as Behaviors.FocusTrap.FocusTrapParams;
+			} as Behaviors.FocusTrapParams;
 
-			this._focusTrapInstance = new Behaviors.FocusTrap.FocusTrap(opts);
+			this._focusTrapInstance = new Behaviors.FocusTrap(opts);
 		}
 
 		// Method to handle the creation of the GestureEvents

@@ -18,7 +18,7 @@ namespace OSFramework.Patterns.Sidebar {
 		// Store the keypress event with bind(this)
 		private _eventSidebarKeypress: Callbacks.Generic;
 		// Store focus trap instance
-		private _focusTrapInstance: Behaviors.FocusTrap.FocusTrap;
+		private _focusTrapInstance: Behaviors.FocusTrap;
 		// Store gesture events instance
 		private _gestureEventInstance: Event.GestureEvent.DragEvent;
 		// Store if the pattern has gesture events added
@@ -86,9 +86,9 @@ namespace OSFramework.Patterns.Sidebar {
 		private _handleFocusTrap(): void {
 			const opts = {
 				focusTargetElement: this._parentSelf,
-			} as Behaviors.FocusTrap.FocusTrapParams;
+			} as Behaviors.FocusTrapParams;
 
-			this._focusTrapInstance = new Behaviors.FocusTrap.FocusTrap(opts);
+			this._focusTrapInstance = new Behaviors.FocusTrap(opts);
 		}
 
 		// Method to hadnle the creation of the GestureEvents

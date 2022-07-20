@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSFramework.Behaviors.FocusTrap {
+namespace OSFramework.Behaviors {
 	// FocusTrap type
 	export type FocusTrapParams = {
 		focusBottomCallback: Callbacks.Generic;
@@ -64,7 +64,7 @@ namespace OSFramework.Behaviors.FocusTrap {
 				this._setFocusableElements();
 
 				// Focus on element
-				this.setFocusOnElement(this._firstFocusableElement, this._targetElement);
+				this._setFocusOnElement(this._firstFocusableElement, this._targetElement);
 			}
 
 			// Trigger the methods on pattern
@@ -80,7 +80,7 @@ namespace OSFramework.Behaviors.FocusTrap {
 				this._setFocusableElements();
 
 				// Focus on element
-				this.setFocusOnElement(this._lastFocusableElement, this._targetElement);
+				this._setFocusOnElement(this._lastFocusableElement, this._targetElement);
 			}
 
 			// Trigger the methods on pattern
@@ -99,6 +99,15 @@ namespace OSFramework.Behaviors.FocusTrap {
 		private _setEventListeners(): void {
 			this._bottomElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._focusBottomHandler.bind(this));
 			this._topElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._focusTopHandler.bind(this));
+		}
+
+		//Method to focus on element inside the block
+		private _setFocusOnElement(focusableElement: HTMLElement, selfElement: HTMLElement): void {
+			if (focusableElement) {
+				focusableElement.focus();
+			} else {
+				selfElement?.focus();
+			}
 		}
 
 		// Method to set the focusable elements to be used
@@ -177,21 +186,6 @@ namespace OSFramework.Behaviors.FocusTrap {
 			// Set A11Y AriaHidden as false
 			Helper.A11Y.AriaHiddenFalse(this._bottomElement);
 			Helper.A11Y.AriaHiddenFalse(this._topElement);
-		}
-
-		/**
-		 * Method to focus on element inside the block
-		 *
-		 * @param {HTMLElement} focusableElement
-		 * @param {HTMLElement} selfElement
-		 * @memberof FocusTrap
-		 */
-		public setFocusOnElement(focusableElement: HTMLElement, selfElement: HTMLElement): void {
-			if (focusableElement) {
-				focusableElement.focus();
-			} else {
-				selfElement?.focus();
-			}
 		}
 
 		/**
