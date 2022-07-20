@@ -10,7 +10,14 @@ namespace OSUIFramework.Event {
 	export class OrientationChange extends Event.AbstractEvent<string> {
 		constructor() {
 			super();
-			window.addEventListener(GlobalEnum.HTMLEvent.OrientationChange, this._orientationTrigger.bind(this), true);
+			// ensure window has orientationchange event since it's only available for mobile
+			if ('onorientationchange' in window) {
+				window.addEventListener(
+					GlobalEnum.HTMLEvent.OrientationChange,
+					this._orientationTrigger.bind(this),
+					true
+				);
+			}
 		}
 
 		private _orientationTrigger(evt: OrientationChange): void {
