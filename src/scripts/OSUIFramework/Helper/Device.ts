@@ -458,7 +458,7 @@ namespace OSUIFramework.Helper {
 				windowOrientation = window.screen.orientation.angle;
 			}
 
-			// If there are not an orientation...
+			// If there's not an orientation...
 			if (windowOrientation === undefined) {
 				return notchPosition;
 			}
