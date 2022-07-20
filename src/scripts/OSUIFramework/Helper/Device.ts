@@ -451,10 +451,10 @@ namespace OSUIFramework.Helper {
 			let windowOrientation = undefined;
 
 			if ('orientation' in window) {
-				// safari browers
+				// safari browser
 				windowOrientation = window.orientation;
 			} else if ('orientation' in window.screen) {
-				// check for other browers
+				// check for other browser
 				windowOrientation = window.screen.orientation.angle;
 			}
 

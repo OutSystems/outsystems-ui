@@ -1,10 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	/**
-	 * Function used to unset all the events has been added at the OnDestroy Layout!
+	 * Function used to unset all the events has been added at the OnDestroy Layout
 	 */
 	export function Dispose(): void {
-		// Remove the onOrientationChange Event!
+		// Remove the onOrientationChange Event
 		LayoutPrivate.OnOrientationChange.Unset();
 	}
 
@@ -111,7 +111,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	}
 
 	/**
-	 * Function used to Set and Update the Device Classes and CSS inline variables to body!
+	 * Function used to Set and Update the Device Classes and CSS inline variables to body
 	 *
 	 * @param IsWebApp
 	 *
@@ -162,7 +162,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	}
 
 	/**
-	 * Function used to set the IntersectionObserver in order to manage if the header is visible!
+	 * Function used to set the IntersectionObserver in order to manage if the header is visible
 	 */
 	export function SetStickyObserver(): void {
 		const layout = document.querySelector('.active-screen .layout');

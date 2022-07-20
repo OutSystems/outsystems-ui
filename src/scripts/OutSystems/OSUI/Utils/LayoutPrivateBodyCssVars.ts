@@ -52,7 +52,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 		}
 
 		/**
-		 * Function used to trigger the setCss inline variables to body!
+		 * Function used to trigger the setCss inline variables to body
 		 */
 		public static Set(): void {
 			this._setCssVars();
