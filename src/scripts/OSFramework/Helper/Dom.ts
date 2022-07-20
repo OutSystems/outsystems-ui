@@ -374,8 +374,7 @@ namespace OSFramework.Helper {
 		 * @memberof Dom
 		 */
 		public static FocusableElements(element: HTMLElement): HTMLElement[] {
-			const focusableElements = [...element.querySelectorAll(Constants.FocusableElems)] as HTMLElement[];
-			return focusableElements;
+			return [...element.querySelectorAll(Constants.FocusableElems)] as HTMLElement[];
 		}
 
 		/**
