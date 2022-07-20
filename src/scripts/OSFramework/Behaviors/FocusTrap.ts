@@ -15,15 +15,15 @@ namespace OSFramework.Behaviors {
 	 * @class FocusTrap
 	 */
 	export class FocusTrap {
-		private _bottomElement: HTMLElement;
 		private _firstFocusableElement: HTMLElement;
 		private _focusBottomCallback: Callbacks.Generic;
 		private _focusTopCallback: Callbacks.Generic;
 		private _focusableElements: HTMLElement[];
 		private _isFocusTrap: boolean;
 		private _lastFocusableElement: HTMLElement;
+		private _predictableBottomElement: HTMLElement;
+		private _predictableTopElement: HTMLElement;
 		private _targetElement: HTMLElement;
-		private _topElement: HTMLElement;
 
 		constructor(opts: FocusTrapParams) {
 			// Store the focus target element
@@ -46,12 +46,12 @@ namespace OSFramework.Behaviors {
 		// Method to create elements
 		private _buildPredictableElements(): void {
 			// Create the focusable elements
-			this._topElement = document.createElement(GlobalEnum.HTMLElement.Span);
-			this._bottomElement = document.createElement(GlobalEnum.HTMLElement.Span);
+			this._predictableTopElement = document.createElement(GlobalEnum.HTMLElement.Span);
+			this._predictableBottomElement = document.createElement(GlobalEnum.HTMLElement.Span);
 
 			// Add the created elements to DOM
-			this._targetElement.prepend(this._topElement);
-			this._targetElement.append(this._bottomElement);
+			this._targetElement.prepend(this._predictableTopElement);
+			this._targetElement.append(this._predictableBottomElement);
 
 			// Set the default properties of focusable elements
 			this._setFocusableProperties();
@@ -91,14 +91,23 @@ namespace OSFramework.Behaviors {
 
 		// Method that removes the added event listeners
 		private _removeEventListeners(): void {
-			this._bottomElement.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._focusBottomHandler.bind(this));
-			this._topElement.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._focusTopHandler.bind(this));
+			this._predictableBottomElement.removeEventListener(
+				GlobalEnum.HTMLEvent.Focus,
+				this._focusBottomHandler.bind(this)
+			);
+			this._predictableTopElement.removeEventListener(
+				GlobalEnum.HTMLEvent.Focus,
+				this._focusTopHandler.bind(this)
+			);
 		}
 
 		// Method to add the event listeners to the created elements
 		private _setEventListeners(): void {
-			this._bottomElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._focusBottomHandler.bind(this));
-			this._topElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._focusTopHandler.bind(this));
+			this._predictableBottomElement.addEventListener(
+				GlobalEnum.HTMLEvent.Focus,
+				this._focusBottomHandler.bind(this)
+			);
+			this._predictableTopElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._focusTopHandler.bind(this));
 		}
 
 		//Method to focus on element inside the block
@@ -114,18 +123,19 @@ namespace OSFramework.Behaviors {
 		private _setFocusableElements(): void {
 			this._focusableElements = Helper.Dom.FocusableElements(this._targetElement);
 
-			// Remove the first and last element, because of span elements added to handle focusable element's tabindex when toggling
+			// Remove the first element from array, because of predictable top element added for trapping
 			this._firstFocusableElement = this._focusableElements[1];
+			// Remove the last element from array, because of predictable bottom element added for trapping
 			this._lastFocusableElement = this._focusableElements[this._focusableElements.length - 2];
 		}
 
 		// Method to add properties to HTML elements
 		private _setFocusableProperties(): void {
 			// Set CSS classes
-			Helper.Dom.Styles.AddClass(this._bottomElement, GlobalEnum.FocusTrapClasses.FocusTrapBottom);
-			Helper.Dom.Styles.AddClass(this._bottomElement, Constants.AccessibilityHideElementClass);
-			Helper.Dom.Styles.AddClass(this._topElement, GlobalEnum.FocusTrapClasses.FocusTrapTop);
-			Helper.Dom.Styles.AddClass(this._topElement, Constants.AccessibilityHideElementClass);
+			Helper.Dom.Styles.AddClass(this._predictableBottomElement, GlobalEnum.FocusTrapClasses.FocusTrapBottom);
+			Helper.Dom.Styles.AddClass(this._predictableBottomElement, Constants.AccessibilityHideElementClass);
+			Helper.Dom.Styles.AddClass(this._predictableTopElement, GlobalEnum.FocusTrapClasses.FocusTrapTop);
+			Helper.Dom.Styles.AddClass(this._predictableTopElement, Constants.AccessibilityHideElementClass);
 
 			// Hide by default the focusable elements
 			this.disableForA11y();
@@ -149,12 +159,12 @@ namespace OSFramework.Behaviors {
 		 */
 		public disableForA11y(): void {
 			// Unset A11Y properties from bottom & top focusable element
-			Helper.A11Y.TabIndexFalse(this._bottomElement);
-			Helper.A11Y.TabIndexFalse(this._topElement);
+			Helper.A11Y.TabIndexFalse(this._predictableBottomElement);
+			Helper.A11Y.TabIndexFalse(this._predictableTopElement);
 
 			// Set A11Y AriaHidden as true
-			Helper.A11Y.AriaHiddenTrue(this._bottomElement);
-			Helper.A11Y.AriaHiddenTrue(this._topElement);
+			Helper.A11Y.AriaHiddenTrue(this._predictableBottomElement);
+			Helper.A11Y.AriaHiddenTrue(this._predictableTopElement);
 		}
 
 		/**
@@ -169,8 +179,8 @@ namespace OSFramework.Behaviors {
 			this._unsetCallbacks();
 
 			// ensure we also remove the html elements
-			this._topElement.remove();
-			this._bottomElement.remove();
+			this._predictableTopElement.remove();
+			this._predictableBottomElement.remove();
 		}
 
 		/**
@@ -180,12 +190,12 @@ namespace OSFramework.Behaviors {
 		 */
 		public enableForA11y(): void {
 			// Set A11Y properties to bottom & top focusable element
-			Helper.A11Y.TabIndexTrue(this._bottomElement);
-			Helper.A11Y.TabIndexTrue(this._topElement);
+			Helper.A11Y.TabIndexTrue(this._predictableBottomElement);
+			Helper.A11Y.TabIndexTrue(this._predictableTopElement);
 
 			// Set A11Y AriaHidden as false
-			Helper.A11Y.AriaHiddenFalse(this._bottomElement);
-			Helper.A11Y.AriaHiddenFalse(this._topElement);
+			Helper.A11Y.AriaHiddenFalse(this._predictableBottomElement);
+			Helper.A11Y.AriaHiddenFalse(this._predictableTopElement);
 		}
 
 		/**
@@ -196,7 +206,7 @@ namespace OSFramework.Behaviors {
 		 * @memberof FocusTrap
 		 */
 		public get bottomElement(): HTMLElement {
-			return this._bottomElement;
+			return this._predictableBottomElement;
 		}
 
 		/**
@@ -207,7 +217,7 @@ namespace OSFramework.Behaviors {
 		 * @memberof FocusTrap
 		 */
 		public get topElement(): HTMLElement {
-			return this._topElement;
+			return this._predictableTopElement;
 		}
 
 		/**
