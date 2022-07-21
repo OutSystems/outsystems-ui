@@ -1,75 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Utils.LayoutPrivate {
-	export function SetDeviceClass(IsWebApp: boolean): void {
-		const operatingSystem = OSFramework.Helper.DeviceInfo.GetOperatingSystem();
-		const body = document.body;
-		if (body) {
-			if (operatingSystem !== OSFramework.GlobalEnum.MobileOS.Unknown) {
-				OSFramework.Helper.Dom.Styles.AddClass(body, operatingSystem);
-			}
-			// Add iphonex class for ios devices with notch
-			if (
-				operatingSystem === OSFramework.GlobalEnum.MobileOS.IOS &&
-				OSFramework.Helper.DeviceInfo.IsIphoneWithNotch
-			) {
-				OSFramework.Helper.Dom.Styles.AddClass(body, OSFramework.GlobalEnum.NotchClasses.IPhoneX);
-			}
-
-			if (IsWebApp) {
-				const browser = OSFramework.Helper.DeviceInfo.GetBrowser();
-
-				if (browser !== OSFramework.GlobalEnum.Browser.unknown) {
-					OSFramework.Helper.Dom.Styles.AddClass(body, browser);
-				}
-
-				if (OSFramework.Helper.DeviceInfo.IsTouch) {
-					OSFramework.Helper.Dom.Styles.AddClass(body, 'is--touch');
-				}
-			} else {
-				// Detect IpadPro to add desktop class
-				if (
-					OSFramework.Helper.Dom.Styles.ContainsClass(body, OSFramework.GlobalEnum.DeviceType.phone) ===
-						false &&
-					OSFramework.Helper.Dom.Styles.ContainsClass(body, OSFramework.GlobalEnum.DeviceType.tablet) ===
-						false
-				) {
-					body.classList.add(OSFramework.GlobalEnum.DeviceType.desktop);
-				}
-
-				if (
-					OSFramework.Helper.Dom.Styles.ContainsClass(body, OSFramework.GlobalEnum.DeviceType.tablet) ||
-					OSFramework.Helper.Dom.Styles.ContainsClass(body, OSFramework.GlobalEnum.DeviceType.desktop)
-				) {
-					window.addEventListener('orientationchange', function () {
-						setTimeout(function () {
-							if (
-								OSFramework.Helper.Dom.Styles.ContainsClass(
-									body,
-									OSFramework.GlobalEnum.DeviceType.phone
-								) === false &&
-								OSFramework.Helper.Dom.Styles.ContainsClass(
-									body,
-									OSFramework.GlobalEnum.DeviceType.tablet
-								) === false
-							) {
-								body.classList.add(OSFramework.GlobalEnum.DeviceType.desktop);
-							} else if (
-								OSFramework.Helper.Dom.Styles.ContainsClass(
-									body,
-									OSFramework.GlobalEnum.DeviceType.desktop
-								) &&
-								OSFramework.Helper.Dom.Styles.ContainsClass(
-									body,
-									OSFramework.GlobalEnum.DeviceType.tablet
-								)
-							) {
-								body.classList.remove(OSFramework.GlobalEnum.DeviceType.desktop);
-							}
-						}, 500);
-					});
-				}
-			}
-		}
+	/**
+	 * Function used to unset all the events has been added at the OnDestroy Layout
+	 */
+	export function Dispose(): void {
+		// Remove the onOrientationChange Event
+		LayoutPrivate.OnOrientationChange.Unset();
 	}
 
 	/**
@@ -128,6 +64,12 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			}
 		}
 	}
+
+	/**
+	 * Function used to set HideHeader on Scroll
+	 *
+	 * @param HideHeader
+	 */
 	export function HideHeader(HideHeader: boolean): void {
 		if (HideHeader) {
 			// window.performance.timing is deprecated but the technology that MDN suggest to use is stil experimental and does not work on IE and Safari. Please visit the following link for context:
@@ -141,6 +83,12 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 		}
 	}
 
+	/**
+	 * Function used to set the RTL observer
+	 *
+	 * @param callback
+	 * @returns
+	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export function RTLObserver(callback: OSFramework.Callbacks.OSGeneric): MutationObserver {
 		const elemToObserve = document.body;
@@ -162,6 +110,60 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 		return observer;
 	}
 
+	/**
+	 * Function used to Set and Update the Device Classes and CSS inline variables to body
+	 *
+	 * @param IsWebApp
+	 *
+	 */
+	export function SetDeviceClass(IsWebApp: boolean): void {
+		const operatingSystem = OSFramework.Helper.DeviceInfo.GetOperatingSystem();
+		const body = document.body;
+
+		if (body) {
+			// Add operatingSystem class
+			if (operatingSystem !== OSFramework.GlobalEnum.MobileOS.Unknown) {
+				OSFramework.Helper.Dom.Styles.AddClass(body, operatingSystem);
+			}
+
+			// Add iphonex class for ios devices with notch
+			if (
+				operatingSystem === OSFramework.GlobalEnum.MobileOS.IOS &&
+				OSFramework.Helper.DeviceInfo.IsIphoneWithNotch
+			) {
+				OSFramework.Helper.Dom.Styles.AddClass(body, OSFramework.GlobalEnum.NotchClasses.IPhoneX);
+			}
+
+			if (IsWebApp) {
+				// if it's a mobile app we do not need to set browser info!
+				const browser = OSFramework.Helper.DeviceInfo.GetBrowser();
+				if (browser !== OSFramework.GlobalEnum.Browser.unknown) {
+					OSFramework.Helper.Dom.Styles.AddClass(body, browser);
+				}
+				// also same as above!
+				if (OSFramework.Helper.DeviceInfo.IsTouch) {
+					OSFramework.Helper.Dom.Styles.AddClass(body, OSFramework.GlobalEnum.CssClassElements.IsTouch);
+				}
+			} else {
+				// Detect IpadPro to add desktop class
+				if (
+					OSFramework.Helper.Dom.Styles.ContainsClass(body, OSFramework.GlobalEnum.DeviceType.phone) ===
+						false &&
+					OSFramework.Helper.Dom.Styles.ContainsClass(body, OSFramework.GlobalEnum.DeviceType.tablet) ===
+						false
+				) {
+					body.classList.add(OSFramework.GlobalEnum.DeviceType.desktop);
+				}
+			}
+
+			// Set the orientation change event
+			LayoutPrivate.OnOrientationChange.Set();
+		}
+	}
+
+	/**
+	 * Function used to set the IntersectionObserver in order to manage if the header is visible
+	 */
 	export function SetStickyObserver(): void {
 		const layout = document.querySelector('.active-screen .layout');
 		const stickyObserver = document.querySelector('.active-screen .sticky-observer');
