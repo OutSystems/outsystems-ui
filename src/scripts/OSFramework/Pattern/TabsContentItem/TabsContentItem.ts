@@ -50,7 +50,7 @@ namespace OSFramework.Patterns.TabsContentItem {
 		 * @memberof TabsContentItem
 		 */
 		protected setHtmlElements(): void {
-			this._focusableElements = Helper.Dom.FocusableElements(this._selfElem);
+			this._focusableElements = Helper.Dom.GetFocusableElements(this._selfElem);
 		}
 
 		/**

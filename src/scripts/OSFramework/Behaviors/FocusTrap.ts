@@ -114,7 +114,7 @@ namespace OSFramework.Behaviors {
 
 		// Method to set the focusable elements to be used
 		private _setFocusableElements(): void {
-			this._focusableElements = Helper.Dom.FocusableElements(this._targetElement);
+			this._focusableElements = Helper.Dom.GetFocusableElements(this._targetElement);
 
 			// Remove the first element from array, because of predictable top element added for trapping
 			this._firstFocusableElement = this._focusableElements[1];

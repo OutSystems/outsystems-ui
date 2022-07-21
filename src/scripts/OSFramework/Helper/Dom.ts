@@ -367,17 +367,6 @@ namespace OSFramework.Helper {
 		}
 
 		/**
-		 * Method to set the list of focusable elements
-		 *
-		 * @readonly
-		 * @static
-		 * @memberof Dom
-		 */
-		public static FocusableElements(element: HTMLElement): HTMLElement[] {
-			return [...element.querySelectorAll(Constants.FocusableElems)] as HTMLElement[];
-		}
-
-		/**
 		 * Generate a Random String that could be assigned as a pattern UniqueId
 		 *
 		 * @export
@@ -422,6 +411,17 @@ namespace OSFramework.Helper {
 			} else {
 				throw new Error(`Object with name '${uniqueId}' not found.`);
 			}
+		}
+
+		/**
+		 * Method to get the list of focusable elements
+		 *
+		 * @readonly
+		 * @static
+		 * @memberof Dom
+		 */
+		public static GetFocusableElements(element: HTMLElement): HTMLElement[] {
+			return [...element.querySelectorAll(Constants.FocusableElems)] as HTMLElement[];
 		}
 
 		/**
