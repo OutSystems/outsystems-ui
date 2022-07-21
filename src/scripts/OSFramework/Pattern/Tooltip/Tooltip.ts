@@ -69,7 +69,9 @@ namespace OSFramework.Patterns.Tooltip {
 		private _onBalloonClick(e: MouseEvent): void {
 			// Get all possible clickable items inside tooltip balloon
 			const clickableItems = Array.from(
-				this._tooltipBalloonContentElem.querySelectorAll(Constants.FocusableElems)
+				this._tooltipBalloonContentElem.querySelectorAll(
+					Constants.FocusableElems + ', ' + GlobalEnum.HTMLAttributes.AllowEventPropagation
+				)
 			);
 
 			// If there no clickable items, do not let the click be propagated!
