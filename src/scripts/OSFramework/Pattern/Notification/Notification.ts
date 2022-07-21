@@ -7,21 +7,25 @@ namespace OSFramework.Patterns.Notification {
 		extends AbstractPattern<NotificationConfig>
 		implements INotification, Interface.ISwipeEvent
 	{
+		// Store the click event with bind(this)
 		private _eventOnClick: Callbacks.Generic;
+		// Store the keypress event with bind(this)
 		private _eventOnKeypress: Callbacks.Generic;
 		// Define the event to be applied based on device
 		private _eventType: string;
-		private _firstFocusableElement: HTMLElement;
-		private _focusTrapInstance: DynamicElements.FocusTrap.FocusTrap;
+		// Store focus trap instance
+		private _focusTrapInstance: Behaviors.FocusTrap;
+		// Store the active element focused
 		private _focusableActiveElement: HTMLElement;
-		private _focusableElements: HTMLElement[];
 		// Store gesture events instance
 		private _gestureEventInstance: Event.GestureEvent.SwipeEvent;
 		// Store if the pattern has gesture events added
 		private _hasGestureEvents: boolean;
+		// Store pattern visibility
 		private _isOpen: boolean;
-		private _lastFocusableElement: HTMLElement;
+		// Store the parent element
 		private _parentSelf: HTMLElement;
+		// Store the platform events
 		private _platformEventOnInitialize: Callbacks.OSNotificationInitializedEvent;
 		private _platformEventOnToggle: Callbacks.OSNotificationToggleEvent;
 
@@ -73,25 +77,13 @@ namespace OSFramework.Patterns.Notification {
 			this.hide();
 		}
 
-		// Focus on first focusable element on Notification
-		private _focusBottomCallback(): void {
-			Helper.FocusTrap.FocusOnFirstFocusableElement(this._firstFocusableElement, this._selfElem);
-		}
-
-		// Focus on last focusable element on Notification
-		private _focusTopCallback(): void {
-			Helper.FocusTrap.FocusOnLastFocusableElement(this._lastFocusableElement, this._selfElem);
-		}
-
 		// Add Focus Trap to Pattern
 		private _handleFocusTrap(): void {
 			const opts = {
-				focusBottomCallback: this._focusBottomCallback.bind(this),
 				focusTargetElement: this._parentSelf,
-				focusTopCallback: this._focusTopCallback.bind(this),
-			} as FocusTrapOpts;
+			} as Behaviors.FocusTrapParams;
 
-			this._focusTrapInstance = new DynamicElements.FocusTrap.FocusTrap(opts);
+			this._focusTrapInstance = new Behaviors.FocusTrap(opts);
 		}
 
 		// Method to handle the creation of the GestureEvents
@@ -115,6 +107,7 @@ namespace OSFramework.Patterns.Notification {
 		private _hideNotification(): void {
 			this._isOpen = false;
 
+			// Remove the A11Y states to focus trap
 			this._focusTrapInstance.disableForA11y();
 
 			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
@@ -159,6 +152,7 @@ namespace OSFramework.Patterns.Notification {
 			this._focusableActiveElement = document.activeElement as HTMLElement;
 			this._isOpen = true;
 
+			// Add the A11Y states to focus trap
 			this._focusTrapInstance.enableForA11y();
 
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsOpen);
@@ -191,8 +185,6 @@ namespace OSFramework.Patterns.Notification {
 
 		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _updateA11yProperties(): void {
-			const setA11YtabIndex = this._isOpen ? Helper.A11Y.TabIndexTrue : Helper.A11Y.TabIndexFalse;
-
 			Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Hidden, (!this._isOpen).toString());
 
 			Helper.Dom.Attribute.Set(
@@ -203,10 +195,8 @@ namespace OSFramework.Patterns.Notification {
 					: Constants.A11YAttributes.States.TabIndexHidden
 			);
 
-			// On each element, toggle the tabindex value, depending if notification is open or closed
-			for (const item of this._focusableElements) {
-				setA11YtabIndex(item);
-			}
+			// Will handle the tabindex value of the elements inside pattern
+			Helper.A11Y.SetElementsTabIndex(this._isOpen, this._focusTrapInstance.focusableElements);
 		}
 
 		// Update time to apply on AutoClose
@@ -290,13 +280,6 @@ namespace OSFramework.Patterns.Notification {
 		 */
 		protected setHtmlElements(): void {
 			this._parentSelf = Helper.Dom.GetElementById(this._widgetId);
-			this._focusableElements = [...this._selfElem.querySelectorAll(Constants.FocusableElems)] as HTMLElement[];
-
-			// to handle focusable element's tabindex when toggling the Notification
-			this._firstFocusableElement = this._focusableElements[0];
-			this._lastFocusableElement = this._focusableElements[this._focusableElements.length - 1];
-
-			this.setA11YProperties();
 
 			Helper.AsyncInvocation(this._platformEventOnInitialize, this.widgetId);
 		}
@@ -353,9 +336,7 @@ namespace OSFramework.Patterns.Notification {
 		 * @memberof Notification
 		 */
 		protected unsetHtmlElements(): void {
-			this._firstFocusableElement = undefined;
-			this._focusableElements = undefined;
-			this._lastFocusableElement = undefined;
+			this._parentSelf = undefined;
 			this._platformEventOnInitialize = undefined;
 			this._platformEventOnToggle = undefined;
 		}
@@ -371,6 +352,8 @@ namespace OSFramework.Patterns.Notification {
 			this.setHtmlElements();
 
 			this._handleFocusTrap();
+
+			this.setA11YProperties();
 
 			this._handleGestureEvents();
 

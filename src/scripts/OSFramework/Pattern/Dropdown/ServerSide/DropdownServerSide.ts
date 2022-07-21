@@ -48,7 +48,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		// Keyboard Key Press Event
 		private _eventOnkeyboardPress: Callbacks.Generic;
 		// Store the instance of the Object responsible to Add Custom HTML elements to the DropdownBallon that will help on deal with keyboard navigation (Accessibility)
-		private _focusTrapObject: DynamicElements.FocusTrap.FocusTrap;
+		private _focusTrapObject: Behaviors.FocusTrap;
 		// Set the observer that will check if the balloon is inside screen boundaries!
 		private _intersectionObserver: IntersectionObserver;
 		// Flag variable used to prevent close the balloon at onBodyScroll when inside tablet!
@@ -511,9 +511,9 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 				focusBottomCallback: this._eventOnSpanFocus.bind(this),
 				focusTargetElement: this._balloonWrapperElement,
 				focusTopCallback: this._eventOnSpanFocus.bind(this),
-			} as FocusTrapOpts;
+			} as Behaviors.FocusTrapParams;
 
-			this._focusTrapObject = new DynamicElements.FocusTrap.FocusTrap(opts);
+			this._focusTrapObject = new Behaviors.FocusTrap(opts);
 		}
 
 		// Method used to store a given DropdownOption into optionItems list, it's triggered by DropdownServerSideItem
@@ -659,9 +659,8 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 
 			// If there are items inside Ballon Footer
 			if (this._balloonFocusableElemsInFooter.length > 0) {
-				for (const item of this._balloonFocusableElemsInFooter) {
-					Helper.A11Y.TabIndex(item, tabIndexValue);
-				}
+				// Will handle the tabindex value of the elements inside pattern
+				Helper.A11Y.SetElementsTabIndex(this._isOpen, this._balloonFocusableElemsInFooter);
 			}
 
 			// Update FocusHTML elements attributes

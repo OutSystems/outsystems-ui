@@ -41,7 +41,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 			// Set target element offset info!
 			this._setTargetOffsetInfo();
 			// Get the vertical scroll position value
-			const scrollYPosition = Helper.ScrollVerticalPosition();
+			const scrollYPosition = Behaviors.ScrollVerticalPosition();
 			// Threshold value to set element as Active
 			const thresholdVal = 40;
 			// Store the offSetValue to be checked

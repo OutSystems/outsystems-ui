@@ -414,6 +414,17 @@ namespace OSFramework.Helper {
 		}
 
 		/**
+		 * Method to get the list of focusable elements
+		 *
+		 * @readonly
+		 * @static
+		 * @memberof Dom
+		 */
+		public static GetFocusableElements(element: HTMLElement): HTMLElement[] {
+			return [...element.querySelectorAll(Constants.FocusableElems)] as HTMLElement[];
+		}
+
+		/**
 		 * Moves a given HTML element to target position.
 		 *
 		 * @static

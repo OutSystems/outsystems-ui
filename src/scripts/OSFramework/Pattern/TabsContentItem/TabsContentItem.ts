@@ -34,18 +34,13 @@ namespace OSFramework.Patterns.TabsContentItem {
 			if (this._isActive) {
 				Helper.A11Y.TabIndexTrue(this._selfElem);
 				Helper.A11Y.AriaHiddenFalse(this._selfElem);
-				// On each element, toggle the tabindex value, depending if is active
-				for (const item of this._focusableElements) {
-					Helper.A11Y.TabIndexTrue(item);
-				}
 			} else {
 				Helper.A11Y.TabIndexFalse(this._selfElem);
 				Helper.A11Y.AriaHiddenTrue(this._selfElem);
-				// On each element, toggle the tabindex value, depending if is active
-				for (const item of this._focusableElements) {
-					Helper.A11Y.TabIndexFalse(item);
-				}
 			}
+
+			// Will handle the tabindex value of the elements inside pattern, depending if is active
+			Helper.A11Y.SetElementsTabIndex(this._isActive, this._focusableElements);
 		}
 
 		/**
@@ -55,7 +50,7 @@ namespace OSFramework.Patterns.TabsContentItem {
 		 * @memberof TabsContentItem
 		 */
 		protected setHtmlElements(): void {
-			this._focusableElements = [...this._selfElem.querySelectorAll(Constants.FocusableElems)] as HTMLElement[];
+			this._focusableElements = Helper.Dom.GetFocusableElements(this._selfElem);
 		}
 
 		/**
