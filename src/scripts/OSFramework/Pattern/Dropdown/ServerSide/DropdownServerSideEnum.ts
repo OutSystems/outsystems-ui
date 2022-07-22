@@ -27,6 +27,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide.Enum {
 		FocusTopHtmlElement = 'osui-dropdown-serverside__balloon-focus-top',
 		IsDisabled = 'osui-dropdown-serverside--is-disabled',
 		IsOpened = 'osui-dropdown-serverside--is-opened',
+		IsVisible = 'osui-dropdown-serverside-visible',
 		NotValid = 'osui-dropdown-serverside--not-valid',
 		Pattern = 'osui-dropdown-serverside',
 		SelectText = 'osui-dropdown-serverside__text',
