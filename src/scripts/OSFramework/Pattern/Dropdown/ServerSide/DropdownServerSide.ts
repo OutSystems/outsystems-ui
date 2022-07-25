@@ -43,8 +43,14 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		private _eventOnCloseTransitionEnd: Callbacks.Generic;
 		// Event OnOrientationChange Event
 		private _eventOnOrientationChange: Callbacks.Generic;
+		// OnSearchInputBlur Event
+		private _eventOnSearchInputBlur: Callbacks.Generic;
+		// OnSearchInputFocus Event
+		private _eventOnSearchInputFocus: Callbacks.Generic;
 		// OnFocus Event at ballon custom span elements
 		private _eventOnSpanFocus: Callbacks.Generic;
+		// OnTouchMove Event at the balloon wrapper
+		private _eventOnTouchMove: Callbacks.Generic;
 		// On WindowResize Event
 		private _eventOnWindowResize: Callbacks.Generic;
 		// Keyboard Key Press Event
@@ -292,9 +298,19 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 			}
 		}
 
+		// Also Used to manage the balloon heigh accorindgly keyboard is in use due to the way iOS deal with it!
+		private _onSearchInputBlur(): void {
+			Helper.Dom.Styles.RemoveClass(this._balloonWrapperElement, Enum.CssClass.SearchInputIsFocused);
+		}
+
 		// Used to set a stopPropagation when click at search input
 		private _onSearchInputClicked(event: MouseEvent): void {
 			event.stopPropagation();
+		}
+
+		// Used to manage the balloon heigh accorindgly keyboard is in use due to the way iOS deal with it!
+		private _onSearchInputFocus(): void {
+			Helper.Dom.Styles.AddClass(this._balloonWrapperElement, Enum.CssClass.SearchInputIsFocused);
 		}
 
 		// Used to apply the logic when user click to open the Dropdown
@@ -595,6 +611,16 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 					GlobalEnum.HTMLEvent.keyDown,
 					this._eventOnkeyboardPress
 				);
+				// Add BlurEvent in order to manage the Balloon Height when at iOS due to keyboard is in use
+				this._balloonSearchInputElement.addEventListener(
+					GlobalEnum.HTMLEvent.Blur,
+					this._eventOnSearchInputBlur
+				);
+				// Add FocusEvent in order to manage the Balloon Height when at iOS due to keyboard is in use
+				this._balloonSearchInputElement.addEventListener(
+					GlobalEnum.HTMLEvent.Focus,
+					this._eventOnSearchInputFocus
+				);
 			}
 			// Add the BodyClick callback that will be used Close open Dropdown!
 			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
@@ -614,9 +640,15 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 			// Check if the used browser has TouchMove event!
 			if ('ontouchmove' in window) {
 				if (this._isOpen) {
-					this._balloonWrapperElement.addEventListener(GlobalEnum.HTMLEvent.TouchMove, this._onTouchMove);
+					this._balloonWrapperElement.addEventListener(
+						GlobalEnum.HTMLEvent.TouchMove,
+						this._eventOnTouchMove
+					);
 				} else {
-					this._balloonWrapperElement.removeEventListener(GlobalEnum.HTMLEvent.TouchMove, this._onTouchMove);
+					this._balloonWrapperElement.removeEventListener(
+						GlobalEnum.HTMLEvent.TouchMove,
+						this._eventOnTouchMove
+					);
 				}
 			}
 		}
@@ -642,6 +674,14 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 				this._balloonSearchInputElement.removeEventListener(
 					GlobalEnum.HTMLEvent.keyDown,
 					this._eventOnkeyboardPress
+				);
+				this._balloonSearchInputElement.removeEventListener(
+					GlobalEnum.HTMLEvent.Blur,
+					this._eventOnSearchInputBlur
+				);
+				this._balloonSearchInputElement.removeEventListener(
+					GlobalEnum.HTMLEvent.Focus,
+					this._eventOnSearchInputFocus
 				);
 			}
 			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
@@ -805,7 +845,10 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 			this._eventOnCloseTransitionEnd = this._endOfCloseAnimation.bind(this);
 			this._eventOnkeyboardPress = this._onKeyboardPressed.bind(this);
 			this._eventOnOrientationChange = this._onOrientationChange.bind(this);
+			this._eventOnSearchInputBlur = this._onSearchInputBlur.bind(this);
+			this._eventOnSearchInputFocus = this._onSearchInputFocus.bind(this);
 			this._eventOnSpanFocus = this._onSpanElementFocus.bind(this);
+			this._eventOnTouchMove = this._onTouchMove.bind(this);
 			this._eventOnWindowResize = this._onWindowResize.bind(this);
 		}
 
@@ -874,7 +917,10 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 			this._eventOnCloseTransitionEnd = undefined;
 			this._eventOnkeyboardPress = undefined;
 			this._eventOnOrientationChange = undefined;
+			this._eventOnSearchInputBlur = undefined;
+			this._eventOnSearchInputFocus = undefined;
 			this._eventOnSpanFocus = undefined;
+			this._eventOnTouchMove = undefined;
 			this._eventOnWindowResize = undefined;
 			this._platformEventInitializedCallback = undefined;
 			this._platformEventOnToggleCallback = undefined;
