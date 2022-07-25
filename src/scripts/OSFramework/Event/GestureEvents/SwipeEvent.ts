@@ -84,17 +84,17 @@ namespace OSFramework.Event.GestureEvent {
 		/**
 		 * Method to set the expected callbacks and add eventListeners to the target element
 		 *
-		 * @param {CallbacksOLD.onSwipeDown} swipeDownCallback
-		 * @param {CallbacksOLD.onSwipeLeft} swipeLeftCallback
-		 * @param {CallbacksOLD.onSwipeRight} swipeRightCallback
-		 * @param {CallbacksOLD.onSwipeUp} swipeUpCallback
+		 * @param {Event.GestureEvent.onSwipeDown} swipeDownCallback
+		 * @param {Event.GestureEvent.onSwipeLeft} swipeLeftCallback
+		 * @param {Event.GestureEvent.onSwipeRight} swipeRightCallback
+		 * @param {Event.GestureEvent.onSwipeUp} swipeUpCallback
 		 * @memberof SwipeEvent
 		 */
 		public setEvents(
-			swipeDownCallback: CallbacksOLD.onSwipeDown,
-			swipeLeftCallback: CallbacksOLD.onSwipeLeft,
-			swipeRightCallback: CallbacksOLD.onSwipeRight,
-			swipeUpCallback: CallbacksOLD.onSwipeUp
+			swipeDownCallback: Event.GestureEvent.onSwipeDown,
+			swipeLeftCallback: Event.GestureEvent.onSwipeLeft,
+			swipeRightCallback: Event.GestureEvent.onSwipeRight,
+			swipeUpCallback: Event.GestureEvent.onSwipeUp
 		): void {
 			this.setSwipeCallbacks(swipeDownCallback, swipeLeftCallback, swipeRightCallback, swipeUpCallback);
 			super.setEventListeners();
