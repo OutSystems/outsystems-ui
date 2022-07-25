@@ -14,9 +14,9 @@ namespace OSFramework.Patterns.Sidebar {
 		// Store the Sidebar direction
 		private _currentDirectionCssClass: string;
 		// Store the click event with bind(this)
-		private _eventOverlayClick: Callbacks.Generic;
+		private _eventOverlayClick: GlobalCallbacks.Generic;
 		// Store the keypress event with bind(this)
-		private _eventSidebarKeypress: Callbacks.Generic;
+		private _eventSidebarKeypress: GlobalCallbacks.Generic;
 		// Store focus trap instance
 		private _focusTrapInstance: Behaviors.FocusTrap;
 		// Store gesture events instance
@@ -26,7 +26,7 @@ namespace OSFramework.Patterns.Sidebar {
 		// Stores the current status of the sidebar
 		private _isOpen: boolean;
 		// Store if the Sidebar is Open
-		private _onToggle: Callbacks.OSSidebarToggleEvent;
+		private _onToggle: CallbacksOLD.OSSidebarToggleEvent;
 		// Store the parent element
 		private _parentSelf: HTMLElement;
 
@@ -426,10 +426,10 @@ namespace OSFramework.Patterns.Sidebar {
 		/**
 		 * Set callbacks for the onToggle event
 		 *
-		 * @param {Callbacks.OSSidebarToggleEvent} callback
+		 * @param {CallbacksOLD.OSSidebarToggleEvent} callback
 		 * @memberof Sidebar
 		 */
-		public registerCallback(callback: Callbacks.OSSidebarToggleEvent): void {
+		public registerCallback(callback: CallbacksOLD.OSSidebarToggleEvent): void {
 			if (this._onToggle === undefined) {
 				this._onToggle = callback;
 			} else {
@@ -459,9 +459,9 @@ namespace OSFramework.Patterns.Sidebar {
 		 * @memberof Sidebar
 		 */
 		public setGestureEvents(
-			onGestureStart: Callbacks.onGestureStart,
-			onGestureMove: Callbacks.onGestureMove,
-			onGestureEnd: Callbacks.onGestureEnd
+			onGestureStart: CallbacksOLD.onGestureStart,
+			onGestureMove: CallbacksOLD.onGestureMove,
+			onGestureEnd: CallbacksOLD.onGestureEnd
 		): void {
 			this._gestureEventInstance.setEvents(onGestureStart, onGestureMove, onGestureEnd);
 			this._hasGestureEvents = true;

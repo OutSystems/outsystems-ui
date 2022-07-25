@@ -8,9 +8,9 @@ namespace OSFramework.Patterns.Notification {
 		implements INotification, Interface.ISwipeEvent
 	{
 		// Store the click event with bind(this)
-		private _eventOnClick: Callbacks.Generic;
+		private _eventOnClick: GlobalCallbacks.Generic;
 		// Store the keypress event with bind(this)
-		private _eventOnKeypress: Callbacks.Generic;
+		private _eventOnKeypress: GlobalCallbacks.Generic;
 		// Define the event to be applied based on device
 		private _eventType: string;
 		// Store focus trap instance
@@ -26,8 +26,8 @@ namespace OSFramework.Patterns.Notification {
 		// Store the parent element
 		private _parentSelf: HTMLElement;
 		// Store the platform events
-		private _platformEventOnInitialize: Callbacks.OSNotificationInitializedEvent;
-		private _platformEventOnToggle: Callbacks.OSNotificationToggleEvent;
+		private _platformEventOnInitialize: CallbacksOLD.OSNotificationInitializedEvent;
+		private _platformEventOnToggle: CallbacksOLD.OSNotificationToggleEvent;
 
 		/**
 		 * Get Gesture Events Instance
@@ -500,10 +500,10 @@ namespace OSFramework.Patterns.Notification {
 		 * Method used to register the provider callback
 		 *
 		 * @param {string} eventName
-		 * @param {Callbacks.OSGeneric} callback
+		 * @param {GlobalCallbacks.OSGeneric} callback
 		 * @memberof Notification
 		 */
-		public registerCallback(eventName: string, callback: Callbacks.OSGeneric): void {
+		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
 				case Patterns.Notification.Enum.Events.OnInitialize:
 					if (this._platformEventOnInitialize === undefined) {
@@ -546,10 +546,10 @@ namespace OSFramework.Patterns.Notification {
 		 * @memberof Sidebar
 		 */
 		public setGestureEvents(
-			onSwipeDownCallback: Callbacks.onSwipeDown,
-			onSwipeLeftCallback: Callbacks.onSwipeLeft,
-			onSwipeRightCallback: Callbacks.onSwipeRight,
-			onSwipeUpCallback: Callbacks.onSwipeUp
+			onSwipeDownCallback: CallbacksOLD.onSwipeDown,
+			onSwipeLeftCallback: CallbacksOLD.onSwipeLeft,
+			onSwipeRightCallback: CallbacksOLD.onSwipeRight,
+			onSwipeUpCallback: CallbacksOLD.onSwipeUp
 		): void {
 			this._gestureEventInstance.setEvents(
 				onSwipeDownCallback,

@@ -5,9 +5,9 @@ namespace Providers.Dropdown.VirtualSelect {
 		implements IVirtualSelect
 	{
 		// Dropdown callback events
-		private _onSelectedOptionEvent: OSFramework.Callbacks.Generic;
-		private _platformEventInitializedCallback: OSFramework.Callbacks.OSGeneric;
-		private _platformEventSelectedOptCallback: OSFramework.Callbacks.OSDropdownOnSelectEvent;
+		private _onSelectedOptionEvent: OSFramework.GlobalCallbacks.Generic;
+		private _platformEventInitializedCallback: OSFramework.GlobalCallbacks.OSGeneric;
+		private _platformEventSelectedOptCallback: OSFramework.CallbacksOLD.OSDropdownOnSelectEvent;
 
 		// Store a reference of available provider methods
 		protected _virtualselectMethods: VirtualSelectMethods;
@@ -277,10 +277,10 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * Method used to register the provider callback
 		 *
 		 * @param {string} eventName Event name that will be assigned
-		 * @param {OSFramework.Callbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
+		 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
 		 * @memberof AbstractVirtualSelect
 		 */
-		public registerCallback(eventName: string, callback: OSFramework.Callbacks.OSGeneric): void {
+		public registerCallback(eventName: string, callback: OSFramework.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
 				case OSFramework.Patterns.Dropdown.Enum.Events.Initialized:
 					if (this._platformEventInitializedCallback === undefined) {

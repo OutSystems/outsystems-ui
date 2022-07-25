@@ -27,16 +27,16 @@ namespace OSFramework.Event.GestureEvent {
 	 */
 	export abstract class AbstractGestureEvent implements GestureEvent.IAbstractGestureEvent {
 		// Stores the end touch event with bind(this)
-		private _endEvent: Callbacks.Generic;
-		private _endTriggerCallback: Callbacks.Generic;
+		private _endEvent: GlobalCallbacks.Generic;
+		private _endTriggerCallback: GlobalCallbacks.Generic;
 		// Holds all the neccessary values on the start, move, end events lifecycle
 		private _gestureParams: GestureParams;
 		// Stores the move touch event with bind(this)
-		private _moveEvent: Callbacks.Generic;
-		private _moveTriggerCallback: Callbacks.Generic;
+		private _moveEvent: GlobalCallbacks.Generic;
+		private _moveTriggerCallback: GlobalCallbacks.Generic;
 		// Stores the start touch event with bind(this)
-		private _startEvent: Callbacks.Generic;
-		private _startTriggerCallback: Callbacks.Generic;
+		private _startEvent: GlobalCallbacks.Generic;
+		private _startTriggerCallback: GlobalCallbacks.Generic;
 		// Store the target element that receives the lsiteners
 		private _targetElement: HTMLElement;
 
@@ -122,15 +122,15 @@ namespace OSFramework.Event.GestureEvent {
 		 * Method to set the callbacks
 		 *
 		 * @protected
-		 * @param {Callbacks.Generic} [onStartCallback]
-		 * @param {Callbacks.Generic} [onMoveCallback]
-		 * @param {Callbacks.Generic} [onEndCallback]
+		 * @param {GlobalCallbacks.Generic} [onStartCallback]
+		 * @param {GlobalCallbacks.Generic} [onMoveCallback]
+		 * @param {GlobalCallbacks.Generic} [onEndCallback]
 		 * @memberof GestureEvent
 		 */
 		protected setCallbacks(
-			onStartCallback?: Callbacks.Generic,
-			onMoveCallback?: Callbacks.Generic,
-			onEndCallback?: Callbacks.Generic
+			onStartCallback?: GlobalCallbacks.Generic,
+			onMoveCallback?: GlobalCallbacks.Generic,
+			onEndCallback?: GlobalCallbacks.Generic
 		): void {
 			this._endEvent = this._eventTouchEnd.bind(this);
 			this._moveEvent = this._eventTouchMove.bind(this);
@@ -176,6 +176,6 @@ namespace OSFramework.Event.GestureEvent {
 			this._unsetCallbacks();
 		}
 
-		protected abstract setEvents(...args: Callbacks.Generic[]): void;
+		protected abstract setEvents(...args: GlobalCallbacks.Generic[]): void;
 	}
 }

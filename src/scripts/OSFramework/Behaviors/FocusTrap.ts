@@ -2,9 +2,9 @@
 namespace OSFramework.Behaviors {
 	// FocusTrap type
 	export type FocusTrapParams = {
-		focusBottomCallback: Callbacks.Generic;
+		focusBottomCallback: GlobalCallbacks.Generic;
 		focusTargetElement: HTMLElement;
-		focusTopCallback: Callbacks.Generic;
+		focusTopCallback: GlobalCallbacks.Generic;
 		focusTrapEnabled: boolean;
 	};
 
@@ -16,8 +16,8 @@ namespace OSFramework.Behaviors {
 	 */
 	export class FocusTrap {
 		private _firstFocusableElement: HTMLElement;
-		private _focusBottomCallback: Callbacks.Generic;
-		private _focusTopCallback: Callbacks.Generic;
+		private _focusBottomCallback: GlobalCallbacks.Generic;
+		private _focusTopCallback: GlobalCallbacks.Generic;
 		private _focusableElements: HTMLElement[];
 		private _isFocusTrap: boolean;
 		private _lastFocusableElement: HTMLElement;
@@ -62,7 +62,7 @@ namespace OSFramework.Behaviors {
 			this._focusHandler(this._firstFocusableElement, this._focusBottomCallback);
 		}
 
-		private _focusHandler(focusableElement: HTMLElement, callback: Callbacks.Generic): void {
+		private _focusHandler(focusableElement: HTMLElement, callback: GlobalCallbacks.Generic): void {
 			if (this._isFocusTrap) {
 				// Update focusable elements
 				this._setFocusableElements();

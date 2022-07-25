@@ -15,8 +15,8 @@ namespace OSFramework.Patterns.BottomSheet {
 		private _bottomSheetContentElem: HTMLElement;
 		private _bottomSheetHeaderElem: HTMLElement;
 		// Listener callbacks
-		private _eventOnContentScroll: Callbacks.Generic;
-		private _eventOnKeypress: Callbacks.Generic;
+		private _eventOnContentScroll: GlobalCallbacks.Generic;
+		private _eventOnKeypress: GlobalCallbacks.Generic;
 		// FocusTrap Properties
 		private _focusTrapInstance: Behaviors.FocusTrap;
 		private _focusableActiveElement: HTMLElement;
@@ -29,7 +29,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		// WidgetId element
 		private _parentSelf: HTMLElement;
 		// OnToggle event callback
-		private _platformEventOnToggle: Callbacks.OSBottomSheetOnToggleEvent;
+		private _platformEventOnToggle: CallbacksOLD.OSBottomSheetOnToggleEvent;
 
 		// Stores SpringAnimation configs used on drag end. This is public to allow ability to change animation or even disable this effect
 		public springAnimationConfigs = {
@@ -393,10 +393,10 @@ namespace OSFramework.Patterns.BottomSheet {
 		/**
 		 * Set callbacks for the onToggle event
 		 *
-		 * @param {Callbacks.Generic} callback
+		 * @param {GlobalCallbacks.Generic} callback
 		 * @memberof BottomSheet
 		 */
-		public registerCallback(callback: Callbacks.Generic): void {
+		public registerCallback(callback: GlobalCallbacks.Generic): void {
 			if (this._platformEventOnToggle === undefined) {
 				this._platformEventOnToggle = callback;
 			} else {
@@ -426,9 +426,9 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * @memberof BottomSheet
 		 */
 		public setGestureEvents(
-			onGestureStart: Callbacks.onGestureStart,
-			onGestureMove: Callbacks.onGestureMove,
-			onGestureEnd: Callbacks.onGestureEnd
+			onGestureStart: CallbacksOLD.onGestureStart,
+			onGestureMove: CallbacksOLD.onGestureMove,
+			onGestureEnd: CallbacksOLD.onGestureEnd
 		): void {
 			this._gestureEventInstance.setEvents(onGestureStart, onGestureMove, onGestureEnd);
 			this._hasGestureEvents = true;

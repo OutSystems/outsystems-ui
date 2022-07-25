@@ -10,13 +10,13 @@ namespace OSFramework.Event {
 	 * @template T
 	 */
 	export abstract class AbstractEvent<T> implements IEvent<T> {
-		private _handlers: Callbacks.OSGeneric[] = [];
+		private _handlers: GlobalCallbacks.OSGeneric[] = [];
 
-		protected get handlers(): Callbacks.OSGeneric[] {
+		protected get handlers(): GlobalCallbacks.OSGeneric[] {
 			return this._handlers;
 		}
 
-		public addHandler(handler: Callbacks.OSGeneric): void {
+		public addHandler(handler: GlobalCallbacks.OSGeneric): void {
 			this._handlers.push(handler);
 		}
 
@@ -24,7 +24,7 @@ namespace OSFramework.Event {
 			return this._handlers.length > 0;
 		}
 
-		public removeHandler(handler: Callbacks.OSGeneric): void {
+		public removeHandler(handler: GlobalCallbacks.OSGeneric): void {
 			const index = this._handlers.findIndex((hd) => {
 				return hd === handler;
 			});

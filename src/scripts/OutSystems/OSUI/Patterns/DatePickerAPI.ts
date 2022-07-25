@@ -241,12 +241,12 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @export
 	 * @param {string} datePickerId
 	 * @param {string} eventName
-	 * @param {OSFramework.Callbacks.OSGeneric} callback
+	 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback
 	 */
 	export function RegisterCallback(
 		datePickerId: string,
 		eventName: string,
-		callback: OSFramework.Callbacks.OSGeneric
+		callback: OSFramework.GlobalCallbacks.OSGeneric
 	): string {
 		const responseObj = {
 			isSuccess: true,

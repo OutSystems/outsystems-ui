@@ -84,12 +84,12 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 	 * @export
 	 * @param {string} swipeEventsID
 	 * @param {string} eventName
-	 * @param {OSFramework.Callbacks.OSGeneric} callback
+	 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback
 	 */
 	export function RegisterCallback(
 		swipeEventsID: string,
 		eventName: string,
-		callback: OSFramework.Callbacks.OSGeneric
+		callback: OSFramework.GlobalCallbacks.OSGeneric
 	): void {
 		const swipeEvents = this.GetSwipeEventsById(swipeEventsID);
 

@@ -127,7 +127,7 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 * @param {string} ratingId
 	 * @param {*} callback
 	 */
-	export function RegisterCallback(ratingId: string, callback: OSFramework.Callbacks.OSRatingSelectEvent): string {
+	export function RegisterCallback(ratingId: string, callback: OSFramework.CallbacksOLD.OSRatingSelectEvent): string {
 		const responseObj = {
 			isSuccess: true,
 			message: ErrorCodes.Success.message,

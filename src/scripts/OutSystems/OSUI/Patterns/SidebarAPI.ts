@@ -174,9 +174,12 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 *
 	 * @export
 	 * @param {string} sidebarId
-	 * @param {OSFramework.Callbacks.OSSidebarToggleEvent} callback
+	 * @param {OSFramework.CallbacksOLD.OSSidebarToggleEvent} callback
 	 */
-	export function RegisterCallback(sidebarId: string, callback: OSFramework.Callbacks.OSSidebarToggleEvent): string {
+	export function RegisterCallback(
+		sidebarId: string,
+		callback: OSFramework.CallbacksOLD.OSSidebarToggleEvent
+	): string {
 		const responseObj = {
 			isSuccess: true,
 			message: ErrorCodes.Success.message,

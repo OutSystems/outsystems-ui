@@ -23,15 +23,15 @@ namespace OSFramework.Patterns.Tabs {
 		// Store the IntersectionObserver callback
 		private _dragObserver: IntersectionObserver;
 		// Store the events with bind(this)
-		private _eventOnHeaderKeypress: Callbacks.Generic;
+		private _eventOnHeaderKeypress: GlobalCallbacks.Generic;
 		// On WindowResize and OrientationChange Event
-		private _eventOnResize: Callbacks.Generic;
+		private _eventOnResize: GlobalCallbacks.Generic;
 		// Store if has drag gestures
 		private _hasDragGestures: boolean;
 		// Store if the Tabs has only one ContentItem, to prevent unnecessary usages of ScrollTo
 		private _hasSingleContent: boolean;
 		// Store the onTabsChange platform callback
-		private _platformEventTabsOnChange: Callbacks.OSTabsOnChangeEvent;
+		private _platformEventTabsOnChange: CallbacksOLD.OSTabsOnChangeEvent;
 		// Store the id of the requestAnimationFrame called to animate the indicator
 		private _requestAnimationFrameOnIndicatorResize: number;
 		// Store the contentItems wrapper -- osui-tabs__content
@@ -871,10 +871,10 @@ namespace OSFramework.Patterns.Tabs {
 		/**
 		 * Set callbacks for the onTabsChange event
 		 *
-		 * @param {Callbacks.OSTabsOnChangeEvent} callback
+		 * @param {CallbacksOLD.OSTabsOnChangeEvent} callback
 		 * @memberof Tabs
 		 */
-		public registerCallback(callback: Callbacks.OSTabsOnChangeEvent): void {
+		public registerCallback(callback: CallbacksOLD.OSTabsOnChangeEvent): void {
 			if (this._platformEventTabsOnChange === undefined) {
 				this._platformEventTabsOnChange = callback;
 			} else {

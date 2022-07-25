@@ -5,7 +5,7 @@ namespace Providers.Datepicker.Flatpickr {
 		implements IFlatpickr
 	{
 		// Flatpickr onInitialize event
-		private _onInitializeCallbackEvent: OSFramework.Callbacks.OSGeneric;
+		private _onInitializeCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
 		// Store pattern input HTML element reference
 		protected _datePickerProviderInputElem: HTMLInputElement;
 		// Store the flatpickr input html element that will be added by library
@@ -13,7 +13,7 @@ namespace Providers.Datepicker.Flatpickr {
 		// Store the provider options
 		protected _flatpickrOpts: FlatpickrOptions;
 		// Flatpickr onChange (SelectedDate) event
-		protected _onChangeCallbackEvent: OSFramework.Callbacks.OSDatepickerOnChangeEvent;
+		protected _onChangeCallbackEvent: OSFramework.CallbacksOLD.OSDatepickerOnChangeEvent;
 
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
@@ -271,7 +271,7 @@ namespace Providers.Datepicker.Flatpickr {
 		 *
 		 * @memberof AbstractFlatpickr
 		 */
-		public registerCallback(eventName: string, callback: OSFramework.Callbacks.OSGeneric): void {
+		public registerCallback(eventName: string, callback: OSFramework.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
 				case OSFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnChange:
 					this._onChangeCallbackEvent = callback;

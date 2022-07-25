@@ -90,7 +90,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	 * @returns
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
-	export function RTLObserver(callback: OSFramework.Callbacks.OSGeneric): MutationObserver {
+	export function RTLObserver(callback: OSFramework.GlobalCallbacks.OSGeneric): MutationObserver {
 		const elemToObserve = document.body;
 		let hasAlreadyRTL = elemToObserve.classList.contains(OSFramework.Constants.IsRTLClass);
 

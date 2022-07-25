@@ -13,9 +13,9 @@ namespace Providers.RangeSlider.NoUISlider {
 		// Store the provider target elem
 		private _rangeSliderProviderElem: HTMLElement;
 		// RangeSlider events
-		protected eventProviderValueChanged: OSFramework.Callbacks.Generic;
-		protected platformEventInitialize: OSFramework.Callbacks.OSRangeSliderInitializeEvent;
-		protected platformEventValueChange: OSFramework.Callbacks.OSRangeSliderOnValueChangeEvent;
+		protected eventProviderValueChanged: OSFramework.GlobalCallbacks.Generic;
+		protected platformEventInitialize: OSFramework.CallbacksOLD.OSRangeSliderInitializeEvent;
+		protected platformEventValueChange: OSFramework.CallbacksOLD.OSRangeSliderOnValueChangeEvent;
 		// Store the provider options
 		protected providerOptions: NoUiSliderOptions;
 		// throttle before invoking the platform
@@ -302,10 +302,10 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * Sets the callbacks to be used to invoke the platform code.
 		 *
 		 * @param {string} eventName
-		 * @param {OSFramework.Callbacks.OSGeneric} callback
+		 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback
 		 * @memberof OSUINoUiSlider
 		 */
-		public registerCallback(eventName: string, callback: OSFramework.Callbacks.OSGeneric): void {
+		public registerCallback(eventName: string, callback: OSFramework.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
 				case OSFramework.Patterns.RangeSlider.Enum.RangeSliderEvents.OnInitialize:
 					if (this.platformEventInitialize === undefined) {

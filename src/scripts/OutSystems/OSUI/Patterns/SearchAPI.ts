@@ -179,7 +179,10 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	 * @param {string} searchId ID of the Search that will be initialized.
 	 * @return {*}  callback
 	 */
-	export function RegisterCallback(searchId: string, callback: OSFramework.Callbacks.OSSearchCollapseEvent): string {
+	export function RegisterCallback(
+		searchId: string,
+		callback: OSFramework.CallbacksOLD.OSSearchCollapseEvent
+	): string {
 		const responseObj = {
 			isSuccess: true,
 			message: ErrorCodes.Success.message,
