@@ -354,6 +354,8 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 			// Set the windown width value
 			this._windowWidth = window.innerWidth;
 
+			this._setBalloonCoordinates();
+
 			// Update the touchMove when pattern is open!
 			this._touchMove();
 
