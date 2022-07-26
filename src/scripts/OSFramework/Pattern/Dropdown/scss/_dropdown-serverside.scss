@@ -442,6 +442,7 @@ $balloonMobileTopMargin: 5vh;
 			&-container {
 				box-shadow: var(--shadow-xl);
 				margin-top: $balloonMobileTopMargin;
+				// 90vh - maxHeight in order to create a margin top/bottom with 5vh
 				max-height: calc(90vh - $balloonMobileTopMargin - var(--header-size));
 				width: 85vw;
 

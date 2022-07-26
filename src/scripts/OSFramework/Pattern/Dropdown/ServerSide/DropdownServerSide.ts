@@ -298,7 +298,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 			}
 		}
 
-		// Also Used to manage the balloon heigh accorindgly keyboard is in use due to the way iOS deal with it!
+		// Also Used to manage the balloon height accordingly keyboard is in use due to the way iOS deal with it!
 		private _onSearchInputBlur(): void {
 			Helper.Dom.Styles.RemoveClass(this._balloonWrapperElement, Enum.CssClass.SearchInputIsFocused);
 		}
@@ -308,7 +308,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 			event.stopPropagation();
 		}
 
-		// Used to manage the balloon heigh accorindgly keyboard is in use due to the way iOS deal with it!
+		// Used to manage the balloon height accordingly keyboard is in use due to the way iOS deal with it!
 		private _onSearchInputFocus(): void {
 			Helper.Dom.Styles.AddClass(this._balloonWrapperElement, Enum.CssClass.SearchInputIsFocused);
 		}
@@ -639,8 +639,8 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		// Method used to manage the onTouchMove when we're at mobile devices in order to block the window scroll!
 		// This is an improvement specially to iOS since otherwise it will be able to scroll the pattern when keyboard is open!
 		private _touchMove(): void {
-			// Check if the used browser has TouchMove event!
-			if ('ontouchmove' in window) {
+			// Check if the used browser has TouchMove event and if it's an iOS device
+			if (Helper.DeviceInfo.IsIos && 'ontouchmove' in window) {
 				if (this._isOpen) {
 					this._balloonWrapperElement.addEventListener(
 						GlobalEnum.HTMLEvent.TouchMove,
