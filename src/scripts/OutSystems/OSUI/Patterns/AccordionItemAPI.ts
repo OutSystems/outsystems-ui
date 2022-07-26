@@ -97,7 +97,7 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	): OSUIFramework.Patterns.AccordionItem.IAccordionItem {
 		if (_accordionItemMap.has(accordionItemId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.AccordionItem} registered under id: ${accordionItemId}`
+				`There is already a ${OSUIFramework.GlobalEnum.PatternName.AccordionItem} registered under id: ${accordionItemId}`
 			);
 		}
 

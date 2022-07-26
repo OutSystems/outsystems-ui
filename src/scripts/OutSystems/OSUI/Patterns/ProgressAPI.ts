@@ -124,6 +124,31 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	}
 
 	/**
+	 * Function to reset the Progress Bar/Circle
+	 *
+	 * @export
+	 * @param {string} progressId
+	 */
+	export function ResetProgressValue(progressId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const _progressItem = GetProgressItemById(progressId);
+			_progressItem.resetProgressValue();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Progress.FailProgressReset;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
 	 * Function that sets the value of the progress circle or the progress bar
 	 * @export
 	 * @param {string} widgetId of the progress circle or progress bar that will have its value set

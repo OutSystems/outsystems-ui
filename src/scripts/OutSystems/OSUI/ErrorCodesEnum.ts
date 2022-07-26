@@ -55,12 +55,13 @@ namespace OutSystems.OSUI.ErrorCodes {
 	export const Carousel = {
 		FailChangeProperty: 'OSUI-API-06001',
 		FailDispose: 'OSUI-API-06002',
-		FailGoTo: 'OSUI-API-06003',
-		FailNext: 'OSUI-API-06004',
-		FailPrevious: 'OSUI-API-06005',
-		FailRegisterCallback: 'OSUI-API-06006',
-		FailToggleDrag: 'OSUI-API-06007',
-		FailUpdate: 'OSUI-API-06008',
+		FailDirection: 'OSUI-API-06003',
+		FailGoTo: 'OSUI-API-06004',
+		FailNext: 'OSUI-API-06005',
+		FailPrevious: 'OSUI-API-06006',
+		FailRegisterCallback: 'OSUI-API-06007',
+		FailToggleDrag: 'OSUI-API-06008',
+		FailUpdate: 'OSUI-API-06009',
 	};
 
 	export const DatePicker = {
@@ -86,6 +87,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailChangeProperty: 'OSUI-API-09001',
 		FailDispose: 'OSUI-API-09002',
 		FailProgressValue: 'OSUI-API-09003',
+		FailProgressReset: 'OSUI-API-09004',
 	};
 
 	export const RangeSlider = {
@@ -93,6 +95,8 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailDispose: 'OSUI-API-10002',
 		FailOnDragEnd: 'OSUI-API-10003',
 		FailRegisterCallback: 'OSUI-API-10004',
+		FailSetValues: 'OSUI-API-10005',
+		FailResetValues: 'OSUI-API-10006',
 	};
 
 	export const Sidebar = {
@@ -101,6 +105,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailDispose: 'OSUI-API-11003',
 		FailOpen: 'OSUI-API-11004',
 		FailRegisterCallback: 'OSUI-API-11005',
+		FailToggleSwipe: 'OSUI-API-11006',
 	};
 
 	export const Submenu = {
@@ -183,6 +188,14 @@ namespace OutSystems.OSUI.ErrorCodes {
 
 	export const TabsHeaderItem = {
 		FailChangeProperty: 'OSUI-API-24001',
-		FailDispose: 'OSUI-API-24002',
+		FailDisableTabHeader: 'OSUI-API-22002',
+		FailDispose: 'OSUI-API-24003',
+		FailEnableTabHeader: 'OSUI-API-22004',
+	};
+
+	export const BottomSheet = {
+		FailChangeProperty: 'OSUI-API-25001',
+		FailDispose: 'OSUI-API-25002',
+		FailRegisterCallback: 'OSUI-API-25003',
 	};
 }

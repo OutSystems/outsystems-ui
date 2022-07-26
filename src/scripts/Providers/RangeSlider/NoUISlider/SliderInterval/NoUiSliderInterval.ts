@@ -111,7 +111,7 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 				switch (propertyName) {
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueTo:
 						console.warn(
-							`${OSUIFramework.GlobalEnum.PatternsNames.RangeSliderInterval}': (${this.widgetId}): changes to ${OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueTo} parameter do not affect the ${OSUIFramework.GlobalEnum.PatternsNames.RangeSliderInterval}'. Use a distinct variable to assign on the OnValueChange event`
+							`${OSUIFramework.GlobalEnum.PatternName.RangeSliderInterval}': (${this.widgetId}): changes to ${OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueTo} parameter do not affect the ${OSUIFramework.GlobalEnum.PatternName.RangeSliderInterval}'. Use a distinct variable to assign on the OnValueChange event`
 						);
 						break;
 					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
@@ -120,6 +120,39 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 						this._updateRangeSlider();
 						break;
 				}
+			}
+		}
+
+		/**
+		 * Method to set current RangeSliderInterval value
+		 *
+		 * @memberof OSUINoUiSlider
+		 */
+		public resetValue(): void {
+			this.configs.StartingValueFrom = this.configs.InitialValueFrom;
+			this.configs.StartingValueTo = this.configs.InitialValueTo;
+			this.provider.set([this.configs.InitialValueFrom, this.configs.InitialValueTo]);
+		}
+
+		/**
+		 * Method to set current RangeSliderInterval values
+		 *
+		 * @param {number} value
+		 * @memberof OSUINoUiSlider
+		 */
+		public setValue(intervalStart: number, intervalEnd: number): void {
+			if (intervalStart < intervalEnd) {
+				this.configs.StartingValueFrom = intervalStart;
+				this.configs.StartingValueTo = intervalEnd;
+				this.provider.set([intervalStart, intervalEnd]);
+			} else if (intervalStart > this.configs.MinValue && intervalEnd < this.configs.MaxValue) {
+				throw new Error(
+					`${OSUIFramework.ErrorCodes.RangeSlider.FailSetValue}:	The values must be within the specified range.`
+				);
+			} else {
+				throw new Error(
+					`${OSUIFramework.ErrorCodes.RangeSlider.FailSetValue}:	The start value cannot be bigger than the end value.`
+				);
 			}
 		}
 	}

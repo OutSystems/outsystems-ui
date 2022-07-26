@@ -120,7 +120,7 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	export function Create(submenuId: string, configs: string): OSUIFramework.Patterns.Submenu.ISubmenu {
 		if (_submenusMap.has(submenuId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.Submenu} registered under id: ${submenuId}`
+				`There is already a ${OSUIFramework.GlobalEnum.PatternName.Submenu} registered under id: ${submenuId}`
 			);
 		}
 
@@ -178,7 +178,7 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	 */
 	export function GetSubmenuById(submenuId: string): OSUIFramework.Patterns.Submenu.ISubmenu {
 		return OSUIFramework.Helper.MapOperation.FindInMap(
-			OSUIFramework.GlobalEnum.PatternsNames.Submenu,
+			OSUIFramework.GlobalEnum.PatternName.Submenu,
 			submenuId,
 			_submenusMap
 		) as OSUIFramework.Patterns.Submenu.ISubmenu;

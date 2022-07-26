@@ -67,6 +67,7 @@
 /*!         - Action Sheet                                                      */
 /*!         - Animate                                                           */
 /*!         - Animated Label                                                    */
+/*!         - BottomSheet                                                       */
 /*!         - Carousel                                                          */
 /*!         - DatePicker                                                        */
 /*!         - Dropdown                                                          */
@@ -273,6 +274,7 @@
 @import '04-patterns/03-interaction/action-sheet';
 @import '04-patterns/03-interaction/animate';
 @import '../scripts/OSUIFramework/Pattern/AnimatedLabel/scss/animated-label';
+@import '../scripts/OSUIFramework/Pattern/BottomSheet/scss/bottomsheet';
 @import '../scripts/OSUIFramework/Pattern/Carousel/scss/carousel';
 @import '../scripts/OSUIFramework/Pattern/DatePicker/scss/datepicker';
 @import '../scripts/OSUIFramework/Pattern/Dropdown/scss/dropdown';

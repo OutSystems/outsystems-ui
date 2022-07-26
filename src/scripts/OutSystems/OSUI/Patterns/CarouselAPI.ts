@@ -46,7 +46,7 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	): OSUIFramework.Patterns.Carousel.ICarousel {
 		if (_carouselItemsMap.has(carouselId)) {
 			throw new Error(
-				`There is already an ${OSUIFramework.GlobalEnum.PatternsNames.Carousel} registered under id: ${carouselId}`
+				`There is already an ${OSUIFramework.GlobalEnum.PatternName.Carousel} registered under id: ${carouselId}`
 			);
 		}
 
@@ -287,6 +287,33 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
 			responseObj.code = ErrorCodes.Carousel.FailUpdate;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
+	 * Function that will update the direction of the carousel
+	 *
+	 * @export
+	 * @param {string} carouselId
+	 * @return {*}  {OSUIFramework.Patterns.Carousel.ICarousel}
+	 */
+	export function SetCarouselDirection(carouselId: string, direction: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const carousel = GetCarouselItemById(carouselId);
+
+			carousel.setCarouselDirection(direction);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Carousel.FailDirection;
 		}
 
 		return JSON.stringify(responseObj);

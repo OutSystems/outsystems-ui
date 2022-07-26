@@ -54,7 +54,7 @@ namespace Providers.RangeSlider.NoUISlider {
 				this.configs.Size = OSUIFramework.Patterns.RangeSlider.Enum.DefaultValues.PercentualSize;
 
 				console.warn(
-					`The value of the Size property on the '${this.widgetId}' ${OSUIFramework.GlobalEnum.PatternsNames.RangeSlider} can't be smaller than '${OSUIFramework.Patterns.RangeSlider.Enum.DefaultValues.PercentualSize}'.`
+					`The value of the Size property on the '${this.widgetId}' ${OSUIFramework.GlobalEnum.PatternName.RangeSlider} can't be smaller than '${OSUIFramework.Patterns.RangeSlider.Enum.DefaultValues.PercentualSize}'.`
 				);
 			}
 
@@ -219,14 +219,14 @@ namespace Providers.RangeSlider.NoUISlider {
 						console.warn(
 							`${
 								this._isInterval
-									? OSUIFramework.GlobalEnum.PatternsNames.RangeSliderInterval
-									: OSUIFramework.GlobalEnum.PatternsNames.RangeSlider
+									? OSUIFramework.GlobalEnum.PatternName.RangeSliderInterval
+									: OSUIFramework.GlobalEnum.PatternName.RangeSlider
 							} (${this.widgetId}): changes to ${
 								OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueFrom
 							} parameter do not affect the ${
 								this._isInterval
-									? OSUIFramework.GlobalEnum.PatternsNames.RangeSliderInterval
-									: OSUIFramework.GlobalEnum.PatternsNames.RangeSlider
+									? OSUIFramework.GlobalEnum.PatternName.RangeSliderInterval
+									: OSUIFramework.GlobalEnum.PatternName.RangeSlider
 							}. Use a distinct variable to assign on the OnValueChange event`
 						);
 						break;
@@ -243,8 +243,8 @@ namespace Providers.RangeSlider.NoUISlider {
 								OSUIFramework.Patterns.RangeSlider.Enum.Properties.Orientation
 							} parameter do not affect the ${
 								this._isInterval
-									? OSUIFramework.GlobalEnum.PatternsNames.RangeSliderInterval
-									: OSUIFramework.GlobalEnum.PatternsNames.RangeSlider
+									? OSUIFramework.GlobalEnum.PatternName.RangeSliderInterval
+									: OSUIFramework.GlobalEnum.PatternName.RangeSlider
 							}. Use a distinct variable to assign on the OnValueChange event.`
 						);
 						break;

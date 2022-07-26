@@ -19,7 +19,7 @@ namespace OSUIFramework.Patterns.Carousel.Factory {
 			_carouselItem = new Providers.Splide.OSUISplide(carouselId, JSON.parse(configs));
 		} else {
 			throw new Error(
-				`There is no  ${OSUIFramework.GlobalEnum.PatternsNames.Carousel}  of the ${provider} provider`
+				`There is no  ${OSUIFramework.GlobalEnum.PatternName.Carousel}  of the ${provider} provider`
 			);
 		}
 

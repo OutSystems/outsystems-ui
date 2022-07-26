@@ -48,7 +48,7 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	): OSUIFramework.Patterns.RangeSlider.IRangeSlider {
 		if (_rangeSliderItemsMap.has(rangeSliderId)) {
 			throw new Error(
-				`There is already an ${OSUIFramework.GlobalEnum.PatternsNames.RangeSlider} registered under id: ${rangeSliderId}`
+				`There is already an ${OSUIFramework.GlobalEnum.PatternName.RangeSlider} registered under id: ${rangeSliderId}`
 			);
 		}
 
@@ -111,7 +111,7 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 */
 	export function GetRangeSliderItemById(rangeSliderId: string): OSUIFramework.Patterns.RangeSlider.IRangeSlider {
 		return OSUIFramework.Helper.MapOperation.FindInMap(
-			OSUIFramework.GlobalEnum.PatternsNames.RangeSlider,
+			OSUIFramework.GlobalEnum.PatternName.RangeSlider,
 			rangeSliderId,
 			_rangeSliderItemsMap
 		) as OSUIFramework.Patterns.RangeSlider.IRangeSlider;
@@ -185,6 +185,57 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
 			responseObj.code = ErrorCodes.RangeSlider.FailOnDragEnd;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
+	 * Function to set the Range Slider value
+	 *
+	 * @export
+	 * @param {string} rangeSliderId
+	 * @param {number} value
+	 */
+	export function SetRangeSliderValue(rangeSliderId: string, valueFrom: number, valueTo?: number): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
+			rangeSlider.setValue(valueFrom, valueTo);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.RangeSlider.FailSetValues;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
+	 * Function to reset the Range Slider
+	 *
+	 * @export
+	 * @param {string} rangeSliderId
+	 */
+	export function ResetRangeSliderValue(rangeSliderId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
+			rangeSlider.resetValue();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.RangeSlider.FailResetValues;
 		}
 
 		return JSON.stringify(responseObj);

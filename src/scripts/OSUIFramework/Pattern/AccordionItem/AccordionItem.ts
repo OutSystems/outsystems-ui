@@ -424,7 +424,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 						break;
 					case Enum.Properties.StartsExpanded:
 						console.warn(
-							`${GlobalEnum.PatternsNames.AccordionItem} (${this.widgetId}): changes to ${Enum.Properties.StartsExpanded} parameter do not affect the ${GlobalEnum.PatternsNames.AccordionItem}. Use the client actions 'AccordionItemExpand' and 'AccordionItemCollapse' to affect the ${GlobalEnum.PatternsNames.AccordionItem}.`
+							`${GlobalEnum.PatternName.AccordionItem} (${this.widgetId}): changes to ${Enum.Properties.StartsExpanded} parameter do not affect the ${GlobalEnum.PatternName.AccordionItem}. Use the client actions 'AccordionItemExpand' and 'AccordionItemCollapse' to affect the ${GlobalEnum.PatternName.AccordionItem}.`
 						);
 						break;
 					case Enum.Properties.IconPosition:
@@ -540,7 +540,7 @@ namespace OSUIFramework.Patterns.AccordionItem {
 			if (this._platformEventOnToggle === undefined) {
 				this._platformEventOnToggle = callback;
 			} else {
-				console.warn(`The ${GlobalEnum.PatternsNames.AccordionItem} already has the toggle callback set.`);
+				console.warn(`The ${GlobalEnum.PatternName.AccordionItem} already has the toggle callback set.`);
 			}
 		}
 	}

@@ -93,7 +93,7 @@ namespace OSUIFramework.Patterns.ButtonLoading {
 				throw new Error(
 					`There are no '${Constants.Dot + Enum.CssClass.Button}' element as a  ${
 						// eslint-disable-next-line @typescript-eslint/no-unused-vars
-						OSUIFramework.GlobalEnum.PatternsNames.ButtonLoading
+						OSUIFramework.GlobalEnum.PatternName.ButtonLoading
 					}  placeholder child.`
 				);
 			}

@@ -66,7 +66,7 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	export function Create(sidebarId: string, configs: string): OSUIFramework.Patterns.Sidebar.ISidebar {
 		if (_sidebarMap.has(sidebarId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.Sidebar} registered under id: ${sidebarId}`
+				`There is already a ${OSUIFramework.GlobalEnum.PatternName.Sidebar} registered under id: ${sidebarId}`
 			);
 		}
 
@@ -122,7 +122,7 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 */
 	export function GetSidebarById(sidebarId: string): OSUIFramework.Patterns.Sidebar.ISidebar {
 		return OSUIFramework.Helper.MapOperation.FindInMap(
-			OSUIFramework.GlobalEnum.PatternsNames.Sidebar,
+			OSUIFramework.GlobalEnum.PatternName.Sidebar,
 			sidebarId,
 			_sidebarMap
 		) as OSUIFramework.Patterns.Sidebar.ISidebar;
@@ -141,6 +141,32 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 		sidebar.build();
 
 		return sidebar;
+	}
+
+	/**
+	 * Function that opens the sidebar.
+	 *
+	 * @export
+	 * @param {string} sidebarId
+	 */
+	export function Open(sidebarId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const sidebar = GetSidebarById(sidebarId);
+
+			sidebar.open();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Sidebar.FailOpen;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -174,12 +200,12 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	}
 
 	/**
-	 * Function that opens the sidebar.
+	 * Function that toggle swipes on sidebar.
 	 *
 	 * @export
 	 * @param {string} sidebarId
 	 */
-	export function Open(sidebarId: string): string {
+	export function ToggleGestures(sidebarId: string, enableSwipe: boolean): string {
 		const responseObj = {
 			isSuccess: true,
 			message: ErrorCodes.Success.message,
@@ -189,11 +215,11 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 		try {
 			const sidebar = GetSidebarById(sidebarId);
 
-			sidebar.open();
+			sidebar.toggleGestures(enableSwipe);
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Sidebar.FailOpen;
+			responseObj.code = ErrorCodes.Sidebar.FailToggleSwipe;
 		}
 
 		return JSON.stringify(responseObj);

@@ -5,6 +5,7 @@
 
 // Balloon margin value related with selectedValuesWrapper
 $balloonMarginToSelectValuesWrapper: 2px;
+$balloonMobileTopMargin: 5vh;
 
 ///
 .osui-dropdown-serverside {
@@ -73,18 +74,19 @@ $balloonMarginToSelectValuesWrapper: 2px;
 	&__balloon {
 		// Wrapper
 		&-wrapper {
+			top: calc(
+				var(--osui-dropdown-ss-top) + var(--osui-dropdown-ss-input-height) + $balloonMarginToSelectValuesWrapper
+			);
 			display: flex;
 			flex-direction: column;
 			flex: 1;
 			left: var(--osui-dropdown-ss-left);
 			max-height: 0;
 			max-width: var(--osui-dropdown-ss-width);
+			opacity: 0;
 			overflow: hidden;
 			position: absolute;
-			top: calc(
-				var(--osui-dropdown-ss-top) + var(--osui-dropdown-ss-input-height) + $balloonMarginToSelectValuesWrapper
-			);
-			transition: max-height 300ms ease-in-out;
+			transition: opacity 300ms ease;
 			width: 100%;
 			z-index: 2;
 
@@ -95,14 +97,6 @@ $balloonMarginToSelectValuesWrapper: 2px;
 				-servicestudio-position: relative;
 				-servicestudio-top: 2px;
 			}
-		}
-
-		&-focus-top {
-			top: 0;
-		}
-
-		&-focus-bottom {
-			bottom: 0;
 		}
 
 		// Content Container
@@ -128,6 +122,7 @@ $balloonMarginToSelectValuesWrapper: 2px;
 
 		// Search placeholder
 		&-search {
+			background-color: var(--color-neutral-0);
 			padding: var(--space-none);
 			position: relative;
 
@@ -197,8 +192,8 @@ $balloonMarginToSelectValuesWrapper: 2px;
 	&__balloon--is-top {
 		// Wrapper
 		&.osui-dropdown-serverside__balloon-wrapper {
-			top: calc(var(--osui-dropdown-ss-top) - $balloonMarginToSelectValuesWrapper);
-			transform: translateY(-100%);
+			bottom: calc(100vh - var(--osui-dropdown-ss-top) + $balloonMarginToSelectValuesWrapper);
+			top: unset;
 		}
 
 		// Content Container
@@ -207,6 +202,10 @@ $balloonMarginToSelectValuesWrapper: 2px;
 				&-container {
 					transform: translateY(0);
 					transition: opacity 250ms ease;
+				}
+
+				&-content {
+					border-top-width: var(--border-size-none);
 				}
 
 				&-search {
@@ -247,6 +246,13 @@ $balloonMarginToSelectValuesWrapper: 2px;
 		// Ballon wrapper
 		&.osui-dropdown-serverside__balloon-wrapper {
 			max-height: var(--osui-dropdown-ss-balloon-max-height);
+			opacity: 1;
+
+			// Used to help triggering the IntersectionObserver before going behind header!
+			&.osui-dropdown-serverside__balloon--is-top {
+				max-height: calc(var(--osui-dropdown-ss-balloon-max-height) + var(--header-size));
+				padding-top: var(--header-size);
+			}
 		}
 	}
 
@@ -329,16 +335,6 @@ $balloonMarginToSelectValuesWrapper: 2px;
 		}
 
 		// Balloon States
-		&--is-opened {
-			.osui-dropdown-serverside {
-				&__selected-values {
-					&:after {
-						transform: rotate(-225deg);
-					}
-				}
-			}
-		}
-
 		&__balloon {
 			&-search {
 				&:before {
@@ -374,6 +370,7 @@ $balloonMarginToSelectValuesWrapper: 2px;
 	}
 }
 
+///
 .phone {
 	&.android {
 		&.landscape {
@@ -383,7 +380,7 @@ $balloonMarginToSelectValuesWrapper: 2px;
 		}
 
 		.osui-dropdown-serverside__balloon-container {
-			max-height: 90vh;
+			max-height: calc(90vh - $balloonMobileTopMargin - var(--header-size));
 		}
 	}
 
@@ -435,9 +432,9 @@ $balloonMarginToSelectValuesWrapper: 2px;
 			// Content Container
 			&-container {
 				box-shadow: var(--shadow-xl);
-				margin-top: 5vh;
+				margin-top: $balloonMobileTopMargin;
 				// 100vw because ios split in half the vertical height when keyboard is open!
-				max-height: calc(100vw - 5vh - var(--header-size));
+				max-height: calc(100vw - $balloonMobileTopMargin - var(--header-size));
 				width: 85vw;
 
 				// Service Studio Preview
@@ -452,8 +449,8 @@ $balloonMarginToSelectValuesWrapper: 2px;
 			// If do not exist a input search inside balloon
 			&--has-not-search {
 				.osui-dropdown-serverside__balloon-container {
-					margin-top: 5vh;
-					max-height: calc(var(--viewport-height) - 5vh - var(--header-size));
+					margin-top: $balloonMobileTopMargin;
+					max-height: calc(var(--viewport-height) - $balloonMobileTopMargin - var(--header-size));
 				}
 			}
 		}

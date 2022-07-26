@@ -16,7 +16,7 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 		constructor(config: JSON) {
 			super(config);
 
-			this.calendarMode = OSUIFramework.Patterns.DatePicker.Enum.Mode.Single;
+			this.CalendarMode = OSUIFramework.Patterns.DatePicker.Enum.Mode.Single;
 		}
 
 		// Method used to set all the config properties for the SingleDate mode type

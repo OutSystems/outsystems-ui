@@ -8,63 +8,138 @@ namespace OSUIFramework.Patterns.Tabs {
 	 * @extends {AbstractPattern<TabsConfig>}
 	 * @implements {ITabs}
 	 */
-	export class Tabs extends AbstractPattern<TabsConfig> implements ITabs {
+	export class Tabs
+		extends AbstractParent<TabsConfig, TabsContentItem.ITabsContentItem | TabsHeaderItem.ITabsHeaderItem>
+		implements ITabs
+	{
 		// Store the current contentItem active
 		private _activeTabContentElement: Patterns.TabsContentItem.ITabsContentItem;
 		// Store the current headerItem active
 		private _activeTabHeaderElement: Patterns.TabsHeaderItem.ITabsHeaderItem;
-		// Store if there is need to add drag gestures
-		private _addDragGestures: boolean;
 		// Store current orientation config, to be able to remove current active option
 		private _currentOrientation: GlobalEnum.Orientation;
 		// Store current position config, to be able to remove current active option
 		private _currentVerticalPositon: GlobalEnum.Direction;
-		// Store if the observer should observe
-		// This is usefull to prevent observer on clicks and changeProperty of changeTab method
-		private _disableObserver: boolean;
 		// Store the IntersectionObserver callback
 		private _dragObserver: IntersectionObserver;
 		// Store the events with bind(this)
 		private _eventOnHeaderKeypress: Callbacks.Generic;
-		private _eventOnTouchstart: Callbacks.Generic;
-		// Store the onTabsChange platform callback
-		private _eventTabsChange: Callbacks.OSTabsOnChangeEvent;
-		// Store if the Tabs has only one ContentItem, to prevebt unnecessary usages of ScrollTo
+		// On WindowResize and OrientationChange Event
+		private _eventOnResize: Callbacks.Generic;
+		// Store if has drag gestures
+		private _hasDragGestures: boolean;
+		// Store if the Tabs has only one ContentItem, to prevent unnecessary usages of ScrollTo
 		private _hasSingleContent: boolean;
+		// Store the onTabsChange platform callback
+		private _platformEventTabsOnChange: Callbacks.OSTabsOnChangeEvent;
+		// Store the id of the requestAnimationFrame called to animate the indicator
+		private _requestAnimationFrameOnIndicatorResize: number;
 		// Store the contentItems wrapper -- osui-tabs__content
 		private _tabsContentElement: HTMLElement;
-		// Store all the contentItems that are created
-		private _tabsContentItemsElementsArray: Patterns.TabsContentItem.ITabsContentItem[];
 		// Store the headerItems wrapper -- osui-tabs__header
 		private _tabsHeaderElement: HTMLElement;
-		// Store all the headerItems that are created
-		private _tabsHeaderItemsElementsArray: Patterns.TabsHeaderItem.ITabsHeaderItem[];
+		// Store the tabs-indicator element -- osui-tabs_indicator
+		private _tabsIndicatorElement: HTMLElement;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new TabsConfig(configs));
 
-			// Start with the arrays empty
-			this._tabsHeaderItemsElementsArray = [];
-			this._tabsContentItemsElementsArray = [];
 			// Check if running on native shell, to enable drag gestures
-			this._addDragGestures = OutSystems.OSUI.Utils.DeviceDetection.IsRunningAsNativeApp();
-			// Block observer by default, to prevent it from running on page load
-			this._disableObserver = true;
+			this._hasDragGestures =
+				Helper.DeviceInfo.IsNative && this.configs.TabsOrientation === GlobalEnum.Orientation.Horizontal;
+		}
+
+		// Method that it's called whenever a new TabsContentItem is rendered
+		private _addContentItem(tabsContentChildId: string): void {
+			// Get the ContentChildItem reference
+			const tabsContentChildItem =
+				OutSystems.OSUI.Patterns.TabsContentItemAPI.GetTabsContentItemById(tabsContentChildId);
+
+			if (this.getChild(tabsContentChildId)) {
+				throw new Error(
+					`${ErrorCodes.Tabs.FailSetNewChildContentItem}: There is already a ${GlobalEnum.PatternName.TabsContentItem} under Id: '${tabsContentChildItem.widgetId}' added to ${GlobalEnum.PatternName.Tabs} with uniqueId: ${this.uniqueId}.`
+				);
+			} else {
+				// Store Child Item
+				this.setChild(tabsContentChildId, tabsContentChildItem);
+			}
+
+			// If tabs are already built, then this is dynamic content being added later
+			if (this.isBuilt) {
+				// So make again the connection between header items and content items,
+				// to make sure the data-tab and labels attributes are correct with the new DOM order
+				Helper.AsyncInvocation(this._updateItemsConnection.bind(this));
+
+				// If there's no active content element, assign it to this one
+				if (this._activeTabContentElement === undefined) {
+					this._activeTabContentElement = tabsContentChildItem;
+				}
+
+				if (this._hasDragGestures) {
+					tabsContentChildItem.setOnDragObserver(this._dragObserver);
+				}
+			} else {
+				// Otherwise are items created before the tabs is built
+				// Set the correct data-tab, by using the items array, that correspond to the DOM order
+				tabsContentChildItem.setDataTab(this.getChildItems(Enum.ChildTypes.TabsContentItem).length - 1);
+			}
 		}
 
 		// Add event listener for arrow navigation
 		private _addEvents(): void {
 			this._tabsHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
+
+			// Add event listener for window resize, to update active indicator size
+			Event.GlobalEventManager.Instance.addHandler(Event.Type.WindowResize, this._eventOnResize);
+
+			// Add orientationchange listener to update active indicator size, on touch devices
+			if (Helper.DeviceInfo.IsPhone || Helper.DeviceInfo.IsTablet) {
+				Event.GlobalEventManager.Instance.addHandler(Event.Type.OrientationChange, this._eventOnResize);
+			}
 		}
 
-		// Method to block the observer
-		private _disableDragObserver(): void {
-			this._disableObserver = true;
-		}
+		// Method that it's called whenever a new TabsHeaderItem is rendered
+		private _addHeaderItem(tabsHeaderChildId: string): void {
+			// Get the ContentChildItem reference
+			const tabsHeaderChildItem =
+				OutSystems.OSUI.Patterns.TabsHeaderItemAPI.GetTabsHeaderItemById(tabsHeaderChildId);
 
-		// Method to enable the observer
-		private _enableDragObserver(): void {
-			this._disableObserver = false;
+			if (this.getChild(tabsHeaderChildId)) {
+				throw new Error(
+					`${ErrorCodes.Tabs.FailSetNewChildHeaderItem}: There is already a ${GlobalEnum.PatternName.TabsHeaderItem} under Id: '${tabsHeaderChildItem.widgetId}' added to ${GlobalEnum.PatternName.Tabs} with uniqueId: ${this.uniqueId}.`
+				);
+			} else {
+				// Store Child Item
+				this.setChild(tabsHeaderChildId, tabsHeaderChildItem);
+			}
+
+			const currentIndex = this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length - 1;
+
+			// If tabs are already built, then this is dynamic content being added later
+			if (this.isBuilt) {
+				// So make again the connection between header items and content items,
+				// to make sure the data-tab and labels attributes are correct with the new DOM order
+				Helper.AsyncInvocation(this._updateItemsConnection.bind(this));
+				// If there's no active header element, assign it to this one
+				if (
+					(this._activeTabHeaderElement === undefined || this._activeTabHeaderElement === null) &&
+					currentIndex === this.configs.StartingTab
+				) {
+					// And call changeTab, to make sure there's an active tab
+					// undefined passed, as we don't necessarily want this item to be set as active,
+					// but the one passed on the configs.activeTab, if available
+					Helper.AsyncInvocation(this.changeTab.bind(this), this.configs.StartingTab, tabsHeaderChildItem);
+				}
+
+				this._setHeaderItemsCustomProperty();
+
+				// Update indicator size
+				this._handleTabIndicator();
+			} else {
+				// Otherwise are items created before the tabs is built
+				// Set the correct data-tab, by using the items array, that correspond to the DOM order
+				tabsHeaderChildItem.setDataTab(currentIndex);
+			}
 		}
 
 		// Method to determine the next target index on changeTab method
@@ -72,10 +147,10 @@ namespace OSUIFramework.Patterns.Tabs {
 			let newTabIndex;
 
 			// If element exists on the array, set it to tabindex passed
-			if (this._tabsHeaderItemsElementsArray[tabIndex]) {
+			if (this.getChildByIndex(tabIndex, Enum.ChildTypes.TabsHeaderItem)) {
 				newTabIndex = tabIndex;
 				// Otherwise, try the current configs_ActiveTab
-			} else if (this._tabsHeaderItemsElementsArray[this.configs.StartingTab]) {
+			} else if (this.getChildByIndex(this.configs.StartingTab, Enum.ChildTypes.TabsHeaderItem)) {
 				newTabIndex = this.configs.StartingTab;
 				// In last case, set it to the first on the list
 			} else {
@@ -94,46 +169,132 @@ namespace OSUIFramework.Patterns.Tabs {
 					// If is right arrow, navigate to current active tabs + 1 (next item)
 					targetHeaderItemIndex = this.configs.StartingTab + 1;
 					// To prevent triggerinh changeTab, if already on last item
-					if (targetHeaderItemIndex < this._tabsHeaderItemsElementsArray.length) {
-						this.changeTab(targetHeaderItemIndex, undefined, true, true);
+					if (targetHeaderItemIndex < this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length) {
+						this.changeTab(targetHeaderItemIndex, undefined, true);
 					}
 
 					break;
 				case GlobalEnum.Keycodes.ArrowLeft:
 					// If is left arrow, navigate to current active tabs - 1 (previous item)
 					targetHeaderItemIndex = this.configs.StartingTab - 1;
-					// To prevent triggerinh changeTab, if already on first item
+					// To prevent triggering changeTab, if already on first item
 					if (targetHeaderItemIndex >= 0) {
-						this.changeTab(targetHeaderItemIndex, undefined, true, true);
+						this.changeTab(targetHeaderItemIndex, undefined, true);
 					}
 					break;
 			}
 
-			const targetHeaderItem = this._tabsHeaderItemsElementsArray[targetHeaderItemIndex];
+			const targetHeaderItem = this.getChildByIndex(targetHeaderItemIndex, Enum.ChildTypes.TabsHeaderItem);
 			// Focus on the new activeHeader, after changeTab
 			if (targetHeaderItem) {
 				targetHeaderItem.setFocus();
 			}
 		}
 
+		// Method to adjust the tabs css active item on resize or orientation-change
+		private _handleOnResizeEvend(): void {
+			this._scrollToTargetContent(this._activeTabContentElement);
+			this._handleTabIndicator();
+		}
+
+		// Method that handles the indicator size and transition
+		private _handleTabIndicator(): void {
+			if (this._activeTabHeaderElement) {
+				// Check if it comes form a disabled tab, to remove the disable class
+				if (
+					!Helper.Dom.Attribute.Get(
+						this._activeTabHeaderElement.selfElement,
+						GlobalEnum.HTMLAttributes.Disabled
+					)
+				) {
+					Helper.Dom.Attribute.Remove(this._tabsIndicatorElement, GlobalEnum.HTMLAttributes.Disabled);
+				}
+
+				const isVertical = this.configs.TabsOrientation === GlobalEnum.Orientation.Vertical;
+				const activeElement = this._activeTabHeaderElement.selfElement;
+
+				// Get transform value based on orientation and rtl value
+				const transformValue = isVertical
+					? activeElement.offsetTop
+					: OutSystems.OSUI.Utils.GetIsRTL()
+					? -(this._tabsHeaderElement.offsetWidth - activeElement.offsetLeft - activeElement.offsetWidth)
+					: activeElement.offsetLeft;
+
+				// Check current indicator size
+				const currentSize = isVertical
+					? this._tabsIndicatorElement.offsetHeight
+					: this._tabsIndicatorElement.offsetWidth;
+
+				// Check current active item size
+				const newSize = isVertical ? activeElement.offsetHeight : activeElement.offsetWidth;
+
+				// translate pixel sized value to a scale value
+				const newScaleValue = newSize / currentSize;
+
+				// Update the css variables, that will trigger a transform transition
+				function updateIndicatorUI() {
+					if (this._activeTabHeaderElement) {
+						// Apply transform: translate
+						Helper.Dom.Styles.SetStyleAttribute(
+							this._tabsIndicatorElement,
+							Enum.CssProperty.TabsIndicatorTransform,
+							transformValue + GlobalEnum.Units.Pixel
+						);
+
+						// Apply transform scale
+						Helper.Dom.Styles.SetStyleAttribute(
+							this._tabsIndicatorElement,
+							Enum.CssProperty.TabsIndicatorScale,
+							newScaleValue
+						);
+					} else {
+						cancelAnimationFrame(this._requestAnimationFrameOnIndicatorResize);
+					}
+				}
+
+				this._requestAnimationFrameOnIndicatorResize = requestAnimationFrame(updateIndicatorUI.bind(this));
+
+				// If at this moment the active item has no size (NaN), set an observer to run this method when its size is changed
+				// This happens, as an example, when there're tabs inside tabs, and inner one has no size when it's built, due to being on a non-active tab
+				if (isNaN(newScaleValue)) {
+					const resizeObserver = new ResizeObserver((entries) => {
+						for (const entry of entries) {
+							if (entry.contentBoxSize) {
+								this._handleTabIndicator();
+								// We just need this once, so lets remove the observer
+								resizeObserver.unobserve(activeElement);
+							}
+						}
+					});
+					resizeObserver.observe(activeElement);
+				}
+			}
+		}
+
 		// Method to make neccessary preparations for header and content items, that can't be done on their scope
 		private _prepareHeaderAndContentItems(): void {
 			// Set if the Tabs has only one Content
-			this._hasSingleContent = this._tabsContentItemsElementsArray.length === 1;
+			this._hasSingleContent = this.getChildItems(Enum.ChildTypes.TabsContentItem).length === 1;
 
 			// Set initial active tab, based on the configs_ActiveTab
-			this._activeTabHeaderElement = this._tabsHeaderItemsElementsArray[this.configs.StartingTab];
+			this._activeTabHeaderElement = this.getChildByIndex(
+				this.configs.StartingTab,
+				Enum.ChildTypes.TabsHeaderItem
+			) as TabsHeaderItem.ITabsHeaderItem;
 
 			// If the Tabs only have one content, the active will be the first, otherwise
 			// respect the active tab from the config
 			this._activeTabContentElement = this._hasSingleContent
-				? this._tabsContentItemsElementsArray[0]
-				: this._tabsContentItemsElementsArray[this.configs.StartingTab];
+				? (this.getChildByIndex(0, Enum.ChildTypes.TabsContentItem) as TabsContentItem.ITabsContentItem)
+				: (this.getChildByIndex(
+						this.configs.StartingTab,
+						Enum.ChildTypes.TabsContentItem
+				  ) as TabsContentItem.ITabsContentItem);
 
 			// Call the method to immediatelly set the single content as active,
 			// as it won't be needed to wait for more content items
 			if (this._hasSingleContent) {
-				this._activeTabContentElement.setActiveElement();
+				this._activeTabContentElement.setIsActive();
 			}
 
 			// Set the connection between headerItems and contentItems,
@@ -143,25 +304,104 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._updateItemsConnection(false);
 		}
 
+		// Method that it's called whenever a new TabsContentItem is destroyed
+		private _removeContentItem(childContentId: string): void {
+			const auxIndex = this.getChildIndex(childContentId);
+			const wasActive = this.getChild(childContentId).IsActive;
+			// Check if the given ChildId exist at childList
+			if (this.getChild(childContentId)) {
+				// Remove item
+				this.unsetChild(childContentId);
+			} else {
+				throw new Error(
+					`${ErrorCodes.Tabs.FailUnsetNewChildContentItem}: The ${GlobalEnum.PatternName.TabsContentItem} under uniqueId: '${childContentId}' does not exist as an TabsContentItem from ${GlobalEnum.PatternName.Tabs} with Id: ${this.widgetId}.`
+				);
+			}
+
+			const tabsContentItem = this.getChild(childContentId) as TabsContentItem.ITabsContentItem;
+
+			// Unobserve this item on the IntersectionObserver
+			if (this._hasDragGestures) {
+				tabsContentItem.unobserveDragObserver(this._dragObserver);
+			}
+
+			if (wasActive) {
+				if (this.getChildByIndex(auxIndex)) {
+					this._activeTabContentElement = this.getChildByIndex(
+						auxIndex,
+						Enum.ChildTypes.TabsContentItem
+					) as TabsContentItem.ITabsContentItem;
+					this._activeTabContentElement.setIsActive();
+				} else if (this.getChildItems(Enum.ChildTypes.TabsContentItem).length > 0) {
+					this._activeTabContentElement = this.getChildItems(Enum.ChildTypes.TabsContentItem).filter(
+						(item) => item.isLastChild
+					)[0] as TabsContentItem.ITabsContentItem;
+					this._activeTabContentElement.setIsActive();
+				} else {
+					this._activeTabContentElement = null;
+				}
+			}
+		}
+
 		// Remove Pattern Events
 		private _removeEvents(): void {
 			this._tabsHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
 
-			if (this._addDragGestures) {
-				this._tabsContentElement.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, this._eventOnTouchstart);
+			// Remove resize event
+			Event.GlobalEventManager.Instance.removeHandler(Event.Type.WindowResize, this._eventOnResize);
+
+			// Remove orientationchange listener
+			if (Helper.DeviceInfo.IsPhone || Helper.DeviceInfo.IsTablet) {
+				Event.GlobalEventManager.Instance.removeHandler(Event.Type.OrientationChange, this._eventOnResize);
+			}
+		}
+
+		// Method that it's called whenever a new TabsHeaderItem is destroyed
+		private _removeHeaderItem(childHeaderId: string): void {
+			const auxIndex = this.getChildIndex(childHeaderId);
+			const wasActive = this.getChild(childHeaderId).IsActive;
+			// Check if the given ChildId exist at childList
+			if (this.getChild(childHeaderId)) {
+				// Remove item
+				this.unsetChild(childHeaderId);
+			} else {
+				throw new Error(
+					`${ErrorCodes.Tabs.FailUnsetNewChildHeaderItem}: The ${GlobalEnum.PatternName.TabsHeaderItem} under uniqueId: '${childHeaderId}' does not exist as an TabsHeaderItem from ${GlobalEnum.PatternName.Tabs} with Id: ${this.widgetId}.`
+				);
+			}
+
+			if (this.isBuilt) {
+				// Update CSS Variable, as an item was removed
+				this._setHeaderItemsCustomProperty();
+				if (wasActive) {
+					if (this.getChildByIndex(auxIndex)) {
+						this._activeTabHeaderElement = this.getChildByIndex(
+							auxIndex,
+							Enum.ChildTypes.TabsHeaderItem
+						) as TabsHeaderItem.ITabsHeaderItem;
+						this._activeTabHeaderElement.setIsActive();
+					} else if (this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length > 0) {
+						this._activeTabHeaderElement = this.getChildItems(Enum.ChildTypes.TabsHeaderItem).filter(
+							(item) => item.isLastChild
+						)[0] as TabsHeaderItem.ITabsHeaderItem;
+						this._activeTabHeaderElement.setIsActive();
+					} else {
+						this._activeTabHeaderElement = null;
+					}
+
+					// Update scale size variable
+					this._handleTabIndicator();
+				}
 			}
 		}
 
 		// Method to scroll to new target content item
 		private _scrollToTargetContent(newContentItem: Patterns.TabsContentItem.ITabsContentItem): void {
 			if (newContentItem) {
-				// Get the left offset, to use on the ScrollTo
-				const targetOffeset = newContentItem.getOffsetLeft();
-
 				// Scroll to new content item
 				this._tabsContentElement.scrollTo({
 					top: 0,
-					left: targetOffeset,
+					left: newContentItem.getOffsetLeft(),
 					behavior: GlobalEnum.ScrollBehavior.Auto,
 				});
 			}
@@ -178,21 +418,22 @@ namespace OSUIFramework.Patterns.Tabs {
 
 			this._dragObserver = new IntersectionObserver((entries) => {
 				entries.forEach((entry) => {
-					if (entry.isIntersecting && !this._disableObserver) {
+					if (entry.isIntersecting) {
 						// Get data-tab from active entry intersecting, to know the current contentItem index
 						const targetIndex = parseInt(
 							Helper.Dom.Attribute.Get(entry.target as HTMLElement, Enum.Attributes.DataTab)
 						);
 						// get current headerItem
-						const currentHeaderItem = this._tabsHeaderItemsElementsArray[targetIndex];
+						const currentHeaderItem = this.getChildByIndex(targetIndex, Enum.ChildTypes.TabsHeaderItem);
+
 						// changeTab using the index obtained above,
-						Helper.AsyncInvocation(this.changeTab.bind(this), targetIndex, currentHeaderItem, true, false);
+						Helper.AsyncInvocation(this.changeTab.bind(this), targetIndex, currentHeaderItem, true, true);
 					}
 				});
 			}, observerOptions);
 
 			// Set an observer on each contentItem, to detect when is being intersected by a drag gesture
-			this._tabsContentItemsElementsArray.forEach((item) => {
+			this.getChildItems(Enum.ChildTypes.TabsContentItem).forEach((item: TabsContentItem.ITabsContentItem) => {
 				item.setOnDragObserver(this._dragObserver);
 			});
 		}
@@ -203,7 +444,7 @@ namespace OSUIFramework.Patterns.Tabs {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
 				Enum.CssProperty.TabsHeaderItems,
-				this._tabsHeaderItemsElementsArray.length
+				this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length
 			);
 		}
 
@@ -221,10 +462,10 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._setIsJustified(this.configs.JustifyHeaders);
 			// Set the --tabs-header-items css variable
 			this._setHeaderItemsCustomProperty();
-			// Setting as false, to avoid trigering changeTab event on screen load
-			this.changeTab(this.configs.StartingTab, undefined, false, true);
+			// Set startingTab
+			this.changeTab(this.configs.StartingTab);
 
-			if (this._addDragGestures) {
+			if (this._hasDragGestures) {
 				this.toggleDragGestures(true);
 			}
 		}
@@ -236,6 +477,11 @@ namespace OSUIFramework.Patterns.Tabs {
 			} else {
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClasses.IsJustified);
 			}
+
+			if (this.isBuilt) {
+				// Update scale size variable
+				this._handleTabIndicator();
+			}
 		}
 
 		// Method to set the Tabs Orientation
@@ -243,6 +489,13 @@ namespace OSUIFramework.Patterns.Tabs {
 			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._currentOrientation);
 			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClasses.Modifier + orientation);
 			this._currentOrientation = orientation;
+
+			if (this.isBuilt) {
+				// Update scale size variable
+				this._handleTabIndicator();
+				// Update content position
+				this._scrollToTargetContent(this._activeTabContentElement);
+			}
 		}
 
 		// Method to set the Tabs Position
@@ -253,15 +506,61 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._currentVerticalPositon = position;
 		}
 
-		// Method to set a touchstart event on tabsContent
-		private _setTouchEvents(): void {
-			this._tabsContentElement.addEventListener(GlobalEnum.HTMLEvent.TouchStart, this._eventOnTouchstart);
+		// Toggle TableHeaderItem disbaled status
+		private _setTabHeaderItemDisabledStatus(childHeaderId: string, isDisabled: boolean): void {
+			const TabHeaderItemElement = Helper.Dom.GetElementByUniqueId(childHeaderId);
+			const TabItemIndex = this.getChildIndex(childHeaderId);
+			const TabContentItemId = this.getChildByIndex(TabItemIndex, Enum.ChildTypes.TabsContentItem).widgetId;
+			const TabContentItemElement = Helper.Dom.GetElementById(TabContentItemId);
+
+			const isTabHeaderItemDisabled = Helper.Dom.Attribute.Get(
+				TabHeaderItemElement,
+				GlobalEnum.HTMLAttributes.Disabled
+			);
+
+			if (isDisabled) {
+				Helper.Dom.Attribute.Set(TabHeaderItemElement, GlobalEnum.HTMLAttributes.Disabled, 'true');
+				// Let's hide TabContentItem, to prevent it appears when the tabs are swippable
+				Helper.Dom.Styles.SetStyleAttribute(
+					TabContentItemElement,
+					GlobalEnum.InlineStyle.Display,
+					GlobalEnum.InlineStyleValue.Display.none
+				);
+
+				if (this._activeTabHeaderElement.selfElement === TabHeaderItemElement) {
+					Helper.Dom.Attribute.Set(this._tabsIndicatorElement, GlobalEnum.HTMLAttributes.Disabled, true);
+				}
+			} else if (!isDisabled && isTabHeaderItemDisabled) {
+				Helper.Dom.Attribute.Remove(TabHeaderItemElement, GlobalEnum.HTMLAttributes.Disabled);
+				Helper.Dom.Styles.SetStyleAttribute(
+					TabContentItemElement,
+					GlobalEnum.InlineStyle.Display,
+					GlobalEnum.InlineStyleValue.Display.block
+				);
+
+				if (this._activeTabHeaderElement.selfElement === TabHeaderItemElement) {
+					Helper.Dom.Attribute.Remove(this._tabsIndicatorElement, GlobalEnum.HTMLAttributes.Disabled);
+				}
+			}
+		}
+
+		// Method to change between tabs
+		private _tabHeaderItemHasBeenClicked(childHeaderId: string): void {
+			const newHeaderItem = this.getChild(childHeaderId) as TabsHeaderItem.ITabsHeaderItem;
+
+			if (newHeaderItem === undefined) {
+				throw new Error(
+					`${ErrorCodes.Tabs.FailChildItemClicked}: The ${GlobalEnum.PatternName.TabsHeaderItem} under uniqueId: '${childHeaderId}' does not exist as an TabsHeaderItem from ${GlobalEnum.PatternName.Tabs} with Id: ${this.widgetId}.`
+				);
+			}
+
+			this.changeTab(this.getChildIndex(childHeaderId), newHeaderItem, true);
 		}
 
 		// Method that triggers the OnTabsChange event
 		private _triggerOnChangeEvent(activeTab: number): void {
-			if (this._eventTabsChange !== undefined) {
-				Helper.AsyncInvocation(this._eventTabsChange, this.widgetId, activeTab);
+			if (this._platformEventTabsOnChange !== undefined) {
+				Helper.AsyncInvocation(this._platformEventTabsOnChange, this.widgetId, activeTab);
 			}
 		}
 
@@ -273,26 +572,36 @@ namespace OSUIFramework.Patterns.Tabs {
 		// Method that handles the connection between HeaderItems and ContentItem, related to data-tab and aria-controls/labbeledby
 		private _updateItemsConnection(updateDataTab = true): void {
 			// By default look to the first content item.
-			let currentContentItem = this._tabsContentItemsElementsArray[0];
+			let currentContentItem = this.getChildByIndex(
+				0,
+				Enum.ChildTypes.TabsContentItem
+			) as TabsContentItem.ITabsContentItem;
 
-			this._tabsHeaderItemsElementsArray.forEach((item, index) => {
-				// If there are more that one content item, then look at the current index
-				if (!this._hasSingleContent) {
-					currentContentItem = this._tabsContentItemsElementsArray[index];
+			this.getChildItems(Enum.ChildTypes.TabsHeaderItem).forEach(
+				(item: TabsHeaderItem.ITabsHeaderItem, index) => {
+					// If there are more that one content item, then look at the current index
+					if (this._hasSingleContent === false) {
+						currentContentItem = this.getChildByIndex(
+							index,
+							Enum.ChildTypes.TabsContentItem
+						) as TabsContentItem.ITabsContentItem;
+					}
+
+					if (item && currentContentItem) {
+						// set aria-controls to current header item, by passing the current content item's widgetId
+						item.setAriaControlsAttribute(currentContentItem.widgetId);
+
+						// set aria-labbeledby to current content item, by passing the current header item's widgetId
+						currentContentItem.setAriaLabelledByAttribute(item.widgetId);
+
+						// If param is true, set the data-tab on the current header and content items, using the index
+						if (updateDataTab) {
+							item.setDataTab(index);
+							currentContentItem.setDataTab(index);
+						}
+					}
 				}
-
-				// set aria-controls to current header item, by passing the current content item's widgetId
-				item.setAriaControlsAttribute(currentContentItem.widgetId);
-
-				// set aria-labbeledby to current content item, by passing the current header item's widgetId
-				currentContentItem.setAriaLabelledByAttribute(item.widgetId);
-
-				// If param is true, set the data-tab on the current header and content items, using the index
-				if (updateDataTab) {
-					item.setDataTab(index);
-					currentContentItem.setDataTab(index);
-				}
-			});
+			);
 		}
 
 		/**
@@ -304,6 +613,8 @@ namespace OSUIFramework.Patterns.Tabs {
 		protected setA11YProperties(): void {
 			// Set aria-role to TabsHeader
 			Helper.A11Y.RoleTabList(this._tabsHeaderElement);
+			// Set aria-hidden to tabs indicator
+			Helper.A11Y.AriaHiddenTrue(this._tabsIndicatorElement);
 		}
 
 		/**
@@ -313,10 +624,9 @@ namespace OSUIFramework.Patterns.Tabs {
 		 * @memberof Tabs
 		 */
 		protected setCallbacks(): void {
-			this._addEvents();
-
 			this._eventOnHeaderKeypress = this._handleKeypressEvent.bind(this);
-			this._eventOnTouchstart = this._enableDragObserver.bind(this);
+			this._eventOnResize = this._handleOnResizeEvend.bind(this);
+			this._addEvents();
 		}
 
 		/**
@@ -328,6 +638,7 @@ namespace OSUIFramework.Patterns.Tabs {
 		protected setHtmlElements(): void {
 			this._tabsHeaderElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClasses.TabsHeader);
 			this._tabsContentElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClasses.TabsContent);
+			this._tabsIndicatorElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClasses.TabsIndicatorElem);
 		}
 
 		/**
@@ -340,11 +651,13 @@ namespace OSUIFramework.Patterns.Tabs {
 			this._removeEvents();
 
 			this._eventOnHeaderKeypress = undefined;
+			this._eventOnResize = undefined;
 
-			if (this._addDragGestures) {
-				this._eventOnTouchstart = undefined;
+			if (this._hasDragGestures) {
 				this._unsetDragObserver();
 			}
+
+			this._requestAnimationFrameOnIndicatorResize = undefined;
 		}
 
 		/**
@@ -356,77 +669,43 @@ namespace OSUIFramework.Patterns.Tabs {
 		protected unsetHtmlElements(): void {
 			this._tabsHeaderElement = undefined;
 			this._tabsContentElement = undefined;
+			this._tabsIndicatorElement = undefined;
 		}
 
 		/**
-		 * Method that it's called whenever a new TabsContentItem is rendered
+		 * Method used to be notified by a given ChildId about a given action and act accordingly
 		 *
-		 * @param {TabsContentItem.ITabsContentItem} tabsContentItem
-		 * @memberof Tabs
+		 * @param childId Child Item Id to be stored/managed
+		 * @param notifiedTo {Enum.ChildNotifyActionType} triggered notification type
+		 * @memberof SectionIndex
 		 */
-		public addContentItem(tabsContentItem: TabsContentItem.ITabsContentItem): void {
-			// Add this item to the array
-			this._tabsContentItemsElementsArray.push(tabsContentItem);
-
-			// If tabs are already built, then this is dynamic content being added later
-			if (this.isBuilt) {
-				// So make again the connection between header items and content items,
-				// to make sure the data-tab and labels attributes are correct with the new DOM order
-				Helper.AsyncInvocation(this._updateItemsConnection.bind(this));
-
-				// If there's no active content element, assign it to this one
-				if (this._activeTabContentElement === undefined) {
-					this._activeTabContentElement = tabsContentItem;
-				}
-
-				if (this._addDragGestures) {
-					tabsContentItem.setOnDragObserver(this._dragObserver);
-				}
-			} else {
-				// Otherwise are items created before the tabs is built
-				// Set the correct data-tab, by using the items array, that correspond to the DOM order
-				tabsContentItem.setDataTab(this._tabsContentItemsElementsArray.length - 1);
-			}
-		}
-
-		/**
-		 * Method that it's called whenever a new TabsHeaderItem is rendered
-		 *
-		 * @param {TabsHeaderItem.ITabsHeaderItem} tabsHeaderItem
-		 * @memberof Tabs
-		 */
-		public addHeaderItem(tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem): void {
-			// Add this item to the array
-			this._tabsHeaderItemsElementsArray.push(tabsHeaderItem);
-			const currentIndex = this._tabsHeaderItemsElementsArray.length - 1;
-
-			// If tabs are already built, then this is dynamic content being added later
-			if (this.isBuilt) {
-				// So make again the connection between header items and content items,
-				// to make sure the data-tab and labels attributes are correct with the new DOM order
-				Helper.AsyncInvocation(this._updateItemsConnection.bind(this));
-				// If there's no active header element, assign it to this one
-				if (
-					(this._activeTabHeaderElement === undefined || this._activeTabHeaderElement === null) &&
-					currentIndex === this.configs.StartingTab
-				) {
-					// And call changeTab, to make sure there's an active tab
-					// undefined passed, as we don't necessarily want this item to be set as active,
-					// but the one passed on the configs.activeTab, if available
-					Helper.AsyncInvocation(
-						this.changeTab.bind(this),
-						this.configs.StartingTab,
-						tabsHeaderItem,
-						false,
-						true
+		public beNotifiedByChild(childId: string, notifiedTo: Enum.ChildNotifyActionType): void {
+			switch (notifiedTo) {
+				case Enum.ChildNotifyActionType.AddContentItem:
+					this._addContentItem(childId);
+					break;
+				case Enum.ChildNotifyActionType.AddHeaderItem:
+					this._addHeaderItem(childId);
+					break;
+				case Enum.ChildNotifyActionType.Click:
+					this._tabHeaderItemHasBeenClicked(childId);
+					break;
+				case Enum.ChildNotifyActionType.DisabledHeaderItem:
+					this._setTabHeaderItemDisabledStatus(childId, true);
+					break;
+				case Enum.ChildNotifyActionType.EnabledHeaderItem:
+					this._setTabHeaderItemDisabledStatus(childId, false);
+					break;
+				case Enum.ChildNotifyActionType.RemovedContentItem:
+					this._removeContentItem(childId);
+					break;
+				case Enum.ChildNotifyActionType.RemovedHeaderItem:
+					this._removeHeaderItem(childId);
+					break;
+				default:
+					throw new Error(
+						`${ErrorCodes.Tabs.FailToSetChildItemAction}: There no exist a '${notifiedTo}' notification type.`
 					);
-				}
-
-				this._setHeaderItemsCustomProperty();
-			} else {
-				// Otherwise are items created before the tabs is built
-				// Set the correct data-tab, by using the items array, that correspond to the DOM order
-				tabsHeaderItem.setDataTab(currentIndex);
 			}
 		}
 
@@ -487,23 +766,19 @@ namespace OSUIFramework.Patterns.Tabs {
 		/**
 		 * Method to change between tabs
 		 *
-		 * @param {*} [tabIndex=this.configs.ActiveTab]
+		 * @param {*} [tabIndex=this.configs.StartingTab]
 		 * @param {Patterns.TabsHeaderItem.ITabsHeaderItem} [tabsHeaderItem]
-		 * @param {boolean} [triggerEvent]
-		 * @param {boolean} [blockObserver]
+		 * @param {boolean} [triggerEvent=false]
+		 * @param {boolean} [triggeredByObserver=false]
 		 * @return {*}  {void}
 		 * @memberof Tabs
 		 */
 		public changeTab(
 			tabIndex = this.configs.StartingTab,
 			tabsHeaderItem?: Patterns.TabsHeaderItem.ITabsHeaderItem,
-			triggerEvent?: boolean,
-			blockObserver?: boolean
+			triggerEvent = false,
+			triggeredByObserver = false
 		): void {
-			if (blockObserver) {
-				Helper.AsyncInvocation(this._disableDragObserver.bind(this));
-			}
-
 			// If selecting the same element as the active one, prevent tabsChange
 			if (
 				this._activeTabHeaderElement === tabsHeaderItem ||
@@ -523,46 +798,57 @@ namespace OSUIFramework.Patterns.Tabs {
 				newTabIndex = this._getTargetIndex(tabIndex);
 
 				// Get the headerItem, based on the newTabIndex
-				newHeaderItem = this._tabsHeaderItemsElementsArray[newTabIndex];
+				newHeaderItem = this.getChildByIndex(newTabIndex, Enum.ChildTypes.TabsHeaderItem);
 			} else {
 				newTabIndex = tabIndex;
 				newHeaderItem = tabsHeaderItem;
 			}
 
-			// If there're more than one content item or changeTab doesn't come from a drag gesture,
-			// then do scrollTo and change active content item
-			if (!this._hasSingleContent || this._disableObserver) {
-				// Get the contentItem, based on the newTabIndex
-				const newContentItem = this._tabsContentItemsElementsArray[newTabIndex];
-
-				if (newContentItem) {
-					// Remove old contentitem as active
-					this._activeTabContentElement.removeActiveElement();
-					// Set new content item as active
-					newContentItem.setActiveElement();
-					this._activeTabContentElement = newContentItem;
-				}
-
-				if (this._addDragGestures) {
-					// Scroll to new content item and set it as active
-					this._scrollToTargetContent(newContentItem);
-				}
-			}
-
 			// Remove old headerItem as active
 			if (this._activeTabHeaderElement) {
-				this._activeTabHeaderElement.removeActiveElement();
+				this._activeTabHeaderElement?.unsetIsActive();
 			}
 			if (newHeaderItem) {
 				// Set new headerItem as active
-				newHeaderItem.setActiveElement();
+				newHeaderItem.setIsActive();
 				this._activeTabHeaderElement = newHeaderItem;
+			}
+
+			// If there're more than one content item,
+			// then do scrollTo and change active content item
+			if (this._hasSingleContent === false) {
+				// Get the contentItem, based on the newTabIndex
+				const newContentItem = this.getChildByIndex(
+					newTabIndex,
+					Enum.ChildTypes.TabsContentItem
+				) as TabsContentItem.ITabsContentItem;
+
+				if (newContentItem) {
+					// Remove old contentitem as active
+					this._activeTabContentElement?.unsetIsActive();
+					// Set new content item as active
+					newContentItem.setIsActive();
+					this._activeTabContentElement = newContentItem;
+				}
+
+				if (this._hasDragGestures) {
+					this._activeTabHeaderElement.setFocus();
+				}
+
+				// Scroll to new content item and set it as active,
+				// if changeTab deosn't come from drag/scroll
+				if (triggeredByObserver === false) {
+					this._scrollToTargetContent(newContentItem);
+				}
+
+				// Update active indicator
+				this._handleTabIndicator();
 			}
 
 			// Update configs
 			this.configs.StartingTab = newTabIndex;
 
-			// Trigger onTabChange event
+			// Trigger platform event
 			if (triggerEvent) {
 				this._triggerOnChangeEvent(newTabIndex);
 			}
@@ -589,53 +875,10 @@ namespace OSUIFramework.Patterns.Tabs {
 		 * @memberof Tabs
 		 */
 		public registerCallback(callback: Callbacks.OSTabsOnChangeEvent): void {
-			if (this._eventTabsChange === undefined) {
-				this._eventTabsChange = callback;
+			if (this._platformEventTabsOnChange === undefined) {
+				this._platformEventTabsOnChange = callback;
 			} else {
-				console.warn(`The ${GlobalEnum.PatternsNames.Tabs} already has the tabs change callback set.`);
-			}
-		}
-
-		/**
-		 * Method that it's called whenever a new TabsContentItem is destroyed
-		 *
-		 * @param {TabsContentItem.ITabsContentItem} tabsContentItem
-		 * @memberof Tabs
-		 */
-		public removeContentItem(tabsContentItem: TabsContentItem.ITabsContentItem): void {
-			// Get this item's index on the array
-			const currentIndex = this._tabsContentItemsElementsArray.indexOf(tabsContentItem);
-			// Remove it from the array
-			this._tabsContentItemsElementsArray.splice(currentIndex, 1);
-
-			// Unobserve this item on the IntersectionObserver
-			if (this._addDragGestures) {
-				tabsContentItem.unobserveDragObserver(this._dragObserver);
-			}
-		}
-
-		/**
-		 * Method that it's called whenever a new TabsHeaderItem is destroyed
-		 *
-		 * @param {TabsHeaderItem.ITabsHeaderItem} tabsHeaderItem
-		 * @param {boolean} [isActiveItem]
-		 * @memberof Tabs
-		 */
-		public removeHeaderItem(tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem, isActiveItem?: boolean): void {
-			// Get this item's index on the array
-			const currentIndex = this._tabsHeaderItemsElementsArray.indexOf(tabsHeaderItem);
-			// Remove it from the array
-			this._tabsHeaderItemsElementsArray.splice(currentIndex, 1);
-
-			if (this.isBuilt) {
-				// Update CSS Variable, as an item was removed
-				this._setHeaderItemsCustomProperty();
-
-				// If this item removed was the active one, set a new one by calling changeTab()
-				if (isActiveItem) {
-					this._activeTabHeaderElement = null;
-					Helper.AsyncInvocation(this.changeTab.bind(this), currentIndex - 1, undefined, false, true);
-				}
+				console.warn(`The ${GlobalEnum.PatternName.Tabs} already has the tabs change callback set.`);
 			}
 		}
 
@@ -648,22 +891,16 @@ namespace OSUIFramework.Patterns.Tabs {
 		public toggleDragGestures(addDragGestures: boolean): void {
 			// If running on native shell
 			if (addDragGestures) {
-				// Add class to prvent enable overflow-x
+				// Add class to prevent enable overflow-x
 				Helper.Dom.Styles.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.HasDragGestures);
-				this._addDragGestures = true;
-				// Set touchStart event to enable observer when starting dragging
-				this._setTouchEvents();
+				this._hasDragGestures = true;
 				// Set observer on each contentItem to detect current content being intersected
 				this._setDragObserver();
-				// Update content position, due to change to display grid
-				this._scrollToTargetContent(this._activeTabContentElement);
 				// If the gestures were already added
-			} else if (this._addDragGestures) {
+			} else if (this._hasDragGestures) {
 				// Remove class to prevent overflow-x
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.HasDragGestures);
-				this._addDragGestures = false;
-				// remove touch event
-				this._tabsContentElement.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, this._eventOnTouchstart);
+				this._hasDragGestures = false;
 				// Disconnect observer
 				this._unsetDragObserver();
 			}

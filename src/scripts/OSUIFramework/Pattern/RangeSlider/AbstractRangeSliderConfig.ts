@@ -1,6 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSUIFramework.Patterns.RangeSlider {
 	export abstract class AbstractRangeSliderConfig extends Patterns.AbstractProviderConfiguration {
+		// These variables hold the inital state of a RangeSlider
+		public InitialValueFrom: number;
+		public InitialValueTo: number;
 		public IsDisabled: boolean;
 		public IsInterval: boolean;
 		public MaxValue: number;

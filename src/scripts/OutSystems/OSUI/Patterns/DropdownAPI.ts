@@ -111,6 +111,34 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	}
 
 	/**
+	 * Function that toggle the dropbox as popup on small screen like mobile
+	 *
+	 * @export
+	 * @param {string} dropdownId
+	 * @param {boolean} isEnabled
+	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 */
+	export function TogglePopup(dropdownId: string, isEnabled: boolean): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const _dropdownItem = GetDropdownById(dropdownId) as VirtualSelect;
+
+			_dropdownItem.togglePopup(isEnabled);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Dropdown.FailDisable;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
 	 * Function that will dispose the instance of the given DropDownItem Id
 	 *
 	 * @export
@@ -172,7 +200,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @export
 	 * @return {*}  Array<string>
 	 */
-	export function GetAllDropDownItemsInScreen(): Array<string> {
+	export function GetAllDropdowns(): Array<string> {
 		return OSUIFramework.Helper.MapOperation.ExportKeys(_dropdownItemsMap);
 	}
 
@@ -185,7 +213,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 */
 	export function GetDropdownById(dropdownId: string): OSUIFramework.Patterns.Dropdown.IDropdown {
 		return OSUIFramework.Helper.MapOperation.FindInMap(
-			OSUIFramework.GlobalEnum.PatternsNames.Dropdown,
+			OSUIFramework.GlobalEnum.PatternName.Dropdown,
 			dropdownId,
 			_dropdownItemsMap
 		) as OSUIFramework.Patterns.Dropdown.IDropdown;

@@ -99,14 +99,20 @@ namespace Providers.Dropdown.VirtualSelect {
 		protected createProviderInstance(): void {
 			// Create the provider instance
 			this.provider = window.VirtualSelect.init(this._virtualselectOpts);
+
+			/* NOTE: When user change the URL and then click at browser back button we're getting an error. This happen because library (VS - VirtualSelect) creates a new instance of the same object and assign it into an array of VS objects that are in the same screen (in this case 2 equal VS objects since we're creating a new VS instance for each Dropdown), that said and in order to avoid this issue, we must follow this approach. 
+			Again, this only happens when user change directly the URL! */
+			this.provider = Array.isArray(this.provider) ? this.provider[0] : this.provider;
+
 			this._virtualselectMethods = this.provider.$ele;
+			// Since at native devices we're detaching the balloon from pattern context we must set this attribute to it in order to be possible create a relation between pattern default structure and the detached balloon!
+			this.provider.$dropboxContainer.setAttribute(OSUIFramework.GlobalEnum.HTMLAttributes.Name, this.uniqueId);
 
 			// Add the pattern Events!
 			this._setUpEvents();
 
 			// Add attributes to the element if needed
 			this._manageAttributes();
-
 			// Trigger platform's InstanceIntializedHandler client Action
 			OSUIFramework.Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
 		}
@@ -144,6 +150,9 @@ namespace Providers.Dropdown.VirtualSelect {
 		 */
 		protected unsetCallbacks(): void {
 			this._onSelectedOptionEvent = undefined;
+			this._virtualselectMethods = undefined;
+			this._virtualselectOpts = undefined;
+			this.provider = undefined;
 		}
 
 		public build(): void {
@@ -226,12 +235,25 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * @memberof AbstractVirtualSelect
 		 */
 		public dispose(): void {
-			this.provider.destroy();
+			if (this.isBuilt) {
+				/* Due to VirtualSelect (VS) library implementation we must check if the provider is an array of elements in screen...
+				- by default, library will have an object instance containing all the Dropdowns (DDs) that has been added to screen, which we're not using since we're creating an instance for each DD added and store it at **this.provider**;
+				- this was only happens when there are DDs in several screens and we're navigating through them;
+				- during screen navigation, platform will create the new screen before removing the old one, at that moment VS will add a new instance to it's context (our this.provider), that way we ends up on having an array of items that we must destroy instead only one as we had before this fix!
+				- that's why we must check if we have an array of items at our this.provider and destroy all of them! */
+				if (Array.isArray(this.provider)) {
+					for (const element of this.provider) {
+						element.destroy();
+					}
+				} else {
+					this.provider.destroy();
+				}
 
-			this.unsetCallbacks();
-			this._unsetEvents();
+				this.unsetCallbacks();
+				this._unsetEvents();
 
-			super.dispose();
+				super.dispose();
+			}
 		}
 
 		/**
@@ -277,6 +299,19 @@ namespace Providers.Dropdown.VirtualSelect {
 
 				default:
 					throw new Error(`The given '${eventName}' event name it's not defined.`);
+			}
+		}
+
+		/**
+		 * Toggle the dropbox as popup on small screen like mobile
+		 *
+		 * @memberof AbstractVirtualSelect
+		 */
+		public togglePopup(isEnabled: boolean): void {
+			if (this.configs.ShowDropboxAsPopup !== isEnabled) {
+				this.configs.ShowDropboxAsPopup = isEnabled;
+				this.configs.setDropboxWrapperConfig(isEnabled);
+				this.redraw();
 			}
 		}
 

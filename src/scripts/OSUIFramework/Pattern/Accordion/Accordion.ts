@@ -31,7 +31,7 @@ namespace OSUIFramework.Patterns.Accordion {
 
 			if (this.getChild(childId)) {
 				throw new Error(
-					`${ErrorCodes.Accordion.FailSetNewChildItem}: There is already a ${GlobalEnum.PatternsNames.AccordionItem} under Id: '${childItem.widgetId}' added to ${GlobalEnum.PatternsNames.Accordion} with uniqueId: ${this.uniqueId}.`
+					`${ErrorCodes.Accordion.FailSetNewChildItem}: There is already a ${GlobalEnum.PatternName.AccordionItem} under Id: '${childItem.widgetId}' added to ${GlobalEnum.PatternName.Accordion} with uniqueId: ${this.uniqueId}.`
 				);
 			} else {
 				// Store Child Item
@@ -110,7 +110,7 @@ namespace OSUIFramework.Patterns.Accordion {
 		 */
 		public collapseAllItems(): void {
 			// Filter all items that are open and not disabled
-			const itemsToClose = this.childItems.filter((item) => item.isOpen && !item.isDisabled);
+			const itemsToClose = this.getChildItems().filter((item) => item.isOpen && !item.isDisabled);
 
 			// Close all of them
 			itemsToClose.forEach((item) => {
@@ -136,7 +136,7 @@ namespace OSUIFramework.Patterns.Accordion {
 			//If this accordion does not have multiple items, it means we can't expand all.
 			if (this.configs.MultipleItems) {
 				// Filter all items that are open and not disabled
-				const itemsToOpen = this.childItems.filter((item) => !item.isOpen && !item.isDisabled);
+				const itemsToOpen = this.getChildItems().filter((item) => !item.isOpen && !item.isDisabled);
 
 				// Close all of them
 				itemsToOpen.forEach((item) => {
@@ -144,7 +144,7 @@ namespace OSUIFramework.Patterns.Accordion {
 				});
 			} else {
 				console.warn(
-					`${GlobalEnum.PatternsNames.Accordion} (${this.widgetId}): if ${Enum.Properties.MultipleItems} parameter is set to false, this action doesn't work. Set the ${Enum.Properties.MultipleItems} parameter to true.`
+					`${GlobalEnum.PatternName.Accordion} (${this.widgetId}): if ${Enum.Properties.MultipleItems} parameter is set to false, this action doesn't work. Set the ${Enum.Properties.MultipleItems} parameter to true.`
 				);
 			}
 		}
@@ -162,7 +162,7 @@ namespace OSUIFramework.Patterns.Accordion {
 				this.unsetChild(childId);
 			} else {
 				throw new Error(
-					`${ErrorCodes.Accordion.FailUnsetNewChildItem}: The ${GlobalEnum.PatternsNames.AccordionItem} under uniqueId: '${childId}' does not exist as an ${GlobalEnum.PatternsNames.AccordionItem} from ${GlobalEnum.PatternsNames.Accordion} with Id: ${this.widgetId}.`
+					`${ErrorCodes.Accordion.FailUnsetNewChildItem}: The ${GlobalEnum.PatternName.AccordionItem} under uniqueId: '${childId}' does not exist as an ${GlobalEnum.PatternName.AccordionItem} from ${GlobalEnum.PatternName.Accordion} with Id: ${this.widgetId}.`
 				);
 			}
 		}
@@ -184,7 +184,7 @@ namespace OSUIFramework.Patterns.Accordion {
 			// Check if the given ChildId exist as an child item
 			if (childReference) {
 				// Close all other open items
-				this.childItems.forEach((item) => {
+				this.getChildItems().forEach((item) => {
 					if (item.uniqueId !== childId) {
 						if (item.isOpen) {
 							item.close();
@@ -193,7 +193,7 @@ namespace OSUIFramework.Patterns.Accordion {
 				});
 			} else {
 				throw new Error(
-					`${ErrorCodes.Accordion.FailChildItemClicked}: The ${GlobalEnum.PatternsNames.AccordionItem} under uniqueId: '${childId}' does not exist as an ${GlobalEnum.PatternsNames.AccordionItem} from ${GlobalEnum.PatternsNames.Accordion} with Id: ${this.widgetId}.`
+					`${ErrorCodes.Accordion.FailChildItemClicked}: The ${GlobalEnum.PatternName.AccordionItem} under uniqueId: '${childId}' does not exist as an ${GlobalEnum.PatternName.AccordionItem} from ${GlobalEnum.PatternName.Accordion} with Id: ${this.widgetId}.`
 				);
 			}
 		}

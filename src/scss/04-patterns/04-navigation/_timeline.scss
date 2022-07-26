@@ -58,7 +58,7 @@
 }
 
 ///
-[data-block*='TimelineItem'] {
+[data-block='Navigation.TimelineItem'] {
 	&:last-of-type {
 		.timeline-icon {
 			flex-direction: column;

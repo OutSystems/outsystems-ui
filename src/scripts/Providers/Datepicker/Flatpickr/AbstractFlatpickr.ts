@@ -114,7 +114,7 @@ namespace Providers.Datepicker.Flatpickr {
 			// Since Flatpickr has a native behaviour (by default) if a mobile device is in use, we must ensure we can add our Classes and TodayBtn to it, since if it's native behaviour we can't do it!
 			if (this.provider.calendarContainer !== undefined) {
 				if (
-					this.configs.calendarMode === OSUIFramework.Patterns.DatePicker.Enum.Mode.Range ||
+					this.configs.CalendarMode === OSUIFramework.Patterns.DatePicker.Enum.Mode.Range ||
 					(OSUIFramework.Helper.DeviceInfo.IsDesktop && OSUIFramework.Helper.DeviceInfo.IsNative === false)
 				) {
 					/* NOTE:
@@ -244,8 +244,8 @@ namespace Providers.Datepicker.Flatpickr {
 		public dispose(): void {
 			if (this.isBuilt) {
 				/* In order to avoid platform warnings due to DateFormat changes when DateFormar different from YYYY-MM-DD,
-				remove the input element from the DOM, this will avoid library update the input into a date with a different date format! */
-				this._datePickerProviderInputElem.remove();
+				remove the input element value, this will avoid library update it's value into a date with a different date format! */
+				this._datePickerProviderInputElem.value = '';
 
 				this.unsetCallbacks();
 				this.unsetHtmlElements();
@@ -287,6 +287,18 @@ namespace Providers.Datepicker.Flatpickr {
 		}
 
 		/**
+		 * Method used to set the DatePicker as editable on its input
+		 *
+		 * @memberof AbstractFlatpickr
+		 */
+		public setEditableInput(isEditable: boolean): void {
+			if (this.configs.AllowInput !== isEditable) {
+				this.configs.AllowInput = isEditable;
+				this.redraw();
+			}
+		}
+
+		/**
 		 * Method used to set the DatePicker language
 		 *
 		 * @memberof AbstractFlatpickr
@@ -297,6 +309,19 @@ namespace Providers.Datepicker.Flatpickr {
 
 			// If provider has been already defined, calendar must be redrawed!
 			if (this.provider !== undefined) {
+				this.redraw();
+			}
+		}
+
+		/**
+		 * Method used to toggle the default native behavior of DatePicker
+		 *
+		 * @memberof AbstractFlatpickr
+		 */
+		public toggleNativeBehavior(isNative: boolean): void {
+			// Invert the boolean value of IsNative because of provider option
+			if (this.configs.DisableMobile !== !isNative) {
+				this.configs.DisableMobile = !isNative;
 				this.redraw();
 			}
 		}

@@ -7,10 +7,6 @@ namespace OSUIFramework.Patterns.Tabs {
 		public TabsOrientation: GlobalEnum.Orientation;
 		public TabsVerticalPosition: GlobalEnum.Direction;
 
-		constructor(config: JSON) {
-			super(config);
-		}
-
 		public validateCanChange(isBuilt: boolean, key: string): boolean {
 			if (isBuilt) {
 				return key !== Enum.Properties.StartingTab;
@@ -35,7 +31,7 @@ namespace OSUIFramework.Patterns.Tabs {
 					validatedValue = this.validateBoolean(value as boolean, false);
 					break;
 				case Enum.Properties.Height:
-					validatedValue = this.validateString(value as string, 'auto');
+					validatedValue = this.validateString(value as string, GlobalEnum.CssProperties.Auto);
 					break;
 				default:
 					validatedValue = super.validateDefault(key, value);

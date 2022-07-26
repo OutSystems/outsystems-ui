@@ -57,7 +57,6 @@ namespace Providers.Splide {
 			// Call the following methods here, so that all DOM elements are iterated and ready to init the library
 			this._prepareCarouselItems();
 			this._providerOptions = this.configs.getProviderConfig();
-
 			// Init the Library
 			this._initProvider(triggerInitialize);
 		}
@@ -362,6 +361,21 @@ namespace Providers.Splide {
 					this._platformEventInitialized = callback;
 					break;
 			}
+		}
+
+		public setCarouselDirection(direction: string): void {
+			if (direction === OSUIFramework.Patterns.Carousel.Enum.Direction.None && OutSystems.OSUI.Utils.GetIsRTL()) {
+				this.configs.Direction = OSUIFramework.GlobalEnum.Direction.RTL;
+			} else if (
+				direction === OSUIFramework.Patterns.Carousel.Enum.Direction.RightToLeft &&
+				this.configs.AutoPlay
+			) {
+				this.configs.Direction = OSUIFramework.GlobalEnum.Direction.RTL;
+			} else {
+				this.configs.Direction = OSUIFramework.GlobalEnum.Direction.LTR;
+			}
+
+			this.updateCarousel();
 		}
 
 		/**

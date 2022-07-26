@@ -14,6 +14,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		public Prompt: string;
 		public SearchPrompt: string;
 		public SelectedOptions: DropDownOption[];
+		public ShowDropboxAsPopup = true;
 
 		// Method used to check if an image or an icon should be added to the given option
 		private _checkForFigType(index: number): Enum.FigureType {
@@ -76,6 +77,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			// Set the library options
 			const vsOptions = {
 				ele: this.ElementId,
+				dropboxWrapper: this.setDropboxWrapperConfig(this.ShowDropboxAsPopup),
 				hideClearButton: false,
 				labelRenderer: this._getOptionInfo.bind(this),
 				noOptionsText: this.NoResultsText,
@@ -86,6 +88,7 @@ namespace Providers.Dropdown.VirtualSelect {
 				searchPlaceholderText: this.SearchPrompt,
 				selectAllOnlyVisible: true,
 				selectedValue: this._getSelectedValues(),
+				showDropboxAsPopup: this.ShowDropboxAsPopup,
 				silentInitialValueSet: true,
 				textDirection: OutSystems.OSUI.Utils.GetIsRTL()
 					? OSUIFramework.GlobalEnum.Direction.RTL
@@ -93,6 +96,19 @@ namespace Providers.Dropdown.VirtualSelect {
 			};
 
 			return vsOptions as VirtualSelectOpts;
+		}
+
+		/**
+		 * Method to set the dropboxWrapper config
+		 *
+		 * @param {boolean} showAsPopup
+		 * @return {*}  {string}
+		 * @memberof AbstractVirtualSelectConfig
+		 */
+		public setDropboxWrapperConfig(showAsPopup: boolean): string {
+			return showAsPopup && OSUIFramework.Helper.DeviceInfo.IsPhone
+				? Enum.DropboxWrapperOptions.Body
+				: Enum.DropboxWrapperOptions.Self;
 		}
 
 		// Override, Validate configs key values

@@ -68,7 +68,7 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	export function Create(tooltipId: string, configs: string): OSUIFramework.Patterns.Tooltip.ITooltip {
 		if (_tooltipsMap.has(tooltipId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.Tooltip} registered under id: ${tooltipId}`
+				`There is already a ${OSUIFramework.GlobalEnum.PatternName.Tooltip} registered under id: ${tooltipId}`
 			);
 		}
 
@@ -126,7 +126,7 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 */
 	export function GetTooltipById(tooltipId: string): OSUIFramework.Patterns.Tooltip.ITooltip {
 		return OSUIFramework.Helper.MapOperation.FindInMap(
-			OSUIFramework.GlobalEnum.PatternsNames.Tooltip,
+			OSUIFramework.GlobalEnum.PatternName.Tooltip,
 			tooltipId,
 			_tooltipsMap
 		) as OSUIFramework.Patterns.Tooltip.ITooltip;

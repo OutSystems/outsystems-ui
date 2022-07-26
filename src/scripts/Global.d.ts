@@ -49,12 +49,25 @@ declare global {
 		standalone: any;
 	}
 
+	// Drag Events Type
+	type DragEvents = Event.DragEvent;
+
+	// Swipe Events Type
+	type SwipeEvents = Event.SwipeEvent;
+
 	// Offset Type
 	type OffsetValues = {
 		bottom?: number;
 		left?: number;
 		right?: number;
 		top?: number;
+	};
+
+	// FocusTrap type
+	type FocusTrapOpts = {
+		focusBottomCallback: Callbacks.Generic;
+		focusTargetElement: HTMLElement;
+		focusTopCallback: Callbacks.Generic;
 	};
 
 	// Is Out Of Boundaries Type

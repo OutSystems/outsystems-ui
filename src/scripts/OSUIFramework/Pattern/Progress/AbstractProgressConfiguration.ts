@@ -2,6 +2,7 @@
 namespace OSUIFramework.Patterns.Progress {
 	export abstract class ProgressConfiguration extends AbstractConfiguration {
 		public AnimateInitialProgress: boolean;
+		public InitialProgress: number;
 		public Progress: number;
 		public ProgressColor: string;
 		public Shape: string;
