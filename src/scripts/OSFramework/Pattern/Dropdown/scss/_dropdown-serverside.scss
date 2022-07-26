@@ -384,6 +384,15 @@ $balloonMobileTopMargin: 5vh;
 		}
 	}
 
+	&.ios {
+		.osui-dropdown-serverside__search-input--is-focused {
+			.osui-dropdown-serverside__balloon-container {
+				// 100vw because ios split in half the vertical height when keyboard is open!
+				max-height: calc(100vw - $balloonMobileTopMargin - var(--header-size));
+			}
+		}
+	}
+
 	&.landscape {
 		.osui-dropdown-serverside {
 			// Balloon section
@@ -433,8 +442,8 @@ $balloonMobileTopMargin: 5vh;
 			&-container {
 				box-shadow: var(--shadow-xl);
 				margin-top: $balloonMobileTopMargin;
-				// 100vw because ios split in half the vertical height when keyboard is open!
-				max-height: calc(100vw - $balloonMobileTopMargin - var(--header-size));
+				// 90vh - maxHeight in order to create a margin top/bottom with 5vh
+				max-height: calc(90vh - $balloonMobileTopMargin - var(--header-size));
 				width: 85vw;
 
 				// Service Studio Preview
