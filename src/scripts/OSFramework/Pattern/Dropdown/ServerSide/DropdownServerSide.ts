@@ -478,6 +478,8 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 				(lookAtXPosition === false && selfElement.y === this._selfElementBoundingClientRect.y) ||
 				(lookAtXPosition &&
 					selfElement.x === this._selfElementBoundingClientRect.x &&
+					selfElement.right ===
+						this._selfElementBoundingClientRect.x + this._selfElementBoundingClientRect.width &&
 					selfElement.y === this._selfElementBoundingClientRect.y)
 			) {
 				cancelAnimationFrame(this._requestAnimationOnBodyScroll);
