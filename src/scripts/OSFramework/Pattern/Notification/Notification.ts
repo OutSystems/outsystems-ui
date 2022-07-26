@@ -26,8 +26,8 @@ namespace OSFramework.Patterns.Notification {
 		// Store the parent element
 		private _parentSelf: HTMLElement;
 		// Store the platform events
-		private _platformEventOnInitialize: CallbacksOLD.OSNotificationInitializedEvent;
-		private _platformEventOnToggle: CallbacksOLD.OSNotificationToggleEvent;
+		private _platformEventOnInitialize: Callbacks.OSInitializedEvent;
+		private _platformEventOnToggle: Callbacks.OSOnToggleEvent;
 
 		/**
 		 * Get Gesture Events Instance

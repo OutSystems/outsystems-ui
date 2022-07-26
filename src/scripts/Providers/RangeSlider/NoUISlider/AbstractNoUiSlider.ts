@@ -14,8 +14,8 @@ namespace Providers.RangeSlider.NoUISlider {
 		private _rangeSliderProviderElem: HTMLElement;
 		// RangeSlider events
 		protected eventProviderValueChanged: OSFramework.GlobalCallbacks.Generic;
-		protected platformEventInitialize: OSFramework.CallbacksOLD.OSRangeSliderInitializeEvent;
-		protected platformEventValueChange: OSFramework.CallbacksOLD.OSRangeSliderOnValueChangeEvent;
+		protected platformEventInitialize: OSFramework.Patterns.RangeSlider.Callbacks.OSInitializeEvent;
+		protected platformEventValueChange: OSFramework.Patterns.RangeSlider.Callbacks.OSOnValueChangeEvent;
 		// Store the provider options
 		protected providerOptions: NoUiSliderOptions;
 		// throttle before invoking the platform

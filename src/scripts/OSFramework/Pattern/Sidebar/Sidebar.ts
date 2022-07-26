@@ -26,7 +26,7 @@ namespace OSFramework.Patterns.Sidebar {
 		// Stores the current status of the sidebar
 		private _isOpen: boolean;
 		// Store if the Sidebar is Open
-		private _onToggle: CallbacksOLD.OSSidebarToggleEvent;
+		private _onToggle: Callbacks.OSOnToggleEvent;
 		// Store the parent element
 		private _parentSelf: HTMLElement;
 
@@ -426,10 +426,10 @@ namespace OSFramework.Patterns.Sidebar {
 		/**
 		 * Set callbacks for the onToggle event
 		 *
-		 * @param {CallbacksOLD.OSSidebarToggleEvent} callback
+		 * @param {Callbacks.OSOnToggleEvent} callback
 		 * @memberof Sidebar
 		 */
-		public registerCallback(callback: CallbacksOLD.OSSidebarToggleEvent): void {
+		public registerCallback(callback: Callbacks.OSOnToggleEvent): void {
 			if (this._onToggle === undefined) {
 				this._onToggle = callback;
 			} else {

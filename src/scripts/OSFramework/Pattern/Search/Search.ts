@@ -10,7 +10,7 @@ namespace OSFramework.Patterns.Search {
 		private _inputElem: HTMLInputElement;
 		private _inputValue: string;
 		private _isOpen = false;
-		private _platformEventCollapse: CallbacksOLD.OSSearchCollapseEvent;
+		private _platformEventCollapse: Callbacks.OSOnCollapseEvent;
 		private _searchGlass: HTMLElement;
 
 		constructor(uniqueId: string, configs: JSON) {
@@ -218,10 +218,10 @@ namespace OSFramework.Patterns.Search {
 		/**
 		 * Set callbacks for the OnCollapse event
 		 *
-		 * @param {CallbacksOLD.OSSearchCollapseEvent} callback
+		 * @param {Callbacks.OSOnCollapseEvent} callback
 		 * @memberof Search
 		 */
-		public registerCallback(callback: CallbacksOLD.OSSearchCollapseEvent): void {
+		public registerCallback(callback: Callbacks.OSOnCollapseEvent): void {
 			if (this._platformEventCollapse === undefined) {
 				this._platformEventCollapse = callback;
 			}

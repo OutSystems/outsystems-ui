@@ -13,7 +13,7 @@ namespace Providers.Datepicker.Flatpickr {
 		// Store the provider options
 		protected _flatpickrOpts: FlatpickrOptions;
 		// Flatpickr onChange (SelectedDate) event
-		protected _onChangeCallbackEvent: OSFramework.CallbacksOLD.OSDatepickerOnChangeEvent;
+		protected _onChangeCallbackEvent: OSFramework.Patterns.DatePicker.Callbacks.OSOnChangeEvent;
 
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);

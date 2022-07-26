@@ -17,7 +17,7 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 		// Keyboard Key Press Event
 		private _eventOnkeyboardPress: GlobalCallbacks.Generic;
 		// Platform Click Event Callback
-		private _platformEventOnClickCallback: CallbacksOLD.OSDropdownServerSideItemOnSelectEvent;
+		private _platformEventOnClickCallback: Callbacks.OSOnSelectEvent;
 
 		// Store the Key used to trigger the notification into Dropdown parent
 		public keyboardTriggeredKey: string;

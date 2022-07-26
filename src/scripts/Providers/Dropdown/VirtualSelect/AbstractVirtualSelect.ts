@@ -7,7 +7,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		// Dropdown callback events
 		private _onSelectedOptionEvent: OSFramework.GlobalCallbacks.Generic;
 		private _platformEventInitializedCallback: OSFramework.GlobalCallbacks.OSGeneric;
-		private _platformEventSelectedOptCallback: OSFramework.CallbacksOLD.OSDropdownOnSelectEvent;
+		private _platformEventSelectedOptCallback: OSFramework.Patterns.Dropdown.Callbacks.OSOnSelectEvent;
 
 		// Store a reference of available provider methods
 		protected _virtualselectMethods: VirtualSelectMethods;

@@ -126,11 +126,11 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 *
 	 * @export
 	 * @param {string} flipId
-	 * @param {OSFramework.CallbacksOLD.OSFlipContentFlipEvent} callback
+	 * @param {OSFramework.Patterns.FlipContent.Callbacks.OSFlipEvent} callback
 	 */
 	export function RegisterCallback(
 		flipId: string,
-		callback: OSFramework.CallbacksOLD.OSFlipContentFlipEvent
+		callback: OSFramework.Patterns.FlipContent.Callbacks.OSFlipEvent
 	): string {
 		const responseObj = {
 			isSuccess: true,

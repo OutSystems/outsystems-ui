@@ -15,7 +15,7 @@ namespace OSFramework.Patterns.Rating {
 		// Store if the rating value is half
 		private _isHalfValue: boolean;
 		// Store the callback to be used on the OnSelect event
-		private _platformEventOnSelect: CallbacksOLD.OSRatingSelectEvent;
+		private _platformEventOnSelect: Callbacks.OSOnSelectEvent;
 		// Store the fieldset html element
 		private _ratingFieldsetElem: HTMLElement;
 		// Store if the rating already has an event added
@@ -409,10 +409,10 @@ namespace OSFramework.Patterns.Rating {
 		/**
 		 * Set callbacks for the onSelect click event
 		 *
-		 * @param {CallbacksOLD.OSRatingSelectEvent} callback
+		 * @param {Callbacks.OSOnSelectEvent} callback
 		 * @memberof Rating
 		 */
-		public registerCallback(callback: CallbacksOLD.OSRatingSelectEvent): void {
+		public registerCallback(callback: Callbacks.OSOnSelectEvent): void {
 			this._platformEventOnSelect = callback;
 		}
 	}

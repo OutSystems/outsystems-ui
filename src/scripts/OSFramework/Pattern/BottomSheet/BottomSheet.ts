@@ -29,7 +29,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		// WidgetId element
 		private _parentSelf: HTMLElement;
 		// OnToggle event callback
-		private _platformEventOnToggle: CallbacksOLD.OSBottomSheetOnToggleEvent;
+		private _platformEventOnToggle: Callbacks.OSOnToggleEvent;
 
 		// Stores SpringAnimation configs used on drag end. This is public to allow ability to change animation or even disable this effect
 		public springAnimationConfigs = {

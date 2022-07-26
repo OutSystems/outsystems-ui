@@ -181,7 +181,7 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	 */
 	export function RegisterCallback(
 		searchId: string,
-		callback: OSFramework.CallbacksOLD.OSSearchCollapseEvent
+		callback: OSFramework.Patterns.Search.Callbacks.OSOnCollapseEvent
 	): string {
 		const responseObj = {
 			isSuccess: true,

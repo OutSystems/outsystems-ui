@@ -31,7 +31,7 @@ namespace OSFramework.Patterns.Tabs {
 		// Store if the Tabs has only one ContentItem, to prevent unnecessary usages of ScrollTo
 		private _hasSingleContent: boolean;
 		// Store the onTabsChange platform callback
-		private _platformEventTabsOnChange: CallbacksOLD.OSTabsOnChangeEvent;
+		private _platformEventTabsOnChange: Callbacks.OSOnChangeEvent;
 		// Store the id of the requestAnimationFrame called to animate the indicator
 		private _requestAnimationFrameOnIndicatorResize: number;
 		// Store the contentItems wrapper -- osui-tabs__content
@@ -871,10 +871,10 @@ namespace OSFramework.Patterns.Tabs {
 		/**
 		 * Set callbacks for the onTabsChange event
 		 *
-		 * @param {CallbacksOLD.OSTabsOnChangeEvent} callback
+		 * @param {Callbacks.OSOnChangeEvent} callback
 		 * @memberof Tabs
 		 */
-		public registerCallback(callback: CallbacksOLD.OSTabsOnChangeEvent): void {
+		public registerCallback(callback: Callbacks.OSOnChangeEvent): void {
 			if (this._platformEventTabsOnChange === undefined) {
 				this._platformEventTabsOnChange = callback;
 			} else {

@@ -12,7 +12,7 @@ namespace OSFramework.Patterns.FlipContent {
 		private _flipWrapperElement: HTMLElement;
 
 		// Callback function to trigger the click event on the platform
-		private _plataformEventFlip: CallbacksOLD.OSFlipContentFlipEvent;
+		private _plataformEventFlip: Callbacks.OSFlipEvent;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new FlipContentConfig(configs));
@@ -204,7 +204,7 @@ namespace OSFramework.Patterns.FlipContent {
 		 *
 		 * @memberof FlipContent
 		 */
-		public registerCallback(callback: CallbacksOLD.OSFlipContentFlipEvent): void {
+		public registerCallback(callback: Callbacks.OSFlipEvent): void {
 			if (this._plataformEventFlip === undefined) {
 				this._plataformEventFlip = callback;
 			}
