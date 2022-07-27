@@ -459,11 +459,15 @@ namespace OSFramework.Patterns.Sidebar {
 		 * @memberof Sidebar
 		 */
 		public setGestureEvents(
-			onGestureStart: Event.GestureEvent.Callbacks.GestureStart,
-			onGestureMove: Event.GestureEvent.Callbacks.GestureMove,
-			onGestureEnd: Event.GestureEvent.Callbacks.GestureEnd
+			onGestureStartCallback: Event.GestureEvent.Callbacks.GestureStart,
+			onGestureMoveCallback: Event.GestureEvent.Callbacks.GestureMove,
+			onGestureEndCallback: Event.GestureEvent.Callbacks.GestureEnd
 		): void {
-			this._gestureEventInstance.setSwipeEvents(onGestureStart, onGestureMove, onGestureEnd);
+			this._gestureEventInstance.setSwipeEvents(
+				onGestureStartCallback,
+				onGestureMoveCallback,
+				onGestureEndCallback
+			);
 			this._hasGestureEvents = true;
 		}
 
