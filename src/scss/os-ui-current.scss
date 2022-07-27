@@ -48,6 +48,7 @@
 /*!         - Master Detail                                                     */
 /*!     - Content                                                               */
 /*!         - Accordion                                                         */
+/*!         - Accordion Item                                                    */
 /*!         - Alert                                                             */
 /*!         - Blank Slate                                                       */
 /*!         - Card                                                              */
@@ -69,14 +70,16 @@
 /*!         - BottomSheet                                                       */
 /*!         - Carousel                                                          */
 /*!         - DatePicker                                                        */
-/*!         - Dropdown Search and Tags, common styles                           */
-/*!         - Dropdown Search                                                   */
-/*!         - Dropdown Tags                                                     */
+/*!         - Dropdown                                                          */
+/*!         - DropdownServerSide                                                */
+/*!         - DropdownServerSideItem                                            */
+/*!         - DropdownSearch                                                    */
+/*!         - DropdownTags                                                      */
 /*!         - Floating Actions                                                  */
 /*!         - Input With Icon                                                   */
 /*!         - Lightbox Image                                                    */
 /*!         - Notification                                                      */
-/*!         - RangeSlider                                                       */
+/*!         - Range Slider                                                      */
 /*!         - Scrollable Area                                                   */
 /*!         - Search                                                            */
 /*!         - Sidebar                                                           */
@@ -95,8 +98,8 @@
 /*!         - Badge                                                             */
 /*!         - Counter                                                           */
 /*!         - Icon Badge                                                        */
-/*!         - Progress Bar                                                      */
-/*!         - Progress Circle                                                   */
+/*!         - ProgressBar                                                       */
+/*!         - ProgressCircle                                                    */
 /*!         - Progress Circle Fraction                                          */
 /*!         - Rating                                                            */
 /*!     - Utilities                                                             */
@@ -107,18 +110,27 @@
 /*!         - Separator                                                         */
 /*!         - Pull to Refresh                                                   */
 /*!         - List Updating                                                     */
-/*!     - Deprecated Patterns                                                   */
-/*!         - Content                                                           */
-/*!             - Flip_Content                                                  */
-/*!             - Submenu                                                       */
-/*!             - Tooltip                                                       */
-/*!         - Interaction                                                       */
-/*!             - Horizontal Scroll                                             */
-/*!             - Sidebar                                                       */
-/*!         - Navigation                                                        */
-/*!             - Tabs                                                          */
-/*!         - Utilities                                                         */
-/*!             - ButtonLoading                                                 */
+/*!  Deprecated Patterns                                                        */
+/*!     - Content                                                               */
+/*!         - Accordion                                                         */
+/*!         - Submenu                                                           */
+/*!         - Tooltip                                                           */
+/*!     - Interaction                                                           */
+/*!         - Carousel                                                          */
+/*!         - DatePicker                                                        */
+/*!         - Dropdown Search and Tags, common styles                           */
+/*!         - Dropdown Search                                                   */
+/*!         - Dropdown Tags                                                     */
+/*!         - Horizontal Scroll                                                 */
+/*!         - Notification                                                      */
+/*!         - Sidebar                                                           */
+/*!     - Navigation                                                            */
+/*!         - Tabs                                                              */
+/*!     - Numbers                                                               */
+/*!         - Progress Bar                                                      */
+/*!         - Progress Circle                                                   */
+/*!     - Utilities                                                             */
+/*!         - ButtonLoading                                                     */
 /*!  Usefull Classes                                                            */
 /*!     - a11y (Accessibility)                                                  */
 /*!     - Colors                                                                */
@@ -319,6 +331,11 @@
 /*! =========================================================================== */
 @import '10-deprecated/accordion-deprecated';
 @import '10-deprecated/button-loading-deprecated';
+@import '10-deprecated/carousel-deprecated';
+@import '10-deprecated/date-picker-deprecated';
+@import '10-deprecated/dropdown-search-and-tags-deprecated';
+@import '10-deprecated/dropdown-search-deprecated';
+@import '10-deprecated/dropdown-tags-deprecated';
 @import '10-deprecated/flip-content-deprecated';
 @import '10-deprecated/gallery-deprecated';
 @import '10-deprecated/horizontal-scroll-deprecated';
@@ -329,13 +346,8 @@
 @import '10-deprecated/section-index-deprecated';
 @import '10-deprecated/sidebar-deprecated';
 @import '10-deprecated/submenu-deprecated';
-@import '10-deprecated/tooltip-deprecated';
-@import '10-deprecated/carousel-deprecated';
-@import '10-deprecated/date-picker-deprecated';
-@import '10-deprecated/dropdown-search-and-tags-deprecated';
-@import '10-deprecated/dropdown-search-deprecated';
-@import '10-deprecated/dropdown-tags-deprecated';
 @import '10-deprecated/tabs-deprecated';
+@import '10-deprecated/tooltip-deprecated';
 
 /*! =========================================================================== */
 /*! Usefull Classes                                                             */
