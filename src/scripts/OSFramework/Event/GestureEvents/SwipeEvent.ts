@@ -90,7 +90,7 @@ namespace OSFramework.Event.GestureEvent {
 		 * @param {Event.GestureEvent.swipeUp} swipeUpCallback
 		 * @memberof SwipeEvent
 		 */
-		public setEvents(
+		public setSwipeEvents(
 			swipeDownCallback: Event.GestureEvent.Callbacks.swipeDown,
 			swipeLeftCallback: Event.GestureEvent.Callbacks.swipeLeft,
 			swipeRightCallback: Event.GestureEvent.Callbacks.swipeRight,

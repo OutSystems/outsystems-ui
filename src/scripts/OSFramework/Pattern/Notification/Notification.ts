@@ -540,10 +540,10 @@ namespace OSFramework.Patterns.Notification {
 		}
 
 		/**
-		 * Sets the gesture events to open/close the Sidebar on Native Apps
+		 * Sets the gesture events to open/close the Notification on Native Apps
 		 *
 		 * @protected
-		 * @memberof Sidebar
+		 * @memberof Notification
 		 */
 		public setGestureEvents(
 			onSwipeDownCallback: Event.GestureEvent.Callbacks.swipeDown,
@@ -551,7 +551,7 @@ namespace OSFramework.Patterns.Notification {
 			onSwipeRightCallback: Event.GestureEvent.Callbacks.swipeRight,
 			onSwipeUpCallback: Event.GestureEvent.Callbacks.swipeUp
 		): void {
-			this._gestureEventInstance.setEvents(
+			this._gestureEventInstance.setSwipeEvents(
 				onSwipeDownCallback,
 				onSwipeLeftCallback,
 				onSwipeRightCallback,

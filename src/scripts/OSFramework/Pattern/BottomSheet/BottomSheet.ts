@@ -430,7 +430,7 @@ namespace OSFramework.Patterns.BottomSheet {
 			onGestureMove: Event.GestureEvent.Callbacks.gestureMove,
 			onGestureEnd: Event.GestureEvent.Callbacks.gestureEnd
 		): void {
-			this._gestureEventInstance.setEvents(onGestureStart, onGestureMove, onGestureEnd);
+			this._gestureEventInstance.setSwipeEvents(onGestureStart, onGestureMove, onGestureEnd);
 			this._hasGestureEvents = true;
 		}
 	}

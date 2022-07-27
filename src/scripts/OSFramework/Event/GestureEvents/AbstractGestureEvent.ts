@@ -176,6 +176,6 @@ namespace OSFramework.Event.GestureEvent {
 			this._unsetCallbacks();
 		}
 
-		protected abstract setEvents(...args: GlobalCallbacks.Generic[]): void;
+		protected abstract setSwipeEvents(...args: GlobalCallbacks.Generic[]): void;
 	}
 }
