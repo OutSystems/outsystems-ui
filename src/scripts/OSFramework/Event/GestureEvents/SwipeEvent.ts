@@ -9,10 +9,10 @@ namespace OSFramework.Event.GestureEvent {
 	 */
 	export class SwipeEvent extends Event.GestureEvent.AbstractGestureEvent {
 		// Store the swipe callbacks for each direction
-		private _swipeDownCallback: Callbacks.Generic;
-		private _swipeLeftCallback: Callbacks.Generic;
-		private _swipeRightCallback: Callbacks.Generic;
-		private _swipeUpCallback: Callbacks.Generic;
+		private _swipeDownCallback: GlobalCallbacks.Generic;
+		private _swipeLeftCallback: GlobalCallbacks.Generic;
+		private _swipeRightCallback: GlobalCallbacks.Generic;
+		private _swipeUpCallback: GlobalCallbacks.Generic;
 
 		// Distance threshold expected to be considered a swipe event
 		private _threshold = 10;
@@ -61,17 +61,17 @@ namespace OSFramework.Event.GestureEvent {
 		 * Method to set the expected callbacks
 		 *
 		 * @protected
-		 * @param {Callbacks.Generic} swipeDownCallback
-		 * @param {Callbacks.Generic} swipeLeftCallback
-		 * @param {Callbacks.Generic} swipeRightCallback
-		 * @param {Callbacks.Generic} swipeUpCallback
+		 * @param {GlobalCallbacks.Generic} swipeDownCallback
+		 * @param {GlobalCallbacks.Generic} swipeLeftCallback
+		 * @param {GlobalCallbacks.Generic} swipeRightCallback
+		 * @param {GlobalCallbacks.Generic} swipeUpCallback
 		 * @memberof SwipeEvent
 		 */
 		protected setSwipeCallbacks(
-			swipeDownCallback: Callbacks.Generic,
-			swipeLeftCallback: Callbacks.Generic,
-			swipeRightCallback: Callbacks.Generic,
-			swipeUpCallback: Callbacks.Generic
+			swipeDownCallback: GlobalCallbacks.Generic,
+			swipeLeftCallback: GlobalCallbacks.Generic,
+			swipeRightCallback: GlobalCallbacks.Generic,
+			swipeUpCallback: GlobalCallbacks.Generic
 		): void {
 			this._swipeDownCallback = swipeDownCallback;
 			this._swipeLeftCallback = swipeLeftCallback;
@@ -84,17 +84,17 @@ namespace OSFramework.Event.GestureEvent {
 		/**
 		 * Method to set the expected callbacks and add eventListeners to the target element
 		 *
-		 * @param {Callbacks.onSwipeDown} swipeDownCallback
-		 * @param {Callbacks.onSwipeLeft} swipeLeftCallback
-		 * @param {Callbacks.onSwipeRight} swipeRightCallback
-		 * @param {Callbacks.onSwipeUp} swipeUpCallback
+		 * @param {Event.GestureEvent.swipeDown} swipeDownCallback
+		 * @param {Event.GestureEvent.swipeLeft} swipeLeftCallback
+		 * @param {Event.GestureEvent.swipeRight} swipeRightCallback
+		 * @param {Event.GestureEvent.swipeUp} swipeUpCallback
 		 * @memberof SwipeEvent
 		 */
-		public setEvents(
-			swipeDownCallback: Callbacks.onSwipeDown,
-			swipeLeftCallback: Callbacks.onSwipeLeft,
-			swipeRightCallback: Callbacks.onSwipeRight,
-			swipeUpCallback: Callbacks.onSwipeUp
+		public setSwipeEvents(
+			swipeDownCallback: Event.GestureEvent.Callbacks.SwipeDown,
+			swipeLeftCallback: Event.GestureEvent.Callbacks.SwipeLeft,
+			swipeRightCallback: Event.GestureEvent.Callbacks.SwipeRight,
+			swipeUpCallback: Event.GestureEvent.Callbacks.SwipeUp
 		): void {
 			this.setSwipeCallbacks(swipeDownCallback, swipeLeftCallback, swipeRightCallback, swipeUpCallback);
 			super.setEventListeners();

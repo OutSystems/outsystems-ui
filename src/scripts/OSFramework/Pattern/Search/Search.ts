@@ -5,12 +5,12 @@ namespace OSFramework.Patterns.Search {
 	 */
 	export class Search extends AbstractPattern<SearchConfig> implements ISearch {
 		// Store the pattern locals
-		private _eventSearchGlassClick: Callbacks.Generic;
-		private _globalEventBody: Callbacks.Generic;
+		private _eventSearchGlassClick: GlobalCallbacks.Generic;
+		private _globalEventBody: GlobalCallbacks.Generic;
 		private _inputElem: HTMLInputElement;
 		private _inputValue: string;
 		private _isOpen = false;
-		private _platformEventCollapse: Callbacks.OSSearchCollapseEvent;
+		private _platformEventCollapse: Callbacks.OSOnCollapseEvent;
 		private _searchGlass: HTMLElement;
 
 		constructor(uniqueId: string, configs: JSON) {
@@ -218,10 +218,10 @@ namespace OSFramework.Patterns.Search {
 		/**
 		 * Set callbacks for the OnCollapse event
 		 *
-		 * @param {Callbacks.OSSearchCollapseEvent} callback
+		 * @param {Callbacks.OSOnCollapseEvent} callback
 		 * @memberof Search
 		 */
-		public registerCallback(callback: Callbacks.OSSearchCollapseEvent): void {
+		public registerCallback(callback: Callbacks.OSOnCollapseEvent): void {
 			if (this._platformEventCollapse === undefined) {
 				this._platformEventCollapse = callback;
 			}

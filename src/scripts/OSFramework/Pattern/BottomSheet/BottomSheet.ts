@@ -10,30 +10,26 @@ namespace OSFramework.Patterns.BottomSheet {
 	 */
 	export class BottomSheet extends AbstractPattern<BottomSheetConfig> implements IBottomSheet, Interface.IDragEvent {
 		// Hold the animateOnDrag intance, that helps transition the sidebar on drag
-		private _animateOnDragInstance: Animations.AnimateOnDrag;
+		private _animateOnDragInstance: Behaviors.AnimateOnDrag;
 		// HTML elements
 		private _bottomSheetContentElem: HTMLElement;
 		private _bottomSheetHeaderElem: HTMLElement;
 		// Listener callbacks
-		private _eventOnContentScroll: Callbacks.Generic;
-		private _eventOnKeypress: Callbacks.Generic;
+		private _eventOnContentScroll: GlobalCallbacks.Generic;
+		private _eventOnKeypress: GlobalCallbacks.Generic;
 		// FocusTrap Properties
-		private _firstFocusableElement: HTMLElement;
-		private _focusTrapInstance: DynamicElements.FocusTrap.FocusTrap;
+		private _focusTrapInstance: Behaviors.FocusTrap;
 		private _focusableActiveElement: HTMLElement;
-		private _focusableElements: HTMLElement[];
 		// Store gesture events instance
 		private _gestureEventInstance: Event.GestureEvent.DragEvent;
 		// Store if the pattern has gesture events added
 		private _hasGestureEvents: boolean;
 		// Store if the pattern is open
 		private _isOpen: boolean;
-		// Last element to receive focus on BottomSheet
-		private _lastFocusableElement: HTMLElement;
 		// WidgetId element
 		private _parentSelf: HTMLElement;
 		// OnToggle event callback
-		private _platformEventOnToggle: Callbacks.OSBottomSheetOnToggleEvent;
+		private _platformEventOnToggle: Callbacks.OSOnToggleEvent;
 
 		// Stores SpringAnimation configs used on drag end. This is public to allow ability to change animation or even disable this effect
 		public springAnimationConfigs = {
@@ -71,25 +67,13 @@ namespace OSFramework.Patterns.BottomSheet {
 			super(uniqueId, new BottomSheetConfig(configs));
 		}
 
-		// Focus on first focusable element on BottomSheet
-		private _focusBottomCallback(): void {
-			Helper.FocusTrap.FocusOnFirstFocusableElement(this._firstFocusableElement, this._selfElem);
-		}
-
-		// Focus on last focusable element on BottomSheet
-		private _focusTopCallback(): void {
-			Helper.FocusTrap.FocusOnLastFocusableElement(this._lastFocusableElement, this._selfElem);
-		}
-
 		// Add Focus Trap to Pattern
 		private _handleFocusTrap(): void {
 			const opts = {
-				focusBottomCallback: this._focusBottomCallback.bind(this),
 				focusTargetElement: this._parentSelf,
-				focusTopCallback: this._focusTopCallback.bind(this),
-			} as FocusTrapOpts;
+			} as Behaviors.FocusTrapParams;
 
-			this._focusTrapInstance = new DynamicElements.FocusTrap.FocusTrap(opts);
+			this._focusTrapInstance = new Behaviors.FocusTrap(opts);
 		}
 
 		// Method to handle the creation of the GestureEvents
@@ -100,7 +84,7 @@ namespace OSFramework.Patterns.BottomSheet {
 				this._gestureEventInstance = new Event.GestureEvent.DragEvent(this._bottomSheetHeaderElem);
 
 				// Apply transform on an element and perform animation
-				this._animateOnDragInstance = new Animations.AnimateOnDrag(this._selfElem);
+				this._animateOnDragInstance = new Behaviors.AnimateOnDrag(this._selfElem);
 			}
 		}
 
@@ -237,8 +221,6 @@ namespace OSFramework.Patterns.BottomSheet {
 				Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Role.Complementary, true);
 			}
 
-			const setA11YtabIndex = this._isOpen ? Helper.A11Y.TabIndexTrue : Helper.A11Y.TabIndexFalse;
-
 			Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Hidden, (!this._isOpen).toString());
 
 			Helper.Dom.Attribute.Set(
@@ -249,10 +231,8 @@ namespace OSFramework.Patterns.BottomSheet {
 					: Constants.A11YAttributes.States.TabIndexHidden
 			);
 
-			// On each element, toggle the tabindex value, depending if notification is open or closed
-			for (const item of this._focusableElements) {
-				setA11YtabIndex(item);
-			}
+			// Will handle the tabindex value of the elements inside pattern
+			Helper.A11Y.SetElementsTabIndex(this._isOpen, this._focusTrapInstance.focusableElements);
 		}
 
 		/**
@@ -296,11 +276,6 @@ namespace OSFramework.Patterns.BottomSheet {
 			this._parentSelf = Helper.Dom.GetElementById(this._widgetId);
 			this._bottomSheetContentElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternContent);
 			this._bottomSheetHeaderElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternHeader);
-
-			this._focusableElements = [...this._selfElem.querySelectorAll(Constants.FocusableElems)] as HTMLElement[];
-			// to handle focusable element's tabindex when toggling the BottomSheet
-			this._firstFocusableElement = this._focusableElements[0];
-			this._lastFocusableElement = this._focusableElements[this._focusableElements.length - 1];
 		}
 
 		/**
@@ -336,10 +311,6 @@ namespace OSFramework.Patterns.BottomSheet {
 			this._parentSelf = undefined;
 			this._bottomSheetContentElem = undefined;
 			this._bottomSheetHeaderElem = undefined;
-			this._focusableElements = undefined;
-			// to handle focusable element's tabindex when toggling the BottomSheet
-			this._firstFocusableElement = undefined;
-			this._lastFocusableElement = undefined;
 		}
 
 		/**
@@ -350,10 +321,10 @@ namespace OSFramework.Patterns.BottomSheet {
 		public build(): void {
 			super.build();
 			this.setHtmlElements();
+			this._handleFocusTrap();
 			this.setInitialOptions();
 			this.setCallbacks();
 			this.setA11yProperties();
-			this._handleFocusTrap();
 			this._handleGestureEvents();
 			this.finishBuild();
 		}
@@ -422,10 +393,10 @@ namespace OSFramework.Patterns.BottomSheet {
 		/**
 		 * Set callbacks for the onToggle event
 		 *
-		 * @param {Callbacks.Generic} callback
+		 * @param {GlobalCallbacks.Generic} callback
 		 * @memberof BottomSheet
 		 */
-		public registerCallback(callback: Callbacks.Generic): void {
+		public registerCallback(callback: GlobalCallbacks.Generic): void {
 			if (this._platformEventOnToggle === undefined) {
 				this._platformEventOnToggle = callback;
 			} else {
@@ -455,11 +426,11 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * @memberof BottomSheet
 		 */
 		public setGestureEvents(
-			onGestureStart: Callbacks.onGestureStart,
-			onGestureMove: Callbacks.onGestureMove,
-			onGestureEnd: Callbacks.onGestureEnd
+			onGestureStart: Event.GestureEvent.Callbacks.GestureStart,
+			onGestureMove: Event.GestureEvent.Callbacks.GestureMove,
+			onGestureEnd: Event.GestureEvent.Callbacks.GestureEnd
 		): void {
-			this._gestureEventInstance.setEvents(onGestureStart, onGestureMove, onGestureEnd);
+			this._gestureEventInstance.setSwipeEvents(onGestureStart, onGestureMove, onGestureEnd);
 			this._hasGestureEvents = true;
 		}
 	}

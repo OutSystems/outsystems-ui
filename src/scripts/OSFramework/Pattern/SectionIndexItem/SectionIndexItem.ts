@@ -13,11 +13,11 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		implements ISectionIndexItem
 	{
 		// Event OnBodyScroll
-		private _eventOnBodyScroll: Callbacks.Generic;
+		private _eventOnBodyScroll: GlobalCallbacks.Generic;
 		// Store the on click event
-		private _eventOnClick: Callbacks.Generic;
+		private _eventOnClick: GlobalCallbacks.Generic;
 		//Stores the keyboard callback function
-		private _eventOnkeyBoardPress: Callbacks.Generic;
+		private _eventOnkeyBoardPress: GlobalCallbacks.Generic;
 		// Store the header size if it's fixed!
 		private _headerHeight = 0;
 		// Store a flag that will be used to check if the header is fixed!
@@ -41,7 +41,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 			// Set target element offset info!
 			this._setTargetOffsetInfo();
 			// Get the vertical scroll position value
-			const scrollYPosition = Helper.ScrollVerticalPosition();
+			const scrollYPosition = Behaviors.ScrollVerticalPosition();
 			// Threshold value to set element as Active
 			const thresholdVal = 40;
 			// Store the offSetValue to be checked

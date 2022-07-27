@@ -126,7 +126,7 @@ namespace OSFramework.Helper {
 		 * @return {*}
 		 * @memberof DeviceInfo
 		 */
-		private static _getUserAgent(userAgent = '') {
+		private static _getUserAgent(userAgent = ''): string {
 			return userAgent.replace(' ', '') === ''
 				? window.navigator.userAgent.toLowerCase()
 				: userAgent.toLowerCase();
@@ -434,6 +434,48 @@ namespace OSFramework.Helper {
 				}
 			}
 			return DeviceInfo._isTouch;
+		}
+
+		/**
+		 * Gets the Notch Position.
+		 *
+		 * @private
+		 * @static
+		 * @returns GlobalEnum.Position
+		 * @memberof DeviceInfo
+		 */
+		public static get NotchPosition(): GlobalEnum.Position {
+			// store the notch position value
+			let notchPosition = undefined;
+			// Store the window object where the orientation can be checked!
+			let windowOrientation = undefined;
+
+			if ('orientation' in window) {
+				// safari browser
+				windowOrientation = window.orientation;
+			} else if ('orientation' in window.screen) {
+				// check for other browser
+				windowOrientation = window.screen.orientation.angle;
+			}
+
+			// If there's not an orientation...
+			if (windowOrientation === undefined) {
+				return notchPosition;
+			}
+
+			switch (windowOrientation) {
+				case 90:
+					notchPosition = GlobalEnum.Position.Left;
+					break;
+				case -90:
+					notchPosition = GlobalEnum.Position.Right;
+					break;
+				default:
+					notchPosition = GlobalEnum.Position.Top;
+			}
+
+			// retrieve it's position!
+			return notchPosition;
 		}
 
 		/******************** PUBLIC METHODS ********************/

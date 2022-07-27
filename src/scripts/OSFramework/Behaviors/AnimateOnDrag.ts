@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSFramework.Animations {
+namespace OSFramework.Behaviors {
 	// SpringAnimation type
 	type SpringAnimationKeyframes = {
 		frames: number;
@@ -114,7 +114,7 @@ namespace OSFramework.Animations {
 		 * @param {number} offsetX
 		 * @param {number} offsetY
 		 * @param {number} timeTaken
-		 * @param {Callbacks.Generic} callback
+		 * @param {GlobalCallbacks.Generic} callback
 		 * @param {SpringAnimationConfigs} [springProperties]
 		 * @return {*}  {void}
 		 * @memberof AnimateOnDrag
@@ -123,7 +123,7 @@ namespace OSFramework.Animations {
 			offsetX: number,
 			offsetY: number,
 			timeTaken: number,
-			callback: Callbacks.Generic,
+			callback: GlobalCallbacks.Generic,
 			springProperties?: SpringAnimationConfigs
 		): void {
 			this._dragParams.IsMoving = false;

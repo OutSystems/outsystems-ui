@@ -140,12 +140,12 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 	 * @export
 	 * @param {string} dropdownServerSideItemId
 	 * @param {string} eventName
-	 * @param {OSFramework.Callbacks.OSGeneric} callback
+	 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback
 	 */
 	export function RegisterCallback(
 		dropdownServerSideItemId: string,
 		eventName: string,
-		callback: OSFramework.Callbacks.OSGeneric
+		callback: OSFramework.GlobalCallbacks.OSGeneric
 	): string {
 		const responseObj = {
 			isSuccess: true,

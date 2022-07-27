@@ -212,7 +212,7 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 * @param {string} accordionItemId
 	 * @param {*} callback
 	 */
-	export function RegisterCallback(accordionItemId: string, callback: OSFramework.Callbacks.Generic): string {
+	export function RegisterCallback(accordionItemId: string, callback: OSFramework.GlobalCallbacks.Generic): string {
 		const responseObj = {
 			isSuccess: true,
 			message: ErrorCodes.Success.message,

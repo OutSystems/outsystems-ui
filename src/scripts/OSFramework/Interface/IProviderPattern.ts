@@ -21,9 +21,9 @@ namespace OSFramework.Interface {
 		 * Enables to register simple callbacks for the platform. Internal use.
 		 *
 		 * @param {string} eventName
-		 * @param {Callbacks.OSGeneric} callback
+		 * @param {GlobalCallbacks.OSGeneric} callback
 		 * @memberof IProviderPattern
 		 */
-		registerCallback(eventName: string, callback: Callbacks.OSGeneric): void;
+		registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
 	}
 }

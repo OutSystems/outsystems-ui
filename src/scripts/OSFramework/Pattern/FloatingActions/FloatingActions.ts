@@ -42,7 +42,7 @@ namespace OSFramework.Patterns.FloatingActions {
 		// Last Floating Action Item
 		private _lastButton: HTMLElement;
 		// Callback function to trigger the click event
-		private _onClick: Callbacks.OSGeneric;
+		private _onClick: GlobalCallbacks.OSGeneric;
 		// Store the open method with bind(this)
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _openMethod: any;
@@ -420,7 +420,7 @@ namespace OSFramework.Patterns.FloatingActions {
 			this._triggerOnClickEvent();
 		}
 
-		public registerCallback(callback: Callbacks.OSGeneric): void {
+		public registerCallback(callback: GlobalCallbacks.OSGeneric): void {
 			this._onClick = callback;
 		}
 

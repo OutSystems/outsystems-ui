@@ -12,7 +12,7 @@ namespace OSFramework.Patterns.Dropdown {
 		public abstract disable(): void;
 		public abstract enable(): void;
 		public abstract getSelectedValues(): string;
-		public abstract registerCallback(eventName: string, callback: Callbacks.OSGeneric): void;
+		public abstract registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
 		public abstract validation(isValid: boolean, validationMessage: string): void;
 	}
 }

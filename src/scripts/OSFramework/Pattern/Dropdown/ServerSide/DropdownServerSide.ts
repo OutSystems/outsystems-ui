@@ -8,6 +8,8 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		>
 		implements IDropdownServerSide
 	{
+		// Store the HTML element for the ActiveScreen where a status class will be updated accoding balloon is open or not.
+		private _activeScreenElement: HTMLElement;
 		// Store the HTML element for the DropdownBalloonContainer
 		private _balloonContainerElement: HTMLElement;
 		// Store the HTML element for the DropdownBalloonContent
@@ -31,36 +33,42 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		// Store a Flag property that will help dealing with the focus state at the close moment
 		private _closeDynamically = false;
 		// Click On Body
-		private _eventOnBodyClick: Callbacks.Generic;
+		private _eventOnBodyClick: GlobalCallbacks.Generic;
 		// Event OnBodyScroll
-		private _eventOnBodyScroll: Callbacks.Generic;
+		private _eventOnBodyScroll: GlobalCallbacks.Generic;
 		// Click Event
-		private _eventOnClick: Callbacks.Generic;
-		private _eventOnClickInputSearch: Callbacks.Generic;
+		private _eventOnClick: GlobalCallbacks.Generic;
+		private _eventOnClickInputSearch: GlobalCallbacks.Generic;
 		// Event OnTransitionEnd applied to the Balloon
-		private _eventOnCloseTransitionEnd: Callbacks.Generic;
+		private _eventOnCloseTransitionEnd: GlobalCallbacks.Generic;
 		// Event OnOrientationChange Event
-		private _eventOnOrientationChange: Callbacks.Generic;
+		private _eventOnOrientationChange: GlobalCallbacks.Generic;
+		// OnSearchInputBlur Event
+		private _eventOnSearchInputBlur: GlobalCallbacks.Generic;
+		// OnSearchInputFocus Event
+		private _eventOnSearchInputFocus: GlobalCallbacks.Generic;
 		// OnFocus Event at ballon custom span elements
-		private _eventOnSpanFocus: Callbacks.Generic;
+		private _eventOnSpanFocus: GlobalCallbacks.Generic;
+		// OnTouchMove Event at the balloon wrapper
+		private _eventOnTouchMove: GlobalCallbacks.Generic;
 		// On WindowResize Event
-		private _eventOnWindowResize: Callbacks.Generic;
+		private _eventOnWindowResize: GlobalCallbacks.Generic;
 		// Keyboard Key Press Event
-		private _eventOnkeyboardPress: Callbacks.Generic;
+		private _eventOnkeyboardPress: GlobalCallbacks.Generic;
 		// Store the instance of the Object responsible to Add Custom HTML elements to the DropdownBallon that will help on deal with keyboard navigation (Accessibility)
-		private _focusTrapObject: DynamicElements.FocusTrap.FocusTrap;
+		private _focusTrapObject: Behaviors.FocusTrap;
 		// Set the observer that will check if the balloon is inside screen boundaries!
 		private _intersectionObserver: IntersectionObserver;
-		// Flag variable used to prevent close the balloon at onBodyScroll when inside tablet!
-		private _isBalloonContentScrolling = false;
 		// Store a Flag property that will control if the dropdown is blocked (like it's under closing animation)
 		private _isBlocked = false;
 		// Store the Element State, by default is closed!
 		private _isOpen = false;
+		// Store the HTML element for the layout where the Balloon will be moved into.
+		private _layoutElement: HTMLElement;
 		// Platform OnInitialize Callback
-		private _platformEventInitializedCallback: Callbacks.OSGeneric;
+		private _platformEventInitializedCallback: GlobalCallbacks.OSGeneric;
 		// Platform OnClose Callback
-		private _platformEventOnToggleCallback: Callbacks.OSGeneric;
+		private _platformEventOnToggleCallback: GlobalCallbacks.OSGeneric;
 		// Store the RequestAnimationFrame that will be triggered at OnBodyScroll
 		private _requestAnimationOnBodyScroll: number;
 		// Store the HTML element for the Dropdown Select Wrapper
@@ -101,6 +109,12 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 				// Set focus to the base element
 				this._selectValuesWrapper.focus();
 			}
+
+			// Remove isVisible class to the layout
+			Helper.Dom.Styles.RemoveClass(this._activeScreenElement, Enum.CssClass.IsVisible);
+
+			// Update the touchMove when pattern is open!
+			this._touchMove();
 
 			// Cancel the requestAnimationFrame
 			cancelAnimationFrame(this._requestAnimationOnBodyScroll);
@@ -171,8 +185,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 
 		// Move ballon element to outside of the pattern context
 		private _moveBallonElement(): void {
-			const layoutElement = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.Layout);
-			Helper.Dom.Move(this._balloonWrapperElement, layoutElement);
+			Helper.Dom.Move(this._balloonWrapperElement, this._layoutElement);
 		}
 
 		// Close when click outside of pattern
@@ -285,9 +298,19 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 			}
 		}
 
+		// Also Used to manage the balloon height accordingly keyboard is in use due to the way iOS deal with it!
+		private _onSearchInputBlur(): void {
+			Helper.Dom.Styles.RemoveClass(this._balloonWrapperElement, Enum.CssClass.SearchInputIsFocused);
+		}
+
 		// Used to set a stopPropagation when click at search input
 		private _onSearchInputClicked(event: MouseEvent): void {
 			event.stopPropagation();
+		}
+
+		// Used to manage the balloon height accordingly keyboard is in use due to the way iOS deal with it!
+		private _onSearchInputFocus(): void {
+			Helper.Dom.Styles.AddClass(this._balloonWrapperElement, Enum.CssClass.SearchInputIsFocused);
 		}
 
 		// Used to apply the logic when user click to open the Dropdown
@@ -302,6 +325,13 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		private _onSpanElementFocus(): void {
 			// Close the Balloon
 			this._close();
+		}
+
+		// Manage the OnTouchMove action
+		private _onTouchMove(event: TouchEvent): void {
+			if (event.target === this._balloonWrapperElement) {
+				event.preventDefault();
+			}
 		}
 
 		// Manage the behaviour when there is a window resize!
@@ -325,6 +355,12 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 			this._windowWidth = window.innerWidth;
 
 			this._setBalloonCoordinates();
+
+			// Update the touchMove when pattern is open!
+			this._touchMove();
+
+			// Add the isVisible class to the layout
+			Helper.Dom.Styles.AddClass(this._activeScreenElement, Enum.CssClass.IsVisible);
 			this._updatePatternState();
 
 			// Set the Observer in order to update it's position if balloon is out of bounds!
@@ -442,6 +478,8 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 				(lookAtXPosition === false && selfElement.y === this._selfElementBoundingClientRect.y) ||
 				(lookAtXPosition &&
 					selfElement.x === this._selfElementBoundingClientRect.x &&
+					selfElement.right ===
+						this._selfElementBoundingClientRect.x + this._selfElementBoundingClientRect.width &&
 					selfElement.y === this._selfElementBoundingClientRect.y)
 			) {
 				cancelAnimationFrame(this._requestAnimationOnBodyScroll);
@@ -511,9 +549,9 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 				focusBottomCallback: this._eventOnSpanFocus.bind(this),
 				focusTargetElement: this._balloonWrapperElement,
 				focusTopCallback: this._eventOnSpanFocus.bind(this),
-			} as FocusTrapOpts;
+			} as Behaviors.FocusTrapParams;
 
-			this._focusTrapObject = new DynamicElements.FocusTrap.FocusTrap(opts);
+			this._focusTrapObject = new Behaviors.FocusTrap(opts);
 		}
 
 		// Method used to store a given DropdownOption into optionItems list, it's triggered by DropdownServerSideItem
@@ -577,6 +615,16 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 					GlobalEnum.HTMLEvent.keyDown,
 					this._eventOnkeyboardPress
 				);
+				// Add BlurEvent in order to manage the Balloon Height when at iOS due to keyboard is in use
+				this._balloonSearchInputElement.addEventListener(
+					GlobalEnum.HTMLEvent.Blur,
+					this._eventOnSearchInputBlur
+				);
+				// Add FocusEvent in order to manage the Balloon Height when at iOS due to keyboard is in use
+				this._balloonSearchInputElement.addEventListener(
+					GlobalEnum.HTMLEvent.Focus,
+					this._eventOnSearchInputFocus
+				);
 			}
 			// Add the BodyClick callback that will be used Close open Dropdown!
 			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
@@ -588,6 +636,25 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 			Event.GlobalEventManager.Instance.addHandler(Event.Type.WindowResize, this._eventOnWindowResize);
 			// Add the OnOrientationChange callback that will be used to close the balloon position!
 			Event.GlobalEventManager.Instance.addHandler(Event.Type.OrientationChange, this._eventOnOrientationChange);
+		}
+
+		// Method used to manage the onTouchMove when we're at mobile devices in order to block the window scroll!
+		// This is an improvement specially to iOS since otherwise it will be able to scroll the pattern when keyboard is open!
+		private _touchMove(): void {
+			// Check if the used browser has TouchMove event and if it's an iOS device
+			if (Helper.DeviceInfo.IsIos && 'ontouchmove' in window) {
+				if (this._isOpen) {
+					this._balloonWrapperElement.addEventListener(
+						GlobalEnum.HTMLEvent.TouchMove,
+						this._eventOnTouchMove
+					);
+				} else {
+					this._balloonWrapperElement.removeEventListener(
+						GlobalEnum.HTMLEvent.TouchMove,
+						this._eventOnTouchMove
+					);
+				}
+			}
 		}
 
 		// Mehod used to trigger the _platformEventOnToggleCallback callback!
@@ -611,6 +678,14 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 				this._balloonSearchInputElement.removeEventListener(
 					GlobalEnum.HTMLEvent.keyDown,
 					this._eventOnkeyboardPress
+				);
+				this._balloonSearchInputElement.removeEventListener(
+					GlobalEnum.HTMLEvent.Blur,
+					this._eventOnSearchInputBlur
+				);
+				this._balloonSearchInputElement.removeEventListener(
+					GlobalEnum.HTMLEvent.Focus,
+					this._eventOnSearchInputFocus
 				);
 			}
 			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
@@ -659,9 +734,8 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 
 			// If there are items inside Ballon Footer
 			if (this._balloonFocusableElemsInFooter.length > 0) {
-				for (const item of this._balloonFocusableElemsInFooter) {
-					Helper.A11Y.TabIndex(item, tabIndexValue);
-				}
+				// Will handle the tabindex value of the elements inside pattern
+				Helper.A11Y.SetElementsTabIndex(this._isOpen, this._balloonFocusableElemsInFooter);
 			}
 
 			// Update FocusHTML elements attributes
@@ -775,7 +849,10 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 			this._eventOnCloseTransitionEnd = this._endOfCloseAnimation.bind(this);
 			this._eventOnkeyboardPress = this._onKeyboardPressed.bind(this);
 			this._eventOnOrientationChange = this._onOrientationChange.bind(this);
+			this._eventOnSearchInputBlur = this._onSearchInputBlur.bind(this);
+			this._eventOnSearchInputFocus = this._onSearchInputFocus.bind(this);
 			this._eventOnSpanFocus = this._onSpanElementFocus.bind(this);
+			this._eventOnTouchMove = this._onTouchMove.bind(this);
 			this._eventOnWindowResize = this._onWindowResize.bind(this);
 		}
 
@@ -786,6 +863,11 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		protected setHtmlElements(): void {
+			this._layoutElement = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.Layout);
+			this._activeScreenElement = Helper.Dom.ClassSelector(
+				document.body,
+				GlobalEnum.CssClassElements.ActiveScreen
+			);
 			this._balloonFooterElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.BalloonFooter);
 			this._balloonFocusableElemsInFooter = Helper.Dom.TagSelectorAll(
 				this._balloonFooterElement,
@@ -839,7 +921,10 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 			this._eventOnCloseTransitionEnd = undefined;
 			this._eventOnkeyboardPress = undefined;
 			this._eventOnOrientationChange = undefined;
+			this._eventOnSearchInputBlur = undefined;
+			this._eventOnSearchInputFocus = undefined;
 			this._eventOnSpanFocus = undefined;
+			this._eventOnTouchMove = undefined;
 			this._eventOnWindowResize = undefined;
 			this._platformEventInitializedCallback = undefined;
 			this._platformEventOnToggleCallback = undefined;
@@ -856,6 +941,8 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 			this._balloonWrapperElement.remove();
 
 			// unset the local properties
+			this._layoutElement = undefined;
+			this._activeScreenElement = undefined;
 			this._balloonContainerElement = undefined;
 			this._balloonFocusableElemsInFooter = [];
 			this._balloonFooterElement = undefined;
@@ -997,10 +1084,10 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		 * Method used to register the provider callback
 		 *
 		 * @param {string} eventName Event name that will be assigned
-		 * @param {Callbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
+		 * @param {GlobalCallbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
 		 * @memberof OSUIDropdownServerSide
 		 */
-		public registerCallback(eventName: string, callback: Callbacks.OSGeneric): void {
+		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
 				case Patterns.Dropdown.Enum.Events.Initialized:
 					if (this._platformEventInitializedCallback === undefined) {

@@ -5,14 +5,14 @@ namespace OSFramework.Patterns.FlipContent {
 	 */
 	export class FlipContent extends AbstractPattern<FlipContentConfig> implements IFlipContent {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventClick: Callbacks.Generic;
+		private _eventClick: GlobalCallbacks.Generic;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventKeydown: Callbacks.Generic;
+		private _eventKeydown: GlobalCallbacks.Generic;
 		//The Flip Content content wrapper
 		private _flipWrapperElement: HTMLElement;
 
 		// Callback function to trigger the click event on the platform
-		private _plataformEventFlip: Callbacks.OSFlipContentFlipEvent;
+		private _plataformEventFlip: Callbacks.OSFlipEvent;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new FlipContentConfig(configs));
@@ -204,7 +204,7 @@ namespace OSFramework.Patterns.FlipContent {
 		 *
 		 * @memberof FlipContent
 		 */
-		public registerCallback(callback: Callbacks.OSFlipContentFlipEvent): void {
+		public registerCallback(callback: Callbacks.OSFlipEvent): void {
 			if (this._plataformEventFlip === undefined) {
 				this._plataformEventFlip = callback;
 			}

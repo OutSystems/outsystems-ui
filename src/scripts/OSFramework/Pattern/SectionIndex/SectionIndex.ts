@@ -88,7 +88,7 @@ namespace OSFramework.Patterns.SectionIndex {
 			this._activeSectionIndexItem = child;
 
 			// Trigger the Scroll navigation
-			Helper.Scroll(this._mainScrollContainerElement, child.TargetElementOffset, this.configs.SmoothScrolling);
+			Behaviors.Scroll(this._mainScrollContainerElement, child.TargetElementOffset, this.configs.SmoothScrolling);
 		}
 
 		// Method used to set the IsActive child item at the onBodyScroll

@@ -16,10 +16,13 @@ namespace OSFramework.GlobalEnum {
 		AsideExpandable = 'aside-expandable',
 		Container = 'screen-container',
 		Content = 'content',
+		Footer = 'footer',
 		Header = 'header',
 		HeaderHideOnScroll = 'hide-header-on-scroll',
 		HeaderIsFixed = 'fixed-header',
 		HeaderIsVisible = 'header-is--visible',
+		HeaderTopContent = 'header-top-content',
+		IsTouch = 'is--touch',
 		Layout = 'layout',
 		LayoutNative = 'layout-native',
 		LayoutTop = 'layout-top',
@@ -32,7 +35,10 @@ namespace OSFramework.GlobalEnum {
 	 * OutSystemsUI common css variables
 	 */
 	export enum CSSVariables {
+		FooterHeight = '--footer-height',
+		HeaderContentHeight = '--header-size-content',
 		OverlayOpacity = '--overlay-opacity',
+		ViewportHeight = '--viewport-height',
 	}
 
 	/**
@@ -96,6 +102,7 @@ namespace OSFramework.GlobalEnum {
 	 * OutSystemsUI HTML Attributes
 	 */
 	export enum HTMLAttributes {
+		AllowEventPropagation = '[data-allow-event-propagation=true]',
 		DataInput = 'data-input',
 		Disabled = 'disabled',
 		Id = 'id',

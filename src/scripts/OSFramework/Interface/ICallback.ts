@@ -7,6 +7,6 @@ namespace OSFramework.Interface {
 	 * @interface ICallback
 	 */
 	export interface ICallback {
-		registerCallback(callback: Callbacks.OSGeneric): void;
+		registerCallback(callback: GlobalCallbacks.OSGeneric): void;
 	}
 }
