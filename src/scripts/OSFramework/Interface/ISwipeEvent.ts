@@ -19,10 +19,10 @@ namespace OSFramework.Interface {
 		 * @memberof ISwipeEvent
 		 */
 		setGestureEvents(
-			swipeDownCallback: Event.GestureEvent.Callbacks.swipeDown,
-			swipeLeftCallback: Event.GestureEvent.Callbacks.swipeLeft,
-			swipeRightCallback: Event.GestureEvent.Callbacks.swipeRight,
-			swipeUpCallback: Event.GestureEvent.Callbacks.swipeUp
+			swipeDownCallback: Event.GestureEvent.Callbacks.SwipeDown,
+			swipeLeftCallback: Event.GestureEvent.Callbacks.SwipeLeft,
+			swipeRightCallback: Event.GestureEvent.Callbacks.SwipeRight,
+			swipeUpCallback: Event.GestureEvent.Callbacks.SwipeUp
 		);
 	}
 }

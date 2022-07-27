@@ -546,10 +546,10 @@ namespace OSFramework.Patterns.Notification {
 		 * @memberof Notification
 		 */
 		public setGestureEvents(
-			onSwipeDownCallback: Event.GestureEvent.Callbacks.swipeDown,
-			onSwipeLeftCallback: Event.GestureEvent.Callbacks.swipeLeft,
-			onSwipeRightCallback: Event.GestureEvent.Callbacks.swipeRight,
-			onSwipeUpCallback: Event.GestureEvent.Callbacks.swipeUp
+			onSwipeDownCallback: Event.GestureEvent.Callbacks.SwipeDown,
+			onSwipeLeftCallback: Event.GestureEvent.Callbacks.SwipeLeft,
+			onSwipeRightCallback: Event.GestureEvent.Callbacks.SwipeRight,
+			onSwipeUpCallback: Event.GestureEvent.Callbacks.SwipeUp
 		): void {
 			this._gestureEventInstance.setSwipeEvents(
 				onSwipeDownCallback,

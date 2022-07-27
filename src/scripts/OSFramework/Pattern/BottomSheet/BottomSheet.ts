@@ -426,9 +426,9 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * @memberof BottomSheet
 		 */
 		public setGestureEvents(
-			onGestureStart: Event.GestureEvent.Callbacks.gestureStart,
-			onGestureMove: Event.GestureEvent.Callbacks.gestureMove,
-			onGestureEnd: Event.GestureEvent.Callbacks.gestureEnd
+			onGestureStart: Event.GestureEvent.Callbacks.GestureStart,
+			onGestureMove: Event.GestureEvent.Callbacks.GestureMove,
+			onGestureEnd: Event.GestureEvent.Callbacks.GestureEnd
 		): void {
 			this._gestureEventInstance.setSwipeEvents(onGestureStart, onGestureMove, onGestureEnd);
 			this._hasGestureEvents = true;

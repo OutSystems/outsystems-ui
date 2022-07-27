@@ -15,15 +15,15 @@ namespace OSFramework.Event.GestureEvent {
 		/**
 		 * Method to set the expected callbacks and add eventListeners to the target element
 		 *
-		 * @param {Event.GestureEvent.Callbacks.gestureStart} onStartCallback
-		 * @param {Event.GestureEvent.Callbacks.gestureMove} onMoveCallback
-		 * @param {Event.GestureEvent.Callbacks.gestureEnd} [onEndCallback]
+		 * @param {Event.GestureEvent.Callbacks.GestureStart} onStartCallback
+		 * @param {Event.GestureEvent.Callbacks.GestureMove} onMoveCallback
+		 * @param {Event.GestureEvent.Callbacks.GestureEnd} [onEndCallback]
 		 * @memberof DragEvent
 		 */
 		public setSwipeEvents(
-			onStartCallback: Event.GestureEvent.Callbacks.gestureStart,
-			onMoveCallback: Event.GestureEvent.Callbacks.gestureMove,
-			onEndCallback?: Event.GestureEvent.Callbacks.gestureEnd
+			onStartCallback: Event.GestureEvent.Callbacks.GestureStart,
+			onMoveCallback: Event.GestureEvent.Callbacks.GestureMove,
+			onEndCallback?: Event.GestureEvent.Callbacks.GestureEnd
 		): void {
 			super.setCallbacks(onStartCallback, onMoveCallback, onEndCallback);
 			super.setEventListeners();
