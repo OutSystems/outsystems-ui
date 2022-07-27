@@ -12,9 +12,9 @@ namespace OSFramework.Interface {
 		/**
 		 * Signature Method to add drag events
 		 *
-		 * @param {Event.GestureEvent.gestureStart} onGestureStart
-		 * @param {Event.GestureEvent.gestureMove} onGestureMove
-		 * @param {Event.GestureEvent.gestureEnd} onGestureEnd
+		 * @param {Event.GestureEvent.gestureStart} gestureStart
+		 * @param {Event.GestureEvent.gestureMove} gestureMove
+		 * @param {Event.GestureEvent.gestureEnd} gestureEnd
 		 * @memberof IDragEvent
 		 */
 		setGestureEvents(
