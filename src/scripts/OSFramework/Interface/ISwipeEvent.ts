@@ -12,17 +12,17 @@ namespace OSFramework.Interface {
 		/**
 		 * Signature Method to add swipe events
 		 *
-		 * @param {Event.GestureEvent.onSwipeDown} swipeDownCallback
-		 * @param {Event.GestureEvent.onSwipeLeft} swipeLeftCallback
-		 * @param {Event.GestureEvent.onSwipeRight} swipeRightCallback
-		 * @param {Event.GestureEvent.onSwipeUp} swipeUpCallback
+		 * @param {Event.GestureEvent.swipeDown} swipeDownCallback
+		 * @param {Event.GestureEvent.swipeLeft} swipeLeftCallback
+		 * @param {Event.GestureEvent.swipeRight} swipeRightCallback
+		 * @param {Event.GestureEvent.swipeUp} swipeUpCallback
 		 * @memberof ISwipeEvent
 		 */
 		setGestureEvents(
-			swipeDownCallback: Event.GestureEvent.onSwipeDown,
-			swipeLeftCallback: Event.GestureEvent.onSwipeLeft,
-			swipeRightCallback: Event.GestureEvent.onSwipeRight,
-			swipeUpCallback: Event.GestureEvent.onSwipeUp
+			swipeDownCallback: Event.GestureEvent.Callbacks.swipeDown,
+			swipeLeftCallback: Event.GestureEvent.Callbacks.swipeLeft,
+			swipeRightCallback: Event.GestureEvent.Callbacks.swipeRight,
+			swipeUpCallback: Event.GestureEvent.Callbacks.swipeUp
 		);
 	}
 }

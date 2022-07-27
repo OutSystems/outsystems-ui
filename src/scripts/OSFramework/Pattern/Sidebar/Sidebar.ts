@@ -459,9 +459,9 @@ namespace OSFramework.Patterns.Sidebar {
 		 * @memberof Sidebar
 		 */
 		public setGestureEvents(
-			onGestureStart: Event.GestureEvent.onGestureStart,
-			onGestureMove: Event.GestureEvent.onGestureMove,
-			onGestureEnd: Event.GestureEvent.onGestureEnd
+			onGestureStart: Event.GestureEvent.Callbacks.gestureStart,
+			onGestureMove: Event.GestureEvent.Callbacks.gestureMove,
+			onGestureEnd: Event.GestureEvent.Callbacks.gestureEnd
 		): void {
 			this._gestureEventInstance.setEvents(onGestureStart, onGestureMove, onGestureEnd);
 			this._hasGestureEvents = true;

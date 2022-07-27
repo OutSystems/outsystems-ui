@@ -546,10 +546,10 @@ namespace OSFramework.Patterns.Notification {
 		 * @memberof Sidebar
 		 */
 		public setGestureEvents(
-			onSwipeDownCallback: Event.GestureEvent.onSwipeDown,
-			onSwipeLeftCallback: Event.GestureEvent.onSwipeLeft,
-			onSwipeRightCallback: Event.GestureEvent.onSwipeRight,
-			onSwipeUpCallback: Event.GestureEvent.onSwipeUp
+			onSwipeDownCallback: Event.GestureEvent.Callbacks.swipeDown,
+			onSwipeLeftCallback: Event.GestureEvent.Callbacks.swipeLeft,
+			onSwipeRightCallback: Event.GestureEvent.Callbacks.swipeRight,
+			onSwipeUpCallback: Event.GestureEvent.Callbacks.swipeUp
 		): void {
 			this._gestureEventInstance.setEvents(
 				onSwipeDownCallback,

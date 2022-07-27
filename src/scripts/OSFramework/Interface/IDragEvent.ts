@@ -12,15 +12,15 @@ namespace OSFramework.Interface {
 		/**
 		 * Signature Method to add drag events
 		 *
-		 * @param {Event.GestureEvent.onGestureStart} onGestureStart
-		 * @param {Event.GestureEvent.onGestureMove} onGestureMove
-		 * @param {Event.GestureEvent.onGestureEnd} onGestureEnd
+		 * @param {Event.GestureEvent.gestureStart} onGestureStart
+		 * @param {Event.GestureEvent.gestureMove} onGestureMove
+		 * @param {Event.GestureEvent.gestureEnd} onGestureEnd
 		 * @memberof IDragEvent
 		 */
 		setGestureEvents(
-			onGestureStart: Event.GestureEvent.onGestureStart,
-			onGestureMove: Event.GestureEvent.onGestureMove,
-			onGestureEnd: Event.GestureEvent.onGestureEnd
+			onGestureStart: Event.GestureEvent.Callbacks.gestureStart,
+			onGestureMove: Event.GestureEvent.Callbacks.gestureMove,
+			onGestureEnd: Event.GestureEvent.Callbacks.gestureEnd
 		);
 	}
 }
