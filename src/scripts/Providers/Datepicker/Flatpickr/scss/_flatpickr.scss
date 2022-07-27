@@ -420,6 +420,19 @@ span.flatpickr-weekday {
 		// Hack to disable zoom focus on mobile
 		font-size: var(--font-size-base);
 	}
+
+	// Hack to force alignment left on iOS 15+
+	.flatpickr-mobile::-webkit-date-and-time-value {
+		text-align: left;
+	}
+
+	// IsRTL ---------------
+	.is-rtl {
+		// Hack to force alignment right on iOS 15+
+		.flatpickr-mobile::-webkit-date-and-time-value {
+			text-align: right;
+		}
+	}
 }
 
 // IsRTL -------------------------------------------------------------------------
