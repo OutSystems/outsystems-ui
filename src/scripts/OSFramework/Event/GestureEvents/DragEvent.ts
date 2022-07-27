@@ -15,9 +15,9 @@ namespace OSFramework.Event.GestureEvent {
 		/**
 		 * Method to set the expected callbacks and add eventListeners to the target element
 		 *
-		 * @param {Event.GestureEvent.gestureStart} onStartCallback
-		 * @param {Event.GestureEvent.gestureMove} onMoveCallback
-		 * @param {Event.GestureEvent.gestureEnd} [onEndCallback]
+		 * @param {Event.GestureEvent.Callbacks.gestureStart} onStartCallback
+		 * @param {Event.GestureEvent.Callbacks.gestureMove} onMoveCallback
+		 * @param {Event.GestureEvent.Callbacks.gestureEnd} [onEndCallback]
 		 * @memberof DragEvent
 		 */
 		public setEvents(
