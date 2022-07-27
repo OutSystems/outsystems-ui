@@ -4,9 +4,9 @@
 
 Create modern experiences with fully customizable responsive Screen Templates and UI Patterns for Native Mobile and Reactive Web Apps.
 
-| `One Framework`                                                              | `Fully Integrated`                                                             | `Responsive by Default`                                                           | `Limitless Possibilities`                                                         |
-| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| Create seamless experiences for Reactive Web and Native Mobile Applications. | Drag and drop UI Patterns and Screen Templates from OutSystems Service Studio. | Ready to use Layouts and UI Patterns that automatically adapt to the device size. | Extend the styles of over 70 UI Patterns and Screen Templates to make them yours. |
+| `One Framework` | `Fully Integrated` | `Responsive by Default` | `Limitless Possibilities` |
+| ------------- | ---------------- | --------------------- | ----------------------- |
+Create seamless experiences for Reactive Web and Native Mobile Applications. | Drag and drop UI Patterns and Screen Templates from OutSystems Service Studio. | Ready to use Layouts and UI Patterns that automatically adapt to the device size. | Extend the styles of over 70 UI Patterns and Screen Templates to make them yours. |
 
 ### Key features
 
