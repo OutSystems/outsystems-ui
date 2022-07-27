@@ -22,17 +22,17 @@ namespace OSFramework.Patterns.AccordionItem {
 		// Store the collapsed height value
 		private _collapsedHeight = 0;
 		// Store the click event with bind(this)
-		private _eventOnClick: Callbacks.Generic;
+		private _eventOnClick: GlobalCallbacks.Generic;
 		//Stores the transition end callback function
-		private _eventOnTransitionEnd: Callbacks.Generic;
+		private _eventOnTransitionEnd: GlobalCallbacks.Generic;
 		//Stores the keyboard callback function
-		private _eventOnkeyPress: Callbacks.Generic;
+		private _eventOnkeyPress: GlobalCallbacks.Generic;
 		// Store the expanded height value
 		private _expandedHeight: number;
 		// Stores if the element is open
 		private _isOpen: boolean;
 		// Callback function to trigger the click event on the platform
-		private _platformEventOnToggle: Callbacks.Generic;
+		private _platformEventOnToggle: GlobalCallbacks.Generic;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new AccordionItemConfig(configs));
@@ -533,10 +533,10 @@ namespace OSFramework.Patterns.AccordionItem {
 		/**
 		 * Set callbacks for the onToggle event
 		 *
-		 * @param {Callbacks.OSGeneric} callback
+		 * @param {GlobalCallbacks.OSGeneric} callback
 		 * @memberof AccordionItem
 		 */
-		public registerCallback(callback: Callbacks.OSGeneric): void {
+		public registerCallback(callback: GlobalCallbacks.OSGeneric): void {
 			if (this._platformEventOnToggle === undefined) {
 				this._platformEventOnToggle = callback;
 			} else {

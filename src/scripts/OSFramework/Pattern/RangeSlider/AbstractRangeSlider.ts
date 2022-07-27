@@ -18,7 +18,7 @@ namespace OSFramework.Patterns.RangeSlider {
 			this._provider = p;
 		}
 
-		public abstract registerCallback(eventName: string, callback: Callbacks.OSGeneric): void;
+		public abstract registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
 		public abstract setRangeIntervalChangeOnDragEnd(): void;
 	}
 }

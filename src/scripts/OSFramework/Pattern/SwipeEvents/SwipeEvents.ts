@@ -5,18 +5,18 @@ namespace OSFramework.Patterns.SwipeEvents {
 	 */
 	export class SwipeEvents extends AbstractPattern<SwipeEventsConfig> implements ISwipeEvents {
 		// Stores the touch event with bind(this)
-		private _gestureMoveEvent: Callbacks.Generic;
+		private _gestureMoveEvent: GlobalCallbacks.Generic;
 		// Stores the touch event with bind(this)
-		private _gestureStartEvent: Callbacks.Generic;
+		private _gestureStartEvent: GlobalCallbacks.Generic;
 
 		//Stores the element that will have the swipe event
 		private _swipableElement: HTMLElement;
 
 		// Callbacks for the platform
-		private _swipeDownCallback: Callbacks.Generic;
-		private _swipeLeftCallback: Callbacks.Generic;
-		private _swipeRightCallback: Callbacks.Generic;
-		private _swipeUpCallback: Callbacks.Generic;
+		private _swipeDownCallback: GlobalCallbacks.Generic;
+		private _swipeLeftCallback: GlobalCallbacks.Generic;
+		private _swipeRightCallback: GlobalCallbacks.Generic;
+		private _swipeUpCallback: GlobalCallbacks.Generic;
 
 		//Threshold to understand if a swipe event was triggered
 		private _threshold: number;
@@ -175,7 +175,7 @@ namespace OSFramework.Patterns.SwipeEvents {
 			this.unsetHtmlElements();
 		}
 
-		public registerCallback(eventName: string, callback: Callbacks.OSGeneric): void {
+		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
 				case Patterns.SwipeEvents.Enum.Events.SwipeDown:
 					this._swipeDownCallback = callback;

@@ -21,15 +21,15 @@ namespace Providers.Splide {
 		// Store current carousel index;
 		private _currentIndex: number;
 		// Store the disable render async callback
-		private _eventOnDisableRender: OSFramework.Callbacks.Generic;
+		private _eventOnDisableRender: OSFramework.GlobalCallbacks.Generic;
 		// Store the onResize event
-		private _eventOnResize: OSFramework.Callbacks.Generic;
+		private _eventOnResize: OSFramework.GlobalCallbacks.Generic;
 		// Store if a List widget is used inside the CarouselItems placeholder
 		private _hasList: boolean;
 		// Store the onInitialized event
-		private _platformEventInitialized: OSFramework.Callbacks.OSCarouselOnInitializeEvent;
+		private _platformEventInitialized: OSFramework.Patterns.Carousel.Callbacks.OSOnInitializeEvent;
 		// Store the onSlideMoved event
-		private _platformEventOnSlideMoved: OSFramework.Callbacks.OSCarouselSlideMovedEvent;
+		private _platformEventOnSlideMoved: OSFramework.Patterns.Carousel.Callbacks.OSOnSlideMovedEvent;
 		// Store initial provider options
 		private _providerOptions: SplideOpts;
 
@@ -349,10 +349,10 @@ namespace Providers.Splide {
 		 * Set callbacks for the onChange event
 		 *
 		 * @param {string} eventName
-		 * @param {OSFramework.Callbacks.OSGeneric} callback
+		 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback
 		 * @memberof OSUISplide
 		 */
-		public registerCallback(eventName: string, callback: OSFramework.Callbacks.OSGeneric): void {
+		public registerCallback(eventName: string, callback: OSFramework.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
 				case OSFramework.Patterns.Carousel.Enum.CarouselEvents.OnSlideMoved:
 					this._platformEventOnSlideMoved = callback;

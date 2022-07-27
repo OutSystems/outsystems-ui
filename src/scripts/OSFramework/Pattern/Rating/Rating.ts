@@ -11,11 +11,11 @@ namespace OSFramework.Patterns.Rating {
 		// Store current disable values
 		private _disabled: boolean;
 		// Store the click event with bind(this)
-		private _eventOnRatingClick: Callbacks.Generic;
+		private _eventOnRatingClick: GlobalCallbacks.Generic;
 		// Store if the rating value is half
 		private _isHalfValue: boolean;
 		// Store the callback to be used on the OnSelect event
-		private _platformEventOnSelect: Callbacks.OSRatingSelectEvent;
+		private _platformEventOnSelect: Callbacks.OSOnSelectEvent;
 		// Store the fieldset html element
 		private _ratingFieldsetElem: HTMLElement;
 		// Store if the rating already has an event added
@@ -409,10 +409,10 @@ namespace OSFramework.Patterns.Rating {
 		/**
 		 * Set callbacks for the onSelect click event
 		 *
-		 * @param {Callbacks.OSRatingSelectEvent} callback
+		 * @param {Callbacks.OSOnSelectEvent} callback
 		 * @memberof Rating
 		 */
-		public registerCallback(callback: Callbacks.OSRatingSelectEvent): void {
+		public registerCallback(callback: Callbacks.OSOnSelectEvent): void {
 			this._platformEventOnSelect = callback;
 		}
 	}

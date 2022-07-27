@@ -13,11 +13,11 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 		implements IDropdownServerSideItem
 	{
 		// Click Event
-		private _eventOnClick: Callbacks.Generic;
+		private _eventOnClick: GlobalCallbacks.Generic;
 		// Keyboard Key Press Event
-		private _eventOnkeyboardPress: Callbacks.Generic;
+		private _eventOnkeyboardPress: GlobalCallbacks.Generic;
 		// Platform Click Event Callback
-		private _platformEventOnClickCallback: Callbacks.OSDropdownServerSideItemOnSelectEvent;
+		private _platformEventOnClickCallback: Callbacks.OSOnSelectEvent;
 
 		// Store the Key used to trigger the notification into Dropdown parent
 		public keyboardTriggeredKey: string;
@@ -208,10 +208,10 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 		 * Method used to register the callback
 		 *
 		 * @param {string} eventName Event name that will be assigned
-		 * @param {OSFramework.Callbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
+		 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
 		 * @memberof DropdownServerSideItem
 		 */
-		public registerCallback(eventName: string, callback: Callbacks.OSGeneric): void {
+		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
 				case Enum.Events.OnSelected:
 					if (this._platformEventOnClickCallback === undefined) {

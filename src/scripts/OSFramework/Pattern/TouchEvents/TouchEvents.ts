@@ -9,17 +9,17 @@ namespace OSFramework.Patterns.TouchEvents {
 		private _currentY: number;
 
 		// Stores the touch event with bind(this)
-		private _endEvent: Callbacks.Generic;
+		private _endEvent: GlobalCallbacks.Generic;
 		//Stores the callback to be triggered
-		private _endEventCallback: Callbacks.Generic;
+		private _endEventCallback: GlobalCallbacks.Generic;
 		//Stores the callback to be triggered
-		private _eventMoveCallback: Callbacks.Generic;
+		private _eventMoveCallback: GlobalCallbacks.Generic;
 		//Stores the callback to be triggered
-		private _eventStartCallback: Callbacks.Generic;
+		private _eventStartCallback: GlobalCallbacks.Generic;
 		// Stores the touch event with bind(this)
-		private _moveEvent: Callbacks.Generic;
+		private _moveEvent: GlobalCallbacks.Generic;
 		// Stores the touch event with bind(this)
-		private _startEvent: Callbacks.Generic;
+		private _startEvent: GlobalCallbacks.Generic;
 		// Stores the moment when the touch began
 		private _startTime;
 		// Stores the start position
@@ -216,7 +216,7 @@ namespace OSFramework.Patterns.TouchEvents {
 			this.unsetHtmlElements();
 		}
 
-		public registerCallback(eventName: string, callback: Callbacks.OSGeneric): void {
+		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
 				case Patterns.TouchEvents.Enum.Events.End:
 					this._endEventCallback = callback;

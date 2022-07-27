@@ -23,6 +23,6 @@ namespace OSFramework.Patterns {
 			return this._provider;
 		}
 
-		public abstract registerCallback(eventName: string, callback: Callbacks.OSGeneric): void;
+		public abstract registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
 	}
 }

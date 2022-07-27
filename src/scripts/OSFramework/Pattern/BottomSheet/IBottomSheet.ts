@@ -10,6 +10,6 @@ namespace OSFramework.Patterns.BottomSheet {
 	export interface IBottomSheet extends Interface.IPattern {
 		close();
 		open();
-		registerCallback(callback: Callbacks.Generic);
+		registerCallback(callback: GlobalCallbacks.Generic);
 	}
 }

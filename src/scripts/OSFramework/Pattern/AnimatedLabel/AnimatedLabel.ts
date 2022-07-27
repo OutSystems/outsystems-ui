@@ -9,9 +9,9 @@ namespace OSFramework.Patterns.AnimatedLabel {
 	 * @implements {IAnimatedLabel}
 	 */
 	export class AnimatedLabel extends AbstractPattern<AnimatedLabelConfig> implements IAnimatedLabel {
-		private _eventAnimationStart: Callbacks.Generic;
-		private _eventBlur: Callbacks.Generic;
-		private _eventFocus: Callbacks.Generic;
+		private _eventAnimationStart: GlobalCallbacks.Generic;
+		private _eventBlur: GlobalCallbacks.Generic;
+		private _eventFocus: GlobalCallbacks.Generic;
 
 		// Set the input html element
 		private _inputElement: HTMLInputElement | HTMLTextAreaElement;

@@ -7,7 +7,7 @@ namespace OSFramework.Patterns.Carousel {
 		goTo(index: number);
 		next();
 		previous();
-		registerCallback(eventName: string, callback: Callbacks.OSGeneric): void;
+		registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
 		setCarouselDirection(direction: string): void;
 		toggleDrag(hasDrag: boolean);
 		updateOnRender();

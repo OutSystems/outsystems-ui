@@ -123,7 +123,7 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	 * @param {string} tabsId
 	 * @param {*} callback
 	 */
-	export function RegisterCallback(tabsId: string, callback: OSFramework.Callbacks.OSGeneric): string {
+	export function RegisterCallback(tabsId: string, callback: OSFramework.GlobalCallbacks.OSGeneric): string {
 		const responseObj = {
 			isSuccess: true,
 			message: ErrorCodes.Success.message,
