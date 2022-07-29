@@ -212,12 +212,12 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * @export
 	 * @param {string} carouselId
 	 * @param {string} eventName
-	 * @param {OSFramework.Callbacks.OSGeneric} callback
+	 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback
 	 */
 	export function RegisterCallback(
 		carouselId: string,
 		eventName: string,
-		callback: OSFramework.Callbacks.OSGeneric
+		callback: OSFramework.GlobalCallbacks.OSGeneric
 	): string {
 		const responseObj = {
 			isSuccess: true,

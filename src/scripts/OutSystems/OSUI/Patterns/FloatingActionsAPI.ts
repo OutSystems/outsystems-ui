@@ -136,7 +136,10 @@ namespace OutSystems.OSUI.Patterns.FloatingActionsAPI {
 	 * @param {string} ratingId
 	 * @param {*} callback
 	 */
-	export function RegisterCallback(floatingActionId: string, callback: OSFramework.Callbacks.OSGeneric): string {
+	export function RegisterCallback(
+		floatingActionId: string,
+		callback: OSFramework.GlobalCallbacks.OSGeneric
+	): string {
 		const responseObj = {
 			isSuccess: true,
 			message: ErrorCodes.Success.message,

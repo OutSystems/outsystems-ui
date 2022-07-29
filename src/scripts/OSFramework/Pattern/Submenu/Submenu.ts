@@ -6,12 +6,12 @@ namespace OSFramework.Patterns.Submenu {
 	export class Submenu extends AbstractPattern<SubmenuConfig> implements ISubmenu {
 		// Store the pattern locals
 		private _dynamicallyOpening = false;
-		private _eventClick: Callbacks.Generic;
-		private _eventKeypress: Callbacks.Generic;
-		private _eventOnMouseEnter: Callbacks.Generic;
-		private _eventOnMouseLeave: Callbacks.Generic;
-		private _globalEventBody: Callbacks.Generic;
-		private _globalEventOpen: Callbacks.Generic;
+		private _eventClick: GlobalCallbacks.Generic;
+		private _eventKeypress: GlobalCallbacks.Generic;
+		private _eventOnMouseEnter: GlobalCallbacks.Generic;
+		private _eventOnMouseLeave: GlobalCallbacks.Generic;
+		private _globalEventBody: GlobalCallbacks.Generic;
+		private _globalEventOpen: GlobalCallbacks.Generic;
 		private _hasActiveLinks = false;
 		private _hasElements = false;
 		private _isActive = false;

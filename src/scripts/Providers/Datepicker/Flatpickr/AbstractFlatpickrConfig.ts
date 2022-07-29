@@ -21,7 +21,7 @@ namespace Providers.Datepicker.Flatpickr {
 		public DisableMobile = false;
 
 		// Set the OnChange Event that will be defined in the specific context for each Flatpickr mode
-		public OnChange: OSFramework.Callbacks.Generic;
+		public OnChange: OSFramework.GlobalCallbacks.Generic;
 
 		// Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr
 		public ServerDateFormat: string;

@@ -23,7 +23,7 @@ namespace OSFramework.Patterns.Carousel {
 		public abstract goTo(index: number): void;
 		public abstract next(): void;
 		public abstract previous(): void;
-		public abstract registerCallback(eventName: string, callback: Callbacks.OSGeneric): void;
+		public abstract registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
 		public abstract setCarouselDirection(direction: string): void;
 		public abstract toggleDrag(hasDrag: boolean): void;
 		public abstract updateOnRender(): void;

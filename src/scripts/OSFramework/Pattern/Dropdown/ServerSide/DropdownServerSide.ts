@@ -33,28 +33,28 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		// Store a Flag property that will help dealing with the focus state at the close moment
 		private _closeDynamically = false;
 		// Click On Body
-		private _eventOnBodyClick: Callbacks.Generic;
+		private _eventOnBodyClick: GlobalCallbacks.Generic;
 		// Event OnBodyScroll
-		private _eventOnBodyScroll: Callbacks.Generic;
+		private _eventOnBodyScroll: GlobalCallbacks.Generic;
 		// Click Event
-		private _eventOnClick: Callbacks.Generic;
-		private _eventOnClickInputSearch: Callbacks.Generic;
+		private _eventOnClick: GlobalCallbacks.Generic;
+		private _eventOnClickInputSearch: GlobalCallbacks.Generic;
 		// Event OnTransitionEnd applied to the Balloon
-		private _eventOnCloseTransitionEnd: Callbacks.Generic;
+		private _eventOnCloseTransitionEnd: GlobalCallbacks.Generic;
 		// Event OnOrientationChange Event
-		private _eventOnOrientationChange: Callbacks.Generic;
+		private _eventOnOrientationChange: GlobalCallbacks.Generic;
 		// OnSearchInputBlur Event
-		private _eventOnSearchInputBlur: Callbacks.Generic;
+		private _eventOnSearchInputBlur: GlobalCallbacks.Generic;
 		// OnSearchInputFocus Event
-		private _eventOnSearchInputFocus: Callbacks.Generic;
+		private _eventOnSearchInputFocus: GlobalCallbacks.Generic;
 		// OnFocus Event at ballon custom span elements
-		private _eventOnSpanFocus: Callbacks.Generic;
+		private _eventOnSpanFocus: GlobalCallbacks.Generic;
 		// OnTouchMove Event at the balloon wrapper
-		private _eventOnTouchMove: Callbacks.Generic;
+		private _eventOnTouchMove: GlobalCallbacks.Generic;
 		// On WindowResize Event
-		private _eventOnWindowResize: Callbacks.Generic;
+		private _eventOnWindowResize: GlobalCallbacks.Generic;
 		// Keyboard Key Press Event
-		private _eventOnkeyboardPress: Callbacks.Generic;
+		private _eventOnkeyboardPress: GlobalCallbacks.Generic;
 		// Store the instance of the Object responsible to Add Custom HTML elements to the DropdownBallon that will help on deal with keyboard navigation (Accessibility)
 		private _focusTrapObject: Behaviors.FocusTrap;
 		// Set the observer that will check if the balloon is inside screen boundaries!
@@ -66,9 +66,9 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		// Store the HTML element for the layout where the Balloon will be moved into.
 		private _layoutElement: HTMLElement;
 		// Platform OnInitialize Callback
-		private _platformEventInitializedCallback: Callbacks.OSGeneric;
+		private _platformEventInitializedCallback: GlobalCallbacks.OSGeneric;
 		// Platform OnClose Callback
-		private _platformEventOnToggleCallback: Callbacks.OSGeneric;
+		private _platformEventOnToggleCallback: GlobalCallbacks.OSGeneric;
 		// Store the RequestAnimationFrame that will be triggered at OnBodyScroll
 		private _requestAnimationOnBodyScroll: number;
 		// Store the HTML element for the Dropdown Select Wrapper
@@ -1084,10 +1084,10 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		 * Method used to register the provider callback
 		 *
 		 * @param {string} eventName Event name that will be assigned
-		 * @param {Callbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
+		 * @param {GlobalCallbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
 		 * @memberof OSUIDropdownServerSide
 		 */
-		public registerCallback(eventName: string, callback: Callbacks.OSGeneric): void {
+		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
 				case Patterns.Dropdown.Enum.Events.Initialized:
 					if (this._platformEventInitializedCallback === undefined) {

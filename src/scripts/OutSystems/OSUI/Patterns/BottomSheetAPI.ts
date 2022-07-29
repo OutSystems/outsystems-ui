@@ -138,7 +138,7 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	 * @param {string} bottomSheetId
 	 * @param {*} callback
 	 */
-	export function RegisterCallback(bottomSheetId: string, callback: OSFramework.Callbacks.Generic): string {
+	export function RegisterCallback(bottomSheetId: string, callback: OSFramework.GlobalCallbacks.Generic): string {
 		const responseObj = {
 			isSuccess: true,
 			message: ErrorCodes.Success.message,

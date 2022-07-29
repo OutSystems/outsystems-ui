@@ -12,7 +12,7 @@ namespace OSFramework.Patterns.TabsHeaderItem {
 		// Store the data-tab attribute
 		private _dataTab: number;
 		// Store the on click event
-		private _eventOnTabsClick: Callbacks.Generic;
+		private _eventOnTabsClick: GlobalCallbacks.Generic;
 		// Store if this is the current active item
 		private _isActive = false;
 

@@ -9,9 +9,9 @@ namespace OSFramework.Event {
 	 * @template D this will the type of Data to be passed, by default to the handlers.
 	 */
 	export interface IEvent<D> {
-		addHandler(handler: Callbacks.OSGeneric, ...args): void;
+		addHandler(handler: GlobalCallbacks.OSGeneric, ...args): void;
 		hasHandlers(): boolean;
-		removeHandler(handler: Callbacks.OSGeneric): void;
+		removeHandler(handler: GlobalCallbacks.OSGeneric): void;
 		trigger(data: D, ...args: unknown[]): unknown;
 	}
 }

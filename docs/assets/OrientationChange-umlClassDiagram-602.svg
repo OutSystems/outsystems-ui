@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="298px" preserveAspectRatio="none" style="width:316px;height:298px;background:#CED4DA;" version="1.1" viewBox="0 0 316 298" width="316px" zoomAndPan="magnify"><defs><filter height="300%" id="f13qytq1v4swi" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[a6511191e08b4cc3c43deebe64ad29c8]
+class OrientationChange--><rect codeLine="7" fill="#FFFFFF" filter="url(#f13qytq1v4swi)" height="104.7754" id="OrientationChange" style="stroke:#272B30;stroke-width:1.5;" width="295" x="7" y="180"/><ellipse cx="97.25" cy="196" fill="#ADD1B2" rx="11" ry="11" style="stroke:#272B30;stroke-width:1.0;"/><path d="M99.7231,202.1431 Q99.1421,202.4419 98.5029,202.5913 Q97.8638,202.7407 97.1582,202.7407 Q94.6514,202.7407 93.3315,201.0889 Q92.0117,199.437 92.0117,196.3159 Q92.0117,193.1865 93.3315,191.5347 Q94.6514,189.8828 97.1582,189.8828 Q97.8638,189.8828 98.5112,190.0322 Q99.1587,190.1816 99.7231,190.4805 L99.7231,193.2031 Q99.0923,192.6221 98.4988,192.3523 Q97.9053,192.0825 97.2744,192.0825 Q95.9297,192.0825 95.2449,193.1492 Q94.5601,194.2158 94.5601,196.3159 Q94.5601,198.4077 95.2449,199.4744 Q95.9297,200.541 97.2744,200.541 Q97.9053,200.541 98.4988,200.2712 Q99.0923,200.0015 99.7231,199.4204 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="106" x="117.75" y="200.5352">OrientationChange</text><line style="stroke:#272B30;stroke-width:1.5;" x1="8" x2="301" y1="212" y2="212"/><ellipse cx="18" cy="223" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="205" x="27" y="226.6348">addHandler(handler: OSGeneric) : void</text><ellipse cx="18" cy="235.9551" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="127" x="27" y="239.5898">hasHandlers() : boolean</text><ellipse cx="18" cy="248.9102" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="225" x="27" y="252.5449">removeHandler(handler: OSGeneric) : void</text><ellipse cx="18" cy="261.8652" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="231" x="27" y="265.5">trigger(data: string, args: unknown[]) : void</text><rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="15" y="271.8203"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="269" x="27" y="278.4551">_orientationTrigger(evt: OrientationChange) : void</text><!--MD5=[3bb7872f488c5331b1ab2ddd8f0b1815]
+class AbstractEvent<string>--><rect codeLine="14" fill="#FFFFFF" filter="url(#f13qytq1v4swi)" height="112.7754" id="AbstractEvent&lt;string&gt;" style="stroke:#272B30;stroke-width:1.5;" width="257" x="26" y="7"/><ellipse cx="84.75" cy="23" fill="#A9DCDF" rx="11" ry="11" style="stroke:#272B30;stroke-width:1.0;"/><path d="M84.6133,18.3481 L83.4595,23.4199 L85.7754,23.4199 Z M83.1191,16.1069 L86.1157,16.1069 L89.4609,28.5 L87.0122,28.5 L86.2485,25.437 L82.9697,25.437 L82.2227,28.5 L79.7739,28.5 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="131" x="105.25" y="27.5352">AbstractEvent&lt;string&gt;</text><line style="stroke:#272B30;stroke-width:1.5;" x1="27" x2="282" y1="39" y2="39"/><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="34" y="47"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="126" x="46" y="53.6348">_handlers : OSGeneric[]</text><line style="stroke:#272B30;stroke-width:1.5;" x1="27" x2="282" y1="59.9551" y2="59.9551"/><ellipse cx="37" cy="70.9551" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="205" x="46" y="74.5898">addHandler(handler: OSGeneric) : void</text><ellipse cx="37" cy="83.9102" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="127" x="46" y="87.5449">hasHandlers() : boolean</text><ellipse cx="37" cy="96.8652" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="225" x="46" y="100.5">removeHandler(handler: OSGeneric) : void</text><ellipse cx="37" cy="109.8203" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="231" x="46" y="113.4551">trigger(data: string, args: unknown[]) : void</text><!--MD5=[3849b54a61ed9c36f851b182908b3222]
+reverse link AbstractEvent<string> to OrientationChange--><path codeLine="21" d="M154.5,140.57 C154.5,153.85 154.5,167.38 154.5,179.8 " fill="none" id="AbstractEvent&lt;string&gt;-backto-OrientationChange" style="stroke:#272B30;stroke-width:1.0;"/><polygon fill="none" points="147.5,140.11,154.5,120.11,161.5,140.11,147.5,140.11" style="stroke:#272B30;stroke-width:1.0;"/><!--MD5=[5c8dc3f290a86bba460c936a0041583b]
+@startuml
+skinparam ClassArrowColor #272b30
+skinparam ClassBorderColor #272b30
+skinparam ClassBackgroundColor #fff
+skinparam BackgroundColor #ced4da
+hide empty methods
+hide empty fields
+class "OrientationChange" {
+    +addHandler(handler: OSGeneric) : void
+    +hasHandlers() : boolean
+    +removeHandler(handler: OSGeneric) : void
+    +trigger(data: string, args: unknown[]) : void
+    -_orientationTrigger(evt: OrientationChange) : void
+}
+abstract class "AbstractEvent<string>" {
+    -_handlers : OSGeneric[]
+    +addHandler(handler: OSGeneric) : void
+    +hasHandlers() : boolean
+    +removeHandler(handler: OSGeneric) : void
+    +trigger(data: string, args: unknown[]) : void
+}
+"AbstractEvent<string>" <|- - "OrientationChange"
+@enduml
+
+PlantUML version 1.2021.14(Fri Nov 12 16:46:50 WET 2021)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: PT
+--></g></svg>

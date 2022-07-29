@@ -2,29 +2,29 @@
 namespace OSFramework.Patterns.Tooltip {
 	export class Tooltip extends AbstractPattern<TooltipConfig> implements ITooltip {
 		// Event OnMouseEnter at _tooltipBalloonWrapperElem
-		private _eventBalloonWrapperOnMouseEnter: Callbacks.Generic;
+		private _eventBalloonWrapperOnMouseEnter: GlobalCallbacks.Generic;
 		// Event OnMouseLeave at at _tooltipBalloonWrapperElem
-		private _eventBalloonWrapperOnMouseLeave: Callbacks.Generic;
+		private _eventBalloonWrapperOnMouseLeave: GlobalCallbacks.Generic;
 		// Event OnMouseEnter at _tooltipIconElem
-		private _eventIconOnMouseEnter: Callbacks.Generic;
+		private _eventIconOnMouseEnter: GlobalCallbacks.Generic;
 		// Event OnMouseLeave at at _tooltipIconElem
-		private _eventIconOnMouseLeave: Callbacks.Generic;
+		private _eventIconOnMouseLeave: GlobalCallbacks.Generic;
 		// Event OnBalloonClick - Manage the balloon click!
-		private _eventOnBalloonClick: Callbacks.Generic;
+		private _eventOnBalloonClick: GlobalCallbacks.Generic;
 		// Event OnPatternBlur (combined with focus)
-		private _eventOnBlur: Callbacks.Generic;
+		private _eventOnBlur: GlobalCallbacks.Generic;
 		// Event OnBodyClick
-		private _eventOnBodyClick: Callbacks.Generic;
+		private _eventOnBodyClick: GlobalCallbacks.Generic;
 		// Event OnBodyScroll
-		private _eventOnBodyScroll: Callbacks.Generic;
+		private _eventOnBodyScroll: GlobalCallbacks.Generic;
 		// Event OnPatternClick
-		private _eventOnClick: Callbacks.Generic;
+		private _eventOnClick: GlobalCallbacks.Generic;
 		// Event OnPatternFocus
-		private _eventOnFocus: Callbacks.Generic;
+		private _eventOnFocus: GlobalCallbacks.Generic;
 		// Event OnOpendBalloon
-		private _eventOnOpenedBalloon: Callbacks.Generic;
+		private _eventOnOpenedBalloon: GlobalCallbacks.Generic;
 		// On WindowResize Event
-		private _eventOnWindowResize: Callbacks.Generic;
+		private _eventOnWindowResize: GlobalCallbacks.Generic;
 		// Set the observer that will check if the balloon is inside screen boundaries!
 		private _intersectionObserver: IntersectionObserver;
 		// Flag used to manage if it's _tooltipBalloonWrapperElem  has been MouseEnter
@@ -36,9 +36,9 @@ namespace OSFramework.Patterns.Tooltip {
 		// Flag used to deal with onBodyClick and open api concurrency methods!
 		private _isOpenedByApi = false;
 		// Platform OnInitialize Callback
-		private _platformEventInitializedCallback: Callbacks.OSGeneric;
+		private _platformEventInitializedCallback: GlobalCallbacks.OSGeneric;
 		// Platform OnClose Callback
-		private _platformEventOnToggleCallback: Callbacks.OSGeneric;
+		private _platformEventOnToggleCallback: GlobalCallbacks.OSGeneric;
 		// Store the RequestAnimationFrame that will be triggered at OnBodyScroll
 		private _requestAnimationOnBodyScroll: number;
 		// Store the RequestAnimationFrame that will be triggered at OnWindowResize
@@ -774,10 +774,10 @@ namespace OSFramework.Patterns.Tooltip {
 		 * Method used to register the provider callback
 		 *
 		 * @param {string} eventName Event name that will be assigned
-		 * @param {Callbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
+		 * @param {GlobalCallbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
 		 * @memberof Tooltip
 		 */
-		public registerCallback(eventName: string, callback: Callbacks.OSGeneric): void {
+		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
 				case Enum.Events.Initialized:
 					if (this._platformEventInitializedCallback === undefined) {

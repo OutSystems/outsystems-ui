@@ -3,7 +3,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.Patterns.Progress.Bar {
 	export class Bar extends Progress.AbstractProgress<ProgressBarConfig> {
-		private _eventAnimateEntranceEnd: Callbacks.Generic;
+		private _eventAnimateEntranceEnd: GlobalCallbacks.Generic;
 
 		// Store the htmlElements
 		private _progressElem: HTMLElement;
