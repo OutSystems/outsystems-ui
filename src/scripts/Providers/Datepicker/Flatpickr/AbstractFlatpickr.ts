@@ -83,8 +83,8 @@ namespace Providers.Datepicker.Flatpickr {
 
 			// Create the TodayBtn element
 			const todayBtn = document.createElement(OSFramework.GlobalEnum.HTMLElement.Link);
-			todayBtn.innerHTML = Enum.TodayButton.Text;
-			OSFramework.Helper.A11Y.AriaLabel(todayBtn, Enum.TodayButton.AriaLabelText);
+			todayBtn.innerHTML = l10ns.TodayBtn[this.configs.Lang].title;
+			OSFramework.Helper.A11Y.AriaLabel(todayBtn, l10ns.TodayBtn[this.configs.Lang].ariaLabel);
 
 			todayBtn.addEventListener(OSFramework.GlobalEnum.HTMLEvent.Click, this._jumpIntoToday.bind(this));
 
@@ -305,7 +305,7 @@ namespace Providers.Datepicker.Flatpickr {
 		 */
 		public setLanguage(value: string): void {
 			// Set the new Language
-			this.configs.Lang = value;
+			this.configs.Lang = value.toLowerCase();
 
 			// If provider has been already defined, calendar must be redrawed!
 			if (this.provider !== undefined) {
