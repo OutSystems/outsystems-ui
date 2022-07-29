@@ -30,7 +30,7 @@ namespace Providers.Datepicker.Flatpickr.l10ns {
 			ariaLabel: 'Kliknite ovdje da skočite na današnji datum',
 			title: 'Danas',
 		},
-		cat: {
+		ca: {
 			ariaLabel: "Feu clic aquí per saltar a la data d'avui",
 			title: 'Avui',
 		},
@@ -40,7 +40,7 @@ namespace Providers.Datepicker.Flatpickr.l10ns {
 		},
 		cs: {
 			ariaLabel: 'Kliknutím sem přejdete na dnešní datum',
-			title: 'dnes',
+			title: 'Dnes',
 		},
 		cy: {
 			ariaLabel: "Cliciwch yma i neidio i'r dyddiad heddiw",
@@ -59,8 +59,8 @@ namespace Providers.Datepicker.Flatpickr.l10ns {
 			title: 'Hodiaŭ',
 		},
 		es: {
-			ariaLabel: 'Haga clic aquí para saltar a la fecha de hoy',
-			title: 'Este Dia',
+			ariaLabel: 'Haga clic para saltar a la fecha de hoy',
+			title: 'Hoy',
 		},
 		en: {
 			ariaLabel: 'Click to jump into today date',
@@ -123,8 +123,8 @@ namespace Providers.Datepicker.Flatpickr.l10ns {
 			title: 'Í dag',
 		},
 		it: {
-			ariaLabel: 'Clicca qui per saltare alla data odierna',
-			title: 'oggi',
+			ariaLabel: 'Clicca per saltare alla data odierna',
+			title: 'Oggi',
 		},
 		ja: {
 			ariaLabel: '今日の日付にジャンプするには、ここをクリックしてください',
