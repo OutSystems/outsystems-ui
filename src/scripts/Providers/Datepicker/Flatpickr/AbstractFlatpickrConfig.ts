@@ -26,8 +26,30 @@ namespace Providers.Datepicker.Flatpickr {
 		// Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr
 		public ServerDateFormat: string;
 
+		// eslint-disable-next-line @typescript-eslint/member-ordering, @typescript-eslint/no-explicit-any
+		private _providerOptions: any;
+
 		constructor(config: JSON) {
 			super(config);
+
+			this._checkServerDateFormat();
+
+			this._providerOptions = {
+				altFormat: this._checkAltFormat(),
+				altInput: true,
+				allowInput: this.AllowInput,
+				disableMobile: this.DisableMobile,
+				dateFormat:
+					this.TimeFormat !== OSFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable
+						? this.ServerDateFormat + ' H:i'
+						: this.ServerDateFormat,
+				locale: undefined,
+				maxDate: OSFramework.Helper.Dates.IsNull(this.MaxDate) ? undefined : this.MaxDate,
+				minDate: OSFramework.Helper.Dates.IsNull(this.MinDate) ? undefined : this.MinDate,
+				onChange: this.OnChange,
+				time_24hr: this.TimeFormat === OSFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat,
+				weekNumbers: this.ShowWeekNumbers,
+			};
 
 			// Set the lang based on the language that has been defined already
 			this._lang = OSFramework.Helper.Language.ShortLang;
@@ -59,7 +81,7 @@ namespace Providers.Datepicker.Flatpickr {
 				// Set the calendar first week day
 				_locale.firstDayOfWeek = this.FirstWeekDay;
 			} catch (error) {
-				throw new Error(`${Providers.ErrorCodes.Flatpickr.FailSetLocale}: Locale '${this._lang}' not found!`);
+				console.log(error);
 			}
 
 			return _locale;
@@ -109,29 +131,30 @@ namespace Providers.Datepicker.Flatpickr {
 			return this.DateFormat;
 		}
 
-		// Method used to set all the global Flatpickr properties across the different types of instances
-		protected getCommonProviderConfigs(): FlatpickrOptions {
-			// Check the given server date format config
-			this._checkServerDateFormat();
+		/**
+		 * Method used to get all the global Flatpickr properties across the different types of instances
+		 *
+		 * @return {*}  {FlatpickrOptions}
+		 * @memberof AbstractFlatpickrConfig
+		 */
+		public getCommonProviderConfigs(): FlatpickrOptions {
+			// Make sure locale is not undefined, as when definig the providerOptions defaults in the costructor, the window.locale is no yet available
+			if (this._providerOptions.locale === undefined) {
+				this._providerOptions.locale = this._checkLocale();
+			}
 
-			const _flatpickrOpts = {
-				altFormat: this._checkAltFormat(),
-				altInput: true,
-				allowInput: this.AllowInput,
-				disableMobile: this.DisableMobile,
-				dateFormat:
-					this.TimeFormat !== OSFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable
-						? this.ServerDateFormat + ' H:i'
-						: this.ServerDateFormat,
-				locale: this._checkLocale(),
-				maxDate: OSFramework.Helper.Dates.IsNull(this.MaxDate) ? undefined : this.MaxDate,
-				minDate: OSFramework.Helper.Dates.IsNull(this.MinDate) ? undefined : this.MinDate,
-				onChange: this.OnChange,
-				time_24hr: this.TimeFormat === OSFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat,
-				weekNumbers: this.ShowWeekNumbers,
-			};
+			return this._providerOptions as FlatpickrOptions;
+		}
 
-			return _flatpickrOpts as FlatpickrOptions;
+		/**
+		 * Method used to set all the extended Flatpickr properties across the different types of instances
+		 *
+		 * @param {FlatpickrOptions} newConfigs
+		 * @param {FlatpickrOptions} flatpickrOptions
+		 * @memberof AbstractFlatpickrConfig
+		 */
+		public setProviderConfig(newConfigs: FlatpickrOptions, providerInfo: ProviderInfo): void {
+			this._providerOptions = super.setProviderConfig(this._providerOptions, newConfigs, providerInfo);
 		}
 
 		/**
