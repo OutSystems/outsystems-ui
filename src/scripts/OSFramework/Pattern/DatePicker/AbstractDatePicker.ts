@@ -24,6 +24,7 @@ namespace OSFramework.Patterns.DatePicker {
 		public abstract open(): void;
 		public abstract registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
 		public abstract setLanguage(value: string): void;
+		public abstract setProviderConfigs(providerConfigs: DatePickerProviderConfigs): void;
 		public abstract updateInitialDate(date1: string, date2?: string): void;
 	}
 }

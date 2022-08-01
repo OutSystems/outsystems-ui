@@ -8,6 +8,7 @@ namespace OSFramework.Patterns.DatePicker {
 		close(): void;
 		open(): void;
 		setLanguage(value: string): void;
+		setProviderConfigs(providerConfigs: DatePickerProviderConfigs): void;
 		updateInitialDate(date1: string, date2?: string): void;
 	}
 }
