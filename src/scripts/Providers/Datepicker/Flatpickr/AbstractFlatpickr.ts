@@ -4,10 +4,9 @@ namespace Providers.Datepicker.Flatpickr {
 		extends OSFramework.Patterns.DatePicker.AbstractDatePicker<Flatpickr, C>
 		implements IFlatpickr
 	{
-		private _providerEventsManagerInstance: OSFramework.Event.IProviderEventManager;
 		// Flatpickr onInitialize event
 		private _onInitializeCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
-		private _pendingEvents = new Map<string, OSFramework.GlobalCallbacks.Generic>();
+		private _providerEventsManagerInstance: OSFramework.Event.IProviderEventManager;
 		// Store pattern input HTML element reference
 		protected _datePickerProviderInputElem: HTMLInputElement;
 		// Store the flatpickr input html element that will be added by library
