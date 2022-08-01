@@ -336,6 +336,10 @@ namespace Providers.RangeSlider.NoUISlider {
 			this._setOnValueChangeEvent(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Change);
 		}
 
+		public setProviderConfigs(newConfigs: FlatpickrOptions): void {
+			//
+		}
+
 		protected abstract prepareConfigs(): void;
 	}
 }

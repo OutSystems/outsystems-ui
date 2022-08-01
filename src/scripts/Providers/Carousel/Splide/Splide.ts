@@ -378,6 +378,10 @@ namespace Providers.Splide {
 			this.updateCarousel();
 		}
 
+		public setProviderConfigs(newConfigs: SplideConfig): void {
+			//
+		}
+
 		/**
 		 * Method to call the option API from the provider to toggle drag events
 		 *

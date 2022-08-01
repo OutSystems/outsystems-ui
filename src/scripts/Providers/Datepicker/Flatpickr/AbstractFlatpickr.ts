@@ -14,8 +14,6 @@ namespace Providers.Datepicker.Flatpickr {
 		protected _flatpickrOpts: FlatpickrOptions;
 		// Flatpickr onChange (SelectedDate) event
 		protected _onChangeCallbackEvent: OSFramework.Patterns.DatePicker.Callbacks.OSOnChangeEvent;
-		// Flatpickr provider info
-		public providerInfo: ProviderInfo;
 
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
@@ -101,7 +99,7 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @protected
 		 * @memberof AbstractFlatpickr
 		 */
-		protected createProviderInstance(triggerEvent = true): void {
+		protected createProviderInstance(triggerEvent: boolean): void {
 			/* In order to avoid dateFormat convert issues done by provider when InitialDate was not defined and input has a default date lets clean that value before creating provider instance. This happen when DateFormat is different from YYYY-MM-DD */
 			if (this._datePickerProviderInputElem && this._flatpickrOpts.defaultDate === undefined) {
 				this._datePickerProviderInputElem.value = '';
@@ -157,7 +155,7 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @protected
 		 * @memberof AbstractFlatpickr
 		 */
-		protected redraw(triggerEvent = true): void {
+		protected redraw(triggerEvent = false): void {
 			// Destroy the old flatpickr instance
 			this.provider.destroy();
 
@@ -332,7 +330,7 @@ namespace Providers.Datepicker.Flatpickr {
 		public setProviderConfigs(newConfigs: FlatpickrOptions): void {
 			this.configs.setProviderConfig(newConfigs, this.providerInfo);
 
-			this.redraw(false);
+			this.redraw();
 		}
 
 		/**

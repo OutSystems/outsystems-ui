@@ -63,7 +63,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 		 * @protected
 		 * @memberof Flatpickr.RangeDate
 		 */
-		protected prepareConfigs(triggerEvent = true): void {
+		protected prepareConfigs(triggerEvent = false): void {
 			// Get the library configurations
 			this._flatpickrOpts = this.configs.getProviderConfig();
 
@@ -74,7 +74,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 		public build(): void {
 			super.build();
 
-			this.prepareConfigs();
+			this.prepareConfigs(true);
 
 			this.finishBuild();
 		}

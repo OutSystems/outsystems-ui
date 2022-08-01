@@ -14,6 +14,15 @@ namespace OSFramework.Patterns {
 		implements Interface.IProviderPattern<P>
 	{
 		protected _provider: P;
+		protected _providerInfo: ProviderInfo;
+
+		public get providerInfo(): ProviderInfo {
+			return this._providerInfo;
+		}
+
+		public set providerInfo(providerInfo: ProviderInfo) {
+			this._providerInfo = providerInfo;
+		}
 
 		public set provider(p: P) {
 			this._provider = p;
@@ -24,5 +33,6 @@ namespace OSFramework.Patterns {
 		}
 
 		public abstract registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
+		public abstract setProviderConfigs(providerConfigs: RangeSliderProviderConfigs): void;
 	}
 }

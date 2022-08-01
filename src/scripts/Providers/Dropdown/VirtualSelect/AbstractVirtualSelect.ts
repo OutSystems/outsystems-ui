@@ -299,6 +299,10 @@ namespace Providers.Dropdown.VirtualSelect {
 			}
 		}
 
+		public setProviderConfigs(newConfigs: FlatpickrOptions): void {
+			//
+		}
+
 		/**
 		 * Toggle the dropbox as popup on small screen like mobile
 		 *
