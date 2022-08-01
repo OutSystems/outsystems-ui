@@ -314,6 +314,20 @@ namespace Providers.Datepicker.Flatpickr {
 		}
 
 		/**
+		 * Method used to set all the extended Flatpickr properties across the different types of instances
+		 *
+		 * @param {FlatpickrOptions} newConfigs
+		 * @memberof AbstractFlatpickr
+		 */
+		public setProviderConfigs(newConfigs: FlatpickrOptions): void {
+			this.configs.setProviderConfig(newConfigs, this.providerInfo);
+
+			this.provider.destroy;
+
+			this.createProviderInstance(false);
+		}
+
+		/**
 		 * Method used to toggle the default native behavior of DatePicker
 		 *
 		 * @memberof AbstractFlatpickr
