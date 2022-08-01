@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSFramework.Event {
+namespace OSFramework.Event.ProviderEvents {
 	export class ProviderEvent implements IProviderEvent {
 		public callback: GlobalCallbacks.Generic;
 		public eventName: string;

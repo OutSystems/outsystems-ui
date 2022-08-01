@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSFramework.Event {
+namespace OSFramework.Event.ProviderEvents {
 	export class ProviderEventsManager implements IProviderEventManager {
 		private _eventsMap = new Map<string, IProviderEvent>();
 		private _pendingEventsMap = new Map<string, IProviderEvent>();

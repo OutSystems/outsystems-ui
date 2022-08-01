@@ -6,7 +6,7 @@ namespace Providers.Datepicker.Flatpickr {
 	{
 		// Flatpickr onInitialize event
 		private _onInitializeCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
-		private _providerEventsManagerInstance: OSFramework.Event.IProviderEventManager;
+		private _providerEventsManagerInstance: OSFramework.Event.ProviderEvents.IProviderEventManager;
 		// Store pattern input HTML element reference
 		protected _datePickerProviderInputElem: HTMLInputElement;
 		// Store the flatpickr input html element that will be added by library
@@ -365,7 +365,7 @@ namespace Providers.Datepicker.Flatpickr {
 			saveEvent = true
 		): void {
 			if (this._providerEventsManagerInstance === undefined) {
-				this._providerEventsManagerInstance = new OSFramework.Event.ProviderEventsManager();
+				this._providerEventsManagerInstance = new OSFramework.Event.ProviderEvents.ProviderEventsManager();
 			}
 
 			if (this.provider.config === undefined) {
