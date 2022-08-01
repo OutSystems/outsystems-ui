@@ -28,12 +28,12 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 		 * @protected
 		 * @memberof Flatpickr.SingleDate
 		 */
-		protected prepareConfigs(): void {
+		protected prepareConfigs(triggerEvent = true): void {
 			// Get the library configurations
 			this._flatpickrOpts = this.configs.getProviderConfig();
 
 			// Instance will be Created!
-			super.createProviderInstance();
+			super.createProviderInstance(triggerEvent);
 		}
 
 		public build(): void {

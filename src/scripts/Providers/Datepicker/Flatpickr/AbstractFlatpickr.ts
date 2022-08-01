@@ -157,12 +157,12 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @protected
 		 * @memberof AbstractFlatpickr
 		 */
-		protected redraw(): void {
+		protected redraw(triggerEvent = true): void {
 			// Destroy the old flatpickr instance
 			this.provider.destroy();
 
 			// Create a new flatpickr instance with the updated configs
-			OSFramework.Helper.AsyncInvocation(this.prepareConfigs.bind(this));
+			OSFramework.Helper.AsyncInvocation(this.prepareConfigs.bind(this), triggerEvent);
 		}
 
 		/**
@@ -332,9 +332,7 @@ namespace Providers.Datepicker.Flatpickr {
 		public setProviderConfigs(newConfigs: FlatpickrOptions): void {
 			this.configs.setProviderConfig(newConfigs, this.providerInfo);
 
-			this.provider.destroy;
-
-			this.createProviderInstance(false);
+			this.redraw(false);
 		}
 
 		/**
@@ -351,7 +349,7 @@ namespace Providers.Datepicker.Flatpickr {
 		}
 
 		protected abstract onDateSelectedEvent(selectedDates: string[], dateStr: string, fp: Flatpickr): void;
-		protected abstract prepareConfigs(): void;
+		protected abstract prepareConfigs(triggerEvent: boolean): void;
 		public abstract updateInitialDate(start: string, end?: string): void;
 	}
 }

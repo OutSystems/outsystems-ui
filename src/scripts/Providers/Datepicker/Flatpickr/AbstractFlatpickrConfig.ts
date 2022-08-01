@@ -27,7 +27,7 @@ namespace Providers.Datepicker.Flatpickr {
 		public ServerDateFormat: string;
 
 		// eslint-disable-next-line @typescript-eslint/member-ordering, @typescript-eslint/no-explicit-any
-		private _providerOptions: any;
+		private _providerOptions: FlatpickrOptions;
 
 		constructor(config: JSON) {
 			super(config);
@@ -49,7 +49,7 @@ namespace Providers.Datepicker.Flatpickr {
 				onChange: this.OnChange,
 				time_24hr: this.TimeFormat === OSFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat,
 				weekNumbers: this.ShowWeekNumbers,
-			};
+			} as FlatpickrOptions;
 
 			// Set the lang based on the language that has been defined already
 			this._lang = OSFramework.Helper.Language.ShortLang;
