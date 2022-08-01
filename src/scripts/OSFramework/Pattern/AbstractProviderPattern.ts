@@ -34,5 +34,6 @@ namespace OSFramework.Patterns {
 
 		public abstract registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
 		public abstract setProviderConfigs(providerConfigs: RangeSliderProviderConfigs): void;
+		public abstract setProviderEvent(eventName: string, callback: GlobalCallbacks.Generic): void;
 	}
 }

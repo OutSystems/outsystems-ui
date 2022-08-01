@@ -41,5 +41,7 @@ namespace OSFramework.Interface {
 		 * @memberof IProviderPattern
 		 */
 		setProviderConfigs(newConfigs: ProviderConfigs): void;
+
+		setProviderEvent(eventName: string, callback: GlobalCallbacks.Generic): void;
 	}
 }

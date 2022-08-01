@@ -4,8 +4,11 @@ namespace Providers.Datepicker.Flatpickr {
 		extends OSFramework.Patterns.DatePicker.AbstractDatePicker<Flatpickr, C>
 		implements IFlatpickr
 	{
+		private _addedProviderEvents = new Map<string, OSFramework.GlobalCallbacks.Generic>();
+		private _providerEventsManagerInstance: OSFramework.Event.IProviderEventManager;
 		// Flatpickr onInitialize event
 		private _onInitializeCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
+		private _pendingEvents = new Map<string, OSFramework.GlobalCallbacks.Generic>();
 		// Store pattern input HTML element reference
 		protected _datePickerProviderInputElem: HTMLInputElement;
 		// Store the flatpickr input html element that will be added by library
@@ -20,6 +23,36 @@ namespace Providers.Datepicker.Flatpickr {
 
 			// Set the default library Event handler that will be used to set on the provider configs
 			this.configs.OnChange = this.onDateSelectedEvent.bind(this);
+		}
+
+		private _checkAddedProviderEvents(): void {
+			// Add previously added events using the SetProviderEvent API
+			// if (this._addedProviderEvents.size > 0) {
+			// 	this._addedProviderEvents.forEach((value, key) => {
+			// 		this.setProviderEvent(key, value); // add provider event
+			// 	});
+			// }
+
+			if (this._providerEventsManagerInstance?.hasEvents) {
+				this._providerEventsManagerInstance.eventsMap.forEach((value) => {
+					this.setProviderEvent(value.eventName, value.callback, false); // add provider event
+				});
+			}
+		}
+
+		private _checkPendingProviderEvents(): void {
+			// Add pending events to be added by the SetProviderEvent API
+			// if (this._pendingEvents.size > 0) {
+			// 	this._pendingEvents.forEach((value, key) => {
+			// 		this.setProviderEvent(key, value); // add provider event
+			// 		this._pendingEvents.delete(key); // delete event from pending map
+			// 	});
+			// }
+			if (this._providerEventsManagerInstance?.hasPendingEvents) {
+				this._providerEventsManagerInstance.pendingEventsMap.forEach((value) => {
+					this.setProviderEvent(value.eventName, value.callback, false); // add provider event
+				});
+			}
 		}
 
 		// Trigger the jumToDate to now
@@ -108,11 +141,19 @@ namespace Providers.Datepicker.Flatpickr {
 			// Init provider
 			this.provider = window.flatpickr(this._datePickerProviderInputElem, this._flatpickrOpts);
 
-			this.providerInfo = {
-				name: Enum.ProviderInfo.Name,
-				version: Enum.ProviderInfo.Version,
-				supportedConfigs: this.provider.config,
-			};
+			// Set provider Info to be used by setProviderConfigs API calls
+			if (this.isBuilt === false) {
+				this.providerInfo = {
+					name: Enum.ProviderInfo.Name,
+					version: Enum.ProviderInfo.Version,
+					supportedConfigs: this.provider.config,
+				};
+			} else {
+				// Check if there're any pending events to be added by the SetProviderEvent API
+				// and/or add them again after a destroy has ocurred
+				this._checkAddedProviderEvents();
+				this._checkPendingProviderEvents();
+			}
 
 			// Set the needed HTML attributes
 			this._setAttributes();
@@ -331,6 +372,38 @@ namespace Providers.Datepicker.Flatpickr {
 			this.configs.setProviderConfig(newConfigs, this.providerInfo);
 
 			this.redraw();
+		}
+
+		public setProviderEvent(
+			eventName: string,
+			callback: OSFramework.GlobalCallbacks.Generic,
+			saveEvent = true
+		): void {
+			if (this._providerEventsManagerInstance === undefined) {
+				this._providerEventsManagerInstance = new OSFramework.Event.ProviderEventsManager();
+			}
+
+			if (this.provider.config === undefined) {
+				//this._pendingEvents.set(eventName, callback);
+				this._providerEventsManagerInstance.addPendingEvent(eventName, callback);
+				return;
+			}
+
+			switch (eventName) {
+				case Enum.ProviderEvents.OnChange:
+					this.provider.config.onChange.push(callback);
+					break;
+				default:
+					console.warn(
+						`THe event ${eventName} isn't supported by the provider ${this.providerInfo.name}, with the version ${this.providerInfo.version}`
+					);
+			}
+
+			if (saveEvent) {
+				this._providerEventsManagerInstance.addEvent(eventName, callback);
+			}
+
+			//this._addedProviderEvents.set(eventName, callback);
 		}
 
 		/**
