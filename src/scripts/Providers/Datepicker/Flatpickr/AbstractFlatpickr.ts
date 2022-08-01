@@ -108,6 +108,12 @@ namespace Providers.Datepicker.Flatpickr {
 			// Init provider
 			this.provider = window.flatpickr(this._datePickerProviderInputElem, this._flatpickrOpts);
 
+			this.providerInfo = {
+				name: Enum.ProviderInfo.Name,
+				version: Enum.ProviderInfo.Version,
+				supportedConfigs: this.provider.config,
+			};
+
 			// Set the needed HTML attributes
 			this._setAttributes();
 
