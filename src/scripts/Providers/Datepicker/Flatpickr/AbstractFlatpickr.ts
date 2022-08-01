@@ -34,8 +34,9 @@ namespace Providers.Datepicker.Flatpickr {
 
 		private _checkPendingProviderEvents(): void {
 			if (this._providerEventsManagerInstance?.hasPendingEvents) {
-				this._providerEventsManagerInstance.pendingEventsMap.forEach((value) => {
-					this.setProviderEvent(value.eventName, value.callback, false); // add provider event
+				this._providerEventsManagerInstance.pendingEventsMap.forEach((value, key) => {
+					this.setProviderEvent(value.eventName, value.callback); // add provider event
+					this._providerEventsManagerInstance.removePendingEvent(key);
 				});
 			}
 		}

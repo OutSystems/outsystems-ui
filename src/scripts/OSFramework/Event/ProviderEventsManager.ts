@@ -27,10 +27,10 @@ namespace OSFramework.Event {
 		}
 
 		public removePendingEvent(uniqueId: string): void {
-			const event = this._eventsMap.get(uniqueId);
+			const event = this._pendingEventsMap.get(uniqueId);
 
 			if (event) {
-				this._eventsMap.delete(uniqueId);
+				this._pendingEventsMap.delete(uniqueId);
 			}
 		}
 
