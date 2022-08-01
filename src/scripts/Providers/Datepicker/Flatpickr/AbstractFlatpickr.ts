@@ -4,7 +4,6 @@ namespace Providers.Datepicker.Flatpickr {
 		extends OSFramework.Patterns.DatePicker.AbstractDatePicker<Flatpickr, C>
 		implements IFlatpickr
 	{
-		private _addedProviderEvents = new Map<string, OSFramework.GlobalCallbacks.Generic>();
 		private _providerEventsManagerInstance: OSFramework.Event.IProviderEventManager;
 		// Flatpickr onInitialize event
 		private _onInitializeCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
@@ -26,13 +25,6 @@ namespace Providers.Datepicker.Flatpickr {
 		}
 
 		private _checkAddedProviderEvents(): void {
-			// Add previously added events using the SetProviderEvent API
-			// if (this._addedProviderEvents.size > 0) {
-			// 	this._addedProviderEvents.forEach((value, key) => {
-			// 		this.setProviderEvent(key, value); // add provider event
-			// 	});
-			// }
-
 			if (this._providerEventsManagerInstance?.hasEvents) {
 				this._providerEventsManagerInstance.eventsMap.forEach((value) => {
 					this.setProviderEvent(value.eventName, value.callback, false); // add provider event
@@ -41,13 +33,6 @@ namespace Providers.Datepicker.Flatpickr {
 		}
 
 		private _checkPendingProviderEvents(): void {
-			// Add pending events to be added by the SetProviderEvent API
-			// if (this._pendingEvents.size > 0) {
-			// 	this._pendingEvents.forEach((value, key) => {
-			// 		this.setProviderEvent(key, value); // add provider event
-			// 		this._pendingEvents.delete(key); // delete event from pending map
-			// 	});
-			// }
 			if (this._providerEventsManagerInstance?.hasPendingEvents) {
 				this._providerEventsManagerInstance.pendingEventsMap.forEach((value) => {
 					this.setProviderEvent(value.eventName, value.callback, false); // add provider event
@@ -384,7 +369,6 @@ namespace Providers.Datepicker.Flatpickr {
 			}
 
 			if (this.provider.config === undefined) {
-				//this._pendingEvents.set(eventName, callback);
 				this._providerEventsManagerInstance.addPendingEvent(eventName, callback);
 				return;
 			}
@@ -400,10 +384,8 @@ namespace Providers.Datepicker.Flatpickr {
 			}
 
 			if (saveEvent) {
-				this._providerEventsManagerInstance.addEvent(eventName, callback);
+				this._providerEventsManagerInstance.saveEvent(eventName, callback);
 			}
-
-			//this._addedProviderEvents.set(eventName, callback);
 		}
 
 		/**
