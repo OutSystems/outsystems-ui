@@ -201,7 +201,6 @@ span.flatpickr-weekday {
 	color: var(--color-neutral-7);
 	font-size: var(--font-size-s);
 	font-weight: var(--font-regular);
-	line-height: var(--space-xs);
 	user-select: none;
 }
 
@@ -439,6 +438,11 @@ span.flatpickr-weekday {
 // IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {
+	.flatpickr-calendar {
+		// This +10px will be used to better contain all the text without cropping it since RTL texts are bigger
+		width: 330px;
+	}
+
 	.flatpickr-months,
 	.flatpickr-weekdays,
 	.flatpickr-days {
