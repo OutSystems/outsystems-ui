@@ -17,6 +17,12 @@ namespace OSFramework.Interface {
 		 */
 		provider: P;
 
+		/**
+		 * Attribute that keeps the information about the provider version
+		 *
+		 * @type {ProviderInfo}
+		 * @memberof IProviderPattern
+		 */
 		providerInfo: ProviderInfo;
 
 		/**
@@ -28,6 +34,12 @@ namespace OSFramework.Interface {
 		 */
 		registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
 
+		/**
+		 * Method to enable extensibility to provider supported  configs
+		 *
+		 * @param {ProviderConfigs} newConfigs
+		 * @memberof IProviderPattern
+		 */
 		setProviderConfigs(newConfigs: ProviderConfigs): void;
 	}
 }
