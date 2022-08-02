@@ -19,7 +19,7 @@ namespace OSFramework.Patterns {
 		protected _providerEventsAPI: ProviderType;
 		// Holds the provider info
 		protected _providerInfo: ProviderInfo;
-		// HOlds the providerEvents instance, that manages the provider events
+		// Holds the providerEvents instance, that manages the provider events
 		protected providerEventsManagerInstance: Event.ProviderEvents.IProviderEventManager;
 
 		/**

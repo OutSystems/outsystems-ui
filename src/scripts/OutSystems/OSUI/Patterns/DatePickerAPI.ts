@@ -419,6 +419,14 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 		return JSON.stringify(responseObj);
 	}
 
+	/**
+	 * Function to remove providerEvents added by extensibility
+	 *
+	 * @export
+	 * @param {string} datePickerId
+	 * @param {string} eventId
+	 * @return {*}  {string}
+	 */
 	export function UnsetProviderEvent(datePickerId: string, eventId: string): string {
 		const responseObj = {
 			isSuccess: true,
@@ -432,7 +440,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DatePicker.FailRegisterProviderEvent;
+			responseObj.code = ErrorCodes.DatePicker.FailRemoveProviderEvent;
 		}
 
 		return JSON.stringify(responseObj);
