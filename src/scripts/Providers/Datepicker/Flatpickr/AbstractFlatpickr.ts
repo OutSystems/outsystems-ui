@@ -352,9 +352,30 @@ namespace Providers.Datepicker.Flatpickr {
 				case Enum.ProviderEvents.OnChange:
 					this.provider.config.onChange.push(callback);
 					break;
+				case Enum.ProviderEvents.OnClose:
+					this.provider.config.onClose.push(callback);
+					break;
+				case Enum.ProviderEvents.OnDayCreate:
+					this.provider.config.onDayCreate.push(callback);
+					break;
+				case Enum.ProviderEvents.OnMonthChange:
+					this.provider.config.onMonthChange.push(callback);
+					break;
+				case Enum.ProviderEvents.OnOpen:
+					this.provider.config.onOpen.push(callback);
+					break;
+				case Enum.ProviderEvents.OnReady:
+					this.provider.config.onReady.push(callback);
+					break;
+				case Enum.ProviderEvents.OnValueUpdate:
+					this.provider.config.onValueUpdate.push(callback);
+					break;
+				case Enum.ProviderEvents.OnYearChange:
+					this.provider.config.onYearChange.push(callback);
+					break;
 				default:
 					console.warn(
-						`THe event ${eventName} isn't supported by the provider ${this.providerInfo.name}, with the version ${this.providerInfo.version}`
+						`The event ${eventName} isn't supported by the provider ${this.providerInfo.name}, with the version ${this.providerInfo.version}`
 					);
 			}
 		}

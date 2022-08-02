@@ -2,6 +2,13 @@
 namespace Providers.Datepicker.Flatpickr.Enum {
 	export enum ProviderEvents {
 		OnChange = 'onChange',
+		OnOpen = 'onOpen',
+		OnClose = 'onClose',
+		OnMonthChange = 'onMonthChange',
+		OnYearChange = 'onYearChange',
+		OnReady = 'onReady',
+		OnValueUpdate = 'onValueUpdate',
+		OnDayCreate = 'onDayCreate',
 	}
 
 	// Flatpickr provider info
