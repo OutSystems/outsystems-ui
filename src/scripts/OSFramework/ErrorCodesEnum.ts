@@ -71,4 +71,12 @@ namespace OSFramework.ErrorCodes {
 		FailChildsNotFound: 'OSUI-GEN-10002',
 		FailTypeNotFound: 'OSUI-GEN-10003',
 	};
+
+	export const AbstractProviderPattern = {
+		FailProviderEventHandler: 'OSUI-GEN-11001',
+		FailProviderEventRemoval: {
+			code: 'OSUI-GEN-11002',
+			message: 'The event with this eventId does not exist',
+		},
+	};
 }

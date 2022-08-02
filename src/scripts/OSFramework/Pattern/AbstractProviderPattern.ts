@@ -60,18 +60,53 @@ namespace OSFramework.Patterns {
 			return this._provider;
 		}
 
+		// Method to get an event index from an array
 		private _getEventIndexFromArray(event: Event.ProviderEvents.IProviderEvent): number {
+			// Get callback from array
 			const _providerCallback = this._providerEventsAPI[event.eventName].find((item) => {
 				return item === event.callback;
 			});
 
 			if (_providerCallback === undefined) {
-				return undefined;
+				throw Error(
+					ErrorCodes.AbstractProviderPattern.FailProviderEventRemoval.code +
+						': ' +
+						ErrorCodes.AbstractProviderPattern.FailProviderEventRemoval.message
+				);
 			}
 
+			// Get the index, using the callback
 			return this._providerEventsAPI[event.eventName].findIndex((item) => {
 				return item === _providerCallback;
 			});
+		}
+
+		// Method to check the provider events api type and add/ remove events
+		// eslint-disable-next-line @typescript-eslint/naming-convention
+		private _handleProviderEventsAPI(
+			eventName: string,
+			callback: GlobalCallbacks.Generic,
+			addEvent: boolean,
+			event?: Event.ProviderEvents.IProviderEvent
+		): void {
+			// Check if is array
+			if (Array.isArray(this._providerEventsAPI[eventName])) {
+				addEvent
+					? this._providerEventsAPI[eventName].push(callback)
+					: this._providerEventsAPI[eventName].splice(this._getEventIndexFromArray(event), 1);
+				// Check if addEventListener is valid
+			} else if (typeof this._providerEventsAPI.addEventListener === GlobalEnum.JavascriptTypes.function) {
+				addEvent
+					? this._providerEventsAPI.addEventListener(eventName, callback)
+					: this._providerEventsAPI.removeEventListener(eventName, callback);
+				// Check if instance.on is valid
+			} else if (typeof this._providerEventsAPI.on === GlobalEnum.JavascriptTypes.function) {
+				addEvent
+					? this._providerEventsAPI.on(eventName, callback)
+					: this._providerEventsAPI.off(eventName, callback);
+			} else {
+				throw Error(ErrorCodes.AbstractProviderPattern.FailProviderEventHandler);
+			}
 		}
 
 		/**
@@ -103,28 +138,6 @@ namespace OSFramework.Patterns {
 			}
 		}
 
-		public handleProviderEventsAPI(
-			eventName?: string,
-			callback?: GlobalCallbacks.Generic,
-			addEvent?: boolean,
-			event?: Event.ProviderEvents.IProviderEvent
-		): void {
-			// Add event on provider
-			if (Array.isArray(this._providerEventsAPI[eventName])) {
-				addEvent
-					? this._providerEventsAPI[eventName].push(callback)
-					: this._providerEventsAPI[eventName].splice(this._getEventIndexFromArray(event), 1);
-			} else if (typeof this._providerEventsAPI.addEventListener === 'function') {
-				addEvent
-					? this._providerEventsAPI.addEventListener(eventName, callback)
-					: this._providerEventsAPI.removeEventListener(eventName, callback);
-			} else {
-				addEvent
-					? this._providerEventsAPI.on(eventName, callback)
-					: this._providerEventsAPI.off(eventName, callback);
-			}
-		}
-
 		/**
 		 * Method to add a provider event using extensibility
 		 *
@@ -153,7 +166,7 @@ namespace OSFramework.Patterns {
 			}
 
 			// Add event
-			this.handleProviderEventsAPI(eventName, callback, true);
+			this._handleProviderEventsAPI(eventName, callback, true);
 
 			// Save added event
 			if (saveEvent) {
@@ -169,14 +182,21 @@ namespace OSFramework.Patterns {
 		 * @memberof AbstractProviderPattern
 		 */
 		public unsetProviderEvent(eventId: string): void {
+			// Get event from saved events map
 			const _event = this.providerEventsManagerInstance?.eventsMap.get(eventId);
 
 			if (_event === undefined) {
-				return;
+				throw Error(
+					ErrorCodes.AbstractProviderPattern.FailProviderEventRemoval.code +
+						': ' +
+						ErrorCodes.AbstractProviderPattern.FailProviderEventRemoval.message
+				);
 			}
 
-			this.handleProviderEventsAPI(_event.eventName, _event.callback, false, _event);
+			// Call the method that will handle the removal of this event
+			this._handleProviderEventsAPI(_event.eventName, _event.callback, false, _event);
 
+			// Removed from the saved events map
 			if (this.providerEventsManagerInstance) {
 				this.providerEventsManagerInstance.removeSavedEvent(eventId);
 			}

@@ -115,6 +115,7 @@ namespace Providers.Datepicker.Flatpickr {
 				supportedConfigs: this.provider.config,
 			};
 
+			// Update the eventsAPI instance, to be use for events extensibility
 			this._providerEventsAPI = this.providerInfo.supportedConfigs;
 
 			if (this.isBuilt) {
