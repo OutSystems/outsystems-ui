@@ -344,6 +344,10 @@ namespace Providers.RangeSlider.NoUISlider {
 			//
 		}
 
+		public setProviderEventHandler(eventName: string, callback: OSFramework.GlobalCallbacks.Generic): void {
+			//
+		}
+
 		protected abstract prepareConfigs(): void;
 	}
 }

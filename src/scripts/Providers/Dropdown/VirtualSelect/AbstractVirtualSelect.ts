@@ -307,6 +307,10 @@ namespace Providers.Dropdown.VirtualSelect {
 			//
 		}
 
+		public setProviderEventHandler(eventName: string, callback: OSFramework.GlobalCallbacks.Generic): void {
+			//
+		}
+
 		/**
 		 * Toggle the dropbox as popup on small screen like mobile
 		 *

@@ -13,7 +13,8 @@ namespace OSFramework.Patterns {
 		extends AbstractPattern<C>
 		implements Interface.IProviderPattern<P>
 	{
-		private _providerConfigInstance: P;
+		// eslint-disable-next-line @typescript-eslint/naming-convention
+		private _providerEventsAPI: ProviderConfigs;
 		private _setProviderEventHandler: GlobalCallbacks.Generic;
 		protected _provider: P;
 		protected _providerInfo: ProviderInfo;
@@ -40,7 +41,7 @@ namespace OSFramework.Patterns {
 				this.providerEventsManagerInstance = new Event.ProviderEvents.ProviderEventsManager();
 			}
 
-			if (this._providerConfigInstance === undefined) {
+			if (this._providerEventsAPI === undefined) {
 				this.providerEventsManagerInstance.addPendingEvent(eventName, callback);
 				return;
 			}
@@ -72,15 +73,17 @@ namespace OSFramework.Patterns {
 		public registerProviderEvent(
 			eventName: string,
 			callback: GlobalCallbacks.Generic,
-			providerInstance: P,
+			providerEventsAPI: ProviderConfigs,
 			providerEventHandler: GlobalCallbacks.Generic
 		): void {
 			this._setProviderEventHandler = providerEventHandler;
-			this._providerConfigInstance = providerInstance;
+			this._providerEventsAPI = providerEventsAPI;
 			this.addProviderEvent(eventName, callback);
 		}
+
 		public abstract registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
 		public abstract setProviderConfigs(providerConfigs: ProviderConfigs): void;
 		public abstract setProviderEvent(eventName: string, callback: OSFramework.GlobalCallbacks.Generic): void;
+		public abstract setProviderEventHandler(eventName: string, callback: OSFramework.GlobalCallbacks.Generic): void;
 	}
 }

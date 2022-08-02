@@ -385,6 +385,10 @@ namespace Providers.Splide {
 		public setProviderEvent(eventName: string, callback: OSFramework.GlobalCallbacks.Generic): void {
 			//
 		}
+
+		public setProviderEventHandler(eventName: string, callback: OSFramework.GlobalCallbacks.Generic): void {
+			//
+		}
 		/**
 		 * Method to call the option API from the provider to toggle drag events
 		 *
