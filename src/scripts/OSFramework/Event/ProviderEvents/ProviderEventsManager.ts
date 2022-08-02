@@ -49,6 +49,7 @@ namespace OSFramework.Event.ProviderEvents {
 			} else {
 				_newEvent = new ProviderEvent(callback, eventName, uniqueId);
 			}
+
 			this._eventsMap.set(uniqueId, _newEvent);
 		}
 	}

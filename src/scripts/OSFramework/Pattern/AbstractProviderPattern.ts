@@ -15,6 +15,8 @@ namespace OSFramework.Patterns {
 	{
 		// Holds the provider
 		protected _provider: P;
+		// Holds the provider api used to set events
+		protected _providerEventsAPI: ProviderType;
 		// Holds the provider info
 		protected _providerInfo: ProviderInfo;
 		// HOlds the providerEvents instance, that manages the provider events
@@ -58,6 +60,20 @@ namespace OSFramework.Patterns {
 			return this._provider;
 		}
 
+		private _getEventIndexFromArray(event: Event.ProviderEvents.IProviderEvent): number {
+			const _providerCallback = this._providerEventsAPI[event.eventName].find((item) => {
+				return item === event.callback;
+			});
+
+			if (_providerCallback === undefined) {
+				return undefined;
+			}
+
+			return this._providerEventsAPI[event.eventName].findIndex((item) => {
+				return item === _providerCallback;
+			});
+		}
+
 		/**
 		 * Method to check for pending events to be added
 		 *
@@ -84,6 +100,28 @@ namespace OSFramework.Patterns {
 					this.setProviderEvent(value.eventName, value.callback, value.uniqueId); // add provider event
 					this.providerEventsManagerInstance.removePendingEvent(key);
 				});
+			}
+		}
+
+		public handleProviderEventsAPI(
+			eventName?: string,
+			callback?: GlobalCallbacks.Generic,
+			addEvent?: boolean,
+			event?: Event.ProviderEvents.IProviderEvent
+		): void {
+			// Add event on provider
+			if (Array.isArray(this._providerEventsAPI[eventName])) {
+				addEvent
+					? this._providerEventsAPI[eventName].push(callback)
+					: this._providerEventsAPI[eventName].splice(this._getEventIndexFromArray(event), 1);
+			} else if (typeof this._providerEventsAPI.addEventListener === 'function') {
+				addEvent
+					? this._providerEventsAPI.addEventListener(eventName, callback)
+					: this._providerEventsAPI.removeEventListener(eventName, callback);
+			} else {
+				addEvent
+					? this._providerEventsAPI.on(eventName, callback)
+					: this._providerEventsAPI.off(eventName, callback);
 			}
 		}
 
@@ -114,8 +152,8 @@ namespace OSFramework.Patterns {
 				return;
 			}
 
-			// Add event on provider
-			this.providerInfo.supportedConfigs[eventName].push(callback);
+			// Add event
+			this.handleProviderEventsAPI(eventName, callback, true);
 
 			// Save added event
 			if (saveEvent) {
@@ -123,6 +161,13 @@ namespace OSFramework.Patterns {
 			}
 		}
 
+		/**
+		 * Method to remove a provider event using extensibility
+		 *
+		 * @param {string} eventId
+		 * @return {*}  {void}
+		 * @memberof AbstractProviderPattern
+		 */
 		public unsetProviderEvent(eventId: string): void {
 			const _event = this.providerEventsManagerInstance?.eventsMap.get(eventId);
 
@@ -130,20 +175,7 @@ namespace OSFramework.Patterns {
 				return;
 			}
 
-			const _providerCallback = this.providerInfo.supportedConfigs[_event.eventName].find((item) => {
-				return item === _event.callback;
-			});
-
-			if (_providerCallback === undefined) {
-				return;
-			}
-
-			const _callbackIndex = this.providerInfo.supportedConfigs[_event.eventName].findIndex((item) => {
-				return item === _providerCallback;
-			});
-
-			// Remove event from provider
-			this.providerInfo.supportedConfigs[_event.eventName].splice(_callbackIndex, 1);
+			this.handleProviderEventsAPI(_event.eventName, _event.callback, false, _event);
 
 			if (this.providerEventsManagerInstance) {
 				this.providerEventsManagerInstance.removeSavedEvent(eventId);

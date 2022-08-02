@@ -115,6 +115,8 @@ namespace Providers.Datepicker.Flatpickr {
 				supportedConfigs: this.provider.config,
 			};
 
+			this._providerEventsAPI = this.providerInfo.supportedConfigs;
+
 			if (this.isBuilt) {
 				// Check if there're any pending events to be added by the SetProviderEvent API
 				OSFramework.Helper.AsyncInvocation(super.checkPendingProviderEvents.bind(this));
