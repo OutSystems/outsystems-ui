@@ -341,9 +341,19 @@ namespace Providers.Datepicker.Flatpickr {
 			this.redraw();
 		}
 
-		public setProviderEvent(eventName: string, callback: OSFramework.GlobalCallbacks.Generic): void {
+		public setProviderEvent(
+			eventName: string,
+			callback: OSFramework.GlobalCallbacks.Generic,
+			uniqueId: string
+		): void {
 			OSFramework.Helper.AsyncInvocation(() => {
-				super.registerProviderEvent(eventName, callback, this.provider.config, this.setProviderEventHandler);
+				super.registerProviderEvent(
+					eventName,
+					callback,
+					uniqueId,
+					this.provider.config,
+					this.setProviderEventHandler
+				);
 			});
 		}
 

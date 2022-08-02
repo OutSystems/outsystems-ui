@@ -72,6 +72,8 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailOpen: 'OSUI-API-07005',
 		FailRedraw: 'OSUI-API-07006',
 		FailRegisterCallback: 'OSUI-API-07007',
+		FailRegisterProviderConfig: 'OSUI-API-07008',
+		FailRegisterProviderEvent: 'OSUI-API-07009',
 	};
 
 	export const FlipContent = {

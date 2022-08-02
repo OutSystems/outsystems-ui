@@ -12,10 +12,9 @@ namespace OSFramework.Event.ProviderEvents {
 			return this._pendingEventsMap;
 		}
 
-		public addPendingEvent(eventName: string, callback: GlobalCallbacks.Generic): void {
-			const _uniqueId = Helper.Dom.GenerateUniqueId();
-			const newEvent = new ProviderEvent(callback, eventName, _uniqueId);
-			this._pendingEventsMap.set(_uniqueId, newEvent);
+		public addPendingEvent(eventName: string, callback: GlobalCallbacks.Generic, uniqueId: string): void {
+			const newEvent = new ProviderEvent(callback, eventName, uniqueId);
+			this._pendingEventsMap.set(uniqueId, newEvent);
 		}
 
 		public hasEvents(): boolean {
@@ -34,10 +33,15 @@ namespace OSFramework.Event.ProviderEvents {
 			}
 		}
 
-		public saveEvent(eventName: string, callback: GlobalCallbacks.Generic): void {
-			const _uniqueId = Helper.Dom.GenerateUniqueId();
-			const newEvent = new ProviderEvent(callback, eventName, _uniqueId);
-			this._eventsMap.set(_uniqueId, newEvent);
+		public saveEvent(eventName: string, callback: GlobalCallbacks.Generic, uniqueId: string): void {
+			let _newEvent;
+
+			if (this._pendingEventsMap.has(uniqueId)) {
+				_newEvent = this._pendingEventsMap.get(uniqueId);
+			} else {
+				_newEvent = new ProviderEvent(callback, eventName, uniqueId);
+			}
+			this._eventsMap.set(uniqueId, _newEvent);
 		}
 	}
 }

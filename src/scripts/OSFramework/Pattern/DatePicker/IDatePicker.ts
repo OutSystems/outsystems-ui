@@ -9,7 +9,7 @@ namespace OSFramework.Patterns.DatePicker {
 		open(): void;
 		setLanguage(value: string): void;
 		setProviderConfigs(providerConfigs: ProviderConfigs): void;
-		setProviderEvent(eventName: string, callback: OSFramework.GlobalCallbacks.Generic): void;
+		setProviderEvent(eventName: string, callback: OSFramework.GlobalCallbacks.Generic, uniqueId: string): void;
 		updateInitialDate(date1: string, date2?: string): void;
 	}
 }

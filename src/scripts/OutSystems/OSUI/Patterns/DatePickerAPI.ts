@@ -377,7 +377,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DatePicker.FailRegisterCallback;
+			responseObj.code = ErrorCodes.DatePicker.FailRegisterProviderConfig;
 		}
 
 		return JSON.stringify(responseObj);
@@ -388,7 +388,10 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 		eventName: string,
 		callback: OSFramework.GlobalCallbacks.Generic
 	): string {
+		const _uniqueId = OSFramework.Helper.Dom.GenerateUniqueId();
+
 		const responseObj = {
+			uniqueId: _uniqueId,
 			isSuccess: true,
 			message: ErrorCodes.Success.message,
 			code: ErrorCodes.Success.code,
@@ -396,12 +399,12 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 
 		try {
 			const datePicker = GetDatePickerItemById(datePickerId);
-
-			datePicker.setProviderEvent(eventName, callback);
+			datePicker.setProviderEvent(eventName, callback, _uniqueId);
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DatePicker.FailRegisterCallback;
+			responseObj.code = ErrorCodes.DatePicker.FailRegisterProviderEvent;
+			responseObj.uniqueId = undefined;
 		}
 
 		return JSON.stringify(responseObj);
