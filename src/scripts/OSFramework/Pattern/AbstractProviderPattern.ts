@@ -114,6 +114,7 @@ namespace OSFramework.Patterns {
 				return;
 			}
 
+			// Add event on provider
 			this.providerInfo.supportedConfigs[eventName].push(callback);
 
 			// Save added event
@@ -128,6 +129,22 @@ namespace OSFramework.Patterns {
 			if (_event === undefined) {
 				return;
 			}
+
+			const _providerCallback = this.providerInfo.supportedConfigs[_event.eventName].find((item) => {
+				return item === _event.callback;
+			});
+
+			if (_providerCallback === undefined) {
+				return;
+			}
+
+			const _callbackIndex = this.providerInfo.supportedConfigs[_event.eventName].findIndex((item) => {
+				return item === _providerCallback;
+			});
+
+			// Remove event from provider
+			this.providerInfo.supportedConfigs[_event.eventName].splice(_callbackIndex, 1);
+
 			if (this.providerEventsManagerInstance) {
 				this.providerEventsManagerInstance.removeSavedEvent(eventId);
 			}

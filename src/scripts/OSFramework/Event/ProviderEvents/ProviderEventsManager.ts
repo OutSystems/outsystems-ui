@@ -37,7 +37,7 @@ namespace OSFramework.Event.ProviderEvents {
 			const event = this._eventsMap.get(uniqueId);
 
 			if (event) {
-				this._pendingEventsMap.delete(uniqueId);
+				this._eventsMap.delete(uniqueId);
 			}
 		}
 
