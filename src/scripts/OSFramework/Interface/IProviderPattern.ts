@@ -25,8 +25,6 @@ namespace OSFramework.Interface {
 		 */
 		providerInfo: ProviderInfo;
 
-		addProviderEvent(eventName: string, callback: GlobalCallbacks.Generic, uniqueId: string): void;
-
 		/**
 		 * Enables to register simple callbacks for the platform. Internal use.
 		 *
@@ -37,7 +35,7 @@ namespace OSFramework.Interface {
 		registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
 
 		/**
-		 * Method to enable extensibility to provider supported  configs
+		 * Method to enable extensibility to provider supported configs
 		 *
 		 * @param {ProviderConfigs} newConfigs
 		 * @memberof IProviderPattern
