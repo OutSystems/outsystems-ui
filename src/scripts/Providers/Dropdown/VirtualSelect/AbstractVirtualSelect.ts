@@ -307,8 +307,9 @@ namespace Providers.Dropdown.VirtualSelect {
 			//
 		}
 
-		public setProviderEventHandler(eventName: string, callback: OSFramework.GlobalCallbacks.Generic): void {
+		public setProviderEventHandler(eventName: string, callback: OSFramework.GlobalCallbacks.Generic): number {
 			//
+			return 0;
 		}
 
 		/**

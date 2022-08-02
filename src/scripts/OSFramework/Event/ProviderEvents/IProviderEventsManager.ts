@@ -7,6 +7,7 @@ namespace OSFramework.Event.ProviderEvents {
 		hasEvents(): boolean;
 		hasPendingEvents(): boolean;
 		removePendingEvent(uniqueId: string): void;
+		removeSavedEvent(uniqueId: string): void;
 		saveEvent(eventName: string, callback: GlobalCallbacks.Generic, uniqueId: string): void;
 	}
 }

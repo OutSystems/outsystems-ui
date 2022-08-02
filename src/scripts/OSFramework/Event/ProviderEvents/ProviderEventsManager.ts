@@ -33,6 +33,14 @@ namespace OSFramework.Event.ProviderEvents {
 			}
 		}
 
+		public removeSavedEvent(uniqueId: string): void {
+			const event = this._eventsMap.get(uniqueId);
+
+			if (event) {
+				this._pendingEventsMap.delete(uniqueId);
+			}
+		}
+
 		public saveEvent(eventName: string, callback: GlobalCallbacks.Generic, uniqueId: string): void {
 			let _newEvent;
 

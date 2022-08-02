@@ -419,6 +419,25 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 		return JSON.stringify(responseObj);
 	}
 
+	export function UnsetProviderEvent(datePickerId: string, eventId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const datePicker = GetDatePickerItemById(datePickerId);
+			datePicker.unsetProviderEvent(eventId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.DatePicker.FailRegisterProviderEvent;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
 	/**
 	 * Function that will set the input as editable
 	 *

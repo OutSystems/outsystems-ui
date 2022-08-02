@@ -10,6 +10,7 @@ namespace OSFramework.Patterns.DatePicker {
 		setLanguage(value: string): void;
 		setProviderConfigs(providerConfigs: ProviderConfigs): void;
 		setProviderEvent(eventName: string, callback: OSFramework.GlobalCallbacks.Generic, uniqueId: string): void;
+		unsetProviderEvent(eventId: string): void;
 		updateInitialDate(date1: string, date2?: string): void;
 	}
 }

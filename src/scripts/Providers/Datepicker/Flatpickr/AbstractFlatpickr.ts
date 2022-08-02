@@ -109,13 +109,13 @@ namespace Providers.Datepicker.Flatpickr {
 			this.provider = window.flatpickr(this._datePickerProviderInputElem, this._flatpickrOpts);
 
 			// Set provider Info to be used by setProviderConfigs API calls
-			if (this.isBuilt === false) {
-				this.providerInfo = {
-					name: Enum.ProviderInfo.Name,
-					version: Enum.ProviderInfo.Version,
-					supportedConfigs: this.provider.config,
-				};
-			} else {
+			this.providerInfo = {
+				name: Enum.ProviderInfo.Name,
+				version: Enum.ProviderInfo.Version,
+				supportedConfigs: this.provider.config,
+			};
+
+			if (this.isBuilt) {
 				// Check if there're any pending events to be added by the SetProviderEvent API
 				OSFramework.Helper.AsyncInvocation(super.checkPendingProviderEvents.bind(this));
 				// and/or add them again after a destroy has ocurred
@@ -339,70 +339,6 @@ namespace Providers.Datepicker.Flatpickr {
 			this.configs.setProviderConfig(newConfigs, this.providerInfo);
 
 			this.redraw();
-		}
-
-		/**
-		 * Method to set provider events by extensibility
-		 *
-		 * @param {string} eventName
-		 * @param {OSFramework.GlobalCallbacks.Generic} callback
-		 * @param {string} uniqueId
-		 * @memberof AbstractFlatpickr
-		 */
-		public setProviderEvent(
-			eventName: string,
-			callback: OSFramework.GlobalCallbacks.Generic,
-			uniqueId: string
-		): void {
-			OSFramework.Helper.AsyncInvocation(() => {
-				super.registerProviderEvent(
-					eventName,
-					callback,
-					uniqueId,
-					this.provider.config,
-					this.setProviderEventHandler
-				);
-			});
-		}
-
-		/**
-		 * Method to handle the events by extensibility, passed as callback on setProviderEvent
-		 *
-		 * @param {string} eventName
-		 * @param {OSFramework.GlobalCallbacks.Generic} callback
-		 * @memberof AbstractFlatpickr
-		 */
-		public setProviderEventHandler(eventName: string, callback: OSFramework.GlobalCallbacks.Generic): void {
-			switch (eventName) {
-				case Enum.ProviderEvents.OnChange:
-					this.provider.config.onChange.push(callback);
-					break;
-				case Enum.ProviderEvents.OnClose:
-					this.provider.config.onClose.push(callback);
-					break;
-				case Enum.ProviderEvents.OnDayCreate:
-					this.provider.config.onDayCreate.push(callback);
-					break;
-				case Enum.ProviderEvents.OnMonthChange:
-					this.provider.config.onMonthChange.push(callback);
-					break;
-				case Enum.ProviderEvents.OnOpen:
-					this.provider.config.onOpen.push(callback);
-					break;
-				case Enum.ProviderEvents.OnReady:
-					this.provider.config.onReady.push(callback);
-					break;
-				case Enum.ProviderEvents.OnValueUpdate:
-					this.provider.config.onValueUpdate.push(callback);
-					break;
-				case Enum.ProviderEvents.OnYearChange:
-					this.provider.config.onYearChange.push(callback);
-					break;
-				default:
-					console.warn(
-						`The event ${eventName} isn't supported by the provider ${this.providerInfo.name}, with the version ${this.providerInfo.version}`
-					);
-			}
 		}
 
 		/**
