@@ -6,7 +6,6 @@ namespace Providers.Datepicker.Flatpickr {
 	{
 		// Flatpickr onInitialize event
 		private _onInitializeCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
-		private _providerEventsManagerInstance: OSFramework.Event.ProviderEvents.IProviderEventManager;
 		// Store pattern input HTML element reference
 		protected _datePickerProviderInputElem: HTMLInputElement;
 		// Store the flatpickr input html element that will be added by library
@@ -21,23 +20,6 @@ namespace Providers.Datepicker.Flatpickr {
 
 			// Set the default library Event handler that will be used to set on the provider configs
 			this.configs.OnChange = this.onDateSelectedEvent.bind(this);
-		}
-
-		private _checkAddedProviderEvents(): void {
-			if (this._providerEventsManagerInstance?.hasEvents) {
-				this._providerEventsManagerInstance.eventsMap.forEach((value) => {
-					this.setProviderEvent(value.eventName, value.callback, false); // add provider event
-				});
-			}
-		}
-
-		private _checkPendingProviderEvents(): void {
-			if (this._providerEventsManagerInstance?.hasPendingEvents) {
-				this._providerEventsManagerInstance.pendingEventsMap.forEach((value, key) => {
-					this.setProviderEvent(value.eventName, value.callback); // add provider event
-					this._providerEventsManagerInstance.removePendingEvent(key);
-				});
-			}
 		}
 
 		// Trigger the jumToDate to now
@@ -135,9 +117,9 @@ namespace Providers.Datepicker.Flatpickr {
 				};
 			} else {
 				// Check if there're any pending events to be added by the SetProviderEvent API
+				OSFramework.Helper.AsyncInvocation(super.checkPendingProviderEvents.bind(this));
 				// and/or add them again after a destroy has ocurred
-				this._checkAddedProviderEvents();
-				this._checkPendingProviderEvents();
+				OSFramework.Helper.AsyncInvocation(super.checkAddedProviderEvents.bind(this));
 			}
 
 			// Set the needed HTML attributes
@@ -359,20 +341,13 @@ namespace Providers.Datepicker.Flatpickr {
 			this.redraw();
 		}
 
-		public setProviderEvent(
-			eventName: string,
-			callback: OSFramework.GlobalCallbacks.Generic,
-			saveEvent = true
-		): void {
-			if (this._providerEventsManagerInstance === undefined) {
-				this._providerEventsManagerInstance = new OSFramework.Event.ProviderEvents.ProviderEventsManager();
-			}
+		public setProviderEvent(eventName: string, callback: OSFramework.GlobalCallbacks.Generic): void {
+			OSFramework.Helper.AsyncInvocation(() => {
+				super.registerProviderEvent(eventName, callback, this.provider.config, this.setProviderEventHandler);
+			});
+		}
 
-			if (this.provider.config === undefined) {
-				this._providerEventsManagerInstance.addPendingEvent(eventName, callback);
-				return;
-			}
-
+		public setProviderEventHandler(eventName: string, callback: OSFramework.GlobalCallbacks.Generic): void {
 			switch (eventName) {
 				case Enum.ProviderEvents.OnChange:
 					this.provider.config.onChange.push(callback);
@@ -381,10 +356,6 @@ namespace Providers.Datepicker.Flatpickr {
 					console.warn(
 						`THe event ${eventName} isn't supported by the provider ${this.providerInfo.name}, with the version ${this.providerInfo.version}`
 					);
-			}
-
-			if (saveEvent) {
-				this._providerEventsManagerInstance.saveEvent(eventName, callback);
 			}
 		}
 
