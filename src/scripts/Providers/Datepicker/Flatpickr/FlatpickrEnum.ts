@@ -1,5 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.Datepicker.Flatpickr.Enum {
+	// Flatpickr provider event hooks
 	export enum ProviderEvents {
 		OnChange = 'onChange',
 		OnOpen = 'onOpen',

@@ -341,6 +341,14 @@ namespace Providers.Datepicker.Flatpickr {
 			this.redraw();
 		}
 
+		/**
+		 * Method to set provider events by extensibility
+		 *
+		 * @param {string} eventName
+		 * @param {OSFramework.GlobalCallbacks.Generic} callback
+		 * @param {string} uniqueId
+		 * @memberof AbstractFlatpickr
+		 */
 		public setProviderEvent(
 			eventName: string,
 			callback: OSFramework.GlobalCallbacks.Generic,
@@ -357,6 +365,13 @@ namespace Providers.Datepicker.Flatpickr {
 			});
 		}
 
+		/**
+		 * Method to handle the events by extensibility, passed as callback on setProviderEvent
+		 *
+		 * @param {string} eventName
+		 * @param {OSFramework.GlobalCallbacks.Generic} callback
+		 * @memberof AbstractFlatpickr
+		 */
 		public setProviderEventHandler(eventName: string, callback: OSFramework.GlobalCallbacks.Generic): void {
 			switch (eventName) {
 				case Enum.ProviderEvents.OnChange:

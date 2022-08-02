@@ -356,7 +356,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	}
 
 	/**
-	 *
+	 * Function to set providerConfigs by extensibility
 	 *
 	 * @export
 	 * @param {string} datePickerId
@@ -383,6 +383,15 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 		return JSON.stringify(responseObj);
 	}
 
+	/**
+	 * Function to set providerEvents by extensibility
+	 *
+	 * @export
+	 * @param {string} datePickerId
+	 * @param {string} eventName
+	 * @param {OSFramework.GlobalCallbacks.Generic} callback
+	 * @return {*}  {string}
+	 */
 	export function SetProviderEvent(
 		datePickerId: string,
 		eventName: string,
