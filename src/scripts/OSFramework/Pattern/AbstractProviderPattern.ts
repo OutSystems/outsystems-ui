@@ -139,6 +139,16 @@ namespace OSFramework.Patterns {
 		}
 
 		/**
+		 * Method to destroy created instance
+		 *
+		 * @memberof AbstractProviderPattern
+		 */
+		public dispose(): void {
+			this.providerEventsManagerInstance = undefined;
+			super.dispose();
+		}
+
+		/**
 		 * Method to add a provider event using extensibility
 		 *
 		 * @param {string} eventName
