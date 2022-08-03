@@ -24,7 +24,10 @@ namespace OSFramework.Patterns {
 			providerExtendedOptions: ProviderConfigs
 		): ProviderConfigs {
 			// Merged passed configs with internal configs
-			const _finalConfigs = { ...providerOptions, ...providerExtendedOptions };
+			const _finalConfigs =
+				providerExtendedOptions !== undefined
+					? { ...providerOptions, ...providerExtendedOptions }
+					: providerOptions;
 
 			// Cleanning undefined properties
 			Object.keys(_finalConfigs).forEach(
