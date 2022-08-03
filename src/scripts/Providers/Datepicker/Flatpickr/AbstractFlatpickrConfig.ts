@@ -32,25 +32,6 @@ namespace Providers.Datepicker.Flatpickr {
 		constructor(config: JSON) {
 			super(config);
 
-			this._checkServerDateFormat();
-
-			this._providerOptions = {
-				altFormat: this._checkAltFormat(),
-				altInput: true,
-				allowInput: this.AllowInput,
-				disableMobile: this.DisableMobile,
-				dateFormat:
-					this.TimeFormat !== OSFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable
-						? this.ServerDateFormat + ' H:i'
-						: this.ServerDateFormat,
-				locale: undefined,
-				maxDate: OSFramework.Helper.Dates.IsNull(this.MaxDate) ? undefined : this.MaxDate,
-				minDate: OSFramework.Helper.Dates.IsNull(this.MinDate) ? undefined : this.MinDate,
-				onChange: this.OnChange,
-				time_24hr: this.TimeFormat === OSFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat,
-				weekNumbers: this.ShowWeekNumbers,
-			} as FlatpickrOptions;
-
 			// Set the lang based on the language that has been defined already
 			this._lang = OSFramework.Helper.Language.ShortLang;
 		}
@@ -142,6 +123,25 @@ namespace Providers.Datepicker.Flatpickr {
 			if (this._providerOptions.locale === undefined) {
 				this._providerOptions.locale = this._checkLocale();
 			}
+
+			this._checkServerDateFormat();
+
+			this._providerOptions = {
+				altFormat: this._checkAltFormat(),
+				altInput: true,
+				allowInput: this.AllowInput,
+				disableMobile: this.DisableMobile,
+				dateFormat:
+					this.TimeFormat !== OSFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable
+						? this.ServerDateFormat + ' H:i'
+						: this.ServerDateFormat,
+				locale: undefined,
+				maxDate: OSFramework.Helper.Dates.IsNull(this.MaxDate) ? undefined : this.MaxDate,
+				minDate: OSFramework.Helper.Dates.IsNull(this.MinDate) ? undefined : this.MinDate,
+				onChange: this.OnChange,
+				time_24hr: this.TimeFormat === OSFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat,
+				weekNumbers: this.ShowWeekNumbers,
+			} as FlatpickrOptions;
 
 			return this._providerOptions as FlatpickrOptions;
 		}

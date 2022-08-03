@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace Providers.Splide {
 	export class SplideConfig extends OSFramework.Patterns.Carousel.AbstractCarouselConfig {
+		private _providerOptions: SplideOpts;
+
 		private _getArrowConfig(): boolean {
 			let arrows: boolean;
 			switch (this.Navigation) {
@@ -57,7 +59,7 @@ namespace Providers.Splide {
 		}
 
 		public getProviderConfig(): SplideOpts {
-			const providerOptions = {
+			this._providerOptions = {
 				arrows: this._getArrowConfig(),
 				breakpoints: {
 					768: {
@@ -80,12 +82,11 @@ namespace Providers.Splide {
 				start: this.StartingPosition,
 			};
 
-			//Cleanning undefined properties
-			Object.keys(providerOptions).forEach(
-				(key) => providerOptions[key] === undefined && delete providerOptions[key]
-			);
+			return this._providerOptions;
+		}
 
-			return providerOptions;
+		public setProviderConfig(newConfigs: SplideOpts, providerInfo: ProviderInfo): void {
+			this._providerOptions = super.setProviderConfig(this._providerOptions, newConfigs, providerInfo);
 		}
 	}
 }

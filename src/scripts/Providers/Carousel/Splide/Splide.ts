@@ -386,7 +386,8 @@ namespace Providers.Splide {
 		}
 
 		public setProviderConfigs(newConfigs: SplideConfig): void {
-			console.warn(OSFramework.GlobalEnum.WarningMessages.FeatureNotImplemented);
+			this.configs.setProviderConfig(newConfigs, this.providerInfo);
+			this.updateCarousel(true, false);
 		}
 
 		/**
