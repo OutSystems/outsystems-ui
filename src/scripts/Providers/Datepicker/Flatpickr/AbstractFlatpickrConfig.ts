@@ -119,11 +119,7 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @memberof AbstractFlatpickrConfig
 		 */
 		public getCommonProviderConfigs(): FlatpickrOptions {
-			// Make sure locale is not undefined, as when definig the providerOptions defaults in the costructor, the window.locale is no yet available
-			if (this._providerOptions.locale === undefined) {
-				this._providerOptions.locale = this._checkLocale();
-			}
-
+			// Check the given server date format config
 			this._checkServerDateFormat();
 
 			this._providerOptions = {
@@ -135,7 +131,7 @@ namespace Providers.Datepicker.Flatpickr {
 					this.TimeFormat !== OSFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable
 						? this.ServerDateFormat + ' H:i'
 						: this.ServerDateFormat,
-				locale: undefined,
+				locale: this._checkLocale(),
 				maxDate: OSFramework.Helper.Dates.IsNull(this.MaxDate) ? undefined : this.MaxDate,
 				minDate: OSFramework.Helper.Dates.IsNull(this.MinDate) ? undefined : this.MinDate,
 				onChange: this.OnChange,
