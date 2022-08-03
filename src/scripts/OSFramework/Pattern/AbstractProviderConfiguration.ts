@@ -93,6 +93,6 @@ namespace OSFramework.Patterns {
 			return newConfigs;
 		}
 
-		public abstract getProviderConfig(): void;
+		public abstract getProviderConfig(): ProviderConfigs;
 	}
 }
