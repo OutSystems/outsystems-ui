@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace Providers.Splide {
 	export class SplideConfig extends OSFramework.Patterns.Carousel.AbstractCarouselConfig {
+		// Store configs set using extensibility
+		private _providerExtendedOptions: SplideOpts;
+		// Store provider configs
 		private _providerOptions: SplideOpts;
 
 		private _getArrowConfig(): boolean {
@@ -82,11 +85,11 @@ namespace Providers.Splide {
 				start: this.StartingPosition,
 			};
 
-			return this._providerOptions;
+			return super.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
 		}
 
-		public setProviderConfig(newConfigs: SplideOpts, providerInfo: ProviderInfo): void {
-			this._providerOptions = super.setProviderConfig(this._providerOptions, newConfigs, providerInfo);
+		public validateExtensibilityConfigs(newConfigs: SplideOpts, providerInfo: ProviderInfo): void {
+			this._providerExtendedOptions = super.validateExtensibilityConfigs(newConfigs, providerInfo);
 		}
 	}
 }

@@ -11,17 +11,43 @@ namespace OSFramework.Patterns {
 	 */
 	export abstract class AbstractProviderConfiguration extends AbstractConfiguration {
 		/**
+		 * Method to merge internal and external confogs added by extensibility
+		 *
+		 * @protected
+		 * @param {ProviderConfigs} providerOptions
+		 * @param {ProviderConfigs} providerExtendedOptions
+		 * @return {*}  {ProviderConfigs}
+		 * @memberof AbstractProviderConfiguration
+		 */
+		protected mergeConfigs(
+			providerOptions: ProviderConfigs,
+			providerExtendedOptions: ProviderConfigs
+		): ProviderConfigs {
+			// Merged passed configs with internal configs
+			const _finalConfigs = { ...providerOptions, ...providerExtendedOptions };
+
+			// Cleanning undefined properties
+			Object.keys(_finalConfigs).forEach(
+				(key) =>
+					(_finalConfigs[key] === undefined ||
+						_finalConfigs[key] === null ||
+						(Array.isArray(_finalConfigs[key]) && _finalConfigs[key].length === 0)) &&
+					delete _finalConfigs[key]
+			);
+
+			return _finalConfigs;
+		}
+
+		/**
 		 * Method to set the provider configs using extensibility
 		 *
 		 * @protected
-		 * @param {ProviderConfigs} defaultConfigs
 		 * @param {ProviderConfigs} newConfigs
 		 * @param {ProviderInfo} providerInfo
 		 * @return {*}  {ProviderConfigs}
 		 * @memberof AbstractProviderConfiguration
 		 */
-		protected setProviderConfig(
-			defaultConfigs: ProviderConfigs,
+		protected validateExtensibilityConfigs(
 			newConfigs: ProviderConfigs,
 			providerInfo: ProviderInfo
 		): ProviderConfigs {
@@ -37,39 +63,31 @@ namespace OSFramework.Patterns {
 					providerInfo.supportedConfigs[element] !== null &&
 					providerInfo.supportedConfigs[element] !== undefined
 				) {
-					// Check for security vulnerabilites on the callbacks
-					if (
-						(typeof providerInfo.supportedConfigs[element] === 'object' &&
-							typeof newConfigs[element] === 'string') ||
-						(typeof providerInfo.supportedConfigs[element] === 'function' &&
-							typeof newConfigs[element] === 'string')
-					) {
-						console.warn(
-							`The config ${element} is not from the type expected by ${
-								providerInfo.name
-							} . The passed config is of type ${typeof newConfigs[
-								element
-							]}, but it should be ${typeof providerInfo.supportedConfigs[element]}!`
-						);
+					// Check for security vulnerabilites
+					if (typeof newConfigs[element] === 'string') {
+						// Avoid XSS attack
+						Helper.Sanitize(newConfigs[element]);
 
-						delete newConfigs[element];
+						// Avoid passing a string on a callback type config
+						if (
+							typeof providerInfo.supportedConfigs[element] === 'object' ||
+							typeof providerInfo.supportedConfigs[element] === 'function'
+						) {
+							console.warn(
+								`The config ${element} is not from the type expected by ${
+									providerInfo.name
+								} . The passed config is of type ${typeof newConfigs[
+									element
+								]}, but it should be ${typeof providerInfo.supportedConfigs[element]}!`
+							);
+
+							delete newConfigs[element];
+						}
 					}
 				}
 			}
 
-			// Merged passed configs with internal configs
-			const _finalConfigs = { ...defaultConfigs, ...newConfigs };
-
-			// Cleanning undefined properties
-			Object.keys(_finalConfigs).forEach(
-				(key) =>
-					(_finalConfigs[key] === undefined ||
-						_finalConfigs[key] === null ||
-						(Array.isArray(_finalConfigs[key]) && _finalConfigs[key].length === 0)) &&
-					delete _finalConfigs[key]
-			);
-
-			return _finalConfigs;
+			return newConfigs;
 		}
 
 		public abstract getProviderConfig(): void;

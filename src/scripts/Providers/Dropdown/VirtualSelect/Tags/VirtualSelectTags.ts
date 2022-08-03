@@ -26,12 +26,12 @@ namespace Providers.Dropdown.VirtualSelect.Tags {
 		 * @protected
 		 * @memberof OSUIVirtualSelectTags
 		 */
-		protected prepareConfigs(): void {
+		protected prepareConfigs(triggerEvent = false): void {
 			// Get the library configurations
 			this._virtualselectOpts = this.configs.getProviderConfig();
 
 			// Instance will be Created!
-			super.createProviderInstance();
+			super.createProviderInstance(triggerEvent);
 		}
 	}
 }

@@ -11,6 +11,12 @@ namespace Providers.Datepicker.Flatpickr {
 		// Store the language that will be assigned as a locale to the DatePicker
 		private _lang: string;
 
+		// Store configs set using extensibility
+		private _providerExtendedOptions: FlatpickrOptions;
+
+		// Store the Provider Options
+		private _providerOptions: FlatpickrOptions;
+
 		// Stores the ability to allow inputs to be editable or not
 		public AllowInput = false;
 
@@ -25,9 +31,6 @@ namespace Providers.Datepicker.Flatpickr {
 
 		// Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr
 		public ServerDateFormat: string;
-
-		// eslint-disable-next-line @typescript-eslint/member-ordering, @typescript-eslint/no-explicit-any
-		private _providerOptions: FlatpickrOptions;
 
 		constructor(config: JSON) {
 			super(config);
@@ -131,7 +134,6 @@ namespace Providers.Datepicker.Flatpickr {
 					this.TimeFormat !== OSFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable
 						? this.ServerDateFormat + ' H:i'
 						: this.ServerDateFormat,
-				locale: this._checkLocale(),
 				maxDate: OSFramework.Helper.Dates.IsNull(this.MaxDate) ? undefined : this.MaxDate,
 				minDate: OSFramework.Helper.Dates.IsNull(this.MinDate) ? undefined : this.MinDate,
 				onChange: this.OnChange,
@@ -139,7 +141,12 @@ namespace Providers.Datepicker.Flatpickr {
 				weekNumbers: this.ShowWeekNumbers,
 			} as FlatpickrOptions;
 
-			return this._providerOptions as FlatpickrOptions;
+			// Make sure locale is not undefined, as when definig the providerOptions defaults in the costructor, the window.locale is no yet available
+			if (this._providerOptions.locale === undefined) {
+				this._providerOptions.locale = this._checkLocale();
+			}
+
+			return super.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
 		}
 
 		/**
@@ -149,8 +156,8 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @param {FlatpickrOptions} flatpickrOptions
 		 * @memberof AbstractFlatpickrConfig
 		 */
-		public setProviderConfig(newConfigs: FlatpickrOptions, providerInfo: ProviderInfo): void {
-			this._providerOptions = super.setProviderConfig(this._providerOptions, newConfigs, providerInfo);
+		public validateExtensibilityConfigs(newConfigs: FlatpickrOptions, providerInfo: ProviderInfo): void {
+			this._providerExtendedOptions = super.validateExtensibilityConfigs(newConfigs, providerInfo);
 		}
 
 		/**

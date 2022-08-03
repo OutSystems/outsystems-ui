@@ -96,7 +96,11 @@ declare global {
 		supportedConfigs: ProviderConfigs;
 	};
 
-	type ProviderConfigs = RangeSliderProviderConfigs | CarouselProviderConfigs | DatePickerProviderConfigs;
+	type ProviderConfigs =
+		| RangeSliderProviderConfigs
+		| CarouselProviderConfigs
+		| DatePickerProviderConfigs
+		| VirtualSelect;
 
 	// RangeSlider
 	type RangeSliderProviderConfigs = NoUiSlider;

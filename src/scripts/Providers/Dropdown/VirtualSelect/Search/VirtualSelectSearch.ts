@@ -37,12 +37,12 @@ namespace Providers.Dropdown.VirtualSelect.Search {
 		 * @protected
 		 * @memberof OSUIVirtualSelectSearch
 		 */
-		protected prepareConfigs(): void {
+		protected prepareConfigs(triggerEvent = false): void {
 			// Get the library configurations
 			this._virtualselectOpts = this.configs.getProviderConfig();
 
 			// Instance will be Created!
-			super.createProviderInstance();
+			super.createProviderInstance(triggerEvent);
 		}
 
 		/**

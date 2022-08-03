@@ -93,7 +93,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * @protected
 		 * @memberof AbstractVirtualSelect
 		 */
-		protected createProviderInstance(): void {
+		protected createProviderInstance(triggerEvent: boolean): void {
 			// Create the provider instance
 			this.provider = window.VirtualSelect.init(this._virtualselectOpts);
 
@@ -117,8 +117,11 @@ namespace Providers.Dropdown.VirtualSelect {
 
 			// Add attributes to the element if needed
 			this._manageAttributes();
+
 			// Trigger platform's InstanceIntializedHandler client Action
-			OSFramework.Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
+			if (triggerEvent) {
+				OSFramework.Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
+			}
 		}
 
 		/**
@@ -127,12 +130,12 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * @protected
 		 * @memberof AbstractVirtualSelect
 		 */
-		protected redraw(): void {
+		protected redraw(triggerEvent = false): void {
 			// Destroy the old VirtualSelect instance
 			this.provider.destroy();
 
 			// Create a new VirtualSelect instance with the updated configs
-			OSFramework.Helper.AsyncInvocation(this.prepareConfigs.bind(this));
+			OSFramework.Helper.AsyncInvocation(this.prepareConfigs.bind(this), triggerEvent);
 		}
 
 		/**
@@ -306,8 +309,9 @@ namespace Providers.Dropdown.VirtualSelect {
 			}
 		}
 
-		public setProviderConfigs(newConfigs: FlatpickrOptions): void {
-			console.warn(OSFramework.GlobalEnum.WarningMessages.FeatureNotImplemented);
+		public setProviderConfigs(newConfigs: VirtualSelectOpts): void {
+			this.configs.validateExtensibilityConfigs(newConfigs, this.providerInfo);
+			this.redraw();
 		}
 
 		/**

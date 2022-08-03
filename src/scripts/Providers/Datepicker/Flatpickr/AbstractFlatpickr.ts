@@ -329,7 +329,7 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @memberof AbstractFlatpickr
 		 */
 		public setProviderConfigs(newConfigs: FlatpickrOptions): void {
-			this.configs.setProviderConfig(newConfigs, this.providerInfo);
+			this.configs.validateExtensibilityConfigs(newConfigs, this.providerInfo);
 
 			this.redraw();
 		}

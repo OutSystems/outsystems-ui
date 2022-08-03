@@ -385,8 +385,14 @@ namespace Providers.Splide {
 			this.updateCarousel();
 		}
 
+		/**
+		 * Method used to set all the extended Splide properties across the different types of instances
+		 *
+		 * @param {SplideConfig} newConfigs
+		 * @memberof OSUISplide
+		 */
 		public setProviderConfigs(newConfigs: SplideConfig): void {
-			this.configs.setProviderConfig(newConfigs, this.providerInfo);
+			this.configs.validateExtensibilityConfigs(newConfigs, this.providerInfo);
 			this.updateCarousel(true, false);
 		}
 

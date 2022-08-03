@@ -8,6 +8,10 @@ namespace Providers.Dropdown.VirtualSelect {
 	 * @extends {AbstractDropdownConfig}
 	 */
 	export abstract class AbstractVirtualSelectConfig extends OSFramework.Patterns.Dropdown.AbstractDropdownConfig {
+		// Store configs set using extensibility
+		private _providerExtendedOptions: VirtualSelectOpts;
+		// Store the Provider Options
+		private _providerOptions: VirtualSelectOpts;
 		public ElementId: string;
 		public NoResultsText: string;
 		public OptionsList: DropDownOption[];
@@ -75,7 +79,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			}
 
 			// Set the library options
-			const vsOptions = {
+			this._providerOptions = {
 				ele: this.ElementId,
 				dropboxWrapper: this.setDropboxWrapperConfig(this.ShowDropboxAsPopup),
 				hideClearButton: false,
@@ -93,9 +97,9 @@ namespace Providers.Dropdown.VirtualSelect {
 				textDirection: OutSystems.OSUI.Utils.GetIsRTL()
 					? OSFramework.GlobalEnum.Direction.RTL
 					: OSFramework.GlobalEnum.Direction.LTR,
-			};
+			} as VirtualSelectOpts;
 
-			return vsOptions as VirtualSelectOpts;
+			return super.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
 		}
 
 		/**
@@ -109,6 +113,10 @@ namespace Providers.Dropdown.VirtualSelect {
 			return showAsPopup && OSFramework.Helper.DeviceInfo.IsPhone
 				? Enum.DropboxWrapperOptions.Body
 				: Enum.DropboxWrapperOptions.Self;
+		}
+
+		public validateExtensibilityConfigs(newConfigs: VirtualSelectOpts, providerInfo: ProviderInfo): void {
+			this._providerExtendedOptions = super.validateExtensibilityConfigs(newConfigs, providerInfo);
 		}
 
 		// Override, Validate configs key values
