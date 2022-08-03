@@ -22,13 +22,6 @@ namespace Providers.Datepicker.Flatpickr {
 			this.configs.OnChange = this.onDateSelectedEvent.bind(this);
 		}
 
-		// Trigger the jumToDate to now
-		private _jumpIntoToday(event: MouseEvent) {
-			event.preventDefault();
-
-			this.provider.jumpToDate(this.provider.now);
-		}
-
 		// Method used to set the needed HTML attributes
 		private _setAttributes(): void {
 			// Since a new input will be added by the flatpickr library, we must address it only at onReady
@@ -86,7 +79,7 @@ namespace Providers.Datepicker.Flatpickr {
 			todayBtn.innerHTML = l10ns.TodayBtn[this.configs.Lang].title;
 			OSFramework.Helper.A11Y.AriaLabel(todayBtn, l10ns.TodayBtn[this.configs.Lang].ariaLabel);
 
-			todayBtn.addEventListener(OSFramework.GlobalEnum.HTMLEvent.Click, this._jumpIntoToday.bind(this));
+			todayBtn.addEventListener(OSFramework.GlobalEnum.HTMLEvent.Click, this.todayBtnClick.bind(this));
 
 			// Append elements to the proper containers
 			todayBtnWrapper.appendChild(todayBtn);
@@ -139,6 +132,16 @@ namespace Providers.Datepicker.Flatpickr {
 
 			// Trigger platform's InstanceIntializedHandler client Action
 			OSFramework.Helper.AsyncInvocation(this._onInitializeCallbackEvent, this.widgetId);
+		}
+
+		/**
+		 * Trigger the jumToDate to now
+		 *
+		 * @protected
+		 * @memberof AbstractFlatpickr
+		 */
+		protected jumpIntoToday(): void {
+			this.provider.jumpToDate(this.provider.now);
 		}
 
 		/**
@@ -328,6 +331,7 @@ namespace Providers.Datepicker.Flatpickr {
 
 		protected abstract onDateSelectedEvent(selectedDates: string[], dateStr: string, fp: Flatpickr): void;
 		protected abstract prepareConfigs(): void;
+		protected abstract todayBtnClick(event: MouseEvent): void;
 		public abstract updateInitialDate(start: string, end?: string): void;
 	}
 }

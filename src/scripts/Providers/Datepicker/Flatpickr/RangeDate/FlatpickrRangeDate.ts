@@ -71,6 +71,18 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 			super.createProviderInstance();
 		}
 
+		/**
+		 * Trigger the jumToDate to now
+		 *
+		 * @protected
+		 * @memberof Flatpickr.SingleDate
+		 */
+		protected todayBtnClick(event: MouseEvent): void {
+			event.preventDefault();
+
+			super.jumpIntoToday();
+		}
+
 		public build(): void {
 			super.build();
 
