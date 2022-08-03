@@ -9,7 +9,10 @@ namespace OSFramework.Patterns.Carousel {
 		previous();
 		registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
 		setCarouselDirection(direction: string): void;
+		setProviderConfigs(providerConfigs: ProviderConfigs): void;
+		setProviderEvent(eventName: string, callback: OSFramework.GlobalCallbacks.Generic, uniqueId: string): void;
 		toggleDrag(hasDrag: boolean);
+		unsetProviderEvent(eventId: string): void;
 		updateOnRender();
 	}
 }

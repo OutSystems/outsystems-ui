@@ -105,6 +105,23 @@ namespace Providers.Dropdown.VirtualSelect {
 			// Since at native devices we're detaching the balloon from pattern context we must set this attribute to it in order to be possible create a relation between pattern default structure and the detached balloon!
 			this.provider.$dropboxContainer.setAttribute(OSFramework.GlobalEnum.HTMLAttributes.Name, this.uniqueId);
 
+			// Set provider Info to be used by setProviderConfigs API calls
+			this.providerInfo = {
+				name: Enum.ProviderInfo.Name,
+				version: Enum.ProviderInfo.Version,
+				supportedConfigs: this.provider.$ele,
+			};
+
+			// Update the eventsAPI instance, to be use for events extensibility
+			this._providerEventsAPI = this.providerInfo.supportedConfigs;
+
+			if (this.isBuilt) {
+				// Check if there're any pending events to be added by the SetProviderEvent API
+				OSFramework.Helper.AsyncInvocation(super.checkPendingProviderEvents.bind(this));
+				// and/or add them again after a destroy has ocurred
+				OSFramework.Helper.AsyncInvocation(super.checkAddedProviderEvents.bind(this));
+			}
+
 			// Add the pattern Events!
 			this._setUpEvents();
 
@@ -301,15 +318,6 @@ namespace Providers.Dropdown.VirtualSelect {
 
 		public setProviderConfigs(newConfigs: FlatpickrOptions): void {
 			//
-		}
-
-		public setProviderEvent(eventName: string, callback: OSFramework.GlobalCallbacks.Generic): void {
-			//
-		}
-
-		public setProviderEventHandler(eventName: string, callback: OSFramework.GlobalCallbacks.Generic): number {
-			//
-			return 0;
 		}
 
 		/**

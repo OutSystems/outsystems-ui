@@ -89,6 +89,23 @@ namespace Providers.RangeSlider.NoUISlider {
 			// Init provider
 			this.provider = window.noUiSlider.create(this._rangeSliderProviderElem, this.providerOptions);
 
+			// Set provider Info to be used by setProviderConfigs API calls
+			this.providerInfo = {
+				name: RangeSlider.NoUiSlider.Enum.ProviderInfo.Name,
+				version: RangeSlider.NoUiSlider.Enum.ProviderInfo.Version,
+				supportedConfigs: this.provider,
+			};
+
+			// Update the eventsAPI instance, to be use for events extensibility
+			this._providerEventsAPI = this.providerInfo.supportedConfigs;
+
+			if (this.isBuilt) {
+				// Check if there're any pending events to be added by the SetProviderEvent API
+				OSFramework.Helper.AsyncInvocation(super.checkPendingProviderEvents.bind(this));
+				// and/or add them again after a destroy has ocurred
+				OSFramework.Helper.AsyncInvocation(super.checkAddedProviderEvents.bind(this));
+			}
+
 			// Trigger platform's OnInitialize event (done by us, the library doesn't have a 'mount' event)
 			this._setOnInitializedEvent();
 
@@ -338,15 +355,6 @@ namespace Providers.RangeSlider.NoUISlider {
 
 		public setProviderConfigs(newConfigs: FlatpickrOptions): void {
 			//
-		}
-
-		public setProviderEvent(eventName: string, callback: OSFramework.GlobalCallbacks.Generic): void {
-			//
-		}
-
-		public setProviderEventHandler(eventName: string, callback: OSFramework.GlobalCallbacks.Generic): number {
-			//
-			return 0;
 		}
 
 		protected abstract prepareConfigs(): void;

@@ -18,6 +18,9 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailGetSelectedValues: 'OSUI-API-01006',
 		FailRegisterCallback: 'OSUI-API-01007',
 		FailSetValidation: 'OSUI-API-01008',
+		FailRegisterProviderConfig: 'OSUI-API-01009',
+		FailRegisterProviderEvent: 'OSUI-API-060010',
+		FailRemoveProviderEvent: 'OSUI-API-06011',
 	};
 
 	export const Notification = {
@@ -62,6 +65,9 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailRegisterCallback: 'OSUI-API-06007',
 		FailToggleDrag: 'OSUI-API-06008',
 		FailUpdate: 'OSUI-API-06009',
+		FailRegisterProviderConfig: 'OSUI-API-06010',
+		FailRegisterProviderEvent: 'OSUI-API-06011',
+		FailRemoveProviderEvent: 'OSUI-API-06012',
 	};
 
 	export const DatePicker = {
@@ -100,6 +106,9 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailRegisterCallback: 'OSUI-API-10004',
 		FailSetValues: 'OSUI-API-10005',
 		FailResetValues: 'OSUI-API-10006',
+		FailRegisterProviderConfig: 'OSUI-API-10007',
+		FailRegisterProviderEvent: 'OSUI-API-10008',
+		FailRemoveProviderEvent: 'OSUI-API-10009',
 	};
 
 	export const Sidebar = {

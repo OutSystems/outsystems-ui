@@ -1,6 +1,14 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.Dropdown.VirtualSelect.Enum {
 	/**
+	 * Flatpickr provider info
+	 */
+	export enum ProviderInfo {
+		Name = 'VirtualSelect',
+		Version = '1.0.27',
+	}
+
+	/**
 	 * CSS Classes
 	 */
 	export enum CssClass {

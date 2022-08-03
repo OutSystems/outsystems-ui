@@ -33,7 +33,6 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 		 * @memberof IDropdownServerSideItem
 		 */
 		get ItemId(): string;
-
 		/**
 		 * Method used to update the DropdownOptionItem selected state
 		 *
