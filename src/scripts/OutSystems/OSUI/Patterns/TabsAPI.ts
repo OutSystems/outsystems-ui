@@ -187,7 +187,7 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 		try {
 			const tabs = GetTabsById(tabsId);
 
-			tabs.changeTab(tabsNumber, undefined, true, true);
+			tabs.changeTab(tabsNumber, undefined, true);
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;

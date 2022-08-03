@@ -8,7 +8,8 @@ namespace OSFramework.Patterns.Tabs {
 			tabIndex: number,
 			tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem,
 			blockObserver?: boolean,
-			triggerEvent?: boolean
+			triggerEvent?: boolean,
+			triggeredByObserver?: boolean
 		);
 		toggleDragGestures(addDragGestures: boolean);
 	}
