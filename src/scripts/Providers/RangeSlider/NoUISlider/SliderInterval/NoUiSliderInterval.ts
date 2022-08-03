@@ -16,8 +16,6 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 			this.configs.StartingValueFrom = value[0];
 			this.configs.StartingValueTo = value[1];
 
-			this.providerOptions = this.configs.getProviderConfig();
-
 			super.updateRangeSlider();
 		}
 

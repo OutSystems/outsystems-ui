@@ -82,7 +82,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * @private
 		 * @memberof OSUINoUiSlider
 		 */
-		protected createProviderInstance(): void {
+		protected createProviderInstance(triggerEvent = true): void {
 			// Set inital library options
 			this.setInitialStates();
 
@@ -96,8 +96,10 @@ namespace Providers.RangeSlider.NoUISlider {
 				supportedConfigs: this.provider,
 			});
 
-			// Trigger platform's OnInitialize event (done by us, the library doesn't have a 'mount' event)
-			this._setOnInitializedEvent();
+			if (triggerEvent) {
+				// Trigger platform's OnInitialize event (done by us, the library doesn't have a 'mount' event)
+				this._setOnInitializedEvent();
+			}
 
 			// Set OnValueChange event
 			this._setOnValueChangeEvent(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Slide);
@@ -193,7 +195,8 @@ namespace Providers.RangeSlider.NoUISlider {
 		 */
 		protected updateRangeSlider(): void {
 			this.provider.destroy();
-			this.createProviderInstance();
+			this.providerOptions = this.configs.getProviderConfig();
+			this.createProviderInstance(false);
 			this.setInitialCSSClasses();
 		}
 
@@ -331,8 +334,16 @@ namespace Providers.RangeSlider.NoUISlider {
 			}
 		}
 
-		public setProviderConfigs(newConfigs: FlatpickrOptions): void {
-			console.warn(OSFramework.GlobalEnum.WarningMessages.FeatureNotImplemented);
+		/**
+		 * Method used to set all the extended NoUiSlider properties across the different types of instances
+		 *
+		 * @param {NoUiSliderOptions} newConfigs
+		 * @memberof AbstractNoUiSlider
+		 */
+		public setProviderConfigs(newConfigs: NoUiSliderOptions): void {
+			this.configs.validateExtensibilityConfigs(newConfigs, this.providerInfo);
+
+			this.updateRangeSlider();
 		}
 
 		/**

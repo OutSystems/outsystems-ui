@@ -99,7 +99,9 @@ namespace Providers.Dropdown.VirtualSelect {
 					: OSFramework.GlobalEnum.Direction.LTR,
 			} as VirtualSelectOpts;
 
-			return super.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
+			return this._providerExtendedOptions !== undefined
+				? super.mergeConfigs(this._providerOptions, this._providerExtendedOptions)
+				: this._providerOptions;
 		}
 
 		/**
@@ -113,10 +115,6 @@ namespace Providers.Dropdown.VirtualSelect {
 			return showAsPopup && OSFramework.Helper.DeviceInfo.IsPhone
 				? Enum.DropboxWrapperOptions.Body
 				: Enum.DropboxWrapperOptions.Self;
-		}
-
-		public validateExtensibilityConfigs(newConfigs: VirtualSelectOpts, providerInfo: ProviderInfo): void {
-			this._providerExtendedOptions = super.validateExtensibilityConfigs(newConfigs, providerInfo);
 		}
 
 		// Override, Validate configs key values
@@ -145,6 +143,17 @@ namespace Providers.Dropdown.VirtualSelect {
 			}
 
 			return validatedValue;
+		}
+
+		/**
+		 * Method to validate and save the external provider configs
+		 *
+		 * @param {VirtualSelectOpts} newConfigs
+		 * @param {ProviderInfo} providerInfo
+		 * @memberof AbstractVirtualSelectConfig
+		 */
+		public validateExtensibilityConfigs(newConfigs: VirtualSelectOpts, providerInfo: ProviderInfo): void {
+			this._providerExtendedOptions = super.validateExtensibilityConfigs(newConfigs, providerInfo);
 		}
 
 		protected abstract _getSelectedValues(): string[];

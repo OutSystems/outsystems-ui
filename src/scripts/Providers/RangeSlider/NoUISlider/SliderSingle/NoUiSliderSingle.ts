@@ -14,7 +14,6 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 			const value = this.getValue();
 
 			this.configs.StartingValueFrom = value as number;
-			this.providerOptions = this.configs.getProviderConfig();
 
 			super.updateRangeSlider();
 		}

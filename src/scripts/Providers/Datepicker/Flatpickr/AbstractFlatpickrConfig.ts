@@ -145,15 +145,16 @@ namespace Providers.Datepicker.Flatpickr {
 			if (this._providerOptions.locale === undefined) {
 				this._providerOptions.locale = this._checkLocale();
 			}
-
-			return super.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
+			return this._providerExtendedOptions !== undefined
+				? super.mergeConfigs(this._providerOptions, this._providerExtendedOptions)
+				: this._providerOptions;
 		}
 
 		/**
-		 * Method used to set all the extended Flatpickr properties across the different types of instances
+		 * Method to validate and save the external provider configs
 		 *
 		 * @param {FlatpickrOptions} newConfigs
-		 * @param {FlatpickrOptions} flatpickrOptions
+		 * @param {ProviderInfo} providerInfo
 		 * @memberof AbstractFlatpickrConfig
 		 */
 		public validateExtensibilityConfigs(newConfigs: FlatpickrOptions, providerInfo: ProviderInfo): void {

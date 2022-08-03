@@ -61,6 +61,12 @@ namespace Providers.Splide {
 			return pagination;
 		}
 
+		/**
+		 * Method to get and merge internal and external provider configs
+		 *
+		 * @return {*}  {SplideOpts}
+		 * @memberof SplideConfig
+		 */
 		public getProviderConfig(): SplideOpts {
 			this._providerOptions = {
 				arrows: this._getArrowConfig(),
@@ -85,9 +91,18 @@ namespace Providers.Splide {
 				start: this.StartingPosition,
 			};
 
-			return super.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
+			return this._providerExtendedOptions !== undefined
+				? super.mergeConfigs(this._providerOptions, this._providerExtendedOptions)
+				: this._providerOptions;
 		}
 
+		/**
+		 * Method to validate and save the external provider configs
+		 *
+		 * @param {SplideOpts} newConfigs
+		 * @param {ProviderInfo} providerInfo
+		 * @memberof SplideConfig
+		 */
 		public validateExtensibilityConfigs(newConfigs: SplideOpts, providerInfo: ProviderInfo): void {
 			this._providerExtendedOptions = super.validateExtensibilityConfigs(newConfigs, providerInfo);
 		}
