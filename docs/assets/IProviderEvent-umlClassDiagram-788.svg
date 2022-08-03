@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="238px" preserveAspectRatio="none" style="width:147px;height:238px;background:#CED4DA;" version="1.1" viewBox="0 0 147 238" width="147px" zoomAndPan="magnify"><defs><filter height="300%" id="f1pbx4gqtj0y0p" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[0d04667fc4813e63f45a9dc04d8f9b5d]
+class IProviderEvent--><rect codeLine="7" fill="#FFFFFF" filter="url(#f1pbx4gqtj0y0p)" height="78.8652" id="IProviderEvent" style="stroke:#272B30;stroke-width:1.5;" width="126" x="7" y="7"/><ellipse cx="27.4" cy="23" fill="#B4A7E5" rx="11" ry="11" style="stroke:#272B30;stroke-width:1.0;"/><path d="M23.8277,19.2651 L23.8277,17.1069 L31.2071,17.1069 L31.2071,19.2651 L28.7418,19.2651 L28.7418,27.3418 L31.2071,27.3418 L31.2071,29.5 L23.8277,29.5 L23.8277,27.3418 L26.2931,27.3418 L26.2931,19.2651 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="82" x="42.6" y="27.5352">IProviderEvent</text><line style="stroke:#272B30;stroke-width:1.5;" x1="8" x2="132" y1="39" y2="39"/><ellipse cx="18" cy="50" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="93" x="27" y="53.6348">callback : Generic</text><ellipse cx="18" cy="62.9551" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="100" x="27" y="66.5898">eventName : string</text><ellipse cx="18" cy="75.9102" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="88" x="27" y="79.5449">uniqueId : string</text><!--MD5=[1a46ca335ccd60eafd0e06c30e36142e]
+class ProviderEvent--><rect codeLine="12" fill="#FFFFFF" filter="url(#f1pbx4gqtj0y0p)" height="78.8652" id="ProviderEvent" style="stroke:#272B30;stroke-width:1.5;" width="126" x="7" y="146"/><ellipse cx="28.75" cy="162" fill="#ADD1B2" rx="11" ry="11" style="stroke:#272B30;stroke-width:1.0;"/><path d="M31.2231,168.1431 Q30.6421,168.4419 30.0029,168.5913 Q29.3638,168.7407 28.6582,168.7407 Q26.1514,168.7407 24.8315,167.0889 Q23.5117,165.437 23.5117,162.3159 Q23.5117,159.1865 24.8315,157.5347 Q26.1514,155.8828 28.6582,155.8828 Q29.3638,155.8828 30.0112,156.0322 Q30.6587,156.1816 31.2231,156.4805 L31.2231,159.2031 Q30.5923,158.6221 29.9988,158.3523 Q29.4053,158.0825 28.7744,158.0825 Q27.4297,158.0825 26.7449,159.1492 Q26.0601,160.2158 26.0601,162.3159 Q26.0601,164.4077 26.7449,165.4744 Q27.4297,166.541 28.7744,166.541 Q29.4053,166.541 29.9988,166.2712 Q30.5923,166.0015 31.2231,165.4204 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="79" x="44.25" y="166.5352">ProviderEvent</text><line style="stroke:#272B30;stroke-width:1.5;" x1="8" x2="132" y1="178" y2="178"/><ellipse cx="18" cy="189" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="93" x="27" y="192.6348">callback : Generic</text><ellipse cx="18" cy="201.9551" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="100" x="27" y="205.5898">eventName : string</text><ellipse cx="18" cy="214.9102" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="88" x="27" y="218.5449">uniqueId : string</text><!--MD5=[acaddc7e81572d45f5e201988ae88f13]
+reverse link IProviderEvent to ProviderEvent--><path codeLine="17" d="M70,106.3 C70,119.66 70,133.51 70,145.79 " fill="none" id="IProviderEvent-backto-ProviderEvent" style="stroke:#272B30;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="none" points="63,106.03,70,86.03,77,106.03,63,106.03" style="stroke:#272B30;stroke-width:1.0;"/><!--MD5=[62fc4793c3d73a49ccca8b32737ad40c]
+@startuml
+skinparam ClassArrowColor #272b30
+skinparam ClassBorderColor #272b30
+skinparam ClassBackgroundColor #fff
+skinparam BackgroundColor #ced4da
+hide empty methods
+hide empty fields
+interface "IProviderEvent" {
+    +callback : Generic
+    +eventName : string
+    +uniqueId : string
+}
+class "ProviderEvent" {
+    +callback : Generic
+    +eventName : string
+    +uniqueId : string
+}
+"IProviderEvent" <|.. "ProviderEvent"
+@enduml
+
+PlantUML version 1.2021.14(Fri Nov 12 16:46:50 WET 2021)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: PT
+--></g></svg>
