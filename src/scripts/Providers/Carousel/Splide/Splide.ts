@@ -71,21 +71,11 @@ namespace Providers.Splide {
 			this._provider = new window.Splide(this._carouselProviderElem, this._providerOptions);
 
 			// Set provider Info to be used by setProviderConfigs API calls
-			this.providerInfo = {
+			super.updateProviderEvents({
 				name: Enum.ProviderInfo.Name,
 				version: Enum.ProviderInfo.Version,
-				supportedConfigs: this._provider,
-			};
-
-			// Update the eventsAPI instance, to be use for events extensibility
-			this._providerEventsAPI = this.providerInfo.supportedConfigs;
-
-			if (this.isBuilt) {
-				// Check if there're any pending events to be added by the SetProviderEvent API
-				OSFramework.Helper.AsyncInvocation(super.checkPendingProviderEvents.bind(this));
-				// and/or add them again after a destroy has ocurred
-				OSFramework.Helper.AsyncInvocation(super.checkAddedProviderEvents.bind(this));
-			}
+				supportedConfigs: this.provider,
+			});
 
 			if (triggerInitialize) {
 				// Set the OnInitialized event, before the provider is mounted
@@ -396,7 +386,7 @@ namespace Providers.Splide {
 		}
 
 		public setProviderConfigs(newConfigs: SplideConfig): void {
-			//
+			console.warn(OSFramework.GlobalEnum.WarningMessages.FeatureNotImplemented);
 		}
 
 		/**

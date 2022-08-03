@@ -15,8 +15,6 @@ namespace OSFramework.Patterns {
 	{
 		// Holds the provider
 		protected _provider: P;
-		// Holds the provider api used to set events
-		protected _providerEventsAPI: ProviderType;
 		// Holds the provider info
 		protected _providerInfo: ProviderInfo;
 		// Holds the providerEvents instance, that manages the provider events
@@ -63,7 +61,7 @@ namespace OSFramework.Patterns {
 		// Method to get an event index from an array
 		private _getEventIndexFromArray(event: Event.ProviderEvents.IProviderEvent): number {
 			// Get callback from array
-			const _providerCallback = this._providerEventsAPI[event.eventName].find((item) => {
+			const _providerCallback = this.providerInfo.supportedConfigs[event.eventName].find((item) => {
 				return item === event.callback;
 			});
 
@@ -76,7 +74,7 @@ namespace OSFramework.Patterns {
 			}
 
 			// Get the index, using the callback
-			return this._providerEventsAPI[event.eventName].findIndex((item) => {
+			return this.providerInfo.supportedConfigs[event.eventName].findIndex((item) => {
 				return item === _providerCallback;
 			});
 		}
@@ -90,23 +88,39 @@ namespace OSFramework.Patterns {
 			event?: Event.ProviderEvents.IProviderEvent
 		): void {
 			// Check if is array
-			if (Array.isArray(this._providerEventsAPI[eventName])) {
+			if (Array.isArray(this.providerInfo.supportedConfigs[eventName])) {
 				addEvent
-					? this._providerEventsAPI[eventName].push(callback)
-					: this._providerEventsAPI[eventName].splice(this._getEventIndexFromArray(event), 1);
+					? this.providerInfo.supportedConfigs[eventName].push(callback)
+					: this.providerInfo.supportedConfigs[eventName].splice(this._getEventIndexFromArray(event), 1);
 				// Check if addEventListener is valid
-			} else if (typeof this._providerEventsAPI.addEventListener === GlobalEnum.JavascriptTypes.function) {
+			} else if (
+				typeof this.providerInfo.supportedConfigs.addEventListener === GlobalEnum.JavascriptTypes.function
+			) {
 				addEvent
-					? this._providerEventsAPI.addEventListener(eventName, callback)
-					: this._providerEventsAPI.removeEventListener(eventName, callback);
+					? this.providerInfo.supportedConfigs.addEventListener(eventName, callback)
+					: this.providerInfo.supportedConfigs.removeEventListener(eventName, callback);
 				// Check if instance.on is valid
-			} else if (typeof this._providerEventsAPI.on === GlobalEnum.JavascriptTypes.function) {
+			} else if (typeof this.providerInfo.supportedConfigs.on === GlobalEnum.JavascriptTypes.function) {
 				addEvent
-					? this._providerEventsAPI.on(eventName, callback)
-					: this._providerEventsAPI.off(eventName, callback);
+					? this.providerInfo.supportedConfigs.on(eventName, callback)
+					: this.providerInfo.supportedConfigs.off(eventName, callback);
 			} else {
 				throw Error(ErrorCodes.AbstractProviderPattern.FailProviderEventHandler);
 			}
+		}
+
+		/**
+		 * Method to build the pattern
+		 *
+		 * @memberof AbstractProviderPattern
+		 */
+		public build(): void {
+			this.providerInfo = {
+				name: undefined,
+				version: undefined,
+				supportedConfigs: undefined,
+			};
+			super.build();
 		}
 
 		/**
@@ -209,6 +223,28 @@ namespace OSFramework.Patterns {
 			// Removed from the saved events map
 			if (this.providerEventsManagerInstance) {
 				this.providerEventsManagerInstance.removeSavedEvent(eventId);
+			}
+		}
+
+		/**
+		 * Method to update the provider events API instance and save/pending events
+		 *
+		 * @param {ProviderInfo} providerInfo
+		 * @memberof AbstractProviderPattern
+		 */
+		public updateProviderEvents(providerInfo: ProviderInfo): void {
+			// Update provider instance reference
+			this.providerInfo.supportedConfigs = providerInfo.supportedConfigs;
+
+			if (this.isBuilt) {
+				// Check if there're any pending events to be added by the SetProviderEvent API
+				Helper.AsyncInvocation(this.checkPendingProviderEvents.bind(this));
+				// and/or add them again after a destroy has ocurred
+				Helper.AsyncInvocation(this.checkAddedProviderEvents.bind(this));
+			} else {
+				// These won't change, so they can be updated only once
+				this.providerInfo.name = providerInfo.name;
+				this.providerInfo.version = providerInfo.version;
 			}
 		}
 

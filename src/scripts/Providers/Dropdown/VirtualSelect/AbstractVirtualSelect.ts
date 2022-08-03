@@ -106,21 +106,11 @@ namespace Providers.Dropdown.VirtualSelect {
 			this.provider.$dropboxContainer.setAttribute(OSFramework.GlobalEnum.HTMLAttributes.Name, this.uniqueId);
 
 			// Set provider Info to be used by setProviderConfigs API calls
-			this.providerInfo = {
+			super.updateProviderEvents({
 				name: Enum.ProviderInfo.Name,
 				version: Enum.ProviderInfo.Version,
 				supportedConfigs: this.provider.$ele,
-			};
-
-			// Update the eventsAPI instance, to be use for events extensibility
-			this._providerEventsAPI = this.providerInfo.supportedConfigs;
-
-			if (this.isBuilt) {
-				// Check if there're any pending events to be added by the SetProviderEvent API
-				OSFramework.Helper.AsyncInvocation(super.checkPendingProviderEvents.bind(this));
-				// and/or add them again after a destroy has ocurred
-				OSFramework.Helper.AsyncInvocation(super.checkAddedProviderEvents.bind(this));
-			}
+			});
 
 			// Add the pattern Events!
 			this._setUpEvents();
@@ -317,7 +307,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		}
 
 		public setProviderConfigs(newConfigs: FlatpickrOptions): void {
-			//
+			console.warn(OSFramework.GlobalEnum.WarningMessages.FeatureNotImplemented);
 		}
 
 		/**

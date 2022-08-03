@@ -308,4 +308,8 @@ namespace OSFramework.GlobalEnum {
 	export enum JavascriptTypes {
 		function = 'function',
 	}
+
+	export enum WarningMessages {
+		FeatureNotImplemented = 'This feature is not yet implemented!',
+	}
 }

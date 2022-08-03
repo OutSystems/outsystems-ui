@@ -41,5 +41,13 @@ namespace OSFramework.Interface {
 		 * @memberof IProviderPattern
 		 */
 		setProviderConfigs(newConfigs: ProviderConfigs): void;
+
+		/**
+		 * Method to update the provider events API instance and save/pending events
+		 *
+		 * @param {ProviderInfo} providerInfo
+		 * @memberof IProviderPattern
+		 */
+		updateProviderEvents(providerInfo: ProviderInfo): void;
 	}
 }

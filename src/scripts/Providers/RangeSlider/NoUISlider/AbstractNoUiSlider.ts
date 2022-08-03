@@ -90,21 +90,11 @@ namespace Providers.RangeSlider.NoUISlider {
 			this.provider = window.noUiSlider.create(this._rangeSliderProviderElem, this.providerOptions);
 
 			// Set provider Info to be used by setProviderConfigs API calls
-			this.providerInfo = {
+			super.updateProviderEvents({
 				name: RangeSlider.NoUiSlider.Enum.ProviderInfo.Name,
 				version: RangeSlider.NoUiSlider.Enum.ProviderInfo.Version,
 				supportedConfigs: this.provider,
-			};
-
-			// Update the eventsAPI instance, to be use for events extensibility
-			this._providerEventsAPI = this.providerInfo.supportedConfigs;
-
-			if (this.isBuilt) {
-				// Check if there're any pending events to be added by the SetProviderEvent API
-				OSFramework.Helper.AsyncInvocation(super.checkPendingProviderEvents.bind(this));
-				// and/or add them again after a destroy has ocurred
-				OSFramework.Helper.AsyncInvocation(super.checkAddedProviderEvents.bind(this));
-			}
+			});
 
 			// Trigger platform's OnInitialize event (done by us, the library doesn't have a 'mount' event)
 			this._setOnInitializedEvent();
@@ -341,6 +331,10 @@ namespace Providers.RangeSlider.NoUISlider {
 			}
 		}
 
+		public setProviderConfigs(newConfigs: FlatpickrOptions): void {
+			console.warn(OSFramework.GlobalEnum.WarningMessages.FeatureNotImplemented);
+		}
+
 		/**
 		 * Method to change the Range Slider trigger to on DragEnd
 		 *
@@ -351,10 +345,6 @@ namespace Providers.RangeSlider.NoUISlider {
 			this.provider.off(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Slide, this.eventProviderValueChanged);
 			// Set new Change event
 			this._setOnValueChangeEvent(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Change);
-		}
-
-		public setProviderConfigs(newConfigs: FlatpickrOptions): void {
-			//
 		}
 
 		protected abstract prepareConfigs(): void;
