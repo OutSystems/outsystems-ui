@@ -63,13 +63,6 @@ declare global {
 		top?: number;
 	};
 
-	// FocusTrap type
-	type FocusTrapOpts = {
-		focusBottomCallback: Callbacks.Generic;
-		focusTargetElement: HTMLElement;
-		focusTopCallback: Callbacks.Generic;
-	};
-
 	// Is Out Of Boundaries Type
 	type OutOfBoundaries = {
 		bottom: boolean;
