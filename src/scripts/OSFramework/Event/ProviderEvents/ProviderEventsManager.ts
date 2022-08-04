@@ -54,10 +54,12 @@ namespace OSFramework.Event.ProviderEvents {
 		 * @memberof ProviderEventsManager
 		 */
 		public removePendingEvent(uniqueId: string): void {
-			const event = this._pendingEventsMap.get(uniqueId);
+			const event = this._pendingEventsMap.has(uniqueId);
 
 			if (event) {
 				this._pendingEventsMap.delete(uniqueId);
+			} else {
+				throw new Error(ErrorCodes.ProviderEventsManager.FailEventRemoval);
 			}
 		}
 
@@ -68,10 +70,12 @@ namespace OSFramework.Event.ProviderEvents {
 		 * @memberof ProviderEventsManager
 		 */
 		public removeSavedEvent(uniqueId: string): void {
-			const event = this._eventsMap.get(uniqueId);
+			const event = this._eventsMap.has(uniqueId);
 
 			if (event) {
 				this._eventsMap.delete(uniqueId);
+			} else {
+				throw new Error(ErrorCodes.ProviderEventsManager.FailEventRemoval);
 			}
 		}
 

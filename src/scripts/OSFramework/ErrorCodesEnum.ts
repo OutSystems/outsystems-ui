@@ -83,4 +83,8 @@ namespace OSFramework.ErrorCodes {
 			message: 'The provided eventName does not exist or is not supported by the provider',
 		},
 	};
+
+	export const ProviderEventsManager = {
+		FailEventRemoval: 'OSUI-GEN-12001',
+	};
 }
