@@ -88,8 +88,6 @@ declare global {
 		viewHeight: number;
 	};
 
-	type ProviderType = NoUiSlider | Splide | Flatpickr | VirtualSelect;
-
 	type ProviderInfo = {
 		name: string;
 		version: string;
