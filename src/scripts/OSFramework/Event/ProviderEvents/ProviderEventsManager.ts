@@ -88,6 +88,7 @@ namespace OSFramework.Event.ProviderEvents {
 
 			if (this._pendingEventsMap.has(uniqueId)) {
 				_newEvent = this._pendingEventsMap.get(uniqueId);
+				this._pendingEventsMap.delete(uniqueId);
 			} else {
 				_newEvent = new ProviderEvent(callback, eventName, uniqueId);
 			}

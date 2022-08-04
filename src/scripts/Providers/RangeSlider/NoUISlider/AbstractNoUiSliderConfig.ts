@@ -27,7 +27,6 @@ namespace Providers.RangeSlider.NoUiSlider {
 		 * @memberof AbstractNoUiSliderConfig
 		 */
 		protected getCommonProviderConfig(): NoUiSliderOptions {
-			// eslint-disable-next-line prefer-const
 			this._providerOptions = {
 				direction: OutSystems.OSUI.Utils.GetIsRTL()
 					? OSFramework.GlobalEnum.Direction.RTL

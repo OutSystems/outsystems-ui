@@ -78,5 +78,9 @@ namespace OSFramework.ErrorCodes {
 			code: 'OSUI-GEN-11002',
 			message: 'The event with this eventId does not exist',
 		},
+		FailProviderEventSet: {
+			code: 'OSUI-GEN-11002',
+			message: 'The provided eventName does not exist or is not supported by the provider',
+		},
 	};
 }

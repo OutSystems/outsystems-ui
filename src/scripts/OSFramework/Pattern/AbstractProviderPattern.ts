@@ -105,7 +105,11 @@ namespace OSFramework.Patterns {
 					? this.providerInfo.supportedConfigs.on(eventName, callback)
 					: this.providerInfo.supportedConfigs.off(eventName, callback);
 			} else {
-				throw Error(ErrorCodes.AbstractProviderPattern.FailProviderEventHandler);
+				throw new Error(
+					`${eventName}: ` + addEvent
+						? ErrorCodes.AbstractProviderPattern.FailProviderEventSet.message
+						: ErrorCodes.AbstractProviderPattern.FailProviderEventRemoval.message
+				);
 			}
 		}
 
