@@ -36,6 +36,20 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 			super.createProviderInstance(triggerEvent);
 		}
 
+		/**
+		 * Trigger the jumToDate to now and trigger the Now as a selected Date!
+		 *
+		 * @protected
+		 * @memberof Flatpickr.SingleDate
+		 */
+		protected todayBtnClick(event: MouseEvent): void {
+			event.preventDefault();
+			// Set the currentDate at the Datepicker
+			this.provider.setDate(this.provider.now, true);
+			// Trigger the jumpIntoDate!
+			super.jumpIntoToday();
+		}
+
 		public build(): void {
 			super.build();
 
