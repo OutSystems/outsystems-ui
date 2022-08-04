@@ -840,10 +840,9 @@ namespace OSFramework.Patterns.Tabs {
 				if (triggeredByObserver === false) {
 					this._scrollToTargetContent(newContentItem);
 				}
-
-				// Update active indicator
-				this._handleTabIndicator();
 			}
+			// Update active indicator
+			this._handleTabIndicator();
 
 			// Update configs
 			this.configs.StartingTab = newTabIndex;
