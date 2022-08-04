@@ -90,10 +90,12 @@ namespace OSFramework.Event.ProviderEvents {
 		public saveEvent(eventName: string, callback: GlobalCallbacks.Generic, uniqueId: string): void {
 			let _newEvent;
 
+			// If the event we are adding was already on the pending ones, get that one
 			if (this._pendingEventsMap.has(uniqueId)) {
 				_newEvent = this._pendingEventsMap.get(uniqueId);
 				this._pendingEventsMap.delete(uniqueId);
 			} else {
+				// Otherwise create a new one
 				_newEvent = new ProviderEvent(callback, eventName, uniqueId);
 			}
 
