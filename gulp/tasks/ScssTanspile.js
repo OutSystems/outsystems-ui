@@ -39,7 +39,7 @@ function scssTranspile(envMode) {
 			)
 			.pipe(
 				rename({
-					prefix: envMode + '-',
+					prefix: envMode + '.',
 				})
 			)
 			.pipe(sourcemaps.write('.'))
@@ -53,7 +53,7 @@ function scssTranspile(envMode) {
             }))
             .pipe(removeEmptyLines())
             .pipe(rename({
-                prefix: envMode + "-",
+                prefix: envMode + ".",
             }))
             .pipe(gulp.dest(distFolder));    
     }
