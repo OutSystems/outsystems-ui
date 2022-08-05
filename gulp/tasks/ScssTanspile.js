@@ -27,19 +27,23 @@ function scssTranspile(envMode) {
     let cssResult;
 
     if(envMode === envType.development) {
-        cssResult = gulp.src(watchScssThemes)
-            .pipe(sourcemaps.init())
-            .pipe(sass().on('error', sass.logError))
-            .pipe(postcss([postcssdc]))
-            .pipe(autoprefixer({
-                overrideBrowserslist: ['last 10 versions']
-            }))
-            .pipe(removeEmptyLines())
-            .pipe(rename({
-                prefix: envMode + "-",
-            }))
-            .pipe(sourcemaps.write("."))
-            .pipe(gulp.dest(distFolder));
+        cssResult = gulp
+			.src(watchScssThemes)
+			.pipe(sourcemaps.init())
+			.pipe(sass().on('error', sass.logError))
+			.pipe(postcss([postcssdc]))
+			.pipe(
+				autoprefixer({
+					overrideBrowserslist: ['last 10 versions'],
+				})
+			)
+			.pipe(
+				rename({
+					prefix: envMode + '-',
+				})
+			)
+			.pipe(sourcemaps.write('.'))
+			.pipe(gulp.dest(distFolder));
     } else {
         cssResult = gulp.src(watchScssThemes)
             .pipe(sass().on('error', sass.logError))
