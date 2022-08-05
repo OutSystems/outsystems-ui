@@ -77,7 +77,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			// Set the library options
 			const vsOptions = {
 				ele: this.ElementId,
-				dropboxWrapper: this.setDropboxWrapperConfig(this.ShowDropboxAsPopup),
+				dropboxWrapper: OSFramework.Constants.Dot + OSFramework.GlobalEnum.CssClassElements.Layout,
 				hideClearButton: false,
 				labelRenderer: this._getOptionInfo.bind(this),
 				noOptionsText: this.NoResultsText,
@@ -93,22 +93,10 @@ namespace Providers.Dropdown.VirtualSelect {
 				textDirection: OutSystems.OSUI.Utils.GetIsRTL()
 					? OSFramework.GlobalEnum.Direction.RTL
 					: OSFramework.GlobalEnum.Direction.LTR,
+				updatePositionThrottle: 0,
 			};
 
 			return vsOptions as VirtualSelectOpts;
-		}
-
-		/**
-		 * Method to set the dropboxWrapper config
-		 *
-		 * @param {boolean} showAsPopup
-		 * @return {*}  {string}
-		 * @memberof AbstractVirtualSelectConfig
-		 */
-		public setDropboxWrapperConfig(showAsPopup: boolean): string {
-			return showAsPopup && OSFramework.Helper.DeviceInfo.IsPhone
-				? Enum.DropboxWrapperOptions.Body
-				: Enum.DropboxWrapperOptions.Self;
 		}
 
 		// Override, Validate configs key values

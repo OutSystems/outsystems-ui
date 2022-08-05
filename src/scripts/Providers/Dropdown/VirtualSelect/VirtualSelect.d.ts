@@ -97,6 +97,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		tooltipAlignment: string;
 		tooltipFontSize: string;
 		tooltipMaxWidth: string;
+		updatePositionThrottle: number;
 		valueKey: string;
 		zIndex: number;
 	};
