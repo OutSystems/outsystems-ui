@@ -9,22 +9,23 @@ The namespaces should follow application directories, this way we should find fi
     ├── src                                     # Where the code lives
     |   ├── scripts                             # Contains the TS code (+ patterns partials) of the framework.
     |   |   ├── OSFramework                     # Internal code to orchestrate the usage of provider. **Should not** be invoked directly.
-    |   |   |   ├── Callbacks                   # Contains the callbacks signatures of the OutSystems code to be invoked.
+    |   |   |   ├── Behaviours                  # Contains the classes used to set/define pattern behaviours.
     |   |   |   ├── Event                       # Contains the classes related with event management.
+    |   |   |   |   └── GestureEvents           # Contains the classes related with gesture events.
     |   |   |   ├── Helper                      # Contains several classes that isolate behaviors and simplify the code.
     |   |   |   ├── Interface                   # Contains several generic interfaces to be used by different patterns.
     |   |   |   ├── Pattern                     # Contains the code (TS + SCSS partial) of each pattern of OutSystems UI - divided in folders with the pattern name.
     |   |   |   |   ├── Accordion
     |   |   |   |   ├── AccordionItem
     |   |   |   |   ├── AnimatedLabel
+    |   |   |   |   ├── BottomSheet
     |   |   |   |   ├── ButtonLoading
     |   |   |   |   ├── Carousel
     |   |   |   |   ├── DatePicker
     |   |   |   |   ├── Dropdown
     |   |   |   |   |   └── ServerSide
+    |   |   |   |   ├── DropdownServerSideItem
     |   |   |   |   ├── FlipContent
-    |   |   |   |   ├── FloatingActions
-    |   |   |   |   ├── FloatingActionsItem
     |   |   |   |   ├── Gallery
     |   |   |   |   ├── Notification
     |   |   |   |   ├── Progress
@@ -32,7 +33,6 @@ The namespaces should follow application directories, this way we should find fi
     |   |   |   |   |   └── Circle
     |   |   |   |   ├── RangeSlider
     |   |   |   |   ├── Rating
-    |   |   |   |   ├── Search
     |   |   |   |   ├── Sidebar
     |   |   |   |   ├── SubMenu
     |   |   |   |   ├── SwipeEvents
