@@ -29,11 +29,11 @@ namespace OSFramework.ErrorCodes {
 	};
 
 	export const DropdownServerSide = {
-		FailOnSetIntersectionObserver: 'OSUI-GEN-11001',
+		FailOnSetIntersectionObserver: 'OSUI-GEN-0401',
 	};
 
 	export const Notification = {
-		FailRegisterCallback: 'OSUI-GEN-03001',
+		FailRegisterCallback: 'OSUI-GEN-13001',
 	};
 
 	export const RangeSlider = {
@@ -79,7 +79,7 @@ namespace OSFramework.ErrorCodes {
 			message: 'The event with this eventId does not exist',
 		},
 		FailProviderEventSet: {
-			code: 'OSUI-GEN-11002',
+			code: 'OSUI-GEN-11003',
 			message: 'The provided eventName does not exist or is not supported by the provider',
 		},
 	};

@@ -94,8 +94,8 @@ declare global {
 		| VirtualSelect;
 
 	// RangeSlider
-	type RangeSliderProviderConfigs = NoUiSlider;
 	type NoUiSlider = noUiSlider;
+	type RangeSliderProviderConfigs = NoUiSlider;
 	type NoUiSliderOptions = noUiSliderOptions;
 	type NoUiSliderPipsMode = PipsMode;
 	type wNumb = WNumb;
