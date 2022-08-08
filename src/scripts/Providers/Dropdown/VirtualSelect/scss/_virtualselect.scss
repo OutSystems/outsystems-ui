@@ -328,6 +328,11 @@
 	border-radius: var(--border-radius-soft);
 	border: var(--border-size-s) solid var(--color-neutral-5);
 	overflow: hidden;
+
+	// This is an override in order to fix an issue when inside a AlignCenter pattern
+	.vscomp-dropbox-close-button {
+		display: none;
+	}
 }
 
 // Opptions container input search wrapper
