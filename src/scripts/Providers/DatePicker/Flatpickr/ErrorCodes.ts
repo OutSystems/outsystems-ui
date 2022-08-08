@@ -1,10 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.ErrorCodes {
+namespace Providers.Datepicker.Flatpickr {
 	/**
-	 * OutSystemsUI Providers Error Messages
+	 * OutSystemsUI Flatpickr Provider
 	 */
-
-	export const Flatpickr = {
+	export const ErrorCodes = {
 		FailSetLocale: 'OSUI-PRO-01001',
 	};
 }
