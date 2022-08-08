@@ -132,7 +132,7 @@ namespace OSFramework.Patterns {
 				version: undefined,
 				supportedConfigs: undefined,
 			};
-			super();
+			super.build();
 		}
 
 		/**

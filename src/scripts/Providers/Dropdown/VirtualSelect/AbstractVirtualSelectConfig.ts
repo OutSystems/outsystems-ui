@@ -98,7 +98,7 @@ namespace Providers.Dropdown.VirtualSelect {
 					? OSFramework.GlobalEnum.Direction.RTL
 					: OSFramework.GlobalEnum.Direction.LTR,
 				updatePositionThrottle: 0,
-			};
+			} as VirtualSelectOpts;
 
 			return this.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
 		}
