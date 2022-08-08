@@ -307,7 +307,6 @@ namespace Providers.Dropdown.VirtualSelect {
 		public togglePopup(isEnabled: boolean): void {
 			if (this.configs.ShowDropboxAsPopup !== isEnabled) {
 				this.configs.ShowDropboxAsPopup = isEnabled;
-				this.configs.setDropboxWrapperConfig(isEnabled);
 				this.redraw();
 			}
 		}

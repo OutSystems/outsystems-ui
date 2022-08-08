@@ -1,5 +1,5 @@
 /*!
- * Virtual Select v1.0.29
+ * Virtual Select v1.0.31
  * https://sa-si-dev.github.io/virtual-select
  * Licensed under MIT (https://github.com/sa-si-dev/virtual-select/blob/master/LICENSE)
  */
@@ -85,7 +85,7 @@
 
 .vscomp-arrow::after {
 	transform: rotate(45deg);
-	border: 1px solid transparent;
+	border: 1px solid rgba(0, 0, 0, 0);
 	border-bottom-color: #111;
 	border-right-color: #111;
 	content: '';
@@ -218,7 +218,7 @@
 }
 
 .vscomp-option.group-title.selected {
-	background-color: transparent;
+	background-color: rgba(0, 0, 0, 0);
 }
 
 .vscomp-option.group-option {
@@ -235,8 +235,8 @@
 
 .vscomp-new-option-icon::before {
 	border: 15px solid #512da8;
-	border-bottom-color: transparent;
-	border-left-color: transparent;
+	border-bottom-color: rgba(0, 0, 0, 0);
+	border-left-color: rgba(0, 0, 0, 0);
 	content: '';
 	position: absolute;
 	right: 0;
@@ -288,7 +288,7 @@
 }
 
 .vscomp-search-input {
-	background-color: transparent;
+	background-color: rgba(0, 0, 0, 0);
 	border: 0;
 	color: inherit;
 	font-size: 15px;
@@ -381,10 +381,11 @@
 .vscomp-wrapper .checkbox-icon.checked::after {
 	transform: rotate(45deg) translate(1px, -4px);
 	border-color: #512da8;
-	border-left-color: transparent;
-	border-top-color: transparent;
+	border-left-color: rgba(0, 0, 0, 0);
+	border-top-color: rgba(0, 0, 0, 0);
 	width: 50%;
 }
+
 .vscomp-wrapper.show-as-popup .vscomp-dropbox-container {
 	align-items: center;
 	background-color: rgba(0, 0, 0, 0.5);
@@ -454,8 +455,8 @@
 .vscomp-wrapper.multiple .vscomp-option.selected .checkbox-icon::after {
 	transform: rotate(45deg) translate(1px, -4px);
 	border-color: #512da8;
-	border-left-color: transparent;
-	border-top-color: transparent;
+	border-left-color: rgba(0, 0, 0, 0);
+	border-top-color: rgba(0, 0, 0, 0);
 	width: 50%;
 }
 
@@ -625,6 +626,7 @@
 .vscomp-wrapper.text-direction-rtl {
 	direction: rtl;
 }
+
 .vscomp-wrapper.text-direction-rtl .vscomp-toggle-button {
 	padding: 7px 10px 7px 30px;
 }
@@ -643,6 +645,7 @@
 	margin-left: 10px;
 	margin-right: 0;
 }
+
 .vscomp-wrapper.text-direction-rtl .checkbox-icon.checked::after {
 	transform: rotate(45deg) translate(-4px, 1px);
 }
@@ -650,6 +653,7 @@
 .vscomp-wrapper.text-direction-rtl .vscomp-search-container {
 	padding: 0 15px 0 5px;
 }
+
 .vscomp-wrapper.text-direction-rtl .vscomp-toggle-all-label {
 	text-align: right;
 }
@@ -669,7 +673,7 @@
 
 .vscomp-wrapper.text-direction-rtl .vscomp-new-option-icon::before {
 	border-left-color: #512da8;
-	border-right-color: transparent;
+	border-right-color: rgba(0, 0, 0, 0);
 }
 
 .vscomp-wrapper.text-direction-rtl .vscomp-new-option-icon::after {
@@ -711,10 +715,10 @@
 }
 
 /*!
-  * Popover v1.0.7
-  * https://sa-si-dev.github.io/popover
-  * Licensed under MIT (https://github.com/sa-si-dev/popover/blob/master/LICENSE)
-  */
+ * Popover v1.0.10
+ * https://sa-si-dev.github.io/popover
+ * Licensed under MIT (https://github.com/sa-si-dev/popover/blob/master/LICENSE)
+ */
 .pop-comp-wrapper {
 	display: none;
 	position: absolute;
@@ -757,29 +761,29 @@
 	z-index: 2;
 }
 
-.pop-comp-wrapper.position-bottom .pop-comp-arrow {
+.pop-comp-wrapper.position-bottom > .pop-comp-arrow {
 	margin-left: -8px;
 	left: 0;
 	top: -15px;
 }
 
-.pop-comp-wrapper.position-bottom .pop-comp-arrow::before {
+.pop-comp-wrapper.position-bottom > .pop-comp-arrow::before {
 	box-shadow: 0px 0px 2px 0 rgba(0, 0, 0, 0.14);
 }
 
-.pop-comp-wrapper.position-top .pop-comp-arrow {
+.pop-comp-wrapper.position-top > .pop-comp-arrow {
 	margin-left: -8px;
 	left: 0;
 	bottom: -15px;
 }
 
-.pop-comp-wrapper.position-right .pop-comp-arrow {
+.pop-comp-wrapper.position-right > .pop-comp-arrow {
 	margin-top: -8px;
 	top: 0;
 	left: -15px;
 }
 
-.pop-comp-wrapper.position-left .pop-comp-arrow {
+.pop-comp-wrapper.position-left > .pop-comp-arrow {
 	margin-top: -8px;
 	top: 0;
 	right: -15px;
