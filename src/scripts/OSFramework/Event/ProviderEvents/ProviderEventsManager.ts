@@ -59,7 +59,9 @@ namespace OSFramework.Event.ProviderEvents {
 			if (event) {
 				this._pendingEventsMap.delete(uniqueId);
 			} else {
-				throw new Error(ErrorCodes.ProviderEventsManager.FailEventRemoval);
+				throw new Error(
+					`${ErrorCodes.ProviderEventsManager.FailPendingEventRemoval}: The event with eventId:'${uniqueId}' does not exist`
+				);
 			}
 		}
 
@@ -75,7 +77,9 @@ namespace OSFramework.Event.ProviderEvents {
 			if (event) {
 				this._eventsMap.delete(uniqueId);
 			} else {
-				throw new Error(ErrorCodes.ProviderEventsManager.FailEventRemoval);
+				throw new Error(
+					`${ErrorCodes.ProviderEventsManager.FailSavedEventRemoval}: The event with eventId:'${uniqueId}' does not exist`
+				);
 			}
 		}
 
@@ -88,7 +92,7 @@ namespace OSFramework.Event.ProviderEvents {
 		 * @memberof ProviderEventsManager
 		 */
 		public saveEvent(eventName: string, callback: GlobalCallbacks.Generic, uniqueId: string): void {
-			let _newEvent;
+			let _newEvent: IProviderEvent;
 
 			// If the event we are adding was already on the pending ones, get that one
 			if (this._pendingEventsMap.has(uniqueId)) {
