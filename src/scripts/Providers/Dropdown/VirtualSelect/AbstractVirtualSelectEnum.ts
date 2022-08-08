@@ -18,11 +18,6 @@ namespace Providers.Dropdown.VirtualSelect.Enum {
 		OptionItemImage = 'osui-dropdown-option-image',
 	}
 
-	export enum DropboxWrapperOptions {
-		Body = 'body',
-		Self = 'self',
-	}
-
 	/**
 	 * Events
 	 */
