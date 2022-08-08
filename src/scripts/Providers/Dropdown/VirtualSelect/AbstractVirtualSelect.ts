@@ -4,6 +4,8 @@ namespace Providers.Dropdown.VirtualSelect {
 		extends OSFramework.Patterns.Dropdown.AbstractDropdown<VirtualSelect, C>
 		implements IVirtualSelect
 	{
+		// Store the onResize event
+		private _eventOnWindowResize: OSFramework.GlobalCallbacks.Generic;
 		// Dropdown callback events
 		private _onSelectedOptionEvent: OSFramework.GlobalCallbacks.Generic;
 		private _platformEventInitializedCallback: OSFramework.GlobalCallbacks.OSGeneric;
@@ -70,6 +72,13 @@ namespace Providers.Dropdown.VirtualSelect {
 			);
 		}
 
+		// Close the dropdown if it's open!
+		private _onWindowResize() {
+			if (this.provider.isOpened()) {
+				this._virtualselectMethods.close();
+			}
+		}
+
 		// Set the ElementId that is expected from VirtualSelect config
 		private _setElementId(): void {
 			// Store the ElementId where the provider will create the Dropdown
@@ -80,11 +89,26 @@ namespace Providers.Dropdown.VirtualSelect {
 		private _setUpEvents(): void {
 			// Add the event that will get the selected options values
 			this._selfElem.addEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
+
+			if (OSFramework.Helper.DeviceInfo.IsDesktop) {
+				// Set the WindowResize in order to close it if it's open!
+				OSFramework.Event.GlobalEventManager.Instance.addHandler(
+					OSFramework.Event.Type.WindowResize,
+					this._eventOnWindowResize
+				);
+			}
 		}
 
 		// Remove Pattern Events
 		private _unsetEvents(): void {
 			this._selfElem.removeEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
+
+			if (OSFramework.Helper.DeviceInfo.IsDesktop) {
+				OSFramework.Event.GlobalEventManager.Instance.removeHandler(
+					OSFramework.Event.Type.WindowResize,
+					this._eventOnWindowResize
+				);
+			}
 		}
 
 		/**
@@ -135,7 +159,8 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * @memberof AbstractVirtualSelect
 		 */
 		protected setCallbacks(): void {
-			// Set the event callback reference
+			// Set the events callback reference
+			this._eventOnWindowResize = this._onWindowResize.bind(this);
 			this._onSelectedOptionEvent = this._onSelectedOption.bind(this);
 		}
 
@@ -146,6 +171,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * @memberof AbstractVirtualSelect
 		 */
 		protected unsetCallbacks(): void {
+			this._eventOnWindowResize = undefined;
 			this._onSelectedOptionEvent = undefined;
 			this._virtualselectMethods = undefined;
 			this._virtualselectOpts = undefined;
