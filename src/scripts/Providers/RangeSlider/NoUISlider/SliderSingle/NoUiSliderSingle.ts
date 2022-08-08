@@ -15,7 +15,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 
 			this.configs.StartingValueFrom = value as number;
 
-			super.updateRangeSlider();
+			this.updateRangeSlider();
 		}
 
 		// Handler to trigger the OnValueChange event
@@ -46,7 +46,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 			this.providerOptions = this.configs.getProviderConfig();
 
 			// Instance will be Created!
-			super.createProviderInstance();
+			this.createProviderInstance();
 		}
 
 		/**
