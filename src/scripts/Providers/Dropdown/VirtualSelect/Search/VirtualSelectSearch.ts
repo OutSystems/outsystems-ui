@@ -42,7 +42,7 @@ namespace Providers.Dropdown.VirtualSelect.Search {
 			this._virtualselectOpts = this.configs.getProviderConfig();
 
 			// Instance will be Created!
-			super.createProviderInstance(triggerEvent);
+			this.createProviderInstance(triggerEvent);
 		}
 
 		/**

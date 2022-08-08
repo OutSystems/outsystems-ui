@@ -52,7 +52,7 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 			this.providerOptions = this.configs.getProviderConfig();
 
 			// Instance will be Created!
-			super.createProviderInstance();
+			this.createProviderInstance();
 		}
 
 		/**

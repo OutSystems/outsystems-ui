@@ -25,8 +25,8 @@ namespace OSFramework.Event.GestureEvent {
 			onMoveCallback: Event.GestureEvent.Callbacks.GestureMove,
 			onEndCallback?: Event.GestureEvent.Callbacks.GestureEnd
 		): void {
-			super.setCallbacks(onStartCallback, onMoveCallback, onEndCallback);
-			super.setEventListeners();
+			this.setCallbacks(onStartCallback, onMoveCallback, onEndCallback);
+			this.setEventListeners();
 		}
 	}
 }

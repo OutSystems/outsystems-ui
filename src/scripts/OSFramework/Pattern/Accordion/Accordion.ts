@@ -80,7 +80,7 @@ namespace OSFramework.Patterns.Accordion {
 
 			this.setA11YProperties();
 
-			super.finishBuild();
+			this.finishBuild();
 		}
 
 		/**

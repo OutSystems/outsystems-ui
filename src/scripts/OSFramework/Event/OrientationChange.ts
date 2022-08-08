@@ -21,7 +21,7 @@ namespace OSFramework.Event {
 		}
 
 		private _orientationTrigger(evt: OrientationChange): void {
-			super.trigger(GlobalEnum.HTMLEvent.OrientationChange, evt);
+			this.trigger(GlobalEnum.HTMLEvent.OrientationChange, evt);
 		}
 	}
 }

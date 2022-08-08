@@ -146,7 +146,7 @@ namespace Providers.Datepicker.Flatpickr {
 				this._providerOptions.locale = this._checkLocale();
 			}
 
-			return super.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
+			return this.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
 		}
 
 		/**

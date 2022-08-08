@@ -31,7 +31,7 @@ namespace Providers.Dropdown.VirtualSelect.Tags {
 			this._virtualselectOpts = this.configs.getProviderConfig();
 
 			// Instance will be Created!
-			super.createProviderInstance(triggerEvent);
+			this.createProviderInstance(triggerEvent);
 		}
 	}
 }

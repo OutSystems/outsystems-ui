@@ -90,7 +90,7 @@ namespace Providers.RangeSlider.NoUISlider {
 			this.provider = window.noUiSlider.create(this._rangeSliderProviderElem, this.providerOptions);
 
 			// Set provider Info to be used by setProviderConfigs API calls
-			super.updateProviderEvents({
+			this.updateProviderEvents({
 				name: RangeSlider.NoUiSlider.Enum.ProviderInfo.Name,
 				version: RangeSlider.NoUiSlider.Enum.ProviderInfo.Version,
 				supportedConfigs: this.provider,

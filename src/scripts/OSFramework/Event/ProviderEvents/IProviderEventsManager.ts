@@ -4,8 +4,8 @@ namespace OSFramework.Event.ProviderEvents {
 		eventsMap: Map<string, IProviderEvent>;
 		pendingEventsMap: Map<string, IProviderEvent>;
 		addPendingEvent(eventName: string, callback: GlobalCallbacks.Generic, uniqueId: string): void;
-		hasEvents(): boolean;
-		hasPendingEvents(): boolean;
+		get hasEvents(): boolean;
+		get hasPendingEvents(): boolean;
 		removePendingEvent(uniqueId: string): void;
 		removeSavedEvent(uniqueId: string): void;
 		saveEvent(eventName: string, callback: GlobalCallbacks.Generic, uniqueId: string): void;

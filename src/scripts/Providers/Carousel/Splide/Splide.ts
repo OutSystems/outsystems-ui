@@ -71,7 +71,7 @@ namespace Providers.Splide {
 			this._provider = new window.Splide(this._carouselProviderElem, this._providerOptions);
 
 			// Set provider Info to be used by setProviderConfigs API calls
-			super.updateProviderEvents({
+			this.updateProviderEvents({
 				name: Enum.ProviderInfo.Name,
 				version: Enum.ProviderInfo.Version,
 				supportedConfigs: this.provider,

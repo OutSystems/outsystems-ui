@@ -31,7 +31,7 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 			// Merge both option objects => if objects have a property with the same name, then the right-most object property overwrites the previous one
 			// eslint-disable-next-line prefer-const
 			let fpOptions = {
-				...super.getCommonProviderConfigs(),
+				...this.getCommonProviderConfigs(),
 				...flatpickrSingleDateOpts,
 			};
 

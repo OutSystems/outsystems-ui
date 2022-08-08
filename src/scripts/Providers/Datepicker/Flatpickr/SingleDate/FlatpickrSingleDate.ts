@@ -33,7 +33,7 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 			this._flatpickrOpts = this.configs.getProviderConfig();
 
 			// Instance will be Created!
-			super.createProviderInstance(triggerEvent);
+			this.createProviderInstance(triggerEvent);
 		}
 
 		/**
@@ -47,7 +47,7 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 			// Set the currentDate at the Datepicker
 			this.provider.setDate(this.provider.now, true);
 			// Trigger the jumpIntoDate!
-			super.jumpIntoToday();
+			this.jumpIntoToday();
 		}
 
 		public build(): void {

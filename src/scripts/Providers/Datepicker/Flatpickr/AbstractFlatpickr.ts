@@ -102,7 +102,7 @@ namespace Providers.Datepicker.Flatpickr {
 			this.provider = window.flatpickr(this._datePickerProviderInputElem, this._flatpickrOpts);
 
 			// Set provider Info to be used by setProviderConfigs API calls
-			super.updateProviderEvents({
+			this.updateProviderEvents({
 				name: Enum.ProviderInfo.Name,
 				version: Enum.ProviderInfo.Version,
 				supportedConfigs: this.provider.config,

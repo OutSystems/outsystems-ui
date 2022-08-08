@@ -106,7 +106,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			this.provider.$dropboxContainer.setAttribute(OSFramework.GlobalEnum.HTMLAttributes.Name, this.uniqueId);
 
 			// Set provider Info to be used by setProviderConfigs API calls
-			super.updateProviderEvents({
+			this.updateProviderEvents({
 				name: Enum.ProviderInfo.Name,
 				version: Enum.ProviderInfo.Version,
 				supportedConfigs: this.provider.$ele,
@@ -171,7 +171,7 @@ namespace Providers.Dropdown.VirtualSelect {
 
 			this.prepareConfigs();
 
-			super.finishBuild();
+			this.finishBuild();
 		}
 
 		/**

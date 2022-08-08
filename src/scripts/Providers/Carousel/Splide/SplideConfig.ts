@@ -91,7 +91,7 @@ namespace Providers.Splide {
 				start: this.StartingPosition,
 			};
 
-			return super.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
+			return this.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
 		}
 
 		/**

@@ -18,7 +18,7 @@ namespace OSFramework.Event {
 		private _windowTrigger(evt: WindowResize): void {
 			window.clearTimeout(this._timeout);
 			this._timeout = window.setTimeout(() => {
-				super.trigger(GlobalEnum.HTMLEvent.Resize, evt);
+				this.trigger(GlobalEnum.HTMLEvent.Resize, evt);
 			}, 100);
 		}
 	}

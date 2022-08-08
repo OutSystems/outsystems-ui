@@ -78,7 +78,7 @@ namespace OSFramework.Event.GestureEvent {
 			this._swipeRightCallback = swipeRightCallback;
 			this._swipeUpCallback = swipeUpCallback;
 
-			super.setCallbacks(undefined, undefined, this._onGestureEnd);
+			this.setCallbacks(undefined, undefined, this._onGestureEnd);
 		}
 
 		/**
@@ -97,7 +97,7 @@ namespace OSFramework.Event.GestureEvent {
 			swipeUpCallback: Event.GestureEvent.Callbacks.SwipeUp
 		): void {
 			this.setSwipeCallbacks(swipeDownCallback, swipeLeftCallback, swipeRightCallback, swipeUpCallback);
-			super.setEventListeners();
+			this.setEventListeners();
 		}
 	}
 }

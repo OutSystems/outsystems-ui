@@ -99,7 +99,7 @@ namespace Providers.Dropdown.VirtualSelect {
 					: OSFramework.GlobalEnum.Direction.LTR,
 			} as VirtualSelectOpts;
 
-			return super.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
+			return this.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
 		}
 
 		/**

@@ -6,14 +6,6 @@ namespace OSFramework.Event.ProviderEvents {
 		// Map with the pending events to be added when provider is available
 		private _pendingEventsMap = new Map<string, IProviderEvent>();
 
-		public get eventsMap(): Map<string, IProviderEvent> {
-			return this._eventsMap;
-		}
-
-		public get pendingEventsMap(): Map<string, IProviderEvent> {
-			return this._pendingEventsMap;
-		}
-
 		/**
 		 * Method to add a pending event
 		 *
@@ -25,26 +17,6 @@ namespace OSFramework.Event.ProviderEvents {
 		public addPendingEvent(eventName: string, callback: GlobalCallbacks.Generic, uniqueId: string): void {
 			const newEvent = new ProviderEvent(callback, eventName, uniqueId);
 			this._pendingEventsMap.set(uniqueId, newEvent);
-		}
-
-		/**
-		 * Method to check if there're saved events
-		 *
-		 * @return {*}  {boolean}
-		 * @memberof ProviderEventsManager
-		 */
-		public hasEvents(): boolean {
-			return this._eventsMap.size > 0;
-		}
-
-		/**
-		 * Method to check if there're pending events
-		 *
-		 * @return {*}  {boolean}
-		 * @memberof ProviderEventsManager
-		 */
-		public hasPendingEvents(): boolean {
-			return this._pendingEventsMap.size > 0;
 		}
 
 		/**
@@ -104,6 +76,47 @@ namespace OSFramework.Event.ProviderEvents {
 			}
 
 			this._eventsMap.set(uniqueId, _newEvent);
+		}
+
+		/**
+		 * Get all the existing events
+		 *
+		 * @type {Map<string, IProviderEvent>}
+		 * @memberof ProviderEventsManager
+		 */
+		public get eventsMap(): Map<string, IProviderEvent> {
+			return this._eventsMap;
+		}
+
+		/**
+		 * Get all the existing pending events
+		 *
+		 * @readonly
+		 * @type {Map<string, IProviderEvent>}
+		 * @memberof ProviderEventsManager
+		 */
+		public get pendingEventsMap(): Map<string, IProviderEvent> {
+			return this._pendingEventsMap;
+		}
+
+		/**
+		 * Check if there're saved events
+		 *
+		 * @return {*}  {boolean}
+		 * @memberof ProviderEventsManager
+		 */
+		public get hasEvents(): boolean {
+			return this._eventsMap.size > 0;
+		}
+
+		/**
+		 * Check if there're pending events
+		 *
+		 * @return {*}  {boolean}
+		 * @memberof ProviderEventsManager
+		 */
+		public get hasPendingEvents(): boolean {
+			return this._pendingEventsMap.size > 0;
 		}
 	}
 }
