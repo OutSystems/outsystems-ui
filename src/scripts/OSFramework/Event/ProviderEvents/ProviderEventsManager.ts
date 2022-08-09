@@ -15,6 +15,13 @@ namespace OSFramework.Event.ProviderEvents {
 		 * @memberof ProviderEventsManager
 		 */
 		public addPendingEvent(eventName: string, callback: GlobalCallbacks.Generic, uniqueId: string): void {
+			// Check if we've everything needed to store the event
+			if (eventName === '' || callback === undefined || uniqueId === '') {
+				throw new Error(
+					`${ErrorCodes.ProviderEventsManager.FailSavingPendingEvent}: The event can not be saved.`
+				);
+			}
+
 			const newEvent = new ProviderEvent(callback, eventName, uniqueId);
 			this._pendingEventsMap.set(uniqueId, newEvent);
 		}
@@ -64,6 +71,11 @@ namespace OSFramework.Event.ProviderEvents {
 		 * @memberof ProviderEventsManager
 		 */
 		public saveEvent(eventName: string, callback: GlobalCallbacks.Generic, uniqueId: string): void {
+			// Check if we've everything needed to store the event
+			if (eventName === '' || callback === undefined || uniqueId === '') {
+				throw new Error(`${ErrorCodes.ProviderEventsManager.FailSavingEvent}: The event can not be saved.`);
+			}
+
 			let _newEvent: IProviderEvent;
 
 			// If the event we are adding was already on the pending ones, get that one

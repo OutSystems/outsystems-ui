@@ -85,7 +85,9 @@ namespace OSFramework.ErrorCodes {
 	};
 
 	export const ProviderEventsManager = {
-		FailSavedEventRemoval: 'OSUI-GEN-12001',
-		FailPendingEventRemoval: 'OSUI-GEN-12002',
+		FailPendingEventRemoval: 'OSUI-GEN-12001',
+		FailSavingPendingEvent: 'OSUI-GEN-12002',
+		FailSavedEventRemoval: 'OSUI-GEN-12003',
+		FailSavingEvent: 'OSUI-GEN-12004',
 	};
 }
