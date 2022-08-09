@@ -125,7 +125,6 @@ namespace OSFramework.Patterns {
 		protected triggerPlatformEventInitialized(platFormCallback: GlobalCallbacks.OSGeneric): void {
 			// Ensure it's only be trigger the first time!
 			if (this.isBuilt === false) {
-				console.log('triggerPlatformEventInitialized', this.uniqueId);
 				Helper.AsyncInvocation(platFormCallback, this.widgetId);
 			}
 		}

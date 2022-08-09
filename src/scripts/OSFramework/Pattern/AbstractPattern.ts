@@ -162,8 +162,6 @@ namespace OSFramework.Patterns {
 		protected finishBuild(): void {
 			//In the future we can trigger an initialized event.
 			this._isBuilt = true;
-
-			console.log('finishBuild', this.uniqueId);
 		}
 
 		/**
