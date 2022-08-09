@@ -91,14 +91,11 @@ namespace Providers.RangeSlider.NoUISlider {
 				supportedConfigs: this.provider,
 			});
 
-			// Ensure it's only be trigger the first time!
-			if (this.isBuilt === false) {
-				// Trigger platform's OnInitialize event (done by us, the library doesn't have a 'mount' event)
-				OSFramework.Helper.AsyncInvocation(this.platformEventInitialize, this.widgetId);
-			}
-
 			// Set OnValueChange event
 			this._setOnValueChangeEvent(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Slide);
+
+			// Trigger platform's InstanceIntializedHandler client Action
+			this.triggerPlatformEventInitialized(this.platformEventInitialize);
 		}
 
 		/**
