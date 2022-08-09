@@ -121,6 +121,15 @@ namespace OSFramework.Patterns {
 			}
 		}
 
+		// Trigger platform's InstanceIntializedHandler client Action
+		protected triggerPlatformEventInitialized(platFormCallback: GlobalCallbacks.OSGeneric): void {
+			// Ensure it's only be trigger the first time!
+			if (this.isBuilt === false) {
+				console.log('triggerPlatformEventInitialized', this.uniqueId);
+				Helper.AsyncInvocation(platFormCallback, this.widgetId);
+			}
+		}
+
 		/**
 		 * Method to build the pattern
 		 *
