@@ -144,7 +144,6 @@ namespace Providers.Dropdown.VirtualSelect {
 
 			// Ensure it's only be trigger the first time!
 			if (this.isBuilt === false) {
-				console.log('_platformEventInitializedCallback', this.uniqueId);
 				// Trigger platform's InstanceIntializedHandler client Action
 				OSFramework.Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
 			}

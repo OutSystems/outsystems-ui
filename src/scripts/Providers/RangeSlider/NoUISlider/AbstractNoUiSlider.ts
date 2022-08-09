@@ -38,11 +38,6 @@ namespace Providers.RangeSlider.NoUISlider {
 			}
 		}
 
-		// Method to set the OnInitializeEvent
-		private _setOnInitializedEvent(): void {
-			OSFramework.Helper.AsyncInvocation(this.platformEventInitialize, this.widgetId);
-		}
-
 		// Method to set the OnValueChangeEvent
 		private _setOnValueChangeEvent(changeEvent: RangeSlider.NoUiSlider.Enum.NoUISliderEvents): void {
 			this.provider.on(changeEvent, this.eventProviderValueChanged);
@@ -82,7 +77,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * @private
 		 * @memberof OSUINoUiSlider
 		 */
-		protected createProviderInstance(triggerEvent = true): void {
+		protected createProviderInstance(): void {
 			// Set inital library options
 			this.setInitialStates();
 
@@ -96,9 +91,10 @@ namespace Providers.RangeSlider.NoUISlider {
 				supportedConfigs: this.provider,
 			});
 
-			if (triggerEvent) {
+			// Ensure it's only be trigger the first time!
+			if (this.isBuilt === false) {
 				// Trigger platform's OnInitialize event (done by us, the library doesn't have a 'mount' event)
-				this._setOnInitializedEvent();
+				OSFramework.Helper.AsyncInvocation(this.platformEventInitialize, this.widgetId);
 			}
 
 			// Set OnValueChange event
@@ -196,7 +192,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		protected updateRangeSlider(): void {
 			this.provider.destroy();
 			this.providerOptions = this.configs.getProviderConfig();
-			this.createProviderInstance(false);
+			this.createProviderInstance();
 			this.setInitialCSSClasses();
 		}
 
