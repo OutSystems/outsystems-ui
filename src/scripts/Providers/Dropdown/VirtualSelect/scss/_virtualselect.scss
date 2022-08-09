@@ -2,6 +2,14 @@
 // Import VirtualSelect library styles
 @import 'virtualselect_lib';
 
+// Set the transform values to checkBox Checked Icon
+@mixin CheckBoxCheckIconTransform {
+	transform: rotate(45deg) translate(3px, -3px);
+}
+@mixin IsRTL_CheckBoxCheckIconTransform {
+	transform: rotate(45deg) translate(-2px, 3px);
+}
+
 // VirtualSelect overriding styles
 // Parent wrapper container
 .vscomp-ele {
@@ -67,7 +75,7 @@
 						border-top-color: transparent;
 						height: 80%;
 						opacity: 1;
-						transform: rotate(45deg) translate(3px, -3px);
+						@include CheckBoxCheckIconTransform;
 						width: 45%;
 					}
 				}
@@ -182,7 +190,7 @@
 				&.selected {
 					.checkbox-icon {
 						&:after {
-							transform: rotate(45deg) translate(-2px, 2px);
+							@include IsRTL_CheckBoxCheckIconTransform;
 						}
 					}
 				}
@@ -231,7 +239,7 @@
 
 			&.checked {
 				&:after {
-					transform: rotate(45deg) translate(-2px, 2px);
+					@include IsRTL_CheckBoxCheckIconTransform;
 				}
 			}
 		}
@@ -267,7 +275,7 @@
 				border-top-color: transparent;
 				height: 80%;
 				opacity: 1;
-				transform: rotate(45deg) translate(3px, -3px);
+				@include CheckBoxCheckIconTransform;
 				width: 45%;
 			}
 		}
