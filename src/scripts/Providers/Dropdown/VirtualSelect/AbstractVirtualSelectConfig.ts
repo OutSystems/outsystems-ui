@@ -86,19 +86,19 @@ namespace Providers.Dropdown.VirtualSelect {
 				labelRenderer: this._getOptionInfo.bind(this),
 				noOptionsText: this.NoResultsText,
 				noSearchResultsText: this.NoResultsText,
-				options: this.OptionsList,
+				options: this.OptionsList as [],
 				placeholder: this.Prompt,
 				search: true,
 				searchPlaceholderText: this.SearchPrompt,
 				selectAllOnlyVisible: true,
-				selectedValue: this._getSelectedValues(),
+				selectedValue: this._getSelectedValues() as [],
 				showDropboxAsPopup: this.ShowDropboxAsPopup,
 				silentInitialValueSet: true,
 				textDirection: OutSystems.OSUI.Utils.GetIsRTL()
 					? OSFramework.GlobalEnum.Direction.RTL
 					: OSFramework.GlobalEnum.Direction.LTR,
 				updatePositionThrottle: 0,
-			} as VirtualSelectOpts;
+			};
 
 			return this.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
 		}
