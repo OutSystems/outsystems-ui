@@ -14,7 +14,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		private _rangeSliderProviderElem: HTMLElement;
 		// RangeSlider events
 		protected eventProviderValueChanged: OSFramework.GlobalCallbacks.Generic;
-		protected platformEventInitialize: OSFramework.GlobalCallbacks.Generic;
+		protected platformEventInitialize: OSFramework.GlobalCallbacks.OSGeneric;
 		protected platformEventValueChange: OSFramework.Patterns.RangeSlider.Callbacks.OSOnValueChangeEvent;
 		// Store the provider options
 		protected providerOptions: NoUiSliderOptions;

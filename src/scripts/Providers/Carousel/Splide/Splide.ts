@@ -27,7 +27,7 @@ namespace Providers.Splide {
 		// Store if a List widget is used inside the CarouselItems placeholder
 		private _hasList: boolean;
 		// Store the onInitialized event
-		private _platformEventInitialized: OSFramework.GlobalCallbacks.Generic;
+		private _platformEventInitialized: OSFramework.GlobalCallbacks.OSGeneric;
 		// Store the onSlideMoved event
 		private _platformEventOnSlideMoved: OSFramework.Patterns.Carousel.Callbacks.OSOnSlideMovedEvent;
 		// Store initial provider options
