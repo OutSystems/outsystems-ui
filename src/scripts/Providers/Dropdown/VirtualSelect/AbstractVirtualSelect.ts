@@ -117,7 +117,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * @protected
 		 * @memberof AbstractVirtualSelect
 		 */
-		protected createProviderInstance(triggerEvent: boolean): void {
+		protected createProviderInstance(): void {
 			// Create the provider instance
 			this.provider = window.VirtualSelect.init(this._virtualselectOpts);
 
@@ -142,8 +142,10 @@ namespace Providers.Dropdown.VirtualSelect {
 			// Add attributes to the element if needed
 			this._manageAttributes();
 
-			// Trigger platform's InstanceIntializedHandler client Action
-			if (triggerEvent) {
+			// Ensure it's only be trigger the first time!
+			if (this.isBuilt === false) {
+				console.log('_platformEventInitializedCallback', this.uniqueId);
+				// Trigger platform's InstanceIntializedHandler client Action
 				OSFramework.Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
 			}
 		}
@@ -154,12 +156,12 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * @protected
 		 * @memberof AbstractVirtualSelect
 		 */
-		protected redraw(triggerEvent = false): void {
+		protected redraw(): void {
 			// Destroy the old VirtualSelect instance
 			this.provider.destroy();
 
 			// Create a new VirtualSelect instance with the updated configs
-			OSFramework.Helper.AsyncInvocation(this.prepareConfigs.bind(this), triggerEvent);
+			OSFramework.Helper.AsyncInvocation(this.prepareConfigs.bind(this));
 		}
 
 		/**
