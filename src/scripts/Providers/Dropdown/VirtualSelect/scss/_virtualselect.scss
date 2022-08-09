@@ -238,7 +238,7 @@
 		border: var(--border-size-s) solid var(--color-neutral-5);
 		height: 16px;
 		margin-right: var(--space-s);
-		overflow: hidden;
+		overflow: visible;
 		transition: background-color 0.25s ease;
 		width: 16px;
 
