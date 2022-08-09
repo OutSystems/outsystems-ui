@@ -53,12 +53,12 @@ namespace Providers.Splide {
 		}
 
 		// Method that encapsulates all methods needed to create a new Carousel
-		private _createProviderCarousel(triggerInitialize = true): void {
+		private _createProviderCarousel(): void {
 			// Call the following methods here, so that all DOM elements are iterated and ready to init the library
 			this._prepareCarouselItems();
 			this._providerOptions = this.configs.getProviderConfig();
 			// Init the Library
-			this._initProvider(triggerInitialize);
+			this._initProvider();
 		}
 
 		// Method to toggle the blockRender status, to avoid multiple renderings triggering changeProperty
@@ -67,7 +67,7 @@ namespace Providers.Splide {
 		}
 
 		// Method to init the provider
-		private _initProvider(triggerInitialize = true): void {
+		private _initProvider(): void {
 			this._provider = new window.Splide(this._carouselProviderElem, this._providerOptions);
 
 			// Set provider Info to be used by setProviderConfigs API calls
@@ -77,10 +77,9 @@ namespace Providers.Splide {
 				supportedConfigs: this.provider,
 			});
 
-			if (triggerInitialize) {
-				// Set the OnInitialized event, before the provider is mounted
-				this._setOnInitializedEvent();
-			}
+			// Set the OnInitialized event, before the provider is mounted
+			this._setOnInitializedEvent();
+
 			// Init the provider
 			this._provider.mount();
 
@@ -121,9 +120,11 @@ namespace Providers.Splide {
 
 		// Method to set the OnInitializeEvent
 		private _setOnInitializedEvent(): void {
-			this._provider.on(Enum.SpliderEvents.Mounted, () => {
-				OSFramework.Helper.AsyncInvocation(this._platformEventInitialized, this.widgetId);
-			});
+			if (this.isBuilt === false) {
+				this._provider.on(Enum.SpliderEvents.Mounted, () => {
+					OSFramework.Helper.AsyncInvocation(this._platformEventInitialized, this.widgetId);
+				});
+			}
 		}
 
 		// Method to set the OnSlideMoved event
@@ -393,7 +394,7 @@ namespace Providers.Splide {
 		 */
 		public setProviderConfigs(newConfigs: SplideConfig): void {
 			this.configs.validateExtensibilityConfigs(newConfigs, this.providerInfo);
-			this.updateCarousel(true, false);
+			this.updateCarousel(true);
 		}
 
 		/**
@@ -413,7 +414,7 @@ namespace Providers.Splide {
 		 * @param {boolean} [triggerInitialize=true]
 		 * @memberof OSUISplide
 		 */
-		public updateCarousel(keepCurrentIndex = true, triggerInitialize = true): void {
+		public updateCarousel(keepCurrentIndex = true): void {
 			// Check if provider is ready
 			if (typeof this._provider === 'object') {
 				this._provider.destroy();
@@ -424,7 +425,7 @@ namespace Providers.Splide {
 				this.configs.StartingPosition = this._currentIndex;
 			}
 			// Create Carousel again
-			this._createProviderCarousel(triggerInitialize);
+			this._createProviderCarousel();
 		}
 
 		/**
@@ -438,7 +439,7 @@ namespace Providers.Splide {
 
 				// Check if provider is ready
 				if (typeof this._provider === 'object') {
-					this.updateCarousel(false, false);
+					this.updateCarousel(false);
 				}
 			}
 		}
