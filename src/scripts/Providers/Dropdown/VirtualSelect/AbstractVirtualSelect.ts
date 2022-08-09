@@ -12,7 +12,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		private _platformEventSelectedOptCallback: OSFramework.Patterns.Dropdown.Callbacks.OSOnSelectEvent;
 
 		// Store a reference of available provider methods
-		protected _virtualselectMethods: VirtualSelectMethods;
+		protected _virtualselectConfigs: VirtualSelectMethods;
 		// Store the provider options
 		protected _virtualselectOpts: VirtualSelectOpts;
 
@@ -49,7 +49,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		// Manage the disable status of the pattern
 		private _manageDisableStatus(): void {
 			// Ensure that is closed!
-			this._virtualselectMethods.close();
+			this._virtualselectConfigs.close();
 
 			if (this.configs.IsDisabled) {
 				OSFramework.Helper.Dom.Attribute.Set(
@@ -75,7 +75,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		// Close the dropdown if it's open!
 		private _onWindowResize() {
 			if (this.provider.isOpened()) {
-				this._virtualselectMethods.close();
+				this._virtualselectConfigs.close();
 			}
 		}
 
@@ -125,7 +125,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			Again, this only happens when user change directly the URL! */
 			this.provider = Array.isArray(this.provider) ? this.provider[0] : this.provider;
 
-			this._virtualselectMethods = this.provider.$ele;
+			this._virtualselectConfigs = this.provider.$ele;
 			// Since at native devices we're detaching the balloon from pattern context we must set this attribute to it in order to be possible create a relation between pattern default structure and the detached balloon!
 			this.provider.$dropboxContainer.setAttribute(OSFramework.GlobalEnum.HTMLAttributes.Name, this.uniqueId);
 
@@ -133,7 +133,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			this.updateProviderEvents({
 				name: Enum.ProviderInfo.Name,
 				version: Enum.ProviderInfo.Version,
-				supportedConfigs: this.provider.$ele,
+				supportedConfigs: this._virtualselectConfigs,
 			});
 
 			// Add the pattern Events!
@@ -181,7 +181,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		protected unsetCallbacks(): void {
 			this._eventOnWindowResize = undefined;
 			this._onSelectedOptionEvent = undefined;
-			this._virtualselectMethods = undefined;
+			this._virtualselectConfigs = undefined;
 			this._virtualselectOpts = undefined;
 			this.provider = undefined;
 		}
@@ -246,7 +246,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * @memberof AbstractVirtualSelect
 		 */
 		public clear(): void {
-			this._virtualselectMethods.reset();
+			this._virtualselectConfigs.reset();
 		}
 
 		/**

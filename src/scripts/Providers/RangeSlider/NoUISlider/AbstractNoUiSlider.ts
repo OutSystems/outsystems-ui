@@ -88,7 +88,7 @@ namespace Providers.RangeSlider.NoUISlider {
 			this.updateProviderEvents({
 				name: RangeSlider.NoUiSlider.Enum.ProviderInfo.Name,
 				version: RangeSlider.NoUiSlider.Enum.ProviderInfo.Version,
-				supportedConfigs: this.provider,
+				supportedConfigs: this.provider, //this.provider will also contain all the supported lib configs
 			});
 
 			// Set OnValueChange event

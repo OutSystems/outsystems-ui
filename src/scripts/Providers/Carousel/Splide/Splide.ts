@@ -68,13 +68,14 @@ namespace Providers.Splide {
 
 		// Method to init the provider
 		private _initProvider(): void {
+			// Init provider
 			this._provider = new window.Splide(this._carouselProviderElem, this._providerOptions);
 
 			// Set provider Info to be used by setProviderConfigs API calls
 			this.updateProviderEvents({
 				name: Enum.ProviderInfo.Name,
 				version: Enum.ProviderInfo.Version,
-				supportedConfigs: this.provider,
+				supportedConfigs: this.provider, //this.provider will also contain all the supported lib configs
 			});
 
 			// Set the OnInitialized event, before the provider is mounted

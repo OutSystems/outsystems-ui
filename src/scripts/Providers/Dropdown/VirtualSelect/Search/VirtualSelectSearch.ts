@@ -19,12 +19,12 @@ namespace Providers.Dropdown.VirtualSelect.Search {
 
 			// Check if it's multiple type
 			if (this.configs.AllowMultipleSelection) {
-				optionsSelected = this._virtualselectMethods.getSelectedOptions(); // It returns an array of selected options
+				optionsSelected = this._virtualselectConfigs.getSelectedOptions(); // It returns an array of selected options
 			} else {
 				// It's single option type
 				// Check if there are any selected option
-				if (this._virtualselectMethods.getSelectedOptions()) {
-					optionsSelected.push(this._virtualselectMethods.getSelectedOptions()); // It returns an single object of selected option
+				if (this._virtualselectConfigs.getSelectedOptions()) {
+					optionsSelected.push(this._virtualselectConfigs.getSelectedOptions()); // It returns an single object of selected option
 				}
 			}
 
