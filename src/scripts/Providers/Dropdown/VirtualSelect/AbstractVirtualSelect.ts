@@ -142,11 +142,8 @@ namespace Providers.Dropdown.VirtualSelect {
 			// Add attributes to the element if needed
 			this._manageAttributes();
 
-			// Ensure it's only be trigger the first time!
-			if (this.isBuilt === false) {
-				// Trigger platform's InstanceIntializedHandler client Action
-				OSFramework.Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
-			}
+			// Trigger platform's InstanceIntializedHandler client Action
+			this.triggerPlatformEventInitialized(this._platformEventInitializedCallback);
 		}
 
 		/**
