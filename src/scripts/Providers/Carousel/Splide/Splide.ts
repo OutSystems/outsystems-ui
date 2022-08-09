@@ -120,8 +120,10 @@ namespace Providers.Splide {
 
 		// Method to set the OnInitializeEvent
 		private _setOnInitializedEvent(): void {
+			// Ensure it's only be trigger the first time!
 			if (this.isBuilt === false) {
 				this._provider.on(Enum.SpliderEvents.Mounted, () => {
+					// Trigger platform's InstanceIntializedHandler client Action
 					OSFramework.Helper.AsyncInvocation(this._platformEventInitialized, this.widgetId);
 				});
 			}
