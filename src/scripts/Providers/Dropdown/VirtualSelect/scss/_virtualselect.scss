@@ -201,6 +201,12 @@
 		}
 
 		&.show-value-as-tags {
+			&.has-value {
+				.vscomp-clear-button {
+					left: var(--space-l);
+				}
+			}
+
 			.vscomp-value-tag {
 				padding: 6px 10px 6px 35px;
 			}
