@@ -87,37 +87,37 @@ namespace OSFramework.Patterns {
 			addEvent: boolean,
 			event?: Event.ProviderEvents.IProviderEvent
 		): void {
-			switch (true) {
-				// Check if is array
-				case Array.isArray(this.providerInfo.supportedConfigs[eventName]):
-					if (addEvent) {
-						this.providerInfo.supportedConfigs[eventName].push(callback);
-					} else {
-						this.providerInfo.supportedConfigs[eventName].splice(this._getEventIndexFromArray(event), 1);
-					}
-					break;
-				// Check if addEventListener is valid
-				case typeof this.providerInfo.supportedConfigs.addEventListener === GlobalEnum.JavascriptTypes.function:
-					if (addEvent) {
-						this.providerInfo.supportedConfigs.addEventListener(eventName, callback);
-					} else {
-						this.providerInfo.supportedConfigs.removeEventListener(eventName, callback);
-					}
-					break;
-				// Check if instance.on is valid
-				case typeof this.providerInfo.supportedConfigs.on === GlobalEnum.JavascriptTypes.function:
-					if (addEvent) {
-						this.providerInfo.supportedConfigs.on(eventName, callback);
-					} else {
-						this.providerInfo.supportedConfigs.off(eventName, callback);
-					}
-					break;
-				default:
-					throw new Error(
-						`${eventName}: ` + addEvent
-							? ErrorCodes.AbstractProviderPattern.FailProviderEventSet.message
-							: ErrorCodes.AbstractProviderPattern.FailProviderEventRemoval.message
-					);
+			const supportedConfigs = this.providerInfo.supportedConfigs;
+
+			// Check if is array
+			if (Array.isArray(supportedConfigs[eventName])) {
+				if (addEvent) {
+					supportedConfigs[eventName].push(callback);
+				} else {
+					supportedConfigs[eventName].splice(this._getEventIndexFromArray(event), 1);
+				}
+			}
+			// Check if addEventListener is valid
+			else if (typeof supportedConfigs.addEventListener === GlobalEnum.JavascriptTypes.function) {
+				if (addEvent) {
+					supportedConfigs.addEventListener(eventName, callback);
+				} else {
+					supportedConfigs.removeEventListener(eventName, callback);
+				}
+			}
+			// Check if instance.on is valid
+			else if (typeof supportedConfigs.on === GlobalEnum.JavascriptTypes.function) {
+				if (addEvent) {
+					supportedConfigs.on(eventName, callback);
+				} else {
+					supportedConfigs.off(eventName, callback);
+				}
+			} else {
+				const errorMessage = addEvent
+					? ErrorCodes.AbstractProviderPattern.FailProviderEventSet.message
+					: ErrorCodes.AbstractProviderPattern.FailProviderEventRemoval.message;
+
+				throw new Error(`${eventName}: ${errorMessage}`);
 			}
 		}
 
