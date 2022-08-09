@@ -137,11 +137,8 @@ namespace Providers.Datepicker.Flatpickr {
 				}
 			}
 
-			// Ensure it's only be trigger the first time!
-			if (this.isBuilt === false) {
-				// Trigger platform's InstanceIntializedHandler client Action
-				OSFramework.Helper.AsyncInvocation(this._onInitializeCallbackEvent, this.widgetId);
-			}
+			// Trigger platform's InstanceIntializedHandler client Action
+			this.triggerPlatformEventInitialized(this._onInitializeCallbackEvent);
 		}
 
 		/**
