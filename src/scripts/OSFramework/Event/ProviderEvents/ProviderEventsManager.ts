@@ -11,35 +11,35 @@ namespace OSFramework.Event.ProviderEvents {
 		 *
 		 * @param {string} eventName
 		 * @param {GlobalCallbacks.Generic} callback
-		 * @param {string} uniqueId
+		 * @param {string} eventUniqueId
 		 * @memberof ProviderEventsManager
 		 */
-		public addPendingEvent(eventName: string, callback: GlobalCallbacks.Generic, uniqueId: string): void {
+		public addPendingEvent(eventName: string, callback: GlobalCallbacks.Generic, eventUniqueId: string): void {
 			// Check if we've everything needed to store the event
-			if (eventName === '' || callback === undefined || uniqueId === '') {
+			if (eventName === '' || callback === undefined || eventUniqueId === '') {
 				throw new Error(
 					`${ErrorCodes.ProviderEventsManager.FailSavingPendingEvent}: The event can not be saved.`
 				);
 			}
 
-			const newEvent = new ProviderEvent(callback, eventName, uniqueId);
-			this._pendingEventsMap.set(uniqueId, newEvent);
+			const newEvent = new ProviderEvent(callback, eventName, eventUniqueId);
+			this._pendingEventsMap.set(eventUniqueId, newEvent);
 		}
 
 		/**
 		 * Method to remove a pending event
 		 *
-		 * @param {string} uniqueId
+		 * @param {string} eventUniqueId
 		 * @memberof ProviderEventsManager
 		 */
-		public removePendingEvent(uniqueId: string): void {
-			const event = this._pendingEventsMap.has(uniqueId);
+		public removePendingEvent(eventUniqueId: string): void {
+			const event = this._pendingEventsMap.has(eventUniqueId);
 
 			if (event) {
-				this._pendingEventsMap.delete(uniqueId);
+				this._pendingEventsMap.delete(eventUniqueId);
 			} else {
 				throw new Error(
-					`${ErrorCodes.ProviderEventsManager.FailPendingEventRemoval}: The event with eventId:'${uniqueId}' does not exist`
+					`${ErrorCodes.ProviderEventsManager.FailPendingEventRemoval}: The event with eventId:'${eventUniqueId}' does not exist`
 				);
 			}
 		}
@@ -47,17 +47,17 @@ namespace OSFramework.Event.ProviderEvents {
 		/**
 		 * Method to remove a saved event
 		 *
-		 * @param {string} uniqueId
+		 * @param {string} eventUniqueId
 		 * @memberof ProviderEventsManager
 		 */
-		public removeSavedEvent(uniqueId: string): void {
-			const event = this._eventsMap.has(uniqueId);
+		public removeSavedEvent(eventUniqueId: string): void {
+			const event = this._eventsMap.has(eventUniqueId);
 
 			if (event) {
-				this._eventsMap.delete(uniqueId);
+				this._eventsMap.delete(eventUniqueId);
 			} else {
 				throw new Error(
-					`${ErrorCodes.ProviderEventsManager.FailSavedEventRemoval}: The event with eventId:'${uniqueId}' does not exist`
+					`${ErrorCodes.ProviderEventsManager.FailSavedEventRemoval}: The event with eventId:'${eventUniqueId}' does not exist`
 				);
 			}
 		}
@@ -67,27 +67,27 @@ namespace OSFramework.Event.ProviderEvents {
 		 *
 		 * @param {string} eventName
 		 * @param {GlobalCallbacks.Generic} callback
-		 * @param {string} uniqueId
+		 * @param {string} eventUniqueId
 		 * @memberof ProviderEventsManager
 		 */
-		public saveEvent(eventName: string, callback: GlobalCallbacks.Generic, uniqueId: string): void {
+		public saveEvent(eventName: string, callback: GlobalCallbacks.Generic, eventUniqueId: string): void {
 			// Check if we've everything needed to store the event
-			if (eventName === '' || callback === undefined || uniqueId === '') {
+			if (eventName === '' || callback === undefined || eventUniqueId === '') {
 				throw new Error(`${ErrorCodes.ProviderEventsManager.FailSavingEvent}: The event can not be saved.`);
 			}
 
 			let _newEvent: IProviderEvent;
 
 			// If the event we are adding was already on the pending ones, get that one
-			if (this._pendingEventsMap.has(uniqueId)) {
-				_newEvent = this._pendingEventsMap.get(uniqueId);
-				this._pendingEventsMap.delete(uniqueId);
+			if (this._pendingEventsMap.has(eventUniqueId)) {
+				_newEvent = this._pendingEventsMap.get(eventUniqueId);
+				this._pendingEventsMap.delete(eventUniqueId);
 			} else {
 				// Otherwise create a new one
-				_newEvent = new ProviderEvent(callback, eventName, uniqueId);
+				_newEvent = new ProviderEvent(callback, eventName, eventUniqueId);
 			}
 
-			this._eventsMap.set(uniqueId, _newEvent);
+			this._eventsMap.set(eventUniqueId, _newEvent);
 		}
 
 		/**
@@ -96,7 +96,7 @@ namespace OSFramework.Event.ProviderEvents {
 		 * @type {Map<string, IProviderEvent>}
 		 * @memberof ProviderEventsManager
 		 */
-		public get eventsMap(): Map<string, IProviderEvent> {
+		public get events(): Map<string, IProviderEvent> {
 			return this._eventsMap;
 		}
 
@@ -107,7 +107,7 @@ namespace OSFramework.Event.ProviderEvents {
 		 * @type {Map<string, IProviderEvent>}
 		 * @memberof ProviderEventsManager
 		 */
-		public get pendingEventsMap(): Map<string, IProviderEvent> {
+		public get pendingEvents(): Map<string, IProviderEvent> {
 			return this._pendingEventsMap;
 		}
 

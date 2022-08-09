@@ -333,10 +333,10 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 		eventName: string,
 		callback: OSFramework.GlobalCallbacks.Generic
 	): string {
-		const _uniqueId = OSFramework.Helper.Dom.GenerateUniqueId();
+		const _eventUniqueId = OSFramework.Helper.Dom.GenerateUniqueId();
 
 		const responseObj = {
-			uniqueId: _uniqueId,
+			uniqueId: _eventUniqueId,
 			isSuccess: true,
 			message: ErrorCodes.Success.message,
 			code: ErrorCodes.Success.code,
@@ -344,7 +344,7 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 
 		try {
 			const carousel = GetCarouselItemById(carouselId);
-			carousel.setProviderEvent(eventName, callback, _uniqueId);
+			carousel.setProviderEvent(eventName, callback, _eventUniqueId);
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;

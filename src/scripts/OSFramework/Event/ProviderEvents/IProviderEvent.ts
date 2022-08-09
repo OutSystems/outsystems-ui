@@ -3,6 +3,6 @@ namespace OSFramework.Event.ProviderEvents {
 	export interface IProviderEvent {
 		callback: GlobalCallbacks.Generic;
 		eventName: string;
-		uniqueId: string;
+		eventUniqueId: string;
 	}
 }

@@ -3,12 +3,12 @@ namespace OSFramework.Event.ProviderEvents {
 	export class ProviderEvent implements IProviderEvent {
 		public callback: GlobalCallbacks.Generic;
 		public eventName: string;
-		public uniqueId: string;
+		public eventUniqueId: string;
 
-		constructor(callback: GlobalCallbacks.Generic, eventName: string, uniqueId: string) {
+		constructor(callback: GlobalCallbacks.Generic, eventName: string, eventUniqueId: string) {
 			this.callback = callback;
 			this.eventName = eventName;
-			this.uniqueId = uniqueId;
+			this.eventUniqueId = eventUniqueId;
 		}
 	}
 }

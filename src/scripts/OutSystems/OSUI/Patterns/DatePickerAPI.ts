@@ -397,10 +397,10 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 		eventName: string,
 		callback: OSFramework.GlobalCallbacks.Generic
 	): string {
-		const _uniqueId = OSFramework.Helper.Dom.GenerateUniqueId();
+		const _eventUniqueId = OSFramework.Helper.Dom.GenerateUniqueId();
 
 		const responseObj = {
-			uniqueId: _uniqueId,
+			uniqueId: _eventUniqueId,
 			isSuccess: true,
 			message: ErrorCodes.Success.message,
 			code: ErrorCodes.Success.code,
@@ -408,7 +408,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 
 		try {
 			const datePicker = GetDatePickerItemById(datePickerId);
-			datePicker.setProviderEvent(eventName, callback, _uniqueId);
+			datePicker.setProviderEvent(eventName, callback, _eventUniqueId);
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;

@@ -151,8 +151,8 @@ namespace OSFramework.Patterns {
 		public checkAddedProviderEvents(): void {
 			if (this.providerEventsManagerInstance?.hasEvents) {
 				// check if there're events pending
-				this.providerEventsManagerInstance.eventsMap.forEach((value) => {
-					this.setProviderEvent(value.eventName, value.callback, value.uniqueId, false); // add provider event
+				this.providerEventsManagerInstance.events.forEach((value) => {
+					this.setProviderEvent(value.eventName, value.callback, value.eventUniqueId, false); // add provider event
 				});
 			}
 		}
@@ -165,8 +165,8 @@ namespace OSFramework.Patterns {
 		public checkPendingProviderEvents(): void {
 			if (this.providerEventsManagerInstance?.hasPendingEvents) {
 				// check if there're events saved
-				this.providerEventsManagerInstance.pendingEventsMap.forEach((value, key) => {
-					this.setProviderEvent(value.eventName, value.callback, value.uniqueId); // add provider event
+				this.providerEventsManagerInstance.pendingEvents.forEach((value, key) => {
+					this.setProviderEvent(value.eventName, value.callback, value.eventUniqueId); // add provider event
 					this.providerEventsManagerInstance.removePendingEvent(key);
 				});
 			}
@@ -227,7 +227,7 @@ namespace OSFramework.Patterns {
 		 */
 		public unsetProviderEvent(eventId: string): void {
 			// Get event from saved events map
-			const _event = this.providerEventsManagerInstance?.eventsMap.get(eventId);
+			const _event = this.providerEventsManagerInstance?.events.get(eventId);
 
 			if (_event === undefined) {
 				throw Error(

@@ -309,10 +309,10 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 		eventName: string,
 		callback: OSFramework.GlobalCallbacks.Generic
 	): string {
-		const _uniqueId = OSFramework.Helper.Dom.GenerateUniqueId();
+		const _eventUniqueId = OSFramework.Helper.Dom.GenerateUniqueId();
 
 		const responseObj = {
-			uniqueId: _uniqueId,
+			uniqueId: _eventUniqueId,
 			isSuccess: true,
 			message: ErrorCodes.Success.message,
 			code: ErrorCodes.Success.code,
@@ -320,7 +320,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 
 		try {
 			const dropdown = GetDropdownById(dropdownId);
-			dropdown.setProviderEvent(eventName, callback, _uniqueId);
+			dropdown.setProviderEvent(eventName, callback, _eventUniqueId);
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
