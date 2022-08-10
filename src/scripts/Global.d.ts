@@ -81,17 +81,33 @@ declare global {
 		viewHeight: number;
 	};
 
+	type ProviderInfo = {
+		name: string;
+		version: string;
+		supportedConfigs: ProviderConfigs;
+	};
+
+	type ProviderConfigs =
+		| RangeSliderProviderConfigs
+		| CarouselProviderConfigs
+		| DatePickerProviderConfigs
+		| VirtualSelect;
+
 	// RangeSlider
 	type NoUiSlider = noUiSlider;
+	type RangeSliderProviderConfigs = NoUiSlider;
 	type NoUiSliderOptions = noUiSliderOptions;
 	type NoUiSliderPipsMode = PipsMode;
 	type wNumb = WNumb;
 
 	// Carousel
+	type CarouselProviderConfigs = SplideOpts;
+	// Carousel => Splide
 	type Splide = OriginalSplide;
 	type SplideOpts = Options;
 
 	// DatePicker => Flatpickr
+	type DatePickerProviderConfigs = FlatpickrOptions;
 	type Flatpickr = flatpickr;
 	type FlatpickrOptions = flatpickrOpts;
 	type FlatpickrLocale = flatpickrLocale;

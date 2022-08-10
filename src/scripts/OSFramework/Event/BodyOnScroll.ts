@@ -14,7 +14,7 @@ namespace OSFramework.Event {
 		}
 
 		private _bodyTrigger(evt: Event): void {
-			super.trigger(GlobalEnum.HTMLEvent.Scroll, evt);
+			this.trigger(GlobalEnum.HTMLEvent.Scroll, evt);
 		}
 	}
 }

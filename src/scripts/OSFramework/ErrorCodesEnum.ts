@@ -29,11 +29,11 @@ namespace OSFramework.ErrorCodes {
 	};
 
 	export const DropdownServerSide = {
-		FailOnSetIntersectionObserver: 'OSUI-GEN-11001',
+		FailOnSetIntersectionObserver: 'OSUI-GEN-0401',
 	};
 
 	export const Notification = {
-		FailRegisterCallback: 'OSUI-GEN-03001',
+		FailRegisterCallback: 'OSUI-GEN-13001',
 	};
 
 	export const RangeSlider = {
@@ -70,5 +70,24 @@ namespace OSFramework.ErrorCodes {
 		FailChildNotFound: 'OSUI-GEN-10001',
 		FailChildsNotFound: 'OSUI-GEN-10002',
 		FailTypeNotFound: 'OSUI-GEN-10003',
+	};
+
+	export const AbstractProviderPattern = {
+		FailProviderEventHandler: 'OSUI-GEN-11001',
+		FailProviderEventRemoval: {
+			code: 'OSUI-GEN-11002',
+			message: 'The event with this eventId does not exist',
+		},
+		FailProviderEventSet: {
+			code: 'OSUI-GEN-11003',
+			message: 'The provided eventName does not exist or is not supported by the provider',
+		},
+	};
+
+	export const ProviderEventsManager = {
+		FailPendingEventRemoval: 'OSUI-GEN-12001',
+		FailSavingPendingEvent: 'OSUI-GEN-12002',
+		FailSavedEventRemoval: 'OSUI-GEN-12003',
+		FailSavingEvent: 'OSUI-GEN-12004',
 	};
 }

@@ -32,6 +32,11 @@ namespace OSFramework.Patterns.Dropdown {
 		 */
 		getSelectedValues(): string;
 
+		// Set as optional, to not make mandatory DropdownSErverItem to implement these
+		setProviderConfigs?(providerConfigs: ProviderConfigs): void;
+		setProviderEvent?(eventName: string, callback: OSFramework.GlobalCallbacks.Generic, uniqueId: string): void;
+		unsetProviderEvent?(eventId: string): void;
+
 		/**
 		 * Method used to set the validation status, and also pass the message to show
 		 *

@@ -18,6 +18,14 @@ namespace OSFramework.Interface {
 		provider: P;
 
 		/**
+		 * Attribute that keeps the information about the provider version
+		 *
+		 * @type {ProviderInfo}
+		 * @memberof IProviderPattern
+		 */
+		providerInfo: ProviderInfo;
+
+		/**
 		 * Enables to register simple callbacks for the platform. Internal use.
 		 *
 		 * @param {string} eventName
@@ -25,5 +33,21 @@ namespace OSFramework.Interface {
 		 * @memberof IProviderPattern
 		 */
 		registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
+
+		/**
+		 * Method to enable extensibility to provider supported configs
+		 *
+		 * @param {ProviderConfigs} newConfigs
+		 * @memberof IProviderPattern
+		 */
+		setProviderConfigs(newConfigs: ProviderConfigs): void;
+
+		/**
+		 * Method to update the provider events API instance and save/pending events
+		 *
+		 * @param {ProviderInfo} providerInfo
+		 * @memberof IProviderPattern
+		 */
+		updateProviderEvents(providerInfo: ProviderInfo): void;
 	}
 }

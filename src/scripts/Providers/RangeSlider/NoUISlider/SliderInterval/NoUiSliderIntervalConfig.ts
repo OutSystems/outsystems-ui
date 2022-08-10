@@ -23,7 +23,7 @@ namespace Providers.RangeSlider.NoUISlider.SliderInterval {
 			// Merge both option objects => if objects have a property with the same name, then the right-most object property overwrites the previous one
 			// eslint-disable-next-line prefer-const
 			let noUiSliderOptions = {
-				...super.getCommonProviderConfig(),
+				...this.getCommonProviderConfig(),
 				...rangeSliderOptions,
 			};
 
