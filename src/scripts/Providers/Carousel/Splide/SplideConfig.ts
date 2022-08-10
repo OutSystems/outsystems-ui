@@ -78,6 +78,11 @@ namespace Providers.Splide {
 				pagination: this._getPaginationConfig(),
 				gap: this.ItemsGap,
 				start: this.StartingPosition,
+				snap: true,
+				dragMinThreshold: {
+					mouse: 300,
+					touch: 100,
+				},
 			};
 
 			//Cleanning undefined properties
