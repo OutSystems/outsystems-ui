@@ -1,0 +1,807 @@
+[{
+    "osui": {
+        "version": "2.10.0",
+        "url": "https://www.outsystems.com/outsystems-ui",
+        "description": "",
+        
+        "css-structure": {
+            "section-css-variables-setup": {
+                "name": "SCSS Setup variables",
+                "add-to-section-index": false,
+                "has-child-section": false,
+
+                "assets": [
+                    {
+                        "name": "",
+                        "path": "00-abstract/setup-global-vars"
+                    },
+                    {
+                        "name": "",
+                        "path": "00-abstract/setup-global-typography-vars"
+                    },
+                    {
+                        "name": "",
+                        "path": "00-abstract/setup-color-vars"
+                    },
+                    {
+                        "name": "",
+                        "path": "00-abstract/setup-border-vars"
+                    }
+                ]
+            },
+
+            "section-function-mixins": {
+                "name": "Functions & Mixins",
+                "add-to-section-index": false,
+                "has-child-section": false,
+
+                "assets": [
+                    {
+                        "name": "",
+                        "path": "00-abstract/functions"
+                    },
+                    {
+                        "name": "",
+                        "path": "00-abstract/mixins"
+                    }
+                ]
+            },
+
+            "section-root": {
+                "name": "Root - CSS Variables",
+                "add-to-section-index": true,
+                "has-child-section": false,
+
+                "assets": [
+                    {
+                        "name": "",
+                        "path": "01-foundations/root"
+                    }
+                ]
+            },
+
+            "section-resets": {
+                "name": "Resets",
+                "add-to-section-index": true,
+                "has-child-section": false,
+
+                "assets": [
+                    {
+                        "name": "",
+                        "path": "01-foundations/resets"
+                    }
+                ]
+            },
+            
+            "section-html-elements": {
+                "name": "HTML Elements",
+                "add-to-section-index": true,
+                "has-child-section": false,
+
+                "assets": [
+                    {
+                        "name": "Links",
+                        "path": "01-foundations/html-elements-link"
+                    },
+                    {
+                        "name": "Images",
+                        "path": "01-foundations/html-elements-img"
+                    },
+                    {
+                        "name": "Headings",
+                        "path": "01-foundations/html-elements-headingss"
+                    }
+                ]
+            },
+
+            "section-page-layout": {
+                "name": "Page Layout",
+                "add-to-section-index": true,
+                "has-child-section": false,
+
+                "assets": [
+                    {
+                        "name": "Layout",
+                        "path": "02-layout/layout"
+                    },
+                    {
+                        "name": "Header",
+                        "path": "02-layout/header"
+                    },
+                    {
+                        "name": "Layout Native - Header",
+                        "path": "02-layout/header-layout-native"
+                    },
+                    {
+                        "name": "Layout Side - Header",
+                        "path": "02-layout/header-layout-side"
+                    },
+                    {
+                        "name": "Menu",
+                        "path": "02-layout/menu"
+                    },
+                    {
+                        "name": "Layout Native - Menu",
+                        "path": "02-layout/menu-layout-native"
+                    },
+                    {
+                        "name": "Layout Side - Menu",
+                        "path": "02-layout/menu-layout-side"
+                    },
+                    {
+                        "name": "Menu - Header Logo",
+                        "path": "02-layout/menu-header-logo"
+                    },
+                    {
+                        "name": "Menu - App Menu Link",
+                        "path": "02-layout/menu-app-menu-links"
+                    },
+                    {
+                        "name": "Menu - App Login Info",
+                        "path": "02-layout/menu-app-login-info"
+                    },
+                    {
+                        "name": "Content",
+                        "path": "02-layout/content"
+                    },
+                    {
+                        "name": "ThemeGrid_Container",
+                        "path": "02-layout/themegrid-container"
+                    },
+                    {
+                        "name": "Section",
+                        "path": "02-layout/section"
+                    },
+                    {
+                        "name": "Login",
+                        "path": "02-layout/login"
+                    },
+                    {
+                        "name": "iOS Scroll Bounce",
+                        "path": "02-layout/ios-bounce"
+                    }
+                ]
+            },
+
+            "section-widgets": {
+                "name": "Widgets",
+                "add-to-section-index": true,
+                "has-child-section": false,
+
+                "assets": [
+                    {
+                        "name": "Inputs and TextAreas",
+                        "path": "03-widgets/inputs-and-textareas"
+                    },
+                    {
+                        "name": "Switch",
+                        "path": "03-widgets/switch"
+                    },
+                    {
+                        "name": "Checkbox",
+                        "path": "03-widgets/checkbox"
+                    },
+                    {
+                        "name": "Dropdown",
+                        "path": "03-widgets/dropdown"
+                    },
+                    {
+                        "name": "Button",
+                        "path": "03-widgets/btn"
+                    },
+                    {
+                        "name": "List",
+                        "path": "03-widgets/list"
+                    },
+                    {
+                        "name": "List Item",
+                        "path": "03-widgets/list-item"
+                    },
+                    {
+                        "name": "Table",
+                        "path": "03-widgets/table"
+                    },
+                    {
+                        "name": "Table - Sortable Icon",
+                        "path": "03-widgets/table-sortable-icon"
+                    },
+                    {
+                        "name": "Table - Bulk Actions",
+                        "path": "03-widgets/bulk-actions"
+                    },
+                    {
+                        "name": "Form",
+                        "path": "03-widgets/form"
+                    },
+                    {
+                        "name": "Upload",
+                        "path": "03-widgets/upload"
+                    },
+                    {
+                        "name": "Button Group",
+                        "path": "03-widgets/button-group"
+                    },
+                    {
+                        "name": "Popover",
+                        "path": "03-widgets/popover"
+                    },
+                    {
+                        "name": "Popup",
+                        "path": "03-widgets/popup"
+                    },
+                    {
+                        "name": "Feedback Message",
+                        "path": "03-widgets/feedback-message"
+                    },
+                    {
+                        "name": "Radio Button",
+                        "path": "03-widgets/radio-button"
+                    }
+                ]
+            },
+
+            "section-patterns": {
+                "name": "Patterns",
+                "add-to-section-index": true,
+                "has-child-section": true,
+
+                "section-adaptive": {
+                    "name": "Adaptive",
+                    "add-to-section-index": true,
+
+                    "assets": [
+                        {
+                            "name": "Columns",
+                            "path": "04-patterns/01-adaptive/columns"
+                        },
+                        {
+                            "name": "Gallery",
+                            "path": "../scripts/OSFramework/Pattern/Gallery/scss/gallery"
+                        },
+                        {
+                            "name": "Master Detail",
+                            "path": "04-patterns/01-adaptive/master-detail"
+                        }
+                    ]
+                },
+
+                "section-content": {
+                    "name": "Content",
+                    "add-to-section-index": true,
+
+                    "assets": [
+                        {
+                            "name": "Accordion",
+                            "path": "../scripts/OSFramework/Pattern/Accordion/scss/accordion"
+                        },
+                        {
+                            "name": "Accordion Item",
+                            "path": "../scripts/OSFramework/Pattern/AccordionItem/scss/accordion-item"
+                        },
+                        {
+                            "name": "Alert",
+                            "path": "04-patterns/02-content/alert"
+                        },
+                        {
+                            "name": "Blank Slate",
+                            "path": "04-patterns/02-content/blank-slate"
+                        },
+                        {
+                            "name": "Card",
+                            "path": "04-patterns/02-content/card"
+                        },
+                        {
+                            "name": "Card Background",
+                            "path": "04-patterns/02-content/card-background"
+                        },
+                        {
+                            "name": "Card Item",
+                            "path": "04-patterns/02-content/card-item"
+                        },
+                        {
+                            "name": "Card Sectioned",
+                            "path": "04-patterns/02-content/card-sectioned"
+                        },
+                        {
+                            "name": "Chat Message",
+                            "path": "04-patterns/02-content/chat-message"
+                        },
+                        {
+                            "name": "Flip_Content",
+                            "path": "../scripts/OSFramework/Pattern/FlipContent/scss/flipcontent"
+                        },
+                        {
+                            "name": "Floating Content",
+                            "path": "04-patterns/02-content/floating-content"
+                        },
+                        {
+                            "name": "List Item Content",
+                            "path": "04-patterns/02-content/list-item-content"
+                        },
+                        {
+                            "name": "Section",
+                            "path": "04-patterns/02-content/section"
+                        },
+                        {
+                            "name": "Tag",
+                            "path": "04-patterns/02-content/tag"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "path": "../scripts/OSFramework/Pattern/Tooltip/scss/tooltip"
+                        },
+                        {
+                            "name": "User Avatar",
+                            "path": "04-patterns/02-content/user-avatar"
+                        }
+                    ]
+                },
+
+                "section-tnteraction": {
+                    "name": "Interaction",
+                    "add-to-section-index": true,
+
+                    "assets": [
+                        {
+                            "name": "Action Sheet",
+                            "path": "04-patterns/03-interaction/action-sheet"
+                        },
+                        {
+                            "name": "Animate",
+                            "path": "04-patterns/03-interaction/animate"
+                        },
+                        {
+                            "name": "Animated Label",
+                            "path": "../scripts/OSFramework/Pattern/AnimatedLabel/scss/animated-label"
+                        },
+                        {
+                            "name": "BottomSheet",
+                            "path": "../scripts/OSFramework/Pattern/BottomSheet/scss/bottomsheet"
+                        },
+                        {
+                            "name": "Carousel",
+                            "path": "../scripts/OSFramework/Pattern/Carousel/scss/carousel"
+                        },
+                        {
+                            "name": "DatePicker and DatePickerRange",
+                            "path": "../scripts/OSFramework/Pattern/DatePicker/scss/datepicker"
+                        },
+                        {
+                            "name": "Dropdown Common",
+                            "path": "../scripts/OSFramework/Pattern/Dropdown/scss/dropdown"
+                        },
+                        {
+                            "name": "Dropdown Common",
+                            "path": "../scripts/OSFramework/Pattern/Dropdown/scss/dropdown"
+                        },
+                        {
+                            "name": "Dropdown Server Side",
+                            "path": "../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-serverside"
+                        },
+                        {
+                            "name": "Dropdown Server Side Item",
+                            "path": "../scripts/OSFramework/Pattern/DropdownServerSideItem/scss/dropdownserversideitem"
+                        },
+                        {
+                            "name": "Dropdown Search",
+                            "path": "../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-search"
+                        },
+                        {
+                            "name": "Dropdown Tags",
+                            "path": "../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-tags"
+                        },
+                        {
+                            "name": "Floating Actions",
+                            "path": "04-patterns/03-interaction/floating-actions"
+                        },
+                        {
+                            "name": "Input With Icon",
+                            "path": "04-patterns/03-interaction/input-with-icon"
+                        },
+                        {
+                            "name": "Lightbox Image",
+                            "path": "04-patterns/03-interaction/lightbox-image"
+                        },
+                        {
+                            "name": "Notification",
+                            "path": "../scripts/OSFramework/Pattern/Notification/scss/notification"
+                        },
+                        {
+                            "name": "RangeSlider and RangeSlider Interval",
+                            "path": "../scripts/OSFramework/Pattern/RangeSlider/scss/rangeslider"
+                        },
+                        {
+                            "name": "Scrollable Area",
+                            "path": "04-patterns/03-interaction/scrollable-area"
+                        },
+                        {
+                            "name": "Search",
+                            "path": "04-patterns/03-interaction/search"
+                        },
+                        {
+                            "name": "Sidebar",
+                            "path": "../scripts/OSFramework/Pattern/Sidebar/scss/sidebar"
+                        },
+                        {
+                            "name": "Stacked Cards",
+                            "path": "04-patterns/03-interaction/stacked-cards"
+                        },
+                        {
+                            "name": "Video",
+                            "path": "04-patterns/03-interaction/video"
+                        }
+                    ]
+                },
+
+                "section-navigation": {
+                    "name": "Navigation",
+                    "add-to-section-index": true,
+
+                    "assets": [
+                        {
+                            "name": "Bottom Bar Item",
+                            "path": "04-patterns/04-navigation/bottom-bar-item"
+                        },
+                        {
+                            "name": "Breadcrumbs",
+                            "path": "04-patterns/04-navigation/breadcrumbs"
+                        },
+                        {
+                            "name": "Pagination",
+                            "path": "04-patterns/04-navigation/pagination"
+                        },
+                        {
+                            "name": "Section Index",
+                            "path": "../scripts/OSFramework/Pattern/SectionIndex/scss/sectionindex"
+                        },
+                        {
+                            "name": "Submenu",
+                            "path": "../scripts/OSFramework/Pattern/Submenu/scss/submenu"
+                        },
+                        {
+                            "name": "Tabs",
+                            "path": "../scripts/OSFramework/Pattern/Tabs/scss/tabs"
+                        },
+                        {
+                            "name": "Timeline",
+                            "path": "04-patterns/04-navigation/timeline"
+                        },
+                        {
+                            "name": "Wizard",
+                            "path": "04-patterns/04-navigation/wizard"
+                        }
+                    ]
+                },
+
+                "section-numbers": {
+                    "name": "Numbers",
+                    "add-to-section-index": true,
+
+                    "assets": [
+                        {
+                            "name": "Badge",
+                            "path": "04-patterns/05-numbers/badge"
+                        },
+                        {
+                            "name": "Counter",
+                            "path": "04-patterns/05-numbers/counter"
+                        },
+                        {
+                            "name": "Icon Badge",
+                            "path": "04-patterns/05-numbers/icon-badge"
+                        },
+                        {
+                            "name": "Progress Bar",
+                            "path": "../scripts/OSFramework/Pattern/Progress/Bar/scss/progressbar"
+                        },
+                        {
+                            "name": "Progress Circle",
+                            "path": "../scripts/OSFramework/Pattern/Progress/Circle/scss/progresscircle"
+                        },
+                        {
+                            "name": "Rating",
+                            "path": "../scripts/OSFramework/Pattern/Rating/scss/rating"
+                        }
+                    ]
+                },
+
+                "section-utilities": {
+                    "name": "Utilities",
+                    "add-to-section-index": true,
+
+                    "assets": [
+                        {
+                            "name": "Align Center",
+                            "path": "04-patterns/06-utilities/align-center"
+                        },
+                        {
+                            "name": "Button Loading",
+                            "path": "../scripts/OSFramework/Pattern/ButtonLoading/scss/button-loading"
+                        },
+                        {
+                            "name": "Center Content",
+                            "path": "04-patterns/06-utilities/center-content"
+                        },
+                        {
+                            "name": "Margin Container",
+                            "path": "04-patterns/06-utilities/margin-container"
+                        },
+                        {
+                            "name": "Separator",
+                            "path": "04-patterns/06-utilities/separator"
+                        },
+                        {
+                            "name": "Pull to Refresh",
+                            "path": "04-patterns/06-utilities/pull-to-refresh"
+                        },
+                        {
+                            "name": "List Updating",
+                            "path": "04-patterns/06-utilities/list-updating"
+                        }
+                    ]
+                },
+
+                "section-deprectaed": {
+                    "name": "Deprecated Patterns",
+                    "add-to-section-index": true,
+
+                    "assets": [
+                        {
+                            "name": "Accordion",
+                            "path": "10-deprecated/accordion-deprecated"
+                        },
+                        {
+                            "name": "Button Loading",
+                            "path": "10-deprecated/button-loading-deprecated"
+                        },
+                        {
+                            "name": "Carousel",
+                            "path": "10-deprecated/carousel-deprecated"
+                        },
+                        {
+                            "name": "Datepicker",
+                            "path": "10-deprecated/date-picker-deprecated"
+                        },
+                        {
+                            "name": "Dropdown Search an Tags (Common)",
+                            "path": "10-deprecated/dropdown-search-and-tags-deprecated"
+                        },
+                        {
+                            "name": "Dropdown Search",
+                            "path": "10-deprecated/dropdown-search-deprecated"
+                        },
+                        {
+                            "name": "Dropdown Tags",
+                            "path": "10-deprecated/dropdown-tags-deprecated"
+                        },
+                        {
+                            "name": "Flip Content",
+                            "path": "10-deprecated/flip-content-deprecated"
+                        },
+                        {
+                            "name": "Gallery",
+                            "path": "10-deprecated/gallery-deprecated"
+                        },
+                        {
+                            "name": "Horizontal Scroll",
+                            "path": "10-deprecated/horizontal-scroll-deprecated"
+                        },
+                        {
+                            "name": "Notification",
+                            "path": "10-deprecated/notification-deprecated"
+                        },
+                        {
+                            "name": "Progress Bar",
+                            "path": "10-deprecated/progress-bar-deprecated"
+                        },
+                        {
+                            "name": "Progress Circle",
+                            "path": "10-deprecated/progress-circle-deprecated"
+                        },
+                        {
+                            "name": "Progress Circle Fraction",
+                            "path": "10-deprecated/progress-circle-fraction-deprecated"
+                        },
+                        {
+                            "name": "Section Index",
+                            "path": "10-deprecated/section-index-deprecated"
+                        },
+                        {
+                            "name": "Sidebar",
+                            "path": "10-deprecated/sidebar-deprecated"
+                        },
+                        {
+                            "name": "Submenu",
+                            "path": "10-deprecated/submenu-deprecated"
+                        },
+                        {
+                            "name": "Tabs",
+                            "path": "10-deprecated/tabs-deprecated"
+                        },
+                        {
+                            "name": "Tooltip",
+                            "path": "10-deprecated/tooltip-deprecated"
+                        }
+                    ]
+                },
+
+                "section-csefull-lasses": {
+                    "name": "Usefull Classes",
+                    "add-to-section-index": true,
+
+                    "assets": [
+                        {
+                            "name": "a11y (Accessibility)",
+                            "path": "05-useful/a11y"
+                        },
+                        {
+                            "name": "Colors - Brand",
+                            "path": "05-useful/colors-brand"
+                        },
+                        {
+                            "name": "Colors - Neutral",
+                            "path": "05-useful/colors-neutral"
+                        },
+                        {
+                            "name": "Colors - Palette",
+                            "path": "05-useful/colors-palette"
+                        },
+                        {
+                            "name": "Colors - Semantic",
+                            "path": "05-useful/colors-semantic"
+                        },
+                        {
+                            "name": "Colors - Others",
+                            "path": "05-useful/colors-others"
+                        },
+                        {
+                            "name": "Text",
+                            "path": "05-useful/text"
+                        },
+                        {
+                            "name": "Typography",
+                            "path": "05-useful/typography"
+                        },
+                        {
+                            "name": "Border Size",
+                            "path": "05-useful/border-size"
+                        },
+                        {
+                            "name": "Border Radius",
+                            "path": "05-useful/border-radius"
+                        },
+                        {
+                            "name": "Space - Margin",
+                            "path": "05-useful/space-margin"
+                        },
+                        {
+                            "name": "Space - Padding",
+                            "path": "05-useful/space-padding"
+                        },
+                        {
+                            "name": "Shadow",
+                            "path": "05-useful/shadow"
+                        },
+                        {
+                            "name": "Box Width",
+                            "path": "05-useful/box-width"
+                        },
+                        {
+                            "name": "Box Height",
+                            "path": "05-useful/box-height"
+                        },
+                        {
+                            "name": "Display",
+                            "path": "05-useful/display"
+                        },
+                        {
+                            "name": "Display - Flex",
+                            "path": "05-useful/display-flex"
+                        },
+                        {
+                            "name": "Display - Align",
+                            "path": "05-useful/display-align"
+                        },
+                        {
+                            "name": "Images",
+                            "path": "05-useful/images"
+                        },
+                        {
+                            "name": "",
+                            "path": "05-useful/overflow"
+                        },
+                        {
+                            "name": "Visibility",
+                            "path": "05-useful/visibility"
+                        },
+                        {
+                            "name": "Position",
+                            "path": "05-useful/positioning"
+                        },
+                        {
+                            "name": "Position - Absolute",
+                            "path": "05-useful/positioning-absolute"
+                        },
+                        {
+                            "name": "Miscellaneous",
+                            "path": "05-useful/miscellaneous"
+                        }
+                    ]
+                },
+                
+                "section-screen-transitions": {
+                    "name": "Screen Transitions",
+                    "add-to-section-index": true,
+
+                    "assets": [
+                        {
+                            "name": "",
+                            "path": "06-screen-transitions/screen-transitions"
+                        }
+                    ]
+                },
+
+                "section-keyframes-animations": {
+                    "name": "Keyframes - Animations",
+                    "add-to-section-index": true,
+
+                    "assets": [
+                        {
+                            "name": "Animate",
+                            "path": "07-keyframes/animate"
+                        },
+                        {
+                            "name": "Button Loading",
+                            "path": "07-keyframes/btn-loading"
+                        },
+                        {
+                            "name": "List Item",
+                            "path": "07-keyframes/list-item"
+                        },
+                        {
+                            "name": "Feedback Message",
+                            "path": "07-keyframes/feedback-message"
+                        },
+                        {
+                            "name": "Pull To Refresh",
+                            "path": "07-keyframes/pull-to-refresh"
+                        },
+                        {
+                            "name": "Miscellaneous",
+                            "path": "07-keyframes/miscellaneous"
+                        }
+                    ]
+                },
+
+                "section-ss-preview": {
+                    "name": "Service Studio Preview",
+                    "add-to-section-index": true,
+
+                    "assets": [
+                        {
+                            "name": "",
+                            "path": "08-servicestudio-preview/servicestudiopreview"
+                        },
+                        {
+                            "name": "",
+                            "path": "08-servicestudio-preview/deprecated-preview"
+                        }
+                    ]
+                },
+
+                "section-excluders": {
+                    "name": "Excluders",
+                    "add-to-section-index": false,
+
+                    "assets": [
+                        {
+                            "name": "",
+                            "path": "09-excluders/excluders"
+                        }
+                    ]
+                }
+
+            }
+        }
+    }
+}]
