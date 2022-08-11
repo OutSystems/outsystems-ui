@@ -1,3 +1,177 @@
+/*! =========================================================================== */
+/*!  OutSystems UI                                                              */
+/*!  For more information, visit www.outsystems.com/outsystems-ui               */
+/*!                                                                             */
+/*!  Root - CSS Variables                                                       */
+/*!  Resets                                                                     */
+/*!  HTML Elements                                                              */
+/*!     - Links                                                                 */
+/*!     - Images                                                                */
+/*!     - Headings                                                              */
+/*!  Page Layout                                                                */
+/*!     - Header                                                                */
+/*!     - Layout Native - Header                                                */
+/*!     - Layout Side - Header                                                  */
+/*!     - Menu                                                                  */
+/*!     - Layout Native - Menu                                                  */
+/*!     - Layout Side - Menu                                                    */
+/*!     - Menu - Header Logo                                                    */
+/*!     - Menu - App Menu Link                                                  */
+/*!     - Menu - App Login Info                                                 */
+/*!     - Content                                                               */
+/*!     - ThemeGrid_Container                                                   */
+/*!     - Section                                                               */
+/*!     - Login                                                                 */
+/*!     - iOS Scroll Bounce                                                     */
+/*!  Widgets                                                                    */
+/*!     - Inputs and TextAreas                                                  */
+/*!     - Switch                                                                */
+/*!     - Checkbox                                                              */
+/*!     - Dropdown                                                              */
+/*!     - Button                                                                */
+/*!     - List                                                                  */
+/*!     - List Item                                                             */
+/*!     - Table                                                                 */
+/*!     - Table - Sortable Icon                                                 */
+/*!     - Table - Bulk Actions                                                  */
+/*!     - Form                                                                  */
+/*!     - Upload                                                                */
+/*!     - Button Group                                                          */
+/*!     - Popover                                                               */
+/*!     - Popup                                                                 */
+/*!     - Feedback Message                                                      */
+/*!     - Radio Button                                                          */
+/*!  Patterns                                                                   */
+/*!     - Adaptive                                                              */
+/*!         - Columns                                                           */
+/*!         - Gallery                                                           */
+/*!         - Master Detail                                                     */
+/*!     - Content                                                               */
+/*!         - Accordion                                                         */
+/*!         - Accordion Item                                                    */
+/*!         - Alert                                                             */
+/*!         - Blank Slate                                                       */
+/*!         - Card                                                              */
+/*!         - Card Background                                                   */
+/*!         - CardItem                                                          */
+/*!         - Card Sectioned                                                    */
+/*!         - Chat Message                                                      */
+/*!         - Flip_Content                                                      */
+/*!         - Floating Content                                                  */
+/*!         - List Item Content                                                 */
+/*!         - Section                                                           */
+/*!         - Tag                                                               */
+/*!         - Tooltip                                                           */
+/*!         - User Avatar                                                       */
+/*!     - Interaction                                                           */
+/*!         - Action Sheet                                                      */
+/*!         - Animate                                                           */
+/*!         - Animated Label                                                    */
+/*!         - BottomSheet                                                       */
+/*!         - Carousel                                                          */
+/*!         - DatePicker                                                        */
+/*!         - Dropdown                                                          */
+/*!         - DropdownServerSide                                                */
+/*!         - DropdownServerSideItem                                            */
+/*!         - DropdownSearch                                                    */
+/*!         - DropdownTags                                                      */
+/*!         - Floating Actions                                                  */
+/*!         - Input With Icon                                                   */
+/*!         - Lightbox Image                                                    */
+/*!         - Notification                                                      */
+/*!         - Range Slider                                                      */
+/*!         - Scrollable Area                                                   */
+/*!         - Search                                                            */
+/*!         - Sidebar                                                           */
+/*!         - Stacked Cards                                                     */
+/*!         - Video                                                             */
+/*!     - Navigation                                                            */
+/*!         - Bottom Bar Item                                                   */
+/*!         - Breadcrumbs                                                       */
+/*!         - Pagination                                                        */
+/*!         - Section Index                                                     */
+/*!         - Submenu                                                           */
+/*!         - Tabs                                                              */
+/*!         - Timeline                                                          */
+/*!         - Wizard                                                            */
+/*!     - Numbers                                                               */
+/*!         - Badge                                                             */
+/*!         - Counter                                                           */
+/*!         - Icon Badge                                                        */
+/*!         - ProgressBar                                                       */
+/*!         - ProgressCircle                                                    */
+/*!         - Progress Circle Fraction                                          */
+/*!         - Rating                                                            */
+/*!     - Utilities                                                             */
+/*!         - Align Center                                                      */
+/*!         - Button Loading                                                    */
+/*!         - Center Content                                                    */
+/*!         - Margin Container                                                  */
+/*!         - Separator                                                         */
+/*!         - Pull to Refresh                                                   */
+/*!         - List Updating                                                     */
+/*!  Deprecated Patterns                                                        */
+/*!     - Content                                                               */
+/*!         - Accordion                                                         */
+/*!         - Submenu                                                           */
+/*!         - Tooltip                                                           */
+/*!     - Interaction                                                           */
+/*!         - Carousel                                                          */
+/*!         - DatePicker                                                        */
+/*!         - Dropdown Search and Tags, common styles                           */
+/*!         - Dropdown Search                                                   */
+/*!         - Dropdown Tags                                                     */
+/*!         - Horizontal Scroll                                                 */
+/*!         - Notification                                                      */
+/*!         - Sidebar                                                           */
+/*!     - Navigation                                                            */
+/*!         - Tabs                                                              */
+/*!     - Numbers                                                               */
+/*!         - Progress Bar                                                      */
+/*!         - Progress Circle                                                   */
+/*!     - Utilities                                                             */
+/*!         - ButtonLoading                                                     */
+/*!  Usefull Classes                                                            */
+/*!     - a11y (Accessibility)                                                  */
+/*!     - Colors                                                                */
+/*!         - Colors Brand                                                      */
+/*!         - Colors Neutral                                                    */
+/*!         - Colors Palette                                                    */
+/*!         - Colors Semantic                                                   */
+/*!     - Overlays                                                              */
+/*!     - Text                                                                  */
+/*!     - Typography                                                            */
+/*!     - Border                                                                */
+/*!         - Border Size                                                       */
+/*!         - Border Radius                                                     */
+/*!     - Margin                                                                */
+/*!     - Padding                                                               */
+/*!     - Shadow                                                                */
+/*!     - Box                                                                   */
+/*!         - Box Width                                                         */
+/*!         - Box Height                                                        */
+/*!     - Display                                                               */
+/*!         - Display Flex                                                      */
+/*!         - Display Align                                                     */
+/*!     - Images                                                                */
+/*!     - Overflow                                                              */
+/*!     - Visibility                                                            */
+/*!     - Position                                                              */
+/*!     - Position Absolute                                                     */
+/*!     - Miscellaneous                                                         */
+/*!  Screen Transitions                                                         */
+/*!     - Keyframes                                                             */
+/*!         - Animations                                                        */
+/*!         - Animate                                                           */
+/*!         - Button Loading                                                    */
+/*!         - List Item                                                         */
+/*!         - Feedback Message                                                  */
+/*!         - Pull To Refresh                                                   */
+/*!         - Miscellaneous                                                     */
+/*!  Service Studio Preview                                                     */
+/*!     - Deprecated block preview                                              */
+/*! =========================================================================== */
+
 // SCSS Setup variables
 @import '00-abstract/setup-global-vars';
 @import '00-abstract/setup-global-typography-vars';

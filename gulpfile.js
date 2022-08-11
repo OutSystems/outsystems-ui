@@ -7,7 +7,7 @@ const template = require('gulp-template');
 
 // Get dependencies tasks
 const cssTranspile = require('./gulp/tasks/ScssTanspile');
-const createScssFile = require('./gulp/tasks/CreateOSUI.css');
+const createScssFile = require('./gulp/tasks/CreateScssFile');
 const pattern = require('./gulp/tasks/NewPattern');
 const tsTranspile = require('./gulp/tasks/TsTanspile');
 
