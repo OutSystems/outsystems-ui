@@ -73,7 +73,7 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 		if (target) {
 			const isFocusable = OSFramework.Helper.Dom.Attribute.Get(target, 'tabindex');
 
-			if (isFocusable === null) {
+			if (isFocusable === undefined) {
 				OSFramework.Helper.Dom.Attribute.Set(target, 'tabindex', '0');
 				target.focus();
 				OSFramework.Helper.Dom.Attribute.Remove(target, 'tabindex');
