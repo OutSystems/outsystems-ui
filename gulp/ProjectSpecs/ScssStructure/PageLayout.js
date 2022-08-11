@@ -3,7 +3,7 @@
 **/
 const sectionInfo = {
     "name": "Page Layout",
-    "add-to-section-index": true,
+    "addToSectionIndex": true,
 
     "assets": [
         {

@@ -12,15 +12,17 @@ const patternsDeprecated = require('./PatternsDeprecated');
 **/
 const sectionInfo = {
     "name": "Patterns",
-    "add-to-section-index": true,
+    "addToSectionIndex": true,
 
-    "adaptive": patternsAdaptive.info,
-    "content": patternsContent.info,
-    "interaction": patternsInteraction.info,
-    "navigation": patternsNavigation.info,
-    "numbers": patternsNumbers.info,
-    "utilities": patternsUtilities.info,
-    "deprectaed": patternsDeprecated.info,
+    "assets": [
+        patternsAdaptive.info,
+        patternsContent.info,
+        patternsInteraction.info,
+        patternsNavigation.info,
+        patternsNumbers.info,
+        patternsUtilities.info,
+        patternsDeprecated.info
+    ]
 };
 
 // Expose section info!

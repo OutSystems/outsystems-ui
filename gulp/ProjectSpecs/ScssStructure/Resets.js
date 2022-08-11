@@ -3,7 +3,7 @@
 **/
 const sectionInfo = {
     "name": "Resets",
-    "add-to-section-index": true,
+    "addToSectionIndex": true,
 
     "assets": [
         {

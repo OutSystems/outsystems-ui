@@ -3,7 +3,7 @@
 **/
 const sectionInfo = {
     "name": "Usefull Classes",
-    "add-to-section-index": false,
+    "addToSectionIndex": true,
 
     "assets": [
         {

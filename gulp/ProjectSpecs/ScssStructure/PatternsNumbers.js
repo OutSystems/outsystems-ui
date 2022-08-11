@@ -3,7 +3,7 @@
 **/
 const sectionInfo = {
     "name": "Numbers",
-    "add-to-section-index": true,
+    "addToSectionIndex": true,
 
     "assets": [
         {

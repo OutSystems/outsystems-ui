@@ -3,7 +3,7 @@
 **/
 const sectionInfo = {
     "name": "Deprecated Patterns",
-    "add-to-section-index": true,
+    "addToSectionIndex": true,
 
     "assets": [
         {

@@ -3,7 +3,7 @@
 **/
 const sectionInfo = {
     "name": "Root - CSS Variables",
-    "add-to-section-index": true,
+    "addToSectionIndex": true,
 
     "assets": [
         {

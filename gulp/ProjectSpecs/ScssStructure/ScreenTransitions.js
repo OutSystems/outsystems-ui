@@ -3,7 +3,7 @@
 **/
 const sectionInfo = {
     "name": "Screen Transitions",
-    "add-to-section-index": true,
+    "addToSectionIndex": true,
 
     "assets": [
         {

@@ -3,7 +3,7 @@
 **/
 const sectionInfo = {
     "name": "Functions & Mixins",
-    "add-to-section-index": false,
+    "addToSectionIndex": false,
 
     "assets": [
         {

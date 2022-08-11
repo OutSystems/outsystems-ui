@@ -3,7 +3,7 @@
 **/
 const sectionInfo = {
     "name": "Excluders",
-    "add-to-section-index": false,
+    "addToSectionIndex": false,
 
     "assets": [
         {

@@ -3,7 +3,7 @@
 **/
 const sectionInfo = {
     "name": "HTML Elements",
-    "add-to-section-index": true,
+    "addToSectionIndex": true,
 
     "assets": [
         {

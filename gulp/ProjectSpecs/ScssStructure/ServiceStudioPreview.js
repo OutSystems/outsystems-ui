@@ -3,7 +3,7 @@
 **/
 const sectionInfo = {
     "name": "Service Studio Preview",
-    "add-to-section-index": false,
+    "addToSectionIndex": true,
 
     "assets": [
         {

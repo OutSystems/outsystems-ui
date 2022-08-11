@@ -3,7 +3,7 @@
 **/
 const sectionInfo = {
     "name": "SCSS Setup variables",
-    "add-to-section-index": false,
+    "addToSectionIndex": false,
 
     "assets": [
         {
