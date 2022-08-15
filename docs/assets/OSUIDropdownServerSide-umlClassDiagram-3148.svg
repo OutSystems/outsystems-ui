@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="206px" preserveAspectRatio="none" style="width:303px;height:206px;background:#CED4DA;" version="1.1" viewBox="0 0 303 206" width="303px" zoomAndPan="magnify"><defs/><g><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="261" x="5" y="19">Dot Executable: /opt/local/bin/dot</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="145" x="5" y="35.2969">File does not exist</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="291" x="5" y="51.5938">Cannot find Graphviz. You should try</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="67.8906"/><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="79" x="5" y="84.1875">@startuml</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="57" x="5" y="100.4844">testdot</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="72" x="5" y="116.7813">@enduml</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="133.0781"/><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="17" x="10" y="149.375">or</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="165.6719"/><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="227" x="5" y="181.9688">java -jar plantuml.jar -testdot</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="198.2656"/><!--MD5=[9388c1d3267b3ca4eae81678cb33cb1b]
+@startuml
+skinparam ClassArrowColor #272b30
+skinparam ClassBorderColor #272b30
+skinparam ClassBackgroundColor #fff
+skinparam BackgroundColor #ced4da
+hide empty methods
+hide empty fields
+class "OSUIDropdownServerSide" {
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    -_activeScreenElement : HTMLElement
+    -_balloonContainerElement : HTMLElement
+    -_balloonContentElement : HTMLElement
+    -_balloonFocusableElemsInFooter : HTMLElement[]
+    -_balloonFooterElement : HTMLElement
+    -_balloonOptionsAriaLabel : string
+    -_balloonOptionsWrapperElement : HTMLElement
+    -_balloonPositionClass : string
+    -_balloonSearchInputElement : HTMLElement
+    -_balloonSearchInputWrapperElement : HTMLElement
+    -_balloonWrapperElement : HTMLElement
+    -_closeDynamically : boolean
+    -_eventOnBodyClick : Generic
+    -_eventOnBodyScroll : Generic
+    -_eventOnClick : Generic
+    -_eventOnClickInputSearch : Generic
+    -_eventOnCloseTransitionEnd : Generic
+    -_eventOnkeyboardPress : Generic
+    -_eventOnOrientationChange : Generic
+    -_eventOnSearchInputBlur : Generic
+    -_eventOnSearchInputFocus : Generic
+    -_eventOnSpanFocus : Generic
+    -_eventOnTouchMove : Generic
+    -_eventOnWindowResize : Generic
+    -_focusTrapObject : FocusTrap
+    -_intersectionObserver : IntersectionObserver
+    -_isBlocked : boolean
+    -_isOpen : boolean
+    -_layoutElement : HTMLElement
+    -_platformEventInitializedCallback : OSGeneric
+    -_platformEventOnToggleCallback : OSGeneric
+    -_requestAnimationOnBodyScroll : number
+    -_selectValuesWrapper : HTMLElement
+    -_selectValuesWrapperAriaLabel : string
+    -_selfElementBoundingClientRect : DOMRect
+    -_windowWidth : number
+    +beNotifiedByChild(childId: string, notifiedTo: ChildNotifyActionType) : void
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +clear() : void
+    +disable() : void
+    +dispose() : void
+    +enable() : void
+    +equalsToID(patternId: string) : boolean
+    +getChildItems(type: string) : IDropdownServerSideItem[]
+    +getSelectedValues() : string
+    +registerCallback(eventName: string, callback: OSGeneric) : void
+    +setBalloonOptionsAriaLabel(value: string) : void
+    +setSelectAriaLabel(value: string) : void
+    +validation(isValid: boolean, validationMessage: string) : void
+    #finishBuild() : void
+    #getChild(childId: string) : IDropdownServerSideItem
+    #getChildByIndex(index: number, childType: string) : IDropdownServerSideItem
+    #getChildIndex(childId: string) : number
+    #setA11yProperties() : void
+    #setCallbacks() : void
+    #setChild(childId: string, childItem: IDropdownServerSideItem) : void
+    #setHtmlElements() : void
+    #unsetCallbacks() : void
+    #unsetChild(childId: string) : void
+    #unsetHtmlElements() : void
+    -_addErrorMessage(text: string) : void
+    -_close() : void
+    -_endOfCloseAnimation() : void
+    -_getRecommendedPosition(isIntersecting: boolean, boundingClientRect: DOMRect) : void
+    -_moveBallonElement() : void
+    -_onBodyClick(_eventType: string, event: MouseEvent) : void
+    -_onBodyScroll(_eventType: string, event: UIEvent) : void
+    -_onKeyboardPressed(event: KeyboardEvent) : void
+    -_onOrientationChange() : void
+    -_onSearchInputBlur() : void
+    -_onSearchInputClicked(event: MouseEvent) : void
+    -_onSearchInputFocus() : void
+    -_onSelectValuesWrapperClicked() : void
+    -_onSpanElementFocus() : void
+    -_onTouchMove(event: TouchEvent) : void
+    -_onWindowResize() : void
+    -_open() : void
+    -_optionItemHasBeenClicked(optionItemId: string) : void
+    -_optionItemKeyPressed(optionItemId: string) : void
+    -_setBalloonCoordinates(lookAtXPosition: boolean) : void
+    -_setBalloonWrapperExtendedClass(newExtendedClass: string, preExtendedClass: string) : void
+    -_setCssClasses() : void
+    -_setFocusSpanElements() : void
+    -_setNewOptionItem(optionItemId: string) : void
+    -_setObserver() : void
+    -_setUpEvents() : void
+    -_touchMove() : void
+    -_triggerToogleCalbackEvent() : void
+    -_unsetEvents() : void
+    -_unsetNewOptionItem(optionItemId: string) : void
+    -_unsetObserver() : void
+    -_updateBalloonAccessibilityElements() : void
+    -_updateOptionItemFocuStateOnKeyPress(optionItem: IDropdownServerSideItem, itemIndex: number) : void
+    -_updatePatternState() : void
+}
+abstract class "AbstractParent<OSUIDropdownServerSideConfig, IDropdownServerSideItem>" {
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    -_childIdsByType : Map<string, string>
+    -_childItemsByType : Object
+    {abstract} +beNotifiedByChild(childId: string, notifiedTo: string) : void
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    +getChildItems(type: string) : IDropdownServerSideItem[]
+    #finishBuild() : void
+    #getChild(childId: string) : IDropdownServerSideItem
+    #getChildByIndex(index: number, childType: string) : IDropdownServerSideItem
+    #getChildIndex(childId: string) : number
+    #setChild(childId: string, childItem: IDropdownServerSideItem) : void
+    #unsetChild(childId: string) : void
+}
+"AbstractParent<OSUIDropdownServerSideConfig, IDropdownServerSideItem>" <|- - "OSUIDropdownServerSide"
+interface "IDropdownServerSide" {
+    +isBuilt : boolean
+    +selfElement : HTMLElement
+    +uniqueId : string
+    +widgetId : string
+    +beNotifiedByChild(childId: string, notifiedTo: string) : void
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +clear() : void
+    +disable() : void
+    +dispose() : void
+    +enable() : void
+    +equalsToID(id: string) : boolean
+    +getSelectedValues() : string
+    +setProviderConfigs(providerConfigs: any) : void
+    +setProviderEvent(eventName: string, callback: Generic, uniqueId: string) : void
+    +unsetProviderEvent(eventId: string) : void
+    +validation(isValid: boolean, validationMessage: string) : void
+}
+"IDropdownServerSide" <|.. "OSUIDropdownServerSide"
+@enduml
+
+PlantUML version 1.2021.14(Fri Nov 12 16:46:50 UTC 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: null
+--></g></svg>

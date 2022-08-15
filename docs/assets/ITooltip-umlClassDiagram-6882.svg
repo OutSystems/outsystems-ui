@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="206px" preserveAspectRatio="none" style="width:303px;height:206px;background:#CED4DA;" version="1.1" viewBox="0 0 303 206" width="303px" zoomAndPan="magnify"><defs/><g><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="261" x="5" y="19">Dot Executable: /opt/local/bin/dot</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="145" x="5" y="35.2969">File does not exist</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="291" x="5" y="51.5938">Cannot find Graphviz. You should try</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="67.8906"/><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="79" x="5" y="84.1875">@startuml</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="57" x="5" y="100.4844">testdot</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="72" x="5" y="116.7813">@enduml</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="133.0781"/><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="17" x="10" y="149.375">or</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="165.6719"/><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="227" x="5" y="181.9688">java -jar plantuml.jar -testdot</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="198.2656"/><!--MD5=[6c9de015e4d1f59aa01fba42d716e254]
+@startuml
+skinparam ClassArrowColor #272b30
+skinparam ClassBorderColor #272b30
+skinparam ClassBackgroundColor #fff
+skinparam BackgroundColor #ced4da
+hide empty methods
+hide empty fields
+interface "ITooltip" {
+    +isBuilt : boolean
+    +selfElement : HTMLElement
+    +uniqueId : string
+    +widgetId : string
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +close() : void
+    +dispose() : void
+    +equalsToID(id: string) : boolean
+    +open() : void
+}
+interface "IPattern" {
+    +isBuilt : boolean
+    +selfElement : HTMLElement
+    +uniqueId : string
+    +widgetId : string
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +dispose() : void
+    +equalsToID(id: string) : boolean
+}
+"IPattern" <|- - "ITooltip"
+interface "IOpenable" {
+    +close() : void
+    +open() : void
+}
+"IOpenable" <|- - "ITooltip"
+class "Tooltip" {
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    -_eventBalloonWrapperOnMouseEnter : Generic
+    -_eventBalloonWrapperOnMouseLeave : Generic
+    -_eventIconOnMouseEnter : Generic
+    -_eventIconOnMouseLeave : Generic
+    -_eventOnBalloonClick : Generic
+    -_eventOnBlur : Generic
+    -_eventOnBodyClick : Generic
+    -_eventOnBodyScroll : Generic
+    -_eventOnClick : Generic
+    -_eventOnFocus : Generic
+    -_eventOnOpenedBalloon : Generic
+    -_eventOnWindowResize : Generic
+    -_intersectionObserver : IntersectionObserver
+    -_isBalloonWrapperMouseEnter : boolean
+    -_isIconMouseEnter : boolean
+    -_isOpen : boolean
+    -_isOpenedByApi : boolean
+    -_platformEventInitializedCallback : OSGeneric
+    -_platformEventOnToggleCallback : OSGeneric
+    -_requestAnimationOnBodyScroll : number
+    -_requestAnimationOnWindowResize : number
+    -_selfElementBoundingClientRect : DOMRect
+    -_tooltipBalloonContentActiveElem : HTMLElement
+    -_tooltipBalloonContentElem : HTMLElement
+    -_tooltipBalloonPositionClass : string
+    -_tooltipBalloonWrapperElem : HTMLElement
+    -_tooltipIconElem : HTMLElement
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +close() : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    +open() : void
+    +registerCallback(eventName: string, callback: OSGeneric) : void
+    #finishBuild() : void
+    #setA11YProperties() : void
+    #setCallbacks() : void
+    #setHtmlElements() : void
+    #unsetCallbacks() : void
+    #unsetHtmlElements() : void
+    -_moveBalloonElement() : void
+    -_onBalloonClick(e: MouseEvent) : void
+    -_onBalloonWrapperMouseEnter() : void
+    -_onBalloonWrapperMouseLeave() : void
+    -_onBlur() : void
+    -_onBodyClick(_eventName: string, e: MouseEvent) : void
+    -_onBodyScroll() : void
+    -_onClick(e: MouseEvent) : void
+    -_onFocus() : void
+    -_onIconMouseEnter() : void
+    -_onIconMouseLeave() : void
+    -_onOpenedBalloon() : void
+    -_onWindowResize() : void
+    -_setBalloonCoordinates() : void
+    -_setBalloonPosition(isIntersecting: boolean, boundingClientRect: DOMRect) : void
+    -_setBalloonWrapperExtendedClass(newExtendedClass: string, preExtendedClass: string) : void
+    -_setCssClasses() : void
+    -_setObserver() : void
+    -_setUpEvents() : void
+    -_triggerClose() : void
+    -_triggerOpen() : void
+    -_unsetEvents() : void
+    -_unsetObserver() : void
+    -_updateIsHover() : void
+    -_updateIsVisible() : void
+}
+"ITooltip" <|.. "Tooltip"
+@enduml
+
+PlantUML version 1.2021.14(Fri Nov 12 16:46:50 UTC 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: null
+--></g></svg>

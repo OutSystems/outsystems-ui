@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="206px" preserveAspectRatio="none" style="width:303px;height:206px;background:#CED4DA;" version="1.1" viewBox="0 0 303 206" width="303px" zoomAndPan="magnify"><defs/><g><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="261" x="5" y="19">Dot Executable: /opt/local/bin/dot</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="145" x="5" y="35.2969">File does not exist</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="291" x="5" y="51.5938">Cannot find Graphviz. You should try</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="67.8906"/><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="79" x="5" y="84.1875">@startuml</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="57" x="5" y="100.4844">testdot</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="72" x="5" y="116.7813">@enduml</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="133.0781"/><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="17" x="10" y="149.375">or</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="165.6719"/><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="227" x="5" y="181.9688">java -jar plantuml.jar -testdot</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="198.2656"/><!--MD5=[db8efdcc8be1db4f055bbde2d78de0ff]
+@startuml
+skinparam ClassArrowColor #272b30
+skinparam ClassBorderColor #272b30
+skinparam ClassBackgroundColor #fff
+skinparam BackgroundColor #ced4da
+hide empty methods
+hide empty fields
+abstract class "AbstractRangeSlider<P, C>" {
+    #providerEventsManagerInstance : IProviderEventManager
+    #_provider : P
+    #_providerInfo : ProviderInfo
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +checkAddedProviderEvents() : void
+    +checkPendingProviderEvents() : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    {abstract} +registerCallback(eventName: string, callback: OSGeneric) : void
+    {abstract} +setProviderConfigs(providerConfigs: any) : void
+    +setProviderEvent(eventName: string, callback: Generic, uniqueId: string, saveEvent: boolean) : void
+    {abstract} +setRangeIntervalChangeOnDragEnd() : void
+    +unsetProviderEvent(eventId: string) : void
+    +updateProviderEvents(providerInfo: ProviderInfo) : void
+    #finishBuild() : void
+    #triggerPlatformEventInitialized(platFormCallback: OSGeneric) : void
+}
+abstract class "AbstractProviderPattern<P, C>" {
+    #providerEventsManagerInstance : IProviderEventManager
+    #_provider : P
+    #_providerInfo : ProviderInfo
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +checkAddedProviderEvents() : void
+    +checkPendingProviderEvents() : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    {abstract} +registerCallback(eventName: string, callback: OSGeneric) : void
+    {abstract} +setProviderConfigs(providerConfigs: any) : void
+    +setProviderEvent(eventName: string, callback: Generic, uniqueId: string, saveEvent: boolean) : void
+    +unsetProviderEvent(eventId: string) : void
+    +updateProviderEvents(providerInfo: ProviderInfo) : void
+    #finishBuild() : void
+    #triggerPlatformEventInitialized(platFormCallback: OSGeneric) : void
+    -_getEventIndexFromArray(event: IProviderEvent) : number
+    -_handleProviderEventsAPI(eventName: string, callback: Generic, addEvent: boolean, event: IProviderEvent) : void
+}
+"AbstractProviderPattern<P, C>" <|- - "AbstractRangeSlider<P, C>"
+interface "IRangeSlider" {
+    +isBuilt : boolean
+    +selfElement : HTMLElement
+    +uniqueId : string
+    +widgetId : string
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +dispose() : void
+    +equalsToID(id: string) : boolean
+    +setProviderConfigs(providerConfigs: any) : void
+    +setProviderEvent(eventName: string, callback: Generic, uniqueId: string) : void
+    +unsetProviderEvent(eventId: string) : void
+}
+"IRangeSlider" <|.. "AbstractRangeSlider<P, C>"
+abstract class "AbstractNoUiSlider<C>" {
+    #eventProviderValueChanged : Generic
+    #platformEventInitialize : OSGeneric
+    #platformEventValueChange : OSOnValueChangeEvent
+    #providerEventsManagerInstance : IProviderEventManager
+    #providerOptions : noUiSliderOptions
+    #throttleTimer : any
+    #throttleTimeValue : number
+    #_provider : noUiSlider
+    #_providerInfo : ProviderInfo
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    -_isInterval : boolean
+    -_rangeSliderProviderElem : HTMLElement
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +checkAddedProviderEvents() : void
+    +checkPendingProviderEvents() : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    +getValue() : number | number[]
+    +registerCallback(eventName: string, callback: OSGeneric) : void
+    +setProviderConfigs(newConfigs: noUiSliderOptions) : void
+    +setProviderEvent(eventName: string, callback: Generic, uniqueId: string, saveEvent: boolean) : void
+    +setRangeIntervalChangeOnDragEnd() : void
+    +unsetProviderEvent(eventId: string) : void
+    +updateProviderEvents(providerInfo: ProviderInfo) : void
+    #finishBuild() : void
+    {abstract} #prepareConfigs() : void
+    #setHtmlElements() : void
+    #setInitialCSSClasses() : void
+    #triggerPlatformEventInitialized(platFormCallback: OSGeneric) : void
+    #unsetCallbacks() : void
+    #unsetHtmlElements() : void
+    -createProviderInstance() : void
+    -setInitialStates() : void
+    -updateRangeSlider() : void
+    -_setIsDisabled() : void
+    -_setOnValueChangeEvent(changeEvent: NoUISliderEvents) : void
+    -_setSize() : void
+    -_updateRangeValues() : void
+}
+"AbstractRangeSlider<P, C>" <|- - "AbstractNoUiSlider<C>"
+@enduml
+
+PlantUML version 1.2021.14(Fri Nov 12 16:46:50 UTC 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: null
+--></g></svg>

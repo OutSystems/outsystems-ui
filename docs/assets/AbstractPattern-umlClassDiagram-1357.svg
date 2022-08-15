@@ -1,0 +1,677 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="206px" preserveAspectRatio="none" style="width:303px;height:206px;background:#CED4DA;" version="1.1" viewBox="0 0 303 206" width="303px" zoomAndPan="magnify"><defs/><g><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="261" x="5" y="19">Dot Executable: /opt/local/bin/dot</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="145" x="5" y="35.2969">File does not exist</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="291" x="5" y="51.5938">Cannot find Graphviz. You should try</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="67.8906"/><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="79" x="5" y="84.1875">@startuml</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="57" x="5" y="100.4844">testdot</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="72" x="5" y="116.7813">@enduml</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="133.0781"/><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="17" x="10" y="149.375">or</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="165.6719"/><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="227" x="5" y="181.9688">java -jar plantuml.jar -testdot</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="198.2656"/><!--MD5=[3e915d4eea096961bb525d2635bc5769]
+@startuml
+skinparam ClassArrowColor #272b30
+skinparam ClassBorderColor #272b30
+skinparam ClassBackgroundColor #fff
+skinparam BackgroundColor #ced4da
+left to right direction
+hide empty methods
+hide empty fields
+abstract class "AbstractPattern<C>" {
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    -_configs : C
+    -_isBuilt : boolean
+    -_uniqueId : string
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    #finishBuild() : void
+    #_unsetCommonHtmlElements() : void
+    -_setCommonHtmlElements() : void
+}
+interface "IPattern" {
+    +isBuilt : boolean
+    +selfElement : HTMLElement
+    +uniqueId : string
+    +widgetId : string
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +dispose() : void
+    +equalsToID(id: string) : boolean
+}
+"IPattern" <|.. "AbstractPattern<C>"
+abstract class "AbstractChild<C, PT>" {
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    -_isFirstChild : boolean
+    -_isLastChild : boolean
+    -_parentId : string
+    -_parentObject : PT
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    #finishBuild() : void
+    #notifyParent(actionType: string) : void
+    #setParentInfo(parentSelector: string, getPatternByIdAPI: Function, canBeOrphan: boolean) : void
+}
+"AbstractPattern<C>" <|- - "AbstractChild<C, PT>"
+abstract class "AbstractParent<C, CT>" {
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    -_childIdsByType : Map<string, string>
+    -_childItemsByType : Object
+    {abstract} +beNotifiedByChild(childId: string, notifiedTo: string) : void
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    +getChildItems(type: string) : CT[]
+    #finishBuild() : void
+    #getChild(childId: string) : CT
+    #getChildByIndex(index: number, childType: string) : CT
+    #getChildIndex(childId: string) : number
+    #setChild(childId: string, childItem: CT) : void
+    #unsetChild(childId: string) : void
+}
+"AbstractPattern<C>" <|- - "AbstractParent<C, CT>"
+abstract class "AbstractProviderPattern<P, C>" {
+    #providerEventsManagerInstance : IProviderEventManager
+    #_provider : P
+    #_providerInfo : ProviderInfo
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +checkAddedProviderEvents() : void
+    +checkPendingProviderEvents() : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    {abstract} +registerCallback(eventName: string, callback: OSGeneric) : void
+    {abstract} +setProviderConfigs(providerConfigs: any) : void
+    +setProviderEvent(eventName: string, callback: Generic, uniqueId: string, saveEvent: boolean) : void
+    +unsetProviderEvent(eventId: string) : void
+    +updateProviderEvents(providerInfo: ProviderInfo) : void
+    #finishBuild() : void
+    #triggerPlatformEventInitialized(platFormCallback: OSGeneric) : void
+    -_getEventIndexFromArray(event: IProviderEvent) : number
+    -_handleProviderEventsAPI(eventName: string, callback: Generic, addEvent: boolean, event: IProviderEvent) : void
+}
+"AbstractPattern<C>" <|- - "AbstractProviderPattern<P, C>"
+class "AnimatedLabel" {
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    -_eventAnimationStart : Generic
+    -_eventBlur : Generic
+    -_eventFocus : Generic
+    -_inputElement : HTMLInputElement | HTMLTextAreaElement
+    -_inputPhElement : HTMLElement
+    -_isLabelFocus : boolean
+    -_labelPhElement : HTMLElement
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    +updateOnRender() : void
+    #finishBuild() : void
+    #setCallbacks() : void
+    #setHtmlElements() : void
+    #unsetCallbacks() : void
+    #unsetHtmlElements() : void
+    -_addEvents() : void
+    -_inputAnimationStartCallback(e: AnimationEvent) : void
+    -_inputBlurCallback(evt: UIEvent) : void
+    -_inputFocusCallback(evt: UIEvent) : void
+    -_inputStateToggle(isFocus: boolean) : void
+    -_removeEvents() : void
+}
+"AbstractPattern<C>" <|- - "AnimatedLabel"
+class "BottomSheet" {
+    +springAnimationConfigs : Object
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    -_animateOnDragInstance : AnimateOnDrag
+    -_bottomSheetContentElem : HTMLElement
+    -_bottomSheetHeaderElem : HTMLElement
+    -_eventOnContentScroll : Generic
+    -_eventOnKeypress : Generic
+    -_focusableActiveElement : HTMLElement
+    -_focusTrapInstance : FocusTrap
+    -_gestureEventInstance : DragEvent
+    -_hasGestureEvents : boolean
+    -_isOpen : boolean
+    -_parentSelf : HTMLElement
+    -_platformEventOnToggle : OSOnToggleEvent
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +close() : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    +open() : void
+    +registerCallback(callback: Generic) : void
+    +removeGestureEvents() : void
+    #finishBuild() : void
+    #removeEventListeners() : void
+    #setA11yProperties() : void
+    #setCallbacks() : void
+    #setEventListeners() : void
+    #setGestureEvents(onGestureStart: GestureStart, onGestureMove: GestureMove, onGestureEnd: GestureEnd) : void
+    #setHtmlElements() : void
+    #setInitialOptions() : void
+    #unsetCallbacks() : void
+    #unsetHtmlElements() : void
+    -_handleFocusTrap() : void
+    -_handleGestureEvents() : void
+    -_handleShape(shape: ShapeTypes) : void
+    -_onContentScrollCallback() : void
+    -_onGestureEnd(offsetX: number, offsetY: number, timeTaken: number) : void
+    -_onGestureMove(x: number, y: number, offsetX: number, offsetY: number, evt: TouchEvent) : void
+    -_onGestureStart(x: number, y: number) : void
+    -_onkeypressCallback(e: KeyboardEvent) : void
+    -_toggleBottomSheet(isOpen: boolean) : void
+    -_toggleHandler(ShowHandler: boolean) : void
+    -_triggerOnToggleEvent() : void
+}
+"AbstractPattern<C>" <|- - "BottomSheet"
+class "ButtonLoading" {
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    -_buttonElement : HTMLElement
+    -_spinnerElement : HTMLElement
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    #finishBuild() : void
+    #setA11yProperties() : void
+    #setHtmlElements() : void
+    #unsetHtmlElements() : void
+    -_setInitialButtonState() : void
+    -_setIsLoading(isLoading: boolean) : void
+    -_setLoadingLabel(showSpinnerOnly: boolean) : void
+}
+"AbstractPattern<C>" <|- - "ButtonLoading"
+class "FlipContent" {
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    -_eventClick : Generic
+    -_eventKeydown : Generic
+    -_flipWrapperElement : HTMLElement
+    -_plataformEventFlip : OSFlipEvent
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    +registerCallback(callback: OSFlipEvent) : void
+    +showBackContent() : void
+    +showFrontContent() : void
+    +toggleFlipContent() : void
+    #finishBuild() : void
+    #setA11yProperties() : void
+    #setCallbacks() : void
+    #setHtmlElements() : void
+    #unsetCallbacks() : void
+    #unsetHtmlElements() : void
+    -_keydownCallback(e: KeyboardEvent) : void
+    -_removeEvents() : void
+    -_setEventHandlers() : void
+    -_setStartsFlipped() : void
+    -_toggleClasses() : void
+    -_triggerPlatformEvent() : void
+    -_updateA11yProperties() : void
+}
+"AbstractPattern<C>" <|- - "FlipContent"
+class "FloatingActions" {
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    -_bottomBar : HTMLElement
+    -_closeMethod : any
+    -_escException : any
+    -_eventkeyboard : any
+    -_eventToggleClick : any
+    -_firstButton : HTMLElement
+    -_floatingActions : HTMLElement
+    -_floatingActionsButton : HTMLElement
+    -_floatingActionsItem : HTMLElement
+    -_floatingActionsItems : HTMLElement[]
+    -_floatingAllLinks : HTMLAnchorElement[]
+    -_floatingItems : Map<string, IFloatingActionsItem>
+    -_insideBottomBar : boolean
+    -_iOSStopPropagation : any
+    -_isIOS : boolean
+    -_isOpen : boolean
+    -_lastButton : HTMLElement
+    -_onClick : OSGeneric
+    -_openMethod : any
+    +addFloatingActionItem(uniqueId: string, floatingActionItem: IFloatingActionsItem) : void
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: any) : void
+    +close() : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    +open() : void
+    +registerCallback(callback: OSGeneric) : void
+    +removeFloatingActionItem(floatingActionItemId: string) : void
+    #finishBuild() : void
+    -_checkIfInsideBottomBar() : void
+    -_handleEscException(e: KeyboardEvent) : void
+    -_onButtonKeypress(e: KeyboardEvent) : void
+    -_refreshFloatingActionItems() : void
+    -_setAccessibility() : void
+    -_setClasses() : void
+    -_setFocusTrap(e: KeyboardEvent) : void
+    -_setIsExpanded(IsExpanded: boolean) : void
+    -_setIsHover(IsHover: boolean) : void
+    -_setTabIndex(value: string) : void
+    -_setUpEvents() : void
+    -_setUpFloatingActions() : void
+    -_toggleClick() : void
+    -_triggerOnClickEvent() : void
+}
+"AbstractPattern<C>" <|- - "FloatingActions"
+class "FloatingActionsItem" {
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    -_floatingParent : IFloatingActions
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    +setAnimationDelay(value: number) : void
+    +setTabindex(value: string) : void
+    #finishBuild() : void
+}
+"AbstractPattern<C>" <|- - "FloatingActionsItem"
+class "Gallery" {
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    #finishBuild() : void
+    -_setItemsGap() : void
+    -_setRowItemsDesktop() : void
+    -_setRowItemsPhone() : void
+    -_setRowItemsTablet() : void
+}
+"AbstractPattern<C>" <|- - "Gallery"
+class "Notification" {
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    -_eventOnClick : Generic
+    -_eventOnKeypress : Generic
+    -_eventType : string
+    -_focusableActiveElement : HTMLElement
+    -_focusTrapInstance : FocusTrap
+    -_gestureEventInstance : SwipeEvent
+    -_hasGestureEvents : boolean
+    -_isOpen : boolean
+    -_parentSelf : HTMLElement
+    -_platformEventOnInitialize : OSInitializedEvent
+    -_platformEventOnToggle : OSOnToggleEvent
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: any) : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    +hide() : void
+    +onSwipeBottom() : void
+    +onSwipeLeft() : void
+    +onSwipeRight() : void
+    +onSwipeUp() : void
+    +registerCallback(eventName: string, callback: OSGeneric) : void
+    +removeGestureEvents() : void
+    +show() : void
+    #finishBuild() : void
+    #setA11YProperties() : void
+    #setCallbacks() : void
+    #setGestureEvents(onSwipeDownCallback: SwipeDown, onSwipeLeftCallback: SwipeLeft, onSwipeRightCallback: SwipeRight, onSwipeUpCallback: SwipeUp) : void
+    #setHtmlElements() : void
+    #setInitialStates() : void
+    #unsetCallbacks() : void
+    #unsetHtmlElements() : void
+    -_autoCloseNotification() : void
+    -_clickCallback(e: MouseEvent) : void
+    -_handleFocusTrap() : void
+    -_handleGestureEvents() : void
+    -_hideNotification() : void
+    -_keypressCallback(e: KeyboardEvent) : void
+    -_removeEvents() : void
+    -_showNotification() : void
+    -_triggerOnToggleEvent(isOpen: boolean) : void
+    -_updateA11yProperties() : void
+    -_updateCloseAfterTime(value: number) : void
+    -_updateInteractToClose(value: boolean) : void
+    -_updatePosition(position: string) : void
+    -_updateWidth(width: string) : void
+}
+"AbstractPattern<C>" <|- - "Notification"
+abstract class "AbstractProgress<C>" {
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    +resetProgressValue() : void
+    +setProgressValue(value: number) : void
+    {abstract} #addInitialAnimation() : void
+    #finishBuild() : void
+    {abstract} #setElementProgressValue(value: number) : void
+    #updateValueNow(progressValue: string) : void
+    -_setAccessibilityProps() : void
+}
+"AbstractPattern<C>" <|- - "AbstractProgress<C>"
+class "Rating" {
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    -_clonedPlaceholders : string
+    -_decimalValue : number
+    -_disabled : boolean
+    -_eventOnRatingClick : Generic
+    -_isHalfValue : boolean
+    -_platformEventOnSelect : OSOnSelectEvent
+    -_ratingFieldsetElem : HTMLElement
+    -_ratingHasEventAdded : boolean
+    -_ratingIconStatesElem : HTMLElement
+    -_ratingInputName : string
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    +registerCallback(callback: OSOnSelectEvent) : void
+    #finishBuild() : void
+    #setCallbacks() : void
+    #setHtmlElements() : void
+    #unsetCallbacks() : void
+    #unsetHtmlElements() : void
+    -_createItems() : void
+    -_getDecimalValue(value: number) : number
+    -_getIsHalfValue(value: number) : boolean
+    -_getValue() : number
+    -_handlePlaceholders() : void
+    -_manageRatingEvent() : void
+    -_ratingOnClick(e: MouseEvent) : void
+    -_removeEvents() : void
+    -_renderItem(index: number) : void
+    -_setFieldsetDisabledStatus(isDisabled: boolean) : void
+    -_setInitialCssClasses() : void
+    -_setInitialPropertiesValues() : void
+    -_setIsDisabled(isDisabled: boolean) : void
+    -_setIsEdit() : void
+    -_setScale() : void
+    -_setSize(oldSize: string) : void
+    -_setValue(triggerEvent: boolean) : void
+    -_triggerOnSelectEvent(value: number) : void
+}
+"AbstractPattern<C>" <|- - "Rating"
+class "Search" {
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    -_eventSearchGlassClick : Generic
+    -_globalEventBody : Generic
+    -_inputElem : HTMLInputElement
+    -_inputValue : string
+    -_isOpen : boolean
+    -_platformEventCollapse : OSOnCollapseEvent
+    -_searchGlass : HTMLElement
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +close() : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    +open() : void
+    +registerCallback(callback: OSOnCollapseEvent) : void
+    #finishBuild() : void
+    #setA11yProperties() : void
+    #setCallbacks() : void
+    #setHtmlElements() : void
+    #setInitialStates() : void
+    #unsetCallbacks() : void
+    #unsetHtmlElements() : void
+    -_bodyClickCallback(e: MouseEvent) : void
+    -_checkInputValue() : void
+    -_onToggle(e: MouseEvent) : void
+    -_removeEvents() : void
+    -_triggerPlatformEvent() : void
+}
+"AbstractPattern<C>" <|- - "Search"
+class "Sidebar" {
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    -_animateOnDragInstance : AnimateOnDrag
+    -_currentDirectionCssClass : string
+    -_eventOverlayClick : Generic
+    -_eventSidebarKeypress : Generic
+    -_focusTrapInstance : FocusTrap
+    -_gestureEventInstance : DragEvent
+    -_hasGestureEvents : boolean
+    -_isOpen : boolean
+    -_onToggle : OSOnToggleEvent
+    -_parentSelf : HTMLElement
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +close() : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    +open() : void
+    +registerCallback(callback: OSOnToggleEvent) : void
+    +removeGestureEvents() : void
+    +toggleGestures(enableSwipe: boolean) : void
+    #finishBuild() : void
+    #setA11YProperties() : void
+    #setCallbacks() : void
+    #setGestureEvents(onGestureStartCallback: GestureStart, onGestureMoveCallback: GestureMove, onGestureEndCallback: GestureEnd) : void
+    #setHtmlElements() : void
+    #unsetCallbacks() : void
+    #unsetHtmlElements() : void
+    -_closeSidebar() : void
+    -_handleFocusTrap() : void
+    -_handleGestureEvents() : void
+    -_onGestureEnd(offsetX: number, offsetY: number, timeTaken: number) : void
+    -_onGestureMove(x: number, y: number, offsetX: number, offsetY: number, evt: TouchEvent) : void
+    -_onGestureStart(x: number, y: number) : void
+    -_openSidebar() : void
+    -_overlayClickCallback(_args: string, e: MouseEvent) : void
+    -_removeEvents() : void
+    -_setDirection() : void
+    -_setHasOverlay() : void
+    -_setInitialCssClasses() : void
+    -_setWidth() : void
+    -_sidebarKeypressCallback(e: KeyboardEvent) : void
+    -_toggle() : void
+    -_toggleGesturesSidebar(enableSwipes: boolean) : void
+    -_triggerOnToggleEvent() : void
+}
+"AbstractPattern<C>" <|- - "Sidebar"
+class "Submenu" {
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    -_dynamicallyOpening : boolean
+    -_eventClick : Generic
+    -_eventKeypress : Generic
+    -_eventOnMouseEnter : Generic
+    -_eventOnMouseLeave : Generic
+    -_globalEventBody : Generic
+    -_globalEventOpen : Generic
+    -_hasActiveLinks : boolean
+    -_hasElements : boolean
+    -_isActive : boolean
+    -_isOpen : boolean
+    -_submenuActiveLinksElement : HTMLElement
+    -_submenuAllLinksElement : HTMLAnchorElement[]
+    -_submenuHeaderElement : HTMLElement
+    -_submenuLinksElement : HTMLElement
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +close() : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    +open() : void
+    +updateOnRender() : void
+    #finishBuild() : void
+    #setA11yProperties() : void
+    #setCallbacks() : void
+    #setHtmlElements() : void
+    #setInitialStates() : void
+    #unsetCallbacks() : void
+    #unsetHtmlElements() : void
+    -_bodyClickCallback(_args: string, e: MouseEvent) : void
+    -_checkForActiveLinks() : void
+    -_clickCallback(e: MouseEvent) : void
+    -_keypressCallback(e: KeyboardEvent) : void
+    -_onMouseEnterCallback(e: MouseEvent) : void
+    -_onMouseLeaveCallback(e: MouseEvent) : void
+    -_openCallback(element: string) : void
+    -_removeActive() : void
+    -_removeEvents() : void
+    -_setActive() : void
+    -_setOpenOnHover() : void
+    -_show() : void
+    -_toggleSubmenu() : void
+    -_updateA11yProperties() : void
+}
+"AbstractPattern<C>" <|- - "Submenu"
+class "SwipeEvents" {
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    -_gestureMoveEvent : Generic
+    -_gestureStartEvent : Generic
+    -_swipableElement : HTMLElement
+    -_swipeDownCallback : Generic
+    -_swipeLeftCallback : Generic
+    -_swipeRightCallback : Generic
+    -_swipeUpCallback : Generic
+    -_threshold : number
+    -_velocity : number
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    +EventGestureEnd(offsetX: number, offsetY: number, timeTaken: number) : void
+    +EventGestureMove(event: TouchEvent) : void
+    +registerCallback(eventName: string, callback: OSGeneric) : void
+    #finishBuild() : void
+    #setCallbacks() : void
+    #setHtmlElements() : void
+    #unsetCallbacks() : void
+    #unsetHtmlElements() : void
+    -_removeEventListeners() : void
+    -_setEventListeners() : void
+    -_triggerSwipeDown() : void
+    -_triggerSwipeLeft() : void
+    -_triggerSwipeRight() : void
+    -_triggerSwipeUp() : void
+}
+"AbstractPattern<C>" <|- - "SwipeEvents"
+class "Tooltip" {
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    -_eventBalloonWrapperOnMouseEnter : Generic
+    -_eventBalloonWrapperOnMouseLeave : Generic
+    -_eventIconOnMouseEnter : Generic
+    -_eventIconOnMouseLeave : Generic
+    -_eventOnBalloonClick : Generic
+    -_eventOnBlur : Generic
+    -_eventOnBodyClick : Generic
+    -_eventOnBodyScroll : Generic
+    -_eventOnClick : Generic
+    -_eventOnFocus : Generic
+    -_eventOnOpenedBalloon : Generic
+    -_eventOnWindowResize : Generic
+    -_intersectionObserver : IntersectionObserver
+    -_isBalloonWrapperMouseEnter : boolean
+    -_isIconMouseEnter : boolean
+    -_isOpen : boolean
+    -_isOpenedByApi : boolean
+    -_platformEventInitializedCallback : OSGeneric
+    -_platformEventOnToggleCallback : OSGeneric
+    -_requestAnimationOnBodyScroll : number
+    -_requestAnimationOnWindowResize : number
+    -_selfElementBoundingClientRect : DOMRect
+    -_tooltipBalloonContentActiveElem : HTMLElement
+    -_tooltipBalloonContentElem : HTMLElement
+    -_tooltipBalloonPositionClass : string
+    -_tooltipBalloonWrapperElem : HTMLElement
+    -_tooltipIconElem : HTMLElement
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +close() : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    +open() : void
+    +registerCallback(eventName: string, callback: OSGeneric) : void
+    #finishBuild() : void
+    #setA11YProperties() : void
+    #setCallbacks() : void
+    #setHtmlElements() : void
+    #unsetCallbacks() : void
+    #unsetHtmlElements() : void
+    -_moveBalloonElement() : void
+    -_onBalloonClick(e: MouseEvent) : void
+    -_onBalloonWrapperMouseEnter() : void
+    -_onBalloonWrapperMouseLeave() : void
+    -_onBlur() : void
+    -_onBodyClick(_eventName: string, e: MouseEvent) : void
+    -_onBodyScroll() : void
+    -_onClick(e: MouseEvent) : void
+    -_onFocus() : void
+    -_onIconMouseEnter() : void
+    -_onIconMouseLeave() : void
+    -_onOpenedBalloon() : void
+    -_onWindowResize() : void
+    -_setBalloonCoordinates() : void
+    -_setBalloonPosition(isIntersecting: boolean, boundingClientRect: DOMRect) : void
+    -_setBalloonWrapperExtendedClass(newExtendedClass: string, preExtendedClass: string) : void
+    -_setCssClasses() : void
+    -_setObserver() : void
+    -_setUpEvents() : void
+    -_triggerClose() : void
+    -_triggerOpen() : void
+    -_unsetEvents() : void
+    -_unsetObserver() : void
+    -_updateIsHover() : void
+    -_updateIsVisible() : void
+}
+"AbstractPattern<C>" <|- - "Tooltip"
+class "TouchEvents" {
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    -_currentX : number
+    -_currentY : number
+    -_endEvent : Generic
+    -_endEventCallback : Generic
+    -_eventMoveCallback : Generic
+    -_eventStartCallback : Generic
+    -_moveEvent : Generic
+    -_startEvent : Generic
+    -_startTime : any
+    -_startX : number
+    -_startY : number
+    -_timeTaken : any
+    -_touchingElement : boolean
+    -_trackableElement : any
+    -_translateX : any
+    -_translateY : any
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    +registerCallback(eventName: string, callback: OSGeneric) : void
+    #finishBuild() : void
+    #setCallbacks() : void
+    #setHtmlElements() : void
+    #unsetCallbacks() : void
+    #unsetHtmlElements() : void
+    -_eventTouchEnd() : void
+    -_eventTouchMove(evt: TouchEvent) : void
+    -_eventTouchStart(evt: TouchEvent) : void
+    -_removeEventListeners() : void
+    -_setEventListeners() : void
+    -_triggerTouchEnd() : void
+    -_triggerTouchMove(event: TouchEvent) : void
+    -_triggerTouchStart() : void
+}
+"AbstractPattern<C>" <|- - "TouchEvents"
+@enduml
+
+PlantUML version 1.2021.14(Fri Nov 12 16:46:50 UTC 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: null
+--></g></svg>

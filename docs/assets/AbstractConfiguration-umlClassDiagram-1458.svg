@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="206px" preserveAspectRatio="none" style="width:303px;height:206px;background:#CED4DA;" version="1.1" viewBox="0 0 303 206" width="303px" zoomAndPan="magnify"><defs/><g><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="261" x="5" y="19">Dot Executable: /opt/local/bin/dot</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="145" x="5" y="35.2969">File does not exist</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="291" x="5" y="51.5938">Cannot find Graphviz. You should try</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="67.8906"/><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="79" x="5" y="84.1875">@startuml</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="57" x="5" y="100.4844">testdot</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="72" x="5" y="116.7813">@enduml</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="133.0781"/><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="17" x="10" y="149.375">or</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="165.6719"/><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="227" x="5" y="181.9688">java -jar plantuml.jar -testdot</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="198.2656"/><!--MD5=[7fb241b8996208ca6bfe7040c23b55df]
+@startuml
+skinparam ClassArrowColor #272b30
+skinparam ClassBorderColor #272b30
+skinparam ClassBackgroundColor #fff
+skinparam BackgroundColor #ced4da
+left to right direction
+hide empty methods
+hide empty fields
+abstract class "AbstractConfiguration" {
+    +ExtendedClass : string
+    +validateCanChange(_isBuilt: boolean, _key: string) : boolean
+    +validateDefault(_key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+abstract class "AbstractProviderConfiguration" {
+    +ExtendedClass : string
+    {abstract} +getProviderConfig() : any
+    +validateCanChange(_isBuilt: boolean, _key: string) : boolean
+    +validateDefault(_key: string, value: unknown) : unknown
+    #mergeConfigs(providerOptions: any, providerExtendedOptions: any) : any
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateExtensibilityConfigs(newConfigs: any, providerInfo: ProviderInfo) : any
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "AbstractProviderConfiguration"
+class "AccordionConfig" {
+    +ExtendedClass : string
+    +MultipleItems : boolean
+    +validateCanChange(_isBuilt: boolean, _key: string) : boolean
+    +validateDefault(key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "AccordionConfig"
+class "AccordionItemConfig" {
+    +ExtendedClass : string
+    +Icon : string
+    +IconPosition : string
+    +IsDisabled : boolean
+    +StartsExpanded : boolean
+    +validateCanChange(isBuilt: boolean, key: string) : boolean
+    +validateDefault(key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "AccordionItemConfig"
+class "AnimatedLabelConfig" {
+    +ExtendedClass : string
+    +validateCanChange(_isBuilt: boolean, _key: string) : boolean
+    +validateDefault(_key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "AnimatedLabelConfig"
+class "BottomSheetConfig" {
+    +ExtendedClass : string
+    +Shape : ShapeTypes
+    +ShowHandler : boolean
+    +validateCanChange(_isBuilt: boolean, _key: string) : boolean
+    +validateDefault(key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "BottomSheetConfig"
+class "ButtonLoadingConfig" {
+    +ExtendedClass : string
+    +IsLoading : boolean
+    +ShowLoadingAndLabel : boolean
+    +validateCanChange(_isBuilt: boolean, _key: string) : boolean
+    +validateDefault(_key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "ButtonLoadingConfig"
+class "OSUIDropdownServerSideConfig" {
+    +AllowMultipleSelection : boolean
+    +ExtendedClass : string
+    +IsDisabled : boolean
+    -_balloonMaxHeight : PropertiesValues
+    -_balloonOptionsArialabel : string
+    -_selectValuesWrapperAriaLabel : PropertiesValues
+    +validateCanChange(_isBuilt: boolean, _key: string) : boolean
+    +validateDefault(key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "OSUIDropdownServerSideConfig"
+class "DropdownServerSideItemConfig" {
+    +ExtendedClass : string
+    +IsSelected : boolean
+    +ItemId : string
+    +validateCanChange(_isBuilt: boolean, _key: string) : boolean
+    +validateDefault(key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "DropdownServerSideItemConfig"
+class "FlipContentConfig" {
+    +ExtendedClass : string
+    +FlipSelf : boolean
+    +IsFlipped : boolean
+    +validateCanChange(isBuilt: boolean, key: string) : boolean
+    +validateDefault(_key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "FlipContentConfig"
+class "FloatingActionsConfig" {
+    +ExtendedClass : string
+    +FloatingId : string
+    +IsExpanded : boolean
+    +IsHover : boolean
+    +validateCanChange(_isBuilt: boolean, _key: string) : boolean
+    +validateDefault(_key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "FloatingActionsConfig"
+class "FloatingActionsItemConfig" {
+    +ExtendedClass : string
+    +validateCanChange(_isBuilt: boolean, _key: string) : boolean
+    +validateDefault(_key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "FloatingActionsItemConfig"
+class "GalleryConfig" {
+    +ExtendedClass : string
+    +ItemsGap : string
+    +RowItemsDesktop : number
+    +RowItemsPhone : number
+    +RowItemsTablet : number
+    +validateCanChange(_isBuilt: boolean, _key: string) : boolean
+    +validateDefault(_key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "GalleryConfig"
+class "NotificationConfig" {
+    +CloseAfterTime : number
+    +ExtendedClass : string
+    +InteractToClose : boolean
+    +NeedsSwipes : boolean
+    +Position : string
+    +StartsOpen : boolean
+    +Width : string
+    +validateCanChange(isBuilt: boolean, key: string) : boolean
+    +validateDefault(key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "NotificationConfig"
+abstract class "ProgressConfiguration" {
+    +AnimateInitialProgress : boolean
+    +ExtendedClass : string
+    +InitialProgress : number
+    +Progress : number
+    +ProgressColor : string
+    +Shape : string
+    +Thickness : number
+    +TrailColor : string
+    +validateCanChange(_isBuilt: boolean, _key: string) : boolean
+    +validateDefault(_key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "ProgressConfiguration"
+class "RatingConfig" {
+    +ExtendedClass : string
+    +IsEdit : boolean
+    +RatingScale : number
+    +RatingValue : number
+    +Size : string
+    +validateCanChange(_isBuilt: boolean, _key: string) : boolean
+    +validateDefault(_key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "RatingConfig"
+class "SearchConfig" {
+    +ExtendedClass : string
+    +validateCanChange(_isBuilt: boolean, _key: string) : boolean
+    +validateDefault(_key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "SearchConfig"
+class "SectionIndexConfig" {
+    +ExtendedClass : string
+    +IsFixed : boolean
+    +SmoothScrolling : boolean
+    +validateCanChange(_isBuilt: boolean, _key: string) : boolean
+    +validateDefault(key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "SectionIndexConfig"
+class "SectionIndexItemConfig" {
+    +ExtendedClass : string
+    +ScrollToWidgetId : string
+    +validateCanChange(isBuilt: boolean, key: string) : boolean
+    +validateDefault(_key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "SectionIndexItemConfig"
+class "SidebarConfig" {
+    +Direction : Direction
+    +ExtendedClass : string
+    +HasOverlay : boolean
+    +StartsOpen : boolean
+    +Width : string
+    +validateCanChange(isBuilt: boolean, key: string) : boolean
+    +validateDefault(key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "SidebarConfig"
+class "SubmenuConfig" {
+    +ExtendedClass : string
+    +OpenOnHover : boolean
+    +validateCanChange(_isBuilt: boolean, _key: string) : boolean
+    +validateDefault(key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "SubmenuConfig"
+class "SwipeEventsConfig" {
+    +ExtendedClass : string
+    +WidgetId : string
+    +validateCanChange(_isBuilt: boolean, _key: string) : boolean
+    +validateDefault(_key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "SwipeEventsConfig"
+class "TabsConfig" {
+    +ExtendedClass : string
+    +Height : string
+    +JustifyHeaders : boolean
+    +StartingTab : number
+    +TabsOrientation : Orientation
+    +TabsVerticalPosition : Direction
+    +validateCanChange(isBuilt: boolean, key: string) : boolean
+    +validateDefault(key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "TabsConfig"
+class "TabsContentItemConfig" {
+    +ExtendedClass : string
+    +validateCanChange(_isBuilt: boolean, _key: string) : boolean
+    +validateDefault(_key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "TabsContentItemConfig"
+class "TabsHeaderItemConfig" {
+    +ExtendedClass : string
+    +validateCanChange(_isBuilt: boolean, _key: string) : boolean
+    +validateDefault(_key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "TabsHeaderItemConfig"
+class "TooltipConfig" {
+    +ExtendedClass : string
+    +IsHover : boolean
+    +Position : Position
+    +StartVisible : boolean
+    +validateCanChange(isBuilt: boolean, key: string) : boolean
+    +validateDefault(key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "TooltipConfig"
+class "TouchEventsConfig" {
+    +ExtendedClass : string
+    +WidgetId : string
+    +validateCanChange(_isBuilt: boolean, _key: string) : boolean
+    +validateDefault(_key: string, value: unknown) : unknown
+    #validateBoolean(value: boolean, defaultValue: boolean) : boolean
+    #validateDate(value: string | Date, defaultValue: string) : string | Date
+    #validateInRange(value: unknown, defaultValue: unknown, args: unknown[]) : unknown
+    #validateNumber(value: number, defaultValue: number) : number
+    #validateString(value: string, defaultValue: string) : string
+}
+"AbstractConfiguration" <|- - "TouchEventsConfig"
+@enduml
+
+PlantUML version 1.2021.14(Fri Nov 12 16:46:50 UTC 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: null
+--></g></svg>

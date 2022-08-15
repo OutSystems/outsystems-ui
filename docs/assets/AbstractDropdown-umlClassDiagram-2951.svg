@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="206px" preserveAspectRatio="none" style="width:303px;height:206px;background:#CED4DA;" version="1.1" viewBox="0 0 303 206" width="303px" zoomAndPan="magnify"><defs/><g><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="261" x="5" y="19">Dot Executable: /opt/local/bin/dot</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="145" x="5" y="35.2969">File does not exist</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="291" x="5" y="51.5938">Cannot find Graphviz. You should try</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="67.8906"/><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="79" x="5" y="84.1875">@startuml</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="57" x="5" y="100.4844">testdot</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="72" x="5" y="116.7813">@enduml</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="133.0781"/><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="17" x="10" y="149.375">or</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="165.6719"/><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="227" x="5" y="181.9688">java -jar plantuml.jar -testdot</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="198.2656"/><!--MD5=[70ea7030b983a4811f2e2d2dbf1db29c]
+@startuml
+skinparam ClassArrowColor #272b30
+skinparam ClassBorderColor #272b30
+skinparam ClassBackgroundColor #fff
+skinparam BackgroundColor #ced4da
+hide empty methods
+hide empty fields
+abstract class "AbstractDropdown<P, C>" {
+    #providerEventsManagerInstance : IProviderEventManager
+    #_provider : P
+    #_providerInfo : ProviderInfo
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +checkAddedProviderEvents() : void
+    +checkPendingProviderEvents() : void
+    {abstract} +clear() : void
+    {abstract} +disable() : void
+    +dispose() : void
+    {abstract} +enable() : void
+    +equalsToID(patternId: string) : boolean
+    {abstract} +getSelectedValues() : string
+    {abstract} +registerCallback(eventName: string, callback: OSGeneric) : void
+    {abstract} +setProviderConfigs(providerConfigs: any) : void
+    +setProviderEvent(eventName: string, callback: Generic, uniqueId: string, saveEvent: boolean) : void
+    +unsetProviderEvent(eventId: string) : void
+    +updateProviderEvents(providerInfo: ProviderInfo) : void
+    {abstract} +validation(isValid: boolean, validationMessage: string) : void
+    #finishBuild() : void
+    #triggerPlatformEventInitialized(platFormCallback: OSGeneric) : void
+}
+abstract class "AbstractProviderPattern<P, C>" {
+    #providerEventsManagerInstance : IProviderEventManager
+    #_provider : P
+    #_providerInfo : ProviderInfo
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +checkAddedProviderEvents() : void
+    +checkPendingProviderEvents() : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    {abstract} +registerCallback(eventName: string, callback: OSGeneric) : void
+    {abstract} +setProviderConfigs(providerConfigs: any) : void
+    +setProviderEvent(eventName: string, callback: Generic, uniqueId: string, saveEvent: boolean) : void
+    +unsetProviderEvent(eventId: string) : void
+    +updateProviderEvents(providerInfo: ProviderInfo) : void
+    #finishBuild() : void
+    #triggerPlatformEventInitialized(platFormCallback: OSGeneric) : void
+    -_getEventIndexFromArray(event: IProviderEvent) : number
+    -_handleProviderEventsAPI(eventName: string, callback: Generic, addEvent: boolean, event: IProviderEvent) : void
+}
+"AbstractProviderPattern<P, C>" <|- - "AbstractDropdown<P, C>"
+interface "IDropdown" {
+    +isBuilt : boolean
+    +selfElement : HTMLElement
+    +uniqueId : string
+    +widgetId : string
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +clear() : void
+    +disable() : void
+    +dispose() : void
+    +enable() : void
+    +equalsToID(id: string) : boolean
+    +getSelectedValues() : string
+    +setProviderConfigs(providerConfigs: any) : void
+    +setProviderEvent(eventName: string, callback: Generic, uniqueId: string) : void
+    +unsetProviderEvent(eventId: string) : void
+    +validation(isValid: boolean, validationMessage: string) : void
+}
+"IDropdown" <|.. "AbstractDropdown<P, C>"
+abstract class "AbstractVirtualSelect<C>" {
+    #providerEventsManagerInstance : IProviderEventManager
+    #_provider : any
+    #_providerInfo : ProviderInfo
+    #_selfElem : HTMLElement
+    #_virtualselectConfigs : VirtualSelectMethods
+    #_virtualselectOpts : VirtualSelectOpts
+    #_widgetId : string
+    -_eventOnWindowResize : Generic
+    -_onSelectedOptionEvent : Generic
+    -_platformEventInitializedCallback : OSGeneric
+    -_platformEventSelectedOptCallback : OSOnSelectEvent
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +checkAddedProviderEvents() : void
+    +checkPendingProviderEvents() : void
+    +clear() : void
+    +disable() : void
+    +dispose() : void
+    +enable() : void
+    +equalsToID(patternId: string) : boolean
+    +getSelectedValues() : string
+    +registerCallback(eventName: string, callback: OSGeneric) : void
+    +setProviderConfigs(newConfigs: VirtualSelectOpts) : void
+    +setProviderEvent(eventName: string, callback: Generic, uniqueId: string, saveEvent: boolean) : void
+    +togglePopup(isEnabled: boolean) : void
+    +unsetProviderEvent(eventId: string) : void
+    +updateProviderEvents(providerInfo: ProviderInfo) : void
+    +validation(isValid: boolean, validationMessage: string) : void
+    #createProviderInstance() : void
+    #finishBuild() : void
+    {abstract} #getSelectedOptionsStructure() : string
+    {abstract} #prepareConfigs() : void
+    #redraw() : void
+    #setCallbacks() : void
+    #triggerPlatformEventInitialized(platFormCallback: OSGeneric) : void
+    #unsetCallbacks() : void
+    -_addErrorMessage(text: string) : void
+    -_manageAttributes() : void
+    -_manageDisableStatus() : void
+    -_onSelectedOption() : void
+    -_onWindowResize() : void
+    -_setElementId() : void
+    -_setUpEvents() : void
+    -_unsetEvents() : void
+}
+"AbstractDropdown<P, C>" <|- - "AbstractVirtualSelect<C>"
+@enduml
+
+PlantUML version 1.2021.14(Fri Nov 12 16:46:50 UTC 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: null
+--></g></svg>

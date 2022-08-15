@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="206px" preserveAspectRatio="none" style="width:303px;height:206px;background:#CED4DA;" version="1.1" viewBox="0 0 303 206" width="303px" zoomAndPan="magnify"><defs/><g><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="261" x="5" y="19">Dot Executable: /opt/local/bin/dot</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="145" x="5" y="35.2969">File does not exist</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="291" x="5" y="51.5938">Cannot find Graphviz. You should try</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="67.8906"/><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="79" x="5" y="84.1875">@startuml</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="57" x="5" y="100.4844">testdot</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="72" x="5" y="116.7813">@enduml</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="133.0781"/><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="17" x="10" y="149.375">or</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="165.6719"/><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="227" x="5" y="181.9688">java -jar plantuml.jar -testdot</text><text fill="#33FF02" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="0" x="10" y="198.2656"/><!--MD5=[f18fdb4dfbddf11a86c60b584421b7cb]
+@startuml
+skinparam ClassArrowColor #272b30
+skinparam ClassBorderColor #272b30
+skinparam ClassBackgroundColor #fff
+skinparam BackgroundColor #ced4da
+hide empty methods
+hide empty fields
+class "Sidebar" {
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    -_animateOnDragInstance : AnimateOnDrag
+    -_currentDirectionCssClass : string
+    -_eventOverlayClick : Generic
+    -_eventSidebarKeypress : Generic
+    -_focusTrapInstance : FocusTrap
+    -_gestureEventInstance : DragEvent
+    -_hasGestureEvents : boolean
+    -_isOpen : boolean
+    -_onToggle : OSOnToggleEvent
+    -_parentSelf : HTMLElement
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +close() : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    +open() : void
+    +registerCallback(callback: OSOnToggleEvent) : void
+    +removeGestureEvents() : void
+    +toggleGestures(enableSwipe: boolean) : void
+    #finishBuild() : void
+    #setA11YProperties() : void
+    #setCallbacks() : void
+    #setGestureEvents(onGestureStartCallback: GestureStart, onGestureMoveCallback: GestureMove, onGestureEndCallback: GestureEnd) : void
+    #setHtmlElements() : void
+    #unsetCallbacks() : void
+    #unsetHtmlElements() : void
+    -_closeSidebar() : void
+    -_handleFocusTrap() : void
+    -_handleGestureEvents() : void
+    -_onGestureEnd(offsetX: number, offsetY: number, timeTaken: number) : void
+    -_onGestureMove(x: number, y: number, offsetX: number, offsetY: number, evt: TouchEvent) : void
+    -_onGestureStart(x: number, y: number) : void
+    -_openSidebar() : void
+    -_overlayClickCallback(_args: string, e: MouseEvent) : void
+    -_removeEvents() : void
+    -_setDirection() : void
+    -_setHasOverlay() : void
+    -_setInitialCssClasses() : void
+    -_setWidth() : void
+    -_sidebarKeypressCallback(e: KeyboardEvent) : void
+    -_toggle() : void
+    -_toggleGesturesSidebar(enableSwipes: boolean) : void
+    -_triggerOnToggleEvent() : void
+}
+abstract class "AbstractPattern<SidebarConfig>" {
+    #_selfElem : HTMLElement
+    #_widgetId : string
+    -_configs : SidebarConfig
+    -_isBuilt : boolean
+    -_uniqueId : string
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +dispose() : void
+    +equalsToID(patternId: string) : boolean
+    #finishBuild() : void
+    #_unsetCommonHtmlElements() : void
+    -_setCommonHtmlElements() : void
+}
+"AbstractPattern<SidebarConfig>" <|- - "Sidebar"
+interface "ISidebar" {
+    +isBuilt : boolean
+    +selfElement : HTMLElement
+    +uniqueId : string
+    +widgetId : string
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +close() : void
+    +dispose() : void
+    +equalsToID(id: string) : boolean
+    +open() : void
+    +registerCallback(callback: OSGeneric) : void
+    +toggleGestures(enableSwipe: any) : void
+}
+"ISidebar" <|.. "Sidebar"
+interface "IDragEvent" {
+    +gestureEventInstance : DragEvent
+    +hasGestureEvents : boolean
+    +removeGestureEvents() : void
+    +setGestureEvents(onGestureStart: GestureStart, onGestureMove: GestureMove, onGestureEnd: GestureEnd) : any
+}
+"IDragEvent" <|.. "Sidebar"
+@enduml
+
+PlantUML version 1.2021.14(Fri Nov 12 16:46:50 UTC 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: null
+--></g></svg>
