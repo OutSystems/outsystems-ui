@@ -74,14 +74,15 @@ namespace Providers.Splide {
 				// Set the OnInitialized event, before the provider is mounted
 				this._setOnInitializedEvent();
 			}
-			// Init the provider
-			this._provider.mount();
 
 			// Set the OnSlideMoved event
 			this._setOnSlideMovedEvent();
 
 			// Set initial carousel width
 			this._setCarouselWidth();
+
+			// Init the provider
+			this._provider.mount();
 
 			// Update pagination class, in case navigation was changed
 			this._togglePaginationClass();
