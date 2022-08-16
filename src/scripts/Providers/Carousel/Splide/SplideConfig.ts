@@ -79,10 +79,7 @@ namespace Providers.Splide {
 				gap: this.ItemsGap,
 				start: this.StartingPosition,
 				snap: true,
-				dragMinThreshold: {
-					mouse: 300,
-					touch: 100,
-				},
+				dragMinThreshold: 30,
 			};
 
 			//Cleanning undefined properties
