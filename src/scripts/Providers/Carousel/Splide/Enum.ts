@@ -34,6 +34,14 @@ namespace Providers.Splide.Enum {
 	}
 
 	/**
+	 * Splide provider info
+	 */
+	export enum ProviderInfo {
+		Name = 'Splide',
+		Version = '3.6',
+	}
+
+	/**
 	 * Splide type API options
 	 */
 	export enum TypeOptions {

@@ -27,7 +27,7 @@ namespace Providers.Splide {
 		// Store if a List widget is used inside the CarouselItems placeholder
 		private _hasList: boolean;
 		// Store the onInitialized event
-		private _platformEventInitialized: OSFramework.Patterns.Carousel.Callbacks.OSOnInitializeEvent;
+		private _platformEventInitialized: OSFramework.GlobalCallbacks.OSGeneric;
 		// Store the onSlideMoved event
 		private _platformEventOnSlideMoved: OSFramework.Patterns.Carousel.Callbacks.OSOnSlideMovedEvent;
 		// Store initial provider options
@@ -53,12 +53,12 @@ namespace Providers.Splide {
 		}
 
 		// Method that encapsulates all methods needed to create a new Carousel
-		private _createProviderCarousel(triggerInitialize = true): void {
+		private _createProviderCarousel(): void {
 			// Call the following methods here, so that all DOM elements are iterated and ready to init the library
 			this._prepareCarouselItems();
 			this._providerOptions = this.configs.getProviderConfig();
 			// Init the Library
-			this._initProvider(triggerInitialize);
+			this._initProvider();
 		}
 
 		// Method to toggle the blockRender status, to avoid multiple renderings triggering changeProperty
@@ -67,13 +67,19 @@ namespace Providers.Splide {
 		}
 
 		// Method to init the provider
-		private _initProvider(triggerInitialize = true): void {
+		private _initProvider(): void {
+			// Init provider
 			this._provider = new window.Splide(this._carouselProviderElem, this._providerOptions);
 
-			if (triggerInitialize) {
-				// Set the OnInitialized event, before the provider is mounted
-				this._setOnInitializedEvent();
-			}
+			// Set provider Info to be used by setProviderConfigs API calls
+			this.updateProviderEvents({
+				name: Enum.ProviderInfo.Name,
+				version: Enum.ProviderInfo.Version,
+				supportedConfigs: this.provider, //this.provider will also contain all the supported lib configs
+			});
+
+			// Set the OnInitialized event, before the provider is mounted
+			this._setOnInitializedEvent();
 
 			// Set the OnSlideMoved event
 			this._setOnSlideMovedEvent();
@@ -116,7 +122,8 @@ namespace Providers.Splide {
 		// Method to set the OnInitializeEvent
 		private _setOnInitializedEvent(): void {
 			this._provider.on(Enum.SpliderEvents.Mounted, () => {
-				OSFramework.Helper.AsyncInvocation(this._platformEventInitialized, this.widgetId);
+				// Trigger platform's InstanceIntializedHandler client Action
+				this.triggerPlatformEventInitialized(this._platformEventInitialized);
 			});
 		}
 
@@ -380,6 +387,17 @@ namespace Providers.Splide {
 		}
 
 		/**
+		 * Method used to set all the extended Splide properties across the different types of instances
+		 *
+		 * @param {SplideConfig} newConfigs
+		 * @memberof OSUISplide
+		 */
+		public setProviderConfigs(newConfigs: SplideConfig): void {
+			this.configs.validateExtensibilityConfigs(newConfigs, this.providerInfo);
+			this.updateCarousel(true);
+		}
+
+		/**
 		 * Method to call the option API from the provider to toggle drag events
 		 *
 		 * @param {boolean} hasDrag
@@ -396,7 +414,7 @@ namespace Providers.Splide {
 		 * @param {boolean} [triggerInitialize=true]
 		 * @memberof OSUISplide
 		 */
-		public updateCarousel(keepCurrentIndex = true, triggerInitialize = true): void {
+		public updateCarousel(keepCurrentIndex = true): void {
 			// Check if provider is ready
 			if (typeof this._provider === 'object') {
 				this._provider.destroy();
@@ -407,7 +425,7 @@ namespace Providers.Splide {
 				this.configs.StartingPosition = this._currentIndex;
 			}
 			// Create Carousel again
-			this._createProviderCarousel(triggerInitialize);
+			this._createProviderCarousel();
 		}
 
 		/**
@@ -421,7 +439,7 @@ namespace Providers.Splide {
 
 				// Check if provider is ready
 				if (typeof this._provider === 'object') {
-					this.updateCarousel(false, false);
+					this.updateCarousel(false);
 				}
 			}
 		}

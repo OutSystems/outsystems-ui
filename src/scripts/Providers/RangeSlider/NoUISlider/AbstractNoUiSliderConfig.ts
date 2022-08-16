@@ -12,6 +12,10 @@ namespace Providers.RangeSlider.NoUiSlider {
 	 * 		.AbstractRangeSliderConfig}
 	 */
 	export abstract class AbstractNoUiSliderConfig extends OSFramework.Patterns.RangeSlider.AbstractRangeSliderConfig {
+		// Store configs set using extensibility
+		private _providerExtendedOptions: NoUiSliderOptions;
+		// Store the Provider Options
+		private _providerOptions: NoUiSliderOptions;
 		// Store rangeslider mode is in use
 		public rangeSliderMode: OSFramework.Patterns.RangeSlider.Enum.Mode;
 
@@ -23,8 +27,7 @@ namespace Providers.RangeSlider.NoUiSlider {
 		 * @memberof AbstractNoUiSliderConfig
 		 */
 		protected getCommonProviderConfig(): NoUiSliderOptions {
-			// eslint-disable-next-line prefer-const
-			let providerOptions = {
+			this._providerOptions = {
 				direction: OutSystems.OSUI.Utils.GetIsRTL()
 					? OSFramework.GlobalEnum.Direction.RTL
 					: OSFramework.GlobalEnum.Direction.LTR,
@@ -35,12 +38,7 @@ namespace Providers.RangeSlider.NoUiSlider {
 				tooltips: this.getTooltipFormat(),
 			};
 
-			//Cleanning undefined properties
-			Object.keys(providerOptions).forEach(
-				(key) => providerOptions[key] === undefined && delete providerOptions[key]
-			);
-
-			return providerOptions;
+			return this.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
 		}
 
 		/**
@@ -122,6 +120,17 @@ namespace Providers.RangeSlider.NoUiSlider {
 			}
 
 			return tooltipsFormat;
+		}
+
+		/**
+		 * Method to validate and save the external provider configs
+		 *
+		 * @param {NoUiSliderOptions} newConfigs
+		 * @param {ProviderInfo} providerInfo
+		 * @memberof AbstractNoUiSliderConfig
+		 */
+		public validateExtensibilityConfigs(newConfigs: NoUiSliderOptions, providerInfo: ProviderInfo): void {
+			this._providerExtendedOptions = super.validateExtensibilityConfigs(newConfigs, providerInfo);
 		}
 	}
 }

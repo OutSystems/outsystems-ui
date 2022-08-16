@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace Providers.Splide {
 	export class SplideConfig extends OSFramework.Patterns.Carousel.AbstractCarouselConfig {
+		// Store configs set using extensibility
+		private _providerExtendedOptions: SplideOpts;
+		// Store provider configs
+		private _providerOptions: SplideOpts;
+
 		private _getArrowConfig(): boolean {
 			let arrows: boolean;
 			switch (this.Navigation) {
@@ -56,8 +61,14 @@ namespace Providers.Splide {
 			return pagination;
 		}
 
+		/**
+		 * Method to get and merge internal and external provider configs
+		 *
+		 * @return {*}  {SplideOpts}
+		 * @memberof SplideConfig
+		 */
 		public getProviderConfig(): SplideOpts {
-			const providerOptions = {
+			this._providerOptions = {
 				arrows: this._getArrowConfig(),
 				breakpoints: {
 					768: {
@@ -82,12 +93,18 @@ namespace Providers.Splide {
 				dragMinThreshold: 30,
 			};
 
-			//Cleanning undefined properties
-			Object.keys(providerOptions).forEach(
-				(key) => providerOptions[key] === undefined && delete providerOptions[key]
-			);
+			return this.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
+		}
 
-			return providerOptions;
+		/**
+		 * Method to validate and save the external provider configs
+		 *
+		 * @param {SplideOpts} newConfigs
+		 * @param {ProviderInfo} providerInfo
+		 * @memberof SplideConfig
+		 */
+		public validateExtensibilityConfigs(newConfigs: SplideOpts, providerInfo: ProviderInfo): void {
+			this._providerExtendedOptions = super.validateExtensibilityConfigs(newConfigs, providerInfo);
 		}
 	}
 }

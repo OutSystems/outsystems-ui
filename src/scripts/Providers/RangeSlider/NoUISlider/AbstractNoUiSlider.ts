@@ -14,7 +14,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		private _rangeSliderProviderElem: HTMLElement;
 		// RangeSlider events
 		protected eventProviderValueChanged: OSFramework.GlobalCallbacks.Generic;
-		protected platformEventInitialize: OSFramework.Patterns.RangeSlider.Callbacks.OSInitializeEvent;
+		protected platformEventInitialize: OSFramework.GlobalCallbacks.OSGeneric;
 		protected platformEventValueChange: OSFramework.Patterns.RangeSlider.Callbacks.OSOnValueChangeEvent;
 		// Store the provider options
 		protected providerOptions: NoUiSliderOptions;
@@ -36,11 +36,6 @@ namespace Providers.RangeSlider.NoUISlider {
 			} else {
 				OSFramework.Helper.Dom.Enable(this._rangeSliderProviderElem);
 			}
-		}
-
-		// Method to set the OnInitializeEvent
-		private _setOnInitializedEvent(): void {
-			OSFramework.Helper.AsyncInvocation(this.platformEventInitialize, this.widgetId);
 		}
 
 		// Method to set the OnValueChangeEvent
@@ -89,11 +84,18 @@ namespace Providers.RangeSlider.NoUISlider {
 			// Init provider
 			this.provider = window.noUiSlider.create(this._rangeSliderProviderElem, this.providerOptions);
 
-			// Trigger platform's OnInitialize event (done by us, the library doesn't have a 'mount' event)
-			this._setOnInitializedEvent();
+			// Set provider Info to be used by setProviderConfigs API calls
+			this.updateProviderEvents({
+				name: RangeSlider.NoUiSlider.Enum.ProviderInfo.Name,
+				version: RangeSlider.NoUiSlider.Enum.ProviderInfo.Version,
+				supportedConfigs: this.provider, //this.provider will also contain all the supported lib configs
+			});
 
 			// Set OnValueChange event
 			this._setOnValueChangeEvent(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Slide);
+
+			// Trigger platform's InstanceIntializedHandler client Action
+			this.triggerPlatformEventInitialized(this.platformEventInitialize);
 		}
 
 		/**
@@ -186,6 +188,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 */
 		protected updateRangeSlider(): void {
 			this.provider.destroy();
+			this.providerOptions = this.configs.getProviderConfig();
 			this.createProviderInstance();
 			this.setInitialCSSClasses();
 		}
@@ -322,6 +325,18 @@ namespace Providers.RangeSlider.NoUISlider {
 						`${OSFramework.ErrorCodes.RangeSlider.FailRegisterCallback}:	The given '${eventName}' event name is not defined.`
 					);
 			}
+		}
+
+		/**
+		 * Method used to set all the extended NoUiSlider properties across the different types of instances
+		 *
+		 * @param {NoUiSliderOptions} newConfigs
+		 * @memberof AbstractNoUiSlider
+		 */
+		public setProviderConfigs(newConfigs: NoUiSliderOptions): void {
+			this.configs.validateExtensibilityConfigs(newConfigs, this.providerInfo);
+
+			this.updateRangeSlider();
 		}
 
 		/**
