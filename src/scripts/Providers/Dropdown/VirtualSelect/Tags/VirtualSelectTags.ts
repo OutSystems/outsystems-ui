@@ -15,7 +15,7 @@ namespace Providers.Dropdown.VirtualSelect.Tags {
 		 */
 		protected getSelectedOptionsStructure(): string {
 			// Store the options selected
-			const optionsSelected = this._virtualselectMethods.getSelectedOptions();
+			const optionsSelected = this._virtualselectConfigs.getSelectedOptions();
 
 			return optionsSelected.length > 0 ? JSON.stringify(optionsSelected) : '';
 		}
@@ -31,7 +31,7 @@ namespace Providers.Dropdown.VirtualSelect.Tags {
 			this._virtualselectOpts = this.configs.getProviderConfig();
 
 			// Instance will be Created!
-			super.createProviderInstance();
+			this.createProviderInstance();
 		}
 	}
 }

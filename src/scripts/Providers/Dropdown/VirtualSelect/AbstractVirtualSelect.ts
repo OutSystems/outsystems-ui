@@ -4,13 +4,15 @@ namespace Providers.Dropdown.VirtualSelect {
 		extends OSFramework.Patterns.Dropdown.AbstractDropdown<VirtualSelect, C>
 		implements IVirtualSelect
 	{
+		// Store the onResize event
+		private _eventOnWindowResize: OSFramework.GlobalCallbacks.Generic;
 		// Dropdown callback events
 		private _onSelectedOptionEvent: OSFramework.GlobalCallbacks.Generic;
 		private _platformEventInitializedCallback: OSFramework.GlobalCallbacks.OSGeneric;
 		private _platformEventSelectedOptCallback: OSFramework.Patterns.Dropdown.Callbacks.OSOnSelectEvent;
 
 		// Store a reference of available provider methods
-		protected _virtualselectMethods: VirtualSelectMethods;
+		protected _virtualselectConfigs: VirtualSelectMethods;
 		// Store the provider options
 		protected _virtualselectOpts: VirtualSelectOpts;
 
@@ -47,7 +49,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		// Manage the disable status of the pattern
 		private _manageDisableStatus(): void {
 			// Ensure that is closed!
-			this._virtualselectMethods.close();
+			this._virtualselectConfigs.close();
 
 			if (this.configs.IsDisabled) {
 				OSFramework.Helper.Dom.Attribute.Set(
@@ -70,6 +72,13 @@ namespace Providers.Dropdown.VirtualSelect {
 			);
 		}
 
+		// Close the dropdown if it's open!
+		private _onWindowResize() {
+			if (this.provider.isOpened()) {
+				this._virtualselectConfigs.close();
+			}
+		}
+
 		// Set the ElementId that is expected from VirtualSelect config
 		private _setElementId(): void {
 			// Store the ElementId where the provider will create the Dropdown
@@ -80,11 +89,26 @@ namespace Providers.Dropdown.VirtualSelect {
 		private _setUpEvents(): void {
 			// Add the event that will get the selected options values
 			this._selfElem.addEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
+
+			if (OSFramework.Helper.DeviceInfo.IsDesktop) {
+				// Set the WindowResize in order to close it if it's open!
+				OSFramework.Event.GlobalEventManager.Instance.addHandler(
+					OSFramework.Event.Type.WindowResize,
+					this._eventOnWindowResize
+				);
+			}
 		}
 
 		// Remove Pattern Events
 		private _unsetEvents(): void {
 			this._selfElem.removeEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
+
+			if (OSFramework.Helper.DeviceInfo.IsDesktop) {
+				OSFramework.Event.GlobalEventManager.Instance.removeHandler(
+					OSFramework.Event.Type.WindowResize,
+					this._eventOnWindowResize
+				);
+			}
 		}
 
 		/**
@@ -101,17 +125,25 @@ namespace Providers.Dropdown.VirtualSelect {
 			Again, this only happens when user change directly the URL! */
 			this.provider = Array.isArray(this.provider) ? this.provider[0] : this.provider;
 
-			this._virtualselectMethods = this.provider.$ele;
+			this._virtualselectConfigs = this.provider.$ele;
 			// Since at native devices we're detaching the balloon from pattern context we must set this attribute to it in order to be possible create a relation between pattern default structure and the detached balloon!
 			this.provider.$dropboxContainer.setAttribute(OSFramework.GlobalEnum.HTMLAttributes.Name, this.uniqueId);
+
+			// Set provider Info to be used by setProviderConfigs API calls
+			this.updateProviderEvents({
+				name: Enum.ProviderInfo.Name,
+				version: Enum.ProviderInfo.Version,
+				supportedConfigs: this._virtualselectConfigs,
+			});
 
 			// Add the pattern Events!
 			this._setUpEvents();
 
 			// Add attributes to the element if needed
 			this._manageAttributes();
+
 			// Trigger platform's InstanceIntializedHandler client Action
-			OSFramework.Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
+			this.triggerPlatformEventInitialized(this._platformEventInitializedCallback);
 		}
 
 		/**
@@ -135,7 +167,8 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * @memberof AbstractVirtualSelect
 		 */
 		protected setCallbacks(): void {
-			// Set the event callback reference
+			// Set the events callback reference
+			this._eventOnWindowResize = this._onWindowResize.bind(this);
 			this._onSelectedOptionEvent = this._onSelectedOption.bind(this);
 		}
 
@@ -146,8 +179,9 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * @memberof AbstractVirtualSelect
 		 */
 		protected unsetCallbacks(): void {
+			this._eventOnWindowResize = undefined;
 			this._onSelectedOptionEvent = undefined;
-			this._virtualselectMethods = undefined;
+			this._virtualselectConfigs = undefined;
 			this._virtualselectOpts = undefined;
 			this.provider = undefined;
 		}
@@ -161,7 +195,7 @@ namespace Providers.Dropdown.VirtualSelect {
 
 			this.prepareConfigs();
 
-			super.finishBuild();
+			this.finishBuild();
 		}
 
 		/**
@@ -212,7 +246,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * @memberof AbstractVirtualSelect
 		 */
 		public clear(): void {
-			this._virtualselectMethods.reset();
+			this._virtualselectConfigs.reset();
 		}
 
 		/**
@@ -297,6 +331,11 @@ namespace Providers.Dropdown.VirtualSelect {
 				default:
 					throw new Error(`The given '${eventName}' event name it's not defined.`);
 			}
+		}
+
+		public setProviderConfigs(newConfigs: VirtualSelectOpts): void {
+			this.configs.validateExtensibilityConfigs(newConfigs, this.providerInfo);
+			this.redraw();
 		}
 
 		/**

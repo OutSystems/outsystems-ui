@@ -26,7 +26,7 @@ namespace OSFramework.Event {
 		}
 
 		private _bodyTrigger(evt: PointerEvent): void {
-			super.trigger(GlobalEnum.HTMLEvent.Click, evt);
+			this.trigger(GlobalEnum.HTMLEvent.Click, evt);
 		}
 	}
 }

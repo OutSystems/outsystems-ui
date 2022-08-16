@@ -304,4 +304,12 @@ namespace OSFramework.GlobalEnum {
 		FocusTrapBottom = 'focus-trap-bottom',
 		FocusTrapTop = 'focus-trap-top',
 	}
+
+	export enum JavascriptTypes {
+		function = 'function',
+	}
+
+	export enum WarningMessages {
+		FeatureNotImplemented = 'This feature is not yet implemented!',
+	}
 }

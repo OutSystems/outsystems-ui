@@ -11,6 +11,12 @@ namespace Providers.Datepicker.Flatpickr {
 		// Store the language that will be assigned as a locale to the DatePicker
 		private _lang: string;
 
+		// Store configs set using extensibility
+		private _providerExtendedOptions: FlatpickrOptions;
+
+		// Store the Provider Options
+		private _providerOptions: FlatpickrOptions;
+
 		// Stores the ability to allow inputs to be editable or not
 		public AllowInput = false;
 
@@ -109,12 +115,17 @@ namespace Providers.Datepicker.Flatpickr {
 			return this.DateFormat;
 		}
 
-		// Method used to set all the global Flatpickr properties across the different types of instances
-		protected getCommonProviderConfigs(): FlatpickrOptions {
+		/**
+		 * Method used to get all the global Flatpickr properties across the different types of instances
+		 *
+		 * @return {*}  {FlatpickrOptions}
+		 * @memberof AbstractFlatpickrConfig
+		 */
+		public getCommonProviderConfigs(): FlatpickrOptions {
 			// Check the given server date format config
 			this._checkServerDateFormat();
 
-			const _flatpickrOpts = {
+			this._providerOptions = {
 				altFormat: this._checkAltFormat(),
 				altInput: true,
 				allowInput: this.AllowInput,
@@ -123,15 +134,30 @@ namespace Providers.Datepicker.Flatpickr {
 					this.TimeFormat !== OSFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable
 						? this.ServerDateFormat + ' H:i'
 						: this.ServerDateFormat,
-				locale: this._checkLocale(),
 				maxDate: OSFramework.Helper.Dates.IsNull(this.MaxDate) ? undefined : this.MaxDate,
 				minDate: OSFramework.Helper.Dates.IsNull(this.MinDate) ? undefined : this.MinDate,
 				onChange: this.OnChange,
 				time_24hr: this.TimeFormat === OSFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat,
 				weekNumbers: this.ShowWeekNumbers,
-			};
+			} as FlatpickrOptions;
 
-			return _flatpickrOpts as FlatpickrOptions;
+			// Make sure locale is not undefined, as when definig the providerOptions defaults in the costructor, the window.locale is no yet available
+			if (this._providerOptions.locale === undefined) {
+				this._providerOptions.locale = this._checkLocale();
+			}
+
+			return this.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
+		}
+
+		/**
+		 * Method to validate and save the external provider configs
+		 *
+		 * @param {FlatpickrOptions} newConfigs
+		 * @param {ProviderInfo} providerInfo
+		 * @memberof AbstractFlatpickrConfig
+		 */
+		public validateExtensibilityConfigs(newConfigs: FlatpickrOptions, providerInfo: ProviderInfo): void {
+			this._providerExtendedOptions = super.validateExtensibilityConfigs(newConfigs, providerInfo);
 		}
 
 		/**

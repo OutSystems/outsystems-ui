@@ -101,6 +101,13 @@ namespace Providers.Datepicker.Flatpickr {
 			// Init provider
 			this.provider = window.flatpickr(this._datePickerProviderInputElem, this._flatpickrOpts);
 
+			// Set provider Info to be used by setProviderConfigs API calls
+			this.updateProviderEvents({
+				name: Enum.ProviderInfo.Name,
+				version: Enum.ProviderInfo.Version,
+				supportedConfigs: this.provider.config,
+			});
+
 			// Set the needed HTML attributes
 			this._setAttributes();
 
@@ -131,7 +138,7 @@ namespace Providers.Datepicker.Flatpickr {
 			}
 
 			// Trigger platform's InstanceIntializedHandler client Action
-			OSFramework.Helper.AsyncInvocation(this._onInitializeCallbackEvent, this.widgetId);
+			this.triggerPlatformEventInitialized(this._onInitializeCallbackEvent);
 		}
 
 		/**
@@ -314,6 +321,18 @@ namespace Providers.Datepicker.Flatpickr {
 			if (this.provider !== undefined) {
 				this.redraw();
 			}
+		}
+
+		/**
+		 * Method used to set all the extended Flatpickr properties across the different types of instances
+		 *
+		 * @param {FlatpickrOptions} newConfigs
+		 * @memberof AbstractFlatpickr
+		 */
+		public setProviderConfigs(newConfigs: FlatpickrOptions): void {
+			this.configs.validateExtensibilityConfigs(newConfigs, this.providerInfo);
+
+			this.redraw();
 		}
 
 		/**

@@ -68,7 +68,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 			this._flatpickrOpts = this.configs.getProviderConfig();
 
 			// Instance will be Created!
-			super.createProviderInstance();
+			this.createProviderInstance();
 		}
 
 		/**
@@ -80,7 +80,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 		protected todayBtnClick(event: MouseEvent): void {
 			event.preventDefault();
 
-			super.jumpIntoToday();
+			this.jumpIntoToday();
 		}
 
 		public build(): void {

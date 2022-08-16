@@ -8,6 +8,10 @@ namespace Providers.Dropdown.VirtualSelect {
 	 * @extends {AbstractDropdownConfig}
 	 */
 	export abstract class AbstractVirtualSelectConfig extends OSFramework.Patterns.Dropdown.AbstractDropdownConfig {
+		// Store configs set using extensibility
+		private _providerExtendedOptions: VirtualSelectOpts;
+		// Store the Provider Options
+		private _providerOptions: VirtualSelectOpts;
 		public ElementId: string;
 		public NoResultsText: string;
 		public OptionsList: DropDownOption[];
@@ -75,19 +79,19 @@ namespace Providers.Dropdown.VirtualSelect {
 			}
 
 			// Set the library options
-			const vsOptions = {
+			this._providerOptions = {
 				ele: this.ElementId,
 				dropboxWrapper: OSFramework.Constants.Dot + OSFramework.GlobalEnum.CssClassElements.Layout,
 				hideClearButton: false,
 				labelRenderer: this._getOptionInfo.bind(this),
 				noOptionsText: this.NoResultsText,
 				noSearchResultsText: this.NoResultsText,
-				options: this.OptionsList,
+				options: this.OptionsList as [],
 				placeholder: this.Prompt,
 				search: true,
 				searchPlaceholderText: this.SearchPrompt,
 				selectAllOnlyVisible: true,
-				selectedValue: this._getSelectedValues(),
+				selectedValue: this._getSelectedValues() as [],
 				showDropboxAsPopup: this.ShowDropboxAsPopup,
 				silentInitialValueSet: true,
 				textDirection: OutSystems.OSUI.Utils.GetIsRTL()
@@ -96,7 +100,7 @@ namespace Providers.Dropdown.VirtualSelect {
 				updatePositionThrottle: 0,
 			};
 
-			return vsOptions as VirtualSelectOpts;
+			return this.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
 		}
 
 		// Override, Validate configs key values
@@ -125,6 +129,17 @@ namespace Providers.Dropdown.VirtualSelect {
 			}
 
 			return validatedValue;
+		}
+
+		/**
+		 * Method to validate and save the external provider configs
+		 *
+		 * @param {VirtualSelectOpts} newConfigs
+		 * @param {ProviderInfo} providerInfo
+		 * @memberof AbstractVirtualSelectConfig
+		 */
+		public validateExtensibilityConfigs(newConfigs: VirtualSelectOpts, providerInfo: ProviderInfo): void {
+			this._providerExtendedOptions = super.validateExtensibilityConfigs(newConfigs, providerInfo);
 		}
 
 		protected abstract _getSelectedValues(): string[];
