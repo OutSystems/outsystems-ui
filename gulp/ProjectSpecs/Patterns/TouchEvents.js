@@ -2,8 +2,8 @@
 * Pattern Info
 **/
 const patternInfo = {
-    "code-name": "TouchEvents",
-    "in-development": false,
+    "codeName": "TouchEvents",
+    "inDevelopment": false,
     "name": "Touch Events"
 };
 

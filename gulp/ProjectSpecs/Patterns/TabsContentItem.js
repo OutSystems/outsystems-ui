@@ -2,8 +2,8 @@
 * Pattern Info
 **/
 const patternInfo = {
-    "code-name": "TabsContentItem",
-    "in-development": false,
+    "codeName": "TabsContentItem",
+    "inDevelopment": false,
     "name": "Tabs Content Item"
 };
 

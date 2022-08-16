@@ -2,22 +2,24 @@
 * Pattern Info
 **/
 const patternInfo = {
-    "code-name": "Progress",
+    "codeName": "Progress",
     "section": "Numbers",
 
-    "bar": {
-        "code-name": "Bar",
-        "in-development": false,
-        "name": "Progress Bar",
-        "scss": "../scripts/OSFramework/Pattern/Progress/Bar/scss/progressbar",
-    },
-
-    "circle": {
-        "code-name": "Circle",
-        "in-development": false,
-        "name": "Progress Circle",
-        "scss": "../scripts/OSFramework/Pattern/Progress/Circle/scss/progresscircle"
-    }
+    "assets": [
+        {
+            "codeName": "Bar",
+            "inDevelopment": false,
+            "name": "Progress Bar",
+            "scss": "../scripts/OSFramework/Pattern/Progress/Bar/scss/progressbar",
+        },
+        
+        {
+            "codeName": "Circle",
+            "inDevelopment": false,
+            "name": "Progress Circle",
+            "scss": "../scripts/OSFramework/Pattern/Progress/Circle/scss/progresscircle"
+        }
+    ]
 };
 
 // Expose patterns info!

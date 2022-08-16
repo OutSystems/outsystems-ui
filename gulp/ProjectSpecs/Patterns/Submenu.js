@@ -2,8 +2,8 @@
 * Pattern Info
 **/
 const patternInfo = {
-    "code-name": "Submenu",
-    "in-development": false,
+    "codeName": "Submenu",
+    "inDevelopment": false,
     "name": "Submenu",
     "scss": "../scripts/OSFramework/Pattern/Submenu/scss/submenu",
     "section": "Navigation"

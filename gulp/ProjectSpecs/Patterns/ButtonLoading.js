@@ -2,8 +2,8 @@
 * Pattern Info
 **/
 const patternInfo = {
-    "code-name": "ButtonLoading",
-    "in-development": false,
+    "codeName": "ButtonLoading",
+    "inDevelopment": false,
     "name": "Button Loading",
     "scss": "../scripts/OSFramework/Pattern/ButtonLoading/scss/button-loading",
     "section": "Utilities"

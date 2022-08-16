@@ -2,8 +2,8 @@
 * Pattern Info
 **/
 const patternInfo = {
-    "code-name": "Carousel",
-    "in-development": false,
+    "codeName": "Carousel",
+    "inDevelopment": false,
     "name": "Carousel",
     "provider": {
         "name": "Splide",

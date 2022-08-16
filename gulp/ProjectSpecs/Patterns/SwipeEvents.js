@@ -2,8 +2,8 @@
 * Pattern Info
 **/
 const patternInfo = {
-    "code-name": "SwipeEvents",
-    "in-development": false,
+    "codeName": "SwipeEvents",
+    "inDevelopment": false,
     "name": "Swipe Events"
 };
 

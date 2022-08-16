@@ -28,8 +28,8 @@ const touchEvents = require('./TouchEvents');
 /* 
 * List of all patterns in OSFramework.OSUI.Patterns.*
 *
-* - "code-name": The used name in patterns folder and for the API file where 'API' will be concatenated to the name.
-* - "in-development": If true pattern will not be deployed into production mode.
+* - "codeName": The used name in patterns folder and for the API file where 'API' will be concatenated to the name.
+* - "inDevelopment": If true pattern will not be deployed into production mode.
 * - "name": The pattern name which will be used to name in the comments context (eg: css structure).
 * - "scss": The scss partial file path.
 *

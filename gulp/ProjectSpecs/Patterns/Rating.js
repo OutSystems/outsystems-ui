@@ -2,8 +2,8 @@
 * Pattern Info
 **/
 const patternInfo = {
-    "code-name": "Rating",
-    "in-development": false,
+    "codeName": "Rating",
+    "inDevelopment": false,
     "name": "Rating",
     "scss": "../scripts/OSFramework/Pattern/Rating/scss/rating",
     "section": "Numbers"

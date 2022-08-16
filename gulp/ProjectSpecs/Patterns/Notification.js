@@ -2,8 +2,8 @@
 * Pattern Info
 **/
 const patternInfo = {
-    "code-name": "Notification",
-    "in-development": false,
+    "codeName": "Notification",
+    "inDevelopment": false,
     "name": "Notification",
     "scss": "../scripts/OSFramework/Pattern/Notification/scss/notification",
     "section": "Interaction"

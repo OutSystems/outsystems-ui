@@ -2,8 +2,8 @@
 * Pattern Info
 **/
 const patternInfo = {
-    "code-name": "Sidebar",
-    "in-development": false,
+    "codeName": "Sidebar",
+    "inDevelopment": false,
     "name": "Sidebar",
     "scss": "../scripts/OSFramework/Pattern/Sidebar/scss/sidebar",
     "section": "Interaction"

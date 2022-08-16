@@ -2,8 +2,8 @@
 * Pattern Info
 **/
 const patternInfo = {
-    "code-name": "SectionIndexItem",
-    "in-development": false,
+    "codeName": "SectionIndexItem",
+    "inDevelopment": false,
     "name": "Section Index Item",
     "section": "Navigation"
 };

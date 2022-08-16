@@ -2,8 +2,8 @@
 * Pattern Info
 **/
 const patternInfo = {
-    "code-name": "SectionIndex",
-    "in-development": false,
+    "codeName": "SectionIndex",
+    "inDevelopment": false,
     "name": "Section Index",
     "scss": "../scripts/OSFramework/Pattern/SectionIndex/scss/sectionindex",
     "section": "Navigation"

@@ -2,10 +2,11 @@
 * Pattern Info
 **/
 const patternInfo =  {
-    "code-name": "DropdownServerSideItem",
-    "in-development": true,
+    "codeName": "DropdownServerSideItem",
+    "inDevelopment": true,
     "name": "Dropdown ServerSide Item",
-    "scss": "../scripts/OSFramework/Pattern/DropdownServerSideItem/scss/dropdownserversideitem"
+    "scss": "../scripts/OSFramework/Pattern/DropdownServerSideItem/scss/dropdownserversideitem",
+    "section": "Interaction",
 };
 
 // Expose patterns info!

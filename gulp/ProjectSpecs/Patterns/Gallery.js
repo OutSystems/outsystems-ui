@@ -2,8 +2,8 @@
 * Pattern Info
 **/
 const patternInfo = {
-    "code-name": "Gallery",
-    "in-development": false,
+    "codeName": "Gallery",
+    "inDevelopment": false,
     "name": "Gallery",
     "scss": "../scripts/OSFramework/Pattern/Gallery/scss/gallery",
     "section": "Adaptive"

@@ -2,8 +2,8 @@
 * Pattern Info
 **/
 const patternInfo = {
-    "code-name": "Tabs",
-    "in-development": false,
+    "codeName": "Tabs",
+    "inDevelopment": false,
     "name": "Tabs",
     "scss": "../scripts/OSFramework/Pattern/Tabs/scss/tabs",
     "section": "Navigation"

@@ -30,6 +30,9 @@ const sectionInfo = {
             "key": "dropdown"
         },
         {
+            "key": "dropdown-serverside-item"
+        },
+        {
             "name": "Floating Actions",
             "path": "04-patterns/03-interaction/floating-actions"
         },

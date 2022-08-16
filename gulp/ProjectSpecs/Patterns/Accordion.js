@@ -2,8 +2,8 @@
 * Pattern Info
 **/
 const patternInfo = { 
-	"code-name": "Accordion",
-	"in-development": false,
+	"codeName": "Accordion",
+	"inDevelopment": false,
 	"name": "Accordion",
 	"scss": "../scripts/OSFramework/Pattern/Accordion/scss/accordion",
 	"section": "Content"
