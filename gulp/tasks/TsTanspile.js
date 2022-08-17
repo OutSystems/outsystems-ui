@@ -21,7 +21,7 @@ function tsTranspile(envMode) {
     let tsResult;
     let tsProject = ts.createProject('tsconfig.json', {
         outDir: distFolder,
-        outFile: envMode + '-outsystems-ui.js',
+        outFile: envMode + '.OutSystemsUI.js',
     });
 
     if(envMode === envType.development) {
