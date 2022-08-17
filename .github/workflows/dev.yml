@@ -30,3 +30,4 @@ jobs:
               with:
                   # Commit message: in case we need to skip azure pipeline we should include [skip azurepipelines]. This needs to be tested though.
                   commit_message: Update documentation
+                  push_options: --force
