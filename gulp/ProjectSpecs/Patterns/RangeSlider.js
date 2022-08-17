@@ -13,7 +13,7 @@ const patternInfo = {
             "name": "Slider Single",
             "provider": {
                 "name": "NoUISlider",
-                "version": "v15.5.1"
+                "version": "v15.6.0"
             }
         },
         
@@ -23,7 +23,7 @@ const patternInfo = {
             "name": "Slider Interval",
             "provider": {
                 "name": "NoUISlider",
-                "version": "v15.5.1"
+                "version": "v15.6.0"
             }
         }
     ]
