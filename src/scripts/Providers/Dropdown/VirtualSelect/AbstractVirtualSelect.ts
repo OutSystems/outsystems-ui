@@ -231,7 +231,7 @@ namespace Providers.Dropdown.VirtualSelect {
 						this.redraw();
 						break;
 					case Enum.Properties.StartingSelection:
-						this.redraw();
+						console.warn(`The ${propertyName} can not be changed through onParameterChange.`);
 						break;
 				}
 			}
