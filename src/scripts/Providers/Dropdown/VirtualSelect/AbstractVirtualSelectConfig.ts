@@ -103,6 +103,14 @@ namespace Providers.Dropdown.VirtualSelect {
 			return this.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
 		}
 
+		// Override, validates if a given property can be changed.
+		public validateCanChange(isBuilt: boolean, key: string): boolean {
+			if (isBuilt) {
+				return key !== Enum.Properties.StartingSelection;
+			}
+			return true;
+		}
+
 		// Override, Validate configs key values
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;
