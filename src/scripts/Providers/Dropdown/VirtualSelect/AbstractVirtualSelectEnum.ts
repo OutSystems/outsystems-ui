@@ -34,7 +34,7 @@ namespace Providers.Dropdown.VirtualSelect.Enum {
 		OptionsList = 'OptionsList',
 		Prompt = 'Prompt',
 		SearchPrompt = 'SearchPrompt',
-		SelectedOptions = 'SelectedOptions',
+		StartingSelection = 'StartingSelection',
 	}
 
 	/**

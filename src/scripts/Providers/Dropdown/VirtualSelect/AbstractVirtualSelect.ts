@@ -207,10 +207,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			// If/When we've the dropdown outside an IsDataFetched IF and OnParametersChannge where we're receiving (for both cases) a JSON string that must be parsed into an Object
-			if (
-				(propertyName === Enum.Properties.OptionsList || propertyName === Enum.Properties.SelectedOptions) &&
-				typeof propertyValue === 'string'
-			) {
+			if (propertyName === Enum.Properties.OptionsList && typeof propertyValue === 'string') {
 				propertyValue = JSON.parse(propertyValue);
 			}
 
@@ -233,7 +230,7 @@ namespace Providers.Dropdown.VirtualSelect {
 					case Enum.Properties.SearchPrompt:
 						this.redraw();
 						break;
-					case Enum.Properties.SelectedOptions:
+					case Enum.Properties.StartingSelection:
 						this.redraw();
 						break;
 				}

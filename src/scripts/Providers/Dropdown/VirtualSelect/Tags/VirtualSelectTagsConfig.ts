@@ -19,9 +19,9 @@ namespace Providers.Dropdown.VirtualSelect.Tags {
 			const selectedKeyvalues = [];
 
 			// Has selected values
-			if (this.SelectedOptions.length > 0) {
+			if (this.StartingSelection.length > 0) {
 				// Get the selected key value
-				for (const option of this.SelectedOptions) {
+				for (const option of this.StartingSelection) {
 					selectedKeyvalues.push(option.value);
 				}
 			}
