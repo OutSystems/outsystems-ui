@@ -89,6 +89,8 @@ namespace Providers.Splide {
 				pagination: this._getPaginationConfig(),
 				gap: this.ItemsGap,
 				start: this.StartingPosition,
+				snap: true,
+				dragMinThreshold: 30,
 			};
 
 			return this.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
