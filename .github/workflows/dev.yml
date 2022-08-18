@@ -12,6 +12,8 @@ jobs:
         steps:
             # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
             - uses: actions/checkout@v3
+                with:
+                    token: ${{ secrets.PAT }}
 
             - name: Install graphviz
               run: sudo apt install -y graphviz
@@ -20,7 +22,7 @@ jobs:
               with:
                   node-version: 16
                   cache: 'npm'
-
+                  
             - run: npm install
             - run: npm run docs
 
@@ -29,6 +31,3 @@ jobs:
               with:
                   # Commit message: in case we need to skip azure pipeline we should include [skip azurepipelines]. This needs to be tested though.
                   commit_message: Update documentation
-                  push_options: --force
-                  commit_user_name: gnbm
-                  commit_user_email: goncalo.martins@outsystems.com
