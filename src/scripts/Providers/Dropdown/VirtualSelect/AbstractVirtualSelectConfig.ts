@@ -17,8 +17,8 @@ namespace Providers.Dropdown.VirtualSelect {
 		public OptionsList: DropDownOption[];
 		public Prompt: string;
 		public SearchPrompt: string;
-		public StartingSelection: DropDownOption[];
 		public ShowDropboxAsPopup = true;
+		public StartingSelection: DropDownOption[];
 
 		// Method used to check if an image or an icon should be added to the given option
 		private _checkForFigType(index: number): Enum.FigureType {
