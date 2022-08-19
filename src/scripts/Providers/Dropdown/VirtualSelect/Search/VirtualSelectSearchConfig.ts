@@ -21,16 +21,16 @@ namespace Providers.Dropdown.VirtualSelect.Search {
 			const selectedKeyvalues = [];
 
 			// Has selected values?
-			if (this.SelectedOptions.length > 0) {
+			if (this.StartingSelection.length > 0) {
 				// Check if it's multiple options
 				if (this.AllowMultipleSelection) {
 					// Get the selected key value
-					for (const option of this.SelectedOptions) {
+					for (const option of this.StartingSelection) {
 						selectedKeyvalues.push(option.value);
 					}
 				} else {
 					// It's Single option, set only the first given value
-					selectedKeyvalues.push(this.SelectedOptions[0].value);
+					selectedKeyvalues.push(this.StartingSelection[0].value);
 				}
 			}
 

@@ -17,7 +17,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		public OptionsList: DropDownOption[];
 		public Prompt: string;
 		public SearchPrompt: string;
-		public SelectedOptions: DropDownOption[];
+		public StartingSelection: DropDownOption[];
 		public ShowDropboxAsPopup = true;
 
 		// Method used to check if an image or an icon should be added to the given option
@@ -103,6 +103,14 @@ namespace Providers.Dropdown.VirtualSelect {
 			return this.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
 		}
 
+		// Override, validates if a given property can be changed.
+		public validateCanChange(isBuilt: boolean, key: string): boolean {
+			if (isBuilt) {
+				return key !== Enum.Properties.StartingSelection;
+			}
+			return true;
+		}
+
 		// Override, Validate configs key values
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;
@@ -120,7 +128,7 @@ namespace Providers.Dropdown.VirtualSelect {
 				case Enum.Properties.SearchPrompt:
 					validatedValue = this.validateString(value as string, undefined);
 					break;
-				case Enum.Properties.SelectedOptions:
+				case Enum.Properties.StartingSelection:
 					validatedValue = value as DropDownOption;
 					break;
 				default:
