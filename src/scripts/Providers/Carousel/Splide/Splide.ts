@@ -439,7 +439,7 @@ namespace Providers.Splide {
 
 				// Check if provider is ready
 				if (typeof this._provider === 'object') {
-					this.updateCarousel(false);
+					this.updateCarousel(true);
 				}
 			}
 		}
