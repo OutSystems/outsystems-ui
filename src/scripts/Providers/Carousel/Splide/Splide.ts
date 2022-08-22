@@ -384,7 +384,7 @@ namespace Providers.Splide {
 		 */
 		public setProviderConfigs(newConfigs: SplideConfig): void {
 			this.configs.validateExtensibilityConfigs(newConfigs, this.providerInfo);
-			this.updateCarousel(true);
+			this.updateCarousel();
 		}
 
 		/**
@@ -410,20 +410,17 @@ namespace Providers.Splide {
 		/**
 		 * Method used on the changeProperty for the options that require the Carousel to be destroyd and created again to properly update
 		 *
-		 * @param {boolean} [keepCurrentIndex=true]
-		 * @param {boolean} [triggerInitialize=true]
 		 * @memberof OSUISplide
 		 */
-		public updateCarousel(keepCurrentIndex = true): void {
+		public updateCarousel(): void {
 			// Check if provider is ready
 			if (typeof this._provider === 'object') {
 				this._provider.destroy();
 			}
 
-			if (keepCurrentIndex) {
-				// Keep same position after update
-				this.configs.StartingPosition = this._currentIndex;
-			}
+			// Keep same position after update
+			this.configs.StartingPosition = this._currentIndex;
+
 			// Create Carousel again
 			this._createProviderCarousel();
 		}
@@ -439,7 +436,7 @@ namespace Providers.Splide {
 
 				// Check if provider is ready
 				if (typeof this._provider === 'object') {
-					this.updateCarousel(true);
+					this.updateCarousel();
 				}
 			}
 		}
