@@ -9,7 +9,7 @@ namespace Providers.Splide {
 		implements OSFramework.Patterns.Carousel.ICarousel
 	{
 		// Store if the render callback should be prevented
-		private _blockRender: boolean;
+		private _blockOnRender = false;
 		// Store the List widget element
 		private _carouselListWidgetElem: HTMLElement;
 		// Store the placholder element
@@ -20,8 +20,6 @@ namespace Providers.Splide {
 		private _carouselTrackElem: HTMLElement;
 		// Store current carousel index;
 		private _currentIndex: number;
-		// Store the disable render async callback
-		private _eventOnDisableRender: OSFramework.GlobalCallbacks.Generic;
 		// Store the onResize event
 		private _eventOnResize: OSFramework.GlobalCallbacks.Generic;
 		// Store if a List widget is used inside the CarouselItems placeholder
@@ -59,11 +57,6 @@ namespace Providers.Splide {
 			this._providerOptions = this.configs.getProviderConfig();
 			// Init the Library
 			this._initProvider();
-		}
-
-		// Method to toggle the blockRender status, to avoid multiple renderings triggering changeProperty
-		private _disableBlockRender(): void {
-			this._blockRender = false;
 		}
 
 		// Method to init the provider
@@ -163,8 +156,6 @@ namespace Providers.Splide {
 		 * @memberof OSUISplide
 		 */
 		protected setCallbacks(): void {
-			// Bind this to the async callback
-			this._eventOnDisableRender = this._disableBlockRender.bind(this);
 			this._eventOnResize = this._setCarouselWidth.bind(this);
 
 			// Add event listener for window resize
@@ -226,7 +217,6 @@ namespace Providers.Splide {
 				this._eventOnResize
 			);
 
-			this._eventOnDisableRender = undefined;
 			this._eventOnResize = undefined;
 			this._platformEventInitialized = undefined;
 			this._platformEventOnSlideMoved = undefined;
@@ -276,7 +266,7 @@ namespace Providers.Splide {
 
 			if (this.isBuilt) {
 				// Block UpdateOnRender to avoid multiple triggers of provider.refresh()
-				this._blockRender = true;
+				this.toggleOnRender(true);
 
 				switch (propertyName) {
 					case OSFramework.Patterns.Carousel.Enum.Properties.StartingPosition:
@@ -305,7 +295,7 @@ namespace Providers.Splide {
 			}
 
 			// Unblock UpdateOnRender so that it is able to update on DOM changes inside Carousel content
-			OSFramework.Helper.AsyncInvocation(this._eventOnDisableRender, this.widgetId);
+			OSFramework.Helper.AsyncInvocation(this.toggleOnRender, false);
 		}
 
 		/**
@@ -408,6 +398,16 @@ namespace Providers.Splide {
 		}
 
 		/**
+		 * Method to toggle the _blockOnRender that enables/disables the OnRender update
+		 *
+		 * @param {boolean} blockOnRender
+		 * @memberof OSUISplide
+		 */
+		public toggleOnRender(blockOnRender: boolean): void {
+			this._blockOnRender = blockOnRender;
+		}
+
+		/**
 		 * Method used on the changeProperty for the options that require the Carousel to be destroyd and created again to properly update
 		 *
 		 * @param {boolean} [keepCurrentIndex=true]
@@ -434,7 +434,7 @@ namespace Providers.Splide {
 		 * @memberof OSUISplide
 		 */
 		public updateOnRender(): void {
-			if (!this._blockRender) {
+			if (this._blockOnRender === false) {
 				this.setInitialCssClasses();
 
 				// Check if provider is ready
