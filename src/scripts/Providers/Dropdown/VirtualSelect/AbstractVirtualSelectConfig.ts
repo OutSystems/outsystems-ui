@@ -13,6 +13,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		// Store the Provider Options
 		private _providerOptions: VirtualSelectOpts;
 		public ElementId: string;
+		public NoOptionsText: string;
 		public NoResultsText: string;
 		public OptionsList: DropDownOption[];
 		public Prompt: string;
@@ -84,7 +85,7 @@ namespace Providers.Dropdown.VirtualSelect {
 				dropboxWrapper: OSFramework.Constants.Dot + OSFramework.GlobalEnum.CssClassElements.Layout,
 				hideClearButton: false,
 				labelRenderer: this._getOptionInfo.bind(this),
-				noOptionsText: this.NoResultsText,
+				noOptionsText: this.NoOptionsText,
 				noSearchResultsText: this.NoResultsText,
 				options: this.OptionsList as [],
 				placeholder: this.Prompt,
@@ -116,6 +117,9 @@ namespace Providers.Dropdown.VirtualSelect {
 			let validatedValue = undefined;
 
 			switch (key) {
+				case Enum.Properties.NoOptionsText:
+					validatedValue = this.validateString(value as string, undefined);
+					break;
 				case Enum.Properties.NoResultsText:
 					validatedValue = this.validateString(value as string, undefined);
 					break;

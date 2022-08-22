@@ -218,6 +218,9 @@ namespace Providers.Dropdown.VirtualSelect {
 					case OSFramework.Patterns.Dropdown.Enum.Properties.IsDisabled:
 						this._manageDisableStatus();
 						break;
+					case Enum.Properties.NoOptionsText:
+						this.redraw();
+						break;
 					case Enum.Properties.NoResultsText:
 						this.redraw();
 						break;
