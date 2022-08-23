@@ -20,19 +20,7 @@ namespace Providers.RangeSlider.NoUISlider.SliderInterval {
 				connect: true,
 			};
 
-			// Merge both option objects => if objects have a property with the same name, then the right-most object property overwrites the previous one
-			// eslint-disable-next-line prefer-const
-			let noUiSliderOptions = {
-				...this.getCommonProviderConfig(),
-				...rangeSliderOptions,
-			};
-
-			//Cleanning undefined properties
-			Object.keys(noUiSliderOptions).forEach(
-				(key) => noUiSliderOptions[key] === undefined && delete noUiSliderOptions[key]
-			);
-
-			return noUiSliderOptions;
+			return this.mergeConfigs(this.getCommonProviderConfig(), rangeSliderOptions, this._providerExtendedOptions);
 		}
 	}
 }

@@ -88,7 +88,7 @@ namespace Providers.RangeSlider.NoUISlider {
 			this.updateProviderEvents({
 				name: RangeSlider.NoUiSlider.Enum.ProviderInfo.Name,
 				version: RangeSlider.NoUiSlider.Enum.ProviderInfo.Version,
-				supportedConfigs: this.provider, //this.provider will also contain all the supported lib configs
+				events: this.provider, //this.provider will also contain all the supported lib configs
 			});
 
 			// Set OnValueChange event
@@ -334,7 +334,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * @memberof AbstractNoUiSlider
 		 */
 		public setProviderConfigs(newConfigs: NoUiSliderOptions): void {
-			this.configs.validateExtensibilityConfigs(newConfigs, this.providerInfo);
+			this.configs.setExtensibilityConfigs(newConfigs);
 
 			this.updateRangeSlider();
 		}

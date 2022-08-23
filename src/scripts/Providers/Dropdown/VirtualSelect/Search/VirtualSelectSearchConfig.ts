@@ -48,17 +48,7 @@ namespace Providers.Dropdown.VirtualSelect.Search {
 				multiple: this.AllowMultipleSelection,
 			};
 
-			// Merge both option objects => if objects have a property with the same name, then the right-most object property overwrites the previous one
-			// eslint-disable-next-line prefer-const
-			let vsOptions = {
-				...super.getProviderConfig(),
-				...virtualSelectSearchOpts,
-			};
-
-			//Cleaning undefined properties
-			Object.keys(vsOptions).forEach((key) => vsOptions[key] === undefined && delete vsOptions[key]);
-
-			return vsOptions;
+			return this.mergeConfigs(super.getProviderConfig(), virtualSelectSearchOpts, this._providerExtendedOptions);
 		}
 
 		/**
