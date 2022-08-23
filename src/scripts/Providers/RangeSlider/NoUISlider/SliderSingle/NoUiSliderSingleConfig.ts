@@ -20,19 +20,11 @@ namespace Providers.RangeSlider.NoUISlider.SliderSingle {
 				connect: NoUiSlider.Enum.NoUiSliderConnectOptions.Lower,
 			};
 
-			// Merge both option objects => if objects have a property with the same name, then the right-most object property overwrites the previous one
-			// eslint-disable-next-line prefer-const
-			let noUiSliderOptions = {
-				...this.getCommonProviderConfig(),
-				...singleSliderOptions,
-			};
-
-			//Cleanning undefined properties
-			Object.keys(noUiSliderOptions).forEach(
-				(key) => noUiSliderOptions[key] === undefined && delete noUiSliderOptions[key]
+			return this.mergeConfigs(
+				this.getCommonProviderConfig(),
+				singleSliderOptions,
+				this._providerExtendedOptions
 			);
-
-			return noUiSliderOptions;
 		}
 	}
 }

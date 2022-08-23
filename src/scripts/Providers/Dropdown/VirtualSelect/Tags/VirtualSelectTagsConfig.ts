@@ -36,22 +36,12 @@ namespace Providers.Dropdown.VirtualSelect.Tags {
 		 * @memberof VirtualSelectTagsConfig
 		 */
 		public getProviderConfig(): VirtualSelectOpts {
-			const virtualSelectSearchOpts = {
+			const virtualSelectTagsOpts = {
 				multiple: true,
 				showValueAsTags: true,
 			};
 
-			// Merge both option objects => if objects have a property with the same name, then the right-most object property overwrites the previous one
-			// eslint-disable-next-line prefer-const
-			let vsOptions = {
-				...super.getProviderConfig(),
-				...virtualSelectSearchOpts,
-			};
-
-			//Cleaning undefined properties
-			Object.keys(vsOptions).forEach((key) => vsOptions[key] === undefined && delete vsOptions[key]);
-
-			return vsOptions;
+			return this.mergeConfigs(super.getProviderConfig(), virtualSelectTagsOpts, this._providerExtendedOptions);
 		}
 	}
 }

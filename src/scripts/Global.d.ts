@@ -84,7 +84,7 @@ declare global {
 	type ProviderInfo = {
 		name: string;
 		version: string;
-		supportedConfigs: ProviderConfigs;
+		events: ProviderConfigs;
 	};
 
 	type ProviderConfigs =
