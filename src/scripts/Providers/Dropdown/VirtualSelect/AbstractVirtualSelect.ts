@@ -133,7 +133,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			this.updateProviderEvents({
 				name: Enum.ProviderInfo.Name,
 				version: Enum.ProviderInfo.Version,
-				supportedConfigs: this._virtualselectConfigs,
+				supportedConfigs: VirtualSelect.options,
 			});
 
 			// Add the pattern Events!

@@ -105,7 +105,7 @@ namespace Providers.Datepicker.Flatpickr {
 			this.updateProviderEvents({
 				name: Enum.ProviderInfo.Name,
 				version: Enum.ProviderInfo.Version,
-				supportedConfigs: this.provider.config,
+				supportedConfigs: Flatpickr.options,
 			});
 
 			// Set the needed HTML attributes
