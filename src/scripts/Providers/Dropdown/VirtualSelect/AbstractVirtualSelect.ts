@@ -133,7 +133,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			this.updateProviderEvents({
 				name: Enum.ProviderInfo.Name,
 				version: Enum.ProviderInfo.Version,
-				supportedConfigs: this._virtualselectConfigs,
+				events: this._virtualselectConfigs,
 			});
 
 			// Add the pattern Events!
@@ -330,8 +330,14 @@ namespace Providers.Dropdown.VirtualSelect {
 			}
 		}
 
+		/**
+		 * Method used to set all the extended VirtualSelect properties across the different types of instances
+		 *
+		 * @param {VirtualSelectOpts} newConfigs
+		 * @memberof AbstractVirtualSelect
+		 */
 		public setProviderConfigs(newConfigs: VirtualSelectOpts): void {
-			this.configs.validateExtensibilityConfigs(newConfigs, this.providerInfo);
+			this.configs.setExtensibilityConfigs(newConfigs);
 			this.redraw();
 		}
 

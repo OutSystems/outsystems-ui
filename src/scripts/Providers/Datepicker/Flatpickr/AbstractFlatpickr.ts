@@ -105,7 +105,7 @@ namespace Providers.Datepicker.Flatpickr {
 			this.updateProviderEvents({
 				name: Enum.ProviderInfo.Name,
 				version: Enum.ProviderInfo.Version,
-				supportedConfigs: this.provider.config,
+				events: this.provider.config,
 			});
 
 			// Set the needed HTML attributes
@@ -330,7 +330,7 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @memberof AbstractFlatpickr
 		 */
 		public setProviderConfigs(newConfigs: FlatpickrOptions): void {
-			this.configs.validateExtensibilityConfigs(newConfigs, this.providerInfo);
+			this.configs.setExtensibilityConfigs(newConfigs);
 
 			this.redraw();
 		}

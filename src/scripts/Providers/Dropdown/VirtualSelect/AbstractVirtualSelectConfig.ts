@@ -8,10 +8,10 @@ namespace Providers.Dropdown.VirtualSelect {
 	 * @extends {AbstractDropdownConfig}
 	 */
 	export abstract class AbstractVirtualSelectConfig extends OSFramework.Patterns.Dropdown.AbstractDropdownConfig {
-		// Store configs set using extensibility
-		private _providerExtendedOptions: VirtualSelectOpts;
 		// Store the Provider Options
 		private _providerOptions: VirtualSelectOpts;
+		// Store configs set using extensibility
+		protected _providerExtendedOptions: VirtualSelectOpts;
 		public ElementId: string;
 		public NoResultsText: string;
 		public OptionsList: DropDownOption[];
@@ -100,7 +100,17 @@ namespace Providers.Dropdown.VirtualSelect {
 				updatePositionThrottle: 0,
 			};
 
-			return this.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
+			return this._providerOptions;
+		}
+
+		/**
+		 * Method to validate and save the external provider configs
+		 *
+		 * @param {VirtualSelectOpts} newConfigs
+		 * @memberof AbstractVirtualSelectConfig
+		 */
+		public setExtensibilityConfigs(newConfigs: VirtualSelectOpts): void {
+			this._providerExtendedOptions = newConfigs;
 		}
 
 		// Override, validates if a given property can be changed.
@@ -137,17 +147,6 @@ namespace Providers.Dropdown.VirtualSelect {
 			}
 
 			return validatedValue;
-		}
-
-		/**
-		 * Method to validate and save the external provider configs
-		 *
-		 * @param {VirtualSelectOpts} newConfigs
-		 * @param {ProviderInfo} providerInfo
-		 * @memberof AbstractVirtualSelectConfig
-		 */
-		public validateExtensibilityConfigs(newConfigs: VirtualSelectOpts, providerInfo: ProviderInfo): void {
-			this._providerExtendedOptions = super.validateExtensibilityConfigs(newConfigs, providerInfo);
 		}
 
 		protected abstract _getSelectedValues(): string[];

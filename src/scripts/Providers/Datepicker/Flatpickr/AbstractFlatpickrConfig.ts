@@ -11,11 +11,11 @@ namespace Providers.Datepicker.Flatpickr {
 		// Store the language that will be assigned as a locale to the DatePicker
 		private _lang: string;
 
-		// Store configs set using extensibility
-		private _providerExtendedOptions: FlatpickrOptions;
-
 		// Store the Provider Options
 		private _providerOptions: FlatpickrOptions;
+
+		// Store configs set using extensibility
+		protected _providerExtendedOptions: FlatpickrOptions;
 
 		// Stores the ability to allow inputs to be editable or not
 		public AllowInput = false;
@@ -146,18 +146,17 @@ namespace Providers.Datepicker.Flatpickr {
 				this._providerOptions.locale = this._checkLocale();
 			}
 
-			return this.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
+			return this._providerOptions;
 		}
 
 		/**
-		 * Method to validate and save the external provider configs
+		 * Method to set and save the extensibility provider configs
 		 *
 		 * @param {FlatpickrOptions} newConfigs
-		 * @param {ProviderInfo} providerInfo
 		 * @memberof AbstractFlatpickrConfig
 		 */
-		public validateExtensibilityConfigs(newConfigs: FlatpickrOptions, providerInfo: ProviderInfo): void {
-			this._providerExtendedOptions = super.validateExtensibilityConfigs(newConfigs, providerInfo);
+		public setExtensibilityConfigs(newConfigs: FlatpickrOptions): void {
+			this._providerExtendedOptions = newConfigs;
 		}
 
 		/**
