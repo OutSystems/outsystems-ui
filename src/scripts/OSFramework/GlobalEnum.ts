@@ -114,6 +114,7 @@ namespace OSFramework.GlobalEnum {
 	 * OutSystemsUI HTML Elements
 	 */
 	export enum HTMLElement {
+		Body = 'body',
 		Button = 'button',
 		Div = 'div',
 		FieldSet = 'fieldset',
