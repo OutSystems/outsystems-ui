@@ -434,8 +434,9 @@ namespace Providers.Splide {
 				// Check if provider is ready
 				if (typeof this._provider === 'object') {
 					// Keep same position after update
-					if (this._currentIndex !== undefined) {
-						this.configs.StartingPosition = this._currentIndex;
+					// Check autoplay config, as that triggers the provider onChange and our onRender event, but doesn't udpate the _currentIndex property.
+					if (this._currentIndex !== undefined || this.configs.AutoPlay === true) {
+						this.configs.StartingPosition = this.provider.index;
 					}
 
 					this.updateCarousel();
