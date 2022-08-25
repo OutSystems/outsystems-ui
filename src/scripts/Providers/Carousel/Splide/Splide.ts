@@ -295,7 +295,7 @@ namespace Providers.Splide {
 			}
 
 			// Unblock UpdateOnRender so that it is able to update on DOM changes inside Carousel content
-			OSFramework.Helper.AsyncInvocation(this.toggleOnRender, false);
+			OSFramework.Helper.AsyncInvocation(this.toggleOnRender.bind(this), false);
 		}
 
 		/**
@@ -408,7 +408,7 @@ namespace Providers.Splide {
 		}
 
 		/**
-		 * Method used on the changeProperty for the options that require the Carousel to be destroyd and created again to properly update
+		 * Method used on the changeProperty for the options that require the Carousel to be destroyed and created again to properly update
 		 *
 		 * @memberof OSUISplide
 		 */
@@ -417,9 +417,6 @@ namespace Providers.Splide {
 			if (typeof this._provider === 'object') {
 				this._provider.destroy();
 			}
-
-			// Keep same position after update
-			this.configs.StartingPosition = this._currentIndex;
 
 			// Create Carousel again
 			this._createProviderCarousel();
@@ -436,6 +433,11 @@ namespace Providers.Splide {
 
 				// Check if provider is ready
 				if (typeof this._provider === 'object') {
+					// Keep same position after update
+					if (this._currentIndex !== undefined) {
+						this.configs.StartingPosition = this._currentIndex;
+					}
+
 					this.updateCarousel();
 				}
 			}
