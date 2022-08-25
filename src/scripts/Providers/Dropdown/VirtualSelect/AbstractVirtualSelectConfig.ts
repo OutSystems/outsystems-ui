@@ -8,17 +8,18 @@ namespace Providers.Dropdown.VirtualSelect {
 	 * @extends {AbstractDropdownConfig}
 	 */
 	export abstract class AbstractVirtualSelectConfig extends OSFramework.Patterns.Dropdown.AbstractDropdownConfig {
-		// Store configs set using extensibility
-		private _providerExtendedOptions: VirtualSelectOpts;
 		// Store the Provider Options
 		private _providerOptions: VirtualSelectOpts;
+		// Store configs set using extensibility
+		protected _providerExtendedOptions: VirtualSelectOpts;
 		public ElementId: string;
+		public NoOptionsText: string;
 		public NoResultsText: string;
 		public OptionsList: DropDownOption[];
 		public Prompt: string;
 		public SearchPrompt: string;
-		public SelectedOptions: DropDownOption[];
 		public ShowDropboxAsPopup = true;
+		public StartingSelection: DropDownOption[];
 
 		// Method used to check if an image or an icon should be added to the given option
 		private _checkForFigType(index: number): Enum.FigureType {
@@ -81,10 +82,10 @@ namespace Providers.Dropdown.VirtualSelect {
 			// Set the library options
 			this._providerOptions = {
 				ele: this.ElementId,
-				dropboxWrapper: OSFramework.Constants.Dot + OSFramework.GlobalEnum.CssClassElements.Layout,
+				dropboxWrapper: OSFramework.GlobalEnum.HTMLElement.Body,
 				hideClearButton: false,
 				labelRenderer: this._getOptionInfo.bind(this),
-				noOptionsText: this.NoResultsText,
+				noOptionsText: this.NoOptionsText,
 				noSearchResultsText: this.NoResultsText,
 				options: this.OptionsList as [],
 				placeholder: this.Prompt,
@@ -100,7 +101,25 @@ namespace Providers.Dropdown.VirtualSelect {
 				updatePositionThrottle: 0,
 			};
 
-			return this.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
+			return this._providerOptions;
+		}
+
+		/**
+		 * Method to validate and save the external provider configs
+		 *
+		 * @param {VirtualSelectOpts} newConfigs
+		 * @memberof AbstractVirtualSelectConfig
+		 */
+		public setExtensibilityConfigs(newConfigs: VirtualSelectOpts): void {
+			this._providerExtendedOptions = newConfigs;
+		}
+
+		// Override, validates if a given property can be changed.
+		public validateCanChange(isBuilt: boolean, key: string): boolean {
+			if (isBuilt) {
+				return key !== Enum.Properties.StartingSelection;
+			}
+			return true;
 		}
 
 		// Override, Validate configs key values
@@ -108,6 +127,9 @@ namespace Providers.Dropdown.VirtualSelect {
 			let validatedValue = undefined;
 
 			switch (key) {
+				case Enum.Properties.NoOptionsText:
+					validatedValue = this.validateString(value as string, undefined);
+					break;
 				case Enum.Properties.NoResultsText:
 					validatedValue = this.validateString(value as string, undefined);
 					break;
@@ -120,7 +142,7 @@ namespace Providers.Dropdown.VirtualSelect {
 				case Enum.Properties.SearchPrompt:
 					validatedValue = this.validateString(value as string, undefined);
 					break;
-				case Enum.Properties.SelectedOptions:
+				case Enum.Properties.StartingSelection:
 					validatedValue = value as DropDownOption;
 					break;
 				default:
@@ -129,17 +151,6 @@ namespace Providers.Dropdown.VirtualSelect {
 			}
 
 			return validatedValue;
-		}
-
-		/**
-		 * Method to validate and save the external provider configs
-		 *
-		 * @param {VirtualSelectOpts} newConfigs
-		 * @param {ProviderInfo} providerInfo
-		 * @memberof AbstractVirtualSelectConfig
-		 */
-		public validateExtensibilityConfigs(newConfigs: VirtualSelectOpts, providerInfo: ProviderInfo): void {
-			this._providerExtendedOptions = super.validateExtensibilityConfigs(newConfigs, providerInfo);
 		}
 
 		protected abstract _getSelectedValues(): string[];

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace Providers.Splide {
 	export class SplideConfig extends OSFramework.Patterns.Carousel.AbstractCarouselConfig {
-		// Store configs set using extensibility
-		private _providerExtendedOptions: SplideOpts;
 		// Store provider configs
 		private _providerOptions: SplideOpts;
+		// Store configs set using extensibility
+		protected _providerExtendedOptions: SplideOpts;
 
 		private _getArrowConfig(): boolean {
 			let arrows: boolean;
@@ -89,18 +89,17 @@ namespace Providers.Splide {
 				dragMinThreshold: 30,
 			};
 
-			return this.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
+			return this.mergeConfigs(this._providerOptions, undefined, this._providerExtendedOptions);
 		}
 
 		/**
-		 * Method to validate and save the external provider configs
+		 * Method to set and save the extensibility provider configs
 		 *
 		 * @param {SplideOpts} newConfigs
-		 * @param {ProviderInfo} providerInfo
 		 * @memberof SplideConfig
 		 */
-		public validateExtensibilityConfigs(newConfigs: SplideOpts, providerInfo: ProviderInfo): void {
-			this._providerExtendedOptions = super.validateExtensibilityConfigs(newConfigs, providerInfo);
+		public setExtensibilityConfigs(newConfigs: SplideOpts): void {
+			this._providerExtendedOptions = newConfigs;
 		}
 	}
 }

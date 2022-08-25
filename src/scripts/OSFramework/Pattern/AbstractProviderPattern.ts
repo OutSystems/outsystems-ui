@@ -61,7 +61,7 @@ namespace OSFramework.Patterns {
 		// Method to get an event index from an array
 		private _getEventIndexFromArray(event: Event.ProviderEvents.IProviderEvent): number {
 			// Get callback from array
-			const _providerCallback = this.providerInfo.supportedConfigs[event.eventName].find((item) => {
+			const _providerCallback = this.providerInfo.events[event.eventName].find((item) => {
 				return item === event.callback;
 			});
 
@@ -74,7 +74,7 @@ namespace OSFramework.Patterns {
 			}
 
 			// Get the index, using the callback
-			return this.providerInfo.supportedConfigs[event.eventName].findIndex((item) => {
+			return this.providerInfo.events[event.eventName].findIndex((item) => {
 				return item === _providerCallback;
 			});
 		}
@@ -87,30 +87,30 @@ namespace OSFramework.Patterns {
 			addEvent: boolean,
 			event?: Event.ProviderEvents.IProviderEvent
 		): void {
-			const supportedConfigs = this.providerInfo.supportedConfigs;
+			const events = this.providerInfo.events;
 
 			// Check if is array
-			if (Array.isArray(supportedConfigs[eventName])) {
+			if (Array.isArray(events[eventName])) {
 				if (addEvent) {
-					supportedConfigs[eventName].push(callback);
+					events[eventName].push(callback);
 				} else {
-					supportedConfigs[eventName].splice(this._getEventIndexFromArray(event), 1);
+					events[eventName].splice(this._getEventIndexFromArray(event), 1);
 				}
 			}
 			// Check if addEventListener is valid
-			else if (typeof supportedConfigs.addEventListener === GlobalEnum.JavascriptTypes.function) {
+			else if (typeof events.addEventListener === GlobalEnum.JavascriptTypes.function) {
 				if (addEvent) {
-					supportedConfigs.addEventListener(eventName, callback);
+					events.addEventListener(eventName, callback);
 				} else {
-					supportedConfigs.removeEventListener(eventName, callback);
+					events.removeEventListener(eventName, callback);
 				}
 			}
 			// Check if instance.on is valid
-			else if (typeof supportedConfigs.on === GlobalEnum.JavascriptTypes.function) {
+			else if (typeof events.on === GlobalEnum.JavascriptTypes.function) {
 				if (addEvent) {
-					supportedConfigs.on(eventName, callback);
+					events.on(eventName, callback);
 				} else {
-					supportedConfigs.off(eventName, callback);
+					events.off(eventName, callback);
 				}
 			} else {
 				const errorMessage = addEvent
@@ -138,7 +138,7 @@ namespace OSFramework.Patterns {
 			this.providerInfo = {
 				name: undefined,
 				version: undefined,
-				supportedConfigs: undefined,
+				events: undefined,
 			};
 			super.build();
 		}
@@ -204,7 +204,7 @@ namespace OSFramework.Patterns {
 			}
 
 			// If the providerEventsAPI is not available, add this one to the pending events
-			if (this.providerInfo.supportedConfigs === undefined) {
+			if (this.providerInfo.events === undefined) {
 				this.providerEventsManagerInstance.addPendingEvent(eventName, callback, uniqueId);
 				return;
 			}
@@ -254,7 +254,7 @@ namespace OSFramework.Patterns {
 		 */
 		public updateProviderEvents(providerInfo: ProviderInfo): void {
 			// Update provider instance reference
-			this.providerInfo.supportedConfigs = providerInfo.supportedConfigs;
+			this.providerInfo.events = providerInfo.events;
 
 			if (this.isBuilt) {
 				// Check if there're any pending events to be added by the SetProviderEvent API

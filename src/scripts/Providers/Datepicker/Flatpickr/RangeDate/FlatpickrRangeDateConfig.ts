@@ -46,17 +46,11 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 				mode: OSFramework.Patterns.DatePicker.Enum.Mode.Range,
 			};
 
-			// Merge both option objects => if objects have a property with the same name, then the right-most object property overwrites the previous one
-			// eslint-disable-next-line prefer-const
-			let fpOptions = {
-				...this.getCommonProviderConfigs(),
-				...flatpickrRangeDateOpts,
-			};
-
-			// Cleanning undefined properties
-			Object.keys(fpOptions).forEach((key) => fpOptions[key] === undefined && delete fpOptions[key]);
-
-			return fpOptions;
+			return this.mergeConfigs(
+				this.getCommonProviderConfigs(),
+				flatpickrRangeDateOpts,
+				this._providerExtendedOptions
+			);
 		}
 
 		// Method that validates if a given property can be changed.

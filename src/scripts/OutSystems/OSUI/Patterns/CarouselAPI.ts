@@ -3,6 +3,58 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	const _carouselItemsMap = new Map<string, OSFramework.Patterns.Carousel.ICarousel>();
 
 	/**
+	 * Function that will enable updates on OnRender event
+	 *
+	 * @export
+	 * @param {string} carouselId
+	 * @return {*}  {string}
+	 */
+	export function CarouselEnableOnRender(carouselId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const carousel = GetCarouselItemById(carouselId);
+			carousel.toggleOnRender(false);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Carousel.FailEnableOnRender;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
+	 * Function that will disable updates on OnRender event
+	 *
+	 * @export
+	 * @param {string} carouselId
+	 * @return {*}  {string}
+	 */
+	export function CarouselDisableOnRender(carouselId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const carousel = GetCarouselItemById(carouselId);
+			carousel.toggleOnRender(true);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Carousel.FailDisableOnRender;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
 	 * Function that will change the property of a given Carousel Id.
 	 *
 	 * @export

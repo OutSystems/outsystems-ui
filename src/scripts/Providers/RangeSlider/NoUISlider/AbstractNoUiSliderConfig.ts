@@ -12,10 +12,10 @@ namespace Providers.RangeSlider.NoUiSlider {
 	 * 		.AbstractRangeSliderConfig}
 	 */
 	export abstract class AbstractNoUiSliderConfig extends OSFramework.Patterns.RangeSlider.AbstractRangeSliderConfig {
-		// Store configs set using extensibility
-		private _providerExtendedOptions: NoUiSliderOptions;
 		// Store the Provider Options
 		private _providerOptions: NoUiSliderOptions;
+		// Store configs set using extensibility
+		protected _providerExtendedOptions: NoUiSliderOptions;
 		// Store rangeslider mode is in use
 		public rangeSliderMode: OSFramework.Patterns.RangeSlider.Enum.Mode;
 
@@ -126,11 +126,10 @@ namespace Providers.RangeSlider.NoUiSlider {
 		 * Method to validate and save the external provider configs
 		 *
 		 * @param {NoUiSliderOptions} newConfigs
-		 * @param {ProviderInfo} providerInfo
 		 * @memberof AbstractNoUiSliderConfig
 		 */
-		public validateExtensibilityConfigs(newConfigs: NoUiSliderOptions, providerInfo: ProviderInfo): void {
-			this._providerExtendedOptions = super.validateExtensibilityConfigs(newConfigs, providerInfo);
+		public setExtensibilityConfigs(newConfigs: NoUiSliderOptions): void {
+			this._providerExtendedOptions = newConfigs;
 		}
 	}
 }

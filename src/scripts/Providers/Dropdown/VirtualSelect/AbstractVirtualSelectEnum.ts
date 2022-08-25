@@ -30,11 +30,12 @@ namespace Providers.Dropdown.VirtualSelect.Enum {
 	 * Properties
 	 */
 	export enum Properties {
+		NoOptionsText = 'NoOptionsText',
 		NoResultsText = 'NoResultsText',
 		OptionsList = 'OptionsList',
 		Prompt = 'Prompt',
 		SearchPrompt = 'SearchPrompt',
-		SelectedOptions = 'SelectedOptions',
+		StartingSelection = 'StartingSelection',
 	}
 
 	/**

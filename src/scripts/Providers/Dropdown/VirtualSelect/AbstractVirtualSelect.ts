@@ -133,7 +133,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			this.updateProviderEvents({
 				name: Enum.ProviderInfo.Name,
 				version: Enum.ProviderInfo.Version,
-				supportedConfigs: this._virtualselectConfigs,
+				events: this._virtualselectConfigs,
 			});
 
 			// Add the pattern Events!
@@ -207,10 +207,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			// If/When we've the dropdown outside an IsDataFetched IF and OnParametersChannge where we're receiving (for both cases) a JSON string that must be parsed into an Object
-			if (
-				(propertyName === Enum.Properties.OptionsList || propertyName === Enum.Properties.SelectedOptions) &&
-				typeof propertyValue === 'string'
-			) {
+			if (propertyName === Enum.Properties.OptionsList && typeof propertyValue === 'string') {
 				propertyValue = JSON.parse(propertyValue);
 			}
 
@@ -220,6 +217,9 @@ namespace Providers.Dropdown.VirtualSelect {
 				switch (propertyName) {
 					case OSFramework.Patterns.Dropdown.Enum.Properties.IsDisabled:
 						this._manageDisableStatus();
+						break;
+					case Enum.Properties.NoOptionsText:
+						this.redraw();
 						break;
 					case Enum.Properties.NoResultsText:
 						this.redraw();
@@ -233,8 +233,8 @@ namespace Providers.Dropdown.VirtualSelect {
 					case Enum.Properties.SearchPrompt:
 						this.redraw();
 						break;
-					case Enum.Properties.SelectedOptions:
-						this.redraw();
+					case Enum.Properties.StartingSelection:
+						console.warn(`The ${propertyName} can not be changed through onParameterChange.`);
 						break;
 				}
 			}
@@ -333,8 +333,14 @@ namespace Providers.Dropdown.VirtualSelect {
 			}
 		}
 
+		/**
+		 * Method used to set all the extended VirtualSelect properties across the different types of instances
+		 *
+		 * @param {VirtualSelectOpts} newConfigs
+		 * @memberof AbstractVirtualSelect
+		 */
 		public setProviderConfigs(newConfigs: VirtualSelectOpts): void {
-			this.configs.validateExtensibilityConfigs(newConfigs, this.providerInfo);
+			this.configs.setExtensibilityConfigs(newConfigs);
 			this.redraw();
 		}
 
