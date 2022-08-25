@@ -21,7 +21,7 @@ namespace Providers.Dropdown.VirtualSelect.Search {
 			const selectedKeyvalues = [];
 
 			// Has selected values?
-			if (this.StartingSelection.length > 0) {
+			if (this.StartingSelection?.length > 0) {
 				// Check if it's multiple options
 				if (this.AllowMultipleSelection) {
 					// Get the selected key value

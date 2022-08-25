@@ -82,7 +82,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			// Set the library options
 			this._providerOptions = {
 				ele: this.ElementId,
-				dropboxWrapper: OSFramework.Constants.Dot + OSFramework.GlobalEnum.CssClassElements.Layout,
+				dropboxWrapper: OSFramework.GlobalEnum.HTMLElement.Body,
 				hideClearButton: false,
 				labelRenderer: this._getOptionInfo.bind(this),
 				noOptionsText: this.NoOptionsText,
