@@ -102,6 +102,8 @@
 		}
 
 		.osui-tabs__header__indicator {
+			bottom: 0;
+			min-width: 1px;
 			height: 2px;
 			transform: translateX(var(--tabs-indicator-transform)) translateY(0) translateZ(0)
 				scaleX(var(--tabs-indicator-scale));
@@ -176,6 +178,7 @@
 
 		&__indicator {
 			background-color: var(--color-primary);
+			position: absolute;
 			transition: transform 200ms linear;
 			transform-origin: 0 0;
 			will-change: transform;
