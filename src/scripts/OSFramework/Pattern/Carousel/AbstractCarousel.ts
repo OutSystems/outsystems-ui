@@ -16,6 +16,7 @@ namespace OSFramework.Patterns.Carousel {
 		public abstract previous(): void;
 		public abstract setCarouselDirection(direction: string): void;
 		public abstract toggleDrag(hasDrag: boolean): void;
+		public abstract toggleOnRender(blockOnRender: boolean): void;
 		public abstract updateOnRender(): void;
 	}
 }

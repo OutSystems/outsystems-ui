@@ -12,6 +12,7 @@ namespace OSFramework.Patterns.Carousel {
 		setProviderConfigs(providerConfigs: ProviderConfigs): void;
 		setProviderEvent(eventName: string, callback: OSFramework.GlobalCallbacks.Generic, uniqueId: string): void;
 		toggleDrag(hasDrag: boolean);
+		toggleOnRender(blockOnRender: boolean): void;
 		unsetProviderEvent(eventId: string): void;
 		updateOnRender();
 	}

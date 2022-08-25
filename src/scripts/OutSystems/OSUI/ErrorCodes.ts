@@ -68,6 +68,8 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailRegisterProviderConfig: 'OSUI-API-06010',
 		FailRegisterProviderEvent: 'OSUI-API-06011',
 		FailRemoveProviderEvent: 'OSUI-API-06012',
+		FailEnableOnRender: 'OSUI-API-06013',
+		FailDisableOnRender: 'OSUI-API-06014',
 	};
 
 	export const DatePicker = {

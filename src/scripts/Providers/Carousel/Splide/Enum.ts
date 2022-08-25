@@ -38,7 +38,7 @@ namespace Providers.Splide.Enum {
 	 */
 	export enum ProviderInfo {
 		Name = 'Splide',
-		Version = '3.6',
+		Version = '4.0',
 	}
 
 	/**
