@@ -1,5 +1,3 @@
-/// <reference path="./AbstractNoUiSlider.ts" />
-
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace Providers.RangeSlider.NoUiSlider {
 	/**
@@ -33,7 +31,7 @@ namespace Providers.RangeSlider.NoUiSlider {
 					: OSFramework.GlobalEnum.Direction.LTR,
 				step: this.Step,
 				orientation: this.Orientation,
-				pips: this.ShowTickMarks ? this.getPipsConfig() : false,
+				pips: this.ShowTickMarks ? this.getPipsConfig() : null,
 				range: this.getRangeConfig(),
 				tooltips: this.getTooltipFormat(),
 			};
@@ -47,7 +45,7 @@ namespace Providers.RangeSlider.NoUiSlider {
 		 * @return {*}  {unknown}
 		 * @memberof AbstractNoUiSliderConfig
 		 */
-		public getPipsConfig(): unknown {
+		public getPipsConfig(): NoUiSliderPips {
 			let tickMarksValues = Math.floor(this.TickMarksInterval);
 
 			//To avoid performance issues
@@ -59,8 +57,8 @@ namespace Providers.RangeSlider.NoUiSlider {
 				console.warn(
 					'The interval between tick marks, when they exist, can not be smaller than one or a decimal number (library restraint). If you do not want TickMarks to show, set the ShowTickMarks parameter to false.'
 				);
-				this.TickMarksInterval = 1;
-				return;
+				this.ShowTickMarks = true;
+				return null;
 			}
 
 			// To avoid the creation of minor ticks, whatever the value
@@ -96,7 +94,7 @@ namespace Providers.RangeSlider.NoUiSlider {
 		 * @return {*}  {unknown}
 		 * @memberof AbstractNoUiSliderConfig
 		 */
-		public getRangeConfig(): unknown {
+		public getRangeConfig(): NoUiSliderRange {
 			return {
 				min: this.MinValue,
 				max: this.MaxValue === this.MinValue ? 100 : this.MaxValue,
@@ -109,7 +107,7 @@ namespace Providers.RangeSlider.NoUiSlider {
 		 * @return {*}  {string[]}
 		 * @memberof AbstractNoUiSliderConfig
 		 */
-		public getTooltipFormat(): string[] {
+		public getTooltipFormat(): NoUISliderTooltip {
 			const tooltipValue = this.ShowFloatingLabel ? window.wNumb({ decimals: 0 }) : false;
 			let tooltipsFormat;
 

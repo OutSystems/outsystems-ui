@@ -91,6 +91,8 @@ namespace Providers.RangeSlider.NoUISlider {
 				events: this.provider, //this.provider will also contain all the supported lib configs
 			});
 
+			this.setInitialCSSClasses();
+
 			// Set OnValueChange event
 			this._setOnValueChangeEvent(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Slide);
 
@@ -188,9 +190,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 */
 		protected updateRangeSlider(): void {
 			this.provider.destroy();
-			this.providerOptions = this.configs.getProviderConfig();
-			this.createProviderInstance();
-			this.setInitialCSSClasses();
+			this.prepareConfigs();
 		}
 
 		/**
@@ -201,7 +201,6 @@ namespace Providers.RangeSlider.NoUISlider {
 		public build(): void {
 			super.build();
 			this.setHtmlElements();
-			this.setInitialCSSClasses();
 		}
 
 		/**

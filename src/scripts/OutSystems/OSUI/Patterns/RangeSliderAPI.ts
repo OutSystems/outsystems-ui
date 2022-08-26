@@ -242,6 +242,34 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	}
 
 	/**
+	 * Function to set providerConfigs by extensibility
+	 *
+	 * @export
+	 * @param {string} rangeSliderId
+	 * @param {RangeSliderProviderConfigs} providerConfigs
+	 * @return {*}  {string}
+	 */
+	export function SetProviderConfigs(rangeSliderId: string, configs: RangeSliderProviderConfigs): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const rangeSlider = GetRangeSliderItemById(rangeSliderId);
+
+			rangeSlider.setProviderConfigs(configs);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.RangeSlider.FailRegisterProviderConfig;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
 	 * Function to set providerEvents by extensibility
 	 *
 	 * @export

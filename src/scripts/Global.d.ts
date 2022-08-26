@@ -6,8 +6,10 @@ import { Key as flatpickrLocaleKey } from 'flatpickr/dist/types/locale';
 
 // RangeSlider
 import noUiSlider from 'nouislider';
-import noUiSliderOptions from 'nouislider';
-import { PipsMode } from 'nouislider';
+import { Options as noUiSliderOptions } from 'nouislider';
+import { Pips } from 'nouislider';
+import { Range } from 'nouislider';
+import { PartialFormatter } from 'nouislider';
 
 // Carousel
 import OriginalSplide from '@splidejs/splide';
@@ -29,8 +31,10 @@ declare global {
 
 		// RangeSlider
 		noUiSlider: typeof noUiSlider;
-		NoUiSliderOptions: typeof noUiSliderOptions;
-		NoUiSliderPipsMode: typeof PipsMode;
+		NoUiSliderOptions: typeof Options;
+		NoUiSliderPips: typeof Pips;
+		NoUiSliderRange: typeof Range;
+		NoUISliderTooltip: typeof boolean | PartialFormatter | (boolean | PartialFormatter)[];
 
 		// Carousel
 		Splide: typeof OriginalSplide;
@@ -62,6 +66,9 @@ declare global {
 		right?: number;
 		top?: number;
 	};
+
+	// Orientation type
+	type Orientation = OSFramework.GlobalEnum.Orientation.Vertical | OSFramework.GlobalEnum.Orientation.Horizontal;
 
 	// Is Out Of Boundaries Type
 	type OutOfBoundaries = {
@@ -97,7 +104,9 @@ declare global {
 	type NoUiSlider = noUiSlider;
 	type RangeSliderProviderConfigs = NoUiSlider;
 	type NoUiSliderOptions = noUiSliderOptions;
-	type NoUiSliderPipsMode = PipsMode;
+	type NoUiSliderPips = Pips;
+	type NoUiSliderRange = Range;
+	type NoUISliderTooltip = typeof boolean | PartialFormatter | (boolean | PartialFormatter)[];
 	type wNumb = WNumb;
 
 	// Carousel

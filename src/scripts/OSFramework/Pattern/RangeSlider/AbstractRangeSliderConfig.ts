@@ -8,7 +8,7 @@ namespace OSFramework.Patterns.RangeSlider {
 		public IsInterval: boolean;
 		public MaxValue: number;
 		public MinValue: number;
-		public Orientation: string;
+		public Orientation: Orientation;
 		public ShowFloatingLabel: boolean;
 		public ShowTickMarks: boolean;
 		public Size: string;
