@@ -87,6 +87,7 @@ namespace OSFramework.GlobalEnum {
 		Right = 'right',
 		RTL = 'rtl',
 		Top = 'top',
+		TTB = 'ttb',
 		Up = 'up',
 	}
 

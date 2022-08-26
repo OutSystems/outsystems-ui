@@ -26,8 +26,14 @@ namespace Providers.Splide {
 			return arrows;
 		}
 
-		private _getDirectionConfig(): 'ltr' | 'rtl' | 'ttb' {
-			let direction: 'ltr' | 'rtl' | 'ttb';
+		private _getDirectionConfig():
+			| OSFramework.GlobalEnum.Direction.LTR
+			| OSFramework.GlobalEnum.Direction.RTL
+			| OSFramework.GlobalEnum.Direction.TTB {
+			let direction:
+				| OSFramework.GlobalEnum.Direction.LTR
+				| OSFramework.GlobalEnum.Direction.RTL
+				| OSFramework.GlobalEnum.Direction.TTB;
 			if (this.Direction === undefined && OutSystems.OSUI.Utils.GetIsRTL()) {
 				direction = OSFramework.GlobalEnum.Direction.RTL;
 			} else {
