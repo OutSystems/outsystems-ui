@@ -259,20 +259,6 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 		try {
 			const rangeSlider = GetRangeSliderItemById(rangeSliderId);
 
-			// Go through all given provider configs and check for string ones to check if it should be converted into a boolean one!
-			for (const keyName of Object.keys(configs)) {
-				let keyValue = configs[keyName];
-
-				if (typeof keyValue !== 'string') {
-					break;
-				}
-
-				keyValue = keyValue.toLowerCase().trim();
-				if (keyValue === 'true' || keyValue === 'false') {
-					configs[keyName] = keyValue === 'true';
-				}
-			}
-
 			rangeSlider.setProviderConfigs(configs);
 		} catch (error) {
 			responseObj.isSuccess = false;
