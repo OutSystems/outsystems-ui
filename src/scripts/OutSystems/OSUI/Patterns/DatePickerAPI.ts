@@ -373,21 +373,6 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 		try {
 			const datePicker = GetDatePickerItemById(datePickerId);
 
-			// Go through all given provider configs and check for string ones to check if it should be converted into a boolean one!
-			for (let i = 0; i < Object.keys(providerConfigs).length; ++i) {
-				const keyName = Object.keys(providerConfigs)[i];
-				let keyValue = providerConfigs[keyName];
-
-				if (typeof keyValue !== 'string') {
-					break;
-				}
-
-				keyValue = keyValue.toLowerCase().trim();
-				if (keyValue === 'true' || keyValue === 'false') {
-					providerConfigs[keyName] = keyValue === 'true';
-				}
-			}
-
 			datePicker.setProviderConfigs(providerConfigs);
 		} catch (error) {
 			responseObj.isSuccess = false;

@@ -315,21 +315,6 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 
 			// Check if the given Dropdown has a provider (DropdownServerSide do not have it!)
 			if (_dropdownItem['provider'] !== undefined) {
-				// Go through all given provider configs and check for string ones to check if it should be converted into a boolean one!
-				for (let i = 0; i < Object.keys(providerConfigs).length; ++i) {
-					const keyName = Object.keys(providerConfigs)[i];
-					let keyValue = providerConfigs[keyName];
-
-					if (typeof keyValue !== 'string') {
-						break;
-					}
-
-					keyValue = keyValue.toLowerCase().trim();
-					if (keyValue === 'true' || keyValue === 'false') {
-						providerConfigs[keyName] = keyValue === 'true';
-					}
-				}
-
 				_dropdownItem.setProviderConfigs(providerConfigs);
 			} else {
 				responseObj.isSuccess = false;
