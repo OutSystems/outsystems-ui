@@ -249,7 +249,7 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 * @param {RangeSliderProviderConfigs} providerConfigs
 	 * @return {*}  {string}
 	 */
-	export function SetProviderConfigs(rangeSliderId: string, providerConfigs: RangeSliderProviderConfigs): string {
+	export function SetProviderConfigs(rangeSliderId: string, configs: RangeSliderProviderConfigs): string {
 		const responseObj = {
 			isSuccess: true,
 			message: ErrorCodes.Success.message,
@@ -260,9 +260,8 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 			const rangeSlider = GetRangeSliderItemById(rangeSliderId);
 
 			// Go through all given provider configs and check for string ones to check if it should be converted into a boolean one!
-			for (let i = 0; i < Object.keys(providerConfigs).length; ++i) {
-				const keyName = Object.keys(providerConfigs)[i];
-				let keyValue = providerConfigs[keyName];
+			for (const keyName of Object.keys(configs)) {
+				let keyValue = configs[keyName];
 
 				if (typeof keyValue !== 'string') {
 					break;
@@ -270,11 +269,11 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 
 				keyValue = keyValue.toLowerCase().trim();
 				if (keyValue === 'true' || keyValue === 'false') {
-					providerConfigs[keyName] = keyValue === 'true';
+					configs[keyName] = keyValue === 'true';
 				}
 			}
 
-			rangeSlider.setProviderConfigs(providerConfigs);
+			rangeSlider.setProviderConfigs(configs);
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
