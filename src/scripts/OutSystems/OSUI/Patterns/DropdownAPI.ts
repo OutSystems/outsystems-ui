@@ -313,22 +313,29 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 		try {
 			const _dropdownItem = GetDropdownById(dropdownId);
 
-			// Go through all given provider configs and check for string ones to check if it should be converted into a boolean one!
-			for (let i = 0; i < Object.keys(providerConfigs).length; ++i) {
-				const keyName = Object.keys(providerConfigs)[i];
-				let keyValue = providerConfigs[keyName];
+			// Check if the given Dropdown has a provider (DropdownServerSide do not have it!)
+			if (_dropdownItem['provider'] !== undefined) {
+				// Go through all given provider configs and check for string ones to check if it should be converted into a boolean one!
+				for (let i = 0; i < Object.keys(providerConfigs).length; ++i) {
+					const keyName = Object.keys(providerConfigs)[i];
+					let keyValue = providerConfigs[keyName];
 
-				if (typeof keyValue !== 'string') {
-					break;
+					if (typeof keyValue !== 'string') {
+						break;
+					}
+
+					keyValue = keyValue.toLowerCase().trim();
+					if (keyValue === 'true' || keyValue === 'false') {
+						providerConfigs[keyName] = keyValue === 'true';
+					}
 				}
 
-				keyValue = keyValue.toLowerCase().trim();
-				if (keyValue === 'true' || keyValue === 'false') {
-					providerConfigs[keyName] = keyValue === 'true';
-				}
+				_dropdownItem.setProviderConfigs(providerConfigs);
+			} else {
+				responseObj.isSuccess = false;
+				responseObj.message = `Dropdown with Id:${dropdownId} does not have a provider.`;
+				responseObj.code = ErrorCodes.DatePicker.FailRegisterProviderConfig;
 			}
-
-			_dropdownItem.setProviderConfigs(providerConfigs);
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
