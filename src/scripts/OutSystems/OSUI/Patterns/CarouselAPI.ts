@@ -371,6 +371,27 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 		return JSON.stringify(responseObj);
 	}
 
+	export function SetProviderConfigs(carouselId: string, configs: CarouselProviderConfigs): string {
+		const responseObj = {
+			uniqueId: carouselId,
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const carousel = GetCarouselItemById(carouselId);
+			carousel.setProviderConfigs(configs);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Carousel.FailRegisterProviderConfig;
+			responseObj.uniqueId = undefined;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
 	/**
 	 * Function to set providerEvents by extensibility
 	 *

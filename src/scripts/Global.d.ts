@@ -11,7 +11,7 @@ import { PipsMode } from 'nouislider';
 
 // Carousel
 import OriginalSplide from '@splidejs/splide';
-import { Options } from '@splidejs/splide/dist/types/types/options';
+import { Options as splideOptions } from '@splidejs/splide/dist/types/index';
 
 /**
  * Set global declarations
@@ -34,7 +34,7 @@ declare global {
 
 		// Carousel
 		Splide: typeof OriginalSplide;
-		SplideOpts: typeof OriginalSplide.defaults;
+		SplideOpts: typeof splideOptions;
 		wNumb: typeof window.wNumb;
 
 		// Dropdown using VirtualSelect
@@ -104,7 +104,7 @@ declare global {
 	type CarouselProviderConfigs = SplideOpts;
 	// Carousel => Splide
 	type Splide = OriginalSplide;
-	type SplideOpts = Options;
+	type SplideOpts = splideOptions;
 
 	// DatePicker => Flatpickr
 	type DatePickerProviderConfigs = FlatpickrOptions;

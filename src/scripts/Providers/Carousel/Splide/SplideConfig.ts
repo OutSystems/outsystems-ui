@@ -26,13 +26,15 @@ namespace Providers.Splide {
 			return arrows;
 		}
 
-		private _getDirectionConfig(): string {
-			let direction: string;
-			if (
-				(this.Direction === undefined ||
-					this.Direction === OSFramework.Patterns.Carousel.Enum.Direction.None) &&
-				OutSystems.OSUI.Utils.GetIsRTL()
-			) {
+		private _getDirectionConfig():
+			| OSFramework.GlobalEnum.Direction.LTR
+			| OSFramework.GlobalEnum.Direction.RTL
+			| OSFramework.GlobalEnum.Direction.TTB {
+			let direction:
+				| OSFramework.GlobalEnum.Direction.LTR
+				| OSFramework.GlobalEnum.Direction.RTL
+				| OSFramework.GlobalEnum.Direction.TTB;
+			if (this.Direction === undefined && OutSystems.OSUI.Utils.GetIsRTL()) {
 				direction = OSFramework.GlobalEnum.Direction.RTL;
 			} else {
 				direction = this.Direction || OSFramework.GlobalEnum.Direction.LTR;
