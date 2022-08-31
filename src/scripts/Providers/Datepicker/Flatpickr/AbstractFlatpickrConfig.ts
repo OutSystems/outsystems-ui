@@ -23,6 +23,9 @@ namespace Providers.Datepicker.Flatpickr {
 		// Store calendar mode is in use
 		public CalendarMode: OSFramework.Patterns.DatePicker.Enum.Mode;
 
+		// Stores the ability to disable a range of dates from datepicker
+		public Disable = [];
+
 		// Stores the ability to disable the mobile flatpickr behavior. False is the default provider option
 		public DisableMobile = false;
 
@@ -129,6 +132,7 @@ namespace Providers.Datepicker.Flatpickr {
 				altFormat: this._checkAltFormat(),
 				altInput: true,
 				allowInput: this.AllowInput,
+				disable: this.Disable.length === 0 ? undefined : this.Disable,
 				disableMobile: this.DisableMobile,
 				dateFormat:
 					this.TimeFormat !== OSFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable
@@ -147,6 +151,18 @@ namespace Providers.Datepicker.Flatpickr {
 			}
 
 			return this._providerOptions;
+		}
+
+		public setDisableWeekDays(disableWeekDays: number[]): void {
+			// code goes here
+			for (const day of disableWeekDays) {
+				console.log(day);
+				this.Disable.push(function (date) {
+					console.log(date);
+				});
+			}
+
+			console.log(this.Disable);
 		}
 
 		/**

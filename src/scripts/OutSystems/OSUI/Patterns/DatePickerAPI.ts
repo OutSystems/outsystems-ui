@@ -356,6 +356,34 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	}
 
 	/**
+	 * Function to set disable weekdays by client action
+	 *
+	 * @export
+	 * @param {string} datePickerId
+	 * @param {string} disableWeekDays
+	 * @return {*}  {string}
+	 */
+	export function DisableWeekDays(datePickerId: string, disableWeekDays: number[]): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const datePicker = GetDatePickerItemById(datePickerId);
+
+			datePicker.disableWeekDays(disableWeekDays);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.DatePicker.FailDisableWeekDays;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
 	 * Function to set providerConfigs by extensibility
 	 *
 	 * @export

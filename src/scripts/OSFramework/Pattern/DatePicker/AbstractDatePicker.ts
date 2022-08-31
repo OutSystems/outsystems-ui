@@ -11,6 +11,7 @@ namespace OSFramework.Patterns.DatePicker {
 
 		public abstract clear(): void;
 		public abstract close(): void;
+		public abstract disableWeekDays(value: number[]): void;
 		public abstract open(): void;
 		public abstract setLanguage(value: string): void;
 		public abstract updateInitialDate(date1: string, date2?: string): void;

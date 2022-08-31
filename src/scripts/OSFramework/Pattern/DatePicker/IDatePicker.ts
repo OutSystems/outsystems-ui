@@ -6,6 +6,7 @@ namespace OSFramework.Patterns.DatePicker {
 	export interface IDatePicker extends Interface.IPattern {
 		clear(): void;
 		close(): void;
+		disableWeekDays(disableDays: number[]): void;
 		open(): void;
 		setLanguage(value: string): void;
 		setProviderConfigs(providerConfigs: ProviderConfigs): void;

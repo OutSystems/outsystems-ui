@@ -247,6 +247,16 @@ namespace Providers.Datepicker.Flatpickr {
 		}
 
 		/**
+		 * Method used to disbale weekdays on DatePicker
+		 *
+		 * @param disableWeekDays
+		 * @memberof Flatpickr.DisableWeekDays
+		 */
+		public disableWeekDays(disableWeekDays: number[]): void {
+			this.configs.setDisableWeekDays(disableWeekDays);
+		}
+
+		/**
 		 * Method to remove and destroy DatePicker instance
 		 *
 		 * @memberof AbstractFlatpickr
