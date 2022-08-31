@@ -11,6 +11,9 @@ namespace Providers.Datepicker.Flatpickr {
 		// Store the language that will be assigned as a locale to the DatePicker
 		private _lang: string;
 
+		// Comment here
+		private _disabledWeekDays = [];
+
 		// Store the Provider Options
 		private _providerOptions: FlatpickrOptions;
 
@@ -55,6 +58,11 @@ namespace Providers.Datepicker.Flatpickr {
 			}
 
 			return _altFormat;
+		}
+
+		// Comment here
+		private _checkDisableWeeksDay(date: Date): boolean {
+			return this._disabledWeekDays.indexOf(date.getDay()) > -1;
 		}
 
 		// Method used to check the language and also map it into Flatpickr expected format
@@ -118,6 +126,20 @@ namespace Providers.Datepicker.Flatpickr {
 			return this.DateFormat;
 		}
 
+		// Comment here
+		private _setDisable() {
+			this.Disable = [];
+
+			// Check if there are days to be disabled
+			if (this._disabledWeekDays.length > 0) {
+				this.Disable.push((date) => {
+					return this._checkDisableWeeksDay(date);
+				});
+			}
+
+			// Add more validations in the future!
+		}
+
 		/**
 		 * Method used to get all the global Flatpickr properties across the different types of instances
 		 *
@@ -127,6 +149,9 @@ namespace Providers.Datepicker.Flatpickr {
 		public getCommonProviderConfigs(): FlatpickrOptions {
 			// Check the given server date format config
 			this._checkServerDateFormat();
+
+			// Comment here
+			this._setDisable();
 
 			this._providerOptions = {
 				altFormat: this._checkAltFormat(),
@@ -151,18 +176,6 @@ namespace Providers.Datepicker.Flatpickr {
 			}
 
 			return this._providerOptions;
-		}
-
-		public setDisableWeekDays(disableWeekDays: number[]): void {
-			// code goes here
-			for (const day of disableWeekDays) {
-				console.log(day);
-				this.Disable.push(function (date) {
-					console.log(date);
-				});
-			}
-
-			console.log(this.Disable);
 		}
 
 		/**
@@ -194,6 +207,15 @@ namespace Providers.Datepicker.Flatpickr {
 		public set Lang(value: string) {
 			// substring is needed to avoid passing values like "en-EN" since we must use only "en"
 			this._lang = value.substring(0, 2);
+		}
+
+		/**
+		 * Set DisableWeekDays
+		 *
+		 * @memberof AbstractFlatpickrConfig
+		 */
+		public set DisabledWeekDays(value: number[]) {
+			this._disabledWeekDays = value;
 		}
 	}
 }

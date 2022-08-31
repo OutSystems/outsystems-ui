@@ -253,7 +253,8 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @memberof Flatpickr.DisableWeekDays
 		 */
 		public disableWeekDays(disableWeekDays: number[]): void {
-			this.configs.setDisableWeekDays(disableWeekDays);
+			this.configs.DisabledWeekDays = disableWeekDays;
+			this.redraw();
 		}
 
 		/**
