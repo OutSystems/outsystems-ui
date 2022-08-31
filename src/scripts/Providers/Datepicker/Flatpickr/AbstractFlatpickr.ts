@@ -247,6 +247,17 @@ namespace Providers.Datepicker.Flatpickr {
 		}
 
 		/**
+		 * Method used to disable days on DatePicker
+		 *
+		 * @param disableDays
+		 * @memberof Flatpickr.DisableDays
+		 */
+		public disableDays(disableDays: string[]): void {
+			this.configs.DisabledDays = disableDays;
+			this.redraw();
+		}
+
+		/**
 		 * Method used to disbale weekdays on DatePicker
 		 *
 		 * @param disableWeekDays

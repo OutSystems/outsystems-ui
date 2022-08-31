@@ -8,11 +8,14 @@ namespace Providers.Datepicker.Flatpickr {
 	 * @extends {AbstractDatePickerConfig}
 	 */
 	export abstract class AbstractFlatpickrConfig extends OSFramework.Patterns.DatePicker.AbstractDatePickerConfig {
+		// Store a list of disable days
+		private _disabledDays = [];
+
+		// Store a integer list of weekdays
+		private _disabledWeekDays = [];
+
 		// Store the language that will be assigned as a locale to the DatePicker
 		private _lang: string;
-
-		// Comment here
-		private _disabledWeekDays = [];
 
 		// Store the Provider Options
 		private _providerOptions: FlatpickrOptions;
@@ -60,7 +63,7 @@ namespace Providers.Datepicker.Flatpickr {
 			return _altFormat;
 		}
 
-		// Comment here
+		// Method to check if the weekday of date is inside of disable weekdays list
 		private _checkDisableWeeksDay(date: Date): boolean {
 			return this._disabledWeekDays.indexOf(date.getDay()) > -1;
 		}
@@ -126,18 +129,23 @@ namespace Providers.Datepicker.Flatpickr {
 			return this.DateFormat;
 		}
 
-		// Comment here
+		// Method to be used to disable days on datepicker, based on an array of dates
 		private _setDisable() {
 			this.Disable = [];
 
-			// Check if there are days to be disabled
+			// Check if there are weekdays to be disabled
 			if (this._disabledWeekDays.length > 0) {
 				this.Disable.push((date) => {
 					return this._checkDisableWeeksDay(date);
 				});
 			}
 
-			// Add more validations in the future!
+			// Check if there are days to be disabled
+			if (this._disabledDays.length > 0) {
+				for (const date of this._disabledDays) {
+					this.Disable.push(date);
+				}
+			}
 		}
 
 		/**
@@ -207,6 +215,15 @@ namespace Providers.Datepicker.Flatpickr {
 		public set Lang(value: string) {
 			// substring is needed to avoid passing values like "en-EN" since we must use only "en"
 			this._lang = value.substring(0, 2);
+		}
+
+		/**
+		 * Set DisableDays
+		 *
+		 * @memberof AbstractFlatpickrConfig
+		 */
+		public set DisabledDays(value: string[]) {
+			this._disabledDays = value;
 		}
 
 		/**
