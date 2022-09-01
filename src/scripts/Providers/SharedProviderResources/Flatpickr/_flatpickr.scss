@@ -1,8 +1,7 @@
-/* Flatpickr Library Core Styles */
-// Import Flatpickr library styles
-@import 'flatpickr_lib';
-
-// Flatpickr overriding styles
+/*
+	Overriding styles for Flatpickr library.
+	Shared between SingleDatePicker, RangeDatePicker and TimePicker
+*/
 .flatpickr-calendar {
 	border-radius: var(--border-radius-soft);
 	border: var(--border-size-s) solid var(--color-neutral-5);
@@ -353,6 +352,17 @@ span.flatpickr-weekday {
 		}
 	}
 
+	.flatpickr-time-separator,
+	.numInputWrapper .numInput {
+		font-size: var(--font-size-xs);
+		font-weight: var(--font-semi-bold);
+	}
+
+	.flatpickr-time-separator {
+		color: var(--color-neutral-7);
+		line-height: var(--space-xl);
+	}
+
 	// Hour and Minute input number
 	.numInputWrapper {
 		flex: initial;
@@ -366,6 +376,7 @@ span.flatpickr-weekday {
 		}
 
 		.numInput {
+			color: var(--color-neutral-9);
 			font-size: var(--font-size-s);
 		}
 	}
@@ -378,17 +389,17 @@ span.flatpickr-weekday {
 
 	// AM/PM selector
 	.flatpickr-am-pm {
-		background-color: var(--color-primary);
-		border-radius: var(--border-radius-soft);
+		background-color: var(--color-neutral-7);
+		border-radius: var(--border-radius-rounded);
 		color: var(--color-neutral-0);
 		font-size: var(--font-size-xs);
 		font-weight: var(--font-semi-bold);
-		height: 18px;
-		line-height: 16px;
+		height: var(--space-m);
+		line-height: var(--space-m);
 		position: absolute;
-		right: var(--space-l);
-		text-transform: lowercase;
-		width: 40px;
+		right: var(--space-xs);
+		text-transform: uppercase;
+		width: var(--space-xl);
 
 		&:hover,
 		&:focus {

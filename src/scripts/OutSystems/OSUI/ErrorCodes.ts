@@ -212,4 +212,17 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailDispose: 'OSUI-API-25002',
 		FailRegisterCallback: 'OSUI-API-25003',
 	};
+
+	export const TimePicker = {
+		FailChangeProperty: 'OSUI-API-26001',
+		FailClear: 'OSUI-API-26002',
+		FailClose: 'OSUI-API-26003',
+		FailDispose: 'OSUI-API-26004',
+		FailOpen: 'OSUI-API-26005',
+		FailRedraw: 'OSUI-API-26006',
+		FailRegisterCallback: 'OSUI-API-26007',
+		FailRegisterProviderConfig: 'OSUI-API-26008',
+		FailRegisterProviderEvent: 'OSUI-API-26009',
+		FailRemoveProviderEvent: 'OSUI-API-26010',
+	};
 }

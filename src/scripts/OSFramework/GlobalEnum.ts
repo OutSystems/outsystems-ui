@@ -249,6 +249,7 @@ namespace OSFramework.GlobalEnum {
 		Tabs = 'Tabs',
 		TabsHeaderItem = 'TabsHeaderItem',
 		TabsContentItem = 'TabsContentItem',
+		Timepicker = 'Timepicker',
 		Tooltip = 'Tooltip',
 		TouchEvents = 'TouchEvents',
 	}

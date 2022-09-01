@@ -1,31 +1,31 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.Datepicker.Flatpickr {
-	export abstract class AbstractFlatpickr<C extends Flatpickr.AbstractFlatpickrConfig>
-		extends OSFramework.Patterns.DatePicker.AbstractDatePicker<Flatpickr, C>
+namespace Providers.Timepicker.Flatpickr {
+	// eslint-disable-next-line @typescript-eslint/naming-convention
+	export class OSUIFlatpickrTime
+		extends OSFramework.Patterns.TimePicker.AbstractTimePicker<Flatpickr, FlatpickrTimeConfig>
 		implements IFlatpickr
 	{
-		// Flatpickr onInitialize event
-		private _onInitializeCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
-		// Store pattern input HTML element reference
-		protected _datePickerProviderInputElem: HTMLInputElement;
-		// Store the flatpickr input html element that will be added by library
 		protected _flatpickrInputElem: HTMLInputElement;
 		// Store the provider options
 		protected _flatpickrOpts: FlatpickrOptions;
-		// Flatpickr onChange (SelectedDate) event
-		protected _onChangeCallbackEvent: OSFramework.Patterns.DatePicker.Callbacks.OSOnChangeEvent;
+		// Flatpickr onChange (SelectedTime) event
+		protected _onChangeCallbackEvent: OSFramework.Patterns.TimePicker.Callbacks.OSOnChangeEvent;
+		// Flatpickr onInitialize event
+		protected _onInitializeCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
+		// Store pattern input HTML element reference
+		protected _timePickerProviderInputElem: HTMLInputElement;
 
-		constructor(uniqueId: string, configs: C) {
-			super(uniqueId, configs);
+		constructor(uniqueId: string, configs: JSON) {
+			super(uniqueId, new FlatpickrTimeConfig(configs));
 
 			// Set the default library Event handler that will be used to set on the provider configs
-			this.configs.OnChange = this.onDateSelectedEvent.bind(this);
+			this.configs.OnChange = this.onTimeSelectedEvent.bind(this);
 		}
 
 		// Method used to set the needed HTML attributes
 		private _setAttributes(): void {
 			// Since a new input will be added by the flatpickr library, we must address it only at onReady
-			this._flatpickrInputElem = this._datePickerProviderInputElem.nextSibling as HTMLInputElement;
+			this._flatpickrInputElem = this._timePickerProviderInputElem.nextSibling as HTMLInputElement;
 
 			// Added the data-input attribute in order to input be styled as all platform inputs
 			OSFramework.Helper.Dom.Attribute.Set(
@@ -39,7 +39,7 @@ namespace Providers.Datepicker.Flatpickr {
 		private _setCalendarCssClasses(): void {
 			OSFramework.Helper.Dom.Styles.AddClass(
 				this.provider.calendarContainer,
-				OSFramework.Patterns.DatePicker.Enum.CssClass.Calendar
+				OSFramework.Patterns.TimePicker.Enum.CssClass.Dropdown
 			);
 
 			// Check if there are any ExtendedClass to be added into our calendar elements
@@ -55,35 +55,12 @@ namespace Providers.Datepicker.Flatpickr {
 		// Method to set the html elements used
 		private _setHtmllElements(): void {
 			// Set the inputHTML element
-			this._datePickerProviderInputElem = this._selfElem.querySelector('input.form-control');
+			this._timePickerProviderInputElem = this._selfElem.querySelector('input.form-control');
 
 			// If the input hasn't be added
-			if (!this._datePickerProviderInputElem) {
-				throw new Error(`The datepicker input at DatepickerId '${this._widgetId}' is missing`);
+			if (!this._timePickerProviderInputElem) {
+				throw new Error(`The timepicker input at TimepickerId '${this._widgetId}' is missing`);
 			}
-		}
-
-		/**
-		 * Method used to add the TodayButton at calendar
-		 *
-		 * @protected
-		 * @memberof AbstractFlatpickr
-		 */
-		protected addTodayBtn(): void {
-			// Create the wrapper container
-			const todayBtnWrapper = document.createElement(OSFramework.GlobalEnum.HTMLElement.Div);
-			todayBtnWrapper.classList.add(Enum.CssClasses.TodayBtn);
-
-			// Create the TodayBtn element
-			const todayBtn = document.createElement(OSFramework.GlobalEnum.HTMLElement.Link);
-			todayBtn.innerHTML = l10ns.TodayBtn[this.configs.Lang].title;
-			OSFramework.Helper.A11Y.AriaLabel(todayBtn, l10ns.TodayBtn[this.configs.Lang].ariaLabel);
-
-			todayBtn.addEventListener(OSFramework.GlobalEnum.HTMLEvent.Click, this.todayBtnClick.bind(this));
-
-			// Append elements to the proper containers
-			todayBtnWrapper.appendChild(todayBtn);
-			this.provider.calendarContainer.appendChild(todayBtnWrapper);
 		}
 
 		/**
@@ -93,14 +70,34 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @memberof AbstractFlatpickr
 		 */
 		protected createProviderInstance(): void {
-			/* In order to avoid dateFormat convert issues done by provider when InitialDate was not defined and input has a default date lets clean that value before creating provider instance. This happen when DateFormat is different from YYYY-MM-DD */
-			if (this._datePickerProviderInputElem && this._flatpickrOpts.defaultDate === undefined) {
-				this._datePickerProviderInputElem.value = '';
+			/* In order to avoid dateFormat convert issues done by provider when InitialTime was not defined and input has a default time lets clean that value before creating provider instance. This happen when DateFormat is different from YYYY-MM-DD */
+			if (this._timePickerProviderInputElem && this._flatpickrOpts.defaultDate === undefined) {
+				this._timePickerProviderInputElem.value = '';
 			}
 
 			// Init provider
-			this.provider = window.flatpickr(this._datePickerProviderInputElem, this._flatpickrOpts);
+			this.provider = window.flatpickr(this._timePickerProviderInputElem, this._flatpickrOpts);
+			// Set the needed HTML attributes
+			this._setAttributes();
 
+			// Since Flatpickr has a native behaviour (by default) if a mobile device is in use, we must ensure we can add our Classes and TodayBtn to it, since if it's native behaviour we can't do it!
+			if (this.provider.calendarContainer !== undefined) {
+				if (OSFramework.Helper.DeviceInfo.IsDesktop && OSFramework.Helper.DeviceInfo.IsNative === false) {
+					// Set Calendar CSS classes
+					this._setCalendarCssClasses();
+				}
+			}
+
+			this.createdInstance();
+		}
+
+		/**
+		 * Method that will be triggered at Flatpickr instance is ready
+		 *
+		 * @protected
+		 * @memberof AbstractFlatpickr
+		 */
+		protected createdInstance(): void {
 			// Set provider Info to be used by setProviderConfigs API calls
 			this.updateProviderEvents({
 				name: SharedProviderResources.Flatpickr.Enum.ProviderInfo.Name,
@@ -108,47 +105,36 @@ namespace Providers.Datepicker.Flatpickr {
 				events: this.provider.config,
 			});
 
-			// Set the needed HTML attributes
-			this._setAttributes();
-
-			// Since Flatpickr has a native behaviour (by default) if a mobile device is in use, we must ensure we can add our Classes and TodayBtn to it, since if it's native behaviour we can't do it!
-			if (this.provider.calendarContainer !== undefined) {
-				if (
-					this.configs.CalendarMode === OSFramework.Patterns.DatePicker.Enum.Mode.Range ||
-					(OSFramework.Helper.DeviceInfo.IsDesktop && OSFramework.Helper.DeviceInfo.IsNative === false)
-				) {
-					/* NOTE:
-						If it's not a native app, could we add our stuff to the calendar?
-							- If RangeDate calendar => We do not have a native behaviour for it, so => YES!
-							- If Desktop we also be able to add them
-						
-						Seams confused but we can be at:
-							- iPad Safari (rendered as desktop)
-							- iPad Chrome (rendered as native)
-					*/
-
-					// Add TodayBtn
-					if (this.configs.ShowTodayButton) {
-						this.addTodayBtn();
-					}
-
-					// Set Calendar CSS classes
-					this._setCalendarCssClasses();
-				}
-			}
-
 			// Trigger platform's InstanceIntializedHandler client Action
 			this.triggerPlatformEventInitialized(this._onInitializeCallbackEvent);
 		}
 
+		// Method that will be triggered by library each time any date is selected
+		protected onTimeSelectedEvent(selectedTime: string[]): void {
+			/* NOTE: dateStr param is not in use since the library has an issue arround it */
+			let _selectedTime = '';
+
+			// Check if any date has been selected, In case of Clear this will return empty string
+			if (selectedTime.length > 0) {
+				_selectedTime = this.provider.formatDate(selectedTime[0], this._flatpickrOpts.dateFormat);
+			}
+
+			// Trigger platform's onChange callback event
+			OSFramework.Helper.AsyncInvocation(this._onChangeCallbackEvent, this.widgetId, _selectedTime);
+		}
+
 		/**
-		 * Trigger the jumToDate to now
+		 * Method that will set the provider configurations in order to properly create its instance
 		 *
 		 * @protected
-		 * @memberof AbstractFlatpickr
+		 * @memberof Flatpickr.Time
 		 */
-		protected jumpIntoToday(): void {
-			this.provider.jumpToDate(this.provider.now);
+		protected prepareConfigs(): void {
+			// Get the library configurations
+			this._flatpickrOpts = this.configs.getProviderConfig();
+
+			// Instance will be Created!
+			this.createProviderInstance();
 		}
 
 		/**
@@ -185,13 +171,16 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @memberof AbstractFlatpickr
 		 */
 		protected unsetHtmlElements(): void {
-			this._datePickerProviderInputElem = undefined;
+			this._timePickerProviderInputElem = undefined;
 		}
-
 		public build(): void {
 			super.build();
 
 			this._setHtmllElements();
+
+			this.prepareConfigs();
+
+			this.finishBuild();
 		}
 
 		/**
@@ -210,10 +199,9 @@ namespace Providers.Datepicker.Flatpickr {
 
 			if (this.isBuilt) {
 				switch (propertyName) {
-					case OSFramework.Patterns.DatePicker.Enum.Properties.FirstWeekDay:
-					case OSFramework.Patterns.DatePicker.Enum.Properties.MaxDate:
-					case OSFramework.Patterns.DatePicker.Enum.Properties.MinDate:
-					case OSFramework.Patterns.DatePicker.Enum.Properties.ShowTodayButton:
+					case OSFramework.Patterns.TimePicker.Enum.Properties.Is24Hours:
+					case OSFramework.Patterns.TimePicker.Enum.Properties.MaxTime:
+					case OSFramework.Patterns.TimePicker.Enum.Properties.MinTime:
 						this.redraw();
 						break;
 					case OSFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass:
@@ -238,7 +226,7 @@ namespace Providers.Datepicker.Flatpickr {
 		}
 
 		/**
-		 * Method used to close DatePicker
+		 * Method used to close TimePicker
 		 *
 		 * @memberof AbstractFlatpickr
 		 */
@@ -247,19 +235,12 @@ namespace Providers.Datepicker.Flatpickr {
 		}
 
 		/**
-		 * Method to remove and destroy DatePicker instance
+		 * Method to remove and destroy TimePicker instance
 		 *
 		 * @memberof AbstractFlatpickr
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
-				/* In order to avoid platform warnings due to DateFormat changes when DateFormar different from YYYY-MM-DD,
-				remove the input element value, this will avoid library update it's value into a date with a different date format! */
-				this._datePickerProviderInputElem.value = '';
-
-				this.unsetCallbacks();
-				this.unsetHtmlElements();
-
 				// Wait for _datePickerProviderInputElem be removed from DOM, before detroy the provider instance!
 				OSFramework.Helper.AsyncInvocation(this.provider.destroy);
 			}
@@ -268,7 +249,7 @@ namespace Providers.Datepicker.Flatpickr {
 		}
 
 		/**
-		 * Method used to open DatePicker
+		 * Method used to open TimePicker
 		 *
 		 * @memberof AbstractFlatpickr
 		 */
@@ -283,11 +264,11 @@ namespace Providers.Datepicker.Flatpickr {
 		 */
 		public registerCallback(eventName: string, callback: OSFramework.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
-				case OSFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnChange:
+				case OSFramework.Patterns.TimePicker.Enum.TimePickerEvents.OnChange:
 					this._onChangeCallbackEvent = callback;
 					break;
 
-				case OSFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnInitialize:
+				case OSFramework.Patterns.TimePicker.Enum.TimePickerEvents.OnInitialize:
 					this._onInitializeCallbackEvent = callback;
 					break;
 
@@ -295,9 +276,8 @@ namespace Providers.Datepicker.Flatpickr {
 					throw new Error(`The given '${eventName}' event name it's not defined.`);
 			}
 		}
-
 		/**
-		 * Method used to set the DatePicker as editable on its input
+		 * Method used to set the TimePicker as editable on its input
 		 *
 		 * @memberof AbstractFlatpickr
 		 */
@@ -309,7 +289,7 @@ namespace Providers.Datepicker.Flatpickr {
 		}
 
 		/**
-		 * Method used to set the DatePicker language
+		 * Method used to set the TimePicker language
 		 *
 		 * @memberof AbstractFlatpickr
 		 */
@@ -336,7 +316,7 @@ namespace Providers.Datepicker.Flatpickr {
 		}
 
 		/**
-		 * Method used to toggle the default native behavior of DatePicker
+		 * Method used to toggle the default native behavior of TimePicker
 		 *
 		 * @memberof AbstractFlatpickr
 		 */
@@ -347,10 +327,5 @@ namespace Providers.Datepicker.Flatpickr {
 				this.redraw();
 			}
 		}
-
-		protected abstract onDateSelectedEvent(selectedDates: string[], dateStr: string, fp: Flatpickr): void;
-		protected abstract prepareConfigs(): void;
-		protected abstract todayBtnClick(event: MouseEvent): void;
-		public abstract updateInitialDate(start: string, end?: string): void;
 	}
 }
