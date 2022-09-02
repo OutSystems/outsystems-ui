@@ -264,6 +264,14 @@ namespace OSFramework.GlobalEnum {
 	}
 
 	/**
+	 * OutSystemsUI Input Types
+	 */
+	export enum InputTypes {
+		InputLarge = 'input-large',
+		InputSmall = 'input-small',
+	}
+
+	/**
 	 * OutSystemsUI Units
 	 */
 	export enum Units {

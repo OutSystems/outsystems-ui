@@ -181,7 +181,7 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	 */
 	export function GetTimePickerItemById(timePickerId: string): OSFramework.Patterns.TimePicker.ITimePicker {
 		return OSFramework.Helper.MapOperation.FindInMap(
-			'TimePicker',
+			OSFramework.GlobalEnum.PatternName.Timepicker,
 			timePickerId,
 			_timePickerItemsMap
 		) as OSFramework.Patterns.TimePicker.ITimePicker;
@@ -312,41 +312,6 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 
 		return JSON.stringify(responseObj);
 	}
-
-	/**
-	 * Function that will update the InitialDate fot a given TimepickerId
-	 * 	When:
-	 * 		SingleDate
-	 * 			=> Date1 = InitialDate
-	 * 			=> Date2 = Ignored!
-	 *
-	 * 		RangeDate
-	 * 			=> Date1 = InitialStartDate
-	 * 			=> Date2 = InitialEndDate
-	 *
-	 * @param {string} timePickerId
-	 * @param {string} date1 The value for the date1
-	 * @param {string} date2 The value for the date2
-	 
-	export function UpdateInitialDate(timePickerId: string, date1: string, date2?: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
-
-		try {
-			const _timePicker = this.GetTimePickerItemById(timePickerId);
-
-			_timePicker.updateInitialDate(date1, date2);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.TimePicker.FailRedraw;
-		}
-
-		return JSON.stringify(responseObj);
-	}*/
 
 	/**
 	 * Function to set providerConfigs by extensibility

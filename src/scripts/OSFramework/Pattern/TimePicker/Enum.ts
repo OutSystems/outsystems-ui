@@ -5,6 +5,8 @@ namespace OSFramework.Patterns.TimePicker.Enum {
 	 */
 	export enum CssClass {
 		Dropdown = 'osui-timepicker-dropdown',
+		DropdownLarge = 'dropdown-large',
+		DropdownSmall = 'dropdown-small',
 		Pattern = 'osui-timepicker',
 	}
 

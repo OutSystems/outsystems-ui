@@ -20,10 +20,8 @@ namespace OSFramework.Patterns.TimePicker {
 					validatedValue = this.validateBoolean(value as boolean, true);
 					break;
 				case Enum.Properties.MaxTime:
-					validatedValue = this.validateDate(value as string, undefined);
-					break;
 				case Enum.Properties.MinTime:
-					validatedValue = this.validateDate(value as string, undefined);
+					validatedValue = this.validateTime(value as string, undefined);
 					break;
 				default:
 					validatedValue = super.validateDefault(key, value);

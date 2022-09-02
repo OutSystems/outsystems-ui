@@ -48,10 +48,10 @@
 			}
 
 			&.arrowUp:after {
-				border-bottom-color: var(--color-primary);
+				border-bottom-color: var(--color-neutral-8);
 			}
 			&.arrowDown:after {
-				border-top-color: var(--color-primary);
+				border-top-color: var(--color-neutral-8);
 			}
 		}
 	}
@@ -403,7 +403,7 @@ span.flatpickr-weekday {
 
 		&:hover,
 		&:focus {
-			background-color: var(--color-primary-hover);
+			background-color: var(--color-neutral-8);
 		}
 	}
 }

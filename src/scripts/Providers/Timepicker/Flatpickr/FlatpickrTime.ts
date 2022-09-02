@@ -42,7 +42,29 @@ namespace Providers.Timepicker.Flatpickr {
 				OSFramework.Patterns.TimePicker.Enum.CssClass.Dropdown
 			);
 
-			// Check if there are any ExtendedClass to be added into our calendar elements
+			if (
+				OSFramework.Helper.Dom.Styles.ContainsClass(
+					this._flatpickrInputElem,
+					OSFramework.GlobalEnum.InputTypes.InputLarge
+				)
+			) {
+				OSFramework.Helper.Dom.Styles.AddClass(
+					this.provider.calendarContainer,
+					OSFramework.Patterns.TimePicker.Enum.CssClass.DropdownLarge
+				);
+			} else if (
+				OSFramework.Helper.Dom.Styles.ContainsClass(
+					this._flatpickrInputElem,
+					OSFramework.GlobalEnum.InputTypes.InputSmall
+				)
+			) {
+				OSFramework.Helper.Dom.Styles.AddClass(
+					this.provider.calendarContainer,
+					OSFramework.Patterns.TimePicker.Enum.CssClass.DropdownSmall
+				);
+			}
+
+			// Check if there are any ExtendedClass to be added into our dropdown elements
 			if (this.configs.ExtendedClass !== '') {
 				OSFramework.Helper.Dom.Styles.ExtendedClass(
 					this.provider.calendarContainer,

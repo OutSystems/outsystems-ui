@@ -41,9 +41,9 @@ namespace Providers.Timepicker.Flatpickr {
 			let _altFormat;
 
 			if (this.Is24Hours) {
-				_altFormat = ' - H:i';
+				_altFormat = 'H:i';
 			} else {
-				_altFormat = ' - h:i K';
+				_altFormat = 'h:i K';
 			}
 			return _altFormat;
 		}
@@ -71,11 +71,11 @@ namespace Providers.Timepicker.Flatpickr {
 				altFormat: this._checkAltFormat(),
 				altInput: true,
 				allowInput: this.AllowInput,
-				defaultDate: OSFramework.Helper.Dates.IsNull(this.InitialTime) ? undefined : this.InitialTime,
+				defaultDate: OSFramework.Helper.Times.IsNull(this.InitialTime) ? undefined : this.InitialTime,
 				enableTime: true,
 				noCalendar: true,
-				maxTime: OSFramework.Helper.Dates.IsNull(this.MaxTime) ? undefined : this.MaxTime,
-				minTime: OSFramework.Helper.Dates.IsNull(this.MinTime) ? undefined : this.MinTime,
+				maxTime: OSFramework.Helper.Times.IsNull(this.MaxTime) ? undefined : this.MaxTime,
+				minTime: OSFramework.Helper.Times.IsNull(this.MinTime) ? undefined : this.MinTime,
 				dateFormat: 'H:i',
 				time_24hr: this.Is24Hours,
 				onChange: this.OnChange,

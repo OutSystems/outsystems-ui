@@ -33,7 +33,7 @@ namespace OSFramework.Patterns {
 		}
 
 		/**
-		 * Method that helps to validate if a given value is a valida date
+		 * Method that helps to validate if a given value is a valid date
 		 *
 		 * @protected
 		 * @param {string} value
@@ -92,6 +92,19 @@ namespace OSFramework.Patterns {
 		 */
 		protected validateString(value: string | undefined, defaultValue: string): string {
 			return value && value.trim() ? value : defaultValue;
+		}
+
+		/**
+		 * Method that helps to validate if a given value is a valid time
+		 *
+		 * @protected
+		 * @param {string} value
+		 * @param {string} defaultValue
+		 * @return {*}  {(string)}
+		 * @memberof AbstractConfiguration
+		 */
+		protected validateTime(value: string, defaultValue: string): string {
+			return Helper.Times.IsNull(value) === false ? value : defaultValue;
 		}
 
 		/**

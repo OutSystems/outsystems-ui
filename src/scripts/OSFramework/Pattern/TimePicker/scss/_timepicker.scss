@@ -105,10 +105,53 @@ html[data-uieditorversion^='1'] {
 }
 
 .osui-timepicker-dropdown {
-	&.hasTime.noCalendar .flatpickr-time {
-		padding: 0;
-		height: var(--space-xl);
-		justify-content: space-evenly;
+	&.hasTime.noCalendar {
+		.flatpickr-time {
+			padding: 0;
+			height: var(--space-xl);
+
+			&.time24hr:after {
+				display: none;
+			}
+
+			.numInputWrapper {
+				height: var(--space-xl);
+				flex-grow: 1;
+			}
+
+			.flatpickr-am-pm {
+				position: relative;
+				margin-left: var(--space-s);
+			}
+		}
+
+		&.dropdown-large {
+			.flatpickr-time {
+				height: var(--space-xxl);
+				max-height: var(--space-xxl);
+
+				.numInputWrapper {
+					height: var(--space-xxl);
+				}
+				.flatpickr-time-separator {
+					line-height: var(--space-xxl);
+				}
+			}
+		}
+
+		&.dropdown-small {
+			.flatpickr-time {
+				height: var(--space-l);
+				max-height: var(--space-l);
+
+				.numInputWrapper {
+					height: var(--space-l);
+				}
+				.flatpickr-time-separator {
+					line-height: var(--space-l);
+				}
+			}
+		}
 	}
 
 	&:before,
