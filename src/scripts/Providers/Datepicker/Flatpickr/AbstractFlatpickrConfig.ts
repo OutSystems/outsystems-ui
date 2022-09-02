@@ -158,7 +158,7 @@ namespace Providers.Datepicker.Flatpickr {
 			// Check the given server date format config
 			this._checkServerDateFormat();
 
-			// Comment here
+			// Check the disabled days to be applied on datepicker
 			this._setDisable();
 
 			this._providerOptions = {

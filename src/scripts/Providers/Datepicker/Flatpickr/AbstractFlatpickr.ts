@@ -258,14 +258,20 @@ namespace Providers.Datepicker.Flatpickr {
 		}
 
 		/**
-		 * Method used to disbale weekdays on DatePicker
+		 * Method used to disable weekdays on DatePicker
 		 *
 		 * @param disableWeekDays
 		 * @memberof Flatpickr.DisableWeekDays
 		 */
 		public disableWeekDays(disableWeekDays: number[]): void {
+			const tempDate = this.provider.selectedDates;
 			this.configs.DisabledWeekDays = disableWeekDays;
+			console.log('tempDate: ', tempDate);
 			this.redraw();
+
+			OSFramework.Helper.AsyncInvocation(() => {
+				this.provider.setDate(tempDate);
+			});
 		}
 
 		/**
