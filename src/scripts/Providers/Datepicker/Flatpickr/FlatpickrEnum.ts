@@ -4,4 +4,9 @@ namespace Providers.Datepicker.Flatpickr.Enum {
 	export enum CssClasses {
 		TodayBtn = 'flatpickr-today-button',
 	}
+
+	// Disable Date Types
+	export enum DisableDate {
+		Weekdays = 'Weekdays',
+	}
 }
