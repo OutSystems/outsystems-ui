@@ -41,9 +41,9 @@ namespace Providers.Timepicker.Flatpickr {
 			let _altFormat;
 
 			if (this.Is24Hours) {
-				_altFormat = 'H:i';
+				_altFormat = Enum.InputFormats.Format24h;
 			} else {
-				_altFormat = 'h:i K';
+				_altFormat = Enum.InputFormats.Format12h;
 			}
 			return _altFormat;
 		}
@@ -76,7 +76,7 @@ namespace Providers.Timepicker.Flatpickr {
 				noCalendar: true,
 				maxTime: OSFramework.Helper.Times.IsNull(this.MaxTime) ? undefined : this.MaxTime,
 				minTime: OSFramework.Helper.Times.IsNull(this.MinTime) ? undefined : this.MinTime,
-				dateFormat: 'H:i',
+				dateFormat: Enum.InputFormats.Format24h,
 				time_24hr: this.Is24Hours,
 				onChange: this.OnChange,
 			} as FlatpickrOptions;

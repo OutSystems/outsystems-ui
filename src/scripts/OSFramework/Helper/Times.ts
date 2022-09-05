@@ -10,7 +10,7 @@ namespace OSFramework.Helper {
 		public static IsNull(time: string): boolean {
 			if (isNaN(Date.parse(time))) {
 				// Check if the given time is not a time object and if it's a valid time
-				if (typeof time === 'string') {
+				if (typeof time === Constants.JavaScriptTypes.String) {
 					const isValid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(time);
 					// Check if string could be parsed into a time - If it has an expected timeformat
 					if (isValid === false) {
@@ -26,7 +26,7 @@ namespace OSFramework.Helper {
 			}
 
 			// Check if is an OutSystems Null time
-			if (time === '00:00:00') {
+			if (time === GlobalEnum.NullValues.Time) {
 				return true;
 			}
 

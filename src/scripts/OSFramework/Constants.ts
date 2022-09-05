@@ -60,6 +60,17 @@ namespace OSFramework.Constants {
 	export const FocusableElems =
 		'a[href]:not([disabled]),[tabindex="0"], button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]),input[type="submit"]:not([disabled]), select:not([disabled])';
 
+	/* Store JavaScript types*/
+	export const JavaScriptTypes = {
+		Undefined: 'undefined',
+		Boolean: 'boolean',
+		Number: 'number',
+		String: 'string',
+		Symbol: 'symbol',
+		Function: 'function',
+		Object: 'object',
+	};
+
 	/* Store strict inputs elements excluding buttons, checkboxes... */
 	export const JustInputs =
 		'input:not([type=button]):not([type=checkbox]):not([type=color]):not([type=file]):not([type=hidden]):not([type=image]):not([type=image]):not([type=radio]):not([type=range]):not([type=reset]):not([type=submit]), textarea';
