@@ -83,6 +83,8 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailRegisterProviderConfig: 'OSUI-API-07008',
 		FailRegisterProviderEvent: 'OSUI-API-07009',
 		FailRemoveProviderEvent: 'OSUI-API-07010',
+		FailDisableDays: 'OSUI-API-07011',
+		FailDisableWeekDays: 'OSUI-API-07012',
 	};
 
 	export const FlipContent = {
