@@ -238,7 +238,9 @@ namespace Providers.Dropdown.VirtualSelect {
 						break;
 					case Enum.Properties.StartingSelection:
 						this.redraw();
-						console.warn(`The ${propertyName} property can not be changed through onParametersChanged.`);
+						console.warn(
+							`We recommend using the StartingSelection parameter exclusively for the initial selection and avoid changing it after initialization.`
+						);
 						break;
 				}
 			}
