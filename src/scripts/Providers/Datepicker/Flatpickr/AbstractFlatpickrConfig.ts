@@ -8,6 +8,12 @@ namespace Providers.Datepicker.Flatpickr {
 	 * @extends {AbstractDatePickerConfig}
 	 */
 	export abstract class AbstractFlatpickrConfig extends OSFramework.Patterns.DatePicker.AbstractDatePickerConfig {
+		// Store a list of disable days
+		private _disabledDays = [];
+
+		// Store a integer list of weekdays
+		private _disabledWeekDays = [];
+
 		// Store the language that will be assigned as a locale to the DatePicker
 		private _lang: string;
 
@@ -22,6 +28,9 @@ namespace Providers.Datepicker.Flatpickr {
 
 		// Store calendar mode is in use
 		public CalendarMode: OSFramework.Patterns.DatePicker.Enum.Mode;
+
+		// Stores the ability to disable a range of dates from datepicker
+		public Disable = [];
 
 		// Stores the ability to disable the mobile flatpickr behavior. False is the default provider option
 		public DisableMobile = false;
@@ -52,6 +61,11 @@ namespace Providers.Datepicker.Flatpickr {
 			}
 
 			return _altFormat;
+		}
+
+		// Method to check if the weekday of date is inside of disable weekdays list
+		private _checkDisableWeeksDay(date: Date): boolean {
+			return this._disabledWeekDays.indexOf(date.getDay()) > -1;
 		}
 
 		// Method used to check the language and also map it into Flatpickr expected format
@@ -115,6 +129,25 @@ namespace Providers.Datepicker.Flatpickr {
 			return this.DateFormat;
 		}
 
+		// Method to be used to disable days on datepicker, based on an array of dates
+		private _setDisable() {
+			this.Disable = [];
+
+			// Check if there are weekdays to be disabled
+			if (this._disabledWeekDays.length > 0) {
+				this.Disable.push((date) => {
+					return this._checkDisableWeeksDay(date);
+				});
+			}
+
+			// Check if there are days to be disabled
+			if (this._disabledDays.length > 0) {
+				for (const date of this._disabledDays) {
+					this.Disable.push(date);
+				}
+			}
+		}
+
 		/**
 		 * Method used to get all the global Flatpickr properties across the different types of instances
 		 *
@@ -125,10 +158,14 @@ namespace Providers.Datepicker.Flatpickr {
 			// Check the given server date format config
 			this._checkServerDateFormat();
 
+			// Check the disabled days to be applied on datepicker
+			this._setDisable();
+
 			this._providerOptions = {
 				altFormat: this._checkAltFormat(),
 				altInput: true,
 				allowInput: this.AllowInput,
+				disable: this.Disable.length === 0 ? undefined : this.Disable,
 				disableMobile: this.DisableMobile,
 				dateFormat:
 					this.TimeFormat !== OSFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable
@@ -178,6 +215,24 @@ namespace Providers.Datepicker.Flatpickr {
 		public set Lang(value: string) {
 			// substring is needed to avoid passing values like "en-EN" since we must use only "en"
 			this._lang = value.substring(0, 2);
+		}
+
+		/**
+		 * Set DisableDays
+		 *
+		 * @memberof AbstractFlatpickrConfig
+		 */
+		public set DisabledDays(value: string[]) {
+			this._disabledDays = value;
+		}
+
+		/**
+		 * Set DisableWeekDays
+		 *
+		 * @memberof AbstractFlatpickrConfig
+		 */
+		public set DisabledWeekDays(value: number[]) {
+			this._disabledWeekDays = value;
 		}
 	}
 }
