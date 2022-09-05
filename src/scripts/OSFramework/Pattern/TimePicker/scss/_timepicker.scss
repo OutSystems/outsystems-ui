@@ -6,6 +6,8 @@
 /// Import Flatpickr library styles
 @import '../../../../Providers/SharedProviderResources/Flatpickr/flatpickr';
 
+@import 'timepicker_ss_preview_imgs';
+
 ///
 .osui-timepicker {
 	input {
@@ -37,12 +39,11 @@
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: var(--color-neutral-0);
+			-servicestudio-background-color: transparent;
 			-servicestudio-background-position: top center;
 			-servicestudio-background-repeat: no-repeat;
 			-servicestudio-background-size: contain;
 			-servicestudio-border-radius: var(--border-radius-soft);
-			-servicestudio-border: var(--border-size-s) solid var(--color-neutral-5);
 			-servicestudio-display: inline-block;
 			-servicestudio-height: 0;
 			-servicestudio-margin-top: 2px;
@@ -52,19 +53,14 @@
 			-servicestudio-width: 100%;
 			-servicestudio-z-index: 1;
 
-			&.single {
-				-servicestudio-background-image: $calendar_single_img_base64;
-				-servicestudio-height: 310px;
-			}
-
 			&.time12h {
-				-servicestudio-background-image: $calendar_time12h_img_base64;
-				-servicestudio-height: 344px;
+				-servicestudio-background-image: $timepicker_time12h_img_base64;
+				-servicestudio-height: 48px;
 			}
 
 			&.time24h {
-				-servicestudio-background-image: $calendar_time24h_img_base64;
-				-servicestudio-height: 344px;
+				-servicestudio-background-image: $timepicker_time24h_img_base64;
+				-servicestudio-height: 48px;
 			}
 
 			& + .placeholder-ss-preview {
@@ -89,16 +85,9 @@
 ///
 html[data-uieditorversion^='1'] {
 	.osui-timepicker-dropdown-ss-preview {
-		// If has not today btn
-
-		&.single {
-			-servicestudio-padding-top: min(300px, 100%);
-			-servicestudio-height: 0;
-		}
-
 		&.time12h,
 		&.time24h {
-			-servicestudio-padding-top: min(344px, 100%);
+			-servicestudio-padding-top: min(48px, 100%);
 			-servicestudio-height: 0;
 		}
 	}
