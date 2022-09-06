@@ -9,10 +9,4 @@ namespace Providers.Datepicker.Flatpickr.Enum {
 	export enum DisableDate {
 		Weekdays = 'Weekdays',
 	}
-
-	// Flatpickr provider info
-	export enum ProviderInfo {
-		Name = 'Flatpickr',
-		Version = '4.6.10',
-	}
 }

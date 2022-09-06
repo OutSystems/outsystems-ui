@@ -32,6 +32,13 @@ namespace OSFramework.GlobalEnum {
 	}
 
 	/**
+	 * OutSystemsUI css selectors
+	 */
+	export enum CSSSelectors {
+		InputFormControl = 'input.form-control',
+	}
+
+	/**
 	 * OutSystemsUI common css variables
 	 */
 	export enum CSSVariables {
@@ -249,6 +256,7 @@ namespace OSFramework.GlobalEnum {
 		Tabs = 'Tabs',
 		TabsHeaderItem = 'TabsHeaderItem',
 		TabsContentItem = 'TabsContentItem',
+		Timepicker = 'Timepicker',
 		Tooltip = 'Tooltip',
 		TouchEvents = 'TouchEvents',
 	}
@@ -260,6 +268,14 @@ namespace OSFramework.GlobalEnum {
 		Rounded = 'rounded',
 		Sharp = 'none',
 		SoftRounded = 'soft',
+	}
+
+	/**
+	 * OutSystemsUI Input Types
+	 */
+	export enum InputTypes {
+		InputLarge = 'input-large',
+		InputSmall = 'input-small',
 	}
 
 	/**
@@ -307,11 +323,11 @@ namespace OSFramework.GlobalEnum {
 		FocusTrapTop = 'focus-trap-top',
 	}
 
-	export enum JavascriptTypes {
-		function = 'function',
-	}
-
 	export enum WarningMessages {
 		FeatureNotImplemented = 'This feature is not yet implemented!',
+	}
+
+	export enum NullValues {
+		Time = '00:00:00',
 	}
 }
