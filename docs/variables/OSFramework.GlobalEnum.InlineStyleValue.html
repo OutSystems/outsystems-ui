@@ -33,7 +33,7 @@
 <li class="tsd-parameter">
 <h5>unset<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5></li></ul></li></ul></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/OutSystems/outsystems-ui/blob/afb0086/src/scripts/OSFramework/GlobalEnum.ts#L166">OSFramework/GlobalEnum.ts:166</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/OutSystems/outsystems-ui/blob/b384dd4/src/scripts/OSFramework/GlobalEnum.ts#L173">OSFramework/GlobalEnum.ts:173</a></li></ul></aside></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -162,6 +162,11 @@
 <li class="tsd-kind-namespace tsd-parent-kind-namespace"><a href="../modules/OSFramework.Patterns.Tabs.Enum.html">Enum</a></li></ul></li>
 <li class="tsd-kind-namespace tsd-parent-kind-namespace"><a href="../modules/OSFramework.Patterns.TabsContentItem.html">Tabs<wbr/>Content<wbr/>Item</a></li>
 <li class="tsd-kind-namespace tsd-parent-kind-namespace"><a href="../modules/OSFramework.Patterns.TabsHeaderItem.html">Tabs<wbr/>Header<wbr/>Item</a></li>
+<li class="tsd-kind-namespace tsd-parent-kind-namespace"><a href="../modules/OSFramework.Patterns.TimePicker.html">Time<wbr/>Picker</a>
+<ul>
+<li class="tsd-kind-namespace tsd-parent-kind-namespace"><a href="../modules/OSFramework.Patterns.TimePicker.Callbacks.html">Callbacks</a></li>
+<li class="tsd-kind-namespace tsd-parent-kind-namespace"><a href="../modules/OSFramework.Patterns.TimePicker.Enum.html">Enum</a></li>
+<li class="tsd-kind-namespace tsd-parent-kind-namespace"><a href="../modules/OSFramework.Patterns.TimePicker.Factory.html">Factory</a></li></ul></li>
 <li class="tsd-kind-namespace tsd-parent-kind-namespace"><a href="../modules/OSFramework.Patterns.Tooltip.html">Tooltip</a>
 <ul>
 <li class="tsd-kind-namespace tsd-parent-kind-namespace"><a href="../modules/OSFramework.Patterns.Tooltip.Enum.html">Enum</a></li></ul></li>
@@ -198,6 +203,7 @@
 <li class="tsd-kind-namespace tsd-parent-kind-namespace"><a href="../modules/OutSystems.OSUI.Patterns.TabsAPI.html">TabsAPI</a></li>
 <li class="tsd-kind-namespace tsd-parent-kind-namespace"><a href="../modules/OutSystems.OSUI.Patterns.TabsContentItemAPI.html">Tabs<wbr/>Content<wbr/>ItemAPI</a></li>
 <li class="tsd-kind-namespace tsd-parent-kind-namespace"><a href="../modules/OutSystems.OSUI.Patterns.TabsHeaderItemAPI.html">Tabs<wbr/>Header<wbr/>ItemAPI</a></li>
+<li class="tsd-kind-namespace tsd-parent-kind-namespace"><a href="../modules/OutSystems.OSUI.Patterns.TimePickerAPI.html">Time<wbr/>PickerAPI</a></li>
 <li class="tsd-kind-namespace tsd-parent-kind-namespace"><a href="../modules/OutSystems.OSUI.Patterns.TooltipAPI.html">TooltipAPI</a></li>
 <li class="tsd-kind-namespace tsd-parent-kind-namespace"><a href="../modules/OutSystems.OSUI.Patterns.TouchEventsAPI.html">Touch<wbr/>EventsAPI</a></li></ul></li>
 <li class="tsd-kind-namespace tsd-parent-kind-namespace"><a href="../modules/OutSystems.OSUI.Utils.html">Utils</a>
@@ -215,6 +221,7 @@
 <ul>
 <li class="tsd-kind-enum tsd-parent-kind-namespace"><a href="../enums/OSFramework.GlobalEnum.CommonPatternsProperties.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-enum)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-8-path"></rect><path d="M9.45 16V7.24H14.49V8.224H10.518V10.936H14.07V11.908H10.518V15.016H14.49V16H9.45Z" fill="var(--color-text)" id="icon-8-text"></path></svg>Common<wbr/>Patterns<wbr/>Properties</a></li>
 <li class="tsd-kind-enum tsd-parent-kind-namespace"><a href="../enums/OSFramework.GlobalEnum.CssClassElements.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-8-path"></use><use href="#icon-8-text"></use></svg>Css<wbr/>Class<wbr/>Elements</a></li>
+<li class="tsd-kind-enum tsd-parent-kind-namespace"><a href="../enums/OSFramework.GlobalEnum.CSSSelectors.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-8-path"></use><use href="#icon-8-text"></use></svg>CSSSelectors</a></li>
 <li class="tsd-kind-enum tsd-parent-kind-namespace"><a href="../enums/OSFramework.GlobalEnum.CSSVariables.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-8-path"></use><use href="#icon-8-text"></use></svg>CSSVariables</a></li>
 <li class="tsd-kind-enum tsd-parent-kind-namespace"><a href="../enums/OSFramework.GlobalEnum.Position.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-8-path"></use><use href="#icon-8-text"></use></svg>Position</a></li>
 <li class="tsd-kind-enum tsd-parent-kind-namespace"><a href="../enums/OSFramework.GlobalEnum.CssProperties.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-8-path"></use><use href="#icon-8-text"></use></svg>Css<wbr/>Properties</a></li>
@@ -232,12 +239,13 @@
 <li class="tsd-kind-enum tsd-parent-kind-namespace"><a href="../enums/OSFramework.GlobalEnum.Orientation.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-8-path"></use><use href="#icon-8-text"></use></svg>Orientation</a></li>
 <li class="tsd-kind-enum tsd-parent-kind-namespace"><a href="../enums/OSFramework.GlobalEnum.PatternName.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-8-path"></use><use href="#icon-8-text"></use></svg>Pattern<wbr/>Name</a></li>
 <li class="tsd-kind-enum tsd-parent-kind-namespace"><a href="../enums/OSFramework.GlobalEnum.ShapeTypes.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-8-path"></use><use href="#icon-8-text"></use></svg>Shape<wbr/>Types</a></li>
+<li class="tsd-kind-enum tsd-parent-kind-namespace"><a href="../enums/OSFramework.GlobalEnum.InputTypes.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-8-path"></use><use href="#icon-8-text"></use></svg>Input<wbr/>Types</a></li>
 <li class="tsd-kind-enum tsd-parent-kind-namespace"><a href="../enums/OSFramework.GlobalEnum.Units.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-8-path"></use><use href="#icon-8-text"></use></svg>Units</a></li>
 <li class="tsd-kind-enum tsd-parent-kind-namespace"><a href="../enums/OSFramework.GlobalEnum.Browser.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-8-path"></use><use href="#icon-8-text"></use></svg>Browser</a></li>
 <li class="tsd-kind-enum tsd-parent-kind-namespace"><a href="../enums/OSFramework.GlobalEnum.DeviceOrientation.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-8-path"></use><use href="#icon-8-text"></use></svg>Device<wbr/>Orientation</a></li>
 <li class="tsd-kind-enum tsd-parent-kind-namespace"><a href="../enums/OSFramework.GlobalEnum.DeviceType.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-8-path"></use><use href="#icon-8-text"></use></svg>Device<wbr/>Type</a></li>
 <li class="tsd-kind-enum tsd-parent-kind-namespace"><a href="../enums/OSFramework.GlobalEnum.NotchClasses.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-8-path"></use><use href="#icon-8-text"></use></svg>Notch<wbr/>Classes</a></li>
 <li class="tsd-kind-enum tsd-parent-kind-namespace"><a href="../enums/OSFramework.GlobalEnum.FocusTrapClasses.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-8-path"></use><use href="#icon-8-text"></use></svg>Focus<wbr/>Trap<wbr/>Classes</a></li>
-<li class="tsd-kind-enum tsd-parent-kind-namespace"><a href="../enums/OSFramework.GlobalEnum.JavascriptTypes.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-8-path"></use><use href="#icon-8-text"></use></svg>Javascript<wbr/>Types</a></li>
-<li class="tsd-kind-enum tsd-parent-kind-namespace"><a href="../enums/OSFramework.GlobalEnum.WarningMessages.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-8-path"></use><use href="#icon-8-text"></use></svg>Warning<wbr/>Messages</a></li></ul></nav></div></div>
+<li class="tsd-kind-enum tsd-parent-kind-namespace"><a href="../enums/OSFramework.GlobalEnum.WarningMessages.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-8-path"></use><use href="#icon-8-text"></use></svg>Warning<wbr/>Messages</a></li>
+<li class="tsd-kind-enum tsd-parent-kind-namespace"><a href="../enums/OSFramework.GlobalEnum.NullValues.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-8-path"></use><use href="#icon-8-text"></use></svg>Null<wbr/>Values</a></li></ul></nav></div></div>
 <div class="overlay"></div><script src="../assets/main.js"></script></body></html>
