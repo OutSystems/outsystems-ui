@@ -207,7 +207,10 @@ namespace Providers.Dropdown.VirtualSelect {
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			// If/When we've the dropdown outside an IsDataFetched IF and OnParametersChannge where we're receiving (for both cases) a JSON string that must be parsed into an Object
-			if (propertyName === Enum.Properties.OptionsList && typeof propertyValue === 'string') {
+			if (
+				(propertyName === Enum.Properties.OptionsList || propertyName === Enum.Properties.StartingSelection) &&
+				typeof propertyValue === 'string'
+			) {
 				propertyValue = JSON.parse(propertyValue);
 			}
 
@@ -234,7 +237,10 @@ namespace Providers.Dropdown.VirtualSelect {
 						this.redraw();
 						break;
 					case Enum.Properties.StartingSelection:
-						console.warn(`The ${propertyName} can not be changed through onParameterChange.`);
+						this.redraw();
+						console.warn(
+							`We recommend using the StartingSelection parameter exclusively for the initial selection and avoid changing it after initialization.`
+						);
 						break;
 				}
 			}

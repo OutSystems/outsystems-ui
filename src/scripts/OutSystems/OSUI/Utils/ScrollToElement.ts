@@ -1,75 +1,46 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace OutSystems.OSUI.Utils {
-	/**
-	 * timeout needs to be added as a hack for the scrollIntoView to act
-	 *
-	 */
-	function scroll(elementToScrollTo: HTMLElement, IsSmooth: boolean): void {
-		if (IsSmooth) {
-			elementToScrollTo.scrollIntoView({
-				behavior: OSFramework.GlobalEnum.ScrollBehavior.Smooth,
-				block: 'start',
-			});
-		} else {
-			elementToScrollTo.scrollIntoView({
-				behavior: OSFramework.GlobalEnum.ScrollBehavior.Auto,
-				block: 'start',
-			});
-		}
-
-		// reset to the original position
-		OSFramework.Helper.Dom.Styles.SetStyleAttribute(
-			elementToScrollTo,
-			OSFramework.GlobalEnum.InlineStyle.Transform,
-			''
-		);
-		OSFramework.Helper.Dom.Styles.SetStyleAttribute(
-			elementToScrollTo,
-			OSFramework.GlobalEnum.InlineStyle.Display,
-			OSFramework.GlobalEnum.InlineStyleValue.Display.unset
-		);
-	}
-
 	export function ScrollToElement(ElementId: string, IsSmooth = true, OffSet = 0): void {
 		if (ElementId) {
 			const elementToScrollTo = document.getElementById(ElementId);
 
 			if (elementToScrollTo) {
+				// The app element that has the scroll and where the scrollTo wiull be applied
+				const activeScreen = OSFramework.Helper.Dom.ClassSelector(
+					document,
+					OSFramework.GlobalEnum.CssClassElements.ActiveScreen
+				);
+
 				const header = OSFramework.Helper.Dom.ClassSelector(
 					document,
 					OSFramework.GlobalEnum.CssClassElements.Header
 				);
-				const layout = OSFramework.Helper.Dom.ClassSelector(
-					document,
-					OSFramework.GlobalEnum.CssClassElements.Layout
-				);
 
-				if (layout) {
-					const isFixed = OSFramework.Helper.Dom.Styles.ContainsClass(layout, 'fixed-header');
+				if (header) {
+					let top: number;
+					const scrollBehavior = IsSmooth
+						? OSFramework.GlobalEnum.ScrollBehavior.Smooth
+						: OSFramework.GlobalEnum.ScrollBehavior.Auto;
 
-					// pull the target up from its original position, pulling it the header amount so in the end it won't be covered by the header
-					// it removes the height from whatever offset you might want to remove from the top
-					if (isFixed) {
-						OSFramework.Helper.Dom.Styles.SetStyleAttribute(
-							elementToScrollTo,
-							OSFramework.GlobalEnum.InlineStyle.Transform,
-							`translateY(${-header.offsetHeight + -OffSet}${OSFramework.GlobalEnum.Units.Pixel})`
-						);
-					} else {
-						OSFramework.Helper.Dom.Styles.SetStyleAttribute(
-							elementToScrollTo,
-							OSFramework.GlobalEnum.InlineStyle.Transform,
-							`translateY(${-OffSet}${OSFramework.GlobalEnum.Units.Pixel})`
-						);
-					}
-					OSFramework.Helper.Dom.Styles.SetStyleAttribute(
-						elementToScrollTo,
-						OSFramework.GlobalEnum.InlineStyle.Display,
-						OSFramework.GlobalEnum.InlineStyleValue.Display.block
+					const isHeaderFixed = OSFramework.Helper.Dom.ClassSelector(
+						document,
+						OSFramework.GlobalEnum.CssClassElements.HeaderIsFixed
 					);
 
-					// timeout needs to be added as a hack for the scrollIntoView to act
-					OSFramework.Helper.AsyncInvocation(scroll, elementToScrollTo, IsSmooth);
+					// if fixed header, get the header height so that in the end it won't be covered by the header
+					if (isHeaderFixed) {
+						top = -header.offsetHeight + (elementToScrollTo.getBoundingClientRect().top + OffSet);
+					} else {
+						top = elementToScrollTo.getBoundingClientRect().top + OffSet;
+					}
+
+					if (activeScreen) {
+						activeScreen.scrollTo({
+							top: top,
+							left: 0,
+							behavior: scrollBehavior,
+						});
+					}
 				}
 			}
 		}
