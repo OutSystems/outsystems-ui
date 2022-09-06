@@ -4,9 +4,7 @@ namespace OSFramework.Patterns.TimePicker.Enum {
 	 * TimePicker Enum for CSS Classes
 	 */
 	export enum CssClass {
-		Dropdown = 'osui-timepicker-dropdown',
-		DropdownLarge = 'dropdown-large',
-		DropdownSmall = 'dropdown-small',
+		Dropdown = 'osui-timepicker__dropdown',
 		Pattern = 'osui-timepicker',
 	}
 
@@ -15,7 +13,7 @@ namespace OSFramework.Patterns.TimePicker.Enum {
 	 */
 	export enum TimePickerEvents {
 		OnChange = 'OnChange',
-		OnInitialize = 'OnInitialize',
+		OnInitialized = 'OnInitialized',
 	}
 
 	/**

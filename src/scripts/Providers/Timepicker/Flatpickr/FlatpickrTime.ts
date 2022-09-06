@@ -11,7 +11,7 @@ namespace Providers.Timepicker.Flatpickr {
 		// Flatpickr onChange (SelectedTime) event
 		protected _onChangeCallbackEvent: OSFramework.Patterns.TimePicker.Callbacks.OSOnChangeEvent;
 		// Flatpickr onInitialize event
-		protected _onInitializeCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
+		protected _onInitializedCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
 		// Store pattern input HTML element reference
 		protected _timePickerProviderInputElem: HTMLInputElement;
 
@@ -50,7 +50,7 @@ namespace Providers.Timepicker.Flatpickr {
 			) {
 				OSFramework.Helper.Dom.Styles.AddClass(
 					this.provider.calendarContainer,
-					OSFramework.Patterns.TimePicker.Enum.CssClass.DropdownLarge
+					OSFramework.Patterns.Dropdown.Enum.CssClass.DropdownLarge
 				);
 			} else if (
 				OSFramework.Helper.Dom.Styles.ContainsClass(
@@ -60,7 +60,7 @@ namespace Providers.Timepicker.Flatpickr {
 			) {
 				OSFramework.Helper.Dom.Styles.AddClass(
 					this.provider.calendarContainer,
-					OSFramework.Patterns.TimePicker.Enum.CssClass.DropdownSmall
+					OSFramework.Patterns.Dropdown.Enum.CssClass.DropdownSmall
 				);
 			}
 
@@ -77,7 +77,9 @@ namespace Providers.Timepicker.Flatpickr {
 		// Method to set the html elements used
 		private _setHtmllElements(): void {
 			// Set the inputHTML element
-			this._timePickerProviderInputElem = this._selfElem.querySelector('input.form-control');
+			this._timePickerProviderInputElem = this._selfElem.querySelector(
+				OSFramework.GlobalEnum.CSSSelectors.InputFormControl
+			);
 
 			// If the input hasn't be added
 			if (!this._timePickerProviderInputElem) {
@@ -128,7 +130,7 @@ namespace Providers.Timepicker.Flatpickr {
 			});
 
 			// Trigger platform's InstanceIntializedHandler client Action
-			this.triggerPlatformEventInitialized(this._onInitializeCallbackEvent);
+			this.triggerPlatformEventInitialized(this._onInitializedCallbackEvent);
 		}
 
 		// Method that will be triggered by library each time any date is selected
@@ -182,7 +184,7 @@ namespace Providers.Timepicker.Flatpickr {
 		protected unsetCallbacks(): void {
 			this.configs.OnChange = undefined;
 
-			this._onInitializeCallbackEvent = undefined;
+			this._onInitializedCallbackEvent = undefined;
 			this._onChangeCallbackEvent = undefined;
 		}
 
@@ -290,8 +292,8 @@ namespace Providers.Timepicker.Flatpickr {
 					this._onChangeCallbackEvent = callback;
 					break;
 
-				case OSFramework.Patterns.TimePicker.Enum.TimePickerEvents.OnInitialize:
-					this._onInitializeCallbackEvent = callback;
+				case OSFramework.Patterns.TimePicker.Enum.TimePickerEvents.OnInitialized:
+					this._onInitializedCallbackEvent = callback;
 					break;
 
 				default:

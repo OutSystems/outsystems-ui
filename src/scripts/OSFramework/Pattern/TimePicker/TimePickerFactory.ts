@@ -4,7 +4,7 @@ namespace OSFramework.Patterns.TimePicker.Factory {
 	 * Create the new TimePicker instance object according given provider
 	 *
 	 * @export
-	 * @param {string} datePickerId ID of the Pattern that a new instance will be created.
+	 * @param {string} timePickerId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {Patterns.Progress.ITimePicker}
 	 */

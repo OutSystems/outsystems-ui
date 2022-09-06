@@ -3,10 +3,8 @@ namespace OSFramework.Patterns.TimePicker {
 	/**
 	 * Defines the interface for OutSystemsUI TimePicker Pattern
 	 */
-	export interface ITimePicker extends Interface.IPattern {
+	export interface ITimePicker extends Interface.IPattern, Interface.IOpenable {
 		clear(): void;
-		close(): void;
-		open(): void;
 		setLanguage(value: string): void;
 		setProviderConfigs(providerConfigs: ProviderConfigs): void;
 		setProviderEvent(eventName: string, callback: OSFramework.GlobalCallbacks.Generic, uniqueId: string): void;

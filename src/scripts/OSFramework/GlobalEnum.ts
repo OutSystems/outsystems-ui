@@ -32,6 +32,13 @@ namespace OSFramework.GlobalEnum {
 	}
 
 	/**
+	 * OutSystemsUI css selectors
+	 */
+	export enum CSSSelectors {
+		InputFormControl = 'input.form-control',
+	}
+
+	/**
 	 * OutSystemsUI common css variables
 	 */
 	export enum CSSVariables {

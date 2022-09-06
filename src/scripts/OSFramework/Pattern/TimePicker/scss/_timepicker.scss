@@ -36,6 +36,7 @@
 	// Service Studio Preview Container Styles
 	&-dropdown-ss-preview {
 		display: none;
+		-servicestudio-display: none;
 
 		// Service Studio Preview
 		& {
@@ -55,12 +56,12 @@
 
 			&.time12h {
 				-servicestudio-background-image: $timepicker_time12h_img_base64;
-				-servicestudio-height: 48px;
+				-servicestudio-height: var(--space-xl);
 			}
 
 			&.time24h {
 				-servicestudio-background-image: $timepicker_time24h_img_base64;
-				-servicestudio-height: 48px;
+				-servicestudio-height: var(--space-xl);
 			}
 
 			& + .placeholder-ss-preview {
@@ -76,7 +77,7 @@
 ///
 .form {
 	// Service Studio Preview
-	.osui-timepicker-dropdown-ss-preview {
+	.osui-timepicker__dropdown-ss-preview {
 		-servicestudio-margin-top: -22px;
 	}
 }
@@ -84,16 +85,16 @@
 // If Hybrid IDE
 ///
 html[data-uieditorversion^='1'] {
-	.osui-timepicker-dropdown-ss-preview {
+	.osui-timepicker__dropdown-ss-preview {
 		&.time12h,
 		&.time24h {
-			-servicestudio-padding-top: min(48px, 100%);
+			-servicestudio-padding-top: min(var(--space-xl), 100%);
 			-servicestudio-height: 0;
 		}
 	}
 }
 
-.osui-timepicker-dropdown {
+.osui-timepicker__dropdown {
 	&.hasTime.noCalendar {
 		.flatpickr-time {
 			padding: 0;
@@ -114,7 +115,7 @@ html[data-uieditorversion^='1'] {
 			}
 		}
 
-		&.dropdown-large {
+		&.dropdown--is-large {
 			.flatpickr-time {
 				height: var(--space-xxl);
 				max-height: var(--space-xxl);
@@ -128,7 +129,7 @@ html[data-uieditorversion^='1'] {
 			}
 		}
 
-		&.dropdown-small {
+		&.dropdown--is-small {
 			.flatpickr-time {
 				height: var(--space-l);
 				max-height: var(--space-l);
