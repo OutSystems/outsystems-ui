@@ -24,15 +24,20 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 		// Method used to set the default value since we're dealing with on input to be assigned and 2 received dates!
 		private _setDefaultDate(): string[] | undefined {
 			// Check if any of the given dates are a null date
-			if (
-				OSFramework.Helper.Dates.IsNull(this.InitialStartDate) ||
-				OSFramework.Helper.Dates.IsNull(this.InitialEndDate)
-			) {
-				return undefined;
+			if (OSFramework.Helper.Dates.IsNull(this.InitialStartDate)) {
+				this.InitialStartDate = undefined;
+			}
+
+			if (OSFramework.Helper.Dates.IsNull(this.InitialEndDate)) {
+				this.InitialEndDate = undefined;
 			}
 
 			// Check if the Start Date is after than End Date
-			if (OSFramework.Helper.Dates.Compare(this.InitialStartDate, this.InitialEndDate) === false) {
+			if (
+				this.InitialEndDate !== undefined &&
+				this.InitialStartDate !== undefined &&
+				OSFramework.Helper.Dates.Compare(this.InitialStartDate, this.InitialEndDate) === false
+			) {
 				throw new Error(`StartDate '${this.InitialStartDate}' can't be after EndDate '${this.InitialEndDate}'`);
 			}
 
