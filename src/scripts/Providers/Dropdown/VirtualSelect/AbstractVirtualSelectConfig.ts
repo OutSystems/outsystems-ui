@@ -99,6 +99,7 @@ namespace Providers.Dropdown.VirtualSelect {
 					? OSFramework.GlobalEnum.Direction.RTL
 					: OSFramework.GlobalEnum.Direction.LTR,
 				updatePositionThrottle: 0,
+				zIndex: 251, // Higher than Sidebar and Popup
 			};
 
 			return this._providerOptions;
