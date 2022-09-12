@@ -78,6 +78,21 @@ namespace OSFramework.Constants {
 	/* cssClass to be checked if the Accessibility Feature is enabled */
 	export const HasAccessibilityClass = 'has-accessible-features';
 
+	export const Months = [
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December',
+	];
+
 	/* cssClass to be added to elements that must visible yet hidded for accessibility purposes */
 	export const AccessibilityHideElementClass = 'wcag-hide-text';
 

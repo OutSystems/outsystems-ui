@@ -48,16 +48,17 @@ namespace Providers.MonthPicker.Flatpickr {
 		public getProviderConfig(): FlatpickrOptions {
 			this._providerOptions = {
 				altInput: true,
-				allowInput: this.AllowInput,
-				defaultDate: OSFramework.Helper.Times.IsNull(this.initialMonth) ? undefined : this.initialMonth,
-				noCalendar: true,
-				maxDate: OSFramework.Helper.Dates.IsNull(this.maxMonth) ? undefined : this.maxMonth,
-				minDate: OSFramework.Helper.Dates.IsNull(this.minMonth) ? undefined : this.minMonth,
+				dateFormat: 'm.y',
+				//defaultDate: OSFramework.Helper.Times.IsNull(this.initialMonth) ? undefined : this.initialMonth,
+				defaultDate: new Date(),
+				//maxDate: OSFramework.Helper.Dates.IsNull(this.maxMonth) ? undefined : this.maxMonth,
+				//minDate: OSFramework.Helper.Dates.IsNull(this.minMonth) ? undefined : this.minMonth,
 				onChange: this.OnChange,
 				plugins: [
 					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 					//@ts-ignore
 					new monthSelectPlugin({
+						shorthand: true, //defaults to false
 						dateFormat: 'm.y', //defaults to "F Y"
 						altFormat: 'F Y', //defaults to "F Y"
 					}),

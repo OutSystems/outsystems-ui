@@ -12,7 +12,7 @@ namespace Providers.MonthPicker.Flatpickr {
 		protected _monthPickerProviderInputElem: HTMLInputElement;
 		// Flatpickr onInitialize event
 		protected _onInitializedCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
-		// Flatpickr onChange (SelectedTime) event
+		// Flatpickr onChange (SelectedMonth) event
 		protected _onSelectedCallbackEvent: OSFramework.Patterns.MonthPicker.Callbacks.OSOnSelectedEvent;
 
 		constructor(uniqueId: string, configs: JSON) {
@@ -94,7 +94,7 @@ namespace Providers.MonthPicker.Flatpickr {
 		 * @memberof AbstractFlatpickr
 		 */
 		protected createProviderInstance(): void {
-			/* In order to avoid dateFormat convert issues done by provider when InitialMonth was not defined and input has a default time lets clean that value before creating provider instance. This happen when DateFormat is different from YYYY-MM-DD */
+			/* In order to avoid dateFormat convert issues done by provider when InitialMonth was not defined and input has a default month lets clean that value before creating provider instance. This happen when DateFormat is different from YYYY-MM-DD */
 			if (this._monthPickerProviderInputElem && this._flatpickrOpts.defaultDate === undefined) {
 				this._monthPickerProviderInputElem.value = '';
 			}
@@ -136,22 +136,32 @@ namespace Providers.MonthPicker.Flatpickr {
 		// Method that will be triggered by library each month and year is selected
 		protected onMonthSelectedEvent(selectedMonthYear: string[]): void {
 			/* NOTE: dateStr param is not in use since the library has an issue arround it */
-			let _selectedMonthYear = '';
+			const _selectedMonthYear = {
+				month: '',
+				year: null,
+			};
 
 			// Check if any date has been selected, In case of Clear this will return empty string
 			if (selectedMonthYear.length > 0) {
-				_selectedMonthYear = this.provider.formatDate(selectedMonthYear[0], this._flatpickrOpts.dateFormat);
+				const _selectedDate = new Date(selectedMonthYear[0]);
+				_selectedMonthYear.month = OSFramework.Constants.Months[_selectedDate.getMonth()];
+				_selectedMonthYear.year = _selectedDate.getFullYear();
 			}
 
 			// Trigger platform's onChange callback event
-			OSFramework.Helper.AsyncInvocation(this._onSelectedCallbackEvent, this.widgetId, _selectedMonthYear);
+			OSFramework.Helper.AsyncInvocation(
+				this._onSelectedCallbackEvent,
+				this.widgetId,
+				_selectedMonthYear.month,
+				_selectedMonthYear.year
+			);
 		}
 
 		/**
 		 * Method that will set the provider configurations in order to properly create its instance
 		 *
 		 * @protected
-		 * @memberof Flatpickr.Time
+		 * @memberof Flatpickr.Month
 		 */
 		protected prepareConfigs(): void {
 			// Get the library configurations
@@ -250,7 +260,7 @@ namespace Providers.MonthPicker.Flatpickr {
 		}
 
 		/**
-		 * Method used to close TimePicker
+		 * Method used to close MonthPicker
 		 *
 		 * @memberof AbstractFlatpickr
 		 */
@@ -259,7 +269,7 @@ namespace Providers.MonthPicker.Flatpickr {
 		}
 
 		/**
-		 * Method to remove and destroy TimePicker instance
+		 * Method to remove and destroy MonthPicker instance
 		 *
 		 * @memberof AbstractFlatpickr
 		 */
@@ -273,7 +283,7 @@ namespace Providers.MonthPicker.Flatpickr {
 		}
 
 		/**
-		 * Method used to open TimePicker
+		 * Method used to open MonthPicker
 		 *
 		 * @memberof AbstractFlatpickr
 		 */

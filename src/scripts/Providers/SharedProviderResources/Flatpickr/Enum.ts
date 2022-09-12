@@ -3,6 +3,6 @@ namespace Providers.SharedProviderResources.Flatpickr.Enum {
 	// Flatpickr provider info
 	export enum ProviderInfo {
 		Name = 'Flatpickr',
-		Version = '4.6.10',
+		Version = '4.6.9',
 	}
 }

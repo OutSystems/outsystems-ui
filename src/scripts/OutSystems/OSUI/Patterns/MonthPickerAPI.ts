@@ -28,14 +28,10 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	 */
 	export function Create(
 		monthPickerId: string,
-		provider: string,
-		configs: string
+		configs: string,
+		provider: string
 	): OSFramework.Patterns.MonthPicker.IMonthPicker {
 		if (_monthPickerItemsMap.has(monthPickerId)) {
-			/* TODO (by CreateNewPattern): 
-				The line below is created by the CreateNewPattern mechanism, that is not able to replace values
-				as expected, that said, check other patterns to understand how to replace it!
-			*/
 			throw new Error('There is already an MonthPicker registered under id: ' + monthPickerId);
 		}
 
