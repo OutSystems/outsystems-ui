@@ -241,6 +241,7 @@ namespace OSFramework.GlobalEnum {
 		FloatingActions = 'Floating Actions',
 		FloatingActionsItem = 'Floating Actions Item',
 		Gallery = 'Gallery',
+		MonthPicker = 'MonthPicker',
 		Notification = 'Notification',
 		ProgressBar = 'Progress Bar',
 		ProgressCircle = 'Progress Circle',
