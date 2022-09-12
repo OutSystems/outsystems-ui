@@ -103,14 +103,5 @@ namespace Providers.MonthPicker.Flatpickr {
 			// substring is needed to avoid passing values like "en-EN" since we must use only "en"
 			this._lang = value.substring(0, 2);
 		}
-
-		// Method that validates if a given property can be changed.
-		public validateCanChange(isBuilt: boolean, key: string): boolean {
-			// Block updating InitialMonth after pattern is built (OnParameters Change)!
-			if (isBuilt) {
-				return key !== OSFramework.Patterns.MonthPicker.Enum.Properties.InitialMonth;
-			}
-			return true;
-		}
 	}
 }
