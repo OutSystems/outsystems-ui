@@ -3,7 +3,7 @@ namespace Providers.MonthPicker.Flatpickr {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class OSUIFlatpickrMonth
 		extends OSFramework.Patterns.MonthPicker.AbstractMonthPicker<Flatpickr, FlatpickrMonthConfig>
-		implements IFlatpickr
+		implements IFlatpickrMonth
 	{
 		protected _flatpickrInputElem: HTMLInputElement;
 		// Store the provider options
@@ -138,7 +138,7 @@ namespace Providers.MonthPicker.Flatpickr {
 			/* NOTE: dateStr param is not in use since the library has an issue arround it */
 			const _selectedMonthYear = {
 				month: '',
-				year: null,
+				year: -1,
 			};
 
 			// Check if any date has been selected, In case of Clear this will return empty string
@@ -234,6 +234,7 @@ namespace Providers.MonthPicker.Flatpickr {
 			if (this.isBuilt) {
 				switch (propertyName) {
 					case OSFramework.Patterns.MonthPicker.Enum.Properties.InitialMonth:
+					case OSFramework.Patterns.MonthPicker.Enum.Properties.DateFormat:
 					case OSFramework.Patterns.MonthPicker.Enum.Properties.MaxMonth:
 					case OSFramework.Patterns.MonthPicker.Enum.Properties.MinMonth:
 						this.redraw();

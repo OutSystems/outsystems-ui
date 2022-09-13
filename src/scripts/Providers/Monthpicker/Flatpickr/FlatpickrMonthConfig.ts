@@ -36,6 +36,47 @@ namespace Providers.MonthPicker.Flatpickr {
 			this._lang = OSFramework.Helper.Language.ShortLang;
 		}
 
+		// Method used to manage the AM/PM time when it's on use
+		private _checkDateFormat(): string {
+			// If DateFormat hasn't been defined, set the same format as server date
+			return this.DateFormat !== '' ? this._mapProviderDateFormat() : this.ServerDateFormat;
+		}
+
+		// Method used to check the serverDateFormat and map it into the Flatpickr expected format
+		private _checkServerDateFormat(): void {
+			this.ServerDateFormat = OSFramework.Helper.Dates.ServerFormat.replace('YYYY', 'Y')
+				.replace('MM', 'm')
+				.replace('DD', '');
+		}
+
+		// Method used to mapping DateFormat style and map it into Flatpickr expected one
+		private _mapProviderDateFormat(): string {
+			const _dateFormat = this.DateFormat.replace(/[^a-zA-Z]/g, ' ').split(' ');
+			for (const format of _dateFormat) {
+				switch (format) {
+					// Map Year
+					case 'YYYY':
+						this.DateFormat = this.DateFormat.replace('YYYY', 'Y');
+						break;
+
+					case 'YY':
+						this.DateFormat = this.DateFormat.replace('YY', 'y');
+						break;
+
+					// Map Month
+					case 'MMM':
+						this.DateFormat = this.DateFormat.replace('MMM', 'M');
+						break;
+
+					case 'MM':
+						this.DateFormat = this.DateFormat.replace('MM', 'm');
+						break;
+				}
+			}
+
+			return this.DateFormat;
+		}
+
 		// Method used to check the language and also map it into Flatpickr expected format
 		protected _checkLocale(): FlatpickrLocale {
 			// FlatpickrLocale script file is already loaded
@@ -46,6 +87,8 @@ namespace Providers.MonthPicker.Flatpickr {
 
 		// Method used to set all the config properties for the Month mode type
 		public getProviderConfig(): FlatpickrOptions {
+			this._checkServerDateFormat();
+			console.log('configs');
 			this._providerOptions = {
 				altInput: true,
 				dateFormat: 'm.y',

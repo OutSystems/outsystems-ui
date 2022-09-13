@@ -1,4 +1,10 @@
 // Flatpickr - MonthPicker
+.osui-monthpicker__dropdown {
+	.flatpickr-innerContainer {
+		padding-bottom: 0;
+	}
+}
+
 .flatpickr-monthSelect-months {
 	display: grid;
 	gap: var(--space-xs);
@@ -16,8 +22,8 @@
 		}
 
 		&.selected {
-			background-color: var(--color-primary-selected);
-			color: var(--color-neutral-10);
+			background-color: var(--color-primary);
+			color: var(--color-neutral-0);
 		}
 
 		&.disabled {

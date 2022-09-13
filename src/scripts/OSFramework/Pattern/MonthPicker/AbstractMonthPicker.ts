@@ -4,6 +4,7 @@ namespace OSFramework.Patterns.MonthPicker {
 		extends AbstractProviderPattern<P, C>
 		implements IMonthPicker
 	{
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
 		}
