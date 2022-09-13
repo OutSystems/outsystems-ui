@@ -1,7 +1,6 @@
 // DatePicker => Flatpickr
 import flatpickr from 'flatpickr';
 import { BaseOptions as flatpickrOpts } from 'flatpickr/dist/types/options';
-import { Plugin as flatpickrOptsPlugins } from 'flatpickr/dist/types/options';
 import { CustomLocale as flatpickrLocale } from 'flatpickr/dist/types/locale';
 import { Key as flatpickrLocaleKey } from 'flatpickr/dist/types/locale';
 
@@ -27,7 +26,6 @@ declare global {
 		// DatePicker => Flatpickr
 		flatpickr: typeof flatpickr;
 		flatpickrOpts: typeof flatpickrOpts;
-		flatpickrOptsPlugins: typeof flatpickrOptsPlugins;
 		flatpickrLocale: typeof flatpickrOpts;
 		flatpickrLocaleKey: typeof flatpickrLocaleKey;
 
@@ -128,7 +126,6 @@ declare global {
 	type TimePickerProviderConfigs = FlatpickrOptions;
 	type Flatpickr = flatpickr;
 	type FlatpickrOptions = flatpickrOpts;
-	type FlatpickrOptionsPlugins = flatpickrOptsPlugins;
 	type FlatpickrLocale = flatpickrLocale;
 	type FlatpickrLocaleKey = flatpickrLocaleKey;
 

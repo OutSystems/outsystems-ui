@@ -12,7 +12,6 @@ namespace OSFramework.Patterns.MonthPicker {
 		public InitialMonth: string;
 		public MaxMonth: string;
 		public MinMonth: string;
-		public DELETE: any;
 
 		constructor(config: JSON) {
 			super(config);
