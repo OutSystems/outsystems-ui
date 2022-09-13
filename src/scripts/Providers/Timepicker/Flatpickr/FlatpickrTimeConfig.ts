@@ -5,7 +5,7 @@ namespace Providers.Timepicker.Flatpickr {
 	 *
 	 * @export
 	 * @class FlatpickrTimeConfig
-	 * @extends {AbstractFlatpickrConfig}
+	 * @extends {AbstractTimePickerConfig}
 	 */
 	export class FlatpickrTimeConfig extends OSFramework.Patterns.TimePicker.AbstractTimePickerConfig {
 		// Store the language that will be assigned as a locale to the TimePicker
@@ -72,6 +72,7 @@ namespace Providers.Timepicker.Flatpickr {
 				altInput: true,
 				allowInput: this.AllowInput,
 				defaultDate: OSFramework.Helper.Times.IsNull(this.InitialTime) ? undefined : this.InitialTime,
+				disableMobile: this.DisableMobile,
 				enableTime: true,
 				noCalendar: true,
 				maxTime: OSFramework.Helper.Times.IsNull(this.MaxTime) ? undefined : this.MaxTime,
