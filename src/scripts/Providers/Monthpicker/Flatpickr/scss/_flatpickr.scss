@@ -1,0 +1,28 @@
+// Flatpickr - MonthPicker
+.flatpickr-monthSelect-months {
+	display: grid;
+	gap: var(--space-xs);
+	grid-template-columns: repeat(3, 1fr);
+	justify-items: center;
+	margin: 0;
+
+	.flatpickr-monthSelect-month {
+		border-radius: var(--border-radius-soft);
+		width: 100%;
+
+		&:hover,
+		&:focus {
+			background: var(--color-neutral-2);
+		}
+
+		&.selected {
+			background-color: var(--color-primary-selected);
+			color: var(--color-neutral-10);
+		}
+
+		&.disabled {
+			color: var(--color-neutral-5);
+			background-color: var(--color-neutral-1);
+		}
+	}
+}

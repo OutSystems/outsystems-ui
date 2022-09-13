@@ -1,44 +1,43 @@
-// TODO (by CreateNewPattern): update section!
-/*! Patterns - section - MonthPicker */
+/*! Patterns - Interaction - MonthPicker */
 ////
 /// @group Patterns-MonthPicker
-/// Patterns - section - MonthPicker
+/// Patterns - INteraction - MonthPicker
 
 /// Import Flatpickr library styles
-@import "../../../../Providers/MonthPicker/Flatpickr/scss/flatpickr";
+@import '../../../../Providers/Monthpicker/Flatpickr/scss/_flatpickr.scss';
 
 // TODO (by CreateNewPattern): Common styles for all MonthPicker patterns based on Flatpickr at this partial!
 
 ///
-.osui-pattern-class {
-  // css props
+.osui-monthpicker {
+	// css props
 }
 
 // Accessibility -----------------------------------------------------------------
 ///
 .has-accessible-features {
-  // css props
+	// css props
 }
 
 // IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {
-  // css props
+	// css props
 }
 
 // Responsive --------------------------------------------------------------------
 ///
 .tablet,
 .phone {
-  // css props
+	// css props
 }
 
 ///
 .tablet {
-  // css props
+	// css props
 }
 
 ///
 .phone {
-  // css props
+	// css props
 }
