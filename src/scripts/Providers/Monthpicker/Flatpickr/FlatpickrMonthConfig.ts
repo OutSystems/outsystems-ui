@@ -104,7 +104,6 @@ namespace Providers.MonthPicker.Flatpickr {
 
 			return this.DateFormat;
 		}
-
 		// Method used to set all the config properties for the Month mode type
 		public getProviderConfig(): FlatpickrOptions {
 			this._checkServerDateFormat();

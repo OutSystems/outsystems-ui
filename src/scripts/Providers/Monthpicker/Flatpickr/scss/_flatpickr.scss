@@ -13,6 +13,7 @@
 	margin: 0;
 
 	.flatpickr-monthSelect-month {
+		border: 1px solid transparent;
 		border-radius: var(--border-radius-soft);
 		width: 100%;
 
@@ -31,8 +32,8 @@
 			background-color: var(--color-neutral-1);
 		}
 
-		&.today {
-			border: 1px solid var(--color-neutral-6);
+		&.today:not(.selected) {
+			border-color: var(--color-neutral-6);
 
 			&:hover {
 				border-color: var(--color-neutral-3);
