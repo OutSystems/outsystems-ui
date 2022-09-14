@@ -31,7 +31,7 @@ namespace Providers.MonthPicker.Flatpickr {
 			OSFramework.Helper.Dom.Attribute.Set(
 				this._flatpickrInputElem,
 				OSFramework.GlobalEnum.HTMLAttributes.DataInput,
-				''
+				OSFramework.Constants.EmptyString
 			);
 		}
 
@@ -133,12 +133,19 @@ namespace Providers.MonthPicker.Flatpickr {
 			this.triggerPlatformEventInitialized(this._onInitializedCallbackEvent);
 		}
 
-		// Method that will be triggered by library each month and year is selected
+		/**
+		 * Method that will be triggered by library each month and year is selected
+		 *
+		 * @protected
+		 * @param {string[]} selectedMonthYear
+		 * @memberof OSUIFlatpickrMonth
+		 */
 		protected onMonthSelectedEvent(selectedMonthYear: string[]): void {
-			/* NOTE: dateStr param is not in use since the library has an issue arround it */
+			// Default values to null values, so that a null date comes from the picker, we pass it correctly as null to the platform
+			// and without the need to run the code below
 			const _selectedMonthYear = {
-				month: '',
-				year: -1,
+				month: OSFramework.Constants.EmptyString,
+				year: OSFramework.Constants.InvalidNumber,
 			};
 
 			// Check if any date has been selected, In case of Clear this will return empty string
@@ -311,17 +318,6 @@ namespace Providers.MonthPicker.Flatpickr {
 					throw new Error(`The given '${eventName}' event name it's not defined.`);
 			}
 		}
-		/**
-		 * Method used to set the MonthPicker as editable on its input
-		 *
-		 * @memberof AbstractFlatpickr
-		 */
-		public setEditableInput(isEditable: boolean): void {
-			if (this.configs.AllowInput !== isEditable) {
-				this.configs.AllowInput = isEditable;
-				this.redraw();
-			}
-		}
 
 		/**
 		 * Method used to set the MonthPicker language
@@ -348,19 +344,6 @@ namespace Providers.MonthPicker.Flatpickr {
 			this.configs.setExtensibilityConfigs(newConfigs);
 
 			this.redraw();
-		}
-
-		/**
-		 * Method used to toggle the default native behavior of MonthPicker
-		 *
-		 * @memberof AbstractFlatpickr
-		 */
-		public toggleNativeBehavior(isNative: boolean): void {
-			// Invert the boolean value of IsNative because of provider option
-			if (this.configs.DisableMobile !== !isNative) {
-				this.configs.DisableMobile = !isNative;
-				this.redraw();
-			}
 		}
 	}
 }

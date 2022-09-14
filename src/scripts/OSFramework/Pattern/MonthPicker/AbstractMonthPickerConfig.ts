@@ -9,9 +9,9 @@ namespace OSFramework.Patterns.MonthPicker {
 	 */
 	export abstract class AbstractMonthPickerConfig extends Patterns.AbstractProviderConfiguration {
 		public DateFormat: string;
-		public InitialMonth: string;
-		public MaxMonth: string;
-		public MinMonth: string;
+		public InitialMonth: MonthYear;
+		public MaxMonth: MonthYear;
+		public MinMonth: MonthYear;
 
 		constructor(config: JSON) {
 			super(config);
@@ -30,12 +30,12 @@ namespace OSFramework.Patterns.MonthPicker {
 
 			switch (key) {
 				case Enum.Properties.DateFormat:
-					validatedValue = this.validateString(value as string, 'm.y');
+					validatedValue = this.validateString(value as string, 'F Y');
 					break;
 				case Enum.Properties.InitialMonth:
 				case Enum.Properties.MinMonth:
 				case Enum.Properties.MaxMonth:
-					validatedValue = this.validateInRange(value as MonthYear, undefined);
+					validatedValue = value as MonthYear;
 					break;
 				default:
 					validatedValue = super.validateDefault(key, value);

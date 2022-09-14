@@ -69,8 +69,8 @@ declare global {
 
 	// MonthYear type for TimePicker
 	type MonthYear = {
-		month: string;
-		year: number;
+		Month: string;
+		Year: number;
 	};
 
 	// Orientation type

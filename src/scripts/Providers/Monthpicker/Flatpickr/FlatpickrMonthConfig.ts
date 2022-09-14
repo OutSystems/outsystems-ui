@@ -17,11 +17,8 @@ namespace Providers.MonthPicker.Flatpickr {
 		// Store configs set using extensibility
 		protected _providerExtendedOptions: FlatpickrOptions;
 
-		// Stores the ability to allow inputs to be editable or not
-		public AllowInput = false;
-
 		// Stores the ability to disable the mobile flatpickr behavior. False is the default provider option
-		public DisableMobile = false;
+		public DisableMobile = true;
 
 		// Set the OnChange Event that will be defined in the specific context for each Flatpickr mode
 		public OnChange: OSFramework.GlobalCallbacks.Generic;
@@ -42,11 +39,42 @@ namespace Providers.MonthPicker.Flatpickr {
 			return this.DateFormat !== '' ? this._mapProviderDateFormat() : this.ServerDateFormat;
 		}
 
+		// Method used to check the language and also map it into Flatpickr expected format
+		private _checkLocale(): FlatpickrLocale {
+			// FlatpickrLocale script file is already loaded
+			let _locale: FlatpickrLocale;
+			try {
+				// Set the locale in order to define the calendar language
+				_locale = window.flatpickr.l10ns[this._lang];
+			} catch (error) {
+				throw new Error(`${Flatpickr.ErrorCodes.FailSetLocale}: Locale '${this._lang}' not found!`);
+			}
+
+			return _locale;
+		}
+
 		// Method used to check the serverDateFormat and map it into the Flatpickr expected format
 		private _checkServerDateFormat(): void {
 			this.ServerDateFormat = OSFramework.Helper.Dates.ServerFormat.replace('YYYY', 'Y')
 				.replace('MM', 'm')
 				.replace('DD', '');
+		}
+
+		// Method to get a valid Date from the month and year configs
+		private _getDateFromMonthYear(monthYear: MonthYear): Date {
+			const _monthIndex = OSFramework.Constants.Months.indexOf(monthYear.Month);
+			const _validatedYear = monthYear.Year < 1900 ? null : monthYear.Year;
+			let _newDate = null;
+
+			if (_monthIndex !== -1 && _validatedYear !== null) {
+				_newDate = new Date(_validatedYear, _monthIndex, 1);
+			} else {
+				console.warn(
+					`The passed Month and/or Year is not valid: {Month: ${monthYear.Month} | Year: ${monthYear.Year} }, please review the values on parameters ${OSFramework.Patterns.MonthPicker.Enum.Properties.InitialMonth}, ${OSFramework.Patterns.MonthPicker.Enum.Properties.MinMonth} and ${OSFramework.Patterns.MonthPicker.Enum.Properties.MaxMonth}`
+				);
+			}
+
+			return _newDate;
 		}
 
 		// Method used to mapping DateFormat style and map it into Flatpickr expected one
@@ -77,33 +105,25 @@ namespace Providers.MonthPicker.Flatpickr {
 			return this.DateFormat;
 		}
 
-		// Method used to check the language and also map it into Flatpickr expected format
-		protected _checkLocale(): FlatpickrLocale {
-			// FlatpickrLocale script file is already loaded
-			let _locale: FlatpickrLocale;
-
-			return _locale;
-		}
-
 		// Method used to set all the config properties for the Month mode type
 		public getProviderConfig(): FlatpickrOptions {
 			this._checkServerDateFormat();
-			console.log('configs');
+			this._checkDateFormat();
+
 			this._providerOptions = {
 				altInput: true,
-				dateFormat: 'm.y',
-				//defaultDate: OSFramework.Helper.Times.IsNull(this.initialMonth) ? undefined : this.initialMonth,
-				defaultDate: new Date(),
-				//maxDate: OSFramework.Helper.Dates.IsNull(this.maxMonth) ? undefined : this.maxMonth,
-				//minDate: OSFramework.Helper.Dates.IsNull(this.minMonth) ? undefined : this.minMonth,
+				dateFormat: this.ServerDateFormat,
+				defaultDate: this._getDateFromMonthYear(this.InitialMonth),
+				disableMobile: this.DisableMobile,
+				maxDate: this._getDateFromMonthYear(this.MaxMonth),
+				minDate: this._getDateFromMonthYear(this.MinMonth),
 				onChange: this.OnChange,
 				plugins: [
 					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 					//@ts-ignore
 					new monthSelectPlugin({
-						shorthand: true, //defaults to false
-						dateFormat: 'm.y', //defaults to "F Y"
-						altFormat: 'F Y', //defaults to "F Y"
+						dateFormat: this.ServerDateFormat,
+						altFormat: this.DateFormat,
 					}),
 				],
 			} as FlatpickrOptions;
