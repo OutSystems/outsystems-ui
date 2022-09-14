@@ -3,8 +3,16 @@ namespace Providers.Dropdown.VirtualSelect {
 	// DropDown => Option type
 	export type DropDownOption = {
 		image_url_or_class: string;
+		group_name?: string;
 		label: string;
 		value: string;
+	};
+
+	// DropDown => Grouped options type
+	export type GroupDropDownOption = {
+		label: string;
+		options: DropDownOption[];
+		index: number;
 	};
 
 	// VirtualSelect => Option Item, options type
@@ -12,6 +20,8 @@ namespace Providers.Dropdown.VirtualSelect {
 		alias: string;
 		index: number;
 		isGroupTitle: boolean;
+		isGroupOption: boolean;
+		groupIndex: number;
 		isNew: boolean;
 		isSelected: boolean;
 		isVisible: boolean;
@@ -98,6 +108,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		tooltipFontSize?: string;
 		tooltipMaxWidth?: string;
 		updatePositionThrottle?: number;
+		useGroupValue?: boolean;
 		valueKey?: string;
 		zIndex?: number;
 	};
