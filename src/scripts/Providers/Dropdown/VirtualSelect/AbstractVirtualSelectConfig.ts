@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars, no-extra-boolean-cast */
 namespace Providers.Dropdown.VirtualSelect {
 	/**
 	 * Class that represents the custom configurations received by the Dropdown.
@@ -8,9 +8,10 @@ namespace Providers.Dropdown.VirtualSelect {
 	 * @extends {AbstractDropdownConfig}
 	 */
 	export abstract class AbstractVirtualSelectConfig extends OSFramework.Patterns.Dropdown.AbstractDropdownConfig {
+		// Store grouped options
+		private _groupedOptionsList: GroupDropDownOption[];
 		// Store the Provider Options
 		private _providerOptions: VirtualSelectOpts;
-		private _groupedOptionsList: GroupDropDownOption[];
 		// Store configs set using extensibility
 		protected _providerExtendedOptions: VirtualSelectOpts;
 		public ElementId: string;
@@ -37,6 +38,36 @@ namespace Providers.Dropdown.VirtualSelect {
 			return hasImage;
 		}
 
+		// Method to build the group list format required by the provider:
+		// [
+		// 	{
+		// 	  label: 'Option Group 1',
+		// 	  options: [{ label: 'Option 1-1', value: '1' }, ... ]
+		// 	},
+		// 	...
+		// ]
+		private _getGroupedOptionsList(): GroupDropDownOption[] {
+			const options: GroupDropDownOption[] = [];
+			let previousKey: string = undefined;
+			const groupedOptions = this._groupOptions();
+
+			for (const key in groupedOptions) {
+				options.push({
+					label: key,
+					options: groupedOptions[key],
+
+					// When using grouped options, we need to calculate the index
+					// to match the option index provided by VirtuaSelect
+					index: groupedOptions[previousKey]
+						? options[options.length - 1].index + groupedOptions[previousKey].length + 1
+						: 0,
+				});
+				previousKey = key;
+			}
+
+			return options;
+		}
+
 		// Method used to generate the HTML String to be attached at the option label
 		private _getOptionIconPrefix(option: DropDownOption): string {
 			return `<i class="${Enum.CssClass.OptionItemIcon} ${option.image_url_or_class}"></i>`;
@@ -52,7 +83,8 @@ namespace Providers.Dropdown.VirtualSelect {
 		// Method used to generate the option info that will be added
 		private _getOptionInfo(data: VirtualSelectOptionInfo): string {
 			let prefix = '';
-			let index, groupIndex: number;
+			let index: number;
+			let groupIndex: number;
 
 			// Group titles do not have labels thus it can skip this block
 			if (!data.isGroupTitle) {
@@ -82,9 +114,21 @@ namespace Providers.Dropdown.VirtualSelect {
 			return `${prefix}${data.label}`;
 		}
 
-		// Auxiliary method to group the options into an object where
-		// the keys are the names of the groups and
-		// the values ​​are a list of the options in the group
+		// Provide a list in Virtual Select format depending if it is has groups or not
+		private _getOptionsList() {
+			// If the _groupedOptionsList has just one group that does not have a defined label,
+			// we infere that this should be that this is a regular DropDownOption list,
+			// otherwise this is a GroupDropDownOption List
+			if (this._groupedOptionsList.length === 1 && !!!this._groupedOptionsList[0].label) {
+				return this._groupedOptionsList[0].options;
+			} else {
+				return this._groupedOptionsList;
+			}
+		}
+
+		// Auxiliary method to group the options into an object where:
+		// keys correspond to the names of the groups
+		// values correspond to a list of the options in the group
 		private _groupOptions(): { [key: string]: DropDownOption[] } {
 			return this.OptionsList.reduce(function (
 				previousValue: { [key: string]: DropDownOption[] },
@@ -96,48 +140,6 @@ namespace Providers.Dropdown.VirtualSelect {
 				return previousValue;
 			},
 			{});
-		}
-
-		// Method to build the group list format required by the provider:
-		// [
-		// 	{
-		// 	  label: 'Option Group 1',
-		// 	  options: [{ label: 'Option 1-1', value: '1' }, ... ]
-		// 	},
-		// 	...
-		// ]
-		private _getGroupedOptionsList(): GroupDropDownOption[] {
-			let options: GroupDropDownOption[] = [];
-			let previousKey: string = undefined;
-			let groupedOptions = this._groupOptions();
-
-			for (const key in groupedOptions) {
-				options.push({
-					label: key,
-					options: groupedOptions[key],
-
-					// When using grouped options, we need to calculate the index
-					// to match the option index provided by VirtuaSelect
-					index: groupedOptions[previousKey]
-						? options[options.length - 1].index + groupedOptions[previousKey].length + 1
-						: 0,
-				});
-				previousKey = key;
-			}
-
-			return options;
-		}
-
-		// Provide a list in Virtual Select format depending if it is has groups or not
-		private _getOptionsList() {
-			// If the _groupedOptionsList has just one group that does not have a defined label,
-			// we infere that this should be that this is a regular DropDownOption list,
-			// otherwise this is a GroupDropDownOption List
-			if (this._groupedOptionsList.length === 1 && !!!this._groupedOptionsList[0].label) {
-				return this._groupedOptionsList[0].options;
-			} else {
-				return this._groupedOptionsList;
-			}
 		}
 
 		// Method used to set all the common VirtualSelect properties across the different types of instances
