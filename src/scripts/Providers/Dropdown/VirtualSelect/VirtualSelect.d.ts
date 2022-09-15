@@ -4,6 +4,7 @@ namespace Providers.Dropdown.VirtualSelect {
 	export type DropDownOption = {
 		image_url_or_class: string;
 		group_name?: string;
+		customData?: Any;
 		label: string;
 		value: string;
 	};

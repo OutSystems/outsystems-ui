@@ -68,7 +68,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			OSFramework.Helper.AsyncInvocation(
 				this._platformEventSelectedOptCallback,
 				this.widgetId,
-				this.getSelectedOptionsStructure()
+				this.getSelectedValues()
 			);
 		}
 
@@ -310,7 +310,18 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * @memberof AbstractVirtualSelect
 		 */
 		public getSelectedValues(): string {
-			return this.getSelectedOptionsStructure();
+			let optionsSelected = this.getSelectedOptionsStructure();
+
+			if (optionsSelected !== undefined && optionsSelected.length > 0) {
+				optionsSelected = optionsSelected.map(function (option) {
+					return {
+						group_name: option.customData.group_name || '',
+						...option,
+					};
+				});
+				return JSON.stringify(optionsSelected);
+			}
+			return '';
 		}
 
 		/**
@@ -388,7 +399,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			}
 		}
 
-		protected abstract getSelectedOptionsStructure(): string;
+		protected abstract getSelectedOptionsStructure(): DropDownOption[];
 		protected abstract prepareConfigs(): void;
 	}
 }

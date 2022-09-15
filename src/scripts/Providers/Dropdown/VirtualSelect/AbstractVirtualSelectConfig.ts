@@ -134,6 +134,8 @@ namespace Providers.Dropdown.VirtualSelect {
 				previousValue: { [key: string]: DropDownOption[] },
 				option: DropDownOption
 			) {
+				// We need to set the customData to obtain it when getSelectedOptions() invoked
+				option.customData = { group_name: option.group_name };
 				previousValue[option.group_name] = previousValue[option.group_name] || [];
 				previousValue[option.group_name].push(option);
 
