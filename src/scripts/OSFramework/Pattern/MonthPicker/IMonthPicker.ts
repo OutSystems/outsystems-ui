@@ -7,5 +7,7 @@ namespace OSFramework.Patterns.MonthPicker {
 	 * @interface IMonthPicker
 	 * @extends {Interface.IPattern}
 	 */
-	export interface IMonthPicker extends Interface.IPattern, Interface.IOpenable {}
+	export interface IMonthPicker extends Interface.IPattern, Interface.IOpenable {
+		setLanguage(value: string): void;
+	}
 }
