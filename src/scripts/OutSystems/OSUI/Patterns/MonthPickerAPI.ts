@@ -11,10 +11,24 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ChangeProperty(monthPickerId: string, propertyName: string, propertyValue: any): void {
-		const _monthPickerItem = GetMonthPickerItemById(monthPickerId);
+	export function ChangeProperty(monthPickerId: string, propertyName: string, propertyValue: any): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		_monthPickerItem.changeProperty(propertyName, propertyValue);
+		try {
+			const _monthPickerItem = GetMonthPickerItemById(monthPickerId);
+
+			_monthPickerItem.changeProperty(propertyName, propertyValue);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.MonthPicker.FailChangeProperty;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -52,12 +66,26 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	 * @export
 	 * @param {string} monthPickerId
 	 */
-	export function Dispose(monthPickerId: string): void {
-		const _monthPickerItem = GetMonthPickerItemById(monthPickerId);
+	export function Dispose(monthPickerId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		_monthPickerItem.dispose();
+		try {
+			const _monthPickerItem = GetMonthPickerItemById(monthPickerId);
 
-		_monthPickerItemsMap.delete(_monthPickerItem.uniqueId);
+			_monthPickerItem.dispose();
+
+			_monthPickerItemsMap.delete(_monthPickerItem.uniqueId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.MonthPicker.FailDispose;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -112,9 +140,51 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 		monthPickerId: string,
 		eventName: string,
 		callback: OSFramework.GlobalCallbacks.OSGeneric
-	): void {
-		const _monthPicker = this.GetMonthPickerItemById(monthPickerId);
+	): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		_monthPicker.registerCallback(eventName, callback);
+		try {
+			const _monthPicker = this.GetMonthPickerItemById(monthPickerId);
+
+			_monthPicker.registerCallback(eventName, callback);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.MonthPicker.FailRegisterCallback;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
+	 * Function that will set a different language to a given MonthPickerId
+	 *
+	 * @export
+	 * @param {string} monthPickerId
+	 * @param {string} isoCode
+	 * @return {*}  {string}
+	 */
+	export function SetLanguage(monthPickerId: string, isoCode: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const _monthPicker = this.GetMonthPickerItemById(monthPickerId);
+
+			_monthPicker.setLanguage(isoCode);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.MonthPicker.FailRedraw;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 }

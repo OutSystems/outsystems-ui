@@ -13,8 +13,12 @@
 	margin: 0;
 
 	.flatpickr-monthSelect-month {
+		align-items: center;
 		border: 1px solid transparent;
 		border-radius: var(--border-radius-soft);
+		display: flex;
+		height: 40px;
+		margin: 0;
 		width: 100%;
 
 		&:hover,

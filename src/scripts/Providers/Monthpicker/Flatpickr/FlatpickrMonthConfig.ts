@@ -64,14 +64,10 @@ namespace Providers.MonthPicker.Flatpickr {
 		private _getDateFromMonthYear(monthYear: MonthYear): Date {
 			const _monthIndex = OSFramework.Constants.Months.indexOf(monthYear.Month);
 			const _validatedYear = monthYear.Year < 1900 ? null : monthYear.Year;
-			let _newDate = null;
+			let _newDate = undefined;
 
 			if (_monthIndex !== -1 && _validatedYear !== null) {
 				_newDate = new Date(_validatedYear, _monthIndex, 1);
-			} else {
-				console.warn(
-					`The passed Month and/or Year is not valid: {Month: ${monthYear.Month} | Year: ${monthYear.Year} }, please review the values on parameters ${OSFramework.Patterns.MonthPicker.Enum.Properties.InitialMonth}, ${OSFramework.Patterns.MonthPicker.Enum.Properties.MinMonth} and ${OSFramework.Patterns.MonthPicker.Enum.Properties.MaxMonth}`
-				);
 			}
 
 			return _newDate;
@@ -104,6 +100,7 @@ namespace Providers.MonthPicker.Flatpickr {
 
 			return this.DateFormat;
 		}
+
 		// Method used to set all the config properties for the Month mode type
 		public getProviderConfig(): FlatpickrOptions {
 			this._checkServerDateFormat();
