@@ -27,6 +27,7 @@
 
 		&.selected {
 			background-color: var(--color-primary);
+			border-color: transparent;
 			color: var(--color-neutral-0);
 		}
 
