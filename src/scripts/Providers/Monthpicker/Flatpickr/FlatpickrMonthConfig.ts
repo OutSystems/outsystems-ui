@@ -120,6 +120,7 @@ namespace Providers.MonthPicker.Flatpickr {
 					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 					//@ts-expect-error
 					new monthSelectPlugin({
+						shorthand: true,
 						dateFormat: this.ServerDateFormat,
 						altFormat: this.DateFormat,
 					}),
