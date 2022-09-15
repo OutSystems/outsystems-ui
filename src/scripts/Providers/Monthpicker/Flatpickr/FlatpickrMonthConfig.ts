@@ -115,6 +115,7 @@ namespace Providers.MonthPicker.Flatpickr {
 				minDate: this._getDateFromMonthYear(this.MinMonth),
 				onChange: this.OnChange,
 				plugins: [
+					// Provider doesn't has the expected type difined
 					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 					//@ts-expect-error
 					new monthSelectPlugin({
