@@ -108,6 +108,7 @@ namespace Providers.MonthPicker.Flatpickr {
 
 			this._providerOptions = {
 				altInput: true,
+				allowInput: true,
 				dateFormat: this.ServerDateFormat,
 				defaultDate: this._getDateFromMonthYear(this.InitialMonth),
 				disableMobile: this.DisableMobile,

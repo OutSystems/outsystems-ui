@@ -30,7 +30,7 @@ namespace OSFramework.Patterns.MonthPicker {
 
 			switch (key) {
 				case Enum.Properties.DateFormat:
-					validatedValue = this.validateString(value as string, 'F Y');
+					validatedValue = this.validateString(value as string, 'MM/YYYY');
 					break;
 				case Enum.Properties.InitialMonth:
 				case Enum.Properties.MinMonth:
