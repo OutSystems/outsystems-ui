@@ -429,6 +429,14 @@
 	&.focused {
 		background-color: var(--color-neutral-2);
 	}
+
+	// Style dropdown group title
+	&.group-title {
+		.vscomp-option-text {
+			font-weight: var(--font-semi-bold);
+			opacity: 1;
+		}
+	}
 }
 
 // Option Item text
@@ -441,16 +449,6 @@
 	// This is used so that the text can  get ellipsis if too long
 	* {
 		vertical-align: middle;
-	}
-}
-
-// Style dropdown group title
-.vscomp-option {
-	&.group-title {
-		.vscomp-option-text {
-			font-weight: var(--font-semi-bold);
-			opacity: 1;
-		}
 	}
 }
 
