@@ -444,6 +444,16 @@
 	}
 }
 
+// Style dropdown group title
+.vscomp-option {
+	&.group-title {
+		.vscomp-option-text {
+			font-weight: var(--font-semi-bold);
+			opacity: 1;
+		}
+	}
+}
+
 // Accessibility -----------------------------------------------------------------
 ///
 .has-accessible-features {
