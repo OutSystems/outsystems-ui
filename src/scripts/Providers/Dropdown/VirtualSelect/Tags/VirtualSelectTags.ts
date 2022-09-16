@@ -10,14 +10,14 @@ namespace Providers.Dropdown.VirtualSelect.Tags {
 		 * Get the selected values options that will be used to pass into platform as a JSON string
 		 *
 		 * @protected
-		 * @return {*}  {string}
+		 * @return {*}  {DropDownOption[]}
 		 * @memberof OSUIVirtualSelectTags
 		 */
-		protected getSelectedOptionsStructure(): string {
+		protected getSelectedOptionsStructure(): DropDownOption[] {
 			// Store the options selected
 			const optionsSelected = this._virtualselectConfigs.getSelectedOptions();
 
-			return optionsSelected.length > 0 ? JSON.stringify(optionsSelected) : '';
+			return optionsSelected;
 		}
 
 		/**
