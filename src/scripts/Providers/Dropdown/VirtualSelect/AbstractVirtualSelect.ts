@@ -315,7 +315,8 @@ namespace Providers.Dropdown.VirtualSelect {
 			if (optionsSelected !== undefined && optionsSelected.length > 0) {
 				optionsSelected = optionsSelected.map(function (option) {
 					return {
-						group_name: option.customData.group_name || '',
+						group_name:
+							option.customData && option.customData.group_name ? option.customData.group_name : '',
 						...option,
 					};
 				});

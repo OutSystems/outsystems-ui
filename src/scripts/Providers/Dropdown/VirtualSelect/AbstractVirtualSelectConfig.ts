@@ -134,10 +134,11 @@ namespace Providers.Dropdown.VirtualSelect {
 				previousValue: { [key: string]: DropDownOption[] },
 				option: DropDownOption
 			) {
+				const group_name = option.group_name || '';
 				// We need to set the customData to obtain it when getSelectedOptions() invoked
-				option.customData = { group_name: option.group_name };
-				previousValue[option.group_name] = previousValue[option.group_name] || [];
-				previousValue[option.group_name].push(option);
+				option.customData = group_name !== '' ? { group_name: group_name } : null;
+				previousValue[group_name] = previousValue[group_name] || [];
+				previousValue[group_name].push(option);
 
 				return previousValue;
 			},
