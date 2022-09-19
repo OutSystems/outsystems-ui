@@ -1,8 +1,13 @@
 // Flatpickr - MonthPicker
-.flatpickr-calendar.osui-monthpicker__dropdown {
-	width: auto;
-}
+.osui-monthpicker__dropdown {
+	&.flatpickr-calendar {
+		width: auto;
+	}
 
+	.flatpickr-months {
+		padding-bottom: 0;
+	}
+}
 .flatpickr-monthSelect-months {
 	display: grid;
 	gap: var(--space-xs);
