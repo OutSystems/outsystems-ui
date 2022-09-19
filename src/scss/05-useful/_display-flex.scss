@@ -77,28 +77,73 @@
 }
 
 .gap {
-	@for $index from 1 through 5 {
-		// Generate .gap-1
-		&-#{$index} {
-			gap: #{$index}em;
-		}
+	&-xs {
+		gap: var(--space-xs);
+	}
+	&-s {
+		gap: var(--space-s);
+	}
+	&-base {
+		gap: var(--space-base);
+	}
+	&-m {
+		gap: var(--space-m);
+	}
+	&-l {
+		gap: var(--space-l);
+	}
+	&-xl {
+		gap: var(--space-xl);
+	}
+	&-xxl {
+		gap: var(--space-xxl);
 	}
 }
 
 .row-gap {
-	@for $index from 1 through 5 {
-		// Generate .row-gap-1
-		&-#{$index} {
-			row-gap: #{$index}em;
-		}
+	&-xs {
+		row-gap: var(--space-xs);
+	}
+	&-s {
+		row-gap: var(--space-s);
+	}
+	&-base {
+		row-gap: var(--space-base);
+	}
+	&-m {
+		row-gap: var(--space-m);
+	}
+	&-l {
+		row-gap: var(--space-l);
+	}
+	&-xl {
+		row-gap: var(--space-xl);
+	}
+	&-xxl {
+		row-gap: var(--space-xxl);
 	}
 }
 
 .column-gap {
-	@for $index from 1 through 5 {
-		// Generate .column-gap-1
-		&-#{$index} {
-			column-gap: #{$index}em;
-		}
+	&-xs {
+		column-gap: var(--space-xs);
+	}
+	&-s {
+		column-gap: var(--space-s);
+	}
+	&-base {
+		column-gap: var(--space-base);
+	}
+	&-m {
+		column-gap: var(--space-m);
+	}
+	&-l {
+		column-gap: var(--space-l);
+	}
+	&-xl {
+		column-gap: var(--space-xl);
+	}
+	&-xxl {
+		column-gap: var(--space-xxl);
 	}
 }
