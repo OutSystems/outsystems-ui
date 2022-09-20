@@ -49,7 +49,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 			}
 
 			// Trigger platform's onChange callback event
-			OSUIFramework.Helper.AsyncInvocation(
+			OSFramework.Helper.AsyncInvocation(
 				this._onChangeCallbackEvent,
 				this.widgetId,
 				_selectedDate[0],
@@ -68,7 +68,19 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 			this._flatpickrOpts = this.configs.getProviderConfig();
 
 			// Instance will be Created!
-			super.createProviderInstance();
+			this.createProviderInstance();
+		}
+
+		/**
+		 * Trigger the jumToDate to now
+		 *
+		 * @protected
+		 * @memberof Flatpickr.SingleDate
+		 */
+		protected todayBtnClick(event: MouseEvent): void {
+			event.preventDefault();
+
+			this.jumpIntoToday();
 		}
 
 		public build(): void {
@@ -91,7 +103,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 
 			if (this.isBuilt) {
 				switch (propertyName) {
-					case OSUIFramework.Patterns.DatePicker.Enum.Properties.DateFormat:
+					case OSFramework.Patterns.DatePicker.Enum.Properties.DateFormat:
 						// Check if there is any selected date already
 						this._onUpdateDateFormat();
 						break;

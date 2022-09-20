@@ -4,35 +4,32 @@ namespace OutSystems.OSUI.Utils.Application {
 	 * Set SideMenu and Sticky classes when the layout needs them
 	 */
 	export function SetExpandableExceptions(): void {
-		const layout = OSUIFramework.Helper.Dom.ClassSelector(
-			document,
-			OSUIFramework.GlobalEnum.CssClassElements.Layout
-		);
+		const layout = OSFramework.Helper.Dom.ClassSelector(document, OSFramework.GlobalEnum.CssClassElements.Layout);
 		const body = document.body;
 		if (layout) {
-			const expandableMenuBehavior = OSUIFramework.Helper.Dom.Styles.ContainsClass(
+			const expandableMenuBehavior = OSFramework.Helper.Dom.Styles.ContainsClass(
 				layout,
-				OSUIFramework.GlobalEnum.CssClassElements.AsideExpandable
+				OSFramework.GlobalEnum.CssClassElements.AsideExpandable
 			);
-			const isLayoutNative = OSUIFramework.Helper.Dom.Styles.ContainsClass(
+			const isLayoutNative = OSFramework.Helper.Dom.Styles.ContainsClass(
 				layout,
-				OSUIFramework.GlobalEnum.CssClassElements.LayoutNative
+				OSFramework.GlobalEnum.CssClassElements.LayoutNative
 			);
 
 			if (expandableMenuBehavior && isLayoutNative) {
 				const deviceDetectionClasses =
-					(OSUIFramework.Helper.Dom.Styles.ContainsClass(body, OSUIFramework.GlobalEnum.DeviceType.tablet) &&
-						OSUIFramework.Helper.Dom.Styles.ContainsClass(
+					(OSFramework.Helper.Dom.Styles.ContainsClass(body, OSFramework.GlobalEnum.DeviceType.tablet) &&
+						OSFramework.Helper.Dom.Styles.ContainsClass(
 							body,
-							OSUIFramework.GlobalEnum.DeviceOrientation.landscape
+							OSFramework.GlobalEnum.DeviceOrientation.landscape
 						)) ||
-					OSUIFramework.Helper.Dom.Styles.ContainsClass(body, OSUIFramework.GlobalEnum.DeviceType.desktop);
+					OSFramework.Helper.Dom.Styles.ContainsClass(body, OSFramework.GlobalEnum.DeviceType.desktop);
 
 				// Check device detection classes
 				if (deviceDetectionClasses) {
-					const isHideOnScroll = OSUIFramework.Helper.Dom.Styles.ContainsClass(
+					const isHideOnScroll = OSFramework.Helper.Dom.Styles.ContainsClass(
 						layout,
-						OSUIFramework.GlobalEnum.CssClassElements.HeaderHideOnScroll
+						OSFramework.GlobalEnum.CssClassElements.HeaderHideOnScroll
 					);
 					// Check if the menu is open and apply the correct menu visibility, when has Expandable behavior
 					Menu.ToggleSideMenu();

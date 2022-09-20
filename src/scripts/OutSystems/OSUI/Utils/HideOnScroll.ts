@@ -8,22 +8,22 @@ namespace OutSystems.OSUI.Utils.HideOnScroll {
 	function addEvents(header: HTMLElement) {
 		const content: HTMLElement = document.querySelector('.active-screen .content');
 
-		if (OSUIFramework.Helper.Dom.Styles.ContainsClass(header, 'hide') && content) {
+		if (OSFramework.Helper.Dom.Styles.ContainsClass(header, 'hide') && content) {
 			let startY = 0;
-			const mainContentHeight: number = OSUIFramework.Helper.Dom.ClassSelector(
+			const mainContentHeight: number = OSFramework.Helper.Dom.ClassSelector(
 				document.body,
 				'main-content'
 			)?.scrollHeight;
 
 			const threshold = 60;
-			const layout = OSUIFramework.Helper.Dom.ClassSelector(
+			const layout = OSFramework.Helper.Dom.ClassSelector(
 				document.body,
-				OSUIFramework.GlobalEnum.CssClassElements.Layout
+				OSFramework.GlobalEnum.CssClassElements.Layout
 			);
 
 			if (mainContentHeight - threshold > content.offsetHeight) {
 				content.addEventListener(
-					OSUIFramework.GlobalEnum.HTMLEvent.TouchStart,
+					OSFramework.GlobalEnum.HTMLEvent.TouchStart,
 					(e: TouchEvent) => {
 						startY = e.touches[0].pageY;
 					},
@@ -31,17 +31,17 @@ namespace OutSystems.OSUI.Utils.HideOnScroll {
 				);
 
 				content.addEventListener(
-					OSUIFramework.GlobalEnum.HTMLEvent.TouchMove,
+					OSFramework.GlobalEnum.HTMLEvent.TouchMove,
 					(e: TouchEvent) => {
 						const c: number = e.touches[0].pageY;
 						const translateY: number = c - startY;
 
 						if (c < startY - threshold && translateY < 0) {
-							OSUIFramework.Helper.Dom.Styles.AddClass(header, 'header-on-scroll');
-							OSUIFramework.Helper.Dom.Styles.AddClass(layout, 'header-is-hidden');
+							OSFramework.Helper.Dom.Styles.AddClass(header, 'header-on-scroll');
+							OSFramework.Helper.Dom.Styles.AddClass(layout, 'header-is-hidden');
 						} else if (c > startY + threshold) {
-							OSUIFramework.Helper.Dom.Styles.RemoveClass(header, 'header-on-scroll');
-							OSUIFramework.Helper.Dom.Styles.RemoveClass(layout, 'header-is-hidden');
+							OSFramework.Helper.Dom.Styles.RemoveClass(header, 'header-on-scroll');
+							OSFramework.Helper.Dom.Styles.RemoveClass(layout, 'header-is-hidden');
 						}
 					},
 					false
@@ -56,9 +56,9 @@ namespace OutSystems.OSUI.Utils.HideOnScroll {
 	 * @export
 	 */
 	export function Init(): void {
-		const header = OSUIFramework.Helper.Dom.ClassSelector(
+		const header = OSFramework.Helper.Dom.ClassSelector(
 			document.body,
-			OSUIFramework.GlobalEnum.CssClassElements.Header
+			OSFramework.GlobalEnum.CssClassElements.Header
 		);
 		if (header) {
 			addEvents(header);

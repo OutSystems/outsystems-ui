@@ -1,0 +1,160 @@
+/*! Patterns - Interaction - Carousel */
+////
+/// @group Patterns-Carousel
+/// Patterns - Interaction - Carousel
+
+/* Splide Library Core Default Styles */
+@import '../../../../Providers/Carousel/Splide/scss/splide-core.scss';
+
+@import 'carousel_ss_preview_imgs';
+
+/* OutSystems UI Carousel customization */
+///
+.osui-carousel {
+	--osui-carousel-track-width: 100%;
+	--osui-carousel-pagination-margin: 30px;
+
+	.splide {
+		&__arrow {
+			background-color: var(--color-neutral-0);
+			box-shadow: var(--shadow-xs);
+			height: 40px;
+			opacity: 1;
+			transition: opacity 150ms linear;
+			width: 40px;
+			will-change: opacity;
+
+			&[disabled] {
+				cursor: default;
+				opacity: 0.3;
+			}
+
+			svg {
+				height: 14px;
+				width: 14px;
+
+				path {
+					fill: var(--color-neutral-7);
+				}
+			}
+
+			/* Service Studio Preview*/
+			& {
+				-servicestudio-transform: translateY(calc(-50% + 20px));
+			}
+		}
+
+		&__pagination {
+			margin: 0;
+
+			&__page {
+				&.is-active {
+					background-color: var(--color-primary);
+				}
+			}
+		}
+
+		&__list {
+			/* To avoid flickering with multiple items and gap 0*/
+			transform-style: flat;
+		}
+
+		&--draggable,
+		&.splide--draggable {
+			cursor: grab;
+		}
+
+		img {
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+
+	&--has-pagination {
+		// To fix pagination position so that it appears below Carousel
+		padding-bottom: var(--osui-carousel-pagination-margin);
+
+		// Adjust rule when using List inside
+		&:not(.splide) {
+			.splide__pagination {
+				bottom: calc(var(--osui-carousel-pagination-margin) * -1);
+			}
+		}
+
+		// Adjust rule when using static content
+		&.splide {
+			.splide__arrow {
+				top: calc(50% - (var(--osui-carousel-pagination-margin)) / 2);
+			}
+
+			.splide__pagination {
+				bottom: 0;
+			}
+		}
+	}
+
+	&__content {
+		// Service Studio Preview
+		& {
+			-servicestudio-display: grid;
+			-servicestudio-grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+		}
+
+		& > .list {
+			overflow: unset;
+
+			// Service Studio Preview
+			& {
+				-servicestudio-display: inline-flex;
+				-servicestudio-overflow: hidden;
+			}
+		}
+	}
+
+	&__track {
+		max-width: 100%;
+		width: var(--osui-carousel-track-width);
+		-servicestudio-position: relative;
+	}
+
+	.list:not([data-virtualization-disabled]),
+	.list:not([data-animation-disabled]) {
+		-servicestudio-pointer-events: none;
+		-servicestudio-min-height: 100px;
+
+		&:after {
+			-servicestudio-content: '';
+			-servicestudio-position: absolute;
+			-servicestudio-top: 0;
+			-servicestudio-left: 0;
+			-servicestudio-width: 100%;
+			-servicestudio-height: 100%;
+			-servicestudio-background-color: var(--color-neutral-0);
+			-servicestudio-background-image: $carousel_helper_img_base64;
+			-servicestudio-background-repeat: no-repeat;
+			-servicestudio-background-position: center;
+			-servicestudio-z-index: 2;
+		}
+	}
+}
+
+///
+.has-accessible-features {
+	.splide__slide {
+		box-shadow: none;
+	}
+}
+
+///
+// RTL for dynamic changes of direction
+.is-rtl {
+	.splide.splide {
+		&--ltr {
+			direction: ltr;
+		}
+
+		&--rtl {
+			direction: rtl;
+		}
+	}
+}

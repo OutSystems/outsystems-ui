@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.TouchEventsAPI {
-	const _touchEventsMap = new Map<string, OSUIFramework.Patterns.TouchEvents.ITouchEvents>(); //touchEvents.uniqueId -> TouchEvents obj
+	const _touchEventsMap = new Map<string, OSFramework.Patterns.TouchEvents.ITouchEvents>(); //touchEvents.uniqueId -> TouchEvents obj
 
 	/**
 	 * Create the new TouchEvents instance and add it to the TouchEventssMap
@@ -8,16 +8,16 @@ namespace OutSystems.OSUI.Patterns.TouchEventsAPI {
 	 * @export
 	 * @param {string} touchEventsId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSUIFramework.Patterns TouchEvents. TouchEvents}
+	 * @return {*}  {OSFramework.Patterns TouchEvents. TouchEvents}
 	 */
-	export function Create(touchEventsId: string, configs: string): OSUIFramework.Patterns.TouchEvents.ITouchEvents {
+	export function Create(touchEventsId: string, configs: string): OSFramework.Patterns.TouchEvents.ITouchEvents {
 		if (_touchEventsMap.has(touchEventsId)) {
 			throw new Error(
-				`There is already an ${OSUIFramework.GlobalEnum.PatternName.TouchEvents} registered under id: ${touchEventsId}`
+				`There is already an ${OSFramework.GlobalEnum.PatternName.TouchEvents} registered under id: ${touchEventsId}`
 			);
 		}
 
-		const _newTouchEvents = new OSUIFramework.Patterns.TouchEvents.TouchEvents(touchEventsId, JSON.parse(configs));
+		const _newTouchEvents = new OSFramework.Patterns.TouchEvents.TouchEvents(touchEventsId, JSON.parse(configs));
 
 		_touchEventsMap.set(touchEventsId, _newTouchEvents);
 
@@ -42,10 +42,10 @@ namespace OutSystems.OSUI.Patterns.TouchEventsAPI {
 	 * Function that will return the Map with all the TouchEvents instances at the page
 	 *
 	 * @export
-	 * @return {*}  {Map<string, OSUIFramework.Patterns TouchEvents.ITouchEvents>}
+	 * @return {*}  {Map<string, OSFramework.Patterns TouchEvents.ITouchEvents>}
 	 */
 	export function GetAllTouchEvents(): Array<string> {
-		return OSUIFramework.Helper.MapOperation.ExportKeys(_touchEventsMap);
+		return OSFramework.Helper.MapOperation.ExportKeys(_touchEventsMap);
 	}
 
 	/**
@@ -53,14 +53,14 @@ namespace OutSystems.OSUI.Patterns.TouchEventsAPI {
 	 *
 	 * @export
 	 * @param {string} TouchEventsId ID of the TouchEvents that will be looked for.
-	 * @return {*}  {OSUIFramework.Patterns TouchEvents. TouchEvents;}
+	 * @return {*}  {OSFramework.Patterns TouchEvents. TouchEvents;}
 	 */
-	export function GetTouchEventsById(touchEventsId: string): OSUIFramework.Patterns.TouchEvents.ITouchEvents {
-		return OSUIFramework.Helper.MapOperation.FindInMap(
+	export function GetTouchEventsById(touchEventsId: string): OSFramework.Patterns.TouchEvents.ITouchEvents {
+		return OSFramework.Helper.MapOperation.FindInMap(
 			'TouchEvents',
 			touchEventsId,
 			_touchEventsMap
-		) as OSUIFramework.Patterns.TouchEvents.ITouchEvents;
+		) as OSFramework.Patterns.TouchEvents.ITouchEvents;
 	}
 
 	/**
@@ -68,9 +68,9 @@ namespace OutSystems.OSUI.Patterns.TouchEventsAPI {
 	 *
 	 * @export
 	 * @param {string} touchEventsId ID of the TouchEvents that will be initialized.
-	 * @return {*}  {OSUIFramework.Patterns TouchEvents. TouchEvents}
+	 * @return {*}  {OSFramework.Patterns TouchEvents. TouchEvents}
 	 */
-	export function Initialize(touchEventsId: string): OSUIFramework.Patterns.TouchEvents.ITouchEvents {
+	export function Initialize(touchEventsId: string): OSFramework.Patterns.TouchEvents.ITouchEvents {
 		const TouchEvents = GetTouchEventsById(touchEventsId);
 
 		TouchEvents.build();
@@ -84,12 +84,12 @@ namespace OutSystems.OSUI.Patterns.TouchEventsAPI {
 	 * @export
 	 * @param {string} touchEventsID
 	 * @param {string} eventName
-	 * @param {OSUIFramework.Callbacks.OSGeneric} callback
+	 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback
 	 */
 	export function RegisterCallback(
 		touchEventsID: string,
 		eventName: string,
-		callback: OSUIFramework.Callbacks.OSGeneric
+		callback: OSFramework.GlobalCallbacks.OSGeneric
 	): void {
 		const touchEvents = this.GetTouchEventsById(touchEventsID);
 

@@ -6,17 +6,17 @@ namespace Providers.Dropdown.VirtualSelect.Factory {
 	 * @export
 	 * @param {string} dropdownId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSUIFramework.Patterns.Dropdown.IDropdown}
+	 * @return {*}  {OSFramework.Patterns.Dropdown.IDropdown}
 	 */
 	export function NewVirtualSelect(
 		dropdownId: string,
 		mode: string,
 		configs: JSON
-	): OSUIFramework.Patterns.Dropdown.IDropdown {
+	): OSFramework.Patterns.Dropdown.IDropdown {
 		let _virtualSelectItem = null;
 
 		switch (mode) {
-			case OSUIFramework.Patterns.Dropdown.Enum.Mode.Search:
+			case OSFramework.Patterns.Dropdown.Enum.Mode.Search:
 				_virtualSelectItem = new Providers.Dropdown.VirtualSelect.Search.OSUIVirtualSelectSearch(
 					dropdownId,
 					configs
@@ -24,7 +24,7 @@ namespace Providers.Dropdown.VirtualSelect.Factory {
 
 				break;
 
-			case OSUIFramework.Patterns.Dropdown.Enum.Mode.Tags:
+			case OSFramework.Patterns.Dropdown.Enum.Mode.Tags:
 				_virtualSelectItem = new Providers.Dropdown.VirtualSelect.Tags.OSUIVirtualSelectTags(
 					dropdownId,
 					configs

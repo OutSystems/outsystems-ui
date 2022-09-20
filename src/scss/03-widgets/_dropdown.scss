@@ -162,6 +162,8 @@ select {
 
 div {
 	&.dropdown-display-content {
+		width: 100%;
+
 		& > span,
 		& > div {
 			font-size: var(--font-size-s);

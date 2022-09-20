@@ -18,21 +18,21 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 		constructor(config: JSON) {
 			super(config);
 
-			this.CalendarMode = OSUIFramework.Patterns.DatePicker.Enum.Mode.Range;
+			this.CalendarMode = OSFramework.Patterns.DatePicker.Enum.Mode.Range;
 		}
 
 		// Method used to set the default value since we're dealing with on input to be assigned and 2 received dates!
 		private _setDefaultDate(): string[] | undefined {
 			// Check if any of the given dates are a null date
 			if (
-				OSUIFramework.Helper.Dates.IsNull(this.InitialStartDate) ||
-				OSUIFramework.Helper.Dates.IsNull(this.InitialEndDate)
+				OSFramework.Helper.Dates.IsNull(this.InitialStartDate) ||
+				OSFramework.Helper.Dates.IsNull(this.InitialEndDate)
 			) {
 				return undefined;
 			}
 
 			// Check if the Start Date is after than End Date
-			if (OSUIFramework.Helper.Dates.Compare(this.InitialStartDate, this.InitialEndDate) === false) {
+			if (OSFramework.Helper.Dates.Compare(this.InitialStartDate, this.InitialEndDate) === false) {
 				throw new Error(`StartDate '${this.InitialStartDate}' can't be after EndDate '${this.InitialEndDate}'`);
 			}
 
@@ -43,20 +43,14 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 		public getProviderConfig(): FlatpickrOptions {
 			const flatpickrRangeDateOpts = {
 				defaultDate: this._setDefaultDate(),
-				mode: OSUIFramework.Patterns.DatePicker.Enum.Mode.Range,
+				mode: OSFramework.Patterns.DatePicker.Enum.Mode.Range,
 			};
 
-			// Merge both option objects => if objects have a property with the same name, then the right-most object property overwrites the previous one
-			// eslint-disable-next-line prefer-const
-			let fpOptions = {
-				...super.getCommonProviderConfigs(),
-				...flatpickrRangeDateOpts,
-			};
-
-			// Cleanning undefined properties
-			Object.keys(fpOptions).forEach((key) => fpOptions[key] === undefined && delete fpOptions[key]);
-
-			return fpOptions;
+			return this.mergeConfigs(
+				this.getCommonProviderConfigs(),
+				flatpickrRangeDateOpts,
+				this._providerExtendedOptions
+			);
 		}
 
 		// Method that validates if a given property can be changed.

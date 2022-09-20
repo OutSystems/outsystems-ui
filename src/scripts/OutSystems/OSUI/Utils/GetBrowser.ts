@@ -11,6 +11,6 @@ namespace OutSystems.OSUI.Utils {
 	 * @return {*}  {string}
 	 */
 	export function GetBrowser(useragent = ''): string {
-		return OSUIFramework.Helper.DeviceInfo.GetBrowser(useragent);
+		return OSFramework.Helper.DeviceInfo.GetBrowser(useragent);
 	}
 }

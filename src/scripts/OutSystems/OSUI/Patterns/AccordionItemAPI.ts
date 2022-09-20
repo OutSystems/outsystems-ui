@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
-	const _accordionItemMap = new Map<string, OSUIFramework.Patterns.AccordionItem.IAccordionItem>(); //accordionItem.uniqueId -> AccordionItem obj
+	const _accordionItemMap = new Map<string, OSFramework.Patterns.AccordionItem.IAccordionItem>(); //accordionItem.uniqueId -> AccordionItem obj
 
 	/**
 	 * Function that will allow elements inside the title to be clicked without triggering the pattern toggle.
@@ -89,19 +89,19 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 * @export
 	 * @param {string} accordionItemId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSUIFramework.Patterns.AccordrionItem.IAccordionItem}
+	 * @return {*}  {OSFramework.Patterns.AccordrionItem.IAccordionItem}
 	 */
 	export function Create(
 		accordionItemId: string,
 		configs: string
-	): OSUIFramework.Patterns.AccordionItem.IAccordionItem {
+	): OSFramework.Patterns.AccordionItem.IAccordionItem {
 		if (_accordionItemMap.has(accordionItemId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternName.AccordionItem} registered under id: ${accordionItemId}`
+				`There is already a ${OSFramework.GlobalEnum.PatternName.AccordionItem} registered under id: ${accordionItemId}`
 			);
 		}
 
-		const _newAccordionItem = new OSUIFramework.Patterns.AccordionItem.AccordionItem(
+		const _newAccordionItem = new OSFramework.Patterns.AccordionItem.AccordionItem(
 			accordionItemId,
 			JSON.parse(configs)
 		);
@@ -169,10 +169,10 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 * Function that will return the Map with all the Accordion Item instances at the page
 	 *
 	 * @export
-	 * @return {*}  {Map<string, OSUIFramework.Patterns.AccordionItem.IAccordionItem>}
+	 * @return {*}  {Map<string, OSFramework.Patterns.AccordionItem.IAccordionItem>}
 	 */
 	export function GetAllAccordionItems(): Array<string> {
-		return OSUIFramework.Helper.MapOperation.ExportKeys(_accordionItemMap);
+		return OSFramework.Helper.MapOperation.ExportKeys(_accordionItemMap);
 	}
 
 	/**
@@ -180,14 +180,14 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 *
 	 * @export
 	 * @param {string} accodrionItemId ID of the AccordionItem that will be looked for.
-	 * @return {*}  {OSUIFramework.Patterns.AccordionItem.IAccordionItem}
+	 * @return {*}  {OSFramework.Patterns.AccordionItem.IAccordionItem}
 	 */
-	export function GetAccordionItemById(accordionItemId: string): OSUIFramework.Patterns.AccordionItem.IAccordionItem {
-		return OSUIFramework.Helper.MapOperation.FindInMap(
+	export function GetAccordionItemById(accordionItemId: string): OSFramework.Patterns.AccordionItem.IAccordionItem {
+		return OSFramework.Helper.MapOperation.FindInMap(
 			'AccordionItem',
 			accordionItemId,
 			_accordionItemMap
-		) as OSUIFramework.Patterns.AccordionItem.IAccordionItem;
+		) as OSFramework.Patterns.AccordionItem.IAccordionItem;
 	}
 
 	/**
@@ -195,9 +195,9 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 *
 	 * @export
 	 * @param {string} accordionItemId ID of the Accordion Item pattern that will be initialized.
-	 * @return {*}  {OSUIFramework.Patterns.AccodrionItem.IAccordionItem}
+	 * @return {*}  {OSFramework.Patterns.AccodrionItem.IAccordionItem}
 	 */
-	export function Initialize(accordionItemId: string): OSUIFramework.Patterns.AccordionItem.IAccordionItem {
+	export function Initialize(accordionItemId: string): OSFramework.Patterns.AccordionItem.IAccordionItem {
 		const accordionItem = GetAccordionItemById(accordionItemId);
 
 		accordionItem.build();
@@ -212,7 +212,7 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 * @param {string} accordionItemId
 	 * @param {*} callback
 	 */
-	export function RegisterCallback(accordionItemId: string, callback: OSUIFramework.Callbacks.Generic): string {
+	export function RegisterCallback(accordionItemId: string, callback: OSFramework.GlobalCallbacks.Generic): string {
 		const responseObj = {
 			isSuccess: true,
 			message: ErrorCodes.Success.message,

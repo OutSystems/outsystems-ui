@@ -16,29 +16,23 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 		constructor(config: JSON) {
 			super(config);
 
-			this.CalendarMode = OSUIFramework.Patterns.DatePicker.Enum.Mode.Single;
+			this.CalendarMode = OSFramework.Patterns.DatePicker.Enum.Mode.Single;
 		}
 
 		// Method used to set all the config properties for the SingleDate mode type
 		public getProviderConfig(): FlatpickrOptions {
 			const flatpickrSingleDateOpts = {
-				defaultDate: OSUIFramework.Helper.Dates.IsNull(this.InitialDate) ? undefined : this.InitialDate,
-				mode: OSUIFramework.Patterns.DatePicker.Enum.Mode.Single,
-				enableTime: this.TimeFormat !== OSUIFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable,
+				defaultDate: OSFramework.Helper.Dates.IsNull(this.InitialDate) ? undefined : this.InitialDate,
+				mode: OSFramework.Patterns.DatePicker.Enum.Mode.Single,
+				enableTime: this.TimeFormat !== OSFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable,
 				onChange: this.OnChange,
 			};
 
-			// Merge both option objects => if objects have a property with the same name, then the right-most object property overwrites the previous one
-			// eslint-disable-next-line prefer-const
-			let fpOptions = {
-				...super.getCommonProviderConfigs(),
-				...flatpickrSingleDateOpts,
-			};
-
-			// Cleanning undefined properties
-			Object.keys(fpOptions).forEach((key) => fpOptions[key] === undefined && delete fpOptions[key]);
-
-			return fpOptions;
+			return this.mergeConfigs(
+				this.getCommonProviderConfigs(),
+				flatpickrSingleDateOpts,
+				this._providerExtendedOptions
+			);
 		}
 
 		// Method that validates if a given property can be changed.

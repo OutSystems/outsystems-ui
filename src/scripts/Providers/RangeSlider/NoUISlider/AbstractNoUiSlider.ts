@@ -5,7 +5,7 @@ namespace Providers.RangeSlider.NoUISlider {
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export abstract class AbstractNoUiSlider<C extends NoUiSlider.AbstractNoUiSliderConfig>
-		extends OSUIFramework.Patterns.RangeSlider.AbstractRangeSlider<NoUiSlider, C>
+		extends OSFramework.Patterns.RangeSlider.AbstractRangeSlider<NoUiSlider, C>
 		implements INoUiSlider
 	{
 		// Store if the mode is Interval
@@ -13,9 +13,9 @@ namespace Providers.RangeSlider.NoUISlider {
 		// Store the provider target elem
 		private _rangeSliderProviderElem: HTMLElement;
 		// RangeSlider events
-		protected eventProviderValueChanged: OSUIFramework.Callbacks.Generic;
-		protected platformEventInitialize: OSUIFramework.Callbacks.OSRangeSliderInitializeEvent;
-		protected platformEventValueChange: OSUIFramework.Callbacks.OSRangeSliderOnValueChangeEvent;
+		protected eventProviderValueChanged: OSFramework.GlobalCallbacks.Generic;
+		protected platformEventInitialize: OSFramework.GlobalCallbacks.OSGeneric;
+		protected platformEventValueChange: OSFramework.Patterns.RangeSlider.Callbacks.OSOnValueChangeEvent;
 		// Store the provider options
 		protected providerOptions: NoUiSliderOptions;
 		// throttle before invoking the platform
@@ -26,21 +26,16 @@ namespace Providers.RangeSlider.NoUISlider {
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
 
-			this._isInterval = this.configs.rangeSliderMode === OSUIFramework.Patterns.RangeSlider.Enum.Mode.Interval;
+			this._isInterval = this.configs.rangeSliderMode === OSFramework.Patterns.RangeSlider.Enum.Mode.Interval;
 		}
 
 		// Method to togghe the disabled attribute
 		private _setIsDisabled(): void {
 			if (this.configs.IsDisabled) {
-				OSUIFramework.Helper.Dom.Disable(this._rangeSliderProviderElem);
+				OSFramework.Helper.Dom.Disable(this._rangeSliderProviderElem);
 			} else {
-				OSUIFramework.Helper.Dom.Enable(this._rangeSliderProviderElem);
+				OSFramework.Helper.Dom.Enable(this._rangeSliderProviderElem);
 			}
-		}
-
-		// Method to set the OnInitializeEvent
-		private _setOnInitializedEvent(): void {
-			OSUIFramework.Helper.AsyncInvocation(this.platformEventInitialize, this.widgetId);
 		}
 
 		// Method to set the OnValueChangeEvent
@@ -51,16 +46,16 @@ namespace Providers.RangeSlider.NoUISlider {
 		// Method to create/update the Size CSS Variable
 		private _setSize(): void {
 			if (this.configs.Size.includes('%') && parseFloat(this.configs.Size) > 100) {
-				this.configs.Size = OSUIFramework.Patterns.RangeSlider.Enum.DefaultValues.PercentualSize;
+				this.configs.Size = OSFramework.Patterns.RangeSlider.Enum.DefaultValues.PercentualSize;
 
 				console.warn(
-					`The value of the Size property on the '${this.widgetId}' ${OSUIFramework.GlobalEnum.PatternName.RangeSlider} can't be smaller than '${OSUIFramework.Patterns.RangeSlider.Enum.DefaultValues.PercentualSize}'.`
+					`The value of the Size property on the '${this.widgetId}' ${OSFramework.GlobalEnum.PatternName.RangeSlider} can't be smaller than '${OSFramework.Patterns.RangeSlider.Enum.DefaultValues.PercentualSize}'.`
 				);
 			}
 
-			OSUIFramework.Helper.Dom.Styles.SetStyleAttribute(
+			OSFramework.Helper.Dom.Styles.SetStyleAttribute(
 				this._selfElem,
-				OSUIFramework.Patterns.RangeSlider.Enum.CssProperties.Size,
+				OSFramework.Patterns.RangeSlider.Enum.CssProperties.Size,
 				this.configs.Size
 			);
 		}
@@ -89,11 +84,20 @@ namespace Providers.RangeSlider.NoUISlider {
 			// Init provider
 			this.provider = window.noUiSlider.create(this._rangeSliderProviderElem, this.providerOptions);
 
-			// Trigger platform's OnInitialize event (done by us, the library doesn't have a 'mount' event)
-			this._setOnInitializedEvent();
+			// Set provider Info to be used by setProviderConfigs API calls
+			this.updateProviderEvents({
+				name: RangeSlider.NoUiSlider.Enum.ProviderInfo.Name,
+				version: RangeSlider.NoUiSlider.Enum.ProviderInfo.Version,
+				events: this.provider, //this.provider will also contain all the supported lib configs
+			});
+
+			this.setInitialCSSClasses();
 
 			// Set OnValueChange event
 			this._setOnValueChangeEvent(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Slide);
+
+			// Trigger platform's InstanceIntializedHandler client Action
+			this.triggerPlatformEventInitialized(this.platformEventInitialize);
 		}
 
 		/**
@@ -104,9 +108,9 @@ namespace Providers.RangeSlider.NoUISlider {
 		 */
 		protected setHtmlElements(): void {
 			// Element that will be used to init the provider
-			this._rangeSliderProviderElem = OSUIFramework.Helper.Dom.ClassSelector(
+			this._rangeSliderProviderElem = OSFramework.Helper.Dom.ClassSelector(
 				this._selfElem,
-				OSUIFramework.Patterns.RangeSlider.Enum.CssClass.RangeSliderProviderElem
+				OSFramework.Patterns.RangeSlider.Enum.CssClass.RangeSliderProviderElem
 			);
 		}
 
@@ -118,30 +122,30 @@ namespace Providers.RangeSlider.NoUISlider {
 		 */
 		protected setInitialCSSClasses(): void {
 			// If Orientation is vertical add class
-			if (this.configs.Orientation === OSUIFramework.GlobalEnum.Orientation.Vertical) {
-				OSUIFramework.Helper.Dom.Styles.AddClass(
+			if (this.configs.Orientation === OSFramework.GlobalEnum.Orientation.Vertical) {
+				OSFramework.Helper.Dom.Styles.AddClass(
 					this._selfElem,
-					OSUIFramework.Patterns.RangeSlider.Enum.CssClass.ClassModifier +
-						OSUIFramework.GlobalEnum.Orientation.Vertical
+					OSFramework.Patterns.RangeSlider.Enum.CssClass.ClassModifier +
+						OSFramework.GlobalEnum.Orientation.Vertical
 				);
 				// Otherwise it's horizontal and we don't need a class
-			} else if (OSUIFramework.GlobalEnum.Orientation.Horizontal) {
-				OSUIFramework.Helper.Dom.Styles.RemoveClass(
+			} else if (OSFramework.GlobalEnum.Orientation.Horizontal) {
+				OSFramework.Helper.Dom.Styles.RemoveClass(
 					this._selfElem,
-					OSUIFramework.Patterns.RangeSlider.Enum.CssClass.ClassModifier +
-						OSUIFramework.GlobalEnum.Orientation.Vertical
+					OSFramework.Patterns.RangeSlider.Enum.CssClass.ClassModifier +
+						OSFramework.GlobalEnum.Orientation.Vertical
 				);
 			}
 
 			if (this.configs.ShowTickMarks) {
-				OSUIFramework.Helper.Dom.Styles.AddClass(
+				OSFramework.Helper.Dom.Styles.AddClass(
 					this._selfElem,
-					OSUIFramework.Patterns.RangeSlider.Enum.CssClass.HasTicks
+					OSFramework.Patterns.RangeSlider.Enum.CssClass.HasTicks
 				);
 			} else {
-				OSUIFramework.Helper.Dom.Styles.RemoveClass(
+				OSFramework.Helper.Dom.Styles.RemoveClass(
 					this._selfElem,
-					OSUIFramework.Patterns.RangeSlider.Enum.CssClass.HasTicks
+					OSFramework.Patterns.RangeSlider.Enum.CssClass.HasTicks
 				);
 			}
 		}
@@ -186,8 +190,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 */
 		protected updateRangeSlider(): void {
 			this.provider.destroy();
-			this.createProviderInstance();
-			this.setInitialCSSClasses();
+			this.prepareConfigs();
 		}
 
 		/**
@@ -198,7 +201,6 @@ namespace Providers.RangeSlider.NoUISlider {
 		public build(): void {
 			super.build();
 			this.setHtmlElements();
-			this.setInitialCSSClasses();
 		}
 
 		/**
@@ -215,56 +217,56 @@ namespace Providers.RangeSlider.NoUISlider {
 
 			if (this.isBuilt) {
 				switch (propertyName) {
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueFrom:
+					case OSFramework.Patterns.RangeSlider.Enum.Properties.StartingValueFrom:
 						console.warn(
 							`${
 								this._isInterval
-									? OSUIFramework.GlobalEnum.PatternName.RangeSliderInterval
-									: OSUIFramework.GlobalEnum.PatternName.RangeSlider
+									? OSFramework.GlobalEnum.PatternName.RangeSliderInterval
+									: OSFramework.GlobalEnum.PatternName.RangeSlider
 							} (${this.widgetId}): changes to ${
-								OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueFrom
+								OSFramework.Patterns.RangeSlider.Enum.Properties.StartingValueFrom
 							} parameter do not affect the ${
 								this._isInterval
-									? OSUIFramework.GlobalEnum.PatternName.RangeSliderInterval
-									: OSUIFramework.GlobalEnum.PatternName.RangeSlider
+									? OSFramework.GlobalEnum.PatternName.RangeSliderInterval
+									: OSFramework.GlobalEnum.PatternName.RangeSlider
 							}. Use a distinct variable to assign on the OnValueChange event`
 						);
 						break;
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.MinValue:
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.MaxValue:
+					case OSFramework.Patterns.RangeSlider.Enum.Properties.MinValue:
+					case OSFramework.Patterns.RangeSlider.Enum.Properties.MaxValue:
 						this._updateRangeValues();
 
 						break;
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.Orientation:
+					case OSFramework.Patterns.RangeSlider.Enum.Properties.Orientation:
 						console.warn(
 							`RangeSlider${
-								this._isInterval ? OSUIFramework.Patterns.RangeSlider.Enum.Mode.Interval : ''
+								this._isInterval ? OSFramework.Patterns.RangeSlider.Enum.Mode.Interval : ''
 							} (${this.widgetId}): changes to ${
-								OSUIFramework.Patterns.RangeSlider.Enum.Properties.Orientation
+								OSFramework.Patterns.RangeSlider.Enum.Properties.Orientation
 							} parameter do not affect the ${
 								this._isInterval
-									? OSUIFramework.GlobalEnum.PatternName.RangeSliderInterval
-									: OSUIFramework.GlobalEnum.PatternName.RangeSlider
+									? OSFramework.GlobalEnum.PatternName.RangeSliderInterval
+									: OSFramework.GlobalEnum.PatternName.RangeSlider
 							}. Use a distinct variable to assign on the OnValueChange event.`
 						);
 						break;
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.IsDisabled:
+					case OSFramework.Patterns.RangeSlider.Enum.Properties.IsDisabled:
 						this._setIsDisabled();
 
 						break;
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.TickMarksInterval:
+					case OSFramework.Patterns.RangeSlider.Enum.Properties.TickMarksInterval:
 						this.provider.updateOptions({ pips: this.configs.getPipsConfig() });
 
 						break;
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.Step:
+					case OSFramework.Patterns.RangeSlider.Enum.Properties.Step:
 						this.provider.updateOptions({ step: this.configs.Step });
 
 						break;
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.Size:
+					case OSFramework.Patterns.RangeSlider.Enum.Properties.Size:
 						this._setSize();
 
 						break;
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowFloatingLabel:
+					case OSFramework.Patterns.RangeSlider.Enum.Properties.ShowFloatingLabel:
 						this.provider.updateOptions({ tooltips: this.configs.getTooltipFormat() });
 
 						break;
@@ -302,26 +304,38 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * Sets the callbacks to be used to invoke the platform code.
 		 *
 		 * @param {string} eventName
-		 * @param {OSUIFramework.Callbacks.OSGeneric} callback
+		 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback
 		 * @memberof OSUINoUiSlider
 		 */
-		public registerCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
+		public registerCallback(eventName: string, callback: OSFramework.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
-				case OSUIFramework.Patterns.RangeSlider.Enum.RangeSliderEvents.OnInitialize:
+				case OSFramework.Patterns.RangeSlider.Enum.RangeSliderEvents.OnInitialize:
 					if (this.platformEventInitialize === undefined) {
 						this.platformEventInitialize = callback;
 					}
 					break;
-				case OSUIFramework.Patterns.RangeSlider.Enum.RangeSliderEvents.OnValueChange:
+				case OSFramework.Patterns.RangeSlider.Enum.RangeSliderEvents.OnValueChange:
 					if (this.platformEventValueChange === undefined) {
 						this.platformEventValueChange = callback;
 					}
 					break;
 				default:
 					throw new Error(
-						`${OSUIFramework.ErrorCodes.RangeSlider.FailRegisterCallback}:	The given '${eventName}' event name is not defined.`
+						`${OSFramework.ErrorCodes.RangeSlider.FailRegisterCallback}:	The given '${eventName}' event name is not defined.`
 					);
 			}
+		}
+
+		/**
+		 * Method used to set all the extended NoUiSlider properties across the different types of instances
+		 *
+		 * @param {NoUiSliderOptions} newConfigs
+		 * @memberof AbstractNoUiSlider
+		 */
+		public setProviderConfigs(newConfigs: NoUiSliderOptions): void {
+			this.configs.setExtensibilityConfigs(newConfigs);
+
+			this.updateRangeSlider();
 		}
 
 		/**

@@ -19,7 +19,7 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 			}
 
 			// Trigger platform's onChange callback event
-			OSUIFramework.Helper.AsyncInvocation(this._onChangeCallbackEvent, this.widgetId, _selectedDate);
+			OSFramework.Helper.AsyncInvocation(this._onChangeCallbackEvent, this.widgetId, _selectedDate);
 		}
 
 		/**
@@ -33,7 +33,21 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 			this._flatpickrOpts = this.configs.getProviderConfig();
 
 			// Instance will be Created!
-			super.createProviderInstance();
+			this.createProviderInstance();
+		}
+
+		/**
+		 * Trigger the jumToDate to now and trigger the Now as a selected Date!
+		 *
+		 * @protected
+		 * @memberof Flatpickr.SingleDate
+		 */
+		protected todayBtnClick(event: MouseEvent): void {
+			event.preventDefault();
+			// Set the currentDate at the Datepicker
+			this.provider.setDate(this.provider.now, true);
+			// Trigger the jumpIntoDate!
+			this.jumpIntoToday();
 		}
 
 		public build(): void {
@@ -56,7 +70,7 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 
 			if (this.isBuilt) {
 				switch (propertyName) {
-					case OSUIFramework.Patterns.DatePicker.Enum.Properties.DateFormat:
+					case OSFramework.Patterns.DatePicker.Enum.Properties.DateFormat:
 						// Check if any Date was selected
 						if (this.provider.selectedDates.length > 0) {
 							// Set the new DefaultDate values
@@ -68,7 +82,7 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 						this.redraw();
 						break;
 
-					case OSUIFramework.Patterns.DatePicker.Enum.Properties.TimeFormat:
+					case OSFramework.Patterns.DatePicker.Enum.Properties.TimeFormat:
 						this.redraw();
 						break;
 				}

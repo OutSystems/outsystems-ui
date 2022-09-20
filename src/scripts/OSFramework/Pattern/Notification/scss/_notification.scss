@@ -1,0 +1,183 @@
+/*! Patterns - Interaction - Notification */
+////
+/// @group Patterns-Notification
+/// Patterns - Interaction - Notification
+
+///
+.osui-notification {
+	--osui-notification-margin: var(--space-m);
+
+	background-color: var(--color-neutral-0);
+	border-radius: var(--border-radius-soft);
+	border: var(--border-size-s) solid var(--color-neutral-4);
+	box-shadow: var(--shadow-xl);
+	color: var(--color-neutral-10);
+	max-width: calc(100vw - (var(--osui-notification-margin) * 2));
+	opacity: 0;
+	padding: var(--space-m);
+	pointer-events: none;
+	position: fixed;
+	transition: transform 300ms ease-out, opacity 300ms ease-out;
+	user-select: none;
+	width: var(--notification-width);
+	z-index: 300;
+
+	// Service Studio Preview
+	& {
+		-servicestudio-opacity: 1;
+		-servicestudio-position: relative;
+	}
+
+	// Service Studio Preview
+	&-preview {
+		-servicestudio-position: relative;
+
+		&.bottom .is-bottom,
+		&.bottom-right .is-bottom-right,
+		&.bottom-left .is-bottom-left,
+		&.center .is-center,
+		&.right .is-right,
+		&.left .is-left,
+		&.top .is-top,
+		&.top-right .is-top-right,
+		&.top-left .is-top-left {
+			-servicestudio-display: block;
+		}
+
+		[class*='is-'] {
+			-servicestudio-display: none;
+		}
+	}
+
+	&--is {
+		&-top {
+			left: 50%;
+			transform: translate(-50%, -100%);
+
+			&,
+			&-right,
+			&-left {
+				top: calc(var(--os-safe-area-top) + var(--osui-notification-margin));
+			}
+
+			&-right {
+				right: calc(var(--os-safe-area-right) + var(--osui-notification-margin));
+				transform: translateX(100%);
+			}
+			&-left {
+				left: calc(var(--os-safe-area-left) + var(--osui-notification-margin));
+				transform: translateX(-100%);
+			}
+		}
+
+		&-center {
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -100%);
+		}
+
+		&-right,
+		&-left {
+			top: 50%;
+		}
+
+		&-right {
+			right: calc(var(--os-safe-area-right) + var(--osui-notification-margin));
+			transform: translate(100%, -50%);
+		}
+		&-left {
+			left: calc(var(--os-safe-area-left) + var(--osui-notification-margin));
+			transform: translate(-100%, -50%);
+		}
+
+		&-bottom {
+			left: 50%;
+			transform: translate(-50%, 100%);
+
+			&,
+			&-right,
+			&-left {
+				bottom: calc(var(--os-safe-area-bottom) + var(--osui-notification-margin));
+			}
+
+			&-right {
+				right: calc(var(--os-safe-area-right) + var(--osui-notification-margin));
+				transform: translateX(100%);
+			}
+			&-left {
+				left: calc(var(--os-safe-area-left) + var(--osui-notification-margin));
+				transform: translateX(-100%);
+			}
+		}
+
+		&-open {
+			opacity: 1;
+			pointer-events: auto;
+
+			&.osui-notification {
+				&--is {
+					&-top {
+						transform: translate(-50%);
+
+						&-right,
+						&-left {
+							transform: translate(0, 0);
+						}
+					}
+
+					&-center {
+						transform: translate(-50%, -50%);
+					}
+
+					&-right,
+					&-left {
+						transform: translate(0, -50%);
+					}
+
+					&-bottom {
+						transform: translate(-50%, 0);
+
+						&-right,
+						&-left {
+							transform: translateX(0);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+///
+.slide-from-left-enter,
+.slide-from-left-leave,
+.slide-from-right-enter,
+.slide-from-right-leave,
+.slide-from-top-enter,
+.slide-from-top-leave,
+.slide-from-bottom-enter,
+.slide-from-bottom-leave,
+.fade-enter,
+.fade-leave {
+	.layout-native {
+		.osui-notification {
+			display: none;
+		}
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+.phone {
+	.osui-notification {
+		--osui-notification-margin: var(--space-base);
+	}
+}
+
+///
+.android[data-status-bar-height] {
+	.layout-native {
+		.osui-notification--is-open {
+			margin-top: var(--status-bar-height);
+		}
+	}
+}

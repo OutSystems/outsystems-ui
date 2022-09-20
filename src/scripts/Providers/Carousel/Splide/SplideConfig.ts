@@ -1,19 +1,24 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace Providers.Splide {
-	export class SplideConfig extends OSUIFramework.Patterns.Carousel.AbstractCarouselConfig {
+	export class SplideConfig extends OSFramework.Patterns.Carousel.AbstractCarouselConfig {
+		// Store provider configs
+		private _providerOptions: SplideOpts;
+		// Store configs set using extensibility
+		protected _providerExtendedOptions: SplideOpts;
+
 		private _getArrowConfig(): boolean {
 			let arrows: boolean;
 			switch (this.Navigation) {
-				case OSUIFramework.Patterns.Carousel.Enum.Navigation.None:
+				case OSFramework.Patterns.Carousel.Enum.Navigation.None:
 					arrows = false;
 					break;
-				case OSUIFramework.Patterns.Carousel.Enum.Navigation.Dots:
+				case OSFramework.Patterns.Carousel.Enum.Navigation.Dots:
 					arrows = false;
 					break;
-				case OSUIFramework.Patterns.Carousel.Enum.Navigation.Arrows:
+				case OSFramework.Patterns.Carousel.Enum.Navigation.Arrows:
 					arrows = true;
 					break;
-				case OSUIFramework.Patterns.Carousel.Enum.Navigation.Both:
+				case OSFramework.Patterns.Carousel.Enum.Navigation.Both:
 					arrows = true;
 					break;
 			}
@@ -21,16 +26,18 @@ namespace Providers.Splide {
 			return arrows;
 		}
 
-		private _getDirectionConfig(): string {
-			let direction: string;
-			if (
-				(this.Direction === undefined ||
-					this.Direction === OSUIFramework.Patterns.Carousel.Enum.Direction.None) &&
-				OutSystems.OSUI.Utils.GetIsRTL()
-			) {
-				direction = OSUIFramework.GlobalEnum.Direction.RTL;
+		private _getDirectionConfig():
+			| OSFramework.GlobalEnum.Direction.LTR
+			| OSFramework.GlobalEnum.Direction.RTL
+			| OSFramework.GlobalEnum.Direction.TTB {
+			let direction:
+				| OSFramework.GlobalEnum.Direction.LTR
+				| OSFramework.GlobalEnum.Direction.RTL
+				| OSFramework.GlobalEnum.Direction.TTB;
+			if (this.Direction === undefined && OutSystems.OSUI.Utils.GetIsRTL()) {
+				direction = OSFramework.GlobalEnum.Direction.RTL;
 			} else {
-				direction = this.Direction || OSUIFramework.GlobalEnum.Direction.LTR;
+				direction = this.Direction || OSFramework.GlobalEnum.Direction.LTR;
 			}
 
 			return direction;
@@ -39,16 +46,16 @@ namespace Providers.Splide {
 		private _getPaginationConfig(): boolean {
 			let pagination: boolean;
 			switch (this.Navigation) {
-				case OSUIFramework.Patterns.Carousel.Enum.Navigation.None:
+				case OSFramework.Patterns.Carousel.Enum.Navigation.None:
 					pagination = false;
 					break;
-				case OSUIFramework.Patterns.Carousel.Enum.Navigation.Dots:
+				case OSFramework.Patterns.Carousel.Enum.Navigation.Dots:
 					pagination = true;
 					break;
-				case OSUIFramework.Patterns.Carousel.Enum.Navigation.Arrows:
+				case OSFramework.Patterns.Carousel.Enum.Navigation.Arrows:
 					pagination = false;
 					break;
-				case OSUIFramework.Patterns.Carousel.Enum.Navigation.Both:
+				case OSFramework.Patterns.Carousel.Enum.Navigation.Both:
 					pagination = true;
 					break;
 			}
@@ -56,8 +63,14 @@ namespace Providers.Splide {
 			return pagination;
 		}
 
+		/**
+		 * Method to get and merge internal and external provider configs
+		 *
+		 * @return {*}  {SplideOpts}
+		 * @memberof SplideConfig
+		 */
 		public getProviderConfig(): SplideOpts {
-			const providerOptions = {
+			this._providerOptions = {
 				arrows: this._getArrowConfig(),
 				breakpoints: {
 					768: {
@@ -78,14 +91,21 @@ namespace Providers.Splide {
 				pagination: this._getPaginationConfig(),
 				gap: this.ItemsGap,
 				start: this.StartingPosition,
+				snap: true,
+				dragMinThreshold: 30,
 			};
 
-			//Cleanning undefined properties
-			Object.keys(providerOptions).forEach(
-				(key) => providerOptions[key] === undefined && delete providerOptions[key]
-			);
+			return this.mergeConfigs(this._providerOptions, undefined, this._providerExtendedOptions);
+		}
 
-			return providerOptions;
+		/**
+		 * Method to set and save the extensibility provider configs
+		 *
+		 * @param {SplideOpts} newConfigs
+		 * @memberof SplideConfig
+		 */
+		public setExtensibilityConfigs(newConfigs: SplideOpts): void {
+			this._providerExtendedOptions = newConfigs;
 		}
 	}
 }

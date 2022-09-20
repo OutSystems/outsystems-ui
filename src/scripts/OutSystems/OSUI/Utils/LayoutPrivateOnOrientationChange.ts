@@ -9,35 +9,25 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 				setTimeout(() => {
 					// If it's an iphoneX, and platform says it's tablet (due to screen resolution), remove the tablet class and add phone one instead
 					if (
-						OSUIFramework.Helper.Dom.Styles.ContainsClass(
-							body,
-							OSUIFramework.GlobalEnum.NotchClasses.IPhoneX
-						)
+						OSFramework.Helper.Dom.Styles.ContainsClass(body, OSFramework.GlobalEnum.NotchClasses.IPhoneX)
 					) {
-						OSUIFramework.Helper.Dom.Styles.RemoveClass(body, OSUIFramework.GlobalEnum.DeviceType.tablet);
-						OSUIFramework.Helper.Dom.Styles.AddClass(body, OSUIFramework.GlobalEnum.DeviceType.phone);
+						OSFramework.Helper.Dom.Styles.RemoveClass(body, OSFramework.GlobalEnum.DeviceType.tablet);
+						OSFramework.Helper.Dom.Styles.AddClass(body, OSFramework.GlobalEnum.DeviceType.phone);
 					}
 
 					// Add the desktop class if not phone/tablet
 					if (
-						OSUIFramework.Helper.Dom.Styles.ContainsClass(
-							body,
-							OSUIFramework.GlobalEnum.DeviceType.phone
-						) === false &&
-						OSUIFramework.Helper.Dom.Styles.ContainsClass(
-							body,
-							OSUIFramework.GlobalEnum.DeviceType.tablet
-						) === false
+						OSFramework.Helper.Dom.Styles.ContainsClass(body, OSFramework.GlobalEnum.DeviceType.phone) ===
+							false &&
+						OSFramework.Helper.Dom.Styles.ContainsClass(body, OSFramework.GlobalEnum.DeviceType.tablet) ===
+							false
 					) {
-						OSUIFramework.Helper.Dom.Styles.AddClass(body, OSUIFramework.GlobalEnum.DeviceType.desktop);
+						OSFramework.Helper.Dom.Styles.AddClass(body, OSFramework.GlobalEnum.DeviceType.desktop);
 					} else if (
-						OSUIFramework.Helper.Dom.Styles.ContainsClass(
-							body,
-							OSUIFramework.GlobalEnum.DeviceType.desktop
-						) &&
-						OSUIFramework.Helper.Dom.Styles.ContainsClass(body, OSUIFramework.GlobalEnum.DeviceType.tablet)
+						OSFramework.Helper.Dom.Styles.ContainsClass(body, OSFramework.GlobalEnum.DeviceType.desktop) &&
+						OSFramework.Helper.Dom.Styles.ContainsClass(body, OSFramework.GlobalEnum.DeviceType.tablet)
 					) {
-						OSUIFramework.Helper.Dom.Styles.RemoveClass(body, OSUIFramework.GlobalEnum.DeviceType.desktop);
+						OSFramework.Helper.Dom.Styles.RemoveClass(body, OSFramework.GlobalEnum.DeviceType.desktop);
 					}
 
 					// Update the CSS body variables
@@ -50,8 +40,8 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 		 * Function used to set the orientation event
 		 */
 		public static Set(): void {
-			OSUIFramework.Event.GlobalEventManager.Instance.addHandler(
-				OSUIFramework.Event.Type.OrientationChange,
+			OSFramework.Event.GlobalEventManager.Instance.addHandler(
+				OSFramework.Event.Type.OrientationChange,
 				this._onOrientationChange
 			);
 		}
@@ -60,8 +50,8 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 		 * Function used to unset the orientation event
 		 */
 		public static Unset(): void {
-			OSUIFramework.Event.GlobalEventManager.Instance.removeHandler(
-				OSUIFramework.Event.Type.OrientationChange,
+			OSFramework.Event.GlobalEventManager.Instance.removeHandler(
+				OSFramework.Event.Type.OrientationChange,
 				this._onOrientationChange
 			);
 		}

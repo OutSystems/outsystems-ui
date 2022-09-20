@@ -1,27 +1,27 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	const _tabsMap = new Map<string, string>();
-	const _tabsHeaderItemMap = new Map<string, OSUIFramework.Patterns.TabsHeaderItem.ITabsHeaderItem>();
+	const _tabsHeaderItemMap = new Map<string, OSFramework.Patterns.TabsHeaderItem.ITabsHeaderItem>();
 	/**
 	 * Gets the Tabd pattern the Item belongs to
 	 *
-	 * @return {*}  {Map<string, OSUIFramework.Patterns.TabsHeaderItem.ITabsHeaderItem>}
+	 * @return {*}  {Map<string, OSFramework.Patterns.TabsHeaderItem.ITabsHeaderItem>}
 	 */
-	export function GetTabsByItem(tabsHeaderItemId: string): OSUIFramework.Patterns.Tabs.ITabs {
-		let tabs: OSUIFramework.Patterns.Tabs.ITabs;
+	export function GetTabsByItem(tabsHeaderItemId: string): OSFramework.Patterns.Tabs.ITabs {
+		let tabs: OSFramework.Patterns.Tabs.ITabs;
 
 		if (_tabsMap.has(tabsHeaderItemId)) {
 			tabs = TabsAPI.GetTabsById(_tabsMap.get(tabsHeaderItemId));
 		} else {
 			// Try to find its reference on DOM
-			const elem = OSUIFramework.Helper.Dom.GetElementByUniqueId(tabsHeaderItemId);
+			const elem = OSFramework.Helper.Dom.GetElementByUniqueId(tabsHeaderItemId);
 			const tabsElem = elem.closest(
-				OSUIFramework.Constants.Dot + OSUIFramework.Patterns.Tabs.Enum.CssClasses.TabsWrapper
+				OSFramework.Constants.Dot + OSFramework.Patterns.Tabs.Enum.CssClasses.TabsWrapper
 			);
 
 			if (!tabsElem) {
 				throw Error(
-					`This ${OSUIFramework.GlobalEnum.PatternName.TabsHeaderItem} does not belong to any ${OSUIFramework.GlobalEnum.PatternName.Tabs} pattern.`
+					`This ${OSFramework.GlobalEnum.PatternName.TabsHeaderItem} does not belong to any ${OSFramework.GlobalEnum.PatternName.Tabs} pattern.`
 				);
 			}
 			const uniqueId = tabsElem.getAttribute('name');
@@ -66,20 +66,20 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	 * @export
 	 * @param {string} tabsHeaderItemId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSUIFramework.Patterns.Tabs.ITabs}
+	 * @return {*}  {OSFramework.Patterns.Tabs.ITabs}
 	 */
 	export function Create(
 		tabsHeaderItemId: string,
 		configs: string
-	): OSUIFramework.Patterns.TabsHeaderItem.ITabsHeaderItem {
+	): OSFramework.Patterns.TabsHeaderItem.ITabsHeaderItem {
 		if (_tabsHeaderItemMap.has(tabsHeaderItemId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternName.TabsHeaderItem} registered under id: ${tabsHeaderItemId}`
+				`There is already a ${OSFramework.GlobalEnum.PatternName.TabsHeaderItem} registered under id: ${tabsHeaderItemId}`
 			);
 		}
 		const tabs = GetTabsByItem(tabsHeaderItemId);
 
-		const _newTabsHeaderItem = new OSUIFramework.Patterns.TabsHeaderItem.TabsHeaderItem(
+		const _newTabsHeaderItem = new OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem(
 			tabsHeaderItemId,
 			JSON.parse(configs)
 		);
@@ -178,10 +178,10 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	 * Function that will return the Map with all the Tabs instances at the page
 	 *
 	 * @export
-	 * @return {*}  {Map<string, OSUIFramework.Patterns.Tabs.ITabs>}
+	 * @return {*}  {Map<string, OSFramework.Patterns.Tabs.ITabs>}
 	 */
 	export function GetAllTabsHeaderItems(): Array<string> {
-		return OSUIFramework.Helper.MapOperation.ExportKeys(_tabsHeaderItemMap);
+		return OSFramework.Helper.MapOperation.ExportKeys(_tabsHeaderItemMap);
 	}
 
 	/**
@@ -189,15 +189,15 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	 *
 	 * @export
 	 * @param {string} tabsId ID of the Tabs that will be looked for.
-	 * @return {*}  {OSUIFramework.Patterns.Tabs.ITabs}
+	 * @return {*}  {OSFramework.Patterns.Tabs.ITabs}
 	 */
 	export function GetTabsHeaderItemById(
 		tabsHeaderItemId: string
-	): OSUIFramework.Patterns.TabsHeaderItem.ITabsHeaderItem {
-		return OSUIFramework.Helper.MapOperation.FindInMap(
+	): OSFramework.Patterns.TabsHeaderItem.ITabsHeaderItem {
+		return OSFramework.Helper.MapOperation.FindInMap(
 			'TabsHeaderItem',
 			tabsHeaderItemId,
 			_tabsHeaderItemMap
-		) as OSUIFramework.Patterns.TabsHeaderItem.ITabsHeaderItem;
+		) as OSFramework.Patterns.TabsHeaderItem.ITabsHeaderItem;
 	}
 }

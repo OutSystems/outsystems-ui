@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
-	const _rangeSliderItemsMap = new Map<string, OSUIFramework.Patterns.RangeSlider.IRangeSlider>(); //RangeSlider.uniqueId -> RangeSlider obj
+	const _rangeSliderItemsMap = new Map<string, OSFramework.Patterns.RangeSlider.IRangeSlider>(); //RangeSlider.uniqueId -> RangeSlider obj
 
 	/**
 	 * Function that will change the property of a given RangeSlider Id.
@@ -36,23 +36,23 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 * @export
 	 * @param {string} rangeSliderId
 	 * @param {string} configs
-	 * @param {OSUIFramework.Patterns.RangeSlider.Enum.Mode} mode
+	 * @param {OSFramework.Patterns.RangeSlider.Enum.Mode} mode
 	 * @param {string} provider
-	 * @return {*}  {OSUIFramework.Patterns.RangeSlider.IRangeSlider}
+	 * @return {*}  {OSFramework.Patterns.RangeSlider.IRangeSlider}
 	 */
 	export function Create(
 		rangeSliderId: string,
 		configs: string,
-		mode: OSUIFramework.Patterns.RangeSlider.Enum.Mode,
+		mode: OSFramework.Patterns.RangeSlider.Enum.Mode,
 		provider: string
-	): OSUIFramework.Patterns.RangeSlider.IRangeSlider {
+	): OSFramework.Patterns.RangeSlider.IRangeSlider {
 		if (_rangeSliderItemsMap.has(rangeSliderId)) {
 			throw new Error(
-				`There is already an ${OSUIFramework.GlobalEnum.PatternName.RangeSlider} registered under id: ${rangeSliderId}`
+				`There is already an ${OSFramework.GlobalEnum.PatternName.RangeSlider} registered under id: ${rangeSliderId}`
 			);
 		}
 
-		const _rangeSliderItem = OSUIFramework.Patterns.RangeSlider.Factory.NewRangeSlider(
+		const _rangeSliderItem = OSFramework.Patterns.RangeSlider.Factory.NewRangeSlider(
 			rangeSliderId,
 			configs,
 			mode,
@@ -99,7 +99,7 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 * @return {*}  Array<string>
 	 */
 	export function GetAllRangeSliderItemsMap(): Array<string> {
-		return OSUIFramework.Helper.MapOperation.ExportKeys(_rangeSliderItemsMap);
+		return OSFramework.Helper.MapOperation.ExportKeys(_rangeSliderItemsMap);
 	}
 
 	/**
@@ -107,14 +107,14 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 *
 	 * @export
 	 * @param {string} rangeSliderId ID of the RangeSlider that will be looked for.
-	 * @return {*}  {OSUIFramework.Patterns.RangeSlider.IRangeSlider;}
+	 * @return {*}  {OSFramework.Patterns.RangeSlider.IRangeSlider;}
 	 */
-	export function GetRangeSliderItemById(rangeSliderId: string): OSUIFramework.Patterns.RangeSlider.IRangeSlider {
-		return OSUIFramework.Helper.MapOperation.FindInMap(
-			OSUIFramework.GlobalEnum.PatternName.RangeSlider,
+	export function GetRangeSliderItemById(rangeSliderId: string): OSFramework.Patterns.RangeSlider.IRangeSlider {
+		return OSFramework.Helper.MapOperation.FindInMap(
+			OSFramework.GlobalEnum.PatternName.RangeSlider,
 			rangeSliderId,
 			_rangeSliderItemsMap
-		) as OSUIFramework.Patterns.RangeSlider.IRangeSlider;
+		) as OSFramework.Patterns.RangeSlider.IRangeSlider;
 	}
 
 	/**
@@ -122,9 +122,9 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 *
 	 * @export
 	 * @param {string} rangeSliderId ID of the RangeSliderItem that will be initialized.
-	 * @return {*}  {OSUIFramework.Patterns.RangeSlider.IRangeSlider}
+	 * @return {*}  {OSFramework.Patterns.RangeSlider.IRangeSlider}
 	 */
-	export function Initialize(rangeSliderId: string): OSUIFramework.Patterns.RangeSlider.IRangeSlider {
+	export function Initialize(rangeSliderId: string): OSFramework.Patterns.RangeSlider.IRangeSlider {
 		const _rangeSliderItem = GetRangeSliderItemById(rangeSliderId);
 
 		_rangeSliderItem.build();
@@ -138,12 +138,12 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 * @export
 	 * @param {string} rangeSliderId
 	 * @param {string} eventName
-	 * @param {OSUIFramework.Callbacks.OSGeneric} callback
+	 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback
 	 */
 	export function RegisterCallback(
 		rangeSliderId: string,
 		eventName: string,
-		callback: OSUIFramework.Callbacks.OSGeneric
+		callback: OSFramework.GlobalCallbacks.OSGeneric
 	): string {
 		const responseObj = {
 			isSuccess: true,
@@ -236,6 +236,97 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
 			responseObj.code = ErrorCodes.RangeSlider.FailResetValues;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
+	 * Function to set providerConfigs by extensibility
+	 *
+	 * @export
+	 * @param {string} rangeSliderId
+	 * @param {RangeSliderProviderConfigs} providerConfigs
+	 * @return {*}  {string}
+	 */
+	export function SetProviderConfigs(rangeSliderId: string, configs: RangeSliderProviderConfigs): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const rangeSlider = GetRangeSliderItemById(rangeSliderId);
+
+			rangeSlider.setProviderConfigs(configs);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.RangeSlider.FailRegisterProviderConfig;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
+	 * Function to set providerEvents by extensibility
+	 *
+	 * @export
+	 * @param {string} rangeSliderId
+	 * @param {string} eventName
+	 * @param {OSFramework.GlobalCallbacks.Generic} callback
+	 * @return {*}  {string}
+	 */
+	export function SetProviderEvent(
+		rangeSliderId: string,
+		eventName: string,
+		callback: OSFramework.GlobalCallbacks.Generic
+	): string {
+		const _eventUniqueId = OSFramework.Helper.Dom.GenerateUniqueId();
+
+		const responseObj = {
+			uniqueId: _eventUniqueId,
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const rangeSlider = GetRangeSliderItemById(rangeSliderId);
+			rangeSlider.setProviderEvent(eventName, callback, _eventUniqueId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.RangeSlider.FailRegisterProviderEvent;
+			responseObj.uniqueId = undefined;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
+	 * Function to remove providerEvents added by extensibility
+	 *
+	 * @export
+	 * @param {string} rangeSliderId
+	 * @param {string} eventId
+	 * @return {*}  {string}
+	 */
+	export function UnsetProviderEvent(rangeSliderId: string, eventId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const rangeSlider = GetRangeSliderItemById(rangeSliderId);
+			rangeSlider.unsetProviderEvent(eventId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.RangeSlider.FailRemoveProviderEvent;
 		}
 
 		return JSON.stringify(responseObj);

@@ -21,16 +21,16 @@ namespace Providers.Dropdown.VirtualSelect.Search {
 			const selectedKeyvalues = [];
 
 			// Has selected values?
-			if (this.SelectedOptions.length > 0) {
+			if (this.StartingSelection?.length > 0) {
 				// Check if it's multiple options
 				if (this.AllowMultipleSelection) {
 					// Get the selected key value
-					for (const option of this.SelectedOptions) {
+					for (const option of this.StartingSelection) {
 						selectedKeyvalues.push(option.value);
 					}
 				} else {
 					// It's Single option, set only the first given value
-					selectedKeyvalues.push(this.SelectedOptions[0].value);
+					selectedKeyvalues.push(this.StartingSelection[0].value);
 				}
 			}
 
@@ -48,17 +48,7 @@ namespace Providers.Dropdown.VirtualSelect.Search {
 				multiple: this.AllowMultipleSelection,
 			};
 
-			// Merge both option objects => if objects have a property with the same name, then the right-most object property overwrites the previous one
-			// eslint-disable-next-line prefer-const
-			let vsOptions = {
-				...super.getProviderConfig(),
-				...virtualSelectSearchOpts,
-			};
-
-			//Cleaning undefined properties
-			Object.keys(vsOptions).forEach((key) => vsOptions[key] === undefined && delete vsOptions[key]);
-
-			return vsOptions;
+			return this.mergeConfigs(super.getProviderConfig(), virtualSelectSearchOpts, this._providerExtendedOptions);
 		}
 
 		/**

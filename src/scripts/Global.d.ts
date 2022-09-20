@@ -6,12 +6,14 @@ import { Key as flatpickrLocaleKey } from 'flatpickr/dist/types/locale';
 
 // RangeSlider
 import noUiSlider from 'nouislider';
-import noUiSliderOptions from 'nouislider';
-import { PipsMode } from 'nouislider';
+import { Options as noUiSliderOptions } from 'nouislider';
+import { Pips } from 'nouislider';
+import { Range } from 'nouislider';
+import { PartialFormatter } from 'nouislider';
 
 // Carousel
 import OriginalSplide from '@splidejs/splide';
-import { Options } from '@splidejs/splide/dist/types/types/options';
+import { Options as splideOptions } from '@splidejs/splide/dist/types/index';
 
 /**
  * Set global declarations
@@ -29,12 +31,14 @@ declare global {
 
 		// RangeSlider
 		noUiSlider: typeof noUiSlider;
-		NoUiSliderOptions: typeof noUiSliderOptions;
-		NoUiSliderPipsMode: typeof PipsMode;
+		NoUiSliderOptions: typeof Options;
+		NoUiSliderPips: typeof Pips;
+		NoUiSliderRange: typeof Range;
+		NoUISliderTooltip: typeof boolean | PartialFormatter | (boolean | PartialFormatter)[];
 
 		// Carousel
 		Splide: typeof OriginalSplide;
-		SplideOpts: typeof OriginalSplide.defaults;
+		SplideOpts: typeof splideOptions;
 		wNumb: typeof window.wNumb;
 
 		// Dropdown using VirtualSelect
@@ -63,12 +67,8 @@ declare global {
 		top?: number;
 	};
 
-	// FocusTrap type
-	type FocusTrapOpts = {
-		focusBottomCallback: Callbacks.Generic;
-		focusTargetElement: HTMLElement;
-		focusTopCallback: Callbacks.Generic;
-	};
+	// Orientation type
+	type Orientation = OSFramework.GlobalEnum.Orientation.Vertical | OSFramework.GlobalEnum.Orientation.Horizontal;
 
 	// Is Out Of Boundaries Type
 	type OutOfBoundaries = {
@@ -80,7 +80,7 @@ declare global {
 
 	// Set the scroll position type
 	type ScrollPosition = {
-		direction: OSUIFramework.GlobalEnum.Direction;
+		direction: OSFramework.GlobalEnum.Direction;
 		percentageInView: number;
 		pixelInView: number;
 		scrollableHeight: number;
@@ -88,17 +88,35 @@ declare global {
 		viewHeight: number;
 	};
 
+	type ProviderInfo = {
+		name: string;
+		version: string;
+		events: ProviderConfigs;
+	};
+
+	type ProviderConfigs =
+		| RangeSliderProviderConfigs
+		| CarouselProviderConfigs
+		| DatePickerProviderConfigs
+		| VirtualSelect;
+
 	// RangeSlider
 	type NoUiSlider = noUiSlider;
+	type RangeSliderProviderConfigs = NoUiSlider;
 	type NoUiSliderOptions = noUiSliderOptions;
-	type NoUiSliderPipsMode = PipsMode;
+	type NoUiSliderPips = Pips;
+	type NoUiSliderRange = Range;
+	type NoUISliderTooltip = typeof boolean | PartialFormatter | (boolean | PartialFormatter)[];
 	type wNumb = WNumb;
 
 	// Carousel
+	type CarouselProviderConfigs = SplideOpts;
+	// Carousel => Splide
 	type Splide = OriginalSplide;
-	type SplideOpts = Options;
+	type SplideOpts = splideOptions;
 
 	// DatePicker => Flatpickr
+	type DatePickerProviderConfigs = FlatpickrOptions;
 	type Flatpickr = flatpickr;
 	type FlatpickrOptions = flatpickrOpts;
 	type FlatpickrLocale = flatpickrLocale;
