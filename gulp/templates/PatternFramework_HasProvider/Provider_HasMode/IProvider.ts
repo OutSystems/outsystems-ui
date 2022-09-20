@@ -3,5 +3,5 @@ namespace Providers.<%= patternNamePC %>.<%= providerNamePC %> {
 	/**
 	 * Defines the interface for <%= providerNamePC %> provider based Patterns
 	 */
-	export interface I<%= providerNamePC %> extends OSUIFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %> {}
+	export interface I<%= providerNamePC %> extends OSFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %> {}
 }

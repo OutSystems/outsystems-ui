@@ -7,7 +7,7 @@ namespace Providers.<%= patternNamePC %>.<%= providerNamePC %> {
 	 * @class Abstract<%= providerNamePC %>Config
 	 * @extends {Abstract<%= patternNamePC %>Config}
 	 */
-	export abstract class Abstract<%= providerNamePC %>Config extends OSUIFramework.Patterns.<%= patternNamePC %>.Abstract<%= patternNamePC %>Config {
+	export abstract class Abstract<%= providerNamePC %>Config extends OSFramework.Patterns.<%= patternNamePC %>.Abstract<%= patternNamePC %>Config {
 
 		// Method used to set all the common <%= providerNamePC %> properties across the different instances mode types
 		public getProviderConfig(): <%= providerNamePC %>Opts {

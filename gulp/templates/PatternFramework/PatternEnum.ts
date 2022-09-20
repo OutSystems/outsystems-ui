@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSUIFramework.Patterns.<%= patternNamePC %>.Enum {
+namespace OSFramework.Patterns.<%= patternNamePC %>.Enum {
 	/**
 	 * <%= patternNamePC %> Enum for CSS Classes
 	 */

@@ -7,7 +7,7 @@ namespace Providers.<%= patternNamePC %>.<%= providerNamePC %> {
 	 * @class OSUI<%= providerNamePC %>Config
 	 * @extends {<%= patternNamePC %>Config}
 	 */
-	export class OSUI<%= providerNamePC %>Config extends OSUIFramework.Patterns.<%= patternNamePC %>.Abstract<%= patternNamePC %>Config {
+	export class OSUI<%= providerNamePC %>Config extends OSFramework.Patterns.<%= patternNamePC %>.Abstract<%= patternNamePC %>Config {
 
 		/**
 		 * Set all the <%= providerNamePC %> properties
