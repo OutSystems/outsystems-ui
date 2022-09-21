@@ -56,6 +56,9 @@ namespace OSFramework.Constants {
 	/* Manage if the log messages are visible or not  */
 	export const EnableLogMessages = false;
 
+	/* Used to typify the empty string value*/
+	export const EmptyString = '';
+
 	/* Store focusable elements when doing a focus trap inside an element*/
 	export const FocusableElems =
 		'a[href]:not([disabled]),[tabindex="0"], button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]),input[type="submit"]:not([disabled]), select:not([disabled])';
@@ -77,6 +80,25 @@ namespace OSFramework.Constants {
 
 	/* cssClass to be checked if the Accessibility Feature is enabled */
 	export const HasAccessibilityClass = 'has-accessible-features';
+
+	/* Used to typify noon-valid expected number values */
+	export const InvalidNumber = -1;
+
+	/* Store months list */
+	export const Months = [
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December',
+	];
 
 	/* cssClass to be added to elements that must visible yet hidded for accessibility purposes */
 	export const AccessibilityHideElementClass = 'wcag-hide-text';

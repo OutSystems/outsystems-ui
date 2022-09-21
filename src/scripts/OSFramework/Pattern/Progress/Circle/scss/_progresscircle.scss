@@ -44,7 +44,7 @@
 		}
 
 		&__progress-path {
-			stroke: var(--progress-color);
+			stroke: var(--progress-color, var(--color-primary));
 			stroke-dasharray: var(--stroke-dasharray);
 			stroke-dashoffset: var(--stroke-dashoffset);
 			stroke-linecap: var(--shape);
@@ -63,7 +63,7 @@
 		}
 
 		&__trail-path {
-			stroke: var(--trail-color);
+			stroke: var(--trail-color, var(--color-neutral-3));
 		}
 	}
 

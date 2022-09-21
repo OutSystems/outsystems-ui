@@ -29,6 +29,19 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 		 * @memberof Flatpickr.SingleDate
 		 */
 		protected prepareConfigs(): void {
+			if (this._isUpdatingDefaultDate === false) {
+				// Check if any Date was selected
+				if (this.provider?.selectedDates.length > 0) {
+					// Set the new DefaultDate values
+					this.configs.InitialDate = this.provider.formatDate(
+						this.provider.selectedDates[0],
+						this._flatpickrOpts.dateFormat
+					);
+				}
+			}
+
+			this._isUpdatingDefaultDate = false;
+
 			// Get the library configurations
 			this._flatpickrOpts = this.configs.getProviderConfig();
 
@@ -96,6 +109,7 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 		 * @memberof Flatpickr.SingleDate
 		 */
 		public updateInitialDate(value: string): void {
+			this._isUpdatingDefaultDate = true;
 			// Redefine the Initial date
 			this.configs.InitialDate = value;
 			// Trigger the Redraw method in order to update calendar with this new value
