@@ -62,3 +62,12 @@
 		}
 	}
 }
+
+// RTL
+.is-rtl {
+	.osui-monthpicker__dropdown {
+		.flatpickr-monthSelect-months {
+			direction: rtl;
+		}
+	}
+}
