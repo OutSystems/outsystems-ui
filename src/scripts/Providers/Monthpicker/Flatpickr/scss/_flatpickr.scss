@@ -37,8 +37,8 @@
 		}
 
 		&.flatpickr-disabled {
-			color: var(--color-neutral-5);
 			background-color: var(--color-neutral-1);
+			color: var(--color-neutral-5);
 
 			&:hover {
 				background-color: var(--color-neutral-1) !important; // override provider !important rule
@@ -55,8 +55,8 @@
 
 			&:hover,
 			&:focus {
-				border-color: var(--color-neutral-3);
 				background: var(--color-neutral-3);
+				border-color: var(--color-neutral-3);
 				color: var(--color-primary);
 			}
 		}

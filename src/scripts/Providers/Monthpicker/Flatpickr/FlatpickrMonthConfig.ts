@@ -55,9 +55,12 @@ namespace Providers.MonthPicker.Flatpickr {
 
 		// Method used to check the serverDateFormat and map it into the Flatpickr expected format
 		private _checkServerDateFormat(): void {
-			this.ServerDateFormat = OSFramework.Helper.Dates.ServerFormat.replace('YYYY', 'Y')
-				.replace('MM', 'm')
-				.replace('DD', '');
+			this.ServerDateFormat = OSFramework.Helper.Dates.ServerFormat.replace(
+				OSFramework.GlobalEnum.DateFormat.YYYY,
+				OSFramework.GlobalEnum.DateFormat.Y
+			)
+				.replace(OSFramework.GlobalEnum.DateFormat.MM, OSFramework.GlobalEnum.DateFormat.m)
+				.replace(OSFramework.GlobalEnum.DateFormat.DD, OSFramework.Constants.EmptyString);
 		}
 
 		// Method to get a valid Date from the month and year configs
@@ -79,21 +82,33 @@ namespace Providers.MonthPicker.Flatpickr {
 			for (const format of _dateFormat) {
 				switch (format) {
 					// Map Year
-					case 'YYYY':
-						this.DateFormat = this.DateFormat.replace('YYYY', 'Y');
+					case OSFramework.GlobalEnum.DateFormat.YYYY:
+						this.DateFormat = this.DateFormat.replace(
+							OSFramework.GlobalEnum.DateFormat.YYYY,
+							OSFramework.GlobalEnum.DateFormat.Y
+						);
 						break;
 
 					case 'YY':
-						this.DateFormat = this.DateFormat.replace('YY', 'y');
+						this.DateFormat = this.DateFormat.replace(
+							OSFramework.GlobalEnum.DateFormat.YY,
+							OSFramework.GlobalEnum.DateFormat.y
+						);
 						break;
 
 					// Map Month
 					case 'MMM':
-						this.DateFormat = this.DateFormat.replace('MMM', 'M');
+						this.DateFormat = this.DateFormat.replace(
+							OSFramework.GlobalEnum.DateFormat.MMM,
+							OSFramework.GlobalEnum.DateFormat.M
+						);
 						break;
 
 					case 'MM':
-						this.DateFormat = this.DateFormat.replace('MM', 'm');
+						this.DateFormat = this.DateFormat.replace(
+							OSFramework.GlobalEnum.DateFormat.MM,
+							OSFramework.GlobalEnum.DateFormat.m
+						);
 						break;
 				}
 			}

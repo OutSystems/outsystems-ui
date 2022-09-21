@@ -83,6 +83,24 @@ namespace OSFramework.GlobalEnum {
 	}
 
 	/**
+	 * OutSystemsUI Date Format values
+	 */
+	export enum DateFormat {
+		D = 'D',
+		d = 'd',
+		DD = 'DD',
+		M = 'M',
+		m = 'm',
+		MM = 'MM',
+		MMM = 'MMM',
+		Y = 'Y',
+		y = 'y',
+		YY = 'YY',
+		YYY = 'YYY',
+		YYYY = 'YYYY',
+	}
+
+	/**
 	 * OutSystemsUI Direction options
 	 */
 	export enum Direction {
