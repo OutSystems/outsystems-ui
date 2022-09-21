@@ -193,12 +193,12 @@ namespace OSFramework.Helper {
 		 * @returns
 		 */
 		public static GetColorValueFromColorType(colorName: string): string {
-			// Store the color value
+			// Store the color value based on the CSS variable color
 			const colorValue = getComputedStyle(document.documentElement).getPropertyValue('--color-' + colorName);
 
 			// Check if the value isn't empty because of HEX or RGB values
 			if (colorValue !== '') {
-				colorName = colorValue;
+				return colorValue;
 			}
 
 			return colorName;
