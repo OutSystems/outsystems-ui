@@ -187,13 +187,21 @@ namespace OSFramework.Helper {
 		}
 
 		/**
-		 * Method used to get the color value based on color entity given color name
+		 * Method used to get the color value based on color entity given color name or on a value provided from user (HEX or RGB)
 		 *
 		 * @param colorName
 		 * @returns
 		 */
 		public static GetColorValueFromColorType(colorName: string): string {
-			return getComputedStyle(document.documentElement).getPropertyValue('--color-' + colorName);
+			// Store the color value based on the CSS variable color
+			const colorValue = getComputedStyle(document.documentElement).getPropertyValue('--color-' + colorName);
+
+			// Check if the value isn't empty because of HEX or RGB values
+			if (colorValue !== '') {
+				return colorValue;
+			}
+
+			return colorName;
 		}
 
 		/**
