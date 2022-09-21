@@ -67,6 +67,12 @@ declare global {
 		top?: number;
 	};
 
+	// MonthYear type for TimePicker
+	type MonthYear = {
+		Month: string;
+		Year: number;
+	};
+
 	// Orientation type
 	type Orientation = OSFramework.GlobalEnum.Orientation.Vertical | OSFramework.GlobalEnum.Orientation.Horizontal;
 

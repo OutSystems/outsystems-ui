@@ -178,7 +178,7 @@ namespace Providers.Datepicker.Flatpickr {
 				weekNumbers: this.ShowWeekNumbers,
 			} as FlatpickrOptions;
 
-			// Make sure locale is not undefined, as when definig the providerOptions defaults in the costructor, the window.locale is no yet available
+			// Make sure locale is not undefined, as when defining the providerOptions defaults in the costructor, the window.locale is no yet available
 			if (this._providerOptions.locale === undefined) {
 				this._providerOptions.locale = this._checkLocale();
 			}

@@ -227,4 +227,17 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailRegisterProviderEvent: 'OSUI-API-26009',
 		FailRemoveProviderEvent: 'OSUI-API-26010',
 	};
+
+	export const MonthPicker = {
+		FailChangeProperty: 'OSUI-API-27001',
+		FailClear: 'OSUI-API-27002',
+		FailClose: 'OSUI-API-27003',
+		FailDispose: 'OSUI-API-27004',
+		FailOpen: 'OSUI-API-27005',
+		FailRedraw: 'OSUI-API-27006',
+		FailRegisterCallback: 'OSUI-API-27007',
+		FailRegisterProviderConfig: 'OSUI-API-27008',
+		FailRegisterProviderEvent: 'OSUI-API-27009',
+		FailRemoveProviderEvent: 'OSUI-API-27010',
+	};
 }
