@@ -12,6 +12,8 @@ namespace Providers.Datepicker.Flatpickr {
 		protected _flatpickrInputElem: HTMLInputElement;
 		// Store the provider options
 		protected _flatpickrOpts: FlatpickrOptions;
+		// Store on a flag status when the picker is updating the default date;
+		protected _isUpdatingDefaultDate = false;
 		// Flatpickr onChange (SelectedDate) event
 		protected _onChangeCallbackEvent: OSFramework.Patterns.DatePicker.Callbacks.OSOnChangeEvent;
 
