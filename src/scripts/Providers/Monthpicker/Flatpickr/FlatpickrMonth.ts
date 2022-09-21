@@ -75,7 +75,7 @@ namespace Providers.MonthPicker.Flatpickr {
 		}
 
 		// Method to set the html elements used
-		private _setHtmllElements(): void {
+		private _setHtmlElements(): void {
 			// Set the inputHTML element
 			this._monthPickerProviderInputElem = this._selfElem.querySelector(
 				OSFramework.GlobalEnum.CSSSelectors.InputFormControl
@@ -104,12 +104,10 @@ namespace Providers.MonthPicker.Flatpickr {
 			// Set the needed HTML attributes
 			this._setAttributes();
 
-			// Since Flatpickr has a native behaviour (by default) if a mobile device is in use, we must ensure we can add our Classes and TodayBtn to it, since if it's native behaviour we can't do it!
+			// Add our CSS classes to the input
 			if (this.provider.calendarContainer !== undefined) {
-				if (OSFramework.Helper.DeviceInfo.IsDesktop && OSFramework.Helper.DeviceInfo.IsNative === false) {
-					// Set Calendar CSS classes
-					this._setCalendarCssClasses();
-				}
+				// Set Calendar CSS classes
+				this._setCalendarCssClasses();
 			}
 
 			this.createdInstance();
@@ -206,7 +204,7 @@ namespace Providers.MonthPicker.Flatpickr {
 		}
 
 		/**
-		 * Unsets the refences to the HTML elements.
+		 * Unsets the references to the HTML elements.
 		 *
 		 * @protected
 		 * @memberof AbstractFlatpickr
@@ -217,7 +215,7 @@ namespace Providers.MonthPicker.Flatpickr {
 		public build(): void {
 			super.build();
 
-			this._setHtmllElements();
+			this._setHtmlElements();
 
 			this.prepareConfigs();
 
@@ -283,7 +281,7 @@ namespace Providers.MonthPicker.Flatpickr {
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
-				// Wait for _datePickerProviderInputElem be removed from DOM, before detroy the provider instance!
+				// Wait for _monthPickerProviderInputElem be removed from DOM, before detroy the provider instance!
 				OSFramework.Helper.AsyncInvocation(this.provider.destroy);
 			}
 

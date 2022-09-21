@@ -89,7 +89,7 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	}
 
 	/**
-	 * Fucntion that will return the Map with all the MonthPicker instances at the page
+	 * Function that will return the Map with all the MonthPicker instances at the page
 	 *
 	 * @export
 	 * @return {*}  Array<string>
