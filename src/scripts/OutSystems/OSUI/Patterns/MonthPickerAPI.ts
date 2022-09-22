@@ -32,6 +32,58 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	}
 
 	/**
+	 * Function used to Resets the selected month (if any) and clears the input from a Given Id monthpicker
+	 *
+	 * @param {string} monthPickerId ID of the MonthPickerItem that will be initialized.
+	 * @return {*}  {OSFramework.Patterns.MonthPicker.IMonthPicker}
+	 */
+	export function Clear(monthPickerId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const _MonthPickerItem = GetMonthPickerItemById(monthPickerId);
+
+			_MonthPickerItem.clear();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.MonthPicker.FailClear;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
+	 * Function used to Close the monthpicker with the Given Id
+	 *
+	 * @param {string} monthPickerId ID of the MonthPickerItem that will be initialized.
+	 * @return {*}  {OSFramework.Patterns.MonthPicker.IMonthPicker}
+	 */
+	export function Close(monthPickerId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const _MonthPickerItem = GetMonthPickerItemById(monthPickerId);
+
+			_MonthPickerItem.close();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.MonthPicker.FailClose;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
 	 * Create the new MonthPickerItem instance and add it to the monthPickerItemsMap
 	 *
 	 * @export
@@ -129,6 +181,32 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	}
 
 	/**
+	 * Function used to Open the monthpicker with the Given Id
+	 *
+	 * @param {string} monthPickerId ID of the MonthPickerItem that will be initialized.
+	 * @return {*}  {OSFramework.Patterns.MonthPicker.IMonthPicker}
+	 */
+	export function Open(monthPickerId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const _MonthPickerItem = GetMonthPickerItemById(monthPickerId);
+
+			_MonthPickerItem.open();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.MonthPicker.FailOpen;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
 	 * Function to register a provider callback
 	 *
 	 * @export
@@ -155,6 +233,69 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
 			responseObj.code = ErrorCodes.MonthPicker.FailRegisterCallback;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
+	 * Function to set providerEvents by extensibility
+	 *
+	 * @export
+	 * @param {string} monthPickerId
+	 * @param {string} eventName
+	 * @param {OSFramework.GlobalCallbacks.Generic} callback
+	 * @return {*}  {string}
+	 */
+	export function SetProviderEvent(
+		monthPickerId: string,
+		eventName: string,
+		callback: OSFramework.GlobalCallbacks.Generic
+	): string {
+		const _eventUniqueId = OSFramework.Helper.Dom.GenerateUniqueId();
+
+		const responseObj = {
+			uniqueId: _eventUniqueId,
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const monthPicker = GetMonthPickerItemById(monthPickerId);
+			monthPicker.setProviderEvent(eventName, callback, _eventUniqueId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.MonthPicker.FailRegisterProviderEvent;
+			responseObj.uniqueId = undefined;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
+	 * Function to remove providerEvents added by extensibility
+	 *
+	 * @export
+	 * @param {string} monthPickerId
+	 * @param {string} eventId
+	 * @return {*}  {string}
+	 */
+	export function UnsetProviderEvent(monthPickerId: string, eventId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const monthPicker = GetMonthPickerItemById(monthPickerId);
+			monthPicker.unsetProviderEvent(eventId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.MonthPicker.FailRemoveProviderEvent;
 		}
 
 		return JSON.stringify(responseObj);
