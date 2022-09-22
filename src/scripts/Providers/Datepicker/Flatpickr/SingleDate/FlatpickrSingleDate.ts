@@ -33,10 +33,7 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 				// Check if any Date was selected
 				if (this.provider?.selectedDates.length > 0) {
 					// Set the new DefaultDate values
-					this.configs.InitialDate = this.provider.formatDate(
-						this.provider.selectedDates[0],
-						this._flatpickrOpts.dateFormat
-					);
+					this.configs.InitialDate = this.provider.selectedDates[0];
 				}
 			}
 
