@@ -68,17 +68,11 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 				// Check if any Date was selected
 				if (this.provider?.selectedDates.length > 0) {
 					// Set the new Start DefaultDate value
-					this.configs.InitialStartDate = this.provider.formatDate(
-						this.provider.selectedDates[0],
-						this._flatpickrOpts.dateFormat
-					);
+					this.configs.InitialStartDate = this.provider.selectedDates[0];
 
 					// Set the new End DefaultDate value
 					if (this.provider.selectedDates[1]) {
-						this.configs.InitialEndDate = this.provider.formatDate(
-							this.provider.selectedDates[1],
-							this._flatpickrOpts.dateFormat
-						);
+						this.configs.InitialEndDate = this.provider.selectedDates[1];
 					}
 				}
 			}
