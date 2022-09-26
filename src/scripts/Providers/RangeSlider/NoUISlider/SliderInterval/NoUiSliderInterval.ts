@@ -110,13 +110,13 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 					case OSFramework.Patterns.RangeSlider.Enum.Properties.StartingValueFrom:
 						this.setValue(propertyValue as number, this.configs.StartingValueTo);
 						console.warn(
-							`${OSFramework.GlobalEnum.PatternName.RangeSliderInterval}': (${this.widgetId}): You should use a distinct variable to assign on the OnValueChange event. Any updates to ${OSFramework.Patterns.RangeSlider.Enum.Properties.InitialValueFrom} parameter should ideally be made using the SetRangeSliderIntervalValue Client Action.`
+							`${OSFramework.GlobalEnum.PatternName.RangeSliderInterval}: (${this.widgetId}): You should use a distinct variable to assign on the OnValueChange event. Any updates to ${OSFramework.Patterns.RangeSlider.Enum.Properties.InitialValueFrom} parameter should ideally be made using the SetRangeSliderIntervalValue Client Action.`
 						);
 						break;
 					case OSFramework.Patterns.RangeSlider.Enum.Properties.StartingValueTo:
 						this.setValue(this.configs.StartingValueFrom, propertyValue as number);
 						console.warn(
-							`${OSFramework.GlobalEnum.PatternName.RangeSliderInterval}': (${this.widgetId}): You should use a distinct variable to assign on the OnValueChange event. Any updates to ${OSFramework.Patterns.RangeSlider.Enum.Properties.InitialValueTo} parameter should ideally be made using the SetRangeSliderIntervalValue Client Action.`
+							`${OSFramework.GlobalEnum.PatternName.RangeSliderInterval}: (${this.widgetId}): You should use a distinct variable to assign on the OnValueChange event. Any updates to ${OSFramework.Patterns.RangeSlider.Enum.Properties.InitialValueTo} parameter should ideally be made using the SetRangeSliderIntervalValue Client Action.`
 						);
 						break;
 					case OSFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
