@@ -103,7 +103,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 					case OSFramework.Patterns.RangeSlider.Enum.Properties.StartingValueFrom:
 						this.setValue(propertyValue as number);
 						console.warn(
-							`${OSFramework.GlobalEnum.PatternName.RangeSliderInterval}': (${this.widgetId}): You should use a distinct variable to assign on the OnValueChange event. Any updates to ${OSFramework.Patterns.RangeSlider.Enum.Properties.InitialValueFrom} parameter should ideally be made using the SetRangeSliderValue Client Action.`
+							`${OSFramework.GlobalEnum.PatternName.RangeSlider}': (${this.widgetId}): You should use a distinct variable to assign on the OnValueChange event. Any updates to ${OSFramework.Patterns.RangeSlider.Enum.Properties.InitialValueFrom} parameter should ideally be made using the SetRangeSliderValue Client Action.`
 						);
 						break;
 					case OSFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
