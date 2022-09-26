@@ -119,16 +119,6 @@ namespace Providers.Datepicker.Flatpickr {
 					this.configs.CalendarMode === OSFramework.Patterns.DatePicker.Enum.Mode.Range ||
 					(OSFramework.Helper.DeviceInfo.IsNative === true && this.configs.DisableMobile === true)
 				) {
-					/* NOTE:
-						If it's not a native app, could we add our stuff to the calendar?
-							- If RangeDate calendar => We do not have a native behaviour for it, so => YES!
-							- If Desktop we also be able to add them
-						
-						Seams confused but we can be at:
-							- iPad Safari (rendered as desktop)
-							- iPad Chrome (rendered as native)
-					*/
-
 					// Add TodayBtn
 					if (this.configs.ShowTodayButton) {
 						this.addTodayBtn();
