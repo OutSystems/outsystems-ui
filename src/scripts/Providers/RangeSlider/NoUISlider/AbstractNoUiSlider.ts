@@ -217,38 +217,13 @@ namespace Providers.RangeSlider.NoUISlider {
 
 			if (this.isBuilt) {
 				switch (propertyName) {
-					case OSFramework.Patterns.RangeSlider.Enum.Properties.StartingValueFrom:
-						console.warn(
-							`${
-								this._isInterval
-									? OSFramework.GlobalEnum.PatternName.RangeSliderInterval
-									: OSFramework.GlobalEnum.PatternName.RangeSlider
-							} (${this.widgetId}): changes to ${
-								OSFramework.Patterns.RangeSlider.Enum.Properties.StartingValueFrom
-							} parameter do not affect the ${
-								this._isInterval
-									? OSFramework.GlobalEnum.PatternName.RangeSliderInterval
-									: OSFramework.GlobalEnum.PatternName.RangeSlider
-							}. Use a distinct variable to assign on the OnValueChange event`
-						);
-						break;
 					case OSFramework.Patterns.RangeSlider.Enum.Properties.MinValue:
 					case OSFramework.Patterns.RangeSlider.Enum.Properties.MaxValue:
 						this._updateRangeValues();
 
 						break;
 					case OSFramework.Patterns.RangeSlider.Enum.Properties.Orientation:
-						console.warn(
-							`RangeSlider${
-								this._isInterval ? OSFramework.Patterns.RangeSlider.Enum.Mode.Interval : ''
-							} (${this.widgetId}): changes to ${
-								OSFramework.Patterns.RangeSlider.Enum.Properties.Orientation
-							} parameter do not affect the ${
-								this._isInterval
-									? OSFramework.GlobalEnum.PatternName.RangeSliderInterval
-									: OSFramework.GlobalEnum.PatternName.RangeSlider
-							}. Use a distinct variable to assign on the OnValueChange event.`
-						);
+						this.updateRangeSlider();
 						break;
 					case OSFramework.Patterns.RangeSlider.Enum.Properties.IsDisabled:
 						this._setIsDisabled();

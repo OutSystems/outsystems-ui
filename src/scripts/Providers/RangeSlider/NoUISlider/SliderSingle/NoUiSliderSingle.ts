@@ -100,6 +100,12 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 
 			if (this.isBuilt) {
 				switch (propertyName) {
+					case OSFramework.Patterns.RangeSlider.Enum.Properties.StartingValueFrom:
+						this.setValue(propertyValue as number);
+						console.warn(
+							`${OSFramework.GlobalEnum.PatternName.RangeSlider}: (${this.widgetId}): You should use a distinct variable to assign on the OnValueChange event. Any updates to ${OSFramework.Patterns.RangeSlider.Enum.Properties.InitialValueFrom} parameter should ideally be made using the SetRangeSliderValue Client Action.`
+						);
+						break;
 					case OSFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
 						// Library only supports update on some options, so we need to
 						// destroy the object and create a new RangeSlider
@@ -131,7 +137,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 				this.provider.set(value);
 			} else {
 				throw new Error(
-					`${OSFramework.ErrorCodes.RangeSlider.FailSetValue}:	The value must be between the minimum value and maximum value set.`
+					`${OSFramework.ErrorCodes.RangeSlider.FailSetValue}: The value must be between the minimum value and maximum value set.`
 				);
 			}
 		}

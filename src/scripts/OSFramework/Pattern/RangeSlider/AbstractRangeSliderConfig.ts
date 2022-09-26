@@ -21,22 +21,14 @@ namespace OSFramework.Patterns.RangeSlider {
 			super(config);
 		}
 
-		public validateCanChange(isBuilt: boolean, key: string): boolean {
-			if (isBuilt) {
-				switch (key) {
-					case Enum.Properties.StartingValueFrom:
-					case Enum.Properties.StartingValueTo:
-					case Enum.Properties.Orientation:
-						return false;
-				}
-			}
-			return true;
-		}
-
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;
 
 			switch (key) {
+				case Enum.Properties.InitialValueFrom:
+				case Enum.Properties.InitialValueTo:
+					validatedValue = this.validateNumber(value as number, 0);
+					break;
 				case Enum.Properties.Orientation:
 					validatedValue = this.validateInRange(
 						value,
