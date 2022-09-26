@@ -356,8 +356,9 @@ span.flatpickr-weekday {
 	.numInputWrapper {
 		flex: initial;
 		height: 30px;
+		min-width: 48px;
 		padding: 0 var(--space-base);
-		width: 48px;
+		width: auto;
 
 		&:hover,
 		&:focus {
