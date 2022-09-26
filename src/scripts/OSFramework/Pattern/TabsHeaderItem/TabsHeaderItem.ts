@@ -199,6 +199,15 @@ namespace OSFramework.Patterns.TabsHeaderItem {
 		}
 
 		/**
+		 * Method to update tabs indicator size on HeaderItem onRender
+		 *
+		 * @memberof TabsHeaderItem
+		 */
+		public updateOnRender(): void {
+			this.notifyParent(Tabs.Enum.ChildNotifyActionType.UpdateIndicator);
+		}
+
+		/**
 		 * Readable property to get the active state of the element
 		 *
 		 * @readonly

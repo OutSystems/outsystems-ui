@@ -11,6 +11,7 @@ namespace OSFramework.Patterns.Tabs.Enum {
 		RemovedHeaderItem = 'removed-header-item',
 		DisabledHeaderItem = 'disabled-header-item',
 		EnabledHeaderItem = 'enabled-header-item',
+		UpdateIndicator = 'update-indicator',
 	}
 
 	/**

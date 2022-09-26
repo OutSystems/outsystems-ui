@@ -702,6 +702,9 @@ namespace OSFramework.Patterns.Tabs {
 				case Enum.ChildNotifyActionType.RemovedHeaderItem:
 					this._removeHeaderItem(childId);
 					break;
+				case Enum.ChildNotifyActionType.UpdateIndicator:
+					this._handleTabIndicator();
+					break;
 				default:
 					throw new Error(
 						`${ErrorCodes.Tabs.FailToSetChildItemAction}: There no exist a '${notifiedTo}' notification type.`
