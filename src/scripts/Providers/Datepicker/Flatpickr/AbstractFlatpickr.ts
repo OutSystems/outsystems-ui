@@ -113,7 +113,7 @@ namespace Providers.Datepicker.Flatpickr {
 			// Set the needed HTML attributes
 			this._setAttributes();
 
-			// Since Flatpickr has a native behaviour (by default) if a mobile device is in use, we must ensure we can add our Classes and TodayBtn to it, since if it's native behaviour we can't do it!
+			// Since Flatpickr has a native behaviour (by default) check if the calendar exist
 			if (this.provider.calendarContainer !== undefined) {
 				if (
 					this.configs.CalendarMode === OSFramework.Patterns.DatePicker.Enum.Mode.Range ||
