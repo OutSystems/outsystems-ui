@@ -117,7 +117,7 @@ namespace Providers.Datepicker.Flatpickr {
 			if (this.provider.calendarContainer !== undefined) {
 				if (
 					this.configs.CalendarMode === OSFramework.Patterns.DatePicker.Enum.Mode.Range ||
-					(OSFramework.Helper.DeviceInfo.IsDesktop && OSFramework.Helper.DeviceInfo.IsNative === false)
+					(OSFramework.Helper.DeviceInfo.IsNative === true && this.configs.DisableMobile === true)
 				) {
 					/* NOTE:
 						If it's not a native app, could we add our stuff to the calendar?
