@@ -113,22 +113,13 @@ namespace Providers.Datepicker.Flatpickr {
 			// Set the needed HTML attributes
 			this._setAttributes();
 
-			// Since Flatpickr has a native behaviour (by default) if a mobile device is in use, we must ensure we can add our Classes and TodayBtn to it, since if it's native behaviour we can't do it!
+			// Since Flatpickr has a native behaviour (by default) check if the calendar exist
 			if (this.provider.calendarContainer !== undefined) {
 				if (
-					this.configs.CalendarMode === OSFramework.Patterns.DatePicker.Enum.Mode.Range ||
-					(OSFramework.Helper.DeviceInfo.IsDesktop && OSFramework.Helper.DeviceInfo.IsNative === false)
+					this.configs.DisableMobile === true ||
+					OSFramework.Helper.DeviceInfo.IsDesktop ||
+					this.configs.CalendarMode === OSFramework.Patterns.DatePicker.Enum.Mode.Range
 				) {
-					/* NOTE:
-						If it's not a native app, could we add our stuff to the calendar?
-							- If RangeDate calendar => We do not have a native behaviour for it, so => YES!
-							- If Desktop we also be able to add them
-						
-						Seams confused but we can be at:
-							- iPad Safari (rendered as desktop)
-							- iPad Chrome (rendered as native)
-					*/
-
 					// Add TodayBtn
 					if (this.configs.ShowTodayButton) {
 						this.addTodayBtn();
@@ -216,6 +207,7 @@ namespace Providers.Datepicker.Flatpickr {
 					case OSFramework.Patterns.DatePicker.Enum.Properties.MaxDate:
 					case OSFramework.Patterns.DatePicker.Enum.Properties.MinDate:
 					case OSFramework.Patterns.DatePicker.Enum.Properties.ShowTodayButton:
+					case OSFramework.Patterns.DatePicker.Enum.Properties.ShowWeekNumbers:
 						this.redraw();
 						break;
 					case OSFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass:
