@@ -206,6 +206,7 @@ namespace Providers.Datepicker.Flatpickr {
 					case OSFramework.Patterns.DatePicker.Enum.Properties.MaxDate:
 					case OSFramework.Patterns.DatePicker.Enum.Properties.MinDate:
 					case OSFramework.Patterns.DatePicker.Enum.Properties.ShowTodayButton:
+					case OSFramework.Patterns.DatePicker.Enum.Properties.ShowWeekNumbers:
 						this.redraw();
 						break;
 					case OSFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass:
