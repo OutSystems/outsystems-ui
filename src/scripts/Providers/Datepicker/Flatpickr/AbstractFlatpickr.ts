@@ -116,9 +116,9 @@ namespace Providers.Datepicker.Flatpickr {
 			// Since Flatpickr has a native behaviour (by default) check if the calendar exist
 			if (this.provider.calendarContainer !== undefined) {
 				if (
+					this.configs.DisableMobile === true ||
 					OSFramework.Helper.DeviceInfo.IsDesktop ||
-					this.configs.CalendarMode === OSFramework.Patterns.DatePicker.Enum.Mode.Range ||
-					(OSFramework.Helper.DeviceInfo.IsNative === true && this.configs.DisableMobile === true)
+					this.configs.CalendarMode === OSFramework.Patterns.DatePicker.Enum.Mode.Range
 				) {
 					// Add TodayBtn
 					if (this.configs.ShowTodayButton) {
