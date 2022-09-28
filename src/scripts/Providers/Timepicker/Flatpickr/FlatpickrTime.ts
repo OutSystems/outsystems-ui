@@ -106,10 +106,8 @@ namespace Providers.Timepicker.Flatpickr {
 
 			// Since Flatpickr has a native behaviour (by default) if a mobile device is in use, we must ensure we can add our Classes and TodayBtn to it, since if it's native behaviour we can't do it!
 			if (this.provider.calendarContainer !== undefined) {
-				if (OSFramework.Helper.DeviceInfo.IsDesktop && OSFramework.Helper.DeviceInfo.IsNative === false) {
-					// Set Calendar CSS classes
-					this._setCalendarCssClasses();
-				}
+				// Set Calendar CSS classes
+				this._setCalendarCssClasses();
 			}
 
 			this.createdInstance();
