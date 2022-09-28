@@ -87,7 +87,7 @@ namespace Providers.Datepicker.Flatpickr {
 		// Add Events
 		private _setUpEvents(): void {
 			// Check if native behaviour is disabled
-			if (this.configs.DisableMobile === true) {
+			if (OSFramework.Helper.DeviceInfo.IsDesktop || this.configs.DisableMobile === true) {
 				// Add the BodyScroll callback that will be used to update the balloon coodinates
 				OSFramework.Event.GlobalEventManager.Instance.addHandler(
 					OSFramework.Event.Type.BodyOnScroll,
@@ -99,7 +99,7 @@ namespace Providers.Datepicker.Flatpickr {
 		// Remove Added Events
 		private _unsetEvents(): void {
 			// Check if native behaviour is disabled
-			if (this.configs.DisableMobile === true) {
+			if (OSFramework.Helper.DeviceInfo.IsDesktop || this.configs.DisableMobile === true) {
 				OSFramework.Event.GlobalEventManager.Instance.removeHandler(
 					OSFramework.Event.Type.BodyOnScroll,
 					this._eventOnBodyScroll
