@@ -397,6 +397,12 @@ span.flatpickr-weekday {
 	}
 }
 
+.firefox .flatpickr-time {
+	input {
+		max-width: 48px; // fix for different input appearance css rules regarding size
+	}
+}
+
 // Flatpickr - TodayBtn
 .flatpickr-today-button {
 	padding: var(--space-none) var(--space-base) var(--space-base);
