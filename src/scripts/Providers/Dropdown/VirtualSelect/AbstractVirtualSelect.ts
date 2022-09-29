@@ -317,6 +317,8 @@ namespace Providers.Dropdown.VirtualSelect {
 					return {
 						group_name:
 							option.customData && option.customData.group_name ? option.customData.group_name : '',
+						description:
+							option.customData && option.customData.description ? option.customData.description : '',
 						...option,
 					};
 				});
