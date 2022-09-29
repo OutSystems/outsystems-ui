@@ -314,6 +314,7 @@ namespace Providers.Datepicker.Flatpickr {
 		 */
 		public disableWeekDays(disableWeekDays: number[]): void {
 			this.configs.DisabledWeekDays = disableWeekDays;
+
 			this.redraw();
 		}
 
@@ -331,6 +332,8 @@ namespace Providers.Datepicker.Flatpickr {
 				this._unsetEvents();
 				this.unsetCallbacks();
 				this.unsetHtmlElements();
+
+				this._requestAnimationOnBodyScroll = undefined;
 
 				// Wait for _datePickerProviderInputElem be removed from DOM, before detroy the provider instance!
 				OSFramework.Helper.AsyncInvocation(this.provider.destroy);
