@@ -4,8 +4,12 @@ namespace Providers.Datepicker.Flatpickr {
 		extends OSFramework.Patterns.DatePicker.AbstractDatePicker<Flatpickr, C>
 		implements IFlatpickr
 	{
+		// Event OnBodyScroll
+		private _eventOnBodyScroll: OSFramework.GlobalCallbacks.Generic;
 		// Flatpickr onInitialize event
 		private _onInitializeCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
+		// Store the RequestAnimationFrame that will be triggered at OnBodyScroll
+		private _requestAnimationOnBodyScroll: number;
 		// Store pattern input HTML element reference
 		protected _datePickerProviderInputElem: HTMLInputElement;
 		// Store the flatpickr input html element that will be added by library
@@ -22,6 +26,21 @@ namespace Providers.Datepicker.Flatpickr {
 
 			// Set the default library Event handler that will be used to set on the provider configs
 			this.configs.OnChange = this.onDateSelectedEvent.bind(this);
+		}
+
+		// Update the calendar position
+		private _onBodyScroll(): void {
+			if (this.isBuilt) {
+				// If the calendar is open!
+				if (this.provider.isOpen) {
+					// trigger provider update position method
+					this.provider._positionCalendar();
+					// Update the "position" before the next "repaint"
+					this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
+				} else {
+					cancelAnimationFrame(this._requestAnimationOnBodyScroll);
+				}
+			}
 		}
 
 		// Method used to set the needed HTML attributes
@@ -62,6 +81,29 @@ namespace Providers.Datepicker.Flatpickr {
 			// If the input hasn't be added
 			if (!this._datePickerProviderInputElem) {
 				throw new Error(`The datepicker input at DatepickerId '${this._widgetId}' is missing`);
+			}
+		}
+
+		// Add Events
+		private _setUpEvents(): void {
+			// Check if native behaviour is disabled
+			if (OSFramework.Helper.DeviceInfo.IsDesktop || this.configs.DisableMobile === true) {
+				// Add the BodyScroll callback that will be used to update the balloon coodinates
+				OSFramework.Event.GlobalEventManager.Instance.addHandler(
+					OSFramework.Event.Type.BodyOnScroll,
+					this._eventOnBodyScroll
+				);
+			}
+		}
+
+		// Remove Added Events
+		private _unsetEvents(): void {
+			// Check if native behaviour is disabled
+			if (OSFramework.Helper.DeviceInfo.IsDesktop || this.configs.DisableMobile === true) {
+				OSFramework.Event.GlobalEventManager.Instance.removeHandler(
+					OSFramework.Event.Type.BodyOnScroll,
+					this._eventOnBodyScroll
+				);
 			}
 		}
 
@@ -159,6 +201,16 @@ namespace Providers.Datepicker.Flatpickr {
 		}
 
 		/**
+		 * Method used to set callbacks
+		 *
+		 * @protected
+		 * @memberof AbstractFlatpickr
+		 */
+		protected setCallbacks(): void {
+			this._eventOnBodyScroll = this._onBodyScroll.bind(this);
+		}
+
+		/**
 		 * Remove all the assigned Events
 		 *
 		 * @protected
@@ -167,6 +219,7 @@ namespace Providers.Datepicker.Flatpickr {
 		protected unsetCallbacks(): void {
 			this.configs.OnChange = undefined;
 
+			this._eventOnBodyScroll = undefined;
 			this._onInitializeCallbackEvent = undefined;
 			this._onChangeCallbackEvent = undefined;
 		}
@@ -184,6 +237,8 @@ namespace Providers.Datepicker.Flatpickr {
 		public build(): void {
 			super.build();
 
+			this.setCallbacks();
+			this._setUpEvents();
 			this._setHtmllElements();
 		}
 
@@ -273,6 +328,7 @@ namespace Providers.Datepicker.Flatpickr {
 				remove the input element value, this will avoid library update it's value into a date with a different date format! */
 				this._datePickerProviderInputElem.value = '';
 
+				this._unsetEvents();
 				this.unsetCallbacks();
 				this.unsetHtmlElements();
 
