@@ -357,7 +357,8 @@ span.flatpickr-weekday {
 		flex: initial;
 		height: 30px;
 		padding: 0 var(--space-base);
-		width: 48px;
+		min-width: 48px;
+		width: auto;
 
 		&:hover,
 		&:focus {
@@ -393,6 +394,12 @@ span.flatpickr-weekday {
 		&:focus {
 			background-color: var(--color-primary-hover);
 		}
+	}
+}
+
+.firefox .flatpickr-time {
+	input {
+		max-width: 48px; // fix for different input appearance css rules regarding size
 	}
 }
 
