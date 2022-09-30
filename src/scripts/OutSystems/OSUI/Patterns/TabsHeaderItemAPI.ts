@@ -200,4 +200,31 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 			_tabsHeaderItemMap
 		) as OSFramework.Patterns.TabsHeaderItem.ITabsHeaderItem;
 	}
+
+	/**
+	 * Function that will update on DOM changes inside the TabsHeaderItem
+	 *
+	 * @export
+	 * @param {string} tabsHeaderItemId
+	 * @return {*}  {string}
+	 */
+	export function UpdateOnRender(tabsHeaderItemId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
+
+			tabsHeaderItem.updateOnRender();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.TabsHeaderItem.FailUpdate;
+		}
+
+		return JSON.stringify(responseObj);
+	}
 }

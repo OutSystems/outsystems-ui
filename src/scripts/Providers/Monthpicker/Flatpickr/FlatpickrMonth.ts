@@ -5,13 +5,16 @@ namespace Providers.MonthPicker.Flatpickr {
 		extends OSFramework.Patterns.MonthPicker.AbstractMonthPicker<Flatpickr, FlatpickrMonthConfig>
 		implements IFlatpickrMonth
 	{
+		// Event OnBodyScroll common behaviour
+		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
+		// Flatpickr onInitialize event
+		private _onInitializeCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
+		// Store the flatpickr input html element that will be added by library
 		protected _flatpickrInputElem: HTMLInputElement;
 		// Store the provider options
 		protected _flatpickrOpts: FlatpickrOptions;
 		// Store pattern input HTML element reference
 		protected _monthPickerProviderInputElem: HTMLInputElement;
-		// Flatpickr onInitialize event
-		protected _onInitializedCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
 		// Flatpickr onChange (SelectedMonth) event
 		protected _onSelectedCallbackEvent: OSFramework.Patterns.MonthPicker.Callbacks.OSOnSelectedEvent;
 
@@ -91,7 +94,7 @@ namespace Providers.MonthPicker.Flatpickr {
 		 * Method that will be triggered at Flatpickr instance is ready
 		 *
 		 * @protected
-		 * @memberof AbstractFlatpickr
+		 * @memberof Flatpickr.Month
 		 */
 		protected createProviderInstance(): void {
 			/* In order to avoid dateFormat convert issues done by provider when InitialMonth was not defined and input has a default month lets clean that value before creating provider instance. This happen when DateFormat is different from YYYY-MM-DD */
@@ -108,6 +111,9 @@ namespace Providers.MonthPicker.Flatpickr {
 			if (this.provider.calendarContainer !== undefined) {
 				// Set Calendar CSS classes
 				this._setCalendarCssClasses();
+
+				// set the onBodyScroll update calendar position behaviour!
+				this._bodyScrollCommonBehaviour = new SharedProviderResources.Flatpickr.UpdatePositionOnScroll(this);
 			}
 
 			this.createdInstance();
@@ -117,7 +123,7 @@ namespace Providers.MonthPicker.Flatpickr {
 		 * Method that will be triggered at Flatpickr instance is ready
 		 *
 		 * @protected
-		 * @memberof AbstractFlatpickr
+		 * @memberof Flatpickr.Month
 		 */
 		protected createdInstance(): void {
 			// Set provider Info to be used by setProviderConfigs API calls
@@ -128,7 +134,7 @@ namespace Providers.MonthPicker.Flatpickr {
 			});
 
 			// Trigger platform's InstanceIntializedHandler client Action
-			this.triggerPlatformEventInitialized(this._onInitializedCallbackEvent);
+			this.triggerPlatformEventInitialized(this._onInitializeCallbackEvent);
 		}
 
 		/**
@@ -180,7 +186,7 @@ namespace Providers.MonthPicker.Flatpickr {
 		 * Method that will be responsible to redraw the calendar when it's needed
 		 *
 		 * @protected
-		 * @memberof AbstractFlatpickr
+		 * @memberof Flatpickr.Month
 		 */
 		protected redraw(): void {
 			// Destroy the old flatpickr instance
@@ -194,12 +200,12 @@ namespace Providers.MonthPicker.Flatpickr {
 		 * Remove all the assigned Events
 		 *
 		 * @protected
-		 * @memberof AbstractFlatpickr
+		 * @memberof Flatpickr.Month
 		 */
 		protected unsetCallbacks(): void {
 			this.configs.OnChange = undefined;
 
-			this._onInitializedCallbackEvent = undefined;
+			this._onInitializeCallbackEvent = undefined;
 			this._onSelectedCallbackEvent = undefined;
 		}
 
@@ -207,18 +213,17 @@ namespace Providers.MonthPicker.Flatpickr {
 		 * Unsets the references to the HTML elements.
 		 *
 		 * @protected
-		 * @memberof AbstractFlatpickr
+		 * @memberof Flatpickr.Month
 		 */
 		protected unsetHtmlElements(): void {
 			this._monthPickerProviderInputElem = undefined;
 		}
+
 		public build(): void {
 			super.build();
 
 			this._setHtmlElements();
-
 			this.prepareConfigs();
-
 			this.finishBuild();
 		}
 
@@ -227,7 +232,7 @@ namespace Providers.MonthPicker.Flatpickr {
 		 *
 		 * @param {string} propertyName the name of the property that will be changed
 		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
-		 * @memberof AbstractFlatpickr
+		 * @memberof Flatpickr.Month
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			//Storing the current ExtendedClass, before possibly changing this property.
@@ -259,7 +264,7 @@ namespace Providers.MonthPicker.Flatpickr {
 		/**
 		 * Method used to clear the selected date
 		 *
-		 * @memberof AbstractFlatpickr
+		 * @memberof Flatpickr.Month
 		 */
 		public clear(): void {
 			this.provider.clear();
@@ -268,7 +273,7 @@ namespace Providers.MonthPicker.Flatpickr {
 		/**
 		 * Method used to close MonthPicker
 		 *
-		 * @memberof AbstractFlatpickr
+		 * @memberof Flatpickr.Month
 		 */
 		public close(): void {
 			this.provider.close();
@@ -277,10 +282,18 @@ namespace Providers.MonthPicker.Flatpickr {
 		/**
 		 * Method to remove and destroy MonthPicker instance
 		 *
-		 * @memberof AbstractFlatpickr
+		 * @memberof Flatpickr.Month
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
+				this.unsetCallbacks();
+				this.unsetHtmlElements();
+
+				if (this._bodyScrollCommonBehaviour !== undefined) {
+					this._bodyScrollCommonBehaviour.dispose();
+					this._bodyScrollCommonBehaviour = undefined;
+				}
+
 				// Wait for _monthPickerProviderInputElem be removed from DOM, before detroy the provider instance!
 				OSFramework.Helper.AsyncInvocation(this.provider.destroy);
 			}
@@ -291,7 +304,7 @@ namespace Providers.MonthPicker.Flatpickr {
 		/**
 		 * Method used to open MonthPicker
 		 *
-		 * @memberof AbstractFlatpickr
+		 * @memberof Flatpickr.Month
 		 */
 		public open(): void {
 			this.provider.open();
@@ -300,7 +313,7 @@ namespace Providers.MonthPicker.Flatpickr {
 		/**
 		 * Method used to regist callback events
 		 *
-		 * @memberof AbstractFlatpickr
+		 * @memberof Flatpickr.Month
 		 */
 		public registerCallback(eventName: string, callback: OSFramework.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -309,7 +322,7 @@ namespace Providers.MonthPicker.Flatpickr {
 					break;
 
 				case OSFramework.Patterns.MonthPicker.Enum.Events.OnInitialized:
-					this._onInitializedCallbackEvent = callback;
+					this._onInitializeCallbackEvent = callback;
 					break;
 
 				default:
@@ -320,7 +333,7 @@ namespace Providers.MonthPicker.Flatpickr {
 		/**
 		 * Method used to set the MonthPicker language
 		 *
-		 * @memberof AbstractFlatpickr
+		 * @memberof Flatpickr.Month
 		 */
 		public setLanguage(value: string): void {
 			// Set the new Language
@@ -336,7 +349,7 @@ namespace Providers.MonthPicker.Flatpickr {
 		 * Method used to set all the extended Flatpickr properties across the different types of instances
 		 *
 		 * @param {FlatpickrOptions} newConfigs
-		 * @memberof AbstractFlatpickr
+		 * @memberof Flatpickr.Month
 		 */
 		public setProviderConfigs(newConfigs: FlatpickrOptions): void {
 			this.configs.setExtensibilityConfigs(newConfigs);

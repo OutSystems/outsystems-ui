@@ -4,6 +4,8 @@ namespace Providers.Datepicker.Flatpickr {
 		extends OSFramework.Patterns.DatePicker.AbstractDatePicker<Flatpickr, C>
 		implements IFlatpickr
 	{
+		// Event OnBodyScroll common behaviour
+		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
 		// Flatpickr onInitialize event
 		private _onInitializeCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
 		// Store pattern input HTML element reference
@@ -15,7 +17,7 @@ namespace Providers.Datepicker.Flatpickr {
 		// Store on a flag status when the picker is updating the default date;
 		protected _isUpdatingDefaultDate = false;
 		// Flatpickr onChange (SelectedDate) event
-		protected _onChangeCallbackEvent: OSFramework.Patterns.DatePicker.Callbacks.OSOnChangeEvent;
+		protected _onSelectedCallbackEvent: OSFramework.Patterns.DatePicker.Callbacks.OSOnChangeEvent;
 
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
@@ -127,6 +129,11 @@ namespace Providers.Datepicker.Flatpickr {
 
 					// Set Calendar CSS classes
 					this._setCalendarCssClasses();
+
+					// set the onBodyScroll update calendar position behaviour!
+					this._bodyScrollCommonBehaviour = new SharedProviderResources.Flatpickr.UpdatePositionOnScroll(
+						this
+					);
 				}
 			}
 
@@ -168,7 +175,7 @@ namespace Providers.Datepicker.Flatpickr {
 			this.configs.OnChange = undefined;
 
 			this._onInitializeCallbackEvent = undefined;
-			this._onChangeCallbackEvent = undefined;
+			this._onSelectedCallbackEvent = undefined;
 		}
 
 		/**
@@ -259,6 +266,7 @@ namespace Providers.Datepicker.Flatpickr {
 		 */
 		public disableWeekDays(disableWeekDays: number[]): void {
 			this.configs.DisabledWeekDays = disableWeekDays;
+
 			this.redraw();
 		}
 
@@ -275,6 +283,11 @@ namespace Providers.Datepicker.Flatpickr {
 
 				this.unsetCallbacks();
 				this.unsetHtmlElements();
+
+				if (this._bodyScrollCommonBehaviour !== undefined) {
+					this._bodyScrollCommonBehaviour.dispose();
+					this._bodyScrollCommonBehaviour = undefined;
+				}
 
 				// Wait for _datePickerProviderInputElem be removed from DOM, before detroy the provider instance!
 				OSFramework.Helper.AsyncInvocation(this.provider.destroy);
@@ -300,7 +313,7 @@ namespace Providers.Datepicker.Flatpickr {
 		public registerCallback(eventName: string, callback: OSFramework.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
 				case OSFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnChange:
-					this._onChangeCallbackEvent = callback;
+					this._onSelectedCallbackEvent = callback;
 					break;
 
 				case OSFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnInitialize:

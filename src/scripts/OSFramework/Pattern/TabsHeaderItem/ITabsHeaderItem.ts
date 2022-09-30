@@ -13,5 +13,6 @@ namespace OSFramework.Patterns.TabsHeaderItem {
 		setFocus();
 		setIsActive();
 		unsetIsActive();
+		updateOnRender();
 	}
 }
