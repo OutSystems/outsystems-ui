@@ -8,6 +8,10 @@
 	box-shadow: var(--shadow-none);
 	width: 320px;
 
+	&.open {
+		z-index: 99;
+	}
+
 	&.arrowTop {
 		&:before,
 		&::after {
