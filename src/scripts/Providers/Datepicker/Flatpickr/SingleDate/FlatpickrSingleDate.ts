@@ -38,7 +38,6 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 			}
 
 			this._isUpdatingDefaultDate = false;
-
 			// Get the library configurations
 			this._flatpickrOpts = this.configs.getProviderConfig();
 
@@ -92,6 +91,10 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 						this.redraw();
 						break;
 
+					case Enum.Properties.InitialDate:
+						this._isUpdatingDefaultDate = true;
+						this.redraw();
+						break;
 					case OSFramework.Patterns.DatePicker.Enum.Properties.TimeFormat:
 						this.redraw();
 						break;

@@ -9,5 +9,6 @@ namespace OSFramework.Patterns.TimePicker {
 		setProviderConfigs(providerConfigs: ProviderConfigs): void;
 		setProviderEvent(eventName: string, callback: OSFramework.GlobalCallbacks.Generic, uniqueId: string): void;
 		unsetProviderEvent(eventId: string): void;
+		updateInitialTime(time: string): void;
 	}
 }

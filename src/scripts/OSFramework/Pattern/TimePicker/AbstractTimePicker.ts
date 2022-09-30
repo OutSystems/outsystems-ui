@@ -13,5 +13,6 @@ namespace OSFramework.Patterns.TimePicker {
 		public abstract close(): void;
 		public abstract open(): void;
 		public abstract setLanguage(value: string): void;
+		public abstract updateInitialTime(time: string): void;
 	}
 }

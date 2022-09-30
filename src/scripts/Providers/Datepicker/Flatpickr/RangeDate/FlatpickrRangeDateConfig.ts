@@ -57,14 +57,5 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 				this._providerExtendedOptions
 			);
 		}
-
-		// Method that validates if a given property can be changed.
-		public validateCanChange(isBuilt: boolean, key: string): boolean {
-			// Block updating InitialStartDate and InitialEndDate after pattern is built (OnParameters Change)
-			if (isBuilt) {
-				return key !== Enum.Properties.InitialStartDate && key !== Enum.Properties.InitialEndDate;
-			}
-			return true;
-		}
 	}
 }

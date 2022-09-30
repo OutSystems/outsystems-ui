@@ -121,6 +121,11 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 						// Check if there is any selected date already
 						this._onUpdateDateFormat();
 						break;
+					case Enum.Properties.InitialEndDate:
+					case Enum.Properties.InitialStartDate:
+						this._isUpdatingDefaultDate = true;
+						this.redraw();
+						break;
 				}
 			}
 		}

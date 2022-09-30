@@ -19,6 +19,7 @@ namespace OSFramework.Patterns.TimePicker {
 					// eslint-disable-next-line @typescript-eslint/no-unused-vars
 					validatedValue = this.validateBoolean(value as boolean, true);
 					break;
+				case Enum.Properties.InitialTime:
 				case Enum.Properties.MaxTime:
 				case Enum.Properties.MinTime:
 					validatedValue = this.validateTime(value as string, undefined);
