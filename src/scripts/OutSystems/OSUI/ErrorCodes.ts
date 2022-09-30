@@ -204,9 +204,10 @@ namespace OutSystems.OSUI.ErrorCodes {
 
 	export const TabsHeaderItem = {
 		FailChangeProperty: 'OSUI-API-24001',
-		FailDisableTabHeader: 'OSUI-API-22002',
+		FailDisableTabHeader: 'OSUI-API-24002',
 		FailDispose: 'OSUI-API-24003',
-		FailEnableTabHeader: 'OSUI-API-22004',
+		FailEnableTabHeader: 'OSUI-API-24004',
+		FailUpdate: 'OSUI-API-24005',
 	};
 
 	export const BottomSheet = {
