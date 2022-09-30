@@ -3,21 +3,10 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.Patterns.Progress.Bar {
 	export class Bar extends Progress.AbstractProgress<ProgressBarConfig> {
-		private _eventAnimateEntranceEnd: GlobalCallbacks.Generic;
-
-		// Store the htmlElements
-		private _progressElem: HTMLElement;
-
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new ProgressBarConfig(configs));
-		}
-
-		// remove the added transitionEnd event and the cssClass added at the beginning
-		private _animateEntranceEnd(): void {
-			this._progressElem.removeEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._eventAnimateEntranceEnd);
-
-			Helper.Dom.Styles.RemoveClass(this._progressElem, ProgressEnum.CssClass.AddInitialAnimation);
+			this._progressType = ProgressEnum.ProgressTypes.Bar;
 		}
 
 		// Set the default inline css variables
@@ -47,6 +36,7 @@ namespace OSFramework.Patterns.Progress.Bar {
 			);
 		}
 
+		// Update progress color based on value change
 		private _updateProgressColor(value: string): void {
 			this.configs.ProgressColor = value;
 
@@ -57,11 +47,7 @@ namespace OSFramework.Patterns.Progress.Bar {
 			);
 		}
 
-		// Update the valuenow accessibility property
-		private _updateProgressValue(): void {
-			this.updateValueNow(this.configs.Progress.toString());
-		}
-
+		// Update progress shape based on value change
 		private _updateShape(value: string): void {
 			this.configs.Shape = value;
 
@@ -72,6 +58,7 @@ namespace OSFramework.Patterns.Progress.Bar {
 			);
 		}
 
+		// Update progress thickness based on value change
 		private _updateThickness(value: number): void {
 			this.configs.Thickness = value;
 
@@ -82,6 +69,7 @@ namespace OSFramework.Patterns.Progress.Bar {
 			);
 		}
 
+		// Update progress trail color based on value change
 		private _updateTrailColor(value: string): void {
 			this.configs.TrailColor = value;
 
@@ -96,38 +84,26 @@ namespace OSFramework.Patterns.Progress.Bar {
 		protected addInitialAnimation(): void {
 			// Check if the animation at init should be added
 			if (this.configs.AnimateInitialProgress) {
-				Helper.Dom.Styles.AddClass(this._progressElem, ProgressEnum.CssClass.AddInitialAnimation);
-
-				this._progressElem.addEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._eventAnimateEntranceEnd);
+				this.animateInitial();
 			}
 
-			this.setElementProgressValue(this.configs.Progress);
+			// Update the progress value and the valuenow accessibility property
+			this.updatedProgressValue();
 		}
 
 		protected setCallbacks(): void {
-			this._eventAnimateEntranceEnd = this._animateEntranceEnd.bind(this);
+			super.setCallbacks();
 		}
 
+		// Add the animation on progress before applying progress value based on value change
 		protected setElementProgressValue(value: number): void {
-			// If negative value, set it as minimum progress value by default
-			if (value < ProgressEnum.Properties.MinProgressValue) {
-				this.configs.Progress = ProgressEnum.Properties.MinProgressValue;
+			this.configs.Progress = value;
 
-				console.warn(
-					`The value of the Progress property on the '${this.widgetId}' ${GlobalEnum.PatternName.ProgressBar} can't be smaller than '${ProgressEnum.Properties.MinProgressValue}'.`
-				);
-			} else if (value > ProgressEnum.Properties.MaxProgressValue) {
-				// If value is higher than the maximum progress value, assume the maximum progress value
-				this.configs.Progress = ProgressEnum.Properties.MaxProgressValue;
+			// Add the animate to progress value, on value change
+			this.animateOnValueChange();
 
-				console.warn(
-					`The value of the Progress property on the '${this.widgetId}' ${GlobalEnum.PatternName.ProgressBar} is higher than supported (${ProgressEnum.Properties.MaxProgressValue}).`
-				);
-			} else {
-				this.configs.Progress = value;
-			}
-
-			this._updateProgressValue();
+			// Update the progress value and the valuenow accessibility property
+			this.updatedProgressValue();
 		}
 
 		// Update info based on htmlContent
@@ -137,11 +113,11 @@ namespace OSFramework.Patterns.Progress.Bar {
 		}
 
 		protected unsetCallbacks(): void {
-			this._eventAnimateEntranceEnd = undefined;
+			super.unsetCallbacks();
 		}
 
 		protected unsetHtmlElements(): void {
-			this._progressElem = undefined;
+			super.unsetHtmlElements();
 		}
 
 		public build(): void {
@@ -153,7 +129,12 @@ namespace OSFramework.Patterns.Progress.Bar {
 
 			this.setCallbacks();
 
-			Helper.AsyncInvocation(this.addInitialAnimation.bind(this));
+			// Ensure that this will run only at the Initialization
+			if (!this.isBuilt) {
+				// Make async to ensure that all css variables are assigned
+				// Update according initial style
+				Helper.AsyncInvocation(this.addInitialAnimation.bind(this));
+			}
 
 			this.finishBuild();
 		}
