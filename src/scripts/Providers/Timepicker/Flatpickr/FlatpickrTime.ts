@@ -137,12 +137,12 @@ namespace Providers.Timepicker.Flatpickr {
 			this.triggerPlatformEventInitialized(this._onInitializeCallbackEvent);
 		}
 
-		// Method that will be triggered by library each time any date is selected
+		// Method that will be triggered by library each time any time is selected
 		protected onTimeSelectedEvent(selectedTime: string[]): void {
-			/* NOTE: dateStr param is not in use since the library has an issue arround it */
+			/* NOTE: timeStr param is not in use since the library has an issue arround it */
 			let _selectedTime = '';
 
-			// Check if any date has been selected, In case of Clear this will return empty string
+			// Check if any time has been selected, In case of Clear this will return empty string
 			if (selectedTime.length > 0) {
 				_selectedTime = this.provider.formatDate(selectedTime[0], this._flatpickrOpts.dateFormat);
 			}
@@ -226,6 +226,7 @@ namespace Providers.Timepicker.Flatpickr {
 
 			if (this.isBuilt) {
 				switch (propertyName) {
+					case OSFramework.Patterns.TimePicker.Enum.Properties.InitialTime:
 					case OSFramework.Patterns.TimePicker.Enum.Properties.Is24Hours:
 					case OSFramework.Patterns.TimePicker.Enum.Properties.MaxTime:
 					case OSFramework.Patterns.TimePicker.Enum.Properties.MinTime:
@@ -361,6 +362,19 @@ namespace Providers.Timepicker.Flatpickr {
 				this.configs.DisableMobile = !isNative;
 				this.redraw();
 			}
+		}
+
+		/**
+		 * Method used to update the InitialTime config value
+		 *
+		 * @param {string} value The new InitialTime value that will be set
+		 * @memberof OSUIFlatpickrTime
+		 */
+		public updateInitialTime(value: string): void {
+			// Redefine the Initial time
+			this.configs.InitialTime = value;
+			// Trigger the Redraw method in order to update calendar with this new value
+			this.redraw();
 		}
 	}
 }

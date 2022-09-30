@@ -314,6 +314,30 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	}
 
 	/**
+	 * Function that will update the InitialTime fot a given TimepickerId
+	 * @param {string} timePickerId
+	 * @param {string} time The value for the InitialTime
+	 */
+	export function UpdateInitialTime(timePickerId: string, time: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const _timePicker = this.GetTimePickerItemById(timePickerId);
+			_timePicker.updateInitialTime(time);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.TimePicker.FailRedraw;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
 	 * Function to set providerConfigs by extensibility
 	 *
 	 * @export
