@@ -50,7 +50,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 
 			// Trigger platform's onChange callback event
 			OSFramework.Helper.AsyncInvocation(
-				this._onChangeCallbackEvent,
+				this._onSelectedCallbackEvent,
 				this.widgetId,
 				_selectedDate[0],
 				_selectedDate[1]
