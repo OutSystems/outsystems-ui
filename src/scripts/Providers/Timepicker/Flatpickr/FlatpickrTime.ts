@@ -6,7 +6,7 @@ namespace Providers.Timepicker.Flatpickr {
 		implements IFlatpickr
 	{
 		// Event OnBodyScroll
-		private _eventOnBodyScroll: OSFramework.GlobalCallbacks.Generic;
+		private _onBodyScrollEvent: OSFramework.GlobalCallbacks.Generic;
 		// Store the RequestAnimationFrame that will be triggered at OnBodyScroll
 		private _requestAnimationOnBodyScroll: number;
 		// Store the flatpickr input html element that will be added by library
@@ -35,7 +35,7 @@ namespace Providers.Timepicker.Flatpickr {
 					// trigger provider update position method
 					this.provider._positionCalendar();
 					// Update the "position" before the next "repaint"
-					this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
+					this._requestAnimationOnBodyScroll = requestAnimationFrame(this._onBodyScrollEvent);
 				} else {
 					cancelAnimationFrame(this._requestAnimationOnBodyScroll);
 				}
@@ -114,7 +114,7 @@ namespace Providers.Timepicker.Flatpickr {
 				// Add the BodyScroll callback that will be used to update the balloon coodinates
 				OSFramework.Event.GlobalEventManager.Instance.addHandler(
 					OSFramework.Event.Type.BodyOnScroll,
-					this._eventOnBodyScroll
+					this._onBodyScrollEvent
 				);
 			}
 		}
@@ -125,7 +125,7 @@ namespace Providers.Timepicker.Flatpickr {
 			if (OSFramework.Helper.DeviceInfo.IsDesktop || this.configs.DisableMobile === true) {
 				OSFramework.Event.GlobalEventManager.Instance.removeHandler(
 					OSFramework.Event.Type.BodyOnScroll,
-					this._eventOnBodyScroll
+					this._onBodyScrollEvent
 				);
 			}
 		}
@@ -223,7 +223,7 @@ namespace Providers.Timepicker.Flatpickr {
 		 * @memberof Flatpickr.Time
 		 */
 		protected setCallbacks(): void {
-			this._eventOnBodyScroll = this._onBodyScroll.bind(this);
+			this._onBodyScrollEvent = this._onBodyScroll.bind(this);
 		}
 
 		/**
@@ -235,7 +235,7 @@ namespace Providers.Timepicker.Flatpickr {
 		protected unsetCallbacks(): void {
 			this.configs.OnChange = undefined;
 
-			this._eventOnBodyScroll = undefined;
+			this._onBodyScrollEvent = undefined;
 			this._onInitializedCallbackEvent = undefined;
 			this._onChangeCallbackEvent = undefined;
 		}
@@ -254,8 +254,8 @@ namespace Providers.Timepicker.Flatpickr {
 			super.build();
 
 			this.setCallbacks();
-			this._setUpEvents();
 			this._setHtmllElements();
+			this._setUpEvents();
 			this.prepareConfigs();
 			this.finishBuild();
 		}

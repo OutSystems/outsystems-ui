@@ -5,7 +5,7 @@ namespace Providers.Datepicker.Flatpickr {
 		implements IFlatpickr
 	{
 		// Event OnBodyScroll
-		private _eventOnBodyScroll: OSFramework.GlobalCallbacks.Generic;
+		private _onBodyScrollEvent: OSFramework.GlobalCallbacks.Generic;
 		// Flatpickr onInitialize event
 		private _onInitializeCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
 		// Store the RequestAnimationFrame that will be triggered at OnBodyScroll
@@ -36,7 +36,7 @@ namespace Providers.Datepicker.Flatpickr {
 					// trigger provider update position method
 					this.provider._positionCalendar();
 					// Update the "position" before the next "repaint"
-					this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
+					this._requestAnimationOnBodyScroll = requestAnimationFrame(this._onBodyScrollEvent);
 				} else {
 					cancelAnimationFrame(this._requestAnimationOnBodyScroll);
 				}
@@ -91,7 +91,7 @@ namespace Providers.Datepicker.Flatpickr {
 				// Add the BodyScroll callback that will be used to update the balloon coodinates
 				OSFramework.Event.GlobalEventManager.Instance.addHandler(
 					OSFramework.Event.Type.BodyOnScroll,
-					this._eventOnBodyScroll
+					this._onBodyScrollEvent
 				);
 			}
 		}
@@ -102,7 +102,7 @@ namespace Providers.Datepicker.Flatpickr {
 			if (OSFramework.Helper.DeviceInfo.IsDesktop || this.configs.DisableMobile === true) {
 				OSFramework.Event.GlobalEventManager.Instance.removeHandler(
 					OSFramework.Event.Type.BodyOnScroll,
-					this._eventOnBodyScroll
+					this._onBodyScrollEvent
 				);
 			}
 		}
@@ -207,7 +207,7 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @memberof AbstractFlatpickr
 		 */
 		protected setCallbacks(): void {
-			this._eventOnBodyScroll = this._onBodyScroll.bind(this);
+			this._onBodyScrollEvent = this._onBodyScroll.bind(this);
 		}
 
 		/**
@@ -219,7 +219,7 @@ namespace Providers.Datepicker.Flatpickr {
 		protected unsetCallbacks(): void {
 			this.configs.OnChange = undefined;
 
-			this._eventOnBodyScroll = undefined;
+			this._onBodyScrollEvent = undefined;
 			this._onInitializeCallbackEvent = undefined;
 			this._onChangeCallbackEvent = undefined;
 		}
@@ -238,8 +238,8 @@ namespace Providers.Datepicker.Flatpickr {
 			super.build();
 
 			this.setCallbacks();
-			this._setUpEvents();
 			this._setHtmllElements();
+			this._setUpEvents();
 		}
 
 		/**
