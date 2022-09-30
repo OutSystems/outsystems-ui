@@ -19,7 +19,7 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 			}
 
 			// Trigger platform's onChange callback event
-			OSFramework.Helper.AsyncInvocation(this._onChangeCallbackEvent, this.widgetId, _selectedDate);
+			OSFramework.Helper.AsyncInvocation(this._onSelectedCallbackEvent, this.widgetId, _selectedDate);
 		}
 
 		/**
