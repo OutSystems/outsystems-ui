@@ -455,7 +455,7 @@
 // Option Item description
 .vscomp-option-description {
 	color: var(--color-neutral-7);
-	font-size: var(--font-size-xxs);
+	font-size: 11px; // value used to provide a better UX when using option description
 }
 
 // Accessibility -----------------------------------------------------------------
