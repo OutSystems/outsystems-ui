@@ -36,8 +36,4 @@ namespace OSFramework.Patterns.Dropdown.Enum {
 		OSUIComponents = 'osui-components',
 		VirtualSelect = 'virtual-select',
 	}
-
-	export enum ExtendedConfigs {
-		hasOptionDescription = 'hasOptionDescription',
-	}
 }

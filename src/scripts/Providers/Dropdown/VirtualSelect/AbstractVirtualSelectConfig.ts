@@ -207,13 +207,9 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * @memberof AbstractVirtualSelectConfig
 		 */
 		public setExtensibilityConfigs(newConfigs: VirtualSelectOpts): void {
-			if (
-				Object.keys(newConfigs).includes(
-					OSFramework.Patterns.Dropdown.Enum.ExtendedConfigs.hasOptionDescription
-				)
-			)
+			if (newConfigs[Enum.ExtendedConfigs.hasOptionDescription] !== undefined)
 				console.warn(
-					`The option description may be affected when modifying the property ${OSFramework.Patterns.Dropdown.Enum.ExtendedConfigs.hasOptionDescription}.`
+					`The option description may be affected when modifying the property ${Enum.ExtendedConfigs.hasOptionDescription}.`
 				);
 
 			this._providerExtendedOptions = newConfigs;
