@@ -46,10 +46,10 @@ namespace Providers.Dropdown.VirtualSelect {
 		// 	},
 		// 	...
 		// ]
-		private _getGroupedOptionsList(): GroupDropDownOption[] {
+		private _getGroupedOptionsList(): [boolean, GroupDropDownOption[]] {
 			const options: GroupDropDownOption[] = [];
 			let previousKey: string = undefined;
-			const groupedOptions = this._groupOptions();
+			const [hasDescription, groupedOptions] = this._groupOptions();
 
 			for (const key in groupedOptions) {
 				options.push({
@@ -65,7 +65,7 @@ namespace Providers.Dropdown.VirtualSelect {
 				previousKey = key;
 			}
 
-			return options;
+			return [hasDescription, options];
 		}
 
 		// Method used to generate the HTML String to be attached at the option label
@@ -129,20 +129,34 @@ namespace Providers.Dropdown.VirtualSelect {
 		// Auxiliary method to group the options into an object where:
 		// keys correspond to the names of the groups
 		// values correspond to a list of the options in the group
-		private _groupOptions(): { [key: string]: DropDownOption[] } {
-			return this.OptionsList.reduce(function (
+		private _groupOptions(): [boolean, { [key: string]: DropDownOption[] }] {
+			let hasDescription = false;
+
+			const groupOptionsObject = this.OptionsList.reduce(function (
 				previousValue: { [key: string]: DropDownOption[] },
 				option: DropDownOption
 			) {
 				const group_name = option.group_name || '';
+				const description = option.description || '';
+
+				option.customData = {};
+
 				// We need to set the customData to obtain it when getSelectedOptions() invoked
-				option.customData = group_name !== '' ? { group_name: group_name } : null;
+				if (description !== '') {
+					option.customData = { description: description };
+					hasDescription = true;
+				}
+				if (group_name !== '') {
+					option.customData = { ...option.customData, group_name: group_name };
+				}
+
 				previousValue[group_name] = previousValue[group_name] || [];
 				previousValue[group_name].push(option);
 
 				return previousValue;
 			},
 			{});
+			return [hasDescription, groupOptionsObject];
 		}
 
 		// Method used to set all the common VirtualSelect properties across the different types of instances
@@ -155,12 +169,14 @@ namespace Providers.Dropdown.VirtualSelect {
 			}
 
 			// We need to keep the _groupedOptionsList in order to use it in this._getOptionInfo method
-			this._groupedOptionsList = this._getGroupedOptionsList();
+			const [hasDescription, groupedOptionsList] = this._getGroupedOptionsList();
+			this._groupedOptionsList = groupedOptionsList;
 
 			// Set the library options
 			this._providerOptions = {
 				ele: this.ElementId,
 				dropboxWrapper: OSFramework.GlobalEnum.HTMLElement.Body,
+				hasOptionDescription: hasDescription,
 				hideClearButton: false,
 				labelRenderer: this._getOptionInfo.bind(this),
 				noOptionsText: this.NoOptionsText,
@@ -191,6 +207,11 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * @memberof AbstractVirtualSelectConfig
 		 */
 		public setExtensibilityConfigs(newConfigs: VirtualSelectOpts): void {
+			if (newConfigs[Enum.ExtendedConfigs.hasOptionDescription] !== undefined)
+				console.warn(
+					`The option description may be affected when modifying the property ${Enum.ExtendedConfigs.hasOptionDescription}.`
+				);
+
 			this._providerExtendedOptions = newConfigs;
 		}
 

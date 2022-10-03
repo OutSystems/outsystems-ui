@@ -46,4 +46,8 @@ namespace Providers.Dropdown.VirtualSelect.Enum {
 		Image = 'Image',
 		None = 'None',
 	}
+
+	export enum ExtendedConfigs {
+		hasOptionDescription = 'hasOptionDescription',
+	}
 }
