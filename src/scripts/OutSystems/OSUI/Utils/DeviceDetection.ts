@@ -59,6 +59,26 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	}
 
 	/**
+	 * Checks if is the layout side menu is being used
+	 * @returns
+	 */
+	export function CheckIsLayoutSide(): boolean {
+		const layout = OSFramework.Helper.Dom.ClassSelector(
+			document.body,
+			OSFramework.GlobalEnum.CssClassElements.Layout
+		);
+
+		if (layout) {
+			return OSFramework.Helper.Dom.Styles.ContainsClass(
+				layout,
+				OSFramework.GlobalEnum.CssClassElements.LayoutSide
+			);
+		} else {
+			return false;
+		}
+	}
+
+	/**
 	 * Checks if running as PWA.
 	 * @returns
 	 */
