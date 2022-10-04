@@ -10,7 +10,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 
 		private static _closeDeprecatedSubmenu(): void {
 			if (this._checkMenuLinks !== undefined) {
-				const subItems = this._checkMenuLinks.querySelectorAll('.submenu');
+				const subItems = this._checkMenuLinks.querySelectorAll('.active-screen.screen-container .submenu');
 
 				if (subItems.length > 0) {
 					for (let i = 0; i < subItems.length; i++) {
@@ -36,7 +36,11 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			// Store the event to be added to element
 			this._closeMenuEvent = this._closeDeprecatedSubmenu.bind(this);
 
-			if (OSFramework.Helper.DeviceInfo.IsDesktop && !OSUI.Utils.DeviceDetection.CheckIsLayoutSide()) {
+			if (
+				OSFramework.Helper.DeviceInfo.IsDesktop &&
+				!OSUI.Utils.DeviceDetection.CheckIsLayoutSide() &&
+				this._checkMenuLinks
+			) {
 				document.body.addEventListener(OSFramework.GlobalEnum.HTMLEvent.Click, this._closeMenuEvent);
 			}
 		}
@@ -45,15 +49,16 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 		 * Function used to unset the close deprecated submenu event
 		 */
 		public static Unset(): void {
-			if (OSFramework.Helper.DeviceInfo.IsDesktop && !OSUI.Utils.DeviceDetection.CheckIsLayoutSide()) {
+			if (
+				OSFramework.Helper.DeviceInfo.IsDesktop &&
+				!OSUI.Utils.DeviceDetection.CheckIsLayoutSide() &&
+				this._checkMenuLinks
+			) {
 				document.body.removeEventListener(OSFramework.GlobalEnum.HTMLEvent.Click, this._closeMenuEvent);
 
 				// Unset the callback added to element
 				this._closeMenuEvent = undefined;
 			}
-
-			// Unset the HTML element
-			this._checkMenuLinks = undefined;
 		}
 	}
 }
