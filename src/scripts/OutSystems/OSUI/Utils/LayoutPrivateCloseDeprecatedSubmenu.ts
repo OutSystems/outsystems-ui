@@ -3,10 +3,8 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	// This class is to support the deprecated submenu
 	// We won't create enums for the deprecated classes ('.submenu' and '.open') in order to prevent technical debt
 	export abstract class CloseDeprecatedSubmenu {
-		// eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-		static _checkMenuLinks: HTMLElement;
-		// eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-		static _closeMenuEvent: OSFramework.GlobalCallbacks.Generic;
+		private static _checkMenuLinks: HTMLElement;
+		private static _closeMenuEvent: OSFramework.GlobalCallbacks.Generic;
 
 		private static _closeDeprecatedSubmenu(): void {
 			if (this._checkMenuLinks !== undefined) {
