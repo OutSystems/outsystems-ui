@@ -16,6 +16,14 @@ namespace OutSystems.OSUI.Utils {
 		UnsetProviderEvent = 'UnsetProviderEvent',
 	}
 
+	/**
+	 * Method to get the correct Provider API
+	 *
+	 * @export
+	 * @param {string} widgetId
+	 * @param {APIMethod} method
+	 * @return {*}  {OSFramework.GlobalCallbacks.Generic}
+	 */
 	export function GetPickerExtensibilityAPI(
 		widgetId: string,
 		method: APIMethod
