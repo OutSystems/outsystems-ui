@@ -140,6 +140,7 @@
 	&__header {
 		display: grid;
 		height: -webkit-fit-content; // this is important to fix Safari render issues on onRender changes
+		min-height: 100%;
 		position: relative;
 		z-index: 1;
 
