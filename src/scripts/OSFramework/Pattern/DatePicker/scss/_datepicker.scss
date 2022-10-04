@@ -98,6 +98,10 @@
 			}
 		}
 	}
+
+	.not-valid + .input {
+		border-color: var(--color-error);
+	}
 }
 
 ///
