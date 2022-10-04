@@ -11,12 +11,14 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 				const subItems = this._checkMenuLinks.querySelectorAll('.active-screen.screen-container .submenu');
 
 				if (subItems.length > 0) {
-					// Close all of them
+					// Close all of them if contains the class open
 					subItems.forEach((item) => {
-						// This method is to trigger the platform global action of deprecated submenu
-						// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-						//@ts-expect-error
-						item.CloseMenu();
+						if (item.classList.contains('open')) {
+							// This method is to trigger the platform global action of deprecated submenu
+							// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+							//@ts-expect-error
+							item.CloseMenu();
+						}
 					});
 				}
 			}
