@@ -25,9 +25,11 @@ namespace OSFramework.GlobalEnum {
 		IsTouch = 'is--touch',
 		Layout = 'layout',
 		LayoutNative = 'layout-native',
+		LayoutSide = 'layout-side',
 		LayoutTop = 'layout-top',
 		List = 'list',
 		MainContent = 'main-content',
+		MenuLinks = 'app-menu-links',
 		Placeholder = 'ph',
 	}
 
