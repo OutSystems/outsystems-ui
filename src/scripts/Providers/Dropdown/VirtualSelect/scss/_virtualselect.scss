@@ -88,6 +88,12 @@
 		}
 	}
 
+	&:not(.multiple) {
+		.vscomp-option.group-title {
+			height: var(--space-xl) !important; // !important required to override the element style in html
+		}
+	}
+
 	&.show-value-as-tags {
 		.vscomp-toggle-button {
 			height: auto;
@@ -416,8 +422,22 @@
 	}
 }
 
+// Option Item text
+.vscomp-option-text {
+	color: var(--color-neutral-9);
+	display: inline-block;
+	font-size: var(--font-size-s);
+
+	// To keep vertical align using inline-block.
+	// This is used so that the text can  get ellipsis if too long
+	* {
+		vertical-align: middle;
+	}
+}
+
 // Option Item
 .vscomp-option {
+	align-content: center;
 	background-color: var(--color-neutral-0);
 	transition: background-color 0.25s ease;
 
@@ -433,22 +453,16 @@
 	// Style dropdown group title
 	&.group-title {
 		.vscomp-option-text {
-			font-weight: var(--font-semi-bold);
 			opacity: 1;
+			// Style group title in single select dropdown
+			// this selector is necessary so that the style is not applied when the option has a checkbox
+			&:only-child {
+				color: var(--color-neutral-7);
+				font-size: var(--font-size-label);
+				font-weight: var(--font-semi-bold);
+				text-transform: uppercase;
+			}
 		}
-	}
-}
-
-// Option Item text
-.vscomp-option-text {
-	color: var(--color-neutral-9);
-	display: inline-block;
-	font-size: var(--font-size-s);
-
-	// To keep vertical align using inline-block.
-	// This is used so that the text can  get ellipsis if too long
-	* {
-		vertical-align: middle;
 	}
 }
 
@@ -456,6 +470,7 @@
 .vscomp-option-description {
 	color: var(--color-neutral-7);
 	font-size: var(--font-size-label);
+	margin-top: 1px;
 }
 
 // Accessibility -----------------------------------------------------------------
