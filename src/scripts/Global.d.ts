@@ -124,6 +124,7 @@ declare global {
 	// DatePicker => Flatpickr
 	type DatePickerProviderConfigs = FlatpickrOptions;
 	type TimePickerProviderConfigs = FlatpickrOptions;
+	type MonthPickerProviderConfigs = FlatpickrOptions;
 	type Flatpickr = flatpickr;
 	type FlatpickrOptions = flatpickrOpts;
 	type FlatpickrLocale = flatpickrLocale;
