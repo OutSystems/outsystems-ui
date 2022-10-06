@@ -46,7 +46,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		reset: Function;
 		setDisabledOptions: Function;
 		setOptions: Function;
-		setValue: () => {};
+		setValue: Function;
 		show: Function;
 		toggleSelectAll: Function;
 	};

@@ -127,7 +127,6 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 
 		try {
 			const _dropdownItem = GetDropdownById(dropdownId) as VirtualSelect;
-
 			_dropdownItem.togglePopup(isEnabled);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -417,6 +416,34 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
 			responseObj.code = ErrorCodes.Dropdown.FailSetValidation;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
+	 * Function used to set the value(s) of a given Dropdown Id
+	 *
+	 * @export
+	 * @param {string} dropdownId
+	 * @param {string} selectedValues
+	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 */
+	export function SetValues(dropdownId: string, selectedValues: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const _dropdownItem = GetDropdownById(dropdownId) as VirtualSelect;
+
+			_dropdownItem.setValue(JSON.parse(selectedValues));
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Dropdown.FailSetValues;
 		}
 
 		return JSON.stringify(responseObj);

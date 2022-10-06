@@ -21,6 +21,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailRegisterProviderConfig: 'OSUI-API-01009',
 		FailRegisterProviderEvent: 'OSUI-API-060010',
 		FailRemoveProviderEvent: 'OSUI-API-06011',
+		FailSetValues: 'OSUI-API-06012',
 	};
 
 	export const Notification = {

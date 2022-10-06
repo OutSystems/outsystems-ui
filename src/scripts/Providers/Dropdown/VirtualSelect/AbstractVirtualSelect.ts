@@ -237,9 +237,9 @@ namespace Providers.Dropdown.VirtualSelect {
 						this.redraw();
 						break;
 					case Enum.Properties.StartingSelection:
-						this.redraw();
+						this.setValue(propertyValue as DropDownOption[]);
 						console.warn(
-							`We recommend using the StartingSelection parameter exclusively for the initial selection and avoid changing it after initialization.`
+							`${OSFramework.GlobalEnum.PatternName.Dropdown}: (${this.widgetId}): We recommend using the StartingSelection parameter exclusively for the initial selection and avoid changing it after initialization. To dynamically change the selected options, you should ideally use the DropdownSetValue Client Action.`
 						);
 						break;
 				}
@@ -362,6 +362,25 @@ namespace Providers.Dropdown.VirtualSelect {
 		public setProviderConfigs(newConfigs: VirtualSelectOpts): void {
 			this.configs.setExtensibilityConfigs(newConfigs);
 			this.redraw();
+		}
+
+		/**
+		 * Method used to set all the extended VirtualSelect properties across the different types of instances
+		 *
+		 * @param {DropDownOption[]} optionsToSelect
+		 * @memberof AbstractVirtualSelect
+		 */
+		public setValue(optionsToSelect: DropDownOption[]): void {
+			const selectedValues = this.getSelectedOptionsStructure().map((value) => value.value) || [];
+			let valuesToSelect = [];
+
+			if (optionsToSelect.length > 0) {
+				if (this._virtualselectOpts.multiple) valuesToSelect = optionsToSelect.map((option) => option.value);
+				else valuesToSelect = [optionsToSelect[0].value];
+			}
+
+			if (valuesToSelect.sort().join(' ') !== selectedValues.sort().join(' '))
+				this.provider.setValueMethod(valuesToSelect);
 		}
 
 		/**
