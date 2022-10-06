@@ -365,14 +365,14 @@ namespace Providers.Dropdown.VirtualSelect {
 		/**
 		 * Method used to set all the extended VirtualSelect properties across the different types of instances
 		 *
-		 * @param {VirtualSelectOpts} newConfigs
+		 * @param {DropDownOption[]} optionsToSelect
 		 * @memberof AbstractVirtualSelect
 		 */
 		public setValue(optionsToSelect: DropDownOption[]): void {
 			const selectedValues = this.getSelectedOptionsStructure().map((value) => value.value) || [];
-			const valuesToSelect = optionsToSelect.map((option) => option.value);
-
-			if (!this._virtualselectOpts.multiple) optionsToSelect = [optionsToSelect[0]];
+			const valuesToSelect = this._virtualselectOpts.multiple
+				? optionsToSelect.map((option) => option.value)
+				: [optionsToSelect[0].value];
 
 			if (valuesToSelect.sort().join(' ') !== selectedValues.sort().join(' '))
 				this.provider.setValueMethod(valuesToSelect);
