@@ -370,9 +370,12 @@ namespace Providers.Dropdown.VirtualSelect {
 		 */
 		public setValue(optionsToSelect: DropDownOption[]): void {
 			const selectedValues = this.getSelectedOptionsStructure().map((value) => value.value) || [];
-			const valuesToSelect = this._virtualselectOpts.multiple
-				? optionsToSelect.map((option) => option.value)
-				: [optionsToSelect[0].value];
+			let valuesToSelect = [];
+
+			if (optionsToSelect.length > 0) {
+				if (this._virtualselectOpts.multiple) valuesToSelect = optionsToSelect.map((option) => option.value);
+				else valuesToSelect = [optionsToSelect[0].value];
+			}
 
 			if (valuesToSelect.sort().join(' ') !== selectedValues.sort().join(' '))
 				this.provider.setValueMethod(valuesToSelect);
