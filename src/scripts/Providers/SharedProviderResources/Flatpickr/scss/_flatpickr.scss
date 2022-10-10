@@ -423,6 +423,11 @@ span.flatpickr-weekday {
 
 // Responsive --------------------------------------------------------------------
 ///
+.safari input.flatpickr-input,
+.safari input.flatpickr-input + input {
+	transition: none; // Fix input flickering on redraw()
+}
+
 .phone {
 	.flatpickr-current-month .flatpickr-monthDropdown-months,
 	.flatpickr-current-month .numInputWrapper .numInput,
