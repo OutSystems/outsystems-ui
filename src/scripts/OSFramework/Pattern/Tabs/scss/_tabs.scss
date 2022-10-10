@@ -142,8 +142,6 @@
 		height: -webkit-fit-content; // this is important to fix Safari render issues on onRender changes
 		min-height: 100%;
 		position: relative;
-		z-index: 1;
-
 		&-item {
 			align-items: center;
 			background-color: transparent;
@@ -184,6 +182,7 @@
 			transition: transform 200ms linear;
 			transform-origin: 0 0;
 			will-change: transform;
+			z-index: 1;
 
 			&[disabled] {
 				background-color: var(--color-neutral-6);
@@ -207,7 +206,6 @@
 		position: relative;
 		scroll-snap-type: x mandatory;
 		width: 100%;
-		z-index: 0;
 
 		&::-webkit-scrollbar {
 			display: none;
