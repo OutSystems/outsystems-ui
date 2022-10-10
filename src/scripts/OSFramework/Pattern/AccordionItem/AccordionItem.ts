@@ -207,8 +207,8 @@ namespace OSFramework.Patterns.AccordionItem {
 			if (this.configs.IsDisabled) {
 				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternDisabled);
 				Helper.A11Y.AriaDisabledTrue(this._selfElem);
-				this.unsetCallbacks();
 				this._removeEvents();
+				this.unsetCallbacks();
 			} else {
 				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternDisabled);
 				Helper.A11Y.AriaDisabledFalse(this._selfElem);
