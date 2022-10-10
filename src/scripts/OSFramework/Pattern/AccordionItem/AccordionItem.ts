@@ -248,12 +248,11 @@ namespace OSFramework.Patterns.AccordionItem {
 		 * Method to handle Accessibility attributes
 		 *
 		 * @protected
-		 * @param {boolean} [isUpdate=true]
 		 * @memberof AccordionItem
 		 */
-		protected setA11yProperties(isUpdate = true): void {
+		protected setA11yProperties(): void {
 			// Set the static attributes on page load only
-			if (!isUpdate) {
+			if (this.isBuilt === false) {
 				// Set ARIA Controls
 				Helper.A11Y.AriaControls(this._selfElem, this._accordionItemPlaceholder.id);
 
@@ -402,7 +401,7 @@ namespace OSFramework.Patterns.AccordionItem {
 			this._setAccordionParent();
 
 			this._setIsDisabledState();
-			this.setA11yProperties(false);
+			this.setA11yProperties();
 
 			super.finishBuild();
 		}
