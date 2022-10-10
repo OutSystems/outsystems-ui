@@ -14,7 +14,7 @@ namespace OSFramework.Patterns.Accordion {
 		 * @protected
 		 * @memberof Accordion
 		 */
-		protected setA11YProperties(): void {
+		protected setA11yProperties(): void {
 			Helper.A11Y.RoleTabList(this._selfElem);
 		}
 
@@ -78,7 +78,7 @@ namespace OSFramework.Patterns.Accordion {
 		public build(): void {
 			super.build();
 
-			this.setA11YProperties();
+			this.setA11yProperties();
 
 			this.finishBuild();
 		}

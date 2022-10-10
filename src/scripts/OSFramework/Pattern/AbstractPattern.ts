@@ -229,10 +229,10 @@ namespace OSFramework.Patterns {
 		}
 
 		//TODO: add this to make all patterns implement method.
-		//protected abstract setHtmlElements();
-		//protected abstract unsetHtmlElements();
-		//protected abstract setCallbacks();
-		//protected abstract unsetCallbacks();
-		//protected abstract setA11YProperties();
+		protected abstract setA11yProperties(): void;
+		//protected abstract setCallbacks(): void;
+		//protected abstract setHtmlElements(): void;
+		//protected abstract unsetCallbacks(): void;
+		//protected abstract unsetHtmlElements(): void;
 	}
 }
