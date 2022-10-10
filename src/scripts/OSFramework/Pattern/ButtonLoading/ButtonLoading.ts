@@ -73,7 +73,7 @@ namespace OSFramework.Patterns.ButtonLoading {
 		 * @protected
 		 * @memberof ButtonLoading
 		 */
-		protected setA11yProperties(): void {
+		protected setA11YProperties(): void {
 			Helper.A11Y.AriaLivePolite(this._selfElem);
 			Helper.A11Y.AriaAtomicTrue(this._selfElem);
 			Helper.A11Y.AriaHiddenTrue(this._spinnerElement);
@@ -132,7 +132,7 @@ namespace OSFramework.Patterns.ButtonLoading {
 
 			this._setInitialButtonState();
 
-			this.setA11yProperties();
+			this.setA11YProperties();
 
 			this.finishBuild();
 		}

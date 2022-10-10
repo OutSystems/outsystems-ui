@@ -61,7 +61,7 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 		 * @protected
 		 * @memberof OSUINoUiSliderInterval
 		 */
-		protected setA11yProperties(): void {
+		protected setA11YProperties(): void {
 			this.providerOptions.handleAttributes = [
 				{ 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Lower },
 				{ 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Upper },
@@ -90,7 +90,7 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 
 			this.prepareConfigs();
 
-			this.setA11yProperties();
+			this.setA11YProperties();
 
 			this.finishBuild();
 		}

@@ -92,7 +92,7 @@ namespace OSFramework.Patterns.FlipContent {
 		 *
 		 * @memberof FlipContent
 		 */
-		protected setA11yProperties(): void {
+		protected setA11YProperties(): void {
 			if (this.configs.FlipSelf) {
 				Helper.A11Y.AriaAtomicTrue(this._selfElem);
 				Helper.A11Y.TabIndexTrue(this._selfElem);
@@ -159,7 +159,7 @@ namespace OSFramework.Patterns.FlipContent {
 			this._toggleClasses();
 
 			// Set the A11Y defaults
-			this.setA11yProperties();
+			this.setA11YProperties();
 
 			this.finishBuild();
 		}

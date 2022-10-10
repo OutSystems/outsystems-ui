@@ -161,7 +161,7 @@ namespace OSFramework.Patterns.BottomSheet {
 
 			// Update listeners and A11y properties
 			this.setEventListeners();
-			this.setA11yProperties();
+			this.setA11YProperties();
 
 			// Handle focus trap logic
 			if (isOpen) {
@@ -216,7 +216,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * @protected
 		 * @memberof BottomSheet
 		 */
-		protected setA11yProperties(): void {
+		protected setA11YProperties(): void {
 			if (!this.isBuilt) {
 				Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Role.Complementary, true);
 			}
@@ -324,7 +324,7 @@ namespace OSFramework.Patterns.BottomSheet {
 			this._handleFocusTrap();
 			this.setInitialOptions();
 			this.setCallbacks();
-			this.setA11yProperties();
+			this.setA11YProperties();
 			this._handleGestureEvents();
 			this.finishBuild();
 		}

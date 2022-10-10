@@ -97,7 +97,7 @@ namespace OSFramework.Patterns.AccordionItem {
 				this._isOpen = false;
 			}
 
-			this.setA11yProperties();
+			this.setA11YProperties();
 			this._onToggleCallback();
 		}
 
@@ -250,7 +250,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		 * @protected
 		 * @memberof AccordionItem
 		 */
-		protected setA11yProperties(): void {
+		protected setA11YProperties(): void {
 			// Set the static attributes on page load only
 			if (this.isBuilt === false) {
 				// Set ARIA Controls
@@ -401,7 +401,7 @@ namespace OSFramework.Patterns.AccordionItem {
 			this._setAccordionParent();
 
 			this._setIsDisabledState();
-			this.setA11yProperties();
+			this.setA11YProperties();
 
 			super.finishBuild();
 		}

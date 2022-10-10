@@ -250,7 +250,7 @@ namespace OSFramework.Patterns.Notification {
 		 * @protected
 		 * @memberof Notification
 		 */
-		protected setA11yProperties(): void {
+		protected setA11YProperties(): void {
 			Helper.Dom.Attribute.Set(
 				this._selfElem,
 				Constants.A11YAttributes.Role.AttrName,
@@ -353,7 +353,7 @@ namespace OSFramework.Patterns.Notification {
 
 			this._handleFocusTrap();
 
-			this.setA11yProperties();
+			this.setA11YProperties();
 
 			this._handleGestureEvents();
 

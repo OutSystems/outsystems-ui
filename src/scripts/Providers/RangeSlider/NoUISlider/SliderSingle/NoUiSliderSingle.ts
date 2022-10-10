@@ -55,7 +55,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 		 * @protected
 		 * @memberof OSUINoUiSliderSingle
 		 */
-		protected setA11yProperties(): void {
+		protected setA11YProperties(): void {
 			this.providerOptions.handleAttributes = [
 				{ 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Single },
 			];
@@ -83,7 +83,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 
 			this.prepareConfigs();
 
-			this.setA11yProperties();
+			this.setA11YProperties();
 
 			this.finishBuild();
 		}

@@ -811,7 +811,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		 * @protected
 		 * @memberof OSUIDropdownServerSide
 		 */
-		protected setA11yProperties(): void {
+		protected setA11YProperties(): void {
 			// Update Tabindex Ballon elements
 			this._updateBalloonAccessibilityElements();
 			// Enabled TabIndex to the SelectValuesWrapper
@@ -893,7 +893,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 			// Add custom SPAN HTML Elements that will help on Accessibility keyboard navigation
 			this._setFocusSpanElements();
 			// Add Accessibility properties
-			this.setA11yProperties();
+			this.setA11YProperties();
 			// Add the pattern Events
 			this._setUpEvents();
 			// Add CSS classes

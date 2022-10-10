@@ -164,7 +164,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		 * @protected
 		 * @memberof SectionIndexItem
 		 */
-		protected setA11yProperties(): void {
+		protected setA11YProperties(): void {
 			// Set RoleButton attribute
 			Helper.A11Y.RoleButton(this.selfElement);
 			// Set TabIndex
@@ -217,7 +217,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 
 			this._setUpEvents();
 
-			this.setA11yProperties();
+			this.setA11YProperties();
 
 			this._setLinkAttribute();
 

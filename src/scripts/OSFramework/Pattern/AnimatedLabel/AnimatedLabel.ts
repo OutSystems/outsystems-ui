@@ -88,7 +88,7 @@ namespace OSFramework.Patterns.AnimatedLabel {
 		/**
 		 * This method has no implementation on this pattern context!
 		 */
-		protected setA11yProperties(): void {
+		protected setA11YProperties(): void {
 			throw new Error('Method not implemented.');
 		}
 

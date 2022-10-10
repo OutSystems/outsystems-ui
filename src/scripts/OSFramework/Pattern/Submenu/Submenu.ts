@@ -208,7 +208,7 @@ namespace OSFramework.Patterns.Submenu {
 		 * @protected
 		 * @memberof Submenu
 		 */
-		protected setA11yProperties(): void {
+		protected setA11YProperties(): void {
 			// Apply the default A11Y
 			Helper.A11Y.AriaHasPopupTrue(this._submenuHeaderElement);
 			Helper.A11Y.TabIndexTrue(this._submenuHeaderElement);
@@ -344,7 +344,7 @@ namespace OSFramework.Patterns.Submenu {
 
 			this.setInitialStates();
 
-			this.setA11yProperties();
+			this.setA11YProperties();
 
 			// Add timeout to make this method call asynchronous to wait for the classes of device detection
 			Helper.AsyncInvocation(this.setCallbacks.bind(this));

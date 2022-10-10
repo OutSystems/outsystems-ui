@@ -112,7 +112,7 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 		 * @protected
 		 * @memberof DropdownServerSideItem
 		 */
-		protected setA11yProperties(): void {
+		protected setA11YProperties(): void {
 			// By default set disable to tabIndex
 			Helper.A11Y.TabIndexFalse(this.selfElement);
 			// Set balloon option items container with listbox as a role
@@ -163,7 +163,7 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 
 			this.setCallbacks();
 			this._setUpEvents();
-			this.setA11yProperties();
+			this.setA11YProperties();
 			this.finishBuild();
 		}
 
