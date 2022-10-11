@@ -284,6 +284,13 @@ namespace OSFramework.Patterns.Rating {
 		}
 
 		/**
+		 * This method has no implementation on this pattern context!
+		 */
+		protected setA11YProperties(): void {
+			throw new Error('Method not implemented.');
+		}
+
+		/**
 		 * Set the events
 		 *
 		 * @protected
@@ -311,8 +318,6 @@ namespace OSFramework.Patterns.Rating {
 		 * @memberof Rating
 		 */
 		protected unsetCallbacks(): void {
-			this._removeEvents();
-
 			this._eventOnRatingClick = undefined;
 		}
 
@@ -400,6 +405,8 @@ namespace OSFramework.Patterns.Rating {
 		 * @memberof Rating
 		 */
 		public dispose(): void {
+			this._removeEvents();
+
 			this.unsetCallbacks();
 			this.unsetHtmlElements();
 
