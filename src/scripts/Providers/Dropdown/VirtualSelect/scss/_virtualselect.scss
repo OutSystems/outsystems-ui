@@ -30,7 +30,6 @@
 // Wrapper container
 .vscomp-wrapper {
 	position: relative;
-	z-index: 300;
 
 	&.focused,
 	&:focus {
@@ -517,6 +516,10 @@ body {
 	&.vscomp-popup-active {
 		.vscomp-wrapper:not(.focused) {
 			z-index: 0;
+		}
+
+		.vscomp-wrapper {
+			z-index: 300;
 		}
 	}
 }
