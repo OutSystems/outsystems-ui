@@ -40,13 +40,13 @@ namespace Providers.Carousel.Splide {
 			this._hasList = OutSystems.OSUI.Utils.GetHasListInside(this._carouselPlaceholderElem);
 
 			if (this._hasList) {
-				this._carouselListWidgetElem = this._selfElem.querySelector(
+				this._carouselListWidgetElem = this.selfElement.querySelector(
 					OSFramework.Constants.Dot + OSFramework.GlobalEnum.CssClassElements.List
 				);
 
 				this._carouselProviderElem = this._carouselTrackElem;
 			} else {
-				this._carouselProviderElem = this._selfElem;
+				this._carouselProviderElem = this.selfElement;
 			}
 		}
 
@@ -108,7 +108,7 @@ namespace Providers.Carousel.Splide {
 			OSFramework.Helper.Dom.Styles.SetStyleAttribute(
 				this._carouselTrackElem,
 				OSFramework.Patterns.Carousel.Enum.CssVariables.CarouselWidth,
-				this._selfElem.offsetWidth + OSFramework.GlobalEnum.Units.Pixel
+				this.selfElement.offsetWidth + OSFramework.GlobalEnum.Units.Pixel
 			);
 		}
 
@@ -138,12 +138,12 @@ namespace Providers.Carousel.Splide {
 				this.configs.Navigation === OSFramework.Patterns.Carousel.Enum.Navigation.Both
 			) {
 				OSFramework.Helper.Dom.Styles.AddClass(
-					this._selfElem,
+					this.selfElement,
 					OSFramework.Patterns.Carousel.Enum.CssClass.HasPagination
 				);
 			} else {
 				OSFramework.Helper.Dom.Styles.RemoveClass(
-					this._selfElem,
+					this.selfElement,
 					OSFramework.Patterns.Carousel.Enum.CssClass.HasPagination
 				);
 			}
@@ -180,11 +180,11 @@ namespace Providers.Carousel.Splide {
 		 */
 		protected setHtmlElements(): void {
 			this._carouselPlaceholderElem = OSFramework.Helper.Dom.ClassSelector(
-				this._selfElem,
+				this.selfElement,
 				OSFramework.Patterns.Carousel.Enum.CssClass.Content
 			);
 			this._carouselTrackElem = OSFramework.Helper.Dom.ClassSelector(
-				this._selfElem,
+				this.selfElement,
 				OSFramework.Patterns.Carousel.Enum.CssClass.Track
 			);
 		}
@@ -203,7 +203,7 @@ namespace Providers.Carousel.Splide {
 				OSFramework.Helper.Dom.Styles.AddClass(this._carouselPlaceholderElem, Enum.CssClass.SplideTrack);
 				OSFramework.Helper.Dom.Styles.AddClass(this._carouselListWidgetElem, Enum.CssClass.SplideList);
 			} else {
-				OSFramework.Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.SplideWrapper);
+				OSFramework.Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.SplideWrapper);
 				OSFramework.Helper.Dom.Styles.AddClass(this._carouselTrackElem, Enum.CssClass.SplideTrack);
 				OSFramework.Helper.Dom.Styles.AddClass(this._carouselPlaceholderElem, Enum.CssClass.SplideList);
 			}

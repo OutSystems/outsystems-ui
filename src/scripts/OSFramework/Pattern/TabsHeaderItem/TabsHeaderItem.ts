@@ -29,28 +29,28 @@ namespace OSFramework.Patterns.TabsHeaderItem {
 
 		// Method to remove the event listeners
 		private _removeEvents(): void {
-			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnTabsClick);
+			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnTabsClick);
 		}
 
 		// Method to set the event listeners
 		private _setUpEvents(): void {
-			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnTabsClick);
+			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnTabsClick);
 		}
 
 		// Method to handle the Accessibility attributes
 		protected setA11YProperties(isUpdate = true): void {
 			// Static attribute to be added when the item is created
 			if (isUpdate === false) {
-				Helper.A11Y.RoleTab(this._selfElem);
+				Helper.A11Y.RoleTab(this.selfElement);
 			}
 
 			// Dynamic values that need to be changed when toggling the active state
 			if (this._isActive) {
-				Helper.A11Y.TabIndexTrue(this._selfElem);
-				Helper.A11Y.AriaSelectedTrue(this._selfElem);
+				Helper.A11Y.TabIndexTrue(this.selfElement);
+				Helper.A11Y.AriaSelectedTrue(this.selfElement);
 			} else {
-				Helper.A11Y.TabIndexFalse(this._selfElem);
-				Helper.A11Y.AriaSelectedFalse(this._selfElem);
+				Helper.A11Y.TabIndexFalse(this.selfElement);
+				Helper.A11Y.AriaSelectedFalse(this.selfElement);
 			}
 		}
 
@@ -163,7 +163,7 @@ namespace OSFramework.Patterns.TabsHeaderItem {
 		 * @memberof TabsHeaderItem
 		 */
 		public setAriaControlsAttribute(contentItemId: string): void {
-			Helper.A11Y.AriaControls(this._selfElem, contentItemId);
+			Helper.A11Y.AriaControls(this.selfElement, contentItemId);
 		}
 
 		/**
@@ -173,7 +173,7 @@ namespace OSFramework.Patterns.TabsHeaderItem {
 		 * @memberof TabsHeaderItem
 		 */
 		public setDataTab(dataTab: number): void {
-			Helper.Dom.Attribute.Set(this._selfElem, Tabs.Enum.Attributes.DataTab, dataTab.toString());
+			Helper.Dom.Attribute.Set(this.selfElement, Tabs.Enum.Attributes.DataTab, dataTab.toString());
 			this._dataTab = dataTab;
 		}
 
@@ -183,7 +183,7 @@ namespace OSFramework.Patterns.TabsHeaderItem {
 		 * @memberof TabsHeaderItem
 		 */
 		public setFocus(): void {
-			this._selfElem.focus();
+			this.selfElement.focus();
 		}
 
 		/**
@@ -192,8 +192,8 @@ namespace OSFramework.Patterns.TabsHeaderItem {
 		 * @memberof TabsHeaderItem
 		 */
 		public setIsActive(): void {
-			if (this._selfElem) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
+			if (this.selfElement) {
+				Helper.Dom.Styles.AddClass(this.selfElement, Patterns.Tabs.Enum.CssClasses.ActiveTab);
 				this._isActive = true;
 				this.setA11YProperties();
 			}
@@ -205,8 +205,8 @@ namespace OSFramework.Patterns.TabsHeaderItem {
 		 * @memberof TabsHeaderItem
 		 */
 		public unsetIsActive(): void {
-			if (this._selfElem) {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
+			if (this.selfElement) {
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Patterns.Tabs.Enum.CssClasses.ActiveTab);
 				this._isActive = false;
 				this.setA11YProperties();
 			}

@@ -205,7 +205,7 @@ namespace Providers.MonthPicker.Flatpickr {
 		 */
 		protected setHtmlElements(): void {
 			// Set the inputHTML element
-			this._monthPickerProviderInputElem = this._selfElem.querySelector(
+			this._monthPickerProviderInputElem = this.selfElement.querySelector(
 				OSFramework.GlobalEnum.CSSSelectors.InputFormControl
 			);
 

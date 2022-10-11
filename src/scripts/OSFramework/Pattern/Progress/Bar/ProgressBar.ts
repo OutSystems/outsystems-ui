@@ -12,25 +12,25 @@ namespace OSFramework.Patterns.Progress.Bar {
 		// Set the default inline css variables
 		private _setCssVariables(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				ProgressEnum.InlineStyleProp.Thickness,
 				this.configs.Thickness + GlobalEnum.Units.Pixel
 			);
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				ProgressEnum.InlineStyleProp.ProgressColor,
 				Helper.Dom.Styles.GetColorValueFromColorType(this.configs.ProgressColor)
 			);
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				ProgressEnum.InlineStyleProp.Shape,
 				Helper.Dom.Styles.GetBorderRadiusValueFromShapeType(this.configs.Shape)
 			);
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				ProgressEnum.InlineStyleProp.TrailColor,
 				Helper.Dom.Styles.GetColorValueFromColorType(this.configs.TrailColor)
 			);
@@ -41,7 +41,7 @@ namespace OSFramework.Patterns.Progress.Bar {
 			this.configs.ProgressColor = value;
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				ProgressEnum.InlineStyleProp.ProgressColor,
 				Helper.Dom.Styles.GetColorValueFromColorType(this.configs.ProgressColor)
 			);
@@ -52,7 +52,7 @@ namespace OSFramework.Patterns.Progress.Bar {
 			this.configs.Shape = value;
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				ProgressEnum.InlineStyleProp.Shape,
 				Helper.Dom.Styles.GetBorderRadiusValueFromShapeType(this.configs.Shape)
 			);
@@ -63,7 +63,7 @@ namespace OSFramework.Patterns.Progress.Bar {
 			this.configs.Thickness = value;
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				ProgressEnum.InlineStyleProp.Thickness,
 				value + GlobalEnum.Units.Pixel
 			);
@@ -74,7 +74,7 @@ namespace OSFramework.Patterns.Progress.Bar {
 			this.configs.TrailColor = value;
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				ProgressEnum.InlineStyleProp.TrailColor,
 				Helper.Dom.Styles.GetColorValueFromColorType(this.configs.TrailColor)
 			);
@@ -116,7 +116,7 @@ namespace OSFramework.Patterns.Progress.Bar {
 		// Update info based on htmlContent
 		protected setHtmlElements(): void {
 			// Set the html references that will be used to manage the cssClasses and atribute properties
-			this._progressElem = this._selfElem.querySelector(Constants.Dot + ProgressEnum.CssClass.Container);
+			this._progressElem = this.selfElement.querySelector(Constants.Dot + ProgressEnum.CssClass.Container);
 		}
 
 		protected unsetCallbacks(): void {

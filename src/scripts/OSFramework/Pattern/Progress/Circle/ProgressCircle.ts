@@ -31,7 +31,7 @@ namespace OSFramework.Patterns.Progress.Circle {
 					this._updateCircleProps();
 				});
 			});
-			this._resizeObserver.observe(this._selfElem);
+			this._resizeObserver.observe(this.selfElement);
 		}
 
 		// Check if the resizeOberver does not exist yet!
@@ -46,20 +46,20 @@ namespace OSFramework.Patterns.Progress.Circle {
 		private _progressToOffset(): void {
 			// Get the pattern parent size
 			const _elementSize =
-				this._selfElem.parentElement.clientHeight < this._selfElem.parentElement.clientWidth
-					? this._selfElem.parentElement.clientHeight
-					: this._selfElem.parentElement.clientWidth;
+				this.selfElement.parentElement.clientHeight < this.selfElement.parentElement.clientWidth
+					? this.selfElement.parentElement.clientHeight
+					: this.selfElement.parentElement.clientWidth;
 
 			// Check the maxValue that the circle must have
-			if (this._selfElem.clientHeight < this._selfElem.parentElement.clientWidth) {
-				this._circletSize = this._selfElem.parentElement.clientWidth;
+			if (this.selfElement.clientHeight < this.selfElement.parentElement.clientWidth) {
+				this._circletSize = this.selfElement.parentElement.clientWidth;
 			} else {
 				this._circletSize = _elementSize;
 			}
 
 			// Set the css variable to
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				Enum.InlineStyleProp.CircleSize,
 				this._circletSize + GlobalEnum.Units.Pixel
 			);
@@ -72,17 +72,17 @@ namespace OSFramework.Patterns.Progress.Circle {
 
 			// Set the css variables that will be used at ProgressCircle
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				Enum.InlineStyleProp.CircleRadius,
 				_radius + GlobalEnum.Units.Pixel
 			);
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				Enum.InlineStyleProp.StrokeDasharray,
 				this._strokeDasharray
 			);
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				Enum.InlineStyleProp.StrokeDashoffset,
 				this._strokeDashoffset
 			);
@@ -98,19 +98,19 @@ namespace OSFramework.Patterns.Progress.Circle {
 		// Set the default inline css variables
 		private _setCssVariables(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				ProgressEnum.InlineStyleProp.Thickness,
 				this.configs.Thickness + GlobalEnum.Units.Pixel
 			);
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				ProgressEnum.InlineStyleProp.ProgressColor,
 				Helper.Dom.Styles.GetColorValueFromColorType(this.configs.ProgressColor)
 			);
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				ProgressEnum.InlineStyleProp.Shape,
 				this.configs.Shape === GlobalEnum.ShapeTypes.Sharp
 					? ProgressEnum.ShapeTypes.Sharp
@@ -118,7 +118,7 @@ namespace OSFramework.Patterns.Progress.Circle {
 			);
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				ProgressEnum.InlineStyleProp.TrailColor,
 				Helper.Dom.Styles.GetColorValueFromColorType(this.configs.TrailColor)
 			);
@@ -140,7 +140,7 @@ namespace OSFramework.Patterns.Progress.Circle {
 				this._circleCircumference - (this.configs.Progress / 100) * this._circleCircumference;
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				Enum.InlineStyleProp.StrokeDashoffset,
 				this._strokeDashoffset
 			);
@@ -187,7 +187,7 @@ namespace OSFramework.Patterns.Progress.Circle {
 		// Update info based on htmlContent
 		protected setHtmlElements(): void {
 			// Set the html reference that will be used to do all the needed calcs
-			this._progressElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Progress);
+			this._progressElem = this.selfElement.querySelector(Constants.Dot + Enum.CssClass.Progress);
 		}
 
 		protected unsetCallbacks(): void {
@@ -202,7 +202,7 @@ namespace OSFramework.Patterns.Progress.Circle {
 			this.configs.ProgressColor = value;
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				ProgressEnum.InlineStyleProp.ProgressColor,
 				Helper.Dom.Styles.GetColorValueFromColorType(this.configs.ProgressColor)
 			);
@@ -212,7 +212,7 @@ namespace OSFramework.Patterns.Progress.Circle {
 			this.configs.Shape = value;
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				ProgressEnum.InlineStyleProp.Shape,
 				this.configs.Shape === GlobalEnum.ShapeTypes.Sharp
 					? ProgressEnum.ShapeTypes.Sharp
@@ -226,7 +226,7 @@ namespace OSFramework.Patterns.Progress.Circle {
 			this._updateCircleProps();
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				ProgressEnum.InlineStyleProp.Thickness,
 				this.configs.Thickness + GlobalEnum.Units.Pixel
 			);
@@ -236,7 +236,7 @@ namespace OSFramework.Patterns.Progress.Circle {
 			this.configs.TrailColor = value;
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				ProgressEnum.InlineStyleProp.TrailColor,
 				Helper.Dom.Styles.GetColorValueFromColorType(this.configs.TrailColor)
 			);

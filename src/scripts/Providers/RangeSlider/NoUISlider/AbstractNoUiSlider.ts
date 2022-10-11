@@ -54,7 +54,7 @@ namespace Providers.RangeSlider.NoUISlider {
 			}
 
 			OSFramework.Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				OSFramework.Patterns.RangeSlider.Enum.CssProperties.Size,
 				this.configs.Size
 			);
@@ -109,7 +109,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		protected setHtmlElements(): void {
 			// Element that will be used to init the provider
 			this._rangeSliderProviderElem = OSFramework.Helper.Dom.ClassSelector(
-				this._selfElem,
+				this.selfElement,
 				OSFramework.Patterns.RangeSlider.Enum.CssClass.RangeSliderProviderElem
 			);
 		}
@@ -124,14 +124,14 @@ namespace Providers.RangeSlider.NoUISlider {
 			// If Orientation is vertical add class
 			if (this.configs.Orientation === OSFramework.GlobalEnum.Orientation.Vertical) {
 				OSFramework.Helper.Dom.Styles.AddClass(
-					this._selfElem,
+					this.selfElement,
 					OSFramework.Patterns.RangeSlider.Enum.CssClass.ClassModifier +
 						OSFramework.GlobalEnum.Orientation.Vertical
 				);
 				// Otherwise it's horizontal and we don't need a class
 			} else if (OSFramework.GlobalEnum.Orientation.Horizontal) {
 				OSFramework.Helper.Dom.Styles.RemoveClass(
-					this._selfElem,
+					this.selfElement,
 					OSFramework.Patterns.RangeSlider.Enum.CssClass.ClassModifier +
 						OSFramework.GlobalEnum.Orientation.Vertical
 				);
@@ -139,12 +139,12 @@ namespace Providers.RangeSlider.NoUISlider {
 
 			if (this.configs.ShowTickMarks) {
 				OSFramework.Helper.Dom.Styles.AddClass(
-					this._selfElem,
+					this.selfElement,
 					OSFramework.Patterns.RangeSlider.Enum.CssClass.HasTicks
 				);
 			} else {
 				OSFramework.Helper.Dom.Styles.RemoveClass(
-					this._selfElem,
+					this.selfElement,
 					OSFramework.Patterns.RangeSlider.Enum.CssClass.HasTicks
 				);
 			}

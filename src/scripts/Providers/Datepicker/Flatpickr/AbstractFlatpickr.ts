@@ -176,7 +176,7 @@ namespace Providers.Datepicker.Flatpickr {
 		 */
 		protected setHtmlElements(): void {
 			// Set the inputHTML element
-			this._datePickerProviderInputElem = this._selfElem.querySelector('input.form-control');
+			this._datePickerProviderInputElem = this.selfElement.querySelector('input.form-control');
 
 			// If the input hasn't be added
 			if (!this._datePickerProviderInputElem) {

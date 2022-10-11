@@ -42,11 +42,11 @@ namespace OSFramework.Patterns.ButtonLoading {
 		 */
 		private _setIsLoading(isLoading: boolean): void {
 			if (isLoading) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsLoading);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsLoading);
 				this.isBuilt && Helper.A11Y.TabIndexFalse(this._buttonElement);
 				this._buttonElement.blur();
 			} else {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsLoading);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsLoading);
 				this.isBuilt && Helper.A11Y.TabIndexTrue(this._buttonElement);
 			}
 		}
@@ -61,9 +61,9 @@ namespace OSFramework.Patterns.ButtonLoading {
 		private _setLoadingLabel(showSpinnerOnly: boolean): void {
 			//let's remove the class only and only when the pattern is already built and the showSpinnerOnly is false.
 			if (showSpinnerOnly && this.isBuilt) {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.ShowSpinnerOnly);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.ShowSpinnerOnly);
 			} else if (showSpinnerOnly === false) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.ShowSpinnerOnly);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.ShowSpinnerOnly);
 			}
 		}
 
@@ -74,8 +74,8 @@ namespace OSFramework.Patterns.ButtonLoading {
 		 * @memberof ButtonLoading
 		 */
 		protected setA11YProperties(): void {
-			Helper.A11Y.AriaLivePolite(this._selfElem);
-			Helper.A11Y.AriaAtomicTrue(this._selfElem);
+			Helper.A11Y.AriaLivePolite(this.selfElement);
+			Helper.A11Y.AriaAtomicTrue(this.selfElement);
 			Helper.A11Y.AriaHiddenTrue(this._spinnerElement);
 		}
 
@@ -100,7 +100,7 @@ namespace OSFramework.Patterns.ButtonLoading {
 		 * @memberof ButtonLoading
 		 */
 		protected setHtmlElements(): void {
-			this._buttonElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.Button);
+			this._buttonElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.Button);
 
 			// Since the ButtonElem is a must have element, check if it exist
 			if (this._buttonElement === undefined) {

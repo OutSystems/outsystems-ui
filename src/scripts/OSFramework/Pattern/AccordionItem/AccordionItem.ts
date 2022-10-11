@@ -205,13 +205,13 @@ namespace OSFramework.Patterns.AccordionItem {
 		// Method to handle the IsDisabled state
 		private _setIsDisabledState(): void {
 			if (this.configs.IsDisabled) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternDisabled);
-				Helper.A11Y.AriaDisabledTrue(this._selfElem);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternDisabled);
+				Helper.A11Y.AriaDisabledTrue(this.selfElement);
 				this._removeEvents();
 				this.unsetCallbacks();
 			} else {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternDisabled);
-				Helper.A11Y.AriaDisabledFalse(this._selfElem);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.PatternDisabled);
+				Helper.A11Y.AriaDisabledFalse(this.selfElement);
 				this.setCallbacks();
 				this._addEvents();
 			}
@@ -254,7 +254,7 @@ namespace OSFramework.Patterns.AccordionItem {
 			// Set the static attributes on page load only
 			if (this.isBuilt === false) {
 				// Set ARIA Controls
-				Helper.A11Y.AriaControls(this._selfElem, this._accordionItemPlaceholder.id);
+				Helper.A11Y.AriaControls(this.selfElement, this._accordionItemPlaceholder.id);
 
 				// Set ARIA LabelledBy
 				Helper.A11Y.AriaLabelledBy(this._accordionItemContentElem, this._accordionItemTitleElem.id);
@@ -263,10 +263,10 @@ namespace OSFramework.Patterns.AccordionItem {
 				Helper.A11Y.AriaHiddenTrue(this._accordionItemIconElem);
 
 				// Set ARIA Disabled
-				Helper.A11Y.AriaDisabled(this._selfElem, this.configs.IsDisabled);
+				Helper.A11Y.AriaDisabled(this.selfElement, this.configs.IsDisabled);
 
 				// Set roles
-				Helper.A11Y.RoleTab(this._selfElem);
+				Helper.A11Y.RoleTab(this.selfElement);
 				Helper.A11Y.RoleButton(this._accordionItemTitleElem);
 				Helper.A11Y.RoleTabPanel(this._accordionItemPlaceholder);
 			}
@@ -275,7 +275,7 @@ namespace OSFramework.Patterns.AccordionItem {
 			this._handleTabIndex();
 
 			// Set ARIA Expanded
-			Helper.A11Y.AriaExpanded(this._selfElem, this._isOpen.toString());
+			Helper.A11Y.AriaExpanded(this.selfElement, this._isOpen.toString());
 			Helper.A11Y.AriaExpanded(this._accordionItemTitleElem, this._isOpen.toString());
 
 			// Set aria-hidden to content
@@ -301,12 +301,12 @@ namespace OSFramework.Patterns.AccordionItem {
 		 * @memberof AccordionItem
 		 */
 		protected setHtmlElements(): void {
-			this._accordionItemTitleElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternTitle);
-			this._accordionItemContentElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternContent);
-			this._accordionItemIconElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternIcon);
+			this._accordionItemTitleElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternTitle);
+			this._accordionItemContentElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternContent);
+			this._accordionItemIconElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternIcon);
 			// Getting the custom icon that is also a placeholder (ph)
 			this._accordionItemIconCustomElem = Helper.Dom.ClassSelector(
-				this._selfElem,
+				this.selfElement,
 				Enum.CssClass.PatternIcon + '.' + GlobalEnum.CssClassElements.Placeholder
 			);
 			this._accordionItemPlaceholder = this._accordionItemContentElem.firstChild as HTMLElement;
@@ -320,10 +320,10 @@ namespace OSFramework.Patterns.AccordionItem {
 		 */
 		protected setInitialCssClasses(): void {
 			if (this._isOpen) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternOpen);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternOpen);
 				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternExpanded);
 			} else {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternClosed);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternClosed);
 				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternCollapsed);
 			}
 
@@ -448,8 +448,8 @@ namespace OSFramework.Patterns.AccordionItem {
 			Helper.Dom.Attribute.Remove(this._accordionItemContentElem, GlobalEnum.HTMLAttributes.Style);
 			this._expandedHeight = this._accordionItemContentElem.getBoundingClientRect().height;
 
-			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternClosed);
-			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternOpen);
+			Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternClosed);
+			Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.PatternOpen);
 
 			// Removes collapsed class and adds the expanded class to animate
 			Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.PatternExpanded);
@@ -494,8 +494,8 @@ namespace OSFramework.Patterns.AccordionItem {
 				return;
 			}
 
-			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternClosed);
-			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternOpen);
+			Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.PatternClosed);
+			Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternOpen);
 
 			// While the animation is running, we don't want any clicks happening on the title
 			Helper.Dom.Styles.SetStyleAttribute(

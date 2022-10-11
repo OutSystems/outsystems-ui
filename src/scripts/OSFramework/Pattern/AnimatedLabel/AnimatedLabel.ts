@@ -68,11 +68,11 @@ namespace OSFramework.Patterns.AnimatedLabel {
 				//(Does the input have text or is it Focus) and it's currently inactive?
 				if ((inputHasText || isFocus) && this._isLabelFocus === false) {
 					//let's mark as active!
-					Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClasses.IsActive);
+					Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClasses.IsActive);
 					this._isLabelFocus = true;
 					//is the input empty and it's active and it's blur event
 				} else if (inputHasText === false && this._isLabelFocus && isFocus === false) {
-					Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClasses.IsActive);
+					Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClasses.IsActive);
 					this._isLabelFocus = false;
 				}
 			}
@@ -113,8 +113,8 @@ namespace OSFramework.Patterns.AnimatedLabel {
 		 * @memberof AnimatedLabel
 		 */
 		protected setHtmlElements(): void {
-			this._labelPhElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClasses.LabelPlaceholder);
-			this._inputPhElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClasses.InputPlaceholder);
+			this._labelPhElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClasses.LabelPlaceholder);
+			this._inputPhElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClasses.InputPlaceholder);
 			this._inputElement =
 				(Helper.Dom.TagSelector(this._inputPhElement, GlobalEnum.DataBlocksTag.Input) as HTMLInputElement) ||
 				(Helper.Dom.TagSelector(

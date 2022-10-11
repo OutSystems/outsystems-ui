@@ -23,7 +23,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		// Add error message container with a given text
 		private _addErrorMessage(text: string): void {
 			const errorMessageElement = OSFramework.Helper.Dom.ClassSelector(
-				this._selfElem.parentElement,
+				this.selfElement.parentElement,
 				Enum.CssClass.ErrorMessage
 			);
 
@@ -34,7 +34,7 @@ namespace Providers.Dropdown.VirtualSelect {
 				textContainer.classList.add(Enum.CssClass.ErrorMessage);
 				textContainer.innerHTML = text;
 
-				this._selfElem.parentElement.appendChild(textContainer);
+				this.selfElement.parentElement.appendChild(textContainer);
 			}
 		}
 
@@ -53,12 +53,15 @@ namespace Providers.Dropdown.VirtualSelect {
 
 			if (this.configs.IsDisabled) {
 				OSFramework.Helper.Dom.Attribute.Set(
-					this._selfElem,
+					this.selfElement,
 					OSFramework.GlobalEnum.HTMLAttributes.Disabled,
 					''
 				);
 			} else {
-				OSFramework.Helper.Dom.Attribute.Remove(this._selfElem, OSFramework.GlobalEnum.HTMLAttributes.Disabled);
+				OSFramework.Helper.Dom.Attribute.Remove(
+					this.selfElement,
+					OSFramework.GlobalEnum.HTMLAttributes.Disabled
+				);
 			}
 		}
 
@@ -82,13 +85,13 @@ namespace Providers.Dropdown.VirtualSelect {
 		// Set the ElementId that is expected from VirtualSelect config
 		private _setElementId(): void {
 			// Store the ElementId where the provider will create the Dropdown
-			this.configs.ElementId = '#' + this._selfElem.id;
+			this.configs.ElementId = '#' + this.selfElement.id;
 		}
 
 		// Set Pattern Events
 		private _setUpEvents(): void {
 			// Add the event that will get the selected options values
-			this._selfElem.addEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
+			this.selfElement.addEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
 
 			if (OSFramework.Helper.DeviceInfo.IsDesktop) {
 				// Set the WindowResize in order to close it if it's open!
@@ -101,7 +104,7 @@ namespace Providers.Dropdown.VirtualSelect {
 
 		// Remove Pattern Events
 		private _unsetEvents(): void {
-			this._selfElem.removeEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
+			this.selfElement.removeEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
 
 			if (OSFramework.Helper.DeviceInfo.IsDesktop) {
 				OSFramework.Event.GlobalEventManager.Instance.removeHandler(
@@ -425,13 +428,13 @@ namespace Providers.Dropdown.VirtualSelect {
 		 */
 		public validation(isValid: boolean, validationMessage: string): void {
 			if (isValid === false) {
-				OSFramework.Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.NotValid);
+				OSFramework.Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.NotValid);
 				this._addErrorMessage(validationMessage);
 			} else {
-				OSFramework.Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.NotValid);
+				OSFramework.Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.NotValid);
 
 				const errorMessageElement = OSFramework.Helper.Dom.ClassSelector(
-					this._selfElem.parentElement,
+					this.selfElement.parentElement,
 					Enum.CssClass.ErrorMessage
 				);
 

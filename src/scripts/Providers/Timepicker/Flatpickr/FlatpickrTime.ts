@@ -188,7 +188,7 @@ namespace Providers.TimePicker.Flatpickr {
 		 */
 		protected setHtmlElements(): void {
 			// Set the inputHTML element
-			this._timePickerProviderInputElem = this._selfElem.querySelector(
+			this._timePickerProviderInputElem = this.selfElement.querySelector(
 				OSFramework.GlobalEnum.CSSSelectors.InputFormControl
 			);
 

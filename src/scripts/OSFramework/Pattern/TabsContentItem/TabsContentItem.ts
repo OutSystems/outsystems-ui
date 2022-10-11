@@ -28,15 +28,15 @@ namespace OSFramework.Patterns.TabsContentItem {
 		 */
 		protected setA11YProperties(isUpdate = true): void {
 			if (isUpdate) {
-				Helper.A11Y.RoleTabPanel(this._selfElem);
+				Helper.A11Y.RoleTabPanel(this.selfElement);
 			}
 
 			if (this._isActive) {
-				Helper.A11Y.TabIndexTrue(this._selfElem);
-				Helper.A11Y.AriaHiddenFalse(this._selfElem);
+				Helper.A11Y.TabIndexTrue(this.selfElement);
+				Helper.A11Y.AriaHiddenFalse(this.selfElement);
 			} else {
-				Helper.A11Y.TabIndexFalse(this._selfElem);
-				Helper.A11Y.AriaHiddenTrue(this._selfElem);
+				Helper.A11Y.TabIndexFalse(this.selfElement);
+				Helper.A11Y.AriaHiddenTrue(this.selfElement);
 			}
 
 			// Will handle the tabindex value of the elements inside pattern, depending if is active
@@ -57,7 +57,7 @@ namespace OSFramework.Patterns.TabsContentItem {
 		 * @memberof TabsContentItem
 		 */
 		protected setHtmlElements(): void {
-			this._focusableElements = Helper.Dom.GetFocusableElements(this._selfElem);
+			this._focusableElements = Helper.Dom.GetFocusableElements(this.selfElement);
 		}
 
 		/**
@@ -130,7 +130,7 @@ namespace OSFramework.Patterns.TabsContentItem {
 		 * @memberof TabsContentItem
 		 */
 		public getOffsetLeft(): number {
-			return this._selfElem.offsetLeft;
+			return this.selfElement.offsetLeft;
 		}
 
 		/**
@@ -140,7 +140,7 @@ namespace OSFramework.Patterns.TabsContentItem {
 		 * @memberof TabsContentItem
 		 */
 		public setAriaLabelledByAttribute(headerItemId: string): void {
-			Helper.A11Y.AriaLabelledBy(this._selfElem, headerItemId);
+			Helper.A11Y.AriaLabelledBy(this.selfElement, headerItemId);
 		}
 
 		/**
@@ -150,7 +150,7 @@ namespace OSFramework.Patterns.TabsContentItem {
 		 * @memberof TabsContentItem
 		 */
 		public setDataTab(dataTab: number): void {
-			Helper.Dom.Attribute.Set(this._selfElem, Tabs.Enum.Attributes.DataTab, dataTab.toString());
+			Helper.Dom.Attribute.Set(this.selfElement, Tabs.Enum.Attributes.DataTab, dataTab.toString());
 			this._dataTab = dataTab;
 		}
 
@@ -160,8 +160,8 @@ namespace OSFramework.Patterns.TabsContentItem {
 		 * @memberof TabsContentItem
 		 */
 		public setIsActive(): void {
-			if (this._selfElem) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
+			if (this.selfElement) {
+				Helper.Dom.Styles.AddClass(this.selfElement, Patterns.Tabs.Enum.CssClasses.ActiveTab);
 				this._isActive = true;
 				this.setA11YProperties();
 			}
@@ -174,7 +174,7 @@ namespace OSFramework.Patterns.TabsContentItem {
 		 * @memberof TabsContentItem
 		 */
 		public setOnDragObserver(observer: IntersectionObserver): void {
-			observer.observe(this._selfElem);
+			observer.observe(this.selfElement);
 		}
 
 		/**
@@ -185,7 +185,7 @@ namespace OSFramework.Patterns.TabsContentItem {
 		 */
 		public unobserveDragObserver(observer: IntersectionObserver): void {
 			// disconnect observer when destroyed from DOM
-			observer.unobserve(this._selfElem);
+			observer.unobserve(this.selfElement);
 		}
 
 		/**
@@ -194,8 +194,8 @@ namespace OSFramework.Patterns.TabsContentItem {
 		 * @memberof TabsContentItem
 		 */
 		public unsetIsActive(): void {
-			if (this._selfElem) {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
+			if (this.selfElement) {
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Patterns.Tabs.Enum.CssClasses.ActiveTab);
 				this._isActive = false;
 				this.setA11YProperties();
 			}

@@ -94,8 +94,8 @@ namespace OSFramework.Patterns.SectionIndexItem {
 
 		// Remove Pattern Events
 		private _removeEvents(): void {
-			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
-			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
+			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
 			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
 		}
 
@@ -112,7 +112,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 
 		// Adds a data attribute to be used in automated tests and to have info on DOM of which element the index is pointing
 		private _setLinkAttribute(): void {
-			Helper.Dom.Attribute.Set(this._selfElem, Enum.DataTypes.dataItem, this.configs.ScrollToWidgetId);
+			Helper.Dom.Attribute.Set(this.selfElement, Enum.DataTypes.dataItem, this.configs.ScrollToWidgetId);
 		}
 
 		// Set TargetElement
@@ -153,8 +153,8 @@ namespace OSFramework.Patterns.SectionIndexItem {
 
 		// Method to set the event listeners
 		private _setUpEvents(): void {
-			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
-			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
+			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
 			// Add the BodyScroll callback that will be used to update the balloon coodinates
 			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
 		}
@@ -285,7 +285,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		 */
 		public setIsActive(): void {
 			this._isActive = true;
-			Helper.Dom.Styles.AddClass(this._selfElem, Patterns.SectionIndex.Enum.CssClass.IsActiveItem);
+			Helper.Dom.Styles.AddClass(this.selfElement, Patterns.SectionIndex.Enum.CssClass.IsActiveItem);
 		}
 
 		/**
@@ -295,7 +295,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		 */
 		public unsetIsActive(): void {
 			this._isActive = false;
-			Helper.Dom.Styles.RemoveClass(this._selfElem, Patterns.SectionIndex.Enum.CssClass.IsActiveItem);
+			Helper.Dom.Styles.RemoveClass(this.selfElement, Patterns.SectionIndex.Enum.CssClass.IsActiveItem);
 		}
 
 		/**

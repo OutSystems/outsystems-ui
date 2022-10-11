@@ -137,18 +137,18 @@ namespace OSFramework.Patterns.SectionIndex {
 
 				// Set inline css variable that will affect the pattern sticky position top value
 				Helper.Dom.Styles.SetStyleAttribute(
-					this._selfElem,
+					this.selfElement,
 					Enum.CssVariable.TopPosition,
 					'calc(' + headerHeight + 'px + ' + contentPaddingTop + ')'
 				);
 
 				// Set the Sticky class
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsSticky);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsSticky);
 			} else {
 				// Remove inline added css variable
-				Helper.Dom.Styles.RemoveStyleAttribute(this._selfElem, Enum.CssVariable.TopPosition);
+				Helper.Dom.Styles.RemoveStyleAttribute(this.selfElement, Enum.CssVariable.TopPosition);
 				// Remove the Sticky class
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsSticky);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsSticky);
 			}
 		}
 

@@ -62,7 +62,7 @@ namespace OSFramework.Patterns.Rating {
 
 		// Get the rating value
 		private _getValue(): number {
-			const inputChecked = Helper.Dom.TagSelector(this._selfElem, 'input:checked') as HTMLInputElement;
+			const inputChecked = Helper.Dom.TagSelector(this.selfElement, 'input:checked') as HTMLInputElement;
 			return parseInt(inputChecked.value);
 		}
 
@@ -80,13 +80,13 @@ namespace OSFramework.Patterns.Rating {
 			// Check if a event was already added
 			if (this._ratingHasEventAdded) {
 				// If true, remove event
-				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnRatingClick);
+				this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnRatingClick);
 
 				// And set variable as false
 				this._ratingHasEventAdded = false;
 			} else if (this.configs.IsEdit) {
 				// Otherwise, if there is no event already added and the param IsEdit is true, add new event
-				this._selfElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnRatingClick);
+				this.selfElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnRatingClick);
 				// And set variable as true
 				this._ratingHasEventAdded = true;
 			}
@@ -110,8 +110,8 @@ namespace OSFramework.Patterns.Rating {
 		// Method to remove the event listeners
 		private _removeEvents(): void {
 			// remove event listener if any was added
-			if (this._selfElem && this._ratingHasEventAdded) {
-				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnRatingClick);
+			if (this.selfElement && this._ratingHasEventAdded) {
+				this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnRatingClick);
 			}
 		}
 
@@ -150,17 +150,17 @@ namespace OSFramework.Patterns.Rating {
 		private _setInitialCssClasses(): void {
 			// Set IsHalf class
 			if (this._isHalfValue) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsHalf);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsHalf);
 			}
 
 			// Set IsEdit class
 			if (this.configs.IsEdit) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsEdit);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsEdit);
 			}
 
 			// Set Size class
 			if (this.configs.Size !== '') {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Size + this.configs.Size);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.Size + this.configs.Size);
 			}
 		}
 
@@ -185,8 +185,8 @@ namespace OSFramework.Patterns.Rating {
 
 			// Toggle the is-edit class
 			this.configs.IsEdit
-				? Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsEdit)
-				: Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsEdit);
+				? Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsEdit)
+				: Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsEdit);
 
 			// Review if there's a need to add/remove the click event, accordingly to the IsEdit value
 			this._manageRatingEvent();
@@ -206,12 +206,12 @@ namespace OSFramework.Patterns.Rating {
 		private _setSize(oldSize: string): void {
 			// Reset current class
 			if (oldSize !== '') {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.Size + oldSize);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.Size + oldSize);
 			}
 
 			// If updateSize param is not empty, it means is either 'small' or 'medium', so we can add the class based on the updateSize param
 			if (this.configs.Size !== '') {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.Size + this.configs.Size);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.Size + this.configs.Size);
 			}
 		}
 
@@ -222,11 +222,11 @@ namespace OSFramework.Patterns.Rating {
 			// Check if passed value is half
 			this._isHalfValue = this._getIsHalfValue(this.configs.RatingValue);
 			// Get all inputs on rating, to properly add the :checked attribute on the correct one
-			const ratingItems = this._selfElem.querySelectorAll(GlobalEnum.HTMLElement.Input);
+			const ratingItems = this.selfElement.querySelectorAll(GlobalEnum.HTMLElement.Input);
 
 			// Reset the is-half class
-			if (Helper.Dom.Styles.ContainsClass(this._selfElem, Enum.CssClass.IsHalf)) {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsHalf);
+			if (Helper.Dom.Styles.ContainsClass(this.selfElement, Enum.CssClass.IsHalf)) {
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsHalf);
 			}
 
 			// If there's only one rating item, then there's no need for further checks, this one will be checked
@@ -264,7 +264,7 @@ namespace OSFramework.Patterns.Rating {
 
 			// If is-half add the appropriate class, otherwise just declare the this.isHalfValue, to complete the if statement
 			if (this._isHalfValue) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsHalf);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsHalf);
 			}
 
 			// Update the variables with the new value
@@ -307,8 +307,8 @@ namespace OSFramework.Patterns.Rating {
 		 * @memberof Rating
 		 */
 		protected setHtmlElements(): void {
-			this._ratingIconStatesElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.IconStates);
-			this._ratingFieldsetElem = Helper.Dom.TagSelector(this._selfElem, GlobalEnum.HTMLElement.FieldSet);
+			this._ratingIconStatesElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.IconStates);
+			this._ratingFieldsetElem = Helper.Dom.TagSelector(this.selfElement, GlobalEnum.HTMLElement.FieldSet);
 		}
 
 		/**

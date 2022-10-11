@@ -84,14 +84,14 @@ namespace OSFramework.Patterns.BottomSheet {
 				this._gestureEventInstance = new Event.GestureEvent.DragEvent(this._bottomSheetHeaderElem);
 
 				// Apply transform on an element and perform animation
-				this._animateOnDragInstance = new Behaviors.AnimateOnDrag(this._selfElem);
+				this._animateOnDragInstance = new Behaviors.AnimateOnDrag(this.selfElement);
 			}
 		}
 
 		// Method to hadnle the Shape config css variable
 		private _handleShape(shape: GlobalEnum.ShapeTypes): void {
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				Enum.CssCustomProperties.Shape,
 				'var(--border-radius-' + shape + ')'
 			);
@@ -100,9 +100,9 @@ namespace OSFramework.Patterns.BottomSheet {
 		// Method to be called as callback on scroll event, to toggle class on BottomSheet when it has scroll active
 		private _onContentScrollCallback(): void {
 			if (this._bottomSheetContentElem.scrollTop === 0) {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.HasSCroll);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.HasSCroll);
 			} else {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.HasSCroll);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.HasSCroll);
 			}
 		}
 
@@ -130,7 +130,7 @@ namespace OSFramework.Patterns.BottomSheet {
 				x,
 				y,
 				true,
-				this._selfElem.clientHeight.toString()
+				this.selfElement.clientHeight.toString()
 			);
 		}
 
@@ -153,8 +153,8 @@ namespace OSFramework.Patterns.BottomSheet {
 
 			// Toggle class
 			isOpen
-				? Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsOpen)
-				: Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsOpen);
+				? Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsOpen)
+				: Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpen);
 
 			// Update property
 			this._isOpen = isOpen;
@@ -168,13 +168,13 @@ namespace OSFramework.Patterns.BottomSheet {
 				this._focusableActiveElement = document.activeElement as HTMLElement;
 				this._focusTrapInstance.enableForA11y();
 				// Focus on element when pattern is open
-				this._selfElem.focus();
+				this.selfElement.focus();
 			} else {
 				this._focusTrapInstance.disableForA11y();
 
 				// Focus on last element clicked. Async to avoid conflict with closing animation
 				Helper.AsyncInvocation(() => {
-					this._selfElem.blur();
+					this.selfElement.blur();
 					this._focusableActiveElement.focus();
 				});
 			}
@@ -186,9 +186,9 @@ namespace OSFramework.Patterns.BottomSheet {
 		// Method that toggles the showHandler config
 		private _toggleHandler(ShowHandler: boolean): void {
 			if (ShowHandler) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.HasHandler);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.HasHandler);
 			} else {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.HasHandler);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.HasHandler);
 			}
 		}
 
@@ -205,7 +205,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		 */
 		protected removeEventListeners(): void {
 			this._bottomSheetContentElem.removeEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnContentScroll);
-			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
+			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
 
 			this.removeGestureEvents();
 		}
@@ -218,13 +218,17 @@ namespace OSFramework.Patterns.BottomSheet {
 		 */
 		protected setA11YProperties(): void {
 			if (!this.isBuilt) {
-				Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Role.Complementary, true);
+				Helper.Dom.Attribute.Set(this.selfElement, Constants.A11YAttributes.Role.Complementary, true);
 			}
 
-			Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Hidden, (!this._isOpen).toString());
+			Helper.Dom.Attribute.Set(
+				this.selfElement,
+				Constants.A11YAttributes.Aria.Hidden,
+				(!this._isOpen).toString()
+			);
 
 			Helper.Dom.Attribute.Set(
-				this._selfElem,
+				this.selfElement,
 				Constants.A11YAttributes.TabIndex,
 				this._isOpen
 					? Constants.A11YAttributes.States.TabIndexShow
@@ -254,7 +258,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		 */
 		protected setEventListeners(): void {
 			this._bottomSheetContentElem.addEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnContentScroll);
-			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
+			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
 
 			if (!Helper.DeviceInfo.IsDesktop && this.gestureEventInstance !== undefined) {
 				// Set event listeners and callbacks
@@ -274,8 +278,8 @@ namespace OSFramework.Patterns.BottomSheet {
 		 */
 		protected setHtmlElements(): void {
 			this._parentSelf = Helper.Dom.GetElementById(this._widgetId);
-			this._bottomSheetContentElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternContent);
-			this._bottomSheetHeaderElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternHeader);
+			this._bottomSheetContentElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternContent);
+			this._bottomSheetHeaderElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternHeader);
 		}
 
 		/**

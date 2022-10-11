@@ -66,12 +66,12 @@ namespace OSFramework.Patterns.Sidebar {
 			this._focusTrapInstance.disableForA11y();
 
 			if (this.isBuilt) {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsOpen);
-				Helper.A11Y.TabIndexFalse(this._selfElem);
-				Helper.A11Y.AriaHiddenTrue(this._selfElem);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpen);
+				Helper.A11Y.TabIndexFalse(this.selfElement);
+				Helper.A11Y.AriaHiddenTrue(this.selfElement);
 
 				this._triggerOnToggleEvent();
-				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
+				this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
 
 				// Will handle the tabindex value of the elements inside pattern
 				Helper.A11Y.SetElementsTabIndex(this._isOpen, this._focusTrapInstance.focusableElements);
@@ -95,8 +95,8 @@ namespace OSFramework.Patterns.Sidebar {
 		private _handleGestureEvents(): void {
 			if (Helper.DeviceInfo.IsNative) {
 				// Create and save gesture event instance. Created here and not on constructor,
-				// as we need to pass this._selfElem, only available after super.build()
-				this._gestureEventInstance = new Event.GestureEvent.DragEvent(this._selfElem);
+				// as we need to pass this.selfElement, only available after super.build()
+				this._gestureEventInstance = new Event.GestureEvent.DragEvent(this.selfElement);
 
 				// Set event listeners and callbacks
 				this.setGestureEvents(
@@ -105,7 +105,7 @@ namespace OSFramework.Patterns.Sidebar {
 					this._onGestureEnd.bind(this)
 				);
 				// Apply transform on an element and perform animation
-				this._animateOnDragInstance = new Behaviors.AnimateOnDrag(this._selfElem);
+				this._animateOnDragInstance = new Behaviors.AnimateOnDrag(this.selfElement);
 			}
 		}
 
@@ -114,7 +114,7 @@ namespace OSFramework.Patterns.Sidebar {
 			this._animateOnDragInstance.onDragEnd(offsetX, offsetY, timeTaken, this._toggle.bind(this));
 
 			if (this.configs.HasOverlay) {
-				Behaviors.OverlayTransitionOnDrag.UnSet(this._selfElem);
+				Behaviors.OverlayTransitionOnDrag.UnSet(this.selfElement);
 			}
 		}
 
@@ -123,7 +123,7 @@ namespace OSFramework.Patterns.Sidebar {
 			this._animateOnDragInstance.onDragMove(offsetX, offsetY, x, y, evt);
 
 			if (this.configs.HasOverlay) {
-				Behaviors.OverlayTransitionOnDrag.Set(this._selfElem, x, this.configs.Direction, this.configs.Width);
+				Behaviors.OverlayTransitionOnDrag.Set(this.selfElement, x, this.configs.Direction, this.configs.Width);
 			}
 		}
 
@@ -141,9 +141,9 @@ namespace OSFramework.Patterns.Sidebar {
 
 		// Actual method that knows what is to open the sidebar
 		private _openSidebar() {
-			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsOpen);
-			Helper.A11Y.TabIndexTrue(this._selfElem);
-			Helper.A11Y.AriaHiddenFalse(this._selfElem);
+			Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsOpen);
+			Helper.A11Y.TabIndexTrue(this.selfElement);
+			Helper.A11Y.AriaHiddenFalse(this.selfElement);
 
 			// Add the A11Y states to focus trap
 			this._focusTrapInstance.enableForA11y();
@@ -158,8 +158,8 @@ namespace OSFramework.Patterns.Sidebar {
 				}
 			}
 
-			this._selfElem.focus();
-			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
+			this.selfElement.focus();
+			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
 
 			// Will handle the tabindex value of the elements inside pattern
 			Helper.A11Y.SetElementsTabIndex(this._isOpen, this._focusTrapInstance.focusableElements);
@@ -167,7 +167,7 @@ namespace OSFramework.Patterns.Sidebar {
 
 		// Overlay onClick event to close the Sidebar
 		private _overlayClickCallback(_args: string, e: MouseEvent): void {
-			if (this._selfElem === e.target) {
+			if (this.selfElement === e.target) {
 				if (this._isOpen) {
 					this.close();
 				}
@@ -178,7 +178,7 @@ namespace OSFramework.Patterns.Sidebar {
 
 		// Method to remove the event listeners
 		private _removeEvents(): void {
-			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
+			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
 			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOverlayClick);
 		}
 
@@ -186,23 +186,23 @@ namespace OSFramework.Patterns.Sidebar {
 		private _setDirection(): void {
 			// Reset direction class
 			if (this._currentDirectionCssClass !== '') {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, this._currentDirectionCssClass);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, this._currentDirectionCssClass);
 			}
 			this._currentDirectionCssClass = Enum.CssClass.ClassModifier + this.configs.Direction;
-			Helper.Dom.Styles.AddClass(this._selfElem, this._currentDirectionCssClass);
+			Helper.Dom.Styles.AddClass(this.selfElement, this._currentDirectionCssClass);
 		}
 
 		// Sets the Sidebar overlay
 		private _setHasOverlay(): void {
-			const alreadyHasOverlayClass = Helper.Dom.Styles.ContainsClass(this._selfElem, Enum.CssClass.HasOverlay);
+			const alreadyHasOverlayClass = Helper.Dom.Styles.ContainsClass(this.selfElement, Enum.CssClass.HasOverlay);
 
 			if (this.configs.HasOverlay && alreadyHasOverlayClass === false) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.HasOverlay);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.HasOverlay);
 				if (this._isOpen) {
 					Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._eventOverlayClick);
 				}
 			} else if (this.isBuilt) {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.HasOverlay);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.HasOverlay);
 				if (this._isOpen) {
 					Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOverlayClick);
 				}
@@ -222,7 +222,7 @@ namespace OSFramework.Patterns.Sidebar {
 
 		// Set the Sidebar width
 		private _setWidth(): void {
-			Helper.Dom.Styles.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, this.configs.Width);
+			Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Enum.CssProperty.Width, this.configs.Width);
 		}
 
 		// Method that will handle the tab navigation and sidebar closing on Escape
@@ -267,15 +267,15 @@ namespace OSFramework.Patterns.Sidebar {
 		 * @memberof Sidebar
 		 */
 		protected setA11YProperties(): void {
-			Helper.A11Y.RoleComplementary(this._selfElem);
-			Helper.A11Y.AriaHasPopupTrue(this._selfElem);
+			Helper.A11Y.RoleComplementary(this.selfElement);
+			Helper.A11Y.AriaHasPopupTrue(this.selfElement);
 
 			if (this._isOpen) {
-				Helper.A11Y.TabIndexTrue(this._selfElem);
-				Helper.A11Y.AriaHiddenFalse(this._selfElem);
+				Helper.A11Y.TabIndexTrue(this.selfElement);
+				Helper.A11Y.AriaHiddenFalse(this.selfElement);
 			} else {
-				Helper.A11Y.TabIndexFalse(this._selfElem);
-				Helper.A11Y.AriaHiddenTrue(this._selfElem);
+				Helper.A11Y.TabIndexFalse(this.selfElement);
+				Helper.A11Y.AriaHiddenTrue(this.selfElement);
 			}
 		}
 

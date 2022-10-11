@@ -128,7 +128,7 @@ namespace OSFramework.Patterns.Tooltip {
 
 				// Get the closest element in order to check if the activeElement is inside this TooltipBalloon
 				const _closestElem = document.activeElement.closest(Constants.Dot + Enum.CssClass.Pattern);
-				if (_closestElem !== this._selfElem) {
+				if (_closestElem !== this.selfElement) {
 					// Close Tooltip
 					this._triggerClose();
 				} else {
@@ -150,7 +150,7 @@ namespace OSFramework.Patterns.Tooltip {
 				const _closestBalloonElem = _clickedElem.closest(Constants.Dot + Enum.CssClass.BalloonWrapper);
 
 				// If the click has occur outside of this tooltip, or tooltipBalloon!
-				if (_closestElem !== this._selfElem && _closestBalloonElem !== this._tooltipBalloonWrapperElem) {
+				if (_closestElem !== this.selfElement && _closestBalloonElem !== this._tooltipBalloonWrapperElem) {
 					// Remove the Event
 					Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
 
@@ -242,7 +242,7 @@ namespace OSFramework.Patterns.Tooltip {
 		// Set balloon position and coordinates based on pattern SelfElement
 		private _setBalloonCoordinates(): void {
 			// Get all info from the pattern self element
-			const selfElement = this._selfElem.getBoundingClientRect();
+			const selfElement = this.selfElement.getBoundingClientRect();
 
 			// Check if the position didn't change!
 			if (
@@ -330,12 +330,12 @@ namespace OSFramework.Patterns.Tooltip {
 		private _setCssClasses(): void {
 			// Set default IsHover cssClass property value
 			if (this.configs.IsHover) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsHover);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsHover);
 			}
 
 			// Set default IsVisible cssClass property value
 			if (this._isOpen) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsOpened);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsOpened);
 				Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpened);
 			}
 
@@ -426,7 +426,7 @@ namespace OSFramework.Patterns.Tooltip {
 				this._isOpen = false;
 
 				// Remove the IsOpned selector
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsOpened);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpened);
 				Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpened);
 
 				// Update the AriaHidden to the balloon!
@@ -490,7 +490,7 @@ namespace OSFramework.Patterns.Tooltip {
 					);
 
 					// Add the IsOpned Class Selector
-					Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsOpened);
+					Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsOpened);
 					Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpened);
 				});
 
@@ -557,9 +557,9 @@ namespace OSFramework.Patterns.Tooltip {
 		// Update Pattern behaviour accordingly IsHover status
 		private _updateIsHover(): void {
 			if (this.configs.IsHover) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsHover);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsHover);
 			} else {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsHover);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsHover);
 			}
 
 			// Remove previous added events
@@ -625,9 +625,9 @@ namespace OSFramework.Patterns.Tooltip {
 		// Update info based on htmlContent
 		protected setHtmlElements(): void {
 			// Set the html references that will be used to manage the cssClasses and atribute properties
-			this._tooltipIconElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.Content);
-			this._tooltipBalloonContentElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.BalloonContent);
-			this._tooltipBalloonWrapperElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.BalloonWrapper);
+			this._tooltipIconElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.Content);
+			this._tooltipBalloonContentElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.BalloonContent);
+			this._tooltipBalloonWrapperElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.BalloonWrapper);
 
 			// Add Accessibility properties
 			this.setA11YProperties();

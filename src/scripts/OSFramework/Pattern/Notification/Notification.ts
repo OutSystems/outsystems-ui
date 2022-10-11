@@ -90,8 +90,8 @@ namespace OSFramework.Patterns.Notification {
 		private _handleGestureEvents(): void {
 			if (Helper.DeviceInfo.IsNative) {
 				// Create and save gesture event instance. Created here and not on constructor,
-				// as we need to pass this._selfElem, only available after super.build()
-				this._gestureEventInstance = new Event.GestureEvent.SwipeEvent(this._selfElem);
+				// as we need to pass this.selfElement, only available after super.build()
+				this._gestureEventInstance = new Event.GestureEvent.SwipeEvent(this.selfElement);
 
 				//Set event listeners and callbacks
 				this.setGestureEvents(
@@ -110,7 +110,7 @@ namespace OSFramework.Patterns.Notification {
 			// Remove the A11Y states to focus trap
 			this._focusTrapInstance.disableForA11y();
 
-			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
+			Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.PatternIsOpen);
 
 			// Trigger Notification event with new status
 			this._triggerOnToggleEvent(this._isOpen);
@@ -119,15 +119,15 @@ namespace OSFramework.Patterns.Notification {
 			this._updateA11yProperties();
 
 			// Remove focus when a Notification is closed
-			this._selfElem.blur();
+			this.selfElement.blur();
 
 			// Focus on last element clicked
 			this._focusableActiveElement.focus();
 
 			// Remove listeners to toggle Notification
 			if (Helper.DeviceInfo.IsNative === false && this.configs.InteractToClose) {
-				this._selfElem.removeEventListener(this._eventType, this._eventOnClick);
-				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
+				this.selfElement.removeEventListener(this._eventType, this._eventOnClick);
+				this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
 			}
 		}
 
@@ -143,8 +143,8 @@ namespace OSFramework.Patterns.Notification {
 
 		// Remove all the assigned Events
 		private _removeEvents(): void {
-			this._selfElem.removeEventListener(this._eventType, this._eventOnClick);
-			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
+			this.selfElement.removeEventListener(this._eventType, this._eventOnClick);
+			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
 		}
 
 		// Show Notification
@@ -155,7 +155,7 @@ namespace OSFramework.Patterns.Notification {
 			// Add the A11Y states to focus trap
 			this._focusTrapInstance.enableForA11y();
 
-			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsOpen);
+			Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternIsOpen);
 
 			// Trigger Notification event with new status
 			this._triggerOnToggleEvent(this._isOpen);
@@ -165,13 +165,13 @@ namespace OSFramework.Patterns.Notification {
 
 			// Add listeners to toggle Notification
 			if (Helper.DeviceInfo.IsNative === false && this.configs.InteractToClose) {
-				this._selfElem.addEventListener(this._eventType, this._eventOnClick);
+				this.selfElement.addEventListener(this._eventType, this._eventOnClick);
 			}
 
-			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
+			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
 
 			// Focus on element when Notification is open
-			this._selfElem.focus();
+			this.selfElement.focus();
 
 			if (this.configs.CloseAfterTime > 0) {
 				this._autoCloseNotification();
@@ -185,10 +185,14 @@ namespace OSFramework.Patterns.Notification {
 
 		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _updateA11yProperties(): void {
-			Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Hidden, (!this._isOpen).toString());
+			Helper.Dom.Attribute.Set(
+				this.selfElement,
+				Constants.A11YAttributes.Aria.Hidden,
+				(!this._isOpen).toString()
+			);
 
 			Helper.Dom.Attribute.Set(
-				this._selfElem,
+				this.selfElement,
 				Constants.A11YAttributes.TabIndex,
 				this._isOpen
 					? Constants.A11YAttributes.States.TabIndexShow
@@ -213,9 +217,9 @@ namespace OSFramework.Patterns.Notification {
 				this.configs.InteractToClose = value;
 				if (Helper.DeviceInfo.IsNative === false) {
 					if (this.configs.InteractToClose) {
-						this._selfElem.addEventListener(this._eventType, this._eventOnClick);
+						this.selfElement.addEventListener(this._eventType, this._eventOnClick);
 					} else {
-						this._selfElem.removeEventListener(this._eventType, this._eventOnClick);
+						this.selfElement.removeEventListener(this._eventType, this._eventOnClick);
 					}
 				}
 			}
@@ -227,10 +231,10 @@ namespace OSFramework.Patterns.Notification {
 			if (this.configs.Position !== position) {
 				// Reset direction class
 				if (this.configs.Position !== '') {
-					Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternPosition + position);
+					Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.PatternPosition + position);
 				}
 
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternPosition + this.configs.Position);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternPosition + this.configs.Position);
 			}
 		}
 
@@ -239,7 +243,7 @@ namespace OSFramework.Patterns.Notification {
 			this.configs.Width = width;
 			if (width !== '') {
 				// Update css variable
-				Helper.Dom.Styles.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, width);
+				Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Enum.CssProperty.Width, width);
 				this.configs.Width = width;
 			}
 		}
@@ -252,7 +256,7 @@ namespace OSFramework.Patterns.Notification {
 		 */
 		protected setA11YProperties(): void {
 			Helper.Dom.Attribute.Set(
-				this._selfElem,
+				this.selfElement,
 				Constants.A11YAttributes.Role.AttrName,
 				Constants.A11YAttributes.Role.Alert
 			);
@@ -299,10 +303,10 @@ namespace OSFramework.Patterns.Notification {
 			}
 
 			// Set width value for Notification
-			Helper.Dom.Styles.SetStyleAttribute(this._selfElem, Enum.CssProperty.Width, this.configs.Width);
+			Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Enum.CssProperty.Width, this.configs.Width);
 
 			// Set position initial class
-			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternPosition + this.configs.Position);
+			Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternPosition + this.configs.Position);
 
 			if (this._isOpen) {
 				this._showNotification();
@@ -395,7 +399,7 @@ namespace OSFramework.Patterns.Notification {
 						break;
 					case GlobalEnum.CommonPatternsProperties.ExtendedClass:
 						Helper.Dom.Styles.ExtendedClass(
-							this._selfElem,
+							this.selfElement,
 							this.configs.ExtendedClass,
 							propertyValue as string
 						);

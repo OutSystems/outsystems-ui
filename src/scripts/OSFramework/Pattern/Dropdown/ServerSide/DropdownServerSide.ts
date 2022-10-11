@@ -87,7 +87,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		// Add error message container with a given text
 		private _addErrorMessage(text: string): void {
 			const errorMessageElement = Helper.Dom.ClassSelector(
-				this._selfElem.parentElement,
+				this.selfElement.parentElement,
 				Enum.CssClass.ErrorMessage
 			);
 
@@ -98,7 +98,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 				textContainer.classList.add(Enum.CssClass.ErrorMessage);
 				textContainer.innerHTML = text;
 
-				this._selfElem.parentElement.appendChild(textContainer);
+				this.selfElement.parentElement.appendChild(textContainer);
 			}
 		}
 
@@ -195,7 +195,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 			// Get the closest based on pattern base selector
 			const getBaseElement = targetElement.closest(Constants.Dot + Enum.CssClass.Pattern);
 			// If the click occurs outside of this instance and if it's open, close it!
-			if (this._isOpen && getBaseElement !== this._selfElem) {
+			if (this._isOpen && getBaseElement !== this.selfElement) {
 				this._closeDynamically = true;
 				this._close();
 			}
@@ -471,7 +471,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		// Set balloon position and coordinates based on pattern SelfElement
 		private _setBalloonCoordinates(lookAtXPosition = true): void {
 			// Get all info from the pattern self element
-			const selfElement = this._selfElem.getBoundingClientRect();
+			const selfElement = this.selfElement.getBoundingClientRect();
 
 			// Check if the position didn't change!
 			if (
@@ -1138,13 +1138,13 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		 */
 		public validation(isValid: boolean, validationMessage: string): void {
 			if (isValid === false) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.NotValid);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.NotValid);
 				this._addErrorMessage(validationMessage);
 			} else {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.NotValid);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.NotValid);
 
 				const errorMessageElement = Helper.Dom.ClassSelector(
-					this._selfElem.parentElement,
+					this.selfElement.parentElement,
 					Enum.CssClass.ErrorMessage
 				);
 

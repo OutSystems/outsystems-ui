@@ -442,7 +442,7 @@ namespace OSFramework.Patterns.Tabs {
 		private _setHeaderItemsCustomProperty(): void {
 			// Create css variable
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				Enum.CssProperty.TabsHeaderItems,
 				this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length
 			);
@@ -451,7 +451,7 @@ namespace OSFramework.Patterns.Tabs {
 		// Method to set the Tabs Height
 		private _setHeight(height: string): void {
 			// Create css variable
-			Helper.Dom.Styles.SetStyleAttribute(this._selfElem, Enum.CssProperty.TabsHeight, height);
+			Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Enum.CssProperty.TabsHeight, height);
 		}
 
 		// Method to set the initial options on screen load
@@ -473,9 +473,9 @@ namespace OSFramework.Patterns.Tabs {
 		// Method to set if the Tabs are justified
 		private _setIsJustified(isJustified: boolean): void {
 			if (isJustified) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClasses.IsJustified);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClasses.IsJustified);
 			} else {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClasses.IsJustified);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClasses.IsJustified);
 			}
 
 			if (this.isBuilt) {
@@ -486,8 +486,8 @@ namespace OSFramework.Patterns.Tabs {
 
 		// Method to set the Tabs Orientation
 		private _setOrientation(orientation: GlobalEnum.Orientation): void {
-			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._currentOrientation);
-			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClasses.Modifier + orientation);
+			Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClasses.Modifier + this._currentOrientation);
+			Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClasses.Modifier + orientation);
 			this._currentOrientation = orientation;
 
 			if (this.isBuilt) {
@@ -500,8 +500,8 @@ namespace OSFramework.Patterns.Tabs {
 
 		// Method to set the Tabs Position
 		private _setPosition(position: GlobalEnum.Direction): void {
-			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._currentVerticalPositon);
-			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClasses.Modifier + position);
+			Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClasses.Modifier + this._currentVerticalPositon);
+			Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClasses.Modifier + position);
 
 			this._currentVerticalPositon = position;
 		}
@@ -636,9 +636,9 @@ namespace OSFramework.Patterns.Tabs {
 		 * @memberof Tabs
 		 */
 		protected setHtmlElements(): void {
-			this._tabsHeaderElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClasses.TabsHeader);
-			this._tabsContentElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClasses.TabsContent);
-			this._tabsIndicatorElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClasses.TabsIndicatorElem);
+			this._tabsHeaderElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClasses.TabsHeader);
+			this._tabsContentElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClasses.TabsContent);
+			this._tabsIndicatorElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClasses.TabsIndicatorElem);
 		}
 
 		/**
@@ -894,14 +894,14 @@ namespace OSFramework.Patterns.Tabs {
 			// If running on native shell
 			if (addDragGestures) {
 				// Add class to prevent enable overflow-x
-				Helper.Dom.Styles.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.HasDragGestures);
+				Helper.Dom.Styles.AddClass(this.selfElement, Patterns.Tabs.Enum.CssClasses.HasDragGestures);
 				this._hasDragGestures = true;
 				// Set observer on each contentItem to detect current content being intersected
 				this._setDragObserver();
 				// If the gestures were already added
 			} else if (this._hasDragGestures) {
 				// Remove class to prevent overflow-x
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.HasDragGestures);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Patterns.Tabs.Enum.CssClasses.HasDragGestures);
 				this._hasDragGestures = false;
 				// Disconnect observer
 				this._unsetDragObserver();

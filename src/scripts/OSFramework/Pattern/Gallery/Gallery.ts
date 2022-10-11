@@ -21,7 +21,7 @@ namespace OSFramework.Patterns.Gallery {
 		 */
 		private _setItemsGap(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				Enum.CssVariables.PatternItemsGap,
 				`var(--space-${this.configs.ItemsGap})`
 			);
@@ -44,13 +44,13 @@ namespace OSFramework.Patterns.Gallery {
 			}
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				Enum.CssVariables.PatternItemsDesktop,
 				this.configs.RowItemsDesktop
 			);
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				Enum.CssVariables.PatternListItemsDesktop,
 				this.configs.RowItemsDesktop
 			);
@@ -73,12 +73,12 @@ namespace OSFramework.Patterns.Gallery {
 			}
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				Enum.CssVariables.PatternItemsPhone,
 				this.configs.RowItemsPhone
 			);
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				Enum.CssVariables.PatternListItemsPhone,
 				this.configs.RowItemsPhone
 			);
@@ -101,13 +101,13 @@ namespace OSFramework.Patterns.Gallery {
 			}
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				Enum.CssVariables.PatternItemsTablet,
 				this.configs.RowItemsTablet
 			);
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				Enum.CssVariables.PatternListItemsTablet,
 				this.configs.RowItemsTablet
 			);
