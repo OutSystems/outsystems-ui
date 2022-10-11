@@ -277,7 +277,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * @memberof BottomSheet
 		 */
 		protected setHtmlElements(): void {
-			this._parentSelf = Helper.Dom.GetElementById(this._widgetId);
+			this._parentSelf = Helper.Dom.GetElementById(this.widgetId);
 			this._bottomSheetContentElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternContent);
 			this._bottomSheetHeaderElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternHeader);
 		}

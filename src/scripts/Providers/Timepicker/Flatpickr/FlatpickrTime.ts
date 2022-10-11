@@ -194,7 +194,7 @@ namespace Providers.TimePicker.Flatpickr {
 
 			// If the input hasn't be added
 			if (!this._timePickerProviderInputElem) {
-				throw new Error(`The timepicker input at TimepickerId '${this._widgetId}' is missing`);
+				throw new Error(`The timepicker input at TimepickerId '${this.widgetId}' is missing`);
 			}
 		}
 

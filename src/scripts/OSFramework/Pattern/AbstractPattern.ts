@@ -48,11 +48,11 @@ namespace OSFramework.Patterns {
 		/**
 		 * Id of the widget. This will be the Id that the developer will be using in runtime.
 		 *
-		 * @protected
+		 * @private
 		 * @type {string}
 		 * @memberof AbstractPattern
 		 */
-		protected _widgetId: string;
+		private _widgetId: string;
 
 		constructor(uniqueId: string, configs: C) {
 			this._uniqueId = uniqueId;

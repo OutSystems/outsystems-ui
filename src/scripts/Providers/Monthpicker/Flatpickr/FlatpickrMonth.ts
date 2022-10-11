@@ -211,7 +211,7 @@ namespace Providers.MonthPicker.Flatpickr {
 
 			// If the input hasn't be added
 			if (!this._monthPickerProviderInputElem) {
-				throw new Error(`The monthpicker input at MonthpickerId '${this._widgetId}' is missing`);
+				throw new Error(`The monthpicker input at MonthpickerId '${this.widgetId}' is missing`);
 			}
 		}
 

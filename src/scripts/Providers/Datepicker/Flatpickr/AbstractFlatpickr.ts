@@ -180,7 +180,7 @@ namespace Providers.Datepicker.Flatpickr {
 
 			// If the input hasn't be added
 			if (!this._datePickerProviderInputElem) {
-				throw new Error(`The datepicker input at DatepickerId '${this._widgetId}' is missing`);
+				throw new Error(`The datepicker input at DatepickerId '${this.widgetId}' is missing`);
 			}
 		}
 

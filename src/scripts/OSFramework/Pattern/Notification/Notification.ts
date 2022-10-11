@@ -283,7 +283,7 @@ namespace OSFramework.Patterns.Notification {
 		 * @memberof Notification
 		 */
 		protected setHtmlElements(): void {
-			this._parentSelf = Helper.Dom.GetElementById(this._widgetId);
+			this._parentSelf = Helper.Dom.GetElementById(this.widgetId);
 
 			Helper.AsyncInvocation(this._platformEventOnInitialize, this.widgetId);
 		}

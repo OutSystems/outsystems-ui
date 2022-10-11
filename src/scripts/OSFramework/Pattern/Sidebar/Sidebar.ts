@@ -297,7 +297,7 @@ namespace OSFramework.Patterns.Sidebar {
 		 * @memberof Sidebar
 		 */
 		protected setHtmlElements(): void {
-			this._parentSelf = Helper.Dom.GetElementById(this._widgetId);
+			this._parentSelf = Helper.Dom.GetElementById(this.widgetId);
 
 			this._setWidth();
 		}
