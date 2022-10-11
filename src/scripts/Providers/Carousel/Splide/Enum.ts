@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.Splide.Enum {
+namespace Providers.Carousel.Splide.Enum {
 	/**
 	 * Splide CSS Classes
 	 */

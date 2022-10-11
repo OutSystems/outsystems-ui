@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.Splide {
+namespace Providers.Carousel.Splide {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
 	 */

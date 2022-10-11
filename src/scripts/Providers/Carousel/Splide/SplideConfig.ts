@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace Providers.Splide {
+namespace Providers.Carousel.Splide {
 	export class SplideConfig extends OSFramework.Patterns.Carousel.AbstractCarouselConfig {
 		// Store provider configs
 		private _providerOptions: SplideOpts;
