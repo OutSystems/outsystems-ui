@@ -517,5 +517,9 @@ body {
 		.vscomp-wrapper:not(.focused) {
 			z-index: 0;
 		}
+
+		.vscomp-wrapper {
+			z-index: 300;
+		}
 	}
 }
