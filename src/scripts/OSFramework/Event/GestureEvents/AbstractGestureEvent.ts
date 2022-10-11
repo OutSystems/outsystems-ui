@@ -125,7 +125,7 @@ namespace OSFramework.Event.GestureEvent {
 		 * @param {GlobalCallbacks.Generic} [onStartCallback]
 		 * @param {GlobalCallbacks.Generic} [onMoveCallback]
 		 * @param {GlobalCallbacks.Generic} [onEndCallback]
-		 * @memberof GestureEvent
+		 * @memberof OSFramework.Event.GestureEvent.AbstractGestureEvent
 		 */
 		protected setCallbacks(
 			onStartCallback?: GlobalCallbacks.Generic,
@@ -145,7 +145,7 @@ namespace OSFramework.Event.GestureEvent {
 		 * Method to add the event listeners to the targetElement, with the expected callbacks
 		 *
 		 * @protected
-		 * @memberof GestureEvent
+		 * @memberof OSFramework.Event.GestureEvent.AbstractGestureEvent
 		 */
 		protected setEventListeners(): void {
 			if (this._targetElement) {
@@ -160,7 +160,7 @@ namespace OSFramework.Event.GestureEvent {
 		 *
 		 * @readonly
 		 * @type {HTMLElement}
-		 * @memberof GestureEvent
+		 * @memberof OSFramework.Event.GestureEvent.AbstractGestureEvent
 		 */
 		public get targetElement(): HTMLElement {
 			return this._targetElement;
@@ -169,7 +169,7 @@ namespace OSFramework.Event.GestureEvent {
 		/**
 		 * Method to remove the event listeners added to the targetElement and unset the callback
 		 *
-		 * @memberof GestureEvent
+		 * @memberof OSFramework.Event.GestureEvent.AbstractGestureEvent
 		 */
 		public unsetTouchEvents(): void {
 			this._removeEventListeners();

@@ -12,7 +12,7 @@ namespace OSFramework.Patterns.Accordion {
 		 * Sets the A11Y properties when the pattern is built.
 		 *
 		 * @protected
-		 * @memberof Accordion
+		 * @memberof OSFramework.Patterns.Accordion.Accordion
 		 */
 		protected setA11YProperties(): void {
 			Helper.A11Y.RoleTabList(this.selfElement);
@@ -20,6 +20,9 @@ namespace OSFramework.Patterns.Accordion {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Accordion.Accordion
 		 */
 		protected setCallbacks(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -27,6 +30,9 @@ namespace OSFramework.Patterns.Accordion {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Accordion.Accordion
 		 */
 		protected setHtmlElements(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -34,6 +40,9 @@ namespace OSFramework.Patterns.Accordion {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Accordion.Accordion
 		 */
 		protected unsetCallbacks(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -41,6 +50,9 @@ namespace OSFramework.Patterns.Accordion {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Accordion.Accordion
 		 */
 		protected unsetHtmlElements(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -51,7 +63,7 @@ namespace OSFramework.Patterns.Accordion {
 		 *
 		 * @param {string} uniqueId
 		 * @param {AccordionItem.IAccordionItem} accordionItem
-		 * @memberof Accordion
+		 * @memberof OSFramework.Patterns.Accordion.Accordion
 		 */
 		public addAccordionItem(childId: string): void {
 			// Get the ChildItem reference
@@ -78,7 +90,7 @@ namespace OSFramework.Patterns.Accordion {
 		 *
 		 * @param childId Child Item Id to be stored/managed
 		 * @param notifiedTo {Enum.ChildNotifyActionType} triggered notification type
-		 * @memberof SectionIndex
+		 * @memberof OSFramework.Patterns.Accordion.Accordion
 		 */
 		public beNotifiedByChild(childId: string, notifiedTo: Enum.ChildNotifyActionType): void {
 			switch (notifiedTo) {
@@ -101,7 +113,7 @@ namespace OSFramework.Patterns.Accordion {
 		/**
 		 * Method to build the pattern.
 		 *
-		 * @memberof Accordion
+		 * @memberof OSFramework.Patterns.Accordion.Accordion
 		 */
 		public build(): void {
 			super.build();
@@ -116,7 +128,7 @@ namespace OSFramework.Patterns.Accordion {
 		 *
 		 * @param {string} propertyName
 		 * @param {*} propertyValue
-		 * @memberof Accordion
+		 * @memberof OSFramework.Patterns.Accordion.Accordion
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -134,7 +146,7 @@ namespace OSFramework.Patterns.Accordion {
 		/**
 		 * Method to close all accordionItems
 		 *
-		 * @memberof Accordion
+		 * @memberof OSFramework.Patterns.Accordion.Accordion
 		 */
 		public collapseAllItems(): void {
 			// Filter all items that are open and not disabled
@@ -149,7 +161,7 @@ namespace OSFramework.Patterns.Accordion {
 		/**
 		 * Method to destroy accordion instance
 		 *
-		 * @memberof Accordion
+		 * @memberof OSFramework.Patterns.Accordion.Accordion
 		 */
 		public dispose(): void {
 			super.dispose();
@@ -158,7 +170,7 @@ namespace OSFramework.Patterns.Accordion {
 		/**
 		 * Method to open all accordionItems
 		 *
-		 * @memberof Accordion
+		 * @memberof OSFramework.Patterns.Accordion.Accordion
 		 */
 		public expandAllItems(): void {
 			//If this accordion does not have multiple items, it means we can't expand all.
@@ -181,7 +193,7 @@ namespace OSFramework.Patterns.Accordion {
 		 * Method to remove an accordionItem
 		 *
 		 * @param {string} accordionItemId
-		 * @memberof Accordion
+		 * @memberof OSFramework.Patterns.Accordion.Accordion
 		 */
 		public removeAccordionItem(childId: string): void {
 			// Check if the given ChildId exist at childList
@@ -200,7 +212,7 @@ namespace OSFramework.Patterns.Accordion {
 		 *
 		 * @param {string} accordionItemId
 		 * @return {*}  {void}
-		 * @memberof Accordion
+		 * @memberof OSFramework.Patterns.Accordion.Accordion
 		 */
 		public triggerAccordionItemClose(childId: string): void {
 			//If this accordion has multiple items, it means we don't want to close the other items.

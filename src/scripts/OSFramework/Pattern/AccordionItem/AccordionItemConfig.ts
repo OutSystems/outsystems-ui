@@ -10,6 +10,14 @@ namespace OSFramework.Patterns.AccordionItem {
 			super(config);
 		}
 
+		/**
+		 * Method used to check if a given property can be changed!
+		 *
+		 * @param isBuilt if pattern is already built
+		 * @param key key name to be checked
+		 * @returns {boolean}
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItemConfig
+		 */
 		public validateCanChange(isBuilt: boolean, key: string): boolean {
 			if (isBuilt) {
 				return key !== Enum.Properties.StartsExpanded;
@@ -17,6 +25,14 @@ namespace OSFramework.Patterns.AccordionItem {
 			return true;
 		}
 
+		/**
+		 * Method used to validate default value before apply it's change!
+		 *
+		 * @param key property name
+		 * @param value value to be set
+		 * @returns {*}
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItemConfig
+		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;
 			switch (key) {

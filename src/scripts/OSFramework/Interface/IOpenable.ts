@@ -10,13 +10,13 @@ namespace OSFramework.Interface {
 		/**
 		 * Method signature to close the pattern.
 		 *
-		 * @memberof IOpenable
+		 * @memberof OSFramework.Interface.IOpenable
 		 */
 		close(): void;
 		/**
 		 * Method signature to open the pattern.
 		 *
-		 * @memberof IOpenable
+		 * @memberof OSFramework.Interface.IOpenable
 		 */
 		open(): void;
 	}

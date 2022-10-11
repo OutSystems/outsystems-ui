@@ -6,7 +6,7 @@ namespace OSFramework.Helper {
 		 * Function that validate if a given URL is an image URL
 		 *
 		 * @param url
-		 * @memberof URL
+		 * @memberof OSFramework.Helper.URL
 		 */
 		public static IsImage(url: string): boolean {
 			return url.match(/\/?(\.\w\.)*\.(jpeg|jpg|gif|png|svg)($|(\?))/) !== null;
@@ -16,7 +16,7 @@ namespace OSFramework.Helper {
 		 * Function that validate if a given URL is a valid URL
 		 *
 		 * @param url
-		 * @memberof URL
+		 * @memberof OSFramework.Helper.URL
 		 */
 		public static IsValid(url: string): boolean {
 			const pattern = new RegExp(

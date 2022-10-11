@@ -12,7 +12,7 @@ namespace OSFramework.Interface {
 		/**
 		 * Signature Method to remove the gesture events
 		 *
-		 * @memberof IGestureEventPattern
+		 * @memberof OSFramework.Interface.IGestureEventPattern
 		 */
 		removeGestureEvents(): void;
 	}

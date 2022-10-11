@@ -7,6 +7,14 @@ namespace OSFramework.Patterns.Accordion {
 			super(config);
 		}
 
+		/**
+		 * Method used to validate default value before apply it's change!
+		 *
+		 * @param key property name
+		 * @param value value to be set
+		 * @returns {*}
+		 * @memberof OSFramework.Patterns.Accordion.AccordionConfig
+		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;
 			switch (key) {

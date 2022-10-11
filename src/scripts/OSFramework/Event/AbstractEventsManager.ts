@@ -10,7 +10,7 @@ namespace OSFramework.Event {
 	 * @abstract
 	 * @class AbstractEventsManager
 	 * @template ET type events that this manager will be handling (e.g. MapEventType, MarkerEventTypes, ...)
-	 * @template D  this will the type of Data to be passed, by default to the handlers.
+	 * @template D  this will be the type of Data to be passed, by default to the handlers.
 	 */
 	export abstract class AbstractEventsManager<ET, D> {
 		private _events: Map<ET, IEvent<D>>;
@@ -19,10 +19,13 @@ namespace OSFramework.Event {
 			this._events = new Map<ET, IEvent<D>>();
 		}
 
-		public get events(): Map<ET, IEvent<D>> {
-			return this._events;
-		}
-
+		/**
+		 * This method is used to add assign a new callback to a given EventType
+		 *
+		 * @param eventType
+		 * @param handler
+		 * @memberof OSFramework.Event.AbstractEventsManager
+		 */
 		public addHandler(eventType: ET, handler: GlobalCallbacks.Generic): void {
 			if (this._events && this._events.has(eventType)) {
 				this._events.get(eventType).addHandler(handler);
@@ -35,6 +38,13 @@ namespace OSFramework.Event {
 			}
 		}
 
+		/**
+		 * This method will check if a given EventType has assigned callbacks
+		 *
+		 * @param eventType
+		 * @returns boolean
+		 * @memberof OSFramework.Event.AbstractEventsManager
+		 */
 		public hasHandlers(eventType: ET): boolean {
 			let returnValue = false;
 			if (this._events.has(eventType)) {
@@ -44,6 +54,13 @@ namespace OSFramework.Event {
 			return returnValue;
 		}
 
+		/**
+		 * Remove the given event type
+		 *
+		 * @param eventType
+		 * @param handler
+		 * @memberof OSFramework.Event.AbstractEventsManager
+		 */
 		public removeHandler(eventType: ET, handler: GlobalCallbacks.OSGeneric): void {
 			if (this._events.has(eventType)) {
 				const event = this._events.get(eventType);
@@ -51,10 +68,29 @@ namespace OSFramework.Event {
 			}
 		}
 
+		/**
+		 * This method will trigger the callback assigned to the given eventType
+		 *
+		 * @param eventType
+		 * @param data
+		 * @param args
+		 * @memberof OSFramework.Event.AbstractEventsManager
+		 */
 		public trigger(eventType: ET, data?: D, ...args: unknown[]): void {
 			if (this._events.has(eventType)) {
 				this._events.get(eventType).trigger(data, args);
 			}
+		}
+
+		/**
+		 * Getter that allows to obtain the list of events
+		 *
+		 * @readonly
+		 * @type {Map<ET, IEvent<D>>}
+		 * @memberof OSFramework.Event.AbstractEventsManager
+		 */
+		public get events(): Map<ET, IEvent<D>> {
+			return this._events;
 		}
 
 		/**
@@ -65,7 +101,7 @@ namespace OSFramework.Event {
 		 * @abstract
 		 * @param {ET} eventType Type of the event that will we need an instance of.
 		 * @returns {*}  {IEvent<D>} Instance of the event.
-		 * @memberof AbstractEventsManager
+		 * @memberof OSFramework.Event.AbstractEventsManager
 		 */
 		protected abstract getInstanceOfEventType(eventType: ET): IEvent<D>;
 	}

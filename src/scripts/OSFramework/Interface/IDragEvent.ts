@@ -15,7 +15,7 @@ namespace OSFramework.Interface {
 		 * @param {Event.GestureEvent.Callbacks.GestureStart} gestureStart
 		 * @param {Event.GestureEvent.Callbacks.GestureMove} gestureMove
 		 * @param {Event.GestureEvent.Callbacks.GestureEnd} gestureEnd
-		 * @memberof IDragEvent
+		 * @memberof OSFramework.Interface.IDragEvent
 		 */
 		setGestureEvents(
 			onGestureStart: Event.GestureEvent.Callbacks.GestureStart,

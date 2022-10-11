@@ -10,7 +10,7 @@ namespace OSFramework.Interface {
 		/**
 		 * Method that is invoked by the Platform OnRender event.
 		 *
-		 * @memberof IRenderUpdate
+		 * @memberof OSFramework.Interface.IRenderUpdate
 		 */
 		updateOnRender(): void;
 	}

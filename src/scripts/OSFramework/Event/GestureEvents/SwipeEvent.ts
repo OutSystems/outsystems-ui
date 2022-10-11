@@ -30,7 +30,7 @@ namespace OSFramework.Event.GestureEvent {
 		 * @param {number} offsetX
 		 * @param {number} offsetY
 		 * @param {number} timeTaken
-		 * @memberof SwipeEvent
+		 * @memberof OSFramework.Event.GestureEvent.SwipeEvent
 		 */
 		private _onGestureEnd(offsetX: number, offsetY: number, timeTaken: number): void {
 			// CHeck if this a swipe
@@ -65,7 +65,7 @@ namespace OSFramework.Event.GestureEvent {
 		 * @param {GlobalCallbacks.Generic} swipeLeftCallback
 		 * @param {GlobalCallbacks.Generic} swipeRightCallback
 		 * @param {GlobalCallbacks.Generic} swipeUpCallback
-		 * @memberof SwipeEvent
+		 * @memberof OSFramework.Event.GestureEvent.SwipeEvent
 		 */
 		protected setSwipeCallbacks(
 			swipeDownCallback: GlobalCallbacks.Generic,
@@ -88,7 +88,7 @@ namespace OSFramework.Event.GestureEvent {
 		 * @param {Event.GestureEvent.swipeLeft} swipeLeftCallback
 		 * @param {Event.GestureEvent.swipeRight} swipeRightCallback
 		 * @param {Event.GestureEvent.swipeUp} swipeUpCallback
-		 * @memberof SwipeEvent
+		 * @memberof OSFramework.Event.GestureEvent.SwipeEvent
 		 */
 		public setSwipeEvents(
 			swipeDownCallback: Event.GestureEvent.Callbacks.SwipeDown,

@@ -29,7 +29,7 @@ namespace OSFramework.Behaviors {
 	 * Get the Sroll Vertical position based on viewport height
 	 *
 	 * @param scrollableElement Element where the scroll will happen
-	 * @returns
+	 * @returns {ScrollPosition} ScrollPosition
 	 */
 	export function ScrollVerticalPosition(
 		scrollableElement: HTMLElement = Helper.Dom.ClassSelector(

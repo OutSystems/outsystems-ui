@@ -14,7 +14,7 @@ namespace OSFramework.Interface {
 		 * Indicates if the instance of the pattern is built.
 		 *
 		 * @type {boolean}
-		 * @memberof IPattern
+		 * @memberof OSFramework.Interface.IPattern
 		 */
 		isBuilt: boolean;
 
@@ -22,7 +22,7 @@ namespace OSFramework.Interface {
 		 * Pattern HTML element
 		 *
 		 * @type {string}
-		 * @memberof IPattern
+		 * @memberof OSFramework.Interface.IPattern
 		 */
 		selfElement: HTMLElement;
 
@@ -30,7 +30,7 @@ namespace OSFramework.Interface {
 		 * Internal Id of the instance of the pattern.
 		 *
 		 * @type {string}
-		 * @memberof IPattern
+		 * @memberof OSFramework.Interface.IPattern
 		 */
 		uniqueId: string;
 
@@ -38,7 +38,7 @@ namespace OSFramework.Interface {
 		 * External Id of the instance of the pattern
 		 *
 		 * @type {string}
-		 * @memberof IPattern
+		 * @memberof OSFramework.Interface.IPattern
 		 */
 		widgetId: string;
 
@@ -47,7 +47,7 @@ namespace OSFramework.Interface {
 		 *
 		 * @param {string} propertyName
 		 * @param {*} propertyValue
-		 * @memberof IPattern
+		 * @memberof OSFramework.Interface.IPattern
 		 */
 		changeProperty(propertyName: string, propertyValue: unknown): void;
 	}

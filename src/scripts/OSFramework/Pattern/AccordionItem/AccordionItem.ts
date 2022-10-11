@@ -248,7 +248,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		 * Method to handle Accessibility attributes
 		 *
 		 * @protected
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		protected setA11YProperties(): void {
 			// Set the static attributes on page load only
@@ -286,7 +286,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		 * Method to set the listeners and callbacks
 		 *
 		 * @protected
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		protected setCallbacks(): void {
 			this._eventOnClick = this._accordionOnClickHandler.bind(this);
@@ -298,7 +298,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		 * Method that sets the HTML elements of the Accordion Item
 		 *
 		 * @protected
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		protected setHtmlElements(): void {
 			this._accordionItemTitleElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternTitle);
@@ -316,7 +316,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		 * Method to set the initial CSS Classes
 		 *
 		 * @protected
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		protected setInitialCssClasses(): void {
 			if (this._isOpen) {
@@ -335,7 +335,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		 * Method to remove all assigned callbacks
 		 *
 		 * @protected
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnClick = undefined;
@@ -347,7 +347,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		 * Method to unset the html elements
 		 *
 		 * @protected
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		protected unsetHtmlElements(): void {
 			this._accordionItemTitleElem = undefined;
@@ -361,7 +361,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		public get isDisabled(): boolean {
 			return this.configs.IsDisabled;
@@ -372,7 +372,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		public get isOpen(): boolean {
 			return this._isOpen;
@@ -381,7 +381,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		/**
 		 * Method to prevent clicks inside thte title to open the accordion
 		 *
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		public allowTitleEvents(): void {
 			this._allowTitleEvents = true;
@@ -390,7 +390,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		/**
 		 * Method to build the pattern.
 		 *
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		public build(): void {
 			super.build();
@@ -411,7 +411,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -438,7 +438,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		/**
 		 * Method to close the AccordionItem
 		 *
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		public close(): void {
 			if (!this._isOpen) {
@@ -468,7 +468,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		/**
 		 * Method to remove event listener and destroy AccordionItem instance
 		 *
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		public dispose(): void {
 			this.unsetCallbacks();
@@ -487,7 +487,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		/**
 		 * Method to open the AccordionItem
 		 *
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		public open(): void {
 			if (this._isOpen) {
@@ -533,7 +533,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		 * Set callbacks for the onToggle event
 		 *
 		 * @param {GlobalCallbacks.OSGeneric} callback
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		public registerCallback(callback: GlobalCallbacks.OSGeneric): void {
 			if (this._platformEventOnToggle === undefined) {
