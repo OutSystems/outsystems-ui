@@ -200,6 +200,13 @@ namespace Providers.Dropdown.VirtualSelect {
 			this.provider = undefined;
 		}
 
+		/**
+		 * This method has no implementation on this pattern context!
+		 */
+		protected unsetHtmlElements(): void {
+			console.log(OSFramework.GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
 		public build(): void {
 			super.build();
 

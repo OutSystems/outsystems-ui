@@ -232,7 +232,7 @@ namespace OSFramework.Patterns {
 		protected abstract setA11YProperties(): void;
 		protected abstract setCallbacks(): void;
 		protected abstract setHtmlElements(): void;
-		// protected abstract unsetCallbacks(): void;
-		// protected abstract unsetHtmlElements(): void;
+		protected abstract unsetCallbacks(): void;
+		protected abstract unsetHtmlElements(): void;
 	}
 }

@@ -152,6 +152,13 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 		}
 
 		/**
+		 * This method has no implementation on this pattern context!
+		 */
+		protected unsetHtmlElements(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
 		 *  Builds the DropdownServerSideItem.
 		 *
 		 * @memberof DropdownServerSideItem

@@ -114,6 +114,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		private _setLinkAttribute(): void {
 			Helper.Dom.Attribute.Set(this._selfElem, Enum.DataTypes.dataItem, this.configs.ScrollToWidgetId);
 		}
+
 		// Set TargetElement
 		private _setTargetElement(): void {
 			// Check if the element has been already defined!
@@ -202,6 +203,16 @@ namespace OSFramework.Patterns.SectionIndexItem {
 			this._eventOnClick = undefined;
 			this._eventOnkeyBoardPress = undefined;
 			this._eventOnBodyScroll = undefined;
+		}
+
+		/**
+		 * Method to unset the html elements used
+		 *
+		 * @protected
+		 * @memberof SectionIndexItem
+		 */
+		protected unsetHtmlElements(): void {
+			this._targetElement = undefined;
 		}
 
 		/**

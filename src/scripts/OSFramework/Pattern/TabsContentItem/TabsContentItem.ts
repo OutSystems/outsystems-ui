@@ -61,6 +61,13 @@ namespace OSFramework.Patterns.TabsContentItem {
 		}
 
 		/**
+		 * This method has no implementation on this pattern context!
+		 */
+		protected unsetCallbacks(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
 		 * Method to unset the HTML Elements
 		 *
 		 * @protected

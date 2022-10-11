@@ -83,6 +83,13 @@ namespace OSFramework.Patterns.TabsHeaderItem {
 		}
 
 		/**
+		 * This method has no implementation on this pattern context!
+		 */
+		protected unsetHtmlElements(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
 		 * Method to build the pattern
 		 *
 		 * @memberof TabsHeaderItem

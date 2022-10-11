@@ -134,6 +134,20 @@ namespace OSFramework.Patterns.Gallery {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
 		}
 
+		/**
+		 * This method has no implementation on this pattern context!
+		 */
+		protected unsetCallbacks(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
+		 * This method has no implementation on this pattern context!
+		 */
+		protected unsetHtmlElements(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
 		public build(): void {
 			super.build();
 

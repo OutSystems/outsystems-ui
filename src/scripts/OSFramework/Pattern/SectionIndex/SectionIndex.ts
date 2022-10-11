@@ -180,6 +180,13 @@ namespace OSFramework.Patterns.SectionIndex {
 		}
 
 		/**
+		 * This method has no implementation on this pattern context!
+		 */
+		protected unsetCallbacks(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
 		 * Method to unset the HTMLElements used
 		 *
 		 * @protected

@@ -33,6 +33,20 @@ namespace OSFramework.Patterns.Accordion {
 		}
 
 		/**
+		 * This method has no implementation on this pattern context!
+		 */
+		protected unsetCallbacks(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
+		 * This method has no implementation on this pattern context!
+		 */
+		protected unsetHtmlElements(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
 		 * Method to add a new accordionItem
 		 *
 		 * @param {string} uniqueId
