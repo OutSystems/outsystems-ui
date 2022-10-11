@@ -80,6 +80,13 @@ namespace OSFramework.Patterns.ButtonLoading {
 		}
 
 		/**
+		 * This method has no implementation on this pattern context!
+		 */
+		protected setCallbacks(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
 		 * Update info based on htmlContent
 		 *
 		 * @protected

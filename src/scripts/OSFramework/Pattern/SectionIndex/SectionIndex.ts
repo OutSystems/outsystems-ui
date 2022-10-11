@@ -160,6 +160,13 @@ namespace OSFramework.Patterns.SectionIndex {
 		}
 
 		/**
+		 * This method has no implementation on this pattern context!
+		 */
+		protected setCallbacks(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
 		 * Method to set the HTMLElements used
 		 *
 		 * @protected

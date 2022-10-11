@@ -120,6 +120,13 @@ namespace OSFramework.Patterns.Gallery {
 			console.warn(GlobalEnum.WarningMessages.MethodNotImplemented);
 		}
 
+		/**
+		 * This method has no implementation on this pattern context!
+		 */
+		protected setCallbacks(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
 		public build(): void {
 			super.build();
 

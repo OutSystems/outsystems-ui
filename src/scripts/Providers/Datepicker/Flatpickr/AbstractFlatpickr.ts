@@ -173,6 +173,13 @@ namespace Providers.Datepicker.Flatpickr {
 		}
 
 		/**
+		 * This method has no implementation on this pattern context!
+		 */
+		protected setCallbacks(): void {
+			console.log(OSFramework.GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
 		 * Remove all the assigned Events
 		 *
 		 * @protected
