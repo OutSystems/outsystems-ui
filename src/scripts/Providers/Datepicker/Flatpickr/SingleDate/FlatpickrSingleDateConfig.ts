@@ -19,7 +19,12 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 			this.CalendarMode = OSFramework.Patterns.DatePicker.Enum.Mode.Single;
 		}
 
-		// Method used to set all the config properties for the SingleDate mode type
+		/**
+		 * Method used to set all the config properties for the SingleDate mode type
+		 *
+		 * @returns [FlatpickrOptions]
+		 * @memberof Providers.DatePicker.Flatpickr.SingleDate.FlatpickrSingleDateConfig
+		 */
 		public getProviderConfig(): FlatpickrOptions {
 			const flatpickrSingleDateOpts = {
 				defaultDate: OSFramework.Helper.Dates.IsNull(this.InitialDate) ? undefined : this.InitialDate,

@@ -11,7 +11,7 @@ namespace Providers.RangeSlider.NoUISlider.SliderSingle {
 		 * Method to set provider configs for the Single Slider mode
 		 *
 		 * @return {*}  {NoUiSliderOptions}
-		 * @memberof NoUiSliderSingleConfig
+		 * @memberof Providers.RangeSlider.NoUISlider.SliderSingle.NoUiSliderSingleConfig
 		 */
 		public getProviderConfig(): NoUiSliderOptions {
 			// eslint-disable-next-line prefer-const

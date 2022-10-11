@@ -11,7 +11,7 @@ namespace Providers.RangeSlider.NoUISlider.SliderInterval {
 		 * Method to set provider configs for the Interval Slider mode
 		 *
 		 * @return {*}  {NoUiSliderOptions}
-		 * @memberof NoUiSliderIntervalConfig
+		 * @memberof Providers.RangeSlider.NoUISlider.SliderInterval.NoUiSliderIntervalConfig
 		 */
 		public getProviderConfig(): NoUiSliderOptions {
 			// eslint-disable-next-line prefer-const

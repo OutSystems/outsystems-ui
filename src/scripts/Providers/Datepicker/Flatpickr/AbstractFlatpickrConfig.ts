@@ -152,7 +152,7 @@ namespace Providers.Datepicker.Flatpickr {
 		 * Method used to get all the global Flatpickr properties across the different types of instances
 		 *
 		 * @return {*}  {FlatpickrOptions}
-		 * @memberof AbstractFlatpickrConfig
+		 * @memberof Providers.DatePicker.Flatpickr.AbstractFlatpickrConfig
 		 */
 		public getCommonProviderConfigs(): FlatpickrOptions {
 			// Check the given server date format config
@@ -190,7 +190,7 @@ namespace Providers.Datepicker.Flatpickr {
 		 * Method to set and save the extensibility provider configs
 		 *
 		 * @param {FlatpickrOptions} newConfigs
-		 * @memberof AbstractFlatpickrConfig
+		 * @memberof Providers.DatePicker.Flatpickr.AbstractFlatpickrConfig
 		 */
 		public setExtensibilityConfigs(newConfigs: FlatpickrOptions): void {
 			this._providerExtendedOptions = newConfigs;
@@ -201,7 +201,7 @@ namespace Providers.Datepicker.Flatpickr {
 		 *
 		 * @readonly
 		 * @type {string}
-		 * @memberof AbstractFlatpickrConfig
+		 * @memberof Providers.DatePicker.Flatpickr.AbstractFlatpickrConfig
 		 */
 		public get Lang(): string {
 			return this._lang;
@@ -210,7 +210,7 @@ namespace Providers.Datepicker.Flatpickr {
 		/**
 		 * Set DatePicker Locale
 		 *
-		 * @memberof AbstractFlatpickrConfig
+		 * @memberof Providers.DatePicker.Flatpickr.AbstractFlatpickrConfig
 		 */
 		public set Lang(value: string) {
 			// substring is needed to avoid passing values like "en-EN" since we must use only "en"
@@ -220,7 +220,7 @@ namespace Providers.Datepicker.Flatpickr {
 		/**
 		 * Set DisableDays
 		 *
-		 * @memberof AbstractFlatpickrConfig
+		 * @memberof Providers.DatePicker.Flatpickr.AbstractFlatpickrConfig
 		 */
 		public set DisabledDays(value: string[]) {
 			this._disabledDays = value;
@@ -229,7 +229,7 @@ namespace Providers.Datepicker.Flatpickr {
 		/**
 		 * Set DisableWeekDays
 		 *
-		 * @memberof AbstractFlatpickrConfig
+		 * @memberof Providers.DatePicker.Flatpickr.AbstractFlatpickrConfig
 		 */
 		public set DisabledWeekDays(value: number[]) {
 			this._disabledWeekDays = value;

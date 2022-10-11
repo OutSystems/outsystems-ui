@@ -70,7 +70,7 @@ namespace Providers.SharedProviderResources.Flatpickr {
 		/**
 		 * Method to remove and destroy instance events and properties!
 		 *
-		 * @memberof UpdatePositionOnScroll
+		 * @memberof Providers.SharedProviderResources.Flatpickr.UpdatePositionOnScroll
 		 */
 		public dispose(): void {
 			this._unsetEvents();

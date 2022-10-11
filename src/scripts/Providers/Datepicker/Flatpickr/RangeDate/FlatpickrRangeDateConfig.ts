@@ -44,7 +44,12 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 			return [this.InitialStartDate, this.InitialEndDate];
 		}
 
-		// Method used to set all the config properties for the RangeDate mode type
+		/**
+		 * Method used to set all the config properties for the RangeDate mode type
+		 *
+		 * @returns [FlatpickrOptions]
+		 * @memberof Providers.DatePicker.Flatpickr.RangeDate.FlatpickrRangeDateConfig
+		 */
 		public getProviderConfig(): FlatpickrOptions {
 			const flatpickrRangeDateOpts = {
 				defaultDate: this._setDefaultDate(),

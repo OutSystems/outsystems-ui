@@ -159,7 +159,12 @@ namespace Providers.Dropdown.VirtualSelect {
 			return [hasDescription, groupOptionsObject];
 		}
 
-		// Method used to set all the common VirtualSelect properties across the different types of instances
+		/**
+		 * Method used to set all the common VirtualSelect properties across the different types of instances
+		 *
+		 * @returns [VirtualSelectOpts]
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelectConfig
+		 */
 		public getProviderConfig(): VirtualSelectOpts {
 			/* In order to avoid XSS let's sanitize the label of each all options
 			- This must be done here since If we do this at the renderer option we will remain with the
@@ -204,7 +209,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * Method to validate and save the external provider configs
 		 *
 		 * @param {VirtualSelectOpts} newConfigs
-		 * @memberof AbstractVirtualSelectConfig
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelectConfig
 		 */
 		public setExtensibilityConfigs(newConfigs: VirtualSelectOpts): void {
 			if (newConfigs[Enum.ExtendedConfigs.hasOptionDescription] !== undefined)
@@ -215,7 +220,13 @@ namespace Providers.Dropdown.VirtualSelect {
 			this._providerExtendedOptions = newConfigs;
 		}
 
-		// Override, Validate configs key values
+		/**
+		 * Override, Validate configs key values
+		 *
+		 * @param {string} key
+		 * @param {unknown} value
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelectConfig
+		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;
 

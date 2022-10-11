@@ -48,7 +48,12 @@ namespace Providers.TimePicker.Flatpickr {
 			return _altFormat;
 		}
 
-		// Method used to check the language and also map it into Flatpickr expected format
+		/**
+		 * Method used to check the language and also map it into Flatpickr expected format
+		 *
+		 * @return {FlatpickrLocale} FlatpickrLocale
+		 * @memberof Providers.TimePicker.Flatpickr.FlatpickrTimeConfig
+		 */
 		protected _checkLocale(): FlatpickrLocale {
 			// FlatpickrLocale script file is already loaded
 			let _locale: FlatpickrLocale;
@@ -65,7 +70,12 @@ namespace Providers.TimePicker.Flatpickr {
 			return _locale;
 		}
 
-		// Method used to set all the config properties for the Time mode type
+		/**
+		 * Method used to set all the config properties for the Time mode type
+		 *
+		 * @return {FlatpickrOptions} FlatpickrOptions
+		 * @memberof Providers.TimePicker.Flatpickr.FlatpickrTimeConfig
+		 */
 		public getProviderConfig(): FlatpickrOptions {
 			this._providerOptions = {
 				altFormat: this._checkAltFormat(),
@@ -94,7 +104,7 @@ namespace Providers.TimePicker.Flatpickr {
 		 * Method to set and save the extensibility provider configs
 		 *
 		 * @param {FlatpickrOptions} newConfigs
-		 * @memberof AbstractFlatpickrConfig
+		 * @memberof Providers.TimePicker.Flatpickr.FlatpickrTimeConfig
 		 */
 		public setExtensibilityConfigs(newConfigs: FlatpickrOptions): void {
 			this._providerExtendedOptions = newConfigs;
@@ -105,7 +115,7 @@ namespace Providers.TimePicker.Flatpickr {
 		 *
 		 * @readonly
 		 * @type {string}
-		 * @memberof AbstractFlatpickrConfig
+		 * @memberof Providers.TimePicker.Flatpickr.FlatpickrTimeConfig
 		 */
 		public get Lang(): string {
 			return this._lang;
@@ -114,7 +124,7 @@ namespace Providers.TimePicker.Flatpickr {
 		/**
 		 * Set TimePicker Locale
 		 *
-		 * @memberof AbstractFlatpickrConfig
+		 * @memberof Providers.TimePicker.Flatpickr.FlatpickrTimeConfig
 		 */
 		public set Lang(value: string) {
 			// substring is needed to avoid passing values like "en-EN" since we must use only "en"

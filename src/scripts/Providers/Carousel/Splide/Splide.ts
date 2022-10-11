@@ -176,7 +176,7 @@ namespace Providers.Carousel.Splide {
 		 * Method to set the html elements used
 		 *
 		 * @protected
-		 * @memberof Providers.Splide.OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		protected setHtmlElements(): void {
 			this._carouselPlaceholderElem = OSFramework.Helper.Dom.ClassSelector(
@@ -193,7 +193,7 @@ namespace Providers.Carousel.Splide {
 		 * Method to set the initial CSS Classes
 		 *
 		 * @protected
-		 * @memberof Providers.Splide.OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		protected setInitialCssClasses(): void {
 			// If using Carousel with a List, get one level below on the HTML, so that the List element is used on the structure expected by the library
@@ -215,7 +215,7 @@ namespace Providers.Carousel.Splide {
 		 * Unsets the callbacks.
 		 *
 		 * @protected
-		 * @memberof Providers.Splide.OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		protected unsetCallbacks(): void {
 			// remove event listener
@@ -233,7 +233,7 @@ namespace Providers.Carousel.Splide {
 		 * Unsets the HTML elements.
 		 *
 		 * @protected
-		 * @memberof Providers.Splide.OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		protected unsetHtmlElements(): void {
 			this._carouselPlaceholderElem = undefined;
@@ -243,7 +243,7 @@ namespace Providers.Carousel.Splide {
 		/**
 		 * Method to build the pattern.
 		 *
-		 * @memberof Providers.Splide.OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		public build(): void {
 			super.build();
@@ -266,7 +266,7 @@ namespace Providers.Carousel.Splide {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof Providers.Splide.OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -308,7 +308,7 @@ namespace Providers.Carousel.Splide {
 		/**
 		 * Method to remove and destroy Carousel Splide instance
 		 *
-		 * @memberof Providers.Splide.OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		public dispose(): void {
 			// Check if provider is ready
@@ -326,7 +326,7 @@ namespace Providers.Carousel.Splide {
 		 * Method to call the go API from the provider
 		 *
 		 * @param {number} index
-		 * @memberof Providers.Splide.OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		public goTo(index: number): void {
 			this._provider.go(index);
@@ -335,7 +335,7 @@ namespace Providers.Carousel.Splide {
 		/**
 		 * Method to call the go API from the provider. With '>' it will go to the next page
 		 *
-		 * @memberof Providers.Splide.OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		public next(): void {
 			this._provider.go(Enum.Go.Next);
@@ -344,7 +344,7 @@ namespace Providers.Carousel.Splide {
 		/**
 		 * Method to call the go API from the provider. With '<' it will go to the previous page
 		 *
-		 * @memberof Providers.Splide.OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		public previous(): void {
 			this._provider.go(Enum.Go.Previous);
@@ -355,7 +355,7 @@ namespace Providers.Carousel.Splide {
 		 *
 		 * @param {string} eventName
 		 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback
-		 * @memberof Providers.Splide.OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		public registerCallback(eventName: string, callback: OSFramework.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -387,7 +387,7 @@ namespace Providers.Carousel.Splide {
 		 * Method used to set all the extended Splide properties across the different types of instances
 		 *
 		 * @param {SplideOpts} newConfigs
-		 * @memberof Providers.Splide.OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		public setProviderConfigs(newConfigs: SplideOpts): void {
 			this.configs.setExtensibilityConfigs(newConfigs);
@@ -398,7 +398,7 @@ namespace Providers.Carousel.Splide {
 		 * Method to call the option API from the provider to toggle drag events
 		 *
 		 * @param {boolean} hasDrag
-		 * @memberof Providers.Splide.OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		public toggleDrag(hasDrag: boolean): void {
 			this._provider.options = { drag: hasDrag };
@@ -408,7 +408,7 @@ namespace Providers.Carousel.Splide {
 		 * Method to toggle the _blockOnRender that enables/disables the OnRender update
 		 *
 		 * @param {boolean} blockOnRender
-		 * @memberof Providers.Splide.OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		public toggleOnRender(blockOnRender: boolean): void {
 			this._blockOnRender = blockOnRender;
@@ -417,7 +417,7 @@ namespace Providers.Carousel.Splide {
 		/**
 		 * Method used on the changeProperty for the options that require the Carousel to be destroyed and created again to properly update
 		 *
-		 * @memberof Providers.Splide.OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		public updateCarousel(): void {
 			// Check if provider is ready
@@ -432,7 +432,7 @@ namespace Providers.Carousel.Splide {
 		/**
 		 * Method to run when there's a platform onRender
 		 *
-		 * @memberof Providers.Splide.OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		public updateOnRender(): void {
 			if (this._blockOnRender === false) {

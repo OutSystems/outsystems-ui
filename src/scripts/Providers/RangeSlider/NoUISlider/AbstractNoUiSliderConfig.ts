@@ -22,7 +22,7 @@ namespace Providers.RangeSlider.NoUiSlider {
 		 *
 		 * @protected
 		 * @return {*}  {NoUiSliderOptions}
-		 * @memberof AbstractNoUiSliderConfig
+		 * @memberof Providers.RangeSlider.NoUiSlider.AbstractNoUiSliderConfig
 		 */
 		protected getCommonProviderConfig(): NoUiSliderOptions {
 			this._providerOptions = {
@@ -43,7 +43,7 @@ namespace Providers.RangeSlider.NoUiSlider {
 		 * Method to get the configs for the Pips option (ShowTickMarks)
 		 *
 		 * @return {*}  {unknown}
-		 * @memberof AbstractNoUiSliderConfig
+		 * @memberof Providers.RangeSlider.NoUiSlider.AbstractNoUiSliderConfig
 		 */
 		public getPipsConfig(): NoUiSliderPips {
 			let tickMarksValues = Math.floor(this.TickMarksInterval);
@@ -92,7 +92,7 @@ namespace Providers.RangeSlider.NoUiSlider {
 		 * Method to get the configs for the Range option (Min/Max values)
 		 *
 		 * @return {*}  {unknown}
-		 * @memberof AbstractNoUiSliderConfig
+		 * @memberof Providers.RangeSlider.NoUiSlider.AbstractNoUiSliderConfig
 		 */
 		public getRangeConfig(): NoUiSliderRange {
 			return {
@@ -105,7 +105,7 @@ namespace Providers.RangeSlider.NoUiSlider {
 		 * Method to get the configs for the Tooltip option (ShowFloatingLabel)
 		 *
 		 * @return {*}  {string[]}
-		 * @memberof AbstractNoUiSliderConfig
+		 * @memberof Providers.RangeSlider.NoUiSlider.AbstractNoUiSliderConfig
 		 */
 		public getTooltipFormat(): NoUISliderTooltip {
 			const tooltipValue = this.ShowFloatingLabel ? window.wNumb({ decimals: 0 }) : false;
@@ -124,7 +124,7 @@ namespace Providers.RangeSlider.NoUiSlider {
 		 * Method to validate and save the external provider configs
 		 *
 		 * @param {NoUiSliderOptions} newConfigs
-		 * @memberof AbstractNoUiSliderConfig
+		 * @memberof Providers.RangeSlider.NoUiSlider.AbstractNoUiSliderConfig
 		 */
 		public setExtensibilityConfigs(newConfigs: NoUiSliderOptions): void {
 			this._providerExtendedOptions = newConfigs;
