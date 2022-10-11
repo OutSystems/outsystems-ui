@@ -169,7 +169,7 @@ namespace Providers.Datepicker.Flatpickr {
 		 * This method has no implementation on this pattern context!
 		 */
 		protected setA11YProperties(): void {
-			throw new Error('Method not implemented.');
+			console.warn(OSFramework.GlobalEnum.WarningMessages.MethodNotImplemented);
 		}
 
 		/**

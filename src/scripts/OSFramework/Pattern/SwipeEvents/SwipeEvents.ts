@@ -83,7 +83,7 @@ namespace OSFramework.Patterns.SwipeEvents {
 		 * This method has no implementation on this pattern context!
 		 */
 		protected setA11YProperties(): void {
-			throw new Error('Method not implemented.');
+			console.warn(GlobalEnum.WarningMessages.MethodNotImplemented);
 		}
 
 		/**

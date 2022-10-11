@@ -346,6 +346,7 @@ namespace OSFramework.GlobalEnum {
 
 	export enum WarningMessages {
 		FeatureNotImplemented = 'This feature is not yet implemented!',
+		MethodNotImplemented = 'This Method has no implementation on the context of this pattern.',
 	}
 
 	export enum NullValues {
