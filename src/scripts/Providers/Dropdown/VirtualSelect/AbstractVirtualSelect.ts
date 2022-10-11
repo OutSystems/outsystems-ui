@@ -161,6 +161,13 @@ namespace Providers.Dropdown.VirtualSelect {
 		}
 
 		/**
+		 * This method has no implementation on this pattern context!
+		 */
+		protected setA11YProperties(): void {
+			throw new Error('Method not implemented.');
+		}
+
+		/**
 		 * Set the callbacks that will be assigned to the window click event
 		 *
 		 * @protected

@@ -197,6 +197,13 @@ namespace Providers.MonthPicker.Flatpickr {
 		}
 
 		/**
+		 * This method has no implementation on this pattern context!
+		 */
+		protected setA11YProperties(): void {
+			throw new Error('Method not implemented.');
+		}
+
+		/**
 		 * Remove all the assigned Events
 		 *
 		 * @protected
