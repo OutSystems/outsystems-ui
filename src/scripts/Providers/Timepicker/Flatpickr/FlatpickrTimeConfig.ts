@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace Providers.Timepicker.Flatpickr {
+namespace Providers.TimePicker.Flatpickr {
 	/**
 	 * Class that represents the custom configurations received by the Timepicker.
 	 *

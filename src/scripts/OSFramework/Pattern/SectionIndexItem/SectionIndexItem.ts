@@ -184,6 +184,13 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		}
 
 		/**
+		 * This method has no implementation on this pattern context!
+		 */
+		protected setHtmlElements(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
 		 *  Removes the listeners that were added in the code and unsets the callbacks.
 		 *
 		 * @protected

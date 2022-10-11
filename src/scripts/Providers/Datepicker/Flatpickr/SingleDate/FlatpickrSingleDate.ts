@@ -26,7 +26,7 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 		 * Method that will set the provider configurations in order to properly create its instance
 		 *
 		 * @protected
-		 * @memberof Flatpickr.SingleDate
+		 * @memberof Providers.DatePicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate
 		 */
 		protected prepareConfigs(): void {
 			if (this._isUpdatingDefaultDate === false) {
@@ -49,7 +49,7 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 		 * Trigger the jumToDate to now and trigger the Now as a selected Date!
 		 *
 		 * @protected
-		 * @memberof Flatpickr.SingleDate
+		 * @memberof Providers.DatePicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate
 		 */
 		protected todayBtnClick(event: MouseEvent): void {
 			event.preventDefault();
@@ -72,7 +72,7 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 		 *
 		 * @param {string} propertyName the name of the property that will be changed
 		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
-		 * @memberof Flatpickr.SingleDate
+		 * @memberof Providers.DatePicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -106,7 +106,7 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 		 * Method used to update the InitialDate config value
 		 *
 		 * @param value The new InitialDate value that will be set
-		 * @memberof Flatpickr.SingleDate
+		 * @memberof Providers.DatePicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate
 		 */
 		public updateInitialDate(value: string): void {
 			this._isUpdatingDefaultDate = true;

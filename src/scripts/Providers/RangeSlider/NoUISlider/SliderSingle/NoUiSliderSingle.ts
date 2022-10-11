@@ -39,7 +39,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 		 * Method that will set the provider configurations in order to properly create its instance
 		 *
 		 * @protected
-		 * @memberof OSUINoUiSliderSingleSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.SingleSlider.OSUINoUiSliderSingle
 		 */
 		protected prepareConfigs(): void {
 			// Get the library configurations
@@ -53,7 +53,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 		 * Method to set the Accessibility attributes
 		 *
 		 * @protected
-		 * @memberof OSUINoUiSliderSingle
+		 * @memberof Providers.RangeSlider.NoUISlider.SingleSlider.OSUINoUiSliderSingle
 		 */
 		protected setA11YProperties(): void {
 			this.providerOptions.handleAttributes = [
@@ -74,7 +74,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 		/**
 		 * Method to build the pattern
 		 *
-		 * @memberof OSUINoUiSliderSingle
+		 * @memberof Providers.RangeSlider.NoUISlider.SingleSlider.OSUINoUiSliderSingle
 		 */
 		public build(): void {
 			super.build();
@@ -93,7 +93,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof OSUINoUiSliderSingle
+		 * @memberof Providers.RangeSlider.NoUISlider.SingleSlider.OSUINoUiSliderSingle
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);

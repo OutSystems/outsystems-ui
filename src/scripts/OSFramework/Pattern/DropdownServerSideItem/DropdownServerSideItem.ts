@@ -133,6 +133,13 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 		}
 
 		/**
+		 * This method has no implementation on this pattern context!
+		 */
+		protected setHtmlElements(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
 		 * Unset callbacks that has been assigned to the element
 		 *
 		 * @protected

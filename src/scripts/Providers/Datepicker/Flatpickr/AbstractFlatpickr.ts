@@ -56,22 +56,11 @@ namespace Providers.Datepicker.Flatpickr {
 			}
 		}
 
-		// Method to set the html elements used
-		private _setHtmllElements(): void {
-			// Set the inputHTML element
-			this._datePickerProviderInputElem = this._selfElem.querySelector('input.form-control');
-
-			// If the input hasn't be added
-			if (!this._datePickerProviderInputElem) {
-				throw new Error(`The datepicker input at DatepickerId '${this._widgetId}' is missing`);
-			}
-		}
-
 		/**
 		 * Method used to add the TodayButton at calendar
 		 *
 		 * @protected
-		 * @memberof AbstractFlatpickr
+		 * @memberof Providers.DatePicker.AbstractFlatpickr
 		 */
 		protected addTodayBtn(): void {
 			// Create the wrapper container
@@ -94,7 +83,7 @@ namespace Providers.Datepicker.Flatpickr {
 		 * Method that will be triggered at Flatpickr instance is ready
 		 *
 		 * @protected
-		 * @memberof AbstractFlatpickr
+		 * @memberof Providers.DatePicker.AbstractFlatpickr
 		 */
 		protected createProviderInstance(): void {
 			/* In order to avoid dateFormat convert issues done by provider when InitialDate was not defined and input has a default date lets clean that value before creating provider instance. This happen when DateFormat is different from YYYY-MM-DD */
@@ -145,7 +134,7 @@ namespace Providers.Datepicker.Flatpickr {
 		 * Trigger the jumToDate to now
 		 *
 		 * @protected
-		 * @memberof AbstractFlatpickr
+		 * @memberof Providers.DatePicker.AbstractFlatpickr
 		 */
 		protected jumpIntoToday(): void {
 			this.provider.jumpToDate(this.provider.now);
@@ -155,7 +144,7 @@ namespace Providers.Datepicker.Flatpickr {
 		 * Method that will be responsible to redraw the calendar when it's needed
 		 *
 		 * @protected
-		 * @memberof AbstractFlatpickr
+		 * @memberof Providers.DatePicker.AbstractFlatpickr
 		 */
 		protected redraw(): void {
 			// Destroy the old flatpickr instance
@@ -180,10 +169,26 @@ namespace Providers.Datepicker.Flatpickr {
 		}
 
 		/**
+		 * Method to set the html elements used
+		 *
+		 * @protected
+		 * @memberof Providers.DatePicker.AbstractFlatpickr
+		 */
+		protected setHtmlElements(): void {
+			// Set the inputHTML element
+			this._datePickerProviderInputElem = this._selfElem.querySelector('input.form-control');
+
+			// If the input hasn't be added
+			if (!this._datePickerProviderInputElem) {
+				throw new Error(`The datepicker input at DatepickerId '${this._widgetId}' is missing`);
+			}
+		}
+
+		/**
 		 * Remove all the assigned Events
 		 *
 		 * @protected
-		 * @memberof AbstractFlatpickr
+		 * @memberof Providers.DatePicker.AbstractFlatpickr
 		 */
 		protected unsetCallbacks(): void {
 			this.configs.OnChange = undefined;
@@ -196,7 +201,7 @@ namespace Providers.Datepicker.Flatpickr {
 		 * Unsets the refences to the HTML elements.
 		 *
 		 * @protected
-		 * @memberof AbstractFlatpickr
+		 * @memberof Providers.DatePicker.AbstractFlatpickr
 		 */
 		protected unsetHtmlElements(): void {
 			this._datePickerProviderInputElem = undefined;
@@ -205,7 +210,7 @@ namespace Providers.Datepicker.Flatpickr {
 		public build(): void {
 			super.build();
 
-			this._setHtmllElements();
+			this.setHtmlElements();
 		}
 
 		/**
@@ -213,7 +218,7 @@ namespace Providers.Datepicker.Flatpickr {
 		 *
 		 * @param {string} propertyName the name of the property that will be changed
 		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
-		 * @memberof AbstractFlatpickr
+		 * @memberof Providers.DatePicker.AbstractFlatpickr
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			//Storing the current ExtendedClass, before possibly changing this property.
@@ -246,7 +251,7 @@ namespace Providers.Datepicker.Flatpickr {
 		/**
 		 * Method used to clear the selected date
 		 *
-		 * @memberof AbstractFlatpickr
+		 * @memberof Providers.DatePicker.AbstractFlatpickr
 		 */
 		public clear(): void {
 			this.provider.clear();
@@ -255,7 +260,7 @@ namespace Providers.Datepicker.Flatpickr {
 		/**
 		 * Method used to close DatePicker
 		 *
-		 * @memberof AbstractFlatpickr
+		 * @memberof Providers.DatePicker.AbstractFlatpickr
 		 */
 		public close(): void {
 			this.provider.close();
@@ -287,7 +292,7 @@ namespace Providers.Datepicker.Flatpickr {
 		/**
 		 * Method to remove and destroy DatePicker instance
 		 *
-		 * @memberof AbstractFlatpickr
+		 * @memberof Providers.DatePicker.AbstractFlatpickr
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
@@ -313,7 +318,7 @@ namespace Providers.Datepicker.Flatpickr {
 		/**
 		 * Method used to open DatePicker
 		 *
-		 * @memberof AbstractFlatpickr
+		 * @memberof Providers.DatePicker.AbstractFlatpickr
 		 */
 		public open(): void {
 			this.provider.open();
@@ -322,7 +327,7 @@ namespace Providers.Datepicker.Flatpickr {
 		/**
 		 * Method used to regist callback events
 		 *
-		 * @memberof AbstractFlatpickr
+		 * @memberof Providers.DatePicker.AbstractFlatpickr
 		 */
 		public registerCallback(eventName: string, callback: OSFramework.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -342,7 +347,7 @@ namespace Providers.Datepicker.Flatpickr {
 		/**
 		 * Method used to set the DatePicker as editable on its input
 		 *
-		 * @memberof AbstractFlatpickr
+		 * @memberof Providers.DatePicker.AbstractFlatpickr
 		 */
 		public setEditableInput(isEditable: boolean): void {
 			if (this.configs.AllowInput !== isEditable) {
@@ -354,7 +359,7 @@ namespace Providers.Datepicker.Flatpickr {
 		/**
 		 * Method used to set the DatePicker language
 		 *
-		 * @memberof AbstractFlatpickr
+		 * @memberof Providers.DatePicker.AbstractFlatpickr
 		 */
 		public setLanguage(value: string): void {
 			// Set the new Language
@@ -370,7 +375,7 @@ namespace Providers.Datepicker.Flatpickr {
 		 * Method used to set all the extended Flatpickr properties across the different types of instances
 		 *
 		 * @param {FlatpickrOptions} newConfigs
-		 * @memberof AbstractFlatpickr
+		 * @memberof Providers.DatePicker.AbstractFlatpickr
 		 */
 		public setProviderConfigs(newConfigs: FlatpickrOptions): void {
 			this.configs.setExtensibilityConfigs(newConfigs);
@@ -381,7 +386,7 @@ namespace Providers.Datepicker.Flatpickr {
 		/**
 		 * Method used to toggle the default native behavior of DatePicker
 		 *
-		 * @memberof AbstractFlatpickr
+		 * @memberof Providers.DatePicker.AbstractFlatpickr
 		 */
 		public toggleNativeBehavior(isNative: boolean): void {
 			// Invert the boolean value of IsNative because of provider option

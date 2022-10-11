@@ -11,7 +11,7 @@ namespace Providers.Dropdown.VirtualSelect.Search {
 		 *
 		 * @protected
 		 * @return {*}  {DropDownOption[]}
-		 * @memberof OSUIVirtualSelectSearch
+		 * @memberof Providers.Dropdown.VirtualSelect.Search.OSUIVirtualSelectSearch
 		 */
 		protected getSelectedOptionsStructure(): DropDownOption[] {
 			// Store the options selected
@@ -35,7 +35,7 @@ namespace Providers.Dropdown.VirtualSelect.Search {
 		 * Method that will set the provider configurations in order to properly create its instance
 		 *
 		 * @protected
-		 * @memberof OSUIVirtualSelectSearch
+		 * @memberof Providers.Dropdown.VirtualSelect.Search.OSUIVirtualSelectSearch
 		 */
 		protected prepareConfigs(): void {
 			// Get the library configurations
@@ -50,7 +50,7 @@ namespace Providers.Dropdown.VirtualSelect.Search {
 		 *
 		 * @param {string} propertyName the name of the property that will be changed
 		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
-		 * @memberof OSUIVirtualSelectSearch
+		 * @memberof Providers.Dropdown.VirtualSelect.Search.OSUIVirtualSelectSearch
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);

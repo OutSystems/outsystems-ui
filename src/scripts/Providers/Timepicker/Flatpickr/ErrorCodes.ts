@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.Timepicker.Flatpickr {
+namespace Providers.TimePicker.Flatpickr {
 	/**
 	 * OutSystemsUI Flatpickr Provider
 	 */

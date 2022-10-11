@@ -45,7 +45,7 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 		 * Method that will set the provider configurations in order to properly create its instance
 		 *
 		 * @protected
-		 * @memberof OSUINoUiSliderSingleSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.IntervalSlider.OSUINoUiSliderInterval
 		 */
 		protected prepareConfigs(): void {
 			// Get the library configurations
@@ -59,7 +59,7 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 		 * Method to set the Accessibility attributes
 		 *
 		 * @protected
-		 * @memberof OSUINoUiSliderInterval
+		 * @memberof Providers.RangeSlider.NoUISlider.IntervalSlider.OSUINoUiSliderInterval
 		 */
 		protected setA11YProperties(): void {
 			this.providerOptions.handleAttributes = [
@@ -72,7 +72,7 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 		 * Sets the callbacks to be used with the provider.
 		 *
 		 * @protected
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.IntervalSlider.OSUINoUiSliderInterval
 		 */
 		protected setCallbacks(): void {
 			this.eventProviderValueChanged = this._valueChangeCallback.bind(this);
@@ -81,7 +81,7 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 		/**
 		 * Method to build the pattern
 		 *
-		 * @memberof OSUINoUiSliderInterval
+		 * @memberof Providers.RangeSlider.NoUISlider.IntervalSlider.OSUINoUiSliderInterval
 		 */
 		public build(): void {
 			super.build();
@@ -100,7 +100,7 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof OSUINoUiSliderInterval
+		 * @memberof Providers.RangeSlider.NoUISlider.IntervalSlider.OSUINoUiSliderInterval
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -131,7 +131,7 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 		/**
 		 * Method to set current RangeSliderInterval value
 		 *
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.IntervalSlider.OSUINoUiSliderInterval
 		 */
 		public resetValue(): void {
 			this.configs.StartingValueFrom = this.configs.InitialValueFrom;
@@ -143,7 +143,7 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 		 * Method to set current RangeSliderInterval values
 		 *
 		 * @param {number} value
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.IntervalSlider.OSUINoUiSliderInterval
 		 */
 		public setValue(intervalStart: number, intervalEnd: number): void {
 			if (intervalStart < intervalEnd) {

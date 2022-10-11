@@ -65,6 +65,13 @@ namespace OSFramework.Patterns.TabsHeaderItem {
 		}
 
 		/**
+		 * This method has no implementation on this pattern context!
+		 */
+		protected setHtmlElements(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
 		 * Method to remove all assigned callbacks
 		 *
 		 * @protected

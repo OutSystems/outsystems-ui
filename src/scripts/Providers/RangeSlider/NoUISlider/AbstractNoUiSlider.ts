@@ -75,7 +75,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * Method that will create the provider
 		 *
 		 * @private
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		protected createProviderInstance(): void {
 			// Set inital library options
@@ -104,7 +104,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * Method to set the html elements used
 		 *
 		 * @protected
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		protected setHtmlElements(): void {
 			// Element that will be used to init the provider
@@ -118,7 +118,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * Method to set the initial CSS Classes
 		 *
 		 * @protected
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		protected setInitialCSSClasses(): void {
 			// If Orientation is vertical add class
@@ -154,7 +154,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * Method to set the library options from the config
 		 *
 		 * @private
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		protected setInitialStates(): void {
 			this._setSize();
@@ -166,7 +166,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * Unsets the callbacks.
 		 *
 		 * @protected
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		protected unsetCallbacks(): void {
 			this.eventProviderValueChanged = undefined;
@@ -176,7 +176,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * Unsets the HTML elements.
 		 *
 		 * @protected
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		protected unsetHtmlElements(): void {
 			this._rangeSliderProviderElem = undefined;
@@ -186,7 +186,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * Method to remove and destroy RangeSlider instance
 		 *
 		 * @private
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		protected updateRangeSlider(): void {
 			this.provider.destroy();
@@ -196,7 +196,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		/**
 		 * Method to build the pattern.
 		 *
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		public build(): void {
 			super.build();
@@ -208,7 +208,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			// Check which property changed and call respective method to update it
@@ -252,7 +252,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		/**
 		 * Method to remove and destroy RangeSlider instance
 		 *
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
@@ -269,7 +269,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * Method to get current RangeSlider value
 		 *
 		 * @return {*}  {(number | number[])}
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		public getValue(): number | number[] {
 			return this.provider.get();
@@ -280,7 +280,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 *
 		 * @param {string} eventName
 		 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		public registerCallback(eventName: string, callback: OSFramework.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -316,7 +316,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		/**
 		 * Method to change the Range Slider trigger to on DragEnd
 		 *
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		public setRangeIntervalChangeOnDragEnd(): void {
 			// Remove slide default event
