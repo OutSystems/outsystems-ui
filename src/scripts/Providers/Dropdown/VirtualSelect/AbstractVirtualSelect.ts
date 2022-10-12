@@ -98,7 +98,7 @@ namespace Providers.Dropdown.VirtualSelect {
 
 			if (OSFramework.Helper.DeviceInfo.GetBrowser() === OSFramework.GlobalEnum.Browser.edge) {
 				// Prevent the context menu from appearing when clicking on the dropdown multiple times in Edge browser
-				this._selfElem.addEventListener(OSFramework.GlobalEnum.HTMLEvent.MouseUp, this._onMouseUpEvent);
+				this.selfElement.addEventListener(OSFramework.GlobalEnum.HTMLEvent.MouseUp, this._onMouseUpEvent);
 			}
 
 			if (OSFramework.Helper.DeviceInfo.IsDesktop) {
