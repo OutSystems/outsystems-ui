@@ -51,6 +51,10 @@
 			.vscomp-clear-button {
 				right: var(--space-xl);
 			}
+
+			.vscomp-value {
+				margin-right: var(--space-m);
+			}
 		}
 	}
 
@@ -114,7 +118,6 @@
 			color: var(--color-neutral-7);
 			font-size: var(--font-size-xs);
 			font-weight: var(--font-semi-bold);
-			margin-right: var(--space-m);
 			padding: 6px 35px 6px 10px;
 			position: relative;
 
