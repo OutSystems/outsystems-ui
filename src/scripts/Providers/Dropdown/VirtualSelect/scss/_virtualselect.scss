@@ -51,6 +51,17 @@
 			.vscomp-clear-button {
 				right: var(--space-xl);
 			}
+
+			.vscomp-value {
+				margin-right: var(--space-m);
+			}
+		}
+	}
+
+	&:not(.has-value) {
+		.vscomp-value {
+			color: var(--color-neutral-7);
+			opacity: 1;
 		}
 	}
 
@@ -476,14 +487,6 @@
 // Accessibility -----------------------------------------------------------------
 ///
 .has-accessible-features {
-	.vscomp-wrapper {
-		&:not(.has-value) {
-			.vscomp-value {
-				opacity: 0.8;
-			}
-		}
-	}
-
 	.vscomp-toggle-button {
 		border-color: var(--color-neutral-7);
 		color: var(--color-neutral-10);

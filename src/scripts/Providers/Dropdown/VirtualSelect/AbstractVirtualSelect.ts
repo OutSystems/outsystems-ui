@@ -7,6 +7,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		// Store the onResize event
 		private _eventOnWindowResize: OSFramework.GlobalCallbacks.Generic;
 		// Dropdown callback events
+		private _onMouseUpEvent: OSFramework.GlobalCallbacks.Generic;
 		private _onSelectedOptionEvent: OSFramework.GlobalCallbacks.Generic;
 		private _platformEventInitializedCallback: OSFramework.GlobalCallbacks.OSGeneric;
 		private _platformEventSelectedOptCallback: OSFramework.Patterns.Dropdown.Callbacks.OSOnSelectEvent;
@@ -62,6 +63,11 @@ namespace Providers.Dropdown.VirtualSelect {
 			}
 		}
 
+		// Prevent the default behaviour of the event
+		private _onMouseUp(event) {
+			event.preventDefault();
+		}
+
 		// Get the selected options and pass them into callBack
 		private _onSelectedOption() {
 			// Trigger platform's SelectedOptionCallbackEvent client Action
@@ -90,6 +96,11 @@ namespace Providers.Dropdown.VirtualSelect {
 			// Add the event that will get the selected options values
 			this._selfElem.addEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
 
+			if (OSFramework.Helper.DeviceInfo.GetBrowser() === OSFramework.GlobalEnum.Browser.edge) {
+				// Prevent the context menu from appearing when clicking on the dropdown multiple times in Edge browser
+				this.selfElement.addEventListener(OSFramework.GlobalEnum.HTMLEvent.MouseUp, this._onMouseUpEvent);
+			}
+
 			if (OSFramework.Helper.DeviceInfo.IsDesktop) {
 				// Set the WindowResize in order to close it if it's open!
 				OSFramework.Event.GlobalEventManager.Instance.addHandler(
@@ -102,6 +113,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		// Remove Pattern Events
 		private _unsetEvents(): void {
 			this._selfElem.removeEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
+			this._selfElem.removeEventListener(OSFramework.GlobalEnum.HTMLEvent.MouseUp, this._onMouseUpEvent);
 
 			if (OSFramework.Helper.DeviceInfo.IsDesktop) {
 				OSFramework.Event.GlobalEventManager.Instance.removeHandler(
@@ -156,6 +168,9 @@ namespace Providers.Dropdown.VirtualSelect {
 			// Destroy the old VirtualSelect instance
 			this.provider.destroy();
 
+			// Unset all the events
+			this._unsetEvents();
+
 			// Create a new VirtualSelect instance with the updated configs
 			OSFramework.Helper.AsyncInvocation(this.prepareConfigs.bind(this));
 		}
@@ -169,6 +184,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		protected setCallbacks(): void {
 			// Set the events callback reference
 			this._eventOnWindowResize = this._onWindowResize.bind(this);
+			this._onMouseUpEvent = this._onMouseUp.bind(this);
 			this._onSelectedOptionEvent = this._onSelectedOption.bind(this);
 		}
 
