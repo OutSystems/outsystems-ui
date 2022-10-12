@@ -90,6 +90,13 @@ namespace Providers.Dropdown.VirtualSelect {
 			// Add the event that will get the selected options values
 			this._selfElem.addEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
 
+			if (OSFramework.Helper.DeviceInfo.GetBrowser() === OSFramework.GlobalEnum.Browser.edge) {
+				// Prevent the context menu from appearing when clicking on the dropdown multiple times in Edge browser
+				this._selfElem.addEventListener(OSFramework.GlobalEnum.HTMLEvent.MouseUp, (event) =>
+					event.preventDefault()
+				);
+			}
+
 			if (OSFramework.Helper.DeviceInfo.IsDesktop) {
 				// Set the WindowResize in order to close it if it's open!
 				OSFramework.Event.GlobalEventManager.Instance.addHandler(
