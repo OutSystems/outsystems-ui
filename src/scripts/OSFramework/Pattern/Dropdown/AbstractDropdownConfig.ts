@@ -9,12 +9,12 @@ namespace OSFramework.Patterns.Dropdown {
 		}
 
 		/**
-		 * Override, Validate configs key values
+		 * Method that will check if a given property (key) value is the type expected!
 		 *
-		 * @param {string} key
-		 * @param {unknown} value
-		 * @return {*}  {unknown}
-		 * @memberof AbstractDropdownConfig
+		 * @param key property name
+		 * @param value value to be check
+		 * @returns {unknown} value
+		 * @memberof  OSFramework.Patterns.Dropdown.AbstractDropdownConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

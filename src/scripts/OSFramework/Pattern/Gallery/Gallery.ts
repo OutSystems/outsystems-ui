@@ -17,7 +17,7 @@ namespace OSFramework.Patterns.Gallery {
 		 * Function used to set the Gallery's items gap
 		 *
 		 * @private
-		 * @memberof Gallery
+		 * @memberof OSFramework.Patterns.Gallery.Gallery
 		 */
 		private _setItemsGap(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
@@ -31,7 +31,7 @@ namespace OSFramework.Patterns.Gallery {
 		 * Function used to set the Gallery's number of items per row in Desktop
 		 *
 		 * @private
-		 * @memberof Gallery
+		 * @memberof OSFramework.Patterns.Gallery.Gallery
 		 */
 		private _setRowItemsDesktop(): void {
 			//The number must be greater than 0
@@ -60,7 +60,7 @@ namespace OSFramework.Patterns.Gallery {
 		 * Function used to set the Gallery's number of items per row in Phone
 		 *
 		 * @private
-		 * @memberof Gallery
+		 * @memberof OSFramework.Patterns.Gallery.Gallery
 		 */
 		private _setRowItemsPhone(): void {
 			//The number must be greater than 0
@@ -88,7 +88,7 @@ namespace OSFramework.Patterns.Gallery {
 		 * Function used to set the Gallery's number of items per row in Tablet
 		 *
 		 * @private
-		 * @memberof Gallery
+		 * @memberof OSFramework.Patterns.Gallery.Gallery
 		 */
 		private _setRowItemsTablet(): void {
 			//The number must be greater than 0
@@ -115,6 +115,9 @@ namespace OSFramework.Patterns.Gallery {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Gallery.Gallery
 		 */
 		protected setA11YProperties(): void {
 			console.warn(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -122,6 +125,9 @@ namespace OSFramework.Patterns.Gallery {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Gallery.Gallery
 		 */
 		protected setCallbacks(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -129,6 +135,9 @@ namespace OSFramework.Patterns.Gallery {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Gallery.Gallery
 		 */
 		protected setHtmlElements(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -136,6 +145,9 @@ namespace OSFramework.Patterns.Gallery {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Gallery.Gallery
 		 */
 		protected unsetCallbacks(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -143,6 +155,9 @@ namespace OSFramework.Patterns.Gallery {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Gallery.Gallery
 		 */
 		protected unsetHtmlElements(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -167,10 +182,11 @@ namespace OSFramework.Patterns.Gallery {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof Gallery
+		 * @memberof OSFramework.Patterns.Gallery.Gallery
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
+
 			if (this.isBuilt) {
 				// Check which property changed and call respective method to update it
 				switch (propertyName) {

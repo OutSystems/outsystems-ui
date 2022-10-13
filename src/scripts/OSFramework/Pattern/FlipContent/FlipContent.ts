@@ -90,7 +90,8 @@ namespace OSFramework.Patterns.FlipContent {
 		/**
 		 * Set the A11Y attributes
 		 *
-		 * @memberof FlipContent
+		 * @protected
+		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		protected setA11YProperties(): void {
 			if (this.configs.FlipSelf) {
@@ -104,7 +105,8 @@ namespace OSFramework.Patterns.FlipContent {
 		/**
 		 * Set the events
 		 *
-		 * @memberof FlipContent
+		 * @protected
+		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		protected setCallbacks(): void {
 			this._eventKeydown = this._keydownCallback.bind(this);
@@ -116,7 +118,8 @@ namespace OSFramework.Patterns.FlipContent {
 		/**
 		 * Set the HTML elements
 		 *
-		 * @memberof FlipContent
+		 * @protected
+		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		protected setHtmlElements(): void {
 			this._flipWrapperElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternContainer);
@@ -125,7 +128,8 @@ namespace OSFramework.Patterns.FlipContent {
 		/**
 		 * Method to remove all assigned callbacks
 		 *
-		 * @memberof FlipContent
+		 * @protected
+		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		protected unsetCallbacks(): void {
 			this._removeEvents();
@@ -137,7 +141,8 @@ namespace OSFramework.Patterns.FlipContent {
 		/**
 		 * Set the HTML elements
 		 *
-		 * @memberof FlipContent
+		 * @protected
+		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		protected unsetHtmlElements(): void {
 			this._flipWrapperElement = undefined;
@@ -146,7 +151,7 @@ namespace OSFramework.Patterns.FlipContent {
 		/**
 		 * Building Flip Content
 		 *
-		 * @memberof FlipContent
+		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		public build(): void {
 			super.build();
@@ -169,7 +174,7 @@ namespace OSFramework.Patterns.FlipContent {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof FlipContent
+		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -190,7 +195,7 @@ namespace OSFramework.Patterns.FlipContent {
 		/**
 		 * Destroy FlipContent
 		 *
-		 * @memberof FlipContent
+		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		public dispose(): void {
 			this.unsetCallbacks();
@@ -202,7 +207,7 @@ namespace OSFramework.Patterns.FlipContent {
 		/**
 		 * Register OnToogleClick clientAction as a callBack reference
 		 *
-		 * @memberof FlipContent
+		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		public registerCallback(callback: Callbacks.OSFlipEvent): void {
 			if (this._plataformEventFlip === undefined) {
@@ -219,7 +224,7 @@ namespace OSFramework.Patterns.FlipContent {
 		/**
 		 * Tries to show the font
 		 *
-		 * @memberof FlipContent
+		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		public showFrontContent(): void {
 			if (this.configs.IsFlipped) {
@@ -230,7 +235,7 @@ namespace OSFramework.Patterns.FlipContent {
 		/**
 		 * Public method to trigger the flipping of the pattern and the event on the platform's side
 		 *
-		 * @memberof FlipContent
+		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		public toggleFlipContent(): void {
 			this.configs.IsFlipped = !this.configs.IsFlipped;

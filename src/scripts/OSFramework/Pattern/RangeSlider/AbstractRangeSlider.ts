@@ -7,6 +7,8 @@ namespace OSFramework.Patterns.RangeSlider {
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
 		}
+
+		// Commom methods that all RangeSliders must implement
 		public abstract setRangeIntervalChangeOnDragEnd(): void;
 	}
 }

@@ -146,7 +146,12 @@ namespace OSFramework.Patterns.Progress.Circle {
 			);
 		}
 
-		// Add the initial animation to the pattern if it's applicable
+		/**
+		 * Add the initial animation to the pattern if it's applicable
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
+		 */
 		protected addInitialAnimation(): void {
 			// Check if the animation at init should be added
 			if (this.configs.AnimateInitialProgress) {
@@ -164,15 +169,30 @@ namespace OSFramework.Patterns.Progress.Circle {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
 		 */
 		protected setA11YProperties(): void {
 			console.warn(GlobalEnum.WarningMessages.MethodNotImplemented);
 		}
 
+		/**
+		 * Method to set the callbacks
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
+		 */
 		protected setCallbacks(): void {
 			super.setCallbacks();
 		}
 
+		/**
+		 * Method used to set the progrees value
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
+		 */
 		protected setElementProgressValue(value: number): void {
 			this.configs.Progress = value;
 
@@ -184,20 +204,42 @@ namespace OSFramework.Patterns.Progress.Circle {
 			this._updateProgressValue();
 		}
 
-		// Update info based on htmlContent
+		/**
+		 * Method used to set the HTML elements reference
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
+		 */
 		protected setHtmlElements(): void {
 			// Set the html reference that will be used to do all the needed calcs
 			this._progressElem = this.selfElement.querySelector(Constants.Dot + Enum.CssClass.Progress);
 		}
 
+		/**
+		 * Method to unset the callbacks
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
+		 */
 		protected unsetCallbacks(): void {
 			super.unsetCallbacks();
 		}
 
+		/**
+		 * Method to unset the HTML elements reference
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
+		 */
 		protected unsetHtmlElements(): void {
 			super.unsetHtmlElements();
 		}
 
+		/**
+		 * Update progress value
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
+		 */
 		protected updateProgressColor(value: string): void {
 			this.configs.ProgressColor = value;
 
@@ -208,6 +250,12 @@ namespace OSFramework.Patterns.Progress.Circle {
 			);
 		}
 
+		/**
+		 * Update shape type
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
+		 */
 		protected updateShape(value: string): void {
 			this.configs.Shape = value;
 
@@ -220,6 +268,12 @@ namespace OSFramework.Patterns.Progress.Circle {
 			);
 		}
 
+		/**
+		 * Update shape thickness
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
+		 */
 		protected updateThickness(value: number): void {
 			this.configs.Thickness = value;
 
@@ -232,6 +286,12 @@ namespace OSFramework.Patterns.Progress.Circle {
 			);
 		}
 
+		/**
+		 * Update shape color
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
+		 */
 		protected updateTrailColor(value: string): void {
 			this.configs.TrailColor = value;
 
@@ -256,6 +316,13 @@ namespace OSFramework.Patterns.Progress.Circle {
 			this.finishBuild();
 		}
 
+		/**
+		 * Update property value from a given property name at OnParametersChange
+		 *
+		 * @param {string} propertyName the name of the property that will be changed
+		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
+		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
+		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			switch (propertyName) {
 				case ProgressEnum.Properties.Thickness:
@@ -285,7 +352,11 @@ namespace OSFramework.Patterns.Progress.Circle {
 			}
 		}
 
-		// Destroy the ProgressCircle
+		/**
+		 * Destroy the ProgressCircle
+		 *
+		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
+		 */
 		public dispose(): void {
 			super.dispose();
 

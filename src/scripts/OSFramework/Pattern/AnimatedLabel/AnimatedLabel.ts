@@ -96,7 +96,7 @@ namespace OSFramework.Patterns.AnimatedLabel {
 		 * Set the callbacks that will be assigned to the window click event
 		 *
 		 * @protected
-		 * @memberof AnimatedLabel
+		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		protected setCallbacks(): void {
 			this._eventBlur = this._inputBlurCallback.bind(this);
@@ -110,7 +110,7 @@ namespace OSFramework.Patterns.AnimatedLabel {
 		 * Update info based on htmlContent
 		 *
 		 * @protected
-		 * @memberof AnimatedLabel
+		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		protected setHtmlElements(): void {
 			this._labelPhElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClasses.LabelPlaceholder);
@@ -142,7 +142,7 @@ namespace OSFramework.Patterns.AnimatedLabel {
 		 * Removes the listeners that were added in the code and unsets the callbacks.
 		 *
 		 * @protected
-		 * @memberof AnimatedLabel
+		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		protected unsetCallbacks(): void {
 			this._removeEvents();
@@ -156,7 +156,7 @@ namespace OSFramework.Patterns.AnimatedLabel {
 		 * Removes the local value of the variables pointing to HTML elements;
 		 *
 		 * @protected
-		 * @memberof AnimatedLabel
+		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		protected unsetHtmlElements(): void {
 			this._labelPhElement = undefined;
@@ -167,7 +167,7 @@ namespace OSFramework.Patterns.AnimatedLabel {
 		/**
 		 * Builds the animation label.
 		 *
-		 * @memberof AnimatedLabel
+		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		public build(): void {
 			//OS takes a while to set the TextArea
@@ -185,7 +185,7 @@ namespace OSFramework.Patterns.AnimatedLabel {
 		/**
 		 * Destroy the Animatedlabel.
 		 *
-		 * @memberof AnimatedLabel
+		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		public dispose(): void {
 			this.unsetCallbacks();
@@ -199,7 +199,7 @@ namespace OSFramework.Patterns.AnimatedLabel {
 		/**
 		 * Update Label active status accordingly when the input info has changed.
 		 *
-		 * @memberof AnimatedLabel
+		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		public updateOnRender(): void {
 			// Do not run this instead the pattern is totally built

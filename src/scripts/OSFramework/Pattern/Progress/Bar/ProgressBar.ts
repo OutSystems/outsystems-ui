@@ -80,7 +80,12 @@ namespace OSFramework.Patterns.Progress.Bar {
 			);
 		}
 
-		// Add the initial animation to the pattern if it's applicable
+		/**
+		 * Add the initial animation to the pattern if it's applicable
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.Bar.Bar
+		 */
 		protected addInitialAnimation(): void {
 			// Check if the animation at init should be added
 			if (this.configs.AnimateInitialProgress) {
@@ -93,16 +98,30 @@ namespace OSFramework.Patterns.Progress.Bar {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.Bar.Bar
 		 */
 		protected setA11YProperties(): void {
 			console.warn(GlobalEnum.WarningMessages.MethodNotImplemented);
 		}
 
+		/**
+		 * Method to set callbacks
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.Bar.Bar
+		 */
 		protected setCallbacks(): void {
 			super.setCallbacks();
 		}
 
-		// Add the animation on progress before applying progress value based on value change
+		/**
+		 * Add the animation on progress before applying progress value based on value change
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.Bar.Bar
+		 */
 		protected setElementProgressValue(value: number): void {
 			this.configs.Progress = value;
 
@@ -113,16 +132,33 @@ namespace OSFramework.Patterns.Progress.Bar {
 			this.updatedProgressValue();
 		}
 
-		// Update info based on htmlContent
+		/**
+		 * Method to set HTML elements reference
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.Bar.Bar
+		 */
 		protected setHtmlElements(): void {
 			// Set the html references that will be used to manage the cssClasses and atribute properties
 			this._progressElem = this.selfElement.querySelector(Constants.Dot + ProgressEnum.CssClass.Container);
 		}
 
+		/**
+		 * Method to unset callbacks
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.Bar.Bar
+		 */
 		protected unsetCallbacks(): void {
 			super.unsetCallbacks();
 		}
 
+		/**
+		 * Method to unset HTML elements reference
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.Bar.Bar
+		 */
 		protected unsetHtmlElements(): void {
 			super.unsetHtmlElements();
 		}
@@ -172,6 +208,11 @@ namespace OSFramework.Patterns.Progress.Bar {
 			}
 		}
 
+		/**
+		 * Destroy ProgressBar
+		 *
+		 * @memberof OSFramework.Patterns.Progress.Bar.Bar
+		 */
 		public dispose(): void {
 			this.unsetHtmlElements();
 			this.unsetCallbacks();

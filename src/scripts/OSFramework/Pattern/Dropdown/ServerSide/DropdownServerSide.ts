@@ -809,7 +809,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		 * Add the Accessibility Attributes values
 		 *
 		 * @protected
-		 * @memberof OSUIDropdownServerSide
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		protected setA11YProperties(): void {
 			// Update Tabindex Ballon elements
@@ -839,7 +839,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		 * Method to set the calbacks
 		 *
 		 * @protected
-		 * @memberof OSUIDropdownServerSide
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		protected setCallbacks(): void {
 			this._eventOnBodyClick = this._onBodyClick.bind(this);
@@ -860,7 +860,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		 * Method to set the html elements used
 		 *
 		 * @protected
-		 * @memberof OSUIDropdownServerSide
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		protected setHtmlElements(): void {
 			this._layoutElement = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.Layout);
@@ -911,7 +911,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		 * Unset callbacks that has been assigned to the element
 		 *
 		 * @protected
-		 * @memberof OSUIDropdownServerSide
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnBodyClick = undefined;
@@ -934,7 +934,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		 * Method to unset the html elements used
 		 *
 		 * @protected
-		 * @memberof OSUIDropdownServerSide
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		protected unsetHtmlElements(): void {
 			// Ensure that the ballon has been removed from the DOM since it has been Moved to outside of pattern context.
@@ -958,7 +958,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		 *
 		 * @param childId Dropdown Option Item Id to be stored
 		 * @param notifiedTo {Enum.ChildNotifyActionType} triggered notification type
-		 * @memberof OSUIDropdownServerSide
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public beNotifiedByChild(childId: string, notifiedTo: Enum.ChildNotifyActionType): void {
 			switch (notifiedTo) {
@@ -993,7 +993,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		 *
 		 * @param {string} propertyName the name of the property that will be changed
 		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
-		 * @memberof OSUIDropdownServerSide
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			// Store previous extended class before change it!
@@ -1017,7 +1017,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		/**
 		 * Method that will check for all Selected OptionItems and Unselect them
 		 *
-		 * @memberof OSUIDropdownServerSide
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public clear(): void {
 			// Get all Selected Items
@@ -1032,7 +1032,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		/**
 		 * Set pattern with a disable status
 		 *
-		 * @memberof OSUIDropdownServerSide
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public disable(): void {
 			// Assign disabled status.
@@ -1045,7 +1045,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		/**
 		 * Destroy the Dropdown.
 		 *
-		 * @memberof OSUIDropdownServerSide
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public dispose(): void {
 			this._unsetObserver();
@@ -1059,7 +1059,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		/**
 		 * Remove disable status from
 		 *
-		 * @memberof OSUIDropdownServerSide
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public enable(): void {
 			// Remove disabled status.
@@ -1072,7 +1072,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		/**
 		 * This method has no implementation on this context.
 		 *
-		 * @memberof OSUIDropdownServerSide
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public getSelectedValues(): string {
 			throw new Error(
@@ -1085,7 +1085,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		 *
 		 * @param {string} eventName Event name that will be assigned
 		 * @param {GlobalCallbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
-		 * @memberof OSUIDropdownServerSide
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -1134,7 +1134,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		 *
 		 * @param {boolean} Set if the dropdown is valid or not
 		 * @param {string} Text message to be added
-		 * @memberof OSUIDropdownServerSide
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public validation(isValid: boolean, validationMessage: string): void {
 			if (isValid === false) {

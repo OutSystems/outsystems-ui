@@ -21,6 +21,14 @@ namespace OSFramework.Patterns.RangeSlider {
 			super(config);
 		}
 
+		/**
+		 * Method that will check if a given property (key) value is the type expected!
+		 *
+		 * @param key property name
+		 * @param value value to be check
+		 * @returns {unknown} value
+		 * @memberof  OSFramework.Patterns.RangeSlider.AbstractRangeSliderConfig
+		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;
 

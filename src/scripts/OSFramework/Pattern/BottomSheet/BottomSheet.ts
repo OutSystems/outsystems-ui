@@ -46,7 +46,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		 *
 		 * @readonly
 		 * @type {Event.GestureEvent.DragEvent}
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public get gestureEventInstance(): Event.GestureEvent.DragEvent {
 			return this._gestureEventInstance;
@@ -57,7 +57,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public get hasGestureEvents(): boolean {
 			return this._hasGestureEvents;
@@ -201,7 +201,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * Method to remove the event listeners
 		 *
 		 * @protected
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		protected removeEventListeners(): void {
 			this._bottomSheetContentElem.removeEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnContentScroll);
@@ -214,7 +214,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * Add the Accessibility Attributes values
 		 *
 		 * @protected
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		protected setA11YProperties(): void {
 			if (!this.isBuilt) {
@@ -243,7 +243,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * Method to set the listeners and platform event callbacks
 		 *
 		 * @protected
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		protected setCallbacks(): void {
 			this._eventOnContentScroll = this._onContentScrollCallback.bind(this);
@@ -254,7 +254,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * Method to add event listeners
 		 *
 		 * @protected
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		protected setEventListeners(): void {
 			this._bottomSheetContentElem.addEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnContentScroll);
@@ -274,7 +274,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * Update info based on htmlContent
 		 *
 		 * @protected
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		protected setHtmlElements(): void {
 			this._parentSelf = Helper.Dom.GetElementById(this.widgetId);
@@ -286,7 +286,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * Method to set initial options
 		 *
 		 * @protected
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		protected setInitialOptions(): void {
 			this._toggleHandler(this.configs.ShowHandler);
@@ -297,7 +297,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * Method to unset callbacks
 		 *
 		 * @protected
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnContentScroll = undefined;
@@ -309,7 +309,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * Removes the local value of the variables pointing to HTML elements;
 		 *
 		 * @protected
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		protected unsetHtmlElements(): void {
 			this._parentSelf = undefined;
@@ -320,7 +320,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		/**
 		 *  Builds the BottomSheet.
 		 *
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public build(): void {
 			super.build();
@@ -338,7 +338,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -359,7 +359,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		/**
 		 * Method to close the BottomSHeet
 		 *
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public close(): void {
 			this._toggleBottomSheet(false);
@@ -368,7 +368,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		/**
 		 * Disposes the current pattern.
 		 *
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public dispose(): void {
 			if (this._isOpen) {
@@ -388,7 +388,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		/**
 		 * Method to open the BottomSheet
 		 *
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public open(): void {
 			this._toggleBottomSheet(true);
@@ -398,7 +398,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * Set callbacks for the onToggle event
 		 *
 		 * @param {GlobalCallbacks.Generic} callback
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public registerCallback(callback: GlobalCallbacks.Generic): void {
 			if (this._platformEventOnToggle === undefined) {
@@ -411,7 +411,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		/**
 		 * Removes the gesture events to open/close the BottomSheet on Native Apps
 		 *
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public removeGestureEvents(): void {
 			if (this._gestureEventInstance !== undefined) {
@@ -427,7 +427,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * Sets the gesture events to open/close the BottomSheet on Native Apps
 		 *
 		 * @protected
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public setGestureEvents(
 			onGestureStart: Event.GestureEvent.Callbacks.GestureStart,

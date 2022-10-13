@@ -285,6 +285,9 @@ namespace OSFramework.Patterns.Rating {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Rating.Rating
 		 */
 		protected setA11YProperties(): void {
 			console.warn(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -294,7 +297,7 @@ namespace OSFramework.Patterns.Rating {
 		 * Set the events
 		 *
 		 * @protected
-		 * @memberof Rating
+		 * @memberof OSFramework.Patterns.Rating.Rating
 		 */
 		protected setCallbacks(): void {
 			this._eventOnRatingClick = this._ratingOnClick.bind(this);
@@ -304,7 +307,7 @@ namespace OSFramework.Patterns.Rating {
 		 * Set the html references that will be used to manage the cssClasses and atribute properties
 		 *
 		 * @protected
-		 * @memberof Rating
+		 * @memberof OSFramework.Patterns.Rating.Rating
 		 */
 		protected setHtmlElements(): void {
 			this._ratingIconStatesElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.IconStates);
@@ -315,7 +318,7 @@ namespace OSFramework.Patterns.Rating {
 		 * Method to remove all assigned callbacks
 		 *
 		 * @protected
-		 * @memberof Rating
+		 * @memberof OSFramework.Patterns.Rating.Rating
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnRatingClick = undefined;
@@ -325,7 +328,7 @@ namespace OSFramework.Patterns.Rating {
 		 * UnSet the HTML elements
 		 *
 		 * @protected
-		 * @memberof Rating
+		 * @memberof OSFramework.Patterns.Rating.Rating
 		 */
 		protected unsetHtmlElements(): void {
 			// Remove html from the fieldset
@@ -338,7 +341,7 @@ namespace OSFramework.Patterns.Rating {
 		/**
 		 * Building Rating
 		 *
-		 * @memberof Rating
+		 * @memberof OSFramework.Patterns.Rating.Rating
 		 */
 		public build(): void {
 			super.build();
@@ -369,7 +372,7 @@ namespace OSFramework.Patterns.Rating {
 		 *
 		 * @param {string} propertyName
 		 * @param {*} propertyValue
-		 * @memberof Rating
+		 * @memberof OSFramework.Patterns.Rating.Rating
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			//Storing the current Size, before possibly changing this property.
@@ -402,7 +405,7 @@ namespace OSFramework.Patterns.Rating {
 		/**
 		 * Destroy the Rating pattern
 		 *
-		 * @memberof Rating
+		 * @memberof OSFramework.Patterns.Rating.Rating
 		 */
 		public dispose(): void {
 			this._removeEvents();
@@ -417,7 +420,7 @@ namespace OSFramework.Patterns.Rating {
 		 * Set callbacks for the onSelect click event
 		 *
 		 * @param {Callbacks.OSOnSelectEvent} callback
-		 * @memberof Rating
+		 * @memberof OSFramework.Patterns.Rating.Rating
 		 */
 		public registerCallback(callback: Callbacks.OSOnSelectEvent): void {
 			this._platformEventOnSelect = callback;

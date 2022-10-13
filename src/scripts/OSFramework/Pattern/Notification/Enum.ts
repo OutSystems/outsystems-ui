@@ -3,7 +3,6 @@ namespace OSFramework.Patterns.Notification.Enum {
 	/**
 	 * Notification Enum for CSS Classes
 	 */
-
 	export enum CssClass {
 		Pattern = 'osui-notification',
 		PatternIsOpen = 'osui-notification--is-open',
@@ -32,6 +31,7 @@ namespace OSFramework.Patterns.Notification.Enum {
 		OnInitialize = 'Initialized',
 		OnToggle = 'OnToggle',
 	}
+
 	/**
 	 * Notification Enum properties
 	 */

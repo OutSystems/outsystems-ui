@@ -154,6 +154,9 @@ namespace OSFramework.Patterns.SectionIndex {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.SectionIndex.SectionIndex
 		 */
 		protected setA11YProperties(): void {
 			console.warn(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -161,6 +164,9 @@ namespace OSFramework.Patterns.SectionIndex {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.SectionIndex.SectionIndex
 		 */
 		protected setCallbacks(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -170,7 +176,7 @@ namespace OSFramework.Patterns.SectionIndex {
 		 * Method to set the HTMLElements used
 		 *
 		 * @protected
-		 * @memberof SectionIndex
+		 * @memberof OSFramework.Patterns.SectionIndex.SectionIndex
 		 */
 		protected setHtmlElements(): void {
 			this._mainScrollContainerElement = Helper.Dom.ClassSelector(
@@ -181,6 +187,9 @@ namespace OSFramework.Patterns.SectionIndex {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.SectionIndex.SectionIndex
 		 */
 		protected unsetCallbacks(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -190,7 +199,7 @@ namespace OSFramework.Patterns.SectionIndex {
 		 * Method to unset the HTMLElements used
 		 *
 		 * @protected
-		 * @memberof SectionIndex
+		 * @memberof OSFramework.Patterns.SectionIndex.SectionIndex
 		 */
 		protected unsetHtmlElements(): void {
 			this._mainScrollContainerElement = undefined;
@@ -201,7 +210,7 @@ namespace OSFramework.Patterns.SectionIndex {
 		 *
 		 * @param childId Child Item Id to be stored/managed
 		 * @param notifiedTo {Enum.ChildNotifyActionType} triggered notification type
-		 * @memberof SectionIndex
+		 * @memberof OSFramework.Patterns.SectionIndex.SectionIndex
 		 */
 		public beNotifiedByChild(childId: string, notifiedTo: Enum.ChildNotifyActionType): void {
 			switch (notifiedTo) {
@@ -227,7 +236,7 @@ namespace OSFramework.Patterns.SectionIndex {
 		/**
 		 *  Builds the SectionIndex.
 		 *
-		 * @memberof SectionIndex
+		 * @memberof OSFramework.Patterns.SectionIndex.SectionIndex
 		 */
 		public build(): void {
 			super.build();
@@ -244,7 +253,7 @@ namespace OSFramework.Patterns.SectionIndex {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof SectionIndex
+		 * @memberof OSFramework.Patterns.SectionIndex.SectionIndex
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -260,7 +269,7 @@ namespace OSFramework.Patterns.SectionIndex {
 		/**
 		 * Disposes the current pattern.
 		 *
-		 * @memberof SectionIndex
+		 * @memberof OSFramework.Patterns.SectionIndex.SectionIndex
 		 */
 		public dispose(): void {
 			this.unsetHtmlElements();
