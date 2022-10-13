@@ -186,6 +186,9 @@ namespace OSFramework.Patterns.SectionIndexItem {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		protected setHtmlElements(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);

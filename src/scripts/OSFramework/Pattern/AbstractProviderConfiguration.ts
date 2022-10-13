@@ -16,9 +16,9 @@ namespace OSFramework.Patterns {
 		 * @protected
 		 * @param {ProviderConfigs} commonConfigs
 		 * @param {ProviderConfigs} specificConfigs
-		 *s @param {ProviderConfigs} extendedConfig
+		 * @param {ProviderConfigs} extendedConfigs
 		 * @return {*}  {ProviderConfigs}
-		 * @memberof AbstractProviderConfiguration
+		 * @memberof OSFramework.Patterns.AbstractProviderConfiguration
 		 */
 		protected mergeConfigs(
 			commonConfigs: ProviderConfigs,
@@ -50,6 +50,7 @@ namespace OSFramework.Patterns {
 			return _finalConfigs;
 		}
 
+		// Common method all providersConfigs must implement
 		public abstract getProviderConfig(): ProviderConfigs;
 	}
 }

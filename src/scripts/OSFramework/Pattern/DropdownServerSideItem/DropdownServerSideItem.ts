@@ -134,6 +134,9 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		protected setHtmlElements(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -153,6 +156,9 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		protected unsetHtmlElements(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);

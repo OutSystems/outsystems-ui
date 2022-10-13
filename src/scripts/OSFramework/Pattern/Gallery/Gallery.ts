@@ -163,6 +163,11 @@ namespace OSFramework.Patterns.Gallery {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
 		}
 
+		/**
+		 * Build Gallery
+		 *
+		 * @memberof OSFramework.Patterns.Gallery.Gallery
+		 */
 		public build(): void {
 			super.build();
 

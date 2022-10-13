@@ -15,28 +15,19 @@ namespace OSFramework.Patterns {
 		extends AbstractPattern<C>
 		implements Interface.IParent
 	{
-		/**
-		 * Store a collection about all the child items <childId, childType> in the parent scope
-		 *
-		 * @private
-		 * @type {Map<string, string>} // Map<childId, childType>
-		 * @memberof AbstractParent
-		 */
+		//  Store a collection about all the child items <childId, childType> in the parent scope
 		private _childIdsByType: Map<string, string> = new Map<string, string>();
 
-		/**
-		 * Associative Array that will contain the childType as keyName and a map with all childs of same type!
-		 *
-		 * @private
-		 * @memberof AbstractParent
-		 */
+		//  Associative Array that will contain the childType as keyName and a map with all childs of same type!
 		private _childItemsByType = {};
 
 		/**
 		 * Get the child reference based on given Id
 		 *
+		 * @protected
 		 * @param childId Child Id of the element to be found
 		 * @returns Child Reference
+		 * @memberof OSFramework.Patterns.AbstractParent
 		 */
 		protected getChild(childId: string): CT {
 			// Get ChildType
@@ -53,9 +44,11 @@ namespace OSFramework.Patterns {
 		/**
 		 * Get a child reference by a given Index position
 		 *
+		 * @protected
 		 * @param index Index of the item to be returned
 		 * @param childType To be based on childType childs collection, otherwise will assume parent only contains one child type!
 		 * @returns Child Reference
+		 * @memberof OSFramework.Patterns.AbstractParent
 		 */
 		protected getChildByIndex(index: number, childType?: string): CT {
 			// If childType undefined, get the first key object name!
@@ -71,8 +64,10 @@ namespace OSFramework.Patterns {
 		/**
 		 * Get a child index from a given child Id
 		 *
+		 * @protected
 		 * @param childId Child id where index will be found
 		 * @returns Index value
+		 * @memberof OSFramework.Patterns.AbstractParent
 		 */
 		protected getChildIndex(childId: string): number {
 			// Get ChildType
@@ -86,8 +81,10 @@ namespace OSFramework.Patterns {
 		/**
 		 * Method that is used to set a given child as a Parent child.
 		 *
+		 * @protected
 		 * @param childId Id that should be added
 		 * @param childItem Reference to be added
+		 * @memberof OSFramework.Patterns.AbstractParent
 		 */
 		protected setChild(childId: string, childItem: CT): void {
 			const childType = childItem.constructor.name;
@@ -117,7 +114,9 @@ namespace OSFramework.Patterns {
 		/**
 		 * Method that will remove Child by given Id
 		 *
+		 * @protected
 		 * @param childId Id of the item that will be removed
+		 * @memberof OSFramework.Patterns.AbstractParent
 		 */
 		protected unsetChild(childId: string): void {
 			// Get ChildType
@@ -180,9 +179,10 @@ namespace OSFramework.Patterns {
 		 * Getter that allows to obtain all the childs when parent only contains childs of one type,
 		 * otherwise a type must be passed in order to return all child of the given type!
 		 *
+		 * @protected
 		 * @param type To be based on childType childs collection, otherwise will assume parent only contains one child type!
 		 * @returns
-		 * @memberof AbstractParent
+		 * @memberof OSFramework.Patterns.AbstractParent
 		 */
 		public getChildItems(type?: string): Array<CT> {
 			// If type undefined, get the first key object name!
@@ -201,7 +201,7 @@ namespace OSFramework.Patterns {
 		 * @abstract
 		 * @param {string} childId Child Item Id
 		 * @param {string} notifiedTo Notification name (Should be based on an Enum)
-		 * @memberof AbstractParent
+		 * @memberof OSFramework.Patterns.AbstractParent
 		 */
 		public abstract beNotifiedByChild(childId: string, notifiedTo: string): void;
 	}

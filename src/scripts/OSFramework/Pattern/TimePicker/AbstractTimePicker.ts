@@ -9,6 +9,7 @@ namespace OSFramework.Patterns.TimePicker {
 			super(uniqueId, configs);
 		}
 
+		// Commom methods all TimePickers must implement
 		public abstract clear(): void;
 		public abstract close(): void;
 		public abstract open(): void;
