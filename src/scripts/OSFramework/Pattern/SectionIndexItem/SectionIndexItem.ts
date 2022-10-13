@@ -163,7 +163,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		 * Add the Accessibility Attributes values
 		 *
 		 * @protected
-		 * @memberof SectionIndexItem
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		protected setA11YProperties(): void {
 			// Set RoleButton attribute
@@ -176,7 +176,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		 * Method to set the callbacks and event listeners
 		 *
 		 * @protected
-		 * @memberof SectionIndexItem
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		protected setCallbacks(): void {
 			this._eventOnClick = this._onSelected.bind(this);
@@ -195,7 +195,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		 *  Removes the listeners that were added in the code and unsets the callbacks.
 		 *
 		 * @protected
-		 * @memberof SectionIndexItem
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		protected unsetCallbacks(): void {
 			this._removeEvents();
@@ -209,7 +209,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		 * Method to unset the html elements used
 		 *
 		 * @protected
-		 * @memberof SectionIndexItem
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		protected unsetHtmlElements(): void {
 			this._targetElement = undefined;
@@ -218,7 +218,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		/**
 		 *  Builds the SectionIndexItem.
 		 *
-		 * @memberof SectionIndexItem
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public build(): void {
 			super.build();
@@ -247,7 +247,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof SectionIndexItem
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -266,7 +266,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		/**
 		 * Disposes the current pattern.
 		 *
-		 * @memberof SectionIndexItem
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public dispose(): void {
 			this.unsetCallbacks();
@@ -281,7 +281,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		/**
 		 * Adds active class from pattern.
 		 *
-		 * @memberof SectionIndexItem
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public setIsActive(): void {
 			this._isActive = true;
@@ -291,7 +291,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		/**
 		 * Removes active class from pattern.
 		 *
-		 * @memberof SectionIndexItem
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public unsetIsActive(): void {
 			this._isActive = false;
@@ -303,7 +303,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof SectionIndexItem
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public get IsSelected(): boolean {
 			return this._isActive;
@@ -314,7 +314,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		 *
 		 * @readonly
 		 * @type {HTMLElement}
-		 * @memberof SectionIndexItem
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public get TargetElement(): HTMLElement {
 			return this._targetElement;
@@ -325,7 +325,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		 *
 		 * @readonly
 		 * @type {OffsetValues}
-		 * @memberof SectionIndexItem
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public get TargetElementOffset(): OffsetValues {
 			return this._targetElementOffset;

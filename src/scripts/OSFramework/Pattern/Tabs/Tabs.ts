@@ -162,7 +162,7 @@ namespace OSFramework.Patterns.Tabs {
 
 		// Method that handles the Keypress Event, for tabs navigation using arrows
 		private _handleKeypressEvent(e: KeyboardEvent): void {
-			let targetHeaderItemIndex;
+			let targetHeaderItemIndex: number;
 
 			switch (e.key) {
 				case GlobalEnum.Keycodes.ArrowRight:
@@ -185,6 +185,7 @@ namespace OSFramework.Patterns.Tabs {
 			}
 
 			const targetHeaderItem = this.getChildByIndex(targetHeaderItemIndex, Enum.ChildTypes.TabsHeaderItem);
+
 			// Focus on the new activeHeader, after changeTab
 			if (targetHeaderItem) {
 				targetHeaderItem.setFocus();
@@ -608,7 +609,7 @@ namespace OSFramework.Patterns.Tabs {
 		 * Method that adds the necessary attributes and listeners to the Tabs header
 		 *
 		 * @protected
-		 * @memberof Tabs
+		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		protected setA11YProperties(): void {
 			// Set aria-role to TabsHeader
@@ -621,7 +622,7 @@ namespace OSFramework.Patterns.Tabs {
 		 * Method to set the callbacks and event listeners
 		 *
 		 * @protected
-		 * @memberof Tabs
+		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		protected setCallbacks(): void {
 			this._eventOnHeaderKeypress = this._handleKeypressEvent.bind(this);
@@ -633,7 +634,7 @@ namespace OSFramework.Patterns.Tabs {
 		 * Method to assign the html elements to the header and content wrappers
 		 *
 		 * @protected
-		 * @memberof Tabs
+		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		protected setHtmlElements(): void {
 			this._tabsHeaderElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClasses.TabsHeader);
@@ -645,7 +646,7 @@ namespace OSFramework.Patterns.Tabs {
 		 * Removes the listeners that were added in the code and unsets the callbacks.
 		 *
 		 * @protected
-		 * @memberof Tabs
+		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		protected unsetCallbacks(): void {
 			this._removeEvents();
@@ -664,7 +665,7 @@ namespace OSFramework.Patterns.Tabs {
 		 * Method to unset the html elements references
 		 *
 		 * @protected
-		 * @memberof Tabs
+		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		protected unsetHtmlElements(): void {
 			this._tabsHeaderElement = undefined;
@@ -715,7 +716,7 @@ namespace OSFramework.Patterns.Tabs {
 		/**
 		 * Method to build the pattern
 		 *
-		 * @memberof Tabs
+		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		public build(): void {
 			super.build();
@@ -738,7 +739,7 @@ namespace OSFramework.Patterns.Tabs {
 		 *
 		 * @param {string} propertyName
 		 * @param {*} propertyValue
-		 * @memberof Tabs
+		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -774,7 +775,7 @@ namespace OSFramework.Patterns.Tabs {
 		 * @param {boolean} [triggerEvent=false]
 		 * @param {boolean} [triggeredByObserver=false]
 		 * @return {*}  {void}
-		 * @memberof Tabs
+		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		public changeTab(
 			tabIndex = this.configs.StartingTab,
@@ -859,7 +860,7 @@ namespace OSFramework.Patterns.Tabs {
 		/**
 		 * Method to remove event listener and destroy Tabs instance
 		 *
-		 * @memberof Tabs
+		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		public dispose(): void {
 			// Remove event listeners on tabs header element
@@ -874,7 +875,7 @@ namespace OSFramework.Patterns.Tabs {
 		 * Set callbacks for the onTabsChange event
 		 *
 		 * @param {Callbacks.OSOnChangeEvent} callback
-		 * @memberof Tabs
+		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		public registerCallback(callback: Callbacks.OSOnChangeEvent): void {
 			if (this._platformEventTabsOnChange === undefined) {
@@ -888,7 +889,7 @@ namespace OSFramework.Patterns.Tabs {
 		 * Method to set the drag gestures necessary configurations
 		 *
 		 * @param {boolean} addDragGestures
-		 * @memberof Tabs
+		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		public toggleDragGestures(addDragGestures: boolean): void {
 			// If running on native shell

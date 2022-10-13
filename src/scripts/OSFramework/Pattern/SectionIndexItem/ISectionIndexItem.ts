@@ -12,7 +12,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		get TargetElement(): HTMLElement;
 		get TargetElementOffset(): OffsetValues;
 
-		setIsActive();
-		unsetIsActive();
+		setIsActive(): void;
+		unsetIsActive(): void;
 	}
 }

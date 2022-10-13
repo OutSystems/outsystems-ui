@@ -206,7 +206,7 @@ namespace OSFramework.Patterns.Submenu {
 		 * Add the A11Y attributes values
 		 *
 		 * @protected
-		 * @memberof Submenu
+		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		protected setA11YProperties(): void {
 			// Apply the default A11Y
@@ -228,7 +228,7 @@ namespace OSFramework.Patterns.Submenu {
 		 * Add Pattern Events
 		 *
 		 * @protected
-		 * @memberof Submenu
+		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		protected setCallbacks(): void {
 			// Define the callbacks that will be used
@@ -260,7 +260,7 @@ namespace OSFramework.Patterns.Submenu {
 		 * Update info based on htmlContent
 		 *
 		 * @protected
-		 * @memberof Submenu
+		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		protected setHtmlElements(): void {
 			this._submenuHeaderElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternHeader);
@@ -280,7 +280,7 @@ namespace OSFramework.Patterns.Submenu {
 		 * Set the cssClasses that should be assigned to the element on it's initialization
 		 *
 		 * @protected
-		 * @memberof Submenu
+		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		protected setInitialStates(): void {
 			// Add active class to pattern based on links whith active state
@@ -305,7 +305,7 @@ namespace OSFramework.Patterns.Submenu {
 		 * Remove all the assigned Events
 		 *
 		 * @protected
-		 * @memberof Submenu
+		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		protected unsetCallbacks(): void {
 			this._removeEvents();
@@ -323,7 +323,7 @@ namespace OSFramework.Patterns.Submenu {
 		 * Reassign the HTML elements to undefined, preventing memory leaks
 		 *
 		 * @protected
-		 * @memberof Submenu
+		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		protected unsetHtmlElements(): void {
 			this._submenuHeaderElement = undefined;
@@ -335,7 +335,7 @@ namespace OSFramework.Patterns.Submenu {
 		/**
 		 * Built the Submenu
 		 *
-		 * @memberof Submenu
+		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		public build(): void {
 			super.build();
@@ -357,7 +357,7 @@ namespace OSFramework.Patterns.Submenu {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof Submenu
+		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -375,7 +375,7 @@ namespace OSFramework.Patterns.Submenu {
 		/**
 		 * Close Submenu
 		 *
-		 * @memberof Submenu
+		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		public close(): void {
 			if (this._isOpen) {
@@ -391,7 +391,7 @@ namespace OSFramework.Patterns.Submenu {
 		/**
 		 * Destroy the Submenu
 		 *
-		 * @memberof Submenu
+		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		public dispose(): void {
 			// Remove event listners
@@ -407,7 +407,7 @@ namespace OSFramework.Patterns.Submenu {
 		/**
 		 * Public Open Submenu
 		 *
-		 * @memberof Submenu
+		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		public open(): void {
 			// Need to prevent the submenu will not be closed by the body click, use this flag to check.
@@ -424,7 +424,7 @@ namespace OSFramework.Patterns.Submenu {
 		/**
 		 * Trigger on submenu onRender, to update active state
 		 *
-		 * @memberof Submenu
+		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		public updateOnRender(): void {
 			if (this.isBuilt) {

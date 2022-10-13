@@ -30,28 +30,6 @@ namespace OSFramework.Patterns.Sidebar {
 		// Store the parent element
 		private _parentSelf: HTMLElement;
 
-		/**
-		 * Get Gesture Events Instance
-		 *
-		 * @readonly
-		 * @type {Event.GestureEvent.DragEvent}
-		 * @memberof Sidebar
-		 */
-		public get gestureEventInstance(): Event.GestureEvent.DragEvent {
-			return this._gestureEventInstance;
-		}
-
-		/**
-		 * Get if has gesture events
-		 *
-		 * @readonly
-		 * @type {boolean}
-		 * @memberof Sidebar
-		 */
-		public get hasGestureEvents(): boolean {
-			return this._hasGestureEvents;
-		}
-
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SidebarConfig(configs));
 			this._isOpen = this.configs.StartsOpen;
@@ -264,7 +242,7 @@ namespace OSFramework.Patterns.Sidebar {
 		 * Sets the A11Y properties when the pattern is built.
 		 *
 		 * @protected
-		 * @memberof Sidebar
+		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
 		 */
 		protected setA11YProperties(): void {
 			Helper.A11Y.RoleComplementary(this.selfElement);
@@ -283,7 +261,7 @@ namespace OSFramework.Patterns.Sidebar {
 		 * Sets the callbacks to be used in the pattern.
 		 *
 		 * @protected
-		 * @memberof Sidebar
+		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
 		 */
 		protected setCallbacks(): void {
 			this._eventSidebarKeypress = this._sidebarKeypressCallback.bind(this);
@@ -294,7 +272,7 @@ namespace OSFramework.Patterns.Sidebar {
 		 * Set the html references that will be used to manage the cssClasses and atribute properties
 		 *
 		 * @protected
-		 * @memberof Sidebar
+		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
 		 */
 		protected setHtmlElements(): void {
 			this._parentSelf = Helper.Dom.GetElementById(this.widgetId);
@@ -306,7 +284,7 @@ namespace OSFramework.Patterns.Sidebar {
 		 * Method to remove all assigned callbacks
 		 *
 		 * @protected
-		 * @memberof Sidebar
+		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
 		 */
 		protected unsetCallbacks(): void {
 			this._removeEvents();
@@ -319,7 +297,7 @@ namespace OSFramework.Patterns.Sidebar {
 		 * Release references to HTML elements.
 		 *
 		 * @protected
-		 * @memberof Sidebar
+		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
 		 */
 		protected unsetHtmlElements(): void {
 			this._parentSelf = undefined;
@@ -328,7 +306,7 @@ namespace OSFramework.Patterns.Sidebar {
 		/**
 		 * Method to build the pattern.
 		 *
-		 * @memberof Sidebar
+		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
 		 */
 		public build(): void {
 			super.build();
@@ -353,7 +331,7 @@ namespace OSFramework.Patterns.Sidebar {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof Sidebar
+		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -382,7 +360,7 @@ namespace OSFramework.Patterns.Sidebar {
 		/**
 		 * Public method to close the sidebar, if it's open.
 		 *
-		 * @memberof Sidebar
+		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
 		 */
 		public close(): void {
 			if (this._isOpen) {
@@ -393,7 +371,7 @@ namespace OSFramework.Patterns.Sidebar {
 		/**
 		 * Method to remove event listener and destroy sidebar instance
 		 *
-		 * @memberof Sidebar
+		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
 		 */
 		public dispose(): void {
 			this.unsetCallbacks();
@@ -415,7 +393,7 @@ namespace OSFramework.Patterns.Sidebar {
 		/**
 		 * Method that opens the sidebar.
 		 *
-		 * @memberof Sidebar
+		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
 		 */
 		public open(): void {
 			if (this._isOpen === false) {
@@ -427,7 +405,7 @@ namespace OSFramework.Patterns.Sidebar {
 		 * Set callbacks for the onToggle event
 		 *
 		 * @param {Callbacks.OSOnToggleEvent} callback
-		 * @memberof Sidebar
+		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
 		 */
 		public registerCallback(callback: Callbacks.OSOnToggleEvent): void {
 			if (this._onToggle === undefined) {
@@ -440,7 +418,7 @@ namespace OSFramework.Patterns.Sidebar {
 		/**
 		 * Removes the gesture events to open/close the Sidebar on Native Apps
 		 *
-		 * @memberof Sidebar
+		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
 		 */
 		public removeGestureEvents(): void {
 			if (this._gestureEventInstance !== undefined) {
@@ -456,7 +434,7 @@ namespace OSFramework.Patterns.Sidebar {
 		 * Sets the gesture events to open/close the Sidebar on Native Apps
 		 *
 		 * @protected
-		 * @memberof Sidebar
+		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
 		 */
 		public setGestureEvents(
 			onGestureStartCallback: Event.GestureEvent.Callbacks.GestureStart,
@@ -474,10 +452,32 @@ namespace OSFramework.Patterns.Sidebar {
 		/**
 		 * Method that toggle swipes on sidebar.
 		 *
-		 * @memberof Sidebar
+		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
 		 */
 		public toggleGestures(enableSwipe: boolean): void {
 			this._toggleGesturesSidebar(enableSwipe);
+		}
+
+		/**
+		 * Get Gesture Events Instance
+		 *
+		 * @readonly
+		 * @type {Event.GestureEvent.DragEvent}
+		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
+		 */
+		public get gestureEventInstance(): Event.GestureEvent.DragEvent {
+			return this._gestureEventInstance;
+		}
+
+		/**
+		 * Get if has gesture events
+		 *
+		 * @readonly
+		 * @type {boolean}
+		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
+		 */
+		public get hasGestureEvents(): boolean {
+			return this._hasGestureEvents;
 		}
 	}
 }
