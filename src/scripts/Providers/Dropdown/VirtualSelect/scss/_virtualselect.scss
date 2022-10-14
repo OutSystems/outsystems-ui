@@ -47,14 +47,9 @@
 			.vscomp-toggle-button {
 				padding-left: var(--space-s);
 			}
-
-			.vscomp-clear-button {
-				right: var(--space-xl);
-			}
-
-			.vscomp-value {
-				margin-right: var(--space-m);
-			}
+		}
+		.vscomp-value {
+			margin-right: var(--space-m);
 		}
 	}
 
@@ -154,24 +149,6 @@
 			margin-top: 0;
 			top: 50%;
 			transform: translateY(-50%);
-
-			.vscomp-clear-icon {
-				&:before,
-				&:after {
-					background-color: var(--color-neutral-7);
-				}
-			}
-
-			&:hover {
-				background: var(--color-neutral-7);
-
-				.vscomp-clear-icon {
-					&:before,
-					&:after {
-						background-color: var(--color-neutral-3);
-					}
-				}
-			}
 		}
 	}
 
@@ -258,6 +235,14 @@
 				&:after {
 					@include IsRTL_CheckBoxCheckIconTransform;
 				}
+			}
+		}
+	}
+
+	&:not(.text-direction-rtl) {
+		&.has-value {
+			.vscomp-clear-button {
+				right: var(--space-xl);
 			}
 		}
 	}
