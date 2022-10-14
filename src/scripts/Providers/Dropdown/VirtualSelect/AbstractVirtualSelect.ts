@@ -113,12 +113,10 @@ namespace Providers.Dropdown.VirtualSelect {
 			this._selfElem.removeEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
 			this._selfElem.removeEventListener(OSFramework.GlobalEnum.HTMLEvent.MouseUp, this._onMouseUpEvent);
 
-			if (OSFramework.Helper.DeviceInfo.IsDesktop) {
-				OSFramework.Event.GlobalEventManager.Instance.removeHandler(
-					OSFramework.Event.Type.WindowResize,
-					this._eventOnWindowResize
-				);
-			}
+			OSFramework.Event.GlobalEventManager.Instance.removeHandler(
+				OSFramework.Event.Type.WindowResize,
+				this._eventOnWindowResize
+			);
 		}
 
 		/**
