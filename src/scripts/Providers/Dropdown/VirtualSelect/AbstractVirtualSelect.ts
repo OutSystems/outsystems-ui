@@ -162,7 +162,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			this.provider.destroy();
 
 			// Create a new VirtualSelect instance with the updated configs
-			this.prepareConfigs();
+			OSFramework.Helper.AsyncInvocation(this.prepareConfigs.bind(this));
 		}
 
 		/**
