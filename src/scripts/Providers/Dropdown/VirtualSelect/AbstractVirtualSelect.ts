@@ -100,7 +100,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			}
 
 			if (OSFramework.Helper.DeviceInfo.IsDesktop) {
-				// Set the WindowResize in order to close it if it's open!
+				//Set the WindowResize in order to close it if it's open!
 				OSFramework.Event.GlobalEventManager.Instance.addHandler(
 					OSFramework.Event.Type.WindowResize,
 					this._eventOnWindowResize
@@ -144,9 +144,6 @@ namespace Providers.Dropdown.VirtualSelect {
 				events: this._virtualselectConfigs,
 			});
 
-			// Add the pattern Events!
-			this._setUpEvents();
-
 			// Add attributes to the element if needed
 			this._manageAttributes();
 
@@ -163,9 +160,6 @@ namespace Providers.Dropdown.VirtualSelect {
 		protected redraw(): void {
 			// Destroy the old VirtualSelect instance
 			this.provider.destroy();
-
-			// Unset all the events
-			this._unsetEvents();
 
 			// Create a new VirtualSelect instance with the updated configs
 			OSFramework.Helper.AsyncInvocation(this.prepareConfigs.bind(this));
@@ -204,6 +198,8 @@ namespace Providers.Dropdown.VirtualSelect {
 			this._setElementId();
 
 			this.setCallbacks();
+
+			this._setUpEvents();
 
 			this.prepareConfigs();
 
@@ -297,12 +293,12 @@ namespace Providers.Dropdown.VirtualSelect {
 				} else {
 					this.provider.destroy();
 				}
-
-				this._unsetEvents();
-				this.unsetCallbacks();
-
-				super.dispose();
 			}
+
+			this._unsetEvents();
+			this.unsetCallbacks();
+
+			super.dispose();
 		}
 
 		/**
