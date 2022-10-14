@@ -160,6 +160,7 @@
 			padding-top: calc(var(--header-size) + var(--os-safe-area-top));
 
 			.split-right-close {
+				display: block;
 				left: calc(var(--os-safe-area-left) + var(--space-base));
 			}
 		}

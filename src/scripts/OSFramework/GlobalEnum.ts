@@ -163,6 +163,7 @@ namespace OSFramework.GlobalEnum {
 		keyDown = 'keydown',
 		MouseEnter = 'mouseenter',
 		MouseLeave = 'mouseleave',
+		MouseUp = 'mouseup',
 		OrientationChange = 'orientationchange',
 		Resize = 'resize',
 		Scroll = 'scroll',
