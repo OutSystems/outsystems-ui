@@ -41,9 +41,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		// Manage the attributes to be added
 		private _manageAttributes(): void {
 			// Check if the pattern should be in disabled mode
-			if (this.configs.IsDisabled) {
-				this.disable();
-			}
+			this._manageDisableStatus();
 		}
 
 		// Manage the disable status of the pattern
@@ -103,12 +101,10 @@ namespace Providers.Dropdown.VirtualSelect {
 		private _unsetEvents(): void {
 			this._selfElem.removeEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
 
-			if (OSFramework.Helper.DeviceInfo.IsDesktop) {
-				OSFramework.Event.GlobalEventManager.Instance.removeHandler(
-					OSFramework.Event.Type.WindowResize,
-					this._eventOnWindowResize
-				);
-			}
+			OSFramework.Event.GlobalEventManager.Instance.removeHandler(
+				OSFramework.Event.Type.WindowResize,
+				this._eventOnWindowResize
+			);
 		}
 
 		/**
@@ -286,8 +282,8 @@ namespace Providers.Dropdown.VirtualSelect {
 					this.provider.destroy();
 				}
 
-				this.unsetCallbacks();
 				this._unsetEvents();
+				this.unsetCallbacks();
 
 				super.dispose();
 			}
