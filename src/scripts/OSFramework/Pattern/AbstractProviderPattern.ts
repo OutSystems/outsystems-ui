@@ -84,7 +84,7 @@ namespace OSFramework.Patterns {
 		}
 
 		/**
-		 * Method that will be responsible to redraw the calendar when it's needed
+		 * Method that will be responsible to redraw pattern when needed
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.AbstractProviderPattern
@@ -97,7 +97,7 @@ namespace OSFramework.Patterns {
 				//@ts-expect-error
 				this._provider.destroy();
 
-				// Create a new flatpickr instance with the updated configs
+				// Trigger a new instance creation with updated configs
 				Helper.AsyncInvocation(this.prepareConfigs.bind(this));
 			}
 		}
