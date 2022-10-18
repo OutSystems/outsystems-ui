@@ -7,12 +7,12 @@ namespace Providers.MonthPicker.Flatpickr {
 	{
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
+		// Store the provider options
+		private _flatpickrOpts: FlatpickrOptions;
 		// Flatpickr onInitialize event
 		private _onInitializeCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
 		// Store the flatpickr input html element that will be added by library
 		protected _flatpickrInputElem: HTMLInputElement;
-		// Store the provider options
-		protected _flatpickrOpts: FlatpickrOptions;
 		// Store pattern input HTML element reference
 		protected _monthPickerProviderInputElem: HTMLInputElement;
 		// Flatpickr onChange (SelectedMonth) event
@@ -164,7 +164,6 @@ namespace Providers.MonthPicker.Flatpickr {
 		protected prepareConfigs(): void {
 			// Get the library configurations
 			this._flatpickrOpts = this.configs.getProviderConfig();
-
 			// Instance will be Created!
 			this.createProviderInstance();
 		}

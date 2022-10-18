@@ -29,7 +29,7 @@ namespace Providers.Carousel.Splide {
 		// Store the onSlideMoved event
 		private _platformEventOnSlideMoved: OSFramework.Patterns.Carousel.Callbacks.OSOnSlideMovedEvent;
 		// Store initial provider options
-		private _providerOptions: SplideOpts;
+		private _splideOptions: SplideOpts;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SplideConfig(configs));
@@ -53,7 +53,7 @@ namespace Providers.Carousel.Splide {
 		// Method to init the provider
 		private _initProvider(): void {
 			// Init provider
-			this._provider = new window.Splide(this._carouselProviderElem, this._providerOptions);
+			this._provider = new window.Splide(this._carouselProviderElem, this._splideOptions);
 
 			// Set provider Info to be used by setProviderConfigs API calls
 			this.updateProviderEvents({
@@ -148,8 +148,7 @@ namespace Providers.Carousel.Splide {
 		 */
 		protected prepareConfigs(): void {
 			// Call the following methods here, so that all DOM elements are iterated and ready to init the library
-			this._prepareCarouselItems();
-			this._providerOptions = this.configs.getProviderConfig();
+			this._splideOptions = this.configs.getProviderConfig();
 			// Init the Library
 			this._initProvider();
 		}
@@ -217,6 +216,8 @@ namespace Providers.Carousel.Splide {
 			}
 
 			this._togglePaginationClass();
+
+			this._prepareCarouselItems();
 		}
 
 		/**

@@ -33,7 +33,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 		 */
 		protected prepareConfigs(): void {
 			// Get the library configurations
-			this.providerOptions = this.configs.getProviderConfig();
+			this.noUiSliderOpts = this.configs.getProviderConfig();
 
 			// Instance will be Created!
 			this.createProviderInstance();
@@ -61,7 +61,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 		 * @memberof Providers.RangeSlider.NoUISlider.SingleSlider.OSUINoUiSliderSingle
 		 */
 		protected setA11YProperties(): void {
-			this.providerOptions.handleAttributes = [
+			this.noUiSliderOpts.handleAttributes = [
 				{ 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Single },
 			];
 		}

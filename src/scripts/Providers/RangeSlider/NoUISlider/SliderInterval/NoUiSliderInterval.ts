@@ -38,7 +38,7 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 		 */
 		protected prepareConfigs(): void {
 			// Get the library configurations
-			this.providerOptions = this.configs.getProviderConfig();
+			this.noUiSliderOpts = this.configs.getProviderConfig();
 
 			// Instance will be Created!
 			this.createProviderInstance();
@@ -67,7 +67,7 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 		 * @memberof Providers.RangeSlider.NoUISlider.IntervalSlider.OSUINoUiSliderInterval
 		 */
 		protected setA11YProperties(): void {
-			this.providerOptions.handleAttributes = [
+			this.noUiSliderOpts.handleAttributes = [
 				{ 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Lower },
 				{ 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Upper },
 			];

@@ -14,10 +14,10 @@ namespace Providers.RangeSlider.NoUISlider {
 		private _rangeSliderProviderElem: HTMLElement;
 		// RangeSlider events
 		protected eventProviderValueChanged: OSFramework.GlobalCallbacks.Generic;
+		// Store the provider options
+		protected noUiSliderOpts: NoUiSliderOptions;
 		protected platformEventInitialize: OSFramework.GlobalCallbacks.OSGeneric;
 		protected platformEventValueChange: OSFramework.Patterns.RangeSlider.Callbacks.OSOnValueChangeEvent;
-		// Store the provider options
-		protected providerOptions: NoUiSliderOptions;
 		// throttle before invoking the platform
 		protected throttleTimeValue = 200;
 		// throttle timer id
@@ -82,7 +82,7 @@ namespace Providers.RangeSlider.NoUISlider {
 			this.setInitialStates();
 
 			// Init provider
-			this.provider = window.noUiSlider.create(this._rangeSliderProviderElem, this.providerOptions);
+			this.provider = window.noUiSlider.create(this._rangeSliderProviderElem, this.noUiSliderOpts);
 
 			// Set provider Info to be used by setProviderConfigs API calls
 			this.updateProviderEvents({
@@ -314,6 +314,7 @@ namespace Providers.RangeSlider.NoUISlider {
 			this._setOnValueChangeEvent(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Change);
 		}
 
+		// Common method all RangeSliders must implement
 		protected abstract prepareConfigs(): void;
 	}
 }

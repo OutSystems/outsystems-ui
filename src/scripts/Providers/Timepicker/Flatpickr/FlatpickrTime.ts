@@ -7,12 +7,12 @@ namespace Providers.TimePicker.Flatpickr {
 	{
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
+		// Store the provider options
+		private _flatpickrOpts: FlatpickrOptions;
 		// Flatpickr onInitialize event
 		private _onInitializeCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
 		// Store the flatpickr input html element that will be added by library
 		protected _flatpickrInputElem: HTMLInputElement;
-		// Store the provider options
-		protected _flatpickrOpts: FlatpickrOptions;
 		// Flatpickr onChange (SelectedTime) event
 		protected _onChangeCallbackEvent: OSFramework.Patterns.TimePicker.Callbacks.OSOnChangeEvent;
 		// Store pattern input HTML element reference
@@ -147,7 +147,6 @@ namespace Providers.TimePicker.Flatpickr {
 		protected prepareConfigs(): void {
 			// Get the library configurations
 			this._flatpickrOpts = this.configs.getProviderConfig();
-
 			// Instance will be Created!
 			this.createProviderInstance();
 		}
