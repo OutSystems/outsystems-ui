@@ -5,6 +5,7 @@ namespace Providers.TimePicker.Flatpickr.Enum {
 		InitialTime = 'InitialTime',
 	}
 
+	// Supported formats
 	export enum InputFormats {
 		Format12h = 'h:i K',
 		Format24h = 'H:i',

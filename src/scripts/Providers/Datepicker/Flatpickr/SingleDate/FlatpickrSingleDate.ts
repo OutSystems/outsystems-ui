@@ -59,6 +59,11 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 			this.jumpIntoToday();
 		}
 
+		/**
+		 * Builds the Pattern
+		 *
+		 * @memberof Providers.DatePicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate
+		 */
 		public build(): void {
 			super.build();
 

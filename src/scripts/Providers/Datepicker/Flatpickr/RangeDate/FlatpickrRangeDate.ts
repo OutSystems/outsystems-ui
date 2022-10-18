@@ -89,7 +89,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 		 * Trigger the jumToDate to now
 		 *
 		 * @protected
-		 * @memberof Flatpickr.SingleDate
+		 * @memberof Providers.DatePicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate
 		 */
 		protected todayBtnClick(event: MouseEvent): void {
 			event.preventDefault();
@@ -97,6 +97,11 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 			this.jumpIntoToday();
 		}
 
+		/**
+		 * Builds the Pattern
+		 *
+		 * @memberof Providers.DatePicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate
+		 */
 		public build(): void {
 			super.build();
 

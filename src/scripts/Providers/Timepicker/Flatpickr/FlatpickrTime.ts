@@ -168,6 +168,9 @@ namespace Providers.TimePicker.Flatpickr {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof Providers.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		protected setA11YProperties(): void {
 			console.warn(OSFramework.GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -175,6 +178,9 @@ namespace Providers.TimePicker.Flatpickr {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof Providers.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		protected setCallbacks(): void {
 			console.log(OSFramework.GlobalEnum.WarningMessages.MethodNotImplemented);

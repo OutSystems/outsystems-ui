@@ -151,6 +151,9 @@ namespace Providers.Carousel.Splide {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		protected setA11YProperties(): void {
 			console.warn(OSFramework.GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -241,7 +244,7 @@ namespace Providers.Carousel.Splide {
 		}
 
 		/**
-		 * Method to build the pattern.
+		 * Build the pattern.
 		 *
 		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */

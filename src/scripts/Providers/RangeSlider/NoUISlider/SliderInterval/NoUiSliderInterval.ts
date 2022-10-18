@@ -79,7 +79,7 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 		}
 
 		/**
-		 * Method to build the pattern
+		 * Builds the Pattern
 		 *
 		 * @memberof Providers.RangeSlider.NoUISlider.IntervalSlider.OSUINoUiSliderInterval
 		 */
@@ -142,7 +142,8 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 		/**
 		 * Method to set current RangeSliderInterval values
 		 *
-		 * @param {number} value
+		 * @param {number} intervalStart
+		 * @param {number} intervalEnd
 		 * @memberof Providers.RangeSlider.NoUISlider.IntervalSlider.OSUINoUiSliderInterval
 		 */
 		public setValue(intervalStart: number, intervalEnd: number): void {

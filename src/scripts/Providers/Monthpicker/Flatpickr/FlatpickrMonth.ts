@@ -185,6 +185,9 @@ namespace Providers.MonthPicker.Flatpickr {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof Providers.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		protected setA11YProperties(): void {
 			console.warn(OSFramework.GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -192,6 +195,9 @@ namespace Providers.MonthPicker.Flatpickr {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof Providers.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		protected setCallbacks(): void {
 			console.log(OSFramework.GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -238,6 +244,11 @@ namespace Providers.MonthPicker.Flatpickr {
 			this._monthPickerProviderInputElem = undefined;
 		}
 
+		/**
+		 * Builds the Pattern
+		 *
+		 * @memberof Providers.MonthPicker.Flatpickr.OSUIFlatpickrMonth
+		 */
 		public build(): void {
 			super.build();
 

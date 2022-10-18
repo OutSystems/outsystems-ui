@@ -170,6 +170,9 @@ namespace Providers.Dropdown.VirtualSelect {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		protected setA11YProperties(): void {
 			console.warn(OSFramework.GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -190,6 +193,9 @@ namespace Providers.Dropdown.VirtualSelect {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		protected setHtmlElements(): void {
 			console.log(OSFramework.GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -211,11 +217,19 @@ namespace Providers.Dropdown.VirtualSelect {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		protected unsetHtmlElements(): void {
 			console.log(OSFramework.GlobalEnum.WarningMessages.MethodNotImplemented);
 		}
 
+		/**
+		 * Builds the Pattern
+		 *
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
+		 */
 		public build(): void {
 			super.build();
 
@@ -453,6 +467,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			}
 		}
 
+		// Common methods all Dropdowns must implement!
 		protected abstract getSelectedOptionsStructure(): DropDownOption[];
 		protected abstract prepareConfigs(): void;
 	}

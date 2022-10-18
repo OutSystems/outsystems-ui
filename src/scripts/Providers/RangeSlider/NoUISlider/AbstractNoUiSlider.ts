@@ -194,7 +194,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		}
 
 		/**
-		 * Method to build the pattern.
+		 * Builds the Pattern
 		 *
 		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
@@ -305,7 +305,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * Method used to set all the extended NoUiSlider properties across the different types of instances
 		 *
 		 * @param {NoUiSliderOptions} newConfigs
-		 * @memberof AbstractNoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		public setProviderConfigs(newConfigs: NoUiSliderOptions): void {
 			this.configs.setExtensibilityConfigs(newConfigs);

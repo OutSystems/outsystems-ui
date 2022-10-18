@@ -65,14 +65,14 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 		 * Sets the callbacks to be used with the provider.
 		 *
 		 * @protected
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.SingleSlider.OSUINoUiSliderSingle
 		 */
 		protected setCallbacks(): void {
 			this.eventProviderValueChanged = this._valueChangeCallback.bind(this);
 		}
 
 		/**
-		 * Method to build the pattern
+		 * Builds the Pattern
 		 *
 		 * @memberof Providers.RangeSlider.NoUISlider.SingleSlider.OSUINoUiSliderSingle
 		 */
@@ -118,7 +118,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 		/**
 		 * Method to set current RangeSlider value
 		 *
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.SingleSlider.OSUINoUiSliderSingle
 		 */
 		public resetValue(): void {
 			this.configs.StartingValueFrom = this.configs.InitialValueFrom;
@@ -129,7 +129,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 		 * Method to set current RangeSlider value
 		 *
 		 * @param {number} value
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.SingleSlider.OSUINoUiSliderSingle
 		 */
 		public setValue(value: number): void {
 			if (value >= this.configs.MinValue && value <= this.configs.MaxValue) {

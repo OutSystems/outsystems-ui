@@ -257,6 +257,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			return validatedValue;
 		}
 
+		// Common methods all DropdownsConfigs must implement
 		protected abstract _getSelectedValues(): string[];
 	}
 }

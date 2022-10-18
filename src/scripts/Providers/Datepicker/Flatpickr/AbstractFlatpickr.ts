@@ -156,6 +156,9 @@ namespace Providers.Datepicker.Flatpickr {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof Providers.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		protected setA11YProperties(): void {
 			console.warn(OSFramework.GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -163,6 +166,9 @@ namespace Providers.Datepicker.Flatpickr {
 
 		/**
 		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof Providers.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		protected setCallbacks(): void {
 			console.log(OSFramework.GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -207,6 +213,11 @@ namespace Providers.Datepicker.Flatpickr {
 			this._datePickerProviderInputElem = undefined;
 		}
 
+		/**
+		 * Build the Pattern
+		 *
+		 * @memberof Providers.DatePicker.Flatpickr.AbstractFlatpickr
+		 */
 		public build(): void {
 			super.build();
 
@@ -396,6 +407,7 @@ namespace Providers.Datepicker.Flatpickr {
 			}
 		}
 
+		// Common methods all DatePickers must implement
 		protected abstract onDateSelectedEvent(selectedDates: string[], dateStr: string, fp: Flatpickr): void;
 		protected abstract prepareConfigs(): void;
 		protected abstract todayBtnClick(event: MouseEvent): void;

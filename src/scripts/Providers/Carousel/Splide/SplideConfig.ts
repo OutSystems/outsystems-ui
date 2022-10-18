@@ -6,6 +6,7 @@ namespace Providers.Carousel.Splide {
 		// Store configs set using extensibility
 		protected _providerExtendedOptions: SplideOpts;
 
+		// Prepare Arrows expected config
 		private _getArrowConfig(): boolean {
 			let arrows: boolean;
 			switch (this.Navigation) {
@@ -26,6 +27,7 @@ namespace Providers.Carousel.Splide {
 			return arrows;
 		}
 
+		// Prepare Direction expected config
 		private _getDirectionConfig():
 			| OSFramework.GlobalEnum.Direction.LTR
 			| OSFramework.GlobalEnum.Direction.RTL
@@ -43,6 +45,7 @@ namespace Providers.Carousel.Splide {
 			return direction;
 		}
 
+		// Prepare Pagination expected config
 		private _getPaginationConfig(): boolean {
 			let pagination: boolean;
 			switch (this.Navigation) {
