@@ -18,28 +18,6 @@ namespace Providers.RangeSlider.NoUiSlider {
 		public rangeSliderMode: OSFramework.Patterns.RangeSlider.Enum.Mode;
 
 		/**
-		 * Method to set the common configs for the provider
-		 *
-		 * @protected
-		 * @return {*}  {NoUiSliderOptions}
-		 * @memberof Providers.RangeSlider.NoUiSlider.AbstractNoUiSliderConfig
-		 */
-		protected getCommonProviderConfig(): NoUiSliderOptions {
-			this._providerOptions = {
-				direction: OutSystems.OSUI.Utils.GetIsRTL()
-					? OSFramework.GlobalEnum.Direction.RTL
-					: OSFramework.GlobalEnum.Direction.LTR,
-				step: this.Step,
-				orientation: this.Orientation,
-				pips: this.ShowTickMarks ? this.getPipsConfig() : null,
-				range: this.getRangeConfig(),
-				tooltips: this.getTooltipFormat(),
-			};
-
-			return this.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
-		}
-
-		/**
 		 * Method to get the configs for the Pips option (ShowTickMarks)
 		 *
 		 * @return {*}  {unknown}
@@ -86,6 +64,27 @@ namespace Providers.RangeSlider.NoUiSlider {
 				density: ticksDensity,
 				mode: RangeSlider.NoUiSlider.Enum.NoUiSliderModeOptions.Values,
 			};
+		}
+
+		/**
+		 * Method to set the common configs for the provider
+		 *
+		 * @return {*}  {NoUiSliderOptions}
+		 * @memberof Providers.RangeSlider.NoUiSlider.AbstractNoUiSliderConfig
+		 */
+		public getProviderConfig(): NoUiSliderOptions {
+			this._providerOptions = {
+				direction: OutSystems.OSUI.Utils.GetIsRTL()
+					? OSFramework.GlobalEnum.Direction.RTL
+					: OSFramework.GlobalEnum.Direction.LTR,
+				step: this.Step,
+				orientation: this.Orientation,
+				pips: this.ShowTickMarks ? this.getPipsConfig() : null,
+				range: this.getRangeConfig(),
+				tooltips: this.getTooltipFormat(),
+			};
+
+			return this.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
 		}
 
 		/**

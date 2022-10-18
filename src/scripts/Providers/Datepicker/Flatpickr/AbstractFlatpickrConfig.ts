@@ -154,7 +154,7 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @return {*}  {FlatpickrOptions}
 		 * @memberof Providers.DatePicker.Flatpickr.AbstractFlatpickrConfig
 		 */
-		public getCommonProviderConfigs(): FlatpickrOptions {
+		public getProviderConfig(): FlatpickrOptions {
 			// Check the given server date format config
 			this._checkServerDateFormat();
 

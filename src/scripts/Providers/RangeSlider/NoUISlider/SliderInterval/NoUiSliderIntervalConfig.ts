@@ -20,7 +20,7 @@ namespace Providers.RangeSlider.NoUISlider.SliderInterval {
 				connect: true,
 			};
 
-			return this.mergeConfigs(this.getCommonProviderConfig(), rangeSliderOptions, this._providerExtendedOptions);
+			return this.mergeConfigs(super.getProviderConfig(), rangeSliderOptions, this._providerExtendedOptions);
 		}
 	}
 }

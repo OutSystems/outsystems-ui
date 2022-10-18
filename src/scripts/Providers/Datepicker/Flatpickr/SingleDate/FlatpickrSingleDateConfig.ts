@@ -33,11 +33,7 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 				onChange: this.OnChange,
 			};
 
-			return this.mergeConfigs(
-				this.getCommonProviderConfigs(),
-				flatpickrSingleDateOpts,
-				this._providerExtendedOptions
-			);
+			return this.mergeConfigs(super.getProviderConfig(), flatpickrSingleDateOpts, this._providerExtendedOptions);
 		}
 	}
 }
