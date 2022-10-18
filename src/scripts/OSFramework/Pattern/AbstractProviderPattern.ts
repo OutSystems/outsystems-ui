@@ -84,6 +84,25 @@ namespace OSFramework.Patterns {
 		}
 
 		/**
+		 * Method that will be responsible to redraw the calendar when it's needed
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.AbstractProviderPattern
+		 */
+		protected redraw(): void {
+			// Check if provider has been set!
+			if (this._provider !== undefined) {
+				// Destroy provider instance
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				//@ts-expect-error
+				this._provider.destroy();
+
+				// Create a new flatpickr instance with the updated configs
+				Helper.AsyncInvocation(this.prepareConfigs.bind(this));
+			}
+		}
+
+		/**
 		 * Trigger platform's InstanceIntializedHandler client Action
 		 *
 		 * @param {GlobalCallbacks.OSGeneric} platFormCallback
@@ -97,7 +116,7 @@ namespace OSFramework.Patterns {
 		}
 
 		/**
-		 * Method to build Provider instance
+		 * Build the Pattern
 		 *
 		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
@@ -274,6 +293,7 @@ namespace OSFramework.Patterns {
 		}
 
 		// Common methods all providers must implement
+		protected abstract prepareConfigs(): void;
 		public abstract registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
 		public abstract setProviderConfigs(providerConfigs: ProviderConfigs): void;
 	}

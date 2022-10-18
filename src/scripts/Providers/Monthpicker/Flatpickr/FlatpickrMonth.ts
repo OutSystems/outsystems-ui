@@ -170,20 +170,6 @@ namespace Providers.MonthPicker.Flatpickr {
 		}
 
 		/**
-		 * Method that will be responsible to redraw the calendar when it's needed
-		 *
-		 * @protected
-		 * @memberof Providers.MonthPicker.Flatpickr.OSUIFlatpickrMonth
-		 */
-		protected redraw(): void {
-			// Destroy the old flatpickr instance
-			this.provider.destroy();
-
-			// Create a new flatpickr instance with the updated configs
-			OSFramework.Helper.AsyncInvocation(this.prepareConfigs.bind(this));
-		}
-
-		/**
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected

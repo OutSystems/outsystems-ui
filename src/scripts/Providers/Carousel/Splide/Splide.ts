@@ -50,15 +50,6 @@ namespace Providers.Carousel.Splide {
 			}
 		}
 
-		// Method that encapsulates all methods needed to create a new Carousel
-		private _createProviderCarousel(): void {
-			// Call the following methods here, so that all DOM elements are iterated and ready to init the library
-			this._prepareCarouselItems();
-			this._providerOptions = this.configs.getProviderConfig();
-			// Init the Library
-			this._initProvider();
-		}
-
 		// Method to init the provider
 		private _initProvider(): void {
 			// Init provider
@@ -147,6 +138,20 @@ namespace Providers.Carousel.Splide {
 					OSFramework.Patterns.Carousel.Enum.CssClass.HasPagination
 				);
 			}
+		}
+
+		/**
+		 * Method that encapsulates all methods needed to create a new Carousel
+		 *
+		 * @protected
+		 * @memberof Providers.Carousel.Splide.OSUISplide
+		 */
+		protected prepareConfigs(): void {
+			// Call the following methods here, so that all DOM elements are iterated and ready to init the library
+			this._prepareCarouselItems();
+			this._providerOptions = this.configs.getProviderConfig();
+			// Init the Library
+			this._initProvider();
 		}
 
 		/**
@@ -259,7 +264,7 @@ namespace Providers.Carousel.Splide {
 
 			this.setInitialCssClasses();
 
-			this._createProviderCarousel();
+			this.prepareConfigs();
 
 			this.finishBuild();
 		}
@@ -290,7 +295,7 @@ namespace Providers.Carousel.Splide {
 					case OSFramework.Patterns.Carousel.Enum.Properties.ItemsDesktop:
 					case OSFramework.Patterns.Carousel.Enum.Properties.ItemsTablet:
 					case OSFramework.Patterns.Carousel.Enum.Properties.ItemsPhone:
-						this.updateCarousel();
+						this.redraw();
 						break;
 					case OSFramework.Patterns.Carousel.Enum.Properties.Height:
 						this._provider.options = { height: propertyValue as string | number };
@@ -383,7 +388,7 @@ namespace Providers.Carousel.Splide {
 				this.configs.Direction = OSFramework.GlobalEnum.Direction.LTR;
 			}
 
-			this.updateCarousel();
+			this.redraw();
 		}
 
 		/**
@@ -394,7 +399,7 @@ namespace Providers.Carousel.Splide {
 		 */
 		public setProviderConfigs(newConfigs: SplideOpts): void {
 			this.configs.setExtensibilityConfigs(newConfigs);
-			this.updateCarousel();
+			this.redraw();
 		}
 
 		/**
@@ -418,21 +423,6 @@ namespace Providers.Carousel.Splide {
 		}
 
 		/**
-		 * Method used on the changeProperty for the options that require the Carousel to be destroyed and created again to properly update
-		 *
-		 * @memberof Providers.Carousel.Splide.OSUISplide
-		 */
-		public updateCarousel(): void {
-			// Check if provider is ready
-			if (typeof this._provider === 'object') {
-				this._provider.destroy();
-			}
-
-			// Create Carousel again
-			this._createProviderCarousel();
-		}
-
-		/**
 		 * Method to run when there's a platform onRender
 		 *
 		 * @memberof Providers.Carousel.Splide.OSUISplide
@@ -449,7 +439,7 @@ namespace Providers.Carousel.Splide {
 						this.configs.StartingPosition = this.provider.index;
 					}
 
-					this.updateCarousel();
+					this.redraw();
 				}
 			}
 		}

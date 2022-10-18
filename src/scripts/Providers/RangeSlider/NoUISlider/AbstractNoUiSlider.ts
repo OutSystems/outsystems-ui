@@ -183,17 +183,6 @@ namespace Providers.RangeSlider.NoUISlider {
 		}
 
 		/**
-		 * Method to remove and destroy RangeSlider instance
-		 *
-		 * @private
-		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
-		 */
-		protected updateRangeSlider(): void {
-			this.provider.destroy();
-			this.prepareConfigs();
-		}
-
-		/**
 		 * Builds the Pattern
 		 *
 		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
@@ -223,7 +212,7 @@ namespace Providers.RangeSlider.NoUISlider {
 
 						break;
 					case OSFramework.Patterns.RangeSlider.Enum.Properties.Orientation:
-						this.updateRangeSlider();
+						this.redraw();
 						break;
 					case OSFramework.Patterns.RangeSlider.Enum.Properties.IsDisabled:
 						this._setIsDisabled();
@@ -310,7 +299,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		public setProviderConfigs(newConfigs: NoUiSliderOptions): void {
 			this.configs.setExtensibilityConfigs(newConfigs);
 
-			this.updateRangeSlider();
+			this.redraw();
 		}
 
 		/**

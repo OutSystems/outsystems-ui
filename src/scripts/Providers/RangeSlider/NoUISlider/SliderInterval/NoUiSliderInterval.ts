@@ -8,17 +8,6 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 			super(uniqueId, new NoUISlider.SliderInterval.NoUiSliderIntervalConfig(configs));
 		}
 
-		// Method to trigger the a destroy & creation of new provider instance, with configs updated
-		private _updateRangeSlider(): void {
-			// Get values so the the Range Slider keeps the same values as before is destroyed
-			const value = this.getValue();
-
-			this.configs.StartingValueFrom = value[0];
-			this.configs.StartingValueTo = value[1];
-
-			super.updateRangeSlider();
-		}
-
 		// Handler to trigger the OnValueChange event
 		private _valueChangeCallback(value?: number[]): void {
 			if (value !== undefined) {
@@ -53,6 +42,22 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 
 			// Instance will be Created!
 			this.createProviderInstance();
+		}
+
+		/**
+		 * Redraw the pattern
+		 *
+		 * @protected
+		 * @memberof Providers.RangeSlider.NoUISlider.IntervalSlider.OSUINoUiSliderInterval
+		 */
+		protected redraw(): void {
+			// Get values so the the Range Slider keeps the same values as before is destroyed
+			const value = this.getValue();
+
+			this.configs.StartingValueFrom = value[0];
+			this.configs.StartingValueTo = value[1];
+
+			super.redraw();
 		}
 
 		/**
@@ -122,7 +127,7 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 					case OSFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
 						// Library only supports update on some options, so we need to
 						// destroy the object and create a new RangeSlider
-						this._updateRangeSlider();
+						this.redraw();
 						break;
 				}
 			}

@@ -155,20 +155,6 @@ namespace Providers.Dropdown.VirtualSelect {
 		}
 
 		/**
-		 * Method that will be responsible to redraw the dropdown when it's needed
-		 *
-		 * @protected
-		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
-		 */
-		protected redraw(): void {
-			// Destroy the old VirtualSelect instance
-			this.provider.destroy();
-
-			// Create a new VirtualSelect instance with the updated configs
-			OSFramework.Helper.AsyncInvocation(this.prepareConfigs.bind(this));
-		}
-
-		/**
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
