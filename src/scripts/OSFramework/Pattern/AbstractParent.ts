@@ -179,7 +179,6 @@ namespace OSFramework.Patterns {
 		 * Getter that allows to obtain all the childs when parent only contains childs of one type,
 		 * otherwise a type must be passed in order to return all child of the given type!
 		 *
-		 * @protected
 		 * @param type To be based on childType childs collection, otherwise will assume parent only contains one child type!
 		 * @returns
 		 * @memberof OSFramework.Patterns.AbstractParent

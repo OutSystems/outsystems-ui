@@ -257,6 +257,7 @@ namespace OSFramework.Patterns {
 		/**
 		 * ProviderInfo getter
 		 *
+		 * @readonly
 		 * @type {ProviderInfo}
 		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
@@ -285,6 +286,7 @@ namespace OSFramework.Patterns {
 		/**
 		 * Provider getter
 		 *
+		 * @readonly
 		 * @type {P}
 		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
