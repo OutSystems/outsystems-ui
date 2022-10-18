@@ -87,7 +87,7 @@ namespace OSFramework.Patterns.Tabs {
 
 		// Add event listener for arrow navigation
 		private _addEvents(): void {
-			this._tabsHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
+			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
 
 			// Add event listener for window resize, to update active indicator size
 			Event.GlobalEventManager.Instance.addHandler(Event.Type.WindowResize, this._eventOnResize);
@@ -162,10 +162,16 @@ namespace OSFramework.Patterns.Tabs {
 
 		// Method that handles the Keypress Event, for tabs navigation using arrows
 		private _handleKeypressEvent(e: KeyboardEvent): void {
-			let targetHeaderItemIndex: number;
+			let targetHeaderItemIndex;
+			// Check oif target is content, to preventDefault and not change tabe on x arrow press
+			const isContentTarget = e.target === this._activeTabContentElement.selfElement;
 
 			switch (e.key) {
 				case GlobalEnum.Keycodes.ArrowRight:
+					if (isContentTarget) {
+						e.preventDefault();
+						return;
+					}
 					// If is right arrow, navigate to current active tabs + 1 (next item)
 					targetHeaderItemIndex = this.configs.StartingTab + 1;
 					// To prevent triggerinh changeTab, if already on last item
@@ -175,6 +181,10 @@ namespace OSFramework.Patterns.Tabs {
 
 					break;
 				case GlobalEnum.Keycodes.ArrowLeft:
+					if (isContentTarget) {
+						e.preventDefault();
+						return;
+					}
 					// If is left arrow, navigate to current active tabs - 1 (previous item)
 					targetHeaderItemIndex = this.configs.StartingTab - 1;
 					// To prevent triggering changeTab, if already on first item
