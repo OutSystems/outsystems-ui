@@ -15,7 +15,7 @@ namespace Providers.Dropdown.VirtualSelect.Search {
 		 *
 		 * @protected
 		 * @return {*}  {string[]}
-		 * @memberof VirtualSelectSearchConfig
+		 * @memberof Providers.Dropdown.VirtualSelect.Search.VirtualSelectSearchConfig
 		 */
 		protected _getSelectedValues(): string[] {
 			const selectedKeyvalues = [];
@@ -41,7 +41,7 @@ namespace Providers.Dropdown.VirtualSelect.Search {
 		 * Set the configs for the Dropdown Search mode
 		 *
 		 * @return {*}  {VirtualSelectOpts}
-		 * @memberof VirtualSelectSearchConfig
+		 * @memberof Providers.Dropdown.VirtualSelect.Search.VirtualSelectSearchConfig
 		 */
 		public getProviderConfig(): VirtualSelectOpts {
 			const virtualSelectSearchOpts = {
@@ -57,7 +57,7 @@ namespace Providers.Dropdown.VirtualSelect.Search {
 		 * @param {string} key
 		 * @param {unknown} value
 		 * @return {*}  {unknown}
-		 * @memberof VirtualSelectSearchConfig
+		 * @memberof Providers.Dropdown.VirtualSelect.Search.VirtualSelectSearchConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

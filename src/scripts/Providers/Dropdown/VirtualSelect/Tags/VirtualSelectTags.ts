@@ -11,7 +11,7 @@ namespace Providers.Dropdown.VirtualSelect.Tags {
 		 *
 		 * @protected
 		 * @return {*}  {DropDownOption[]}
-		 * @memberof OSUIVirtualSelectTags
+		 * @memberof Providers.Dropdown.VirtualSelect.Tags.OSUIVirtualSelectTags
 		 */
 		protected getSelectedOptionsStructure(): DropDownOption[] {
 			// Store the options selected
@@ -24,7 +24,7 @@ namespace Providers.Dropdown.VirtualSelect.Tags {
 		 * Method that will set the provider configurations in order to properly create its instance
 		 *
 		 * @protected
-		 * @memberof OSUIVirtualSelectTags
+		 * @memberof Providers.Dropdown.VirtualSelect.Tags.OSUIVirtualSelectTags
 		 */
 		protected prepareConfigs(): void {
 			// Get the library configurations

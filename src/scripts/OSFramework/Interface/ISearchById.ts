@@ -12,7 +12,7 @@ namespace OSFramework.Interface {
 		 *
 		 * @param {string} id
 		 * @return {*}  {boolean}
-		 * @memberof ISearchById
+		 * @memberof OSFramework.Interface.ISearchById
 		 */
 		equalsToID(id: string): boolean;
 	}

@@ -12,7 +12,7 @@ namespace OSFramework.Helper {
 		 * @readonly
 		 * @static
 		 * @type {string}
-		 * @memberof Language
+		 * @memberof OSFramework.Helper.Language
 		 */
 		public static get Lang(): string {
 			return Language._lang;
@@ -24,7 +24,7 @@ namespace OSFramework.Helper {
 		 * @readonly
 		 * @static
 		 * @type {string}
-		 * @memberof Language
+		 * @memberof OSFramework.Helper.Language
 		 */
 		public static get ShortLang(): string {
 			return Language._lang.substring(0, 2);

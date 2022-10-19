@@ -9,12 +9,12 @@ namespace OSFramework.Patterns.Notification {
 		public Width: string;
 
 		/**
-		 * Validate if the parameters can change
+		 * Method that will check if a given property (key) can be changed/updated!
 		 *
-		 * @param {boolean} isBuilt
-		 * @param {string} key
-		 * @return {*}  {boolean}
-		 * @memberof NotificationConfig
+		 * @param isBuilt True when pattern has been built!
+		 * @param key property name
+		 * @returns {boolean} boolean
+		 * @memberof  OSFramework.Patterns.Notification.NotificationConfig
 		 */
 		public validateCanChange(isBuilt: boolean, key: string): boolean {
 			if (isBuilt) {
@@ -24,12 +24,12 @@ namespace OSFramework.Patterns.Notification {
 		}
 
 		/**
-		 * Override, Validate configs key values
+		 * Method that will check if a given property (key) value is the type expected!
 		 *
-		 * @param {string} key
-		 * @param {unknown} value
-		 * @return {*}  {unknown}
-		 * @memberof NotificationConfig
+		 * @param key property name
+		 * @param value value to be check
+		 * @returns {unknown} value
+		 * @memberof  OSFramework.Patterns.Notification.NotificationConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

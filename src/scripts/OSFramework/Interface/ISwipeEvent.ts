@@ -5,7 +5,7 @@ namespace OSFramework.Interface {
 		 * Gesture Events Instance
 		 *
 		 * @type {Event.GestureEvent.SwipeEvent}
-		 * @memberof ISwipeEvent
+		 * @memberof OSFramework.Interface.ISwipeEvent
 		 */
 		gestureEventInstance: Event.GestureEvent.SwipeEvent;
 
@@ -16,7 +16,7 @@ namespace OSFramework.Interface {
 		 * @param {Event.GestureEvent.swipeLeft} swipeLeftCallback
 		 * @param {Event.GestureEvent.swipeRight} swipeRightCallback
 		 * @param {Event.GestureEvent.swipeUp} swipeUpCallback
-		 * @memberof ISwipeEvent
+		 * @memberof OSFramework.Interface.ISwipeEvent
 		 */
 		setGestureEvents(
 			swipeDownCallback: Event.GestureEvent.Callbacks.SwipeDown,

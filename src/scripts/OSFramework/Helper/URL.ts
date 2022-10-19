@@ -6,7 +6,7 @@ namespace OSFramework.Helper {
 		 * Function that validates if a given URL is a valid image URL
 		 *
 		 * @param url
-		 * @memberof URL
+		 * @memberof OSFramework.Helper.URL
 		 */
 		public static IsImage(url: string): boolean {
 			return (
@@ -20,7 +20,7 @@ namespace OSFramework.Helper {
 		 * Function that validates if a given URL is a valid URL
 		 *
 		 * @param url
-		 * @memberof URL
+		 * @memberof OSFramework.Helper.URL
 		 */
 		public static IsValid(url: string): boolean {
 			const pattern = new RegExp(

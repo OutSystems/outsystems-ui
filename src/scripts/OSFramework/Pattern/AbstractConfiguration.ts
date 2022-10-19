@@ -26,7 +26,7 @@ namespace OSFramework.Patterns {
 		 * @param {(boolean | undefined)} value
 		 * @param {boolean} defaultValue
 		 * @return {*}  {boolean}
-		 * @memberof AbstractConfiguration
+		 * @memberof OSFramework.Patterns.AbstractConfiguration
 		 */
 		protected validateBoolean(value: boolean | undefined, defaultValue: boolean): boolean {
 			return value !== undefined ? value : defaultValue;
@@ -39,7 +39,7 @@ namespace OSFramework.Patterns {
 		 * @param {string} value
 		 * @param {string} defaultValue
 		 * @return {*}  {(string | Date)}
-		 * @memberof AbstractConfiguration
+		 * @memberof OSFramework.Patterns.AbstractConfiguration
 		 */
 		protected validateDate(value: string | Date, defaultValue: string): string | Date {
 			return Helper.Dates.IsNull(value) === false ? value : defaultValue;
@@ -53,7 +53,7 @@ namespace OSFramework.Patterns {
 		 * @param {unknown} defaultValue
 		 * @param {...unknown[]} args
 		 * @return {*}  {unknown}
-		 * @memberof AbstractConfiguration
+		 * @memberof OSFramework.Patterns.AbstractConfiguration
 		 */
 		protected validateInRange(value: unknown, defaultValue: unknown, ...args: unknown[]): unknown {
 			if (value) {
@@ -75,7 +75,7 @@ namespace OSFramework.Patterns {
 		 * @param {number} value
 		 * @param {number} defaultValue
 		 * @return {*}  {number}
-		 * @memberof AbstractConfiguration
+		 * @memberof OSFramework.Patterns.AbstractConfiguration
 		 */
 		protected validateNumber(value: number, defaultValue: number): number {
 			return typeof value === 'number' ? value : defaultValue;
@@ -88,7 +88,7 @@ namespace OSFramework.Patterns {
 		 * @param {(string | undefined)} value
 		 * @param {string} defaultValue
 		 * @return {*}  {string}
-		 * @memberof AbstractConfiguration
+		 * @memberof OSFramework.Patterns.AbstractConfiguration
 		 */
 		protected validateString(value: string | undefined, defaultValue: string): string {
 			return value && value.trim() ? value : defaultValue;
@@ -101,7 +101,7 @@ namespace OSFramework.Patterns {
 		 * @param {string} value
 		 * @param {string} defaultValue
 		 * @return {*}  {(string)}
-		 * @memberof AbstractConfiguration
+		 * @memberof OSFramework.Patterns.AbstractConfiguration
 		 */
 		protected validateTime(value: string, defaultValue: string): string {
 			return Helper.Times.IsNull(value) === false ? value : defaultValue;
@@ -113,7 +113,7 @@ namespace OSFramework.Patterns {
 		 * @param {boolean} _isBuilt
 		 * @param {string} _key
 		 * @return {*}  {boolean}
-		 * @memberof AbstractConfiguration
+		 * @memberof OSFramework.Patterns.AbstractConfiguration
 		 */
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		public validateCanChange(_isBuilt: boolean, _key: string): boolean {
@@ -126,7 +126,7 @@ namespace OSFramework.Patterns {
 		 * @param {string} _key
 		 * @param {unknown} value
 		 * @return {*}  {unknown}
-		 * @memberof AbstractConfiguration
+		 * @memberof OSFramework.Patterns.AbstractConfiguration
 		 */
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		public validateDefault(_key: string, value: unknown): unknown {

@@ -23,30 +23,35 @@ namespace OSFramework.Patterns.Progress {
 
 		// Set default Accessibility properties
 		private _setAccessibilityProps(): void {
-			Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.TabIndex, '0');
+			Helper.Dom.Attribute.Set(this.selfElement, Constants.A11YAttributes.TabIndex, '0');
 
 			Helper.Dom.Attribute.Set(
-				this._selfElem,
+				this.selfElement,
 				Constants.A11YAttributes.Role.AttrName,
 				Constants.A11YAttributes.Role.Progressbar
 			);
 
-			Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Label, 'progress');
+			Helper.Dom.Attribute.Set(this.selfElement, Constants.A11YAttributes.Aria.Label, 'progress');
 
 			Helper.Dom.Attribute.Set(
-				this._selfElem,
+				this.selfElement,
 				Constants.A11YAttributes.Aria.ValueMin,
 				ProgressEnum.Properties.MinProgressValue
 			);
 
 			Helper.Dom.Attribute.Set(
-				this._selfElem,
+				this.selfElement,
 				Constants.A11YAttributes.Aria.ValueMax,
 				ProgressEnum.Properties.MaxProgressValue
 			);
 		}
 
-		// Method to add the initial animation to progress
+		/**
+		 * Method to add the initial animation to progress
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.AbstractProgress
+		 */
 		protected animateInitial(): void {
 			// Do the initial animation
 			Helper.Dom.Styles.AddClass(this._progressElem, ProgressEnum.CssClass.AddInitialAnimation);
@@ -55,7 +60,12 @@ namespace OSFramework.Patterns.Progress {
 			this._progressElem.addEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._eventAnimateEntranceEnd);
 		}
 
-		// Method to add the animation to progress on value change
+		/**
+		 * Method to add the animation to progress on value change
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.AbstractProgress
+		 */
 		protected animateOnValueChange(): void {
 			// Do the transition animation
 			Helper.Dom.Styles.AddClass(this._progressElem, ProgressEnum.CssClass.AnimateProgressChange);
@@ -64,19 +74,42 @@ namespace OSFramework.Patterns.Progress {
 			this._progressElem.addEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._eventAnimateEntranceEnd);
 		}
 
+		/**
+		 * Method to set the calbacks
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.AbstractProgress
+		 */
 		protected setCallbacks(): void {
 			this._eventAnimateEntranceEnd = this._animateEntranceEnd.bind(this);
 		}
 
+		/**
+		 * Method to unset the calbacks
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.AbstractProgress
+		 */
 		protected unsetCallbacks(): void {
 			this._eventAnimateEntranceEnd = undefined;
 		}
 
+		/**
+		 * Method to set the html elements used
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.AbstractProgress
+		 */
 		protected unsetHtmlElements(): void {
 			this._progressElem = undefined;
 		}
 
-		// Method to validate the value limits and apply the A11Y on progress, based on progress value
+		/**
+		 * Method to validate the value limits and apply the A11Y on progress, based on progress value
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.AbstractProgress
+		 */
 		protected updatedProgressValue(): void {
 			// If negative value, set it as minimum progress value by default
 			if (this.configs.Progress < ProgressEnum.Properties.MinProgressValue) {
@@ -105,10 +138,10 @@ namespace OSFramework.Patterns.Progress {
 			}
 
 			// Update valuenow Accessibility property and CssVariable that will be used to set the progress value into pattern
-			Helper.Dom.Attribute.Set(this._selfElem, 'aria-valuenow', this.configs.Progress.toString());
+			Helper.Dom.Attribute.Set(this.selfElement, 'aria-valuenow', this.configs.Progress.toString());
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				ProgressEnum.InlineStyleProp.ProgressValue,
 				this.configs.Progress.toString() + GlobalEnum.Units.Percentage
 			);
@@ -120,17 +153,28 @@ namespace OSFramework.Patterns.Progress {
 			this._setAccessibilityProps();
 		}
 
+		/**
+		 * Method used to reset the progress value
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.AbstractProgress
+		 */
 		public resetProgressValue(): void {
 			this.setElementProgressValue(this.configs.InitialProgress);
 		}
 
+		/**
+		 * Method used to set the progress value
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Progress.AbstractProgress
+		 */
 		public setProgressValue(value: number): void {
 			this.setElementProgressValue(value);
 		}
 
-		// Implement the _addInitialAnimation method since a transitionend event must be added, this must be implemented at childs level
+		// Common methods all Progress patterns must implement
 		protected abstract addInitialAnimation(): void;
-
 		protected abstract setElementProgressValue(value: number): void;
 	}
 }

@@ -8,6 +8,7 @@ namespace OSFramework.Patterns.Dropdown {
 			super(uniqueId, configs);
 		}
 
+		// Common methods that all Dropdowns must implement!
 		public abstract clear(): void;
 		public abstract disable(): void;
 		public abstract enable(): void;

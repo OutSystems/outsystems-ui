@@ -87,7 +87,7 @@ namespace OSFramework.Patterns.Tabs {
 
 		// Add event listener for arrow navigation
 		private _addEvents(): void {
-			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
+			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
 
 			// Add event listener for window resize, to update active indicator size
 			Event.GlobalEventManager.Instance.addHandler(Event.Type.WindowResize, this._eventOnResize);
@@ -195,6 +195,7 @@ namespace OSFramework.Patterns.Tabs {
 			}
 
 			const targetHeaderItem = this.getChildByIndex(targetHeaderItemIndex, Enum.ChildTypes.TabsHeaderItem);
+
 			// Focus on the new activeHeader, after changeTab
 			if (targetHeaderItem) {
 				targetHeaderItem.setFocus();
@@ -452,7 +453,7 @@ namespace OSFramework.Patterns.Tabs {
 		private _setHeaderItemsCustomProperty(): void {
 			// Create css variable
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				Enum.CssProperty.TabsHeaderItems,
 				this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length
 			);
@@ -461,7 +462,7 @@ namespace OSFramework.Patterns.Tabs {
 		// Method to set the Tabs Height
 		private _setHeight(height: string): void {
 			// Create css variable
-			Helper.Dom.Styles.SetStyleAttribute(this._selfElem, Enum.CssProperty.TabsHeight, height);
+			Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Enum.CssProperty.TabsHeight, height);
 		}
 
 		// Method to set the initial options on screen load
@@ -483,9 +484,9 @@ namespace OSFramework.Patterns.Tabs {
 		// Method to set if the Tabs are justified
 		private _setIsJustified(isJustified: boolean): void {
 			if (isJustified) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClasses.IsJustified);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClasses.IsJustified);
 			} else {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClasses.IsJustified);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClasses.IsJustified);
 			}
 
 			if (this.isBuilt) {
@@ -496,8 +497,8 @@ namespace OSFramework.Patterns.Tabs {
 
 		// Method to set the Tabs Orientation
 		private _setOrientation(orientation: GlobalEnum.Orientation): void {
-			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._currentOrientation);
-			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClasses.Modifier + orientation);
+			Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClasses.Modifier + this._currentOrientation);
+			Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClasses.Modifier + orientation);
 			this._currentOrientation = orientation;
 
 			if (this.isBuilt) {
@@ -510,8 +511,8 @@ namespace OSFramework.Patterns.Tabs {
 
 		// Method to set the Tabs Position
 		private _setPosition(position: GlobalEnum.Direction): void {
-			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClasses.Modifier + this._currentVerticalPositon);
-			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClasses.Modifier + position);
+			Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClasses.Modifier + this._currentVerticalPositon);
+			Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClasses.Modifier + position);
 
 			this._currentVerticalPositon = position;
 		}
@@ -618,7 +619,7 @@ namespace OSFramework.Patterns.Tabs {
 		 * Method that adds the necessary attributes and listeners to the Tabs header
 		 *
 		 * @protected
-		 * @memberof Tabs
+		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		protected setA11YProperties(): void {
 			// Set aria-role to TabsHeader
@@ -631,7 +632,7 @@ namespace OSFramework.Patterns.Tabs {
 		 * Method to set the callbacks and event listeners
 		 *
 		 * @protected
-		 * @memberof Tabs
+		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		protected setCallbacks(): void {
 			this._eventOnHeaderKeypress = this._handleKeypressEvent.bind(this);
@@ -643,19 +644,19 @@ namespace OSFramework.Patterns.Tabs {
 		 * Method to assign the html elements to the header and content wrappers
 		 *
 		 * @protected
-		 * @memberof Tabs
+		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		protected setHtmlElements(): void {
-			this._tabsHeaderElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClasses.TabsHeader);
-			this._tabsContentElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClasses.TabsContent);
-			this._tabsIndicatorElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClasses.TabsIndicatorElem);
+			this._tabsHeaderElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClasses.TabsHeader);
+			this._tabsContentElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClasses.TabsContent);
+			this._tabsIndicatorElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClasses.TabsIndicatorElem);
 		}
 
 		/**
 		 * Removes the listeners that were added in the code and unsets the callbacks.
 		 *
 		 * @protected
-		 * @memberof Tabs
+		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		protected unsetCallbacks(): void {
 			this._removeEvents();
@@ -674,7 +675,7 @@ namespace OSFramework.Patterns.Tabs {
 		 * Method to unset the html elements references
 		 *
 		 * @protected
-		 * @memberof Tabs
+		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		protected unsetHtmlElements(): void {
 			this._tabsHeaderElement = undefined;
@@ -725,7 +726,7 @@ namespace OSFramework.Patterns.Tabs {
 		/**
 		 * Method to build the pattern
 		 *
-		 * @memberof Tabs
+		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		public build(): void {
 			super.build();
@@ -748,7 +749,7 @@ namespace OSFramework.Patterns.Tabs {
 		 *
 		 * @param {string} propertyName
 		 * @param {*} propertyValue
-		 * @memberof Tabs
+		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -784,7 +785,7 @@ namespace OSFramework.Patterns.Tabs {
 		 * @param {boolean} [triggerEvent=false]
 		 * @param {boolean} [triggeredByObserver=false]
 		 * @return {*}  {void}
-		 * @memberof Tabs
+		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		public changeTab(
 			tabIndex = this.configs.StartingTab,
@@ -869,7 +870,7 @@ namespace OSFramework.Patterns.Tabs {
 		/**
 		 * Method to remove event listener and destroy Tabs instance
 		 *
-		 * @memberof Tabs
+		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		public dispose(): void {
 			// Remove event listeners on tabs header element
@@ -884,7 +885,7 @@ namespace OSFramework.Patterns.Tabs {
 		 * Set callbacks for the onTabsChange event
 		 *
 		 * @param {Callbacks.OSOnChangeEvent} callback
-		 * @memberof Tabs
+		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		public registerCallback(callback: Callbacks.OSOnChangeEvent): void {
 			if (this._platformEventTabsOnChange === undefined) {
@@ -898,20 +899,20 @@ namespace OSFramework.Patterns.Tabs {
 		 * Method to set the drag gestures necessary configurations
 		 *
 		 * @param {boolean} addDragGestures
-		 * @memberof Tabs
+		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		public toggleDragGestures(addDragGestures: boolean): void {
 			// If running on native shell
 			if (addDragGestures) {
 				// Add class to prevent enable overflow-x
-				Helper.Dom.Styles.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.HasDragGestures);
+				Helper.Dom.Styles.AddClass(this.selfElement, Patterns.Tabs.Enum.CssClasses.HasDragGestures);
 				this._hasDragGestures = true;
 				// Set observer on each contentItem to detect current content being intersected
 				this._setDragObserver();
 				// If the gestures were already added
 			} else if (this._hasDragGestures) {
 				// Remove class to prevent overflow-x
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.HasDragGestures);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Patterns.Tabs.Enum.CssClasses.HasDragGestures);
 				this._hasDragGestures = false;
 				// Disconnect observer
 				this._unsetDragObserver();

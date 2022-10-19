@@ -18,7 +18,7 @@ namespace OSFramework.Event.GestureEvent {
 		 * @param {Event.GestureEvent.Callbacks.GestureStart} onStartCallback
 		 * @param {Event.GestureEvent.Callbacks.GestureMove} onMoveCallback
 		 * @param {Event.GestureEvent.Callbacks.GestureEnd} [onEndCallback]
-		 * @memberof DragEvent
+		 * @memberof OSFramework.Event.GestureEvent.DragEvent
 		 */
 		public setSwipeEvents(
 			onStartCallback: Event.GestureEvent.Callbacks.GestureStart,

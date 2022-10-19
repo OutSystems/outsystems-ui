@@ -97,7 +97,7 @@ namespace OSFramework.Patterns.AccordionItem {
 				this._isOpen = false;
 			}
 
-			this.setA11yProperties();
+			this.setA11YProperties();
 			this._onToggleCallback();
 		}
 
@@ -205,13 +205,13 @@ namespace OSFramework.Patterns.AccordionItem {
 		// Method to handle the IsDisabled state
 		private _setIsDisabledState(): void {
 			if (this.configs.IsDisabled) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternDisabled);
-				Helper.A11Y.AriaDisabledTrue(this._selfElem);
-				this.unsetCallbacks();
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternDisabled);
+				Helper.A11Y.AriaDisabledTrue(this.selfElement);
 				this._removeEvents();
+				this.unsetCallbacks();
 			} else {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternDisabled);
-				Helper.A11Y.AriaDisabledFalse(this._selfElem);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.PatternDisabled);
+				Helper.A11Y.AriaDisabledFalse(this.selfElement);
 				this.setCallbacks();
 				this._addEvents();
 			}
@@ -248,14 +248,13 @@ namespace OSFramework.Patterns.AccordionItem {
 		 * Method to handle Accessibility attributes
 		 *
 		 * @protected
-		 * @param {boolean} [isUpdate=true]
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
-		protected setA11yProperties(isUpdate = true): void {
+		protected setA11YProperties(): void {
 			// Set the static attributes on page load only
-			if (!isUpdate) {
+			if (this.isBuilt === false) {
 				// Set ARIA Controls
-				Helper.A11Y.AriaControls(this._selfElem, this._accordionItemPlaceholder.id);
+				Helper.A11Y.AriaControls(this.selfElement, this._accordionItemPlaceholder.id);
 
 				// Set ARIA LabelledBy
 				Helper.A11Y.AriaLabelledBy(this._accordionItemContentElem, this._accordionItemTitleElem.id);
@@ -264,10 +263,10 @@ namespace OSFramework.Patterns.AccordionItem {
 				Helper.A11Y.AriaHiddenTrue(this._accordionItemIconElem);
 
 				// Set ARIA Disabled
-				Helper.A11Y.AriaDisabled(this._selfElem, this.configs.IsDisabled);
+				Helper.A11Y.AriaDisabled(this.selfElement, this.configs.IsDisabled);
 
 				// Set roles
-				Helper.A11Y.RoleTab(this._selfElem);
+				Helper.A11Y.RoleTab(this.selfElement);
 				Helper.A11Y.RoleButton(this._accordionItemTitleElem);
 				Helper.A11Y.RoleTabPanel(this._accordionItemPlaceholder);
 			}
@@ -276,7 +275,7 @@ namespace OSFramework.Patterns.AccordionItem {
 			this._handleTabIndex();
 
 			// Set ARIA Expanded
-			Helper.A11Y.AriaExpanded(this._selfElem, this._isOpen.toString());
+			Helper.A11Y.AriaExpanded(this.selfElement, this._isOpen.toString());
 			Helper.A11Y.AriaExpanded(this._accordionItemTitleElem, this._isOpen.toString());
 
 			// Set aria-hidden to content
@@ -287,7 +286,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		 * Method to set the listeners and callbacks
 		 *
 		 * @protected
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		protected setCallbacks(): void {
 			this._eventOnClick = this._accordionOnClickHandler.bind(this);
@@ -299,15 +298,15 @@ namespace OSFramework.Patterns.AccordionItem {
 		 * Method that sets the HTML elements of the Accordion Item
 		 *
 		 * @protected
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		protected setHtmlElements(): void {
-			this._accordionItemTitleElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternTitle);
-			this._accordionItemContentElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternContent);
-			this._accordionItemIconElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternIcon);
+			this._accordionItemTitleElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternTitle);
+			this._accordionItemContentElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternContent);
+			this._accordionItemIconElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternIcon);
 			// Getting the custom icon that is also a placeholder (ph)
 			this._accordionItemIconCustomElem = Helper.Dom.ClassSelector(
-				this._selfElem,
+				this.selfElement,
 				Enum.CssClass.PatternIcon + '.' + GlobalEnum.CssClassElements.Placeholder
 			);
 			this._accordionItemPlaceholder = this._accordionItemContentElem.firstChild as HTMLElement;
@@ -317,14 +316,14 @@ namespace OSFramework.Patterns.AccordionItem {
 		 * Method to set the initial CSS Classes
 		 *
 		 * @protected
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		protected setInitialCssClasses(): void {
 			if (this._isOpen) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternOpen);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternOpen);
 				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternExpanded);
 			} else {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternClosed);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternClosed);
 				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternCollapsed);
 			}
 
@@ -336,7 +335,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		 * Method to remove all assigned callbacks
 		 *
 		 * @protected
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnClick = undefined;
@@ -348,7 +347,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		 * Method to unset the html elements
 		 *
 		 * @protected
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		protected unsetHtmlElements(): void {
 			this._accordionItemTitleElem = undefined;
@@ -362,7 +361,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		public get isDisabled(): boolean {
 			return this.configs.IsDisabled;
@@ -373,7 +372,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		public get isOpen(): boolean {
 			return this._isOpen;
@@ -382,7 +381,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		/**
 		 * Method to prevent clicks inside thte title to open the accordion
 		 *
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		public allowTitleEvents(): void {
 			this._allowTitleEvents = true;
@@ -391,7 +390,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		/**
 		 * Method to build the pattern.
 		 *
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		public build(): void {
 			super.build();
@@ -402,7 +401,7 @@ namespace OSFramework.Patterns.AccordionItem {
 			this._setAccordionParent();
 
 			this._setIsDisabledState();
-			this.setA11yProperties(false);
+			this.setA11YProperties();
 
 			super.finishBuild();
 		}
@@ -412,7 +411,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -439,7 +438,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		/**
 		 * Method to close the AccordionItem
 		 *
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		public close(): void {
 			if (!this._isOpen) {
@@ -449,8 +448,8 @@ namespace OSFramework.Patterns.AccordionItem {
 			Helper.Dom.Attribute.Remove(this._accordionItemContentElem, GlobalEnum.HTMLAttributes.Style);
 			this._expandedHeight = this._accordionItemContentElem.getBoundingClientRect().height;
 
-			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternClosed);
-			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternOpen);
+			Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternClosed);
+			Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.PatternOpen);
 
 			// Removes collapsed class and adds the expanded class to animate
 			Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.PatternExpanded);
@@ -469,7 +468,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		/**
 		 * Method to remove event listener and destroy AccordionItem instance
 		 *
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		public dispose(): void {
 			this.unsetCallbacks();
@@ -488,15 +487,15 @@ namespace OSFramework.Patterns.AccordionItem {
 		/**
 		 * Method to open the AccordionItem
 		 *
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		public open(): void {
 			if (this._isOpen) {
 				return;
 			}
 
-			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternClosed);
-			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternOpen);
+			Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.PatternClosed);
+			Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternOpen);
 
 			// While the animation is running, we don't want any clicks happening on the title
 			Helper.Dom.Styles.SetStyleAttribute(
@@ -534,7 +533,7 @@ namespace OSFramework.Patterns.AccordionItem {
 		 * Set callbacks for the onToggle event
 		 *
 		 * @param {GlobalCallbacks.OSGeneric} callback
-		 * @memberof AccordionItem
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		public registerCallback(callback: GlobalCallbacks.OSGeneric): void {
 			if (this._platformEventOnToggle === undefined) {

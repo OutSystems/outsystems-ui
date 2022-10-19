@@ -110,9 +110,9 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 		 * Add the Accessibility Attributes values
 		 *
 		 * @protected
-		 * @memberof DropdownServerSideItem
+		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
-		protected setA11yProperties(): void {
+		protected setA11YProperties(): void {
 			// By default set disable to tabIndex
 			Helper.A11Y.TabIndexFalse(this.selfElement);
 			// Set balloon option items container with listbox as a role
@@ -125,7 +125,7 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 		 * Sets the callbacks to be used with the provider.
 		 *
 		 * @protected
-		 * @memberof DropdownServerSideItem
+		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		protected setCallbacks(): void {
 			this._eventOnClick = this._onSelected.bind(this);
@@ -133,10 +133,20 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 		}
 
 		/**
+		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
+		 */
+		protected setHtmlElements(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
 		 * Unset callbacks that has been assigned to the element
 		 *
 		 * @protected
-		 * @memberof DropdownServerSideItem
+		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnClick = null;
@@ -145,9 +155,19 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 		}
 
 		/**
+		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
+		 */
+		protected unsetHtmlElements(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
 		 *  Builds the DropdownServerSideItem.
 		 *
-		 * @memberof DropdownServerSideItem
+		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		public build(): void {
 			super.build();
@@ -163,7 +183,7 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 
 			this.setCallbacks();
 			this._setUpEvents();
-			this.setA11yProperties();
+			this.setA11YProperties();
 			this.finishBuild();
 		}
 
@@ -172,7 +192,7 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof DropdownServerSideItem
+		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -189,7 +209,7 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 		/**
 		 * Disposes the current pattern.
 		 *
-		 * @memberof DropdownServerSideItem
+		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
@@ -209,7 +229,7 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 		 *
 		 * @param {string} eventName Event name that will be assigned
 		 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
-		 * @memberof DropdownServerSideItem
+		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -226,7 +246,7 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 		/**
 		 * Method used to set item as blur state
 		 *
-		 * @memberof DropdownServerSideItem
+		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		public setBlur(): void {
 			this.selfElement.blur();
@@ -235,7 +255,7 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 		/**
 		 * Method used to set item as focus state
 		 *
-		 * @memberof DropdownServerSideItem
+		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		public setFocus(): void {
 			this.selfElement.focus();
@@ -244,7 +264,7 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 		/**
 		 * Method used to set the tabindex attribute
 		 *
-		 * @memberof DropdownServerSideItem
+		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		public setTabindex(): void {
 			Helper.A11Y.TabIndexTrue(this.selfElement);
@@ -254,7 +274,7 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 		 * Method used to update the selected status
 		 *
 		 * @param triggerCallback True by default, used to block the callback when needed
-		 * @memberof DropdownServerSideItem
+		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		public toggleSelected(triggerCallback = true): void {
 			// Update the Status value with the it's Toggled value
@@ -273,7 +293,7 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 		/**
 		 * Method used to unset the tabindex attribute
 		 *
-		 * @memberof DropdownServerSideItem
+		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		public unsetTabindex(): void {
 			Helper.A11Y.TabIndexFalse(this.selfElement);
@@ -284,7 +304,7 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof DropdownServerSideItem
+		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		public get IsSelected(): boolean {
 			return this.configs.IsSelected;
@@ -295,7 +315,7 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof DropdownServerSideItem
+		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		public get ItemId(): string {
 			return this.configs.ItemId;

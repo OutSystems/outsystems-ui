@@ -96,7 +96,7 @@ namespace OSFramework.Helper {
 		 * @static
 		 * @param {string} [userAgent='']
 		 * @return {*}  {GlobalEnum.MobileOS}
-		 * @memberof DeviceInfo
+		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		private static _getOperatingSystem(userAgent = ''): GlobalEnum.MobileOS {
 			const userAgentLocal = DeviceInfo._getUserAgent(userAgent);
@@ -124,7 +124,7 @@ namespace OSFramework.Helper {
 		 * @static
 		 * @param {string} [userAgent='']
 		 * @return {*}
-		 * @memberof DeviceInfo
+		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		private static _getUserAgent(userAgent = ''): string {
 			return userAgent.replace(' ', '') === ''
@@ -139,7 +139,7 @@ namespace OSFramework.Helper {
 		 * @static
 		 * @param {string} ua
 		 * @return {*}  {boolean}
-		 * @memberof DeviceInfo
+		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		private static _isChrome(ua: string): boolean {
 			return ua.includes(UAKeyword.chrome) || ua.includes(UAKeyword.crios);
@@ -152,7 +152,7 @@ namespace OSFramework.Helper {
 		 * @static
 		 * @param {string} ua
 		 * @return {*}  {boolean}
-		 * @memberof DeviceInfo
+		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		private static _isEdge(ua: string): boolean {
 			return (
@@ -170,7 +170,7 @@ namespace OSFramework.Helper {
 		 * @static
 		 * @param {string} ua
 		 * @return {*}  {boolean}
-		 * @memberof DeviceInfo
+		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		private static _isFirefox(ua: string): boolean {
 			return ua.includes(UAKeyword.firefox) || ua.includes(UAKeyword.fxios);
@@ -183,7 +183,7 @@ namespace OSFramework.Helper {
 		 * @static
 		 * @param {string} ua
 		 * @return {*}  {boolean}
-		 * @memberof DeviceInfo
+		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		// eslint-disable-next-line @typescript-eslint/naming-convention
 		private static _isIE(ua: string): boolean {
@@ -197,7 +197,7 @@ namespace OSFramework.Helper {
 		 * @static
 		 * @param {string} ua
 		 * @return {*}  {boolean}
-		 * @memberof DeviceInfo
+		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		private static _isKindle(ua: string): boolean {
 			return (
@@ -222,7 +222,7 @@ namespace OSFramework.Helper {
 		 * @static
 		 * @param {string} ua
 		 * @return {*}  {boolean}
-		 * @memberof DeviceInfo
+		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		private static _isMiui(ua: string): boolean {
 			return ua.includes(UAKeyword.miuibrowser);
@@ -235,7 +235,7 @@ namespace OSFramework.Helper {
 		 * @static
 		 * @param {string} ua
 		 * @return {*}  {boolean}
-		 * @memberof DeviceInfo
+		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		private static _isOpera(ua: string): boolean {
 			return ua.includes(UAKeyword.opr) || ua.includes(UAKeyword.opera) || ua.includes(UAKeyword.opios);
@@ -248,7 +248,7 @@ namespace OSFramework.Helper {
 		 * @static
 		 * @param {string} ua
 		 * @return {*}  {boolean}
-		 * @memberof DeviceInfo
+		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		private static _isSafari(ua: string): boolean {
 			return ua.includes(UAKeyword.safari);
@@ -261,7 +261,7 @@ namespace OSFramework.Helper {
 		 * @static
 		 * @param {string} ua
 		 * @return {*}  {boolean}
-		 * @memberof DeviceInfo
+		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		private static _isSamsung(ua: string): boolean {
 			return ua.includes(UAKeyword.samsungbrowser);
@@ -274,7 +274,7 @@ namespace OSFramework.Helper {
 		 * @static
 		 * @param {string} ua
 		 * @return {*}  {boolean}
-		 * @memberof DeviceInfo
+		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		// eslint-disable-next-line @typescript-eslint/naming-convention
 		private static _isUC(ua: string): boolean {
@@ -288,7 +288,7 @@ namespace OSFramework.Helper {
 		 * @static
 		 * @param {string} ua
 		 * @return {*}  {boolean}
-		 * @memberof DeviceInfo
+		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		private static _isYandex(ua: string): boolean {
 			return ua.includes(UAKeyword.yabrowser);
@@ -306,7 +306,7 @@ namespace OSFramework.Helper {
 		 * @readonly
 		 * @static
 		 * @type {boolean}
-		 * @memberof DeviceInfo
+		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		public static get IsDesktop(): boolean {
 			return DeviceInfo.GetDeviceType() === GlobalEnum.DeviceType.desktop;
@@ -318,7 +318,7 @@ namespace OSFramework.Helper {
 		 * @readonly
 		 * @static
 		 * @type {boolean}
-		 * @memberof DeviceInfo
+		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		public static get IsPhone(): boolean {
 			return DeviceInfo.GetDeviceType() === GlobalEnum.DeviceType.phone;
@@ -330,7 +330,7 @@ namespace OSFramework.Helper {
 		 * @readonly
 		 * @static
 		 * @type {boolean}
-		 * @memberof DeviceInfo
+		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		public static get IsIphoneWithNotch(): boolean {
 			if (DeviceInfo._isIphoneWithNotch === undefined) {
@@ -357,7 +357,7 @@ namespace OSFramework.Helper {
 		 * @readonly
 		 * @static
 		 * @type {boolean}
-		 * @memberof DeviceInfo
+		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		public static get IsTablet(): boolean {
 			return DeviceInfo.GetDeviceType() === GlobalEnum.DeviceType.tablet;
@@ -369,7 +369,7 @@ namespace OSFramework.Helper {
 		 * @readonly
 		 * @static
 		 * @type {boolean}
-		 * @memberof DeviceInfo
+		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		public static get IsPwa(): boolean {
 			if (DeviceInfo._isPwa === undefined) {
@@ -386,7 +386,7 @@ namespace OSFramework.Helper {
 		 * @readonly
 		 * @static
 		 * @type {boolean}
-		 * @memberof DeviceInfo
+		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		public static get IsNative(): boolean {
 			if (DeviceInfo._isNativeApp === undefined) {
@@ -415,7 +415,7 @@ namespace OSFramework.Helper {
 		 * @readonly
 		 * @static
 		 * @type {boolean}
-		 * @memberof DeviceInfo
+		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		public static get IsTouch(): boolean {
 			if (DeviceInfo._isTouch === undefined) {
@@ -442,7 +442,7 @@ namespace OSFramework.Helper {
 		 * @private
 		 * @static
 		 * @returns GlobalEnum.Position
-		 * @memberof DeviceInfo
+		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		public static get NotchPosition(): GlobalEnum.Position {
 			// store the notch position value
@@ -486,7 +486,7 @@ namespace OSFramework.Helper {
 		 * @static
 		 * @param {string} [userAgent=''] Optional parameter. If none is passed, the framework will get it.
 		 * @return {*}  {GlobalEnum.Browser}
-		 * @memberof DeviceInfo
+		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		public static GetBrowser(userAgent = ''): GlobalEnum.Browser {
 			let browser = GlobalEnum.Browser.unknown;
@@ -526,7 +526,7 @@ namespace OSFramework.Helper {
 		 *
 		 * @static
 		 * @return {*}  {GlobalEnum.DeviceOrientation} Detected orientation of the device.
-		 * @memberof DeviceInfo
+		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		public static GetDeviceOrientation(): GlobalEnum.DeviceOrientation {
 			let orientation = GlobalEnum.DeviceOrientation.unknown;
@@ -543,7 +543,7 @@ namespace OSFramework.Helper {
 		 *
 		 * @static
 		 * @return {*}  {GlobalEnum.DeviceType} Detected device type.
-		 * @memberof DeviceInfo
+		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		public static GetDeviceType(): GlobalEnum.DeviceType {
 			let device = GlobalEnum.DeviceType.desktop;
@@ -562,7 +562,7 @@ namespace OSFramework.Helper {
 		 * @static
 		 * @param {string} [userAgent=''] Optional parameter. If none, the framework will obtain the UserAgent, calculate it once, and use the cache value afterwards.
 		 * @return {*}  {GlobalEnum.MobileOS} Detected operating system.
-		 * @memberof DeviceInfo
+		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		public static GetOperatingSystem(userAgent = ''): GlobalEnum.MobileOS {
 			let localOs;

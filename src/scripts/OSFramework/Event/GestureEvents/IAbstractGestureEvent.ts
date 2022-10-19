@@ -5,14 +5,14 @@ namespace OSFramework.Event.GestureEvent {
 		 * Target element that receives the event listeners
 		 *
 		 * @type {HTMLElement}
-		 * @memberof IAbstractGestureEvent
+		 * @memberof OSFramework.Event.GestureEvent.IAbstractGestureEvent
 		 */
 		targetElement: HTMLElement;
 
 		/**
 		 * Signature method to unset the gesture events
 		 *
-		 * @memberof IAbstractGestureEvent
+		 * @memberof OSFramework.Event.GestureEvent.IAbstractGestureEvent
 		 */
 		unsetTouchEvents(): void;
 	}

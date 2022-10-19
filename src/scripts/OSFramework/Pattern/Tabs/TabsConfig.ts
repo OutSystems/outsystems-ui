@@ -7,6 +7,14 @@ namespace OSFramework.Patterns.Tabs {
 		public TabsOrientation: GlobalEnum.Orientation;
 		public TabsVerticalPosition: GlobalEnum.Direction;
 
+		/**
+		 * Method that will check if a given property (key) can be changed/updated!
+		 *
+		 * @param isBuilt True when pattern has been built!
+		 * @param key property name
+		 * @returns {boolean} boolean
+		 * @memberof  OSFramework.Patterns.Tabs.TabsConfig
+		 */
 		public validateCanChange(isBuilt: boolean, key: string): boolean {
 			if (isBuilt) {
 				return key !== Enum.Properties.StartingTab;
@@ -14,6 +22,14 @@ namespace OSFramework.Patterns.Tabs {
 			return true;
 		}
 
+		/**
+		 * Method that will check if a given property (key) value is the type expected!
+		 *
+		 * @param key property name
+		 * @param value value to be check
+		 * @returns {unknown} value
+		 * @memberof  OSFramework.Patterns.Tabs.TabsConfig
+		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;
 			switch (key) {

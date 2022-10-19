@@ -24,19 +24,19 @@ namespace OSFramework.Patterns.TabsContentItem {
 		 *
 		 * @protected
 		 * @param {boolean} [isUpdate=true]
-		 * @memberof TabsContentItem
+		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
 		 */
 		protected setA11YProperties(isUpdate = true): void {
 			if (isUpdate) {
-				Helper.A11Y.RoleTabPanel(this._selfElem);
+				Helper.A11Y.RoleTabPanel(this.selfElement);
 			}
 
 			if (this._isActive) {
-				Helper.A11Y.TabIndexTrue(this._selfElem);
-				Helper.A11Y.AriaHiddenFalse(this._selfElem);
+				Helper.A11Y.TabIndexTrue(this.selfElement);
+				Helper.A11Y.AriaHiddenFalse(this.selfElement);
 			} else {
-				Helper.A11Y.TabIndexFalse(this._selfElem);
-				Helper.A11Y.AriaHiddenTrue(this._selfElem);
+				Helper.A11Y.TabIndexFalse(this.selfElement);
+				Helper.A11Y.AriaHiddenTrue(this.selfElement);
 			}
 
 			// Will handle the tabindex value of the elements inside pattern, depending if is active
@@ -44,20 +44,40 @@ namespace OSFramework.Patterns.TabsContentItem {
 		}
 
 		/**
+		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
+		 */
+		protected setCallbacks(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
 		 * Method to set the HTML Elements
 		 *
 		 * @protected
-		 * @memberof TabsContentItem
+		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
 		 */
 		protected setHtmlElements(): void {
-			this._focusableElements = Helper.Dom.GetFocusableElements(this._selfElem);
+			this._focusableElements = Helper.Dom.GetFocusableElements(this.selfElement);
+		}
+
+		/**
+		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
+		 */
+		protected unsetCallbacks(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
 		}
 
 		/**
 		 * Method to unset the HTML Elements
 		 *
 		 * @protected
-		 * @memberof TabsContentItem
+		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
 		 */
 		protected unsetHtmlElements(): void {
 			this._focusableElements = undefined;
@@ -66,7 +86,7 @@ namespace OSFramework.Patterns.TabsContentItem {
 		/**
 		 * Method to build the pattern
 		 *
-		 * @memberof TabsContentItem
+		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
 		 */
 		public build(): void {
 			super.build();
@@ -89,7 +109,7 @@ namespace OSFramework.Patterns.TabsContentItem {
 		/**
 		 * Method to remove event listener and destroy TabsContentItem instance
 		 *
-		 * @memberof TabsContentItem
+		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
 		 */
 		public dispose(): void {
 			this.unsetHtmlElements();
@@ -103,7 +123,7 @@ namespace OSFramework.Patterns.TabsContentItem {
 		 * Method to get the current data-tab attribute, called by the Tabs
 		 *
 		 * @return {*}  {number}
-		 * @memberof TabsContentItem
+		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
 		 */
 		public getDataTab(): number {
 			return this._dataTab;
@@ -113,41 +133,41 @@ namespace OSFramework.Patterns.TabsContentItem {
 		 * Method to get the element offsetLeft value, called by the Tabs
 		 *
 		 * @return {*}  {number}
-		 * @memberof TabsContentItem
+		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
 		 */
 		public getOffsetLeft(): number {
-			return this._selfElem.offsetLeft;
+			return this.selfElement.offsetLeft;
 		}
 
 		/**
 		 * Method to set the aria-labbeledby attribute, called by the tabs
 		 *
 		 * @param {string} headerItemId
-		 * @memberof TabsContentItem
+		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
 		 */
 		public setAriaLabelledByAttribute(headerItemId: string): void {
-			Helper.A11Y.AriaLabelledBy(this._selfElem, headerItemId);
+			Helper.A11Y.AriaLabelledBy(this.selfElement, headerItemId);
 		}
 
 		/**
 		 * Method to set the data-tab attribute, called by the tabs
 		 *
 		 * @param {number} dataTab
-		 * @memberof TabsContentItem
+		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
 		 */
 		public setDataTab(dataTab: number): void {
-			Helper.Dom.Attribute.Set(this._selfElem, Tabs.Enum.Attributes.DataTab, dataTab.toString());
+			Helper.Dom.Attribute.Set(this.selfElement, Tabs.Enum.Attributes.DataTab, dataTab.toString());
 			this._dataTab = dataTab;
 		}
 
 		/**
 		 * Method to set the element as active, called by the tabs
 		 *
-		 * @memberof TabsContentItem
+		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
 		 */
 		public setIsActive(): void {
-			if (this._selfElem) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
+			if (this.selfElement) {
+				Helper.Dom.Styles.AddClass(this.selfElement, Patterns.Tabs.Enum.CssClasses.ActiveTab);
 				this._isActive = true;
 				this.setA11YProperties();
 			}
@@ -157,31 +177,31 @@ namespace OSFramework.Patterns.TabsContentItem {
 		 * Method to set the intersection observer, called by the tabs
 		 *
 		 * @param {IntersectionObserver} observer
-		 * @memberof TabsContentItem
+		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
 		 */
 		public setOnDragObserver(observer: IntersectionObserver): void {
-			observer.observe(this._selfElem);
+			observer.observe(this.selfElement);
 		}
 
 		/**
 		 * Method to stop observing this element in the intersection observer, called by the tabs
 		 *
 		 * @param {IntersectionObserver} observer
-		 * @memberof TabsContentItem
+		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
 		 */
 		public unobserveDragObserver(observer: IntersectionObserver): void {
 			// disconnect observer when destroyed from DOM
-			observer.unobserve(this._selfElem);
+			observer.unobserve(this.selfElement);
 		}
 
 		/**
 		 * Method to set the element as active, called by the tabs
 		 *
-		 * @memberof TabsContentItem
+		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
 		 */
 		public unsetIsActive(): void {
-			if (this._selfElem) {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
+			if (this.selfElement) {
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Patterns.Tabs.Enum.CssClasses.ActiveTab);
 				this._isActive = false;
 				this.setA11YProperties();
 			}
@@ -192,7 +212,7 @@ namespace OSFramework.Patterns.TabsContentItem {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof TabsContentItem
+		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
 		 */
 		public get IsActive(): boolean {
 			return this._isActive;

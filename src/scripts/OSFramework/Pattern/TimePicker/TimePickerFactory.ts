@@ -16,7 +16,7 @@ namespace OSFramework.Patterns.TimePicker.Factory {
 		let _timePickerItem = null;
 
 		if (provider === Enum.Provider.FlatPicker) {
-			_timePickerItem = new Providers.Timepicker.Flatpickr.OSUIFlatpickrTime(timePickerId, JSON.parse(configs));
+			_timePickerItem = new Providers.TimePicker.Flatpickr.OSUIFlatpickrTime(timePickerId, JSON.parse(configs));
 		} else {
 			throw new Error(`There is no ${GlobalEnum.PatternName.Timepicker} of the ${provider} provider`);
 		}

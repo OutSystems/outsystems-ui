@@ -8,16 +8,6 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 			super(uniqueId, new NoUISlider.SliderSingle.NoUiSliderSingleConfig(configs));
 		}
 
-		// Method to trigger the a destroy & creation of new provider instance, with configs updated
-		private _updateRangeSlider(): void {
-			// Get values so the the Range Slider keeps the same values as before is destroyed
-			const value = this.getValue();
-
-			this.configs.StartingValueFrom = value as number;
-
-			this.updateRangeSlider();
-		}
-
 		// Handler to trigger the OnValueChange event
 		private _valueChangeCallback(value?: number[]): void {
 			if (value !== undefined) {
@@ -39,24 +29,39 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 		 * Method that will set the provider configurations in order to properly create its instance
 		 *
 		 * @protected
-		 * @memberof OSUINoUiSliderSingleSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.SingleSlider.OSUINoUiSliderSingle
 		 */
 		protected prepareConfigs(): void {
 			// Get the library configurations
-			this.providerOptions = this.configs.getProviderConfig();
+			this.noUiSliderOpts = this.configs.getProviderConfig();
 
 			// Instance will be Created!
 			this.createProviderInstance();
 		}
 
 		/**
+		 * Redraw the pattern
+		 *
+		 * @protected
+		 * @memberof Providers.RangeSlider.NoUISlider.IntervalSlider.OSUINoUiSliderInterval
+		 */
+		protected redraw(): void {
+			// Get values so the the Range Slider keeps the same values as before is destroyed
+			const value = this.getValue();
+
+			this.configs.StartingValueFrom = value as number;
+
+			super.redraw();
+		}
+
+		/**
 		 * Method to set the Accessibility attributes
 		 *
 		 * @protected
-		 * @memberof OSUINoUiSliderSingle
+		 * @memberof Providers.RangeSlider.NoUISlider.SingleSlider.OSUINoUiSliderSingle
 		 */
-		protected setA11yProperties(): void {
-			this.providerOptions.handleAttributes = [
+		protected setA11YProperties(): void {
+			this.noUiSliderOpts.handleAttributes = [
 				{ 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Single },
 			];
 		}
@@ -65,16 +70,16 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 		 * Sets the callbacks to be used with the provider.
 		 *
 		 * @protected
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.SingleSlider.OSUINoUiSliderSingle
 		 */
 		protected setCallbacks(): void {
 			this.eventProviderValueChanged = this._valueChangeCallback.bind(this);
 		}
 
 		/**
-		 * Method to build the pattern
+		 * Builds the Pattern
 		 *
-		 * @memberof OSUINoUiSliderSingle
+		 * @memberof Providers.RangeSlider.NoUISlider.SingleSlider.OSUINoUiSliderSingle
 		 */
 		public build(): void {
 			super.build();
@@ -83,7 +88,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 
 			this.prepareConfigs();
 
-			this.setA11yProperties();
+			this.setA11YProperties();
 
 			this.finishBuild();
 		}
@@ -93,7 +98,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof OSUINoUiSliderSingle
+		 * @memberof Providers.RangeSlider.NoUISlider.SingleSlider.OSUINoUiSliderSingle
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -109,7 +114,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 					case OSFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
 						// Library only supports update on some options, so we need to
 						// destroy the object and create a new RangeSlider
-						this._updateRangeSlider();
+						this.redraw();
 						break;
 				}
 			}
@@ -118,7 +123,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 		/**
 		 * Method to set current RangeSlider value
 		 *
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.SingleSlider.OSUINoUiSliderSingle
 		 */
 		public resetValue(): void {
 			this.configs.StartingValueFrom = this.configs.InitialValueFrom;
@@ -129,7 +134,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 		 * Method to set current RangeSlider value
 		 *
 		 * @param {number} value
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.SingleSlider.OSUINoUiSliderSingle
 		 */
 		public setValue(value: number): void {
 			if (value >= this.configs.MinValue && value <= this.configs.MaxValue) {

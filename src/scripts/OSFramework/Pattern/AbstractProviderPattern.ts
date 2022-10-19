@@ -20,44 +20,6 @@ namespace OSFramework.Patterns {
 		// Holds the providerEvents instance, that manages the provider events
 		protected providerEventsManagerInstance: Event.ProviderEvents.IProviderEventManager;
 
-		/**
-		 * ProviderInfo getter
-		 *
-		 * @type {ProviderInfo}
-		 * @memberof AbstractProviderPattern
-		 */
-		public get providerInfo(): ProviderInfo {
-			return this._providerInfo;
-		}
-
-		/**
-		 * ProviderInfo setter
-		 *
-		 * @memberof AbstractProviderPattern
-		 */
-		public set providerInfo(providerInfo: ProviderInfo) {
-			this._providerInfo = providerInfo;
-		}
-
-		/**
-		 * Provider setter
-		 *
-		 * @memberof AbstractProviderPattern
-		 */
-		public set provider(p: P) {
-			this._provider = p;
-		}
-
-		/**
-		 * Provider getter
-		 *
-		 * @type {P}
-		 * @memberof AbstractProviderPattern
-		 */
-		public get provider(): P {
-			return this._provider;
-		}
-
 		// Method to get an event index from an array
 		private _getEventIndexFromArray(event: Event.ProviderEvents.IProviderEvent): number {
 			// Get callback from array
@@ -121,7 +83,31 @@ namespace OSFramework.Patterns {
 			}
 		}
 
-		// Trigger platform's InstanceIntializedHandler client Action
+		/**
+		 * Method that will be responsible to redraw pattern when needed
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.AbstractProviderPattern
+		 */
+		protected redraw(): void {
+			// Check if provider has been set!
+			if (this._provider !== undefined) {
+				// Destroy provider instance
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				//@ts-expect-error
+				this._provider.destroy();
+
+				// Trigger a new instance creation with updated configs
+				Helper.AsyncInvocation(this.prepareConfigs.bind(this));
+			}
+		}
+
+		/**
+		 * Trigger platform's InstanceIntializedHandler client Action
+		 *
+		 * @param {GlobalCallbacks.OSGeneric} platFormCallback
+		 * @memberof OSFramework.Patterns.AbstractProviderPattern
+		 */
 		protected triggerPlatformEventInitialized(platFormCallback: GlobalCallbacks.OSGeneric): void {
 			// Ensure it's only be trigger the first time!
 			if (this.isBuilt === false) {
@@ -130,9 +116,9 @@ namespace OSFramework.Patterns {
 		}
 
 		/**
-		 * Method to build the pattern
+		 * Build the Pattern
 		 *
-		 * @memberof AbstractProviderPattern
+		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
 		public build(): void {
 			this.providerInfo = {
@@ -146,7 +132,7 @@ namespace OSFramework.Patterns {
 		/**
 		 * Method to check for pending events to be added
 		 *
-		 * @memberof AbstractProviderPattern
+		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
 		public checkAddedProviderEvents(): void {
 			if (this.providerEventsManagerInstance?.hasEvents) {
@@ -160,7 +146,7 @@ namespace OSFramework.Patterns {
 		/**
 		 * Method to check for saved events to be added after a destroy/init cycle
 		 *
-		 * @memberof AbstractProviderPattern
+		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
 		public checkPendingProviderEvents(): void {
 			if (this.providerEventsManagerInstance?.hasPendingEvents) {
@@ -175,7 +161,7 @@ namespace OSFramework.Patterns {
 		/**
 		 * Method to destroy created instance
 		 *
-		 * @memberof AbstractProviderPattern
+		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
 		public dispose(): void {
 			this.providerEventsManagerInstance = undefined;
@@ -190,7 +176,7 @@ namespace OSFramework.Patterns {
 		 * @param {string} uniqueId
 		 * @param {boolean} [saveEvent=true]
 		 * @return {*}  {void}
-		 * @memberof AbstractProviderPattern
+		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
 		public setProviderEvent(
 			eventName: string,
@@ -223,7 +209,7 @@ namespace OSFramework.Patterns {
 		 *
 		 * @param {string} eventId
 		 * @return {*}  {void}
-		 * @memberof AbstractProviderPattern
+		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
 		public unsetProviderEvent(eventId: string): void {
 			// Get event from saved events map
@@ -250,7 +236,7 @@ namespace OSFramework.Patterns {
 		 * Method to update the provider events API instance and save/pending events
 		 *
 		 * @param {ProviderInfo} providerInfo
-		 * @memberof AbstractProviderPattern
+		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
 		public updateProviderEvents(providerInfo: ProviderInfo): void {
 			// Update provider instance reference
@@ -268,6 +254,48 @@ namespace OSFramework.Patterns {
 			}
 		}
 
+		/**
+		 * ProviderInfo getter
+		 *
+		 * @readonly
+		 * @type {ProviderInfo}
+		 * @memberof OSFramework.Patterns.AbstractProviderPattern
+		 */
+		public get providerInfo(): ProviderInfo {
+			return this._providerInfo;
+		}
+
+		/**
+		 * ProviderInfo setter
+		 *
+		 * @memberof OSFramework.Patterns.AbstractProviderPattern
+		 */
+		public set providerInfo(providerInfo: ProviderInfo) {
+			this._providerInfo = providerInfo;
+		}
+
+		/**
+		 * Provider setter
+		 *
+		 * @memberof OSFramework.Patterns.AbstractProviderPattern
+		 */
+		public set provider(p: P) {
+			this._provider = p;
+		}
+
+		/**
+		 * Provider getter
+		 *
+		 * @readonly
+		 * @type {P}
+		 * @memberof OSFramework.Patterns.AbstractProviderPattern
+		 */
+		public get provider(): P {
+			return this._provider;
+		}
+
+		// Common methods all providers must implement
+		protected abstract prepareConfigs(): void;
 		public abstract registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
 		public abstract setProviderConfigs(providerConfigs: ProviderConfigs): void;
 	}

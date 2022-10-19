@@ -128,7 +128,7 @@ namespace OSFramework.Patterns.Tooltip {
 
 				// Get the closest element in order to check if the activeElement is inside this TooltipBalloon
 				const _closestElem = document.activeElement.closest(Constants.Dot + Enum.CssClass.Pattern);
-				if (_closestElem !== this._selfElem) {
+				if (_closestElem !== this.selfElement) {
 					// Close Tooltip
 					this._triggerClose();
 				} else {
@@ -150,7 +150,7 @@ namespace OSFramework.Patterns.Tooltip {
 				const _closestBalloonElem = _clickedElem.closest(Constants.Dot + Enum.CssClass.BalloonWrapper);
 
 				// If the click has occur outside of this tooltip, or tooltipBalloon!
-				if (_closestElem !== this._selfElem && _closestBalloonElem !== this._tooltipBalloonWrapperElem) {
+				if (_closestElem !== this.selfElement && _closestBalloonElem !== this._tooltipBalloonWrapperElem) {
 					// Remove the Event
 					Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
 
@@ -242,7 +242,7 @@ namespace OSFramework.Patterns.Tooltip {
 		// Set balloon position and coordinates based on pattern SelfElement
 		private _setBalloonCoordinates(): void {
 			// Get all info from the pattern self element
-			const selfElement = this._selfElem.getBoundingClientRect();
+			const selfElement = this.selfElement.getBoundingClientRect();
 
 			// Check if the position didn't change!
 			if (
@@ -330,12 +330,12 @@ namespace OSFramework.Patterns.Tooltip {
 		private _setCssClasses(): void {
 			// Set default IsHover cssClass property value
 			if (this.configs.IsHover) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsHover);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsHover);
 			}
 
 			// Set default IsVisible cssClass property value
 			if (this._isOpen) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsOpened);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsOpened);
 				Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpened);
 			}
 
@@ -426,7 +426,7 @@ namespace OSFramework.Patterns.Tooltip {
 				this._isOpen = false;
 
 				// Remove the IsOpned selector
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsOpened);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpened);
 				Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpened);
 
 				// Update the AriaHidden to the balloon!
@@ -490,7 +490,7 @@ namespace OSFramework.Patterns.Tooltip {
 					);
 
 					// Add the IsOpned Class Selector
-					Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsOpened);
+					Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsOpened);
 					Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpened);
 				});
 
@@ -557,9 +557,9 @@ namespace OSFramework.Patterns.Tooltip {
 		// Update Pattern behaviour accordingly IsHover status
 		private _updateIsHover(): void {
 			if (this.configs.IsHover) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsHover);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsHover);
 			} else {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsHover);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsHover);
 			}
 
 			// Remove previous added events
@@ -584,7 +584,7 @@ namespace OSFramework.Patterns.Tooltip {
 		 * Add the Accessibility Attributes values
 		 *
 		 * @protected
-		 * @memberof Tooltip
+		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */
 		protected setA11YProperties(): void {
 			// Set Role to the tooltipContent
@@ -605,7 +605,7 @@ namespace OSFramework.Patterns.Tooltip {
 		 * Set the method that will be assigned to the window click event
 		 *
 		 * @protected
-		 * @memberof Tooltip
+		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */
 		protected setCallbacks(): void {
 			this._eventOnBalloonClick = this._onBalloonClick.bind(this);
@@ -622,12 +622,17 @@ namespace OSFramework.Patterns.Tooltip {
 			this._eventIconOnMouseLeave = this._onIconMouseLeave.bind(this);
 		}
 
-		// Update info based on htmlContent
+		/**
+		 * Update info based on htmlContent
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
+		 */
 		protected setHtmlElements(): void {
 			// Set the html references that will be used to manage the cssClasses and atribute properties
-			this._tooltipIconElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.Content);
-			this._tooltipBalloonContentElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.BalloonContent);
-			this._tooltipBalloonWrapperElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.BalloonWrapper);
+			this._tooltipIconElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.Content);
+			this._tooltipBalloonContentElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.BalloonContent);
+			this._tooltipBalloonWrapperElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.BalloonWrapper);
 
 			// Add Accessibility properties
 			this.setA11YProperties();
@@ -658,7 +663,7 @@ namespace OSFramework.Patterns.Tooltip {
 		 * Remove all the assigned Events
 		 *
 		 * @protected
-		 * @memberof Tooltip
+		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnBalloonClick = undefined;
@@ -678,7 +683,7 @@ namespace OSFramework.Patterns.Tooltip {
 		 * Unsets the refences to the HTML elements.
 		 *
 		 * @protected
-		 * @memberof Tooltip
+		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */
 		protected unsetHtmlElements(): void {
 			// Remove the detached balloon html element!
@@ -689,6 +694,11 @@ namespace OSFramework.Patterns.Tooltip {
 			this._tooltipBalloonWrapperElem = undefined;
 		}
 
+		/**
+		 * Build tooltip
+		 *
+		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
+		 */
 		public build(): void {
 			super.build();
 			this.setCallbacks();
@@ -701,7 +711,7 @@ namespace OSFramework.Patterns.Tooltip {
 		 *
 		 * @param {string} propertyName the name of the property that will be changed
 		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
-		 * @memberof Tooltip
+		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			// Store previous extended class before change it!
@@ -741,7 +751,7 @@ namespace OSFramework.Patterns.Tooltip {
 		/**
 		 * Close the tooltip
 		 *
-		 * @memberof Tooltip
+		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */
 		public close(): void {
 			this._triggerClose();
@@ -750,7 +760,7 @@ namespace OSFramework.Patterns.Tooltip {
 		/**
 		 * Destroy the tooltip
 		 *
-		 * @memberof Tooltip
+		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */
 		public dispose(): void {
 			this._unsetEvents();
@@ -763,7 +773,7 @@ namespace OSFramework.Patterns.Tooltip {
 		/**
 		 * Open the tooltip
 		 *
-		 * @memberof Tooltip
+		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */
 		public open(): void {
 			this._isOpenedByApi = true;
@@ -775,7 +785,7 @@ namespace OSFramework.Patterns.Tooltip {
 		 *
 		 * @param {string} eventName Event name that will be assigned
 		 * @param {GlobalCallbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
-		 * @memberof Tooltip
+		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -803,7 +813,7 @@ namespace OSFramework.Patterns.Tooltip {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof Tooltip
+		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */
 		public get IsOpen(): boolean {
 			return this._isOpen;

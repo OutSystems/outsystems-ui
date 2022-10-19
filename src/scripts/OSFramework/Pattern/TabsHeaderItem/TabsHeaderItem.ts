@@ -29,28 +29,33 @@ namespace OSFramework.Patterns.TabsHeaderItem {
 
 		// Method to remove the event listeners
 		private _removeEvents(): void {
-			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnTabsClick);
+			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnTabsClick);
 		}
 
 		// Method to set the event listeners
 		private _setUpEvents(): void {
-			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnTabsClick);
+			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnTabsClick);
 		}
 
-		// Method to handle the Accessibility attributes
+		/**
+		 * Method to handle the Accessibility attributes
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
+		 */
 		protected setA11YProperties(isUpdate = true): void {
 			// Static attribute to be added when the item is created
 			if (isUpdate === false) {
-				Helper.A11Y.RoleTab(this._selfElem);
+				Helper.A11Y.RoleTab(this.selfElement);
 			}
 
 			// Dynamic values that need to be changed when toggling the active state
 			if (this._isActive) {
-				Helper.A11Y.TabIndexTrue(this._selfElem);
-				Helper.A11Y.AriaSelectedTrue(this._selfElem);
+				Helper.A11Y.TabIndexTrue(this.selfElement);
+				Helper.A11Y.AriaSelectedTrue(this.selfElement);
 			} else {
-				Helper.A11Y.TabIndexFalse(this._selfElem);
-				Helper.A11Y.AriaSelectedFalse(this._selfElem);
+				Helper.A11Y.TabIndexFalse(this.selfElement);
+				Helper.A11Y.AriaSelectedFalse(this.selfElement);
 			}
 		}
 
@@ -58,17 +63,27 @@ namespace OSFramework.Patterns.TabsHeaderItem {
 		 * Method to set the callbacks and event listeners
 		 *
 		 * @protected
-		 * @memberof TabsHeaderItem
+		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		protected setCallbacks(): void {
 			this._eventOnTabsClick = this._handleClickEvent.bind(this);
 		}
 
 		/**
+		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
+		 */
+		protected setHtmlElements(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
 		 * Method to remove all assigned callbacks
 		 *
 		 * @protected
-		 * @memberof TabsHeaderItem
+		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		protected unsetCallbacks(): void {
 			this._removeEvents();
@@ -76,9 +91,19 @@ namespace OSFramework.Patterns.TabsHeaderItem {
 		}
 
 		/**
+		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
+		 */
+		protected unsetHtmlElements(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
 		 * Method to build the pattern
 		 *
-		 * @memberof TabsHeaderItem
+		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		public build(): void {
 			super.build();
@@ -103,7 +128,7 @@ namespace OSFramework.Patterns.TabsHeaderItem {
 		/**
 		 * Method to disable TabHeaderItem
 		 *
-		 * @memberof TabsHeaderItem
+		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		public disable(): void {
 			this.notifyParent(Tabs.Enum.ChildNotifyActionType.DisabledHeaderItem);
@@ -112,7 +137,7 @@ namespace OSFramework.Patterns.TabsHeaderItem {
 		/**
 		 * Method to remove event listener and destroy TabsHeaderItem instance
 		 *
-		 * @memberof TabsHeaderItem
+		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		public dispose(): void {
 			// Notify parent about this instance will be destroyed
@@ -126,7 +151,7 @@ namespace OSFramework.Patterns.TabsHeaderItem {
 		/**
 		 * Method to enable TabHeaderItem
 		 *
-		 * @memberof TabsHeaderItem
+		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		public enable(): void {
 			this.notifyParent(Tabs.Enum.ChildNotifyActionType.EnabledHeaderItem);
@@ -136,7 +161,7 @@ namespace OSFramework.Patterns.TabsHeaderItem {
 		 * Method to get the current data-tab value, called by the Tabs
 		 *
 		 * @return {*}  {number}
-		 * @memberof TabsHeaderItem
+		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		public getDataTab(): number {
 			return this._dataTab;
@@ -146,40 +171,40 @@ namespace OSFramework.Patterns.TabsHeaderItem {
 		 * Method to set the aria-controls attribute, called by the Tabs
 		 *
 		 * @param {string} contentItemId
-		 * @memberof TabsHeaderItem
+		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		public setAriaControlsAttribute(contentItemId: string): void {
-			Helper.A11Y.AriaControls(this._selfElem, contentItemId);
+			Helper.A11Y.AriaControls(this.selfElement, contentItemId);
 		}
 
 		/**
 		 * Method to set the data-tab attribute, called by the Tabs
 		 *
 		 * @param {number} dataTab
-		 * @memberof TabsHeaderItem
+		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		public setDataTab(dataTab: number): void {
-			Helper.Dom.Attribute.Set(this._selfElem, Tabs.Enum.Attributes.DataTab, dataTab.toString());
+			Helper.Dom.Attribute.Set(this.selfElement, Tabs.Enum.Attributes.DataTab, dataTab.toString());
 			this._dataTab = dataTab;
 		}
 
 		/**
 		 * Method to set the focus on this item, called by the Tabs
 		 *
-		 * @memberof TabsHeaderItem
+		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		public setFocus(): void {
-			this._selfElem.focus();
+			this.selfElement.focus();
 		}
 
 		/**
 		 * Method to set this element as active
 		 *
-		 * @memberof TabsHeaderItem
+		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		public setIsActive(): void {
-			if (this._selfElem) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
+			if (this.selfElement) {
+				Helper.Dom.Styles.AddClass(this.selfElement, Patterns.Tabs.Enum.CssClasses.ActiveTab);
 				this._isActive = true;
 				this.setA11YProperties();
 			}
@@ -188,11 +213,11 @@ namespace OSFramework.Patterns.TabsHeaderItem {
 		/**
 		 * Method to remove this element as active
 		 *
-		 * @memberof TabsHeaderItem
+		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		public unsetIsActive(): void {
-			if (this._selfElem) {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Patterns.Tabs.Enum.CssClasses.ActiveTab);
+			if (this.selfElement) {
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Patterns.Tabs.Enum.CssClasses.ActiveTab);
 				this._isActive = false;
 				this.setA11YProperties();
 			}
@@ -201,7 +226,7 @@ namespace OSFramework.Patterns.TabsHeaderItem {
 		/**
 		 * Method to update tabs indicator size on HeaderItem onRender
 		 *
-		 * @memberof TabsHeaderItem
+		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		public updateOnRender(): void {
 			this.notifyParent(Tabs.Enum.ChildNotifyActionType.UpdateIndicator);
@@ -212,7 +237,7 @@ namespace OSFramework.Patterns.TabsHeaderItem {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof TabsHeaderItem
+		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		public get IsActive(): boolean {
 			return this._isActive;

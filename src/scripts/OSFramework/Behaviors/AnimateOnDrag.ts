@@ -102,7 +102,7 @@ namespace OSFramework.Behaviors {
 		 *
 		 * @readonly
 		 * @type {unknown}
-		 * @memberof AnimateOnDrag
+		 * @memberof OSFramework.Behaviors.AnimateOnDrag
 		 */
 		public get dragParams(): DragParams {
 			return this._dragParams;
@@ -117,7 +117,7 @@ namespace OSFramework.Behaviors {
 		 * @param {GlobalCallbacks.Generic} callback
 		 * @param {SpringAnimationConfigs} [springProperties]
 		 * @return {*}  {void}
-		 * @memberof AnimateOnDrag
+		 * @memberof OSFramework.Behaviors.AnimateOnDrag
 		 */
 		public onDragEnd(
 			offsetX: number,
@@ -180,7 +180,7 @@ namespace OSFramework.Behaviors {
 		 * @param {number} currentY
 		 * @param {TouchEvent} event
 		 * @return {*}  {void}
-		 * @memberof AnimateOnDrag
+		 * @memberof OSFramework.Behaviors.AnimateOnDrag
 		 */
 		public onDragMove(
 			offsetX: number,
@@ -258,7 +258,7 @@ namespace OSFramework.Behaviors {
 		 * @param {number} currentY
 		 * @param {boolean} isOpen
 		 * @param {string} size
-		 * @memberof AnimateOnDrag
+		 * @memberof OSFramework.Behaviors.AnimateOnDrag
 		 */
 		public onDragStart(
 			verticalDrag: boolean,

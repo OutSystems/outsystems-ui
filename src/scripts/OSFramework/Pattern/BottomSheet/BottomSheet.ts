@@ -46,7 +46,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		 *
 		 * @readonly
 		 * @type {Event.GestureEvent.DragEvent}
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public get gestureEventInstance(): Event.GestureEvent.DragEvent {
 			return this._gestureEventInstance;
@@ -57,7 +57,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public get hasGestureEvents(): boolean {
 			return this._hasGestureEvents;
@@ -84,14 +84,14 @@ namespace OSFramework.Patterns.BottomSheet {
 				this._gestureEventInstance = new Event.GestureEvent.DragEvent(this._bottomSheetHeaderElem);
 
 				// Apply transform on an element and perform animation
-				this._animateOnDragInstance = new Behaviors.AnimateOnDrag(this._selfElem);
+				this._animateOnDragInstance = new Behaviors.AnimateOnDrag(this.selfElement);
 			}
 		}
 
 		// Method to hadnle the Shape config css variable
 		private _handleShape(shape: GlobalEnum.ShapeTypes): void {
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				Enum.CssCustomProperties.Shape,
 				'var(--border-radius-' + shape + ')'
 			);
@@ -100,9 +100,9 @@ namespace OSFramework.Patterns.BottomSheet {
 		// Method to be called as callback on scroll event, to toggle class on BottomSheet when it has scroll active
 		private _onContentScrollCallback(): void {
 			if (this._bottomSheetContentElem.scrollTop === 0) {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.HasSCroll);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.HasSCroll);
 			} else {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.HasSCroll);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.HasSCroll);
 			}
 		}
 
@@ -130,7 +130,7 @@ namespace OSFramework.Patterns.BottomSheet {
 				x,
 				y,
 				true,
-				this._selfElem.clientHeight.toString()
+				this.selfElement.clientHeight.toString()
 			);
 		}
 
@@ -153,28 +153,28 @@ namespace OSFramework.Patterns.BottomSheet {
 
 			// Toggle class
 			isOpen
-				? Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsOpen)
-				: Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsOpen);
+				? Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsOpen)
+				: Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpen);
 
 			// Update property
 			this._isOpen = isOpen;
 
 			// Update listeners and A11y properties
 			this.setEventListeners();
-			this.setA11yProperties();
+			this.setA11YProperties();
 
 			// Handle focus trap logic
 			if (isOpen) {
 				this._focusableActiveElement = document.activeElement as HTMLElement;
 				this._focusTrapInstance.enableForA11y();
 				// Focus on element when pattern is open
-				this._selfElem.focus();
+				this.selfElement.focus();
 			} else {
 				this._focusTrapInstance.disableForA11y();
 
 				// Focus on last element clicked. Async to avoid conflict with closing animation
 				Helper.AsyncInvocation(() => {
-					this._selfElem.blur();
+					this.selfElement.blur();
 					this._focusableActiveElement.focus();
 				});
 			}
@@ -186,9 +186,9 @@ namespace OSFramework.Patterns.BottomSheet {
 		// Method that toggles the showHandler config
 		private _toggleHandler(ShowHandler: boolean): void {
 			if (ShowHandler) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.HasHandler);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.HasHandler);
 			} else {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.HasHandler);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.HasHandler);
 			}
 		}
 
@@ -201,11 +201,11 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * Method to remove the event listeners
 		 *
 		 * @protected
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		protected removeEventListeners(): void {
 			this._bottomSheetContentElem.removeEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnContentScroll);
-			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
+			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
 
 			this.removeGestureEvents();
 		}
@@ -214,17 +214,21 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * Add the Accessibility Attributes values
 		 *
 		 * @protected
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
-		protected setA11yProperties(): void {
+		protected setA11YProperties(): void {
 			if (!this.isBuilt) {
-				Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Role.Complementary, true);
+				Helper.Dom.Attribute.Set(this.selfElement, Constants.A11YAttributes.Role.Complementary, true);
 			}
 
-			Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Hidden, (!this._isOpen).toString());
+			Helper.Dom.Attribute.Set(
+				this.selfElement,
+				Constants.A11YAttributes.Aria.Hidden,
+				(!this._isOpen).toString()
+			);
 
 			Helper.Dom.Attribute.Set(
-				this._selfElem,
+				this.selfElement,
 				Constants.A11YAttributes.TabIndex,
 				this._isOpen
 					? Constants.A11YAttributes.States.TabIndexShow
@@ -239,7 +243,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * Method to set the listeners and platform event callbacks
 		 *
 		 * @protected
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		protected setCallbacks(): void {
 			this._eventOnContentScroll = this._onContentScrollCallback.bind(this);
@@ -250,11 +254,11 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * Method to add event listeners
 		 *
 		 * @protected
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		protected setEventListeners(): void {
 			this._bottomSheetContentElem.addEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnContentScroll);
-			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
+			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
 
 			if (!Helper.DeviceInfo.IsDesktop && this.gestureEventInstance !== undefined) {
 				// Set event listeners and callbacks
@@ -270,19 +274,19 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * Update info based on htmlContent
 		 *
 		 * @protected
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		protected setHtmlElements(): void {
-			this._parentSelf = Helper.Dom.GetElementById(this._widgetId);
-			this._bottomSheetContentElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternContent);
-			this._bottomSheetHeaderElem = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternHeader);
+			this._parentSelf = Helper.Dom.GetElementById(this.widgetId);
+			this._bottomSheetContentElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternContent);
+			this._bottomSheetHeaderElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternHeader);
 		}
 
 		/**
 		 * Method to set initial options
 		 *
 		 * @protected
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		protected setInitialOptions(): void {
 			this._toggleHandler(this.configs.ShowHandler);
@@ -293,7 +297,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * Method to unset callbacks
 		 *
 		 * @protected
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnContentScroll = undefined;
@@ -305,7 +309,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * Removes the local value of the variables pointing to HTML elements;
 		 *
 		 * @protected
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		protected unsetHtmlElements(): void {
 			this._parentSelf = undefined;
@@ -316,7 +320,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		/**
 		 *  Builds the BottomSheet.
 		 *
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public build(): void {
 			super.build();
@@ -324,7 +328,7 @@ namespace OSFramework.Patterns.BottomSheet {
 			this._handleFocusTrap();
 			this.setInitialOptions();
 			this.setCallbacks();
-			this.setA11yProperties();
+			this.setA11YProperties();
 			this._handleGestureEvents();
 			this.finishBuild();
 		}
@@ -334,7 +338,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -355,7 +359,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		/**
 		 * Method to close the BottomSHeet
 		 *
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public close(): void {
 			this._toggleBottomSheet(false);
@@ -364,7 +368,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		/**
 		 * Disposes the current pattern.
 		 *
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public dispose(): void {
 			if (this._isOpen) {
@@ -384,7 +388,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		/**
 		 * Method to open the BottomSheet
 		 *
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public open(): void {
 			this._toggleBottomSheet(true);
@@ -394,7 +398,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * Set callbacks for the onToggle event
 		 *
 		 * @param {GlobalCallbacks.Generic} callback
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public registerCallback(callback: GlobalCallbacks.Generic): void {
 			if (this._platformEventOnToggle === undefined) {
@@ -407,7 +411,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		/**
 		 * Removes the gesture events to open/close the BottomSheet on Native Apps
 		 *
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public removeGestureEvents(): void {
 			if (this._gestureEventInstance !== undefined) {
@@ -423,7 +427,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * Sets the gesture events to open/close the BottomSheet on Native Apps
 		 *
 		 * @protected
-		 * @memberof BottomSheet
+		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public setGestureEvents(
 			onGestureStart: Event.GestureEvent.Callbacks.GestureStart,

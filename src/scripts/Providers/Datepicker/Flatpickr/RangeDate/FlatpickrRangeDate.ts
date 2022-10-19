@@ -34,7 +34,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 		 * Method that will be triggered by library each time any date is selected
 		 *
 		 * @protected
-		 * @memberof Flatpickr.RangeDate
+		 * @memberof Providers.DatePicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate
 		 */
 		protected onDateSelectedEvent(selectedDates: string[]): void {
 			/* NOTE: dateStr param is not in use since the library has an issue arround it */
@@ -61,7 +61,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 		 * Method that will set the provider configurations in order to properly create its instance
 		 *
 		 * @protected
-		 * @memberof Flatpickr.RangeDate
+		 * @memberof Providers.DatePicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate
 		 */
 		protected prepareConfigs(): void {
 			if (this._isUpdatingDefaultDate === false) {
@@ -89,7 +89,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 		 * Trigger the jumToDate to now
 		 *
 		 * @protected
-		 * @memberof Flatpickr.SingleDate
+		 * @memberof Providers.DatePicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate
 		 */
 		protected todayBtnClick(event: MouseEvent): void {
 			event.preventDefault();
@@ -97,6 +97,11 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 			this.jumpIntoToday();
 		}
 
+		/**
+		 * Builds the Pattern
+		 *
+		 * @memberof Providers.DatePicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate
+		 */
 		public build(): void {
 			super.build();
 
@@ -110,7 +115,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 		 *
 		 * @param {string} propertyName the name of the property that will be changed
 		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
-		 * @memberof Flatpickr.RangeDate
+		 * @memberof Providers.DatePicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -135,7 +140,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 		 *
 		 * @param startDate The new StartInitialDate value
 		 * @param endDate The new EndInitialDate value
-		 * @memberof Flatpickr.RangeDate
+		 * @memberof Providers.DatePicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate
 		 */
 		public updateInitialDate(startDate: string, endDate: string): void {
 			this._isUpdatingDefaultDate = true;

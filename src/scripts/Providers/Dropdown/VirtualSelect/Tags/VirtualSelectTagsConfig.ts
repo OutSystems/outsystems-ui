@@ -13,7 +13,7 @@ namespace Providers.Dropdown.VirtualSelect.Tags {
 		 *
 		 * @protected
 		 * @return {*}  {string[]}
-		 * @memberof VirtualSelectTagsConfig
+		 * @memberof Providers.Dropdown.VirtualSelect.Tags.VirtualSelectTagsConfig
 		 */
 		protected _getSelectedValues(): string[] {
 			const selectedKeyvalues = [];
@@ -33,7 +33,7 @@ namespace Providers.Dropdown.VirtualSelect.Tags {
 		 * Set the configs for the Dropdown Tags mode
 		 *
 		 * @return {*}  {VirtualSelectOpts}
-		 * @memberof VirtualSelectTagsConfig
+		 * @memberof Providers.Dropdown.VirtualSelect.Tags.VirtualSelectTagsConfig
 		 */
 		public getProviderConfig(): VirtualSelectOpts {
 			const virtualSelectTagsOpts = {
