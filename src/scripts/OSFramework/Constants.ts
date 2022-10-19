@@ -7,7 +7,7 @@ namespace OSFramework.Constants {
 		Aria: {
 			Atomic: 'atomic',
 			Controls: 'aria-controls',
-			Describedby: 'describedby',
+			Describedby: 'aria-describedby',
 			Disabled: 'aria-disabled',
 			Expanded: 'aria-expanded',
 			Haspopup: 'aria-haspopup',

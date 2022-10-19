@@ -4,6 +4,8 @@ namespace Providers.Datepicker.Flatpickr {
 		extends OSFramework.Patterns.DatePicker.AbstractDatePicker<Flatpickr, C>
 		implements IFlatpickr
 	{
+		// Store container HTML element reference that contains an explanation about how to navigate through calendar with keyboard
+		private _a11yInfoContainerElem: HTMLElement;
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
 		// Flatpickr onInitialize event
@@ -104,7 +106,10 @@ namespace Providers.Datepicker.Flatpickr {
 			// Set the needed HTML attributes
 			this._setAttributes();
 
-			// Since Flatpickr has a native behaviour (by default) check if the calendar exist
+			// Set accessibility stuff
+			this.setA11YProperties();
+
+			// Since native behaviour could be enabled, check if the calendar container exist!
 			if (this.provider.calendarContainer !== undefined) {
 				if (
 					this.configs.DisableMobile === true ||
@@ -147,7 +152,23 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @memberof Providers.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		protected setA11YProperties(): void {
-			console.warn(OSFramework.GlobalEnum.WarningMessages.MethodNotImplemented);
+			// Since native behaviour could be enabled, check if the calendar container exist!
+			if (this.provider.calendarContainer !== undefined) {
+				// Set the default aria-label value attribute in case user didn't set it!
+				let ariaLabelValue = Enum.Attribute.DefaultAriaLabel as string;
+
+				// Check if aria-label attribute has been added to the default input
+				if (this._datePickerProviderInputElem.hasAttribute(OSFramework.Constants.A11YAttributes.Aria.Label)) {
+					ariaLabelValue = this._datePickerProviderInputElem.getAttribute(
+						OSFramework.Constants.A11YAttributes.Aria.Label
+					);
+				}
+
+				// Set the aria-label attribute value
+				OSFramework.Helper.A11Y.AriaLabel(this._flatpickrInputElem, ariaLabelValue);
+				// Set the aria-describedby attribute in order to give more context about how to navigate into calendar using keyboard
+				OSFramework.Helper.A11Y.AriaDescribedBy(this._flatpickrInputElem, this._a11yInfoContainerElem.id);
+			}
 		}
 
 		/**
@@ -169,6 +190,11 @@ namespace Providers.Datepicker.Flatpickr {
 		protected setHtmlElements(): void {
 			// Set the inputHTML element
 			this._datePickerProviderInputElem = this.selfElement.querySelector('input.form-control');
+			// Store the reference to the info container about how to use keyboard to navigate through calendar
+			this._a11yInfoContainerElem = OSFramework.Helper.Dom.TagSelector(
+				this.selfElement.parentElement,
+				OSFramework.Constants.Dot + Enum.CssClasses.AccessibilityContainerInfo
+			);
 
 			// If the input hasn't be added
 			if (!this._datePickerProviderInputElem) {
@@ -196,6 +222,7 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @memberof Providers.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		protected unsetHtmlElements(): void {
+			this._a11yInfoContainerElem = undefined;
 			this._datePickerProviderInputElem = undefined;
 		}
 
