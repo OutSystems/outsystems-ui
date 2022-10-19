@@ -92,6 +92,10 @@ body,
 		&-native .footer {
 			height: calc(var(--os-safe-area-bottom) + var(--bottom-bar-size));
 		}
+
+		.header {
+			padding-top: var(--os-safe-area-top);
+		}
 	}
 }
 
