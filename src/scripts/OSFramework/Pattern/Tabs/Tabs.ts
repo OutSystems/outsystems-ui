@@ -321,7 +321,7 @@ namespace OSFramework.Patterns.Tabs {
 			let auxIndex: number;
 
 			// Check if the given ChildId exist at childList
-			if (this.getChild(childContentId)) {
+			if (childContentItem) {
 				auxIndex = this.getChildIndex(childContentId);
 				// Remove item
 				this.unsetChild(childContentId);
