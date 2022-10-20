@@ -131,6 +131,11 @@ namespace Providers.Datepicker.Flatpickr {
 				}
 			}
 
+			// Due to platform validations every time a new redraw occurs we must ensure we remove the class based on a clone from the platform input!
+			if (this.isBuilt === false) {
+				OSFramework.Helper.Dom.Styles.RemoveClass(this._flatpickrInputElem, Enum.CssClasses.InputNotValid);
+			}
+
 			// Trigger platform's InstanceIntializedHandler client Action
 			this.triggerPlatformEventInitialized(this._onInitializeCallbackEvent);
 		}
