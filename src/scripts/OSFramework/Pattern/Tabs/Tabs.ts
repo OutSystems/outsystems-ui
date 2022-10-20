@@ -317,10 +317,12 @@ namespace OSFramework.Patterns.Tabs {
 
 		// Method that it's called whenever a new TabsContentItem is destroyed
 		private _removeContentItem(childContentId: string): void {
-			const auxIndex = this.getChildIndex(childContentId);
-			const wasActive = this.getChild(childContentId).IsActive;
+			const childContentItem = this.getChild(childContentId) as TabsContentItem.ITabsContentItem;
+			let auxIndex: number;
+
 			// Check if the given ChildId exist at childList
-			if (this.getChild(childContentId)) {
+			if (childContentItem) {
+				auxIndex = this.getChildIndex(childContentId);
 				// Remove item
 				this.unsetChild(childContentId);
 			} else {
@@ -329,12 +331,12 @@ namespace OSFramework.Patterns.Tabs {
 				);
 			}
 
-			const tabsContentItem = this.getChild(childContentId) as TabsContentItem.ITabsContentItem;
-
 			// Unobserve this item on the IntersectionObserver
 			if (this._hasDragGestures) {
-				tabsContentItem.unobserveDragObserver(this._dragObserver);
+				childContentItem.unobserveDragObserver(this._dragObserver);
 			}
+
+			const wasActive = childContentItem.IsActive;
 
 			if (wasActive) {
 				if (this.getChildByIndex(auxIndex)) {
