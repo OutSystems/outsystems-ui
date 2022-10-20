@@ -191,7 +191,7 @@ namespace Providers.Datepicker.Flatpickr.l10ns {
 			title: 'Dziś',
 		},
 		pt: {
-			ariaLabel: 'Clique aqui para seleccionar a data de hoje',
+			ariaLabel: 'Clique aqui para seleccionar a data de hoje.',
 			title: 'Hoje',
 		},
 		ro: {
