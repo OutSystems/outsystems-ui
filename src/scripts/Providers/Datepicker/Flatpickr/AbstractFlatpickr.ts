@@ -4,12 +4,14 @@ namespace Providers.Datepicker.Flatpickr {
 		extends OSFramework.Patterns.DatePicker.AbstractDatePicker<Flatpickr, C>
 		implements IFlatpickr
 	{
+		// Store container HTML element reference that contains an explanation about how to navigate through calendar with keyboard
+		private _a11yInfoContainerElem: HTMLElement;
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
 		// Flatpickr onInitialize event
 		private _onInitializeCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
 		// Store pattern input HTML element reference
-		protected _datePickerProviderInputElem: HTMLInputElement;
+		protected _datePickerPlatformInputElem: HTMLInputElement;
 		// Store the flatpickr input html element that will be added by library
 		protected _flatpickrInputElem: HTMLInputElement;
 		// Store the provider options
@@ -29,14 +31,16 @@ namespace Providers.Datepicker.Flatpickr {
 		// Method used to set the needed HTML attributes
 		private _setAttributes(): void {
 			// Since a new input will be added by the flatpickr library, we must address it only at onReady
-			this._flatpickrInputElem = this._datePickerProviderInputElem.nextSibling as HTMLInputElement;
+			if (this._datePickerPlatformInputElem.nextSibling) {
+				this._flatpickrInputElem = this._datePickerPlatformInputElem.nextSibling as HTMLInputElement;
 
-			// Added the data-input attribute in order to input be styled as all platform inputs
-			OSFramework.Helper.Dom.Attribute.Set(
-				this._flatpickrInputElem,
-				OSFramework.GlobalEnum.HTMLAttributes.DataInput,
-				''
-			);
+				// Added the data-input attribute in order to input be styled as all platform inputs
+				OSFramework.Helper.Dom.Attribute.Set(
+					this._flatpickrInputElem,
+					OSFramework.GlobalEnum.HTMLAttributes.DataInput,
+					''
+				);
+			}
 		}
 
 		// Method used to set the CSS classes to the pattern HTML elements
@@ -87,12 +91,12 @@ namespace Providers.Datepicker.Flatpickr {
 		 */
 		protected createProviderInstance(): void {
 			/* In order to avoid dateFormat convert issues done by provider when InitialDate was not defined and input has a default date lets clean that value before creating provider instance. This happen when DateFormat is different from YYYY-MM-DD */
-			if (this._datePickerProviderInputElem && this._flatpickrOpts.defaultDate === undefined) {
-				this._datePickerProviderInputElem.value = '';
+			if (this._datePickerPlatformInputElem && this._flatpickrOpts.defaultDate === undefined) {
+				this._datePickerPlatformInputElem.value = '';
 			}
 
 			// Init provider
-			this.provider = window.flatpickr(this._datePickerProviderInputElem, this._flatpickrOpts);
+			this.provider = window.flatpickr(this._datePickerPlatformInputElem, this._flatpickrOpts);
 
 			// Set provider Info to be used by setProviderConfigs API calls
 			this.updateProviderEvents({
@@ -104,7 +108,10 @@ namespace Providers.Datepicker.Flatpickr {
 			// Set the needed HTML attributes
 			this._setAttributes();
 
-			// Since Flatpickr has a native behaviour (by default) check if the calendar exist
+			// Set accessibility stuff
+			this.setA11YProperties();
+
+			// Since native behaviour could be enabled, check if the calendar container exist!
 			if (this.provider.calendarContainer !== undefined) {
 				if (
 					this.configs.DisableMobile === true ||
@@ -124,6 +131,11 @@ namespace Providers.Datepicker.Flatpickr {
 						this
 					);
 				}
+			}
+
+			// Due to platform validations every time a new redraw occurs we must ensure we remove the class based on a clone from the platform input!
+			if (this._flatpickrInputElem !== undefined && this.isBuilt) {
+				OSFramework.Helper.Dom.Styles.RemoveClass(this._flatpickrInputElem, Enum.CssClasses.InputNotValid);
 			}
 
 			// Trigger platform's InstanceIntializedHandler client Action
@@ -147,7 +159,23 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @memberof Providers.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		protected setA11YProperties(): void {
-			console.warn(OSFramework.GlobalEnum.WarningMessages.MethodNotImplemented);
+			// Since native behaviour could be enabled, check if the calendar container exist!
+			if (this.provider.calendarContainer !== undefined && this._flatpickrInputElem !== undefined) {
+				// Set the default aria-label value attribute in case user didn't set it!
+				let ariaLabelValue = Enum.Attribute.DefaultAriaLabel as string;
+
+				// Check if aria-label attribute has been added to the default input
+				if (this._datePickerPlatformInputElem.hasAttribute(OSFramework.Constants.A11YAttributes.Aria.Label)) {
+					ariaLabelValue = this._datePickerPlatformInputElem.getAttribute(
+						OSFramework.Constants.A11YAttributes.Aria.Label
+					);
+				}
+
+				// Set the aria-label attribute value
+				OSFramework.Helper.A11Y.AriaLabel(this._flatpickrInputElem, ariaLabelValue);
+				// Set the aria-describedby attribute in order to give more context about how to navigate into calendar using keyboard
+				OSFramework.Helper.A11Y.AriaDescribedBy(this._flatpickrInputElem, this._a11yInfoContainerElem.id);
+			}
 		}
 
 		/**
@@ -168,10 +196,15 @@ namespace Providers.Datepicker.Flatpickr {
 		 */
 		protected setHtmlElements(): void {
 			// Set the inputHTML element
-			this._datePickerProviderInputElem = this.selfElement.querySelector('input.form-control');
+			this._datePickerPlatformInputElem = this.selfElement.querySelector('input.form-control');
+			// Store the reference to the info container about how to use keyboard to navigate through calendar
+			this._a11yInfoContainerElem = OSFramework.Helper.Dom.TagSelector(
+				this.selfElement.parentElement,
+				OSFramework.Constants.Dot + Enum.CssClasses.AccessibilityContainerInfo
+			);
 
 			// If the input hasn't be added
-			if (!this._datePickerProviderInputElem) {
+			if (!this._datePickerPlatformInputElem) {
 				throw new Error(`The datepicker input at DatepickerId '${this.widgetId}' is missing`);
 			}
 		}
@@ -196,7 +229,8 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @memberof Providers.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		protected unsetHtmlElements(): void {
-			this._datePickerProviderInputElem = undefined;
+			this._a11yInfoContainerElem = undefined;
+			this._datePickerPlatformInputElem = undefined;
 		}
 
 		/**
@@ -295,7 +329,7 @@ namespace Providers.Datepicker.Flatpickr {
 			if (this.isBuilt) {
 				/* In order to avoid platform warnings due to DateFormat changes when DateFormat different from YYYY-MM-DD,
 				remove the input element value, this will avoid library update it's value into a date with a different date format! */
-				this._datePickerProviderInputElem.value = '';
+				this._datePickerPlatformInputElem.value = '';
 
 				this.unsetCallbacks();
 				this.unsetHtmlElements();

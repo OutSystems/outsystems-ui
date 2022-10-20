@@ -4,6 +4,6 @@ namespace Providers.TimePicker.Flatpickr {
 	 * OutSystemsUI Flatpickr Provider
 	 */
 	export const ErrorCodes = {
-		FailSetLocale: 'OSUI-PRO-01001',
+		FailSetLocale: 'OSUI-PRO-02001',
 	};
 }

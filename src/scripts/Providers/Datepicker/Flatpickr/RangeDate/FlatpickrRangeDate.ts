@@ -76,8 +76,8 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 					}
 				}
 			}
-
 			this._isUpdatingDefaultDate = false;
+
 			// Get the library configurations
 			this._flatpickrOpts = this.configs.getProviderConfig();
 
