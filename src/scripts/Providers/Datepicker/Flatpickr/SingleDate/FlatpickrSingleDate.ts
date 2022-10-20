@@ -36,8 +36,8 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 					this.configs.InitialDate = this.provider.selectedDates[0];
 				}
 			}
-
 			this._isUpdatingDefaultDate = false;
+
 			// Get the library configurations
 			this._flatpickrOpts = this.configs.getProviderConfig();
 
