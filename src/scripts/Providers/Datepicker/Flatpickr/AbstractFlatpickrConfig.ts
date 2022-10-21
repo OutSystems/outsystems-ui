@@ -167,10 +167,7 @@ namespace Providers.Datepicker.Flatpickr {
 				allowInput: this.AllowInput,
 				disable: this.Disable.length === 0 ? undefined : this.Disable,
 				disableMobile: this.DisableMobile,
-				dateFormat:
-					this.TimeFormat !== OSFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable
-						? this.ServerDateFormat + ' H:i:s' // do not change 'H:i:s' since it's absoluted needed due to platform conversions!
-						: this.ServerDateFormat,
+				dateFormat: this.ServerDateFormat + ' H:i:s', // do not change 'H:i:s' since it's absoluted needed due to platform conversions, it's needed even when dateformat does not contain time, otherwise platform will not deal well with the dates conversion!
 				maxDate: OSFramework.Helper.Dates.IsNull(this.MaxDate) ? undefined : this.MaxDate,
 				minDate: OSFramework.Helper.Dates.IsNull(this.MinDate) ? undefined : this.MinDate,
 				onChange: this.OnChange,

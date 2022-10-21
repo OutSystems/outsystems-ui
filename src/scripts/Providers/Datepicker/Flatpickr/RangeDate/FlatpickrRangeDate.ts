@@ -48,13 +48,16 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 				}
 			}
 
-			// Trigger platform's onChange callback event
-			OSFramework.Helper.AsyncInvocation(
-				this._onSelectedCallbackEvent,
-				this.widgetId,
-				_selectedDate[0],
-				_selectedDate[1]
-			);
+			// Ensure user has selected start and end dates before trigger the onSelectedDate callback!
+			if (selectedDates.length === 2) {
+				// Trigger platform's onChange callback event
+				OSFramework.Helper.AsyncInvocation(
+					this._onSelectedCallbackEvent,
+					this.widgetId,
+					_selectedDate[0],
+					_selectedDate[1]
+				);
+			}
 		}
 
 		/**
