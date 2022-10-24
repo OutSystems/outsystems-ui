@@ -4,6 +4,8 @@ namespace Providers.Datepicker.Flatpickr {
 		extends OSFramework.Patterns.DatePicker.AbstractDatePicker<Flatpickr, C>
 		implements IFlatpickr
 	{
+		// Event OnBodyScroll common behaviour
+		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
 		// Flatpickr onInitialize event
 		private _onInitializeCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
 		// Store pattern input HTML element reference
@@ -12,8 +14,10 @@ namespace Providers.Datepicker.Flatpickr {
 		protected _flatpickrInputElem: HTMLInputElement;
 		// Store the provider options
 		protected _flatpickrOpts: FlatpickrOptions;
+		// Store on a flag status when the picker is updating the default date;
+		protected _isUpdatingDefaultDate = false;
 		// Flatpickr onChange (SelectedDate) event
-		protected _onChangeCallbackEvent: OSFramework.Patterns.DatePicker.Callbacks.OSOnChangeEvent;
+		protected _onSelectedCallbackEvent: OSFramework.Patterns.DatePicker.Callbacks.OSOnChangeEvent;
 
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
@@ -103,30 +107,21 @@ namespace Providers.Datepicker.Flatpickr {
 
 			// Set provider Info to be used by setProviderConfigs API calls
 			this.updateProviderEvents({
-				name: Enum.ProviderInfo.Name,
-				version: Enum.ProviderInfo.Version,
+				name: SharedProviderResources.Flatpickr.Enum.ProviderInfo.Name,
+				version: SharedProviderResources.Flatpickr.Enum.ProviderInfo.Version,
 				events: this.provider.config,
 			});
 
 			// Set the needed HTML attributes
 			this._setAttributes();
 
-			// Since Flatpickr has a native behaviour (by default) if a mobile device is in use, we must ensure we can add our Classes and TodayBtn to it, since if it's native behaviour we can't do it!
+			// Since Flatpickr has a native behaviour (by default) check if the calendar exist
 			if (this.provider.calendarContainer !== undefined) {
 				if (
-					this.configs.CalendarMode === OSFramework.Patterns.DatePicker.Enum.Mode.Range ||
-					(OSFramework.Helper.DeviceInfo.IsDesktop && OSFramework.Helper.DeviceInfo.IsNative === false)
+					this.configs.DisableMobile === true ||
+					OSFramework.Helper.DeviceInfo.IsDesktop ||
+					this.configs.CalendarMode === OSFramework.Patterns.DatePicker.Enum.Mode.Range
 				) {
-					/* NOTE:
-						If it's not a native app, could we add our stuff to the calendar?
-							- If RangeDate calendar => We do not have a native behaviour for it, so => YES!
-							- If Desktop we also be able to add them
-						
-						Seams confused but we can be at:
-							- iPad Safari (rendered as desktop)
-							- iPad Chrome (rendered as native)
-					*/
-
 					// Add TodayBtn
 					if (this.configs.ShowTodayButton) {
 						this.addTodayBtn();
@@ -134,6 +129,11 @@ namespace Providers.Datepicker.Flatpickr {
 
 					// Set Calendar CSS classes
 					this._setCalendarCssClasses();
+
+					// set the onBodyScroll update calendar position behaviour!
+					this._bodyScrollCommonBehaviour = new SharedProviderResources.Flatpickr.UpdatePositionOnScroll(
+						this
+					);
 				}
 			}
 
@@ -175,7 +175,7 @@ namespace Providers.Datepicker.Flatpickr {
 			this.configs.OnChange = undefined;
 
 			this._onInitializeCallbackEvent = undefined;
-			this._onChangeCallbackEvent = undefined;
+			this._onSelectedCallbackEvent = undefined;
 		}
 
 		/**
@@ -214,6 +214,7 @@ namespace Providers.Datepicker.Flatpickr {
 					case OSFramework.Patterns.DatePicker.Enum.Properties.MaxDate:
 					case OSFramework.Patterns.DatePicker.Enum.Properties.MinDate:
 					case OSFramework.Patterns.DatePicker.Enum.Properties.ShowTodayButton:
+					case OSFramework.Patterns.DatePicker.Enum.Properties.ShowWeekNumbers:
 						this.redraw();
 						break;
 					case OSFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass:
@@ -247,20 +248,48 @@ namespace Providers.Datepicker.Flatpickr {
 		}
 
 		/**
+		 * Method used to disable days on DatePicker
+		 *
+		 * @param disableDays
+		 * @memberof Flatpickr.DisableDays
+		 */
+		public disableDays(disableDays: string[]): void {
+			this.configs.DisabledDays = disableDays;
+			this.redraw();
+		}
+
+		/**
+		 * Method used to disable weekdays on DatePicker
+		 *
+		 * @param disableWeekDays
+		 * @memberof Flatpickr.DisableWeekDays
+		 */
+		public disableWeekDays(disableWeekDays: number[]): void {
+			this.configs.DisabledWeekDays = disableWeekDays;
+
+			this.redraw();
+		}
+
+		/**
 		 * Method to remove and destroy DatePicker instance
 		 *
 		 * @memberof AbstractFlatpickr
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
-				/* In order to avoid platform warnings due to DateFormat changes when DateFormar different from YYYY-MM-DD,
+				/* In order to avoid platform warnings due to DateFormat changes when DateFormat different from YYYY-MM-DD,
 				remove the input element value, this will avoid library update it's value into a date with a different date format! */
 				this._datePickerProviderInputElem.value = '';
 
 				this.unsetCallbacks();
 				this.unsetHtmlElements();
 
-				// Wait for _datePickerProviderInputElem be removed from DOM, before detroy the provider instance!
+				if (this._bodyScrollCommonBehaviour !== undefined) {
+					this._bodyScrollCommonBehaviour.dispose();
+					this._bodyScrollCommonBehaviour = undefined;
+				}
+
+				// Wait for _datePickerProviderInputElem be removed from DOM, before destroy the provider instance!
 				OSFramework.Helper.AsyncInvocation(this.provider.destroy);
 			}
 
@@ -284,7 +313,7 @@ namespace Providers.Datepicker.Flatpickr {
 		public registerCallback(eventName: string, callback: OSFramework.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
 				case OSFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnChange:
-					this._onChangeCallbackEvent = callback;
+					this._onSelectedCallbackEvent = callback;
 					break;
 
 				case OSFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnInitialize:

@@ -25,10 +25,19 @@ namespace OSFramework.GlobalEnum {
 		IsTouch = 'is--touch',
 		Layout = 'layout',
 		LayoutNative = 'layout-native',
+		LayoutSide = 'layout-side',
 		LayoutTop = 'layout-top',
 		List = 'list',
 		MainContent = 'main-content',
+		MenuLinks = 'app-menu-links',
 		Placeholder = 'ph',
+	}
+
+	/**
+	 * OutSystemsUI css selectors
+	 */
+	export enum CSSSelectors {
+		InputFormControl = 'input.form-control',
 	}
 
 	/**
@@ -73,6 +82,24 @@ namespace OSFramework.GlobalEnum {
 		Input = '[data-input]',
 		Label = '[data-label]',
 		TextArea = '[data-textarea]',
+	}
+
+	/**
+	 * OutSystemsUI Date Format values
+	 */
+	export enum DateFormat {
+		D = 'D',
+		d = 'd',
+		DD = 'DD',
+		M = 'M',
+		m = 'm',
+		MM = 'MM',
+		MMM = 'MMM',
+		Y = 'Y',
+		y = 'y',
+		YY = 'YY',
+		YYY = 'YYY',
+		YYYY = 'YYYY',
 	}
 
 	/**
@@ -234,6 +261,7 @@ namespace OSFramework.GlobalEnum {
 		FloatingActions = 'Floating Actions',
 		FloatingActionsItem = 'Floating Actions Item',
 		Gallery = 'Gallery',
+		MonthPicker = 'MonthPicker',
 		Notification = 'Notification',
 		ProgressBar = 'Progress Bar',
 		ProgressCircle = 'Progress Circle',
@@ -249,6 +277,7 @@ namespace OSFramework.GlobalEnum {
 		Tabs = 'Tabs',
 		TabsHeaderItem = 'TabsHeaderItem',
 		TabsContentItem = 'TabsContentItem',
+		Timepicker = 'Timepicker',
 		Tooltip = 'Tooltip',
 		TouchEvents = 'TouchEvents',
 	}
@@ -260,6 +289,14 @@ namespace OSFramework.GlobalEnum {
 		Rounded = 'rounded',
 		Sharp = 'none',
 		SoftRounded = 'soft',
+	}
+
+	/**
+	 * OutSystemsUI Input Types
+	 */
+	export enum InputTypes {
+		InputLarge = 'input-large',
+		InputSmall = 'input-small',
 	}
 
 	/**
@@ -307,11 +344,11 @@ namespace OSFramework.GlobalEnum {
 		FocusTrapTop = 'focus-trap-top',
 	}
 
-	export enum JavascriptTypes {
-		function = 'function',
-	}
-
 	export enum WarningMessages {
 		FeatureNotImplemented = 'This feature is not yet implemented!',
+	}
+
+	export enum NullValues {
+		Time = '00:00:00',
 	}
 }

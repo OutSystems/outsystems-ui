@@ -78,12 +78,14 @@
 /*!         - Floating Actions                                                  */
 /*!         - Input With Icon                                                   */
 /*!         - Lightbox Image                                                    */
+/*!         - MonthPicker                                                       */
 /*!         - Notification                                                      */
 /*!         - Range Slider                                                      */
 /*!         - Scrollable Area                                                   */
 /*!         - Search                                                            */
 /*!         - Sidebar                                                           */
 /*!         - Stacked Cards                                                     */
+/*!         - TimePicker                                                        */
 /*!         - Video                                                             */
 /*!     - Navigation                                                            */
 /*!         - Bottom Bar Item                                                   */
@@ -278,7 +280,9 @@
 @import '../scripts/OSFramework/Pattern/AnimatedLabel/scss/animated-label';
 @import '../scripts/OSFramework/Pattern/BottomSheet/scss/bottomsheet';
 @import '../scripts/OSFramework/Pattern/Carousel/scss/carousel';
-@import '../scripts/OSFramework/Pattern/DatePicker/scss/datepicker';
+// Flatpickr Library Core Styles (flatpickr_lib) - shared between Date and Time Pickers
+@import '../scripts/Providers/SharedProviderResources/Flatpickr/scss/flatpickr_lib';
+@import '../scripts/OSFramework/Pattern/DatePicker/scss/_datepicker';
 @import '../scripts/OSFramework/Pattern/Dropdown/scss/dropdown';
 @import '../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-serverside';
 @import '../scripts/OSFramework/Pattern/DropdownServerSideItem/scss/dropdownserversideitem';
@@ -287,12 +291,14 @@
 @import '04-patterns/03-interaction/floating-actions';
 @import '04-patterns/03-interaction/input-with-icon';
 @import '04-patterns/03-interaction/lightbox-image';
+@import '../scripts/OSFramework/Pattern/MonthPicker/scss/_monthpicker';
 @import '../scripts/OSFramework/Pattern/Notification/scss/notification';
 @import '../scripts/OSFramework/Pattern/RangeSlider/scss/rangeslider';
 @import '04-patterns/03-interaction/scrollable-area';
 @import '04-patterns/03-interaction/search';
 @import '../scripts/OSFramework/Pattern/Sidebar/scss/sidebar';
 @import '04-patterns/03-interaction/stacked-cards';
+@import '../scripts/OSFramework/Pattern/TimePicker/scss/timepicker';
 @import '04-patterns/03-interaction/video';
 
 /* ============================================================================ */

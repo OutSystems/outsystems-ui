@@ -34,14 +34,5 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 				this._providerExtendedOptions
 			);
 		}
-
-		// Method that validates if a given property can be changed.
-		public validateCanChange(isBuilt: boolean, key: string): boolean {
-			// Block updating InitialDate after pattern is built (OnParameters Change)!
-			if (isBuilt) {
-				return key !== Enum.Properties.InitialDate;
-			}
-			return true;
-		}
 	}
 }

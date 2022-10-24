@@ -56,9 +56,23 @@ namespace OSFramework.Constants {
 	/* Manage if the log messages are visible or not  */
 	export const EnableLogMessages = false;
 
+	/* Used to typify the empty string value*/
+	export const EmptyString = '';
+
 	/* Store focusable elements when doing a focus trap inside an element*/
 	export const FocusableElems =
 		'a[href]:not([disabled]),[tabindex="0"], button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]),input[type="submit"]:not([disabled]), select:not([disabled])';
+
+	/* Store JavaScript types*/
+	export const JavaScriptTypes = {
+		Undefined: 'undefined',
+		Boolean: 'boolean',
+		Number: 'number',
+		String: 'string',
+		Symbol: 'symbol',
+		Function: 'function',
+		Object: 'object',
+	};
 
 	/* Store strict inputs elements excluding buttons, checkboxes... */
 	export const JustInputs =
@@ -66,6 +80,25 @@ namespace OSFramework.Constants {
 
 	/* cssClass to be checked if the Accessibility Feature is enabled */
 	export const HasAccessibilityClass = 'has-accessible-features';
+
+	/* Used to typify noon-valid expected number values */
+	export const InvalidNumber = -1;
+
+	/* Store months list */
+	export const Months = [
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December',
+	];
 
 	/* cssClass to be added to elements that must visible yet hidded for accessibility purposes */
 	export const AccessibilityHideElementClass = 'wcag-hide-text';
@@ -77,7 +110,7 @@ namespace OSFramework.Constants {
 	export const NoTransition = 'no-transition';
 
 	/* OSUI Version */
-	export const OSUIVersion = '2.11.0';
+	export const OSUIVersion = '2.12.0';
 
 	/*Constant to be used across project as the zero value*/
 	export const ZeroValue = 0;

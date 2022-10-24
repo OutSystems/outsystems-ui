@@ -3,7 +3,10 @@ namespace OSFramework.Patterns.Dropdown.Enum {
 	/**
 	 * CSS Classes
 	 */
-	export enum CssClass {}
+	export enum CssClass {
+		DropdownLarge = 'dropdown--is-large',
+		DropdownSmall = 'dropdown--is-small',
+	}
 
 	/**
 	 * Events

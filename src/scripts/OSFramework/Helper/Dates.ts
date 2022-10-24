@@ -7,7 +7,7 @@ namespace OSFramework.Helper {
 		private static _serverFormat = '';
 
 		/**
-		 * Function that will compare 2 dates and check if date1 is older than date2
+		 * Function that will compare 2 dates and check if date1 is older or equal to date2
 		 *
 		 * @static
 		 * @param {string} date1 Date to be checked if older
@@ -16,8 +16,7 @@ namespace OSFramework.Helper {
 		 * @memberof Dates
 		 */
 		public static Compare(date1: string, date2: string): boolean {
-			// Check if received dates are in right format
-			return Date.parse(date1) < Date.parse(date2);
+			return Date.parse(date1) <= Date.parse(date2);
 		}
 
 		public static get ServerFormat(): string {

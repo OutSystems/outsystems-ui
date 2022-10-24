@@ -7,13 +7,6 @@ namespace OSFramework.Patterns.Progress.Circle {
 		private _circleCircumference: number;
 		private _circletSize = 0;
 
-		// Store the events
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		private _eventAnimateEntranceEnd: any;
-
-		// ProgressSVG htmlElement
-		private _progressSvgElem: HTMLElement;
-
 		// ResizeOberver
 		private _resizeObserver: ResizeObserver;
 
@@ -41,14 +34,8 @@ namespace OSFramework.Patterns.Progress.Circle {
 			this._resizeObserver.observe(this._selfElem);
 		}
 
-		// remove the added transitionEnd event and the cssClass added at the beginning
-		private _animateEntranceEnd(): void {
-			this._progressSvgElem.removeEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._animateEntranceEnd);
-
-			Helper.Dom.Styles.RemoveClass(this._progressSvgElem, ProgressEnum.CssClass.AddInitialAnimation);
-			Helper.Dom.Styles.RemoveClass(this._progressSvgElem, ProgressEnum.CssClass.AnimateProgressChange);
-
-			// Check if the resizeOberver does not exist yet!
+		// Check if the resizeOberver does not exist yet!
+		private _checkResizeObserver(): void {
 			if (!this._resizeObserver) {
 				// Create the Oberver
 				this._addResizeOberser();
@@ -145,26 +132,8 @@ namespace OSFramework.Patterns.Progress.Circle {
 
 		// Update the valuenow accessibility property
 		private _updateProgressValue(): void {
-			// If negative value, set it as minimum progress value by default
-			if (this.configs.Progress < ProgressEnum.Properties.MinProgressValue) {
-				this.configs.Progress = ProgressEnum.Properties.MinProgressValue;
-
-				console.warn(
-					`The value of the Progress property on the '${this.widgetId}' ${GlobalEnum.PatternName.ProgressCircle} can't be smaller than '${ProgressEnum.Properties.MinProgressValue}'.`
-				);
-			}
-
-			// If value is higher than the maximum progress value, assume the maximum progress value
-			if (this.configs.Progress > ProgressEnum.Properties.MaxProgressValue) {
-				this.configs.Progress = ProgressEnum.Properties.MaxProgressValue;
-
-				console.warn(
-					`The value of the Progress property on the '${this.widgetId}' ${GlobalEnum.PatternName.ProgressCircle} is higher than supported (${ProgressEnum.Properties.MaxProgressValue}).`
-				);
-			}
-
-			// Update inline attributes based on new Progress value
-			this.updateValueNow(this.configs.Progress.toString());
+			// Update the progress value and the valuenow accessibility property
+			this.updatedProgressValue();
 
 			// Update the offset value
 			this._strokeDashoffset =
@@ -181,14 +150,9 @@ namespace OSFramework.Patterns.Progress.Circle {
 		protected addInitialAnimation(): void {
 			// Check if the animation at init should be added
 			if (this.configs.AnimateInitialProgress) {
-				// Do the initial animation
-				Helper.Dom.Styles.AddClass(this._progressSvgElem, ProgressEnum.CssClass.AddInitialAnimation);
+				this.animateInitial();
 
-				// Add the event to remove the cssClass responsible to add the initial animation
-				this._progressSvgElem.addEventListener(
-					GlobalEnum.HTMLEvent.TransitionEnd,
-					this._eventAnimateEntranceEnd
-				);
+				this._checkResizeObserver();
 
 				// Set the progressValue into the element
 				this._updateProgressValue();
@@ -199,17 +163,16 @@ namespace OSFramework.Patterns.Progress.Circle {
 		}
 
 		protected setCallbacks(): void {
-			this._eventAnimateEntranceEnd = this._animateEntranceEnd.bind(this);
+			super.setCallbacks();
 		}
 
 		protected setElementProgressValue(value: number): void {
 			this.configs.Progress = value;
 
-			// Do the transition animation
-			Helper.Dom.Styles.AddClass(this._progressSvgElem, ProgressEnum.CssClass.AnimateProgressChange);
+			// Add the animate to progress value, on value change
+			this.animateOnValueChange();
 
-			// Add the event that will remove the responsible cssClass that added animation
-			this._progressSvgElem.addEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._eventAnimateEntranceEnd);
+			this._checkResizeObserver();
 
 			this._updateProgressValue();
 		}
@@ -217,16 +180,15 @@ namespace OSFramework.Patterns.Progress.Circle {
 		// Update info based on htmlContent
 		protected setHtmlElements(): void {
 			// Set the html reference that will be used to do all the needed calcs
-			this._progressSvgElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Progress);
+			this._progressElem = this._selfElem.querySelector(Constants.Dot + Enum.CssClass.Progress);
 		}
 
 		protected unsetCallbacks(): void {
-			this._eventAnimateEntranceEnd = undefined;
+			super.unsetCallbacks();
 		}
 
 		protected unsetHtmlElements(): void {
-			// Set the html reference that will be used to do all the needed calcs
-			this._progressSvgElem = undefined;
+			super.unsetHtmlElements();
 		}
 
 		protected updateProgressColor(value: string): void {

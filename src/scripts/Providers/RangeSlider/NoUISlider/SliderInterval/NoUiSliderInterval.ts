@@ -107,9 +107,16 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 
 			if (this.isBuilt) {
 				switch (propertyName) {
-					case OSFramework.Patterns.RangeSlider.Enum.Properties.StartingValueTo:
+					case OSFramework.Patterns.RangeSlider.Enum.Properties.StartingValueFrom:
+						this.setValue(propertyValue as number, this.configs.StartingValueTo);
 						console.warn(
-							`${OSFramework.GlobalEnum.PatternName.RangeSliderInterval}': (${this.widgetId}): changes to ${OSFramework.Patterns.RangeSlider.Enum.Properties.StartingValueTo} parameter do not affect the ${OSFramework.GlobalEnum.PatternName.RangeSliderInterval}'. Use a distinct variable to assign on the OnValueChange event`
+							`${OSFramework.GlobalEnum.PatternName.RangeSliderInterval}: (${this.widgetId}): You should use a distinct variable to assign on the OnValueChange event. Any updates to ${OSFramework.Patterns.RangeSlider.Enum.Properties.InitialValueFrom} parameter should ideally be made using the SetRangeSliderIntervalValue Client Action.`
+						);
+						break;
+					case OSFramework.Patterns.RangeSlider.Enum.Properties.StartingValueTo:
+						this.setValue(this.configs.StartingValueFrom, propertyValue as number);
+						console.warn(
+							`${OSFramework.GlobalEnum.PatternName.RangeSliderInterval}: (${this.widgetId}): You should use a distinct variable to assign on the OnValueChange event. Any updates to ${OSFramework.Patterns.RangeSlider.Enum.Properties.InitialValueTo} parameter should ideally be made using the SetRangeSliderIntervalValue Client Action.`
 						);
 						break;
 					case OSFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
@@ -145,11 +152,11 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 				this.provider.set([intervalStart, intervalEnd]);
 			} else if (intervalStart > this.configs.MinValue && intervalEnd < this.configs.MaxValue) {
 				throw new Error(
-					`${OSFramework.ErrorCodes.RangeSlider.FailSetValue}:	The values must be within the specified range.`
+					`${OSFramework.ErrorCodes.RangeSlider.FailSetValue}: The values must be within the specified range.`
 				);
 			} else {
 				throw new Error(
-					`${OSFramework.ErrorCodes.RangeSlider.FailSetValue}:	The start value cannot be bigger than the end value.`
+					`${OSFramework.ErrorCodes.RangeSlider.FailSetValue}: The start value cannot be bigger than the end value.`
 				);
 			}
 		}

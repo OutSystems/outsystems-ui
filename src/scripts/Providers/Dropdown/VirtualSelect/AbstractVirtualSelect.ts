@@ -41,9 +41,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		// Manage the attributes to be added
 		private _manageAttributes(): void {
 			// Check if the pattern should be in disabled mode
-			if (this.configs.IsDisabled) {
-				this.disable();
-			}
+			this._manageDisableStatus();
 		}
 
 		// Manage the disable status of the pattern
@@ -68,7 +66,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			OSFramework.Helper.AsyncInvocation(
 				this._platformEventSelectedOptCallback,
 				this.widgetId,
-				this.getSelectedOptionsStructure()
+				this.getSelectedValues()
 			);
 		}
 
@@ -91,7 +89,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			this._selfElem.addEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
 
 			if (OSFramework.Helper.DeviceInfo.IsDesktop) {
-				// Set the WindowResize in order to close it if it's open!
+				//Set the WindowResize in order to close it if it's open!
 				OSFramework.Event.GlobalEventManager.Instance.addHandler(
 					OSFramework.Event.Type.WindowResize,
 					this._eventOnWindowResize
@@ -103,12 +101,10 @@ namespace Providers.Dropdown.VirtualSelect {
 		private _unsetEvents(): void {
 			this._selfElem.removeEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
 
-			if (OSFramework.Helper.DeviceInfo.IsDesktop) {
-				OSFramework.Event.GlobalEventManager.Instance.removeHandler(
-					OSFramework.Event.Type.WindowResize,
-					this._eventOnWindowResize
-				);
-			}
+			OSFramework.Event.GlobalEventManager.Instance.removeHandler(
+				OSFramework.Event.Type.WindowResize,
+				this._eventOnWindowResize
+			);
 		}
 
 		/**
@@ -135,9 +131,6 @@ namespace Providers.Dropdown.VirtualSelect {
 				version: Enum.ProviderInfo.Version,
 				events: this._virtualselectConfigs,
 			});
-
-			// Add the pattern Events!
-			this._setUpEvents();
 
 			// Add attributes to the element if needed
 			this._manageAttributes();
@@ -193,6 +186,8 @@ namespace Providers.Dropdown.VirtualSelect {
 
 			this.setCallbacks();
 
+			this._setUpEvents();
+
 			this.prepareConfigs();
 
 			this.finishBuild();
@@ -237,9 +232,9 @@ namespace Providers.Dropdown.VirtualSelect {
 						this.redraw();
 						break;
 					case Enum.Properties.StartingSelection:
-						this.redraw();
+						this.setValue(propertyValue as DropDownOption[]);
 						console.warn(
-							`We recommend using the StartingSelection parameter exclusively for the initial selection and avoid changing it after initialization.`
+							`${OSFramework.GlobalEnum.PatternName.Dropdown}: (${this.widgetId}): We recommend using the StartingSelection parameter exclusively for the initial selection and avoid changing it after initialization. To dynamically change the selected options, you should ideally use the DropdownSetValue Client Action.`
 						);
 						break;
 				}
@@ -285,12 +280,12 @@ namespace Providers.Dropdown.VirtualSelect {
 				} else {
 					this.provider.destroy();
 				}
-
-				this.unsetCallbacks();
-				this._unsetEvents();
-
-				super.dispose();
 			}
+
+			this._unsetEvents();
+			this.unsetCallbacks();
+
+			super.dispose();
 		}
 
 		/**
@@ -310,7 +305,21 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * @memberof AbstractVirtualSelect
 		 */
 		public getSelectedValues(): string {
-			return this.getSelectedOptionsStructure();
+			let optionsSelected = this.getSelectedOptionsStructure();
+
+			if (optionsSelected !== undefined && optionsSelected.length > 0) {
+				optionsSelected = optionsSelected.map(function (option) {
+					return {
+						group_name:
+							option.customData && option.customData.group_name ? option.customData.group_name : '',
+						description:
+							option.customData && option.customData.description ? option.customData.description : '',
+						...option,
+					};
+				});
+				return JSON.stringify(optionsSelected);
+			}
+			return '';
 		}
 
 		/**
@@ -351,6 +360,25 @@ namespace Providers.Dropdown.VirtualSelect {
 		}
 
 		/**
+		 * Method used to set all the extended VirtualSelect properties across the different types of instances
+		 *
+		 * @param {DropDownOption[]} optionsToSelect
+		 * @memberof AbstractVirtualSelect
+		 */
+		public setValue(optionsToSelect: DropDownOption[]): void {
+			const selectedValues = this.getSelectedOptionsStructure().map((value) => value.value) || [];
+			let valuesToSelect = [];
+
+			if (optionsToSelect.length > 0) {
+				if (this._virtualselectOpts.multiple) valuesToSelect = optionsToSelect.map((option) => option.value);
+				else valuesToSelect = [optionsToSelect[0].value];
+			}
+
+			if (valuesToSelect.sort().join(' ') !== selectedValues.sort().join(' '))
+				this.provider.setValueMethod(valuesToSelect);
+		}
+
+		/**
 		 * Toggle the dropbox as popup on small screen like mobile
 		 *
 		 * @memberof AbstractVirtualSelect
@@ -388,7 +416,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			}
 		}
 
-		protected abstract getSelectedOptionsStructure(): string;
+		protected abstract getSelectedOptionsStructure(): DropDownOption[];
 		protected abstract prepareConfigs(): void;
 	}
 }

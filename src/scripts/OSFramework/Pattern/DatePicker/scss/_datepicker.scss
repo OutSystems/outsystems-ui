@@ -4,7 +4,7 @@
 /// Patterns - Interaction - DatePicker
 
 /// Import Flatpickr library styles
-@import '../../../../Providers/Datepicker/Flatpickr/scss/flatpickr';
+@import '../../../../Providers/SharedProviderResources/Flatpickr/scss/flatpickr';
 
 @import 'datepicker_ss_preview_imgs';
 
@@ -98,6 +98,16 @@
 			}
 		}
 	}
+
+	.not-valid + .input,
+	.not-valid + .flatpickr-mobile {
+		border-color: var(--color-error);
+	}
+
+	.flatpickr-mobile ~ span.validation-message {
+		bottom: -40px;
+	}
+
 }
 
 ///

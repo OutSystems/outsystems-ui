@@ -19,7 +19,7 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 			}
 
 			// Trigger platform's onChange callback event
-			OSFramework.Helper.AsyncInvocation(this._onChangeCallbackEvent, this.widgetId, _selectedDate);
+			OSFramework.Helper.AsyncInvocation(this._onSelectedCallbackEvent, this.widgetId, _selectedDate);
 		}
 
 		/**
@@ -29,6 +29,15 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 		 * @memberof Flatpickr.SingleDate
 		 */
 		protected prepareConfigs(): void {
+			if (this._isUpdatingDefaultDate === false) {
+				// Check if any Date was selected
+				if (this.provider?.selectedDates.length > 0) {
+					// Set the new DefaultDate values
+					this.configs.InitialDate = this.provider.selectedDates[0];
+				}
+			}
+
+			this._isUpdatingDefaultDate = false;
 			// Get the library configurations
 			this._flatpickrOpts = this.configs.getProviderConfig();
 
@@ -82,6 +91,10 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 						this.redraw();
 						break;
 
+					case Enum.Properties.InitialDate:
+						this._isUpdatingDefaultDate = true;
+						this.redraw();
+						break;
 					case OSFramework.Patterns.DatePicker.Enum.Properties.TimeFormat:
 						this.redraw();
 						break;
@@ -96,6 +109,7 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 		 * @memberof Flatpickr.SingleDate
 		 */
 		public updateInitialDate(value: string): void {
+			this._isUpdatingDefaultDate = true;
 			// Redefine the Initial date
 			this.configs.InitialDate = value;
 			// Trigger the Redraw method in order to update calendar with this new value

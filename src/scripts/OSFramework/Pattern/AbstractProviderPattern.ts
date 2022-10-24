@@ -98,7 +98,7 @@ namespace OSFramework.Patterns {
 				}
 			}
 			// Check if addEventListener is valid
-			else if (typeof events.addEventListener === GlobalEnum.JavascriptTypes.function) {
+			else if (typeof events.addEventListener === Constants.JavaScriptTypes.Function) {
 				if (addEvent) {
 					events.addEventListener(eventName, callback);
 				} else {
@@ -106,7 +106,7 @@ namespace OSFramework.Patterns {
 				}
 			}
 			// Check if instance.on is valid
-			else if (typeof events.on === GlobalEnum.JavascriptTypes.function) {
+			else if (typeof events.on === Constants.JavaScriptTypes.Function) {
 				if (addEvent) {
 					events.on(eventName, callback);
 				} else {

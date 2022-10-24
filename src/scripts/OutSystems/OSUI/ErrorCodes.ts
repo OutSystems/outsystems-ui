@@ -21,6 +21,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailRegisterProviderConfig: 'OSUI-API-01009',
 		FailRegisterProviderEvent: 'OSUI-API-060010',
 		FailRemoveProviderEvent: 'OSUI-API-06011',
+		FailSetValues: 'OSUI-API-06012',
 	};
 
 	export const Notification = {
@@ -83,6 +84,8 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailRegisterProviderConfig: 'OSUI-API-07008',
 		FailRegisterProviderEvent: 'OSUI-API-07009',
 		FailRemoveProviderEvent: 'OSUI-API-07010',
+		FailDisableDays: 'OSUI-API-07011',
+		FailDisableWeekDays: 'OSUI-API-07012',
 	};
 
 	export const FlipContent = {
@@ -202,14 +205,41 @@ namespace OutSystems.OSUI.ErrorCodes {
 
 	export const TabsHeaderItem = {
 		FailChangeProperty: 'OSUI-API-24001',
-		FailDisableTabHeader: 'OSUI-API-22002',
+		FailDisableTabHeader: 'OSUI-API-24002',
 		FailDispose: 'OSUI-API-24003',
-		FailEnableTabHeader: 'OSUI-API-22004',
+		FailEnableTabHeader: 'OSUI-API-24004',
+		FailUpdate: 'OSUI-API-24005',
 	};
 
 	export const BottomSheet = {
 		FailChangeProperty: 'OSUI-API-25001',
 		FailDispose: 'OSUI-API-25002',
 		FailRegisterCallback: 'OSUI-API-25003',
+	};
+
+	export const TimePicker = {
+		FailChangeProperty: 'OSUI-API-26001',
+		FailClear: 'OSUI-API-26002',
+		FailClose: 'OSUI-API-26003',
+		FailDispose: 'OSUI-API-26004',
+		FailOpen: 'OSUI-API-26005',
+		FailRedraw: 'OSUI-API-26006',
+		FailRegisterCallback: 'OSUI-API-26007',
+		FailRegisterProviderConfig: 'OSUI-API-26008',
+		FailRegisterProviderEvent: 'OSUI-API-26009',
+		FailRemoveProviderEvent: 'OSUI-API-26010',
+	};
+
+	export const MonthPicker = {
+		FailChangeProperty: 'OSUI-API-27001',
+		FailClear: 'OSUI-API-27002',
+		FailClose: 'OSUI-API-27003',
+		FailDispose: 'OSUI-API-27004',
+		FailOpen: 'OSUI-API-27005',
+		FailRedraw: 'OSUI-API-27006',
+		FailRegisterCallback: 'OSUI-API-27007',
+		FailRegisterProviderConfig: 'OSUI-API-27008',
+		FailRegisterProviderEvent: 'OSUI-API-27009',
+		FailRemoveProviderEvent: 'OSUI-API-27010',
 	};
 }

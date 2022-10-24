@@ -50,7 +50,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 
 			// Trigger platform's onChange callback event
 			OSFramework.Helper.AsyncInvocation(
-				this._onChangeCallbackEvent,
+				this._onSelectedCallbackEvent,
 				this.widgetId,
 				_selectedDate[0],
 				_selectedDate[1]
@@ -64,6 +64,20 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 		 * @memberof Flatpickr.RangeDate
 		 */
 		protected prepareConfigs(): void {
+			if (this._isUpdatingDefaultDate === false) {
+				// Check if any Date was selected
+				if (this.provider?.selectedDates.length > 0) {
+					// Set the new Start DefaultDate value
+					this.configs.InitialStartDate = this.provider.selectedDates[0];
+
+					// Set the new End DefaultDate value
+					if (this.provider.selectedDates[1]) {
+						this.configs.InitialEndDate = this.provider.selectedDates[1];
+					}
+				}
+			}
+
+			this._isUpdatingDefaultDate = false;
 			// Get the library configurations
 			this._flatpickrOpts = this.configs.getProviderConfig();
 
@@ -107,6 +121,11 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 						// Check if there is any selected date already
 						this._onUpdateDateFormat();
 						break;
+					case Enum.Properties.InitialEndDate:
+					case Enum.Properties.InitialStartDate:
+						this._isUpdatingDefaultDate = true;
+						this.redraw();
+						break;
 				}
 			}
 		}
@@ -119,6 +138,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 		 * @memberof Flatpickr.RangeDate
 		 */
 		public updateInitialDate(startDate: string, endDate: string): void {
+			this._isUpdatingDefaultDate = true;
 			// Redefine the Initial dates
 			this.configs.InitialStartDate = startDate;
 			this.configs.InitialEndDate = endDate;
