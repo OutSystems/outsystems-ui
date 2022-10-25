@@ -98,7 +98,7 @@ namespace OSFramework.Patterns {
 				this._provider.destroy();
 
 				// Trigger a new instance creation with updated configs
-				Helper.AsyncInvocation(this.prepareConfigs.bind(this));
+				this.prepareConfigs();
 			}
 		}
 
