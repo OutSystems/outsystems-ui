@@ -142,6 +142,45 @@ namespace OSFramework.Patterns.Tabs {
 			}
 		}
 
+		private _changeActiveContentItem(newTabIndex: number, triggeredByObserver: boolean): void {
+			// Get the contentItem, based on the newTabIndex
+			const newContentItem = this.getChildByIndex(
+				newTabIndex,
+				Enum.ChildTypes.TabsContentItem
+			) as TabsContentItem.ITabsContentItem;
+
+			if (newContentItem) {
+				// Remove old contentitem as active
+				this._activeTabContentElement?.unsetIsActive();
+				// Set new content item as active
+				newContentItem.setIsActive();
+				this._activeTabContentElement = newContentItem;
+			}
+
+			if (this._hasDragGestures) {
+				this._activeTabHeaderElement.setFocus();
+			}
+
+			// Scroll to new content item and set it as active,
+			// if changeTab doesn't come from drag/scroll
+			if (triggeredByObserver === false) {
+				this._scrollToTargetContent(newContentItem);
+			}
+		}
+
+		private _changeActiveHeaderItem(newHeaderItem: TabsHeaderItem.ITabsHeaderItem): void {
+			// Remove old headerItem as active
+			if (this._activeTabHeaderElement) {
+				this._activeTabHeaderElement?.unsetIsActive();
+			}
+
+			if (newHeaderItem) {
+				// Set new headerItem as active
+				newHeaderItem.setIsActive();
+				this._activeTabHeaderElement = newHeaderItem;
+			}
+		}
+
 		// Method to determine the next target index on changeTab method
 		private _getTargetIndex(tabIndex: number): number {
 			let newTabIndex;
@@ -205,7 +244,7 @@ namespace OSFramework.Patterns.Tabs {
 		// Method to adjust the tabs css active item on resize or orientation-change
 		private _handleOnResizeEvend(): void {
 			this._scrollToTargetContent(this._activeTabContentElement);
-			this._handleTabIndicator();
+			Helper.AsyncInvocation(this._handleTabIndicator.bind(this));
 		}
 
 		// Method that handles the indicator size and transition
@@ -469,17 +508,18 @@ namespace OSFramework.Patterns.Tabs {
 
 		// Method to set the initial options on screen load
 		private _setInitialOptions(): void {
-			this._setOrientation(this.configs.TabsOrientation);
-			this._setPosition(this.configs.TabsVerticalPosition);
-			this._setHeight(this.configs.Height);
-			this._setIsJustified(this.configs.JustifyHeaders);
+			// Call necessary methods that avoid layout shift first
 			// Set the --tabs-header-items css variable
 			this._setHeaderItemsCustomProperty();
-			// Set startingTab
-			this.changeTab(this.configs.StartingTab);
+			this._setOrientation(this.configs.TabsOrientation);
+
+			// these don't affect layout shit, can run async to not affect main thread
+			Helper.AsyncInvocation(this._setHeight.bind(this), this.configs.Height);
+			Helper.AsyncInvocation(this._setPosition.bind(this), this.configs.TabsVerticalPosition);
+			Helper.AsyncInvocation(this._setIsJustified.bind(this), this.configs.JustifyHeaders);
 
 			if (this._hasDragGestures) {
-				this.toggleDragGestures(true);
+				Helper.AsyncInvocation(this.toggleDragGestures.bind(this), true);
 			}
 		}
 
@@ -735,15 +775,21 @@ namespace OSFramework.Patterns.Tabs {
 
 			this.setHtmlElements();
 
-			this.setCallbacks();
-
-			this.setA11YProperties();
-
-			this._prepareHeaderAndContentItems();
-
 			this._setInitialOptions();
 
-			this.finishBuild();
+			// Call following methods async to prevent affecting Main Thread and causing Long Tasks on page load
+
+			Helper.AsyncInvocation(this.setCallbacks.bind(this));
+
+			Helper.AsyncInvocation(this.setA11YProperties.bind(this));
+
+			Helper.AsyncInvocation(this._prepareHeaderAndContentItems.bind(this));
+
+			Helper.AsyncInvocation(this.changeTab.bind(this), this.configs.StartingTab);
+
+			Helper.AsyncInvocation(this.finishBuild.bind(this));
+
+			console.timeEnd(GlobalEnum.PatternName.Tabs + ':' + this.uniqueId + ' Performance Load: ');
 		}
 
 		/**
@@ -795,6 +841,10 @@ namespace OSFramework.Patterns.Tabs {
 			triggerEvent = false,
 			triggeredByObserver = false
 		): void {
+			if (this.build) {
+				console.time(GlobalEnum.PatternName.Tabs + ':' + this.uniqueId + ' Performance OnChange: ');
+			}
+
 			// If selecting the same element as the active one, prevent tabsChange
 			if (
 				this._activeTabHeaderElement === tabsHeaderItem ||
@@ -820,48 +870,22 @@ namespace OSFramework.Patterns.Tabs {
 				newHeaderItem = tabsHeaderItem;
 			}
 
-			// Remove old headerItem as active
-			if (this._activeTabHeaderElement) {
-				this._activeTabHeaderElement?.unsetIsActive();
-			}
-			if (newHeaderItem) {
-				// Set new headerItem as active
-				newHeaderItem.setIsActive();
-				this._activeTabHeaderElement = newHeaderItem;
-			}
+			this._changeActiveHeaderItem(newHeaderItem);
 
 			// If there're more than one content item,
 			// then do scrollTo and change active content item
 			if (this._hasSingleContent === false) {
-				// Get the contentItem, based on the newTabIndex
-				const newContentItem = this.getChildByIndex(
-					newTabIndex,
-					Enum.ChildTypes.TabsContentItem
-				) as TabsContentItem.ITabsContentItem;
-
-				if (newContentItem) {
-					// Remove old contentitem as active
-					this._activeTabContentElement?.unsetIsActive();
-					// Set new content item as active
-					newContentItem.setIsActive();
-					this._activeTabContentElement = newContentItem;
-				}
-
-				if (this._hasDragGestures) {
-					this._activeTabHeaderElement.setFocus();
-				}
-
-				// Scroll to new content item and set it as active,
-				// if changeTab deosn't come from drag/scroll
-				if (triggeredByObserver === false) {
-					this._scrollToTargetContent(newContentItem);
-				}
+				Helper.AsyncInvocation(this._changeActiveContentItem.bind(this), newTabIndex, triggeredByObserver);
 			}
-			// Update active indicator
-			this._handleTabIndicator();
+
+			Helper.AsyncInvocation(this._handleTabIndicator.bind(this));
 
 			// Update configs
 			this.configs.StartingTab = newTabIndex;
+
+			if (this.build) {
+				console.timeEnd(GlobalEnum.PatternName.Tabs + ':' + this.uniqueId + ' Performance OnChange: ');
+			}
 
 			// Trigger platform event
 			if (triggerEvent) {
