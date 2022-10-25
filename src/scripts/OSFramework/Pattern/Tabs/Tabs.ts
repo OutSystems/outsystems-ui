@@ -142,6 +142,7 @@ namespace OSFramework.Patterns.Tabs {
 			}
 		}
 
+		// Method to change the active content item
 		private _changeActiveContentItem(newTabIndex: number, triggeredByObserver: boolean): void {
 			// Get the contentItem, based on the newTabIndex
 			const newContentItem = this.getChildByIndex(
@@ -168,6 +169,7 @@ namespace OSFramework.Patterns.Tabs {
 			}
 		}
 
+		// Method to change the active header item
 		private _changeActiveHeaderItem(newHeaderItem: TabsHeaderItem.ITabsHeaderItem): void {
 			// Remove old headerItem as active
 			if (this._activeTabHeaderElement) {
