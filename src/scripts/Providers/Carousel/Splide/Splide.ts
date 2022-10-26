@@ -147,6 +147,7 @@ namespace Providers.Carousel.Splide {
 		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		protected prepareConfigs(): void {
+			this._prepareCarouselItems();
 			// Call the following methods here, so that all DOM elements are iterated and ready to init the library
 			this._splideOptions = this.configs.getProviderConfig();
 			// Init the Library
@@ -216,8 +217,6 @@ namespace Providers.Carousel.Splide {
 			}
 
 			this._togglePaginationClass();
-
-			this._prepareCarouselItems();
 		}
 
 		/**
