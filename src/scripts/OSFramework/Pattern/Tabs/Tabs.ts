@@ -790,8 +790,6 @@ namespace OSFramework.Patterns.Tabs {
 			Helper.AsyncInvocation(this.changeTab.bind(this), this.configs.StartingTab);
 
 			Helper.AsyncInvocation(this.finishBuild.bind(this));
-
-			console.timeEnd(GlobalEnum.PatternName.Tabs + ':' + this.uniqueId + ' Performance Load: ');
 		}
 
 		/**
@@ -843,10 +841,6 @@ namespace OSFramework.Patterns.Tabs {
 			triggerEvent = false,
 			triggeredByObserver = false
 		): void {
-			if (this.build) {
-				console.time(GlobalEnum.PatternName.Tabs + ':' + this.uniqueId + ' Performance OnChange: ');
-			}
-
 			// If selecting the same element as the active one, prevent tabsChange
 			if (
 				this._activeTabHeaderElement === tabsHeaderItem ||
@@ -884,10 +878,6 @@ namespace OSFramework.Patterns.Tabs {
 
 			// Update configs
 			this.configs.StartingTab = newTabIndex;
-
-			if (this.build) {
-				console.timeEnd(GlobalEnum.PatternName.Tabs + ':' + this.uniqueId + ' Performance OnChange: ');
-			}
 
 			// Trigger platform event
 			if (triggerEvent) {
