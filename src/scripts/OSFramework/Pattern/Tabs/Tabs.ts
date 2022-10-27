@@ -30,6 +30,8 @@ namespace OSFramework.Patterns.Tabs {
 		private _hasDragGestures: boolean;
 		// Store if the Tabs has only one ContentItem, to prevent unnecessary usages of ScrollTo
 		private _hasSingleContent: boolean;
+		// Store the number of headerItems to be used to set the css variable
+		private _headerItemsLength: number;
 		// Store the onTabsChange platform callback
 		private _platformEventTabsOnChange: Callbacks.OSOnChangeEvent;
 		// Store the id of the requestAnimationFrame called to animate the indicator
@@ -113,7 +115,8 @@ namespace OSFramework.Patterns.Tabs {
 				this.setChild(tabsHeaderChildId, tabsHeaderChildItem);
 			}
 
-			const currentIndex = this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length - 1;
+			this._headerItemsLength = this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length;
+			const currentIndex = this._headerItemsLength - 1;
 
 			// If tabs are already built, then this is dynamic content being added later
 			if (this.isBuilt) {
@@ -131,7 +134,7 @@ namespace OSFramework.Patterns.Tabs {
 					Helper.AsyncInvocation(this.changeTab.bind(this), this.configs.StartingTab, tabsHeaderChildItem);
 				}
 
-				this._setHeaderItemsCustomProperty();
+				this._setHeaderItemsCustomProperty(this._headerItemsLength);
 
 				// Update indicator size
 				this._handleTabIndicator();
@@ -424,9 +427,11 @@ namespace OSFramework.Patterns.Tabs {
 				);
 			}
 
+			this._headerItemsLength = this._headerItemsLength - 1;
+
 			if (this.isBuilt) {
 				// Update CSS Variable, as an item was removed
-				this._setHeaderItemsCustomProperty();
+				this._setHeaderItemsCustomProperty(this._headerItemsLength);
 				if (wasActive) {
 					if (this.getChildByIndex(auxIndex)) {
 						this._activeTabHeaderElement = this.getChildByIndex(
@@ -493,13 +498,9 @@ namespace OSFramework.Patterns.Tabs {
 		}
 
 		// Method to set the CSS variable that holds the number of header items
-		private _setHeaderItemsCustomProperty(): void {
+		private _setHeaderItemsCustomProperty(itemsLength: number): void {
 			// Create css variable
-			Helper.Dom.Styles.SetStyleAttribute(
-				this.selfElement,
-				Enum.CssProperty.TabsHeaderItems,
-				this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length
-			);
+			Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Enum.CssProperty.TabsHeaderItems, itemsLength);
 		}
 
 		// Method to set the Tabs Height
@@ -512,10 +513,10 @@ namespace OSFramework.Patterns.Tabs {
 		private _setInitialOptions(): void {
 			// Call necessary methods that avoid layout shift first
 			// Set the --tabs-header-items css variable
-			this._setHeaderItemsCustomProperty();
+			this._setHeaderItemsCustomProperty(this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length);
 			this._setOrientation(this.configs.TabsOrientation);
 
-			// these don't affect layout shit, can run async to not affect main thread
+			// these don't affect layout shift, can run async to not affect main thread
 			Helper.AsyncInvocation(this._setHeight.bind(this), this.configs.Height);
 			Helper.AsyncInvocation(this._setPosition.bind(this), this.configs.TabsVerticalPosition);
 			Helper.AsyncInvocation(this._setIsJustified.bind(this), this.configs.JustifyHeaders);
@@ -779,17 +780,17 @@ namespace OSFramework.Patterns.Tabs {
 
 			this._setInitialOptions();
 
+			this._prepareHeaderAndContentItems();
+
+			this.changeTab(this.configs.StartingTab);
+
 			// Call following methods async to prevent affecting Main Thread and causing Long Tasks on page load
 
 			Helper.AsyncInvocation(this.setCallbacks.bind(this));
 
 			Helper.AsyncInvocation(this.setA11YProperties.bind(this));
 
-			Helper.AsyncInvocation(this._prepareHeaderAndContentItems.bind(this));
-
-			Helper.AsyncInvocation(this.changeTab.bind(this), this.configs.StartingTab);
-
-			Helper.AsyncInvocation(this.finishBuild.bind(this));
+			this.finishBuild();
 		}
 
 		/**
