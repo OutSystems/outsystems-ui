@@ -240,6 +240,7 @@ namespace Providers.TimePicker.Flatpickr {
 					case OSFramework.Patterns.TimePicker.Enum.Properties.Is24Hours:
 					case OSFramework.Patterns.TimePicker.Enum.Properties.MaxTime:
 					case OSFramework.Patterns.TimePicker.Enum.Properties.MinTime:
+					case OSFramework.Patterns.TimePicker.Enum.Properties.TimeFormat:
 						this.redraw();
 						break;
 					case OSFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass:
