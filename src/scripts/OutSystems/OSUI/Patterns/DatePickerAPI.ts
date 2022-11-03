@@ -344,7 +344,11 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 
 		try {
 			// Check if when both dates have been passed (DatePickerRange) they are under the expectactions!
-			if (
+			if (OSFramework.Helper.Dates.IsNull(date1)) {
+				responseObj.isSuccess = false;
+				responseObj.message = `Given Date: '${date1}', can't be Null.`;
+				responseObj.code = ErrorCodes.DatePicker.FailUpdateInitialDate;
+			} else if (
 				OSFramework.Helper.Dates.IsNull(date1) === false &&
 				date2 !== undefined &&
 				OSFramework.Helper.Dates.IsNull(date2) === false &&
