@@ -6,6 +6,7 @@ namespace OSFramework.Patterns.TimePicker {
 		public Is24Hours: boolean;
 		public MaxTime: string;
 		public MinTime: string;
+		public TimeFormat: string;
 
 		constructor(config: JSON) {
 			super(config);

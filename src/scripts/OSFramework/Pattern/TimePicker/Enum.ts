@@ -24,6 +24,7 @@ namespace OSFramework.Patterns.TimePicker.Enum {
 		Is24Hours = 'Is24Hours',
 		MaxTime = 'MaxTime',
 		MinTime = 'MinTime',
+		TimeFormat = 'TimeFormat',
 	}
 
 	/**

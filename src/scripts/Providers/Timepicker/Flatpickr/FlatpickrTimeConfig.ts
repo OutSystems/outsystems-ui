@@ -78,7 +78,7 @@ namespace Providers.TimePicker.Flatpickr {
 		 */
 		public getProviderConfig(): FlatpickrOptions {
 			this._providerOptions = {
-				altFormat: this._checkAltFormat(),
+				altFormat: this.TimeFormat ? this.TimeFormat : this._checkAltFormat(),
 				altInput: true,
 				allowInput: this.AllowInput,
 				defaultDate: OSFramework.Helper.Times.IsNull(this.InitialTime) ? undefined : this.InitialTime,
