@@ -135,7 +135,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DatePicker.FailRedraw;
+			responseObj.code = ErrorCodes.DatePicker.FailToggleNativeBehavior;
 		}
 
 		return JSON.stringify(responseObj);
@@ -314,7 +314,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DatePicker.FailRedraw;
+			responseObj.code = ErrorCodes.DatePicker.FailSetLanguage;
 		}
 
 		return JSON.stringify(responseObj);
@@ -343,13 +343,24 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 		};
 
 		try {
-			const _datePicker = this.GetDatePickerItemById(datePickerId);
-
-			_datePicker.updateInitialDate(date1, date2);
+			// Check if when both dates have been passed (DatePickerRange) they are under the expectactions!
+			if (
+				OSFramework.Helper.Dates.IsNull(date1) === false &&
+				date2 !== undefined &&
+				OSFramework.Helper.Dates.IsNull(date2) === false &&
+				OSFramework.Helper.Dates.Compare(date1, date2) === false
+			) {
+				responseObj.isSuccess = false;
+				responseObj.message = `Date1: '${date1}', can't be after Date2: '${date2}'.`;
+				responseObj.code = ErrorCodes.DatePicker.FailUpdateInitialDate;
+			} else {
+				const _datePicker = this.GetDatePickerItemById(datePickerId);
+				_datePicker.updateInitialDate(date1, date2);
+			}
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DatePicker.FailRedraw;
+			responseObj.code = ErrorCodes.DatePicker.FailUpdateInitialDate;
 		}
 
 		return JSON.stringify(responseObj);
@@ -523,7 +534,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DatePicker.FailRedraw;
+			responseObj.code = ErrorCodes.DatePicker.FailSetEditableInput;
 		}
 
 		return JSON.stringify(responseObj);

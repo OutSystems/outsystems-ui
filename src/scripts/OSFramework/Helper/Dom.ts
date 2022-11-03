@@ -447,6 +447,27 @@ namespace OSFramework.Helper {
 		}
 
 		/**
+		 * Method that will help on setting the value of an input and trigger that change to the platform in order to update it's assigned variable, otherwise platform value do not get updated if/when only a value attribute get set!
+		 *
+		 * @param {HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement} inputElem Element where the value will be assigned!
+		 * @param {string} value Value to be assigned
+		 * @memberof OSFramework.Helper.Dom
+		 */
+		public static SetInputValue(
+			inputElem: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement,
+			value: string
+		): void {
+			// Set the input prototype object;
+			const inputElemProtoObj = Object.getPrototypeOf(inputElem);
+			// Get the Set Method for the value attribute
+			const setValue = Object.getOwnPropertyDescriptor(inputElemProtoObj, 'value').set;
+			// Trigger the call of the Set method in order chanhe it's value
+			setValue.call(inputElem, value);
+			// Trigger the CustomEvent in order trigger the update platform variable accordingly
+			inputElem.dispatchEvent(new CustomEvent('input', { bubbles: true }));
+		}
+
+		/**
 		 * Function that performs a querySelector of a given html tag in a given element.
 		 *
 		 * @static

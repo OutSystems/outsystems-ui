@@ -94,6 +94,7 @@ declare global {
 		viewHeight: number;
 	};
 
+	// Providers -----------------------------------------------------------------
 	type ProviderInfo = {
 		name: string;
 		version: string;
@@ -105,8 +106,9 @@ declare global {
 		| CarouselProviderConfigs
 		| DatePickerProviderConfigs
 		| VirtualSelect;
+	// ---------------------------------------------------------------------------
 
-	// RangeSlider
+	// RangeSlider ---------------------------------------------------------------
 	type NoUiSlider = noUiSlider;
 	type RangeSliderProviderConfigs = NoUiSlider;
 	type NoUiSliderOptions = noUiSliderOptions;
@@ -114,25 +116,42 @@ declare global {
 	type NoUiSliderRange = Range;
 	type NoUISliderTooltip = typeof boolean | PartialFormatter | (boolean | PartialFormatter)[];
 	type wNumb = WNumb;
+	// ---------------------------------------------------------------------------
 
-	// Carousel
+	// Carousel ------------------------------------------------------------------
 	type CarouselProviderConfigs = SplideOpts;
+	// ---------------------------------------------------------------------------
 	// Carousel => Splide
 	type Splide = OriginalSplide;
 	type SplideOpts = splideOptions;
 
-	// DatePicker => Flatpickr
-	type DatePickerProviderConfigs = FlatpickrOptions;
-	type TimePickerProviderConfigs = FlatpickrOptions;
-	type MonthPickerProviderConfigs = FlatpickrOptions;
+	// DatePicker => Flatpickr ---------------------------------------------------
 	type Flatpickr = flatpickr;
-	type FlatpickrOptions = flatpickrOpts;
+	type DatePickerProviderConfigs = flatpickrOpts;
 	type FlatpickrLocale = flatpickrLocale;
 	type FlatpickrLocaleKey = flatpickrLocaleKey;
 
-	// DropDown => Virtual Select Provider
-	type VirtualSelect = any;
+	// Added new extra Configs (due to repository fork!)
+	type DatePickerNewBaseOpts = {
+		updateInputVal: boolean;
+	};
+	// Merge Flatpickr default configs with the new ones
+	type FlatpickrOptions = flatpickrOpts & DatePickerNewBaseOpts;
+	// ---------------------------------------------------------------------------
 
-	// DropDown => OutSystems Provider
+	// Timepicker => Flatpickr ---------------------------------------------------
+	type TimePickerProviderConfigs = FlatpickrOptions;
+	// ---------------------------------------------------------------------------
+
+	// Monthpicker => Flatpickr --------------------------------------------------
+	type MonthPickerProviderConfigs = FlatpickrOptions;
+	// ---------------------------------------------------------------------------
+
+	// DropDown => Virtual Select Provider ---------------------------------------
+	type VirtualSelect = any;
+	// ---------------------------------------------------------------------------
+
+	// UIComponents => OutSystems Provider ---------------------------------------
 	type OSUIComponents = any;
+	// ---------------------------------------------------------------------------
 }

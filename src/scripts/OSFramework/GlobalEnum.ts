@@ -136,6 +136,7 @@ namespace OSFramework.GlobalEnum {
 		Id = 'id',
 		Name = 'name',
 		Style = 'style',
+		type = 'type',
 	}
 
 	/**
@@ -293,11 +294,20 @@ namespace OSFramework.GlobalEnum {
 	}
 
 	/**
-	 * OutSystemsUI Input Types
+	 * OutSystemsUI Input Class Types
 	 */
-	export enum InputTypes {
+	export enum InputClassTypes {
 		InputLarge = 'input-large',
 		InputSmall = 'input-small',
+	}
+
+	/**
+	 * OutSystemsUI Input attribute values Types
+	 */
+	export enum InputTypeAttr {
+		Date = 'date',
+		DateTime = 'date-time-edit',
+		Text = 'text',
 	}
 
 	/**

@@ -16,8 +16,6 @@ namespace Providers.Datepicker.Flatpickr {
 		protected _flatpickrInputElem: HTMLInputElement;
 		// Store the provider options
 		protected _flatpickrOpts: FlatpickrOptions;
-		// Store on a flag status when the picker is updating the default date;
-		protected _isUpdatingDefaultDate = false;
 		// Flatpickr onChange (SelectedDate) event
 		protected _onSelectedCallbackEvent: OSFramework.Patterns.DatePicker.Callbacks.OSOnChangeEvent;
 
@@ -60,6 +58,23 @@ namespace Providers.Datepicker.Flatpickr {
 			}
 		}
 
+		// Set the clientHeight to the parent container as an inline style in order vertical content remains same and avoid content vertical flickering!
+		private _setParentMinHeight(): void {
+			OSFramework.Helper.Dom.Styles.SetStyleAttribute(
+				this.selfElement,
+				OSFramework.GlobalEnum.InlineStyle.Height,
+				this.selfElement.clientHeight + OSFramework.GlobalEnum.Units.Pixel
+			);
+		}
+
+		// Remove the clientHeight that has been assigned before the redraw process!
+		private _unsetParentMinHeight(): void {
+			OSFramework.Helper.Dom.Styles.RemoveStyleAttribute(
+				this.selfElement,
+				OSFramework.GlobalEnum.InlineStyle.Height
+			);
+		}
+
 		/**
 		 * Method used to add the TodayButton at calendar
 		 *
@@ -90,11 +105,6 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @memberof Providers.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		protected createProviderInstance(): void {
-			/* In order to avoid dateFormat convert issues done by provider when InitialDate was not defined and input has a default date lets clean that value before creating provider instance. This happen when DateFormat is different from YYYY-MM-DD */
-			if (this._datePickerPlatformInputElem && this._flatpickrOpts.defaultDate === undefined) {
-				this._datePickerPlatformInputElem.value = '';
-			}
-
 			// Init provider
 			this.provider = window.flatpickr(this._datePickerPlatformInputElem, this._flatpickrOpts);
 
@@ -107,6 +117,9 @@ namespace Providers.Datepicker.Flatpickr {
 
 			// Set the needed HTML attributes
 			this._setAttributes();
+
+			// Update the platform input attributes
+			this.updatePlatformInputAttrs();
 
 			// Set accessibility stuff
 			this.setA11YProperties();
@@ -140,6 +153,9 @@ namespace Providers.Datepicker.Flatpickr {
 
 			// Trigger platform's InstanceIntializedHandler client Action
 			this.triggerPlatformEventInitialized(this._onInitializeCallbackEvent);
+
+			// Remove inline height value style!
+			this._unsetParentMinHeight();
 		}
 
 		/**
@@ -150,6 +166,31 @@ namespace Providers.Datepicker.Flatpickr {
 		 */
 		protected jumpIntoToday(): void {
 			this.provider.jumpToDate(this.provider.now);
+		}
+
+		/**
+		 * Method that will set the provider configurations in order to properly create its instance
+		 *
+		 * @protected
+		 * @memberof Providers.DatePicker.Flatpickr.AbstractFlatpickr
+		 */
+		protected prepareConfigs(): void {
+			// Get the library configurations
+			this._flatpickrOpts = this.configs.getProviderConfig();
+
+			// Instance will be Created!
+			this.createProviderInstance();
+		}
+
+		/**
+		 * Method used to prepare pattern before being redrawed in order to prevent possible flickerings!
+		 *
+		 * @protected
+		 * @memberof Providers.DatePicker.Flatpickr.AbstractFlatpickr
+		 */
+		protected prepareToAndRedraw(): void {
+			this._setParentMinHeight();
+			this.redraw();
 		}
 
 		/**
@@ -265,7 +306,7 @@ namespace Providers.Datepicker.Flatpickr {
 					case OSFramework.Patterns.DatePicker.Enum.Properties.MinDate:
 					case OSFramework.Patterns.DatePicker.Enum.Properties.ShowTodayButton:
 					case OSFramework.Patterns.DatePicker.Enum.Properties.ShowWeekNumbers:
-						this.redraw();
+						this.prepareToAndRedraw();
 						break;
 					case OSFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass:
 						// Since Calendar element will be added dynamically by the library outside the pattern context
@@ -305,7 +346,7 @@ namespace Providers.Datepicker.Flatpickr {
 		 */
 		public disableDays(disableDays: string[]): void {
 			this.configs.DisabledDays = disableDays;
-			this.redraw();
+			this.prepareToAndRedraw();
 		}
 
 		/**
@@ -317,7 +358,7 @@ namespace Providers.Datepicker.Flatpickr {
 		public disableWeekDays(disableWeekDays: number[]): void {
 			this.configs.DisabledWeekDays = disableWeekDays;
 
-			this.redraw();
+			this.prepareToAndRedraw();
 		}
 
 		/**
@@ -327,9 +368,12 @@ namespace Providers.Datepicker.Flatpickr {
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
+				console.log('TSLog: Dispose');
+
 				/* In order to avoid platform warnings due to DateFormat changes when DateFormat different from YYYY-MM-DD,
 				remove the input element value, this will avoid library update it's value into a date with a different date format! */
-				this._datePickerPlatformInputElem.value = '';
+				// this._datePickerPlatformInputElem.value = '';
+				// OSFramework.Helper.Dom.SetInputValue(this._datePickerPlatformInputElem, '');
 
 				this.unsetCallbacks();
 				this.unsetHtmlElements();
@@ -383,7 +427,7 @@ namespace Providers.Datepicker.Flatpickr {
 		public setEditableInput(isEditable: boolean): void {
 			if (this.configs.AllowInput !== isEditable) {
 				this.configs.AllowInput = isEditable;
-				this.redraw();
+				this.prepareToAndRedraw();
 			}
 		}
 
@@ -398,7 +442,7 @@ namespace Providers.Datepicker.Flatpickr {
 
 			// If provider has been already defined, calendar must be redrawed!
 			if (this.provider !== undefined) {
-				this.redraw();
+				this.prepareToAndRedraw();
 			}
 		}
 
@@ -411,7 +455,7 @@ namespace Providers.Datepicker.Flatpickr {
 		public setProviderConfigs(newConfigs: FlatpickrOptions): void {
 			this.configs.setExtensibilityConfigs(newConfigs);
 
-			this.redraw();
+			this.prepareToAndRedraw();
 		}
 
 		/**
@@ -423,14 +467,14 @@ namespace Providers.Datepicker.Flatpickr {
 			// Invert the boolean value of IsNative because of provider option
 			if (this.configs.DisableMobile !== !isNative) {
 				this.configs.DisableMobile = !isNative;
-				this.redraw();
+				this.prepareToAndRedraw();
 			}
 		}
 
 		// Common methods all DatePickers must implement
 		protected abstract onDateSelectedEvent(selectedDates: string[], dateStr: string, fp: Flatpickr): void;
-		protected abstract prepareConfigs(): void;
 		protected abstract todayBtnClick(event: MouseEvent): void;
 		public abstract updateInitialDate(start: string, end?: string): void;
+		protected abstract updatePlatformInputAttrs(): void;
 	}
 }

@@ -8,7 +8,12 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 			super(uniqueId, new FlatpickrRangeDateConfig(configs));
 		}
 
-		// Method used to check if there is any selected date before changing the DateFormat
+		/**
+		 * Method used to check if there is any selected date before changing the DateFormat
+		 *
+		 * @protected
+		 * @memberof Providers.DatePicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate
+		 */
 		private _onUpdateDateFormat(): void {
 			// Check if any Date was selected
 			if (this.provider.selectedDates.length > 0) {
@@ -27,17 +32,18 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 				}
 			}
 
-			this.redraw();
+			this.prepareToAndRedraw();
 		}
 
 		/**
-		 * Method that will be triggered by library each time any date is selected
+		 * Method that will be triggered by library each time any date is selected and will also trigger the input update value and also trigger the OnSelectedDate platform event callback!
 		 *
 		 * @protected
+		 * @param {string[]} selectedDates Array of selected dates
 		 * @memberof Providers.DatePicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate
 		 */
 		protected onDateSelectedEvent(selectedDates: string[]): void {
-			/* NOTE: dateStr param is not in use since the library has an issue arround it */
+			// Store selected dates with the expected dateFormat as a string type
 			const _selectedDate = [];
 
 			// Check if any date has been selected, In case of Clear this will retunr empty array
@@ -48,7 +54,11 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 				}
 			}
 
-			// Ensure user has selected start and end dates before trigger the onSelectedDate callback!
+			// Trigger the platform update attribute value based on the flatpicker text input value!
+			// This can be done on this context since on this case the "hidden" input should be text type!
+			OSFramework.Helper.Dom.SetInputValue(this._datePickerPlatformInputElem, this._flatpickrInputElem.value);
+
+			// Ensure user has selected start and end dates before trigger the onSelectedDate callback
 			if (selectedDates.length === 2) {
 				// Trigger platform's onChange callback event
 				OSFramework.Helper.AsyncInvocation(
@@ -61,34 +71,6 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 		}
 
 		/**
-		 * Method that will set the provider configurations in order to properly create its instance
-		 *
-		 * @protected
-		 * @memberof Providers.DatePicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate
-		 */
-		protected prepareConfigs(): void {
-			if (this._isUpdatingDefaultDate === false) {
-				// Check if any Date was selected
-				if (this.provider?.selectedDates.length > 0) {
-					// Set the new Start DefaultDate value
-					this.configs.InitialStartDate = this.provider.selectedDates[0];
-
-					// Set the new End DefaultDate value
-					if (this.provider.selectedDates[1]) {
-						this.configs.InitialEndDate = this.provider.selectedDates[1];
-					}
-				}
-			}
-			this._isUpdatingDefaultDate = false;
-
-			// Get the library configurations
-			this._flatpickrOpts = this.configs.getProviderConfig();
-
-			// Instance will be Created!
-			this.createProviderInstance();
-		}
-
-		/**
 		 * Trigger the jumToDate to now
 		 *
 		 * @protected
@@ -98,6 +80,22 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 			event.preventDefault();
 
 			this.jumpIntoToday();
+		}
+
+		/**
+		 * Update platform input attributes in order to maintain consistency with data type!
+		 *
+		 * @protected
+		 * @memberof Providers.DatePicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate
+		 */
+		protected updatePlatformInputAttrs(): void {
+			// Set the type attribute value
+			// This is needed once library set it as an hidden by default which can not be since otherwise the updating it's value will not be triggered the local variable update. That said it will be hidden through CSS!
+			OSFramework.Helper.Dom.Attribute.Set(
+				this._datePickerPlatformInputElem,
+				OSFramework.GlobalEnum.HTMLAttributes.type,
+				OSFramework.GlobalEnum.InputTypeAttr.Text
+			);
 		}
 
 		/**
@@ -131,8 +129,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 						break;
 					case Enum.Properties.InitialEndDate:
 					case Enum.Properties.InitialStartDate:
-						this._isUpdatingDefaultDate = true;
-						this.redraw();
+						this.prepareToAndRedraw();
 						break;
 				}
 			}
@@ -146,12 +143,22 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 		 * @memberof Providers.DatePicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate
 		 */
 		public updateInitialDate(startDate: string, endDate: string): void {
-			this._isUpdatingDefaultDate = true;
-			// Redefine the Initial dates
-			this.configs.InitialStartDate = startDate;
-			this.configs.InitialEndDate = endDate;
-			// Trigger the Redraw method in order to update calendar with these new values
-			this.redraw();
+			// Ensure assigns only occurs if both dates are set!
+			if (
+				OSFramework.Helper.Dates.IsNull(startDate) === false &&
+				OSFramework.Helper.Dates.IsNull(endDate) === false
+			) {
+				// Redefine the Initial dates
+				this.configs.InitialStartDate = startDate;
+				this.configs.InitialEndDate = endDate;
+
+				if (OSFramework.Helper.Dates.Compare(startDate, endDate)) {
+					// Trigger the onDateSelectedEvent method that will be responsible for setting the input value and trigger the selected event that will after trigger the redraw!
+					this.onDateSelectedEvent([startDate, endDate]);
+				} else {
+					console.error(`StartDate '${startDate}' can't be after EndDate '${endDate}'`);
+				}
+			}
 		}
 	}
 }
