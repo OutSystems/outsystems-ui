@@ -346,9 +346,9 @@ namespace Providers.MonthPicker.Flatpickr {
 		}
 
 		/**
-		 * Method used to set the TimePicker as editable on its input
+		 * Method used to set the MonthPicker as editable on its input
 		 *
-		 * @memberof Providers.TimePicker.Flatpickr.OSUIFlatpickrTime
+		 * @memberof Providers.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public setEditableInput(isEditable: boolean): void {
 			if (this.configs.AllowInput !== isEditable) {
