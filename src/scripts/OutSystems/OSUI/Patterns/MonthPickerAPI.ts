@@ -378,7 +378,7 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.MonthPicker.FailRedraw;
+			responseObj.code = ErrorCodes.MonthPicker.FailSetEditableInput;
 		}
 
 		return JSON.stringify(responseObj);
