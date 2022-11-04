@@ -40,7 +40,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 					false
 			) {
 				/* Since they given StartDate is greater than given EndDate...
-				Let's mimicate the same behaviour flatpickr use at the selection moment on this cases.
+				Let's mimicked the same behaviour flatpickr use at the selection moment on this cases.
 					- If the first selected date is greater than the second selected date, flatpickr will assume
 				the startDate the minor one! */
 
