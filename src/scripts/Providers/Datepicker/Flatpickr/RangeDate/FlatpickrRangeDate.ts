@@ -8,12 +8,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 			super(uniqueId, new FlatpickrRangeDateConfig(configs));
 		}
 
-		/**
-		 * Method used to check if there is any selected date before changing the DateFormat
-		 *
-		 * @protected
-		 * @memberof Providers.DatePicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate
-		 */
+		// Method used to check if there is any selected date before changing the DateFormat
 		private _onUpdateDateFormat(): void {
 			// Check if any Date was selected
 			if (this.provider.selectedDates.length > 0) {
@@ -32,6 +27,38 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 				}
 			}
 
+			this.prepareToAndRedraw();
+		}
+
+		// Method used by the ChangeProperties method in order to update InitialStart and/or InitialEnd Dates
+		private _updateInitialStartAndEndDates(): void {
+			// Check if the given StartDate is minor of Given EndDate
+			if (
+				this.configs.InitialStartDate !== undefined &&
+				this.configs.InitialEndDate !== undefined &&
+				OSFramework.Helper.Dates.IsMinorThan(this.configs.InitialStartDate, this.configs.InitialEndDate) ===
+					false
+			) {
+				/* Since they given StartDate is greater than given EndDate...
+				Let's mimicate the same behaviour flatpickr use at the selection moment on this cases.
+					- If the first selected date is greater than the second selected date, flatpickr will assume
+				the startDate the minor one! */
+
+				// Store the given dates in order to swapp them
+				const newInitialStartDate = this.configs.InitialEndDate;
+				const newInitialEndDate = this.configs.InitialStartDate;
+
+				// Rest values to trigger the redraw
+				this.configs.InitialStartDate = newInitialStartDate;
+				this.configs.InitialEndDate = newInitialEndDate;
+
+				// Give a warning console message in order to alert developers about this change!
+				console.warn(
+					`Given StartDate:'${this.configs.InitialStartDate}' is greater than given EndDate:'${this.configs.InitialEndDate}'. Take in consideration that they have been swapped.`
+				);
+			}
+
+			// Trigger the redraw!
 			this.prepareToAndRedraw();
 		}
 
@@ -58,8 +85,8 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 			// This can be done on this context since on this case the "hidden" input should be text type!
 			OSFramework.Helper.Dom.SetInputValue(this._datePickerPlatformInputElem, this._flatpickrInputElem.value);
 
-			// Ensure user has selected start and end dates before trigger the onSelectedDate callback
-			if (selectedDates.length === 2) {
+			// Ensure user has selected start and end dates before trigger the onSelectedDate callback, or user has clean the seelcted dates!
+			if (selectedDates.length === 0 || selectedDates.length === 2) {
 				// Trigger platform's onChange callback event
 				OSFramework.Helper.AsyncInvocation(
 					this._onSelectedCallbackEvent,
@@ -129,7 +156,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 						break;
 					case Enum.Properties.InitialEndDate:
 					case Enum.Properties.InitialStartDate:
-						this.prepareToAndRedraw();
+						this._updateInitialStartAndEndDates();
 						break;
 				}
 			}
