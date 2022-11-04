@@ -356,4 +356,31 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 
 		return JSON.stringify(responseObj);
 	}
+
+	/**
+	 * Function that will set the input as editable
+	 *
+	 * @export
+	 * @param {string} monthPickerId
+	 * @param {boolean} IsEditable
+	 * @return {*}  {string}
+	 */
+	export function SetEditableInput(monthPickerId: string, IsEditable: boolean): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const _monthPicker = this.GetMonthPickerItemById(monthPickerId);
+			_monthPicker.setEditableInput(IsEditable);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.MonthPicker.FailSetEditableInput;
+		}
+
+		return JSON.stringify(responseObj);
+	}
 }

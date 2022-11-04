@@ -241,5 +241,6 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailRegisterProviderConfig: 'OSUI-API-27008',
 		FailRegisterProviderEvent: 'OSUI-API-27009',
 		FailRemoveProviderEvent: 'OSUI-API-27010',
+		FailSetEditableInput: 'OSUI-API-27011',
 	};
 }
