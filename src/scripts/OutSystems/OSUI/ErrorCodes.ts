@@ -114,6 +114,8 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailRegisterProviderConfig: 'OSUI-API-10007',
 		FailRegisterProviderEvent: 'OSUI-API-10008',
 		FailRemoveProviderEvent: 'OSUI-API-10009',
+		FailEnable: 'OSUI-API-10010',
+		FailDisable: 'OSUI-API-10011',
 	};
 
 	export const Sidebar = {
