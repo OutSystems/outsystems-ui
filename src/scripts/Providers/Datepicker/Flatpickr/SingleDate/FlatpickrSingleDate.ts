@@ -5,7 +5,7 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class OSUIFlatpickrSingleDate extends AbstractFlatpickr<FlatpickrSingleDateConfig> {
 		// Flag to be used to prevent trigger the OnSelectedDate platform callback when InitialDate is being updated through Client Action!
-		private _isUpdateInitialDateByCa = false;
+		private _isUpdatedInitialDateByClientAction = false;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new FlatpickrSingleDateConfig(configs));
@@ -31,13 +31,13 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 			OSFramework.Helper.Dom.SetInputValue(this._datePickerPlatformInputElem, _selectedDate);
 
 			// Check if values are not beeing updated by UpdateInitialDate API Method!
-			if (this._isUpdateInitialDateByCa === false) {
+			if (this._isUpdatedInitialDateByClientAction === false) {
 				// Trigger platform's onChange callback event
 				OSFramework.Helper.AsyncInvocation(this._onSelectedCallbackEvent, this.widgetId, _selectedDate);
 			}
 
 			// Reset Flag value;
-			this._isUpdateInitialDateByCa = false;
+			this._isUpdatedInitialDateByClientAction = false;
 		}
 
 		/**
@@ -102,15 +102,15 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 				// Store the new Date value
 				const newDateValue = propertyValue as Date;
 				// Store (if exist) the selected date stored at the provider context
-				const providerSeletcedDate =
+				const providerSelectedDate =
 					this.provider?.selectedDates.length > 0
 						? (new Date(this.provider.selectedDates[0]) as Date)
 						: undefined;
 
 				// Check if InitialDate has been "asked" to be changed dynamically without user selected a date at calendar!
 				if (
-					(providerSeletcedDate === undefined && OSFramework.Helper.Dates.IsNull(newDateValue) === false) ||
-					providerSeletcedDate.getTime() !== newDateValue.getTime()
+					(providerSelectedDate === undefined && OSFramework.Helper.Dates.IsNull(newDateValue) === false) ||
+					providerSelectedDate.getTime() !== newDateValue.getTime()
 				) {
 					redrawAtInitialDateChange = true;
 				}
@@ -153,7 +153,7 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 		 */
 		public updateInitialDate(value: string): void {
 			// Enable Flag in order to prevent trigger OnDateSelected platform callback event
-			this._isUpdateInitialDateByCa = true;
+			this._isUpdatedInitialDateByClientAction = true;
 			// Redefine the Initial date
 			this.configs.InitialDate = value;
 			// Trigger the onDateSelectedEvent method that will be responsible for setting the input value and trigger the selected event that will after trigger the redraw!

@@ -152,7 +152,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 				this.configs.InitialStartDate = startDate;
 				this.configs.InitialEndDate = endDate;
 
-				if (OSFramework.Helper.Dates.Compare(startDate, endDate)) {
+				if (OSFramework.Helper.Dates.IsMinorThan(startDate, endDate)) {
 					// Trigger the onDateSelectedEvent method that will be responsible for setting the input value and trigger the selected event that will after trigger the redraw!
 					this.onDateSelectedEvent([startDate, endDate]);
 				} else {

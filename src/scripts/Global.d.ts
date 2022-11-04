@@ -131,12 +131,12 @@ declare global {
 	type FlatpickrLocale = flatpickrLocale;
 	type FlatpickrLocaleKey = flatpickrLocaleKey;
 
-	// Added new extra Configs (due to repository fork!)
-	type DatePickerNewBaseOpts = {
+	// Temporary Fork Flatpickr Repository new Options
+	type Temp_FlatpickrForkNewOpts = {
 		updateInputVal: boolean;
 	};
 	// Merge Flatpickr default configs with the new ones
-	type FlatpickrOptions = flatpickrOpts & DatePickerNewBaseOpts;
+	type FlatpickrOptions = flatpickrOpts & Temp_FlatpickrForkNewOpts;
 	// ---------------------------------------------------------------------------
 
 	// Timepicker => Flatpickr ---------------------------------------------------

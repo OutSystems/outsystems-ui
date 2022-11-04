@@ -368,13 +368,6 @@ namespace Providers.Datepicker.Flatpickr {
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
-				console.log('TSLog: Dispose');
-
-				/* In order to avoid platform warnings due to DateFormat changes when DateFormat different from YYYY-MM-DD,
-				remove the input element value, this will avoid library update it's value into a date with a different date format! */
-				// this._datePickerPlatformInputElem.value = '';
-				// OSFramework.Helper.Dom.SetInputValue(this._datePickerPlatformInputElem, '');
-
 				this.unsetCallbacks();
 				this.unsetHtmlElements();
 
@@ -474,7 +467,8 @@ namespace Providers.Datepicker.Flatpickr {
 		// Common methods all DatePickers must implement
 		protected abstract onDateSelectedEvent(selectedDates: string[], dateStr: string, fp: Flatpickr): void;
 		protected abstract todayBtnClick(event: MouseEvent): void;
-		public abstract updateInitialDate(start: string, end?: string): void;
 		protected abstract updatePlatformInputAttrs(): void;
+		// eslint-disable-next-line @typescript-eslint/member-ordering
+		public abstract updateInitialDate(start: string, end?: string): void;
 	}
 }

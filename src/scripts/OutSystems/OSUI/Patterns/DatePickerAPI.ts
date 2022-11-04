@@ -352,7 +352,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 				OSFramework.Helper.Dates.IsNull(date1) === false &&
 				date2 !== undefined &&
 				OSFramework.Helper.Dates.IsNull(date2) === false &&
-				OSFramework.Helper.Dates.Compare(date1, date2) === false
+				OSFramework.Helper.Dates.IsMinorThan(date1, date2) === false
 			) {
 				responseObj.isSuccess = false;
 				responseObj.message = `Date1: '${date1}', can't be after Date2: '${date2}'.`;
