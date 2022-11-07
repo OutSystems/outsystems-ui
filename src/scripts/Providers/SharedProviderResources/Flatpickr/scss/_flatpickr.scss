@@ -8,6 +8,10 @@
 	box-shadow: var(--shadow-none);
 	width: 320px;
 
+	&.open {
+		z-index: var(--flatpickr-open-zindex);
+	}
+
 	&.arrowTop {
 		&:before,
 		&::after {

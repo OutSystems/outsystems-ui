@@ -13,7 +13,7 @@
 
 ///
 [data-popup-backdrop] {
-	z-index: 250;
+	z-index: var(--popup-zindex);
 }
 
 ///
