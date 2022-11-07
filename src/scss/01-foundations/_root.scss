@@ -87,11 +87,4 @@
 	--os-safe-area-right: env(safe-area-inset-right);
 	--os-safe-area-bottom: env(safe-area-inset-bottom);
 	--os-safe-area-left: env(safe-area-inset-left);
-
-	/**/
-	--bottomsheet-zindex: #{$bottomsheet-zindex};
-	--notification-zindex: #{$notification-zindex};
-	--popup-zindex: #{$popup-zindex};
-	--sidebar-zindex: #{$sidebar-zindex};
-	--flatpickr-open-zindex: #{$flatpickr-open-zindex};
 }

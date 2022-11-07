@@ -24,7 +24,7 @@
 	transition: transform 350ms var(--osui-bottom-sheet-transition-function);
 	transform: translateY(100%);
 	width: 100%;
-	z-index: var(--bottomsheet-zindex);
+	z-index: 300;
 
 	// Service Studio Preview
 	& {
