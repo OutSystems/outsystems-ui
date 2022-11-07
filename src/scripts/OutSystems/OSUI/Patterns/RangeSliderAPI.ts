@@ -65,6 +65,32 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	}
 
 	/**
+	 * Function that will set RangeSlider with given ID as disabled
+	 *
+	 * @export
+	 * @param {string} rangeSliderId
+	 */
+	export function Disable(rangeSliderId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
+
+			rangeSlider.disable();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.RangeSlider.FailDisable;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
 	 * Function that will dispose the instance of the given RangeSliderItem Id
 	 *
 	 * @export
@@ -87,6 +113,32 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
 			responseObj.code = ErrorCodes.RangeSlider.FailDispose;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
+	 * Function that will set RangeSlider with given ID as enabled
+	 *
+	 * @export
+	 * @param {string} rangeSliderId
+	 */
+	export function Enable(rangeSliderId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
+
+			rangeSlider.enable();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.RangeSlider.FailEnable;
 		}
 
 		return JSON.stringify(responseObj);

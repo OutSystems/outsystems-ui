@@ -9,6 +9,8 @@ namespace OSFramework.Patterns.RangeSlider {
 		}
 
 		// Commom methods that all RangeSliders must implement
+		public abstract disable(): void;
+		public abstract enable(): void;
 		public abstract setRangeIntervalChangeOnDragEnd(): void;
 	}
 }
