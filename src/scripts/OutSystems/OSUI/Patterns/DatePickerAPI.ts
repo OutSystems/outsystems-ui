@@ -35,7 +35,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * Function used to Resets the selected dates (if any) and clears the input from a Given Id datepicker
 	 *
 	 * @param {string} datePickerId ID of the DatePickerItem that will be initialized.
-	 * @return {*}  {OSFramework.Patterns.DatePicker.IDatePicker}
+	 * @return {*} Response Object as a JSON String
 	 */
 	export function Clear(datePickerId: string): string {
 		const responseObj = {
@@ -61,7 +61,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * Function used to Close the Datepicker with the Given Id
 	 *
 	 * @param {string} datePickerId ID of the DatePickerItem that will be initialized.
-	 * @return {*}  {OSFramework.Patterns.DatePicker.IDatePicker}
+	 * @return {*} Response Object as a JSON String
 	 */
 	export function Close(datePickerId: string): string {
 		const responseObj = {
@@ -91,7 +91,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @param {string} configs Configurations for the Pattern in JSON format.
 	 * @param {string} mode Set which calendar type should be created (SingleDate, RangeDate).
 	 * @param {string} provider Set which provider should be used to create the calendar instance.
-	 * @return {*}  {OSFramework.Patterns.DatePicker.IDatePicker}
+	 * @return {*} (OSFramework.Patterns.DatePicker.IDatePicker) - Instance created of the new DatePicker
 	 */
 	export function Create(
 		datePickerId: string,
@@ -120,7 +120,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 *
 	 * @export
 	 * @param {string} datePickerId
-	 * @return {*}  {string}
+	 * @return {*} Response Object as a JSON String
 	 */
 	export function ToggleNativeBehavior(datePickerId: string, IsNative: boolean): string {
 		const responseObj = {
@@ -146,6 +146,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 *
 	 * @export
 	 * @param {string} datePickerId
+	 * @return {*} Response Object as a JSON String
 	 */
 	export function Dispose(datePickerId: string): string {
 		const responseObj = {
@@ -173,7 +174,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * Fucntion that will return the Map with all the DatePicker instances at the page
 	 *
 	 * @export
-	 * @return {*}  Array<string>
+	 * @return {*}  Array containing all the Ids of the DatePickers existing in the current screen.
 	 */
 	export function GetAllDatePickerItemsMap(): Array<string> {
 		return OSFramework.Helper.MapOperation.ExportKeys(_datePickerItemsMap);
@@ -184,7 +185,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 *
 	 * @export
 	 * @param {string} datePickerId ID of the DatePicker that will be looked for.
-	 * @return {*}  {OSFramework.Patterns.DatePicker.IDatePicker;}
+	 * @return {*}  (OSFramework.Patterns.DatePicker.IDatePicker) - Instance of the given DatePicker Id.
 	 */
 	export function GetDatePickerItemById(datePickerId: string): OSFramework.Patterns.DatePicker.IDatePicker {
 		return OSFramework.Helper.MapOperation.FindInMap(
@@ -199,7 +200,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 *
 	 * @export
 	 * @param {string} datePickerId ID of the DatePickerItem that will be initialized.
-	 * @return {*}  {OSFramework.Patterns.DatePicker.IDatePicker}
+	 * @return {*} (OSFramework.Patterns.DatePicker.IDatePicker) - Instance of the given DatePicker Id.
 	 */
 	export function Initialize(datePickerId: string): OSFramework.Patterns.DatePicker.IDatePicker {
 		const _datePickerItem = GetDatePickerItemById(datePickerId);
@@ -213,7 +214,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * Function used to Open the Datepicker with the Given Id
 	 *
 	 * @param {string} datePickerId ID of the DatePickerItem that will be initialized.
-	 * @return {*}  {OSFramework.Patterns.DatePicker.IDatePicker}
+	 * @return {*} Response Object as a JSON String
 	 */
 	export function Open(datePickerId: string): string {
 		const responseObj = {
@@ -242,6 +243,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @param {string} datePickerId
 	 * @param {string} eventName
 	 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback
+	 * @return {*} Response Object as a JSON String
 	 */
 	export function RegisterCallback(
 		datePickerId: string,
@@ -272,6 +274,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 *
 	 * @export
 	 * @param {string} datePickerId
+	 * @return {*} Response Object as a JSON String
 	 */
 	export function Redraw(datePickerId: string): string {
 		const responseObj = {
@@ -298,7 +301,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 *
 	 * @param datePickerId
 	 * @param isoCode ISO Code language that will be assigned
-	 * @returns
+	 * @return {*} Response Object as a JSON String
 	 */
 	export function SetLanguage(datePickerId: string, isoCode: string): string {
 		const responseObj = {
@@ -334,6 +337,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @param {string} datePickerId
 	 * @param {string} date1 The value for the date1
 	 * @param {string} date2 The value for the date2
+	 * @return {*} Response Object as a JSON String
 	 */
 	export function UpdateInitialDate(datePickerId: string, date1: string, date2?: string): string {
 		const responseObj = {
@@ -376,7 +380,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @export
 	 * @param {string} datePickerId
 	 * @param {string} disableDays
-	 * @return {*}  {string}
+	 * @return {*} Response Object as a JSON String
 	 */
 	export function DisableDays(datePickerId: string, disableDays: string[]): string {
 		const responseObj = {
@@ -404,7 +408,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @export
 	 * @param {string} datePickerId
 	 * @param {string} disableWeekDays
-	 * @return {*}  {string}
+	 * @return {*} Response Object as a JSON String
 	 */
 	export function DisableWeekDays(datePickerId: string, disableWeekDays: number[]): string {
 		const responseObj = {
@@ -432,7 +436,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @export
 	 * @param {string} datePickerId
 	 * @param {DatePickerProviderConfigs} providerConfigs
-	 * @return {*}  {string}
+	 * @return {*} Response Object as a JSON String
 	 */
 	export function SetProviderConfigs(datePickerId: string, providerConfigs: DatePickerProviderConfigs): string {
 		const responseObj = {
@@ -461,7 +465,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @param {string} datePickerId
 	 * @param {string} eventName
 	 * @param {OSFramework.GlobalCallbacks.Generic} callback
-	 * @return {*}  {string}
+	 * @return {*} Response Object as a JSON String
 	 */
 	export function SetProviderEvent(
 		datePickerId: string,
@@ -496,7 +500,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @export
 	 * @param {string} datePickerId
 	 * @param {string} eventId
-	 * @return {*}  {string}
+	 * @return {*} Response Object as a JSON String
 	 */
 	export function UnsetProviderEvent(datePickerId: string, eventId: string): string {
 		const responseObj = {
@@ -523,7 +527,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @export
 	 * @param {string} datePickerId
 	 * @param {boolean} IsEditable
-	 * @return {*}  {string}
+	 * @return {*} Response Object as a JSON String
 	 */
 	export function SetEditableInput(datePickerId: string, IsEditable: boolean): string {
 		const responseObj = {

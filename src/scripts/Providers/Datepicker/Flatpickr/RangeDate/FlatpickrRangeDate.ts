@@ -39,27 +39,20 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 				OSFramework.Helper.Dates.IsMinorThan(this.configs.InitialStartDate, this.configs.InitialEndDate) ===
 					false
 			) {
-				/* Since they given StartDate is greater than given EndDate...
-				Let's mimicked the same behaviour flatpickr use at the selection moment on this cases.
-					- If the first selected date is greater than the second selected date, flatpickr will assume
-				the startDate the minor one! */
-
-				// Store the given dates in order to swapp them
-				const newInitialStartDate = this.configs.InitialEndDate;
-				const newInitialEndDate = this.configs.InitialStartDate;
-
-				// Rest values to trigger the redraw
-				this.configs.InitialStartDate = newInitialStartDate;
-				this.configs.InitialEndDate = newInitialEndDate;
-
-				// Give a warning console message in order to alert developers about this change!
-				console.warn(
-					`Given StartDate:'${this.configs.InitialStartDate}' is greater than given EndDate:'${this.configs.InitialEndDate}'. Take in consideration that they have been swapped.`
+				// Give a error console message in order to alert developers about this unexpected given dates!
+				console.error(
+					`Given StartDate:'${this.provider.formatDate(
+						this.configs.InitialStartDate,
+						this.configs.ServerDateFormat
+					)}' can not be greater than given EndDate:'${this.provider.formatDate(
+						this.configs.InitialEndDate,
+						this.configs.ServerDateFormat
+					)}'.`
 				);
+			} else {
+				// Trigger the redraw!
+				this.prepareToAndRedraw();
 			}
-
-			// Trigger the redraw!
-			this.prepareToAndRedraw();
 		}
 
 		/**
@@ -183,7 +176,15 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 					// Trigger the onDateSelectedEvent method that will be responsible for setting the input value and trigger the selected event that will after trigger the redraw!
 					this.onDateSelectedEvent([startDate, endDate]);
 				} else {
-					console.error(`StartDate '${startDate}' can't be after EndDate '${endDate}'`);
+					console.error(
+						`Given StartDate:'${this.provider.formatDate(
+							this.configs.InitialStartDate,
+							this.configs.ServerDateFormat
+						)}' can not be greater than given EndDate:'${this.provider.formatDate(
+							this.configs.InitialEndDate,
+							this.configs.ServerDateFormat
+						)}'.`
+					);
 				}
 			}
 		}
