@@ -9,7 +9,20 @@
 	width: 320px;
 
 	&.open {
-		z-index: var(--flatpickr-open-zindex);
+		z-index: 99;
+
+		&.inside-bottom-sheet {
+			z-index: $bottom-sheet-zindex + 1;
+		}
+		&.inside-notification {
+			z-index: $notification-zindex + 1;
+		}
+		&.inside-popup {
+			z-index: $popup-zindex + 1;
+		}
+		&.inside-sidebar {
+			z-index: $sidebar-zindex + 1;
+		}
 	}
 
 	&.arrowTop {

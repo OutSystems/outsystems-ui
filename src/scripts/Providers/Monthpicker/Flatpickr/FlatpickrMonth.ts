@@ -11,6 +11,8 @@ namespace Providers.MonthPicker.Flatpickr {
 		private _flatpickrOpts: FlatpickrOptions;
 		// Flatpickr onInitialize event
 		private _onInitializeCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
+		// Validation of ZIndex position common behavior
+		private _zindexCommonBehavior: SharedProviderResources.Flatpickr.UpdateZindex;
 		// Store the flatpickr input html element that will be added by library
 		protected _flatpickrInputElem: HTMLInputElement;
 		// Store pattern input HTML element reference
@@ -101,6 +103,9 @@ namespace Providers.MonthPicker.Flatpickr {
 
 				// set the onBodyScroll update calendar position behaviour!
 				this._bodyScrollCommonBehaviour = new SharedProviderResources.Flatpickr.UpdatePositionOnScroll(this);
+
+				// set the zindex update position behaviour!
+				this._zindexCommonBehavior = new SharedProviderResources.Flatpickr.UpdateZindex(this);
 			}
 
 			this.createdInstance();
