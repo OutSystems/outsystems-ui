@@ -55,6 +55,10 @@
 			}
 		}
 	}
+
+	&.inline {
+		display: inline-block;
+	}
 }
 
 // Flatpickr - Top info wrapper container

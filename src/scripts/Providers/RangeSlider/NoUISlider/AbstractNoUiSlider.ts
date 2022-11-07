@@ -30,8 +30,8 @@ namespace Providers.RangeSlider.NoUISlider {
 		}
 
 		// Method to togghe the disabled attribute
-		private _setIsDisabled(): void {
-			if (this.configs.IsDisabled) {
+		private _setIsDisabled(isDisabled: boolean): void {
+			if (isDisabled) {
 				OSFramework.Helper.Dom.Disable(this._rangeSliderProviderElem);
 			} else {
 				OSFramework.Helper.Dom.Enable(this._rangeSliderProviderElem);
@@ -159,7 +159,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		protected setInitialStates(): void {
 			this._setSize();
 
-			this._setIsDisabled();
+			this._setIsDisabled(this.configs.IsDisabled);
 		}
 
 		/**
@@ -215,7 +215,7 @@ namespace Providers.RangeSlider.NoUISlider {
 						this.redraw();
 						break;
 					case OSFramework.Patterns.RangeSlider.Enum.Properties.IsDisabled:
-						this._setIsDisabled();
+						this._setIsDisabled(this.configs.IsDisabled);
 
 						break;
 					case OSFramework.Patterns.RangeSlider.Enum.Properties.TickMarksInterval:
@@ -239,6 +239,15 @@ namespace Providers.RangeSlider.NoUISlider {
 		}
 
 		/**
+		 * Method to set the RangeSlider instance to disabled
+		 *
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
+		 */
+		public disable(): void {
+			this._setIsDisabled(true);
+		}
+
+		/**
 		 * Method to remove and destroy RangeSlider instance
 		 *
 		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
@@ -252,6 +261,15 @@ namespace Providers.RangeSlider.NoUISlider {
 			}
 
 			super.dispose();
+		}
+
+		/**
+		 * Method to set the RangeSlider instance to enabled
+		 *
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
+		 */
+		public enable(): void {
+			this._setIsDisabled(false);
 		}
 
 		/**

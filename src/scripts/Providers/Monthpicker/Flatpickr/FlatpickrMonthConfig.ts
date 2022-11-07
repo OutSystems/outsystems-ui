@@ -17,6 +17,9 @@ namespace Providers.MonthPicker.Flatpickr {
 		// Store configs set using extensibility
 		protected _providerExtendedOptions: FlatpickrOptions;
 
+		// Stores the ability to allow inputs to be editable or not
+		public AllowInput = false;
+
 		// Stores the ability to disable the mobile flatpickr behavior. False is the default provider option
 		public DisableMobile = true;
 
@@ -128,7 +131,7 @@ namespace Providers.MonthPicker.Flatpickr {
 
 			this._providerOptions = {
 				altInput: true,
-				allowInput: true,
+				allowInput: this.AllowInput,
 				dateFormat: this.ServerDateFormat,
 				defaultDate: this._getDateFromMonthYear(this.InitialMonth),
 				disableMobile: this.DisableMobile,
