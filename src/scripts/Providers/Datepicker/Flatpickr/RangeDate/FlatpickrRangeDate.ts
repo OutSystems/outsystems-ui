@@ -32,7 +32,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 
 		// Method used by the ChangeProperties method in order to update InitialStart and/or InitialEnd Dates
 		private _updateInitialStartAndEndDates(): void {
-			// Check if the given StartDate is minor of Given EndDate
+			// Check if the given StartDate is minor of Given EndDate in order to prevent redraw on this case!
 			if (
 				this.configs.InitialStartDate !== undefined &&
 				this.configs.InitialEndDate !== undefined &&
