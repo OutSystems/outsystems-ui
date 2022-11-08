@@ -221,6 +221,12 @@ namespace Providers.Datepicker.Flatpickr {
 				OSFramework.Helper.A11Y.AriaLabel(this._flatpickrInputElem, ariaLabelValue);
 				// Set the aria-describedby attribute in order to give more context about how to navigate into calendar using keyboard
 				OSFramework.Helper.A11Y.AriaDescribedBy(this._flatpickrInputElem, this._a11yInfoContainerElem.id);
+				// Check if lang is not EN (default one)
+				if (this.configs.Lang !== OSFramework.Constants.Language.short) {
+					// Update A11yContainer info based on the given language
+					this._a11yInfoContainerElem.innerHTML =
+						Datepicker.Flatpickr.l10ns.A11yContainerInfo[this.configs.Lang].htmlTex;
+				}
 			}
 		}
 

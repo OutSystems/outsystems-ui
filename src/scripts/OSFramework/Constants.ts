@@ -100,6 +100,12 @@ namespace OSFramework.Constants {
 		'December',
 	];
 
+	/* Store the default app lang */
+	export const Language = {
+		code: 'en-US',
+		short: 'en',
+	};
+
 	/* cssClass to be added to elements that must visible yet hidded for accessibility purposes */
 	export const AccessibilityHideElementClass = 'wcag-hide-text';
 
