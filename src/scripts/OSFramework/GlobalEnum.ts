@@ -91,6 +91,7 @@ namespace OSFramework.GlobalEnum {
 		D = 'D',
 		d = 'd',
 		DD = 'DD',
+		DDD = 'DDD',
 		M = 'M',
 		m = 'm',
 		MM = 'MM',

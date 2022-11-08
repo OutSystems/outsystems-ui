@@ -88,30 +88,48 @@ namespace Providers.Datepicker.Flatpickr {
 			for (const format of _dateFormat) {
 				switch (format) {
 					// Map Year
-					case 'YYYY':
-						this.DateFormat = this.DateFormat.replace('YYYY', 'Y');
+					case OSFramework.GlobalEnum.DateFormat.YYYY:
+						this.DateFormat = this.DateFormat.replace(
+							OSFramework.GlobalEnum.DateFormat.YYYY,
+							OSFramework.GlobalEnum.DateFormat.Y
+						);
 						break;
 
-					case 'YY':
-						this.DateFormat = this.DateFormat.replace('YY', 'y');
+					case OSFramework.GlobalEnum.DateFormat.YY:
+						this.DateFormat = this.DateFormat.replace(
+							OSFramework.GlobalEnum.DateFormat.YY,
+							OSFramework.GlobalEnum.DateFormat.y
+						);
 						break;
 
 					// Map Month
-					case 'MMM':
-						this.DateFormat = this.DateFormat.replace('MMM', 'M');
+					case OSFramework.GlobalEnum.DateFormat.MMM:
+						this.DateFormat = this.DateFormat.replace(
+							OSFramework.GlobalEnum.DateFormat.MMM,
+							OSFramework.GlobalEnum.DateFormat.M
+						);
 						break;
 
-					case 'MM':
-						this.DateFormat = this.DateFormat.replace('MM', 'm');
+					case OSFramework.GlobalEnum.DateFormat.MM:
+						this.DateFormat = this.DateFormat.replace(
+							OSFramework.GlobalEnum.DateFormat.MM,
+							OSFramework.GlobalEnum.DateFormat.m
+						);
 						break;
 
 					// Map Day
-					case 'DDD':
-						this.DateFormat = this.DateFormat.replace('DDD', 'D');
+					case OSFramework.GlobalEnum.DateFormat.DDD:
+						this.DateFormat = this.DateFormat.replace(
+							OSFramework.GlobalEnum.DateFormat.DDD,
+							OSFramework.GlobalEnum.DateFormat.D
+						);
 						break;
 
-					case 'DD':
-						this.DateFormat = this.DateFormat.replace('DD', 'd');
+					case OSFramework.GlobalEnum.DateFormat.DD:
+						this.DateFormat = this.DateFormat.replace(
+							OSFramework.GlobalEnum.DateFormat.DD,
+							OSFramework.GlobalEnum.DateFormat.d
+						);
 						break;
 				}
 			}
@@ -215,7 +233,12 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @memberof Providers.DatePicker.Flatpickr.AbstractFlatpickrConfig
 		 */
 		public get ServerDateFormat(): string {
-			return OSFramework.Helper.Dates.ServerFormat.replace('YYYY', 'Y').replace('MM', 'm').replace('DD', 'd');
+			return OSFramework.Helper.Dates.ServerFormat.replace(
+				OSFramework.GlobalEnum.DateFormat.YYYY,
+				OSFramework.GlobalEnum.DateFormat.Y
+			)
+				.replace(OSFramework.GlobalEnum.DateFormat.MM, OSFramework.GlobalEnum.DateFormat.m)
+				.replace(OSFramework.GlobalEnum.DateFormat.DD, OSFramework.GlobalEnum.DateFormat.d);
 		}
 
 		/**

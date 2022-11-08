@@ -91,7 +91,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 		}
 
 		/**
-		 * Trigger the jumToDate to now
+		 * Trigger the jumpToDate to now
 		 *
 		 * @protected
 		 * @memberof Providers.DatePicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate
