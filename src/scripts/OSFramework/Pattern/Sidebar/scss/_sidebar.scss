@@ -18,7 +18,7 @@
 	transition: all 130ms ease-in;
 	width: var(--sidebar-width);
 	will-change: transform;
-	z-index: 140;
+	z-index: $sidebar-zindex;
 
 	&:not(.osui-sidebar--is-open):not(.no-transition) {
 		opacity: 0;
