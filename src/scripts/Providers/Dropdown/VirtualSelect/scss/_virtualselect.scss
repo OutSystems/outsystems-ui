@@ -25,6 +25,25 @@
 			}
 		}
 	}
+
+	.vscomp-clear-icon {
+		&::after,
+		&::before {
+			background-color: var(--color-neutral-7);
+			width: 2.5px; // Width added to make the same UI as the search box
+		}
+	}
+
+	.vscomp-clear-button:hover {
+		background-color: var(--color-neutral-7);
+
+		.vscomp-clear-icon {
+			&::after,
+			&::before {
+				background-color: var(--color-neutral-3);
+			}
+		}
+	}
 }
 
 // Wrapper container
