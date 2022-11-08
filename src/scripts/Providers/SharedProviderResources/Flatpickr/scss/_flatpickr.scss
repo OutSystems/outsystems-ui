@@ -8,6 +8,23 @@
 	box-shadow: var(--shadow-none);
 	width: 320px;
 
+	&.open {
+		z-index: 99;
+
+		&.inside-bottom-sheet {
+			z-index: $bottom-sheet-zindex;
+		}
+		&.inside-notification {
+			z-index: $notification-zindex;
+		}
+		&.inside-popup {
+			z-index: $popup-zindex;
+		}
+		&.inside-sidebar {
+			z-index: $sidebar-zindex;
+		}
+	}
+
 	&.arrowTop {
 		&:before,
 		&::after {

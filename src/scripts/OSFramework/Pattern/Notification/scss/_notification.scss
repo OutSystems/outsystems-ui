@@ -20,7 +20,7 @@
 	transition: transform 300ms ease-out, opacity 300ms ease-out;
 	user-select: none;
 	width: var(--notification-width);
-	z-index: 300;
+	z-index: $notification-zindex;
 
 	// Service Studio Preview
 	& {

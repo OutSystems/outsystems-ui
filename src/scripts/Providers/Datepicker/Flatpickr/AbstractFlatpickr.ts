@@ -10,6 +10,8 @@ namespace Providers.Datepicker.Flatpickr {
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
 		// Flatpickr onInitialize event
 		private _onInitializeCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
+		// Validation of ZIndex position common behavior
+		private _zindexCommonBehavior: SharedProviderResources.Flatpickr.UpdateZindex;
 		// Store pattern input HTML element reference
 		protected _datePickerPlatformInputElem: HTMLInputElement;
 		// Store the flatpickr input html element that will be added by library
@@ -130,6 +132,9 @@ namespace Providers.Datepicker.Flatpickr {
 					this._bodyScrollCommonBehaviour = new SharedProviderResources.Flatpickr.UpdatePositionOnScroll(
 						this
 					);
+
+					// set the zindex update position behaviour!
+					this._zindexCommonBehavior = new SharedProviderResources.Flatpickr.UpdateZindex(this);
 				}
 			}
 
