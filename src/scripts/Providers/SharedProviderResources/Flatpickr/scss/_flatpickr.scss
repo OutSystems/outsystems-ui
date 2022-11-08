@@ -12,16 +12,16 @@
 		z-index: 99;
 
 		&.inside-bottom-sheet {
-			z-index: $bottom-sheet-zindex + 1;
+			z-index: $bottom-sheet-zindex;
 		}
 		&.inside-notification {
-			z-index: $notification-zindex + 1;
+			z-index: $notification-zindex;
 		}
 		&.inside-popup {
-			z-index: $popup-zindex + 1;
+			z-index: $popup-zindex;
 		}
 		&.inside-sidebar {
-			z-index: $sidebar-zindex + 1;
+			z-index: $sidebar-zindex;
 		}
 	}
 
