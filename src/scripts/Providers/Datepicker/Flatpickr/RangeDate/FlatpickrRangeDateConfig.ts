@@ -36,7 +36,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 			if (
 				this.InitialEndDate !== undefined &&
 				this.InitialStartDate !== undefined &&
-				OSFramework.Helper.Dates.Compare(this.InitialStartDate, this.InitialEndDate) === false
+				OSFramework.Helper.Dates.IsMinorThan(this.InitialStartDate, this.InitialEndDate) === false
 			) {
 				throw new Error(`StartDate '${this.InitialStartDate}' can't be after EndDate '${this.InitialEndDate}'`);
 			}

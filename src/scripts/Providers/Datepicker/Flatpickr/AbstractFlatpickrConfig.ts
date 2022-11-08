@@ -38,9 +38,6 @@ namespace Providers.Datepicker.Flatpickr {
 		// Set the OnChange Event that will be defined in the specific context for each Flatpickr mode
 		public OnChange: OSFramework.GlobalCallbacks.Generic;
 
-		// Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr
-		public ServerDateFormat: string;
-
 		constructor(config: JSON) {
 			super(config);
 
@@ -85,43 +82,54 @@ namespace Providers.Datepicker.Flatpickr {
 			return _locale;
 		}
 
-		// Method used to check the serverDateFormat and map it into the Flatpickr expected format
-		private _checkServerDateFormat(): void {
-			this.ServerDateFormat = OSFramework.Helper.Dates.ServerFormat.replace('YYYY', 'Y')
-				.replace('MM', 'm')
-				.replace('DD', 'd');
-		}
-
 		// Method used to mapping DateFormat style and map it into Flatpickr expected one
 		private _mapProviderDateFormat(): string {
 			const _dateFormat = this.DateFormat.replace(/[^a-zA-Z]/g, ' ').split(' ');
 			for (const format of _dateFormat) {
 				switch (format) {
 					// Map Year
-					case 'YYYY':
-						this.DateFormat = this.DateFormat.replace('YYYY', 'Y');
+					case OSFramework.GlobalEnum.DateFormat.YYYY:
+						this.DateFormat = this.DateFormat.replace(
+							OSFramework.GlobalEnum.DateFormat.YYYY,
+							OSFramework.GlobalEnum.DateFormat.Y
+						);
 						break;
 
-					case 'YY':
-						this.DateFormat = this.DateFormat.replace('YY', 'y');
+					case OSFramework.GlobalEnum.DateFormat.YY:
+						this.DateFormat = this.DateFormat.replace(
+							OSFramework.GlobalEnum.DateFormat.YY,
+							OSFramework.GlobalEnum.DateFormat.y
+						);
 						break;
 
 					// Map Month
-					case 'MMM':
-						this.DateFormat = this.DateFormat.replace('MMM', 'M');
+					case OSFramework.GlobalEnum.DateFormat.MMM:
+						this.DateFormat = this.DateFormat.replace(
+							OSFramework.GlobalEnum.DateFormat.MMM,
+							OSFramework.GlobalEnum.DateFormat.M
+						);
 						break;
 
-					case 'MM':
-						this.DateFormat = this.DateFormat.replace('MM', 'm');
+					case OSFramework.GlobalEnum.DateFormat.MM:
+						this.DateFormat = this.DateFormat.replace(
+							OSFramework.GlobalEnum.DateFormat.MM,
+							OSFramework.GlobalEnum.DateFormat.m
+						);
 						break;
 
 					// Map Day
-					case 'DDD':
-						this.DateFormat = this.DateFormat.replace('DDD', 'D');
+					case OSFramework.GlobalEnum.DateFormat.DDD:
+						this.DateFormat = this.DateFormat.replace(
+							OSFramework.GlobalEnum.DateFormat.DDD,
+							OSFramework.GlobalEnum.DateFormat.D
+						);
 						break;
 
-					case 'DD':
-						this.DateFormat = this.DateFormat.replace('DD', 'd');
+					case OSFramework.GlobalEnum.DateFormat.DD:
+						this.DateFormat = this.DateFormat.replace(
+							OSFramework.GlobalEnum.DateFormat.DD,
+							OSFramework.GlobalEnum.DateFormat.d
+						);
 						break;
 				}
 			}
@@ -155,23 +163,26 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @memberof Providers.DatePicker.Flatpickr.AbstractFlatpickrConfig
 		 */
 		public getProviderConfig(): FlatpickrOptions {
-			// Check the given server date format config
-			this._checkServerDateFormat();
-
 			// Check the disabled days to be applied on datepicker
 			this._setDisable();
 
+			// Set Provider configs values!
+			// - (*) Config added by us to the provider repository!
 			this._providerOptions = {
 				altFormat: this._checkAltFormat(),
 				altInput: true,
 				allowInput: this.AllowInput,
 				disable: this.Disable.length === 0 ? undefined : this.Disable,
 				disableMobile: this.DisableMobile,
-				dateFormat: this.ServerDateFormat + ' H:i:s', // do not change 'H:i:s' since it's absoluted needed due to platform conversions, it's needed even when dateformat does not contain time, otherwise platform will not deal well with the dates conversion!
+				dateFormat:
+					this.TimeFormat !== OSFramework.Patterns.DatePicker.Enum.TimeFormatMode.Disable
+						? this.ServerDateFormat + ' H:i:S' // do not change 'H:i:S' since it's absoluted needed due to platform conversions!
+						: this.ServerDateFormat,
 				maxDate: OSFramework.Helper.Dates.IsNull(this.MaxDate) ? undefined : this.MaxDate,
 				minDate: OSFramework.Helper.Dates.IsNull(this.MinDate) ? undefined : this.MinDate,
 				onChange: this.OnChange,
 				time_24hr: this.TimeFormat === OSFramework.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat,
+				updateInputVal: false, // (*)
 				weekNumbers: this.ShowWeekNumbers,
 			} as FlatpickrOptions;
 
@@ -212,6 +223,22 @@ namespace Providers.Datepicker.Flatpickr {
 		public set Lang(value: string) {
 			// substring is needed to avoid passing values like "en-EN" since we must use only "en"
 			this._lang = value.substring(0, 2);
+		}
+
+		/**
+		 * Get the ServerDate Format
+		 *
+		 * @readonly
+		 * @type {string}
+		 * @memberof Providers.DatePicker.Flatpickr.AbstractFlatpickrConfig
+		 */
+		public get ServerDateFormat(): string {
+			return OSFramework.Helper.Dates.ServerFormat.replace(
+				OSFramework.GlobalEnum.DateFormat.YYYY,
+				OSFramework.GlobalEnum.DateFormat.Y
+			)
+				.replace(OSFramework.GlobalEnum.DateFormat.MM, OSFramework.GlobalEnum.DateFormat.m)
+				.replace(OSFramework.GlobalEnum.DateFormat.DD, OSFramework.GlobalEnum.DateFormat.d);
 		}
 
 		/**

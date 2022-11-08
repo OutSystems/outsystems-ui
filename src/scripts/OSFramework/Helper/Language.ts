@@ -36,7 +36,11 @@ namespace OSFramework.Helper {
 		 * @param language The value returned by platform GetCurrentLocale() method
 		 */
 		public static Set(language: string): void {
-			Language._lang = language;
+			// Check if the given lang is not empty or has been already assigned
+			if (language !== '' && language !== Language._lang) {
+				Language._lang = language;
+				document.documentElement.lang = language;
+			}
 		}
 	}
 }

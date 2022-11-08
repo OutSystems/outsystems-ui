@@ -50,7 +50,7 @@ namespace Providers.MonthPicker.Flatpickr {
 			if (
 				OSFramework.Helper.Dom.Styles.ContainsClass(
 					this._flatpickrInputElem,
-					OSFramework.GlobalEnum.InputTypes.InputLarge
+					OSFramework.GlobalEnum.InputClassTypes.InputLarge
 				)
 			) {
 				OSFramework.Helper.Dom.Styles.AddClass(
@@ -60,7 +60,7 @@ namespace Providers.MonthPicker.Flatpickr {
 			} else if (
 				OSFramework.Helper.Dom.Styles.ContainsClass(
 					this._flatpickrInputElem,
-					OSFramework.GlobalEnum.InputTypes.InputSmall
+					OSFramework.GlobalEnum.InputClassTypes.InputSmall
 				)
 			) {
 				OSFramework.Helper.Dom.Styles.AddClass(
