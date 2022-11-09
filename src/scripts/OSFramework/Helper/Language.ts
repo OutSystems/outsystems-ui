@@ -4,7 +4,7 @@ namespace OSFramework.Helper {
 		/**
 		 * App Language
 		 */
-		private static _lang = 'en-US';
+		private static _lang = Constants.Language.code;
 
 		/**
 		 * Getter that allows to obtain the App Language based on SetLocale Action from platform!
