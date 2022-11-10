@@ -184,8 +184,18 @@
 
 ///
 .android {
-	[data-status-bar-height] .app-menu-content {
-		padding-top: var(--status-bar-height);
+	&[data-status-bar-height] {
+		&.portrait {
+			.app-menu-content {
+				padding-top: var(--status-bar-height);
+			}
+		}
+
+		&.landscape {
+			.app-menu-content {
+				padding-left: var(--status-bar-height);
+			}
+		}
 	}
 }
 
