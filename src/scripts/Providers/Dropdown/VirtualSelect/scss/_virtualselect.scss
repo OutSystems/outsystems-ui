@@ -12,18 +12,62 @@
 
 // VirtualSelect overriding styles
 // Parent wrapper container
-.vscomp-ele {
-	max-width: initial;
+.vscomp {
+	&-ele {
+		max-width: initial;
 
-	&.pop-comp-active {
-		.vscomp-toggle-button {
-			border-color: var(--color-primary);
+		&.pop-comp-active {
+			.vscomp-toggle-button {
+				border-color: var(--color-primary);
 
-			&:after {
-				color: var(--color-primary);
-				transform: rotate(180deg) translateY(50%);
+				&:after {
+					color: var(--color-primary);
+					transform: rotate(180deg) translateY(50%);
+				}
 			}
 		}
+		.vscomp {
+			&-clear-icon {
+				&::after,
+				&::before {
+					background-color: inherit;
+					left: 50%;
+					transform: translateX(-50%);
+				}
+			}
+		}
+	}
+
+	&-ele .vscomp-clear-icon:after,
+	&-search-clear:after {
+		align-items: center;
+		color: var(--color-neutral-7);
+		content: '\f00d';
+		display: flex;
+		font: normal normal normal 14px/1 FontAwesome;
+		height: 100%;
+		justify-content: center;
+		position: absolute;
+		text-indent: 0;
+		top: 0;
+		width: 24px;
+	}
+
+	&-clear-button:hover {
+		background-color: var(--color-neutral-7);
+
+		.vscomp-clear-icon {
+			&::after,
+			&::before {
+				background-color: transparent;
+				color: var(--color-neutral-3);
+			}
+		}
+	}
+
+	&-search-clear:hover:after {
+		background-color: transparent;
+		color: var(--color-neutral-3);
 	}
 }
 
@@ -380,6 +424,11 @@
 		text-align: center;
 		width: 24px;
 
+		/* Hide text from provider div in order to keep consistency on styles */
+		text-indent: 100%;
+		white-space: nowrap;
+		overflow: hidden;
+
 		// Fix vertical alignemnt differences due to system fonts usage
 		.osx &,
 		.ios & {
@@ -388,7 +437,6 @@
 
 		&:hover {
 			background-color: var(--color-neutral-7);
-			color: var(--color-neutral-3);
 		}
 	}
 }
