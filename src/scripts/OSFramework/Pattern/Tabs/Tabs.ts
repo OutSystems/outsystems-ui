@@ -284,7 +284,8 @@ namespace OSFramework.Patterns.Tabs {
 				const newSize = isVertical ? activeElement.offsetHeight : activeElement.offsetWidth;
 
 				// translate pixel sized value to a scale value
-				const newScaleValue = newSize / currentSize;
+				// devicePixelRatio used here to account for browser or system zoom
+				const newScaleValue = (devicePixelRatio * (newSize / currentSize)) / Math.round(devicePixelRatio);
 
 				// Update the css variables, that will trigger a transform transition
 				function updateIndicatorUI() {
