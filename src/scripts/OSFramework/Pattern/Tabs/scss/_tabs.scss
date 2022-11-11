@@ -178,6 +178,7 @@
 
 		&__indicator {
 			background-color: var(--color-primary);
+			perspective: 1000px; // prevent rendering issues on webkit browsers, when inside overflow elements
 			position: absolute;
 			transition: transform 200ms linear;
 			transform-origin: 0 0;
