@@ -178,7 +178,6 @@
 
 		&__indicator {
 			background-color: var(--color-primary);
-			perspective: 1000px; // prevent rendering issues on webkit browsers, when inside overflow elements
 			position: absolute;
 			transition: transform 200ms linear;
 			transform-origin: 0 0;
@@ -326,6 +325,16 @@
 				box-shadow: 0 0 0 1px var(--color-focus-outer) inset;
 			}
 		}
+	}
+}
+
+// Browser specific rules
+.windows.chrome,
+.windows.edge,
+.osx.chrome,
+.osx.edge {
+	.osui-tabs__header__indicator {
+		perspective: 1000px; // prevent rendering issues on webkit browsers, when inside overflow elements
 	}
 }
 
