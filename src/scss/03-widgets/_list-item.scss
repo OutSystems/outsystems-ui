@@ -48,8 +48,10 @@
 ///
 .desktop {
 	.list {
-		.list-item:hover:not(.list-item-selected) {
-			background-color: var(--color-neutral-2);
+		.list-item:hover {
+			&:not(.list-item-disable-hover):not(.list-item-selected) {
+				background-color: var(--color-neutral-2);
+			}
 		}
 	}
 }
