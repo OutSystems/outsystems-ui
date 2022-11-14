@@ -6,8 +6,6 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	export function Dispose(): void {
 		// Remove the onOrientationChange Event
 		LayoutPrivate.OnOrientationChange.Unset();
-		// Remove the CloseDeprecatedSubmenu Event
-		LayoutPrivate.CloseDeprecatedSubmenu.Unset();
 	}
 
 	/**
