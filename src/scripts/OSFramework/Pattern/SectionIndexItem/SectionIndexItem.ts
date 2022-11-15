@@ -24,6 +24,8 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		private _headerIsFixed = true;
 		// Store the state
 		private _isActive = false;
+		// Store the mainContent reference - The one that will have the scroll
+		private _mainScrollContainerElement: HTMLElement;
 		// Store TargetElement HTML object
 		private _targetElement: HTMLElement = undefined;
 		// Store offset top/bottom from TargetElement HTML object
@@ -41,7 +43,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 			// Set target element offset info!
 			this._setTargetOffsetInfo();
 			// Get the vertical scroll position value
-			const scrollYPosition = Behaviors.ScrollVerticalPosition();
+			const scrollYPosition = Behaviors.ScrollVerticalPosition(this._mainScrollContainerElement);
 			// Threshold value to set element as Active
 			const thresholdVal = 40;
 			// Store the offSetValue to be checked
@@ -185,13 +187,28 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		}
 
 		/**
-		 * This method has no implementation on this pattern context!
+		 * Method to set the HTMLElements used
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		protected setHtmlElements(): void {
-			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+			// Check if overlay is enabled => If StatusBar is enabled and if is iOS device
+			/* With the introduction of the ios-bounce the overflow container change from the .active-screen into .content */
+			if (
+				Helper.Dom.Attribute.Has(document.body, GlobalEnum.HTMLAttributes.StatusBar) &&
+				Helper.DeviceInfo.GetOperatingSystem() === GlobalEnum.MobileOS.IOS
+			) {
+				this._mainScrollContainerElement = Helper.Dom.ClassSelector(
+					document,
+					GlobalEnum.CssClassElements.Content
+				);
+			} else {
+				this._mainScrollContainerElement = Helper.Dom.ClassSelector(
+					document,
+					GlobalEnum.CssClassElements.ActiveScreen
+				);
+			}
 		}
 
 		/**
@@ -215,6 +232,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		protected unsetHtmlElements(): void {
+			this._mainScrollContainerElement = undefined;
 			this._targetElement = undefined;
 		}
 
@@ -235,6 +253,8 @@ namespace OSFramework.Patterns.SectionIndexItem {
 			this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Add);
 
 			this.setCallbacks();
+
+			this.setHtmlElements();
 
 			this._setUpEvents();
 
