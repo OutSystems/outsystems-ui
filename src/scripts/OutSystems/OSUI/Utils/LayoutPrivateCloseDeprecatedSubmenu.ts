@@ -25,17 +25,15 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 
 		// Method attach the event to close all open deprecated submenu items
 		private static _closeDeprecatedSubmenu(): void {
-			if (this._checkMenuLinks !== undefined) {
-				if (this._deprecatedSubmenuItems.length > 0) {
-					// Close all of them if contains the class open
-					this._deprecatedSubmenuItems.forEach((item) => {
-						if (item.classList.contains('open')) {
-							// This method is to trigger the platform global action of deprecated submenu
-							// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-							//@ts-expect-error
-							item.CloseMenu();
-						}
-					});
+			if (this._deprecatedSubmenuItems.length > 0) {
+				// Close all of them if contains the class open
+				for (const item of this._deprecatedSubmenuItems) {
+					if (item.classList.contains('open')) {
+						// This method is to trigger the platform global action of deprecated submenu
+						// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+						//@ts-expect-error
+						item.CloseMenu();
+					}
 				}
 			}
 		}
@@ -53,8 +51,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			if (
 				this._deprecatedSubmenuItems.length > 0 &&
 				OSFramework.Helper.DeviceInfo.IsDesktop &&
-				!OSUI.Utils.DeviceDetection.CheckIsLayoutSide() &&
-				this._checkMenuLinks
+				!OSUI.Utils.DeviceDetection.CheckIsLayoutSide()
 			) {
 				// Store the event to be added to element
 				this._closeMenuEvent = this._closeDeprecatedSubmenu.bind(this);
