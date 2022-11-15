@@ -136,6 +136,7 @@ namespace OSFramework.GlobalEnum {
 		Disabled = 'disabled',
 		Id = 'id',
 		Name = 'name',
+		StatusBar = 'data-status-bar-height',
 		Style = 'style',
 		type = 'type',
 	}

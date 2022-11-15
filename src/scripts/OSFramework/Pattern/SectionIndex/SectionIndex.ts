@@ -179,10 +179,19 @@ namespace OSFramework.Patterns.SectionIndex {
 		 * @memberof OSFramework.Patterns.SectionIndex.SectionIndex
 		 */
 		protected setHtmlElements(): void {
-			this._mainScrollContainerElement = Helper.Dom.ClassSelector(
-				document,
-				GlobalEnum.CssClassElements.ActiveScreen
-			);
+			// Check if overlay is enabled => If StatusBar is enabled!
+			/* With the introduction of the ios-bounce the overflow container change from the .active-screen into .content */
+			if (Helper.Dom.Attribute.Has(document.body, GlobalEnum.HTMLAttributes.StatusBar)) {
+				this._mainScrollContainerElement = Helper.Dom.ClassSelector(
+					document,
+					GlobalEnum.CssClassElements.Content
+				);
+			} else {
+				this._mainScrollContainerElement = Helper.Dom.ClassSelector(
+					document,
+					GlobalEnum.CssClassElements.ActiveScreen
+				);
+			}
 		}
 
 		/**
