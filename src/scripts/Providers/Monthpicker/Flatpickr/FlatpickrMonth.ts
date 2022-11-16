@@ -149,6 +149,7 @@ namespace Providers.MonthPicker.Flatpickr {
 			if (selectedMonthYear.length > 0) {
 				const _selectedDate = new Date(selectedMonthYear[0]);
 				const _selectedMonthIndex = _selectedDate.getMonth();
+
 				_selectedMonthYear.month = OSFramework.Constants.Months[_selectedMonthIndex];
 				// Provider works with index starting on 0 but we need to match with real month number, so we increment 1
 				_selectedMonthYear.monthOrder = _selectedMonthIndex + 1;
