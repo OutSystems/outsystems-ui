@@ -63,6 +63,17 @@
 }
 
 ///
+.ios[data-status-bar-height] {
+	.section-group {
+		&.is--sticky {
+			.section-title {
+				top: 0;
+			}
+		}
+	}
+}
+
+///
 .ios {
 	.layout-native {
 		.section-group {
