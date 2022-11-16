@@ -565,37 +565,51 @@ namespace OSFramework.Patterns.Tabs {
 
 		// Toggle TableHeaderItem disbaled status
 		private _setTabHeaderItemDisabledStatus(childHeaderId: string, isDisabled: boolean): void {
-			const TabHeaderItemElement = Helper.Dom.GetElementByUniqueId(childHeaderId);
-			const TabItemIndex = this.getChildIndex(childHeaderId);
-			const TabContentItemId = this.getChildByIndex(TabItemIndex, Enum.ChildTypes.TabsContentItem).widgetId;
-			const TabContentItemElement = Helper.Dom.GetElementById(TabContentItemId);
+			const _tabHeaderItemElement = Helper.Dom.GetElementByUniqueId(childHeaderId);
+			const _tabItemIndex = this.getChildIndex(childHeaderId);
+			const _tabContentItemId = this.getChildByIndex(
+				this._hasSingleContent ? 0 : _tabItemIndex,
+				Enum.ChildTypes.TabsContentItem
+			).widgetId;
+			const _tabContentItemElement = Helper.Dom.GetElementById(_tabContentItemId);
 
 			const isTabHeaderItemDisabled = Helper.Dom.Attribute.Get(
-				TabHeaderItemElement,
+				_tabHeaderItemElement,
 				GlobalEnum.HTMLAttributes.Disabled
 			);
 
 			if (isDisabled) {
-				Helper.Dom.Attribute.Set(TabHeaderItemElement, GlobalEnum.HTMLAttributes.Disabled, 'true');
-				// Let's hide TabContentItem, to prevent it appears when the tabs are swippable
-				Helper.Dom.Styles.SetStyleAttribute(
-					TabContentItemElement,
-					GlobalEnum.InlineStyle.Display,
-					GlobalEnum.InlineStyleValue.Display.none
-				);
+				let _allTabsDisabled = false;
+				Helper.Dom.Attribute.Set(_tabHeaderItemElement, GlobalEnum.HTMLAttributes.Disabled, 'true');
 
-				if (this._activeTabHeaderElement.selfElement === TabHeaderItemElement) {
+				if (this._hasSingleContent) {
+					// Check if all tabs items are now disable
+					_allTabsDisabled = this.getChildItems().every((tabHeaderItem) =>
+						tabHeaderItem.selfElement.getAttribute(GlobalEnum.HTMLAttributes.Disabled)
+					);
+				}
+
+				if (this._hasSingleContent === false || _allTabsDisabled) {
+					// Let's hide TabContentItem, to prevent it appears when the tabs are swippable or when single contentItem is used and all headerItems are disable
+					Helper.Dom.Styles.SetStyleAttribute(
+						_tabContentItemElement,
+						GlobalEnum.InlineStyle.Display,
+						GlobalEnum.InlineStyleValue.Display.none
+					);
+				}
+				if (this._activeTabHeaderElement.selfElement === _tabHeaderItemElement) {
 					Helper.Dom.Attribute.Set(this._tabsIndicatorElement, GlobalEnum.HTMLAttributes.Disabled, true);
 				}
 			} else if (!isDisabled && isTabHeaderItemDisabled) {
-				Helper.Dom.Attribute.Remove(TabHeaderItemElement, GlobalEnum.HTMLAttributes.Disabled);
+				Helper.Dom.Attribute.Remove(_tabHeaderItemElement, GlobalEnum.HTMLAttributes.Disabled);
+
 				Helper.Dom.Styles.SetStyleAttribute(
-					TabContentItemElement,
+					_tabContentItemElement,
 					GlobalEnum.InlineStyle.Display,
 					GlobalEnum.InlineStyleValue.Display.block
 				);
 
-				if (this._activeTabHeaderElement.selfElement === TabHeaderItemElement) {
+				if (this._activeTabHeaderElement.selfElement === _tabHeaderItemElement) {
 					Helper.Dom.Attribute.Remove(this._tabsIndicatorElement, GlobalEnum.HTMLAttributes.Disabled);
 				}
 			}
