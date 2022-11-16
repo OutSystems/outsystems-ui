@@ -14,6 +14,14 @@
 		border-bottom: none;
 	}
 
+	&.list-item-no-click-effect {
+		.scale-animation {
+			// !important should be in use in order to grant the expected behaviour when this class is assigned!
+			background: transparent !important;
+			opacity: 0 !important;
+		}
+	}
+
 	.scale-animation {
 		animation: list-item-scale-animation 1500ms;
 		background-color: rgba(0, 0, 0, 0.1);
@@ -48,8 +56,10 @@
 ///
 .desktop {
 	.list {
-		.list-item:hover:not(.list-item-selected) {
-			background-color: var(--color-neutral-2);
+		.list-item:hover {
+			&:not(.list-item-no-hover):not(.list-item-selected) {
+				background-color: var(--color-neutral-2);
+			}
 		}
 	}
 }
