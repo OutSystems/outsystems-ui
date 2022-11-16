@@ -16,6 +16,7 @@ namespace OSFramework.GlobalEnum {
 		AsideExpandable = 'aside-expandable',
 		Container = 'screen-container',
 		Content = 'content',
+		DeprecatedSubmenu = 'submenu',
 		Footer = 'footer',
 		Header = 'header',
 		HeaderHideOnScroll = 'hide-header-on-scroll',
