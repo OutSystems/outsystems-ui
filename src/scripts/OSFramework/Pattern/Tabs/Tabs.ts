@@ -32,6 +32,8 @@ namespace OSFramework.Patterns.Tabs {
 		private _hasSingleContent: boolean;
 		// Store the number of headerItems to be used to set the css variable
 		private _headerItemsLength: number;
+		// Store if the current browser is chrome
+		private _isChrome: boolean;
 		// Store the onTabsChange platform callback
 		private _platformEventTabsOnChange: Callbacks.OSOnChangeEvent;
 		// Store the id of the requestAnimationFrame called to animate the indicator
@@ -49,6 +51,7 @@ namespace OSFramework.Patterns.Tabs {
 			// Check if running on native shell, to enable drag gestures
 			this._hasDragGestures =
 				Helper.DeviceInfo.IsNative && this.configs.TabsOrientation === GlobalEnum.Orientation.Horizontal;
+			this._isChrome = Helper.DeviceInfo.GetBrowser() === 'chrome';
 		}
 
 		// Method that it's called whenever a new TabsContentItem is rendered
@@ -275,17 +278,18 @@ namespace OSFramework.Patterns.Tabs {
 					? -(this._tabsHeaderElement.offsetWidth - activeElement.offsetLeft - activeElement.offsetWidth)
 					: activeElement.offsetLeft;
 
-				// Check current indicator size
-				const currentSize = isVertical
-					? this._tabsIndicatorElement.offsetHeight
-					: this._tabsIndicatorElement.offsetWidth;
-
 				// Check current active item size
 				const newSize = isVertical ? activeElement.offsetHeight : activeElement.offsetWidth;
 
+				let pixelRatio = 1;
+
+				if (this._isChrome) {
+					// devicePixelRatio used here to account for browser or system zoom
+					pixelRatio = window.devicePixelRatio;
+				}
+
 				// translate pixel sized value to a scale value
-				// devicePixelRatio used here to account for browser or system zoom
-				const newScaleValue = (devicePixelRatio * (newSize / currentSize)) / Math.round(devicePixelRatio);
+				const newScaleValue = (pixelRatio * newSize) / Math.round(pixelRatio);
 
 				// Update the css variables, that will trigger a transform transition
 				function updateIndicatorUI() {

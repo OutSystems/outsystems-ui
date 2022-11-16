@@ -7,6 +7,7 @@
 .osui-tabs {
 	--header-item-width: fit-content(30%);
 	--header-item-alignment: auto;
+	--tabs-indicator-size: 1px;
 	display: grid;
 	height: var(--tabs-height);
 	overflow: hidden;
@@ -66,7 +67,7 @@
 			}
 
 			& > .osui-tabs__header__indicator {
-				min-height: 1px;
+				min-height: var(--tabs-indicator-size);
 				position: absolute;
 				top: 0;
 				transform: translateY(var(--tabs-indicator-transform)) translateX(0) translateZ(0)
@@ -103,7 +104,7 @@
 
 		.osui-tabs__header__indicator {
 			bottom: 0;
-			min-width: 1px;
+			min-width: var(--tabs-indicator-size);
 			height: 2px;
 			transform: translateX(var(--tabs-indicator-transform)) translateY(0) translateZ(0)
 				scaleX(var(--tabs-indicator-scale));
@@ -328,13 +329,16 @@
 	}
 }
 
-// Browser specific rules
+// Issue on accordion in webkit
 .windows.chrome,
 .windows.edge,
 .osx.chrome,
 .osx.edge {
-	.osui-tabs__header__indicator {
-		perspective: 1000px; // prevent rendering issues on webkit browsers, when inside overflow elements
+	.osui-accordion,
+	.section-expandable {
+		.osui-tabs__header__indicator {
+			perspective: 1000px; // prevent rendering issues on webkit browsers, when inside overflow elements
+		}
 	}
 }
 
