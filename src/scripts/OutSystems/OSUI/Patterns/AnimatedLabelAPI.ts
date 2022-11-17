@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
-	const _animatedLabelsMap = new Map<string, OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel>(); //animatedlabel.uniqueId -> AnimatedLabel obj
+	const _animatedLabelsMap = new Map<string, OSFramework.Patterns.AnimatedLabel.IAnimatedLabel>(); //animatedlabel.uniqueId -> AnimatedLabel obj
 
 	/**
 	 * Function that will change the property of a given animatedLabel.
@@ -10,10 +10,24 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	 * @param {string} propertyName Property name that will be updated
 	 * @param {unknown} propertyValue Value that will be set to the property
 	 */
-	export function ChangeProperty(animatedLabelId: string, propertyName: string, propertyValue: unknown): void {
-		const animatedlabel = GetAnimatedLabelById(animatedLabelId);
+	export function ChangeProperty(animatedLabelId: string, propertyName: string, propertyValue: unknown): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		animatedlabel.changeProperty(propertyName, propertyValue);
+		try {
+			const animatedlabel = GetAnimatedLabelById(animatedLabelId);
+
+			animatedlabel.changeProperty(propertyName, propertyValue);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.AnimatedLabel.FailChangeProperty;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -22,19 +36,19 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	 * @export
 	 * @param {string} animatedLabelId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel}
+	 * @return {*}  {OSFramework.Patterns.AnimatedLabel.IAnimatedLabel}
 	 */
 	export function Create(
 		animatedLabelId: string,
 		configs: string
-	): OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel {
+	): OSFramework.Patterns.AnimatedLabel.IAnimatedLabel {
 		if (_animatedLabelsMap.has(animatedLabelId)) {
 			throw new Error(
-				`There is already an ${OSUIFramework.GlobalEnum.PatternsNames.AnimatedLabel} registered under id: ${animatedLabelId}`
+				`There is already an ${OSFramework.GlobalEnum.PatternName.AnimatedLabel} registered under id: ${animatedLabelId}`
 			);
 		}
 
-		const _newAnimatedLabel = new OSUIFramework.Patterns.AnimatedLabel.AnimatedLabel(
+		const _newAnimatedLabel = new OSFramework.Patterns.AnimatedLabel.AnimatedLabel(
 			animatedLabelId,
 			JSON.parse(configs)
 		);
@@ -50,22 +64,36 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	 * @export
 	 * @param {string} animatedLabelId
 	 */
-	export function Dispose(animatedLabelId: string): void {
-		const animatedlabel = GetAnimatedLabelById(animatedLabelId);
+	export function Dispose(animatedLabelId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		animatedlabel.dispose();
+		try {
+			const animatedlabel = GetAnimatedLabelById(animatedLabelId);
 
-		_animatedLabelsMap.delete(animatedlabel.uniqueId);
+			animatedlabel.dispose();
+
+			_animatedLabelsMap.delete(animatedlabel.uniqueId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.AnimatedLabel.FailDispose;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
 	 * Fucntion that will return the Map with all the Animatedlabels instances at the page
 	 *
 	 * @export
-	 * @return {*}  {Map<string, OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel>}
+	 * @return {*}  {Map<string, OSFramework.Patterns.AnimatedLabel.IAnimatedLabel>}
 	 */
 	export function GetAllAnimatedLabels(): Array<string> {
-		return OSUIFramework.Helper.MapOperation.ExportKeys(_animatedLabelsMap);
+		return OSFramework.Helper.MapOperation.ExportKeys(_animatedLabelsMap);
 	}
 
 	/**
@@ -73,14 +101,14 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	 *
 	 * @export
 	 * @param {string} animatedLabelId ID of the AnimatedLabel that will be looked for.
-	 * @return {*}  {OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel;}
+	 * @return {*}  {OSFramework.Patterns.AnimatedLabel.IAnimatedLabel;}
 	 */
-	export function GetAnimatedLabelById(animatedLabelId: string): OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel {
-		return OSUIFramework.Helper.MapOperation.FindInMap(
-			OSUIFramework.GlobalEnum.PatternsNames.AnimatedLabel,
+	export function GetAnimatedLabelById(animatedLabelId: string): OSFramework.Patterns.AnimatedLabel.IAnimatedLabel {
+		return OSFramework.Helper.MapOperation.FindInMap(
+			OSFramework.GlobalEnum.PatternName.AnimatedLabel,
 			animatedLabelId,
 			_animatedLabelsMap
-		) as OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel;
+		) as OSFramework.Patterns.AnimatedLabel.IAnimatedLabel;
 	}
 
 	/**
@@ -88,9 +116,9 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	 *
 	 * @export
 	 * @param {string} animatedLabelId ID of the Animatedlabel that will be initialized.
-	 * @return {*}  {OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel}
+	 * @return {*}  {OSFramework.Patterns.AnimatedLabel.IAnimatedLabel}
 	 */
-	export function Initialize(animatedLabelId: string): OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel {
+	export function Initialize(animatedLabelId: string): OSFramework.Patterns.AnimatedLabel.IAnimatedLabel {
 		const animatedlabel = GetAnimatedLabelById(animatedLabelId);
 
 		animatedlabel.build();
@@ -103,13 +131,25 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	 *
 	 * @export
 	 * @param {string} animatedLabelId ID of the Animatedlabel that will be updated.
-	 * @return {*}  {OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel}
+	 * @return {*}  {OSFramework.Patterns.AnimatedLabel.IAnimatedLabel}
 	 */
-	export function UpdateOnRender(animatedLabelId: string): OSUIFramework.Patterns.AnimatedLabel.IAnimatedLabel {
-		const animatedlabel = GetAnimatedLabelById(animatedLabelId);
+	export function UpdateOnRender(animatedLabelId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		animatedlabel.updateOnRender();
+		try {
+			const animatedlabel = GetAnimatedLabelById(animatedLabelId);
 
-		return animatedlabel;
+			animatedlabel.updateOnRender();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.AnimatedLabel.FailUpdate;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 }

@@ -10,25 +10,25 @@ namespace Providers.Dropdown.VirtualSelect.Search {
 		 * Get the selected values options that will be used to pass into platform as a JSON string
 		 *
 		 * @protected
-		 * @return {*}  {string}
+		 * @return {*}  {DropDownOption[]}
 		 * @memberof OSUIVirtualSelectSearch
 		 */
-		protected getSelectedOptionsStructure(): string {
+		protected getSelectedOptionsStructure(): DropDownOption[] {
 			// Store the options selected
 			let optionsSelected = [];
 
 			// Check if it's multiple type
 			if (this.configs.AllowMultipleSelection) {
-				optionsSelected = this._virtualselectMethods.getSelectedOptions(); // It returns an array of selected options
+				optionsSelected = this._virtualselectConfigs.getSelectedOptions(); // It returns an array of selected options
 			} else {
 				// It's single option type
 				// Check if there are any selected option
-				if (this._virtualselectMethods.getSelectedOptions()) {
-					optionsSelected.push(this._virtualselectMethods.getSelectedOptions()); // It returns an single object of selected option
+				if (this._virtualselectConfigs.getSelectedOptions()) {
+					optionsSelected.push(this._virtualselectConfigs.getSelectedOptions()); // It returns an single object of selected option
 				}
 			}
 
-			return optionsSelected !== undefined && optionsSelected.length > 0 ? JSON.stringify(optionsSelected) : '';
+			return optionsSelected;
 		}
 
 		/**
@@ -42,7 +42,7 @@ namespace Providers.Dropdown.VirtualSelect.Search {
 			this._virtualselectOpts = this.configs.getProviderConfig();
 
 			// Instance will be Created!
-			super.createProviderInstance();
+			this.createProviderInstance();
 		}
 
 		/**

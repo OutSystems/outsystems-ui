@@ -5,9 +5,8 @@ namespace Providers.Datepicker.Flatpickr.Enum {
 		TodayBtn = 'flatpickr-today-button',
 	}
 
-	// Flatpickr Today button Enum
-	export enum TodayButton {
-		AriaLabelText = 'click to jump into today date',
-		Text = 'Today',
+	// Disable Date Types
+	export enum DisableDate {
+		Weekdays = 'Weekdays',
 	}
 }

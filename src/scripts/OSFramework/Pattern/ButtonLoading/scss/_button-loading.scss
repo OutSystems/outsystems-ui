@@ -1,0 +1,113 @@
+/*! Patterns - Utilities - Button Loading */
+////
+/// @group Patterns-Button_Loading
+/// Patterns - Utilities - Button Loading
+
+///
+.osui-btn-loading {
+	// Service Studio Preview
+	& {
+		-servicestudio-display: inline-flex;
+	}
+
+	&-show-spinner {
+		&.osui-btn-loading--is-loading {
+			.btn {
+				font-size: 0;
+
+				.osui-btn-loading__spinner-animation {
+					margin-right: var(--space-none);
+				}
+
+				& > span[data-expression] {
+					display: none;
+				}
+			}
+		}
+	}
+
+	&.osui-btn-loading--is-loading {
+		&,
+		& * {
+			pointer-events: none;
+		}
+
+		.btn {
+			.osui-btn-loading__spinner-animation {
+				display: inline-block;
+			}
+		}
+	}
+
+	.btn {
+		display: inline-flex;
+		transition: none;
+		vertical-align: middle;
+		white-space: nowrap;
+
+		// ServiceStudio Preview
+		& {
+			-servicestudio-display: inline-flex;
+		}
+
+		& > * {
+			display: inline-block;
+			font-size: var(--font-size-s);
+			vertical-align: middle;
+		}
+
+		.osui-btn-loading__spinner-animation {
+			display: none;
+			animation: loadingSpinner 850ms cubic-bezier(0.7, 1.05, 0.78, 0.78) infinite;
+			border: var(--border-size-m) solid currentColor;
+			border-radius: var(--border-radius-circle);
+			border-top: var(--border-size-m) solid transparent;
+			height: 16px;
+			margin-right: var(--space-s);
+			width: 16px;
+			will-change: transform;
+
+			// ServiceStudio Preview
+			& {
+				-servicestudio-margin-right: var(--space-s);
+			}
+		}
+
+		& > span[data-expression] {
+			white-space: nowrap;
+		}
+	}
+}
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	.osui-btn-loading {
+		&-show-spinner {
+			&.osui-btn-loading--is-loading {
+				.btn {
+					.osui-btn-loading__spinner-animation {
+						margin-left: var(--space-none);
+					}
+				}
+			}
+		}
+
+		&--is-loading {
+			.btn {
+				.osui-btn-loading__spinner-animation {
+					margin-left: var(--space-s);
+					margin-right: var(--space-none);
+				}
+			}
+		}
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+///
+.phone {
+	.osui-btn-loading {
+		width: 100%;
+	}
+}

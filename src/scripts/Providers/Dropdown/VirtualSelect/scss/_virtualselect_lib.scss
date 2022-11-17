@@ -1,5 +1,5 @@
 /*!
- * Virtual Select v1.0.27
+ * Virtual Select v1.0.31
  * https://sa-si-dev.github.io/virtual-select
  * Licensed under MIT (https://github.com/sa-si-dev/virtual-select/blob/master/LICENSE)
  */
@@ -15,25 +15,25 @@
 	}
 }
 
-body.vscomp-popup-active {
-	overflow: hidden;
+.vscomp-popup-active {
+	overflow: hidden !important;
 }
 
 .vscomp-ele {
 	display: inline-block;
-	width: 100%;
 	max-width: 250px;
+	width: 100%;
 }
 
 .vscomp-wrapper {
+	color: #333;
 	display: inline-flex;
-	position: relative;
-	width: 100%;
+	flex-wrap: wrap;
 	font-family: sans-serif;
 	font-size: 14px;
-	color: #333;
+	position: relative;
 	text-align: left;
-	flex-wrap: wrap;
+	width: 100%;
 }
 
 .vscomp-wrapper *,
@@ -47,68 +47,68 @@ body.vscomp-popup-active {
 }
 
 .vscomp-dropbox-wrapper {
+	left: 0;
 	position: absolute;
 	top: 0;
-	left: 0;
 }
 
 .vscomp-toggle-button {
-	display: flex;
-	position: relative;
 	align-items: center;
-	width: 100%;
-	padding: 7px 30px 7px 10px;
-	border: 1px solid #ddd;
 	background-color: #fff;
+	border: 1px solid #ddd;
 	cursor: pointer;
+	display: flex;
+	padding: 7px 30px 7px 10px;
+	position: relative;
+	width: 100%;
 }
 
 .vscomp-value {
-	max-width: 100%;
 	height: 20px;
 	line-height: 20px;
+	max-width: 100%;
 	overflow: hidden;
-	white-space: nowrap;
 	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .vscomp-arrow {
-	position: absolute;
-	display: flex;
-	top: 0;
-	right: 0;
-	width: 30px;
-	height: 100%;
 	align-items: center;
+	display: flex;
+	height: 100%;
 	justify-content: center;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 30px;
 }
 
 .vscomp-arrow::after {
-	content: '';
 	transform: rotate(45deg);
-	border: 1px solid transparent;
-	border-right-color: #111;
+	border: 1px solid rgba(0, 0, 0, 0);
 	border-bottom-color: #111;
-	width: 8px;
+	border-right-color: #111;
+	content: '';
 	height: 8px;
 	margin-top: -6px;
+	width: 8px;
 }
 
 .vscomp-clear-icon {
+	height: 12px;
 	position: relative;
 	width: 12px;
-	height: 12px;
 }
 
 .vscomp-clear-icon::before,
 .vscomp-clear-icon::after {
+	background-color: #999;
 	content: '';
+	height: 12px;
+	left: 5px;
 	position: absolute;
 	top: 0;
-	left: 5px;
 	width: 2px;
-	height: 12px;
-	background-color: #999;
 }
 
 .vscomp-clear-icon::before {
@@ -125,16 +125,16 @@ body.vscomp-popup-active {
 }
 
 .vscomp-clear-button {
-	position: absolute;
-	display: none;
-	top: 50%;
-	right: 30px;
-	width: 24px;
-	height: 24px;
-	justify-content: center;
 	align-items: center;
 	border-radius: 50%;
+	display: none;
+	height: 24px;
+	justify-content: center;
 	margin-top: -12px;
+	position: absolute;
+	right: 30px;
+	top: 50%;
+	width: 24px;
 }
 
 .vscomp-clear-button:hover {
@@ -147,18 +147,18 @@ body.vscomp-popup-active {
 }
 
 .vscomp-dropbox-close-button {
-	display: none;
 	align-items: center;
-	justify-content: center;
-	position: absolute;
-	left: 50%;
-	margin-left: -20px;
-	bottom: -48px;
-	width: 40px;
-	height: 40px;
 	background-color: #fff;
 	border-radius: 50%;
+	bottom: -48px;
 	cursor: pointer;
+	display: none;
+	height: 40px;
+	justify-content: center;
+	left: 50%;
+	margin-left: -20px;
+	position: absolute;
+	width: 40px;
 }
 
 .vscomp-value-tag.more-value-count {
@@ -171,33 +171,32 @@ body.vscomp-popup-active {
 }
 
 .vscomp-dropbox {
-	width: 100%;
 	background-color: #fff;
+	width: 100%;
 }
 
 .vscomp-options-container {
-	position: relative;
 	max-height: 210px;
 	overflow: auto;
+	position: relative;
 }
 
 .vscomp-options-bottom-freezer {
-	position: absolute;
 	bottom: 0;
-	left: 0;
-	right: 0;
 	height: 2px;
+	left: 0;
+	position: absolute;
+	right: 0;
 }
 
 .vscomp-option {
-	display: flex;
-	flex-wrap: wrap;
-	position: relative;
-	align-items: center;
-	padding: 0 15px;
-	height: 40px;
 	align-items: center;
 	cursor: pointer;
+	display: flex;
+	flex-wrap: wrap;
+	height: 40px;
+	padding: 0 15px;
+	position: relative;
 }
 
 .vscomp-option.selected {
@@ -209,17 +208,17 @@ body.vscomp-popup-active {
 }
 
 .vscomp-option.disabled {
-	opacity: 0.5;
 	cursor: default;
+	opacity: 0.5;
 }
 
 .vscomp-option.group-title .vscomp-option-text {
-	opacity: 0.6;
 	cursor: default;
+	opacity: 0.6;
 }
 
 .vscomp-option.group-title.selected {
-	background-color: transparent;
+	background-color: rgba(0, 0, 0, 0);
 }
 
 .vscomp-option.group-option {
@@ -227,75 +226,75 @@ body.vscomp-popup-active {
 }
 
 .vscomp-new-option-icon {
-	position: absolute;
-	top: 0;
-	right: 0;
-	width: 30px;
 	height: 30px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 30px;
 }
 
 .vscomp-new-option-icon::before {
+	border: 15px solid #512da8;
+	border-bottom-color: rgba(0, 0, 0, 0);
+	border-left-color: rgba(0, 0, 0, 0);
 	content: '';
 	position: absolute;
-	top: 0;
 	right: 0;
-	border: 15px solid #512da8;
-	border-left-color: transparent;
-	border-bottom-color: transparent;
+	top: 0;
 }
 
 .vscomp-new-option-icon::after {
+	align-items: center;
+	color: #fff;
 	content: '+';
 	display: flex;
-	align-items: center;
+	font-size: 18px;
+	height: 15px;
 	justify-content: center;
 	position: absolute;
-	top: 0;
 	right: 1px;
-	font-size: 18px;
-	color: #fff;
+	top: 0;
 	width: 15px;
-	height: 15px;
 }
 
 .vscomp-option-text {
+	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	overflow: hidden;
-	width: 100%;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+	width: 100%;
 }
 
 .vscomp-option-description {
+	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	overflow: hidden;
-	width: 100%;
-	line-height: 15px;
 	color: #666;
 	font-size: 13px;
+	line-height: 15px;
+	width: 100%;
 }
 
 .vscomp-search-container {
-	display: flex;
 	align-items: center;
-	position: relative;
+	border-bottom: 1px solid #ddd;
+	display: flex;
 	height: 40px;
 	padding: 0 5px 0 15px;
-	border-bottom: 1px solid #ddd;
+	position: relative;
 }
 
 .vscomp-search-input {
-	border: none;
-	width: calc(100% - 30px);
+	background-color: rgba(0, 0, 0, 0);
+	border: 0;
+	color: inherit;
+	font-size: 15px;
 	height: 38px;
 	padding: 10px 0;
-	font-size: 15px;
-	background-color: transparent;
-	color: inherit;
+	width: calc(100% - 30px);
 }
 
 .vscomp-search-input:focus {
@@ -303,19 +302,19 @@ body.vscomp-popup-active {
 }
 
 .vscomp-search-clear {
-	display: flex;
 	align-items: center;
-	justify-content: center;
-	width: 30px;
-	height: 30px;
-	font-size: 25px;
 	color: #999;
 	cursor: pointer;
+	display: flex;
+	font-size: 25px;
+	height: 30px;
+	justify-content: center;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
 	visibility: hidden;
+	width: 30px;
 }
 
 .vscomp-search-clear:hover {
@@ -324,29 +323,29 @@ body.vscomp-popup-active {
 
 .vscomp-no-options,
 .vscomp-no-search-results {
+	align-items: center;
 	display: none;
 	justify-content: center;
-	align-items: center;
 	padding: 20px 10px;
 }
 
 .vscomp-options-loader {
 	display: none;
-	text-align: center;
 	padding: 20px 0;
+	text-align: center;
 }
 
 .vscomp-options-loader::before {
+	-webkit-animation: vscomp-animation-spin 0.8s infinite linear;
+	animation: vscomp-animation-spin 0.8s infinite linear;
+	background-color: #fff;
+	border-radius: 50%;
+	box-shadow: -4px -5px 3px -3px rgba(0, 0, 0, 0.3);
 	content: '';
 	display: inline-block;
 	height: 40px;
-	width: 40px;
 	opacity: 0.7;
-	border-radius: 50%;
-	background-color: #fff;
-	box-shadow: -4px -5px 3px -3px rgba(0, 0, 0, 0.3);
-	-webkit-animation: vscomp-animation-spin 0.8s infinite linear;
-	animation: vscomp-animation-spin 0.8s infinite linear;
+	width: 40px;
 }
 
 .vscomp-ele[disabled] {
@@ -358,56 +357,56 @@ body.vscomp-popup-active {
 }
 
 .vscomp-ele[disabled] .vscomp-wrapper {
-	pointer-events: none;
 	opacity: 0.7;
+	pointer-events: none;
 }
 
 .vscomp-wrapper .checkbox-icon {
 	display: inline-flex;
-	position: relative;
-	width: 15px;
 	height: 15px;
 	margin-right: 10px;
+	position: relative;
+	width: 15px;
 }
 
 .vscomp-wrapper .checkbox-icon::after {
+	transition-duration: 0.2s;
+	border: 2px solid #888;
 	content: '';
 	display: inline-block;
-	width: 100%;
 	height: 100%;
-	border: 2px solid #888;
-	transition-duration: 0.2s;
+	width: 100%;
 }
 
 .vscomp-wrapper .checkbox-icon.checked::after {
-	width: 50%;
-	border-color: #512da8;
-	border-left-color: transparent;
-	border-top-color: transparent;
 	transform: rotate(45deg) translate(1px, -4px);
+	border-color: #512da8;
+	border-left-color: rgba(0, 0, 0, 0);
+	border-top-color: rgba(0, 0, 0, 0);
+	width: 50%;
 }
 
 .vscomp-wrapper.show-as-popup .vscomp-dropbox-container {
-	display: flex;
-	justify-content: center;
 	align-items: center;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	height: 100vh;
+	justify-content: center;
+	left: 0;
+	opacity: 1;
+	overflow: auto;
+	padding: 0 10px;
 	position: fixed;
 	top: 0;
-	left: 0;
 	width: 100vw;
-	height: 100vh;
-	overflow: auto;
-	opacity: 1;
-	background-color: rgba(0, 0, 0, 0.5);
-	padding: 0 10px;
 }
 
 .vscomp-wrapper.show-as-popup .vscomp-dropbox {
-	position: relative;
-	width: 80%;
+	margin-top: -24px;
 	max-height: calc(80% - 48px);
 	max-width: 500px;
-	margin-top: -24px;
+	position: relative;
+	width: 80%;
 }
 
 .vscomp-wrapper.show-as-popup .vscomp-dropbox-close-button {
@@ -423,9 +422,9 @@ body.vscomp-popup-active {
 }
 
 .vscomp-wrapper.has-select-all .vscomp-toggle-all-button {
-	display: flex;
 	align-items: center;
 	cursor: pointer;
+	display: flex;
 }
 
 .vscomp-wrapper.has-select-all .vscomp-search-input,
@@ -454,11 +453,11 @@ body.vscomp-popup-active {
 }
 
 .vscomp-wrapper.multiple .vscomp-option.selected .checkbox-icon::after {
-	width: 50%;
-	border-color: #512da8;
-	border-left-color: transparent;
-	border-top-color: transparent;
 	transform: rotate(45deg) translate(1px, -4px);
+	border-color: #512da8;
+	border-left-color: rgba(0, 0, 0, 0);
+	border-top-color: rgba(0, 0, 0, 0);
+	width: 50%;
 }
 
 .vscomp-wrapper.focused .vscomp-toggle-button,
@@ -524,8 +523,8 @@ body.vscomp-popup-active {
 
 .vscomp-wrapper.keep-always-open .vscomp-dropbox {
 	transition-duration: 0s;
-	box-shadow: none;
 	border: 1px solid #ddd;
+	box-shadow: none;
 }
 
 .vscomp-wrapper.keep-always-open.focused,
@@ -556,23 +555,23 @@ body.vscomp-popup-active {
 	height: auto;
 	min-height: 28px;
 	overflow: auto;
-	white-space: normal;
 	text-overflow: unset;
+	white-space: normal;
 }
 
 .vscomp-wrapper.show-value-as-tags .vscomp-value-tag {
+	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	overflow: hidden;
-	display: inline-flex;
 	align-items: center;
-	max-width: 100%;
 	border: 1px solid #ddd;
-	margin: 0 4px 4px 0;
-	padding: 2px 3px 2px 8px;
+	border-radius: 20px;
+	display: inline-flex;
 	font-size: 12px;
 	line-height: 16px;
-	border-radius: 20px;
+	margin: 0 4px 4px 0;
+	max-width: 100%;
+	padding: 2px 3px 2px 8px;
 }
 
 .vscomp-wrapper.show-value-as-tags .vscomp-value-tag.more-value-count {
@@ -580,18 +579,18 @@ body.vscomp-popup-active {
 }
 
 .vscomp-wrapper.show-value-as-tags .vscomp-value-tag-content {
+	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	overflow: hidden;
 	width: calc(100% - 20px);
 }
 
 .vscomp-wrapper.show-value-as-tags .vscomp-value-tag-clear-button {
-	display: flex;
 	align-items: center;
+	display: flex;
+	height: 20px;
 	justify-content: center;
 	width: 20px;
-	height: 20px;
 }
 
 .vscomp-wrapper.show-value-as-tags .vscomp-value-tag-clear-button .vscomp-clear-icon {
@@ -633,18 +632,18 @@ body.vscomp-popup-active {
 }
 
 .vscomp-wrapper.text-direction-rtl .vscomp-arrow {
-	right: auto;
 	left: 0;
+	right: auto;
 }
 
 .vscomp-wrapper.text-direction-rtl .vscomp-clear-button {
-	right: auto !important;
 	left: 30px;
+	right: auto !important;
 }
 
 .vscomp-wrapper.text-direction-rtl .checkbox-icon {
-	margin-right: 0;
 	margin-left: 10px;
+	margin-right: 0;
 }
 
 .vscomp-wrapper.text-direction-rtl .checkbox-icon.checked::after {
@@ -668,18 +667,18 @@ body.vscomp-popup-active {
 }
 
 .vscomp-wrapper.text-direction-rtl .vscomp-new-option-icon {
-	right: auto;
 	left: 0;
+	right: auto;
 }
 
 .vscomp-wrapper.text-direction-rtl .vscomp-new-option-icon::before {
 	border-left-color: #512da8;
-	border-right-color: transparent;
+	border-right-color: rgba(0, 0, 0, 0);
 }
 
 .vscomp-wrapper.text-direction-rtl .vscomp-new-option-icon::after {
-	right: auto;
 	left: 1px;
+	right: auto;
 }
 
 .vscomp-wrapper.text-direction-rtl.multiple .vscomp-option.selected .checkbox-icon::after {
@@ -716,7 +715,7 @@ body.vscomp-popup-active {
 }
 
 /*!
- * Popover v1.0.7
+ * Popover v1.0.10
  * https://sa-si-dev.github.io/popover
  * Licensed under MIT (https://github.com/sa-si-dev/popover/blob/master/LICENSE)
  */
@@ -762,29 +761,29 @@ body.vscomp-popup-active {
 	z-index: 2;
 }
 
-.pop-comp-wrapper.position-bottom .pop-comp-arrow {
+.pop-comp-wrapper.position-bottom > .pop-comp-arrow {
 	margin-left: -8px;
 	left: 0;
 	top: -15px;
 }
 
-.pop-comp-wrapper.position-bottom .pop-comp-arrow::before {
+.pop-comp-wrapper.position-bottom > .pop-comp-arrow::before {
 	box-shadow: 0px 0px 2px 0 rgba(0, 0, 0, 0.14);
 }
 
-.pop-comp-wrapper.position-top .pop-comp-arrow {
+.pop-comp-wrapper.position-top > .pop-comp-arrow {
 	margin-left: -8px;
 	left: 0;
 	bottom: -15px;
 }
 
-.pop-comp-wrapper.position-right .pop-comp-arrow {
+.pop-comp-wrapper.position-right > .pop-comp-arrow {
 	margin-top: -8px;
 	top: 0;
 	left: -15px;
 }
 
-.pop-comp-wrapper.position-left .pop-comp-arrow {
+.pop-comp-wrapper.position-left > .pop-comp-arrow {
 	margin-top: -8px;
 	top: 0;
 	right: -15px;

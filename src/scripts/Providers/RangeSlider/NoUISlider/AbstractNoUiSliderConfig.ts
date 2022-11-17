@@ -1,5 +1,3 @@
-/// <reference path="./AbstractNoUiSlider.ts" />
-
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace Providers.RangeSlider.NoUiSlider {
 	/**
@@ -8,13 +6,16 @@ namespace Providers.RangeSlider.NoUiSlider {
 	 * @export
 	 * @abstract
 	 * @class AbstractNoUiSliderConfig
-	 * @extends {OSUIFramework.Patterns.RangeSlider
+	 * @extends {OSFramework.Patterns.RangeSlider
 	 * 		.AbstractRangeSliderConfig}
 	 */
-	export abstract class AbstractNoUiSliderConfig extends OSUIFramework.Patterns.RangeSlider
-		.AbstractRangeSliderConfig {
+	export abstract class AbstractNoUiSliderConfig extends OSFramework.Patterns.RangeSlider.AbstractRangeSliderConfig {
+		// Store the Provider Options
+		private _providerOptions: NoUiSliderOptions;
+		// Store configs set using extensibility
+		protected _providerExtendedOptions: NoUiSliderOptions;
 		// Store rangeslider mode is in use
-		public rangeSliderMode: OSUIFramework.Patterns.RangeSlider.Enum.Mode;
+		public rangeSliderMode: OSFramework.Patterns.RangeSlider.Enum.Mode;
 
 		/**
 		 * Method to set the common configs for the provider
@@ -24,24 +25,18 @@ namespace Providers.RangeSlider.NoUiSlider {
 		 * @memberof AbstractNoUiSliderConfig
 		 */
 		protected getCommonProviderConfig(): NoUiSliderOptions {
-			// eslint-disable-next-line prefer-const
-			let providerOptions = {
+			this._providerOptions = {
 				direction: OutSystems.OSUI.Utils.GetIsRTL()
-					? OSUIFramework.GlobalEnum.Direction.RTL
-					: OSUIFramework.GlobalEnum.Direction.LTR,
+					? OSFramework.GlobalEnum.Direction.RTL
+					: OSFramework.GlobalEnum.Direction.LTR,
 				step: this.Step,
 				orientation: this.Orientation,
-				pips: this.ShowTickMarks ? this.getPipsConfig() : false,
+				pips: this.ShowTickMarks ? this.getPipsConfig() : null,
 				range: this.getRangeConfig(),
 				tooltips: this.getTooltipFormat(),
 			};
 
-			//Cleanning undefined properties
-			Object.keys(providerOptions).forEach(
-				(key) => providerOptions[key] === undefined && delete providerOptions[key]
-			);
-
-			return providerOptions;
+			return this.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
 		}
 
 		/**
@@ -50,7 +45,7 @@ namespace Providers.RangeSlider.NoUiSlider {
 		 * @return {*}  {unknown}
 		 * @memberof AbstractNoUiSliderConfig
 		 */
-		public getPipsConfig(): unknown {
+		public getPipsConfig(): NoUiSliderPips {
 			let tickMarksValues = Math.floor(this.TickMarksInterval);
 
 			//To avoid performance issues
@@ -62,8 +57,8 @@ namespace Providers.RangeSlider.NoUiSlider {
 				console.warn(
 					'The interval between tick marks, when they exist, can not be smaller than one or a decimal number (library restraint). If you do not want TickMarks to show, set the ShowTickMarks parameter to false.'
 				);
-				this.TickMarksInterval = 1;
-				return;
+				this.ShowTickMarks = true;
+				return null;
 			}
 
 			// To avoid the creation of minor ticks, whatever the value
@@ -99,7 +94,7 @@ namespace Providers.RangeSlider.NoUiSlider {
 		 * @return {*}  {unknown}
 		 * @memberof AbstractNoUiSliderConfig
 		 */
-		public getRangeConfig(): unknown {
+		public getRangeConfig(): NoUiSliderRange {
 			return {
 				min: this.MinValue,
 				max: this.MaxValue === this.MinValue ? 100 : this.MaxValue,
@@ -112,17 +107,27 @@ namespace Providers.RangeSlider.NoUiSlider {
 		 * @return {*}  {string[]}
 		 * @memberof AbstractNoUiSliderConfig
 		 */
-		public getTooltipFormat(): string[] {
+		public getTooltipFormat(): NoUISliderTooltip {
 			const tooltipValue = this.ShowFloatingLabel ? window.wNumb({ decimals: 0 }) : false;
 			let tooltipsFormat;
 
-			if (this.rangeSliderMode === OSUIFramework.Patterns.RangeSlider.Enum.Mode.Interval) {
+			if (this.rangeSliderMode === OSFramework.Patterns.RangeSlider.Enum.Mode.Interval) {
 				tooltipsFormat = [tooltipValue, tooltipValue];
 			} else {
 				tooltipsFormat = [tooltipValue];
 			}
 
 			return tooltipsFormat;
+		}
+
+		/**
+		 * Method to validate and save the external provider configs
+		 *
+		 * @param {NoUiSliderOptions} newConfigs
+		 * @memberof AbstractNoUiSliderConfig
+		 */
+		public setExtensibilityConfigs(newConfigs: NoUiSliderOptions): void {
+			this._providerExtendedOptions = newConfigs;
 		}
 	}
 }

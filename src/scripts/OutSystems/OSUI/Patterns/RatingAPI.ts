@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.RatingAPI {
-	const _ratingsMap = new Map<string, OSUIFramework.Patterns.Rating.IRating>(); //rating.uniqueId -> Rating obj
+	const _ratingsMap = new Map<string, OSFramework.Patterns.Rating.IRating>(); //rating.uniqueId -> Rating obj
 
 	/**
 	 * Function that will change the property of a given rating.
@@ -11,9 +11,24 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-	export function ChangeProperty(ratingId: string, propertyName: string, propertyValue: any): void {
-		const rating = GetRatingById(ratingId);
-		rating.changeProperty(propertyName, propertyValue);
+	export function ChangeProperty(ratingId: string, propertyName: string, propertyValue: any): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const rating = GetRatingById(ratingId);
+
+			rating.changeProperty(propertyName, propertyValue);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Rating.FailChangeProperty;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -22,16 +37,16 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 * @export
 	 * @param {string} ratingId ID of the Rating where the instance will be created.
 	 * @param {string} configs configurations for the Rating in JSON format.
-	 * @return {*}  {OSUIFramework.Patterns.IRating}
+	 * @return {*}  {OSFramework.Patterns.IRating}
 	 */
-	export function Create(ratingId: string, configs: string): OSUIFramework.Patterns.Rating.IRating {
+	export function Create(ratingId: string, configs: string): OSFramework.Patterns.Rating.IRating {
 		if (_ratingsMap.has(ratingId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.Rating} registered under id: ${ratingId}`
+				`There is already a ${OSFramework.GlobalEnum.PatternName.Rating} registered under id: ${ratingId}`
 			);
 		}
 
-		const _newRating = new OSUIFramework.Patterns.Rating.Rating(ratingId, JSON.parse(configs));
+		const _newRating = new OSFramework.Patterns.Rating.Rating(ratingId, JSON.parse(configs));
 		_ratingsMap.set(ratingId, _newRating);
 		return _newRating;
 	}
@@ -43,22 +58,36 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 * @param {string} ratingId
 	 * @return {*}  {*}
 	 */
-	export function Destroy(ratingId: string): void {
-		const rating = GetRatingById(ratingId);
+	export function Dispose(ratingId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		rating.dispose();
+		try {
+			const rating = GetRatingById(ratingId);
 
-		_ratingsMap.delete(ratingId);
+			rating.dispose();
+
+			_ratingsMap.delete(ratingId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Rating.FailDispose;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
 	 * Function that will return the Map with all the Rating instances at the page
 	 *
 	 * @export
-	 * @return {*}  {Map<string, OSUIFramework.Patterns.IRating>}
+	 * @return {*}  {Map<string, OSFramework.Patterns.IRating>}
 	 */
 	export function GetAllRatings(): Array<string> {
-		return OSUIFramework.Helper.MapOperation.ExportKeys(_ratingsMap);
+		return OSFramework.Helper.MapOperation.ExportKeys(_ratingsMap);
 	}
 
 	/**
@@ -66,14 +95,14 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 *
 	 * @export
 	 * @param {string} ratingId ID of the Rating that will be looked for.
-	 * @return {*}  {OSUIFramework.Patterns.IRating}
+	 * @return {*}  {OSFramework.Patterns.IRating}
 	 */
-	export function GetRatingById(ratingId: string): OSUIFramework.Patterns.Rating.IRating {
-		return OSUIFramework.Helper.MapOperation.FindInMap(
+	export function GetRatingById(ratingId: string): OSFramework.Patterns.Rating.IRating {
+		return OSFramework.Helper.MapOperation.FindInMap(
 			'Rating',
 			ratingId,
 			_ratingsMap
-		) as OSUIFramework.Patterns.Rating.IRating;
+		) as OSFramework.Patterns.Rating.IRating;
 	}
 
 	/**
@@ -81,9 +110,9 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 *
 	 * @export
 	 * @param {string} ratingId ID of the Rating that will be initialized.
-	 * @return {*}  {OSUIFramework.Patterns.IRating}
+	 * @return {*}  {OSFramework.Patterns.IRating}
 	 */
-	export function Initialize(ratingId: string): OSUIFramework.Patterns.Rating.IRating {
+	export function Initialize(ratingId: string): OSFramework.Patterns.Rating.IRating {
 		const rating = GetRatingById(ratingId);
 
 		rating.build();
@@ -98,9 +127,26 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 * @param {string} ratingId
 	 * @param {*} callback
 	 */
-	export function RegisterCallback(ratingId: string, callback: OSUIFramework.Callbacks.OSRatingSelectEvent): void {
-		const rating = GetRatingById(ratingId);
+	export function RegisterCallback(
+		ratingId: string,
+		callback: OSFramework.Patterns.Rating.Callbacks.OSOnSelectEvent
+	): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		rating.registerCallback(callback);
+		try {
+			const rating = GetRatingById(ratingId);
+
+			rating.registerCallback(callback);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Rating.FailRegisterCallback;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 }

@@ -180,7 +180,7 @@ function getDestFolder(templateType) {
             break;
         case 'framework':
             destSrc = destFolder === '' ? 
-                './src/scripts/OSUIFramework/Pattern/'+patternNamePC :
+                './src/scripts/OSFramework/Pattern/'+patternNamePC :
                 destFolder+'/Pattern/'+patternNamePC;
             break;
         case 'provider':

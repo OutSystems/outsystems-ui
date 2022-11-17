@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
-	const _buttonsLoadingMap = new Map<string, OSUIFramework.Patterns.ButtonLoading.IButtonLoading>(); //buttonLoading.uniqueId -> ButtonLoading obj
+	const _buttonsLoadingMap = new Map<string, OSFramework.Patterns.ButtonLoading.IButtonLoading>(); //buttonLoading.uniqueId -> ButtonLoading obj
 
 	/**
 	 * Function that will change the property of a given ButtonLoading.
@@ -10,10 +10,24 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	 * @param {string} propertyName Property name that will be updated
 	 * @param {unknown} propertyValue Value that will be set to the property
 	 */
-	export function ChangeProperty(buttonLoadingId: string, propertyName: string, propertyValue: unknown): void {
-		const ButtonLoading = GetButtonLoadingById(buttonLoadingId);
+	export function ChangeProperty(buttonLoadingId: string, propertyName: string, propertyValue: unknown): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		ButtonLoading.changeProperty(propertyName, propertyValue);
+		try {
+			const buttonLoading = GetButtonLoadingById(buttonLoadingId);
+
+			buttonLoading.changeProperty(propertyName, propertyValue);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.ButtonLoading.FailChangeProperty;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -22,19 +36,19 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	 * @export
 	 * @param {string} ButtonLoadingId ID of the ButtonLoading where the instance will be created.
 	 * @param {string} configs configurations for the ButtonLoading in JSON format.
-	 * @return {*}  {OSUIFramework.Patterns.IButtonLoading}
+	 * @return {*}  {OSFramework.Patterns.IButtonLoading}
 	 */
 	export function Create(
 		buttonLoadingId: string,
 		configs: string
-	): OSUIFramework.Patterns.ButtonLoading.IButtonLoading {
+	): OSFramework.Patterns.ButtonLoading.IButtonLoading {
 		if (_buttonsLoadingMap.has(buttonLoadingId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.ButtonLoading} registered under id: ${buttonLoadingId}`
+				`There is already a ${OSFramework.GlobalEnum.PatternName.ButtonLoading} registered under id: ${buttonLoadingId}`
 			);
 		}
 
-		const _newButtonLoading = new OSUIFramework.Patterns.ButtonLoading.ButtonLoading(
+		const _newButtonLoading = new OSFramework.Patterns.ButtonLoading.ButtonLoading(
 			buttonLoadingId,
 			JSON.parse(configs)
 		);
@@ -50,22 +64,36 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	 * @export
 	 * @param {string} ButtonLoadingId
 	 */
-	export function Destroy(buttonLoadingId: string): void {
-		const buttonLoading = GetButtonLoadingById(buttonLoadingId);
+	export function Dispose(buttonLoadingId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		buttonLoading.dispose();
+		try {
+			const buttonLoading = GetButtonLoadingById(buttonLoadingId);
 
-		_buttonsLoadingMap.delete(buttonLoading.uniqueId);
+			buttonLoading.dispose();
+
+			_buttonsLoadingMap.delete(buttonLoading.uniqueId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.ButtonLoading.FailChangeProperty;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
 	 * Function that will return the Map with all the ButtonLoading instances at the page
 	 *
 	 * @export
-	 * @return {*}  {Map<string, OSUIFramework.Patterns.ButtonLoading.IButtonLoading>}
+	 * @return {*}  {Map<string, OSFramework.Patterns.ButtonLoading.IButtonLoading>}
 	 */
 	export function GetAllButtonsLoading(): Array<string> {
-		return OSUIFramework.Helper.MapOperation.ExportKeys(_buttonsLoadingMap);
+		return OSFramework.Helper.MapOperation.ExportKeys(_buttonsLoadingMap);
 	}
 
 	/**
@@ -73,14 +101,14 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	 *
 	 * @export
 	 * @param {string} ButtonLoadingId ID of the ButtonLoading that will be looked for.
-	 * @return {*}  {OSUIFramework.Patterns.ButtonLoading.IButtonLoading}
+	 * @return {*}  {OSFramework.Patterns.ButtonLoading.IButtonLoading}
 	 */
-	export function GetButtonLoadingById(buttonLoadingId: string): OSUIFramework.Patterns.ButtonLoading.IButtonLoading {
-		return OSUIFramework.Helper.MapOperation.FindInMap(
-			OSUIFramework.GlobalEnum.PatternsNames.ButtonLoading,
+	export function GetButtonLoadingById(buttonLoadingId: string): OSFramework.Patterns.ButtonLoading.IButtonLoading {
+		return OSFramework.Helper.MapOperation.FindInMap(
+			OSFramework.GlobalEnum.PatternName.ButtonLoading,
 			buttonLoadingId,
 			_buttonsLoadingMap
-		) as OSUIFramework.Patterns.ButtonLoading.IButtonLoading;
+		) as OSFramework.Patterns.ButtonLoading.IButtonLoading;
 	}
 
 	/**
@@ -88,9 +116,9 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	 *
 	 * @export
 	 * @param {string} ButtonLoadingId ID of the ButtonLoading that will be initialized.
-	 * @return {*}  {OSUIFramework.Patterns.ButtonLoading.IButtonLoading}
+	 * @return {*}  {OSFramework.Patterns.ButtonLoading.IButtonLoading}
 	 */
-	export function Initialize(buttonLoadingId: string): OSUIFramework.Patterns.ButtonLoading.IButtonLoading {
+	export function Initialize(buttonLoadingId: string): OSFramework.Patterns.ButtonLoading.IButtonLoading {
 		const buttonLoading = GetButtonLoadingById(buttonLoadingId);
 
 		buttonLoading.build();

@@ -2,6 +2,14 @@
 // Import VirtualSelect library styles
 @import 'virtualselect_lib';
 
+// Set the transform values to checkBox Checked Icon
+@mixin CheckBoxCheckIconTransform {
+	transform: rotate(45deg) translate(3px, -3px);
+}
+@mixin IsRTL_CheckBoxCheckIconTransform {
+	transform: rotate(45deg) translate(-2px, 3px);
+}
+
 // VirtualSelect overriding styles
 // Parent wrapper container
 .vscomp-ele {
@@ -13,7 +21,7 @@
 
 			&:after {
 				color: var(--color-primary);
-				transform: rotate(180deg);
+				transform: rotate(180deg) translateY(50%);
 			}
 		}
 	}
@@ -39,6 +47,10 @@
 			.vscomp-toggle-button {
 				padding-left: var(--space-s);
 			}
+
+			.vscomp-clear-button {
+				right: var(--space-xl);
+			}
 		}
 	}
 
@@ -63,7 +75,7 @@
 						border-top-color: transparent;
 						height: 80%;
 						opacity: 1;
-						transform: rotate(45deg) translate(3px, -3px);
+						@include CheckBoxCheckIconTransform;
 						width: 45%;
 					}
 				}
@@ -73,6 +85,12 @@
 				flex: 1;
 				width: auto;
 			}
+		}
+	}
+
+	&:not(.multiple) {
+		.vscomp-option.group-title {
+			height: var(--space-xl) !important; // !important required to override the element style in html
 		}
 	}
 
@@ -114,9 +132,32 @@
 					&:before,
 					&:after {
 						background-color: var(--color-neutral-3);
-						border-radius: 4px;
+						border-radius: var(--border-radius-soft);
 						height: 100%;
 						width: 2px;
+					}
+				}
+			}
+		}
+		.vscomp-clear-button {
+			margin-top: 0;
+			top: 50%;
+			transform: translateY(-50%);
+
+			.vscomp-clear-icon {
+				&:before,
+				&:after {
+					background-color: var(--color-neutral-7);
+				}
+			}
+
+			&:hover {
+				background: var(--color-neutral-7);
+
+				.vscomp-clear-icon {
+					&:before,
+					&:after {
+						background-color: var(--color-neutral-3);
 					}
 				}
 			}
@@ -129,7 +170,7 @@
 			border: none;
 
 			&-container {
-				background-color: rgba(0, 0, 0, 0.25);
+				background-color: var(--overlay-background);
 				// The !important is needed in order to overwrite the inline style added by library!
 				z-index: 101 !important;
 			}
@@ -155,7 +196,7 @@
 				&.selected {
 					.checkbox-icon {
 						&:after {
-							transform: rotate(45deg) translate(-2px, 2px);
+							@include IsRTL_CheckBoxCheckIconTransform;
 						}
 					}
 				}
@@ -174,6 +215,12 @@
 		}
 
 		&.show-value-as-tags {
+			&.has-value {
+				.vscomp-clear-button {
+					left: var(--space-l);
+				}
+			}
+
 			.vscomp-value-tag {
 				padding: 6px 10px 6px 35px;
 			}
@@ -198,7 +245,7 @@
 
 			&.checked {
 				&:after {
-					transform: rotate(45deg) translate(-2px, 2px);
+					@include IsRTL_CheckBoxCheckIconTransform;
 				}
 			}
 		}
@@ -211,7 +258,7 @@
 		border: var(--border-size-s) solid var(--color-neutral-5);
 		height: 16px;
 		margin-right: var(--space-s);
-		overflow: hidden;
+		overflow: visible;
 		transition: background-color 0.25s ease;
 		width: 16px;
 
@@ -234,7 +281,7 @@
 				border-top-color: transparent;
 				height: 80%;
 				opacity: 1;
-				transform: rotate(45deg) translate(3px, -3px);
+				@include CheckBoxCheckIconTransform;
 				width: 45%;
 			}
 		}
@@ -269,7 +316,8 @@
 		font: normal normal normal var(--vscomp-toogle-btn-arrow-size) / 1 FontAwesome;
 		position: absolute;
 		right: var(--space-base);
-		top: calc((var(--vscomp-toogle-btn-height) - var(--vscomp-toogle-btn-arrow-size)) / 2);
+		top: 50%;
+		transform: translateY(-50%);
 		transform-origin: center;
 		transition: all 0.25s ease;
 	}
@@ -300,6 +348,11 @@
 	border-radius: var(--border-radius-soft);
 	border: var(--border-size-s) solid var(--color-neutral-5);
 	overflow: hidden;
+
+	// This is an override in order to fix an issue when inside a AlignCenter pattern
+	.vscomp-dropbox-close-button {
+		display: none;
+	}
 }
 
 // Opptions container input search wrapper
@@ -310,7 +363,7 @@
 
 	&:before {
 		align-items: center;
-		color: var(--color-neutral-6);
+		color: var(--color-neutral-7);
 		content: '';
 		display: flex;
 		font: normal normal normal 14px/1 FontAwesome;
@@ -318,6 +371,29 @@
 		left: var(--space-base);
 		position: absolute;
 		top: 0;
+	}
+
+	.vscomp-search-clear {
+		border-radius: var(--border-radius-circle);
+		color: var(--color-neutral-7);
+		display: table;
+		font-size: var(--font-size-h5);
+		font-weight: var(--font-semi-bold);
+		height: 24px;
+		line-height: 1;
+		text-align: center;
+		width: 24px;
+
+		// Fix vertical alignemnt differences due to system fonts usage
+		.osx &,
+		.ios & {
+			line-height: 1.1;
+		}
+
+		&:hover {
+			background-color: var(--color-neutral-7);
+			color: var(--color-neutral-3);
+		}
 	}
 }
 
@@ -346,21 +422,6 @@
 	}
 }
 
-// Option Item
-.vscomp-option {
-	background-color: var(--color-neutral-0);
-	transition: background-color 0.25s ease;
-
-	&.focused,
-	&.selected {
-		background-color: var(--color-neutral-3);
-	}
-
-	&.focused {
-		background-color: var(--color-neutral-2);
-	}
-}
-
 // Option Item text
 .vscomp-option-text {
 	color: var(--color-neutral-9);
@@ -372,6 +433,44 @@
 	* {
 		vertical-align: middle;
 	}
+}
+
+// Option Item
+.vscomp-option {
+	align-content: center;
+	background-color: var(--color-neutral-0);
+	transition: background-color 0.25s ease;
+
+	&.focused,
+	&.selected {
+		background-color: var(--color-neutral-3);
+	}
+
+	&.focused {
+		background-color: var(--color-neutral-2);
+	}
+
+	// Style dropdown group title
+	&.group-title {
+		.vscomp-option-text {
+			opacity: 1;
+			// Style group title in single select dropdown
+			// this selector is necessary so that the style is not applied when the option has a checkbox
+			&:only-child {
+				color: var(--color-neutral-7);
+				font-size: var(--font-size-label);
+				font-weight: var(--font-semi-bold);
+				text-transform: uppercase;
+			}
+		}
+	}
+}
+
+// Option Item description
+.vscomp-option-description {
+	color: var(--color-neutral-7);
+	font-size: var(--font-size-label);
+	margin-top: 1px;
 }
 
 // Accessibility -----------------------------------------------------------------
@@ -409,22 +508,18 @@
 
 	.vscomp-toggle-button {
 		height: var(--vscomp-toogle-btn-mobile-height);
-
-		&:after {
-			top: calc((var(--vscomp-toogle-btn-mobile-height) - var(--vscomp-toogle-btn-arrow-size)) / 2);
-		}
 	}
 }
 
-// Popup Mode inside Tabs --------------------------------------------------------
+// Popup Mode --------------------------------------------------------
 body {
 	&.vscomp-popup-active {
-		.tabs-content-wrapper {
-			display: contents;
+		.vscomp-wrapper:not(.focused) {
+			z-index: 0;
+		}
 
-			.OSBlockWidget {
-				display: flex;
-			}
+		.vscomp-wrapper {
+			z-index: 300;
 		}
 	}
 }

@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.DropdownAPI {
-	const _dropdownItemsMap = new Map<string, OSUIFramework.Patterns.Dropdown.IDropdown>(); //Dropdown.uniqueId -> Dropdown obj
+	const _dropdownItemsMap = new Map<string, OSFramework.Patterns.Dropdown.IDropdown>(); //Dropdown.uniqueId -> Dropdown obj
 
 	/**
 	 * Function that will change the property of a given Dropdown Id.
@@ -18,9 +18,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _dropdownItem = GetDropdownById(dropdownId);
-
 		try {
+			const _dropdownItem = GetDropdownById(dropdownId);
+
 			_dropdownItem.changeProperty(propertyName, propertyValue);
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -45,9 +45,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _dropdownItem = GetDropdownById(dropdownId);
-
 		try {
+			const _dropdownItem = GetDropdownById(dropdownId);
+
 			_dropdownItem.clear();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -64,19 +64,19 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @export
 	 * @param {string} dropdownId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSUIFramework.Patterns.Dropdown.IDropdown}
+	 * @return {*}  {OSFramework.Patterns.Dropdown.IDropdown}
 	 */
 	export function Create(
 		dropdownId: string,
 		mode: string,
 		provider: string,
 		configs: string
-	): OSUIFramework.Patterns.Dropdown.IDropdown {
+	): OSFramework.Patterns.Dropdown.IDropdown {
 		if (_dropdownItemsMap.has(dropdownId)) {
 			throw new Error(`There is already an Dropdown registered under id: ${dropdownId}`);
 		}
 
-		const _dropdownItem = OSUIFramework.Patterns.Dropdown.Factory.NewDropdown(dropdownId, mode, provider, configs);
+		const _dropdownItem = OSFramework.Patterns.Dropdown.Factory.NewDropdown(dropdownId, mode, provider, configs);
 
 		_dropdownItemsMap.set(dropdownId, _dropdownItem);
 
@@ -97,10 +97,37 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _dropdownItem = GetDropdownById(dropdownId);
+		try {
+			const _dropdownItem = GetDropdownById(dropdownId);
+
+			_dropdownItem.disable();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Dropdown.FailDisable;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
+	 * Function that toggle the dropbox as popup on small screen like mobile
+	 *
+	 * @export
+	 * @param {string} dropdownId
+	 * @param {boolean} isEnabled
+	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 */
+	export function TogglePopup(dropdownId: string, isEnabled: boolean): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
 		try {
-			_dropdownItem.disable();
+			const _dropdownItem = GetDropdownById(dropdownId) as VirtualSelect;
+			_dropdownItem.togglePopup(isEnabled);
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
@@ -124,9 +151,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _dropdownItem = GetDropdownById(dropdownId);
-
 		try {
+			const _dropdownItem = GetDropdownById(dropdownId);
+
 			_dropdownItem.dispose();
 
 			_dropdownItemsMap.delete(_dropdownItem.uniqueId);
@@ -153,9 +180,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _dropdownItem = GetDropdownById(dropdownId);
-
 		try {
+			const _dropdownItem = GetDropdownById(dropdownId);
+
 			_dropdownItem.enable();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -172,8 +199,8 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @export
 	 * @return {*}  Array<string>
 	 */
-	export function GetAllDropDownItemsMap(): Array<string> {
-		return OSUIFramework.Helper.MapOperation.ExportKeys(_dropdownItemsMap);
+	export function GetAllDropdowns(): Array<string> {
+		return OSFramework.Helper.MapOperation.ExportKeys(_dropdownItemsMap);
 	}
 
 	/**
@@ -181,14 +208,14 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 *
 	 * @export
 	 * @param {string} dropdownId ID of the DropdownId that will be looked for.
-	 * @return {*}  {OSUIFramework.Patterns.Dropdown.IDropdown}
+	 * @return {*}  {OSFramework.Patterns.Dropdown.IDropdown}
 	 */
-	export function GetDropdownById(dropdownId: string): OSUIFramework.Patterns.Dropdown.IDropdown {
-		return OSUIFramework.Helper.MapOperation.FindInMap(
-			OSUIFramework.GlobalEnum.PatternsNames.Dropdown,
+	export function GetDropdownById(dropdownId: string): OSFramework.Patterns.Dropdown.IDropdown {
+		return OSFramework.Helper.MapOperation.FindInMap(
+			OSFramework.GlobalEnum.PatternName.Dropdown,
 			dropdownId,
 			_dropdownItemsMap
-		) as OSUIFramework.Patterns.Dropdown.IDropdown;
+		) as OSFramework.Patterns.Dropdown.IDropdown;
 	}
 
 	/**
@@ -206,9 +233,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			value: '',
 		};
 
-		const _dropdownItem = GetDropdownById(dropdownId);
-
 		try {
+			const _dropdownItem = GetDropdownById(dropdownId);
+
 			responseObj.value = _dropdownItem.getSelectedValues();
 		} catch (error) {
 			responseObj.isSuccess = false;
@@ -224,9 +251,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 *
 	 * @export
 	 * @param {string} dropdownId ID of the DropdownItem that will be initialized.
-	 * @return {*}  {OSUIFramework.Patterns.Dropdown.IDropdown}
+	 * @return {*}  {OSFramework.Patterns.Dropdown.IDropdown}
 	 */
-	export function Initialize(dropdownId: string): OSUIFramework.Patterns.Dropdown.IDropdown {
+	export function Initialize(dropdownId: string): OSFramework.Patterns.Dropdown.IDropdown {
 		const _dropdownItem = GetDropdownById(dropdownId);
 
 		_dropdownItem.build();
@@ -240,13 +267,13 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @export
 	 * @param {string} dropdownId
 	 * @param {string} eventName
-	 * @param {OSUIFramework.Callbacks.OSGeneric} callback
+	 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback
 	 * @return {*} {string} Return Message Success or message of error info if it's the case.
 	 */
-	export function RegisterProviderCallback(
+	export function RegisterCallback(
 		dropdownId: string,
 		eventName: string,
-		callback: OSUIFramework.Callbacks.OSGeneric
+		callback: OSFramework.GlobalCallbacks.OSGeneric
 	): string {
 		const responseObj = {
 			isSuccess: true,
@@ -254,14 +281,112 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _dropdownItem = this.GetDropdownById(dropdownId);
-
 		try {
-			_dropdownItem.registerProviderCallback(eventName, callback);
+			const _dropdownItem = this.GetDropdownById(dropdownId);
+
+			_dropdownItem.registerCallback(eventName, callback);
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
 			responseObj.code = ErrorCodes.Dropdown.FailRegisterCallback;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
+	 * Function to set providerConfigs by extensibility
+	 *
+	 * @export
+	 * @param {string} dropdownId
+	 * @param {DropdownProviderConfigs} providerConfigs
+	 * @return {*}  {string}
+	 */
+	export function SetProviderConfigs(dropdownId: string, providerConfigs: DatePickerProviderConfigs): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const _dropdownItem = GetDropdownById(dropdownId);
+
+			// Check if the given Dropdown has a provider (DropdownServerSide do not have it!)
+			if (_dropdownItem['provider'] !== undefined) {
+				_dropdownItem.setProviderConfigs(providerConfigs);
+			} else {
+				responseObj.isSuccess = false;
+				responseObj.message = `Dropdown with Id:${dropdownId} does not have a provider.`;
+				responseObj.code = ErrorCodes.DatePicker.FailRegisterProviderConfig;
+			}
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.DatePicker.FailRegisterProviderConfig;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
+	 * Function to set providerEvents by extensibility
+	 *
+	 * @export
+	 * @param {string} dropdownId
+	 * @param {string} eventName
+	 * @param {OSFramework.GlobalCallbacks.Generic} callback
+	 * @return {*}  {string}
+	 */
+	export function SetProviderEvent(
+		dropdownId: string,
+		eventName: string,
+		callback: OSFramework.GlobalCallbacks.Generic
+	): string {
+		const _eventUniqueId = OSFramework.Helper.Dom.GenerateUniqueId();
+
+		const responseObj = {
+			uniqueId: _eventUniqueId,
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const dropdown = GetDropdownById(dropdownId);
+			dropdown.setProviderEvent(eventName, callback, _eventUniqueId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Dropdown.FailRegisterProviderEvent;
+			responseObj.uniqueId = undefined;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
+	 * Function to remove providerEvents added by extensibility
+	 *
+	 * @export
+	 * @param {string} dropdownId
+	 * @param {string} eventId
+	 * @return {*}  {string}
+	 */
+	export function UnsetProviderEvent(dropdownId: string, eventId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const dropdown = GetDropdownById(dropdownId);
+			dropdown.unsetProviderEvent(eventId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Dropdown.FailRemoveProviderEvent;
 		}
 
 		return JSON.stringify(responseObj);
@@ -283,14 +408,42 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			code: ErrorCodes.Success.code,
 		};
 
-		const _dropdownItem = GetDropdownById(dropdownId);
-
 		try {
+			const _dropdownItem = GetDropdownById(dropdownId);
+
 			_dropdownItem.validation(isValid, validationMessage);
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
 			responseObj.code = ErrorCodes.Dropdown.FailSetValidation;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
+	 * Function used to set the value(s) of a given Dropdown Id
+	 *
+	 * @export
+	 * @param {string} dropdownId
+	 * @param {string} selectedValues
+	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 */
+	export function SetValues(dropdownId: string, selectedValues: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const _dropdownItem = GetDropdownById(dropdownId) as VirtualSelect;
+
+			_dropdownItem.setValue(JSON.parse(selectedValues));
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Dropdown.FailSetValues;
 		}
 
 		return JSON.stringify(responseObj);

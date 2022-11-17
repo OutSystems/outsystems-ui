@@ -3,12 +3,12 @@ namespace Providers.RangeSlider.NoUiSlider.Factory {
 	export function NewNoUiSlider(
 		rangeSliderId: string,
 		configs: string,
-		mode: OSUIFramework.Patterns.RangeSlider.Enum.Mode
-	): OSUIFramework.Patterns.RangeSlider.IRangeSlider {
+		mode: OSFramework.Patterns.RangeSlider.Enum.Mode
+	): OSFramework.Patterns.RangeSlider.IRangeSlider {
 		let _rangeSliderItem = null;
 
 		switch (mode) {
-			case OSUIFramework.Patterns.RangeSlider.Enum.Mode.Single:
+			case OSFramework.Patterns.RangeSlider.Enum.Mode.Single:
 				_rangeSliderItem = new Providers.RangeSlider.NoUISlider.SingleSlider.OSUINoUiSliderSingle(
 					rangeSliderId,
 					JSON.parse(configs)
@@ -16,7 +16,7 @@ namespace Providers.RangeSlider.NoUiSlider.Factory {
 
 				break;
 
-			case OSUIFramework.Patterns.RangeSlider.Enum.Mode.Interval:
+			case OSFramework.Patterns.RangeSlider.Enum.Mode.Interval:
 				_rangeSliderItem = new Providers.RangeSlider.NoUISlider.IntervalSlider.OSUINoUiSliderInterval(
 					rangeSliderId,
 					JSON.parse(configs)

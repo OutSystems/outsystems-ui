@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.TooltipAPI {
-	const _tooltipsMap = new Map<string, OSUIFramework.Patterns.Tooltip.ITooltip>(); //tooltip.uniqueId -> Tooltip obj
+	const _tooltipsMap = new Map<string, OSFramework.Patterns.Tooltip.ITooltip>(); //tooltip.uniqueId -> Tooltip obj
 
 	/**
 	 * Function that will change the property of a given tooltip.
@@ -11,10 +11,24 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ChangeProperty(tooltipId: string, propertyName: string, propertyValue: any): void {
-		const tooltip = GetTooltipById(tooltipId);
+	export function ChangeProperty(tooltipId: string, propertyName: string, propertyValue: any): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		tooltip.changeProperty(propertyName, propertyValue);
+		try {
+			const tooltip = GetTooltipById(tooltipId);
+
+			tooltip.changeProperty(propertyName, propertyValue);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Tooltip.FailChangeProperty;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -23,10 +37,24 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 * @export
 	 * @param {string} tooltipId ID of the tooltip that will be closed
 	 */
-	export function Close(tooltipId: string): void {
-		const tooltip = GetTooltipById(tooltipId);
+	export function Close(tooltipId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		tooltip.close();
+		try {
+			const tooltip = GetTooltipById(tooltipId);
+
+			tooltip.close();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Tooltip.FailClose;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
@@ -35,16 +63,16 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 * @export
 	 * @param {string} tooltipId ID of the Tooltip where the instance will be created.
 	 * @param {string} configs configurations for the Tooltip in JSON format.
-	 * @return {*}  {OSUIFramework.Patterns.ITooltip}
+	 * @return {*}  {OSFramework.Patterns.ITooltip}
 	 */
-	export function Create(tooltipId: string, configs: string): OSUIFramework.Patterns.Tooltip.ITooltip {
+	export function Create(tooltipId: string, configs: string): OSFramework.Patterns.Tooltip.ITooltip {
 		if (_tooltipsMap.has(tooltipId)) {
 			throw new Error(
-				`There is already a ${OSUIFramework.GlobalEnum.PatternsNames.Tooltip} registered under id: ${tooltipId}`
+				`There is already a ${OSFramework.GlobalEnum.PatternName.Tooltip} registered under id: ${tooltipId}`
 			);
 		}
 
-		const _newTooltip = new OSUIFramework.Patterns.Tooltip.Tooltip(tooltipId, JSON.parse(configs));
+		const _newTooltip = new OSFramework.Patterns.Tooltip.Tooltip(tooltipId, JSON.parse(configs));
 
 		_tooltipsMap.set(tooltipId, _newTooltip);
 
@@ -57,22 +85,36 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 * @export
 	 * @param {string} tooltipId
 	 */
-	export function Destroy(tooltipId: string): void {
-		const tooltip = GetTooltipById(tooltipId);
+	export function Dispose(tooltipId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		tooltip.dispose();
+		try {
+			const tooltip = GetTooltipById(tooltipId);
 
-		_tooltipsMap.delete(tooltip.uniqueId);
+			tooltip.dispose();
+
+			_tooltipsMap.delete(tooltip.uniqueId);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Tooltip.FailDispose;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
 	 * Fucntion that will return the Map with all the Tooltip instances at the page
 	 *
 	 * @export
-	 * @return {*}  {Map<string, OSUIFramework.Patterns.ITooltip>}
+	 * @return {*}  {Map<string, OSFramework.Patterns.ITooltip>}
 	 */
 	export function GetAllTooltips(): Array<string> {
-		return OSUIFramework.Helper.MapOperation.ExportKeys(_tooltipsMap);
+		return OSFramework.Helper.MapOperation.ExportKeys(_tooltipsMap);
 	}
 
 	/**
@@ -80,14 +122,14 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 *
 	 * @export
 	 * @param {string} tooltipId ID of the Tooltip that will be looked for.
-	 * @return {*}  {OSUIFramework.Patterns.ITooltip}
+	 * @return {*}  {OSFramework.Patterns.ITooltip}
 	 */
-	export function GetTooltipById(tooltipId: string): OSUIFramework.Patterns.Tooltip.ITooltip {
-		return OSUIFramework.Helper.MapOperation.FindInMap(
-			OSUIFramework.GlobalEnum.PatternsNames.Tooltip,
+	export function GetTooltipById(tooltipId: string): OSFramework.Patterns.Tooltip.ITooltip {
+		return OSFramework.Helper.MapOperation.FindInMap(
+			OSFramework.GlobalEnum.PatternName.Tooltip,
 			tooltipId,
 			_tooltipsMap
-		) as OSUIFramework.Patterns.Tooltip.ITooltip;
+		) as OSFramework.Patterns.Tooltip.ITooltip;
 	}
 
 	/**
@@ -95,9 +137,9 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 *
 	 * @export
 	 * @param {string} tooltipId ID of the Tooltip that will be initialized.
-	 * @return {*}  {OSUIFramework.Patterns.ITooltip}
+	 * @return {*}  {OSFramework.Patterns.ITooltip}
 	 */
-	export function Initialize(tooltipId: string): OSUIFramework.Patterns.Tooltip.ITooltip {
+	export function Initialize(tooltipId: string): OSFramework.Patterns.Tooltip.ITooltip {
 		const tooltip = GetTooltipById(tooltipId);
 
 		tooltip.build();
@@ -111,9 +153,56 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 * @export
 	 * @param {string} tooltipId ID of the tooltip that will be opened
 	 */
-	export function Open(tooltipId: string): void {
-		const tooltip = GetTooltipById(tooltipId);
+	export function Open(tooltipId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		tooltip.open();
+		try {
+			const tooltip = GetTooltipById(tooltipId);
+
+			tooltip.open();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Tooltip.FailOpen;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
+	 * Function to register a provider callback
+	 *
+	 * @export
+	 * @param {string} tooltipId
+	 * @param {string} eventName
+	 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback
+	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 */
+	export function RegisterCallback(
+		tooltipId: string,
+		eventName: string,
+		callback: OSFramework.GlobalCallbacks.OSGeneric
+	): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const tooltip = this.GetTooltipById(tooltipId);
+
+			tooltip.registerCallback(eventName, callback);
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Tooltip.FailRegisterCallback;
+		}
+
+		return JSON.stringify(responseObj);
 	}
 }

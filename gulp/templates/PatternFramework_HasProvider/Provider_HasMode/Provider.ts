@@ -1,6 +1,6 @@
 namespace Providers.<%= patternNamePC %>.<%= providerNamePC %> {
 	export abstract class Abstract<%= providerNamePC %><C extends <%= patternNamePC %>.<%= providerNamePC %>.Abstract<%= providerNamePC %>Config>
-		extends OSUIFramework.Patterns.<%= patternNamePC %>.Abstract<%= patternNamePC %><<%= providerNamePC %>, C>
+		extends OSFramework.Patterns.<%= patternNamePC %>.Abstract<%= patternNamePC %><<%= providerNamePC %>, C>
 		implements I<%= providerNamePC %>
 	{
 		/* TODO (by CreateNewPattern):
@@ -80,7 +80,7 @@ namespace Providers.<%= patternNamePC %>.<%= providerNamePC %> {
 
 			if (this.isBuilt) {
 				switch (propertyName) {
-					case OSUIFramework.Patterns.<%= patternNamePC %>.Enum.Properties.PROP_NAME:
+					case OSFramework.Patterns.<%= patternNamePC %>.Enum.Properties.PROP_NAME:
 						// TODO (by CreateNewPattern): Update or Remove
 					break;
 				}
@@ -104,12 +104,12 @@ namespace Providers.<%= patternNamePC %>.<%= providerNamePC %> {
 		 * Method used to register the provider callback
 		 *
 		 * @param {string} eventName Event name that will be assigned
-		 * @param {OSUIFramework.Callbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
+		 * @param {OSFramework.Callbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
 		 * @memberof Abstract<%= providerNamePC %>
 		 */
-		public registerProviderCallback(eventName: string, callback: OSUIFramework.Callbacks.OSGeneric): void {
+		public registerCallback(eventName: string, callback: OSFramework.Callbacks.OSGeneric): void {
 			switch (eventName) {
-				case OSUIFramework.Patterns.<%= patternNamePC %>.Enum.Events.EVENT_NAME:
+				case OSFramework.Patterns.<%= patternNamePC %>.Enum.Events.EVENT_NAME:
 						// TODO (by CreateNewPattern): Update or Remove
 					break;
 

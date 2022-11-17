@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="284px" preserveAspectRatio="none" style="width:446px;height:284px;background:#CED4DA;" version="1.1" viewBox="0 0 446 284" width="446px" zoomAndPan="magnify"><defs><filter height="300%" id="fmej6hm2h73he" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[fe50a4f6767356ff4dcdadb85ef8cbdd]
+class IDisposable--><rect codeLine="7" fill="#FFFFFF" filter="url(#fmej6hm2h73he)" height="52.8047" id="IDisposable" style="stroke:#272B30;stroke-width:1.5;" width="114" x="162.5" y="7"/><ellipse cx="182.45" cy="23" fill="#B4A7E5" rx="11" ry="11" style="stroke:#272B30;stroke-width:1.0;"/><path d="M178.3719,18.7656 L178.3719,16.6094 L185.7625,16.6094 L185.7625,18.7656 L183.2938,18.7656 L183.2938,26.8438 L185.7625,26.8438 L185.7625,29 L178.3719,29 L178.3719,26.8438 L180.8406,26.8438 L180.8406,18.7656 L178.3719,18.7656 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="71" x="197.55" y="27.1543">IDisposable</text><line style="stroke:#272B30;stroke-width:1.5;" x1="163.5" x2="275.5" y1="39" y2="39"/><ellipse cx="173.5" cy="50" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="88" x="182.5" y="53.2104">dispose() : void</text><!--MD5=[3266101ea6228889a90c639b28de0501]
+class IPattern--><rect codeLine="10" fill="#FFFFFF" filter="url(#fmej6hm2h73he)" height="150.4375" id="IPattern" style="stroke:#272B30;stroke-width:1.5;" width="425" x="7" y="120"/><ellipse cx="190.25" cy="136" fill="#B4A7E5" rx="11" ry="11" style="stroke:#272B30;stroke-width:1.0;"/><path d="M186.1719,131.7656 L186.1719,129.6094 L193.5625,129.6094 L193.5625,131.7656 L191.0938,131.7656 L191.0938,139.8438 L193.5625,139.8438 L193.5625,142 L186.1719,142 L186.1719,139.8438 L188.6406,139.8438 L188.6406,131.7656 L186.1719,131.7656 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="50" x="210.75" y="140.1543">IPattern</text><line style="stroke:#272B30;stroke-width:1.5;" x1="8" x2="431" y1="152" y2="152"/><ellipse cx="18" cy="163" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="92" x="27" y="166.2104">isBuilt : boolean</text><ellipse cx="18" cy="175.8047" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="155" x="27" y="179.0151">selfElement : HTMLElement</text><ellipse cx="18" cy="188.6094" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="93" x="27" y="191.8198">uniqueId : string</text><ellipse cx="18" cy="201.4141" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="92" x="27" y="204.6245">widgetId : string</text><line style="stroke:#272B30;stroke-width:1.5;" x1="8" x2="431" y1="211.2188" y2="211.2188"/><ellipse cx="18" cy="222.2188" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="70" x="27" y="225.4292">build() : void</text><ellipse cx="18" cy="235.0234" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="399" x="27" y="238.2339">changeProperty(propertyName: string, propertyValue: unknown) : void</text><ellipse cx="18" cy="247.8281" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="88" x="27" y="251.0386">dispose() : void</text><ellipse cx="18" cy="260.6328" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="179" x="27" y="263.8433">equalsToID(id: string) : boolean</text><!--MD5=[5fd67fb941499aaa6769288332201427]
+reverse link IDisposable to IPattern--><path codeLine="20" d="M219.5,80.53 C219.5,92.84 219.5,106.46 219.5,119.87 " fill="none" id="IDisposable-backto-IPattern" style="stroke:#272B30;stroke-width:1.0;"/><polygon fill="none" points="212.5,80.13,219.5,60.13,226.5,80.13,212.5,80.13" style="stroke:#272B30;stroke-width:1.0;"/><!--MD5=[b06f54a330da538d3eb531d7d4b00c6c]
+@startuml
+skinparam ClassArrowColor #272b30
+skinparam ClassBorderColor #272b30
+skinparam ClassBackgroundColor #fff
+skinparam BackgroundColor #ced4da
+hide empty methods
+hide empty fields
+interface "IDisposable" {
+    +dispose() : void
+}
+interface "IPattern" {
+    +isBuilt : boolean
+    +selfElement : HTMLElement
+    +uniqueId : string
+    +widgetId : string
+    +build() : void
+    +changeProperty(propertyName: string, propertyValue: unknown) : void
+    +dispose() : void
+    +equalsToID(id: string) : boolean
+}
+"IDisposable" <|- - "IPattern"
+@enduml
+
+PlantUML version 1.2021.14(Fri Nov 12 16:46:50 UTC 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: null
+--></g></svg>

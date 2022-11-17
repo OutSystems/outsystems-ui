@@ -1,0 +1,75 @@
+/*! Patterns - Interaction - Dropdown */
+////
+/// @group Patterns-Dropdown
+/// Patterns - Interaction - Dropdown
+
+/// Import VirtualSelect provider library styles
+@import '../../../../Providers/Dropdown/VirtualSelect/scss/virtualselect';
+
+.osui-dropdown {
+	&-search,
+	&-tags {
+		/// Disable states for dropdowns
+		&.vscomp-ele[disabled] {
+			// Override of library cursor on disable states
+			cursor: initial;
+
+			.vscomp {
+				&-toggle-button {
+					background-color: var(--color-neutral-2);
+					border: var(--border-size-s) solid var(--color-neutral-4);
+					color: var(--color-neutral-6);
+					pointer-events: none;
+				}
+
+				&-wrapper,
+				&-wrapper:not(.has-value) .vscomp-value {
+					opacity: inherit;
+				}
+			}
+		}
+
+		// Override the font-family of provider
+		.vscomp-wrapper {
+			font-family: inherit;
+		}
+	}
+
+	/// Dropdown Option Item image
+	&-option {
+		&-image {
+			border-radius: 100%;
+			display: inline-block;
+			height: 24px;
+			margin-right: var(--space-s);
+			width: 24px;
+			background-color: var(--color-neutral-3);
+			overflow: hidden;
+		}
+
+		&-icon {
+			color: var(--color-neutral-9);
+			font-size: var(--font-size-h6);
+			margin-right: var(--space-s);
+		}
+	}
+
+	/// Error message
+	&-error-message {
+		color: var(--color-error);
+		font-size: var(--font-size-xs);
+		margin-left: var(--space-none);
+		margin-top: 3px;
+	}
+}
+
+// IsRTL -------------------------------------------------------------------------
+.is-rtl {
+	.osui-dropdown {
+		&-option-image,
+		&-option-icon {
+			margin-left: var(--space-s);
+			margin-right: initial;
+		}
+	}
+}
