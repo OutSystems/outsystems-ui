@@ -36,7 +36,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 			if (
 				this.configs.InitialStartDate !== undefined &&
 				this.configs.InitialEndDate !== undefined &&
-				OSFramework.Helper.Dates.IsMinorThan(this.configs.InitialStartDate, this.configs.InitialEndDate) ===
+				OSFramework.Helper.Dates.IsBeforeThan(this.configs.InitialStartDate, this.configs.InitialEndDate) ===
 					false
 			) {
 				// Give a error console message in order to alert developers about this unexpected given dates!
@@ -172,9 +172,8 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 				this.configs.InitialStartDate = startDate;
 				this.configs.InitialEndDate = endDate;
 
-				if (OSFramework.Helper.Dates.IsMinorThan(startDate, endDate)) {
-					// Trigger the onDateSelectedEvent method that will be responsible for setting the input value and trigger the selected event that will after trigger the redraw!
-					this.onDateSelectedEvent([startDate, endDate]);
+				if (OSFramework.Helper.Dates.IsBeforeThan(startDate, endDate)) {
+					this.prepareToAndRedraw();
 				} else {
 					console.error(
 						`Given StartDate:'${this.provider.formatDate(

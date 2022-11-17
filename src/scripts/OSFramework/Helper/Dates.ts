@@ -15,7 +15,7 @@ namespace OSFramework.Helper {
 		 * @return {*}  {boolean}
 		 * @memberof OSFramework.Helper.Dates
 		 */
-		public static IsMinorThan(date1: string, date2: string): boolean {
+		public static IsBeforeThan(date1: string, date2: string): boolean {
 			return Date.parse(date1) <= Date.parse(date2);
 		}
 
