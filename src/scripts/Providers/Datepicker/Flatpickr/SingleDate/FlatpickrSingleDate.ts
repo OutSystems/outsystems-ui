@@ -156,8 +156,8 @@ namespace Providers.Datepicker.Flatpickr.SingleDate {
 			this._isUpdatedInitialDateByClientAction = true;
 			// Redefine the Initial date
 			this.configs.InitialDate = value;
-			// Trigger the onDateSelectedEvent method that will be responsible for setting the input value and trigger the selected event that will after trigger the redraw!
-			this.onDateSelectedEvent([this.configs.InitialDate]);
+			// Redraw calendar!
+			this.prepareToAndRedraw();
 		}
 	}
 }
