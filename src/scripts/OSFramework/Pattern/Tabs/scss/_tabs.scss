@@ -132,6 +132,16 @@
 		}
 	}
 
+	&--has-auto-height {
+		.osui-tabs__content-item {
+			display: none;
+
+			&.osui-tabs--is-active {
+				display: block;
+			}
+		}
+	}
+
 	&--has-drag:not(.osui-tabs--is-vertical) {
 		.osui-tabs__content {
 			overflow-x: auto;
