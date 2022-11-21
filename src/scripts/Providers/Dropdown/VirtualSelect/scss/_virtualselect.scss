@@ -510,13 +510,6 @@
 	}
 }
 
-// When used inside a BottomSheet
-.osui-bottom-sheet--is-active {
-	.vscomp-wrapper {
-		z-index: $bottom-sheet-zindex + 1;
-	}
-}
-
 // Option Item description
 .vscomp-option-description {
 	color: var(--color-neutral-7);
