@@ -17,15 +17,18 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			this._checkMenuLinks = activeScreen.querySelector(
 				OSFramework.Constants.Dot + OSFramework.GlobalEnum.CssClassElements.MenuLinks
 			);
-			// Store the deprecated submenu items
-			this._deprecatedSubmenuItems = this._checkMenuLinks.querySelectorAll(
-				OSFramework.Constants.Dot + OSFramework.GlobalEnum.CssClassElements.DeprecatedSubmenu
-			);
+			//Since we'll be using a querySelectorAll we'll do this check first in order to avoid throwing an exception
+			if (this._checkMenuLinks) {
+				// Store the deprecated submenu items
+				this._deprecatedSubmenuItems = this._checkMenuLinks.querySelectorAll(
+					OSFramework.Constants.Dot + OSFramework.GlobalEnum.CssClassElements.DeprecatedSubmenu
+				);
+			}
 		}
 
 		// Method attach the event to close all open deprecated submenu items
 		private static _closeDeprecatedSubmenu(): void {
-			if (this._deprecatedSubmenuItems.length > 0) {
+			if (this._deprecatedSubmenuItems && this._deprecatedSubmenuItems.length > 0) {
 				// Close all of them if contains the class open
 				for (const item of this._deprecatedSubmenuItems) {
 					if (item.classList.contains('open')) {
@@ -49,6 +52,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			this.Unset();
 
 			if (
+				this._deprecatedSubmenuItems &&
 				this._deprecatedSubmenuItems.length > 0 &&
 				OSFramework.Helper.DeviceInfo.IsDesktop &&
 				!OSUI.Utils.DeviceDetection.CheckIsLayoutSide()
