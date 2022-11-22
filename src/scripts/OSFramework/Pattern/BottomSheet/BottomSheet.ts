@@ -152,9 +152,13 @@ namespace OSFramework.Patterns.BottomSheet {
 			}
 
 			// Toggle class
-			isOpen
-				? Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsOpen)
-				: Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpen);
+			if (isOpen) {
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsOpen);
+				Helper.Dom.Styles.AddClass(document.body, Enum.CssClass.IsActive);
+			} else {
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpen);
+				Helper.Dom.Styles.RemoveClass(document.body, Enum.CssClass.IsActive);
+			}
 
 			// Update property
 			this._isOpen = isOpen;

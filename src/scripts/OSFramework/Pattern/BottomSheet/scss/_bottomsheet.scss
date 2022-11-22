@@ -170,3 +170,11 @@
 		padding-left: calc(var(--space-base) + var(--os-safe-area-left));
 	}
 }
+
+// Body absolute patterns when used inside a BottomSheet
+.osui-bottom-sheet--is-active {
+	.vscomp-wrapper,
+	[data-popup-backdrop] {
+		z-index: $bottom-sheet-zindex + 1;
+	}
+}
