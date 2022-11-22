@@ -1,17 +1,16 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.Helper {
 	export abstract class InvalidInputs {
 		private static _checkInvalidInputs(element: HTMLElement, isSmooth: boolean): void {
 			const notValidClassess = [
-				OSFramework.GlobalEnum.CssClassElements.PlatformNotValid,
-				OSFramework.Patterns.Dropdown.ServerSide.Enum.CssClass.NotValid,
+				GlobalEnum.CssClassElements.PlatformNotValid,
+				Patterns.Dropdown.ServerSide.Enum.CssClass.NotValid,
 				Providers.Dropdown.VirtualSelect.Enum.CssClass.NotValid,
 			];
 
 			// Method to check if exists invalid inputs
 			for (const className of notValidClassess) {
-				const invalidInput = OSFramework.Helper.Dom.ClassSelector(element, className);
+				const invalidInput = Helper.Dom.ClassSelector(element, className);
 
 				if (invalidInput) {
 					// If True, call scroll to element method to given element
@@ -22,7 +21,7 @@ namespace OSFramework.Helper {
 		}
 
 		/**
-		 *  Function used to check if contains invalid inputs
+		 *  Function used to check if an element, body or elementId, contains invalid inputs
 		 *
 		 * @static
 		 * @param {string} elementId
@@ -40,7 +39,7 @@ namespace OSFramework.Helper {
 
 			try {
 				if (elementId !== '') {
-					element = OSFramework.Helper.Dom.GetElementById(elementId);
+					element = Helper.Dom.GetElementById(elementId);
 				}
 
 				this._checkInvalidInputs(element, isSmooth);
