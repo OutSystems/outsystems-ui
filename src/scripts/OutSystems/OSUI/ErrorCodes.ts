@@ -249,4 +249,8 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailRemoveProviderEvent: 'OSUI-API-27010',
 		FailSetEditableInput: 'OSUI-API-27011',
 	};
+
+	export const InvalidInput = {
+		FailGetInvalidInput: 'OSUI-API-28001',
+	};
 }
