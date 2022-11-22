@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.Patterns.Tabs {
 	export class TabsConfig extends AbstractConfiguration {
+		public ContentAutoHeight: boolean;
 		public Height: string;
 		public JustifyHeaders: boolean;
 		public StartingTab: number;
@@ -43,6 +44,7 @@ namespace OSFramework.Patterns.Tabs {
 				case Enum.Properties.TabsVerticalPosition:
 					validatedValue = this.validateInRange(value, GlobalEnum.Direction.Left, GlobalEnum.Direction.Right);
 					break;
+				case Enum.Properties.ContentAutoHeight:
 				case Enum.Properties.JustifyHeaders:
 					validatedValue = this.validateBoolean(value as boolean, false);
 					break;

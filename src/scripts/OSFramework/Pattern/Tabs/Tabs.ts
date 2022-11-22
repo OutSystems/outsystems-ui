@@ -471,6 +471,21 @@ namespace OSFramework.Patterns.Tabs {
 			}
 		}
 
+		// Method to set if the Tabs AutoHeight
+		private _setContentAutoHeight(hasAutoHeight: boolean): void {
+			if (this._hasDragGestures === false) {
+				if (hasAutoHeight) {
+					Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClasses.HasContentAutoHeight);
+				} else {
+					Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClasses.HasContentAutoHeight);
+				}
+			} else {
+				console.warn(
+					`Tabs (${this.widgetId}): changes to ${Enum.Properties.ContentAutoHeight} parameter do not affect tabs when Gestures are in use.`
+				);
+			}
+		}
+
 		// Method to set an IntersectionObserver when drag gestures are enable, to detect the activeItem on drag
 		private _setDragObserver(): void {
 			// Observer options
@@ -525,6 +540,7 @@ namespace OSFramework.Patterns.Tabs {
 			Helper.AsyncInvocation(this._setHeight.bind(this), this.configs.Height);
 			Helper.AsyncInvocation(this._setPosition.bind(this), this.configs.TabsVerticalPosition);
 			Helper.AsyncInvocation(this._setIsJustified.bind(this), this.configs.JustifyHeaders);
+			Helper.AsyncInvocation(this._setContentAutoHeight.bind(this), this.configs.ContentAutoHeight);
 
 			if (this._hasDragGestures) {
 				Helper.AsyncInvocation(this.toggleDragGestures.bind(this), true);
@@ -840,6 +856,9 @@ namespace OSFramework.Patterns.Tabs {
 						break;
 					case Enum.Properties.JustifyHeaders:
 						this._setIsJustified(propertyValue as boolean);
+						break;
+					case Enum.Properties.ContentAutoHeight:
+						this._setContentAutoHeight(propertyValue as boolean);
 						break;
 				}
 			}
