@@ -366,7 +366,9 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public close(): void {
-			this._toggleBottomSheet(false);
+			if (this._isOpen) {
+				this._toggleBottomSheet(false);
+			}
 		}
 
 		/**
@@ -395,7 +397,9 @@ namespace OSFramework.Patterns.BottomSheet {
 		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public open(): void {
-			this._toggleBottomSheet(true);
+			if (this._isOpen === false) {
+				this._toggleBottomSheet(true);
+			}
 		}
 
 		/**
