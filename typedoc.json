@@ -8,7 +8,9 @@
     "includeVersion": true,
     "hideGenerator": true,
     "out": "./docs",
-    "sort": "source-order",
+    "sort": [
+        "source-order"
+    ],
     "umlClassDiagram": {
         "type": "detailed",
         "location": "local",
