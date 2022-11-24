@@ -1022,7 +1022,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		public clear(): void {
 			// Get all Selected Items
 			const selectedOptions = this.getChildItems().filter((item) => item.IsSelected);
-			// Go through all the seected option items
+			// Go through all the selected option items
 			for (const optionItem of selectedOptions) {
 				// Unselect it!
 				optionItem.toggleSelected(false);

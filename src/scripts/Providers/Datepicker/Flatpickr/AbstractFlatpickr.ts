@@ -346,7 +346,9 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @memberof Providers.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		public close(): void {
-			this.provider.close();
+			if (this.provider.isOpen) {
+				this.provider.close();
+			}
 		}
 
 		/**
@@ -400,7 +402,9 @@ namespace Providers.Datepicker.Flatpickr {
 		 * @memberof Providers.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		public open(): void {
-			this.provider.open();
+			if (this.provider.isOpen === false) {
+				this.provider.open();
+			}
 		}
 
 		/**

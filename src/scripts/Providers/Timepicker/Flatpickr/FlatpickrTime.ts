@@ -275,7 +275,9 @@ namespace Providers.TimePicker.Flatpickr {
 		 * @memberof Providers.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public close(): void {
-			this.provider.close();
+			if (this.provider.isOpen) {
+				this.provider.close();
+			}
 		}
 
 		/**
@@ -306,7 +308,9 @@ namespace Providers.TimePicker.Flatpickr {
 		 * @memberof Providers.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public open(): void {
-			this.provider.open();
+			if (this.provider.isOpen === false) {
+				this.provider.open();
+			}
 		}
 
 		/**
