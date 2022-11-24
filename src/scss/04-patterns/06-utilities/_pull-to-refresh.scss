@@ -89,14 +89,10 @@
 
 // iOS ---------------------------------------------------------------------------
 ///
-.ios {
-	&.ptr-refresh {
-		.layout-native {
-			&.ios-bounce {
-				.main {
-					overflow: hidden;
-				}
-			}
+.ios.ptr-refresh {
+	.layout-native.ios-bounce {
+		.main {
+			overflow: hidden;
 		}
 	}
 }
