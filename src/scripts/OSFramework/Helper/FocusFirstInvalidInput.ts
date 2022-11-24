@@ -1,22 +1,48 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.Helper {
 	export abstract class InvalidInputs {
+		// Method to check if exists invalid inputs
 		private static _checkInvalidInputs(element: HTMLElement, isSmooth: boolean): void {
 			const notValidClassess = [
-				GlobalEnum.CssClassElements.PlatformNotValid,
-				Patterns.Dropdown.ServerSide.Enum.CssClass.NotValid,
-				Providers.Dropdown.VirtualSelect.Enum.CssClass.NotValid,
+				Constants.Dot + GlobalEnum.CssClassElements.InputNotValid,
+				Constants.Dot + Providers.Datepicker.Flatpickr.Enum.CSSSelectors.DatepickerNotValid,
+				Constants.Dot + Patterns.Dropdown.ServerSide.Enum.CssClass.NotValid,
+				Constants.Dot + Providers.Dropdown.VirtualSelect.Enum.CssClass.NotValid,
 			];
+			// Arrange the class names list for selector
+			const joinClassNames = [notValidClassess].join(Constants.Comma);
+			// Get the first invalid input element
+			const invalidInput = element.querySelectorAll(joinClassNames)[0] as HTMLElement;
 
-			// Method to check if exists invalid inputs
-			for (const className of notValidClassess) {
-				const invalidInput = Helper.Dom.ClassSelector(element, className);
+			// Check if exists a invalid input, based on provided class
+			if (invalidInput) {
+				const inputVisible = window.getComputedStyle(invalidInput).display !== GlobalEnum.CssProperties.None;
 
-				if (invalidInput) {
+				// Check if element exists and is visible on DOM
+				if (inputVisible) {
 					// If True, call scroll to element method to given element
-					OutSystems.OSUI.Utils.ScrollToElement(invalidInput.id, isSmooth);
-					break;
+					this._scrollToInvalidInput(invalidInput, isSmooth);
+				} else {
+					// Check if closest element contains ID
+					Helper.AsyncInvocation(() => {
+						this._searchElementId(invalidInput, isSmooth);
+					});
 				}
+			}
+		}
+
+		// Method to call Utils API > ScrollToElement
+		private static _scrollToInvalidInput(element: HTMLElement, isSmooth: boolean): void {
+			OutSystems.OSUI.Utils.ScrollToElement(element.id, isSmooth);
+		}
+
+		// Method that will search for the closest element with ID
+		private static _searchElementId(element: HTMLElement, isSmooth: boolean): void {
+			const elementToSearch = element.parentElement;
+			if (elementToSearch.id !== '') {
+				this._scrollToInvalidInput(elementToSearch, isSmooth);
+			} else {
+				this._searchElementId(elementToSearch, isSmooth);
 			}
 		}
 

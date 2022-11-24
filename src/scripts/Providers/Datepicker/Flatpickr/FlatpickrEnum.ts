@@ -8,8 +8,12 @@ namespace Providers.Datepicker.Flatpickr.Enum {
 	// CssClasses Enum
 	export enum CssClasses {
 		AccessibilityContainerInfo = 'osui-datepicker-a11y',
-		InputNotValid = 'not-valid',
 		TodayBtn = 'flatpickr-today-button',
+	}
+
+	// CssClasses Enum
+	export enum CSSSelectors {
+		DatepickerNotValid = 'osui-datepicker .not-valid + .input',
 	}
 
 	// Disable Date Types

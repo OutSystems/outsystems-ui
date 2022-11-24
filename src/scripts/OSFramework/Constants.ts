@@ -53,6 +53,9 @@ namespace OSFramework.Constants {
 	/* Used to concatenate when querySelector for a class */
 	export const Dot = '.';
 
+	/* Used to concatenate when querySelectorAll for a list of classes */
+	export const Comma = ',';
+
 	/* Manage if the log messages are visible or not  */
 	export const EnableLogMessages = false;
 
