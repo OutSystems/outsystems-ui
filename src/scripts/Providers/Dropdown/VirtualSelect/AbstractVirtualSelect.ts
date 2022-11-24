@@ -293,9 +293,11 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public disable(): void {
-			this.configs.IsDisabled = true;
+			if (this.configs.IsDisabled === false) {
+				this.configs.IsDisabled = true;
 
-			this._manageDisableStatus();
+				this._manageDisableStatus();
+			}
 		}
 
 		/**
@@ -331,9 +333,11 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public enable(): void {
-			this.configs.IsDisabled = false;
+			if (this.configs.IsDisabled) {
+				this.configs.IsDisabled = false;
 
-			this._manageDisableStatus();
+				this._manageDisableStatus();
+			}
 		}
 
 		/**

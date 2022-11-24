@@ -307,8 +307,10 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public setIsActive(): void {
-			this._isActive = true;
-			Helper.Dom.Styles.AddClass(this.selfElement, Patterns.SectionIndex.Enum.CssClass.IsActiveItem);
+			if (this._isActive === false) {
+				this._isActive = true;
+				Helper.Dom.Styles.AddClass(this.selfElement, Patterns.SectionIndex.Enum.CssClass.IsActiveItem);
+			}
 		}
 
 		/**
@@ -317,8 +319,10 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public unsetIsActive(): void {
-			this._isActive = false;
-			Helper.Dom.Styles.RemoveClass(this.selfElement, Patterns.SectionIndex.Enum.CssClass.IsActiveItem);
+			if (this._isActive) {
+				this._isActive = false;
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Patterns.SectionIndex.Enum.CssClass.IsActiveItem);
+			}
 		}
 
 		/**

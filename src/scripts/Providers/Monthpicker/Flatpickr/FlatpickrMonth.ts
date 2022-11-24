@@ -302,7 +302,9 @@ namespace Providers.MonthPicker.Flatpickr {
 		 * @memberof Providers.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public close(): void {
-			this.provider.close();
+			if (this.provider.isOpen) {
+				this.provider.close();
+			}
 		}
 
 		/**
@@ -333,7 +335,9 @@ namespace Providers.MonthPicker.Flatpickr {
 		 * @memberof Providers.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public open(): void {
-			this.provider.open();
+			if (this.provider.isOpen === false) {
+				this.provider.open();
+			}
 		}
 
 		/**
