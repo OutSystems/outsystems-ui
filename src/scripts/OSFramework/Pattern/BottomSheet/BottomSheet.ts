@@ -25,7 +25,7 @@ namespace OSFramework.Patterns.BottomSheet {
 		// Store if the pattern has gesture events added
 		private _hasGestureEvents: boolean;
 		// Store if the pattern is open
-		private _isOpen: boolean;
+		private _isOpen = false;
 		// WidgetId element
 		private _parentSelf: HTMLElement;
 		// OnToggle event callback
