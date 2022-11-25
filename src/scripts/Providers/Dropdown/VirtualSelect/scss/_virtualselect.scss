@@ -181,10 +181,7 @@
 
 					&:before,
 					&:after {
-						background-color: var(--color-neutral-3);
-						border-radius: var(--border-radius-soft);
-						height: 100%;
-						width: 2px;
+						color: var(--color-neutral-4);
 					}
 				}
 			}
