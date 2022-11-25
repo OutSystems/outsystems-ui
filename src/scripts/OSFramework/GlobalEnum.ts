@@ -32,7 +32,7 @@ namespace OSFramework.GlobalEnum {
 		MainContent = 'main-content',
 		MenuLinks = 'app-menu-links',
 		Placeholder = 'ph',
-		PlatformNotValid = 'not-valid',
+		InputNotValid = 'not-valid',
 	}
 
 	/**
