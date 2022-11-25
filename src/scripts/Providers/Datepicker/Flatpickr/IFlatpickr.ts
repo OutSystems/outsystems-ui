@@ -4,6 +4,6 @@ namespace Providers.Datepicker.Flatpickr {
 	 * Defines the interface for Datepicker Pattern Based on Flatpickr provider
 	 */
 	export interface IFlatpickr
-		extends OSUIFramework.Patterns.DatePicker.IDatePicker,
-			OSUIFramework.Interface.IProviderPattern<Flatpickr> {}
+		extends OSFramework.Patterns.DatePicker.IDatePicker,
+			OSFramework.Interface.IProviderPattern<Flatpickr> {}
 }

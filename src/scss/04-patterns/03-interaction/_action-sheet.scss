@@ -41,7 +41,7 @@
 		}
 
 		&:after {
-			background-color: rgba(0, 0, 0, 0.25);
+			background-color: var(--overlay-background);
 			content: '';
 			display: block;
 			height: 100%;

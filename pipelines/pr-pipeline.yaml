@@ -36,7 +36,7 @@ stages:
 
                               fi
 
-                              if [[ $FILE == *"src/scripts/OSUIFramework/Pattern"* || $FILE == *"src/scss/04-patterns"* ]]; then
+                              if [[ $FILE == *"src/scripts/OSFramework/Pattern"* || $FILE == *"src/scss/04-patterns"* ]]; then
                                   ELEMENT=$(echo $FILE| cut -d/ -f5) # 5th file/folder name in the file path
 
                                   if [[ $ELEMENT == *".scss"* ]]; then 
@@ -91,6 +91,7 @@ stages:
       jobs:
           - job: execute_tests
             displayName: Build and run tests on Safari
+            timeoutInMinutes: 120
             variables:
                 tags: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['check_changes.tags'] ]
                 branch: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['branch_name.branch'] ]
@@ -115,6 +116,7 @@ stages:
       jobs:
           - job: execute_tests
             displayName: Build and run tests on Safari
+            timeoutInMinutes: 120
             variables:
                 tags: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['check_changes.tags'] ]
                 branch: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['branch_name.branch'] ]
@@ -137,6 +139,7 @@ stages:
       jobs:
           - job: execute_tests
             displayName: Build and run tests on Chrome
+            timeoutInMinutes: 120
             variables:
                 tags: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['check_changes.tags'] ]
                 branch: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['branch_name.branch'] ]
@@ -161,6 +164,7 @@ stages:
       jobs:
           - job: execute_tests
             displayName: Build and run tests on Chrome
+            timeoutInMinutes: 120
             variables:
                 tags: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['check_changes.tags'] ]
                 branch: $[ stageDependencies.CheckChanges.CheckChangesJob.outputs['branch_name.branch'] ]

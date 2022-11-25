@@ -49,8 +49,8 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 			}
 
 			// Trigger platform's onChange callback event
-			OSUIFramework.Helper.AsyncInvocation(
-				this._onChangeCallbackEvent,
+			OSFramework.Helper.AsyncInvocation(
+				this._onSelectedCallbackEvent,
 				this.widgetId,
 				_selectedDate[0],
 				_selectedDate[1]
@@ -64,11 +64,37 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 		 * @memberof Flatpickr.RangeDate
 		 */
 		protected prepareConfigs(): void {
+			if (this._isUpdatingDefaultDate === false) {
+				// Check if any Date was selected
+				if (this.provider?.selectedDates.length > 0) {
+					// Set the new Start DefaultDate value
+					this.configs.InitialStartDate = this.provider.selectedDates[0];
+
+					// Set the new End DefaultDate value
+					if (this.provider.selectedDates[1]) {
+						this.configs.InitialEndDate = this.provider.selectedDates[1];
+					}
+				}
+			}
+
+			this._isUpdatingDefaultDate = false;
 			// Get the library configurations
 			this._flatpickrOpts = this.configs.getProviderConfig();
 
 			// Instance will be Created!
-			super.createProviderInstance();
+			this.createProviderInstance();
+		}
+
+		/**
+		 * Trigger the jumToDate to now
+		 *
+		 * @protected
+		 * @memberof Flatpickr.SingleDate
+		 */
+		protected todayBtnClick(event: MouseEvent): void {
+			event.preventDefault();
+
+			this.jumpIntoToday();
 		}
 
 		public build(): void {
@@ -79,18 +105,45 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 			this.finishBuild();
 		}
 
-		// Method used to change given propertyName at OnParametersChange platform event
+		/**
+		 * Method used to change given propertyName at OnParametersChange platform event
+		 *
+		 * @param {string} propertyName the name of the property that will be changed
+		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
+		 * @memberof Flatpickr.RangeDate
+		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
 
 			if (this.isBuilt) {
 				switch (propertyName) {
-					case OSUIFramework.Patterns.DatePicker.Enum.Properties.DateFormat:
+					case OSFramework.Patterns.DatePicker.Enum.Properties.DateFormat:
 						// Check if there is any selected date already
 						this._onUpdateDateFormat();
 						break;
+					case Enum.Properties.InitialEndDate:
+					case Enum.Properties.InitialStartDate:
+						this._isUpdatingDefaultDate = true;
+						this.redraw();
+						break;
 				}
 			}
+		}
+
+		/**
+		 * Method used to update the StartInitialDate and EndInitialDate values
+		 *
+		 * @param startDate The new StartInitialDate value
+		 * @param endDate The new EndInitialDate value
+		 * @memberof Flatpickr.RangeDate
+		 */
+		public updateInitialDate(startDate: string, endDate: string): void {
+			this._isUpdatingDefaultDate = true;
+			// Redefine the Initial dates
+			this.configs.InitialStartDate = startDate;
+			this.configs.InitialEndDate = endDate;
+			// Trigger the Redraw method in order to update calendar with these new values
+			this.redraw();
 		}
 	}
 }

@@ -44,7 +44,7 @@ Bellow there is some comments about the application structure.
     |   |   ├── PatternAPI_HasProvider.ts           # Same as above but when Provider without Mode should also be added
     |   |   └── PatternAPI_HasProviderAndMode.ts    # Same as above but when Provider with Mode should also be added
     |   |
-    |   |   ├── PatternFramework                    # './.../OSUIFramework/Pattern/DatePicker/' when Provider is NOT to be added.
+    |   |   ├── PatternFramework                    # './.../OSFramework/Pattern/DatePicker/' when Provider is NOT to be added.
     |   |   |   ├── scss
     |   |   |   |   └── _pattern.scss               # Used to create _datepicker.scss
     |   |   |   |
@@ -53,16 +53,16 @@ Bellow there is some comments about the application structure.
     |   |   |   ├── PatternConfig.ts                # Used to create DatePickerConfig.ts
     |   |   |   └── PatternEnum.ts                  # Used to create DatePickerEnum.ts
     |   |   |
-    |   |   ├── PatternFramework_HasProvider        # './.../OSUIFramework/Pattern/DatePicker/' when Provider(Flatpickr) SHOULD be added
+    |   |   ├── PatternFramework_HasProvider        # './.../OSFramework/Pattern/DatePicker/' when Provider(Flatpickr) SHOULD be added
     |   |   |   ├── Provider                        # './.../Providers/DatePicker/Flatpickr/' when Mode(SingleDate) is NOT to be added
-    |   |   |   |   ├── PatternFactory.ts           # Used to create DatePickerFactory.ts that will be added to './.../OSUIFramework/Pattern/DatePicker/'
+    |   |   |   |   ├── PatternFactory.ts           # Used to create DatePickerFactory.ts that will be added to './.../OSFramework/Pattern/DatePicker/'
     |   |   |   |   ├── Provider.ts                 # Used to create Flatpickr.ts
     |   |   |   |   ├── ProviderConfig.ts           # Used to create FlatpickrConfig.ts
     |   |   |   |   └── ProviderEnum.ts             # Used to create FlatpickrEnum.ts
     |   |   |   |
     |   |   |   ├── Provider_HasMode                # './.../Providers/DatePicker/Flatpickr/' when Mode(SingleDate) SHOULD be added
     |   |   |   |   ├── IProvider.ts                # Used to create IFlatpickr.ts
-    |   |   |   |   ├── PatternFactory.ts           # Used to create DatePickerFactory.ts that will be added to './.../OSUIFramework/Pattern/DatePicker/'
+    |   |   |   |   ├── PatternFactory.ts           # Used to create DatePickerFactory.ts that will be added to './.../OSFramework/Pattern/DatePicker/'
     |   |   |   |   ├── Provider.ts                 # Used to create AbstractFlatpickr.ts
     |   |   |   |   ├── ProviderConfig.ts           # Used to create AbstractFlatpickrConfig.ts
     |   |   |   |   ├── ProviderEnum.ts             # Used to create AbstractFlatpickrEnum.ts

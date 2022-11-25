@@ -14,9 +14,8 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 			const value = this.getValue();
 
 			this.configs.StartingValueFrom = value as number;
-			this.providerOptions = this.configs.getProviderConfig();
 
-			super.updateRangeSlider();
+			this.updateRangeSlider();
 		}
 
 		// Handler to trigger the OnValueChange event
@@ -47,7 +46,7 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 			this.providerOptions = this.configs.getProviderConfig();
 
 			// Instance will be Created!
-			super.createProviderInstance();
+			this.createProviderInstance();
 		}
 
 		/**
@@ -101,12 +100,45 @@ namespace Providers.RangeSlider.NoUISlider.SingleSlider {
 
 			if (this.isBuilt) {
 				switch (propertyName) {
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
+					case OSFramework.Patterns.RangeSlider.Enum.Properties.StartingValueFrom:
+						this.setValue(propertyValue as number);
+						console.warn(
+							`${OSFramework.GlobalEnum.PatternName.RangeSlider}: (${this.widgetId}): You should use a distinct variable to assign on the OnValueChange event. Any updates to ${OSFramework.Patterns.RangeSlider.Enum.Properties.InitialValueFrom} parameter should ideally be made using the SetRangeSliderValue Client Action.`
+						);
+						break;
+					case OSFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
 						// Library only supports update on some options, so we need to
 						// destroy the object and create a new RangeSlider
 						this._updateRangeSlider();
 						break;
 				}
+			}
+		}
+
+		/**
+		 * Method to set current RangeSlider value
+		 *
+		 * @memberof OSUINoUiSlider
+		 */
+		public resetValue(): void {
+			this.configs.StartingValueFrom = this.configs.InitialValueFrom;
+			this.provider.set(this.configs.InitialValueFrom);
+		}
+
+		/**
+		 * Method to set current RangeSlider value
+		 *
+		 * @param {number} value
+		 * @memberof OSUINoUiSlider
+		 */
+		public setValue(value: number): void {
+			if (value >= this.configs.MinValue && value <= this.configs.MaxValue) {
+				this.configs.StartingValueFrom = value;
+				this.provider.set(value);
+			} else {
+				throw new Error(
+					`${OSFramework.ErrorCodes.RangeSlider.FailSetValue}: The value must be between the minimum value and maximum value set.`
+				);
 			}
 		}
 	}

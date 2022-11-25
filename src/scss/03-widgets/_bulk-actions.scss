@@ -5,6 +5,12 @@
 
 ///
 .table {
+	// Add this selector to fix the horizontal align of checkbox enclosed on a container
+	div span [data-checkbox] {
+		display: inline-block;
+		vertical-align: middle;
+	}
+
 	[data-checkbox] {
 		display: block;
 		height: 16px;

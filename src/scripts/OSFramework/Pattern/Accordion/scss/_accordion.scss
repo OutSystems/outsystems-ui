@@ -1,0 +1,66 @@
+/*! Patterns - Content - Accordion */
+////
+/// @group Patterns-Accordion
+/// Patterns - Content - Accordion
+
+///
+.osui-accordion {
+	// Style the first accordionItem inside accordion and/or list
+	:first-child:not(.list) >,
+	.list :first-child > {
+		.osui-accordion-item {
+			border-radius: var(--border-radius-none);
+			border-top-left-radius: var(--border-radius-soft);
+			border-top-right-radius: var(--border-radius-soft);
+		}
+	}
+
+	// Style the last accordionItem inside accordion and/or list
+	:last-child:not(.list) >,
+	.list :last-child > {
+		.osui-accordion-item {
+			border-bottom-width: var(--border-size-s);
+			border-radius: var(--border-radius-none);
+			border-bottom-left-radius: var(--border-radius-soft);
+			border-bottom-right-radius: var(--border-radius-soft);
+		}
+	}
+
+	// When accordionItem is used isolated or only 1 item on the list
+	:only-child >,
+	.list :only-child > {
+		.osui-accordion-item {
+			border-radius: var(--border-radius-soft);
+		}
+	}
+
+	// Style the first accordionItem active border inside accordion
+	:first-child:not(.list) > {
+		.osui-accordion-item {
+			&::after {
+				border-top-left-radius: var(--border-radius-soft);
+				border-top-right-radius: var(--border-radius-soft);
+			}
+		}
+	}
+
+	& &-item,
+	.list .osui-accordion-item {
+		border-radius: var(--border-radius-none);
+	}
+
+	// Style all the accordion items once inside an accordion
+	& &-item {
+		border-bottom-width: var(--border-size-none);
+
+		&::after {
+			border-top-left-radius: var(--border-radius-none);
+			border-top-right-radius: var(--border-radius-none);
+		}
+
+		// ServiceStudio Preview
+		& {
+			-servicestudio-border-bottom-width: var(--border-size-s);
+		}
+	}
+}

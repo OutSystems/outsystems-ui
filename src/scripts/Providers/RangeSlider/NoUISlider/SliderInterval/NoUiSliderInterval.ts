@@ -16,8 +16,6 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 			this.configs.StartingValueFrom = value[0];
 			this.configs.StartingValueTo = value[1];
 
-			this.providerOptions = this.configs.getProviderConfig();
-
 			super.updateRangeSlider();
 		}
 
@@ -54,7 +52,7 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 			this.providerOptions = this.configs.getProviderConfig();
 
 			// Instance will be Created!
-			super.createProviderInstance();
+			this.createProviderInstance();
 		}
 
 		/**
@@ -109,17 +107,57 @@ namespace Providers.RangeSlider.NoUISlider.IntervalSlider {
 
 			if (this.isBuilt) {
 				switch (propertyName) {
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueTo:
+					case OSFramework.Patterns.RangeSlider.Enum.Properties.StartingValueFrom:
+						this.setValue(propertyValue as number, this.configs.StartingValueTo);
 						console.warn(
-							`${OSUIFramework.GlobalEnum.PatternsNames.RangeSliderInterval}': (${this.widgetId}): changes to ${OSUIFramework.Patterns.RangeSlider.Enum.Properties.StartingValueTo} parameter do not affect the ${OSUIFramework.GlobalEnum.PatternsNames.RangeSliderInterval}'. Use a distinct variable to assign on the OnValueChange event`
+							`${OSFramework.GlobalEnum.PatternName.RangeSliderInterval}: (${this.widgetId}): You should use a distinct variable to assign on the OnValueChange event. Any updates to ${OSFramework.Patterns.RangeSlider.Enum.Properties.InitialValueFrom} parameter should ideally be made using the SetRangeSliderIntervalValue Client Action.`
 						);
 						break;
-					case OSUIFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
+					case OSFramework.Patterns.RangeSlider.Enum.Properties.StartingValueTo:
+						this.setValue(this.configs.StartingValueFrom, propertyValue as number);
+						console.warn(
+							`${OSFramework.GlobalEnum.PatternName.RangeSliderInterval}: (${this.widgetId}): You should use a distinct variable to assign on the OnValueChange event. Any updates to ${OSFramework.Patterns.RangeSlider.Enum.Properties.InitialValueTo} parameter should ideally be made using the SetRangeSliderIntervalValue Client Action.`
+						);
+						break;
+					case OSFramework.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
 						// Library only supports update on some options, so we need to
 						// destroy the object and create a new RangeSlider
 						this._updateRangeSlider();
 						break;
 				}
+			}
+		}
+
+		/**
+		 * Method to set current RangeSliderInterval value
+		 *
+		 * @memberof OSUINoUiSlider
+		 */
+		public resetValue(): void {
+			this.configs.StartingValueFrom = this.configs.InitialValueFrom;
+			this.configs.StartingValueTo = this.configs.InitialValueTo;
+			this.provider.set([this.configs.InitialValueFrom, this.configs.InitialValueTo]);
+		}
+
+		/**
+		 * Method to set current RangeSliderInterval values
+		 *
+		 * @param {number} value
+		 * @memberof OSUINoUiSlider
+		 */
+		public setValue(intervalStart: number, intervalEnd: number): void {
+			if (intervalStart < intervalEnd) {
+				this.configs.StartingValueFrom = intervalStart;
+				this.configs.StartingValueTo = intervalEnd;
+				this.provider.set([intervalStart, intervalEnd]);
+			} else if (intervalStart > this.configs.MinValue && intervalEnd < this.configs.MaxValue) {
+				throw new Error(
+					`${OSFramework.ErrorCodes.RangeSlider.FailSetValue}: The values must be within the specified range.`
+				);
+			} else {
+				throw new Error(
+					`${OSFramework.ErrorCodes.RangeSlider.FailSetValue}: The start value cannot be bigger than the end value.`
+				);
 			}
 		}
 	}

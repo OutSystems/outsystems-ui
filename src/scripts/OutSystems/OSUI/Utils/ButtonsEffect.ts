@@ -17,12 +17,12 @@ namespace OutSystems.OSUI.Utils {
 	}
 
 	function _clickEffect(el: HTMLElement) {
-		const spanEl: HTMLElement = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Span);
+		const spanEl: HTMLElement = document.createElement(OSFramework.GlobalEnum.HTMLElement.Span);
 		spanEl.classList.add('scale-animation');
 
 		el.appendChild(spanEl);
 
-		el.addEventListener(OSUIFramework.GlobalEnum.HTMLEvent.AnimationEnd, OnTransitionEnd, false);
+		el.addEventListener(OSFramework.GlobalEnum.HTMLEvent.AnimationEnd, OnTransitionEnd, false);
 		el.addEventListener('webkitAnimationEnd', OnTransitionEnd, false);
 
 		function OnTransitionEnd() {
@@ -33,7 +33,7 @@ namespace OutSystems.OSUI.Utils {
 	}
 
 	function _buttonEffect(el: HTMLElement) {
-		const spanEl: HTMLElement = document.createElement(OSUIFramework.GlobalEnum.HTMLElement.Span);
+		const spanEl: HTMLElement = document.createElement(OSFramework.GlobalEnum.HTMLElement.Span);
 		spanEl.classList.add('btn-animation');
 		el.appendChild(spanEl);
 
@@ -61,5 +61,5 @@ namespace OutSystems.OSUI.Utils {
 		return undefined;
 	}
 
-	OSUIFramework.Event.GlobalEventManager.Instance.addHandler(OSUIFramework.Event.Type.BodyOnClick, _bodyClick);
+	OSFramework.Event.GlobalEventManager.Instance.addHandler(OSFramework.Event.Type.BodyOnClick, _bodyClick);
 }

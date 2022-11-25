@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.<%= patternNamePC %>API {
-	const _<%= patternName %>ItemsMap = new Map<string, OSUIFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %>>(); //<%= patternNamePC %>.uniqueId -> <%= patternNamePC %> obj
+	const _<%= patternName %>ItemsMap = new Map<string, OSFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %>>(); //<%= patternNamePC %>.uniqueId -> <%= patternNamePC %> obj
 
 	/**
 	 * Function that will change the property of a given <%= patternNamePC %> Id.
@@ -25,14 +25,14 @@ namespace OutSystems.OSUI.Patterns.<%= patternNamePC %>API {
 	 * @param {string} provider Set which provider should be used to create the <%= patternNamePC %> instance.
 	 * @param {string} mode Set which <%= patternNamePC %> type should be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSUIFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %>}
+	 * @return {*}  {OSFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %>}
 	 */
 	export function Create(
 		<%= patternName %>Id: string,
 		provider: string,
-		mode: OSUIFramework.Patterns.<%= patternNamePC %>.Enum.Mode,
+		mode: OSFramework.Patterns.<%= patternNamePC %>.Enum.Mode,
 		configs: string
-	): OSUIFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %> {
+	): OSFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %> {
 		if (_<%= patternName %>ItemsMap.has(<%= patternName %>Id)) {
 			/* TODO (by CreateNewPattern): 
 				The line below is created by the CreateNewPattern mechanism, that is not able to replace values
@@ -41,7 +41,7 @@ namespace OutSystems.OSUI.Patterns.<%= patternNamePC %>API {
 			throw new Error("There is already an <%= patternNamePC %> registered under id: "+<%= patternName %>Id);
 		}
 
-		const _<%= patternName %>Item = OSUIFramework.Patterns.<%= patternNamePC %>.Factory.New<%= patternNamePC %>(
+		const _<%= patternName %>Item = OSFramework.Patterns.<%= patternNamePC %>.Factory.New<%= patternNamePC %>(
 			<%= patternName %>Id,
 			provider,
 			mode,
@@ -74,7 +74,7 @@ namespace OutSystems.OSUI.Patterns.<%= patternNamePC %>API {
 	 * @return {*}  Array<string>
 	 */
 	export function GetAll<%= patternNamePC %>ItemsMap(): Array<string> {
-		return OSUIFramework.Helper.MapOperation.ExportKeys(_<%= patternName %>ItemsMap);
+		return OSFramework.Helper.MapOperation.ExportKeys(_<%= patternName %>ItemsMap);
 	}
 
 	/**
@@ -82,14 +82,14 @@ namespace OutSystems.OSUI.Patterns.<%= patternNamePC %>API {
 	 *
 	 * @export
 	 * @param {string} <%= patternName %>Id ID of the <%= patternNamePC %> that will be looked for.
-	 * @return {*}  {OSUIFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %>;}
+	 * @return {*}  {OSFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %>;}
 	 */
-	export function Get<%= patternNamePC %>ItemById(<%= patternName %>Id: string): OSUIFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %> {
-		return OSUIFramework.Helper.MapOperation.FindInMap(
+	export function Get<%= patternNamePC %>ItemById(<%= patternName %>Id: string): OSFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %> {
+		return OSFramework.Helper.MapOperation.FindInMap(
 			'<%= patternNamePC %>',
 			<%= patternName %>Id,
 			_<%= patternName %>ItemsMap
-		) as OSUIFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %>;
+		) as OSFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %>;
 	}
 
 	/**
@@ -97,9 +97,9 @@ namespace OutSystems.OSUI.Patterns.<%= patternNamePC %>API {
 	 *
 	 * @export
 	 * @param {string} <%= patternName %>Id ID of the <%= patternNamePC %>Item that will be initialized.
-	 * @return {*}  {OSUIFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %>}
+	 * @return {*}  {OSFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %>}
 	 */
-	export function Initialize(<%= patternName %>Id: string): OSUIFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %> {
+	export function Initialize(<%= patternName %>Id: string): OSFramework.Patterns.<%= patternNamePC %>.I<%= patternNamePC %> {
 		const _<%= patternName %>Item = Get<%= patternNamePC %>ItemById(<%= patternName %>Id);
 
 		_<%= patternName %>Item.build();
@@ -113,15 +113,15 @@ namespace OutSystems.OSUI.Patterns.<%= patternNamePC %>API {
 	 * @export
 	 * @param {string} <%= patternName %>Id
 	 * @param {string} eventName
-	 * @param {OSUIFramework.Callbacks.OSGeneric} callback
+	 * @param {OSFramework.Callbacks.OSGeneric} callback
 	 */
-	export function RegisterProviderCallback(
+	export function RegisterCallback(
 		<%= patternName %>Id: string,
 		eventName: string,
-		callback: OSUIFramework.Callbacks.OSGeneric
+		callback: OSFramework.Callbacks.OSGeneric
 	): void {
 		const _<%= patternName %> = this.Get<%= patternNamePC %>ItemById(<%= patternName %>Id);
 
-		_<%= patternName %>.registerProviderCallback(eventName, callback);
+		_<%= patternName %>.registerCallback(eventName, callback);
 	}
 }

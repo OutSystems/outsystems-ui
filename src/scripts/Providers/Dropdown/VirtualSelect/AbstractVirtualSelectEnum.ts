@@ -1,6 +1,14 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.Dropdown.VirtualSelect.Enum {
 	/**
+	 * VirtualSelect provider info
+	 */
+	export enum ProviderInfo {
+		Name = 'VirtualSelect',
+		Version = '1.0.31',
+	}
+
+	/**
 	 * CSS Classes
 	 */
 	export enum CssClass {
@@ -22,11 +30,12 @@ namespace Providers.Dropdown.VirtualSelect.Enum {
 	 * Properties
 	 */
 	export enum Properties {
+		NoOptionsText = 'NoOptionsText',
 		NoResultsText = 'NoResultsText',
 		OptionsList = 'OptionsList',
 		Prompt = 'Prompt',
 		SearchPrompt = 'SearchPrompt',
-		SelectedOptions = 'SelectedOptions',
+		StartingSelection = 'StartingSelection',
 	}
 
 	/**
@@ -36,5 +45,9 @@ namespace Providers.Dropdown.VirtualSelect.Enum {
 		Icon = 'Icon',
 		Image = 'Image',
 		None = 'None',
+	}
+
+	export enum ExtendedConfigs {
+		hasOptionDescription = 'hasOptionDescription',
 	}
 }

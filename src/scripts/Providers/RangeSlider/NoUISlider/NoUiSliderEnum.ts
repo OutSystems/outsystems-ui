@@ -1,5 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.RangeSlider.NoUiSlider.Enum {
+	export enum ProviderInfo {
+		Name = 'noUISlider',
+		Version = '15.6.0',
+	}
+
 	export enum NoUISliderLabels {
 		Lower = 'lower-handle',
 		Single = 'handle',

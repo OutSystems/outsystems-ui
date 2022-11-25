@@ -3,18 +3,27 @@ namespace OutSystems.OSUI.Language {
 	/**
 	 * Method that will expose the App Language
 	 *
-	 * @returns Server Date Format
+	 * @returns All Language
 	 */
-	export function GetLanguage(): string {
-		return OSUIFramework.Helper.Language.Lang;
+	export function Get(): string {
+		return OSFramework.Helper.Language.Lang;
 	}
 
 	/**
-	 * Used to trigger the OSUIFramework method responsible for set the App Language
+	 * Method that will expose the Short App Language
 	 *
-	 * @param date A Sample Date that will be used to set the ServerDateFormat
+	 * @returns Short App Language
 	 */
-	export function SetLanguage(language: string): void {
-		OSUIFramework.Helper.Language.SetLanguage(language);
+	export function GetShort(): string {
+		return OSFramework.Helper.Language.ShortLang;
+	}
+
+	/**
+	 * Used to set the App Language global variable based on platform GetLocale Action
+	 *
+	 * @param lang The Lang code to be set
+	 */
+	export function Set(lang: string): void {
+		OSFramework.Helper.Language.Set(lang);
 	}
 }

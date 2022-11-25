@@ -1,0 +1,412 @@
+/*! =========================================================================== */
+/*!  OutSystems UI                                                              */
+/*!  For more information, visit www.outsystems.com/outsystems-ui               */
+/*!                                                                             */
+/*!  Root - CSS Variables                                                       */
+/*!  Resets                                                                     */
+/*!  HTML Elements                                                              */
+/*!     - Links                                                                 */
+/*!     - Images                                                                */
+/*!     - Headings                                                              */
+/*!  Page Layout                                                                */
+/*!     - Header                                                                */
+/*!     - Layout Native - Header                                                */
+/*!     - Layout Side - Header                                                  */
+/*!     - Menu                                                                  */
+/*!     - Layout Native - Menu                                                  */
+/*!     - Layout Side - Menu                                                    */
+/*!     - Menu - Header Logo                                                    */
+/*!     - Menu - App Menu Link                                                  */
+/*!     - Menu - App Login Info                                                 */
+/*!     - Content                                                               */
+/*!     - ThemeGrid_Container                                                   */
+/*!     - Section                                                               */
+/*!     - Login                                                                 */
+/*!     - iOS Scroll Bounce                                                     */
+/*!  Widgets                                                                    */
+/*!     - Inputs and TextAreas                                                  */
+/*!     - Switch                                                                */
+/*!     - Checkbox                                                              */
+/*!     - Dropdown                                                              */
+/*!     - Button                                                                */
+/*!     - List                                                                  */
+/*!     - List Item                                                             */
+/*!     - Table                                                                 */
+/*!     - Table - Sortable Icon                                                 */
+/*!     - Table - Bulk Actions                                                  */
+/*!     - Form                                                                  */
+/*!     - Upload                                                                */
+/*!     - Button Group                                                          */
+/*!     - Popover                                                               */
+/*!     - Popup                                                                 */
+/*!     - Feedback Message                                                      */
+/*!     - Radio Button                                                          */
+/*!  Patterns                                                                   */
+/*!     - Adaptive                                                              */
+/*!         - Columns                                                           */
+/*!         - Gallery                                                           */
+/*!         - Master Detail                                                     */
+/*!     - Content                                                               */
+/*!         - Accordion                                                         */
+/*!         - Accordion Item                                                    */
+/*!         - Alert                                                             */
+/*!         - Blank Slate                                                       */
+/*!         - Card                                                              */
+/*!         - Card Background                                                   */
+/*!         - CardItem                                                          */
+/*!         - Card Sectioned                                                    */
+/*!         - Chat Message                                                      */
+/*!         - Flip_Content                                                      */
+/*!         - Floating Content                                                  */
+/*!         - List Item Content                                                 */
+/*!         - Section                                                           */
+/*!         - Tag                                                               */
+/*!         - Tooltip                                                           */
+/*!         - User Avatar                                                       */
+/*!     - Interaction                                                           */
+/*!         - Action Sheet                                                      */
+/*!         - Animate                                                           */
+/*!         - Animated Label                                                    */
+/*!         - BottomSheet                                                       */
+/*!         - Carousel                                                          */
+/*!         - DatePicker                                                        */
+/*!         - Dropdown                                                          */
+/*!         - DropdownServerSide                                                */
+/*!         - DropdownServerSideItem                                            */
+/*!         - DropdownSearch                                                    */
+/*!         - DropdownTags                                                      */
+/*!         - Floating Actions                                                  */
+/*!         - Input With Icon                                                   */
+/*!         - Lightbox Image                                                    */
+/*!         - MonthPicker                                                       */
+/*!         - Notification                                                      */
+/*!         - Range Slider                                                      */
+/*!         - Scrollable Area                                                   */
+/*!         - Search                                                            */
+/*!         - Sidebar                                                           */
+/*!         - Stacked Cards                                                     */
+/*!         - TimePicker                                                        */
+/*!         - Video                                                             */
+/*!     - Navigation                                                            */
+/*!         - Bottom Bar Item                                                   */
+/*!         - Breadcrumbs                                                       */
+/*!         - Pagination                                                        */
+/*!         - Section Index                                                     */
+/*!         - Submenu                                                           */
+/*!         - Tabs                                                              */
+/*!         - Timeline                                                          */
+/*!         - Wizard                                                            */
+/*!     - Numbers                                                               */
+/*!         - Badge                                                             */
+/*!         - Counter                                                           */
+/*!         - Icon Badge                                                        */
+/*!         - ProgressBar                                                       */
+/*!         - ProgressCircle                                                    */
+/*!         - Progress Circle Fraction                                          */
+/*!         - Rating                                                            */
+/*!     - Utilities                                                             */
+/*!         - Align Center                                                      */
+/*!         - Button Loading                                                    */
+/*!         - Center Content                                                    */
+/*!         - Margin Container                                                  */
+/*!         - Separator                                                         */
+/*!         - Pull to Refresh                                                   */
+/*!         - List Updating                                                     */
+/*!  Deprecated Patterns                                                        */
+/*!     - Content                                                               */
+/*!         - Accordion                                                         */
+/*!         - Submenu                                                           */
+/*!         - Tooltip                                                           */
+/*!     - Interaction                                                           */
+/*!         - Carousel                                                          */
+/*!         - DatePicker                                                        */
+/*!         - Dropdown Search and Tags, common styles                           */
+/*!         - Dropdown Search                                                   */
+/*!         - Dropdown Tags                                                     */
+/*!         - Horizontal Scroll                                                 */
+/*!         - Notification                                                      */
+/*!         - Sidebar                                                           */
+/*!     - Navigation                                                            */
+/*!         - Tabs                                                              */
+/*!     - Numbers                                                               */
+/*!         - Progress Bar                                                      */
+/*!         - Progress Circle                                                   */
+/*!     - Utilities                                                             */
+/*!         - ButtonLoading                                                     */
+/*!  Usefull Classes                                                            */
+/*!     - a11y (Accessibility)                                                  */
+/*!     - Colors                                                                */
+/*!         - Colors Brand                                                      */
+/*!         - Colors Neutral                                                    */
+/*!         - Colors Palette                                                    */
+/*!         - Colors Semantic                                                   */
+/*!     - Overlays                                                              */
+/*!     - Text                                                                  */
+/*!     - Typography                                                            */
+/*!     - Border                                                                */
+/*!         - Border Size                                                       */
+/*!         - Border Radius                                                     */
+/*!     - Margin                                                                */
+/*!     - Padding                                                               */
+/*!     - Shadow                                                                */
+/*!     - Box                                                                   */
+/*!         - Box Width                                                         */
+/*!         - Box Height                                                        */
+/*!     - Display                                                               */
+/*!         - Display Flex                                                      */
+/*!         - Display Align                                                     */
+/*!     - Images                                                                */
+/*!     - Overflow                                                              */
+/*!     - Visibility                                                            */
+/*!     - Position                                                              */
+/*!     - Position Absolute                                                     */
+/*!     - Miscellaneous                                                         */
+/*!  Screen Transitions                                                         */
+/*!     - Keyframes                                                             */
+/*!         - Animations                                                        */
+/*!         - Animate                                                           */
+/*!         - Button Loading                                                    */
+/*!         - List Item                                                         */
+/*!         - Feedback Message                                                  */
+/*!         - Pull To Refresh                                                   */
+/*!         - Miscellaneous                                                     */
+/*!  Service Studio Preview                                                     */
+/*!     - Deprecated block preview                                              */
+/*! =========================================================================== */
+
+// SCSS Setup variables
+@import '00-abstract/setup-global-vars';
+@import '00-abstract/setup-global-typography-vars';
+@import '00-abstract/setup-color-vars';
+@import '00-abstract/setup-border-vars';
+
+// Abstract Elements - Function & Mixins
+@import '00-abstract/functions';
+@import '00-abstract/mixins';
+
+/*! =========================================================================== */
+/*! Root - CSS Variables                                                        */
+/*! =========================================================================== */
+@import '01-foundations/root';
+
+/*! =========================================================================== */
+/*! Resets                                                                      */
+/*! =========================================================================== */
+@import '01-foundations/resets';
+
+/*! =========================================================================== */
+/*! HTML Elements                                                               */
+/*! =========================================================================== */
+@import '01-foundations/html-elements-link';
+@import '01-foundations/html-elements-img';
+@import '01-foundations/html-elements-headings';
+
+/*! =========================================================================== */
+/*! Page Layout                                                                 */
+/*! =========================================================================== */
+@import '02-layout/layout';
+@import '02-layout/header';
+@import '02-layout/header-layout-native';
+@import '02-layout/header-layout-side';
+@import '02-layout/menu';
+@import '02-layout/menu-layout-native';
+@import '02-layout/menu-layout-side';
+@import '02-layout/menu-header-logo';
+@import '02-layout/menu-app-menu-links';
+@import '02-layout/menu-app-login-info';
+@import '02-layout/content';
+@import '02-layout/themegrid-container';
+@import '02-layout/section';
+@import '02-layout/login';
+@import '02-layout/ios-bounce';
+
+/*! =========================================================================== */
+/*! Widgets                                                                     */
+/*! =========================================================================== */
+@import '03-widgets/inputs-and-textareas';
+@import '03-widgets/switch';
+@import '03-widgets/checkbox';
+@import '03-widgets/dropdown';
+@import '03-widgets/btn';
+@import '03-widgets/list';
+@import '03-widgets/list-item';
+@import '03-widgets/table';
+@import '03-widgets/table-sortable-icon';
+@import '03-widgets/bulk-actions';
+@import '03-widgets/form';
+@import '03-widgets/upload';
+@import '03-widgets/button-group';
+@import '03-widgets/popover';
+@import '03-widgets/popup';
+@import '03-widgets/feedback-message';
+@import '03-widgets/radio-button';
+
+/*! =========================================================================== */
+/*! Patterns                                                                    */
+/*! =========================================================================== */
+
+/* ============================================================================ */
+/*      - Adaptive                                                              */
+/* ============================================================================ */
+@import '04-patterns/01-adaptive/columns';
+@import '../scripts/OSFramework/Pattern/Gallery/scss/gallery';
+@import '04-patterns/01-adaptive/master-detail';
+
+/* ============================================================================ */
+/*      - Content                                                               */
+/* ============================================================================ */
+@import '../scripts/OSFramework/Pattern/Accordion/scss/accordion';
+@import '../scripts/OSFramework/Pattern/AccordionItem/scss/accordion-item';
+@import '04-patterns/02-content/alert';
+@import '04-patterns/02-content/blank-slate';
+@import '04-patterns/02-content/card';
+@import '04-patterns/02-content/card-background';
+@import '04-patterns/02-content/card-item';
+@import '04-patterns/02-content/card-sectioned';
+@import '04-patterns/02-content/chat-message';
+@import '../scripts/OSFramework/Pattern/FlipContent/scss/flipcontent';
+@import '04-patterns/02-content/floating-content';
+@import '04-patterns/02-content/list-item-content';
+@import '04-patterns/02-content/section';
+@import '04-patterns/02-content/tag';
+@import '../scripts/OSFramework/Pattern/Tooltip/scss/tooltip';
+@import '04-patterns/02-content/user-avatar';
+
+/* ============================================================================ */
+/*      - Interaction                                                           */
+/* ============================================================================ */
+@import '04-patterns/03-interaction/action-sheet';
+@import '04-patterns/03-interaction/animate';
+@import '../scripts/OSFramework/Pattern/AnimatedLabel/scss/animated-label';
+@import '../scripts/OSFramework/Pattern/BottomSheet/scss/bottomsheet';
+@import '../scripts/OSFramework/Pattern/Carousel/scss/carousel';
+// Flatpickr Library Core Styles (flatpickr_lib) - shared between Date and Time Pickers
+@import '../scripts/Providers/SharedProviderResources/Flatpickr/scss/flatpickr_lib';
+@import '../scripts/OSFramework/Pattern/DatePicker/scss/_datepicker';
+@import '../scripts/OSFramework/Pattern/Dropdown/scss/dropdown';
+@import '../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-serverside';
+@import '../scripts/OSFramework/Pattern/DropdownServerSideItem/scss/dropdownserversideitem';
+@import '../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-search';
+@import '../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-tags';
+@import '04-patterns/03-interaction/floating-actions';
+@import '04-patterns/03-interaction/input-with-icon';
+@import '04-patterns/03-interaction/lightbox-image';
+@import '../scripts/OSFramework/Pattern/MonthPicker/scss/_monthpicker';
+@import '../scripts/OSFramework/Pattern/Notification/scss/notification';
+@import '../scripts/OSFramework/Pattern/RangeSlider/scss/rangeslider';
+@import '04-patterns/03-interaction/scrollable-area';
+@import '04-patterns/03-interaction/search';
+@import '../scripts/OSFramework/Pattern/Sidebar/scss/sidebar';
+@import '04-patterns/03-interaction/stacked-cards';
+@import '../scripts/OSFramework/Pattern/TimePicker/scss/timepicker';
+@import '04-patterns/03-interaction/video';
+
+/* ============================================================================ */
+/*      - Navigation                                                            */
+/* ============================================================================ */
+@import '04-patterns/04-navigation/bottom-bar-item';
+@import '04-patterns/04-navigation/breadcrumbs';
+@import '04-patterns/04-navigation/pagination';
+@import '../scripts/OSFramework/Pattern/SectionIndex/scss/sectionindex';
+@import '../scripts/OSFramework/Pattern/Submenu/scss/submenu';
+@import '../scripts/OSFramework/Pattern/Tabs/scss/tabs';
+@import '04-patterns/04-navigation/timeline';
+@import '04-patterns/04-navigation/wizard';
+
+/* ============================================================================ */
+/*      - Numbers                                                               */
+/* ============================================================================ */
+@import '04-patterns/05-numbers/badge';
+@import '04-patterns/05-numbers/counter';
+@import '04-patterns/05-numbers/icon-badge';
+@import '../scripts/OSFramework/Pattern/Progress/Bar/scss/progressbar';
+@import '../scripts/OSFramework/Pattern/Progress/Circle/scss/progresscircle';
+@import '../scripts/OSFramework/Pattern/Rating/scss/rating';
+
+/* ============================================================================ */
+/*      - Utilities                                                             */
+/* ============================================================================ */
+@import '04-patterns/06-utilities/align-center';
+@import '../scripts/OSFramework/Pattern/ButtonLoading/scss/button-loading';
+@import '04-patterns/06-utilities/center-content';
+@import '04-patterns/06-utilities/margin-container';
+@import '04-patterns/06-utilities/separator';
+@import '04-patterns/06-utilities/pull-to-refresh';
+@import '04-patterns/06-utilities/list-updating';
+
+/*! =========================================================================== */
+/*! Deprecated Patterns                                                         */
+/*! =========================================================================== */
+@import '10-deprecated/accordion-deprecated';
+@import '10-deprecated/button-loading-deprecated';
+@import '10-deprecated/carousel-deprecated';
+@import '10-deprecated/date-picker-deprecated';
+@import '10-deprecated/dropdown-search-and-tags-deprecated';
+@import '10-deprecated/dropdown-search-deprecated';
+@import '10-deprecated/dropdown-tags-deprecated';
+@import '10-deprecated/flip-content-deprecated';
+@import '10-deprecated/gallery-deprecated';
+@import '10-deprecated/horizontal-scroll-deprecated';
+@import '10-deprecated/notification-deprecated';
+@import '10-deprecated/progress-bar-deprecated';
+@import '10-deprecated/progress-circle-deprecated';
+@import '10-deprecated/progress-circle-fraction-deprecated';
+@import '10-deprecated/section-index-deprecated';
+@import '10-deprecated/sidebar-deprecated';
+@import '10-deprecated/submenu-deprecated';
+@import '10-deprecated/tabs-deprecated';
+@import '10-deprecated/tooltip-deprecated';
+
+/*! =========================================================================== */
+/*! Usefull Classes                                                             */
+/*! =========================================================================== */
+@import '05-useful/a11y';
+@import '05-useful/colors-brand';
+@import '05-useful/colors-neutral';
+@import '05-useful/colors-palette';
+@import '05-useful/colors-semantic';
+@import '05-useful/colors-others';
+@import '05-useful/text';
+@import '05-useful/typography';
+@import '05-useful/border-size';
+@import '05-useful/border-radius';
+@import '05-useful/space-margin';
+@import '05-useful/space-padding';
+@import '05-useful/shadow';
+@import '05-useful/box-width';
+@import '05-useful/box-height';
+@import '05-useful/display';
+@import '05-useful/display-flex';
+@import '05-useful/display-align';
+@import '05-useful/images';
+@import '05-useful/overflow';
+@import '05-useful/visibility';
+@import '05-useful/positioning';
+@import '05-useful/positioning-absolute';
+@import '05-useful/miscellaneous';
+
+/*! =========================================================================== */
+/*! Screen Transitions                                                          */
+/*! =========================================================================== */
+@import '06-screen-transitions/screen-transitions';
+
+/*! =========================================================================== */
+/*! Keyframes - Animations                                                      */
+/*! =========================================================================== */
+@import '07-keyframes/animate';
+@import '07-keyframes/btn-loading';
+@import '07-keyframes/list-item';
+@import '07-keyframes/feedback-message';
+@import '07-keyframes/pull-to-refresh';
+@import '07-keyframes/miscellaneous';
+
+/*! =========================================================================== */
+/*! Service Studio Preview                                                      */
+/*! =========================================================================== */
+@import '08-servicestudio-preview/servicestudiopreview';
+@import '08-servicestudio-preview/deprecated-preview';
+
+/* ============================================================================ */
+/* Excluders                                                                    */
+/* ============================================================================ */
+@import '09-excluders/excluders';

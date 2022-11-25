@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSUIFramework.Patterns.<%= patternNamePC %> {
+namespace OSFramework.Patterns.<%= patternNamePC %> {
 	export abstract class Abstract<%= patternNamePC %><P, C extends Abstract<%= patternNamePC %>Config>
 		extends AbstractPattern<C>
 		implements I<%= patternNamePC %>, Interface.IProviderPattern<P>
@@ -20,6 +20,6 @@ namespace OSUIFramework.Patterns.<%= patternNamePC %> {
 
 		// TODO (by CreateNewPattern): Implement abstract methods that all inherit instances should have
 
-		public abstract registerProviderCallback(eventName: string, callback: Callbacks.OSGeneric): void;
+		public abstract registerCallback(eventName: string, callback: Callbacks.OSGeneric): void;
 	}
 }
