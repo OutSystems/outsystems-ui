@@ -229,15 +229,15 @@
 			scroll-snap-align: start;
 			scroll-snap-stop: always;
 
-			&,
-			* {
-				max-width: 99.99%; /* prevent render issues on chrome, in some screen-sizes, due to overflow hidden and css snap */
-			}
-
 			// Service Studio Preview
 			& {
 				-servicestudio-display: block !important;
 				-servicestudio-margin-bottom: var(--space-m);
+			}
+
+			// This selector is used to prevent render issues on chrome, in some screen-sizes, due to overflow hidden and css snap
+			.columns {
+				max-width: 99.99%;
 			}
 		}
 	}
