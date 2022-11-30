@@ -33,9 +33,7 @@ Bellow there is some comments about the application structure.
     ├── ...
     ├── gulp                                        # Contains gulp specific tasks and templates
     |   └── tasks
-    |       ├── NewPattern.js                       # New Pattern task definition
     |       ├── ScssTranspile.js                    # SCSS transpile task definition
     |       └── TsTranspile.js                      # TypeScript transpile task definition
     |    
-    |
     ├── ...

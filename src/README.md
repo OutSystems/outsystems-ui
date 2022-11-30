@@ -27,18 +27,22 @@ The namespaces should follow application directories, this way we should find fi
     |   |   |   |   ├── DropdownServerSideItem
     |   |   |   |   ├── FlipContent
     |   |   |   |   ├── Gallery
+    |   |   |   |   ├── MonthPicker
     |   |   |   |   ├── Notification
     |   |   |   |   ├── Progress
     |   |   |   |   |   ├── Bar
     |   |   |   |   |   └── Circle
     |   |   |   |   ├── RangeSlider
     |   |   |   |   ├── Rating
+    |   |   |   |   ├── SectionIndex
+    |   |   |   |   ├── SectionIndexItem
     |   |   |   |   ├── Sidebar
     |   |   |   |   ├── SubMenu
     |   |   |   |   ├── SwipeEvents
     |   |   |   |   ├── Tabs
     |   |   |   |   ├── TabsContentItem
     |   |   |   |   ├── TabesHeaderItem
+    |   |   |   |   ├── TimePicker
     |   |   |   |   ├── Tooltip
     |   |   |   |   └── TouchEvents
     |   |   |   |
@@ -62,7 +66,6 @@ The namespaces should follow application directories, this way we should find fi
     |   |   |   |   └── Flatpickr                # Flatpickr specific code.
     |   |   |   |       ├── l10ns                # Contains all the translations needed for the nonTranslated calendar elements by library;
     |   |   |   |       ├── RangeDate            # Specific code for the **DatePicker** pattern with **RangeDate** Mode.
-    |   |   |   |       ├── scss                 # Contains all styles for the datepicker based on library;
     |   |   |   |       └── SingleDate           # Specific code for the **DatePicker** pattern with **SingleDate** Mode.
     |   |   |   |
     |   |   |   ├── Dropdown                     # Contains the providers used by the **DropdownSearch** & **DropdownTags** pattern.
@@ -71,8 +74,18 @@ The namespaces should follow application directories, this way we should find fi
     |   |   |   |       ├── Search               # Specific code for the DropdownSearch.
     |   |   |   |       └── Tags                 # Specific code for the DropdownTags search.
     |   |   |   |
-    |   |   |   └── RangeSlider                  # Contains the providers used by the **RangeSlider** & **RangeSliderInterval** pattern.
-    |   |   |       └── NoUiSlider               # NoUiSlider specific code.
+    |   |   |   ├── MonthPicker                  # Contains the providers used by the **MonthPicker** pattern.
+    |   |   |   |   └── Flatpickr                # Flatpickr specific code.
+    |   |   |   |
+    |   |   |   ├── RangeSlider                  # Contains the providers used by the **RangeSlider** & **RangeSliderInterval** pattern.
+    |   |   |   |   └── NoUiSlider               # NoUiSlider specific code.
+    |   |   |   |
+    |   |   |   ├── TimePicker                   # Contains the providers used by the **MonthPicker** pattern.
+    |   |   |   |       └── Flatpickr            # Flatpickr specific code.
+    |   |   |   |
+    |   |   |   └── SharedProviderResources      # Contains the providers used by the patterns that share this info/structure.
+    |   |   |       └── Flatpickr                # Flatpickr specific code.
+    |   |   |
     |   |   |
     |   |   ├── Global.d.ts                      # Used to declare development time variables and imports, that will not be *used* in runtime - for better intellisense in Visual Code.
     |   |   └── osui.ts                          # Defines the (old) `osui` API, retrocompatibility, but now invoking the methods correctly organized under `OutSystems.OSUI`.
