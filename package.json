@@ -13,7 +13,7 @@
 		"setup": "npm i && npm run dev",
 		"docs": "npx typedoc"
 	},
-	"author": "OutSystems UI Team",
+	"author": "UI Components Team",
 	"devDependencies": {
 		"@splidejs/splide": "^4.0.7",
 		"@typescript-eslint/eslint-plugin": "^4.23.0",
