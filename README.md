@@ -35,7 +35,7 @@ OutSystems UI allows you to create applications with great user experience and b
 ## About this repository
 
 This repository contains the code that is used to control/style the OutSystems UI patterns. The code is written in TypeScript🖤 and SCSS.</br>
-You can branch it and PR your changes/proposals!
+You can fork it then branch it and PR your proposals!
 
 ### What tools should you use?
 
