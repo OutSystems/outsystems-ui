@@ -8,7 +8,6 @@ const template = require('gulp-template');
 // Get dependencies tasks
 const cssTranspile = require('./gulp/tasks/ScssTanspile');
 const createScssFile = require('./gulp/tasks/CreateScssFile');
-const pattern = require('./gulp/tasks/NewPattern');
 const tsTranspile = require('./gulp/tasks/TsTanspile');
 
 // Local configs
@@ -51,7 +50,5 @@ exports.createProduction = series(
     cssTranspile.transpileProd,
     tsTranspile.transpileProd
 );
-
-exports.newPattern = pattern.create;
 
 exports.updateScssFile = createScssFile.create_osui_scss_file;

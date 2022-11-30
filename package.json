@@ -4,7 +4,6 @@
 	"description": "OutSystems UI Framework",
 	"scripts": {
 		"build": "gulp createProduction && npm run lint",
-		"create-pattern": "gulp newPattern",
 		"create-osui-scss": "gulp updateScssFile",
 		"dev": "gulp startDevelopment",
 		"lint": "eslint . --ext .ts",
