@@ -4,9 +4,9 @@
 
 Create modern experiences with fully customizable responsive Screen Templates and UI Patterns for Native Mobile and Reactive Web Apps.
 
-| `One Framework` | `Fully Integrated` | `Responsive by Default` | `Limitless Possibilities` |
-| ------------- | ---------------- | --------------------- | ----------------------- |
-Create seamless experiences for Reactive Web and Native Mobile Applications. | Drag and drop UI Patterns and Screen Templates from OutSystems Service Studio. | Ready to use Layouts and UI Patterns that automatically adapt to the device size. | Extend the styles of over 70 UI Patterns and Screen Templates to make them yours. |
+| `One Framework`                                                              | `Fully Integrated`                                                             | `Responsive by Default`                                                           | `Limitless Possibilities`                                                         |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| Create seamless experiences for Reactive Web and Native Mobile Applications. | Drag and drop UI Patterns and Screen Templates from OutSystems Service Studio. | Ready to use Layouts and UI Patterns that automatically adapt to the device size. | Extend the styles of over 70 UI Patterns and Screen Templates to make them yours. |
 
 ### Key features
 
@@ -34,8 +34,8 @@ OutSystems UI allows you to create applications with great user experience and b
 
 ## About this repository
 
-This repository contains the code that is used to control/style the OutSystems UI patterns.
-The code is written in TypeScript🖤 and in SCSS, and you branch it and PR your changes/proposals!
+This repository contains the code that is used to control/style the OutSystems UI patterns. The code is written in TypeScript🖤 and SCSS.</br>
+You can branch it and PR your changes/proposals!
 
 ### What tools should you use?
 
@@ -50,9 +50,10 @@ We highly recommend the usage of the following tools:
 ### How to change this code?
 
 <ol>
+  <li>Do a Repository <strong>Fork</strong></li>
   <li>Create a branch based in the branch <strong>master</strong> (lastest & greatest release)</li>
-  <li>Open your Visual Code in your branch</li>
-  <li>Run the following command in Visual Code terminal: <code>npm run setup</code> (this will install all the dependencies that you need and compile the code)</li>
+  <li>Open your banch Code in Visual Code</li>
+  <li>Run the following command in Visual Code terminal: <code>npm run setup</code> (this will install all the dependencies that you need to compile the code)</li>
   <li>Do your magic! :)</li>
   <li><strong>Document your code</strong> (with the extension "Document This", start typing <code>/**</code> and the extension will give you a good starting point</li>
   <li>Compile and fix errors and warnings (in Visual Code terminal: <code>npm run build</code>)</li>
@@ -64,31 +65,9 @@ We highly recommend the usage of the following tools:
     </ol>
   </li>
   <li>Fix all errors & warnings! :)</li>
+  <li>Kept the branch updated with the master branch and also synchronized with the upstream <strong>master</strong></li>
   <li>Create a PR, describing what was the (mis)behavior, what you changed and please provide a sample </li>
 </ol>
-
-### How to add new feature/fix?
-
--   A new branch from **master** should be created.
--   If possible the branch should be kept updated with the master branch.
--   If possible unnecessary commit messages should be omitted.
-
-### How to create a New Pattern structure?
-
-  <ol>
-    <li>Create a branch based in the branch <strong>master</strong> (lastest & greatest release)</li>
-    <li>Run the following command in Visual Code terminal: <code>npm run create-pattern</code></li>
-    <li>
-      Answer to the following questions:
-      <ol>
-        <li><strong>Pattern Name?</strong> - <i>The name new pattern should have;</i></li>
-        <li><strong>Provider Name?</strong> - <i>If/When pattern have an external provider/library. An abstract layer will be added to the Pattern.</i></li>
-        <li><strong>Mode?</strong> - <i>If/When based on same provider, you will have multiple patterns like <strong>DatePicker</strong> that has <strong>Flatpickr</strong> as a provider and <strong>SingleDate</strong> and <strong>RangeDate</strong> as <strong>DatePicker</strong> modes; An abstract layer will be added to the Provider as well.</i></li>
-        <li><strong>Custom destination Folder?</strong> - <i>If you do not provide a folder name here all the pattern files (if already exist) <strong>will be overwritten</strong>, this way you prevent that by creating a new folder where all the files will be automagically added.</i></li>
-      </ol>
-     </li>
-     <li>Do your magic! :)<br><i>As mentioned above, all the nedded files (based in your answers) will be automagically created and added to right places.</i></li>
-  </ol>
 
 ### How to generate Documentation?
 
@@ -100,6 +79,8 @@ For the UML diagrams to be generated, some extra installations are required in y
 -   [Graphviz](https://graphviz.org/download/) (latest version)
 
 Finally, you just need to run the command (in Visual Code terminal): <code>npm run docs</code>!
+
+**NOTE:** This is not working properly at windows yet since UML graphics are not being generated.
 
 ### How to do a Pull Request?
 
