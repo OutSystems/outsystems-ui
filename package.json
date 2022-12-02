@@ -15,8 +15,8 @@
 	"author": "OutSystems UI Team",
 	"devDependencies": {
 		"@splidejs/splide": "^4.0.7",
-		"@typescript-eslint/eslint-plugin": "^4.23.0",
-		"@typescript-eslint/parser": "^4.23.0",
+		"@typescript-eslint/eslint-plugin": "^5.45.0",
+		"@typescript-eslint/parser": "^5.45.0",
 		"browser-sync": "^2.27.7",
 		"eslint": "^7.26.0",
 		"eslint-config-prettier": "^7.0.0",
