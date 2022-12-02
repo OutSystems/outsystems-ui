@@ -202,7 +202,7 @@ namespace OSFramework.Behaviors {
 			this._dragParams.InvalidDrag =
 				this._dragParams.IsOpen && _dragDirection !== this._dragParams.ExpectedDirection;
 
-			// CHeck if swiped in wrong direction
+			// Check if swiped in wrong direction
 			if (this._dragParams.InvalidDrag) {
 				this._updateLastPositions(currentX, currentY);
 				return;

@@ -69,7 +69,7 @@ namespace OSFramework.Patterns.Sidebar {
 			this._focusTrapInstance = new Behaviors.FocusTrap(opts);
 		}
 
-		// Method to hadnle the creation of the GestureEvents
+		// Method to handle the creation of the GestureEvents
 		private _handleGestureEvents(): void {
 			if (Helper.DeviceInfo.IsNative) {
 				// Create and save gesture event instance. Created here and not on constructor,

@@ -70,8 +70,7 @@ namespace OSFramework.Event.GestureEvent {
 				this._gestureParams.currentY = evt.changedTouches[0].pageY;
 				this._gestureParams.offsetX = this._gestureParams.currentX - this._gestureParams.startX;
 				this._gestureParams.offsetY = this._gestureParams.currentY - this._gestureParams.startY;
-				// Prevent scrolling the page while doing gesture
-				evt.preventDefault();
+
 				if (this._moveTriggerCallback !== undefined) {
 					this._moveTriggerCallback(
 						this._gestureParams.currentX,
