@@ -7,7 +7,7 @@ let env = envType.development;
 // Store text that will be added as SectionIndex
 let indexSection = '';
 
-// Used to define the initialization of each line
+// Used to define the initialization text of each line
 function getStartLine(sectionLevel = 0, section1Index = -1, section2Index = -1, section3Index = -1) {
 	let text = '';
 	switch (sectionLevel) {
@@ -161,4 +161,4 @@ function createIndexSection() {
 
 
 // Expose the IndexSection Text
-exports.devStructure = createIndexSection();
+exports.text = createIndexSection();

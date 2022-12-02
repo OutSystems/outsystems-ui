@@ -1,14 +1,14 @@
 const { series, parallel } = require('gulp');
 const fs = require('fs');
 
-const sectionIndex = require('./CreateScss/SectionIndex');
+const getSectionIndexText = require('./CreateScss/SectionIndex');
+const getPartialsList = require('./CreateScss/GetPartialsList');
 
 // Method used to Create SCSS file structure dynamically
 function createScssFile(cb) {
-	// const a = sectionIndex.devStructure;
-	const b = sectionIndex.devStructure;
+	const newScssText = getSectionIndexText.text;
 
-	console.log(b);
+	const partialsList = getPartialsList.text;
 
 	cb();
 }

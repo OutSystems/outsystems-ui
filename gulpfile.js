@@ -1,14 +1,14 @@
 const gulp = require('gulp');
 const { watch, series, parallel } = require('gulp');
+const fs = require('fs');
 
 const browser = require('browser-sync');
 const clean = require('gulp-clean');
-const template = require('gulp-template');
 
 // Get dependencies tasks
-const cssTranspile = require('./gulp/tasks/ScssTanspile');
-const createScssFile = require('./gulp/tasks/CreateScssFile');
-const tsTranspile = require('./gulp/tasks/TsTanspile');
+const cssTranspile = require('./gulp/Tasks/ScssTanspile');
+const createScssFile = require('./gulp/Tasks/CreateScssFile');
+const tsTranspile = require('./gulp/Tasks/TsTanspile');
 
 // Local configs
 const serverPort = 3000;
@@ -23,10 +23,10 @@ function cleanOldFiles() {
 
 // Starts a Browser instance
 function initServer() {
-    // Create index.html
-    gulp.src("./gulp/templates/index.html")
-        .pipe(template({}))
-        .pipe(gulp.dest(distFolder));
+    // Get the index.html base file
+    let code = fs.readFileSync('./gulp/Template/index.html', 'utf8');
+    // Create the new index.html at the dist folder!
+    fs.writeFileSync(`${distFolder}/index.html`, code, 'utf8');
 
     browser.init({server: distFolder, port: serverPort, cors: true});
 }
