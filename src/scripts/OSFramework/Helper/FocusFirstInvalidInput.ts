@@ -33,7 +33,7 @@ namespace OSFramework.Helper {
 
 		// Method to call Utils API > ScrollToElement
 		private static _scrollToInvalidInput(element: HTMLElement, scrollableElement: string, isSmooth: boolean): void {
-			OutSystems.OSUI.Utils.ScrollToElement(element.id, scrollableElement, isSmooth);
+			OutSystems.OSUI.Utils.ScrollToElement(element.id, isSmooth, 0, scrollableElement);
 		}
 
 		// Method that will search for the closest element with ID
