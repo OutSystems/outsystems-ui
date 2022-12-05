@@ -4,7 +4,7 @@ namespace OutSystems.OSUI.Utils {
 		ElementId: string,
 		IsSmooth = true,
 		OffSet = 0,
-		ScrollableElement?: string,
+		ElementParentClass?: string,
 		ScrollDelay?: number
 	): void {
 		const elementToScrollTo = document.getElementById(ElementId);
@@ -16,8 +16,8 @@ namespace OutSystems.OSUI.Utils {
 			);
 			// Set element that has the scroll and where the scrollTo will be applied
 			const scrollOnElement =
-				ScrollableElement !== ''
-					? elementToScrollTo.closest(OSFramework.Constants.Dot + ScrollableElement)
+				ElementParentClass !== ''
+					? elementToScrollTo.closest(OSFramework.Constants.Dot + ElementParentClass)
 					: activeScreen;
 			const scrollBehavior = IsSmooth
 				? OSFramework.GlobalEnum.ScrollBehavior.Smooth

@@ -7,7 +7,7 @@ namespace OutSystems.OSUI.Utils.InvalidInputs {
 	 * @param {string} elementId
 	 * @param {boolean} isSmooth
 	 */
-	export function FocusFirstInvalidInput(elementId: string, isSmooth: boolean, scrollableElement: string): string {
-		return OSFramework.Helper.InvalidInputs.FocusFirstInvalidInput(elementId, isSmooth, scrollableElement);
+	export function FocusFirstInvalidInput(elementId: string, isSmooth: boolean, elementParentClass: string): string {
+		return OSFramework.Helper.InvalidInputs.FocusFirstInvalidInput(elementId, isSmooth, elementParentClass);
 	}
 }
