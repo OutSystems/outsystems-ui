@@ -11,20 +11,12 @@ const patternInfo = {
             "codeName": "SingleDate",
             "inDevelopment": false,
             "name": "Single Date",
-            "provider": {
-                "name": "Flatpickr",
-                "version": "v4.6.10"
-            }
         },
         
         {
             "codeName": "RangeDate",
             "inDevelopment": false,
             "name": "Range Date",
-            "provider": {
-                "name": "Flatpickr",
-                "version": "v4.6.10"
-            }
         }
     ]
 };

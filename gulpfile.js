@@ -47,8 +47,9 @@ exports.startDevelopment = series(
 
 exports.createProduction = series(
     cleanOldFiles,
+    createScssFile.update_osui_scss_file_prod,
     cssTranspile.transpileProd,
     tsTranspile.transpileProd
 );
 
-exports.updateScssFile = createScssFile.create_osui_scss_file;
+exports.updateScssFile = createScssFile.update_osui_scss_file_dev;
