@@ -5,10 +5,10 @@ IMPORTANT NOTE:
 |	└── Which will recreate this file as a Dev mode. 
 |
 ├── npm run build 
-|	└── During Prod mode it will be recreated before it's compilation. 
+|	└── When Prod mode is being start, it will be recreated before it's compilation. 
 |
 └── npm run dev 
-	└── At Dev mode it will be recreated, than the compilation will occurs as usually. 
+	└── When Dev mode is being start, it will be recreated, than the compilation will occurs as usually. 
 
 • In order to proper manage this file, use:
 └── './gulp/ProjectSpecs/ScssStructure/#All.js' 
@@ -103,13 +103,15 @@ Section Index:
         6.2.8. Floating Actions
         6.2.9. Input With Icon
         6.2.10. Lightbox Image
-        6.2.11. Notification
-        6.2.12. RangeSlider
-        6.2.13. Scrollable Area
-        6.2.14. Search
-        6.2.15. Sidebar
-        6.2.16. Stacked Cards
-        6.2.17. Video
+        6.2.11. MonthPicker
+        6.2.12. Notification
+        6.2.13. RangeSlider
+        6.2.14. Scrollable Area
+        6.2.15. Search
+        6.2.16. Sidebar
+        6.2.17. Stacked Cards
+        6.2.18. TimePicker
+        6.2.19. Video
     6.3. Navigation
         6.3.0. Bottom Bar Item
         6.3.1. Breadcrumbs
@@ -384,19 +386,23 @@ Functions & Mixins
 @import '04-patterns/03-interaction/input-with-icon';
 /*! 6.2.10. Lightbox Image */
 @import '04-patterns/03-interaction/lightbox-image';
-/*! 6.2.11. Notification */
+/*! 6.2.11. MonthPicker */
+@import '../scripts/OSFramework/Pattern/MonthPicker/scss/monthpicker';
+/*! 6.2.12. Notification */
 @import '../scripts/OSFramework/Pattern/Notification/scss/notification';
-/*! 6.2.12. RangeSlider */
+/*! 6.2.13. RangeSlider */
 @import '../scripts/OSFramework/Pattern/RangeSlider/scss/rangeslider';
-/*! 6.2.13. Scrollable Area */
+/*! 6.2.14. Scrollable Area */
 @import '04-patterns/03-interaction/scrollable-area';
-/*! 6.2.14. Search */
+/*! 6.2.15. Search */
 @import '04-patterns/03-interaction/search';
-/*! 6.2.15. Sidebar */
+/*! 6.2.16. Sidebar */
 @import '../scripts/OSFramework/Pattern/Sidebar/scss/sidebar';
-/*! 6.2.16. Stacked Cards */
+/*! 6.2.17. Stacked Cards */
 @import '04-patterns/03-interaction/stacked-cards';
-/*! 6.2.17. Video */
+/*! 6.2.18. TimePicker */
+@import '../scripts/OSFramework/Pattern/TimePicker/scss/timepicker';
+/*! 6.2.19. Video */
 @import '04-patterns/03-interaction/video';
 
 /*! 6.3. Navigation */
