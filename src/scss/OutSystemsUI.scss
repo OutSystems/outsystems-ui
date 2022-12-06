@@ -98,6 +98,8 @@ Section Index:
         6.2.6. Dropdown
             6.2.6.0 Dropdown Search
             6.2.6.1 Dropdown Tags
+            6.2.6.2 Dropdown ServerSide
+        6.2.7. Dropdown ServerSide Item
         6.2.8. Floating Actions
         6.2.9. Input With Icon
         6.2.10. Lightbox Image
@@ -374,6 +376,10 @@ Functions & Mixins
 @import '../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-search';
 /*! 6.2.6.1 Dropdown Tags */
 @import '../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-tags';
+/*! 6.2.6.2 Dropdown ServerSide */
+@import '../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-serverside';
+/*! 6.2.7. Dropdown ServerSide Item */
+@import '../scripts/OSFramework/Pattern/DropdownServerSideItem/scss/dropdownserversideitem';
 /*! 6.2.8. Floating Actions */
 @import '04-patterns/03-interaction/floating-actions';
 /*! 6.2.9. Input With Icon */
