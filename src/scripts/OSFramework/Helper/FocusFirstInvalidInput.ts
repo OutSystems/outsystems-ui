@@ -2,7 +2,7 @@
 namespace OSFramework.Helper {
 	export abstract class InvalidInputs {
 		// Method to check if exists invalid inputs
-		private static _checkInvalidInputs(element: HTMLElement, isSmooth: boolean): void {
+		private static _checkInvalidInputs(element: HTMLElement, isSmooth: boolean, elementParentClass: string): void {
 			const notValidClassess = [
 				Constants.Dot + GlobalEnum.CssClassElements.InputNotValid,
 				Constants.Dot + Providers.Datepicker.Flatpickr.Enum.CSSSelectors.DatepickerNotValid,
@@ -21,28 +21,32 @@ namespace OSFramework.Helper {
 				// Check if element exists and is visible on DOM
 				if (inputVisible) {
 					// If True, call scroll to element method to given element
-					this._scrollToInvalidInput(invalidInput, isSmooth);
+					this._scrollToInvalidInput(invalidInput, isSmooth, elementParentClass);
 				} else {
 					// Check if closest element contains ID
 					Helper.AsyncInvocation(() => {
-						this._searchElementId(invalidInput, isSmooth);
+						this._searchElementId(invalidInput, isSmooth, elementParentClass);
 					});
 				}
 			}
 		}
 
 		// Method to call Utils API > ScrollToElement
-		private static _scrollToInvalidInput(element: HTMLElement, isSmooth: boolean): void {
-			OutSystems.OSUI.Utils.ScrollToElement(element.id, isSmooth);
+		private static _scrollToInvalidInput(
+			element: HTMLElement,
+			isSmooth: boolean,
+			elementParentClass: string
+		): void {
+			OutSystems.OSUI.Utils.ScrollToElement(element.id, isSmooth, 0, elementParentClass);
 		}
 
 		// Method that will search for the closest element with ID
-		private static _searchElementId(element: HTMLElement, isSmooth: boolean): void {
+		private static _searchElementId(element: HTMLElement, isSmooth: boolean, elementParentClass: string): void {
 			const elementToSearch = element.parentElement;
 			if (elementToSearch.id !== '') {
-				this._scrollToInvalidInput(elementToSearch, isSmooth);
+				this._scrollToInvalidInput(elementToSearch, isSmooth, elementParentClass);
 			} else {
-				this._searchElementId(elementToSearch, isSmooth);
+				this._searchElementId(elementToSearch, isSmooth, elementParentClass);
 			}
 		}
 
@@ -55,7 +59,7 @@ namespace OSFramework.Helper {
 		 * @return {*}  {string}
 		 * @memberof InvalidInputs
 		 */
-		public static FocusFirstInvalidInput(elementId: string, isSmooth: boolean): string {
+		public static FocusFirstInvalidInput(elementId: string, isSmooth: boolean, elementParentClass: string): string {
 			let element: HTMLElement = document.body;
 			const responseObj = {
 				isSuccess: true,
@@ -68,7 +72,7 @@ namespace OSFramework.Helper {
 					element = Helper.Dom.GetElementById(elementId);
 				}
 
-				this._checkInvalidInputs(element, isSmooth);
+				this._checkInvalidInputs(element, isSmooth, elementParentClass);
 			} catch (error) {
 				responseObj.isSuccess = false;
 				responseObj.message = error.message;
