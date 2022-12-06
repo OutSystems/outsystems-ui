@@ -3,10 +3,17 @@ const patterns = require('../../ProjectSpecs/Patterns/#All');
 const scssStructure = require('../../ProjectSpecs/ScssStructure/#All');
 
 const envType = {'development':'dev', 'production':'prod'}
-let env = envType.development;
 
 // Store text that will be added as SectionIndex
 let indexSection = '';
+
+function createIndexSectionDev() {
+    return createIndexSection(envType.development);
+}
+
+function createIndexSectionProd() {
+    return createIndexSection(envType.production);
+}
 
 // Used to define the initialization text of each line
 function getLineText(text, level = 0) {
@@ -33,10 +40,7 @@ function getLineText(text, level = 0) {
 
 
 // Method that will create the text for the SectionIndex section dynamically
-function createIndexSection(_env) {
-	// Update the environment type!
-	env = _env;
-	
+function createIndexSection(env) {
 	// Section iteractor
     let sectionIndex = 0;
 
@@ -147,5 +151,5 @@ function createIndexSection(_env) {
 
 
 // Expose the IndexSection Text
-exports.textDev = createIndexSection(envType.development);
-exports.textProd = createIndexSection(envType.production);
+exports.textDev = createIndexSectionDev;
+exports.textProd = createIndexSectionProd;

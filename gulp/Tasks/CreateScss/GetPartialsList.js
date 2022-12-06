@@ -2,10 +2,17 @@ const patterns = require('../../ProjectSpecs/Patterns/#All');
 const scssStructure = require('../../ProjectSpecs/ScssStructure/#All');
 
 const envType = {'development':'dev', 'production':'prod'}
-let env = envType.development;
 
 // Store the text to be exposed!
 let partialsListText = '';
+
+function createPartialsListDev() {
+    return createPartialsList(envType.development);
+}
+
+function createPartialsListProd() {
+    return createPartialsList(envType.production);
+}
 
 // Method used to create the import text
 function getImportLineText(text) {
@@ -41,10 +48,7 @@ function createSectionCommentTitle(text, type) {
 }
 
 // Method that will create the text for the SectionIndex section dynamically
-function createPartialsList(_env) {
-	// Update the environment type!
-	env = _env;
-	
+function createPartialsList(env) {	
     // Section iteractor
     let sectionIndex = 0;
 
@@ -167,5 +171,5 @@ function createPartialsList(_env) {
 
 
 // Expose the IndexSection Text
-exports.textDev = createPartialsList(envType.development);
-exports.textProd = createPartialsList(envType.production);
+exports.textDev = createPartialsListDev;
+exports.textProd = createPartialsListProd;

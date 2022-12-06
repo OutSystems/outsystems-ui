@@ -41,6 +41,7 @@ function watchFiles() {
 // Gulp tasks
 exports.startDevelopment = series(
     cleanOldFiles,
+    createScssFile.update_osui_scss_file_dev,
     parallel(cssTranspile.transpileDev, tsTranspile.transpileDev),
     parallel(watchFiles, initServer)
 );

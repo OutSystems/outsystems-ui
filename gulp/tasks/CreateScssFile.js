@@ -19,16 +19,15 @@ function setProdEnvironment (cb) {
 // Method used to Create SCSS file structure dynamically
 function createScssFile(cb) {
 	// Store the Section Index generated text
-	const sectionIndexText = env === envType.production ? getSectionIndexText.textProd : getSectionIndexText.textDev;
+	const sectionIndexText = env === envType.production ? getSectionIndexText.textProd() : getSectionIndexText.textDev();
 	// Store the Partials List generated text
-	const partialsText = env === envType.production ? getPartialsList.textProd : getPartialsList.textDev;
+	const partialsText = env === envType.production ? getPartialsList.textProd() : getPartialsList.textDev();
 
 	// Combine text to create the hole file
 	const newScssText = `${sectionIndexText}\n${partialsText}`;
-	console.log(newScssText);
 
     // Update the SCSS file with the generated code!
-    // fs.writeFileSync(`./src/scss/OutSystemsUI.scss`, newScssText, 'utf8');
+    fs.writeFileSync(`./src/scss/OutSystemsUI.scss`, newScssText, 'utf8');
 
 	cb();
 }
