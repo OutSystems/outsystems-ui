@@ -30,16 +30,13 @@ namespace OutSystems.OSUI.Utils {
 				? OSFramework.GlobalEnum.ScrollBehavior.Smooth
 				: OSFramework.GlobalEnum.ScrollBehavior.Auto;
 
-			// Set the base value to apply on scroll
-			let top = elementToScrollTo.getBoundingClientRect().top + OffSet;
+			// Set the base value to apply on scroll, calculating the difference between the current scroll position and element to scroll
+			let top = screenDefaultScroll.scrollTop + elementToScrollTo.getBoundingClientRect().top + OffSet;
 
 			// Exception to be applied on custom patterns that have scrollable elements inside
 			if (scrollOnElement !== screenDefaultScroll) {
 				// Get the space from body and the space from element provided to the body, to get the right scroll when the element are inside of other patterns
-				top =
-					elementToScrollTo.getBoundingClientRect().top -
-					scrollOnElement.getBoundingClientRect().top +
-					OffSet;
+				top = elementToScrollTo.getBoundingClientRect().top - top;
 			} else {
 				// Selector for header fixed on Reactive templates and Native
 				const isHeaderFixed =
@@ -59,7 +56,7 @@ namespace OutSystems.OSUI.Utils {
 						OSFramework.GlobalEnum.CssClassElements.Header
 					);
 
-					top = -header.offsetHeight + (elementToScrollTo.getBoundingClientRect().top + OffSet);
+					top = -header.offsetHeight + top;
 				}
 			}
 
