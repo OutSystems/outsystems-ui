@@ -10,62 +10,57 @@ namespace OutSystems.OSUI.Utils {
 		const elementToScrollTo = document.getElementById(ElementId);
 
 		if (elementToScrollTo) {
+			// Selector for header fixed on Reactive templates and Native
+			const isHeaderFixed =
+				OSFramework.Helper.Dom.ClassSelector(document, OSFramework.GlobalEnum.CssClassElements.HeaderIsFixed) ||
+				OSFramework.Helper.Dom.ClassSelector(document, OSFramework.GlobalEnum.CSSSelectors.LayoutNativeHeader);
+
 			// Set ios-bounce selector
 			const isIosBounce = OSFramework.Helper.Dom.ClassSelector(
 				document,
 				OSFramework.GlobalEnum.CSSSelectors.IosBounceScroll
 			);
 
-			// Set default scrollable html element based on ios device with bounce class applied
-			const screenDefaultScroll = isIosBounce
-				? isIosBounce
-				: OSFramework.Helper.Dom.ClassSelector(document, OSFramework.GlobalEnum.CssClassElements.ActiveScreen);
-
-			// Set element that has the scroll and where the scrollTo will be applied
-			const scrollOnElement =
-				ElementParentClass !== ''
-					? elementToScrollTo.closest(OSFramework.Constants.Dot + ElementParentClass)
-					: screenDefaultScroll;
+			// Set the scroll behavior to be applied
 			const scrollBehavior = IsSmooth
 				? OSFramework.GlobalEnum.ScrollBehavior.Smooth
 				: OSFramework.GlobalEnum.ScrollBehavior.Auto;
 
-			// Set the base value to apply on scroll
-			let top = elementToScrollTo.getBoundingClientRect().top + OffSet;
+			// Set the default scroll HTML element
+			let scrollableElement = OSFramework.Helper.Dom.ClassSelector(
+				document,
+				OSFramework.GlobalEnum.CssClassElements.ActiveScreen
+			);
 
-			// Exception to be applied on custom patterns that have scrollable elements inside
-			if (scrollOnElement !== screenDefaultScroll) {
-				// Get the space from body and the space from element provided to the body, to get the right scroll when the element are inside of other patterns
-				top =
-					elementToScrollTo.getBoundingClientRect().top -
-					scrollOnElement.getBoundingClientRect().top +
-					OffSet;
-			} else {
-				// Selector for header fixed on Reactive templates and Native
-				const isHeaderFixed =
-					OSFramework.Helper.Dom.ClassSelector(
-						document,
-						OSFramework.GlobalEnum.CssClassElements.HeaderIsFixed
-					) ||
-					OSFramework.Helper.Dom.ClassSelector(
-						document,
-						OSFramework.GlobalEnum.CSSSelectors.LayoutNativeHeader
-					);
+			// Set default scrollable html element based on ios device with bounce class applied
+			if (ElementParentClass !== OSFramework.Constants.EmptyString) {
+				const isElementParentClass = elementToScrollTo.closest(OSFramework.Constants.Dot + ElementParentClass);
 
-				// If fixed header, get the header height so that in the end it won't be covered by the header
-				if (isHeaderFixed) {
-					const header = OSFramework.Helper.Dom.ClassSelector(
-						document,
-						OSFramework.GlobalEnum.CssClassElements.Header
-					);
-
-					top = -header.offsetHeight + (elementToScrollTo.getBoundingClientRect().top + OffSet);
+				if (isElementParentClass) {
+					scrollableElement = isElementParentClass as HTMLElement;
+				} else {
+					console.warn(`The element with class '${ElementParentClass}' doesn't exist on DOM.`);
 				}
+			} else if (isIosBounce) {
+				scrollableElement = isIosBounce;
+			}
+
+			// Set the base value to apply on scroll, calculating the difference between the current scroll position and element to scroll
+			let top = scrollableElement.scrollTop + elementToScrollTo.getBoundingClientRect().top + OffSet;
+
+			// If fixed header, get the header height so that in the end it won't be covered by the header
+			if (isHeaderFixed) {
+				const header = OSFramework.Helper.Dom.ClassSelector(
+					document,
+					OSFramework.GlobalEnum.CssClassElements.Header
+				);
+
+				top = -header.offsetHeight + top;
 			}
 
 			// Check if element exist to prevent errors
 			setTimeout(() => {
-				scrollOnElement.scrollTo({
+				scrollableElement.scrollTo({
 					top: top,
 					left: 0,
 					behavior: scrollBehavior,
