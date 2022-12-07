@@ -16,7 +16,7 @@ const sectionInfo = {
         },
         {
             "name": "Headings",
-            "path": "01-foundations/html-elements-headingss"
+            "path": "01-foundations/html-elements-headings"
         }
     ]
 };

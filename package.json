@@ -4,7 +4,6 @@
 	"description": "OutSystems UI Framework",
 	"scripts": {
 		"build": "gulp createProduction && npm run lint",
-		"create-pattern": "gulp newPattern",
 		"create-osui-scss": "gulp updateScssFile",
 		"dev": "gulp startDevelopment",
 		"lint": "eslint . --ext .ts",
@@ -16,8 +15,8 @@
 	"author": "UI Components Team",
 	"devDependencies": {
 		"@splidejs/splide": "^4.0.7",
-		"@typescript-eslint/eslint-plugin": "^4.23.0",
-		"@typescript-eslint/parser": "^4.23.0",
+		"@typescript-eslint/eslint-plugin": "^5.45.0",
+		"@typescript-eslint/parser": "^5.45.0",
 		"browser-sync": "^2.27.7",
 		"eslint": "^7.26.0",
 		"eslint-config-prettier": "^7.0.0",
@@ -33,7 +32,6 @@
 		"gulp-rename": "^2.0.0",
 		"gulp-sass": "^5.1.0",
 		"gulp-sourcemaps": "^3.0.0",
-		"gulp-template": "^5.0.0",
 		"gulp-typescript": "^6.0.0-alpha.1",
 		"nouislider": "^15.6.0",
 		"postcss": "^8.4.5",

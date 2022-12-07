@@ -45,6 +45,9 @@ const sectionInfo = {
             "path": "04-patterns/03-interaction/lightbox-image"
         },
         {
+            "key": "monthpicker"
+        },
+        {
             "key": "notification"
         },
         {
@@ -64,6 +67,9 @@ const sectionInfo = {
         {
             "name": "Stacked Cards",
             "path": "04-patterns/03-interaction/stacked-cards"
+        },
+        {
+            "key": "timepicker"
         },
         {
             "name": "Video",
