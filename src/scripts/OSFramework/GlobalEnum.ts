@@ -40,7 +40,7 @@ namespace OSFramework.GlobalEnum {
 	 */
 	export enum CSSSelectors {
 		InputFormControl = 'input.form-control',
-		IosBounceScroll = 'ios-bounce:not(.hide-header-on-scroll) .content',
+		IosBounceScroll = 'ios .ios-bounce:not(.hide-header-on-scroll) .content',
 		LayoutNativeHeader = 'layout-native:not(.hide-header-on-scroll) .header',
 	}
 
