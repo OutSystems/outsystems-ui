@@ -15,6 +15,6 @@ namespace OSFramework.Interface {
 		 * @param notifiedTo triggered notification type name
 		 * @memberof OSFramework.Interface.IParent
 		 */
-		beNotifiedByChild(childItem: unknown, notifiedTo: string): void;
+		beNotifiedByChild(childItem: IChild, notifiedTo: string): void;
 	}
 }
