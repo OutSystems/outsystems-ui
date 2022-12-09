@@ -23,7 +23,7 @@ const patternInfo = {
         
         {
             "codeName": "ServerSide",
-            "inDevelopment": true,
+            "inDevelopment": false,
             "name": "Dropdown ServerSide",
             "scss": "../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-serverside"
         }
