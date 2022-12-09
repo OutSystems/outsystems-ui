@@ -555,19 +555,15 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		}
 
 		// Method used to store a given DropdownOption into optionItems list, it's triggered by DropdownServerSideItem
-		private _setNewOptionItem(optionItemId: string): void {
-			// Get the DropdownOptionItem reference
-			const optionItem =
-				OutSystems.OSUI.Patterns.DropdownServerSideItemAPI.GetDropdownServerSideItemItemById(optionItemId);
-
+		private _setNewOptionItem(optionItem: Patterns.DropdownServerSideItem.DropdownServerSideItem): void {
 			// Check if the given OptionId has been already added
-			if (this.getChild(optionItemId)) {
+			if (this.getChild(optionItem.uniqueId)) {
 				throw new Error(
 					`${ErrorCodes.Dropdown.FailSetNewOptionItem}: There is already a ${GlobalEnum.PatternName.DropdownServerSideItem} under Id: '${optionItem.widgetId}' added to ${GlobalEnum.PatternName.Dropdown} with uniqueId: ${this.uniqueId}.`
 				);
 			} else {
 				// Store DropDownOption Child Item
-				this.setChild(optionItemId, optionItem);
+				this.setChild(optionItem);
 			}
 		}
 
@@ -960,19 +956,22 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		 * @param notifiedTo {Enum.ChildNotifyActionType} triggered notification type
 		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
-		public beNotifiedByChild(childId: string, notifiedTo: Enum.ChildNotifyActionType): void {
+		public beNotifiedByChild(
+			childItem: Patterns.DropdownServerSideItem.DropdownServerSideItem,
+			notifiedTo: Enum.ChildNotifyActionType
+		): void {
 			switch (notifiedTo) {
 				case Enum.ChildNotifyActionType.Add:
-					this._setNewOptionItem(childId);
+					this._setNewOptionItem(childItem);
 					break;
 				case Enum.ChildNotifyActionType.Click:
-					this._optionItemHasBeenClicked(childId);
+					this._optionItemHasBeenClicked(childItem.uniqueId);
 					break;
 				case Enum.ChildNotifyActionType.KeyPressed:
-					this._optionItemKeyPressed(childId);
+					this._optionItemKeyPressed(childItem.uniqueId);
 					break;
 				case Enum.ChildNotifyActionType.Removed:
-					this._unsetNewOptionItem(childId);
+					this._unsetNewOptionItem(childItem.uniqueId);
 					break;
 				default:
 					throw new Error(

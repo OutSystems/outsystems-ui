@@ -25,17 +25,14 @@ namespace OSFramework.Patterns.SectionIndex {
 		}
 
 		// Method to add Item to the list
-		private _addSectionIndexItem(childId: string): void {
-			// Get the ChildItem reference
-			const childItem = OutSystems.OSUI.Patterns.SectionIndexItemAPI.GetSectionIndexItemById(childId);
-
-			if (this.getChild(childId)) {
+		private _addSectionIndexItem(childItem: Patterns.SectionIndexItem.SectionIndexItem): void {
+			if (this.getChild(childItem.uniqueId)) {
 				throw new Error(
 					`${ErrorCodes.SectionIndex.FailSetNewChildItem}: There is already a ${GlobalEnum.PatternName.SectionIndexItem} under Id: '${childItem.widgetId}' added to ${GlobalEnum.PatternName.SectionIndex} with uniqueId: ${this.uniqueId}.`
 				);
 			} else {
 				// Store Child Item
-				this.setChild(childId, childItem);
+				this.setChild(childItem);
 			}
 		}
 
@@ -224,19 +221,22 @@ namespace OSFramework.Patterns.SectionIndex {
 		 * @param notifiedTo {Enum.ChildNotifyActionType} triggered notification type
 		 * @memberof OSFramework.Patterns.SectionIndex.SectionIndex
 		 */
-		public beNotifiedByChild(childId: string, notifiedTo: Enum.ChildNotifyActionType): void {
+		public beNotifiedByChild(
+			childItem: Patterns.SectionIndexItem.SectionIndexItem,
+			notifiedTo: Enum.ChildNotifyActionType
+		): void {
 			switch (notifiedTo) {
 				case Enum.ChildNotifyActionType.Add:
-					this._addSectionIndexItem(childId);
+					this._addSectionIndexItem(childItem);
 					break;
 				case Enum.ChildNotifyActionType.Click:
-					this._childItemHasBeenClicked(childId);
+					this._childItemHasBeenClicked(childItem.uniqueId);
 					break;
 				case Enum.ChildNotifyActionType.Removed:
-					this._removeSectionIndexItem(childId);
+					this._removeSectionIndexItem(childItem.uniqueId);
 					break;
 				case Enum.ChildNotifyActionType.Active:
-					this._setActiveChildOnScroll(this.getChild(childId));
+					this._setActiveChildOnScroll(this.getChild(childItem.uniqueId));
 					break;
 				default:
 					throw new Error(
