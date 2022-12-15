@@ -7,7 +7,7 @@
 
 	// Service Studio Preview
 	& {
-		-servicestudio-z-index: 0;
+		-servicestudio-z-index: var(--layer-global-screen);
 	}
 
 	&-content {

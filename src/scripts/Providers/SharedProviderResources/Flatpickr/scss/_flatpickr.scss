@@ -314,7 +314,7 @@ span.flatpickr-weekday {
 			bottom: -1px;
 			background-color: var(--color-neutral-3);
 			position: absolute;
-			z-index: -1;
+			z-index: var(--layer-global-negative);
 		}
 	}
 

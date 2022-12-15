@@ -78,7 +78,7 @@
 		&-empty,
 		&-half {
 			opacity: 0;
-			z-index: 0;
+			z-index: var(--layer-global-screen);
 		}
 	}
 

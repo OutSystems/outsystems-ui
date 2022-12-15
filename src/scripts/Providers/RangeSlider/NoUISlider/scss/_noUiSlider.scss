@@ -29,7 +29,7 @@
   */
 .noUi-connects {
 	overflow: hidden;
-	z-index: 0;
+	z-index: var(--layer-global-screen);
 }
 .noUi-connect,
 .noUi-origin {

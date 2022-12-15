@@ -147,7 +147,7 @@
 			display: none;
 			height: 0;
 			width: 0;
-			-servicestudio-z-index: -1;
+			-servicestudio-z-index: var(--layer-global-negative);
 		}
 	}
 

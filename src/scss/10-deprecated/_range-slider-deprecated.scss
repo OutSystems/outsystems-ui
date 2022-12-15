@@ -72,7 +72,7 @@
 .range-slider .noUi-connects {
 	border-radius: var(--border-radius-soft);
 	overflow: hidden;
-	z-index: 0;
+	z-index: var(--layer-global-screen);
 }
 
 .range-slider .noUi-horizontal .noUi-handle,

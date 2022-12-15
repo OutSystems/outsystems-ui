@@ -21,7 +21,7 @@
 		margin: 0 auto;
 		position: relative;
 		width: var(--circle-size);
-		z-index: 0;
+		z-index: var(--layer-global-screen);
 
 		> div {
 			display: block;

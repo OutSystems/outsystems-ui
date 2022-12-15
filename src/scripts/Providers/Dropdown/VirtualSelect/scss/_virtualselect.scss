@@ -544,7 +544,7 @@
 body {
 	&.vscomp-popup-active {
 		.vscomp-wrapper:not(.focused) {
-			z-index: 0;
+			z-index: var(--layer-global-screen);
 		}
 
 		.vscomp-wrapper {

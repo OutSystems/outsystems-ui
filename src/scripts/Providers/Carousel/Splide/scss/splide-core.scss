@@ -93,7 +93,7 @@
 .splide__track {
 	overflow: hidden;
 	position: relative;
-	z-index: 0;
+	z-index: var(--layer-global-screen);
 }
 @keyframes splide-loading {
 	0% {
@@ -117,7 +117,7 @@
 	opacity: 0;
 	position: absolute;
 	top: 0;
-	z-index: 0;
+	z-index: var(--layer-global-screen);
 }
 .splide__track--fade > .splide__list > .splide__slide.is-active {
 	opacity: 1;
