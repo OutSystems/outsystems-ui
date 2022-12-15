@@ -90,4 +90,27 @@
 	--os-safe-area-right: env(safe-area-inset-right);
 	--os-safe-area-bottom: env(safe-area-inset-bottom);
 	--os-safe-area-left: env(safe-area-inset-left);
+
+	/*! Layer System */
+	--layer-above: #{$layer-above}; /* use this for all values above the base */
+	--layer-below: #{$layer-below}; /* and this for all values below the base */
+
+	/*! Global Layers */
+	/* Main */
+	--layer-global-screen: 0;
+	--layer-global-elevated: #{$layer-global-elevated}; // 5
+	--layer-global-navigation: #{$layer-global-navigation}; // 10
+	--layer-global-off-canvas: #{$layer-global-off-canvas}; // 15
+	--layer-global-instant-interaction: #{$layer-global-instant-interaction}; // 20
+
+	/*! Auxiliary */
+	--layer-global-negative: #{$layer-global-negative}; // -1
+	--layer-global-auto: auto; // auto
+
+	/*! Local Layers */
+	--layer-local-tier-1: 1;
+	--layer-local-tier-2: 2;
+	--layer-local-tier-3: 3;
+	--layer-local-tier-4: 4;
+	--layer-local-tier-5: 5;
 }

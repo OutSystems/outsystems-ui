@@ -1,0 +1,37 @@
+/* ---------------------------------------------------------------------------- */
+/* Layer System													                */
+/* ---------------------------------------------------------------------------- */
+/// BottomSheet
+$bottom-sheet-zindex: 300;
+
+/// Notification
+$notification-zindex: 300;
+
+/// Popup
+$popup-zindex: 250;
+
+/// Sidebar
+$sidebar-zindex: 140;
+
+/* Z-index modifiers */
+$layer-above: 5; /* use this for all values above the base */
+$layer-below: -1; /* and this for all values below the base */
+
+/* Global Layers */
+/* Main */
+$layer-global-screen: 0;
+$layer-global-elevated: $layer-above + $layer-global-screen; // 5
+$layer-global-navigation: $layer-above + $layer-global-elevated; // 10
+$layer-global-off-canvas: $layer-above + $layer-global-navigation; // 15
+$layer-global-instant-interaction: $layer-above + $layer-global-off-canvas; // 20
+
+/* Auxiliary */
+$layer-global-negative: $layer-below + $layer-global-screen; // -1
+$layer-global-auto: auto; // auto
+
+/* Local Layers */
+$layer-local-tier-1: 1;
+$layer-local-tier-2: 2;
+$layer-local-tier-3: 3;
+$layer-local-tier-4: 4;
+$layer-local-tier-5: 5;
