@@ -45,12 +45,26 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 	 * Use this action to focus the element.
 	 * @param widgetId
 	 */
-	export function SetFocus(widgetId: string): void {
-		const elementId = OSFramework.Helper.Dom.GetElementById(widgetId);
+	export function SetFocus(widgetId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
 
-		if (elementId) {
-			elementId.focus();
+		try {
+			const elementId = OSFramework.Helper.Dom.GetElementById(widgetId);
+
+			if (elementId) {
+				elementId.focus();
+			}
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.SetFocus.FailSetFocus;
 		}
+
+		return JSON.stringify(responseObj);
 	}
 
 	/**
