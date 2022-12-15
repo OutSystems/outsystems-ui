@@ -25,7 +25,7 @@ namespace OutSystems.OSUI.Utils {
 		};
 
 		try {
-			const elementToScrollTo = document.getElementById(ElementId);
+			const elementToScrollTo = OSFramework.Helper.Dom.GetElementById(ElementId);
 
 			if (elementToScrollTo) {
 				// Selector for header fixed on Reactive templates and Native
