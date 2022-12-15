@@ -18,7 +18,7 @@
 <h1>Function MoveElement</h1></div>
 <section class="tsd-panel">
 <ul class="tsd-signatures tsd-kind-function tsd-parent-kind-namespace">
-<li class="tsd-signature tsd-anchor-link" id="MoveElement">Move<wbr/>Element<span class="tsd-signature-symbol">(</span>ElementId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, TargetSelector<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#MoveElement" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" id="icon-anchor-a"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" id="icon-anchor-b"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" id="icon-anchor-c"></path></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="MoveElement">Move<wbr/>Element<span class="tsd-signature-symbol">(</span>ElementId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, TargetSelector<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, TimeoutVal<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#MoveElement" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" id="icon-anchor-a"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" id="icon-anchor-b"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" id="icon-anchor-c"></path></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Action that moves elements on the DOM tree.
 Define the WidgetID of the element to be moved and the Target selector that will receive the element.
@@ -30,10 +30,14 @@ Example: $actions.MoveElement($parameters.WidgetId, &quot;.active-screen .screen
 <li>
 <h5>ElementId: <span class="tsd-signature-type">string</span></h5></li>
 <li>
-<h5>TargetSelector: <span class="tsd-signature-type">string</span></h5></li></ul></div>
+<h5>TargetSelector: <span class="tsd-signature-type">string</span></h5></li>
+<li>
+<h5>TimeoutVal: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 200</span></h5>
+<div class="tsd-comment tsd-typography"><p>{TimeoutVal=200}</p>
+</div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/OutSystems/outsystems-ui/blob/63f2a43/src/scripts/OutSystems/OSUI/Utils/Utilities.ts#L130">OutSystems/OSUI/Utils/Utilities.ts:130</a></li></ul></aside></li></ul></section></div>
+<li>Defined in <a href="https://github.com/OutSystems/outsystems-ui/blob/9c498db/src/scripts/OutSystems/OSUI/Utils/Utilities.ts#L131">OutSystems/OSUI/Utils/Utilities.ts:131</a></li></ul></aside></li></ul></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
