@@ -253,4 +253,12 @@ namespace OutSystems.OSUI.ErrorCodes {
 	export const InvalidInput = {
 		FailGetInvalidInput: 'OSUI-API-28001',
 	};
+
+	export const ScrollToElement = {
+		FailScrollToElement: 'OSUI-API-29001',
+	};
+
+	export const SetFocus = {
+		FailSetFocus: 'OSUI-API-30001',
+	};
 }
