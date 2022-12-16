@@ -69,8 +69,17 @@
 			color: var(--color-neutral-7);
 			pointer-events: none;
 
-			.osui-accordion-item__icon {
-				color: var(--color-neutral-6);
+			.osui-accordion-item {
+				&__icon {
+					color: var(--color-neutral-6);
+
+					&--plus-minus {
+						&:after,
+						&:before {
+							background-color: var(--color-neutral-6);
+						}
+					}
+				}
 			}
 		}
 	}
