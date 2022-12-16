@@ -552,3 +552,14 @@ body {
 		}
 	}
 }
+
+// Layer Library Overrides
+.pop-comp-arrow,
+.vscomp-wrapper.keep-always-open .vscomp-dropbox-container {
+	z-index: var(--layer-local-tier-1);
+}
+
+.pop-comp-content,
+.vscomp-dropbox-container {
+	z-index: var(--layer-local-tier-2);
+}

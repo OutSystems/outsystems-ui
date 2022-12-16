@@ -105,6 +105,7 @@
 		position: static;
 		top: unset;
 		width: 34px;
+		z-index: calc(var(--layer-above) + var(--layer-global-elevated));
 
 		&:hover {
 			background-color: var(--color-neutral-2);
@@ -526,4 +527,9 @@ span.flatpickr-weekday {
 			}
 		}
 	}
+}
+
+// Layer Library Overrides
+.flatpickr-calendar.static.open {
+	z-index: var(--layer-global-elevated);
 }
