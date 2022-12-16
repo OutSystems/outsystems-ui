@@ -61,7 +61,7 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.SetFocus.FailSetFocus;
+			responseObj.code = ErrorCodes.Utilities.FailSetFocus;
 		}
 
 		return JSON.stringify(responseObj);

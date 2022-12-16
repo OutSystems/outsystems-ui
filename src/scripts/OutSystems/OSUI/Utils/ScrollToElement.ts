@@ -96,7 +96,7 @@ namespace OutSystems.OSUI.Utils {
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.ScrollToElement.FailScrollToElement;
+			responseObj.code = ErrorCodes.Utilities.FailScrollToElement;
 		}
 
 		return JSON.stringify(responseObj);

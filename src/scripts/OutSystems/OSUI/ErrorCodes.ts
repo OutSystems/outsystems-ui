@@ -250,15 +250,10 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailSetEditableInput: 'OSUI-API-27011',
 	};
 
-	export const InvalidInput = {
+	//Error codes used on the context of the Utilities client actions
+	export const Utilities = {
 		FailGetInvalidInput: 'OSUI-API-28001',
-	};
-
-	export const ScrollToElement = {
-		FailScrollToElement: 'OSUI-API-29001',
-	};
-
-	export const SetFocus = {
-		FailSetFocus: 'OSUI-API-30001',
+		FailScrollToElement: 'OSUI-API-28002',
+		FailSetFocus: 'OSUI-API-28003',
 	};
 }

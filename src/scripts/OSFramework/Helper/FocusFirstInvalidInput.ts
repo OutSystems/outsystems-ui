@@ -76,7 +76,7 @@ namespace OSFramework.Helper {
 			} catch (error) {
 				responseObj.isSuccess = false;
 				responseObj.message = error.message;
-				responseObj.code = OutSystems.OSUI.ErrorCodes.InvalidInput.FailGetInvalidInput;
+				responseObj.code = OutSystems.OSUI.ErrorCodes.Utilities.FailGetInvalidInput;
 			}
 
 			return JSON.stringify(responseObj);
