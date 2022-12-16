@@ -88,7 +88,7 @@ $balloonMobileTopMargin: 5vh;
 			position: absolute;
 			transition: opacity 300ms ease;
 			width: 100%;
-			z-index: 2;
+			z-index: var(--layer-global-elevated);
 
 			// Service Studio Preview
 			& {
@@ -427,7 +427,6 @@ $balloonMobileTopMargin: 5vh;
 				overflow: hidden;
 				top: 0;
 				transition: opacity 250ms ease;
-				z-index: 101;
 
 				// Service Studio Preview
 				& {

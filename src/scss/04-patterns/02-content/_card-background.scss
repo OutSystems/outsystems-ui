@@ -22,7 +22,7 @@
 		display: flex;
 		position: relative;
 		width: 100%;
-		z-index: 1;
+		z-index: var(--layer-local-tier-1);
 
 		// Service Studio Preview
 		& {
@@ -77,7 +77,7 @@
 			position: absolute;
 			top: 0;
 			width: 100%;
-			z-index: 1;
+			z-index: var(--layer-local-tier-1);
 		}
 	}
 }

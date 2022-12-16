@@ -7,7 +7,7 @@
 .header {
 	background-color: var(--header-color);
 	box-shadow: 0 1px 5px 0 rgba(21, 24, 26, 0.1);
-	z-index: 100;
+	z-index: var(--layer-global-navigation);
 
 	// Service Studio Preview
 	& {
@@ -132,7 +132,7 @@
 		left: 0;
 		position: fixed;
 		top: 0;
-		z-index: 102;
+		z-index: var(--layer-global-navigation);
 	}
 }
 

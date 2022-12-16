@@ -55,7 +55,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	pointer-events: none;
 	position: absolute;
 	will-change: top, right, bottom, left, opacity, transform;
-	z-index: 340;
+	z-index: var(--layer-global-off-canvas);
 
 	// Service Studio Preview
 	& {

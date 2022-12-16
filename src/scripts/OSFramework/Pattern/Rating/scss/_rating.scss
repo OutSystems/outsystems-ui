@@ -72,7 +72,7 @@
 
 		&-filled {
 			opacity: 1;
-			z-index: 1;
+			z-index: var(--layer-local-tier-1);
 		}
 
 		&-empty,
@@ -94,7 +94,7 @@
 	}
 
 	&.is-half .rating-item-half {
-		z-index: 1;
+		z-index: var(--layer-local-tier-1);
 	}
 
 	&.is-half input:checked + label .rating-item-half {

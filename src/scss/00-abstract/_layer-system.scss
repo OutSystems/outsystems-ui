@@ -1,18 +1,6 @@
 /* ---------------------------------------------------------------------------- */
 /* Layer System													                */
 /* ---------------------------------------------------------------------------- */
-/// BottomSheet
-$bottom-sheet-zindex: 300;
-
-/// Notification
-$notification-zindex: 300;
-
-/// Popup
-$popup-zindex: 250;
-
-/// Sidebar
-$sidebar-zindex: 140;
-
 /* Z-index modifiers */
 $layer-above: 5; /* use this for all values above the base */
 $layer-below: -1; /* and this for all values below the base */

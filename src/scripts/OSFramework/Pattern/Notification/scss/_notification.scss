@@ -6,6 +6,7 @@
 ///
 .osui-notification {
 	--osui-notification-margin: var(--space-m);
+	--osui-notification-layer: var(--layer-global-instant-interaction);
 
 	background-color: var(--color-neutral-0);
 	border-radius: var(--border-radius-soft);
@@ -20,7 +21,7 @@
 	transition: transform 300ms ease-out, opacity 300ms ease-out;
 	user-select: none;
 	width: var(--notification-width);
-	z-index: $notification-zindex;
+	z-index: var(--layer-global-instant-interaction);
 
 	// Service Studio Preview
 	& {

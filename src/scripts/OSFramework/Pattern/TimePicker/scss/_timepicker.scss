@@ -52,7 +52,7 @@
 			-servicestudio-overflow: hidden;
 			-servicestudio-position: relative;
 			-servicestudio-width: 100%;
-			-servicestudio-z-index: 1;
+			-servicestudio-z-index: var(--layer-local-tier-1);
 
 			&.time12h {
 				-servicestudio-background-image: $timepicker_time12h_img_base64;

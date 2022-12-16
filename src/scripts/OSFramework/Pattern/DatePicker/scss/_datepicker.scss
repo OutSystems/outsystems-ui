@@ -57,7 +57,7 @@
 			-servicestudio-overflow: hidden;
 			-servicestudio-position: relative;
 			-servicestudio-width: 100%;
-			-servicestudio-z-index: 1;
+			-servicestudio-z-index: var(--layer-local-tier-1);
 
 			// If has not today btn
 			&:not(.has-today-btn) {

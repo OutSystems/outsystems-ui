@@ -60,7 +60,7 @@
 		bottom: 0;
 		position: -webkit-sticky; //Fix for older iPhones
 		position: sticky;
-		z-index: 100;
+		z-index: var(--layer-global-navigation);
 	}
 
 	.menu-icon {

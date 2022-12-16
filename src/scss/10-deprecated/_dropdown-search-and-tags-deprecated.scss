@@ -92,7 +92,7 @@
 			pointer-events: none;
 			position: absolute;
 			width: 1px;
-			z-index: var(--layer-global-negative) 0;
+			z-index: var(--layer-global-negative);
 		}
 	}
 
@@ -162,7 +162,7 @@
 			top: 100%;
 			width: 100%;
 			word-break: break-all;
-			z-index: 3;
+			z-index: var(--layer-local-tier-3);
 
 			&.is-active {
 				display: block;

@@ -130,7 +130,7 @@
 			-servicestudio-background-image: $carousel_helper_img_base64;
 			-servicestudio-background-repeat: no-repeat;
 			-servicestudio-background-position: center;
-			-servicestudio-z-index: 2;
+			-servicestudio-z-index: var(--layer-local-tier-2);
 		}
 	}
 }

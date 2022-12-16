@@ -13,7 +13,8 @@
 
 ///
 [data-popup-backdrop] {
-	z-index: $popup-zindex;
+	--popup-layer: var(--layer-global-off-canvas);
+	z-index: var(--popup-layer);
 }
 
 ///

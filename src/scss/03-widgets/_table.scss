@@ -270,7 +270,7 @@
 	th.sortable:focus {
 		box-shadow: 0 0 0 3px var(--color-focus-outer);
 		position: relative;
-		z-index: 1;
+		z-index: var(--layer-global-screen);
 	}
 }
 

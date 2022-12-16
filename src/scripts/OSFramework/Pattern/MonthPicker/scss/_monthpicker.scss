@@ -29,7 +29,7 @@
 			-servicestudio-padding-top: min(250px, 100%);
 			-servicestudio-position: relative;
 			-servicestudio-width: 100%;
-			-servicestudio-z-index: 1;
+			-servicestudio-z-index: var(--layer-local-tier-1);
 
 			& + .placeholder-ss-preview {
 				-servicestudio-height: 0;

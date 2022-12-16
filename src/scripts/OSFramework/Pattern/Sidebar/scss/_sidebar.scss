@@ -6,6 +6,7 @@
 ///
 .osui-sidebar {
 	--overlay-opacity: 0;
+	--osui-sidebar-layer: var(layer-global-off-canvas);
 
 	background-color: var(--color-neutral-0);
 	box-shadow: var(--shadow-l);
@@ -18,7 +19,7 @@
 	transition: all 130ms ease-in;
 	width: var(--sidebar-width);
 	will-change: transform;
-	z-index: $sidebar-zindex;
+	z-index: var(--osui-sidebar-layer);
 
 	&:not(.osui-sidebar--is-open):not(.no-transition) {
 		opacity: 0;
@@ -114,7 +115,7 @@
 			transition: opacity 130ms ease-in;
 			width: 200vw;
 			will-change: opacity;
-			z-index: 129;
+			z-index: calc(var(--layer-below) - var(layer-global-off-canvas));
 
 			// Service Studio Preview
 			& {

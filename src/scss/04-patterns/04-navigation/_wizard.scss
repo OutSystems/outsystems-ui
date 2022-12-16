@@ -78,7 +78,7 @@
 		margin: 0 auto;
 		position: relative;
 		width: 32px;
-		z-index: 2;
+		z-index: var(--layer-local-tier-1);
 
 		&:empty {
 			height: 8px;
