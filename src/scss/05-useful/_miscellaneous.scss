@@ -28,7 +28,8 @@
 /* Used in order to deal with allow propagation event when is't blocked by default
 Example can be checked at Tooltip since we can have clickable containers. */
 ///
-[data-allow-event-propagation='true'] > * {
+[data-allow-event-propagation='true'] > *,
+[data-allow-event-propagation='True'] > * {
 	pointer-events: none;
 }
 

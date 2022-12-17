@@ -136,6 +136,7 @@ namespace OSFramework.GlobalEnum {
 	 */
 	export enum HTMLAttributes {
 		AllowEventPropagation = '[data-allow-event-propagation=true]',
+		AllowEventPropagationBoolean = '[data-allow-event-propagation=True]',
 		DataInput = 'data-input',
 		Disabled = 'disabled',
 		Id = 'id',
