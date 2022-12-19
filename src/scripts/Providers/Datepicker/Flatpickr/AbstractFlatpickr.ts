@@ -18,6 +18,8 @@ namespace Providers.Datepicker.Flatpickr {
 		protected _flatpickrInputElem: HTMLInputElement;
 		// Store the provider options
 		protected _flatpickrOpts: FlatpickrOptions;
+		// Store on a flag status when the picker is updating the default date;
+		protected _isUpdatingDefaultDate = false;
 		// Flatpickr onChange (SelectedDate) event
 		protected _onSelectedCallbackEvent: OSFramework.Patterns.DatePicker.Callbacks.OSOnChangeEvent;
 
@@ -375,6 +377,29 @@ namespace Providers.Datepicker.Flatpickr {
 			this.configs.DisabledWeekDays = disableWeekDays;
 
 			this.prepareToAndRedraw();
+		}
+
+		/**
+		 * Method used to disable days on DatePicker
+		 *
+		 * @param disableDays
+		 * @memberof Flatpickr.DisableDays
+		 */
+		public disableDays(disableDays: string[]): void {
+			this.configs.DisabledDays = disableDays;
+			this.redraw();
+		}
+
+		/**
+		 * Method used to disable weekdays on DatePicker
+		 *
+		 * @param disableWeekDays
+		 * @memberof Flatpickr.DisableWeekDays
+		 */
+		public disableWeekDays(disableWeekDays: number[]): void {
+			this.configs.DisabledWeekDays = disableWeekDays;
+
+			this.redraw();
 		}
 
 		/**

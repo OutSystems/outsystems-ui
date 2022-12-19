@@ -43,6 +43,13 @@ namespace OSFramework.GlobalEnum {
 	}
 
 	/**
+	 * OutSystemsUI css selectors
+	 */
+	export enum CSSSelectors {
+		InputFormControl = 'input.form-control',
+	}
+
+	/**
 	 * OutSystemsUI common css variables
 	 */
 	export enum CSSVariables {
@@ -362,6 +369,10 @@ namespace OSFramework.GlobalEnum {
 	export enum WarningMessages {
 		FeatureNotImplemented = 'This feature is not yet implemented!',
 		MethodNotImplemented = 'This Method has no implementation on the context of this pattern.',
+	}
+
+	export enum NullValues {
+		Time = '00:00:00',
 	}
 
 	export enum NullValues {
