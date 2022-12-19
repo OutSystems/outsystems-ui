@@ -70,11 +70,7 @@ namespace OSFramework.Patterns.Tooltip {
 			// Get all possible clickable items inside tooltip balloon
 			const clickableItems = Array.from(
 				this._tooltipBalloonContentElem.querySelectorAll(
-					Constants.FocusableElems +
-						', ' +
-						GlobalEnum.HTMLAttributes.AllowEventPropagation +
-						', ' +
-						GlobalEnum.HTMLAttributes.AllowEventPropagationBoolean
+					Constants.FocusableElems + ', ' + GlobalEnum.HTMLAttributes.AllowEventPropagation
 				)
 			);
 

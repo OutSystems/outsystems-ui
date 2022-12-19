@@ -135,8 +135,7 @@ namespace OSFramework.GlobalEnum {
 	 * OutSystemsUI HTML Attributes
 	 */
 	export enum HTMLAttributes {
-		AllowEventPropagation = '[data-allow-event-propagation=true]',
-		AllowEventPropagationBoolean = '[data-allow-event-propagation=True]',
+		AllowEventPropagation = '[data-allow-event-propagation=true], [data-allow-event-propagation=True]',
 		DataInput = 'data-input',
 		Disabled = 'disabled',
 		Id = 'id',
