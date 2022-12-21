@@ -98,7 +98,6 @@ Section Index:
         6.2.6. Dropdown
             6.2.6.0 Dropdown Search
             6.2.6.1 Dropdown Tags
-            6.2.6.2 Dropdown ServerSide
         6.2.7. Dropdown ServerSide Item
         6.2.8. Floating Actions
         6.2.9. Input With Icon
@@ -137,26 +136,29 @@ Section Index:
         6.5.4. Separator
         6.5.5. Pull to Refresh
         6.5.6. List Updating
-    6.6. Deprecated Patterns
-        6.6.0. Accordion
-        6.6.1. Button Loading
-        6.6.2. Carousel
-        6.6.3. Datepicker
-        6.6.4. Dropdown Search an Tags (Common)
-        6.6.5. Dropdown Search
-        6.6.6. Dropdown Tags
-        6.6.7. Flip Content
-        6.6.8. Gallery
-        6.6.9. Horizontal Scroll
-        6.6.10. Notification
-        6.6.11. Progress Bar
-        6.6.12. Progress Circle
-        6.6.13. Progress Circle Fraction
-        6.6.14. Section Index
-        6.6.15. Sidebar
-        6.6.16. Submenu
-        6.6.17. Tabs
-        6.6.18. Tooltip
+    6.6. Advanced
+        6.6.0. Dropdown ServerSide
+        6.6.1. Dropdown ServerSide Item
+    6.7. Deprecated Patterns
+        6.7.0. Accordion
+        6.7.1. Button Loading
+        6.7.2. Carousel
+        6.7.3. Datepicker
+        6.7.4. Dropdown Search an Tags (Common)
+        6.7.5. Dropdown Search
+        6.7.6. Dropdown Tags
+        6.7.7. Flip Content
+        6.7.8. Gallery
+        6.7.9. Horizontal Scroll
+        6.7.10. Notification
+        6.7.11. Progress Bar
+        6.7.12. Progress Circle
+        6.7.13. Progress Circle Fraction
+        6.7.14. Section Index
+        6.7.15. Sidebar
+        6.7.16. Submenu
+        6.7.17. Tabs
+        6.7.18. Tooltip
 7. Usefull Classes
     7.0. a11y (Accessibility)
     7.1. Colors - Brand
@@ -376,8 +378,6 @@ Functions & Mixins
 @import '../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-search';
 /*! 6.2.6.1 Dropdown Tags */
 @import '../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-tags';
-/*! 6.2.6.2 Dropdown ServerSide */
-@import '../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-serverside';
 /*! 6.2.7. Dropdown ServerSide Item */
 @import '../scripts/OSFramework/Pattern/DropdownServerSideItem/scss/dropdownserversideitem';
 /*! 6.2.8. Floating Actions */
@@ -454,44 +454,50 @@ Functions & Mixins
 /*! 6.5.6. List Updating */
 @import '04-patterns/06-utilities/list-updating';
 
-/*! 6.6. Deprecated Patterns */
-/*! 6.6.0. Accordion */
+/*! 6.6. Advanced */
+/*! 6.6.0. Dropdown ServerSide */
+@import '../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-serverside';
+/*! 6.6.1. Dropdown ServerSide Item */
+@import '../scripts/OSFramework/Pattern/DropdownServerSideItem/scss/dropdownserversideitem';
+
+/*! 6.7. Deprecated Patterns */
+/*! 6.7.0. Accordion */
 @import '10-deprecated/accordion-deprecated';
-/*! 6.6.1. Button Loading */
+/*! 6.7.1. Button Loading */
 @import '10-deprecated/button-loading-deprecated';
-/*! 6.6.2. Carousel */
+/*! 6.7.2. Carousel */
 @import '10-deprecated/carousel-deprecated';
-/*! 6.6.3. Datepicker */
+/*! 6.7.3. Datepicker */
 @import '10-deprecated/date-picker-deprecated';
-/*! 6.6.4. Dropdown Search an Tags (Common) */
+/*! 6.7.4. Dropdown Search an Tags (Common) */
 @import '10-deprecated/dropdown-search-and-tags-deprecated';
-/*! 6.6.5. Dropdown Search */
+/*! 6.7.5. Dropdown Search */
 @import '10-deprecated/dropdown-search-deprecated';
-/*! 6.6.6. Dropdown Tags */
+/*! 6.7.6. Dropdown Tags */
 @import '10-deprecated/dropdown-tags-deprecated';
-/*! 6.6.7. Flip Content */
+/*! 6.7.7. Flip Content */
 @import '10-deprecated/flip-content-deprecated';
-/*! 6.6.8. Gallery */
+/*! 6.7.8. Gallery */
 @import '10-deprecated/gallery-deprecated';
-/*! 6.6.9. Horizontal Scroll */
+/*! 6.7.9. Horizontal Scroll */
 @import '10-deprecated/horizontal-scroll-deprecated';
-/*! 6.6.10. Notification */
+/*! 6.7.10. Notification */
 @import '10-deprecated/notification-deprecated';
-/*! 6.6.11. Progress Bar */
+/*! 6.7.11. Progress Bar */
 @import '10-deprecated/progress-bar-deprecated';
-/*! 6.6.12. Progress Circle */
+/*! 6.7.12. Progress Circle */
 @import '10-deprecated/progress-circle-deprecated';
-/*! 6.6.13. Progress Circle Fraction */
+/*! 6.7.13. Progress Circle Fraction */
 @import '10-deprecated/progress-circle-fraction-deprecated';
-/*! 6.6.14. Section Index */
+/*! 6.7.14. Section Index */
 @import '10-deprecated/section-index-deprecated';
-/*! 6.6.15. Sidebar */
+/*! 6.7.15. Sidebar */
 @import '10-deprecated/sidebar-deprecated';
-/*! 6.6.16. Submenu */
+/*! 6.7.16. Submenu */
 @import '10-deprecated/submenu-deprecated';
-/*! 6.6.17. Tabs */
+/*! 6.7.17. Tabs */
 @import '10-deprecated/tabs-deprecated';
-/*! 6.6.18. Tooltip */
+/*! 6.7.18. Tooltip */
 @import '10-deprecated/tooltip-deprecated';
 
 /*! ==============================================================================
