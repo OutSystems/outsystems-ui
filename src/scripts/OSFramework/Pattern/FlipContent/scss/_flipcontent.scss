@@ -7,6 +7,7 @@
 .osui-flip-content {
 	perspective: 200vw;
 	position: relative;
+	overflow: hidden;
 
 	// Service Studio preview
 	& {
