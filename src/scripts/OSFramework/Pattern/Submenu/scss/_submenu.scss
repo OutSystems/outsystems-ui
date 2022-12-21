@@ -117,6 +117,9 @@
 			position: relative;
 			transition: all 150ms linear;
 
+			-servicestudio-min-width: 100px;
+			-servicestudio-margin-left: calc(var(--space-s) * -1);
+
 			a {
 				align-items: center;
 				color: var(--color-neutral-8);
