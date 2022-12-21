@@ -7,12 +7,14 @@ namespace Providers.MonthPicker.Flatpickr {
 	{
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
+		// Store the provider options
+		private _flatpickrOpts: FlatpickrOptions;
 		// Flatpickr onInitialize event
 		private _onInitializeCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
+		// Validation of ZIndex position common behavior
+		private _zindexCommonBehavior: SharedProviderResources.Flatpickr.UpdateZindex;
 		// Store the flatpickr input html element that will be added by library
 		protected _flatpickrInputElem: HTMLInputElement;
-		// Store the provider options
-		protected _flatpickrOpts: FlatpickrOptions;
 		// Store pattern input HTML element reference
 		protected _monthPickerProviderInputElem: HTMLInputElement;
 		// Flatpickr onChange (SelectedMonth) event
@@ -48,7 +50,7 @@ namespace Providers.MonthPicker.Flatpickr {
 			if (
 				OSFramework.Helper.Dom.Styles.ContainsClass(
 					this._flatpickrInputElem,
-					OSFramework.GlobalEnum.InputTypes.InputLarge
+					OSFramework.GlobalEnum.InputClassTypes.InputLarge
 				)
 			) {
 				OSFramework.Helper.Dom.Styles.AddClass(
@@ -58,7 +60,7 @@ namespace Providers.MonthPicker.Flatpickr {
 			} else if (
 				OSFramework.Helper.Dom.Styles.ContainsClass(
 					this._flatpickrInputElem,
-					OSFramework.GlobalEnum.InputTypes.InputSmall
+					OSFramework.GlobalEnum.InputClassTypes.InputSmall
 				)
 			) {
 				OSFramework.Helper.Dom.Styles.AddClass(
@@ -77,24 +79,11 @@ namespace Providers.MonthPicker.Flatpickr {
 			}
 		}
 
-		// Method to set the html elements used
-		private _setHtmlElements(): void {
-			// Set the inputHTML element
-			this._monthPickerProviderInputElem = this._selfElem.querySelector(
-				OSFramework.GlobalEnum.CSSSelectors.InputFormControl
-			);
-
-			// If the input hasn't be added
-			if (!this._monthPickerProviderInputElem) {
-				throw new Error(`The monthpicker input at MonthpickerId '${this._widgetId}' is missing`);
-			}
-		}
-
 		/**
 		 * Method that will be triggered at Flatpickr instance is ready
 		 *
 		 * @protected
-		 * @memberof Flatpickr.Month
+		 * @memberof Providers.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		protected createProviderInstance(): void {
 			/* In order to avoid dateFormat convert issues done by provider when InitialMonth was not defined and input has a default month lets clean that value before creating provider instance. This happen when DateFormat is different from YYYY-MM-DD */
@@ -114,6 +103,9 @@ namespace Providers.MonthPicker.Flatpickr {
 
 				// set the onBodyScroll update calendar position behaviour!
 				this._bodyScrollCommonBehaviour = new SharedProviderResources.Flatpickr.UpdatePositionOnScroll(this);
+
+				// set the zindex update position behaviour!
+				this._zindexCommonBehavior = new SharedProviderResources.Flatpickr.UpdateZindex(this);
 			}
 
 			this.createdInstance();
@@ -123,7 +115,7 @@ namespace Providers.MonthPicker.Flatpickr {
 		 * Method that will be triggered at Flatpickr instance is ready
 		 *
 		 * @protected
-		 * @memberof Flatpickr.Month
+		 * @memberof Providers.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		protected createdInstance(): void {
 			// Set provider Info to be used by setProviderConfigs API calls
@@ -149,13 +141,18 @@ namespace Providers.MonthPicker.Flatpickr {
 			// and without the need to run the code below
 			const _selectedMonthYear = {
 				month: OSFramework.Constants.EmptyString,
+				monthOrder: OSFramework.Constants.InvalidNumber,
 				year: OSFramework.Constants.InvalidNumber,
 			};
 
 			// Check if any date has been selected, In case of Clear this will return empty string
 			if (selectedMonthYear.length > 0) {
 				const _selectedDate = new Date(selectedMonthYear[0]);
-				_selectedMonthYear.month = OSFramework.Constants.Months[_selectedDate.getMonth()];
+				const _selectedMonthIndex = _selectedDate.getMonth();
+
+				_selectedMonthYear.month = OSFramework.Constants.Months[_selectedMonthIndex];
+				// Provider works with index starting on 0 but we need to match with real month number, so we increment 1
+				_selectedMonthYear.monthOrder = _selectedMonthIndex + 1;
 				_selectedMonthYear.year = _selectedDate.getFullYear();
 			}
 
@@ -164,6 +161,7 @@ namespace Providers.MonthPicker.Flatpickr {
 				this._onSelectedCallbackEvent,
 				this.widgetId,
 				_selectedMonthYear.month,
+				_selectedMonthYear.monthOrder,
 				_selectedMonthYear.year
 			);
 		}
@@ -172,35 +170,58 @@ namespace Providers.MonthPicker.Flatpickr {
 		 * Method that will set the provider configurations in order to properly create its instance
 		 *
 		 * @protected
-		 * @memberof Flatpickr.Month
+		 * @memberof Providers.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		protected prepareConfigs(): void {
 			// Get the library configurations
 			this._flatpickrOpts = this.configs.getProviderConfig();
-
 			// Instance will be Created!
 			this.createProviderInstance();
 		}
 
 		/**
-		 * Method that will be responsible to redraw the calendar when it's needed
+		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof Flatpickr.Month
+		 * @memberof Providers.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
-		protected redraw(): void {
-			// Destroy the old flatpickr instance
-			this.provider.destroy();
+		protected setA11YProperties(): void {
+			console.warn(OSFramework.GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
 
-			// Create a new flatpickr instance with the updated configs
-			OSFramework.Helper.AsyncInvocation(this.prepareConfigs.bind(this));
+		/**
+		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof Providers.MonthPicker.Flatpickr.OSUIFlatpickrMonth
+		 */
+		protected setCallbacks(): void {
+			console.log(OSFramework.GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
+		 * Method to set the html elements used
+		 *
+		 * @protected
+		 * @memberof Providers.MonthPicker.Flatpickr.OSUIFlatpickrMonth
+		 */
+		protected setHtmlElements(): void {
+			// Set the inputHTML element
+			this._monthPickerProviderInputElem = this.selfElement.querySelector(
+				OSFramework.GlobalEnum.CSSSelectors.InputFormControl
+			);
+
+			// If the input hasn't be added
+			if (!this._monthPickerProviderInputElem) {
+				throw new Error(`The monthpicker input at MonthpickerId '${this.widgetId}' is missing`);
+			}
 		}
 
 		/**
 		 * Remove all the assigned Events
 		 *
 		 * @protected
-		 * @memberof Flatpickr.Month
+		 * @memberof Providers.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		protected unsetCallbacks(): void {
 			this.configs.OnChange = undefined;
@@ -213,16 +234,21 @@ namespace Providers.MonthPicker.Flatpickr {
 		 * Unsets the references to the HTML elements.
 		 *
 		 * @protected
-		 * @memberof Flatpickr.Month
+		 * @memberof Providers.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		protected unsetHtmlElements(): void {
 			this._monthPickerProviderInputElem = undefined;
 		}
 
+		/**
+		 * Builds the Pattern
+		 *
+		 * @memberof Providers.MonthPicker.Flatpickr.OSUIFlatpickrMonth
+		 */
 		public build(): void {
 			super.build();
 
-			this._setHtmlElements();
+			this.setHtmlElements();
 			this.prepareConfigs();
 			this.finishBuild();
 		}
@@ -232,7 +258,7 @@ namespace Providers.MonthPicker.Flatpickr {
 		 *
 		 * @param {string} propertyName the name of the property that will be changed
 		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
-		 * @memberof Flatpickr.Month
+		 * @memberof Providers.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			//Storing the current ExtendedClass, before possibly changing this property.
@@ -264,7 +290,7 @@ namespace Providers.MonthPicker.Flatpickr {
 		/**
 		 * Method used to clear the selected date
 		 *
-		 * @memberof Flatpickr.Month
+		 * @memberof Providers.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public clear(): void {
 			this.provider.clear();
@@ -273,16 +299,18 @@ namespace Providers.MonthPicker.Flatpickr {
 		/**
 		 * Method used to close MonthPicker
 		 *
-		 * @memberof Flatpickr.Month
+		 * @memberof Providers.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public close(): void {
-			this.provider.close();
+			if (this.provider.isOpen) {
+				this.provider.close();
+			}
 		}
 
 		/**
 		 * Method to remove and destroy MonthPicker instance
 		 *
-		 * @memberof Flatpickr.Month
+		 * @memberof Providers.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
@@ -304,16 +332,18 @@ namespace Providers.MonthPicker.Flatpickr {
 		/**
 		 * Method used to open MonthPicker
 		 *
-		 * @memberof Flatpickr.Month
+		 * @memberof Providers.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public open(): void {
-			this.provider.open();
+			if (this.provider.isOpen === false) {
+				this.provider.open();
+			}
 		}
 
 		/**
 		 * Method used to regist callback events
 		 *
-		 * @memberof Flatpickr.Month
+		 * @memberof Providers.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public registerCallback(eventName: string, callback: OSFramework.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -331,9 +361,21 @@ namespace Providers.MonthPicker.Flatpickr {
 		}
 
 		/**
+		 * Method used to set the MonthPicker as editable on its input
+		 *
+		 * @memberof Providers.MonthPicker.Flatpickr.OSUIFlatpickrMonth
+		 */
+		public setEditableInput(isEditable: boolean): void {
+			if (this.configs.AllowInput !== isEditable) {
+				this.configs.AllowInput = isEditable;
+				this.redraw();
+			}
+		}
+
+		/**
 		 * Method used to set the MonthPicker language
 		 *
-		 * @memberof Flatpickr.Month
+		 * @memberof Providers.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public setLanguage(value: string): void {
 			// Set the new Language
@@ -349,7 +391,7 @@ namespace Providers.MonthPicker.Flatpickr {
 		 * Method used to set all the extended Flatpickr properties across the different types of instances
 		 *
 		 * @param {FlatpickrOptions} newConfigs
-		 * @memberof Flatpickr.Month
+		 * @memberof Providers.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public setProviderConfigs(newConfigs: FlatpickrOptions): void {
 			this.configs.setExtensibilityConfigs(newConfigs);

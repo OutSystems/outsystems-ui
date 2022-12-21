@@ -7,28 +7,28 @@ namespace OSFramework.Patterns.Dropdown {
 		/**
 		 * Method used to clear any selected values from the Dropdown
 		 *
-		 * @memberof IDropdown
+		 * @memberof OSFramework.Patterns.Dropdown.IDropdown
 		 */
 		clear(): void;
 
 		/**
 		 * Method used to set Dropdown as disabled
 		 *
-		 * @memberof IDropdown
+		 * @memberof OSFramework.Patterns.Dropdown.IDropdown
 		 */
 		disable(): void;
 
 		/**
 		 * Method used to set Dropdown is enabled
 		 *
-		 * @memberof IDropdown
+		 * @memberof OSFramework.Patterns.Dropdown.IDropdown
 		 */
 		enable(): void;
 
 		/**
 		 * Method used to get the selected values
 		 *
-		 * @memberof IDropdown
+		 * @memberof OSFramework.Patterns.Dropdown.IDropdown
 		 */
 		getSelectedValues(): string;
 
@@ -42,7 +42,7 @@ namespace OSFramework.Patterns.Dropdown {
 		 *
 		 * @param {boolean} isValid
 		 * @param {string} validationMessage
-		 * @memberof IDropdown
+		 * @memberof OSFramework.Patterns.Dropdown.IDropdown
 		 */
 		validation(isValid: boolean, validationMessage: string): void;
 	}

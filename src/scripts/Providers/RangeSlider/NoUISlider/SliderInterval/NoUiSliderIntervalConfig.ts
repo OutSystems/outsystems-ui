@@ -11,7 +11,7 @@ namespace Providers.RangeSlider.NoUISlider.SliderInterval {
 		 * Method to set provider configs for the Interval Slider mode
 		 *
 		 * @return {*}  {NoUiSliderOptions}
-		 * @memberof NoUiSliderIntervalConfig
+		 * @memberof Providers.RangeSlider.NoUISlider.SliderInterval.NoUiSliderIntervalConfig
 		 */
 		public getProviderConfig(): NoUiSliderOptions {
 			// eslint-disable-next-line prefer-const
@@ -20,7 +20,7 @@ namespace Providers.RangeSlider.NoUISlider.SliderInterval {
 				connect: true,
 			};
 
-			return this.mergeConfigs(this.getCommonProviderConfig(), rangeSliderOptions, this._providerExtendedOptions);
+			return this.mergeConfigs(super.getProviderConfig(), rangeSliderOptions, this._providerExtendedOptions);
 		}
 	}
 }

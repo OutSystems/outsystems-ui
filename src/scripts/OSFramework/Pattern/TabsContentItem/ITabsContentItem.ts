@@ -5,13 +5,14 @@ namespace OSFramework.Patterns.TabsContentItem {
 	 */
 	export interface ITabsContentItem extends Interface.IChild {
 		get IsActive(): boolean;
-		getDataTab();
-		getOffsetLeft();
-		setAriaLabelledByAttribute(headerItemId: string);
-		setDataTab(dataTab: number);
-		setIsActive();
-		setOnDragObserver(observer: IntersectionObserver);
-		unobserveDragObserver(observer: IntersectionObserver);
-		unsetIsActive();
+
+		getDataTab(): number;
+		getOffsetLeft(): number;
+		setAriaLabelledByAttribute(headerItemId: string): void;
+		setDataTab(dataTab: number): void;
+		setIsActive(): void;
+		setOnDragObserver(observer: IntersectionObserver): void;
+		unobserveDragObserver(observer: IntersectionObserver): void;
+		unsetIsActive(): void;
 	}
 }

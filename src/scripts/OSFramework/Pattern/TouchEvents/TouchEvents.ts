@@ -21,19 +21,19 @@ namespace OSFramework.Patterns.TouchEvents {
 		// Stores the touch event with bind(this)
 		private _startEvent: GlobalCallbacks.Generic;
 		// Stores the moment when the touch began
-		private _startTime;
+		private _startTime: number;
 		// Stores the start position
 		private _startX: number;
 		private _startY: number;
 		// Stores the moment when the touch finished.
-		private _timeTaken;
+		private _timeTaken: number;
 		// Controls if we're "touching" the element
 		private _touchingElement: boolean;
 		// The element to which we have bound this pattern
-		private _trackableElement;
+		private _trackableElement: HTMLElement;
 		// Stores the touch movement position
-		private _translateX;
-		private _translateY;
+		private _translateX: number;
+		private _translateY: number;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new TouchEventsConfig(configs));
@@ -44,9 +44,7 @@ namespace OSFramework.Patterns.TouchEvents {
 			this._touchingElement = false;
 		}
 
-		/**
-		 * Detects if the "touch" has ended
-		 */
+		// Detects if the "touch" has ended
 		private _eventTouchEnd(): void {
 			if (this._touchingElement) {
 				this._touchingElement = false;
@@ -59,11 +57,7 @@ namespace OSFramework.Patterns.TouchEvents {
 			}
 		}
 
-		/**
-		 *
-		 * Detects if the "touch" is moving
-		 * @param {TouchEvent} evt
-		 */
+		// Detects if the "touch" is moving
 		private _eventTouchMove(evt: TouchEvent): void {
 			if (this._touchingElement) {
 				this._currentX = evt.changedTouches[0].pageX;
@@ -75,11 +69,7 @@ namespace OSFramework.Patterns.TouchEvents {
 			}
 		}
 
-		/**
-		 *
-		 * Detects if the "touch" has started
-		 * @param {TouchEvent} evt
-		 */
+		// Detects if the "touch" has started
 		private _eventTouchStart(evt: TouchEvent): void {
 			this._startTime = new Date().getTime();
 			this._startX = evt.changedTouches[0].pageX;
@@ -93,6 +83,7 @@ namespace OSFramework.Patterns.TouchEvents {
 			this._triggerTouchStart();
 		}
 
+		// Remove Events
 		private _removeEventListeners(): void {
 			if (this._trackableElement) {
 				this._trackableElement.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, this._startEvent);
@@ -101,6 +92,7 @@ namespace OSFramework.Patterns.TouchEvents {
 			}
 		}
 
+		// Set Events
 		private _setEventListeners(): void {
 			if (this._trackableElement) {
 				this._trackableElement.addEventListener(GlobalEnum.HTMLEvent.TouchStart, this._startEvent);
@@ -109,10 +101,7 @@ namespace OSFramework.Patterns.TouchEvents {
 			}
 		}
 
-		/**
-		 *
-		 * Method that triggers the TouchEnd event on the platform
-		 */
+		// Method that triggers the TouchEnd event on the platform
 		private _triggerTouchEnd(): void {
 			if (this._endEventCallback) {
 				Helper.AsyncInvocation(
@@ -125,14 +114,8 @@ namespace OSFramework.Patterns.TouchEvents {
 				);
 			}
 		}
-		/**
-		 * Method that triggers the TouchMove event on the platform
-		 * @param {number} x
-		 * @param {number} y
-		 * @param {number} offsetX
-		 * @param {number} offsetY
-		 * @param {TouchEvent} event
-		 */
+
+		// Method that triggers the TouchMove event on the platform
 		private _triggerTouchMove(event: TouchEvent): void {
 			if (this._eventMoveCallback) {
 				Helper.AsyncInvocation(
@@ -145,11 +128,8 @@ namespace OSFramework.Patterns.TouchEvents {
 				);
 			}
 		}
-		/**
-		 * Method that triggers the TouchStart event on the platform
-		 * @param {number} x
-		 * @param {number} y
-		 */
+
+		// Method that triggers the TouchStart event on the platform
 		private _triggerTouchStart(): void {
 			if (this._eventStartCallback) {
 				Helper.AsyncInvocation(this._eventStartCallback, this._startX, this._startY);
@@ -157,10 +137,20 @@ namespace OSFramework.Patterns.TouchEvents {
 		}
 
 		/**
+		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.TouchEvents.TouchEvents
+		 */
+		protected setA11YProperties(): void {
+			console.warn(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
 		 * Sets the callbacks to be used in the pattern.
 		 *
 		 * @protected
-		 * @memberof TouchEvents
+		 * @memberof OSFramework.Patterns.TouchEvents.TouchEvents
 		 */
 		protected setCallbacks(): void {
 			this._endEvent = this._eventTouchEnd.bind(this);
@@ -174,7 +164,7 @@ namespace OSFramework.Patterns.TouchEvents {
 		 * Set the html references that will be used to manage the cssClasses and atribute properties
 		 *
 		 * @protected
-		 * @memberof TouchEvents
+		 * @memberof OSFramework.Patterns.TouchEvents.TouchEvents
 		 */
 		protected setHtmlElements(): void {
 			this._trackableElement = document.getElementById(this.configs.WidgetId);
@@ -184,7 +174,7 @@ namespace OSFramework.Patterns.TouchEvents {
 		 * Removes event listeners and callbacks.
 		 *
 		 * @protected
-		 * @memberof TouchEvents
+		 * @memberof OSFramework.Patterns.TouchEvents.TouchEvents
 		 */
 		protected unsetCallbacks(): void {
 			this._removeEventListeners();
@@ -193,16 +183,22 @@ namespace OSFramework.Patterns.TouchEvents {
 			this._moveEvent = undefined;
 			this._startEvent = undefined;
 		}
+
 		/**
 		 * Release references to HTML elements.
 		 *
 		 * @protected
-		 * @memberof TouchEvents
+		 * @memberof OSFramework.Patterns.TouchEvents.TouchEvents
 		 */
 		protected unsetHtmlElements(): void {
 			this._trackableElement = undefined;
 		}
 
+		/**
+		 * Build TouchEvents
+		 *
+		 * @memberof OSFramework.Patterns.TouchEvents.TouchEvents
+		 */
 		public build(): void {
 			super.build();
 			this.setHtmlElements();
@@ -210,12 +206,24 @@ namespace OSFramework.Patterns.TouchEvents {
 			super.finishBuild();
 		}
 
+		/**
+		 * Destroy TouchEvents
+		 *
+		 * @memberof OSFramework.Patterns.TouchEvents.TouchEvents
+		 */
 		public dispose(): void {
 			super.dispose();
 			this.unsetCallbacks();
 			this.unsetHtmlElements();
 		}
 
+		/**
+		 * Method used to register the provider callback
+		 *
+		 * @param {string} eventName Event name that will be assigned
+		 * @param {GlobalCallbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
+		 * @memberof OSFramework.Patterns.TouchEvents.TouchEvents
+		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
 				case Patterns.TouchEvents.Enum.Events.End:

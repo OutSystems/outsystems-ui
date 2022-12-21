@@ -31,7 +31,7 @@ namespace OSFramework.Patterns {
 		 * Method used to notify parent about the action that was performed
 		 *
 		 * @param actionType Action Type name (Should be based on an Enum)
-		 * @memberof AbstractChild
+		 * @memberof OSFramework.Patterns.AbstractChild
 		 */
 		protected notifyParent(actionType: string): void {
 			this._parentObject.beNotifiedByChild(this.uniqueId, actionType);
@@ -44,12 +44,12 @@ namespace OSFramework.Patterns {
 		 * @param {string} parentSelector Selector to find for parent Element
 		 * @param {Function} getPatternByIdAPI API reference method from Parent Pattern that will return the PatternById
 		 * @param {boolean} [canBeOrphan] option for patterns that can work without a parent
-		 * @memberof AbstractChild
+		 * @memberof OSFramework.Patterns.AbstractChild
 		 */
 		// eslint-disable-next-line @typescript-eslint/ban-types
 		protected setParentInfo(parentSelector: string, getPatternByIdAPI: Function, canBeOrphan?: boolean): void {
 			try {
-				const findedElement = this._selfElem.closest(parentSelector) as HTMLElement;
+				const findedElement = this.selfElement.closest(parentSelector) as HTMLElement;
 				// Find for Id at Name or data-uniqueid attribute, data-uniqueid attribute is used at the elements that will be moved outside parent context
 				this._parentId = Helper.Dom.Attribute.Get(findedElement, 'name') || findedElement.dataset.uniqueid;
 
@@ -72,7 +72,7 @@ namespace OSFramework.Patterns {
 		 *
 		 * @readonly
 		 * @type {string}
-		 * @memberof AbstractChild
+		 * @memberof OSFramework.Patterns.AbstractChild
 		 */
 		public get isFirstChild(): boolean {
 			return this._isFirstChild;
@@ -83,7 +83,7 @@ namespace OSFramework.Patterns {
 		 *
 		 * @readonly
 		 * @type {string}
-		 * @memberof AbstractChild
+		 * @memberof OSFramework.Patterns.AbstractChild
 		 */
 		public set isFirstChild(value: boolean) {
 			this._isFirstChild = value;
@@ -92,7 +92,7 @@ namespace OSFramework.Patterns {
 		/**
 		 * Getter that allows to check if it's the last child.
 		 *
-		 * @memberof AbstractChild
+		 * @memberof OSFramework.Patterns.AbstractChild
 		 */
 		public get isLastChild(): boolean {
 			return this._isLastChild;
@@ -101,7 +101,7 @@ namespace OSFramework.Patterns {
 		/**
 		 * Setter that allows to define it's the last child.
 		 *
-		 * @memberof AbstractChild
+		 * @memberof OSFramework.Patterns.AbstractChild
 		 */
 		public set isLastChild(value: boolean) {
 			this._isLastChild = value;
@@ -112,7 +112,7 @@ namespace OSFramework.Patterns {
 		 *
 		 * @readonly
 		 * @type {string}
-		 * @memberof AbstractChild
+		 * @memberof OSFramework.Patterns.AbstractChild
 		 */
 		public get parentId(): string {
 			return this._parentId;
@@ -123,7 +123,7 @@ namespace OSFramework.Patterns {
 		 *
 		 * @readonly
 		 * @type {PT}
-		 * @memberof AbstractChild
+		 * @memberof OSFramework.Patterns.AbstractChild
 		 */
 		public get parentObject(): PT {
 			return this._parentObject;

@@ -34,19 +34,19 @@ namespace OSFramework.Patterns.FlipContent {
 
 		// Method to remove the event listeners
 		private _removeEvents(): void {
-			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
+			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
 			this._flipWrapperElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
 		}
 
 		// Setting the handlers and the classes for when the FlipSelf is active or not
 		private _setEventHandlers(): void {
 			if (this.configs.FlipSelf) {
-				this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
+				this.selfElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
 				this._flipWrapperElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
 
 				Helper.Dom.Styles.AddClass(this._flipWrapperElement, Enum.CssClass.PatternFlipSelf);
 			} else {
-				this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
+				this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
 				this._flipWrapperElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
 
 				Helper.Dom.Styles.RemoveClass(this._flipWrapperElement, Enum.CssClass.PatternFlipSelf);
@@ -63,9 +63,9 @@ namespace OSFramework.Patterns.FlipContent {
 		// Set the classes on the pattern's first render, toggle click & parameters changed
 		private _toggleClasses(): void {
 			if (this.configs.IsFlipped) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsFlipped);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternIsFlipped);
 			} else {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsFlipped);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.PatternIsFlipped);
 			}
 		}
 
@@ -79,32 +79,34 @@ namespace OSFramework.Patterns.FlipContent {
 		// Update the A11Y attributes
 		private _updateA11yProperties(): void {
 			if (this.configs.FlipSelf) {
-				Helper.A11Y.AriaAtomicTrue(this._selfElem);
-				Helper.A11Y.TabIndexTrue(this._selfElem);
+				Helper.A11Y.AriaAtomicTrue(this.selfElement);
+				Helper.A11Y.TabIndexTrue(this.selfElement);
 			} else {
-				Helper.A11Y.AriaAtomicFalse(this._selfElem);
-				Helper.A11Y.TabIndexFalse(this._selfElem);
+				Helper.A11Y.AriaAtomicFalse(this.selfElement);
+				Helper.A11Y.TabIndexFalse(this.selfElement);
 			}
 		}
 
 		/**
 		 * Set the A11Y attributes
 		 *
-		 * @memberof FlipContent
+		 * @protected
+		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
-		protected setA11yProperties(): void {
+		protected setA11YProperties(): void {
 			if (this.configs.FlipSelf) {
-				Helper.A11Y.AriaAtomicTrue(this._selfElem);
-				Helper.A11Y.TabIndexTrue(this._selfElem);
-				Helper.A11Y.RoleButton(this._selfElem);
-				Helper.A11Y.AriaLivePolite(this._selfElem);
+				Helper.A11Y.AriaAtomicTrue(this.selfElement);
+				Helper.A11Y.TabIndexTrue(this.selfElement);
+				Helper.A11Y.RoleButton(this.selfElement);
+				Helper.A11Y.AriaLivePolite(this.selfElement);
 			}
 		}
 
 		/**
 		 * Set the events
 		 *
-		 * @memberof FlipContent
+		 * @protected
+		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		protected setCallbacks(): void {
 			this._eventKeydown = this._keydownCallback.bind(this);
@@ -116,16 +118,18 @@ namespace OSFramework.Patterns.FlipContent {
 		/**
 		 * Set the HTML elements
 		 *
-		 * @memberof FlipContent
+		 * @protected
+		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		protected setHtmlElements(): void {
-			this._flipWrapperElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternContainer);
+			this._flipWrapperElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternContainer);
 		}
 
 		/**
 		 * Method to remove all assigned callbacks
 		 *
-		 * @memberof FlipContent
+		 * @protected
+		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		protected unsetCallbacks(): void {
 			this._removeEvents();
@@ -137,7 +141,8 @@ namespace OSFramework.Patterns.FlipContent {
 		/**
 		 * Set the HTML elements
 		 *
-		 * @memberof FlipContent
+		 * @protected
+		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		protected unsetHtmlElements(): void {
 			this._flipWrapperElement = undefined;
@@ -146,7 +151,7 @@ namespace OSFramework.Patterns.FlipContent {
 		/**
 		 * Building Flip Content
 		 *
-		 * @memberof FlipContent
+		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		public build(): void {
 			super.build();
@@ -159,7 +164,7 @@ namespace OSFramework.Patterns.FlipContent {
 			this._toggleClasses();
 
 			// Set the A11Y defaults
-			this.setA11yProperties();
+			this.setA11YProperties();
 
 			this.finishBuild();
 		}
@@ -169,7 +174,7 @@ namespace OSFramework.Patterns.FlipContent {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof FlipContent
+		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -190,7 +195,7 @@ namespace OSFramework.Patterns.FlipContent {
 		/**
 		 * Destroy FlipContent
 		 *
-		 * @memberof FlipContent
+		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		public dispose(): void {
 			this.unsetCallbacks();
@@ -202,7 +207,7 @@ namespace OSFramework.Patterns.FlipContent {
 		/**
 		 * Register OnToogleClick clientAction as a callBack reference
 		 *
-		 * @memberof FlipContent
+		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		public registerCallback(callback: Callbacks.OSFlipEvent): void {
 			if (this._plataformEventFlip === undefined) {
@@ -219,7 +224,7 @@ namespace OSFramework.Patterns.FlipContent {
 		/**
 		 * Tries to show the font
 		 *
-		 * @memberof FlipContent
+		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		public showFrontContent(): void {
 			if (this.configs.IsFlipped) {
@@ -230,7 +235,7 @@ namespace OSFramework.Patterns.FlipContent {
 		/**
 		 * Public method to trigger the flipping of the pattern and the event on the platform's side
 		 *
-		 * @memberof FlipContent
+		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
 		public toggleFlipContent(): void {
 			this.configs.IsFlipped = !this.configs.IsFlipped;

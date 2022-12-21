@@ -14,7 +14,7 @@ namespace OSFramework.Helper {
 		 * @param {HTMLElement} element Element where the attribute will be looked for.
 		 * @param {string} attrName Attribute name to be obtained the value.
 		 * @return {*}  {string}
-		 * @memberof AttributeManipulation
+		 * @memberof OSFramework.Helper.AttributeManipulation
 		 */
 		public static Get(element: HTMLElement, attrName: string): string | undefined {
 			if (element) {
@@ -32,7 +32,7 @@ namespace OSFramework.Helper {
 		 * @param {HTMLElement} element
 		 * @param {string} attrName
 		 * @return {*}  {boolean}
-		 * @memberof AttributeManipulation
+		 * @memberof OSFramework.Helper.AttributeManipulation
 		 */
 		public static Has(element: HTMLElement, attrName: string): boolean {
 			if (element) {
@@ -48,7 +48,7 @@ namespace OSFramework.Helper {
 		 * @static
 		 * @param {HTMLElement} element
 		 * @return {*}  {(string | undefined)}
-		 * @memberof AttributeManipulation
+		 * @memberof OSFramework.Helper.AttributeManipulation
 		 */
 		public static Id(element: HTMLElement): string | undefined {
 			return AttributeManipulation.Get(element, 'Id');
@@ -60,7 +60,7 @@ namespace OSFramework.Helper {
 		 * @static
 		 * @param {HTMLElement} element Element where the given attribute will be removed.
 		 * @param {string} attrName Attribute name to be removed.
-		 * @memberof AttributeManipulation
+		 * @memberof OSFramework.Helper.AttributeManipulation
 		 */
 		public static Remove(element: HTMLElement, attrName: string): void {
 			if (element) {
@@ -77,7 +77,7 @@ namespace OSFramework.Helper {
 		 * @param {HTMLElement} element Element where the given attribute will be added.
 		 * @param {string} attrName Attribute name to be added.
 		 * @param {(boolean | number | string)} attrValue Attribute value to be added.
-		 * @memberof AttributeManipulation
+		 * @memberof OSFramework.Helper.AttributeManipulation
 		 */
 		public static Set(element: HTMLElement, attrName: string, attrValue: boolean | number | string): void {
 			if (element) {
@@ -101,7 +101,7 @@ namespace OSFramework.Helper {
 		 * @static
 		 * @param {HTMLElement} element Element where the class will be added.
 		 * @param {string} cssClass Css class that will be added.
-		 * @memberof StyleManipulation
+		 * @memberof OSFramework.Helper.StyleManipulation
 		 */
 		public static AddClass(element: HTMLElement, cssClass: string): void {
 			if (element) {
@@ -120,7 +120,7 @@ namespace OSFramework.Helper {
 		 * @param {HTMLElement} element Element that will be checked for the class.
 		 * @param {string} cssClass Css class that will be checked.
 		 * @return {*}  {boolean} true if the element possess the class.
-		 * @memberof StyleManipulation
+		 * @memberof OSFramework.Helper.StyleManipulation
 		 */
 		public static ContainsClass(element: HTMLElement, cssClass: string): boolean {
 			if (element) {
@@ -139,7 +139,7 @@ namespace OSFramework.Helper {
 		 * @param {HTMLElement} element Element where the class will be toggled.
 		 * @param {string} currentCssClasses Css classes that are assigned to the given element
 		 * @param {string} newCssClass Css classes that will be assigned to the given element
-		 * @memberof StyleManipulation
+		 * @memberof OSFramework.Helper.StyleManipulation
 		 */
 		public static ExtendedClass(element: HTMLElement, currentCssClasses: string, newCssClass: string): void {
 			if (element) {
@@ -210,7 +210,7 @@ namespace OSFramework.Helper {
 		 * @static
 		 * @param {HTMLElement} element
 		 * @return {*}  {string[]}
-		 * @memberof StyleManipulation
+		 * @memberof OSFramework.Helper.StyleManipulation
 		 */
 		public static GetCssClasses(element: HTMLElement): Set<string> {
 			if (element) {
@@ -226,7 +226,7 @@ namespace OSFramework.Helper {
 		 * @static
 		 * @param {HTMLElement} element Element where the class will be removed.
 		 * @param {string} cssClass Css class that will be removed.
-		 * @memberof StyleManipulation
+		 * @memberof OSFramework.Helper.StyleManipulation
 		 */
 		public static RemoveClass(element: HTMLElement, cssClass: string): void {
 			if (element) {
@@ -244,7 +244,7 @@ namespace OSFramework.Helper {
 		 * @static
 		 * @param {HTMLElement} element Element where the class will be toggled.
 		 * @param {string} cssProperty Css property that will be removed.
-		 * @memberof StyleManipulation
+		 * @memberof OSFramework.Helper.StyleManipulation
 		 */
 		public static RemoveStyleAttribute(element: HTMLElement, cssProperty: string): void {
 			if (element) {
@@ -263,7 +263,7 @@ namespace OSFramework.Helper {
 		 * @param {HTMLElement} element Element where the class will be toggled.
 		 * @param {string} cssProperty Css property that will be added.
 		 * @param {(number | string)} ruleValue Value of the CSS property.
-		 * @memberof StyleManipulation
+		 * @memberof OSFramework.Helper.StyleManipulation
 		 */
 		public static SetStyleAttribute(element: HTMLElement, cssProperty: string, ruleValue: number | string): void {
 			if (element) {
@@ -281,7 +281,7 @@ namespace OSFramework.Helper {
 		 * @static
 		 * @param {HTMLElement} element Element where the class will be toggled.
 		 * @param {string} cssClass Css class that will be toggled.
-		 * @memberof StyleManipulation
+		 * @memberof OSFramework.Helper.StyleManipulation
 		 */
 		public static ToggleClass(element: HTMLElement, cssClass: string): void {
 			if (element) {
@@ -301,7 +301,7 @@ namespace OSFramework.Helper {
 		 * @readonly
 		 * @static
 		 * @type {typeof AttributeManipulation}
-		 * @memberof Dom
+		 * @memberof OSFramework.Helper.Dom
 		 */
 		public static get Attribute(): typeof AttributeManipulation {
 			return AttributeManipulation;
@@ -313,7 +313,7 @@ namespace OSFramework.Helper {
 		 * @readonly
 		 * @static
 		 * @type {typeof StyleManipulation}
-		 * @memberof Dom
+		 * @memberof OSFramework.Helper.Dom
 		 */
 		public static get Styles(): typeof StyleManipulation {
 			return StyleManipulation;
@@ -326,7 +326,7 @@ namespace OSFramework.Helper {
 		 * @param {HTMLElement} element Element to be queried.
 		 * @param {string} cssClass CSS class to test its value.
 		 * @return {*}  {(HTMLElement | undefined)} Return the HTMLElement found, of if not undefined.
-		 * @memberof Dom
+		 * @memberof OSFramework.Helper.Dom
 		 */
 		public static ClassSelector(element: HTMLElement | Document, cssClass: string): HTMLElement | undefined {
 			let elementFound: HTMLElement = undefined;
@@ -349,7 +349,7 @@ namespace OSFramework.Helper {
 		 *
 		 * @static
 		 * @param {HTMLElement} element
-		 * @memberof Dom
+		 * @memberof OSFramework.Helper.Dom
 		 */
 		public static Disable(element: HTMLElement): void {
 			if (element) {
@@ -364,7 +364,7 @@ namespace OSFramework.Helper {
 		 *
 		 * @static
 		 * @param {HTMLElement} element
-		 * @memberof Dom
+		 * @memberof OSFramework.Helper.Dom
 		 */
 		public static Enable(element: HTMLElement): void {
 			if (element) {
@@ -390,7 +390,7 @@ namespace OSFramework.Helper {
 		 * @static
 		 * @param {string} id Id of the element to be returned.
 		 * @return {*}  {HTMLElement} The respective DOM Element.
-		 * @memberof Dom
+		 * @memberof OSFramework.Helper.Dom
 		 */
 		public static GetElementById(id: string): HTMLElement {
 			const obj = document.getElementById(id);
@@ -409,7 +409,7 @@ namespace OSFramework.Helper {
 		 * @static
 		 * @param {string} uniqueId uniqueId generated by the framework.
 		 * @return {*}  {HTMLElement} The respective DOM Element.
-		 * @memberof Dom
+		 * @memberof OSFramework.Helper.Dom
 		 */
 		public static GetElementByUniqueId(uniqueId: string): HTMLElement {
 			const obj = document.getElementsByName(uniqueId);
@@ -426,7 +426,7 @@ namespace OSFramework.Helper {
 		 *
 		 * @readonly
 		 * @static
-		 * @memberof Dom
+		 * @memberof OSFramework.Helper.Dom
 		 */
 		public static GetFocusableElements(element: HTMLElement): HTMLElement[] {
 			return [...element.querySelectorAll(Constants.FocusableElems)] as HTMLElement[];
@@ -438,12 +438,33 @@ namespace OSFramework.Helper {
 		 * @static
 		 * @param {HTMLElement} element Element to be moved.
 		 * @param {HTMLElement} target Location to where the Element is to be moved.
-		 * @memberof Dom
+		 * @memberof OSFramework.Helper.Dom
 		 */
 		public static Move(element: HTMLElement, target: HTMLElement): void {
 			if (element && target) {
 				target.appendChild(element);
 			}
+		}
+
+		/**
+		 * Method that will help on setting the value of an input and trigger that change to the platform in order to update it's assigned variable, otherwise platform value do not get updated if/when only a value attribute get set!
+		 *
+		 * @param {HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement} inputElem Element where the value will be assigned!
+		 * @param {string} value Value to be assigned
+		 * @memberof OSFramework.Helper.Dom
+		 */
+		public static SetInputValue(
+			inputElem: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement,
+			value: string
+		): void {
+			// Set the input prototype object;
+			const inputElemProtoObj = Object.getPrototypeOf(inputElem);
+			// Get the Set Method for the value attribute
+			const setValue = Object.getOwnPropertyDescriptor(inputElemProtoObj, 'value').set;
+			// Trigger the call of the Set method in order chanhe it's value
+			setValue.call(inputElem, value);
+			// Trigger the CustomEvent in order trigger the update platform variable accordingly
+			inputElem.dispatchEvent(new CustomEvent('input', { bubbles: true }));
 		}
 
 		/**
@@ -453,7 +474,7 @@ namespace OSFramework.Helper {
 		 * @param {HTMLElement} element Element to be queried.
 		 * @param {string} htmlTag HTML element to be searched for.
 		 * @return {*}  {(HTMLElement | undefined)}
-		 * @memberof Dom
+		 * @memberof OSFramework.Helper.Dom
 		 */
 		public static TagSelector(element: HTMLElement, htmlTag: string): HTMLElement | undefined {
 			let elementFound: HTMLElement = undefined;
@@ -478,7 +499,7 @@ namespace OSFramework.Helper {
 		 * @param {HTMLElement} element Element to be queried.
 		 * @param {string} htmlTag HTML element to be searched for.
 		 * @return {*}  {(HTMLElement | undefined)}
-		 * @memberof Dom
+		 * @memberof OSFramework.Helper.Dom
 		 */
 		public static TagSelectorAll(element: HTMLElement | Document, htmlTag: string): HTMLElement[] | undefined {
 			let elementFound: HTMLElement[];

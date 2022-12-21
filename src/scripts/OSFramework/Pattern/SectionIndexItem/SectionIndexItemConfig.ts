@@ -11,12 +11,12 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		public ScrollToWidgetId: string;
 
 		/**
-		 * Method that validates if a given property can be changed.
+		 * Method that will check if a given property (key) can be changed/updated!
 		 *
-		 * @param {boolean} isBuilt
-		 * @param {string} key
-		 * @return {*}  {boolean}
-		 * @memberof SectionIndexItemConfig
+		 * @param isBuilt True when pattern has been built!
+		 * @param key property name
+		 * @returns {boolean} boolean
+		 * @memberof  OSFramework.Patterns.SectionIndexItem.SectionIndexItemConfig
 		 */
 		public validateCanChange(isBuilt: boolean, key: string): boolean {
 			if (isBuilt) {

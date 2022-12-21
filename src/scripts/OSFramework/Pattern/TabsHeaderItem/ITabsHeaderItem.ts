@@ -5,14 +5,15 @@ namespace OSFramework.Patterns.TabsHeaderItem {
 	 */
 	export interface ITabsHeaderItem extends Interface.IChild {
 		get IsActive(): boolean;
-		disable();
-		enable();
-		getDataTab();
-		setAriaControlsAttribute(contentItemId: string);
-		setDataTab(dataTab: number);
-		setFocus();
-		setIsActive();
-		unsetIsActive();
-		updateOnRender();
+
+		disable(): void;
+		enable(): void;
+		getDataTab(): number;
+		setAriaControlsAttribute(contentItemId: string): void;
+		setDataTab(dataTab: number): void;
+		setFocus(): void;
+		setIsActive(): void;
+		unsetIsActive(): void;
+		updateOnRender(): void;
 	}
 }

@@ -7,6 +7,7 @@
 .osui-tabs {
 	--header-item-width: fit-content(30%);
 	--header-item-alignment: auto;
+	--tabs-indicator-size: 1px;
 	display: grid;
 	height: var(--tabs-height);
 	overflow: hidden;
@@ -66,7 +67,7 @@
 			}
 
 			& > .osui-tabs__header__indicator {
-				min-height: 1px;
+				min-height: var(--tabs-indicator-size);
 				position: absolute;
 				top: 0;
 				transform: translateY(var(--tabs-indicator-transform)) translateX(0) translateZ(0)
@@ -103,7 +104,7 @@
 
 		.osui-tabs__header__indicator {
 			bottom: 0;
-			min-width: 1px;
+			min-width: var(--tabs-indicator-size);
 			height: 2px;
 			transform: translateX(var(--tabs-indicator-transform)) translateY(0) translateZ(0)
 				scaleX(var(--tabs-indicator-scale));
@@ -127,6 +128,16 @@
 		&.osui-tabs--is-vertical {
 			.osui-tabs__header {
 				align-content: initial;
+			}
+		}
+	}
+
+	&--has-auto-height {
+		.osui-tabs__content-item {
+			display: none;
+
+			&.osui-tabs--is-active {
+				display: block;
 			}
 		}
 	}
@@ -213,7 +224,6 @@
 
 		&-item {
 			height: 100%;
-			max-width: 99.99%; /* prevent render issues on chrome, in some screen-sizes, due to overflow hidden and css snap */
 			overflow-y: auto;
 			padding: var(--space-m) var(--space-none);
 			scroll-snap-align: start;
@@ -223,6 +233,11 @@
 			& {
 				-servicestudio-display: block !important;
 				-servicestudio-margin-bottom: var(--space-m);
+			}
+
+			// This selector is used to prevent render issues on chrome, in some screen-sizes, due to overflow hidden and css snap
+			.columns {
+				max-width: 99.99%;
 			}
 		}
 	}
@@ -320,6 +335,19 @@
 			&:focus-visible {
 				box-shadow: 0 0 0 1px var(--color-focus-outer) inset;
 			}
+		}
+	}
+}
+
+// Issue on accordion in webkit
+.windows.chrome,
+.windows.edge,
+.osx.chrome,
+.osx.edge {
+	.osui-accordion,
+	.section-expandable {
+		.osui-tabs__header__indicator {
+			perspective: 1000px; // prevent rendering issues on webkit browsers, when inside overflow elements
 		}
 	}
 }

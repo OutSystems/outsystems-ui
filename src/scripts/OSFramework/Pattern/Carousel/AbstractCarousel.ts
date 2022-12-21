@@ -11,6 +11,8 @@ namespace OSFramework.Patterns.Carousel {
 		public build(): void {
 			super.build();
 		}
+
+		// Common methods that all Carousels must implement!
 		public abstract goTo(index: number): void;
 		public abstract next(): void;
 		public abstract previous(): void;

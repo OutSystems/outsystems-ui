@@ -36,7 +36,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 			if (
 				this.InitialEndDate !== undefined &&
 				this.InitialStartDate !== undefined &&
-				OSFramework.Helper.Dates.Compare(this.InitialStartDate, this.InitialEndDate) === false
+				OSFramework.Helper.Dates.IsBeforeThan(this.InitialStartDate, this.InitialEndDate) === false
 			) {
 				throw new Error(`StartDate '${this.InitialStartDate}' can't be after EndDate '${this.InitialEndDate}'`);
 			}
@@ -44,18 +44,19 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 			return [this.InitialStartDate, this.InitialEndDate];
 		}
 
-		// Method used to set all the config properties for the RangeDate mode type
+		/**
+		 * Method used to set all the config properties for the RangeDate mode type
+		 *
+		 * @returns [FlatpickrOptions]
+		 * @memberof Providers.DatePicker.Flatpickr.RangeDate.FlatpickrRangeDateConfig
+		 */
 		public getProviderConfig(): FlatpickrOptions {
 			const flatpickrRangeDateOpts = {
 				defaultDate: this._setDefaultDate(),
 				mode: OSFramework.Patterns.DatePicker.Enum.Mode.Range,
 			};
 
-			return this.mergeConfigs(
-				this.getCommonProviderConfigs(),
-				flatpickrRangeDateOpts,
-				this._providerExtendedOptions
-			);
+			return this.mergeConfigs(super.getProviderConfig(), flatpickrRangeDateOpts, this._providerExtendedOptions);
 		}
 	}
 }

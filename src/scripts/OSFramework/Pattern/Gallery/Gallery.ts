@@ -17,11 +17,11 @@ namespace OSFramework.Patterns.Gallery {
 		 * Function used to set the Gallery's items gap
 		 *
 		 * @private
-		 * @memberof Gallery
+		 * @memberof OSFramework.Patterns.Gallery.Gallery
 		 */
 		private _setItemsGap(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				Enum.CssVariables.PatternItemsGap,
 				`var(--space-${this.configs.ItemsGap})`
 			);
@@ -31,7 +31,7 @@ namespace OSFramework.Patterns.Gallery {
 		 * Function used to set the Gallery's number of items per row in Desktop
 		 *
 		 * @private
-		 * @memberof Gallery
+		 * @memberof OSFramework.Patterns.Gallery.Gallery
 		 */
 		private _setRowItemsDesktop(): void {
 			//The number must be greater than 0
@@ -44,13 +44,13 @@ namespace OSFramework.Patterns.Gallery {
 			}
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				Enum.CssVariables.PatternItemsDesktop,
 				this.configs.RowItemsDesktop
 			);
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				Enum.CssVariables.PatternListItemsDesktop,
 				this.configs.RowItemsDesktop
 			);
@@ -60,7 +60,7 @@ namespace OSFramework.Patterns.Gallery {
 		 * Function used to set the Gallery's number of items per row in Phone
 		 *
 		 * @private
-		 * @memberof Gallery
+		 * @memberof OSFramework.Patterns.Gallery.Gallery
 		 */
 		private _setRowItemsPhone(): void {
 			//The number must be greater than 0
@@ -73,12 +73,12 @@ namespace OSFramework.Patterns.Gallery {
 			}
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				Enum.CssVariables.PatternItemsPhone,
 				this.configs.RowItemsPhone
 			);
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				Enum.CssVariables.PatternListItemsPhone,
 				this.configs.RowItemsPhone
 			);
@@ -88,7 +88,7 @@ namespace OSFramework.Patterns.Gallery {
 		 * Function used to set the Gallery's number of items per row in Tablet
 		 *
 		 * @private
-		 * @memberof Gallery
+		 * @memberof OSFramework.Patterns.Gallery.Gallery
 		 */
 		private _setRowItemsTablet(): void {
 			//The number must be greater than 0
@@ -101,18 +101,73 @@ namespace OSFramework.Patterns.Gallery {
 			}
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				Enum.CssVariables.PatternItemsTablet,
 				this.configs.RowItemsTablet
 			);
 
 			Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				Enum.CssVariables.PatternListItemsTablet,
 				this.configs.RowItemsTablet
 			);
 		}
 
+		/**
+		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Gallery.Gallery
+		 */
+		protected setA11YProperties(): void {
+			console.warn(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
+		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Gallery.Gallery
+		 */
+		protected setCallbacks(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
+		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Gallery.Gallery
+		 */
+		protected setHtmlElements(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
+		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Gallery.Gallery
+		 */
+		protected unsetCallbacks(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
+		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.Gallery.Gallery
+		 */
+		protected unsetHtmlElements(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
+		 * Build Gallery
+		 *
+		 * @memberof OSFramework.Patterns.Gallery.Gallery
+		 */
 		public build(): void {
 			super.build();
 
@@ -132,10 +187,11 @@ namespace OSFramework.Patterns.Gallery {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof Gallery
+		 * @memberof OSFramework.Patterns.Gallery.Gallery
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
+
 			if (this.isBuilt) {
 				// Check which property changed and call respective method to update it
 				switch (propertyName) {

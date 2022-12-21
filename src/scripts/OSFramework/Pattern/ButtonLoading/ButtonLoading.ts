@@ -20,12 +20,7 @@ namespace OSFramework.Patterns.ButtonLoading {
 			super(uniqueId, new ButtonLoadingConfig(configs));
 		}
 
-		/**
-		 * Set the cssClasses that should be assigned to the element on it's initialization
-		 *
-		 * @private
-		 * @memberof ButtonLoading
-		 */
+		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _setInitialButtonState(): void {
 			// Set default IsLoading cssClass property value
 			this._setIsLoading(this.configs.IsLoading);
@@ -33,37 +28,25 @@ namespace OSFramework.Patterns.ButtonLoading {
 			this._setLoadingLabel(this.configs.ShowLoadingAndLabel);
 		}
 
-		/**
-		 * Sets the new state of the button. If it's loading or not loading.
-		 *
-		 * @private
-		 * @param {boolean} isLoading
-		 * @memberof ButtonLoading
-		 */
+		// Sets the new state of the button. If it's loading or not loading.
 		private _setIsLoading(isLoading: boolean): void {
 			if (isLoading) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.IsLoading);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsLoading);
 				this.isBuilt && Helper.A11Y.TabIndexFalse(this._buttonElement);
 				this._buttonElement.blur();
 			} else {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.IsLoading);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsLoading);
 				this.isBuilt && Helper.A11Y.TabIndexTrue(this._buttonElement);
 			}
 		}
 
-		/**
-		 * Sets if the button should display label or not.
-		 *
-		 * @private
-		 * @param {boolean} showSpinnerOnly
-		 * @memberof ButtonLoading
-		 */
+		// Sets if the button should display label or not.
 		private _setLoadingLabel(showSpinnerOnly: boolean): void {
 			//let's remove the class only and only when the pattern is already built and the showSpinnerOnly is false.
 			if (showSpinnerOnly && this.isBuilt) {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.ShowSpinnerOnly);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.ShowSpinnerOnly);
 			} else if (showSpinnerOnly === false) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.ShowSpinnerOnly);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.ShowSpinnerOnly);
 			}
 		}
 
@@ -71,22 +54,32 @@ namespace OSFramework.Patterns.ButtonLoading {
 		 * Add the Accessibility Attributes values
 		 *
 		 * @protected
-		 * @memberof ButtonLoading
+		 * @memberof OSFramework.Patterns.ButtonLoading.ButtonLoading
 		 */
-		protected setA11yProperties(): void {
-			Helper.A11Y.AriaLivePolite(this._selfElem);
-			Helper.A11Y.AriaAtomicTrue(this._selfElem);
+		protected setA11YProperties(): void {
+			Helper.A11Y.AriaLivePolite(this.selfElement);
+			Helper.A11Y.AriaAtomicTrue(this.selfElement);
 			Helper.A11Y.AriaHiddenTrue(this._spinnerElement);
+		}
+
+		/**
+		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.ButtonLoading.ButtonLoading
+		 */
+		protected setCallbacks(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
 		}
 
 		/**
 		 * Update info based on htmlContent
 		 *
 		 * @protected
-		 * @memberof ButtonLoading
+		 * @memberof OSFramework.Patterns.ButtonLoading.ButtonLoading
 		 */
 		protected setHtmlElements(): void {
-			this._buttonElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.Button);
+			this._buttonElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.Button);
 
 			// Since the ButtonElem is a must have element, check if it exist
 			if (this._buttonElement === undefined) {
@@ -110,10 +103,20 @@ namespace OSFramework.Patterns.ButtonLoading {
 		}
 
 		/**
+		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.ButtonLoading.ButtonLoading
+		 */
+		protected unsetCallbacks(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
 		 * Removes the local value of the variables pointing to HTML elements;
 		 *
 		 * @protected
-		 * @memberof ButtonLoading
+		 * @memberof OSFramework.Patterns.ButtonLoading.ButtonLoading
 		 */
 		protected unsetHtmlElements(): void {
 			this._buttonElement = undefined;
@@ -123,7 +126,7 @@ namespace OSFramework.Patterns.ButtonLoading {
 		/**
 		 *  Builds the button loading.
 		 *
-		 * @memberof ButtonLoading
+		 * @memberof OSFramework.Patterns.ButtonLoading.ButtonLoading
 		 */
 		public build(): void {
 			super.build();
@@ -132,7 +135,7 @@ namespace OSFramework.Patterns.ButtonLoading {
 
 			this._setInitialButtonState();
 
-			this.setA11yProperties();
+			this.setA11YProperties();
 
 			this.finishBuild();
 		}
@@ -142,7 +145,7 @@ namespace OSFramework.Patterns.ButtonLoading {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof ButtonLoading
+		 * @memberof OSFramework.Patterns.ButtonLoading.ButtonLoading
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -163,7 +166,7 @@ namespace OSFramework.Patterns.ButtonLoading {
 		/**
 		 * Disposes the current pattern.
 		 *
-		 * @memberof ButtonLoading
+		 * @memberof OSFramework.Patterns.ButtonLoading.ButtonLoading
 		 */
 		public dispose(): void {
 			this.unsetHtmlElements();

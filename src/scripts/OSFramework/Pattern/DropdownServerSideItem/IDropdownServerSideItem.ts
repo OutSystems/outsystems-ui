@@ -12,7 +12,7 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 		 * Key used to trigger the notification into Dropdown parent
 		 *
 		 * @type {string}
-		 * @memberof IDropdownServerSideItem
+		 * @memberof OSFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem
 		 */
 		keyboardTriggeredKey: string;
 
@@ -21,7 +21,7 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof IDropdownServerSideItem
+		 * @memberof OSFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem
 		 */
 		get IsSelected(): boolean;
 
@@ -30,14 +30,14 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof IDropdownServerSideItem
+		 * @memberof OSFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem
 		 */
 		get ItemId(): string;
 		/**
 		 * Method used to update the DropdownOptionItem selected state
 		 *
 		 * @param triggerCallback True by default, used to block the callback when needed
-		 * @memberof IDropdownServerSideItem
+		 * @memberof OSFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem
 		 */
 		toggleSelected(triggerCallback?: boolean): void;
 	}

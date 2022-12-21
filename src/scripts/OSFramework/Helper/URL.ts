@@ -3,20 +3,24 @@ namespace OSFramework.Helper {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export abstract class URL {
 		/**
-		 * Function that validate if a given URL is an image URL
+		 * Function that validates if a given URL is a valid image URL
 		 *
 		 * @param url
-		 * @memberof URL
+		 * @memberof OSFramework.Helper.URL
 		 */
 		public static IsImage(url: string): boolean {
-			return url.match(/\/?(\.\w\.)*\.(jpeg|jpg|gif|png|svg)($|(\?))/) !== null;
+			return (
+				url.match(
+					/(^data:image\/*(jpeg|jpg|gif|png|svg);base64)|\/?(\.\w\.)*\.(jpeg|jpg|gif|png|svg)($|(\?))/i
+				) !== null
+			);
 		}
 
 		/**
-		 * Function that validate if a given URL is a valid URL
+		 * Function that validates if a given URL is a valid URL
 		 *
 		 * @param url
-		 * @memberof URL
+		 * @memberof OSFramework.Helper.URL
 		 */
 		public static IsValid(url: string): boolean {
 			const pattern = new RegExp(

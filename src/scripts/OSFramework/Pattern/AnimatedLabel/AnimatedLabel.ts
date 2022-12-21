@@ -68,11 +68,11 @@ namespace OSFramework.Patterns.AnimatedLabel {
 				//(Does the input have text or is it Focus) and it's currently inactive?
 				if ((inputHasText || isFocus) && this._isLabelFocus === false) {
 					//let's mark as active!
-					Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClasses.IsActive);
+					Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClasses.IsActive);
 					this._isLabelFocus = true;
 					//is the input empty and it's active and it's blur event
 				} else if (inputHasText === false && this._isLabelFocus && isFocus === false) {
-					Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClasses.IsActive);
+					Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClasses.IsActive);
 					this._isLabelFocus = false;
 				}
 			}
@@ -86,10 +86,17 @@ namespace OSFramework.Patterns.AnimatedLabel {
 		}
 
 		/**
+		 * This method has no implementation on this pattern context!
+		 */
+		protected setA11YProperties(): void {
+			console.warn(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
 		 * Set the callbacks that will be assigned to the window click event
 		 *
 		 * @protected
-		 * @memberof AnimatedLabel
+		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		protected setCallbacks(): void {
 			this._eventBlur = this._inputBlurCallback.bind(this);
@@ -103,11 +110,11 @@ namespace OSFramework.Patterns.AnimatedLabel {
 		 * Update info based on htmlContent
 		 *
 		 * @protected
-		 * @memberof AnimatedLabel
+		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		protected setHtmlElements(): void {
-			this._labelPhElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClasses.LabelPlaceholder);
-			this._inputPhElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClasses.InputPlaceholder);
+			this._labelPhElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClasses.LabelPlaceholder);
+			this._inputPhElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClasses.InputPlaceholder);
 			this._inputElement =
 				(Helper.Dom.TagSelector(this._inputPhElement, GlobalEnum.DataBlocksTag.Input) as HTMLInputElement) ||
 				(Helper.Dom.TagSelector(
@@ -135,7 +142,7 @@ namespace OSFramework.Patterns.AnimatedLabel {
 		 * Removes the listeners that were added in the code and unsets the callbacks.
 		 *
 		 * @protected
-		 * @memberof AnimatedLabel
+		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		protected unsetCallbacks(): void {
 			this._removeEvents();
@@ -149,7 +156,7 @@ namespace OSFramework.Patterns.AnimatedLabel {
 		 * Removes the local value of the variables pointing to HTML elements;
 		 *
 		 * @protected
-		 * @memberof AnimatedLabel
+		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		protected unsetHtmlElements(): void {
 			this._labelPhElement = undefined;
@@ -160,7 +167,7 @@ namespace OSFramework.Patterns.AnimatedLabel {
 		/**
 		 * Builds the animation label.
 		 *
-		 * @memberof AnimatedLabel
+		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		public build(): void {
 			//OS takes a while to set the TextArea
@@ -178,7 +185,7 @@ namespace OSFramework.Patterns.AnimatedLabel {
 		/**
 		 * Destroy the Animatedlabel.
 		 *
-		 * @memberof AnimatedLabel
+		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		public dispose(): void {
 			this.unsetCallbacks();
@@ -192,7 +199,7 @@ namespace OSFramework.Patterns.AnimatedLabel {
 		/**
 		 * Update Label active status accordingly when the input info has changed.
 		 *
-		 * @memberof AnimatedLabel
+		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		public updateOnRender(): void {
 			// Do not run this instead the pattern is totally built

@@ -15,28 +15,28 @@ namespace OSFramework.Interface {
 		/**
 		 * Method used to set item as focus state
 		 *
-		 * @memberof IChild
+		 * @memberof OSFramework.Interface.IChild
 		 */
 		setBlur?(): void;
 
 		/**
 		 * Method used to set item as blur state
 		 *
-		 * @memberof IChild
+		 * @memberof OSFramework.Interface.IChild
 		 */
 		setFocus?(): void;
 
 		/**
 		 * Method used to set the tabindex attribute
 		 *
-		 * @memberof IChild
+		 * @memberof OSFramework.Interface.IChild
 		 */
 		setTabindex?(): void;
 
 		/**
 		 * Method used to unset the tabindex attribute
 		 *
-		 * @memberof IChild
+		 * @memberof OSFramework.Interface.IChild
 		 */
 		unsetTabindex?(): void;
 	}

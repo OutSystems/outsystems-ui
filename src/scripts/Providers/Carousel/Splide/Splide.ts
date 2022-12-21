@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.Splide {
+namespace Providers.Carousel.Splide {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
@@ -29,7 +29,7 @@ namespace Providers.Splide {
 		// Store the onSlideMoved event
 		private _platformEventOnSlideMoved: OSFramework.Patterns.Carousel.Callbacks.OSOnSlideMovedEvent;
 		// Store initial provider options
-		private _providerOptions: SplideOpts;
+		private _splideOptions: SplideOpts;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SplideConfig(configs));
@@ -40,29 +40,20 @@ namespace Providers.Splide {
 			this._hasList = OutSystems.OSUI.Utils.GetHasListInside(this._carouselPlaceholderElem);
 
 			if (this._hasList) {
-				this._carouselListWidgetElem = this._selfElem.querySelector(
+				this._carouselListWidgetElem = this.selfElement.querySelector(
 					OSFramework.Constants.Dot + OSFramework.GlobalEnum.CssClassElements.List
 				);
 
 				this._carouselProviderElem = this._carouselTrackElem;
 			} else {
-				this._carouselProviderElem = this._selfElem;
+				this._carouselProviderElem = this.selfElement;
 			}
-		}
-
-		// Method that encapsulates all methods needed to create a new Carousel
-		private _createProviderCarousel(): void {
-			// Call the following methods here, so that all DOM elements are iterated and ready to init the library
-			this._prepareCarouselItems();
-			this._providerOptions = this.configs.getProviderConfig();
-			// Init the Library
-			this._initProvider();
 		}
 
 		// Method to init the provider
 		private _initProvider(): void {
 			// Init provider
-			this._provider = new window.Splide(this._carouselProviderElem, this._providerOptions);
+			this._provider = new window.Splide(this._carouselProviderElem, this._splideOptions);
 
 			// Set provider Info to be used by setProviderConfigs API calls
 			this.updateProviderEvents({
@@ -108,7 +99,7 @@ namespace Providers.Splide {
 			OSFramework.Helper.Dom.Styles.SetStyleAttribute(
 				this._carouselTrackElem,
 				OSFramework.Patterns.Carousel.Enum.CssVariables.CarouselWidth,
-				this._selfElem.offsetWidth + OSFramework.GlobalEnum.Units.Pixel
+				this.selfElement.offsetWidth + OSFramework.GlobalEnum.Units.Pixel
 			);
 		}
 
@@ -138,22 +129,46 @@ namespace Providers.Splide {
 				this.configs.Navigation === OSFramework.Patterns.Carousel.Enum.Navigation.Both
 			) {
 				OSFramework.Helper.Dom.Styles.AddClass(
-					this._selfElem,
+					this.selfElement,
 					OSFramework.Patterns.Carousel.Enum.CssClass.HasPagination
 				);
 			} else {
 				OSFramework.Helper.Dom.Styles.RemoveClass(
-					this._selfElem,
+					this.selfElement,
 					OSFramework.Patterns.Carousel.Enum.CssClass.HasPagination
 				);
 			}
 		}
 
 		/**
+		 * Method that encapsulates all methods needed to create a new Carousel
+		 *
+		 * @protected
+		 * @memberof Providers.Carousel.Splide.OSUISplide
+		 */
+		protected prepareConfigs(): void {
+			this._prepareCarouselItems();
+			// Call the following methods here, so that all DOM elements are iterated and ready to init the library
+			this._splideOptions = this.configs.getProviderConfig();
+			// Init the Library
+			this._initProvider();
+		}
+
+		/**
+		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof Providers.Carousel.Splide.OSUISplide
+		 */
+		protected setA11YProperties(): void {
+			console.warn(OSFramework.GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
 		 * Sets the callbacks to be used.
 		 *
 		 * @protected
-		 * @memberof OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		protected setCallbacks(): void {
 			this._eventOnResize = this._setCarouselWidth.bind(this);
@@ -169,15 +184,15 @@ namespace Providers.Splide {
 		 * Method to set the html elements used
 		 *
 		 * @protected
-		 * @memberof OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		protected setHtmlElements(): void {
 			this._carouselPlaceholderElem = OSFramework.Helper.Dom.ClassSelector(
-				this._selfElem,
+				this.selfElement,
 				OSFramework.Patterns.Carousel.Enum.CssClass.Content
 			);
 			this._carouselTrackElem = OSFramework.Helper.Dom.ClassSelector(
-				this._selfElem,
+				this.selfElement,
 				OSFramework.Patterns.Carousel.Enum.CssClass.Track
 			);
 		}
@@ -186,7 +201,7 @@ namespace Providers.Splide {
 		 * Method to set the initial CSS Classes
 		 *
 		 * @protected
-		 * @memberof OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		protected setInitialCssClasses(): void {
 			// If using Carousel with a List, get one level below on the HTML, so that the List element is used on the structure expected by the library
@@ -196,7 +211,7 @@ namespace Providers.Splide {
 				OSFramework.Helper.Dom.Styles.AddClass(this._carouselPlaceholderElem, Enum.CssClass.SplideTrack);
 				OSFramework.Helper.Dom.Styles.AddClass(this._carouselListWidgetElem, Enum.CssClass.SplideList);
 			} else {
-				OSFramework.Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.SplideWrapper);
+				OSFramework.Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.SplideWrapper);
 				OSFramework.Helper.Dom.Styles.AddClass(this._carouselTrackElem, Enum.CssClass.SplideTrack);
 				OSFramework.Helper.Dom.Styles.AddClass(this._carouselPlaceholderElem, Enum.CssClass.SplideList);
 			}
@@ -208,7 +223,7 @@ namespace Providers.Splide {
 		 * Unsets the callbacks.
 		 *
 		 * @protected
-		 * @memberof OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		protected unsetCallbacks(): void {
 			// remove event listener
@@ -226,7 +241,7 @@ namespace Providers.Splide {
 		 * Unsets the HTML elements.
 		 *
 		 * @protected
-		 * @memberof OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		protected unsetHtmlElements(): void {
 			this._carouselPlaceholderElem = undefined;
@@ -234,9 +249,9 @@ namespace Providers.Splide {
 		}
 
 		/**
-		 * Method to build the pattern.
+		 * Build the pattern.
 		 *
-		 * @memberof OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		public build(): void {
 			super.build();
@@ -249,7 +264,7 @@ namespace Providers.Splide {
 
 			this.setInitialCssClasses();
 
-			this._createProviderCarousel();
+			this.prepareConfigs();
 
 			this.finishBuild();
 		}
@@ -259,7 +274,7 @@ namespace Providers.Splide {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -280,7 +295,7 @@ namespace Providers.Splide {
 					case OSFramework.Patterns.Carousel.Enum.Properties.ItemsDesktop:
 					case OSFramework.Patterns.Carousel.Enum.Properties.ItemsTablet:
 					case OSFramework.Patterns.Carousel.Enum.Properties.ItemsPhone:
-						this.updateCarousel();
+						this.redraw();
 						break;
 					case OSFramework.Patterns.Carousel.Enum.Properties.Height:
 						this._provider.options = { height: propertyValue as string | number };
@@ -301,7 +316,7 @@ namespace Providers.Splide {
 		/**
 		 * Method to remove and destroy Carousel Splide instance
 		 *
-		 * @memberof OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		public dispose(): void {
 			// Check if provider is ready
@@ -319,7 +334,7 @@ namespace Providers.Splide {
 		 * Method to call the go API from the provider
 		 *
 		 * @param {number} index
-		 * @memberof OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		public goTo(index: number): void {
 			this._provider.go(index);
@@ -328,7 +343,7 @@ namespace Providers.Splide {
 		/**
 		 * Method to call the go API from the provider. With '>' it will go to the next page
 		 *
-		 * @memberof OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		public next(): void {
 			this._provider.go(Enum.Go.Next);
@@ -337,7 +352,7 @@ namespace Providers.Splide {
 		/**
 		 * Method to call the go API from the provider. With '<' it will go to the previous page
 		 *
-		 * @memberof OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		public previous(): void {
 			this._provider.go(Enum.Go.Previous);
@@ -348,7 +363,7 @@ namespace Providers.Splide {
 		 *
 		 * @param {string} eventName
 		 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback
-		 * @memberof OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		public registerCallback(eventName: string, callback: OSFramework.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -373,25 +388,25 @@ namespace Providers.Splide {
 				this.configs.Direction = OSFramework.GlobalEnum.Direction.LTR;
 			}
 
-			this.updateCarousel();
+			this.redraw();
 		}
 
 		/**
 		 * Method used to set all the extended Splide properties across the different types of instances
 		 *
 		 * @param {SplideOpts} newConfigs
-		 * @memberof OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		public setProviderConfigs(newConfigs: SplideOpts): void {
 			this.configs.setExtensibilityConfigs(newConfigs);
-			this.updateCarousel();
+			this.redraw();
 		}
 
 		/**
 		 * Method to call the option API from the provider to toggle drag events
 		 *
 		 * @param {boolean} hasDrag
-		 * @memberof OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		public toggleDrag(hasDrag: boolean): void {
 			this._provider.options = { drag: hasDrag };
@@ -401,31 +416,16 @@ namespace Providers.Splide {
 		 * Method to toggle the _blockOnRender that enables/disables the OnRender update
 		 *
 		 * @param {boolean} blockOnRender
-		 * @memberof OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		public toggleOnRender(blockOnRender: boolean): void {
 			this._blockOnRender = blockOnRender;
 		}
 
 		/**
-		 * Method used on the changeProperty for the options that require the Carousel to be destroyed and created again to properly update
-		 *
-		 * @memberof OSUISplide
-		 */
-		public updateCarousel(): void {
-			// Check if provider is ready
-			if (typeof this._provider === 'object') {
-				this._provider.destroy();
-			}
-
-			// Create Carousel again
-			this._createProviderCarousel();
-		}
-
-		/**
 		 * Method to run when there's a platform onRender
 		 *
-		 * @memberof OSUISplide
+		 * @memberof Providers.Carousel.Splide.OSUISplide
 		 */
 		public updateOnRender(): void {
 			if (this._blockOnRender === false) {
@@ -439,7 +439,7 @@ namespace Providers.Splide {
 						this.configs.StartingPosition = this.provider.index;
 					}
 
-					this.updateCarousel();
+					this.redraw();
 				}
 			}
 		}

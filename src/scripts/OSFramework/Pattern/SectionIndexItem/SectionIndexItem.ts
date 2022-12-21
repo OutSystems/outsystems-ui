@@ -24,6 +24,8 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		private _headerIsFixed = true;
 		// Store the state
 		private _isActive = false;
+		// Store the mainContent reference - The one that will have the scroll
+		private _mainScrollContainerElement: HTMLElement;
 		// Store TargetElement HTML object
 		private _targetElement: HTMLElement = undefined;
 		// Store offset top/bottom from TargetElement HTML object
@@ -41,7 +43,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 			// Set target element offset info!
 			this._setTargetOffsetInfo();
 			// Get the vertical scroll position value
-			const scrollYPosition = Behaviors.ScrollVerticalPosition();
+			const scrollYPosition = Behaviors.ScrollVerticalPosition(this._mainScrollContainerElement);
 			// Threshold value to set element as Active
 			const thresholdVal = 40;
 			// Store the offSetValue to be checked
@@ -94,8 +96,8 @@ namespace OSFramework.Patterns.SectionIndexItem {
 
 		// Remove Pattern Events
 		private _removeEvents(): void {
-			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
-			this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
+			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
 			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
 		}
 
@@ -112,8 +114,9 @@ namespace OSFramework.Patterns.SectionIndexItem {
 
 		// Adds a data attribute to be used in automated tests and to have info on DOM of which element the index is pointing
 		private _setLinkAttribute(): void {
-			Helper.Dom.Attribute.Set(this._selfElem, Enum.DataTypes.dataItem, this.configs.ScrollToWidgetId);
+			Helper.Dom.Attribute.Set(this.selfElement, Enum.DataTypes.dataItem, this.configs.ScrollToWidgetId);
 		}
+
 		// Set TargetElement
 		private _setTargetElement(): void {
 			// Check if the element has been already defined!
@@ -152,8 +155,8 @@ namespace OSFramework.Patterns.SectionIndexItem {
 
 		// Method to set the event listeners
 		private _setUpEvents(): void {
-			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
-			this._selfElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
+			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
 			// Add the BodyScroll callback that will be used to update the balloon coodinates
 			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
 		}
@@ -162,9 +165,9 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		 * Add the Accessibility Attributes values
 		 *
 		 * @protected
-		 * @memberof SectionIndexItem
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
-		protected setA11yProperties(): void {
+		protected setA11YProperties(): void {
 			// Set RoleButton attribute
 			Helper.A11Y.RoleButton(this.selfElement);
 			// Set TabIndex
@@ -175,7 +178,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		 * Method to set the callbacks and event listeners
 		 *
 		 * @protected
-		 * @memberof SectionIndexItem
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		protected setCallbacks(): void {
 			this._eventOnClick = this._onSelected.bind(this);
@@ -184,10 +187,35 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		}
 
 		/**
+		 * Method to set the HTMLElements used
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
+		 */
+		protected setHtmlElements(): void {
+			// Check if overlay is enabled => If StatusBar is enabled and if is iOS device
+			/* With the introduction of the ios-bounce the overflow container change from the .active-screen into .content */
+			if (
+				Helper.Dom.Attribute.Has(document.body, GlobalEnum.HTMLAttributes.StatusBar) &&
+				Helper.DeviceInfo.GetOperatingSystem() === GlobalEnum.MobileOS.IOS
+			) {
+				this._mainScrollContainerElement = Helper.Dom.ClassSelector(
+					document,
+					GlobalEnum.CssClassElements.Content
+				);
+			} else {
+				this._mainScrollContainerElement = Helper.Dom.ClassSelector(
+					document,
+					GlobalEnum.CssClassElements.ActiveScreen
+				);
+			}
+		}
+
+		/**
 		 *  Removes the listeners that were added in the code and unsets the callbacks.
 		 *
 		 * @protected
-		 * @memberof SectionIndexItem
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		protected unsetCallbacks(): void {
 			this._removeEvents();
@@ -198,9 +226,20 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		}
 
 		/**
+		 * Method to unset the html elements used
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
+		 */
+		protected unsetHtmlElements(): void {
+			this._mainScrollContainerElement = undefined;
+			this._targetElement = undefined;
+		}
+
+		/**
 		 *  Builds the SectionIndexItem.
 		 *
-		 * @memberof SectionIndexItem
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public build(): void {
 			super.build();
@@ -215,9 +254,11 @@ namespace OSFramework.Patterns.SectionIndexItem {
 
 			this.setCallbacks();
 
+			this.setHtmlElements();
+
 			this._setUpEvents();
 
-			this.setA11yProperties();
+			this.setA11YProperties();
 
 			this._setLinkAttribute();
 
@@ -229,7 +270,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof SectionIndexItem
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -248,7 +289,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		/**
 		 * Disposes the current pattern.
 		 *
-		 * @memberof SectionIndexItem
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public dispose(): void {
 			this.unsetCallbacks();
@@ -263,21 +304,25 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		/**
 		 * Adds active class from pattern.
 		 *
-		 * @memberof SectionIndexItem
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public setIsActive(): void {
-			this._isActive = true;
-			Helper.Dom.Styles.AddClass(this._selfElem, Patterns.SectionIndex.Enum.CssClass.IsActiveItem);
+			if (this._isActive === false) {
+				this._isActive = true;
+				Helper.Dom.Styles.AddClass(this.selfElement, Patterns.SectionIndex.Enum.CssClass.IsActiveItem);
+			}
 		}
 
 		/**
 		 * Removes active class from pattern.
 		 *
-		 * @memberof SectionIndexItem
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public unsetIsActive(): void {
-			this._isActive = false;
-			Helper.Dom.Styles.RemoveClass(this._selfElem, Patterns.SectionIndex.Enum.CssClass.IsActiveItem);
+			if (this._isActive) {
+				this._isActive = false;
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Patterns.SectionIndex.Enum.CssClass.IsActiveItem);
+			}
 		}
 
 		/**
@@ -285,7 +330,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof SectionIndexItem
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public get IsSelected(): boolean {
 			return this._isActive;
@@ -296,7 +341,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		 *
 		 * @readonly
 		 * @type {HTMLElement}
-		 * @memberof SectionIndexItem
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public get TargetElement(): HTMLElement {
 			return this._targetElement;
@@ -307,7 +352,7 @@ namespace OSFramework.Patterns.SectionIndexItem {
 		 *
 		 * @readonly
 		 * @type {OffsetValues}
-		 * @memberof SectionIndexItem
+		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public get TargetElementOffset(): OffsetValues {
 			return this._targetElementOffset;

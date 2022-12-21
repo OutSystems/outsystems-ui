@@ -14,10 +14,10 @@ namespace Providers.RangeSlider.NoUISlider {
 		private _rangeSliderProviderElem: HTMLElement;
 		// RangeSlider events
 		protected eventProviderValueChanged: OSFramework.GlobalCallbacks.Generic;
+		// Store the provider options
+		protected noUiSliderOpts: NoUiSliderOptions;
 		protected platformEventInitialize: OSFramework.GlobalCallbacks.OSGeneric;
 		protected platformEventValueChange: OSFramework.Patterns.RangeSlider.Callbacks.OSOnValueChangeEvent;
-		// Store the provider options
-		protected providerOptions: NoUiSliderOptions;
 		// throttle before invoking the platform
 		protected throttleTimeValue = 200;
 		// throttle timer id
@@ -30,8 +30,8 @@ namespace Providers.RangeSlider.NoUISlider {
 		}
 
 		// Method to togghe the disabled attribute
-		private _setIsDisabled(): void {
-			if (this.configs.IsDisabled) {
+		private _setIsDisabled(isDisabled: boolean): void {
+			if (isDisabled) {
 				OSFramework.Helper.Dom.Disable(this._rangeSliderProviderElem);
 			} else {
 				OSFramework.Helper.Dom.Enable(this._rangeSliderProviderElem);
@@ -54,7 +54,7 @@ namespace Providers.RangeSlider.NoUISlider {
 			}
 
 			OSFramework.Helper.Dom.Styles.SetStyleAttribute(
-				this._selfElem,
+				this.selfElement,
 				OSFramework.Patterns.RangeSlider.Enum.CssProperties.Size,
 				this.configs.Size
 			);
@@ -75,14 +75,14 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * Method that will create the provider
 		 *
 		 * @private
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		protected createProviderInstance(): void {
 			// Set inital library options
 			this.setInitialStates();
 
 			// Init provider
-			this.provider = window.noUiSlider.create(this._rangeSliderProviderElem, this.providerOptions);
+			this.provider = window.noUiSlider.create(this._rangeSliderProviderElem, this.noUiSliderOpts);
 
 			// Set provider Info to be used by setProviderConfigs API calls
 			this.updateProviderEvents({
@@ -104,12 +104,12 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * Method to set the html elements used
 		 *
 		 * @protected
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		protected setHtmlElements(): void {
 			// Element that will be used to init the provider
 			this._rangeSliderProviderElem = OSFramework.Helper.Dom.ClassSelector(
-				this._selfElem,
+				this.selfElement,
 				OSFramework.Patterns.RangeSlider.Enum.CssClass.RangeSliderProviderElem
 			);
 		}
@@ -118,20 +118,20 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * Method to set the initial CSS Classes
 		 *
 		 * @protected
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		protected setInitialCSSClasses(): void {
 			// If Orientation is vertical add class
 			if (this.configs.Orientation === OSFramework.GlobalEnum.Orientation.Vertical) {
 				OSFramework.Helper.Dom.Styles.AddClass(
-					this._selfElem,
+					this.selfElement,
 					OSFramework.Patterns.RangeSlider.Enum.CssClass.ClassModifier +
 						OSFramework.GlobalEnum.Orientation.Vertical
 				);
 				// Otherwise it's horizontal and we don't need a class
 			} else if (OSFramework.GlobalEnum.Orientation.Horizontal) {
 				OSFramework.Helper.Dom.Styles.RemoveClass(
-					this._selfElem,
+					this.selfElement,
 					OSFramework.Patterns.RangeSlider.Enum.CssClass.ClassModifier +
 						OSFramework.GlobalEnum.Orientation.Vertical
 				);
@@ -139,12 +139,12 @@ namespace Providers.RangeSlider.NoUISlider {
 
 			if (this.configs.ShowTickMarks) {
 				OSFramework.Helper.Dom.Styles.AddClass(
-					this._selfElem,
+					this.selfElement,
 					OSFramework.Patterns.RangeSlider.Enum.CssClass.HasTicks
 				);
 			} else {
 				OSFramework.Helper.Dom.Styles.RemoveClass(
-					this._selfElem,
+					this.selfElement,
 					OSFramework.Patterns.RangeSlider.Enum.CssClass.HasTicks
 				);
 			}
@@ -154,19 +154,19 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * Method to set the library options from the config
 		 *
 		 * @private
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		protected setInitialStates(): void {
 			this._setSize();
 
-			this._setIsDisabled();
+			this._setIsDisabled(this.configs.IsDisabled);
 		}
 
 		/**
 		 * Unsets the callbacks.
 		 *
 		 * @protected
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		protected unsetCallbacks(): void {
 			this.eventProviderValueChanged = undefined;
@@ -176,27 +176,16 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * Unsets the HTML elements.
 		 *
 		 * @protected
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		protected unsetHtmlElements(): void {
 			this._rangeSliderProviderElem = undefined;
 		}
 
 		/**
-		 * Method to remove and destroy RangeSlider instance
+		 * Builds the Pattern
 		 *
-		 * @private
-		 * @memberof OSUINoUiSlider
-		 */
-		protected updateRangeSlider(): void {
-			this.provider.destroy();
-			this.prepareConfigs();
-		}
-
-		/**
-		 * Method to build the pattern.
-		 *
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		public build(): void {
 			super.build();
@@ -208,7 +197,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			// Check which property changed and call respective method to update it
@@ -223,10 +212,10 @@ namespace Providers.RangeSlider.NoUISlider {
 
 						break;
 					case OSFramework.Patterns.RangeSlider.Enum.Properties.Orientation:
-						this.updateRangeSlider();
+						this.redraw();
 						break;
 					case OSFramework.Patterns.RangeSlider.Enum.Properties.IsDisabled:
-						this._setIsDisabled();
+						this._setIsDisabled(this.configs.IsDisabled);
 
 						break;
 					case OSFramework.Patterns.RangeSlider.Enum.Properties.TickMarksInterval:
@@ -250,9 +239,18 @@ namespace Providers.RangeSlider.NoUISlider {
 		}
 
 		/**
+		 * Method to set the RangeSlider instance to disabled
+		 *
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
+		 */
+		public disable(): void {
+			this._setIsDisabled(true);
+		}
+
+		/**
 		 * Method to remove and destroy RangeSlider instance
 		 *
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
@@ -266,10 +264,19 @@ namespace Providers.RangeSlider.NoUISlider {
 		}
 
 		/**
+		 * Method to set the RangeSlider instance to enabled
+		 *
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
+		 */
+		public enable(): void {
+			this._setIsDisabled(false);
+		}
+
+		/**
 		 * Method to get current RangeSlider value
 		 *
 		 * @return {*}  {(number | number[])}
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		public getValue(): number | number[] {
 			return this.provider.get();
@@ -280,7 +287,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 *
 		 * @param {string} eventName
 		 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		public registerCallback(eventName: string, callback: OSFramework.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -305,18 +312,18 @@ namespace Providers.RangeSlider.NoUISlider {
 		 * Method used to set all the extended NoUiSlider properties across the different types of instances
 		 *
 		 * @param {NoUiSliderOptions} newConfigs
-		 * @memberof AbstractNoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		public setProviderConfigs(newConfigs: NoUiSliderOptions): void {
 			this.configs.setExtensibilityConfigs(newConfigs);
 
-			this.updateRangeSlider();
+			this.redraw();
 		}
 
 		/**
 		 * Method to change the Range Slider trigger to on DragEnd
 		 *
-		 * @memberof OSUINoUiSlider
+		 * @memberof Providers.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		public setRangeIntervalChangeOnDragEnd(): void {
 			// Remove slide default event
@@ -325,6 +332,7 @@ namespace Providers.RangeSlider.NoUISlider {
 			this._setOnValueChangeEvent(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Change);
 		}
 
+		// Common method all RangeSliders must implement
 		protected abstract prepareConfigs(): void;
 	}
 }

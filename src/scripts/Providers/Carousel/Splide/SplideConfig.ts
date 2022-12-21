@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-namespace Providers.Splide {
+namespace Providers.Carousel.Splide {
 	export class SplideConfig extends OSFramework.Patterns.Carousel.AbstractCarouselConfig {
 		// Store provider configs
 		private _providerOptions: SplideOpts;
 		// Store configs set using extensibility
 		protected _providerExtendedOptions: SplideOpts;
 
+		// Prepare Arrows expected config
 		private _getArrowConfig(): boolean {
 			let arrows: boolean;
 			switch (this.Navigation) {
@@ -26,6 +27,7 @@ namespace Providers.Splide {
 			return arrows;
 		}
 
+		// Prepare Direction expected config
 		private _getDirectionConfig():
 			| OSFramework.GlobalEnum.Direction.LTR
 			| OSFramework.GlobalEnum.Direction.RTL
@@ -43,6 +45,7 @@ namespace Providers.Splide {
 			return direction;
 		}
 
+		// Prepare Pagination expected config
 		private _getPaginationConfig(): boolean {
 			let pagination: boolean;
 			switch (this.Navigation) {
@@ -67,7 +70,7 @@ namespace Providers.Splide {
 		 * Method to get and merge internal and external provider configs
 		 *
 		 * @return {*}  {SplideOpts}
-		 * @memberof SplideConfig
+		 * @memberof Providers.Carousel.Splide.SplideConfig
 		 */
 		public getProviderConfig(): SplideOpts {
 			this._providerOptions = {
@@ -102,7 +105,7 @@ namespace Providers.Splide {
 		 * Method to set and save the extensibility provider configs
 		 *
 		 * @param {SplideOpts} newConfigs
-		 * @memberof SplideConfig
+		 * @memberof Providers.Carousel.Splide.SplideConfig
 		 */
 		public setExtensibilityConfigs(newConfigs: SplideOpts): void {
 			this._providerExtendedOptions = newConfigs;

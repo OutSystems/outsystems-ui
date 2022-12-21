@@ -7,7 +7,7 @@ namespace OSFramework.Constants {
 		Aria: {
 			Atomic: 'atomic',
 			Controls: 'aria-controls',
-			Describedby: 'describedby',
+			Describedby: 'aria-describedby',
 			Disabled: 'aria-disabled',
 			Expanded: 'aria-expanded',
 			Haspopup: 'aria-haspopup',
@@ -52,6 +52,9 @@ namespace OSFramework.Constants {
 
 	/* Used to concatenate when querySelector for a class */
 	export const Dot = '.';
+
+	/* Used to concatenate when querySelectorAll for a list of classes */
+	export const Comma = ',';
 
 	/* Manage if the log messages are visible or not  */
 	export const EnableLogMessages = false;
@@ -100,6 +103,12 @@ namespace OSFramework.Constants {
 		'December',
 	];
 
+	/* Store the default app lang */
+	export const Language = {
+		code: 'en-US',
+		short: 'en',
+	};
+
 	/* cssClass to be added to elements that must visible yet hidded for accessibility purposes */
 	export const AccessibilityHideElementClass = 'wcag-hide-text';
 
@@ -110,7 +119,7 @@ namespace OSFramework.Constants {
 	export const NoTransition = 'no-transition';
 
 	/* OSUI Version */
-	export const OSUIVersion = '2.12.0';
+	export const OSUIVersion = '2.13.0';
 
 	/*Constant to be used across project as the zero value*/
 	export const ZeroValue = 0;

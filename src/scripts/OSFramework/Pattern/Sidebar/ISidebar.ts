@@ -14,6 +14,6 @@ namespace OSFramework.Patterns.Sidebar {
 		 *
 		 * @memberof ISidebar
 		 */
-		toggleGestures(enableSwipe): void;
+		toggleGestures(enableSwipe: boolean): void;
 	}
 }

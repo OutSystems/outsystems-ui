@@ -12,18 +12,62 @@
 
 // VirtualSelect overriding styles
 // Parent wrapper container
-.vscomp-ele {
-	max-width: initial;
+.vscomp {
+	&-ele {
+		max-width: initial;
 
-	&.pop-comp-active {
-		.vscomp-toggle-button {
-			border-color: var(--color-primary);
+		&.pop-comp-active {
+			.vscomp-toggle-button {
+				border-color: var(--color-primary);
 
-			&:after {
-				color: var(--color-primary);
-				transform: rotate(180deg) translateY(50%);
+				&:after {
+					color: var(--color-primary);
+					transform: rotate(180deg) translateY(50%);
+				}
 			}
 		}
+		.vscomp {
+			&-clear-icon {
+				&::after,
+				&::before {
+					background-color: inherit;
+					left: 50%;
+					transform: translateX(-50%);
+				}
+			}
+		}
+	}
+
+	&-ele .vscomp-clear-icon:after,
+	&-search-clear:after {
+		align-items: center;
+		color: #91999e;
+		content: '\f00d';
+		display: flex;
+		font: normal normal normal 13px/1 FontAwesome;
+		height: 100%;
+		justify-content: center;
+		position: absolute;
+		text-indent: 0;
+		top: 0;
+		width: 24px;
+	}
+
+	&-clear-button:hover {
+		background-color: var(--color-neutral-4);
+
+		.vscomp-clear-icon {
+			&::after,
+			&::before {
+				background-color: transparent;
+				color: var(--color-neutral-7);
+			}
+		}
+	}
+
+	&-search-clear:hover:after {
+		background-color: transparent;
+		color: var(--color-neutral-7);
 	}
 }
 
@@ -47,10 +91,16 @@
 			.vscomp-toggle-button {
 				padding-left: var(--space-s);
 			}
+		}
+		.vscomp-value {
+			margin-right: var(--space-m);
+		}
+	}
 
-			.vscomp-clear-button {
-				right: var(--space-xl);
-			}
+	&:not(.has-value) {
+		.vscomp-value {
+			color: var(--color-neutral-7);
+			opacity: 1;
 		}
 	}
 
@@ -131,10 +181,7 @@
 
 					&:before,
 					&:after {
-						background-color: var(--color-neutral-3);
-						border-radius: var(--border-radius-soft);
-						height: 100%;
-						width: 2px;
+						color: var(--color-neutral-4);
 					}
 				}
 			}
@@ -143,24 +190,6 @@
 			margin-top: 0;
 			top: 50%;
 			transform: translateY(-50%);
-
-			.vscomp-clear-icon {
-				&:before,
-				&:after {
-					background-color: var(--color-neutral-7);
-				}
-			}
-
-			&:hover {
-				background: var(--color-neutral-7);
-
-				.vscomp-clear-icon {
-					&:before,
-					&:after {
-						background-color: var(--color-neutral-3);
-					}
-				}
-			}
 		}
 	}
 
@@ -247,6 +276,14 @@
 				&:after {
 					@include IsRTL_CheckBoxCheckIconTransform;
 				}
+			}
+		}
+	}
+
+	&:not(.text-direction-rtl) {
+		&.has-value {
+			.vscomp-clear-button {
+				right: var(--space-xl);
 			}
 		}
 	}
@@ -384,6 +421,11 @@
 		text-align: center;
 		width: 24px;
 
+		/* Hide text from provider div in order to keep consistency on styles */
+		text-indent: 100%;
+		white-space: nowrap;
+		overflow: hidden;
+
 		// Fix vertical alignemnt differences due to system fonts usage
 		.osx &,
 		.ios & {
@@ -391,8 +433,7 @@
 		}
 
 		&:hover {
-			background-color: var(--color-neutral-7);
-			color: var(--color-neutral-3);
+			background-color: var(--color-neutral-4);
 		}
 	}
 }
@@ -476,14 +517,6 @@
 // Accessibility -----------------------------------------------------------------
 ///
 .has-accessible-features {
-	.vscomp-wrapper {
-		&:not(.has-value) {
-			.vscomp-value {
-				opacity: 0.8;
-			}
-		}
-	}
-
 	.vscomp-toggle-button {
 		border-color: var(--color-neutral-7);
 		color: var(--color-neutral-10);

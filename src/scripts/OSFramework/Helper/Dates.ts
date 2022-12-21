@@ -7,20 +7,16 @@ namespace OSFramework.Helper {
 		private static _serverFormat = '';
 
 		/**
-		 * Function that will compare 2 dates and check if date1 is older or equal to date2
+		 * Function used to check if the given date1 is minor than given date2
 		 *
 		 * @static
-		 * @param {string} date1 Date to be checked if older
-		 * @param {string} date2 Date to be checked if it's after date1
+		 * @param {string} date1 Date to be checked if minor
+		 * @param {string} date2 Date to be checked if it's greater than date1
 		 * @return {*}  {boolean}
-		 * @memberof Dates
+		 * @memberof OSFramework.Helper.Dates
 		 */
-		public static Compare(date1: string, date2: string): boolean {
+		public static IsBeforeThan(date1: string, date2: string): boolean {
 			return Date.parse(date1) <= Date.parse(date2);
-		}
-
-		public static get ServerFormat(): string {
-			return Dates._serverFormat;
 		}
 
 		/**
@@ -28,6 +24,7 @@ namespace OSFramework.Helper {
 		 *
 		 * @export
 		 * @param {string} date
+		 * @memberof OSFramework.Helper.Dates
 		 */
 		public static IsNull(date: string | Date): boolean {
 			let _date: Date;
@@ -60,9 +57,22 @@ namespace OSFramework.Helper {
 		 *
 		 * @export
 		 * @param {string} date example of date.
+		 * @memberof OSFramework.Helper.Dates
 		 */
 		public static SetServerDateFormat(date: string): void {
 			Dates._serverFormat = date.replace('13', 'DD').replace('10', 'MM').replace('1900', 'YYYY');
+		}
+
+		/**
+		 * Getter that allows to obtain the Server DateFormat
+		 *
+		 * @readonly
+		 * @static
+		 * @type {string}
+		 * @memberof OSFramework.Helper.Dates
+		 */
+		public static get ServerFormat(): string {
+			return Dates._serverFormat;
 		}
 	}
 }

@@ -6,11 +6,20 @@ namespace OSFramework.Patterns.TimePicker {
 		public Is24Hours: boolean;
 		public MaxTime: string;
 		public MinTime: string;
+		public TimeFormat: string;
 
 		constructor(config: JSON) {
 			super(config);
 		}
 
+		/**
+		 * Method that will check if a given property (key) value is the type expected!
+		 *
+		 * @param key property name
+		 * @param value value to be check
+		 * @returns {unknown} value
+		 * @memberof  OSFramework.Patterns.TimePicker.AbstractTimePickerConfig
+		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;
 

@@ -28,7 +28,7 @@ namespace OSFramework.Patterns.Submenu {
 		// Close submenu, when BodyOnCLick event is triggered
 		private _bodyClickCallback(_args: string, e: MouseEvent): void {
 			if (this.isBuilt && this._isOpen && this._dynamicallyOpening === false) {
-				if (!this._selfElem.contains(e.target as HTMLElement)) {
+				if (!this.selfElement.contains(e.target as HTMLElement)) {
 					this.close();
 				}
 
@@ -79,7 +79,7 @@ namespace OSFramework.Patterns.Submenu {
 
 			// If navigate to outside of Submenu, close it
 			if (_isShiftPressed && _isTabPressed && _clickedElem === this._submenuHeaderElement) {
-				if (_closestElem === this._selfElem && this._isOpen) {
+				if (_closestElem === this.selfElement && this._isOpen) {
 					this.close();
 				}
 			}
@@ -98,7 +98,7 @@ namespace OSFramework.Patterns.Submenu {
 			// Leave event is triggered each time we moved from the scope;
 			// Here we are validating if we hovering any element under _selfElem
 			// If we are not hovering it means that we leave the component
-			if (this._selfElem.querySelector(':hover') === null) {
+			if (this.selfElement.querySelector(':hover') === null) {
 				this.close();
 			}
 
@@ -118,7 +118,7 @@ namespace OSFramework.Patterns.Submenu {
 		// Remove submenu as active
 		private _removeActive(): void {
 			if (this._isActive) {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternActive);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.PatternActive);
 				this._isActive = false;
 			}
 		}
@@ -133,8 +133,8 @@ namespace OSFramework.Patterns.Submenu {
 				}
 
 				if (this.configs.OpenOnHover && Helper.DeviceInfo.IsTouch === false) {
-					this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
-					this._selfElem.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
+					this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
+					this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
 				}
 			}
 			// Remove global handlers
@@ -147,7 +147,7 @@ namespace OSFramework.Patterns.Submenu {
 		// Set submenu as active
 		private _setActive(): void {
 			if (this._isActive === false) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternActive);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternActive);
 				this._isActive = true;
 			}
 		}
@@ -160,8 +160,8 @@ namespace OSFramework.Patterns.Submenu {
 					this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
 					this._eventClick = undefined;
 
-					this._selfElem.addEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
-					this._selfElem.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
+					this.selfElement.addEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
+					this.selfElement.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
 				}
 			}
 		}
@@ -169,7 +169,7 @@ namespace OSFramework.Patterns.Submenu {
 		// Show submenu
 		private _show(): void {
 			if (this._isOpen === false) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsOpen);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternIsOpen);
 
 				this._submenuHeaderElement.focus();
 				this._isOpen = true;
@@ -206,9 +206,9 @@ namespace OSFramework.Patterns.Submenu {
 		 * Add the A11Y attributes values
 		 *
 		 * @protected
-		 * @memberof Submenu
+		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
-		protected setA11yProperties(): void {
+		protected setA11YProperties(): void {
 			// Apply the default A11Y
 			Helper.A11Y.AriaHasPopupTrue(this._submenuHeaderElement);
 			Helper.A11Y.TabIndexTrue(this._submenuHeaderElement);
@@ -228,7 +228,7 @@ namespace OSFramework.Patterns.Submenu {
 		 * Add Pattern Events
 		 *
 		 * @protected
-		 * @memberof Submenu
+		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		protected setCallbacks(): void {
 			// Define the callbacks that will be used
@@ -260,11 +260,11 @@ namespace OSFramework.Patterns.Submenu {
 		 * Update info based on htmlContent
 		 *
 		 * @protected
-		 * @memberof Submenu
+		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		protected setHtmlElements(): void {
-			this._submenuHeaderElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternHeader);
-			this._submenuLinksElement = Helper.Dom.ClassSelector(this._selfElem, Enum.CssClass.PatternLinks);
+			this._submenuHeaderElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternHeader);
+			this._submenuLinksElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternLinks);
 			this._submenuAllLinksElement = [...this._submenuLinksElement.querySelectorAll(GlobalEnum.HTMLElement.Link)];
 
 			// Check if submenu has childs
@@ -280,7 +280,7 @@ namespace OSFramework.Patterns.Submenu {
 		 * Set the cssClasses that should be assigned to the element on it's initialization
 		 *
 		 * @protected
-		 * @memberof Submenu
+		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		protected setInitialStates(): void {
 			// Add active class to pattern based on links whith active state
@@ -290,13 +290,13 @@ namespace OSFramework.Patterns.Submenu {
 
 			// Add an identifier if the pattern has childs
 			if (this._hasElements) {
-				Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsDropdown);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternIsDropdown);
 			} else {
 				Helper.Dom.Styles.AddClass(this._submenuLinksElement, Enum.CssClass.PatternIsHidden);
 			}
 
 			// In case the class modifier was added by extended class
-			if (Helper.Dom.Styles.ContainsClass(this._selfElem, Enum.CssClass.PatternIsOpen) && !this._isOpen) {
+			if (Helper.Dom.Styles.ContainsClass(this.selfElement, Enum.CssClass.PatternIsOpen) && !this._isOpen) {
 				this._isOpen = true;
 			}
 		}
@@ -305,7 +305,7 @@ namespace OSFramework.Patterns.Submenu {
 		 * Remove all the assigned Events
 		 *
 		 * @protected
-		 * @memberof Submenu
+		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		protected unsetCallbacks(): void {
 			this._removeEvents();
@@ -323,7 +323,7 @@ namespace OSFramework.Patterns.Submenu {
 		 * Reassign the HTML elements to undefined, preventing memory leaks
 		 *
 		 * @protected
-		 * @memberof Submenu
+		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		protected unsetHtmlElements(): void {
 			this._submenuHeaderElement = undefined;
@@ -335,7 +335,7 @@ namespace OSFramework.Patterns.Submenu {
 		/**
 		 * Built the Submenu
 		 *
-		 * @memberof Submenu
+		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		public build(): void {
 			super.build();
@@ -344,7 +344,7 @@ namespace OSFramework.Patterns.Submenu {
 
 			this.setInitialStates();
 
-			this.setA11yProperties();
+			this.setA11YProperties();
 
 			// Add timeout to make this method call asynchronous to wait for the classes of device detection
 			Helper.AsyncInvocation(this.setCallbacks.bind(this));
@@ -357,7 +357,7 @@ namespace OSFramework.Patterns.Submenu {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof Submenu
+		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -375,11 +375,11 @@ namespace OSFramework.Patterns.Submenu {
 		/**
 		 * Close Submenu
 		 *
-		 * @memberof Submenu
+		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		public close(): void {
 			if (this._isOpen) {
-				Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.PatternIsOpen);
 
 				this._isOpen = false;
 				this._dynamicallyOpening = false;
@@ -391,7 +391,7 @@ namespace OSFramework.Patterns.Submenu {
 		/**
 		 * Destroy the Submenu
 		 *
-		 * @memberof Submenu
+		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		public dispose(): void {
 			// Remove event listners
@@ -407,7 +407,7 @@ namespace OSFramework.Patterns.Submenu {
 		/**
 		 * Public Open Submenu
 		 *
-		 * @memberof Submenu
+		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		public open(): void {
 			// Need to prevent the submenu will not be closed by the body click, use this flag to check.
@@ -424,7 +424,7 @@ namespace OSFramework.Patterns.Submenu {
 		/**
 		 * Trigger on submenu onRender, to update active state
 		 *
-		 * @memberof Submenu
+		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		public updateOnRender(): void {
 			if (this.isBuilt) {

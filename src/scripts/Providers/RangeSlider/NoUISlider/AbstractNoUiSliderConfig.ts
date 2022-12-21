@@ -18,32 +18,10 @@ namespace Providers.RangeSlider.NoUiSlider {
 		public rangeSliderMode: OSFramework.Patterns.RangeSlider.Enum.Mode;
 
 		/**
-		 * Method to set the common configs for the provider
-		 *
-		 * @protected
-		 * @return {*}  {NoUiSliderOptions}
-		 * @memberof AbstractNoUiSliderConfig
-		 */
-		protected getCommonProviderConfig(): NoUiSliderOptions {
-			this._providerOptions = {
-				direction: OutSystems.OSUI.Utils.GetIsRTL()
-					? OSFramework.GlobalEnum.Direction.RTL
-					: OSFramework.GlobalEnum.Direction.LTR,
-				step: this.Step,
-				orientation: this.Orientation,
-				pips: this.ShowTickMarks ? this.getPipsConfig() : null,
-				range: this.getRangeConfig(),
-				tooltips: this.getTooltipFormat(),
-			};
-
-			return this.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
-		}
-
-		/**
 		 * Method to get the configs for the Pips option (ShowTickMarks)
 		 *
 		 * @return {*}  {unknown}
-		 * @memberof AbstractNoUiSliderConfig
+		 * @memberof Providers.RangeSlider.NoUiSlider.AbstractNoUiSliderConfig
 		 */
 		public getPipsConfig(): NoUiSliderPips {
 			let tickMarksValues = Math.floor(this.TickMarksInterval);
@@ -89,10 +67,31 @@ namespace Providers.RangeSlider.NoUiSlider {
 		}
 
 		/**
+		 * Method to set the common configs for the provider
+		 *
+		 * @return {*}  {NoUiSliderOptions}
+		 * @memberof Providers.RangeSlider.NoUiSlider.AbstractNoUiSliderConfig
+		 */
+		public getProviderConfig(): NoUiSliderOptions {
+			this._providerOptions = {
+				direction: OutSystems.OSUI.Utils.GetIsRTL()
+					? OSFramework.GlobalEnum.Direction.RTL
+					: OSFramework.GlobalEnum.Direction.LTR,
+				step: this.Step,
+				orientation: this.Orientation,
+				pips: this.ShowTickMarks ? this.getPipsConfig() : null,
+				range: this.getRangeConfig(),
+				tooltips: this.getTooltipFormat(),
+			};
+
+			return this.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
+		}
+
+		/**
 		 * Method to get the configs for the Range option (Min/Max values)
 		 *
 		 * @return {*}  {unknown}
-		 * @memberof AbstractNoUiSliderConfig
+		 * @memberof Providers.RangeSlider.NoUiSlider.AbstractNoUiSliderConfig
 		 */
 		public getRangeConfig(): NoUiSliderRange {
 			return {
@@ -105,7 +104,7 @@ namespace Providers.RangeSlider.NoUiSlider {
 		 * Method to get the configs for the Tooltip option (ShowFloatingLabel)
 		 *
 		 * @return {*}  {string[]}
-		 * @memberof AbstractNoUiSliderConfig
+		 * @memberof Providers.RangeSlider.NoUiSlider.AbstractNoUiSliderConfig
 		 */
 		public getTooltipFormat(): NoUISliderTooltip {
 			const tooltipValue = this.ShowFloatingLabel ? window.wNumb({ decimals: 0 }) : false;
@@ -124,7 +123,7 @@ namespace Providers.RangeSlider.NoUiSlider {
 		 * Method to validate and save the external provider configs
 		 *
 		 * @param {NoUiSliderOptions} newConfigs
-		 * @memberof AbstractNoUiSliderConfig
+		 * @memberof Providers.RangeSlider.NoUiSlider.AbstractNoUiSliderConfig
 		 */
 		public setExtensibilityConfigs(newConfigs: NoUiSliderOptions): void {
 			this._providerExtendedOptions = newConfigs;

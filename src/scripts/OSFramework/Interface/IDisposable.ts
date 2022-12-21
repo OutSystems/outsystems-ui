@@ -10,7 +10,7 @@ namespace OSFramework.Interface {
 		/**
 		 * Dispose object and free up its used resources
 		 *
-		 * @memberof IDisposable
+		 * @memberof OSFramework.Interface.IDisposable
 		 */
 		dispose(): void;
 	}

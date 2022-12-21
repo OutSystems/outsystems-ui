@@ -22,6 +22,7 @@ namespace OSFramework.Patterns.Tabs.Enum {
 		IsVertical = 'osui-tabs--is-vertical',
 		IsHorizontal = 'osui-tabs--is-horizontal',
 		IsJustified = 'osui-tabs--is-justified',
+		HasContentAutoHeight = 'osui-tabs--has-auto-height',
 		HasDragGestures = 'osui-tabs--has-drag',
 		Modifier = 'osui-tabs--is-',
 		TabsWrapper = 'osui-tabs',
@@ -54,6 +55,7 @@ namespace OSFramework.Patterns.Tabs.Enum {
 	 * Tabs Enum for Properties
 	 */
 	export enum Properties {
+		ContentAutoHeight = 'ContentAutoHeight',
 		Height = 'Height',
 		JustifyHeaders = 'JustifyHeaders',
 		StartingTab = 'StartingTab',

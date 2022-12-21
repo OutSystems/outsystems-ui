@@ -148,7 +148,7 @@ namespace OSFramework.Behaviors {
 		/**
 		 *  Set element disabled for A11Y
 		 *
-		 * @memberof FocusTrap
+		 * @memberof OSFramework.Behaviors.FocusTrap
 		 */
 		public disableForA11y(): void {
 			// Unset A11Y properties from bottom & top focusable element
@@ -163,7 +163,7 @@ namespace OSFramework.Behaviors {
 		/**
 		 * Method to remove the event listeners and unset the callbacks
 		 *
-		 * @memberof FocusTrap
+		 * @memberof OSFramework.Behaviors.FocusTrap
 		 */
 		public dispose(): void {
 			// remove events added
@@ -179,7 +179,7 @@ namespace OSFramework.Behaviors {
 		/**
 		 *  Set element enabled for A11Y
 		 *
-		 * @memberof FocusTrap
+		 * @memberof OSFramework.Behaviors.FocusTrap
 		 */
 		public enableForA11y(): void {
 			// Set A11Y properties to bottom & top focusable element
@@ -196,7 +196,7 @@ namespace OSFramework.Behaviors {
 		 *
 		 * @readonly
 		 * @type {HTMLElement}
-		 * @memberof FocusTrap
+		 * @memberof OSFramework.Behaviors.FocusTrap
 		 */
 		public get bottomElement(): HTMLElement {
 			return this._predictableBottomElement;
@@ -207,7 +207,7 @@ namespace OSFramework.Behaviors {
 		 *
 		 * @readonly
 		 * @type {HTMLElement}
-		 * @memberof FocusTrap
+		 * @memberof OSFramework.Behaviors.FocusTrap
 		 */
 		public get topElement(): HTMLElement {
 			return this._predictableTopElement;
@@ -218,7 +218,7 @@ namespace OSFramework.Behaviors {
 		 *
 		 * @readonly
 		 * @type {HTMLElement}
-		 * @memberof FocusTrap
+		 * @memberof OSFramework.Behaviors.FocusTrap
 		 */
 		public get focusableElements(): HTMLElement[] {
 			return this._focusableElements;

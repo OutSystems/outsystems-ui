@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.Timepicker.Flatpickr {
+namespace Providers.TimePicker.Flatpickr {
 	/**
 	 * Defines the interface for Timepicker Pattern Based on Flatpickr provider
 	 */

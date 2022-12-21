@@ -16,6 +16,7 @@ namespace OSFramework.GlobalEnum {
 		AsideExpandable = 'aside-expandable',
 		Container = 'screen-container',
 		Content = 'content',
+		DeprecatedSubmenu = 'submenu',
 		Footer = 'footer',
 		Header = 'header',
 		HeaderHideOnScroll = 'hide-header-on-scroll',
@@ -31,6 +32,7 @@ namespace OSFramework.GlobalEnum {
 		MainContent = 'main-content',
 		MenuLinks = 'app-menu-links',
 		Placeholder = 'ph',
+		InputNotValid = 'not-valid',
 	}
 
 	/**
@@ -91,6 +93,7 @@ namespace OSFramework.GlobalEnum {
 		D = 'D',
 		d = 'd',
 		DD = 'DD',
+		DDD = 'DDD',
 		M = 'M',
 		m = 'm',
 		MM = 'MM',
@@ -135,7 +138,9 @@ namespace OSFramework.GlobalEnum {
 		Disabled = 'disabled',
 		Id = 'id',
 		Name = 'name',
+		StatusBar = 'data-status-bar-height',
 		Style = 'style',
+		type = 'type',
 	}
 
 	/**
@@ -163,6 +168,7 @@ namespace OSFramework.GlobalEnum {
 		keyDown = 'keydown',
 		MouseEnter = 'mouseenter',
 		MouseLeave = 'mouseleave',
+		MouseUp = 'mouseup',
 		OrientationChange = 'orientationchange',
 		Resize = 'resize',
 		Scroll = 'scroll',
@@ -292,11 +298,20 @@ namespace OSFramework.GlobalEnum {
 	}
 
 	/**
-	 * OutSystemsUI Input Types
+	 * OutSystemsUI Input Class Types
 	 */
-	export enum InputTypes {
+	export enum InputClassTypes {
 		InputLarge = 'input-large',
 		InputSmall = 'input-small',
+	}
+
+	/**
+	 * OutSystemsUI Input attribute values Types
+	 */
+	export enum InputTypeAttr {
+		Date = 'date',
+		DateTime = 'date-time-edit',
+		Text = 'text',
 	}
 
 	/**
@@ -346,6 +361,7 @@ namespace OSFramework.GlobalEnum {
 
 	export enum WarningMessages {
 		FeatureNotImplemented = 'This feature is not yet implemented!',
+		MethodNotImplemented = 'This Method has no implementation on the context of this pattern.',
 	}
 
 	export enum NullValues {

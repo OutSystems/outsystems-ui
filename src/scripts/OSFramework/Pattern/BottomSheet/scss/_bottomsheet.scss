@@ -24,7 +24,7 @@
 	transition: transform 350ms var(--osui-bottom-sheet-transition-function);
 	transform: translateY(100%);
 	width: 100%;
-	z-index: 300;
+	z-index: $bottom-sheet-zindex;
 
 	// Service Studio Preview
 	& {
@@ -168,5 +168,13 @@
 	.osui-bottom-sheet__content {
 		padding-right: calc(var(--space-base) + var(--os-safe-area-right));
 		padding-left: calc(var(--space-base) + var(--os-safe-area-left));
+	}
+}
+
+// Body absolute patterns when used inside a BottomSheet
+.osui-bottom-sheet--is-active {
+	.vscomp-wrapper,
+	[data-popup-backdrop] {
+		z-index: $bottom-sheet-zindex + 1;
 	}
 }

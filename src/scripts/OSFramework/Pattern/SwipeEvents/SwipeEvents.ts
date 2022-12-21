@@ -29,6 +29,7 @@ namespace OSFramework.Patterns.SwipeEvents {
 			this._velocity = Enum.Properties.Velocity;
 		}
 
+		// Remove Events
 		private _removeEventListeners(): void {
 			if (this._swipableElement) {
 				this._swipableElement.removeEventListener(GlobalEnum.HTMLEvent.TouchStart, this._gestureStartEvent);
@@ -36,6 +37,7 @@ namespace OSFramework.Patterns.SwipeEvents {
 			}
 		}
 
+		// Set Events
 		private _setEventListeners(): void {
 			if (this._swipableElement) {
 				this._swipableElement.addEventListener(GlobalEnum.HTMLEvent.TouchStart, this._gestureStartEvent);
@@ -43,36 +45,28 @@ namespace OSFramework.Patterns.SwipeEvents {
 			}
 		}
 
-		/**
-		 * Method that triggers the SwipeDown event on the platform
-		 */
+		// Method that triggers the SwipeDown event on the platform
 		private _triggerSwipeDown(): void {
 			if (this._swipeRightCallback) {
 				Helper.AsyncInvocation(this._swipeDownCallback);
 			}
 		}
 
-		/**
-		 * Method that triggers the SwipeLeft event on the platform
-		 */
+		// Method that triggers the SwipeLeft event on the platform
 		private _triggerSwipeLeft(): void {
 			if (this._swipeRightCallback) {
 				Helper.AsyncInvocation(this._swipeLeftCallback);
 			}
 		}
 
-		/**
-		 * Method that triggers the SwipeRight event on the platform
-		 */
+		// Method that triggers the SwipeRight event on the platform
 		private _triggerSwipeRight(): void {
 			if (this._swipeRightCallback) {
 				Helper.AsyncInvocation(this._swipeRightCallback);
 			}
 		}
 
-		/**
-		 * Method that triggers the SwipeUp event on the platform
-		 */
+		// Method that triggers the SwipeUp event on the platform
 		private _triggerSwipeUp(): void {
 			if (this._swipeRightCallback) {
 				Helper.AsyncInvocation(this._swipeUpCallback);
@@ -80,10 +74,20 @@ namespace OSFramework.Patterns.SwipeEvents {
 		}
 
 		/**
+		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
+		 */
+		protected setA11YProperties(): void {
+			console.warn(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
 		 * Sets the callbacks to be used in the pattern.
 		 *
 		 * @protected
-		 * @memberof SwipeEvents
+		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
 		 */
 		protected setCallbacks(): void {
 			this._gestureStartEvent = this.EventGestureEnd.bind(this);
@@ -96,7 +100,7 @@ namespace OSFramework.Patterns.SwipeEvents {
 		 * Set the html references that will be used to manage the cssClasses and atribute properties
 		 *
 		 * @protected
-		 * @memberof SwipeEvents
+		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
 		 */
 		protected setHtmlElements(): void {
 			this._swipableElement = document.getElementById(this.configs.WidgetId);
@@ -106,7 +110,7 @@ namespace OSFramework.Patterns.SwipeEvents {
 		 * Removes event listeners and callbacks.
 		 *
 		 * @protected
-		 * @memberof SwipeEvents
+		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
 		 */
 		protected unsetCallbacks(): void {
 			this._removeEventListeners();
@@ -114,11 +118,12 @@ namespace OSFramework.Patterns.SwipeEvents {
 			this._gestureStartEvent = undefined;
 			this._gestureMoveEvent = undefined;
 		}
+
 		/**
 		 * Release references to HTML elements.
 		 *
 		 * @protected
-		 * @memberof SwipeEvents
+		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
 		 */
 		protected unsetHtmlElements(): void {
 			this._swipableElement = undefined;
@@ -129,6 +134,7 @@ namespace OSFramework.Patterns.SwipeEvents {
 		 * @param {number} offsetX
 		 * @param {number} offsetY
 		 * @param {number} timeTaken
+		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
 		 */
 		public EventGestureEnd(offsetX: number, offsetY: number, timeTaken: number): void {
 			if (
@@ -153,8 +159,10 @@ namespace OSFramework.Patterns.SwipeEvents {
 		}
 
 		/**
+		 * Block the default behaviour of the GestureMove
 		 *
 		 * @param {TouchEvent} event
+		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
 		 */
 		public EventGestureMove(event: TouchEvent): void {
 			if (event) {
@@ -162,6 +170,11 @@ namespace OSFramework.Patterns.SwipeEvents {
 			}
 		}
 
+		/**
+		 * Build SwipeEvents
+		 *
+		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
+		 */
 		public build(): void {
 			super.build();
 			this.setHtmlElements();
@@ -169,12 +182,24 @@ namespace OSFramework.Patterns.SwipeEvents {
 			super.finishBuild();
 		}
 
+		/**
+		 * Destroy SwipeEvents
+		 *
+		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
+		 */
 		public dispose(): void {
 			super.dispose();
 			this.unsetCallbacks();
 			this.unsetHtmlElements();
 		}
 
+		/**
+		 * Method used to register the provider callback
+		 *
+		 * @param {string} eventName Event name that will be assigned
+		 * @param {GlobalCallbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
+		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
+		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
 				case Patterns.SwipeEvents.Enum.Events.SwipeDown:

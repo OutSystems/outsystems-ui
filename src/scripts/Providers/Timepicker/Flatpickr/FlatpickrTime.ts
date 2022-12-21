@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace Providers.Timepicker.Flatpickr {
+namespace Providers.TimePicker.Flatpickr {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class OSUIFlatpickrTime
 		extends OSFramework.Patterns.TimePicker.AbstractTimePicker<Flatpickr, FlatpickrTimeConfig>
@@ -7,12 +7,14 @@ namespace Providers.Timepicker.Flatpickr {
 	{
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
+		// Store the provider options
+		private _flatpickrOpts: FlatpickrOptions;
 		// Flatpickr onInitialize event
 		private _onInitializeCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
+		// Validation of ZIndex position common behavior
+		private _zindexCommonBehavior: SharedProviderResources.Flatpickr.UpdateZindex;
 		// Store the flatpickr input html element that will be added by library
 		protected _flatpickrInputElem: HTMLInputElement;
-		// Store the provider options
-		protected _flatpickrOpts: FlatpickrOptions;
 		// Flatpickr onChange (SelectedTime) event
 		protected _onChangeCallbackEvent: OSFramework.Patterns.TimePicker.Callbacks.OSOnChangeEvent;
 		// Store pattern input HTML element reference
@@ -48,7 +50,7 @@ namespace Providers.Timepicker.Flatpickr {
 			if (
 				OSFramework.Helper.Dom.Styles.ContainsClass(
 					this._flatpickrInputElem,
-					OSFramework.GlobalEnum.InputTypes.InputLarge
+					OSFramework.GlobalEnum.InputClassTypes.InputLarge
 				)
 			) {
 				OSFramework.Helper.Dom.Styles.AddClass(
@@ -58,7 +60,7 @@ namespace Providers.Timepicker.Flatpickr {
 			} else if (
 				OSFramework.Helper.Dom.Styles.ContainsClass(
 					this._flatpickrInputElem,
-					OSFramework.GlobalEnum.InputTypes.InputSmall
+					OSFramework.GlobalEnum.InputClassTypes.InputSmall
 				)
 			) {
 				OSFramework.Helper.Dom.Styles.AddClass(
@@ -77,24 +79,11 @@ namespace Providers.Timepicker.Flatpickr {
 			}
 		}
 
-		// Method to set the html elements used
-		private _setHtmllElements(): void {
-			// Set the inputHTML element
-			this._timePickerProviderInputElem = this._selfElem.querySelector(
-				OSFramework.GlobalEnum.CSSSelectors.InputFormControl
-			);
-
-			// If the input hasn't be added
-			if (!this._timePickerProviderInputElem) {
-				throw new Error(`The timepicker input at TimepickerId '${this._widgetId}' is missing`);
-			}
-		}
-
 		/**
 		 * Method that will be triggered at Flatpickr instance is ready
 		 *
 		 * @protected
-		 * @memberof Flatpickr.Time
+		 * @memberof Providers.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		protected createProviderInstance(): void {
 			/* In order to avoid dateFormat convert issues done by provider when InitialTime was not defined and input has a default time lets clean that value before creating provider instance. This happen when DateFormat is different from YYYY-MM-DD */
@@ -114,6 +103,9 @@ namespace Providers.Timepicker.Flatpickr {
 
 				// set the onBodyScroll update calendar position behaviour!
 				this._bodyScrollCommonBehaviour = new SharedProviderResources.Flatpickr.UpdatePositionOnScroll(this);
+
+				// set the zindex update position behaviour!
+				this._zindexCommonBehavior = new SharedProviderResources.Flatpickr.UpdateZindex(this);
 			}
 
 			this.createdInstance();
@@ -123,7 +115,7 @@ namespace Providers.Timepicker.Flatpickr {
 		 * Method that will be triggered at Flatpickr instance is ready
 		 *
 		 * @protected
-		 * @memberof Flatpickr.Time
+		 * @memberof Providers.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		protected createdInstance(): void {
 			// Set provider Info to be used by setProviderConfigs API calls
@@ -155,35 +147,58 @@ namespace Providers.Timepicker.Flatpickr {
 		 * Method that will set the provider configurations in order to properly create its instance
 		 *
 		 * @protected
-		 * @memberof Flatpickr.Time
+		 * @memberof Providers.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		protected prepareConfigs(): void {
 			// Get the library configurations
 			this._flatpickrOpts = this.configs.getProviderConfig();
-
 			// Instance will be Created!
 			this.createProviderInstance();
 		}
 
 		/**
-		 * Method that will be responsible to redraw the calendar when it's needed
+		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof Flatpickr.Time
+		 * @memberof Providers.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
-		protected redraw(): void {
-			// Destroy the old flatpickr instance
-			this.provider.destroy();
+		protected setA11YProperties(): void {
+			console.warn(OSFramework.GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
 
-			// Create a new flatpickr instance with the updated configs
-			OSFramework.Helper.AsyncInvocation(this.prepareConfigs.bind(this));
+		/**
+		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof Providers.TimePicker.Flatpickr.OSUIFlatpickrTime
+		 */
+		protected setCallbacks(): void {
+			console.log(OSFramework.GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
+		 * Method to set the html elements used
+		 *
+		 * @protected
+		 * @memberof Providers.TimePicker.Flatpickr.OSUIFlatpickrTime
+		 */
+		protected setHtmlElements(): void {
+			// Set the inputHTML element
+			this._timePickerProviderInputElem = this.selfElement.querySelector(
+				OSFramework.GlobalEnum.CSSSelectors.InputFormControl
+			);
+
+			// If the input hasn't be added
+			if (!this._timePickerProviderInputElem) {
+				throw new Error(`The timepicker input at TimepickerId '${this.widgetId}' is missing`);
+			}
 		}
 
 		/**
 		 * Remove all the assigned Events
 		 *
 		 * @protected
-		 * @memberof Flatpickr.Time
+		 * @memberof Providers.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		protected unsetCallbacks(): void {
 			this.configs.OnChange = undefined;
@@ -196,7 +211,7 @@ namespace Providers.Timepicker.Flatpickr {
 		 * Unsets the refences to the HTML elements.
 		 *
 		 * @protected
-		 * @memberof Flatpickr.Time
+		 * @memberof Providers.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		protected unsetHtmlElements(): void {
 			this._timePickerProviderInputElem = undefined;
@@ -205,7 +220,7 @@ namespace Providers.Timepicker.Flatpickr {
 		public build(): void {
 			super.build();
 
-			this._setHtmllElements();
+			this.setHtmlElements();
 			this.prepareConfigs();
 			this.finishBuild();
 		}
@@ -215,7 +230,7 @@ namespace Providers.Timepicker.Flatpickr {
 		 *
 		 * @param {string} propertyName the name of the property that will be changed
 		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
-		 * @memberof Flatpickr.Time
+		 * @memberof Providers.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			//Storing the current ExtendedClass, before possibly changing this property.
@@ -230,6 +245,7 @@ namespace Providers.Timepicker.Flatpickr {
 					case OSFramework.Patterns.TimePicker.Enum.Properties.Is24Hours:
 					case OSFramework.Patterns.TimePicker.Enum.Properties.MaxTime:
 					case OSFramework.Patterns.TimePicker.Enum.Properties.MinTime:
+					case OSFramework.Patterns.TimePicker.Enum.Properties.TimeFormat:
 						this.redraw();
 						break;
 					case OSFramework.GlobalEnum.CommonPatternsProperties.ExtendedClass:
@@ -247,7 +263,7 @@ namespace Providers.Timepicker.Flatpickr {
 		/**
 		 * Method used to clear the selected date
 		 *
-		 * @memberof Flatpickr.Time
+		 * @memberof Providers.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public clear(): void {
 			this.provider.clear();
@@ -256,16 +272,18 @@ namespace Providers.Timepicker.Flatpickr {
 		/**
 		 * Method used to close TimePicker
 		 *
-		 * @memberof Flatpickr.Time
+		 * @memberof Providers.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public close(): void {
-			this.provider.close();
+			if (this.provider.isOpen) {
+				this.provider.close();
+			}
 		}
 
 		/**
 		 * Method to remove and destroy TimePicker instance
 		 *
-		 * @memberof Flatpickr.Time
+		 * @memberof Providers.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
@@ -287,16 +305,18 @@ namespace Providers.Timepicker.Flatpickr {
 		/**
 		 * Method used to open TimePicker
 		 *
-		 * @memberof Flatpickr.Time
+		 * @memberof Providers.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public open(): void {
-			this.provider.open();
+			if (this.provider.isOpen === false) {
+				this.provider.open();
+			}
 		}
 
 		/**
 		 * Method used to regist callback events
 		 *
-		 * @memberof Flatpickr.Time
+		 * @memberof Providers.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public registerCallback(eventName: string, callback: OSFramework.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -315,7 +335,7 @@ namespace Providers.Timepicker.Flatpickr {
 		/**
 		 * Method used to set the TimePicker as editable on its input
 		 *
-		 * @memberof Flatpickr.Time
+		 * @memberof Providers.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public setEditableInput(isEditable: boolean): void {
 			if (this.configs.AllowInput !== isEditable) {
@@ -327,7 +347,7 @@ namespace Providers.Timepicker.Flatpickr {
 		/**
 		 * Method used to set the TimePicker language
 		 *
-		 * @memberof Flatpickr.Time
+		 * @memberof Providers.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public setLanguage(value: string): void {
 			// Set the new Language
@@ -343,7 +363,7 @@ namespace Providers.Timepicker.Flatpickr {
 		 * Method used to set all the extended Flatpickr properties across the different types of instances
 		 *
 		 * @param {FlatpickrOptions} newConfigs
-		 * @memberof Flatpickr.Time
+		 * @memberof Providers.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public setProviderConfigs(newConfigs: FlatpickrOptions): void {
 			this.configs.setExtensibilityConfigs(newConfigs);
@@ -354,7 +374,7 @@ namespace Providers.Timepicker.Flatpickr {
 		/**
 		 * Method used to toggle the default native behavior of TimePicker
 		 *
-		 * @memberof Flatpickr.Time
+		 * @memberof Providers.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public toggleNativeBehavior(isNative: boolean): void {
 			// Invert the boolean value of IsNative because of provider option

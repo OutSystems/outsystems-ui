@@ -77,6 +77,8 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailChangeProperty: 'OSUI-API-07001',
 		FailClear: 'OSUI-API-07002',
 		FailClose: 'OSUI-API-07003',
+		FailDisableDays: 'OSUI-API-07011',
+		FailDisableWeekDays: 'OSUI-API-07012',
 		FailDispose: 'OSUI-API-07004',
 		FailOpen: 'OSUI-API-07005',
 		FailRedraw: 'OSUI-API-07006',
@@ -84,8 +86,10 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailRegisterProviderConfig: 'OSUI-API-07008',
 		FailRegisterProviderEvent: 'OSUI-API-07009',
 		FailRemoveProviderEvent: 'OSUI-API-07010',
-		FailDisableDays: 'OSUI-API-07011',
-		FailDisableWeekDays: 'OSUI-API-07012',
+		FailSetEditableInput: 'OSUI-API-07013',
+		FailSetLanguage: 'OSUI-API-07014',
+		FailToggleNativeBehavior: 'OSUI-API-07015',
+		FailUpdateInitialDate: 'OSUI-API-07016',
 	};
 
 	export const FlipContent = {
@@ -114,6 +118,8 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailRegisterProviderConfig: 'OSUI-API-10007',
 		FailRegisterProviderEvent: 'OSUI-API-10008',
 		FailRemoveProviderEvent: 'OSUI-API-10009',
+		FailEnable: 'OSUI-API-10010',
+		FailDisable: 'OSUI-API-10011',
 	};
 
 	export const Sidebar = {
@@ -241,5 +247,10 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailRegisterProviderConfig: 'OSUI-API-27008',
 		FailRegisterProviderEvent: 'OSUI-API-27009',
 		FailRemoveProviderEvent: 'OSUI-API-27010',
+		FailSetEditableInput: 'OSUI-API-27011',
+	};
+
+	export const InvalidInput = {
+		FailGetInvalidInput: 'OSUI-API-28001',
 	};
 }

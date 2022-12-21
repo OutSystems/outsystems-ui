@@ -9,6 +9,7 @@ namespace OSFramework.Patterns.DatePicker {
 			super(uniqueId, configs);
 		}
 
+		// Common methods that all DatePickers must implement!
 		public abstract clear(): void;
 		public abstract close(): void;
 		public abstract disableDays(value: string[]): void;

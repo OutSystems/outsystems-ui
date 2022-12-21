@@ -7,6 +7,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		// Store the onResize event
 		private _eventOnWindowResize: OSFramework.GlobalCallbacks.Generic;
 		// Dropdown callback events
+		private _onMouseUpEvent: OSFramework.GlobalCallbacks.Generic;
 		private _onSelectedOptionEvent: OSFramework.GlobalCallbacks.Generic;
 		private _platformEventInitializedCallback: OSFramework.GlobalCallbacks.OSGeneric;
 		private _platformEventSelectedOptCallback: OSFramework.Patterns.Dropdown.Callbacks.OSOnSelectEvent;
@@ -23,7 +24,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		// Add error message container with a given text
 		private _addErrorMessage(text: string): void {
 			const errorMessageElement = OSFramework.Helper.Dom.ClassSelector(
-				this._selfElem.parentElement,
+				this.selfElement.parentElement,
 				Enum.CssClass.ErrorMessage
 			);
 
@@ -34,7 +35,7 @@ namespace Providers.Dropdown.VirtualSelect {
 				textContainer.classList.add(Enum.CssClass.ErrorMessage);
 				textContainer.innerHTML = text;
 
-				this._selfElem.parentElement.appendChild(textContainer);
+				this.selfElement.parentElement.appendChild(textContainer);
 			}
 		}
 
@@ -51,13 +52,21 @@ namespace Providers.Dropdown.VirtualSelect {
 
 			if (this.configs.IsDisabled) {
 				OSFramework.Helper.Dom.Attribute.Set(
-					this._selfElem,
+					this.selfElement,
 					OSFramework.GlobalEnum.HTMLAttributes.Disabled,
 					''
 				);
 			} else {
-				OSFramework.Helper.Dom.Attribute.Remove(this._selfElem, OSFramework.GlobalEnum.HTMLAttributes.Disabled);
+				OSFramework.Helper.Dom.Attribute.Remove(
+					this.selfElement,
+					OSFramework.GlobalEnum.HTMLAttributes.Disabled
+				);
 			}
+		}
+
+		// Prevent the default behaviour of the event
+		private _onMouseUp(event) {
+			event.preventDefault();
 		}
 
 		// Get the selected options and pass them into callBack
@@ -80,13 +89,18 @@ namespace Providers.Dropdown.VirtualSelect {
 		// Set the ElementId that is expected from VirtualSelect config
 		private _setElementId(): void {
 			// Store the ElementId where the provider will create the Dropdown
-			this.configs.ElementId = '#' + this._selfElem.id;
+			this.configs.ElementId = '#' + this.selfElement.id;
 		}
 
 		// Set Pattern Events
 		private _setUpEvents(): void {
 			// Add the event that will get the selected options values
-			this._selfElem.addEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
+			this.selfElement.addEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
+
+			if (OSFramework.Helper.DeviceInfo.GetBrowser() === OSFramework.GlobalEnum.Browser.edge) {
+				// Prevent the context menu from appearing when clicking on the dropdown multiple times in Edge browser
+				this.selfElement.addEventListener(OSFramework.GlobalEnum.HTMLEvent.MouseUp, this._onMouseUpEvent);
+			}
 
 			if (OSFramework.Helper.DeviceInfo.IsDesktop) {
 				//Set the WindowResize in order to close it if it's open!
@@ -99,7 +113,8 @@ namespace Providers.Dropdown.VirtualSelect {
 
 		// Remove Pattern Events
 		private _unsetEvents(): void {
-			this._selfElem.removeEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
+			this.selfElement.removeEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
+			this.selfElement.removeEventListener(OSFramework.GlobalEnum.HTMLEvent.MouseUp, this._onMouseUpEvent);
 
 			OSFramework.Event.GlobalEventManager.Instance.removeHandler(
 				OSFramework.Event.Type.WindowResize,
@@ -111,7 +126,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * Create the provider instance
 		 *
 		 * @protected
-		 * @memberof AbstractVirtualSelect
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		protected createProviderInstance(): void {
 			// Create the provider instance
@@ -140,36 +155,43 @@ namespace Providers.Dropdown.VirtualSelect {
 		}
 
 		/**
-		 * Method that will be responsible to redraw the dropdown when it's needed
+		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof AbstractVirtualSelect
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
-		protected redraw(): void {
-			// Destroy the old VirtualSelect instance
-			this.provider.destroy();
-
-			// Create a new VirtualSelect instance with the updated configs
-			OSFramework.Helper.AsyncInvocation(this.prepareConfigs.bind(this));
+		protected setA11YProperties(): void {
+			console.warn(OSFramework.GlobalEnum.WarningMessages.MethodNotImplemented);
 		}
 
 		/**
 		 * Set the callbacks that will be assigned to the window click event
 		 *
 		 * @protected
-		 * @memberof AbstractVirtualSelect
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		protected setCallbacks(): void {
 			// Set the events callback reference
 			this._eventOnWindowResize = this._onWindowResize.bind(this);
+			this._onMouseUpEvent = this._onMouseUp.bind(this);
 			this._onSelectedOptionEvent = this._onSelectedOption.bind(this);
+		}
+
+		/**
+		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
+		 */
+		protected setHtmlElements(): void {
+			console.log(OSFramework.GlobalEnum.WarningMessages.MethodNotImplemented);
 		}
 
 		/**
 		 * Unset callbacks that has been assigned to the element
 		 *
 		 * @protected
-		 * @memberof AbstractVirtualSelect
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnWindowResize = undefined;
@@ -179,6 +201,21 @@ namespace Providers.Dropdown.VirtualSelect {
 			this.provider = undefined;
 		}
 
+		/**
+		 * This method has no implementation on this pattern context!
+		 *
+		 * @protected
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
+		 */
+		protected unsetHtmlElements(): void {
+			console.log(OSFramework.GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
+		 * Builds the Pattern
+		 *
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
+		 */
 		public build(): void {
 			super.build();
 
@@ -198,7 +235,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		 *
 		 * @param {string} propertyName the name of the property that will be changed
 		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
-		 * @memberof AbstractVirtualSelect
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			// If/When we've the dropdown outside an IsDataFetched IF and OnParametersChannge where we're receiving (for both cases) a JSON string that must be parsed into an Object
@@ -244,7 +281,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		/**
 		 * Clear any selected values from the Dropdown
 		 *
-		 * @memberof AbstractVirtualSelect
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public clear(): void {
 			this._virtualselectConfigs.reset();
@@ -253,18 +290,20 @@ namespace Providers.Dropdown.VirtualSelect {
 		/**
 		 * Set Dropdown as disabled
 		 *
-		 * @memberof AbstractVirtualSelect
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public disable(): void {
-			this.configs.IsDisabled = true;
+			if (this.configs.IsDisabled === false) {
+				this.configs.IsDisabled = true;
 
-			this._manageDisableStatus();
+				this._manageDisableStatus();
+			}
 		}
 
 		/**
 		 * Destroy the Dropdown.
 		 *
-		 * @memberof AbstractVirtualSelect
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
@@ -291,18 +330,20 @@ namespace Providers.Dropdown.VirtualSelect {
 		/**
 		 * Set Dropdown as enabled
 		 *
-		 * @memberof AbstractVirtualSelect
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public enable(): void {
-			this.configs.IsDisabled = false;
+			if (this.configs.IsDisabled) {
+				this.configs.IsDisabled = false;
 
-			this._manageDisableStatus();
+				this._manageDisableStatus();
+			}
 		}
 
 		/**
 		 * Get the selected values
 		 *
-		 * @memberof AbstractVirtualSelect
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public getSelectedValues(): string {
 			let optionsSelected = this.getSelectedOptionsStructure();
@@ -327,7 +368,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		 *
 		 * @param {string} eventName Event name that will be assigned
 		 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
-		 * @memberof AbstractVirtualSelect
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public registerCallback(eventName: string, callback: OSFramework.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -352,7 +393,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * Method used to set all the extended VirtualSelect properties across the different types of instances
 		 *
 		 * @param {VirtualSelectOpts} newConfigs
-		 * @memberof AbstractVirtualSelect
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public setProviderConfigs(newConfigs: VirtualSelectOpts): void {
 			this.configs.setExtensibilityConfigs(newConfigs);
@@ -363,7 +404,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		 * Method used to set all the extended VirtualSelect properties across the different types of instances
 		 *
 		 * @param {DropDownOption[]} optionsToSelect
-		 * @memberof AbstractVirtualSelect
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public setValue(optionsToSelect: DropDownOption[]): void {
 			const selectedValues = this.getSelectedOptionsStructure().map((value) => value.value) || [];
@@ -381,7 +422,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		/**
 		 * Toggle the dropbox as popup on small screen like mobile
 		 *
-		 * @memberof AbstractVirtualSelect
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public togglePopup(isEnabled: boolean): void {
 			if (this.configs.ShowDropboxAsPopup !== isEnabled) {
@@ -395,17 +436,17 @@ namespace Providers.Dropdown.VirtualSelect {
 		 *
 		 * @param {boolean} Set if the dropdown is valid or not
 		 * @param {string} Pass the text message to show
-		 * @memberof AbstractVirtualSelect
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public validation(isValid: boolean, validationMessage: string): void {
 			if (isValid === false) {
-				OSFramework.Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.NotValid);
+				OSFramework.Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.NotValid);
 				this._addErrorMessage(validationMessage);
 			} else {
-				OSFramework.Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.NotValid);
+				OSFramework.Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.NotValid);
 
 				const errorMessageElement = OSFramework.Helper.Dom.ClassSelector(
-					this._selfElem.parentElement,
+					this.selfElement.parentElement,
 					Enum.CssClass.ErrorMessage
 				);
 
@@ -416,6 +457,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			}
 		}
 
+		// Common methods all Dropdowns must implement!
 		protected abstract getSelectedOptionsStructure(): DropDownOption[];
 		protected abstract prepareConfigs(): void;
 	}

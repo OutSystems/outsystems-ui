@@ -13,6 +13,7 @@ namespace OSFramework.Interface {
 		 *
 		 * @param childId Dropdown Option Item Id to be stored
 		 * @param notifiedTo triggered notification type name
+		 * @memberof OSFramework.Interface.IParent
 		 */
 		beNotifiedByChild(childId: string, notifiedTo: string): void;
 	}

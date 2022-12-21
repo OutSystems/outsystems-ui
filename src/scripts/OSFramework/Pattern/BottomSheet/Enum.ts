@@ -7,6 +7,7 @@ namespace OSFramework.Patterns.BottomSheet.Enum {
 		HasHandler = 'osui-bottom-sheet--has-handler',
 		HasSCroll = 'osui-bottom-sheet--has-scroll',
 		IsOpen = 'osui-bottom-sheet--is-open',
+		IsActive = 'osui-bottom-sheet--is-active',
 		PatternContent = 'osui-bottom-sheet__content',
 		PatternHeader = 'osui-bottom-sheet__header',
 		PatternOverlay = 'osui-bottom-sheet-overlay',

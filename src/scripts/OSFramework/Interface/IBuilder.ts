@@ -10,7 +10,7 @@ namespace OSFramework.Interface {
 		/**
 		 * Build object, instantiating dependencies, and manipulating DOM when necessary
 		 *
-		 * @memberof IBuilder
+		 * @memberof OSFramework.Interface.IBuilder
 		 */
 		build(): void;
 	}

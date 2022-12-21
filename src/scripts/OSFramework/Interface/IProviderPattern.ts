@@ -13,7 +13,7 @@ namespace OSFramework.Interface {
 		 * Attribute that keeps the instance of the provider of the pattern.
 		 *
 		 * @type {P}
-		 * @memberof IProviderPattern
+		 * @memberof OSFramework.Interface.IProviderPattern
 		 */
 		provider: P;
 
@@ -21,7 +21,7 @@ namespace OSFramework.Interface {
 		 * Attribute that keeps the information about the provider version
 		 *
 		 * @type {ProviderInfo}
-		 * @memberof IProviderPattern
+		 * @memberof OSFramework.Interface.IProviderPattern
 		 */
 		providerInfo: ProviderInfo;
 
@@ -30,7 +30,7 @@ namespace OSFramework.Interface {
 		 *
 		 * @param {string} eventName
 		 * @param {GlobalCallbacks.OSGeneric} callback
-		 * @memberof IProviderPattern
+		 * @memberof OSFramework.Interface.IProviderPattern
 		 */
 		registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
 
@@ -38,7 +38,7 @@ namespace OSFramework.Interface {
 		 * Method to enable extensibility to provider supported configs
 		 *
 		 * @param {ProviderConfigs} newConfigs
-		 * @memberof IProviderPattern
+		 * @memberof OSFramework.Interface.IProviderPattern
 		 */
 		setProviderConfigs(newConfigs: ProviderConfigs): void;
 
@@ -46,7 +46,7 @@ namespace OSFramework.Interface {
 		 * Method to update the provider events API instance and save/pending events
 		 *
 		 * @param {ProviderInfo} providerInfo
-		 * @memberof IProviderPattern
+		 * @memberof OSFramework.Interface.IProviderPattern
 		 */
 		updateProviderEvents(providerInfo: ProviderInfo): void;
 	}

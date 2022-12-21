@@ -12,7 +12,7 @@ namespace OSFramework.Patterns.Carousel.Factory {
 		let _carouselItem = null;
 
 		if (provider === Enum.Provider.Splide) {
-			_carouselItem = new Providers.Splide.OSUISplide(carouselId, JSON.parse(configs));
+			_carouselItem = new Providers.Carousel.Splide.OSUISplide(carouselId, JSON.parse(configs));
 		} else {
 			throw new Error(`There is no  ${GlobalEnum.PatternName.Carousel}  of the ${provider} provider`);
 		}

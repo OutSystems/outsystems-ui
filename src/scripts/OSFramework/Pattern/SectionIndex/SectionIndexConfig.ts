@@ -12,11 +12,12 @@ namespace OSFramework.Patterns.SectionIndex {
 		public SmoothScrolling: boolean;
 
 		/**
-		 * Override, Validate configs key values
+		 * Method that will check if a given property (key) value is the type expected!
 		 *
-		 * @param {string} key
-		 * @param {unknown} value
-		 * @memberof AbstractSectionIndexConfig
+		 * @param key property name
+		 * @param value value to be check
+		 * @returns {unknown} value
+		 * @memberof  OSFramework.Patterns.SectionIndex.SectionIndexConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

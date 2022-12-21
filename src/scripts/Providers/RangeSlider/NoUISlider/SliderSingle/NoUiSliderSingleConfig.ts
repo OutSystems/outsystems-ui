@@ -11,7 +11,7 @@ namespace Providers.RangeSlider.NoUISlider.SliderSingle {
 		 * Method to set provider configs for the Single Slider mode
 		 *
 		 * @return {*}  {NoUiSliderOptions}
-		 * @memberof NoUiSliderSingleConfig
+		 * @memberof Providers.RangeSlider.NoUISlider.SliderSingle.NoUiSliderSingleConfig
 		 */
 		public getProviderConfig(): NoUiSliderOptions {
 			// eslint-disable-next-line prefer-const
@@ -20,11 +20,7 @@ namespace Providers.RangeSlider.NoUISlider.SliderSingle {
 				connect: NoUiSlider.Enum.NoUiSliderConnectOptions.Lower,
 			};
 
-			return this.mergeConfigs(
-				this.getCommonProviderConfig(),
-				singleSliderOptions,
-				this._providerExtendedOptions
-			);
+			return this.mergeConfigs(super.getProviderConfig(), singleSliderOptions, this._providerExtendedOptions);
 		}
 	}
 }

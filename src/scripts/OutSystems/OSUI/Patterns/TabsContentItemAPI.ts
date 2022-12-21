@@ -74,7 +74,7 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 	): OSFramework.Patterns.TabsContentItem.ITabsContentItem {
 		if (_tabsContentItemMap.has(tabsContentItemId)) {
 			throw new Error(
-				`There is already a ${OSFramework.GlobalEnum.PatternName.TabsHeaderItem} registered under id: ${tabsContentItemId}`
+				`There is already a ${OSFramework.GlobalEnum.PatternName.TabsContentItem} registered under id: ${tabsContentItemId}`
 			);
 		}
 		const tabs = GetTabsByItem(tabsContentItemId);
@@ -129,7 +129,7 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 	 * @return {*}  {Map<string, OSFramework.Patterns.Tabs.ITabs>}
 	 */
 	export function GetAllTabsContentItems(): Array<string> {
-		return;
+		return OSFramework.Helper.MapOperation.ExportKeys(_tabsContentItemMap);
 	}
 
 	/**

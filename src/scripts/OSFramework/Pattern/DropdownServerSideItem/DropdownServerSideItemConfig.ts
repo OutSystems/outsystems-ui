@@ -16,12 +16,12 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 		}
 
 		/**
-		 * Override, Validate configs key values
+		 * Method that will check if a given property (key) value is the type expected!
 		 *
-		 * @param {string} key
-		 * @param {unknown} value
-		 * @return {*}  {unknown}
-		 * @memberof AbstractDropdownServerSideItemConfig
+		 * @param key property name
+		 * @param value value to be check
+		 * @returns {unknown} value
+		 * @memberof  OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItemConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

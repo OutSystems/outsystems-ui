@@ -10,6 +10,19 @@
 
 	&.open {
 		z-index: 99;
+
+		&.inside-bottom-sheet {
+			z-index: $bottom-sheet-zindex;
+		}
+		&.inside-notification {
+			z-index: $notification-zindex;
+		}
+		&.inside-popup {
+			z-index: $popup-zindex;
+		}
+		&.inside-sidebar {
+			z-index: $sidebar-zindex;
+		}
 	}
 
 	&.arrowTop {
@@ -58,6 +71,10 @@
 				border-top-color: var(--color-primary);
 			}
 		}
+	}
+
+	&.inline {
+		display: inline-block;
 	}
 }
 

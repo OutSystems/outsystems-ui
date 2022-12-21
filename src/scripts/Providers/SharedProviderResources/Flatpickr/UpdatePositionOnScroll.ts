@@ -6,7 +6,7 @@ namespace Providers.SharedProviderResources.Flatpickr {
 		// Store the picker instance
 		private _picker:
 			| Datepicker.Flatpickr.IFlatpickr
-			| Timepicker.Flatpickr.IFlatpickrTime
+			| TimePicker.Flatpickr.IFlatpickrTime
 			| MonthPicker.Flatpickr.IFlatpickrMonth;
 		// Store the RequestAnimationFrame that will be triggered at OnBodyScroll
 		private _requestAnimationOnBodyScroll: number;
@@ -14,7 +14,7 @@ namespace Providers.SharedProviderResources.Flatpickr {
 		constructor(
 			picker:
 				| Datepicker.Flatpickr.IFlatpickr
-				| Timepicker.Flatpickr.IFlatpickrTime
+				| TimePicker.Flatpickr.IFlatpickrTime
 				| MonthPicker.Flatpickr.IFlatpickrMonth
 		) {
 			// Set picker object
@@ -70,7 +70,7 @@ namespace Providers.SharedProviderResources.Flatpickr {
 		/**
 		 * Method to remove and destroy instance events and properties!
 		 *
-		 * @memberof UpdatePositionOnScroll
+		 * @memberof Providers.SharedProviderResources.Flatpickr.UpdatePositionOnScroll
 		 */
 		public dispose(): void {
 			this._unsetEvents();

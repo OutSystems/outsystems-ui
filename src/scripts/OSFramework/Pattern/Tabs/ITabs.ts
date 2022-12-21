@@ -10,7 +10,7 @@ namespace OSFramework.Patterns.Tabs {
 			blockObserver?: boolean,
 			triggerEvent?: boolean,
 			triggeredByObserver?: boolean
-		);
-		toggleDragGestures(addDragGestures: boolean);
+		): void;
+		toggleDragGestures(addDragGestures: boolean): void;
 	}
 }

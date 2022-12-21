@@ -9,6 +9,7 @@ namespace OSFramework.Patterns.MonthPicker {
 			super(uniqueId, configs);
 		}
 
+		// Common methods that all Carousels must implement!
 		public abstract clear(): void;
 		public abstract close(): void;
 		public abstract open(): void;
