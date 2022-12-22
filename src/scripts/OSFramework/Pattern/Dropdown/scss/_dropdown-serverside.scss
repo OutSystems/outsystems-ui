@@ -182,6 +182,11 @@ $balloonMobileTopMargin: 5vh;
 			&::-webkit-scrollbar-thumb {
 				background-color: var(--color-neutral-6);
 			}
+
+			// Avoid having data-list above other elements in this context, such as a StickyTop SelectAll Option container.
+			& > *:not([data-list]) {
+				z-index: 1;
+			}
 		}
 
 		// Footer placeholder
