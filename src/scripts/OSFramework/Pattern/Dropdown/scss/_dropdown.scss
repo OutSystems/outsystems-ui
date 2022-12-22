@@ -3,9 +3,10 @@
 /// @group Patterns-Dropdown
 /// Patterns - Interaction - Dropdown
 
-// Import common dropdown styles based on current provider
+// Import common dropdown styles based on Flatpickr provider
 @import '../../../../Providers/Dropdown/VirtualSelect/scss/_virtualselect.scss';
 
+// Common dropdown styles
 .osui-dropdown {
 	&-search,
 	&-tags {
