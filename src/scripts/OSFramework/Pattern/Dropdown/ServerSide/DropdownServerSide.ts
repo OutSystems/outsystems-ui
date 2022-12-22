@@ -1032,6 +1032,15 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		}
 
 		/**
+		 * Method used to close the Dropdown
+		 *
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 */
+		public close(): void {
+			this._close();
+		}
+
+		/**
 		 * Set pattern with a disable status
 		 *
 		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
@@ -1078,8 +1087,17 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		 */
 		public getSelectedValues(): string {
 			throw new Error(
-				`${ErrorCodes.Dropdown.HasNoImplementation.code}:	${ErrorCodes.Dropdown.HasNoImplementation.message}`
+				`${ErrorCodes.Dropdown.HasNoImplementation.code}: ${ErrorCodes.Dropdown.HasNoImplementation.message}`
 			);
+		}
+
+		/**
+		 * Method used to open the Dropdown
+		 *
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 */
+		public open(): void {
+			this._open();
 		}
 
 		/**
