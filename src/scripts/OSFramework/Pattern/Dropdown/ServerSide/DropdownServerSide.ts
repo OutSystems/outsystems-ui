@@ -193,9 +193,12 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 			// Get the target element
 			const targetElement = event.target as HTMLElement;
 			// Get the closest based on pattern base selector
-			const getBaseElement = targetElement.closest(Constants.Dot + Enum.CssClass.Pattern);
+			const getBaseElement =
+				targetElement.closest(Constants.Dot + Enum.CssClass.Pattern) ||
+				targetElement.closest(Constants.Dot + Enum.CssClass.BalloonWrapper);
+
 			// If the click occurs outside of this instance and if it's open, close it!
-			if (this._isOpen && getBaseElement !== this.selfElement) {
+			if (this._isOpen && getBaseElement !== this.selfElement && getBaseElement !== this._balloonWrapperElement) {
 				this._closeDynamically = true;
 				this._close();
 			}
