@@ -194,7 +194,6 @@ $balloonMobileTopMargin: 5vh;
 			align-items: center;
 			border-top: var(--border-size-s) solid var(--color-neutral-5);
 			display: flex;
-			order: 3;
 			padding: var(--space-s) var(--space-base);
 		}
 	}
@@ -222,7 +221,7 @@ $balloonMobileTopMargin: 5vh;
 				&-search {
 					border-bottom: var(--border-size-none);
 					border-top: var(--border-size-s) solid var(--color-neutral-5);
-					order: 2;
+					order: 3;
 				}
 			}
 		}
