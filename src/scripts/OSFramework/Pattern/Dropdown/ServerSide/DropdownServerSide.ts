@@ -1132,6 +1132,15 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		}
 
 		/**
+		 * This method has no implementation on this pattern context!
+		 *
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 */
+		public togglePopup(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
 		 * Set the validation status, and also pass the message to show
 		 *
 		 * @param {boolean} Set if the dropdown is valid or not
