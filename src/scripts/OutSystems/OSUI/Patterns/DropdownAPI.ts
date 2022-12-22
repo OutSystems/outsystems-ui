@@ -131,7 +131,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Dropdown.FailDisable;
+			responseObj.code = ErrorCodes.Dropdown.FailTogglePopup;
 		}
 
 		return JSON.stringify(responseObj);

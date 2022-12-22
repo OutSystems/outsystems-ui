@@ -17,11 +17,12 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailEnable: 'OSUI-API-01005',
 		FailGetSelectedValues: 'OSUI-API-01006',
 		FailRegisterCallback: 'OSUI-API-01007',
-		FailSetValidation: 'OSUI-API-01008',
 		FailRegisterProviderConfig: 'OSUI-API-01009',
 		FailRegisterProviderEvent: 'OSUI-API-060010',
 		FailRemoveProviderEvent: 'OSUI-API-06011',
+		FailSetValidation: 'OSUI-API-01008',
 		FailSetValues: 'OSUI-API-06012',
+		FailTogglePopup: 'OSUI-API-01013',
 	};
 
 	export const Notification = {
