@@ -22,11 +22,6 @@ body,
 	display: flex;
 	min-height: 100vh;
 
-	& .layout {
-		// Service Studio Preview
-		-servicestudio-min-width: calc(100vw - (var(--space-xl) * 2));
-	}
-
 	&.layout {
 		&-top,
 		&-side:not(.layout-native) {
