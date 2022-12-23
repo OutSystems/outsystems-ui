@@ -22,7 +22,14 @@ body,
 	display: flex;
 	min-height: 100vh;
 
+	// Service Studio Preview
+	-servicestudio-min-width: 100vw;
+	-servicestudio-overflow-x: hidden;
+
 	&.layout {
+		// Service Studio Preview
+		-servicestudio-min-width: calc(100vw - (var(--space-xl) * 2));
+
 		&-top,
 		&-side:not(.layout-native) {
 			flex-direction: column;
