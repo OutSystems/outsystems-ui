@@ -22,10 +22,6 @@ body,
 	display: flex;
 	min-height: 100vh;
 
-	// Service Studio Preview
-	-servicestudio-min-width: 100vw;
-	-servicestudio-overflow-x: hidden;
-
 	& .layout {
 		// Service Studio Preview
 		-servicestudio-min-width: calc(100vw - (var(--space-xl) * 2));
@@ -234,5 +230,19 @@ body,
 		.main {
 			margin-right: 0;
 		}
+	}
+}
+
+// Nested layout SS preview
+///
+.layout .main-content .layout {
+	-servicestudio-min-width: calc(100vw - (var(--space-xl) * 2));
+}
+
+.phone .layout .main-content .layout {
+	-servicestudio-min-width: calc(100vw - (var(--space-base) * 2));
+
+	&.layout-native {
+		-servicestudio-min-width: 100vw;
 	}
 }
