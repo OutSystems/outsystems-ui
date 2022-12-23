@@ -66,7 +66,7 @@ function createPartialsList(env) {
         // Check if the current section contains assets to be included!
         if (sectionInfo.assets && sectionInfo.assets.length > 0) {
             // Asset iteractor
-            let assetIndex = 0;
+            let assetIndex = 1;
 
             // 1. Go through each section assets
             for (const asset of sectionInfo.assets) {
@@ -84,7 +84,7 @@ function createPartialsList(env) {
                 // Check if the current Asset also contains it's own Assets (Ex: Patterns case)
                 if (asset.assets && asset.assets.length > 0) {
                     // SubAsset iteractor
-                    let subAssetIndex = 0;
+                    let subAssetIndex = 1;
 
                     // 2. Go through each section assets
                     for (const subAsset of asset.assets) {
@@ -122,7 +122,7 @@ function createPartialsList(env) {
                                 // Check if the current asset is a group (Ex: DatePicker case)
                                 if (assetInfo.assets && assetInfo.assets.length > 0) {
                                     // AssetItem iteractor
-                                    let assetInfoItemIndex = 0;
+                                    let assetInfoItemIndex = 1;
 
                                     // 3. Go through each asset
                                     for (const assetItem of assetInfo.assets) {

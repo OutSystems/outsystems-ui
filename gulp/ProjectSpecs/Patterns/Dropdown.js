@@ -4,7 +4,7 @@
 const patternInfo = {
     "codeName": "Dropdown",
     "scss": "../scripts/OSFramework/Pattern/Dropdown/scss/dropdown",
-    "section": "Interaction",
+    "section": "Advanced",
 
     "assets": [
         {
@@ -19,13 +19,6 @@ const patternInfo = {
             "inDevelopment": false,
             "name": "Dropdown Tags",
             "scss": "../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-tags"
-        },
-        
-        {
-            "codeName": "ServerSide",
-            "inDevelopment": false,
-            "name": "Dropdown ServerSide",
-            "scss": "../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-serverside"
         }
     ]
 };

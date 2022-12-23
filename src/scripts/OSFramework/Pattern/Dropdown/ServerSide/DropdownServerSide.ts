@@ -193,9 +193,12 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 			// Get the target element
 			const targetElement = event.target as HTMLElement;
 			// Get the closest based on pattern base selector
-			const getBaseElement = targetElement.closest(Constants.Dot + Enum.CssClass.Pattern);
+			const getBaseElement =
+				targetElement.closest(Constants.Dot + Enum.CssClass.Pattern) ||
+				targetElement.closest(Constants.Dot + Enum.CssClass.BalloonWrapper);
+
 			// If the click occurs outside of this instance and if it's open, close it!
-			if (this._isOpen && getBaseElement !== this.selfElement) {
+			if (this._isOpen && getBaseElement !== this.selfElement && getBaseElement !== this._balloonWrapperElement) {
 				this._closeDynamically = true;
 				this._close();
 			}
@@ -1029,6 +1032,15 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		}
 
 		/**
+		 * Method used to close the Dropdown
+		 *
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 */
+		public close(): void {
+			this._close();
+		}
+
+		/**
 		 * Set pattern with a disable status
 		 *
 		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
@@ -1075,8 +1087,17 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		 */
 		public getSelectedValues(): string {
 			throw new Error(
-				`${ErrorCodes.Dropdown.HasNoImplementation.code}:	${ErrorCodes.Dropdown.HasNoImplementation.message}`
+				`${ErrorCodes.Dropdown.HasNoImplementation.code}: ${ErrorCodes.Dropdown.HasNoImplementation.message}`
 			);
+		}
+
+		/**
+		 * Method used to open the Dropdown
+		 *
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 */
+		public open(): void {
+			this._open();
 		}
 
 		/**

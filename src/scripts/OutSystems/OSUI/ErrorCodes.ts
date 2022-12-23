@@ -12,16 +12,19 @@ namespace OutSystems.OSUI.ErrorCodes {
 	export const Dropdown = {
 		FailChangeProperty: 'OSUI-API-01001',
 		FailClear: 'OSUI-API-01002',
+		FailClose: 'OSUI-API-010014',
 		FailDisable: 'OSUI-API-01003',
 		FailDispose: 'OSUI-API-01004',
 		FailEnable: 'OSUI-API-01005',
 		FailGetSelectedValues: 'OSUI-API-01006',
+		FailOpen: 'OSUI-API-010015',
 		FailRegisterCallback: 'OSUI-API-01007',
-		FailSetValidation: 'OSUI-API-01008',
 		FailRegisterProviderConfig: 'OSUI-API-01009',
 		FailRegisterProviderEvent: 'OSUI-API-060010',
 		FailRemoveProviderEvent: 'OSUI-API-06011',
+		FailSetValidation: 'OSUI-API-01008',
 		FailSetValues: 'OSUI-API-06012',
+		FailTogglePopup: 'OSUI-API-01013',
 	};
 
 	export const Notification = {

@@ -288,6 +288,15 @@ namespace Providers.Dropdown.VirtualSelect {
 		}
 
 		/**
+		 * Method used to close the Dropdown
+		 *
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
+		 */
+		public close(): void {
+			this._virtualselectConfigs.close();
+		}
+
+		/**
 		 * Set Dropdown as disabled
 		 *
 		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
@@ -364,6 +373,15 @@ namespace Providers.Dropdown.VirtualSelect {
 		}
 
 		/**
+		 * Method used to open the Dropdown
+		 *
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
+		 */
+		public open(): void {
+			this._virtualselectConfigs.open();
+		}
+
+		/**
 		 * Method used to register the provider callback
 		 *
 		 * @param {string} eventName Event name that will be assigned
@@ -416,7 +434,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			}
 
 			if (valuesToSelect.sort().join(' ') !== selectedValues.sort().join(' '))
-				this.provider.setValueMethod(valuesToSelect);
+				this._virtualselectConfigs.setValue(valuesToSelect);
 		}
 
 		/**

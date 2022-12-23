@@ -59,6 +59,33 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	}
 
 	/**
+	 * Function that will Close the Dropdown with the given Id
+	 *
+	 * @export
+	 * @param {string} dropdownId
+	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 */
+	export function Close(dropdownId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const _dropdownItem = GetDropdownById(dropdownId);
+
+			_dropdownItem.close();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Dropdown.FailClose;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
 	 * Create the new DropdownItem instance and add it to the dropdownItemsMap
 	 *
 	 * @export
@@ -131,7 +158,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Dropdown.FailDisable;
+			responseObj.code = ErrorCodes.Dropdown.FailTogglePopup;
 		}
 
 		return JSON.stringify(responseObj);
@@ -241,6 +268,33 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;
 			responseObj.code = ErrorCodes.Dropdown.FailGetSelectedValues;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
+	 * Function that will Open the Dropdown with the given Id
+	 *
+	 * @export
+	 * @param {string} dropdownId
+	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 */
+	export function Open(dropdownId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const _dropdownItem = GetDropdownById(dropdownId);
+
+			_dropdownItem.open();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.Dropdown.FailOpen;
 		}
 
 		return JSON.stringify(responseObj);

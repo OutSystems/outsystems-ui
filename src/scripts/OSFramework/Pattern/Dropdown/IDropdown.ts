@@ -12,6 +12,13 @@ namespace OSFramework.Patterns.Dropdown {
 		clear(): void;
 
 		/**
+		 * Method used to close the Dropdown
+		 *
+		 * @memberof OSFramework.Patterns.Dropdown.IDropdown
+		 */
+		close(): void;
+
+		/**
 		 * Method used to set Dropdown as disabled
 		 *
 		 * @memberof OSFramework.Patterns.Dropdown.IDropdown
@@ -31,6 +38,13 @@ namespace OSFramework.Patterns.Dropdown {
 		 * @memberof OSFramework.Patterns.Dropdown.IDropdown
 		 */
 		getSelectedValues(): string;
+
+		/**
+		 * Method used to open the Dropdown
+		 *
+		 * @memberof OSFramework.Patterns.Dropdown.IDropdown
+		 */
+		open(): void;
 
 		// Set as optional, to not make mandatory DropdownSErverItem to implement these
 		setProviderConfigs?(providerConfigs: ProviderConfigs): void;

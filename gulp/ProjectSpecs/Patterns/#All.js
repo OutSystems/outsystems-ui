@@ -7,6 +7,7 @@ const buttonLoading = require('./ButtonLoading');
 const carousel = require('./Carousel');
 const datePicker = require('./DatePicker');
 const dropdown = require('./Dropdown');
+const dropdownServerSide = require('./DropdownServerSide');
 const dropdownServerSideItem = require('./DropdownServerSideItem');
 const flipContent = require('./FlipContent');
 const gallery = require('./Gallery');
@@ -45,6 +46,7 @@ const patterns = {
 	"button-loading": buttonLoading.info,
 	"carousel": carousel.info,
 	"datepicker": datePicker.info,
+	"dropdown-serverside": dropdownServerSide.info,	
 	"dropdown-serverside-item": dropdownServerSideItem.info,	
 	"dropdown": dropdown.info,
 	"flip-content": flipContent.info,	
