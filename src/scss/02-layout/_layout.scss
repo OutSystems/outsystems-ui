@@ -227,3 +227,17 @@ body,
 		}
 	}
 }
+
+// Nested layout SS preview
+///
+.layout .main-content .layout {
+	-servicestudio-min-width: calc(100vw - (var(--space-xl) * 2));
+}
+
+.phone .layout .main-content .layout {
+	-servicestudio-min-width: calc(100vw - (var(--space-base) * 2));
+
+	&.layout-native {
+		-servicestudio-min-width: 100vw;
+	}
+}
