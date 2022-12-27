@@ -28,15 +28,15 @@ namespace OSFramework.Patterns.TabsContentItem {
 		 */
 		protected setA11YProperties(isUpdate = true): void {
 			if (isUpdate) {
-				Helper.A11Y.RoleTabPanel(this.selfElement);
+				Helper.A11Y.RoleTabPanel(this.selfElement.parentElement);
 			}
 
 			if (this._isActive) {
-				Helper.A11Y.TabIndexTrue(this.selfElement);
-				Helper.A11Y.AriaHiddenFalse(this.selfElement);
+				Helper.A11Y.TabIndexTrue(this.selfElement.parentElement);
+				Helper.A11Y.AriaHiddenFalse(this.selfElement.parentElement);
 			} else {
-				Helper.A11Y.TabIndexFalse(this.selfElement);
-				Helper.A11Y.AriaHiddenTrue(this.selfElement);
+				Helper.A11Y.TabIndexFalse(this.selfElement.parentElement);
+				Helper.A11Y.AriaHiddenTrue(this.selfElement.parentElement);
 			}
 
 			// Will handle the tabindex value of the elements inside pattern, depending if is active
