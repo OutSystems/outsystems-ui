@@ -39,14 +39,6 @@ namespace Providers.Dropdown.VirtualSelect.Enum {
 	}
 
 	/**
-	 * Properties values
-	 */
-	export enum PropertiesValues {
-		AriaLabelMultipleValue = 'Select one or more options',
-		AriaLabelSingleValue = 'Select an option',
-	}
-
-	/**
 	 * Options Figure types
 	 */
 	export enum FigureType {

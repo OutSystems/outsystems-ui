@@ -12,8 +12,6 @@ namespace Providers.Dropdown.VirtualSelect {
 		private _platformEventInitializedCallback: OSFramework.GlobalCallbacks.OSGeneric;
 		private _platformEventSelectedOptCallback: OSFramework.Patterns.Dropdown.Callbacks.OSOnSelectEvent;
 
-		// Store the hidden input AriaLabel value
-		protected _hiddenInputWrapperAriaLabelVal: string;
 		// Store a reference of available provider methods
 		protected _virtualselectConfigs: VirtualSelectMethods;
 		// Store the provider options
@@ -45,8 +43,6 @@ namespace Providers.Dropdown.VirtualSelect {
 		private _manageAttributes(): void {
 			// Check if the pattern should be in disabled mode
 			this._manageDisableStatus();
-			// Manage A11Y attributes
-			this.setA11YProperties();
 		}
 
 		// Manage the disable status of the pattern
@@ -159,14 +155,13 @@ namespace Providers.Dropdown.VirtualSelect {
 		}
 
 		/**
-		 * Method that adds the necessary attributes for A11Y purposes
+		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
 		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		protected setA11YProperties(): void {
-			// Set the Hidden Input AriaLabel value
-			this.setHiddenInputWrapperAriaLabelVal();
+			console.warn(OSFramework.GlobalEnum.WarningMessages.MethodNotImplemented);
 		}
 
 		/**
@@ -410,18 +405,6 @@ namespace Providers.Dropdown.VirtualSelect {
 				default:
 					throw new Error(`The given '${eventName}' event name it's not defined.`);
 			}
-		}
-
-		/**
-		 * Method used to set the Hidden Input AriaLabel text value
-		 *
-		 * @param {string} value
-		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
-		 */
-		public setHiddenInputWrapperAriaLabelVal(value?: string): void {
-			this._hiddenInputWrapperAriaLabelVal = value === undefined ? this._hiddenInputWrapperAriaLabelVal : value;
-			// Set HiddenInput AriaLabel Value
-			OSFramework.Helper.A11Y.AriaLabel(this.provider.$wrapper, this._hiddenInputWrapperAriaLabelVal);
 		}
 
 		/**
