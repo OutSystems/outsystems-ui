@@ -5,6 +5,7 @@ namespace Providers.Dropdown.VirtualSelect.Search {
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new VirtualSelectSearchConfig(configs));
 
+			// Set the AriaLabel text value for the hidden text input wrapper
 			this._hiddenInputWrapperAriaLabelVal = this.configs.AllowMultipleSelection
 				? Dropdown.VirtualSelect.Enum.PropertiesValues.AriaLabelMultipleValue
 				: Dropdown.VirtualSelect.Enum.PropertiesValues.AriaLabelSingleValue;
