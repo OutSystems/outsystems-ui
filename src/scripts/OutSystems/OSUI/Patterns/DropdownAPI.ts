@@ -481,9 +481,10 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @export
 	 * @param {string} dropdownId
 	 * @param {string} selectedValues
+	 * @param {boolean} silentOnChangedEvent
 	 * @return {*} {string} Return Message Success or message of error info if it's the case.
 	 */
-	export function SetValues(dropdownId: string, selectedValues: string): string {
+	export function SetValues(dropdownId: string, selectedValues: string, silentOnChangedEvent = true): string {
 		const responseObj = {
 			isSuccess: true,
 			message: ErrorCodes.Success.message,
@@ -493,7 +494,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 		try {
 			const _dropdownItem = GetDropdownById(dropdownId) as VirtualSelect;
 
-			_dropdownItem.setValue(JSON.parse(selectedValues));
+			_dropdownItem.setValue(JSON.parse(selectedValues), silentOnChangedEvent);
 		} catch (error) {
 			responseObj.isSuccess = false;
 			responseObj.message = error.message;

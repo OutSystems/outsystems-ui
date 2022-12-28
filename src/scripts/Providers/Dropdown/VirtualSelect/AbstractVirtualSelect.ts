@@ -419,12 +419,13 @@ namespace Providers.Dropdown.VirtualSelect {
 		}
 
 		/**
-		 * Method used to set all the extended VirtualSelect properties across the different types of instances
+		 * Method used to set the Dropdown options values dynamically
 		 *
-		 * @param {DropDownOption[]} optionsToSelect
+		 * @param {DropDownOption[]} optionsToSelect List of options to bet set
+		 * @param {boolean} silentOnChangedEvent If True, OnChange event will not be triggered
 		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
-		public setValue(optionsToSelect: DropDownOption[]): void {
+		public setValue(optionsToSelect: DropDownOption[], silentOnChangedEvent = true): void {
 			const selectedValues = this.getSelectedOptionsStructure().map((value) => value.value) || [];
 			let valuesToSelect = [];
 
@@ -434,7 +435,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			}
 
 			if (valuesToSelect.sort().join(' ') !== selectedValues.sort().join(' '))
-				this._virtualselectConfigs.setValue(valuesToSelect);
+				this._virtualselectConfigs.setValue(valuesToSelect, silentOnChangedEvent);
 		}
 
 		/**
