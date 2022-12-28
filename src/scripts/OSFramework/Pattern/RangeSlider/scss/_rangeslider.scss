@@ -14,6 +14,7 @@
 
 	&--is-vertical {
 		height: var(--range-slider-size);
+		width: fit-content;
 	}
 
 	&--has-ticks {
