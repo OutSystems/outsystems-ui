@@ -297,7 +297,7 @@ namespace OSFramework.Patterns.Tabs {
 						Helper.Dom.Styles.SetStyleAttribute(
 							this._tabsIndicatorElement,
 							Enum.CssProperty.TabsIndicatorScale,
-							newScaleValue
+							Math.floor(newScaleValue)
 						);
 					} else {
 						cancelAnimationFrame(this._requestAnimationFrameOnIndicatorResize);
@@ -695,7 +695,7 @@ namespace OSFramework.Patterns.Tabs {
 		 */
 		protected setA11YProperties(): void {
 			// Set aria-role to TabsHeader
-			Helper.A11Y.RoleTabList(this._tabsHeaderElement);
+			Helper.A11Y.RoleTabList(this._tabsHeaderElement.firstElementChild as HTMLElement);
 			// Set aria-hidden to tabs indicator
 			Helper.A11Y.AriaHiddenTrue(this._tabsIndicatorElement);
 		}
