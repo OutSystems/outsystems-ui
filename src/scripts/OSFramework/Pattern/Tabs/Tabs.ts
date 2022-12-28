@@ -297,7 +297,7 @@ namespace OSFramework.Patterns.Tabs {
 						Helper.Dom.Styles.SetStyleAttribute(
 							this._tabsIndicatorElement,
 							Enum.CssProperty.TabsIndicatorScale,
-							newScaleValue
+							Math.floor(newScaleValue)
 						);
 					} else {
 						cancelAnimationFrame(this._requestAnimationFrameOnIndicatorResize);
