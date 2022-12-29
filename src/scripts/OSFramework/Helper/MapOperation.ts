@@ -8,27 +8,30 @@ namespace OSFramework.Helper.MapOperation {
 	 * @return {*}  {string}
 	 */
 	export function FindInMap(
-		pattternName: string,
+		patternName: string,
 		patternId: string,
 		map: Map<string, Interface.IPattern>
 	): Interface.IPattern {
 		let pattern: Interface.IPattern;
 
-		// animatedLabelId is the UniqueId
+		// Search for patternId as the uniqueId
 		if (map.has(patternId)) {
 			pattern = map.get(patternId);
 		} else {
-			//Search for animatedLabelId
+			// Search for patternId as the widgetId.
+
+			// Sometimes we can have more than one pattern with the same widgetID, because of how the Lifecycle of the page works.
+			// In this case, we need to always get the newest one, that is, the latest one in the map.
+
 			for (const p of map.values()) {
 				if (p.equalsToID(patternId)) {
 					pattern = p;
-					break;
 				}
 			}
 		}
 
 		if (pattern === undefined) {
-			throw new Error(`The ${pattternName} with id:'${patternId}' was not found`);
+			throw new Error(`The ${patternName} with id:'${patternId}' was not found`);
 		}
 
 		return pattern;
