@@ -11,23 +11,15 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	export function ChangeProperty(accordionId: string, propertyName: string, propertyValue: unknown): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Accordion.FailChangeProperty,
+			callback: () => {
+				const accordion = GetAccordionById(accordionId);
+				accordion.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-		try {
-			const accordion = GetAccordionById(accordionId);
-
-			accordion.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Accordion.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
