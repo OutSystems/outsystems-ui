@@ -239,6 +239,10 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailRegisterProviderConfig: 'OSUI-API-26008',
 		FailRegisterProviderEvent: 'OSUI-API-26009',
 		FailRemoveProviderEvent: 'OSUI-API-26010',
+		FailToggleNativeBehavior: 'OSUI-API-26011',
+		FailSetLanguage: 'OSUI-API-26012',
+		FailUpdateInitialTime: 'OSUI-API-26013',
+		FailSetEditableInput: 'OSUI-API-26014',
 	};
 
 	export const MonthPicker = {
@@ -253,6 +257,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailRegisterProviderEvent: 'OSUI-API-27009',
 		FailRemoveProviderEvent: 'OSUI-API-27010',
 		FailSetEditableInput: 'OSUI-API-27011',
+		FailSetLanguage: 'OSUI-API-27012',
 	};
 
 	//Error codes used on the context of the Utilities client actions
