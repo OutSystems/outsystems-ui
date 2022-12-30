@@ -12,23 +12,16 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 	export function ChangeProperty(tooltipId: string, propertyName: string, propertyValue: any): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Tooltip.FailChangeProperty,
+			callback: () => {
+				const tooltip = GetTooltipById(tooltipId);
 
-		try {
-			const tooltip = GetTooltipById(tooltipId);
+				tooltip.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-			tooltip.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Tooltip.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -38,23 +31,16 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 * @param {string} tooltipId ID of the tooltip that will be closed
 	 */
 	export function Close(tooltipId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Tooltip.FailClose,
+			callback: () => {
+				const tooltip = GetTooltipById(tooltipId);
 
-		try {
-			const tooltip = GetTooltipById(tooltipId);
+				tooltip.close();
+			},
+		});
 
-			tooltip.close();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Tooltip.FailClose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -86,25 +72,18 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 * @param {string} tooltipId
 	 */
 	export function Dispose(tooltipId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Tooltip.FailDispose,
+			callback: () => {
+				const tooltip = GetTooltipById(tooltipId);
 
-		try {
-			const tooltip = GetTooltipById(tooltipId);
+				tooltip.dispose();
 
-			tooltip.dispose();
+				_tooltipsMap.delete(tooltip.uniqueId);
+			},
+		});
 
-			_tooltipsMap.delete(tooltip.uniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Tooltip.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -154,23 +133,16 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 * @param {string} tooltipId ID of the tooltip that will be opened
 	 */
 	export function Open(tooltipId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Tooltip.FailOpen,
+			callback: () => {
+				const tooltip = GetTooltipById(tooltipId);
 
-		try {
-			const tooltip = GetTooltipById(tooltipId);
+				tooltip.open();
+			},
+		});
 
-			tooltip.open();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Tooltip.FailOpen;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -187,22 +159,15 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 		eventName: string,
 		callback: OSFramework.GlobalCallbacks.OSGeneric
 	): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Tooltip.FailRegisterCallback,
+			callback: () => {
+				const tooltip = this.GetTooltipById(tooltipId);
 
-		try {
-			const tooltip = this.GetTooltipById(tooltipId);
+				tooltip.registerCallback(eventName, callback);
+			},
+		});
 
-			tooltip.registerCallback(eventName, callback);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Tooltip.FailRegisterCallback;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 }
