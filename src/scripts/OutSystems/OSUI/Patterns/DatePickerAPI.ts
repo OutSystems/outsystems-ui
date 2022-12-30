@@ -378,10 +378,13 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.DatePicker.FailRegisterProviderEvent,
+			hasValue: true,
 			callback: () => {
 				const _eventUniqueId = OSFramework.Helper.Dom.GenerateUniqueId();
 				const datePicker = GetDatePickerItemById(datePickerId);
 				datePicker.setProviderEvent(eventName, callback, _eventUniqueId);
+
+				return _eventUniqueId;
 			},
 		});
 

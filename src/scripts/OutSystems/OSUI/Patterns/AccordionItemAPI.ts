@@ -11,7 +11,7 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 */
 	export function AllowTitleEvents(accordionItemId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
-			errorCode: ErrorCodes.AccordionItem.FailExpandItem,
+			errorCode: ErrorCodes.AccordionItem.FailAllowTitleEvents,
 			callback: () => {
 				const accordionItem = GetAccordionItemById(accordionItemId);
 

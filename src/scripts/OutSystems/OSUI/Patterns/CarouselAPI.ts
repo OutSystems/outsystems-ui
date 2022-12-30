@@ -321,7 +321,7 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 		callback: OSFramework.GlobalCallbacks.Generic
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
-			errorCode: ErrorCodes.Carousel.FailRegisterProviderConfig,
+			errorCode: ErrorCodes.Carousel.FailRegisterProviderEvent,
 			hasValue: true,
 			callback: () => {
 				const _eventUniqueId = OSFramework.Helper.Dom.GenerateUniqueId();
