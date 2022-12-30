@@ -11,23 +11,16 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	export function ChangeProperty(rangeSliderId: string, propertyName: string, propertyValue: unknown): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.RangeSlider.FailChangeProperty,
+			callback: () => {
+				const _rangeSliderItem = GetRangeSliderItemById(rangeSliderId);
 
-		try {
-			const _rangeSliderItem = GetRangeSliderItemById(rangeSliderId);
+				_rangeSliderItem.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-			_rangeSliderItem.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.RangeSlider.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -71,23 +64,16 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 * @param {string} rangeSliderId
 	 */
 	export function Disable(rangeSliderId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.RangeSlider.FailDisable,
+			callback: () => {
+				const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
 
-		try {
-			const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
+				rangeSlider.disable();
+			},
+		});
 
-			rangeSlider.disable();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.RangeSlider.FailDisable;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -97,25 +83,18 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 * @param {string} rangeSliderId
 	 */
 	export function Dispose(rangeSliderId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.RangeSlider.FailDispose,
+			callback: () => {
+				const _rangeSliderItem = GetRangeSliderItemById(rangeSliderId);
 
-		try {
-			const _rangeSliderItem = GetRangeSliderItemById(rangeSliderId);
+				_rangeSliderItem.dispose();
 
-			_rangeSliderItem.dispose();
+				_rangeSliderItemsMap.delete(_rangeSliderItem.uniqueId);
+			},
+		});
 
-			_rangeSliderItemsMap.delete(_rangeSliderItem.uniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.RangeSlider.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -125,23 +104,16 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 * @param {string} rangeSliderId
 	 */
 	export function Enable(rangeSliderId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.RangeSlider.FailEnable,
+			callback: () => {
+				const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
 
-		try {
-			const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
+				rangeSlider.enable();
+			},
+		});
 
-			rangeSlider.enable();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.RangeSlider.FailEnable;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -197,23 +169,16 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 		eventName: string,
 		callback: OSFramework.GlobalCallbacks.OSGeneric
 	): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.RangeSlider.FailRegisterCallback,
+			callback: () => {
+				const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
 
-		try {
-			const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
+				rangeSlider.registerCallback(eventName, callback);
+			},
+		});
 
-			rangeSlider.registerCallback(eventName, callback);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.RangeSlider.FailRegisterCallback;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -223,23 +188,16 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 * @param {string} rangeSliderId
 	 */
 	export function SetRangeIntervalChangeOnDragEnd(rangeSliderId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.RangeSlider.FailOnDragEnd,
+			callback: () => {
+				const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
 
-		try {
-			const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
+				rangeSlider.setRangeIntervalChangeOnDragEnd();
+			},
+		});
 
-			rangeSlider.setRangeIntervalChangeOnDragEnd();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.RangeSlider.FailOnDragEnd;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -250,22 +208,15 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 * @param {number} value
 	 */
 	export function SetRangeSliderValue(rangeSliderId: string, valueFrom: number, valueTo?: number): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.RangeSlider.FailSetValues,
+			callback: () => {
+				const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
+				rangeSlider.setValue(valueFrom, valueTo);
+			},
+		});
 
-		try {
-			const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
-			rangeSlider.setValue(valueFrom, valueTo);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.RangeSlider.FailSetValues;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -275,22 +226,15 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 * @param {string} rangeSliderId
 	 */
 	export function ResetRangeSliderValue(rangeSliderId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.RangeSlider.FailResetValues,
+			callback: () => {
+				const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
+				rangeSlider.resetValue();
+			},
+		});
 
-		try {
-			const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
-			rangeSlider.resetValue();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.RangeSlider.FailResetValues;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -302,23 +246,16 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 * @return {*}  {string}
 	 */
 	export function SetProviderConfigs(rangeSliderId: string, configs: RangeSliderProviderConfigs): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.RangeSlider.FailRegisterProviderConfig,
+			callback: () => {
+				const rangeSlider = GetRangeSliderItemById(rangeSliderId);
 
-		try {
-			const rangeSlider = GetRangeSliderItemById(rangeSliderId);
+				rangeSlider.setProviderConfigs(configs);
+			},
+		});
 
-			rangeSlider.setProviderConfigs(configs);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.RangeSlider.FailRegisterProviderConfig;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -335,26 +272,19 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 		eventName: string,
 		callback: OSFramework.GlobalCallbacks.Generic
 	): string {
-		const _eventUniqueId = OSFramework.Helper.Dom.GenerateUniqueId();
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.RangeSlider.FailRegisterProviderEvent,
+			hasValue: true,
+			callback: () => {
+				const _eventUniqueId = OSFramework.Helper.Dom.GenerateUniqueId();
+				const rangeSlider = GetRangeSliderItemById(rangeSliderId);
+				rangeSlider.setProviderEvent(eventName, callback, _eventUniqueId);
 
-		const responseObj = {
-			uniqueId: _eventUniqueId,
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+				return _eventUniqueId;
+			},
+		});
 
-		try {
-			const rangeSlider = GetRangeSliderItemById(rangeSliderId);
-			rangeSlider.setProviderEvent(eventName, callback, _eventUniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.RangeSlider.FailRegisterProviderEvent;
-			responseObj.uniqueId = undefined;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -366,21 +296,14 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 * @return {*}  {string}
 	 */
 	export function UnsetProviderEvent(rangeSliderId: string, eventId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.RangeSlider.FailRemoveProviderEvent,
+			callback: () => {
+				const rangeSlider = GetRangeSliderItemById(rangeSliderId);
+				rangeSlider.unsetProviderEvent(eventId);
+			},
+		});
 
-		try {
-			const rangeSlider = GetRangeSliderItemById(rangeSliderId);
-			rangeSlider.unsetProviderEvent(eventId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.RangeSlider.FailRemoveProviderEvent;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 }
