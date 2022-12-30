@@ -320,7 +320,6 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 		eventName: string,
 		callback: OSFramework.GlobalCallbacks.Generic
 	): string {
-		//Rever aqui
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Carousel.FailRegisterProviderConfig,
 			hasValue: true,
