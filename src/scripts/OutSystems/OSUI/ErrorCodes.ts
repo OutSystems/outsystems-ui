@@ -224,6 +224,8 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailChangeProperty: 'OSUI-API-25001',
 		FailDispose: 'OSUI-API-25002',
 		FailRegisterCallback: 'OSUI-API-25003',
+		FailOpen: 'OSUI-API-25004',
+		FailClose: 'OSUI-API-25005',
 	};
 
 	export const TimePicker = {

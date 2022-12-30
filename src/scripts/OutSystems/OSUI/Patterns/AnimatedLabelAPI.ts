@@ -11,23 +11,16 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	 * @param {unknown} propertyValue Value that will be set to the property
 	 */
 	export function ChangeProperty(animatedLabelId: string, propertyName: string, propertyValue: unknown): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.AnimatedLabel.FailChangeProperty,
+			callback: () => {
+				const animatedlabel = GetAnimatedLabelById(animatedLabelId);
 
-		try {
-			const animatedlabel = GetAnimatedLabelById(animatedLabelId);
+				animatedlabel.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-			animatedlabel.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.AnimatedLabel.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -65,25 +58,18 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	 * @param {string} animatedLabelId
 	 */
 	export function Dispose(animatedLabelId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.AnimatedLabel.FailDispose,
+			callback: () => {
+				const animatedlabel = GetAnimatedLabelById(animatedLabelId);
 
-		try {
-			const animatedlabel = GetAnimatedLabelById(animatedLabelId);
+				animatedlabel.dispose();
 
-			animatedlabel.dispose();
+				_animatedLabelsMap.delete(animatedlabel.uniqueId);
+			},
+		});
 
-			_animatedLabelsMap.delete(animatedlabel.uniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.AnimatedLabel.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -134,22 +120,15 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	 * @return {*}  {OSFramework.Patterns.AnimatedLabel.IAnimatedLabel}
 	 */
 	export function UpdateOnRender(animatedLabelId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.AnimatedLabel.FailUpdate,
+			callback: () => {
+				const animatedlabel = GetAnimatedLabelById(animatedLabelId);
 
-		try {
-			const animatedlabel = GetAnimatedLabelById(animatedLabelId);
+				animatedlabel.updateOnRender();
+			},
+		});
 
-			animatedlabel.updateOnRender();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.AnimatedLabel.FailUpdate;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 }

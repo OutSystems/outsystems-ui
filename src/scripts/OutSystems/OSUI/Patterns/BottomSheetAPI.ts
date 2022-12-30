@@ -11,10 +11,17 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ChangeProperty(bottomSheetId: string, propertyName: string, propertyValue: any): void {
-		const _bottomSheetItem = GetBottomSheetItemById(bottomSheetId);
+	export function ChangeProperty(bottomSheetId: string, propertyName: string, propertyValue: any): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.BottomSheet.FailChangeProperty,
+			callback: () => {
+				const _bottomSheetItem = GetBottomSheetItemById(bottomSheetId);
 
-		_bottomSheetItem.changeProperty(propertyName, propertyValue);
+				_bottomSheetItem.changeProperty(propertyName, propertyValue);
+			},
+		});
+
+		return result;
 	}
 
 	/**
@@ -43,12 +50,19 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	 * @export
 	 * @param {string} bottomSheetId
 	 */
-	export function Dispose(bottomSheetId: string): void {
-		const _bottomSheetItem = GetBottomSheetItemById(bottomSheetId);
+	export function Dispose(bottomSheetId: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.BottomSheet.FailDispose,
+			callback: () => {
+				const _bottomSheetItem = GetBottomSheetItemById(bottomSheetId);
 
-		_bottomSheetItem.dispose();
+				_bottomSheetItem.dispose();
 
-		_bottomSheetItemsMap.delete(_bottomSheetItem.uniqueId);
+				_bottomSheetItemsMap.delete(_bottomSheetItem.uniqueId);
+			},
+		});
+
+		return result;
 	}
 
 	/**
@@ -92,43 +106,29 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	}
 
 	export function Open(bottomSheetId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.BottomSheet.FailOpen,
+			callback: () => {
+				const _bottomSheetItem = GetBottomSheetItemById(bottomSheetId);
 
-		try {
-			const _bottomSheetItem = GetBottomSheetItemById(bottomSheetId);
+				_bottomSheetItem.open();
+			},
+		});
 
-			_bottomSheetItem.open();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.BottomSheet.FailRegisterCallback;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	export function Close(bottomSheetId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.BottomSheet.FailClose,
+			callback: () => {
+				const _bottomSheetItem = GetBottomSheetItemById(bottomSheetId);
 
-		try {
-			const _bottomSheetItem = GetBottomSheetItemById(bottomSheetId);
+				_bottomSheetItem.close();
+			},
+		});
 
-			_bottomSheetItem.close();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.BottomSheet.FailRegisterCallback;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -139,22 +139,15 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	 * @param {*} callback
 	 */
 	export function RegisterCallback(bottomSheetId: string, callback: OSFramework.GlobalCallbacks.Generic): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.BottomSheet.FailRegisterCallback,
+			callback: () => {
+				const bottomSheet = GetBottomSheetItemById(bottomSheetId);
 
-		try {
-			const bottomSheet = GetBottomSheetItemById(bottomSheetId);
+				bottomSheet.registerCallback(callback);
+			},
+		});
 
-			bottomSheet.registerCallback(callback);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.BottomSheet.FailRegisterCallback;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 }
