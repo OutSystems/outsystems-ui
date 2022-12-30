@@ -12,23 +12,16 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 	export function ChangeProperty(progressId: string, propertyName: string, propertyValue: any): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Progress.FailChangeProperty,
+			callback: () => {
+				const _progressItem = GetProgressItemById(progressId);
 
-		try {
-			const _progressItem = GetProgressItemById(progressId);
+				_progressItem.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-			_progressItem.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Progress.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -58,25 +51,18 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 * @param {string} progressId
 	 */
 	export function Dispose(progressId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Progress.FailDispose,
+			callback: () => {
+				const _progressItem = GetProgressItemById(progressId);
 
-		try {
-			const _progressItem = GetProgressItemById(progressId);
+				_progressItem.dispose();
 
-			_progressItem.dispose();
+				_progressItemsMap.delete(_progressItem.uniqueId);
+			},
+		});
 
-			_progressItemsMap.delete(_progressItem.uniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Progress.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -126,22 +112,15 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 * @param {string} progressId
 	 */
 	export function ResetProgressValue(progressId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Progress.FailProgressReset,
+			callback: () => {
+				const _progressItem = GetProgressItemById(progressId);
+				_progressItem.resetProgressValue();
+			},
+		});
 
-		try {
-			const _progressItem = GetProgressItemById(progressId);
-			_progressItem.resetProgressValue();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Progress.FailProgressReset;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -151,22 +130,15 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 * @param {number} progress value of the circle
 	 */
 	export function SetProgressValue(progressId: string, progress: number): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Progress.FailProgressValue,
+			callback: () => {
+				const _progressItem = GetProgressItemById(progressId);
 
-		try {
-			const _progressItem = GetProgressItemById(progressId);
+				_progressItem.setProgressValue(progress);
+			},
+		});
 
-			_progressItem.setProgressValue(progress);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Progress.FailProgressValue;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 }
