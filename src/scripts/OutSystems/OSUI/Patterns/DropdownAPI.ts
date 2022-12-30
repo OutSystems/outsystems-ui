@@ -320,10 +320,13 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Dropdown.FailRegisterProviderEvent,
+			hasValue: true,
 			callback: () => {
 				const _eventUniqueId = OSFramework.Helper.Dom.GenerateUniqueId();
 				const dropdown = GetDropdownById(dropdownId);
 				dropdown.setProviderEvent(eventName, callback, _eventUniqueId);
+
+				return _eventUniqueId;
 			},
 		});
 
