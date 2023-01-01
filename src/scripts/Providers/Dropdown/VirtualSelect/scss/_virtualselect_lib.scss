@@ -1,13 +1,8 @@
 /*!
- * Virtual Select v1.0.36
+ * Virtual Select v1.0.37
  * https://sa-si-dev.github.io/virtual-select
  * Licensed under MIT (https://github.com/sa-si-dev/virtual-select/blob/master/LICENSE)
  */
-@-webkit-keyframes vscomp-animation-spin {
-	to {
-		transform: rotateZ(360deg);
-	}
-}
 @keyframes vscomp-animation-spin {
 	to {
 		transform: rotateZ(360deg);
@@ -227,7 +222,6 @@
 	white-space: nowrap;
 	-webkit-user-select: none;
 	-moz-user-select: none;
-	-ms-user-select: none;
 	user-select: none;
 	width: 100%;
 }
@@ -270,7 +264,6 @@
 	justify-content: center;
 	-webkit-user-select: none;
 	-moz-user-select: none;
-	-ms-user-select: none;
 	user-select: none;
 	visibility: hidden;
 	width: 30px;
@@ -291,7 +284,6 @@
 	text-align: center;
 }
 .vscomp-options-loader::before {
-	-webkit-animation: vscomp-animation-spin 0.8s infinite linear;
 	animation: vscomp-animation-spin 0.8s infinite linear;
 	background-color: #fff;
 	border-radius: 50%;
@@ -306,7 +298,6 @@
 	cursor: not-allowed;
 	-webkit-user-select: none;
 	-moz-user-select: none;
-	-ms-user-select: none;
 	user-select: none;
 }
 .vscomp-ele[disabled] .vscomp-wrapper {
