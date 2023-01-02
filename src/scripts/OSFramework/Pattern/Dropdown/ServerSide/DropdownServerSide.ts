@@ -183,6 +183,13 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 			}
 		}
 
+		// Method that will return HasNoImplementation Error Info
+		private _hasNoImplementation(): string {
+			throw new Error(
+				`${ErrorCodes.Dropdown.HasNoImplementation.code}: ${ErrorCodes.Dropdown.HasNoImplementation.message}`
+			);
+		}
+
 		// Move ballon element to outside of the pattern context
 		private _moveBallonElement(): void {
 			Helper.Dom.Move(this._balloonWrapperElement, this._layoutElement);
@@ -1086,9 +1093,7 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public getSelectedValues(): string {
-			throw new Error(
-				`${ErrorCodes.Dropdown.HasNoImplementation.code}: ${ErrorCodes.Dropdown.HasNoImplementation.message}`
-			);
+			return this._hasNoImplementation();
 		}
 
 		/**
@@ -1139,6 +1144,24 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		}
 
 		/**
+		 * This method has no implementation on this context.
+		 *
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 */
+		public setProviderConfigs(): string {
+			return this._hasNoImplementation();
+		}
+
+		/**
+		 * This method has no implementation on this context.
+		 *
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 */
+		public setProviderEvent(): string {
+			return this._hasNoImplementation();
+		}
+
+		/**
 		 * Method used to set the AriaLabel text that will be applied to the SelectValuesWrapper "input" element
 		 *
 		 * @param value Text to be added
@@ -1147,6 +1170,15 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 			this._selectValuesWrapperAriaLabel =
 				value === undefined ? this.configs.selectValuesWrapperAriaLabel : value;
 			Helper.A11Y.AriaLabel(this._selectValuesWrapper, this._selectValuesWrapperAriaLabel);
+		}
+
+		/**
+		 * This method has no implementation on this context.
+		 *
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 */
+		public unsetProviderEvent(): string {
+			return this._hasNoImplementation();
 		}
 
 		/**

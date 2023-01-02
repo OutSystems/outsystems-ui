@@ -46,10 +46,26 @@ namespace OSFramework.Patterns.Dropdown {
 		 */
 		open(): void;
 
-		// Set as optional, to not make mandatory DropdownSErverItem to implement these
-		setProviderConfigs?(providerConfigs: ProviderConfigs): void;
-		setProviderEvent?(eventName: string, callback: OSFramework.GlobalCallbacks.Generic, uniqueId: string): void;
-		unsetProviderEvent?(eventId: string): void;
+		/**
+		 * Method used to set the extensibility configs based on provider
+		 *
+		 * @memberof OSFramework.Patterns.Dropdown.IDropdown
+		 */
+		setProviderConfigs(providerConfigs: ProviderConfigs): void;
+
+		/**
+		 * Method used to set the extensibility events based on provider
+		 *
+		 * @memberof OSFramework.Patterns.Dropdown.IDropdown
+		 */
+		setProviderEvent(eventName: string, callback: OSFramework.GlobalCallbacks.Generic, uniqueId: string): void;
+
+		/**
+		 * Method used to unset the extensibility events that was previously added
+		 *
+		 * @memberof OSFramework.Patterns.Dropdown.IDropdown
+		 */
+		unsetProviderEvent(eventId: string): void;
 
 		/**
 		 * Method used to set the validation status, and also pass the message to show
