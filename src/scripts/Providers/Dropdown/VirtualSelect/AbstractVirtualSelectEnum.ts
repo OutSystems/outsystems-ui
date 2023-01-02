@@ -5,7 +5,7 @@ namespace Providers.Dropdown.VirtualSelect.Enum {
 	 */
 	export enum ProviderInfo {
 		Name = 'VirtualSelect',
-		Version = '1.0.36',
+		Version = '1.0.37',
 	}
 
 	/**
