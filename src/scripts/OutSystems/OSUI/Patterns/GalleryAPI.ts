@@ -12,23 +12,16 @@ namespace OutSystems.OSUI.Patterns.GalleryAPI {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 	export function ChangeProperty(galleryId: string, propertyName: string, propertyValue: any): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Gallery.FailChangeProperty,
+			callback: () => {
+				const gallery = GetGalleryById(galleryId);
 
-		try {
-			const gallery = GetGalleryById(galleryId);
+				gallery.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-			gallery.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Gallery.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 	/**
 	 * Create the new gallery instance and add it to the galleryMap
@@ -59,25 +52,18 @@ namespace OutSystems.OSUI.Patterns.GalleryAPI {
 	 * @param {string} galleryId
 	 */
 	export function Dispose(galleryId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Gallery.FailDispose,
+			callback: () => {
+				const gallery = GetGalleryById(galleryId);
 
-		try {
-			const gallery = GetGalleryById(galleryId);
+				gallery.dispose();
 
-			gallery.dispose();
+				_galleryMap.delete(galleryId);
+			},
+		});
 
-			_galleryMap.delete(galleryId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Gallery.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**

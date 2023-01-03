@@ -12,23 +12,16 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 	export function ChangeProperty(monthPickerId: string, propertyName: string, propertyValue: any): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.MonthPicker.FailChangeProperty,
+			callback: () => {
+				const _monthPickerItem = GetMonthPickerItemById(monthPickerId);
 
-		try {
-			const _monthPickerItem = GetMonthPickerItemById(monthPickerId);
+				_monthPickerItem.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-			_monthPickerItem.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.MonthPicker.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -38,23 +31,16 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	 * @return {*}  {OSFramework.Patterns.MonthPicker.IMonthPicker}
 	 */
 	export function Clear(monthPickerId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.MonthPicker.FailClear,
+			callback: () => {
+				const _MonthPickerItem = GetMonthPickerItemById(monthPickerId);
 
-		try {
-			const _MonthPickerItem = GetMonthPickerItemById(monthPickerId);
+				_MonthPickerItem.clear();
+			},
+		});
 
-			_MonthPickerItem.clear();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.MonthPicker.FailClear;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -64,23 +50,16 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	 * @return {*}  {OSFramework.Patterns.MonthPicker.IMonthPicker}
 	 */
 	export function Close(monthPickerId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.MonthPicker.FailClose,
+			callback: () => {
+				const _MonthPickerItem = GetMonthPickerItemById(monthPickerId);
 
-		try {
-			const _MonthPickerItem = GetMonthPickerItemById(monthPickerId);
+				_MonthPickerItem.close();
+			},
+		});
 
-			_MonthPickerItem.close();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.MonthPicker.FailClose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -119,25 +98,18 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	 * @param {string} monthPickerId
 	 */
 	export function Dispose(monthPickerId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.MonthPicker.FailDispose,
+			callback: () => {
+				const _monthPickerItem = GetMonthPickerItemById(monthPickerId);
 
-		try {
-			const _monthPickerItem = GetMonthPickerItemById(monthPickerId);
+				_monthPickerItem.dispose();
 
-			_monthPickerItem.dispose();
+				_monthPickerItemsMap.delete(_monthPickerItem.uniqueId);
+			},
+		});
 
-			_monthPickerItemsMap.delete(_monthPickerItem.uniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.MonthPicker.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -187,23 +159,16 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	 * @return {*}  {OSFramework.Patterns.MonthPicker.IMonthPicker}
 	 */
 	export function Open(monthPickerId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.MonthPicker.FailOpen,
+			callback: () => {
+				const _MonthPickerItem = GetMonthPickerItemById(monthPickerId);
 
-		try {
-			const _MonthPickerItem = GetMonthPickerItemById(monthPickerId);
+				_MonthPickerItem.open();
+			},
+		});
 
-			_MonthPickerItem.open();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.MonthPicker.FailOpen;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -219,23 +184,16 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 		eventName: string,
 		callback: OSFramework.GlobalCallbacks.OSGeneric
 	): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.MonthPicker.FailRegisterCallback,
+			callback: () => {
+				const _monthPicker = this.GetMonthPickerItemById(monthPickerId);
 
-		try {
-			const _monthPicker = this.GetMonthPickerItemById(monthPickerId);
+				_monthPicker.registerCallback(eventName, callback);
+			},
+		});
 
-			_monthPicker.registerCallback(eventName, callback);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.MonthPicker.FailRegisterCallback;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -247,23 +205,16 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	 * @return {*}  {string}
 	 */
 	export function SetProviderConfigs(monthPickerId: string, providerConfigs: MonthPickerProviderConfigs): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.MonthPicker.FailRegisterProviderConfig,
+			callback: () => {
+				const monthPicker = GetMonthPickerItemById(monthPickerId);
 
-		try {
-			const monthPicker = GetMonthPickerItemById(monthPickerId);
+				monthPicker.setProviderConfigs(providerConfigs);
+			},
+		});
 
-			monthPicker.setProviderConfigs(providerConfigs);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.MonthPicker.FailRegisterProviderConfig;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -280,26 +231,20 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 		eventName: string,
 		callback: OSFramework.GlobalCallbacks.Generic
 	): string {
-		const _eventUniqueId = OSFramework.Helper.Dom.GenerateUniqueId();
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.MonthPicker.FailRegisterProviderEvent,
+			hasValue: true,
+			callback: () => {
+				const _eventUniqueId = OSFramework.Helper.Dom.GenerateUniqueId();
 
-		const responseObj = {
-			uniqueId: _eventUniqueId,
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+				const monthPicker = GetMonthPickerItemById(monthPickerId);
+				monthPicker.setProviderEvent(eventName, callback, _eventUniqueId);
 
-		try {
-			const monthPicker = GetMonthPickerItemById(monthPickerId);
-			monthPicker.setProviderEvent(eventName, callback, _eventUniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.MonthPicker.FailRegisterProviderEvent;
-			responseObj.uniqueId = undefined;
-		}
+				return _eventUniqueId;
+			},
+		});
 
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -311,22 +256,15 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	 * @return {*}  {string}
 	 */
 	export function UnsetProviderEvent(monthPickerId: string, eventId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.MonthPicker.FailRemoveProviderEvent,
+			callback: () => {
+				const monthPicker = GetMonthPickerItemById(monthPickerId);
+				monthPicker.unsetProviderEvent(eventId);
+			},
+		});
 
-		try {
-			const monthPicker = GetMonthPickerItemById(monthPickerId);
-			monthPicker.unsetProviderEvent(eventId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.MonthPicker.FailRemoveProviderEvent;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -338,23 +276,16 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	 * @return {*}  {string}
 	 */
 	export function SetLanguage(monthPickerId: string, isoCode: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.MonthPicker.FailSetLanguage,
+			callback: () => {
+				const _monthPicker = this.GetMonthPickerItemById(monthPickerId);
 
-		try {
-			const _monthPicker = this.GetMonthPickerItemById(monthPickerId);
+				_monthPicker.setLanguage(isoCode);
+			},
+		});
 
-			_monthPicker.setLanguage(isoCode);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.MonthPicker.FailRedraw;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -366,21 +297,14 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	 * @return {*}  {string}
 	 */
 	export function SetEditableInput(monthPickerId: string, IsEditable: boolean): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.MonthPicker.FailSetEditableInput,
+			callback: () => {
+				const _monthPicker = this.GetMonthPickerItemById(monthPickerId);
+				_monthPicker.setEditableInput(IsEditable);
+			},
+		});
 
-		try {
-			const _monthPicker = this.GetMonthPickerItemById(monthPickerId);
-			_monthPicker.setEditableInput(IsEditable);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.MonthPicker.FailSetEditableInput;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 }

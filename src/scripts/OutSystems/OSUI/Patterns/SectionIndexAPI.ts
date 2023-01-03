@@ -12,23 +12,16 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 	export function ChangeProperty(sectionIndexId: string, propertyName: string, propertyValue: any): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.SectionIndex.FailChangeProperty,
+			callback: () => {
+				const _sectionIndexItem = GetSectionIndexById(sectionIndexId);
 
-		try {
-			const _sectionIndexItem = GetSectionIndexById(sectionIndexId);
+				_sectionIndexItem.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-			_sectionIndexItem.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.SectionIndex.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -61,25 +54,18 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 	 * @param {string} sectionIndexId
 	 */
 	export function Dispose(sectionIndexId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.SectionIndex.FailDispose,
+			callback: () => {
+				const _sectionIndexItem = GetSectionIndexById(sectionIndexId);
 
-		try {
-			const _sectionIndexItem = GetSectionIndexById(sectionIndexId);
+				_sectionIndexItem.dispose();
 
-			_sectionIndexItem.dispose();
+				_sectionIndexItemsMap.delete(_sectionIndexItem.uniqueId);
+			},
+		});
 
-			_sectionIndexItemsMap.delete(_sectionIndexItem.uniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.SectionIndex.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**

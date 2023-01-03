@@ -11,23 +11,15 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	export function ChangeProperty(accordionId: string, propertyName: string, propertyValue: unknown): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Accordion.FailChangeProperty,
+			callback: () => {
+				const accordion = GetAccordionById(accordionId);
+				accordion.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-		try {
-			const accordion = GetAccordionById(accordionId);
-
-			accordion.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Accordion.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -38,23 +30,15 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 *
 	 */
 	export function CollapseAllItems(accordionId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Accordion.FailCollapseAll,
+			callback: () => {
+				const accordion = GetAccordionById(accordionId);
+				accordion.collapseAllItems();
+			},
+		});
 
-		try {
-			const accordion = GetAccordionById(accordionId);
-
-			accordion.collapseAllItems();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Accordion.FailCollapseAll;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -86,25 +70,18 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 * @param {string} accordionId
 	 */
 	export function Dispose(accordionId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Accordion.FailDispose,
+			callback: () => {
+				const accordion = GetAccordionById(accordionId);
 
-		try {
-			const accordion = GetAccordionById(accordionId);
+				accordion.dispose();
 
-			accordion.dispose();
+				_accordionMap.delete(accordion.uniqueId);
+			},
+		});
 
-			_accordionMap.delete(accordion.uniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Accordion.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -115,23 +92,16 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 *
 	 */
 	export function ExpandAllItems(accordionId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Accordion.FailExpandAll,
+			callback: () => {
+				const accordion = GetAccordionById(accordionId);
 
-		try {
-			const accordion = GetAccordionById(accordionId);
+				accordion.expandAllItems();
+			},
+		});
 
-			accordion.expandAllItems();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Accordion.FailExpandAll;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**

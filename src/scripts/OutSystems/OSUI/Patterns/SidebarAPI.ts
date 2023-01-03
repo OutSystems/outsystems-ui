@@ -10,23 +10,16 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * @param {*} propertyValue
 	 */
 	export function ChangeProperty(sidebarId: string, propertyName: string, propertyValue: unknown): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Sidebar.FailChangeProperty,
+			callback: () => {
+				const sidebar = GetSidebarById(sidebarId);
 
-		try {
-			const sidebar = GetSidebarById(sidebarId);
+				sidebar.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-			sidebar.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Sidebar.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -36,23 +29,16 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * @param {string} sidebarId
 	 */
 	export function Close(sidebarId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Sidebar.FailClose,
+			callback: () => {
+				const sidebar = GetSidebarById(sidebarId);
 
-		try {
-			const sidebar = GetSidebarById(sidebarId);
+				sidebar.close();
+			},
+		});
 
-			sidebar.close();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Sidebar.FailClose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -82,25 +68,18 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * @param {string} sidebarId
 	 */
 	export function Dispose(sidebarId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Sidebar.FailDispose,
+			callback: () => {
+				const sidebar = GetSidebarById(sidebarId);
 
-		try {
-			const sidebar = GetSidebarById(sidebarId);
+				sidebar.dispose();
 
-			sidebar.dispose();
+				_sidebarMap.delete(sidebarId);
+			},
+		});
 
-			_sidebarMap.delete(sidebarId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Sidebar.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -150,23 +129,16 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * @param {string} sidebarId
 	 */
 	export function Open(sidebarId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Sidebar.FailOpen,
+			callback: () => {
+				const sidebar = GetSidebarById(sidebarId);
 
-		try {
-			const sidebar = GetSidebarById(sidebarId);
+				sidebar.open();
+			},
+		});
 
-			sidebar.open();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Sidebar.FailOpen;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -180,23 +152,16 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 		sidebarId: string,
 		callback: OSFramework.Patterns.Sidebar.Callbacks.OSOnToggleEvent
 	): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Sidebar.FailRegisterCallback,
+			callback: () => {
+				const sidebar = GetSidebarById(sidebarId);
 
-		try {
-			const sidebar = GetSidebarById(sidebarId);
+				sidebar.registerCallback(callback);
+			},
+		});
 
-			sidebar.registerCallback(callback);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Sidebar.FailRegisterCallback;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -206,22 +171,15 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * @param {string} sidebarId
 	 */
 	export function ToggleGestures(sidebarId: string, enableSwipe: boolean): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Sidebar.FailToggleSwipe,
+			callback: () => {
+				const sidebar = GetSidebarById(sidebarId);
 
-		try {
-			const sidebar = GetSidebarById(sidebarId);
+				sidebar.toggleGestures(enableSwipe);
+			},
+		});
 
-			sidebar.toggleGestures(enableSwipe);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Sidebar.FailToggleSwipe;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 }

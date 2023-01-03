@@ -12,23 +12,16 @@ namespace OutSystems.OSUI.Patterns.SectionIndexItemAPI {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 	export function ChangeProperty(sectionIndexItemId: string, propertyName: string, propertyValue: any): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.SectionIndexItem.FailChangeProperty,
+			callback: () => {
+				const _sectionIndexItem = GetSectionIndexItemById(sectionIndexItemId);
 
-		try {
-			const _sectionIndexItem = GetSectionIndexItemById(sectionIndexItemId);
+				_sectionIndexItem.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-			_sectionIndexItem.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.SectionIndexItem.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -64,25 +57,18 @@ namespace OutSystems.OSUI.Patterns.SectionIndexItemAPI {
 	 * @param {string} sectionIndexItemId
 	 */
 	export function Dispose(sectionIndexItemId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.SectionIndexItem.FailDispose,
+			callback: () => {
+				const _sectionIndexItemItem = GetSectionIndexItemById(sectionIndexItemId);
 
-		try {
-			const _sectionIndexItemItem = GetSectionIndexItemById(sectionIndexItemId);
+				_sectionIndexItemItem.dispose();
 
-			_sectionIndexItemItem.dispose();
+				_sectionIndexItemMap.delete(_sectionIndexItemItem.uniqueId);
+			},
+		});
 
-			_sectionIndexItemMap.delete(_sectionIndexItemItem.uniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.SectionIndexItem.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -140,22 +126,15 @@ namespace OutSystems.OSUI.Patterns.SectionIndexItemAPI {
 		eventName: string,
 		callback: OSFramework.GlobalCallbacks.OSGeneric
 	): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.SectionIndexItem.FailRegisterCallback,
+			callback: () => {
+				const _sectionIndexItem = this.GetSectionIndexItemById(sectionIndexItemId);
 
-		try {
-			const _sectionIndexItem = this.GetSectionIndexItemById(sectionIndexItemId);
+				_sectionIndexItem.registerCallback(eventName, callback);
+			},
+		});
 
-			_sectionIndexItem.registerCallback(eventName, callback);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.SectionIndexItem.FailRegisterCallback;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 }

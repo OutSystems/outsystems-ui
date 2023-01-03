@@ -60,26 +60,20 @@ namespace OSFramework.Helper {
 		 * @memberof InvalidInputs
 		 */
 		public static FocusFirstInvalidInput(elementId: string, isSmooth: boolean, elementParentClass: string): string {
-			let element: HTMLElement = document.body;
-			const responseObj = {
-				isSuccess: true,
-				message: OutSystems.OSUI.ErrorCodes.Success.message,
-				code: OutSystems.OSUI.ErrorCodes.Success.code,
-			};
+			const result = OutSystems.OSUI.Utils.CreateApiResponse({
+				errorCode: OutSystems.OSUI.ErrorCodes.Utilities.FailGetInvalidInput,
+				callback: () => {
+					let element: HTMLElement = document.body;
 
-			try {
-				if (elementId !== '') {
-					element = Helper.Dom.GetElementById(elementId);
-				}
+					if (elementId !== '') {
+						element = Helper.Dom.GetElementById(elementId);
+					}
 
-				this._checkInvalidInputs(element, isSmooth, elementParentClass);
-			} catch (error) {
-				responseObj.isSuccess = false;
-				responseObj.message = error.message;
-				responseObj.code = OutSystems.OSUI.ErrorCodes.Utilities.FailGetInvalidInput;
-			}
+					this._checkInvalidInputs(element, isSmooth, elementParentClass);
+				},
+			});
 
-			return JSON.stringify(responseObj);
+			return result;
 		}
 	}
 }

@@ -12,23 +12,16 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 */
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 	export function ChangeProperty(ratingId: string, propertyName: string, propertyValue: any): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Rating.FailChangeProperty,
+			callback: () => {
+				const rating = GetRatingById(ratingId);
 
-		try {
-			const rating = GetRatingById(ratingId);
+				rating.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-			rating.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Rating.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -59,25 +52,18 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 * @return {*}  {*}
 	 */
 	export function Dispose(ratingId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Rating.FailDispose,
+			callback: () => {
+				const rating = GetRatingById(ratingId);
 
-		try {
-			const rating = GetRatingById(ratingId);
+				rating.dispose();
 
-			rating.dispose();
+				_ratingsMap.delete(ratingId);
+			},
+		});
 
-			_ratingsMap.delete(ratingId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Rating.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -131,22 +117,15 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 		ratingId: string,
 		callback: OSFramework.Patterns.Rating.Callbacks.OSOnSelectEvent
 	): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Rating.FailRegisterCallback,
+			callback: () => {
+				const rating = GetRatingById(ratingId);
 
-		try {
-			const rating = GetRatingById(ratingId);
+				rating.registerCallback(callback);
+			},
+		});
 
-			rating.registerCallback(callback);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Rating.FailRegisterCallback;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 }

@@ -46,25 +46,18 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 	 * @param widgetId
 	 */
 	export function SetFocus(widgetId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Utilities.FailSetFocus,
+			callback: () => {
+				const elementId = OSFramework.Helper.Dom.GetElementById(widgetId);
 
-		try {
-			const elementId = OSFramework.Helper.Dom.GetElementById(widgetId);
+				if (elementId) {
+					elementId.focus();
+				}
+			},
+		});
 
-			if (elementId) {
-				elementId.focus();
-			}
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Utilities.FailSetFocus;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
