@@ -14,7 +14,7 @@
 	},
 	"author": "UI Components Team",
 	"devDependencies": {
-		"@splidejs/splide": "^4.0.7",
+		"@splidejs/splide": "4.1.3",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"browser-sync": "^2.27.7",
