@@ -55,12 +55,12 @@
 
 .phone {
 	.layout {
-		.btn-provider-login {
+		.btn.btn-provider-login {
 			&.btn-provider-login-logo-only {
 				width: 50px;
 				&.btn- {
 					&small {
-						&.btn-provider-logo-only {
+						&.btn-provider-login-logo-only {
 							width: 40px;
 						}
 						.btn-provider-login-text-name {
