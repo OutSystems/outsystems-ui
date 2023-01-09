@@ -60,24 +60,21 @@
 				width: 50px;
 				&.btn- {
 					&small {
-						&.btn-provider-login-logo-only {
-							width: 40px;
-						}
-						.btn-provider-login-text-name {
-							width: 53px;
-						}
+						width: 40px;
 					}
-
 					&large {
-						&.btn-provider-login-logo-only {
-							width: 55px;
-						}
+						width: 55px;
 					}
 				}
-				.btn-provider-login-text-name {
-					text-align: left;
-					width: 70px;
-				}
+			}
+			.btn-provider-login-text-name {
+				text-align: left;
+				width: 70px;
+				-servicestudio-display: inline-block;
+			}
+
+			&.btn-small .btn-provider-login-text-name {
+				width: 53px;
 			}
 		}
 	}
