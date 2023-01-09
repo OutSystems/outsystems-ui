@@ -5,6 +5,7 @@ namespace OSFramework.Constants {
 	 */
 	export const A11YAttributes = {
 		Aria: {
+			CENA: 'coisas',
 			Atomic: 'atomic',
 			Controls: 'aria-controls',
 			Describedby: 'aria-describedby',
