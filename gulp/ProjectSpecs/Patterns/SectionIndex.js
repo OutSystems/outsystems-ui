@@ -5,7 +5,7 @@ const patternInfo = {
     "codeName": "SectionIndex",
     "inDevelopment": false,
     "name": "Section Index",
-    "scss": "../scripts/OSFramework/Pattern/SectionIndex/scss/sectionindex",
+    "scss": "../scripts/OSFramework/OSUI/Pattern/SectionIndex/scss/sectionindex",
     "section": "Navigation"
 };
 

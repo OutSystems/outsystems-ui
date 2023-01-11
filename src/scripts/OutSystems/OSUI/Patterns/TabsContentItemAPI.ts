@@ -1,27 +1,27 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 	const _tabsMap = new Map<string, string>();
-	const _tabsContentItemMap = new Map<string, OSFramework.Patterns.TabsContentItem.ITabsContentItem>();
+	const _tabsContentItemMap = new Map<string, OSFramework.OSUI.Patterns.TabsContentItem.ITabsContentItem>();
 	/**
 	 * Gets the Tabd pattern the Item belongs to
 	 *
-	 * @return {*}  {Map<string, OSFramework.Patterns.TabsContentItem.ITabsContentItem>}
+	 * @return {*}  {Map<string, OSFramework.OSUI.Patterns.TabsContentItem.ITabsContentItem>}
 	 */
-	export function GetTabsByItem(tabsContentItemId: string): OSFramework.Patterns.Tabs.ITabs {
-		let tabs: OSFramework.Patterns.Tabs.ITabs;
+	export function GetTabsByItem(tabsContentItemId: string): OSFramework.OSUI.Patterns.Tabs.ITabs {
+		let tabs: OSFramework.OSUI.Patterns.Tabs.ITabs;
 
 		if (_tabsMap.has(tabsContentItemId)) {
 			tabs = TabsAPI.GetTabsById(_tabsMap.get(tabsContentItemId));
 		} else {
 			// Try to find its reference on DOM
-			const elem = OSFramework.Helper.Dom.GetElementByUniqueId(tabsContentItemId);
+			const elem = OSFramework.OSUI.Helper.Dom.GetElementByUniqueId(tabsContentItemId);
 			const tabsElem = elem.closest(
-				OSFramework.Constants.Dot + OSFramework.Patterns.Tabs.Enum.CssClasses.TabsWrapper
+				OSFramework.OSUI.Constants.Dot + OSFramework.OSUI.Patterns.Tabs.Enum.CssClasses.TabsWrapper
 			);
 
 			if (!tabsElem) {
 				throw Error(
-					`This ${OSFramework.GlobalEnum.PatternName.TabsContentItem} does not belong to any ${OSFramework.GlobalEnum.PatternName.Tabs} pattern.`
+					`This ${OSFramework.OSUI.GlobalEnum.PatternName.TabsContentItem} does not belong to any ${OSFramework.OSUI.GlobalEnum.PatternName.Tabs} pattern.`
 				);
 			}
 			const uniqueId = tabsElem.getAttribute('name');
@@ -59,20 +59,20 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 	 * @export
 	 * @param {string} tabsContentItemId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.Patterns.Tabs.ITabs}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Tabs.ITabs}
 	 */
 	export function Create(
 		tabsContentItemId: string,
 		configs: string
-	): OSFramework.Patterns.TabsContentItem.ITabsContentItem {
+	): OSFramework.OSUI.Patterns.TabsContentItem.ITabsContentItem {
 		if (_tabsContentItemMap.has(tabsContentItemId)) {
 			throw new Error(
-				`There is already a ${OSFramework.GlobalEnum.PatternName.TabsContentItem} registered under id: ${tabsContentItemId}`
+				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.TabsContentItem} registered under id: ${tabsContentItemId}`
 			);
 		}
 		const tabs = GetTabsByItem(tabsContentItemId);
 
-		const _newTabsContentItem = new OSFramework.Patterns.TabsContentItem.TabsContentItem(
+		const _newTabsContentItem = new OSFramework.OSUI.Patterns.TabsContentItem.TabsContentItem(
 			tabsContentItemId,
 			JSON.parse(configs)
 		);
@@ -112,10 +112,10 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 	 * Function that will return the Map with all the Tabs instances at the page
 	 *
 	 * @export
-	 * @return {*}  {Map<string, OSFramework.Patterns.Tabs.ITabs>}
+	 * @return {*}  {Map<string, OSFramework.OSUI.Patterns.Tabs.ITabs>}
 	 */
 	export function GetAllTabsContentItems(): Array<string> {
-		return OSFramework.Helper.MapOperation.ExportKeys(_tabsContentItemMap);
+		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_tabsContentItemMap);
 	}
 
 	/**
@@ -123,15 +123,15 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 	 *
 	 * @export
 	 * @param {string} tabsId ID of the Tabs that will be looked for.
-	 * @return {*}  {OSFramework.Patterns.Tabs.ITabs}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Tabs.ITabs}
 	 */
 	export function GetTabsContentItemById(
 		tabsContentItemId: string
-	): OSFramework.Patterns.TabsContentItem.ITabsContentItem {
-		return OSFramework.Helper.MapOperation.FindInMap(
+	): OSFramework.OSUI.Patterns.TabsContentItem.ITabsContentItem {
+		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
 			'TabsContentItem',
 			tabsContentItemId,
 			_tabsContentItemMap
-		) as OSFramework.Patterns.TabsContentItem.ITabsContentItem;
+		) as OSFramework.OSUI.Patterns.TabsContentItem.ITabsContentItem;
 	}
 }

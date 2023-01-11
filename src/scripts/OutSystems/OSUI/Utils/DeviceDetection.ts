@@ -4,21 +4,21 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	 * Get the current device orientation
 	 */
 	export function GetDeviceOrientation(): string {
-		return OSFramework.Helper.DeviceInfo.GetDeviceOrientation();
+		return OSFramework.OSUI.Helper.DeviceInfo.GetDeviceOrientation();
 	}
 
 	/**
 	 * Get the current device type
 	 */
 	export function GetDeviceType(): string {
-		return OSFramework.Helper.DeviceInfo.GetDeviceType();
+		return OSFramework.OSUI.Helper.DeviceInfo.GetDeviceType();
 	}
 
 	/**
 	 * Identifies if the device has a touchscreen.
 	 */
 	export function IsTouch(): boolean {
-		return OSFramework.Helper.DeviceInfo.IsTouch;
+		return OSFramework.OSUI.Helper.DeviceInfo.IsTouch;
 	}
 
 	/**
@@ -27,7 +27,7 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	 * @returns
 	 */
 	export function GetOperatingSystem(UserAgent: string): string {
-		return OSFramework.Helper.DeviceInfo.GetOperatingSystem(UserAgent);
+		return OSFramework.OSUI.Helper.DeviceInfo.GetOperatingSystem(UserAgent);
 	}
 
 	/**
@@ -35,7 +35,7 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	 * @returns
 	 */
 	export function IsDesktop(): boolean {
-		return OSFramework.Helper.DeviceInfo.IsDesktop;
+		return OSFramework.OSUI.Helper.DeviceInfo.IsDesktop;
 	}
 
 	/**
@@ -43,15 +43,15 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	 * @returns
 	 */
 	export function CheckIsLayoutNative(): boolean {
-		const layout = OSFramework.Helper.Dom.ClassSelector(
+		const layout = OSFramework.OSUI.Helper.Dom.ClassSelector(
 			document.body,
-			OSFramework.GlobalEnum.CssClassElements.Layout
+			OSFramework.OSUI.GlobalEnum.CssClassElements.Layout
 		);
 
 		if (layout) {
-			return OSFramework.Helper.Dom.Styles.ContainsClass(
+			return OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(
 				layout,
-				OSFramework.GlobalEnum.CssClassElements.LayoutNative
+				OSFramework.OSUI.GlobalEnum.CssClassElements.LayoutNative
 			);
 		} else {
 			return false;
@@ -63,15 +63,15 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	 * @returns
 	 */
 	export function CheckIsLayoutSide(): boolean {
-		const layout = OSFramework.Helper.Dom.ClassSelector(
+		const layout = OSFramework.OSUI.Helper.Dom.ClassSelector(
 			document.body,
-			OSFramework.GlobalEnum.CssClassElements.Layout
+			OSFramework.OSUI.GlobalEnum.CssClassElements.Layout
 		);
 
 		if (layout) {
-			return OSFramework.Helper.Dom.Styles.ContainsClass(
+			return OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(
 				layout,
-				OSFramework.GlobalEnum.CssClassElements.LayoutSide
+				OSFramework.OSUI.GlobalEnum.CssClassElements.LayoutSide
 			);
 		} else {
 			return false;
@@ -84,7 +84,7 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export function IsRunningAsPWA(): boolean {
-		return OSFramework.Helper.DeviceInfo.IsPwa;
+		return OSFramework.OSUI.Helper.DeviceInfo.IsPwa;
 	}
 
 	/**
@@ -92,7 +92,7 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	 * @returns
 	 */
 	export function IsPhone(): boolean {
-		return OSFramework.Helper.DeviceInfo.IsPhone;
+		return OSFramework.OSUI.Helper.DeviceInfo.IsPhone;
 	}
 
 	/**
@@ -100,7 +100,7 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	 * @returns
 	 */
 	export function IsRunningAsNativeApp(): boolean {
-		return OSFramework.Helper.DeviceInfo.IsNative;
+		return OSFramework.OSUI.Helper.DeviceInfo.IsNative;
 	}
 
 	/**
@@ -108,7 +108,7 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	 * @returns
 	 */
 	export function IsTablet(): boolean {
-		return OSFramework.Helper.DeviceInfo.IsTablet;
+		return OSFramework.OSUI.Helper.DeviceInfo.IsTablet;
 	}
 
 	/**
@@ -116,16 +116,16 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	 * @returns
 	 */
 	export function IsWebApp(): boolean {
-		const layout = OSFramework.Helper.Dom.ClassSelector(
+		const layout = OSFramework.OSUI.Helper.Dom.ClassSelector(
 			document.body,
-			OSFramework.GlobalEnum.CssClassElements.Layout
+			OSFramework.OSUI.GlobalEnum.CssClassElements.Layout
 		);
 		if (layout) {
 			const isNotOldNativeLayouts =
-				OSFramework.Helper.Dom.TagSelector(document.body, '.active-screen .layout.layout-top') ||
-				OSFramework.Helper.Dom.TagSelector(document.body, '.active-screen .layout.layout-side') ||
-				OSFramework.Helper.Dom.TagSelector(document.body, '.active-screen .layout.blank') ||
-				OSFramework.Helper.Dom.TagSelector(document.body, '.active-screen .layout.layout-blank');
+				OSFramework.OSUI.Helper.Dom.TagSelector(document.body, '.active-screen .layout.layout-top') ||
+				OSFramework.OSUI.Helper.Dom.TagSelector(document.body, '.active-screen .layout.layout-side') ||
+				OSFramework.OSUI.Helper.Dom.TagSelector(document.body, '.active-screen .layout.blank') ||
+				OSFramework.OSUI.Helper.Dom.TagSelector(document.body, '.active-screen .layout.layout-blank');
 
 			return !!isNotOldNativeLayouts && CheckIsLayoutNative() === false;
 		} else {
@@ -147,9 +147,9 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 			const windowHeight = window.innerHeight || document.documentElement.clientHeight;
 			const orient =
 				windowWidth > windowHeight
-					? OSFramework.GlobalEnum.DeviceOrientation.landscape
-					: OSFramework.GlobalEnum.DeviceOrientation.portrait;
-			const isLandscape = orient === OSFramework.GlobalEnum.DeviceOrientation.landscape;
+					? OSFramework.OSUI.GlobalEnum.DeviceOrientation.landscape
+					: OSFramework.OSUI.GlobalEnum.DeviceOrientation.portrait;
+			const isLandscape = orient === OSFramework.OSUI.GlobalEnum.DeviceOrientation.landscape;
 
 			const userValues = {
 				phone: phoneWidth,
@@ -160,9 +160,9 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 			const tabletMax = userValues.tablet ? userValues.tablet : 1024;
 
 			const deviceList = [
-				OSFramework.GlobalEnum.DeviceType.phone,
-				OSFramework.GlobalEnum.DeviceType.tablet,
-				OSFramework.GlobalEnum.DeviceType.desktop,
+				OSFramework.OSUI.GlobalEnum.DeviceType.phone,
+				OSFramework.OSUI.GlobalEnum.DeviceType.tablet,
+				OSFramework.OSUI.GlobalEnum.DeviceType.desktop,
 			];
 
 			let device;

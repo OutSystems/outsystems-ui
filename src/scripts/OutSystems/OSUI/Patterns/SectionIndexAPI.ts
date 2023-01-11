@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
-	const _sectionIndexItemsMap = new Map<string, OSFramework.Patterns.SectionIndex.ISectionIndex>(); //SectionIndex.uniqueId -> SectionIndex obj
+	const _sectionIndexItemsMap = new Map<string, OSFramework.OSUI.Patterns.SectionIndex.ISectionIndex>(); //SectionIndex.uniqueId -> SectionIndex obj
 
 	/**
 	 * Function that will change the property of a given SectionIndex Id.
@@ -30,14 +30,17 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 	 * @export
 	 * @param {string} sectionIndexId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.Patterns.SectionIndex.ISectionIndex}
+	 * @return {*}  {OSFramework.OSUI.Patterns.SectionIndex.ISectionIndex}
 	 */
-	export function Create(sectionIndexId: string, configs: string): OSFramework.Patterns.SectionIndex.ISectionIndex {
+	export function Create(
+		sectionIndexId: string,
+		configs: string
+	): OSFramework.OSUI.Patterns.SectionIndex.ISectionIndex {
 		if (_sectionIndexItemsMap.has(sectionIndexId)) {
 			throw new Error(`There is already an SectionIndex registered under id: ${sectionIndexId}`);
 		}
 
-		const _sectionIndexItem = new OSFramework.Patterns.SectionIndex.SectionIndex(
+		const _sectionIndexItem = new OSFramework.OSUI.Patterns.SectionIndex.SectionIndex(
 			sectionIndexId,
 			JSON.parse(configs)
 		);
@@ -75,7 +78,7 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 	 * @return {*}  Array<string>
 	 */
 	export function GetAllSectionIndexItemsMap(): Array<string> {
-		return OSFramework.Helper.MapOperation.ExportKeys(_sectionIndexItemsMap);
+		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_sectionIndexItemsMap);
 	}
 
 	/**
@@ -83,14 +86,14 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 	 *
 	 * @export
 	 * @param {string} sectionIndexId ID of the SectionIndex that will be looked for.
-	 * @return {*}  {OSFramework.Patterns.SectionIndex.ISectionIndex;}
+	 * @return {*}  {OSFramework.OSUI.Patterns.SectionIndex.ISectionIndex;}
 	 */
-	export function GetSectionIndexById(sectionIndexId: string): OSFramework.Patterns.SectionIndex.ISectionIndex {
-		return OSFramework.Helper.MapOperation.FindInMap(
-			OSFramework.GlobalEnum.PatternName.SectionIndex,
+	export function GetSectionIndexById(sectionIndexId: string): OSFramework.OSUI.Patterns.SectionIndex.ISectionIndex {
+		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
+			OSFramework.OSUI.GlobalEnum.PatternName.SectionIndex,
 			sectionIndexId,
 			_sectionIndexItemsMap
-		) as OSFramework.Patterns.SectionIndex.ISectionIndex;
+		) as OSFramework.OSUI.Patterns.SectionIndex.ISectionIndex;
 	}
 
 	/**
@@ -98,9 +101,9 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 	 *
 	 * @export
 	 * @param {string} sectionIndexId ID of the SectionIndexItem that will be initialized.
-	 * @return {*}  {OSFramework.Patterns.SectionIndex.ISectionIndex}
+	 * @return {*}  {OSFramework.OSUI.Patterns.SectionIndex.ISectionIndex}
 	 */
-	export function Initialize(sectionIndexId: string): OSFramework.Patterns.SectionIndex.ISectionIndex {
+	export function Initialize(sectionIndexId: string): OSFramework.OSUI.Patterns.SectionIndex.ISectionIndex {
 		const _sectionIndexItem = GetSectionIndexById(sectionIndexId);
 
 		_sectionIndexItem.build();

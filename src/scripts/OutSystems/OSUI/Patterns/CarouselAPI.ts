@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.CarouselAPI {
-	const _carouselItemsMap = new Map<string, OSFramework.Patterns.Carousel.ICarousel>();
+	const _carouselItemsMap = new Map<string, OSFramework.OSUI.Patterns.Carousel.ICarousel>();
 
 	/**
 	 * Function that will enable updates on OnRender event
@@ -68,20 +68,20 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * @export
 	 * @param {string} carouselId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.Patterns.Carousel.ICarousel}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Carousel.ICarousel}
 	 */
 	export function Create(
 		carouselId: string,
 		configs: string,
 		provider: string
-	): OSFramework.Patterns.Carousel.ICarousel {
+	): OSFramework.OSUI.Patterns.Carousel.ICarousel {
 		if (_carouselItemsMap.has(carouselId)) {
 			throw new Error(
-				`There is already an ${OSFramework.GlobalEnum.PatternName.Carousel} registered under id: ${carouselId}`
+				`There is already an ${OSFramework.OSUI.GlobalEnum.PatternName.Carousel} registered under id: ${carouselId}`
 			);
 		}
 
-		const _carouselItem = OSFramework.Patterns.Carousel.Factory.NewCarousel(carouselId, configs, provider);
+		const _carouselItem = OSFramework.OSUI.Patterns.Carousel.Factory.NewCarousel(carouselId, configs, provider);
 
 		_carouselItemsMap.set(carouselId, _carouselItem);
 
@@ -116,7 +116,7 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * @return {*}  Array<string>
 	 */
 	export function GetAllCarouselItemsMap(): Array<string> {
-		return OSFramework.Helper.MapOperation.ExportKeys(_carouselItemsMap);
+		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_carouselItemsMap);
 	}
 
 	/**
@@ -124,14 +124,14 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 *
 	 * @export
 	 * @param {string} carouselId ID of the Carousel that will be looked for.
-	 * @return {*}  {OSFramework.Patterns.Carousel.ICarousel;}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Carousel.ICarousel;}
 	 */
-	export function GetCarouselItemById(carouselId: string): OSFramework.Patterns.Carousel.ICarousel {
-		return OSFramework.Helper.MapOperation.FindInMap(
+	export function GetCarouselItemById(carouselId: string): OSFramework.OSUI.Patterns.Carousel.ICarousel {
+		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
 			'Carousel',
 			carouselId,
 			_carouselItemsMap
-		) as OSFramework.Patterns.Carousel.ICarousel;
+		) as OSFramework.OSUI.Patterns.Carousel.ICarousel;
 	}
 
 	/**
@@ -159,9 +159,9 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 *
 	 * @export
 	 * @param {string} carouselId ID of the CarouselItem that will be initialized.
-	 * @return {*}  {OSFramework.Patterns.Carousel.ICarousel}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Carousel.ICarousel}
 	 */
-	export function Initialize(carouselId: string): OSFramework.Patterns.Carousel.ICarousel {
+	export function Initialize(carouselId: string): OSFramework.OSUI.Patterns.Carousel.ICarousel {
 		const _carouselItem = GetCarouselItemById(carouselId);
 
 		_carouselItem.build();
@@ -215,12 +215,12 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * @export
 	 * @param {string} carouselId
 	 * @param {string} eventName
-	 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
 	 */
 	export function RegisterCallback(
 		carouselId: string,
 		eventName: string,
-		callback: OSFramework.GlobalCallbacks.OSGeneric
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Carousel.FailRegisterCallback,
@@ -259,7 +259,7 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 *
 	 * @export
 	 * @param {string} carouselId
-	 * @return {*}  {OSFramework.Patterns.Carousel.ICarousel}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Carousel.ICarousel}
 	 */
 	export function UpdateOnRender(carouselId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -279,7 +279,7 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 *
 	 * @export
 	 * @param {string} carouselId
-	 * @return {*}  {OSFramework.Patterns.Carousel.ICarousel}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Carousel.ICarousel}
 	 */
 	export function SetCarouselDirection(carouselId: string, direction: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -312,19 +312,19 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * @export
 	 * @param {string} carouselId
 	 * @param {string} eventName
-	 * @param {OSFramework.GlobalCallbacks.Generic} callback
+	 * @param {OSFramework.OSUI.GlobalCallbacks.Generic} callback
 	 * @return {*}  {string}
 	 */
 	export function SetProviderEvent(
 		carouselId: string,
 		eventName: string,
-		callback: OSFramework.GlobalCallbacks.Generic
+		callback: OSFramework.OSUI.GlobalCallbacks.Generic
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Carousel.FailRegisterProviderEvent,
 			hasValue: true,
 			callback: () => {
-				const _eventUniqueId = OSFramework.Helper.Dom.GenerateUniqueId();
+				const _eventUniqueId = OSFramework.OSUI.Helper.Dom.GenerateUniqueId();
 
 				const carousel = GetCarouselItemById(carouselId);
 				carousel.setProviderEvent(eventName, callback, _eventUniqueId);

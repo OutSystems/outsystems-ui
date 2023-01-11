@@ -1,0 +1,74 @@
+// Flatpickr - MonthPicker
+.osui-monthpicker__dropdown {
+	&.flatpickr-calendar {
+		width: auto;
+	}
+
+	.flatpickr-months {
+		padding-bottom: 0;
+	}
+}
+
+.flatpickr-monthSelect-months {
+	display: grid;
+	gap: var(--space-xs);
+	grid-template-columns: repeat(3, 1fr);
+	justify-items: center;
+	margin: 0;
+
+	.flatpickr-monthSelect-month {
+		align-items: center;
+		border: 1px solid transparent;
+		border-radius: var(--border-radius-soft);
+		display: flex;
+		height: 40px;
+		margin: 0;
+		min-width: 70px;
+		width: 100%;
+
+		&:hover,
+		&:focus {
+			background: var(--color-neutral-2);
+		}
+
+		&.selected {
+			background-color: var(--color-primary);
+			border-color: transparent;
+			color: var(--color-neutral-0);
+		}
+
+		&.flatpickr-disabled {
+			background-color: var(--color-neutral-1);
+			color: var(--color-neutral-5);
+
+			&:hover {
+				background-color: var(--color-neutral-1) !important; // override provider !important rule
+			}
+
+			&.today:hover,
+			&.today:focus {
+				border: none;
+			}
+		}
+
+		&.today:not(.selected):not(.flatpickr-disabled) {
+			border-color: var(--color-neutral-6);
+
+			&:hover,
+			&:focus {
+				background: var(--color-neutral-3);
+				border-color: var(--color-neutral-3);
+				color: var(--color-primary);
+			}
+		}
+	}
+}
+
+// RTL
+.is-rtl {
+	.osui-monthpicker__dropdown {
+		.flatpickr-monthSelect-months {
+			direction: rtl;
+		}
+	}
+}

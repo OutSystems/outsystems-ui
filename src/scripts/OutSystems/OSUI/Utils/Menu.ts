@@ -12,12 +12,12 @@ namespace OutSystems.OSUI.Utils.Menu {
 	 * Closes the extended menu content.
 	 */
 	export function MenuHide(): void {
-		const menu = OSFramework.Helper.Dom.ClassSelector(document, 'menu');
-		const appMenu = OSFramework.Helper.Dom.ClassSelector(document, 'app-menu-container');
-		const menuOverlay = OSFramework.Helper.Dom.ClassSelector(document, 'menu-background');
+		const menu = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'menu');
+		const appMenu = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'app-menu-container');
+		const menuOverlay = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'menu-background');
 
 		if (menu) {
-			OSFramework.Helper.Dom.Styles.RemoveClass(menu, 'menu--visible');
+			OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(menu, 'menu--visible');
 
 			if (menuOverlay) {
 				menuOverlay.style.opacity = '';
@@ -31,7 +31,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 		}
 
 		function OnTransitionEnd() {
-			OSFramework.Helper.Dom.Styles.RemoveClass(menu, 'menu--animatable');
+			OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(menu, 'menu--animatable');
 
 			menu.removeEventListener('transitionend', OnTransitionEnd);
 		}
@@ -43,11 +43,11 @@ namespace OutSystems.OSUI.Utils.Menu {
 	 * Opens the extended menu content.
 	 */
 	export function MenuShow(): void {
-		const myMenu = OSFramework.Helper.Dom.ClassSelector(document, 'menu');
+		const myMenu = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'menu');
 
 		if (myMenu) {
-			OSFramework.Helper.Dom.Styles.AddClass(myMenu, 'menu--visible');
-			OSFramework.Helper.Dom.Styles.AddClass(myMenu, 'menu--animatable');
+			OSFramework.OSUI.Helper.Dom.Styles.AddClass(myMenu, 'menu--visible');
+			OSFramework.OSUI.Helper.Dom.Styles.AddClass(myMenu, 'menu--animatable');
 
 			SetMenuAttributes();
 		} else {
@@ -68,27 +68,27 @@ namespace OutSystems.OSUI.Utils.Menu {
 		}
 
 		const appMenuLinks =
-			OSFramework.Helper.Dom.TagSelector(document.body, widgetSelector + '.app-menu-links') ||
-			OSFramework.Helper.Dom.TagSelector(document.body, widgetSelector + '.app-sidemenu-links');
+			OSFramework.OSUI.Helper.Dom.TagSelector(document.body, widgetSelector + '.app-menu-links') ||
+			OSFramework.OSUI.Helper.Dom.TagSelector(document.body, widgetSelector + '.app-sidemenu-links');
 
 		if (appMenuLinks) {
 			const activeLinkBlock = appMenuLinks.children[ActiveItem] as HTMLElement;
 
 			if (activeLinkBlock) {
-				OSFramework.Helper.Dom.Styles.AddClass(activeLinkBlock, 'active');
+				OSFramework.OSUI.Helper.Dom.Styles.AddClass(activeLinkBlock, 'active');
 				const activeSubMenu =
-					OSFramework.Helper.Dom.ClassSelector(activeLinkBlock, 'submenu') ||
-					OSFramework.Helper.Dom.ClassSelector(activeLinkBlock, 'osui-submenu');
+					OSFramework.OSUI.Helper.Dom.ClassSelector(activeLinkBlock, 'submenu') ||
+					OSFramework.OSUI.Helper.Dom.ClassSelector(activeLinkBlock, 'osui-submenu');
 
 				if (activeSubMenu) {
-					OSFramework.Helper.Dom.Styles.AddClass(activeSubMenu, 'active');
+					OSFramework.OSUI.Helper.Dom.Styles.AddClass(activeSubMenu, 'active');
 					const subMenuItem =
-						OSFramework.Helper.Dom.ClassSelector(activeSubMenu, 'submenu-items') ||
-						OSFramework.Helper.Dom.ClassSelector(activeSubMenu, 'osui-submenu__items');
+						OSFramework.OSUI.Helper.Dom.ClassSelector(activeSubMenu, 'submenu-items') ||
+						OSFramework.OSUI.Helper.Dom.ClassSelector(activeSubMenu, 'osui-submenu__items');
 
 					const activeSubMenuItem = subMenuItem.children[ActiveSubItem] as HTMLElement;
 					if (activeSubMenuItem) {
-						OSFramework.Helper.Dom.Styles.AddClass(activeSubMenuItem, 'active');
+						OSFramework.OSUI.Helper.Dom.Styles.AddClass(activeSubMenuItem, 'active');
 					}
 				}
 			}
@@ -101,11 +101,11 @@ namespace OutSystems.OSUI.Utils.Menu {
 	 * @param ActiveItem
 	 */
 	export function SetBottomBarActiveElement(ActiveItem = -1): void {
-		const bottomBar = OSFramework.Helper.Dom.ClassSelector(document, 'bottom-bar');
+		const bottomBar = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'bottom-bar');
 		const bottomBarChild = (bottomBar ? bottomBar.children[ActiveItem] : undefined) as HTMLElement;
 
 		if (bottomBar && bottomBarChild) {
-			OSFramework.Helper.Dom.Styles.AddClass(bottomBarChild, 'active');
+			OSFramework.OSUI.Helper.Dom.Styles.AddClass(bottomBarChild, 'active');
 		}
 	}
 
@@ -113,16 +113,16 @@ namespace OutSystems.OSUI.Utils.Menu {
 	 * Supports the items accessible on the menu.
 	 */
 	export function SetMenuAttributes(): void {
-		const layout = OSFramework.Helper.Dom.ClassSelector(document, 'layout');
+		const layout = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'layout');
 		const menu =
-			OSFramework.Helper.Dom.ClassSelector(document, 'app-menu-content') ||
-			OSFramework.Helper.Dom.ClassSelector(document, 'app-menu-container');
+			OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'app-menu-content') ||
+			OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'app-menu-container');
 		const isExpanded =
-			OSFramework.Helper.Dom.Styles.ContainsClass(layout, 'menu-visible') ||
-			OSFramework.Helper.Dom.Styles.ContainsClass(layout, 'menu--visible');
+			OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(layout, 'menu-visible') ||
+			OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(layout, 'menu--visible');
 
 		if (menu) {
-			let focusableEls = menu.querySelectorAll(OSFramework.Constants.FocusableElems);
+			let focusableEls = menu.querySelectorAll(OSFramework.OSUI.Constants.FocusableElems);
 			focusableEls = [].slice.call(focusableEls);
 			if (isExpanded) {
 				menu.setAttribute('tabindex', '0');
@@ -153,10 +153,10 @@ namespace OutSystems.OSUI.Utils.Menu {
 	export function SetMenuIcon(MenuAction: string): void {
 		if (MenuAction === 'Auto') {
 			const appMenu = Array.prototype.slice.call(
-				OSFramework.Helper.Dom.TagSelectorAll(document, '.bottom-bar a')
+				OSFramework.OSUI.Helper.Dom.TagSelectorAll(document, '.bottom-bar a')
 			);
 			const bottomBar = Array.prototype.slice.call(
-				OSFramework.Helper.Dom.TagSelectorAll(document, '.app-menu a')
+				OSFramework.OSUI.Helper.Dom.TagSelectorAll(document, '.app-menu a')
 			);
 
 			const links = appMenu.concat(bottomBar);
@@ -178,12 +178,12 @@ namespace OutSystems.OSUI.Utils.Menu {
 				}
 			}
 
-			const menuIcon = OSFramework.Helper.Dom.ClassSelector(document, 'app-menu-icon');
+			const menuIcon = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'app-menu-icon');
 
 			if (showMenu) {
-				OSFramework.Helper.Dom.Styles.RemoveClass(menuIcon, 'back');
+				OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(menuIcon, 'back');
 			} else {
-				OSFramework.Helper.Dom.Styles.AddClass(menuIcon, 'back');
+				OSFramework.OSUI.Helper.Dom.Styles.AddClass(menuIcon, 'back');
 			}
 		}
 	}
@@ -192,7 +192,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 	 * Makes the menu accessibility-ready.
 	 */
 	export function SetMenuIconListeners(): void {
-		const menuIcon = OSFramework.Helper.Dom.ClassSelector(document, 'menu-icon');
+		const menuIcon = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'menu-icon');
 
 		if (menuIcon) {
 			const menuIconOnKeypress = function (e) {
@@ -218,30 +218,33 @@ namespace OutSystems.OSUI.Utils.Menu {
 			widgetSelector = '#' + WidgetId;
 		}
 
-		const layout = OSFramework.Helper.Dom.ClassSelector(document, 'layout');
-		const menu = OSFramework.Helper.Dom.TagSelector(document.body, widgetSelector + '.app-menu-content');
+		const layout = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'layout');
+		const menu = OSFramework.OSUI.Helper.Dom.TagSelector(document.body, widgetSelector + '.app-menu-content');
 
 		if (layout && menu) {
 			let isTopMenuMobile;
 			let isVisibleMobile;
-			let isExpanded = OSFramework.Helper.Dom.Styles.ContainsClass(layout, 'menu-visible');
-			const isOverlay = OSFramework.Helper.Dom.Styles.ContainsClass(layout, 'aside-overlay');
-			const isExpandable = OSFramework.Helper.Dom.Styles.ContainsClass(layout, 'aside-expandable');
+			let isExpanded = OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(layout, 'menu-visible');
+			const isOverlay = OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(layout, 'aside-overlay');
+			const isExpandable = OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(layout, 'aside-expandable');
 
 			const menuOnKeypress = function (e) {
 				const isTabPressed = e.key === 'Tab' || e.keyCode === 9;
 				const isEscapedPressed = e.key === 'Escape' || e.keyCode === 27;
 				const isShiftKey = e.shiftKey;
-				const focusableEls = OSFramework.Helper.Dom.TagSelectorAll(menu, OSFramework.Constants.FocusableElems);
+				const focusableEls = OSFramework.OSUI.Helper.Dom.TagSelectorAll(
+					menu,
+					OSFramework.OSUI.Constants.FocusableElems
+				);
 
 				const firstFocusableEl = focusableEls[0] as HTMLElement;
 				const lastFocusableEl = focusableEls[focusableEls.length - 1] as HTMLElement;
 				const isExpandableDesktop =
-					OSFramework.Helper.Dom.TagSelector(
+					OSFramework.OSUI.Helper.Dom.TagSelector(
 						document.body,
 						'.desktop .active-screen .layout-side.aside-expandable'
 					) ||
-					OSFramework.Helper.Dom.TagSelector(
+					OSFramework.OSUI.Helper.Dom.TagSelector(
 						document.body,
 						'.tablet.landscape .active-screen .layout-side.aside-expandable'
 					);
@@ -250,7 +253,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 					return;
 				}
 
-				isExpanded = OSFramework.Helper.Dom.Styles.ContainsClass(layout, 'menu-visible');
+				isExpanded = OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(layout, 'menu-visible');
 
 				//If esc, Close Menu
 				if (isExpanded && isEscapedPressed) {
@@ -275,14 +278,14 @@ namespace OutSystems.OSUI.Utils.Menu {
 			// Invoking setTimeout to schedule the callback to be run asynchronously
 			setTimeout(function () {
 				isTopMenuMobile =
-					OSFramework.Helper.Dom.TagSelector(document.body, '.tablet .active-screen .layout-top') ||
-					OSFramework.Helper.Dom.TagSelector(document.body, '.phone .active-screen .layout-top');
+					OSFramework.OSUI.Helper.Dom.TagSelector(document.body, '.tablet .active-screen .layout-top') ||
+					OSFramework.OSUI.Helper.Dom.TagSelector(document.body, '.phone .active-screen .layout-top');
 				isVisibleMobile =
-					OSFramework.Helper.Dom.TagSelector(
+					OSFramework.OSUI.Helper.Dom.TagSelector(
 						document.body,
 						'.tablet.portrait .active-screen .layout-side.aside-visible'
 					) ||
-					OSFramework.Helper.Dom.TagSelector(
+					OSFramework.OSUI.Helper.Dom.TagSelector(
 						document.body,
 						'.phone .active-screen .layout-side.aside-visible'
 					);
@@ -293,7 +296,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 				}
 			}, 0);
 
-			const menuLinks = OSFramework.Helper.Dom.ClassSelector(menu, 'app-menu-links');
+			const menuLinks = OSFramework.OSUI.Helper.Dom.ClassSelector(menu, 'app-menu-links');
 			if (menuLinks) {
 				const menuLinksChildren = menuLinks.children;
 

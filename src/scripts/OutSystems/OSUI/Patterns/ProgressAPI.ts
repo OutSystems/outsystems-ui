@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.ProgressAPI {
-	const _progressItemsMap = new Map<string, OSFramework.Patterns.Progress.IProgress>(); //Progress.uniqueId -> Progress obj
+	const _progressItemsMap = new Map<string, OSFramework.OSUI.Patterns.Progress.IProgress>(); //Progress.uniqueId -> Progress obj
 
 	/**
 	 * Function that will change the property of a given Progress Id.
@@ -30,14 +30,18 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 * @export
 	 * @param {string} progressId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.Patterns.Progress.IProgress}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Progress.IProgress}
 	 */
-	export function Create(progressId: string, type: string, configs: string): OSFramework.Patterns.Progress.IProgress {
+	export function Create(
+		progressId: string,
+		type: string,
+		configs: string
+	): OSFramework.OSUI.Patterns.Progress.IProgress {
 		if (_progressItemsMap.has(progressId)) {
 			throw new Error(`There is already an ProgressItem registered under id: ${progressId}`);
 		}
 
-		const _progressItem = OSFramework.Patterns.Progress.Factory.NewProgress(progressId, type, configs);
+		const _progressItem = OSFramework.OSUI.Patterns.Progress.Factory.NewProgress(progressId, type, configs);
 
 		_progressItemsMap.set(progressId, _progressItem);
 
@@ -72,7 +76,7 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 * @return {*}  Array<string>
 	 */
 	export function GetAllProgressItemsMap(): Array<string> {
-		return OSFramework.Helper.MapOperation.ExportKeys(_progressItemsMap);
+		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_progressItemsMap);
 	}
 
 	/**
@@ -80,14 +84,14 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 *
 	 * @export
 	 * @param {string} progressId ID of the Progress that will be looked for.
-	 * @return {*}  {OSFramework.Patterns.Progress.IProgress;}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Progress.IProgress;}
 	 */
-	export function GetProgressItemById(progressId: string): OSFramework.Patterns.Progress.IProgress {
-		return OSFramework.Helper.MapOperation.FindInMap(
+	export function GetProgressItemById(progressId: string): OSFramework.OSUI.Patterns.Progress.IProgress {
+		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
 			'Progress',
 			progressId,
 			_progressItemsMap
-		) as OSFramework.Patterns.Progress.IProgress;
+		) as OSFramework.OSUI.Patterns.Progress.IProgress;
 	}
 
 	/**
@@ -95,9 +99,9 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 *
 	 * @export
 	 * @param {string} progressId ID of the ProgressItem that will be initialized.
-	 * @return {*}  {OSFramework.Patterns.Progress.IProgress}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Progress.IProgress}
 	 */
-	export function Initialize(progressId: string): OSFramework.Patterns.Progress.IProgress {
+	export function Initialize(progressId: string): OSFramework.OSUI.Patterns.Progress.IProgress {
 		const _progressItem = GetProgressItemById(progressId);
 
 		_progressItem.build();
