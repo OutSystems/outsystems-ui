@@ -1,0 +1,77 @@
+/*! Patterns - Utilities - Provider Login Button */
+////
+/// @group Utilities-Provider_Login_Button
+/// Patterns - Utilities - Provider Login Button
+
+.btn.btn-provider-login {
+	background: var(--color-neutral-0);
+	border-color: var(--color-neutral-6);
+	border-radius: 0;
+	&-logo {
+		&-only {
+			padding: 10px;
+			.btn-provider-login-text {
+				display: none;
+				-servicestudio-display: none !important;
+			}
+		}
+		svg {
+			height: 100%;
+			width: 100%;
+		}
+	}
+	&.btn- {
+		&small {
+			padding: 0 16px;
+			&.btn-provider-login-logo-only {
+				padding: 5px;
+			}
+		}
+		&large {
+			padding: 10px 15px;
+		}
+	}
+	&.soft {
+		border-radius: var(--border-radius-soft);
+	}
+	&.rounded {
+		border-radius: var(--border-radius-rounded);
+	}
+	.btn-provider-login {
+		&-logo {
+			border-radius: 50%;
+			height: 20px;
+			width: 20px;
+		}
+		&-text {
+			color: var(--color-neutral-7);
+			margin-left: 10px;
+			white-space: nowrap;
+		}
+	}
+}
+
+.phone .layout {
+	.btn.btn-provider-login {
+		&.btn-provider-login-logo-only {
+			width: 50px;
+			&.btn- {
+				&small {
+					width: 40px;
+				}
+				&large {
+					width: 55px;
+				}
+			}
+		}
+		.btn-provider-login-text-name {
+			text-align: left;
+			width: 70px;
+			-servicestudio-display: inline-block;
+		}
+
+		&.btn-small .btn-provider-login-text-name {
+			width: 53px;
+		}
+	}
+}
