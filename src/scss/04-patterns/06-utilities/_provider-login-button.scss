@@ -40,9 +40,9 @@
 		}
 		.btn-provider-login {
 			&-logo {
+				border-radius: 50%;
 				height: 20px;
 				width: 20px;
-				border-radius: 50%;
 			}
 			&-text {
 				color: var(--color-neutral-7);
