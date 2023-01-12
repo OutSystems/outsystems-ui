@@ -11,62 +11,48 @@ namespace OutSystems.OSUI.Utils.Menu {
 	/**
 	 * Closes the extended menu content.
 	 */
-	export function MenuHide(): string {
-		const result = OutSystems.OSUI.Utils.CreateApiResponse({
-			errorCode: ErrorCodes.Utilities.FailMenuHide,
-			callback: () => {
-				const menu = OSFramework.Helper.Dom.ClassSelector(document, 'menu');
-				const appMenu = OSFramework.Helper.Dom.ClassSelector(document, 'app-menu-container');
-				const menuOverlay = OSFramework.Helper.Dom.ClassSelector(document, 'menu-background');
+	export function MenuHide(): void {
+		const menu = OSFramework.Helper.Dom.ClassSelector(document, 'menu');
+		const appMenu = OSFramework.Helper.Dom.ClassSelector(document, 'app-menu-container');
+		const menuOverlay = OSFramework.Helper.Dom.ClassSelector(document, 'menu-background');
 
-				if (menu) {
-					OSFramework.Helper.Dom.Styles.RemoveClass(menu, 'menu--visible');
+		if (menu) {
+			OSFramework.Helper.Dom.Styles.RemoveClass(menu, 'menu--visible');
 
-					if (menuOverlay) {
-						menuOverlay.style.opacity = '';
-					}
+			if (menuOverlay) {
+				menuOverlay.style.opacity = '';
+			}
 
-					appMenu.style.transform = '';
+			appMenu.style.transform = '';
 
-					menu.addEventListener('transitionend', OnTransitionEnd, false);
-				} else {
-					console.warn('The menu element is not present in the screen');
-				}
+			menu.addEventListener('transitionend', OnTransitionEnd, false);
+		} else {
+			console.warn('The menu element is not present in the screen');
+		}
 
-				function OnTransitionEnd() {
-					OSFramework.Helper.Dom.Styles.RemoveClass(menu, 'menu--animatable');
+		function OnTransitionEnd() {
+			OSFramework.Helper.Dom.Styles.RemoveClass(menu, 'menu--animatable');
 
-					menu.removeEventListener('transitionend', OnTransitionEnd);
-				}
+			menu.removeEventListener('transitionend', OnTransitionEnd);
+		}
 
-				SetMenuAttributes();
-			},
-		});
-
-		return result;
+		SetMenuAttributes();
 	}
 
 	/**
 	 * Opens the extended menu content.
 	 */
-	export function MenuShow(): string {
-		const result = OutSystems.OSUI.Utils.CreateApiResponse({
-			errorCode: ErrorCodes.Utilities.FailMenuShow,
-			callback: () => {
-				const myMenu = OSFramework.Helper.Dom.ClassSelector(document, 'menu');
+	export function MenuShow(): void {
+		const myMenu = OSFramework.Helper.Dom.ClassSelector(document, 'menu');
 
-				if (myMenu) {
-					OSFramework.Helper.Dom.Styles.AddClass(myMenu, 'menu--visible');
-					OSFramework.Helper.Dom.Styles.AddClass(myMenu, 'menu--animatable');
+		if (myMenu) {
+			OSFramework.Helper.Dom.Styles.AddClass(myMenu, 'menu--visible');
+			OSFramework.Helper.Dom.Styles.AddClass(myMenu, 'menu--animatable');
 
-					SetMenuAttributes();
-				} else {
-					console.warn('The menu element is not present in the screen');
-				}
-			},
-		});
-
-		return result;
+			SetMenuAttributes();
+		} else {
+			console.warn('The menu element is not present in the screen');
+		}
 	}
 
 	/**
