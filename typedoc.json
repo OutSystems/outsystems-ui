@@ -1,8 +1,8 @@
 {
     "entryPoints": [
-        "./src/scripts/OSFramework/*.ts",
+        "./src/scripts/OSFramework/OSUI/*.ts",
         "./src/scripts/OutSystems/OSUI/*.ts",
-        "./src/scripts/Providers/*.ts"
+        "./src/scripts/Providers/OSUI//*.ts"
     ],
     "entryPointStrategy": "expand",
     "includeVersion": true,

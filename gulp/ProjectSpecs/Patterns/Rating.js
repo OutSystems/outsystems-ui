@@ -5,7 +5,7 @@ const patternInfo = {
     "codeName": "Rating",
     "inDevelopment": false,
     "name": "Rating",
-    "scss": "../scripts/OSFramework/Pattern/Rating/scss/rating",
+    "scss": "../scripts/OSFramework/OSUI/Pattern/Rating/scss/rating",
     "section": "Numbers"
 };
 

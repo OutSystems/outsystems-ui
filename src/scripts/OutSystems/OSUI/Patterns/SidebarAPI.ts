@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.SidebarAPI {
-	const _sidebarMap = new Map<string, OSFramework.Patterns.Sidebar.ISidebar>();
+	const _sidebarMap = new Map<string, OSFramework.OSUI.Patterns.Sidebar.ISidebar>();
 	/**
 	 * Function that will change the property of a given Sidebar.
 	 *
@@ -47,16 +47,16 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * @export
 	 * @param {string} sidebarId
 	 * @param {string} configs
-	 * @return {*}  {OSFramework.Patterns.Sidebar.ISidebar}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Sidebar.ISidebar}
 	 */
-	export function Create(sidebarId: string, configs: string): OSFramework.Patterns.Sidebar.ISidebar {
+	export function Create(sidebarId: string, configs: string): OSFramework.OSUI.Patterns.Sidebar.ISidebar {
 		if (_sidebarMap.has(sidebarId)) {
 			throw new Error(
-				`There is already a ${OSFramework.GlobalEnum.PatternName.Sidebar} registered under id: ${sidebarId}`
+				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Sidebar} registered under id: ${sidebarId}`
 			);
 		}
 
-		const _newSidebar = new OSFramework.Patterns.Sidebar.Sidebar(sidebarId, JSON.parse(configs));
+		const _newSidebar = new OSFramework.OSUI.Patterns.Sidebar.Sidebar(sidebarId, JSON.parse(configs));
 		_sidebarMap.set(sidebarId, _newSidebar);
 		return _newSidebar;
 	}
@@ -89,7 +89,7 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * @return {*}  {Array<string>}
 	 */
 	export function GetAllSidebars(): Array<string> {
-		return OSFramework.Helper.MapOperation.ExportKeys(_sidebarMap);
+		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_sidebarMap);
 	}
 
 	/**
@@ -97,14 +97,14 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 *
 	 * @export
 	 * @param {string} sidebarId
-	 * @return {*}  {OSFramework.Patterns.Sidebar.ISidebar}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Sidebar.ISidebar}
 	 */
-	export function GetSidebarById(sidebarId: string): OSFramework.Patterns.Sidebar.ISidebar {
-		return OSFramework.Helper.MapOperation.FindInMap(
-			OSFramework.GlobalEnum.PatternName.Sidebar,
+	export function GetSidebarById(sidebarId: string): OSFramework.OSUI.Patterns.Sidebar.ISidebar {
+		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
+			OSFramework.OSUI.GlobalEnum.PatternName.Sidebar,
 			sidebarId,
 			_sidebarMap
-		) as OSFramework.Patterns.Sidebar.ISidebar;
+		) as OSFramework.OSUI.Patterns.Sidebar.ISidebar;
 	}
 
 	/**
@@ -112,9 +112,9 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 *
 	 * @export
 	 * @param {string} sidebarId
-	 * @return {*}  {OSFramework.Patterns.Sidebar.ISidebar}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Sidebar.ISidebar}
 	 */
-	export function Initialize(sidebarId: string): OSFramework.Patterns.Sidebar.ISidebar {
+	export function Initialize(sidebarId: string): OSFramework.OSUI.Patterns.Sidebar.ISidebar {
 		const sidebar = GetSidebarById(sidebarId);
 
 		sidebar.build();
@@ -146,11 +146,11 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 *
 	 * @export
 	 * @param {string} sidebarId
-	 * @param {OSFramework.Patterns.Sidebar.Callbacks.OSOnToggleEvent} callback
+	 * @param {OSFramework.OSUI.Patterns.Sidebar.Callbacks.OSOnToggleEvent} callback
 	 */
 	export function RegisterCallback(
 		sidebarId: string,
-		callback: OSFramework.Patterns.Sidebar.Callbacks.OSOnToggleEvent
+		callback: OSFramework.OSUI.Patterns.Sidebar.Callbacks.OSOnToggleEvent
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Sidebar.FailRegisterCallback,

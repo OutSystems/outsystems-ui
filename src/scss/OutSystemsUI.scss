@@ -305,13 +305,13 @@ Functions & Mixins
 5. Providers
 =============================================================================== */
 /*! 5.1. Flatpickr */
-@import '../scripts/Providers/SharedProviderResources/Flatpickr/scss/_flatpickr_lib.scss';
+@import '../scripts/Providers/OSUI/SharedProviderResources/Flatpickr/scss/_flatpickr_lib.scss';
 /*! 5.2. NoUiSlider */
-@import '../scripts/Providers/RangeSlider/NoUISlider/scss/_noUiSlider.scss';
+@import '../scripts/Providers/OSUI/RangeSlider/NoUISlider/scss/_noUiSlider.scss';
 /*! 5.3. Splide */
-@import '../scripts/Providers/Carousel/Splide/scss/splide-core.scss';
+@import '../scripts/Providers/OSUI/Carousel/Splide/scss/splide-core.scss';
 /*! 5.4. VirtualSelect */
-@import '../scripts/Providers/Dropdown/VirtualSelect/scss/_virtualselect_lib.scss';
+@import '../scripts/Providers/OSUI/Dropdown/VirtualSelect/scss/_virtualselect_lib.scss';
 
 /*! ==============================================================================
 6. Patterns
@@ -320,15 +320,15 @@ Functions & Mixins
 /*! 6.1.1. Columns */
 @import '04-patterns/01-adaptive/columns';
 /*! 6.1.2. Gallery */
-@import '../scripts/OSFramework/Pattern/Gallery/scss/gallery';
+@import '../scripts/OSFramework/OSUI/Pattern/Gallery/scss/gallery';
 /*! 6.1.3. Master Detail */
 @import '04-patterns/01-adaptive/master-detail';
 
 /*! 6.2. Content */
 /*! 6.2.1. Accordion */
-@import '../scripts/OSFramework/Pattern/Accordion/scss/accordion';
+@import '../scripts/OSFramework/OSUI/Pattern/Accordion/scss/accordion';
 /*! 6.2.2. Accordion Item */
-@import '../scripts/OSFramework/Pattern/AccordionItem/scss/accordion-item';
+@import '../scripts/OSFramework/OSUI/Pattern/AccordionItem/scss/accordion-item';
 /*! 6.2.3. Alert */
 @import '04-patterns/02-content/alert';
 /*! 6.2.4. Blank Slate */
@@ -344,7 +344,7 @@ Functions & Mixins
 /*! 6.2.9. Chat Message */
 @import '04-patterns/02-content/chat-message';
 /*! 6.2.10. Flip Content */
-@import '../scripts/OSFramework/Pattern/FlipContent/scss/flipcontent';
+@import '../scripts/OSFramework/OSUI/Pattern/FlipContent/scss/flipcontent';
 /*! 6.2.11. Floating Content */
 @import '04-patterns/02-content/floating-content';
 /*! 6.2.12. List Item Content */
@@ -354,7 +354,7 @@ Functions & Mixins
 /*! 6.2.14. Tag */
 @import '04-patterns/02-content/tag';
 /*! 6.2.15. Tooltip */
-@import '../scripts/OSFramework/Pattern/Tooltip/scss/tooltip';
+@import '../scripts/OSFramework/OSUI/Pattern/Tooltip/scss/tooltip';
 /*! 6.2.16. User Avatar */
 @import '04-patterns/02-content/user-avatar';
 
@@ -364,19 +364,19 @@ Functions & Mixins
 /*! 6.3.2. Animate */
 @import '04-patterns/03-interaction/animate';
 /*! 6.3.3. Animated Label */
-@import '../scripts/OSFramework/Pattern/AnimatedLabel/scss/animated-label';
+@import '../scripts/OSFramework/OSUI/Pattern/AnimatedLabel/scss/animated-label';
 /*! 6.3.4. Bottom Sheet */
-@import '../scripts/OSFramework/Pattern/BottomSheet/scss/bottomsheet';
+@import '../scripts/OSFramework/OSUI/Pattern/BottomSheet/scss/bottomsheet';
 /*! 6.3.5. Carousel */
-@import '../scripts/OSFramework/Pattern/Carousel/scss/carousel';
+@import '../scripts/OSFramework/OSUI/Pattern/Carousel/scss/carousel';
 /*! 6.3.6. DatePicker */
-@import '../scripts/OSFramework/Pattern/DatePicker/scss/datepicker';
+@import '../scripts/OSFramework/OSUI/Pattern/DatePicker/scss/datepicker';
 /*! 6.3.7. Dropdown */
-@import '../scripts/OSFramework/Pattern/Dropdown/scss/dropdown';
+@import '../scripts/OSFramework/OSUI/Pattern/Dropdown/scss/dropdown';
 /*! 6.3.7.1 Dropdown Search */
-@import '../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-search';
+@import '../scripts/OSFramework/OSUI/Pattern/Dropdown/scss/dropdown-search';
 /*! 6.3.7.2 Dropdown Tags */
-@import '../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-tags';
+@import '../scripts/OSFramework/OSUI/Pattern/Dropdown/scss/dropdown-tags';
 /*! 6.3.8. Floating Actions */
 @import '04-patterns/03-interaction/floating-actions';
 /*! 6.3.9. Input With Icon */
@@ -384,21 +384,21 @@ Functions & Mixins
 /*! 6.3.10. Lightbox Image */
 @import '04-patterns/03-interaction/lightbox-image';
 /*! 6.3.11. MonthPicker */
-@import '../scripts/OSFramework/Pattern/MonthPicker/scss/monthpicker';
+@import '../scripts/OSFramework/OSUI/Pattern/MonthPicker/scss/monthpicker';
 /*! 6.3.12. Notification */
-@import '../scripts/OSFramework/Pattern/Notification/scss/notification';
+@import '../scripts/OSFramework/OSUI/Pattern/Notification/scss/notification';
 /*! 6.3.13. RangeSlider */
-@import '../scripts/OSFramework/Pattern/RangeSlider/scss/rangeslider';
+@import '../scripts/OSFramework/OSUI/Pattern/RangeSlider/scss/rangeslider';
 /*! 6.3.14. Scrollable Area */
 @import '04-patterns/03-interaction/scrollable-area';
 /*! 6.3.15. Search */
 @import '04-patterns/03-interaction/search';
 /*! 6.3.16. Sidebar */
-@import '../scripts/OSFramework/Pattern/Sidebar/scss/sidebar';
+@import '../scripts/OSFramework/OSUI/Pattern/Sidebar/scss/sidebar';
 /*! 6.3.17. Stacked Cards */
 @import '04-patterns/03-interaction/stacked-cards';
 /*! 6.3.18. TimePicker */
-@import '../scripts/OSFramework/Pattern/TimePicker/scss/timepicker';
+@import '../scripts/OSFramework/OSUI/Pattern/TimePicker/scss/timepicker';
 /*! 6.3.19. Video */
 @import '04-patterns/03-interaction/video';
 
@@ -410,11 +410,11 @@ Functions & Mixins
 /*! 6.4.3. Pagination */
 @import '04-patterns/04-navigation/pagination';
 /*! 6.4.4. Section Index */
-@import '../scripts/OSFramework/Pattern/SectionIndex/scss/sectionindex';
+@import '../scripts/OSFramework/OSUI/Pattern/SectionIndex/scss/sectionindex';
 /*! 6.4.5. Submenu */
-@import '../scripts/OSFramework/Pattern/Submenu/scss/submenu';
+@import '../scripts/OSFramework/OSUI/Pattern/Submenu/scss/submenu';
 /*! 6.4.6. Tabs */
-@import '../scripts/OSFramework/Pattern/Tabs/scss/tabs';
+@import '../scripts/OSFramework/OSUI/Pattern/Tabs/scss/tabs';
 /*! 6.4.7. Timeline */
 @import '04-patterns/04-navigation/timeline';
 /*! 6.4.8. Wizard */
@@ -429,17 +429,17 @@ Functions & Mixins
 @import '04-patterns/05-numbers/icon-badge';
 /*! 6.5.4. Progress */
 /*! 6.5.4.1 Progress Bar */
-@import '../scripts/OSFramework/Pattern/Progress/Bar/scss/progressbar';
+@import '../scripts/OSFramework/OSUI/Pattern/Progress/Bar/scss/progressbar';
 /*! 6.5.4.2 Progress Circle */
-@import '../scripts/OSFramework/Pattern/Progress/Circle/scss/progresscircle';
+@import '../scripts/OSFramework/OSUI/Pattern/Progress/Circle/scss/progresscircle';
 /*! 6.5.5. Rating */
-@import '../scripts/OSFramework/Pattern/Rating/scss/rating';
+@import '../scripts/OSFramework/OSUI/Pattern/Rating/scss/rating';
 
 /*! 6.6. Utilities */
 /*! 6.6.1. Align Center */
 @import '04-patterns/06-utilities/align-center';
 /*! 6.6.2. Button Loading */
-@import '../scripts/OSFramework/Pattern/ButtonLoading/scss/button-loading';
+@import '../scripts/OSFramework/OSUI/Pattern/ButtonLoading/scss/button-loading';
 /*! 6.6.3. Center Content */
 @import '04-patterns/06-utilities/center-content';
 /*! 6.6.4. Margin Container */
@@ -453,9 +453,9 @@ Functions & Mixins
 
 /*! 6.7. Advanced */
 /*! 6.7.1. Dropdown ServerSide */
-@import '../scripts/OSFramework/Pattern/Dropdown/ServerSide/scss/_dropdown-serverside';
+@import '../scripts/OSFramework/OSUI/Pattern/Dropdown/ServerSide/scss/_dropdown-serverside';
 /*! 6.7.2. Dropdown ServerSide Item */
-@import '../scripts/OSFramework/Pattern/DropdownServerSideItem/scss/dropdownserversideitem';
+@import '../scripts/OSFramework/OSUI/Pattern/DropdownServerSideItem/scss/dropdownserversideitem';
 /*! 6.8. Deprecated Patterns */
 /*! 6.8.1. Accordion */
 @import '10-deprecated/accordion-deprecated';

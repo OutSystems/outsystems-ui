@@ -5,7 +5,7 @@ const patternInfo = {
     "codeName": "Notification",
     "inDevelopment": false,
     "name": "Notification",
-    "scss": "../scripts/OSFramework/Pattern/Notification/scss/notification",
+    "scss": "../scripts/OSFramework/OSUI/Pattern/Notification/scss/notification",
     "section": "Interaction"
 };
 
