@@ -276,15 +276,26 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailSetLang: 'OSUI-API-28012',
 		FailSkipToContent: 'OSUI-API-28013',
 		FailToggleTextSpacing: 'OSUI-API-28014',
-		FailMenuHide: 'OSUI-API-28015',
-		FailMenuShow: 'OSUI-API-28016',
-		FailSetActiveMenuItems: 'OSUI-API-28017',
-		FailSetBottomBarActiveElement: 'OSUI-API-28018',
-		FailSetMenuAttributes: 'OSUI-API-28019',
-		FailSetMenuIcon: 'OSUI-API-28020',
-		FailSetMenuIconListeners: 'OSUI-API-28021',
-		FailSetMenuListeners: 'OSUI-API-28022',
-		FailToggleSideMenu: 'OSUI-API-28023',
-		FailListItemAnimate: 'OSUI-API-28024',
+		FailSetActiveMenuItems: 'OSUI-API-28015',
+		FailSetBottomBarActiveElement: 'OSUI-API-28016',
+		FailSetMenuAttributes: 'OSUI-API-28017',
+		FailSetMenuIcon: 'OSUI-API-28018',
+		FailSetMenuIconListeners: 'OSUI-API-28019',
+		FailSetMenuListeners: 'OSUI-API-28020',
+		FailToggleSideMenu: 'OSUI-API-28021',
+		FailListItemAnimate: 'OSUI-API-28022',
+	};
+
+	// Error Codes used in Legacy Client Action
+	export const Legacy = {
+		FailAddFavicon_Legacy: 'OSUI-LEG-000001',
+		MoveElement_Legacy: 'OSUI-LEG-000002',
+		MasterDetailSetContentFocus_Legacy: 'OSUI-LEG-000003',
+		SetAccessibilityRole_Legacy: 'OSUI-LEG-000004',
+		SetAriaHidden_Legacy: 'OSUI-LEG-000005',
+		SetFocus_Legacy: 'OSUI-LEG-000006',
+		SetLang_Legacy: 'OSUI-LEG-000007',
+		SkipToContent_Legacy: 'OSUI-LEG-000008',
+		ToggleTextSpacing_Legacy: 'OSUI-LEG-000009',
 	};
 }
