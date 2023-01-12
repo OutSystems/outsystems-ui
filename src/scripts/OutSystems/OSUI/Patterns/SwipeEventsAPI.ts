@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
-	const _swipeEventsMap = new Map<string, OSFramework.Patterns.SwipeEvents.ISwipeEvents>(); //swipeEvents.uniqueId -> SwipeEvents obj
+	const _swipeEventsMap = new Map<string, OSFramework.OSUI.Patterns.SwipeEvents.ISwipeEvents>(); //swipeEvents.uniqueId -> SwipeEvents obj
 
 	/**
 	 * Create the new SwipeEvents instance and add it to the SwipeEventssMap
@@ -8,16 +8,19 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 	 * @export
 	 * @param {string} swipeEventsId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.Patterns SwipeEvents. SwipeEvents}
+	 * @return {*}  {OSFramework.OSUI.Patterns SwipeEvents. SwipeEvents}
 	 */
-	export function Create(swipeEventsId: string, configs: string): OSFramework.Patterns.SwipeEvents.ISwipeEvents {
+	export function Create(swipeEventsId: string, configs: string): OSFramework.OSUI.Patterns.SwipeEvents.ISwipeEvents {
 		if (_swipeEventsMap.has(swipeEventsId)) {
 			throw new Error(
-				`There is already an ${OSFramework.GlobalEnum.PatternName.SwipeEvents} registered under id: ${swipeEventsId}`
+				`There is already an ${OSFramework.OSUI.GlobalEnum.PatternName.SwipeEvents} registered under id: ${swipeEventsId}`
 			);
 		}
 
-		const _newSwipeEvents = new OSFramework.Patterns.SwipeEvents.SwipeEvents(swipeEventsId, JSON.parse(configs));
+		const _newSwipeEvents = new OSFramework.OSUI.Patterns.SwipeEvents.SwipeEvents(
+			swipeEventsId,
+			JSON.parse(configs)
+		);
 
 		_swipeEventsMap.set(swipeEventsId, _newSwipeEvents);
 
@@ -42,10 +45,10 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 	 * Function that will return the Map with all the SwipeEvents instances at the page
 	 *
 	 * @export
-	 * @return {*}  {Map<string, OSFramework.Patterns SwipeEvents.ISwipeEvents>}
+	 * @return {*}  {Map<string, OSFramework.OSUI.Patterns SwipeEvents.ISwipeEvents>}
 	 */
 	export function GetAllSwipeEvents(): Array<string> {
-		return OSFramework.Helper.MapOperation.ExportKeys(_swipeEventsMap);
+		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_swipeEventsMap);
 	}
 
 	/**
@@ -53,14 +56,14 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 	 *
 	 * @export
 	 * @param {string} SwipeEventsId ID of the SwipeEvents that will be looked for.
-	 * @return {*}  {OSFramework.Patterns SwipeEvents. SwipeEvents;}
+	 * @return {*}  {OSFramework.OSUI.Patterns SwipeEvents. SwipeEvents;}
 	 */
-	export function GetSwipeEventsById(swipeEventsId: string): OSFramework.Patterns.SwipeEvents.ISwipeEvents {
-		return OSFramework.Helper.MapOperation.FindInMap(
+	export function GetSwipeEventsById(swipeEventsId: string): OSFramework.OSUI.Patterns.SwipeEvents.ISwipeEvents {
+		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
 			'SwipeEvents',
 			swipeEventsId,
 			_swipeEventsMap
-		) as OSFramework.Patterns.SwipeEvents.ISwipeEvents;
+		) as OSFramework.OSUI.Patterns.SwipeEvents.ISwipeEvents;
 	}
 
 	/**
@@ -68,9 +71,9 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 	 *
 	 * @export
 	 * @param {string} swipeEventsId ID of the SwipeEvents that will be initialized.
-	 * @return {*}  {OSFramework.Patterns SwipeEvents. SwipeEvents}
+	 * @return {*}  {OSFramework.OSUI.Patterns SwipeEvents. SwipeEvents}
 	 */
-	export function Initialize(swipeEventsId: string): OSFramework.Patterns.SwipeEvents.ISwipeEvents {
+	export function Initialize(swipeEventsId: string): OSFramework.OSUI.Patterns.SwipeEvents.ISwipeEvents {
 		const SwipeEvents = GetSwipeEventsById(swipeEventsId);
 
 		SwipeEvents.build();
@@ -84,12 +87,12 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 	 * @export
 	 * @param {string} swipeEventsID
 	 * @param {string} eventName
-	 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
 	 */
 	export function RegisterCallback(
 		swipeEventsID: string,
 		eventName: string,
-		callback: OSFramework.GlobalCallbacks.OSGeneric
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): void {
 		const swipeEvents = this.GetSwipeEventsById(swipeEventsID);
 

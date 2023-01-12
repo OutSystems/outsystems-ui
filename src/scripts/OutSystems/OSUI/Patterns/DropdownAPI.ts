@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.DropdownAPI {
-	const _dropdownItemsMap = new Map<string, OSFramework.Patterns.Dropdown.IDropdown>(); //Dropdown.uniqueId -> Dropdown obj
+	const _dropdownItemsMap = new Map<string, OSFramework.OSUI.Patterns.Dropdown.IDropdown>(); //Dropdown.uniqueId -> Dropdown obj
 
 	/**
 	 * Function that will change the property of a given Dropdown Id.
@@ -70,19 +70,24 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @export
 	 * @param {string} dropdownId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.Patterns.Dropdown.IDropdown}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Dropdown.IDropdown}
 	 */
 	export function Create(
 		dropdownId: string,
 		mode: string,
 		provider: string,
 		configs: string
-	): OSFramework.Patterns.Dropdown.IDropdown {
+	): OSFramework.OSUI.Patterns.Dropdown.IDropdown {
 		if (_dropdownItemsMap.has(dropdownId)) {
 			throw new Error(`There is already an Dropdown registered under id: ${dropdownId}`);
 		}
 
-		const _dropdownItem = OSFramework.Patterns.Dropdown.Factory.NewDropdown(dropdownId, mode, provider, configs);
+		const _dropdownItem = OSFramework.OSUI.Patterns.Dropdown.Factory.NewDropdown(
+			dropdownId,
+			mode,
+			provider,
+			configs
+		);
 
 		_dropdownItemsMap.set(dropdownId, _dropdownItem);
 
@@ -178,7 +183,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @return {*}  Array<string>
 	 */
 	export function GetAllDropdowns(): Array<string> {
-		return OSFramework.Helper.MapOperation.ExportKeys(_dropdownItemsMap);
+		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_dropdownItemsMap);
 	}
 
 	/**
@@ -186,14 +191,14 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 *
 	 * @export
 	 * @param {string} dropdownId ID of the DropdownId that will be looked for.
-	 * @return {*}  {OSFramework.Patterns.Dropdown.IDropdown}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Dropdown.IDropdown}
 	 */
-	export function GetDropdownById(dropdownId: string): OSFramework.Patterns.Dropdown.IDropdown {
-		return OSFramework.Helper.MapOperation.FindInMap(
-			OSFramework.GlobalEnum.PatternName.Dropdown,
+	export function GetDropdownById(dropdownId: string): OSFramework.OSUI.Patterns.Dropdown.IDropdown {
+		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
+			OSFramework.OSUI.GlobalEnum.PatternName.Dropdown,
 			dropdownId,
 			_dropdownItemsMap
-		) as OSFramework.Patterns.Dropdown.IDropdown;
+		) as OSFramework.OSUI.Patterns.Dropdown.IDropdown;
 	}
 
 	/**
@@ -242,9 +247,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 *
 	 * @export
 	 * @param {string} dropdownId ID of the DropdownItem that will be initialized.
-	 * @return {*}  {OSFramework.Patterns.Dropdown.IDropdown}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Dropdown.IDropdown}
 	 */
-	export function Initialize(dropdownId: string): OSFramework.Patterns.Dropdown.IDropdown {
+	export function Initialize(dropdownId: string): OSFramework.OSUI.Patterns.Dropdown.IDropdown {
 		const _dropdownItem = GetDropdownById(dropdownId);
 
 		_dropdownItem.build();
@@ -258,13 +263,13 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @export
 	 * @param {string} dropdownId
 	 * @param {string} eventName
-	 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
 	 * @return {*} {string} Return Message Success or message of error info if it's the case.
 	 */
 	export function RegisterCallback(
 		dropdownId: string,
 		eventName: string,
-		callback: OSFramework.GlobalCallbacks.OSGeneric
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Dropdown.FailRegisterCallback,
@@ -310,19 +315,19 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @export
 	 * @param {string} dropdownId
 	 * @param {string} eventName
-	 * @param {OSFramework.GlobalCallbacks.Generic} callback
+	 * @param {OSFramework.OSUI.GlobalCallbacks.Generic} callback
 	 * @return {*}  {string}
 	 */
 	export function SetProviderEvent(
 		dropdownId: string,
 		eventName: string,
-		callback: OSFramework.GlobalCallbacks.Generic
+		callback: OSFramework.OSUI.GlobalCallbacks.Generic
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Dropdown.FailRegisterProviderEvent,
 			hasValue: true,
 			callback: () => {
-				const _eventUniqueId = OSFramework.Helper.Dom.GenerateUniqueId();
+				const _eventUniqueId = OSFramework.OSUI.Helper.Dom.GenerateUniqueId();
 				const dropdown = GetDropdownById(dropdownId);
 				dropdown.setProviderEvent(eventName, callback, _eventUniqueId);
 

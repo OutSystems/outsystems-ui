@@ -12,23 +12,23 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Utilities.FailSetAccessibilityRole,
 			callback: () => {
-				const element = OSFramework.Helper.Dom.GetElementById(widgetId);
+				const element = OSFramework.OSUI.Helper.Dom.GetElementById(widgetId);
 
 				if (element) {
-					const isBlock = OSFramework.Helper.Dom.Attribute.Has(
+					const isBlock = OSFramework.OSUI.Helper.Dom.Attribute.Has(
 						element,
-						OSFramework.GlobalEnum.DataBlocksTag.DataBlock
+						OSFramework.OSUI.GlobalEnum.DataBlocksTag.DataBlock
 					);
 					if (isBlock) {
-						OSFramework.Helper.Dom.Attribute.Set(
+						OSFramework.OSUI.Helper.Dom.Attribute.Set(
 							element.children[0] as HTMLElement,
-							OSFramework.Constants.A11YAttributes.Role.AttrName,
+							OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName,
 							role
 						);
 					} else {
-						OSFramework.Helper.Dom.Attribute.Set(
+						OSFramework.OSUI.Helper.Dom.Attribute.Set(
 							element,
-							OSFramework.Constants.A11YAttributes.Role.AttrName,
+							OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName,
 							role
 						);
 					}
@@ -48,10 +48,10 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Utilities.FailSetAriaHidden,
 			callback: () => {
-				const elem = OSFramework.Helper.Dom.GetElementById(widgetId);
+				const elem = OSFramework.OSUI.Helper.Dom.GetElementById(widgetId);
 
 				if (elem) {
-					OSFramework.Helper.A11Y.AriaHidden(elem, `${isHidden}`);
+					OSFramework.OSUI.Helper.A11Y.AriaHidden(elem, `${isHidden}`);
 				}
 			},
 		});
@@ -67,7 +67,7 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Utilities.FailSetFocus,
 			callback: () => {
-				const elementId = OSFramework.Helper.Dom.GetElementById(widgetId);
+				const elementId = OSFramework.OSUI.Helper.Dom.GetElementById(widgetId);
 
 				if (elementId) {
 					elementId.focus();
@@ -86,7 +86,7 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Utilities.FailSetLang,
 			callback: () => {
-				OSFramework.Helper.Language.Set(lang);
+				OSFramework.OSUI.Helper.Language.Set(lang);
 			},
 		});
 
@@ -102,15 +102,15 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Utilities.FailSkipToContent,
 			callback: () => {
-				const target = OSFramework.Helper.Dom.GetElementById(targetId);
+				const target = OSFramework.OSUI.Helper.Dom.GetElementById(targetId);
 
 				if (target) {
-					const isFocusable = OSFramework.Helper.Dom.Attribute.Get(target, 'tabindex');
+					const isFocusable = OSFramework.OSUI.Helper.Dom.Attribute.Get(target, 'tabindex');
 
 					if (isFocusable === undefined) {
-						OSFramework.Helper.Dom.Attribute.Set(target, 'tabindex', '0');
+						OSFramework.OSUI.Helper.Dom.Attribute.Set(target, 'tabindex', '0');
 						target.focus();
-						OSFramework.Helper.Dom.Attribute.Remove(target, 'tabindex');
+						OSFramework.OSUI.Helper.Dom.Attribute.Remove(target, 'tabindex');
 					} else {
 						target.focus();
 					}
@@ -128,20 +128,20 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Utilities.FailToggleTextSpacing,
 			callback: () => {
-				let spacingStyles = OSFramework.Helper.Dom.ClassSelector(
+				let spacingStyles = OSFramework.OSUI.Helper.Dom.ClassSelector(
 					document,
-					OSFramework.GlobalEnum.CssClassElements.AcessibilityStyleTag
+					OSFramework.OSUI.GlobalEnum.CssClassElements.AcessibilityStyleTag
 				);
 
 				if (spacingStyles === undefined) {
 					spacingStyles = document.createElement('style');
-					OSFramework.Helper.Dom.Styles.AddClass(
+					OSFramework.OSUI.Helper.Dom.Styles.AddClass(
 						spacingStyles,
-						OSFramework.GlobalEnum.CssClassElements.AcessibilityStyleTag
+						OSFramework.OSUI.GlobalEnum.CssClassElements.AcessibilityStyleTag
 					);
 					spacingStyles.textContent =
 						' * { line-height: 1.5 !important; letter-spacing: 0.12em !important; word-spacing: 0.16em !important; } p { margin-bottom: 2em !important; } ';
-					OSFramework.Helper.Dom.Move(spacingStyles, document.head);
+					OSFramework.OSUI.Helper.Dom.Move(spacingStyles, document.head);
 				} else if (spacingStyles) {
 					spacingStyles.remove();
 				}
@@ -156,8 +156,8 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export function WCAGMetaTag(): void {
-		OSFramework.Helper.Dom.Attribute.Set(
-			OSFramework.Helper.Dom.TagSelector(document.head, '[name="viewport"]'),
+		OSFramework.OSUI.Helper.Dom.Attribute.Set(
+			OSFramework.OSUI.Helper.Dom.TagSelector(document.head, '[name="viewport"]'),
 			'content',
 			'viewport-fit=cover, width=device-width, initial-scale=1'
 		);

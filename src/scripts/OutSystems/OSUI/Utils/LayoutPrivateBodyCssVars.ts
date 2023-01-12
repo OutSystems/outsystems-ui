@@ -4,41 +4,41 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 		// Function that will set the css variables to body element
 		private static _setCssVars(): void {
 			const body = document.body;
-			const headerContent = OSFramework.Helper.Dom.ClassSelector(
+			const headerContent = OSFramework.OSUI.Helper.Dom.ClassSelector(
 				document,
-				OSFramework.GlobalEnum.CssClassElements.HeaderTopContent
+				OSFramework.OSUI.GlobalEnum.CssClassElements.HeaderTopContent
 			);
-			const footer = OSFramework.Helper.Dom.ClassSelector(
+			const footer = OSFramework.OSUI.Helper.Dom.ClassSelector(
 				document,
-				OSFramework.GlobalEnum.CssClassElements.Footer
+				OSFramework.OSUI.GlobalEnum.CssClassElements.Footer
 			);
 
 			if (OSUI.Utils.DeviceDetection.IsWebApp() === false) {
 				if (headerContent) {
-					OSFramework.Helper.Dom.Styles.SetStyleAttribute(
+					OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
 						body,
-						OSFramework.GlobalEnum.CSSVariables.HeaderContentHeight,
-						headerContent.getBoundingClientRect().height + OSFramework.GlobalEnum.Units.Pixel
+						OSFramework.OSUI.GlobalEnum.CSSVariables.HeaderContentHeight,
+						headerContent.getBoundingClientRect().height + OSFramework.OSUI.GlobalEnum.Units.Pixel
 					);
 				}
 
 				if (footer) {
-					OSFramework.Helper.Dom.Styles.SetStyleAttribute(
+					OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
 						body,
-						OSFramework.GlobalEnum.CSSVariables.FooterHeight,
-						footer.getBoundingClientRect().height + OSFramework.GlobalEnum.Units.Pixel
+						OSFramework.OSUI.GlobalEnum.CSSVariables.FooterHeight,
+						footer.getBoundingClientRect().height + OSFramework.OSUI.GlobalEnum.Units.Pixel
 					);
 				}
 			}
 
 			if (
-				OSFramework.Helper.Dom.Styles.ContainsClass(body, OSFramework.GlobalEnum.DeviceType.phone) ||
-				OSFramework.Helper.Dom.Styles.ContainsClass(body, OSFramework.GlobalEnum.DeviceType.tablet)
+				OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(body, OSFramework.OSUI.GlobalEnum.DeviceType.phone) ||
+				OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(body, OSFramework.OSUI.GlobalEnum.DeviceType.tablet)
 			) {
-				OSFramework.Helper.Dom.Styles.SetStyleAttribute(
+				OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
 					body,
-					OSFramework.GlobalEnum.CSSVariables.ViewportHeight,
-					window.innerHeight + OSFramework.GlobalEnum.Units.Pixel
+					OSFramework.OSUI.GlobalEnum.CSSVariables.ViewportHeight,
+					window.innerHeight + OSFramework.OSUI.GlobalEnum.Units.Pixel
 				);
 			}
 		}

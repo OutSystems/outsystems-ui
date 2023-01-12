@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.TabsAPI {
-	const _tabsMap = new Map<string, OSFramework.Patterns.Tabs.ITabs>();
+	const _tabsMap = new Map<string, OSFramework.OSUI.Patterns.Tabs.ITabs>();
 
 	/**
 	 * Function that will change the property of a given Tabs pattern.
@@ -29,16 +29,16 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	 * @export
 	 * @param {string} tabsId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.Patterns.Tabs.ITabs}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Tabs.ITabs}
 	 */
-	export function Create(tabsId: string, configs: string): OSFramework.Patterns.Tabs.ITabs {
+	export function Create(tabsId: string, configs: string): OSFramework.OSUI.Patterns.Tabs.ITabs {
 		if (_tabsMap.has(tabsId)) {
 			throw new Error(
-				`There is already a ${OSFramework.GlobalEnum.PatternName.Tabs} registered under id: ${tabsId}`
+				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Tabs} registered under id: ${tabsId}`
 			);
 		}
 
-		const _newTabs = new OSFramework.Patterns.Tabs.Tabs(tabsId, JSON.parse(configs));
+		const _newTabs = new OSFramework.OSUI.Patterns.Tabs.Tabs(tabsId, JSON.parse(configs));
 
 		_tabsMap.set(tabsId, _newTabs);
 
@@ -70,10 +70,10 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	 * Fucntion that will return the Map with all the Tabs instances at the page
 	 *
 	 * @export
-	 * @return {*}  {Map<string, OSFramework.Patterns.Tabs.ITabs>}
+	 * @return {*}  {Map<string, OSFramework.OSUI.Patterns.Tabs.ITabs>}
 	 */
 	export function GetAllTabs(): Array<string> {
-		return OSFramework.Helper.MapOperation.ExportKeys(_tabsMap);
+		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_tabsMap);
 	}
 
 	/**
@@ -81,10 +81,14 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	 *
 	 * @export
 	 * @param {string} tabsId ID of the Tabs that will be looked for.
-	 * @return {*}  {OSFramework.Patterns.Tabs.ITabs}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Tabs.ITabs}
 	 */
-	export function GetTabsById(tabsId: string): OSFramework.Patterns.Tabs.ITabs {
-		return OSFramework.Helper.MapOperation.FindInMap('Tabs', tabsId, _tabsMap) as OSFramework.Patterns.Tabs.ITabs;
+	export function GetTabsById(tabsId: string): OSFramework.OSUI.Patterns.Tabs.ITabs {
+		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
+			'Tabs',
+			tabsId,
+			_tabsMap
+		) as OSFramework.OSUI.Patterns.Tabs.ITabs;
 	}
 
 	/**
@@ -92,9 +96,9 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	 *
 	 * @export
 	 * @param {string} tabsId ID of the Tabs pattern that will be initialized.
-	 * @return {*}  {OSFramework.Patterns.Tabs.ITabs}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Tabs.ITabs}
 	 */
-	export function Initialize(tabsId: string): OSFramework.Patterns.Tabs.ITabs {
+	export function Initialize(tabsId: string): OSFramework.OSUI.Patterns.Tabs.ITabs {
 		const tabs = GetTabsById(tabsId);
 
 		tabs.build();
@@ -109,7 +113,7 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	 * @param {string} tabsId
 	 * @param {*} callback
 	 */
-	export function RegisterCallback(tabsId: string, callback: OSFramework.GlobalCallbacks.OSGeneric): string {
+	export function RegisterCallback(tabsId: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Tabs.FailRegisterCallback,
 			callback: () => {

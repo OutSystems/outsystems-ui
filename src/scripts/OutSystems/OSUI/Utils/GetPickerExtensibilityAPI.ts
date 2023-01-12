@@ -22,12 +22,12 @@ namespace OutSystems.OSUI.Utils {
 	 * @export
 	 * @param {string} widgetId
 	 * @param {APIMethod} method
-	 * @return {*}  {OSFramework.GlobalCallbacks.Generic}
+	 * @return {*}  {OSFramework.OSUI.GlobalCallbacks.Generic}
 	 */
 	export function GetPickerExtensibilityAPI(
 		widgetId: string,
 		method: APIMethod
-	): OSFramework.GlobalCallbacks.Generic {
+	): OSFramework.OSUI.GlobalCallbacks.Generic {
 		try {
 			OutSystems.OSUI.Patterns.DatePickerAPI.GetDatePickerItemById(widgetId);
 			return OutSystems.OSUI.Patterns.DatePickerAPI[method];

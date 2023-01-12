@@ -8,19 +8,19 @@ const sectionInfo = {
     "assets": [
         {
             "name": "Flatpickr",
-            "path": "../scripts/Providers/SharedProviderResources/Flatpickr/scss/_flatpickr_lib.scss"
+            "path": "../scripts/Providers/OSUI/SharedProviderResources/Flatpickr/scss/_flatpickr_lib.scss"
         },
         {
             "name": "NoUiSlider",
-            "path": "../scripts/Providers/RangeSlider/NoUISlider/scss/_noUiSlider.scss"
+            "path": "../scripts/Providers/OSUI/RangeSlider/NoUISlider/scss/_noUiSlider.scss"
         },
         {
             "name": "Splide",
-            "path": "../scripts/Providers/Carousel/Splide/scss/splide-core.scss"
+            "path": "../scripts/Providers/OSUI/Carousel/Splide/scss/splide-core.scss"
         },
         {
             "name": "VirtualSelect",
-            "path": "../scripts/Providers/Dropdown/VirtualSelect/scss/_virtualselect_lib.scss"
+            "path": "../scripts/Providers/OSUI/Dropdown/VirtualSelect/scss/_virtualselect_lib.scss"
         },
     ]
 };
