@@ -9,5 +9,6 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		BodyOnMouseDown = 'body.mousedown',
 		OrientationChange = 'window.onorientationchange',
 		WindowResize = 'window.onresize',
+		WindowMessage = 'window.message',
 	}
 }
