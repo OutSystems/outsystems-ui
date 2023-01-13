@@ -6,5 +6,6 @@ namespace OSFramework.Event {
 		OrientationChange = 'window.onorientationchange',
 		SubmenuOpen = 'submenu.open',
 		WindowResize = 'window.onresize',
+		WindowMessage = 'window.message',
 	}
 }
