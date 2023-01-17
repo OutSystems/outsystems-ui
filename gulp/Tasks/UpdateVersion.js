@@ -48,7 +48,7 @@ function askForNewVersion(cb) {
 // Get the list of file where the version must be updated!
 function getFilesList(cb) {	
 	// Go through all files to be updated!
-	for(path of filesPath) {
+	for(const path of filesPath) {
 		// Read file code
 		let code = fs.readFileSync(path, 'utf8');
 		// Update code
