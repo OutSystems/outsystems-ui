@@ -52,7 +52,9 @@ function createIndexSection(env) {
         indexSection += `${project.info.description}\n`;
     }
     indexSection += `${project.info.url}\n`;
-    indexSection += `\n`;
+    indexSection += `${project.info.gitHub}\n`;
+    indexSection += `*/ \n`;
+    indexSection += `/*!\n`;
     indexSection += `Section Index:\n`;
 
     // 0. Go through all the Sections
