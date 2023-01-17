@@ -7,7 +7,7 @@ const defaultSpecs = require("./../ProjectSpecs/DefaultSpecs");
 // Store the new version
 let newVersionToBeSet = '';
 
-// list files path to be updated
+// list of files path to be updated
 let filesPath = [
 	'./gulp/ProjectSpecs/DefaultSpecs.js',
 	'./package-lock.json',
@@ -46,19 +46,16 @@ function askForNewVersion(cb) {
 }
 
 // Get the list of file where the version must be updated!
-function getFilesList(cb) {
-
-	console.log("Get list of files where the version must be set!")
-	
+function getFilesList(cb) {	
+	// Go through all files to be updated!
 	for(path of filesPath) {
+		// Read file code
 		let code = fs.readFileSync(path, 'utf8');
+		// Update code
 		let updatedCode = code.replaceAll(defaultSpecs.info.version, newVersionToBeSet.replace("v", ""));
-		
-		console.log("code", code);
-		console.log("updatedCode", updatedCode);
+		// Update the existing file info with the new one!
+		fs.writeFileSync(path, updatedCode, 'utf8');
 	}
-
-
 	cb();
 }
 
