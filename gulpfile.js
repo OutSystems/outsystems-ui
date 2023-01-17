@@ -6,9 +6,10 @@ const browser = require('browser-sync');
 const clean = require('gulp-clean');
 
 // Get dependencies tasks
-const cssTranspile = require('./gulp/Tasks/ScssTanspile');
 const createScssFile = require('./gulp/Tasks/CreateScssFile');
+const cssTranspile = require('./gulp/Tasks/ScssTanspile');
 const tsTranspile = require('./gulp/Tasks/TsTanspile');
+const updatetVersion = require('./gulp/Tasks/UpdateVersion');
 
 // Local configs
 const serverPort = 3000;
@@ -54,3 +55,4 @@ exports.createProduction = series(
 );
 
 exports.updateScssFile = createScssFile.update_osui_scss_file_dev;
+exports.updateVersion = updatetVersion.setVersion;
