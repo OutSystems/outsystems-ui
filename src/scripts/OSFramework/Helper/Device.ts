@@ -130,8 +130,8 @@ namespace OSFramework.Helper {
 			const cleanedUserAgent = userAgent.replace(' ', '');
 
 			if (cleanedUserAgent === '') {
-				if (sessionStorage.userAgent) {
-					return sessionStorage.userAgent.toLowerCase();
+				if (sessionStorage.previewDevicesUserAgent) {
+					return sessionStorage.previewDevicesUserAgent.toLowerCase();
 				}
 				return window.navigator.userAgent.toLowerCase();
 			} else {
@@ -342,7 +342,10 @@ namespace OSFramework.Helper {
 		public static get IsIphoneWithNotch(): boolean {
 			if (DeviceInfo._isIphoneWithNotch === undefined) {
 				// get the device pixel ratio
-				const ratio = (sessionStorage.pixelRatio ? sessionStorage.pixelRatio : window.devicePixelRatio) || 1;
+				const ratio =
+					(sessionStorage.previewDevicesPixelRatio
+						? sessionStorage.previewDevicesPixelRatio
+						: window.devicePixelRatio) || 1;
 				const currScreen: iphoneDetails = {
 					width: window.visualViewport.width * ratio,
 					height: window.visualViewport.height * ratio,
