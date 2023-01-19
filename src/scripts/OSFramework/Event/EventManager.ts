@@ -13,6 +13,8 @@ namespace OSFramework.Event {
 					return new Event.WindowResize();
 				case Type.OrientationChange:
 					return new Event.OrientationChange();
+				case Type.WindowMessage:
+					return new Event.WindowMessage();
 				default:
 					throw new Error(`The event ${eventType} is not supported.`);
 			}
