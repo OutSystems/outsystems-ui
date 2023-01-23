@@ -299,6 +299,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 		return result;
 	}
 
+
 	/**
 	 * Function to disable days
 	 *

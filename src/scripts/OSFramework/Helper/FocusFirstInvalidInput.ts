@@ -68,7 +68,6 @@ namespace OSFramework.Helper {
 					if (elementId !== '') {
 						element = Helper.Dom.GetElementById(elementId);
 					}
-
 					this._checkInvalidInputs(element, isSmooth, elementParentClass);
 				},
 			});

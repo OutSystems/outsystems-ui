@@ -117,6 +117,32 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	}
 
 	/**
+	 * Function that will set RangeSlider with given ID as enabled
+	 *
+	 * @export
+	 * @param {string} rangeSliderId
+	 */
+	export function Enable(rangeSliderId: string): string {
+		const responseObj = {
+			isSuccess: true,
+			message: ErrorCodes.Success.message,
+			code: ErrorCodes.Success.code,
+		};
+
+		try {
+			const rangeSlider = this.GetRangeSliderItemById(rangeSliderId);
+
+			rangeSlider.enable();
+		} catch (error) {
+			responseObj.isSuccess = false;
+			responseObj.message = error.message;
+			responseObj.code = ErrorCodes.RangeSlider.FailEnable;
+		}
+
+		return JSON.stringify(responseObj);
+	}
+
+	/**
 	 * Fucntion that will return the Map with all the RangeSlider instances at the page
 	 *
 	 * @export

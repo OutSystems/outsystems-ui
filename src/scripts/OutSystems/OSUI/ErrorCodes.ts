@@ -266,4 +266,35 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailScrollToElement: 'OSUI-API-28002',
 		FailSetFocus: 'OSUI-API-28003',
 	};
+
+	export const TimePicker = {
+		FailChangeProperty: 'OSUI-API-26001',
+		FailClear: 'OSUI-API-26002',
+		FailClose: 'OSUI-API-26003',
+		FailDispose: 'OSUI-API-26004',
+		FailOpen: 'OSUI-API-26005',
+		FailRedraw: 'OSUI-API-26006',
+		FailRegisterCallback: 'OSUI-API-26007',
+		FailRegisterProviderConfig: 'OSUI-API-26008',
+		FailRegisterProviderEvent: 'OSUI-API-26009',
+		FailRemoveProviderEvent: 'OSUI-API-26010',
+	};
+
+	export const MonthPicker = {
+		FailChangeProperty: 'OSUI-API-27001',
+		FailClear: 'OSUI-API-27002',
+		FailClose: 'OSUI-API-27003',
+		FailDispose: 'OSUI-API-27004',
+		FailOpen: 'OSUI-API-27005',
+		FailRedraw: 'OSUI-API-27006',
+		FailRegisterCallback: 'OSUI-API-27007',
+		FailRegisterProviderConfig: 'OSUI-API-27008',
+		FailRegisterProviderEvent: 'OSUI-API-27009',
+		FailRemoveProviderEvent: 'OSUI-API-27010',
+		FailSetEditableInput: 'OSUI-API-27011',
+	};
+
+	export const InvalidInput = {
+		FailGetInvalidInput: 'OSUI-API-28001',
+	};
 }
