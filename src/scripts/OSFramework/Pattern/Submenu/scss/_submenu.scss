@@ -1,4 +1,4 @@
-/*! Patterns - Navigation - Submenu */
+/* Patterns - Navigation - Submenu */
 ////
 /// @group Patterns-Submenu
 /// Patterns - Navigation - Submenu
@@ -116,6 +116,9 @@
 			height: 100%;
 			position: relative;
 			transition: all 150ms linear;
+
+			-servicestudio-min-width: 100px;
+			-servicestudio-margin-left: calc(var(--space-s) * -1);
 
 			a {
 				align-items: center;

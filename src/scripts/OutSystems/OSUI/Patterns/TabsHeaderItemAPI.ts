@@ -41,23 +41,16 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 	export function ChangeProperty(tabsHeaderItemId: string, propertyName: string, propertyValue: any): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.TabsHeaderItem.FailChangeProperty,
+			callback: () => {
+				const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
 
-		try {
-			const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
+				tabsHeaderItem.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-			tabsHeaderItem.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.TabsHeaderItem.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -102,22 +95,15 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	 * @return {*}  {string}
 	 */
 	export function DisableTabItem(tabsHeaderItemId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.TabsHeaderItem.FailDisableTabHeader,
+			callback: () => {
+				const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
+				tabsHeaderItem.disable();
+			},
+		});
 
-		try {
-			const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
-			tabsHeaderItem.disable();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.TabsHeaderItem.FailDisableTabHeader;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -127,25 +113,18 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	 * @param {string} tabsHeaderItemId
 	 */
 	export function Dispose(tabsHeaderItemId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.TabsHeaderItem.FailDispose,
+			callback: () => {
+				const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
 
-		try {
-			const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
+				tabsHeaderItem.dispose();
 
-			tabsHeaderItem.dispose();
+				_tabsHeaderItemMap.delete(tabsHeaderItem.uniqueId);
+			},
+		});
 
-			_tabsHeaderItemMap.delete(tabsHeaderItem.uniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.TabsHeaderItem.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -156,22 +135,15 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	 * @return {*}  {string}
 	 */
 	export function EnableTabItem(tabsHeaderItemId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.TabsHeaderItem.FailEnableTabHeader,
+			callback: () => {
+				const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
+				tabsHeaderItem.enable();
+			},
+		});
 
-		try {
-			const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
-			tabsHeaderItem.enable();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.TabsHeaderItem.FailEnableTabHeader;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -209,22 +181,15 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	 * @return {*}  {string}
 	 */
 	export function UpdateOnRender(tabsHeaderItemId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.TabsHeaderItem.FailUpdate,
+			callback: () => {
+				const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
 
-		try {
-			const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
+				tabsHeaderItem.updateOnRender();
+			},
+		});
 
-			tabsHeaderItem.updateOnRender();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.TabsHeaderItem.FailUpdate;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 }

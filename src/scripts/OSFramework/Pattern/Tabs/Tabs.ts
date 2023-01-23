@@ -55,18 +55,14 @@ namespace OSFramework.Patterns.Tabs {
 		}
 
 		// Method that it's called whenever a new TabsContentItem is rendered
-		private _addContentItem(tabsContentChildId: string): void {
-			// Get the ContentChildItem reference
-			const tabsContentChildItem =
-				OutSystems.OSUI.Patterns.TabsContentItemAPI.GetTabsContentItemById(tabsContentChildId);
-
-			if (this.getChild(tabsContentChildId)) {
+		private _addContentItem(tabsContentChildItem: Patterns.TabsContentItem.TabsContentItem): void {
+			if (this.getChild(tabsContentChildItem.uniqueId)) {
 				throw new Error(
 					`${ErrorCodes.Tabs.FailSetNewChildContentItem}: There is already a ${GlobalEnum.PatternName.TabsContentItem} under Id: '${tabsContentChildItem.widgetId}' added to ${GlobalEnum.PatternName.Tabs} with uniqueId: ${this.uniqueId}.`
 				);
 			} else {
 				// Store Child Item
-				this.setChild(tabsContentChildId, tabsContentChildItem);
+				this.setChild(tabsContentChildItem);
 			}
 
 			// If tabs are already built, then this is dynamic content being added later
@@ -104,18 +100,14 @@ namespace OSFramework.Patterns.Tabs {
 		}
 
 		// Method that it's called whenever a new TabsHeaderItem is rendered
-		private _addHeaderItem(tabsHeaderChildId: string): void {
-			// Get the ContentChildItem reference
-			const tabsHeaderChildItem =
-				OutSystems.OSUI.Patterns.TabsHeaderItemAPI.GetTabsHeaderItemById(tabsHeaderChildId);
-
-			if (this.getChild(tabsHeaderChildId)) {
+		private _addHeaderItem(tabsHeaderChildItem: Patterns.TabsHeaderItem.TabsHeaderItem): void {
+			if (this.getChild(tabsHeaderChildItem.uniqueId)) {
 				throw new Error(
 					`${ErrorCodes.Tabs.FailSetNewChildHeaderItem}: There is already a ${GlobalEnum.PatternName.TabsHeaderItem} under Id: '${tabsHeaderChildItem.widgetId}' added to ${GlobalEnum.PatternName.Tabs} with uniqueId: ${this.uniqueId}.`
 				);
 			} else {
 				// Store Child Item
-				this.setChild(tabsHeaderChildId, tabsHeaderChildItem);
+				this.setChild(tabsHeaderChildItem);
 			}
 
 			this._headerItemsLength = this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length;
@@ -305,7 +297,7 @@ namespace OSFramework.Patterns.Tabs {
 						Helper.Dom.Styles.SetStyleAttribute(
 							this._tabsIndicatorElement,
 							Enum.CssProperty.TabsIndicatorScale,
-							newScaleValue
+							Math.floor(newScaleValue)
 						);
 					} else {
 						cancelAnimationFrame(this._requestAnimationFrameOnIndicatorResize);
@@ -703,7 +695,7 @@ namespace OSFramework.Patterns.Tabs {
 		 */
 		protected setA11YProperties(): void {
 			// Set aria-role to TabsHeader
-			Helper.A11Y.RoleTabList(this._tabsHeaderElement);
+			Helper.A11Y.RoleTabList(this._tabsHeaderElement.firstElementChild as HTMLElement);
 			// Set aria-hidden to tabs indicator
 			Helper.A11Y.AriaHiddenTrue(this._tabsIndicatorElement);
 		}
@@ -770,28 +762,34 @@ namespace OSFramework.Patterns.Tabs {
 		 * @param notifiedTo {Enum.ChildNotifyActionType} triggered notification type
 		 * @memberof SectionIndex
 		 */
-		public beNotifiedByChild(childId: string, notifiedTo: Enum.ChildNotifyActionType): void {
+		public beNotifiedByChild(
+			childItem: Patterns.TabsHeaderItem.TabsHeaderItem | Patterns.TabsContentItem.TabsContentItem,
+			notifiedTo: Enum.ChildNotifyActionType
+		): void {
 			switch (notifiedTo) {
 				case Enum.ChildNotifyActionType.AddContentItem:
-					this._addContentItem(childId);
+					this._addContentItem(childItem as Patterns.TabsContentItem.TabsContentItem);
 					break;
 				case Enum.ChildNotifyActionType.AddHeaderItem:
-					this._addHeaderItem(childId);
+					this._addHeaderItem(childItem as Patterns.TabsHeaderItem.TabsHeaderItem);
 					break;
 				case Enum.ChildNotifyActionType.Click:
-					this._tabHeaderItemHasBeenClicked(childId);
+					this._tabHeaderItemHasBeenClicked(childItem.uniqueId);
 					break;
 				case Enum.ChildNotifyActionType.DisabledHeaderItem:
-					this._setTabHeaderItemDisabledStatus(childId, true);
+					this._setTabHeaderItemDisabledStatus(childItem.uniqueId, true);
 					break;
 				case Enum.ChildNotifyActionType.EnabledHeaderItem:
-					this._setTabHeaderItemDisabledStatus(childId, false);
+					this._setTabHeaderItemDisabledStatus(childItem.uniqueId, false);
 					break;
 				case Enum.ChildNotifyActionType.RemovedContentItem:
-					this._removeContentItem(childId);
+					this._removeContentItem(childItem.uniqueId);
 					break;
 				case Enum.ChildNotifyActionType.RemovedHeaderItem:
-					this._removeHeaderItem(childId);
+					this._removeHeaderItem(childItem.uniqueId);
+					break;
+				case Enum.ChildNotifyActionType.UpdateIndicator:
+					this._handleTabIndicator();
 					break;
 				case Enum.ChildNotifyActionType.UpdateIndicator:
 					this._handleTabIndicator();

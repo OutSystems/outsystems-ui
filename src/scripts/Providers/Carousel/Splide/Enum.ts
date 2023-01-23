@@ -38,7 +38,7 @@ namespace Providers.Carousel.Splide.Enum {
 	 */
 	export enum ProviderInfo {
 		Name = 'Splide',
-		Version = '4.0',
+		Version = '4.1.3',
 	}
 
 	/**

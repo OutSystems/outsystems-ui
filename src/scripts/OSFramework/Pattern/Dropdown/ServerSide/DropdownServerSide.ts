@@ -183,6 +183,13 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 			}
 		}
 
+		// Method that will return HasNoImplementation Error Info
+		private _hasNoImplementation(): string {
+			throw new Error(
+				`${ErrorCodes.Dropdown.HasNoImplementation.code}: ${ErrorCodes.Dropdown.HasNoImplementation.message}`
+			);
+		}
+
 		// Move ballon element to outside of the pattern context
 		private _moveBallonElement(): void {
 			Helper.Dom.Move(this._balloonWrapperElement, this._layoutElement);
@@ -193,9 +200,12 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 			// Get the target element
 			const targetElement = event.target as HTMLElement;
 			// Get the closest based on pattern base selector
-			const getBaseElement = targetElement.closest(Constants.Dot + Enum.CssClass.Pattern);
+			const getBaseElement =
+				targetElement.closest(Constants.Dot + Enum.CssClass.Pattern) ||
+				targetElement.closest(Constants.Dot + Enum.CssClass.BalloonWrapper);
+
 			// If the click occurs outside of this instance and if it's open, close it!
-			if (this._isOpen && getBaseElement !== this.selfElement) {
+			if (this._isOpen && getBaseElement !== this.selfElement && getBaseElement !== this._balloonWrapperElement) {
 				this._closeDynamically = true;
 				this._close();
 			}
@@ -555,19 +565,15 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		}
 
 		// Method used to store a given DropdownOption into optionItems list, it's triggered by DropdownServerSideItem
-		private _setNewOptionItem(optionItemId: string): void {
-			// Get the DropdownOptionItem reference
-			const optionItem =
-				OutSystems.OSUI.Patterns.DropdownServerSideItemAPI.GetDropdownServerSideItemItemById(optionItemId);
-
+		private _setNewOptionItem(optionItem: Patterns.DropdownServerSideItem.DropdownServerSideItem): void {
 			// Check if the given OptionId has been already added
-			if (this.getChild(optionItemId)) {
+			if (this.getChild(optionItem.uniqueId)) {
 				throw new Error(
 					`${ErrorCodes.Dropdown.FailSetNewOptionItem}: There is already a ${GlobalEnum.PatternName.DropdownServerSideItem} under Id: '${optionItem.widgetId}' added to ${GlobalEnum.PatternName.Dropdown} with uniqueId: ${this.uniqueId}.`
 				);
 			} else {
 				// Store DropDownOption Child Item
-				this.setChild(optionItemId, optionItem);
+				this.setChild(optionItem);
 			}
 		}
 
@@ -960,19 +966,22 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		 * @param notifiedTo {Enum.ChildNotifyActionType} triggered notification type
 		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
-		public beNotifiedByChild(childId: string, notifiedTo: Enum.ChildNotifyActionType): void {
+		public beNotifiedByChild(
+			childItem: Patterns.DropdownServerSideItem.DropdownServerSideItem,
+			notifiedTo: Enum.ChildNotifyActionType
+		): void {
 			switch (notifiedTo) {
 				case Enum.ChildNotifyActionType.Add:
-					this._setNewOptionItem(childId);
+					this._setNewOptionItem(childItem);
 					break;
 				case Enum.ChildNotifyActionType.Click:
-					this._optionItemHasBeenClicked(childId);
+					this._optionItemHasBeenClicked(childItem.uniqueId);
 					break;
 				case Enum.ChildNotifyActionType.KeyPressed:
-					this._optionItemKeyPressed(childId);
+					this._optionItemKeyPressed(childItem.uniqueId);
 					break;
 				case Enum.ChildNotifyActionType.Removed:
-					this._unsetNewOptionItem(childId);
+					this._unsetNewOptionItem(childItem.uniqueId);
 					break;
 				default:
 					throw new Error(
@@ -1030,6 +1039,15 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		}
 
 		/**
+		 * Method used to close the Dropdown
+		 *
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 */
+		public close(): void {
+			this._close();
+		}
+
+		/**
 		 * Set pattern with a disable status
 		 *
 		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
@@ -1075,9 +1093,16 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public getSelectedValues(): string {
-			throw new Error(
-				`${ErrorCodes.Dropdown.HasNoImplementation.code}:	${ErrorCodes.Dropdown.HasNoImplementation.message}`
-			);
+			return this._hasNoImplementation();
+		}
+
+		/**
+		 * Method used to open the Dropdown
+		 *
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 */
+		public open(): void {
+			this._open();
 		}
 
 		/**
@@ -1119,6 +1144,24 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 		}
 
 		/**
+		 * This method has no implementation on this context.
+		 *
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 */
+		public setProviderConfigs(): string {
+			return this._hasNoImplementation();
+		}
+
+		/**
+		 * This method has no implementation on this context.
+		 *
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 */
+		public setProviderEvent(): string {
+			return this._hasNoImplementation();
+		}
+
+		/**
 		 * Method used to set the AriaLabel text that will be applied to the SelectValuesWrapper "input" element
 		 *
 		 * @param value Text to be added
@@ -1127,6 +1170,15 @@ namespace OSFramework.Patterns.Dropdown.ServerSide {
 			this._selectValuesWrapperAriaLabel =
 				value === undefined ? this.configs.selectValuesWrapperAriaLabel : value;
 			Helper.A11Y.AriaLabel(this._selectValuesWrapper, this._selectValuesWrapperAriaLabel);
+		}
+
+		/**
+		 * This method has no implementation on this context.
+		 *
+		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 */
+		public unsetProviderEvent(): string {
+			return this._hasNoImplementation();
 		}
 
 		/**

@@ -12,6 +12,8 @@ namespace Providers.Dropdown.VirtualSelect {
 		private _platformEventInitializedCallback: OSFramework.GlobalCallbacks.OSGeneric;
 		private _platformEventSelectedOptCallback: OSFramework.Patterns.Dropdown.Callbacks.OSOnSelectEvent;
 
+		// Store the hidden input AriaLabel value
+		protected _hiddenInputWrapperAriaLabelVal: string;
 		// Store a reference of available provider methods
 		protected _virtualselectConfigs: VirtualSelectMethods;
 		// Store the provider options
@@ -43,6 +45,9 @@ namespace Providers.Dropdown.VirtualSelect {
 		private _manageAttributes(): void {
 			// Check if the pattern should be in disabled mode
 			this._manageDisableStatus();
+
+			// Manage A11Y attributes
+			this.setA11YProperties();
 		}
 
 		// Manage the disable status of the pattern
@@ -155,13 +160,14 @@ namespace Providers.Dropdown.VirtualSelect {
 		}
 
 		/**
-		 * This method has no implementation on this pattern context!
+		 * Method that adds the necessary attributes for A11Y purposes
 		 *
 		 * @protected
 		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		protected setA11YProperties(): void {
-			console.warn(OSFramework.GlobalEnum.WarningMessages.MethodNotImplemented);
+			// Set the Hidden Input AriaLabel value
+			this.setHiddenInputWrapperAriaLabelVal();
 		}
 
 		/**
@@ -288,6 +294,15 @@ namespace Providers.Dropdown.VirtualSelect {
 		}
 
 		/**
+		 * Method used to close the Dropdown
+		 *
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
+		 */
+		public close(): void {
+			this._virtualselectConfigs.close();
+		}
+
+		/**
 		 * Set Dropdown as disabled
 		 *
 		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
@@ -364,6 +379,15 @@ namespace Providers.Dropdown.VirtualSelect {
 		}
 
 		/**
+		 * Method used to open the Dropdown
+		 *
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
+		 */
+		public open(): void {
+			this._virtualselectConfigs.open();
+		}
+
+		/**
 		 * Method used to register the provider callback
 		 *
 		 * @param {string} eventName Event name that will be assigned
@@ -390,6 +414,18 @@ namespace Providers.Dropdown.VirtualSelect {
 		}
 
 		/**
+		 * Method used to set the Hidden Input AriaLabel text value
+		 *
+		 * @param {string} value
+		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
+		 */
+		public setHiddenInputWrapperAriaLabelVal(value?: string): void {
+			this._hiddenInputWrapperAriaLabelVal = value === undefined ? this._hiddenInputWrapperAriaLabelVal : value;
+			// Set HiddenInput AriaLabel Value
+			OSFramework.Helper.A11Y.AriaLabel(this.provider.$wrapper, this._hiddenInputWrapperAriaLabelVal);
+		}
+
+		/**
 		 * Method used to set all the extended VirtualSelect properties across the different types of instances
 		 *
 		 * @param {VirtualSelectOpts} newConfigs
@@ -401,12 +437,13 @@ namespace Providers.Dropdown.VirtualSelect {
 		}
 
 		/**
-		 * Method used to set all the extended VirtualSelect properties across the different types of instances
+		 * Method used to set the Dropdown options values dynamically
 		 *
-		 * @param {DropDownOption[]} optionsToSelect
+		 * @param {DropDownOption[]} optionsToSelect List of options to bet set
+		 * @param {boolean} silentOnChangedEvent If True, OnChange event will not be triggered
 		 * @memberof Providers.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
-		public setValue(optionsToSelect: DropDownOption[]): void {
+		public setValue(optionsToSelect: DropDownOption[], silentOnChangedEvent = true): void {
 			const selectedValues = this.getSelectedOptionsStructure().map((value) => value.value) || [];
 			let valuesToSelect = [];
 
@@ -416,7 +453,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			}
 
 			if (valuesToSelect.sort().join(' ') !== selectedValues.sort().join(' '))
-				this.provider.setValueMethod(valuesToSelect);
+				this._virtualselectConfigs.setValue(valuesToSelect, silentOnChangedEvent);
 		}
 
 		/**

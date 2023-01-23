@@ -86,7 +86,7 @@ namespace OSFramework.Patterns {
 		 * @param childItem Reference to be added
 		 * @memberof OSFramework.Patterns.AbstractParent
 		 */
-		protected setChild(childId: string, childItem: CT): void {
+		protected setChild(childItem: CT): void {
 			const childType = childItem.constructor.name;
 
 			if (this._childItemsByType[childType] === undefined) {
@@ -106,9 +106,9 @@ namespace OSFramework.Patterns {
 			}
 
 			// Set the child into the global _childIdsByType
-			this._childIdsByType.set(childId, childType);
+			this._childIdsByType.set(childItem.uniqueId, childType);
 			// Set the given child into the map with the same type
-			this._childItemsByType[childType].set(childId, childItem);
+			this._childItemsByType[childType].set(childItem.uniqueId, childItem);
 		}
 
 		/**
@@ -198,10 +198,10 @@ namespace OSFramework.Patterns {
 		 * Method used to be notified by a given ChildId about a given action and act accordingly
 		 *
 		 * @abstract
-		 * @param {string} childId Child Item Id
+		 * @param {string} childItem Child Item
 		 * @param {string} notifiedTo Notification name (Should be based on an Enum)
 		 * @memberof OSFramework.Patterns.AbstractParent
 		 */
-		public abstract beNotifiedByChild(childId: string, notifiedTo: string): void;
+		public abstract beNotifiedByChild(childItem: CT, notifiedTo: string): void;
 	}
 }

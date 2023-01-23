@@ -40,6 +40,8 @@ namespace OSFramework.GlobalEnum {
 	 */
 	export enum CSSSelectors {
 		InputFormControl = 'input.form-control',
+		IosBounceScroll = 'ios .ios-bounce:not(.hide-header-on-scroll) .content',
+		LayoutNativeHeader = 'layout-native:not(.hide-header-on-scroll) .header',
 	}
 
 	/**
@@ -133,7 +135,7 @@ namespace OSFramework.GlobalEnum {
 	 * OutSystemsUI HTML Attributes
 	 */
 	export enum HTMLAttributes {
-		AllowEventPropagation = '[data-allow-event-propagation=true]',
+		AllowEventPropagation = '[data-allow-event-propagation=true], [data-allow-event-propagation=True]',
 		DataInput = 'data-input',
 		Disabled = 'disabled',
 		Id = 'id',

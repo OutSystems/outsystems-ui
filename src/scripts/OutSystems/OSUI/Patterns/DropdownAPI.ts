@@ -12,23 +12,16 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @return {*} {string} Return Message Success or message of error info if it's the case.
 	 */
 	export function ChangeProperty(dropdownId: string, propertyName: string, propertyValue: unknown): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Dropdown.FailChangeProperty,
+			callback: () => {
+				const _dropdownItem = GetDropdownById(dropdownId);
 
-		try {
-			const _dropdownItem = GetDropdownById(dropdownId);
+				_dropdownItem.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-			_dropdownItem.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Dropdown.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -39,23 +32,36 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @return {*} {string} Return Message Success or message of error info if it's the case.
 	 */
 	export function Clear(dropdownId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Dropdown.FailClear,
+			callback: () => {
+				const _dropdownItem = GetDropdownById(dropdownId);
 
-		try {
-			const _dropdownItem = GetDropdownById(dropdownId);
+				_dropdownItem.clear();
+			},
+		});
 
-			_dropdownItem.clear();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Dropdown.FailClear;
-		}
+		return result;
+	}
 
-		return JSON.stringify(responseObj);
+	/**
+	 * Function that will Close the Dropdown with the given Id
+	 *
+	 * @export
+	 * @param {string} dropdownId
+	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 */
+	export function Close(dropdownId: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Dropdown.FailClose,
+			callback: () => {
+				const _dropdownItem = GetDropdownById(dropdownId);
+
+				_dropdownItem.close();
+			},
+		});
+
+		return result;
 	}
 
 	/**
@@ -91,23 +97,16 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @return {*} {string} Return Message Success or message of error info if it's the case.
 	 */
 	export function Disable(dropdownId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Dropdown.FailDisable,
+			callback: () => {
+				const _dropdownItem = GetDropdownById(dropdownId);
 
-		try {
-			const _dropdownItem = GetDropdownById(dropdownId);
+				_dropdownItem.disable();
+			},
+		});
 
-			_dropdownItem.disable();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Dropdown.FailDisable;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -119,22 +118,15 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @return {*} {string} Return Message Success or message of error info if it's the case.
 	 */
 	export function TogglePopup(dropdownId: string, isEnabled: boolean): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Dropdown.FailTogglePopup,
+			callback: () => {
+				const _dropdownItem = GetDropdownById(dropdownId) as VirtualSelect;
+				_dropdownItem.togglePopup(isEnabled);
+			},
+		});
 
-		try {
-			const _dropdownItem = GetDropdownById(dropdownId) as VirtualSelect;
-			_dropdownItem.togglePopup(isEnabled);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Dropdown.FailDisable;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -145,25 +137,18 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @return {*} {string} Return Message Success or message of error info if it's the case.
 	 */
 	export function Dispose(dropdownId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Dropdown.FailDispose,
+			callback: () => {
+				const _dropdownItem = GetDropdownById(dropdownId);
 
-		try {
-			const _dropdownItem = GetDropdownById(dropdownId);
+				_dropdownItem.dispose();
 
-			_dropdownItem.dispose();
+				_dropdownItemsMap.delete(_dropdownItem.uniqueId);
+			},
+		});
 
-			_dropdownItemsMap.delete(_dropdownItem.uniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Dropdown.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -174,23 +159,16 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @return {*} {string} Return Message Success or message of error info if it's the case.
 	 */
 	export function Enable(dropdownId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Dropdown.FailEnable,
+			callback: () => {
+				const _dropdownItem = GetDropdownById(dropdownId);
 
-		try {
-			const _dropdownItem = GetDropdownById(dropdownId);
+				_dropdownItem.enable();
+			},
+		});
 
-			_dropdownItem.enable();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Dropdown.FailEnable;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -226,24 +204,37 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @return {*}  {string}
 	 */
 	export function GetSelectedValues(dropdownId: string): string {
-		const responseObj = {
-			code: ErrorCodes.Success.code,
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			value: '',
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Dropdown.FailGetSelectedValues,
+			hasValue: true,
+			callback: () => {
+				const _dropdownItem = GetDropdownById(dropdownId);
 
-		try {
-			const _dropdownItem = GetDropdownById(dropdownId);
+				return _dropdownItem.getSelectedValues();
+			},
+		});
 
-			responseObj.value = _dropdownItem.getSelectedValues();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Dropdown.FailGetSelectedValues;
-		}
+		return result;
+	}
 
-		return JSON.stringify(responseObj);
+	/**
+	 * Function that will Open the Dropdown with the given Id
+	 *
+	 * @export
+	 * @param {string} dropdownId
+	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 */
+	export function Open(dropdownId: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Dropdown.FailOpen,
+			callback: () => {
+				const _dropdownItem = GetDropdownById(dropdownId);
+
+				_dropdownItem.open();
+			},
+		});
+
+		return result;
 	}
 
 	/**
@@ -275,23 +266,16 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 		eventName: string,
 		callback: OSFramework.GlobalCallbacks.OSGeneric
 	): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Dropdown.FailRegisterCallback,
+			callback: () => {
+				const _dropdownItem = this.GetDropdownById(dropdownId);
 
-		try {
-			const _dropdownItem = this.GetDropdownById(dropdownId);
+				_dropdownItem.registerCallback(eventName, callback);
+			},
+		});
 
-			_dropdownItem.registerCallback(eventName, callback);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Dropdown.FailRegisterCallback;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -303,30 +287,21 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @return {*}  {string}
 	 */
 	export function SetProviderConfigs(dropdownId: string, providerConfigs: DatePickerProviderConfigs): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Dropdown.FailRegisterProviderConfig,
+			callback: () => {
+				const _dropdownItem = GetDropdownById(dropdownId);
 
-		try {
-			const _dropdownItem = GetDropdownById(dropdownId);
+				// Check if the given Dropdown has a provider (DropdownServerSide do not have it!)
+				if (_dropdownItem['provider'] !== undefined) {
+					_dropdownItem.setProviderConfigs(providerConfigs);
+				} else {
+					throw new Error(`Dropdown with Id:${dropdownId} does not have a provider.`);
+				}
+			},
+		});
 
-			// Check if the given Dropdown has a provider (DropdownServerSide do not have it!)
-			if (_dropdownItem['provider'] !== undefined) {
-				_dropdownItem.setProviderConfigs(providerConfigs);
-			} else {
-				responseObj.isSuccess = false;
-				responseObj.message = `Dropdown with Id:${dropdownId} does not have a provider.`;
-				responseObj.code = ErrorCodes.DatePicker.FailRegisterProviderConfig;
-			}
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DatePicker.FailRegisterProviderConfig;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -343,26 +318,19 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 		eventName: string,
 		callback: OSFramework.GlobalCallbacks.Generic
 	): string {
-		const _eventUniqueId = OSFramework.Helper.Dom.GenerateUniqueId();
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Dropdown.FailRegisterProviderEvent,
+			hasValue: true,
+			callback: () => {
+				const _eventUniqueId = OSFramework.Helper.Dom.GenerateUniqueId();
+				const dropdown = GetDropdownById(dropdownId);
+				dropdown.setProviderEvent(eventName, callback, _eventUniqueId);
 
-		const responseObj = {
-			uniqueId: _eventUniqueId,
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+				return _eventUniqueId;
+			},
+		});
 
-		try {
-			const dropdown = GetDropdownById(dropdownId);
-			dropdown.setProviderEvent(eventName, callback, _eventUniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Dropdown.FailRegisterProviderEvent;
-			responseObj.uniqueId = undefined;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -374,22 +342,15 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @return {*}  {string}
 	 */
 	export function UnsetProviderEvent(dropdownId: string, eventId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Dropdown.FailRemoveProviderEvent,
+			callback: () => {
+				const dropdown = GetDropdownById(dropdownId);
+				dropdown.unsetProviderEvent(eventId);
+			},
+		});
 
-		try {
-			const dropdown = GetDropdownById(dropdownId);
-			dropdown.unsetProviderEvent(eventId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Dropdown.FailRemoveProviderEvent;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -402,23 +363,38 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 * @return {*} {string} Return Message Success or message of error info if it's the case.
 	 */
 	export function SetValidation(dropdownId: string, isValid: boolean, validationMessage: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Dropdown.FailSetValidation,
+			callback: () => {
+				const _dropdownItem = GetDropdownById(dropdownId);
 
-		try {
-			const _dropdownItem = GetDropdownById(dropdownId);
+				_dropdownItem.validation(isValid, validationMessage);
+			},
+		});
 
-			_dropdownItem.validation(isValid, validationMessage);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Dropdown.FailSetValidation;
-		}
+		return result;
+	}
 
-		return JSON.stringify(responseObj);
+	/**
+	 * Function used to set the value(s) of a given Dropdown Id
+	 *
+	 * @export
+	 * @param {string} dropdownId
+	 * @param {string} selectedValues
+	 * @param {boolean} silentOnChangedEvent
+	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 */
+	export function SetValues(dropdownId: string, selectedValues: string, silentOnChangedEvent = true): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Dropdown.FailSetValues,
+			callback: () => {
+				const _dropdownItem = GetDropdownById(dropdownId) as VirtualSelect;
+
+				_dropdownItem.setValue(JSON.parse(selectedValues), silentOnChangedEvent);
+			},
+		});
+
+		return result;
 	}
 
 	/**

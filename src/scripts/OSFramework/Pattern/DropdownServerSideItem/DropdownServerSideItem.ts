@@ -184,6 +184,10 @@ namespace OSFramework.Patterns.DropdownServerSideItem {
 			this.setCallbacks();
 			this._setUpEvents();
 			this.setA11YProperties();
+
+			// Update the Status value with the it's Toggled value
+			this._updateSelectedStatus(this.configs.IsSelected);
+
 			this.finishBuild();
 		}
 

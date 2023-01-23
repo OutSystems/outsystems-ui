@@ -10,23 +10,16 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 * @return {*}  {string}
 	 */
 	export function AllowTitleEvents(accordionItemId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.AccordionItem.FailAllowTitleEvents,
+			callback: () => {
+				const accordionItem = GetAccordionItemById(accordionItemId);
 
-		try {
-			const accordionItem = GetAccordionItemById(accordionItemId);
+				accordionItem.allowTitleEvents();
+			},
+		});
 
-			accordionItem.allowTitleEvents();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.AccordionItem.FailExpandItem;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -38,23 +31,16 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	export function ChangeProperty(accordionItemId: string, propertyName: string, propertyValue: unknown): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.AccordionItem.FailChangeProperty,
+			callback: () => {
+				const accordionItem = GetAccordionItemById(accordionItemId);
 
-		try {
-			const accordionItem = GetAccordionItemById(accordionItemId);
+				accordionItem.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-			accordionItem.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.AccordionItem.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -64,23 +50,16 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 * @param {string} accordionItemId
 	 */
 	export function Collapse(accordionItemId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.AccordionItem.FailCollapseItem,
+			callback: () => {
+				const accordionItem = GetAccordionItemById(accordionItemId);
 
-		try {
-			const accordionItem = GetAccordionItemById(accordionItemId);
+				accordionItem.close();
+			},
+		});
 
-			accordionItem.close();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.AccordionItem.FailCollapseItem;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -115,28 +94,21 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 * Function that will dispose the instance of the given Accordrion Item
 	 *
 	 * @export
-	 * @param {string} accordrionItemId
+	 * @param {string} accordionItemId
 	 */
 	export function Dispose(accordionItemId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.AccordionItem.FailDispose,
+			callback: () => {
+				const accordionItem = GetAccordionItemById(accordionItemId);
 
-		try {
-			const accordionItem = GetAccordionItemById(accordionItemId);
+				accordionItem.dispose();
 
-			accordionItem.dispose();
+				_accordionItemMap.delete(accordionItem.uniqueId);
+			},
+		});
 
-			_accordionItemMap.delete(accordionItem.uniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.AccordionItem.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -146,23 +118,16 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 * @param {string} accordionItemId
 	 */
 	export function Expand(accordionItemId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.AccordionItem.FailExpandItem,
+			callback: () => {
+				const accordionItem = GetAccordionItemById(accordionItemId);
 
-		try {
-			const accordionItem = GetAccordionItemById(accordionItemId);
+				accordionItem.open();
+			},
+		});
 
-			accordionItem.open();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.AccordionItem.FailExpandItem;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -213,22 +178,15 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 * @param {*} callback
 	 */
 	export function RegisterCallback(accordionItemId: string, callback: OSFramework.GlobalCallbacks.Generic): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.AccordionItem.FailRegisterCallback,
+			callback: () => {
+				const accordionItem = GetAccordionItemById(accordionItemId);
 
-		try {
-			const accordionItem = GetAccordionItemById(accordionItemId);
+				accordionItem.registerCallback(callback);
+			},
+		});
 
-			accordionItem.registerCallback(callback);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.AccordionItem.FailRegisterCallback;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 }

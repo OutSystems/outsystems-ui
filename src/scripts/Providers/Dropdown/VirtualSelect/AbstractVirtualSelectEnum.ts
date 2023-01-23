@@ -5,7 +5,7 @@ namespace Providers.Dropdown.VirtualSelect.Enum {
 	 */
 	export enum ProviderInfo {
 		Name = 'VirtualSelect',
-		Version = '1.0.31',
+		Version = '1.0.37',
 	}
 
 	/**
@@ -36,6 +36,14 @@ namespace Providers.Dropdown.VirtualSelect.Enum {
 		Prompt = 'Prompt',
 		SearchPrompt = 'SearchPrompt',
 		StartingSelection = 'StartingSelection',
+	}
+
+	/**
+	 * Properties values
+	 */
+	export enum PropertiesValues {
+		AriaLabelMultipleValue = 'Select one or more options',
+		AriaLabelSingleValue = 'Select an option',
 	}
 
 	/**

@@ -62,20 +62,16 @@ namespace OSFramework.Patterns.Accordion {
 		 * Method to add a new accordionItem
 		 *
 		 * @param {string} uniqueId
-		 * @param {AccordionItem.IAccordionItem} accordionItem
 		 * @memberof OSFramework.Patterns.Accordion.Accordion
 		 */
-		public addAccordionItem(childId: string): void {
-			// Get the ChildItem reference
-			const childItem = OutSystems.OSUI.Patterns.AccordionItemAPI.GetAccordionItemById(childId);
-
-			if (this.getChild(childId)) {
+		public addAccordionItem(childItem: Patterns.AccordionItem.AccordionItem): void {
+			if (this.getChild(childItem.uniqueId)) {
 				throw new Error(
 					`${ErrorCodes.Accordion.FailSetNewChildItem}: There is already a ${GlobalEnum.PatternName.AccordionItem} under Id: '${childItem.widgetId}' added to ${GlobalEnum.PatternName.Accordion} with uniqueId: ${this.uniqueId}.`
 				);
 			} else {
 				// Store Child Item
-				this.setChild(childId, childItem);
+				this.setChild(childItem);
 			}
 
 			// If we're adding to an accordion w/Multiple Items set to false & this item is expanded,
@@ -92,16 +88,19 @@ namespace OSFramework.Patterns.Accordion {
 		 * @param notifiedTo {Enum.ChildNotifyActionType} triggered notification type
 		 * @memberof OSFramework.Patterns.Accordion.Accordion
 		 */
-		public beNotifiedByChild(childId: string, notifiedTo: Enum.ChildNotifyActionType): void {
+		public beNotifiedByChild(
+			childItem: Patterns.AccordionItem.AccordionItem,
+			notifiedTo: Enum.ChildNotifyActionType
+		): void {
 			switch (notifiedTo) {
 				case Enum.ChildNotifyActionType.Add:
-					this.addAccordionItem(childId);
+					this.addAccordionItem(childItem);
 					break;
 				case Enum.ChildNotifyActionType.Click:
-					this.triggerAccordionItemClose(childId);
+					this.triggerAccordionItemClose(childItem.uniqueId);
 					break;
 				case Enum.ChildNotifyActionType.Removed:
-					this.removeAccordionItem(childId);
+					this.removeAccordionItem(childItem.uniqueId);
 					break;
 				default:
 					throw new Error(

@@ -1,4 +1,4 @@
-/*! Patterns - Navigation - Tabs */
+/* Patterns - Navigation - Tabs */
 ////
 /// @group Patterns-Tabs
 /// Patterns - Navigation - Tabs
@@ -59,7 +59,7 @@
 		& > .osui-tabs__header {
 			align-content: start;
 			grid-template-rows: repeat(var(--tabs-header-items), var(--header-item-alignment));
-			overflow-y: auto;
+			overflow-y: hidden;
 			overflow-x: hidden;
 
 			.osui-tabs__header-item {
@@ -67,7 +67,7 @@
 			}
 
 			& > .osui-tabs__header__indicator {
-				min-height: var(--tabs-indicator-size);
+				height: var(--tabs-indicator-size);
 				position: absolute;
 				top: 0;
 				transform: translateY(var(--tabs-indicator-transform)) translateX(0) translateZ(0)

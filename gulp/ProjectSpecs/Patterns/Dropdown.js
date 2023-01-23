@@ -4,17 +4,13 @@
 const patternInfo = {
     "codeName": "Dropdown",
     "scss": "../scripts/OSFramework/Pattern/Dropdown/scss/dropdown",
-    "section": "Interaction",
+    "section": "Advanced",
 
     "assets": [
         {
             "codeName": "Search",
-            "inDevelopment": true,
+            "inDevelopment": false,
             "name": "Dropdown Search",
-            "provider": {
-                "name": "VirtualSelect",
-                "version": "v1.0.31"
-            },
             "scss": "../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-search"
         },
         
@@ -22,18 +18,7 @@ const patternInfo = {
             "codeName": "Tags",
             "inDevelopment": false,
             "name": "Dropdown Tags",
-            "provider": {
-                "name": "VirtualSelect",
-                "version": "v1.0.31"
-            },
             "scss": "../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-tags"
-        },
-        
-        {
-            "codeName": "ServerSide",
-            "inDevelopment": true,
-            "name": "Dropdown ServerSide",
-            "scss": "../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-serverside"
         }
     ]
 };

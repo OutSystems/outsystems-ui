@@ -231,20 +231,8 @@ namespace Providers.Dropdown.VirtualSelect {
 			let validatedValue = undefined;
 
 			switch (key) {
-				case Enum.Properties.NoOptionsText:
-					validatedValue = this.validateString(value as string, undefined);
-					break;
-				case Enum.Properties.NoResultsText:
-					validatedValue = this.validateString(value as string, undefined);
-					break;
 				case Enum.Properties.OptionsList:
 					validatedValue = value as DropDownOption;
-					break;
-				case Enum.Properties.Prompt:
-					validatedValue = this.validateString(value as string, undefined);
-					break;
-				case Enum.Properties.SearchPrompt:
-					validatedValue = this.validateString(value as string, undefined);
 					break;
 				case Enum.Properties.StartingSelection:
 					validatedValue = value as DropDownOption;

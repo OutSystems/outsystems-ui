@@ -11,23 +11,16 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	export function ChangeProperty(tabsId: string, propertyName: string, propertyValue: unknown): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Tabs.FailChangeProperty,
+			callback: () => {
+				const tabs = GetTabsById(tabsId);
 
-		try {
-			const tabs = GetTabsById(tabsId);
+				tabs.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-			tabs.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Tabs.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -59,25 +52,18 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	 * @param {string} tabsId
 	 */
 	export function Dispose(tabsId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Tabs.FailDispose,
+			callback: () => {
+				const tabs = GetTabsById(tabsId);
 
-		try {
-			const tabs = GetTabsById(tabsId);
+				tabs.dispose();
 
-			tabs.dispose();
+				_tabsMap.delete(tabs.uniqueId);
+			},
+		});
 
-			_tabsMap.delete(tabs.uniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Tabs.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -124,23 +110,16 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	 * @param {*} callback
 	 */
 	export function RegisterCallback(tabsId: string, callback: OSFramework.GlobalCallbacks.OSGeneric): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Tabs.FailRegisterCallback,
+			callback: () => {
+				const tabs = GetTabsById(tabsId);
 
-		try {
-			const tabs = GetTabsById(tabsId);
+				tabs.registerCallback(callback);
+			},
+		});
 
-			tabs.registerCallback(callback);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Tabs.FailRegisterCallback;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -151,23 +130,16 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	 * @param {boolean} enableSwipe
 	 */
 	export function TabsToggleSwipe(tabsId: string, enableSwipe: boolean): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Tabs.FailToggleSwipe,
+			callback: () => {
+				const tabs = GetTabsById(tabsId);
 
-		try {
-			const tabs = GetTabsById(tabsId);
+				tabs.toggleDragGestures(enableSwipe);
+			},
+		});
 
-			tabs.toggleDragGestures(enableSwipe);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Tabs.FailToggleSwipe;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -178,22 +150,15 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	 * @param {number} tabsNumber
 	 */
 	export function SetActiveTab(tabsId: string, tabsNumber: number): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Tabs.FailSetActive,
+			callback: () => {
+				const tabs = GetTabsById(tabsId);
 
-		try {
-			const tabs = GetTabsById(tabsId);
+				tabs.changeTab(tabsNumber, undefined, true);
+			},
+		});
 
-			tabs.changeTab(tabsNumber, undefined, true);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Tabs.FailSetActive;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 }

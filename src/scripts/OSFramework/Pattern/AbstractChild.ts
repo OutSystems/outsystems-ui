@@ -34,7 +34,7 @@ namespace OSFramework.Patterns {
 		 * @memberof OSFramework.Patterns.AbstractChild
 		 */
 		protected notifyParent(actionType: string): void {
-			this._parentObject.beNotifiedByChild(this.uniqueId, actionType);
+			this._parentObject.beNotifiedByChild(this, actionType);
 		}
 
 		/**

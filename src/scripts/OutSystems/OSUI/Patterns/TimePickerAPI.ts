@@ -12,23 +12,16 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 	export function ChangeProperty(timePickerId: string, propertyName: string, propertyValue: any): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.TimePicker.FailChangeProperty,
+			callback: () => {
+				const _timePickerItem = GetTimePickerItemById(timePickerId);
 
-		try {
-			const _timePickerItem = GetTimePickerItemById(timePickerId);
+				_timePickerItem.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-			_timePickerItem.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.TimePicker.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -38,23 +31,16 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	 * @return {*}  {OSFramework.Patterns.TimePicker.ITimePicker}
 	 */
 	export function Clear(timePickerId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.TimePicker.FailClear,
+			callback: () => {
+				const _timePickerItem = GetTimePickerItemById(timePickerId);
 
-		try {
-			const _timePickerItem = GetTimePickerItemById(timePickerId);
+				_timePickerItem.clear();
+			},
+		});
 
-			_timePickerItem.clear();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.TimePicker.FailClear;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -64,23 +50,16 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	 * @return {*}  {OSFramework.Patterns.TimePicker.ITimePicker}
 	 */
 	export function Close(timePickerId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.TimePicker.FailClose,
+			callback: () => {
+				const _timePickerItem = GetTimePickerItemById(timePickerId);
 
-		try {
-			const _timePickerItem = GetTimePickerItemById(timePickerId);
+				_timePickerItem.close();
+			},
+		});
 
-			_timePickerItem.close();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.TimePicker.FailClose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -116,22 +95,15 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	 * @return {*}  {string}
 	 */
 	export function ToggleNativeBehavior(timePickerId: string, IsNative: boolean): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.TimePicker.FailToggleNativeBehavior,
+			callback: () => {
+				const _timePicker = this.GetTimePickerItemById(timePickerId);
+				_timePicker.toggleNativeBehavior(IsNative);
+			},
+		});
 
-		try {
-			const _timePicker = this.GetTimePickerItemById(timePickerId);
-			_timePicker.toggleNativeBehavior(IsNative);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.TimePicker.FailRedraw;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -141,25 +113,18 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	 * @param {string} timePickerId
 	 */
 	export function Dispose(timePickerId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.TimePicker.FailDispose,
+			callback: () => {
+				const _timePickerItem = GetTimePickerItemById(timePickerId);
 
-		try {
-			const _timePickerItem = GetTimePickerItemById(timePickerId);
+				_timePickerItem.dispose();
 
-			_timePickerItem.dispose();
+				_timePickerItemsMap.delete(_timePickerItem.uniqueId);
+			},
+		});
 
-			_timePickerItemsMap.delete(_timePickerItem.uniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.TimePicker.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -209,23 +174,16 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	 * @return {*}  {OSFramework.Patterns.TimePicker.ITimePicker}
 	 */
 	export function Open(timePickerId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.TimePicker.FailOpen,
+			callback: () => {
+				const _timePickerItem = GetTimePickerItemById(timePickerId);
 
-		try {
-			const _timePickerItem = GetTimePickerItemById(timePickerId);
+				_timePickerItem.open();
+			},
+		});
 
-			_timePickerItem.open();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.TimePicker.FailOpen;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -241,23 +199,16 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 		eventName: string,
 		callback: OSFramework.GlobalCallbacks.OSGeneric
 	): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.TimePicker.FailRegisterCallback,
+			callback: () => {
+				const _timePicker = this.GetTimePickerItemById(timePickerId);
 
-		try {
-			const _timePicker = this.GetTimePickerItemById(timePickerId);
+				_timePicker.registerCallback(eventName, callback);
+			},
+		});
 
-			_timePicker.registerCallback(eventName, callback);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.TimePicker.FailRegisterCallback;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -267,23 +218,16 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	 * @param {string} timePickerId
 	 */
 	export function Redraw(timePickerId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.TimePicker.FailRedraw,
+			callback: () => {
+				const _timePicker = this.GetTimePickerItemById(timePickerId);
 
-		try {
-			const _timePicker = this.GetTimePickerItemById(timePickerId);
+				_timePicker.redraw();
+			},
+		});
 
-			_timePicker.redraw();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.TimePicker.FailRedraw;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -294,23 +238,16 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	 * @returns
 	 */
 	export function SetLanguage(timePickerId: string, isoCode: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.TimePicker.FailSetLanguage,
+			callback: () => {
+				const _timePicker = this.GetTimePickerItemById(timePickerId);
 
-		try {
-			const _timePicker = this.GetTimePickerItemById(timePickerId);
+				_timePicker.setLanguage(isoCode);
+			},
+		});
 
-			_timePicker.setLanguage(isoCode);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.TimePicker.FailRedraw;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -319,22 +256,15 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	 * @param {string} time The value for the InitialTime
 	 */
 	export function UpdateInitialTime(timePickerId: string, time: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.TimePicker.FailUpdateInitialTime,
+			callback: () => {
+				const _timePicker = this.GetTimePickerItemById(timePickerId);
+				_timePicker.updateInitialTime(time);
+			},
+		});
 
-		try {
-			const _timePicker = this.GetTimePickerItemById(timePickerId);
-			_timePicker.updateInitialTime(time);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.TimePicker.FailRedraw;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -346,23 +276,16 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	 * @return {*}  {string}
 	 */
 	export function SetProviderConfigs(timePickerId: string, providerConfigs: TimePickerProviderConfigs): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.TimePicker.FailRegisterProviderConfig,
+			callback: () => {
+				const timePicker = GetTimePickerItemById(timePickerId);
 
-		try {
-			const timePicker = GetTimePickerItemById(timePickerId);
+				timePicker.setProviderConfigs(providerConfigs);
+			},
+		});
 
-			timePicker.setProviderConfigs(providerConfigs);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.TimePicker.FailRegisterProviderConfig;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -379,26 +302,19 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 		eventName: string,
 		callback: OSFramework.GlobalCallbacks.Generic
 	): string {
-		const _eventUniqueId = OSFramework.Helper.Dom.GenerateUniqueId();
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.TimePicker.FailRegisterProviderEvent,
+			hasValue: true,
+			callback: () => {
+				const _eventUniqueId = OSFramework.Helper.Dom.GenerateUniqueId();
+				const timePicker = GetTimePickerItemById(timePickerId);
+				timePicker.setProviderEvent(eventName, callback, _eventUniqueId);
 
-		const responseObj = {
-			uniqueId: _eventUniqueId,
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+				return _eventUniqueId;
+			},
+		});
 
-		try {
-			const timePicker = GetTimePickerItemById(timePickerId);
-			timePicker.setProviderEvent(eventName, callback, _eventUniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.TimePicker.FailRegisterProviderEvent;
-			responseObj.uniqueId = undefined;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -410,22 +326,15 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	 * @return {*}  {string}
 	 */
 	export function UnsetProviderEvent(timePickerId: string, eventId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.TimePicker.FailRemoveProviderEvent,
+			callback: () => {
+				const timePicker = GetTimePickerItemById(timePickerId);
+				timePicker.unsetProviderEvent(eventId);
+			},
+		});
 
-		try {
-			const timePicker = GetTimePickerItemById(timePickerId);
-			timePicker.unsetProviderEvent(eventId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.TimePicker.FailRemoveProviderEvent;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -437,21 +346,14 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	 * @return {*}  {string}
 	 */
 	export function SetEditableInput(timePickerId: string, IsEditable: boolean): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.TimePicker.FailSetEditableInput,
+			callback: () => {
+				const _timePicker = this.GetTimePickerItemById(timePickerId);
+				_timePicker.setEditableInput(IsEditable);
+			},
+		});
 
-		try {
-			const _timePicker = this.GetTimePickerItemById(timePickerId);
-			_timePicker.setEditableInput(IsEditable);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.TimePicker.FailRedraw;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 }

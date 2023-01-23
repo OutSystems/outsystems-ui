@@ -12,16 +12,19 @@ namespace OutSystems.OSUI.ErrorCodes {
 	export const Dropdown = {
 		FailChangeProperty: 'OSUI-API-01001',
 		FailClear: 'OSUI-API-01002',
+		FailClose: 'OSUI-API-010014',
 		FailDisable: 'OSUI-API-01003',
 		FailDispose: 'OSUI-API-01004',
 		FailEnable: 'OSUI-API-01005',
 		FailGetSelectedValues: 'OSUI-API-01006',
+		FailOpen: 'OSUI-API-010015',
 		FailRegisterCallback: 'OSUI-API-01007',
-		FailSetValidation: 'OSUI-API-01008',
 		FailRegisterProviderConfig: 'OSUI-API-01009',
 		FailRegisterProviderEvent: 'OSUI-API-060010',
 		FailRemoveProviderEvent: 'OSUI-API-06011',
+		FailSetValidation: 'OSUI-API-01008',
 		FailSetValues: 'OSUI-API-06012',
+		FailTogglePopup: 'OSUI-API-01013',
 	};
 
 	export const Notification = {
@@ -221,6 +224,47 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailChangeProperty: 'OSUI-API-25001',
 		FailDispose: 'OSUI-API-25002',
 		FailRegisterCallback: 'OSUI-API-25003',
+		FailOpen: 'OSUI-API-25004',
+		FailClose: 'OSUI-API-25005',
+	};
+
+	export const TimePicker = {
+		FailChangeProperty: 'OSUI-API-26001',
+		FailClear: 'OSUI-API-26002',
+		FailClose: 'OSUI-API-26003',
+		FailDispose: 'OSUI-API-26004',
+		FailOpen: 'OSUI-API-26005',
+		FailRedraw: 'OSUI-API-26006',
+		FailRegisterCallback: 'OSUI-API-26007',
+		FailRegisterProviderConfig: 'OSUI-API-26008',
+		FailRegisterProviderEvent: 'OSUI-API-26009',
+		FailRemoveProviderEvent: 'OSUI-API-26010',
+		FailToggleNativeBehavior: 'OSUI-API-26011',
+		FailSetLanguage: 'OSUI-API-26012',
+		FailUpdateInitialTime: 'OSUI-API-26013',
+		FailSetEditableInput: 'OSUI-API-26014',
+	};
+
+	export const MonthPicker = {
+		FailChangeProperty: 'OSUI-API-27001',
+		FailClear: 'OSUI-API-27002',
+		FailClose: 'OSUI-API-27003',
+		FailDispose: 'OSUI-API-27004',
+		FailOpen: 'OSUI-API-27005',
+		FailRedraw: 'OSUI-API-27006',
+		FailRegisterCallback: 'OSUI-API-27007',
+		FailRegisterProviderConfig: 'OSUI-API-27008',
+		FailRegisterProviderEvent: 'OSUI-API-27009',
+		FailRemoveProviderEvent: 'OSUI-API-27010',
+		FailSetEditableInput: 'OSUI-API-27011',
+		FailSetLanguage: 'OSUI-API-27012',
+	};
+
+	//Error codes used on the context of the Utilities client actions
+	export const Utilities = {
+		FailGetInvalidInput: 'OSUI-API-28001',
+		FailScrollToElement: 'OSUI-API-28002',
+		FailSetFocus: 'OSUI-API-28003',
 	};
 
 	export const TimePicker = {

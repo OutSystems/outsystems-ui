@@ -1,48 +1,97 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace OutSystems.OSUI.Utils {
-	export function ScrollToElement(ElementId: string, IsSmooth = true, OffSet = 0): void {
-		if (ElementId) {
-			const elementToScrollTo = document.getElementById(ElementId);
+	/**
+	 * Function to scroll to a given element
+	 *
+	 * @export
+	 * @param {string} ElementId
+	 * @param {boolean} [IsSmooth=true]
+	 * @param {number} [OffSet=0]
+	 * @param {string} [ElementParentClass]
+	 * @param {number} [ScrollDelay]
+	 * @return {*}  {string}
+	 */
+	export function ScrollToElement(
+		ElementId: string,
+		IsSmooth = true,
+		OffSet = 0,
+		ElementParentClass?: string,
+		ScrollDelay?: number
+	): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Utilities.FailScrollToElement,
+			callback: () => {
+				const elementToScrollTo = OSFramework.Helper.Dom.GetElementById(ElementId);
 
-			if (elementToScrollTo) {
-				// The app element that has the scroll and where the scrollTo wiull be applied
-				const activeScreen = OSFramework.Helper.Dom.ClassSelector(
-					document,
-					OSFramework.GlobalEnum.CssClassElements.ActiveScreen
-				);
+				if (elementToScrollTo) {
+					// Selector for header fixed on Reactive templates and Native
+					const isHeaderFixed =
+						OSFramework.Helper.Dom.ClassSelector(
+							document,
+							OSFramework.GlobalEnum.CssClassElements.HeaderIsFixed
+						) ||
+						OSFramework.Helper.Dom.ClassSelector(
+							document,
+							OSFramework.GlobalEnum.CSSSelectors.LayoutNativeHeader
+						);
 
-				const header = OSFramework.Helper.Dom.ClassSelector(
-					document,
-					OSFramework.GlobalEnum.CssClassElements.Header
-				);
+					// Set ios-bounce selector
+					const isIosBounce = OSFramework.Helper.Dom.ClassSelector(
+						document,
+						OSFramework.GlobalEnum.CSSSelectors.IosBounceScroll
+					);
 
-				if (header) {
-					let top: number;
+					// Set the scroll behavior to be applied
 					const scrollBehavior = IsSmooth
 						? OSFramework.GlobalEnum.ScrollBehavior.Smooth
 						: OSFramework.GlobalEnum.ScrollBehavior.Auto;
 
-					const isHeaderFixed = OSFramework.Helper.Dom.ClassSelector(
+					// Set the default scroll HTML element
+					let scrollableElement = OSFramework.Helper.Dom.ClassSelector(
 						document,
-						OSFramework.GlobalEnum.CssClassElements.HeaderIsFixed
+						OSFramework.GlobalEnum.CssClassElements.ActiveScreen
 					);
 
-					// if fixed header, get the header height so that in the end it won't be covered by the header
-					if (isHeaderFixed) {
-						top = -header.offsetHeight + (elementToScrollTo.getBoundingClientRect().top + OffSet);
-					} else {
-						top = elementToScrollTo.getBoundingClientRect().top + OffSet;
+					// Set default scrollable html element based on ios device with bounce class applied
+					if (ElementParentClass !== OSFramework.Constants.EmptyString) {
+						const isElementParentClass = elementToScrollTo.closest(
+							OSFramework.Constants.Dot + ElementParentClass
+						);
+
+						if (isElementParentClass) {
+							scrollableElement = isElementParentClass as HTMLElement;
+						} else {
+							console.warn(`The element with class '${ElementParentClass}' doesn't exist on DOM.`);
+						}
+					} else if (isIosBounce) {
+						scrollableElement = isIosBounce;
 					}
 
-					if (activeScreen) {
-						activeScreen.scrollTo({
+					// Set the base value to apply on scroll, calculating the difference between the current scroll position and element to scroll
+					let top = scrollableElement.scrollTop + elementToScrollTo.getBoundingClientRect().top + OffSet;
+
+					// If fixed header, get the header height so that in the end it won't be covered by the header
+					if (isHeaderFixed) {
+						const header = OSFramework.Helper.Dom.ClassSelector(
+							document,
+							OSFramework.GlobalEnum.CssClassElements.Header
+						);
+
+						top = -header.offsetHeight + top;
+					}
+
+					// Check if element exist to prevent errors
+					setTimeout(() => {
+						scrollableElement.scrollTo({
 							top: top,
 							left: 0,
 							behavior: scrollBehavior,
 						});
-					}
+					}, ScrollDelay);
 				}
-			}
-		}
+			},
+		});
+
+		return result;
 	}
 }

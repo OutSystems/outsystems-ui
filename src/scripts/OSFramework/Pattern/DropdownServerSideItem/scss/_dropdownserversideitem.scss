@@ -1,4 +1,4 @@
-/*! Patterns - section - DropdownServerSideItem */
+/* Patterns - section - DropdownServerSideItem */
 ////
 /// @group Patterns-DropdownServerSideItem
 /// Patterns - section - DropdownServerSideItem
@@ -35,7 +35,7 @@
 		overflow: hidden;
 		pointer-events: none;
 
-		& *:first-child {
+		& > *:first-child {
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;

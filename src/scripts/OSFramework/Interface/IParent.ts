@@ -11,10 +11,10 @@ namespace OSFramework.Interface {
 		/**
 		 * Method used to be notified by a given dropdownOptionId about a given action and act accordingly
 		 *
-		 * @param childId Dropdown Option Item Id to be stored
+		 * @param childItem Child Item to be stored
 		 * @param notifiedTo triggered notification type name
 		 * @memberof OSFramework.Interface.IParent
 		 */
-		beNotifiedByChild(childId: string, notifiedTo: string): void;
+		beNotifiedByChild(childItem: IChild, notifiedTo: string): void;
 	}
 }

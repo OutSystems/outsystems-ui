@@ -1,4 +1,4 @@
-/*! Patterns - Interaction - DropdownServerSide */
+/* Patterns - Interaction - DropdownServerSide */
 ////
 /// @group Patterns-DropdownServerSide
 /// Patterns - Interaction - DropdownServerSide
@@ -121,11 +121,18 @@ $balloonMobileTopMargin: 5vh;
 			}
 		}
 
-		// Search placeholder
-		&-search {
+		// Search Wrapper
+		&-search-wrapper {
 			background-color: var(--color-neutral-0);
 			padding: var(--space-none);
 			position: relative;
+			display: flex;
+			align-items: center;
+		}
+
+		// Search placeholder
+		&-search {
+			flex: 1;
 
 			&:before {
 				align-items: center;
@@ -139,10 +146,8 @@ $balloonMobileTopMargin: 5vh;
 				top: 0;
 			}
 
-			/* Used this approach in order to avoid renderization issues since at andoird the 
-			border-bottom assigned to the search element was not getting applied due to list renderization */
-			&:empty + .osui-dropdown-serverside__balloon-content {
-				border-top: none;
+			&:empty + .osui-dropdown-serverside__balloon-search-icon {
+				display: none;
 			}
 
 			input,
@@ -156,6 +161,14 @@ $balloonMobileTopMargin: 5vh;
 				padding: var(--space-none) var(--space-s) var(--space-none) var(--space-xl);
 				width: 100%;
 			}
+		}
+
+		// Search Icon placeholder
+		&-search-icon {
+			align-items: center;
+			display: flex;
+			height: 100%;
+			padding: var(--space-none) var(--space-base);
 		}
 
 		// Options placeholder
@@ -177,14 +190,23 @@ $balloonMobileTopMargin: 5vh;
 			&::-webkit-scrollbar-thumb {
 				background-color: var(--color-neutral-6);
 			}
+
+			// Avoid having data-list above other elements in this context, such as a StickyTop SelectAll Option container.
+			& > *:not([data-list]) {
+				z-index: 1;
+			}
+		}
+
+		// If Search input do not exist, this modifier will be added!
+		&--has-not-search {
+			.osui-dropdown-serverside__balloon-content {
+				border-top: none;
+			}
 		}
 
 		// Footer placeholder
 		&-footer {
-			align-items: center;
 			border-top: var(--border-size-s) solid var(--color-neutral-5);
-			display: flex;
-			order: 3;
 			padding: var(--space-s) var(--space-base);
 		}
 	}
@@ -209,10 +231,10 @@ $balloonMobileTopMargin: 5vh;
 					border-top-width: var(--border-size-none);
 				}
 
-				&-search {
+				&-search-wrapper {
 					border-bottom: var(--border-size-none);
 					border-top: var(--border-size-s) solid var(--color-neutral-5);
-					order: 2;
+					order: 3;
 				}
 			}
 		}

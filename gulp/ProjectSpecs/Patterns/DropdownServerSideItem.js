@@ -3,10 +3,10 @@
 **/
 const patternInfo =  {
     "codeName": "DropdownServerSideItem",
-    "inDevelopment": true,
+    "inDevelopment": false,
     "name": "Dropdown ServerSide Item",
     "scss": "../scripts/OSFramework/Pattern/DropdownServerSideItem/scss/dropdownserversideitem",
-    "section": "Interaction",
+    "section": "Advanced",
 };
 
 // Expose patterns info!

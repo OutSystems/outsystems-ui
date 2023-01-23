@@ -11,23 +11,16 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	 * @param {unknown} propertyValue Value that will be set to the property
 	 */
 	export function ChangeProperty(buttonLoadingId: string, propertyName: string, propertyValue: unknown): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.ButtonLoading.FailChangeProperty,
+			callback: () => {
+				const buttonLoading = GetButtonLoadingById(buttonLoadingId);
 
-		try {
-			const buttonLoading = GetButtonLoadingById(buttonLoadingId);
+				buttonLoading.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-			buttonLoading.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.ButtonLoading.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -65,25 +58,18 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	 * @param {string} ButtonLoadingId
 	 */
 	export function Dispose(buttonLoadingId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.ButtonLoading.FailDispose,
+			callback: () => {
+				const buttonLoading = GetButtonLoadingById(buttonLoadingId);
 
-		try {
-			const buttonLoading = GetButtonLoadingById(buttonLoadingId);
+				buttonLoading.dispose();
 
-			buttonLoading.dispose();
+				_buttonsLoadingMap.delete(buttonLoading.uniqueId);
+			},
+		});
 
-			_buttonsLoadingMap.delete(buttonLoading.uniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.ButtonLoading.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**

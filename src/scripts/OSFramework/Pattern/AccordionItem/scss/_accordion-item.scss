@@ -1,4 +1,4 @@
-/*! Patterns - Content - Accordion Item */
+/* Patterns - Content - Accordion Item */
 ////
 /// @group Patterns-Accordion_Item
 /// Patterns - Content - Accordion Item
@@ -71,6 +71,13 @@
 
 			.osui-accordion-item__icon {
 				color: var(--color-neutral-6);
+
+				&--plus-minus {
+					&:after,
+					&:before {
+						background-color: var(--color-neutral-6);
+					}
+				}
 			}
 		}
 	}

@@ -126,8 +126,9 @@ namespace OutSystems.OSUI.Utils {
 	 * Example: $actions.MoveElement($parameters.WidgetId, ".active-screen .screen");
 	 * @param ElementId
 	 * @param TargetSelector
+	 * @param TimeoutVal {TimeoutVal=200}
 	 */
-	export function MoveElement(ElementId: string, TargetSelector: string): void {
+	export function MoveElement(ElementId: string, TargetSelector: string, TimeoutVal = 200): void {
 		if (TargetSelector && ElementId) {
 			const elementToMove = OSFramework.Helper.Dom.GetElementById(ElementId);
 			const targetElement = OSFramework.Helper.Dom.TagSelector(document.body, TargetSelector);
@@ -135,7 +136,7 @@ namespace OutSystems.OSUI.Utils {
 			if (elementToMove && targetElement) {
 				setTimeout(function () {
 					OSFramework.Helper.Dom.Move(elementToMove, targetElement);
-				}, 200);
+				}, TimeoutVal);
 			}
 		}
 	}
