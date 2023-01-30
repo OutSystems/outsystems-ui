@@ -40,6 +40,14 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 					OSFramework.OSUI.GlobalEnum.HTMLAttributes.DataInput,
 					''
 				);
+
+				// If the provider cloned a disabled platform input, remove the disable attribute form the provider input
+				if (this._flatpickrInputElem.disabled) {
+					OSFramework.OSUI.Helper.Dom.Attribute.Remove(
+						this._flatpickrInputElem,
+						OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled
+					);
+				}
 			}
 		}
 
