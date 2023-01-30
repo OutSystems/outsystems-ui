@@ -905,7 +905,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			// If there're more than one content item,
 			// then do scrollTo and change active content item
 			if (this._hasSingleContent === false) {
-				Helper.AsyncInvocation(this._changeActiveContentItem.bind(this), newTabIndex, triggeredByObserver);
+				this._changeActiveContentItem(newTabIndex, triggeredByObserver);
 			}
 
 			Helper.AsyncInvocation(this._handleTabIndicator.bind(this));
