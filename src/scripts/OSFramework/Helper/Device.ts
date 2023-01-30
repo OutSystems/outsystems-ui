@@ -450,7 +450,7 @@ namespace OSFramework.Helper {
 			// Store the window object where the orientation can be checked!
 			let windowOrientation = undefined;
 
-			if ('orientation' in window) {
+			if (window !== null && 'orientation' in window) {
 				// safari browser
 				windowOrientation = window.orientation;
 			} else if ('orientation' in window.screen) {
