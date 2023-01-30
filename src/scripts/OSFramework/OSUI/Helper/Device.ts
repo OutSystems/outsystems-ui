@@ -50,7 +50,7 @@ namespace OSFramework.OSUI.Helper {
 		Windows = 'windows',
 	}
 
-	/** @type {iphoneDetails} type that identifies a iPhoneX/iPhone12/iPhone13 */
+	/** @type {iphoneDetails} type that identifies a iPhoneX/iPhone11/iPhone12/iPhone13/iPhone14 */
 	type iphoneDetails = {
 		description: string;
 		height: number;
@@ -65,15 +65,28 @@ namespace OSFramework.OSUI.Helper {
 		{ width: 750, height: 1624, description: 'iphone xr scaled' },
 		{ width: 1242, height: 2688, description: 'iphone xs max' },
 
+		// iPhone11
+		{ width: 828, height: 1792, description: 'iphone 11' },
+		{ width: 1125, height: 2436, description: 'iphone 11 pro' },
+		{ width: 1242, height: 2688, description: 'iphone 11 pro max' },
+
 		// iPhone12
+		{ width: 1125, height: 2436, description: 'iphone 12 mini' },
 		{ width: 1170, height: 2532, description: 'iphone 12' },
+		{ width: 1170, height: 2532, description: 'iphone 12 pro' },
 		{ width: 1284, height: 2778, description: 'iphone 12 pro max' },
 
 		// iPhone13
-		{ width: 1170, height: 2532, description: 'iphone 13' },
 		{ width: 1125, height: 2436, description: 'iphone 13 mini' },
+		{ width: 1170, height: 2532, description: 'iphone 13' },
 		{ width: 1170, height: 2532, description: 'iphone 13 pro' },
 		{ width: 1284, height: 2778, description: 'iphone 13 pro max' },
+
+		// iPhone14
+		{ width: 1170, height: 2532, description: 'iphone 14' },
+		{ width: 1284, height: 2778, description: 'iphone 14 plus' },
+		{ width: 1179, height: 2556, description: 'iphone 14 pro' },
+		{ width: 1290, height: 2796, description: 'iphone 14 pro max' },
 	];
 
 	export abstract class DeviceInfo {
@@ -450,7 +463,7 @@ namespace OSFramework.OSUI.Helper {
 			// Store the window object where the orientation can be checked!
 			let windowOrientation = undefined;
 
-			if ('orientation' in window) {
+			if (window !== null && 'orientation' in window) {
 				// safari browser
 				windowOrientation = window.orientation;
 			} else if ('orientation' in window.screen) {
