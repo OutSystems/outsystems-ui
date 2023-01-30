@@ -50,7 +50,7 @@ namespace OSFramework.OSUI.Helper {
 		Windows = 'windows',
 	}
 
-	/** @type {iphoneDetails} type that identifies a iPhoneX/iPhone12/iPhone13 */
+	/** @type {iphoneDetails} type that identifies a iPhoneX/iPhone11/iPhone12/iPhone13/iPhone14 */
 	type iphoneDetails = {
 		description: string;
 		height: number;
