@@ -1,19 +1,22 @@
+const parseArgs = require('minimist');
 const prompts = require('prompts');
 const fs = require('fs');
 
 // Get the default specs
 const defaultSpecs = require("./../ProjectSpecs/DefaultSpecs");
 
+const gtaScriptOpts = parseArgs(process.argv.slice(3), { from: process.env.NODE_ENV || '' });
+
 // Store the new version
 let newVersionToBeSet = '';
 
-// list of files path to be updated
-let filesPath = [
-	'./gulp/ProjectSpecs/DefaultSpecs.js',
-	'./package-lock.json',
-	'./package.json',
-	'./src/scripts/OSFramework/OSUI/Constants.ts',
-]
+// List of files path to be updated
+let filesList = {
+	constants: './src/scripts/OSFramework/OSUI/Constants.ts',
+	package: './package.json',
+	readme: './README.md',
+	specs: './gulp/ProjectSpecs/DefaultSpecs.js',
+}
 
 // Prompt question about the new version to be set
 function askForNewVersion(cb) {
@@ -36,7 +39,7 @@ function askForNewVersion(cb) {
 		]);
 
 		if (answer.newVersion && answer.confirm === true) {
-			newVersionToBeSet = answer.newVersion;
+			newVersionToBeSet = answer.newVersion.replace("v", "");
 			getFilesList(cb);
 		} else {
 			console.warn(`\n ❌ Process has been canceled! \n \n`);
@@ -48,15 +51,53 @@ function askForNewVersion(cb) {
 // Get the list of file where the version must be updated!
 function getFilesList(cb) {	
 	// Go through all files to be updated!
-	for(const path of filesPath) {
+	for(const path in filesList) {
+		// Find for text
+		let findFor = '';
+		let replaceTo = '';
+
+
+		switch (filesList[path]) {
+			case filesList.constants:
+				findFor = `OSUIVersion = '${defaultSpecs.info.version}';`
+				replaceTo = `OSUIVersion = '${newVersionToBeSet}';`
+				break;
+
+			case filesList.package:
+				findFor = `"version": "${defaultSpecs.info.version}",`
+				replaceTo = `"version": "${newVersionToBeSet}",`
+				break;
+			
+			case filesList.readme:
+				findFor = `version-v${defaultSpecs.info.version}-brightgreen.svg`
+				replaceTo = `version-v${newVersionToBeSet}-brightgreen.svg`
+				break;
+
+			case filesList.specs:
+				findFor = `"version": "${defaultSpecs.info.version}",`
+				replaceTo = `"version": "${newVersionToBeSet}",`
+				break;
+		}
+
 		// Read file code
-		let code = fs.readFileSync(path, 'utf8');
+		let code = fs.readFileSync(filesList[path], 'utf8');
 		// Update code
-		let updatedCode = code.replaceAll(defaultSpecs.info.version, newVersionToBeSet.replace("v", ""));
+		let updatedCode = code.replace(findFor, replaceTo);
 		// Update the existing file info with the new one!
-		fs.writeFileSync(path, updatedCode, 'utf8');
+		fs.writeFileSync(filesList[path], updatedCode, 'utf8');
 	}
+
 	cb();
 }
 
+// Set the new version script triggered by the GitHub Action!
+function gtaSetNewVersion(cb) {	
+	let newVersion = gtaScriptOpts.from.replace("v", "").split(".");
+	// Increase into a new version
+	newVersionToBeSet = `${parseInt(newVersion[0])}.${parseInt(newVersion[1])+1}.${parseInt(newVersion[2])}`;
+
+	getFilesList(cb);
+}
+
 exports.setVersion = askForNewVersion;
+exports.gtaSetVersion = gtaSetNewVersion;

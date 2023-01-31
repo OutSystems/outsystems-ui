@@ -11,7 +11,8 @@
 		"lintfix": "eslint . --fix --ext .ts",
 		"prettier": "prettier --config ./.prettierrc.json --write \"**/*.+(js|ts|css)\"",
 		"setup": "npm i && npm run dev",
-		"update-version": "gulp updateVersion"
+		"update-version": "gulp updateVersion",
+		"gta-update-version": "gulp gtaSetVersion --from"
 	},
 	"author": "UI Components Team",
 	"devDependencies": {
