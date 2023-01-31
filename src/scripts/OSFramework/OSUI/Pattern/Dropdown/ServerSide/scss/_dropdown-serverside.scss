@@ -310,6 +310,18 @@ $balloonMobileTopMargin: 5vh;
 	}
 }
 
+// Inside other fixed patterns
+.osui-bottom-sheet--is-active {
+	.osui-dropdown-serverside--is-opened {
+		z-index: $bottom-sheet-zindex + 1;
+	}
+}
+
+.osui-dropdown-serverside-visible:has(.osui-sidebar--is-open) {
+	.osui-dropdown-serverside--is-opened {
+		z-index: $sidebar-zindex + 1;
+	}
+}
 // Accessibility -----------------------------------------------------------------
 ///
 .has-accessible-features {
