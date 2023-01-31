@@ -312,7 +312,7 @@ $balloonMobileTopMargin: 5vh;
 
 // Inside other fixed patterns
 .osui-bottom-sheet--is-active {
-	.osui-dropdown-serverside--is-opened {
+	.osui-dropdown-serverside--is-opened.osui-dropdown-serverside__balloon-wrapper {
 		z-index: $bottom-sheet-zindex + 1;
 	}
 }
