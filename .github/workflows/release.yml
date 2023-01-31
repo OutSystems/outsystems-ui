@@ -1,0 +1,153 @@
+name: release
+
+on:
+    release:
+        types: [released]
+
+jobs:
+    merge-rc:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+              with:
+                  ref: dev
+
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 16
+
+            - name: Get tags versions
+              id: get-tags
+              uses: JinoArch/get-latest-tag@latest
+
+            - name: Get lts version
+              id: split-lts-tag
+              uses: jungwinter/split@v2
+              with:
+                  msg: '${{ steps.get-tags.outputs.latestTag }}'
+                  separator: 'v'
+
+            - name: Merge rc${{ steps.split-lts-tag.outputs._1 }} into main
+              uses: everlytic/branch-merge@1.1.2
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  source_ref: rc${{ steps.split-lts-tag.outputs._1 }}
+                  target_branch: 'main'
+                  commit_message_template: 'Merged rc${{ steps.split-lts-tag.outputs._1 }} into main. [skip ci]'
+
+    delete-rc:
+        needs: merge-rc
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+              with:
+                  ref: main
+
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 16
+
+            - name: Get tags versions
+              id: get-tags
+              uses: JinoArch/get-latest-tag@latest
+
+            - name: Get lts version
+              id: split-lts-tag
+              uses: jungwinter/split@v2
+              with:
+                  msg: '${{ steps.get-tags.outputs.latestTag }}'
+                  separator: 'v'
+
+            - name: Delete rc${{ steps.split-lts-tag.outputs._1 }}
+              shell: bash
+              run: |
+                  git push origin -d rc${{ steps.split-lts-tag.outputs._1 }}
+
+    compile-prod:
+        needs: merge-rc
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+              with:
+                  ref: main
+
+            - run: npm install
+
+            - name: Compile Prod
+              run: npm run build
+
+            - name: Git Commit
+              uses: stefanzweifel/git-auto-commit-action@v4
+              with:
+                  branch: main
+                  commit_message: Compiled Production Mode [skip ci]
+
+    update-doc:
+        needs: compile-prod
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+              with:
+                  ref: main
+
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 16
+
+            - run: npm install
+
+            - name: Install graphviz
+              run: sudo apt install -y graphviz
+
+            - run: npm run docs
+
+            - name: Git Commit
+              uses: stefanzweifel/git-auto-commit-action@v4
+              with:
+                  branch: main
+                  commit_message: Update documentation [skip ci]
+
+    deploy-doc:
+        needs: update-doc
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v3
+              with:
+                  ref: main
+
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 16
+
+            - name: Push files into github page
+              uses: GuillaumeFalourd/copy-push-files@v1
+
+              with:
+                  source_files: docs/*
+                  remote_repository: https://github.com/outsystems-ui-docs/outsystems-ui-docs.github.io
+                  access_token: ${{ secrets.UICOMPONENTSDOCS }}
+                  target_branch: main
+                  commit_message: Deploy documentation.
+
+    publish-npm:
+        needs: update-doc
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+              with:
+                  ref: main
+
+            # - uses: actions/setup-node@v3
+            #   with:
+            #       node-version: 16
+            #       registry-url: https://registry.npmjs.org/
+
+            # - run: npm publish
+            #   env:
+            #       NODE_AUTH_TOKEN: ${{secrets.NPM_UICOMPONENTS}}
+
+            - name: NPM publish
+              shell: bash
+              run: |
+                  echo "Do NPM publish"
