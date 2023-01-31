@@ -54,3 +54,5 @@ exports.createProduction = series(
 );
 
 exports.updateScssFile = createScssFile.update_osui_scss_file_dev;
+exports.updateVersion = updatetVersion.setVersion;
+exports.gtaSetVersion = updatetVersion.gtaSetVersion;

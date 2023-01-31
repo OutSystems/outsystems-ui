@@ -6,11 +6,13 @@
 		"build": "gulp createProduction && npm run lint",
 		"create-osui-scss": "gulp updateScssFile",
 		"dev": "gulp startDevelopment",
+		"docs": "npx typedoc",
 		"lint": "eslint . --ext .ts",
 		"lintfix": "eslint . --fix --ext .ts",
 		"prettier": "prettier --config ./.prettierrc.json --write \"**/*.+(js|ts|css)\"",
 		"setup": "npm i && npm run dev",
-		"docs": "npx typedoc"
+		"update-version": "gulp updateVersion",
+		"gta-update-version": "gulp gtaSetVersion --from"
 	},
 	"author": "UI Components Team",
 	"devDependencies": {
