@@ -69,8 +69,8 @@ function getFilesList(cb) {
 				break;
 			
 			case filesList.readme:
-				findFor = `version-v${defaultSpecs.info.version}-brightgreen.svg`
-				replaceTo = `version-v${newVersionToBeSet}-brightgreen.svg`
+				findFor = `# OutSystems UI · v${defaultSpecs.info.version}`;
+				replaceTo = `# OutSystems UI · v${newVersionToBeSet}`;
 				break;
 
 			case filesList.specs:
