@@ -1,8 +1,9 @@
 name: pre-release
 
 on:
-    release:
-        types: [prereleased]
+    # release:
+    #     types: [prereleased]
+    workflow_dispatch:
 
 jobs:
     run-lint-and-prettier:
@@ -10,7 +11,8 @@ jobs:
         steps:
             - uses: actions/checkout@v3
               with:
-                  ref: dev
+                  # ref: dev
+                  ref: ROU-3588
 
             - uses: actions/setup-node@v3
 
@@ -24,7 +26,8 @@ jobs:
         steps:
             - uses: actions/checkout@v3
               with:
-                  ref: dev
+                  # ref: dev
+                  ref: ROU-3588
 
             - uses: actions/setup-node@v3
 
@@ -57,7 +60,8 @@ jobs:
         steps:
             - uses: actions/checkout@v3
               with:
-                  ref: dev
+                  # ref: dev
+                  ref: ROU-3588
 
             - uses: actions/setup-node@v3
 
@@ -90,7 +94,8 @@ jobs:
         steps:
             - uses: actions/checkout@v3
               with:
-                  ref: dev
+                  # ref: dev
+                  ref: ROU-3588
 
             - uses: actions/setup-node@v3
 
@@ -151,7 +156,8 @@ jobs:
         steps:
             - uses: actions/checkout@v3
               with:
-                  ref: dev
+                  # ref: dev
+                  ref: ROU-3588
 
             - uses: actions/setup-node@v3
 
