@@ -106,5 +106,7 @@ typings/
 **/Icon?
 **/.DS_Store
 
+package-lock.json
+
 # gta artifact
 new-version-artf.txt

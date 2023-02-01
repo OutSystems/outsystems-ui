@@ -8,7 +8,7 @@ const rename = require("gulp-rename");
 const sass = require('gulp-sass')(require('sass'));
 const sourcemaps = require('gulp-sourcemaps');
 
-const envType = {'development':'dev', 'production':'prod'}
+const envType = {'development':'dev.', 'production':''}
 const distFolder = './dist';
 const watchScssThemes = 'src/scss/*.scss';
 
@@ -39,7 +39,7 @@ function scssTranspile(envMode) {
 			)
 			.pipe(
 				rename({
-					prefix: envMode + '.',
+					prefix: envMode,
 				})
 			)
 			.pipe(sourcemaps.write('.'))
@@ -53,7 +53,7 @@ function scssTranspile(envMode) {
             }))
             .pipe(removeEmptyLines())
             .pipe(rename({
-                prefix: envMode + ".",
+                prefix: envMode,
             }))
             .pipe(gulp.dest(distFolder));    
     }
