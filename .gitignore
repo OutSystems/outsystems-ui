@@ -80,7 +80,6 @@ typings/
 
 # Nuxt.js build / generate output
 .nuxt
-dist
 
 # Gatsby files
 .cache/
@@ -106,3 +105,6 @@ dist
 # MacOS folder icon (hidden file)
 **/Icon?
 **/.DS_Store
+
+# gta artifact
+new-version-artf.txt
