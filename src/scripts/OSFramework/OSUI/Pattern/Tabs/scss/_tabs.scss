@@ -59,8 +59,7 @@
 		& > .osui-tabs__header {
 			align-content: start;
 			grid-template-rows: repeat(var(--tabs-header-items), var(--header-item-alignment));
-			overflow-y: hidden;
-			overflow-x: hidden;
+			overflow: hidden;
 
 			.osui-tabs__header-item {
 				flex: none;
