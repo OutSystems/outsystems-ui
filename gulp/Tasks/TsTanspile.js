@@ -7,7 +7,7 @@ const ts = require('gulp-typescript');
 
 const project = require('../ProjectSpecs/DefaultSpecs');
 
-const envType = {'development':'dev', 'production':'prod'};
+const envType = {'development':'dev.', 'production':''};
 const distFolder = './dist';
 
 let filePath = '';
@@ -27,10 +27,11 @@ function tsTranspile(envMode) {
     let tsResult;
     let tsProject = ts.createProject('tsconfig.json', {
         outDir: distFolder,
-        outFile: envMode + '.OutSystemsUI.js',
+        declaration: envMode === envType.production ? true : false,
+        outFile: envMode + 'OutSystemsUI.js',
     });
 
-    filePath = distFolder + "/" + envMode + '.OutSystemsUI.js';
+    filePath = distFolder + "/" + envMode + 'OutSystemsUI.js';
 
     if(envMode === envType.development) {
         tsResult = tsProject
@@ -42,7 +43,7 @@ function tsTranspile(envMode) {
     } else {
         tsResult = tsProject
             .src()
-            .pipe(tsProject()).js
+            .pipe(tsProject())
             .pipe(gulp.dest(distFolder));
     }
 
