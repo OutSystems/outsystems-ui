@@ -308,7 +308,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 
 				// If at this moment the active item has no size (NaN), set an observer to run this method when its size is changed
 				// This happens, as an example, when there're tabs inside tabs, and inner one has no size when it's built, due to being on a non-active tab
-				if (isNaN(newScaleValue)) {
+				if (isNaN(newScaleValue) || newScaleValue === 0) {
 					const resizeObserver = new ResizeObserver((entries) => {
 						for (const entry of entries) {
 							if (entry.contentBoxSize) {
