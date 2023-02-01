@@ -81,20 +81,29 @@ namespace Providers.OSUI.Carousel.Splide {
 		// Method to add the splide__slide class on each carousel item
 		private _prepareCarouselItems(): void {
 			// Define the element that has the items. The List widget if dynamic content, otherwise get from the placeholder directly
-			const targetList = this._hasList ? this._carouselListWidgetElem : this._carouselPlaceholderElem;
+			const _targetList = this._hasList ? this._carouselListWidgetElem : this._carouselPlaceholderElem;
+			const _childrenList = _targetList.children;
 
-			// Add the placeholder content already with the correct html structure per item, expected by the library
-			for (const item of targetList.children) {
-				if (!item.classList.contains(Enum.CssClass.SplideSlide)) {
-					item.classList.add(Enum.CssClass.SplideSlide);
+			if (_childrenList.length > 0) {
+				// Add the placeholder content already with the correct html structure per item, expected by the library
+				for (const item of _childrenList) {
+					if (!item.classList.contains(Enum.CssClass.SplideSlide)) {
+						item.classList.add(Enum.CssClass.SplideSlide);
+					}
 				}
 			}
 		}
 
-		// Ensure that the splide track maintains the correct width
-		private _setCarouselWidth(): void {
+		// Used on resize to refresh provider and redefine the width
+		private _redefineCarouselWidth(): void {
 			// Update UI on window resize
 			this.provider.refresh();
+			// Update css variable
+			this._setCarouselWidth();
+		}
+
+		// Ensure that the splide track maintains the correct width
+		private _setCarouselWidth(): void {
 			// Update css variable
 			OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
 				this._carouselTrackElem,
@@ -171,7 +180,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
 		 */
 		protected setCallbacks(): void {
-			this._eventOnResize = this._setCarouselWidth.bind(this);
+			this._eventOnResize = this._redefineCarouselWidth.bind(this);
 
 			// Add event listener for window resize
 			OSFramework.OSUI.Event.GlobalEventManager.Instance.addHandler(
