@@ -64,6 +64,7 @@ function getFilesList(cb) {
 				break;
 
 			case filesList.package:
+			case filesList.specs:
 				findFor = `"version": "${defaultSpecs.info.version}",`
 				replaceTo = `"version": "${newVersionToBeSet}",`
 				break;
@@ -71,11 +72,6 @@ function getFilesList(cb) {
 			case filesList.readme:
 				findFor = `# OutSystems UI · v${defaultSpecs.info.version}`;
 				replaceTo = `# OutSystems UI · v${newVersionToBeSet}`;
-				break;
-
-			case filesList.specs:
-				findFor = `"version": "${defaultSpecs.info.version}",`
-				replaceTo = `"version": "${newVersionToBeSet}",`
 				break;
 		}
 
