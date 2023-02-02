@@ -141,16 +141,11 @@ jobs:
               with:
                   ref: main
 
-            # - uses: actions/setup-node@v3
-            #   with:
-            #       node-version: 16
-            #       registry-url: https://registry.npmjs.org/
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 16
+                  registry-url: https://registry.npmjs.org/
 
-            # - run: npm publish
-            #   env:
-            #       NODE_AUTH_TOKEN: ${{secrets.NPM_UICOMPONENTS}}
-
-            - name: NPM publish
-              shell: bash
-              run: |
-                  echo "Do NPM publish"
+            - run: npm publish
+              env:
+                  NODE_AUTH_TOKEN: ${{secrets.NPM_UICOMPONENTS}}
