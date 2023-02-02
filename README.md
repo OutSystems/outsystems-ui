@@ -29,6 +29,7 @@ The OutSystems UI component, like all components, can be found in [OutSystems fo
 ### Where can you find documentation?
 
 The documentation can be found in the [OutSystems UI website](https://outsystemsui.outsystems.com/outsystemsuiwebsite/) and in [OutSystems product documentation](https://success.outsystems.com/Documentation/11/Developing_an_Application/Design_UI/Patterns).
+Code documentation can be found [here](https://outsystems-ui-docs.github.io/index.html) - This is a beta version of the code documentation.
 
 ### Why use this component?
 
