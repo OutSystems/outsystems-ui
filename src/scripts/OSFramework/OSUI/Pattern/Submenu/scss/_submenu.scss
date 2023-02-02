@@ -14,6 +14,23 @@
 		-servicestudio-height: auto !important;
 	}
 
+	// Multi level menu
+	&:first-of-type:not(.osui-submenu--is-open) {
+		.osui-submenu {
+			&__items {
+				display: none;
+				opacity: 0;
+			}
+
+			&__header .osui-submenu__header__icon {
+				top: -1px;
+				-webkit-transform: rotate(-45deg);
+				-ms-transform: rotate(-45deg);
+				transform: rotate(-45deg);
+			}
+		}
+	}
+
 	&:hover {
 		.osui-submenu__header__icon:before {
 			border: var(--border-size-s) solid var(--color-neutral-9);
@@ -52,9 +69,11 @@
 
 	&--is-open {
 		.osui-submenu {
-			&__header__icon {
-				top: 3px;
-				transform: rotate(135deg);
+			&__header {
+				&__icon {
+					top: 3px;
+					transform: rotate(135deg);
+				}
 			}
 
 			&__items {
@@ -63,21 +82,33 @@
 				transform: translateY(0px);
 			}
 		}
-
-		// This is needed for the OpenOnHover feature, to fit in the gap between submenu_header and items
-		&:after {
-			content: '';
-			height: 100%;
-			left: 0;
-			position: absolute;
-			right: 0;
-			top: 100%;
-		}
 	}
 
 	&--is-dropdown {
 		.osui-submenu__header__icon {
 			display: inline-flex;
+		}
+	}
+
+	&--is-hover {
+		&.osui-submenu {
+			&--is-open {
+				.osui-submenu {
+					&__header {
+						position: relative;
+
+						// This is needed for the OpenOnHover feature, to fit in the gap between submenu_header and items
+						&:after {
+							content: '';
+							height: 100%;
+							left: 0;
+							position: absolute;
+							right: 0;
+							top: 100%;
+						}
+					}
+				}
+			}
 		}
 	}
 

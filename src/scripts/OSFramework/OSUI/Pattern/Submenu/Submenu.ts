@@ -11,7 +11,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		private _eventOnMouseEnter: GlobalCallbacks.Generic;
 		private _eventOnMouseLeave: GlobalCallbacks.Generic;
 		private _globalEventBody: GlobalCallbacks.Generic;
-		private _globalEventOpen: GlobalCallbacks.Generic;
 		private _hasActiveLinks = false;
 		private _hasElements = false;
 		private _isActive = false;
@@ -52,9 +51,8 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		}
 
 		// Trigger the submenu at toggle behaviour
-		private _clickCallback(e: MouseEvent): void {
+		private _clickCallback(): void {
 			this._toggleSubmenu();
-			e.stopPropagation();
 		}
 
 		// Call methods to open or close, based ok e.key and behavior applied
@@ -106,15 +104,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			e.stopPropagation();
 		}
 
-		// Prevent close submenu based on a uniqueID validation, when his event is triggered
-		private _openCallback(element: string): void {
-			if (element !== this.uniqueId) {
-				if (this._isOpen) {
-					this.close();
-				}
-			}
-		}
-
 		// Remove submenu as active
 		private _removeActive(): void {
 			if (this._isActive) {
@@ -137,8 +126,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 					this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
 				}
 			}
-			// Remove global handlers
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.SubmenuOpen, this._globalEventOpen);
 
 			// Remove handler from Event Manager
 			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._globalEventBody);
@@ -160,6 +147,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 					this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
 					this._eventClick = undefined;
 
+					Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternIsHover);
 					this.selfElement.addEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
 					this.selfElement.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
 				}
@@ -183,8 +171,8 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			if (this._isOpen) {
 				this.close();
 			} else {
-				// Trigger event to close other submenu instances
-				Event.GlobalEventManager.Instance.trigger(Event.Type.SubmenuOpen, this.uniqueId);
+				// Add the body click handler to event manager
+				Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
 
 				// Make async the method call
 				Helper.AsyncInvocation(this._show.bind(this));
@@ -234,13 +222,9 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			// Define the callbacks that will be used
 			this._eventClick = this._clickCallback.bind(this);
 			this._eventKeypress = this._keypressCallback.bind(this);
-			this._globalEventOpen = this._openCallback.bind(this);
 			this._globalEventBody = this._bodyClickCallback.bind(this);
 			this._eventOnMouseEnter = this._onMouseEnterCallback.bind(this);
 			this._eventOnMouseLeave = this._onMouseLeaveCallback.bind(this);
-
-			// For support reasons, the use case of adding the open class by ExtendedClass on submenu we will add the handler to close all on body click
-			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
 
 			// Add events only if has elements inside
 			if (this._hasElements) {
@@ -251,9 +235,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 				this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
 			}
-
-			// Add the handler to Event Manager
-			Event.GlobalEventManager.Instance.addHandler(Event.Type.SubmenuOpen, this._globalEventOpen);
 		}
 
 		/**
@@ -313,7 +294,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			// Reassign the elements to undefined, preventing memory leaks
 			this._eventClick = undefined;
 			this._eventKeypress = undefined;
-			this._globalEventOpen = undefined;
 			this._globalEventBody = undefined;
 			this._eventOnMouseEnter = undefined;
 			this._eventOnMouseLeave = undefined;
@@ -379,6 +359,9 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 */
 		public close(): void {
 			if (this._isOpen) {
+				// Remove handler from Event Manager
+				Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._globalEventBody);
+
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.PatternIsOpen);
 
 				this._isOpen = false;
@@ -410,9 +393,14 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		public open(): void {
-			// Need to prevent the submenu will not be closed by the body click, use this flag to check.
+			// Keep the submenu open when using the Open api. After the first bodyclick, this will close
 			this._dynamicallyOpening = true;
-			this._show();
+
+			// Add the body click handler to event manager
+			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
+
+			// Make async the method call
+			Helper.AsyncInvocation(this._show.bind(this));
 
 			setTimeout(function () {
 				if (!this._dynamiclyOpening) {

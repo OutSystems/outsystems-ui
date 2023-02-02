@@ -4,7 +4,6 @@ namespace OSFramework.OSUI.Event {
 		BodyOnClick = 'body.onclick',
 		BodyOnScroll = 'body.onscroll',
 		OrientationChange = 'window.onorientationchange',
-		SubmenuOpen = 'submenu.open',
 		WindowResize = 'window.onresize',
 	}
 }
