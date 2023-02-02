@@ -1,4 +1,4 @@
-# OutSystems UI · v2.15.0
+# OutSystems UI · v2.14.0
 
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg) ![NPM version](https://img.shields.io/badge/npm-v8.3.1-informational)
 
