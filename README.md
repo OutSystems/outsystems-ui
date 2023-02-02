@@ -20,7 +20,7 @@ Create modern experiences with fully customizable responsive Screen Templates an
 -   Actions to deal with different device types
 -   Built for Reactive Web and Mobile apps
 
-Find out more in [OutSystems UI website](www.outsystems.com/outsystems-ui).
+Find out more in [OutSystems UI website](https://outsystemsui.outsystems.com/OutsystemsUiWebsite/).
 
 ### Where can you find the component?
 
