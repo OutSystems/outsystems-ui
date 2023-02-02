@@ -32,7 +32,7 @@ jobs:
             - name: Merge rc${{ steps.split-lts-tag.outputs._1 }} into main
               uses: everlytic/branch-merge@1.1.2
               with:
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  github_token: ${{ secrets.PAT }}
                   source_ref: rc${{ steps.split-lts-tag.outputs._1 }}
                   target_branch: 'main'
                   commit_message_template: 'Merged rc${{ steps.split-lts-tag.outputs._1 }} into main. [skip ci]'
