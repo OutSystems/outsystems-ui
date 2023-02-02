@@ -1,8 +1,9 @@
 name: release
 
 on:
-    release:
-        types: [released]
+    # release:
+    #     types: [released]
+    workflow_dispatch:
 
 jobs:
     merge-rc:
@@ -10,7 +11,8 @@ jobs:
         steps:
             - uses: actions/checkout@v3
               with:
-                  ref: dev
+                  # ref: dev
+                  ref: Wrokflow-Dev-Tests
 
             - uses: actions/setup-node@v3
               with:
@@ -32,7 +34,8 @@ jobs:
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   source_ref: rc${{ steps.split-lts-tag.outputs._1 }}
-                  target_branch: 'main'
+                  # target_branch: 'main'
+                  target_branch: 'Wrokflow-Main-Tests'
                   commit_message_template: 'Merged rc${{ steps.split-lts-tag.outputs._1 }} into main. [skip ci]'
 
     delete-rc:
@@ -41,7 +44,8 @@ jobs:
         steps:
             - uses: actions/checkout@v3
               with:
-                  ref: main
+                  # ref: main
+                  ref: Wrokflow-Main-Tests
 
             - uses: actions/setup-node@v3
               with:
@@ -69,7 +73,8 @@ jobs:
         steps:
             - uses: actions/checkout@v3
               with:
-                  ref: main
+                  # ref: main
+                  ref: Wrokflow-Main-Tests
 
             - run: npm install
 
@@ -79,7 +84,8 @@ jobs:
             - name: Git Commit
               uses: stefanzweifel/git-auto-commit-action@v4
               with:
-                  branch: main
+                  # branch: main
+                  branch: Wrokflow-Main-Tests
                   commit_message: Compiled Production Mode [skip ci]
 
     update-doc:
@@ -88,7 +94,8 @@ jobs:
         steps:
             - uses: actions/checkout@v3
               with:
-                  ref: main
+                  # ref: main
+                  ref: Wrokflow-Main-Tests
 
             - uses: actions/setup-node@v3
               with:
@@ -104,7 +111,8 @@ jobs:
             - name: Git Commit
               uses: stefanzweifel/git-auto-commit-action@v4
               with:
-                  branch: main
+                  # branch: main
+                  branch: Wrokflow-Main-Tests
                   commit_message: Update documentation [skip ci]
 
     deploy-doc:
@@ -114,7 +122,8 @@ jobs:
         steps:
             - uses: actions/checkout@v3
               with:
-                  ref: main
+                  # ref: main
+                  ref: Wrokflow-Main-Tests
 
             - uses: actions/setup-node@v3
               with:
@@ -127,7 +136,8 @@ jobs:
                   source_files: docs/*
                   remote_repository: https://github.com/outsystems-ui-docs/outsystems-ui-docs.github.io
                   access_token: ${{ secrets.UICOMPONENTSDOCS }}
-                  target_branch: main
+                  # target_branch: main
+                  target_branch: Wrokflow-Main-Tests
                   commit_message: Deploy documentation.
 
     publish-npm:
@@ -136,7 +146,8 @@ jobs:
         steps:
             - uses: actions/checkout@v3
               with:
-                  ref: main
+                  # ref: main
+                  ref: Wrokflow-Main-Tests
 
             # - uses: actions/setup-node@v3
             #   with:
