@@ -12,7 +12,7 @@ jobs:
             - uses: actions/checkout@v3
               with:
                   # ref: dev
-                  ref: ROU-3588-DEV
+                  ref: Wrokflow-Dev-Tests
 
             - uses: actions/setup-node@v3
 
@@ -27,7 +27,7 @@ jobs:
             - uses: actions/checkout@v3
               with:
                   # ref: dev
-                  ref: ROU-3588-DEV
+                  ref: Wrokflow-Dev-Tests
 
             - uses: actions/setup-node@v3
 
@@ -61,7 +61,7 @@ jobs:
             - uses: actions/checkout@v3
               with:
                   # ref: dev
-                  ref: ROU-3588-DEV
+                  ref: Wrokflow-Dev-Tests
 
             - uses: actions/setup-node@v3
 
@@ -85,7 +85,8 @@ jobs:
             - name: Commit updated version
               uses: stefanzweifel/git-auto-commit-action@v4
               with:
-                  branch: dev
+                  # branch: dev
+                  branch: Wrokflow-Dev-Tests
                   commit_message: Updated version. [skip ci]
 
     create-rc:
@@ -95,7 +96,7 @@ jobs:
             - uses: actions/checkout@v3
               with:
                   # ref: dev
-                  ref: ROU-3588-DEV
+                  ref: Wrokflow-Dev-Tests
 
             - uses: actions/setup-node@v3
 
@@ -157,7 +158,7 @@ jobs:
             - uses: actions/checkout@v3
               with:
                   # ref: dev
-                  ref: ROU-3588-DEV
+                  ref: Wrokflow-Dev-Tests
 
             - uses: actions/setup-node@v3
 
