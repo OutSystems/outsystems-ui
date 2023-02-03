@@ -5,7 +5,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 	export class Circle extends Progress.AbstractProgress<ProgressCircleConfig> {
 		// Circunference circle value
 		private _circleCircumference: number;
-		private _circletSize = 0;
+		private _circleSize = 0;
 
 		// ResizeOberver
 		private _resizeObserver: ResizeObserver;
@@ -44,27 +44,40 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 
 		// Convert progress value into offset to assign to our circle
 		private _progressToOffset(): void {
-			// Get the pattern parent size
-			const _elementSize =
-				this.selfElement.parentElement.clientHeight < this.selfElement.parentElement.clientWidth
-					? this.selfElement.parentElement.clientHeight
-					: this.selfElement.parentElement.clientWidth;
+			// Check wich size will be appliced on ProgressCircle
+			if (this.configs.ProgressCircleSize !== '') {
+				// Set the Progress Circle Size variable for calculations
+				Helper.Dom.Styles.SetStyleAttribute(
+					this.selfElement,
+					Enum.InlineStyleProp.ProgressCircleSize,
+					this.configs.ProgressCircleSize
+				);
 
-			// Check the maxValue that the circle must have
-			if (this.selfElement.clientHeight < this.selfElement.parentElement.clientWidth) {
-				this._circletSize = this.selfElement.parentElement.clientWidth;
+				// Set the size of Progress Circle with the value defined through parameter
+				this._circleSize = this.selfElement.clientWidth;
 			} else {
-				this._circletSize = _elementSize;
+				// Get the pattern parent size
+				const _elementSize =
+					this.selfElement.parentElement.clientHeight < this.selfElement.parentElement.clientWidth
+						? this.selfElement.parentElement.clientHeight
+						: this.selfElement.parentElement.clientWidth;
+
+				// Check the maxValue that the circle must have
+				if (this.selfElement.clientHeight < this.selfElement.parentElement.clientWidth) {
+					this._circleSize = this.selfElement.parentElement.clientWidth;
+				} else {
+					this._circleSize = _elementSize;
+				}
 			}
 
 			// Set the css variable to
 			Helper.Dom.Styles.SetStyleAttribute(
 				this.selfElement,
 				Enum.InlineStyleProp.CircleSize,
-				this._circletSize + GlobalEnum.Units.Pixel
+				this._circleSize + GlobalEnum.Units.Pixel
 			);
 
-			const _radius = Math.floor(this._circletSize / 2 - this.configs.Thickness / 2);
+			const _radius = Math.floor(this._circleSize / 2 - this.configs.Thickness / 2);
 			this._circleCircumference = _radius * 2 * Math.PI;
 
 			// set the base values
@@ -240,9 +253,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		 * @protected
 		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
 		 */
-		protected updateProgressColor(value: string): void {
-			this.configs.ProgressColor = value;
-
+		protected updateProgressColor(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this.selfElement,
 				ProgressEnum.InlineStyleProp.ProgressColor,
@@ -256,9 +267,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		 * @protected
 		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
 		 */
-		protected updateShape(value: string): void {
-			this.configs.Shape = value;
-
+		protected updateShape(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this.selfElement,
 				ProgressEnum.InlineStyleProp.Shape,
@@ -274,9 +283,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		 * @protected
 		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
 		 */
-		protected updateThickness(value: number): void {
-			this.configs.Thickness = value;
-
+		protected updateThickness(): void {
 			this._updateCircleProps();
 
 			Helper.Dom.Styles.SetStyleAttribute(
@@ -292,9 +299,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		 * @protected
 		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
 		 */
-		protected updateTrailColor(value: string): void {
-			this.configs.TrailColor = value;
-
+		protected updateTrailColor(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this.selfElement,
 				ProgressEnum.InlineStyleProp.TrailColor,
@@ -324,9 +329,12 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			// Update the default values
+			super.changeProperty(propertyName, propertyValue);
+
 			switch (propertyName) {
 				case ProgressEnum.Properties.Thickness:
-					this.updateThickness(propertyValue as number);
+					this.updateThickness();
 					break;
 
 				case ProgressEnum.Properties.Progress:
@@ -334,20 +342,22 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 					break;
 
 				case ProgressEnum.Properties.ProgressColor:
-					this.updateProgressColor(propertyValue as string);
+					this.updateProgressColor();
+					break;
+
+				case ProgressEnum.Properties.ProgressCircleSize:
+					this._resizeObserver?.unobserve(this.selfElement);
+					this._updateCircleProps();
+					this._resizeObserver?.observe(this.selfElement);
 					break;
 
 				case ProgressEnum.Properties.Shape:
-					this.updateShape(propertyValue as string);
+					this.updateShape();
 
 					break;
 
 				case ProgressEnum.Properties.TrailColor:
-					this.updateTrailColor(propertyValue as string);
-					break;
-
-				default:
-					super.changeProperty(propertyName, propertyValue);
+					this.updateTrailColor();
 					break;
 			}
 		}

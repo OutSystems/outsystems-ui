@@ -29,6 +29,7 @@ namespace OSFramework.OSUI.Patterns.Progress.ProgressEnum {
 		MinProgressValue = 0,
 		Progress = 'Progress',
 		ProgressColor = 'ProgressColor',
+		ProgressCircleSize = 'ProgressCircleSize',
 		Shape = 'Shape',
 		Thickness = 'Thickness',
 		TrailColor = 'TrailColor',
