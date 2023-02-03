@@ -2,6 +2,7 @@
 	"name": "outsystems-ui",
 	"version": "2.15.0",
 	"description": "OutSystems UI Framework",
+	"license" : "BSD-3-Clause",
 	"scripts": {
 		"build": "gulp createProduction && npm run lint",
 		"create-osui-scss": "gulp updateScssFile",
