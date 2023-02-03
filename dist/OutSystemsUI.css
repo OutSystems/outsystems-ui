@@ -11926,16 +11926,16 @@ html[data-uieditorversion^="1"] .wizard-wrapper-item{
   display:block;
 }
 .osui-progress-circle{
-  --osui-progress-circle-width:100%;
+  --progress-circle-size:100%;
   -webkit-box-align:center;
       -ms-flex-align:center;
           align-items:center;
   display:-webkit-box;
   display:-ms-flexbox;
   display:flex;
-  height:var(--osui-progress-circle-width);
+  height:var(--progress-circle-size);
   position:relative;
-  width:var(--osui-progress-circle-width);
+  width:var(--progress-circle-size);
 }
 .osui-progress-circle__container{
   display:inline-block;

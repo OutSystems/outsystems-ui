@@ -9,12 +9,12 @@
 
 ///
 .osui-progress-circle {
-	--osui-progress-circle-width: 100%;
+	--progress-circle-size: 100%;
 	align-items: center;
 	display: flex;
-	height: var(--osui-progress-circle-width);
+	height: var(--progress-circle-size);
 	position: relative;
-	width: var(--osui-progress-circle-width);
+	width: var(--progress-circle-size);
 
 	&__container {
 		display: inline-block;
