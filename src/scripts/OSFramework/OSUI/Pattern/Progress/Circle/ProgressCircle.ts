@@ -44,7 +44,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 
 		// Convert progress value into offset to assign to our circle
 		private _progressToOffset(): void {
-			// Check wich size will be appliced on ProgressCircle
+			// Check which size will be applied on ProgressCircle
 			if (this.configs.ProgressCircleSize !== '') {
 				// Set the Progress Circle Size variable for calculations
 				Helper.Dom.Styles.SetStyleAttribute(
@@ -56,6 +56,13 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 				// Set the size of Progress Circle with the value defined through parameter
 				this._circleSize = this.selfElement.clientWidth;
 			} else {
+				// Set the default value of progress circle size
+				Helper.Dom.Styles.SetStyleAttribute(
+					this.selfElement,
+					Enum.InlineStyleProp.ProgressCircleSize,
+					Enum.DefaultValues.PercentualSize
+				);
+
 				// Get the pattern parent size
 				const _elementSize =
 					this.selfElement.parentElement.clientHeight < this.selfElement.parentElement.clientWidth

@@ -18,4 +18,8 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle.Enum {
 		StrokeDasharray = '--stroke-dasharray',
 		StrokeDashoffset = '--stroke-dashoffset',
 	}
+
+	export enum DefaultValues {
+		PercentualSize = '100%',
+	}
 }
