@@ -4,6 +4,7 @@ namespace OSFramework.OSUI.Patterns.Progress {
 		public AnimateInitialProgress: boolean;
 		public InitialProgress: number;
 		public Progress: number;
+		public ProgressCircleSize: string;
 		public ProgressColor: string;
 		public Shape: string;
 		public Thickness: number;

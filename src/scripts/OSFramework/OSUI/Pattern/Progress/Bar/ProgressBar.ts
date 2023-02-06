@@ -37,9 +37,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Bar {
 		}
 
 		// Update progress color based on value change
-		private _updateProgressColor(value: string): void {
-			this.configs.ProgressColor = value;
-
+		private _updateProgressColor(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this.selfElement,
 				ProgressEnum.InlineStyleProp.ProgressColor,
@@ -48,9 +46,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Bar {
 		}
 
 		// Update progress shape based on value change
-		private _updateShape(value: string): void {
-			this.configs.Shape = value;
-
+		private _updateShape(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this.selfElement,
 				ProgressEnum.InlineStyleProp.Shape,
@@ -59,20 +55,16 @@ namespace OSFramework.OSUI.Patterns.Progress.Bar {
 		}
 
 		// Update progress thickness based on value change
-		private _updateThickness(value: number): void {
-			this.configs.Thickness = value;
-
+		private _updateThickness(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this.selfElement,
 				ProgressEnum.InlineStyleProp.Thickness,
-				value + GlobalEnum.Units.Pixel
+				this.configs.Thickness + GlobalEnum.Units.Pixel
 			);
 		}
 
 		// Update progress trail color based on value change
-		private _updateTrailColor(value: string): void {
-			this.configs.TrailColor = value;
-
+		private _updateTrailColor(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this.selfElement,
 				ProgressEnum.InlineStyleProp.TrailColor,
@@ -187,7 +179,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Bar {
 
 			switch (propertyName) {
 				case ProgressEnum.Properties.Thickness:
-					this._updateThickness(propertyValue as number);
+					this._updateThickness();
 					break;
 
 				case ProgressEnum.Properties.Progress:
@@ -195,15 +187,15 @@ namespace OSFramework.OSUI.Patterns.Progress.Bar {
 					break;
 
 				case ProgressEnum.Properties.ProgressColor:
-					this._updateProgressColor(propertyValue as string);
+					this._updateProgressColor();
 					break;
 
 				case ProgressEnum.Properties.Shape:
-					this._updateShape(propertyValue as string);
+					this._updateShape();
 					break;
 
 				case ProgressEnum.Properties.TrailColor:
-					this._updateTrailColor(propertyValue as string);
+					this._updateTrailColor();
 					break;
 			}
 		}

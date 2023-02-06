@@ -11,9 +11,9 @@
 .osui-progress-circle {
 	align-items: center;
 	display: flex;
-	height: 100%;
+	height: var(--progress-circle-size);
 	position: relative;
-	width: 100%;
+	width: var(--progress-circle-size);
 
 	&__container {
 		display: inline-block;
