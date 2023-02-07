@@ -48,7 +48,7 @@
 
 			&:after,
 			&:before {
-				border-radius: var(--shape);
+				border-radius: calc(var(--shape) / 2);
 				content: '';
 				height: 100%;
 				left: 0;
