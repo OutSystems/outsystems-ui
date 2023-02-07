@@ -137,7 +137,6 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			if (this.isBuilt) {
 				//let's only change the property and trigger the OS event IF the pattern is already built.
 				this._isOpen = true;
-				this._clickOutsideToClose = false;
 				this._triggerOnToggleEvent();
 
 				if (this.configs.HasOverlay) {
@@ -172,6 +171,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			const targetElem = e.target as HTMLElement;
 			this._clickOutsideToClose = true;
 			if (targetElem.closest('.osui-sidebar__header') || targetElem.closest('.osui-sidebar__content')) {
+				// If the click was inside the side bar, then change the flag to false.
 				this._clickOutsideToClose = false;
 			}
 		}
