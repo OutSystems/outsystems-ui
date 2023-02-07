@@ -20,6 +20,6 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle.Enum {
 	}
 
 	export enum DefaultValues {
-		PercentualSize = '100%',
+		DefaultSize = 'auto',
 	}
 }
