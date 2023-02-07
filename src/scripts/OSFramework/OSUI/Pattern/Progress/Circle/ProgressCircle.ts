@@ -3,9 +3,13 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Patterns.Progress.Circle {
 	export class Circle extends Progress.AbstractProgress<ProgressCircleConfig> {
+		private _blockParent: HTMLElement;
 		// Circunference circle value
 		private _circleCircumference: number;
 		private _circleSize = 0;
+
+		// Flag to check if the resize observer should be added
+		private _needsResizeObserver = true;
 
 		// ResizeOberver
 		private _resizeObserver: ResizeObserver;
@@ -28,24 +32,45 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 						return;
 					}
 
-					this._updateCircleProps();
+					if (this._progressElem) {
+						if (
+							Helper.Dom.Styles.ContainsClass(
+								this._progressElem,
+								ProgressEnum.CssClass.AddInitialAnimation
+							)
+						) {
+							this._progressElem.addEventListener(
+								GlobalEnum.HTMLEvent.TransitionEnd,
+								this._updateCircleProps.bind(this)
+							);
+						} else {
+							this._updateCircleProps();
+						}
+					}
 				});
 			});
-			this._resizeObserver.observe(this.selfElement);
+
+			this._resizeObserver.observe(this._blockParent);
 		}
 
 		// Check if the resizeOberver does not exist yet!
 		private _checkResizeObserver(): void {
-			if (!this._resizeObserver) {
+			if (!this._resizeObserver && this._needsResizeObserver) {
 				// Create the Oberver
 				this._addResizeOberser();
+			} else if (this._resizeObserver && this._needsResizeObserver === false) {
+				this._removeResizeOberver();
 			}
 		}
 
 		// Convert progress value into offset to assign to our circle
 		private _progressToOffset(): void {
 			// Check which size will be applied on ProgressCircle
-			if (this.configs.ProgressCircleSize !== '') {
+			if (
+				this.configs.ProgressCircleSize !== OSFramework.OSUI.Constants.EmptyString &&
+				this.configs.ProgressCircleSize !== (Enum.DefaultValues.DefaultSize as string) &&
+				parseInt(this.configs.ProgressCircleSize) !== 0
+			) {
 				// Set the Progress Circle Size variable for calculations
 				Helper.Dom.Styles.SetStyleAttribute(
 					this.selfElement,
@@ -55,26 +80,22 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 
 				// Set the size of Progress Circle with the value defined through parameter
 				this._circleSize = this.selfElement.clientWidth;
+				this._needsResizeObserver = false;
 			} else {
-				// Set the default value of progress circle size
+				// Get the pattern parent size, based on lower size by priority (to avoid overflowing the parent, as this will always be a square)
+				if (this._blockParent.clientWidth > this._blockParent.clientHeight) {
+					this._circleSize = this._blockParent.clientHeight;
+				} else {
+					this._circleSize = this._blockParent.clientWidth;
+				}
+
+				// Set the Progress Circle Size variable for calculations
 				Helper.Dom.Styles.SetStyleAttribute(
 					this.selfElement,
 					Enum.InlineStyleProp.ProgressCircleSize,
-					Enum.DefaultValues.PercentualSize
+					this._circleSize + GlobalEnum.Units.Pixel
 				);
-
-				// Get the pattern parent size
-				const _elementSize =
-					this.selfElement.parentElement.clientHeight < this.selfElement.parentElement.clientWidth
-						? this.selfElement.parentElement.clientHeight
-						: this.selfElement.parentElement.clientWidth;
-
-				// Check the maxValue that the circle must have
-				if (this.selfElement.clientHeight < this.selfElement.parentElement.clientWidth) {
-					this._circleSize = this.selfElement.parentElement.clientWidth;
-				} else {
-					this._circleSize = _elementSize;
-				}
+				this._needsResizeObserver = true;
 			}
 
 			// Set the css variable to
@@ -112,7 +133,15 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 				// Make async to ensure that all css variables are assigned
 				// Update according initial style
 				Helper.AsyncInvocation(this.addInitialAnimation.bind(this));
+			} else {
+				this._checkResizeObserver();
 			}
+		}
+
+		// Remove the resizeObserver
+		private _removeResizeOberver(): void {
+			this._resizeObserver.disconnect();
+			this._resizeObserver = undefined;
 		}
 
 		// Set the default inline css variables
@@ -231,6 +260,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
 		 */
 		protected setHtmlElements(): void {
+			this._blockParent = document.getElementById(this.widgetId).parentElement;
 			// Set the html reference that will be used to do all the needed calcs
 			this._progressElem = this.selfElement.querySelector(Constants.Dot + Enum.CssClass.Progress);
 		}
@@ -251,6 +281,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
 		 */
 		protected unsetHtmlElements(): void {
+			this._blockParent = undefined;
 			super.unsetHtmlElements();
 		}
 
@@ -353,9 +384,9 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 					break;
 
 				case ProgressEnum.Properties.ProgressCircleSize:
-					this._resizeObserver?.unobserve(this.selfElement);
+					this._resizeObserver?.unobserve(this._blockParent);
 					this._updateCircleProps();
-					this._resizeObserver?.observe(this.selfElement);
+					this._resizeObserver?.observe(this._blockParent);
 					break;
 
 				case ProgressEnum.Properties.Shape:
@@ -383,7 +414,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 
 			// Check if the resizeOberver already exists
 			if (this._resizeObserver) {
-				this._resizeObserver.disconnect();
+				this._removeResizeOberver();
 			}
 		}
 	}
