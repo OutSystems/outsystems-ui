@@ -74,6 +74,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			sessionStorage.setItem('previewDevicesPixelRatio', evt.data.pixelRatio);
 			OnPostMessage.Unset();
 			evt.source.postMessage('received', { targetOrigin: evt.origin });
+			OSFramework.Helper.DeviceInfo.RefreshOperatingSystem();
 			SetDeviceClass(false);
 		}
 

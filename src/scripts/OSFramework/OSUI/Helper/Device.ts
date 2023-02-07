@@ -602,5 +602,15 @@ namespace OSFramework.OSUI.Helper {
 
 			return localOs;
 		}
+
+		/**
+		 * Refresh the operating system information
+		 *
+		 * @static
+		 * @memberof DeviceInfo
+		 */
+		public static RefreshOperatingSystem(): void {
+			DeviceInfo._operatingSystem = DeviceInfo.GetOperatingSystem(DeviceInfo._getUserAgent());
+		}
 	}
 }
