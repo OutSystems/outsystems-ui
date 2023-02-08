@@ -115,6 +115,11 @@ body,
 
 ///
 .desktop {
+	.layout-side:not(.layout-native):not(.aside-overlay) {
+		.app-menu-content {
+			right: 0;
+		}
+	}
 	.layout-native {
 		&.aside {
 			&-visible,
@@ -131,12 +136,14 @@ body,
 .tablet {
 	&.landscape {
 		.layout-native {
-			&.aside {
-				&-visible,
-				&-expandable {
-					.main {
-						margin-left: var(--side-menu-size);
-						width: calc(100% - var(--side-menu-size));
+			&.menu-visible {
+				&.aside {
+					&-visible,
+					&-expandable {
+						.main {
+							margin-left: var(--side-menu-size);
+							width: calc(100% - var(--side-menu-size));
+						}
 					}
 				}
 			}
@@ -173,6 +180,19 @@ body,
 // IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {
+	.app-menu-content {
+		left: auto;
+		right: calc(-1 * var(--side-menu-size));
+	}
+
+	.menu-visible {
+		.app-menu-content {
+			right: 0;
+			-webkit-transform: translateX(0) translateZ(0);
+			transform: translateX(0) translateZ(0);
+		}
+	}
+
 	&.tablet {
 		.layout-native {
 			&.aside {
@@ -180,7 +200,6 @@ body,
 				&-expandable {
 					.main {
 						margin-left: 0;
-						margin-right: var(--side-menu-size);
 					}
 				}
 			}
@@ -216,7 +235,7 @@ body,
 			margin-right: var(--side-menu-size);
 		}
 
-		.aside-overlay .main {
+		&.aside-overlay .main {
 			margin-right: 0;
 		}
 	}

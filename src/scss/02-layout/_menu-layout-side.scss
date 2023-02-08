@@ -108,9 +108,22 @@
 	&.tablet,
 	&.phone {
 		.app-menu-content {
-			left: auto;
 			right: calc(-1 * var(--side-menu-size));
 			transition: all 330ms ease-out;
+		}
+	}
+
+	&:not(.portrait) {
+		.layout {
+			&-side {
+				&.layout-native {
+					&.aside-visible {
+						.app-menu-content {
+							right: 0;
+						}
+					}
+				}
+			}
 		}
 	}
 
