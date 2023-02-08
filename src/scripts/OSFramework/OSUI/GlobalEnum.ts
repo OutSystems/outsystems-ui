@@ -168,6 +168,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Click = 'click',
 		Focus = 'focus',
 		keyDown = 'keydown',
+		MouseDown = 'mousedown',
 		MouseEnter = 'mouseenter',
 		MouseLeave = 'mouseleave',
 		MouseUp = 'mouseup',
