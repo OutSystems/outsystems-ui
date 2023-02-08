@@ -110,9 +110,3 @@ package-lock.json
 
 # gta artifact
 new-version-artf.txt
-
-# distribution files
-dist
-dist/OutSystemsUI.js
-dist/OutSystemsUI.css
-dist/OutSystemsUI.d.ts
