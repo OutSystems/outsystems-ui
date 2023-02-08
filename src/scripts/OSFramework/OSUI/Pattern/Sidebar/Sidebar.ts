@@ -11,10 +11,14 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 	export class Sidebar extends AbstractPattern<SidebarConfig> implements ISidebar, Interface.IDragEvent {
 		// Hold the animateOnDrag intance, that helps transition the sidebar on drag
 		private _animateOnDragInstance: Behaviors.AnimateOnDrag;
+		// Store if the click was outside the sidebar
+		private _clickOutsideToClose: boolean;
 		// Store the Sidebar direction
 		private _currentDirectionCssClass: string;
 		// Store the click event with bind(this)
 		private _eventOverlayClick: GlobalCallbacks.Generic;
+		// Store the mousedown event with bind(this)
+		private _eventOverlayMouseDown: GlobalCallbacks.Generic;
 		// Store the keypress event with bind(this)
 		private _eventSidebarKeypress: GlobalCallbacks.Generic;
 		// Store focus trap instance
@@ -55,6 +59,10 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 				Helper.A11Y.SetElementsTabIndex(this._isOpen, this._focusTrapInstance.focusableElements);
 
 				if (this.configs.HasOverlay) {
+					Event.GlobalEventManager.Instance.removeHandler(
+						Event.Type.BodyOnMouseDown,
+						this._eventOverlayMouseDown
+					);
 					Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOverlayClick);
 				}
 			}
@@ -132,6 +140,10 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 				this._triggerOnToggleEvent();
 
 				if (this.configs.HasOverlay) {
+					Event.GlobalEventManager.Instance.addHandler(
+						Event.Type.BodyOnMouseDown,
+						this._eventOverlayMouseDown
+					);
 					Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._eventOverlayClick);
 				}
 			}
@@ -145,18 +157,29 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 
 		// Overlay onClick event to close the Sidebar
 		private _overlayClickCallback(_args: string, e: MouseEvent): void {
-			if (this.selfElement === e.target) {
-				if (this._isOpen) {
-					this.close();
-				}
+			// If the sidebar is opened and the mouse down event occured outside the sidebar, close it.
+			if (this._isOpen && this._clickOutsideToClose) {
+				this.close();
 			}
 
 			e.stopPropagation();
 		}
 
+		// Method to check if the mouse down event happened outside the sidebar
+		// This is required to cover the cases when selecting text and moving the cursor to the sidebar's overlay.
+		private _overlayMouseDownCallback(_args: string, e: MouseEvent): void {
+			const targetElem = e.target as HTMLElement;
+			this._clickOutsideToClose = true;
+			if (targetElem.closest('.osui-sidebar__header') || targetElem.closest('.osui-sidebar__content')) {
+				// If the click was inside the side bar, then change the flag to false.
+				this._clickOutsideToClose = false;
+			}
+		}
+
 		// Method to remove the event listeners
 		private _removeEvents(): void {
 			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
+			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnMouseDown, this._eventOverlayMouseDown);
 			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOverlayClick);
 		}
 
@@ -177,11 +200,19 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			if (this.configs.HasOverlay && alreadyHasOverlayClass === false) {
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.HasOverlay);
 				if (this._isOpen) {
+					Event.GlobalEventManager.Instance.removeHandler(
+						Event.Type.BodyOnMouseDown,
+						this._eventOverlayMouseDown
+					);
 					Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._eventOverlayClick);
 				}
 			} else if (this.isBuilt) {
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.HasOverlay);
 				if (this._isOpen) {
+					Event.GlobalEventManager.Instance.removeHandler(
+						Event.Type.BodyOnMouseDown,
+						this._eventOverlayMouseDown
+					);
 					Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOverlayClick);
 				}
 			}
@@ -266,6 +297,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		protected setCallbacks(): void {
 			this._eventSidebarKeypress = this._sidebarKeypressCallback.bind(this);
 			this._eventOverlayClick = this._overlayClickCallback.bind(this);
+			this._eventOverlayMouseDown = this._overlayMouseDownCallback.bind(this);
 		}
 
 		/**
@@ -291,6 +323,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 
 			this._eventSidebarKeypress = undefined;
 			this._eventOverlayClick = undefined;
+			this._eventOverlayMouseDown = undefined;
 		}
 
 		/**

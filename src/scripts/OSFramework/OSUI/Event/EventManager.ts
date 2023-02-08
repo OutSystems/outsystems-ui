@@ -7,6 +7,8 @@ namespace OSFramework.OSUI.Event {
 					return new Event.BodyOnClick();
 				case Type.BodyOnScroll:
 					return new Event.BodyOnScroll();
+				case Type.BodyOnMouseDown:
+					return new Event.BodyOnMouseDown();
 				case Type.WindowResize:
 					return new Event.WindowResize();
 				case Type.OrientationChange:
