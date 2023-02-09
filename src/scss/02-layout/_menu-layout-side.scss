@@ -53,6 +53,7 @@
 	.layout-side {
 		&:not(.layout-native):not(.aside-overlay) .app-menu-content {
 			left: 0;
+			right: 0;
 		}
 
 		&.aside-expandable:not(.fixed-header) .app-menu-content {
