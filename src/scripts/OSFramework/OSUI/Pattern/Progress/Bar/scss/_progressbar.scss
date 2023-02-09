@@ -37,8 +37,10 @@
 		}
 
 		&__value {
+			border-radius: calc(var(--shape) / 2);
 			height: var(--thickness);
 			left: 0;
+			overflow: hidden;
 			position: absolute;
 			right: 0;
 
@@ -48,7 +50,6 @@
 
 			&:after,
 			&:before {
-				border-radius: calc(var(--shape) / 2);
 				content: '';
 				height: 100%;
 				left: 0;
