@@ -50,6 +50,7 @@
 
 			&:after,
 			&:before {
+				border-radius: calc(var(--shape) / 2);
 				content: '';
 				height: 100%;
 				left: 0;
