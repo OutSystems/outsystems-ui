@@ -36,13 +36,13 @@
 					.app-menu-content {
 						padding-top: calc(var(--header-size) + var(--header-size-content) + var(--os-safe-area-top));
 					}
-				}
-			}
-		}
 
-		&-side.layout-native.aside-expandable.hide-header-on-scroll:not(.header-is--visible) {
-			.app-menu-content {
-				padding-top: var(--header-size-content);
+					&.hide-header-on-scroll:not(.header-is--visible) {
+						.app-menu-content {
+							padding-top: var(--header-size-content);
+						}
+					}
+				}
 			}
 		}
 	}
