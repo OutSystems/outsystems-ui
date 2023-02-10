@@ -29,6 +29,24 @@
 // Responsice --------------------------------------------------------------------
 ///
 .desktop {
+	.layout {
+		&.layout-native {
+			&.layout-side {
+				&.aside-expandable {
+					.app-menu-content {
+						padding-top: calc(var(--header-size) + var(--header-size-content) + var(--os-safe-area-top));
+					}
+
+					&.hide-header-on-scroll:not(.header-is--visible) {
+						.app-menu-content {
+							padding-top: var(--header-size-content);
+						}
+					}
+				}
+			}
+		}
+	}
+
 	.layout-native {
 		&.aside {
 			&-visible,
@@ -38,20 +56,6 @@
 					z-index: 110;
 				}
 			}
-		}
-
-		&.layout-side {
-			&.aside-expandable {
-				.app-menu-content {
-					padding-top: calc(var(--header-size) + var(--header-size-content) + var(--os-safe-area-top));
-				}
-			}
-		}
-	}
-
-	.layout-side.layout-native.aside-expandable.hide-header-on-scroll:not(.header-is--visible) {
-		.app-menu-content {
-			padding-top: var(--header-size-content);
 		}
 	}
 }

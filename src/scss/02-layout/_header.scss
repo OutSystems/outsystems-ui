@@ -139,12 +139,20 @@
 // IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {
-	.header-logo {
-		padding-left: var(--space-base);
-		padding-right: 0;
+	.header {
+		&-logo {
+			padding-left: var(--space-base);
+			padding-right: 0;
+		}
+
+		.header-content > [data-block*='ApplicationTitle'] .application-name {
+			margin-right: 0;
+			margin-left: var(--space-m);
+		}
 	}
 
-	.app-logo {
+	.app-logo,
+	.layout-side .app-logo {
 		margin-left: var(--space-s);
 		margin-right: 0;
 	}
