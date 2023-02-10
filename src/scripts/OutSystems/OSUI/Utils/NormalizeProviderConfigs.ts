@@ -15,7 +15,7 @@ namespace OutSystems.OSUI.Utils {
 			let keyValue = providerConfigs[keyName];
 
 			if (typeof keyValue !== 'string') {
-				break;
+				continue;
 			}
 
 			keyValue = keyValue.toLowerCase().trim();
