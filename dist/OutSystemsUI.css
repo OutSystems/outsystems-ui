@@ -1253,7 +1253,7 @@ body,
 .desktop .layout.layout-native.layout-side.aside-expandable .app-menu-content{
   padding-top:calc(var(--header-size) + var(--header-size-content) + var(--os-safe-area-top));
 }
-.desktop .layout-side.layout-native.aside-expandable.hide-header-on-scroll:not(.header-is--visible) .app-menu-content{
+.desktop .layout.layout-native.layout-side.aside-expandable.hide-header-on-scroll:not(.header-is--visible) .app-menu-content{
   padding-top:var(--header-size-content);
 }
 .desktop .layout-native.aside-visible .app-menu-content, .desktop .layout-native.aside-expandable .app-menu-content{
@@ -11897,8 +11897,10 @@ html[data-uieditorversion^="1"] .wizard-wrapper-item{
           transition-duration:0.35s;
 }
 .osui-progress-bar__value{
+  border-radius:calc(var(--shape) / 2);
   height:var(--thickness);
   left:0;
+  overflow:hidden;
   position:absolute;
   right:0;
 }
@@ -11906,7 +11908,7 @@ html[data-uieditorversion^="1"] .wizard-wrapper-item{
   -servicestudio-height:var(--thickness, 8px);
 }
 .osui-progress-bar__value:after, .osui-progress-bar__value:before{
-  border-radius:var(--shape);
+  border-radius:calc(var(--shape) / 2);
   content:"";
   height:100%;
   left:0;
@@ -11952,7 +11954,7 @@ html[data-uieditorversion^="1"] .wizard-wrapper-item{
 }
 /*! 6.5.4.2 Progress Circle */
 [data-block*=ProgressCircle]{
-  display:block;
+  display:inline-block;
 }
 .osui-progress-circle{
   -webkit-box-align:center;

@@ -283,6 +283,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         Click = "click",
         Focus = "focus",
         keyDown = "keydown",
+        MouseDown = "mousedown",
         MouseEnter = "mouseenter",
         MouseLeave = "mouseleave",
         MouseUp = "mouseup",
@@ -549,6 +550,12 @@ declare namespace OSFramework.OSUI.Event {
     }
 }
 declare namespace OSFramework.OSUI.Event {
+    class BodyOnMouseDown extends Event.AbstractEvent<string> {
+        constructor();
+        private _bodyTrigger;
+    }
+}
+declare namespace OSFramework.OSUI.Event {
     class BodyOnScroll extends Event.AbstractEvent<string> {
         constructor();
         private _bodyTrigger;
@@ -558,6 +565,7 @@ declare namespace OSFramework.OSUI.Event {
     enum Type {
         BodyOnClick = "body.onclick",
         BodyOnScroll = "body.onscroll",
+        BodyOnMouseDown = "body.mousedown",
         OrientationChange = "window.onorientationchange",
         WindowResize = "window.onresize"
     }
@@ -2250,13 +2258,15 @@ declare namespace OSFramework.OSUI.Patterns.Progress.Circle.Enum {
         StrokeDashoffset = "--stroke-dashoffset"
     }
     enum DefaultValues {
-        PercentualSize = "100%"
+        DefaultSize = "auto"
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Progress.Circle {
     class Circle extends Progress.AbstractProgress<ProgressCircleConfig> {
+        private _blockParent;
         private _circleCircumference;
         private _circleSize;
+        private _needsResizeObserver;
         private _resizeObserver;
         private _strokeDasharray;
         private _strokeDashoffset;
@@ -2264,6 +2274,7 @@ declare namespace OSFramework.OSUI.Patterns.Progress.Circle {
         private _addResizeOberser;
         private _checkResizeObserver;
         private _progressToOffset;
+        private _removeResizeOberver;
         private _setCssVariables;
         private _updateCircleProps;
         private _updateProgressValue;
@@ -2607,8 +2618,10 @@ declare namespace OSFramework.OSUI.Patterns.Sidebar {
 declare namespace OSFramework.OSUI.Patterns.Sidebar {
     class Sidebar extends AbstractPattern<SidebarConfig> implements ISidebar, Interface.IDragEvent {
         private _animateOnDragInstance;
+        private _clickOutsideToClose;
         private _currentDirectionCssClass;
         private _eventOverlayClick;
+        private _eventOverlayMouseDown;
         private _eventSidebarKeypress;
         private _focusTrapInstance;
         private _gestureEventInstance;
@@ -2625,6 +2638,7 @@ declare namespace OSFramework.OSUI.Patterns.Sidebar {
         private _onGestureStart;
         private _openSidebar;
         private _overlayClickCallback;
+        private _overlayMouseDownCallback;
         private _removeEvents;
         private _setDirection;
         private _setHasOverlay;

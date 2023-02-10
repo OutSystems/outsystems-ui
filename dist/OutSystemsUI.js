@@ -357,6 +357,7 @@ var OSFramework;
                 HTMLEvent["Click"] = "click";
                 HTMLEvent["Focus"] = "focus";
                 HTMLEvent["keyDown"] = "keydown";
+                HTMLEvent["MouseDown"] = "mousedown";
                 HTMLEvent["MouseEnter"] = "mouseenter";
                 HTMLEvent["MouseLeave"] = "mouseleave";
                 HTMLEvent["MouseUp"] = "mouseup";
@@ -1008,6 +1009,25 @@ var OSFramework;
     (function (OSUI) {
         var Event;
         (function (Event) {
+            class BodyOnMouseDown extends Event.AbstractEvent {
+                constructor() {
+                    super();
+                    document.body.addEventListener(OSUI.GlobalEnum.HTMLEvent.MouseDown, this._bodyTrigger.bind(this));
+                }
+                _bodyTrigger(evt) {
+                    this.trigger(OSUI.GlobalEnum.HTMLEvent.MouseDown, evt);
+                }
+            }
+            Event.BodyOnMouseDown = BodyOnMouseDown;
+        })(Event = OSUI.Event || (OSUI.Event = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Event;
+        (function (Event) {
             class BodyOnScroll extends Event.AbstractEvent {
                 constructor() {
                     super();
@@ -1031,6 +1051,7 @@ var OSFramework;
             (function (Type) {
                 Type["BodyOnClick"] = "body.onclick";
                 Type["BodyOnScroll"] = "body.onscroll";
+                Type["BodyOnMouseDown"] = "body.mousedown";
                 Type["OrientationChange"] = "window.onorientationchange";
                 Type["WindowResize"] = "window.onresize";
             })(Type = Event.Type || (Event.Type = {}));
@@ -1050,6 +1071,8 @@ var OSFramework;
                             return new Event.BodyOnClick();
                         case Event.Type.BodyOnScroll:
                             return new Event.BodyOnScroll();
+                        case Event.Type.BodyOnMouseDown:
+                            return new Event.BodyOnMouseDown();
                         case Event.Type.WindowResize:
                             return new Event.WindowResize();
                         case Event.Type.OrientationChange:
@@ -3619,12 +3642,6 @@ var OSFramework;
             var BottomSheet;
             (function (BottomSheet_1) {
                 class BottomSheet extends Patterns.AbstractPattern {
-                    get gestureEventInstance() {
-                        return this._gestureEventInstance;
-                    }
-                    get hasGestureEvents() {
-                        return this._hasGestureEvents;
-                    }
                     constructor(uniqueId, configs) {
                         super(uniqueId, new BottomSheet_1.BottomSheetConfig(configs));
                         this._isOpen = false;
@@ -3636,6 +3653,12 @@ var OSFramework;
                                 mass: 1,
                             },
                         };
+                    }
+                    get gestureEventInstance() {
+                        return this._gestureEventInstance;
+                    }
+                    get hasGestureEvents() {
+                        return this._hasGestureEvents;
                     }
                     _handleFocusTrap() {
                         const opts = {
@@ -6558,7 +6581,7 @@ var OSFramework;
                         })(InlineStyleProp = Enum.InlineStyleProp || (Enum.InlineStyleProp = {}));
                         let DefaultValues;
                         (function (DefaultValues) {
-                            DefaultValues["PercentualSize"] = "100%";
+                            DefaultValues["DefaultSize"] = "auto";
                         })(DefaultValues = Enum.DefaultValues || (Enum.DefaultValues = {}));
                     })(Enum = Circle.Enum || (Circle.Enum = {}));
                 })(Circle = Progress.Circle || (Progress.Circle = {}));
@@ -6580,6 +6603,7 @@ var OSFramework;
                         constructor(uniqueId, configs) {
                             super(uniqueId, new Circle_1.ProgressCircleConfig(configs));
                             this._circleSize = 0;
+                            this._needsResizeObserver = true;
                         }
                         _addResizeOberser() {
                             this._resizeObserver = new ResizeObserver((entries) => {
@@ -6587,32 +6611,43 @@ var OSFramework;
                                     if (!Array.isArray(entries) || !entries.length) {
                                         return;
                                     }
-                                    this._updateCircleProps();
+                                    if (this._progressElem) {
+                                        if (OSUI.Helper.Dom.Styles.ContainsClass(this._progressElem, Progress.ProgressEnum.CssClass.AddInitialAnimation)) {
+                                            this._progressElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.TransitionEnd, this._updateCircleProps.bind(this));
+                                        }
+                                        else {
+                                            this._updateCircleProps();
+                                        }
+                                    }
                                 });
                             });
-                            this._resizeObserver.observe(this.selfElement);
+                            this._resizeObserver.observe(this._blockParent);
                         }
                         _checkResizeObserver() {
-                            if (!this._resizeObserver) {
+                            if (!this._resizeObserver && this._needsResizeObserver) {
                                 this._addResizeOberser();
+                            }
+                            else if (this._resizeObserver && this._needsResizeObserver === false) {
+                                this._removeResizeOberver();
                             }
                         }
                         _progressToOffset() {
-                            if (this.configs.ProgressCircleSize !== '') {
+                            if (this.configs.ProgressCircleSize !== OSFramework.OSUI.Constants.EmptyString &&
+                                this.configs.ProgressCircleSize !== Circle_1.Enum.DefaultValues.DefaultSize &&
+                                parseInt(this.configs.ProgressCircleSize) !== 0) {
                                 OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Circle_1.Enum.InlineStyleProp.ProgressCircleSize, this.configs.ProgressCircleSize);
                                 this._circleSize = this.selfElement.clientWidth;
+                                this._needsResizeObserver = false;
                             }
                             else {
-                                OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Circle_1.Enum.InlineStyleProp.ProgressCircleSize, Circle_1.Enum.DefaultValues.PercentualSize);
-                                const _elementSize = this.selfElement.parentElement.clientHeight < this.selfElement.parentElement.clientWidth
-                                    ? this.selfElement.parentElement.clientHeight
-                                    : this.selfElement.parentElement.clientWidth;
-                                if (this.selfElement.clientHeight < this.selfElement.parentElement.clientWidth) {
-                                    this._circleSize = this.selfElement.parentElement.clientWidth;
+                                if (this._blockParent.clientWidth > this._blockParent.clientHeight) {
+                                    this._circleSize = this._blockParent.clientHeight;
                                 }
                                 else {
-                                    this._circleSize = _elementSize;
+                                    this._circleSize = this._blockParent.clientWidth;
                                 }
+                                OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Circle_1.Enum.InlineStyleProp.ProgressCircleSize, this._circleSize + OSUI.GlobalEnum.Units.Pixel);
+                                this._needsResizeObserver = true;
                             }
                             OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Circle_1.Enum.InlineStyleProp.CircleSize, this._circleSize + OSUI.GlobalEnum.Units.Pixel);
                             const _radius = Math.floor(this._circleSize / 2 - this.configs.Thickness / 2);
@@ -6624,6 +6659,13 @@ var OSFramework;
                             if (!this.isBuilt) {
                                 OSUI.Helper.AsyncInvocation(this.addInitialAnimation.bind(this));
                             }
+                            else {
+                                this._checkResizeObserver();
+                            }
+                        }
+                        _removeResizeOberver() {
+                            this._resizeObserver.disconnect();
+                            this._resizeObserver = undefined;
                         }
                         _setCssVariables() {
                             OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Progress.ProgressEnum.InlineStyleProp.Thickness, this.configs.Thickness + OSUI.GlobalEnum.Units.Pixel);
@@ -6666,12 +6708,14 @@ var OSFramework;
                             this._updateProgressValue();
                         }
                         setHtmlElements() {
+                            this._blockParent = document.getElementById(this.widgetId).parentElement;
                             this._progressElem = this.selfElement.querySelector(OSUI.Constants.Dot + Circle_1.Enum.CssClass.Progress);
                         }
                         unsetCallbacks() {
                             super.unsetCallbacks();
                         }
                         unsetHtmlElements() {
+                            this._blockParent = undefined;
                             super.unsetHtmlElements();
                         }
                         updateProgressColor() {
@@ -6711,9 +6755,9 @@ var OSFramework;
                                     this.updateProgressColor();
                                     break;
                                 case Progress.ProgressEnum.Properties.ProgressCircleSize:
-                                    (_a = this._resizeObserver) === null || _a === void 0 ? void 0 : _a.unobserve(this.selfElement);
+                                    (_a = this._resizeObserver) === null || _a === void 0 ? void 0 : _a.unobserve(this._blockParent);
                                     this._updateCircleProps();
-                                    (_b = this._resizeObserver) === null || _b === void 0 ? void 0 : _b.observe(this.selfElement);
+                                    (_b = this._resizeObserver) === null || _b === void 0 ? void 0 : _b.observe(this._blockParent);
                                     break;
                                 case Progress.ProgressEnum.Properties.Shape:
                                     this.updateShape();
@@ -6728,7 +6772,7 @@ var OSFramework;
                             this.unsetHtmlElements();
                             this.unsetCallbacks();
                             if (this._resizeObserver) {
-                                this._resizeObserver.disconnect();
+                                this._removeResizeOberver();
                             }
                         }
                     }
@@ -7678,6 +7722,7 @@ var OSFramework;
                             this.selfElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
                             OSUI.Helper.A11Y.SetElementsTabIndex(this._isOpen, this._focusTrapInstance.focusableElements);
                             if (this.configs.HasOverlay) {
+                                OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnMouseDown, this._eventOverlayMouseDown);
                                 OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnClick, this._eventOverlayClick);
                             }
                         }
@@ -7719,6 +7764,7 @@ var OSFramework;
                             this._isOpen = true;
                             this._triggerOnToggleEvent();
                             if (this.configs.HasOverlay) {
+                                OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnMouseDown, this._eventOverlayMouseDown);
                                 OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnClick, this._eventOverlayClick);
                             }
                         }
@@ -7727,15 +7773,21 @@ var OSFramework;
                         OSUI.Helper.A11Y.SetElementsTabIndex(this._isOpen, this._focusTrapInstance.focusableElements);
                     }
                     _overlayClickCallback(_args, e) {
-                        if (this.selfElement === e.target) {
-                            if (this._isOpen) {
-                                this.close();
-                            }
+                        if (this._isOpen && this._clickOutsideToClose) {
+                            this.close();
                         }
                         e.stopPropagation();
                     }
+                    _overlayMouseDownCallback(_args, e) {
+                        const targetElem = e.target;
+                        this._clickOutsideToClose = true;
+                        if (targetElem.closest('.osui-sidebar__header') || targetElem.closest('.osui-sidebar__content')) {
+                            this._clickOutsideToClose = false;
+                        }
+                    }
                     _removeEvents() {
                         this.selfElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
+                        OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnMouseDown, this._eventOverlayMouseDown);
                         OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnClick, this._eventOverlayClick);
                     }
                     _setDirection() {
@@ -7750,12 +7802,14 @@ var OSFramework;
                         if (this.configs.HasOverlay && alreadyHasOverlayClass === false) {
                             OSUI.Helper.Dom.Styles.AddClass(this.selfElement, Sidebar_1.Enum.CssClass.HasOverlay);
                             if (this._isOpen) {
+                                OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnMouseDown, this._eventOverlayMouseDown);
                                 OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnClick, this._eventOverlayClick);
                             }
                         }
                         else if (this.isBuilt) {
                             OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, Sidebar_1.Enum.CssClass.HasOverlay);
                             if (this._isOpen) {
+                                OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnMouseDown, this._eventOverlayMouseDown);
                                 OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnClick, this._eventOverlayClick);
                             }
                         }
@@ -7813,6 +7867,7 @@ var OSFramework;
                     setCallbacks() {
                         this._eventSidebarKeypress = this._sidebarKeypressCallback.bind(this);
                         this._eventOverlayClick = this._overlayClickCallback.bind(this);
+                        this._eventOverlayMouseDown = this._overlayMouseDownCallback.bind(this);
                     }
                     setHtmlElements() {
                         this._parentSelf = OSUI.Helper.Dom.GetElementById(this.widgetId);
@@ -7822,6 +7877,7 @@ var OSFramework;
                         this._removeEvents();
                         this._eventSidebarKeypress = undefined;
                         this._eventOverlayClick = undefined;
+                        this._eventOverlayMouseDown = undefined;
                     }
                     unsetHtmlElements() {
                         this._parentSelf = undefined;
@@ -14434,7 +14490,7 @@ var OutSystems;
                 for (const keyName of Object.keys(providerConfigs)) {
                     let keyValue = providerConfigs[keyName];
                     if (typeof keyValue !== 'string') {
-                        break;
+                        continue;
                     }
                     keyValue = keyValue.toLowerCase().trim();
                     if (keyValue === 'true' || keyValue === 'false') {
@@ -16484,7 +16540,7 @@ var Providers;
                     }
                     _checkForFigType(option) {
                         let hasImage = VirtualSelect.Enum.FigureType.None;
-                        if (!!option.image_url_or_class) {
+                        if (!!option && !!option.image_url_or_class) {
                             hasImage = OSFramework.OSUI.Helper.URL.IsImage(option.image_url_or_class)
                                 ? VirtualSelect.Enum.FigureType.Image
                                 : VirtualSelect.Enum.FigureType.Icon;

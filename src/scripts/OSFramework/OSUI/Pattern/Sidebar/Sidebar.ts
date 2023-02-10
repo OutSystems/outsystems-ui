@@ -200,7 +200,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			if (this.configs.HasOverlay && alreadyHasOverlayClass === false) {
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.HasOverlay);
 				if (this._isOpen) {
-					Event.GlobalEventManager.Instance.removeHandler(
+					Event.GlobalEventManager.Instance.addHandler(
 						Event.Type.BodyOnMouseDown,
 						this._eventOverlayMouseDown
 					);
