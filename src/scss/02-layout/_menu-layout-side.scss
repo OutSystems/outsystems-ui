@@ -115,13 +115,11 @@
 	}
 
 	&:not(.portrait) {
-		.layout {
-			&-side {
-				&.layout-native {
-					&.aside-visible {
-						.app-menu-content {
-							right: 0;
-						}
+		.layout-side {
+			&.layout-native {
+				&.aside-visible {
+					.app-menu-content {
+						right: 0;
 					}
 				}
 			}
