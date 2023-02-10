@@ -29,7 +29,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			let hasImage = Enum.FigureType.None;
 
 			// Check if image_url_or_class filed has info
-			if (!!option.image_url_or_class) {
+			if (!!option && !!option.image_url_or_class) {
 				// The given info doesn't have spaces on it, check if it's a valid URL
 				hasImage = OSFramework.OSUI.Helper.URL.IsImage(option.image_url_or_class)
 					? Enum.FigureType.Image
