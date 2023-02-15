@@ -586,6 +586,7 @@ var OSFramework;
                     this._dragParams.IsMoving = false;
                     OSUI.Helper.Dom.Styles.RemoveClass(this._targetElement, OSUI.Constants.NoTransition);
                     if ((offsetX === 0 && offsetY === 0) || this._dragParams.InvalidDrag) {
+                        this._targetElement.style.transform = '';
                         return;
                     }
                     const checkSwipeSpeed = (this._dragParams.VerticalDrag ? Math.abs(offsetY) : Math.abs(offsetX)) / timeTaken >
@@ -595,17 +596,13 @@ var OSFramework;
                     const swipedHalfWidth = axisToValidate < sizeThreshold;
                     this._dragParams.IsReadyToTriggerCallback = swipedHalfWidth || checkSwipeSpeed;
                     if (this._dragParams.IsReadyToTriggerCallback) {
-                        this._targetElement.style.transform = '';
                         callback();
                     }
                     else if ((springProperties === null || springProperties === void 0 ? void 0 : springProperties.addSpringAnimation) && this._dragParams.IsOpen) {
                         this._dragParams.SpringAnimation = SpringAnimation.CreateSpringAnimation(this._targetElement, offsetX, offsetY, this._dragParams.VerticalDrag ? OSUI.GlobalEnum.Orientation.Vertical : OSUI.GlobalEnum.Orientation.Horizontal, springProperties.springAnimationProperties);
                         this._dragParams.SpringAnimation.play();
-                        this._targetElement.style.transform = '';
                     }
-                    else {
-                        this._targetElement.style.transform = '';
-                    }
+                    this._targetElement.style.transform = '';
                 }
                 onDragMove(offsetX, offsetY, currentX, currentY, event) {
                     let _dragDirection;
