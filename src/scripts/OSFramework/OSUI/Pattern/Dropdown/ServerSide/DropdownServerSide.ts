@@ -1192,6 +1192,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			if (isValid === false) {
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.NotValid);
 				this._addErrorMessage(validationMessage);
+				// Due to the error message text, update the balloon position
+				this._setBalloonCoordinates();
 			} else {
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.NotValid);
 
