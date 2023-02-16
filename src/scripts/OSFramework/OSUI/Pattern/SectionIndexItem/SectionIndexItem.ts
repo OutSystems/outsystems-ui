@@ -141,16 +141,9 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 			// Takes into account the headerSize
 			this._setHeaderSize();
 
-			// Get the MainContent paddingTop value in order to remove it's value from the calcs
-			const contentPaddingTop =
-				parseFloat(
-					window
-						.getComputedStyle(Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.MainContent))
-						.getPropertyValue(GlobalEnum.CssProperties.PaddingTop)
-				) || 0;
-
 			// Set the target element offset top values
-			this._targetElementOffset.top = this._targetElement.offsetTop + this._headerHeight + contentPaddingTop;
+			this._targetElementOffset.top =
+				this._targetElement.offsetTop + this._headerHeight + (this.parentObject.contentPaddingTop as number);
 		}
 
 		// Method to set the event listeners

@@ -7302,6 +7302,12 @@ var OSFramework;
                             throw new Error(`${OSUI.ErrorCodes.SectionIndex.FailChildItemClicked}: The ${OSUI.GlobalEnum.PatternName.SectionIndexItem} under uniqueId: '${childId}' does not exist as an SectionIndexItem from ${OSUI.GlobalEnum.PatternName.SectionIndex} with Id: ${this.widgetId}.`);
                         }
                     }
+                    _getContentPaddingTop() {
+                        const _mainContent = OSUI.Helper.Dom.ClassSelector(document, OSUI.GlobalEnum.CssClassElements.MainContent);
+                        this._contentPaddingTop = _mainContent
+                            ? parseFloat(window.getComputedStyle(_mainContent).getPropertyValue(OSUI.GlobalEnum.CssProperties.PaddingTop))
+                            : 0;
+                    }
                     _removeSectionIndexItem(childId) {
                         if (this.getChild(childId)) {
                             this.unsetChild(childId);
@@ -7344,10 +7350,7 @@ var OSFramework;
                                 headerHeight =
                                     OSUI.Helper.Dom.ClassSelector(document, OSUI.GlobalEnum.CssClassElements.Header).offsetHeight || 0;
                             }
-                            const contentPaddingTop = window
-                                .getComputedStyle(OSUI.Helper.Dom.ClassSelector(document, OSUI.GlobalEnum.CssClassElements.MainContent))
-                                .getPropertyValue(OSUI.GlobalEnum.CssProperties.PaddingTop) || 0;
-                            OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, SectionIndex_1.Enum.CssVariable.TopPosition, 'calc(' + headerHeight + 'px + ' + contentPaddingTop + ')');
+                            OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, SectionIndex_1.Enum.CssVariable.TopPosition, 'calc(' + headerHeight + 'px + ' + this._contentPaddingTop + 'px)');
                             OSUI.Helper.Dom.Styles.AddClass(this.selfElement, SectionIndex_1.Enum.CssClass.IsSticky);
                         }
                         else {
@@ -7397,6 +7400,7 @@ var OSFramework;
                     build() {
                         super.build();
                         this.setHtmlElements();
+                        this._getContentPaddingTop();
                         this._toggleIsFixed();
                         this.finishBuild();
                     }
@@ -7413,6 +7417,9 @@ var OSFramework;
                     dispose() {
                         this.unsetHtmlElements();
                         super.dispose();
+                    }
+                    get contentPaddingTop() {
+                        return this._contentPaddingTop;
                     }
                 }
                 SectionIndex_1.SectionIndex = SectionIndex;
@@ -7546,10 +7553,8 @@ var OSFramework;
                     _setTargetOffsetInfo() {
                         this._setTargetElement();
                         this._setHeaderSize();
-                        const contentPaddingTop = parseFloat(window
-                            .getComputedStyle(OSUI.Helper.Dom.ClassSelector(document, OSUI.GlobalEnum.CssClassElements.MainContent))
-                            .getPropertyValue(OSUI.GlobalEnum.CssProperties.PaddingTop)) || 0;
-                        this._targetElementOffset.top = this._targetElement.offsetTop + this._headerHeight + contentPaddingTop;
+                        this._targetElementOffset.top =
+                            this._targetElement.offsetTop + this._headerHeight + this.parentObject.contentPaddingTop;
                     }
                     _setUpEvents() {
                         this.selfElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);

@@ -2493,17 +2493,20 @@ declare namespace OSFramework.OSUI.Patterns.SectionIndex.Enum {
 }
 declare namespace OSFramework.OSUI.Patterns.SectionIndex {
     interface ISectionIndex extends Interface.IParent {
+        contentPaddingTop: string | number;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.SectionIndex {
     class SectionIndex extends AbstractParent<SectionIndexConfig, SectionIndexItem.ISectionIndexItem> implements ISectionIndex {
         private _activeSectionIndexItem;
+        private _contentPaddingTop;
         private _mainScrollContainerElement;
         private _navigateOnClick;
         private _scrollTimeout;
         constructor(uniqueId: string, configs: JSON);
         private _addSectionIndexItem;
         private _childItemHasBeenClicked;
+        private _getContentPaddingTop;
         private _removeSectionIndexItem;
         private _setActiveChildOnClick;
         private _setActiveChildOnScroll;
@@ -2517,6 +2520,7 @@ declare namespace OSFramework.OSUI.Patterns.SectionIndex {
         build(): void;
         changeProperty(propertyName: string, propertyValue: unknown): void;
         dispose(): void;
+        get contentPaddingTop(): string | number;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.SectionIndex {
