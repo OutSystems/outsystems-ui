@@ -7,5 +7,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 	 * @interface ISectionIndex
 	 * @extends {Interface.IPattern}
 	 */
-	export interface ISectionIndex extends Interface.IParent {}
+	export interface ISectionIndex extends Interface.IParent {
+		contentPaddingTop: string | number;
+	}
 }

@@ -14,6 +14,8 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 	{
 		// Store the current active sectionIndexItem
 		private _activeSectionIndexItem: SectionIndexItem.ISectionIndexItem;
+		// Store the contentPaddingTop
+		private _contentPaddingTop: string | number;
 		// Store the mainContent reference - The one that will have the scroll
 		private _mainScrollContainerElement: HTMLElement;
 
@@ -48,6 +50,15 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 					`${ErrorCodes.SectionIndex.FailChildItemClicked}: The ${GlobalEnum.PatternName.SectionIndexItem} under uniqueId: '${childId}' does not exist as an SectionIndexItem from ${GlobalEnum.PatternName.SectionIndex} with Id: ${this.widgetId}.`
 				);
 			}
+		}
+
+		private _getContentPaddingTop(): void {
+			const _mainContent = Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.MainContent);
+			this._contentPaddingTop = _mainContent
+				? parseFloat(
+						window.getComputedStyle(_mainContent).getPropertyValue(GlobalEnum.CssProperties.PaddingTop)
+				  )
+				: 0;
 		}
 
 		// Method used to remove a given SectionIndexItem from sectionIndexItems list, it's triggered by SectionIndexItem
@@ -125,18 +136,11 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 					headerHeight =
 						Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.Header).offsetHeight || 0;
 				}
-
-				// Get (if exist) the paddingTop value for the mainContent (the one with Scroll)
-				const contentPaddingTop =
-					window
-						.getComputedStyle(Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.MainContent))
-						.getPropertyValue(GlobalEnum.CssProperties.PaddingTop) || 0;
-
 				// Set inline css variable that will affect the pattern sticky position top value
 				Helper.Dom.Styles.SetStyleAttribute(
 					this.selfElement,
 					Enum.CssVariable.TopPosition,
-					'calc(' + headerHeight + 'px + ' + contentPaddingTop + ')'
+					'calc(' + headerHeight + 'px + ' + this._contentPaddingTop + 'px)'
 				);
 
 				// Set the Sticky class
@@ -255,6 +259,8 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 
 			this.setHtmlElements();
 
+			this._getContentPaddingTop();
+
 			this._toggleIsFixed();
 
 			this.finishBuild();
@@ -287,6 +293,17 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 			this.unsetHtmlElements();
 			//Destroying the base of pattern
 			super.dispose();
+		}
+
+		/**
+		 * Getter of the contentPaddingTop property
+		 *
+		 * @readonly
+		 * @type {(string | number)}
+		 * @memberof SectionIndex
+		 */
+		public get contentPaddingTop(): string | number {
+			return this._contentPaddingTop;
 		}
 	}
 }
