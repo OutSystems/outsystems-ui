@@ -3642,6 +3642,12 @@ var OSFramework;
             var BottomSheet;
             (function (BottomSheet_1) {
                 class BottomSheet extends Patterns.AbstractPattern {
+                    get gestureEventInstance() {
+                        return this._gestureEventInstance;
+                    }
+                    get hasGestureEvents() {
+                        return this._hasGestureEvents;
+                    }
                     constructor(uniqueId, configs) {
                         super(uniqueId, new BottomSheet_1.BottomSheetConfig(configs));
                         this._isOpen = false;
@@ -3653,12 +3659,6 @@ var OSFramework;
                                 mass: 1,
                             },
                         };
-                    }
-                    get gestureEventInstance() {
-                        return this._gestureEventInstance;
-                    }
-                    get hasGestureEvents() {
-                        return this._hasGestureEvents;
                     }
                     _handleFocusTrap() {
                         const opts = {
@@ -17546,6 +17546,37 @@ var Providers;
                     Factory.NewNoUiSlider = NewNoUiSlider;
                 })(Factory = NoUiSlider.Factory || (NoUiSlider.Factory = {}));
             })(NoUiSlider = RangeSlider.NoUiSlider || (RangeSlider.NoUiSlider = {}));
+        })(RangeSlider = OSUI.RangeSlider || (OSUI.RangeSlider = {}));
+    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
+})(Providers || (Providers = {}));
+var Providers;
+(function (Providers) {
+    var OSUI;
+    (function (OSUI) {
+        var RangeSlider;
+        (function (RangeSlider) {
+            var NoUISlider;
+            (function (NoUISlider) {
+                var Utils;
+                (function (Utils) {
+                    function SetRangeValues(providerConfigs) {
+                        const rangeSliderConfigs = JSON.parse(providerConfigs);
+                        if (rangeSliderConfigs.range.length <= 0) {
+                            delete rangeSliderConfigs.range;
+                        }
+                        else {
+                            const rangeValues = {};
+                            for (let i = 0; i < rangeSliderConfigs.range.length; i++) {
+                                rangeValues[rangeSliderConfigs.range[i].key] =
+                                    rangeSliderConfigs.range[i].value === undefined ? 0 : rangeSliderConfigs.range[i].value;
+                            }
+                            rangeSliderConfigs.range = rangeValues;
+                        }
+                        return rangeSliderConfigs;
+                    }
+                    Utils.SetRangeValues = SetRangeValues;
+                })(Utils = NoUISlider.Utils || (NoUISlider.Utils = {}));
+            })(NoUISlider = RangeSlider.NoUISlider || (RangeSlider.NoUISlider = {}));
         })(RangeSlider = OSUI.RangeSlider || (OSUI.RangeSlider = {}));
     })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
 })(Providers || (Providers = {}));
