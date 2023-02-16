@@ -133,6 +133,8 @@ namespace OSFramework.OSUI.Behaviors {
 
 			// Check if just clicked or swiped in invalid direction
 			if ((offsetX === 0 && offsetY === 0) || this._dragParams.InvalidDrag) {
+				this._targetElement.style.transform = '';
+
 				return;
 			}
 
@@ -151,7 +153,6 @@ namespace OSFramework.OSUI.Behaviors {
 			this._dragParams.IsReadyToTriggerCallback = swipedHalfWidth || checkSwipeSpeed;
 
 			if (this._dragParams.IsReadyToTriggerCallback) {
-				this._targetElement.style.transform = '';
 				callback();
 			} else if (springProperties?.addSpringAnimation && this._dragParams.IsOpen) {
 				// Create the animation object
@@ -165,10 +166,9 @@ namespace OSFramework.OSUI.Behaviors {
 
 				// Play the animation
 				this._dragParams.SpringAnimation.play();
-				this._targetElement.style.transform = '';
-			} else {
-				this._targetElement.style.transform = '';
 			}
+
+			this._targetElement.style.transform = '';
 		}
 
 		/**
