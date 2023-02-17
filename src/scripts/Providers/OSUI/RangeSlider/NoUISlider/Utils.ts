@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.OSUI.RangeSlider.NoUISlider.Utils {
-	export function SetRangeValues(providerConfigs: ProviderConfigs): NoUiSliderOptions {
+	export function SetRangeValues(providerConfigs: RangeSliderProviderConfigs): RangeSliderProviderConfigs {
 		const _noUiSliderConfigs = JSON.parse(providerConfigs);
 
 		// Check if the range key is empty. If true, remove from the array
@@ -9,9 +9,9 @@ namespace Providers.OSUI.RangeSlider.NoUISlider.Utils {
 		} else {
 			const _rangeValues = {};
 
-			for (let i = 0; i < _noUiSliderConfigs.range.length; i++) {
-				_rangeValues[_noUiSliderConfigs.range[i].key] =
-					_noUiSliderConfigs.range[i].value === undefined ? 0 : _noUiSliderConfigs.range[i].value;
+			// Check the range values and cahnge to a single object
+			for (const element of _noUiSliderConfigs.range) {
+				_rangeValues[element.key] = element.value === undefined ? 0 : element.value;
 			}
 
 			_noUiSliderConfigs.range = _rangeValues;

@@ -17566,9 +17566,8 @@ var Providers;
                         }
                         else {
                             const _rangeValues = {};
-                            for (let i = 0; i < _noUiSliderConfigs.range.length; i++) {
-                                _rangeValues[_noUiSliderConfigs.range[i].key] =
-                                    _noUiSliderConfigs.range[i].value === undefined ? 0 : _noUiSliderConfigs.range[i].value;
+                            for (const element of _noUiSliderConfigs.range) {
+                                _rangeValues[element.key] = element.value === undefined ? 0 : element.value;
                             }
                             _noUiSliderConfigs.range = _rangeValues;
                         }
