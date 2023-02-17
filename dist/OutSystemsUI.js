@@ -17560,19 +17560,19 @@ var Providers;
                 var Utils;
                 (function (Utils) {
                     function SetRangeValues(providerConfigs) {
-                        const _rangeSliderConfigs = JSON.parse(providerConfigs);
-                        if (_rangeSliderConfigs.range.length <= 0) {
-                            delete _rangeSliderConfigs.range;
+                        const _noUiSliderConfigs = JSON.parse(providerConfigs);
+                        if (_noUiSliderConfigs.range.length <= 0) {
+                            delete _noUiSliderConfigs.range;
                         }
                         else {
                             const _rangeValues = {};
-                            for (let i = 0; i < _rangeSliderConfigs.range.length; i++) {
-                                _rangeValues[_rangeSliderConfigs.range[i].key] =
-                                    _rangeSliderConfigs.range[i].value === undefined ? 0 : _rangeSliderConfigs.range[i].value;
+                            for (let i = 0; i < _noUiSliderConfigs.range.length; i++) {
+                                _rangeValues[_noUiSliderConfigs.range[i].key] =
+                                    _noUiSliderConfigs.range[i].value === undefined ? 0 : _noUiSliderConfigs.range[i].value;
                             }
-                            _rangeSliderConfigs.range = _rangeValues;
+                            _noUiSliderConfigs.range = _rangeValues;
                         }
-                        return _rangeSliderConfigs;
+                        return _noUiSliderConfigs;
                     }
                     Utils.SetRangeValues = SetRangeValues;
                 })(Utils = NoUISlider.Utils || (NoUISlider.Utils = {}));

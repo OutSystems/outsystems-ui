@@ -4977,7 +4977,7 @@ declare namespace Providers.OSUI.RangeSlider.NoUiSlider.Factory {
     function NewNoUiSlider(rangeSliderId: string, configs: string, mode: OSFramework.OSUI.Patterns.RangeSlider.Enum.Mode): OSFramework.OSUI.Patterns.RangeSlider.IRangeSlider;
 }
 declare namespace Providers.OSUI.RangeSlider.NoUISlider.Utils {
-    function SetRangeValues(providerConfigs: ProviderConfigs): ProviderConfigs;
+    function SetRangeValues(providerConfigs: ProviderConfigs): NoUiSliderOptions;
 }
 declare namespace Providers.OSUI.RangeSlider.NoUISlider.IntervalSlider {
     class OSUINoUiSliderInterval extends AbstractNoUiSlider<NoUISlider.SliderInterval.NoUiSliderIntervalConfig> {
