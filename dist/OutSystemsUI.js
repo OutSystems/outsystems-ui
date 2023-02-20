@@ -14197,8 +14197,8 @@ var OutSystems;
                 }
                 Menu.AddMenuOnOrientationChange = AddMenuOnOrientationChange;
                 function IsMenuDraggable() {
-                    const _layoutMenuVisible = document.querySelector('.active-screen .aside-visible');
-                    const _isLandscape = document.body.classList.contains('landscape');
+                    const _layoutMenuVisible = OSFramework.OSUI.Helper.Dom.TagSelector(document.body, '.active-screen .aside-visible');
+                    const _isLandscape = OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(document.body, 'landscape');
                     let _addDragGestures = false;
                     if (window.cordova !== undefined && Utils.DeviceDetection.IsRunningAsPWA() === false) {
                         if ((_layoutMenuVisible && OSFramework.OSUI.Helper.DeviceInfo.IsDesktop) ||
