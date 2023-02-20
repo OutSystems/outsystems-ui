@@ -537,7 +537,7 @@ declare namespace OSFramework.OSUI.Event {
         constructor();
         addHandler(eventType: ET, handler: GlobalCallbacks.Generic): void;
         hasHandlers(eventType: ET): boolean;
-        removeHandler(eventType: ET, handler: GlobalCallbacks.OSGeneric): void;
+        removeHandler(eventType: ET, handler: GlobalCallbacks.Generic): void;
         trigger(eventType: ET, data?: D, ...args: unknown[]): void;
         get events(): Map<ET, IEvent<D>>;
         protected abstract getInstanceOfEventType(eventType: ET): IEvent<D>;
@@ -3974,9 +3974,11 @@ declare namespace OutSystems.OSUI.Utils {
     function SetFocusBehaviour(contentId: string, triggerItem: string): string;
 }
 declare namespace OutSystems.OSUI.Utils.Menu {
+    function AddMenuOnOrientationChange(callback: OSFramework.OSUI.GlobalCallbacks.Generic): void;
     function IsMenuDraggable(): boolean;
     function MenuHide(): void;
     function MenuShow(): void;
+    function RemoveMenuOnOrientationChange(): void;
     function SetActiveMenuItems(WidgetId: string, ActiveItem: number, ActiveSubItem: number): string;
     function SetBottomBarActiveElement(ActiveItem?: number): string;
     function SetMenuAttributes(): string;

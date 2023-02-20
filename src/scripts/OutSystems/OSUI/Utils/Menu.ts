@@ -1,11 +1,57 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Utils.Menu {
+	// OrientationChange callback to be stored and removed on Destroy
+	let _onOrientationChangeCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
+
+	// OrientationChange handler
+	function _onOrientationChangeCallbackHandler(callback: OSFramework.OSUI.GlobalCallbacks.Generic): void {
+		if (callback !== undefined) {
+			setTimeout(function () {
+				_onOrientationChangeCallback();
+			}, 300);
+		}
+	}
+
+	/**
+	 * Method that add the OrientationChange handler
+	 *
+	 * @export
+	 * @param {OSFramework.OSUI.GlobalCallbacks.Generic} callback
+	 */
+	export function AddMenuOnOrientationChange(callback: OSFramework.OSUI.GlobalCallbacks.Generic): void {
+		if (callback !== undefined) {
+			_onOrientationChangeCallback = callback;
+			OSFramework.OSUI.Event.GlobalEventManager.Instance.addHandler(
+				OSFramework.OSUI.Event.Type.OrientationChange,
+				_onOrientationChangeCallbackHandler
+			);
+		}
+	}
+
 	/**
 	 * Checks if the menu can be draggable
 	 * @returns
 	 */
 	export function IsMenuDraggable(): boolean {
-		return window.cordova !== undefined && DeviceDetection.IsRunningAsPWA() === false;
+		const _layoutMenuVisible = OSFramework.OSUI.Helper.Dom.TagSelector(
+			document.body,
+			'.active-screen .aside-visible'
+		);
+		const _isLandscape = OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(document.body, 'landscape');
+		let _addDragGestures = false;
+
+		if (window.cordova !== undefined && DeviceDetection.IsRunningAsPWA() === false) {
+			if (
+				(_layoutMenuVisible && OSFramework.OSUI.Helper.DeviceInfo.IsDesktop) ||
+				(_layoutMenuVisible && OSFramework.OSUI.Helper.DeviceInfo.IsTablet && _isLandscape)
+			) {
+				_addDragGestures = false;
+			} else {
+				_addDragGestures = true;
+			}
+		}
+
+		return _addDragGestures;
 	}
 
 	/**
@@ -52,6 +98,19 @@ namespace OutSystems.OSUI.Utils.Menu {
 			SetMenuAttributes();
 		} else {
 			console.warn('The menu element is not present in the screen');
+		}
+	}
+
+	/**
+	 * Method that removes the OrientationChange handler
+	 */
+	export function RemoveMenuOnOrientationChange(): void {
+		if (_onOrientationChangeCallback !== undefined) {
+			OSFramework.OSUI.Event.GlobalEventManager.Instance.removeHandler(
+				OSFramework.OSUI.Event.Type.OrientationChange,
+				_onOrientationChangeCallbackHandler
+			);
+			_onOrientationChangeCallback = undefined;
 		}
 	}
 
