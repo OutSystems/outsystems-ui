@@ -150,8 +150,8 @@
 	&__content {
 		max-height: var(--bottom-sheet-max-height);
 		overflow-y: scroll;
-		padding-bottom: calc(var(--bottom-bar-size) + var(--space-m) + var(--os-safe-area-bottom));
 		padding: var(--space-base);
+		padding-bottom: calc(var(--bottom-bar-size) + var(--space-m) + var(--os-safe-area-bottom));
 	}
 }
 
