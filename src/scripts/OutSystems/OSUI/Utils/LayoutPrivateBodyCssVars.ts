@@ -3,6 +3,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	export abstract class CssBodyVariables {
 		// Function that will set the css variables to body element
 		private static _setCssVars(): void {
+			const body = document.body;
 			const headerContent = OSFramework.Helper.Dom.ClassSelector(
 				document,
 				OSFramework.GlobalEnum.CssClassElements.HeaderTopContent
@@ -11,25 +12,22 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 				document,
 				OSFramework.GlobalEnum.CssClassElements.Footer
 			);
-			const body = document.body;
-
-			let stylesToBeAdded = '';
 
 			if (OSUI.Utils.DeviceDetection.IsWebApp() === false) {
 				if (headerContent) {
-					stylesToBeAdded += `${OSFramework.GlobalEnum.CSSVariables.HeaderContentHeight}: ${
-						headerContent.getBoundingClientRect().height
-					}${OSFramework.GlobalEnum.Units.Pixel}`;
+					OSFramework.Helper.Dom.Styles.SetStyleAttribute(
+						body,
+						OSFramework.GlobalEnum.CSSVariables.HeaderContentHeight,
+						headerContent.getBoundingClientRect().height + OSFramework.GlobalEnum.Units.Pixel
+					);
 				}
 
 				if (footer) {
-					stylesToBeAdded +=
-						stylesToBeAdded === ''
-							? ''
-							: '; ' +
-							  `${OSFramework.GlobalEnum.CSSVariables.FooterHeight}: ${
-									footer.getBoundingClientRect().height
-							  }${OSFramework.GlobalEnum.Units.Pixel}`;
+					OSFramework.Helper.Dom.Styles.SetStyleAttribute(
+						body,
+						OSFramework.GlobalEnum.CSSVariables.FooterHeight,
+						footer.getBoundingClientRect().height + OSFramework.GlobalEnum.Units.Pixel
+					);
 				}
 			}
 
@@ -37,14 +35,12 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 				OSFramework.Helper.Dom.Styles.ContainsClass(body, OSFramework.GlobalEnum.DeviceType.phone) ||
 				OSFramework.Helper.Dom.Styles.ContainsClass(body, OSFramework.GlobalEnum.DeviceType.tablet)
 			) {
-				stylesToBeAdded +=
-					stylesToBeAdded === ''
-						? ''
-						: '; ' +
-						  `${OSFramework.GlobalEnum.CSSVariables.ViewportHeight}: ${window.innerHeight}${OSFramework.GlobalEnum.Units.Pixel}`;
+				OSFramework.Helper.Dom.Styles.SetStyleAttribute(
+					body,
+					OSFramework.GlobalEnum.CSSVariables.ViewportHeight,
+					window.innerHeight + OSFramework.GlobalEnum.Units.Pixel
+				);
 			}
-
-			OSFramework.Helper.Dom.Attribute.Set(body, OSFramework.GlobalEnum.HTMLAttributes.Style, stylesToBeAdded);
 		}
 
 		/**
