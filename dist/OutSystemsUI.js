@@ -3639,12 +3639,6 @@ var OSFramework;
             var BottomSheet;
             (function (BottomSheet_1) {
                 class BottomSheet extends Patterns.AbstractPattern {
-                    get gestureEventInstance() {
-                        return this._gestureEventInstance;
-                    }
-                    get hasGestureEvents() {
-                        return this._hasGestureEvents;
-                    }
                     constructor(uniqueId, configs) {
                         super(uniqueId, new BottomSheet_1.BottomSheetConfig(configs));
                         this._isOpen = false;
@@ -3656,6 +3650,12 @@ var OSFramework;
                                 mass: 1,
                             },
                         };
+                    }
+                    get gestureEventInstance() {
+                        return this._gestureEventInstance;
+                    }
+                    get hasGestureEvents() {
+                        return this._hasGestureEvents;
                     }
                     _handleFocusTrap() {
                         const opts = {
@@ -5084,6 +5084,7 @@ var OSFramework;
                             if (isValid === false) {
                                 OSUI.Helper.Dom.Styles.AddClass(this.selfElement, ServerSide.Enum.CssClass.NotValid);
                                 this._addErrorMessage(validationMessage);
+                                this._setBalloonCoordinates();
                             }
                             else {
                                 OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, ServerSide.Enum.CssClass.NotValid);
@@ -14180,8 +14181,35 @@ var OutSystems;
         (function (Utils) {
             var Menu;
             (function (Menu) {
+                let _onOrientationChangeCallback;
+                function _onOrientationChangeCallbackHandler(callback) {
+                    if (callback !== undefined) {
+                        setTimeout(function () {
+                            _onOrientationChangeCallback();
+                        }, 300);
+                    }
+                }
+                function AddMenuOnOrientationChange(callback) {
+                    if (callback !== undefined) {
+                        _onOrientationChangeCallback = callback;
+                        OSFramework.OSUI.Event.GlobalEventManager.Instance.addHandler(OSFramework.OSUI.Event.Type.OrientationChange, _onOrientationChangeCallbackHandler);
+                    }
+                }
+                Menu.AddMenuOnOrientationChange = AddMenuOnOrientationChange;
                 function IsMenuDraggable() {
-                    return window.cordova !== undefined && Utils.DeviceDetection.IsRunningAsPWA() === false;
+                    const _layoutMenuVisible = OSFramework.OSUI.Helper.Dom.TagSelector(document.body, '.active-screen .aside-visible');
+                    const _isLandscape = OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(document.body, 'landscape');
+                    let _addDragGestures = false;
+                    if (window.cordova !== undefined && Utils.DeviceDetection.IsRunningAsPWA() === false) {
+                        if ((_layoutMenuVisible && OSFramework.OSUI.Helper.DeviceInfo.IsDesktop) ||
+                            (_layoutMenuVisible && OSFramework.OSUI.Helper.DeviceInfo.IsTablet && _isLandscape)) {
+                            _addDragGestures = false;
+                        }
+                        else {
+                            _addDragGestures = true;
+                        }
+                    }
+                    return _addDragGestures;
                 }
                 Menu.IsMenuDraggable = IsMenuDraggable;
                 function MenuHide() {
@@ -14218,6 +14246,13 @@ var OutSystems;
                     }
                 }
                 Menu.MenuShow = MenuShow;
+                function RemoveMenuOnOrientationChange() {
+                    if (_onOrientationChangeCallback !== undefined) {
+                        OSFramework.OSUI.Event.GlobalEventManager.Instance.removeHandler(OSFramework.OSUI.Event.Type.OrientationChange, _onOrientationChangeCallbackHandler);
+                        _onOrientationChangeCallback = undefined;
+                    }
+                }
+                Menu.RemoveMenuOnOrientationChange = RemoveMenuOnOrientationChange;
                 function SetActiveMenuItems(WidgetId, ActiveItem, ActiveSubItem) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Utilities.FailSetActiveMenuItems,

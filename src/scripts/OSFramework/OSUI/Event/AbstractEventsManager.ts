@@ -61,7 +61,7 @@ namespace OSFramework.OSUI.Event {
 		 * @param handler
 		 * @memberof OSFramework.Event.AbstractEventsManager
 		 */
-		public removeHandler(eventType: ET, handler: GlobalCallbacks.OSGeneric): void {
+		public removeHandler(eventType: ET, handler: GlobalCallbacks.Generic): void {
 			if (this._events.has(eventType)) {
 				const event = this._events.get(eventType);
 				event.removeHandler(handler);
