@@ -163,6 +163,13 @@
 }
 
 ///
+.desktop {
+	.osui-bottom-sheet__header::after {
+		display: none;
+	}
+}
+
+///
 .landscape {
 	.osui-bottom-sheet__header__top-bar,
 	.osui-bottom-sheet__content {
@@ -173,8 +180,18 @@
 
 // Body absolute patterns when used inside a BottomSheet
 .osui-bottom-sheet--is-active {
+	// DropdownSearch and DropdownTags
 	.vscomp-wrapper,
 	[data-popup-backdrop] {
 		z-index: $bottom-sheet-zindex + 1;
+	}
+
+	// DatePicker, DatePickerRange, MonthPicker and TimePicker
+	.osui-bottom-sheet__content {
+		.osui-datepicker,
+		.osui-monthpicker,
+		.osui-timepicker {
+			position: relative;
+		}
 	}
 }
