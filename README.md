@@ -1,6 +1,6 @@
 # OutSystems UI · v2.15.0
 
-![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg) ![NPM version](https://img.shields.io/badge/npm-v8.3.1-informational)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
 ## About the component
 
@@ -72,18 +72,11 @@ We highly recommend the usage of the following tools:
   <li>Create a PR, describing what was the (mis)behavior, what you changed and please provide a sample </li>
 </ol>
 
-### How to generate Documentation?
+### Documentation?
 
 We use the [TypeDoc](https://typedoc.org/) to automatically generate documentation. TypeDoc converts comments in TypeScript source code into rendered HTML documentation, alongside UML diagrams for each class and Interface.
 
-For the UML diagrams to be generated, some extra installations are required in your system:
-
--   [JAVA](https://www.java.com/en/) (latest version)
--   [Graphviz](https://graphviz.org/download/) (latest version)
-
-Finally, you just need to run the command (in Visual Code terminal): <code>npm run docs</code>!
-
-**NOTE:** This is not working properly at windows yet since UML graphics are not being generated.
+Take a look at it, at [OutSystemsUI FWK Documentation](https://outsystems-ui-docs.github.io/).
 
 ### How to do a Pull Request?
 
