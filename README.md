@@ -29,7 +29,10 @@ The OutSystems UI component, like all components, can be found in [OutSystems fo
 ### Where can you find documentation?
 
 The documentation can be found in the [OutSystems UI website](https://outsystemsui.outsystems.com/outsystemsuiwebsite/) and in [OutSystems product documentation](https://success.outsystems.com/Documentation/11/Developing_an_Application/Design_UI/Patterns).
-Code documentation can be found [here](https://outsystems-ui-docs.github.io/index.html) - This is a beta version of the code documentation.
+
+We also use the [TypeDoc](https://typedoc.org/) to automatically generate documentation. TypeDoc converts comments in TypeScript source code into rendered HTML documentation, alongside UML diagrams for each class and Interface.
+
+Take a look at it, at [OutSystemsUI FWK Documentation](https://outsystems-ui-docs.github.io/).
 
 ### Why use this component?
 
@@ -71,12 +74,6 @@ We highly recommend the usage of the following tools:
   <li>Kept the branch updated with the master branch and also synchronized with the upstream <strong>master</strong></li>
   <li>Create a PR, describing what was the (mis)behavior, what you changed and please provide a sample </li>
 </ol>
-
-### Documentation?
-
-We use the [TypeDoc](https://typedoc.org/) to automatically generate documentation. TypeDoc converts comments in TypeScript source code into rendered HTML documentation, alongside UML diagrams for each class and Interface.
-
-Take a look at it, at [OutSystemsUI FWK Documentation](https://outsystems-ui-docs.github.io/).
 
 ### How to do a Pull Request?
 
