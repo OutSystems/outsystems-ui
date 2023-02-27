@@ -3,6 +3,7 @@ const gulp = require('gulp');
 const autoprefixer = require('gulp-autoprefixer');
 const postcss = require('gulp-postcss');
 const postcssdc = require('postcss-discard-comments');
+const postcssdd = require('postcss-discard-duplicates');
 const removeEmptyLines = require('gulp-remove-empty-lines');
 const rename = require("gulp-rename");
 const sass = require('gulp-sass')(require('sass'));
@@ -31,7 +32,7 @@ function scssTranspile(envMode) {
 			.src(watchScssThemes)
 			.pipe(sourcemaps.init())
 			.pipe(sass().on('error', sass.logError))
-			.pipe(postcss([postcssdc]))
+			.pipe(postcss([postcssdc, postcssdd]))
 			.pipe(
 				autoprefixer({
 					overrideBrowserslist: ['last 10 versions'],
@@ -47,7 +48,7 @@ function scssTranspile(envMode) {
     } else {
         cssResult = gulp.src(watchScssThemes)
             .pipe(sass().on('error', sass.logError))
-            .pipe(postcss([postcssdc]))
+            .pipe(postcss([postcssdc, postcssdd]))
             .pipe(autoprefixer({
                 overrideBrowserslist: ['last 10 versions']
             }))
