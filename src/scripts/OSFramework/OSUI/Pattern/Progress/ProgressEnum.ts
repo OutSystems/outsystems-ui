@@ -15,9 +15,20 @@ namespace OSFramework.OSUI.Patterns.Progress.ProgressEnum {
 	export enum InlineStyleProp {
 		ProgressColor = '--progress-color',
 		ProgressValue = '--progress-value',
+		ProgressGradient = '--progress-gradient',
 		Shape = '--shape',
 		Thickness = '--thickness',
 		TrailColor = '--trail-color',
+	}
+
+	/**
+	 * Progress Enum Gradient Types
+	 */
+	export enum Gradient {
+		LinearHorizontal = 'LinearHorizontal',
+		LinearVertical = 'LinearVertical',
+		LinearDiagonally = 'LinearDiagonally',
+		Radial = 'Radial',
 	}
 
 	/**

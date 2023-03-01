@@ -6,7 +6,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Bar {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
 			super(uniqueId, new ProgressBarConfig(configs));
-			this._progressType = ProgressEnum.ProgressTypes.Bar;
+			this.progressType = ProgressEnum.ProgressTypes.Bar;
 		}
 
 		// Set the default inline css variables
@@ -132,7 +132,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Bar {
 		 */
 		protected setHtmlElements(): void {
 			// Set the html references that will be used to manage the cssClasses and atribute properties
-			this._progressElem = this.selfElement.querySelector(Constants.Dot + ProgressEnum.CssClass.Container);
+			this.progressElem = this.selfElement.querySelector(Constants.Dot + ProgressEnum.CssClass.Container);
 		}
 
 		/**
@@ -209,6 +209,49 @@ namespace OSFramework.OSUI.Patterns.Progress.Bar {
 			this.unsetHtmlElements();
 			this.unsetCallbacks();
 			super.dispose();
+		}
+
+		public progressApplyGradient(gradientType: string, colors: GradientColor): void {
+			// Call super to clean and validate color string
+			super.progressApplyGradient(gradientType, colors);
+			// Stole gradient to later used on CSS Variable
+			let _gradient;
+			// Store final gradient string
+			const _colorsString = [];
+
+			// Make sure the string passed on the CSS Variable has the expected format (color X%)
+			for (let i = 0; i < this.gradientLength; i++) {
+				_colorsString.push(
+					`${colors[i].Color} ${
+						colors[i].Percentage !== -1
+							? colors[i].Percentage + GlobalEnum.Units.Percentage
+							: Constants.EmptyString
+					}`
+				);
+			}
+
+			// Compose the gradient structure, according to type
+			switch (gradientType) {
+				case ProgressEnum.Gradient.LinearDiagonally:
+					_gradient = `linear-gradient(135deg, ${_colorsString})`;
+					break;
+				case ProgressEnum.Gradient.LinearHorizontal:
+					_gradient = `linear-gradient(90deg, ${_colorsString})`;
+					break;
+				case ProgressEnum.Gradient.LinearVertical:
+					_gradient = `linear-gradient(180deg, ${_colorsString})`;
+					break;
+				case ProgressEnum.Gradient.Radial:
+					_gradient = `radial-gradient(${_colorsString})`;
+					break;
+			}
+
+			// Set the gradient as CSS Variable, to be used on the CSS
+			Helper.Dom.Styles.SetStyleAttribute(
+				this.selfElement,
+				ProgressEnum.InlineStyleProp.ProgressGradient,
+				_gradient
+			);
 		}
 	}
 }

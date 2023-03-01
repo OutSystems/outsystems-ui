@@ -5,6 +5,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle.Enum {
 	 */
 	export enum CssClass {
 		Progress = 'osui-progress-circle__container__progress-path',
+		SVG = 'svg-wrapper',
 		Trail = 'osui-progress-circle__container__trail-path',
 	}
 
@@ -14,12 +15,24 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle.Enum {
 	export enum InlineStyleProp {
 		CircleRadius = '--radius',
 		CircleSize = '--circle-size',
+		GradientURL = '--progress-circle-gradient-url',
 		ProgressCircleSize = '--progress-circle-size',
 		StrokeDasharray = '--stroke-dasharray',
 		StrokeDashoffset = '--stroke-dashoffset',
 	}
 
+	/**
+	 * ProgressCircle default size value
+	 */
 	export enum DefaultValues {
 		DefaultSize = 'auto',
+	}
+
+	/**
+	 * ProgressCircle Gradient name expected by the svg
+	 */
+	export enum GradientName {
+		Linear = 'linearGradient',
+		Radial = 'radialGradient',
 	}
 }
