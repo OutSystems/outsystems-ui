@@ -3639,6 +3639,12 @@ var OSFramework;
             var BottomSheet;
             (function (BottomSheet_1) {
                 class BottomSheet extends Patterns.AbstractPattern {
+                    get gestureEventInstance() {
+                        return this._gestureEventInstance;
+                    }
+                    get hasGestureEvents() {
+                        return this._hasGestureEvents;
+                    }
                     constructor(uniqueId, configs) {
                         super(uniqueId, new BottomSheet_1.BottomSheetConfig(configs));
                         this._isOpen = false;
@@ -3650,12 +3656,6 @@ var OSFramework;
                                 mass: 1,
                             },
                         };
-                    }
-                    get gestureEventInstance() {
-                        return this._gestureEventInstance;
-                    }
-                    get hasGestureEvents() {
-                        return this._hasGestureEvents;
                     }
                     _handleFocusTrap() {
                         const opts = {
@@ -6269,9 +6269,9 @@ var OSFramework;
                         super(uniqueId, configs);
                     }
                     _animateEntranceEnd() {
-                        this._progressElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.TransitionEnd, this._eventAnimateEntranceEnd);
-                        OSUI.Helper.Dom.Styles.RemoveClass(this._progressElem, Progress.ProgressEnum.CssClass.AddInitialAnimation);
-                        OSUI.Helper.Dom.Styles.RemoveClass(this._progressElem, Progress.ProgressEnum.CssClass.AnimateProgressChange);
+                        this.progressElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.TransitionEnd, this._eventAnimateEntranceEnd);
+                        OSUI.Helper.Dom.Styles.RemoveClass(this.progressElem, Progress.ProgressEnum.CssClass.AddInitialAnimation);
+                        OSUI.Helper.Dom.Styles.RemoveClass(this.progressElem, Progress.ProgressEnum.CssClass.AnimateProgressChange);
                     }
                     _setAccessibilityProps() {
                         OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSUI.Constants.A11YAttributes.TabIndex, '0');
@@ -6281,12 +6281,12 @@ var OSFramework;
                         OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSUI.Constants.A11YAttributes.Aria.ValueMax, Progress.ProgressEnum.Properties.MaxProgressValue);
                     }
                     animateInitial() {
-                        OSUI.Helper.Dom.Styles.AddClass(this._progressElem, Progress.ProgressEnum.CssClass.AddInitialAnimation);
-                        this._progressElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.TransitionEnd, this._eventAnimateEntranceEnd);
+                        OSUI.Helper.Dom.Styles.AddClass(this.progressElem, Progress.ProgressEnum.CssClass.AddInitialAnimation);
+                        this.progressElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.TransitionEnd, this._eventAnimateEntranceEnd);
                     }
                     animateOnValueChange() {
-                        OSUI.Helper.Dom.Styles.AddClass(this._progressElem, Progress.ProgressEnum.CssClass.AnimateProgressChange);
-                        this._progressElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.TransitionEnd, this._eventAnimateEntranceEnd);
+                        OSUI.Helper.Dom.Styles.AddClass(this.progressElem, Progress.ProgressEnum.CssClass.AnimateProgressChange);
+                        this.progressElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.TransitionEnd, this._eventAnimateEntranceEnd);
                     }
                     setCallbacks() {
                         this._eventAnimateEntranceEnd = this._animateEntranceEnd.bind(this);
@@ -6295,18 +6295,18 @@ var OSFramework;
                         this._eventAnimateEntranceEnd = undefined;
                     }
                     unsetHtmlElements() {
-                        this._progressElem = undefined;
+                        this.progressElem = undefined;
                     }
                     updatedProgressValue() {
                         if (this.configs.Progress < Progress.ProgressEnum.Properties.MinProgressValue) {
                             this.configs.Progress = Progress.ProgressEnum.Properties.MinProgressValue;
-                            console.warn(`The value of the Progress property on the '${this.widgetId}' ${this._progressType === Progress.ProgressEnum.ProgressTypes.Bar
+                            console.warn(`The value of the Progress property on the '${this.widgetId}' ${this.progressType === Progress.ProgressEnum.ProgressTypes.Bar
                                 ? OSUI.GlobalEnum.PatternName.ProgressBar
                                 : OSUI.GlobalEnum.PatternName.ProgressCircle} can't be smaller than '${Progress.ProgressEnum.Properties.MinProgressValue}'.`);
                         }
                         if (this.configs.Progress > Progress.ProgressEnum.Properties.MaxProgressValue) {
                             this.configs.Progress = Progress.ProgressEnum.Properties.MaxProgressValue;
-                            console.warn(`The value of the Progress property on the '${this.widgetId}' ${this._progressType === Progress.ProgressEnum.ProgressTypes.Bar
+                            console.warn(`The value of the Progress property on the '${this.widgetId}' ${this.progressType === Progress.ProgressEnum.ProgressTypes.Bar
                                 ? OSUI.GlobalEnum.PatternName.ProgressBar
                                 : OSUI.GlobalEnum.PatternName.ProgressCircle} is higher than supported (${Progress.ProgressEnum.Properties.MaxProgressValue}).`);
                         }
@@ -6316,6 +6316,13 @@ var OSFramework;
                     build() {
                         super.build();
                         this._setAccessibilityProps();
+                    }
+                    progressApplyGradient(gradientType, colors) {
+                        this.gradientLength = Object.keys(colors).length;
+                        if (this.gradientLength < 2) {
+                            console.warn(`Progress${this.progressType}(${this.uniqueId}): CSS ${gradientType} gradient needs at least two colors to work`);
+                            throw Error();
+                        }
                     }
                     resetProgressValue() {
                         this.setElementProgressValue(this.configs.InitialProgress);
@@ -6367,10 +6374,18 @@ var OSFramework;
                     (function (InlineStyleProp) {
                         InlineStyleProp["ProgressColor"] = "--progress-color";
                         InlineStyleProp["ProgressValue"] = "--progress-value";
+                        InlineStyleProp["ProgressGradient"] = "--progress-gradient";
                         InlineStyleProp["Shape"] = "--shape";
                         InlineStyleProp["Thickness"] = "--thickness";
                         InlineStyleProp["TrailColor"] = "--trail-color";
                     })(InlineStyleProp = ProgressEnum.InlineStyleProp || (ProgressEnum.InlineStyleProp = {}));
+                    let Gradient;
+                    (function (Gradient) {
+                        Gradient["LinearHorizontal"] = "LinearHorizontal";
+                        Gradient["LinearVertical"] = "LinearVertical";
+                        Gradient["LinearDiagonally"] = "LinearDiagonally";
+                        Gradient["Radial"] = "Radial";
+                    })(Gradient = ProgressEnum.Gradient || (ProgressEnum.Gradient = {}));
                     let Properties;
                     (function (Properties) {
                         Properties["ExtendedClass"] = "ExtendedClass";
@@ -6443,7 +6458,7 @@ var OSFramework;
                     class Bar extends Progress.AbstractProgress {
                         constructor(uniqueId, configs) {
                             super(uniqueId, new Bar_1.ProgressBarConfig(configs));
-                            this._progressType = Progress.ProgressEnum.ProgressTypes.Bar;
+                            this.progressType = Progress.ProgressEnum.ProgressTypes.Bar;
                         }
                         _setCssVariables() {
                             OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Progress.ProgressEnum.InlineStyleProp.Thickness, this.configs.Thickness + OSUI.GlobalEnum.Units.Pixel);
@@ -6481,7 +6496,7 @@ var OSFramework;
                             this.updatedProgressValue();
                         }
                         setHtmlElements() {
-                            this._progressElem = this.selfElement.querySelector(OSUI.Constants.Dot + Progress.ProgressEnum.CssClass.Container);
+                            this.progressElem = this.selfElement.querySelector(OSUI.Constants.Dot + Progress.ProgressEnum.CssClass.Container);
                         }
                         unsetCallbacks() {
                             super.unsetCallbacks();
@@ -6523,6 +6538,31 @@ var OSFramework;
                             this.unsetHtmlElements();
                             this.unsetCallbacks();
                             super.dispose();
+                        }
+                        progressApplyGradient(gradientType, colors) {
+                            super.progressApplyGradient(gradientType, colors);
+                            let _gradient;
+                            const _colorsString = [];
+                            for (let i = 0; i < this.gradientLength; i++) {
+                                _colorsString.push(`${colors[i].Color} ${colors[i].Percentage !== -1
+                                    ? colors[i].Percentage + OSUI.GlobalEnum.Units.Percentage
+                                    : OSUI.Constants.EmptyString}`);
+                            }
+                            switch (gradientType) {
+                                case Progress.ProgressEnum.Gradient.LinearDiagonally:
+                                    _gradient = `linear-gradient(135deg, ${_colorsString})`;
+                                    break;
+                                case Progress.ProgressEnum.Gradient.LinearHorizontal:
+                                    _gradient = `linear-gradient(90deg, ${_colorsString})`;
+                                    break;
+                                case Progress.ProgressEnum.Gradient.LinearVertical:
+                                    _gradient = `linear-gradient(180deg, ${_colorsString})`;
+                                    break;
+                                case Progress.ProgressEnum.Gradient.Radial:
+                                    _gradient = `radial-gradient(${_colorsString})`;
+                                    break;
+                            }
+                            OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Progress.ProgressEnum.InlineStyleProp.ProgressGradient, _gradient);
                         }
                     }
                     Bar_1.Bar = Bar;
@@ -6567,12 +6607,14 @@ var OSFramework;
                         let CssClass;
                         (function (CssClass) {
                             CssClass["Progress"] = "osui-progress-circle__container__progress-path";
+                            CssClass["SVG"] = "svg-wrapper";
                             CssClass["Trail"] = "osui-progress-circle__container__trail-path";
                         })(CssClass = Enum.CssClass || (Enum.CssClass = {}));
                         let InlineStyleProp;
                         (function (InlineStyleProp) {
                             InlineStyleProp["CircleRadius"] = "--radius";
                             InlineStyleProp["CircleSize"] = "--circle-size";
+                            InlineStyleProp["GradientURL"] = "--progress-circle-gradient-url";
                             InlineStyleProp["ProgressCircleSize"] = "--progress-circle-size";
                             InlineStyleProp["StrokeDasharray"] = "--stroke-dasharray";
                             InlineStyleProp["StrokeDashoffset"] = "--stroke-dashoffset";
@@ -6581,6 +6623,11 @@ var OSFramework;
                         (function (DefaultValues) {
                             DefaultValues["DefaultSize"] = "auto";
                         })(DefaultValues = Enum.DefaultValues || (Enum.DefaultValues = {}));
+                        let GradientName;
+                        (function (GradientName) {
+                            GradientName["Linear"] = "linearGradient";
+                            GradientName["Radial"] = "radialGradient";
+                        })(GradientName = Enum.GradientName || (Enum.GradientName = {}));
                     })(Enum = Circle.Enum || (Circle.Enum = {}));
                 })(Circle = Progress.Circle || (Progress.Circle = {}));
             })(Progress = Patterns.Progress || (Patterns.Progress = {}));
@@ -6602,6 +6649,16 @@ var OSFramework;
                             super(uniqueId, new Circle_1.ProgressCircleConfig(configs));
                             this._circleSize = 0;
                             this._needsResizeObserver = true;
+                            this.linearGradientCoords = {
+                                x1: 1,
+                                x2: 1,
+                                y1: 0,
+                                y2: 1,
+                            };
+                            this.radialGradientCoords = {
+                                fr: '15%',
+                                r: '95%',
+                            };
                         }
                         _addResizeOberser() {
                             this._resizeObserver = new ResizeObserver((entries) => {
@@ -6609,9 +6666,9 @@ var OSFramework;
                                     if (!Array.isArray(entries) || !entries.length) {
                                         return;
                                     }
-                                    if (this._progressElem) {
-                                        if (OSUI.Helper.Dom.Styles.ContainsClass(this._progressElem, Progress.ProgressEnum.CssClass.AddInitialAnimation)) {
-                                            this._progressElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.TransitionEnd, this._updateCircleProps.bind(this));
+                                    if (this.progressElem) {
+                                        if (OSUI.Helper.Dom.Styles.ContainsClass(this.progressElem, Progress.ProgressEnum.CssClass.AddInitialAnimation)) {
+                                            this.progressElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.TransitionEnd, this._updateCircleProps.bind(this));
                                         }
                                         else {
                                             this._updateCircleProps();
@@ -6673,6 +6730,14 @@ var OSFramework;
                                 : Progress.ProgressEnum.ShapeTypes.Round);
                             OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Progress.ProgressEnum.InlineStyleProp.TrailColor, OSUI.Helper.Dom.Styles.GetColorValueFromColorType(this.configs.TrailColor));
                         }
+                        _setGradientCoords(gradientType) {
+                            if (gradientType === Circle_1.Enum.GradientName.Radial) {
+                                return `fr="${this.radialGradientCoords.fr}" r="${this.radialGradientCoords.r}"`;
+                            }
+                            else {
+                                return `x1="${this.linearGradientCoords.x1}" y1="${this.linearGradientCoords.y1}" x2="${this.linearGradientCoords.x2}" y2="${this.linearGradientCoords.y2}"`;
+                            }
+                        }
                         _updateCircleProps() {
                             this._progressToOffset();
                             this._updateProgressValue();
@@ -6707,13 +6772,15 @@ var OSFramework;
                         }
                         setHtmlElements() {
                             this._blockParent = document.getElementById(this.widgetId).parentElement;
-                            this._progressElem = this.selfElement.querySelector(OSUI.Constants.Dot + Circle_1.Enum.CssClass.Progress);
+                            this.progressElem = this.selfElement.querySelector(OSUI.Constants.Dot + Circle_1.Enum.CssClass.Progress);
+                            this._gradientElem = this.progressElem.parentElement.querySelector('defs');
                         }
                         unsetCallbacks() {
                             super.unsetCallbacks();
                         }
                         unsetHtmlElements() {
                             this._blockParent = undefined;
+                            this._gradientElem = undefined;
                             super.unsetHtmlElements();
                         }
                         updateProgressColor() {
@@ -6772,6 +6839,50 @@ var OSFramework;
                             if (this._resizeObserver) {
                                 this._removeResizeOberver();
                             }
+                        }
+                        progressApplyGradient(gradientType, colors) {
+                            var _a;
+                            super.progressApplyGradient(gradientType, colors);
+                            (_a = this._gradientElem) === null || _a === void 0 ? void 0 : _a.remove();
+                            let _gradient = OSUI.Constants.EmptyString;
+                            let _gradientName = Circle_1.Enum.GradientName.Linear;
+                            const _gradientId = 'progressGradient-' + this.uniqueId;
+                            switch (gradientType) {
+                                case Progress.ProgressEnum.Gradient.LinearHorizontal:
+                                    this.linearGradientCoords.x1 = 1;
+                                    this.linearGradientCoords.x2 = 1;
+                                    this.linearGradientCoords.y1 = 0;
+                                    this.linearGradientCoords.y2 = 1;
+                                    break;
+                                case Progress.ProgressEnum.Gradient.LinearDiagonally:
+                                    this.linearGradientCoords.x1 = 1;
+                                    this.linearGradientCoords.x2 = 0;
+                                    this.linearGradientCoords.y1 = 0;
+                                    this.linearGradientCoords.y2 = 1;
+                                    break;
+                                case Progress.ProgressEnum.Gradient.LinearVertical:
+                                    this.linearGradientCoords.x1 = 0;
+                                    this.linearGradientCoords.x2 = 1;
+                                    this.linearGradientCoords.y1 = 1;
+                                    this.linearGradientCoords.y2 = 1;
+                                    break;
+                                case Progress.ProgressEnum.Gradient.Radial:
+                                    _gradientName = Circle_1.Enum.GradientName.Radial;
+                                    break;
+                            }
+                            const _gradientCoords = this._setGradientCoords(_gradientName);
+                            for (let i = 0; i < this.gradientLength; i++) {
+                                _gradient += `<stop offset="${colors[i].Percentage !== -1 ? colors[i].Percentage : Math.floor((i * 100) / this.gradientLength)}%" stop-color="${colors[i].Color}"/>`;
+                            }
+                            const gradientSVG = `
+			<defs>
+				<${_gradientName} id="${_gradientId}" ${_gradientCoords}">
+					${_gradient}
+				</${_gradientName}>
+			</defs>`;
+                            this.progressElem.parentElement.innerHTML += gradientSVG;
+                            this.setHtmlElements();
+                            OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Circle_1.Enum.InlineStyleProp.GradientURL, 'url(#' + _gradientId + ')');
                         }
                     }
                     Circle_1.Circle = Circle;
@@ -10286,6 +10397,7 @@ var OutSystems;
                 FailDispose: 'OSUI-API-09002',
                 FailProgressValue: 'OSUI-API-09003',
                 FailProgressReset: 'OSUI-API-09004',
+                FailtProgressGradient: 'OSUI-API-09005',
             };
             ErrorCodes.RangeSlider = {
                 FailChangeProperty: 'OSUI-API-10001',
@@ -12065,6 +12177,17 @@ var OutSystems;
                     return result;
                 }
                 ProgressAPI.SetProgressValue = SetProgressValue;
+                function ProgressApplyGradient(progressId, gradientType, colors) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Progress.FailtProgressGradient,
+                        callback: () => {
+                            const _progressItem = GetProgressItemById(progressId);
+                            _progressItem.progressApplyGradient(gradientType, JSON.parse(colors));
+                        },
+                    });
+                    return result;
+                }
+                ProgressAPI.ProgressApplyGradient = ProgressApplyGradient;
             })(ProgressAPI = Patterns.ProgressAPI || (Patterns.ProgressAPI = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
