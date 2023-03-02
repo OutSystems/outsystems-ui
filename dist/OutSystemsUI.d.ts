@@ -2271,7 +2271,10 @@ declare namespace OSFramework.OSUI.Patterns.Progress.Circle.Enum {
         StrokeDashoffset = "--stroke-dashoffset"
     }
     enum DefaultValues {
-        DefaultSize = "auto"
+        GradientId = "progressGradient-",
+        RadialFr = "15%",
+        RadialRadius = "95%",
+        Size = "auto"
     }
     enum GradientName {
         Linear = "linearGradient",
@@ -2295,8 +2298,8 @@ declare namespace OSFramework.OSUI.Patterns.Progress.Circle {
             y2: number;
         };
         radialGradientCoords: {
-            fr: string;
-            r: string;
+            fr: Enum.DefaultValues;
+            r: Enum.DefaultValues;
         };
         constructor(uniqueId: string, configs: any);
         private _addResizeOberser;
@@ -2320,6 +2323,7 @@ declare namespace OSFramework.OSUI.Patterns.Progress.Circle {
         protected updateTrailColor(): void;
         build(): void;
         changeProperty(propertyName: string, propertyValue: unknown): void;
+        createSVGGradient(gradientId: string, gradientName: string, gradientCoords: unknown, gradientLenght: number, colors: GradientColor): void;
         dispose(): void;
         progressApplyGradient(gradientType: string, colors: GradientColor): void;
     }

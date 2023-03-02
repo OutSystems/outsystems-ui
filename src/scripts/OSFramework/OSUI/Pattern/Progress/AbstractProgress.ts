@@ -165,12 +165,10 @@ namespace OSFramework.OSUI.Patterns.Progress {
 			this.gradientLength = Object.keys(colors).length;
 
 			if (this.gradientLength < 2) {
-				// Warn about warning about what is wrong
-				console.warn(
+				// Make API call fail and prevent adding a faulty CSS gradient
+				throw Error(
 					`Progress${this.progressType}(${this.uniqueId}): CSS ${gradientType} gradient needs at least two colors to work`
 				);
-				// Make API call fail and prevent adding a faulty CSS gradient
-				throw Error();
 			}
 		}
 

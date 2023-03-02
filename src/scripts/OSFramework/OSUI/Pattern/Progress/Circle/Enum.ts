@@ -22,10 +22,13 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle.Enum {
 	}
 
 	/**
-	 * ProgressCircle default size value
+	 * ProgressCircle default values
 	 */
 	export enum DefaultValues {
-		DefaultSize = 'auto',
+		GradientId = 'progressGradient-',
+		RadialFr = '15%',
+		RadialRadius = '95%',
+		Size = 'auto',
 	}
 
 	/**

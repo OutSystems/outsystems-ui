@@ -6320,8 +6320,7 @@ var OSFramework;
                     progressApplyGradient(gradientType, colors) {
                         this.gradientLength = Object.keys(colors).length;
                         if (this.gradientLength < 2) {
-                            console.warn(`Progress${this.progressType}(${this.uniqueId}): CSS ${gradientType} gradient needs at least two colors to work`);
-                            throw Error();
+                            throw Error(`Progress${this.progressType}(${this.uniqueId}): CSS ${gradientType} gradient needs at least two colors to work`);
                         }
                     }
                     resetProgressValue() {
@@ -6621,7 +6620,10 @@ var OSFramework;
                         })(InlineStyleProp = Enum.InlineStyleProp || (Enum.InlineStyleProp = {}));
                         let DefaultValues;
                         (function (DefaultValues) {
-                            DefaultValues["DefaultSize"] = "auto";
+                            DefaultValues["GradientId"] = "progressGradient-";
+                            DefaultValues["RadialFr"] = "15%";
+                            DefaultValues["RadialRadius"] = "95%";
+                            DefaultValues["Size"] = "auto";
                         })(DefaultValues = Enum.DefaultValues || (Enum.DefaultValues = {}));
                         let GradientName;
                         (function (GradientName) {
@@ -6656,8 +6658,8 @@ var OSFramework;
                                 y2: 1,
                             };
                             this.radialGradientCoords = {
-                                fr: '15%',
-                                r: '95%',
+                                fr: Circle_1.Enum.DefaultValues.RadialFr,
+                                r: Circle_1.Enum.DefaultValues.RadialRadius,
                             };
                         }
                         _addResizeOberser() {
@@ -6688,7 +6690,7 @@ var OSFramework;
                         }
                         _progressToOffset() {
                             if (this.configs.ProgressCircleSize !== OSFramework.OSUI.Constants.EmptyString &&
-                                this.configs.ProgressCircleSize !== Circle_1.Enum.DefaultValues.DefaultSize &&
+                                this.configs.ProgressCircleSize !== Circle_1.Enum.DefaultValues.Size &&
                                 parseInt(this.configs.ProgressCircleSize) !== 0) {
                                 OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Circle_1.Enum.InlineStyleProp.ProgressCircleSize, this.configs.ProgressCircleSize);
                                 this._circleSize = this.selfElement.clientWidth;
@@ -6773,7 +6775,9 @@ var OSFramework;
                         setHtmlElements() {
                             this._blockParent = document.getElementById(this.widgetId).parentElement;
                             this.progressElem = this.selfElement.querySelector(OSUI.Constants.Dot + Circle_1.Enum.CssClass.Progress);
-                            this._gradientElem = this.progressElem.parentElement.querySelector('defs');
+                            if (this.isBuilt) {
+                                this._gradientElem = this.progressElem.parentElement.querySelector('defs');
+                            }
                         }
                         unsetCallbacks() {
                             super.unsetCallbacks();
@@ -6832,6 +6836,23 @@ var OSFramework;
                                     break;
                             }
                         }
+                        createSVGGradient(gradientId, gradientName, gradientCoords, gradientLenght, colors) {
+                            var _a;
+                            (_a = this._gradientElem) === null || _a === void 0 ? void 0 : _a.remove();
+                            let _gradient = OSUI.Constants.EmptyString;
+                            for (let i = 0; i < gradientLenght; i++) {
+                                _gradient += `<stop offset="${colors[i].Percentage !== -1 ? colors[i].Percentage : Math.floor((i * 100) / gradientLenght)}%" stop-color="${colors[i].Color}"/>`;
+                            }
+                            const gradientSVG = `
+				<defs>
+					<${gradientName} id="${gradientId}" ${gradientCoords}">
+						${_gradient}
+					</${gradientName}>
+				</defs>`;
+                            this.progressElem.parentElement.innerHTML += gradientSVG;
+                            this.setHtmlElements();
+                            OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Circle_1.Enum.InlineStyleProp.GradientURL, 'url(#' + gradientId + ')');
+                        }
                         dispose() {
                             super.dispose();
                             this.unsetHtmlElements();
@@ -6841,12 +6862,9 @@ var OSFramework;
                             }
                         }
                         progressApplyGradient(gradientType, colors) {
-                            var _a;
                             super.progressApplyGradient(gradientType, colors);
-                            (_a = this._gradientElem) === null || _a === void 0 ? void 0 : _a.remove();
-                            let _gradient = OSUI.Constants.EmptyString;
                             let _gradientName = Circle_1.Enum.GradientName.Linear;
-                            const _gradientId = 'progressGradient-' + this.uniqueId;
+                            const _gradientId = Circle_1.Enum.DefaultValues.GradientId + this.uniqueId;
                             switch (gradientType) {
                                 case Progress.ProgressEnum.Gradient.LinearHorizontal:
                                     this.linearGradientCoords.x1 = 1;
@@ -6871,18 +6889,7 @@ var OSFramework;
                                     break;
                             }
                             const _gradientCoords = this._setGradientCoords(_gradientName);
-                            for (let i = 0; i < this.gradientLength; i++) {
-                                _gradient += `<stop offset="${colors[i].Percentage !== -1 ? colors[i].Percentage : Math.floor((i * 100) / this.gradientLength)}%" stop-color="${colors[i].Color}"/>`;
-                            }
-                            const gradientSVG = `
-			<defs>
-				<${_gradientName} id="${_gradientId}" ${_gradientCoords}">
-					${_gradient}
-				</${_gradientName}>
-			</defs>`;
-                            this.progressElem.parentElement.innerHTML += gradientSVG;
-                            this.setHtmlElements();
-                            OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Circle_1.Enum.InlineStyleProp.GradientURL, 'url(#' + _gradientId + ')');
+                            this.createSVGGradient(_gradientId, _gradientName, _gradientCoords, this.gradientLength, colors);
                         }
                     }
                     Circle_1.Circle = Circle;
