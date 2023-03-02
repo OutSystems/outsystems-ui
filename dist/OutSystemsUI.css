@@ -458,11 +458,6 @@ select::-ms-expand{
 input::-ms-clear{
   display:none;
 }
-button.OSFillParent{
-  display:-webkit-inline-box;
-  display:-ms-inline-flexbox;
-  display:inline-flex;
-}
 .focus-trap-top{
   top:0;
 }
@@ -510,22 +505,6 @@ a[disabled]{
 /*! 2.2. Images */
 img{
   max-width:100%;
-}
-img.img-rounded{
-  border-radius:10px;
-}
-img.img-circle{
-  border-radius:var(--border-radius-circle);
-}
-img.img-cover{
-  height:100%;
-  -o-object-fit:cover;
-     object-fit:cover;
-}
-img.thumbnail{
-  background-color:var(--color-neutral-0);
-  border:var(--border-size-s) solid var(--color-neutral-4);
-  padding:var(--space-xs);
 }
 figure{
   margin:0;
@@ -3128,15 +3107,8 @@ div.feedback-message-warning{
   margin-left:-6px;
   margin-top:-6px;
   position:absolute;
-  position:absolute;
   top:50%;
   width:12px;
-}
-.has-accessible-features .radio-button:focus:before{
-  background-color:var(--color-primary);
-  border:1px solid var(--color-focus-inner);
-  -webkit-box-shadow:none;
-          box-shadow:none;
 }
 .has-accessible-features .radio-button:checked:before{
   border-color:var(--color-primary);
@@ -3330,7 +3302,6 @@ div.feedback-message-warning{
   cursor:pointer;
   position:absolute;
   top:0;
-  height:34px;
   padding:10px;
   z-index:3;
   color:rgba(0, 0, 0, 0.9);
@@ -3806,7 +3777,6 @@ span.flatpickr-weekday{
   overflow:hidden;
   display:-webkit-box;
   display:-ms-flexbox;
-  display:flex;
 }
 .flatpickr-time:after{
   content:"";
@@ -4723,13 +4693,10 @@ span.flatpickr-weekday{
           align-items:center;
   background-color:#fff;
   border:1px solid #ddd;
-  cursor:pointer;
   display:-webkit-box;
   display:-ms-flexbox;
   display:flex;
   padding:7px 30px 7px 10px;
-  position:relative;
-  width:100%;
 }
 .vscomp-value{
   height:20px;
@@ -4961,7 +4928,6 @@ span.flatpickr-weekday{
   display:flex;
   height:40px;
   padding:0 5px 0 15px;
-  position:relative;
 }
 .vscomp-search-input{
   background-color:rgba(0, 0, 0, 0);
@@ -5290,7 +5256,6 @@ span.flatpickr-weekday{
   height:34px;
 }
 .vscomp-wrapper.show-value-as-tags .vscomp-clear-button{
-  margin-top:0;
   top:5px;
 }
 .vscomp-wrapper.show-value-as-tags.has-value .vscomp-arrow{
@@ -7862,6 +7827,9 @@ span.flatpickr-weekday{
 .layout:not(.layout-native) .osui-bottom-sheet{
   --bottom-sheet-max-height:85vh;
 }
+.desktop .osui-bottom-sheet__header::after{
+  display:none;
+}
 .landscape .osui-bottom-sheet__header__top-bar,
 .landscape .osui-bottom-sheet__content{
   padding-right:calc(var(--space-base) + var(--os-safe-area-right));
@@ -7870,6 +7838,11 @@ span.flatpickr-weekday{
 .osui-bottom-sheet--is-active .vscomp-wrapper,
 .osui-bottom-sheet--is-active [data-popup-backdrop]{
   z-index:301;
+}
+.osui-bottom-sheet--is-active .osui-bottom-sheet__content .osui-datepicker,
+.osui-bottom-sheet--is-active .osui-bottom-sheet__content .osui-monthpicker,
+.osui-bottom-sheet--is-active .osui-bottom-sheet__content .osui-timepicker{
+  position:relative;
 }
 /*! 6.3.5. Carousel */
 .osui-carousel{
@@ -7990,16 +7963,16 @@ span.flatpickr-weekday{
   z-index:99;
 }
 .flatpickr-calendar.open.inside-bottom-sheet{
-  z-index:300;
+  z-index:301;
 }
 .flatpickr-calendar.open.inside-notification{
-  z-index:300;
+  z-index:301;
 }
 .flatpickr-calendar.open.inside-popup{
-  z-index:250;
+  z-index:251;
 }
 .flatpickr-calendar.open.inside-sidebar{
-  z-index:140;
+  z-index:141;
 }
 .flatpickr-calendar.arrowTop:before, .flatpickr-calendar.arrowTop::after{
   left:40px;
@@ -10825,9 +10798,6 @@ html[data-uieditorversion^="1"] .osui-timepicker__dropdown-ss-preview.time12h, h
   left:initial;
   right:calc(var(--os-safe-area-right) + var(--space-base));
   padding:0 0 var(--space-base) 0;
-}
-.safari [data-block*=SectionIndex]{
-  display:contents;
 }
 /*! 6.4.5. Submenu */
 .osui-submenu{
@@ -14050,9 +14020,6 @@ input.OSFillParent.calendar-input{
   white-space:nowrap;
   width:99%;
 }
-.dropdown-tag-select{
-  opacity:0;
-}
 .tablet .choices[data-type*=select-one]:after,
 .phone .choices[data-type*=select-one]:after{
   top:14px;
@@ -16247,17 +16214,9 @@ input.OSFillParent.calendar-input{
   border-top-left-radius:var(--border-radius-none);
   border-top-right-radius:var(--border-radius-none);
 }
-.border-radius-top-none{
-  border-top-right-radius:var(--border-radius-none);
-  border-top-left-radius:var(--border-radius-none);
-}
 .border-radius-bottom-none{
   border-bottom-left-radius:var(--border-radius-none);
   border-bottom-right-radius:var(--border-radius-none);
-}
-.border-radius-bottom-none{
-  border-bottom-right-radius:var(--border-radius-none);
-  border-bottom-left-radius:var(--border-radius-none);
 }
 .border-radius-soft{
   border-radius:var(--border-radius-soft);
@@ -16278,17 +16237,9 @@ input.OSFillParent.calendar-input{
   border-top-left-radius:var(--border-radius-soft);
   border-top-right-radius:var(--border-radius-soft);
 }
-.border-radius-top-soft{
-  border-top-right-radius:var(--border-radius-soft);
-  border-top-left-radius:var(--border-radius-soft);
-}
 .border-radius-bottom-soft{
   border-bottom-left-radius:var(--border-radius-soft);
   border-bottom-right-radius:var(--border-radius-soft);
-}
-.border-radius-bottom-soft{
-  border-bottom-right-radius:var(--border-radius-soft);
-  border-bottom-left-radius:var(--border-radius-soft);
 }
 .border-radius-rounded{
   border-radius:var(--border-radius-rounded);
@@ -16309,17 +16260,9 @@ input.OSFillParent.calendar-input{
   border-top-left-radius:var(--border-radius-rounded);
   border-top-right-radius:var(--border-radius-rounded);
 }
-.border-radius-top-rounded{
-  border-top-right-radius:var(--border-radius-rounded);
-  border-top-left-radius:var(--border-radius-rounded);
-}
 .border-radius-bottom-rounded{
   border-bottom-left-radius:var(--border-radius-rounded);
   border-bottom-right-radius:var(--border-radius-rounded);
-}
-.border-radius-bottom-rounded{
-  border-bottom-right-radius:var(--border-radius-rounded);
-  border-bottom-left-radius:var(--border-radius-rounded);
 }
 .border-radius-circle{
   border-radius:var(--border-radius-circle);
@@ -16340,17 +16283,9 @@ input.OSFillParent.calendar-input{
   border-top-left-radius:var(--border-radius-circle);
   border-top-right-radius:var(--border-radius-circle);
 }
-.border-radius-top-circle{
-  border-top-right-radius:var(--border-radius-circle);
-  border-top-left-radius:var(--border-radius-circle);
-}
 .border-radius-bottom-circle{
   border-bottom-left-radius:var(--border-radius-circle);
   border-bottom-right-radius:var(--border-radius-circle);
-}
-.border-radius-bottom-circle{
-  border-bottom-right-radius:var(--border-radius-circle);
-  border-bottom-left-radius:var(--border-radius-circle);
 }
 /*! 7.11. Space - Margin */
 .margin-none{

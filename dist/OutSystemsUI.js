@@ -3639,6 +3639,12 @@ var OSFramework;
             var BottomSheet;
             (function (BottomSheet_1) {
                 class BottomSheet extends Patterns.AbstractPattern {
+                    get gestureEventInstance() {
+                        return this._gestureEventInstance;
+                    }
+                    get hasGestureEvents() {
+                        return this._hasGestureEvents;
+                    }
                     constructor(uniqueId, configs) {
                         super(uniqueId, new BottomSheet_1.BottomSheetConfig(configs));
                         this._isOpen = false;
@@ -3650,12 +3656,6 @@ var OSFramework;
                                 mass: 1,
                             },
                         };
-                    }
-                    get gestureEventInstance() {
-                        return this._gestureEventInstance;
-                    }
-                    get hasGestureEvents() {
-                        return this._hasGestureEvents;
                     }
                     _handleFocusTrap() {
                         const opts = {
@@ -17528,7 +17528,7 @@ var Providers;
                     let ProviderInfo;
                     (function (ProviderInfo) {
                         ProviderInfo["Name"] = "noUISlider";
-                        ProviderInfo["Version"] = "15.6.1";
+                        ProviderInfo["Version"] = "15.7.0";
                     })(ProviderInfo = Enum.ProviderInfo || (Enum.ProviderInfo = {}));
                     let NoUISliderLabels;
                     (function (NoUISliderLabels) {

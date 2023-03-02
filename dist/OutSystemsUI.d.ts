@@ -4959,7 +4959,7 @@ declare namespace Providers.OSUI.RangeSlider.NoUISlider {
 declare namespace Providers.OSUI.RangeSlider.NoUiSlider.Enum {
     enum ProviderInfo {
         Name = "noUISlider",
-        Version = "15.6.1"
+        Version = "15.7.0"
     }
     enum NoUISliderLabels {
         Lower = "lower-handle",
