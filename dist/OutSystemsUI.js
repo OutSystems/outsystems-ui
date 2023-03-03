@@ -17658,7 +17658,7 @@ var Providers;
                     let ProviderInfo;
                     (function (ProviderInfo) {
                         ProviderInfo["Name"] = "noUISlider";
-                        ProviderInfo["Version"] = "15.6.1";
+                        ProviderInfo["Version"] = "15.7.0";
                     })(ProviderInfo = Enum.ProviderInfo || (Enum.ProviderInfo = {}));
                     let NoUISliderLabels;
                     (function (NoUISliderLabels) {
