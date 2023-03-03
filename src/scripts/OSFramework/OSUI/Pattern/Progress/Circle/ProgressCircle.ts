@@ -8,6 +8,9 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		private _circleCircumference: number;
 		private _circleSize = 0;
 
+		// SVG defs gradient element
+		private _gradientElem: SVGDefsElement;
+
 		// Flag to check if the resize observer should be added
 		private _needsResizeObserver = true;
 
@@ -17,6 +20,20 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		// Store values to be assigned to the circle
 		private _strokeDasharray: number;
 		private _strokeDashoffset: number;
+
+		// Set as public, so that the coordinates can be customized using extesnibility. LinearHorizontal by default
+		public linearGradientCoords = {
+			x1: 1,
+			x2: 1,
+			y1: 0,
+			y2: 1,
+		};
+
+		// Set as public, so that the coordinates can be customized using extesnibility
+		public radialGradientCoords = {
+			fr: Enum.DefaultValues.RadialFr,
+			r: Enum.DefaultValues.RadialRadius,
+		};
 
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: any) {
@@ -32,14 +49,14 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 						return;
 					}
 
-					if (this._progressElem) {
+					if (this.progressElem) {
 						if (
 							Helper.Dom.Styles.ContainsClass(
-								this._progressElem,
+								this.progressElem,
 								ProgressEnum.CssClass.AddInitialAnimation
 							)
 						) {
-							this._progressElem.addEventListener(
+							this.progressElem.addEventListener(
 								GlobalEnum.HTMLEvent.TransitionEnd,
 								this._updateCircleProps.bind(this)
 							);
@@ -68,7 +85,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 			// Check which size will be applied on ProgressCircle
 			if (
 				this.configs.ProgressCircleSize !== OSFramework.OSUI.Constants.EmptyString &&
-				this.configs.ProgressCircleSize !== (Enum.DefaultValues.DefaultSize as string) &&
+				this.configs.ProgressCircleSize !== (Enum.DefaultValues.Size as string) &&
 				parseInt(this.configs.ProgressCircleSize) !== 0
 			) {
 				// Set the Progress Circle Size variable for calculations
@@ -173,6 +190,15 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 			);
 		}
 
+		// Method to compose coordinates string, to avoid code repetition
+		private _setGradientCoords(gradientType: string): string {
+			if (gradientType === Enum.GradientName.Radial) {
+				return `fr="${this.radialGradientCoords.fr}" r="${this.radialGradientCoords.r}"`;
+			} else {
+				return `x1="${this.linearGradientCoords.x1}" y1="${this.linearGradientCoords.y1}" x2="${this.linearGradientCoords.x2}" y2="${this.linearGradientCoords.y2}"`;
+			}
+		}
+
 		// Trigger all the meethods responsible to proper update the Circle
 		private _updateCircleProps(): void {
 			this._progressToOffset();
@@ -262,7 +288,11 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		protected setHtmlElements(): void {
 			this._blockParent = document.getElementById(this.widgetId).parentElement;
 			// Set the html reference that will be used to do all the needed calcs
-			this._progressElem = this.selfElement.querySelector(Constants.Dot + Enum.CssClass.Progress);
+			this.progressElem = this.selfElement.querySelector(Constants.Dot + Enum.CssClass.Progress);
+			// Set the <defs> element when using a svg gradient. Only after built, as the gradient is only available through Client Action
+			if (this.isBuilt) {
+				this._gradientElem = this.progressElem.parentElement.querySelector('defs');
+			}
 		}
 
 		/**
@@ -282,6 +312,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		 */
 		protected unsetHtmlElements(): void {
 			this._blockParent = undefined;
+			this._gradientElem = undefined;
 			super.unsetHtmlElements();
 		}
 
@@ -401,6 +432,57 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		}
 
 		/**
+		 * Method to create the SVG Gradient
+		 *
+		 * @param {string} gradientId
+		 * @param {string} gradientName
+		 * @param {unknown} gradientCoords
+		 * @param {string} gradientHtml
+		 * @param {GradientColor} colors
+		 * @memberof Circle
+		 */
+		public createSVGGradient(
+			gradientId: string,
+			gradientName: string,
+			gradientCoords: unknown,
+			gradientLenght: number,
+			colors: GradientColor
+		): void {
+			// Start by removing the current gradient, in case there's already one created
+			this._gradientElem?.remove();
+			// Store gradient HTML that will be dynamically created
+			let _gradient = Constants.EmptyString;
+
+			// Create gradient stop elements dynamically, depending on number of color and percentages used
+			for (let i = 0; i < gradientLenght; i++) {
+				_gradient += `<stop offset="${
+					// If the Percentage config is used, use that value, otherwise auto calculate based on the color array length
+					colors[i].Percentage !== -1 ? colors[i].Percentage : Math.floor((i * 100) / gradientLenght)
+				}%" stop-color="${colors[i].Color}"/>`;
+			}
+
+			// Compose the final SVG gradient, with the expected html structure
+			const gradientSVG = `
+				<defs>
+					<${gradientName} id="${gradientId}" ${gradientCoords}">
+						${_gradient}
+					</${gradientName}>
+				</defs>`;
+
+			// Add the gradient inside the SVG element
+			this.progressElem.parentElement.innerHTML += gradientSVG;
+			// As we manipulate the DOM, we must update the elements references
+			this.setHtmlElements();
+
+			// Add the url as a css-variable, so that it can be referenced on the CSS
+			Helper.Dom.Styles.SetStyleAttribute(
+				this.selfElement,
+				Enum.InlineStyleProp.GradientURL,
+				'url(#' + gradientId + ')'
+			);
+		}
+
+		/**
 		 * Destroy the ProgressCircle
 		 *
 		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
@@ -416,6 +498,52 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 			if (this._resizeObserver) {
 				this._removeResizeOberver();
 			}
+		}
+
+		/**
+		 * Method to apply a SVG Gradient
+		 *
+		 * @param {string} gradientType
+		 * @param {GradientColor} colors
+		 * @memberof Circle
+		 */
+		public progressApplyGradient(gradientType: string, colors: GradientColor): void {
+			// Call super to clean and validate color string
+			super.progressApplyGradient(gradientType, colors);
+			// Store the expected gradient name to be used as html tag
+			let _gradientName = Enum.GradientName.Linear;
+			// Store the dynamic svg gradient id, to make sure it's unique for each progressCircle
+			const _gradientId = Enum.DefaultValues.GradientId + this.uniqueId;
+
+			// Set coordinates, according to gradient type
+			switch (gradientType) {
+				case ProgressEnum.Gradient.LinearHorizontal:
+					this.linearGradientCoords.x1 = 1;
+					this.linearGradientCoords.x2 = 1;
+					this.linearGradientCoords.y1 = 0;
+					this.linearGradientCoords.y2 = 1;
+					break;
+				case ProgressEnum.Gradient.LinearDiagonally:
+					this.linearGradientCoords.x1 = 1;
+					this.linearGradientCoords.x2 = 0;
+					this.linearGradientCoords.y1 = 0;
+					this.linearGradientCoords.y2 = 1;
+					break;
+				case ProgressEnum.Gradient.LinearVertical:
+					this.linearGradientCoords.x1 = 0;
+					this.linearGradientCoords.x2 = 1;
+					this.linearGradientCoords.y1 = 1;
+					this.linearGradientCoords.y2 = 1;
+					break;
+				case ProgressEnum.Gradient.Radial:
+					_gradientName = Enum.GradientName.Radial;
+					break;
+			}
+
+			// Update html string with the expected coordinates attributes
+			const _gradientCoords = this._setGradientCoords(_gradientName);
+			// Craete SVG Gradient
+			this.createSVGGradient(_gradientId, _gradientName, _gradientCoords, this.gradientLength, colors);
 		}
 	}
 }

@@ -72,7 +72,7 @@
 			}
 
 			&:before {
-				background: var(--progress-color);
+				background: var(--progress-gradient, var(--progress-color));
 				width: var(--progress-value);
 				z-index: 1;
 

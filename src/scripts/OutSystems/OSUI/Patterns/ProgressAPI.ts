@@ -145,4 +145,25 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 
 		return result;
 	}
+
+	/**
+	 * Funciton that sets a Progress Gradient
+	 *
+	 * @export
+	 * @param {string} progressId
+	 * @param {string} gradientType
+	 * @param {string} colors
+	 * @return {*}  {string}
+	 */
+	export function ProgressApplyGradient(progressId: string, gradientType: string, colors: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Progress.FailtProgressGradient,
+			callback: () => {
+				const _progressItem = GetProgressItemById(progressId);
+				_progressItem.progressApplyGradient(gradientType, JSON.parse(colors));
+			},
+		});
+
+		return result;
+	}
 }
