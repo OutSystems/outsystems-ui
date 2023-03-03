@@ -38,4 +38,12 @@ namespace OSFramework.OSUI.Patterns.Sidebar.Enum {
 	export enum CssProperty {
 		Width = '--sidebar-width',
 	}
+
+	/**
+	 * Sidebar Events
+	 */
+	export enum Events {
+		OnInitialize = 'Initialized',
+		OnToggle = 'OnToggle',
+	}
 }

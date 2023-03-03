@@ -218,6 +218,9 @@ var OSFramework;
                 FailSavedEventRemoval: 'OSUI-GEN-12003',
                 FailSavingEvent: 'OSUI-GEN-12004',
             };
+            ErrorCodes.Sidebar = {
+                FailRegisterCallback: 'OSUI-GEN-14001',
+            };
         })(ErrorCodes = OSUI.ErrorCodes || (OSUI.ErrorCodes = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
 })(OSFramework || (OSFramework = {}));
@@ -3639,6 +3642,12 @@ var OSFramework;
             var BottomSheet;
             (function (BottomSheet_1) {
                 class BottomSheet extends Patterns.AbstractPattern {
+                    get gestureEventInstance() {
+                        return this._gestureEventInstance;
+                    }
+                    get hasGestureEvents() {
+                        return this._hasGestureEvents;
+                    }
                     constructor(uniqueId, configs) {
                         super(uniqueId, new BottomSheet_1.BottomSheetConfig(configs));
                         this._isOpen = false;
@@ -3650,12 +3659,6 @@ var OSFramework;
                                 mass: 1,
                             },
                         };
-                    }
-                    get gestureEventInstance() {
-                        return this._gestureEventInstance;
-                    }
-                    get hasGestureEvents() {
-                        return this._hasGestureEvents;
                     }
                     _handleFocusTrap() {
                         const opts = {
@@ -7695,6 +7698,11 @@ var OSFramework;
                     (function (CssProperty) {
                         CssProperty["Width"] = "--sidebar-width";
                     })(CssProperty = Enum.CssProperty || (Enum.CssProperty = {}));
+                    let Events;
+                    (function (Events) {
+                        Events["OnInitialize"] = "Initialized";
+                        Events["OnToggle"] = "OnToggle";
+                    })(Events = Enum.Events || (Enum.Events = {}));
                 })(Enum = Sidebar.Enum || (Sidebar.Enum = {}));
             })(Sidebar = Patterns.Sidebar || (Patterns.Sidebar = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
@@ -7724,7 +7732,7 @@ var OSFramework;
                             this._triggerOnToggleEvent();
                             this.selfElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
                             OSUI.Helper.A11Y.SetElementsTabIndex(this._isOpen, this._focusTrapInstance.focusableElements);
-                            if (this.configs.HasOverlay) {
+                            if (this._clickOutsideToClose || (this.configs.HasOverlay && this._clickOutsideToClose === undefined)) {
                                 OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnMouseDown, this._eventOverlayMouseDown);
                                 OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnClick, this._eventOverlayClick);
                             }
@@ -7766,7 +7774,7 @@ var OSFramework;
                         if (this.isBuilt) {
                             this._isOpen = true;
                             this._triggerOnToggleEvent();
-                            if (this.configs.HasOverlay) {
+                            if (this._clickOutsideToClose || (this.configs.HasOverlay && this._clickOutsideToClose === undefined)) {
                                 OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnMouseDown, this._eventOverlayMouseDown);
                                 OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnClick, this._eventOverlayClick);
                             }
@@ -7776,16 +7784,16 @@ var OSFramework;
                         OSUI.Helper.A11Y.SetElementsTabIndex(this._isOpen, this._focusTrapInstance.focusableElements);
                     }
                     _overlayClickCallback(_args, e) {
-                        if (this._isOpen && this._clickOutsideToClose) {
+                        if (this._isOpen && this._clickedOutsideElement) {
                             this.close();
                         }
                         e.stopPropagation();
                     }
                     _overlayMouseDownCallback(_args, e) {
                         const targetElem = e.target;
-                        this._clickOutsideToClose = true;
+                        this._clickedOutsideElement = true;
                         if (targetElem.closest('.osui-sidebar__header') || targetElem.closest('.osui-sidebar__content')) {
-                            this._clickOutsideToClose = false;
+                            this._clickedOutsideElement = false;
                         }
                     }
                     _removeEvents() {
@@ -7804,17 +7812,9 @@ var OSFramework;
                         const alreadyHasOverlayClass = OSUI.Helper.Dom.Styles.ContainsClass(this.selfElement, Sidebar_1.Enum.CssClass.HasOverlay);
                         if (this.configs.HasOverlay && alreadyHasOverlayClass === false) {
                             OSUI.Helper.Dom.Styles.AddClass(this.selfElement, Sidebar_1.Enum.CssClass.HasOverlay);
-                            if (this._isOpen) {
-                                OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnMouseDown, this._eventOverlayMouseDown);
-                                OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnClick, this._eventOverlayClick);
-                            }
                         }
                         else if (this.isBuilt) {
                             OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, Sidebar_1.Enum.CssClass.HasOverlay);
-                            if (this._isOpen) {
-                                OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnMouseDown, this._eventOverlayMouseDown);
-                                OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnClick, this._eventOverlayClick);
-                            }
                         }
                     }
                     _setInitialCssClasses() {
@@ -7853,7 +7853,7 @@ var OSFramework;
                         }
                     }
                     _triggerOnToggleEvent() {
-                        OSUI.Helper.AsyncInvocation(this._onToggle, this.widgetId, this._isOpen);
+                        OSUI.Helper.AsyncInvocation(this._platformEventOnToggle, this.widgetId, this._isOpen);
                     }
                     setA11YProperties() {
                         OSUI.Helper.A11Y.RoleComplementary(this.selfElement);
@@ -7875,6 +7875,7 @@ var OSFramework;
                     setHtmlElements() {
                         this._parentSelf = OSUI.Helper.Dom.GetElementById(this.widgetId);
                         this._setWidth();
+                        OSUI.Helper.AsyncInvocation(this._platformEventOnInitialize, this.widgetId);
                     }
                     unsetCallbacks() {
                         this._removeEvents();
@@ -7884,6 +7885,8 @@ var OSFramework;
                     }
                     unsetHtmlElements() {
                         this._parentSelf = undefined;
+                        this._platformEventOnInitialize = undefined;
+                        this._platformEventOnToggle = undefined;
                     }
                     build() {
                         super.build();
@@ -7914,6 +7917,10 @@ var OSFramework;
                             }
                         }
                     }
+                    clickOutsideToClose(closeOnOutSideClick) {
+                        console.log(closeOnOutSideClick);
+                        this._clickOutsideToClose = closeOnOutSideClick;
+                    }
                     close() {
                         if (this._isOpen) {
                             this._closeSidebar();
@@ -7933,12 +7940,23 @@ var OSFramework;
                             this._openSidebar();
                         }
                     }
-                    registerCallback(callback) {
-                        if (this._onToggle === undefined) {
-                            this._onToggle = callback;
-                        }
-                        else {
-                            console.warn(`The ${OSUI.GlobalEnum.PatternName.Sidebar} already has the toggle callback set.`);
+                    registerCallback(eventName, callback) {
+                        switch (eventName) {
+                            case Patterns.Sidebar.Enum.Events.OnInitialize:
+                                if (this._platformEventOnInitialize === undefined) {
+                                    this._platformEventOnInitialize = callback;
+                                }
+                                break;
+                            case Patterns.Sidebar.Enum.Events.OnToggle:
+                                if (this._platformEventOnToggle === undefined) {
+                                    this._platformEventOnToggle = callback;
+                                }
+                                else {
+                                    console.warn(`The ${OSUI.GlobalEnum.PatternName.Sidebar} already has the toggle callback set.`);
+                                }
+                                break;
+                            default:
+                                throw new Error(`${OSUI.ErrorCodes.Sidebar.FailRegisterCallback}:	The given '${eventName}' event name is not defined.`);
                         }
                     }
                     removeGestureEvents() {
@@ -10307,6 +10325,7 @@ var OutSystems;
                 FailOpen: 'OSUI-API-11004',
                 FailRegisterCallback: 'OSUI-API-11005',
                 FailToggleSwipe: 'OSUI-API-11006',
+                FailClickOutsideToClose: 'OSUI-API-11007',
             };
             ErrorCodes.Submenu = {
                 FailChangeProperty: 'OSUI-API-12001',
@@ -12449,6 +12468,17 @@ var OutSystems;
                     return result;
                 }
                 SidebarAPI.ChangeProperty = ChangeProperty;
+                function ClickOutsideToClose(sidebarId, closeOnOutSIdeClick) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Sidebar.FailClickOutsideToClose,
+                        callback: () => {
+                            const sidebar = GetSidebarById(sidebarId);
+                            sidebar.clickOutsideToClose(closeOnOutSIdeClick);
+                        },
+                    });
+                    return result;
+                }
+                SidebarAPI.ClickOutsideToClose = ClickOutsideToClose;
                 function Close(sidebarId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Sidebar.FailClose,
@@ -12506,12 +12536,12 @@ var OutSystems;
                     return result;
                 }
                 SidebarAPI.Open = Open;
-                function RegisterCallback(sidebarId, callback) {
+                function RegisterCallback(sidebarId, eventName, callback) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Sidebar.FailRegisterCallback,
                         callback: () => {
-                            const sidebar = GetSidebarById(sidebarId);
-                            sidebar.registerCallback(callback);
+                            const _sidebarItem = this.GetSidebarById(sidebarId);
+                            _sidebarItem.registerCallback(eventName, callback);
                         },
                     });
                     return result;

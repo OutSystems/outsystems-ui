@@ -8,12 +8,9 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 	 * @extends {Interface.IPattern}
 	 * @extends {Interface.ICallback}
 	 */
-	export interface ISidebar extends Interface.IPattern, Interface.ICallback, Interface.IOpenable {
-		/**
-		 * Method signature to enable or disable the gestures on the pattern.
-		 *
-		 * @memberof ISidebar
-		 */
+	export interface ISidebar extends Interface.IPattern, Interface.IOpenable {
+		clickOutsideToClose(closeOnOutSIdeClick: boolean): void;
+		registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
 		toggleGestures(enableSwipe: boolean): void;
 	}
 }

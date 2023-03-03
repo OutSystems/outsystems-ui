@@ -132,6 +132,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailOpen: 'OSUI-API-11004',
 		FailRegisterCallback: 'OSUI-API-11005',
 		FailToggleSwipe: 'OSUI-API-11006',
+		FailClickOutsideToClose: 'OSUI-API-11007',
 	};
 
 	export const Submenu = {
