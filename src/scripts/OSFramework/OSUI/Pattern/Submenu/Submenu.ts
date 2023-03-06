@@ -15,6 +15,9 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		private _hasElements = false;
 		private _isActive = false;
 		private _isOpen = false;
+		// Platform OnInitialize Callback
+		private _platformEventInitializedCallback: GlobalCallbacks.OSGeneric;
+		private _platformEventOnToggleCallback: GlobalCallbacks.OSGeneric;
 		private _submenuActiveLinksElement: HTMLElement;
 		private _submenuAllLinksElement: HTMLAnchorElement[];
 		private _submenuHeaderElement: HTMLElement;
@@ -136,21 +139,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			if (this._isActive === false) {
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternActive);
 				this._isActive = true;
-			}
-		}
-
-		// Manage Callbacks needed to show submenu on hover
-		private _setOpenOnHover(): void {
-			// OpenOnHover is only available for devices where the hover exists
-			if (Helper.DeviceInfo.IsTouch === false) {
-				if (this._hasElements) {
-					this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
-					this._eventClick = undefined;
-
-					Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternIsHover);
-					this.selfElement.addEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
-					this.selfElement.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
-				}
 			}
 		}
 
@@ -297,6 +285,8 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			this._globalEventBody = undefined;
 			this._eventOnMouseEnter = undefined;
 			this._eventOnMouseLeave = undefined;
+			this._platformEventInitializedCallback = undefined;
+			this._platformEventOnToggleCallback = undefined;
 		}
 
 		/**
@@ -326,8 +316,10 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 			this.setA11YProperties();
 
-			// Add timeout to make this method call asynchronous to wait for the classes of device detection
-			Helper.AsyncInvocation(this.setCallbacks.bind(this));
+			this.setCallbacks();
+
+			// Trigger platform's _platformEventInitializedCallback client Action
+			Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
 
 			this.finishBuild();
 		}
@@ -341,15 +333,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
-			// Check which property changed and call respective method to update it
-			if (this.isBuilt) {
-				// Check which property changed and call respective method to update it
-				switch (propertyName) {
-					case Enum.Properties.OpenOnHover:
-						this._setOpenOnHover();
-						break;
-				}
-			}
 		}
 
 		/**
@@ -368,6 +351,9 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 				this._dynamicallyOpening = false;
 
 				this._updateA11yProperties();
+
+				// Trigger the _platformEventOnToggleCallback callback!
+				Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, false);
 			}
 		}
 
@@ -407,6 +393,56 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 					this._dynamiclyOpening = false;
 				}
 			}, 500);
+
+			// Trigger the _platformEventOnToggleCallback callback!
+			Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, true);
+		}
+
+		/**
+		 * Method used to register the provider callback
+		 *
+		 * @param {string} eventName
+		 * @param {GlobalCallbacks.OSGeneric} callback
+		 * @memberof Submenu
+		 */
+		public registerCallback(callback: GlobalCallbacks.OSGeneric, eventName: string): void {
+			switch (eventName) {
+				case Enum.Events.Initialized:
+					if (this._platformEventInitializedCallback === undefined) {
+						this._platformEventInitializedCallback = callback;
+					}
+					break;
+
+				case Enum.Events.OnToggle:
+					if (this._platformEventOnToggleCallback === undefined) {
+						this._platformEventOnToggleCallback = callback;
+					}
+					break;
+
+				default:
+					throw new Error(
+						`${ErrorCodes.Submenu.FailRegisterCallback}: The given '${eventName}' event name is not defined.`
+					);
+			}
+		}
+
+		/**
+		 * Manage Callbacks needed to show submenu on hover
+		 *
+		 * @memberof Submenu
+		 */
+		public setOpenOnHover(): void {
+			// OpenOnHover is only available for devices where the hover exists
+			if (Helper.DeviceInfo.IsTouch === false) {
+				if (this._hasElements) {
+					this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
+					this._eventClick = undefined;
+
+					Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternIsHover);
+					this.selfElement.addEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
+					this.selfElement.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
+				}
+			}
 		}
 
 		/**

@@ -184,6 +184,9 @@ var OSFramework;
             ErrorCodes.SectionIndexItem = {
                 FailToSetTargetElement: 'OSUI-GEN-06001',
             };
+            ErrorCodes.Submenu = {
+                FailRegisterCallback: 'OSUI-GEN-14001',
+            };
             ErrorCodes.Tooltip = {
                 FailRegisterCallback: 'OSUI-GEN-08001',
                 FailOnSetIntersectionObserver: 'OSUI-GEN-08002',
@@ -8138,10 +8141,6 @@ var OSFramework;
             (function (Submenu) {
                 var Enum;
                 (function (Enum) {
-                    let Properties;
-                    (function (Properties) {
-                        Properties["OpenOnHover"] = "OpenOnHover";
-                    })(Properties = Enum.Properties || (Enum.Properties = {}));
                     let CssClass;
                     (function (CssClass) {
                         CssClass["Pattern"] = "osui-submenu";
@@ -8155,6 +8154,15 @@ var OSFramework;
                         CssClass["PatternItem"] = "osui-submenu__header__item";
                         CssClass["PatternLinks"] = "osui-submenu__items";
                     })(CssClass = Enum.CssClass || (Enum.CssClass = {}));
+                    let Events;
+                    (function (Events) {
+                        Events["Initialized"] = "Initialized";
+                        Events["OnToggle"] = "OnToggle";
+                    })(Events = Enum.Events || (Enum.Events = {}));
+                    let Properties;
+                    (function (Properties) {
+                        Properties["OpenOnHover"] = "OpenOnHover";
+                    })(Properties = Enum.Properties || (Enum.Properties = {}));
                 })(Enum = Submenu.Enum || (Submenu.Enum = {}));
             })(Submenu = Patterns.Submenu || (Patterns.Submenu = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
@@ -8255,17 +8263,6 @@ var OSFramework;
                             this._isActive = true;
                         }
                     }
-                    _setOpenOnHover() {
-                        if (OSUI.Helper.DeviceInfo.IsTouch === false) {
-                            if (this._hasElements) {
-                                this._submenuHeaderElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventClick);
-                                this._eventClick = undefined;
-                                OSUI.Helper.Dom.Styles.AddClass(this.selfElement, Submenu_1.Enum.CssClass.PatternIsHover);
-                                this.selfElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
-                                this.selfElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
-                            }
-                        }
-                    }
                     _show() {
                         if (this._isOpen === false) {
                             OSUI.Helper.Dom.Styles.AddClass(this.selfElement, Submenu_1.Enum.CssClass.PatternIsOpen);
@@ -8343,6 +8340,8 @@ var OSFramework;
                         this._globalEventBody = undefined;
                         this._eventOnMouseEnter = undefined;
                         this._eventOnMouseLeave = undefined;
+                        this._platformEventInitializedCallback = undefined;
+                        this._platformEventOnToggleCallback = undefined;
                     }
                     unsetHtmlElements() {
                         this._submenuHeaderElement = undefined;
@@ -8355,18 +8354,12 @@ var OSFramework;
                         this.setHtmlElements();
                         this.setInitialStates();
                         this.setA11YProperties();
-                        OSUI.Helper.AsyncInvocation(this.setCallbacks.bind(this));
+                        this.setCallbacks();
+                        OSUI.Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
                         this.finishBuild();
                     }
                     changeProperty(propertyName, propertyValue) {
                         super.changeProperty(propertyName, propertyValue);
-                        if (this.isBuilt) {
-                            switch (propertyName) {
-                                case Submenu_1.Enum.Properties.OpenOnHover:
-                                    this._setOpenOnHover();
-                                    break;
-                            }
-                        }
                     }
                     close() {
                         if (this._isOpen) {
@@ -8375,6 +8368,7 @@ var OSFramework;
                             this._isOpen = false;
                             this._dynamicallyOpening = false;
                             this._updateA11yProperties();
+                            OSUI.Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, false);
                         }
                     }
                     dispose() {
@@ -8391,6 +8385,34 @@ var OSFramework;
                                 this._dynamiclyOpening = false;
                             }
                         }, 500);
+                        OSUI.Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, true);
+                    }
+                    registerCallback(callback, eventName) {
+                        switch (eventName) {
+                            case Submenu_1.Enum.Events.Initialized:
+                                if (this._platformEventInitializedCallback === undefined) {
+                                    this._platformEventInitializedCallback = callback;
+                                }
+                                break;
+                            case Submenu_1.Enum.Events.OnToggle:
+                                if (this._platformEventOnToggleCallback === undefined) {
+                                    this._platformEventOnToggleCallback = callback;
+                                }
+                                break;
+                            default:
+                                throw new Error(`${OSUI.ErrorCodes.Submenu.FailRegisterCallback}: The given '${eventName}' event name is not defined.`);
+                        }
+                    }
+                    setOpenOnHover() {
+                        if (OSUI.Helper.DeviceInfo.IsTouch === false) {
+                            if (this._hasElements) {
+                                this._submenuHeaderElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventClick);
+                                this._eventClick = undefined;
+                                OSUI.Helper.Dom.Styles.AddClass(this.selfElement, Submenu_1.Enum.CssClass.PatternIsHover);
+                                this.selfElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
+                                this.selfElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
+                            }
+                        }
                     }
                     updateOnRender() {
                         if (this.isBuilt) {
@@ -10433,7 +10455,8 @@ var OutSystems;
                 FailDispose: 'OSUI-API-12003',
                 FailOpen: 'OSUI-API-12004',
                 FailOpenOnHover: 'OSUI-API-12005',
-                FailUpdate: 'OSUI-API-12006',
+                FailRegisterCallback: 'OSUI-API-12006',
+                FailUpdate: 'OSUI-API-12007',
             };
             ErrorCodes.Tooltip = {
                 FailChangeProperty: 'OSUI-API-13001',
@@ -12704,17 +12727,6 @@ var OutSystems;
                     return result;
                 }
                 SubmenuAPI.Open = Open;
-                function SubmenuOpenOnHover(submenuId) {
-                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
-                        errorCode: OSUI.ErrorCodes.Submenu.FailOpenOnHover,
-                        callback: () => {
-                            const submenu = GetSubmenuById(submenuId);
-                            submenu.changeProperty(OSFramework.OSUI.Patterns.Submenu.Enum.Properties.OpenOnHover, true);
-                        },
-                    });
-                    return result;
-                }
-                SubmenuAPI.SubmenuOpenOnHover = SubmenuOpenOnHover;
                 function Create(submenuId, configs) {
                     if (_submenusMap.has(submenuId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Submenu} registered under id: ${submenuId}`);
@@ -12750,6 +12762,28 @@ var OutSystems;
                     return submenu;
                 }
                 SubmenuAPI.Initialize = Initialize;
+                function RegisterCallback(submenuId, eventName, callback) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Submenu.FailRegisterCallback,
+                        callback: () => {
+                            const submenu = GetSubmenuById(submenuId);
+                            submenu.registerCallback(callback, eventName);
+                        },
+                    });
+                    return result;
+                }
+                SubmenuAPI.RegisterCallback = RegisterCallback;
+                function SubmenuOpenOnHover(submenuId) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Submenu.FailOpenOnHover,
+                        callback: () => {
+                            const submenu = GetSubmenuById(submenuId);
+                            submenu.setOpenOnHover();
+                        },
+                    });
+                    return result;
+                }
+                SubmenuAPI.SubmenuOpenOnHover = SubmenuOpenOnHover;
                 function UpdateOnRender(submenuId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Submenu.FailUpdate,

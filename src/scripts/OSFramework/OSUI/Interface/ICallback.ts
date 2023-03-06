@@ -7,6 +7,6 @@ namespace OSFramework.OSUI.Interface {
 	 * @interface ICallback
 	 */
 	export interface ICallback {
-		registerCallback(callback: GlobalCallbacks.OSGeneric): void;
+		registerCallback(callback: GlobalCallbacks.OSGeneric, eventName?: string): void;
 	}
 }

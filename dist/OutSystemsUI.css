@@ -10990,33 +10990,33 @@ html[data-uieditorversion^="1"] .osui-timepicker__dropdown-ss-preview.time12h, h
 .layout-side .app-menu-links .osui-submenu a{
   border-left:none;
 }
-.layout-side .osui-submenu{
+.layout-side .app-menu-links .osui-submenu{
   -webkit-box-orient:vertical;
   -webkit-box-direction:normal;
       -ms-flex-direction:column;
           flex-direction:column;
   width:100%;
 }
-.layout-side .osui-submenu.active .osui-submenu__header{
+.layout-side .app-menu-links .osui-submenu.active .osui-submenu__header{
   border-left:var(--border-size-m) solid var(--color-primary);
 }
-.layout-side .osui-submenu--is-open .osui-submenu__items{
+.layout-side .app-menu-links .osui-submenu--is-open > .osui-submenu__items{
   display:-webkit-box;
   display:-ms-flexbox;
   display:flex;
 }
-.layout-side .osui-submenu .osui-submenu__header{
+.layout-side .app-menu-links .osui-submenu .osui-submenu__header{
   border-bottom:0;
   border-left:var(--border-size-m) solid transparent;
   border-top:0;
   padding:var(--space-s) var(--space-m);
 }
-.layout-side .osui-submenu .osui-submenu__header__item{
+.layout-side .app-menu-links .osui-submenu .osui-submenu__header__item{
   -webkit-box-flex:1;
       -ms-flex:1;
           flex:1;
 }
-.layout-side .osui-submenu__items{
+.layout-side .app-menu-links .osui-submenu__items{
   border:none;
   -webkit-box-shadow:none;
           box-shadow:none;
@@ -11030,7 +11030,7 @@ html[data-uieditorversion^="1"] .osui-timepicker__dropdown-ss-preview.time12h, h
       -ms-transform:translateY(0);
           transform:translateY(0);
 }
-.layout-side .osui-submenu__items a{
+.layout-side .app-menu-links .osui-submenu__items a{
   padding:var(--space-s) var(--space-base);
 }
 .layout-side .app-menu-links .osui-submenu__header a,
