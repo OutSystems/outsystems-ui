@@ -90,7 +90,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 		// Trigger the submenu after an hover behaviour
 		private _onMouseEnterCallback(e: MouseEvent) {
-			this._show();
+			this.open();
 			e.stopPropagation();
 		}
 
@@ -163,7 +163,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 				Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
 
 				// Make async the method call
-				Helper.AsyncInvocation(this._show.bind(this));
+				Helper.AsyncInvocation(this.open.bind(this));
 			}
 		}
 

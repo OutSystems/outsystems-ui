@@ -8228,7 +8228,7 @@ var OSFramework;
                         e.stopPropagation();
                     }
                     _onMouseEnterCallback(e) {
-                        this._show();
+                        this.open();
                         e.stopPropagation();
                     }
                     _onMouseLeaveCallback(e) {
@@ -8277,7 +8277,7 @@ var OSFramework;
                         }
                         else {
                             OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnClick, this._globalEventBody);
-                            OSUI.Helper.AsyncInvocation(this._show.bind(this));
+                            OSUI.Helper.AsyncInvocation(this.open.bind(this));
                         }
                     }
                     _updateA11yProperties() {
