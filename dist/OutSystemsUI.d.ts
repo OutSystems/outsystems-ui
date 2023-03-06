@@ -156,6 +156,9 @@ declare namespace OSFramework.OSUI.ErrorCodes {
         FailSavedEventRemoval: string;
         FailSavingEvent: string;
     };
+    const Sidebar: {
+        FailRegisterCallback: string;
+    };
 }
 declare namespace OSFramework.OSUI.GlobalCallbacks {
     type Generic = {
@@ -2627,6 +2630,9 @@ declare namespace OSFramework.OSUI.Patterns.Sidebar.Callbacks {
     type OSOnToggleEvent = {
         (sidebarId: string, isOpen: boolean): void;
     };
+    type OSInitializedEvent = {
+        (sidebarId: string): void;
+    };
 }
 declare namespace OSFramework.OSUI.Patterns.Sidebar.Enum {
     enum Properties {
@@ -2647,9 +2653,15 @@ declare namespace OSFramework.OSUI.Patterns.Sidebar.Enum {
     enum CssProperty {
         Width = "--sidebar-width"
     }
+    enum Events {
+        OnInitialize = "Initialized",
+        OnToggle = "OnToggle"
+    }
 }
 declare namespace OSFramework.OSUI.Patterns.Sidebar {
-    interface ISidebar extends Interface.IPattern, Interface.ICallback, Interface.IOpenable {
+    interface ISidebar extends Interface.IPattern, Interface.IOpenable {
+        clickOutsideToClose(closeOnOutSIdeClick: boolean): void;
+        registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
         toggleGestures(enableSwipe: boolean): void;
     }
 }
@@ -2657,6 +2669,7 @@ declare namespace OSFramework.OSUI.Patterns.Sidebar {
     class Sidebar extends AbstractPattern<SidebarConfig> implements ISidebar, Interface.IDragEvent {
         private _animateOnDragInstance;
         private _clickOutsideToClose;
+        private _clickedOutsideElement;
         private _currentDirectionCssClass;
         private _eventOverlayClick;
         private _eventOverlayMouseDown;
@@ -2665,8 +2678,9 @@ declare namespace OSFramework.OSUI.Patterns.Sidebar {
         private _gestureEventInstance;
         private _hasGestureEvents;
         private _isOpen;
-        private _onToggle;
         private _parentSelf;
+        private _platformEventOnInitialize;
+        private _platformEventOnToggle;
         constructor(uniqueId: string, configs: JSON);
         private _closeSidebar;
         private _handleFocusTrap;
@@ -2693,10 +2707,11 @@ declare namespace OSFramework.OSUI.Patterns.Sidebar {
         protected unsetHtmlElements(): void;
         build(): void;
         changeProperty(propertyName: string, propertyValue: unknown): void;
+        clickOutsideToClose(closeOnOutSideClick: boolean): void;
         close(): void;
         dispose(): void;
         open(): void;
-        registerCallback(callback: Callbacks.OSOnToggleEvent): void;
+        registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
         removeGestureEvents(): void;
         setGestureEvents(onGestureStartCallback: Event.GestureEvent.Callbacks.GestureStart, onGestureMoveCallback: Event.GestureEvent.Callbacks.GestureMove, onGestureEndCallback: Event.GestureEvent.Callbacks.GestureEnd): void;
         toggleGestures(enableSwipe: boolean): void;
@@ -3417,6 +3432,7 @@ declare namespace OutSystems.OSUI.ErrorCodes {
         FailOpen: string;
         FailRegisterCallback: string;
         FailToggleSwipe: string;
+        FailClickOutsideToClose: string;
     };
     const Submenu: {
         FailChangeProperty: string;
@@ -3793,6 +3809,7 @@ declare namespace OutSystems.OSUI.Patterns.SectionIndexItemAPI {
 }
 declare namespace OutSystems.OSUI.Patterns.SidebarAPI {
     function ChangeProperty(sidebarId: string, propertyName: string, propertyValue: unknown): string;
+    function ClickOutsideToClose(sidebarId: string, closeOnOutSIdeClick: boolean): string;
     function Close(sidebarId: string): string;
     function Create(sidebarId: string, configs: string): OSFramework.OSUI.Patterns.Sidebar.ISidebar;
     function Dispose(sidebarId: string): string;
@@ -3800,7 +3817,7 @@ declare namespace OutSystems.OSUI.Patterns.SidebarAPI {
     function GetSidebarById(sidebarId: string): OSFramework.OSUI.Patterns.Sidebar.ISidebar;
     function Initialize(sidebarId: string): OSFramework.OSUI.Patterns.Sidebar.ISidebar;
     function Open(sidebarId: string): string;
-    function RegisterCallback(sidebarId: string, callback: OSFramework.OSUI.Patterns.Sidebar.Callbacks.OSOnToggleEvent): string;
+    function RegisterCallback(sidebarId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
     function ToggleGestures(sidebarId: string, enableSwipe: boolean): string;
 }
 declare namespace OutSystems.OSUI.Patterns.SubmenuAPI {

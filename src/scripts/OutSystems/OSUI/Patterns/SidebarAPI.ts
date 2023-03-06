@@ -23,6 +23,27 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	}
 
 	/**
+	 * Function that will toggle the click on outside to close the sidebar.
+	 *
+	 * @export
+	 * @param {string} sidebarId
+	 * @param {boolean} closeOnOutSIdeClick
+	 * @return {*}  {string}
+	 */
+	export function ClickOutsideToClose(sidebarId: string, closeOnOutSIdeClick: boolean): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Sidebar.FailClickOutsideToClose,
+			callback: () => {
+				const sidebar = GetSidebarById(sidebarId);
+
+				sidebar.clickOutsideToClose(closeOnOutSIdeClick);
+			},
+		});
+
+		return result;
+	}
+
+	/**
 	 * Function that Closes the sidebar.
 	 *
 	 * @export
@@ -142,22 +163,25 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	}
 
 	/**
-	 * Function that will register a pattern callback.
+	 * Function to register a provider callback
 	 *
 	 * @export
 	 * @param {string} sidebarId
-	 * @param {OSFramework.OSUI.Patterns.Sidebar.Callbacks.OSOnToggleEvent} callback
+	 * @param {string} eventName
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
+	 * @return {*} {string} Return Message Success or message of error info if it's the case.
 	 */
 	export function RegisterCallback(
 		sidebarId: string,
-		callback: OSFramework.OSUI.Patterns.Sidebar.Callbacks.OSOnToggleEvent
+		eventName: string,
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Sidebar.FailRegisterCallback,
 			callback: () => {
-				const sidebar = GetSidebarById(sidebarId);
+				const _sidebarItem = this.GetSidebarById(sidebarId);
 
-				sidebar.registerCallback(callback);
+				_sidebarItem.registerCallback(eventName, callback);
 			},
 		});
 
