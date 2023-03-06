@@ -389,7 +389,6 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
 		 */
 		public clickOutsideToClose(closeOnOutSideClick: boolean): void {
-			console.log(closeOnOutSideClick);
 			this._clickOutsideToClose = closeOnOutSideClick;
 		}
 
