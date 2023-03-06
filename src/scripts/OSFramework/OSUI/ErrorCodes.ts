@@ -94,4 +94,8 @@ namespace OSFramework.OSUI.ErrorCodes {
 		FailSavedEventRemoval: 'OSUI-GEN-12003',
 		FailSavingEvent: 'OSUI-GEN-12004',
 	};
+
+	export const Sidebar = {
+		FailRegisterCallback: 'OSUI-GEN-14001',
+	};
 }
