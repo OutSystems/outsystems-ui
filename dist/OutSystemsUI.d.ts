@@ -2148,8 +2148,9 @@ declare namespace OSFramework.OSUI.Patterns.Notification {
 declare namespace OSFramework.OSUI.Patterns.Progress {
     abstract class AbstractProgress<C extends ProgressConfiguration> extends AbstractPattern<C> implements IProgress {
         private _eventAnimateEntranceEnd;
-        protected _progressElem: HTMLElement;
-        protected _progressType: ProgressEnum.ProgressTypes;
+        protected gradientLength: number;
+        protected progressElem: HTMLElement;
+        protected progressType: ProgressEnum.ProgressTypes;
         constructor(uniqueId: string, configs: C);
         private _animateEntranceEnd;
         private _setAccessibilityProps;
@@ -2160,6 +2161,7 @@ declare namespace OSFramework.OSUI.Patterns.Progress {
         protected unsetHtmlElements(): void;
         protected updatedProgressValue(): void;
         build(): void;
+        progressApplyGradient(gradientType: string, colors: GradientColor): void;
         resetProgressValue(): void;
         setProgressValue(value: number): void;
         protected abstract addInitialAnimation(): void;
@@ -2181,6 +2183,7 @@ declare namespace OSFramework.OSUI.Patterns.Progress {
 }
 declare namespace OSFramework.OSUI.Patterns.Progress {
     interface IProgress extends Interface.IPattern {
+        progressApplyGradient(gradientType: string, colors: GradientColor): void;
         resetProgressValue(): void;
         setProgressValue(value: number): void;
     }
@@ -2194,9 +2197,16 @@ declare namespace OSFramework.OSUI.Patterns.Progress.ProgressEnum {
     enum InlineStyleProp {
         ProgressColor = "--progress-color",
         ProgressValue = "--progress-value",
+        ProgressGradient = "--progress-gradient",
         Shape = "--shape",
         Thickness = "--thickness",
         TrailColor = "--trail-color"
+    }
+    enum Gradient {
+        LinearHorizontal = "LinearHorizontal",
+        LinearVertical = "LinearVertical",
+        LinearDiagonally = "LinearDiagonally",
+        Radial = "Radial"
     }
     enum Properties {
         ExtendedClass = "ExtendedClass",
@@ -2241,6 +2251,7 @@ declare namespace OSFramework.OSUI.Patterns.Progress.Bar {
         build(): void;
         changeProperty(propertyName: string, propertyValue: unknown): void;
         dispose(): void;
+        progressApplyGradient(gradientType: string, colors: GradientColor): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Progress.Bar {
@@ -2251,17 +2262,26 @@ declare namespace OSFramework.OSUI.Patterns.Progress.Bar {
 declare namespace OSFramework.OSUI.Patterns.Progress.Circle.Enum {
     enum CssClass {
         Progress = "osui-progress-circle__container__progress-path",
+        SVG = "svg-wrapper",
         Trail = "osui-progress-circle__container__trail-path"
     }
     enum InlineStyleProp {
         CircleRadius = "--radius",
         CircleSize = "--circle-size",
+        GradientURL = "--progress-circle-gradient-url",
         ProgressCircleSize = "--progress-circle-size",
         StrokeDasharray = "--stroke-dasharray",
         StrokeDashoffset = "--stroke-dashoffset"
     }
     enum DefaultValues {
-        DefaultSize = "auto"
+        GradientId = "progressGradient-",
+        RadialFr = "15%",
+        RadialRadius = "95%",
+        Size = "auto"
+    }
+    enum GradientName {
+        Linear = "linearGradient",
+        Radial = "radialGradient"
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Progress.Circle {
@@ -2269,16 +2289,28 @@ declare namespace OSFramework.OSUI.Patterns.Progress.Circle {
         private _blockParent;
         private _circleCircumference;
         private _circleSize;
+        private _gradientElem;
         private _needsResizeObserver;
         private _resizeObserver;
         private _strokeDasharray;
         private _strokeDashoffset;
+        linearGradientCoords: {
+            x1: number;
+            x2: number;
+            y1: number;
+            y2: number;
+        };
+        radialGradientCoords: {
+            fr: Enum.DefaultValues;
+            r: Enum.DefaultValues;
+        };
         constructor(uniqueId: string, configs: any);
         private _addResizeOberser;
         private _checkResizeObserver;
         private _progressToOffset;
         private _removeResizeOberver;
         private _setCssVariables;
+        private _setGradientCoords;
         private _updateCircleProps;
         private _updateProgressValue;
         protected addInitialAnimation(): void;
@@ -2294,7 +2326,9 @@ declare namespace OSFramework.OSUI.Patterns.Progress.Circle {
         protected updateTrailColor(): void;
         build(): void;
         changeProperty(propertyName: string, propertyValue: unknown): void;
+        createSVGGradient(gradientId: string, gradientName: string, gradientCoords: unknown, gradientLenght: number, colors: GradientColor): void;
         dispose(): void;
+        progressApplyGradient(gradientType: string, colors: GradientColor): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Progress.Circle {
@@ -3376,6 +3410,7 @@ declare namespace OutSystems.OSUI.ErrorCodes {
         FailDispose: string;
         FailProgressValue: string;
         FailProgressReset: string;
+        FailtProgressGradient: string;
     };
     const RangeSlider: {
         FailChangeProperty: string;
@@ -3727,6 +3762,7 @@ declare namespace OutSystems.OSUI.Patterns.ProgressAPI {
     function Initialize(progressId: string): OSFramework.OSUI.Patterns.Progress.IProgress;
     function ResetProgressValue(progressId: string): string;
     function SetProgressValue(progressId: string, progress: number): string;
+    function ProgressApplyGradient(progressId: string, gradientType: string, colors: string): string;
 }
 declare namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
     function ChangeProperty(rangeSliderId: string, propertyName: string, propertyValue: unknown): string;
@@ -4976,7 +5012,7 @@ declare namespace Providers.OSUI.RangeSlider.NoUISlider {
 declare namespace Providers.OSUI.RangeSlider.NoUiSlider.Enum {
     enum ProviderInfo {
         Name = "noUISlider",
-        Version = "15.6.1"
+        Version = "15.7.0"
     }
     enum NoUISliderLabels {
         Lower = "lower-handle",

@@ -11896,7 +11896,7 @@ html[data-uieditorversion^="1"] .wizard-wrapper-item{
   -servicestudio-background:var(--trail-color, var(--color-neutral-3));
 }
 .osui-progress-bar__value:before{
-  background:var(--progress-color);
+  background:var(--progress-gradient, var(--progress-color));
   width:var(--progress-value);
   z-index:1;
 }
@@ -11967,7 +11967,7 @@ html[data-uieditorversion^="1"] .wizard-wrapper-item{
           transform-origin:center;
 }
 .osui-progress-circle__container__progress-path{
-  stroke:var(--progress-color, var(--color-primary));
+  stroke:var(--progress-circle-gradient-url, var(--progress-color, var(--color-primary)));
   stroke-dasharray:var(--stroke-dasharray);
   stroke-dashoffset:var(--stroke-dashoffset);
   stroke-linecap:var(--shape);
