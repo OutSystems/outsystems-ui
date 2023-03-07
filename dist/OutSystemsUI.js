@@ -8039,7 +8039,6 @@ var OSFramework;
                         }
                     }
                     clickOutsideToClose(closeOnOutSideClick) {
-                        console.log(closeOnOutSideClick);
                         this._clickOutsideToClose = closeOnOutSideClick;
                     }
                     close() {
@@ -8197,22 +8196,18 @@ var OSFramework;
                 class Submenu extends Patterns.AbstractPattern {
                     constructor(uniqueId, configs) {
                         super(uniqueId, new Submenu_1.SubmenuConfig(configs));
-                        this._dynamicallyOpening = false;
                         this._hasActiveLinks = false;
                         this._hasElements = false;
                         this._isActive = false;
                         this._isOpen = false;
                     }
                     _bodyClickCallback(_args, e) {
-                        if (this.isBuilt && this._isOpen && this._dynamicallyOpening === false) {
+                        if (this.isBuilt && this._isOpen) {
                             if (!this.selfElement.contains(e.target)) {
                                 this.close();
                             }
                             e.preventDefault();
                             e.stopPropagation();
-                        }
-                        if (this._dynamicallyOpening) {
-                            this._dynamicallyOpening = false;
                         }
                     }
                     _checkForActiveLinks() {
@@ -8384,7 +8379,6 @@ var OSFramework;
                             OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnClick, this._globalEventBody);
                             OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, Submenu_1.Enum.CssClass.PatternIsOpen);
                             this._isOpen = false;
-                            this._dynamicallyOpening = false;
                             this._updateA11yProperties();
                             OSUI.Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, false);
                         }
@@ -8395,7 +8389,6 @@ var OSFramework;
                         super.dispose();
                     }
                     open() {
-                        this._dynamicallyOpening = true;
                         OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnClick, this._globalEventBody);
                         OSUI.Helper.AsyncInvocation(this._show.bind(this));
                         setTimeout(function () {

@@ -4,8 +4,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	export class Submenu extends AbstractPattern<SubmenuConfig> implements ISubmenu {
-		// Store the pattern locals
-		private _dynamicallyOpening = false;
 		private _eventClick: GlobalCallbacks.Generic;
 		private _eventKeypress: GlobalCallbacks.Generic;
 		private _eventOnMouseEnter: GlobalCallbacks.Generic;
@@ -29,18 +27,13 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 		// Close submenu, when BodyOnCLick event is triggered
 		private _bodyClickCallback(_args: string, e: MouseEvent): void {
-			if (this.isBuilt && this._isOpen && this._dynamicallyOpening === false) {
+			if (this.isBuilt && this._isOpen) {
 				if (!this.selfElement.contains(e.target as HTMLElement)) {
 					this.close();
 				}
 
 				e.preventDefault();
 				e.stopPropagation();
-			}
-
-			//this flag _dynamiclyOpening is just needed one time per interaction
-			if (this._dynamicallyOpening) {
-				this._dynamicallyOpening = false;
 			}
 		}
 
@@ -348,7 +341,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.PatternIsOpen);
 
 				this._isOpen = false;
-				this._dynamicallyOpening = false;
 
 				this._updateA11yProperties();
 
@@ -379,9 +371,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		public open(): void {
-			// Keep the submenu open when using the Open api. After the first bodyclick, this will close
-			this._dynamicallyOpening = true;
-
 			// Add the body click handler to event manager
 			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
 

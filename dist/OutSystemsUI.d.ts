@@ -2761,7 +2761,6 @@ declare namespace OSFramework.OSUI.Patterns.Submenu {
 }
 declare namespace OSFramework.OSUI.Patterns.Submenu {
     class Submenu extends AbstractPattern<SubmenuConfig> implements ISubmenu {
-        private _dynamicallyOpening;
         private _eventClick;
         private _eventKeypress;
         private _eventOnMouseEnter;
