@@ -142,7 +142,8 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailDispose: 'OSUI-API-12003',
 		FailOpen: 'OSUI-API-12004',
 		FailOpenOnHover: 'OSUI-API-12005',
-		FailUpdate: 'OSUI-API-12006',
+		FailRegisterCallback: 'OSUI-API-12006',
+		FailUpdate: 'OSUI-API-12007',
 	};
 
 	export const Tooltip = {

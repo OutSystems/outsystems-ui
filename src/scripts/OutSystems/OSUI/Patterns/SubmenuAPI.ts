@@ -63,25 +63,6 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	}
 
 	/**
-	 * Function that will set the hover trigger to a given submenu.
-	 *
-	 * @export
-	 * @param {string} submenuId
-	 */
-	export function SubmenuOpenOnHover(submenuId: string): string {
-		const result = OutSystems.OSUI.Utils.CreateApiResponse({
-			errorCode: ErrorCodes.Submenu.FailOpenOnHover,
-			callback: () => {
-				const submenu = GetSubmenuById(submenuId);
-
-				submenu.changeProperty(OSFramework.OSUI.Patterns.Submenu.Enum.Properties.OpenOnHover, true);
-			},
-		});
-
-		return result;
-	}
-
-	/**
 	 * Create the new submenu instance and add it to the submenusMap
 	 *
 	 * @export
@@ -162,6 +143,51 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 		submenu.build();
 
 		return submenu;
+	}
+
+	/**
+	 * Function to register a provider callback
+	 *
+	 * @export
+	 * @param {string} submenuId
+	 * @param {string} eventName
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
+	 * @return {*}  {string}
+	 */
+	export function RegisterCallback(
+		submenuId: string,
+		eventName: string,
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
+	): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Submenu.FailRegisterCallback,
+			callback: () => {
+				const submenu = GetSubmenuById(submenuId);
+
+				submenu.registerCallback(callback, eventName);
+			},
+		});
+
+		return result;
+	}
+
+	/**
+	 * Function that will set the hover trigger to a given submenu.
+	 *
+	 * @export
+	 * @param {string} submenuId
+	 */
+	export function SubmenuOpenOnHover(submenuId: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Submenu.FailOpenOnHover,
+			callback: () => {
+				const submenu = GetSubmenuById(submenuId);
+
+				submenu.setOpenOnHover();
+			},
+		});
+
+		return result;
 	}
 
 	/**

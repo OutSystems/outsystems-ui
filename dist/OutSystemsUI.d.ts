@@ -122,6 +122,9 @@ declare namespace OSFramework.OSUI.ErrorCodes {
     const SectionIndexItem: {
         FailToSetTargetElement: string;
     };
+    const Submenu: {
+        FailRegisterCallback: string;
+    };
     const Tooltip: {
         FailRegisterCallback: string;
         FailOnSetIntersectionObserver: string;
@@ -906,7 +909,7 @@ declare namespace OSFramework.OSUI.Interface {
 }
 declare namespace OSFramework.OSUI.Interface {
     interface ICallback {
-        registerCallback(callback: GlobalCallbacks.OSGeneric): void;
+        registerCallback(callback: GlobalCallbacks.OSGeneric, eventName?: string): void;
     }
 }
 declare namespace OSFramework.OSUI.Interface {
@@ -2731,9 +2734,6 @@ declare namespace OSFramework.OSUI.Patterns.Sidebar {
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Submenu.Enum {
-    enum Properties {
-        OpenOnHover = "OpenOnHover"
-    }
     enum CssClass {
         Pattern = "osui-submenu",
         PatternActive = "active",
@@ -2746,14 +2746,21 @@ declare namespace OSFramework.OSUI.Patterns.Submenu.Enum {
         PatternItem = "osui-submenu__header__item",
         PatternLinks = "osui-submenu__items"
     }
+    enum Events {
+        Initialized = "Initialized",
+        OnToggle = "OnToggle"
+    }
+    enum Properties {
+        OpenOnHover = "OpenOnHover"
+    }
 }
 declare namespace OSFramework.OSUI.Patterns.Submenu {
-    interface ISubmenu extends Interface.IPattern, Interface.IOpenable, Interface.IRenderUpdate {
+    interface ISubmenu extends Interface.IPattern, Interface.IOpenable, Interface.IRenderUpdate, Interface.ICallback {
+        setOpenOnHover(): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Submenu {
     class Submenu extends AbstractPattern<SubmenuConfig> implements ISubmenu {
-        private _dynamicallyOpening;
         private _eventClick;
         private _eventKeypress;
         private _eventOnMouseEnter;
@@ -2763,6 +2770,8 @@ declare namespace OSFramework.OSUI.Patterns.Submenu {
         private _hasElements;
         private _isActive;
         private _isOpen;
+        private _platformEventInitializedCallback;
+        private _platformEventOnToggleCallback;
         private _submenuActiveLinksElement;
         private _submenuAllLinksElement;
         private _submenuHeaderElement;
@@ -2777,7 +2786,6 @@ declare namespace OSFramework.OSUI.Patterns.Submenu {
         private _removeActive;
         private _removeEvents;
         private _setActive;
-        private _setOpenOnHover;
         private _show;
         private _toggleSubmenu;
         private _updateA11yProperties;
@@ -2792,6 +2800,8 @@ declare namespace OSFramework.OSUI.Patterns.Submenu {
         close(): void;
         dispose(): void;
         open(): void;
+        registerCallback(callback: GlobalCallbacks.OSGeneric, eventName: string): void;
+        setOpenOnHover(): void;
         updateOnRender(): void;
     }
 }
@@ -3440,6 +3450,7 @@ declare namespace OutSystems.OSUI.ErrorCodes {
         FailDispose: string;
         FailOpen: string;
         FailOpenOnHover: string;
+        FailRegisterCallback: string;
         FailUpdate: string;
     };
     const Tooltip: {
@@ -3824,12 +3835,13 @@ declare namespace OutSystems.OSUI.Patterns.SubmenuAPI {
     function ChangeProperty(submenuId: string, propertyName: string, propertyValue: any): string;
     function Close(submenuId: string): string;
     function Open(submenuId: string): string;
-    function SubmenuOpenOnHover(submenuId: string): string;
     function Create(submenuId: string, configs: string): OSFramework.OSUI.Patterns.Submenu.ISubmenu;
     function Dispose(submenuId: string): string;
     function GetAllSubmenus(): Array<string>;
     function GetSubmenuById(submenuId: string): OSFramework.OSUI.Patterns.Submenu.ISubmenu;
     function Initialize(submenuId: string): OSFramework.OSUI.Patterns.Submenu.ISubmenu;
+    function RegisterCallback(submenuId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
+    function SubmenuOpenOnHover(submenuId: string): string;
     function UpdateOnRender(submenuId: string): string;
 }
 declare namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {

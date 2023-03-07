@@ -9,7 +9,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof IDropdownServerSideItem
+		 * @memberof ITooltip
 		 */
 		get IsOpen(): boolean;
 	}

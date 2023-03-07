@@ -52,6 +52,10 @@ namespace OSFramework.OSUI.ErrorCodes {
 		FailToSetTargetElement: 'OSUI-GEN-06001',
 	};
 
+	export const Submenu = {
+		FailRegisterCallback: 'OSUI-GEN-14001',
+	};
+
 	export const Tooltip = {
 		FailRegisterCallback: 'OSUI-GEN-08001',
 		FailOnSetIntersectionObserver: 'OSUI-GEN-08002',
