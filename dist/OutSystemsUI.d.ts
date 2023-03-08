@@ -4256,6 +4256,9 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr {
     interface IFlatpickr extends OSFramework.OSUI.Patterns.DatePicker.IDatePicker, OSFramework.OSUI.Interface.IProviderPattern<Flatpickr> {
     }
 }
+declare namespace Providers.OSUI.Datepicker.Flatpickr.Utils {
+    function GetPositionElement(elementId: string): HTMLElement;
+}
 declare namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate.Enum {
     enum Properties {
         InitialEndDate = "InitialEndDate",

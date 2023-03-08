@@ -15738,6 +15738,29 @@ var Providers;
         (function (Datepicker) {
             var Flatpickr;
             (function (Flatpickr) {
+                var Utils;
+                (function (Utils) {
+                    function GetPositionElement(elementId) {
+                        const _positionElement = document.getElementById(elementId);
+                        if (!_positionElement) {
+                            console.warn(`It was not possible to find an element with the id: ${elementId}`);
+                        }
+                        return _positionElement;
+                    }
+                    Utils.GetPositionElement = GetPositionElement;
+                })(Utils = Flatpickr.Utils || (Flatpickr.Utils = {}));
+            })(Flatpickr = Datepicker.Flatpickr || (Datepicker.Flatpickr = {}));
+        })(Datepicker = OSUI.Datepicker || (OSUI.Datepicker = {}));
+    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
+})(Providers || (Providers = {}));
+var Providers;
+(function (Providers) {
+    var OSUI;
+    (function (OSUI) {
+        var Datepicker;
+        (function (Datepicker) {
+            var Flatpickr;
+            (function (Flatpickr) {
                 var RangeDate;
                 (function (RangeDate) {
                     var Enum;
