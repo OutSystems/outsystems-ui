@@ -52,6 +52,21 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	}
 
 	/**
+	 * Create and return Pattern Instance
+	 *
+	 * @export
+	 * @param {string} bottomSheetId
+	 * @param {string} configs
+	 * @return {*}  {OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet}
+	 */
+	export function CreatePatternInstance(
+		bottomSheetId: string,
+		configs: string
+	): OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet {
+		return new OSFramework.OSUI.Patterns.BottomSheet.BottomSheet(bottomSheetId, JSON.parse(configs));
+	}
+
+	/**
 	 * Function that will destroy the instance of the given ButtonLoading
 	 *
 	 * @export

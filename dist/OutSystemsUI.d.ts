@@ -3598,6 +3598,7 @@ declare namespace OutSystems.OSUI.Patterns.AccordionAPI {
     function ChangeProperty(accordionId: string, propertyName: string, propertyValue: unknown): string;
     function CollapseAllItems(accordionId: string): string;
     function Create(accordionId: string, configs: string): OSFramework.OSUI.Patterns.Accordion.IAccordion;
+    function CreatePatternInstance(accordionId: string, configs: string): OSFramework.OSUI.Patterns.Accordion.IAccordion;
     function Dispose(accordionId: string): string;
     function ExpandAllItems(accordionId: string): string;
     function GetAllAccordions(): Array<string>;
@@ -3609,6 +3610,7 @@ declare namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
     function ChangeProperty(accordionItemId: string, propertyName: string, propertyValue: unknown): string;
     function Collapse(accordionItemId: string): string;
     function Create(accordionItemId: string, configs: string): OSFramework.OSUI.Patterns.AccordionItem.IAccordionItem;
+    function CreatePatternInstance(accordionItemId: string, configs: string): OSFramework.OSUI.Patterns.AccordionItem.IAccordionItem;
     function Dispose(accordionItemId: string): string;
     function Expand(accordionItemId: string): string;
     function GetAllAccordionItems(): Array<string>;
@@ -3619,6 +3621,7 @@ declare namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 declare namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
     function ChangeProperty(animatedLabelId: string, propertyName: string, propertyValue: unknown): string;
     function Create(animatedLabelId: string, configs: string): OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel;
+    function CreatePatternInstance(animatedLabelId: string, configs: string): OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel;
     function Dispose(animatedLabelId: string): string;
     function GetAllAnimatedLabels(): Array<string>;
     function GetAnimatedLabelById(animatedLabelId: string): OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel;
@@ -3628,6 +3631,7 @@ declare namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 declare namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
     function ChangeProperty(bottomSheetId: string, propertyName: string, propertyValue: any): string;
     function Create(bottomSheetId: string, configs: string): OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet;
+    function CreatePatternInstance(bottomSheetId: string, configs: string): OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet;
     function Dispose(bottomSheetId: string): string;
     function GetAllBottomSheetItemsMap(): Array<string>;
     function GetBottomSheetItemById(bottomSheetId: string): OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet;
@@ -3639,6 +3643,7 @@ declare namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 declare namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
     function ChangeProperty(buttonLoadingId: string, propertyName: string, propertyValue: unknown): string;
     function Create(buttonLoadingId: string, configs: string): OSFramework.OSUI.Patterns.ButtonLoading.IButtonLoading;
+    function CreatePatternInstance(bottomSheetId: string, configs: string): OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet;
     function Dispose(buttonLoadingId: string): string;
     function GetAllButtonsLoading(): Array<string>;
     function GetButtonLoadingById(buttonLoadingId: string): OSFramework.OSUI.Patterns.ButtonLoading.IButtonLoading;
@@ -3764,6 +3769,10 @@ declare namespace OutSystems.OSUI.Patterns.NotificationAPI {
     function RegisterCallback(notificationId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
     function Show(notificationId: string): string;
 }
+declare namespace OutSystems.OSUI.Patterns.PatternFactoryAPI {
+    function CreateInstance(patternName: string, patternId: string, configs: string): unknown;
+    function ExtendPatternClass(patternName: string, patternClass: string | object): void;
+}
 declare namespace OutSystems.OSUI.Patterns.ProgressAPI {
     function ChangeProperty(progressId: string, propertyName: string, propertyValue: any): string;
     function Create(progressId: string, type: string, configs: string): OSFramework.OSUI.Patterns.Progress.IProgress;
@@ -3823,6 +3832,7 @@ declare namespace OutSystems.OSUI.Patterns.SidebarAPI {
     function ClickOutsideToClose(sidebarId: string, closeOnOutSIdeClick: boolean): string;
     function Close(sidebarId: string): string;
     function Create(sidebarId: string, configs: string): OSFramework.OSUI.Patterns.Sidebar.ISidebar;
+    function CreatePatternInstance(sidebarId: string, configs: string): OSFramework.OSUI.Patterns.Sidebar.ISidebar;
     function Dispose(sidebarId: string): string;
     function GetAllSidebars(): Array<string>;
     function GetSidebarById(sidebarId: string): OSFramework.OSUI.Patterns.Sidebar.ISidebar;

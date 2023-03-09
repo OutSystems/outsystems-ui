@@ -91,6 +91,21 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	}
 
 	/**
+	 * Create and return Pattern Instance
+	 *
+	 * @export
+	 * @param {string} accordionItemId
+	 * @param {string} configs
+	 * @return {*}  {OSFramework.OSUI.Patterns.AccordionItem.IAccordionItem}
+	 */
+	export function CreatePatternInstance(
+		accordionItemId: string,
+		configs: string
+	): OSFramework.OSUI.Patterns.AccordionItem.IAccordionItem {
+		return new OSFramework.OSUI.Patterns.AccordionItem.AccordionItem(accordionItemId, JSON.parse(configs));
+	}
+
+	/**
 	 * Function that will dispose the instance of the given Accordrion Item
 	 *
 	 * @export

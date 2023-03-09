@@ -48,6 +48,21 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	}
 
 	/**
+	 * Create and return Pattern Instance
+	 *
+	 * @export
+	 * @param {string} bottomSheetId
+	 * @param {string} configs
+	 * @return {*}  {OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet}
+	 */
+	export function CreatePatternInstance(
+		bottomSheetId: string,
+		configs: string
+	): OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet {
+		return new OSFramework.OSUI.Patterns.BottomSheet.BottomSheet(bottomSheetId, JSON.parse(configs));
+	}
+
+	/**
 	 * Function that will dispose the instance of the given BottomSheetItem Id
 	 *
 	 * @export

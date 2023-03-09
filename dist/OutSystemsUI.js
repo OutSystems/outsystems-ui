@@ -10655,11 +10655,15 @@ var OutSystems;
                     if (_accordionMap.has(accordionId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Accordion} registered under id: ${accordionId}`);
                     }
-                    const _newAccordion = new OSFramework.OSUI.Patterns.Accordion.Accordion(accordionId, JSON.parse(configs));
+                    const _newAccordion = CreatePatternInstance(accordionId, JSON.parse(configs));
                     _accordionMap.set(accordionId, _newAccordion);
                     return _newAccordion;
                 }
                 AccordionAPI.Create = Create;
+                function CreatePatternInstance(accordionId, configs) {
+                    return new OSFramework.OSUI.Patterns.Accordion.Accordion(accordionId, JSON.parse(configs));
+                }
+                AccordionAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(accordionId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Accordion.FailDispose,
@@ -10752,6 +10756,10 @@ var OutSystems;
                     return _newAccordionItem;
                 }
                 AccordionItemAPI.Create = Create;
+                function CreatePatternInstance(accordionItemId, configs) {
+                    return new OSFramework.OSUI.Patterns.AccordionItem.AccordionItem(accordionItemId, JSON.parse(configs));
+                }
+                AccordionItemAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(accordionItemId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.AccordionItem.FailDispose,
@@ -10833,6 +10841,10 @@ var OutSystems;
                     return _newAnimatedLabel;
                 }
                 AnimatedLabelAPI.Create = Create;
+                function CreatePatternInstance(animatedLabelId, configs) {
+                    return new OSFramework.OSUI.Patterns.AnimatedLabel.AnimatedLabel(animatedLabelId, JSON.parse(configs));
+                }
+                AnimatedLabelAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(animatedLabelId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.AnimatedLabel.FailDispose,
@@ -10903,6 +10915,10 @@ var OutSystems;
                     return _bottomSheetItem;
                 }
                 BottomSheetAPI.Create = Create;
+                function CreatePatternInstance(bottomSheetId, configs) {
+                    return new OSFramework.OSUI.Patterns.BottomSheet.BottomSheet(bottomSheetId, JSON.parse(configs));
+                }
+                BottomSheetAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(bottomSheetId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.BottomSheet.FailDispose,
@@ -10995,6 +11011,10 @@ var OutSystems;
                     return _newButtonLoading;
                 }
                 ButtonLoadingAPI.Create = Create;
+                function CreatePatternInstance(bottomSheetId, configs) {
+                    return new OSFramework.OSUI.Patterns.BottomSheet.BottomSheet(bottomSheetId, JSON.parse(configs));
+                }
+                ButtonLoadingAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(buttonLoadingId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.ButtonLoading.FailDispose,
@@ -12148,6 +12168,41 @@ var OutSystems;
     (function (OSUI) {
         var Patterns;
         (function (Patterns) {
+            var PatternFactoryAPI;
+            (function (PatternFactoryAPI) {
+                const _patternClasses = {
+                    Sidebar: OSFramework.OSUI.Patterns.Sidebar.Sidebar,
+                };
+                function CreateInstance(patternName, patternId, configs) {
+                    return new _patternClasses[patternName](patternId, configs);
+                }
+                PatternFactoryAPI.CreateInstance = CreateInstance;
+                function ExtendPatternClass(patternName, patternClass) {
+                    let _extendedClass = patternClass;
+                    if (typeof patternClass === 'string') {
+                        _extendedClass = _stringToFunction(patternClass);
+                    }
+                    _patternClasses[patternName] = _extendedClass;
+                }
+                PatternFactoryAPI.ExtendPatternClass = ExtendPatternClass;
+                function _stringToFunction(str) {
+                    const arr = str.split('.');
+                    let fn = window || this;
+                    for (let i = 0; i < arr.lenght; i++) {
+                        fn = fn[arr[i]];
+                    }
+                    return fn;
+                }
+            })(PatternFactoryAPI = Patterns.PatternFactoryAPI || (Patterns.PatternFactoryAPI = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
+})(OutSystems || (OutSystems = {}));
+var OutSystems;
+(function (OutSystems) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
             var ProgressAPI;
             (function (ProgressAPI) {
                 const _progressItemsMap = new Map();
@@ -12640,11 +12695,15 @@ var OutSystems;
                     if (_sidebarMap.has(sidebarId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Sidebar} registered under id: ${sidebarId}`);
                     }
-                    const _newSidebar = new OSFramework.OSUI.Patterns.Sidebar.Sidebar(sidebarId, JSON.parse(configs));
+                    const _newSidebar = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance('Sidebar', sidebarId, JSON.parse(configs));
                     _sidebarMap.set(sidebarId, _newSidebar);
                     return _newSidebar;
                 }
                 SidebarAPI.Create = Create;
+                function CreatePatternInstance(sidebarId, configs) {
+                    return new OSFramework.OSUI.Patterns.Sidebar.Sidebar(sidebarId, JSON.parse(configs));
+                }
+                SidebarAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(sidebarId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Sidebar.FailDispose,

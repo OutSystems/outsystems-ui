@@ -56,11 +56,26 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 			);
 		}
 
-		const _newAccordion = new OSFramework.OSUI.Patterns.Accordion.Accordion(accordionId, JSON.parse(configs));
+		const _newAccordion = CreatePatternInstance(accordionId, JSON.parse(configs));
 
 		_accordionMap.set(accordionId, _newAccordion);
 
 		return _newAccordion;
+	}
+
+	/**
+	 * Create and return Pattern Instance
+	 *
+	 * @export
+	 * @param {string} accordionId
+	 * @param {string} configs
+	 * @return {*}  {OSFramework.OSUI.Patterns.Accordion.IAccordion}
+	 */
+	export function CreatePatternInstance(
+		accordionId: string,
+		configs: string
+	): OSFramework.OSUI.Patterns.Accordion.IAccordion {
+		return new OSFramework.OSUI.Patterns.Accordion.Accordion(accordionId, JSON.parse(configs));
 	}
 
 	/**

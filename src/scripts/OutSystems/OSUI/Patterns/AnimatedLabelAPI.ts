@@ -52,6 +52,21 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	}
 
 	/**
+	 * Create and return Pattern Instance
+	 *
+	 * @export
+	 * @param {string} animatedLabelId
+	 * @param {string} configs
+	 * @return {*}  {OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel}
+	 */
+	export function CreatePatternInstance(
+		animatedLabelId: string,
+		configs: string
+	): OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel {
+		return new OSFramework.OSUI.Patterns.AnimatedLabel.AnimatedLabel(animatedLabelId, JSON.parse(configs));
+	}
+
+	/**
 	 * Function that will dispose the instance of the given AnimatedLabel
 	 *
 	 * @export
