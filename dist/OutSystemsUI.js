@@ -14710,7 +14710,7 @@ var OutSystems;
     (function (OSUI) {
         var Utils;
         (function (Utils) {
-            function NormalizeProviderConfigs(providerConfigs) {
+            function AbstractNormalizeProviderConfigs(providerConfigs, htmlElementsProps) {
                 for (const keyName of Object.keys(providerConfigs)) {
                     let keyValue = providerConfigs[keyName];
                     if (typeof keyValue !== 'string') {
@@ -14720,10 +14720,13 @@ var OutSystems;
                     if (keyValue === 'true' || keyValue === 'false') {
                         providerConfigs[keyName] = keyValue === 'true';
                     }
+                    if ((htmlElementsProps === null || htmlElementsProps === void 0 ? void 0 : htmlElementsProps.indexOf(keyName)) > -1) {
+                        providerConfigs[keyName] = OSFramework.OSUI.Helper.Dom.GetElementById(keyValue);
+                    }
                 }
                 return providerConfigs;
             }
-            Utils.NormalizeProviderConfigs = NormalizeProviderConfigs;
+            Utils.AbstractNormalizeProviderConfigs = AbstractNormalizeProviderConfigs;
         })(Utils = OSUI.Utils || (OSUI.Utils = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
 })(OutSystems || (OutSystems = {}));
@@ -15315,6 +15318,25 @@ var Providers;
 (function (Providers) {
     var OSUI;
     (function (OSUI) {
+        var Carousel;
+        (function (Carousel) {
+            var Splide;
+            (function (Splide) {
+                var Utils;
+                (function (Utils) {
+                    function NormalizeSplideConfigs(splideConfigs) {
+                        return OutSystems.OSUI.Utils.AbstractNormalizeProviderConfigs(splideConfigs);
+                    }
+                    Utils.NormalizeSplideConfigs = NormalizeSplideConfigs;
+                })(Utils = Splide.Utils || (Splide.Utils = {}));
+            })(Splide = Carousel.Splide || (Carousel.Splide = {}));
+        })(Carousel = OSUI.Carousel || (OSUI.Carousel = {}));
+    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
+})(Providers || (Providers = {}));
+var Providers;
+(function (Providers) {
+    var OSUI;
+    (function (OSUI) {
         var Datepicker;
         (function (Datepicker) {
             var Flatpickr;
@@ -15726,29 +15748,6 @@ var Providers;
                     }
                     Factory.NewFlatpickr = NewFlatpickr;
                 })(Factory = Flatpickr.Factory || (Flatpickr.Factory = {}));
-            })(Flatpickr = Datepicker.Flatpickr || (Datepicker.Flatpickr = {}));
-        })(Datepicker = OSUI.Datepicker || (OSUI.Datepicker = {}));
-    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
-})(Providers || (Providers = {}));
-var Providers;
-(function (Providers) {
-    var OSUI;
-    (function (OSUI) {
-        var Datepicker;
-        (function (Datepicker) {
-            var Flatpickr;
-            (function (Flatpickr) {
-                var Utils;
-                (function (Utils) {
-                    function GetPositionElement(elementId) {
-                        const _positionElement = document.getElementById(elementId);
-                        if (!_positionElement) {
-                            console.warn(`It was not possible to find an element with the id: ${elementId}`);
-                        }
-                        return _positionElement;
-                    }
-                    Utils.GetPositionElement = GetPositionElement;
-                })(Utils = Flatpickr.Utils || (Flatpickr.Utils = {}));
             })(Flatpickr = Datepicker.Flatpickr || (Datepicker.Flatpickr = {}));
         })(Datepicker = OSUI.Datepicker || (OSUI.Datepicker = {}));
     })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
@@ -16990,6 +16989,25 @@ var Providers;
         (function (Dropdown) {
             var VirtualSelect;
             (function (VirtualSelect) {
+                var Utils;
+                (function (Utils) {
+                    function NormalizeVirtualSelectConfigs(virtualSelectConfigs) {
+                        return OutSystems.OSUI.Utils.AbstractNormalizeProviderConfigs(virtualSelectConfigs);
+                    }
+                    Utils.NormalizeVirtualSelectConfigs = NormalizeVirtualSelectConfigs;
+                })(Utils = VirtualSelect.Utils || (VirtualSelect.Utils = {}));
+            })(VirtualSelect = Dropdown.VirtualSelect || (Dropdown.VirtualSelect = {}));
+        })(Dropdown = OSUI.Dropdown || (OSUI.Dropdown = {}));
+    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
+})(Providers || (Providers = {}));
+var Providers;
+(function (Providers) {
+    var OSUI;
+    (function (OSUI) {
+        var Dropdown;
+        (function (Dropdown) {
+            var VirtualSelect;
+            (function (VirtualSelect) {
                 var Factory;
                 (function (Factory) {
                     function NewVirtualSelect(dropdownId, mode, configs) {
@@ -17806,8 +17824,8 @@ var Providers;
             (function (NoUISlider) {
                 var Utils;
                 (function (Utils) {
-                    function SetRangeValues(providerConfigs) {
-                        const _noUiSliderConfigs = JSON.parse(providerConfigs);
+                    function _setRangeValues(providerConfigs) {
+                        const _noUiSliderConfigs = providerConfigs;
                         if (_noUiSliderConfigs.range.length <= 0) {
                             delete _noUiSliderConfigs.range;
                         }
@@ -17820,7 +17838,11 @@ var Providers;
                         }
                         return _noUiSliderConfigs;
                     }
-                    Utils.SetRangeValues = SetRangeValues;
+                    function NormalizeNoUISliderConfigs(noUiSliderConfigs) {
+                        const finalConfigs = _setRangeValues(noUiSliderConfigs);
+                        return OutSystems.OSUI.Utils.AbstractNormalizeProviderConfigs(finalConfigs);
+                    }
+                    Utils.NormalizeNoUISliderConfigs = NormalizeNoUISliderConfigs;
                 })(Utils = NoUISlider.Utils || (NoUISlider.Utils = {}));
             })(NoUISlider = RangeSlider.NoUISlider || (RangeSlider.NoUISlider = {}));
         })(RangeSlider = OSUI.RangeSlider || (OSUI.RangeSlider = {}));
@@ -18161,6 +18183,23 @@ var Providers;
                     }
                 }
                 Flatpickr.UpdateZindex = UpdateZindex;
+            })(Flatpickr = SharedProviderResources.Flatpickr || (SharedProviderResources.Flatpickr = {}));
+        })(SharedProviderResources = OSUI.SharedProviderResources || (OSUI.SharedProviderResources = {}));
+    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
+})(Providers || (Providers = {}));
+var Providers;
+(function (Providers) {
+    var OSUI;
+    (function (OSUI) {
+        var SharedProviderResources;
+        (function (SharedProviderResources) {
+            var Flatpickr;
+            (function (Flatpickr) {
+                function NormalizeFlatpickrConfigs(flatpickrConfigs) {
+                    const _htmlElementsProps = ['positionElement', 'appendTo'];
+                    return OutSystems.OSUI.Utils.AbstractNormalizeProviderConfigs(flatpickrConfigs, _htmlElementsProps);
+                }
+                Flatpickr.NormalizeFlatpickrConfigs = NormalizeFlatpickrConfigs;
             })(Flatpickr = SharedProviderResources.Flatpickr || (SharedProviderResources.Flatpickr = {}));
         })(SharedProviderResources = OSUI.SharedProviderResources || (OSUI.SharedProviderResources = {}));
     })(OSUI = Providers.OSUI || (Providers.OSUI = {}));

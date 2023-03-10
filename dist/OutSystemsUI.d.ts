@@ -4057,7 +4057,7 @@ declare namespace OutSystems.OSUI.Utils.Network {
     function Type(): string;
 }
 declare namespace OutSystems.OSUI.Utils {
-    function NormalizeProviderConfigs(providerConfigs: ProviderConfigs): ProviderConfigs;
+    function AbstractNormalizeProviderConfigs(providerConfigs: ProviderConfigs, htmlElementsProps?: Array<string>): ProviderConfigs;
 }
 declare namespace OutSystems.OSUI.Utils {
     function ScrollToElement(ElementId: string, IsSmooth?: boolean, OffSet?: number, ElementParentClass?: string, ScrollDelay?: number): string;
@@ -4157,6 +4157,9 @@ declare namespace Providers.OSUI.Carousel.Splide {
         setExtensibilityConfigs(newConfigs: SplideOpts): void;
     }
 }
+declare namespace Providers.OSUI.Carousel.Splide.Utils {
+    function NormalizeSplideConfigs(splideConfigs: SplideOpts): SplideOpts;
+}
 declare namespace Providers.OSUI.Datepicker.Flatpickr {
     abstract class AbstractFlatpickr<C extends Flatpickr.AbstractFlatpickrConfig> extends OSFramework.OSUI.Patterns.DatePicker.AbstractDatePicker<Flatpickr, C> implements IFlatpickr {
         private _a11yInfoContainerElem;
@@ -4255,9 +4258,6 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr.Factory {
 declare namespace Providers.OSUI.Datepicker.Flatpickr {
     interface IFlatpickr extends OSFramework.OSUI.Patterns.DatePicker.IDatePicker, OSFramework.OSUI.Interface.IProviderPattern<Flatpickr> {
     }
-}
-declare namespace Providers.OSUI.Datepicker.Flatpickr.Utils {
-    function GetPositionElement(elementId: string): HTMLElement;
 }
 declare namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate.Enum {
     enum Properties {
@@ -4874,6 +4874,9 @@ declare namespace Providers.OSUI.Dropdown.VirtualSelect {
         togglePopup(isEnabled: boolean): void;
     }
 }
+declare namespace Providers.OSUI.Dropdown.VirtualSelect.Utils {
+    function NormalizeVirtualSelectConfigs(virtualSelectConfigs: VirtualSelectOpts): VirtualSelectOpts;
+}
 declare namespace Providers.OSUI.Dropdown.VirtualSelect.Factory {
     function NewVirtualSelect(dropdownId: string, mode: string, configs: JSON): OSFramework.OSUI.Patterns.Dropdown.IDropdown;
 }
@@ -5051,7 +5054,7 @@ declare namespace Providers.OSUI.RangeSlider.NoUiSlider.Factory {
     function NewNoUiSlider(rangeSliderId: string, configs: string, mode: OSFramework.OSUI.Patterns.RangeSlider.Enum.Mode): OSFramework.OSUI.Patterns.RangeSlider.IRangeSlider;
 }
 declare namespace Providers.OSUI.RangeSlider.NoUISlider.Utils {
-    function SetRangeValues(providerConfigs: RangeSliderProviderConfigs): RangeSliderProviderConfigs;
+    function NormalizeNoUISliderConfigs(noUiSliderConfigs: FlatpickrOptions): FlatpickrOptions;
 }
 declare namespace Providers.OSUI.RangeSlider.NoUISlider.IntervalSlider {
     class OSUINoUiSliderInterval extends AbstractNoUiSlider<NoUISlider.SliderInterval.NoUiSliderIntervalConfig> {
@@ -5120,6 +5123,9 @@ declare namespace Providers.OSUI.SharedProviderResources.Flatpickr {
         constructor(picker: Datepicker.Flatpickr.IFlatpickr | TimePicker.Flatpickr.IFlatpickrTime | MonthPicker.Flatpickr.IFlatpickrMonth);
         private _updateZindex;
     }
+}
+declare namespace Providers.OSUI.SharedProviderResources.Flatpickr {
+    function NormalizeFlatpickrConfigs(flatpickrConfigs: FlatpickrOptions): FlatpickrOptions;
 }
 declare namespace Providers.OSUI.TimePicker.Flatpickr.Enum {
     enum Properties {
