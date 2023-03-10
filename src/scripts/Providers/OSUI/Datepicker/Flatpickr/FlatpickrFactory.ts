@@ -14,27 +14,29 @@ namespace Providers.OSUI.Datepicker.Flatpickr.Factory {
 		configs: string
 	): OSFramework.OSUI.Patterns.DatePicker.IDatePicker {
 		let _flatpickrItem = null;
+		let _patternName: string;
 
 		switch (mode) {
 			case OSFramework.OSUI.Patterns.DatePicker.Enum.Mode.Single:
-				_flatpickrItem = new Providers.OSUI.Datepicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate(
-					datePickerId,
-					JSON.parse(configs)
-				);
+				_patternName = OSFramework.OSUI.GlobalEnum.PatternName.Datepicker;
 
 				break;
 
 			case OSFramework.OSUI.Patterns.DatePicker.Enum.Mode.Range:
-				_flatpickrItem = new Providers.OSUI.Datepicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate(
-					datePickerId,
-					JSON.parse(configs)
-				);
+				_patternName = OSFramework.OSUI.GlobalEnum.PatternName.DatepickerRange;
 
 				break;
 
 			default:
 				throw new Error(`There is no Flatpickr of ${mode} type`);
 		}
+
+		_flatpickrItem = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(
+			_patternName,
+			datePickerId,
+			JSON.parse(configs),
+			OSFramework.OSUI.Patterns.DatePicker.Enum.Provider.FlatPicker
+		) as OSFramework.OSUI.Patterns.DatePicker.IDatePicker;
 
 		return _flatpickrItem;
 	}

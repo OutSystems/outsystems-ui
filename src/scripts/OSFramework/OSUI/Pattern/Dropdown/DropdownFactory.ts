@@ -21,14 +21,19 @@ namespace OSFramework.OSUI.Patterns.Dropdown.Factory {
 				_dropdownItem = Providers.OSUI.Dropdown.VirtualSelect.Factory.NewVirtualSelect(
 					dropdownId,
 					mode,
-					JSON.parse(configs)
+					configs
 				);
 
 				break;
 
 			case Enum.Provider.OSUIComponents:
 				if (mode === Enum.Mode.ServerSide) {
-					_dropdownItem = new ServerSide.OSUIDropdownServerSide(dropdownId, JSON.parse(configs));
+					_dropdownItem = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(
+						GlobalEnum.PatternName.DropdownServerSide,
+						dropdownId,
+						JSON.parse(configs),
+						OSFramework.OSUI.Patterns.Dropdown.Enum.Provider.OSUIComponents
+					) as OSFramework.OSUI.Patterns.Dropdown.IDropdown;
 				} else {
 					throw new Error(`There is no Dropdown of the ${provider} provider with ${mode} type`);
 				}

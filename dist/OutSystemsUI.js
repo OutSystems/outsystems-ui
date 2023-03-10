@@ -429,35 +429,39 @@ var OSFramework;
             let PatternName;
             (function (PatternName) {
                 PatternName["Accordion"] = "Accordion";
-                PatternName["AccordionItem"] = "Accordion Item";
-                PatternName["AnimatedLabel"] = "Animated Label";
-                PatternName["BottomSheet"] = "Bottom Sheet";
+                PatternName["AccordionItem"] = "AccordionItem";
+                PatternName["AnimatedLabel"] = "AnimatedLabel";
+                PatternName["BottomSheet"] = "BottomSheet";
                 PatternName["ButtonLoading"] = "ButtonLoading";
                 PatternName["Carousel"] = "Carousel";
-                PatternName["Datepicker"] = "Datepicker";
+                PatternName["Datepicker"] = "DatePicker";
+                PatternName["DatepickerRange"] = "DatePickerRange";
                 PatternName["Dropdown"] = "Dropdown";
+                PatternName["DropdownSearch"] = "DropdownSearch";
+                PatternName["DropdownTags"] = "DropdownTags";
+                PatternName["DropdownServerSide"] = "DropdownServerSide";
                 PatternName["DropdownServerSideItem"] = "DropdownServerSideItem";
-                PatternName["FlipContent"] = "Flip Content";
-                PatternName["FloatingActions"] = "Floating Actions";
-                PatternName["FloatingActionsItem"] = "Floating Actions Item";
+                PatternName["FlipContent"] = "FlipContent";
+                PatternName["FloatingActions"] = "FloatingActions";
+                PatternName["FloatingActionsItem"] = "FloatingActionsItem";
                 PatternName["Gallery"] = "Gallery";
                 PatternName["MonthPicker"] = "MonthPicker";
                 PatternName["Notification"] = "Notification";
-                PatternName["ProgressBar"] = "Progress Bar";
-                PatternName["ProgressCircle"] = "Progress Circle";
-                PatternName["RangeSlider"] = "Range Slider";
-                PatternName["RangeSliderInterval"] = "Range Slider Interval";
+                PatternName["ProgressBar"] = "ProgressBar";
+                PatternName["ProgressCircle"] = "ProgressCircle";
+                PatternName["RangeSlider"] = "RangeSlider";
+                PatternName["RangeSliderInterval"] = "RangeSliderInterval";
                 PatternName["Rating"] = "Rating";
                 PatternName["Search"] = "Search";
-                PatternName["SectionIndex"] = "Section Index";
-                PatternName["SectionIndexItem"] = "Section Index Item";
+                PatternName["SectionIndex"] = "SectionIndex";
+                PatternName["SectionIndexItem"] = "SectionIndexItem";
                 PatternName["Sidebar"] = "Sidebar";
                 PatternName["Submenu"] = "Submenu";
                 PatternName["SwipeEvents"] = "SwipeEvents";
                 PatternName["Tabs"] = "Tabs";
                 PatternName["TabsHeaderItem"] = "TabsHeaderItem";
                 PatternName["TabsContentItem"] = "TabsContentItem";
-                PatternName["Timepicker"] = "Timepicker";
+                PatternName["Timepicker"] = "TimePicker";
                 PatternName["Tooltip"] = "Tooltip";
                 PatternName["TouchEvents"] = "TouchEvents";
             })(PatternName = GlobalEnum.PatternName || (GlobalEnum.PatternName = {}));
@@ -4151,7 +4155,7 @@ var OSFramework;
                     function NewCarousel(carouselId, configs, provider) {
                         let _carouselItem = null;
                         if (provider === Carousel.Enum.Provider.Splide) {
-                            _carouselItem = new Providers.OSUI.Carousel.Splide.OSUISplide(carouselId, JSON.parse(configs));
+                            _carouselItem = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(OSFramework.OSUI.GlobalEnum.PatternName.Carousel, carouselId, JSON.parse(configs), provider);
                         }
                         else {
                             throw new Error(`There is no  ${OSUI.GlobalEnum.PatternName.Carousel}  of the ${provider} provider`);
@@ -4427,11 +4431,11 @@ var OSFramework;
                         let _dropdownItem = null;
                         switch (provider) {
                             case Dropdown.Enum.Provider.VirtualSelect:
-                                _dropdownItem = Providers.OSUI.Dropdown.VirtualSelect.Factory.NewVirtualSelect(dropdownId, mode, JSON.parse(configs));
+                                _dropdownItem = Providers.OSUI.Dropdown.VirtualSelect.Factory.NewVirtualSelect(dropdownId, mode, configs);
                                 break;
                             case Dropdown.Enum.Provider.OSUIComponents:
                                 if (mode === Dropdown.Enum.Mode.ServerSide) {
-                                    _dropdownItem = new Dropdown.ServerSide.OSUIDropdownServerSide(dropdownId, JSON.parse(configs));
+                                    _dropdownItem = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(OSUI.GlobalEnum.PatternName.DropdownServerSide, dropdownId, JSON.parse(configs), OSFramework.OSUI.Patterns.Dropdown.Enum.Provider.OSUIComponents);
                                 }
                                 else {
                                     throw new Error(`There is no Dropdown of the ${provider} provider with ${mode} type`);
@@ -4479,8 +4483,8 @@ var OSFramework;
                     })(Properties = Enum.Properties || (Enum.Properties = {}));
                     let Provider;
                     (function (Provider) {
-                        Provider["OSUIComponents"] = "osui-components";
-                        Provider["VirtualSelect"] = "virtual-select";
+                        Provider["OSUIComponents"] = "OSUIComponents";
+                        Provider["VirtualSelect"] = "VirtualSelect";
                     })(Provider = Enum.Provider || (Enum.Provider = {}));
                 })(Enum = Dropdown.Enum || (Dropdown.Enum = {}));
             })(Dropdown = Patterns.Dropdown || (Patterns.Dropdown = {}));
@@ -5875,7 +5879,7 @@ var OSFramework;
                     function NewMonthPicker(monthPickerId, provider, configs) {
                         let _monthPickerItem = null;
                         if (provider === MonthPicker.Enum.Provider.Flatpickr) {
-                            _monthPickerItem = new Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth(monthPickerId, JSON.parse(configs));
+                            _monthPickerItem = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(OSFramework.OSUI.GlobalEnum.PatternName.MonthPicker, monthPickerId, JSON.parse(configs), provider);
                         }
                         else {
                             throw new Error(`There is no ${OSUI.GlobalEnum.PatternName.MonthPicker} of the ${provider} provider`);
@@ -9642,7 +9646,7 @@ var OSFramework;
                     function NewTimePicker(timePickerId, configs, provider) {
                         let _timePickerItem = null;
                         if (provider === TimePicker.Enum.Provider.FlatPicker) {
-                            _timePickerItem = new Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime(timePickerId, JSON.parse(configs));
+                            _timePickerItem = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(OSFramework.OSUI.GlobalEnum.PatternName.Timepicker, timePickerId, JSON.parse(configs), provider);
                         }
                         else {
                             throw new Error(`There is no ${OSUI.GlobalEnum.PatternName.Timepicker} of the ${provider} provider`);
@@ -10655,15 +10659,11 @@ var OutSystems;
                     if (_accordionMap.has(accordionId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Accordion} registered under id: ${accordionId}`);
                     }
-                    const _newAccordion = CreatePatternInstance(accordionId, JSON.parse(configs));
+                    const _newAccordion = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(OSFramework.OSUI.GlobalEnum.PatternName.Accordion, accordionId, JSON.parse(configs));
                     _accordionMap.set(accordionId, _newAccordion);
                     return _newAccordion;
                 }
                 AccordionAPI.Create = Create;
-                function CreatePatternInstance(accordionId, configs) {
-                    return new OSFramework.OSUI.Patterns.Accordion.Accordion(accordionId, JSON.parse(configs));
-                }
-                AccordionAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(accordionId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Accordion.FailDispose,
@@ -10751,15 +10751,11 @@ var OutSystems;
                     if (_accordionItemMap.has(accordionItemId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.AccordionItem} registered under id: ${accordionItemId}`);
                     }
-                    const _newAccordionItem = new OSFramework.OSUI.Patterns.AccordionItem.AccordionItem(accordionItemId, JSON.parse(configs));
+                    const _newAccordionItem = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(OSFramework.OSUI.GlobalEnum.PatternName.AccordionItem, accordionItemId, JSON.parse(configs));
                     _accordionItemMap.set(accordionItemId, _newAccordionItem);
                     return _newAccordionItem;
                 }
                 AccordionItemAPI.Create = Create;
-                function CreatePatternInstance(accordionItemId, configs) {
-                    return new OSFramework.OSUI.Patterns.AccordionItem.AccordionItem(accordionItemId, JSON.parse(configs));
-                }
-                AccordionItemAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(accordionItemId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.AccordionItem.FailDispose,
@@ -10836,15 +10832,11 @@ var OutSystems;
                     if (_animatedLabelsMap.has(animatedLabelId)) {
                         throw new Error(`There is already an ${OSFramework.OSUI.GlobalEnum.PatternName.AnimatedLabel} registered under id: ${animatedLabelId}`);
                     }
-                    const _newAnimatedLabel = new OSFramework.OSUI.Patterns.AnimatedLabel.AnimatedLabel(animatedLabelId, JSON.parse(configs));
+                    const _newAnimatedLabel = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(OSFramework.OSUI.GlobalEnum.PatternName.AnimatedLabel, animatedLabelId, JSON.parse(configs));
                     _animatedLabelsMap.set(animatedLabelId, _newAnimatedLabel);
                     return _newAnimatedLabel;
                 }
                 AnimatedLabelAPI.Create = Create;
-                function CreatePatternInstance(animatedLabelId, configs) {
-                    return new OSFramework.OSUI.Patterns.AnimatedLabel.AnimatedLabel(animatedLabelId, JSON.parse(configs));
-                }
-                AnimatedLabelAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(animatedLabelId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.AnimatedLabel.FailDispose,
@@ -10910,15 +10902,11 @@ var OutSystems;
                     if (_bottomSheetItemsMap.has(bottomSheetId)) {
                         throw new Error('There is already an BottomSheet registered under id: ' + bottomSheetId);
                     }
-                    const _bottomSheetItem = new OSFramework.OSUI.Patterns.BottomSheet.BottomSheet(bottomSheetId, JSON.parse(configs));
+                    const _bottomSheetItem = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(OSFramework.OSUI.GlobalEnum.PatternName.BottomSheet, bottomSheetId, JSON.parse(configs));
                     _bottomSheetItemsMap.set(bottomSheetId, _bottomSheetItem);
                     return _bottomSheetItem;
                 }
                 BottomSheetAPI.Create = Create;
-                function CreatePatternInstance(bottomSheetId, configs) {
-                    return new OSFramework.OSUI.Patterns.BottomSheet.BottomSheet(bottomSheetId, JSON.parse(configs));
-                }
-                BottomSheetAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(bottomSheetId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.BottomSheet.FailDispose,
@@ -11006,15 +10994,11 @@ var OutSystems;
                     if (_buttonsLoadingMap.has(buttonLoadingId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.ButtonLoading} registered under id: ${buttonLoadingId}`);
                     }
-                    const _newButtonLoading = new OSFramework.OSUI.Patterns.ButtonLoading.ButtonLoading(buttonLoadingId, JSON.parse(configs));
+                    const _newButtonLoading = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(OSFramework.OSUI.GlobalEnum.PatternName.ButtonLoading, buttonLoadingId, JSON.parse(configs));
                     _buttonsLoadingMap.set(buttonLoadingId, _newButtonLoading);
                     return _newButtonLoading;
                 }
                 ButtonLoadingAPI.Create = Create;
-                function CreatePatternInstance(bottomSheetId, configs) {
-                    return new OSFramework.OSUI.Patterns.BottomSheet.BottomSheet(bottomSheetId, JSON.parse(configs));
-                }
-                ButtonLoadingAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(buttonLoadingId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.ButtonLoading.FailDispose,
@@ -11701,7 +11685,7 @@ var OutSystems;
                     if (_dropdownServerSideItemItemsMap.has(dropdownServerSideItemId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.DropdownServerSideItem} registered under id: ${dropdownServerSideItemId}`);
                     }
-                    const _dropdownServerSideItemItem = new OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem(dropdownServerSideItemId, JSON.parse(configs));
+                    const _dropdownServerSideItemItem = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(OSFramework.OSUI.GlobalEnum.PatternName.DropdownServerSideItem, dropdownServerSideItemId, JSON.parse(configs));
                     _dropdownServerSideItemItemsMap.set(dropdownServerSideItemId, _dropdownServerSideItemItem);
                     return _dropdownServerSideItemItem;
                 }
@@ -11771,7 +11755,7 @@ var OutSystems;
                     if (_flipContentMap.has(flipId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.FlipContent} registered under id: ${flipId}`);
                     }
-                    const _newFlip = new OSFramework.OSUI.Patterns.FlipContent.FlipContent(flipId, JSON.parse(configs));
+                    const _newFlip = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(OSFramework.OSUI.GlobalEnum.PatternName.FlipContent, flipId, JSON.parse(configs));
                     _flipContentMap.set(flipId, _newFlip);
                     return _newFlip;
                 }
@@ -11874,7 +11858,7 @@ var OutSystems;
                     if (_galleryMap.has(galleryId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Gallery} registered under id: ${galleryId}`);
                     }
-                    const _newGallery = new OSFramework.OSUI.Patterns.Gallery.Gallery(galleryId, JSON.parse(configs));
+                    const _newGallery = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(OSFramework.OSUI.GlobalEnum.PatternName.Gallery, galleryId, JSON.parse(configs));
                     _galleryMap.set(galleryId, _newGallery);
                     return _newGallery;
                 }
@@ -12094,7 +12078,7 @@ var OutSystems;
                     if (_notificationMap.has(notificationId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Notification} registered under id: ${notificationId}`);
                     }
-                    const _newNotification = new OSFramework.OSUI.Patterns.Notification.Notification(notificationId, JSON.parse(configs));
+                    const _newNotification = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(OSFramework.OSUI.GlobalEnum.PatternName.Notification, notificationId, JSON.parse(configs));
                     _notificationMap.set(notificationId, _newNotification);
                     return _newNotification;
                 }
@@ -12162,6 +12146,1628 @@ var OutSystems;
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
 })(OutSystems || (OutSystems = {}));
+var Providers;
+(function (Providers) {
+    var OSUI;
+    (function (OSUI) {
+        var Carousel;
+        (function (Carousel) {
+            var Splide;
+            (function (Splide) {
+                class OSUISplide extends OSFramework.OSUI.Patterns.Carousel.AbstractCarousel {
+                    constructor(uniqueId, configs) {
+                        super(uniqueId, new Splide.SplideConfig(configs));
+                        this._blockOnRender = false;
+                    }
+                    _checkListWidget() {
+                        this._hasList = OutSystems.OSUI.Utils.GetHasListInside(this._carouselPlaceholderElem);
+                        if (this._hasList) {
+                            this._carouselListWidgetElem = this.selfElement.querySelector(OSFramework.OSUI.Constants.Dot + OSFramework.OSUI.GlobalEnum.CssClassElements.List);
+                            this._carouselProviderElem = this._carouselTrackElem;
+                        }
+                        else {
+                            this._carouselProviderElem = this.selfElement;
+                        }
+                    }
+                    _initProvider() {
+                        this._provider = new window.Splide(this._carouselProviderElem, this._splideOptions);
+                        this.updateProviderEvents({
+                            name: Splide.Enum.ProviderInfo.Name,
+                            version: Splide.Enum.ProviderInfo.Version,
+                            events: this.provider,
+                        });
+                        this._setOnInitializedEvent();
+                        this._setOnSlideMovedEvent();
+                        this._setCarouselWidth();
+                        this._provider.mount();
+                        this._togglePaginationClass();
+                    }
+                    _prepareCarouselItems() {
+                        const _targetList = this._hasList ? this._carouselListWidgetElem : this._carouselPlaceholderElem;
+                        const _childrenList = _targetList.children;
+                        if (_childrenList.length > 0) {
+                            for (const item of _childrenList) {
+                                if (!item.classList.contains(Splide.Enum.CssClass.SplideSlide)) {
+                                    item.classList.add(Splide.Enum.CssClass.SplideSlide);
+                                }
+                            }
+                        }
+                    }
+                    _redefineCarouselWidth() {
+                        this.provider.refresh();
+                        this._setCarouselWidth();
+                    }
+                    _setCarouselWidth() {
+                        OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._carouselTrackElem, OSFramework.OSUI.Patterns.Carousel.Enum.CssVariables.CarouselWidth, this.selfElement.offsetWidth + OSFramework.OSUI.GlobalEnum.Units.Pixel);
+                    }
+                    _setOnInitializedEvent() {
+                        this._provider.on(Splide.Enum.SpliderEvents.Mounted, () => {
+                            this.triggerPlatformEventInitialized(this._platformEventInitialized);
+                        });
+                    }
+                    _setOnSlideMovedEvent() {
+                        this._provider.on(Splide.Enum.SpliderEvents.Moved, (index) => {
+                            if (index !== this._currentIndex) {
+                                OSFramework.OSUI.Helper.AsyncInvocation(this._platformEventOnSlideMoved, this.widgetId, index);
+                                this._currentIndex = index;
+                            }
+                        });
+                    }
+                    _togglePaginationClass() {
+                        if (this.configs.Navigation === OSFramework.OSUI.Patterns.Carousel.Enum.Navigation.Dots ||
+                            this.configs.Navigation === OSFramework.OSUI.Patterns.Carousel.Enum.Navigation.Both) {
+                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.selfElement, OSFramework.OSUI.Patterns.Carousel.Enum.CssClass.HasPagination);
+                        }
+                        else {
+                            OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, OSFramework.OSUI.Patterns.Carousel.Enum.CssClass.HasPagination);
+                        }
+                    }
+                    prepareConfigs() {
+                        this._prepareCarouselItems();
+                        this._splideOptions = this.configs.getProviderConfig();
+                        this._initProvider();
+                    }
+                    setA11YProperties() {
+                        console.warn(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    setCallbacks() {
+                        this._eventOnResize = this._redefineCarouselWidth.bind(this);
+                        OSFramework.OSUI.Event.GlobalEventManager.Instance.addHandler(OSFramework.OSUI.Event.Type.WindowResize, this._eventOnResize);
+                    }
+                    setHtmlElements() {
+                        this._carouselPlaceholderElem = OSFramework.OSUI.Helper.Dom.ClassSelector(this.selfElement, OSFramework.OSUI.Patterns.Carousel.Enum.CssClass.Content);
+                        this._carouselTrackElem = OSFramework.OSUI.Helper.Dom.ClassSelector(this.selfElement, OSFramework.OSUI.Patterns.Carousel.Enum.CssClass.Track);
+                    }
+                    setInitialCssClasses() {
+                        if (this._hasList) {
+                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this._carouselTrackElem, Splide.Enum.CssClass.SplideWrapper);
+                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this._carouselPlaceholderElem, Splide.Enum.CssClass.SplideTrack);
+                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this._carouselListWidgetElem, Splide.Enum.CssClass.SplideList);
+                        }
+                        else {
+                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.selfElement, Splide.Enum.CssClass.SplideWrapper);
+                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this._carouselTrackElem, Splide.Enum.CssClass.SplideTrack);
+                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this._carouselPlaceholderElem, Splide.Enum.CssClass.SplideList);
+                        }
+                        this._togglePaginationClass();
+                    }
+                    unsetCallbacks() {
+                        OSFramework.OSUI.Event.GlobalEventManager.Instance.removeHandler(OSFramework.OSUI.Event.Type.WindowResize, this._eventOnResize);
+                        this._eventOnResize = undefined;
+                        this._platformEventInitialized = undefined;
+                        this._platformEventOnSlideMoved = undefined;
+                    }
+                    unsetHtmlElements() {
+                        this._carouselPlaceholderElem = undefined;
+                        this._carouselTrackElem = undefined;
+                    }
+                    build() {
+                        super.build();
+                        this.setHtmlElements();
+                        this.setCallbacks();
+                        this._checkListWidget();
+                        this.setInitialCssClasses();
+                        this.prepareConfigs();
+                        this.finishBuild();
+                    }
+                    changeProperty(propertyName, propertyValue) {
+                        super.changeProperty(propertyName, propertyValue);
+                        if (this.isBuilt) {
+                            this.toggleOnRender(true);
+                            switch (propertyName) {
+                                case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.StartingPosition:
+                                    console.warn(`Carousel (${this.widgetId}): changes to ${OSFramework.OSUI.Patterns.Carousel.Enum.Properties.StartingPosition} parameter do not affect the carousel. Use the client action 'CarouselGoTo' to change the current item.`);
+                                    break;
+                                case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.Navigation:
+                                case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.AutoPlay:
+                                case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.Loop:
+                                case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.ItemsDesktop:
+                                case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.ItemsTablet:
+                                case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.ItemsPhone:
+                                    this.redraw();
+                                    break;
+                                case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.Height:
+                                    this._provider.options = { height: propertyValue };
+                                    break;
+                                case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.Padding:
+                                    this._provider.options = { padding: propertyValue };
+                                    break;
+                                case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.ItemsGap:
+                                    this._provider.options = { gap: propertyValue };
+                                    break;
+                            }
+                        }
+                        OSFramework.OSUI.Helper.AsyncInvocation(this.toggleOnRender.bind(this), false);
+                    }
+                    dispose() {
+                        if (this.isBuilt) {
+                            this._provider.destroy();
+                        }
+                        this.unsetCallbacks();
+                        this.unsetHtmlElements();
+                        super.dispose();
+                    }
+                    goTo(index) {
+                        this._provider.go(index);
+                    }
+                    next() {
+                        this._provider.go(Splide.Enum.Go.Next);
+                    }
+                    previous() {
+                        this._provider.go(Splide.Enum.Go.Previous);
+                    }
+                    registerCallback(eventName, callback) {
+                        switch (eventName) {
+                            case OSFramework.OSUI.Patterns.Carousel.Enum.CarouselEvents.OnSlideMoved:
+                                this._platformEventOnSlideMoved = callback;
+                                break;
+                            case OSFramework.OSUI.Patterns.Carousel.Enum.CarouselEvents.Initialized:
+                                this._platformEventInitialized = callback;
+                                break;
+                        }
+                    }
+                    setCarouselDirection(direction) {
+                        if (direction === OSFramework.OSUI.Patterns.Carousel.Enum.Direction.None &&
+                            OutSystems.OSUI.Utils.GetIsRTL()) {
+                            this.configs.Direction = OSFramework.OSUI.GlobalEnum.Direction.RTL;
+                        }
+                        else if (direction === OSFramework.OSUI.Patterns.Carousel.Enum.Direction.RightToLeft &&
+                            this.configs.AutoPlay) {
+                            this.configs.Direction = OSFramework.OSUI.GlobalEnum.Direction.RTL;
+                        }
+                        else {
+                            this.configs.Direction = OSFramework.OSUI.GlobalEnum.Direction.LTR;
+                        }
+                        this.redraw();
+                    }
+                    setProviderConfigs(newConfigs) {
+                        this.configs.setExtensibilityConfigs(newConfigs);
+                        this.redraw();
+                    }
+                    toggleDrag(hasDrag) {
+                        this._provider.options = { drag: hasDrag };
+                    }
+                    toggleOnRender(blockOnRender) {
+                        this._blockOnRender = blockOnRender;
+                    }
+                    updateOnRender() {
+                        if (this._blockOnRender === false) {
+                            this.setInitialCssClasses();
+                            if (typeof this._provider === 'object') {
+                                if (this._currentIndex !== undefined || this.configs.AutoPlay === true) {
+                                    this.configs.StartingPosition = this.provider.index;
+                                }
+                                this.redraw();
+                            }
+                        }
+                    }
+                }
+                Splide.OSUISplide = OSUISplide;
+            })(Splide = Carousel.Splide || (Carousel.Splide = {}));
+        })(Carousel = OSUI.Carousel || (OSUI.Carousel = {}));
+    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
+})(Providers || (Providers = {}));
+var Providers;
+(function (Providers) {
+    var OSUI;
+    (function (OSUI) {
+        var Datepicker;
+        (function (Datepicker) {
+            var Flatpickr;
+            (function (Flatpickr) {
+                class AbstractFlatpickr extends OSFramework.OSUI.Patterns.DatePicker.AbstractDatePicker {
+                    constructor(uniqueId, configs) {
+                        super(uniqueId, configs);
+                        this.configs.OnChange = this.onDateSelectedEvent.bind(this);
+                    }
+                    _setAttributes() {
+                        if (this._datePickerPlatformInputElem.nextSibling) {
+                            this._flatpickrInputElem = this._datePickerPlatformInputElem.nextSibling;
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.DataInput, '');
+                            if (this._flatpickrInputElem.disabled) {
+                                OSFramework.OSUI.Helper.Dom.Attribute.Remove(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled);
+                            }
+                        }
+                    }
+                    _setCalendarCssClasses() {
+                        OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.provider.calendarContainer, OSFramework.OSUI.Patterns.DatePicker.Enum.CssClass.Calendar);
+                        if (this.configs.ExtendedClass !== '') {
+                            OSFramework.OSUI.Helper.Dom.Styles.ExtendedClass(this.provider.calendarContainer, '', this.configs.ExtendedClass);
+                        }
+                    }
+                    _setParentMinHeight() {
+                        OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, OSFramework.OSUI.GlobalEnum.InlineStyle.Height, this.selfElement.clientHeight + OSFramework.OSUI.GlobalEnum.Units.Pixel);
+                    }
+                    _unsetParentMinHeight() {
+                        OSFramework.OSUI.Helper.Dom.Styles.RemoveStyleAttribute(this.selfElement, OSFramework.OSUI.GlobalEnum.InlineStyle.Height);
+                    }
+                    addTodayBtn() {
+                        const todayBtnWrapper = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
+                        todayBtnWrapper.classList.add(Flatpickr.Enum.CssClasses.TodayBtn);
+                        const todayBtn = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Link);
+                        todayBtn.innerHTML = Flatpickr.l10ns.TodayBtn[this.configs.Lang].title;
+                        OSFramework.OSUI.Helper.A11Y.AriaLabel(todayBtn, Flatpickr.l10ns.TodayBtn[this.configs.Lang].ariaLabel);
+                        todayBtn.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.Click, this.todayBtnClick.bind(this));
+                        todayBtnWrapper.appendChild(todayBtn);
+                        this.provider.calendarContainer.appendChild(todayBtnWrapper);
+                    }
+                    createProviderInstance() {
+                        this.provider = window.flatpickr(this._datePickerPlatformInputElem, this._flatpickrOpts);
+                        this.updateProviderEvents({
+                            name: OSUI.SharedProviderResources.Flatpickr.Enum.ProviderInfo.Name,
+                            version: OSUI.SharedProviderResources.Flatpickr.Enum.ProviderInfo.Version,
+                            events: this.provider.config,
+                        });
+                        this._setAttributes();
+                        this.updatePlatformInputAttrs();
+                        this.setA11YProperties();
+                        if (this.provider.calendarContainer !== undefined) {
+                            if (this.configs.DisableMobile === true ||
+                                OSFramework.OSUI.Helper.DeviceInfo.IsDesktop ||
+                                this.configs.CalendarMode === OSFramework.OSUI.Patterns.DatePicker.Enum.Mode.Range) {
+                                if (this.configs.ShowTodayButton) {
+                                    this.addTodayBtn();
+                                }
+                                this._setCalendarCssClasses();
+                                this._bodyScrollCommonBehaviour = new OSUI.SharedProviderResources.Flatpickr.UpdatePositionOnScroll(this);
+                                this._zindexCommonBehavior = new OSUI.SharedProviderResources.Flatpickr.UpdateZindex(this);
+                            }
+                        }
+                        if (this._flatpickrInputElem !== undefined && this.isBuilt) {
+                            OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.CssClassElements.InputNotValid);
+                        }
+                        this.triggerPlatformEventInitialized(this._onInitializeCallbackEvent);
+                        this._unsetParentMinHeight();
+                    }
+                    jumpIntoToday() {
+                        this.provider.jumpToDate(this.provider.now);
+                    }
+                    prepareConfigs() {
+                        this._flatpickrOpts = this.configs.getProviderConfig();
+                        this.createProviderInstance();
+                    }
+                    prepareToAndRedraw() {
+                        this._setParentMinHeight();
+                        this.redraw();
+                    }
+                    setA11YProperties() {
+                        if (this.provider.calendarContainer !== undefined && this._flatpickrInputElem !== undefined) {
+                            let ariaLabelValue = Flatpickr.Enum.Attribute.DefaultAriaLabel;
+                            if (this._datePickerPlatformInputElem.hasAttribute(OSFramework.OSUI.Constants.A11YAttributes.Aria.Label)) {
+                                ariaLabelValue = this._datePickerPlatformInputElem.getAttribute(OSFramework.OSUI.Constants.A11YAttributes.Aria.Label);
+                            }
+                            OSFramework.OSUI.Helper.A11Y.AriaLabel(this._flatpickrInputElem, ariaLabelValue);
+                            OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(this._flatpickrInputElem, this._a11yInfoContainerElem.id);
+                            if (this.configs.Lang !== OSFramework.OSUI.Constants.Language.short) {
+                                this._a11yInfoContainerElem.innerHTML =
+                                    Datepicker.Flatpickr.l10ns.A11yContainerInfo[this.configs.Lang].htmlTex;
+                            }
+                        }
+                    }
+                    setCallbacks() {
+                        console.log(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    setHtmlElements() {
+                        this._datePickerPlatformInputElem = this.selfElement.querySelector('input.form-control');
+                        this._a11yInfoContainerElem = OSFramework.OSUI.Helper.Dom.TagSelector(this.selfElement.parentElement, OSFramework.OSUI.Constants.Dot + Flatpickr.Enum.CssClasses.AccessibilityContainerInfo);
+                        if (!this._datePickerPlatformInputElem) {
+                            throw new Error(`The datepicker input at DatepickerId '${this.widgetId}' is missing`);
+                        }
+                    }
+                    unsetCallbacks() {
+                        this.configs.OnChange = undefined;
+                        this._onInitializeCallbackEvent = undefined;
+                        this._onSelectedCallbackEvent = undefined;
+                    }
+                    unsetHtmlElements() {
+                        this._a11yInfoContainerElem = undefined;
+                        this._datePickerPlatformInputElem = undefined;
+                    }
+                    build() {
+                        super.build();
+                        this.setHtmlElements();
+                    }
+                    changeProperty(propertyName, propertyValue) {
+                        const oldExtendedClass = this.configs.ExtendedClass;
+                        super.changeProperty(propertyName, propertyValue);
+                        if (this.isBuilt) {
+                            switch (propertyName) {
+                                case OSFramework.OSUI.Patterns.DatePicker.Enum.Properties.FirstWeekDay:
+                                case OSFramework.OSUI.Patterns.DatePicker.Enum.Properties.MaxDate:
+                                case OSFramework.OSUI.Patterns.DatePicker.Enum.Properties.MinDate:
+                                case OSFramework.OSUI.Patterns.DatePicker.Enum.Properties.ShowTodayButton:
+                                case OSFramework.OSUI.Patterns.DatePicker.Enum.Properties.ShowWeekNumbers:
+                                    this.prepareToAndRedraw();
+                                    break;
+                                case OSFramework.OSUI.GlobalEnum.CommonPatternsProperties.ExtendedClass:
+                                    OSFramework.OSUI.Helper.Dom.Styles.ExtendedClass(this.provider.calendarContainer, oldExtendedClass, propertyValue);
+                                    break;
+                            }
+                        }
+                    }
+                    clear() {
+                        this.provider.clear();
+                    }
+                    close() {
+                        if (this.provider.isOpen) {
+                            this.provider.close();
+                        }
+                    }
+                    disableDays(disableDays) {
+                        this.configs.DisabledDays = disableDays;
+                        this.prepareToAndRedraw();
+                    }
+                    disableWeekDays(disableWeekDays) {
+                        this.configs.DisabledWeekDays = disableWeekDays;
+                        this.prepareToAndRedraw();
+                    }
+                    dispose() {
+                        if (this.isBuilt) {
+                            this.unsetCallbacks();
+                            this.unsetHtmlElements();
+                            if (this._bodyScrollCommonBehaviour !== undefined) {
+                                this._bodyScrollCommonBehaviour.dispose();
+                                this._bodyScrollCommonBehaviour = undefined;
+                            }
+                            OSFramework.OSUI.Helper.AsyncInvocation(this.provider.destroy);
+                        }
+                        super.dispose();
+                    }
+                    open() {
+                        if (this.provider.isOpen === false) {
+                            this.provider.open();
+                        }
+                    }
+                    registerCallback(eventName, callback) {
+                        switch (eventName) {
+                            case OSFramework.OSUI.Patterns.DatePicker.Enum.DatePickerEvents.OnChange:
+                                this._onSelectedCallbackEvent = callback;
+                                break;
+                            case OSFramework.OSUI.Patterns.DatePicker.Enum.DatePickerEvents.OnInitialize:
+                                this._onInitializeCallbackEvent = callback;
+                                break;
+                            default:
+                                throw new Error(`The given '${eventName}' event name it's not defined.`);
+                        }
+                    }
+                    setEditableInput(isEditable) {
+                        if (this.configs.AllowInput !== isEditable) {
+                            this.configs.AllowInput = isEditable;
+                            this.prepareToAndRedraw();
+                        }
+                    }
+                    setLanguage(value) {
+                        this.configs.Lang = value.toLowerCase();
+                        if (this.provider !== undefined) {
+                            this.prepareToAndRedraw();
+                        }
+                    }
+                    setProviderConfigs(newConfigs) {
+                        this.configs.setExtensibilityConfigs(newConfigs);
+                        this.prepareToAndRedraw();
+                    }
+                    toggleNativeBehavior(isNative) {
+                        if (this.configs.DisableMobile !== !isNative) {
+                            this.configs.DisableMobile = !isNative;
+                            this.prepareToAndRedraw();
+                        }
+                    }
+                }
+                Flatpickr.AbstractFlatpickr = AbstractFlatpickr;
+            })(Flatpickr = Datepicker.Flatpickr || (Datepicker.Flatpickr = {}));
+        })(Datepicker = OSUI.Datepicker || (OSUI.Datepicker = {}));
+    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
+})(Providers || (Providers = {}));
+var Providers;
+(function (Providers) {
+    var OSUI;
+    (function (OSUI) {
+        var Datepicker;
+        (function (Datepicker) {
+            var Flatpickr;
+            (function (Flatpickr) {
+                var SingleDate;
+                (function (SingleDate) {
+                    class OSUIFlatpickrSingleDate extends Flatpickr.AbstractFlatpickr {
+                        constructor(uniqueId, configs) {
+                            super(uniqueId, new SingleDate.FlatpickrSingleDateConfig(configs));
+                            this._isUpdatedInitialDateByClientAction = false;
+                        }
+                        onDateSelectedEvent(selectedDates) {
+                            let _selectedDate = '';
+                            if (selectedDates.length > 0) {
+                                _selectedDate = this.provider.formatDate(selectedDates[0], this._flatpickrOpts.dateFormat);
+                            }
+                            OSFramework.OSUI.Helper.Dom.SetInputValue(this._datePickerPlatformInputElem, _selectedDate);
+                            if (this._isUpdatedInitialDateByClientAction === false) {
+                                OSFramework.OSUI.Helper.AsyncInvocation(this._onSelectedCallbackEvent, this.widgetId, _selectedDate);
+                            }
+                            this._isUpdatedInitialDateByClientAction = false;
+                        }
+                        todayBtnClick(event) {
+                            event.preventDefault();
+                            this.provider.setDate(this.provider.now, true);
+                            this.jumpIntoToday();
+                        }
+                        updatePlatformInputAttrs() {
+                            const dateType = this.configs.TimeFormat === OSFramework.OSUI.Patterns.DatePicker.Enum.TimeFormatMode.Disable
+                                ? OSFramework.OSUI.GlobalEnum.InputTypeAttr.Date
+                                : OSFramework.OSUI.GlobalEnum.InputTypeAttr.DateTime;
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this._datePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.type, dateType);
+                        }
+                        build() {
+                            super.build();
+                            this.prepareConfigs();
+                            this.finishBuild();
+                        }
+                        changeProperty(propertyName, propertyValue) {
+                            var _a;
+                            let redrawAtInitialDateChange = false;
+                            if (propertyName === SingleDate.Enum.Properties.InitialDate) {
+                                const newDateValue = propertyValue;
+                                const providerSelectedDate = ((_a = this.provider) === null || _a === void 0 ? void 0 : _a.selectedDates.length) > 0
+                                    ? new Date(this.provider.selectedDates[0])
+                                    : undefined;
+                                if ((providerSelectedDate === undefined &&
+                                    OSFramework.OSUI.Helper.Dates.IsNull(newDateValue) === false) ||
+                                    providerSelectedDate.getTime() !== newDateValue.getTime()) {
+                                    redrawAtInitialDateChange = true;
+                                }
+                            }
+                            super.changeProperty(propertyName, propertyValue);
+                            if (this.isBuilt) {
+                                switch (propertyName) {
+                                    case OSFramework.OSUI.Patterns.DatePicker.Enum.Properties.DateFormat:
+                                        if (this.provider.selectedDates.length > 0) {
+                                            this.configs.InitialDate = this.provider.formatDate(this.provider.selectedDates[0], this._flatpickrOpts.dateFormat);
+                                        }
+                                        this.prepareToAndRedraw();
+                                        break;
+                                    case SingleDate.Enum.Properties.InitialDate:
+                                        if (redrawAtInitialDateChange) {
+                                            this.prepareToAndRedraw();
+                                        }
+                                        break;
+                                    case OSFramework.OSUI.Patterns.DatePicker.Enum.Properties.TimeFormat:
+                                        this.prepareToAndRedraw();
+                                        break;
+                                }
+                            }
+                        }
+                        updateInitialDate(value) {
+                            this._isUpdatedInitialDateByClientAction = true;
+                            this.configs.InitialDate = value;
+                            this.prepareToAndRedraw();
+                        }
+                    }
+                    SingleDate.OSUIFlatpickrSingleDate = OSUIFlatpickrSingleDate;
+                })(SingleDate = Flatpickr.SingleDate || (Flatpickr.SingleDate = {}));
+            })(Flatpickr = Datepicker.Flatpickr || (Datepicker.Flatpickr = {}));
+        })(Datepicker = OSUI.Datepicker || (OSUI.Datepicker = {}));
+    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
+})(Providers || (Providers = {}));
+var Providers;
+(function (Providers) {
+    var OSUI;
+    (function (OSUI) {
+        var Datepicker;
+        (function (Datepicker) {
+            var Flatpickr;
+            (function (Flatpickr) {
+                var RangeDate;
+                (function (RangeDate) {
+                    class OSUIFlatpickrRangeDate extends Flatpickr.AbstractFlatpickr {
+                        constructor(uniqueId, configs) {
+                            super(uniqueId, new RangeDate.FlatpickrRangeDateConfig(configs));
+                        }
+                        _onUpdateDateFormat() {
+                            if (this.provider.selectedDates.length > 0) {
+                                this.configs.InitialStartDate = this.provider.formatDate(this.provider.selectedDates[0], this._flatpickrOpts.dateFormat);
+                                if (this.provider.selectedDates[1]) {
+                                    this.configs.InitialEndDate = this.provider.formatDate(this.provider.selectedDates[1], this._flatpickrOpts.dateFormat);
+                                }
+                            }
+                            this.prepareToAndRedraw();
+                        }
+                        _updateInitialStartAndEndDates() {
+                            if (this.configs.InitialStartDate !== undefined &&
+                                this.configs.InitialEndDate !== undefined &&
+                                OSFramework.OSUI.Helper.Dates.IsBeforeThan(this.configs.InitialStartDate, this.configs.InitialEndDate) === false) {
+                                console.error(`Given StartDate:'${this.provider.formatDate(this.configs.InitialStartDate, this.configs.ServerDateFormat)}' can not be greater than given EndDate:'${this.provider.formatDate(this.configs.InitialEndDate, this.configs.ServerDateFormat)}'.`);
+                            }
+                            else {
+                                this.prepareToAndRedraw();
+                            }
+                        }
+                        onDateSelectedEvent(selectedDates) {
+                            const _selectedDate = [];
+                            if (selectedDates.length > 0) {
+                                _selectedDate[0] = this.provider.formatDate(selectedDates[0], this._flatpickrOpts.dateFormat);
+                                if (selectedDates[1]) {
+                                    _selectedDate[1] = this.provider.formatDate(selectedDates[1], this._flatpickrOpts.dateFormat);
+                                }
+                            }
+                            OSFramework.OSUI.Helper.Dom.SetInputValue(this._datePickerPlatformInputElem, this._flatpickrInputElem.value);
+                            if (selectedDates.length === 0 || selectedDates.length === 2) {
+                                OSFramework.OSUI.Helper.AsyncInvocation(this._onSelectedCallbackEvent, this.widgetId, _selectedDate[0], _selectedDate[1]);
+                            }
+                        }
+                        todayBtnClick(event) {
+                            event.preventDefault();
+                            this.jumpIntoToday();
+                        }
+                        updatePlatformInputAttrs() {
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this._datePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.type, OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text);
+                        }
+                        build() {
+                            super.build();
+                            this.prepareConfigs();
+                            this.finishBuild();
+                        }
+                        changeProperty(propertyName, propertyValue) {
+                            super.changeProperty(propertyName, propertyValue);
+                            if (this.isBuilt) {
+                                switch (propertyName) {
+                                    case OSFramework.OSUI.Patterns.DatePicker.Enum.Properties.DateFormat:
+                                        this._onUpdateDateFormat();
+                                        break;
+                                    case RangeDate.Enum.Properties.InitialEndDate:
+                                    case RangeDate.Enum.Properties.InitialStartDate:
+                                        this._updateInitialStartAndEndDates();
+                                        break;
+                                }
+                            }
+                        }
+                        updateInitialDate(startDate, endDate) {
+                            if (OSFramework.OSUI.Helper.Dates.IsNull(startDate) === false &&
+                                OSFramework.OSUI.Helper.Dates.IsNull(endDate) === false) {
+                                this.configs.InitialStartDate = startDate;
+                                this.configs.InitialEndDate = endDate;
+                                if (OSFramework.OSUI.Helper.Dates.IsBeforeThan(startDate, endDate)) {
+                                    this.prepareToAndRedraw();
+                                }
+                                else {
+                                    console.error(`Given StartDate:'${this.provider.formatDate(this.configs.InitialStartDate, this.configs.ServerDateFormat)}' can not be greater than given EndDate:'${this.provider.formatDate(this.configs.InitialEndDate, this.configs.ServerDateFormat)}'.`);
+                                }
+                            }
+                        }
+                    }
+                    RangeDate.OSUIFlatpickrRangeDate = OSUIFlatpickrRangeDate;
+                })(RangeDate = Flatpickr.RangeDate || (Flatpickr.RangeDate = {}));
+            })(Flatpickr = Datepicker.Flatpickr || (Datepicker.Flatpickr = {}));
+        })(Datepicker = OSUI.Datepicker || (OSUI.Datepicker = {}));
+    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
+})(Providers || (Providers = {}));
+var Providers;
+(function (Providers) {
+    var OSUI;
+    (function (OSUI) {
+        var Dropdown;
+        (function (Dropdown) {
+            var VirtualSelect;
+            (function (VirtualSelect) {
+                class AbstractVirtualSelect extends OSFramework.OSUI.Patterns.Dropdown.AbstractDropdown {
+                    constructor(uniqueId, configs) {
+                        super(uniqueId, configs);
+                    }
+                    _addErrorMessage(text) {
+                        const errorMessageElement = OSFramework.OSUI.Helper.Dom.ClassSelector(this.selfElement.parentElement, VirtualSelect.Enum.CssClass.ErrorMessage);
+                        if (errorMessageElement === undefined) {
+                            const textContainer = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
+                            textContainer.classList.add(VirtualSelect.Enum.CssClass.ErrorMessage);
+                            textContainer.innerHTML = text;
+                            this.selfElement.parentElement.appendChild(textContainer);
+                        }
+                    }
+                    _manageAttributes() {
+                        this._manageDisableStatus();
+                        this.setA11YProperties();
+                    }
+                    _manageDisableStatus() {
+                        this._virtualselectConfigs.close();
+                        if (this.configs.IsDisabled) {
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled, '');
+                        }
+                        else {
+                            OSFramework.OSUI.Helper.Dom.Attribute.Remove(this.selfElement, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled);
+                        }
+                    }
+                    _onMouseUp(event) {
+                        event.preventDefault();
+                    }
+                    _onSelectedOption() {
+                        OSFramework.OSUI.Helper.AsyncInvocation(this._platformEventSelectedOptCallback, this.widgetId, this.getSelectedValues());
+                    }
+                    _onWindowResize() {
+                        if (this.provider.isOpened()) {
+                            this._virtualselectConfigs.close();
+                        }
+                    }
+                    _setElementId() {
+                        this.configs.ElementId = '#' + this.selfElement.id;
+                    }
+                    _setUpEvents() {
+                        this.selfElement.addEventListener(VirtualSelect.Enum.Events.Change, this._onSelectedOptionEvent);
+                        if (OSFramework.OSUI.Helper.DeviceInfo.GetBrowser() === OSFramework.OSUI.GlobalEnum.Browser.edge) {
+                            this.selfElement.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.MouseUp, this._onMouseUpEvent);
+                        }
+                        if (OSFramework.OSUI.Helper.DeviceInfo.IsDesktop) {
+                            OSFramework.OSUI.Event.GlobalEventManager.Instance.addHandler(OSFramework.OSUI.Event.Type.WindowResize, this._eventOnWindowResize);
+                        }
+                    }
+                    _unsetEvents() {
+                        this.selfElement.removeEventListener(VirtualSelect.Enum.Events.Change, this._onSelectedOptionEvent);
+                        this.selfElement.removeEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.MouseUp, this._onMouseUpEvent);
+                        OSFramework.OSUI.Event.GlobalEventManager.Instance.removeHandler(OSFramework.OSUI.Event.Type.WindowResize, this._eventOnWindowResize);
+                    }
+                    createProviderInstance() {
+                        this.provider = window.VirtualSelect.init(this._virtualselectOpts);
+                        this.provider = Array.isArray(this.provider) ? this.provider[0] : this.provider;
+                        this._virtualselectConfigs = this.provider.$ele;
+                        this.provider.$dropboxContainer.setAttribute(OSFramework.OSUI.GlobalEnum.HTMLAttributes.Name, this.uniqueId);
+                        this.updateProviderEvents({
+                            name: VirtualSelect.Enum.ProviderInfo.Name,
+                            version: VirtualSelect.Enum.ProviderInfo.Version,
+                            events: this._virtualselectConfigs,
+                        });
+                        this._manageAttributes();
+                        this.triggerPlatformEventInitialized(this._platformEventInitializedCallback);
+                    }
+                    setA11YProperties() {
+                        this.setHiddenInputWrapperAriaLabelVal();
+                    }
+                    setCallbacks() {
+                        this._eventOnWindowResize = this._onWindowResize.bind(this);
+                        this._onMouseUpEvent = this._onMouseUp.bind(this);
+                        this._onSelectedOptionEvent = this._onSelectedOption.bind(this);
+                    }
+                    setHtmlElements() {
+                        console.log(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    unsetCallbacks() {
+                        this._eventOnWindowResize = undefined;
+                        this._onSelectedOptionEvent = undefined;
+                        this._virtualselectConfigs = undefined;
+                        this._virtualselectOpts = undefined;
+                        this.provider = undefined;
+                    }
+                    unsetHtmlElements() {
+                        console.log(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    build() {
+                        super.build();
+                        this._setElementId();
+                        this.setCallbacks();
+                        this._setUpEvents();
+                        this.prepareConfigs();
+                        this.finishBuild();
+                    }
+                    changeProperty(propertyName, propertyValue) {
+                        if ((propertyName === VirtualSelect.Enum.Properties.OptionsList || propertyName === VirtualSelect.Enum.Properties.StartingSelection) &&
+                            typeof propertyValue === 'string') {
+                            propertyValue = JSON.parse(propertyValue);
+                        }
+                        super.changeProperty(propertyName, propertyValue);
+                        if (this.isBuilt) {
+                            switch (propertyName) {
+                                case OSFramework.OSUI.Patterns.Dropdown.Enum.Properties.IsDisabled:
+                                    this._manageDisableStatus();
+                                    break;
+                                case VirtualSelect.Enum.Properties.NoOptionsText:
+                                    this.redraw();
+                                    break;
+                                case VirtualSelect.Enum.Properties.NoResultsText:
+                                    this.redraw();
+                                    break;
+                                case VirtualSelect.Enum.Properties.OptionsList:
+                                    this.redraw();
+                                    break;
+                                case VirtualSelect.Enum.Properties.Prompt:
+                                    this.redraw();
+                                    break;
+                                case VirtualSelect.Enum.Properties.SearchPrompt:
+                                    this.redraw();
+                                    break;
+                                case VirtualSelect.Enum.Properties.StartingSelection:
+                                    this.setValue(propertyValue);
+                                    console.warn(`${OSFramework.OSUI.GlobalEnum.PatternName.Dropdown}: (${this.widgetId}): We recommend using the StartingSelection parameter exclusively for the initial selection and avoid changing it after initialization. To dynamically change the selected options, you should ideally use the DropdownSetValue Client Action.`);
+                                    break;
+                            }
+                        }
+                    }
+                    clear() {
+                        this._virtualselectConfigs.reset();
+                    }
+                    close() {
+                        this._virtualselectConfigs.close();
+                    }
+                    disable() {
+                        if (this.configs.IsDisabled === false) {
+                            this.configs.IsDisabled = true;
+                            this._manageDisableStatus();
+                        }
+                    }
+                    dispose() {
+                        if (this.isBuilt) {
+                            if (Array.isArray(this.provider)) {
+                                for (const element of this.provider) {
+                                    element.destroy();
+                                }
+                            }
+                            else {
+                                this.provider.destroy();
+                            }
+                        }
+                        this._unsetEvents();
+                        this.unsetCallbacks();
+                        super.dispose();
+                    }
+                    enable() {
+                        if (this.configs.IsDisabled) {
+                            this.configs.IsDisabled = false;
+                            this._manageDisableStatus();
+                        }
+                    }
+                    getSelectedValues() {
+                        let optionsSelected = this.getSelectedOptionsStructure();
+                        if (optionsSelected !== undefined && optionsSelected.length > 0) {
+                            optionsSelected = optionsSelected.map(function (option) {
+                                return Object.assign({ group_name: option.customData && option.customData.group_name ? option.customData.group_name : '', description: option.customData && option.customData.description ? option.customData.description : '' }, option);
+                            });
+                            return JSON.stringify(optionsSelected);
+                        }
+                        return '';
+                    }
+                    open() {
+                        this._virtualselectConfigs.open();
+                    }
+                    registerCallback(eventName, callback) {
+                        switch (eventName) {
+                            case OSFramework.OSUI.Patterns.Dropdown.Enum.Events.Initialized:
+                                if (this._platformEventInitializedCallback === undefined) {
+                                    this._platformEventInitializedCallback = callback;
+                                }
+                                break;
+                            case VirtualSelect.Enum.Events.OnSelected:
+                                if (this._platformEventSelectedOptCallback === undefined) {
+                                    this._platformEventSelectedOptCallback = callback;
+                                }
+                                break;
+                            default:
+                                throw new Error(`The given '${eventName}' event name it's not defined.`);
+                        }
+                    }
+                    setHiddenInputWrapperAriaLabelVal(value) {
+                        this._hiddenInputWrapperAriaLabelVal = value === undefined ? this._hiddenInputWrapperAriaLabelVal : value;
+                        OSFramework.OSUI.Helper.A11Y.AriaLabel(this.provider.$wrapper, this._hiddenInputWrapperAriaLabelVal);
+                    }
+                    setProviderConfigs(newConfigs) {
+                        this.configs.setExtensibilityConfigs(newConfigs);
+                        this.redraw();
+                    }
+                    setValue(optionsToSelect, silentOnChangedEvent = true) {
+                        const selectedValues = this.getSelectedOptionsStructure().map((value) => value.value) || [];
+                        let valuesToSelect = [];
+                        if (optionsToSelect.length > 0) {
+                            if (this._virtualselectOpts.multiple)
+                                valuesToSelect = optionsToSelect.map((option) => option.value);
+                            else
+                                valuesToSelect = [optionsToSelect[0].value];
+                        }
+                        if (valuesToSelect.sort().join(' ') !== selectedValues.sort().join(' '))
+                            this._virtualselectConfigs.setValue(valuesToSelect, silentOnChangedEvent);
+                    }
+                    togglePopup(isEnabled) {
+                        if (this.configs.ShowDropboxAsPopup !== isEnabled) {
+                            this.configs.ShowDropboxAsPopup = isEnabled;
+                            this.redraw();
+                        }
+                    }
+                    validation(isValid, validationMessage) {
+                        if (isValid === false) {
+                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.selfElement, VirtualSelect.Enum.CssClass.NotValid);
+                            this._addErrorMessage(validationMessage);
+                        }
+                        else {
+                            OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, VirtualSelect.Enum.CssClass.NotValid);
+                            const errorMessageElement = OSFramework.OSUI.Helper.Dom.ClassSelector(this.selfElement.parentElement, VirtualSelect.Enum.CssClass.ErrorMessage);
+                            if (errorMessageElement) {
+                                errorMessageElement.remove();
+                            }
+                        }
+                    }
+                }
+                VirtualSelect.AbstractVirtualSelect = AbstractVirtualSelect;
+            })(VirtualSelect = Dropdown.VirtualSelect || (Dropdown.VirtualSelect = {}));
+        })(Dropdown = OSUI.Dropdown || (OSUI.Dropdown = {}));
+    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
+})(Providers || (Providers = {}));
+var Providers;
+(function (Providers) {
+    var OSUI;
+    (function (OSUI) {
+        var Dropdown;
+        (function (Dropdown) {
+            var VirtualSelect;
+            (function (VirtualSelect) {
+                var Search;
+                (function (Search) {
+                    class OSUIVirtualSelectSearch extends VirtualSelect.AbstractVirtualSelect {
+                        constructor(uniqueId, configs) {
+                            super(uniqueId, new Search.VirtualSelectSearchConfig(configs));
+                            this._hiddenInputWrapperAriaLabelVal = this.configs.AllowMultipleSelection
+                                ? Dropdown.VirtualSelect.Enum.PropertiesValues.AriaLabelMultipleValue
+                                : Dropdown.VirtualSelect.Enum.PropertiesValues.AriaLabelSingleValue;
+                        }
+                        getSelectedOptionsStructure() {
+                            let optionsSelected = [];
+                            if (this.configs.AllowMultipleSelection) {
+                                optionsSelected = this._virtualselectConfigs.getSelectedOptions();
+                            }
+                            else {
+                                if (this._virtualselectConfigs.getSelectedOptions()) {
+                                    optionsSelected.push(this._virtualselectConfigs.getSelectedOptions());
+                                }
+                            }
+                            return optionsSelected;
+                        }
+                        prepareConfigs() {
+                            this._virtualselectOpts = this.configs.getProviderConfig();
+                            this.createProviderInstance();
+                        }
+                        changeProperty(propertyName, propertyValue) {
+                            super.changeProperty(propertyName, propertyValue);
+                            if (this.isBuilt) {
+                                switch (propertyName) {
+                                    case Search.Enum.Properties.AllowMultipleSelection:
+                                        this.redraw();
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                    Search.OSUIVirtualSelectSearch = OSUIVirtualSelectSearch;
+                })(Search = VirtualSelect.Search || (VirtualSelect.Search = {}));
+            })(VirtualSelect = Dropdown.VirtualSelect || (Dropdown.VirtualSelect = {}));
+        })(Dropdown = OSUI.Dropdown || (OSUI.Dropdown = {}));
+    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
+})(Providers || (Providers = {}));
+var Providers;
+(function (Providers) {
+    var OSUI;
+    (function (OSUI) {
+        var Dropdown;
+        (function (Dropdown) {
+            var VirtualSelect;
+            (function (VirtualSelect) {
+                var Tags;
+                (function (Tags) {
+                    class OSUIVirtualSelectTags extends VirtualSelect.AbstractVirtualSelect {
+                        constructor(uniqueId, configs) {
+                            super(uniqueId, new Tags.VirtualSelectTagsConfig(configs));
+                            this._hiddenInputWrapperAriaLabelVal = Dropdown.VirtualSelect.Enum.PropertiesValues.AriaLabelMultipleValue;
+                        }
+                        getSelectedOptionsStructure() {
+                            const optionsSelected = this._virtualselectConfigs.getSelectedOptions();
+                            return optionsSelected;
+                        }
+                        prepareConfigs() {
+                            this._virtualselectOpts = this.configs.getProviderConfig();
+                            this.createProviderInstance();
+                        }
+                    }
+                    Tags.OSUIVirtualSelectTags = OSUIVirtualSelectTags;
+                })(Tags = VirtualSelect.Tags || (VirtualSelect.Tags = {}));
+            })(VirtualSelect = Dropdown.VirtualSelect || (Dropdown.VirtualSelect = {}));
+        })(Dropdown = OSUI.Dropdown || (OSUI.Dropdown = {}));
+    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
+})(Providers || (Providers = {}));
+var Providers;
+(function (Providers) {
+    var OSUI;
+    (function (OSUI) {
+        var MonthPicker;
+        (function (MonthPicker) {
+            var Flatpickr;
+            (function (Flatpickr) {
+                class OSUIFlatpickrMonth extends OSFramework.OSUI.Patterns.MonthPicker.AbstractMonthPicker {
+                    constructor(uniqueId, configs) {
+                        super(uniqueId, new Flatpickr.FlatpickrMonthConfig(configs));
+                        this.configs.OnChange = this.onMonthSelectedEvent.bind(this);
+                    }
+                    _setAttributes() {
+                        this._flatpickrInputElem = this._monthPickerProviderInputElem.nextSibling;
+                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.DataInput, OSFramework.OSUI.Constants.EmptyString);
+                    }
+                    _setCalendarCssClasses() {
+                        OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.provider.calendarContainer, OSFramework.OSUI.Patterns.MonthPicker.Enum.CssClass.Dropdown);
+                        if (OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.InputClassTypes.InputLarge)) {
+                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.provider.calendarContainer, OSFramework.OSUI.Patterns.Dropdown.Enum.CssClass.DropdownLarge);
+                        }
+                        else if (OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.InputClassTypes.InputSmall)) {
+                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.provider.calendarContainer, OSFramework.OSUI.Patterns.Dropdown.Enum.CssClass.DropdownSmall);
+                        }
+                        if (this.configs.ExtendedClass !== '') {
+                            OSFramework.OSUI.Helper.Dom.Styles.ExtendedClass(this.provider.calendarContainer, '', this.configs.ExtendedClass);
+                        }
+                    }
+                    createProviderInstance() {
+                        if (this._monthPickerProviderInputElem && this._flatpickrOpts.defaultDate === undefined) {
+                            this._monthPickerProviderInputElem.value = '';
+                        }
+                        this.provider = window.flatpickr(this._monthPickerProviderInputElem, this._flatpickrOpts);
+                        this._setAttributes();
+                        if (this.provider.calendarContainer !== undefined) {
+                            this._setCalendarCssClasses();
+                            this._bodyScrollCommonBehaviour = new OSUI.SharedProviderResources.Flatpickr.UpdatePositionOnScroll(this);
+                            this._zindexCommonBehavior = new OSUI.SharedProviderResources.Flatpickr.UpdateZindex(this);
+                        }
+                        this.createdInstance();
+                    }
+                    createdInstance() {
+                        this.updateProviderEvents({
+                            name: OSUI.SharedProviderResources.Flatpickr.Enum.ProviderInfo.Name,
+                            version: OSUI.SharedProviderResources.Flatpickr.Enum.ProviderInfo.Version,
+                            events: this.provider.config,
+                        });
+                        this.triggerPlatformEventInitialized(this._onInitializeCallbackEvent);
+                    }
+                    onMonthSelectedEvent(selectedMonthYear) {
+                        const _selectedMonthYear = {
+                            month: OSFramework.OSUI.Constants.EmptyString,
+                            monthOrder: OSFramework.OSUI.Constants.InvalidNumber,
+                            year: OSFramework.OSUI.Constants.InvalidNumber,
+                        };
+                        if (selectedMonthYear.length > 0) {
+                            const _selectedDate = new Date(selectedMonthYear[0]);
+                            const _selectedMonthIndex = _selectedDate.getMonth();
+                            _selectedMonthYear.month = OSFramework.OSUI.Constants.Months[_selectedMonthIndex];
+                            _selectedMonthYear.monthOrder = _selectedMonthIndex + 1;
+                            _selectedMonthYear.year = _selectedDate.getFullYear();
+                        }
+                        OSFramework.OSUI.Helper.AsyncInvocation(this._onSelectedCallbackEvent, this.widgetId, _selectedMonthYear.month, _selectedMonthYear.monthOrder, _selectedMonthYear.year);
+                    }
+                    prepareConfigs() {
+                        this._flatpickrOpts = this.configs.getProviderConfig();
+                        this.createProviderInstance();
+                    }
+                    setA11YProperties() {
+                        console.warn(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    setCallbacks() {
+                        console.log(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    setHtmlElements() {
+                        this._monthPickerProviderInputElem = this.selfElement.querySelector(OSFramework.OSUI.GlobalEnum.CSSSelectors.InputFormControl);
+                        if (!this._monthPickerProviderInputElem) {
+                            throw new Error(`The monthpicker input at MonthpickerId '${this.widgetId}' is missing`);
+                        }
+                    }
+                    unsetCallbacks() {
+                        this.configs.OnChange = undefined;
+                        this._onInitializeCallbackEvent = undefined;
+                        this._onSelectedCallbackEvent = undefined;
+                    }
+                    unsetHtmlElements() {
+                        this._monthPickerProviderInputElem = undefined;
+                    }
+                    build() {
+                        super.build();
+                        this.setHtmlElements();
+                        this.prepareConfigs();
+                        this.finishBuild();
+                    }
+                    changeProperty(propertyName, propertyValue) {
+                        const oldExtendedClass = this.configs.ExtendedClass;
+                        super.changeProperty(propertyName, propertyValue);
+                        if (this.isBuilt) {
+                            switch (propertyName) {
+                                case OSFramework.OSUI.Patterns.MonthPicker.Enum.Properties.InitialMonth:
+                                case OSFramework.OSUI.Patterns.MonthPicker.Enum.Properties.DateFormat:
+                                case OSFramework.OSUI.Patterns.MonthPicker.Enum.Properties.MaxMonth:
+                                case OSFramework.OSUI.Patterns.MonthPicker.Enum.Properties.MinMonth:
+                                    this.redraw();
+                                    break;
+                                case OSFramework.OSUI.GlobalEnum.CommonPatternsProperties.ExtendedClass:
+                                    OSFramework.OSUI.Helper.Dom.Styles.ExtendedClass(this.provider.calendarContainer, oldExtendedClass, propertyValue);
+                                    break;
+                            }
+                        }
+                    }
+                    clear() {
+                        this.provider.clear();
+                    }
+                    close() {
+                        if (this.provider.isOpen) {
+                            this.provider.close();
+                        }
+                    }
+                    dispose() {
+                        if (this.isBuilt) {
+                            this.unsetCallbacks();
+                            this.unsetHtmlElements();
+                            if (this._bodyScrollCommonBehaviour !== undefined) {
+                                this._bodyScrollCommonBehaviour.dispose();
+                                this._bodyScrollCommonBehaviour = undefined;
+                            }
+                            OSFramework.OSUI.Helper.AsyncInvocation(this.provider.destroy);
+                        }
+                        super.dispose();
+                    }
+                    open() {
+                        if (this.provider.isOpen === false) {
+                            this.provider.open();
+                        }
+                    }
+                    registerCallback(eventName, callback) {
+                        switch (eventName) {
+                            case OSFramework.OSUI.Patterns.MonthPicker.Enum.Events.OnSelected:
+                                this._onSelectedCallbackEvent = callback;
+                                break;
+                            case OSFramework.OSUI.Patterns.MonthPicker.Enum.Events.OnInitialized:
+                                this._onInitializeCallbackEvent = callback;
+                                break;
+                            default:
+                                throw new Error(`The given '${eventName}' event name it's not defined.`);
+                        }
+                    }
+                    setEditableInput(isEditable) {
+                        if (this.configs.AllowInput !== isEditable) {
+                            this.configs.AllowInput = isEditable;
+                            this.redraw();
+                        }
+                    }
+                    setLanguage(value) {
+                        this.configs.Lang = value.toLowerCase();
+                        if (this.provider !== undefined) {
+                            this.redraw();
+                        }
+                    }
+                    setProviderConfigs(newConfigs) {
+                        this.configs.setExtensibilityConfigs(newConfigs);
+                        this.redraw();
+                    }
+                }
+                Flatpickr.OSUIFlatpickrMonth = OSUIFlatpickrMonth;
+            })(Flatpickr = MonthPicker.Flatpickr || (MonthPicker.Flatpickr = {}));
+        })(MonthPicker = OSUI.MonthPicker || (OSUI.MonthPicker = {}));
+    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
+})(Providers || (Providers = {}));
+var Providers;
+(function (Providers) {
+    var OSUI;
+    (function (OSUI) {
+        var TimePicker;
+        (function (TimePicker) {
+            var Flatpickr;
+            (function (Flatpickr) {
+                class OSUIFlatpickrTime extends OSFramework.OSUI.Patterns.TimePicker.AbstractTimePicker {
+                    constructor(uniqueId, configs) {
+                        super(uniqueId, new Flatpickr.FlatpickrTimeConfig(configs));
+                        this.configs.OnChange = this.onTimeSelectedEvent.bind(this);
+                    }
+                    _setAttributes() {
+                        this._flatpickrInputElem = this._timePickerProviderInputElem.nextSibling;
+                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.DataInput, '');
+                    }
+                    _setCalendarCssClasses() {
+                        OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.provider.calendarContainer, OSFramework.OSUI.Patterns.TimePicker.Enum.CssClass.Dropdown);
+                        if (OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.InputClassTypes.InputLarge)) {
+                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.provider.calendarContainer, OSFramework.OSUI.Patterns.Dropdown.Enum.CssClass.DropdownLarge);
+                        }
+                        else if (OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.InputClassTypes.InputSmall)) {
+                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.provider.calendarContainer, OSFramework.OSUI.Patterns.Dropdown.Enum.CssClass.DropdownSmall);
+                        }
+                        if (this.configs.ExtendedClass !== '') {
+                            OSFramework.OSUI.Helper.Dom.Styles.ExtendedClass(this.provider.calendarContainer, '', this.configs.ExtendedClass);
+                        }
+                    }
+                    createProviderInstance() {
+                        if (this._timePickerProviderInputElem && this._flatpickrOpts.defaultDate === undefined) {
+                            this._timePickerProviderInputElem.value = '';
+                        }
+                        this.provider = window.flatpickr(this._timePickerProviderInputElem, this._flatpickrOpts);
+                        this._setAttributes();
+                        if (this.provider.calendarContainer !== undefined) {
+                            this._setCalendarCssClasses();
+                            this._bodyScrollCommonBehaviour = new OSUI.SharedProviderResources.Flatpickr.UpdatePositionOnScroll(this);
+                            this._zindexCommonBehavior = new OSUI.SharedProviderResources.Flatpickr.UpdateZindex(this);
+                        }
+                        this.createdInstance();
+                    }
+                    createdInstance() {
+                        this.updateProviderEvents({
+                            name: OSUI.SharedProviderResources.Flatpickr.Enum.ProviderInfo.Name,
+                            version: OSUI.SharedProviderResources.Flatpickr.Enum.ProviderInfo.Version,
+                            events: this.provider.config,
+                        });
+                        this.triggerPlatformEventInitialized(this._onInitializeCallbackEvent);
+                    }
+                    onTimeSelectedEvent(selectedTime) {
+                        let _selectedTime = '';
+                        if (selectedTime.length > 0) {
+                            _selectedTime = this.provider.formatDate(selectedTime[0], this._flatpickrOpts.dateFormat);
+                        }
+                        OSFramework.OSUI.Helper.AsyncInvocation(this._onChangeCallbackEvent, this.widgetId, _selectedTime);
+                    }
+                    prepareConfigs() {
+                        this._flatpickrOpts = this.configs.getProviderConfig();
+                        this.createProviderInstance();
+                    }
+                    setA11YProperties() {
+                        console.warn(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    setCallbacks() {
+                        console.log(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    setHtmlElements() {
+                        this._timePickerProviderInputElem = this.selfElement.querySelector(OSFramework.OSUI.GlobalEnum.CSSSelectors.InputFormControl);
+                        if (!this._timePickerProviderInputElem) {
+                            throw new Error(`The timepicker input at TimepickerId '${this.widgetId}' is missing`);
+                        }
+                    }
+                    unsetCallbacks() {
+                        this.configs.OnChange = undefined;
+                        this._onInitializeCallbackEvent = undefined;
+                        this._onChangeCallbackEvent = undefined;
+                    }
+                    unsetHtmlElements() {
+                        this._timePickerProviderInputElem = undefined;
+                    }
+                    build() {
+                        super.build();
+                        this.setHtmlElements();
+                        this.prepareConfigs();
+                        this.finishBuild();
+                    }
+                    changeProperty(propertyName, propertyValue) {
+                        const oldExtendedClass = this.configs.ExtendedClass;
+                        super.changeProperty(propertyName, propertyValue);
+                        if (this.isBuilt) {
+                            switch (propertyName) {
+                                case OSFramework.OSUI.Patterns.TimePicker.Enum.Properties.InitialTime:
+                                case OSFramework.OSUI.Patterns.TimePicker.Enum.Properties.Is24Hours:
+                                case OSFramework.OSUI.Patterns.TimePicker.Enum.Properties.MaxTime:
+                                case OSFramework.OSUI.Patterns.TimePicker.Enum.Properties.MinTime:
+                                case OSFramework.OSUI.Patterns.TimePicker.Enum.Properties.TimeFormat:
+                                    this.redraw();
+                                    break;
+                                case OSFramework.OSUI.GlobalEnum.CommonPatternsProperties.ExtendedClass:
+                                    OSFramework.OSUI.Helper.Dom.Styles.ExtendedClass(this.provider.calendarContainer, oldExtendedClass, propertyValue);
+                                    break;
+                            }
+                        }
+                    }
+                    clear() {
+                        this.provider.clear();
+                    }
+                    close() {
+                        if (this.provider.isOpen) {
+                            this.provider.close();
+                        }
+                    }
+                    dispose() {
+                        if (this.isBuilt) {
+                            this.unsetCallbacks();
+                            this.unsetHtmlElements();
+                            if (this._bodyScrollCommonBehaviour !== undefined) {
+                                this._bodyScrollCommonBehaviour.dispose();
+                                this._bodyScrollCommonBehaviour = undefined;
+                            }
+                            OSFramework.OSUI.Helper.AsyncInvocation(this.provider.destroy);
+                        }
+                        super.dispose();
+                    }
+                    open() {
+                        if (this.provider.isOpen === false) {
+                            this.provider.open();
+                        }
+                    }
+                    registerCallback(eventName, callback) {
+                        switch (eventName) {
+                            case OSFramework.OSUI.Patterns.TimePicker.Enum.TimePickerEvents.OnChange:
+                                this._onChangeCallbackEvent = callback;
+                                break;
+                            case OSFramework.OSUI.Patterns.TimePicker.Enum.TimePickerEvents.OnInitialized:
+                                this._onInitializeCallbackEvent = callback;
+                                break;
+                            default:
+                                throw new Error(`The given '${eventName}' event name it's not defined.`);
+                        }
+                    }
+                    setEditableInput(isEditable) {
+                        if (this.configs.AllowInput !== isEditable) {
+                            this.configs.AllowInput = isEditable;
+                            this.redraw();
+                        }
+                    }
+                    setLanguage(value) {
+                        this.configs.Lang = value.toLowerCase();
+                        if (this.provider !== undefined) {
+                            this.redraw();
+                        }
+                    }
+                    setProviderConfigs(newConfigs) {
+                        this.configs.setExtensibilityConfigs(newConfigs);
+                        this.redraw();
+                    }
+                    toggleNativeBehavior(isNative) {
+                        if (this.configs.DisableMobile !== !isNative) {
+                            this.configs.DisableMobile = !isNative;
+                            this.redraw();
+                        }
+                    }
+                    updateInitialTime(value) {
+                        this.configs.InitialTime = value;
+                        this.redraw();
+                    }
+                }
+                Flatpickr.OSUIFlatpickrTime = OSUIFlatpickrTime;
+            })(Flatpickr = TimePicker.Flatpickr || (TimePicker.Flatpickr = {}));
+        })(TimePicker = OSUI.TimePicker || (OSUI.TimePicker = {}));
+    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
+})(Providers || (Providers = {}));
+var Providers;
+(function (Providers) {
+    var OSUI;
+    (function (OSUI) {
+        var RangeSlider;
+        (function (RangeSlider) {
+            var NoUISlider;
+            (function (NoUISlider) {
+                class AbstractNoUiSlider extends OSFramework.OSUI.Patterns.RangeSlider.AbstractRangeSlider {
+                    constructor(uniqueId, configs) {
+                        super(uniqueId, configs);
+                        this.throttleTimeValue = 200;
+                        this.throttleTimer = undefined;
+                        this._isInterval =
+                            this.configs.rangeSliderMode === OSFramework.OSUI.Patterns.RangeSlider.Enum.Mode.Interval;
+                    }
+                    _setIsDisabled(isDisabled) {
+                        if (isDisabled) {
+                            OSFramework.OSUI.Helper.Dom.Disable(this._rangeSliderProviderElem);
+                        }
+                        else {
+                            OSFramework.OSUI.Helper.Dom.Enable(this._rangeSliderProviderElem);
+                        }
+                    }
+                    _setOnValueChangeEvent(changeEvent) {
+                        this.provider.on(changeEvent, this.eventProviderValueChanged);
+                    }
+                    _setSize() {
+                        if (this.configs.Size.includes('%') && parseFloat(this.configs.Size) > 100) {
+                            this.configs.Size = OSFramework.OSUI.Patterns.RangeSlider.Enum.DefaultValues.PercentualSize;
+                            console.warn(`The value of the Size property on the '${this.widgetId}' ${OSFramework.OSUI.GlobalEnum.PatternName.RangeSlider} can't be smaller than '${OSFramework.OSUI.Patterns.RangeSlider.Enum.DefaultValues.PercentualSize}'.`);
+                        }
+                        OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, OSFramework.OSUI.Patterns.RangeSlider.Enum.CssProperties.Size, this.configs.Size);
+                    }
+                    _updateRangeValues() {
+                        this.provider.updateOptions({
+                            range: this.configs.getRangeConfig(),
+                        });
+                        if (this.configs.ShowTickMarks) {
+                            this.provider.updateOptions({ pips: this.configs.getPipsConfig() });
+                        }
+                    }
+                    createProviderInstance() {
+                        this.setInitialStates();
+                        this.provider = window.noUiSlider.create(this._rangeSliderProviderElem, this.noUiSliderOpts);
+                        this.updateProviderEvents({
+                            name: RangeSlider.NoUiSlider.Enum.ProviderInfo.Name,
+                            version: RangeSlider.NoUiSlider.Enum.ProviderInfo.Version,
+                            events: this.provider,
+                        });
+                        this.setInitialCSSClasses();
+                        this._setOnValueChangeEvent(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Slide);
+                        this.triggerPlatformEventInitialized(this.platformEventInitialize);
+                    }
+                    setHtmlElements() {
+                        this._rangeSliderProviderElem = OSFramework.OSUI.Helper.Dom.ClassSelector(this.selfElement, OSFramework.OSUI.Patterns.RangeSlider.Enum.CssClass.RangeSliderProviderElem);
+                    }
+                    setInitialCSSClasses() {
+                        if (this.configs.Orientation === OSFramework.OSUI.GlobalEnum.Orientation.Vertical) {
+                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.selfElement, OSFramework.OSUI.Patterns.RangeSlider.Enum.CssClass.ClassModifier +
+                                OSFramework.OSUI.GlobalEnum.Orientation.Vertical);
+                        }
+                        else if (OSFramework.OSUI.GlobalEnum.Orientation.Horizontal) {
+                            OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, OSFramework.OSUI.Patterns.RangeSlider.Enum.CssClass.ClassModifier +
+                                OSFramework.OSUI.GlobalEnum.Orientation.Vertical);
+                        }
+                        if (this.configs.ShowTickMarks) {
+                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.selfElement, OSFramework.OSUI.Patterns.RangeSlider.Enum.CssClass.HasTicks);
+                        }
+                        else {
+                            OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, OSFramework.OSUI.Patterns.RangeSlider.Enum.CssClass.HasTicks);
+                        }
+                    }
+                    setInitialStates() {
+                        this._setSize();
+                        this._setIsDisabled(this.configs.IsDisabled);
+                    }
+                    unsetCallbacks() {
+                        this.eventProviderValueChanged = undefined;
+                    }
+                    unsetHtmlElements() {
+                        this._rangeSliderProviderElem = undefined;
+                    }
+                    build() {
+                        super.build();
+                        this.setHtmlElements();
+                    }
+                    changeProperty(propertyName, propertyValue) {
+                        super.changeProperty(propertyName, propertyValue);
+                        if (this.isBuilt) {
+                            switch (propertyName) {
+                                case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.MinValue:
+                                case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.MaxValue:
+                                    this._updateRangeValues();
+                                    break;
+                                case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.Orientation:
+                                    this.redraw();
+                                    break;
+                                case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.IsDisabled:
+                                    this._setIsDisabled(this.configs.IsDisabled);
+                                    break;
+                                case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.TickMarksInterval:
+                                    this.provider.updateOptions({ pips: this.configs.getPipsConfig() });
+                                    break;
+                                case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.Step:
+                                    this.provider.updateOptions({ step: this.configs.Step });
+                                    break;
+                                case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.Size:
+                                    this._setSize();
+                                    break;
+                                case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.ShowFloatingLabel:
+                                    this.provider.updateOptions({ tooltips: this.configs.getTooltipFormat() });
+                                    break;
+                            }
+                        }
+                    }
+                    disable() {
+                        this._setIsDisabled(true);
+                    }
+                    dispose() {
+                        if (this.isBuilt) {
+                            this.unsetCallbacks();
+                            this.unsetHtmlElements();
+                            this.provider.destroy();
+                        }
+                        super.dispose();
+                    }
+                    enable() {
+                        this._setIsDisabled(false);
+                    }
+                    getValue() {
+                        return this.provider.get();
+                    }
+                    registerCallback(eventName, callback) {
+                        switch (eventName) {
+                            case OSFramework.OSUI.Patterns.RangeSlider.Enum.RangeSliderEvents.OnInitialize:
+                                if (this.platformEventInitialize === undefined) {
+                                    this.platformEventInitialize = callback;
+                                }
+                                break;
+                            case OSFramework.OSUI.Patterns.RangeSlider.Enum.RangeSliderEvents.OnValueChange:
+                                if (this.platformEventValueChange === undefined) {
+                                    this.platformEventValueChange = callback;
+                                }
+                                break;
+                            default:
+                                throw new Error(`${OSFramework.OSUI.ErrorCodes.RangeSlider.FailRegisterCallback}:	The given '${eventName}' event name is not defined.`);
+                        }
+                    }
+                    setProviderConfigs(newConfigs) {
+                        this.configs.setExtensibilityConfigs(newConfigs);
+                        this.redraw();
+                    }
+                    setRangeIntervalChangeOnDragEnd() {
+                        this.provider.off(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Slide, this.eventProviderValueChanged);
+                        this._setOnValueChangeEvent(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Change);
+                    }
+                }
+                NoUISlider.AbstractNoUiSlider = AbstractNoUiSlider;
+            })(NoUISlider = RangeSlider.NoUISlider || (RangeSlider.NoUISlider = {}));
+        })(RangeSlider = OSUI.RangeSlider || (OSUI.RangeSlider = {}));
+    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
+})(Providers || (Providers = {}));
+var Providers;
+(function (Providers) {
+    var OSUI;
+    (function (OSUI) {
+        var RangeSlider;
+        (function (RangeSlider) {
+            var NoUISlider;
+            (function (NoUISlider) {
+                var SingleSlider;
+                (function (SingleSlider) {
+                    class OSUINoUiSliderSingle extends NoUISlider.AbstractNoUiSlider {
+                        constructor(uniqueId, configs) {
+                            super(uniqueId, new NoUISlider.SliderSingle.NoUiSliderSingleConfig(configs));
+                        }
+                        _valueChangeCallback(value) {
+                            if (value !== undefined) {
+                                this.configs.StartingValueFrom = value[0];
+                            }
+                            if (this.throttleTimer === undefined) {
+                                this.throttleTimer = setTimeout(() => {
+                                    this.platformEventValueChange(this.widgetId, this.configs.StartingValueFrom, undefined);
+                                    this.throttleTimer = undefined;
+                                }, this.throttleTimeValue);
+                            }
+                        }
+                        prepareConfigs() {
+                            this.noUiSliderOpts = this.configs.getProviderConfig();
+                            this.createProviderInstance();
+                        }
+                        redraw() {
+                            const value = this.getValue();
+                            this.configs.StartingValueFrom = value;
+                            super.redraw();
+                        }
+                        setA11YProperties() {
+                            this.noUiSliderOpts.handleAttributes = [
+                                { 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Single },
+                            ];
+                        }
+                        setCallbacks() {
+                            this.eventProviderValueChanged = this._valueChangeCallback.bind(this);
+                        }
+                        build() {
+                            super.build();
+                            this.setCallbacks();
+                            this.prepareConfigs();
+                            this.setA11YProperties();
+                            this.finishBuild();
+                        }
+                        changeProperty(propertyName, propertyValue) {
+                            super.changeProperty(propertyName, propertyValue);
+                            if (this.isBuilt) {
+                                switch (propertyName) {
+                                    case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.StartingValueFrom:
+                                        this.setValue(propertyValue);
+                                        console.warn(`${OSFramework.OSUI.GlobalEnum.PatternName.RangeSlider}: (${this.widgetId}): You should use a distinct variable to assign on the OnValueChange event. Any updates to ${OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.InitialValueFrom} parameter should ideally be made using the SetRangeSliderValue Client Action.`);
+                                        break;
+                                    case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
+                                        this.redraw();
+                                        break;
+                                }
+                            }
+                        }
+                        resetValue() {
+                            this.configs.StartingValueFrom = this.configs.InitialValueFrom;
+                            this.provider.set(this.configs.InitialValueFrom);
+                        }
+                        setValue(value) {
+                            if (value >= this.configs.MinValue && value <= this.configs.MaxValue) {
+                                this.configs.StartingValueFrom = value;
+                                this.provider.set(value);
+                            }
+                            else {
+                                throw new Error(`${OSFramework.OSUI.ErrorCodes.RangeSlider.FailSetValue}: The value must be between the minimum value and maximum value set.`);
+                            }
+                        }
+                    }
+                    SingleSlider.OSUINoUiSliderSingle = OSUINoUiSliderSingle;
+                })(SingleSlider = NoUISlider.SingleSlider || (NoUISlider.SingleSlider = {}));
+            })(NoUISlider = RangeSlider.NoUISlider || (RangeSlider.NoUISlider = {}));
+        })(RangeSlider = OSUI.RangeSlider || (OSUI.RangeSlider = {}));
+    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
+})(Providers || (Providers = {}));
+var Providers;
+(function (Providers) {
+    var OSUI;
+    (function (OSUI) {
+        var RangeSlider;
+        (function (RangeSlider) {
+            var NoUISlider;
+            (function (NoUISlider) {
+                var IntervalSlider;
+                (function (IntervalSlider) {
+                    class OSUINoUiSliderInterval extends NoUISlider.AbstractNoUiSlider {
+                        constructor(uniqueId, configs) {
+                            super(uniqueId, new NoUISlider.SliderInterval.NoUiSliderIntervalConfig(configs));
+                        }
+                        _valueChangeCallback(value) {
+                            if (value !== undefined) {
+                                this.configs.StartingValueFrom = value[0];
+                                this.configs.StartingValueTo = value[1];
+                            }
+                            if (this.throttleTimer === undefined) {
+                                this.throttleTimer = setTimeout(() => {
+                                    this.platformEventValueChange(this.widgetId, this.configs.StartingValueFrom, this.configs.StartingValueTo);
+                                    this.throttleTimer = undefined;
+                                }, this.throttleTimeValue);
+                            }
+                        }
+                        prepareConfigs() {
+                            this.noUiSliderOpts = this.configs.getProviderConfig();
+                            this.createProviderInstance();
+                        }
+                        redraw() {
+                            const value = this.getValue();
+                            this.configs.StartingValueFrom = value[0];
+                            this.configs.StartingValueTo = value[1];
+                            super.redraw();
+                        }
+                        setA11YProperties() {
+                            this.noUiSliderOpts.handleAttributes = [
+                                { 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Lower },
+                                { 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Upper },
+                            ];
+                        }
+                        setCallbacks() {
+                            this.eventProviderValueChanged = this._valueChangeCallback.bind(this);
+                        }
+                        build() {
+                            super.build();
+                            this.setCallbacks();
+                            this.prepareConfigs();
+                            this.setA11YProperties();
+                            this.finishBuild();
+                        }
+                        changeProperty(propertyName, propertyValue) {
+                            super.changeProperty(propertyName, propertyValue);
+                            if (this.isBuilt) {
+                                switch (propertyName) {
+                                    case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.StartingValueFrom:
+                                        this.setValue(propertyValue, this.configs.StartingValueTo);
+                                        console.warn(`${OSFramework.OSUI.GlobalEnum.PatternName.RangeSliderInterval}: (${this.widgetId}): You should use a distinct variable to assign on the OnValueChange event. Any updates to ${OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.InitialValueFrom} parameter should ideally be made using the SetRangeSliderIntervalValue Client Action.`);
+                                        break;
+                                    case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.StartingValueTo:
+                                        this.setValue(this.configs.StartingValueFrom, propertyValue);
+                                        console.warn(`${OSFramework.OSUI.GlobalEnum.PatternName.RangeSliderInterval}: (${this.widgetId}): You should use a distinct variable to assign on the OnValueChange event. Any updates to ${OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.InitialValueTo} parameter should ideally be made using the SetRangeSliderIntervalValue Client Action.`);
+                                        break;
+                                    case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
+                                        this.redraw();
+                                        break;
+                                }
+                            }
+                        }
+                        resetValue() {
+                            this.configs.StartingValueFrom = this.configs.InitialValueFrom;
+                            this.configs.StartingValueTo = this.configs.InitialValueTo;
+                            this.provider.set([this.configs.InitialValueFrom, this.configs.InitialValueTo]);
+                        }
+                        setValue(intervalStart, intervalEnd) {
+                            if (intervalStart < intervalEnd) {
+                                this.configs.StartingValueFrom = intervalStart;
+                                this.configs.StartingValueTo = intervalEnd;
+                                this.provider.set([intervalStart, intervalEnd]);
+                            }
+                            else if (intervalStart > this.configs.MinValue && intervalEnd < this.configs.MaxValue) {
+                                throw new Error(`${OSFramework.OSUI.ErrorCodes.RangeSlider.FailSetValue}: The values must be within the specified range.`);
+                            }
+                            else {
+                                throw new Error(`${OSFramework.OSUI.ErrorCodes.RangeSlider.FailSetValue}: The start value cannot be bigger than the end value.`);
+                            }
+                        }
+                    }
+                    IntervalSlider.OSUINoUiSliderInterval = OSUINoUiSliderInterval;
+                })(IntervalSlider = NoUISlider.IntervalSlider || (NoUISlider.IntervalSlider = {}));
+            })(NoUISlider = RangeSlider.NoUISlider || (RangeSlider.NoUISlider = {}));
+        })(RangeSlider = OSUI.RangeSlider || (OSUI.RangeSlider = {}));
+    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
+})(Providers || (Providers = {}));
 var OutSystems;
 (function (OutSystems) {
     var OSUI;
@@ -12171,28 +13777,87 @@ var OutSystems;
             var PatternFactoryAPI;
             (function (PatternFactoryAPI) {
                 const _patternClasses = {
+                    Accordion: OSFramework.OSUI.Patterns.Accordion.Accordion,
+                    AccordionItem: OSFramework.OSUI.Patterns.AccordionItem.AccordionItem,
+                    BottomSheet: OSFramework.OSUI.Patterns.BottomSheet.BottomSheet,
+                    Carousel: {
+                        Splide: Providers.OSUI.Carousel.Splide.OSUISplide,
+                    },
+                    DatePicker: {
+                        flatpickr: Providers.OSUI.Datepicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate,
+                    },
+                    DatePickerRange: {
+                        flatpickr: Providers.OSUI.Datepicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate,
+                    },
+                    DropdownSearch: {
+                        VirtualSelect: Providers.OSUI.Dropdown.VirtualSelect.Search.OSUIVirtualSelectSearch,
+                    },
+                    DropdownTags: {
+                        VirtualSelect: Providers.OSUI.Dropdown.VirtualSelect.Tags.OSUIVirtualSelectTags,
+                    },
+                    DropdownServerSide: {
+                        OSUIComponents: OSFramework.OSUI.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide,
+                    },
+                    DropdownServerSideItem: OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem,
+                    FlipContent: OSFramework.OSUI.Patterns.FlipContent.FlipContent,
+                    Gallery: OSFramework.OSUI.Patterns.Gallery.Gallery,
+                    MonthPicker: {
+                        flatpickr: Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth,
+                    },
+                    Notification: OSFramework.OSUI.Patterns.Notification.Notification,
+                    ProgressBar: OSFramework.OSUI.Patterns.Progress.Bar.Bar,
+                    ProgressCircle: OSFramework.OSUI.Patterns.Progress.Circle.Circle,
+                    RangeSlider: {
+                        noUiSlider: Providers.OSUI.RangeSlider.NoUISlider.SingleSlider.OSUINoUiSliderSingle,
+                    },
+                    RangeSliderInyterval: {
+                        noUiSlider: Providers.OSUI.RangeSlider.NoUISlider.IntervalSlider.OSUINoUiSliderInterval,
+                    },
+                    Rating: OSFramework.OSUI.Patterns.Rating.Rating,
+                    SectionIndex: OSFramework.OSUI.Patterns.SectionIndex.SectionIndex,
+                    SectionIndexItem: OSFramework.OSUI.Patterns.SectionIndexItem.SectionIndexItem,
                     Sidebar: OSFramework.OSUI.Patterns.Sidebar.Sidebar,
+                    Submenu: OSFramework.OSUI.Patterns.Submenu.Submenu,
+                    SwipeEvents: OSFramework.OSUI.Patterns.SwipeEvents.SwipeEvents,
+                    Tabs: OSFramework.OSUI.Patterns.Tabs.Tabs,
+                    TabsContentItem: OSFramework.OSUI.Patterns.TabsContentItem.TabsContentItem,
+                    TabsHeaderItem: OSFramework.OSUI.Patterns.TabsHeaderItem.TabsHeaderItem,
+                    TimePicker: {
+                        flatpickr: Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime,
+                    },
+                    Tooltip: OSFramework.OSUI.Patterns.Tooltip.Tooltip,
+                    TouchEvents: OSFramework.OSUI.Patterns.TouchEvents.TouchEvents,
                 };
-                function CreateInstance(patternName, patternId, configs) {
-                    return new _patternClasses[patternName](patternId, configs);
+                function CreateInstance(patternName, patternId, configs, provider) {
+                    try {
+                        let _newClass;
+                        if (provider) {
+                            _newClass = new _patternClasses[patternName][provider](patternId, configs);
+                        }
+                        else {
+                            _newClass = new _patternClasses[patternName](patternId, configs);
+                        }
+                        return _newClass;
+                    }
+                    catch (error) {
+                        throw new Error(`The Class ${_patternClasses[patternName]} could not be instantiated`);
+                    }
                 }
                 PatternFactoryAPI.CreateInstance = CreateInstance;
-                function ExtendPatternClass(patternName, patternClass) {
-                    let _extendedClass = patternClass;
-                    if (typeof patternClass === 'string') {
-                        _extendedClass = _stringToFunction(patternClass);
+                function ExtendPatternClass(patternName, patternClass, provider) {
+                    const _targetClass = provider ? _patternClasses[patternName][provider] : _patternClasses[patternName];
+                    if (_targetClass.isPrototypeOf(patternClass) === false) {
+                        console.warn(`The Class ${patternClass} must extend the OutSystems UI ${_patternClasses[patternName]} Class`);
+                        return;
                     }
-                    _patternClasses[patternName] = _extendedClass;
+                    if (provider) {
+                        _patternClasses[patternName][provider] = patternClass;
+                    }
+                    else {
+                        _patternClasses[patternName] = patternClass;
+                    }
                 }
                 PatternFactoryAPI.ExtendPatternClass = ExtendPatternClass;
-                function _stringToFunction(str) {
-                    const arr = str.split('.');
-                    let fn = window || this;
-                    for (let i = 0; i < arr.lenght; i++) {
-                        fn = fn[arr[i]];
-                    }
-                    return fn;
-                }
             })(PatternFactoryAPI = Patterns.PatternFactoryAPI || (Patterns.PatternFactoryAPI = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
@@ -12474,7 +14139,7 @@ var OutSystems;
                     if (_ratingsMap.has(ratingId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Rating} registered under id: ${ratingId}`);
                     }
-                    const _newRating = new OSFramework.OSUI.Patterns.Rating.Rating(ratingId, JSON.parse(configs));
+                    const _newRating = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(OSFramework.OSUI.GlobalEnum.PatternName.Rating, ratingId, JSON.parse(configs));
                     _ratingsMap.set(ratingId, _newRating);
                     return _newRating;
                 }
@@ -12544,7 +14209,7 @@ var OutSystems;
                     if (_sectionIndexItemsMap.has(sectionIndexId)) {
                         throw new Error(`There is already an SectionIndex registered under id: ${sectionIndexId}`);
                     }
-                    const _sectionIndexItem = new OSFramework.OSUI.Patterns.SectionIndex.SectionIndex(sectionIndexId, JSON.parse(configs));
+                    const _sectionIndexItem = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(OSFramework.OSUI.GlobalEnum.PatternName.SectionIndex, sectionIndexId, JSON.parse(configs));
                     _sectionIndexItemsMap.set(sectionIndexId, _sectionIndexItem);
                     return _sectionIndexItem;
                 }
@@ -12603,7 +14268,7 @@ var OutSystems;
                     if (_sectionIndexItemMap.has(sectionIndexItemId)) {
                         throw new Error(`There is already a SectionIndexItem registered under id: ${sectionIndexItemId}`);
                     }
-                    const _sectionIndexItem = new OSFramework.OSUI.Patterns.SectionIndexItem.SectionIndexItem(sectionIndexItemId, JSON.parse(configs));
+                    const _sectionIndexItem = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(OSFramework.OSUI.GlobalEnum.PatternName.SectionIndexItem, sectionIndexItemId, JSON.parse(configs));
                     _sectionIndexItemMap.set(sectionIndexItemId, _sectionIndexItem);
                     return _sectionIndexItem;
                 }
@@ -12695,15 +14360,11 @@ var OutSystems;
                     if (_sidebarMap.has(sidebarId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Sidebar} registered under id: ${sidebarId}`);
                     }
-                    const _newSidebar = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance('Sidebar', sidebarId, JSON.parse(configs));
+                    const _newSidebar = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(OSFramework.OSUI.GlobalEnum.PatternName.Sidebar, sidebarId, JSON.parse(configs));
                     _sidebarMap.set(sidebarId, _newSidebar);
                     return _newSidebar;
                 }
                 SidebarAPI.Create = Create;
-                function CreatePatternInstance(sidebarId, configs) {
-                    return new OSFramework.OSUI.Patterns.Sidebar.Sidebar(sidebarId, JSON.parse(configs));
-                }
-                SidebarAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(sidebarId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Sidebar.FailDispose,
@@ -12813,7 +14474,7 @@ var OutSystems;
                     if (_submenusMap.has(submenuId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Submenu} registered under id: ${submenuId}`);
                     }
-                    const _newSubmenu = new OSFramework.OSUI.Patterns.Submenu.Submenu(submenuId, JSON.parse(configs));
+                    const _newSubmenu = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(OSFramework.OSUI.GlobalEnum.PatternName.Submenu, submenuId, JSON.parse(configs));
                     _submenusMap.set(submenuId, _newSubmenu);
                     return _newSubmenu;
                 }
@@ -12894,7 +14555,7 @@ var OutSystems;
                     if (_swipeEventsMap.has(swipeEventsId)) {
                         throw new Error(`There is already an ${OSFramework.OSUI.GlobalEnum.PatternName.SwipeEvents} registered under id: ${swipeEventsId}`);
                     }
-                    const _newSwipeEvents = new OSFramework.OSUI.Patterns.SwipeEvents.SwipeEvents(swipeEventsId, JSON.parse(configs));
+                    const _newSwipeEvents = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(OSFramework.OSUI.GlobalEnum.PatternName.SwipeEvents, swipeEventsId, JSON.parse(configs));
                     _swipeEventsMap.set(swipeEventsId, _newSwipeEvents);
                     return _newSwipeEvents;
                 }
@@ -12962,7 +14623,7 @@ var OutSystems;
                     if (_tabsMap.has(tabsId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Tabs} registered under id: ${tabsId}`);
                     }
-                    const _newTabs = new OSFramework.OSUI.Patterns.Tabs.Tabs(tabsId, JSON.parse(configs));
+                    const _newTabs = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(OSFramework.OSUI.GlobalEnum.PatternName.Tabs, tabsId, JSON.parse(configs));
                     _tabsMap.set(tabsId, _newTabs);
                     return _newTabs;
                 }
@@ -13073,7 +14734,7 @@ var OutSystems;
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.TabsContentItem} registered under id: ${tabsContentItemId}`);
                     }
                     const tabs = GetTabsByItem(tabsContentItemId);
-                    const _newTabsContentItem = new OSFramework.OSUI.Patterns.TabsContentItem.TabsContentItem(tabsContentItemId, JSON.parse(configs));
+                    const _newTabsContentItem = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(OSFramework.OSUI.GlobalEnum.PatternName.TabsContentItem, tabsContentItemId, JSON.parse(configs));
                     _tabsContentItemMap.set(tabsContentItemId, _newTabsContentItem);
                     _newTabsContentItem.build();
                     if (tabs !== undefined) {
@@ -13149,7 +14810,7 @@ var OutSystems;
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.TabsHeaderItem} registered under id: ${tabsHeaderItemId}`);
                     }
                     const tabs = GetTabsByItem(tabsHeaderItemId);
-                    const _newTabsHeaderItem = new OSFramework.OSUI.Patterns.TabsHeaderItem.TabsHeaderItem(tabsHeaderItemId, JSON.parse(configs));
+                    const _newTabsHeaderItem = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(OSFramework.OSUI.GlobalEnum.PatternName.TabsHeaderItem, tabsHeaderItemId, JSON.parse(configs));
                     _tabsHeaderItemMap.set(tabsHeaderItemId, _newTabsHeaderItem);
                     _newTabsHeaderItem.build();
                     if (tabs !== undefined) {
@@ -13444,7 +15105,7 @@ var OutSystems;
                     if (_tooltipsMap.has(tooltipId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Tooltip} registered under id: ${tooltipId}`);
                     }
-                    const _newTooltip = new OSFramework.OSUI.Patterns.Tooltip.Tooltip(tooltipId, JSON.parse(configs));
+                    const _newTooltip = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(OSFramework.OSUI.GlobalEnum.PatternName.Tooltip, tooltipId, JSON.parse(configs));
                     _tooltipsMap.set(tooltipId, _newTooltip);
                     return _newTooltip;
                 }
@@ -13514,7 +15175,7 @@ var OutSystems;
                     if (_touchEventsMap.has(touchEventsId)) {
                         throw new Error(`There is already an ${OSFramework.OSUI.GlobalEnum.PatternName.TouchEvents} registered under id: ${touchEventsId}`);
                     }
-                    const _newTouchEvents = new OSFramework.OSUI.Patterns.TouchEvents.TouchEvents(touchEventsId, JSON.parse(configs));
+                    const _newTouchEvents = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(OSFramework.OSUI.GlobalEnum.PatternName.TouchEvents, touchEventsId, JSON.parse(configs));
                     _touchEventsMap.set(touchEventsId, _newTouchEvents);
                     return _newTouchEvents;
                 }
@@ -15066,227 +16727,6 @@ var Providers;
         (function (Carousel) {
             var Splide;
             (function (Splide) {
-                class OSUISplide extends OSFramework.OSUI.Patterns.Carousel.AbstractCarousel {
-                    constructor(uniqueId, configs) {
-                        super(uniqueId, new Splide.SplideConfig(configs));
-                        this._blockOnRender = false;
-                    }
-                    _checkListWidget() {
-                        this._hasList = OutSystems.OSUI.Utils.GetHasListInside(this._carouselPlaceholderElem);
-                        if (this._hasList) {
-                            this._carouselListWidgetElem = this.selfElement.querySelector(OSFramework.OSUI.Constants.Dot + OSFramework.OSUI.GlobalEnum.CssClassElements.List);
-                            this._carouselProviderElem = this._carouselTrackElem;
-                        }
-                        else {
-                            this._carouselProviderElem = this.selfElement;
-                        }
-                    }
-                    _initProvider() {
-                        this._provider = new window.Splide(this._carouselProviderElem, this._splideOptions);
-                        this.updateProviderEvents({
-                            name: Splide.Enum.ProviderInfo.Name,
-                            version: Splide.Enum.ProviderInfo.Version,
-                            events: this.provider,
-                        });
-                        this._setOnInitializedEvent();
-                        this._setOnSlideMovedEvent();
-                        this._setCarouselWidth();
-                        this._provider.mount();
-                        this._togglePaginationClass();
-                    }
-                    _prepareCarouselItems() {
-                        const _targetList = this._hasList ? this._carouselListWidgetElem : this._carouselPlaceholderElem;
-                        const _childrenList = _targetList.children;
-                        if (_childrenList.length > 0) {
-                            for (const item of _childrenList) {
-                                if (!item.classList.contains(Splide.Enum.CssClass.SplideSlide)) {
-                                    item.classList.add(Splide.Enum.CssClass.SplideSlide);
-                                }
-                            }
-                        }
-                    }
-                    _redefineCarouselWidth() {
-                        this.provider.refresh();
-                        this._setCarouselWidth();
-                    }
-                    _setCarouselWidth() {
-                        OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._carouselTrackElem, OSFramework.OSUI.Patterns.Carousel.Enum.CssVariables.CarouselWidth, this.selfElement.offsetWidth + OSFramework.OSUI.GlobalEnum.Units.Pixel);
-                    }
-                    _setOnInitializedEvent() {
-                        this._provider.on(Splide.Enum.SpliderEvents.Mounted, () => {
-                            this.triggerPlatformEventInitialized(this._platformEventInitialized);
-                        });
-                    }
-                    _setOnSlideMovedEvent() {
-                        this._provider.on(Splide.Enum.SpliderEvents.Moved, (index) => {
-                            if (index !== this._currentIndex) {
-                                OSFramework.OSUI.Helper.AsyncInvocation(this._platformEventOnSlideMoved, this.widgetId, index);
-                                this._currentIndex = index;
-                            }
-                        });
-                    }
-                    _togglePaginationClass() {
-                        if (this.configs.Navigation === OSFramework.OSUI.Patterns.Carousel.Enum.Navigation.Dots ||
-                            this.configs.Navigation === OSFramework.OSUI.Patterns.Carousel.Enum.Navigation.Both) {
-                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.selfElement, OSFramework.OSUI.Patterns.Carousel.Enum.CssClass.HasPagination);
-                        }
-                        else {
-                            OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, OSFramework.OSUI.Patterns.Carousel.Enum.CssClass.HasPagination);
-                        }
-                    }
-                    prepareConfigs() {
-                        this._prepareCarouselItems();
-                        this._splideOptions = this.configs.getProviderConfig();
-                        this._initProvider();
-                    }
-                    setA11YProperties() {
-                        console.warn(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
-                    }
-                    setCallbacks() {
-                        this._eventOnResize = this._redefineCarouselWidth.bind(this);
-                        OSFramework.OSUI.Event.GlobalEventManager.Instance.addHandler(OSFramework.OSUI.Event.Type.WindowResize, this._eventOnResize);
-                    }
-                    setHtmlElements() {
-                        this._carouselPlaceholderElem = OSFramework.OSUI.Helper.Dom.ClassSelector(this.selfElement, OSFramework.OSUI.Patterns.Carousel.Enum.CssClass.Content);
-                        this._carouselTrackElem = OSFramework.OSUI.Helper.Dom.ClassSelector(this.selfElement, OSFramework.OSUI.Patterns.Carousel.Enum.CssClass.Track);
-                    }
-                    setInitialCssClasses() {
-                        if (this._hasList) {
-                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this._carouselTrackElem, Splide.Enum.CssClass.SplideWrapper);
-                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this._carouselPlaceholderElem, Splide.Enum.CssClass.SplideTrack);
-                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this._carouselListWidgetElem, Splide.Enum.CssClass.SplideList);
-                        }
-                        else {
-                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.selfElement, Splide.Enum.CssClass.SplideWrapper);
-                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this._carouselTrackElem, Splide.Enum.CssClass.SplideTrack);
-                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this._carouselPlaceholderElem, Splide.Enum.CssClass.SplideList);
-                        }
-                        this._togglePaginationClass();
-                    }
-                    unsetCallbacks() {
-                        OSFramework.OSUI.Event.GlobalEventManager.Instance.removeHandler(OSFramework.OSUI.Event.Type.WindowResize, this._eventOnResize);
-                        this._eventOnResize = undefined;
-                        this._platformEventInitialized = undefined;
-                        this._platformEventOnSlideMoved = undefined;
-                    }
-                    unsetHtmlElements() {
-                        this._carouselPlaceholderElem = undefined;
-                        this._carouselTrackElem = undefined;
-                    }
-                    build() {
-                        super.build();
-                        this.setHtmlElements();
-                        this.setCallbacks();
-                        this._checkListWidget();
-                        this.setInitialCssClasses();
-                        this.prepareConfigs();
-                        this.finishBuild();
-                    }
-                    changeProperty(propertyName, propertyValue) {
-                        super.changeProperty(propertyName, propertyValue);
-                        if (this.isBuilt) {
-                            this.toggleOnRender(true);
-                            switch (propertyName) {
-                                case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.StartingPosition:
-                                    console.warn(`Carousel (${this.widgetId}): changes to ${OSFramework.OSUI.Patterns.Carousel.Enum.Properties.StartingPosition} parameter do not affect the carousel. Use the client action 'CarouselGoTo' to change the current item.`);
-                                    break;
-                                case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.Navigation:
-                                case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.AutoPlay:
-                                case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.Loop:
-                                case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.ItemsDesktop:
-                                case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.ItemsTablet:
-                                case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.ItemsPhone:
-                                    this.redraw();
-                                    break;
-                                case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.Height:
-                                    this._provider.options = { height: propertyValue };
-                                    break;
-                                case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.Padding:
-                                    this._provider.options = { padding: propertyValue };
-                                    break;
-                                case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.ItemsGap:
-                                    this._provider.options = { gap: propertyValue };
-                                    break;
-                            }
-                        }
-                        OSFramework.OSUI.Helper.AsyncInvocation(this.toggleOnRender.bind(this), false);
-                    }
-                    dispose() {
-                        if (this.isBuilt) {
-                            this._provider.destroy();
-                        }
-                        this.unsetCallbacks();
-                        this.unsetHtmlElements();
-                        super.dispose();
-                    }
-                    goTo(index) {
-                        this._provider.go(index);
-                    }
-                    next() {
-                        this._provider.go(Splide.Enum.Go.Next);
-                    }
-                    previous() {
-                        this._provider.go(Splide.Enum.Go.Previous);
-                    }
-                    registerCallback(eventName, callback) {
-                        switch (eventName) {
-                            case OSFramework.OSUI.Patterns.Carousel.Enum.CarouselEvents.OnSlideMoved:
-                                this._platformEventOnSlideMoved = callback;
-                                break;
-                            case OSFramework.OSUI.Patterns.Carousel.Enum.CarouselEvents.Initialized:
-                                this._platformEventInitialized = callback;
-                                break;
-                        }
-                    }
-                    setCarouselDirection(direction) {
-                        if (direction === OSFramework.OSUI.Patterns.Carousel.Enum.Direction.None &&
-                            OutSystems.OSUI.Utils.GetIsRTL()) {
-                            this.configs.Direction = OSFramework.OSUI.GlobalEnum.Direction.RTL;
-                        }
-                        else if (direction === OSFramework.OSUI.Patterns.Carousel.Enum.Direction.RightToLeft &&
-                            this.configs.AutoPlay) {
-                            this.configs.Direction = OSFramework.OSUI.GlobalEnum.Direction.RTL;
-                        }
-                        else {
-                            this.configs.Direction = OSFramework.OSUI.GlobalEnum.Direction.LTR;
-                        }
-                        this.redraw();
-                    }
-                    setProviderConfigs(newConfigs) {
-                        this.configs.setExtensibilityConfigs(newConfigs);
-                        this.redraw();
-                    }
-                    toggleDrag(hasDrag) {
-                        this._provider.options = { drag: hasDrag };
-                    }
-                    toggleOnRender(blockOnRender) {
-                        this._blockOnRender = blockOnRender;
-                    }
-                    updateOnRender() {
-                        if (this._blockOnRender === false) {
-                            this.setInitialCssClasses();
-                            if (typeof this._provider === 'object') {
-                                if (this._currentIndex !== undefined || this.configs.AutoPlay === true) {
-                                    this.configs.StartingPosition = this.provider.index;
-                                }
-                                this.redraw();
-                            }
-                        }
-                    }
-                }
-                Splide.OSUISplide = OSUISplide;
-            })(Splide = Carousel.Splide || (Carousel.Splide = {}));
-        })(Carousel = OSUI.Carousel || (OSUI.Carousel = {}));
-    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
-})(Providers || (Providers = {}));
-var Providers;
-(function (Providers) {
-    var OSUI;
-    (function (OSUI) {
-        var Carousel;
-        (function (Carousel) {
-            var Splide;
-            (function (Splide) {
                 class SplideConfig extends OSFramework.OSUI.Patterns.Carousel.AbstractCarouselConfig {
                     _getArrowConfig() {
                         let arrows;
@@ -15368,217 +16808,6 @@ var Providers;
                 Splide.SplideConfig = SplideConfig;
             })(Splide = Carousel.Splide || (Carousel.Splide = {}));
         })(Carousel = OSUI.Carousel || (OSUI.Carousel = {}));
-    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
-})(Providers || (Providers = {}));
-var Providers;
-(function (Providers) {
-    var OSUI;
-    (function (OSUI) {
-        var Datepicker;
-        (function (Datepicker) {
-            var Flatpickr;
-            (function (Flatpickr) {
-                class AbstractFlatpickr extends OSFramework.OSUI.Patterns.DatePicker.AbstractDatePicker {
-                    constructor(uniqueId, configs) {
-                        super(uniqueId, configs);
-                        this.configs.OnChange = this.onDateSelectedEvent.bind(this);
-                    }
-                    _setAttributes() {
-                        if (this._datePickerPlatformInputElem.nextSibling) {
-                            this._flatpickrInputElem = this._datePickerPlatformInputElem.nextSibling;
-                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.DataInput, '');
-                            if (this._flatpickrInputElem.disabled) {
-                                OSFramework.OSUI.Helper.Dom.Attribute.Remove(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled);
-                            }
-                        }
-                    }
-                    _setCalendarCssClasses() {
-                        OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.provider.calendarContainer, OSFramework.OSUI.Patterns.DatePicker.Enum.CssClass.Calendar);
-                        if (this.configs.ExtendedClass !== '') {
-                            OSFramework.OSUI.Helper.Dom.Styles.ExtendedClass(this.provider.calendarContainer, '', this.configs.ExtendedClass);
-                        }
-                    }
-                    _setParentMinHeight() {
-                        OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, OSFramework.OSUI.GlobalEnum.InlineStyle.Height, this.selfElement.clientHeight + OSFramework.OSUI.GlobalEnum.Units.Pixel);
-                    }
-                    _unsetParentMinHeight() {
-                        OSFramework.OSUI.Helper.Dom.Styles.RemoveStyleAttribute(this.selfElement, OSFramework.OSUI.GlobalEnum.InlineStyle.Height);
-                    }
-                    addTodayBtn() {
-                        const todayBtnWrapper = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
-                        todayBtnWrapper.classList.add(Flatpickr.Enum.CssClasses.TodayBtn);
-                        const todayBtn = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Link);
-                        todayBtn.innerHTML = Flatpickr.l10ns.TodayBtn[this.configs.Lang].title;
-                        OSFramework.OSUI.Helper.A11Y.AriaLabel(todayBtn, Flatpickr.l10ns.TodayBtn[this.configs.Lang].ariaLabel);
-                        todayBtn.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.Click, this.todayBtnClick.bind(this));
-                        todayBtnWrapper.appendChild(todayBtn);
-                        this.provider.calendarContainer.appendChild(todayBtnWrapper);
-                    }
-                    createProviderInstance() {
-                        this.provider = window.flatpickr(this._datePickerPlatformInputElem, this._flatpickrOpts);
-                        this.updateProviderEvents({
-                            name: OSUI.SharedProviderResources.Flatpickr.Enum.ProviderInfo.Name,
-                            version: OSUI.SharedProviderResources.Flatpickr.Enum.ProviderInfo.Version,
-                            events: this.provider.config,
-                        });
-                        this._setAttributes();
-                        this.updatePlatformInputAttrs();
-                        this.setA11YProperties();
-                        if (this.provider.calendarContainer !== undefined) {
-                            if (this.configs.DisableMobile === true ||
-                                OSFramework.OSUI.Helper.DeviceInfo.IsDesktop ||
-                                this.configs.CalendarMode === OSFramework.OSUI.Patterns.DatePicker.Enum.Mode.Range) {
-                                if (this.configs.ShowTodayButton) {
-                                    this.addTodayBtn();
-                                }
-                                this._setCalendarCssClasses();
-                                this._bodyScrollCommonBehaviour = new OSUI.SharedProviderResources.Flatpickr.UpdatePositionOnScroll(this);
-                                this._zindexCommonBehavior = new OSUI.SharedProviderResources.Flatpickr.UpdateZindex(this);
-                            }
-                        }
-                        if (this._flatpickrInputElem !== undefined && this.isBuilt) {
-                            OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.CssClassElements.InputNotValid);
-                        }
-                        this.triggerPlatformEventInitialized(this._onInitializeCallbackEvent);
-                        this._unsetParentMinHeight();
-                    }
-                    jumpIntoToday() {
-                        this.provider.jumpToDate(this.provider.now);
-                    }
-                    prepareConfigs() {
-                        this._flatpickrOpts = this.configs.getProviderConfig();
-                        this.createProviderInstance();
-                    }
-                    prepareToAndRedraw() {
-                        this._setParentMinHeight();
-                        this.redraw();
-                    }
-                    setA11YProperties() {
-                        if (this.provider.calendarContainer !== undefined && this._flatpickrInputElem !== undefined) {
-                            let ariaLabelValue = Flatpickr.Enum.Attribute.DefaultAriaLabel;
-                            if (this._datePickerPlatformInputElem.hasAttribute(OSFramework.OSUI.Constants.A11YAttributes.Aria.Label)) {
-                                ariaLabelValue = this._datePickerPlatformInputElem.getAttribute(OSFramework.OSUI.Constants.A11YAttributes.Aria.Label);
-                            }
-                            OSFramework.OSUI.Helper.A11Y.AriaLabel(this._flatpickrInputElem, ariaLabelValue);
-                            OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(this._flatpickrInputElem, this._a11yInfoContainerElem.id);
-                            if (this.configs.Lang !== OSFramework.OSUI.Constants.Language.short) {
-                                this._a11yInfoContainerElem.innerHTML =
-                                    Datepicker.Flatpickr.l10ns.A11yContainerInfo[this.configs.Lang].htmlTex;
-                            }
-                        }
-                    }
-                    setCallbacks() {
-                        console.log(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
-                    }
-                    setHtmlElements() {
-                        this._datePickerPlatformInputElem = this.selfElement.querySelector('input.form-control');
-                        this._a11yInfoContainerElem = OSFramework.OSUI.Helper.Dom.TagSelector(this.selfElement.parentElement, OSFramework.OSUI.Constants.Dot + Flatpickr.Enum.CssClasses.AccessibilityContainerInfo);
-                        if (!this._datePickerPlatformInputElem) {
-                            throw new Error(`The datepicker input at DatepickerId '${this.widgetId}' is missing`);
-                        }
-                    }
-                    unsetCallbacks() {
-                        this.configs.OnChange = undefined;
-                        this._onInitializeCallbackEvent = undefined;
-                        this._onSelectedCallbackEvent = undefined;
-                    }
-                    unsetHtmlElements() {
-                        this._a11yInfoContainerElem = undefined;
-                        this._datePickerPlatformInputElem = undefined;
-                    }
-                    build() {
-                        super.build();
-                        this.setHtmlElements();
-                    }
-                    changeProperty(propertyName, propertyValue) {
-                        const oldExtendedClass = this.configs.ExtendedClass;
-                        super.changeProperty(propertyName, propertyValue);
-                        if (this.isBuilt) {
-                            switch (propertyName) {
-                                case OSFramework.OSUI.Patterns.DatePicker.Enum.Properties.FirstWeekDay:
-                                case OSFramework.OSUI.Patterns.DatePicker.Enum.Properties.MaxDate:
-                                case OSFramework.OSUI.Patterns.DatePicker.Enum.Properties.MinDate:
-                                case OSFramework.OSUI.Patterns.DatePicker.Enum.Properties.ShowTodayButton:
-                                case OSFramework.OSUI.Patterns.DatePicker.Enum.Properties.ShowWeekNumbers:
-                                    this.prepareToAndRedraw();
-                                    break;
-                                case OSFramework.OSUI.GlobalEnum.CommonPatternsProperties.ExtendedClass:
-                                    OSFramework.OSUI.Helper.Dom.Styles.ExtendedClass(this.provider.calendarContainer, oldExtendedClass, propertyValue);
-                                    break;
-                            }
-                        }
-                    }
-                    clear() {
-                        this.provider.clear();
-                    }
-                    close() {
-                        if (this.provider.isOpen) {
-                            this.provider.close();
-                        }
-                    }
-                    disableDays(disableDays) {
-                        this.configs.DisabledDays = disableDays;
-                        this.prepareToAndRedraw();
-                    }
-                    disableWeekDays(disableWeekDays) {
-                        this.configs.DisabledWeekDays = disableWeekDays;
-                        this.prepareToAndRedraw();
-                    }
-                    dispose() {
-                        if (this.isBuilt) {
-                            this.unsetCallbacks();
-                            this.unsetHtmlElements();
-                            if (this._bodyScrollCommonBehaviour !== undefined) {
-                                this._bodyScrollCommonBehaviour.dispose();
-                                this._bodyScrollCommonBehaviour = undefined;
-                            }
-                            OSFramework.OSUI.Helper.AsyncInvocation(this.provider.destroy);
-                        }
-                        super.dispose();
-                    }
-                    open() {
-                        if (this.provider.isOpen === false) {
-                            this.provider.open();
-                        }
-                    }
-                    registerCallback(eventName, callback) {
-                        switch (eventName) {
-                            case OSFramework.OSUI.Patterns.DatePicker.Enum.DatePickerEvents.OnChange:
-                                this._onSelectedCallbackEvent = callback;
-                                break;
-                            case OSFramework.OSUI.Patterns.DatePicker.Enum.DatePickerEvents.OnInitialize:
-                                this._onInitializeCallbackEvent = callback;
-                                break;
-                            default:
-                                throw new Error(`The given '${eventName}' event name it's not defined.`);
-                        }
-                    }
-                    setEditableInput(isEditable) {
-                        if (this.configs.AllowInput !== isEditable) {
-                            this.configs.AllowInput = isEditable;
-                            this.prepareToAndRedraw();
-                        }
-                    }
-                    setLanguage(value) {
-                        this.configs.Lang = value.toLowerCase();
-                        if (this.provider !== undefined) {
-                            this.prepareToAndRedraw();
-                        }
-                    }
-                    setProviderConfigs(newConfigs) {
-                        this.configs.setExtensibilityConfigs(newConfigs);
-                        this.prepareToAndRedraw();
-                    }
-                    toggleNativeBehavior(isNative) {
-                        if (this.configs.DisableMobile !== !isNative) {
-                            this.configs.DisableMobile = !isNative;
-                            this.prepareToAndRedraw();
-                        }
-                    }
-                }
-                Flatpickr.AbstractFlatpickr = AbstractFlatpickr;
-            })(Flatpickr = Datepicker.Flatpickr || (Datepicker.Flatpickr = {}));
-        })(Datepicker = OSUI.Datepicker || (OSUI.Datepicker = {}));
     })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
 })(Providers || (Providers = {}));
 var Providers;
@@ -15771,16 +17000,18 @@ var Providers;
                 (function (Factory) {
                     function NewFlatpickr(datePickerId, mode, configs) {
                         let _flatpickrItem = null;
+                        let _patternName;
                         switch (mode) {
                             case OSFramework.OSUI.Patterns.DatePicker.Enum.Mode.Single:
-                                _flatpickrItem = new Providers.OSUI.Datepicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate(datePickerId, JSON.parse(configs));
+                                _patternName = OSFramework.OSUI.GlobalEnum.PatternName.Datepicker;
                                 break;
                             case OSFramework.OSUI.Patterns.DatePicker.Enum.Mode.Range:
-                                _flatpickrItem = new Providers.OSUI.Datepicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate(datePickerId, JSON.parse(configs));
+                                _patternName = OSFramework.OSUI.GlobalEnum.PatternName.DatepickerRange;
                                 break;
                             default:
                                 throw new Error(`There is no Flatpickr of ${mode} type`);
                         }
+                        _flatpickrItem = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(_patternName, datePickerId, JSON.parse(configs), OSFramework.OSUI.Patterns.DatePicker.Enum.Provider.FlatPicker);
                         return _flatpickrItem;
                     }
                     Factory.NewFlatpickr = NewFlatpickr;
@@ -15807,98 +17038,6 @@ var Providers;
                             Properties["InitialStartDate"] = "InitialStartDate";
                         })(Properties = Enum.Properties || (Enum.Properties = {}));
                     })(Enum = RangeDate.Enum || (RangeDate.Enum = {}));
-                })(RangeDate = Flatpickr.RangeDate || (Flatpickr.RangeDate = {}));
-            })(Flatpickr = Datepicker.Flatpickr || (Datepicker.Flatpickr = {}));
-        })(Datepicker = OSUI.Datepicker || (OSUI.Datepicker = {}));
-    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
-})(Providers || (Providers = {}));
-var Providers;
-(function (Providers) {
-    var OSUI;
-    (function (OSUI) {
-        var Datepicker;
-        (function (Datepicker) {
-            var Flatpickr;
-            (function (Flatpickr) {
-                var RangeDate;
-                (function (RangeDate) {
-                    class OSUIFlatpickrRangeDate extends Flatpickr.AbstractFlatpickr {
-                        constructor(uniqueId, configs) {
-                            super(uniqueId, new RangeDate.FlatpickrRangeDateConfig(configs));
-                        }
-                        _onUpdateDateFormat() {
-                            if (this.provider.selectedDates.length > 0) {
-                                this.configs.InitialStartDate = this.provider.formatDate(this.provider.selectedDates[0], this._flatpickrOpts.dateFormat);
-                                if (this.provider.selectedDates[1]) {
-                                    this.configs.InitialEndDate = this.provider.formatDate(this.provider.selectedDates[1], this._flatpickrOpts.dateFormat);
-                                }
-                            }
-                            this.prepareToAndRedraw();
-                        }
-                        _updateInitialStartAndEndDates() {
-                            if (this.configs.InitialStartDate !== undefined &&
-                                this.configs.InitialEndDate !== undefined &&
-                                OSFramework.OSUI.Helper.Dates.IsBeforeThan(this.configs.InitialStartDate, this.configs.InitialEndDate) === false) {
-                                console.error(`Given StartDate:'${this.provider.formatDate(this.configs.InitialStartDate, this.configs.ServerDateFormat)}' can not be greater than given EndDate:'${this.provider.formatDate(this.configs.InitialEndDate, this.configs.ServerDateFormat)}'.`);
-                            }
-                            else {
-                                this.prepareToAndRedraw();
-                            }
-                        }
-                        onDateSelectedEvent(selectedDates) {
-                            const _selectedDate = [];
-                            if (selectedDates.length > 0) {
-                                _selectedDate[0] = this.provider.formatDate(selectedDates[0], this._flatpickrOpts.dateFormat);
-                                if (selectedDates[1]) {
-                                    _selectedDate[1] = this.provider.formatDate(selectedDates[1], this._flatpickrOpts.dateFormat);
-                                }
-                            }
-                            OSFramework.OSUI.Helper.Dom.SetInputValue(this._datePickerPlatformInputElem, this._flatpickrInputElem.value);
-                            if (selectedDates.length === 0 || selectedDates.length === 2) {
-                                OSFramework.OSUI.Helper.AsyncInvocation(this._onSelectedCallbackEvent, this.widgetId, _selectedDate[0], _selectedDate[1]);
-                            }
-                        }
-                        todayBtnClick(event) {
-                            event.preventDefault();
-                            this.jumpIntoToday();
-                        }
-                        updatePlatformInputAttrs() {
-                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this._datePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.type, OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text);
-                        }
-                        build() {
-                            super.build();
-                            this.prepareConfigs();
-                            this.finishBuild();
-                        }
-                        changeProperty(propertyName, propertyValue) {
-                            super.changeProperty(propertyName, propertyValue);
-                            if (this.isBuilt) {
-                                switch (propertyName) {
-                                    case OSFramework.OSUI.Patterns.DatePicker.Enum.Properties.DateFormat:
-                                        this._onUpdateDateFormat();
-                                        break;
-                                    case RangeDate.Enum.Properties.InitialEndDate:
-                                    case RangeDate.Enum.Properties.InitialStartDate:
-                                        this._updateInitialStartAndEndDates();
-                                        break;
-                                }
-                            }
-                        }
-                        updateInitialDate(startDate, endDate) {
-                            if (OSFramework.OSUI.Helper.Dates.IsNull(startDate) === false &&
-                                OSFramework.OSUI.Helper.Dates.IsNull(endDate) === false) {
-                                this.configs.InitialStartDate = startDate;
-                                this.configs.InitialEndDate = endDate;
-                                if (OSFramework.OSUI.Helper.Dates.IsBeforeThan(startDate, endDate)) {
-                                    this.prepareToAndRedraw();
-                                }
-                                else {
-                                    console.error(`Given StartDate:'${this.provider.formatDate(this.configs.InitialStartDate, this.configs.ServerDateFormat)}' can not be greater than given EndDate:'${this.provider.formatDate(this.configs.InitialEndDate, this.configs.ServerDateFormat)}'.`);
-                                }
-                            }
-                        }
-                    }
-                    RangeDate.OSUIFlatpickrRangeDate = OSUIFlatpickrRangeDate;
                 })(RangeDate = Flatpickr.RangeDate || (Flatpickr.RangeDate = {}));
             })(Flatpickr = Datepicker.Flatpickr || (Datepicker.Flatpickr = {}));
         })(Datepicker = OSUI.Datepicker || (OSUI.Datepicker = {}));
@@ -15964,94 +17103,6 @@ var Providers;
                             Properties["InitialDate"] = "InitialDate";
                         })(Properties = Enum.Properties || (Enum.Properties = {}));
                     })(Enum = SingleDate.Enum || (SingleDate.Enum = {}));
-                })(SingleDate = Flatpickr.SingleDate || (Flatpickr.SingleDate = {}));
-            })(Flatpickr = Datepicker.Flatpickr || (Datepicker.Flatpickr = {}));
-        })(Datepicker = OSUI.Datepicker || (OSUI.Datepicker = {}));
-    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
-})(Providers || (Providers = {}));
-var Providers;
-(function (Providers) {
-    var OSUI;
-    (function (OSUI) {
-        var Datepicker;
-        (function (Datepicker) {
-            var Flatpickr;
-            (function (Flatpickr) {
-                var SingleDate;
-                (function (SingleDate) {
-                    class OSUIFlatpickrSingleDate extends Flatpickr.AbstractFlatpickr {
-                        constructor(uniqueId, configs) {
-                            super(uniqueId, new SingleDate.FlatpickrSingleDateConfig(configs));
-                            this._isUpdatedInitialDateByClientAction = false;
-                        }
-                        onDateSelectedEvent(selectedDates) {
-                            let _selectedDate = '';
-                            if (selectedDates.length > 0) {
-                                _selectedDate = this.provider.formatDate(selectedDates[0], this._flatpickrOpts.dateFormat);
-                            }
-                            OSFramework.OSUI.Helper.Dom.SetInputValue(this._datePickerPlatformInputElem, _selectedDate);
-                            if (this._isUpdatedInitialDateByClientAction === false) {
-                                OSFramework.OSUI.Helper.AsyncInvocation(this._onSelectedCallbackEvent, this.widgetId, _selectedDate);
-                            }
-                            this._isUpdatedInitialDateByClientAction = false;
-                        }
-                        todayBtnClick(event) {
-                            event.preventDefault();
-                            this.provider.setDate(this.provider.now, true);
-                            this.jumpIntoToday();
-                        }
-                        updatePlatformInputAttrs() {
-                            const dateType = this.configs.TimeFormat === OSFramework.OSUI.Patterns.DatePicker.Enum.TimeFormatMode.Disable
-                                ? OSFramework.OSUI.GlobalEnum.InputTypeAttr.Date
-                                : OSFramework.OSUI.GlobalEnum.InputTypeAttr.DateTime;
-                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this._datePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.type, dateType);
-                        }
-                        build() {
-                            super.build();
-                            this.prepareConfigs();
-                            this.finishBuild();
-                        }
-                        changeProperty(propertyName, propertyValue) {
-                            var _a;
-                            let redrawAtInitialDateChange = false;
-                            if (propertyName === SingleDate.Enum.Properties.InitialDate) {
-                                const newDateValue = propertyValue;
-                                const providerSelectedDate = ((_a = this.provider) === null || _a === void 0 ? void 0 : _a.selectedDates.length) > 0
-                                    ? new Date(this.provider.selectedDates[0])
-                                    : undefined;
-                                if ((providerSelectedDate === undefined &&
-                                    OSFramework.OSUI.Helper.Dates.IsNull(newDateValue) === false) ||
-                                    providerSelectedDate.getTime() !== newDateValue.getTime()) {
-                                    redrawAtInitialDateChange = true;
-                                }
-                            }
-                            super.changeProperty(propertyName, propertyValue);
-                            if (this.isBuilt) {
-                                switch (propertyName) {
-                                    case OSFramework.OSUI.Patterns.DatePicker.Enum.Properties.DateFormat:
-                                        if (this.provider.selectedDates.length > 0) {
-                                            this.configs.InitialDate = this.provider.formatDate(this.provider.selectedDates[0], this._flatpickrOpts.dateFormat);
-                                        }
-                                        this.prepareToAndRedraw();
-                                        break;
-                                    case SingleDate.Enum.Properties.InitialDate:
-                                        if (redrawAtInitialDateChange) {
-                                            this.prepareToAndRedraw();
-                                        }
-                                        break;
-                                    case OSFramework.OSUI.Patterns.DatePicker.Enum.Properties.TimeFormat:
-                                        this.prepareToAndRedraw();
-                                        break;
-                                }
-                            }
-                        }
-                        updateInitialDate(value) {
-                            this._isUpdatedInitialDateByClientAction = true;
-                            this.configs.InitialDate = value;
-                            this.prepareToAndRedraw();
-                        }
-                    }
-                    SingleDate.OSUIFlatpickrSingleDate = OSUIFlatpickrSingleDate;
                 })(SingleDate = Flatpickr.SingleDate || (Flatpickr.SingleDate = {}));
             })(Flatpickr = Datepicker.Flatpickr || (Datepicker.Flatpickr = {}));
         })(Datepicker = OSUI.Datepicker || (OSUI.Datepicker = {}));
@@ -16571,250 +17622,6 @@ var Providers;
         (function (Dropdown) {
             var VirtualSelect;
             (function (VirtualSelect) {
-                class AbstractVirtualSelect extends OSFramework.OSUI.Patterns.Dropdown.AbstractDropdown {
-                    constructor(uniqueId, configs) {
-                        super(uniqueId, configs);
-                    }
-                    _addErrorMessage(text) {
-                        const errorMessageElement = OSFramework.OSUI.Helper.Dom.ClassSelector(this.selfElement.parentElement, VirtualSelect.Enum.CssClass.ErrorMessage);
-                        if (errorMessageElement === undefined) {
-                            const textContainer = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
-                            textContainer.classList.add(VirtualSelect.Enum.CssClass.ErrorMessage);
-                            textContainer.innerHTML = text;
-                            this.selfElement.parentElement.appendChild(textContainer);
-                        }
-                    }
-                    _manageAttributes() {
-                        this._manageDisableStatus();
-                        this.setA11YProperties();
-                    }
-                    _manageDisableStatus() {
-                        this._virtualselectConfigs.close();
-                        if (this.configs.IsDisabled) {
-                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled, '');
-                        }
-                        else {
-                            OSFramework.OSUI.Helper.Dom.Attribute.Remove(this.selfElement, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled);
-                        }
-                    }
-                    _onMouseUp(event) {
-                        event.preventDefault();
-                    }
-                    _onSelectedOption() {
-                        OSFramework.OSUI.Helper.AsyncInvocation(this._platformEventSelectedOptCallback, this.widgetId, this.getSelectedValues());
-                    }
-                    _onWindowResize() {
-                        if (this.provider.isOpened()) {
-                            this._virtualselectConfigs.close();
-                        }
-                    }
-                    _setElementId() {
-                        this.configs.ElementId = '#' + this.selfElement.id;
-                    }
-                    _setUpEvents() {
-                        this.selfElement.addEventListener(VirtualSelect.Enum.Events.Change, this._onSelectedOptionEvent);
-                        if (OSFramework.OSUI.Helper.DeviceInfo.GetBrowser() === OSFramework.OSUI.GlobalEnum.Browser.edge) {
-                            this.selfElement.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.MouseUp, this._onMouseUpEvent);
-                        }
-                        if (OSFramework.OSUI.Helper.DeviceInfo.IsDesktop) {
-                            OSFramework.OSUI.Event.GlobalEventManager.Instance.addHandler(OSFramework.OSUI.Event.Type.WindowResize, this._eventOnWindowResize);
-                        }
-                    }
-                    _unsetEvents() {
-                        this.selfElement.removeEventListener(VirtualSelect.Enum.Events.Change, this._onSelectedOptionEvent);
-                        this.selfElement.removeEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.MouseUp, this._onMouseUpEvent);
-                        OSFramework.OSUI.Event.GlobalEventManager.Instance.removeHandler(OSFramework.OSUI.Event.Type.WindowResize, this._eventOnWindowResize);
-                    }
-                    createProviderInstance() {
-                        this.provider = window.VirtualSelect.init(this._virtualselectOpts);
-                        this.provider = Array.isArray(this.provider) ? this.provider[0] : this.provider;
-                        this._virtualselectConfigs = this.provider.$ele;
-                        this.provider.$dropboxContainer.setAttribute(OSFramework.OSUI.GlobalEnum.HTMLAttributes.Name, this.uniqueId);
-                        this.updateProviderEvents({
-                            name: VirtualSelect.Enum.ProviderInfo.Name,
-                            version: VirtualSelect.Enum.ProviderInfo.Version,
-                            events: this._virtualselectConfigs,
-                        });
-                        this._manageAttributes();
-                        this.triggerPlatformEventInitialized(this._platformEventInitializedCallback);
-                    }
-                    setA11YProperties() {
-                        this.setHiddenInputWrapperAriaLabelVal();
-                    }
-                    setCallbacks() {
-                        this._eventOnWindowResize = this._onWindowResize.bind(this);
-                        this._onMouseUpEvent = this._onMouseUp.bind(this);
-                        this._onSelectedOptionEvent = this._onSelectedOption.bind(this);
-                    }
-                    setHtmlElements() {
-                        console.log(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
-                    }
-                    unsetCallbacks() {
-                        this._eventOnWindowResize = undefined;
-                        this._onSelectedOptionEvent = undefined;
-                        this._virtualselectConfigs = undefined;
-                        this._virtualselectOpts = undefined;
-                        this.provider = undefined;
-                    }
-                    unsetHtmlElements() {
-                        console.log(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
-                    }
-                    build() {
-                        super.build();
-                        this._setElementId();
-                        this.setCallbacks();
-                        this._setUpEvents();
-                        this.prepareConfigs();
-                        this.finishBuild();
-                    }
-                    changeProperty(propertyName, propertyValue) {
-                        if ((propertyName === VirtualSelect.Enum.Properties.OptionsList || propertyName === VirtualSelect.Enum.Properties.StartingSelection) &&
-                            typeof propertyValue === 'string') {
-                            propertyValue = JSON.parse(propertyValue);
-                        }
-                        super.changeProperty(propertyName, propertyValue);
-                        if (this.isBuilt) {
-                            switch (propertyName) {
-                                case OSFramework.OSUI.Patterns.Dropdown.Enum.Properties.IsDisabled:
-                                    this._manageDisableStatus();
-                                    break;
-                                case VirtualSelect.Enum.Properties.NoOptionsText:
-                                    this.redraw();
-                                    break;
-                                case VirtualSelect.Enum.Properties.NoResultsText:
-                                    this.redraw();
-                                    break;
-                                case VirtualSelect.Enum.Properties.OptionsList:
-                                    this.redraw();
-                                    break;
-                                case VirtualSelect.Enum.Properties.Prompt:
-                                    this.redraw();
-                                    break;
-                                case VirtualSelect.Enum.Properties.SearchPrompt:
-                                    this.redraw();
-                                    break;
-                                case VirtualSelect.Enum.Properties.StartingSelection:
-                                    this.setValue(propertyValue);
-                                    console.warn(`${OSFramework.OSUI.GlobalEnum.PatternName.Dropdown}: (${this.widgetId}): We recommend using the StartingSelection parameter exclusively for the initial selection and avoid changing it after initialization. To dynamically change the selected options, you should ideally use the DropdownSetValue Client Action.`);
-                                    break;
-                            }
-                        }
-                    }
-                    clear() {
-                        this._virtualselectConfigs.reset();
-                    }
-                    close() {
-                        this._virtualselectConfigs.close();
-                    }
-                    disable() {
-                        if (this.configs.IsDisabled === false) {
-                            this.configs.IsDisabled = true;
-                            this._manageDisableStatus();
-                        }
-                    }
-                    dispose() {
-                        if (this.isBuilt) {
-                            if (Array.isArray(this.provider)) {
-                                for (const element of this.provider) {
-                                    element.destroy();
-                                }
-                            }
-                            else {
-                                this.provider.destroy();
-                            }
-                        }
-                        this._unsetEvents();
-                        this.unsetCallbacks();
-                        super.dispose();
-                    }
-                    enable() {
-                        if (this.configs.IsDisabled) {
-                            this.configs.IsDisabled = false;
-                            this._manageDisableStatus();
-                        }
-                    }
-                    getSelectedValues() {
-                        let optionsSelected = this.getSelectedOptionsStructure();
-                        if (optionsSelected !== undefined && optionsSelected.length > 0) {
-                            optionsSelected = optionsSelected.map(function (option) {
-                                return Object.assign({ group_name: option.customData && option.customData.group_name ? option.customData.group_name : '', description: option.customData && option.customData.description ? option.customData.description : '' }, option);
-                            });
-                            return JSON.stringify(optionsSelected);
-                        }
-                        return '';
-                    }
-                    open() {
-                        this._virtualselectConfigs.open();
-                    }
-                    registerCallback(eventName, callback) {
-                        switch (eventName) {
-                            case OSFramework.OSUI.Patterns.Dropdown.Enum.Events.Initialized:
-                                if (this._platformEventInitializedCallback === undefined) {
-                                    this._platformEventInitializedCallback = callback;
-                                }
-                                break;
-                            case VirtualSelect.Enum.Events.OnSelected:
-                                if (this._platformEventSelectedOptCallback === undefined) {
-                                    this._platformEventSelectedOptCallback = callback;
-                                }
-                                break;
-                            default:
-                                throw new Error(`The given '${eventName}' event name it's not defined.`);
-                        }
-                    }
-                    setHiddenInputWrapperAriaLabelVal(value) {
-                        this._hiddenInputWrapperAriaLabelVal = value === undefined ? this._hiddenInputWrapperAriaLabelVal : value;
-                        OSFramework.OSUI.Helper.A11Y.AriaLabel(this.provider.$wrapper, this._hiddenInputWrapperAriaLabelVal);
-                    }
-                    setProviderConfigs(newConfigs) {
-                        this.configs.setExtensibilityConfigs(newConfigs);
-                        this.redraw();
-                    }
-                    setValue(optionsToSelect, silentOnChangedEvent = true) {
-                        const selectedValues = this.getSelectedOptionsStructure().map((value) => value.value) || [];
-                        let valuesToSelect = [];
-                        if (optionsToSelect.length > 0) {
-                            if (this._virtualselectOpts.multiple)
-                                valuesToSelect = optionsToSelect.map((option) => option.value);
-                            else
-                                valuesToSelect = [optionsToSelect[0].value];
-                        }
-                        if (valuesToSelect.sort().join(' ') !== selectedValues.sort().join(' '))
-                            this._virtualselectConfigs.setValue(valuesToSelect, silentOnChangedEvent);
-                    }
-                    togglePopup(isEnabled) {
-                        if (this.configs.ShowDropboxAsPopup !== isEnabled) {
-                            this.configs.ShowDropboxAsPopup = isEnabled;
-                            this.redraw();
-                        }
-                    }
-                    validation(isValid, validationMessage) {
-                        if (isValid === false) {
-                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.selfElement, VirtualSelect.Enum.CssClass.NotValid);
-                            this._addErrorMessage(validationMessage);
-                        }
-                        else {
-                            OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, VirtualSelect.Enum.CssClass.NotValid);
-                            const errorMessageElement = OSFramework.OSUI.Helper.Dom.ClassSelector(this.selfElement.parentElement, VirtualSelect.Enum.CssClass.ErrorMessage);
-                            if (errorMessageElement) {
-                                errorMessageElement.remove();
-                            }
-                        }
-                    }
-                }
-                VirtualSelect.AbstractVirtualSelect = AbstractVirtualSelect;
-            })(VirtualSelect = Dropdown.VirtualSelect || (Dropdown.VirtualSelect = {}));
-        })(Dropdown = OSUI.Dropdown || (OSUI.Dropdown = {}));
-    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
-})(Providers || (Providers = {}));
-var Providers;
-(function (Providers) {
-    var OSUI;
-    (function (OSUI) {
-        var Dropdown;
-        (function (Dropdown) {
-            var VirtualSelect;
-            (function (VirtualSelect) {
                 class AbstractVirtualSelectConfig extends OSFramework.OSUI.Patterns.Dropdown
                     .AbstractDropdownConfig {
                     constructor() {
@@ -17030,16 +17837,18 @@ var Providers;
                 (function (Factory) {
                     function NewVirtualSelect(dropdownId, mode, configs) {
                         let _virtualSelectItem = null;
+                        let _patternName;
                         switch (mode) {
                             case OSFramework.OSUI.Patterns.Dropdown.Enum.Mode.Search:
-                                _virtualSelectItem = new Providers.OSUI.Dropdown.VirtualSelect.Search.OSUIVirtualSelectSearch(dropdownId, configs);
+                                _patternName = OSFramework.OSUI.GlobalEnum.PatternName.DropdownSearch;
                                 break;
                             case OSFramework.OSUI.Patterns.Dropdown.Enum.Mode.Tags:
-                                _virtualSelectItem = new Providers.OSUI.Dropdown.VirtualSelect.Tags.OSUIVirtualSelectTags(dropdownId, configs);
+                                _patternName = OSFramework.OSUI.GlobalEnum.PatternName.DropdownTags;
                                 break;
                             default:
                                 throw new Error(`There is no Dropdown of ${mode} mode type`);
                         }
+                        _virtualSelectItem = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(_patternName, dropdownId, JSON.parse(configs), OSFramework.OSUI.Patterns.Dropdown.Enum.Provider.VirtualSelect);
                         return _virtualSelectItem;
                     }
                     Factory.NewVirtualSelect = NewVirtualSelect;
@@ -17065,56 +17874,6 @@ var Providers;
                             Properties["AllowMultipleSelection"] = "AllowMultipleSelection";
                         })(Properties = Enum.Properties || (Enum.Properties = {}));
                     })(Enum = Search.Enum || (Search.Enum = {}));
-                })(Search = VirtualSelect.Search || (VirtualSelect.Search = {}));
-            })(VirtualSelect = Dropdown.VirtualSelect || (Dropdown.VirtualSelect = {}));
-        })(Dropdown = OSUI.Dropdown || (OSUI.Dropdown = {}));
-    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
-})(Providers || (Providers = {}));
-var Providers;
-(function (Providers) {
-    var OSUI;
-    (function (OSUI) {
-        var Dropdown;
-        (function (Dropdown) {
-            var VirtualSelect;
-            (function (VirtualSelect) {
-                var Search;
-                (function (Search) {
-                    class OSUIVirtualSelectSearch extends VirtualSelect.AbstractVirtualSelect {
-                        constructor(uniqueId, configs) {
-                            super(uniqueId, new Search.VirtualSelectSearchConfig(configs));
-                            this._hiddenInputWrapperAriaLabelVal = this.configs.AllowMultipleSelection
-                                ? Dropdown.VirtualSelect.Enum.PropertiesValues.AriaLabelMultipleValue
-                                : Dropdown.VirtualSelect.Enum.PropertiesValues.AriaLabelSingleValue;
-                        }
-                        getSelectedOptionsStructure() {
-                            let optionsSelected = [];
-                            if (this.configs.AllowMultipleSelection) {
-                                optionsSelected = this._virtualselectConfigs.getSelectedOptions();
-                            }
-                            else {
-                                if (this._virtualselectConfigs.getSelectedOptions()) {
-                                    optionsSelected.push(this._virtualselectConfigs.getSelectedOptions());
-                                }
-                            }
-                            return optionsSelected;
-                        }
-                        prepareConfigs() {
-                            this._virtualselectOpts = this.configs.getProviderConfig();
-                            this.createProviderInstance();
-                        }
-                        changeProperty(propertyName, propertyValue) {
-                            super.changeProperty(propertyName, propertyValue);
-                            if (this.isBuilt) {
-                                switch (propertyName) {
-                                    case Search.Enum.Properties.AllowMultipleSelection:
-                                        this.redraw();
-                                        break;
-                                }
-                            }
-                        }
-                    }
-                    Search.OSUIVirtualSelectSearch = OSUIVirtualSelectSearch;
                 })(Search = VirtualSelect.Search || (VirtualSelect.Search = {}));
             })(VirtualSelect = Dropdown.VirtualSelect || (Dropdown.VirtualSelect = {}));
         })(Dropdown = OSUI.Dropdown || (OSUI.Dropdown = {}));
@@ -17181,36 +17940,6 @@ var Providers;
             (function (VirtualSelect) {
                 var Tags;
                 (function (Tags) {
-                    class OSUIVirtualSelectTags extends VirtualSelect.AbstractVirtualSelect {
-                        constructor(uniqueId, configs) {
-                            super(uniqueId, new Tags.VirtualSelectTagsConfig(configs));
-                            this._hiddenInputWrapperAriaLabelVal = Dropdown.VirtualSelect.Enum.PropertiesValues.AriaLabelMultipleValue;
-                        }
-                        getSelectedOptionsStructure() {
-                            const optionsSelected = this._virtualselectConfigs.getSelectedOptions();
-                            return optionsSelected;
-                        }
-                        prepareConfigs() {
-                            this._virtualselectOpts = this.configs.getProviderConfig();
-                            this.createProviderInstance();
-                        }
-                    }
-                    Tags.OSUIVirtualSelectTags = OSUIVirtualSelectTags;
-                })(Tags = VirtualSelect.Tags || (VirtualSelect.Tags = {}));
-            })(VirtualSelect = Dropdown.VirtualSelect || (Dropdown.VirtualSelect = {}));
-        })(Dropdown = OSUI.Dropdown || (OSUI.Dropdown = {}));
-    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
-})(Providers || (Providers = {}));
-var Providers;
-(function (Providers) {
-    var OSUI;
-    (function (OSUI) {
-        var Dropdown;
-        (function (Dropdown) {
-            var VirtualSelect;
-            (function (VirtualSelect) {
-                var Tags;
-                (function (Tags) {
                     class VirtualSelectTagsConfig extends VirtualSelect.AbstractVirtualSelectConfig {
                         _getSelectedValues() {
                             const selectedKeyvalues = [];
@@ -17246,177 +17975,6 @@ var Providers;
                 Flatpickr.ErrorCodes = {
                     FailSetLocale: 'OSUI-PRO-01001',
                 };
-            })(Flatpickr = MonthPicker.Flatpickr || (MonthPicker.Flatpickr = {}));
-        })(MonthPicker = OSUI.MonthPicker || (OSUI.MonthPicker = {}));
-    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
-})(Providers || (Providers = {}));
-var Providers;
-(function (Providers) {
-    var OSUI;
-    (function (OSUI) {
-        var MonthPicker;
-        (function (MonthPicker) {
-            var Flatpickr;
-            (function (Flatpickr) {
-                class OSUIFlatpickrMonth extends OSFramework.OSUI.Patterns.MonthPicker.AbstractMonthPicker {
-                    constructor(uniqueId, configs) {
-                        super(uniqueId, new Flatpickr.FlatpickrMonthConfig(configs));
-                        this.configs.OnChange = this.onMonthSelectedEvent.bind(this);
-                    }
-                    _setAttributes() {
-                        this._flatpickrInputElem = this._monthPickerProviderInputElem.nextSibling;
-                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.DataInput, OSFramework.OSUI.Constants.EmptyString);
-                    }
-                    _setCalendarCssClasses() {
-                        OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.provider.calendarContainer, OSFramework.OSUI.Patterns.MonthPicker.Enum.CssClass.Dropdown);
-                        if (OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.InputClassTypes.InputLarge)) {
-                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.provider.calendarContainer, OSFramework.OSUI.Patterns.Dropdown.Enum.CssClass.DropdownLarge);
-                        }
-                        else if (OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.InputClassTypes.InputSmall)) {
-                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.provider.calendarContainer, OSFramework.OSUI.Patterns.Dropdown.Enum.CssClass.DropdownSmall);
-                        }
-                        if (this.configs.ExtendedClass !== '') {
-                            OSFramework.OSUI.Helper.Dom.Styles.ExtendedClass(this.provider.calendarContainer, '', this.configs.ExtendedClass);
-                        }
-                    }
-                    createProviderInstance() {
-                        if (this._monthPickerProviderInputElem && this._flatpickrOpts.defaultDate === undefined) {
-                            this._monthPickerProviderInputElem.value = '';
-                        }
-                        this.provider = window.flatpickr(this._monthPickerProviderInputElem, this._flatpickrOpts);
-                        this._setAttributes();
-                        if (this.provider.calendarContainer !== undefined) {
-                            this._setCalendarCssClasses();
-                            this._bodyScrollCommonBehaviour = new OSUI.SharedProviderResources.Flatpickr.UpdatePositionOnScroll(this);
-                            this._zindexCommonBehavior = new OSUI.SharedProviderResources.Flatpickr.UpdateZindex(this);
-                        }
-                        this.createdInstance();
-                    }
-                    createdInstance() {
-                        this.updateProviderEvents({
-                            name: OSUI.SharedProviderResources.Flatpickr.Enum.ProviderInfo.Name,
-                            version: OSUI.SharedProviderResources.Flatpickr.Enum.ProviderInfo.Version,
-                            events: this.provider.config,
-                        });
-                        this.triggerPlatformEventInitialized(this._onInitializeCallbackEvent);
-                    }
-                    onMonthSelectedEvent(selectedMonthYear) {
-                        const _selectedMonthYear = {
-                            month: OSFramework.OSUI.Constants.EmptyString,
-                            monthOrder: OSFramework.OSUI.Constants.InvalidNumber,
-                            year: OSFramework.OSUI.Constants.InvalidNumber,
-                        };
-                        if (selectedMonthYear.length > 0) {
-                            const _selectedDate = new Date(selectedMonthYear[0]);
-                            const _selectedMonthIndex = _selectedDate.getMonth();
-                            _selectedMonthYear.month = OSFramework.OSUI.Constants.Months[_selectedMonthIndex];
-                            _selectedMonthYear.monthOrder = _selectedMonthIndex + 1;
-                            _selectedMonthYear.year = _selectedDate.getFullYear();
-                        }
-                        OSFramework.OSUI.Helper.AsyncInvocation(this._onSelectedCallbackEvent, this.widgetId, _selectedMonthYear.month, _selectedMonthYear.monthOrder, _selectedMonthYear.year);
-                    }
-                    prepareConfigs() {
-                        this._flatpickrOpts = this.configs.getProviderConfig();
-                        this.createProviderInstance();
-                    }
-                    setA11YProperties() {
-                        console.warn(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
-                    }
-                    setCallbacks() {
-                        console.log(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
-                    }
-                    setHtmlElements() {
-                        this._monthPickerProviderInputElem = this.selfElement.querySelector(OSFramework.OSUI.GlobalEnum.CSSSelectors.InputFormControl);
-                        if (!this._monthPickerProviderInputElem) {
-                            throw new Error(`The monthpicker input at MonthpickerId '${this.widgetId}' is missing`);
-                        }
-                    }
-                    unsetCallbacks() {
-                        this.configs.OnChange = undefined;
-                        this._onInitializeCallbackEvent = undefined;
-                        this._onSelectedCallbackEvent = undefined;
-                    }
-                    unsetHtmlElements() {
-                        this._monthPickerProviderInputElem = undefined;
-                    }
-                    build() {
-                        super.build();
-                        this.setHtmlElements();
-                        this.prepareConfigs();
-                        this.finishBuild();
-                    }
-                    changeProperty(propertyName, propertyValue) {
-                        const oldExtendedClass = this.configs.ExtendedClass;
-                        super.changeProperty(propertyName, propertyValue);
-                        if (this.isBuilt) {
-                            switch (propertyName) {
-                                case OSFramework.OSUI.Patterns.MonthPicker.Enum.Properties.InitialMonth:
-                                case OSFramework.OSUI.Patterns.MonthPicker.Enum.Properties.DateFormat:
-                                case OSFramework.OSUI.Patterns.MonthPicker.Enum.Properties.MaxMonth:
-                                case OSFramework.OSUI.Patterns.MonthPicker.Enum.Properties.MinMonth:
-                                    this.redraw();
-                                    break;
-                                case OSFramework.OSUI.GlobalEnum.CommonPatternsProperties.ExtendedClass:
-                                    OSFramework.OSUI.Helper.Dom.Styles.ExtendedClass(this.provider.calendarContainer, oldExtendedClass, propertyValue);
-                                    break;
-                            }
-                        }
-                    }
-                    clear() {
-                        this.provider.clear();
-                    }
-                    close() {
-                        if (this.provider.isOpen) {
-                            this.provider.close();
-                        }
-                    }
-                    dispose() {
-                        if (this.isBuilt) {
-                            this.unsetCallbacks();
-                            this.unsetHtmlElements();
-                            if (this._bodyScrollCommonBehaviour !== undefined) {
-                                this._bodyScrollCommonBehaviour.dispose();
-                                this._bodyScrollCommonBehaviour = undefined;
-                            }
-                            OSFramework.OSUI.Helper.AsyncInvocation(this.provider.destroy);
-                        }
-                        super.dispose();
-                    }
-                    open() {
-                        if (this.provider.isOpen === false) {
-                            this.provider.open();
-                        }
-                    }
-                    registerCallback(eventName, callback) {
-                        switch (eventName) {
-                            case OSFramework.OSUI.Patterns.MonthPicker.Enum.Events.OnSelected:
-                                this._onSelectedCallbackEvent = callback;
-                                break;
-                            case OSFramework.OSUI.Patterns.MonthPicker.Enum.Events.OnInitialized:
-                                this._onInitializeCallbackEvent = callback;
-                                break;
-                            default:
-                                throw new Error(`The given '${eventName}' event name it's not defined.`);
-                        }
-                    }
-                    setEditableInput(isEditable) {
-                        if (this.configs.AllowInput !== isEditable) {
-                            this.configs.AllowInput = isEditable;
-                            this.redraw();
-                        }
-                    }
-                    setLanguage(value) {
-                        this.configs.Lang = value.toLowerCase();
-                        if (this.provider !== undefined) {
-                            this.redraw();
-                        }
-                    }
-                    setProviderConfigs(newConfigs) {
-                        this.configs.setExtensibilityConfigs(newConfigs);
-                        this.redraw();
-                    }
-                }
-                Flatpickr.OSUIFlatpickrMonth = OSUIFlatpickrMonth;
             })(Flatpickr = MonthPicker.Flatpickr || (MonthPicker.Flatpickr = {}));
         })(MonthPicker = OSUI.MonthPicker || (OSUI.MonthPicker = {}));
     })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
@@ -17521,169 +18079,6 @@ var Providers;
                 Flatpickr.FlatpickrMonthConfig = FlatpickrMonthConfig;
             })(Flatpickr = MonthPicker.Flatpickr || (MonthPicker.Flatpickr = {}));
         })(MonthPicker = OSUI.MonthPicker || (OSUI.MonthPicker = {}));
-    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
-})(Providers || (Providers = {}));
-var Providers;
-(function (Providers) {
-    var OSUI;
-    (function (OSUI) {
-        var RangeSlider;
-        (function (RangeSlider) {
-            var NoUISlider;
-            (function (NoUISlider) {
-                class AbstractNoUiSlider extends OSFramework.OSUI.Patterns.RangeSlider.AbstractRangeSlider {
-                    constructor(uniqueId, configs) {
-                        super(uniqueId, configs);
-                        this.throttleTimeValue = 200;
-                        this.throttleTimer = undefined;
-                        this._isInterval =
-                            this.configs.rangeSliderMode === OSFramework.OSUI.Patterns.RangeSlider.Enum.Mode.Interval;
-                    }
-                    _setIsDisabled(isDisabled) {
-                        if (isDisabled) {
-                            OSFramework.OSUI.Helper.Dom.Disable(this._rangeSliderProviderElem);
-                        }
-                        else {
-                            OSFramework.OSUI.Helper.Dom.Enable(this._rangeSliderProviderElem);
-                        }
-                    }
-                    _setOnValueChangeEvent(changeEvent) {
-                        this.provider.on(changeEvent, this.eventProviderValueChanged);
-                    }
-                    _setSize() {
-                        if (this.configs.Size.includes('%') && parseFloat(this.configs.Size) > 100) {
-                            this.configs.Size = OSFramework.OSUI.Patterns.RangeSlider.Enum.DefaultValues.PercentualSize;
-                            console.warn(`The value of the Size property on the '${this.widgetId}' ${OSFramework.OSUI.GlobalEnum.PatternName.RangeSlider} can't be smaller than '${OSFramework.OSUI.Patterns.RangeSlider.Enum.DefaultValues.PercentualSize}'.`);
-                        }
-                        OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, OSFramework.OSUI.Patterns.RangeSlider.Enum.CssProperties.Size, this.configs.Size);
-                    }
-                    _updateRangeValues() {
-                        this.provider.updateOptions({
-                            range: this.configs.getRangeConfig(),
-                        });
-                        if (this.configs.ShowTickMarks) {
-                            this.provider.updateOptions({ pips: this.configs.getPipsConfig() });
-                        }
-                    }
-                    createProviderInstance() {
-                        this.setInitialStates();
-                        this.provider = window.noUiSlider.create(this._rangeSliderProviderElem, this.noUiSliderOpts);
-                        this.updateProviderEvents({
-                            name: RangeSlider.NoUiSlider.Enum.ProviderInfo.Name,
-                            version: RangeSlider.NoUiSlider.Enum.ProviderInfo.Version,
-                            events: this.provider,
-                        });
-                        this.setInitialCSSClasses();
-                        this._setOnValueChangeEvent(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Slide);
-                        this.triggerPlatformEventInitialized(this.platformEventInitialize);
-                    }
-                    setHtmlElements() {
-                        this._rangeSliderProviderElem = OSFramework.OSUI.Helper.Dom.ClassSelector(this.selfElement, OSFramework.OSUI.Patterns.RangeSlider.Enum.CssClass.RangeSliderProviderElem);
-                    }
-                    setInitialCSSClasses() {
-                        if (this.configs.Orientation === OSFramework.OSUI.GlobalEnum.Orientation.Vertical) {
-                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.selfElement, OSFramework.OSUI.Patterns.RangeSlider.Enum.CssClass.ClassModifier +
-                                OSFramework.OSUI.GlobalEnum.Orientation.Vertical);
-                        }
-                        else if (OSFramework.OSUI.GlobalEnum.Orientation.Horizontal) {
-                            OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, OSFramework.OSUI.Patterns.RangeSlider.Enum.CssClass.ClassModifier +
-                                OSFramework.OSUI.GlobalEnum.Orientation.Vertical);
-                        }
-                        if (this.configs.ShowTickMarks) {
-                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.selfElement, OSFramework.OSUI.Patterns.RangeSlider.Enum.CssClass.HasTicks);
-                        }
-                        else {
-                            OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, OSFramework.OSUI.Patterns.RangeSlider.Enum.CssClass.HasTicks);
-                        }
-                    }
-                    setInitialStates() {
-                        this._setSize();
-                        this._setIsDisabled(this.configs.IsDisabled);
-                    }
-                    unsetCallbacks() {
-                        this.eventProviderValueChanged = undefined;
-                    }
-                    unsetHtmlElements() {
-                        this._rangeSliderProviderElem = undefined;
-                    }
-                    build() {
-                        super.build();
-                        this.setHtmlElements();
-                    }
-                    changeProperty(propertyName, propertyValue) {
-                        super.changeProperty(propertyName, propertyValue);
-                        if (this.isBuilt) {
-                            switch (propertyName) {
-                                case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.MinValue:
-                                case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.MaxValue:
-                                    this._updateRangeValues();
-                                    break;
-                                case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.Orientation:
-                                    this.redraw();
-                                    break;
-                                case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.IsDisabled:
-                                    this._setIsDisabled(this.configs.IsDisabled);
-                                    break;
-                                case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.TickMarksInterval:
-                                    this.provider.updateOptions({ pips: this.configs.getPipsConfig() });
-                                    break;
-                                case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.Step:
-                                    this.provider.updateOptions({ step: this.configs.Step });
-                                    break;
-                                case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.Size:
-                                    this._setSize();
-                                    break;
-                                case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.ShowFloatingLabel:
-                                    this.provider.updateOptions({ tooltips: this.configs.getTooltipFormat() });
-                                    break;
-                            }
-                        }
-                    }
-                    disable() {
-                        this._setIsDisabled(true);
-                    }
-                    dispose() {
-                        if (this.isBuilt) {
-                            this.unsetCallbacks();
-                            this.unsetHtmlElements();
-                            this.provider.destroy();
-                        }
-                        super.dispose();
-                    }
-                    enable() {
-                        this._setIsDisabled(false);
-                    }
-                    getValue() {
-                        return this.provider.get();
-                    }
-                    registerCallback(eventName, callback) {
-                        switch (eventName) {
-                            case OSFramework.OSUI.Patterns.RangeSlider.Enum.RangeSliderEvents.OnInitialize:
-                                if (this.platformEventInitialize === undefined) {
-                                    this.platformEventInitialize = callback;
-                                }
-                                break;
-                            case OSFramework.OSUI.Patterns.RangeSlider.Enum.RangeSliderEvents.OnValueChange:
-                                if (this.platformEventValueChange === undefined) {
-                                    this.platformEventValueChange = callback;
-                                }
-                                break;
-                            default:
-                                throw new Error(`${OSFramework.OSUI.ErrorCodes.RangeSlider.FailRegisterCallback}:	The given '${eventName}' event name is not defined.`);
-                        }
-                    }
-                    setProviderConfigs(newConfigs) {
-                        this.configs.setExtensibilityConfigs(newConfigs);
-                        this.redraw();
-                    }
-                    setRangeIntervalChangeOnDragEnd() {
-                        this.provider.off(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Slide, this.eventProviderValueChanged);
-                        this._setOnValueChangeEvent(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Change);
-                    }
-                }
-                NoUISlider.AbstractNoUiSlider = AbstractNoUiSlider;
-            })(NoUISlider = RangeSlider.NoUISlider || (RangeSlider.NoUISlider = {}));
-        })(RangeSlider = OSUI.RangeSlider || (OSUI.RangeSlider = {}));
     })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
 })(Providers || (Providers = {}));
 var Providers;
@@ -17814,16 +18209,18 @@ var Providers;
                 (function (Factory) {
                     function NewNoUiSlider(rangeSliderId, configs, mode) {
                         let _rangeSliderItem = null;
+                        let _patternName;
                         switch (mode) {
                             case OSFramework.OSUI.Patterns.RangeSlider.Enum.Mode.Single:
-                                _rangeSliderItem = new Providers.OSUI.RangeSlider.NoUISlider.SingleSlider.OSUINoUiSliderSingle(rangeSliderId, JSON.parse(configs));
+                                _patternName = OSFramework.OSUI.GlobalEnum.PatternName.RangeSlider;
                                 break;
                             case OSFramework.OSUI.Patterns.RangeSlider.Enum.Mode.Interval:
-                                _rangeSliderItem = new Providers.OSUI.RangeSlider.NoUISlider.IntervalSlider.OSUINoUiSliderInterval(rangeSliderId, JSON.parse(configs));
+                                _patternName = OSFramework.OSUI.GlobalEnum.PatternName.RangeSliderInterval;
                                 break;
                             default:
                                 throw new Error(`There is no RangeSlider of ${mode} type`);
                         }
+                        _rangeSliderItem = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(_patternName, rangeSliderId, JSON.parse(configs), OSFramework.OSUI.Patterns.RangeSlider.Enum.Provider.NoUiSlider);
                         return _rangeSliderItem;
                     }
                     Factory.NewNoUiSlider = NewNoUiSlider;
@@ -17870,101 +18267,6 @@ var Providers;
         (function (RangeSlider) {
             var NoUISlider;
             (function (NoUISlider) {
-                var IntervalSlider;
-                (function (IntervalSlider) {
-                    class OSUINoUiSliderInterval extends NoUISlider.AbstractNoUiSlider {
-                        constructor(uniqueId, configs) {
-                            super(uniqueId, new NoUISlider.SliderInterval.NoUiSliderIntervalConfig(configs));
-                        }
-                        _valueChangeCallback(value) {
-                            if (value !== undefined) {
-                                this.configs.StartingValueFrom = value[0];
-                                this.configs.StartingValueTo = value[1];
-                            }
-                            if (this.throttleTimer === undefined) {
-                                this.throttleTimer = setTimeout(() => {
-                                    this.platformEventValueChange(this.widgetId, this.configs.StartingValueFrom, this.configs.StartingValueTo);
-                                    this.throttleTimer = undefined;
-                                }, this.throttleTimeValue);
-                            }
-                        }
-                        prepareConfigs() {
-                            this.noUiSliderOpts = this.configs.getProviderConfig();
-                            this.createProviderInstance();
-                        }
-                        redraw() {
-                            const value = this.getValue();
-                            this.configs.StartingValueFrom = value[0];
-                            this.configs.StartingValueTo = value[1];
-                            super.redraw();
-                        }
-                        setA11YProperties() {
-                            this.noUiSliderOpts.handleAttributes = [
-                                { 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Lower },
-                                { 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Upper },
-                            ];
-                        }
-                        setCallbacks() {
-                            this.eventProviderValueChanged = this._valueChangeCallback.bind(this);
-                        }
-                        build() {
-                            super.build();
-                            this.setCallbacks();
-                            this.prepareConfigs();
-                            this.setA11YProperties();
-                            this.finishBuild();
-                        }
-                        changeProperty(propertyName, propertyValue) {
-                            super.changeProperty(propertyName, propertyValue);
-                            if (this.isBuilt) {
-                                switch (propertyName) {
-                                    case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.StartingValueFrom:
-                                        this.setValue(propertyValue, this.configs.StartingValueTo);
-                                        console.warn(`${OSFramework.OSUI.GlobalEnum.PatternName.RangeSliderInterval}: (${this.widgetId}): You should use a distinct variable to assign on the OnValueChange event. Any updates to ${OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.InitialValueFrom} parameter should ideally be made using the SetRangeSliderIntervalValue Client Action.`);
-                                        break;
-                                    case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.StartingValueTo:
-                                        this.setValue(this.configs.StartingValueFrom, propertyValue);
-                                        console.warn(`${OSFramework.OSUI.GlobalEnum.PatternName.RangeSliderInterval}: (${this.widgetId}): You should use a distinct variable to assign on the OnValueChange event. Any updates to ${OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.InitialValueTo} parameter should ideally be made using the SetRangeSliderIntervalValue Client Action.`);
-                                        break;
-                                    case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
-                                        this.redraw();
-                                        break;
-                                }
-                            }
-                        }
-                        resetValue() {
-                            this.configs.StartingValueFrom = this.configs.InitialValueFrom;
-                            this.configs.StartingValueTo = this.configs.InitialValueTo;
-                            this.provider.set([this.configs.InitialValueFrom, this.configs.InitialValueTo]);
-                        }
-                        setValue(intervalStart, intervalEnd) {
-                            if (intervalStart < intervalEnd) {
-                                this.configs.StartingValueFrom = intervalStart;
-                                this.configs.StartingValueTo = intervalEnd;
-                                this.provider.set([intervalStart, intervalEnd]);
-                            }
-                            else if (intervalStart > this.configs.MinValue && intervalEnd < this.configs.MaxValue) {
-                                throw new Error(`${OSFramework.OSUI.ErrorCodes.RangeSlider.FailSetValue}: The values must be within the specified range.`);
-                            }
-                            else {
-                                throw new Error(`${OSFramework.OSUI.ErrorCodes.RangeSlider.FailSetValue}: The start value cannot be bigger than the end value.`);
-                            }
-                        }
-                    }
-                    IntervalSlider.OSUINoUiSliderInterval = OSUINoUiSliderInterval;
-                })(IntervalSlider = NoUISlider.IntervalSlider || (NoUISlider.IntervalSlider = {}));
-            })(NoUISlider = RangeSlider.NoUISlider || (RangeSlider.NoUISlider = {}));
-        })(RangeSlider = OSUI.RangeSlider || (OSUI.RangeSlider = {}));
-    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
-})(Providers || (Providers = {}));
-var Providers;
-(function (Providers) {
-    var OSUI;
-    (function (OSUI) {
-        var RangeSlider;
-        (function (RangeSlider) {
-            var NoUISlider;
-            (function (NoUISlider) {
                 var SliderInterval;
                 (function (SliderInterval) {
                     class NoUiSliderIntervalConfig extends Providers.OSUI.RangeSlider.NoUiSlider.AbstractNoUiSliderConfig {
@@ -17982,89 +18284,6 @@ var Providers;
                     }
                     SliderInterval.NoUiSliderIntervalConfig = NoUiSliderIntervalConfig;
                 })(SliderInterval = NoUISlider.SliderInterval || (NoUISlider.SliderInterval = {}));
-            })(NoUISlider = RangeSlider.NoUISlider || (RangeSlider.NoUISlider = {}));
-        })(RangeSlider = OSUI.RangeSlider || (OSUI.RangeSlider = {}));
-    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
-})(Providers || (Providers = {}));
-var Providers;
-(function (Providers) {
-    var OSUI;
-    (function (OSUI) {
-        var RangeSlider;
-        (function (RangeSlider) {
-            var NoUISlider;
-            (function (NoUISlider) {
-                var SingleSlider;
-                (function (SingleSlider) {
-                    class OSUINoUiSliderSingle extends NoUISlider.AbstractNoUiSlider {
-                        constructor(uniqueId, configs) {
-                            super(uniqueId, new NoUISlider.SliderSingle.NoUiSliderSingleConfig(configs));
-                        }
-                        _valueChangeCallback(value) {
-                            if (value !== undefined) {
-                                this.configs.StartingValueFrom = value[0];
-                            }
-                            if (this.throttleTimer === undefined) {
-                                this.throttleTimer = setTimeout(() => {
-                                    this.platformEventValueChange(this.widgetId, this.configs.StartingValueFrom, undefined);
-                                    this.throttleTimer = undefined;
-                                }, this.throttleTimeValue);
-                            }
-                        }
-                        prepareConfigs() {
-                            this.noUiSliderOpts = this.configs.getProviderConfig();
-                            this.createProviderInstance();
-                        }
-                        redraw() {
-                            const value = this.getValue();
-                            this.configs.StartingValueFrom = value;
-                            super.redraw();
-                        }
-                        setA11YProperties() {
-                            this.noUiSliderOpts.handleAttributes = [
-                                { 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Single },
-                            ];
-                        }
-                        setCallbacks() {
-                            this.eventProviderValueChanged = this._valueChangeCallback.bind(this);
-                        }
-                        build() {
-                            super.build();
-                            this.setCallbacks();
-                            this.prepareConfigs();
-                            this.setA11YProperties();
-                            this.finishBuild();
-                        }
-                        changeProperty(propertyName, propertyValue) {
-                            super.changeProperty(propertyName, propertyValue);
-                            if (this.isBuilt) {
-                                switch (propertyName) {
-                                    case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.StartingValueFrom:
-                                        this.setValue(propertyValue);
-                                        console.warn(`${OSFramework.OSUI.GlobalEnum.PatternName.RangeSlider}: (${this.widgetId}): You should use a distinct variable to assign on the OnValueChange event. Any updates to ${OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.InitialValueFrom} parameter should ideally be made using the SetRangeSliderValue Client Action.`);
-                                        break;
-                                    case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
-                                        this.redraw();
-                                        break;
-                                }
-                            }
-                        }
-                        resetValue() {
-                            this.configs.StartingValueFrom = this.configs.InitialValueFrom;
-                            this.provider.set(this.configs.InitialValueFrom);
-                        }
-                        setValue(value) {
-                            if (value >= this.configs.MinValue && value <= this.configs.MaxValue) {
-                                this.configs.StartingValueFrom = value;
-                                this.provider.set(value);
-                            }
-                            else {
-                                throw new Error(`${OSFramework.OSUI.ErrorCodes.RangeSlider.FailSetValue}: The value must be between the minimum value and maximum value set.`);
-                            }
-                        }
-                    }
-                    SingleSlider.OSUINoUiSliderSingle = OSUINoUiSliderSingle;
-                })(SingleSlider = NoUISlider.SingleSlider || (NoUISlider.SingleSlider = {}));
             })(NoUISlider = RangeSlider.NoUISlider || (RangeSlider.NoUISlider = {}));
         })(RangeSlider = OSUI.RangeSlider || (OSUI.RangeSlider = {}));
     })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
@@ -18236,180 +18455,6 @@ var Providers;
                 Flatpickr.ErrorCodes = {
                     FailSetLocale: 'OSUI-PRO-02001',
                 };
-            })(Flatpickr = TimePicker.Flatpickr || (TimePicker.Flatpickr = {}));
-        })(TimePicker = OSUI.TimePicker || (OSUI.TimePicker = {}));
-    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
-})(Providers || (Providers = {}));
-var Providers;
-(function (Providers) {
-    var OSUI;
-    (function (OSUI) {
-        var TimePicker;
-        (function (TimePicker) {
-            var Flatpickr;
-            (function (Flatpickr) {
-                class OSUIFlatpickrTime extends OSFramework.OSUI.Patterns.TimePicker.AbstractTimePicker {
-                    constructor(uniqueId, configs) {
-                        super(uniqueId, new Flatpickr.FlatpickrTimeConfig(configs));
-                        this.configs.OnChange = this.onTimeSelectedEvent.bind(this);
-                    }
-                    _setAttributes() {
-                        this._flatpickrInputElem = this._timePickerProviderInputElem.nextSibling;
-                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.DataInput, '');
-                    }
-                    _setCalendarCssClasses() {
-                        OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.provider.calendarContainer, OSFramework.OSUI.Patterns.TimePicker.Enum.CssClass.Dropdown);
-                        if (OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.InputClassTypes.InputLarge)) {
-                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.provider.calendarContainer, OSFramework.OSUI.Patterns.Dropdown.Enum.CssClass.DropdownLarge);
-                        }
-                        else if (OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.InputClassTypes.InputSmall)) {
-                            OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.provider.calendarContainer, OSFramework.OSUI.Patterns.Dropdown.Enum.CssClass.DropdownSmall);
-                        }
-                        if (this.configs.ExtendedClass !== '') {
-                            OSFramework.OSUI.Helper.Dom.Styles.ExtendedClass(this.provider.calendarContainer, '', this.configs.ExtendedClass);
-                        }
-                    }
-                    createProviderInstance() {
-                        if (this._timePickerProviderInputElem && this._flatpickrOpts.defaultDate === undefined) {
-                            this._timePickerProviderInputElem.value = '';
-                        }
-                        this.provider = window.flatpickr(this._timePickerProviderInputElem, this._flatpickrOpts);
-                        this._setAttributes();
-                        if (this.provider.calendarContainer !== undefined) {
-                            this._setCalendarCssClasses();
-                            this._bodyScrollCommonBehaviour = new OSUI.SharedProviderResources.Flatpickr.UpdatePositionOnScroll(this);
-                            this._zindexCommonBehavior = new OSUI.SharedProviderResources.Flatpickr.UpdateZindex(this);
-                        }
-                        this.createdInstance();
-                    }
-                    createdInstance() {
-                        this.updateProviderEvents({
-                            name: OSUI.SharedProviderResources.Flatpickr.Enum.ProviderInfo.Name,
-                            version: OSUI.SharedProviderResources.Flatpickr.Enum.ProviderInfo.Version,
-                            events: this.provider.config,
-                        });
-                        this.triggerPlatformEventInitialized(this._onInitializeCallbackEvent);
-                    }
-                    onTimeSelectedEvent(selectedTime) {
-                        let _selectedTime = '';
-                        if (selectedTime.length > 0) {
-                            _selectedTime = this.provider.formatDate(selectedTime[0], this._flatpickrOpts.dateFormat);
-                        }
-                        OSFramework.OSUI.Helper.AsyncInvocation(this._onChangeCallbackEvent, this.widgetId, _selectedTime);
-                    }
-                    prepareConfigs() {
-                        this._flatpickrOpts = this.configs.getProviderConfig();
-                        this.createProviderInstance();
-                    }
-                    setA11YProperties() {
-                        console.warn(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
-                    }
-                    setCallbacks() {
-                        console.log(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
-                    }
-                    setHtmlElements() {
-                        this._timePickerProviderInputElem = this.selfElement.querySelector(OSFramework.OSUI.GlobalEnum.CSSSelectors.InputFormControl);
-                        if (!this._timePickerProviderInputElem) {
-                            throw new Error(`The timepicker input at TimepickerId '${this.widgetId}' is missing`);
-                        }
-                    }
-                    unsetCallbacks() {
-                        this.configs.OnChange = undefined;
-                        this._onInitializeCallbackEvent = undefined;
-                        this._onChangeCallbackEvent = undefined;
-                    }
-                    unsetHtmlElements() {
-                        this._timePickerProviderInputElem = undefined;
-                    }
-                    build() {
-                        super.build();
-                        this.setHtmlElements();
-                        this.prepareConfigs();
-                        this.finishBuild();
-                    }
-                    changeProperty(propertyName, propertyValue) {
-                        const oldExtendedClass = this.configs.ExtendedClass;
-                        super.changeProperty(propertyName, propertyValue);
-                        if (this.isBuilt) {
-                            switch (propertyName) {
-                                case OSFramework.OSUI.Patterns.TimePicker.Enum.Properties.InitialTime:
-                                case OSFramework.OSUI.Patterns.TimePicker.Enum.Properties.Is24Hours:
-                                case OSFramework.OSUI.Patterns.TimePicker.Enum.Properties.MaxTime:
-                                case OSFramework.OSUI.Patterns.TimePicker.Enum.Properties.MinTime:
-                                case OSFramework.OSUI.Patterns.TimePicker.Enum.Properties.TimeFormat:
-                                    this.redraw();
-                                    break;
-                                case OSFramework.OSUI.GlobalEnum.CommonPatternsProperties.ExtendedClass:
-                                    OSFramework.OSUI.Helper.Dom.Styles.ExtendedClass(this.provider.calendarContainer, oldExtendedClass, propertyValue);
-                                    break;
-                            }
-                        }
-                    }
-                    clear() {
-                        this.provider.clear();
-                    }
-                    close() {
-                        if (this.provider.isOpen) {
-                            this.provider.close();
-                        }
-                    }
-                    dispose() {
-                        if (this.isBuilt) {
-                            this.unsetCallbacks();
-                            this.unsetHtmlElements();
-                            if (this._bodyScrollCommonBehaviour !== undefined) {
-                                this._bodyScrollCommonBehaviour.dispose();
-                                this._bodyScrollCommonBehaviour = undefined;
-                            }
-                            OSFramework.OSUI.Helper.AsyncInvocation(this.provider.destroy);
-                        }
-                        super.dispose();
-                    }
-                    open() {
-                        if (this.provider.isOpen === false) {
-                            this.provider.open();
-                        }
-                    }
-                    registerCallback(eventName, callback) {
-                        switch (eventName) {
-                            case OSFramework.OSUI.Patterns.TimePicker.Enum.TimePickerEvents.OnChange:
-                                this._onChangeCallbackEvent = callback;
-                                break;
-                            case OSFramework.OSUI.Patterns.TimePicker.Enum.TimePickerEvents.OnInitialized:
-                                this._onInitializeCallbackEvent = callback;
-                                break;
-                            default:
-                                throw new Error(`The given '${eventName}' event name it's not defined.`);
-                        }
-                    }
-                    setEditableInput(isEditable) {
-                        if (this.configs.AllowInput !== isEditable) {
-                            this.configs.AllowInput = isEditable;
-                            this.redraw();
-                        }
-                    }
-                    setLanguage(value) {
-                        this.configs.Lang = value.toLowerCase();
-                        if (this.provider !== undefined) {
-                            this.redraw();
-                        }
-                    }
-                    setProviderConfigs(newConfigs) {
-                        this.configs.setExtensibilityConfigs(newConfigs);
-                        this.redraw();
-                    }
-                    toggleNativeBehavior(isNative) {
-                        if (this.configs.DisableMobile !== !isNative) {
-                            this.configs.DisableMobile = !isNative;
-                            this.redraw();
-                        }
-                    }
-                    updateInitialTime(value) {
-                        this.configs.InitialTime = value;
-                        this.redraw();
-                    }
-                }
-                Flatpickr.OSUIFlatpickrTime = OSUIFlatpickrTime;
             })(Flatpickr = TimePicker.Flatpickr || (TimePicker.Flatpickr = {}));
         })(TimePicker = OSUI.TimePicker || (OSUI.TimePicker = {}));
     })(OSUI = Providers.OSUI || (Providers.OSUI = {}));

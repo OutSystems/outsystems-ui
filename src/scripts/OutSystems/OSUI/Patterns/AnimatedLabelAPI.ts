@@ -41,29 +41,15 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 			);
 		}
 
-		const _newAnimatedLabel = new OSFramework.OSUI.Patterns.AnimatedLabel.AnimatedLabel(
+		const _newAnimatedLabel = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(
+			OSFramework.OSUI.GlobalEnum.PatternName.AnimatedLabel,
 			animatedLabelId,
 			JSON.parse(configs)
-		);
+		) as OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel;
 
 		_animatedLabelsMap.set(animatedLabelId, _newAnimatedLabel);
 
 		return _newAnimatedLabel;
-	}
-
-	/**
-	 * Create and return Pattern Instance
-	 *
-	 * @export
-	 * @param {string} animatedLabelId
-	 * @param {string} configs
-	 * @return {*}  {OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel}
-	 */
-	export function CreatePatternInstance(
-		animatedLabelId: string,
-		configs: string
-	): OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel {
-		return new OSFramework.OSUI.Patterns.AnimatedLabel.AnimatedLabel(animatedLabelId, JSON.parse(configs));
 	}
 
 	/**

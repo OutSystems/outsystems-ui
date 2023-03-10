@@ -12,7 +12,12 @@ namespace OSFramework.OSUI.Patterns.Carousel.Factory {
 		let _carouselItem = null;
 
 		if (provider === Enum.Provider.Splide) {
-			_carouselItem = new Providers.OSUI.Carousel.Splide.OSUISplide(carouselId, JSON.parse(configs));
+			_carouselItem = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(
+				OSFramework.OSUI.GlobalEnum.PatternName.Carousel,
+				carouselId,
+				JSON.parse(configs),
+				provider
+			) as OSFramework.OSUI.Patterns.Carousel.ICarousel;
 		} else {
 			throw new Error(`There is no  ${GlobalEnum.PatternName.Carousel}  of the ${provider} provider`);
 		}

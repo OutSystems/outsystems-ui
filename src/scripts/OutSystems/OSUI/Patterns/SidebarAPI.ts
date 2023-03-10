@@ -78,28 +78,13 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 		}
 
 		const _newSidebar = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(
-			'Sidebar',
+			OSFramework.OSUI.GlobalEnum.PatternName.Sidebar,
 			sidebarId,
 			JSON.parse(configs)
 		) as OSFramework.OSUI.Patterns.Sidebar.ISidebar;
 
 		_sidebarMap.set(sidebarId, _newSidebar);
 		return _newSidebar;
-	}
-
-	/**
-	 * Create and return Pattern Instance
-	 *
-	 * @export
-	 * @param {string} sidebarId
-	 * @param {string} configs
-	 * @return {*}  {OSFramework.OSUI.Patterns.Sidebar.ISidebar}
-	 */
-	export function CreatePatternInstance(
-		sidebarId: string,
-		configs: string
-	): OSFramework.OSUI.Patterns.Sidebar.ISidebar {
-		return new OSFramework.OSUI.Patterns.Sidebar.Sidebar(sidebarId, JSON.parse(configs));
 	}
 
 	/**

@@ -17,10 +17,11 @@ namespace OutSystems.OSUI.Patterns.TouchEventsAPI {
 			);
 		}
 
-		const _newTouchEvents = new OSFramework.OSUI.Patterns.TouchEvents.TouchEvents(
+		const _newTouchEvents = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(
+			OSFramework.OSUI.GlobalEnum.PatternName.TouchEvents,
 			touchEventsId,
 			JSON.parse(configs)
-		);
+		) as OSFramework.OSUI.Patterns.TouchEvents.ITouchEvents;
 
 		_touchEventsMap.set(touchEventsId, _newTouchEvents);
 

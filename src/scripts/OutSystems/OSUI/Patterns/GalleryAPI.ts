@@ -38,7 +38,11 @@ namespace OutSystems.OSUI.Patterns.GalleryAPI {
 			);
 		}
 
-		const _newGallery = new OSFramework.OSUI.Patterns.Gallery.Gallery(galleryId, JSON.parse(configs));
+		const _newGallery = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(
+			OSFramework.OSUI.GlobalEnum.PatternName.Gallery,
+			galleryId,
+			JSON.parse(configs)
+		) as OSFramework.OSUI.Patterns.Gallery.IGallery;
 
 		_galleryMap.set(galleryId, _newGallery);
 

@@ -38,7 +38,11 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 			);
 		}
 
-		const _newTabs = new OSFramework.OSUI.Patterns.Tabs.Tabs(tabsId, JSON.parse(configs));
+		const _newTabs = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(
+			OSFramework.OSUI.GlobalEnum.PatternName.Tabs,
+			tabsId,
+			JSON.parse(configs)
+		) as OSFramework.OSUI.Patterns.Tabs.ITabs;
 
 		_tabsMap.set(tabsId, _newTabs);
 

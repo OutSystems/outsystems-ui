@@ -1,3 +1,4 @@
+/// <reference path="../AbstractVirtualSelect.ts" />
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.OSUI.Dropdown.VirtualSelect.Tags {
 	// eslint-disable-next-line @typescript-eslint/naming-convention

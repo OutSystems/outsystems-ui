@@ -39,7 +39,12 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 			);
 		}
 
-		const _newRating = new OSFramework.OSUI.Patterns.Rating.Rating(ratingId, JSON.parse(configs));
+		const _newRating = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(
+			OSFramework.OSUI.GlobalEnum.PatternName.Rating,
+			ratingId,
+			JSON.parse(configs)
+		) as OSFramework.OSUI.Patterns.Rating.IRating;
+
 		_ratingsMap.set(ratingId, _newRating);
 		return _newRating;
 	}

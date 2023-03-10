@@ -11,30 +11,31 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Factory {
 	export function NewVirtualSelect(
 		dropdownId: string,
 		mode: string,
-		configs: JSON
+		configs: string
 	): OSFramework.OSUI.Patterns.Dropdown.IDropdown {
 		let _virtualSelectItem = null;
+		let _patternName: string;
 
 		switch (mode) {
 			case OSFramework.OSUI.Patterns.Dropdown.Enum.Mode.Search:
-				_virtualSelectItem = new Providers.OSUI.Dropdown.VirtualSelect.Search.OSUIVirtualSelectSearch(
-					dropdownId,
-					configs
-				);
+				_patternName = OSFramework.OSUI.GlobalEnum.PatternName.DropdownSearch;
 
 				break;
 
 			case OSFramework.OSUI.Patterns.Dropdown.Enum.Mode.Tags:
-				_virtualSelectItem = new Providers.OSUI.Dropdown.VirtualSelect.Tags.OSUIVirtualSelectTags(
-					dropdownId,
-					configs
-				);
-
+				_patternName = OSFramework.OSUI.GlobalEnum.PatternName.DropdownTags;
 				break;
 
 			default:
 				throw new Error(`There is no Dropdown of ${mode} mode type`);
 		}
+
+		_virtualSelectItem = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(
+			_patternName,
+			dropdownId,
+			JSON.parse(configs),
+			OSFramework.OSUI.Patterns.Dropdown.Enum.Provider.VirtualSelect
+		) as OSFramework.OSUI.Patterns.Dropdown.IDropdown;
 
 		return _virtualSelectItem;
 	}

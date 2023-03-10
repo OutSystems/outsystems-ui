@@ -17,10 +17,12 @@ namespace OSFramework.OSUI.Patterns.MonthPicker.Factory {
 		let _monthPickerItem = null;
 
 		if (provider === Enum.Provider.Flatpickr) {
-			_monthPickerItem = new Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth(
+			_monthPickerItem = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(
+				OSFramework.OSUI.GlobalEnum.PatternName.MonthPicker,
 				monthPickerId,
-				JSON.parse(configs)
-			);
+				JSON.parse(configs),
+				provider
+			) as OSFramework.OSUI.Patterns.MonthPicker.IMonthPicker;
 		} else {
 			throw new Error(`There is no ${GlobalEnum.PatternName.MonthPicker} of the ${provider} provider`);
 		}

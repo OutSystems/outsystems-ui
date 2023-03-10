@@ -45,10 +45,11 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 			);
 		}
 
-		const _dropdownServerSideItemItem = new OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem(
+		const _dropdownServerSideItemItem = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(
+			OSFramework.OSUI.GlobalEnum.PatternName.DropdownServerSideItem,
 			dropdownServerSideItemId,
 			JSON.parse(configs)
-		);
+		) as OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem;
 
 		_dropdownServerSideItemItemsMap.set(dropdownServerSideItemId, _dropdownServerSideItemItem);
 

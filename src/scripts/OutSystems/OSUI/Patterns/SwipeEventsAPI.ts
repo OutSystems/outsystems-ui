@@ -17,10 +17,11 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 			);
 		}
 
-		const _newSwipeEvents = new OSFramework.OSUI.Patterns.SwipeEvents.SwipeEvents(
+		const _newSwipeEvents = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(
+			OSFramework.OSUI.GlobalEnum.PatternName.SwipeEvents,
 			swipeEventsId,
 			JSON.parse(configs)
-		);
+		) as OSFramework.OSUI.Patterns.SwipeEvents.ISwipeEvents;
 
 		_swipeEventsMap.set(swipeEventsId, _newSwipeEvents);
 

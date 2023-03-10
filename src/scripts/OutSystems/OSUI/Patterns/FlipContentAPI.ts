@@ -39,7 +39,11 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 			);
 		}
 
-		const _newFlip = new OSFramework.OSUI.Patterns.FlipContent.FlipContent(flipId, JSON.parse(configs));
+		const _newFlip = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(
+			OSFramework.OSUI.GlobalEnum.PatternName.FlipContent,
+			flipId,
+			JSON.parse(configs)
+		) as OSFramework.OSUI.Patterns.FlipContent.IFlipContent;
 
 		_flipContentMap.set(flipId, _newFlip);
 

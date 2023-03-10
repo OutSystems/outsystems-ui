@@ -349,35 +349,39 @@ declare namespace OSFramework.OSUI.GlobalEnum {
     }
     enum PatternName {
         Accordion = "Accordion",
-        AccordionItem = "Accordion Item",
-        AnimatedLabel = "Animated Label",
-        BottomSheet = "Bottom Sheet",
+        AccordionItem = "AccordionItem",
+        AnimatedLabel = "AnimatedLabel",
+        BottomSheet = "BottomSheet",
         ButtonLoading = "ButtonLoading",
         Carousel = "Carousel",
-        Datepicker = "Datepicker",
+        Datepicker = "DatePicker",
+        DatepickerRange = "DatePickerRange",
         Dropdown = "Dropdown",
+        DropdownSearch = "DropdownSearch",
+        DropdownTags = "DropdownTags",
+        DropdownServerSide = "DropdownServerSide",
         DropdownServerSideItem = "DropdownServerSideItem",
-        FlipContent = "Flip Content",
-        FloatingActions = "Floating Actions",
-        FloatingActionsItem = "Floating Actions Item",
+        FlipContent = "FlipContent",
+        FloatingActions = "FloatingActions",
+        FloatingActionsItem = "FloatingActionsItem",
         Gallery = "Gallery",
         MonthPicker = "MonthPicker",
         Notification = "Notification",
-        ProgressBar = "Progress Bar",
-        ProgressCircle = "Progress Circle",
-        RangeSlider = "Range Slider",
-        RangeSliderInterval = "Range Slider Interval",
+        ProgressBar = "ProgressBar",
+        ProgressCircle = "ProgressCircle",
+        RangeSlider = "RangeSlider",
+        RangeSliderInterval = "RangeSliderInterval",
         Rating = "Rating",
         Search = "Search",
-        SectionIndex = "Section Index",
-        SectionIndexItem = "Section Index Item",
+        SectionIndex = "SectionIndex",
+        SectionIndexItem = "SectionIndexItem",
         Sidebar = "Sidebar",
         Submenu = "Submenu",
         SwipeEvents = "SwipeEvents",
         Tabs = "Tabs",
         TabsHeaderItem = "TabsHeaderItem",
         TabsContentItem = "TabsContentItem",
-        Timepicker = "Timepicker",
+        Timepicker = "TimePicker",
         Tooltip = "Tooltip",
         TouchEvents = "TouchEvents"
     }
@@ -1634,8 +1638,8 @@ declare namespace OSFramework.OSUI.Patterns.Dropdown.Enum {
         IsDisabled = "IsDisabled"
     }
     enum Provider {
-        OSUIComponents = "osui-components",
-        VirtualSelect = "virtual-select"
+        OSUIComponents = "OSUIComponents",
+        VirtualSelect = "VirtualSelect"
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Dropdown {
@@ -3598,7 +3602,6 @@ declare namespace OutSystems.OSUI.Patterns.AccordionAPI {
     function ChangeProperty(accordionId: string, propertyName: string, propertyValue: unknown): string;
     function CollapseAllItems(accordionId: string): string;
     function Create(accordionId: string, configs: string): OSFramework.OSUI.Patterns.Accordion.IAccordion;
-    function CreatePatternInstance(accordionId: string, configs: string): OSFramework.OSUI.Patterns.Accordion.IAccordion;
     function Dispose(accordionId: string): string;
     function ExpandAllItems(accordionId: string): string;
     function GetAllAccordions(): Array<string>;
@@ -3610,7 +3613,6 @@ declare namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
     function ChangeProperty(accordionItemId: string, propertyName: string, propertyValue: unknown): string;
     function Collapse(accordionItemId: string): string;
     function Create(accordionItemId: string, configs: string): OSFramework.OSUI.Patterns.AccordionItem.IAccordionItem;
-    function CreatePatternInstance(accordionItemId: string, configs: string): OSFramework.OSUI.Patterns.AccordionItem.IAccordionItem;
     function Dispose(accordionItemId: string): string;
     function Expand(accordionItemId: string): string;
     function GetAllAccordionItems(): Array<string>;
@@ -3621,7 +3623,6 @@ declare namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 declare namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
     function ChangeProperty(animatedLabelId: string, propertyName: string, propertyValue: unknown): string;
     function Create(animatedLabelId: string, configs: string): OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel;
-    function CreatePatternInstance(animatedLabelId: string, configs: string): OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel;
     function Dispose(animatedLabelId: string): string;
     function GetAllAnimatedLabels(): Array<string>;
     function GetAnimatedLabelById(animatedLabelId: string): OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel;
@@ -3631,7 +3632,6 @@ declare namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 declare namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
     function ChangeProperty(bottomSheetId: string, propertyName: string, propertyValue: any): string;
     function Create(bottomSheetId: string, configs: string): OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet;
-    function CreatePatternInstance(bottomSheetId: string, configs: string): OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet;
     function Dispose(bottomSheetId: string): string;
     function GetAllBottomSheetItemsMap(): Array<string>;
     function GetBottomSheetItemById(bottomSheetId: string): OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet;
@@ -3643,7 +3643,6 @@ declare namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 declare namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
     function ChangeProperty(buttonLoadingId: string, propertyName: string, propertyValue: unknown): string;
     function Create(buttonLoadingId: string, configs: string): OSFramework.OSUI.Patterns.ButtonLoading.IButtonLoading;
-    function CreatePatternInstance(bottomSheetId: string, configs: string): OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet;
     function Dispose(buttonLoadingId: string): string;
     function GetAllButtonsLoading(): Array<string>;
     function GetButtonLoadingById(buttonLoadingId: string): OSFramework.OSUI.Patterns.ButtonLoading.IButtonLoading;
@@ -3769,9 +3768,310 @@ declare namespace OutSystems.OSUI.Patterns.NotificationAPI {
     function RegisterCallback(notificationId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
     function Show(notificationId: string): string;
 }
+declare namespace Providers.OSUI.Carousel.Splide {
+    class OSUISplide extends OSFramework.OSUI.Patterns.Carousel.AbstractCarousel<Splide, Splide.SplideConfig> implements OSFramework.OSUI.Patterns.Carousel.ICarousel {
+        private _blockOnRender;
+        private _carouselListWidgetElem;
+        private _carouselPlaceholderElem;
+        private _carouselProviderElem;
+        private _carouselTrackElem;
+        private _currentIndex;
+        private _eventOnResize;
+        private _hasList;
+        private _platformEventInitialized;
+        private _platformEventOnSlideMoved;
+        private _splideOptions;
+        constructor(uniqueId: string, configs: JSON);
+        private _checkListWidget;
+        private _initProvider;
+        private _prepareCarouselItems;
+        private _redefineCarouselWidth;
+        private _setCarouselWidth;
+        private _setOnInitializedEvent;
+        private _setOnSlideMovedEvent;
+        private _togglePaginationClass;
+        protected prepareConfigs(): void;
+        protected setA11YProperties(): void;
+        protected setCallbacks(): void;
+        protected setHtmlElements(): void;
+        protected setInitialCssClasses(): void;
+        protected unsetCallbacks(): void;
+        protected unsetHtmlElements(): void;
+        build(): void;
+        changeProperty(propertyName: string, propertyValue: unknown): void;
+        dispose(): void;
+        goTo(index: number): void;
+        next(): void;
+        previous(): void;
+        registerCallback(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void;
+        setCarouselDirection(direction: string): void;
+        setProviderConfigs(newConfigs: SplideOpts): void;
+        toggleDrag(hasDrag: boolean): void;
+        toggleOnRender(blockOnRender: boolean): void;
+        updateOnRender(): void;
+    }
+}
+declare namespace Providers.OSUI.Datepicker.Flatpickr {
+    abstract class AbstractFlatpickr<C extends Flatpickr.AbstractFlatpickrConfig> extends OSFramework.OSUI.Patterns.DatePicker.AbstractDatePicker<Flatpickr, C> implements IFlatpickr {
+        private _a11yInfoContainerElem;
+        private _bodyScrollCommonBehaviour;
+        private _onInitializeCallbackEvent;
+        private _zindexCommonBehavior;
+        protected _datePickerPlatformInputElem: HTMLInputElement;
+        protected _flatpickrInputElem: HTMLInputElement;
+        protected _flatpickrOpts: FlatpickrOptions;
+        protected _onSelectedCallbackEvent: OSFramework.OSUI.Patterns.DatePicker.Callbacks.OSOnChangeEvent;
+        constructor(uniqueId: string, configs: C);
+        private _setAttributes;
+        private _setCalendarCssClasses;
+        private _setParentMinHeight;
+        private _unsetParentMinHeight;
+        protected addTodayBtn(): void;
+        protected createProviderInstance(): void;
+        protected jumpIntoToday(): void;
+        protected prepareConfigs(): void;
+        protected prepareToAndRedraw(): void;
+        protected setA11YProperties(): void;
+        protected setCallbacks(): void;
+        protected setHtmlElements(): void;
+        protected unsetCallbacks(): void;
+        protected unsetHtmlElements(): void;
+        build(): void;
+        changeProperty(propertyName: string, propertyValue: unknown): void;
+        clear(): void;
+        close(): void;
+        disableDays(disableDays: string[]): void;
+        disableWeekDays(disableWeekDays: number[]): void;
+        dispose(): void;
+        open(): void;
+        registerCallback(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void;
+        setEditableInput(isEditable: boolean): void;
+        setLanguage(value: string): void;
+        setProviderConfigs(newConfigs: FlatpickrOptions): void;
+        toggleNativeBehavior(isNative: boolean): void;
+        protected abstract onDateSelectedEvent(selectedDates: string[], dateStr: string, fp: Flatpickr): void;
+        protected abstract todayBtnClick(event: MouseEvent): void;
+        protected abstract updatePlatformInputAttrs(): void;
+        abstract updateInitialDate(start: string, end?: string): void;
+    }
+}
+declare namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
+    class OSUIFlatpickrSingleDate extends AbstractFlatpickr<FlatpickrSingleDateConfig> {
+        private _isUpdatedInitialDateByClientAction;
+        constructor(uniqueId: string, configs: JSON);
+        protected onDateSelectedEvent(selectedDates: string[]): void;
+        protected todayBtnClick(event: MouseEvent): void;
+        protected updatePlatformInputAttrs(): void;
+        build(): void;
+        changeProperty(propertyName: string, propertyValue: unknown): void;
+        updateInitialDate(value: string): void;
+    }
+}
+declare namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
+    class OSUIFlatpickrRangeDate extends AbstractFlatpickr<FlatpickrRangeDateConfig> {
+        constructor(uniqueId: string, configs: JSON);
+        private _onUpdateDateFormat;
+        private _updateInitialStartAndEndDates;
+        protected onDateSelectedEvent(selectedDates: string[]): void;
+        protected todayBtnClick(event: MouseEvent): void;
+        protected updatePlatformInputAttrs(): void;
+        build(): void;
+        changeProperty(propertyName: string, propertyValue: unknown): void;
+        updateInitialDate(startDate: string, endDate: string): void;
+    }
+}
+declare namespace Providers.OSUI.Dropdown.VirtualSelect {
+    abstract class AbstractVirtualSelect<C extends Dropdown.VirtualSelect.AbstractVirtualSelectConfig> extends OSFramework.OSUI.Patterns.Dropdown.AbstractDropdown<VirtualSelect, C> implements IVirtualSelect {
+        private _eventOnWindowResize;
+        private _onMouseUpEvent;
+        private _onSelectedOptionEvent;
+        private _platformEventInitializedCallback;
+        private _platformEventSelectedOptCallback;
+        protected _hiddenInputWrapperAriaLabelVal: string;
+        protected _virtualselectConfigs: VirtualSelectMethods;
+        protected _virtualselectOpts: VirtualSelectOpts;
+        constructor(uniqueId: string, configs: C);
+        private _addErrorMessage;
+        private _manageAttributes;
+        private _manageDisableStatus;
+        private _onMouseUp;
+        private _onSelectedOption;
+        private _onWindowResize;
+        private _setElementId;
+        private _setUpEvents;
+        private _unsetEvents;
+        protected createProviderInstance(): void;
+        protected setA11YProperties(): void;
+        protected setCallbacks(): void;
+        protected setHtmlElements(): void;
+        protected unsetCallbacks(): void;
+        protected unsetHtmlElements(): void;
+        build(): void;
+        changeProperty(propertyName: string, propertyValue: unknown): void;
+        clear(): void;
+        close(): void;
+        disable(): void;
+        dispose(): void;
+        enable(): void;
+        getSelectedValues(): string;
+        open(): void;
+        registerCallback(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void;
+        setHiddenInputWrapperAriaLabelVal(value?: string): void;
+        setProviderConfigs(newConfigs: VirtualSelectOpts): void;
+        setValue(optionsToSelect: DropDownOption[], silentOnChangedEvent?: boolean): void;
+        togglePopup(isEnabled: boolean): void;
+        validation(isValid: boolean, validationMessage: string): void;
+        protected abstract getSelectedOptionsStructure(): DropDownOption[];
+        protected abstract prepareConfigs(): void;
+    }
+}
+declare namespace Providers.OSUI.Dropdown.VirtualSelect.Search {
+    class OSUIVirtualSelectSearch extends AbstractVirtualSelect<VirtualSelectSearchConfig> {
+        constructor(uniqueId: string, configs: JSON);
+        protected getSelectedOptionsStructure(): DropDownOption[];
+        protected prepareConfigs(): void;
+        changeProperty(propertyName: string, propertyValue: unknown): void;
+    }
+}
+declare namespace Providers.OSUI.Dropdown.VirtualSelect.Tags {
+    class OSUIVirtualSelectTags extends AbstractVirtualSelect<VirtualSelectTagsConfig> {
+        constructor(uniqueId: string, configs: JSON);
+        protected getSelectedOptionsStructure(): DropDownOption[];
+        protected prepareConfigs(): void;
+    }
+}
+declare namespace Providers.OSUI.MonthPicker.Flatpickr {
+    class OSUIFlatpickrMonth extends OSFramework.OSUI.Patterns.MonthPicker.AbstractMonthPicker<Flatpickr, FlatpickrMonthConfig> implements IFlatpickrMonth {
+        private _bodyScrollCommonBehaviour;
+        private _flatpickrOpts;
+        private _onInitializeCallbackEvent;
+        private _zindexCommonBehavior;
+        protected _flatpickrInputElem: HTMLInputElement;
+        protected _monthPickerProviderInputElem: HTMLInputElement;
+        protected _onSelectedCallbackEvent: OSFramework.OSUI.Patterns.MonthPicker.Callbacks.OSOnSelectedEvent;
+        constructor(uniqueId: string, configs: JSON);
+        private _setAttributes;
+        private _setCalendarCssClasses;
+        protected createProviderInstance(): void;
+        protected createdInstance(): void;
+        protected onMonthSelectedEvent(selectedMonthYear: string[]): void;
+        protected prepareConfigs(): void;
+        protected setA11YProperties(): void;
+        protected setCallbacks(): void;
+        protected setHtmlElements(): void;
+        protected unsetCallbacks(): void;
+        protected unsetHtmlElements(): void;
+        build(): void;
+        changeProperty(propertyName: string, propertyValue: unknown): void;
+        clear(): void;
+        close(): void;
+        dispose(): void;
+        open(): void;
+        registerCallback(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void;
+        setEditableInput(isEditable: boolean): void;
+        setLanguage(value: string): void;
+        setProviderConfigs(newConfigs: FlatpickrOptions): void;
+    }
+}
+declare namespace Providers.OSUI.TimePicker.Flatpickr {
+    class OSUIFlatpickrTime extends OSFramework.OSUI.Patterns.TimePicker.AbstractTimePicker<Flatpickr, FlatpickrTimeConfig> implements IFlatpickrTime {
+        private _bodyScrollCommonBehaviour;
+        private _flatpickrOpts;
+        private _onInitializeCallbackEvent;
+        private _zindexCommonBehavior;
+        protected _flatpickrInputElem: HTMLInputElement;
+        protected _onChangeCallbackEvent: OSFramework.OSUI.Patterns.TimePicker.Callbacks.OSOnChangeEvent;
+        protected _timePickerProviderInputElem: HTMLInputElement;
+        constructor(uniqueId: string, configs: JSON);
+        private _setAttributes;
+        private _setCalendarCssClasses;
+        protected createProviderInstance(): void;
+        protected createdInstance(): void;
+        protected onTimeSelectedEvent(selectedTime: string[]): void;
+        protected prepareConfigs(): void;
+        protected setA11YProperties(): void;
+        protected setCallbacks(): void;
+        protected setHtmlElements(): void;
+        protected unsetCallbacks(): void;
+        protected unsetHtmlElements(): void;
+        build(): void;
+        changeProperty(propertyName: string, propertyValue: unknown): void;
+        clear(): void;
+        close(): void;
+        dispose(): void;
+        open(): void;
+        registerCallback(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void;
+        setEditableInput(isEditable: boolean): void;
+        setLanguage(value: string): void;
+        setProviderConfigs(newConfigs: FlatpickrOptions): void;
+        toggleNativeBehavior(isNative: boolean): void;
+        updateInitialTime(value: string): void;
+    }
+}
+declare namespace Providers.OSUI.RangeSlider.NoUISlider {
+    abstract class AbstractNoUiSlider<C extends NoUiSlider.AbstractNoUiSliderConfig> extends OSFramework.OSUI.Patterns.RangeSlider.AbstractRangeSlider<NoUiSlider, C> implements INoUiSlider {
+        private _isInterval;
+        private _rangeSliderProviderElem;
+        protected eventProviderValueChanged: OSFramework.OSUI.GlobalCallbacks.Generic;
+        protected noUiSliderOpts: NoUiSliderOptions;
+        protected platformEventInitialize: OSFramework.OSUI.GlobalCallbacks.OSGeneric;
+        protected platformEventValueChange: OSFramework.OSUI.Patterns.RangeSlider.Callbacks.OSOnValueChangeEvent;
+        protected throttleTimeValue: number;
+        protected throttleTimer: any;
+        constructor(uniqueId: string, configs: C);
+        private _setIsDisabled;
+        private _setOnValueChangeEvent;
+        private _setSize;
+        private _updateRangeValues;
+        protected createProviderInstance(): void;
+        protected setHtmlElements(): void;
+        protected setInitialCSSClasses(): void;
+        protected setInitialStates(): void;
+        protected unsetCallbacks(): void;
+        protected unsetHtmlElements(): void;
+        build(): void;
+        changeProperty(propertyName: string, propertyValue: unknown): void;
+        disable(): void;
+        dispose(): void;
+        enable(): void;
+        getValue(): number | number[];
+        registerCallback(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void;
+        setProviderConfigs(newConfigs: NoUiSliderOptions): void;
+        setRangeIntervalChangeOnDragEnd(): void;
+        protected abstract prepareConfigs(): void;
+    }
+}
+declare namespace Providers.OSUI.RangeSlider.NoUISlider.SingleSlider {
+    class OSUINoUiSliderSingle extends AbstractNoUiSlider<NoUISlider.SliderSingle.NoUiSliderSingleConfig> {
+        constructor(uniqueId: string, configs: JSON);
+        private _valueChangeCallback;
+        protected prepareConfigs(): void;
+        protected redraw(): void;
+        protected setA11YProperties(): void;
+        protected setCallbacks(): void;
+        build(): void;
+        changeProperty(propertyName: string, propertyValue: unknown): void;
+        resetValue(): void;
+        setValue(value: number): void;
+    }
+}
+declare namespace Providers.OSUI.RangeSlider.NoUISlider.IntervalSlider {
+    class OSUINoUiSliderInterval extends AbstractNoUiSlider<NoUISlider.SliderInterval.NoUiSliderIntervalConfig> {
+        constructor(uniqueId: string, configs: JSON);
+        private _valueChangeCallback;
+        protected prepareConfigs(): void;
+        protected redraw(): void;
+        protected setA11YProperties(): void;
+        protected setCallbacks(): void;
+        build(): void;
+        changeProperty(propertyName: string, propertyValue: unknown): void;
+        resetValue(): void;
+        setValue(intervalStart: number, intervalEnd: number): void;
+    }
+}
 declare namespace OutSystems.OSUI.Patterns.PatternFactoryAPI {
-    function CreateInstance(patternName: string, patternId: string, configs: string): unknown;
-    function ExtendPatternClass(patternName: string, patternClass: string | object): void;
+    function CreateInstance(patternName: string, patternId: string, configs: string, provider?: string): unknown;
+    function ExtendPatternClass(patternName: string, patternClass: object, provider?: string): void;
 }
 declare namespace OutSystems.OSUI.Patterns.ProgressAPI {
     function ChangeProperty(progressId: string, propertyName: string, propertyValue: any): string;
@@ -3832,7 +4132,6 @@ declare namespace OutSystems.OSUI.Patterns.SidebarAPI {
     function ClickOutsideToClose(sidebarId: string, closeOnOutSIdeClick: boolean): string;
     function Close(sidebarId: string): string;
     function Create(sidebarId: string, configs: string): OSFramework.OSUI.Patterns.Sidebar.ISidebar;
-    function CreatePatternInstance(sidebarId: string, configs: string): OSFramework.OSUI.Patterns.Sidebar.ISidebar;
     function Dispose(sidebarId: string): string;
     function GetAllSidebars(): Array<string>;
     function GetSidebarById(sidebarId: string): OSFramework.OSUI.Patterns.Sidebar.ISidebar;
@@ -4114,49 +4413,6 @@ declare namespace Providers.OSUI.Carousel.Splide.Enum {
     }
 }
 declare namespace Providers.OSUI.Carousel.Splide {
-    class OSUISplide extends OSFramework.OSUI.Patterns.Carousel.AbstractCarousel<Splide, Splide.SplideConfig> implements OSFramework.OSUI.Patterns.Carousel.ICarousel {
-        private _blockOnRender;
-        private _carouselListWidgetElem;
-        private _carouselPlaceholderElem;
-        private _carouselProviderElem;
-        private _carouselTrackElem;
-        private _currentIndex;
-        private _eventOnResize;
-        private _hasList;
-        private _platformEventInitialized;
-        private _platformEventOnSlideMoved;
-        private _splideOptions;
-        constructor(uniqueId: string, configs: JSON);
-        private _checkListWidget;
-        private _initProvider;
-        private _prepareCarouselItems;
-        private _redefineCarouselWidth;
-        private _setCarouselWidth;
-        private _setOnInitializedEvent;
-        private _setOnSlideMovedEvent;
-        private _togglePaginationClass;
-        protected prepareConfigs(): void;
-        protected setA11YProperties(): void;
-        protected setCallbacks(): void;
-        protected setHtmlElements(): void;
-        protected setInitialCssClasses(): void;
-        protected unsetCallbacks(): void;
-        protected unsetHtmlElements(): void;
-        build(): void;
-        changeProperty(propertyName: string, propertyValue: unknown): void;
-        dispose(): void;
-        goTo(index: number): void;
-        next(): void;
-        previous(): void;
-        registerCallback(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void;
-        setCarouselDirection(direction: string): void;
-        setProviderConfigs(newConfigs: SplideOpts): void;
-        toggleDrag(hasDrag: boolean): void;
-        toggleOnRender(blockOnRender: boolean): void;
-        updateOnRender(): void;
-    }
-}
-declare namespace Providers.OSUI.Carousel.Splide {
     class SplideConfig extends OSFramework.OSUI.Patterns.Carousel.AbstractCarouselConfig {
         private _providerOptions;
         protected _providerExtendedOptions: SplideOpts;
@@ -4165,50 +4421,6 @@ declare namespace Providers.OSUI.Carousel.Splide {
         private _getPaginationConfig;
         getProviderConfig(): SplideOpts;
         setExtensibilityConfigs(newConfigs: SplideOpts): void;
-    }
-}
-declare namespace Providers.OSUI.Datepicker.Flatpickr {
-    abstract class AbstractFlatpickr<C extends Flatpickr.AbstractFlatpickrConfig> extends OSFramework.OSUI.Patterns.DatePicker.AbstractDatePicker<Flatpickr, C> implements IFlatpickr {
-        private _a11yInfoContainerElem;
-        private _bodyScrollCommonBehaviour;
-        private _onInitializeCallbackEvent;
-        private _zindexCommonBehavior;
-        protected _datePickerPlatformInputElem: HTMLInputElement;
-        protected _flatpickrInputElem: HTMLInputElement;
-        protected _flatpickrOpts: FlatpickrOptions;
-        protected _onSelectedCallbackEvent: OSFramework.OSUI.Patterns.DatePicker.Callbacks.OSOnChangeEvent;
-        constructor(uniqueId: string, configs: C);
-        private _setAttributes;
-        private _setCalendarCssClasses;
-        private _setParentMinHeight;
-        private _unsetParentMinHeight;
-        protected addTodayBtn(): void;
-        protected createProviderInstance(): void;
-        protected jumpIntoToday(): void;
-        protected prepareConfigs(): void;
-        protected prepareToAndRedraw(): void;
-        protected setA11YProperties(): void;
-        protected setCallbacks(): void;
-        protected setHtmlElements(): void;
-        protected unsetCallbacks(): void;
-        protected unsetHtmlElements(): void;
-        build(): void;
-        changeProperty(propertyName: string, propertyValue: unknown): void;
-        clear(): void;
-        close(): void;
-        disableDays(disableDays: string[]): void;
-        disableWeekDays(disableWeekDays: number[]): void;
-        dispose(): void;
-        open(): void;
-        registerCallback(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void;
-        setEditableInput(isEditable: boolean): void;
-        setLanguage(value: string): void;
-        setProviderConfigs(newConfigs: FlatpickrOptions): void;
-        toggleNativeBehavior(isNative: boolean): void;
-        protected abstract onDateSelectedEvent(selectedDates: string[], dateStr: string, fp: Flatpickr): void;
-        protected abstract todayBtnClick(event: MouseEvent): void;
-        protected abstract updatePlatformInputAttrs(): void;
-        abstract updateInitialDate(start: string, end?: string): void;
     }
 }
 declare namespace Providers.OSUI.Datepicker.Flatpickr {
@@ -4273,19 +4485,6 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate.Enum {
     }
 }
 declare namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
-    class OSUIFlatpickrRangeDate extends AbstractFlatpickr<FlatpickrRangeDateConfig> {
-        constructor(uniqueId: string, configs: JSON);
-        private _onUpdateDateFormat;
-        private _updateInitialStartAndEndDates;
-        protected onDateSelectedEvent(selectedDates: string[]): void;
-        protected todayBtnClick(event: MouseEvent): void;
-        protected updatePlatformInputAttrs(): void;
-        build(): void;
-        changeProperty(propertyName: string, propertyValue: unknown): void;
-        updateInitialDate(startDate: string, endDate: string): void;
-    }
-}
-declare namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
     class FlatpickrRangeDateConfig extends AbstractFlatpickrConfig {
         InitialEndDate: string;
         InitialStartDate: string;
@@ -4297,18 +4496,6 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 declare namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate.Enum {
     enum Properties {
         InitialDate = "InitialDate"
-    }
-}
-declare namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
-    class OSUIFlatpickrSingleDate extends AbstractFlatpickr<FlatpickrSingleDateConfig> {
-        private _isUpdatedInitialDateByClientAction;
-        constructor(uniqueId: string, configs: JSON);
-        protected onDateSelectedEvent(selectedDates: string[]): void;
-        protected todayBtnClick(event: MouseEvent): void;
-        protected updatePlatformInputAttrs(): void;
-        build(): void;
-        changeProperty(propertyName: string, propertyValue: unknown): void;
-        updateInitialDate(value: string): void;
     }
 }
 declare namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
@@ -4768,51 +4955,6 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr.l10ns {
     };
 }
 declare namespace Providers.OSUI.Dropdown.VirtualSelect {
-    abstract class AbstractVirtualSelect<C extends Dropdown.VirtualSelect.AbstractVirtualSelectConfig> extends OSFramework.OSUI.Patterns.Dropdown.AbstractDropdown<VirtualSelect, C> implements IVirtualSelect {
-        private _eventOnWindowResize;
-        private _onMouseUpEvent;
-        private _onSelectedOptionEvent;
-        private _platformEventInitializedCallback;
-        private _platformEventSelectedOptCallback;
-        protected _hiddenInputWrapperAriaLabelVal: string;
-        protected _virtualselectConfigs: VirtualSelectMethods;
-        protected _virtualselectOpts: VirtualSelectOpts;
-        constructor(uniqueId: string, configs: C);
-        private _addErrorMessage;
-        private _manageAttributes;
-        private _manageDisableStatus;
-        private _onMouseUp;
-        private _onSelectedOption;
-        private _onWindowResize;
-        private _setElementId;
-        private _setUpEvents;
-        private _unsetEvents;
-        protected createProviderInstance(): void;
-        protected setA11YProperties(): void;
-        protected setCallbacks(): void;
-        protected setHtmlElements(): void;
-        protected unsetCallbacks(): void;
-        protected unsetHtmlElements(): void;
-        build(): void;
-        changeProperty(propertyName: string, propertyValue: unknown): void;
-        clear(): void;
-        close(): void;
-        disable(): void;
-        dispose(): void;
-        enable(): void;
-        getSelectedValues(): string;
-        open(): void;
-        registerCallback(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void;
-        setHiddenInputWrapperAriaLabelVal(value?: string): void;
-        setProviderConfigs(newConfigs: VirtualSelectOpts): void;
-        setValue(optionsToSelect: DropDownOption[], silentOnChangedEvent?: boolean): void;
-        togglePopup(isEnabled: boolean): void;
-        validation(isValid: boolean, validationMessage: string): void;
-        protected abstract getSelectedOptionsStructure(): DropDownOption[];
-        protected abstract prepareConfigs(): void;
-    }
-}
-declare namespace Providers.OSUI.Dropdown.VirtualSelect {
     abstract class AbstractVirtualSelectConfig extends OSFramework.OSUI.Patterns.Dropdown
         .AbstractDropdownConfig {
         private _groupedOptionsList;
@@ -4882,19 +5024,11 @@ declare namespace Providers.OSUI.Dropdown.VirtualSelect {
     }
 }
 declare namespace Providers.OSUI.Dropdown.VirtualSelect.Factory {
-    function NewVirtualSelect(dropdownId: string, mode: string, configs: JSON): OSFramework.OSUI.Patterns.Dropdown.IDropdown;
+    function NewVirtualSelect(dropdownId: string, mode: string, configs: string): OSFramework.OSUI.Patterns.Dropdown.IDropdown;
 }
 declare namespace Providers.OSUI.Dropdown.VirtualSelect.Search.Enum {
     enum Properties {
         AllowMultipleSelection = "AllowMultipleSelection"
-    }
-}
-declare namespace Providers.OSUI.Dropdown.VirtualSelect.Search {
-    class OSUIVirtualSelectSearch extends AbstractVirtualSelect<VirtualSelectSearchConfig> {
-        constructor(uniqueId: string, configs: JSON);
-        protected getSelectedOptionsStructure(): DropDownOption[];
-        protected prepareConfigs(): void;
-        changeProperty(propertyName: string, propertyValue: unknown): void;
     }
 }
 declare namespace Providers.OSUI.Dropdown.VirtualSelect.Search {
@@ -4903,13 +5037,6 @@ declare namespace Providers.OSUI.Dropdown.VirtualSelect.Search {
         protected _getSelectedValues(): string[];
         getProviderConfig(): VirtualSelectOpts;
         validateDefault(key: string, value: unknown): unknown;
-    }
-}
-declare namespace Providers.OSUI.Dropdown.VirtualSelect.Tags {
-    class OSUIVirtualSelectTags extends AbstractVirtualSelect<VirtualSelectTagsConfig> {
-        constructor(uniqueId: string, configs: JSON);
-        protected getSelectedOptionsStructure(): DropDownOption[];
-        protected prepareConfigs(): void;
     }
 }
 declare namespace Providers.OSUI.Dropdown.VirtualSelect.Tags {
@@ -4922,39 +5049,6 @@ declare namespace Providers.OSUI.MonthPicker.Flatpickr {
     const ErrorCodes: {
         FailSetLocale: string;
     };
-}
-declare namespace Providers.OSUI.MonthPicker.Flatpickr {
-    class OSUIFlatpickrMonth extends OSFramework.OSUI.Patterns.MonthPicker.AbstractMonthPicker<Flatpickr, FlatpickrMonthConfig> implements IFlatpickrMonth {
-        private _bodyScrollCommonBehaviour;
-        private _flatpickrOpts;
-        private _onInitializeCallbackEvent;
-        private _zindexCommonBehavior;
-        protected _flatpickrInputElem: HTMLInputElement;
-        protected _monthPickerProviderInputElem: HTMLInputElement;
-        protected _onSelectedCallbackEvent: OSFramework.OSUI.Patterns.MonthPicker.Callbacks.OSOnSelectedEvent;
-        constructor(uniqueId: string, configs: JSON);
-        private _setAttributes;
-        private _setCalendarCssClasses;
-        protected createProviderInstance(): void;
-        protected createdInstance(): void;
-        protected onMonthSelectedEvent(selectedMonthYear: string[]): void;
-        protected prepareConfigs(): void;
-        protected setA11YProperties(): void;
-        protected setCallbacks(): void;
-        protected setHtmlElements(): void;
-        protected unsetCallbacks(): void;
-        protected unsetHtmlElements(): void;
-        build(): void;
-        changeProperty(propertyName: string, propertyValue: unknown): void;
-        clear(): void;
-        close(): void;
-        dispose(): void;
-        open(): void;
-        registerCallback(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void;
-        setEditableInput(isEditable: boolean): void;
-        setLanguage(value: string): void;
-        setProviderConfigs(newConfigs: FlatpickrOptions): void;
-    }
 }
 declare namespace Providers.OSUI.MonthPicker.Flatpickr {
     class FlatpickrMonthConfig extends OSFramework.OSUI.Patterns.MonthPicker.AbstractMonthPickerConfig {
@@ -4979,39 +5073,6 @@ declare namespace Providers.OSUI.MonthPicker.Flatpickr {
 }
 declare namespace Providers.OSUI.MonthPicker.Flatpickr {
     interface IFlatpickrMonth extends OSFramework.OSUI.Patterns.MonthPicker.IMonthPicker, OSFramework.OSUI.Interface.IProviderPattern<Flatpickr> {
-    }
-}
-declare namespace Providers.OSUI.RangeSlider.NoUISlider {
-    abstract class AbstractNoUiSlider<C extends NoUiSlider.AbstractNoUiSliderConfig> extends OSFramework.OSUI.Patterns.RangeSlider.AbstractRangeSlider<NoUiSlider, C> implements INoUiSlider {
-        private _isInterval;
-        private _rangeSliderProviderElem;
-        protected eventProviderValueChanged: OSFramework.OSUI.GlobalCallbacks.Generic;
-        protected noUiSliderOpts: NoUiSliderOptions;
-        protected platformEventInitialize: OSFramework.OSUI.GlobalCallbacks.OSGeneric;
-        protected platformEventValueChange: OSFramework.OSUI.Patterns.RangeSlider.Callbacks.OSOnValueChangeEvent;
-        protected throttleTimeValue: number;
-        protected throttleTimer: any;
-        constructor(uniqueId: string, configs: C);
-        private _setIsDisabled;
-        private _setOnValueChangeEvent;
-        private _setSize;
-        private _updateRangeValues;
-        protected createProviderInstance(): void;
-        protected setHtmlElements(): void;
-        protected setInitialCSSClasses(): void;
-        protected setInitialStates(): void;
-        protected unsetCallbacks(): void;
-        protected unsetHtmlElements(): void;
-        build(): void;
-        changeProperty(propertyName: string, propertyValue: unknown): void;
-        disable(): void;
-        dispose(): void;
-        enable(): void;
-        getValue(): number | number[];
-        registerCallback(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void;
-        setProviderConfigs(newConfigs: NoUiSliderOptions): void;
-        setRangeIntervalChangeOnDragEnd(): void;
-        protected abstract prepareConfigs(): void;
     }
 }
 declare namespace Providers.OSUI.RangeSlider.NoUiSlider {
@@ -5060,38 +5121,10 @@ declare namespace Providers.OSUI.RangeSlider.NoUiSlider.Factory {
 declare namespace Providers.OSUI.RangeSlider.NoUISlider.Utils {
     function SetRangeValues(providerConfigs: RangeSliderProviderConfigs): RangeSliderProviderConfigs;
 }
-declare namespace Providers.OSUI.RangeSlider.NoUISlider.IntervalSlider {
-    class OSUINoUiSliderInterval extends AbstractNoUiSlider<NoUISlider.SliderInterval.NoUiSliderIntervalConfig> {
-        constructor(uniqueId: string, configs: JSON);
-        private _valueChangeCallback;
-        protected prepareConfigs(): void;
-        protected redraw(): void;
-        protected setA11YProperties(): void;
-        protected setCallbacks(): void;
-        build(): void;
-        changeProperty(propertyName: string, propertyValue: unknown): void;
-        resetValue(): void;
-        setValue(intervalStart: number, intervalEnd: number): void;
-    }
-}
 declare namespace Providers.OSUI.RangeSlider.NoUISlider.SliderInterval {
     class NoUiSliderIntervalConfig extends Providers.OSUI.RangeSlider.NoUiSlider.AbstractNoUiSliderConfig {
         constructor(config: JSON);
         getProviderConfig(): NoUiSliderOptions;
-    }
-}
-declare namespace Providers.OSUI.RangeSlider.NoUISlider.SingleSlider {
-    class OSUINoUiSliderSingle extends AbstractNoUiSlider<NoUISlider.SliderSingle.NoUiSliderSingleConfig> {
-        constructor(uniqueId: string, configs: JSON);
-        private _valueChangeCallback;
-        protected prepareConfigs(): void;
-        protected redraw(): void;
-        protected setA11YProperties(): void;
-        protected setCallbacks(): void;
-        build(): void;
-        changeProperty(propertyName: string, propertyValue: unknown): void;
-        resetValue(): void;
-        setValue(value: number): void;
     }
 }
 declare namespace Providers.OSUI.RangeSlider.NoUISlider.SliderSingle {
@@ -5141,41 +5174,6 @@ declare namespace Providers.OSUI.TimePicker.Flatpickr {
     const ErrorCodes: {
         FailSetLocale: string;
     };
-}
-declare namespace Providers.OSUI.TimePicker.Flatpickr {
-    class OSUIFlatpickrTime extends OSFramework.OSUI.Patterns.TimePicker.AbstractTimePicker<Flatpickr, FlatpickrTimeConfig> implements IFlatpickrTime {
-        private _bodyScrollCommonBehaviour;
-        private _flatpickrOpts;
-        private _onInitializeCallbackEvent;
-        private _zindexCommonBehavior;
-        protected _flatpickrInputElem: HTMLInputElement;
-        protected _onChangeCallbackEvent: OSFramework.OSUI.Patterns.TimePicker.Callbacks.OSOnChangeEvent;
-        protected _timePickerProviderInputElem: HTMLInputElement;
-        constructor(uniqueId: string, configs: JSON);
-        private _setAttributes;
-        private _setCalendarCssClasses;
-        protected createProviderInstance(): void;
-        protected createdInstance(): void;
-        protected onTimeSelectedEvent(selectedTime: string[]): void;
-        protected prepareConfigs(): void;
-        protected setA11YProperties(): void;
-        protected setCallbacks(): void;
-        protected setHtmlElements(): void;
-        protected unsetCallbacks(): void;
-        protected unsetHtmlElements(): void;
-        build(): void;
-        changeProperty(propertyName: string, propertyValue: unknown): void;
-        clear(): void;
-        close(): void;
-        dispose(): void;
-        open(): void;
-        registerCallback(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void;
-        setEditableInput(isEditable: boolean): void;
-        setLanguage(value: string): void;
-        setProviderConfigs(newConfigs: FlatpickrOptions): void;
-        toggleNativeBehavior(isNative: boolean): void;
-        updateInitialTime(value: string): void;
-    }
 }
 declare namespace Providers.OSUI.TimePicker.Flatpickr {
     class FlatpickrTimeConfig extends OSFramework.OSUI.Patterns.TimePicker.AbstractTimePickerConfig {

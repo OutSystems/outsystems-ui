@@ -80,29 +80,15 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 			);
 		}
 
-		const _newAccordionItem = new OSFramework.OSUI.Patterns.AccordionItem.AccordionItem(
+		const _newAccordionItem = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(
+			OSFramework.OSUI.GlobalEnum.PatternName.AccordionItem,
 			accordionItemId,
 			JSON.parse(configs)
-		);
+		) as OSFramework.OSUI.Patterns.AccordionItem.IAccordionItem;
 
 		_accordionItemMap.set(accordionItemId, _newAccordionItem);
 
 		return _newAccordionItem;
-	}
-
-	/**
-	 * Create and return Pattern Instance
-	 *
-	 * @export
-	 * @param {string} accordionItemId
-	 * @param {string} configs
-	 * @return {*}  {OSFramework.OSUI.Patterns.AccordionItem.IAccordionItem}
-	 */
-	export function CreatePatternInstance(
-		accordionItemId: string,
-		configs: string
-	): OSFramework.OSUI.Patterns.AccordionItem.IAccordionItem {
-		return new OSFramework.OSUI.Patterns.AccordionItem.AccordionItem(accordionItemId, JSON.parse(configs));
 	}
 
 	/**

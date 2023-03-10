@@ -40,10 +40,11 @@ namespace OutSystems.OSUI.Patterns.SectionIndexItemAPI {
 			throw new Error(`There is already a SectionIndexItem registered under id: ${sectionIndexItemId}`);
 		}
 
-		const _sectionIndexItem = new OSFramework.OSUI.Patterns.SectionIndexItem.SectionIndexItem(
+		const _sectionIndexItem = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(
+			OSFramework.OSUI.GlobalEnum.PatternName.SectionIndexItem,
 			sectionIndexItemId,
 			JSON.parse(configs)
-		);
+		) as OSFramework.OSUI.Patterns.SectionIndexItem.ISectionIndexItem;
 
 		_sectionIndexItemMap.set(sectionIndexItemId, _sectionIndexItem);
 

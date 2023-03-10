@@ -33,7 +33,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.Enum {
 	 * Providers
 	 */
 	export enum Provider {
-		OSUIComponents = 'osui-components',
-		VirtualSelect = 'virtual-select',
+		OSUIComponents = 'OSUIComponents',
+		VirtualSelect = 'VirtualSelect',
 	}
 }

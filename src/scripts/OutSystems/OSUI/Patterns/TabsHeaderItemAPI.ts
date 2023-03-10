@@ -72,10 +72,11 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 		}
 		const tabs = GetTabsByItem(tabsHeaderItemId);
 
-		const _newTabsHeaderItem = new OSFramework.OSUI.Patterns.TabsHeaderItem.TabsHeaderItem(
+		const _newTabsHeaderItem = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(
+			OSFramework.OSUI.GlobalEnum.PatternName.TabsHeaderItem,
 			tabsHeaderItemId,
 			JSON.parse(configs)
-		);
+		) as OSFramework.OSUI.Patterns.TabsHeaderItem.ITabsHeaderItem;
 
 		_tabsHeaderItemMap.set(tabsHeaderItemId, _newTabsHeaderItem);
 		_newTabsHeaderItem.build();

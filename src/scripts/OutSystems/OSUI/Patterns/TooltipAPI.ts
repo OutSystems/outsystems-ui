@@ -58,7 +58,11 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 			);
 		}
 
-		const _newTooltip = new OSFramework.OSUI.Patterns.Tooltip.Tooltip(tooltipId, JSON.parse(configs));
+		const _newTooltip = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(
+			OSFramework.OSUI.GlobalEnum.PatternName.Tooltip,
+			tooltipId,
+			JSON.parse(configs)
+		) as OSFramework.OSUI.Patterns.Tooltip.ITooltip;
 
 		_tooltipsMap.set(tooltipId, _newTooltip);
 
