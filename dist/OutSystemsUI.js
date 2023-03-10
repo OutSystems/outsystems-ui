@@ -10655,7 +10655,7 @@ var OutSystems;
                     if (_accordionMap.has(accordionId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Accordion} registered under id: ${accordionId}`);
                     }
-                    const _newAccordion = CreatePatternInstance(accordionId, JSON.parse(configs));
+                    const _newAccordion = CreatePatternInstance(accordionId, configs);
                     _accordionMap.set(accordionId, _newAccordion);
                     return _newAccordion;
                 }
@@ -10751,7 +10751,7 @@ var OutSystems;
                     if (_accordionItemMap.has(accordionItemId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.AccordionItem} registered under id: ${accordionItemId}`);
                     }
-                    const _newAccordionItem = new OSFramework.OSUI.Patterns.AccordionItem.AccordionItem(accordionItemId, JSON.parse(configs));
+                    const _newAccordionItem = CreatePatternInstance(accordionItemId, configs);
                     _accordionItemMap.set(accordionItemId, _newAccordionItem);
                     return _newAccordionItem;
                 }
@@ -10836,7 +10836,7 @@ var OutSystems;
                     if (_animatedLabelsMap.has(animatedLabelId)) {
                         throw new Error(`There is already an ${OSFramework.OSUI.GlobalEnum.PatternName.AnimatedLabel} registered under id: ${animatedLabelId}`);
                     }
-                    const _newAnimatedLabel = new OSFramework.OSUI.Patterns.AnimatedLabel.AnimatedLabel(animatedLabelId, JSON.parse(configs));
+                    const _newAnimatedLabel = CreatePatternInstance(animatedLabelId, configs);
                     _animatedLabelsMap.set(animatedLabelId, _newAnimatedLabel);
                     return _newAnimatedLabel;
                 }
@@ -10910,7 +10910,7 @@ var OutSystems;
                     if (_bottomSheetItemsMap.has(bottomSheetId)) {
                         throw new Error('There is already an BottomSheet registered under id: ' + bottomSheetId);
                     }
-                    const _bottomSheetItem = new OSFramework.OSUI.Patterns.BottomSheet.BottomSheet(bottomSheetId, JSON.parse(configs));
+                    const _bottomSheetItem = CreatePatternInstance(bottomSheetId, configs);
                     _bottomSheetItemsMap.set(bottomSheetId, _bottomSheetItem);
                     return _bottomSheetItem;
                 }
@@ -11006,7 +11006,7 @@ var OutSystems;
                     if (_buttonsLoadingMap.has(buttonLoadingId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.ButtonLoading} registered under id: ${buttonLoadingId}`);
                     }
-                    const _newButtonLoading = new OSFramework.OSUI.Patterns.ButtonLoading.ButtonLoading(buttonLoadingId, JSON.parse(configs));
+                    const _newButtonLoading = CreatePatternInstance(buttonLoadingId, configs);
                     _buttonsLoadingMap.set(buttonLoadingId, _newButtonLoading);
                     return _newButtonLoading;
                 }
@@ -11091,11 +11091,15 @@ var OutSystems;
                     if (_carouselItemsMap.has(carouselId)) {
                         throw new Error(`There is already an ${OSFramework.OSUI.GlobalEnum.PatternName.Carousel} registered under id: ${carouselId}`);
                     }
-                    const _carouselItem = OSFramework.OSUI.Patterns.Carousel.Factory.NewCarousel(carouselId, configs, provider);
+                    const _carouselItem = CreatePatternInstance(carouselId, configs, provider);
                     _carouselItemsMap.set(carouselId, _carouselItem);
                     return _carouselItem;
                 }
                 CarouselAPI.Create = Create;
+                function CreatePatternInstance(carouselId, configs, provider) {
+                    return OSFramework.OSUI.Patterns.Carousel.Factory.NewCarousel(carouselId, configs, provider);
+                }
+                CarouselAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(carouselId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Carousel.FailDispose,
@@ -11285,11 +11289,15 @@ var OutSystems;
                     if (_datePickerItemsMap.has(datePickerId)) {
                         throw new Error(`There is already an DatePicker registered under id: ${datePickerId}`);
                     }
-                    const _datePickerItem = OSFramework.OSUI.Patterns.DatePicker.Factory.NewDatePicker(datePickerId, configs, mode, provider);
+                    const _datePickerItem = CreatePatternInstance(datePickerId, configs, mode, provider);
                     _datePickerItemsMap.set(datePickerId, _datePickerItem);
                     return _datePickerItem;
                 }
                 DatePickerAPI.Create = Create;
+                function CreatePatternInstance(datePickerId, configs, mode, provider) {
+                    return OSFramework.OSUI.Patterns.DatePicker.Factory.NewDatePicker(datePickerId, configs, mode, provider);
+                }
+                DatePickerAPI.CreatePatternInstance = CreatePatternInstance;
                 function ToggleNativeBehavior(datePickerId, IsNative) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.DatePicker.FailToggleNativeBehavior,
@@ -11512,11 +11520,15 @@ var OutSystems;
                     if (_dropdownItemsMap.has(dropdownId)) {
                         throw new Error(`There is already an Dropdown registered under id: ${dropdownId}`);
                     }
-                    const _dropdownItem = OSFramework.OSUI.Patterns.Dropdown.Factory.NewDropdown(dropdownId, mode, provider, configs);
+                    const _dropdownItem = CreatePatternInstance(dropdownId, mode, provider, configs);
                     _dropdownItemsMap.set(dropdownId, _dropdownItem);
                     return _dropdownItem;
                 }
                 DropdownAPI.Create = Create;
+                function CreatePatternInstance(dropdownId, mode, provider, configs) {
+                    return OSFramework.OSUI.Patterns.Dropdown.Factory.NewDropdown(dropdownId, mode, provider, configs);
+                }
+                DropdownAPI.CreatePatternInstance = CreatePatternInstance;
                 function Disable(dropdownId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Dropdown.FailDisable,
@@ -11701,11 +11713,15 @@ var OutSystems;
                     if (_dropdownServerSideItemItemsMap.has(dropdownServerSideItemId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.DropdownServerSideItem} registered under id: ${dropdownServerSideItemId}`);
                     }
-                    const _dropdownServerSideItemItem = new OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem(dropdownServerSideItemId, JSON.parse(configs));
+                    const _dropdownServerSideItemItem = CreatePatternInstance(dropdownServerSideItemId, JSON.parse(configs));
                     _dropdownServerSideItemItemsMap.set(dropdownServerSideItemId, _dropdownServerSideItemItem);
                     return _dropdownServerSideItemItem;
                 }
                 DropdownServerSideItemAPI.Create = Create;
+                function CreatePatternInstance(dropdownServerSideItemId, configs) {
+                    return new OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem(dropdownServerSideItemId, JSON.parse(configs));
+                }
+                DropdownServerSideItemAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(dropdownServerSideItemId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.DropdownServerSideItem.FailDispose,
@@ -11771,11 +11787,15 @@ var OutSystems;
                     if (_flipContentMap.has(flipId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.FlipContent} registered under id: ${flipId}`);
                     }
-                    const _newFlip = new OSFramework.OSUI.Patterns.FlipContent.FlipContent(flipId, JSON.parse(configs));
+                    const _newFlip = CreatePatternInstance(flipId, configs);
                     _flipContentMap.set(flipId, _newFlip);
                     return _newFlip;
                 }
                 FlipContentAPI.Create = Create;
+                function CreatePatternInstance(flipId, configs) {
+                    return new OSFramework.OSUI.Patterns.FlipContent.FlipContent(flipId, JSON.parse(configs));
+                }
+                FlipContentAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(flipId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.FlipContent.FailDispose,
@@ -11874,11 +11894,15 @@ var OutSystems;
                     if (_galleryMap.has(galleryId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Gallery} registered under id: ${galleryId}`);
                     }
-                    const _newGallery = new OSFramework.OSUI.Patterns.Gallery.Gallery(galleryId, JSON.parse(configs));
+                    const _newGallery = CreatePatternInstance(galleryId, configs);
                     _galleryMap.set(galleryId, _newGallery);
                     return _newGallery;
                 }
                 GalleryAPI.Create = Create;
+                function CreatePatternInstance(galleryId, configs) {
+                    return new OSFramework.OSUI.Patterns.Gallery.Gallery(galleryId, JSON.parse(configs));
+                }
+                GalleryAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(galleryId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Gallery.FailDispose,
@@ -11955,11 +11979,15 @@ var OutSystems;
                     if (_monthPickerItemsMap.has(monthPickerId)) {
                         throw new Error('There is already an MonthPicker registered under id: ' + monthPickerId);
                     }
-                    const _monthPickerItem = OSFramework.OSUI.Patterns.MonthPicker.Factory.NewMonthPicker(monthPickerId, provider, configs);
+                    const _monthPickerItem = CreatePatternInstance(monthPickerId, provider, configs);
                     _monthPickerItemsMap.set(monthPickerId, _monthPickerItem);
                     return _monthPickerItem;
                 }
                 MonthPickerAPI.Create = Create;
+                function CreatePatternInstance(monthPickerId, configs, provider) {
+                    return OSFramework.OSUI.Patterns.MonthPicker.Factory.NewMonthPicker(monthPickerId, configs, provider);
+                }
+                MonthPickerAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(monthPickerId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.MonthPicker.FailDispose,
@@ -12094,11 +12122,15 @@ var OutSystems;
                     if (_notificationMap.has(notificationId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Notification} registered under id: ${notificationId}`);
                     }
-                    const _newNotification = new OSFramework.OSUI.Patterns.Notification.Notification(notificationId, JSON.parse(configs));
+                    const _newNotification = CreatePatternInstance(notificationId, configs);
                     _notificationMap.set(notificationId, _newNotification);
                     return _newNotification;
                 }
                 NotificationAPI.Create = Create;
+                function CreatePatternInstance(notificationId, configs) {
+                    return new OSFramework.OSUI.Patterns.Notification.Notification(notificationId, JSON.parse(configs));
+                }
+                NotificationAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(notificationId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Notification.FailDispose,
@@ -12168,41 +12200,6 @@ var OutSystems;
     (function (OSUI) {
         var Patterns;
         (function (Patterns) {
-            var PatternFactoryAPI;
-            (function (PatternFactoryAPI) {
-                const _patternClasses = {
-                    Sidebar: OSFramework.OSUI.Patterns.Sidebar.Sidebar,
-                };
-                function CreateInstance(patternName, patternId, configs) {
-                    return new _patternClasses[patternName](patternId, configs);
-                }
-                PatternFactoryAPI.CreateInstance = CreateInstance;
-                function ExtendPatternClass(patternName, patternClass) {
-                    let _extendedClass = patternClass;
-                    if (typeof patternClass === 'string') {
-                        _extendedClass = _stringToFunction(patternClass);
-                    }
-                    _patternClasses[patternName] = _extendedClass;
-                }
-                PatternFactoryAPI.ExtendPatternClass = ExtendPatternClass;
-                function _stringToFunction(str) {
-                    const arr = str.split('.');
-                    let fn = window || this;
-                    for (let i = 0; i < arr.lenght; i++) {
-                        fn = fn[arr[i]];
-                    }
-                    return fn;
-                }
-            })(PatternFactoryAPI = Patterns.PatternFactoryAPI || (Patterns.PatternFactoryAPI = {}));
-        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
-    })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
-})(OutSystems || (OutSystems = {}));
-var OutSystems;
-(function (OutSystems) {
-    var OSUI;
-    (function (OSUI) {
-        var Patterns;
-        (function (Patterns) {
             var ProgressAPI;
             (function (ProgressAPI) {
                 const _progressItemsMap = new Map();
@@ -12221,11 +12218,15 @@ var OutSystems;
                     if (_progressItemsMap.has(progressId)) {
                         throw new Error(`There is already an ProgressItem registered under id: ${progressId}`);
                     }
-                    const _progressItem = OSFramework.OSUI.Patterns.Progress.Factory.NewProgress(progressId, type, configs);
+                    const _progressItem = CreatePatternInstance(progressId, type, configs);
                     _progressItemsMap.set(progressId, _progressItem);
                     return _progressItem;
                 }
                 ProgressAPI.Create = Create;
+                function CreatePatternInstance(progressId, configs, provider) {
+                    return OSFramework.OSUI.Patterns.Progress.Factory.NewProgress(progressId, configs, provider);
+                }
+                ProgressAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(progressId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Progress.FailDispose,
@@ -12313,11 +12314,15 @@ var OutSystems;
                     if (_rangeSliderItemsMap.has(rangeSliderId)) {
                         throw new Error(`There is already an ${OSFramework.OSUI.GlobalEnum.PatternName.RangeSlider} registered under id: ${rangeSliderId}`);
                     }
-                    const _rangeSliderItem = OSFramework.OSUI.Patterns.RangeSlider.Factory.NewRangeSlider(rangeSliderId, configs, mode, provider);
+                    const _rangeSliderItem = CreatePatternInstance(rangeSliderId, configs, mode, provider);
                     _rangeSliderItemsMap.set(rangeSliderId, _rangeSliderItem);
                     return _rangeSliderItem;
                 }
                 RangeSliderAPI.Create = Create;
+                function CreatePatternInstance(rangeSliderId, configs, mode, provider) {
+                    return OSFramework.OSUI.Patterns.RangeSlider.Factory.NewRangeSlider(rangeSliderId, configs, mode, provider);
+                }
+                RangeSliderAPI.CreatePatternInstance = CreatePatternInstance;
                 function Disable(rangeSliderId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.RangeSlider.FailDisable,
@@ -12474,11 +12479,15 @@ var OutSystems;
                     if (_ratingsMap.has(ratingId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Rating} registered under id: ${ratingId}`);
                     }
-                    const _newRating = new OSFramework.OSUI.Patterns.Rating.Rating(ratingId, JSON.parse(configs));
+                    const _newRating = CreatePatternInstance(ratingId, configs);
                     _ratingsMap.set(ratingId, _newRating);
                     return _newRating;
                 }
                 RatingAPI.Create = Create;
+                function CreatePatternInstance(ratingId, configs) {
+                    return new OSFramework.OSUI.Patterns.Rating.Rating(ratingId, JSON.parse(configs));
+                }
+                RatingAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(ratingId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Rating.FailDispose,
@@ -12544,11 +12553,15 @@ var OutSystems;
                     if (_sectionIndexItemsMap.has(sectionIndexId)) {
                         throw new Error(`There is already an SectionIndex registered under id: ${sectionIndexId}`);
                     }
-                    const _sectionIndexItem = new OSFramework.OSUI.Patterns.SectionIndex.SectionIndex(sectionIndexId, JSON.parse(configs));
+                    const _sectionIndexItem = CreatePatternInstance(sectionIndexId, configs);
                     _sectionIndexItemsMap.set(sectionIndexId, _sectionIndexItem);
                     return _sectionIndexItem;
                 }
                 SectionIndexAPI.Create = Create;
+                function CreatePatternInstance(sectionIndexId, configs) {
+                    return new OSFramework.OSUI.Patterns.SectionIndex.SectionIndex(sectionIndexId, JSON.parse(configs));
+                }
+                SectionIndexAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(sectionIndexId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.SectionIndex.FailDispose,
@@ -12603,11 +12616,15 @@ var OutSystems;
                     if (_sectionIndexItemMap.has(sectionIndexItemId)) {
                         throw new Error(`There is already a SectionIndexItem registered under id: ${sectionIndexItemId}`);
                     }
-                    const _sectionIndexItem = new OSFramework.OSUI.Patterns.SectionIndexItem.SectionIndexItem(sectionIndexItemId, JSON.parse(configs));
+                    const _sectionIndexItem = CreatePatternInstance(sectionIndexItemId, configs);
                     _sectionIndexItemMap.set(sectionIndexItemId, _sectionIndexItem);
                     return _sectionIndexItem;
                 }
                 SectionIndexItemAPI.Create = Create;
+                function CreatePatternInstance(sectionIndexItemId, configs) {
+                    return new OSFramework.OSUI.Patterns.SectionIndexItem.SectionIndexItem(sectionIndexItemId, JSON.parse(configs));
+                }
+                SectionIndexItemAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(sectionIndexItemId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.SectionIndexItem.FailDispose,
@@ -12695,7 +12712,7 @@ var OutSystems;
                     if (_sidebarMap.has(sidebarId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Sidebar} registered under id: ${sidebarId}`);
                     }
-                    const _newSidebar = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance('Sidebar', sidebarId, JSON.parse(configs));
+                    const _newSidebar = CreatePatternInstance(sidebarId, configs);
                     _sidebarMap.set(sidebarId, _newSidebar);
                     return _newSidebar;
                 }
@@ -12813,11 +12830,15 @@ var OutSystems;
                     if (_submenusMap.has(submenuId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Submenu} registered under id: ${submenuId}`);
                     }
-                    const _newSubmenu = new OSFramework.OSUI.Patterns.Submenu.Submenu(submenuId, JSON.parse(configs));
+                    const _newSubmenu = CreatePatternInstance(submenuId, configs);
                     _submenusMap.set(submenuId, _newSubmenu);
                     return _newSubmenu;
                 }
                 SubmenuAPI.Create = Create;
+                function CreatePatternInstance(submenuId, configs) {
+                    return new OSFramework.OSUI.Patterns.Submenu.Submenu(submenuId, JSON.parse(configs));
+                }
+                SubmenuAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(submenuId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Submenu.FailDispose,
@@ -12894,11 +12915,15 @@ var OutSystems;
                     if (_swipeEventsMap.has(swipeEventsId)) {
                         throw new Error(`There is already an ${OSFramework.OSUI.GlobalEnum.PatternName.SwipeEvents} registered under id: ${swipeEventsId}`);
                     }
-                    const _newSwipeEvents = new OSFramework.OSUI.Patterns.SwipeEvents.SwipeEvents(swipeEventsId, JSON.parse(configs));
+                    const _newSwipeEvents = CreatePatternInstance(swipeEventsId, configs);
                     _swipeEventsMap.set(swipeEventsId, _newSwipeEvents);
                     return _newSwipeEvents;
                 }
                 SwipeEventsAPI.Create = Create;
+                function CreatePatternInstance(swipeEventsId, configs) {
+                    return new OSFramework.OSUI.Patterns.SwipeEvents.SwipeEvents(swipeEventsId, JSON.parse(configs));
+                }
+                SwipeEventsAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(swipeEventsId) {
                     const swipeEvent = GetSwipeEventsById(swipeEventsId);
                     swipeEvent.dispose();
@@ -12962,11 +12987,15 @@ var OutSystems;
                     if (_tabsMap.has(tabsId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Tabs} registered under id: ${tabsId}`);
                     }
-                    const _newTabs = new OSFramework.OSUI.Patterns.Tabs.Tabs(tabsId, JSON.parse(configs));
+                    const _newTabs = CreatePatternInstance(tabsId, configs);
                     _tabsMap.set(tabsId, _newTabs);
                     return _newTabs;
                 }
                 TabsAPI.Create = Create;
+                function CreatePatternInstance(tabsId, configs) {
+                    return new OSFramework.OSUI.Patterns.Tabs.Tabs(tabsId, JSON.parse(configs));
+                }
+                TabsAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(tabsId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Tabs.FailDispose,
@@ -13073,7 +13102,7 @@ var OutSystems;
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.TabsContentItem} registered under id: ${tabsContentItemId}`);
                     }
                     const tabs = GetTabsByItem(tabsContentItemId);
-                    const _newTabsContentItem = new OSFramework.OSUI.Patterns.TabsContentItem.TabsContentItem(tabsContentItemId, JSON.parse(configs));
+                    const _newTabsContentItem = CreatePatternInstance(tabsContentItemId, configs);
                     _tabsContentItemMap.set(tabsContentItemId, _newTabsContentItem);
                     _newTabsContentItem.build();
                     if (tabs !== undefined) {
@@ -13082,6 +13111,10 @@ var OutSystems;
                     return _newTabsContentItem;
                 }
                 TabsContentItemAPI.Create = Create;
+                function CreatePatternInstance(tabsContentItemId, configs) {
+                    return new OSFramework.OSUI.Patterns.TabsContentItem.TabsContentItem(tabsContentItemId, JSON.parse(configs));
+                }
+                TabsContentItemAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(tabsContentItemId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.TabsContentItem.FailDispose,
@@ -13149,7 +13182,7 @@ var OutSystems;
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.TabsHeaderItem} registered under id: ${tabsHeaderItemId}`);
                     }
                     const tabs = GetTabsByItem(tabsHeaderItemId);
-                    const _newTabsHeaderItem = new OSFramework.OSUI.Patterns.TabsHeaderItem.TabsHeaderItem(tabsHeaderItemId, JSON.parse(configs));
+                    const _newTabsHeaderItem = CreatePatternInstance(tabsHeaderItemId, configs);
                     _tabsHeaderItemMap.set(tabsHeaderItemId, _newTabsHeaderItem);
                     _newTabsHeaderItem.build();
                     if (tabs !== undefined) {
@@ -13158,6 +13191,10 @@ var OutSystems;
                     return _newTabsHeaderItem;
                 }
                 TabsHeaderItemAPI.Create = Create;
+                function CreatePatternInstance(tabsHeaderItemId, configs) {
+                    return new OSFramework.OSUI.Patterns.TabsHeaderItem.TabsHeaderItem(tabsHeaderItemId, JSON.parse(configs));
+                }
+                TabsHeaderItemAPI.CreatePatternInstance = CreatePatternInstance;
                 function DisableTabItem(tabsHeaderItemId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.TabsHeaderItem.FailDisableTabHeader,
@@ -13261,11 +13298,15 @@ var OutSystems;
                     if (_timePickerItemsMap.has(timePickerId)) {
                         throw new Error(`There is already an TimePicker registered under id: ${timePickerId}`);
                     }
-                    const _timePickerItem = OSFramework.OSUI.Patterns.TimePicker.Factory.NewTimePicker(timePickerId, configs, provider);
+                    const _timePickerItem = CreatePatternInstance(timePickerId, configs, provider);
                     _timePickerItemsMap.set(timePickerId, _timePickerItem);
                     return _timePickerItem;
                 }
                 TimePickerAPI.Create = Create;
+                function CreatePatternInstance(timePickerId, configs, provider) {
+                    return OSFramework.OSUI.Patterns.TimePicker.Factory.NewTimePicker(timePickerId, configs, provider);
+                }
+                TimePickerAPI.CreatePatternInstance = CreatePatternInstance;
                 function ToggleNativeBehavior(timePickerId, IsNative) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.TimePicker.FailToggleNativeBehavior,
@@ -13444,11 +13485,15 @@ var OutSystems;
                     if (_tooltipsMap.has(tooltipId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Tooltip} registered under id: ${tooltipId}`);
                     }
-                    const _newTooltip = new OSFramework.OSUI.Patterns.Tooltip.Tooltip(tooltipId, JSON.parse(configs));
+                    const _newTooltip = CreatePatternInstance(tooltipId, configs);
                     _tooltipsMap.set(tooltipId, _newTooltip);
                     return _newTooltip;
                 }
                 TooltipAPI.Create = Create;
+                function CreatePatternInstance(tooltipId, configs) {
+                    return new OSFramework.OSUI.Patterns.Tooltip.Tooltip(tooltipId, JSON.parse(configs));
+                }
+                TooltipAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(tooltipId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Tooltip.FailDispose,
@@ -13514,11 +13559,15 @@ var OutSystems;
                     if (_touchEventsMap.has(touchEventsId)) {
                         throw new Error(`There is already an ${OSFramework.OSUI.GlobalEnum.PatternName.TouchEvents} registered under id: ${touchEventsId}`);
                     }
-                    const _newTouchEvents = new OSFramework.OSUI.Patterns.TouchEvents.TouchEvents(touchEventsId, JSON.parse(configs));
+                    const _newTouchEvents = CreatePatternInstance(touchEventsId, configs);
                     _touchEventsMap.set(touchEventsId, _newTouchEvents);
                     return _newTouchEvents;
                 }
                 TouchEventsAPI.Create = Create;
+                function CreatePatternInstance(touchEventsId, configs) {
+                    return new OSFramework.OSUI.Patterns.TouchEvents.TouchEvents(touchEventsId, JSON.parse(configs));
+                }
+                TouchEventsAPI.CreatePatternInstance = CreatePatternInstance;
                 function Dispose(touchEventsId) {
                     const swipeEvent = GetTouchEventsById(touchEventsId);
                     swipeEvent.dispose();

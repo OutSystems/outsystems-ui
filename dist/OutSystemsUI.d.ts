@@ -3654,6 +3654,7 @@ declare namespace OutSystems.OSUI.Patterns.CarouselAPI {
     function CarouselDisableOnRender(carouselId: string): string;
     function ChangeProperty(carouselId: string, propertyName: string, propertyValue: any): string;
     function Create(carouselId: string, configs: string, provider: string): OSFramework.OSUI.Patterns.Carousel.ICarousel;
+    function CreatePatternInstance(carouselId: string, configs: string, provider: string): OSFramework.OSUI.Patterns.Carousel.ICarousel;
     function Dispose(carouselId: string): string;
     function GetAllCarouselItemsMap(): Array<string>;
     function GetCarouselItemById(carouselId: string): OSFramework.OSUI.Patterns.Carousel.ICarousel;
@@ -3674,6 +3675,7 @@ declare namespace OutSystems.OSUI.Patterns.DatePickerAPI {
     function Clear(datePickerId: string): string;
     function Close(datePickerId: string): string;
     function Create(datePickerId: string, configs: string, mode: OSFramework.OSUI.Patterns.DatePicker.Enum.Mode, provider: string): OSFramework.OSUI.Patterns.DatePicker.IDatePicker;
+    function CreatePatternInstance(datePickerId: string, configs: string, mode: OSFramework.OSUI.Patterns.DatePicker.Enum.Mode, provider: string): OSFramework.OSUI.Patterns.DatePicker.IDatePicker;
     function ToggleNativeBehavior(datePickerId: string, IsNative: boolean): string;
     function Dispose(datePickerId: string): string;
     function GetAllDatePickerItemsMap(): Array<string>;
@@ -3696,6 +3698,7 @@ declare namespace OutSystems.OSUI.Patterns.DropdownAPI {
     function Clear(dropdownId: string): string;
     function Close(dropdownId: string): string;
     function Create(dropdownId: string, mode: string, provider: string, configs: string): OSFramework.OSUI.Patterns.Dropdown.IDropdown;
+    function CreatePatternInstance(dropdownId: string, mode: string, provider: string, configs: string): OSFramework.OSUI.Patterns.Dropdown.IDropdown;
     function Disable(dropdownId: string): string;
     function TogglePopup(dropdownId: string, isEnabled: boolean): string;
     function Dispose(dropdownId: string): string;
@@ -3715,6 +3718,7 @@ declare namespace OutSystems.OSUI.Patterns.DropdownAPI {
 declare namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
     function ChangeProperty(dropdownServerSideItemId: string, propertyName: string, propertyValue: any): string;
     function Create(dropdownServerSideItemId: string, configs: string): OSFramework.OSUI.Patterns.DropdownServerSideItem.IDropdownServerSideItem;
+    function CreatePatternInstance(dropdownServerSideItemId: string, configs: string): OSFramework.OSUI.Patterns.DropdownServerSideItem.IDropdownServerSideItem;
     function Dispose(dropdownServerSideItemId: string): string;
     function GetAllDropdownServerSideItemItemsMap(): Array<string>;
     function GetDropdownServerSideItemItemById(dropdownServerSideItemId: string): OSFramework.OSUI.Patterns.DropdownServerSideItem.IDropdownServerSideItem;
@@ -3724,6 +3728,7 @@ declare namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 declare namespace OutSystems.OSUI.Patterns.FlipContentAPI {
     function ChangeProperty(flipId: string, propertyName: string, propertyValue: any): string;
     function Create(flipId: string, configs: string): OSFramework.OSUI.Patterns.FlipContent.IFlipContent;
+    function CreatePatternInstance(flipId: string, configs: string): OSFramework.OSUI.Patterns.FlipContent.IFlipContent;
     function Dispose(flipId: string): string;
     function GetAllFlipContent(): Array<string>;
     function GetFlipContentById(flipId: string): OSFramework.OSUI.Patterns.FlipContent.IFlipContent;
@@ -3736,6 +3741,7 @@ declare namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 declare namespace OutSystems.OSUI.Patterns.GalleryAPI {
     function ChangeProperty(galleryId: string, propertyName: string, propertyValue: any): string;
     function Create(galleryId: string, configs: string): OSFramework.OSUI.Patterns.Gallery.IGallery;
+    function CreatePatternInstance(galleryId: string, configs: string): OSFramework.OSUI.Patterns.Gallery.IGallery;
     function Dispose(galleryId: string): string;
     function GetAllGalleries(): Array<string>;
     function GetGalleryById(galleryId: string): OSFramework.OSUI.Patterns.Gallery.IGallery;
@@ -3746,6 +3752,7 @@ declare namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
     function Clear(monthPickerId: string): string;
     function Close(monthPickerId: string): string;
     function Create(monthPickerId: string, configs: string, provider: string): OSFramework.OSUI.Patterns.MonthPicker.IMonthPicker;
+    function CreatePatternInstance(monthPickerId: string, configs: string, provider: string): OSFramework.OSUI.Patterns.MonthPicker.IMonthPicker;
     function Dispose(monthPickerId: string): string;
     function GetAllMonthPickerItemsMap(): Array<string>;
     function GetMonthPickerItemById(monthPickerId: string): OSFramework.OSUI.Patterns.MonthPicker.IMonthPicker;
@@ -3761,6 +3768,7 @@ declare namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 declare namespace OutSystems.OSUI.Patterns.NotificationAPI {
     function ChangeProperty(notificationId: string, propertyName: string, propertyValue: any): string;
     function Create(notificationId: string, configs: string): OSFramework.OSUI.Patterns.Notification.INotification;
+    function CreatePatternInstance(notificationId: string, configs: string): OSFramework.OSUI.Patterns.Notification.INotification;
     function Dispose(notificationId: string): string;
     function GetAllNotifications(): Array<string>;
     function GetNotificationById(notificationId: string): OSFramework.OSUI.Patterns.Notification.INotification;
@@ -3769,13 +3777,10 @@ declare namespace OutSystems.OSUI.Patterns.NotificationAPI {
     function RegisterCallback(notificationId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
     function Show(notificationId: string): string;
 }
-declare namespace OutSystems.OSUI.Patterns.PatternFactoryAPI {
-    function CreateInstance(patternName: string, patternId: string, configs: string): unknown;
-    function ExtendPatternClass(patternName: string, patternClass: string | object): void;
-}
 declare namespace OutSystems.OSUI.Patterns.ProgressAPI {
     function ChangeProperty(progressId: string, propertyName: string, propertyValue: any): string;
     function Create(progressId: string, type: string, configs: string): OSFramework.OSUI.Patterns.Progress.IProgress;
+    function CreatePatternInstance(progressId: string, configs: string, provider: string): OSFramework.OSUI.Patterns.Progress.IProgress;
     function Dispose(progressId: string): string;
     function GetAllProgressItemsMap(): Array<string>;
     function GetProgressItemById(progressId: string): OSFramework.OSUI.Patterns.Progress.IProgress;
@@ -3787,6 +3792,7 @@ declare namespace OutSystems.OSUI.Patterns.ProgressAPI {
 declare namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
     function ChangeProperty(rangeSliderId: string, propertyName: string, propertyValue: unknown): string;
     function Create(rangeSliderId: string, configs: string, mode: OSFramework.OSUI.Patterns.RangeSlider.Enum.Mode, provider: string): OSFramework.OSUI.Patterns.RangeSlider.IRangeSlider;
+    function CreatePatternInstance(rangeSliderId: string, configs: string, mode: OSFramework.OSUI.Patterns.RangeSlider.Enum.Mode, provider: string): OSFramework.OSUI.Patterns.RangeSlider.IRangeSlider;
     function Disable(rangeSliderId: string): string;
     function Dispose(rangeSliderId: string): string;
     function Enable(rangeSliderId: string): string;
@@ -3804,6 +3810,7 @@ declare namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 declare namespace OutSystems.OSUI.Patterns.RatingAPI {
     function ChangeProperty(ratingId: string, propertyName: string, propertyValue: any): string;
     function Create(ratingId: string, configs: string): OSFramework.OSUI.Patterns.Rating.IRating;
+    function CreatePatternInstance(ratingId: string, configs: string): OSFramework.OSUI.Patterns.Rating.IRating;
     function Dispose(ratingId: string): string;
     function GetAllRatings(): Array<string>;
     function GetRatingById(ratingId: string): OSFramework.OSUI.Patterns.Rating.IRating;
@@ -3813,6 +3820,7 @@ declare namespace OutSystems.OSUI.Patterns.RatingAPI {
 declare namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
     function ChangeProperty(sectionIndexId: string, propertyName: string, propertyValue: any): string;
     function Create(sectionIndexId: string, configs: string): OSFramework.OSUI.Patterns.SectionIndex.ISectionIndex;
+    function CreatePatternInstance(sectionIndexId: string, configs: string): OSFramework.OSUI.Patterns.SectionIndex.ISectionIndex;
     function Dispose(sectionIndexId: string): string;
     function GetAllSectionIndexItemsMap(): Array<string>;
     function GetSectionIndexById(sectionIndexId: string): OSFramework.OSUI.Patterns.SectionIndex.ISectionIndex;
@@ -3821,6 +3829,7 @@ declare namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 declare namespace OutSystems.OSUI.Patterns.SectionIndexItemAPI {
     function ChangeProperty(sectionIndexItemId: string, propertyName: string, propertyValue: any): string;
     function Create(sectionIndexItemId: string, configs: string): OSFramework.OSUI.Patterns.SectionIndexItem.ISectionIndexItem;
+    function CreatePatternInstance(sectionIndexItemId: string, configs: string): OSFramework.OSUI.Patterns.SectionIndexItem.ISectionIndexItem;
     function Dispose(sectionIndexItemId: string): string;
     function GetAllSectionIndexItemItemsMap(): Array<string>;
     function GetSectionIndexItemById(sectionIndexItemId: string): OSFramework.OSUI.Patterns.SectionIndexItem.ISectionIndexItem;
@@ -3846,6 +3855,7 @@ declare namespace OutSystems.OSUI.Patterns.SubmenuAPI {
     function Close(submenuId: string): string;
     function Open(submenuId: string): string;
     function Create(submenuId: string, configs: string): OSFramework.OSUI.Patterns.Submenu.ISubmenu;
+    function CreatePatternInstance(submenuId: string, configs: string): OSFramework.OSUI.Patterns.Submenu.ISubmenu;
     function Dispose(submenuId: string): string;
     function GetAllSubmenus(): Array<string>;
     function GetSubmenuById(submenuId: string): OSFramework.OSUI.Patterns.Submenu.ISubmenu;
@@ -3856,6 +3866,7 @@ declare namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 }
 declare namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
     function Create(swipeEventsId: string, configs: string): OSFramework.OSUI.Patterns.SwipeEvents.ISwipeEvents;
+    function CreatePatternInstance(swipeEventsId: string, configs: string): OSFramework.OSUI.Patterns.SwipeEvents.ISwipeEvents;
     function Dispose(swipeEventsId: string): void;
     function GetAllSwipeEvents(): Array<string>;
     function GetSwipeEventsById(swipeEventsId: string): OSFramework.OSUI.Patterns.SwipeEvents.ISwipeEvents;
@@ -3867,6 +3878,7 @@ declare namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 declare namespace OutSystems.OSUI.Patterns.TabsAPI {
     function ChangeProperty(tabsId: string, propertyName: string, propertyValue: unknown): string;
     function Create(tabsId: string, configs: string): OSFramework.OSUI.Patterns.Tabs.ITabs;
+    function CreatePatternInstance(tabsId: string, configs: string): OSFramework.OSUI.Patterns.Tabs.ITabs;
     function Dispose(tabsId: string): string;
     function GetAllTabs(): Array<string>;
     function GetTabsById(tabsId: string): OSFramework.OSUI.Patterns.Tabs.ITabs;
@@ -3879,6 +3891,7 @@ declare namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
     function GetTabsByItem(tabsContentItemId: string): OSFramework.OSUI.Patterns.Tabs.ITabs;
     function ChangeProperty(tabsContentItemId: string, propertyName: string, propertyValue: any): string;
     function Create(tabsContentItemId: string, configs: string): OSFramework.OSUI.Patterns.TabsContentItem.ITabsContentItem;
+    function CreatePatternInstance(tabsContentItemId: string, configs: string): OSFramework.OSUI.Patterns.TabsContentItem.ITabsContentItem;
     function Dispose(tabsContentItemId: string): string;
     function GetAllTabsContentItems(): Array<string>;
     function GetTabsContentItemById(tabsContentItemId: string): OSFramework.OSUI.Patterns.TabsContentItem.ITabsContentItem;
@@ -3887,6 +3900,7 @@ declare namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
     function GetTabsByItem(tabsHeaderItemId: string): OSFramework.OSUI.Patterns.Tabs.ITabs;
     function ChangeProperty(tabsHeaderItemId: string, propertyName: string, propertyValue: any): string;
     function Create(tabsHeaderItemId: string, configs: string): OSFramework.OSUI.Patterns.TabsHeaderItem.ITabsHeaderItem;
+    function CreatePatternInstance(tabsHeaderItemId: string, configs: string): OSFramework.OSUI.Patterns.TabsHeaderItem.ITabsHeaderItem;
     function DisableTabItem(tabsHeaderItemId: string): string;
     function Dispose(tabsHeaderItemId: string): string;
     function EnableTabItem(tabsHeaderItemId: string): string;
@@ -3899,6 +3913,7 @@ declare namespace OutSystems.OSUI.Patterns.TimePickerAPI {
     function Clear(timePickerId: string): string;
     function Close(timePickerId: string): string;
     function Create(timePickerId: string, configs: string, provider: string): OSFramework.OSUI.Patterns.TimePicker.ITimePicker;
+    function CreatePatternInstance(timePickerId: string, configs: string, provider: string): OSFramework.OSUI.Patterns.TimePicker.ITimePicker;
     function ToggleNativeBehavior(timePickerId: string, IsNative: boolean): string;
     function Dispose(timePickerId: string): string;
     function GetAllTimePickerItemsMap(): Array<string>;
@@ -3918,6 +3933,7 @@ declare namespace OutSystems.OSUI.Patterns.TooltipAPI {
     function ChangeProperty(tooltipId: string, propertyName: string, propertyValue: any): string;
     function Close(tooltipId: string): string;
     function Create(tooltipId: string, configs: string): OSFramework.OSUI.Patterns.Tooltip.ITooltip;
+    function CreatePatternInstance(tooltipId: string, configs: string): OSFramework.OSUI.Patterns.Tooltip.ITooltip;
     function Dispose(tooltipId: string): string;
     function GetAllTooltips(): Array<string>;
     function GetTooltipById(tooltipId: string): OSFramework.OSUI.Patterns.Tooltip.ITooltip;
@@ -3927,6 +3943,7 @@ declare namespace OutSystems.OSUI.Patterns.TooltipAPI {
 }
 declare namespace OutSystems.OSUI.Patterns.TouchEventsAPI {
     function Create(touchEventsId: string, configs: string): OSFramework.OSUI.Patterns.TouchEvents.ITouchEvents;
+    function CreatePatternInstance(touchEventsId: string, configs: string): OSFramework.OSUI.Patterns.TouchEvents.ITouchEvents;
     function Dispose(touchEventsId: string): void;
     function GetAllTouchEvents(): Array<string>;
     function GetTouchEventsById(touchEventsId: string): OSFramework.OSUI.Patterns.TouchEvents.ITouchEvents;
