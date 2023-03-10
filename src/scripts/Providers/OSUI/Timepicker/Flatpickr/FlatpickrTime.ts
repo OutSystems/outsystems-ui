@@ -266,7 +266,10 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public clear(): void {
-			this.provider.clear();
+			const isInputDisable = this._timePickerProviderInputElem.disabled;
+			if (isInputDisable === false) {
+				this.provider.clear();
+			}
 		}
 
 		/**

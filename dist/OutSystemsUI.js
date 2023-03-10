@@ -15450,7 +15450,10 @@ var Providers;
                         }
                     }
                     clear() {
-                        this.provider.clear();
+                        const isInputDisable = this._datePickerPlatformInputElem.disabled;
+                        if (isInputDisable === false) {
+                            this.provider.clear();
+                        }
                     }
                     close() {
                         if (this.provider.isOpen) {
@@ -17305,7 +17308,10 @@ var Providers;
                         }
                     }
                     clear() {
-                        this.provider.clear();
+                        const isInputDisable = this._monthPickerProviderInputElem.disabled;
+                        if (isInputDisable === false) {
+                            this.provider.clear();
+                        }
                     }
                     close() {
                         if (this.provider.isOpen) {
@@ -18289,7 +18295,10 @@ var Providers;
                         }
                     }
                     clear() {
-                        this.provider.clear();
+                        const isInputDisable = this._timePickerProviderInputElem.disabled;
+                        if (isInputDisable === false) {
+                            this.provider.clear();
+                        }
                     }
                     close() {
                         if (this.provider.isOpen) {
