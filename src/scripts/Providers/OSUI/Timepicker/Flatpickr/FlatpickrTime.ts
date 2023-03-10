@@ -308,7 +308,8 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public open(): void {
-			if (this.provider.isOpen === false) {
+			const isInputDisable = this._timePickerProviderInputElem.disabled;
+			if (this.provider.isOpen === false && isInputDisable === false) {
 				this.provider.open();
 			}
 		}

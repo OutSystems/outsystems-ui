@@ -415,7 +415,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		public open(): void {
-			if (this.provider.isOpen === false) {
+			const isInputDisable = this._datePickerPlatformInputElem.disabled;
+			if (this.provider.isOpen === false && isInputDisable === false) {
 				this.provider.open();
 			}
 		}

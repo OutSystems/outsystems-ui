@@ -15478,7 +15478,8 @@ var Providers;
                         super.dispose();
                     }
                     open() {
-                        if (this.provider.isOpen === false) {
+                        const isInputDisable = this._datePickerPlatformInputElem.disabled;
+                        if (this.provider.isOpen === false && isInputDisable === false) {
                             this.provider.open();
                         }
                     }
@@ -17324,7 +17325,8 @@ var Providers;
                         super.dispose();
                     }
                     open() {
-                        if (this.provider.isOpen === false) {
+                        const isInputDisable = this._monthPickerProviderInputElem.disabled;
+                        if (this.provider.isOpen === false && isInputDisable === false) {
                             this.provider.open();
                         }
                     }
@@ -18307,7 +18309,8 @@ var Providers;
                         super.dispose();
                     }
                     open() {
-                        if (this.provider.isOpen === false) {
+                        const isInputDisable = this._timePickerProviderInputElem.disabled;
+                        if (this.provider.isOpen === false && isInputDisable === false) {
                             this.provider.open();
                         }
                     }

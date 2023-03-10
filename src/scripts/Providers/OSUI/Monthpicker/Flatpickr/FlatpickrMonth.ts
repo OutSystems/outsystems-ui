@@ -335,7 +335,8 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public open(): void {
-			if (this.provider.isOpen === false) {
+			const isInputDisable = this._monthPickerProviderInputElem.disabled;
+			if (this.provider.isOpen === false && isInputDisable === false) {
 				this.provider.open();
 			}
 		}
