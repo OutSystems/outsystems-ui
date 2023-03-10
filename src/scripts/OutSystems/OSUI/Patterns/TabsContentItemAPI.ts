@@ -72,10 +72,7 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 		}
 		const tabs = GetTabsByItem(tabsContentItemId);
 
-		const _newTabsContentItem = new OSFramework.OSUI.Patterns.TabsContentItem.TabsContentItem(
-			tabsContentItemId,
-			JSON.parse(configs)
-		);
+		const _newTabsContentItem = CreatePatternInstance(tabsContentItemId, configs);
 
 		_tabsContentItemMap.set(tabsContentItemId, _newTabsContentItem);
 		_newTabsContentItem.build();
@@ -85,6 +82,21 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 		}
 
 		return _newTabsContentItem;
+	}
+
+	/**
+	 * Create and return Pattern Instance
+	 *
+	 * @export
+	 * @param {string} tabsContentItemId
+	 * @param {string} configs
+	 * @return {*}  {OSFramework.OSUI.Patterns.TabsContentItem.ITabsContentItem }
+	 */
+	export function CreatePatternInstance(
+		tabsContentItemId: string,
+		configs: string
+	): OSFramework.OSUI.Patterns.TabsContentItem.ITabsContentItem {
+		return new OSFramework.OSUI.Patterns.TabsContentItem.TabsContentItem(tabsContentItemId, JSON.parse(configs));
 	}
 
 	/**

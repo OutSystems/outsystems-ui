@@ -40,14 +40,26 @@ namespace OutSystems.OSUI.Patterns.SectionIndexItemAPI {
 			throw new Error(`There is already a SectionIndexItem registered under id: ${sectionIndexItemId}`);
 		}
 
-		const _sectionIndexItem = new OSFramework.OSUI.Patterns.SectionIndexItem.SectionIndexItem(
-			sectionIndexItemId,
-			JSON.parse(configs)
-		);
+		const _sectionIndexItem = CreatePatternInstance(sectionIndexItemId, configs);
 
 		_sectionIndexItemMap.set(sectionIndexItemId, _sectionIndexItem);
 
 		return _sectionIndexItem;
+	}
+
+	/**
+	 * Create and return Pattern Instance
+	 *
+	 * @export
+	 * @param {string} sectionIndexItemId
+	 * @param {string} configs
+	 * @return {*}  {OSFramework.OSUI.Patterns.SectionIndex.ISectionIndex }
+	 */
+	export function CreatePatternInstance(
+		sectionIndexItemId: string,
+		configs: string
+	): OSFramework.OSUI.Patterns.SectionIndexItem.ISectionIndexItem {
+		return new OSFramework.OSUI.Patterns.SectionIndexItem.SectionIndexItem(sectionIndexItemId, JSON.parse(configs));
 	}
 
 	/**

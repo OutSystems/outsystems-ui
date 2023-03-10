@@ -38,11 +38,23 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 			);
 		}
 
-		const _newTabs = new OSFramework.OSUI.Patterns.Tabs.Tabs(tabsId, JSON.parse(configs));
+		const _newTabs = CreatePatternInstance(tabsId, configs);
 
 		_tabsMap.set(tabsId, _newTabs);
 
 		return _newTabs;
+	}
+
+	/**
+	 * Create and return Pattern Instance
+	 *
+	 * @export
+	 * @param {string} tabsId
+	 * @param {string} configs
+	 * @return {*}  {OSFramework.OSUI.Patterns.Tabs.ITabs }
+	 */
+	export function CreatePatternInstance(tabsId: string, configs: string): OSFramework.OSUI.Patterns.Tabs.ITabs {
+		return new OSFramework.OSUI.Patterns.Tabs.Tabs(tabsId, JSON.parse(configs));
 	}
 
 	/**

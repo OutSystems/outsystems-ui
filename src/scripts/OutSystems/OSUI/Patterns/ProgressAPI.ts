@@ -41,11 +41,27 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 			throw new Error(`There is already an ProgressItem registered under id: ${progressId}`);
 		}
 
-		const _progressItem = OSFramework.OSUI.Patterns.Progress.Factory.NewProgress(progressId, type, configs);
+		const _progressItem = CreatePatternInstance(progressId, type, configs);
 
 		_progressItemsMap.set(progressId, _progressItem);
 
 		return _progressItem;
+	}
+
+	/**
+	 * Create and return Pattern Instance
+	 *
+	 * @export
+	 * @param {string} progressId
+	 * @param {string} configs
+	 * @return {*}  {OSFramework.OSUI.Patterns.Progress.IProgress}
+	 */
+	export function CreatePatternInstance(
+		progressId: string,
+		configs: string,
+		provider: string
+	): OSFramework.OSUI.Patterns.Progress.IProgress {
+		return OSFramework.OSUI.Patterns.Progress.Factory.NewProgress(progressId, configs, provider);
 	}
 
 	/**

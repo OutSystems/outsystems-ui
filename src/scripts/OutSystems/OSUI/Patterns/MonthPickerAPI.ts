@@ -80,15 +80,27 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 			throw new Error('There is already an MonthPicker registered under id: ' + monthPickerId);
 		}
 
-		const _monthPickerItem = OSFramework.OSUI.Patterns.MonthPicker.Factory.NewMonthPicker(
-			monthPickerId,
-			provider,
-			configs
-		);
+		const _monthPickerItem = CreatePatternInstance(monthPickerId, provider, configs);
 
 		_monthPickerItemsMap.set(monthPickerId, _monthPickerItem);
 
 		return _monthPickerItem;
+	}
+
+	/**
+	 * Create and return Pattern Instance
+	 *
+	 * @export
+	 * @param {string} monthPickerId
+	 * @param {string} configs
+	 * @return {*}  {OSFramework.OSUI.Patterns.MonthPicker.IMonthPicker}
+	 */
+	export function CreatePatternInstance(
+		monthPickerId: string,
+		configs: string,
+		provider: string
+	): OSFramework.OSUI.Patterns.MonthPicker.IMonthPicker {
+		return OSFramework.OSUI.Patterns.MonthPicker.Factory.NewMonthPicker(monthPickerId, configs, provider);
 	}
 
 	/**

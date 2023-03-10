@@ -72,10 +72,7 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 		}
 		const tabs = GetTabsByItem(tabsHeaderItemId);
 
-		const _newTabsHeaderItem = new OSFramework.OSUI.Patterns.TabsHeaderItem.TabsHeaderItem(
-			tabsHeaderItemId,
-			JSON.parse(configs)
-		);
+		const _newTabsHeaderItem = CreatePatternInstance(tabsHeaderItemId, configs);
 
 		_tabsHeaderItemMap.set(tabsHeaderItemId, _newTabsHeaderItem);
 		_newTabsHeaderItem.build();
@@ -85,6 +82,21 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 		}
 
 		return _newTabsHeaderItem;
+	}
+
+	/**
+	 * Create and return Pattern Instance
+	 *
+	 * @export
+	 * @param {string} tabsHeaderItemId
+	 * @param {string} configs
+	 * @return {*}  {OSFramework.OSUI.Patterns.TabsHeaderItem.ITabsHeaderItem}
+	 */
+	export function CreatePatternInstance(
+		tabsHeaderItemId: string,
+		configs: string
+	): OSFramework.OSUI.Patterns.TabsHeaderItem.ITabsHeaderItem {
+		return new OSFramework.OSUI.Patterns.TabsHeaderItem.TabsHeaderItem(tabsHeaderItemId, JSON.parse(configs));
 	}
 
 	/**

@@ -82,16 +82,28 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 			throw new Error(`There is already an DatePicker registered under id: ${datePickerId}`);
 		}
 
-		const _datePickerItem = OSFramework.OSUI.Patterns.DatePicker.Factory.NewDatePicker(
-			datePickerId,
-			configs,
-			mode,
-			provider
-		);
+		const _datePickerItem = CreatePatternInstance(datePickerId, configs, mode, provider);
 
 		_datePickerItemsMap.set(datePickerId, _datePickerItem);
 
 		return _datePickerItem;
+	}
+
+	/**
+	 * Create and return Pattern Instance
+	 *
+	 * @export
+	 * @param {string} datePickerId
+	 * @param {string} configs
+	 * @return {*}  {OSFramework.OSUI.Patterns.DatePicker.IDatePicker}
+	 */
+	export function CreatePatternInstance(
+		datePickerId: string,
+		configs: string,
+		mode: OSFramework.OSUI.Patterns.DatePicker.Enum.Mode,
+		provider: string
+	): OSFramework.OSUI.Patterns.DatePicker.IDatePicker {
+		return OSFramework.OSUI.Patterns.DatePicker.Factory.NewDatePicker(datePickerId, configs, mode, provider);
 	}
 
 	/**

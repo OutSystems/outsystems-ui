@@ -17,14 +17,26 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 			);
 		}
 
-		const _newSwipeEvents = new OSFramework.OSUI.Patterns.SwipeEvents.SwipeEvents(
-			swipeEventsId,
-			JSON.parse(configs)
-		);
+		const _newSwipeEvents = CreatePatternInstance(swipeEventsId, configs);
 
 		_swipeEventsMap.set(swipeEventsId, _newSwipeEvents);
 
 		return _newSwipeEvents;
+	}
+
+	/**
+	 * Create and return Pattern Instance
+	 *
+	 * @export
+	 * @param {string} swipeEventsId
+	 * @param {string} configs
+	 * @return {*}  {OSFramework.OSUI.Patterns.SwipeEvents.ISwipeEvents}
+	 */
+	export function CreatePatternInstance(
+		swipeEventsId: string,
+		configs: string
+	): OSFramework.OSUI.Patterns.SwipeEvents.ISwipeEvents {
+		return new OSFramework.OSUI.Patterns.SwipeEvents.SwipeEvents(swipeEventsId, JSON.parse(configs));
 	}
 
 	/**

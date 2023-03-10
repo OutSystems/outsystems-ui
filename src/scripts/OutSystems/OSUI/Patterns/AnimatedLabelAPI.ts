@@ -41,10 +41,7 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 			);
 		}
 
-		const _newAnimatedLabel = new OSFramework.OSUI.Patterns.AnimatedLabel.AnimatedLabel(
-			animatedLabelId,
-			JSON.parse(configs)
-		);
+		const _newAnimatedLabel = CreatePatternInstance(animatedLabelId, configs);
 
 		_animatedLabelsMap.set(animatedLabelId, _newAnimatedLabel);
 

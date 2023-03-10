@@ -58,11 +58,26 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 			);
 		}
 
-		const _newTooltip = new OSFramework.OSUI.Patterns.Tooltip.Tooltip(tooltipId, JSON.parse(configs));
+		const _newTooltip = CreatePatternInstance(tooltipId, configs);
 
 		_tooltipsMap.set(tooltipId, _newTooltip);
 
 		return _newTooltip;
+	}
+
+	/**
+	 * Create and return Pattern Instance
+	 *
+	 * @export
+	 * @param {string} tooltipId
+	 * @param {string} configs
+	 * @return {*}  {OSFramework.OSUI.Patterns.TabsHeaderItem.ITabsHeaderItem}
+	 */
+	export function CreatePatternInstance(
+		tooltipId: string,
+		configs: string
+	): OSFramework.OSUI.Patterns.Tooltip.ITooltip {
+		return new OSFramework.OSUI.Patterns.Tooltip.Tooltip(tooltipId, JSON.parse(configs));
 	}
 
 	/**

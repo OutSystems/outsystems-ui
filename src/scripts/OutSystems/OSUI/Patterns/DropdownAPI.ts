@@ -82,16 +82,28 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 			throw new Error(`There is already an Dropdown registered under id: ${dropdownId}`);
 		}
 
-		const _dropdownItem = OSFramework.OSUI.Patterns.Dropdown.Factory.NewDropdown(
-			dropdownId,
-			mode,
-			provider,
-			configs
-		);
+		const _dropdownItem = CreatePatternInstance(dropdownId, mode, provider, configs);
 
 		_dropdownItemsMap.set(dropdownId, _dropdownItem);
 
 		return _dropdownItem;
+	}
+
+	/**
+	 * Create and return Pattern Instance
+	 *
+	 * @export
+	 * @param {string} dropdownId
+	 * @param {string} configs
+	 * @return {*}  {OSFramework.OSUI.Patterns.Dropdown.IDropdown}
+	 */
+	export function CreatePatternInstance(
+		dropdownId: string,
+		mode: string,
+		provider: string,
+		configs: string
+	): OSFramework.OSUI.Patterns.Dropdown.IDropdown {
+		return OSFramework.OSUI.Patterns.Dropdown.Factory.NewDropdown(dropdownId, mode, provider, configs);
 	}
 
 	/**

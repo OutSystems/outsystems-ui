@@ -17,14 +17,26 @@ namespace OutSystems.OSUI.Patterns.TouchEventsAPI {
 			);
 		}
 
-		const _newTouchEvents = new OSFramework.OSUI.Patterns.TouchEvents.TouchEvents(
-			touchEventsId,
-			JSON.parse(configs)
-		);
+		const _newTouchEvents = CreatePatternInstance(touchEventsId, configs);
 
 		_touchEventsMap.set(touchEventsId, _newTouchEvents);
 
 		return _newTouchEvents;
+	}
+
+	/**
+	 * Create and return Pattern Instance
+	 *
+	 * @export
+	 * @param {string} touchEventsId
+	 * @param {string} configs
+	 * @return {*}  {OSFramework.OSUI.Patterns.TouchEvents.ITouchEvents}
+	 */
+	export function CreatePatternInstance(
+		touchEventsId: string,
+		configs: string
+	): OSFramework.OSUI.Patterns.TouchEvents.ITouchEvents {
+		return new OSFramework.OSUI.Patterns.TouchEvents.TouchEvents(touchEventsId, JSON.parse(configs));
 	}
 
 	/**

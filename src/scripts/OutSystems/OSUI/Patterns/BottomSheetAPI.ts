@@ -37,10 +37,7 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 			throw new Error('There is already an BottomSheet registered under id: ' + bottomSheetId);
 		}
 
-		const _bottomSheetItem = new OSFramework.OSUI.Patterns.BottomSheet.BottomSheet(
-			bottomSheetId,
-			JSON.parse(configs)
-		);
+		const _bottomSheetItem = CreatePatternInstance(bottomSheetId, configs);
 
 		_bottomSheetItemsMap.set(bottomSheetId, _bottomSheetItem);
 

@@ -45,14 +45,29 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 			);
 		}
 
-		const _dropdownServerSideItemItem = new OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem(
-			dropdownServerSideItemId,
-			JSON.parse(configs)
-		);
+		const _dropdownServerSideItemItem = CreatePatternInstance(dropdownServerSideItemId, JSON.parse(configs));
 
 		_dropdownServerSideItemItemsMap.set(dropdownServerSideItemId, _dropdownServerSideItemItem);
 
 		return _dropdownServerSideItemItem;
+	}
+
+	/**
+	 * Create and return Pattern Instance
+	 *
+	 * @export
+	 * @param {string} dropdownServerSideItemId
+	 * @param {string} configs
+	 * @return {*}  {OSFramework.OSUI.Patterns.DropdownServerSideItem.IDropdownServerSideIte}
+	 */
+	export function CreatePatternInstance(
+		dropdownServerSideItemId: string,
+		configs: string
+	): OSFramework.OSUI.Patterns.DropdownServerSideItem.IDropdownServerSideItem {
+		return new OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem(
+			dropdownServerSideItemId,
+			JSON.parse(configs)
+		);
 	}
 
 	/**

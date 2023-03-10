@@ -41,12 +41,24 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 			);
 		}
 
-		const _newNotification = new OSFramework.OSUI.Patterns.Notification.Notification(
-			notificationId,
-			JSON.parse(configs)
-		);
+		const _newNotification = CreatePatternInstance(notificationId, configs);
 		_notificationMap.set(notificationId, _newNotification);
 		return _newNotification;
+	}
+
+	/**
+	 * Create and return Pattern Instance
+	 *
+	 * @export
+	 * @param {string} notificationId
+	 * @param {string} configs
+	 * @return {*}  {OSFramework.OSUI.Patterns.Notification.INotification }
+	 */
+	export function CreatePatternInstance(
+		notificationId: string,
+		configs: string
+	): OSFramework.OSUI.Patterns.Notification.INotification {
+		return new OSFramework.OSUI.Patterns.Notification.Notification(notificationId, JSON.parse(configs));
 	}
 
 	/**

@@ -41,10 +41,7 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 			);
 		}
 
-		const _newButtonLoading = new OSFramework.OSUI.Patterns.ButtonLoading.ButtonLoading(
-			buttonLoadingId,
-			JSON.parse(configs)
-		);
+		const _newButtonLoading = CreatePatternInstance(buttonLoadingId, configs);
 
 		_buttonsLoadingMap.set(buttonLoadingId, _newButtonLoading);
 

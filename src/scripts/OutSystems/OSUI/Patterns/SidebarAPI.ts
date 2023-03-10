@@ -77,11 +77,7 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 			);
 		}
 
-		const _newSidebar = OutSystems.OSUI.Patterns.PatternFactoryAPI.CreateInstance(
-			'Sidebar',
-			sidebarId,
-			JSON.parse(configs)
-		) as OSFramework.OSUI.Patterns.Sidebar.ISidebar;
+		const _newSidebar = CreatePatternInstance(sidebarId, configs);
 
 		_sidebarMap.set(sidebarId, _newSidebar);
 		return _newSidebar;

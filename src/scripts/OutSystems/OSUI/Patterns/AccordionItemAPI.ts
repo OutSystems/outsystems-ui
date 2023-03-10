@@ -80,10 +80,7 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 			);
 		}
 
-		const _newAccordionItem = new OSFramework.OSUI.Patterns.AccordionItem.AccordionItem(
-			accordionItemId,
-			JSON.parse(configs)
-		);
+		const _newAccordionItem = CreatePatternInstance(accordionItemId, configs);
 
 		_accordionItemMap.set(accordionItemId, _newAccordionItem);
 

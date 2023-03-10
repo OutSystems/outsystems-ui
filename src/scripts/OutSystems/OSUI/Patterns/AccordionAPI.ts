@@ -56,7 +56,7 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 			);
 		}
 
-		const _newAccordion = CreatePatternInstance(accordionId, JSON.parse(configs));
+		const _newAccordion = CreatePatternInstance(accordionId, configs);
 
 		_accordionMap.set(accordionId, _newAccordion);
 

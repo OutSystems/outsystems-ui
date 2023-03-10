@@ -45,16 +45,28 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 			);
 		}
 
-		const _rangeSliderItem = OSFramework.OSUI.Patterns.RangeSlider.Factory.NewRangeSlider(
-			rangeSliderId,
-			configs,
-			mode,
-			provider
-		);
+		const _rangeSliderItem = CreatePatternInstance(rangeSliderId, configs, mode, provider);
 
 		_rangeSliderItemsMap.set(rangeSliderId, _rangeSliderItem);
 
 		return _rangeSliderItem;
+	}
+
+	/**
+	 * Create and return Pattern Instance
+	 *
+	 * @export
+	 * @param {string} rangeSliderId
+	 * @param {string} configs
+	 * @return {*}  {OSFramework.OSUI.Patterns.RangeSlider.IRangeSlider}
+	 */
+	export function CreatePatternInstance(
+		rangeSliderId: string,
+		configs: string,
+		mode: OSFramework.OSUI.Patterns.RangeSlider.Enum.Mode,
+		provider: string
+	): OSFramework.OSUI.Patterns.RangeSlider.IRangeSlider {
+		return OSFramework.OSUI.Patterns.RangeSlider.Factory.NewRangeSlider(rangeSliderId, configs, mode, provider);
 	}
 
 	/**

@@ -39,9 +39,21 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 			);
 		}
 
-		const _newRating = new OSFramework.OSUI.Patterns.Rating.Rating(ratingId, JSON.parse(configs));
+		const _newRating = CreatePatternInstance(ratingId, configs);
 		_ratingsMap.set(ratingId, _newRating);
 		return _newRating;
+	}
+
+	/**
+	 * Create and return Pattern Instance
+	 *
+	 * @export
+	 * @param {string} ratingId
+	 * @param {string} configs
+	 * @return {*}  {OSFramework.OSUI.Patterns.Rating.IRating }
+	 */
+	export function CreatePatternInstance(ratingId: string, configs: string): OSFramework.OSUI.Patterns.Rating.IRating {
+		return new OSFramework.OSUI.Patterns.Rating.Rating(ratingId, JSON.parse(configs));
 	}
 
 	/**

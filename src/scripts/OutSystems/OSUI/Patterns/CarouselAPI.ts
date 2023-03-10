@@ -81,11 +81,27 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 			);
 		}
 
-		const _carouselItem = OSFramework.OSUI.Patterns.Carousel.Factory.NewCarousel(carouselId, configs, provider);
+		const _carouselItem = CreatePatternInstance(carouselId, configs, provider);
 
 		_carouselItemsMap.set(carouselId, _carouselItem);
 
 		return _carouselItem;
+	}
+
+	/**
+	 * Create and return Pattern Instance
+	 *
+	 * @export
+	 * @param {string} carouselId
+	 * @param {string} configs
+	 * @return {*}  {OSFramework.OSUI.Patterns.Carousel.ICarousel}
+	 */
+	export function CreatePatternInstance(
+		carouselId: string,
+		configs: string,
+		provider: string
+	): OSFramework.OSUI.Patterns.Carousel.ICarousel {
+		return OSFramework.OSUI.Patterns.Carousel.Factory.NewCarousel(carouselId, configs, provider);
 	}
 
 	/**

@@ -80,15 +80,27 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 			throw new Error(`There is already an TimePicker registered under id: ${timePickerId}`);
 		}
 
-		const _timePickerItem = OSFramework.OSUI.Patterns.TimePicker.Factory.NewTimePicker(
-			timePickerId,
-			configs,
-			provider
-		);
+		const _timePickerItem = CreatePatternInstance(timePickerId, configs, provider);
 
 		_timePickerItemsMap.set(timePickerId, _timePickerItem);
 
 		return _timePickerItem;
+	}
+
+	/**
+	 * Create and return Pattern Instance
+	 *
+	 * @export
+	 * @param {string} timePickerId
+	 * @param {string} configs
+	 * @return {*}  {OSFramework.OSUI.Patterns.TimePicker.ITimePicker}
+	 */
+	export function CreatePatternInstance(
+		timePickerId: string,
+		configs: string,
+		provider: string
+	): OSFramework.OSUI.Patterns.TimePicker.ITimePicker {
+		return OSFramework.OSUI.Patterns.TimePicker.Factory.NewTimePicker(timePickerId, configs, provider);
 	}
 
 	/**

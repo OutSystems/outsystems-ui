@@ -38,11 +38,26 @@ namespace OutSystems.OSUI.Patterns.GalleryAPI {
 			);
 		}
 
-		const _newGallery = new OSFramework.OSUI.Patterns.Gallery.Gallery(galleryId, JSON.parse(configs));
+		const _newGallery = CreatePatternInstance(galleryId, configs);
 
 		_galleryMap.set(galleryId, _newGallery);
 
 		return _newGallery;
+	}
+
+	/**
+	 * Create and return Pattern Instance
+	 *
+	 * @export
+	 * @param {string} galleryId
+	 * @param {string} configs
+	 * @return {*}  {OSFramework.OSUI.Patterns.Gallery.IGallery }
+	 */
+	export function CreatePatternInstance(
+		galleryId: string,
+		configs: string
+	): OSFramework.OSUI.Patterns.Gallery.IGallery {
+		return new OSFramework.OSUI.Patterns.Gallery.Gallery(galleryId, JSON.parse(configs));
 	}
 
 	/**

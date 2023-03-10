@@ -39,11 +39,26 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 			);
 		}
 
-		const _newFlip = new OSFramework.OSUI.Patterns.FlipContent.FlipContent(flipId, JSON.parse(configs));
+		const _newFlip = CreatePatternInstance(flipId, configs);
 
 		_flipContentMap.set(flipId, _newFlip);
 
 		return _newFlip;
+	}
+
+	/**
+	 * Create and return Pattern Instance
+	 *
+	 * @export
+	 * @param {string} flipId
+	 * @param {string} configs
+	 * @return {*}  {OSFramework.OSUI.Patterns.FlipContent.IFlipContent}
+	 */
+	export function CreatePatternInstance(
+		flipId: string,
+		configs: string
+	): OSFramework.OSUI.Patterns.FlipContent.IFlipContent {
+		return new OSFramework.OSUI.Patterns.FlipContent.FlipContent(flipId, JSON.parse(configs));
 	}
 
 	/**

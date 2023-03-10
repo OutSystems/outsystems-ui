@@ -77,11 +77,26 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 			);
 		}
 
-		const _newSubmenu = new OSFramework.OSUI.Patterns.Submenu.Submenu(submenuId, JSON.parse(configs));
+		const _newSubmenu = CreatePatternInstance(submenuId, configs);
 
 		_submenusMap.set(submenuId, _newSubmenu);
 
 		return _newSubmenu;
+	}
+
+	/**
+	 * Create and return Pattern Instance
+	 *
+	 * @export
+	 * @param {string} submenuId
+	 * @param {string} configs
+	 * @return {*}  {OSFramework.OSUI.Patterns.Submenu.ISubmenu}
+	 */
+	export function CreatePatternInstance(
+		submenuId: string,
+		configs: string
+	): OSFramework.OSUI.Patterns.Submenu.ISubmenu {
+		return new OSFramework.OSUI.Patterns.Submenu.Submenu(submenuId, JSON.parse(configs));
 	}
 
 	/**
