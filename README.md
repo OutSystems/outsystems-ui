@@ -47,7 +47,7 @@ You can fork it then branch it and PR your proposals!
 
 We highly recommend the usage of the following tools:
 
--   [Visual Code](https://code.visualstudio.com/)
+-   [Visual Studio Code](https://code.visualstudio.com/)
 -   With these extensions:
     -   Document This
     -   ESLint
@@ -58,16 +58,16 @@ We highly recommend the usage of the following tools:
 <ol>
   <li>Do a Repository <strong>Fork</strong></li>
   <li>Create a branch based in the branch <strong>master</strong> (lastest & greatest release)</li>
-  <li>Open your banch Code in Visual Code</li>
-  <li>Run the following command in Visual Code terminal: <code>npm run setup</code> (this will install all the dependencies that you need to compile the code)</li>
+  <li>Open your banch Code in Visual Studio Code</li>
+  <li>Run the following command in Visual Studio Code terminal: <code>npm run setup</code> (this will install all the dependencies that you need to compile the code)</li>
   <li>Do your magic! :)</li>
   <li><strong>Document your code</strong> (with the extension "Document This", start typing <code>/**</code> and the extension will give you a good starting point</li>
-  <li>Compile and fix errors and warnings (in Visual Code terminal: <code>npm run build</code>)</li>
+  <li>Compile and fix errors and warnings (in Visual Studio Code terminal: <code>npm run build</code>)</li>
   <li>
-    Check if the code format is following our conventions (in Visual Code terminal: <code>npm run lint</code>)
+    Check if the code format is following our conventions (in Visual Studio Code terminal: <code>npm run lint</code>)
     <ol>
-      <li>Some of the conventions can be fixed automatically by lint (in Visual Code terminal: <code>npm run lintfix</code>)</li>
-      <li>Although the script above execute the prettier conventions, you may want to run it over all project files (in Visual Code terminal: <code>npm run prettier</code>)</li>
+      <li>Some of the conventions can be fixed automatically by lint (in Visual Studio Code terminal: <code>npm run lintfix</code>)</li>
+      <li>Although the script above execute the prettier conventions, you may want to run it over all project files (in Visual Studio Code terminal: <code>npm run prettier</code>)</li>
     </ol>
   </li>
   <li>Fix all errors & warnings! :)</li>
