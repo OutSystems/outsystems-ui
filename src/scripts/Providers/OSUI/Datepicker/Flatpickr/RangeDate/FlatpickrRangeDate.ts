@@ -171,7 +171,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 			// Ensure assigns only occurs if both dates are set!
 			if (
 				OSFramework.OSUI.Helper.Dates.IsNull(startDate) === false &&
-				OSFramework.OSUI.Helper.Dates.IsNull(endDate) === false
+				OSFramework.OSUI.Helper.Dates.IsNull(endDate) === false &&
+				this._datePickerPlatformInputElem.disabled === false
 			) {
 				// Redefine the Initial dates
 				this.configs.InitialStartDate = startDate;

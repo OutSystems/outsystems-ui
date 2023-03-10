@@ -395,10 +395,12 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 * @memberof OSUIFlatpickrTime
 		 */
 		public updateInitialTime(value: string): void {
-			// Redefine the Initial time
-			this.configs.InitialTime = value;
-			// Trigger the Redraw method in order to update calendar with this new value
-			this.redraw();
+			if (this._timePickerProviderInputElem.disabled === false) {
+				// Redefine the Initial time
+				this.configs.InitialTime = value;
+				// Trigger the Redraw method in order to update calendar with this new value
+				this.redraw();
+			}
 		}
 	}
 }
