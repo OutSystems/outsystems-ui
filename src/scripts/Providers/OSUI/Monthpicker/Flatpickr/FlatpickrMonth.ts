@@ -293,7 +293,10 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public clear(): void {
-			this.provider.clear();
+			const isInputDisable = this._monthPickerProviderInputElem.disabled;
+			if (isInputDisable === false) {
+				this.provider.clear();
+			}
 		}
 
 		/**
@@ -335,7 +338,8 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public open(): void {
-			if (this.provider.isOpen === false) {
+			const isInputDisable = this._monthPickerProviderInputElem.disabled;
+			if (this.provider.isOpen === false && isInputDisable === false) {
 				this.provider.open();
 			}
 		}

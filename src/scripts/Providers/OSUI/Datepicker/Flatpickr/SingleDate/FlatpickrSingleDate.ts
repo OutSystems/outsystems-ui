@@ -153,12 +153,14 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 		 * @memberof Providers.OSUI.DatePicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate
 		 */
 		public updateInitialDate(value: string): void {
-			// Enable Flag in order to prevent trigger OnDateSelected platform callback event
-			this._isUpdatedInitialDateByClientAction = true;
-			// Redefine the Initial date
-			this.configs.InitialDate = value;
-			// Redraw calendar!
-			this.prepareToAndRedraw();
+			if (this._datePickerPlatformInputElem.disabled === false) {
+				// Enable Flag in order to prevent trigger OnDateSelected platform callback event
+				this._isUpdatedInitialDateByClientAction = true;
+				// Redefine the Initial date
+				this.configs.InitialDate = value;
+				// Redraw calendar!
+				this.prepareToAndRedraw();
+			}
 		}
 	}
 }

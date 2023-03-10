@@ -15472,7 +15472,10 @@ var Providers;
                         }
                     }
                     clear() {
-                        this.provider.clear();
+                        const isInputDisable = this._datePickerPlatformInputElem.disabled;
+                        if (isInputDisable === false) {
+                            this.provider.clear();
+                        }
                     }
                     close() {
                         if (this.provider.isOpen) {
@@ -15500,7 +15503,8 @@ var Providers;
                         super.dispose();
                     }
                     open() {
-                        if (this.provider.isOpen === false) {
+                        const isInputDisable = this._datePickerPlatformInputElem.disabled;
+                        if (this.provider.isOpen === false && isInputDisable === false) {
                             this.provider.open();
                         }
                     }
@@ -15849,7 +15853,8 @@ var Providers;
                         }
                         updateInitialDate(startDate, endDate) {
                             if (OSFramework.OSUI.Helper.Dates.IsNull(startDate) === false &&
-                                OSFramework.OSUI.Helper.Dates.IsNull(endDate) === false) {
+                                OSFramework.OSUI.Helper.Dates.IsNull(endDate) === false &&
+                                this._datePickerPlatformInputElem.disabled === false) {
                                 this.configs.InitialStartDate = startDate;
                                 this.configs.InitialEndDate = endDate;
                                 if (OSFramework.OSUI.Helper.Dates.IsBeforeThan(startDate, endDate)) {
@@ -16009,9 +16014,11 @@ var Providers;
                             }
                         }
                         updateInitialDate(value) {
-                            this._isUpdatedInitialDateByClientAction = true;
-                            this.configs.InitialDate = value;
-                            this.prepareToAndRedraw();
+                            if (this._datePickerPlatformInputElem.disabled === false) {
+                                this._isUpdatedInitialDateByClientAction = true;
+                                this.configs.InitialDate = value;
+                                this.prepareToAndRedraw();
+                            }
                         }
                     }
                     SingleDate.OSUIFlatpickrSingleDate = OSUIFlatpickrSingleDate;
@@ -17345,7 +17352,10 @@ var Providers;
                         }
                     }
                     clear() {
-                        this.provider.clear();
+                        const isInputDisable = this._monthPickerProviderInputElem.disabled;
+                        if (isInputDisable === false) {
+                            this.provider.clear();
+                        }
                     }
                     close() {
                         if (this.provider.isOpen) {
@@ -17365,7 +17375,8 @@ var Providers;
                         super.dispose();
                     }
                     open() {
-                        if (this.provider.isOpen === false) {
+                        const isInputDisable = this._monthPickerProviderInputElem.disabled;
+                        if (this.provider.isOpen === false && isInputDisable === false) {
                             this.provider.open();
                         }
                     }
@@ -18349,7 +18360,10 @@ var Providers;
                         }
                     }
                     clear() {
-                        this.provider.clear();
+                        const isInputDisable = this._timePickerProviderInputElem.disabled;
+                        if (isInputDisable === false) {
+                            this.provider.clear();
+                        }
                     }
                     close() {
                         if (this.provider.isOpen) {
@@ -18369,7 +18383,8 @@ var Providers;
                         super.dispose();
                     }
                     open() {
-                        if (this.provider.isOpen === false) {
+                        const isInputDisable = this._timePickerProviderInputElem.disabled;
+                        if (this.provider.isOpen === false && isInputDisable === false) {
                             this.provider.open();
                         }
                     }
@@ -18408,8 +18423,10 @@ var Providers;
                         }
                     }
                     updateInitialTime(value) {
-                        this.configs.InitialTime = value;
-                        this.redraw();
+                        if (this._timePickerProviderInputElem.disabled === false) {
+                            this.configs.InitialTime = value;
+                            this.redraw();
+                        }
                     }
                 }
                 Flatpickr.OSUIFlatpickrTime = OSUIFlatpickrTime;

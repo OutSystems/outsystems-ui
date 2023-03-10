@@ -266,7 +266,10 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public clear(): void {
-			this.provider.clear();
+			const isInputDisable = this._timePickerProviderInputElem.disabled;
+			if (isInputDisable === false) {
+				this.provider.clear();
+			}
 		}
 
 		/**
@@ -308,7 +311,8 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public open(): void {
-			if (this.provider.isOpen === false) {
+			const isInputDisable = this._timePickerProviderInputElem.disabled;
+			if (this.provider.isOpen === false && isInputDisable === false) {
 				this.provider.open();
 			}
 		}
@@ -391,10 +395,12 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 * @memberof OSUIFlatpickrTime
 		 */
 		public updateInitialTime(value: string): void {
-			// Redefine the Initial time
-			this.configs.InitialTime = value;
-			// Trigger the Redraw method in order to update calendar with this new value
-			this.redraw();
+			if (this._timePickerProviderInputElem.disabled === false) {
+				// Redefine the Initial time
+				this.configs.InitialTime = value;
+				// Trigger the Redraw method in order to update calendar with this new value
+				this.redraw();
+			}
 		}
 	}
 }
