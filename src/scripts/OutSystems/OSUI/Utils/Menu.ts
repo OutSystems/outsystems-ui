@@ -32,73 +32,95 @@ namespace OutSystems.OSUI.Utils.Menu {
 	 * Checks if the menu can be draggable
 	 * @returns
 	 */
-	export function IsMenuDraggable(): boolean {
-		const _layoutMenuVisible = OSFramework.OSUI.Helper.Dom.TagSelector(
-			document.body,
-			'.active-screen .aside-visible'
-		);
-		const _isLandscape = OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(document.body, 'landscape');
-		let _addDragGestures = false;
+	export function IsMenuDraggable(): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Utilities.FailCheckIsMenuDraggable,
+			hasValue: true,
+			callback: () => {
+				const _layoutMenuVisible = OSFramework.OSUI.Helper.Dom.TagSelector(
+					document.body,
+					'.active-screen .aside-visible'
+				);
+				const _isLandscape = OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(document.body, 'landscape');
+				let _addDragGestures = false;
 
-		if (window.cordova !== undefined && DeviceDetection.IsRunningAsPWA() === false) {
-			if (
-				(_layoutMenuVisible && OSFramework.OSUI.Helper.DeviceInfo.IsDesktop) ||
-				(_layoutMenuVisible && OSFramework.OSUI.Helper.DeviceInfo.IsTablet && _isLandscape)
-			) {
-				_addDragGestures = false;
-			} else {
-				_addDragGestures = true;
-			}
-		}
+				if (window.cordova !== undefined && DeviceDetection.IsRunningAsPWA() === false) {
+					if (
+						(_layoutMenuVisible && OSFramework.OSUI.Helper.DeviceInfo.IsDesktop) ||
+						(_layoutMenuVisible && OSFramework.OSUI.Helper.DeviceInfo.IsTablet && _isLandscape)
+					) {
+						_addDragGestures = false;
+					} else {
+						_addDragGestures = true;
+					}
+				}
 
-		return _addDragGestures;
+				return _addDragGestures;
+			},
+		});
+
+		return result;
 	}
 
 	/**
 	 * Closes the extended menu content.
 	 */
-	export function MenuHide(): void {
-		const menu = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'menu');
-		const appMenu = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'app-menu-container');
-		const menuOverlay = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'menu-background');
+	export function MenuHide(): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Utilities.FailSetExtendedMenuHide,
+			callback: () => {
+				const menu = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'menu');
+				const appMenu = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'app-menu-container');
+				const menuOverlay = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'menu-background');
 
-		if (menu) {
-			OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(menu, 'menu--visible');
+				if (menu) {
+					OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(menu, 'menu--visible');
 
-			if (menuOverlay) {
-				menuOverlay.style.opacity = '';
-			}
+					if (menuOverlay) {
+						menuOverlay.style.opacity = '';
+					}
 
-			appMenu.style.transform = '';
+					appMenu.style.transform = '';
 
-			menu.addEventListener('transitionend', OnTransitionEnd, false);
-		} else {
-			console.warn('The menu element is not present in the screen');
-		}
+					menu.addEventListener('transitionend', OnTransitionEnd, false);
+				} else {
+					console.warn('The menu element is not present in the screen');
+				}
 
-		function OnTransitionEnd() {
-			OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(menu, 'menu--animatable');
+				function OnTransitionEnd() {
+					OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(menu, 'menu--animatable');
 
-			menu.removeEventListener('transitionend', OnTransitionEnd);
-		}
+					menu.removeEventListener('transitionend', OnTransitionEnd);
+				}
 
-		SetMenuAttributes();
+				SetMenuAttributes();
+			},
+		});
+
+		return result;
 	}
 
 	/**
 	 * Opens the extended menu content.
 	 */
-	export function MenuShow(): void {
-		const myMenu = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'menu');
+	export function MenuShow(): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Utilities.FailSetExtendedMenuShow,
+			callback: () => {
+				const myMenu = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'menu');
 
-		if (myMenu) {
-			OSFramework.OSUI.Helper.Dom.Styles.AddClass(myMenu, 'menu--visible');
-			OSFramework.OSUI.Helper.Dom.Styles.AddClass(myMenu, 'menu--animatable');
+				if (myMenu) {
+					OSFramework.OSUI.Helper.Dom.Styles.AddClass(myMenu, 'menu--visible');
+					OSFramework.OSUI.Helper.Dom.Styles.AddClass(myMenu, 'menu--animatable');
 
-			SetMenuAttributes();
-		} else {
-			console.warn('The menu element is not present in the screen');
-		}
+					SetMenuAttributes();
+				} else {
+					console.warn('The menu element is not present in the screen');
+				}
+			},
+		});
+
+		return result;
 	}
 
 	/**

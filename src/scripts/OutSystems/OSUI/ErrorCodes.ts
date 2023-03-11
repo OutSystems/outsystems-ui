@@ -287,6 +287,10 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailSetMenuListeners: 'OSUI-API-28020',
 		FailToggleSideMenu: 'OSUI-API-28021',
 		FailListItemAnimate: 'OSUI-API-28022',
+		FailCheckIsMenuDraggable: 'OSUI-API-28023',
+		FailSetExtendedMenuHide: 'OSUI-API-28024',
+		FailSetExtendedMenuShow: 'OSUI-API-28025',
+		FailCheckIsRTL: 'OSUI-API-28026',
 	};
 
 	// Error Codes used in Legacy Client Action

@@ -26,6 +26,7 @@ namespace OutSystems.OSUI.Utils {
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export function GetIsRTL(): boolean {
+		// This method can't implement the CreateApiResponse method since it's defined as a function in SS
 		return OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(document.body, OSFramework.OSUI.Constants.IsRTLClass);
 	}
 
