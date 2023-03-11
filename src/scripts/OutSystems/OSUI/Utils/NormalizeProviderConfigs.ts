@@ -21,15 +21,16 @@ namespace OutSystems.OSUI.Utils {
 				continue;
 			}
 
-			keyValue = keyValue.toLowerCase().trim();
-
-			if (keyValue === 'true' || keyValue === 'false') {
-				providerConfigs[keyName] = keyValue === 'true';
-			}
-
 			// Check if type is HTMLElement, if so then get the Element from the DOM, using the elementId passed
 			if (htmlElementsProps?.indexOf(keyName) > -1) {
 				providerConfigs[keyName] = OSFramework.OSUI.Helper.Dom.GetElementById(keyValue);
+			} else {
+				// Trim and apply lower case to match the boolean data type
+				keyValue = keyValue.toLowerCase().trim();
+
+				if (keyValue === 'true' || keyValue === 'false') {
+					providerConfigs[keyName] = keyValue === 'true';
+				}
 			}
 		}
 

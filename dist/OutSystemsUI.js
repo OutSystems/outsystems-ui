@@ -14716,12 +14716,14 @@ var OutSystems;
                     if (typeof keyValue !== 'string') {
                         continue;
                     }
-                    keyValue = keyValue.toLowerCase().trim();
-                    if (keyValue === 'true' || keyValue === 'false') {
-                        providerConfigs[keyName] = keyValue === 'true';
-                    }
                     if ((htmlElementsProps === null || htmlElementsProps === void 0 ? void 0 : htmlElementsProps.indexOf(keyName)) > -1) {
                         providerConfigs[keyName] = OSFramework.OSUI.Helper.Dom.GetElementById(keyValue);
+                    }
+                    else {
+                        keyValue = keyValue.toLowerCase().trim();
+                        if (keyValue === 'true' || keyValue === 'false') {
+                            providerConfigs[keyName] = keyValue === 'true';
+                        }
                     }
                 }
                 return providerConfigs;
