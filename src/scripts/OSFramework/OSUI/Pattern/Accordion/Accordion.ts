@@ -177,7 +177,7 @@ namespace OSFramework.OSUI.Patterns.Accordion {
 				// Filter all items that are open and not disabled
 				const itemsToOpen = this.getChildItems().filter((item) => !item.isOpen && !item.isDisabled);
 
-				// Close all of them
+				// Go through each item and open it!
 				itemsToOpen.forEach((item) => {
 					item.open();
 				});
