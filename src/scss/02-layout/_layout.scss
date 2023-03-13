@@ -131,12 +131,14 @@ body,
 .tablet {
 	&.landscape {
 		.layout-native {
-			&.aside {
-				&-visible,
-				&-expandable {
-					.main {
-						margin-left: var(--side-menu-size);
-						width: calc(100% - var(--side-menu-size));
+			&.menu-visible {
+				&.aside {
+					&-visible,
+					&-expandable {
+						.main {
+							margin-left: var(--side-menu-size);
+							width: calc(100% - var(--side-menu-size));
+						}
 					}
 				}
 			}
@@ -180,7 +182,6 @@ body,
 				&-expandable {
 					.main {
 						margin-left: 0;
-						margin-right: var(--side-menu-size);
 					}
 				}
 			}
@@ -216,7 +217,7 @@ body,
 			margin-right: var(--side-menu-size);
 		}
 
-		.aside-overlay .main {
+		&.aside-overlay .main {
 			margin-right: 0;
 		}
 	}
@@ -225,5 +226,19 @@ body,
 		.main {
 			margin-right: 0;
 		}
+	}
+}
+
+// Nested layout SS preview
+///
+.layout .main-content .layout {
+	-servicestudio-min-width: calc(100vw - (var(--space-xl) * 2));
+}
+
+.phone .layout .main-content .layout {
+	-servicestudio-min-width: calc(100vw - (var(--space-base) * 2));
+
+	&.layout-native {
+		-servicestudio-min-width: 100vw;
 	}
 }

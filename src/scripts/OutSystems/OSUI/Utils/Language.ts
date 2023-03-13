@@ -6,7 +6,7 @@ namespace OutSystems.OSUI.Language {
 	 * @returns All Language
 	 */
 	export function Get(): string {
-		return OSFramework.Helper.Language.Lang;
+		return OSFramework.OSUI.Helper.Language.Lang;
 	}
 
 	/**
@@ -15,7 +15,7 @@ namespace OutSystems.OSUI.Language {
 	 * @returns Short App Language
 	 */
 	export function GetShort(): string {
-		return OSFramework.Helper.Language.ShortLang;
+		return OSFramework.OSUI.Helper.Language.ShortLang;
 	}
 
 	/**
@@ -24,6 +24,6 @@ namespace OutSystems.OSUI.Language {
 	 * @param lang The Lang code to be set
 	 */
 	export function Set(lang: string): void {
-		OSFramework.Helper.Language.Set(lang);
+		OSFramework.OSUI.Helper.Language.Set(lang);
 	}
 }

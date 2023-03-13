@@ -1,4 +1,4 @@
-# Gulp · ![Gulp CLI version](https://img.shields.io/badge/gulp--cli-v2.3.0-informational) ![Gulp Local version](https://img.shields.io/badge/gulp--local-v4.0.2-informational)
+# Gulp
 
 <p align="center">
   <a href="https://gulpjs.com">
@@ -18,7 +18,6 @@
                 <li>TypeScript Transpile</li>
             </ul>
     </li>
-    <li>Templates used to automagically create new pattern:</li>
 </ul>
 
 ## Project Structure
@@ -32,8 +31,10 @@ Bellow there is some comments about the application structure.
     ├── gulpfile.js                                 # gulp orchestrator
     ├── ...
     ├── gulp                                        # Contains gulp specific tasks and templates
-    |   └── tasks
+    |   └── Tasks
+    |       ├── CreateScssFile.js                   # Task that will crete the OutSystemsUI theme
     |       ├── ScssTranspile.js                    # SCSS transpile task definition
-    |       └── TsTranspile.js                      # TypeScript transpile task definition
+    |       ├── TsTranspile.js                      # TypeScript transpile task definition
+    |       └── UpdateVersion.js                    # Task used to update the repository task dynamically
     |    
     ├── ...

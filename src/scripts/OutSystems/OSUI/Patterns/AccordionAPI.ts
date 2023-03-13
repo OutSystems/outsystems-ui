@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace OutSystems.OSUI.Patterns.AccordionAPI {
-	const _accordionMap = new Map<string, OSFramework.Patterns.Accordion.IAccordion>(); //Accordion.uniqueId -> Accordion obj
+	const _accordionMap = new Map<string, OSFramework.OSUI.Patterns.Accordion.IAccordion>(); //Accordion.uniqueId -> Accordion obj
 
 	/**
 	 * Function that will change the property of a given Accordion pattern.
@@ -11,23 +11,15 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	export function ChangeProperty(accordionId: string, propertyName: string, propertyValue: unknown): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Accordion.FailChangeProperty,
+			callback: () => {
+				const accordion = GetAccordionById(accordionId);
+				accordion.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-		try {
-			const accordion = GetAccordionById(accordionId);
-
-			accordion.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Accordion.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -38,23 +30,15 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 *
 	 */
 	export function CollapseAllItems(accordionId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Accordion.FailCollapseAll,
+			callback: () => {
+				const accordion = GetAccordionById(accordionId);
+				accordion.collapseAllItems();
+			},
+		});
 
-		try {
-			const accordion = GetAccordionById(accordionId);
-
-			accordion.collapseAllItems();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Accordion.FailCollapseAll;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -63,16 +47,16 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 * @export
 	 * @param {string} accordionId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.Patterns.Accordion.IAccordion}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Accordion.IAccordion}
 	 */
-	export function Create(accordionId: string, configs: string): OSFramework.Patterns.Accordion.IAccordion {
+	export function Create(accordionId: string, configs: string): OSFramework.OSUI.Patterns.Accordion.IAccordion {
 		if (_accordionMap.has(accordionId)) {
 			throw new Error(
-				`There is already a ${OSFramework.GlobalEnum.PatternName.Accordion} registered under id: ${accordionId}`
+				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Accordion} registered under id: ${accordionId}`
 			);
 		}
 
-		const _newAccordion = new OSFramework.Patterns.Accordion.Accordion(accordionId, JSON.parse(configs));
+		const _newAccordion = new OSFramework.OSUI.Patterns.Accordion.Accordion(accordionId, JSON.parse(configs));
 
 		_accordionMap.set(accordionId, _newAccordion);
 
@@ -86,25 +70,18 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 * @param {string} accordionId
 	 */
 	export function Dispose(accordionId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Accordion.FailDispose,
+			callback: () => {
+				const accordion = GetAccordionById(accordionId);
 
-		try {
-			const accordion = GetAccordionById(accordionId);
+				accordion.dispose();
 
-			accordion.dispose();
+				_accordionMap.delete(accordion.uniqueId);
+			},
+		});
 
-			_accordionMap.delete(accordion.uniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Accordion.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -115,33 +92,26 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 *
 	 */
 	export function ExpandAllItems(accordionId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Accordion.FailExpandAll,
+			callback: () => {
+				const accordion = GetAccordionById(accordionId);
 
-		try {
-			const accordion = GetAccordionById(accordionId);
+				accordion.expandAllItems();
+			},
+		});
 
-			accordion.expandAllItems();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Accordion.FailExpandAll;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
 	 * Fucntion that will return the Map with all the Accordion instances at the page
 	 *
 	 * @export
-	 * @return {*}  {Map<string, OSFramework.Patterns.Accordion.IAccordion>}
+	 * @return {*}  {Map<string, OSFramework.OSUI.Patterns.Accordion.IAccordion>}
 	 */
 	export function GetAllAccordions(): Array<string> {
-		return OSFramework.Helper.MapOperation.ExportKeys(_accordionMap);
+		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_accordionMap);
 	}
 
 	/**
@@ -149,16 +119,16 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 *
 	 * @export
 	 * @param {string} AccordionId ID of the Accordion that will be looked for.
-	 * @return {*}  {OSFramework.Patterns.Accordion.IAccordion}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Accordion.IAccordion}
 	 */
-	export function GetAccordionById(AccordionId: string): OSFramework.Patterns.Accordion.IAccordion {
+	export function GetAccordionById(AccordionId: string): OSFramework.OSUI.Patterns.Accordion.IAccordion {
 		// Protects the code when you have the pattern of removing children and parents
 		// In this case, FloatingActionsItem, when destorying itself, will have a hard time looking for something that has already been disposed.
-		return OSFramework.Helper.MapOperation.FindInMap(
+		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
 			'Accordion',
 			AccordionId,
 			_accordionMap
-		) as OSFramework.Patterns.Accordion.IAccordion;
+		) as OSFramework.OSUI.Patterns.Accordion.IAccordion;
 	}
 
 	/**
@@ -166,9 +136,9 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 *
 	 * @export
 	 * @param {string} accordionId ID of the Accordion pattern that will be initialized.
-	 * @return {*}  {OSFramework.Patterns.Accordion.IAccordion}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Accordion.IAccordion}
 	 */
-	export function Initialize(accordionId: string): OSFramework.Patterns.Accordion.IAccordion {
+	export function Initialize(accordionId: string): OSFramework.OSUI.Patterns.Accordion.IAccordion {
 		const accordion = GetAccordionById(accordionId);
 
 		accordion.build();

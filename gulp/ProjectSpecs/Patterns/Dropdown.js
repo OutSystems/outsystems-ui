@@ -3,29 +3,22 @@
 **/
 const patternInfo = {
     "codeName": "Dropdown",
-    "scss": "../scripts/OSFramework/Pattern/Dropdown/scss/dropdown",
-    "section": "Interaction",
+    "scss": "../scripts/OSFramework/OSUI/Pattern/Dropdown/scss/dropdown",
+    "section": "Advanced",
 
     "assets": [
         {
             "codeName": "Search",
             "inDevelopment": false,
             "name": "Dropdown Search",
-            "scss": "../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-search"
+            "scss": "../scripts/OSFramework/OSUI/Pattern/Dropdown/scss/dropdown-search"
         },
         
         {
             "codeName": "Tags",
             "inDevelopment": false,
             "name": "Dropdown Tags",
-            "scss": "../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-tags"
-        },
-        
-        {
-            "codeName": "ServerSide",
-            "inDevelopment": false,
-            "name": "Dropdown ServerSide",
-            "scss": "../scripts/OSFramework/Pattern/Dropdown/scss/dropdown-serverside"
+            "scss": "../scripts/OSFramework/OSUI/Pattern/Dropdown/scss/dropdown-tags"
         }
     ]
 };

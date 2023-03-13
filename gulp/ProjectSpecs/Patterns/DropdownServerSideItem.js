@@ -5,8 +5,8 @@ const patternInfo =  {
     "codeName": "DropdownServerSideItem",
     "inDevelopment": false,
     "name": "Dropdown ServerSide Item",
-    "scss": "../scripts/OSFramework/Pattern/DropdownServerSideItem/scss/dropdownserversideitem",
-    "section": "Interaction",
+    "scss": "../scripts/OSFramework/OSUI/Pattern/DropdownServerSideItem/scss/dropdownserversideitem",
+    "section": "Advanced",
 };
 
 // Expose patterns info!

@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
-	const _bottomSheetItemsMap = new Map<string, OSFramework.Patterns.BottomSheet.IBottomSheet>(); //BottomSheet.uniqueId -> BottomSheet obj
+	const _bottomSheetItemsMap = new Map<string, OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet>(); //BottomSheet.uniqueId -> BottomSheet obj
 
 	/**
 	 * Function that will change the property of a given BottomSheet Id.
@@ -11,10 +11,17 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ChangeProperty(bottomSheetId: string, propertyName: string, propertyValue: any): void {
-		const _bottomSheetItem = GetBottomSheetItemById(bottomSheetId);
+	export function ChangeProperty(bottomSheetId: string, propertyName: string, propertyValue: any): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.BottomSheet.FailChangeProperty,
+			callback: () => {
+				const _bottomSheetItem = GetBottomSheetItemById(bottomSheetId);
 
-		_bottomSheetItem.changeProperty(propertyName, propertyValue);
+				_bottomSheetItem.changeProperty(propertyName, propertyValue);
+			},
+		});
+
+		return result;
 	}
 
 	/**
@@ -23,14 +30,17 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	 * @export
 	 * @param {string} bottomSheetId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.Patterns.BottomSheet.IBottomSheet}
+	 * @return {*}  {OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet}
 	 */
-	export function Create(bottomSheetId: string, configs: string): OSFramework.Patterns.BottomSheet.IBottomSheet {
+	export function Create(bottomSheetId: string, configs: string): OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet {
 		if (_bottomSheetItemsMap.has(bottomSheetId)) {
 			throw new Error('There is already an BottomSheet registered under id: ' + bottomSheetId);
 		}
 
-		const _bottomSheetItem = new OSFramework.Patterns.BottomSheet.BottomSheet(bottomSheetId, JSON.parse(configs));
+		const _bottomSheetItem = new OSFramework.OSUI.Patterns.BottomSheet.BottomSheet(
+			bottomSheetId,
+			JSON.parse(configs)
+		);
 
 		_bottomSheetItemsMap.set(bottomSheetId, _bottomSheetItem);
 
@@ -43,12 +53,19 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	 * @export
 	 * @param {string} bottomSheetId
 	 */
-	export function Dispose(bottomSheetId: string): void {
-		const _bottomSheetItem = GetBottomSheetItemById(bottomSheetId);
+	export function Dispose(bottomSheetId: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.BottomSheet.FailDispose,
+			callback: () => {
+				const _bottomSheetItem = GetBottomSheetItemById(bottomSheetId);
 
-		_bottomSheetItem.dispose();
+				_bottomSheetItem.dispose();
 
-		_bottomSheetItemsMap.delete(_bottomSheetItem.uniqueId);
+				_bottomSheetItemsMap.delete(_bottomSheetItem.uniqueId);
+			},
+		});
+
+		return result;
 	}
 
 	/**
@@ -58,7 +75,7 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	 * @return {*}  Array<string>
 	 */
 	export function GetAllBottomSheetItemsMap(): Array<string> {
-		return OSFramework.Helper.MapOperation.ExportKeys(_bottomSheetItemsMap);
+		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_bottomSheetItemsMap);
 	}
 
 	/**
@@ -66,14 +83,14 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	 *
 	 * @export
 	 * @param {string} bottomSheetId ID of the BottomSheet that will be looked for.
-	 * @return {*}  {OSFramework.Patterns.BottomSheet.IBottomSheet;}
+	 * @return {*}  {OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet;}
 	 */
-	export function GetBottomSheetItemById(bottomSheetId: string): OSFramework.Patterns.BottomSheet.IBottomSheet {
-		return OSFramework.Helper.MapOperation.FindInMap(
+	export function GetBottomSheetItemById(bottomSheetId: string): OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet {
+		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
 			'BottomSheet',
 			bottomSheetId,
 			_bottomSheetItemsMap
-		) as OSFramework.Patterns.BottomSheet.IBottomSheet;
+		) as OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet;
 	}
 
 	/**
@@ -81,9 +98,9 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	 *
 	 * @export
 	 * @param {string} bottomSheetId ID of the BottomSheetItem that will be initialized.
-	 * @return {*}  {OSFramework.Patterns.BottomSheet.IBottomSheet}
+	 * @return {*}  {OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet}
 	 */
-	export function Initialize(bottomSheetId: string): OSFramework.Patterns.BottomSheet.IBottomSheet {
+	export function Initialize(bottomSheetId: string): OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet {
 		const _bottomSheetItem = GetBottomSheetItemById(bottomSheetId);
 
 		_bottomSheetItem.build();
@@ -92,43 +109,29 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	}
 
 	export function Open(bottomSheetId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.BottomSheet.FailOpen,
+			callback: () => {
+				const _bottomSheetItem = GetBottomSheetItemById(bottomSheetId);
 
-		try {
-			const _bottomSheetItem = GetBottomSheetItemById(bottomSheetId);
+				_bottomSheetItem.open();
+			},
+		});
 
-			_bottomSheetItem.open();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.BottomSheet.FailRegisterCallback;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	export function Close(bottomSheetId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.BottomSheet.FailClose,
+			callback: () => {
+				const _bottomSheetItem = GetBottomSheetItemById(bottomSheetId);
 
-		try {
-			const _bottomSheetItem = GetBottomSheetItemById(bottomSheetId);
+				_bottomSheetItem.close();
+			},
+		});
 
-			_bottomSheetItem.close();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.BottomSheet.FailRegisterCallback;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -138,23 +141,19 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	 * @param {string} bottomSheetId
 	 * @param {*} callback
 	 */
-	export function RegisterCallback(bottomSheetId: string, callback: OSFramework.GlobalCallbacks.Generic): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+	export function RegisterCallback(
+		bottomSheetId: string,
+		callback: OSFramework.OSUI.GlobalCallbacks.Generic
+	): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.BottomSheet.FailRegisterCallback,
+			callback: () => {
+				const bottomSheet = GetBottomSheetItemById(bottomSheetId);
 
-		try {
-			const bottomSheet = GetBottomSheetItemById(bottomSheetId);
+				bottomSheet.registerCallback(callback);
+			},
+		});
 
-			bottomSheet.registerCallback(callback);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.BottomSheet.FailRegisterCallback;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 }

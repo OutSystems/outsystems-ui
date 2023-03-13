@@ -94,6 +94,12 @@ declare global {
 		viewHeight: number;
 	};
 
+	// Progress -----------------------------------------------------------------
+	type GradientColor = {
+		Color: string;
+		Percentage: number;
+	}
+
 	// Providers -----------------------------------------------------------------
 	type ProviderInfo = {
 		name: string;

@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.CarouselAPI {
-	const _carouselItemsMap = new Map<string, OSFramework.Patterns.Carousel.ICarousel>();
+	const _carouselItemsMap = new Map<string, OSFramework.OSUI.Patterns.Carousel.ICarousel>();
 
 	/**
 	 * Function that will enable updates on OnRender event
@@ -10,22 +10,15 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * @return {*}  {string}
 	 */
 	export function CarouselEnableOnRender(carouselId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Carousel.FailEnableOnRender,
+			callback: () => {
+				const carousel = GetCarouselItemById(carouselId);
+				carousel.toggleOnRender(false);
+			},
+		});
 
-		try {
-			const carousel = GetCarouselItemById(carouselId);
-			carousel.toggleOnRender(false);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Carousel.FailEnableOnRender;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -36,22 +29,15 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * @return {*}  {string}
 	 */
 	export function CarouselDisableOnRender(carouselId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Carousel.FailDisableOnRender,
+			callback: () => {
+				const carousel = GetCarouselItemById(carouselId);
+				carousel.toggleOnRender(true);
+			},
+		});
 
-		try {
-			const carousel = GetCarouselItemById(carouselId);
-			carousel.toggleOnRender(true);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Carousel.FailDisableOnRender;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -64,23 +50,16 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 	export function ChangeProperty(carouselId: string, propertyName: string, propertyValue: any): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Carousel.FailChangeProperty,
+			callback: () => {
+				const _carouselItem = GetCarouselItemById(carouselId);
 
-		try {
-			const _carouselItem = GetCarouselItemById(carouselId);
+				_carouselItem.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-			_carouselItem.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Carousel.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -89,20 +68,20 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * @export
 	 * @param {string} carouselId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.Patterns.Carousel.ICarousel}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Carousel.ICarousel}
 	 */
 	export function Create(
 		carouselId: string,
 		configs: string,
 		provider: string
-	): OSFramework.Patterns.Carousel.ICarousel {
+	): OSFramework.OSUI.Patterns.Carousel.ICarousel {
 		if (_carouselItemsMap.has(carouselId)) {
 			throw new Error(
-				`There is already an ${OSFramework.GlobalEnum.PatternName.Carousel} registered under id: ${carouselId}`
+				`There is already an ${OSFramework.OSUI.GlobalEnum.PatternName.Carousel} registered under id: ${carouselId}`
 			);
 		}
 
-		const _carouselItem = OSFramework.Patterns.Carousel.Factory.NewCarousel(carouselId, configs, provider);
+		const _carouselItem = OSFramework.OSUI.Patterns.Carousel.Factory.NewCarousel(carouselId, configs, provider);
 
 		_carouselItemsMap.set(carouselId, _carouselItem);
 
@@ -116,25 +95,18 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * @param {string} carouselId
 	 */
 	export function Dispose(carouselId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Carousel.FailDispose,
+			callback: () => {
+				const _carouselItem = GetCarouselItemById(carouselId);
 
-		try {
-			const _carouselItem = GetCarouselItemById(carouselId);
+				_carouselItem.dispose();
 
-			_carouselItem.dispose();
+				_carouselItemsMap.delete(_carouselItem.uniqueId);
+			},
+		});
 
-			_carouselItemsMap.delete(_carouselItem.uniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Carousel.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -144,7 +116,7 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * @return {*}  Array<string>
 	 */
 	export function GetAllCarouselItemsMap(): Array<string> {
-		return OSFramework.Helper.MapOperation.ExportKeys(_carouselItemsMap);
+		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_carouselItemsMap);
 	}
 
 	/**
@@ -152,14 +124,14 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 *
 	 * @export
 	 * @param {string} carouselId ID of the Carousel that will be looked for.
-	 * @return {*}  {OSFramework.Patterns.Carousel.ICarousel;}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Carousel.ICarousel;}
 	 */
-	export function GetCarouselItemById(carouselId: string): OSFramework.Patterns.Carousel.ICarousel {
-		return OSFramework.Helper.MapOperation.FindInMap(
+	export function GetCarouselItemById(carouselId: string): OSFramework.OSUI.Patterns.Carousel.ICarousel {
+		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
 			'Carousel',
 			carouselId,
 			_carouselItemsMap
-		) as OSFramework.Patterns.Carousel.ICarousel;
+		) as OSFramework.OSUI.Patterns.Carousel.ICarousel;
 	}
 
 	/**
@@ -170,23 +142,16 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * @param {number} index
 	 */
 	export function GoTo(carouselId: string, index: number): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Carousel.FailGoTo,
+			callback: () => {
+				const carousel = GetCarouselItemById(carouselId);
 
-		try {
-			const carousel = GetCarouselItemById(carouselId);
+				carousel.goTo(index);
+			},
+		});
 
-			carousel.goTo(index);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Carousel.FailGoTo;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -194,9 +159,9 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 *
 	 * @export
 	 * @param {string} carouselId ID of the CarouselItem that will be initialized.
-	 * @return {*}  {OSFramework.Patterns.Carousel.ICarousel}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Carousel.ICarousel}
 	 */
-	export function Initialize(carouselId: string): OSFramework.Patterns.Carousel.ICarousel {
+	export function Initialize(carouselId: string): OSFramework.OSUI.Patterns.Carousel.ICarousel {
 		const _carouselItem = GetCarouselItemById(carouselId);
 
 		_carouselItem.build();
@@ -212,23 +177,16 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * @param {string} target
 	 */
 	export function Next(carouselId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Carousel.FailNext,
+			callback: () => {
+				const carousel = GetCarouselItemById(carouselId);
 
-		try {
-			const carousel = GetCarouselItemById(carouselId);
+				carousel.next();
+			},
+		});
 
-			carousel.next();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Carousel.FailNext;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -239,23 +197,16 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * @param {string} target
 	 */
 	export function Previous(carouselId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Carousel.FailPrevious,
+			callback: () => {
+				const carousel = GetCarouselItemById(carouselId);
 
-		try {
-			const carousel = GetCarouselItemById(carouselId);
+				carousel.previous();
+			},
+		});
 
-			carousel.previous();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Carousel.FailPrevious;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -264,30 +215,23 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * @export
 	 * @param {string} carouselId
 	 * @param {string} eventName
-	 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
 	 */
 	export function RegisterCallback(
 		carouselId: string,
 		eventName: string,
-		callback: OSFramework.GlobalCallbacks.OSGeneric
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Carousel.FailRegisterCallback,
+			callback: () => {
+				const carousel = GetCarouselItemById(carouselId);
 
-		try {
-			const carousel = GetCarouselItemById(carouselId);
+				carousel.registerCallback(eventName, callback);
+			},
+		});
 
-			carousel.registerCallback(eventName, callback);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Carousel.FailRegisterCallback;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -298,23 +242,16 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * @param {boolean} hasDrag
 	 */
 	export function ToggleDrag(carouselId: string, hasDrag: boolean): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Carousel.FailToggleDrag,
+			callback: () => {
+				const carousel = GetCarouselItemById(carouselId);
 
-		try {
-			const carousel = GetCarouselItemById(carouselId);
+				carousel.toggleDrag(hasDrag);
+			},
+		});
 
-			carousel.toggleDrag(hasDrag);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Carousel.FailToggleDrag;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -322,26 +259,19 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 *
 	 * @export
 	 * @param {string} carouselId
-	 * @return {*}  {OSFramework.Patterns.Carousel.ICarousel}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Carousel.ICarousel}
 	 */
 	export function UpdateOnRender(carouselId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Carousel.FailUpdate,
+			callback: () => {
+				const carousel = GetCarouselItemById(carouselId);
 
-		try {
-			const carousel = GetCarouselItemById(carouselId);
+				carousel.updateOnRender();
+			},
+		});
 
-			carousel.updateOnRender();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Carousel.FailUpdate;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -349,47 +279,31 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 *
 	 * @export
 	 * @param {string} carouselId
-	 * @return {*}  {OSFramework.Patterns.Carousel.ICarousel}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Carousel.ICarousel}
 	 */
 	export function SetCarouselDirection(carouselId: string, direction: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Carousel.FailDirection,
+			callback: () => {
+				const carousel = GetCarouselItemById(carouselId);
 
-		try {
-			const carousel = GetCarouselItemById(carouselId);
+				carousel.setCarouselDirection(direction);
+			},
+		});
 
-			carousel.setCarouselDirection(direction);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Carousel.FailDirection;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	export function SetProviderConfigs(carouselId: string, configs: CarouselProviderConfigs): string {
-		const responseObj = {
-			uniqueId: carouselId,
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Carousel.FailRegisterProviderConfig,
+			callback: () => {
+				const carousel = GetCarouselItemById(carouselId);
+				carousel.setProviderConfigs(configs);
+			},
+		});
 
-		try {
-			const carousel = GetCarouselItemById(carouselId);
-			carousel.setProviderConfigs(configs);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Carousel.FailRegisterProviderConfig;
-			responseObj.uniqueId = undefined;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -398,34 +312,27 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * @export
 	 * @param {string} carouselId
 	 * @param {string} eventName
-	 * @param {OSFramework.GlobalCallbacks.Generic} callback
+	 * @param {OSFramework.OSUI.GlobalCallbacks.Generic} callback
 	 * @return {*}  {string}
 	 */
 	export function SetProviderEvent(
 		carouselId: string,
 		eventName: string,
-		callback: OSFramework.GlobalCallbacks.Generic
+		callback: OSFramework.OSUI.GlobalCallbacks.Generic
 	): string {
-		const _eventUniqueId = OSFramework.Helper.Dom.GenerateUniqueId();
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Carousel.FailRegisterProviderEvent,
+			hasValue: true,
+			callback: () => {
+				const _eventUniqueId = OSFramework.OSUI.Helper.Dom.GenerateUniqueId();
 
-		const responseObj = {
-			uniqueId: _eventUniqueId,
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+				const carousel = GetCarouselItemById(carouselId);
+				carousel.setProviderEvent(eventName, callback, _eventUniqueId);
+				return _eventUniqueId;
+			},
+		});
 
-		try {
-			const carousel = GetCarouselItemById(carouselId);
-			carousel.setProviderEvent(eventName, callback, _eventUniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Carousel.FailRegisterProviderEvent;
-			responseObj.uniqueId = undefined;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -437,21 +344,14 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * @return {*}  {string}
 	 */
 	export function UnsetProviderEvent(carouselId: string, eventId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Carousel.FailRemoveProviderEvent,
+			callback: () => {
+				const carousel = GetCarouselItemById(carouselId);
+				carousel.unsetProviderEvent(eventId);
+			},
+		});
 
-		try {
-			const carousel = GetCarouselItemById(carouselId);
-			carousel.unsetProviderEvent(eventId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Carousel.FailRemoveProviderEvent;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 }

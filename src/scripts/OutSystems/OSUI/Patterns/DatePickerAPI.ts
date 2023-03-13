@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.DatePickerAPI {
-	const _datePickerItemsMap = new Map<string, OSFramework.Patterns.DatePicker.IDatePicker>(); //DatePicker.uniqueId -> DatePicker obj
+	const _datePickerItemsMap = new Map<string, OSFramework.OSUI.Patterns.DatePicker.IDatePicker>(); //DatePicker.uniqueId -> DatePicker obj
 
 	/**
 	 * Function that will change the property of a given DatePicker Id.
@@ -12,23 +12,16 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 	export function ChangeProperty(datePickerId: string, propertyName: string, propertyValue: any): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.DatePicker.FailChangeProperty,
+			callback: () => {
+				const _datePickerItem = GetDatePickerItemById(datePickerId);
 
-		try {
-			const _datePickerItem = GetDatePickerItemById(datePickerId);
+				_datePickerItem.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-			_datePickerItem.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DatePicker.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -38,23 +31,16 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @return {*} Response Object as a JSON String
 	 */
 	export function Clear(datePickerId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.DatePicker.FailClear,
+			callback: () => {
+				const _datePickerItem = GetDatePickerItemById(datePickerId);
 
-		try {
-			const _datePickerItem = GetDatePickerItemById(datePickerId);
+				_datePickerItem.clear();
+			},
+		});
 
-			_datePickerItem.clear();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DatePicker.FailClear;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -64,23 +50,16 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @return {*} Response Object as a JSON String
 	 */
 	export function Close(datePickerId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.DatePicker.FailClose,
+			callback: () => {
+				const _datePickerItem = GetDatePickerItemById(datePickerId);
 
-		try {
-			const _datePickerItem = GetDatePickerItemById(datePickerId);
+				_datePickerItem.close();
+			},
+		});
 
-			_datePickerItem.close();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DatePicker.FailClose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -91,19 +70,19 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @param {string} configs Configurations for the Pattern in JSON format.
 	 * @param {string} mode Set which calendar type should be created (SingleDate, RangeDate).
 	 * @param {string} provider Set which provider should be used to create the calendar instance.
-	 * @return {*} (OSFramework.Patterns.DatePicker.IDatePicker) - Instance created of the new DatePicker
+	 * @return {*} (OSFramework.OSUI.Patterns.DatePicker.IDatePicker) - Instance created of the new DatePicker
 	 */
 	export function Create(
 		datePickerId: string,
 		configs: string,
-		mode: OSFramework.Patterns.DatePicker.Enum.Mode,
+		mode: OSFramework.OSUI.Patterns.DatePicker.Enum.Mode,
 		provider: string
-	): OSFramework.Patterns.DatePicker.IDatePicker {
+	): OSFramework.OSUI.Patterns.DatePicker.IDatePicker {
 		if (_datePickerItemsMap.has(datePickerId)) {
 			throw new Error(`There is already an DatePicker registered under id: ${datePickerId}`);
 		}
 
-		const _datePickerItem = OSFramework.Patterns.DatePicker.Factory.NewDatePicker(
+		const _datePickerItem = OSFramework.OSUI.Patterns.DatePicker.Factory.NewDatePicker(
 			datePickerId,
 			configs,
 			mode,
@@ -123,22 +102,15 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @return {*} Response Object as a JSON String
 	 */
 	export function ToggleNativeBehavior(datePickerId: string, IsNative: boolean): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.DatePicker.FailToggleNativeBehavior,
+			callback: () => {
+				const _datePicker = this.GetDatePickerItemById(datePickerId);
+				_datePicker.toggleNativeBehavior(IsNative);
+			},
+		});
 
-		try {
-			const _datePicker = this.GetDatePickerItemById(datePickerId);
-			_datePicker.toggleNativeBehavior(IsNative);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DatePicker.FailToggleNativeBehavior;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -149,25 +121,18 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @return {*} Response Object as a JSON String
 	 */
 	export function Dispose(datePickerId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.DatePicker.FailDispose,
+			callback: () => {
+				const _datePickerItem = GetDatePickerItemById(datePickerId);
 
-		try {
-			const _datePickerItem = GetDatePickerItemById(datePickerId);
+				_datePickerItem.dispose();
 
-			_datePickerItem.dispose();
+				_datePickerItemsMap.delete(_datePickerItem.uniqueId);
+			},
+		});
 
-			_datePickerItemsMap.delete(_datePickerItem.uniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DatePicker.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -177,7 +142,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @return {*}  Array containing all the Ids of the DatePickers existing in the current screen.
 	 */
 	export function GetAllDatePickerItemsMap(): Array<string> {
-		return OSFramework.Helper.MapOperation.ExportKeys(_datePickerItemsMap);
+		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_datePickerItemsMap);
 	}
 
 	/**
@@ -185,14 +150,14 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 *
 	 * @export
 	 * @param {string} datePickerId ID of the DatePicker that will be looked for.
-	 * @return {*}  (OSFramework.Patterns.DatePicker.IDatePicker) - Instance of the given DatePicker Id.
+	 * @return {*}  (OSFramework.OSUI.Patterns.DatePicker.IDatePicker) - Instance of the given DatePicker Id.
 	 */
-	export function GetDatePickerItemById(datePickerId: string): OSFramework.Patterns.DatePicker.IDatePicker {
-		return OSFramework.Helper.MapOperation.FindInMap(
+	export function GetDatePickerItemById(datePickerId: string): OSFramework.OSUI.Patterns.DatePicker.IDatePicker {
+		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
 			'DatePicker',
 			datePickerId,
 			_datePickerItemsMap
-		) as OSFramework.Patterns.DatePicker.IDatePicker;
+		) as OSFramework.OSUI.Patterns.DatePicker.IDatePicker;
 	}
 
 	/**
@@ -200,9 +165,9 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 *
 	 * @export
 	 * @param {string} datePickerId ID of the DatePickerItem that will be initialized.
-	 * @return {*} (OSFramework.Patterns.DatePicker.IDatePicker) - Instance of the given DatePicker Id.
+	 * @return {*} (OSFramework.OSUI.Patterns.DatePicker.IDatePicker) - Instance of the given DatePicker Id.
 	 */
-	export function Initialize(datePickerId: string): OSFramework.Patterns.DatePicker.IDatePicker {
+	export function Initialize(datePickerId: string): OSFramework.OSUI.Patterns.DatePicker.IDatePicker {
 		const _datePickerItem = GetDatePickerItemById(datePickerId);
 
 		_datePickerItem.build();
@@ -217,23 +182,16 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @return {*} Response Object as a JSON String
 	 */
 	export function Open(datePickerId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.DatePicker.FailOpen,
+			callback: () => {
+				const _datePickerItem = GetDatePickerItemById(datePickerId);
 
-		try {
-			const _datePickerItem = GetDatePickerItemById(datePickerId);
+				_datePickerItem.open();
+			},
+		});
 
-			_datePickerItem.open();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DatePicker.FailOpen;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -242,31 +200,24 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @export
 	 * @param {string} datePickerId
 	 * @param {string} eventName
-	 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
 	 * @return {*} Response Object as a JSON String
 	 */
 	export function RegisterCallback(
 		datePickerId: string,
 		eventName: string,
-		callback: OSFramework.GlobalCallbacks.OSGeneric
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.DatePicker.FailRegisterCallback,
+			callback: () => {
+				const _datePicker = this.GetDatePickerItemById(datePickerId);
 
-		try {
-			const _datePicker = this.GetDatePickerItemById(datePickerId);
+				_datePicker.registerCallback(eventName, callback);
+			},
+		});
 
-			_datePicker.registerCallback(eventName, callback);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DatePicker.FailRegisterCallback;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -277,23 +228,16 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @return {*} Response Object as a JSON String
 	 */
 	export function Redraw(datePickerId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.DatePicker.FailRedraw,
+			callback: () => {
+				const _datePicker = this.GetDatePickerItemById(datePickerId);
 
-		try {
-			const _datePicker = this.GetDatePickerItemById(datePickerId);
+				_datePicker.redraw();
+			},
+		});
 
-			_datePicker.redraw();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DatePicker.FailRedraw;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -304,23 +248,16 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @return {*} Response Object as a JSON String
 	 */
 	export function SetLanguage(datePickerId: string, isoCode: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.DatePicker.FailSetLanguage,
+			callback: () => {
+				const _datePicker = this.GetDatePickerItemById(datePickerId);
 
-		try {
-			const _datePicker = this.GetDatePickerItemById(datePickerId);
+				_datePicker.setLanguage(isoCode);
+			},
+		});
 
-			_datePicker.setLanguage(isoCode);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DatePicker.FailSetLanguage;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -340,38 +277,26 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @return {*} Response Object as a JSON String
 	 */
 	export function UpdateInitialDate(datePickerId: string, date1: string, date2?: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.DatePicker.FailUpdateInitialDate,
+			callback: () => {
+				if (OSFramework.OSUI.Helper.Dates.IsNull(date1)) {
+					throw new Error(`Given Date: '${date1}', can't be Null.`);
+				} else if (
+					OSFramework.OSUI.Helper.Dates.IsNull(date1) === false &&
+					date2 !== undefined &&
+					OSFramework.OSUI.Helper.Dates.IsNull(date2) === false &&
+					OSFramework.OSUI.Helper.Dates.IsBeforeThan(date1, date2) === false
+				) {
+					throw new Error(`Date1: '${date1}', can't be after Date2: '${date2}'.`);
+				} else {
+					const _datePicker = this.GetDatePickerItemById(datePickerId);
+					_datePicker.updateInitialDate(date1, date2);
+				}
+			},
+		});
 
-		try {
-			// Check if when both dates have been passed (DatePickerRange) they are under the expectactions!
-			if (OSFramework.Helper.Dates.IsNull(date1)) {
-				responseObj.isSuccess = false;
-				responseObj.message = `Given Date: '${date1}', can't be Null.`;
-				responseObj.code = ErrorCodes.DatePicker.FailUpdateInitialDate;
-			} else if (
-				OSFramework.Helper.Dates.IsNull(date1) === false &&
-				date2 !== undefined &&
-				OSFramework.Helper.Dates.IsNull(date2) === false &&
-				OSFramework.Helper.Dates.IsBeforeThan(date1, date2) === false
-			) {
-				responseObj.isSuccess = false;
-				responseObj.message = `Date1: '${date1}', can't be after Date2: '${date2}'.`;
-				responseObj.code = ErrorCodes.DatePicker.FailUpdateInitialDate;
-			} else {
-				const _datePicker = this.GetDatePickerItemById(datePickerId);
-				_datePicker.updateInitialDate(date1, date2);
-			}
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DatePicker.FailUpdateInitialDate;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -383,23 +308,16 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @return {*} Response Object as a JSON String
 	 */
 	export function DisableDays(datePickerId: string, disableDays: string[]): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.DatePicker.FailDisableDays,
+			callback: () => {
+				const datePicker = GetDatePickerItemById(datePickerId);
 
-		try {
-			const datePicker = GetDatePickerItemById(datePickerId);
+				datePicker.disableDays(disableDays);
+			},
+		});
 
-			datePicker.disableDays(disableDays);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DatePicker.FailDisableDays;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -411,23 +329,16 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @return {*} Response Object as a JSON String
 	 */
 	export function DisableWeekDays(datePickerId: string, disableWeekDays: number[]): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.DatePicker.FailDisableWeekDays,
+			callback: () => {
+				const datePicker = GetDatePickerItemById(datePickerId);
 
-		try {
-			const datePicker = GetDatePickerItemById(datePickerId);
+				datePicker.disableWeekDays(disableWeekDays);
+			},
+		});
 
-			datePicker.disableWeekDays(disableWeekDays);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DatePicker.FailDisableWeekDays;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -439,23 +350,16 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @return {*} Response Object as a JSON String
 	 */
 	export function SetProviderConfigs(datePickerId: string, providerConfigs: DatePickerProviderConfigs): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.DatePicker.FailRegisterProviderConfig,
+			callback: () => {
+				const datePicker = GetDatePickerItemById(datePickerId);
 
-		try {
-			const datePicker = GetDatePickerItemById(datePickerId);
+				datePicker.setProviderConfigs(providerConfigs);
+			},
+		});
 
-			datePicker.setProviderConfigs(providerConfigs);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DatePicker.FailRegisterProviderConfig;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -464,34 +368,27 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @export
 	 * @param {string} datePickerId
 	 * @param {string} eventName
-	 * @param {OSFramework.GlobalCallbacks.Generic} callback
+	 * @param {OSFramework.OSUI.GlobalCallbacks.Generic} callback
 	 * @return {*} Response Object as a JSON String
 	 */
 	export function SetProviderEvent(
 		datePickerId: string,
 		eventName: string,
-		callback: OSFramework.GlobalCallbacks.Generic
+		callback: OSFramework.OSUI.GlobalCallbacks.Generic
 	): string {
-		const _eventUniqueId = OSFramework.Helper.Dom.GenerateUniqueId();
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.DatePicker.FailRegisterProviderEvent,
+			hasValue: true,
+			callback: () => {
+				const _eventUniqueId = OSFramework.OSUI.Helper.Dom.GenerateUniqueId();
+				const datePicker = GetDatePickerItemById(datePickerId);
+				datePicker.setProviderEvent(eventName, callback, _eventUniqueId);
 
-		const responseObj = {
-			uniqueId: _eventUniqueId,
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+				return _eventUniqueId;
+			},
+		});
 
-		try {
-			const datePicker = GetDatePickerItemById(datePickerId);
-			datePicker.setProviderEvent(eventName, callback, _eventUniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DatePicker.FailRegisterProviderEvent;
-			responseObj.uniqueId = undefined;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -503,22 +400,15 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @return {*} Response Object as a JSON String
 	 */
 	export function UnsetProviderEvent(datePickerId: string, eventId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.DatePicker.FailRemoveProviderEvent,
+			callback: () => {
+				const datePicker = GetDatePickerItemById(datePickerId);
+				datePicker.unsetProviderEvent(eventId);
+			},
+		});
 
-		try {
-			const datePicker = GetDatePickerItemById(datePickerId);
-			datePicker.unsetProviderEvent(eventId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DatePicker.FailRemoveProviderEvent;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -530,21 +420,14 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @return {*} Response Object as a JSON String
 	 */
 	export function SetEditableInput(datePickerId: string, IsEditable: boolean): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.DatePicker.FailSetEditableInput,
+			callback: () => {
+				const _datePicker = this.GetDatePickerItemById(datePickerId);
+				_datePicker.setEditableInput(IsEditable);
+			},
+		});
 
-		try {
-			const _datePicker = this.GetDatePickerItemById(datePickerId);
-			_datePicker.setEditableInput(IsEditable);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DatePicker.FailSetEditableInput;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 }

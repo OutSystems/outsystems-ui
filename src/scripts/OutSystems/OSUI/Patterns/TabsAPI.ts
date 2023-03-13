@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.TabsAPI {
-	const _tabsMap = new Map<string, OSFramework.Patterns.Tabs.ITabs>();
+	const _tabsMap = new Map<string, OSFramework.OSUI.Patterns.Tabs.ITabs>();
 
 	/**
 	 * Function that will change the property of a given Tabs pattern.
@@ -11,23 +11,16 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
 	export function ChangeProperty(tabsId: string, propertyName: string, propertyValue: unknown): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Tabs.FailChangeProperty,
+			callback: () => {
+				const tabs = GetTabsById(tabsId);
 
-		try {
-			const tabs = GetTabsById(tabsId);
+				tabs.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-			tabs.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Tabs.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -36,16 +29,16 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	 * @export
 	 * @param {string} tabsId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.Patterns.Tabs.ITabs}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Tabs.ITabs}
 	 */
-	export function Create(tabsId: string, configs: string): OSFramework.Patterns.Tabs.ITabs {
+	export function Create(tabsId: string, configs: string): OSFramework.OSUI.Patterns.Tabs.ITabs {
 		if (_tabsMap.has(tabsId)) {
 			throw new Error(
-				`There is already a ${OSFramework.GlobalEnum.PatternName.Tabs} registered under id: ${tabsId}`
+				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Tabs} registered under id: ${tabsId}`
 			);
 		}
 
-		const _newTabs = new OSFramework.Patterns.Tabs.Tabs(tabsId, JSON.parse(configs));
+		const _newTabs = new OSFramework.OSUI.Patterns.Tabs.Tabs(tabsId, JSON.parse(configs));
 
 		_tabsMap.set(tabsId, _newTabs);
 
@@ -59,35 +52,28 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	 * @param {string} tabsId
 	 */
 	export function Dispose(tabsId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Tabs.FailDispose,
+			callback: () => {
+				const tabs = GetTabsById(tabsId);
 
-		try {
-			const tabs = GetTabsById(tabsId);
+				tabs.dispose();
 
-			tabs.dispose();
+				_tabsMap.delete(tabs.uniqueId);
+			},
+		});
 
-			_tabsMap.delete(tabs.uniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Tabs.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
 	 * Fucntion that will return the Map with all the Tabs instances at the page
 	 *
 	 * @export
-	 * @return {*}  {Map<string, OSFramework.Patterns.Tabs.ITabs>}
+	 * @return {*}  {Map<string, OSFramework.OSUI.Patterns.Tabs.ITabs>}
 	 */
 	export function GetAllTabs(): Array<string> {
-		return OSFramework.Helper.MapOperation.ExportKeys(_tabsMap);
+		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_tabsMap);
 	}
 
 	/**
@@ -95,10 +81,14 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	 *
 	 * @export
 	 * @param {string} tabsId ID of the Tabs that will be looked for.
-	 * @return {*}  {OSFramework.Patterns.Tabs.ITabs}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Tabs.ITabs}
 	 */
-	export function GetTabsById(tabsId: string): OSFramework.Patterns.Tabs.ITabs {
-		return OSFramework.Helper.MapOperation.FindInMap('Tabs', tabsId, _tabsMap) as OSFramework.Patterns.Tabs.ITabs;
+	export function GetTabsById(tabsId: string): OSFramework.OSUI.Patterns.Tabs.ITabs {
+		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
+			'Tabs',
+			tabsId,
+			_tabsMap
+		) as OSFramework.OSUI.Patterns.Tabs.ITabs;
 	}
 
 	/**
@@ -106,9 +96,9 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	 *
 	 * @export
 	 * @param {string} tabsId ID of the Tabs pattern that will be initialized.
-	 * @return {*}  {OSFramework.Patterns.Tabs.ITabs}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Tabs.ITabs}
 	 */
-	export function Initialize(tabsId: string): OSFramework.Patterns.Tabs.ITabs {
+	export function Initialize(tabsId: string): OSFramework.OSUI.Patterns.Tabs.ITabs {
 		const tabs = GetTabsById(tabsId);
 
 		tabs.build();
@@ -123,24 +113,17 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	 * @param {string} tabsId
 	 * @param {*} callback
 	 */
-	export function RegisterCallback(tabsId: string, callback: OSFramework.GlobalCallbacks.OSGeneric): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+	export function RegisterCallback(tabsId: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Tabs.FailRegisterCallback,
+			callback: () => {
+				const tabs = GetTabsById(tabsId);
 
-		try {
-			const tabs = GetTabsById(tabsId);
+				tabs.registerCallback(callback);
+			},
+		});
 
-			tabs.registerCallback(callback);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Tabs.FailRegisterCallback;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -151,23 +134,16 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	 * @param {boolean} enableSwipe
 	 */
 	export function TabsToggleSwipe(tabsId: string, enableSwipe: boolean): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Tabs.FailToggleSwipe,
+			callback: () => {
+				const tabs = GetTabsById(tabsId);
 
-		try {
-			const tabs = GetTabsById(tabsId);
+				tabs.toggleDragGestures(enableSwipe);
+			},
+		});
 
-			tabs.toggleDragGestures(enableSwipe);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Tabs.FailToggleSwipe;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -178,22 +154,15 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	 * @param {number} tabsNumber
 	 */
 	export function SetActiveTab(tabsId: string, tabsNumber: number): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Tabs.FailSetActive,
+			callback: () => {
+				const tabs = GetTabsById(tabsId);
 
-		try {
-			const tabs = GetTabsById(tabsId);
+				tabs.changeTab(tabsNumber, undefined, true);
+			},
+		});
 
-			tabs.changeTab(tabsNumber, undefined, true);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Tabs.FailSetActive;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 }

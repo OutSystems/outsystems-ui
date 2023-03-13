@@ -1,23 +1,37 @@
 {
 	"name": "outsystems-ui",
-	"version": "2.14.0",
+	"version": "2.15.0",
 	"description": "OutSystems UI Framework",
+	"license": "BSD-3-Clause",
 	"scripts": {
 		"build": "gulp createProduction && npm run lint",
 		"create-osui-scss": "gulp updateScssFile",
 		"dev": "gulp startDevelopment",
+		"docs": "npx typedoc",
 		"lint": "eslint . --ext .ts",
 		"lintfix": "eslint . --fix --ext .ts",
 		"prettier": "prettier --config ./.prettierrc.json --write \"**/*.+(js|ts|css)\"",
 		"setup": "npm i && npm run dev",
-		"docs": "npx typedoc"
+		"update-version": "gulp updateVersion",
+		"gta-update-version": "gulp gtaSetVersion --from"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/OutSystems/outsystems-ui"
 	},
 	"author": "UI Components Team",
+	"keywords": [
+		"OutSystems",
+		"OutSystems UI",
+		"Framework",
+		"UI Components"
+	],
+	"homepage": "https://outsystemsui.outsystems.com/OutsystemsUiWebsite/",
 	"devDependencies": {
-		"@splidejs/splide": "^4.0.7",
+		"@splidejs/splide": "4.1.3",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
-		"browser-sync": "^2.27.7",
+		"browser-sync": "^2.27.11",
 		"eslint": "^7.26.0",
 		"eslint-config-prettier": "^7.0.0",
 		"eslint-plugin-prettier": "^3.4.0",
@@ -33,10 +47,12 @@
 		"gulp-sass": "^5.1.0",
 		"gulp-sourcemaps": "^3.0.0",
 		"gulp-typescript": "^6.0.0-alpha.1",
-		"nouislider": "^15.6.1",
+		"nouislider": "^15.7.0",
 		"postcss": "^8.4.5",
 		"postcss-discard-comments": "^5.0.1",
+		"postcss-discard-duplicates": "^5.1.0",
 		"prettier-eslint": "^12.0.0",
+		"prompts": "^2.4.2",
 		"sass": "^1.48.0",
 		"stylelint": "^13.12.0",
 		"stylelint-config-prettier": "^8.0.2",
@@ -45,6 +61,6 @@
 		"typedoc-plugin-merge-modules": "^4.0.1",
 		"typedoc-umlclass": "^0.7.0",
 		"typescript": "^4.5.0",
-		"virtual-select-plugin": "^1.0.36"
+		"virtual-select-plugin": "^1.0.37"
 	}
 }

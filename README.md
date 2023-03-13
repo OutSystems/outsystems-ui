@@ -1,4 +1,6 @@
-# OutSystems UI · ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg) ![NPM version](https://img.shields.io/badge/npm-v8.3.1-informational)
+# OutSystems UI · v2.15.0
+
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
 ## About the component
 
@@ -18,7 +20,7 @@ Create modern experiences with fully customizable responsive Screen Templates an
 -   Actions to deal with different device types
 -   Built for Reactive Web and Mobile apps
 
-Find out more in [OutSystems UI website](www.outsystems.com/outsystems-ui).
+Find out more in [OutSystems UI website](https://outsystemsui.outsystems.com/OutsystemsUiWebsite/).
 
 ### Where can you find the component?
 
@@ -27,6 +29,10 @@ The OutSystems UI component, like all components, can be found in [OutSystems fo
 ### Where can you find documentation?
 
 The documentation can be found in the [OutSystems UI website](https://outsystemsui.outsystems.com/outsystemsuiwebsite/) and in [OutSystems product documentation](https://success.outsystems.com/Documentation/11/Developing_an_Application/Design_UI/Patterns).
+
+We also use the [TypeDoc](https://typedoc.org/) to automatically generate documentation. TypeDoc converts comments in TypeScript source code into rendered HTML documentation, alongside UML diagrams for each class and Interface.
+
+Take a look at it, at [OutSystemsUI FWK Documentation](https://outsystems-ui-docs.github.io/).
 
 ### Why use this component?
 
@@ -41,7 +47,7 @@ You can fork it then branch it and PR your proposals!
 
 We highly recommend the usage of the following tools:
 
--   [Visual Code](https://code.visualstudio.com/)
+-   [Visual Studio Code](https://code.visualstudio.com/)
 -   With these extensions:
     -   Document This
     -   ESLint
@@ -52,35 +58,22 @@ We highly recommend the usage of the following tools:
 <ol>
   <li>Do a Repository <strong>Fork</strong></li>
   <li>Create a branch based in the branch <strong>master</strong> (lastest & greatest release)</li>
-  <li>Open your banch Code in Visual Code</li>
-  <li>Run the following command in Visual Code terminal: <code>npm run setup</code> (this will install all the dependencies that you need to compile the code)</li>
+  <li>Open your banch Code in Visual Studio Code</li>
+  <li>Run the following command in Visual Studio Code terminal: <code>npm run setup</code> (this will install all the dependencies that you need to compile the code)</li>
   <li>Do your magic! :)</li>
   <li><strong>Document your code</strong> (with the extension "Document This", start typing <code>/**</code> and the extension will give you a good starting point</li>
-  <li>Compile and fix errors and warnings (in Visual Code terminal: <code>npm run build</code>)</li>
+  <li>Compile and fix errors and warnings (in Visual Studio Code terminal: <code>npm run build</code>)</li>
   <li>
-    Check if the code format is following our conventions (in Visual Code terminal: <code>npm run lint</code>)
+    Check if the code format is following our conventions (in Visual Studio Code terminal: <code>npm run lint</code>)
     <ol>
-      <li>Some of the conventions can be fixed automatically by lint (in Visual Code terminal: <code>npm run lintfix</code>)</li>
-      <li>Although the script above execute the prettier conventions, you may want to run it over all project files (in Visual Code terminal: <code>npm run prettier</code>)</li>
+      <li>Some of the conventions can be fixed automatically by lint (in Visual Studio Code terminal: <code>npm run lintfix</code>)</li>
+      <li>Although the script above execute the prettier conventions, you may want to run it over all project files (in Visual Studio Code terminal: <code>npm run prettier</code>)</li>
     </ol>
   </li>
   <li>Fix all errors & warnings! :)</li>
   <li>Kept the branch updated with the master branch and also synchronized with the upstream <strong>master</strong></li>
   <li>Create a PR, describing what was the (mis)behavior, what you changed and please provide a sample </li>
 </ol>
-
-### How to generate Documentation?
-
-We use the [TypeDoc](https://typedoc.org/) to automatically generate documentation. TypeDoc converts comments in TypeScript source code into rendered HTML documentation, alongside UML diagrams for each class and Interface.
-
-For the UML diagrams to be generated, some extra installations are required in your system:
-
--   [JAVA](https://www.java.com/en/) (latest version)
--   [Graphviz](https://graphviz.org/download/) (latest version)
-
-Finally, you just need to run the command (in Visual Code terminal): <code>npm run docs</code>!
-
-**NOTE:** This is not working properly at windows yet since UML graphics are not being generated.
 
 ### How to do a Pull Request?
 

@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.ProgressAPI {
-	const _progressItemsMap = new Map<string, OSFramework.Patterns.Progress.IProgress>(); //Progress.uniqueId -> Progress obj
+	const _progressItemsMap = new Map<string, OSFramework.OSUI.Patterns.Progress.IProgress>(); //Progress.uniqueId -> Progress obj
 
 	/**
 	 * Function that will change the property of a given Progress Id.
@@ -12,23 +12,16 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 	export function ChangeProperty(progressId: string, propertyName: string, propertyValue: any): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Progress.FailChangeProperty,
+			callback: () => {
+				const _progressItem = GetProgressItemById(progressId);
 
-		try {
-			const _progressItem = GetProgressItemById(progressId);
+				_progressItem.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-			_progressItem.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Progress.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -37,14 +30,18 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 * @export
 	 * @param {string} progressId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.Patterns.Progress.IProgress}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Progress.IProgress}
 	 */
-	export function Create(progressId: string, type: string, configs: string): OSFramework.Patterns.Progress.IProgress {
+	export function Create(
+		progressId: string,
+		type: string,
+		configs: string
+	): OSFramework.OSUI.Patterns.Progress.IProgress {
 		if (_progressItemsMap.has(progressId)) {
 			throw new Error(`There is already an ProgressItem registered under id: ${progressId}`);
 		}
 
-		const _progressItem = OSFramework.Patterns.Progress.Factory.NewProgress(progressId, type, configs);
+		const _progressItem = OSFramework.OSUI.Patterns.Progress.Factory.NewProgress(progressId, type, configs);
 
 		_progressItemsMap.set(progressId, _progressItem);
 
@@ -58,25 +55,18 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 * @param {string} progressId
 	 */
 	export function Dispose(progressId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Progress.FailDispose,
+			callback: () => {
+				const _progressItem = GetProgressItemById(progressId);
 
-		try {
-			const _progressItem = GetProgressItemById(progressId);
+				_progressItem.dispose();
 
-			_progressItem.dispose();
+				_progressItemsMap.delete(_progressItem.uniqueId);
+			},
+		});
 
-			_progressItemsMap.delete(_progressItem.uniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Progress.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -86,7 +76,7 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 * @return {*}  Array<string>
 	 */
 	export function GetAllProgressItemsMap(): Array<string> {
-		return OSFramework.Helper.MapOperation.ExportKeys(_progressItemsMap);
+		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_progressItemsMap);
 	}
 
 	/**
@@ -94,14 +84,14 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 *
 	 * @export
 	 * @param {string} progressId ID of the Progress that will be looked for.
-	 * @return {*}  {OSFramework.Patterns.Progress.IProgress;}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Progress.IProgress;}
 	 */
-	export function GetProgressItemById(progressId: string): OSFramework.Patterns.Progress.IProgress {
-		return OSFramework.Helper.MapOperation.FindInMap(
+	export function GetProgressItemById(progressId: string): OSFramework.OSUI.Patterns.Progress.IProgress {
+		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
 			'Progress',
 			progressId,
 			_progressItemsMap
-		) as OSFramework.Patterns.Progress.IProgress;
+		) as OSFramework.OSUI.Patterns.Progress.IProgress;
 	}
 
 	/**
@@ -109,9 +99,9 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 *
 	 * @export
 	 * @param {string} progressId ID of the ProgressItem that will be initialized.
-	 * @return {*}  {OSFramework.Patterns.Progress.IProgress}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Progress.IProgress}
 	 */
-	export function Initialize(progressId: string): OSFramework.Patterns.Progress.IProgress {
+	export function Initialize(progressId: string): OSFramework.OSUI.Patterns.Progress.IProgress {
 		const _progressItem = GetProgressItemById(progressId);
 
 		_progressItem.build();
@@ -126,22 +116,15 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 * @param {string} progressId
 	 */
 	export function ResetProgressValue(progressId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Progress.FailProgressReset,
+			callback: () => {
+				const _progressItem = GetProgressItemById(progressId);
+				_progressItem.resetProgressValue();
+			},
+		});
 
-		try {
-			const _progressItem = GetProgressItemById(progressId);
-			_progressItem.resetProgressValue();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Progress.FailProgressReset;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -151,22 +134,36 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 * @param {number} progress value of the circle
 	 */
 	export function SetProgressValue(progressId: string, progress: number): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Progress.FailProgressValue,
+			callback: () => {
+				const _progressItem = GetProgressItemById(progressId);
 
-		try {
-			const _progressItem = GetProgressItemById(progressId);
+				_progressItem.setProgressValue(progress);
+			},
+		});
 
-			_progressItem.setProgressValue(progress);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Progress.FailProgressValue;
-		}
+		return result;
+	}
 
-		return JSON.stringify(responseObj);
+	/**
+	 * Funciton that sets a Progress Gradient
+	 *
+	 * @export
+	 * @param {string} progressId
+	 * @param {string} gradientType
+	 * @param {string} colors
+	 * @return {*}  {string}
+	 */
+	export function ProgressApplyGradient(progressId: string, gradientType: string, colors: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Progress.FailtProgressGradient,
+			callback: () => {
+				const _progressItem = GetProgressItemById(progressId);
+				_progressItem.progressApplyGradient(gradientType, JSON.parse(colors));
+			},
+		});
+
+		return result;
 	}
 }

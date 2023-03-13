@@ -5,7 +5,7 @@ const patternInfo = {
     "codeName": "AnimatedLabel",
     "inDevelopment": false,
     "name": "Animated Label",
-    "scss": "../scripts/OSFramework/Pattern/AnimatedLabel/scss/animated-label",
+    "scss": "../scripts/OSFramework/OSUI/Pattern/AnimatedLabel/scss/animated-label",
     "section": "Interaction"
 };
 

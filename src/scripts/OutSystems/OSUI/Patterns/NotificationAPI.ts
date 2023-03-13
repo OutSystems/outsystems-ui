@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.NotificationAPI {
-	const _notificationMap = new Map<string, OSFramework.Patterns.Notification.INotification>();
+	const _notificationMap = new Map<string, OSFramework.OSUI.Patterns.Notification.INotification>();
 	/**
 	 * Function that will change the property of a given Notification.
 	 *
@@ -11,23 +11,16 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	 */
 	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 	export function ChangeProperty(notificationId: string, propertyName: string, propertyValue: any): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Notification.FailChangeProperty,
+			callback: () => {
+				const notification = GetNotificationById(notificationId);
 
-		try {
-			const notification = GetNotificationById(notificationId);
+				notification.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-			notification.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Notification.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -36,16 +29,19 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	 * @export
 	 * @param {string} notificationId
 	 * @param {string} configs
-	 * @return {*}  {OSFramework.Patterns.Notification.INotification}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Notification.INotification}
 	 */
-	export function Create(notificationId: string, configs: string): OSFramework.Patterns.Notification.INotification {
+	export function Create(
+		notificationId: string,
+		configs: string
+	): OSFramework.OSUI.Patterns.Notification.INotification {
 		if (_notificationMap.has(notificationId)) {
 			throw new Error(
-				`There is already a ${OSFramework.GlobalEnum.PatternName.Notification} registered under id: ${notificationId}`
+				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Notification} registered under id: ${notificationId}`
 			);
 		}
 
-		const _newNotification = new OSFramework.Patterns.Notification.Notification(
+		const _newNotification = new OSFramework.OSUI.Patterns.Notification.Notification(
 			notificationId,
 			JSON.parse(configs)
 		);
@@ -60,25 +56,18 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	 * @param {string} notificationId
 	 */
 	export function Dispose(notificationId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Notification.FailDispose,
+			callback: () => {
+				const notification = GetNotificationById(notificationId);
 
-		try {
-			const notification = GetNotificationById(notificationId);
+				notification.dispose();
 
-			notification.dispose();
+				_notificationMap.delete(notificationId);
+			},
+		});
 
-			_notificationMap.delete(notificationId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Notification.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -88,7 +77,7 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	 * @return {*}  {Array<string>}
 	 */
 	export function GetAllNotifications(): Array<string> {
-		return OSFramework.Helper.MapOperation.ExportKeys(_notificationMap);
+		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_notificationMap);
 	}
 
 	/**
@@ -96,14 +85,14 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	 *
 	 * @export
 	 * @param {string} notificationId
-	 * @return {*}  {OSFramework.Patterns.Notification.INotification}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Notification.INotification}
 	 */
-	export function GetNotificationById(notificationId: string): OSFramework.Patterns.Notification.INotification {
-		return OSFramework.Helper.MapOperation.FindInMap(
+	export function GetNotificationById(notificationId: string): OSFramework.OSUI.Patterns.Notification.INotification {
+		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
 			'Notification',
 			notificationId,
 			_notificationMap
-		) as OSFramework.Patterns.Notification.INotification;
+		) as OSFramework.OSUI.Patterns.Notification.INotification;
 	}
 
 	/**
@@ -113,23 +102,16 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	 * @param {string} notificationId ID of the notification that will be hidden
 	 */
 	export function Hide(notificationId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Notification.FailHide,
+			callback: () => {
+				const notification = GetNotificationById(notificationId);
 
-		try {
-			const notification = GetNotificationById(notificationId);
+				notification.hide();
+			},
+		});
 
-			notification.hide();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Notification.FailHide;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -137,9 +119,9 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	 *
 	 * @export
 	 * @param {string} notificationId
-	 * @return {*}  {OSFramework.Patterns.Notification.INotification}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Notification.INotification}
 	 */
-	export function Initialize(notificationId: string): OSFramework.Patterns.Notification.INotification {
+	export function Initialize(notificationId: string): OSFramework.OSUI.Patterns.Notification.INotification {
 		const notification = GetNotificationById(notificationId);
 
 		notification.build();
@@ -153,31 +135,24 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	 * @export
 	 * @param {string} notificationId
 	 * @param {string} eventName
-	 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
 	 * @return {*} {string} Return Message Success or message of error info if it's the case.
 	 */
 	export function RegisterCallback(
 		notificationId: string,
 		eventName: string,
-		callback: OSFramework.GlobalCallbacks.OSGeneric
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Notification.FailRegisterCallback,
+			callback: () => {
+				const _notificationItem = this.GetNotificationById(notificationId);
 
-		try {
-			const _notificationItem = this.GetNotificationById(notificationId);
+				_notificationItem.registerCallback(eventName, callback);
+			},
+		});
 
-			_notificationItem.registerCallback(eventName, callback);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Notification.FailRegisterCallback;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -187,22 +162,15 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	 * @param {string} notificationId ID of the notification that will be shown
 	 */
 	export function Show(notificationId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Notification.FailShow,
+			callback: () => {
+				const notification = GetNotificationById(notificationId);
 
-		try {
-			const notification = GetNotificationById(notificationId);
+				notification.show();
+			},
+		});
 
-			notification.show();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Notification.FailShow;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 }
