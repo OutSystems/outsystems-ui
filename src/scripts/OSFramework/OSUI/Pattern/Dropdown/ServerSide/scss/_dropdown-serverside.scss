@@ -315,21 +315,21 @@ $balloonMobileTopMargin: 5vh;
 	// Inside Sidebar
 	&:has(.osui-sidebar--is-open .osui-dropdown-serverside--is-opened) {
 		.osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened {
-			z-index: $sidebar-zindex + 1;
+			z-index: calc(var(--layer-above) + var(--osui-sidebar-layer));
 		}
 	}
 
 	// Inside Notification
 	&:has(.osui-notification--is-open .osui-dropdown-serverside--is-opened) {
 		.osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened {
-			z-index: $notification-zindex + 1;
+			z-index: calc(var(--layer-above) + var(--osui-notification-layer));
 		}
 	}
 
 	// Inside BottomSheet
 	&:has(.osui-bottom-sheet--is-open .osui-dropdown-serverside--is-opened) {
 		.osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened {
-			z-index: $bottom-sheet-zindex + 1;
+			z-index: calc(var(--layer-above) + var(--osui-bottom-sheet-layer));
 		}
 	}
 }
@@ -338,14 +338,14 @@ $balloonMobileTopMargin: 5vh;
 // https://bugzilla.mozilla.org/show_bug.cgi?id=418039
 .firefox {
 	.osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened {
-		z-index: 301;
+		z-index: var(--layer-global-instant-interaction)
 	}
 }
 
 // Inside Popup
 body:has(.popup-dialog):has(.osui-dropdown-serverside--is-opened) {
 	.osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened {
-		z-index: $popup-zindex + 1;
+		z-index: calc(var(--layer-above) + var(--popup-layer));
 	}
 }
 
