@@ -7984,17 +7984,11 @@ span.flatpickr-weekday{
 .flatpickr-calendar.open{
   z-index:var(--layer-global-elevated);
 }
-.flatpickr-calendar.open.inside-bottom-sheet{
-  z-index:calc(var(--layer-above) + var(--osui-bottom-sheet-layer));
+.flatpickr-calendar.open.inside-bottom-sheet, .flatpickr-calendar.open.inside-popup, .flatpickr-calendar.open.inside-sidebar{
+  z-index:calc(var(--layer-above) + var(--layer-global-off-canvas));
 }
 .flatpickr-calendar.open.inside-notification{
-  z-index:calc(var(--layer-above) + var(--osui-notification-layer));
-}
-.flatpickr-calendar.open.inside-popup{
-  z-index:calc(var(--layer-above) + var(--popup-layer));
-}
-.flatpickr-calendar.open.inside-sidebar{
-  z-index:calc(var(--layer-above) + var(--osui-sidebar-layer));
+  z-index:calc(var(--layer-above) + var(--layer-global-instant-interaction));
 }
 .flatpickr-calendar.arrowTop:before, .flatpickr-calendar.arrowTop::after{
   left:40px;
@@ -9488,7 +9482,7 @@ body.vscomp-popup-active .vscomp-wrapper{
       -ms-user-select:none;
           user-select:none;
   width:var(--notification-width);
-  z-index:var(--layer-global-instant-interaction);
+  z-index:var(--osui-notification-layer);
 }
 .osui-notification{
   -servicestudio-opacity:1;
@@ -10150,7 +10144,7 @@ body.vscomp-popup-active .vscomp-wrapper{
   transition:opacity 130ms ease-in;
   width:200vw;
   will-change:opacity;
-  z-index:calc(var(--layer-below) - var(--layer-global-off-canvas));
+  z-index:calc(var(--layer-below) - var(--osui-sidebar-layer));
 }
 .osui-sidebar--has-overlay::before{
   -servicestudio-width:100%;
@@ -12719,19 +12713,19 @@ html[data-uieditorversion^="1"] .wizard-wrapper-item{
   margin-top:3px;
 }
 .osui-dropdown-serverside-visible:has(.osui-sidebar--is-open .osui-dropdown-serverside--is-opened) .osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened{
-  z-index:calc(var(--layer-above) + var(--osui-sidebar-layer));
+  z-index:calc(var(--layer-above) + var(--layer-global-off-canvas));
 }
 .osui-dropdown-serverside-visible:has(.osui-notification--is-open .osui-dropdown-serverside--is-opened) .osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened{
-  z-index:calc(var(--layer-above) + var(--osui-notification-layer));
+  z-index:calc(var(--layer-above) + var(--layer-global-instant-interaction));
 }
 .osui-dropdown-serverside-visible:has(.osui-bottom-sheet--is-open .osui-dropdown-serverside--is-opened) .osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened{
-  z-index:calc(var(--layer-above) + var(--osui-bottom-sheet-layer));
+  z-index:calc(var(--layer-above) + var(--layer-global-off-canvas));
 }
 .firefox .osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened{
   z-index:var(--layer-global-instant-interaction);
 }
 body:has(.popup-dialog):has(.osui-dropdown-serverside--is-opened) .osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened{
-  z-index:calc(var(--layer-above) + var(--popup-layer));
+  z-index:calc(var(--layer-above) + var(--layer-global-off-canvas));
 }
 .has-accessible-features .osui-dropdown-serverside__selected-values:hover, .has-accessible-features .osui-dropdown-serverside__selected-values:after, .has-accessible-features .osui-dropdown-serverside__selected-values-wrapper, .has-accessible-features .osui-dropdown-serverside__selected-values-footer{
   border-color:var(--color-neutral-7);

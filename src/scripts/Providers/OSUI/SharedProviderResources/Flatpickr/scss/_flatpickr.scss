@@ -11,17 +11,13 @@
 	&.open {
 		z-index: var(--layer-global-elevated);
 
-		&.inside-bottom-sheet {
-			z-index: calc(var(--layer-above) + var(--osui-bottom-sheet-layer));
+		&.inside-bottom-sheet,
+		&.inside-popup,
+		&.inside-sidebar {
+			z-index: calc(var(--layer-above) + var(--layer-global-off-canvas));
 		}
 		&.inside-notification {
-			z-index: calc(var(--layer-above) + var(--osui-notification-layer));
-		}
-		&.inside-popup {
-			z-index: calc(var(--layer-above) + var(--popup-layer));
-		}
-		&.inside-sidebar {
-			z-index: calc(var(--layer-above) + var(--osui-sidebar-layer));
+			z-index: calc(var(--layer-above) + var(--layer-global-instant-interaction));
 		}
 	}
 
