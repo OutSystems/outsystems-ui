@@ -203,9 +203,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		private _handleKeypressEvent(e: KeyboardEvent): void {
 			let targetHeaderItemIndex;
 			// Check if target is the header, to do not change tab on x arrow press
-			const isHeaderTarget = e.target === this._activeTabHeaderElement.selfElement;
-
-			if (!isHeaderTarget) {
+			if (e.target !== this._activeTabHeaderElement.selfElement) {
 				return;
 			}
 
