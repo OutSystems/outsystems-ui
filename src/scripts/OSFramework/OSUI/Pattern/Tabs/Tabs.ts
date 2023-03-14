@@ -202,34 +202,36 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		// Method that handles the Keypress Event, for tabs navigation using arrows
 		private _handleKeypressEvent(e: KeyboardEvent): void {
 			let targetHeaderItemIndex;
-			// Check oif target is content, to preventDefault and not change tabe on x arrow press
-			const isContentTarget = e.target === this._activeTabContentElement.selfElement;
+			// Check if target is the header, to do not change tab on x arrow press
+			const isHeaderTarget = e.target === this._activeTabHeaderElement.selfElement;
+
+			if (!isHeaderTarget) {
+				return;
+			}
 
 			switch (e.key) {
 				case GlobalEnum.Keycodes.ArrowRight:
-					if (isContentTarget) {
-						e.preventDefault();
-						return;
-					}
 					// If is right arrow, navigate to current active tabs + 1 (next item)
 					targetHeaderItemIndex = this.configs.StartingTab + 1;
-					// To prevent triggerinh changeTab, if already on last item
-					if (targetHeaderItemIndex < this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length) {
-						this.changeTab(targetHeaderItemIndex, undefined, true);
+
+					// If in last item, change to the first
+					if (targetHeaderItemIndex >= this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length) {
+						targetHeaderItemIndex = 0;
 					}
 
+					this.changeTab(targetHeaderItemIndex, undefined, true);
 					break;
 				case GlobalEnum.Keycodes.ArrowLeft:
-					if (isContentTarget) {
-						e.preventDefault();
-						return;
-					}
 					// If is left arrow, navigate to current active tabs - 1 (previous item)
 					targetHeaderItemIndex = this.configs.StartingTab - 1;
+
 					// To prevent triggering changeTab, if already on first item
-					if (targetHeaderItemIndex >= 0) {
-						this.changeTab(targetHeaderItemIndex, undefined, true);
+					if (targetHeaderItemIndex < 0) {
+						// If in first item, change to the last
+						targetHeaderItemIndex = this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length - 1;
 					}
+
+					this.changeTab(targetHeaderItemIndex, undefined, true);
 					break;
 			}
 
@@ -242,7 +244,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		}
 
 		// Method to adjust the tabs css active item on resize or orientation-change
-		private _handleOnResizeEvend(): void {
+		private _handleOnResizeEvent(): void {
 			this._scrollToTargetContent(this._activeTabContentElement);
 			Helper.AsyncInvocation(this._handleTabIndicator.bind(this));
 		}
@@ -708,7 +710,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 */
 		protected setCallbacks(): void {
 			this._eventOnHeaderKeypress = this._handleKeypressEvent.bind(this);
-			this._eventOnResize = this._handleOnResizeEvend.bind(this);
+			this._eventOnResize = this._handleOnResizeEvent.bind(this);
 			this._addEvents();
 		}
 
