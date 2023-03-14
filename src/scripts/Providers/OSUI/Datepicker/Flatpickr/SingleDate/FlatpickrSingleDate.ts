@@ -41,7 +41,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 		}
 
 		/**
-		 * Method used to prepare pattern before being redrawed in order to prevent possible flickerings!
+		 * The method used to prepare the pattern before being redrawn in order to prevent possible flickering.
 		 *
 		 * @protected
 		 * @memberof Providers.OSUI.DatePicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate
