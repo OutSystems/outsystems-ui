@@ -185,7 +185,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		}
 
 		/**
-		 * Method that will set the provider configurations in order to properly create its instance
+		 * The method used to prepare the pattern before being redrawn in order to prevent possible flickering.
 		 *
 		 * @protected
 		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
