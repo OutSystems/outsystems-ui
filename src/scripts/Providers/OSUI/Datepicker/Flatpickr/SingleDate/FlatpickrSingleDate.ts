@@ -170,6 +170,11 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 				this._isUpdatedInitialDateByClientAction = true;
 				// Redefine the Initial date
 				this.configs.InitialDate = value;
+				// Redefine the value that is assigned to the input, since pattern will be redrawed it will be based on that value as well
+				OSFramework.OSUI.Helper.Dom.SetInputValue(
+					this._datePickerPlatformInputElem,
+					this.provider.formatDate(value, this._flatpickrOpts.dateFormat)
+				);
 				// Redraw calendar!
 				this.prepareToAndRedraw();
 			}
