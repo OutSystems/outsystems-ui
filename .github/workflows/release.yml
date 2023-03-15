@@ -1,9 +1,8 @@
 name: release
 
 on:
-    # release:
-    #     types: [released]
-    workflow_dispatch:
+    release:
+        types: [released]
 
 jobs:
     merge-rc:
@@ -11,12 +10,9 @@ jobs:
         steps:
             - uses: actions/checkout@v3
               with:
-                  # ref: dev
-                  ref: Wrokflow-Dev-Tests
+                  ref: dev
 
             - uses: actions/setup-node@v3
-              with:
-                  node-version: 16
 
             - name: Get tags versions
               id: get-tags
@@ -46,8 +42,6 @@ jobs:
                   ref: main
 
             - uses: actions/setup-node@v3
-              with:
-                  node-version: 16
 
             - name: Get tags versions
               id: get-tags
@@ -94,8 +88,6 @@ jobs:
                   token: ${{ secrets.PAT }}
 
             - uses: actions/setup-node@v3
-              with:
-                  node-version: 16
 
             - run: npm install
 
@@ -120,8 +112,6 @@ jobs:
                   ref: main
 
             - uses: actions/setup-node@v3
-              with:
-                  node-version: 16
 
             - name: Push files into github page
               uses: GuillaumeFalourd/copy-push-files@v1
@@ -133,19 +123,20 @@ jobs:
                   target_branch: main
                   commit_message: Deploy documentation.
 
-    publish-npm:
-        needs: update-doc
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-              with:
-                  ref: main
+    # This should be uncomment once we ensure everything is working as expected
+    # publish-npm:
+    #     needs: update-doc
+    #     runs-on: ubuntu-latest
+    #     steps:
+    #         - uses: actions/checkout@v3
+    #           with:
+    #               ref: main
 
-            - uses: actions/setup-node@v3
-              with:
-                  node-version: 16
-                  registry-url: https://registry.npmjs.org/
+    #         - uses: actions/setup-node@v3
+    #           with:
+    #               node-version: 16
+    #               registry-url: https://registry.npmjs.org/
 
-            - run: npm publish
-              env:
-                  NODE_AUTH_TOKEN: ${{secrets.NPM_UICOMPONENTS}}
+    #         - run: npm publish
+    #           env:
+    #               NODE_AUTH_TOKEN: ${{secrets.NPM_UICOMPONENTS}}
