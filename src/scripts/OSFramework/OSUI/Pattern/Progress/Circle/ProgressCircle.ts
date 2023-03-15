@@ -530,8 +530,8 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 					this.linearGradientCoords.y2 = 1;
 					break;
 				case ProgressEnum.Gradient.LinearVertical:
-					this.linearGradientCoords.x1 = 0;
-					this.linearGradientCoords.x2 = 1;
+					this.linearGradientCoords.x1 = 1;
+					this.linearGradientCoords.x2 = 0;
 					this.linearGradientCoords.y1 = 1;
 					this.linearGradientCoords.y2 = 1;
 					break;

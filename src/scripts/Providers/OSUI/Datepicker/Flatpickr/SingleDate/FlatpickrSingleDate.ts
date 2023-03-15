@@ -41,6 +41,19 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 		}
 
 		/**
+		 * The method used to prepare the pattern before being redrawn in order to prevent possible flickering.
+		 *
+		 * @protected
+		 * @memberof Providers.OSUI.DatePicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate
+		 */
+		protected prepareToAndRedraw(): void {
+			// Ensure the Flag value is reset at the redraw!
+			this._isUpdatedInitialDateByClientAction = false;
+
+			super.prepareToAndRedraw();
+		}
+
+		/**
 		 * Trigger the jumToDate to now and trigger the Now as a selected Date!
 		 *
 		 * @protected
@@ -75,7 +88,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 				dateType
 			);
 		}
-
 		/**
 		 * Builds the Pattern
 		 *
@@ -158,6 +170,11 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 				this._isUpdatedInitialDateByClientAction = true;
 				// Redefine the Initial date
 				this.configs.InitialDate = value;
+				// Redefine the value that is assigned to the input, since pattern will be redrawed it will be based on that value as well
+				OSFramework.OSUI.Helper.Dom.SetInputValue(
+					this._datePickerPlatformInputElem,
+					this.provider.formatDate(value, this._flatpickrOpts.dateFormat)
+				);
 				// Redraw calendar!
 				this.prepareToAndRedraw();
 			}
