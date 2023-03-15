@@ -2954,7 +2954,7 @@ declare namespace OSFramework.OSUI.Patterns.Tabs {
         private _changeActiveHeaderItem;
         private _getTargetIndex;
         private _handleKeypressEvent;
-        private _handleOnResizeEvend;
+        private _handleOnResizeEvent;
         private _handleTabIndicator;
         private _prepareHeaderAndContentItems;
         private _removeContentItem;
