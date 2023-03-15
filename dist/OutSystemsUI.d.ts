@@ -3578,6 +3578,10 @@ declare namespace OutSystems.OSUI.ErrorCodes {
         FailSetMenuListeners: string;
         FailToggleSideMenu: string;
         FailListItemAnimate: string;
+        FailCheckIsMenuDraggable: string;
+        FailSetExtendedMenuHide: string;
+        FailSetExtendedMenuShow: string;
+        FailCheckIsRTL: string;
     };
     const Legacy: {
         FailAddFavicon_Legacy: string;
@@ -4040,9 +4044,9 @@ declare namespace OutSystems.OSUI.Utils {
 }
 declare namespace OutSystems.OSUI.Utils.Menu {
     function AddMenuOnOrientationChange(callback: OSFramework.OSUI.GlobalCallbacks.Generic): void;
-    function IsMenuDraggable(): boolean;
-    function MenuHide(): void;
-    function MenuShow(): void;
+    function IsMenuDraggable(): string;
+    function MenuHide(): string;
+    function MenuShow(): string;
     function RemoveMenuOnOrientationChange(): void;
     function SetActiveMenuItems(WidgetId: string, ActiveItem: number, ActiveSubItem: number): string;
     function SetBottomBarActiveElement(ActiveItem?: number): string;
@@ -4297,6 +4301,7 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
         private _isUpdatedInitialDateByClientAction;
         constructor(uniqueId: string, configs: JSON);
         protected onDateSelectedEvent(selectedDates: string[]): void;
+        protected prepareToAndRedraw(): void;
         protected todayBtnClick(event: MouseEvent): void;
         protected updatePlatformInputAttrs(): void;
         build(): void;
