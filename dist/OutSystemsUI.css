@@ -11362,6 +11362,9 @@ html[data-uieditorversion^="1"] .osui-timepicker__dropdown-ss-preview.time12h, h
   -servicestudio-border:1px dashed var(--color-neutral-5);
   -servicestudio-width:100%;
 }
+.osui-tabs .osui-tabs__content-item .display-contents{
+  -servicestudio-display:block;
+}
 .is-rtl .osui-tabs.osui-tabs--is-vertical.osui-tabs--is-right .osui-tabs__header-item{
   -webkit-box-pack:start;
       -ms-flex-pack:start;
