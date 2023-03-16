@@ -20,6 +20,7 @@
 			transition: opacity 150ms linear;
 			width: 40px;
 			will-change: opacity;
+			z-index: var(--layer-local-tier-1);
 
 			&[disabled] {
 				cursor: default;
@@ -43,10 +44,12 @@
 
 		&__pagination {
 			margin: 0;
+			z-index: var(--layer-local-tier-1);
 
 			&__page {
 				&.is-active {
 					background-color: var(--color-primary);
+					z-index: var(--layer-local-tier-1);
 				}
 			}
 		}
@@ -111,7 +114,12 @@
 	&__track {
 		max-width: 100%;
 		width: var(--osui-carousel-track-width);
-		-servicestudio-position: relative;
+		z-index: var(--layer-global-screen);
+
+		& {
+			-servicestudio-position: relative;
+		}
+
 	}
 
 	.list:not([data-virtualization-disabled]),
@@ -155,3 +163,15 @@
 		}
 	}
 }
+
+// Layer Library Overrides
+.splide__track--fade {
+	& > .splide__list > .splide__slide {
+		z-index: var(--layer-global-screen);
+
+		&.is-active {
+			z-index: var(--layer-local-tier-1);
+		}
+	}
+}
+

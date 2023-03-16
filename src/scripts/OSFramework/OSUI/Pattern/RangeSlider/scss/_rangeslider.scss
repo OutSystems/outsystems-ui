@@ -284,3 +284,14 @@
 		}
 	}
 }
+
+/* Z-index overrides */
+.noUi-origin
+.noUi-base,
+.noUi-connect {
+	z-index: var(--layer-local-tier-1);
+}
+
+.noUi-connects {
+	z-index: var(--layer-global-screen);
+}

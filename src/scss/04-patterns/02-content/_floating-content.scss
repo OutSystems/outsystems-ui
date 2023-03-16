@@ -198,7 +198,7 @@
 	&:not(.menu-visible),
 	&.aside-expandable {
 		.floating-content[class*='absolute-']:not(.absolute-top-plus-header) {
-			z-index: calc(var(--layer-above) + var(--layer-global-navigation));
+			z-index: calc(var(--layer-global-navigation) + var(--layer-local-tier-1));
 		}
 	}
 }

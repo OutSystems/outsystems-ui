@@ -23,19 +23,19 @@
 	width: 100%;
 	height: 100%;
 	position: relative;
-	z-index: var(--layer-local-tier-1);
+	z-index: 1;
 }
 /* Wrapper for all connect elements.
   */
 .noUi-connects {
 	overflow: hidden;
-	z-index: var(--layer-global-screen);
+	z-index: 0;
 }
 .noUi-connect,
 .noUi-origin {
 	will-change: transform;
 	position: absolute;
-	z-index: var(--layer-local-tier-1);
+	z-index: 1;
 	top: 0;
 	right: 0;
 	height: 100%;

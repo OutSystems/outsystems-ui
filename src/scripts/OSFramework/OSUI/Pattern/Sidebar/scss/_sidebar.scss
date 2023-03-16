@@ -114,7 +114,7 @@
 			transition: opacity 130ms ease-in;
 			width: 200vw;
 			will-change: opacity;
-			z-index: calc(var(--layer-below) - var(--osui-sidebar-layer));
+			z-index: var(--osui-sidebar-layer);
 
 			// Service Studio Preview
 			& {

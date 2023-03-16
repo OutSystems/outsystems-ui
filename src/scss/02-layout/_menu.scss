@@ -26,7 +26,7 @@
 	transition: opacity 130ms ease-in;
 	width: 100vw;
 	will-change: opacity;
-	z-index: calc(var(--layer-below) + var(--layer-global-navigation));
+	z-index: calc(var(--layer-global-navigation) - var(--layer-local-tier-1));
 
 	// Service Studio Preview
 	& {

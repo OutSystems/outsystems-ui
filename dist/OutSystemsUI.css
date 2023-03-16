@@ -4407,7 +4407,7 @@ span.flatpickr-weekday{
 .splide__track{
   overflow:hidden;
   position:relative;
-  z-index:var(--layer-global-screen);
+  z-index:0;
 }
 @-webkit-keyframes splide-loading{
   0%{
@@ -4441,7 +4441,7 @@ span.flatpickr-weekday{
   opacity:0;
   position:absolute;
   top:0;
-  z-index:var(--layer-global-screen);
+  z-index:0;
 }
 .splide__track--fade > .splide__list > .splide__slide.is-active{
   opacity:1;
@@ -7886,6 +7886,7 @@ span.flatpickr-weekday{
   transition:opacity 150ms linear;
   width:40px;
   will-change:opacity;
+  z-index:var(--layer-local-tier-1);
 }
 .osui-carousel .splide__arrow[disabled]{
   cursor:default;
@@ -7903,9 +7904,11 @@ span.flatpickr-weekday{
 }
 .osui-carousel .splide__pagination{
   margin:0;
+  z-index:var(--layer-local-tier-1);
 }
 .osui-carousel .splide__pagination__page.is-active{
   background-color:var(--color-primary);
+  z-index:var(--layer-local-tier-1);
 }
 .osui-carousel .splide__list{
   -webkit-transform-style:flat;
@@ -7946,6 +7949,9 @@ span.flatpickr-weekday{
 .osui-carousel__track{
   max-width:100%;
   width:var(--osui-carousel-track-width);
+  z-index:var(--layer-global-screen);
+}
+.osui-carousel__track{
   -servicestudio-position:relative;
 }
 .osui-carousel .list:not([data-virtualization-disabled]),
@@ -7976,6 +7982,12 @@ span.flatpickr-weekday{
 }
 .is-rtl .splide.splide--rtl{
   direction:rtl;
+}
+.splide__track--fade > .splide__list > .splide__slide{
+  z-index:var(--layer-global-screen);
+}
+.splide__track--fade > .splide__list > .splide__slide.is-active{
+  z-index:var(--layer-local-tier-1);
 }
 /*! 6.3.6. DatePicker */
 .flatpickr-calendar{
