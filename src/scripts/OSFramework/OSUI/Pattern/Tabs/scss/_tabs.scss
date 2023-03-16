@@ -257,6 +257,9 @@
 			-servicestudio-border: 1px dashed var(--color-neutral-5);
 			-servicestudio-width: 100%;
 		}
+		.osui-tabs__content-item .display-contents {
+			-servicestudio-display: block;
+		}
 	}
 }
 
