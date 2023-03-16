@@ -1,5 +1,5 @@
 /*!
-OutSystems UI 2.15.0
+OutSystems UI 2.16.0
 Website:
  • https://www.outsystems.com/outsystems-ui
 GitHub:
@@ -133,7 +133,7 @@ var OSFramework;
             Constants.AccessibilityHideElementClass = 'wcag-hide-text';
             Constants.IsRTLClass = 'is-rtl';
             Constants.NoTransition = 'no-transition';
-            Constants.OSUIVersion = '2.15.0';
+            Constants.OSUIVersion = '2.16.0';
             Constants.ZeroValue = 0;
         })(Constants = OSUI.Constants || (OSUI.Constants = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
@@ -8816,27 +8816,23 @@ var OSFramework;
                     }
                     _handleKeypressEvent(e) {
                         let targetHeaderItemIndex;
-                        const isContentTarget = e.target === this._activeTabContentElement.selfElement;
+                        if (e.target !== this._activeTabHeaderElement.selfElement) {
+                            return;
+                        }
                         switch (e.key) {
                             case OSUI.GlobalEnum.Keycodes.ArrowRight:
-                                if (isContentTarget) {
-                                    e.preventDefault();
-                                    return;
-                                }
                                 targetHeaderItemIndex = this.configs.StartingTab + 1;
-                                if (targetHeaderItemIndex < this.getChildItems(Tabs_1.Enum.ChildTypes.TabsHeaderItem).length) {
-                                    this.changeTab(targetHeaderItemIndex, undefined, true);
+                                if (targetHeaderItemIndex >= this.getChildItems(Tabs_1.Enum.ChildTypes.TabsHeaderItem).length) {
+                                    targetHeaderItemIndex = 0;
                                 }
+                                this.changeTab(targetHeaderItemIndex, undefined, true);
                                 break;
                             case OSUI.GlobalEnum.Keycodes.ArrowLeft:
-                                if (isContentTarget) {
-                                    e.preventDefault();
-                                    return;
-                                }
                                 targetHeaderItemIndex = this.configs.StartingTab - 1;
-                                if (targetHeaderItemIndex >= 0) {
-                                    this.changeTab(targetHeaderItemIndex, undefined, true);
+                                if (targetHeaderItemIndex < 0) {
+                                    targetHeaderItemIndex = this.getChildItems(Tabs_1.Enum.ChildTypes.TabsHeaderItem).length - 1;
                                 }
+                                this.changeTab(targetHeaderItemIndex, undefined, true);
                                 break;
                         }
                         const targetHeaderItem = this.getChildByIndex(targetHeaderItemIndex, Tabs_1.Enum.ChildTypes.TabsHeaderItem);
@@ -8844,7 +8840,7 @@ var OSFramework;
                             targetHeaderItem.setFocus();
                         }
                     }
-                    _handleOnResizeEvend() {
+                    _handleOnResizeEvent() {
                         this._scrollToTargetContent(this._activeTabContentElement);
                         OSUI.Helper.AsyncInvocation(this._handleTabIndicator.bind(this));
                     }
@@ -9110,7 +9106,7 @@ var OSFramework;
                     }
                     setCallbacks() {
                         this._eventOnHeaderKeypress = this._handleKeypressEvent.bind(this);
-                        this._eventOnResize = this._handleOnResizeEvend.bind(this);
+                        this._eventOnResize = this._handleOnResizeEvent.bind(this);
                         this._addEvents();
                     }
                     setHtmlElements() {
