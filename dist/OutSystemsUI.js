@@ -14762,39 +14762,39 @@ var OutSystems;
                     errorCode: OSUI.ErrorCodes.Utilities.FailScrollToElement,
                     callback: () => {
                         const elementToScrollTo = OSFramework.OSUI.Helper.Dom.GetElementById(ElementId);
-                        if (elementToScrollTo) {
-                            const isHeaderFixed = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CssClassElements.HeaderIsFixed) ||
-                                OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CSSSelectors.LayoutNativeHeader);
-                            const isIosBounce = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CSSSelectors.IosBounceScroll);
-                            const scrollBehavior = IsSmooth
-                                ? OSFramework.OSUI.GlobalEnum.ScrollBehavior.Smooth
-                                : OSFramework.OSUI.GlobalEnum.ScrollBehavior.Auto;
-                            let scrollableElement = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CssClassElements.ActiveScreen);
-                            if (ElementParentClass !== OSFramework.OSUI.Constants.EmptyString) {
-                                const isElementParentClass = elementToScrollTo.closest(OSFramework.OSUI.Constants.Dot + ElementParentClass);
-                                if (isElementParentClass) {
-                                    scrollableElement = isElementParentClass;
+                        setTimeout(() => {
+                            if (elementToScrollTo) {
+                                const isHeaderFixed = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CssClassElements.HeaderIsFixed) ||
+                                    OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CSSSelectors.LayoutNativeHeader);
+                                const isIosBounce = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CSSSelectors.IosBounceScroll);
+                                const scrollBehavior = IsSmooth
+                                    ? OSFramework.OSUI.GlobalEnum.ScrollBehavior.Smooth
+                                    : OSFramework.OSUI.GlobalEnum.ScrollBehavior.Auto;
+                                let scrollableElement = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CssClassElements.ActiveScreen);
+                                if (ElementParentClass !== OSFramework.OSUI.Constants.EmptyString) {
+                                    const isElementParentClass = elementToScrollTo.closest(OSFramework.OSUI.Constants.Dot + ElementParentClass);
+                                    if (isElementParentClass) {
+                                        scrollableElement = isElementParentClass;
+                                    }
+                                    else {
+                                        console.warn(`The element with class '${ElementParentClass}' doesn't exist on DOM.`);
+                                    }
                                 }
-                                else {
-                                    console.warn(`The element with class '${ElementParentClass}' doesn't exist on DOM.`);
+                                else if (isIosBounce) {
+                                    scrollableElement = isIosBounce;
                                 }
-                            }
-                            else if (isIosBounce) {
-                                scrollableElement = isIosBounce;
-                            }
-                            let top = scrollableElement.scrollTop + elementToScrollTo.getBoundingClientRect().top + OffSet;
-                            if (isHeaderFixed) {
-                                const header = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CssClassElements.Header);
-                                top = -header.offsetHeight + top;
-                            }
-                            setTimeout(() => {
+                                let top = scrollableElement.scrollTop + elementToScrollTo.getBoundingClientRect().top + OffSet;
+                                if (isHeaderFixed) {
+                                    const header = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CssClassElements.Header);
+                                    top = -header.offsetHeight + top;
+                                }
                                 scrollableElement.scrollTo({
                                     top: top,
                                     left: 0,
                                     behavior: scrollBehavior,
                                 });
-                            }, ScrollDelay);
-                        }
+                            }
+                        }, ScrollDelay);
                     },
                 });
                 return result;
