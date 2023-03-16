@@ -361,14 +361,15 @@ Section Index:
   --os-safe-area-bottom:env(safe-area-inset-bottom);
   --os-safe-area-left:env(safe-area-inset-left);
   /*! Layer System */
-  --layer-above:5;
-  --layer-below:-1;
+  --layer-system-scale:5;
+  --layer-above:var(--layer-system-scale);
+  --layer-below:calc(-1 * var(--layer-system-scale));
   /*! Global Layers */
   --layer-global-screen:0;
-  --layer-global-elevated:5;
-  --layer-global-navigation:10;
-  --layer-global-off-canvas:15;
-  --layer-global-instant-interaction:20;
+  --layer-global-elevated:calc(var(--layer-above) + var(--layer-global-screen));
+  --layer-global-navigation:calc(var(--layer-above) + var(--layer-global-elevated));
+  --layer-global-off-canvas:calc(var(--layer-above) + var(--layer-global-navigation));
+  --layer-global-instant-interaction:calc(var(--layer-above) + var(--layer-global-off-canvas));
   /*! Auxiliary */
   --layer-global-negative:-1;
   --layer-global-auto:auto;
@@ -378,6 +379,11 @@ Section Index:
   --layer-local-tier-3:3;
   --layer-local-tier-4:4;
   --layer-local-tier-5:5;
+  /*! Fixed/Absolute Patterns that need their variables on a global level to be referenced on all DOM contexts */
+  --osui-bottom-sheet-layer:var(--layer-global-off-canvas);
+  --osui-notification-layer:var(--layer-global-instant-interaction);
+  --osui-popup-layer:var(--layer-global-off-canvas);
+  --osui-sidebar-layer:var(--layer-global-off-canvas);
 }
 /*! ==============================================================================
 1. Resets
@@ -2908,8 +2914,7 @@ span.validation-message{
   -servicestudio-top:0;
 }
 [data-popup-backdrop]{
-  --popup-layer:var(--layer-global-off-canvas);
-  z-index:var(--popup-layer);
+  z-index:var(--osui-popup-layer);
 }
 .popup-backdrop{
   background-color:var(--overlay-background);
@@ -7700,7 +7705,6 @@ span.flatpickr-weekday{
   --border-radius-rounded:16px;
   --osui-bottom-sheet-draggable-area:56px;
   --osui-bottom-sheet-transition-function:cubic-bezier(0.19, 0.35, 0.56, 0.96);
-  --osui-bottom-sheet-layer:var(--layer-global-off-canvas);
   background-color:var(--color-neutral-0);
   border-top-left-radius:var(--bottom-sheet-shape);
   border-top-right-radius:var(--bottom-sheet-shape);
@@ -7984,11 +7988,17 @@ span.flatpickr-weekday{
 .flatpickr-calendar.open{
   z-index:var(--layer-global-elevated);
 }
-.flatpickr-calendar.open.inside-bottom-sheet, .flatpickr-calendar.open.inside-popup, .flatpickr-calendar.open.inside-sidebar{
-  z-index:calc(var(--layer-above) + var(--layer-global-off-canvas));
+.flatpickr-calendar.open.inside-bottom-sheet{
+  z-index:calc(var(--osui-bottom-sheet-layer) + var(--layer-local-tier-1));
+}
+.flatpickr-calendar.open.inside-popup{
+  z-index:calc(var(--osui-popup-layer) + var(--layer-local-tier-1));
+}
+.flatpickr-calendar.open.inside-sidebar{
+  z-index:calc(var(--osui-sidebar-layer) + var(--layer-local-tier-1));
 }
 .flatpickr-calendar.open.inside-notification{
-  z-index:calc(var(--layer-above) + var(--layer-global-instant-interaction));
+  z-index:calc(var(--osui-notification-layer) + var(--layer-local-tier-1));
 }
 .flatpickr-calendar.arrowTop:before, .flatpickr-calendar.arrowTop::after{
   left:40px;
@@ -9460,7 +9470,6 @@ body.vscomp-popup-active .vscomp-wrapper{
 /*! 6.3.12. Notification */
 .osui-notification{
   --osui-notification-margin:var(--space-m);
-  --osui-notification-layer:var(--layer-global-instant-interaction);
   background-color:var(--color-neutral-0);
   border-radius:var(--border-radius-soft);
   border:var(--border-size-s) solid var(--color-neutral-4);
@@ -10046,7 +10055,6 @@ body.vscomp-popup-active .vscomp-wrapper{
 /*! 6.3.16. Sidebar */
 .osui-sidebar{
   --overlay-opacity:0;
-  --osui-sidebar-layer:var(--layer-global-off-canvas);
   background-color:var(--color-neutral-0);
   -webkit-box-shadow:var(--shadow-l);
           box-shadow:var(--shadow-l);
@@ -11495,8 +11503,7 @@ html[data-uieditorversion^="1"] .osui-tabs__preview--is-active::after{
   -servicestudio-padding:var(--space-s);
   -servicestudio-position:absolute;
   -servicestudio-width:100%;
-}
-/*! 6.4.7. Timeline */
+} /*! 6.4.7. Timeline */
 .timeline-item{
   display:-webkit-box;
   display:-ms-flexbox;
@@ -12713,19 +12720,19 @@ html[data-uieditorversion^="1"] .wizard-wrapper-item{
   margin-top:3px;
 }
 .osui-dropdown-serverside-visible:has(.osui-sidebar--is-open .osui-dropdown-serverside--is-opened) .osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened{
-  z-index:calc(var(--layer-above) + var(--layer-global-off-canvas));
+  z-index:calc(var(--osui-sidebar-layer) + var(--layer-local-tier-1));
 }
 .osui-dropdown-serverside-visible:has(.osui-notification--is-open .osui-dropdown-serverside--is-opened) .osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened{
-  z-index:calc(var(--layer-above) + var(--layer-global-instant-interaction));
+  z-index:calc(var(--osui-notification-layer) + var(--layer-local-tier-1));
 }
 .osui-dropdown-serverside-visible:has(.osui-bottom-sheet--is-open .osui-dropdown-serverside--is-opened) .osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened{
-  z-index:calc(var(--layer-above) + var(--layer-global-off-canvas));
+  z-index:calc(var(--osui-bottom-sheet-layer) + var(--layer-local-tier-1));
 }
 .firefox .osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened{
   z-index:var(--layer-global-instant-interaction);
 }
 body:has(.popup-dialog):has(.osui-dropdown-serverside--is-opened) .osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened{
-  z-index:calc(var(--layer-above) + var(--layer-global-off-canvas));
+  z-index:calc(var(--osui-popup-layer) + var(--layer-local-tier-1));
 }
 .has-accessible-features .osui-dropdown-serverside__selected-values:hover, .has-accessible-features .osui-dropdown-serverside__selected-values:after, .has-accessible-features .osui-dropdown-serverside__selected-values-wrapper, .has-accessible-features .osui-dropdown-serverside__selected-values-footer{
   border-color:var(--color-neutral-7);

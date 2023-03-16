@@ -13,8 +13,7 @@
 
 ///
 [data-popup-backdrop] {
-	--popup-layer: var(--layer-global-off-canvas);
-	z-index: var(--popup-layer);
+	z-index: var(--osui-popup-layer);
 }
 
 ///

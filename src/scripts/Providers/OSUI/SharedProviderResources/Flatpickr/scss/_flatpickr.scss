@@ -11,13 +11,17 @@
 	&.open {
 		z-index: var(--layer-global-elevated);
 
-		&.inside-bottom-sheet,
-		&.inside-popup,
+		&.inside-bottom-sheet {
+			z-index: calc(var(--osui-bottom-sheet-layer) + var(--layer-local-tier-1));
+		}
+		&.inside-popup {
+			z-index: calc(var(--osui-popup-layer) + var(--layer-local-tier-1));
+		}
 		&.inside-sidebar {
-			z-index: calc(var(--layer-above) + var(--layer-global-off-canvas));
+			z-index: calc(var(--osui-sidebar-layer) + var(--layer-local-tier-1));
 		}
 		&.inside-notification {
-			z-index: calc(var(--layer-above) + var(--layer-global-instant-interaction));
+			z-index: calc(var(--osui-notification-layer) + var(--layer-local-tier-1));
 		}
 	}
 

@@ -17,9 +17,6 @@ const sectionInfo = {
         },
         {
             "path": "00-abstract/setup-border-vars"
-        },
-        {
-            "path": "00-abstract/layer-system"
         }
     ]
 };

@@ -92,20 +92,21 @@
 	--os-safe-area-left: env(safe-area-inset-left);
 
 	/*! Layer System */
-	--layer-above: #{$layer-above}; /* use this for all values above the base */
-	--layer-below: #{$layer-below}; /* and this for all values below the base */
+	--layer-system-scale: 5;
+	--layer-above: var(--layer-system-scale); /* use this for all values above the base */
+	--layer-below: calc(-1 * var(--layer-system-scale)); /* and this for all values below the base */
 
 	/*! Global Layers */
 	/* Main */
 	--layer-global-screen: 0;
-	--layer-global-elevated: #{$layer-global-elevated}; // 5
-	--layer-global-navigation: #{$layer-global-navigation}; // 10
-	--layer-global-off-canvas: #{$layer-global-off-canvas}; // 15
-	--layer-global-instant-interaction: #{$layer-global-instant-interaction}; // 20
+	--layer-global-elevated: calc(var(--layer-above) + var(--layer-global-screen)); // 5
+	--layer-global-navigation:  calc(var(--layer-above) + var(--layer-global-elevated)); // 10
+	--layer-global-off-canvas:  calc(var(--layer-above) + var(--layer-global-navigation)); // 15
+	--layer-global-instant-interaction:  calc(var(--layer-above) + var(--layer-global-off-canvas)); // 20
 
 	/*! Auxiliary */
-	--layer-global-negative: #{$layer-global-negative}; // -1
-	--layer-global-auto: auto; // auto
+	--layer-global-negative: -1;
+	--layer-global-auto: auto; 
 
 	/*! Local Layers */
 	--layer-local-tier-1: 1;
@@ -113,4 +114,10 @@
 	--layer-local-tier-3: 3;
 	--layer-local-tier-4: 4;
 	--layer-local-tier-5: 5;
+
+	/*! Fixed/Absolute Patterns that need their variables on a global level to be referenced on all DOM contexts */
+	--osui-bottom-sheet-layer: var(--layer-global-off-canvas);
+	--osui-notification-layer: var(--layer-global-instant-interaction);
+	--osui-popup-layer: var(--layer-global-off-canvas);
+	--osui-sidebar-layer: var(--layer-global-off-canvas);
 }
