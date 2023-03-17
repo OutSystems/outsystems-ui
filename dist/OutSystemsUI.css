@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /*!
-OutSystems UI 2.15.0
+OutSystems UI 2.16.0
 Website:
  • https://www.outsystems.com/outsystems-ui
 GitHub:
@@ -6845,7 +6845,7 @@ span.flatpickr-weekday{
   pointer-events:none;
   position:absolute;
   will-change:top, right, bottom, left, opacity, transform;
-  z-index:var(--layer-global-off-canvas);
+  z-index:var(--layer-global-instant-interaction);
 }
 .osui-tooltip__balloon-wrapper{
   -servicestudio-left:initial;
@@ -11327,6 +11327,8 @@ html[data-uieditorversion^="1"] .osui-timepicker__dropdown-ss-preview.time12h, h
 }
 .osui-tabs--has-drag:not(.osui-tabs--is-vertical) .osui-tabs__content{
   overflow-x:auto;
+  -ms-scroll-snap-type:x mandatory;
+      scroll-snap-type:x mandatory;
 }
 .osui-tabs__header{
   display:grid;
@@ -11394,8 +11396,6 @@ html[data-uieditorversion^="1"] .osui-timepicker__dropdown-ss-preview.time12h, h
   overflow:hidden;
   overscroll-behavior-x:contain;
   position:relative;
-  -ms-scroll-snap-type:x mandatory;
-      scroll-snap-type:x mandatory;
   width:100%;
 }
 .osui-tabs__content::-webkit-scrollbar{
