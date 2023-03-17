@@ -1,9 +1,8 @@
 name: pre-release
 
 on:
-    # release:
-    #     types: [prereleased]
-    workflow_dispatch:
+    release:
+        types: [prereleased]
 
 jobs:
     run-lint-and-prettier:
@@ -11,8 +10,7 @@ jobs:
         steps:
             - uses: actions/checkout@v3
               with:
-                  # ref: dev
-                  ref: Wrokflow-Main-Tests
+                  ref: dev
 
             - uses: actions/setup-node@v3
 
@@ -26,8 +24,7 @@ jobs:
         steps:
             - uses: actions/checkout@v3
               with:
-                  # ref: dev
-                  ref: Wrokflow-Main-Tests
+                  ref: dev
 
             - uses: actions/setup-node@v3
 
@@ -60,8 +57,8 @@ jobs:
         steps:
             - uses: actions/checkout@v3
               with:
-                  # ref: dev
-                  ref: Wrokflow-Main-Tests
+                  ref: dev
+                  token: ${{ secrets.PAT }}
 
             - uses: actions/setup-node@v3
 
@@ -85,8 +82,7 @@ jobs:
             - name: Commit updated version
               uses: stefanzweifel/git-auto-commit-action@v4
               with:
-                  # branch: dev
-                  branch: Wrokflow-Main-Tests
+                  branch: dev
                   commit_message: Updated version. [skip ci]
 
     create-rc:
@@ -95,8 +91,7 @@ jobs:
         steps:
             - uses: actions/checkout@v3
               with:
-                  # ref: dev
-                  ref: Wrokflow-Main-Tests
+                  ref: dev
 
             - uses: actions/setup-node@v3
 
@@ -157,8 +152,7 @@ jobs:
         steps:
             - uses: actions/checkout@v3
               with:
-                  # ref: dev
-                  ref: Wrokflow-Main-Tests
+                  ref: dev
 
             - uses: actions/setup-node@v3
 

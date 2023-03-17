@@ -6885,8 +6885,8 @@ var OSFramework;
                                     this.linearGradientCoords.y2 = 1;
                                     break;
                                 case Progress.ProgressEnum.Gradient.LinearVertical:
-                                    this.linearGradientCoords.x1 = 0;
-                                    this.linearGradientCoords.x2 = 1;
+                                    this.linearGradientCoords.x1 = 1;
+                                    this.linearGradientCoords.x2 = 0;
                                     this.linearGradientCoords.y1 = 1;
                                     this.linearGradientCoords.y2 = 1;
                                     break;
@@ -15988,6 +15988,10 @@ var Providers;
                             }
                             this._isUpdatedInitialDateByClientAction = false;
                         }
+                        prepareToAndRedraw() {
+                            this._isUpdatedInitialDateByClientAction = false;
+                            super.prepareToAndRedraw();
+                        }
                         todayBtnClick(event) {
                             event.preventDefault();
                             this.provider.setDate(this.provider.now, true);
@@ -16042,6 +16046,7 @@ var Providers;
                             if (this._datePickerPlatformInputElem.disabled === false) {
                                 this._isUpdatedInitialDateByClientAction = true;
                                 this.configs.InitialDate = value;
+                                OSFramework.OSUI.Helper.Dom.SetInputValue(this._datePickerPlatformInputElem, this.provider.formatDate(value, this._flatpickrOpts.dateFormat));
                                 this.prepareToAndRedraw();
                             }
                         }
@@ -17280,6 +17285,9 @@ var Providers;
                     _setAttributes() {
                         this._flatpickrInputElem = this._monthPickerProviderInputElem.nextSibling;
                         OSFramework.OSUI.Helper.Dom.Attribute.Set(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.DataInput, OSFramework.OSUI.Constants.EmptyString);
+                        if (this._flatpickrInputElem.disabled) {
+                            OSFramework.OSUI.Helper.Dom.Attribute.Remove(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled);
+                        }
                     }
                     _setCalendarCssClasses() {
                         OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.provider.calendarContainer, OSFramework.OSUI.Patterns.MonthPicker.Enum.CssClass.Dropdown);
@@ -18294,7 +18302,10 @@ var Providers;
                     }
                     _setAttributes() {
                         this._flatpickrInputElem = this._timePickerProviderInputElem.nextSibling;
-                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.DataInput, '');
+                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.DataInput, OSFramework.OSUI.Constants.EmptyString);
+                        if (this._flatpickrInputElem.disabled) {
+                            OSFramework.OSUI.Helper.Dom.Attribute.Remove(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled);
+                        }
                     }
                     _setCalendarCssClasses() {
                         OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.provider.calendarContainer, OSFramework.OSUI.Patterns.TimePicker.Enum.CssClass.Dropdown);

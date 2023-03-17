@@ -144,6 +144,7 @@
 	&--has-drag:not(.osui-tabs--is-vertical) {
 		.osui-tabs__content {
 			overflow-x: auto;
+			scroll-snap-type: x mandatory;
 		}
 	}
 
@@ -214,7 +215,6 @@
 		overflow: hidden;
 		overscroll-behavior-x: contain;
 		position: relative;
-		scroll-snap-type: x mandatory;
 		width: 100%;
 
 		&::-webkit-scrollbar {

@@ -4301,6 +4301,7 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
         private _isUpdatedInitialDateByClientAction;
         constructor(uniqueId: string, configs: JSON);
         protected onDateSelectedEvent(selectedDates: string[]): void;
+        protected prepareToAndRedraw(): void;
         protected todayBtnClick(event: MouseEvent): void;
         protected updatePlatformInputAttrs(): void;
         build(): void;

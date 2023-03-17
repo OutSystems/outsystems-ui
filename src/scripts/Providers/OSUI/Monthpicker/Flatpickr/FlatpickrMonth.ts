@@ -38,6 +38,14 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 				OSFramework.OSUI.GlobalEnum.HTMLAttributes.DataInput,
 				OSFramework.OSUI.Constants.EmptyString
 			);
+
+			// If the provider cloned a disabled platform input, remove the disable attribute form the provider input
+			if (this._flatpickrInputElem.disabled) {
+				OSFramework.OSUI.Helper.Dom.Attribute.Remove(
+					this._flatpickrInputElem,
+					OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled
+				);
+			}
 		}
 
 		// Method used to set the CSS classes to the pattern HTML elements
