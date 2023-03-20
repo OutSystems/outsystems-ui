@@ -120,4 +120,5 @@
 	--osui-notification-layer: var(--layer-global-instant-interaction);
 	--osui-popup-layer: var(--layer-global-off-canvas);
 	--osui-sidebar-layer: var(--layer-global-off-canvas);
+	--osui-menu-layer: calc(var(--layer-global-navigation) + var(--layer-local-tier-2));
 }
