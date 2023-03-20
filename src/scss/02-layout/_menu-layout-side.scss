@@ -17,7 +17,7 @@
 		position: fixed;
 		top: 0;
 		width: var(--side-menu-size);
-		z-index: 105;
+		z-index: var(--layer-global-navigation);
 	}
 }
 
@@ -36,7 +36,7 @@
 		width: var(--side-menu-size);
 
 		will-change: transform;
-		z-index: 105;
+		z-index: var(--layer-global-navigation);
 	}
 
 	&.menu-visible {

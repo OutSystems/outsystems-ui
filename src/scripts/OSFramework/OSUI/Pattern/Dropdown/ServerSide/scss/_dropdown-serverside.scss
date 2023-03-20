@@ -88,7 +88,7 @@ $balloonMobileTopMargin: 5vh;
 			position: absolute;
 			transition: opacity 300ms ease;
 			width: 100%;
-			z-index: 2;
+			z-index: var(--layer-global-elevated);
 
 			// Service Studio Preview
 			& {
@@ -315,21 +315,21 @@ $balloonMobileTopMargin: 5vh;
 	// Inside Sidebar
 	&:has(.osui-sidebar--is-open .osui-dropdown-serverside--is-opened) {
 		.osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened {
-			z-index: $sidebar-zindex + 1;
+			z-index: calc(var(--osui-sidebar-layer) + var(--layer-local-tier-1));
 		}
 	}
 
 	// Inside Notification
 	&:has(.osui-notification--is-open .osui-dropdown-serverside--is-opened) {
 		.osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened {
-			z-index: $notification-zindex + 1;
+			z-index: calc(var(--osui-notification-layer) + var(--layer-local-tier-1));
 		}
 	}
 
 	// Inside BottomSheet
 	&:has(.osui-bottom-sheet--is-open .osui-dropdown-serverside--is-opened) {
 		.osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened {
-			z-index: $bottom-sheet-zindex + 1;
+			z-index: calc(var(--osui-bottom-sheet-layer) + var(--layer-local-tier-1));
 		}
 	}
 }
@@ -338,14 +338,14 @@ $balloonMobileTopMargin: 5vh;
 // https://bugzilla.mozilla.org/show_bug.cgi?id=418039
 .firefox {
 	.osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened {
-		z-index: 301;
+		z-index: var(--layer-global-instant-interaction)
 	}
 }
 
 // Inside Popup
 body:has(.popup-dialog):has(.osui-dropdown-serverside--is-opened) {
 	.osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened {
-		z-index: $popup-zindex + 1;
+		z-index: calc(var(--osui-popup-layer) + var(--layer-local-tier-1));
 	}
 }
 
@@ -488,7 +488,6 @@ body:has(.popup-dialog):has(.osui-dropdown-serverside--is-opened) {
 				overflow: hidden;
 				top: 0;
 				transition: opacity 250ms ease;
-				z-index: 101;
 
 				// Service Studio Preview
 				& {

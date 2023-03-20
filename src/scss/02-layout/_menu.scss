@@ -26,7 +26,7 @@
 	transition: opacity 130ms ease-in;
 	width: 100vw;
 	will-change: opacity;
-	z-index: 104;
+	z-index: calc(var(--layer-global-navigation) - var(--layer-local-tier-1));
 
 	// Service Studio Preview
 	& {
@@ -73,7 +73,7 @@
 			-servicestudio-height: 100%;
 			-servicestudio-position: fixed;
 			-servicestudio-width: var(--side-menu-size);
-			-servicestudio-z-index: 105;
+			-servicestudio-z-index: var(--layer-global-navigation);
 		}
 
 		& > div {
@@ -145,7 +145,7 @@
 		width: var(--side-menu-size);
 
 		will-change: transform;
-		z-index: 105;
+		z-index: var(--layer-global-navigation);
 	}
 
 	// .menu-visible is a class added into the .layout element

@@ -19,7 +19,7 @@
 		.list.list-group {
 			background-color: transparent;
 			height: 100%;
-			z-index: 6;
+			z-index: var(--layer-global-screen);
 
 			& > :nth-child(1) {
 				display: block;
@@ -201,7 +201,7 @@
 			-servicestudio-float: none;
 			-servicestudio-min-height: 80px;
 			-servicestudio-width: 100%;
-			-servicestudio-z-index: 7;
+			-servicestudio-z-index: var(--layer-local-tier-1);
 		}
 	}
 
@@ -215,7 +215,7 @@
 			-servicestudio-float: right;
 			-servicestudio-min-height: 80px;
 			-servicestudio-width: 50%;
-			-servicestudio-z-index: 8;
+			-servicestudio-z-index: var(--layer-local-tier-2);
 		}
 	}
 
@@ -229,7 +229,7 @@
 			-servicestudio-float: none;
 			-servicestudio-min-height: 80px;
 			-servicestudio-width: 50%;
-			-servicestudio-z-index: 8;
+			-servicestudio-z-index: var(--layer-local-tier-2);
 		}
 	}
 

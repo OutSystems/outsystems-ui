@@ -182,7 +182,7 @@
 		transition: opacity 150ms linear;
 		width: 40px;
 		will-change: opacity;
-		z-index: 2;
+		z-index: var(--layer-local-tier-2);
 
 		&.disabled {
 			opacity: 0.3;
