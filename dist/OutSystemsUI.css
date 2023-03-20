@@ -4439,8 +4439,6 @@ span.flatpickr-weekday{
 .splide__track--fade > .splide__list > .splide__slide{
   margin:0 !important;
   opacity:0;
-  position:absolute;
-  top:0;
   z-index:0;
 }
 .splide__track--fade > .splide__list > .splide__slide.is-active{
@@ -11536,7 +11534,8 @@ html[data-uieditorversion^="1"] .osui-tabs__preview--is-active::after{
   -servicestudio-padding:var(--space-s);
   -servicestudio-position:absolute;
   -servicestudio-width:100%;
-} /*! 6.4.7. Timeline */
+}
+/*! 6.4.7. Timeline */
 .timeline-item{
   display:-webkit-box;
   display:-ms-flexbox;
