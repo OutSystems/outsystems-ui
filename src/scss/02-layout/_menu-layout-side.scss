@@ -17,7 +17,7 @@
 		position: fixed;
 		top: 0;
 		width: var(--side-menu-size);
-		z-index: var(--layer-global-navigation);
+		z-index: var(--osui-menu-layer);
 	}
 }
 
@@ -36,7 +36,7 @@
 		width: var(--side-menu-size);
 
 		will-change: transform;
-		z-index: var(--layer-global-navigation);
+		z-index: var(--osui-menu-layer);
 	}
 
 	&.menu-visible {

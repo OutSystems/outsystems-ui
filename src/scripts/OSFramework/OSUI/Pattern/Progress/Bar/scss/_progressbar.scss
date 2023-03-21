@@ -90,6 +90,7 @@
 			top: 50%;
 			transform: translateY(-50%);
 			width: 100%;
+			z-index: var(--layer-local-tier-1);
 
 			& {
 				-servicestudio-text-align: center;

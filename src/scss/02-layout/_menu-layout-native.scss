@@ -53,7 +53,7 @@
 			&-expandable {
 				.app-menu-content {
 					box-shadow: var(--shadow-m);
-					z-index: var(--layer-global-navigation);
+					z-index: var(--osui-menu-layer);
 				}
 			}
 		}
@@ -94,7 +94,7 @@
 					.app-menu-content {
 						box-shadow: var(--shadow-m);
 						left: 0;
-						z-index: var(--layer-global-navigation);
+						z-index: var(--osui-menu-layer);
 					}
 				}
 			}

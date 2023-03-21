@@ -384,6 +384,7 @@ Section Index:
   --osui-notification-layer:var(--layer-global-instant-interaction);
   --osui-popup-layer:var(--layer-global-off-canvas);
   --osui-sidebar-layer:var(--layer-global-off-canvas);
+  --osui-menu-layer:calc(var(--layer-global-navigation) + var(--layer-local-tier-2));
 }
 /*! ==============================================================================
 1. Resets
@@ -1116,7 +1117,7 @@ body,
   transition:opacity 130ms ease-in;
   width:100vw;
   will-change:opacity;
-  z-index:calc(var(--layer-global-navigation) - var(--layer-local-tier-1));
+  z-index:calc(var(--osui-menu-layer) - var(--layer-local-tier-1));
 }
 .app-menu-overlay{
   -servicestudio-display:none;
@@ -1188,7 +1189,7 @@ body,
   transition:transform 130ms ease-in, -webkit-transform 130ms ease-in;
   width:var(--side-menu-size);
   will-change:transform;
-  z-index:var(--layer-global-navigation);
+  z-index:var(--osui-menu-layer);
 }
 .tablet .menu-visible .app-menu-content,
 .phone .menu-visible .app-menu-content{
@@ -1262,7 +1263,7 @@ body,
 .desktop .layout-native.aside-visible .app-menu-content, .desktop .layout-native.aside-expandable .app-menu-content{
   -webkit-box-shadow:var(--shadow-m);
           box-shadow:var(--shadow-m);
-  z-index:var(--layer-global-navigation);
+  z-index:var(--osui-menu-layer);
 }
 .desktop .layout-native .landscape.android[data-status-bar-height].layout-side.aside-expandable .app-menu-content,
 .tablet .layout-native .landscape.android[data-status-bar-height].layout-side.aside-expandable .app-menu-content{
@@ -1275,7 +1276,7 @@ body,
   -webkit-box-shadow:var(--shadow-m);
           box-shadow:var(--shadow-m);
   left:0;
-  z-index:var(--layer-global-navigation);
+  z-index:var(--osui-menu-layer);
 }
 .tablet.landscape .layout-native.layout-side.aside-expandable .app-menu-content{
   padding-top:calc(var(--header-size) + var(--header-size-content) + var(--os-safe-area-top));
@@ -1304,7 +1305,7 @@ body,
   position:fixed;
   top:0;
   width:var(--side-menu-size);
-  z-index:var(--layer-global-navigation);
+  z-index:var(--osui-menu-layer);
 }
 .aside-overlay .app-menu-content{
   background-color:var(--color-neutral-0);
@@ -1325,7 +1326,7 @@ body,
   transition:transform 130ms ease-in, -webkit-transform 130ms ease-in;
   width:var(--side-menu-size);
   will-change:transform;
-  z-index:var(--layer-global-navigation);
+  z-index:var(--osui-menu-layer);
 }
 .aside-overlay.menu-visible .app-menu-content{
   -webkit-transform:translateX(var(--side-menu-size)) translateZ(0);
@@ -11982,6 +11983,7 @@ html[data-uieditorversion^="1"] .wizard-wrapper-item{
       -ms-transform:translateY(-50%);
           transform:translateY(-50%);
   width:100%;
+  z-index:var(--layer-local-tier-1);
 }
 .osui-progress-bar__content{
   -servicestudio-text-align:center;
