@@ -12211,6 +12211,10 @@ html[data-uieditorversion^="1"] .wizard-wrapper-item{
   -webkit-box-shadow:0 0 0 3px var(--color-focus-outer);
           box-shadow:0 0 0 3px var(--color-focus-outer);
 }
+.chrome .osui-tabs .rating .wcag-hide-text,
+.edge .osui-tabs .rating .wcag-hide-text{
+  margin:unset;
+}
 /*! 6.6. Utilities */
 /*! 6.6.1. Align Center */
 .vertical-align{
