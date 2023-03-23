@@ -234,6 +234,10 @@
 				-servicestudio-margin-bottom: var(--space-m);
 			}
 
+			& div:empty {
+				-servicestudio-padding: var(--space-m);
+			}
+
 			// This selector is used to prevent render issues on chrome, in some screen-sizes, due to overflow hidden and css snap
 			.columns {
 				max-width: 99.99%;

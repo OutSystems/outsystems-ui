@@ -11411,6 +11411,9 @@ html[data-uieditorversion^="1"] .osui-timepicker__dropdown-ss-preview.time12h, h
   -servicestudio-display:block !important;
   -servicestudio-margin-bottom:var(--space-m);
 }
+.osui-tabs__content-item div:empty{
+  -servicestudio-padding:var(--space-m);
+}
 .osui-tabs__content-item .columns{
   max-width:99.99%;
 }
