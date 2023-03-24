@@ -196,3 +196,15 @@
 		box-shadow: 0 0 0 3px var(--color-focus-outer);
 	}
 }
+
+// Fix issue on chromium based browsers, related with css snap and the complex combination of HTML and CSS properties used by the Rating
+.chrome,
+.edge {
+	.osui-tabs {
+		.rating {
+			.wcag-hide-text {
+				margin: unset;
+			}
+		}
+	}
+} 
