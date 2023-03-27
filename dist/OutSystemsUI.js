@@ -9006,7 +9006,7 @@ var OSFramework;
                         OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Tabs_1.Enum.CssProperty.TabsHeaderItems, itemsLength);
                     }
                     _setHeight(height) {
-                        const tabsOverflow = height === OSUI.GlobalEnum.CssProperties.Auto || ''
+                        const tabsOverflow = height === OSUI.GlobalEnum.CssProperties.Auto || height === OSUI.Constants.EmptyString
                             ? OSUI.GlobalEnum.CssProperties.Initial
                             : OSUI.GlobalEnum.CssProperties.Auto;
                         OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Tabs_1.Enum.CssProperty.TabsHeight, height);
