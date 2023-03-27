@@ -123,7 +123,6 @@ jobs:
                   target_branch: main
                   commit_message: Deploy documentation.
 
-    # This should be uncomment once we ensure everything is working as expected
     publish-npm:
         needs: update-doc
         runs-on: ubuntu-latest
