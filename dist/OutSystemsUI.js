@@ -9006,9 +9006,9 @@ var OSFramework;
                         OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Tabs_1.Enum.CssProperty.TabsHeaderItems, itemsLength);
                     }
                     _setHeight(height) {
-                        const tabsOverflow = height !== OSUI.GlobalEnum.CssProperties.Auto || ''
-                            ? OSUI.GlobalEnum.CssProperties.Auto
-                            : OSUI.GlobalEnum.CssProperties.Initial;
+                        const tabsOverflow = height === OSUI.GlobalEnum.CssProperties.Auto || ''
+                            ? OSUI.GlobalEnum.CssProperties.Initial
+                            : OSUI.GlobalEnum.CssProperties.Auto;
                         OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Tabs_1.Enum.CssProperty.TabsHeight, height);
                         OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Tabs_1.Enum.CssProperty.TabsContentItemOverflow, tabsOverflow);
                     }

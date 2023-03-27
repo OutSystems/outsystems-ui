@@ -519,9 +519,9 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		private _setHeight(height: string): void {
 			// Set tabs overflow based on height
 			const tabsOverflow =
-				height !== GlobalEnum.CssProperties.Auto || ''
-					? GlobalEnum.CssProperties.Auto
-					: GlobalEnum.CssProperties.Initial;
+				height === GlobalEnum.CssProperties.Auto || ''
+					? GlobalEnum.CssProperties.Initial
+					: GlobalEnum.CssProperties.Auto;
 
 			// Create css variables
 			Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Enum.CssProperty.TabsHeight, height);
