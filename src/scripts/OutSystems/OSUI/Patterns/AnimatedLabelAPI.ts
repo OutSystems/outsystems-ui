@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
-	const _animatedLabelsMap = new Map<string, OSFramework.Patterns.AnimatedLabel.IAnimatedLabel>(); //animatedlabel.uniqueId -> AnimatedLabel obj
+	const _animatedLabelsMap = new Map<string, OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel>(); //animatedlabel.uniqueId -> AnimatedLabel obj
 
 	/**
 	 * Function that will change the property of a given animatedLabel.
@@ -29,19 +29,19 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	 * @export
 	 * @param {string} animatedLabelId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.Patterns.AnimatedLabel.IAnimatedLabel}
+	 * @return {*}  {OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel}
 	 */
 	export function Create(
 		animatedLabelId: string,
 		configs: string
-	): OSFramework.Patterns.AnimatedLabel.IAnimatedLabel {
+	): OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel {
 		if (_animatedLabelsMap.has(animatedLabelId)) {
 			throw new Error(
-				`There is already an ${OSFramework.GlobalEnum.PatternName.AnimatedLabel} registered under id: ${animatedLabelId}`
+				`There is already an ${OSFramework.OSUI.GlobalEnum.PatternName.AnimatedLabel} registered under id: ${animatedLabelId}`
 			);
 		}
 
-		const _newAnimatedLabel = new OSFramework.Patterns.AnimatedLabel.AnimatedLabel(
+		const _newAnimatedLabel = new OSFramework.OSUI.Patterns.AnimatedLabel.AnimatedLabel(
 			animatedLabelId,
 			JSON.parse(configs)
 		);
@@ -76,10 +76,10 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	 * Fucntion that will return the Map with all the Animatedlabels instances at the page
 	 *
 	 * @export
-	 * @return {*}  {Map<string, OSFramework.Patterns.AnimatedLabel.IAnimatedLabel>}
+	 * @return {*}  {Map<string, OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel>}
 	 */
 	export function GetAllAnimatedLabels(): Array<string> {
-		return OSFramework.Helper.MapOperation.ExportKeys(_animatedLabelsMap);
+		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_animatedLabelsMap);
 	}
 
 	/**
@@ -87,14 +87,16 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	 *
 	 * @export
 	 * @param {string} animatedLabelId ID of the AnimatedLabel that will be looked for.
-	 * @return {*}  {OSFramework.Patterns.AnimatedLabel.IAnimatedLabel;}
+	 * @return {*}  {OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel;}
 	 */
-	export function GetAnimatedLabelById(animatedLabelId: string): OSFramework.Patterns.AnimatedLabel.IAnimatedLabel {
-		return OSFramework.Helper.MapOperation.FindInMap(
-			OSFramework.GlobalEnum.PatternName.AnimatedLabel,
+	export function GetAnimatedLabelById(
+		animatedLabelId: string
+	): OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel {
+		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
+			OSFramework.OSUI.GlobalEnum.PatternName.AnimatedLabel,
 			animatedLabelId,
 			_animatedLabelsMap
-		) as OSFramework.Patterns.AnimatedLabel.IAnimatedLabel;
+		) as OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel;
 	}
 
 	/**
@@ -102,9 +104,9 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	 *
 	 * @export
 	 * @param {string} animatedLabelId ID of the Animatedlabel that will be initialized.
-	 * @return {*}  {OSFramework.Patterns.AnimatedLabel.IAnimatedLabel}
+	 * @return {*}  {OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel}
 	 */
-	export function Initialize(animatedLabelId: string): OSFramework.Patterns.AnimatedLabel.IAnimatedLabel {
+	export function Initialize(animatedLabelId: string): OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel {
 		const animatedlabel = GetAnimatedLabelById(animatedLabelId);
 
 		animatedlabel.build();
@@ -117,7 +119,7 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	 *
 	 * @export
 	 * @param {string} animatedLabelId ID of the Animatedlabel that will be updated.
-	 * @return {*}  {OSFramework.Patterns.AnimatedLabel.IAnimatedLabel}
+	 * @return {*}  {OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel}
 	 */
 	export function UpdateOnRender(animatedLabelId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

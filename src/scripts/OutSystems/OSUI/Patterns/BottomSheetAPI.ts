@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
-	const _bottomSheetItemsMap = new Map<string, OSFramework.Patterns.BottomSheet.IBottomSheet>(); //BottomSheet.uniqueId -> BottomSheet obj
+	const _bottomSheetItemsMap = new Map<string, OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet>(); //BottomSheet.uniqueId -> BottomSheet obj
 
 	/**
 	 * Function that will change the property of a given BottomSheet Id.
@@ -30,14 +30,17 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	 * @export
 	 * @param {string} bottomSheetId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.Patterns.BottomSheet.IBottomSheet}
+	 * @return {*}  {OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet}
 	 */
-	export function Create(bottomSheetId: string, configs: string): OSFramework.Patterns.BottomSheet.IBottomSheet {
+	export function Create(bottomSheetId: string, configs: string): OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet {
 		if (_bottomSheetItemsMap.has(bottomSheetId)) {
 			throw new Error('There is already an BottomSheet registered under id: ' + bottomSheetId);
 		}
 
-		const _bottomSheetItem = new OSFramework.Patterns.BottomSheet.BottomSheet(bottomSheetId, JSON.parse(configs));
+		const _bottomSheetItem = new OSFramework.OSUI.Patterns.BottomSheet.BottomSheet(
+			bottomSheetId,
+			JSON.parse(configs)
+		);
 
 		_bottomSheetItemsMap.set(bottomSheetId, _bottomSheetItem);
 
@@ -72,7 +75,7 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	 * @return {*}  Array<string>
 	 */
 	export function GetAllBottomSheetItemsMap(): Array<string> {
-		return OSFramework.Helper.MapOperation.ExportKeys(_bottomSheetItemsMap);
+		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_bottomSheetItemsMap);
 	}
 
 	/**
@@ -80,14 +83,14 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	 *
 	 * @export
 	 * @param {string} bottomSheetId ID of the BottomSheet that will be looked for.
-	 * @return {*}  {OSFramework.Patterns.BottomSheet.IBottomSheet;}
+	 * @return {*}  {OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet;}
 	 */
-	export function GetBottomSheetItemById(bottomSheetId: string): OSFramework.Patterns.BottomSheet.IBottomSheet {
-		return OSFramework.Helper.MapOperation.FindInMap(
+	export function GetBottomSheetItemById(bottomSheetId: string): OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet {
+		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
 			'BottomSheet',
 			bottomSheetId,
 			_bottomSheetItemsMap
-		) as OSFramework.Patterns.BottomSheet.IBottomSheet;
+		) as OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet;
 	}
 
 	/**
@@ -95,9 +98,9 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	 *
 	 * @export
 	 * @param {string} bottomSheetId ID of the BottomSheetItem that will be initialized.
-	 * @return {*}  {OSFramework.Patterns.BottomSheet.IBottomSheet}
+	 * @return {*}  {OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet}
 	 */
-	export function Initialize(bottomSheetId: string): OSFramework.Patterns.BottomSheet.IBottomSheet {
+	export function Initialize(bottomSheetId: string): OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet {
 		const _bottomSheetItem = GetBottomSheetItemById(bottomSheetId);
 
 		_bottomSheetItem.build();
@@ -138,7 +141,10 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	 * @param {string} bottomSheetId
 	 * @param {*} callback
 	 */
-	export function RegisterCallback(bottomSheetId: string, callback: OSFramework.GlobalCallbacks.Generic): string {
+	export function RegisterCallback(
+		bottomSheetId: string,
+		callback: OSFramework.OSUI.GlobalCallbacks.Generic
+	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.BottomSheet.FailRegisterCallback,
 			callback: () => {

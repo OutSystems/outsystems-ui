@@ -1,0 +1,210 @@
+/* Patterns - Numbers - Rating */
+////
+/// @group Patterns-Rating
+/// Patterns - Numbers - Rating
+
+///
+.rating {
+	display: inline-flex;
+	flex-wrap: wrap;
+	font-size: var(--rating-size);
+	pointer-events: none;
+
+	// Service Studio Preview
+	& {
+		-servicestudio-display: inline-flex;
+	}
+
+	&.rating {
+		&-small {
+			.rating-item {
+				padding-right: calc(var(--rating-size) + var(--space-xs));
+			}
+
+			--rating-size: 8px;
+		}
+
+		&-medium {
+			--rating-size: 24px;
+		}
+	}
+
+	&.is-edit {
+		.rating-item {
+			cursor: pointer;
+			pointer-events: auto;
+		}
+	}
+
+	fieldset {
+		border: none;
+		display: contents;
+		margin: 0;
+		padding: 0;
+	}
+
+	&-item {
+		display: inline-block;
+		height: var(--rating-size);
+		// Padding is used to avoid flicks on hover due to rating-items gap
+		padding-right: calc(var(--rating-size) + var(--space-s));
+		position: relative;
+		width: var(--rating-size);
+
+		&-filled,
+		&-half,
+		&-empty {
+			left: 0;
+			line-height: 1;
+			position: absolute;
+			top: 0;
+			transition: opacity linear 150ms;
+
+			// Service Studio Preview
+			& {
+				-servicestudio-margin-right: var(--space-s);
+				-servicestudio-min-height: 24px;
+				-servicestudio-min-width: 24px;
+				-servicestudio-opacity: 1 !important;
+				-servicestudio-position: relative;
+			}
+		}
+
+		&-filled {
+			opacity: 1;
+			z-index: 1;
+		}
+
+		&-empty,
+		&-half {
+			opacity: 0;
+			z-index: 0;
+		}
+	}
+
+	.rating-item[class*='rating-']:last-of-type {
+		padding-right: 0;
+	}
+
+	// These need to be separated, to keep exact CSS specificty, for the hover/ checked styles to work as intended
+	/* Checked styles*/
+	input:checked + label .rating-item-empty,
+	input:checked ~ label .rating-item-filled {
+		opacity: 0;
+	}
+
+	&.is-half .rating-item-half {
+		z-index: 1;
+	}
+
+	&.is-half input:checked + label .rating-item-half {
+		opacity: 1;
+	}
+
+	&.is-half input:checked + label .rating-item-filled {
+		opacity: 0;
+	}
+
+	/* Selected Styles*/
+	&:hover input + label .rating-item-filled,
+	&.is-half:hover input:checked + label .rating-item-filled {
+		opacity: 1;
+	}
+
+	input:focus + label .rating-item-empty,
+	input:hover ~ label .rating-item-filled {
+		opacity: 0;
+	}
+
+	input:checked ~ label .rating-item-empty,
+	input:checked + label .rating-item-filled,
+	input:checked + label .rating-item-half,
+	input:hover ~ label .rating-item-empty,
+	input:focus ~ label .rating-item-empty,
+	input:focus + label .rating-item-filled {
+		opacity: 1;
+	}
+
+	input:hover ~ label .rating-item-filled,
+	&.is-half input:hover ~ label.rating-item .rating-item-filled,
+	&.is-half input:hover ~ label.rating-item .rating-item-half {
+		opacity: 0;
+	}
+
+	input:hover + label .rating-item-filled,
+	&.is-half input:hover + label.rating-item .rating-item-filled {
+		opacity: 1;
+	}
+
+	.icon-states {
+		// Service Studio Preview
+		& {
+			-servicestudio-display: flex;
+		}
+
+		span {
+			// Service Studio Preview
+			& {
+				-servicestudio-display: flex;
+			}
+		}
+	}
+
+	--rating-size: 16px;
+}
+
+///
+.form {
+	.rating {
+		span.wcag-hide-text {
+			position: absolute;
+		}
+	}
+}
+
+// Responsive -------------------------------------------------------------------------
+///
+.ios {
+	.rating {
+		.rating-item {
+			//Fix for preventing FastClick issues on iOS
+			// Check here for details: https://github.com/ftlabs/fastclick/issues/60 */
+			& > * {
+				display: block;
+				pointer-events: none;
+			}
+		}
+	}
+}
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	.rating {
+		.rating-item {
+			padding-left: calc(var(--rating-size) + var(--space-s));
+			padding-right: 0;
+			transform: scaleX(-1);
+		}
+	}
+}
+
+// Accessibility -----------------------------------------------------------------
+///
+.has-accessible-features {
+	input:focus + .rating-item > div {
+		box-shadow: 0 0 0 3px var(--color-focus-outer);
+	}
+}
+
+// Fix issue on chromium based browsers, related with css snap and the complex combination of HTML and CSS properties used by the Rating
+.chrome,
+.edge {
+	.osui-tabs {
+		.rating {
+			.wcag-hide-text {
+				margin: unset;
+			}
+		}
+	}
+} 

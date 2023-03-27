@@ -5,7 +5,7 @@ const patternInfo = {
     "codeName": "ButtonLoading",
     "inDevelopment": false,
     "name": "Button Loading",
-    "scss": "../scripts/OSFramework/Pattern/ButtonLoading/scss/button-loading",
+    "scss": "../scripts/OSFramework/OSUI/Pattern/ButtonLoading/scss/button-loading",
     "section": "Utilities"
 };
 

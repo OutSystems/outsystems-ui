@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.FlipContentAPI {
-	const _flipContentMap = new Map<string, OSFramework.Patterns.FlipContent.IFlipContent>(); //flipContent.uniqueId -> FlipContent obj
+	const _flipContentMap = new Map<string, OSFramework.OSUI.Patterns.FlipContent.IFlipContent>(); //flipContent.uniqueId -> FlipContent obj
 
 	/**
 	 * Function that will change the property of a flip content pattern.
@@ -30,16 +30,16 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 * @export
 	 * @param {string} flipId ID of the Flip Content where the instance will be created.
 	 * @param {string} configs configurations for the Flip Content in JSON format.
-	 * @return {*}  {OSFramework.Patterns.FlipContent.IFlipContent}
+	 * @return {*}  {OSFramework.OSUI.Patterns.FlipContent.IFlipContent}
 	 */
-	export function Create(flipId: string, configs: string): OSFramework.Patterns.FlipContent.IFlipContent {
+	export function Create(flipId: string, configs: string): OSFramework.OSUI.Patterns.FlipContent.IFlipContent {
 		if (_flipContentMap.has(flipId)) {
 			throw new Error(
-				`There is already a ${OSFramework.GlobalEnum.PatternName.FlipContent} registered under id: ${flipId}`
+				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.FlipContent} registered under id: ${flipId}`
 			);
 		}
 
-		const _newFlip = new OSFramework.Patterns.FlipContent.FlipContent(flipId, JSON.parse(configs));
+		const _newFlip = new OSFramework.OSUI.Patterns.FlipContent.FlipContent(flipId, JSON.parse(configs));
 
 		_flipContentMap.set(flipId, _newFlip);
 
@@ -71,10 +71,10 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 * Function that will return the Map with all the Flip Content instances at the page
 	 *
 	 * @export
-	 * @return {*}  {Map<string, OSFramework.Patterns.FlipContent.IFlipContent>}
+	 * @return {*}  {Map<string, OSFramework.OSUI.Patterns.FlipContent.IFlipContent>}
 	 */
 	export function GetAllFlipContent(): Array<string> {
-		return OSFramework.Helper.MapOperation.ExportKeys(_flipContentMap);
+		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_flipContentMap);
 	}
 
 	/**
@@ -82,14 +82,14 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 *
 	 * @export
 	 * @param {string} flipId ID of the Flip Content that will be looked for.
-	 * @return {*}  {OSFramework.Patterns.FlipContent.IFlipContent}
+	 * @return {*}  {OSFramework.OSUI.Patterns.FlipContent.IFlipContent}
 	 */
-	export function GetFlipContentById(flipId: string): OSFramework.Patterns.FlipContent.IFlipContent {
-		return OSFramework.Helper.MapOperation.FindInMap(
+	export function GetFlipContentById(flipId: string): OSFramework.OSUI.Patterns.FlipContent.IFlipContent {
+		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
 			'FlipContent',
 			flipId,
 			_flipContentMap
-		) as OSFramework.Patterns.FlipContent.IFlipContent;
+		) as OSFramework.OSUI.Patterns.FlipContent.IFlipContent;
 	}
 
 	/**
@@ -97,9 +97,9 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 *
 	 * @export
 	 * @param {string} flipId ID of the Flip Content that will be initialized.
-	 * @return {*}  {OSFramework.Patterns.FlipContent.IFlipContent}
+	 * @return {*}  {OSFramework.OSUI.Patterns.FlipContent.IFlipContent}
 	 */
-	export function Initialize(flipId: string): OSFramework.Patterns.FlipContent.IFlipContent {
+	export function Initialize(flipId: string): OSFramework.OSUI.Patterns.FlipContent.IFlipContent {
 		const flipContent = GetFlipContentById(flipId);
 
 		flipContent.build();
@@ -112,11 +112,11 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 *
 	 * @export
 	 * @param {string} flipId
-	 * @param {OSFramework.Patterns.FlipContent.Callbacks.OSFlipEvent} callback
+	 * @param {OSFramework.OSUI.Patterns.FlipContent.Callbacks.OSFlipEvent} callback
 	 */
 	export function RegisterCallback(
 		flipId: string,
-		callback: OSFramework.Patterns.FlipContent.Callbacks.OSFlipEvent
+		callback: OSFramework.OSUI.Patterns.FlipContent.Callbacks.OSFlipEvent
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.FlipContent.FailRegisterCallback,

@@ -5,7 +5,7 @@ const patternInfo = {
     "codeName": "Gallery",
     "inDevelopment": false,
     "name": "Gallery",
-    "scss": "../scripts/OSFramework/Pattern/Gallery/scss/gallery",
+    "scss": "../scripts/OSFramework/OSUI/Pattern/Gallery/scss/gallery",
     "section": "Adaptive"
 };
 

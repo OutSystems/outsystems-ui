@@ -8,24 +8,35 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 	 * @param {string} widgetId
 	 * @param {string} role
 	 */
-	export function SetAccessibilityRole(widgetId: string, role: string): void {
-		const element = OSFramework.Helper.Dom.GetElementById(widgetId);
+	export function SetAccessibilityRole(widgetId: string, role: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Utilities.FailSetAccessibilityRole,
+			callback: () => {
+				const element = OSFramework.OSUI.Helper.Dom.GetElementById(widgetId);
 
-		if (element) {
-			const isBlock = OSFramework.Helper.Dom.Attribute.Has(
-				element,
-				OSFramework.GlobalEnum.DataBlocksTag.DataBlock
-			);
-			if (isBlock) {
-				OSFramework.Helper.Dom.Attribute.Set(
-					element.children[0] as HTMLElement,
-					OSFramework.Constants.A11YAttributes.Role.AttrName,
-					role
-				);
-			} else {
-				OSFramework.Helper.Dom.Attribute.Set(element, OSFramework.Constants.A11YAttributes.Role.AttrName, role);
-			}
-		}
+				if (element) {
+					const isBlock = OSFramework.OSUI.Helper.Dom.Attribute.Has(
+						element,
+						OSFramework.OSUI.GlobalEnum.DataBlocksTag.DataBlock
+					);
+					if (isBlock) {
+						OSFramework.OSUI.Helper.Dom.Attribute.Set(
+							element.children[0] as HTMLElement,
+							OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName,
+							role
+						);
+					} else {
+						OSFramework.OSUI.Helper.Dom.Attribute.Set(
+							element,
+							OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName,
+							role
+						);
+					}
+				}
+			},
+		});
+
+		return result;
 	}
 
 	/**
@@ -33,12 +44,19 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 	 * @param widgetId
 	 * @param isHidden
 	 */
-	export function SetAriaHidden(widgetId: string, isHidden: boolean): void {
-		const elem = OSFramework.Helper.Dom.GetElementById(widgetId);
+	export function SetAriaHidden(widgetId: string, isHidden: boolean): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Utilities.FailSetAriaHidden,
+			callback: () => {
+				const elem = OSFramework.OSUI.Helper.Dom.GetElementById(widgetId);
 
-		if (elem) {
-			OSFramework.Helper.A11Y.AriaHidden(elem, `${isHidden}`);
-		}
+				if (elem) {
+					OSFramework.OSUI.Helper.A11Y.AriaHidden(elem, `${isHidden}`);
+				}
+			},
+		});
+
+		return result;
 	}
 
 	/**
@@ -49,7 +67,7 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Utilities.FailSetFocus,
 			callback: () => {
-				const elementId = OSFramework.Helper.Dom.GetElementById(widgetId);
+				const elementId = OSFramework.OSUI.Helper.Dom.GetElementById(widgetId);
 
 				if (elementId) {
 					elementId.focus();
@@ -64,8 +82,15 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 	 * Use this action to specify the language of the element's content. E.g. "en"
 	 * @param lang
 	 */
-	export function SetLang(lang: string): void {
-		OSFramework.Helper.Language.Set(lang);
+	export function SetLang(lang: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Utilities.FailSetLang,
+			callback: () => {
+				OSFramework.OSUI.Helper.Language.Set(lang);
+			},
+		});
+
+		return result;
 	}
 
 	/**
@@ -73,43 +98,57 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 	 * By default, the MainContentWrapper.Id is used. Use the targetId parameter to set a custom target.
 	 * @param targetId
 	 */
-	export function SkipToContent(targetId: string): void {
-		const target = OSFramework.Helper.Dom.GetElementById(targetId);
+	export function SkipToContent(targetId: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Utilities.FailSkipToContent,
+			callback: () => {
+				const target = OSFramework.OSUI.Helper.Dom.GetElementById(targetId);
 
-		if (target) {
-			const isFocusable = OSFramework.Helper.Dom.Attribute.Get(target, 'tabindex');
+				if (target) {
+					const isFocusable = OSFramework.OSUI.Helper.Dom.Attribute.Get(target, 'tabindex');
 
-			if (isFocusable === undefined) {
-				OSFramework.Helper.Dom.Attribute.Set(target, 'tabindex', '0');
-				target.focus();
-				OSFramework.Helper.Dom.Attribute.Remove(target, 'tabindex');
-			} else {
-				target.focus();
-			}
-		}
+					if (isFocusable === undefined) {
+						OSFramework.OSUI.Helper.Dom.Attribute.Set(target, 'tabindex', '0');
+						target.focus();
+						OSFramework.OSUI.Helper.Dom.Attribute.Remove(target, 'tabindex');
+					} else {
+						target.focus();
+					}
+				}
+			},
+		});
+
+		return result;
 	}
 
 	/**
 	 * Use this action to increase the letter spacing, word spacing and line-height across the application
 	 */
-	export function ToggleTextSpacing(): void {
-		let spacingStyles = OSFramework.Helper.Dom.ClassSelector(
-			document,
-			OSFramework.GlobalEnum.CssClassElements.AcessibilityStyleTag
-		);
+	export function ToggleTextSpacing(): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Utilities.FailToggleTextSpacing,
+			callback: () => {
+				let spacingStyles = OSFramework.OSUI.Helper.Dom.ClassSelector(
+					document,
+					OSFramework.OSUI.GlobalEnum.CssClassElements.AcessibilityStyleTag
+				);
 
-		if (spacingStyles === undefined) {
-			spacingStyles = document.createElement('style');
-			OSFramework.Helper.Dom.Styles.AddClass(
-				spacingStyles,
-				OSFramework.GlobalEnum.CssClassElements.AcessibilityStyleTag
-			);
-			spacingStyles.textContent =
-				' * { line-height: 1.5 !important; letter-spacing: 0.12em !important; word-spacing: 0.16em !important; } p { margin-bottom: 2em !important; } ';
-			OSFramework.Helper.Dom.Move(spacingStyles, document.head);
-		} else if (spacingStyles) {
-			spacingStyles.remove();
-		}
+				if (spacingStyles === undefined) {
+					spacingStyles = document.createElement('style');
+					OSFramework.OSUI.Helper.Dom.Styles.AddClass(
+						spacingStyles,
+						OSFramework.OSUI.GlobalEnum.CssClassElements.AcessibilityStyleTag
+					);
+					spacingStyles.textContent =
+						' * { line-height: 1.5 !important; letter-spacing: 0.12em !important; word-spacing: 0.16em !important; } p { margin-bottom: 2em !important; } ';
+					OSFramework.OSUI.Helper.Dom.Move(spacingStyles, document.head);
+				} else if (spacingStyles) {
+					spacingStyles.remove();
+				}
+			},
+		});
+
+		return result;
 	}
 
 	/**
@@ -117,8 +156,8 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export function WCAGMetaTag(): void {
-		OSFramework.Helper.Dom.Attribute.Set(
-			OSFramework.Helper.Dom.TagSelector(document.head, '[name="viewport"]'),
+		OSFramework.OSUI.Helper.Dom.Attribute.Set(
+			OSFramework.OSUI.Helper.Dom.TagSelector(document.head, '[name="viewport"]'),
 			'content',
 			'viewport-fit=cover, width=device-width, initial-scale=1'
 		);

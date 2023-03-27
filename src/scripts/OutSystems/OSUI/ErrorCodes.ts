@@ -109,6 +109,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailDispose: 'OSUI-API-09002',
 		FailProgressValue: 'OSUI-API-09003',
 		FailProgressReset: 'OSUI-API-09004',
+		FailtProgressGradient: 'OSUI-API-09005',
 	};
 
 	export const RangeSlider = {
@@ -132,6 +133,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailOpen: 'OSUI-API-11004',
 		FailRegisterCallback: 'OSUI-API-11005',
 		FailToggleSwipe: 'OSUI-API-11006',
+		FailClickOutsideToClose: 'OSUI-API-11007',
 	};
 
 	export const Submenu = {
@@ -140,7 +142,8 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailDispose: 'OSUI-API-12003',
 		FailOpen: 'OSUI-API-12004',
 		FailOpenOnHover: 'OSUI-API-12005',
-		FailUpdate: 'OSUI-API-12006',
+		FailRegisterCallback: 'OSUI-API-12006',
+		FailUpdate: 'OSUI-API-12007',
 	};
 
 	export const Tooltip = {
@@ -265,5 +268,41 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailGetInvalidInput: 'OSUI-API-28001',
 		FailScrollToElement: 'OSUI-API-28002',
 		FailSetFocus: 'OSUI-API-28003',
+		FailAddFavicon: 'OSUI-API-28004',
+		FailMoveElement: 'OSUI-API-28005',
+		FailSetActiveElement: 'OSUI-API-28006',
+		FailSetSelectedRow: 'OSUI-API-28007',
+		FailShowPassword: 'OSUI-API-28008',
+		FailMasterDetailSetContentFocus: 'OSUI-API-28009',
+		FailSetAccessibilityRole: 'OSUI-API-28010',
+		FailSetAriaHidden: 'OSUI-API-28011',
+		FailSetLang: 'OSUI-API-28012',
+		FailSkipToContent: 'OSUI-API-28013',
+		FailToggleTextSpacing: 'OSUI-API-28014',
+		FailSetActiveMenuItems: 'OSUI-API-28015',
+		FailSetBottomBarActiveElement: 'OSUI-API-28016',
+		FailSetMenuAttributes: 'OSUI-API-28017',
+		FailSetMenuIcon: 'OSUI-API-28018',
+		FailSetMenuIconListeners: 'OSUI-API-28019',
+		FailSetMenuListeners: 'OSUI-API-28020',
+		FailToggleSideMenu: 'OSUI-API-28021',
+		FailListItemAnimate: 'OSUI-API-28022',
+		FailCheckIsMenuDraggable: 'OSUI-API-28023',
+		FailSetExtendedMenuHide: 'OSUI-API-28024',
+		FailSetExtendedMenuShow: 'OSUI-API-28025',
+		FailCheckIsRTL: 'OSUI-API-28026',
+	};
+
+	// Error Codes used in Legacy Client Action
+	export const Legacy = {
+		FailAddFavicon_Legacy: 'OSUI-LEG-000001',
+		MoveElement_Legacy: 'OSUI-LEG-000002',
+		MasterDetailSetContentFocus_Legacy: 'OSUI-LEG-000003',
+		SetAccessibilityRole_Legacy: 'OSUI-LEG-000004',
+		SetAriaHidden_Legacy: 'OSUI-LEG-000005',
+		SetFocus_Legacy: 'OSUI-LEG-000006',
+		SetLang_Legacy: 'OSUI-LEG-000007',
+		SkipToContent_Legacy: 'OSUI-LEG-000008',
+		ToggleTextSpacing_Legacy: 'OSUI-LEG-000009',
 	};
 }
