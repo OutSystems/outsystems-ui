@@ -289,9 +289,10 @@ var OSFramework;
             })(Position = GlobalEnum.Position || (GlobalEnum.Position = {}));
             let CssProperties;
             (function (CssProperties) {
+                CssProperties["Auto"] = "auto";
+                CssProperties["Initial"] = "initial";
                 CssProperties["None"] = "none";
                 CssProperties["PaddingTop"] = "padding-top";
-                CssProperties["Auto"] = "auto";
             })(CssProperties = GlobalEnum.CssProperties || (GlobalEnum.CssProperties = {}));
             let DataBlocksTag;
             (function (DataBlocksTag) {
@@ -8684,8 +8685,9 @@ var OSFramework;
                     })(Attributes = Enum.Attributes || (Enum.Attributes = {}));
                     let CssProperty;
                     (function (CssProperty) {
-                        CssProperty["TabsHeight"] = "--tabs-height";
+                        CssProperty["TabsContentItemOverflow"] = "--tabs-content-item-overflow";
                         CssProperty["TabsHeaderItems"] = "--tabs-header-items";
+                        CssProperty["TabsHeight"] = "--tabs-height";
                         CssProperty["TabsIndicatorScale"] = "--tabs-indicator-scale";
                         CssProperty["TabsIndicatorTransform"] = "--tabs-indicator-transform";
                     })(CssProperty = Enum.CssProperty || (Enum.CssProperty = {}));
@@ -9004,7 +9006,11 @@ var OSFramework;
                         OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Tabs_1.Enum.CssProperty.TabsHeaderItems, itemsLength);
                     }
                     _setHeight(height) {
+                        const tabsOverflow = height !== OSUI.GlobalEnum.CssProperties.Auto || ''
+                            ? OSUI.GlobalEnum.CssProperties.Auto
+                            : OSUI.GlobalEnum.CssProperties.Initial;
                         OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Tabs_1.Enum.CssProperty.TabsHeight, height);
+                        OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Tabs_1.Enum.CssProperty.TabsContentItemOverflow, tabsOverflow);
                     }
                     _setInitialOptions() {
                         this._setHeaderItemsCustomProperty(this.getChildItems(Tabs_1.Enum.ChildTypes.TabsHeaderItem).length);

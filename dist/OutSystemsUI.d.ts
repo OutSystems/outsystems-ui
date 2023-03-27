@@ -222,9 +222,10 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         TopRight = "top-right"
     }
     enum CssProperties {
+        Auto = "auto",
+        Initial = "initial",
         None = "none",
-        PaddingTop = "padding-top",
-        Auto = "auto"
+        PaddingTop = "padding-top"
     }
     enum DataBlocksTag {
         DataBlock = "[data-block]",
@@ -2901,8 +2902,9 @@ declare namespace OSFramework.OSUI.Patterns.Tabs.Enum {
         DataDirection = "data-direction"
     }
     enum CssProperty {
-        TabsHeight = "--tabs-height",
+        TabsContentItemOverflow = "--tabs-content-item-overflow",
         TabsHeaderItems = "--tabs-header-items",
+        TabsHeight = "--tabs-height",
         TabsIndicatorScale = "--tabs-indicator-scale",
         TabsIndicatorTransform = "--tabs-indicator-transform"
     }

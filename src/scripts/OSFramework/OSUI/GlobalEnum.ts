@@ -73,9 +73,10 @@ namespace OSFramework.OSUI.GlobalEnum {
 	 * OutSystemsUI elements CSS properties
 	 */
 	export enum CssProperties {
+		Auto = 'auto',
+		Initial = 'initial',
 		None = 'none',
 		PaddingTop = 'padding-top',
-		Auto = 'auto',
 	}
 
 	/**
