@@ -2756,6 +2756,7 @@ declare namespace OSFramework.OSUI.Patterns.Submenu.Enum {
 }
 declare namespace OSFramework.OSUI.Patterns.Submenu {
     interface ISubmenu extends Interface.IPattern, Interface.IOpenable, Interface.IRenderUpdate, Interface.ICallback {
+        clickOutsideToClose(clickOutsideToClose: boolean): void;
         setOpenOnHover(): void;
     }
 }
@@ -2776,6 +2777,7 @@ declare namespace OSFramework.OSUI.Patterns.Submenu {
         private _submenuAllLinksElement;
         private _submenuHeaderElement;
         private _submenuLinksElement;
+        hasClickOutsideToClose: boolean;
         constructor(uniqueId: string, configs: JSON);
         private _bodyClickCallback;
         private _checkForActiveLinks;
@@ -2797,6 +2799,7 @@ declare namespace OSFramework.OSUI.Patterns.Submenu {
         protected unsetHtmlElements(): void;
         build(): void;
         changeProperty(propertyName: string, propertyValue: unknown): void;
+        clickOutsideToClose(clickOutsideToClose: boolean): void;
         close(): void;
         dispose(): void;
         open(): void;
@@ -3452,6 +3455,7 @@ declare namespace OutSystems.OSUI.ErrorCodes {
         FailOpenOnHover: string;
         FailRegisterCallback: string;
         FailUpdate: string;
+        FailClickOutsideToClose: string;
     };
     const Tooltip: {
         FailChangeProperty: string;
@@ -3837,6 +3841,7 @@ declare namespace OutSystems.OSUI.Patterns.SidebarAPI {
 }
 declare namespace OutSystems.OSUI.Patterns.SubmenuAPI {
     function ChangeProperty(submenuId: string, propertyName: string, propertyValue: any): string;
+    function ClickOutsideToClose(submenuId: string, clickOutsideToClose: boolean): string;
     function Close(submenuId: string): string;
     function Open(submenuId: string): string;
     function Create(submenuId: string, configs: string): OSFramework.OSUI.Patterns.Submenu.ISubmenu;

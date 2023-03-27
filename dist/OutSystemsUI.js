@@ -8200,6 +8200,7 @@ var OSFramework;
                         this._hasElements = false;
                         this._isActive = false;
                         this._isOpen = false;
+                        this.hasClickOutsideToClose = true;
                     }
                     _bodyClickCallback(_args, e) {
                         if (this.isBuilt && this._isOpen) {
@@ -8289,7 +8290,6 @@ var OSFramework;
                             this.close();
                         }
                         else {
-                            OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnClick, this._globalEventBody);
                             OSUI.Helper.AsyncInvocation(this.open.bind(this));
                         }
                     }
@@ -8312,8 +8312,8 @@ var OSFramework;
                     }
                     setCallbacks() {
                         this._eventClick = this._clickCallback.bind(this);
-                        this._eventKeypress = this._keypressCallback.bind(this);
                         this._globalEventBody = this._bodyClickCallback.bind(this);
+                        this._eventKeypress = this._keypressCallback.bind(this);
                         this._eventOnMouseEnter = this._onMouseEnterCallback.bind(this);
                         this._eventOnMouseLeave = this._onMouseLeaveCallback.bind(this);
                         if (this._hasElements) {
@@ -8374,9 +8374,20 @@ var OSFramework;
                     changeProperty(propertyName, propertyValue) {
                         super.changeProperty(propertyName, propertyValue);
                     }
+                    clickOutsideToClose(clickOutsideToClose) {
+                        this.hasClickOutsideToClose = clickOutsideToClose;
+                        if (this.hasClickOutsideToClose) {
+                            OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnClick, this._globalEventBody);
+                        }
+                        else if (this.hasClickOutsideToClose === false) {
+                            OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnClick, this._globalEventBody);
+                        }
+                    }
                     close() {
                         if (this._isOpen) {
-                            OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnClick, this._globalEventBody);
+                            if (this.hasClickOutsideToClose) {
+                                OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnClick, this._globalEventBody);
+                            }
                             OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, Submenu_1.Enum.CssClass.PatternIsOpen);
                             this._isOpen = false;
                             this._updateA11yProperties();
@@ -8389,13 +8400,10 @@ var OSFramework;
                         super.dispose();
                     }
                     open() {
-                        OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnClick, this._globalEventBody);
+                        if (this.hasClickOutsideToClose) {
+                            OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnClick, this._globalEventBody);
+                        }
                         OSUI.Helper.AsyncInvocation(this._show.bind(this));
-                        setTimeout(function () {
-                            if (!this._dynamiclyOpening) {
-                                this._dynamiclyOpening = false;
-                            }
-                        }, 500);
                         OSUI.Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, true);
                     }
                     registerCallback(callback, eventName) {
@@ -10465,6 +10473,7 @@ var OutSystems;
                 FailOpenOnHover: 'OSUI-API-12005',
                 FailRegisterCallback: 'OSUI-API-12006',
                 FailUpdate: 'OSUI-API-12007',
+                FailClickOutsideToClose: 'OSUI-API-12008',
             };
             ErrorCodes.Tooltip = {
                 FailChangeProperty: 'OSUI-API-13001',
@@ -12728,6 +12737,17 @@ var OutSystems;
                     return result;
                 }
                 SubmenuAPI.ChangeProperty = ChangeProperty;
+                function ClickOutsideToClose(submenuId, clickOutsideToClose) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Submenu.FailClickOutsideToClose,
+                        callback: () => {
+                            const submenu = GetSubmenuById(submenuId);
+                            submenu.clickOutsideToClose(clickOutsideToClose);
+                        },
+                    });
+                    return result;
+                }
+                SubmenuAPI.ClickOutsideToClose = ClickOutsideToClose;
                 function Close(submenuId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Submenu.FailClose,
