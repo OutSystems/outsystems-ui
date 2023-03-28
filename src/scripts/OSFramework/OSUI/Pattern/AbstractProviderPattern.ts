@@ -111,7 +111,16 @@ namespace OSFramework.OSUI.Patterns {
 		protected triggerPlatformEventInitialized(platFormCallback: GlobalCallbacks.OSGeneric): void {
 			// Ensure it's only be trigger the first time!
 			if (this.isBuilt === false) {
-				Helper.AsyncInvocation(platFormCallback, this.widgetId);
+				this.triggerPlatformEventplatformCallback(platFormCallback);
+			}
+		}
+
+		protected triggerPlatformEventplatformCallback(
+			platFormCallback: GlobalCallbacks.OSGeneric,
+			...args: unknown[]
+		): void {
+			if (platFormCallback !== undefined) {
+				Helper.AsyncInvocation(platFormCallback, this.widgetId, ...args);
 			}
 		}
 

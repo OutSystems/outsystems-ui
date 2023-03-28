@@ -10,6 +10,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		private _onMouseUpEvent: OSFramework.OSUI.GlobalCallbacks.Generic;
 		private _onSelectedOptionEvent: OSFramework.OSUI.GlobalCallbacks.Generic;
 		private _platformEventInitializedCallback: OSFramework.OSUI.GlobalCallbacks.OSGeneric;
+		private _platformEventProviderConfigsAppliedCallback: OSFramework.OSUI.GlobalCallbacks.OSGeneric;
 		private _platformEventSelectedOptCallback: OSFramework.OSUI.Patterns.Dropdown.Callbacks.OSOnSelectEvent;
 
 		// Store the hidden input AriaLabel value
@@ -410,6 +411,11 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 						this._platformEventSelectedOptCallback = callback;
 					}
 					break;
+				case Enum.Events.OnProviderConfigsApplied:
+					if (this._platformEventProviderConfigsAppliedCallback === undefined) {
+						this._platformEventProviderConfigsAppliedCallback = callback;
+					}
+					break;
 
 				default:
 					throw new Error(`The given '${eventName}' event name it's not defined.`);
@@ -437,6 +443,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		public setProviderConfigs(newConfigs: VirtualSelectOpts): void {
 			this.configs.setExtensibilityConfigs(newConfigs);
 			this.redraw();
+			this.triggerPlatformEventplatformCallback(this._platformEventProviderConfigsAppliedCallback);
 		}
 
 		/**
