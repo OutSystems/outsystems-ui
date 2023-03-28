@@ -20,6 +20,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		private _submenuAllLinksElement: HTMLAnchorElement[];
 		private _submenuHeaderElement: HTMLElement;
 		private _submenuLinksElement: HTMLElement;
+		public hasClickOutsideToClose = true;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SubmenuConfig(configs));
@@ -152,9 +153,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			if (this._isOpen) {
 				this.close();
 			} else {
-				// Add the body click handler to event manager
-				Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
-
 				// Make async the method call
 				Helper.AsyncInvocation(this.open.bind(this));
 			}
@@ -202,8 +200,8 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		protected setCallbacks(): void {
 			// Define the callbacks that will be used
 			this._eventClick = this._clickCallback.bind(this);
-			this._eventKeypress = this._keypressCallback.bind(this);
 			this._globalEventBody = this._bodyClickCallback.bind(this);
+			this._eventKeypress = this._keypressCallback.bind(this);
 			this._eventOnMouseEnter = this._onMouseEnterCallback.bind(this);
 			this._eventOnMouseLeave = this._onMouseLeaveCallback.bind(this);
 
@@ -329,14 +327,33 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		}
 
 		/**
+		 * Method to toggle the behaviour to close submenu when clicking the body
+		 *
+		 * @param {boolean} clickOutsideToClose
+		 * @memberof Submenu
+		 */
+		public clickOutsideToClose(clickOutsideToClose: boolean): void {
+			this.hasClickOutsideToClose = clickOutsideToClose;
+
+			// Make sure the event is updated when the API is triggered in runtime
+			if (this.hasClickOutsideToClose) {
+				Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
+			} else if (this.hasClickOutsideToClose === false) {
+				Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._globalEventBody);
+			}
+		}
+
+		/**
 		 * Close Submenu
 		 *
 		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		public close(): void {
 			if (this._isOpen) {
-				// Remove handler from Event Manager
-				Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._globalEventBody);
+				if (this.hasClickOutsideToClose) {
+					// Remove handler from Event Manager
+					Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._globalEventBody);
+				}
 
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.PatternIsOpen);
 
@@ -371,17 +388,13 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		public open(): void {
-			// Add the body click handler to event manager
-			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
+			if (this.hasClickOutsideToClose) {
+				// Add the body click handler to event manager
+				Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
+			}
 
 			// Make async the method call
 			Helper.AsyncInvocation(this._show.bind(this));
-
-			setTimeout(function () {
-				if (!this._dynamiclyOpening) {
-					this._dynamiclyOpening = false;
-				}
-			}, 500);
 
 			// Trigger the _platformEventOnToggleCallback callback!
 			Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, true);
