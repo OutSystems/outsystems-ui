@@ -111,7 +111,7 @@ span.validation-message {
 		left: 6px;
 	}
 
-	.form.OSFillParent .form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message,
+	.form.OSFillParent span.input-text .form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message,
 	.form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message {
 		left: 0;
 	}
