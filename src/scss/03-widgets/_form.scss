@@ -33,6 +33,18 @@
 			white-space: nowrap;
 			width: 100%;
 		}
+
+		&.input-text {
+			.form-control[class*='ThemeGrid_Width'].not-valid {
+				& + span.validation-message {
+					left: 0;
+				}
+
+				&.ThemeGrid_MarginGutter + span.validation-message {
+					left: 22px;
+				}
+			}
+		}
 	}
 
 	textarea[data-textarea] {
@@ -53,8 +65,11 @@
 			bottom: 4px;
 		}
 
-		&.not-valid span.validation-message {
-			bottom: -19px;
+		&,
+		&.dropdown-expanded {
+			&.not-valid span.validation-message {
+				bottom: -19px;
+			}
 		}
 	}
 
