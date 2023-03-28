@@ -223,7 +223,7 @@
 
 		&-item {
 			height: 100%;
-			overflow-y: auto;
+			overflow-y: var(--tabs-content-item-overflow);
 			padding: var(--space-m) var(--space-none);
 			scroll-snap-align: start;
 			scroll-snap-stop: always;

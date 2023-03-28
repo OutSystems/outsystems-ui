@@ -11402,7 +11402,7 @@ html[data-uieditorversion^="1"] .osui-timepicker__dropdown-ss-preview.time12h, h
 }
 .osui-tabs__content-item{
   height:100%;
-  overflow-y:auto;
+  overflow-y:var(--tabs-content-item-overflow);
   padding:var(--space-m) var(--space-none);
   scroll-snap-align:start;
   scroll-snap-stop:always;
