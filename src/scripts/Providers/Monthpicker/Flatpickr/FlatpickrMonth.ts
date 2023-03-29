@@ -292,7 +292,7 @@ namespace Providers.MonthPicker.Flatpickr {
 				}
 
 				// Wait for _monthPickerProviderInputElem be removed from DOM, before detroy the provider instance!
-				OSFramework.Helper.AsyncInvocation(this.provider.destroy);
+				OSFramework.Helper.AsyncInvocation(this.provider.destroy.bind(this.provider));
 			}
 
 			super.dispose();

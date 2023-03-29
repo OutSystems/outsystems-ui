@@ -288,7 +288,7 @@ namespace Providers.Datepicker.Flatpickr {
 				}
 
 				// Wait for _datePickerProviderInputElem be removed from DOM, before destroy the provider instance!
-				OSFramework.Helper.AsyncInvocation(this.provider.destroy);
+				OSFramework.Helper.AsyncInvocation(this.provider.destroy.bind(this.provider));
 			}
 
 			super.dispose();

@@ -275,8 +275,8 @@ namespace Providers.Timepicker.Flatpickr {
 					this._bodyScrollCommonBehaviour = undefined;
 				}
 
-				// Wait for _datePickerProviderInputElem be removed from DOM, before detroy the provider instance!
-				OSFramework.Helper.AsyncInvocation(this.provider.destroy);
+				// Wait for _datePickerProviderInputElem be removed from DOM, before destroy the provider instance!
+				OSFramework.Helper.AsyncInvocation(this.provider.destroy.bind(this.provider));
 			}
 
 			super.dispose();
