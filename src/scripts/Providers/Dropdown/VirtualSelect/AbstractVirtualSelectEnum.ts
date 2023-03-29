@@ -23,7 +23,6 @@ namespace Providers.Dropdown.VirtualSelect.Enum {
 	 */
 	export enum Events {
 		Change = 'change',
-		OnProviderConfigsApplied = 'OnProviderConfigsApplied',
 		OnSelected = 'OnSelected',
 	}
 
