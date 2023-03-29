@@ -8,8 +8,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		private _a11yInfoContainerElem: HTMLElement;
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
-		// Flatpickr onInitialize event
-		private _onInitializeCallbackEvent: OSFramework.OSUI.GlobalCallbacks.OSGeneric;
 		// Validation of ZIndex position common behavior
 		private _zindexCommonBehavior: SharedProviderResources.Flatpickr.UpdateZindex;
 		// Store pattern input HTML element reference
@@ -168,7 +166,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			}
 
 			// Trigger platform's InstanceIntializedHandler client Action
-			this.triggerPlatformEventInitialized(this._onInitializeCallbackEvent);
+			this.triggerPlatformEventInitialized();
 
 			// Remove inline height value style!
 			this._unsetParentMinHeight();
@@ -282,9 +280,9 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 */
 		protected unsetCallbacks(): void {
 			this.configs.OnChange = undefined;
-
-			this._onInitializeCallbackEvent = undefined;
 			this._onSelectedCallbackEvent = undefined;
+
+			super.unsetCallbacks();
 		}
 
 		/**
@@ -435,12 +433,9 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 					this._onSelectedCallbackEvent = callback;
 					break;
 
-				case OSFramework.OSUI.Patterns.DatePicker.Enum.DatePickerEvents.OnInitialize:
-					this._onInitializeCallbackEvent = callback;
-					break;
-
 				default:
-					throw new Error(`The given '${eventName}' event name it's not defined.`);
+					super.registerCallback(eventName, callback);
+					break;
 			}
 		}
 
@@ -479,8 +474,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 */
 		public setProviderConfigs(newConfigs: FlatpickrOptions): void {
 			this.configs.setExtensibilityConfigs(newConfigs);
-
 			this.prepareToAndRedraw();
+			super.setProviderConfigs(newConfigs);
 		}
 
 		/**

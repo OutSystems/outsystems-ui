@@ -106,6 +106,7 @@ namespace OSFramework.OSUI.Patterns {
 			}
 		}
 
+		//TODO: move this method to the AbstractPattern. Interfaces need to be updated.
 		/**
 		 * Trigger platform's InstanceIntializedHandler client Action
 		 *
@@ -119,6 +120,15 @@ namespace OSFramework.OSUI.Patterns {
 			}
 		}
 
+		//TODO: move this method to the AbstractPattern. Interfaces need to be updated.
+		/**
+		 * Triggers a generic platform event.
+		 *
+		 * @protected
+		 * @param {GlobalCallbacks.OSGeneric} platFormCallback
+		 * @param {...unknown[]} args
+		 * @memberof AbstractProviderPattern
+		 */
 		protected triggerPlatformEventplatformCallback(
 			platFormCallback: GlobalCallbacks.OSGeneric,
 			...args: unknown[]
