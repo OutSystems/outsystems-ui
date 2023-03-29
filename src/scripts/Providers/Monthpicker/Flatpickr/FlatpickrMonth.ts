@@ -160,7 +160,6 @@ namespace Providers.MonthPicker.Flatpickr {
 			// Trigger platform's onChange callback event
 			this.triggerPlatformEventplatformCallback(
 				this._onSelectedCallbackEvent,
-				this.widgetId,
 				_selectedMonthYear.month,
 				_selectedMonthYear.year
 			);
