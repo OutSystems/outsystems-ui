@@ -146,7 +146,7 @@ namespace Providers.Timepicker.Flatpickr {
 			}
 
 			// Trigger platform's onChange callback event
-			OSFramework.Helper.AsyncInvocation(this._onChangeCallbackEvent, this.widgetId, _selectedTime);
+			this.triggerPlatformEventplatformCallback(this._onChangeCallbackEvent, _selectedTime);
 		}
 
 		/**

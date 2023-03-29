@@ -122,7 +122,7 @@ namespace Providers.Splide {
 		private _setOnSlideMovedEvent(): void {
 			this._provider.on(Enum.SpliderEvents.Moved, (index) => {
 				if (index !== this._currentIndex) {
-					OSFramework.Helper.AsyncInvocation(this._platformEventOnSlideMoved, this.widgetId, index);
+					this.triggerPlatformEventplatformCallback(this._platformEventOnSlideMoved, index);
 					this._currentIndex = index;
 				}
 			});

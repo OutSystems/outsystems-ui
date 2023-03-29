@@ -49,7 +49,7 @@ namespace Providers.Datepicker.Flatpickr.RangeDate {
 			}
 
 			// Trigger platform's onChange callback event
-			OSFramework.Helper.AsyncInvocation(
+			this.triggerPlatformEventplatformCallback(
 				this._onSelectedCallbackEvent,
 				this.widgetId,
 				_selectedDate[0],
