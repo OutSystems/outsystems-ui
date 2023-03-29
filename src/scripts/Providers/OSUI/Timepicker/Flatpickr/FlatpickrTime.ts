@@ -9,8 +9,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
 		// Store the provider options
 		private _flatpickrOpts: FlatpickrOptions;
-		// Flatpickr onInitialize event
-		private _onInitializeCallbackEvent: OSFramework.OSUI.GlobalCallbacks.OSGeneric;
 		// Validation of ZIndex position common behavior
 		private _zindexCommonBehavior: SharedProviderResources.Flatpickr.UpdateZindex;
 		// Store the flatpickr input html element that will be added by library
@@ -134,7 +132,7 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 			});
 
 			// Trigger platform's InstanceIntializedHandler client Action
-			this.triggerPlatformEventInitialized(this._onInitializeCallbackEvent);
+			this.triggerPlatformEventInitialized();
 		}
 
 		// Method that will be triggered by library each time any time is selected
@@ -211,8 +209,8 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		protected unsetCallbacks(): void {
 			this.configs.OnChange = undefined;
 
-			this._onInitializeCallbackEvent = undefined;
 			this._onChangeCallbackEvent = undefined;
+			super.unsetCallbacks();
 		}
 
 		/**
@@ -336,12 +334,9 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 					this._onChangeCallbackEvent = callback;
 					break;
 
-				case OSFramework.OSUI.Patterns.TimePicker.Enum.TimePickerEvents.OnInitialized:
-					this._onInitializeCallbackEvent = callback;
-					break;
-
 				default:
-					throw new Error(`The given '${eventName}' event name it's not defined.`);
+					super.registerCallback(eventName, callback);
+					break;
 			}
 		}
 		/**
@@ -381,6 +376,8 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 			this.configs.setExtensibilityConfigs(newConfigs);
 
 			this.redraw();
+
+			super.setProviderConfigs(newConfigs);
 		}
 
 		/**
