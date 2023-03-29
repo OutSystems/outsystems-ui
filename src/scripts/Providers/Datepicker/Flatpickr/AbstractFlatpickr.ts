@@ -6,8 +6,6 @@ namespace Providers.Datepicker.Flatpickr {
 	{
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
-		// Flatpickr onInitialize event
-		private _onInitializeCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
 		// Store pattern input HTML element reference
 		protected _datePickerProviderInputElem: HTMLInputElement;
 		// Store the flatpickr input html element that will be added by library
@@ -138,7 +136,7 @@ namespace Providers.Datepicker.Flatpickr {
 			}
 
 			// Trigger platform's InstanceIntializedHandler client Action
-			this.triggerPlatformEventInitialized(this._onInitializeCallbackEvent);
+			this.triggerPlatformEventInitialized();
 		}
 
 		/**
@@ -174,8 +172,8 @@ namespace Providers.Datepicker.Flatpickr {
 		protected unsetCallbacks(): void {
 			this.configs.OnChange = undefined;
 
-			this._onInitializeCallbackEvent = undefined;
 			this._onSelectedCallbackEvent = undefined;
+			super.unsetCallbacks();
 		}
 
 		/**
@@ -290,7 +288,7 @@ namespace Providers.Datepicker.Flatpickr {
 				}
 
 				// Wait for _datePickerProviderInputElem be removed from DOM, before destroy the provider instance!
-				OSFramework.Helper.AsyncInvocation(this.provider.destroy);
+				OSFramework.Helper.AsyncInvocation(this.provider.destroy.bind(this.provider));
 			}
 
 			super.dispose();
@@ -316,12 +314,9 @@ namespace Providers.Datepicker.Flatpickr {
 					this._onSelectedCallbackEvent = callback;
 					break;
 
-				case OSFramework.Patterns.DatePicker.Enum.DatePickerEvents.OnInitialize:
-					this._onInitializeCallbackEvent = callback;
-					break;
-
 				default:
-					throw new Error(`The given '${eventName}' event name it's not defined.`);
+					super.registerCallback(eventName, callback);
+					break;
 			}
 		}
 
@@ -362,6 +357,8 @@ namespace Providers.Datepicker.Flatpickr {
 			this.configs.setExtensibilityConfigs(newConfigs);
 
 			this.redraw();
+
+			super.setProviderConfigs(newConfigs);
 		}
 
 		/**

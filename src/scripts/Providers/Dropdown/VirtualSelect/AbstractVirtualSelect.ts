@@ -8,7 +8,6 @@ namespace Providers.Dropdown.VirtualSelect {
 		private _eventOnWindowResize: OSFramework.GlobalCallbacks.Generic;
 		// Dropdown callback events
 		private _onSelectedOptionEvent: OSFramework.GlobalCallbacks.Generic;
-		private _platformEventInitializedCallback: OSFramework.GlobalCallbacks.OSGeneric;
 		private _platformEventSelectedOptCallback: OSFramework.Patterns.Dropdown.Callbacks.OSOnSelectEvent;
 
 		// Store a reference of available provider methods
@@ -63,11 +62,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		// Get the selected options and pass them into callBack
 		private _onSelectedOption() {
 			// Trigger platform's SelectedOptionCallbackEvent client Action
-			OSFramework.Helper.AsyncInvocation(
-				this._platformEventSelectedOptCallback,
-				this.widgetId,
-				this.getSelectedValues()
-			);
+			this.triggerPlatformEventplatformCallback(this._platformEventSelectedOptCallback, this.getSelectedValues());
 		}
 
 		// Close the dropdown if it's open!
@@ -136,7 +131,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			this._manageAttributes();
 
 			// Trigger platform's InstanceIntializedHandler client Action
-			this.triggerPlatformEventInitialized(this._platformEventInitializedCallback);
+			this.triggerPlatformEventInitialized();
 		}
 
 		/**
@@ -177,6 +172,8 @@ namespace Providers.Dropdown.VirtualSelect {
 			this._virtualselectConfigs = undefined;
 			this._virtualselectOpts = undefined;
 			this.provider = undefined;
+
+			super.unsetCallbacks();
 		}
 
 		public build(): void {
@@ -331,12 +328,6 @@ namespace Providers.Dropdown.VirtualSelect {
 		 */
 		public registerCallback(eventName: string, callback: OSFramework.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
-				case OSFramework.Patterns.Dropdown.Enum.Events.Initialized:
-					if (this._platformEventInitializedCallback === undefined) {
-						this._platformEventInitializedCallback = callback;
-					}
-					break;
-
 				case Enum.Events.OnSelected:
 					if (this._platformEventSelectedOptCallback === undefined) {
 						this._platformEventSelectedOptCallback = callback;
@@ -344,7 +335,8 @@ namespace Providers.Dropdown.VirtualSelect {
 					break;
 
 				default:
-					throw new Error(`The given '${eventName}' event name it's not defined.`);
+					super.registerCallback(eventName, callback);
+					break;
 			}
 		}
 
@@ -357,6 +349,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		public setProviderConfigs(newConfigs: VirtualSelectOpts): void {
 			this.configs.setExtensibilityConfigs(newConfigs);
 			this.redraw();
+			super.setProviderConfigs(newConfigs);
 		}
 
 		/**

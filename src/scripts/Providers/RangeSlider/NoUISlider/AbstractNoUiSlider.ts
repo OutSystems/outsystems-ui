@@ -14,7 +14,6 @@ namespace Providers.RangeSlider.NoUISlider {
 		private _rangeSliderProviderElem: HTMLElement;
 		// RangeSlider events
 		protected eventProviderValueChanged: OSFramework.GlobalCallbacks.Generic;
-		protected platformEventInitialize: OSFramework.GlobalCallbacks.OSGeneric;
 		protected platformEventValueChange: OSFramework.Patterns.RangeSlider.Callbacks.OSOnValueChangeEvent;
 		// Store the provider options
 		protected providerOptions: NoUiSliderOptions;
@@ -97,7 +96,7 @@ namespace Providers.RangeSlider.NoUISlider {
 			this._setOnValueChangeEvent(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Slide);
 
 			// Trigger platform's InstanceIntializedHandler client Action
-			this.triggerPlatformEventInitialized(this.platformEventInitialize);
+			this.triggerPlatformEventInitialized();
 		}
 
 		/**
@@ -170,6 +169,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 */
 		protected unsetCallbacks(): void {
 			this.eventProviderValueChanged = undefined;
+			super.unsetCallbacks();
 		}
 
 		/**
@@ -284,20 +284,14 @@ namespace Providers.RangeSlider.NoUISlider {
 		 */
 		public registerCallback(eventName: string, callback: OSFramework.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
-				case OSFramework.Patterns.RangeSlider.Enum.RangeSliderEvents.OnInitialize:
-					if (this.platformEventInitialize === undefined) {
-						this.platformEventInitialize = callback;
-					}
-					break;
 				case OSFramework.Patterns.RangeSlider.Enum.RangeSliderEvents.OnValueChange:
 					if (this.platformEventValueChange === undefined) {
 						this.platformEventValueChange = callback;
 					}
 					break;
 				default:
-					throw new Error(
-						`${OSFramework.ErrorCodes.RangeSlider.FailRegisterCallback}:	The given '${eventName}' event name is not defined.`
-					);
+					super.registerCallback(eventName, callback);
+					break;
 			}
 		}
 
@@ -311,6 +305,8 @@ namespace Providers.RangeSlider.NoUISlider {
 			this.configs.setExtensibilityConfigs(newConfigs);
 
 			this.updateRangeSlider();
+
+			super.setProviderConfigs(newConfigs);
 		}
 
 		/**

@@ -7,8 +7,6 @@ namespace Providers.Timepicker.Flatpickr {
 	{
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
-		// Flatpickr onInitialize event
-		private _onInitializeCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
 		// Store the flatpickr input html element that will be added by library
 		protected _flatpickrInputElem: HTMLInputElement;
 		// Store the provider options
@@ -134,7 +132,7 @@ namespace Providers.Timepicker.Flatpickr {
 			});
 
 			// Trigger platform's InstanceIntializedHandler client Action
-			this.triggerPlatformEventInitialized(this._onInitializeCallbackEvent);
+			this.triggerPlatformEventInitialized();
 		}
 
 		// Method that will be triggered by library each time any time is selected
@@ -148,7 +146,7 @@ namespace Providers.Timepicker.Flatpickr {
 			}
 
 			// Trigger platform's onChange callback event
-			OSFramework.Helper.AsyncInvocation(this._onChangeCallbackEvent, this.widgetId, _selectedTime);
+			this.triggerPlatformEventplatformCallback(this._onChangeCallbackEvent, _selectedTime);
 		}
 
 		/**
@@ -188,8 +186,8 @@ namespace Providers.Timepicker.Flatpickr {
 		protected unsetCallbacks(): void {
 			this.configs.OnChange = undefined;
 
-			this._onInitializeCallbackEvent = undefined;
 			this._onChangeCallbackEvent = undefined;
+			super.unsetCallbacks();
 		}
 
 		/**
@@ -277,8 +275,8 @@ namespace Providers.Timepicker.Flatpickr {
 					this._bodyScrollCommonBehaviour = undefined;
 				}
 
-				// Wait for _datePickerProviderInputElem be removed from DOM, before detroy the provider instance!
-				OSFramework.Helper.AsyncInvocation(this.provider.destroy);
+				// Wait for _datePickerProviderInputElem be removed from DOM, before destroy the provider instance!
+				OSFramework.Helper.AsyncInvocation(this.provider.destroy.bind(this.provider));
 			}
 
 			super.dispose();
@@ -304,12 +302,9 @@ namespace Providers.Timepicker.Flatpickr {
 					this._onChangeCallbackEvent = callback;
 					break;
 
-				case OSFramework.Patterns.TimePicker.Enum.TimePickerEvents.OnInitialized:
-					this._onInitializeCallbackEvent = callback;
-					break;
-
 				default:
-					throw new Error(`The given '${eventName}' event name it's not defined.`);
+					super.registerCallback(eventName, callback);
+					break;
 			}
 		}
 		/**
@@ -349,6 +344,8 @@ namespace Providers.Timepicker.Flatpickr {
 			this.configs.setExtensibilityConfigs(newConfigs);
 
 			this.redraw();
+
+			super.setProviderConfigs(newConfigs);
 		}
 
 		/**

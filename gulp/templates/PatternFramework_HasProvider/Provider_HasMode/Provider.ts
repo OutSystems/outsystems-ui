@@ -54,6 +54,7 @@ namespace Providers.<%= patternNamePC %>.<%= providerNamePC %> {
 		 */
 		protected unsetCallbacks(): void {
 			// TODO (by CreateNewPattern): Update or Remove
+			super.unsetCallbacks();
 		}
 
 		public build(): void {
