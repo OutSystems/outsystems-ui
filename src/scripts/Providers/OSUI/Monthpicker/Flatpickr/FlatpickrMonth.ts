@@ -9,8 +9,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
 		// Store the provider options
 		private _flatpickrOpts: FlatpickrOptions;
-		// Flatpickr onInitialize event
-		private _onInitializeCallbackEvent: OSFramework.OSUI.GlobalCallbacks.OSGeneric;
 		// Validation of ZIndex position common behavior
 		private _zindexCommonBehavior: SharedProviderResources.Flatpickr.UpdateZindex;
 		// Store the flatpickr input html element that will be added by library
@@ -134,7 +132,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 			});
 
 			// Trigger platform's InstanceIntializedHandler client Action
-			this.triggerPlatformEventInitialized(this._onInitializeCallbackEvent);
+			this.triggerPlatformEventInitialized();
 		}
 
 		/**
@@ -165,9 +163,8 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 			}
 
 			// Trigger platform's onChange callback event
-			OSFramework.OSUI.Helper.AsyncInvocation(
+			this.triggerPlatformEventplatformCallback(
 				this._onSelectedCallbackEvent,
-				this.widgetId,
 				_selectedMonthYear.month,
 				_selectedMonthYear.monthOrder,
 				_selectedMonthYear.year
@@ -234,8 +231,8 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		protected unsetCallbacks(): void {
 			this.configs.OnChange = undefined;
 
-			this._onInitializeCallbackEvent = undefined;
 			this._onSelectedCallbackEvent = undefined;
+			super.unsetCallbacks();
 		}
 
 		/**
@@ -363,12 +360,9 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 					this._onSelectedCallbackEvent = callback;
 					break;
 
-				case OSFramework.OSUI.Patterns.MonthPicker.Enum.Events.OnInitialized:
-					this._onInitializeCallbackEvent = callback;
-					break;
-
 				default:
-					throw new Error(`The given '${eventName}' event name it's not defined.`);
+					super.registerCallback(eventName, callback);
+					break;
 			}
 		}
 
@@ -409,6 +403,8 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 			this.configs.setExtensibilityConfigs(newConfigs);
 
 			this.redraw();
+
+			super.setProviderConfigs(newConfigs);
 		}
 	}
 }
