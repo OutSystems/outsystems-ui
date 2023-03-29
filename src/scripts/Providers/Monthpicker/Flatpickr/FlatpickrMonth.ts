@@ -350,6 +350,8 @@ namespace Providers.MonthPicker.Flatpickr {
 			this.configs.setExtensibilityConfigs(newConfigs);
 
 			this.redraw();
+
+			super.setProviderConfigs(newConfigs);
 		}
 	}
 }

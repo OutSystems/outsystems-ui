@@ -383,6 +383,8 @@ namespace Providers.Splide {
 		public setProviderConfigs(newConfigs: SplideOpts): void {
 			this.configs.setExtensibilityConfigs(newConfigs);
 			this.updateCarousel();
+
+			super.setProviderConfigs(newConfigs);
 		}
 
 		/**

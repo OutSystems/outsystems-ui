@@ -169,6 +169,7 @@ namespace Providers.RangeSlider.NoUISlider {
 		 */
 		protected unsetCallbacks(): void {
 			this.eventProviderValueChanged = undefined;
+			super.unsetCallbacks();
 		}
 
 		/**
@@ -304,6 +305,8 @@ namespace Providers.RangeSlider.NoUISlider {
 			this.configs.setExtensibilityConfigs(newConfigs);
 
 			this.updateRangeSlider();
+
+			super.setProviderConfigs(newConfigs);
 		}
 
 		/**

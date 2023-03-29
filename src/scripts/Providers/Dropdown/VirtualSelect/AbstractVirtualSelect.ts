@@ -353,7 +353,7 @@ namespace Providers.Dropdown.VirtualSelect {
 		public setProviderConfigs(newConfigs: VirtualSelectOpts): void {
 			this.configs.setExtensibilityConfigs(newConfigs);
 			this.redraw();
-			this.triggerPlatformEventplatformCallback(this._platformEventProviderConfigsAppliedCallback);
+			super.setProviderConfigs(newConfigs);
 		}
 
 		/**

@@ -302,12 +302,9 @@ namespace Providers.Timepicker.Flatpickr {
 					this._onChangeCallbackEvent = callback;
 					break;
 
-				case OSFramework.Patterns.TimePicker.Enum.TimePickerEvents.OnInitialized:
-					this._onInitializeCallbackEvent = callback;
-					break;
-
 				default:
-					throw new Error(`The given '${eventName}' event name it's not defined.`);
+					super.registerCallback(eventName, callback);
+					break;
 			}
 		}
 		/**
@@ -347,6 +344,8 @@ namespace Providers.Timepicker.Flatpickr {
 			this.configs.setExtensibilityConfigs(newConfigs);
 
 			this.redraw();
+
+			super.setProviderConfigs(newConfigs);
 		}
 
 		/**

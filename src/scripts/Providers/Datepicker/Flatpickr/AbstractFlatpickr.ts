@@ -357,6 +357,8 @@ namespace Providers.Datepicker.Flatpickr {
 			this.configs.setExtensibilityConfigs(newConfigs);
 
 			this.redraw();
+
+			super.setProviderConfigs(newConfigs);
 		}
 
 		/**
