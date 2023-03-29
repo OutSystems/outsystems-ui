@@ -8,8 +8,6 @@ namespace Providers.Dropdown.VirtualSelect {
 		private _eventOnWindowResize: OSFramework.GlobalCallbacks.Generic;
 		// Dropdown callback events
 		private _onSelectedOptionEvent: OSFramework.GlobalCallbacks.Generic;
-		private _platformEventInitializedCallback: OSFramework.GlobalCallbacks.OSGeneric;
-		private _platformEventProviderConfigsAppliedCallback: OSFramework.GlobalCallbacks.OSGeneric;
 		private _platformEventSelectedOptCallback: OSFramework.Patterns.Dropdown.Callbacks.OSOnSelectEvent;
 
 		// Store a reference of available provider methods
@@ -137,7 +135,7 @@ namespace Providers.Dropdown.VirtualSelect {
 			this._manageAttributes();
 
 			// Trigger platform's InstanceIntializedHandler client Action
-			this.triggerPlatformEventInitialized(this._platformEventInitializedCallback);
+			this.triggerPlatformEventInitialized();
 		}
 
 		/**
@@ -178,6 +176,8 @@ namespace Providers.Dropdown.VirtualSelect {
 			this._virtualselectConfigs = undefined;
 			this._virtualselectOpts = undefined;
 			this.provider = undefined;
+
+			super.unsetCallbacks();
 		}
 
 		public build(): void {
@@ -332,25 +332,15 @@ namespace Providers.Dropdown.VirtualSelect {
 		 */
 		public registerCallback(eventName: string, callback: OSFramework.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
-				case OSFramework.Patterns.Dropdown.Enum.Events.Initialized:
-					if (this._platformEventInitializedCallback === undefined) {
-						this._platformEventInitializedCallback = callback;
-					}
-					break;
-
 				case Enum.Events.OnSelected:
 					if (this._platformEventSelectedOptCallback === undefined) {
 						this._platformEventSelectedOptCallback = callback;
 					}
 					break;
-				case Enum.Events.OnProviderConfigsApplied:
-					if (this._platformEventProviderConfigsAppliedCallback === undefined) {
-						this._platformEventProviderConfigsAppliedCallback = callback;
-					}
-					break;
 
 				default:
-					throw new Error(`The given '${eventName}' event name it's not defined.`);
+					super.registerCallback(eventName, callback);
+					break;
 			}
 		}
 

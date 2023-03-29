@@ -7,8 +7,6 @@ namespace Providers.Timepicker.Flatpickr {
 	{
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
-		// Flatpickr onInitialize event
-		private _onInitializeCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
 		// Store the flatpickr input html element that will be added by library
 		protected _flatpickrInputElem: HTMLInputElement;
 		// Store the provider options
@@ -134,7 +132,7 @@ namespace Providers.Timepicker.Flatpickr {
 			});
 
 			// Trigger platform's InstanceIntializedHandler client Action
-			this.triggerPlatformEventInitialized(this._onInitializeCallbackEvent);
+			this.triggerPlatformEventInitialized();
 		}
 
 		// Method that will be triggered by library each time any time is selected
@@ -188,8 +186,8 @@ namespace Providers.Timepicker.Flatpickr {
 		protected unsetCallbacks(): void {
 			this.configs.OnChange = undefined;
 
-			this._onInitializeCallbackEvent = undefined;
 			this._onChangeCallbackEvent = undefined;
+			super.unsetCallbacks();
 		}
 
 		/**

@@ -24,8 +24,6 @@ namespace Providers.Splide {
 		private _eventOnResize: OSFramework.GlobalCallbacks.Generic;
 		// Store if a List widget is used inside the CarouselItems placeholder
 		private _hasList: boolean;
-		// Store the onInitialized event
-		private _platformEventInitialized: OSFramework.GlobalCallbacks.OSGeneric;
 		// Store the onSlideMoved event
 		private _platformEventOnSlideMoved: OSFramework.Patterns.Carousel.Callbacks.OSOnSlideMovedEvent;
 		// Store initial provider options
@@ -116,7 +114,7 @@ namespace Providers.Splide {
 		private _setOnInitializedEvent(): void {
 			this._provider.on(Enum.SpliderEvents.Mounted, () => {
 				// Trigger platform's InstanceIntializedHandler client Action
-				this.triggerPlatformEventInitialized(this._platformEventInitialized);
+				this.triggerPlatformEventInitialized();
 			});
 		}
 
@@ -218,8 +216,8 @@ namespace Providers.Splide {
 			);
 
 			this._eventOnResize = undefined;
-			this._platformEventInitialized = undefined;
 			this._platformEventOnSlideMoved = undefined;
+			super.unsetCallbacks();
 		}
 
 		/**
@@ -355,8 +353,8 @@ namespace Providers.Splide {
 				case OSFramework.Patterns.Carousel.Enum.CarouselEvents.OnSlideMoved:
 					this._platformEventOnSlideMoved = callback;
 					break;
-				case OSFramework.Patterns.Carousel.Enum.CarouselEvents.Initialized:
-					this._platformEventInitialized = callback;
+				default:
+					super.registerCallback(eventName, callback);
 					break;
 			}
 		}

@@ -7,8 +7,6 @@ namespace Providers.MonthPicker.Flatpickr {
 	{
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
-		// Flatpickr onInitialize event
-		private _onInitializeCallbackEvent: OSFramework.GlobalCallbacks.OSGeneric;
 		// Store the flatpickr input html element that will be added by library
 		protected _flatpickrInputElem: HTMLInputElement;
 		// Store the provider options
@@ -134,7 +132,7 @@ namespace Providers.MonthPicker.Flatpickr {
 			});
 
 			// Trigger platform's InstanceIntializedHandler client Action
-			this.triggerPlatformEventInitialized(this._onInitializeCallbackEvent);
+			this.triggerPlatformEventInitialized();
 		}
 
 		/**
@@ -205,8 +203,8 @@ namespace Providers.MonthPicker.Flatpickr {
 		protected unsetCallbacks(): void {
 			this.configs.OnChange = undefined;
 
-			this._onInitializeCallbackEvent = undefined;
 			this._onSelectedCallbackEvent = undefined;
+			super.unsetCallbacks();
 		}
 
 		/**
@@ -321,12 +319,9 @@ namespace Providers.MonthPicker.Flatpickr {
 					this._onSelectedCallbackEvent = callback;
 					break;
 
-				case OSFramework.Patterns.MonthPicker.Enum.Events.OnInitialized:
-					this._onInitializeCallbackEvent = callback;
-					break;
-
 				default:
-					throw new Error(`The given '${eventName}' event name it's not defined.`);
+					super.registerCallback(eventName, callback);
+					break;
 			}
 		}
 
