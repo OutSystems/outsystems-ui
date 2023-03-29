@@ -146,7 +146,7 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 			}
 
 			// Trigger platform's onChange callback event
-			OSFramework.OSUI.Helper.AsyncInvocation(this._onChangeCallbackEvent, this.widgetId, _selectedTime);
+			this.triggerPlatformEventplatformCallback(this._onChangeCallbackEvent, _selectedTime);
 		}
 
 		/**
