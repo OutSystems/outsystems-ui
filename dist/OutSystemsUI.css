@@ -2748,8 +2748,8 @@ span.validation-message{
 .phone .layout-native .form.OSFillParent .form-control[class*=ThemeGrid_Width].not-valid + span.validation-message{
   left:6px;
 }
-.phone .form.OSFillParent span.input-text .form-control[class*=ThemeGrid_Width].not-valid + span.validation-message,
-.phone .form-control[class*=ThemeGrid_Width].not-valid + span.validation-message{
+.phone .form.OSFillParent span.input-text[class*=ThemeGrid_Width].not-valid + span.validation-message,
+.phone .form span.input-text .ThemeGrid_MarginGutter[class*=ThemeGrid_Width].not-valid + span.validation-message, .phone .form-control[class*=ThemeGrid_Width].not-valid + span.validation-message{
   left:0;
 }
 /*! 4.12. Upload */

@@ -111,8 +111,13 @@ span.validation-message {
 		left: 6px;
 	}
 
-	.form.OSFillParent span.input-text .form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message,
-	.form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message {
-		left: 0;
+	.form {
+		&.OSFillParent span.input-text,
+		span.input-text .ThemeGrid_MarginGutter,
+		&-control {
+			&[class*='ThemeGrid_Width'].not-valid + span.validation-message {
+				left: 0;
+			}
+		}
 	}
 }
