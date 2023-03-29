@@ -2709,6 +2709,12 @@ select.dropdown-display[disabled]{
   white-space:nowrap;
   width:100%;
 }
+.form > span.input-text .form-control[class*=ThemeGrid_Width].not-valid + span.validation-message{
+  left:0;
+}
+.form > span.input-text .form-control[class*=ThemeGrid_Width].not-valid.ThemeGrid_MarginGutter + span.validation-message{
+  left:22px;
+}
 .form textarea[data-textarea] + span.validation-message{
   bottom:7px;
 }
@@ -2719,7 +2725,7 @@ select.dropdown-display[disabled]{
 .form .dropdown-container[class*=ThemeGrid_Width].not-valid span.validation-message{
   bottom:4px;
 }
-.form .dropdown-container.not-valid span.validation-message{
+.form .dropdown-container.not-valid span.validation-message, .form .dropdown-container.dropdown-expanded.not-valid span.validation-message{
   bottom:-19px;
 }
 .form .radio-group.not-valid{
@@ -2742,7 +2748,8 @@ span.validation-message{
 .phone .layout-native .form.OSFillParent .form-control[class*=ThemeGrid_Width].not-valid + span.validation-message{
   left:6px;
 }
-.phone .form.OSFillParent .form-control[class*=ThemeGrid_Width].not-valid + span.validation-message,
+.phone .form.OSFillParent span.input-text .form-control[class*=ThemeGrid_Width].not-valid + span.validation-message,
+.phone .form span.input-text .form-control[class*=ThemeGrid_Width].not-valid.ThemeGrid_MarginGutter + span.validation-message,
 .phone .form-control[class*=ThemeGrid_Width].not-valid + span.validation-message{
   left:0;
 }
