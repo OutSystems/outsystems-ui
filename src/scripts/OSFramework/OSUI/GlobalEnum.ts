@@ -371,4 +371,15 @@ namespace OSFramework.OSUI.GlobalEnum {
 	export enum NullValues {
 		Time = '00:00:00',
 	}
+
+	/**
+	 * Events available for all provider based patterns.
+	 *
+	 * @export
+	 * @enum {number}
+	 */
+	export enum ProviderEvents {
+		Initialized = 'Initialized',
+		OnProviderConfigsApplied = 'OnProviderConfigsApplied',
+	}
 }
