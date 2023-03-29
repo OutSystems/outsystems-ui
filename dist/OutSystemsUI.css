@@ -2709,10 +2709,10 @@ select.dropdown-display[disabled]{
   white-space:nowrap;
   width:100%;
 }
-.form span.input-text .form-control[class*=ThemeGrid_Width].not-valid + span.validation-message{
+.form > span.input-text .form-control[class*=ThemeGrid_Width].not-valid + span.validation-message{
   left:0;
 }
-.form span.input-text .form-control[class*=ThemeGrid_Width].not-valid.ThemeGrid_MarginGutter + span.validation-message{
+.form > span.input-text .form-control[class*=ThemeGrid_Width].not-valid.ThemeGrid_MarginGutter + span.validation-message{
   left:22px;
 }
 .form textarea[data-textarea] + span.validation-message{
@@ -2748,8 +2748,9 @@ span.validation-message{
 .phone .layout-native .form.OSFillParent .form-control[class*=ThemeGrid_Width].not-valid + span.validation-message{
   left:6px;
 }
-.phone .form.OSFillParent span.input-text[class*=ThemeGrid_Width].not-valid + span.validation-message,
-.phone .form span.input-text .ThemeGrid_MarginGutter[class*=ThemeGrid_Width].not-valid + span.validation-message, .phone .form-control[class*=ThemeGrid_Width].not-valid + span.validation-message{
+.phone .form.OSFillParent span.input-text .form-control[class*=ThemeGrid_Width].not-valid + span.validation-message,
+.phone .form span.input-text .form-control[class*=ThemeGrid_Width].not-valid.ThemeGrid_MarginGutter + span.validation-message,
+.phone .form-control[class*=ThemeGrid_Width].not-valid + span.validation-message{
   left:0;
 }
 /*! 4.12. Upload */
