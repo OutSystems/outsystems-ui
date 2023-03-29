@@ -170,6 +170,7 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 		 */
 		protected unsetCallbacks(): void {
 			this.eventProviderValueChanged = undefined;
+			super.unsetCallbacks();
 		}
 
 		/**
@@ -312,6 +313,7 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 			this.configs.setExtensibilityConfigs(newConfigs);
 
 			this.redraw();
+			super.setProviderConfigs(newConfigs);
 		}
 
 		/**
