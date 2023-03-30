@@ -2606,6 +2606,13 @@ select.dropdown-display[disabled]{
   margin-left:10px;
   margin-right:0px;
 }
+.is-rtl .table-header th{
+  text-align:right;
+}
+.is-rtl .sortable-icon{
+  margin-left:var(--space-none);
+  right:var(--space-s);
+}
 /*! 4.9. Table - Sortable Icon */
 .sortable-icon{
   display:inline-block;
@@ -2794,6 +2801,10 @@ span.validation-message{
   line-height:1;
   margin-right:var(--space-base);
   width:auto;
+}
+.is-rtl [data-upload] [data-icon]{
+  margin-left:var(--space-base);
+  margin-right:var(--space-none);
 }
 /*! 4.13. Button Group */
 .button-group{
@@ -6401,8 +6412,8 @@ span.flatpickr-weekday{
   display:none;
 }
 .is-rtl .chat.right .chat-photo{
-  margin-left:var(--space-base);
-  margin-right:var(--space-none);
+  margin-left:var(--space-none);
+  margin-right:var(--space-base);
 }
 .is-rtl .chat-photo{
   margin-left:var(--space-base);
@@ -9400,6 +9411,19 @@ body.vscomp-popup-active .vscomp-wrapper{
   -webkit-box-shadow:none;
           box-shadow:none;
   outline:3px solid var(--color-focus-outer);
+}
+.is-rtl .pswp__counter{
+  left:inherit;
+  right:0;
+}
+.is-rtl .pswp__top-bar{
+  display:-webkit-box;
+  display:-ms-flexbox;
+  display:flex;
+  -webkit-box-orient:horizontal;
+  -webkit-box-direction:reverse;
+      -ms-flex-direction:row-reverse;
+          flex-direction:row-reverse;
 }
 /*! 6.3.11. MonthPicker */
 .osui-monthpicker__dropdown.flatpickr-calendar{

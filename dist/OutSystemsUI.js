@@ -530,6 +530,11 @@ var OSFramework;
             (function (NullValues) {
                 NullValues["Time"] = "00:00:00";
             })(NullValues = GlobalEnum.NullValues || (GlobalEnum.NullValues = {}));
+            let ProviderEvents;
+            (function (ProviderEvents) {
+                ProviderEvents["Initialized"] = "Initialized";
+                ProviderEvents["OnProviderConfigsApplied"] = "OnProviderConfigsApplied";
+            })(ProviderEvents = GlobalEnum.ProviderEvents || (GlobalEnum.ProviderEvents = {}));
         })(GlobalEnum = OSUI.GlobalEnum || (OSUI.GlobalEnum = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
 })(OSFramework || (OSFramework = {}));
@@ -2824,10 +2829,19 @@ var OSFramework;
                         this.prepareConfigs();
                     }
                 }
-                triggerPlatformEventInitialized(platFormCallback) {
+                triggerPlatformEventInitialized() {
                     if (this.isBuilt === false) {
-                        OSUI.Helper.AsyncInvocation(platFormCallback, this.widgetId);
+                        this.triggerPlatformEventplatformCallback(this._platformEventInitialized);
                     }
+                }
+                triggerPlatformEventplatformCallback(platFormCallback, ...args) {
+                    if (platFormCallback !== undefined) {
+                        OSUI.Helper.AsyncInvocation(platFormCallback, this.widgetId, ...args);
+                    }
+                }
+                unsetCallbacks() {
+                    this._platformEventInitialized = undefined;
+                    this._platformEventProviderConfigsAppliedCallback = undefined;
                 }
                 build() {
                     this.providerInfo = {
@@ -2855,8 +2869,26 @@ var OSFramework;
                     }
                 }
                 dispose() {
-                    this.providerEventsManagerInstance = undefined;
                     super.dispose();
+                }
+                registerCallback(eventName, callback) {
+                    switch (eventName) {
+                        case OSUI.GlobalEnum.ProviderEvents.Initialized:
+                            if (this._platformEventInitialized === undefined) {
+                                this._platformEventInitialized = callback;
+                            }
+                            break;
+                        case OSUI.GlobalEnum.ProviderEvents.OnProviderConfigsApplied:
+                            if (this._platformEventProviderConfigsAppliedCallback === undefined) {
+                                this._platformEventProviderConfigsAppliedCallback = callback;
+                            }
+                            break;
+                        default:
+                            throw new Error(`The pattern with id '${this.widgetId}' does not have the event '${eventName}' defined.`);
+                    }
+                }
+                setProviderConfigs(providerConfigs) {
+                    this.triggerPlatformEventplatformCallback(this._platformEventProviderConfigsAppliedCallback);
                 }
                 setProviderEvent(eventName, callback, uniqueId, saveEvent = true) {
                     if (this.providerEventsManagerInstance === undefined) {
@@ -15105,13 +15137,13 @@ var Providers;
                     }
                     _setOnInitializedEvent() {
                         this._provider.on(Splide.Enum.SpliderEvents.Mounted, () => {
-                            this.triggerPlatformEventInitialized(this._platformEventInitialized);
+                            this.triggerPlatformEventInitialized();
                         });
                     }
                     _setOnSlideMovedEvent() {
                         this._provider.on(Splide.Enum.SpliderEvents.Moved, (index) => {
                             if (index !== this._currentIndex) {
-                                OSFramework.OSUI.Helper.AsyncInvocation(this._platformEventOnSlideMoved, this.widgetId, index);
+                                this.triggerPlatformEventplatformCallback(this._platformEventOnSlideMoved, index);
                                 this._currentIndex = index;
                             }
                         });
@@ -15157,8 +15189,8 @@ var Providers;
                     unsetCallbacks() {
                         OSFramework.OSUI.Event.GlobalEventManager.Instance.removeHandler(OSFramework.OSUI.Event.Type.WindowResize, this._eventOnResize);
                         this._eventOnResize = undefined;
-                        this._platformEventInitialized = undefined;
                         this._platformEventOnSlideMoved = undefined;
+                        super.unsetCallbacks();
                     }
                     unsetHtmlElements() {
                         this._carouselPlaceholderElem = undefined;
@@ -15224,8 +15256,8 @@ var Providers;
                             case OSFramework.OSUI.Patterns.Carousel.Enum.CarouselEvents.OnSlideMoved:
                                 this._platformEventOnSlideMoved = callback;
                                 break;
-                            case OSFramework.OSUI.Patterns.Carousel.Enum.CarouselEvents.Initialized:
-                                this._platformEventInitialized = callback;
+                            default:
+                                super.registerCallback(eventName, callback);
                                 break;
                         }
                     }
@@ -15246,6 +15278,7 @@ var Providers;
                     setProviderConfigs(newConfigs) {
                         this.configs.setExtensibilityConfigs(newConfigs);
                         this.redraw();
+                        super.setProviderConfigs(newConfigs);
                     }
                     toggleDrag(hasDrag) {
                         this._provider.options = { drag: hasDrag };
@@ -15449,7 +15482,7 @@ var Providers;
                         if (this._flatpickrInputElem !== undefined && this.isBuilt) {
                             OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.CssClassElements.InputNotValid);
                         }
-                        this.triggerPlatformEventInitialized(this._onInitializeCallbackEvent);
+                        this.triggerPlatformEventInitialized();
                         this._unsetParentMinHeight();
                     }
                     jumpIntoToday() {
@@ -15489,8 +15522,8 @@ var Providers;
                     }
                     unsetCallbacks() {
                         this.configs.OnChange = undefined;
-                        this._onInitializeCallbackEvent = undefined;
                         this._onSelectedCallbackEvent = undefined;
+                        super.unsetCallbacks();
                     }
                     unsetHtmlElements() {
                         this._a11yInfoContainerElem = undefined;
@@ -15560,11 +15593,9 @@ var Providers;
                             case OSFramework.OSUI.Patterns.DatePicker.Enum.DatePickerEvents.OnChange:
                                 this._onSelectedCallbackEvent = callback;
                                 break;
-                            case OSFramework.OSUI.Patterns.DatePicker.Enum.DatePickerEvents.OnInitialize:
-                                this._onInitializeCallbackEvent = callback;
-                                break;
                             default:
-                                throw new Error(`The given '${eventName}' event name it's not defined.`);
+                                super.registerCallback(eventName, callback);
+                                break;
                         }
                     }
                     setEditableInput(isEditable) {
@@ -15582,6 +15613,7 @@ var Providers;
                     setProviderConfigs(newConfigs) {
                         this.configs.setExtensibilityConfigs(newConfigs);
                         this.prepareToAndRedraw();
+                        super.setProviderConfigs(newConfigs);
                     }
                     toggleNativeBehavior(isNative) {
                         if (this.configs.DisableMobile !== !isNative) {
@@ -16623,7 +16655,7 @@ var Providers;
                         event.preventDefault();
                     }
                     _onSelectedOption() {
-                        OSFramework.OSUI.Helper.AsyncInvocation(this._platformEventSelectedOptCallback, this.widgetId, this.getSelectedValues());
+                        this.triggerPlatformEventplatformCallback(this._platformEventSelectedOptCallback, this.getSelectedValues());
                     }
                     _onWindowResize() {
                         if (this.provider.isOpened()) {
@@ -16658,7 +16690,7 @@ var Providers;
                             events: this._virtualselectConfigs,
                         });
                         this._manageAttributes();
-                        this.triggerPlatformEventInitialized(this._platformEventInitializedCallback);
+                        this.triggerPlatformEventInitialized();
                     }
                     setA11YProperties() {
                         this.setHiddenInputWrapperAriaLabelVal();
@@ -16677,6 +16709,7 @@ var Providers;
                         this._virtualselectConfigs = undefined;
                         this._virtualselectOpts = undefined;
                         this.provider = undefined;
+                        super.unsetCallbacks();
                     }
                     unsetHtmlElements() {
                         console.log(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -16770,18 +16803,14 @@ var Providers;
                     }
                     registerCallback(eventName, callback) {
                         switch (eventName) {
-                            case OSFramework.OSUI.Patterns.Dropdown.Enum.Events.Initialized:
-                                if (this._platformEventInitializedCallback === undefined) {
-                                    this._platformEventInitializedCallback = callback;
-                                }
-                                break;
                             case VirtualSelect.Enum.Events.OnSelected:
                                 if (this._platformEventSelectedOptCallback === undefined) {
                                     this._platformEventSelectedOptCallback = callback;
                                 }
                                 break;
                             default:
-                                throw new Error(`The given '${eventName}' event name it's not defined.`);
+                                super.registerCallback(eventName, callback);
+                                break;
                         }
                     }
                     setHiddenInputWrapperAriaLabelVal(value) {
@@ -16791,6 +16820,7 @@ var Providers;
                     setProviderConfigs(newConfigs) {
                         this.configs.setExtensibilityConfigs(newConfigs);
                         this.redraw();
+                        super.setProviderConfigs(newConfigs);
                     }
                     setValue(optionsToSelect, silentOnChangedEvent = true) {
                         const selectedValues = this.getSelectedOptionsStructure().map((value) => value.value) || [];
@@ -17342,7 +17372,7 @@ var Providers;
                             version: OSUI.SharedProviderResources.Flatpickr.Enum.ProviderInfo.Version,
                             events: this.provider.config,
                         });
-                        this.triggerPlatformEventInitialized(this._onInitializeCallbackEvent);
+                        this.triggerPlatformEventInitialized();
                     }
                     onMonthSelectedEvent(selectedMonthYear) {
                         const _selectedMonthYear = {
@@ -17357,7 +17387,7 @@ var Providers;
                             _selectedMonthYear.monthOrder = _selectedMonthIndex + 1;
                             _selectedMonthYear.year = _selectedDate.getFullYear();
                         }
-                        OSFramework.OSUI.Helper.AsyncInvocation(this._onSelectedCallbackEvent, this.widgetId, _selectedMonthYear.month, _selectedMonthYear.monthOrder, _selectedMonthYear.year);
+                        this.triggerPlatformEventplatformCallback(this._onSelectedCallbackEvent, _selectedMonthYear.month, _selectedMonthYear.monthOrder, _selectedMonthYear.year);
                     }
                     prepareConfigs() {
                         this._flatpickrOpts = this.configs.getProviderConfig();
@@ -17377,8 +17407,8 @@ var Providers;
                     }
                     unsetCallbacks() {
                         this.configs.OnChange = undefined;
-                        this._onInitializeCallbackEvent = undefined;
                         this._onSelectedCallbackEvent = undefined;
+                        super.unsetCallbacks();
                     }
                     unsetHtmlElements() {
                         this._monthPickerProviderInputElem = undefined;
@@ -17440,11 +17470,9 @@ var Providers;
                             case OSFramework.OSUI.Patterns.MonthPicker.Enum.Events.OnSelected:
                                 this._onSelectedCallbackEvent = callback;
                                 break;
-                            case OSFramework.OSUI.Patterns.MonthPicker.Enum.Events.OnInitialized:
-                                this._onInitializeCallbackEvent = callback;
-                                break;
                             default:
-                                throw new Error(`The given '${eventName}' event name it's not defined.`);
+                                super.registerCallback(eventName, callback);
+                                break;
                         }
                     }
                     setEditableInput(isEditable) {
@@ -17462,6 +17490,7 @@ var Providers;
                     setProviderConfigs(newConfigs) {
                         this.configs.setExtensibilityConfigs(newConfigs);
                         this.redraw();
+                        super.setProviderConfigs(newConfigs);
                     }
                 }
                 Flatpickr.OSUIFlatpickrMonth = OSUIFlatpickrMonth;
@@ -17623,7 +17652,7 @@ var Providers;
                         });
                         this.setInitialCSSClasses();
                         this._setOnValueChangeEvent(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Slide);
-                        this.triggerPlatformEventInitialized(this.platformEventInitialize);
+                        this.triggerPlatformEventInitialized();
                     }
                     setHtmlElements() {
                         this._rangeSliderProviderElem = OSFramework.OSUI.Helper.Dom.ClassSelector(this.selfElement, OSFramework.OSUI.Patterns.RangeSlider.Enum.CssClass.RangeSliderProviderElem);
@@ -17650,6 +17679,7 @@ var Providers;
                     }
                     unsetCallbacks() {
                         this.eventProviderValueChanged = undefined;
+                        super.unsetCallbacks();
                     }
                     unsetHtmlElements() {
                         this._rangeSliderProviderElem = undefined;
@@ -17706,23 +17736,20 @@ var Providers;
                     }
                     registerCallback(eventName, callback) {
                         switch (eventName) {
-                            case OSFramework.OSUI.Patterns.RangeSlider.Enum.RangeSliderEvents.OnInitialize:
-                                if (this.platformEventInitialize === undefined) {
-                                    this.platformEventInitialize = callback;
-                                }
-                                break;
                             case OSFramework.OSUI.Patterns.RangeSlider.Enum.RangeSliderEvents.OnValueChange:
                                 if (this.platformEventValueChange === undefined) {
                                     this.platformEventValueChange = callback;
                                 }
                                 break;
                             default:
-                                throw new Error(`${OSFramework.OSUI.ErrorCodes.RangeSlider.FailRegisterCallback}:	The given '${eventName}' event name is not defined.`);
+                                super.registerCallback(eventName, callback);
+                                break;
                         }
                     }
                     setProviderConfigs(newConfigs) {
                         this.configs.setExtensibilityConfigs(newConfigs);
                         this.redraw();
+                        super.setProviderConfigs(newConfigs);
                     }
                     setRangeIntervalChangeOnDragEnd() {
                         this.provider.off(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Slide, this.eventProviderValueChanged);
@@ -18360,14 +18387,14 @@ var Providers;
                             version: OSUI.SharedProviderResources.Flatpickr.Enum.ProviderInfo.Version,
                             events: this.provider.config,
                         });
-                        this.triggerPlatformEventInitialized(this._onInitializeCallbackEvent);
+                        this.triggerPlatformEventInitialized();
                     }
                     onTimeSelectedEvent(selectedTime) {
                         let _selectedTime = '';
                         if (selectedTime.length > 0) {
                             _selectedTime = this.provider.formatDate(selectedTime[0], this._flatpickrOpts.dateFormat);
                         }
-                        OSFramework.OSUI.Helper.AsyncInvocation(this._onChangeCallbackEvent, this.widgetId, _selectedTime);
+                        this.triggerPlatformEventplatformCallback(this._onChangeCallbackEvent, _selectedTime);
                     }
                     prepareConfigs() {
                         this._flatpickrOpts = this.configs.getProviderConfig();
@@ -18387,8 +18414,8 @@ var Providers;
                     }
                     unsetCallbacks() {
                         this.configs.OnChange = undefined;
-                        this._onInitializeCallbackEvent = undefined;
                         this._onChangeCallbackEvent = undefined;
+                        super.unsetCallbacks();
                     }
                     unsetHtmlElements() {
                         this._timePickerProviderInputElem = undefined;
@@ -18451,11 +18478,9 @@ var Providers;
                             case OSFramework.OSUI.Patterns.TimePicker.Enum.TimePickerEvents.OnChange:
                                 this._onChangeCallbackEvent = callback;
                                 break;
-                            case OSFramework.OSUI.Patterns.TimePicker.Enum.TimePickerEvents.OnInitialized:
-                                this._onInitializeCallbackEvent = callback;
-                                break;
                             default:
-                                throw new Error(`The given '${eventName}' event name it's not defined.`);
+                                super.registerCallback(eventName, callback);
+                                break;
                         }
                     }
                     setEditableInput(isEditable) {
@@ -18473,6 +18498,7 @@ var Providers;
                     setProviderConfigs(newConfigs) {
                         this.configs.setExtensibilityConfigs(newConfigs);
                         this.redraw();
+                        super.setProviderConfigs(newConfigs);
                     }
                     toggleNativeBehavior(isNative) {
                         if (this.configs.DisableMobile !== !isNative) {

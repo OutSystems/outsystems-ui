@@ -274,7 +274,7 @@
 	}
 }
 
-// IsRTL -------------------------------------------------------------------------
+// IsRTL --------------------------------------------------------------------
 ///
 .is-rtl {
 	&.phone,
@@ -285,5 +285,14 @@
 				margin-right: 0px;
 			}
 		}
+	}
+
+	.table-header th {
+		text-align: right;
+	}
+
+	.sortable-icon {
+		margin-left: var(--space-none);
+		right: var(--space-s);
 	}
 }
