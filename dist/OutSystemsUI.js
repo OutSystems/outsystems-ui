@@ -1,5 +1,5 @@
 /*!
-OutSystems UI 2.15.0
+OutSystems UI 2.16.0
 Website:
  • https://www.outsystems.com/outsystems-ui
 GitHub:
@@ -133,7 +133,7 @@ var OSFramework;
             Constants.AccessibilityHideElementClass = 'wcag-hide-text';
             Constants.IsRTLClass = 'is-rtl';
             Constants.NoTransition = 'no-transition';
-            Constants.OSUIVersion = '2.15.0';
+            Constants.OSUIVersion = '2.16.0';
             Constants.ZeroValue = 0;
         })(Constants = OSUI.Constants || (OSUI.Constants = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
@@ -289,9 +289,10 @@ var OSFramework;
             })(Position = GlobalEnum.Position || (GlobalEnum.Position = {}));
             let CssProperties;
             (function (CssProperties) {
+                CssProperties["Auto"] = "auto";
+                CssProperties["Initial"] = "initial";
                 CssProperties["None"] = "none";
                 CssProperties["PaddingTop"] = "padding-top";
-                CssProperties["Auto"] = "auto";
             })(CssProperties = GlobalEnum.CssProperties || (GlobalEnum.CssProperties = {}));
             let DataBlocksTag;
             (function (DataBlocksTag) {
@@ -8200,6 +8201,7 @@ var OSFramework;
                         this._hasElements = false;
                         this._isActive = false;
                         this._isOpen = false;
+                        this.hasClickOutsideToClose = true;
                     }
                     _bodyClickCallback(_args, e) {
                         if (this.isBuilt && this._isOpen) {
@@ -8289,7 +8291,6 @@ var OSFramework;
                             this.close();
                         }
                         else {
-                            OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnClick, this._globalEventBody);
                             OSUI.Helper.AsyncInvocation(this.open.bind(this));
                         }
                     }
@@ -8312,8 +8313,8 @@ var OSFramework;
                     }
                     setCallbacks() {
                         this._eventClick = this._clickCallback.bind(this);
-                        this._eventKeypress = this._keypressCallback.bind(this);
                         this._globalEventBody = this._bodyClickCallback.bind(this);
+                        this._eventKeypress = this._keypressCallback.bind(this);
                         this._eventOnMouseEnter = this._onMouseEnterCallback.bind(this);
                         this._eventOnMouseLeave = this._onMouseLeaveCallback.bind(this);
                         if (this._hasElements) {
@@ -8374,9 +8375,20 @@ var OSFramework;
                     changeProperty(propertyName, propertyValue) {
                         super.changeProperty(propertyName, propertyValue);
                     }
+                    clickOutsideToClose(clickOutsideToClose) {
+                        this.hasClickOutsideToClose = clickOutsideToClose;
+                        if (this.hasClickOutsideToClose) {
+                            OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnClick, this._globalEventBody);
+                        }
+                        else if (this.hasClickOutsideToClose === false) {
+                            OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnClick, this._globalEventBody);
+                        }
+                    }
                     close() {
                         if (this._isOpen) {
-                            OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnClick, this._globalEventBody);
+                            if (this.hasClickOutsideToClose) {
+                                OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnClick, this._globalEventBody);
+                            }
                             OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, Submenu_1.Enum.CssClass.PatternIsOpen);
                             this._isOpen = false;
                             this._updateA11yProperties();
@@ -8389,13 +8401,10 @@ var OSFramework;
                         super.dispose();
                     }
                     open() {
-                        OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnClick, this._globalEventBody);
+                        if (this.hasClickOutsideToClose) {
+                            OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnClick, this._globalEventBody);
+                        }
                         OSUI.Helper.AsyncInvocation(this._show.bind(this));
-                        setTimeout(function () {
-                            if (!this._dynamiclyOpening) {
-                                this._dynamiclyOpening = false;
-                            }
-                        }, 500);
                         OSUI.Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, true);
                     }
                     registerCallback(callback, eventName) {
@@ -8684,8 +8693,9 @@ var OSFramework;
                     })(Attributes = Enum.Attributes || (Enum.Attributes = {}));
                     let CssProperty;
                     (function (CssProperty) {
-                        CssProperty["TabsHeight"] = "--tabs-height";
+                        CssProperty["TabsContentItemOverflow"] = "--tabs-content-item-overflow";
                         CssProperty["TabsHeaderItems"] = "--tabs-header-items";
+                        CssProperty["TabsHeight"] = "--tabs-height";
                         CssProperty["TabsIndicatorScale"] = "--tabs-indicator-scale";
                         CssProperty["TabsIndicatorTransform"] = "--tabs-indicator-transform";
                     })(CssProperty = Enum.CssProperty || (Enum.CssProperty = {}));
@@ -9004,7 +9014,11 @@ var OSFramework;
                         OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Tabs_1.Enum.CssProperty.TabsHeaderItems, itemsLength);
                     }
                     _setHeight(height) {
+                        const tabsOverflow = height === OSUI.GlobalEnum.CssProperties.Auto || height === OSUI.Constants.EmptyString
+                            ? OSUI.GlobalEnum.CssProperties.Initial
+                            : OSUI.GlobalEnum.CssProperties.Auto;
                         OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Tabs_1.Enum.CssProperty.TabsHeight, height);
+                        OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Tabs_1.Enum.CssProperty.TabsContentItemOverflow, tabsOverflow);
                     }
                     _setInitialOptions() {
                         this._setHeaderItemsCustomProperty(this.getChildItems(Tabs_1.Enum.ChildTypes.TabsHeaderItem).length);
@@ -10465,6 +10479,7 @@ var OutSystems;
                 FailOpenOnHover: 'OSUI-API-12005',
                 FailRegisterCallback: 'OSUI-API-12006',
                 FailUpdate: 'OSUI-API-12007',
+                FailClickOutsideToClose: 'OSUI-API-12008',
             };
             ErrorCodes.Tooltip = {
                 FailChangeProperty: 'OSUI-API-13001',
@@ -12728,6 +12743,17 @@ var OutSystems;
                     return result;
                 }
                 SubmenuAPI.ChangeProperty = ChangeProperty;
+                function ClickOutsideToClose(submenuId, clickOutsideToClose) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Submenu.FailClickOutsideToClose,
+                        callback: () => {
+                            const submenu = GetSubmenuById(submenuId);
+                            submenu.clickOutsideToClose(clickOutsideToClose);
+                        },
+                    });
+                    return result;
+                }
+                SubmenuAPI.ClickOutsideToClose = ClickOutsideToClose;
                 function Close(submenuId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Submenu.FailClose,
@@ -14762,39 +14788,39 @@ var OutSystems;
                     errorCode: OSUI.ErrorCodes.Utilities.FailScrollToElement,
                     callback: () => {
                         const elementToScrollTo = OSFramework.OSUI.Helper.Dom.GetElementById(ElementId);
-                        if (elementToScrollTo) {
-                            const isHeaderFixed = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CssClassElements.HeaderIsFixed) ||
-                                OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CSSSelectors.LayoutNativeHeader);
-                            const isIosBounce = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CSSSelectors.IosBounceScroll);
-                            const scrollBehavior = IsSmooth
-                                ? OSFramework.OSUI.GlobalEnum.ScrollBehavior.Smooth
-                                : OSFramework.OSUI.GlobalEnum.ScrollBehavior.Auto;
-                            let scrollableElement = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CssClassElements.ActiveScreen);
-                            if (ElementParentClass !== OSFramework.OSUI.Constants.EmptyString) {
-                                const isElementParentClass = elementToScrollTo.closest(OSFramework.OSUI.Constants.Dot + ElementParentClass);
-                                if (isElementParentClass) {
-                                    scrollableElement = isElementParentClass;
+                        setTimeout(() => {
+                            if (elementToScrollTo) {
+                                const isHeaderFixed = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CssClassElements.HeaderIsFixed) ||
+                                    OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CSSSelectors.LayoutNativeHeader);
+                                const isIosBounce = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CSSSelectors.IosBounceScroll);
+                                const scrollBehavior = IsSmooth
+                                    ? OSFramework.OSUI.GlobalEnum.ScrollBehavior.Smooth
+                                    : OSFramework.OSUI.GlobalEnum.ScrollBehavior.Auto;
+                                let scrollableElement = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CssClassElements.ActiveScreen);
+                                if (ElementParentClass !== OSFramework.OSUI.Constants.EmptyString) {
+                                    const isElementParentClass = elementToScrollTo.closest(OSFramework.OSUI.Constants.Dot + ElementParentClass);
+                                    if (isElementParentClass) {
+                                        scrollableElement = isElementParentClass;
+                                    }
+                                    else {
+                                        console.warn(`The element with class '${ElementParentClass}' doesn't exist on DOM.`);
+                                    }
                                 }
-                                else {
-                                    console.warn(`The element with class '${ElementParentClass}' doesn't exist on DOM.`);
+                                else if (isIosBounce) {
+                                    scrollableElement = isIosBounce;
                                 }
-                            }
-                            else if (isIosBounce) {
-                                scrollableElement = isIosBounce;
-                            }
-                            let top = scrollableElement.scrollTop + elementToScrollTo.getBoundingClientRect().top + OffSet;
-                            if (isHeaderFixed) {
-                                const header = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CssClassElements.Header);
-                                top = -header.offsetHeight + top;
-                            }
-                            setTimeout(() => {
+                                let top = scrollableElement.scrollTop + elementToScrollTo.getBoundingClientRect().top + OffSet;
+                                if (isHeaderFixed) {
+                                    const header = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CssClassElements.Header);
+                                    top = -header.offsetHeight + top;
+                                }
                                 scrollableElement.scrollTo({
                                     top: top,
                                     left: 0,
                                     behavior: scrollBehavior,
                                 });
-                            }, ScrollDelay);
-                        }
+                            }
+                        }, ScrollDelay);
                     },
                 });
                 return result;

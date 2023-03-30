@@ -33,7 +33,7 @@
 
 .flip-content-front {
 	position: relative;
-	z-index: 2;
+	z-index: var(--layer-local-tier-1);
 }
 
 .flip-content-back {

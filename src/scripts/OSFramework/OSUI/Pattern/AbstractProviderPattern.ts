@@ -13,6 +13,10 @@ namespace OSFramework.OSUI.Patterns {
 		extends AbstractPattern<C>
 		implements Interface.IProviderPattern<P>
 	{
+		// Holds the callback for the onInitialized event
+		private _platformEventInitialized: GlobalCallbacks.OSGeneric;
+		// Holds the callback for the provider config applied event
+		private _platformEventProviderConfigsAppliedCallback: GlobalCallbacks.OSGeneric;
 		// Holds the provider
 		protected _provider: P;
 		// Holds the provider info
@@ -102,21 +106,51 @@ namespace OSFramework.OSUI.Patterns {
 			}
 		}
 
+		//TODO: move this method to the AbstractPattern. Interfaces need to be updated.
 		/**
 		 * Trigger platform's InstanceIntializedHandler client Action
 		 *
 		 * @param {GlobalCallbacks.OSGeneric} platFormCallback
 		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
-		protected triggerPlatformEventInitialized(platFormCallback: GlobalCallbacks.OSGeneric): void {
+		protected triggerPlatformEventInitialized(): void {
 			// Ensure it's only be trigger the first time!
 			if (this.isBuilt === false) {
-				Helper.AsyncInvocation(platFormCallback, this.widgetId);
+				this.triggerPlatformEventplatformCallback(this._platformEventInitialized);
+			}
+		}
+
+		//TODO: move this method to the AbstractPattern. Interfaces need to be updated.
+		/**
+		 * Triggers a generic platform event.
+		 *
+		 * @protected
+		 * @param {GlobalCallbacks.OSGeneric} platFormCallback
+		 * @param {...unknown[]} args
+		 * @memberof AbstractProviderPattern
+		 */
+		protected triggerPlatformEventplatformCallback(
+			platFormCallback: GlobalCallbacks.OSGeneric,
+			...args: unknown[]
+		): void {
+			if (platFormCallback !== undefined) {
+				Helper.AsyncInvocation(platFormCallback, this.widgetId, ...args);
 			}
 		}
 
 		/**
-		 * Build the Pattern
+		 * Unsets the callbacks.
+		 *
+		 * @protected
+		 * @memberof OSUISplide
+		 */
+		protected unsetCallbacks(): void {
+			this._platformEventInitialized = undefined;
+			this._platformEventProviderConfigsAppliedCallback = undefined;
+		}
+
+		/**
+		 * Method to build the pattern
 		 *
 		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
@@ -164,8 +198,45 @@ namespace OSFramework.OSUI.Patterns {
 		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
 		public dispose(): void {
-			this.providerEventsManagerInstance = undefined;
 			super.dispose();
+		}
+
+		/**
+		 * Register the default events for provider based patterns.
+		 *
+		 * @abstract
+		 * @param {string} eventName
+		 * @param {GlobalCallbacks.OSGeneric} callback
+		 * @memberof AbstractProviderPattern
+		 */
+		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
+			switch (eventName) {
+				case GlobalEnum.ProviderEvents.Initialized:
+					if (this._platformEventInitialized === undefined) {
+						this._platformEventInitialized = callback;
+					}
+					break;
+				case GlobalEnum.ProviderEvents.OnProviderConfigsApplied:
+					if (this._platformEventProviderConfigsAppliedCallback === undefined) {
+						this._platformEventProviderConfigsAppliedCallback = callback;
+					}
+					break;
+				default:
+					throw new Error(
+						`The pattern with id '${this.widgetId}' does not have the event '${eventName}' defined.`
+					);
+			}
+		}
+
+		/**
+		 * Method used to set all the provider configs. In the AbstractProviderPattern, it
+		 * will simply trigger the callback to warn that the configs have been applied to the provider.
+		 * @param {ProviderConfigs} providerConfigs
+		 * @memberof AbstractProviderPattern
+		 */
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		public setProviderConfigs(providerConfigs: unknown): void {
+			this.triggerPlatformEventplatformCallback(this._platformEventProviderConfigsAppliedCallback);
 		}
 
 		/**
@@ -296,7 +367,5 @@ namespace OSFramework.OSUI.Patterns {
 
 		// Common methods all providers must implement
 		protected abstract prepareConfigs(): void;
-		public abstract registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
-		public abstract setProviderConfigs(providerConfigs: ProviderConfigs): void;
 	}
 }

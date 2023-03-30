@@ -24,8 +24,6 @@ namespace Providers.OSUI.Carousel.Splide {
 		private _eventOnResize: OSFramework.OSUI.GlobalCallbacks.Generic;
 		// Store if a List widget is used inside the CarouselItems placeholder
 		private _hasList: boolean;
-		// Store the onInitialized event
-		private _platformEventInitialized: OSFramework.OSUI.GlobalCallbacks.OSGeneric;
 		// Store the onSlideMoved event
 		private _platformEventOnSlideMoved: OSFramework.OSUI.Patterns.Carousel.Callbacks.OSOnSlideMovedEvent;
 		// Store initial provider options
@@ -116,7 +114,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		private _setOnInitializedEvent(): void {
 			this._provider.on(Enum.SpliderEvents.Mounted, () => {
 				// Trigger platform's InstanceIntializedHandler client Action
-				this.triggerPlatformEventInitialized(this._platformEventInitialized);
+				this.triggerPlatformEventInitialized();
 			});
 		}
 
@@ -124,7 +122,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		private _setOnSlideMovedEvent(): void {
 			this._provider.on(Enum.SpliderEvents.Moved, (index) => {
 				if (index !== this._currentIndex) {
-					OSFramework.OSUI.Helper.AsyncInvocation(this._platformEventOnSlideMoved, this.widgetId, index);
+					this.triggerPlatformEventplatformCallback(this._platformEventOnSlideMoved, index);
 					this._currentIndex = index;
 				}
 			});
@@ -242,8 +240,8 @@ namespace Providers.OSUI.Carousel.Splide {
 			);
 
 			this._eventOnResize = undefined;
-			this._platformEventInitialized = undefined;
 			this._platformEventOnSlideMoved = undefined;
+			super.unsetCallbacks();
 		}
 
 		/**
@@ -379,8 +377,8 @@ namespace Providers.OSUI.Carousel.Splide {
 				case OSFramework.OSUI.Patterns.Carousel.Enum.CarouselEvents.OnSlideMoved:
 					this._platformEventOnSlideMoved = callback;
 					break;
-				case OSFramework.OSUI.Patterns.Carousel.Enum.CarouselEvents.Initialized:
-					this._platformEventInitialized = callback;
+				default:
+					super.registerCallback(eventName, callback);
 					break;
 			}
 		}
@@ -412,6 +410,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		public setProviderConfigs(newConfigs: SplideOpts): void {
 			this.configs.setExtensibilityConfigs(newConfigs);
 			this.redraw();
+			super.setProviderConfigs(newConfigs);
 		}
 
 		/**

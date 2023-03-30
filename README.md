@@ -1,6 +1,6 @@
-# OutSystems UI · v2.15.0
+# OutSystems UI · v2.16.0
 
-![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+![GitHub License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
 ## About the component
 
@@ -32,7 +32,7 @@ The documentation can be found in the [OutSystems UI website](https://outsystems
 
 We also use the [TypeDoc](https://typedoc.org/) to automatically generate documentation. TypeDoc converts comments in TypeScript source code into rendered HTML documentation, alongside UML diagrams for each class and Interface.
 
-Take a look at it, at [OutSystemsUI FWK Documentation](https://outsystems-ui-docs.github.io/).
+Take a look at it, at [OutSystemsUI Framework Documentation](https://outsystems-ui-docs.github.io/).
 
 ### Why use this component?
 
@@ -61,7 +61,7 @@ We highly recommend the usage of the following tools:
   <li>Create a branch based in the branch <strong>master</strong> (lastest & greatest release)</li>
   <li>Open your banch Code in Visual Studio Code</li>
   <li>Run the following command in Visual Studio Code terminal: <code>npm run setup</code> (this will install all the dependencies that you need to compile the code)</li>
-  <li>Do your magic! :)</li>
+  <li>Do your magic! 😎</li>
   <li><strong>Document your code</strong> (with the extension "Document This", start typing <code>/**</code> and the extension will give you a good starting point</li>
   <li>Compile and fix errors and warnings (in Visual Studio Code terminal: <code>npm run build</code>)</li>
   <li>
@@ -71,7 +71,7 @@ We highly recommend the usage of the following tools:
       <li>Although the script above execute the prettier conventions, you may want to run it over all project files (in Visual Studio Code terminal: <code>npm run prettier</code>)</li>
     </ol>
   </li>
-  <li>Fix all errors & warnings! :)</li>
+  <li>Fix all errors & warnings! ✅</li>
   <li>Kept the branch updated with the master branch and also synchronized with the upstream <strong>master</strong></li>
   <li>Create a PR, describing what was the (mis)behavior, what you changed and please provide a sample </li>
 </ol>

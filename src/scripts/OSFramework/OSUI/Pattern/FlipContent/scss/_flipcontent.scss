@@ -68,7 +68,7 @@
 
 		&__front {
 			position: relative;
-			z-index: 2;
+			z-index: var(--layer-global-screen);
 		}
 
 		&__back {

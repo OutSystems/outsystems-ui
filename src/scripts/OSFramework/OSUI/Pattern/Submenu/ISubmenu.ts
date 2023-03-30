@@ -8,6 +8,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			Interface.IOpenable,
 			Interface.IRenderUpdate,
 			Interface.ICallback {
+		clickOutsideToClose(clickOutsideToClose: boolean): void;
 		setOpenOnHover(): void;
 	}
 }

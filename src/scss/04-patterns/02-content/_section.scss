@@ -27,7 +27,7 @@
 				position: -webkit-sticky; //Fix for older iPhones
 				position: sticky;
 				top: calc(var(--section-top-position) + var(--os-safe-area-top));
-				z-index: 90;
+				z-index: calc(var(--layer-below) + var(--layer-global-navigation));
 			}
 		}
 

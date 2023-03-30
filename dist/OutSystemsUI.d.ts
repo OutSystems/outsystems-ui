@@ -78,7 +78,7 @@ declare namespace OSFramework.OSUI.Constants {
     const AccessibilityHideElementClass = "wcag-hide-text";
     const IsRTLClass = "is-rtl";
     const NoTransition = "no-transition";
-    const OSUIVersion = "2.15.0";
+    const OSUIVersion = "2.16.0";
     const ZeroValue = 0;
 }
 declare namespace OSFramework.OSUI.ErrorCodes {
@@ -222,9 +222,10 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         TopRight = "top-right"
     }
     enum CssProperties {
+        Auto = "auto",
+        Initial = "initial",
         None = "none",
-        PaddingTop = "padding-top",
-        Auto = "auto"
+        PaddingTop = "padding-top"
     }
     enum DataBlocksTag {
         DataBlock = "[data-block]",
@@ -2756,6 +2757,7 @@ declare namespace OSFramework.OSUI.Patterns.Submenu.Enum {
 }
 declare namespace OSFramework.OSUI.Patterns.Submenu {
     interface ISubmenu extends Interface.IPattern, Interface.IOpenable, Interface.IRenderUpdate, Interface.ICallback {
+        clickOutsideToClose(clickOutsideToClose: boolean): void;
         setOpenOnHover(): void;
     }
 }
@@ -2776,6 +2778,7 @@ declare namespace OSFramework.OSUI.Patterns.Submenu {
         private _submenuAllLinksElement;
         private _submenuHeaderElement;
         private _submenuLinksElement;
+        hasClickOutsideToClose: boolean;
         constructor(uniqueId: string, configs: JSON);
         private _bodyClickCallback;
         private _checkForActiveLinks;
@@ -2797,6 +2800,7 @@ declare namespace OSFramework.OSUI.Patterns.Submenu {
         protected unsetHtmlElements(): void;
         build(): void;
         changeProperty(propertyName: string, propertyValue: unknown): void;
+        clickOutsideToClose(clickOutsideToClose: boolean): void;
         close(): void;
         dispose(): void;
         open(): void;
@@ -2901,8 +2905,9 @@ declare namespace OSFramework.OSUI.Patterns.Tabs.Enum {
         DataDirection = "data-direction"
     }
     enum CssProperty {
-        TabsHeight = "--tabs-height",
+        TabsContentItemOverflow = "--tabs-content-item-overflow",
         TabsHeaderItems = "--tabs-header-items",
+        TabsHeight = "--tabs-height",
         TabsIndicatorScale = "--tabs-indicator-scale",
         TabsIndicatorTransform = "--tabs-indicator-transform"
     }
@@ -3452,6 +3457,7 @@ declare namespace OutSystems.OSUI.ErrorCodes {
         FailOpenOnHover: string;
         FailRegisterCallback: string;
         FailUpdate: string;
+        FailClickOutsideToClose: string;
     };
     const Tooltip: {
         FailChangeProperty: string;
@@ -3837,6 +3843,7 @@ declare namespace OutSystems.OSUI.Patterns.SidebarAPI {
 }
 declare namespace OutSystems.OSUI.Patterns.SubmenuAPI {
     function ChangeProperty(submenuId: string, propertyName: string, propertyValue: any): string;
+    function ClickOutsideToClose(submenuId: string, clickOutsideToClose: boolean): string;
     function Close(submenuId: string): string;
     function Open(submenuId: string): string;
     function Create(submenuId: string, configs: string): OSFramework.OSUI.Patterns.Submenu.ISubmenu;

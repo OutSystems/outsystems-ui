@@ -42,7 +42,7 @@ html[data-uieditorversion^='1'] {
 			-servicestudio-position: fixed;
 			-servicestudio-top: 0;
 			-servicestudio-width: var(--side-menu-size);
-			-servicestudio-z-index: 102;
+			-servicestudio-z-index: var(--layer-global-navigation);
 		}
 
 		.app-menu {

@@ -193,7 +193,7 @@
 			transition: transform 200ms linear;
 			transform-origin: 0 0;
 			will-change: transform;
-			z-index: 1;
+			z-index: var(--layer-local-tier-1);
 
 			&[disabled] {
 				background-color: var(--color-neutral-6);
@@ -223,7 +223,7 @@
 
 		&-item {
 			height: 100%;
-			overflow-y: auto;
+			overflow-y: var(--tabs-content-item-overflow);
 			padding: var(--space-m) var(--space-none);
 			scroll-snap-align: start;
 			scroll-snap-stop: always;
@@ -232,6 +232,10 @@
 			& {
 				-servicestudio-display: block !important;
 				-servicestudio-margin-bottom: var(--space-m);
+
+				div:empty {
+					-servicestudio-padding: var(--space-m);
+				}
 			}
 
 			// This selector is used to prevent render issues on chrome, in some screen-sizes, due to overflow hidden and css snap
@@ -256,6 +260,9 @@
 		.osui-tabs__content-item {
 			-servicestudio-border: 1px dashed var(--color-neutral-5);
 			-servicestudio-width: 100%;
+		}
+		.osui-tabs__content-item .display-contents {
+			-servicestudio-display: block;
 		}
 	}
 }

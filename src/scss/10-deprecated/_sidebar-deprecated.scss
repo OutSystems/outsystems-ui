@@ -15,7 +15,7 @@
 	transition: all 130ms ease-in;
 	width: 500px;
 	will-change: transform;
-	z-index: 140;
+	z-index: var(--layer-global-off-canvas);
 
 	// Service Studio Preview
 	& {

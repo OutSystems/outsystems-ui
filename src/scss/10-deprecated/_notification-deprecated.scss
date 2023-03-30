@@ -14,7 +14,7 @@
 	transform: translateY(-120%) translateX(-50%);
 	user-select: none;
 	width: 370px;
-	z-index: 300;
+	z-index: var(--layer-global-off-canvas);
 
 	// Service Studio Preview
 	& {

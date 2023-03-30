@@ -9,7 +9,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		// Dropdown callback events
 		private _onMouseUpEvent: OSFramework.OSUI.GlobalCallbacks.Generic;
 		private _onSelectedOptionEvent: OSFramework.OSUI.GlobalCallbacks.Generic;
-		private _platformEventInitializedCallback: OSFramework.OSUI.GlobalCallbacks.OSGeneric;
 		private _platformEventSelectedOptCallback: OSFramework.OSUI.Patterns.Dropdown.Callbacks.OSOnSelectEvent;
 
 		// Store the hidden input AriaLabel value
@@ -77,11 +76,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		// Get the selected options and pass them into callBack
 		private _onSelectedOption() {
 			// Trigger platform's SelectedOptionCallbackEvent client Action
-			OSFramework.OSUI.Helper.AsyncInvocation(
-				this._platformEventSelectedOptCallback,
-				this.widgetId,
-				this.getSelectedValues()
-			);
+			this.triggerPlatformEventplatformCallback(this._platformEventSelectedOptCallback, this.getSelectedValues());
 		}
 
 		// Close the dropdown if it's open!
@@ -159,7 +154,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			this._manageAttributes();
 
 			// Trigger platform's InstanceIntializedHandler client Action
-			this.triggerPlatformEventInitialized(this._platformEventInitializedCallback);
+			this.triggerPlatformEventInitialized();
 		}
 
 		/**
@@ -208,6 +203,8 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			this._virtualselectConfigs = undefined;
 			this._virtualselectOpts = undefined;
 			this.provider = undefined;
+
+			super.unsetCallbacks();
 		}
 
 		/**
@@ -399,12 +396,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 */
 		public registerCallback(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
-				case OSFramework.OSUI.Patterns.Dropdown.Enum.Events.Initialized:
-					if (this._platformEventInitializedCallback === undefined) {
-						this._platformEventInitializedCallback = callback;
-					}
-					break;
-
 				case Enum.Events.OnSelected:
 					if (this._platformEventSelectedOptCallback === undefined) {
 						this._platformEventSelectedOptCallback = callback;
@@ -412,7 +403,8 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 					break;
 
 				default:
-					throw new Error(`The given '${eventName}' event name it's not defined.`);
+					super.registerCallback(eventName, callback);
+					break;
 			}
 		}
 
@@ -437,6 +429,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		public setProviderConfigs(newConfigs: VirtualSelectOpts): void {
 			this.configs.setExtensibilityConfigs(newConfigs);
 			this.redraw();
+			super.setProviderConfigs(newConfigs);
 		}
 
 		/**
