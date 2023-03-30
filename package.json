@@ -19,6 +19,9 @@
 		"type": "git",
 		"url": "git+https://github.com/OutSystems/outsystems-ui"
 	  },
+	"engines": {
+		"node": ">=12"
+	},
 	"author": "UI Components Team",
 	"keywords": [
 		"OutSystems",
