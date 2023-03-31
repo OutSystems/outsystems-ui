@@ -2602,6 +2602,9 @@ select.dropdown-display[disabled]{
   position:relative;
   z-index:var(--layer-global-screen);
 }
+.is-rtl.phone .table:not(.table-no-responsive) td, .is-rtl.tablet .table:not(.table-no-responsive) td{
+  text-align:right !important;
+}
 .is-rtl.phone .table:not(.table-no-responsive) td:before, .is-rtl.tablet .table:not(.table-no-responsive) td:before{
   margin-left:10px;
   margin-right:0px;

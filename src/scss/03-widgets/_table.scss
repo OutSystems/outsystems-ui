@@ -280,6 +280,10 @@
 	&.phone,
 	&.tablet {
 		.table:not(.table-no-responsive) {
+			td {
+				text-align: right !important;
+			}
+
 			td:before {
 				margin-left: 10px;
 				margin-right: 0px;
