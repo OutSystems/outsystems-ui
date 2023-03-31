@@ -44,3 +44,14 @@
 		width: auto;
 	}
 }
+
+// IsRTL --------------------------------------------------------------------
+///
+.is-rtl {
+	[data-upload] {
+		[data-icon] {
+			margin-left: var(--space-base);
+			margin-right: var(--space-none);
+		}
+	}
+}

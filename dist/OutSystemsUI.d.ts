@@ -439,6 +439,10 @@ declare namespace OSFramework.OSUI.GlobalEnum {
     enum NullValues {
         Time = "00:00:00"
     }
+    enum ProviderEvents {
+        Initialized = "Initialized",
+        OnProviderConfigsApplied = "OnProviderConfigsApplied"
+    }
 }
 declare namespace OSFramework.OSUI.Behaviors {
     type SpringAnimationProperties = {
@@ -1066,17 +1070,23 @@ declare namespace OSFramework.OSUI.Patterns {
 }
 declare namespace OSFramework.OSUI.Patterns {
     abstract class AbstractProviderPattern<P, C extends AbstractConfiguration> extends AbstractPattern<C> implements Interface.IProviderPattern<P> {
+        private _platformEventInitialized;
+        private _platformEventProviderConfigsAppliedCallback;
         protected _provider: P;
         protected _providerInfo: ProviderInfo;
         protected providerEventsManagerInstance: Event.ProviderEvents.IProviderEventManager;
         private _getEventIndexFromArray;
         private _handleProviderEventsAPI;
         protected redraw(): void;
-        protected triggerPlatformEventInitialized(platFormCallback: GlobalCallbacks.OSGeneric): void;
+        protected triggerPlatformEventInitialized(): void;
+        protected triggerPlatformEventplatformCallback(platFormCallback: GlobalCallbacks.OSGeneric, ...args: unknown[]): void;
+        protected unsetCallbacks(): void;
         build(): void;
         checkAddedProviderEvents(): void;
         checkPendingProviderEvents(): void;
         dispose(): void;
+        registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
+        setProviderConfigs(providerConfigs: unknown): void;
         setProviderEvent(eventName: string, callback: GlobalCallbacks.Generic, uniqueId: string, saveEvent?: boolean): void;
         unsetProviderEvent(eventId: string): void;
         updateProviderEvents(providerInfo: ProviderInfo): void;
@@ -1085,8 +1095,6 @@ declare namespace OSFramework.OSUI.Patterns {
         set provider(p: P);
         get provider(): P;
         protected abstract prepareConfigs(): void;
-        abstract registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
-        abstract setProviderConfigs(providerConfigs: ProviderConfigs): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Accordion {
@@ -4124,7 +4132,6 @@ declare namespace Providers.OSUI.Carousel.Splide {
         private _currentIndex;
         private _eventOnResize;
         private _hasList;
-        private _platformEventInitialized;
         private _platformEventOnSlideMoved;
         private _splideOptions;
         constructor(uniqueId: string, configs: JSON);
@@ -4175,7 +4182,6 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr {
     abstract class AbstractFlatpickr<C extends Flatpickr.AbstractFlatpickrConfig> extends OSFramework.OSUI.Patterns.DatePicker.AbstractDatePicker<Flatpickr, C> implements IFlatpickr {
         private _a11yInfoContainerElem;
         private _bodyScrollCommonBehaviour;
-        private _onInitializeCallbackEvent;
         private _zindexCommonBehavior;
         protected _datePickerPlatformInputElem: HTMLInputElement;
         protected _flatpickrInputElem: HTMLInputElement;
@@ -4777,7 +4783,6 @@ declare namespace Providers.OSUI.Dropdown.VirtualSelect {
         private _eventOnWindowResize;
         private _onMouseUpEvent;
         private _onSelectedOptionEvent;
-        private _platformEventInitializedCallback;
         private _platformEventSelectedOptCallback;
         protected _hiddenInputWrapperAriaLabelVal: string;
         protected _virtualselectConfigs: VirtualSelectMethods;
@@ -4935,7 +4940,6 @@ declare namespace Providers.OSUI.MonthPicker.Flatpickr {
     class OSUIFlatpickrMonth extends OSFramework.OSUI.Patterns.MonthPicker.AbstractMonthPicker<Flatpickr, FlatpickrMonthConfig> implements IFlatpickrMonth {
         private _bodyScrollCommonBehaviour;
         private _flatpickrOpts;
-        private _onInitializeCallbackEvent;
         private _zindexCommonBehavior;
         protected _flatpickrInputElem: HTMLInputElement;
         protected _monthPickerProviderInputElem: HTMLInputElement;
@@ -4995,7 +4999,6 @@ declare namespace Providers.OSUI.RangeSlider.NoUISlider {
         private _rangeSliderProviderElem;
         protected eventProviderValueChanged: OSFramework.OSUI.GlobalCallbacks.Generic;
         protected noUiSliderOpts: NoUiSliderOptions;
-        protected platformEventInitialize: OSFramework.OSUI.GlobalCallbacks.OSGeneric;
         protected platformEventValueChange: OSFramework.OSUI.Patterns.RangeSlider.Callbacks.OSOnValueChangeEvent;
         protected throttleTimeValue: number;
         protected throttleTimer: any;
@@ -5157,7 +5160,6 @@ declare namespace Providers.OSUI.TimePicker.Flatpickr {
     class OSUIFlatpickrTime extends OSFramework.OSUI.Patterns.TimePicker.AbstractTimePicker<Flatpickr, FlatpickrTimeConfig> implements IFlatpickrTime {
         private _bodyScrollCommonBehaviour;
         private _flatpickrOpts;
-        private _onInitializeCallbackEvent;
         private _zindexCommonBehavior;
         protected _flatpickrInputElem: HTMLInputElement;
         protected _onChangeCallbackEvent: OSFramework.OSUI.Patterns.TimePicker.Callbacks.OSOnChangeEvent;
