@@ -127,3 +127,19 @@
 		outline: 3px solid var(--color-focus-outer);
 	}
 }
+
+// IsRTL --------------------------------------------------------------------
+///
+.is-rtl {
+	.pswp {
+		&__counter {
+			left: inherit;
+			right: 0;
+		}
+
+		&__top-bar {
+			display: flex;
+			flex-direction: row-reverse;
+		}
+	}
+}
