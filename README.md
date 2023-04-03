@@ -52,6 +52,7 @@ We highly recommend the usage of the following tools:
     -   Document This
     -   ESLint
     -   Prettier - Code formatter
+-   [Node v12.0+](https://nodejs.org/en)
 
 ### How to change this code?
 
