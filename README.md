@@ -58,7 +58,7 @@ We highly recommend the usage of the following tools:
 
 <ol>
   <li>Do a Repository <strong>Fork</strong></li>
-  <li>Create a branch based in the branch <strong>master</strong> (lastest & greatest release)</li>
+  <li>Create a branch based in the branch <strong>master</strong> (latest & greatest release) - branch master is <strong>dev</strong></li>
   <li>Open your banch Code in Visual Studio Code</li>
   <li>Run the following command in Visual Studio Code terminal: <code>npm run setup</code> (this will install all the dependencies that you need to compile the code)</li>
   <li>Do your magic! 😎</li>

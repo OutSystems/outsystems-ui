@@ -4810,6 +4810,11 @@ var OSFramework;
                             };
                             this._focusTrapObject = new OSUI.Behaviors.FocusTrap(opts);
                         }
+                        _setInitialOptions() {
+                            if (this.configs.IsDisabled) {
+                                this.disable();
+                            }
+                        }
                         _setNewOptionItem(optionItem) {
                             if (this.getChild(optionItem.uniqueId)) {
                                 throw new Error(`${OSUI.ErrorCodes.Dropdown.FailSetNewOptionItem}: There is already a ${OSUI.GlobalEnum.PatternName.DropdownServerSideItem} under Id: '${optionItem.widgetId}' added to ${OSUI.GlobalEnum.PatternName.Dropdown} with uniqueId: ${this.uniqueId}.`);
@@ -5036,6 +5041,7 @@ var OSFramework;
                             super.build();
                             this.setCallbacks();
                             this.setHtmlElements();
+                            this._setInitialOptions();
                             super.finishBuild();
                         }
                         changeProperty(propertyName, propertyValue) {
