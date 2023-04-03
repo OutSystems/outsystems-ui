@@ -952,6 +952,7 @@ var OSFramework;
         (function (Event) {
             class AbstractEventsManager {
                 constructor() {
+                    this._enableBodyClick = true;
                     this._events = new Map();
                 }
                 addHandler(eventType, handler) {
@@ -965,6 +966,12 @@ var OSFramework;
                             this._events.set(eventType, ev);
                         }
                     }
+                }
+                disableBodyClickEvent() {
+                    this._enableBodyClick = false;
+                }
+                enableBodyClickEvent() {
+                    this._enableBodyClick = true;
                 }
                 hasHandlers(eventType) {
                     let returnValue = false;
@@ -988,6 +995,9 @@ var OSFramework;
                 get events() {
                     return this._events;
                 }
+                get getBodyClickStatus() {
+                    return this._enableBodyClick;
+                }
             }
             Event.AbstractEventsManager = AbstractEventsManager;
         })(Event = OSUI.Event || (OSUI.Event = {}));
@@ -1005,7 +1015,9 @@ var OSFramework;
                     document.body.addEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._bodyTrigger.bind(this));
                 }
                 _bodyTrigger(evt) {
-                    this.trigger(OSUI.GlobalEnum.HTMLEvent.Click, evt);
+                    if (Event.GlobalEventManager.Instance.getBodyClickStatus) {
+                        this.trigger(OSUI.GlobalEnum.HTMLEvent.Click, evt);
+                    }
                 }
             }
             Event.BodyOnClick = BodyOnClick;
@@ -7938,7 +7950,7 @@ var OSFramework;
                         OSUI.Helper.A11Y.SetElementsTabIndex(this._isOpen, this._focusTrapInstance.focusableElements);
                     }
                     _overlayClickCallback(_args, e) {
-                        if (this._isOpen && this._clickedOutsideElement && e.target === this.selfElement) {
+                        if (this._isOpen && this._clickedOutsideElement) {
                             this.close();
                         }
                         e.stopPropagation();
@@ -16691,6 +16703,12 @@ var Providers;
                         });
                         this._manageAttributes();
                         this.triggerPlatformEventInitialized();
+                        this.selfElement.addEventListener(VirtualSelect.Enum.Events.BeforeOpen, () => {
+                            OSFramework.OSUI.Event.GlobalEventManager.Instance.disableBodyClickEvent();
+                        });
+                        this.selfElement.addEventListener(VirtualSelect.Enum.Events.BeforeClose, () => {
+                            OSFramework.OSUI.Event.GlobalEventManager.Instance.enableBodyClickEvent();
+                        });
                     }
                     setA11YProperties() {
                         this.setHiddenInputWrapperAriaLabelVal();
@@ -16760,6 +16778,7 @@ var Providers;
                     }
                     close() {
                         this._virtualselectConfigs.close();
+                        OSFramework.OSUI.Event.GlobalEventManager.Instance.enableBodyClickEvent();
                     }
                     disable() {
                         if (this.configs.IsDisabled === false) {
@@ -16800,6 +16819,7 @@ var Providers;
                     }
                     open() {
                         this._virtualselectConfigs.open();
+                        OSFramework.OSUI.Event.GlobalEventManager.Instance.disableBodyClickEvent();
                     }
                     registerCallback(eventName, callback) {
                         switch (eventName) {
@@ -17038,6 +17058,8 @@ var Providers;
                     })(CssClass = Enum.CssClass || (Enum.CssClass = {}));
                     let Events;
                     (function (Events) {
+                        Events["BeforeClose"] = "beforeClose";
+                        Events["BeforeOpen"] = "beforeOpen";
                         Events["Change"] = "change";
                         Events["OnSelected"] = "OnSelected";
                     })(Events = Enum.Events || (Enum.Events = {}));
@@ -17365,6 +17387,12 @@ var Providers;
                             this._zindexCommonBehavior = new OSUI.SharedProviderResources.Flatpickr.UpdateZindex(this);
                         }
                         this.createdInstance();
+                        this.provider.config.onOpen.push(function () {
+                            OSFramework.OSUI.Event.GlobalEventManager.Instance.disableBodyClickEvent();
+                        });
+                        this.provider.config.onClose.push(function () {
+                            OSFramework.OSUI.Event.GlobalEventManager.Instance.enableBodyClickEvent();
+                        });
                     }
                     createdInstance() {
                         this.updateProviderEvents({
@@ -18380,6 +18408,12 @@ var Providers;
                             this._zindexCommonBehavior = new OSUI.SharedProviderResources.Flatpickr.UpdateZindex(this);
                         }
                         this.createdInstance();
+                        this.provider.config.onOpen.push(function () {
+                            OSFramework.OSUI.Event.GlobalEventManager.Instance.disableBodyClickEvent();
+                        });
+                        this.provider.config.onClose.push(function () {
+                            OSFramework.OSUI.Event.GlobalEventManager.Instance.enableBodyClickEvent();
+                        });
                     }
                     createdInstance() {
                         this.updateProviderEvents({

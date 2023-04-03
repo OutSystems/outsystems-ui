@@ -544,13 +544,17 @@ declare namespace OSFramework.OSUI.Event {
 }
 declare namespace OSFramework.OSUI.Event {
     abstract class AbstractEventsManager<ET, D> {
+        private _enableBodyClick;
         private _events;
         constructor();
         addHandler(eventType: ET, handler: GlobalCallbacks.Generic): void;
+        disableBodyClickEvent(): void;
+        enableBodyClickEvent(): void;
         hasHandlers(eventType: ET): boolean;
         removeHandler(eventType: ET, handler: GlobalCallbacks.Generic): void;
         trigger(eventType: ET, data?: D, ...args: unknown[]): void;
         get events(): Map<ET, IEvent<D>>;
+        get getBodyClickStatus(): boolean;
         protected abstract getInstanceOfEventType(eventType: ET): IEvent<D>;
     }
 }
@@ -4861,6 +4865,8 @@ declare namespace Providers.OSUI.Dropdown.VirtualSelect.Enum {
         OptionItemImage = "osui-dropdown-option-image"
     }
     enum Events {
+        BeforeClose = "beforeClose",
+        BeforeOpen = "beforeOpen",
         Change = "change",
         OnSelected = "OnSelected"
     }
