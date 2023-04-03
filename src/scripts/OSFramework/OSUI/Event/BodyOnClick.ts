@@ -26,7 +26,10 @@ namespace OSFramework.OSUI.Event {
 		}
 
 		private _bodyTrigger(evt: PointerEvent): void {
-			this.trigger(GlobalEnum.HTMLEvent.Click, evt);
+			// Trigger the body click event only if the getBodyClickStatus is True
+			if (GlobalEventManager.Instance.getBodyClickStatus) {
+				this.trigger(GlobalEnum.HTMLEvent.Click, evt);
+			}
 		}
 	}
 }
