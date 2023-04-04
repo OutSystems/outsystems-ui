@@ -16778,7 +16778,6 @@ var Providers;
                     }
                     close() {
                         this._virtualselectConfigs.close();
-                        OSFramework.OSUI.Event.GlobalEventManager.Instance.enableBodyClickEvent();
                     }
                     disable() {
                         if (this.configs.IsDisabled === false) {
@@ -16819,7 +16818,6 @@ var Providers;
                     }
                     open() {
                         this._virtualselectConfigs.open();
-                        OSFramework.OSUI.Event.GlobalEventManager.Instance.disableBodyClickEvent();
                     }
                     registerCallback(eventName, callback) {
                         switch (eventName) {

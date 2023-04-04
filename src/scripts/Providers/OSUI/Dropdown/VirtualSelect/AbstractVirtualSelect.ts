@@ -308,9 +308,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 */
 		public close(): void {
 			this._virtualselectConfigs.close();
-
-			// Enable the global event to close on body click
-			OSFramework.OSUI.Event.GlobalEventManager.Instance.enableBodyClickEvent();
 		}
 
 		/**
@@ -396,9 +393,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 */
 		public open(): void {
 			this._virtualselectConfigs.open();
-
-			// Disable the global event to close on body click
-			OSFramework.OSUI.Event.GlobalEventManager.Instance.disableBodyClickEvent();
 		}
 
 		/**
