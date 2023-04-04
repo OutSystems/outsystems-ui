@@ -155,6 +155,14 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 
 			// Trigger platform's InstanceIntializedHandler client Action
 			this.triggerPlatformEventInitialized();
+
+			// Add events to change the global event triggering of body click on Open / Close
+			this.selfElement.addEventListener(Enum.Events.BeforeOpen, () => {
+				OSFramework.OSUI.Event.GlobalEventManager.Instance.disableBodyClickEvent();
+			});
+			this.selfElement.addEventListener(Enum.Events.BeforeClose, () => {
+				OSFramework.OSUI.Event.GlobalEventManager.Instance.enableBodyClickEvent();
+			});
 		}
 
 		/**

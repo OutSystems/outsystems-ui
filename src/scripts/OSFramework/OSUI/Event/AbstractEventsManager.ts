@@ -13,6 +13,7 @@ namespace OSFramework.OSUI.Event {
 	 * @template D  this will be the type of Data to be passed, by default to the handlers.
 	 */
 	export abstract class AbstractEventsManager<ET, D> {
+		private _enableBodyClick = true;
 		private _events: Map<ET, IEvent<D>>;
 
 		constructor() {
@@ -36,6 +37,26 @@ namespace OSFramework.OSUI.Event {
 					this._events.set(eventType, ev);
 				}
 			}
+		}
+
+		/**
+		 * This method is to disable the body click on detached patterns
+		 *
+		 * @param {boolean} disableBodyClick
+		 * @memberof AbstractEventsManager
+		 */
+		public disableBodyClickEvent(): void {
+			this._enableBodyClick = false;
+		}
+
+		/**
+		 * This method is to enable the body click on detached patterns
+		 *
+		 * @param {boolean} disableBodyClick
+		 * @memberof AbstractEventsManager
+		 */
+		public enableBodyClickEvent(): void {
+			this._enableBodyClick = true;
 		}
 
 		/**
@@ -91,6 +112,17 @@ namespace OSFramework.OSUI.Event {
 		 */
 		public get events(): Map<ET, IEvent<D>> {
 			return this._events;
+		}
+
+		/**
+		 * Getter that returns the body click status
+		 *
+		 * @readonly
+		 * @type {boolean}
+		 * @memberof AbstractEventsManager
+		 */
+		public get getBodyClickStatus(): boolean {
+			return this._enableBodyClick;
 		}
 
 		/**

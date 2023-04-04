@@ -22,6 +22,8 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Enum {
 	 * Events
 	 */
 	export enum Events {
+		BeforeClose = 'beforeClose',
+		BeforeOpen = 'beforeOpen',
 		Change = 'change',
 		OnSelected = 'OnSelected',
 	}
