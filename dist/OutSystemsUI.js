@@ -17390,7 +17390,10 @@ var Providers;
                         this.provider.config.onOpen.push(function () {
                             OSFramework.OSUI.Event.GlobalEventManager.Instance.disableBodyClickEvent();
                         });
-                        this.provider.config.onClose.push(function () {
+                        this.provider.config.onOpen.push(() => {
+                            OSFramework.OSUI.Event.GlobalEventManager.Instance.disableBodyClickEvent();
+                        });
+                        this.provider.config.onClose.push(() => {
                             OSFramework.OSUI.Event.GlobalEventManager.Instance.enableBodyClickEvent();
                         });
                     }
@@ -18408,10 +18411,10 @@ var Providers;
                             this._zindexCommonBehavior = new OSUI.SharedProviderResources.Flatpickr.UpdateZindex(this);
                         }
                         this.createdInstance();
-                        this.provider.config.onOpen.push(function () {
+                        this.provider.config.onOpen.push(() => {
                             OSFramework.OSUI.Event.GlobalEventManager.Instance.disableBodyClickEvent();
                         });
-                        this.provider.config.onClose.push(function () {
+                        this.provider.config.onClose.push(() => {
                             OSFramework.OSUI.Event.GlobalEventManager.Instance.enableBodyClickEvent();
                         });
                     }
