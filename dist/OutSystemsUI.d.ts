@@ -2959,6 +2959,7 @@ declare namespace OSFramework.OSUI.Patterns.Tabs {
         private _hasSingleContent;
         private _headerItemsLength;
         private _isChrome;
+        private _isEdge;
         private _platformEventTabsOnChange;
         private _requestAnimationFrameOnIndicatorResize;
         private _tabsContentElement;
