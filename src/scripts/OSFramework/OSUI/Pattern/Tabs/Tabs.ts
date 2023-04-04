@@ -32,10 +32,8 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		private _hasSingleContent: boolean;
 		// Store the number of headerItems to be used to set the css variable
 		private _headerItemsLength: number;
-		// Store if the current browser is Edge
-		private _isChrome: boolean;
-		// Store if the current browser is Chrome
-		private _isEdge: boolean;
+		// Store if the current browser is Chrome or Edge (Chromium based)
+		private _isChromium: boolean;
 		// Store the onTabsChange platform callback
 		private _platformEventTabsOnChange: Callbacks.OSOnChangeEvent;
 		// Store the id of the requestAnimationFrame called to animate the indicator
@@ -53,8 +51,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			// Check if running on native shell, to enable drag gestures
 			this._hasDragGestures =
 				Helper.DeviceInfo.IsNative && this.configs.TabsOrientation === GlobalEnum.Orientation.Horizontal;
-			this._isChrome = Helper.DeviceInfo.GetBrowser() === 'chrome';
-			this._isEdge = Helper.DeviceInfo.GetBrowser() === 'edge';
+			this._isChromium = Helper.DeviceInfo.GetBrowser() === 'chrome' || Helper.DeviceInfo.GetBrowser() === 'edge';
 		}
 
 		// Method that it's called whenever a new TabsContentItem is rendered
@@ -278,7 +275,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 
 				let pixelRatio = 1;
 
-				if (this._isChrome || this._isEdge) {
+				if (this._isChromium) {
 					// devicePixelRatio used here to account for browser or system zoom
 					pixelRatio = window.devicePixelRatio;
 				}
