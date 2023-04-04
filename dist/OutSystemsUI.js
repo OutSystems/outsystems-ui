@@ -8786,6 +8786,7 @@ var OSFramework;
                         this._hasDragGestures =
                             OSUI.Helper.DeviceInfo.IsNative && this.configs.TabsOrientation === OSUI.GlobalEnum.Orientation.Horizontal;
                         this._isChrome = OSUI.Helper.DeviceInfo.GetBrowser() === 'chrome';
+                        this._isEdge = OSUI.Helper.DeviceInfo.GetBrowser() === 'edge';
                     }
                     _addContentItem(tabsContentChildItem) {
                         if (this.getChild(tabsContentChildItem.uniqueId)) {
@@ -8918,7 +8919,7 @@ var OSFramework;
                                     : activeElement.offsetLeft;
                             const newSize = isVertical ? activeElement.offsetHeight : activeElement.offsetWidth;
                             let pixelRatio = 1;
-                            if (this._isChrome) {
+                            if (this._isChrome || this._isEdge) {
                                 pixelRatio = window.devicePixelRatio;
                             }
                             const newScaleValue = (pixelRatio * newSize) / Math.round(pixelRatio);
