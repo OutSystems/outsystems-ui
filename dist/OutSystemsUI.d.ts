@@ -1728,6 +1728,7 @@ declare namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
         private _setBalloonWrapperExtendedClass;
         private _setCssClasses;
         private _setFocusSpanElements;
+        private _setInitialOptions;
         private _setNewOptionItem;
         private _setObserver;
         private _setUpEvents;

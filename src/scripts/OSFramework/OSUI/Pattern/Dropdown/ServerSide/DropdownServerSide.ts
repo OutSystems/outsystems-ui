@@ -552,7 +552,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				this._setBalloonWrapperExtendedClass(this.configs.ExtendedClass);
 			}
 		}
-
 		// Add Custom HTML elements to the DropdownBallon in order to help on deal with keyboard navigation (Accessibility)
 		private _setFocusSpanElements(): void {
 			const opts = {
@@ -564,6 +563,12 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			this._focusTrapObject = new Behaviors.FocusTrap(opts);
 		}
 
+		// Method to set the initial options on screen load
+		private _setInitialOptions(): void {
+			if (this.configs.IsDisabled) {
+				this.disable();
+			}
+		}
 		// Method used to store a given DropdownOption into optionItems list, it's triggered by DropdownServerSideItem
 		private _setNewOptionItem(optionItem: Patterns.DropdownServerSideItem.DropdownServerSideItem): void {
 			// Check if the given OptionId has been already added
@@ -994,6 +999,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			super.build();
 			this.setCallbacks();
 			this.setHtmlElements();
+			this._setInitialOptions();
 			super.finishBuild();
 		}
 
