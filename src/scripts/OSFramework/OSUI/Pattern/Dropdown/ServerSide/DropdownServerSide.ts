@@ -77,6 +77,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		private _selectValuesWrapperAriaLabel: string;
 		// Store the selfElementBounds in order to check if they changed!
 		private _selfElementBoundingClientRect: DOMRect = new DOMRect(0, 0);
+		// Close and Open setTimeout value time
+		private _setTimeOutOpenCloseVal = 100;
 		// Store the window width value in order to check if has changed at windowResize
 		private _windowWidth: number;
 
@@ -1050,7 +1052,11 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public close(): void {
-			this._close();
+			// SetTimeout is needed in order to ensure there is no conflit between OnClickBody and a button click that trigger this method.
+			OSFramework.OSUI.Helper.ApplySetTimeOut(
+				this._close.bind(this) as OSFramework.OSUI.GlobalCallbacks.Generic,
+				this._setTimeOutOpenCloseVal
+			);
 		}
 
 		/**
@@ -1108,7 +1114,11 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public open(): void {
-			this._open();
+			// SetTimeout is needed in order to ensure there is no conflit between OnClickBody and a button click that trigger this method.
+			OSFramework.OSUI.Helper.ApplySetTimeOut(
+				this._open.bind(this) as OSFramework.OSUI.GlobalCallbacks.Generic,
+				this._setTimeOutOpenCloseVal
+			);
 		}
 
 		/**
