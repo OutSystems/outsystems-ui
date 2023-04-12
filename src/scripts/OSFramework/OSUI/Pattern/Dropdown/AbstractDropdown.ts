@@ -4,9 +4,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown {
 		extends AbstractProviderPattern<P, C>
 		implements IDropdown
 	{
-		// Close and Open setTimeout value time
-		protected _setTimeOutOpenCloseVal = 0;
-
 		/**
 		 * Creates an instance of AbstractDropdown.
 		 *
