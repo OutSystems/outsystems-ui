@@ -78,7 +78,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		// Store the selfElementBounds in order to check if they changed!
 		private _selfElementBoundingClientRect: DOMRect = new DOMRect(0, 0);
 		// Close and Open setTimeout value time
-		private _setTimeOutOpenCloseVal = 100;
+		private _setTimeOutOpenCloseVal = 0;
 		// Store the window width value in order to check if has changed at windowResize
 		private _windowWidth: number;
 
