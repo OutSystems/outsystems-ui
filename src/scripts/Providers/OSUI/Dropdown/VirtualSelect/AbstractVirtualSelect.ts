@@ -307,7 +307,8 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public close(): void {
-			this._virtualselectConfigs.close();
+			// SetTimeout is needed in order to ensure there is no conflit between OnClickBody and a button click that trigger this method.
+			OSFramework.OSUI.Helper.AsyncInvocation(this._virtualselectConfigs.close.bind(this._virtualselectConfigs));
 		}
 
 		/**
@@ -392,7 +393,8 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public open(): void {
-			this._virtualselectConfigs.open();
+			// SetTimeout is needed in order to ensure there is no conflit between OnClickBody and a button click that trigger this method.
+			OSFramework.OSUI.Helper.AsyncInvocation(this._virtualselectConfigs.open.bind(this._virtualselectConfigs));
 		}
 
 		/**

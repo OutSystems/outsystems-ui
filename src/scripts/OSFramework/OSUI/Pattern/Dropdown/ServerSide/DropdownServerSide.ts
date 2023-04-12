@@ -1050,7 +1050,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public close(): void {
-			this._close();
+			// SetTimeout is needed in order to ensure there is no conflit between OnClickBody and a button click that trigger this method.
+			OSFramework.OSUI.Helper.AsyncInvocation(this._close.bind(this));
 		}
 
 		/**
@@ -1108,7 +1109,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public open(): void {
-			this._open();
+			// SetTimeout is needed in order to ensure there is no conflit between OnClickBody and a button click that trigger this method.
+			OSFramework.OSUI.Helper.AsyncInvocation(this._open.bind(this));
 		}
 
 		/**
