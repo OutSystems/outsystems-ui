@@ -58,10 +58,6 @@
 		.header {
 			margin-left: 0;
 		}
-
-		&.menu-visible .header {
-			margin-left: calc(-1 * var(--side-menu-size));
-		}
 	}
 
 	.aside-expandable {
@@ -106,13 +102,6 @@
 // IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {
-	&.desktop {
-		.layout-side.layout-native.aside-expandable.menu-visible .header {
-			margin-left: 0;
-			margin-right: calc(-1 * var(--side-menu-size));
-		}
-	}
-
 	&.tablet,
 	&.phone {
 		left: 0;
