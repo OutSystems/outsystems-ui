@@ -1419,6 +1419,11 @@ var OSFramework;
                     setTimeout(() => callback(...args), 0);
             }
             Helper.AsyncInvocation = AsyncInvocation;
+            function ApplySetTimeOut(callback, time, ...args) {
+                if (callback)
+                    setTimeout(() => callback(...args), time);
+            }
+            Helper.ApplySetTimeOut = ApplySetTimeOut;
         })(Helper = OSUI.Helper || (OSUI.Helper = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
 })(OSFramework || (OSFramework = {}));
@@ -5077,7 +5082,7 @@ var OSFramework;
                             }
                         }
                         close() {
-                            this._close();
+                            OSFramework.OSUI.Helper.AsyncInvocation(this._close.bind(this));
                         }
                         disable() {
                             OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSUI.GlobalEnum.HTMLAttributes.Disabled, '');
@@ -5101,7 +5106,7 @@ var OSFramework;
                             return this._hasNoImplementation();
                         }
                         open() {
-                            this._open();
+                            OSFramework.OSUI.Helper.AsyncInvocation(this._open.bind(this));
                         }
                         registerCallback(eventName, callback) {
                             switch (eventName) {
@@ -8785,8 +8790,7 @@ var OSFramework;
                         super(uniqueId, new Tabs_1.TabsConfig(configs));
                         this._hasDragGestures =
                             OSUI.Helper.DeviceInfo.IsNative && this.configs.TabsOrientation === OSUI.GlobalEnum.Orientation.Horizontal;
-                        this._isChrome = OSUI.Helper.DeviceInfo.GetBrowser() === 'chrome';
-                        this._isEdge = OSUI.Helper.DeviceInfo.GetBrowser() === 'edge';
+                        this._isChromium = OSUI.Helper.DeviceInfo.GetBrowser() === 'chrome' || OSUI.Helper.DeviceInfo.GetBrowser() === 'edge';
                     }
                     _addContentItem(tabsContentChildItem) {
                         if (this.getChild(tabsContentChildItem.uniqueId)) {
@@ -8919,7 +8923,7 @@ var OSFramework;
                                     : activeElement.offsetLeft;
                             const newSize = isVertical ? activeElement.offsetHeight : activeElement.offsetWidth;
                             let pixelRatio = 1;
-                            if (this._isChrome || this._isEdge) {
+                            if (this._isChromium) {
                                 pixelRatio = window.devicePixelRatio;
                             }
                             const newScaleValue = (pixelRatio * newSize) / Math.round(pixelRatio);
@@ -16784,7 +16788,7 @@ var Providers;
                         this._virtualselectConfigs.reset();
                     }
                     close() {
-                        this._virtualselectConfigs.close();
+                        OSFramework.OSUI.Helper.AsyncInvocation(this._virtualselectConfigs.close.bind(this._virtualselectConfigs));
                     }
                     disable() {
                         if (this.configs.IsDisabled === false) {
@@ -16824,7 +16828,7 @@ var Providers;
                         return '';
                     }
                     open() {
-                        this._virtualselectConfigs.open();
+                        OSFramework.OSUI.Helper.AsyncInvocation(this._virtualselectConfigs.open.bind(this._virtualselectConfigs));
                     }
                     registerCallback(eventName, callback) {
                         switch (eventName) {

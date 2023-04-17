@@ -730,6 +730,7 @@ declare namespace OSFramework.OSUI.Event.ProviderEvents {
 }
 declare namespace OSFramework.OSUI.Helper {
     function AsyncInvocation(callback: GlobalCallbacks.Generic, ...args: unknown[]): void;
+    function ApplySetTimeOut(callback: GlobalCallbacks.Generic, time: number, ...args: unknown[]): void;
 }
 declare namespace OSFramework.OSUI.Helper {
     abstract class BoundPosition {
@@ -2958,8 +2959,7 @@ declare namespace OSFramework.OSUI.Patterns.Tabs {
         private _hasDragGestures;
         private _hasSingleContent;
         private _headerItemsLength;
-        private _isChrome;
-        private _isEdge;
+        private _isChromium;
         private _platformEventTabsOnChange;
         private _requestAnimationFrameOnIndicatorResize;
         private _tabsContentElement;
