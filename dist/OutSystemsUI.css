@@ -1049,9 +1049,6 @@ body,
 .desktop .layout-side.layout-native.aside-expandable .header{
   margin-left:0;
 }
-.desktop .layout-side.layout-native.aside-expandable.menu-visible .header{
-  margin-left:calc(-1 * var(--side-menu-size));
-}
 .desktop .aside-expandable .header{
   z-index:var(--layer-global-navigation);
 }
@@ -1068,10 +1065,6 @@ body,
 }
 .phone .layout-side.layout-native.aside-expandable .main .header{
   z-index:var(--layer-global-navigation);
-}
-.is-rtl.desktop .layout-side.layout-native.aside-expandable.menu-visible .header{
-  margin-left:0;
-  margin-right:calc(-1 * var(--side-menu-size));
 }
 .is-rtl.tablet, .is-rtl.phone{
   left:0;
