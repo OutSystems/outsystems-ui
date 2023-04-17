@@ -1066,17 +1066,10 @@ body,
 .tablet.portrait .layout-side.layout-native.aside-expandable .main .header{
   z-index:var(--layer-global-navigation);
 }
-.tablet.landscape .layout-side.layout-native.aside-expandable.menu-visible .header{
-  margin-left:calc(-1 * var(--side-menu-size));
-}
 .phone .layout-side.layout-native.aside-expandable .main .header{
   z-index:var(--layer-global-navigation);
 }
 .is-rtl.desktop .layout-side.layout-native.aside-expandable.menu-visible .header{
-  margin-left:0;
-  margin-right:calc(-1 * var(--side-menu-size));
-}
-.is-rtl.tablet.landscape .layout-side.layout-native.aside-expandable.menu-visible .header{
   margin-left:0;
   margin-right:calc(-1 * var(--side-menu-size));
 }

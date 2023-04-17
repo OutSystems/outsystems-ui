@@ -94,12 +94,6 @@
 			z-index: var(--layer-global-navigation);
 		}
 	}
-
-	&.landscape {
-		.layout-side.layout-native.aside-expandable.menu-visible .header {
-			margin-left: calc(-1 * var(--side-menu-size));
-		}
-	}
 }
 
 ///
@@ -116,15 +110,6 @@
 		.layout-side.layout-native.aside-expandable.menu-visible .header {
 			margin-left: 0;
 			margin-right: calc(-1 * var(--side-menu-size));
-		}
-	}
-
-	&.tablet {
-		&.landscape {
-			.layout-side.layout-native.aside-expandable.menu-visible .header {
-				margin-left: 0;
-				margin-right: calc(-1 * var(--side-menu-size));
-			}
 		}
 	}
 
