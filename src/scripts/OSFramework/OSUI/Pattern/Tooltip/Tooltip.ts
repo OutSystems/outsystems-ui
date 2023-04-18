@@ -59,10 +59,13 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			this._tooltipBalloonPositionClass = this.configs.Position;
 		}
 
-		// Move balloon element to outside of the pattern context
+		// Move balloon element to active screen, outside of the pattern context
 		private _moveBalloonElement(): void {
-			const layoutElement = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.Layout);
-			Helper.Dom.Move(this._tooltipBalloonWrapperElem, layoutElement);
+			const activeScreenElement = Helper.Dom.ClassSelector(
+				document.body,
+				GlobalEnum.CssClassElements.ActiveScreen
+			);
+			Helper.Dom.Move(this._tooltipBalloonWrapperElem, activeScreenElement);
 		}
 
 		// Check if a clickable item has been clicked, otherwise stop the propagation!

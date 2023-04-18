@@ -63,8 +63,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		private _isBlocked = false;
 		// Store the Element State, by default is closed!
 		private _isOpen = false;
-		// Store the HTML element for the layout where the Balloon will be moved into.
-		private _layoutElement: HTMLElement;
 		// Platform OnInitialize Callback
 		private _platformEventInitializedCallback: GlobalCallbacks.OSGeneric;
 		// Platform OnClose Callback
@@ -111,7 +109,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			}
 
 			// Remove isVisible class to the layout
-			Helper.Dom.Styles.RemoveClass(this._activeScreenElement, Enum.CssClass.IsVisible);
+			Helper.Dom.Styles.RemoveClass(document.body, Enum.CssClass.IsVisible);
 
 			// Update the touchMove when pattern is open!
 			this._touchMove();
@@ -190,9 +188,9 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			);
 		}
 
-		// Move ballon element to outside of the pattern context
+		// Move ballon element to active screen element, outside of the pattern context
 		private _moveBallonElement(): void {
-			Helper.Dom.Move(this._balloonWrapperElement, this._layoutElement);
+			Helper.Dom.Move(this._balloonWrapperElement, this._activeScreenElement);
 		}
 
 		// Close when click outside of pattern
@@ -370,7 +368,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			this._touchMove();
 
 			// Add the isVisible class to the layout
-			Helper.Dom.Styles.AddClass(this._activeScreenElement, Enum.CssClass.IsVisible);
+			Helper.Dom.Styles.AddClass(document.body, Enum.CssClass.IsVisible);
 			this._updatePatternState();
 
 			// Set the Observer in order to update it's position if balloon is out of bounds!
@@ -874,7 +872,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		protected setHtmlElements(): void {
-			this._layoutElement = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.Layout);
 			this._activeScreenElement = Helper.Dom.ClassSelector(
 				document.body,
 				GlobalEnum.CssClassElements.ActiveScreen
@@ -952,7 +949,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			this._balloonWrapperElement.remove();
 
 			// unset the local properties
-			this._layoutElement = undefined;
 			this._activeScreenElement = undefined;
 			this._balloonContainerElement = undefined;
 			this._balloonFocusableElemsInFooter = [];
