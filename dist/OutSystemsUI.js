@@ -9786,8 +9786,7 @@ var OSFramework;
                         this._tooltipBalloonPositionClass = this.configs.Position;
                     }
                     _moveBalloonElement() {
-                        const activeScreenElement = OSUI.Helper.Dom.ClassSelector(document.body, OSUI.GlobalEnum.CssClassElements.ActiveScreen);
-                        OSUI.Helper.Dom.Move(this._tooltipBalloonWrapperElem, activeScreenElement);
+                        OSUI.Helper.Dom.Move(this._tooltipBalloonWrapperElem, this._activeScreenElement);
                     }
                     _onBalloonClick(e) {
                         const clickableItems = Array.from(this._tooltipBalloonContentElem.querySelectorAll(OSUI.Constants.FocusableElems + ', ' + OSUI.GlobalEnum.HTMLAttributes.AllowEventPropagation));
@@ -10088,6 +10087,7 @@ var OSFramework;
                         this._eventIconOnMouseLeave = this._onIconMouseLeave.bind(this);
                     }
                     setHtmlElements() {
+                        this._activeScreenElement = OSUI.Helper.Dom.ClassSelector(document.body, OSUI.GlobalEnum.CssClassElements.ActiveScreen);
                         this._tooltipIconElem = OSUI.Helper.Dom.ClassSelector(this.selfElement, Tooltip_1.Enum.CssClass.Content);
                         this._tooltipBalloonContentElem = OSUI.Helper.Dom.ClassSelector(this.selfElement, Tooltip_1.Enum.CssClass.BalloonContent);
                         this._tooltipBalloonWrapperElem = OSUI.Helper.Dom.ClassSelector(this.selfElement, Tooltip_1.Enum.CssClass.BalloonWrapper);
@@ -10119,6 +10119,7 @@ var OSFramework;
                     }
                     unsetHtmlElements() {
                         this._tooltipBalloonWrapperElem.remove();
+                        this._activeScreenElement = undefined;
                         this._tooltipIconElem = undefined;
                         this._tooltipBalloonContentElem = undefined;
                         this._tooltipBalloonWrapperElem = undefined;

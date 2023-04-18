@@ -3208,6 +3208,7 @@ declare namespace OSFramework.OSUI.Patterns.Tooltip {
 }
 declare namespace OSFramework.OSUI.Patterns.Tooltip {
     class Tooltip extends AbstractPattern<TooltipConfig> implements ITooltip {
+        private _activeScreenElement;
         private _eventBalloonWrapperOnMouseEnter;
         private _eventBalloonWrapperOnMouseLeave;
         private _eventIconOnMouseEnter;
