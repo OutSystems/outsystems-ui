@@ -1,6 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Patterns.Tooltip {
 	export class Tooltip extends AbstractPattern<TooltipConfig> implements ITooltip {
+		// Store the HTML element for the ActiveScreen where a status class will be updated accoding balloon is open or not.
+		private _activeScreenElement: HTMLElement;
 		// Event OnMouseEnter at _tooltipBalloonWrapperElem
 		private _eventBalloonWrapperOnMouseEnter: GlobalCallbacks.Generic;
 		// Event OnMouseLeave at at _tooltipBalloonWrapperElem
@@ -61,11 +63,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 
 		// Move balloon element to active screen, outside of the pattern context
 		private _moveBalloonElement(): void {
-			const activeScreenElement = Helper.Dom.ClassSelector(
-				document.body,
-				GlobalEnum.CssClassElements.ActiveScreen
-			);
-			Helper.Dom.Move(this._tooltipBalloonWrapperElem, activeScreenElement);
+			Helper.Dom.Move(this._tooltipBalloonWrapperElem, this._activeScreenElement);
 		}
 
 		// Check if a clickable item has been clicked, otherwise stop the propagation!
@@ -632,6 +630,10 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */
 		protected setHtmlElements(): void {
+			this._activeScreenElement = Helper.Dom.ClassSelector(
+				document.body,
+				GlobalEnum.CssClassElements.ActiveScreen
+			);
 			// Set the html references that will be used to manage the cssClasses and atribute properties
 			this._tooltipIconElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.Content);
 			this._tooltipBalloonContentElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.BalloonContent);
@@ -692,6 +694,8 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			// Remove the detached balloon html element!
 			this._tooltipBalloonWrapperElem.remove();
 
+			// unset the local properties
+			this._activeScreenElement = undefined;
 			this._tooltipIconElem = undefined;
 			this._tooltipBalloonContentElem = undefined;
 			this._tooltipBalloonWrapperElem = undefined;
