@@ -108,7 +108,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				this._selectValuesWrapper.focus();
 			}
 
-			// Remove isVisible class to the layout
+			// Remove isVisible class from the body
 			Helper.Dom.Styles.RemoveClass(document.body, Enum.CssClass.IsVisible);
 
 			// Update the touchMove when pattern is open!
@@ -367,7 +367,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			// Update the touchMove when pattern is open!
 			this._touchMove();
 
-			// Add the isVisible class to the layout
+			// Add the isVisible class to body
 			Helper.Dom.Styles.AddClass(document.body, Enum.CssClass.IsVisible);
 			this._updatePatternState();
 
