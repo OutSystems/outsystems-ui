@@ -4569,7 +4569,7 @@ var OSFramework;
                             if (this._closeDynamically === false) {
                                 this._selectValuesWrapper.focus();
                             }
-                            OSUI.Helper.Dom.Styles.RemoveClass(this._activeScreenElement, ServerSide.Enum.CssClass.IsVisible);
+                            OSUI.Helper.Dom.Styles.RemoveClass(document.body, ServerSide.Enum.CssClass.IsVisible);
                             this._touchMove();
                             cancelAnimationFrame(this._requestAnimationOnBodyScroll);
                             this._isOpen = false;
@@ -4610,7 +4610,7 @@ var OSFramework;
                             throw new Error(`${OSUI.ErrorCodes.Dropdown.HasNoImplementation.code}: ${OSUI.ErrorCodes.Dropdown.HasNoImplementation.message}`);
                         }
                         _moveBallonElement() {
-                            OSUI.Helper.Dom.Move(this._balloonWrapperElement, this._layoutElement);
+                            OSUI.Helper.Dom.Move(this._balloonWrapperElement, this._activeScreenElement);
                         }
                         _onBodyClick(_eventType, event) {
                             const targetElement = event.target;
@@ -4720,7 +4720,7 @@ var OSFramework;
                             this._windowWidth = window.innerWidth;
                             this._setBalloonCoordinates();
                             this._touchMove();
-                            OSUI.Helper.Dom.Styles.AddClass(this._activeScreenElement, ServerSide.Enum.CssClass.IsVisible);
+                            OSUI.Helper.Dom.Styles.AddClass(document.body, ServerSide.Enum.CssClass.IsVisible);
                             this._updatePatternState();
                             this._setObserver();
                         }
@@ -4988,7 +4988,6 @@ var OSFramework;
                             this._eventOnWindowResize = this._onWindowResize.bind(this);
                         }
                         setHtmlElements() {
-                            this._layoutElement = OSUI.Helper.Dom.ClassSelector(document.body, OSUI.GlobalEnum.CssClassElements.Layout);
                             this._activeScreenElement = OSUI.Helper.Dom.ClassSelector(document.body, OSUI.GlobalEnum.CssClassElements.ActiveScreen);
                             this._balloonFooterElement = OSUI.Helper.Dom.ClassSelector(this.selfElement, ServerSide.Enum.CssClass.BalloonFooter);
                             this._balloonFocusableElemsInFooter = OSUI.Helper.Dom.TagSelectorAll(this._balloonFooterElement, OSUI.Constants.FocusableElems);
@@ -5025,7 +5024,6 @@ var OSFramework;
                         }
                         unsetHtmlElements() {
                             this._balloonWrapperElement.remove();
-                            this._layoutElement = undefined;
                             this._activeScreenElement = undefined;
                             this._balloonContainerElement = undefined;
                             this._balloonFocusableElemsInFooter = [];
@@ -9788,8 +9786,7 @@ var OSFramework;
                         this._tooltipBalloonPositionClass = this.configs.Position;
                     }
                     _moveBalloonElement() {
-                        const layoutElement = OSUI.Helper.Dom.ClassSelector(document.body, OSUI.GlobalEnum.CssClassElements.Layout);
-                        OSUI.Helper.Dom.Move(this._tooltipBalloonWrapperElem, layoutElement);
+                        OSUI.Helper.Dom.Move(this._tooltipBalloonWrapperElem, this._activeScreenElement);
                     }
                     _onBalloonClick(e) {
                         const clickableItems = Array.from(this._tooltipBalloonContentElem.querySelectorAll(OSUI.Constants.FocusableElems + ', ' + OSUI.GlobalEnum.HTMLAttributes.AllowEventPropagation));
@@ -10090,6 +10087,7 @@ var OSFramework;
                         this._eventIconOnMouseLeave = this._onIconMouseLeave.bind(this);
                     }
                     setHtmlElements() {
+                        this._activeScreenElement = OSUI.Helper.Dom.ClassSelector(document.body, OSUI.GlobalEnum.CssClassElements.ActiveScreen);
                         this._tooltipIconElem = OSUI.Helper.Dom.ClassSelector(this.selfElement, Tooltip_1.Enum.CssClass.Content);
                         this._tooltipBalloonContentElem = OSUI.Helper.Dom.ClassSelector(this.selfElement, Tooltip_1.Enum.CssClass.BalloonContent);
                         this._tooltipBalloonWrapperElem = OSUI.Helper.Dom.ClassSelector(this.selfElement, Tooltip_1.Enum.CssClass.BalloonWrapper);
@@ -10121,6 +10119,7 @@ var OSFramework;
                     }
                     unsetHtmlElements() {
                         this._tooltipBalloonWrapperElem.remove();
+                        this._activeScreenElement = undefined;
                         this._tooltipIconElem = undefined;
                         this._tooltipBalloonContentElem = undefined;
                         this._tooltipBalloonWrapperElem = undefined;
