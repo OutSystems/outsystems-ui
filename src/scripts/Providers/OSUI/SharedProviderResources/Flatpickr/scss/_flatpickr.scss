@@ -300,7 +300,6 @@ span.flatpickr-weekday {
 			color: var(--color-neutral-0);
 		}
 	}
-
 	// InRange Styles
 	&.selected.startRange,
 	&.startRange.startRange,
@@ -320,9 +319,20 @@ span.flatpickr-weekday {
 		}
 	}
 
-	&.selected.startRange,
-	&.startRange.startRange,
+	&.selected.startRange.endRange,
+	&.startRange.endRange,
+	&.selected.endRange.startRange,
 	&.endRange.startRange {
+		border-radius: 50px;
+
+		&:before {
+			border-radius: 50px;
+		}
+	}
+
+
+	&.selected.startRange,
+	&.startRange.startRange {
 		border-radius: 50px;
 
 		&:before {
@@ -333,7 +343,6 @@ span.flatpickr-weekday {
 	}
 
 	&.selected.endRange,
-	&.startRange.endRange,
 	&.endRange.endRange {
 		border-radius: 50px;
 
