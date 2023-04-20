@@ -323,8 +323,7 @@ span.flatpickr-weekday {
 	&.startRange.endRange,
 	&.selected.endRange.startRange,
 	&.endRange.startRange {
-		border-radius: 50px;
-
+		&,
 		&:before {
 			border-radius: 50px;
 		}
