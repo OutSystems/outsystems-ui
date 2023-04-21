@@ -161,7 +161,12 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		// Overlay onClick event to close the Sidebar
 		private _overlayClickCallback(_args: string, e: MouseEvent): void {
 			// If the sidebar is opened and the mouse down event occured outside the sidebar, close it.
-			if (this._isOpen && this._clickedOutsideElement && e.target === this.selfElement) {
+			if (
+				this._isOpen &&
+				this._clickedOutsideElement &&
+				(e.target === this.selfElement || this._clickOutsideToClose)
+			) {
+				console.log('close');
 				this.close();
 			}
 			e.stopPropagation();

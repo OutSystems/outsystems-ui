@@ -7959,7 +7959,10 @@ var OSFramework;
                         OSUI.Helper.A11Y.SetElementsTabIndex(this._isOpen, this._focusTrapInstance.focusableElements);
                     }
                     _overlayClickCallback(_args, e) {
-                        if (this._isOpen && this._clickedOutsideElement && e.target === this.selfElement) {
+                        if (this._isOpen &&
+                            this._clickedOutsideElement &&
+                            (e.target === this.selfElement || this._clickOutsideToClose)) {
+                            console.log('close');
                             this.close();
                         }
                         e.stopPropagation();
