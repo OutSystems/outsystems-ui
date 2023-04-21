@@ -166,7 +166,6 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 				this._clickedOutsideElement &&
 				(e.target === this.selfElement || this._clickOutsideToClose)
 			) {
-				console.log('close');
 				this.close();
 			}
 			e.stopPropagation();
