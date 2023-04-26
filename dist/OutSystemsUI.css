@@ -8243,18 +8243,21 @@ span.flatpickr-weekday{
   position:absolute;
   z-index:var(--layer-global-negative);
 }
-.flatpickr-day.selected.startRange, .flatpickr-day.startRange.startRange, .flatpickr-day.endRange.startRange{
+.flatpickr-day.selected.startRange.endRange, .flatpickr-day.selected.startRange.endRange:before, .flatpickr-day.startRange.endRange, .flatpickr-day.startRange.endRange:before, .flatpickr-day.selected.endRange.startRange, .flatpickr-day.selected.endRange.startRange:before, .flatpickr-day.endRange.startRange, .flatpickr-day.endRange.startRange:before{
   border-radius:50px;
 }
-.flatpickr-day.selected.startRange:before, .flatpickr-day.startRange.startRange:before, .flatpickr-day.endRange.startRange:before{
+.flatpickr-day.selected.startRange, .flatpickr-day.startRange.startRange{
+  border-radius:50px;
+}
+.flatpickr-day.selected.startRange:before, .flatpickr-day.startRange.startRange:before{
   border-radius:50px 0 0 50px;
   left:0;
   right:-2px;
 }
-.flatpickr-day.selected.endRange, .flatpickr-day.startRange.endRange, .flatpickr-day.endRange.endRange{
+.flatpickr-day.selected.endRange, .flatpickr-day.endRange.endRange{
   border-radius:50px;
 }
-.flatpickr-day.selected.endRange:before, .flatpickr-day.startRange.endRange:before, .flatpickr-day.endRange.endRange:before{
+.flatpickr-day.selected.endRange:before, .flatpickr-day.endRange.endRange:before{
   border-radius:0 50px 50px 0;
   right:0;
   left:-2px;

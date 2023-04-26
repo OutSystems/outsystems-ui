@@ -687,6 +687,76 @@ declare namespace OSFramework.OSUI.Event.GestureEvent {
         setSwipeEvents(swipeDownCallback: Event.GestureEvent.Callbacks.SwipeDown, swipeLeftCallback: Event.GestureEvent.Callbacks.SwipeLeft, swipeRightCallback: Event.GestureEvent.Callbacks.SwipeRight, swipeUpCallback: Event.GestureEvent.Callbacks.SwipeUp): void;
     }
 }
+declare namespace OSFramework.OSUI.Event.Observer {
+    abstract class AbstractObserver<O> extends Event.AbstractEvent<string> implements IObserver<O, string> {
+        private _observerOptions;
+        private _observerTarget;
+        protected observer: ResizeObserver | MutationObserver;
+        get observerOptions(): O;
+        get observerTarget(): HTMLElement;
+        constructor(observerOptions: O, observerTarget: HTMLElement);
+        protected endObserver(): void;
+        protected startObserver(): void;
+        protected abstract createObserver(): void;
+    }
+}
+declare namespace OSFramework.OSUI.Event.Observer {
+    abstract class AbstractObserverManager<OT, D> {
+        private _observers;
+        constructor();
+        addHandler(eventType: OT, handler: GlobalCallbacks.Generic): void;
+        hasHandlers(eventType: OT): boolean;
+        removeHandler(eventType: OT, handler: GlobalCallbacks.Generic): void;
+        trigger(eventType: OT, data?: D, ...args: unknown[]): void;
+        get observers(): Map<OT, IObserver<unknown, D>>;
+        protected abstract getInstanceOfEventType(eventType: OT): IObserver<unknown, unknown>;
+    }
+}
+declare namespace OSFramework.OSUI.Event.Observer {
+    interface IObserver<O, D> {
+        observerOptions: O;
+        observerTarget: HTMLElement;
+        addHandler(handler: GlobalCallbacks.OSGeneric, ...args: any[]): void;
+        hasHandlers(): boolean;
+        removeHandler(handler: GlobalCallbacks.OSGeneric): void;
+        trigger(observer: D, ...args: unknown[]): unknown;
+    }
+}
+declare namespace OSFramework.OSUI.Event.Observer {
+    enum ObserverEvent {
+        RTL = "RTL"
+    }
+}
+declare namespace OSFramework.OSUI.Event.Observer {
+    class ObserverManager extends AbstractObserverManager<unknown, string> {
+        protected getInstanceOfEventType(observerType: Observer.ObserverEvent): Observer.IObserver<unknown, unknown>;
+    }
+    class GlobalObserverManager {
+        private static _observerManager;
+        static get Instance(): ObserverManager;
+    }
+}
+declare namespace OSFramework.OSUI.Event.Observer {
+    abstract class AbstractMutationObserver extends AbstractObserver<MutationObserverInit> implements IObserver<MutationObserverInit, string> {
+        constructor(observerOptions: MutationObserverInit, observerTarget: HTMLElement);
+        protected createObserver(): void;
+        protected abstract observerHandler(mutationList: MutationRecord[]): void;
+    }
+}
+declare namespace OSFramework.OSUI.Event.Observer.RTL {
+    class RTLObserver extends AbstractMutationObserver {
+        constructor();
+        observerHandler(mutationList: MutationRecord[]): void;
+    }
+}
+declare namespace OSFramework.OSUI.Event.Observer.RTL {
+    class RTLObserverConfigs implements MutationObserverInit {
+        attributeFilter: Array<string>;
+        attributeOldValue: boolean;
+        subtree: boolean;
+        constructor();
+    }
+}
 declare namespace OSFramework.OSUI.Event.ProviderEvents {
     interface IProviderEvent {
         callback: GlobalCallbacks.Generic;

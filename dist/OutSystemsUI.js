@@ -1324,6 +1324,216 @@ var OSFramework;
     (function (OSUI) {
         var Event;
         (function (Event) {
+            var Observer;
+            (function (Observer) {
+                class AbstractObserver extends Event.AbstractEvent {
+                    get observerOptions() {
+                        return this._observerOptions;
+                    }
+                    get observerTarget() {
+                        return this._observerTarget;
+                    }
+                    constructor(observerOptions, observerTarget) {
+                        super();
+                        this._observerOptions = observerOptions;
+                        this._observerTarget = observerTarget;
+                    }
+                    endObserver() {
+                        this.observer.disconnect();
+                    }
+                    startObserver() {
+                        this.observer.observe(this.observerTarget, this.observerOptions);
+                    }
+                }
+                Observer.AbstractObserver = AbstractObserver;
+            })(Observer = Event.Observer || (Event.Observer = {}));
+        })(Event = OSUI.Event || (OSUI.Event = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Event;
+        (function (Event) {
+            var Observer;
+            (function (Observer) {
+                class AbstractObserverManager {
+                    constructor() {
+                        this._observers = new Map();
+                    }
+                    addHandler(eventType, handler) {
+                        if (this._observers && this._observers.has(eventType)) {
+                            this._observers.get(eventType).addHandler(handler);
+                        }
+                        else {
+                            const ev = this.getInstanceOfEventType(eventType);
+                            if (ev !== undefined) {
+                                ev.addHandler(handler);
+                                this._observers.set(eventType, ev);
+                            }
+                        }
+                    }
+                    hasHandlers(eventType) {
+                        let returnValue = false;
+                        if (this._observers.has(eventType)) {
+                            const event = this._observers.get(eventType);
+                            returnValue = event.hasHandlers();
+                        }
+                        return returnValue;
+                    }
+                    removeHandler(eventType, handler) {
+                        if (this._observers.has(eventType)) {
+                            const event = this._observers.get(eventType);
+                            event.removeHandler(handler);
+                        }
+                    }
+                    trigger(eventType, data, ...args) {
+                        if (this._observers.has(eventType)) {
+                            this._observers.get(eventType).trigger(data, args);
+                        }
+                    }
+                    get observers() {
+                        return this._observers;
+                    }
+                }
+                Observer.AbstractObserverManager = AbstractObserverManager;
+            })(Observer = Event.Observer || (Event.Observer = {}));
+        })(Event = OSUI.Event || (OSUI.Event = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Event;
+        (function (Event) {
+            var Observer;
+            (function (Observer) {
+                let ObserverEvent;
+                (function (ObserverEvent) {
+                    ObserverEvent["RTL"] = "RTL";
+                })(ObserverEvent = Observer.ObserverEvent || (Observer.ObserverEvent = {}));
+            })(Observer = Event.Observer || (Event.Observer = {}));
+        })(Event = OSUI.Event || (OSUI.Event = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Event;
+        (function (Event) {
+            var Observer;
+            (function (Observer) {
+                class ObserverManager extends Observer.AbstractObserverManager {
+                    getInstanceOfEventType(observerType) {
+                        switch (observerType) {
+                            case Observer.ObserverEvent.RTL:
+                                return new Event.Observer.RTL.RTLObserver();
+                            default:
+                                throw new Error(`The observer ${observerType} is not supported.`);
+                        }
+                    }
+                }
+                Observer.ObserverManager = ObserverManager;
+                class GlobalObserverManager {
+                    static get Instance() {
+                        return GlobalObserverManager._observerManager;
+                    }
+                }
+                GlobalObserverManager._observerManager = new ObserverManager();
+                Observer.GlobalObserverManager = GlobalObserverManager;
+            })(Observer = Event.Observer || (Event.Observer = {}));
+        })(Event = OSUI.Event || (OSUI.Event = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Event;
+        (function (Event) {
+            var Observer;
+            (function (Observer) {
+                class AbstractMutationObserver extends Observer.AbstractObserver {
+                    constructor(observerOptions, observerTarget) {
+                        super(observerOptions, observerTarget);
+                        this.createObserver();
+                        this.startObserver();
+                    }
+                    createObserver() {
+                        this.observer = new MutationObserver(this.observerHandler.bind(this));
+                    }
+                }
+                Observer.AbstractMutationObserver = AbstractMutationObserver;
+            })(Observer = Event.Observer || (Event.Observer = {}));
+        })(Event = OSUI.Event || (OSUI.Event = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Event;
+        (function (Event) {
+            var Observer;
+            (function (Observer) {
+                var RTL;
+                (function (RTL) {
+                    class RTLObserver extends Observer.AbstractMutationObserver {
+                        constructor() {
+                            super(new RTL.RTLObserverConfigs(), document.documentElement);
+                        }
+                        observerHandler(mutationList) {
+                            mutationList.forEach((mutation) => {
+                                switch (mutation.type) {
+                                    case 'attributes':
+                                        switch (mutation.attributeName) {
+                                            case 'lang':
+                                                this.trigger('RTL', mutation);
+                                                break;
+                                        }
+                                        break;
+                                }
+                            });
+                        }
+                    }
+                    RTL.RTLObserver = RTLObserver;
+                })(RTL = Observer.RTL || (Observer.RTL = {}));
+            })(Observer = Event.Observer || (Event.Observer = {}));
+        })(Event = OSUI.Event || (OSUI.Event = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Event;
+        (function (Event) {
+            var Observer;
+            (function (Observer) {
+                var RTL;
+                (function (RTL) {
+                    class RTLObserverConfigs {
+                        constructor() {
+                            this.attributeFilter = ['lang'];
+                            this.attributeOldValue = true;
+                            this.subtree = false;
+                        }
+                    }
+                    RTL.RTLObserverConfigs = RTLObserverConfigs;
+                })(RTL = Observer.RTL || (Observer.RTL = {}));
+            })(Observer = Event.Observer || (Event.Observer = {}));
+        })(Event = OSUI.Event || (OSUI.Event = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Event;
+        (function (Event) {
             var ProviderEvents;
             (function (ProviderEvents) {
                 class ProviderEvent {
