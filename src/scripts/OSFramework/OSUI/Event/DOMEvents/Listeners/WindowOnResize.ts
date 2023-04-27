@@ -11,8 +11,8 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		private _timeout: number;
 
 		constructor() {
-			super();
-			this.addEvent();
+			super(window, GlobalEnum.HTMLEvent.Resize);
+			this.eventCallback = this._windowTrigger.bind(this);
 		}
 
 		private _windowTrigger(evt: WindowResize): void {
@@ -20,14 +20,6 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 			this._timeout = window.setTimeout(() => {
 				this.trigger(GlobalEnum.HTMLEvent.Resize, evt);
 			}, 100);
-		}
-
-		protected addEvent(): void {
-			window.addEventListener(GlobalEnum.HTMLEvent.Resize, this._windowTrigger.bind(this), true);
-		}
-
-		protected removeEvent(): void {
-			window.removeEventListener(GlobalEnum.HTMLEvent.Resize, this._windowTrigger.bind(this), true);
 		}
 	}
 }

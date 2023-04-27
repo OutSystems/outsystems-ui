@@ -9,5 +9,29 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	 * @implements {IListener<T>}
 	 * @template T
 	 */
-	export abstract class AbstractListener<T> extends AbstractEvent<T> implements IListener {}
+	export abstract class AbstractListener<T> extends AbstractEvent<T> implements IListener {
+		private _eventTarget: HTMLElement;
+		private _eventType: GlobalEnum.HTMLEvent;
+		protected eventCallback: EventListenerObject;
+
+		constructor(eventTarget, eventType) {
+			super();
+			this._eventTarget = eventTarget;
+			this._eventType = eventType;
+
+			this.addEvent();
+		}
+
+		public addEvent(): void {
+			if (this._eventType in window) {
+				this._eventTarget.addEventListener(this._eventType, this.eventCallback);
+			}
+		}
+
+		public removeEvent(): void {
+			if (this._eventType in window) {
+				this._eventTarget.removeEventListener(this._eventType, this.eventCallback);
+			}
+		}
+	}
 }

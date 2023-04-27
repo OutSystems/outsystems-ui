@@ -32,13 +32,18 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 			if (index !== -1) {
 				this._handlers.splice(index, 1);
 			}
+
+			// If this was the last handler, then remove the event
+			if (this.hasHandlers() === false) {
+				this.removeEvent();
+			}
 		}
 
 		public trigger(data?: T, ...args: unknown[]): void {
 			this._handlers.slice(0).forEach((h) => Helper.AsyncInvocation(h, data, ...args));
 		}
 
-		protected abstract addEvent(): void;
-		protected abstract removeEvent(): void;
+		public abstract addEvent(): void;
+		public abstract removeEvent(): void;
 	}
 }

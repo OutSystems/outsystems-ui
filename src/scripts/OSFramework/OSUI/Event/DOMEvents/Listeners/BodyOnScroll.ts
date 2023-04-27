@@ -9,20 +9,12 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	 */
 	export class BodyOnScroll extends AbstractListener<string> {
 		constructor() {
-			super();
-			this.addEvent();
+			super(document.body, GlobalEnum.HTMLEvent.Scroll);
+			this.eventCallback = this._bodyTrigger.bind(this);
 		}
 
 		private _bodyTrigger(evt: Event): void {
 			this.trigger(GlobalEnum.HTMLEvent.Scroll, evt);
-		}
-
-		protected addEvent(): void {
-			document.body.addEventListener(GlobalEnum.HTMLEvent.Scroll, this._bodyTrigger.bind(this), true);
-		}
-
-		protected removeEvent(): void {
-			document.body.removeEventListener(GlobalEnum.HTMLEvent.Scroll, this._bodyTrigger.bind(this), true);
 		}
 	}
 }

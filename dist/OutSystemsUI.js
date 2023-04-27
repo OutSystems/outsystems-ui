@@ -937,6 +937,9 @@ var OSFramework;
                         if (index !== -1) {
                             this._handlers.splice(index, 1);
                         }
+                        if (this.hasHandlers() === false) {
+                            this.removeEvent();
+                        }
                     }
                     trigger(data, ...args) {
                         this._handlers.slice(0).forEach((h) => OSUI.Helper.AsyncInvocation(h, data, ...args));
@@ -1010,6 +1013,22 @@ var OSFramework;
                 var Listeners;
                 (function (Listeners) {
                     class AbstractListener extends DOMEvents.AbstractEvent {
+                        constructor(eventTarget, eventType) {
+                            super();
+                            this._eventTarget = eventTarget;
+                            this._eventType = eventType;
+                            this.addEvent();
+                        }
+                        addEvent() {
+                            if (this._eventType in window) {
+                                this._eventTarget.addEventListener(this._eventType, this.eventCallback);
+                            }
+                        }
+                        removeEvent() {
+                            if (this._eventType in window) {
+                                this._eventTarget.removeEventListener(this._eventType, this.eventCallback);
+                            }
+                        }
                     }
                     Listeners.AbstractListener = AbstractListener;
                 })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
@@ -1029,20 +1048,14 @@ var OSFramework;
                 (function (Listeners) {
                     class BodyOnClick extends Listeners.AbstractListener {
                         constructor() {
-                            super();
+                            super(document.body, OSUI.GlobalEnum.HTMLEvent.Click);
                             this._enableBodyClick = true;
-                            this.addEvent();
+                            this.eventCallback = this._bodyTrigger.bind(this);
                         }
                         _bodyTrigger(evt) {
                             if (this.getBodyClickStatus) {
                                 this.trigger(OSUI.GlobalEnum.HTMLEvent.Click, evt);
                             }
-                        }
-                        addEvent() {
-                            document.body.addEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._bodyTrigger.bind(this));
-                        }
-                        removeEvent() {
-                            document.body.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._bodyTrigger.bind(this));
                         }
                         disableBodyClickEvent() {
                             this._enableBodyClick = false;
@@ -1072,17 +1085,11 @@ var OSFramework;
                 (function (Listeners) {
                     class BodyOnMouseDown extends Listeners.AbstractListener {
                         constructor() {
-                            super();
-                            this.addEvent();
+                            super(document.body, OSUI.GlobalEnum.HTMLEvent.MouseDown);
+                            this.eventCallback = this._bodyTrigger.bind(this);
                         }
                         _bodyTrigger(evt) {
                             this.trigger(OSUI.GlobalEnum.HTMLEvent.MouseDown, evt);
-                        }
-                        addEvent() {
-                            document.body.addEventListener(OSUI.GlobalEnum.HTMLEvent.MouseDown, this._bodyTrigger.bind(this));
-                        }
-                        removeEvent() {
-                            document.body.removeEventListener(OSUI.GlobalEnum.HTMLEvent.MouseDown, this._bodyTrigger.bind(this));
                         }
                     }
                     Listeners.BodyOnMouseDown = BodyOnMouseDown;
@@ -1103,17 +1110,11 @@ var OSFramework;
                 (function (Listeners) {
                     class BodyOnScroll extends Listeners.AbstractListener {
                         constructor() {
-                            super();
-                            this.addEvent();
+                            super(document.body, OSUI.GlobalEnum.HTMLEvent.Scroll);
+                            this.eventCallback = this._bodyTrigger.bind(this);
                         }
                         _bodyTrigger(evt) {
                             this.trigger(OSUI.GlobalEnum.HTMLEvent.Scroll, evt);
-                        }
-                        addEvent() {
-                            document.body.addEventListener(OSUI.GlobalEnum.HTMLEvent.Scroll, this._bodyTrigger.bind(this), true);
-                        }
-                        removeEvent() {
-                            document.body.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Scroll, this._bodyTrigger.bind(this), true);
                         }
                     }
                     Listeners.BodyOnScroll = BodyOnScroll;
@@ -1198,21 +1199,11 @@ var OSFramework;
                 (function (Listeners) {
                     class OrientationChange extends Listeners.AbstractListener {
                         constructor() {
-                            super();
-                            this.addEvent();
+                            super(window, OSUI.GlobalEnum.HTMLEvent.OrientationChange);
+                            this.eventCallback = this._orientationTrigger.bind(this);
                         }
                         _orientationTrigger(evt) {
                             this.trigger(OSUI.GlobalEnum.HTMLEvent.OrientationChange, evt);
-                        }
-                        addEvent() {
-                            if ('onorientationchange' in window) {
-                                window.addEventListener(OSUI.GlobalEnum.HTMLEvent.OrientationChange, this._orientationTrigger.bind(this), true);
-                            }
-                        }
-                        removeEvent() {
-                            if ('onorientationchange' in window) {
-                                window.removeEventListener(OSUI.GlobalEnum.HTMLEvent.OrientationChange, this._orientationTrigger.bind(this), true);
-                            }
                         }
                     }
                     Listeners.OrientationChange = OrientationChange;
@@ -1233,20 +1224,14 @@ var OSFramework;
                 (function (Listeners) {
                     class WindowResize extends Listeners.AbstractListener {
                         constructor() {
-                            super();
-                            this.addEvent();
+                            super(window, OSUI.GlobalEnum.HTMLEvent.Resize);
+                            this.eventCallback = this._windowTrigger.bind(this);
                         }
                         _windowTrigger(evt) {
                             window.clearTimeout(this._timeout);
                             this._timeout = window.setTimeout(() => {
                                 this.trigger(OSUI.GlobalEnum.HTMLEvent.Resize, evt);
                             }, 100);
-                        }
-                        addEvent() {
-                            window.addEventListener(OSUI.GlobalEnum.HTMLEvent.Resize, this._windowTrigger.bind(this), true);
-                        }
-                        removeEvent() {
-                            window.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Resize, this._windowTrigger.bind(this), true);
                         }
                     }
                     Listeners.WindowResize = WindowResize;
@@ -1277,11 +1262,11 @@ var OSFramework;
                             this._observerOptions = observerOptions;
                             this._observerTarget = observerTarget;
                         }
-                        removeEvent() {
-                            this.observer.disconnect();
-                        }
                         startObserver() {
                             this.observer.observe(this.observerTarget, this.observerOptions);
+                        }
+                        removeEvent() {
+                            this.observer.disconnect();
                         }
                     }
                     Observers.AbstractObserver = AbstractObserver;

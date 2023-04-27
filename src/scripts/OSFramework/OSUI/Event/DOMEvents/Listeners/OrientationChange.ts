@@ -9,34 +9,12 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	 */
 	export class OrientationChange extends AbstractListener<string> {
 		constructor() {
-			super();
-			this.addEvent();
+			super(window, GlobalEnum.HTMLEvent.OrientationChange);
+			this.eventCallback = this._orientationTrigger.bind(this);
 		}
 
 		private _orientationTrigger(evt: OrientationChange): void {
 			this.trigger(GlobalEnum.HTMLEvent.OrientationChange, evt);
-		}
-
-		protected addEvent(): void {
-			// ensure window has orientationchange event since it's only available for mobile
-			if ('onorientationchange' in window) {
-				window.addEventListener(
-					GlobalEnum.HTMLEvent.OrientationChange,
-					this._orientationTrigger.bind(this),
-					true
-				);
-			}
-		}
-
-		protected removeEvent(): void {
-			// ensure window has orientationchange event since it's only available for mobile
-			if ('onorientationchange' in window) {
-				window.removeEventListener(
-					GlobalEnum.HTMLEvent.OrientationChange,
-					this._orientationTrigger.bind(this),
-					true
-				);
-			}
 		}
 	}
 }

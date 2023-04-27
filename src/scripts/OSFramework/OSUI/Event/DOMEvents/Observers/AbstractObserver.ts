@@ -19,14 +19,12 @@ namespace OSFramework.OSUI.Event.DOMEvents.Observers {
 			this._observerTarget = observerTarget;
 		}
 
-		protected removeEvent(): void {
-			this.observer.disconnect();
-		}
-
 		protected startObserver(): void {
 			this.observer.observe(this.observerTarget, this.observerOptions);
 		}
 
-		protected abstract addEvent(): void;
+		public removeEvent(): void {
+			this.observer.disconnect();
+		}
 	}
 }

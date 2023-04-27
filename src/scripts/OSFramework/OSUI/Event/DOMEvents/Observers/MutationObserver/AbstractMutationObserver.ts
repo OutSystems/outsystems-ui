@@ -10,7 +10,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Observers.MutationObservers {
 			this.startObserver();
 		}
 
-		protected addEvent(): void {
+		public addEvent(): void {
 			this.observer = new MutationObserver(this.observerHandler.bind(this));
 		}
 

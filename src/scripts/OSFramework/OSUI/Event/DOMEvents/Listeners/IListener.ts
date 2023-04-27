@@ -5,8 +5,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	 *
 	 * @export
 	 * @interface IListener
-	 * @extends {IEvent<D>}
-	 * @template D this will the type of Data to be passed, by default to the handlers.
+	 * @extends {IEvent<unknown>}
 	 */
 	export interface IListener extends IEvent<unknown> {
 		// These next two methods are only used for body click, but added here as optional, for TS to be able to detect these methods on Patterns scope

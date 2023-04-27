@@ -9,9 +9,10 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	 */
 	export class BodyOnClick extends AbstractListener<string> {
 		private _enableBodyClick = true;
+
 		constructor() {
-			super();
-			this.addEvent();
+			super(document.body, GlobalEnum.HTMLEvent.Click);
+			this.eventCallback = this._bodyTrigger.bind(this);
 		}
 
 		private _bodyTrigger(evt: PointerEvent): void {
@@ -19,14 +20,6 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 			if (this.getBodyClickStatus) {
 				this.trigger(GlobalEnum.HTMLEvent.Click, evt);
 			}
-		}
-
-		protected addEvent(): void {
-			document.body.addEventListener(GlobalEnum.HTMLEvent.Click, this._bodyTrigger.bind(this));
-		}
-
-		protected removeEvent(): void {
-			document.body.removeEventListener(GlobalEnum.HTMLEvent.Click, this._bodyTrigger.bind(this));
 		}
 
 		/**

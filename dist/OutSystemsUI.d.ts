@@ -540,8 +540,8 @@ declare namespace OSFramework.OSUI.Event.DOMEvents {
         hasHandlers(): boolean;
         removeHandler(handler: GlobalCallbacks.OSGeneric): void;
         trigger(data?: T, ...args: unknown[]): void;
-        protected abstract addEvent(): void;
-        protected abstract removeEvent(): void;
+        abstract addEvent(): void;
+        abstract removeEvent(): void;
     }
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents {
@@ -558,14 +558,22 @@ declare namespace OSFramework.OSUI.Event.DOMEvents {
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents {
     interface IEvent<D> {
+        addEvent(): void;
         addHandler(handler: GlobalCallbacks.OSGeneric, ...args: any[]): void;
         hasHandlers(): boolean;
+        removeEvent(): void;
         removeHandler(handler: GlobalCallbacks.OSGeneric): void;
         trigger(data: D, ...args: unknown[]): unknown;
     }
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
     abstract class AbstractListener<T> extends AbstractEvent<T> implements IListener {
+        private _eventTarget;
+        private _eventType;
+        protected eventCallback: EventListenerObject;
+        constructor(eventTarget: any, eventType: any);
+        addEvent(): void;
+        removeEvent(): void;
     }
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
@@ -573,8 +581,6 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
         private _enableBodyClick;
         constructor();
         private _bodyTrigger;
-        protected addEvent(): void;
-        protected removeEvent(): void;
         disableBodyClickEvent(): void;
         enableBodyClickEvent(): void;
         get getBodyClickStatus(): boolean;
@@ -584,16 +590,12 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
     class BodyOnMouseDown extends AbstractListener<string> {
         constructor();
         private _bodyTrigger;
-        protected addEvent(): void;
-        protected removeEvent(): void;
     }
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
     class BodyOnScroll extends AbstractListener<string> {
         constructor();
         private _bodyTrigger;
-        protected addEvent(): void;
-        protected removeEvent(): void;
     }
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
@@ -624,8 +626,6 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
     class OrientationChange extends AbstractListener<string> {
         constructor();
         private _orientationTrigger;
-        protected addEvent(): void;
-        protected removeEvent(): void;
     }
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
@@ -633,8 +633,6 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
         private _timeout;
         constructor();
         private _windowTrigger;
-        protected addEvent(): void;
-        protected removeEvent(): void;
     }
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents.Observers {
@@ -645,9 +643,8 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Observers {
         get observerOptions(): O;
         get observerTarget(): HTMLElement;
         constructor(observerOptions: O, observerTarget: HTMLElement);
-        protected removeEvent(): void;
         protected startObserver(): void;
-        protected abstract addEvent(): void;
+        removeEvent(): void;
     }
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents.Observers {
@@ -673,7 +670,7 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Observers {
 declare namespace OSFramework.OSUI.Event.DOMEvents.Observers.MutationObservers {
     abstract class AbstractMutationObserver extends AbstractObserver<MutationObserverInit> implements IObserver<MutationObserverInit, string> {
         constructor(observerOptions: MutationObserverInit, observerTarget: HTMLElement);
-        protected addEvent(): void;
+        addEvent(): void;
         protected abstract observerHandler(mutationList: MutationRecord[]): void;
     }
 }

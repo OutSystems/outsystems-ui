@@ -9,20 +9,12 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	 */
 	export class BodyOnMouseDown extends AbstractListener<string> {
 		constructor() {
-			super();
-			this.addEvent();
+			super(document.body, GlobalEnum.HTMLEvent.MouseDown);
+			this.eventCallback = this._bodyTrigger.bind(this);
 		}
 
 		private _bodyTrigger(evt: PointerEvent): void {
 			this.trigger(GlobalEnum.HTMLEvent.MouseDown, evt);
-		}
-
-		protected addEvent(): void {
-			document.body.addEventListener(GlobalEnum.HTMLEvent.MouseDown, this._bodyTrigger.bind(this));
-		}
-
-		protected removeEvent(): void {
-			document.body.removeEventListener(GlobalEnum.HTMLEvent.MouseDown, this._bodyTrigger.bind(this));
 		}
 	}
 }
