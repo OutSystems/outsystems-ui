@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSFramework.OSUI.Event.Observer {
-	export abstract class AbstractObserver<O> extends Event.AbstractEvent<string> implements IObserver<O, string> {
+namespace OSFramework.OSUI.Event.DOMEvents.Observers {
+	export abstract class AbstractObserver<O> extends AbstractEvent<string> implements IObserver<O, string> {
 		private _observerOptions: O;
 		private _observerTarget: HTMLElement;
 		protected observer: ResizeObserver | MutationObserver;
@@ -19,7 +19,7 @@ namespace OSFramework.OSUI.Event.Observer {
 			this._observerTarget = observerTarget;
 		}
 
-		protected endObserver(): void {
+		protected removeEvent(): void {
 			this.observer.disconnect();
 		}
 
@@ -27,6 +27,6 @@ namespace OSFramework.OSUI.Event.Observer {
 			this.observer.observe(this.observerTarget, this.observerOptions);
 		}
 
-		protected abstract createObserver(): void;
+		protected abstract addEvent(): void;
 	}
 }

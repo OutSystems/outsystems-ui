@@ -21,8 +21,8 @@ namespace OutSystems.OSUI.Utils.Menu {
 	export function AddMenuOnOrientationChange(callback: OSFramework.OSUI.GlobalCallbacks.Generic): void {
 		if (callback !== undefined) {
 			_onOrientationChangeCallback = callback;
-			OSFramework.OSUI.Event.GlobalEventManager.Instance.addHandler(
-				OSFramework.OSUI.Event.Type.OrientationChange,
+			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.OrientationChange,
 				_onOrientationChangeCallbackHandler
 			);
 		}
@@ -128,8 +128,8 @@ namespace OutSystems.OSUI.Utils.Menu {
 	 */
 	export function RemoveMenuOnOrientationChange(): void {
 		if (_onOrientationChangeCallback !== undefined) {
-			OSFramework.OSUI.Event.GlobalEventManager.Instance.removeHandler(
-				OSFramework.OSUI.Event.Type.OrientationChange,
+			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.OrientationChange,
 				_onOrientationChangeCallbackHandler
 			);
 			_onOrientationChangeCallback = undefined;

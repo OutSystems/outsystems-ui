@@ -61,5 +61,8 @@ namespace OutSystems.OSUI.Utils {
 		return undefined;
 	}
 
-	OSFramework.OSUI.Event.GlobalEventManager.Instance.addHandler(OSFramework.OSUI.Event.Type.BodyOnClick, _bodyClick);
+	OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+		OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick,
+		_bodyClick
+	);
 }

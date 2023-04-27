@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSFramework.OSUI.Event.Observer.RTL {
+namespace OSFramework.OSUI.Event.DOMEvents.Observers.MutationObservers.RTL {
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class RTLObserver extends AbstractMutationObserver {
 		constructor() {

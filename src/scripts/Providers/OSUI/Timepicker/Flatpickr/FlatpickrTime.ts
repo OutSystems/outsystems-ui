@@ -116,12 +116,16 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 
 			this.createdInstance();
 
+			const _bodyEvent = OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(
+				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick
+			) as OSFramework.OSUI.Event.DOMEvents.Listeners.IListener;
+
 			// Add triggers to change the global event triggering of body click on Open / Close
 			this.provider.config.onOpen.push(() => {
-				OSFramework.OSUI.Event.GlobalEventManager.Instance.disableBodyClickEvent();
+				_bodyEvent.disableBodyClickEvent();
 			});
 			this.provider.config.onClose.push(() => {
-				OSFramework.OSUI.Event.GlobalEventManager.Instance.enableBodyClickEvent();
+				_bodyEvent.enableBodyClickEvent();
 			});
 		}
 

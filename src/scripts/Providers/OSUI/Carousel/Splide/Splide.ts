@@ -181,8 +181,8 @@ namespace Providers.OSUI.Carousel.Splide {
 			this._eventOnResize = this._redefineCarouselWidth.bind(this);
 
 			// Add event listener for window resize
-			OSFramework.OSUI.Event.GlobalEventManager.Instance.addHandler(
-				OSFramework.OSUI.Event.Type.WindowResize,
+			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowResize,
 				this._eventOnResize
 			);
 		}
@@ -234,8 +234,8 @@ namespace Providers.OSUI.Carousel.Splide {
 		 */
 		protected unsetCallbacks(): void {
 			// remove event listener
-			OSFramework.OSUI.Event.GlobalEventManager.Instance.removeHandler(
-				OSFramework.OSUI.Event.Type.WindowResize,
+			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowResize,
 				this._eventOnResize
 			);
 

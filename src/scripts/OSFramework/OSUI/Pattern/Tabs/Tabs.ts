@@ -91,11 +91,17 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
 
 			// Add event listener for window resize, to update active indicator size
-			Event.GlobalEventManager.Instance.addHandler(Event.Type.WindowResize, this._eventOnResize);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+				Event.DOMEvents.Listeners.Type.WindowResize,
+				this._eventOnResize
+			);
 
 			// Add orientationchange listener to update active indicator size, on touch devices
 			if (Helper.DeviceInfo.IsPhone || Helper.DeviceInfo.IsTablet) {
-				Event.GlobalEventManager.Instance.addHandler(Event.Type.OrientationChange, this._eventOnResize);
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+					Event.DOMEvents.Listeners.Type.OrientationChange,
+					this._eventOnResize
+				);
 			}
 		}
 
@@ -402,11 +408,17 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			this._tabsHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
 
 			// Remove resize event
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.WindowResize, this._eventOnResize);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				Event.DOMEvents.Listeners.Type.WindowResize,
+				this._eventOnResize
+			);
 
 			// Remove orientationchange listener
 			if (Helper.DeviceInfo.IsPhone || Helper.DeviceInfo.IsTablet) {
-				Event.GlobalEventManager.Instance.removeHandler(Event.Type.OrientationChange, this._eventOnResize);
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+					Event.DOMEvents.Listeners.Type.OrientationChange,
+					this._eventOnResize
+				);
 			}
 		}
 

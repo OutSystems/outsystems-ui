@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSFramework.OSUI.Event {
+namespace OSFramework.OSUI.Event.DOMEvents {
 	/**
 	 * Abstract class that will be responsible for the basic behaviours of a link, namely storing the callbacks.
 	 *
@@ -37,5 +37,8 @@ namespace OSFramework.OSUI.Event {
 		public trigger(data?: T, ...args: unknown[]): void {
 			this._handlers.slice(0).forEach((h) => Helper.AsyncInvocation(h, data, ...args));
 		}
+
+		protected abstract addEvent(): void;
+		protected abstract removeEvent(): void;
 	}
 }

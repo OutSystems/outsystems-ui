@@ -62,11 +62,14 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 				Helper.A11Y.SetElementsTabIndex(this._isOpen, this._focusTrapInstance.focusableElements);
 
 				if (this._clickOutsideToClose || (this.configs.HasOverlay && this._clickOutsideToClose === undefined)) {
-					Event.GlobalEventManager.Instance.removeHandler(
-						Event.Type.BodyOnMouseDown,
+					Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+						Event.DOMEvents.Listeners.Type.BodyOnMouseDown,
 						this._eventOverlayMouseDown
 					);
-					Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOverlayClick);
+					Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+						Event.DOMEvents.Listeners.Type.BodyOnClick,
+						this._eventOverlayClick
+					);
 				}
 			}
 		}
@@ -143,11 +146,14 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 				this._triggerOnToggleEvent();
 
 				if (this._clickOutsideToClose || (this.configs.HasOverlay && this._clickOutsideToClose === undefined)) {
-					Event.GlobalEventManager.Instance.addHandler(
-						Event.Type.BodyOnMouseDown,
+					Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+						Event.DOMEvents.Listeners.Type.BodyOnMouseDown,
 						this._eventOverlayMouseDown
 					);
-					Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._eventOverlayClick);
+					Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+						Event.DOMEvents.Listeners.Type.BodyOnClick,
+						this._eventOverlayClick
+					);
 				}
 			}
 
@@ -182,8 +188,14 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		// Method to remove the event listeners
 		private _removeEvents(): void {
 			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnMouseDown, this._eventOverlayMouseDown);
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOverlayClick);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				Event.DOMEvents.Listeners.Type.BodyOnMouseDown,
+				this._eventOverlayMouseDown
+			);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				Event.DOMEvents.Listeners.Type.BodyOnClick,
+				this._eventOverlayClick
+			);
 		}
 
 		// Set the Sidebar opening/closing direction

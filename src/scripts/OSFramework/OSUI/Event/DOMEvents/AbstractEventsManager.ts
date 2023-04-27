@@ -1,10 +1,19 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSFramework.OSUI.Event.Observer {
-	export abstract class AbstractObserverManager<OT, D> {
-		private _observers: Map<OT, IObserver<unknown, D>>;
+namespace OSFramework.OSUI.Event.DOMEvents {
+	/**
+	 * This class is a Manager of events (listeners, observers, etc.)
+	 *
+	 * @export
+	 * @abstract
+	 * @class AbstractEventsManager
+	 * @template ET EventType
+	 * @template D Event object
+	 */
+	export abstract class AbstractEventsManager<ET, D> {
+		private _events: Map<ET, IEvent<D>>;
 
 		constructor() {
-			this._observers = new Map<OT, IObserver<OT, D>>();
+			this._events = new Map<ET, IEvent<D>>();
 		}
 
 		/**
@@ -14,14 +23,14 @@ namespace OSFramework.OSUI.Event.Observer {
 		 * @param handler
 		 * @memberof OSFramework.Event.AbstractEventsManager
 		 */
-		public addHandler(eventType: OT, handler: GlobalCallbacks.Generic): void {
-			if (this._observers && this._observers.has(eventType)) {
-				this._observers.get(eventType).addHandler(handler);
+		public addHandler(eventType: ET, handler: GlobalCallbacks.Generic): void {
+			if (this._events && this._events.has(eventType)) {
+				this._events.get(eventType).addHandler(handler);
 			} else {
 				const ev = this.getInstanceOfEventType(eventType);
 				if (ev !== undefined) {
 					ev.addHandler(handler);
-					this._observers.set(eventType, ev);
+					this._events.set(eventType, ev);
 				}
 			}
 		}
@@ -33,10 +42,10 @@ namespace OSFramework.OSUI.Event.Observer {
 		 * @returns boolean
 		 * @memberof OSFramework.Event.AbstractEventsManager
 		 */
-		public hasHandlers(eventType: OT): boolean {
+		public hasHandlers(eventType: ET): boolean {
 			let returnValue = false;
-			if (this._observers.has(eventType)) {
-				const event = this._observers.get(eventType);
+			if (this._events.has(eventType)) {
+				const event = this._events.get(eventType);
 				returnValue = event.hasHandlers();
 			}
 			return returnValue;
@@ -49,9 +58,9 @@ namespace OSFramework.OSUI.Event.Observer {
 		 * @param handler
 		 * @memberof OSFramework.Event.AbstractEventsManager
 		 */
-		public removeHandler(eventType: OT, handler: GlobalCallbacks.Generic): void {
-			if (this._observers.has(eventType)) {
-				const event = this._observers.get(eventType);
+		public removeHandler(eventType: ET, handler: GlobalCallbacks.Generic): void {
+			if (this._events.has(eventType)) {
+				const event = this._events.get(eventType);
 				event.removeHandler(handler);
 			}
 		}
@@ -64,9 +73,9 @@ namespace OSFramework.OSUI.Event.Observer {
 		 * @param args
 		 * @memberof OSFramework.Event.AbstractEventsManager
 		 */
-		public trigger(eventType: OT, data?: D, ...args: unknown[]): void {
-			if (this._observers.has(eventType)) {
-				this._observers.get(eventType).trigger(data, args);
+		public trigger(eventType: ET, data?: D, ...args: unknown[]): void {
+			if (this._events.has(eventType)) {
+				this._events.get(eventType).trigger(data, args);
 			}
 		}
 
@@ -74,22 +83,23 @@ namespace OSFramework.OSUI.Event.Observer {
 		 * Getter that allows to obtain the list of events
 		 *
 		 * @readonly
-		 * @type {Map<OT, IEvent<D>>}
+		 * @type {Map<ET, IEvent<D>>}
 		 * @memberof OSFramework.Event.AbstractEventsManager
 		 */
-		public get observers(): Map<OT, IObserver<unknown, D>> {
-			return this._observers;
+		public get events(): Map<ET, IEvent<D>> {
+			return this._events;
 		}
+
 		/**
 		 * This method will be responsible for creating the correct instance of the Event
 		 * based in the EventType that is passed.
 		 *
 		 * @protected
 		 * @abstract
-		 * @param {OT} eventType Type of the event that will we need an instance of.
+		 * @param {ET} eventType Type of the event that will we need an instance of.
 		 * @returns {*}  {IEvent<D>} Instance of the event.
 		 * @memberof OSFramework.Event.AbstractEventsManager
 		 */
-		protected abstract getInstanceOfEventType(eventType: OT): IObserver<unknown, unknown>;
+		protected abstract getInstanceOfEventType(eventType: ET): IEvent<D>;
 	}
 }
