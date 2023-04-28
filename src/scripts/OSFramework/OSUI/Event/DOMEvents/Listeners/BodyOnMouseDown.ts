@@ -13,6 +13,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 			this.eventCallback = this._bodyTrigger.bind(this);
 		}
 
+		// Method to act as callback for the added event and trigger all handlers stored
 		private _bodyTrigger(evt: PointerEvent): void {
 			this.trigger(GlobalEnum.HTMLEvent.MouseDown, evt);
 		}

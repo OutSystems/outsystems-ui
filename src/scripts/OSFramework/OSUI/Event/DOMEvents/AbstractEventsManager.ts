@@ -10,6 +10,7 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 	 * @template D Event object
 	 */
 	export abstract class AbstractEventsManager<ET, D> {
+		// Store all events
 		private _events: Map<ET, IEvent<D>>;
 
 		constructor() {

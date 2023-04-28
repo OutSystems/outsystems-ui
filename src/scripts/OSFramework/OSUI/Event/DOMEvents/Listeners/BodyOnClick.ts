@@ -8,6 +8,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	 * @extends {Event.AbstractEvent<string>}
 	 */
 	export class BodyOnClick extends AbstractListener<string> {
+		// Property to store if the body event should be enabled
 		private _enableBodyClick = true;
 
 		constructor() {
@@ -15,6 +16,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 			this.eventCallback = this._bodyTrigger.bind(this);
 		}
 
+		// Method to act as callback for the added event and trigger all handlers stored
 		private _bodyTrigger(evt: PointerEvent): void {
 			// Trigger the body click event only if the getBodyClickStatus is True
 			if (this.getBodyClickStatus) {

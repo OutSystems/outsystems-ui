@@ -10,9 +10,13 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	 * @template T
 	 */
 	export abstract class AbstractListener<T> extends AbstractEvent<T> implements IListener {
+		// Store the listener name, to check later if event is supported on the window
 		private _eventName: string;
+		// Store the listener target
 		private _eventTarget: HTMLElement;
+		// Store the listener type
 		private _eventType: GlobalEnum.HTMLEvent;
+		// Store the listener callback
 		protected eventCallback: EventListenerObject;
 
 		constructor(eventTarget, eventType) {
@@ -25,13 +29,25 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 			Helper.AsyncInvocation(this.addEvent.bind(this));
 		}
 
+		/**
+		 * Method to add a new eventListener
+		 *
+		 * @memberof AbstractListener
+		 */
 		public addEvent(): void {
+			// Check if event exist in the window
 			if (this._eventName in window) {
 				this._eventTarget.addEventListener(this._eventType, this.eventCallback);
 			}
 		}
 
+		/**
+		 * Method to remove a eventListener
+		 *
+		 * @memberof AbstractListener
+		 */
 		public removeEvent(): void {
+			// Check if event exist in the window
 			if (this._eventName in window) {
 				this._eventTarget.removeEventListener(this._eventType, this.eventCallback);
 			}

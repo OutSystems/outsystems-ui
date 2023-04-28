@@ -1,5 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
+	/**
+	 * Listener Mananer Class to handle the creation of all eventListeners
+	 *
+	 * @export
+	 * @class ListenerManager
+	 * @extends {AbstractEventsManager<Type, string>}
+	 */
 	export class ListenerManager extends AbstractEventsManager<Type, string> {
 		protected getInstanceOfEventType(listenerType: Type): IListener {
 			switch (listenerType) {
@@ -19,6 +26,12 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		}
 	}
 
+	/**
+	 * Class to create and store the ListenerManager Class
+	 *
+	 * @export
+	 * @class GlobalListenerManager
+	 */
 	export class GlobalListenerManager {
 		private static _listenerManager = new ListenerManager();
 

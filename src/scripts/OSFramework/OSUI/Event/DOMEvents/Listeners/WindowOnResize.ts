@@ -15,6 +15,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 			this.eventCallback = this._windowTrigger.bind(this);
 		}
 
+		// Method to act as callback for the added event and trigger all handlers stored
 		private _windowTrigger(evt: WindowResize): void {
 			window.clearTimeout(this._timeout);
 			this._timeout = window.setTimeout(() => {

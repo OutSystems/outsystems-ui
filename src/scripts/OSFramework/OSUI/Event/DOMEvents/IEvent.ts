@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Event.DOMEvents {
 	/**
-	 * This interface is the base to all events. All events (both internal or external) need to implement it.
+	 * This interface is the base to all events. All events need to implement it.
 	 *
 	 * @export
 	 * @interface IEvent
