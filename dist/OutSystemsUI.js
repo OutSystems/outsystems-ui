@@ -369,6 +369,7 @@ var OSFramework;
                 HTMLEvent["MouseLeave"] = "mouseleave";
                 HTMLEvent["MouseUp"] = "mouseup";
                 HTMLEvent["OrientationChange"] = "orientationchange";
+                HTMLEvent["Prefix"] = "on";
                 HTMLEvent["Resize"] = "resize";
                 HTMLEvent["Scroll"] = "scroll";
                 HTMLEvent["TouchEnd"] = "touchend";
@@ -1017,15 +1018,16 @@ var OSFramework;
                             super();
                             this._eventTarget = eventTarget;
                             this._eventType = eventType;
-                            this.addEvent();
+                            this._eventName = OSUI.GlobalEnum.HTMLEvent.Prefix + this._eventType;
+                            OSUI.Helper.AsyncInvocation(this.addEvent.bind(this));
                         }
                         addEvent() {
-                            if (this._eventType in window) {
+                            if (this._eventName in window) {
                                 this._eventTarget.addEventListener(this._eventType, this.eventCallback);
                             }
                         }
                         removeEvent() {
-                            if (this._eventType in window) {
+                            if (this._eventName in window) {
                                 this._eventTarget.removeEventListener(this._eventType, this.eventCallback);
                             }
                         }
@@ -1251,12 +1253,6 @@ var OSFramework;
                 var Observers;
                 (function (Observers) {
                     class AbstractObserver extends DOMEvents.AbstractEvent {
-                        get observerOptions() {
-                            return this._observerOptions;
-                        }
-                        get observerTarget() {
-                            return this._observerTarget;
-                        }
                         constructor(observerOptions, observerTarget) {
                             super();
                             this._observerOptions = observerOptions;
@@ -1267,6 +1263,12 @@ var OSFramework;
                         }
                         removeEvent() {
                             this.observer.disconnect();
+                        }
+                        get observerOptions() {
+                            return this._observerOptions;
+                        }
+                        get observerTarget() {
+                            return this._observerTarget;
                         }
                     }
                     Observers.AbstractObserver = AbstractObserver;
@@ -1372,18 +1374,18 @@ var OSFramework;
                         (function (RTL) {
                             class RTLObserver extends MutationObservers.AbstractMutationObserver {
                                 constructor() {
-                                    super(new RTL.RTLObserverConfigs(), document.documentElement);
+                                    super(new RTL.RTLObserverConfigs(), document.body);
+                                    this._hasAlreadyRTL = document.body.classList.contains(OSFramework.OSUI.Constants.IsRTLClass);
                                 }
                                 observerHandler(mutationList) {
                                     mutationList.forEach((mutation) => {
-                                        switch (mutation.type) {
-                                            case 'attributes':
-                                                switch (mutation.attributeName) {
-                                                    case 'lang':
-                                                        this.trigger('RTL', mutation);
-                                                        break;
-                                                }
-                                                break;
+                                        if (mutation.attributeName === 'class') {
+                                            const mutationTarget = mutation.target;
+                                            const hasRTLNow = mutationTarget.classList.contains(OSFramework.OSUI.Constants.IsRTLClass);
+                                            if (this._hasAlreadyRTL !== hasRTLNow) {
+                                                this._hasAlreadyRTL = hasRTLNow;
+                                                this.trigger(Observers.ObserverEvent.RTL, mutation);
+                                            }
                                         }
                                     });
                                 }
@@ -1412,7 +1414,7 @@ var OSFramework;
                         (function (RTL) {
                             class RTLObserverConfigs {
                                 constructor() {
-                                    this.attributeFilter = ['lang'];
+                                    this.attributeFilter = ['class'];
                                     this.attributeOldValue = true;
                                     this.subtree = false;
                                 }
@@ -3134,6 +3136,7 @@ var OSFramework;
                         version: undefined,
                         events: undefined,
                     };
+                    OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.addHandler(OSUI.Event.DOMEvents.Observers.ObserverEvent.RTL, this.redraw.bind(this));
                     super.build();
                 }
                 checkAddedProviderEvents() {
@@ -3154,6 +3157,7 @@ var OSFramework;
                     }
                 }
                 dispose() {
+                    OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.removeHandler(OSUI.Event.DOMEvents.Observers.ObserverEvent.RTL, this.redraw.bind(this));
                     super.dispose();
                 }
                 registerCallback(eventName, callback) {
@@ -14456,22 +14460,8 @@ var OutSystems;
                 }
                 LayoutPrivate.HideHeader = HideHeader;
                 function RTLObserver(callback) {
-                    const elemToObserve = document.body;
-                    let hasAlreadyRTL = elemToObserve.classList.contains(OSFramework.OSUI.Constants.IsRTLClass);
-                    const observer = new MutationObserver(function (mutations) {
-                        mutations.forEach(function (mutation) {
-                            if (mutation.attributeName === 'class') {
-                                const mutationTarget = mutation.target;
-                                const hasRTLNow = mutationTarget.classList.contains(OSFramework.OSUI.Constants.IsRTLClass);
-                                if (hasAlreadyRTL !== hasRTLNow) {
-                                    hasAlreadyRTL = hasRTLNow;
-                                    OSFramework.OSUI.Helper.AsyncInvocation(callback);
-                                }
-                            }
-                        });
-                    });
-                    observer.observe(elemToObserve, { attributes: true });
-                    return observer;
+                    console.warn(`This method is deprecated. Use instead the API OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.addHandler`);
+                    OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.addHandler(OSFramework.OSUI.Event.DOMEvents.Observers.ObserverEvent.RTL, callback);
                 }
                 LayoutPrivate.RTLObserver = RTLObserver;
                 function SetDeviceClass(IsWebApp) {

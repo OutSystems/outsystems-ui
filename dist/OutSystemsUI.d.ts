@@ -295,6 +295,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         MouseLeave = "mouseleave",
         MouseUp = "mouseup",
         OrientationChange = "orientationchange",
+        Prefix = "on",
         Resize = "resize",
         Scroll = "scroll",
         TouchEnd = "touchend",
@@ -568,6 +569,7 @@ declare namespace OSFramework.OSUI.Event.DOMEvents {
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
     abstract class AbstractListener<T> extends AbstractEvent<T> implements IListener {
+        private _eventName;
         private _eventTarget;
         private _eventType;
         protected eventCallback: EventListenerObject;
@@ -640,11 +642,11 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Observers {
         private _observerOptions;
         private _observerTarget;
         protected observer: ResizeObserver | MutationObserver;
-        get observerOptions(): O;
-        get observerTarget(): HTMLElement;
         constructor(observerOptions: O, observerTarget: HTMLElement);
         protected startObserver(): void;
         removeEvent(): void;
+        get observerOptions(): O;
+        get observerTarget(): HTMLElement;
     }
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents.Observers {
@@ -676,6 +678,7 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Observers.MutationObservers {
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents.Observers.MutationObservers.RTL {
     class RTLObserver extends AbstractMutationObserver {
+        private _hasAlreadyRTL;
         constructor();
         observerHandler(mutationList: MutationRecord[]): void;
     }
@@ -4101,7 +4104,7 @@ declare namespace OutSystems.OSUI.Utils.LayoutPrivate {
     function Dispose(): void;
     function FixInputs(): void;
     function HideHeader(HideHeader: boolean): void;
-    function RTLObserver(callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): MutationObserver;
+    function RTLObserver(callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void;
     function SetDeviceClass(IsWebApp: boolean): void;
     function SetStickyObserver(): void;
 }

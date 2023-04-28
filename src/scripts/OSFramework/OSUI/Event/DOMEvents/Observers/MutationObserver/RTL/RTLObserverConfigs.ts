@@ -7,7 +7,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Observers.MutationObservers.RTL {
 		public subtree: boolean;
 
 		constructor() {
-			this.attributeFilter = ['lang'];
+			this.attributeFilter = ['class'];
 			this.attributeOldValue = true;
 			this.subtree = false;
 		}

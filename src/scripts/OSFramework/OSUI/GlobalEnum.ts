@@ -174,6 +174,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		MouseLeave = 'mouseleave',
 		MouseUp = 'mouseup',
 		OrientationChange = 'orientationchange',
+		Prefix = 'on',
 		Resize = 'resize',
 		Scroll = 'scroll',
 		TouchEnd = 'touchend',

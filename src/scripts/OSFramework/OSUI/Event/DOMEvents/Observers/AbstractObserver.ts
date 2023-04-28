@@ -5,14 +5,6 @@ namespace OSFramework.OSUI.Event.DOMEvents.Observers {
 		private _observerTarget: HTMLElement;
 		protected observer: ResizeObserver | MutationObserver;
 
-		public get observerOptions(): O {
-			return this._observerOptions;
-		}
-
-		public get observerTarget(): HTMLElement {
-			return this._observerTarget;
-		}
-
 		constructor(observerOptions: O, observerTarget: HTMLElement) {
 			super();
 			this._observerOptions = observerOptions;
@@ -25,6 +17,14 @@ namespace OSFramework.OSUI.Event.DOMEvents.Observers {
 
 		public removeEvent(): void {
 			this.observer.disconnect();
+		}
+
+		public get observerOptions(): O {
+			return this._observerOptions;
+		}
+
+		public get observerTarget(): HTMLElement {
+			return this._observerTarget;
 		}
 	}
 }

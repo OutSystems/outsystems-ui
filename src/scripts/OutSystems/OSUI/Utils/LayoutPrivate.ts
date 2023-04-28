@@ -90,24 +90,14 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	 * @returns
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
-	export function RTLObserver(callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): MutationObserver {
-		const elemToObserve = document.body;
-		let hasAlreadyRTL = elemToObserve.classList.contains(OSFramework.OSUI.Constants.IsRTLClass);
-
-		const observer = new MutationObserver(function (mutations) {
-			mutations.forEach(function (mutation) {
-				if (mutation.attributeName === 'class') {
-					const mutationTarget = mutation.target as HTMLElement;
-					const hasRTLNow = mutationTarget.classList.contains(OSFramework.OSUI.Constants.IsRTLClass);
-					if (hasAlreadyRTL !== hasRTLNow) {
-						hasAlreadyRTL = hasRTLNow;
-						OSFramework.OSUI.Helper.AsyncInvocation(callback);
-					}
-				}
-			});
-		});
-		observer.observe(elemToObserve, { attributes: true });
-		return observer;
+	export function RTLObserver(callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void {
+		console.warn(
+			`This method is deprecated. Use instead the API OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.addHandler`
+		);
+		OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.addHandler(
+			OSFramework.OSUI.Event.DOMEvents.Observers.ObserverEvent.RTL,
+			callback
+		);
 	}
 
 	/**
