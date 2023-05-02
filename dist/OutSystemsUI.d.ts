@@ -266,6 +266,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
     }
     enum HTMLAttributes {
         AllowEventPropagation = "[data-allow-event-propagation=true], [data-allow-event-propagation=True]",
+        Class = "class",
         DataInput = "data-input",
         Disabled = "disabled",
         Id = "id",
@@ -692,7 +693,7 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Observers.MutationObservers.R
     }
 }
 declare namespace OSFramework.OSUI.Event {
-    abstract class AbstractGestureEvent implements GestureEvent.IAbstractGestureEvent {
+    abstract class AbstractGestureEvent implements GestureEvent.IGestureEvent {
         private _endEvent;
         private _endTriggerCallback;
         private _gestureParams;
@@ -744,7 +745,7 @@ declare namespace OSFramework.OSUI.Event.GestureEvent {
     }
 }
 declare namespace OSFramework.OSUI.Event.GestureEvent {
-    interface IAbstractGestureEvent {
+    interface IGestureEvent {
         targetElement: HTMLElement;
         unsetTouchEvents(): void;
     }

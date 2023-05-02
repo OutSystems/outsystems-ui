@@ -338,6 +338,7 @@ var OSFramework;
             let HTMLAttributes;
             (function (HTMLAttributes) {
                 HTMLAttributes["AllowEventPropagation"] = "[data-allow-event-propagation=true], [data-allow-event-propagation=True]";
+                HTMLAttributes["Class"] = "class";
                 HTMLAttributes["DataInput"] = "data-input";
                 HTMLAttributes["Disabled"] = "disabled";
                 HTMLAttributes["Id"] = "id";
@@ -1379,7 +1380,7 @@ var OSFramework;
                                 }
                                 observerHandler(mutationList) {
                                     mutationList.forEach((mutation) => {
-                                        if (mutation.attributeName === 'class') {
+                                        if (mutation.attributeName === OSUI.GlobalEnum.HTMLAttributes.Class) {
                                             const mutationTarget = mutation.target;
                                             const hasRTLNow = mutationTarget.classList.contains(OSFramework.OSUI.Constants.IsRTLClass);
                                             if (this._hasAlreadyRTL !== hasRTLNow) {
@@ -1414,7 +1415,7 @@ var OSFramework;
                         (function (RTL) {
                             class RTLObserverConfigs {
                                 constructor() {
-                                    this.attributeFilter = ['class'];
+                                    this.attributeFilter = [OSUI.GlobalEnum.HTMLAttributes.Class];
                                     this.attributeOldValue = true;
                                     this.subtree = false;
                                 }
@@ -16974,12 +16975,14 @@ var Providers;
                         this._manageAttributes();
                         this.triggerPlatformEventInitialized();
                         const _bodyEvent = OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick);
-                        this.selfElement.addEventListener(VirtualSelect.Enum.Events.BeforeOpen, () => {
-                            _bodyEvent.disableBodyClickEvent();
-                        });
-                        this.selfElement.addEventListener(VirtualSelect.Enum.Events.BeforeClose, () => {
-                            _bodyEvent.enableBodyClickEvent();
-                        });
+                        if (_bodyEvent) {
+                            this.selfElement.addEventListener(VirtualSelect.Enum.Events.BeforeOpen, () => {
+                                _bodyEvent.disableBodyClickEvent();
+                            });
+                            this.selfElement.addEventListener(VirtualSelect.Enum.Events.BeforeClose, () => {
+                                _bodyEvent.enableBodyClickEvent();
+                            });
+                        }
                     }
                     setA11YProperties() {
                         this.setHiddenInputWrapperAriaLabelVal();
@@ -17657,12 +17660,14 @@ var Providers;
                         }
                         this.createdInstance();
                         const _bodyEvent = OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick);
-                        this.provider.config.onOpen.push(function () {
-                            _bodyEvent.disableBodyClickEvent();
-                        });
-                        this.provider.config.onClose.push(() => {
-                            _bodyEvent.enableBodyClickEvent();
-                        });
+                        if (_bodyEvent) {
+                            this.provider.config.onOpen.push(function () {
+                                _bodyEvent.disableBodyClickEvent();
+                            });
+                            this.provider.config.onClose.push(() => {
+                                _bodyEvent.enableBodyClickEvent();
+                            });
+                        }
                     }
                     createdInstance() {
                         this.updateProviderEvents({
@@ -18679,12 +18684,14 @@ var Providers;
                         }
                         this.createdInstance();
                         const _bodyEvent = OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick);
-                        this.provider.config.onOpen.push(() => {
-                            _bodyEvent.disableBodyClickEvent();
-                        });
-                        this.provider.config.onClose.push(() => {
-                            _bodyEvent.enableBodyClickEvent();
-                        });
+                        if (_bodyEvent) {
+                            this.provider.config.onOpen.push(() => {
+                                _bodyEvent.disableBodyClickEvent();
+                            });
+                            this.provider.config.onClose.push(() => {
+                                _bodyEvent.enableBodyClickEvent();
+                            });
+                        }
                     }
                     createdInstance() {
                         this.updateProviderEvents({
