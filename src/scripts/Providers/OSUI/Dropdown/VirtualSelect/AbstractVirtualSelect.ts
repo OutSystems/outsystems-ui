@@ -160,13 +160,15 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick
 			) as OSFramework.OSUI.Event.DOMEvents.Listeners.IListener;
 
-			// Add events to change the global event triggering of body click on Open / Close
-			this.selfElement.addEventListener(Enum.Events.BeforeOpen, () => {
-				_bodyEvent.disableBodyClickEvent();
-			});
-			this.selfElement.addEventListener(Enum.Events.BeforeClose, () => {
-				_bodyEvent.enableBodyClickEvent();
-			});
+			if (_bodyEvent) {
+				// Add events to change the global event triggering of body click on Open / Close
+				this.selfElement.addEventListener(Enum.Events.BeforeOpen, () => {
+					_bodyEvent.disableBodyClickEvent();
+				});
+				this.selfElement.addEventListener(Enum.Events.BeforeClose, () => {
+					_bodyEvent.enableBodyClickEvent();
+				});
+			}
 		}
 
 		/**

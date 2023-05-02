@@ -120,13 +120,15 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick
 			) as OSFramework.OSUI.Event.DOMEvents.Listeners.IListener;
 
-			// Add triggers to change the global event triggering of body click on Open / Close
-			this.provider.config.onOpen.push(function () {
-				_bodyEvent.disableBodyClickEvent();
-			});
-			this.provider.config.onClose.push(() => {
-				_bodyEvent.enableBodyClickEvent();
-			});
+			if (_bodyEvent) {
+				// Add triggers to change the global event triggering of body click on Open / Close
+				this.provider.config.onOpen.push(function () {
+					_bodyEvent.disableBodyClickEvent();
+				});
+				this.provider.config.onClose.push(() => {
+					_bodyEvent.enableBodyClickEvent();
+				});
+			}
 		}
 
 		/**
