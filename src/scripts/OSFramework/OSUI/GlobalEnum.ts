@@ -137,6 +137,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 	 */
 	export enum HTMLAttributes {
 		AllowEventPropagation = '[data-allow-event-propagation=true], [data-allow-event-propagation=True]',
+		Class = 'class',
 		DataInput = 'data-input',
 		Disabled = 'disabled',
 		Id = 'id',
@@ -174,6 +175,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		MouseLeave = 'mouseleave',
 		MouseUp = 'mouseup',
 		OrientationChange = 'orientationchange',
+		Prefix = 'on',
 		Resize = 'resize',
 		Scroll = 'scroll',
 		TouchEnd = 'touchend',

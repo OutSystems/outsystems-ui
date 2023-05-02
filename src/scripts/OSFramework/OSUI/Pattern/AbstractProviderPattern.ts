@@ -160,6 +160,13 @@ namespace OSFramework.OSUI.Patterns {
 				version: undefined,
 				events: undefined,
 			};
+
+			// Force provider redraw/update when rtl is changed in runtime
+			OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.addHandler(
+				Event.DOMEvents.Observers.ObserverEvent.RTL,
+				this.redraw.bind(this)
+			);
+
 			super.build();
 		}
 
@@ -198,6 +205,11 @@ namespace OSFramework.OSUI.Patterns {
 		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
 		public dispose(): void {
+			OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.removeHandler(
+				Event.DOMEvents.Observers.ObserverEvent.RTL,
+				this.redraw.bind(this)
+			);
+
 			super.dispose();
 		}
 

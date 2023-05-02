@@ -369,6 +369,7 @@ var OSFramework;
                 HTMLEvent["MouseLeave"] = "mouseleave";
                 HTMLEvent["MouseUp"] = "mouseup";
                 HTMLEvent["OrientationChange"] = "orientationchange";
+                HTMLEvent["Prefix"] = "on";
                 HTMLEvent["Resize"] = "resize";
                 HTMLEvent["Scroll"] = "scroll";
                 HTMLEvent["TouchEnd"] = "touchend";
@@ -915,91 +916,90 @@ var OSFramework;
     (function (OSUI) {
         var Event;
         (function (Event) {
-            class AbstractEvent {
-                constructor() {
-                    this._handlers = [];
-                }
-                get handlers() {
-                    return this._handlers;
-                }
-                addHandler(handler) {
-                    this._handlers.push(handler);
-                }
-                hasHandlers() {
-                    return this._handlers.length > 0;
-                }
-                removeHandler(handler) {
-                    const index = this._handlers.findIndex((hd) => {
-                        return hd === handler;
-                    });
-                    if (index !== -1) {
-                        this._handlers.splice(index, 1);
+            var DOMEvents;
+            (function (DOMEvents) {
+                class AbstractEvent {
+                    constructor() {
+                        this._handlers = [];
                     }
-                }
-                trigger(data, ...args) {
-                    this._handlers.slice(0).forEach((h) => OSUI.Helper.AsyncInvocation(h, data, ...args));
-                }
-            }
-            Event.AbstractEvent = AbstractEvent;
-        })(Event = OSUI.Event || (OSUI.Event = {}));
-    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
-})(OSFramework || (OSFramework = {}));
-var OSFramework;
-(function (OSFramework) {
-    var OSUI;
-    (function (OSUI) {
-        var Event;
-        (function (Event) {
-            class AbstractEventsManager {
-                constructor() {
-                    this._enableBodyClick = true;
-                    this._events = new Map();
-                }
-                addHandler(eventType, handler) {
-                    if (this._events && this._events.has(eventType)) {
-                        this._events.get(eventType).addHandler(handler);
+                    get handlers() {
+                        return this._handlers;
                     }
-                    else {
-                        const ev = this.getInstanceOfEventType(eventType);
-                        if (ev !== undefined) {
-                            ev.addHandler(handler);
-                            this._events.set(eventType, ev);
+                    addHandler(handler) {
+                        this._handlers.push(handler);
+                    }
+                    hasHandlers() {
+                        return this._handlers.length > 0;
+                    }
+                    removeHandler(handler) {
+                        const index = this._handlers.findIndex((hd) => {
+                            return hd === handler;
+                        });
+                        if (index !== -1) {
+                            this._handlers.splice(index, 1);
+                        }
+                        if (this.hasHandlers() === false) {
+                            this.removeEvent();
                         }
                     }
-                }
-                disableBodyClickEvent() {
-                    this._enableBodyClick = false;
-                }
-                enableBodyClickEvent() {
-                    this._enableBodyClick = true;
-                }
-                hasHandlers(eventType) {
-                    let returnValue = false;
-                    if (this._events.has(eventType)) {
-                        const event = this._events.get(eventType);
-                        returnValue = event.hasHandlers();
-                    }
-                    return returnValue;
-                }
-                removeHandler(eventType, handler) {
-                    if (this._events.has(eventType)) {
-                        const event = this._events.get(eventType);
-                        event.removeHandler(handler);
+                    trigger(data, ...args) {
+                        this._handlers.slice(0).forEach((h) => OSUI.Helper.AsyncInvocation(h, data, ...args));
                     }
                 }
-                trigger(eventType, data, ...args) {
-                    if (this._events.has(eventType)) {
-                        this._events.get(eventType).trigger(data, args);
+                DOMEvents.AbstractEvent = AbstractEvent;
+            })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
+        })(Event = OSUI.Event || (OSUI.Event = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Event;
+        (function (Event) {
+            var DOMEvents;
+            (function (DOMEvents) {
+                class AbstractEventsManager {
+                    constructor() {
+                        this._events = new Map();
+                    }
+                    addHandler(eventType, handler) {
+                        if (this._events && this._events.has(eventType)) {
+                            this._events.get(eventType).addHandler(handler);
+                        }
+                        else {
+                            const ev = this.getInstanceOfEventType(eventType);
+                            if (ev !== undefined) {
+                                ev.addHandler(handler);
+                                this._events.set(eventType, ev);
+                            }
+                        }
+                    }
+                    hasHandlers(eventType) {
+                        let returnValue = false;
+                        if (this._events.has(eventType)) {
+                            const event = this._events.get(eventType);
+                            returnValue = event.hasHandlers();
+                        }
+                        return returnValue;
+                    }
+                    removeHandler(eventType, handler) {
+                        if (this._events.has(eventType)) {
+                            const event = this._events.get(eventType);
+                            event.removeHandler(handler);
+                        }
+                    }
+                    trigger(eventType, data, ...args) {
+                        if (this._events.has(eventType)) {
+                            this._events.get(eventType).trigger(data, args);
+                        }
+                    }
+                    get events() {
+                        return this._events;
                     }
                 }
-                get events() {
-                    return this._events;
-                }
-                get getBodyClickStatus() {
-                    return this._enableBodyClick;
-                }
-            }
-            Event.AbstractEventsManager = AbstractEventsManager;
+                DOMEvents.AbstractEventsManager = AbstractEventsManager;
+            })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
         })(Event = OSUI.Event || (OSUI.Event = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
 })(OSFramework || (OSFramework = {}));
@@ -1009,18 +1009,32 @@ var OSFramework;
     (function (OSUI) {
         var Event;
         (function (Event) {
-            class BodyOnClick extends Event.AbstractEvent {
-                constructor() {
-                    super();
-                    document.body.addEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._bodyTrigger.bind(this));
-                }
-                _bodyTrigger(evt) {
-                    if (Event.GlobalEventManager.Instance.getBodyClickStatus) {
-                        this.trigger(OSUI.GlobalEnum.HTMLEvent.Click, evt);
+            var DOMEvents;
+            (function (DOMEvents) {
+                var Listeners;
+                (function (Listeners) {
+                    class AbstractListener extends DOMEvents.AbstractEvent {
+                        constructor(eventTarget, eventType) {
+                            super();
+                            this._eventTarget = eventTarget;
+                            this._eventType = eventType;
+                            this._eventName = OSUI.GlobalEnum.HTMLEvent.Prefix + this._eventType;
+                            OSUI.Helper.AsyncInvocation(this.addEvent.bind(this));
+                        }
+                        addEvent() {
+                            if (this._eventName in window) {
+                                this._eventTarget.addEventListener(this._eventType, this.eventCallback);
+                            }
+                        }
+                        removeEvent() {
+                            if (this._eventName in window) {
+                                this._eventTarget.removeEventListener(this._eventType, this.eventCallback);
+                            }
+                        }
                     }
-                }
-            }
-            Event.BodyOnClick = BodyOnClick;
+                    Listeners.AbstractListener = AbstractListener;
+                })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
+            })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
         })(Event = OSUI.Event || (OSUI.Event = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
 })(OSFramework || (OSFramework = {}));
@@ -1030,87 +1044,34 @@ var OSFramework;
     (function (OSUI) {
         var Event;
         (function (Event) {
-            class BodyOnMouseDown extends Event.AbstractEvent {
-                constructor() {
-                    super();
-                    document.body.addEventListener(OSUI.GlobalEnum.HTMLEvent.MouseDown, this._bodyTrigger.bind(this));
-                }
-                _bodyTrigger(evt) {
-                    this.trigger(OSUI.GlobalEnum.HTMLEvent.MouseDown, evt);
-                }
-            }
-            Event.BodyOnMouseDown = BodyOnMouseDown;
-        })(Event = OSUI.Event || (OSUI.Event = {}));
-    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
-})(OSFramework || (OSFramework = {}));
-var OSFramework;
-(function (OSFramework) {
-    var OSUI;
-    (function (OSUI) {
-        var Event;
-        (function (Event) {
-            class BodyOnScroll extends Event.AbstractEvent {
-                constructor() {
-                    super();
-                    document.body.addEventListener(OSUI.GlobalEnum.HTMLEvent.Scroll, this._bodyTrigger.bind(this), true);
-                }
-                _bodyTrigger(evt) {
-                    this.trigger(OSUI.GlobalEnum.HTMLEvent.Scroll, evt);
-                }
-            }
-            Event.BodyOnScroll = BodyOnScroll;
-        })(Event = OSUI.Event || (OSUI.Event = {}));
-    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
-})(OSFramework || (OSFramework = {}));
-var OSFramework;
-(function (OSFramework) {
-    var OSUI;
-    (function (OSUI) {
-        var Event;
-        (function (Event) {
-            let Type;
-            (function (Type) {
-                Type["BodyOnClick"] = "body.onclick";
-                Type["BodyOnScroll"] = "body.onscroll";
-                Type["BodyOnMouseDown"] = "body.mousedown";
-                Type["OrientationChange"] = "window.onorientationchange";
-                Type["WindowResize"] = "window.onresize";
-            })(Type = Event.Type || (Event.Type = {}));
-        })(Event = OSUI.Event || (OSUI.Event = {}));
-    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
-})(OSFramework || (OSFramework = {}));
-var OSFramework;
-(function (OSFramework) {
-    var OSUI;
-    (function (OSUI) {
-        var Event;
-        (function (Event) {
-            class EventManager extends Event.AbstractEventsManager {
-                getInstanceOfEventType(eventType) {
-                    switch (eventType) {
-                        case Event.Type.BodyOnClick:
-                            return new Event.BodyOnClick();
-                        case Event.Type.BodyOnScroll:
-                            return new Event.BodyOnScroll();
-                        case Event.Type.BodyOnMouseDown:
-                            return new Event.BodyOnMouseDown();
-                        case Event.Type.WindowResize:
-                            return new Event.WindowResize();
-                        case Event.Type.OrientationChange:
-                            return new Event.OrientationChange();
-                        default:
-                            throw new Error(`The event ${eventType} is not supported.`);
+            var DOMEvents;
+            (function (DOMEvents) {
+                var Listeners;
+                (function (Listeners) {
+                    class BodyOnClick extends Listeners.AbstractListener {
+                        constructor() {
+                            super(document.body, OSUI.GlobalEnum.HTMLEvent.Click);
+                            this._enableBodyClick = true;
+                            this.eventCallback = this._bodyTrigger.bind(this);
+                        }
+                        _bodyTrigger(evt) {
+                            if (this.getBodyClickStatus) {
+                                this.trigger(OSUI.GlobalEnum.HTMLEvent.Click, evt);
+                            }
+                        }
+                        disableBodyClickEvent() {
+                            this._enableBodyClick = false;
+                        }
+                        enableBodyClickEvent() {
+                            this._enableBodyClick = true;
+                        }
+                        get getBodyClickStatus() {
+                            return this._enableBodyClick;
+                        }
                     }
-                }
-            }
-            Event.EventManager = EventManager;
-            class GlobalEventManager {
-                static get Instance() {
-                    return GlobalEventManager._eventManager;
-                }
-            }
-            GlobalEventManager._eventManager = new EventManager();
-            Event.GlobalEventManager = GlobalEventManager;
+                    Listeners.BodyOnClick = BodyOnClick;
+                })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
+            })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
         })(Event = OSUI.Event || (OSUI.Event = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
 })(OSFramework || (OSFramework = {}));
@@ -1120,18 +1081,22 @@ var OSFramework;
     (function (OSUI) {
         var Event;
         (function (Event) {
-            class OrientationChange extends Event.AbstractEvent {
-                constructor() {
-                    super();
-                    if ('onorientationchange' in window) {
-                        window.addEventListener(OSUI.GlobalEnum.HTMLEvent.OrientationChange, this._orientationTrigger.bind(this), true);
+            var DOMEvents;
+            (function (DOMEvents) {
+                var Listeners;
+                (function (Listeners) {
+                    class BodyOnMouseDown extends Listeners.AbstractListener {
+                        constructor() {
+                            super(document.body, OSUI.GlobalEnum.HTMLEvent.MouseDown);
+                            this.eventCallback = this._bodyTrigger.bind(this);
+                        }
+                        _bodyTrigger(evt) {
+                            this.trigger(OSUI.GlobalEnum.HTMLEvent.MouseDown, evt);
+                        }
                     }
-                }
-                _orientationTrigger(evt) {
-                    this.trigger(OSUI.GlobalEnum.HTMLEvent.OrientationChange, evt);
-                }
-            }
-            Event.OrientationChange = OrientationChange;
+                    Listeners.BodyOnMouseDown = BodyOnMouseDown;
+                })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
+            })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
         })(Event = OSUI.Event || (OSUI.Event = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
 })(OSFramework || (OSFramework = {}));
@@ -1141,19 +1106,324 @@ var OSFramework;
     (function (OSUI) {
         var Event;
         (function (Event) {
-            class WindowResize extends Event.AbstractEvent {
-                constructor() {
-                    super();
-                    window.addEventListener(OSUI.GlobalEnum.HTMLEvent.Resize, this._windowTrigger.bind(this), true);
-                }
-                _windowTrigger(evt) {
-                    window.clearTimeout(this._timeout);
-                    this._timeout = window.setTimeout(() => {
-                        this.trigger(OSUI.GlobalEnum.HTMLEvent.Resize, evt);
-                    }, 100);
-                }
-            }
-            Event.WindowResize = WindowResize;
+            var DOMEvents;
+            (function (DOMEvents) {
+                var Listeners;
+                (function (Listeners) {
+                    class BodyOnScroll extends Listeners.AbstractListener {
+                        constructor() {
+                            super(document.body, OSUI.GlobalEnum.HTMLEvent.Scroll);
+                            this.eventCallback = this._bodyTrigger.bind(this);
+                        }
+                        _bodyTrigger(evt) {
+                            this.trigger(OSUI.GlobalEnum.HTMLEvent.Scroll, evt);
+                        }
+                    }
+                    Listeners.BodyOnScroll = BodyOnScroll;
+                })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
+            })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
+        })(Event = OSUI.Event || (OSUI.Event = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Event;
+        (function (Event) {
+            var DOMEvents;
+            (function (DOMEvents) {
+                var Listeners;
+                (function (Listeners) {
+                    let Type;
+                    (function (Type) {
+                        Type["BodyOnClick"] = "body.onclick";
+                        Type["BodyOnScroll"] = "body.onscroll";
+                        Type["BodyOnMouseDown"] = "body.mousedown";
+                        Type["OrientationChange"] = "window.onorientationchange";
+                        Type["WindowResize"] = "window.onresize";
+                    })(Type = Listeners.Type || (Listeners.Type = {}));
+                })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
+            })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
+        })(Event = OSUI.Event || (OSUI.Event = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Event;
+        (function (Event) {
+            var DOMEvents;
+            (function (DOMEvents) {
+                var Listeners;
+                (function (Listeners) {
+                    class ListenerManager extends DOMEvents.AbstractEventsManager {
+                        getInstanceOfEventType(listenerType) {
+                            switch (listenerType) {
+                                case Listeners.Type.BodyOnClick:
+                                    return new Listeners.BodyOnClick();
+                                case Listeners.Type.BodyOnScroll:
+                                    return new Listeners.BodyOnScroll();
+                                case Listeners.Type.BodyOnMouseDown:
+                                    return new Listeners.BodyOnMouseDown();
+                                case Listeners.Type.WindowResize:
+                                    return new Listeners.WindowResize();
+                                case Listeners.Type.OrientationChange:
+                                    return new Listeners.OrientationChange();
+                                default:
+                                    throw new Error(`The listener ${listenerType} is not supported.`);
+                            }
+                        }
+                    }
+                    Listeners.ListenerManager = ListenerManager;
+                    class GlobalListenerManager {
+                        static get Instance() {
+                            return GlobalListenerManager._listenerManager;
+                        }
+                    }
+                    GlobalListenerManager._listenerManager = new ListenerManager();
+                    Listeners.GlobalListenerManager = GlobalListenerManager;
+                })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
+            })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
+        })(Event = OSUI.Event || (OSUI.Event = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Event;
+        (function (Event) {
+            var DOMEvents;
+            (function (DOMEvents) {
+                var Listeners;
+                (function (Listeners) {
+                    class OrientationChange extends Listeners.AbstractListener {
+                        constructor() {
+                            super(window, OSUI.GlobalEnum.HTMLEvent.OrientationChange);
+                            this.eventCallback = this._orientationTrigger.bind(this);
+                        }
+                        _orientationTrigger(evt) {
+                            this.trigger(OSUI.GlobalEnum.HTMLEvent.OrientationChange, evt);
+                        }
+                    }
+                    Listeners.OrientationChange = OrientationChange;
+                })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
+            })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
+        })(Event = OSUI.Event || (OSUI.Event = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Event;
+        (function (Event) {
+            var DOMEvents;
+            (function (DOMEvents) {
+                var Listeners;
+                (function (Listeners) {
+                    class WindowResize extends Listeners.AbstractListener {
+                        constructor() {
+                            super(window, OSUI.GlobalEnum.HTMLEvent.Resize);
+                            this.eventCallback = this._windowTrigger.bind(this);
+                        }
+                        _windowTrigger(evt) {
+                            window.clearTimeout(this._timeout);
+                            this._timeout = window.setTimeout(() => {
+                                this.trigger(OSUI.GlobalEnum.HTMLEvent.Resize, evt);
+                            }, 100);
+                        }
+                    }
+                    Listeners.WindowResize = WindowResize;
+                })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
+            })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
+        })(Event = OSUI.Event || (OSUI.Event = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Event;
+        (function (Event) {
+            var DOMEvents;
+            (function (DOMEvents) {
+                var Observers;
+                (function (Observers) {
+                    class AbstractObserver extends DOMEvents.AbstractEvent {
+                        constructor(observerOptions, observerTarget) {
+                            super();
+                            this._observerOptions = observerOptions;
+                            this._observerTarget = observerTarget;
+                        }
+                        startObserver() {
+                            this.observer.observe(this.observerTarget, this.observerOptions);
+                        }
+                        removeEvent() {
+                            this.observer.disconnect();
+                        }
+                        get observerOptions() {
+                            return this._observerOptions;
+                        }
+                        get observerTarget() {
+                            return this._observerTarget;
+                        }
+                    }
+                    Observers.AbstractObserver = AbstractObserver;
+                })(Observers = DOMEvents.Observers || (DOMEvents.Observers = {}));
+            })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
+        })(Event = OSUI.Event || (OSUI.Event = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Event;
+        (function (Event) {
+            var DOMEvents;
+            (function (DOMEvents) {
+                var Observers;
+                (function (Observers) {
+                    let ObserverEvent;
+                    (function (ObserverEvent) {
+                        ObserverEvent["RTL"] = "RTL";
+                    })(ObserverEvent = Observers.ObserverEvent || (Observers.ObserverEvent = {}));
+                })(Observers = DOMEvents.Observers || (DOMEvents.Observers = {}));
+            })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
+        })(Event = OSUI.Event || (OSUI.Event = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Event;
+        (function (Event) {
+            var DOMEvents;
+            (function (DOMEvents) {
+                var Observers;
+                (function (Observers) {
+                    class ObserverManager extends DOMEvents.AbstractEventsManager {
+                        getInstanceOfEventType(observerType) {
+                            switch (observerType) {
+                                case Observers.ObserverEvent.RTL:
+                                    return new Observers.MutationObservers.RTL.RTLObserver();
+                                default:
+                                    throw new Error(`The observer ${observerType} is not supported.`);
+                            }
+                        }
+                    }
+                    Observers.ObserverManager = ObserverManager;
+                    class GlobalObserverManager {
+                        static get Instance() {
+                            return GlobalObserverManager._observerManager;
+                        }
+                    }
+                    GlobalObserverManager._observerManager = new ObserverManager();
+                    Observers.GlobalObserverManager = GlobalObserverManager;
+                })(Observers = DOMEvents.Observers || (DOMEvents.Observers = {}));
+            })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
+        })(Event = OSUI.Event || (OSUI.Event = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Event;
+        (function (Event) {
+            var DOMEvents;
+            (function (DOMEvents) {
+                var Observers;
+                (function (Observers) {
+                    var MutationObservers;
+                    (function (MutationObservers) {
+                        class AbstractMutationObserver extends Observers.AbstractObserver {
+                            constructor(observerOptions, observerTarget) {
+                                super(observerOptions, observerTarget);
+                                this.addEvent();
+                                this.startObserver();
+                            }
+                            addEvent() {
+                                this.observer = new MutationObserver(this.observerHandler.bind(this));
+                            }
+                        }
+                        MutationObservers.AbstractMutationObserver = AbstractMutationObserver;
+                    })(MutationObservers = Observers.MutationObservers || (Observers.MutationObservers = {}));
+                })(Observers = DOMEvents.Observers || (DOMEvents.Observers = {}));
+            })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
+        })(Event = OSUI.Event || (OSUI.Event = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Event;
+        (function (Event) {
+            var DOMEvents;
+            (function (DOMEvents) {
+                var Observers;
+                (function (Observers) {
+                    var MutationObservers;
+                    (function (MutationObservers) {
+                        var RTL;
+                        (function (RTL) {
+                            class RTLObserver extends MutationObservers.AbstractMutationObserver {
+                                constructor() {
+                                    super(new RTL.RTLObserverConfigs(), document.body);
+                                    this._hasAlreadyRTL = document.body.classList.contains(OSFramework.OSUI.Constants.IsRTLClass);
+                                }
+                                observerHandler(mutationList) {
+                                    mutationList.forEach((mutation) => {
+                                        if (mutation.attributeName === 'class') {
+                                            const mutationTarget = mutation.target;
+                                            const hasRTLNow = mutationTarget.classList.contains(OSFramework.OSUI.Constants.IsRTLClass);
+                                            if (this._hasAlreadyRTL !== hasRTLNow) {
+                                                this._hasAlreadyRTL = hasRTLNow;
+                                                this.trigger(Observers.ObserverEvent.RTL, mutation);
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                            RTL.RTLObserver = RTLObserver;
+                        })(RTL = MutationObservers.RTL || (MutationObservers.RTL = {}));
+                    })(MutationObservers = Observers.MutationObservers || (Observers.MutationObservers = {}));
+                })(Observers = DOMEvents.Observers || (DOMEvents.Observers = {}));
+            })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
+        })(Event = OSUI.Event || (OSUI.Event = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Event;
+        (function (Event) {
+            var DOMEvents;
+            (function (DOMEvents) {
+                var Observers;
+                (function (Observers) {
+                    var MutationObservers;
+                    (function (MutationObservers) {
+                        var RTL;
+                        (function (RTL) {
+                            class RTLObserverConfigs {
+                                constructor() {
+                                    this.attributeFilter = ['class'];
+                                    this.attributeOldValue = true;
+                                    this.subtree = false;
+                                }
+                            }
+                            RTL.RTLObserverConfigs = RTLObserverConfigs;
+                        })(RTL = MutationObservers.RTL || (MutationObservers.RTL = {}));
+                    })(MutationObservers = Observers.MutationObservers || (Observers.MutationObservers = {}));
+                })(Observers = DOMEvents.Observers || (DOMEvents.Observers = {}));
+            })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
         })(Event = OSUI.Event || (OSUI.Event = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
 })(OSFramework || (OSFramework = {}));
@@ -2866,6 +3136,7 @@ var OSFramework;
                         version: undefined,
                         events: undefined,
                     };
+                    OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.addHandler(OSUI.Event.DOMEvents.Observers.ObserverEvent.RTL, this.redraw.bind(this));
                     super.build();
                 }
                 checkAddedProviderEvents() {
@@ -2886,6 +3157,7 @@ var OSFramework;
                     }
                 }
                 dispose() {
+                    OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.removeHandler(OSUI.Event.DOMEvents.Observers.ObserverEvent.RTL, this.redraw.bind(this));
                     super.dispose();
                 }
                 registerCallback(eventName, callback) {
@@ -4863,11 +5135,11 @@ var OSFramework;
                                 this._balloonSearchInputElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.Blur, this._eventOnSearchInputBlur);
                                 this._balloonSearchInputElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.Focus, this._eventOnSearchInputFocus);
                             }
-                            OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnClick, this._eventOnBodyClick);
-                            OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnScroll, this._eventOnBodyScroll);
+                            OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventOnBodyClick);
+                            OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._eventOnBodyScroll);
                             this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
-                            OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.WindowResize, this._eventOnWindowResize);
-                            OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.OrientationChange, this._eventOnOrientationChange);
+                            OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.WindowResize, this._eventOnWindowResize);
+                            OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.OrientationChange, this._eventOnOrientationChange);
                         }
                         _touchMove() {
                             if (OSUI.Helper.DeviceInfo.IsIos && 'ontouchmove' in window) {
@@ -4892,10 +5164,10 @@ var OSFramework;
                                 this._balloonSearchInputElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Blur, this._eventOnSearchInputBlur);
                                 this._balloonSearchInputElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Focus, this._eventOnSearchInputFocus);
                             }
-                            OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnClick, this._eventOnBodyClick);
-                            OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnScroll, this._eventOnBodyScroll);
-                            OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.WindowResize, this._eventOnWindowResize);
-                            OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.OrientationChange, this._eventOnOrientationChange);
+                            OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventOnBodyClick);
+                            OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._eventOnBodyScroll);
+                            OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.WindowResize, this._eventOnWindowResize);
+                            OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.OrientationChange, this._eventOnOrientationChange);
                         }
                         _unsetNewOptionItem(optionItemId) {
                             if (this.getChild(optionItemId)) {
@@ -7707,7 +7979,7 @@ var OSFramework;
                     _removeEvents() {
                         this.selfElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
                         this.selfElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
-                        OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnScroll, this._eventOnBodyScroll);
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._eventOnBodyScroll);
                     }
                     _setHeaderSize() {
                         const header = OSUI.Helper.Dom.ClassSelector(document.body, OSUI.GlobalEnum.CssClassElements.Header);
@@ -7738,7 +8010,7 @@ var OSFramework;
                     _setUpEvents() {
                         this.selfElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
                         this.selfElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
-                        OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnScroll, this._eventOnBodyScroll);
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._eventOnBodyScroll);
                     }
                     setA11YProperties() {
                         OSUI.Helper.A11Y.RoleButton(this.selfElement);
@@ -7908,8 +8180,8 @@ var OSFramework;
                             this.selfElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
                             OSUI.Helper.A11Y.SetElementsTabIndex(this._isOpen, this._focusTrapInstance.focusableElements);
                             if (this._clickOutsideToClose || (this.configs.HasOverlay && this._clickOutsideToClose === undefined)) {
-                                OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnMouseDown, this._eventOverlayMouseDown);
-                                OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnClick, this._eventOverlayClick);
+                                OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnMouseDown, this._eventOverlayMouseDown);
+                                OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventOverlayClick);
                             }
                         }
                     }
@@ -7950,8 +8222,8 @@ var OSFramework;
                             this._isOpen = true;
                             this._triggerOnToggleEvent();
                             if (this._clickOutsideToClose || (this.configs.HasOverlay && this._clickOutsideToClose === undefined)) {
-                                OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnMouseDown, this._eventOverlayMouseDown);
-                                OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnClick, this._eventOverlayClick);
+                                OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnMouseDown, this._eventOverlayMouseDown);
+                                OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventOverlayClick);
                             }
                         }
                         this.selfElement.focus();
@@ -7975,8 +8247,8 @@ var OSFramework;
                     }
                     _removeEvents() {
                         this.selfElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
-                        OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnMouseDown, this._eventOverlayMouseDown);
-                        OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnClick, this._eventOverlayClick);
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnMouseDown, this._eventOverlayMouseDown);
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventOverlayClick);
                     }
                     _setDirection() {
                         if (this._currentDirectionCssClass !== '') {
@@ -8325,7 +8597,7 @@ var OSFramework;
                                 this.selfElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
                             }
                         }
-                        OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnClick, this._globalEventBody);
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._globalEventBody);
                     }
                     _setActive() {
                         if (this._isActive === false) {
@@ -8433,16 +8705,16 @@ var OSFramework;
                     clickOutsideToClose(clickOutsideToClose) {
                         this.hasClickOutsideToClose = clickOutsideToClose;
                         if (this.hasClickOutsideToClose) {
-                            OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnClick, this._globalEventBody);
+                            OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._globalEventBody);
                         }
                         else if (this.hasClickOutsideToClose === false) {
-                            OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnClick, this._globalEventBody);
+                            OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._globalEventBody);
                         }
                     }
                     close() {
                         if (this._isOpen) {
                             if (this.hasClickOutsideToClose) {
-                                OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnClick, this._globalEventBody);
+                                OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._globalEventBody);
                             }
                             OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, Submenu_1.Enum.CssClass.PatternIsOpen);
                             this._isOpen = false;
@@ -8457,7 +8729,7 @@ var OSFramework;
                     }
                     open() {
                         if (this.hasClickOutsideToClose) {
-                            OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnClick, this._globalEventBody);
+                            OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._globalEventBody);
                         }
                         OSUI.Helper.AsyncInvocation(this._show.bind(this));
                         OSUI.Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, true);
@@ -8814,9 +9086,9 @@ var OSFramework;
                     }
                     _addEvents() {
                         this.selfElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
-                        OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.WindowResize, this._eventOnResize);
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.WindowResize, this._eventOnResize);
                         if (OSUI.Helper.DeviceInfo.IsPhone || OSUI.Helper.DeviceInfo.IsTablet) {
-                            OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.OrientationChange, this._eventOnResize);
+                            OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.OrientationChange, this._eventOnResize);
                         }
                     }
                     _addHeaderItem(tabsHeaderChildItem) {
@@ -8991,9 +9263,9 @@ var OSFramework;
                     }
                     _removeEvents() {
                         this._tabsHeaderElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
-                        OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.WindowResize, this._eventOnResize);
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.WindowResize, this._eventOnResize);
                         if (OSUI.Helper.DeviceInfo.IsPhone || OSUI.Helper.DeviceInfo.IsTablet) {
-                            OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.OrientationChange, this._eventOnResize);
+                            OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.OrientationChange, this._eventOnResize);
                         }
                     }
                     _removeHeaderItem(childHeaderId) {
@@ -9839,7 +10111,7 @@ var OSFramework;
                             const _closestElem = _clickedElem.closest(OSUI.Constants.Dot + Tooltip_1.Enum.CssClass.Pattern);
                             const _closestBalloonElem = _clickedElem.closest(OSUI.Constants.Dot + Tooltip_1.Enum.CssClass.BalloonWrapper);
                             if (_closestElem !== this.selfElement && _closestBalloonElem !== this._tooltipBalloonWrapperElem) {
-                                OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnClick, this._eventOnBodyClick);
+                                OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventOnBodyClick);
                                 this._triggerClose();
                             }
                         }
@@ -9964,12 +10236,12 @@ var OSFramework;
                             this._tooltipIconElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
                             this._tooltipIconElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
                         }
-                        OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnScroll, this._eventOnBodyScroll);
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._eventOnBodyScroll);
                         this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
-                        OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.WindowResize, this._eventOnWindowResize);
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.WindowResize, this._eventOnWindowResize);
                         this._requestAnimationOnWindowResize = requestAnimationFrame(this._eventOnWindowResize);
                         if (this._isOpen) {
-                            OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnClick, this._eventOnBodyClick);
+                            OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventOnBodyClick);
                         }
                         if (this.configs.IsHover === false || OSUI.Helper.DeviceInfo.IsDesktop === false) {
                             this._tooltipIconElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
@@ -10016,7 +10288,7 @@ var OSFramework;
                                 OSUI.Helper.Dom.Styles.AddClass(this.selfElement, Tooltip_1.Enum.CssClass.IsOpened);
                                 OSUI.Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, Tooltip_1.Enum.CssClass.BalloonIsOpened);
                             });
-                            OSUI.Event.GlobalEventManager.Instance.addHandler(OSUI.Event.Type.BodyOnClick, this._eventOnBodyClick);
+                            OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventOnBodyClick);
                             OSUI.Helper.AsyncInvocation(this._setObserver.bind(this));
                             OSUI.Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, true);
                             OSUI.Helper.AsyncInvocation(() => {
@@ -10029,9 +10301,9 @@ var OSFramework;
                         this._tooltipIconElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
                         this._tooltipIconElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
                         this._tooltipBalloonContentElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnBalloonClick);
-                        OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnClick, this._eventOnBodyClick);
-                        OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.BodyOnScroll, this._eventOnBodyScroll);
-                        OSUI.Event.GlobalEventManager.Instance.removeHandler(OSUI.Event.Type.WindowResize, this._eventOnWindowResize);
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventOnBodyClick);
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._eventOnBodyScroll);
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.WindowResize, this._eventOnWindowResize);
                         this._tooltipBalloonContentElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.TransitionEnd, this._eventOnOpenedBalloon);
                         this._tooltipIconElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.MouseEnter, this._eventIconOnMouseEnter);
                         this._tooltipIconElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.MouseLeave, this._eventIconOnMouseLeave);
@@ -13768,7 +14040,7 @@ var OutSystems;
                 }
                 return undefined;
             }
-            OSFramework.OSUI.Event.GlobalEventManager.Instance.addHandler(OSFramework.OSUI.Event.Type.BodyOnClick, _bodyClick);
+            OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, _bodyClick);
         })(Utils = OSUI.Utils || (OSUI.Utils = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
 })(OutSystems || (OutSystems = {}));
@@ -14188,22 +14460,8 @@ var OutSystems;
                 }
                 LayoutPrivate.HideHeader = HideHeader;
                 function RTLObserver(callback) {
-                    const elemToObserve = document.body;
-                    let hasAlreadyRTL = elemToObserve.classList.contains(OSFramework.OSUI.Constants.IsRTLClass);
-                    const observer = new MutationObserver(function (mutations) {
-                        mutations.forEach(function (mutation) {
-                            if (mutation.attributeName === 'class') {
-                                const mutationTarget = mutation.target;
-                                const hasRTLNow = mutationTarget.classList.contains(OSFramework.OSUI.Constants.IsRTLClass);
-                                if (hasAlreadyRTL !== hasRTLNow) {
-                                    hasAlreadyRTL = hasRTLNow;
-                                    OSFramework.OSUI.Helper.AsyncInvocation(callback);
-                                }
-                            }
-                        });
-                    });
-                    observer.observe(elemToObserve, { attributes: true });
-                    return observer;
+                    console.warn(`This method is deprecated. Use instead the API OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.addHandler`);
+                    OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.addHandler(OSFramework.OSUI.Event.DOMEvents.Observers.ObserverEvent.RTL, callback);
                 }
                 LayoutPrivate.RTLObserver = RTLObserver;
                 function SetDeviceClass(IsWebApp) {
@@ -14364,10 +14622,10 @@ var OutSystems;
                         }
                     }
                     static Set() {
-                        OSFramework.OSUI.Event.GlobalEventManager.Instance.addHandler(OSFramework.OSUI.Event.Type.OrientationChange, this._onOrientationChange);
+                        OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.OrientationChange, this._onOrientationChange);
                     }
                     static Unset() {
-                        OSFramework.OSUI.Event.GlobalEventManager.Instance.removeHandler(OSFramework.OSUI.Event.Type.OrientationChange, this._onOrientationChange);
+                        OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.OrientationChange, this._onOrientationChange);
                     }
                 }
                 LayoutPrivate.OnOrientationChange = OnOrientationChange;
@@ -14461,7 +14719,7 @@ var OutSystems;
                 function AddMenuOnOrientationChange(callback) {
                     if (callback !== undefined) {
                         _onOrientationChangeCallback = callback;
-                        OSFramework.OSUI.Event.GlobalEventManager.Instance.addHandler(OSFramework.OSUI.Event.Type.OrientationChange, _onOrientationChangeCallbackHandler);
+                        OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.OrientationChange, _onOrientationChangeCallbackHandler);
                     }
                 }
                 Menu.AddMenuOnOrientationChange = AddMenuOnOrientationChange;
@@ -14536,7 +14794,7 @@ var OutSystems;
                 Menu.MenuShow = MenuShow;
                 function RemoveMenuOnOrientationChange() {
                     if (_onOrientationChangeCallback !== undefined) {
-                        OSFramework.OSUI.Event.GlobalEventManager.Instance.removeHandler(OSFramework.OSUI.Event.Type.OrientationChange, _onOrientationChangeCallbackHandler);
+                        OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.OrientationChange, _onOrientationChangeCallbackHandler);
                         _onOrientationChangeCallback = undefined;
                     }
                 }
@@ -15191,7 +15449,7 @@ var Providers;
                     }
                     setCallbacks() {
                         this._eventOnResize = this._redefineCarouselWidth.bind(this);
-                        OSFramework.OSUI.Event.GlobalEventManager.Instance.addHandler(OSFramework.OSUI.Event.Type.WindowResize, this._eventOnResize);
+                        OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowResize, this._eventOnResize);
                     }
                     setHtmlElements() {
                         this._carouselPlaceholderElem = OSFramework.OSUI.Helper.Dom.ClassSelector(this.selfElement, OSFramework.OSUI.Patterns.Carousel.Enum.CssClass.Content);
@@ -15211,7 +15469,7 @@ var Providers;
                         this._togglePaginationClass();
                     }
                     unsetCallbacks() {
-                        OSFramework.OSUI.Event.GlobalEventManager.Instance.removeHandler(OSFramework.OSUI.Event.Type.WindowResize, this._eventOnResize);
+                        OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowResize, this._eventOnResize);
                         this._eventOnResize = undefined;
                         this._platformEventOnSlideMoved = undefined;
                         super.unsetCallbacks();
@@ -16695,13 +16953,13 @@ var Providers;
                             this.selfElement.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.MouseUp, this._onMouseUpEvent);
                         }
                         if (OSFramework.OSUI.Helper.DeviceInfo.IsDesktop) {
-                            OSFramework.OSUI.Event.GlobalEventManager.Instance.addHandler(OSFramework.OSUI.Event.Type.WindowResize, this._eventOnWindowResize);
+                            OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowResize, this._eventOnWindowResize);
                         }
                     }
                     _unsetEvents() {
                         this.selfElement.removeEventListener(VirtualSelect.Enum.Events.Change, this._onSelectedOptionEvent);
                         this.selfElement.removeEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.MouseUp, this._onMouseUpEvent);
-                        OSFramework.OSUI.Event.GlobalEventManager.Instance.removeHandler(OSFramework.OSUI.Event.Type.WindowResize, this._eventOnWindowResize);
+                        OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowResize, this._eventOnWindowResize);
                     }
                     createProviderInstance() {
                         this.provider = window.VirtualSelect.init(this._virtualselectOpts);
@@ -16715,11 +16973,12 @@ var Providers;
                         });
                         this._manageAttributes();
                         this.triggerPlatformEventInitialized();
+                        const _bodyEvent = OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick);
                         this.selfElement.addEventListener(VirtualSelect.Enum.Events.BeforeOpen, () => {
-                            OSFramework.OSUI.Event.GlobalEventManager.Instance.disableBodyClickEvent();
+                            _bodyEvent.disableBodyClickEvent();
                         });
                         this.selfElement.addEventListener(VirtualSelect.Enum.Events.BeforeClose, () => {
-                            OSFramework.OSUI.Event.GlobalEventManager.Instance.enableBodyClickEvent();
+                            _bodyEvent.enableBodyClickEvent();
                         });
                     }
                     setA11YProperties() {
@@ -17397,11 +17656,12 @@ var Providers;
                             this._zindexCommonBehavior = new OSUI.SharedProviderResources.Flatpickr.UpdateZindex(this);
                         }
                         this.createdInstance();
+                        const _bodyEvent = OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick);
                         this.provider.config.onOpen.push(function () {
-                            OSFramework.OSUI.Event.GlobalEventManager.Instance.disableBodyClickEvent();
+                            _bodyEvent.disableBodyClickEvent();
                         });
                         this.provider.config.onClose.push(() => {
-                            OSFramework.OSUI.Event.GlobalEventManager.Instance.enableBodyClickEvent();
+                            _bodyEvent.enableBodyClickEvent();
                         });
                     }
                     createdInstance() {
@@ -18264,13 +18524,13 @@ var Providers;
                         this._onBodyScrollEvent = this._onBodyScroll.bind(this);
                     }
                     _setUpEvents() {
-                        OSFramework.OSUI.Event.GlobalEventManager.Instance.addHandler(OSFramework.OSUI.Event.Type.BodyOnScroll, this._onBodyScrollEvent);
+                        OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._onBodyScrollEvent);
                     }
                     _unsetCallbacks() {
                         this._onBodyScrollEvent = undefined;
                     }
                     _unsetEvents() {
-                        OSFramework.OSUI.Event.GlobalEventManager.Instance.removeHandler(OSFramework.OSUI.Event.Type.BodyOnScroll, this._onBodyScrollEvent);
+                        OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._onBodyScrollEvent);
                     }
                     dispose() {
                         this._unsetEvents();
@@ -18418,11 +18678,12 @@ var Providers;
                             this._zindexCommonBehavior = new OSUI.SharedProviderResources.Flatpickr.UpdateZindex(this);
                         }
                         this.createdInstance();
+                        const _bodyEvent = OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick);
                         this.provider.config.onOpen.push(() => {
-                            OSFramework.OSUI.Event.GlobalEventManager.Instance.disableBodyClickEvent();
+                            _bodyEvent.disableBodyClickEvent();
                         });
                         this.provider.config.onClose.push(() => {
-                            OSFramework.OSUI.Event.GlobalEventManager.Instance.enableBodyClickEvent();
+                            _bodyEvent.enableBodyClickEvent();
                         });
                     }
                     createdInstance() {

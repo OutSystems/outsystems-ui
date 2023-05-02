@@ -104,8 +104,8 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 
 			if (OSFramework.OSUI.Helper.DeviceInfo.IsDesktop) {
 				//Set the WindowResize in order to close it if it's open!
-				OSFramework.OSUI.Event.GlobalEventManager.Instance.addHandler(
-					OSFramework.OSUI.Event.Type.WindowResize,
+				OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+					OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowResize,
 					this._eventOnWindowResize
 				);
 			}
@@ -116,8 +116,8 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			this.selfElement.removeEventListener(Enum.Events.Change, this._onSelectedOptionEvent);
 			this.selfElement.removeEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.MouseUp, this._onMouseUpEvent);
 
-			OSFramework.OSUI.Event.GlobalEventManager.Instance.removeHandler(
-				OSFramework.OSUI.Event.Type.WindowResize,
+			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowResize,
 				this._eventOnWindowResize
 			);
 		}
@@ -156,13 +156,19 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			// Trigger platform's InstanceIntializedHandler client Action
 			this.triggerPlatformEventInitialized();
 
-			// Add events to change the global event triggering of body click on Open / Close
-			this.selfElement.addEventListener(Enum.Events.BeforeOpen, () => {
-				OSFramework.OSUI.Event.GlobalEventManager.Instance.disableBodyClickEvent();
-			});
-			this.selfElement.addEventListener(Enum.Events.BeforeClose, () => {
-				OSFramework.OSUI.Event.GlobalEventManager.Instance.enableBodyClickEvent();
-			});
+			const _bodyEvent = OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(
+				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick
+			) as OSFramework.OSUI.Event.DOMEvents.Listeners.IListener;
+
+			if (_bodyEvent) {
+				// Add events to change the global event triggering of body click on Open / Close
+				this.selfElement.addEventListener(Enum.Events.BeforeOpen, () => {
+					_bodyEvent.disableBodyClickEvent();
+				});
+				this.selfElement.addEventListener(Enum.Events.BeforeClose, () => {
+					_bodyEvent.enableBodyClickEvent();
+				});
+			}
 		}
 
 		/**

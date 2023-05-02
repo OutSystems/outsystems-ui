@@ -636,15 +636,27 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				);
 			}
 			// Add the BodyClick callback that will be used Close open Dropdown!
-			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+				Event.DOMEvents.Listeners.Type.BodyOnClick,
+				this._eventOnBodyClick
+			);
 			// Add the BodyScroll callback that will be used to update the balloon coodinates
-			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+				Event.DOMEvents.Listeners.Type.BodyOnScroll,
+				this._eventOnBodyScroll
+			);
 			// Update "animation" before the next repaint
 			this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
 			// Add the window resize callback that will be used to update the balloon position!
-			Event.GlobalEventManager.Instance.addHandler(Event.Type.WindowResize, this._eventOnWindowResize);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+				Event.DOMEvents.Listeners.Type.WindowResize,
+				this._eventOnWindowResize
+			);
 			// Add the OnOrientationChange callback that will be used to close the balloon position!
-			Event.GlobalEventManager.Instance.addHandler(Event.Type.OrientationChange, this._eventOnOrientationChange);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+				Event.DOMEvents.Listeners.Type.OrientationChange,
+				this._eventOnOrientationChange
+			);
 		}
 
 		// Method used to manage the onTouchMove when we're at mobile devices in order to block the window scroll!
@@ -697,11 +709,20 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 					this._eventOnSearchInputFocus
 				);
 			}
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.WindowResize, this._eventOnWindowResize);
-			Event.GlobalEventManager.Instance.removeHandler(
-				Event.Type.OrientationChange,
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				Event.DOMEvents.Listeners.Type.BodyOnClick,
+				this._eventOnBodyClick
+			);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				Event.DOMEvents.Listeners.Type.BodyOnScroll,
+				this._eventOnBodyScroll
+			);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				Event.DOMEvents.Listeners.Type.WindowResize,
+				this._eventOnWindowResize
+			);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				Event.DOMEvents.Listeners.Type.OrientationChange,
 				this._eventOnOrientationChange
 			);
 		}

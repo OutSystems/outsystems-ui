@@ -125,7 +125,10 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			}
 
 			// Remove handler from Event Manager
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._globalEventBody);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				Event.DOMEvents.Listeners.Type.BodyOnClick,
+				this._globalEventBody
+			);
 		}
 
 		// Set submenu as active
@@ -337,9 +340,15 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 			// Make sure the event is updated when the API is triggered in runtime
 			if (this.hasClickOutsideToClose) {
-				Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+					Event.DOMEvents.Listeners.Type.BodyOnClick,
+					this._globalEventBody
+				);
 			} else if (this.hasClickOutsideToClose === false) {
-				Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._globalEventBody);
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+					Event.DOMEvents.Listeners.Type.BodyOnClick,
+					this._globalEventBody
+				);
 			}
 		}
 
@@ -352,7 +361,10 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			if (this._isOpen) {
 				if (this.hasClickOutsideToClose) {
 					// Remove handler from Event Manager
-					Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._globalEventBody);
+					Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+						Event.DOMEvents.Listeners.Type.BodyOnClick,
+						this._globalEventBody
+					);
 				}
 
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.PatternIsOpen);
@@ -390,7 +402,10 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		public open(): void {
 			if (this.hasClickOutsideToClose) {
 				// Add the body click handler to event manager
-				Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+					Event.DOMEvents.Listeners.Type.BodyOnClick,
+					this._globalEventBody
+				);
 			}
 
 			// Make async the method call

@@ -153,7 +153,10 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 				// If the click has occur outside of this tooltip, or tooltipBalloon!
 				if (_closestElem !== this.selfElement && _closestBalloonElem !== this._tooltipBalloonWrapperElem) {
 					// Remove the Event
-					Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
+					Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+						Event.DOMEvents.Listeners.Type.BodyOnClick,
+						this._eventOnBodyClick
+					);
 
 					// Close Tooltip
 					this._triggerClose();
@@ -381,19 +384,28 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			}
 
 			// Add the BodyScroll callback that will be used to update the balloon coodinates
-			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+				Event.DOMEvents.Listeners.Type.BodyOnScroll,
+				this._eventOnBodyScroll
+			);
 			// Update "animation" before the next repaint
 			this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
 
 			// Add the window resize callback that will be used update the balloon position!
-			Event.GlobalEventManager.Instance.addHandler(Event.Type.WindowResize, this._eventOnWindowResize);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+				Event.DOMEvents.Listeners.Type.WindowResize,
+				this._eventOnWindowResize
+			);
 			// Update "animation" before the next repaint
 			this._requestAnimationOnWindowResize = requestAnimationFrame(this._eventOnWindowResize);
 
 			// If it's open by default!
 			if (this._isOpen) {
 				// Add a window event that will be responsible to close it, if it's opend by default
-				Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+					Event.DOMEvents.Listeners.Type.BodyOnClick,
+					this._eventOnBodyClick
+				);
 			}
 
 			// If tooltip should behave at onMouseClick, or if it's on tablet or phone
@@ -496,7 +508,10 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 				});
 
 				// Add the Event responsible to close it when click outside!
-				Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+					Event.DOMEvents.Listeners.Type.BodyOnClick,
+					this._eventOnBodyClick
+				);
 
 				// ReSet the Observer in order to update it's position if balloon run out of bounds!
 				Helper.AsyncInvocation(this._setObserver.bind(this));
@@ -518,10 +533,19 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
 			this._tooltipBalloonContentElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnBalloonClick);
 
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				Event.DOMEvents.Listeners.Type.BodyOnClick,
+				this._eventOnBodyClick
+			);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				Event.DOMEvents.Listeners.Type.BodyOnScroll,
+				this._eventOnBodyScroll
+			);
 
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.WindowResize, this._eventOnWindowResize);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				Event.DOMEvents.Listeners.Type.WindowResize,
+				this._eventOnWindowResize
+			);
 
 			this._tooltipBalloonContentElem.removeEventListener(
 				GlobalEnum.HTMLEvent.TransitionEnd,

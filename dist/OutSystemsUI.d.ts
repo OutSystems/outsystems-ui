@@ -295,6 +295,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         MouseLeave = "mouseleave",
         MouseUp = "mouseup",
         OrientationChange = "orientationchange",
+        Prefix = "on",
         Resize = "resize",
         Scroll = "scroll",
         TouchEnd = "touchend",
@@ -532,7 +533,7 @@ declare namespace OSFramework.OSUI.Behaviors {
     function Scroll(element: HTMLElement, offSet: OffsetValues, isSmooth?: boolean): void;
     function ScrollVerticalPosition(scrollableElement?: HTMLElement): ScrollPosition;
 }
-declare namespace OSFramework.OSUI.Event {
+declare namespace OSFramework.OSUI.Event.DOMEvents {
     abstract class AbstractEvent<T> implements IEvent<T> {
         private _handlers;
         protected get handlers(): GlobalCallbacks.OSGeneric[];
@@ -540,43 +541,72 @@ declare namespace OSFramework.OSUI.Event {
         hasHandlers(): boolean;
         removeHandler(handler: GlobalCallbacks.OSGeneric): void;
         trigger(data?: T, ...args: unknown[]): void;
+        abstract addEvent(): void;
+        abstract removeEvent(): void;
     }
 }
-declare namespace OSFramework.OSUI.Event {
+declare namespace OSFramework.OSUI.Event.DOMEvents {
     abstract class AbstractEventsManager<ET, D> {
-        private _enableBodyClick;
         private _events;
         constructor();
         addHandler(eventType: ET, handler: GlobalCallbacks.Generic): void;
-        disableBodyClickEvent(): void;
-        enableBodyClickEvent(): void;
         hasHandlers(eventType: ET): boolean;
         removeHandler(eventType: ET, handler: GlobalCallbacks.Generic): void;
         trigger(eventType: ET, data?: D, ...args: unknown[]): void;
         get events(): Map<ET, IEvent<D>>;
-        get getBodyClickStatus(): boolean;
         protected abstract getInstanceOfEventType(eventType: ET): IEvent<D>;
     }
 }
-declare namespace OSFramework.OSUI.Event {
-    class BodyOnClick extends Event.AbstractEvent<string> {
+declare namespace OSFramework.OSUI.Event.DOMEvents {
+    interface IEvent<D> {
+        addEvent(): void;
+        addHandler(handler: GlobalCallbacks.OSGeneric, ...args: any[]): void;
+        hasHandlers(): boolean;
+        removeEvent(): void;
+        removeHandler(handler: GlobalCallbacks.OSGeneric): void;
+        trigger(data: D, ...args: unknown[]): unknown;
+    }
+}
+declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
+    abstract class AbstractListener<T> extends AbstractEvent<T> implements IListener {
+        private _eventName;
+        private _eventTarget;
+        private _eventType;
+        protected eventCallback: EventListenerObject;
+        constructor(eventTarget: any, eventType: any);
+        addEvent(): void;
+        removeEvent(): void;
+    }
+}
+declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
+    class BodyOnClick extends AbstractListener<string> {
+        private _enableBodyClick;
+        constructor();
+        private _bodyTrigger;
+        disableBodyClickEvent(): void;
+        enableBodyClickEvent(): void;
+        get getBodyClickStatus(): boolean;
+    }
+}
+declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
+    class BodyOnMouseDown extends AbstractListener<string> {
         constructor();
         private _bodyTrigger;
     }
 }
-declare namespace OSFramework.OSUI.Event {
-    class BodyOnMouseDown extends Event.AbstractEvent<string> {
+declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
+    class BodyOnScroll extends AbstractListener<string> {
         constructor();
         private _bodyTrigger;
     }
 }
-declare namespace OSFramework.OSUI.Event {
-    class BodyOnScroll extends Event.AbstractEvent<string> {
-        constructor();
-        private _bodyTrigger;
+declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
+    interface IListener extends IEvent<unknown> {
+        disableBodyClickEvent?(): void;
+        enableBodyClickEvent?(): void;
     }
 }
-declare namespace OSFramework.OSUI.Event {
+declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
     enum Type {
         BodyOnClick = "body.onclick",
         BodyOnScroll = "body.onscroll",
@@ -585,34 +615,80 @@ declare namespace OSFramework.OSUI.Event {
         WindowResize = "window.onresize"
     }
 }
-declare namespace OSFramework.OSUI.Event {
-    class EventManager extends AbstractEventsManager<Type, string> {
-        protected getInstanceOfEventType(eventType: Type): IEvent<string>;
+declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
+    class ListenerManager extends AbstractEventsManager<Type, string> {
+        protected getInstanceOfEventType(listenerType: Type): IListener;
     }
-    class GlobalEventManager {
-        private static _eventManager;
-        static get Instance(): EventManager;
-    }
-}
-declare namespace OSFramework.OSUI.Event {
-    interface IEvent<D> {
-        addHandler(handler: GlobalCallbacks.OSGeneric, ...args: any[]): void;
-        hasHandlers(): boolean;
-        removeHandler(handler: GlobalCallbacks.OSGeneric): void;
-        trigger(data: D, ...args: unknown[]): unknown;
+    class GlobalListenerManager {
+        private static _listenerManager;
+        static get Instance(): ListenerManager;
     }
 }
-declare namespace OSFramework.OSUI.Event {
-    class OrientationChange extends Event.AbstractEvent<string> {
+declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
+    class OrientationChange extends AbstractListener<string> {
         constructor();
         private _orientationTrigger;
     }
 }
-declare namespace OSFramework.OSUI.Event {
-    class WindowResize extends Event.AbstractEvent<string> {
+declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
+    class WindowResize extends AbstractListener<string> {
         private _timeout;
         constructor();
         private _windowTrigger;
+    }
+}
+declare namespace OSFramework.OSUI.Event.DOMEvents.Observers {
+    abstract class AbstractObserver<O> extends AbstractEvent<string> implements IObserver<O, string> {
+        private _observerOptions;
+        private _observerTarget;
+        protected observer: ResizeObserver | MutationObserver;
+        constructor(observerOptions: O, observerTarget: HTMLElement);
+        protected startObserver(): void;
+        removeEvent(): void;
+        get observerOptions(): O;
+        get observerTarget(): HTMLElement;
+    }
+}
+declare namespace OSFramework.OSUI.Event.DOMEvents.Observers {
+    interface IObserver<O, D> extends IEvent<D> {
+        observerOptions: O;
+        observerTarget: HTMLElement;
+    }
+}
+declare namespace OSFramework.OSUI.Event.DOMEvents.Observers {
+    enum ObserverEvent {
+        RTL = "RTL"
+    }
+}
+declare namespace OSFramework.OSUI.Event.DOMEvents.Observers {
+    class ObserverManager extends AbstractEventsManager<unknown, string> {
+        protected getInstanceOfEventType(observerType: Observers.ObserverEvent): Observers.IObserver<unknown, unknown>;
+    }
+    class GlobalObserverManager {
+        private static _observerManager;
+        static get Instance(): ObserverManager;
+    }
+}
+declare namespace OSFramework.OSUI.Event.DOMEvents.Observers.MutationObservers {
+    abstract class AbstractMutationObserver extends AbstractObserver<MutationObserverInit> implements IObserver<MutationObserverInit, string> {
+        constructor(observerOptions: MutationObserverInit, observerTarget: HTMLElement);
+        addEvent(): void;
+        protected abstract observerHandler(mutationList: MutationRecord[]): void;
+    }
+}
+declare namespace OSFramework.OSUI.Event.DOMEvents.Observers.MutationObservers.RTL {
+    class RTLObserver extends AbstractMutationObserver {
+        private _hasAlreadyRTL;
+        constructor();
+        observerHandler(mutationList: MutationRecord[]): void;
+    }
+}
+declare namespace OSFramework.OSUI.Event.DOMEvents.Observers.MutationObservers.RTL {
+    class RTLObserverConfigs implements MutationObserverInit {
+        attributeFilter: Array<string>;
+        attributeOldValue: boolean;
+        subtree: boolean;
+        constructor();
     }
 }
 declare namespace OSFramework.OSUI.Event {
@@ -4028,7 +4104,7 @@ declare namespace OutSystems.OSUI.Utils.LayoutPrivate {
     function Dispose(): void;
     function FixInputs(): void;
     function HideHeader(HideHeader: boolean): void;
-    function RTLObserver(callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): MutationObserver;
+    function RTLObserver(callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void;
     function SetDeviceClass(IsWebApp: boolean): void;
     function SetStickyObserver(): void;
 }
