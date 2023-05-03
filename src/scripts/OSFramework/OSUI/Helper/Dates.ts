@@ -53,6 +53,33 @@ namespace OSFramework.OSUI.Helper {
 		}
 
 		/**
+		 * Funciton used to normalize the OUtSystems DateTimes, used on scopes expecting a Date
+		 *
+		 * @static
+		 * @param {(string | Date)} date
+		 * @param {boolean} [normalizeToMax=true]
+		 * @return {*}  {Date}
+		 * @memberof Dates
+		 */
+		public static NormalizeDateTime(date: string | Date, normalizeToMax = true): Date {
+			let _newDate = date;
+
+			if (typeof _newDate === 'string') {
+				_newDate = new Date(date);
+			}
+
+			if (normalizeToMax) {
+				// To make sure that if time is not being used, the hours are as high as possible, to not interfer with other date comparisons
+				_newDate.setHours(23, 59, 59, 59);
+			} else {
+				// To make sure that if time is not being used, the hours are as low as possible, to not interfer with other date comparisons
+				_newDate.setHours(0, 0, 0, 0);
+			}
+
+			return _newDate;
+		}
+
+		/**
 		 * Function responsible for setting up the the server date format.
 		 *
 		 * @export
