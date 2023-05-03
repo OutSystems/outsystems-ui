@@ -338,6 +338,7 @@ var OSFramework;
             let HTMLAttributes;
             (function (HTMLAttributes) {
                 HTMLAttributes["AllowEventPropagation"] = "[data-allow-event-propagation=true], [data-allow-event-propagation=True]";
+                HTMLAttributes["Class"] = "class";
                 HTMLAttributes["DataInput"] = "data-input";
                 HTMLAttributes["Disabled"] = "disabled";
                 HTMLAttributes["Id"] = "id";
@@ -1379,7 +1380,7 @@ var OSFramework;
                                 }
                                 observerHandler(mutationList) {
                                     mutationList.forEach((mutation) => {
-                                        if (mutation.attributeName === 'class') {
+                                        if (mutation.attributeName === OSUI.GlobalEnum.HTMLAttributes.Class) {
                                             const mutationTarget = mutation.target;
                                             const hasRTLNow = mutationTarget.classList.contains(OSFramework.OSUI.Constants.IsRTLClass);
                                             if (this._hasAlreadyRTL !== hasRTLNow) {
@@ -1414,7 +1415,7 @@ var OSFramework;
                         (function (RTL) {
                             class RTLObserverConfigs {
                                 constructor() {
-                                    this.attributeFilter = ['class'];
+                                    this.attributeFilter = [OSUI.GlobalEnum.HTMLAttributes.Class];
                                     this.attributeOldValue = true;
                                     this.subtree = false;
                                 }
@@ -1837,6 +1838,19 @@ var OSFramework;
                         return true;
                     }
                     return false;
+                }
+                static NormalizeDateTime(date, normalizeToMax = true) {
+                    let _newDate = date;
+                    if (typeof _newDate === 'string') {
+                        _newDate = new Date(date);
+                    }
+                    if (normalizeToMax) {
+                        _newDate.setHours(23, 59, 59, 59);
+                    }
+                    else {
+                        _newDate.setHours(0, 0, 0, 0);
+                    }
+                    return _newDate;
                 }
                 static SetServerDateFormat(date) {
                     Dates._serverFormat = date.replace('13', 'DD').replace('10', 'MM').replace('1900', 'YYYY');
@@ -15991,7 +16005,21 @@ var Providers;
                             }
                         }
                     }
+                    _validateDate(date) {
+                        const _finalDate = date;
+                        if (OSFramework.OSUI.Helper.Dates.IsNull(_finalDate)) {
+                            return undefined;
+                        }
+                        else if (this._isUsingDateTime) {
+                            return _finalDate;
+                        }
+                        else {
+                            return OSFramework.OSUI.Helper.Dates.NormalizeDateTime(_finalDate);
+                        }
+                    }
                     getProviderConfig() {
+                        this._isUsingDateTime =
+                            this.TimeFormat !== OSFramework.OSUI.Patterns.DatePicker.Enum.TimeFormatMode.Disable;
                         this._setDisable();
                         this._providerOptions = {
                             altFormat: this._checkAltFormat(),
@@ -15999,11 +16027,11 @@ var Providers;
                             allowInput: this.AllowInput,
                             disable: this.Disable.length === 0 ? undefined : this.Disable,
                             disableMobile: this.DisableMobile,
-                            dateFormat: this.TimeFormat !== OSFramework.OSUI.Patterns.DatePicker.Enum.TimeFormatMode.Disable
+                            dateFormat: this._isUsingDateTime
                                 ? this.ServerDateFormat + ' H:i:S'
                                 : this.ServerDateFormat,
-                            maxDate: OSFramework.OSUI.Helper.Dates.IsNull(this.MaxDate) ? undefined : this.MaxDate,
-                            minDate: OSFramework.OSUI.Helper.Dates.IsNull(this.MinDate) ? undefined : this.MinDate,
+                            maxDate: this._validateDate(this.MaxDate),
+                            minDate: this._validateDate(this.MinDate),
                             onChange: this.OnChange,
                             time_24hr: this.TimeFormat === OSFramework.OSUI.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat,
                             updateInputVal: false,
@@ -16974,12 +17002,14 @@ var Providers;
                         this._manageAttributes();
                         this.triggerPlatformEventInitialized();
                         const _bodyEvent = OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick);
-                        this.selfElement.addEventListener(VirtualSelect.Enum.Events.BeforeOpen, () => {
-                            _bodyEvent.disableBodyClickEvent();
-                        });
-                        this.selfElement.addEventListener(VirtualSelect.Enum.Events.BeforeClose, () => {
-                            _bodyEvent.enableBodyClickEvent();
-                        });
+                        if (_bodyEvent) {
+                            this.selfElement.addEventListener(VirtualSelect.Enum.Events.BeforeOpen, () => {
+                                _bodyEvent.disableBodyClickEvent();
+                            });
+                            this.selfElement.addEventListener(VirtualSelect.Enum.Events.BeforeClose, () => {
+                                _bodyEvent.enableBodyClickEvent();
+                            });
+                        }
                     }
                     setA11YProperties() {
                         this.setHiddenInputWrapperAriaLabelVal();
@@ -17657,12 +17687,14 @@ var Providers;
                         }
                         this.createdInstance();
                         const _bodyEvent = OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick);
-                        this.provider.config.onOpen.push(function () {
-                            _bodyEvent.disableBodyClickEvent();
-                        });
-                        this.provider.config.onClose.push(() => {
-                            _bodyEvent.enableBodyClickEvent();
-                        });
+                        if (_bodyEvent) {
+                            this.provider.config.onOpen.push(function () {
+                                _bodyEvent.disableBodyClickEvent();
+                            });
+                            this.provider.config.onClose.push(() => {
+                                _bodyEvent.enableBodyClickEvent();
+                            });
+                        }
                     }
                     createdInstance() {
                         this.updateProviderEvents({
@@ -18679,12 +18711,14 @@ var Providers;
                         }
                         this.createdInstance();
                         const _bodyEvent = OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick);
-                        this.provider.config.onOpen.push(() => {
-                            _bodyEvent.disableBodyClickEvent();
-                        });
-                        this.provider.config.onClose.push(() => {
-                            _bodyEvent.enableBodyClickEvent();
-                        });
+                        if (_bodyEvent) {
+                            this.provider.config.onOpen.push(() => {
+                                _bodyEvent.disableBodyClickEvent();
+                            });
+                            this.provider.config.onClose.push(() => {
+                                _bodyEvent.enableBodyClickEvent();
+                            });
+                        }
                     }
                     createdInstance() {
                         this.updateProviderEvents({

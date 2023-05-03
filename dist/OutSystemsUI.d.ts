@@ -266,6 +266,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
     }
     enum HTMLAttributes {
         AllowEventPropagation = "[data-allow-event-propagation=true], [data-allow-event-propagation=True]",
+        Class = "class",
         DataInput = "data-input",
         Disabled = "disabled",
         Id = "id",
@@ -692,7 +693,7 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Observers.MutationObservers.R
     }
 }
 declare namespace OSFramework.OSUI.Event {
-    abstract class AbstractGestureEvent implements GestureEvent.IAbstractGestureEvent {
+    abstract class AbstractGestureEvent implements GestureEvent.IGestureEvent {
         private _endEvent;
         private _endTriggerCallback;
         private _gestureParams;
@@ -744,7 +745,7 @@ declare namespace OSFramework.OSUI.Event.GestureEvent {
     }
 }
 declare namespace OSFramework.OSUI.Event.GestureEvent {
-    interface IAbstractGestureEvent {
+    interface IGestureEvent {
         targetElement: HTMLElement;
         unsetTouchEvents(): void;
     }
@@ -822,6 +823,7 @@ declare namespace OSFramework.OSUI.Helper {
         private static _serverFormat;
         static IsBeforeThan(date1: string, date2: string): boolean;
         static IsNull(date: string | Date): boolean;
+        static NormalizeDateTime(date: string | Date, normalizeToMax?: boolean): Date;
         static SetServerDateFormat(date: string): void;
         static get ServerFormat(): string;
     }
@@ -4308,6 +4310,7 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr {
         .AbstractDatePickerConfig {
         private _disabledDays;
         private _disabledWeekDays;
+        private _isUsingDateTime;
         private _lang;
         private _providerOptions;
         protected _providerExtendedOptions: FlatpickrOptions;
@@ -4322,6 +4325,7 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr {
         private _checkLocale;
         private _mapProviderDateFormat;
         private _setDisable;
+        private _validateDate;
         getProviderConfig(): FlatpickrOptions;
         setExtensibilityConfigs(newConfigs: FlatpickrOptions): void;
         get Lang(): string;
