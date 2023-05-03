@@ -148,6 +148,12 @@
 		}
 	}
 
+	&:not(.osui-tabs--has-drag) {
+		.osui-tabs__content-item:not(.osui-tabs--is-active){
+			display: none
+		}
+	}
+
 	&__header {
 		display: grid;
 		height: -webkit-fit-content; // this is important to fix Safari render issues on onRender changes
