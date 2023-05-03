@@ -823,6 +823,7 @@ declare namespace OSFramework.OSUI.Helper {
         private static _serverFormat;
         static IsBeforeThan(date1: string, date2: string): boolean;
         static IsNull(date: string | Date): boolean;
+        static NormalizeDateTime(date: string | Date, normalizeToMax?: boolean): Date;
         static SetServerDateFormat(date: string): void;
         static get ServerFormat(): string;
     }
@@ -4309,6 +4310,7 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr {
         .AbstractDatePickerConfig {
         private _disabledDays;
         private _disabledWeekDays;
+        private _isUsingDateTime;
         private _lang;
         private _providerOptions;
         protected _providerExtendedOptions: FlatpickrOptions;
@@ -4323,6 +4325,7 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr {
         private _checkLocale;
         private _mapProviderDateFormat;
         private _setDisable;
+        private _validateDate;
         getProviderConfig(): FlatpickrOptions;
         setExtensibilityConfigs(newConfigs: FlatpickrOptions): void;
         get Lang(): string;

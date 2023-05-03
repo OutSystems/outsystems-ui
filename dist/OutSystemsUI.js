@@ -1839,6 +1839,19 @@ var OSFramework;
                     }
                     return false;
                 }
+                static NormalizeDateTime(date, normalizeToMax = true) {
+                    let _newDate = date;
+                    if (typeof _newDate === 'string') {
+                        _newDate = new Date(date);
+                    }
+                    if (normalizeToMax) {
+                        _newDate.setHours(23, 59, 59, 59);
+                    }
+                    else {
+                        _newDate.setHours(0, 0, 0, 0);
+                    }
+                    return _newDate;
+                }
                 static SetServerDateFormat(date) {
                     Dates._serverFormat = date.replace('13', 'DD').replace('10', 'MM').replace('1900', 'YYYY');
                 }
@@ -15992,7 +16005,21 @@ var Providers;
                             }
                         }
                     }
+                    _validateDate(date) {
+                        const _finalDate = date;
+                        if (OSFramework.OSUI.Helper.Dates.IsNull(_finalDate)) {
+                            return undefined;
+                        }
+                        else if (this._isUsingDateTime) {
+                            return _finalDate;
+                        }
+                        else {
+                            return OSFramework.OSUI.Helper.Dates.NormalizeDateTime(_finalDate);
+                        }
+                    }
                     getProviderConfig() {
+                        this._isUsingDateTime =
+                            this.TimeFormat !== OSFramework.OSUI.Patterns.DatePicker.Enum.TimeFormatMode.Disable;
                         this._setDisable();
                         this._providerOptions = {
                             altFormat: this._checkAltFormat(),
@@ -16000,11 +16027,11 @@ var Providers;
                             allowInput: this.AllowInput,
                             disable: this.Disable.length === 0 ? undefined : this.Disable,
                             disableMobile: this.DisableMobile,
-                            dateFormat: this.TimeFormat !== OSFramework.OSUI.Patterns.DatePicker.Enum.TimeFormatMode.Disable
+                            dateFormat: this._isUsingDateTime
                                 ? this.ServerDateFormat + ' H:i:S'
                                 : this.ServerDateFormat,
-                            maxDate: OSFramework.OSUI.Helper.Dates.IsNull(this.MaxDate) ? undefined : this.MaxDate,
-                            minDate: OSFramework.OSUI.Helper.Dates.IsNull(this.MinDate) ? undefined : this.MinDate,
+                            maxDate: this._validateDate(this.MaxDate),
+                            minDate: this._validateDate(this.MinDate),
                             onChange: this.OnChange,
                             time_24hr: this.TimeFormat === OSFramework.OSUI.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat,
                             updateInputVal: false,
