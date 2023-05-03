@@ -53,7 +53,7 @@ namespace OSFramework.OSUI.Helper {
 		}
 
 		/**
-		 * Funciton used to normalize the OUtSystems DateTimes, used on scopes expecting a Date
+		 * Function used to normalize the OutSystems DateTimes, used on scopes expecting a Date
 		 *
 		 * @static
 		 * @param {(string | Date)} date
