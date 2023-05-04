@@ -255,7 +255,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 
 		// Method that handles the indicator size and transition
 		private _handleTabIndicator(): void {
-			if (this._activeTabHeaderElement) {
+			if (this._activeTabHeaderElement?.selfElement) {
 				// Check if it comes form a disabled tab, to remove the disable class
 				if (
 					!Helper.Dom.Attribute.Get(
@@ -291,7 +291,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 
 				// Update the css variables, that will trigger a transform transition
 				function updateIndicatorUI() {
-					if (this._activeTabHeaderElement) {
+					if (this._tabsIndicatorElement) {
 						// Apply transform: translate
 						Helper.Dom.Styles.SetStyleAttribute(
 							this._tabsIndicatorElement,

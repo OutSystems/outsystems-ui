@@ -148,6 +148,13 @@
 		}
 	}
 
+	&:not(.osui-tabs--has-drag) {
+		// To prevent render/position issues after repaints that affect the Tabs size
+		.osui-tabs__content:not(:focus-within) {
+			scroll-snap-type: x mandatory;
+		}
+	}
+
 	&__header {
 		display: grid;
 		height: -webkit-fit-content; // this is important to fix Safari render issues on onRender changes

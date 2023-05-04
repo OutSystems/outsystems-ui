@@ -9196,7 +9196,8 @@ var OSFramework;
                         OSUI.Helper.AsyncInvocation(this._handleTabIndicator.bind(this));
                     }
                     _handleTabIndicator() {
-                        if (this._activeTabHeaderElement) {
+                        var _a;
+                        if ((_a = this._activeTabHeaderElement) === null || _a === void 0 ? void 0 : _a.selfElement) {
                             if (!OSUI.Helper.Dom.Attribute.Get(this._activeTabHeaderElement.selfElement, OSUI.GlobalEnum.HTMLAttributes.Disabled)) {
                                 OSUI.Helper.Dom.Attribute.Remove(this._tabsIndicatorElement, OSUI.GlobalEnum.HTMLAttributes.Disabled);
                             }
@@ -9214,7 +9215,7 @@ var OSFramework;
                             }
                             const newScaleValue = (pixelRatio * newSize) / Math.round(pixelRatio);
                             function updateIndicatorUI() {
-                                if (this._activeTabHeaderElement) {
+                                if (this._tabsIndicatorElement) {
                                     OSUI.Helper.Dom.Styles.SetStyleAttribute(this._tabsIndicatorElement, Tabs_1.Enum.CssProperty.TabsIndicatorTransform, transformValue + OSUI.GlobalEnum.Units.Pixel);
                                     OSUI.Helper.Dom.Styles.SetStyleAttribute(this._tabsIndicatorElement, Tabs_1.Enum.CssProperty.TabsIndicatorScale, Math.floor(newScaleValue));
                                 }
@@ -9661,15 +9662,15 @@ var OSFramework;
                     }
                     setA11YProperties(isUpdate = true) {
                         if (isUpdate) {
-                            OSUI.Helper.A11Y.RoleTabPanel(this.selfElement.parentElement);
+                            OSUI.Helper.A11Y.RoleTabPanel(this.selfElement);
                         }
                         if (this._isActive) {
-                            OSUI.Helper.A11Y.TabIndexTrue(this.selfElement.parentElement);
-                            OSUI.Helper.A11Y.AriaHiddenFalse(this.selfElement.parentElement);
+                            OSUI.Helper.A11Y.TabIndexTrue(this.selfElement);
+                            OSUI.Helper.A11Y.AriaHiddenFalse(this.selfElement);
                         }
                         else {
-                            OSUI.Helper.A11Y.TabIndexFalse(this.selfElement.parentElement);
-                            OSUI.Helper.A11Y.AriaHiddenTrue(this.selfElement.parentElement);
+                            OSUI.Helper.A11Y.TabIndexFalse(this.selfElement);
+                            OSUI.Helper.A11Y.AriaHiddenTrue(this.selfElement);
                         }
                         OSUI.Helper.A11Y.SetElementsTabIndex(this._isActive, this._focusableElements);
                     }
