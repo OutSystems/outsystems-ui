@@ -11352,9 +11352,6 @@ html[data-uieditorversion^="1"] .osui-timepicker__dropdown-ss-preview.time12h, h
   -ms-scroll-snap-type:x mandatory;
       scroll-snap-type:x mandatory;
 }
-.osui-tabs:not(.osui-tabs--has-drag) .osui-tabs__content-item:not(.osui-tabs--is-active){
-  display:none;
-}
 .osui-tabs__header{
   display:grid;
   height:-webkit-fit-content;
