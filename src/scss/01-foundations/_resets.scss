@@ -148,18 +148,6 @@ input {
 }
 
 ///
-.chrome input {
-	&[type='time'],
-	&[type='date'],
-	&[type='datetime'],
-	&[type='datetime-local'],
-	&[type='time'],
-	&[type='time']:empty {
-		display: inline-block;
-	}
-}
-
-///
 ::-webkit-file-upload-button {
 	appearance: button;
 }
