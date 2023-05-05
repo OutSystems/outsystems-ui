@@ -141,7 +141,6 @@ input {
 	&[type='date'],
 	&[type='datetime'],
 	&[type='datetime-local'],
-	&[type='time'],
 	&[type='time']:empty {
 		display: inline-flex;
 	}
@@ -153,7 +152,6 @@ input {
 	&[type='date'],
 	&[type='datetime'],
 	&[type='datetime-local'],
-	&[type='time'],
 	&[type='time']:empty {
 		display: inline-block;
 	}
