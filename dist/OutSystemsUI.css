@@ -473,6 +473,9 @@ input[type=time], input[type=date], input[type=datetime], input[type=datetime-lo
   display:-ms-inline-flexbox;
   display:inline-flex;
 }
+.chrome input[type=time], .chrome input[type=date], .chrome input[type=datetime], .chrome input[type=datetime-local], .chrome input[type=time], .chrome input[type=time]:empty{
+  display:inline-block;
+}
 ::-webkit-file-upload-button{
   -webkit-appearance:button;
           appearance:button;
