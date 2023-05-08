@@ -2,6 +2,7 @@
 	Overriding styles for Flatpickr library.
 	Shared between SingleDatePicker, RangeDatePicker and TimePicker
 */
+
 .flatpickr-calendar {
 	--osui-flatpickr-layer: var(--layer-global-elevated);
 	border-radius: var(--border-radius-soft);
@@ -329,7 +330,6 @@ span.flatpickr-weekday {
 		}
 	}
 
-
 	&.selected.startRange,
 	&.startRange.startRange {
 		border-radius: 50px;
@@ -480,6 +480,10 @@ span.flatpickr-weekday {
 // IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {
+	&:has(.layout-side) .flatpickr-calendar {
+		--osui-flatpickr-layer: calc(var(--osui-menu-layer) + var(--layer-local-tier-1));
+	}
+
 	.flatpickr-calendar {
 		// This +10px will be used to better contain all the text without cropping it since RTL texts are bigger
 		width: 330px;
@@ -541,4 +545,11 @@ span.flatpickr-weekday {
 // Layer Library Overrides
 .flatpickr-calendar.static.open {
 	z-index: var(--osui-flatpickr-layer);
+}
+
+// Exception for firefox support for :has()
+@supports not selector(:has(*)) {
+	.is-rtl .flatpickr-calendar {
+		--osui-flatpickr-layer: calc(var(--osui-menu-layer) + var(--layer-local-tier-1));
+	}
 }

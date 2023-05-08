@@ -8360,6 +8360,9 @@ span.flatpickr-weekday{
 .phone .is-rtl .flatpickr-mobile::-webkit-date-and-time-value{
   text-align:right;
 }
+.is-rtl:has(.layout-side) .flatpickr-calendar{
+  --osui-flatpickr-layer:calc(var(--osui-menu-layer) + var(--layer-local-tier-1));
+}
 .is-rtl .flatpickr-calendar{
   width:330px;
 }
@@ -8401,6 +8404,11 @@ span.flatpickr-weekday{
 }
 .flatpickr-calendar.static.open{
   z-index:var(--osui-flatpickr-layer);
+}
+@supports not selector(:has(*)){
+  .is-rtl .flatpickr-calendar{
+    --osui-flatpickr-layer:calc(var(--osui-menu-layer) + var(--layer-local-tier-1));
+  }
 }
 .osui-datepicker input[type=date]::-webkit-inner-spin-button, .osui-datepicker input[type=date]::-webkit-calendar-picker-indicator, .osui-datepicker input[type=date]::-webkit-datetime-edit-year-field, .osui-datepicker input[type=date]::-webkit-datetime-edit-month-field, .osui-datepicker input[type=date]::-webkit-datetime-edit-day-field, .osui-datepicker input[type=date]::-webkit-datetime-edit-fields-wrapper{
   display:none;
