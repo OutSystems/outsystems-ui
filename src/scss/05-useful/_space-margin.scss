@@ -30,6 +30,34 @@
 	&-auto {
 		margin: 0 auto;
 	}
+	
+}
+
+///
+.-margin {
+    @each $type, $value in $osui-sizes {
+        @if $type != none {
+            &-#{$type} {
+                margin: calc(-1 * var(--space-#{$type}));
+            }
+    
+            @each $osui-box-side in $osui-box-sides {
+        	    &-#{$osui-box-side}-#{$type} {
+                    margin-#{$osui-box-side}: calc(-1 * var(--space-#{$type}));
+                }
+            }
+    
+            &-x-#{$type} {
+                margin-left: calc(-1 * var(--space-#{$type}));
+                margin-right: calc(-1 * var(--space-#{$type}));
+            }
+            
+            &-y-#{$type} {
+                margin-bottom: calc(-1 * var(--space-#{$type}));
+                margin-top: calc(-1 * var(--space-#{$type}));
+            }
+    	}
+    }
 }
 
 // IsRTL -------------------------------------------------------------------------
@@ -47,5 +75,19 @@
 				margin-right: var(--space-#{$type});
 			}
 		}
-	}
+
+		.-margin {
+		    @if $type != none {
+			    &-right-#{$type} {
+			        margin-left: calc(-1 * var(--space-#{$type}));
+			        margin-right: var(--space-none);
+			    }   
+
+			    &-left-#{$type} {
+			        margin-left: var(--space-none);
+			        margin-right: calc(-1 * var(--space-#{$type}));
+                }
+            }
+    	}
+    }
 }
