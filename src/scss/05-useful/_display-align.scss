@@ -4,137 +4,191 @@
 /// Usefull - Display Align
 
 ///
+$common-values: stretch center flex-start flex-end initial inherit;
+$self-values: auto baseline;
+$items-values: normal start end baseline;
+$content-values: space-between space-around space-evenly;
+
+@mixin align($name, $values) {
+    @each $value in $values {
+        &-#{$name}-#{$value}
+        {
+            align-#{$name}: #{$value};
+        }
+    }
+  }
+
+@mixin top($direction)
+{
+    @if $direction == colum
+    { 
+        justify-content: flex-start; 
+    }
+    @else if $direction == colum-reverse {
+        justify-content: flex-end;
+    }
+    @else
+    {
+        align-items: flex-start;
+    }
+}
+
+@mixin bottom($direction)
+{
+    @if $direction == colum
+    { 
+        justify-content: flex-end; 
+    }
+    @else if $direction == colum-reverse {
+        justify-content: flex-start;
+    }
+    @else
+    {
+        align-items: flex-end;
+    }
+}
+
+@mixin vCenter($direction)
+{
+    @if $direction == colum or $direction == colum-reverse {
+        justify-content: center;
+    }
+    @else
+    {
+        align-items: center;
+    }
+}
+
+@mixin bottom($direction)
+{
+    @if $direction == colum
+    { 
+        justify-content: flex-end; 
+    }
+    @else if $direction == colum-reverse {
+        justify-content: flex-start;
+    }
+    @else
+    {
+        align-items: flex-end;
+    }
+}
+
+@mixin left($direction)
+{
+    @if $direction == row
+    { 
+        justify-content: flex-start; 
+    }
+    @else if $direction == row-reverse {
+        justify-content: flex-end;
+    }
+    @else
+    {
+        align-items: flex-start;
+    }
+}
+
+@mixin hCenter($direction)
+{
+    @if $direction == row or $direction == row-reverse {
+        justify-content: center;
+    }
+    @else
+    {
+        align-items: center;
+    }
+}
+
+@mixin right($direction)
+{
+    @if $direction == row
+    { 
+        justify-content: flex-end; 
+    }
+    @else if $direction == row-reverse {
+        justify-content: flex-start;
+    }
+    @else
+    {
+        align-items: flex-end;
+    }
+}
+
+@mixin flexPositions($direction)
+{
+    #{if(&, '&.top-left', '.top-left')} {
+        @include top($direction);
+        @include left($direction);
+    }
+    
+    #{if(&, '&.top-center', '.top-center')} {
+        @include top($direction);
+        @include hCenter($direction);
+    }
+    
+    #{if(&, '&.top-right', '.top-right')} {
+        @include top($direction);
+        @include right($direction);
+    }
+    
+    #{if(&, '&.center-left', '.center-left')} {
+        @include vCenter($direction);
+        @include left($direction);
+    }
+    
+    #{if(&, '&.center-right', '.center-right')} {
+        @include vCenter($direction);
+        @include right($direction);
+    }
+    
+    #{if(&, '&.bottom-left', '.bottom-left')} {
+        @include bottom($direction);
+        @include left($direction);
+    }
+    
+    #{if(&, '&.bottom-center', '.bottom-center')} {
+        @include bottom($direction);
+        @include hCenter($direction);
+    }
+    
+    #{if(&, '&.bottom-right', '.bottom-right')} {
+        @include bottom($direction);
+        @include right($direction);
+    }
+}
+
+///
 .align {
-	&-items {
-		&-flex-start {
-			align-items: flex-start;
-		}
-
-		&-flex-end {
-			align-items: flex-end;
-		}
-
-		&-center {
-			align-items: center;
-		}
-
-		&-stretch {
-			align-items: stretch;
-		}
-
-		&-baseline {
-			align-items: baseline;
-		}
-
-		&-initial {
-			align-items: initial;
-		}
-	}
-	&-self {
-		&-flex-start {
-			align-self: flex-start;
-		}
-
-		&-flex-end {
-			align-self: flex-end;
-		}
-
-		&-center {
-			align-self: center;
-		}
-
-		&-stretch {
-			align-self: stretch;
-		}
-
-		&-baseline {
-			align-self: baseline;
-		}
-	}
-
-	&-content {
-		&-flex-start {
-			align-content: flex-start;
-		}
-
-		&-flex-end {
-			align-content: flex-end;
-		}
-
-		&-center {
-			align-content: center;
-		}
-
-		&-space-between {
-			align-content: space-between;
-		}
-
-		&-space-around {
-			align-content: space-around;
-		}
-
-		&-space-evenly {
-			align-content: space-evenly;
-		}
-
-		&-stretch {
-			align-content: stretch;
-		}
-
-		&-baseline {
-			align-content: baseline;
-		}
-	}
+    @include align(self, join($common-values, $self-values));
+    @include align(items, join($common-values, $items-values));
+    @include align(content, join($common-values, $content-values));
 }
 
 ///
-.top {
-	&-left {
-		align-items: flex-start;
-		justify-content: flex-start;
-	}
-
-	&-center {
-		align-items: flex-start;
-		justify-content: center;
-	}
-
-	&-right {
-		align-items: flex-start;
-		justify-content: flex-end;
-	}
+.flex-direction-column
+{
+    @include flexPositions(colum);
 }
 
 ///
-.center {
-	align-items: center;
-	justify-content: center;
-
-	&-left {
-		align-items: center;
-		justify-content: flex-start;
-	}
-
-	&-right {
-		align-items: center;
-		justify-content: flex-end;
-	}
+.flex-direction-column-reverse
+{
+    @include flexPositions(colum-reverse);
 }
 
 ///
-.bottom {
-	&-left {
-		align-items: flex-end;
-		justify-content: flex-start;
-	}
+.flex-direction-row-reverse
+{
+    @include flexPositions(row-reverse);
+}
 
-	&-center {
-		align-items: flex-end;
-		justify-content: center;
-	}
+///
+@include flexPositions(row);
 
-	&-right {
-		align-items: flex-end;
-		justify-content: flex-end;
-	}
+///
+:is(.center, .center-center)
+{
+    @include vCenter(row);
+    @include hCenter(row);
 }
