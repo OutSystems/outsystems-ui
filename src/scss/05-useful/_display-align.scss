@@ -20,11 +20,11 @@ $content-values: space-between space-around space-evenly;
 
 @mixin top($direction)
 {
-    @if $direction == colum
+    @if $direction == column
     { 
         justify-content: flex-start; 
     }
-    @else if $direction == colum-reverse {
+    @else if $direction == column-reverse {
         justify-content: flex-end;
     }
     @else
@@ -35,11 +35,11 @@ $content-values: space-between space-around space-evenly;
 
 @mixin bottom($direction)
 {
-    @if $direction == colum
+    @if $direction == column
     { 
         justify-content: flex-end; 
     }
-    @else if $direction == colum-reverse {
+    @else if $direction == column-reverse {
         justify-content: flex-start;
     }
     @else
@@ -50,7 +50,7 @@ $content-values: space-between space-around space-evenly;
 
 @mixin vCenter($direction)
 {
-    @if $direction == colum or $direction == colum-reverse {
+    @if $direction == column or $direction == column-reverse {
         justify-content: center;
     }
     @else
@@ -61,11 +61,11 @@ $content-values: space-between space-around space-evenly;
 
 @mixin bottom($direction)
 {
-    @if $direction == colum
+    @if $direction == column
     { 
         justify-content: flex-end; 
     }
-    @else if $direction == colum-reverse {
+    @else if $direction == column-reverse {
         justify-content: flex-start;
     }
     @else
@@ -168,13 +168,13 @@ $content-values: space-between space-around space-evenly;
 ///
 .flex-direction-column
 {
-    @include flexPositions(colum);
+    @include flexPositions(column);
 }
 
 ///
 .flex-direction-column-reverse
 {
-    @include flexPositions(colum-reverse);
+    @include flexPositions(column-reverse);
 }
 
 ///
