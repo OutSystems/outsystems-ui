@@ -13,5 +13,6 @@ namespace OSFramework.OSUI.Patterns.MonthPicker {
 		setProviderConfigs(providerConfigs: ProviderConfigs): void;
 		setProviderEvent(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.Generic, uniqueId: string): void;
 		unsetProviderEvent(eventId: string): void;
+		updateInitialMonth(monthYear: MonthYear): void;
 	}
 }
