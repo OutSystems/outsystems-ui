@@ -27,6 +27,7 @@
 		flex-flow: #{$direction} nowrap;
 	}
 }
+
 @mixin flex-flow-axis($axis) {
     @include flex-flow($axis);
     @include flex-flow(#{$axis}-reverse);
@@ -77,18 +78,6 @@
 {
    @include flex-direction($axis);
    @include flex-direction(#{$axis}-reverse);
-}
-
-@mixin osui-sized($attribute)
-{
-    /* #{$attribute} */
-    .#{$attribute} {
-	    @each $type, $value in $osui-sizes {
-	    	&-#{$type} {
-    			#{$attribute}: var($value);
-	    }
-    	}
-    }
 }
 
 ///
