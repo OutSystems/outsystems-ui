@@ -23,3 +23,16 @@
 	position: absolute;
 	top: $top;
 }
+
+///
+@mixin osui-sized($attribute)
+{
+    /* #{$attribute} */
+    .#{$attribute} {
+	    @each $type, $value in $osui-sizes {
+	    	&-#{$type} {
+    			#{$attribute}: var($value);
+	    }
+    	}
+    }
+}
