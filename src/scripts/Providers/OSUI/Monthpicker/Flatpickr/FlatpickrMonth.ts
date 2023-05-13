@@ -420,5 +420,20 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 
 			super.setProviderConfigs(newConfigs);
 		}
+		/**
+		 * Method used to update the InitialMonth config value
+		 *
+		 * @param {string} value The new InitialMonth value that will be set
+		 * @memberof OSUIFlatpickrMonth
+		 */
+		public updateInitialMonth(monthYear: MonthYear): void {
+			if (this._monthPickerProviderInputElem.disabled === false) {
+				// Redefine the Initial month
+				this.configs.InitialMonth = monthYear;
+
+				// Trigger the Redraw method in order to update calendar with this new value
+				this.redraw();
+			}
+		}
 	}
 }

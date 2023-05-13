@@ -262,6 +262,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailRemoveProviderEvent: 'OSUI-API-27010',
 		FailSetEditableInput: 'OSUI-API-27011',
 		FailSetLanguage: 'OSUI-API-27012',
+		FailUpdateInitialMonth: 'OSUI-API-27013',
 	};
 
 	//Error codes used on the context of the Utilities client actions

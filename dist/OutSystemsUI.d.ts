@@ -2089,6 +2089,7 @@ declare namespace OSFramework.OSUI.Patterns.MonthPicker {
         abstract close(): void;
         abstract open(): void;
         abstract setLanguage(value: string): void;
+        abstract updateInitialMonth(monthYear: MonthYear): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.MonthPicker {
@@ -2132,6 +2133,7 @@ declare namespace OSFramework.OSUI.Patterns.MonthPicker {
         setProviderConfigs(providerConfigs: ProviderConfigs): void;
         setProviderEvent(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.Generic, uniqueId: string): void;
         unsetProviderEvent(eventId: string): void;
+        updateInitialMonth(monthYear: MonthYear): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.MonthPicker.Factory {
@@ -3652,6 +3654,7 @@ declare namespace OutSystems.OSUI.ErrorCodes {
         FailRemoveProviderEvent: string;
         FailSetEditableInput: string;
         FailSetLanguage: string;
+        FailUpdateInitialMonth: string;
     };
     const Utilities: {
         FailGetInvalidInput: string;
@@ -3851,9 +3854,10 @@ declare namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
     function RegisterCallback(monthPickerId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
     function SetProviderConfigs(monthPickerId: string, providerConfigs: MonthPickerProviderConfigs): string;
     function SetProviderEvent(monthPickerId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.Generic): string;
-    function UnsetProviderEvent(monthPickerId: string, eventId: string): string;
     function SetLanguage(monthPickerId: string, isoCode: string): string;
     function SetEditableInput(monthPickerId: string, IsEditable: boolean): string;
+    function UnsetProviderEvent(monthPickerId: string, eventId: string): string;
+    function UpdateInitialMonth(monthPickerId: string, monthYear: MonthYear): string;
 }
 declare namespace OutSystems.OSUI.Patterns.NotificationAPI {
     function ChangeProperty(notificationId: string, propertyName: string, propertyValue: any): string;
@@ -5054,6 +5058,7 @@ declare namespace Providers.OSUI.MonthPicker.Flatpickr {
         setEditableInput(isEditable: boolean): void;
         setLanguage(value: string): void;
         setProviderConfigs(newConfigs: FlatpickrOptions): void;
+        updateInitialMonth(monthYear: MonthYear): void;
     }
 }
 declare namespace Providers.OSUI.MonthPicker.Flatpickr {

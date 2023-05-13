@@ -10925,6 +10925,7 @@ var OutSystems;
                 FailRemoveProviderEvent: 'OSUI-API-27010',
                 FailSetEditableInput: 'OSUI-API-27011',
                 FailSetLanguage: 'OSUI-API-27012',
+                FailUpdateInitialMonth: 'OSUI-API-27013',
             };
             ErrorCodes.Utilities = {
                 FailGetInvalidInput: 'OSUI-API-28001',
@@ -12371,17 +12372,6 @@ var OutSystems;
                     return result;
                 }
                 MonthPickerAPI.SetProviderEvent = SetProviderEvent;
-                function UnsetProviderEvent(monthPickerId, eventId) {
-                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
-                        errorCode: OSUI.ErrorCodes.MonthPicker.FailRemoveProviderEvent,
-                        callback: () => {
-                            const monthPicker = GetMonthPickerItemById(monthPickerId);
-                            monthPicker.unsetProviderEvent(eventId);
-                        },
-                    });
-                    return result;
-                }
-                MonthPickerAPI.UnsetProviderEvent = UnsetProviderEvent;
                 function SetLanguage(monthPickerId, isoCode) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.MonthPicker.FailSetLanguage,
@@ -12404,6 +12394,28 @@ var OutSystems;
                     return result;
                 }
                 MonthPickerAPI.SetEditableInput = SetEditableInput;
+                function UnsetProviderEvent(monthPickerId, eventId) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.MonthPicker.FailRemoveProviderEvent,
+                        callback: () => {
+                            const monthPicker = GetMonthPickerItemById(monthPickerId);
+                            monthPicker.unsetProviderEvent(eventId);
+                        },
+                    });
+                    return result;
+                }
+                MonthPickerAPI.UnsetProviderEvent = UnsetProviderEvent;
+                function UpdateInitialMonth(monthPickerId, monthYear) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.MonthPicker.FailUpdateInitialMonth,
+                        callback: () => {
+                            const _monthPicker = this.GetMonthPickerItemById(monthPickerId);
+                            _monthPicker.updateInitialMonth(monthYear);
+                        },
+                    });
+                    return result;
+                }
+                MonthPickerAPI.UpdateInitialMonth = UpdateInitialMonth;
             })(MonthPickerAPI = Patterns.MonthPickerAPI || (Patterns.MonthPickerAPI = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
@@ -17822,6 +17834,12 @@ var Providers;
                         this.configs.setExtensibilityConfigs(newConfigs);
                         this.redraw();
                         super.setProviderConfigs(newConfigs);
+                    }
+                    updateInitialMonth(monthYear) {
+                        if (this._monthPickerProviderInputElem.disabled === false) {
+                            this.configs.InitialMonth = monthYear;
+                            this.redraw();
+                        }
                     }
                 }
                 Flatpickr.OSUIFlatpickrMonth = OSUIFlatpickrMonth;
