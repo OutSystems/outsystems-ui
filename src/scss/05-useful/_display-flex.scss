@@ -3,36 +3,146 @@
 /// @group UsefullClasses-Display_Flex
 /// Usefull - Display Flex
 
+%flex-parent {
+	display: flex;
+}
+
+@mixin flex-parent($isFlexParent)
+{
+    @if $isFlexParent == true {
+        @extend %flex-parent;
+    }
+}
+
+@mixin flex-flow($direction) {
+	&-#{$direction}-wrap {
+	    @extend %flex-parent;
+	    
+		flex-flow: #{$direction} wrap;
+	}
+	
+	&-#{$direction}-nowrap {
+	    @extend %flex-parent;
+	    
+		flex-flow: #{$direction} nowrap;
+	}
+}
+@mixin flex-flow-axis($axis) {
+    @include flex-flow($axis);
+    @include flex-flow(#{$axis}-reverse);
+}
+
+@mixin justify-content($isFlexParent) {
+    &-flex-end {
+        @include flex-parent($isFlexParent);
+    	justify-content: flex-end;
+	}
+
+	&-flex-start {
+	    @include flex-parent($isFlexParent);
+		justify-content: flex-start;
+	}
+
+	&-center {
+	    @include flex-parent($isFlexParent);
+		justify-content: center;
+	}
+
+	&-space-between {
+	    @include flex-parent($isFlexParent);
+		justify-content: space-between;
+	}
+
+	&-space-around {
+	    @include flex-parent($isFlexParent);
+		justify-content: space-around;
+	}
+
+	&-space-evenly {
+	    @include flex-parent($isFlexParent);
+		justify-content: space-evenly;
+	}
+}
+
+@mixin flex-direction($direction)
+{
+    &-#{$direction}
+    {
+        @extend %flex-parent;
+        flex-direction: $direction;
+    }
+}
+
+@mixin flex-direction-axis($axis)
+{
+   @include flex-direction($axis);
+   @include flex-direction(#{$axis}-reverse);
+}
+
+@mixin osui-sized($attribute)
+{
+    /* #{$attribute} */
+    .#{$attribute} {
+	    @each $type, $value in $osui-sizes {
+	    	&-#{$type} {
+    			#{$attribute}: var($value);
+	    }
+    	}
+    }
+}
+
 ///
 .display-flex {
-	display: flex;
+	@extend %flex-parent;
 }
 
 ///
 .flex {
-	@for $index from 1 through 3 {
-		// Generate .flex1
+    	
+	@for $index from 0 through 3 {
+		// Generate .flex0-3
 		&#{$index} {
 			flex: #{$index};
+		}
+		
+		// Generate .flex-grow0-3
+		&-grow#{$index} {
+			flex-grow: #{$index};
+		}
+		
+		// Generate .flex-shrink0-3
+		&-shrink#{$index} {
+			flex-shrink: #{$index};
+		}
+	}
+	
+	&-auto {
+		flex: auto;
+	}
+	
+	&-initial {
+		flex: initial;
+	}
+	
+	&-none {
+		flex: none;
+	}
+
+	&-basis {
+		&-initial {
+			flex-basis: initial;
+		}
+		&-auto {
+			flex-basis: auto;
+		}
+		&-0 {
+			flex-basis: 0;
 		}
 	}
 
 	&-direction {
-		&-column {
-			flex-direction: column;
-
-			&-reverse {
-				flex-direction: column-reverse;
-			}
-		}
-
-		&-row {
-			flex-direction: row;
-
-			&-reverse {
-				flex-direction: row-reverse;
-			}
-		}
+        @include flex-direction-axis(column);
+        @include flex-direction-axis(row);
 	}
 
 	&-wrap {
@@ -46,104 +156,25 @@
 	&-nowrap {
 		flex-wrap: nowrap;
 	}
+	
+	&-flow {
+		@include flex-flow(row);
+		@include flex-flow(column);
+	}
+	
+    &-justify {
+	    &-content {
+	        @include justify-content(true);
+	    }
+    }
 }
 
 .justify {
 	&-content {
-		&-flex-end {
-			justify-content: flex-end;
-		}
-
-		&-flex-start {
-			justify-content: flex-start;
-		}
-
-		&-center {
-			justify-content: center;
-		}
-
-		&-space-between {
-			justify-content: space-between;
-		}
-
-		&-space-around {
-			justify-content: space-around;
-		}
-
-		&-space-evenly {
-			justify-content: space-evenly;
-		}
+	    @include justify-content(false);
 	}
 }
 
-.gap {
-	&-xs {
-		gap: var(--space-xs);
-	}
-	&-s {
-		gap: var(--space-s);
-	}
-	&-base {
-		gap: var(--space-base);
-	}
-	&-m {
-		gap: var(--space-m);
-	}
-	&-l {
-		gap: var(--space-l);
-	}
-	&-xl {
-		gap: var(--space-xl);
-	}
-	&-xxl {
-		gap: var(--space-xxl);
-	}
-}
-
-.row-gap {
-	&-xs {
-		row-gap: var(--space-xs);
-	}
-	&-s {
-		row-gap: var(--space-s);
-	}
-	&-base {
-		row-gap: var(--space-base);
-	}
-	&-m {
-		row-gap: var(--space-m);
-	}
-	&-l {
-		row-gap: var(--space-l);
-	}
-	&-xl {
-		row-gap: var(--space-xl);
-	}
-	&-xxl {
-		row-gap: var(--space-xxl);
-	}
-}
-
-.column-gap {
-	&-xs {
-		column-gap: var(--space-xs);
-	}
-	&-s {
-		column-gap: var(--space-s);
-	}
-	&-base {
-		column-gap: var(--space-base);
-	}
-	&-m {
-		column-gap: var(--space-m);
-	}
-	&-l {
-		column-gap: var(--space-l);
-	}
-	&-xl {
-		column-gap: var(--space-xl);
-	}
-	&-xxl {
-		column-gap: var(--space-xxl);
-	}
-}
+@include osui-sized(gap);
+@include osui-sized(row-gap);
+@include osui-sized(column-gap);
