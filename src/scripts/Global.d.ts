@@ -70,6 +70,8 @@ declare global {
 		shift: (options?: Partial<Options & DetectOverflowOptions>) => Middleware;
 	}
 
+	type BalloonAnchor = unknown;
+
 	// Drag Events Type
 	type DragEvents = Event.DragEvent;
 

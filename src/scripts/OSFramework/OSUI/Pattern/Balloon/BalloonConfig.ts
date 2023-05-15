@@ -8,6 +8,11 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 	 * @extends {AbstractConfiguration}
 	 */
 	export class BalloonConfig extends AbstractConfiguration {
+		public AnchorId: string;
+		public AnchorType: BalloonAnchor;
+		public Position: GlobalEnum.Position;
+		public Shape: GlobalEnum.ShapeTypes;
+
 		constructor(config: JSON) {
 			super(config);
 		}

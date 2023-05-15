@@ -9,6 +9,8 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 	 * @implements {IBalloon}
 	 */
 	export class Balloon extends AbstractPattern<BalloonConfig> implements IBalloon {
+		public anchorElem: HTMLElement;
+
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new BalloonConfig(configs));
 		}
@@ -79,6 +81,10 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 			}
 		}
 
+		public close(): void {
+			//
+		}
+
 		/**
 		 * Destroy the Balloon.
 		 *
@@ -91,6 +97,10 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 
 			//Destroying the base of pattern
 			super.dispose();
+		}
+
+		public open(): void {
+			//
 		}
 	}
 }

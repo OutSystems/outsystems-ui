@@ -263,6 +263,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Accordion = 'Accordion',
 		AccordionItem = 'Accordion Item',
 		AnimatedLabel = 'Animated Label',
+		Balloon = 'Balloon',
 		BottomSheet = 'Bottom Sheet',
 		ButtonLoading = 'ButtonLoading',
 		Carousel = 'Carousel',

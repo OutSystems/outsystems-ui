@@ -7,4 +7,6 @@ namespace OSFramework.OSUI.Patterns.Balloon.Enum {
 		LabelPlaceholder = 'animated-label-text',
 		Pattern = 'animated-label',
 	}
+
+	export type bsokf = any;
 }

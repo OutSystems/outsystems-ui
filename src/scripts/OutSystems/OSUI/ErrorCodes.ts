@@ -295,6 +295,11 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailCheckIsRTL: 'OSUI-API-28026',
 	};
 
+	export const Balloon = {
+		FailChangeProperty: 'OSUI-API-29001',
+		FailDispose: 'OSUI-API-29002',
+	};
+
 	// Error Codes used in Legacy Client Action
 	export const Legacy = {
 		FailAddFavicon_Legacy: 'OSUI-LEG-000001',
