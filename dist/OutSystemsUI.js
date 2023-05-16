@@ -15239,12 +15239,17 @@ var OutSystems;
                 const result = OutSystems.OSUI.Utils.CreateApiResponse({
                     errorCode: OSUI.ErrorCodes.Utilities.FailAddFavicon,
                     callback: () => {
-                        const link = (OSFramework.OSUI.Helper.Dom.TagSelector(document.head, "link[rel*='icon']") ||
-                            document.createElement('link'));
-                        link.type = 'image/x-icon';
-                        link.rel = 'shortcut icon';
-                        link.href = URL;
-                        document.getElementsByTagName('head')[0].appendChild(link);
+                        const existingFavicon = OSFramework.OSUI.Helper.Dom.TagSelector(document.head, "link[rel*='icon']");
+                        if (existingFavicon) {
+                            existingFavicon.href = URL;
+                        }
+                        else {
+                            const link = document.createElement('link');
+                            link.type = 'image/x-icon';
+                            link.rel = 'shortcut icon';
+                            link.href = URL;
+                            document.getElementsByTagName('head')[0].appendChild(link);
+                        }
                     },
                 });
                 return result;
