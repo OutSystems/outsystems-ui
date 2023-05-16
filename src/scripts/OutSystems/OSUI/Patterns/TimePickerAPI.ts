@@ -272,6 +272,26 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	}
 
 	/**
+	 * Function that will update the prompt message for a given TimePickerId
+	 *
+	 * @param {string} TimePickerId
+	 * @param {string} promptMessage The value for the prompt message
+	 * @return {*} Response Object as a JSON String
+	 */
+	export function UpdatePrompt(timePickerId: string, promptMessage: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.TimePicker.FailUpdatePrompt,
+			callback: () => {
+				const _timePicker = this.GetTimePickerItemById(timePickerId);
+
+				_timePicker.updatePrompt(promptMessage);
+			},
+		});
+
+		return result;
+	}
+
+	/**
 	 * Function to set providerConfigs by extensibility
 	 *
 	 * @export

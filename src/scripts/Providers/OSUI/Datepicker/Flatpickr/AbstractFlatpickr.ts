@@ -491,6 +491,16 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			}
 		}
 
+		/**
+		 * Method used to update the prompt message
+		 *
+		 * @param promptMessage The new prompt message value
+		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
+		 */
+		public updatePrompt(promptMessage: string): void {
+			this._flatpickrInputElem.placeholder = promptMessage;
+		}
+
 		// Common methods all DatePickers must implement
 		protected abstract onDateSelectedEvent(selectedDates: string[], dateStr: string, fp: Flatpickr): void;
 		protected abstract todayBtnClick(event: MouseEvent): void;

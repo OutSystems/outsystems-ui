@@ -14,5 +14,6 @@ namespace OSFramework.OSUI.Patterns.DatePicker {
 		setProviderEvent(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.Generic, uniqueId: string): void;
 		unsetProviderEvent(eventId: string): void;
 		updateInitialDate(date1: string, date2?: string): void;
+		updatePrompt(promptMessage: string): void;
 	}
 }
