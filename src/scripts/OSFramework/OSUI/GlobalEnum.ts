@@ -69,6 +69,19 @@ namespace OSFramework.OSUI.GlobalEnum {
 		TopRight = 'top-right',
 	}
 
+	export enum FloatingPosition {
+		Auto = 'auto',
+		Bottom = 'bottom',
+		BottomLeft = 'bottom-start',
+		BottomRight = 'bottom-end',
+		Center = 'center',
+		Left = 'left',
+		Right = 'right',
+		Top = 'top',
+		TopLeft = 'top-start',
+		TopRight = 'top-end',
+	}
+
 	/**
 	 * OutSystemsUI elements CSS properties
 	 */

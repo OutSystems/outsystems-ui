@@ -38,10 +38,6 @@ namespace Providers.OSUI.Utils {
 						'--floating-position-x',
 						OSFramework.OSUI.Helper.GetRoundPixelRatio(x) + 'px'
 					);
-					// Object.assign(options.floatingElem.style, {
-					// 	top: `${y}px`,
-					// 	left: `${x}px`,
-					// });
 				});
 			};
 

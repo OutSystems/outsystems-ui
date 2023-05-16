@@ -221,6 +221,18 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         TopLeft = "top-left",
         TopRight = "top-right"
     }
+    enum FloatingPosition {
+        Auto = "auto",
+        Bottom = "bottom",
+        BottomLeft = "bottom-start",
+        BottomRight = "bottom-end",
+        Center = "center",
+        Left = "left",
+        Right = "right",
+        Top = "top",
+        TopLeft = "top-start",
+        TopRight = "top-end"
+    }
     enum CssProperties {
         Auto = "auto",
         Initial = "initial",
@@ -1377,14 +1389,27 @@ declare namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 }
 declare namespace OSFramework.OSUI.Patterns.Balloon {
     class Balloon extends AbstractPattern<BalloonConfig> implements IBalloon {
+        private _eventOnKeypress;
         private _floatingUICallback;
+        private _focusTrapInstance;
+        private _focusableActiveElement;
+        private _isOpen;
+        private _parentSelf;
         private _platformEventInitialized;
         private _platformEventOnToggle;
         anchorElem: HTMLElement;
         floatingOptions: Providers.OSUI.Utils.FloatingUIOptions;
         constructor(uniqueId: string, configs: JSON);
+        private _handleFocusTrap;
+        private _handleShape;
+        private _onkeypressCallback;
+        private _toggleBalloon;
+        private _triggerInitializedEvent;
+        private _triggerOnToggleEvent;
+        protected removeEventListeners(): void;
         protected setA11YProperties(): void;
         protected setCallbacks(): void;
+        protected setEventListeners(): void;
         protected setFloatingBehaviour(): void;
         protected setHtmlElements(): void;
         protected unsetCallbacks(): void;
@@ -1401,21 +1426,27 @@ declare namespace OSFramework.OSUI.Patterns.Balloon {
     class BalloonConfig extends AbstractConfiguration {
         AnchorId: string;
         AnchorType: BalloonAnchor;
-        Position: GlobalEnum.Position;
+        Position: GlobalEnum.FloatingPosition;
         Shape: GlobalEnum.ShapeTypes;
         constructor(config: JSON);
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Balloon.Enum {
     enum CssClasses {
-        InputPlaceholder = "animated-label-input",
-        IsActive = "active",
-        LabelPlaceholder = "animated-label-text",
-        Pattern = "animated-label"
+        IsOpen = "osui-balloon--is-open",
+        Pattern = "osui-balloon"
+    }
+    enum CssCustomProperties {
+        Shape = "--osui-balloon-shape"
     }
     enum Events {
         Initialized = "Initialized",
         OnToggle = "OnToggle"
+    }
+    enum Properties {
+        AnchorId = "AnchorId",
+        BalloonPosition = "BalloonPosition",
+        BalloonShape = "BalloonPosition"
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Balloon {

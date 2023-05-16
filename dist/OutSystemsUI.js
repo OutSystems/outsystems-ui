@@ -287,6 +287,19 @@ var OSFramework;
                 Position["TopLeft"] = "top-left";
                 Position["TopRight"] = "top-right";
             })(Position = GlobalEnum.Position || (GlobalEnum.Position = {}));
+            let FloatingPosition;
+            (function (FloatingPosition) {
+                FloatingPosition["Auto"] = "auto";
+                FloatingPosition["Bottom"] = "bottom";
+                FloatingPosition["BottomLeft"] = "bottom-start";
+                FloatingPosition["BottomRight"] = "bottom-end";
+                FloatingPosition["Center"] = "center";
+                FloatingPosition["Left"] = "left";
+                FloatingPosition["Right"] = "right";
+                FloatingPosition["Top"] = "top";
+                FloatingPosition["TopLeft"] = "top-start";
+                FloatingPosition["TopRight"] = "top-end";
+            })(FloatingPosition = GlobalEnum.FloatingPosition || (GlobalEnum.FloatingPosition = {}));
             let CssProperties;
             (function (CssProperties) {
                 CssProperties["Auto"] = "auto";
@@ -3998,16 +4011,80 @@ var OSFramework;
                 class Balloon extends Patterns.AbstractPattern {
                     constructor(uniqueId, configs) {
                         super(uniqueId, new Balloon_1.BalloonConfig(configs));
+                        this._isOpen = false;
+                    }
+                    _handleFocusTrap() {
+                        const opts = {
+                            focusTargetElement: this._parentSelf,
+                        };
+                        this._focusTrapInstance = new OSUI.Behaviors.FocusTrap(opts);
+                    }
+                    _handleShape() {
+                        OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Balloon_1.Enum.CssCustomProperties.Shape, 'var(--border-radius-' + this.configs.Shape + ')');
+                    }
+                    _onkeypressCallback(e) {
+                        const isEscapedPressed = e.key === OSUI.GlobalEnum.Keycodes.Escape;
+                        if (isEscapedPressed && this._isOpen) {
+                            this.close();
+                        }
+                    }
+                    _toggleBalloon(isOpen) {
+                        if (isOpen) {
+                            OSUI.Helper.Dom.Styles.AddClass(this.selfElement, Balloon_1.Enum.CssClasses.IsOpen);
+                        }
+                        else {
+                            OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, Balloon_1.Enum.CssClasses.IsOpen);
+                        }
+                        this._isOpen = isOpen;
+                        if (isOpen) {
+                            this.setFloatingBehaviour();
+                            this.setEventListeners();
+                        }
+                        else {
+                            this.removeEventListeners();
+                        }
+                        this.setA11YProperties();
+                        if (isOpen) {
+                            this._focusableActiveElement = document.activeElement;
+                            this._focusTrapInstance.enableForA11y();
+                            this.selfElement.focus();
+                        }
+                        else {
+                            this._focusTrapInstance.disableForA11y();
+                            OSUI.Helper.AsyncInvocation(() => {
+                                this.selfElement.blur();
+                                this._focusableActiveElement.focus();
+                            });
+                        }
+                        this._triggerOnToggleEvent();
+                    }
+                    _triggerInitializedEvent() {
+                        OSUI.Helper.AsyncInvocation(this._platformEventInitialized, this.widgetId);
+                    }
+                    _triggerOnToggleEvent() {
+                        OSUI.Helper.AsyncInvocation(this._platformEventOnToggle, this.widgetId, this._isOpen);
+                    }
+                    removeEventListeners() {
+                        this.selfElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
                     }
                     setA11YProperties() {
-                        console.warn(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                        if (!this.isBuilt) {
+                        }
+                        OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSUI.Constants.A11YAttributes.Aria.Hidden, (!this._isOpen).toString());
+                        OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSUI.Constants.A11YAttributes.TabIndex, this._isOpen
+                            ? OSUI.Constants.A11YAttributes.States.TabIndexShow
+                            : OSUI.Constants.A11YAttributes.States.TabIndexHidden);
+                        OSUI.Helper.A11Y.SetElementsTabIndex(this._isOpen, this._focusTrapInstance.focusableElements);
                     }
                     setCallbacks() {
-                        console.warn(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                        this._eventOnKeypress = this._onkeypressCallback.bind(this);
+                    }
+                    setEventListeners() {
+                        this.selfElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
                     }
                     setFloatingBehaviour() {
                         this.floatingOptions = {
-                            autoPlacement: true,
+                            autoPlacement: this.configs.Position === OSUI.GlobalEnum.FloatingPosition.Auto,
                             anchorElem: this.anchorElem,
                             floatingElem: this.selfElement,
                             position: this.configs.Position,
@@ -4017,34 +4094,61 @@ var OSFramework;
                         this._floatingUICallback = Providers.OSUI.Utils.FloatingUI.setFloatingPosition(this.floatingOptions);
                     }
                     setHtmlElements() {
+                        this._parentSelf = OSUI.Helper.Dom.GetElementById(this.widgetId);
                         this.anchorElem = document.getElementById(this.configs.AnchorId);
                     }
                     unsetCallbacks() {
-                        console.warn(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                        this._eventOnKeypress = undefined;
+                        this._platformEventOnToggle = undefined;
                     }
                     unsetHtmlElements() {
-                        console.warn(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                        this._parentSelf = undefined;
+                        this.anchorElem = undefined;
                     }
                     build() {
                         super.build();
                         this.setHtmlElements();
-                        this.setFloatingBehaviour();
+                        this._handleShape();
+                        this._handleFocusTrap();
+                        this.setA11YProperties();
                         this.finishBuild();
+                        this._triggerInitializedEvent();
                     }
                     changeProperty(propertyName, propertyValue) {
                         super.changeProperty(propertyName, propertyValue);
                         if (this.isBuilt) {
+                            switch (propertyName) {
+                                case Balloon_1.Enum.Properties.AnchorId:
+                                    this.setHtmlElements();
+                                    this.setFloatingBehaviour();
+                                    break;
+                                case Balloon_1.Enum.Properties.BalloonPosition:
+                                    this.setFloatingBehaviour();
+                                    break;
+                                case Balloon_1.Enum.Properties.BalloonShape:
+                                    this._handleShape();
+                            }
                         }
                     }
                     close() {
+                        if (this._isOpen) {
+                            this._toggleBalloon(false);
+                        }
                     }
                     dispose() {
                         this._floatingUICallback();
+                        this._focusTrapInstance.dispose();
+                        if (this._isOpen) {
+                            this.removeEventListeners();
+                        }
                         this.unsetCallbacks();
                         this.unsetHtmlElements();
                         super.dispose();
                     }
                     open() {
+                        if (this._isOpen === false) {
+                            this._toggleBalloon(true);
+                        }
                     }
                     registerCallback(callback, eventName) {
                         switch (eventName) {
@@ -4102,16 +4206,24 @@ var OSFramework;
                 (function (Enum) {
                     let CssClasses;
                     (function (CssClasses) {
-                        CssClasses["InputPlaceholder"] = "animated-label-input";
-                        CssClasses["IsActive"] = "active";
-                        CssClasses["LabelPlaceholder"] = "animated-label-text";
-                        CssClasses["Pattern"] = "animated-label";
+                        CssClasses["IsOpen"] = "osui-balloon--is-open";
+                        CssClasses["Pattern"] = "osui-balloon";
                     })(CssClasses = Enum.CssClasses || (Enum.CssClasses = {}));
+                    let CssCustomProperties;
+                    (function (CssCustomProperties) {
+                        CssCustomProperties["Shape"] = "--osui-balloon-shape";
+                    })(CssCustomProperties = Enum.CssCustomProperties || (Enum.CssCustomProperties = {}));
                     let Events;
                     (function (Events) {
                         Events["Initialized"] = "Initialized";
                         Events["OnToggle"] = "OnToggle";
                     })(Events = Enum.Events || (Enum.Events = {}));
+                    let Properties;
+                    (function (Properties) {
+                        Properties["AnchorId"] = "AnchorId";
+                        Properties["BalloonPosition"] = "BalloonPosition";
+                        Properties["BalloonShape"] = "BalloonPosition";
+                    })(Properties = Enum.Properties || (Enum.Properties = {}));
                 })(Enum = Balloon.Enum || (Balloon.Enum = {}));
             })(Balloon = Patterns.Balloon || (Patterns.Balloon = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));

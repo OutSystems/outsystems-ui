@@ -10,7 +10,7 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 	export class BalloonConfig extends AbstractConfiguration {
 		public AnchorId: string;
 		public AnchorType: BalloonAnchor;
-		public Position: GlobalEnum.Position;
+		public Position: GlobalEnum.FloatingPosition;
 		public Shape: GlobalEnum.ShapeTypes;
 
 		constructor(config: JSON) {

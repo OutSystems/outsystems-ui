@@ -2,14 +2,22 @@
 namespace OSFramework.OSUI.Patterns.Balloon.Enum {
 	// Css Classes
 	export enum CssClasses {
-		InputPlaceholder = 'animated-label-input',
-		IsActive = 'active',
-		LabelPlaceholder = 'animated-label-text',
-		Pattern = 'animated-label',
+		IsOpen = 'osui-balloon--is-open',
+		Pattern = 'osui-balloon',
+	}
+
+	export enum CssCustomProperties {
+		Shape = '--osui-balloon-shape',
 	}
 
 	export enum Events {
 		Initialized = 'Initialized',
 		OnToggle = 'OnToggle',
+	}
+
+	export enum Properties {
+		AnchorId = 'AnchorId',
+		BalloonPosition = 'BalloonPosition',
+		BalloonShape = 'BalloonPosition',
 	}
 }

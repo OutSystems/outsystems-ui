@@ -7712,13 +7712,15 @@ span.flatpickr-weekday{
 .osui-balloon{
   -webkit-box-shadow:var(--shadow-s);
           box-shadow:var(--shadow-s);
-  border-radius:var(--border-radius-soft);
+  border-radius:var(--osui-balloon-shape);
   background-color:var(--color-neutral-0);
   position:absolute;
   top:0;
   left:0;
   width:300px;
   height:100px;
+  opacity:0;
+  pointer-events:none;
   -webkit-transform:translate(var(--floating-position-x), var(--floating-position-y));
       -ms-transform:translate(var(--floating-position-x), var(--floating-position-y));
           transform:translate(var(--floating-position-x), var(--floating-position-y));
@@ -7728,6 +7730,10 @@ span.flatpickr-weekday{
   transition:transform 150ms ease;
   transition:transform 150ms ease, -webkit-transform 150ms ease;
   z-index:var(--layer-global-elevated);
+}
+.osui-balloon--is-open{
+  opacity:1;
+  pointer-events:all;
 }
 /*! 6.3.5. Bottom Sheet */
 .osui-bottom-sheet{
