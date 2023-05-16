@@ -8,19 +8,18 @@
     box-shadow: var(--shadow-s);
     border-radius: var(--osui-balloon-shape);
     background-color: var(--color-neutral-0);
+    display: none;
     position: absolute;
     top: 0;
     left: 0;
     width: 300px;
     height: 100px;
-    opacity: 0;
-    pointer-events: none;
     transform: translate(var(--floating-position-x),var(--floating-position-y));
     transition: transform 150ms ease;
+    will-change: transform;
     z-index: var(--layer-global-elevated);
 
     &--is-open {
-        opacity: 1;
-        pointer-events: all;
+        display: block;
     }
 }

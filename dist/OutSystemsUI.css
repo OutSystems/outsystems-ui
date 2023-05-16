@@ -7714,6 +7714,7 @@ span.flatpickr-weekday{
           box-shadow:var(--shadow-s);
   border-radius:var(--osui-balloon-shape);
   background-color:var(--color-neutral-0);
+  display:none;
   position:absolute;
   top:0;
   left:0;
@@ -7729,9 +7730,11 @@ span.flatpickr-weekday{
   -o-transition:transform 150ms ease;
   transition:transform 150ms ease;
   transition:transform 150ms ease, -webkit-transform 150ms ease;
+  will-change:transform;
   z-index:var(--layer-global-elevated);
 }
 .osui-balloon--is-open{
+  display:block;
   opacity:1;
   pointer-events:all;
 }

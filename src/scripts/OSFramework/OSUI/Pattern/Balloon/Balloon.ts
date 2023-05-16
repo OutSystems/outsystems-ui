@@ -74,6 +74,7 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 				this.setFloatingBehaviour();
 				this.setEventListeners();
 			} else {
+				this._floatingUICallback();
 				this.removeEventListeners();
 			}
 
@@ -219,6 +220,7 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 		public build(): void {
 			super.build();
 			this.setHtmlElements();
+			this.setCallbacks();
 			this._handleShape();
 			this._handleFocusTrap();
 			this.setA11YProperties();

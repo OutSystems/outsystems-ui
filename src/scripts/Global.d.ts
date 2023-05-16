@@ -1,5 +1,5 @@
 // FloatingUI => Balloon
-import {computePosition, autoPlacement, autoUpdate, shift } from './../../node_modules/@floating-ui/dom/index';
+import {computePosition, autoPlacement, autoUpdate, flip, shift } from './../../node_modules/@floating-ui/dom/index';
 
 // DatePicker => Flatpickr
 import flatpickr from 'flatpickr';
@@ -31,6 +31,7 @@ declare global {
 		computePosition: typeof computePosition;
 		autoPlacement: typeof autoPlacement;
 		autoUpdate: typeof autoUpdate;
+		flip: typeof flip;
 		shift: typeof shift;
 
 		// DatePicker => Flatpickr
@@ -67,6 +68,7 @@ declare global {
 		computePosition: (reference: unknown, floating: unknown, config: ComputePositionConfig) => Promise<ComputePositionReturn>;
 		autoPlacement: (options?: Partial<Options & DetectOverflowOptions>) => Middleware;
 		autoUpdate(reference: ReferenceElement, floating: FloatingElement, update: () => void, options?: Partial<Options>): () => void;
+		flip: (options?: Partial<FlipOptions & DetectOverflowOptions>) => Middleware;
 		shift: (options?: Partial<Options & DetectOverflowOptions>) => Middleware;
 	}
 

@@ -4041,6 +4041,7 @@ var OSFramework;
                             this.setEventListeners();
                         }
                         else {
+                            this._floatingUICallback();
                             this.removeEventListeners();
                         }
                         this.setA11YProperties();
@@ -4108,6 +4109,7 @@ var OSFramework;
                     build() {
                         super.build();
                         this.setHtmlElements();
+                        this.setCallbacks();
                         this._handleShape();
                         this._handleFocusTrap();
                         this.setA11YProperties();
