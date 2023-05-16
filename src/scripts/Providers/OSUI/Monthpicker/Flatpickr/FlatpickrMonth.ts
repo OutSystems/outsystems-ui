@@ -435,5 +435,15 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 				this.redraw();
 			}
 		}
+
+		/**
+		 * Method used to update the prompt message
+		 *
+		 * @param promptMessage The new prompt message value
+		 * @memberof OSUIFlatpickrMonth
+		 */
+		public updatePrompt(promptMessage: string): void {
+			this._flatpickrInputElem.placeholder = promptMessage;
+		}
 	}
 }
