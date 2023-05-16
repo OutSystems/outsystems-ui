@@ -12929,6 +12929,7 @@ body:has(.popup-dialog):has(.osui-dropdown-serverside--is-opened) .osui-dropdown
   min-height:40px;
   overflow:hidden;
   padding:var(--space-s) var(--space-base);
+  position:relative;
   -webkit-transition:background 250ms ease;
   -o-transition:background 250ms ease;
   transition:background 250ms ease;
@@ -16243,6 +16244,12 @@ input.OSFillParent.calendar-input{
 }
 .bold{
   font-weight:var(--font-bold);
+}
+.italic{
+  font-style:italic;
+}
+.oblique{
+  font-style:oblique;
 }
 .text-lowercase{
   text-transform:lowercase;
