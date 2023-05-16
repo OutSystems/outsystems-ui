@@ -11,7 +11,7 @@ namespace OutSystems.OSUI.Patterns.BalloonAPI {
 	 * @param {*} propertyValue
 	 * @return {*}  {string}
 	 */
-	export function ChangeProperty(balloonId: string, propertyName: string, propertyValue: any): string {
+	export function ChangeProperty(balloonId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Balloon.FailChangeProperty,
 			callback: () => {
@@ -42,7 +42,6 @@ namespace OutSystems.OSUI.Patterns.BalloonAPI {
 		const _balloonItem = new OSFramework.OSUI.Patterns.Balloon.Balloon(balloonId, JSON.parse(configs));
 
 		_balloonMap.set(balloonId, _balloonItem);
-		_balloonItem.build();
 
 		return _balloonItem;
 	}
@@ -91,5 +90,46 @@ namespace OutSystems.OSUI.Patterns.BalloonAPI {
 			balloonId,
 			_balloonMap
 		) as OSFramework.OSUI.Patterns.Balloon.IBalloon;
+	}
+
+	/**
+	 * Function that will initialize the pattern instance.
+	 *
+	 * @export
+	 * @param {string} balloonId ID of the Balloon that will be initialized.
+	 * @return {*}  {OSFramework.OSUI.Patterns.Balloon.IBalloon}
+	 */
+	export function Initialize(balloonId: string): OSFramework.OSUI.Patterns.Balloon.IBalloon {
+		const _balloon = GetBalloonById(balloonId);
+
+		_balloon.build();
+
+		return _balloon;
+	}
+
+	/**
+	 * Function to register a callback on this pattern
+	 *
+	 * @export
+	 * @param {string} balloonId
+	 * @param {string} eventName
+	 * @param {OSFramework.OSUI.GlobalCallbacks.Generic} callback
+	 * @return {*}  {string}
+	 */
+	export function RegisterCallback(
+		balloonId: string,
+		eventName: string,
+		callback: OSFramework.OSUI.GlobalCallbacks.Generic
+	): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Balloon.FailRegisterCallback,
+			callback: () => {
+				const _balloon = GetBalloonById(balloonId);
+
+				_balloon.registerCallback(callback, eventName);
+			},
+		});
+
+		return result;
 	}
 }

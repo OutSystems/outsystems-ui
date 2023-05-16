@@ -2,6 +2,7 @@
 const accordion = require('./Accordion');
 const accordionItem = require('./AccordionItem');
 const animatedLabel = require('./AnimatedLabel');
+const balloon = require('./Balloon');
 const bottomSheet = require('./BottomSheet');
 const buttonLoading = require('./ButtonLoading');
 const carousel = require('./Carousel');
@@ -41,7 +42,8 @@ const touchEvents = require('./TouchEvents');
 const patterns = {
 	"accordion-item": accordionItem.info,
 	"accordion": accordion.info,
-	"animated-label": animatedLabel.info,	
+	"animated-label": animatedLabel.info,
+	"balloon": balloon.info,	
 	"bottom-sheet": bottomSheet.info,	
 	"button-loading": buttonLoading.info,
 	"carousel": carousel.info,

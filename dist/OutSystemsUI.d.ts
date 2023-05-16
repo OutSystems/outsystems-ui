@@ -354,6 +354,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         Accordion = "Accordion",
         AccordionItem = "Accordion Item",
         AnimatedLabel = "Animated Label",
+        Balloon = "Balloon",
         BottomSheet = "Bottom Sheet",
         ButtonLoading = "ButtonLoading",
         Carousel = "Carousel",
@@ -977,6 +978,9 @@ declare namespace OSFramework.OSUI.Helper.MapOperation {
     function ExportKeys(map: Map<string, Interface.IPattern>): Array<string>;
 }
 declare namespace OSFramework.OSUI.Helper {
+    function GetRoundPixelRatio(value: number): number;
+}
+declare namespace OSFramework.OSUI.Helper {
     function Sanitize(value: string): string;
 }
 declare namespace OSFramework.OSUI.Helper {
@@ -1369,6 +1373,54 @@ declare namespace OSFramework.OSUI.Patterns.AnimatedLabel.Enum {
 }
 declare namespace OSFramework.OSUI.Patterns.AnimatedLabel {
     interface IAnimatedLabel extends Interface.IPattern, Interface.IRenderUpdate {
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.Balloon {
+    class Balloon extends AbstractPattern<BalloonConfig> implements IBalloon {
+        private _floatingUICallback;
+        private _platformEventInitialized;
+        private _platformEventOnToggle;
+        anchorElem: HTMLElement;
+        floatingOptions: Providers.OSUI.Utils.FloatingUIOptions;
+        constructor(uniqueId: string, configs: JSON);
+        protected setA11YProperties(): void;
+        protected setCallbacks(): void;
+        protected setFloatingBehaviour(): void;
+        protected setHtmlElements(): void;
+        protected unsetCallbacks(): void;
+        protected unsetHtmlElements(): void;
+        build(): void;
+        changeProperty(propertyName: string, propertyValue: unknown): void;
+        close(): void;
+        dispose(): void;
+        open(): void;
+        registerCallback(callback: GlobalCallbacks.OSGeneric, eventName: string): void;
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.Balloon {
+    class BalloonConfig extends AbstractConfiguration {
+        AnchorId: string;
+        AnchorType: BalloonAnchor;
+        Position: GlobalEnum.Position;
+        Shape: GlobalEnum.ShapeTypes;
+        constructor(config: JSON);
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.Balloon.Enum {
+    enum CssClasses {
+        InputPlaceholder = "animated-label-input",
+        IsActive = "active",
+        LabelPlaceholder = "animated-label-text",
+        Pattern = "animated-label"
+    }
+    enum Events {
+        Initialized = "Initialized",
+        OnToggle = "OnToggle"
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.Balloon {
+    interface IBalloon extends Interface.IPattern, Interface.IOpenable, Interface.ICallback {
+        anchorElem: HTMLElement;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.BottomSheet {
@@ -3684,6 +3736,11 @@ declare namespace OutSystems.OSUI.ErrorCodes {
         FailSetExtendedMenuShow: string;
         FailCheckIsRTL: string;
     };
+    const Balloon: {
+        FailChangeProperty: string;
+        FailDispose: string;
+        FailRegisterCallback: string;
+    };
     const Legacy: {
         FailAddFavicon_Legacy: string;
         MoveElement_Legacy: string;
@@ -3729,6 +3786,15 @@ declare namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
     function GetAnimatedLabelById(animatedLabelId: string): OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel;
     function Initialize(animatedLabelId: string): OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel;
     function UpdateOnRender(animatedLabelId: string): string;
+}
+declare namespace OutSystems.OSUI.Patterns.BalloonAPI {
+    function ChangeProperty(balloonId: string, propertyName: string, propertyValue: unknown): string;
+    function Create(balloonId: string, configs: string): OSFramework.OSUI.Patterns.Balloon.IBalloon;
+    function Dispose(balloonId: string): string;
+    function GetAllBalloons(): Array<string>;
+    function GetBalloonById(balloonId: string): OSFramework.OSUI.Patterns.Balloon.IBalloon;
+    function Initialize(balloonId: string): OSFramework.OSUI.Patterns.Balloon.IBalloon;
+    function RegisterCallback(balloonId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.Generic): string;
 }
 declare namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
     function ChangeProperty(bottomSheetId: string, propertyName: string, propertyValue: any): string;
@@ -5303,5 +5369,18 @@ declare namespace Providers.OSUI.TimePicker.Flatpickr {
 }
 declare namespace Providers.OSUI.TimePicker.Flatpickr {
     interface IFlatpickrTime extends OSFramework.OSUI.Patterns.TimePicker.ITimePicker, OSFramework.OSUI.Interface.IProviderPattern<Flatpickr> {
+    }
+}
+declare namespace Providers.OSUI.Utils {
+    type FloatingUIOptions = {
+        anchorElem: HTMLElement;
+        autoPlacement: boolean;
+        floatingElem: HTMLElement;
+        position: string;
+        updatePosition: boolean;
+        useShift: boolean;
+    };
+    abstract class FloatingUI {
+        static setFloatingPosition(options: FloatingUIOptions): void | OSFramework.OSUI.GlobalCallbacks.Generic;
     }
 }

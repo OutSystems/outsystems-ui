@@ -8,5 +8,8 @@ namespace OSFramework.OSUI.Patterns.Balloon.Enum {
 		Pattern = 'animated-label',
 	}
 
-	export type bsokf = any;
+	export enum Events {
+		Initialized = 'Initialized',
+		OnToggle = 'OnToggle',
+	}
 }

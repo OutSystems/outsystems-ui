@@ -2,3 +2,18 @@
 ////
 /// @group Patterns-Balloon
 /// Patterns - Interaction - Balloon
+/// 
+
+.osui-balloon {
+    box-shadow: var(--shadow-s);
+    border-radius: var(--border-radius-soft);
+    background-color: var(--color-neutral-0);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 100px;
+    transform: translate(var(--floating-position-x),var(--floating-position-y));
+    transition: transform 150ms ease;
+    z-index: var(--layer-global-elevated);
+}

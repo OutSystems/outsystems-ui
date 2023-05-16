@@ -18,6 +18,9 @@ const sectionInfo = {
             "key": "animated-label"
         },
         {
+            "key": "balloon"
+        },
+        {
             "key": "bottom-sheet"
         },
         {

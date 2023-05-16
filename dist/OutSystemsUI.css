@@ -79,24 +79,25 @@ Section Index:
         6.3.1. Action Sheet
         6.3.2. Animate
         6.3.3. Animated Label
-        6.3.4. Bottom Sheet
-        6.3.5. Carousel
-        6.3.6. DatePicker
-        6.3.7. Dropdown
-            6.3.7.1 Dropdown Search
-            6.3.7.2 Dropdown Tags
-        6.3.8. Floating Actions
-        6.3.9. Input With Icon
-        6.3.10. Lightbox Image
-        6.3.11. MonthPicker
-        6.3.12. Notification
-        6.3.13. RangeSlider
-        6.3.14. Scrollable Area
-        6.3.15. Search
-        6.3.16. Sidebar
-        6.3.17. Stacked Cards
-        6.3.18. TimePicker
-        6.3.19. Video
+        6.3.4. Balloon
+        6.3.5. Bottom Sheet
+        6.3.6. Carousel
+        6.3.7. DatePicker
+        6.3.8. Dropdown
+            6.3.8.1 Dropdown Search
+            6.3.8.2 Dropdown Tags
+        6.3.9. Floating Actions
+        6.3.10. Input With Icon
+        6.3.11. Lightbox Image
+        6.3.12. MonthPicker
+        6.3.13. Notification
+        6.3.14. RangeSlider
+        6.3.15. Scrollable Area
+        6.3.16. Search
+        6.3.17. Sidebar
+        6.3.18. Stacked Cards
+        6.3.19. TimePicker
+        6.3.20. Video
     6.4. Navigation
         6.4.1. Bottom Bar Item
         6.4.2. Breadcrumbs
@@ -7707,7 +7708,28 @@ span.flatpickr-weekday{
   -webkit-box-shadow:0 3px 0 0 var(--color-focus-outer);
           box-shadow:0 3px 0 0 var(--color-focus-outer);
 }
-/*! 6.3.4. Bottom Sheet */
+/*! 6.3.4. Balloon */
+.osui-balloon{
+  -webkit-box-shadow:var(--shadow-s);
+          box-shadow:var(--shadow-s);
+  border-radius:var(--border-radius-soft);
+  background-color:var(--color-neutral-0);
+  position:absolute;
+  top:0;
+  left:0;
+  width:300px;
+  height:100px;
+  -webkit-transform:translate(var(--floating-position-x), var(--floating-position-y));
+      -ms-transform:translate(var(--floating-position-x), var(--floating-position-y));
+          transform:translate(var(--floating-position-x), var(--floating-position-y));
+  -webkit-transition:-webkit-transform 150ms ease;
+  transition:-webkit-transform 150ms ease;
+  -o-transition:transform 150ms ease;
+  transition:transform 150ms ease;
+  transition:transform 150ms ease, -webkit-transform 150ms ease;
+  z-index:var(--layer-global-elevated);
+}
+/*! 6.3.5. Bottom Sheet */
 .osui-bottom-sheet{
   --bottom-sheet-max-height:calc(100vh - 54px);
   --border-radius-sharp:none;
@@ -7879,7 +7901,7 @@ span.flatpickr-weekday{
 .osui-bottom-sheet--is-active .osui-bottom-sheet__content .osui-timepicker{
   position:relative;
 }
-/*! 6.3.5. Carousel */
+/*! 6.3.6. Carousel */
 .osui-carousel{
   --osui-carousel-track-width:100%;
   --osui-carousel-pagination-margin:30px;
@@ -7998,7 +8020,7 @@ span.flatpickr-weekday{
 .splide__track--fade > .splide__list > .splide__slide.is-active{
   z-index:var(--layer-local-tier-1);
 }
-/*! 6.3.6. DatePicker */
+/*! 6.3.7. DatePicker */
 .flatpickr-calendar{
   --osui-flatpickr-layer:var(--layer-global-elevated);
   border-radius:var(--border-radius-soft);
@@ -8506,7 +8528,7 @@ html[data-uieditorversion^="1"] .osui-datepicker-calendar-ss-preview.has-today-b
   -servicestudio-padding-top:min(390px, 100%);
   -servicestudio-height:0;
 }
-/*! 6.3.7. Dropdown */
+/*! 6.3.8. Dropdown */
 .vscomp-ele{
   max-width:initial;
 }
@@ -8978,7 +9000,7 @@ body.vscomp-popup-active .vscomp-wrapper{
   margin-left:var(--space-s);
   margin-right:initial;
 }
-/*! 6.3.7.1 Dropdown Search */
+/*! 6.3.8.1 Dropdown Search */
 .osui-dropdown-search.osui-dropdown--not-valid .vscomp-toggle-button{
   border-color:var(--color-error);
 }
@@ -9003,7 +9025,7 @@ body.vscomp-popup-active .vscomp-wrapper{
   -servicestudio-right:16px;
   -servicestudio-top:8px;
 }
-/*! 6.3.7.2 Dropdown Tags */
+/*! 6.3.8.2 Dropdown Tags */
 .osui-dropdown-tags.osui-dropdown--not-valid .vscomp-toggle-button{
   border-color:var(--color-error);
 }
@@ -9069,7 +9091,7 @@ body.vscomp-popup-active .vscomp-wrapper{
   -servicestudio-top:50%;
   -servicestudio-transform:translate(-50%, -50%);
 }
-/*! 6.3.8. Floating Actions */
+/*! 6.3.9. Floating Actions */
 .floating{
   --osui-floating-actions-layer:var(--layer-global-elevated);
 }
@@ -9288,7 +9310,7 @@ body.vscomp-popup-active .vscomp-wrapper{
   -webkit-box-shadow:0 0 0 3px var(--color-focus-outer);
           box-shadow:0 0 0 3px var(--color-focus-outer);
 }
-/*! 6.3.9. Input With Icon */
+/*! 6.3.10. Input With Icon */
 .input-with-icon{
   display:-webkit-box;
   display:-ms-flexbox;
@@ -9346,7 +9368,7 @@ body.vscomp-popup-active .vscomp-wrapper{
   padding-bottom:var(--space-m);
   z-index:var(--layer-local-tier-1);
 }
-/*! 6.3.10. Lightbox Image */
+/*! 6.3.11. Lightbox Image */
 .lightbox-item{
   -servicestudio-position:relative;
 }
@@ -9428,7 +9450,7 @@ body.vscomp-popup-active .vscomp-wrapper{
       -ms-flex-direction:row-reverse;
           flex-direction:row-reverse;
 }
-/*! 6.3.11. MonthPicker */
+/*! 6.3.12. MonthPicker */
 .osui-monthpicker__dropdown.flatpickr-calendar{
   width:auto;
 }
@@ -9523,7 +9545,7 @@ body.vscomp-popup-active .vscomp-wrapper{
 .form .osui-monthpicker-ss-preview{
   -servicestudio-margin-top:-22px;
 }
-/*! 6.3.12. Notification */
+/*! 6.3.13. Notification */
 .osui-notification{
   --osui-notification-margin:var(--space-m);
   background-color:var(--color-neutral-0);
@@ -9678,7 +9700,7 @@ body.vscomp-popup-active .vscomp-wrapper{
 .android[data-status-bar-height] .layout-native .osui-notification--is-open{
   margin-top:var(--status-bar-height);
 }
-/*! 6.3.13. RangeSlider */
+/*! 6.3.14. RangeSlider */
 .osui-range-slider{
   --range-slider-handle-size:24px;
   --range-slider-thickness:4px;
@@ -9892,7 +9914,7 @@ body.vscomp-popup-active .vscomp-wrapper{
 .noUi-connects{
   z-index:var(--layer-global-screen);
 }
-/*! 6.3.14. Scrollable Area */
+/*! 6.3.15. Scrollable Area */
 .scrollable-area-content{
   --scrollable-area-height:auto;
   --scrollable-area-width:100%;
@@ -9958,7 +9980,7 @@ body.vscomp-popup-active .vscomp-wrapper{
   margin-left:unset;
   margin-right:var(--space-base);
 }
-/*! 6.3.15. Search */
+/*! 6.3.16. Search */
 .search{
   position:relative;
 }
@@ -10115,7 +10137,7 @@ body.vscomp-popup-active .vscomp-wrapper{
 .fade-leave .header-right .layout-native .search-input{
   display:none;
 }
-/*! 6.3.16. Sidebar */
+/*! 6.3.17. Sidebar */
 .osui-sidebar{
   --overlay-opacity:0;
   background-color:var(--color-neutral-0);
@@ -10263,7 +10285,7 @@ body.vscomp-popup-active .vscomp-wrapper{
 .phone .osui-sidebar{
   max-width:85vw;
 }
-/*! 6.3.17. Stacked Cards */
+/*! 6.3.18. Stacked Cards */
 .stackedcards{
   position:relative;
 }
@@ -10442,7 +10464,7 @@ body.vscomp-popup-active .vscomp-wrapper{
 .stackedcards-overlay-hidden{
   display:none;
 }
-/*! 6.3.18. TimePicker */
+/*! 6.3.19. TimePicker */
 .osui-timepicker__dropdown .numInputWrapper span.arrowUp:after{
   border-bottom-color:var(--color-neutral-8);
 }
@@ -10571,7 +10593,7 @@ html[data-uieditorversion^="1"] .osui-timepicker__dropdown-ss-preview.time12h, h
 .osui-timepicker__dropdown:before, .osui-timepicker__dropdown:after{
   display:none;
 }
-/*! 6.3.19. Video */
+/*! 6.3.20. Video */
 .video-preview{
   display:block;
 }
@@ -12929,6 +12951,7 @@ body:has(.popup-dialog):has(.osui-dropdown-serverside--is-opened) .osui-dropdown
   min-height:40px;
   overflow:hidden;
   padding:var(--space-s) var(--space-base);
+  position:relative;
   -webkit-transition:background 250ms ease;
   -o-transition:background 250ms ease;
   transition:background 250ms ease;
@@ -16243,6 +16266,12 @@ input.OSFillParent.calendar-input{
 }
 .bold{
   font-weight:var(--font-bold);
+}
+.italic{
+  font-style:italic;
+}
+.oblique{
+  font-style:oblique;
 }
 .text-lowercase{
   text-transform:lowercase;

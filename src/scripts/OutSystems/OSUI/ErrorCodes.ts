@@ -298,6 +298,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 	export const Balloon = {
 		FailChangeProperty: 'OSUI-API-29001',
 		FailDispose: 'OSUI-API-29002',
+		FailRegisterCallback: 'OSUI-API-29003',
 	};
 
 	// Error Codes used in Legacy Client Action

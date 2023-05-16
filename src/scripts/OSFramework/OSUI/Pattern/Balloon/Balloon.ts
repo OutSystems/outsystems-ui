@@ -9,7 +9,12 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 	 * @implements {IBalloon}
 	 */
 	export class Balloon extends AbstractPattern<BalloonConfig> implements IBalloon {
+		// eslint-disable-next-line @typescript-eslint/naming-convention
+		private _floatingUICallback: GlobalCallbacks.Generic;
+		private _platformEventInitialized: GlobalCallbacks.Generic;
+		private _platformEventOnToggle: GlobalCallbacks.Generic;
 		public anchorElem: HTMLElement;
+		public floatingOptions: Providers.OSUI.Utils.FloatingUIOptions;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new BalloonConfig(configs));
@@ -32,6 +37,21 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 			console.warn(GlobalEnum.WarningMessages.MethodNotImplemented);
 		}
 
+		protected setFloatingBehaviour(): void {
+			this.floatingOptions = {
+				autoPlacement: true,
+				anchorElem: this.anchorElem,
+				floatingElem: this.selfElement,
+				position: this.configs.Position,
+				useShift: true,
+				updatePosition: true,
+			};
+
+			this._floatingUICallback = Providers.OSUI.Utils.FloatingUI.setFloatingPosition(
+				this.floatingOptions
+			) as GlobalCallbacks.Generic;
+		}
+
 		/**
 		 * Update info based on htmlContent
 		 *
@@ -39,7 +59,7 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 		 * @memberof OSFramework.Patterns.Balloon.Balloon
 		 */
 		protected setHtmlElements(): void {
-			console.warn(GlobalEnum.WarningMessages.MethodNotImplemented);
+			this.anchorElem = document.getElementById(this.configs.AnchorId);
 		}
 
 		/**
@@ -64,6 +84,9 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 
 		public build(): void {
 			super.build();
+			this.setHtmlElements();
+			this.setFloatingBehaviour();
+			this.finishBuild();
 		}
 
 		/**
@@ -91,6 +114,8 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 		 * @memberof OSFramework.Patterns.Balloon.Balloon
 		 */
 		public dispose(): void {
+			this._floatingUICallback();
+
 			this.unsetCallbacks();
 
 			this.unsetHtmlElements();
@@ -101,6 +126,43 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 
 		public open(): void {
 			//
+		}
+
+		/**
+		 * Set callbacks for the onToggle event
+		 *
+		 * @param {GlobalCallbacks.OSGeneric} callback
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
+		 */
+
+		/**
+		 * Set callbacks for the pattern events
+		 *
+		 * @param {GlobalCallbacks.OSGeneric} callback
+		 * @param {string} eventName
+		 * @memberof Balloon
+		 */
+		public registerCallback(callback: GlobalCallbacks.OSGeneric, eventName: string): void {
+			switch (eventName) {
+				case Enum.Events.Initialized:
+					if (this._platformEventInitialized === undefined) {
+						this._platformEventInitialized = callback;
+					} else {
+						console.warn(
+							`The ${GlobalEnum.PatternName.Balloon} already has the ${eventName} callback set.`
+						);
+					}
+					break;
+				case Enum.Events.OnToggle:
+					if (this._platformEventOnToggle === undefined) {
+						this._platformEventOnToggle = callback;
+					} else {
+						console.warn(
+							`The ${GlobalEnum.PatternName.Balloon} already has the ${eventName} callback set.`
+						);
+					}
+					break;
+			}
 		}
 	}
 }

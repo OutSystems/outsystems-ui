@@ -434,6 +434,7 @@ var OSFramework;
                 PatternName["Accordion"] = "Accordion";
                 PatternName["AccordionItem"] = "Accordion Item";
                 PatternName["AnimatedLabel"] = "Animated Label";
+                PatternName["Balloon"] = "Balloon";
                 PatternName["BottomSheet"] = "Bottom Sheet";
                 PatternName["ButtonLoading"] = "ButtonLoading";
                 PatternName["Carousel"] = "Carousel";
@@ -2705,6 +2706,20 @@ var OSFramework;
     (function (OSUI) {
         var Helper;
         (function (Helper) {
+            function GetRoundPixelRatio(value) {
+                const dpr = window.devicePixelRatio || 1;
+                return Math.round(value * dpr) / dpr;
+            }
+            Helper.GetRoundPixelRatio = GetRoundPixelRatio;
+        })(Helper = OSUI.Helper || (OSUI.Helper = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Helper;
+        (function (Helper) {
             function Sanitize(value) {
                 if (typeof value === 'string') {
                     if (value !== undefined && value !== null && value !== '') {
@@ -3969,6 +3984,136 @@ var OSFramework;
                     })(Messages = Enum.Messages || (Enum.Messages = {}));
                 })(Enum = AnimatedLabel.Enum || (AnimatedLabel.Enum = {}));
             })(AnimatedLabel = Patterns.AnimatedLabel || (Patterns.AnimatedLabel = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
+            var Balloon;
+            (function (Balloon_1) {
+                class Balloon extends Patterns.AbstractPattern {
+                    constructor(uniqueId, configs) {
+                        super(uniqueId, new Balloon_1.BalloonConfig(configs));
+                    }
+                    setA11YProperties() {
+                        console.warn(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    setCallbacks() {
+                        console.warn(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    setFloatingBehaviour() {
+                        this.floatingOptions = {
+                            autoPlacement: true,
+                            anchorElem: this.anchorElem,
+                            floatingElem: this.selfElement,
+                            position: this.configs.Position,
+                            useShift: true,
+                            updatePosition: true,
+                        };
+                        this._floatingUICallback = Providers.OSUI.Utils.FloatingUI.setFloatingPosition(this.floatingOptions);
+                    }
+                    setHtmlElements() {
+                        this.anchorElem = document.getElementById(this.configs.AnchorId);
+                    }
+                    unsetCallbacks() {
+                        console.warn(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    unsetHtmlElements() {
+                        console.warn(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    build() {
+                        super.build();
+                        this.setHtmlElements();
+                        this.setFloatingBehaviour();
+                        this.finishBuild();
+                    }
+                    changeProperty(propertyName, propertyValue) {
+                        super.changeProperty(propertyName, propertyValue);
+                        if (this.isBuilt) {
+                        }
+                    }
+                    close() {
+                    }
+                    dispose() {
+                        this._floatingUICallback();
+                        this.unsetCallbacks();
+                        this.unsetHtmlElements();
+                        super.dispose();
+                    }
+                    open() {
+                    }
+                    registerCallback(callback, eventName) {
+                        switch (eventName) {
+                            case Balloon_1.Enum.Events.Initialized:
+                                if (this._platformEventInitialized === undefined) {
+                                    this._platformEventInitialized = callback;
+                                }
+                                else {
+                                    console.warn(`The ${OSUI.GlobalEnum.PatternName.Balloon} already has the ${eventName} callback set.`);
+                                }
+                                break;
+                            case Balloon_1.Enum.Events.OnToggle:
+                                if (this._platformEventOnToggle === undefined) {
+                                    this._platformEventOnToggle = callback;
+                                }
+                                else {
+                                    console.warn(`The ${OSUI.GlobalEnum.PatternName.Balloon} already has the ${eventName} callback set.`);
+                                }
+                                break;
+                        }
+                    }
+                }
+                Balloon_1.Balloon = Balloon;
+            })(Balloon = Patterns.Balloon || (Patterns.Balloon = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
+            var Balloon;
+            (function (Balloon) {
+                class BalloonConfig extends Patterns.AbstractConfiguration {
+                    constructor(config) {
+                        super(config);
+                    }
+                }
+                Balloon.BalloonConfig = BalloonConfig;
+            })(Balloon = Patterns.Balloon || (Patterns.Balloon = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
+            var Balloon;
+            (function (Balloon) {
+                var Enum;
+                (function (Enum) {
+                    let CssClasses;
+                    (function (CssClasses) {
+                        CssClasses["InputPlaceholder"] = "animated-label-input";
+                        CssClasses["IsActive"] = "active";
+                        CssClasses["LabelPlaceholder"] = "animated-label-text";
+                        CssClasses["Pattern"] = "animated-label";
+                    })(CssClasses = Enum.CssClasses || (Enum.CssClasses = {}));
+                    let Events;
+                    (function (Events) {
+                        Events["Initialized"] = "Initialized";
+                        Events["OnToggle"] = "OnToggle";
+                    })(Events = Enum.Events || (Enum.Events = {}));
+                })(Enum = Balloon.Enum || (Balloon.Enum = {}));
+            })(Balloon = Patterns.Balloon || (Patterns.Balloon = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
 })(OSFramework || (OSFramework = {}));
@@ -10955,6 +11100,11 @@ var OutSystems;
                 FailSetExtendedMenuShow: 'OSUI-API-28025',
                 FailCheckIsRTL: 'OSUI-API-28026',
             };
+            ErrorCodes.Balloon = {
+                FailChangeProperty: 'OSUI-API-29001',
+                FailDispose: 'OSUI-API-29002',
+                FailRegisterCallback: 'OSUI-API-29003',
+            };
             ErrorCodes.Legacy = {
                 FailAddFavicon_Legacy: 'OSUI-LEG-000001',
                 MoveElement_Legacy: 'OSUI-LEG-000002',
@@ -11230,6 +11380,76 @@ var OutSystems;
                 }
                 AnimatedLabelAPI.UpdateOnRender = UpdateOnRender;
             })(AnimatedLabelAPI = Patterns.AnimatedLabelAPI || (Patterns.AnimatedLabelAPI = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
+})(OutSystems || (OutSystems = {}));
+var OutSystems;
+(function (OutSystems) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
+            var BalloonAPI;
+            (function (BalloonAPI) {
+                const _balloonMap = new Map();
+                function ChangeProperty(balloonId, propertyName, propertyValue) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Balloon.FailChangeProperty,
+                        callback: () => {
+                            const balloon = GetBalloonById(balloonId);
+                            balloon.changeProperty(propertyName, propertyValue);
+                        },
+                    });
+                    return result;
+                }
+                BalloonAPI.ChangeProperty = ChangeProperty;
+                function Create(balloonId, configs) {
+                    if (_balloonMap.has(balloonId)) {
+                        throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Balloon} registered under id: ${balloonId}`);
+                    }
+                    const _balloonItem = new OSFramework.OSUI.Patterns.Balloon.Balloon(balloonId, JSON.parse(configs));
+                    _balloonMap.set(balloonId, _balloonItem);
+                    return _balloonItem;
+                }
+                BalloonAPI.Create = Create;
+                function Dispose(balloonId) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Balloon.FailDispose,
+                        callback: () => {
+                            const balloon = GetBalloonById(balloonId);
+                            balloon.dispose();
+                            _balloonMap.delete(balloon.uniqueId);
+                        },
+                    });
+                    return result;
+                }
+                BalloonAPI.Dispose = Dispose;
+                function GetAllBalloons() {
+                    return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_balloonMap);
+                }
+                BalloonAPI.GetAllBalloons = GetAllBalloons;
+                function GetBalloonById(balloonId) {
+                    return OSFramework.OSUI.Helper.MapOperation.FindInMap('Balloon', balloonId, _balloonMap);
+                }
+                BalloonAPI.GetBalloonById = GetBalloonById;
+                function Initialize(balloonId) {
+                    const _balloon = GetBalloonById(balloonId);
+                    _balloon.build();
+                    return _balloon;
+                }
+                BalloonAPI.Initialize = Initialize;
+                function RegisterCallback(balloonId, eventName, callback) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Balloon.FailRegisterCallback,
+                        callback: () => {
+                            const _balloon = GetBalloonById(balloonId);
+                            _balloon.registerCallback(callback, eventName);
+                        },
+                    });
+                    return result;
+                }
+                BalloonAPI.RegisterCallback = RegisterCallback;
+            })(BalloonAPI = Patterns.BalloonAPI || (Patterns.BalloonAPI = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
 })(OutSystems || (OutSystems = {}));
@@ -18945,5 +19165,44 @@ var Providers;
                 Flatpickr.FlatpickrTimeConfig = FlatpickrTimeConfig;
             })(Flatpickr = TimePicker.Flatpickr || (TimePicker.Flatpickr = {}));
         })(TimePicker = OSUI.TimePicker || (OSUI.TimePicker = {}));
+    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
+})(Providers || (Providers = {}));
+var Providers;
+(function (Providers) {
+    var OSUI;
+    (function (OSUI) {
+        var Utils;
+        (function (Utils) {
+            class FloatingUI {
+                static setFloatingPosition(options) {
+                    let _eventOnUpdatePosition = undefined;
+                    const _middlewareArray = [];
+                    if (options.autoPlacement) {
+                        _middlewareArray.push(window.FloatingUIDOM.autoPlacement());
+                    }
+                    if (options.useShift) {
+                        _middlewareArray.push(window.FloatingUIDOM.shift());
+                    }
+                    _eventOnUpdatePosition = () => {
+                        window.FloatingUIDOM.computePosition(options.anchorElem, options.floatingElem, {
+                            placement: options.position,
+                            middleware: _middlewareArray,
+                        }).then(({ x, y }) => {
+                            OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(options.floatingElem, '--floating-position-y', OSFramework.OSUI.Helper.GetRoundPixelRatio(y) + 'px');
+                            OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(options.floatingElem, '--floating-position-x', OSFramework.OSUI.Helper.GetRoundPixelRatio(x) + 'px');
+                        });
+                    };
+                    _eventOnUpdatePosition();
+                    if (options.updatePosition) {
+                        const _eventOnUpdate = () => {
+                            window.FloatingUIDOM.autoUpdate(options.anchorElem, options.floatingElem, _eventOnUpdatePosition.bind(this));
+                        };
+                        _eventOnUpdate();
+                        return _eventOnUpdate;
+                    }
+                }
+            }
+            Utils.FloatingUI = FloatingUI;
+        })(Utils = OSUI.Utils || (OSUI.Utils = {}));
     })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
 })(Providers || (Providers = {}));
