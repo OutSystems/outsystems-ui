@@ -39,7 +39,7 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
 		 */
 		protected setCallbacks(): void {
-			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+			Helper.AsyncInvocation(this._platformEventOnInitialize, this.widgetId);
 		}
 
 		/**
@@ -50,8 +50,6 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		 */
 		protected setHtmlElements(): void {
 			this._parentSelf = Helper.Dom.GetElementById(this.widgetId);
-
-			Helper.AsyncInvocation(this._platformEventOnInitialize, this.widgetId);
 		}
 
 		/**
@@ -61,7 +59,7 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
 		 */
 		protected unsetCallbacks(): void {
-			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+			this._platformEventOnInitialize = undefined;
 		}
 
 		/**
@@ -72,7 +70,6 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		 */
 		protected unsetHtmlElements(): void {
 			this._parentSelf = undefined;
-			this._platformEventOnInitialize = undefined;
 		}
 
 		public build(): void {
@@ -83,6 +80,8 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 			this.setHtmlElements();
 
 			this.finishBuild();
+
+			this.setCallbacks();
 		}
 
 		/**
@@ -120,6 +119,8 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
+				this.unsetCallbacks();
+
 				// Remove unused HTML elements
 				this.unsetHtmlElements();
 
@@ -131,11 +132,11 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		/**
 		 * Method used to register the callback
 		 *
-		 * @param {string} eventName
 		 * @param {GlobalCallbacks.OSGeneric} callback
+		 * @param {string} eventName
 		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
 		 */
-		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
+		public registerCallback(callback: GlobalCallbacks.OSGeneric, eventName: string): void {
 			switch (eventName) {
 				case Patterns.InlineSvg.Enum.Events.OnInitialize:
 					if (this._platformEventOnInitialize === undefined) {

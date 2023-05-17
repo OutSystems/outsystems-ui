@@ -2108,8 +2108,7 @@ declare namespace OSFramework.OSUI.Patterns.InlineSvg.Enum {
     }
 }
 declare namespace OSFramework.OSUI.Patterns.InlineSvg {
-    interface IInlineSvg extends Interface.IPattern {
-        registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
+    interface IInlineSvg extends Interface.IPattern, Interface.ICallback {
     }
 }
 declare namespace OSFramework.OSUI.Patterns.InlineSvg {
@@ -2126,7 +2125,7 @@ declare namespace OSFramework.OSUI.Patterns.InlineSvg {
         build(): void;
         changeProperty(propertyName: string, propertyValue: any): void;
         dispose(): void;
-        registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
+        registerCallback(callback: GlobalCallbacks.OSGeneric, eventName: string): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.InlineSvg {

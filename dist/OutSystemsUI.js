@@ -6195,24 +6195,23 @@ var OSFramework;
                         console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
                     }
                     setCallbacks() {
-                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                        OSUI.Helper.AsyncInvocation(this._platformEventOnInitialize, this.widgetId);
                     }
                     setHtmlElements() {
                         this._parentSelf = OSUI.Helper.Dom.GetElementById(this.widgetId);
-                        OSUI.Helper.AsyncInvocation(this._platformEventOnInitialize, this.widgetId);
                     }
                     unsetCallbacks() {
-                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                        this._platformEventOnInitialize = undefined;
                     }
                     unsetHtmlElements() {
                         this._parentSelf = undefined;
-                        this._platformEventOnInitialize = undefined;
                     }
                     build() {
                         super.build();
                         this._setSvgCode();
                         this.setHtmlElements();
                         this.finishBuild();
+                        this.setCallbacks();
                     }
                     changeProperty(propertyName, propertyValue) {
                         super.changeProperty(propertyName, propertyValue);
@@ -6229,11 +6228,12 @@ var OSFramework;
                     }
                     dispose() {
                         if (this.isBuilt) {
+                            this.unsetCallbacks();
                             this.unsetHtmlElements();
                             super.dispose();
                         }
                     }
-                    registerCallback(eventName, callback) {
+                    registerCallback(callback, eventName) {
                         switch (eventName) {
                             case Patterns.InlineSvg.Enum.Events.OnInitialize:
                                 if (this._platformEventOnInitialize === undefined) {
