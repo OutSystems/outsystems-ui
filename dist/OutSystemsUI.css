@@ -7720,8 +7720,6 @@ span.flatpickr-weekday{
   left:0;
   width:300px;
   height:100px;
-  opacity:0;
-  pointer-events:none;
   -webkit-transform:translate(var(--floating-position-x), var(--floating-position-y));
       -ms-transform:translate(var(--floating-position-x), var(--floating-position-y));
           transform:translate(var(--floating-position-x), var(--floating-position-y));
@@ -7735,8 +7733,6 @@ span.flatpickr-weekday{
 }
 .osui-balloon--is-open{
   display:block;
-  opacity:1;
-  pointer-events:all;
 }
 /*! 6.3.5. Bottom Sheet */
 .osui-bottom-sheet{

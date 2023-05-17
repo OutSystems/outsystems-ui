@@ -10,31 +10,44 @@ namespace Providers.OSUI.Utils {
 	};
 
 	// eslint-disable-next-line @typescript-eslint/naming-convention
-	export abstract class FloatingUI {
-		public static setFloatingPosition(options: FloatingUIOptions): void | OSFramework.OSUI.GlobalCallbacks.Generic {
+	export class FloatingUI {
+		// eslint-disable-next-line @typescript-eslint/naming-convention
+		private _floatingUIOptions: FloatingUIOptions;
+		public eventOnUpdateCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
+
+		constructor(options: FloatingUIOptions) {
+			this._floatingUIOptions = options;
+			this.build();
+		}
+
+		private _setFloatingPosition(): void {
 			let _eventOnUpdatePosition = undefined;
 			const _middlewareArray = [];
 
-			if (options.autoPlacement) {
+			if (this._floatingUIOptions.autoPlacement) {
 				_middlewareArray.push(window.FloatingUIDOM.autoPlacement());
 			}
 
-			if (options.useShift) {
+			if (this._floatingUIOptions.useShift) {
 				_middlewareArray.push(window.FloatingUIDOM.shift());
 			}
 
 			_eventOnUpdatePosition = () => {
-				window.FloatingUIDOM.computePosition(options.anchorElem, options.floatingElem, {
-					placement: options.position,
-					middleware: _middlewareArray,
-				}).then(({ x, y }) => {
+				window.FloatingUIDOM.computePosition(
+					this._floatingUIOptions.anchorElem,
+					this._floatingUIOptions.floatingElem,
+					{
+						placement: this._floatingUIOptions.position,
+						middleware: _middlewareArray,
+					}
+				).then(({ x, y }) => {
 					OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
-						options.floatingElem,
+						this._floatingUIOptions.floatingElem,
 						'--floating-position-y',
 						OSFramework.OSUI.Helper.GetRoundPixelRatio(y) + 'px'
 					);
 					OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
-						options.floatingElem,
+						this._floatingUIOptions.floatingElem,
 						'--floating-position-x',
 						OSFramework.OSUI.Helper.GetRoundPixelRatio(x) + 'px'
 					);
@@ -43,19 +56,34 @@ namespace Providers.OSUI.Utils {
 
 			_eventOnUpdatePosition();
 
-			if (options.updatePosition) {
-				const _eventOnUpdate = () => {
+			if (this._floatingUIOptions.updatePosition) {
+				this.eventOnUpdateCallback = () => {
 					window.FloatingUIDOM.autoUpdate(
-						options.anchorElem,
-						options.floatingElem,
+						this._floatingUIOptions.anchorElem,
+						this._floatingUIOptions.floatingElem,
 						_eventOnUpdatePosition.bind(this)
 					);
 				};
 
-				_eventOnUpdate();
-
-				return _eventOnUpdate;
+				this.eventOnUpdateCallback();
 			}
+		}
+
+		public build(): void {
+			this._setFloatingPosition();
+		}
+
+		public dispose(): void {
+			if (this._floatingUIOptions.updatePosition) {
+				this.eventOnUpdateCallback();
+			}
+
+			this._floatingUIOptions = undefined;
+		}
+
+		public update(options: FloatingUIOptions): void {
+			this._floatingUIOptions = options;
+			this.build();
 		}
 	}
 }

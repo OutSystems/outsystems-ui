@@ -4041,7 +4041,7 @@ var OSFramework;
                             this.setEventListeners();
                         }
                         else {
-                            this._floatingUICallback();
+                            this._floatingUIInstance.eventOnUpdateCallback();
                             this.removeEventListeners();
                         }
                         this.setA11YProperties();
@@ -4083,16 +4083,24 @@ var OSFramework;
                     setEventListeners() {
                         this.selfElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
                     }
-                    setFloatingBehaviour() {
-                        this.floatingOptions = {
-                            autoPlacement: this.configs.Position === OSUI.GlobalEnum.FloatingPosition.Auto,
-                            anchorElem: this.anchorElem,
-                            floatingElem: this.selfElement,
-                            position: this.configs.Position,
-                            useShift: true,
-                            updatePosition: true,
-                        };
-                        this._floatingUICallback = Providers.OSUI.Utils.FloatingUI.setFloatingPosition(this.floatingOptions);
+                    setFloatingBehaviour(isUpdate = false) {
+                        if (this._floatingUIInstance === undefined || isUpdate) {
+                            this.floatingOptions = {
+                                autoPlacement: this.configs.Position === OSUI.GlobalEnum.FloatingPosition.Auto,
+                                anchorElem: this.anchorElem,
+                                floatingElem: this.selfElement,
+                                position: this.configs.Position,
+                                useShift: true,
+                                updatePosition: true,
+                            };
+                            if (isUpdate && this._floatingUIInstance !== undefined) {
+                                this._floatingUIInstance.update(this.floatingOptions);
+                            }
+                            this._floatingUIInstance = new Providers.OSUI.Utils.FloatingUI(this.floatingOptions);
+                        }
+                        else {
+                            this._floatingUIInstance.build();
+                        }
                     }
                     setHtmlElements() {
                         this._parentSelf = OSUI.Helper.Dom.GetElementById(this.widgetId);
@@ -4138,7 +4146,7 @@ var OSFramework;
                         }
                     }
                     dispose() {
-                        this._floatingUICallback();
+                        this._floatingUIInstance.dispose();
                         this._focusTrapInstance.dispose();
                         if (this._isOpen) {
                             this.removeEventListeners();
@@ -19288,32 +19296,48 @@ var Providers;
         var Utils;
         (function (Utils) {
             class FloatingUI {
-                static setFloatingPosition(options) {
+                constructor(options) {
+                    this._floatingUIOptions = options;
+                    this.build();
+                }
+                _setFloatingPosition() {
                     let _eventOnUpdatePosition = undefined;
                     const _middlewareArray = [];
-                    if (options.autoPlacement) {
+                    if (this._floatingUIOptions.autoPlacement) {
                         _middlewareArray.push(window.FloatingUIDOM.autoPlacement());
                     }
-                    if (options.useShift) {
+                    if (this._floatingUIOptions.useShift) {
                         _middlewareArray.push(window.FloatingUIDOM.shift());
                     }
                     _eventOnUpdatePosition = () => {
-                        window.FloatingUIDOM.computePosition(options.anchorElem, options.floatingElem, {
-                            placement: options.position,
+                        window.FloatingUIDOM.computePosition(this._floatingUIOptions.anchorElem, this._floatingUIOptions.floatingElem, {
+                            placement: this._floatingUIOptions.position,
                             middleware: _middlewareArray,
                         }).then(({ x, y }) => {
-                            OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(options.floatingElem, '--floating-position-y', OSFramework.OSUI.Helper.GetRoundPixelRatio(y) + 'px');
-                            OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(options.floatingElem, '--floating-position-x', OSFramework.OSUI.Helper.GetRoundPixelRatio(x) + 'px');
+                            OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, '--floating-position-y', OSFramework.OSUI.Helper.GetRoundPixelRatio(y) + 'px');
+                            OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, '--floating-position-x', OSFramework.OSUI.Helper.GetRoundPixelRatio(x) + 'px');
                         });
                     };
                     _eventOnUpdatePosition();
-                    if (options.updatePosition) {
-                        const _eventOnUpdate = () => {
-                            window.FloatingUIDOM.autoUpdate(options.anchorElem, options.floatingElem, _eventOnUpdatePosition.bind(this));
+                    if (this._floatingUIOptions.updatePosition) {
+                        this.eventOnUpdateCallback = () => {
+                            window.FloatingUIDOM.autoUpdate(this._floatingUIOptions.anchorElem, this._floatingUIOptions.floatingElem, _eventOnUpdatePosition.bind(this));
                         };
-                        _eventOnUpdate();
-                        return _eventOnUpdate;
+                        this.eventOnUpdateCallback();
                     }
+                }
+                build() {
+                    this._setFloatingPosition();
+                }
+                dispose() {
+                    if (this._floatingUIOptions.updatePosition) {
+                        this.eventOnUpdateCallback();
+                    }
+                    this._floatingUIOptions = undefined;
+                }
+                update(options) {
+                    this._floatingUIOptions = options;
+                    this.build();
                 }
             }
             Utils.FloatingUI = FloatingUI;

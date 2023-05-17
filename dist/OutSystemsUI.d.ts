@@ -1390,7 +1390,7 @@ declare namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 declare namespace OSFramework.OSUI.Patterns.Balloon {
     class Balloon extends AbstractPattern<BalloonConfig> implements IBalloon {
         private _eventOnKeypress;
-        private _floatingUICallback;
+        private _floatingUIInstance;
         private _focusTrapInstance;
         private _focusableActiveElement;
         private _isOpen;
@@ -1410,7 +1410,7 @@ declare namespace OSFramework.OSUI.Patterns.Balloon {
         protected setA11YProperties(): void;
         protected setCallbacks(): void;
         protected setEventListeners(): void;
-        protected setFloatingBehaviour(): void;
+        protected setFloatingBehaviour(isUpdate?: boolean): void;
         protected setHtmlElements(): void;
         protected unsetCallbacks(): void;
         protected unsetHtmlElements(): void;
@@ -5411,7 +5411,13 @@ declare namespace Providers.OSUI.Utils {
         updatePosition: boolean;
         useShift: boolean;
     };
-    abstract class FloatingUI {
-        static setFloatingPosition(options: FloatingUIOptions): void | OSFramework.OSUI.GlobalCallbacks.Generic;
+    class FloatingUI {
+        private _floatingUIOptions;
+        eventOnUpdateCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
+        constructor(options: FloatingUIOptions);
+        private _setFloatingPosition;
+        build(): void;
+        dispose(): void;
+        update(options: FloatingUIOptions): void;
     }
 }

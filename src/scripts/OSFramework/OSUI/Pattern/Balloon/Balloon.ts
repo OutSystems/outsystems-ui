@@ -12,7 +12,7 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 		// Listener callbacks
 		private _eventOnKeypress: GlobalCallbacks.Generic;
 		// eslint-disable-next-line @typescript-eslint/naming-convention
-		private _floatingUICallback: GlobalCallbacks.Generic;
+		private _floatingUIInstance: Providers.OSUI.Utils.FloatingUI;
 		// FocusTrap Properties
 		private _focusTrapInstance: Behaviors.FocusTrap;
 		private _focusableActiveElement: HTMLElement;
@@ -74,7 +74,7 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 				this.setFloatingBehaviour();
 				this.setEventListeners();
 			} else {
-				this._floatingUICallback();
+				this._floatingUIInstance.eventOnUpdateCallback();
 				this.removeEventListeners();
 			}
 
@@ -169,19 +169,25 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
 		}
 
-		protected setFloatingBehaviour(): void {
-			this.floatingOptions = {
-				autoPlacement: this.configs.Position === GlobalEnum.FloatingPosition.Auto,
-				anchorElem: this.anchorElem,
-				floatingElem: this.selfElement,
-				position: this.configs.Position,
-				useShift: true,
-				updatePosition: true,
-			};
+		protected setFloatingBehaviour(isUpdate = false): void {
+			if (this._floatingUIInstance === undefined || isUpdate) {
+				this.floatingOptions = {
+					autoPlacement: this.configs.Position === GlobalEnum.FloatingPosition.Auto,
+					anchorElem: this.anchorElem,
+					floatingElem: this.selfElement,
+					position: this.configs.Position,
+					useShift: true,
+					updatePosition: true,
+				};
 
-			this._floatingUICallback = Providers.OSUI.Utils.FloatingUI.setFloatingPosition(
-				this.floatingOptions
-			) as GlobalCallbacks.Generic;
+				if (isUpdate && this._floatingUIInstance !== undefined) {
+					this._floatingUIInstance.update(this.floatingOptions);
+				}
+
+				this._floatingUIInstance = new Providers.OSUI.Utils.FloatingUI(this.floatingOptions);
+			} else {
+				this._floatingUIInstance.build();
+			}
 		}
 
 		/**
@@ -265,7 +271,7 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 		 * @memberof OSFramework.Patterns.Balloon.Balloon
 		 */
 		public dispose(): void {
-			this._floatingUICallback();
+			this._floatingUIInstance.dispose();
 
 			// Remove focus trap events and callbacks
 			this._focusTrapInstance.dispose();
