@@ -449,6 +449,11 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         Initialized = "Initialized",
         OnProviderConfigsApplied = "OnProviderConfigsApplied"
     }
+    enum SVGHelperConstants {
+        DOMType = "image/svg+xml",
+        ParserError = "parsererror",
+        SVG = "svg"
+    }
 }
 declare namespace OSFramework.OSUI.Behaviors {
     type SpringAnimationProperties = {

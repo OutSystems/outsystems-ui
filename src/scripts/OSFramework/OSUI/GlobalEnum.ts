@@ -385,4 +385,10 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Initialized = 'Initialized',
 		OnProviderConfigsApplied = 'OnProviderConfigsApplied',
 	}
+
+	export enum SVGHelperConstants {
+		DOMType = 'image/svg+xml',
+		ParserError = 'parsererror',
+		SVG = 'svg',
+	}
 }

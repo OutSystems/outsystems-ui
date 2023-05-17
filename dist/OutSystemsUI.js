@@ -541,6 +541,12 @@ var OSFramework;
                 ProviderEvents["Initialized"] = "Initialized";
                 ProviderEvents["OnProviderConfigsApplied"] = "OnProviderConfigsApplied";
             })(ProviderEvents = GlobalEnum.ProviderEvents || (GlobalEnum.ProviderEvents = {}));
+            let SVGHelperConstants;
+            (function (SVGHelperConstants) {
+                SVGHelperConstants["DOMType"] = "image/svg+xml";
+                SVGHelperConstants["ParserError"] = "parsererror";
+                SVGHelperConstants["SVG"] = "svg";
+            })(SVGHelperConstants = GlobalEnum.SVGHelperConstants || (GlobalEnum.SVGHelperConstants = {}));
         })(GlobalEnum = OSUI.GlobalEnum || (OSUI.GlobalEnum = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
 })(OSFramework || (OSFramework = {}));
@@ -2713,9 +2719,9 @@ var OSFramework;
                 static IsValid(svgString) {
                     const parser = new DOMParser();
                     try {
-                        const doc = parser.parseFromString(svgString, 'image/svg+xml');
-                        const parserError = doc.getElementsByTagName('parsererror');
-                        if (parserError.length > 0 || doc.documentElement.tagName !== 'svg') {
+                        const doc = parser.parseFromString(svgString, OSUI.GlobalEnum.SVGHelperConstants.DOMType);
+                        const parserError = doc.getElementsByTagName(OSUI.GlobalEnum.SVGHelperConstants.ParserError);
+                        if (parserError.length > 0 || doc.documentElement.tagName !== OSUI.GlobalEnum.SVGHelperConstants.SVG) {
                             return false;
                         }
                     }
@@ -6195,7 +6201,7 @@ var OSFramework;
                         console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
                     }
                     setCallbacks() {
-                        OSUI.Helper.AsyncInvocation(this._platformEventOnInitialize, this.widgetId);
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
                     }
                     setHtmlElements() {
                         this._parentSelf = OSUI.Helper.Dom.GetElementById(this.widgetId);
@@ -6211,7 +6217,7 @@ var OSFramework;
                         this._setSvgCode();
                         this.setHtmlElements();
                         this.finishBuild();
-                        this.setCallbacks();
+                        OSUI.Helper.AsyncInvocation(this._platformEventOnInitialize, this.widgetId);
                     }
                     changeProperty(propertyName, propertyValue) {
                         super.changeProperty(propertyName, propertyValue);
@@ -12480,7 +12486,7 @@ var OutSystems;
                         errorCode: OSUI.ErrorCodes.InlineSvg.FailRegisterCallback,
                         callback: () => {
                             const _InlineSvgItem = this.GetInlineSvgById(inlineSvgId);
-                            _InlineSvgItem.registerCallback(eventName, callback);
+                            _InlineSvgItem.registerCallback(callback, eventName);
                         },
                     });
                     return result;

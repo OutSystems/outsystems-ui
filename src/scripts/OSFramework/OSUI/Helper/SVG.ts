@@ -11,9 +11,9 @@ namespace OSFramework.OSUI.Helper {
 		public static IsValid(svgString: string): boolean {
 			const parser = new DOMParser();
 			try {
-				const doc = parser.parseFromString(svgString, 'image/svg+xml');
-				const parserError = doc.getElementsByTagName('parsererror'); // If there are parser errors or the root element is not <svg>, it's an invalid SVG
-				if (parserError.length > 0 || doc.documentElement.tagName !== 'svg') {
+				const doc = parser.parseFromString(svgString, GlobalEnum.SVGHelperConstants.DOMType);
+				const parserError = doc.getElementsByTagName(GlobalEnum.SVGHelperConstants.ParserError); // If there are parser errors or the root element is not <svg>, it's an invalid SVG
+				if (parserError.length > 0 || doc.documentElement.tagName !== GlobalEnum.SVGHelperConstants.SVG) {
 					return false;
 				}
 			} catch (error) {
