@@ -118,9 +118,6 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
-				// Remove Callbacks
-				// this.unsetCallbacks();
-
 				// Remove unused HTML elements
 				this.unsetHtmlElements();
 
