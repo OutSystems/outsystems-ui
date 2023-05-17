@@ -273,6 +273,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		FloatingActions = 'Floating Actions',
 		FloatingActionsItem = 'Floating Actions Item',
 		Gallery = 'Gallery',
+		InlineSvg = 'InlineSVG',
 		MonthPicker = 'MonthPicker',
 		Notification = 'Notification',
 		ProgressBar = 'Progress Bar',

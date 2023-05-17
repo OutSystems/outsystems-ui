@@ -98,4 +98,8 @@ namespace OSFramework.OSUI.ErrorCodes {
 	export const Sidebar = {
 		FailRegisterCallback: 'OSUI-GEN-14001',
 	};
+
+	export const InlineSvg = {
+		FailRegisterCallback: 'OSUI-GEN-15001',
+	};
 }

@@ -224,6 +224,9 @@ var OSFramework;
             ErrorCodes.Sidebar = {
                 FailRegisterCallback: 'OSUI-GEN-14001',
             };
+            ErrorCodes.InlineSvg = {
+                FailRegisterCallback: 'OSUI-GEN-15001',
+            };
         })(ErrorCodes = OSUI.ErrorCodes || (OSUI.ErrorCodes = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
 })(OSFramework || (OSFramework = {}));
@@ -444,6 +447,7 @@ var OSFramework;
                 PatternName["FloatingActions"] = "Floating Actions";
                 PatternName["FloatingActionsItem"] = "Floating Actions Item";
                 PatternName["Gallery"] = "Gallery";
+                PatternName["InlineSvg"] = "InlineSVG";
                 PatternName["MonthPicker"] = "MonthPicker";
                 PatternName["Notification"] = "Notification";
                 PatternName["ProgressBar"] = "Progress Bar";
@@ -2696,6 +2700,32 @@ var OSFramework;
                 }
                 MapOperation.ExportKeys = ExportKeys;
             })(MapOperation = Helper.MapOperation || (Helper.MapOperation = {}));
+        })(Helper = OSUI.Helper || (OSUI.Helper = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Helper;
+        (function (Helper) {
+            class SVG {
+                static IsValid(svgString) {
+                    const parser = new DOMParser();
+                    try {
+                        const doc = parser.parseFromString(svgString, 'image/svg+xml');
+                        const parserError = doc.getElementsByTagName('parsererror');
+                        if (parserError.length > 0 || doc.documentElement.tagName !== 'svg') {
+                            return false;
+                        }
+                    }
+                    catch (error) {
+                        return false;
+                    }
+                    return true;
+                }
+            }
+            Helper.SVG = SVG;
         })(Helper = OSUI.Helper || (OSUI.Helper = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
 })(OSFramework || (OSFramework = {}));
@@ -6110,6 +6140,140 @@ var OSFramework;
                 }
                 Gallery.GalleryConfig = GalleryConfig;
             })(Gallery = Patterns.Gallery || (Patterns.Gallery = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
+            var InlineSvg;
+            (function (InlineSvg) {
+                var Enum;
+                (function (Enum) {
+                    let CssClass;
+                    (function (CssClass) {
+                        CssClass["Pattern"] = "osui-inline-svg";
+                    })(CssClass = Enum.CssClass || (Enum.CssClass = {}));
+                    let Events;
+                    (function (Events) {
+                        Events["OnInitialize"] = "Initialized";
+                    })(Events = Enum.Events || (Enum.Events = {}));
+                    let Properties;
+                    (function (Properties) {
+                        Properties["SVGCode"] = "SVGCode";
+                    })(Properties = Enum.Properties || (Enum.Properties = {}));
+                })(Enum = InlineSvg.Enum || (InlineSvg.Enum = {}));
+            })(InlineSvg = Patterns.InlineSvg || (Patterns.InlineSvg = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
+            var InlineSvg;
+            (function (InlineSvg_1) {
+                class InlineSvg extends Patterns.AbstractPattern {
+                    constructor(uniqueId, configs) {
+                        super(uniqueId, new InlineSvg_1.InlineSvgConfig(configs));
+                    }
+                    _setSvgCode() {
+                        if (this.configs.SVGCode !== '' && !OSUI.Helper.SVG.IsValid(this.configs.SVGCode)) {
+                            throw new Error('Please provide a valid SVGCode.');
+                        }
+                        this.selfElement.innerHTML = this.configs.SVGCode;
+                    }
+                    setA11YProperties() {
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    setCallbacks() {
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    setHtmlElements() {
+                        this._parentSelf = OSUI.Helper.Dom.GetElementById(this.widgetId);
+                        OSUI.Helper.AsyncInvocation(this._platformEventOnInitialize, this.widgetId);
+                    }
+                    unsetCallbacks() {
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    unsetHtmlElements() {
+                        this._parentSelf = undefined;
+                        this._platformEventOnInitialize = undefined;
+                    }
+                    build() {
+                        super.build();
+                        this._setSvgCode();
+                        this.setHtmlElements();
+                        this.finishBuild();
+                    }
+                    changeProperty(propertyName, propertyValue) {
+                        super.changeProperty(propertyName, propertyValue);
+                        if (this.isBuilt) {
+                            switch (propertyName) {
+                                case InlineSvg_1.Enum.Properties.SVGCode:
+                                    this._setSvgCode();
+                                    break;
+                                case OSUI.GlobalEnum.CommonPatternsProperties.ExtendedClass:
+                                    OSUI.Helper.Dom.Styles.ExtendedClass(this.selfElement, this.configs.ExtendedClass, propertyValue);
+                                    break;
+                            }
+                        }
+                    }
+                    dispose() {
+                        if (this.isBuilt) {
+                            this.unsetHtmlElements();
+                            super.dispose();
+                        }
+                    }
+                    registerCallback(eventName, callback) {
+                        switch (eventName) {
+                            case Patterns.InlineSvg.Enum.Events.OnInitialize:
+                                if (this._platformEventOnInitialize === undefined) {
+                                    this._platformEventOnInitialize = callback;
+                                }
+                                break;
+                            default:
+                                throw new Error(`${OSUI.ErrorCodes.InlineSvg.FailRegisterCallback}:	The given '${eventName}' event name is not defined.`);
+                        }
+                    }
+                }
+                InlineSvg_1.InlineSvg = InlineSvg;
+            })(InlineSvg = Patterns.InlineSvg || (Patterns.InlineSvg = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
+            var InlineSvg;
+            (function (InlineSvg) {
+                class InlineSvgConfig extends Patterns.AbstractConfiguration {
+                    constructor(config) {
+                        super(config);
+                    }
+                    validateDefault(key, value) {
+                        let validatedValue = undefined;
+                        switch (key) {
+                            case InlineSvg.Enum.Properties.SVGCode:
+                                validatedValue = super.validateString(value, '');
+                                break;
+                            default:
+                                validatedValue = super.validateDefault(key, value);
+                                break;
+                        }
+                        return validatedValue;
+                    }
+                }
+                InlineSvg.InlineSvgConfig = InlineSvgConfig;
+            })(InlineSvg = Patterns.InlineSvg || (Patterns.InlineSvg = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
 })(OSFramework || (OSFramework = {}));
@@ -10955,6 +11119,11 @@ var OutSystems;
                 FailSetExtendedMenuShow: 'OSUI-API-28025',
                 FailCheckIsRTL: 'OSUI-API-28026',
             };
+            ErrorCodes.InlineSvg = {
+                FailChangeProperty: 'OSUI-API-29001',
+                FailDispose: 'OSUI-API-29002',
+                FailRegisterCallback: 'OSUI-API-29003',
+            };
             ErrorCodes.Legacy = {
                 FailAddFavicon_Legacy: 'OSUI-LEG-000001',
                 MoveElement_Legacy: 'OSUI-LEG-000002',
@@ -12245,6 +12414,76 @@ var OutSystems;
                 }
                 GalleryAPI.Initialize = Initialize;
             })(GalleryAPI = Patterns.GalleryAPI || (Patterns.GalleryAPI = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
+})(OutSystems || (OutSystems = {}));
+var OutSystems;
+(function (OutSystems) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
+            var InlineSvgAPI;
+            (function (InlineSvgAPI) {
+                const _inlineSvgMap = new Map();
+                function ChangeProperty(inlineSvgId, propertyName, propertyValue) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.InlineSvg.FailChangeProperty,
+                        callback: () => {
+                            const inlineSvg = GetInlineSvgById(inlineSvgId);
+                            inlineSvg.changeProperty(propertyName, propertyValue);
+                        },
+                    });
+                    return result;
+                }
+                InlineSvgAPI.ChangeProperty = ChangeProperty;
+                function Create(inlineSvgId, configs) {
+                    if (_inlineSvgMap.has(inlineSvgId)) {
+                        throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.InlineSvg} registered under id: ${inlineSvgId}`);
+                    }
+                    const _newInlineSvg = new OSFramework.OSUI.Patterns.InlineSvg.InlineSvg(inlineSvgId, JSON.parse(configs));
+                    _inlineSvgMap.set(inlineSvgId, _newInlineSvg);
+                    return _newInlineSvg;
+                }
+                InlineSvgAPI.Create = Create;
+                function Dispose(inlineSvgId) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.InlineSvg.FailDispose,
+                        callback: () => {
+                            const inlineSvg = GetInlineSvgById(inlineSvgId);
+                            inlineSvg.dispose();
+                            _inlineSvgMap.delete(inlineSvgId);
+                        },
+                    });
+                    return result;
+                }
+                InlineSvgAPI.Dispose = Dispose;
+                function GetAllInlineSvgs() {
+                    return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_inlineSvgMap);
+                }
+                InlineSvgAPI.GetAllInlineSvgs = GetAllInlineSvgs;
+                function GetInlineSvgById(inlineSvgId) {
+                    return OSFramework.OSUI.Helper.MapOperation.FindInMap('InlineSvg', inlineSvgId, _inlineSvgMap);
+                }
+                InlineSvgAPI.GetInlineSvgById = GetInlineSvgById;
+                function Initialize(inlineSvgId) {
+                    const inlineSvg = GetInlineSvgById(inlineSvgId);
+                    inlineSvg.build();
+                    return inlineSvg;
+                }
+                InlineSvgAPI.Initialize = Initialize;
+                function RegisterCallback(inlineSvgId, eventName, callback) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.InlineSvg.FailRegisterCallback,
+                        callback: () => {
+                            const _InlineSvgItem = this.GetInlineSvgById(inlineSvgId);
+                            _InlineSvgItem.registerCallback(eventName, callback);
+                        },
+                    });
+                    return result;
+                }
+                InlineSvgAPI.RegisterCallback = RegisterCallback;
+            })(InlineSvgAPI = Patterns.InlineSvgAPI || (Patterns.InlineSvgAPI = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
 })(OutSystems || (OutSystems = {}));

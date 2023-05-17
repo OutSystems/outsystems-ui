@@ -162,6 +162,9 @@ declare namespace OSFramework.OSUI.ErrorCodes {
     const Sidebar: {
         FailRegisterCallback: string;
     };
+    const InlineSvg: {
+        FailRegisterCallback: string;
+    };
 }
 declare namespace OSFramework.OSUI.GlobalCallbacks {
     type Generic = {
@@ -364,6 +367,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         FloatingActions = "Floating Actions",
         FloatingActionsItem = "Floating Actions Item",
         Gallery = "Gallery",
+        InlineSvg = "InlineSVG",
         MonthPicker = "MonthPicker",
         Notification = "Notification",
         ProgressBar = "Progress Bar",
@@ -975,6 +979,11 @@ declare namespace OSFramework.OSUI.Helper {
 declare namespace OSFramework.OSUI.Helper.MapOperation {
     function FindInMap(patternName: string, patternId: string, map: Map<string, Interface.IPattern>): Interface.IPattern;
     function ExportKeys(map: Map<string, Interface.IPattern>): Array<string>;
+}
+declare namespace OSFramework.OSUI.Helper {
+    abstract class SVG {
+        static IsValid(svgString: string): boolean;
+    }
 }
 declare namespace OSFramework.OSUI.Helper {
     function Sanitize(value: string): string;
@@ -2080,6 +2089,51 @@ declare namespace OSFramework.OSUI.Patterns.Gallery {
 }
 declare namespace OSFramework.OSUI.Patterns.Gallery {
     interface IGallery extends Interface.IPattern {
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.InlineSvg.Callbacks {
+    type OSInitializedEvent = {
+        (inlineSvgId: string): void;
+    };
+}
+declare namespace OSFramework.OSUI.Patterns.InlineSvg.Enum {
+    enum CssClass {
+        Pattern = "osui-inline-svg"
+    }
+    enum Events {
+        OnInitialize = "Initialized"
+    }
+    enum Properties {
+        SVGCode = "SVGCode"
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.InlineSvg {
+    interface IInlineSvg extends Interface.IPattern {
+        registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.InlineSvg {
+    class InlineSvg extends AbstractPattern<InlineSvgConfig> implements IInlineSvg {
+        private _parentSelf;
+        private _platformEventOnInitialize;
+        constructor(uniqueId: string, configs: JSON);
+        private _setSvgCode;
+        protected setA11YProperties(): void;
+        protected setCallbacks(): void;
+        protected setHtmlElements(): void;
+        protected unsetCallbacks(): void;
+        protected unsetHtmlElements(): void;
+        build(): void;
+        changeProperty(propertyName: string, propertyValue: any): void;
+        dispose(): void;
+        registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.InlineSvg {
+    class InlineSvgConfig extends AbstractConfiguration {
+        SVGCode: string;
+        constructor(config: any);
+        validateDefault(key: string, value: unknown): unknown;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.MonthPicker {
@@ -3684,6 +3738,11 @@ declare namespace OutSystems.OSUI.ErrorCodes {
         FailSetExtendedMenuShow: string;
         FailCheckIsRTL: string;
     };
+    const InlineSvg: {
+        FailChangeProperty: string;
+        FailDispose: string;
+        FailRegisterCallback: string;
+    };
     const Legacy: {
         FailAddFavicon_Legacy: string;
         MoveElement_Legacy: string;
@@ -3840,6 +3899,15 @@ declare namespace OutSystems.OSUI.Patterns.GalleryAPI {
     function GetAllGalleries(): Array<string>;
     function GetGalleryById(galleryId: string): OSFramework.OSUI.Patterns.Gallery.IGallery;
     function Initialize(galleryId: string): OSFramework.OSUI.Patterns.Gallery.IGallery;
+}
+declare namespace OutSystems.OSUI.Patterns.InlineSvgAPI {
+    function ChangeProperty(inlineSvgId: string, propertyName: string, propertyValue: any): string;
+    function Create(inlineSvgId: string, configs: string): OSFramework.OSUI.Patterns.InlineSvg.IInlineSvg;
+    function Dispose(inlineSvgId: string): string;
+    function GetAllInlineSvgs(): Array<string>;
+    function GetInlineSvgById(inlineSvgId: string): OSFramework.OSUI.Patterns.InlineSvg.IInlineSvg;
+    function Initialize(inlineSvgId: string): OSFramework.OSUI.Patterns.InlineSvg.IInlineSvg;
+    function RegisterCallback(inlineSvgId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
 }
 declare namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
     function ChangeProperty(monthPickerId: string, propertyName: string, propertyValue: any): string;
