@@ -39,7 +39,7 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
 		 */
 		protected setCallbacks(): void {
-			Helper.AsyncInvocation(this._platformEventOnInitialize, this.widgetId);
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
 		}
 
 		/**
@@ -81,7 +81,7 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 
 			this.finishBuild();
 
-			this.setCallbacks();
+			Helper.AsyncInvocation(this._platformEventOnInitialize, this.widgetId);
 		}
 
 		/**
