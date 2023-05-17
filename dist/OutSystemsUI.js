@@ -6184,9 +6184,12 @@ var OSFramework;
                     }
                     _setSvgCode() {
                         if (this.configs.SVGCode !== '' && !OSUI.Helper.SVG.IsValid(this.configs.SVGCode)) {
-                            throw new Error('Please provide a valid SVGCode.');
+                            this.selfElement.innerHTML = '';
+                            console.error('Please provide a valid SVGCode.');
                         }
-                        this.selfElement.innerHTML = this.configs.SVGCode;
+                        else {
+                            this.selfElement.innerHTML = this.configs.SVGCode;
+                        }
                     }
                     setA11YProperties() {
                         console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);

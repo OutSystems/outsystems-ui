@@ -15,9 +15,11 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 
 		private _setSvgCode(): void {
 			if (this.configs.SVGCode !== '' && !Helper.SVG.IsValid(this.configs.SVGCode)) {
-				throw new Error('Please provide a valid SVGCode.');
+				this.selfElement.innerHTML = '';
+				console.error('Please provide a valid SVGCode.');
+			} else {
+				this.selfElement.innerHTML = this.configs.SVGCode;
 			}
-			this.selfElement.innerHTML = this.configs.SVGCode;
 		}
 
 		/**
