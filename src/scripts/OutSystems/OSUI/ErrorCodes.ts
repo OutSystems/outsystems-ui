@@ -93,6 +93,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailSetLanguage: 'OSUI-API-07014',
 		FailToggleNativeBehavior: 'OSUI-API-07015',
 		FailUpdateInitialDate: 'OSUI-API-07016',
+		FailUpdatePrompt: 'OSUI-API-07017',
 	};
 
 	export const FlipContent = {
@@ -247,6 +248,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailSetLanguage: 'OSUI-API-26012',
 		FailUpdateInitialTime: 'OSUI-API-26013',
 		FailSetEditableInput: 'OSUI-API-26014',
+		FailUpdatePrompt: 'OSUI-API-26015',
 	};
 
 	export const MonthPicker = {
@@ -263,6 +265,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailSetEditableInput: 'OSUI-API-27011',
 		FailSetLanguage: 'OSUI-API-27012',
 		FailUpdateInitialMonth: 'OSUI-API-27013',
+		FailUpdatePrompt: 'OSUI-API-27014',
 	};
 
 	//Error codes used on the context of the Utilities client actions

@@ -1627,6 +1627,7 @@ declare namespace OSFramework.OSUI.Patterns.DatePicker {
         abstract open(): void;
         abstract setLanguage(value: string): void;
         abstract updateInitialDate(date1: string, date2?: string): void;
+        abstract updatePrompt(promptMessage: string): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.DatePicker {
@@ -1693,6 +1694,7 @@ declare namespace OSFramework.OSUI.Patterns.DatePicker {
         setProviderEvent(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.Generic, uniqueId: string): void;
         unsetProviderEvent(eventId: string): void;
         updateInitialDate(date1: string, date2?: string): void;
+        updatePrompt(promptMessage: string): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Dropdown {
@@ -2148,6 +2150,7 @@ declare namespace OSFramework.OSUI.Patterns.MonthPicker {
         abstract open(): void;
         abstract setLanguage(value: string): void;
         abstract updateInitialMonth(monthYear: MonthYear): void;
+        abstract updatePrompt(promptMessage: string): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.MonthPicker {
@@ -3253,6 +3256,7 @@ declare namespace OSFramework.OSUI.Patterns.TimePicker {
         abstract open(): void;
         abstract setLanguage(value: string): void;
         abstract updateInitialTime(time: string): void;
+        abstract updatePrompt(promptMessage: string): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.TimePicker {
@@ -3563,6 +3567,7 @@ declare namespace OutSystems.OSUI.ErrorCodes {
         FailSetLanguage: string;
         FailToggleNativeBehavior: string;
         FailUpdateInitialDate: string;
+        FailUpdatePrompt: string;
     };
     const FlipContent: {
         FailChangeProperty: string;
@@ -3698,6 +3703,7 @@ declare namespace OutSystems.OSUI.ErrorCodes {
         FailSetLanguage: string;
         FailUpdateInitialTime: string;
         FailSetEditableInput: string;
+        FailUpdatePrompt: string;
     };
     const MonthPicker: {
         FailChangeProperty: string;
@@ -3713,6 +3719,7 @@ declare namespace OutSystems.OSUI.ErrorCodes {
         FailSetEditableInput: string;
         FailSetLanguage: string;
         FailUpdateInitialMonth: string;
+        FailUpdatePrompt: string;
     };
     const Utilities: {
         FailGetInvalidInput: string;
@@ -3847,6 +3854,7 @@ declare namespace OutSystems.OSUI.Patterns.DatePickerAPI {
     function Redraw(datePickerId: string): string;
     function SetLanguage(datePickerId: string, isoCode: string): string;
     function UpdateInitialDate(datePickerId: string, date1: string, date2?: string): string;
+    function UpdatePrompt(datePickerId: string, promptMessage: string): string;
     function DisableDays(datePickerId: string, disableDays: string[]): string;
     function DisableWeekDays(datePickerId: string, disableWeekDays: number[]): string;
     function SetProviderConfigs(datePickerId: string, providerConfigs: DatePickerProviderConfigs): string;
@@ -3930,6 +3938,7 @@ declare namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
     function SetEditableInput(monthPickerId: string, IsEditable: boolean): string;
     function UnsetProviderEvent(monthPickerId: string, eventId: string): string;
     function UpdateInitialMonth(monthPickerId: string, monthYear: MonthYear): string;
+    function UpdatePrompt(monthPickerId: string, promptMessage: string): string;
 }
 declare namespace OutSystems.OSUI.Patterns.NotificationAPI {
     function ChangeProperty(notificationId: string, propertyName: string, propertyValue: any): string;
@@ -4078,6 +4087,7 @@ declare namespace OutSystems.OSUI.Patterns.TimePickerAPI {
     function Redraw(timePickerId: string): string;
     function SetLanguage(timePickerId: string, isoCode: string): string;
     function UpdateInitialTime(timePickerId: string, time: string): string;
+    function UpdatePrompt(timePickerId: string, promptMessage: string): string;
     function SetProviderConfigs(timePickerId: string, providerConfigs: TimePickerProviderConfigs): string;
     function SetProviderEvent(timePickerId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.Generic): string;
     function UnsetProviderEvent(timePickerId: string, eventId: string): string;
@@ -4375,6 +4385,7 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr {
         setLanguage(value: string): void;
         setProviderConfigs(newConfigs: FlatpickrOptions): void;
         toggleNativeBehavior(isNative: boolean): void;
+        updatePrompt(promptMessage: string): void;
         protected abstract onDateSelectedEvent(selectedDates: string[], dateStr: string, fp: Flatpickr): void;
         protected abstract todayBtnClick(event: MouseEvent): void;
         protected abstract updatePlatformInputAttrs(): void;
@@ -5131,6 +5142,7 @@ declare namespace Providers.OSUI.MonthPicker.Flatpickr {
         setLanguage(value: string): void;
         setProviderConfigs(newConfigs: FlatpickrOptions): void;
         updateInitialMonth(monthYear: MonthYear): void;
+        updatePrompt(promptMessage: string): void;
     }
 }
 declare namespace Providers.OSUI.MonthPicker.Flatpickr {
@@ -5353,6 +5365,7 @@ declare namespace Providers.OSUI.TimePicker.Flatpickr {
         setProviderConfigs(newConfigs: FlatpickrOptions): void;
         toggleNativeBehavior(isNative: boolean): void;
         updateInitialTime(value: string): void;
+        updatePrompt(promptMessage: string): void;
     }
 }
 declare namespace Providers.OSUI.TimePicker.Flatpickr {

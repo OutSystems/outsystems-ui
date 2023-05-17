@@ -324,4 +324,24 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 
 		return result;
 	}
+
+	/**
+	 * Function that will update the prompt message for a given MonthPickerId
+	 *
+	 * @param {string} monthPickerId
+	 * @param {string} promptMessage The value for the prompt message
+	 * @return {*} Response Object as a JSON String
+	 */
+	export function UpdatePrompt(monthPickerId: string, promptMessage: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.MonthPicker.FailUpdatePrompt,
+			callback: () => {
+				const _monthPicker = this.GetMonthPickerItemById(monthPickerId);
+
+				_monthPicker.updatePrompt(promptMessage);
+			},
+		});
+
+		return result;
+	}
 }

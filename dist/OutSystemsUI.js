@@ -10949,6 +10949,7 @@ var OutSystems;
                 FailSetLanguage: 'OSUI-API-07014',
                 FailToggleNativeBehavior: 'OSUI-API-07015',
                 FailUpdateInitialDate: 'OSUI-API-07016',
+                FailUpdatePrompt: 'OSUI-API-07017',
             };
             ErrorCodes.FlipContent = {
                 FailChangeProperty: 'OSUI-API-08001',
@@ -11084,6 +11085,7 @@ var OutSystems;
                 FailSetLanguage: 'OSUI-API-26012',
                 FailUpdateInitialTime: 'OSUI-API-26013',
                 FailSetEditableInput: 'OSUI-API-26014',
+                FailUpdatePrompt: 'OSUI-API-26015',
             };
             ErrorCodes.MonthPicker = {
                 FailChangeProperty: 'OSUI-API-27001',
@@ -11099,6 +11101,7 @@ var OutSystems;
                 FailSetEditableInput: 'OSUI-API-27011',
                 FailSetLanguage: 'OSUI-API-27012',
                 FailUpdateInitialMonth: 'OSUI-API-27013',
+                FailUpdatePrompt: 'OSUI-API-27014',
             };
             ErrorCodes.Utilities = {
                 FailGetInvalidInput: 'OSUI-API-28001',
@@ -11910,6 +11913,17 @@ var OutSystems;
                     return result;
                 }
                 DatePickerAPI.UpdateInitialDate = UpdateInitialDate;
+                function UpdatePrompt(datePickerId, promptMessage) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.DatePicker.FailUpdatePrompt,
+                        callback: () => {
+                            const _datePicker = this.GetDatePickerItemById(datePickerId);
+                            _datePicker.updatePrompt(promptMessage);
+                        },
+                    });
+                    return result;
+                }
+                DatePickerAPI.UpdatePrompt = UpdatePrompt;
                 function DisableDays(datePickerId, disableDays) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.DatePicker.FailDisableDays,
@@ -12664,6 +12678,17 @@ var OutSystems;
                     return result;
                 }
                 MonthPickerAPI.UpdateInitialMonth = UpdateInitialMonth;
+                function UpdatePrompt(monthPickerId, promptMessage) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.MonthPicker.FailUpdatePrompt,
+                        callback: () => {
+                            const _monthPicker = this.GetMonthPickerItemById(monthPickerId);
+                            _monthPicker.updatePrompt(promptMessage);
+                        },
+                    });
+                    return result;
+                }
+                MonthPickerAPI.UpdatePrompt = UpdatePrompt;
             })(MonthPickerAPI = Patterns.MonthPickerAPI || (Patterns.MonthPickerAPI = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
@@ -13928,6 +13953,17 @@ var OutSystems;
                     return result;
                 }
                 TimePickerAPI.UpdateInitialTime = UpdateInitialTime;
+                function UpdatePrompt(timePickerId, promptMessage) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.TimePicker.FailUpdatePrompt,
+                        callback: () => {
+                            const _timePicker = this.GetTimePickerItemById(timePickerId);
+                            _timePicker.updatePrompt(promptMessage);
+                        },
+                    });
+                    return result;
+                }
+                TimePickerAPI.UpdatePrompt = UpdatePrompt;
                 function SetProviderConfigs(timePickerId, providerConfigs) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.TimePicker.FailRegisterProviderConfig,
@@ -15451,12 +15487,17 @@ var OutSystems;
                 const result = OutSystems.OSUI.Utils.CreateApiResponse({
                     errorCode: OSUI.ErrorCodes.Utilities.FailAddFavicon,
                     callback: () => {
-                        const link = (OSFramework.OSUI.Helper.Dom.TagSelector(document.head, "link[rel*='icon']") ||
-                            document.createElement('link'));
-                        link.type = 'image/x-icon';
-                        link.rel = 'shortcut icon';
-                        link.href = URL;
-                        document.getElementsByTagName('head')[0].appendChild(link);
+                        const existingFavicon = OSFramework.OSUI.Helper.Dom.TagSelector(document.head, "link[rel*='icon']");
+                        if (existingFavicon) {
+                            existingFavicon.href = URL;
+                        }
+                        else {
+                            const link = document.createElement('link');
+                            link.type = 'image/x-icon';
+                            link.rel = 'shortcut icon';
+                            link.href = URL;
+                            document.getElementsByTagName('head')[0].appendChild(link);
+                        }
                     },
                 });
                 return result;
@@ -16177,6 +16218,9 @@ var Providers;
                             this.configs.DisableMobile = !isNative;
                             this.prepareToAndRedraw();
                         }
+                    }
+                    updatePrompt(promptMessage) {
+                        this._flatpickrInputElem.placeholder = promptMessage;
                     }
                 }
                 Flatpickr.AbstractFlatpickr = AbstractFlatpickr;
@@ -18089,6 +18133,9 @@ var Providers;
                             this.redraw();
                         }
                     }
+                    updatePrompt(promptMessage) {
+                        this._flatpickrInputElem.placeholder = promptMessage;
+                    }
                 }
                 Flatpickr.OSUIFlatpickrMonth = OSUIFlatpickrMonth;
             })(Flatpickr = MonthPicker.Flatpickr || (MonthPicker.Flatpickr = {}));
@@ -19117,6 +19164,9 @@ var Providers;
                             this.configs.InitialTime = value;
                             this.redraw();
                         }
+                    }
+                    updatePrompt(promptMessage) {
+                        this._flatpickrInputElem.placeholder = promptMessage;
                     }
                 }
                 Flatpickr.OSUIFlatpickrTime = OSUIFlatpickrTime;
