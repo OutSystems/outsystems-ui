@@ -2834,6 +2834,17 @@ var OSFramework;
                 }
                 finishBuild() {
                     this._isBuilt = true;
+                    if (this._platformEventInitialized !== undefined) {
+                        this.triggerPlatformEventplatformCallback(this._platformEventInitialized);
+                    }
+                }
+                triggerPlatformEventplatformCallback(platFormCallback, ...args) {
+                    if (platFormCallback !== undefined) {
+                        OSUI.Helper.AsyncInvocation(platFormCallback, this.widgetId, ...args);
+                    }
+                }
+                unsetCallbacks() {
+                    this._platformEventInitialized = undefined;
                 }
                 build() {
                     this._setCommonHtmlElements();
@@ -2858,10 +2869,22 @@ var OSFramework;
                 dispose() {
                     this._isBuilt = false;
                     this._unsetCommonHtmlElements();
+                    this.unsetCallbacks();
                     this._configs = undefined;
                 }
                 equalsToID(patternId) {
                     return patternId === this._uniqueId || patternId === this._widgetId;
+                }
+                registerCallback(eventName, callback) {
+                    switch (eventName) {
+                        case OSUI.GlobalEnum.ProviderEvents.Initialized:
+                            if (this._platformEventInitialized === undefined) {
+                                this._platformEventInitialized = callback;
+                            }
+                            break;
+                        default:
+                            console.warn(`The pattern with id '${this.widgetId}' does not have the event '${eventName}' defined.`);
+                    }
                 }
                 get _enableAccessibility() {
                     return OSUI.Helper.DeviceInfo.HasAccessibilityEnabled;
@@ -3166,19 +3189,9 @@ var OSFramework;
                         this.prepareConfigs();
                     }
                 }
-                triggerPlatformEventInitialized() {
-                    if (this.isBuilt === false) {
-                        this.triggerPlatformEventplatformCallback(this._platformEventInitialized);
-                    }
-                }
-                triggerPlatformEventplatformCallback(platFormCallback, ...args) {
-                    if (platFormCallback !== undefined) {
-                        OSUI.Helper.AsyncInvocation(platFormCallback, this.widgetId, ...args);
-                    }
-                }
                 unsetCallbacks() {
-                    this._platformEventInitialized = undefined;
                     this._platformEventProviderConfigsAppliedCallback = undefined;
+                    super.unsetCallbacks();
                 }
                 build() {
                     this.providerInfo = {
@@ -3212,18 +3225,13 @@ var OSFramework;
                 }
                 registerCallback(eventName, callback) {
                     switch (eventName) {
-                        case OSUI.GlobalEnum.ProviderEvents.Initialized:
-                            if (this._platformEventInitialized === undefined) {
-                                this._platformEventInitialized = callback;
-                            }
-                            break;
                         case OSUI.GlobalEnum.ProviderEvents.OnProviderConfigsApplied:
                             if (this._platformEventProviderConfigsAppliedCallback === undefined) {
                                 this._platformEventProviderConfigsAppliedCallback = callback;
                             }
                             break;
                         default:
-                            throw new Error(`The pattern with id '${this.widgetId}' does not have the event '${eventName}' defined.`);
+                            super.registerCallback(eventName, callback);
                     }
                 }
                 setProviderConfigs(providerConfigs) {
@@ -3745,12 +3753,15 @@ var OSFramework;
                             this.notifyParent(Patterns.Accordion.Enum.ChildNotifyActionType.Click);
                         }
                     }
-                    registerCallback(callback) {
-                        if (this._platformEventOnToggle === undefined) {
-                            this._platformEventOnToggle = callback;
-                        }
-                        else {
-                            console.warn(`The ${OSUI.GlobalEnum.PatternName.AccordionItem} already has the toggle callback set.`);
+                    registerCallback(eventName, callback) {
+                        switch (eventName) {
+                            case AccordionItem_1.Enum.Events.OnToggle:
+                                if (this._platformEventOnToggle === undefined) {
+                                    this._platformEventOnToggle = callback;
+                                }
+                                break;
+                            default:
+                                super.registerCallback(eventName, callback);
                         }
                     }
                 }
@@ -3836,6 +3847,10 @@ var OSFramework;
                         CssClass["PatternOpen"] = "osui-accordion-item--is-open";
                         CssClass["PatternTitle"] = "osui-accordion-item__title";
                     })(CssClass = Enum.CssClass || (Enum.CssClass = {}));
+                    let Events;
+                    (function (Events) {
+                        Events["OnToggle"] = "OnToggle";
+                    })(Events = Enum.Events || (Enum.Events = {}));
                     let IconType;
                     (function (IconType) {
                         IconType["Caret"] = "Caret";
@@ -4201,12 +4216,15 @@ var OSFramework;
                             this._toggleBottomSheet(true);
                         }
                     }
-                    registerCallback(callback) {
-                        if (this._platformEventOnToggle === undefined) {
-                            this._platformEventOnToggle = callback;
-                        }
-                        else {
-                            console.warn(`The ${OSUI.GlobalEnum.PatternName.BottomSheet} already has the toggle callback set.`);
+                    registerCallback(eventName, callback) {
+                        switch (eventName) {
+                            case BottomSheet_1.Enum.Events.OnToggle:
+                                if (this._platformEventOnToggle === undefined) {
+                                    this._platformEventOnToggle = callback;
+                                }
+                                break;
+                            default:
+                                super.registerCallback(eventName, callback);
                         }
                     }
                     removeGestureEvents() {
@@ -4286,7 +4304,7 @@ var OSFramework;
                     })(CssCustomProperties = Enum.CssCustomProperties || (Enum.CssCustomProperties = {}));
                     let Events;
                     (function (Events) {
-                        Events["Open"] = "Open";
+                        Events["OnToggle"] = "OnToggle";
                     })(Events = Enum.Events || (Enum.Events = {}));
                     let Properties;
                     (function (Properties) {
@@ -5840,6 +5858,10 @@ var OSFramework;
                         CssClass["PatternFront"] = "osui-flip-content__container__front";
                         CssClass["PatternIsFlipped"] = "osui-flip-content--flipped";
                     })(CssClass = Enum.CssClass || (Enum.CssClass = {}));
+                    let Events;
+                    (function (Events) {
+                        Events["OnToggle"] = "OnToggle";
+                    })(Events = Enum.Events || (Enum.Events = {}));
                 })(Enum = FlipContent.Enum || (FlipContent.Enum = {}));
             })(FlipContent = Patterns.FlipContent || (Patterns.FlipContent = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
@@ -5896,8 +5918,8 @@ var OSFramework;
                         }
                     }
                     _triggerPlatformEvent() {
-                        if (this._plataformEventFlip) {
-                            OSUI.Helper.AsyncInvocation(this._plataformEventFlip.bind(this), this.widgetId, this.configs.IsFlipped);
+                        if (this._platformEventOnToggle) {
+                            OSUI.Helper.AsyncInvocation(this._platformEventOnToggle.bind(this), this.widgetId, this.configs.IsFlipped);
                         }
                     }
                     _updateA11yProperties() {
@@ -5961,9 +5983,15 @@ var OSFramework;
                         this.unsetHtmlElements();
                         super.dispose();
                     }
-                    registerCallback(callback) {
-                        if (this._plataformEventFlip === undefined) {
-                            this._plataformEventFlip = callback;
+                    registerCallback(eventName, callback) {
+                        switch (eventName) {
+                            case FlipContent_1.Enum.Events.OnToggle:
+                                if (this._platformEventOnToggle === undefined) {
+                                    this._platformEventOnToggle = callback;
+                                }
+                                break;
+                            default:
+                                super.registerCallback(eventName, callback);
                         }
                     }
                     showBackContent() {
@@ -6204,31 +6232,22 @@ var OSFramework;
                         console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
                     }
                     setHtmlElements() {
-                        this._parentSelf = OSUI.Helper.Dom.GetElementById(this.widgetId);
-                    }
-                    unsetCallbacks() {
-                        this._platformEventOnInitialize = undefined;
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
                     }
                     unsetHtmlElements() {
-                        this._parentSelf = undefined;
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
                     }
                     build() {
                         super.build();
-                        this._setSvgCode();
                         this.setHtmlElements();
+                        this._setSvgCode();
                         this.finishBuild();
-                        OSUI.Helper.AsyncInvocation(this._platformEventOnInitialize, this.widgetId);
                     }
                     changeProperty(propertyName, propertyValue) {
                         super.changeProperty(propertyName, propertyValue);
                         if (this.isBuilt) {
-                            switch (propertyName) {
-                                case InlineSvg_1.Enum.Properties.SVGCode:
-                                    this._setSvgCode();
-                                    break;
-                                case OSUI.GlobalEnum.CommonPatternsProperties.ExtendedClass:
-                                    OSUI.Helper.Dom.Styles.ExtendedClass(this.selfElement, this.configs.ExtendedClass, propertyValue);
-                                    break;
+                            if (propertyName === InlineSvg_1.Enum.Properties.SVGCode) {
+                                this._setSvgCode();
                             }
                         }
                     }
@@ -6237,17 +6256,6 @@ var OSFramework;
                             this.unsetCallbacks();
                             this.unsetHtmlElements();
                             super.dispose();
-                        }
-                    }
-                    registerCallback(callback, eventName) {
-                        switch (eventName) {
-                            case Patterns.InlineSvg.Enum.Events.OnInitialize:
-                                if (this._platformEventOnInitialize === undefined) {
-                                    this._platformEventOnInitialize = callback;
-                                }
-                                break;
-                            default:
-                                throw new Error(`${OSUI.ErrorCodes.InlineSvg.FailRegisterCallback}:	The given '${eventName}' event name is not defined.`);
                         }
                     }
                 }
@@ -7620,6 +7628,10 @@ var OSFramework;
                         CssClass["Size"] = "rating-";
                         CssClass["WCAGHideText"] = "wcag-hide-text";
                     })(CssClass = Enum.CssClass || (Enum.CssClass = {}));
+                    let Events;
+                    (function (Events) {
+                        Events["OnSelected"] = "OnSelected";
+                    })(Events = Enum.Events || (Enum.Events = {}));
                     let Properties;
                     (function (Properties) {
                         Properties["IsEdit"] = "IsEdit";
@@ -7844,8 +7856,16 @@ var OSFramework;
                         this.unsetHtmlElements();
                         super.dispose();
                     }
-                    registerCallback(callback) {
-                        this._platformEventOnSelect = callback;
+                    registerCallback(eventName, callback) {
+                        switch (eventName) {
+                            case Rating_1.Enum.Events.OnSelected:
+                                if (this._platformEventOnSelect === undefined) {
+                                    this._platformEventOnSelect = callback;
+                                }
+                                break;
+                            default:
+                                super.registerCallback(eventName, callback);
+                        }
                     }
                 }
                 Rating_1.Rating = Rating;
@@ -8688,7 +8708,6 @@ var OSFramework;
                     })(CssClass = Enum.CssClass || (Enum.CssClass = {}));
                     let Events;
                     (function (Events) {
-                        Events["Initialized"] = "Initialized";
                         Events["OnToggle"] = "OnToggle";
                     })(Events = Enum.Events || (Enum.Events = {}));
                     let Properties;
@@ -8868,7 +8887,6 @@ var OSFramework;
                         this._globalEventBody = undefined;
                         this._eventOnMouseEnter = undefined;
                         this._eventOnMouseLeave = undefined;
-                        this._platformEventInitializedCallback = undefined;
                         this._platformEventOnToggleCallback = undefined;
                     }
                     unsetHtmlElements() {
@@ -8883,7 +8901,6 @@ var OSFramework;
                         this.setInitialStates();
                         this.setA11YProperties();
                         this.setCallbacks();
-                        OSUI.Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
                         this.finishBuild();
                     }
                     changeProperty(propertyName, propertyValue) {
@@ -8921,20 +8938,15 @@ var OSFramework;
                         OSUI.Helper.AsyncInvocation(this._show.bind(this));
                         OSUI.Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, true);
                     }
-                    registerCallback(callback, eventName) {
+                    registerCallback(eventName, callback) {
                         switch (eventName) {
-                            case Submenu_1.Enum.Events.Initialized:
-                                if (this._platformEventInitializedCallback === undefined) {
-                                    this._platformEventInitializedCallback = callback;
-                                }
-                                break;
                             case Submenu_1.Enum.Events.OnToggle:
                                 if (this._platformEventOnToggleCallback === undefined) {
                                     this._platformEventOnToggleCallback = callback;
                                 }
                                 break;
                             default:
-                                throw new Error(`${OSUI.ErrorCodes.Submenu.FailRegisterCallback}: The given '${eventName}' event name is not defined.`);
+                                super.registerCallback(eventName, callback);
                         }
                     }
                     setOpenOnHover() {
@@ -9231,6 +9243,10 @@ var OSFramework;
                         ChildTypes["TabsContentItem"] = "TabsContentItem";
                         ChildTypes["TabsHeaderItem"] = "TabsHeaderItem";
                     })(ChildTypes = Enum.ChildTypes || (Enum.ChildTypes = {}));
+                    let Events;
+                    (function (Events) {
+                        Events["OnChange"] = "OnChange";
+                    })(Events = Enum.Events || (Enum.Events = {}));
                 })(Enum = Tabs.Enum || (Tabs.Enum = {}));
             })(Tabs = Patterns.Tabs || (Patterns.Tabs = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
@@ -9752,12 +9768,15 @@ var OSFramework;
                         this.unsetHtmlElements();
                         super.dispose();
                     }
-                    registerCallback(callback) {
-                        if (this._platformEventTabsOnChange === undefined) {
-                            this._platformEventTabsOnChange = callback;
-                        }
-                        else {
-                            console.warn(`The ${OSUI.GlobalEnum.PatternName.Tabs} already has the tabs change callback set.`);
+                    registerCallback(eventName, callback) {
+                        switch (eventName) {
+                            case Tabs_1.Enum.Events.OnChange:
+                                if (this._platformEventTabsOnChange === undefined) {
+                                    this._platformEventTabsOnChange = callback;
+                                }
+                                break;
+                            default:
+                                super.registerCallback(eventName, callback);
                         }
                     }
                     toggleDragGestures(addDragGestures) {
@@ -11329,12 +11348,12 @@ var OutSystems;
                     return accordionItem;
                 }
                 AccordionItemAPI.Initialize = Initialize;
-                function RegisterCallback(accordionItemId, callback) {
+                function RegisterCallback(accordionItemId, eventName, callback) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.AccordionItem.FailRegisterCallback,
                         callback: () => {
                             const accordionItem = GetAccordionItemById(accordionItemId);
-                            accordionItem.registerCallback(callback);
+                            accordionItem.registerCallback(eventName, callback);
                         },
                     });
                     return result;
@@ -11399,6 +11418,17 @@ var OutSystems;
                     return animatedlabel;
                 }
                 AnimatedLabelAPI.Initialize = Initialize;
+                function RegisterCallback(dropdownId, eventName, callback) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Dropdown.FailRegisterCallback,
+                        callback: () => {
+                            const animatedlabel = this.GetAnimatedLabelById(dropdownId);
+                            animatedlabel.registerCallback(eventName, callback);
+                        },
+                    });
+                    return result;
+                }
+                AnimatedLabelAPI.RegisterCallback = RegisterCallback;
                 function UpdateOnRender(animatedLabelId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.AnimatedLabel.FailUpdate,
@@ -11491,12 +11521,12 @@ var OutSystems;
                     return result;
                 }
                 BottomSheetAPI.Close = Close;
-                function RegisterCallback(bottomSheetId, callback) {
+                function RegisterCallback(bottomSheetId, eventName, callback) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.BottomSheet.FailRegisterCallback,
                         callback: () => {
                             const bottomSheet = GetBottomSheetItemById(bottomSheetId);
-                            bottomSheet.registerCallback(callback);
+                            bottomSheet.registerCallback(eventName, callback);
                         },
                     });
                     return result;
@@ -11561,6 +11591,17 @@ var OutSystems;
                     return buttonLoading;
                 }
                 ButtonLoadingAPI.Initialize = Initialize;
+                function RegisterCallback(dropdownId, eventName, callback) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Dropdown.FailRegisterCallback,
+                        callback: () => {
+                            const buttonLoading = this.GetButtonLoadingById(dropdownId);
+                            buttonLoading.registerCallback(eventName, callback);
+                        },
+                    });
+                    return result;
+                }
+                ButtonLoadingAPI.RegisterCallback = RegisterCallback;
             })(ButtonLoadingAPI = Patterns.ButtonLoadingAPI || (Patterns.ButtonLoadingAPI = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
@@ -12333,12 +12374,12 @@ var OutSystems;
                     return flipContent;
                 }
                 FlipContentAPI.Initialize = Initialize;
-                function RegisterCallback(flipId, callback) {
+                function RegisterCallback(flipId, eventName, callback) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.FlipContent.FailRegisterCallback,
                         callback: () => {
                             const flipContent = GetFlipContentById(flipId);
-                            flipContent.registerCallback(callback);
+                            flipContent.registerCallback(eventName, callback);
                         },
                     });
                     return result;
@@ -12436,6 +12477,17 @@ var OutSystems;
                     return gallery;
                 }
                 GalleryAPI.Initialize = Initialize;
+                function RegisterCallback(dropdownId, eventName, callback) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Dropdown.FailRegisterCallback,
+                        callback: () => {
+                            const gallery = this.GetGalleryById(dropdownId);
+                            gallery.registerCallback(eventName, callback);
+                        },
+                    });
+                    return result;
+                }
+                GalleryAPI.RegisterCallback = RegisterCallback;
             })(GalleryAPI = Patterns.GalleryAPI || (Patterns.GalleryAPI = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
@@ -12500,7 +12552,7 @@ var OutSystems;
                         errorCode: OSUI.ErrorCodes.InlineSvg.FailRegisterCallback,
                         callback: () => {
                             const _InlineSvgItem = this.GetInlineSvgById(inlineSvgId);
-                            _InlineSvgItem.registerCallback(callback, eventName);
+                            _InlineSvgItem.registerCallback(eventName, callback);
                         },
                     });
                     return result;
@@ -12840,6 +12892,17 @@ var OutSystems;
                     return _progressItem;
                 }
                 ProgressAPI.Initialize = Initialize;
+                function RegisterCallback(dropdownId, eventName, callback) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Dropdown.FailRegisterCallback,
+                        callback: () => {
+                            const _progressItem = this.GetProgressItemById(dropdownId);
+                            _progressItem.registerCallback(eventName, callback);
+                        },
+                    });
+                    return result;
+                }
+                ProgressAPI.RegisterCallback = RegisterCallback;
                 function ResetProgressValue(progressId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Progress.FailProgressReset,
@@ -13093,12 +13156,12 @@ var OutSystems;
                     return rating;
                 }
                 RatingAPI.Initialize = Initialize;
-                function RegisterCallback(ratingId, callback) {
+                function RegisterCallback(ratingId, eventName, callback) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Rating.FailRegisterCallback,
                         callback: () => {
                             const rating = GetRatingById(ratingId);
-                            rating.registerCallback(callback);
+                            rating.registerCallback(eventName, callback);
                         },
                     });
                     return result;
@@ -13444,7 +13507,7 @@ var OutSystems;
                         errorCode: OSUI.ErrorCodes.Submenu.FailRegisterCallback,
                         callback: () => {
                             const submenu = GetSubmenuById(submenuId);
-                            submenu.registerCallback(callback, eventName);
+                            submenu.registerCallback(eventName, callback);
                         },
                     });
                     return result;
@@ -13588,12 +13651,12 @@ var OutSystems;
                     return tabs;
                 }
                 TabsAPI.Initialize = Initialize;
-                function RegisterCallback(tabsId, callback) {
+                function RegisterCallback(tabsId, eventName, callback) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Tabs.FailRegisterCallback,
                         callback: () => {
                             const tabs = GetTabsById(tabsId);
-                            tabs.registerCallback(callback);
+                            tabs.registerCallback(eventName, callback);
                         },
                     });
                     return result;
@@ -15735,7 +15798,7 @@ var Providers;
                     }
                     _setOnInitializedEvent() {
                         this._provider.on(Splide.Enum.SpliderEvents.Mounted, () => {
-                            this.triggerPlatformEventInitialized();
+                            this.finishBuild();
                         });
                     }
                     _setOnSlideMovedEvent() {
@@ -15801,7 +15864,6 @@ var Providers;
                         this._checkListWidget();
                         this.setInitialCssClasses();
                         this.prepareConfigs();
-                        this.finishBuild();
                     }
                     changeProperty(propertyName, propertyValue) {
                         super.changeProperty(propertyName, propertyValue);
@@ -16080,7 +16142,7 @@ var Providers;
                         if (this._flatpickrInputElem !== undefined && this.isBuilt) {
                             OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.CssClassElements.InputNotValid);
                         }
-                        this.triggerPlatformEventInitialized();
+                        this.finishBuild();
                         this._unsetParentMinHeight();
                     }
                     jumpIntoToday() {
@@ -16529,7 +16591,6 @@ var Providers;
                         build() {
                             super.build();
                             this.prepareConfigs();
-                            this.finishBuild();
                         }
                         changeProperty(propertyName, propertyValue) {
                             super.changeProperty(propertyName, propertyValue);
@@ -16675,7 +16736,6 @@ var Providers;
                         build() {
                             super.build();
                             this.prepareConfigs();
-                            this.finishBuild();
                         }
                         changeProperty(propertyName, propertyValue) {
                             var _a;
@@ -17305,7 +17365,7 @@ var Providers;
                             events: this._virtualselectConfigs,
                         });
                         this._manageAttributes();
-                        this.triggerPlatformEventInitialized();
+                        this.finishBuild();
                         const _bodyEvent = OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick);
                         if (_bodyEvent) {
                             this.selfElement.addEventListener(VirtualSelect.Enum.Events.BeforeOpen, () => {
@@ -17344,7 +17404,6 @@ var Providers;
                         this.setCallbacks();
                         this._setUpEvents();
                         this.prepareConfigs();
-                        this.finishBuild();
                     }
                     changeProperty(propertyName, propertyValue) {
                         if ((propertyName === VirtualSelect.Enum.Properties.OptionsList || propertyName === VirtualSelect.Enum.Properties.StartingSelection) &&
@@ -18007,7 +18066,7 @@ var Providers;
                             version: OSUI.SharedProviderResources.Flatpickr.Enum.ProviderInfo.Version,
                             events: this.provider.config,
                         });
-                        this.triggerPlatformEventInitialized();
+                        this.finishBuild();
                     }
                     onMonthSelectedEvent(selectedMonthYear) {
                         const _selectedMonthYear = {
@@ -18052,7 +18111,6 @@ var Providers;
                         super.build();
                         this.setHtmlElements();
                         this.prepareConfigs();
-                        this.finishBuild();
                     }
                     changeProperty(propertyName, propertyValue) {
                         const oldExtendedClass = this.configs.ExtendedClass;
@@ -18296,7 +18354,7 @@ var Providers;
                         });
                         this.setInitialCSSClasses();
                         this._setOnValueChangeEvent(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Slide);
-                        this.triggerPlatformEventInitialized();
+                        this.finishBuild();
                     }
                     setHtmlElements() {
                         this._rangeSliderProviderElem = OSFramework.OSUI.Helper.Dom.ClassSelector(this.selfElement, OSFramework.OSUI.Patterns.RangeSlider.Enum.CssClass.RangeSliderProviderElem);
@@ -18635,7 +18693,6 @@ var Providers;
                             this.setCallbacks();
                             this.prepareConfigs();
                             this.setA11YProperties();
-                            this.finishBuild();
                         }
                         changeProperty(propertyName, propertyValue) {
                             super.changeProperty(propertyName, propertyValue);
@@ -18756,7 +18813,6 @@ var Providers;
                             this.setCallbacks();
                             this.prepareConfigs();
                             this.setA11YProperties();
-                            this.finishBuild();
                         }
                         changeProperty(propertyName, propertyValue) {
                             super.changeProperty(propertyName, propertyValue);
@@ -19040,7 +19096,7 @@ var Providers;
                             version: OSUI.SharedProviderResources.Flatpickr.Enum.ProviderInfo.Version,
                             events: this.provider.config,
                         });
-                        this.triggerPlatformEventInitialized();
+                        this.finishBuild();
                     }
                     onTimeSelectedEvent(selectedTime) {
                         let _selectedTime = '';
@@ -19077,7 +19133,6 @@ var Providers;
                         super.build();
                         this.setHtmlElements();
                         this.prepareConfigs();
-                        this.finishBuild();
                     }
                     changeProperty(propertyName, propertyValue) {
                         const oldExtendedClass = this.configs.ExtendedClass;

@@ -123,7 +123,7 @@ namespace OutSystems.OSUI.Patterns.InlineSvgAPI {
 			callback: () => {
 				const _InlineSvgItem = this.GetInlineSvgById(inlineSvgId);
 
-				_InlineSvgItem.registerCallback(callback, eventName);
+				_InlineSvgItem.registerCallback(eventName, callback);
 			},
 		});
 

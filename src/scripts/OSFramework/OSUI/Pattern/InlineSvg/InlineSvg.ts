@@ -4,15 +4,23 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	export class InlineSvg extends AbstractPattern<InlineSvgConfig> implements IInlineSvg {
-		// Store the parent element
-		private _parentSelf: HTMLElement;
-		// Store the platform events
-		private _platformEventOnInitialize: Callbacks.OSInitializedEvent;
-
+		/**
+		 * Creates an instance of InlineSvg.
+		 *
+		 * @param {string} uniqueId
+		 * @param {JSON} configs
+		 * @memberof InlineSvg
+		 */
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new InlineSvgConfig(configs));
 		}
 
+		/**
+		 * Method that will set the given SVG code into the pattern container.
+		 *
+		 * @private
+		 * @memberof InlineSvg
+		 */
 		private _setSvgCode(): void {
 			if (this.configs.SVGCode !== '' && !Helper.SVG.IsValid(this.configs.SVGCode)) {
 				this.selfElement.innerHTML = '';
@@ -33,7 +41,7 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		}
 
 		/**
-		 * Set the callbacks that will be assigned to the pattern
+		 * Set the callbacks that will be assigned to the pattern.
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
@@ -43,71 +51,49 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		}
 
 		/**
-		 * Set the html references that will be used to manage the cssClasses and atribute properties
+		 * Set the html references that will be used to manage the cssClasses and atribute properties.
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
 		 */
 		protected setHtmlElements(): void {
-			this._parentSelf = Helper.Dom.GetElementById(this.widgetId);
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
 		}
 
 		/**
-		 * Set the callbacks that will be assigned to the pattern
-		 *
-		 * @protected
-		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
-		 */
-		protected unsetCallbacks(): void {
-			this._platformEventOnInitialize = undefined;
-		}
-
-		/**
-		 * Reassign the HTML elements to undefined, preventing memory leaks
+		 * Reassign the HTML elements to undefined, preventing memory leaks.
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
 		 */
 		protected unsetHtmlElements(): void {
-			this._parentSelf = undefined;
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
 		}
 
 		public build(): void {
 			super.build();
 
-			this._setSvgCode();
-
 			this.setHtmlElements();
 
-			this.finishBuild();
+			this._setSvgCode();
 
-			Helper.AsyncInvocation(this._platformEventOnInitialize, this.widgetId);
+			this.finishBuild();
 		}
 
 		/**
-		 * Update value when a parameters changed occurs
+		 * Update value when a parameters changed occurs.
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
 		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
 		 */
-		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-		public changeProperty(propertyName: string, propertyValue: any): void {
+		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
 
 			if (this.isBuilt) {
-				// Check which property changed and call respective method to update it
-				switch (propertyName) {
-					case Enum.Properties.SVGCode:
-						this._setSvgCode();
-						break;
-					case GlobalEnum.CommonPatternsProperties.ExtendedClass:
-						Helper.Dom.Styles.ExtendedClass(
-							this.selfElement,
-							this.configs.ExtendedClass,
-							propertyValue as string
-						);
-						break;
+				// If SVG code has changed, update it
+				if (propertyName === Enum.Properties.SVGCode) {
+					this._setSvgCode();
 				}
 			}
 		}
@@ -126,28 +112,6 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 
 				//Destroying the base of pattern
 				super.dispose();
-			}
-		}
-
-		/**
-		 * Method used to register the callback
-		 *
-		 * @param {GlobalCallbacks.OSGeneric} callback
-		 * @param {string} eventName
-		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
-		 */
-		public registerCallback(callback: GlobalCallbacks.OSGeneric, eventName: string): void {
-			switch (eventName) {
-				case Patterns.InlineSvg.Enum.Events.OnInitialize:
-					if (this._platformEventOnInitialize === undefined) {
-						this._platformEventOnInitialize = callback;
-					}
-					break;
-
-				default:
-					throw new Error(
-						`${ErrorCodes.InlineSvg.FailRegisterCallback}:	The given '${eventName}' event name is not defined.`
-					);
 			}
 		}
 	}
