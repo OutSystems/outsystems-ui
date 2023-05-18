@@ -177,10 +177,13 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 *
 	 * @export
 	 * @param {string} accordionItemId
-	 * @param {*} callback
+	 * @param {string} eventName
+	 * @param {OSFramework.OSUI.GlobalCallbacks.Generic} callback
+	 * @return {*}  {string}
 	 */
 	export function RegisterCallback(
 		accordionItemId: string,
+		eventName: string,
 		callback: OSFramework.OSUI.GlobalCallbacks.Generic
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -188,7 +191,7 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 			callback: () => {
 				const accordionItem = GetAccordionItemById(accordionItemId);
 
-				accordionItem.registerCallback(callback);
+				accordionItem.registerCallback(eventName, callback);
 			},
 		});
 

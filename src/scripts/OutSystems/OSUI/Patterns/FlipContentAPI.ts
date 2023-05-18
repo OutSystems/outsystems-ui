@@ -108,14 +108,17 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	}
 
 	/**
-	 * Function that will register a pattern callback.
+	 * * Function that will register a pattern callback.
 	 *
 	 * @export
 	 * @param {string} flipId
+	 * @param {string} eventName
 	 * @param {OSFramework.OSUI.Patterns.FlipContent.Callbacks.OSFlipEvent} callback
+	 * @return {*}  {string}
 	 */
 	export function RegisterCallback(
 		flipId: string,
+		eventName: string,
 		callback: OSFramework.OSUI.Patterns.FlipContent.Callbacks.OSFlipEvent
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -123,7 +126,7 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 			callback: () => {
 				const flipContent = GetFlipContentById(flipId);
 
-				flipContent.registerCallback(callback);
+				flipContent.registerCallback(eventName, callback);
 			},
 		});
 

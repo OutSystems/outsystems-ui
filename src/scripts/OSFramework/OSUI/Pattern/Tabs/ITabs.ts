@@ -3,7 +3,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 	/**
 	 * Defines the interface for OutSystemsUI Tabs Pattern
 	 */
-	export interface ITabs extends Interface.IParent, Interface.ICallback {
+	export interface ITabs extends Interface.IParent {
 		changeTab(
 			tabIndex: number,
 			tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem,

@@ -107,14 +107,17 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	}
 
 	/**
-	 *
+	 * Function to register a provider callback
 	 *
 	 * @export
 	 * @param {string} ratingId
-	 * @param {*} callback
+	 * @param {string} eventName
+	 * @param {OSFramework.OSUI.Patterns.Rating.Callbacks.OSOnSelectEvent} callback
+	 * @return {*}  {string}
 	 */
 	export function RegisterCallback(
 		ratingId: string,
+		eventName: string,
 		callback: OSFramework.OSUI.Patterns.Rating.Callbacks.OSOnSelectEvent
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -122,7 +125,7 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 			callback: () => {
 				const rating = GetRatingById(ratingId);
 
-				rating.registerCallback(callback);
+				rating.registerCallback(eventName, callback);
 			},
 		});
 

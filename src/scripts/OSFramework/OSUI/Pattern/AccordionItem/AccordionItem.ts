@@ -530,16 +530,21 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		}
 
 		/**
-		 * Set callbacks for the onToggle event
+		 * Register a given callback event handler.
 		 *
+		 * @param {string} eventName
 		 * @param {GlobalCallbacks.OSGeneric} callback
 		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
-		public registerCallback(callback: GlobalCallbacks.OSGeneric): void {
-			if (this._platformEventOnToggle === undefined) {
-				this._platformEventOnToggle = callback;
-			} else {
-				console.warn(`The ${GlobalEnum.PatternName.AccordionItem} already has the toggle callback set.`);
+		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
+			switch (eventName) {
+				case Enum.Events.OnToggle:
+					if (this._platformEventOnToggle === undefined) {
+						this._platformEventOnToggle = callback;
+					}
+					break;
+				default:
+					super.registerCallback(eventName, callback);
 			}
 		}
 	}

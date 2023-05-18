@@ -110,6 +110,32 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	}
 
 	/**
+	 * Function to register a provider callback
+	 *
+	 * @export
+	 * @param {string} dropdownId
+	 * @param {string} eventName
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
+	 * @return {*}  {string}
+	 */
+	export function RegisterCallback(
+		dropdownId: string,
+		eventName: string,
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
+	): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Dropdown.FailRegisterCallback,
+			callback: () => {
+				const _progressItem = this.GetProgressItemById(dropdownId);
+
+				_progressItem.registerCallback(eventName, callback);
+			},
+		});
+
+		return result;
+	}
+
+	/**
 	 * Function to reset the Progress Bar/Circle
 	 *
 	 * @export

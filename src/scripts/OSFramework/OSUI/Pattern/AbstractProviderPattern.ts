@@ -13,8 +13,6 @@ namespace OSFramework.OSUI.Patterns {
 		extends AbstractPattern<C>
 		implements Interface.IProviderPattern<P>
 	{
-		// Holds the callback for the onInitialized event
-		private _platformEventInitialized: GlobalCallbacks.OSGeneric;
 		// Holds the callback for the provider config applied event
 		private _platformEventProviderConfigsAppliedCallback: GlobalCallbacks.OSGeneric;
 		// Holds the provider
@@ -106,47 +104,16 @@ namespace OSFramework.OSUI.Patterns {
 			}
 		}
 
-		//TODO: move this method to the AbstractPattern. Interfaces need to be updated.
-		/**
-		 * Trigger platform's InstanceIntializedHandler client Action
-		 *
-		 * @param {GlobalCallbacks.OSGeneric} platFormCallback
-		 * @memberof OSFramework.Patterns.AbstractProviderPattern
-		 */
-		protected triggerPlatformEventInitialized(): void {
-			// Ensure it's only be trigger the first time!
-			if (this.isBuilt === false) {
-				this.triggerPlatformEventplatformCallback(this._platformEventInitialized);
-			}
-		}
-
-		//TODO: move this method to the AbstractPattern. Interfaces need to be updated.
-		/**
-		 * Triggers a generic platform event.
-		 *
-		 * @protected
-		 * @param {GlobalCallbacks.OSGeneric} platFormCallback
-		 * @param {...unknown[]} args
-		 * @memberof AbstractProviderPattern
-		 */
-		protected triggerPlatformEventplatformCallback(
-			platFormCallback: GlobalCallbacks.OSGeneric,
-			...args: unknown[]
-		): void {
-			if (platFormCallback !== undefined) {
-				Helper.AsyncInvocation(platFormCallback, this.widgetId, ...args);
-			}
-		}
-
 		/**
 		 * Unsets the callbacks.
 		 *
 		 * @protected
-		 * @memberof OSUISplide
+		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
 		protected unsetCallbacks(): void {
-			this._platformEventInitialized = undefined;
 			this._platformEventProviderConfigsAppliedCallback = undefined;
+
+			super.unsetCallbacks();
 		}
 
 		/**
@@ -223,20 +190,13 @@ namespace OSFramework.OSUI.Patterns {
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
-				case GlobalEnum.ProviderEvents.Initialized:
-					if (this._platformEventInitialized === undefined) {
-						this._platformEventInitialized = callback;
-					}
-					break;
 				case GlobalEnum.ProviderEvents.OnProviderConfigsApplied:
 					if (this._platformEventProviderConfigsAppliedCallback === undefined) {
 						this._platformEventProviderConfigsAppliedCallback = callback;
 					}
 					break;
 				default:
-					throw new Error(
-						`The pattern with id '${this.widgetId}' does not have the event '${eventName}' defined.`
-					);
+					super.registerCallback(eventName, callback);
 			}
 		}
 

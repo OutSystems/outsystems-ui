@@ -96,7 +96,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 		public build(): void {
 			super.build();
 			this.prepareConfigs();
-			this.finishBuild();
 		}
 
 		/**

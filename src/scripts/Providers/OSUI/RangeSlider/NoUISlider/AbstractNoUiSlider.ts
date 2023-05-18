@@ -96,8 +96,7 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 			// Set OnValueChange event
 			this._setOnValueChangeEvent(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Slide);
 
-			// Trigger platform's InstanceIntializedHandler client Action
-			this.triggerPlatformEventInitialized();
+			this.finishBuild();
 		}
 
 		/**

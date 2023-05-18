@@ -101,4 +101,30 @@ namespace OutSystems.OSUI.Patterns.GalleryAPI {
 
 		return gallery;
 	}
+
+	/**
+	 * Function to register a provider callback
+	 *
+	 * @export
+	 * @param {string} dropdownId
+	 * @param {string} eventName
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
+	 * @return {*}  {string}
+	 */
+	export function RegisterCallback(
+		dropdownId: string,
+		eventName: string,
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
+	): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Dropdown.FailRegisterCallback,
+			callback: () => {
+				const gallery = this.GetGalleryById(dropdownId);
+
+				gallery.registerCallback(eventName, callback);
+			},
+		});
+
+		return result;
+	}
 }

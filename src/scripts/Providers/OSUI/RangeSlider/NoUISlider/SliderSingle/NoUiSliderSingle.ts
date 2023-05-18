@@ -89,8 +89,6 @@ namespace Providers.OSUI.RangeSlider.NoUISlider.SingleSlider {
 			this.prepareConfigs();
 
 			this.setA11YProperties();
-
-			this.finishBuild();
 		}
 
 		/**

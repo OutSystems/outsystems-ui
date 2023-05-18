@@ -61,10 +61,10 @@ namespace OSFramework.OSUI.Patterns.Accordion {
 		/**
 		 * Method to add a new accordionItem
 		 *
-		 * @param {string} uniqueId
+		 * @param {AccordionItem.IAccordionItem} childItem
 		 * @memberof OSFramework.Patterns.Accordion.Accordion
 		 */
-		public addAccordionItem(childItem: Patterns.AccordionItem.AccordionItem): void {
+		public addAccordionItem(childItem: AccordionItem.IAccordionItem): void {
 			if (this.getChild(childItem.uniqueId)) {
 				throw new Error(
 					`${ErrorCodes.Accordion.FailSetNewChildItem}: There is already a ${GlobalEnum.PatternName.AccordionItem} under Id: '${childItem.widgetId}' added to ${GlobalEnum.PatternName.Accordion} with uniqueId: ${this.uniqueId}.`
@@ -89,7 +89,7 @@ namespace OSFramework.OSUI.Patterns.Accordion {
 		 * @memberof OSFramework.Patterns.Accordion.Accordion
 		 */
 		public beNotifiedByChild(
-			childItem: Patterns.AccordionItem.AccordionItem,
+			childItem: AccordionItem.IAccordionItem,
 			notifiedTo: Enum.ChildNotifyActionType
 		): void {
 			switch (notifiedTo) {

@@ -26,15 +26,6 @@ namespace OSFramework.OSUI.Interface {
 		providerInfo: ProviderInfo;
 
 		/**
-		 * Enables to register simple callbacks for the platform. Internal use.
-		 *
-		 * @param {string} eventName
-		 * @param {GlobalCallbacks.OSGeneric} callback
-		 * @memberof OSFramework.Interface.IProviderPattern
-		 */
-		registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
-
-		/**
 		 * Method to enable extensibility to provider supported configs
 		 *
 		 * @param {ProviderConfigs} newConfigs
