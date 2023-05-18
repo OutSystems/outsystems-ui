@@ -1061,13 +1061,13 @@ declare namespace OSFramework.OSUI.Interface {
         uniqueId: string;
         widgetId: string;
         changeProperty(propertyName: string, propertyValue: unknown): void;
+        registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
     }
 }
 declare namespace OSFramework.OSUI.Interface {
     interface IProviderPattern<P> extends Interface.IPattern {
         provider: P;
         providerInfo: ProviderInfo;
-        registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
         setProviderConfigs(newConfigs: ProviderConfigs): void;
         updateProviderEvents(providerInfo: ProviderInfo): void;
     }
@@ -1092,6 +1092,7 @@ declare namespace OSFramework.OSUI.Patterns {
     abstract class AbstractPattern<C extends AbstractConfiguration> implements Interface.IPattern {
         private _configs;
         private _isBuilt;
+        private _platformEventInitialized;
         private _selfElem;
         private _uniqueId;
         private _widgetId;
@@ -1099,10 +1100,13 @@ declare namespace OSFramework.OSUI.Patterns {
         private _setCommonHtmlElements;
         private _unsetCommonHtmlElements;
         protected finishBuild(): void;
+        protected triggerPlatformEventplatformCallback(platFormCallback: GlobalCallbacks.OSGeneric, ...args: unknown[]): void;
+        protected unsetCallbacks(): void;
         build(): void;
         changeProperty(propertyName: string, propertyValue: unknown): void;
         dispose(): void;
         equalsToID(patternId: string): boolean;
+        registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
         protected get _enableAccessibility(): boolean;
         get selfElement(): HTMLElement;
         get isBuilt(): boolean;
@@ -1112,7 +1116,6 @@ declare namespace OSFramework.OSUI.Patterns {
         protected abstract setA11YProperties(): void;
         protected abstract setCallbacks(): void;
         protected abstract setHtmlElements(): void;
-        protected abstract unsetCallbacks(): void;
         protected abstract unsetHtmlElements(): void;
     }
 }
@@ -1167,7 +1170,6 @@ declare namespace OSFramework.OSUI.Patterns {
 }
 declare namespace OSFramework.OSUI.Patterns {
     abstract class AbstractProviderPattern<P, C extends AbstractConfiguration> extends AbstractPattern<C> implements Interface.IProviderPattern<P> {
-        private _platformEventInitialized;
         private _platformEventProviderConfigsAppliedCallback;
         protected _provider: P;
         protected _providerInfo: ProviderInfo;
@@ -1175,8 +1177,6 @@ declare namespace OSFramework.OSUI.Patterns {
         private _getEventIndexFromArray;
         private _handleProviderEventsAPI;
         protected redraw(): void;
-        protected triggerPlatformEventInitialized(): void;
-        protected triggerPlatformEventplatformCallback(platFormCallback: GlobalCallbacks.OSGeneric, ...args: unknown[]): void;
         protected unsetCallbacks(): void;
         build(): void;
         checkAddedProviderEvents(): void;
@@ -1202,8 +1202,8 @@ declare namespace OSFramework.OSUI.Patterns.Accordion {
         protected setHtmlElements(): void;
         protected unsetCallbacks(): void;
         protected unsetHtmlElements(): void;
-        addAccordionItem(childItem: Patterns.AccordionItem.AccordionItem): void;
-        beNotifiedByChild(childItem: Patterns.AccordionItem.AccordionItem, notifiedTo: Enum.ChildNotifyActionType): void;
+        addAccordionItem(childItem: AccordionItem.IAccordionItem): void;
+        beNotifiedByChild(childItem: AccordionItem.IAccordionItem, notifiedTo: Enum.ChildNotifyActionType): void;
         build(): void;
         changeProperty(propertyName: string, propertyValue: unknown): void;
         collapseAllItems(): void;
@@ -1235,11 +1235,11 @@ declare namespace OSFramework.OSUI.Patterns.Accordion.Enum {
 }
 declare namespace OSFramework.OSUI.Patterns.Accordion {
     interface IAccordion extends Interface.IParent {
-        addAccordionItem(accordionItem: AccordionItem.IAccordionItem): any;
-        collapseAllItems(): any;
-        expandAllItems(): any;
-        removeAccordionItem(uniqueId: string): any;
-        triggerAccordionItemClose(accordionItemId: string): any;
+        addAccordionItem(accordionItem: AccordionItem.IAccordionItem): void;
+        collapseAllItems(): void;
+        expandAllItems(): void;
+        removeAccordionItem(uniqueId: string): void;
+        triggerAccordionItemClose(accordionItemId: string): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.AccordionItem {
@@ -1284,7 +1284,7 @@ declare namespace OSFramework.OSUI.Patterns.AccordionItem {
         close(): void;
         dispose(): void;
         open(): void;
-        registerCallback(callback: GlobalCallbacks.OSGeneric): void;
+        registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.AccordionItem {
@@ -1322,6 +1322,9 @@ declare namespace OSFramework.OSUI.Patterns.AccordionItem.Enum {
         PatternOpen = "osui-accordion-item--is-open",
         PatternTitle = "osui-accordion-item__title"
     }
+    enum Events {
+        OnToggle = "OnToggle"
+    }
     enum IconType {
         Caret = "Caret",
         Custom = "Custom",
@@ -1329,10 +1332,10 @@ declare namespace OSFramework.OSUI.Patterns.AccordionItem.Enum {
     }
 }
 declare namespace OSFramework.OSUI.Patterns.AccordionItem {
-    interface IAccordionItem extends Interface.IChild, Interface.IOpenable, Interface.ICallback {
+    interface IAccordionItem extends Interface.IChild, Interface.IOpenable {
         isDisabled: boolean;
         isOpen: boolean;
-        allowTitleEvents(): any;
+        allowTitleEvents(): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.AnimatedLabel {
@@ -1434,7 +1437,7 @@ declare namespace OSFramework.OSUI.Patterns.BottomSheet {
         close(): void;
         dispose(): void;
         open(): void;
-        registerCallback(callback: GlobalCallbacks.Generic): void;
+        registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
         removeGestureEvents(): void;
         setGestureEvents(onGestureStart: Event.GestureEvent.Callbacks.GestureStart, onGestureMove: Event.GestureEvent.Callbacks.GestureMove, onGestureEnd: Event.GestureEvent.Callbacks.GestureEnd): void;
     }
@@ -1467,7 +1470,7 @@ declare namespace OSFramework.OSUI.Patterns.BottomSheet.Enum {
         Shape = "--bottom-sheet-shape"
     }
     enum Events {
-        Open = "Open"
+        OnToggle = "OnToggle"
     }
     enum Properties {
         Shape = "Shape",
@@ -1476,9 +1479,8 @@ declare namespace OSFramework.OSUI.Patterns.BottomSheet.Enum {
 }
 declare namespace OSFramework.OSUI.Patterns.BottomSheet {
     interface IBottomSheet extends Interface.IPattern {
-        close(): any;
-        open(): any;
-        registerCallback(callback: GlobalCallbacks.Generic): any;
+        close(): void;
+        open(): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.ButtonLoading {
@@ -2007,13 +2009,16 @@ declare namespace OSFramework.OSUI.Patterns.FlipContent.Enum {
         PatternFront = "osui-flip-content__container__front",
         PatternIsFlipped = "osui-flip-content--flipped"
     }
+    enum Events {
+        OnToggle = "OnToggle"
+    }
 }
 declare namespace OSFramework.OSUI.Patterns.FlipContent {
     class FlipContent extends AbstractPattern<FlipContentConfig> implements IFlipContent {
         private _eventClick;
         private _eventKeydown;
         private _flipWrapperElement;
-        private _plataformEventFlip;
+        private _platformEventOnToggle;
         constructor(uniqueId: string, configs: JSON);
         private _keydownCallback;
         private _removeEvents;
@@ -2030,7 +2035,7 @@ declare namespace OSFramework.OSUI.Patterns.FlipContent {
         build(): void;
         changeProperty(propertyName: string, propertyValue: unknown): void;
         dispose(): void;
-        registerCallback(callback: Callbacks.OSFlipEvent): void;
+        registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
         showBackContent(): void;
         showFrontContent(): void;
         toggleFlipContent(): void;
@@ -2045,7 +2050,7 @@ declare namespace OSFramework.OSUI.Patterns.FlipContent {
     }
 }
 declare namespace OSFramework.OSUI.Patterns.FlipContent {
-    interface IFlipContent extends Interface.IPattern, Interface.ICallback {
+    interface IFlipContent extends Interface.IPattern {
         showBackContent(): void;
         showFrontContent(): void;
         toggleFlipContent(): void;
@@ -2115,24 +2120,20 @@ declare namespace OSFramework.OSUI.Patterns.InlineSvg.Enum {
     }
 }
 declare namespace OSFramework.OSUI.Patterns.InlineSvg {
-    interface IInlineSvg extends Interface.IPattern, Interface.ICallback {
+    interface IInlineSvg extends Interface.IPattern {
     }
 }
 declare namespace OSFramework.OSUI.Patterns.InlineSvg {
     class InlineSvg extends AbstractPattern<InlineSvgConfig> implements IInlineSvg {
-        private _parentSelf;
-        private _platformEventOnInitialize;
         constructor(uniqueId: string, configs: JSON);
         private _setSvgCode;
         protected setA11YProperties(): void;
         protected setCallbacks(): void;
         protected setHtmlElements(): void;
-        protected unsetCallbacks(): void;
         protected unsetHtmlElements(): void;
         build(): void;
-        changeProperty(propertyName: string, propertyValue: any): void;
+        changeProperty(propertyName: string, propertyValue: unknown): void;
         dispose(): void;
-        registerCallback(callback: GlobalCallbacks.OSGeneric, eventName: string): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.InlineSvg {
@@ -2600,6 +2601,9 @@ declare namespace OSFramework.OSUI.Patterns.Rating.Enum {
         Size = "rating-",
         WCAGHideText = "wcag-hide-text"
     }
+    enum Events {
+        OnSelected = "OnSelected"
+    }
     enum Properties {
         IsEdit = "IsEdit",
         MaxRatingScale = 100,
@@ -2610,7 +2614,7 @@ declare namespace OSFramework.OSUI.Patterns.Rating.Enum {
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Rating {
-    interface IRating extends Interface.IPattern, Interface.ICallback {
+    interface IRating extends Interface.IPattern {
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Rating {
@@ -2652,7 +2656,7 @@ declare namespace OSFramework.OSUI.Patterns.Rating {
         build(): void;
         changeProperty(propertyName: string, propertyValue: unknown): void;
         dispose(): void;
-        registerCallback(callback: Callbacks.OSOnSelectEvent): void;
+        registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Rating {
@@ -2902,7 +2906,6 @@ declare namespace OSFramework.OSUI.Patterns.Submenu.Enum {
         PatternLinks = "osui-submenu__items"
     }
     enum Events {
-        Initialized = "Initialized",
         OnToggle = "OnToggle"
     }
     enum Properties {
@@ -2910,7 +2913,7 @@ declare namespace OSFramework.OSUI.Patterns.Submenu.Enum {
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Submenu {
-    interface ISubmenu extends Interface.IPattern, Interface.IOpenable, Interface.IRenderUpdate, Interface.ICallback {
+    interface ISubmenu extends Interface.IPattern, Interface.IOpenable, Interface.IRenderUpdate {
         clickOutsideToClose(clickOutsideToClose: boolean): void;
         setOpenOnHover(): void;
     }
@@ -2926,7 +2929,6 @@ declare namespace OSFramework.OSUI.Patterns.Submenu {
         private _hasElements;
         private _isActive;
         private _isOpen;
-        private _platformEventInitializedCallback;
         private _platformEventOnToggleCallback;
         private _submenuActiveLinksElement;
         private _submenuAllLinksElement;
@@ -2958,7 +2960,7 @@ declare namespace OSFramework.OSUI.Patterns.Submenu {
         close(): void;
         dispose(): void;
         open(): void;
-        registerCallback(callback: GlobalCallbacks.OSGeneric, eventName: string): void;
+        registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
         setOpenOnHover(): void;
         updateOnRender(): void;
     }
@@ -3080,9 +3082,12 @@ declare namespace OSFramework.OSUI.Patterns.Tabs.Enum {
         TabsContentItem = "TabsContentItem",
         TabsHeaderItem = "TabsHeaderItem"
     }
+    enum Events {
+        OnChange = "OnChange"
+    }
 }
 declare namespace OSFramework.OSUI.Patterns.Tabs {
-    interface ITabs extends Interface.IParent, Interface.ICallback {
+    interface ITabs extends Interface.IParent {
         changeTab(tabIndex: number, tabsHeaderItem: TabsHeaderItem.ITabsHeaderItem, blockObserver?: boolean, triggerEvent?: boolean, triggeredByObserver?: boolean): void;
         toggleDragGestures(addDragGestures: boolean): void;
     }
@@ -3143,7 +3148,7 @@ declare namespace OSFramework.OSUI.Patterns.Tabs {
         changeProperty(propertyName: string, propertyValue: unknown): void;
         changeTab(tabIndex?: number, tabsHeaderItem?: Patterns.TabsHeaderItem.ITabsHeaderItem, triggerEvent?: boolean, triggeredByObserver?: boolean): void;
         dispose(): void;
-        registerCallback(callback: Callbacks.OSOnChangeEvent): void;
+        registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
         toggleDragGestures(addDragGestures: boolean): void;
     }
 }
@@ -3789,7 +3794,7 @@ declare namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
     function GetAllAccordionItems(): Array<string>;
     function GetAccordionItemById(accordionItemId: string): OSFramework.OSUI.Patterns.AccordionItem.IAccordionItem;
     function Initialize(accordionItemId: string): OSFramework.OSUI.Patterns.AccordionItem.IAccordionItem;
-    function RegisterCallback(accordionItemId: string, callback: OSFramework.OSUI.GlobalCallbacks.Generic): string;
+    function RegisterCallback(accordionItemId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.Generic): string;
 }
 declare namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
     function ChangeProperty(animatedLabelId: string, propertyName: string, propertyValue: unknown): string;
@@ -3798,6 +3803,7 @@ declare namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
     function GetAllAnimatedLabels(): Array<string>;
     function GetAnimatedLabelById(animatedLabelId: string): OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel;
     function Initialize(animatedLabelId: string): OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel;
+    function RegisterCallback(dropdownId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
     function UpdateOnRender(animatedLabelId: string): string;
 }
 declare namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
@@ -3809,7 +3815,7 @@ declare namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
     function Initialize(bottomSheetId: string): OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet;
     function Open(bottomSheetId: string): string;
     function Close(bottomSheetId: string): string;
-    function RegisterCallback(bottomSheetId: string, callback: OSFramework.OSUI.GlobalCallbacks.Generic): string;
+    function RegisterCallback(bottomSheetId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.Generic): string;
 }
 declare namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
     function ChangeProperty(buttonLoadingId: string, propertyName: string, propertyValue: unknown): string;
@@ -3818,6 +3824,7 @@ declare namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
     function GetAllButtonsLoading(): Array<string>;
     function GetButtonLoadingById(buttonLoadingId: string): OSFramework.OSUI.Patterns.ButtonLoading.IButtonLoading;
     function Initialize(buttonLoadingId: string): OSFramework.OSUI.Patterns.ButtonLoading.IButtonLoading;
+    function RegisterCallback(dropdownId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
 }
 declare namespace OutSystems.OSUI.Patterns.CarouselAPI {
     function CarouselEnableOnRender(carouselId: string): string;
@@ -3899,7 +3906,7 @@ declare namespace OutSystems.OSUI.Patterns.FlipContentAPI {
     function GetAllFlipContent(): Array<string>;
     function GetFlipContentById(flipId: string): OSFramework.OSUI.Patterns.FlipContent.IFlipContent;
     function Initialize(flipId: string): OSFramework.OSUI.Patterns.FlipContent.IFlipContent;
-    function RegisterCallback(flipId: string, callback: OSFramework.OSUI.Patterns.FlipContent.Callbacks.OSFlipEvent): string;
+    function RegisterCallback(flipId: string, eventName: string, callback: OSFramework.OSUI.Patterns.FlipContent.Callbacks.OSFlipEvent): string;
     function ShowBackContent(flipId: string): string;
     function ShowFrontContent(flipId: string): string;
     function ToggleFlipContent(flipId: string): string;
@@ -3911,6 +3918,7 @@ declare namespace OutSystems.OSUI.Patterns.GalleryAPI {
     function GetAllGalleries(): Array<string>;
     function GetGalleryById(galleryId: string): OSFramework.OSUI.Patterns.Gallery.IGallery;
     function Initialize(galleryId: string): OSFramework.OSUI.Patterns.Gallery.IGallery;
+    function RegisterCallback(dropdownId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
 }
 declare namespace OutSystems.OSUI.Patterns.InlineSvgAPI {
     function ChangeProperty(inlineSvgId: string, propertyName: string, propertyValue: any): string;
@@ -3958,6 +3966,7 @@ declare namespace OutSystems.OSUI.Patterns.ProgressAPI {
     function GetAllProgressItemsMap(): Array<string>;
     function GetProgressItemById(progressId: string): OSFramework.OSUI.Patterns.Progress.IProgress;
     function Initialize(progressId: string): OSFramework.OSUI.Patterns.Progress.IProgress;
+    function RegisterCallback(dropdownId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
     function ResetProgressValue(progressId: string): string;
     function SetProgressValue(progressId: string, progress: number): string;
     function ProgressApplyGradient(progressId: string, gradientType: string, colors: string): string;
@@ -3986,7 +3995,7 @@ declare namespace OutSystems.OSUI.Patterns.RatingAPI {
     function GetAllRatings(): Array<string>;
     function GetRatingById(ratingId: string): OSFramework.OSUI.Patterns.Rating.IRating;
     function Initialize(ratingId: string): OSFramework.OSUI.Patterns.Rating.IRating;
-    function RegisterCallback(ratingId: string, callback: OSFramework.OSUI.Patterns.Rating.Callbacks.OSOnSelectEvent): string;
+    function RegisterCallback(ratingId: string, eventName: string, callback: OSFramework.OSUI.Patterns.Rating.Callbacks.OSOnSelectEvent): string;
 }
 declare namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
     function ChangeProperty(sectionIndexId: string, propertyName: string, propertyValue: any): string;
@@ -4049,7 +4058,7 @@ declare namespace OutSystems.OSUI.Patterns.TabsAPI {
     function GetAllTabs(): Array<string>;
     function GetTabsById(tabsId: string): OSFramework.OSUI.Patterns.Tabs.ITabs;
     function Initialize(tabsId: string): OSFramework.OSUI.Patterns.Tabs.ITabs;
-    function RegisterCallback(tabsId: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
+    function RegisterCallback(tabsId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
     function TabsToggleSwipe(tabsId: string, enableSwipe: boolean): string;
     function SetActiveTab(tabsId: string, tabsNumber: number): string;
 }

@@ -111,15 +111,21 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	 *
 	 * @export
 	 * @param {string} tabsId
-	 * @param {*} callback
+	 * @param {string} eventName
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
+	 * @return {*}  {string}
 	 */
-	export function RegisterCallback(tabsId: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string {
+	export function RegisterCallback(
+		tabsId: string,
+		eventName: string,
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
+	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Tabs.FailRegisterCallback,
 			callback: () => {
 				const tabs = GetTabsById(tabsId);
 
-				tabs.registerCallback(callback);
+				tabs.registerCallback(eventName, callback);
 			},
 		});
 

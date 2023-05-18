@@ -165,8 +165,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				);
 			}
 
-			// Trigger platform's InstanceIntializedHandler client Action
-			this.triggerPlatformEventInitialized();
+			this.finishBuild();
 
 			// Remove inline height value style!
 			this._unsetParentMinHeight();

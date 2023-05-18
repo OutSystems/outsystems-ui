@@ -20,7 +20,6 @@ namespace OSFramework.OSUI.Patterns.Submenu.Enum {
 	 * Events
 	 */
 	export enum Events {
-		Initialized = 'Initialized',
 		OnToggle = 'OnToggle',
 	}
 

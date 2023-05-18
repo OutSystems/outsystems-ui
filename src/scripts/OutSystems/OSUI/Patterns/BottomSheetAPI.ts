@@ -139,10 +139,13 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	 *
 	 * @export
 	 * @param {string} bottomSheetId
-	 * @param {*} callback
+	 * @param {string} eventName
+	 * @param {OSFramework.OSUI.GlobalCallbacks.Generic} callback
+	 * @return {*}  {string}
 	 */
 	export function RegisterCallback(
 		bottomSheetId: string,
+		eventName: string,
 		callback: OSFramework.OSUI.GlobalCallbacks.Generic
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -150,7 +153,7 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 			callback: () => {
 				const bottomSheet = GetBottomSheetItemById(bottomSheetId);
 
-				bottomSheet.registerCallback(callback);
+				bottomSheet.registerCallback(eventName, callback);
 			},
 		});
 

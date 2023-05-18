@@ -957,16 +957,21 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		}
 
 		/**
-		 * Set callbacks for the onTabsChange event
+		 * Register a given callback event handler.
 		 *
-		 * @param {Callbacks.OSOnChangeEvent} callback
+		 * @param {string} eventName
+		 * @param {GlobalCallbacks.OSGeneric} callback
 		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
-		public registerCallback(callback: Callbacks.OSOnChangeEvent): void {
-			if (this._platformEventTabsOnChange === undefined) {
-				this._platformEventTabsOnChange = callback;
-			} else {
-				console.warn(`The ${GlobalEnum.PatternName.Tabs} already has the tabs change callback set.`);
+		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
+			switch (eventName) {
+				case Enum.Events.OnChange:
+					if (this._platformEventTabsOnChange === undefined) {
+						this._platformEventTabsOnChange = callback;
+					}
+					break;
+				default:
+					super.registerCallback(eventName, callback);
 			}
 		}
 

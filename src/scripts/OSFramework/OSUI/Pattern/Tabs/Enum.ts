@@ -78,4 +78,14 @@ namespace OSFramework.OSUI.Patterns.Tabs.Enum {
 		TabsContentItem = 'TabsContentItem',
 		TabsHeaderItem = 'TabsHeaderItem',
 	}
+
+	/**
+	 * Callbacks eventName
+	 *
+	 * @export
+	 * @enum {number}
+	 */
+	export enum Events {
+		OnChange = 'OnChange',
+	}
 }

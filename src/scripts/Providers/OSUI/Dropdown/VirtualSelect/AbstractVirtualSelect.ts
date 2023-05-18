@@ -153,8 +153,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			// Add attributes to the element if needed
 			this._manageAttributes();
 
-			// Trigger platform's InstanceIntializedHandler client Action
-			this.triggerPlatformEventInitialized();
+			this.finishBuild();
 
 			const _bodyEvent = OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(
 				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick
@@ -246,8 +245,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			this._setUpEvents();
 
 			this.prepareConfigs();
-
-			this.finishBuild();
 		}
 
 		/**

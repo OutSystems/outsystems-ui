@@ -22,7 +22,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet.Enum {
 	 * BottomSheet Events
 	 */
 	export enum Events {
-		Open = 'Open',
+		OnToggle = 'OnToggle',
 	}
 
 	/**

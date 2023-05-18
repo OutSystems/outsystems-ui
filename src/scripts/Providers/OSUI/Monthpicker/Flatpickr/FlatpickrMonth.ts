@@ -145,8 +145,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 				events: this.provider.config,
 			});
 
-			// Trigger platform's InstanceIntializedHandler client Action
-			this.triggerPlatformEventInitialized();
+			this.finishBuild();
 		}
 
 		/**
@@ -269,7 +268,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 
 			this.setHtmlElements();
 			this.prepareConfigs();
-			this.finishBuild();
 		}
 
 		/**

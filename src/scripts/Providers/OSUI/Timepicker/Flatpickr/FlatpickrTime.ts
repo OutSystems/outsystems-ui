@@ -145,8 +145,7 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 				events: this.provider.config,
 			});
 
-			// Trigger platform's InstanceIntializedHandler client Action
-			this.triggerPlatformEventInitialized();
+			this.finishBuild();
 		}
 
 		// Method that will be triggered by library each time any time is selected
@@ -242,7 +241,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 
 			this.setHtmlElements();
 			this.prepareConfigs();
-			this.finishBuild();
 		}
 
 		/**

@@ -185,7 +185,7 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 			callback: () => {
 				const submenu = GetSubmenuById(submenuId);
 
-				submenu.registerCallback(callback, eventName);
+				submenu.registerCallback(eventName, callback);
 			},
 		});
 
