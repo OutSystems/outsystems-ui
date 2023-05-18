@@ -1,22 +1,30 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Utils {
 	/**
-	 * Add a favicon to your web application by providing the icon's URL. This action should be used in the Layout OnReady event or on an OnApplicationStart event.
+	 * Add a favicon to your web application by providing the icon's URL. If the tag already exists, only the URL will be updated.
+	 * This action should be used in the Layout OnReady event or on an OnApplicationStart event.
 	 * @param URL
 	 */
 	export function AddFavicon(URL: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Utilities.FailAddFavicon,
 			callback: () => {
-				const link = (OSFramework.OSUI.Helper.Dom.TagSelector(document.head, "link[rel*='icon']") ||
-					document.createElement('link')) as HTMLLinkElement;
-				link.type = 'image/x-icon';
-				link.rel = 'shortcut icon';
-				link.href = URL;
-				document.getElementsByTagName('head')[0].appendChild(link);
+				const existingFavicon = OSFramework.OSUI.Helper.Dom.TagSelector(
+					document.head,
+					"link[rel*='icon']"
+				) as HTMLLinkElement;
+
+				if (existingFavicon) {
+					existingFavicon.href = URL;
+				} else {
+					const link = document.createElement('link');
+					link.type = 'image/x-icon';
+					link.rel = 'shortcut icon';
+					link.href = URL;
+					document.getElementsByTagName('head')[0].appendChild(link);
+				}
 			},
 		});
-
 		return result;
 	}
 
