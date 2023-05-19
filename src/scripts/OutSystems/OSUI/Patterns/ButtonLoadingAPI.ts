@@ -129,7 +129,7 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
-			errorCode: ErrorCodes.Dropdown.FailRegisterCallback,
+			errorCode: ErrorCodes.ButtonLoading.FailRegisterCallback,
 			callback: () => {
 				const buttonLoading = this.GetButtonLoadingById(dropdownId);
 

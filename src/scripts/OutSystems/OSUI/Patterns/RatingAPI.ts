@@ -112,13 +112,13 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 * @export
 	 * @param {string} ratingId
 	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.Patterns.Rating.Callbacks.OSOnSelectEvent} callback
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
 	 * @return {*}  {string}
 	 */
 	export function RegisterCallback(
 		ratingId: string,
 		eventName: string,
-		callback: OSFramework.OSUI.Patterns.Rating.Callbacks.OSOnSelectEvent
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Rating.FailRegisterCallback,

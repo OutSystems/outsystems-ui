@@ -37,8 +37,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		private _isOpen: boolean;
 		// Flag used to deal with onBodyClick and open api concurrency methods!
 		private _isOpenedByApi = false;
-		// Platform OnInitialize Callback
-		private _platformEventInitializedCallback: GlobalCallbacks.OSGeneric;
 		// Platform OnClose Callback
 		private _platformEventOnToggleCallback: GlobalCallbacks.OSGeneric;
 		// Store the RequestAnimationFrame that will be triggered at OnBodyScroll
@@ -459,7 +457,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 				}
 
 				// Trigger the _platformEventOnToggleCallback callback!
-				Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, false);
+				this.triggerPlatformEventplatformCallback(this._platformEventOnToggleCallback, false);
 			}
 		}
 
@@ -517,7 +515,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 				Helper.AsyncInvocation(this._setObserver.bind(this));
 
 				// Trigger the _platformEventOnToggleCallback callback!
-				Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, true);
+				this.triggerPlatformEventplatformCallback(this._platformEventOnToggleCallback, true);
 
 				// Delay the _isOpenedByApi assignement in order to deal with clickOnBody() and open() api concurrency!
 				Helper.AsyncInvocation(() => {
@@ -684,8 +682,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 				Helper.A11Y.AriaHiddenFalse(this._tooltipBalloonWrapperElem);
 			}
 
-			// Trigger platform's _platformEventInitializedCallback client Action
-			Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
+			this.finishBuild();
 		}
 
 		/**
@@ -734,7 +731,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			super.build();
 			this.setCallbacks();
 			this.setHtmlElements();
-			this.finishBuild();
 		}
 
 		/**
@@ -820,12 +816,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
-				case Enum.Events.Initialized:
-					if (this._platformEventInitializedCallback === undefined) {
-						this._platformEventInitializedCallback = callback;
-					}
-					break;
-
 				case Enum.Events.OnToggle:
 					if (this._platformEventOnToggleCallback === undefined) {
 						this._platformEventOnToggleCallback = callback;
@@ -833,9 +823,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 					break;
 
 				default:
-					throw new Error(
-						`${ErrorCodes.Tooltip.FailRegisterCallback}: The given '${eventName}' event name is not defined.`
-					);
+					super.registerCallback(eventName, callback);
 			}
 		}
 

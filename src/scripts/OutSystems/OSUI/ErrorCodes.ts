@@ -48,6 +48,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailCollapseAll: 'OSUI-API-04002',
 		FailDispose: 'OSUI-API-04003',
 		FailExpandAll: 'OSUI-API-04004',
+		FailRegisterCallback: 'OSUI-API-04005',
 	};
 
 	export const AccordionItem = {
@@ -111,6 +112,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailProgressValue: 'OSUI-API-09003',
 		FailProgressReset: 'OSUI-API-09004',
 		FailtProgressGradient: 'OSUI-API-09005',
+		FailRegisterCallback: 'OSUI-API-09006',
 	};
 
 	export const RangeSlider = {
@@ -159,12 +161,14 @@ namespace OutSystems.OSUI.ErrorCodes {
 	export const AnimatedLabel = {
 		FailChangeProperty: 'OSUI-API-14001',
 		FailDispose: 'OSUI-API-14002',
+		FailRegisterCallback: 'OSUI-API-14004',
 		FailUpdate: 'OSUI-API-14003',
 	};
 
 	export const ButtonLoading = {
 		FailChangeProperty: 'OSUI-API-15001',
 		FailDispose: 'OSUI-API-15002',
+		FailRegisterCallback: 'OSUI-API-15003',
 	};
 
 	export const DropdownServerSideItem = {
@@ -182,6 +186,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 	export const Gallery = {
 		FailChangeProperty: 'OSUI-API-18001',
 		FailDispose: 'OSUI-API-18002',
+		FailRegisterCallback: 'OSUI-API-18003',
 	};
 
 	export const Rating = {
@@ -215,6 +220,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 	export const TabsContentItem = {
 		FailChangeProperty: 'OSUI-API-23001',
 		FailDispose: 'OSUI-API-23002',
+		FailRegisterCallback: 'OSUI-API-23003',
 	};
 
 	export const TabsHeaderItem = {
@@ -222,6 +228,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailDisableTabHeader: 'OSUI-API-24002',
 		FailDispose: 'OSUI-API-24003',
 		FailEnableTabHeader: 'OSUI-API-24004',
+		FailRegisterCallback: 'OSUI-API-24006',
 		FailUpdate: 'OSUI-API-24005',
 	};
 

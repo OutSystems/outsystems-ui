@@ -43,7 +43,6 @@ namespace OSFramework.OSUI.Patterns.Sidebar.Enum {
 	 * Sidebar Events
 	 */
 	export enum Events {
-		OnInitialize = 'Initialized',
 		OnToggle = 'OnToggle',
 	}
 }

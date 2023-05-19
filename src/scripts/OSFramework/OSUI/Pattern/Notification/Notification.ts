@@ -158,7 +158,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 
 		// Method that triggers the OnToggle event
 		private _triggerOnToggleEvent(isOpen: boolean): void {
-			Helper.AsyncInvocation(this._platformEventOnToggle, this.widgetId, isOpen);
+			this.triggerPlatformEventplatformCallback(this._platformEventOnToggle, isOpen);
 		}
 
 		// Set the cssClasses that should be assigned to the element on it's initialization
@@ -262,8 +262,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 */
 		protected setHtmlElements(): void {
 			this._parentSelf = Helper.Dom.GetElementById(this.widgetId);
-
-			Helper.AsyncInvocation(this._platformEventOnInitialize, this.widgetId);
 		}
 
 		/**
@@ -487,12 +485,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
-				case Patterns.Notification.Enum.Events.OnInitialize:
-					if (this._platformEventOnInitialize === undefined) {
-						this._platformEventOnInitialize = callback;
-					}
-					break;
-
 				case Patterns.Notification.Enum.Events.OnToggle:
 					if (this._platformEventOnToggle === undefined) {
 						this._platformEventOnToggle = callback;
@@ -500,9 +492,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 					break;
 
 				default:
-					throw new Error(
-						`${ErrorCodes.Notification.FailRegisterCallback}:	The given '${eventName}' event name is not defined.`
-					);
+					super.registerCallback(eventName, callback);
 			}
 		}
 
