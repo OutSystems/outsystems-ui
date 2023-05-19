@@ -139,7 +139,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 
 		// Method to handle the keyboard interactions
 		private _onToggleCallback(): void {
-			Helper.AsyncInvocation(this._platformEventOnToggle, this.widgetId, this._isOpen);
+			this.triggerPlatformEventplatformCallback(this._platformEventOnToggle, this._isOpen);
 		}
 
 		// Method to remove the event listeners

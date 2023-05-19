@@ -129,7 +129,7 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
-			errorCode: ErrorCodes.Dropdown.FailRegisterCallback,
+			errorCode: ErrorCodes.AnimatedLabel.FailRegisterCallback,
 			callback: () => {
 				const animatedlabel = this.GetAnimatedLabelById(dropdownId);
 

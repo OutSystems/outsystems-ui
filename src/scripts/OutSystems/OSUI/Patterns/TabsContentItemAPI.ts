@@ -122,7 +122,7 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 	 * Function that gets the instance of Tabs by a given ID.
 	 *
 	 * @export
-	 * @param {string} tabsId ID of the Tabs that will be looked for.
+	 * @param {string} tabsContentItemId ID of the Tabs that will be looked for.
 	 * @return {*}  {OSFramework.OSUI.Patterns.Tabs.ITabs}
 	 */
 	export function GetTabsContentItemById(
@@ -133,5 +133,31 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 			tabsContentItemId,
 			_tabsContentItemMap
 		) as OSFramework.OSUI.Patterns.TabsContentItem.ITabsContentItem;
+	}
+
+	/**
+	 * Function that will register a pattern callback.
+	 *
+	 * @export
+	 * @param {string} tabsContentItemId
+	 * @param {string} eventName
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
+	 * @return {*}  {string}
+	 */
+	export function RegisterCallback(
+		tabsContentItemId: string,
+		eventName: string,
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
+	): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.TabsContentItem.FailRegisterCallback,
+			callback: () => {
+				const tabsContentItem = GetTabsContentItemById(tabsContentItemId);
+
+				tabsContentItem.registerCallback(eventName, callback);
+			},
+		});
+
+		return result;
 	}
 }

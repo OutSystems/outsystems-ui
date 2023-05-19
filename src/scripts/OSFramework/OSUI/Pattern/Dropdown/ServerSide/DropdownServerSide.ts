@@ -63,8 +63,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		private _isBlocked = false;
 		// Store the Element State, by default is closed!
 		private _isOpen = false;
-		// Platform OnInitialize Callback
-		private _platformEventInitializedCallback: GlobalCallbacks.OSGeneric;
 		// Platform OnClose Callback
 		private _platformEventOnToggleCallback: GlobalCallbacks.OSGeneric;
 		// Store the RequestAnimationFrame that will be triggered at OnBodyScroll
@@ -680,7 +678,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 		// Mehod used to trigger the _platformEventOnToggleCallback callback!
 		private _triggerToogleCalbackEvent(): void {
-			Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, this._isOpen);
+			this.triggerPlatformEventplatformCallback(this._platformEventOnToggleCallback, this._isOpen);
 		}
 
 		// Remove Pattern Events
@@ -932,8 +930,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			// Set the balloon coordinates
 			this._setBalloonCoordinates();
 
-			// Trigger platform's _platformEventInitializedCallback client Action
-			Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
+			this.finishBuild();
 		}
 
 		/**
@@ -955,7 +952,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			this._eventOnSpanFocus = undefined;
 			this._eventOnTouchMove = undefined;
 			this._eventOnWindowResize = undefined;
-			this._platformEventInitializedCallback = undefined;
 			this._platformEventOnToggleCallback = undefined;
 		}
 
@@ -1017,7 +1013,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			this.setCallbacks();
 			this.setHtmlElements();
 			this._setInitialOptions();
-			super.finishBuild();
 		}
 
 		/**
@@ -1139,12 +1134,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
-				case Patterns.Dropdown.Enum.Events.Initialized:
-					if (this._platformEventInitializedCallback === undefined) {
-						this._platformEventInitializedCallback = callback;
-					}
-					break;
-
 				case Enum.Events.OnToggle:
 					if (this._platformEventOnToggleCallback === undefined) {
 						this._platformEventOnToggleCallback = callback;
@@ -1152,9 +1141,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 					break;
 
 				default:
-					throw new Error(
-						`${ErrorCodes.Dropdown.FailRegisterCallback}:	The given '${eventName}' event name is not defined.`
-					);
+					super.registerCallback(eventName, callback);
 			}
 		}
 

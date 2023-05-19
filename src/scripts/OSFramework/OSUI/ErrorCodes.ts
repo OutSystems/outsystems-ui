@@ -18,12 +18,11 @@ namespace OSFramework.OSUI.ErrorCodes {
 	export const Dropdown = {
 		FailOptionItemClicked: 'OSUI-GEN-02001',
 		FailOptionItemKeyPressed: 'OSUI-GEN-02002',
-		FailRegisterCallback: 'OSUI-GEN-02003',
-		FailSetNewOptionItem: 'OSUI-GEN-02004',
-		FailToSetOptionItemAction: 'OSUI-GEN-02005',
-		FailUnsetNewOptionItem: 'OSUI-GEN-02006',
+		FailSetNewOptionItem: 'OSUI-GEN-02003',
+		FailToSetOptionItemAction: 'OSUI-GEN-02004',
+		FailUnsetNewOptionItem: 'OSUI-GEN-02005',
 		HasNoImplementation: {
-			code: 'OSUI-GEN-02007',
+			code: 'OSUI-GEN-02006',
 			message: 'This method has no implementation on this Dropdown Type.',
 		},
 	};
@@ -32,13 +31,8 @@ namespace OSFramework.OSUI.ErrorCodes {
 		FailOnSetIntersectionObserver: 'OSUI-GEN-0401',
 	};
 
-	export const Notification = {
-		FailRegisterCallback: 'OSUI-GEN-13001',
-	};
-
 	export const RangeSlider = {
-		FailRegisterCallback: 'OSUI-GEN-04001',
-		FailSetValue: 'OSUI-GEN-04002',
+		FailSetValue: 'OSUI-GEN-04001',
 	};
 
 	export const SectionIndex = {
@@ -52,13 +46,8 @@ namespace OSFramework.OSUI.ErrorCodes {
 		FailToSetTargetElement: 'OSUI-GEN-06001',
 	};
 
-	export const Submenu = {
-		FailRegisterCallback: 'OSUI-GEN-14001',
-	};
-
 	export const Tooltip = {
-		FailRegisterCallback: 'OSUI-GEN-08001',
-		FailOnSetIntersectionObserver: 'OSUI-GEN-08002',
+		FailOnSetIntersectionObserver: 'OSUI-GEN-08001',
 	};
 
 	export const Tabs = {
@@ -93,13 +82,5 @@ namespace OSFramework.OSUI.ErrorCodes {
 		FailSavingPendingEvent: 'OSUI-GEN-12002',
 		FailSavedEventRemoval: 'OSUI-GEN-12003',
 		FailSavingEvent: 'OSUI-GEN-12004',
-	};
-
-	export const Sidebar = {
-		FailRegisterCallback: 'OSUI-GEN-14001',
-	};
-
-	export const InlineSvg = {
-		FailRegisterCallback: 'OSUI-GEN-15001',
 	};
 }

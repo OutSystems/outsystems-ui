@@ -113,13 +113,13 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 * @export
 	 * @param {string} flipId
 	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.Patterns.FlipContent.Callbacks.OSFlipEvent} callback
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
 	 * @return {*}  {string}
 	 */
 	export function RegisterCallback(
 		flipId: string,
 		eventName: string,
-		callback: OSFramework.OSUI.Patterns.FlipContent.Callbacks.OSFlipEvent
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.FlipContent.FailRegisterCallback,

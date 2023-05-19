@@ -124,7 +124,7 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
-			errorCode: ErrorCodes.Dropdown.FailRegisterCallback,
+			errorCode: ErrorCodes.Progress.FailRegisterCallback,
 			callback: () => {
 				const _progressItem = this.GetProgressItemById(dropdownId);
 

@@ -140,13 +140,13 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	 * @export
 	 * @param {string} bottomSheetId
 	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.Generic} callback
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
 	 * @return {*}  {string}
 	 */
 	export function RegisterCallback(
 		bottomSheetId: string,
 		eventName: string,
-		callback: OSFramework.OSUI.GlobalCallbacks.Generic
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.BottomSheet.FailRegisterCallback,

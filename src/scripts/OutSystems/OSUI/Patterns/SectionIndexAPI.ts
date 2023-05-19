@@ -110,4 +110,30 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 
 		return _sectionIndexItem;
 	}
+
+	/**
+	 * Function to register a provider callback
+	 *
+	 * @export
+	 * @param {string} sectionIndexId
+	 * @param {string} eventName
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
+	 * @return {*}  {string}
+	 */
+	export function RegisterCallback(
+		sectionIndexId: string,
+		eventName: string,
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
+	): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.SectionIndex.FailRegisterCallback,
+			callback: () => {
+				const _sectionIndexItem = GetSectionIndexById(sectionIndexId);
+
+				_sectionIndexItem.registerCallback(eventName, callback);
+			},
+		});
+
+		return result;
+	}
 }

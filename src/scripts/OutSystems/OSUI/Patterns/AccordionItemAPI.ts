@@ -178,13 +178,13 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 * @export
 	 * @param {string} accordionItemId
 	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.Generic} callback
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
 	 * @return {*}  {string}
 	 */
 	export function RegisterCallback(
 		accordionItemId: string,
 		eventName: string,
-		callback: OSFramework.OSUI.GlobalCallbacks.Generic
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.AccordionItem.FailRegisterCallback,
