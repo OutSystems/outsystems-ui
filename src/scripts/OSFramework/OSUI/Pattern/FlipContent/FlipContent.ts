@@ -71,9 +71,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 
 		// Triggers the toggle event on the platform
 		private _triggerPlatformEvent(): void {
-			if (this._platformEventOnToggle) {
-				this.triggerPlatformEventCallback(this._platformEventOnToggle, this.configs.IsFlipped);
-			}
+			this.triggerPlatformEventCallback(this._platformEventOnToggle, this.configs.IsFlipped);
 		}
 
 		// Update the A11Y attributes
