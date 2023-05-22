@@ -666,7 +666,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		// Method that triggers the OnTabsChange event
 		private _triggerOnChangeEvent(activeTab: number): void {
 			if (this._platformEventTabsOnChange !== undefined) {
-				this.triggerPlatformEventplatformCallback(this._platformEventTabsOnChange, activeTab);
+				this.triggerPlatformEventCallback(this._platformEventTabsOnChange, activeTab);
 			}
 		}
 

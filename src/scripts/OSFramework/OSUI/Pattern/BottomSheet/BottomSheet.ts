@@ -198,7 +198,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 
 		// Method that triggers the OnToggle event
 		private _triggerOnToggleEvent(): void {
-			this.triggerPlatformEventplatformCallback(this._platformEventOnToggle, this._isOpen);
+			this.triggerPlatformEventCallback(this._platformEventOnToggle, this._isOpen);
 		}
 
 		/**

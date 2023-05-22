@@ -208,7 +208,7 @@ namespace OSFramework.OSUI.Patterns {
 		 */
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		public setProviderConfigs(providerConfigs: unknown): void {
-			this.triggerPlatformEventplatformCallback(this._platformEventProviderConfigsAppliedCallback);
+			this.triggerPlatformEventCallback(this._platformEventProviderConfigsAppliedCallback);
 		}
 
 		/**

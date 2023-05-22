@@ -159,7 +159,7 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 			}
 
 			// Trigger platform's onChange callback event
-			this.triggerPlatformEventplatformCallback(this._onChangeCallbackEvent, _selectedTime);
+			this.triggerPlatformEventCallback(this._onChangeCallbackEvent, _selectedTime);
 		}
 
 		/**

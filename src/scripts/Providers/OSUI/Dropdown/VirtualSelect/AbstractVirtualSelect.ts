@@ -76,7 +76,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		// Get the selected options and pass them into callBack
 		private _onSelectedOption() {
 			// Trigger platform's SelectedOptionCallbackEvent client Action
-			this.triggerPlatformEventplatformCallback(this._platformEventSelectedOptCallback, this.getSelectedValues());
+			this.triggerPlatformEventCallback(this._platformEventSelectedOptCallback, this.getSelectedValues());
 		}
 
 		// Close the dropdown if it's open!

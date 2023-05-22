@@ -158,7 +158,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 
 		// Method that triggers the OnToggle event
 		private _triggerOnToggleEvent(isOpen: boolean): void {
-			this.triggerPlatformEventplatformCallback(this._platformEventOnToggle, isOpen);
+			this.triggerPlatformEventCallback(this._platformEventOnToggle, isOpen);
 		}
 
 		// Set the cssClasses that should be assigned to the element on it's initialization

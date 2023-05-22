@@ -678,7 +678,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 		// Mehod used to trigger the _platformEventOnToggleCallback callback!
 		private _triggerToogleCalbackEvent(): void {
-			this.triggerPlatformEventplatformCallback(this._platformEventOnToggleCallback, this._isOpen);
+			this.triggerPlatformEventCallback(this._platformEventOnToggleCallback, this._isOpen);
 		}
 
 		// Remove Pattern Events

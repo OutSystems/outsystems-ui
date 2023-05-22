@@ -121,7 +121,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		private _setOnSlideMovedEvent(): void {
 			this._provider.on(Enum.SpliderEvents.Moved, (index) => {
 				if (index !== this._currentIndex) {
-					this.triggerPlatformEventplatformCallback(this._platformEventOnSlideMoved, index);
+					this.triggerPlatformEventCallback(this._platformEventOnSlideMoved, index);
 					this._currentIndex = index;
 				}
 			});

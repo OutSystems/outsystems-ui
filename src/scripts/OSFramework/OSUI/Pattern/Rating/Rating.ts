@@ -279,7 +279,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		// Method that triggers the OnSelect event
 		private _triggerOnSelectEvent(value: number): void {
 			if (this._platformEventOnSelect !== undefined) {
-				this.triggerPlatformEventplatformCallback(this._platformEventOnSelect, value);
+				this.triggerPlatformEventCallback(this._platformEventOnSelect, value);
 			}
 		}
 

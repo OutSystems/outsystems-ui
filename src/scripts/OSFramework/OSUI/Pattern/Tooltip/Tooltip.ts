@@ -457,7 +457,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 				}
 
 				// Trigger the _platformEventOnToggleCallback callback!
-				this.triggerPlatformEventplatformCallback(this._platformEventOnToggleCallback, false);
+				this.triggerPlatformEventCallback(this._platformEventOnToggleCallback, false);
 			}
 		}
 
@@ -515,7 +515,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 				Helper.AsyncInvocation(this._setObserver.bind(this));
 
 				// Trigger the _platformEventOnToggleCallback callback!
-				this.triggerPlatformEventplatformCallback(this._platformEventOnToggleCallback, true);
+				this.triggerPlatformEventCallback(this._platformEventOnToggleCallback, true);
 
 				// Delay the _isOpenedByApi assignement in order to deal with clickOnBody() and open() api concurrency!
 				Helper.AsyncInvocation(() => {

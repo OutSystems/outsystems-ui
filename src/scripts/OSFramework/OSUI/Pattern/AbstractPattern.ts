@@ -55,7 +55,7 @@ namespace OSFramework.OSUI.Patterns {
 
 			if (this._platformEventInitialized !== undefined) {
 				// Trigger platform's _platformEventInitialized handler.
-				this.triggerPlatformEventplatformCallback(this._platformEventInitialized);
+				this.triggerPlatformEventCallback(this._platformEventInitialized);
 			}
 		}
 
@@ -67,10 +67,7 @@ namespace OSFramework.OSUI.Patterns {
 		 * @param {...unknown[]} args
 		 * @memberof AbstractProviderPattern
 		 */
-		protected triggerPlatformEventplatformCallback(
-			platFormCallback: GlobalCallbacks.OSGeneric,
-			...args: unknown[]
-		): void {
+		protected triggerPlatformEventCallback(platFormCallback: GlobalCallbacks.OSGeneric, ...args: unknown[]): void {
 			if (platFormCallback !== undefined) {
 				Helper.AsyncInvocation(platFormCallback, this.widgetId, ...args);
 			}

@@ -176,7 +176,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 			}
 
 			// Trigger platform's onChange callback event
-			this.triggerPlatformEventplatformCallback(
+			this.triggerPlatformEventCallback(
 				this._onSelectedCallbackEvent,
 				_selectedMonthYear.month,
 				_selectedMonthYear.monthOrder,
