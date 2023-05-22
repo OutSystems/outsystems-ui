@@ -214,6 +214,7 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 		protected unsetCallbacks(): void {
 			this._eventOnKeypress = undefined;
 			this._platformEventOnToggle = undefined;
+			this._platformEventInitialized = undefined;
 		}
 
 		/**

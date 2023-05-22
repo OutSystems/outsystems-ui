@@ -289,6 +289,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Gallery = 'Gallery',
 		MonthPicker = 'MonthPicker',
 		Notification = 'Notification',
+		OverflowMenu = 'OverflowMenu',
 		ProgressBar = 'Progress Bar',
 		ProgressCircle = 'Progress Circle',
 		RangeSlider = 'Range Slider',

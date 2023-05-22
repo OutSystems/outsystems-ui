@@ -15,9 +15,9 @@ namespace OutSystems.OSUI.Patterns.BalloonAPI {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Balloon.FailChangeProperty,
 			callback: () => {
-				const balloon = GetBalloonById(balloonId);
+				const _balloon = GetBalloonById(balloonId);
 
-				balloon.changeProperty(propertyName, propertyValue);
+				_balloon.changeProperty(propertyName, propertyValue);
 			},
 		});
 
@@ -56,11 +56,11 @@ namespace OutSystems.OSUI.Patterns.BalloonAPI {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Balloon.FailDispose,
 			callback: () => {
-				const balloon = GetBalloonById(balloonId);
+				const _balloon = GetBalloonById(balloonId);
 
-				balloon.dispose();
+				_balloon.dispose();
 
-				_balloonMap.delete(balloon.uniqueId);
+				_balloonMap.delete(_balloon.uniqueId);
 			},
 		});
 

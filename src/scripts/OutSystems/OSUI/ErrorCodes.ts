@@ -301,6 +301,12 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailRegisterCallback: 'OSUI-API-29003',
 	};
 
+	export const OverflowMenu = {
+		FailChangeProperty: 'OSUI-API-30001',
+		FailDispose: 'OSUI-API-30002',
+		FailRegisterCallback: 'OSUI-API-30003',
+	};
+
 	// Error Codes used in Legacy Client Action
 	export const Legacy = {
 		FailAddFavicon_Legacy: 'OSUI-LEG-000001',
