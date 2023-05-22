@@ -50,7 +50,6 @@ namespace OSFramework.OSUI.Patterns {
 		 * @memberof OSFramework.Patterns.AbstractPattern
 		 */
 		protected finishBuild(): void {
-			//In the future we can trigger an initialized event.
 			this._isBuilt = true;
 
 			if (this._platformEventInitialized !== undefined) {
