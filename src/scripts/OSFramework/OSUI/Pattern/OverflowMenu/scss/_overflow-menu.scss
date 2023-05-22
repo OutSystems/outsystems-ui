@@ -2,3 +2,11 @@
 ////
 /// @group Patterns-OverflowMenu
 /// Patterns - Navigation - OverflowMenu
+
+.osui-overflow-menu {
+    &__trigger {
+        * {
+            pointer-events: none;
+        }
+    }
+}

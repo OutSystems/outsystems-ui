@@ -224,14 +224,14 @@ declare namespace OSFramework.OSUI.GlobalEnum {
     enum FloatingPosition {
         Auto = "auto",
         Bottom = "bottom",
-        BottomLeft = "bottom-start",
-        BottomRight = "bottom-end",
+        BottomStart = "bottom-start",
+        BottomEnd = "bottom-end",
         Center = "center",
         Left = "left",
         Right = "right",
         Top = "top",
-        TopLeft = "top-start",
-        TopRight = "top-end"
+        TopStart = "top-start",
+        TopEnd = "top-end"
     }
     enum CssProperties {
         Auto = "auto",
@@ -379,6 +379,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         Gallery = "Gallery",
         MonthPicker = "MonthPicker",
         Notification = "Notification",
+        OverflowMenu = "OverflowMenu",
         ProgressBar = "Progress Bar",
         ProgressCircle = "Progress Circle",
         RangeSlider = "Range Slider",
@@ -1389,17 +1390,19 @@ declare namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 }
 declare namespace OSFramework.OSUI.Patterns.Balloon {
     class Balloon extends AbstractPattern<BalloonConfig> implements IBalloon {
+        private _eventBodyClick;
         private _eventOnKeypress;
         private _floatingUIInstance;
         private _focusTrapInstance;
         private _focusableActiveElement;
-        private _isOpen;
         private _parentSelf;
         private _platformEventInitialized;
         private _platformEventOnToggle;
         anchorElem: HTMLElement;
         floatingOptions: Providers.OSUI.Utils.FloatingUIOptions;
+        isOpen: boolean;
         constructor(uniqueId: string, configs: JSON);
+        private _bodyClickCallback;
         private _handleFocusTrap;
         private _handleShape;
         private _onkeypressCallback;
@@ -1454,6 +1457,7 @@ declare namespace OSFramework.OSUI.Patterns.Balloon.Enum {
 declare namespace OSFramework.OSUI.Patterns.Balloon {
     interface IBalloon extends Interface.IPattern, Interface.IOpenable, Interface.ICallback {
         anchorElem: HTMLElement;
+        isOpen: boolean;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.BottomSheet {
@@ -2325,6 +2329,51 @@ declare namespace OSFramework.OSUI.Patterns.Notification {
         Width: string;
         validateCanChange(isBuilt: boolean, key: string): boolean;
         validateDefault(key: string, value: unknown): unknown;
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.OverflowMenu.Enum {
+    enum CssClass {
+        Trigger = "osui-overflow-menu__trigger"
+    }
+    enum Events {
+        Initialized = "Initialized",
+        OnMenuToggle = "OnToggle"
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
+    interface IOverflowMenu extends Interface.IPattern, Interface.IOpenable, Interface.ICallback {
+        balloonElem: Balloon.IBalloon;
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
+    class OverflowMenu extends AbstractPattern<OverflowMenuConfig> implements IOverflowMenu {
+        private _eventOnClick;
+        private _isOpen;
+        private _platformEventInitialized;
+        private _triggerElem;
+        balloonElem: Balloon.IBalloon;
+        constructor(uniqueId: string, configs: JSON);
+        private _onClickCallback;
+        private _triggerInitializedEvent;
+        protected removeEventListeners(): void;
+        protected setA11YProperties(): void;
+        protected setCallbacks(): void;
+        protected setEventListeners(): void;
+        protected setHtmlElements(): void;
+        protected unsetCallbacks(): void;
+        protected unsetHtmlElements(): void;
+        build(): void;
+        changeProperty(propertyName: string, propertyValue: unknown): void;
+        close(): void;
+        dispose(): void;
+        open(): void;
+        registerCallback(callback: GlobalCallbacks.OSGeneric, eventName: string): void;
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
+    class OverflowMenuConfig extends AbstractConfiguration {
+        BalloonWidgetId: string;
+        constructor(config: JSON);
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Progress {
@@ -3773,6 +3822,13 @@ declare namespace OutSystems.OSUI.ErrorCodes {
         FailChangeProperty: string;
         FailDispose: string;
         FailRegisterCallback: string;
+        FailOpen: string;
+        FailClose: string;
+    };
+    const OverflowMenu: {
+        FailChangeProperty: string;
+        FailDispose: string;
+        FailRegisterCallback: string;
     };
     const Legacy: {
         FailAddFavicon_Legacy: string;
@@ -3827,6 +3883,8 @@ declare namespace OutSystems.OSUI.Patterns.BalloonAPI {
     function GetAllBalloons(): Array<string>;
     function GetBalloonById(balloonId: string): OSFramework.OSUI.Patterns.Balloon.IBalloon;
     function Initialize(balloonId: string): OSFramework.OSUI.Patterns.Balloon.IBalloon;
+    function Open(balloonId: string): string;
+    function Close(balloonId: string): string;
     function RegisterCallback(balloonId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.Generic): string;
 }
 declare namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
@@ -3968,6 +4026,15 @@ declare namespace OutSystems.OSUI.Patterns.NotificationAPI {
     function Initialize(notificationId: string): OSFramework.OSUI.Patterns.Notification.INotification;
     function RegisterCallback(notificationId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
     function Show(notificationId: string): string;
+}
+declare namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
+    function ChangeProperty(overflowMenuId: string, propertyName: string, propertyValue: unknown): string;
+    function Create(overflowMenuId: string, configs: string): OSFramework.OSUI.Patterns.OverflowMenu.IOverflowMenu;
+    function Dispose(overflowMenuId: string): string;
+    function GetAllOverflowMenus(): Array<string>;
+    function GetOverflowMenuById(overflowMenuId: string): OSFramework.OSUI.Patterns.OverflowMenu.IOverflowMenu;
+    function Initialize(overflowMenuId: string): OSFramework.OSUI.Patterns.OverflowMenu.IOverflowMenu;
+    function RegisterCallback(overflowMenuId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.Generic): string;
 }
 declare namespace OutSystems.OSUI.Patterns.ProgressAPI {
     function ChangeProperty(progressId: string, propertyName: string, propertyValue: any): string;
@@ -5402,6 +5469,12 @@ declare namespace Providers.OSUI.TimePicker.Flatpickr {
 }
 declare namespace Providers.OSUI.TimePicker.Flatpickr {
     interface IFlatpickrTime extends OSFramework.OSUI.Patterns.TimePicker.ITimePicker, OSFramework.OSUI.Interface.IProviderPattern<Flatpickr> {
+    }
+}
+declare namespace Providers.OSUI.Utils.Enum {
+    enum CssCustomProperties {
+        YPosition = "--osui-floating-position-y",
+        XPosition = "--osui-floating-position-x"
     }
 }
 declare namespace Providers.OSUI.Utils {

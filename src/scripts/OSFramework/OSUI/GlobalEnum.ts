@@ -72,14 +72,14 @@ namespace OSFramework.OSUI.GlobalEnum {
 	export enum FloatingPosition {
 		Auto = 'auto',
 		Bottom = 'bottom',
-		BottomLeft = 'bottom-start',
-		BottomRight = 'bottom-end',
+		BottomStart = 'bottom-start',
+		BottomEnd = 'bottom-end',
 		Center = 'center',
 		Left = 'left',
 		Right = 'right',
 		Top = 'top',
-		TopLeft = 'top-start',
-		TopRight = 'top-end',
+		TopStart = 'top-start',
+		TopEnd = 'top-end',
 	}
 
 	/**

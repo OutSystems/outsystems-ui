@@ -7725,9 +7725,9 @@ span.flatpickr-weekday{
   min-width:100px;
   height:auto;
   min-height:100px;
-  -webkit-transform:translate(var(--floating-position-x), var(--floating-position-y));
-      -ms-transform:translate(var(--floating-position-x), var(--floating-position-y));
-          transform:translate(var(--floating-position-x), var(--floating-position-y));
+  -webkit-transform:translate(var(--osui-floating-position-x), var(--osui-floating-position-y));
+      -ms-transform:translate(var(--osui-floating-position-x), var(--osui-floating-position-y));
+          transform:translate(var(--osui-floating-position-x), var(--osui-floating-position-y));
   -webkit-transition:-webkit-transform 150ms ease;
   transition:-webkit-transform 150ms ease;
   -o-transition:transform 150ms ease;

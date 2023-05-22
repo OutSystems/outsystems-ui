@@ -26,6 +26,15 @@ namespace Providers.OSUI.Utils {
 			const _middlewareArray = [];
 
 			if (this._floatingUIOptions.autoPlacement) {
+				if (this._floatingUIOptions.autoPlacementOptions.aligment === '') {
+					this._floatingUIOptions.autoPlacementOptions.aligment = null;
+				}
+
+				if (this._floatingUIOptions.autoPlacementOptions.allowedPlacements.length <= 0) {
+					this._floatingUIOptions.autoPlacementOptions.allowedPlacements.push(
+						OSFramework.OSUI.GlobalEnum.FloatingPosition.BottomStart
+					);
+				}
 				_middlewareArray.push(window.FloatingUIDOM.autoPlacement(this._floatingUIOptions.autoPlacementOptions));
 			}
 

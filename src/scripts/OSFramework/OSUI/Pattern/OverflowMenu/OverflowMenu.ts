@@ -1,16 +1,31 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Patterns.OverflowMenu {
 	export class OverflowMenu extends AbstractPattern<OverflowMenuConfig> implements IOverflowMenu {
+		private _eventOnClick: GlobalCallbacks.Generic;
+		private _isOpen = false;
 		private _platformEventInitialized: GlobalCallbacks.Generic;
+		private _triggerElem: HTMLElement;
 		public balloonElem: Balloon.IBalloon;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new OverflowMenuConfig(configs));
 		}
 
+		private _onClickCallback(): void {
+			if (this.balloonElem.isOpen) {
+				this.close();
+			} else {
+				this.open();
+			}
+		}
+
 		// Method that triggers the Intialized event
 		private _triggerInitializedEvent(): void {
 			Helper.AsyncInvocation(this._platformEventInitialized, this.widgetId);
+		}
+
+		protected removeEventListeners(): void {
+			this._triggerElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 		}
 
 		/**
@@ -30,7 +45,11 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 * @memberof OSFramework.Patterns.OverflowMenu.OverflowMenu
 		 */
 		protected setCallbacks(): void {
-			//
+			this._eventOnClick = this._onClickCallback.bind(this);
+		}
+
+		protected setEventListeners(): void {
+			this._triggerElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 		}
 
 		/**
@@ -40,7 +59,8 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 * @memberof OSFramework.Patterns.OverflowMenu.OverflowMenu
 		 */
 		protected setHtmlElements(): void {
-			//this.balloonElem = document.getElementById(this.configs.AnchorId);
+			this._triggerElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.Trigger);
+			this.balloonElem = OutSystems.OSUI.Patterns.BalloonAPI.GetBalloonById(this.configs.BalloonWidgetId);
 		}
 
 		/**
@@ -50,6 +70,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 * @memberof OSFramework.Patterns.OverflowMenu.OverflowMenu
 		 */
 		protected unsetCallbacks(): void {
+			this._eventOnClick = undefined;
 			this._platformEventInitialized = undefined;
 		}
 
@@ -60,11 +81,15 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 * @memberof OSFramework.Patterns.OverflowMenu.OverflowMenu
 		 */
 		protected unsetHtmlElements(): void {
+			this._triggerElem = undefined;
 			this.balloonElem = undefined;
 		}
 
 		public build(): void {
 			super.build();
+			this.setHtmlElements();
+			this.setCallbacks();
+			this.setEventListeners();
 			super.finishBuild();
 		}
 
@@ -74,14 +99,19 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 
 		public close(): void {
 			this.balloonElem.close();
+			this._isOpen = false;
 		}
 
 		public dispose(): void {
+			this.removeEventListeners();
+			this.unsetCallbacks();
+			this.unsetHtmlElements();
 			super.dispose();
 		}
 
 		public open(): void {
 			this.balloonElem.open();
+			this._isOpen = true;
 		}
 
 		/**

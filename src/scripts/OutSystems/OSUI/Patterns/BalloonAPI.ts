@@ -108,6 +108,46 @@ namespace OutSystems.OSUI.Patterns.BalloonAPI {
 	}
 
 	/**
+	 * Function to open this pattern
+	 *
+	 * @export
+	 * @param {string} balloonId
+	 * @return {*}  {string}
+	 */
+	export function Open(balloonId: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Balloon.FailOpen,
+			callback: () => {
+				const _balloonItem = GetBalloonById(balloonId);
+
+				_balloonItem.open();
+			},
+		});
+
+		return result;
+	}
+
+	/**
+	 * Function to close this pattern
+	 *
+	 * @export
+	 * @param {string} balloonId
+	 * @return {*}  {string}
+	 */
+	export function Close(balloonId: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Balloon.FailClose,
+			callback: () => {
+				const _balloonItem = GetBalloonById(balloonId);
+
+				_balloonItem.close();
+			},
+		});
+
+		return result;
+	}
+
+	/**
 	 * Function to register a callback on this pattern
 	 *
 	 * @export

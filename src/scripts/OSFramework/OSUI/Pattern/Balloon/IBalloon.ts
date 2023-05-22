@@ -5,5 +5,6 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 	 */
 	export interface IBalloon extends Interface.IPattern, Interface.IOpenable, Interface.ICallback {
 		anchorElem: HTMLElement;
+		isOpen: boolean;
 	}
 }
