@@ -7715,11 +7715,16 @@ span.flatpickr-weekday{
   border-radius:var(--osui-balloon-shape);
   background-color:var(--color-neutral-0);
   display:none;
+  padding:var(--space-s);
   position:absolute;
   top:0;
   left:0;
-  width:300px;
-  height:100px;
+  width:-webkit-max-content;
+  width:-moz-max-content;
+  width:max-content;
+  min-width:100px;
+  height:auto;
+  min-height:100px;
   -webkit-transform:translate(var(--floating-position-x), var(--floating-position-y));
       -ms-transform:translate(var(--floating-position-x), var(--floating-position-y));
           transform:translate(var(--floating-position-x), var(--floating-position-y));

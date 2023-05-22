@@ -4041,7 +4041,7 @@ var OSFramework;
                             this.setEventListeners();
                         }
                         else {
-                            this._floatingUIInstance.eventOnUpdateCallback();
+                            this._floatingUIInstance.close();
                             this.removeEventListeners();
                         }
                         this.setA11YProperties();
@@ -4088,6 +4088,10 @@ var OSFramework;
                             this.floatingOptions = {
                                 autoPlacement: this.configs.Position === OSUI.GlobalEnum.FloatingPosition.Auto,
                                 anchorElem: this.anchorElem,
+                                autoPlacementOptions: {
+                                    placement: this.configs.Alignment,
+                                    allowedPlacements: this.configs.AllowedPlacements,
+                                },
                                 floatingElem: this.selfElement,
                                 position: this.configs.Position,
                                 useShift: true,
@@ -4232,7 +4236,7 @@ var OSFramework;
                     (function (Properties) {
                         Properties["AnchorId"] = "AnchorId";
                         Properties["BalloonPosition"] = "BalloonPosition";
-                        Properties["BalloonShape"] = "BalloonPosition";
+                        Properties["BalloonShape"] = "BalloonShape";
                     })(Properties = Enum.Properties || (Enum.Properties = {}));
                 })(Enum = Balloon.Enum || (Balloon.Enum = {}));
             })(Balloon = Patterns.Balloon || (Patterns.Balloon = {}));
@@ -19304,7 +19308,7 @@ var Providers;
                     let _eventOnUpdatePosition = undefined;
                     const _middlewareArray = [];
                     if (this._floatingUIOptions.autoPlacement) {
-                        _middlewareArray.push(window.FloatingUIDOM.autoPlacement());
+                        _middlewareArray.push(window.FloatingUIDOM.autoPlacement(this._floatingUIOptions.autoPlacementOptions));
                     }
                     if (this._floatingUIOptions.useShift) {
                         _middlewareArray.push(window.FloatingUIDOM.shift());
@@ -19328,6 +19332,13 @@ var Providers;
                 }
                 build() {
                     this._setFloatingPosition();
+                }
+                close() {
+                    this.eventOnUpdateCallback();
+                    setTimeout(() => {
+                        OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, '--floating-position-y', 0);
+                        OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, '--floating-position-x', 0);
+                    }, 0);
                 }
                 dispose() {
                     if (this._floatingUIOptions.updatePosition) {

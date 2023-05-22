@@ -18,6 +18,6 @@ namespace OSFramework.OSUI.Patterns.Balloon.Enum {
 	export enum Properties {
 		AnchorId = 'AnchorId',
 		BalloonPosition = 'BalloonPosition',
-		BalloonShape = 'BalloonPosition',
+		BalloonShape = 'BalloonShape',
 	}
 }

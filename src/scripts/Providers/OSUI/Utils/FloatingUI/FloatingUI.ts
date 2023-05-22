@@ -3,6 +3,7 @@ namespace Providers.OSUI.Utils {
 	export type FloatingUIOptions = {
 		anchorElem: HTMLElement;
 		autoPlacement: boolean;
+		autoPlacementOptions: AutoPlacementOptions;
 		floatingElem: HTMLElement;
 		position: string;
 		updatePosition: boolean;
@@ -25,7 +26,7 @@ namespace Providers.OSUI.Utils {
 			const _middlewareArray = [];
 
 			if (this._floatingUIOptions.autoPlacement) {
-				_middlewareArray.push(window.FloatingUIDOM.autoPlacement());
+				_middlewareArray.push(window.FloatingUIDOM.autoPlacement(this._floatingUIOptions.autoPlacementOptions));
 			}
 
 			if (this._floatingUIOptions.useShift) {
@@ -43,13 +44,13 @@ namespace Providers.OSUI.Utils {
 				).then(({ x, y }) => {
 					OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
 						this._floatingUIOptions.floatingElem,
-						'--floating-position-y',
-						OSFramework.OSUI.Helper.GetRoundPixelRatio(y) + 'px'
+						Enum.CssCustomProperties.YPosition,
+						OSFramework.OSUI.Helper.GetRoundPixelRatio(y) + OSFramework.OSUI.GlobalEnum.Units.Pixel
 					);
 					OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
 						this._floatingUIOptions.floatingElem,
-						'--floating-position-x',
-						OSFramework.OSUI.Helper.GetRoundPixelRatio(x) + 'px'
+						Enum.CssCustomProperties.XPosition,
+						OSFramework.OSUI.Helper.GetRoundPixelRatio(x) + OSFramework.OSUI.GlobalEnum.Units.Pixel
 					);
 				});
 			};
@@ -71,6 +72,22 @@ namespace Providers.OSUI.Utils {
 
 		public build(): void {
 			this._setFloatingPosition();
+		}
+
+		public close(): void {
+			this.eventOnUpdateCallback();
+			setTimeout(() => {
+				OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
+					this._floatingUIOptions.floatingElem,
+					Enum.CssCustomProperties.YPosition,
+					0
+				);
+				OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
+					this._floatingUIOptions.floatingElem,
+					Enum.CssCustomProperties.XPosition,
+					0
+				);
+			}, 0);
 		}
 
 		public dispose(): void {

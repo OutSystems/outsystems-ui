@@ -1424,6 +1424,8 @@ declare namespace OSFramework.OSUI.Patterns.Balloon {
 }
 declare namespace OSFramework.OSUI.Patterns.Balloon {
     class BalloonConfig extends AbstractConfiguration {
+        Alignment: string;
+        AllowedPlacements: Array<GlobalEnum.FloatingPosition>;
         AnchorId: string;
         AnchorType: BalloonAnchor;
         Position: GlobalEnum.FloatingPosition;
@@ -1446,7 +1448,7 @@ declare namespace OSFramework.OSUI.Patterns.Balloon.Enum {
     enum Properties {
         AnchorId = "AnchorId",
         BalloonPosition = "BalloonPosition",
-        BalloonShape = "BalloonPosition"
+        BalloonShape = "BalloonShape"
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Balloon {
@@ -5406,6 +5408,7 @@ declare namespace Providers.OSUI.Utils {
     type FloatingUIOptions = {
         anchorElem: HTMLElement;
         autoPlacement: boolean;
+        autoPlacementOptions: AutoPlacementOptions;
         floatingElem: HTMLElement;
         position: string;
         updatePosition: boolean;
@@ -5417,6 +5420,7 @@ declare namespace Providers.OSUI.Utils {
         constructor(options: FloatingUIOptions);
         private _setFloatingPosition;
         build(): void;
+        close(): void;
         dispose(): void;
         update(options: FloatingUIOptions): void;
     }

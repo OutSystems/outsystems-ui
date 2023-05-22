@@ -8,6 +8,8 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 	 * @extends {AbstractConfiguration}
 	 */
 	export class BalloonConfig extends AbstractConfiguration {
+		public Alignment: string;
+		public AllowedPlacements: Array<GlobalEnum.FloatingPosition>;
 		public AnchorId: string;
 		public AnchorType: BalloonAnchor;
 		public Position: GlobalEnum.FloatingPosition;

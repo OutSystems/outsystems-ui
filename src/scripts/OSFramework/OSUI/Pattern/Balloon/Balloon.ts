@@ -74,7 +74,7 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 				this.setFloatingBehaviour();
 				this.setEventListeners();
 			} else {
-				this._floatingUIInstance.eventOnUpdateCallback();
+				this._floatingUIInstance.close();
 				this.removeEventListeners();
 			}
 
@@ -174,6 +174,10 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 				this.floatingOptions = {
 					autoPlacement: this.configs.Position === GlobalEnum.FloatingPosition.Auto,
 					anchorElem: this.anchorElem,
+					autoPlacementOptions: {
+						placement: this.configs.Alignment,
+						allowedPlacements: this.configs.AllowedPlacements,
+					},
 					floatingElem: this.selfElement,
 					position: this.configs.Position,
 					useShift: true,
