@@ -8,13 +8,6 @@ namespace OSFramework.OSUI.Patterns.InlineSvg.Enum {
 	}
 
 	/**
-	 * InlineSvg Events
-	 */
-	export enum Events {
-		OnInitialize = 'Initialized',
-	}
-
-	/**
 	 * InlineSvg Properties
 	 */
 	export enum Properties {

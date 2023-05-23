@@ -12,7 +12,6 @@ namespace OSFramework.OSUI.Patterns.MonthPicker.Enum {
 	 * MonthPicker Events
 	 */
 	export enum Events {
-		OnInitialized = 'OnInitialized',
 		OnSelected = 'OnSelected',
 	}
 

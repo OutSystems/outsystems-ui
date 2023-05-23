@@ -22,7 +22,16 @@ namespace OSFramework.OSUI.Patterns {
 		private _uniqueId: string;
 		// Id of the widget. This will be the Id that the developer will be using in runtime.
 		private _widgetId: string;
+		// Flag to help on check if a pattern has a provider.
+		protected _isProviderBased = false;
 
+		/**
+		 * Creates an instance of AbstractPattern.
+		 *
+		 * @param {string} uniqueId
+		 * @param {C} configs
+		 * @memberof OSFramework.Patterns.AbstractPattern
+		 */
 		constructor(uniqueId: string, configs: C) {
 			this._uniqueId = uniqueId;
 			this._configs = configs;
@@ -50,12 +59,13 @@ namespace OSFramework.OSUI.Patterns {
 		 * @memberof OSFramework.Patterns.AbstractPattern
 		 */
 		protected finishBuild(): void {
-			//In the future we can trigger an initialized event.
 			this._isBuilt = true;
 
-			if (this._platformEventInitialized !== undefined) {
-				// Trigger platform's _platformEventInitialized handler.
-				this.triggerPlatformEventplatformCallback(this._platformEventInitialized);
+			// Check if this is a provider based pattern, If true Initialization cb Event will be triggered at the new provider instance creation.
+			// For non provider based patterns this should be triggered here.
+			if (this._isProviderBased === false) {
+				// Trigger the Initialized Callback Event
+				this.triggerPlatformInitializedEventCallback();
 			}
 		}
 
@@ -67,12 +77,22 @@ namespace OSFramework.OSUI.Patterns {
 		 * @param {...unknown[]} args
 		 * @memberof AbstractProviderPattern
 		 */
-		protected triggerPlatformEventplatformCallback(
-			platFormCallback: GlobalCallbacks.OSGeneric,
-			...args: unknown[]
-		): void {
+		protected triggerPlatformEventCallback(platFormCallback: GlobalCallbacks.OSGeneric, ...args: unknown[]): void {
 			if (platFormCallback !== undefined) {
 				Helper.AsyncInvocation(platFormCallback, this.widgetId, ...args);
+			}
+		}
+
+		/**
+		 * Trigger the Initialized callback platform event.
+		 *
+		 * @protected
+		 * @memberof AbstractPattern
+		 */
+		protected triggerPlatformInitializedEventCallback() {
+			if (this._platformEventInitialized !== undefined) {
+				// Trigger platform's _platformEventInitialized handler.
+				this.triggerPlatformEventCallback(this._platformEventInitialized);
 			}
 		}
 

@@ -117,7 +117,7 @@ namespace OutSystems.OSUI.Patterns.GalleryAPI {
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
-			errorCode: ErrorCodes.Dropdown.FailRegisterCallback,
+			errorCode: ErrorCodes.Gallery.FailRegisterCallback,
 			callback: () => {
 				const gallery = this.GetGalleryById(dropdownId);
 

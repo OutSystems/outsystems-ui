@@ -12,7 +12,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		private _flipWrapperElement: HTMLElement;
 
 		// Callback function to trigger the click event on the platform
-		private _platformEventOnToggle: Callbacks.OSFlipEvent;
+		private _platformEventOnToggle: GlobalCallbacks.OSGeneric;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new FlipContentConfig(configs));
@@ -71,9 +71,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 
 		// Triggers the toggle event on the platform
 		private _triggerPlatformEvent(): void {
-			if (this._platformEventOnToggle) {
-				Helper.AsyncInvocation(this._platformEventOnToggle.bind(this), this.widgetId, this.configs.IsFlipped);
-			}
+			this.triggerPlatformEventCallback(this._platformEventOnToggle, this.configs.IsFlipped);
 		}
 
 		// Update the A11Y attributes

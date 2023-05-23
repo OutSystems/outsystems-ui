@@ -666,7 +666,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		// Method that triggers the OnTabsChange event
 		private _triggerOnChangeEvent(activeTab: number): void {
 			if (this._platformEventTabsOnChange !== undefined) {
-				Helper.AsyncInvocation(this._platformEventTabsOnChange, this.widgetId, activeTab);
+				this.triggerPlatformEventCallback(this._platformEventTabsOnChange, activeTab);
 			}
 		}
 
@@ -838,9 +838,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			this.changeTab(this.configs.StartingTab);
 
 			// Call following methods async to prevent affecting Main Thread and causing Long Tasks on page load
-
 			Helper.AsyncInvocation(this.setCallbacks.bind(this));
-
 			Helper.AsyncInvocation(this.setA11YProperties.bind(this));
 
 			this.finishBuild();

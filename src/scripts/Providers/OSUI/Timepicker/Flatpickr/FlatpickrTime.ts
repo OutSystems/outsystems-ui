@@ -114,8 +114,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 				this._zindexCommonBehavior = new SharedProviderResources.Flatpickr.UpdateZindex(this);
 			}
 
-			this.createdInstance();
-
 			const _bodyEvent = OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(
 				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick
 			) as OSFramework.OSUI.Event.DOMEvents.Listeners.IListener;
@@ -129,6 +127,8 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 					_bodyEvent.enableBodyClickEvent();
 				});
 			}
+
+			this.createdInstance();
 		}
 
 		/**
@@ -145,7 +145,13 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 				events: this.provider.config,
 			});
 
-			this.finishBuild();
+			/**
+			 * Trigger Innitialized Event.
+			 * - This is needed for the patterns based on a provider since at the Initialized Event at the
+			 * Platform side, custom code can be added in order to add customization to the provider.
+			 * - This way, Initialized Event will be triggered every time a redraw occurs.
+			 */
+			this.triggerPlatformInitializedEventCallback();
 		}
 
 		// Method that will be triggered by library each time any time is selected
@@ -159,7 +165,7 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 			}
 
 			// Trigger platform's onChange callback event
-			this.triggerPlatformEventplatformCallback(this._onChangeCallbackEvent, _selectedTime);
+			this.triggerPlatformEventCallback(this._onChangeCallbackEvent, _selectedTime);
 		}
 
 		/**
@@ -241,6 +247,8 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 
 			this.setHtmlElements();
 			this.prepareConfigs();
+
+			this.finishBuild();
 		}
 
 		/**

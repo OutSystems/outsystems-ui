@@ -33,7 +33,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 			// Check if values are not beeing updated by UpdateInitialDate API Method!
 			if (this._isUpdatedInitialDateByClientAction === false) {
 				// Trigger platform's onChange callback event
-				OSFramework.OSUI.Helper.AsyncInvocation(this._onSelectedCallbackEvent, this.widgetId, _selectedDate);
+				this.triggerPlatformEventCallback(this._onSelectedCallbackEvent, _selectedDate);
 			}
 
 			// Reset Flag value;
@@ -96,6 +96,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 		public build(): void {
 			super.build();
 			this.prepareConfigs();
+			this.finishBuild();
 		}
 
 		/**

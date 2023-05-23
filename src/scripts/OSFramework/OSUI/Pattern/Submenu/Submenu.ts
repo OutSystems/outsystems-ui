@@ -368,7 +368,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 				this._updateA11yProperties();
 
 				// Trigger the _platformEventOnToggleCallback callback!
-				Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, false);
+				this.triggerPlatformEventCallback(this._platformEventOnToggleCallback, false);
 			}
 		}
 
@@ -406,7 +406,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			Helper.AsyncInvocation(this._show.bind(this));
 
 			// Trigger the _platformEventOnToggleCallback callback!
-			Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, true);
+			this.triggerPlatformEventCallback(this._platformEventOnToggleCallback, true);
 		}
 
 		/**

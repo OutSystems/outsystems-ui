@@ -86,12 +86,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 			// Ensure user has selected start and end dates before trigger the onSelectedDate callback, or user has clean the seelcted dates!
 			if (selectedDates.length === 0 || selectedDates.length === 2) {
 				// Trigger platform's onChange callback event
-				OSFramework.OSUI.Helper.AsyncInvocation(
-					this._onSelectedCallbackEvent,
-					this.widgetId,
-					_selectedDate[0],
-					_selectedDate[1]
-				);
+				this.triggerPlatformEventCallback(this._onSelectedCallbackEvent, _selectedDate[0], _selectedDate[1]);
 			}
 		}
 
@@ -131,6 +126,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 		public build(): void {
 			super.build();
 			this.prepareConfigs();
+			this.finishBuild();
 		}
 
 		/**

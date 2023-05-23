@@ -165,10 +165,16 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				);
 			}
 
-			this.finishBuild();
-
 			// Remove inline height value style!
 			this._unsetParentMinHeight();
+
+			/**
+			 * Trigger Innitialized Event.
+			 * - This is needed for the patterns based on a provider since at the Initialized Event at the
+			 * Platform side, custom code can be added in order to add customization to the provider.
+			 * - This way, Initialized Event will be triggered every time a redraw occurs.
+			 */
+			this.triggerPlatformInitializedEventCallback();
 		}
 
 		/**

@@ -145,4 +145,30 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 
 		return accordion;
 	}
+
+	/**
+	 * Function to register a provider callback
+	 *
+	 * @export
+	 * @param {string} accordionId
+	 * @param {string} eventName
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
+	 * @return {*}  {string}
+	 */
+	export function RegisterCallback(
+		accordionId: string,
+		eventName: string,
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
+	): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Accordion.FailRegisterCallback,
+			callback: () => {
+				const accordion = GetAccordionById(accordionId);
+
+				accordion.registerCallback(eventName, callback);
+			},
+		});
+
+		return result;
+	}
 }
