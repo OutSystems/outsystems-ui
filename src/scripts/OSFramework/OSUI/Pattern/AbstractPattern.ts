@@ -22,6 +22,8 @@ namespace OSFramework.OSUI.Patterns {
 		private _uniqueId: string;
 		// Id of the widget. This will be the Id that the developer will be using in runtime.
 		private _widgetId: string;
+		// Flag to help on check if a pattern has a provider.
+		protected _isProviderBased = false;
 
 		constructor(uniqueId: string, configs: C) {
 			this._uniqueId = uniqueId;
@@ -52,8 +54,12 @@ namespace OSFramework.OSUI.Patterns {
 		protected finishBuild(): void {
 			this._isBuilt = true;
 
-			// Trigger the Initialized Callback Event
-			this.triggerPlatformInitializedEventCallback();
+			// Check if this is a provider based pattern, If true Initialization cb Event will be triggered at the new provider instance creation.
+			// For non provider based patterns this should be triggered here.
+			if (this._isProviderBased === false) {
+				// Trigger the Initialized Callback Event
+				this.triggerPlatformInitializedEventCallback();
+			}
 		}
 
 		/**

@@ -122,6 +122,8 @@ namespace OSFramework.OSUI.Patterns {
 		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
 		public build(): void {
+			this._isProviderBased = true;
+
 			this.providerInfo = {
 				name: undefined,
 				version: undefined,
