@@ -7716,27 +7716,23 @@ span.flatpickr-weekday{
           box-shadow:var(--shadow-s);
   border-radius:var(--osui-balloon-shape);
   background-color:var(--color-neutral-0);
-  display:none;
+  visibility:hidden;
+  opacity:0;
   position:absolute;
-  top:0;
-  left:0;
+  top:var(--osui-floating-position-y);
+  left:var(--osui-floating-position-x);
   width:-webkit-max-content;
   width:-moz-max-content;
   width:max-content;
   height:auto;
-  -webkit-transform:translate(var(--osui-floating-position-x), var(--osui-floating-position-y));
-      -ms-transform:translate(var(--osui-floating-position-x), var(--osui-floating-position-y));
-          transform:translate(var(--osui-floating-position-x), var(--osui-floating-position-y));
-  -webkit-transition:-webkit-transform 250ms ease-out;
-  transition:-webkit-transform 250ms ease-out;
-  -o-transition:transform 250ms ease-out;
-  transition:transform 250ms ease-out;
-  transition:transform 250ms ease-out, -webkit-transform 250ms ease-out;
-  will-change:transform;
   z-index:var(--layer-global-elevated);
+  -webkit-transition:opacity 300ms ease-in;
+  -o-transition:opacity 300ms ease-in;
+  transition:opacity 300ms ease-in;
 }
 .osui-balloon--is-open{
-  display:block;
+  visibility:visible;
+  opacity:1;
 }
 .osui-overflow-menu__trigger{
   --osui-floating-offset:var(--space-s);

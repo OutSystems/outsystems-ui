@@ -19647,7 +19647,6 @@ var Providers;
                     _eventOnUpdatePosition();
                     if (this._floatingUIOptions.updatePosition) {
                         this.eventOnUpdateCallback = window.FloatingUIDOM.autoUpdate(this._floatingUIOptions.anchorElem, this._floatingUIOptions.floatingElem, _eventOnUpdatePosition.bind(this));
-                        this.eventOnUpdateCallback();
                     }
                 }
                 build() {
@@ -19664,7 +19663,6 @@ var Providers;
                     if (this._floatingUIOptions.updatePosition) {
                         this.eventOnUpdateCallback();
                     }
-                    this._floatingUIOptions = undefined;
                 }
                 update(options) {
                     this._floatingUIOptions = options;

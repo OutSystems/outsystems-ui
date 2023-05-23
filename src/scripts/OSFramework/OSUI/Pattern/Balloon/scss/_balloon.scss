@@ -6,22 +6,23 @@
 .osui-balloon {
     --osui-floating-position-x: 0;
     --osui-floating-position-y: 0;
+
     box-shadow: var(--shadow-s);
     border-radius: var(--osui-balloon-shape);
     background-color: var(--color-neutral-0);
-    display: none;
+    visibility: hidden;
+    opacity: 0;
     position: absolute;
-    top: 0;
-    left: 0;
+    top: var(--osui-floating-position-y);
+    left: var(--osui-floating-position-x);
     width: max-content;
     height: auto;
-    transform: translate(var(--osui-floating-position-x),var(--osui-floating-position-y));
-    transition: transform 250ms ease-out;
-    will-change: transform;
     z-index: var(--layer-global-elevated);
+    transition: opacity 300ms ease-in;
 
     &--is-open {
-        display: block;
+        visibility: visible;
+        opacity: 1;
     }
 }
 

@@ -83,8 +83,6 @@ namespace Providers.OSUI.Utils {
 					this._floatingUIOptions.floatingElem,
 					_eventOnUpdatePosition.bind(this)
 				);
-
-				this.eventOnUpdateCallback();
 			}
 		}
 
