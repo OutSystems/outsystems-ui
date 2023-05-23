@@ -8,43 +8,16 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 	 * @extends {AbstractPattern<BalloonConfig>}
 	 * @implements {IBalloon}
 	 */
-	export class Balloon extends AbstractPattern<BalloonConfig> implements IBalloon {
-		// Listener callbacks
-		private _eventBodyClick: GlobalCallbacks.Generic;
-		private _eventOnKeypress: GlobalCallbacks.Generic;
+	export class Balloon extends AbstractFloatable<BalloonConfig> implements IBalloon {
 		// eslint-disable-next-line @typescript-eslint/naming-convention
 		private _floatingUIInstance: Providers.OSUI.Utils.FloatingUI;
-		// FocusTrap Properties
-		private _focusTrapInstance: Behaviors.FocusTrap;
-		private _focusableActiveElement: HTMLElement;
-		// WidgetId element
-		private _parentSelf: HTMLElement;
 		private _platformEventInitialized: GlobalCallbacks.Generic;
-		private _platformEventOnToggle: GlobalCallbacks.Generic;
 		public anchorElem: HTMLElement;
 		public floatingOptions: Providers.OSUI.Utils.FloatingUIOptions;
-		// Store if the pattern is open
-		public isOpen = false;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new BalloonConfig(configs));
-		}
-
-		private _bodyClickCallback(_args: string, e: MouseEvent): void {
-			if (e.target === this.anchorElem) {
-				return;
-			}
-			this.close();
-			e.stopPropagation();
-		}
-
-		// Add Focus Trap to Pattern
-		private _handleFocusTrap(): void {
-			const opts = {
-				focusTargetElement: this._parentSelf,
-			} as Behaviors.FocusTrapParams;
-
-			this._focusTrapInstance = new Behaviors.FocusTrap(opts);
+			this.openCSSClass = Enum.CssClasses.IsOpen;
 		}
 
 		// Method to handle the Shape config css variable
@@ -56,81 +29,16 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 			);
 		}
 
-		// Call methods to open or close, based on e.key and behaviour applied
-		private _onkeypressCallback(e: KeyboardEvent): void {
-			const isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
-
-			// Close the Balloon when pressing Esc
-			if (isEscapedPressed && this.isOpen) {
-				this.close();
-			}
-		}
-
-		// Method to toggle the open/close the Balloon
-		private _toggleBalloon(isOpen: boolean): void {
-			// Toggle class
-			if (isOpen) {
-				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClasses.IsOpen);
-			} else {
-				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClasses.IsOpen);
-			}
-
-			// Update property
-			this.isOpen = isOpen;
-
-			// Update listeners and A11y properties
-			if (isOpen) {
-				this.setEventListeners();
-				this.setFloatingBehaviour();
-			} else {
-				this.removeEventListeners();
-				this._floatingUIInstance.close();
-			}
-
-			this.setA11YProperties();
-
-			// Handle focus trap logic
-			if (isOpen) {
-				this._focusableActiveElement = document.activeElement as HTMLElement;
-				this._focusTrapInstance.enableForA11y();
-				// Focus on element when pattern is open
-				this.selfElement.focus();
-			} else {
-				this._focusTrapInstance.disableForA11y();
-
-				// Focus on last element clicked. Async to avoid conflict with closing animation
-				Helper.AsyncInvocation(() => {
-					this.selfElement.blur();
-					this._focusableActiveElement.focus();
-				});
-			}
-
-			// Trigger platform event
-			this._triggerOnToggleEvent();
-		}
-
 		// Method that triggers the Intialized event
 		private _triggerInitializedEvent(): void {
 			Helper.AsyncInvocation(this._platformEventInitialized, this.widgetId);
 		}
 
-		// Method that triggers the OnToggle event
-		private _triggerOnToggleEvent(): void {
-			Helper.AsyncInvocation(this._platformEventOnToggle, this.widgetId, this.isOpen);
-		}
-
-		/**
-		 * Method to remove the event listeners
-		 *
-		 * @protected
-		 * @memberof OSFramework.Patterns.Balloon.Balloon
-		 */
-		protected removeEventListeners(): void {
-			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
-			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
-				Event.DOMEvents.Listeners.Type.BodyOnClick,
-				this._eventBodyClick
-			);
+		protected bodyClickCallback(_args: string, e: MouseEvent): void {
+			if (e.target === this.anchorElem) {
+				return;
+			}
+			super.bodyClickCallback(_args, e);
 		}
 
 		/**
@@ -144,46 +52,7 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 				//Helper.Dom.Attribute.Set(this.selfElement, Constants.A11YAttributes.Role.Complementary, true);
 			}
 
-			Helper.Dom.Attribute.Set(this.selfElement, Constants.A11YAttributes.Aria.Hidden, (!this.isOpen).toString());
-
-			Helper.Dom.Attribute.Set(
-				this.selfElement,
-				Constants.A11YAttributes.TabIndex,
-				this.isOpen
-					? Constants.A11YAttributes.States.TabIndexShow
-					: Constants.A11YAttributes.States.TabIndexHidden
-			);
-
-			// Will handle the tabindex value of the elements inside pattern
-			Helper.A11Y.SetElementsTabIndex(this.isOpen, this._focusTrapInstance.focusableElements);
-		}
-
-		/**
-		 * Set the callbacks
-		 *
-		 * @protected
-		 * @memberof OSFramework.Patterns.Balloon.Balloon
-		 */
-		protected setCallbacks(): void {
-			this._eventBodyClick = this._bodyClickCallback.bind(this);
-			this._eventOnKeypress = this._onkeypressCallback.bind(this);
-		}
-
-		/**
-		 * Method to add event listeners
-		 *
-		 * @protected
-		 * @memberof OSFramework.Patterns.Balloon.Balloon
-		 */
-		protected setEventListeners(): void {
-			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
-
-			if (this.isBuilt) {
-				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
-					Event.DOMEvents.Listeners.Type.BodyOnClick,
-					this._eventBodyClick
-				);
-			}
+			super.setA11YProperties();
 		}
 
 		protected setFloatingBehaviour(isUpdate = false): void {
@@ -218,8 +87,20 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 		 * @memberof OSFramework.Patterns.Balloon.Balloon
 		 */
 		protected setHtmlElements(): void {
-			this._parentSelf = Helper.Dom.GetElementById(this.widgetId);
+			super.setHtmlElements();
 			this.anchorElem = document.getElementById(this.configs.AnchorId);
+		}
+
+		// Method to toggle the open/close the Balloon
+		protected togglePattern(isOpen: boolean): void {
+			super.togglePattern(isOpen);
+
+			// Update listeners and A11y properties
+			if (isOpen) {
+				this.setFloatingBehaviour();
+			} else {
+				this._floatingUIInstance.close();
+			}
 		}
 
 		/**
@@ -229,9 +110,7 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 		 * @memberof OSFramework.Patterns.Balloon.Balloon
 		 */
 		protected unsetCallbacks(): void {
-			this._eventBodyClick = undefined;
-			this._eventOnKeypress = undefined;
-			this._platformEventOnToggle = undefined;
+			super.unsetCallbacks();
 			this._platformEventInitialized = undefined;
 		}
 
@@ -242,17 +121,13 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 		 * @memberof OSFramework.Patterns.Balloon.Balloon
 		 */
 		protected unsetHtmlElements(): void {
-			this._parentSelf = undefined;
+			super.unsetHtmlElements();
 			this.anchorElem = undefined;
 		}
 
 		public build(): void {
 			super.build();
-			this.setHtmlElements();
-			this.setCallbacks();
 			this._handleShape();
-			this._handleFocusTrap();
-			this.setA11YProperties();
 			this.finishBuild();
 			this._triggerInitializedEvent();
 		}
@@ -282,12 +157,6 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 			}
 		}
 
-		public close(): void {
-			if (this.isOpen) {
-				this._toggleBalloon(false);
-			}
-		}
-
 		/**
 		 * Destroy the Balloon.
 		 *
@@ -296,25 +165,8 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 		public dispose(): void {
 			this._floatingUIInstance.dispose();
 
-			// Remove focus trap events and callbacks
-			this._focusTrapInstance.dispose();
-
-			if (this.isOpen) {
-				this.removeEventListeners();
-			}
-
-			this.unsetCallbacks();
-			this.unsetHtmlElements();
-
 			super.dispose();
 		}
-
-		public open(): void {
-			if (this.isOpen === false) {
-				this._toggleBalloon(true);
-			}
-		}
-
 		/**
 		 * Set callbacks for the pattern events
 		 *
@@ -327,15 +179,6 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 				case Enum.Events.Initialized:
 					if (this._platformEventInitialized === undefined) {
 						this._platformEventInitialized = callback;
-					} else {
-						console.warn(
-							`The ${GlobalEnum.PatternName.Balloon} already has the ${eventName} callback set.`
-						);
-					}
-					break;
-				case Enum.Events.OnToggle:
-					if (this._platformEventOnToggle === undefined) {
-						this._platformEventOnToggle = callback;
 					} else {
 						console.warn(
 							`The ${GlobalEnum.PatternName.Balloon} already has the ${eventName} callback set.`

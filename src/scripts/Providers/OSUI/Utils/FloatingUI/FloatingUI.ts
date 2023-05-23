@@ -96,7 +96,7 @@ namespace Providers.OSUI.Utils {
 					Enum.CssCustomProperties.XPosition,
 					0
 				);
-			}, 0);
+			}, 50);
 		}
 
 		public dispose(): void {

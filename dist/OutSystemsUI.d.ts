@@ -172,6 +172,10 @@ declare namespace OSFramework.OSUI.GlobalCallbacks {
     };
 }
 declare namespace OSFramework.OSUI.GlobalEnum {
+    enum CommonCSSClasses {
+        IsOpen = "--is-open",
+        Prefix = "osui-"
+    }
     enum CommonPatternsProperties {
         ExtendedClass = "ExtendedClass"
     }
@@ -1041,6 +1045,11 @@ declare namespace OSFramework.OSUI.Interface {
     }
 }
 declare namespace OSFramework.OSUI.Interface {
+    interface IFloatable extends IOpenable {
+        isOpen: boolean;
+    }
+}
+declare namespace OSFramework.OSUI.Interface {
     interface IGestureEvent {
         hasGestureEvents: boolean;
         removeGestureEvents(): void;
@@ -1147,6 +1156,35 @@ declare namespace OSFramework.OSUI.Patterns {
         protected validateTime(value: string, defaultValue: string): string;
         validateCanChange(_isBuilt: boolean, _key: string): boolean;
         validateDefault(_key: string, value: unknown): unknown;
+    }
+}
+declare namespace OSFramework.OSUI.Patterns {
+    abstract class AbstractFloatable<C extends AbstractConfiguration> extends AbstractPattern<C> implements Interface.IFloatable {
+        private _eventBodyClick;
+        private _eventOnKeypress;
+        private _focusTrapInstance;
+        private _focusableActiveElement;
+        private _parentSelf;
+        private _patternName;
+        private _platformEventOnToggle;
+        protected openCSSClass: string;
+        isOpen: boolean;
+        private _handleFocusTrap;
+        private _onkeypressCallback;
+        private _triggerOnToggleEvent;
+        protected bodyClickCallback(_args: string, e: MouseEvent): void;
+        protected removeEventListeners(): void;
+        protected setA11YProperties(): void;
+        protected setCallbacks(): void;
+        protected setEventListeners(): void;
+        protected setHtmlElements(): void;
+        protected togglePattern(isOpen: boolean): void;
+        protected unsetCallbacks(): void;
+        protected unsetHtmlElements(): void;
+        build(): void;
+        close(): void;
+        dispose(): void;
+        open(): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns {
@@ -1389,39 +1427,24 @@ declare namespace OSFramework.OSUI.Patterns.AnimatedLabel {
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Balloon {
-    class Balloon extends AbstractPattern<BalloonConfig> implements IBalloon {
-        private _eventBodyClick;
-        private _eventOnKeypress;
+    class Balloon extends AbstractFloatable<BalloonConfig> implements IBalloon {
         private _floatingUIInstance;
-        private _focusTrapInstance;
-        private _focusableActiveElement;
-        private _parentSelf;
         private _platformEventInitialized;
-        private _platformEventOnToggle;
         anchorElem: HTMLElement;
         floatingOptions: Providers.OSUI.Utils.FloatingUIOptions;
-        isOpen: boolean;
         constructor(uniqueId: string, configs: JSON);
-        private _bodyClickCallback;
-        private _handleFocusTrap;
         private _handleShape;
-        private _onkeypressCallback;
-        private _toggleBalloon;
         private _triggerInitializedEvent;
-        private _triggerOnToggleEvent;
-        protected removeEventListeners(): void;
+        protected bodyClickCallback(_args: string, e: MouseEvent): void;
         protected setA11YProperties(): void;
-        protected setCallbacks(): void;
-        protected setEventListeners(): void;
         protected setFloatingBehaviour(isUpdate?: boolean): void;
         protected setHtmlElements(): void;
+        protected togglePattern(isOpen: boolean): void;
         protected unsetCallbacks(): void;
         protected unsetHtmlElements(): void;
         build(): void;
         changeProperty(propertyName: string, propertyValue: unknown): void;
-        close(): void;
         dispose(): void;
-        open(): void;
         registerCallback(callback: GlobalCallbacks.OSGeneric, eventName: string): void;
     }
 }

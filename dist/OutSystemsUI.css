@@ -7710,6 +7710,8 @@ span.flatpickr-weekday{
 }
 /*! 6.3.4. Balloon */
 .osui-balloon{
+  --osui-floating-position-x:0;
+  --osui-floating-position-y:0;
   -webkit-box-shadow:var(--shadow-s);
           box-shadow:var(--shadow-s);
   border-radius:var(--osui-balloon-shape);
@@ -7738,6 +7740,9 @@ span.flatpickr-weekday{
 }
 .osui-balloon--is-open{
   display:block;
+}
+.osui-overflow-menu__trigger *{
+  pointer-events:none;
 }
 /*! 6.3.5. Bottom Sheet */
 .osui-bottom-sheet{

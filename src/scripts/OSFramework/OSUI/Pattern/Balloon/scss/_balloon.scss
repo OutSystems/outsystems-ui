@@ -4,6 +4,8 @@
 /// Patterns - Interaction - Balloon
 
 .osui-balloon {
+    --osui-floating-position-x: 0;
+    --osui-floating-position-y: 0;
     box-shadow: var(--shadow-s);
     border-radius: var(--osui-balloon-shape);
     background-color: var(--color-neutral-0);
@@ -23,5 +25,13 @@
 
     &--is-open {
         display: block;
+    }
+}
+
+.osui-overflow-menu {
+    &__trigger {
+        * {
+            pointer-events: none;
+        }
     }
 }
