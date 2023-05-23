@@ -51,7 +51,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		// Method to init the provider
 		private _initProvider(): void {
 			// Init provider
-			this._provider = new window.Splide(this._carouselProviderElem, this._splideOptions);
+			this.provider = new window.Splide(this._carouselProviderElem, this._splideOptions);
 
 			// Set provider Info to be used by setProviderConfigs API calls
 			this.updateProviderEvents({
@@ -70,7 +70,7 @@ namespace Providers.OSUI.Carousel.Splide {
 			this._setCarouselWidth();
 
 			// Init the provider
-			this._provider.mount();
+			this.provider.mount();
 
 			// Update pagination class, in case navigation was changed
 			this._togglePaginationClass();
@@ -112,14 +112,14 @@ namespace Providers.OSUI.Carousel.Splide {
 
 		// Method to set the OnInitializeEvent
 		private _setOnInitializedEvent(): void {
-			this._provider.on(Enum.SpliderEvents.Mounted, () => {
+			this.provider.on(Enum.SpliderEvents.Mounted, () => {
 				this.triggerPlatformInitializedEventCallback();
 			});
 		}
 
 		// Method to set the OnSlideMoved event
 		private _setOnSlideMovedEvent(): void {
-			this._provider.on(Enum.SpliderEvents.Moved, (index) => {
+			this.provider.on(Enum.SpliderEvents.Moved, (index) => {
 				if (index !== this._currentIndex) {
 					this.triggerPlatformEventCallback(this._platformEventOnSlideMoved, index);
 					this._currentIndex = index;
@@ -304,13 +304,13 @@ namespace Providers.OSUI.Carousel.Splide {
 						this.redraw();
 						break;
 					case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.Height:
-						this._provider.options = { height: propertyValue as string | number };
+						this.provider.options = { height: propertyValue as string | number };
 						break;
 					case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.Padding:
-						this._provider.options = { padding: propertyValue as string | number };
+						this.provider.options = { padding: propertyValue as string | number };
 						break;
 					case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.ItemsGap:
-						this._provider.options = { gap: propertyValue as string | number };
+						this.provider.options = { gap: propertyValue as string | number };
 						break;
 				}
 			}
@@ -327,7 +327,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		public dispose(): void {
 			// Check if provider is ready
 			if (this.isBuilt) {
-				this._provider.destroy();
+				this.provider.destroy();
 			}
 
 			this.unsetCallbacks();
@@ -343,7 +343,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
 		 */
 		public goTo(index: number): void {
-			this._provider.go(index);
+			this.provider.go(index);
 		}
 
 		/**
@@ -352,7 +352,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
 		 */
 		public next(): void {
-			this._provider.go(Enum.Go.Next);
+			this.provider.go(Enum.Go.Next);
 		}
 
 		/**
@@ -361,7 +361,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
 		 */
 		public previous(): void {
-			this._provider.go(Enum.Go.Previous);
+			this.provider.go(Enum.Go.Previous);
 		}
 
 		/**
@@ -419,7 +419,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
 		 */
 		public toggleDrag(hasDrag: boolean): void {
-			this._provider.options = { drag: hasDrag };
+			this.provider.options = { drag: hasDrag };
 		}
 
 		/**
@@ -442,7 +442,7 @@ namespace Providers.OSUI.Carousel.Splide {
 				this.setInitialCssClasses();
 
 				// Check if provider is ready
-				if (typeof this._provider === 'object') {
+				if (typeof this.provider === 'object') {
 					// Keep same position after update
 					// Check autoplay config, as that triggers the provider onChange and our onRender event, but doesn't udpate the _currentIndex property.
 					if (this._currentIndex !== undefined || this.configs.AutoPlay === true) {

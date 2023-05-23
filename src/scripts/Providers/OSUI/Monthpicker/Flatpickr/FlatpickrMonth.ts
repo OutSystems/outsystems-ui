@@ -12,11 +12,11 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		// Validation of ZIndex position common behavior
 		private _zindexCommonBehavior: SharedProviderResources.Flatpickr.UpdateZindex;
 		// Store the flatpickr input html element that will be added by library
-		protected _flatpickrInputElem: HTMLInputElement;
+		protected flatpickrInputElem: HTMLInputElement;
 		// Store pattern input HTML element reference
-		protected _monthPickerProviderInputElem: HTMLInputElement;
+		protected monthPickerProviderInputElem: HTMLInputElement;
 		// Flatpickr onChange (SelectedMonth) event
-		protected _onSelectedCallbackEvent: OSFramework.OSUI.Patterns.MonthPicker.Callbacks.OSOnSelectedEvent;
+		protected onSelectedCallbackEvent: OSFramework.OSUI.Patterns.MonthPicker.Callbacks.OSOnSelectedEvent;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new FlatpickrMonthConfig(configs));
@@ -28,19 +28,19 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		// Method used to set the needed HTML attributes
 		private _setAttributes(): void {
 			// Since a new input will be added by the flatpickr library, we must address it only at onReady
-			this._flatpickrInputElem = this._monthPickerProviderInputElem.nextSibling as HTMLInputElement;
+			this.flatpickrInputElem = this.monthPickerProviderInputElem.nextSibling as HTMLInputElement;
 
 			// Added the data-input attribute in order to input be styled as all platform inputs
 			OSFramework.OSUI.Helper.Dom.Attribute.Set(
-				this._flatpickrInputElem,
+				this.flatpickrInputElem,
 				OSFramework.OSUI.GlobalEnum.HTMLAttributes.DataInput,
 				OSFramework.OSUI.Constants.EmptyString
 			);
 
 			// If the provider cloned a disabled platform input, remove the disable attribute form the provider input
-			if (this._flatpickrInputElem.disabled) {
+			if (this.flatpickrInputElem.disabled) {
 				OSFramework.OSUI.Helper.Dom.Attribute.Remove(
-					this._flatpickrInputElem,
+					this.flatpickrInputElem,
 					OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled
 				);
 			}
@@ -55,7 +55,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 
 			if (
 				OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(
-					this._flatpickrInputElem,
+					this.flatpickrInputElem,
 					OSFramework.OSUI.GlobalEnum.InputClassTypes.InputLarge
 				)
 			) {
@@ -65,7 +65,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 				);
 			} else if (
 				OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(
-					this._flatpickrInputElem,
+					this.flatpickrInputElem,
 					OSFramework.OSUI.GlobalEnum.InputClassTypes.InputSmall
 				)
 			) {
@@ -93,12 +93,12 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 */
 		protected createProviderInstance(): void {
 			/* In order to avoid dateFormat convert issues done by provider when InitialMonth was not defined and input has a default month lets clean that value before creating provider instance. This happen when DateFormat is different from YYYY-MM-DD */
-			if (this._monthPickerProviderInputElem && this._flatpickrOpts.defaultDate === undefined) {
-				this._monthPickerProviderInputElem.value = '';
+			if (this.monthPickerProviderInputElem && this._flatpickrOpts.defaultDate === undefined) {
+				this.monthPickerProviderInputElem.value = '';
 			}
 
 			// Init provider
-			this.provider = window.flatpickr(this._monthPickerProviderInputElem, this._flatpickrOpts);
+			this.provider = window.flatpickr(this.monthPickerProviderInputElem, this._flatpickrOpts);
 			// Set the needed HTML attributes
 			this._setAttributes();
 
@@ -183,7 +183,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 
 			// Trigger platform's onChange callback event
 			this.triggerPlatformEventCallback(
-				this._onSelectedCallbackEvent,
+				this.onSelectedCallbackEvent,
 				_selectedMonthYear.month,
 				_selectedMonthYear.monthOrder,
 				_selectedMonthYear.year
@@ -231,12 +231,12 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 */
 		protected setHtmlElements(): void {
 			// Set the inputHTML element
-			this._monthPickerProviderInputElem = this.selfElement.querySelector(
+			this.monthPickerProviderInputElem = this.selfElement.querySelector(
 				OSFramework.OSUI.GlobalEnum.CSSSelectors.InputFormControl
 			);
 
 			// If the input hasn't be added
-			if (!this._monthPickerProviderInputElem) {
+			if (!this.monthPickerProviderInputElem) {
 				throw new Error(`The monthpicker input at MonthpickerId '${this.widgetId}' is missing`);
 			}
 		}
@@ -250,7 +250,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		protected unsetCallbacks(): void {
 			this.configs.OnChange = undefined;
 
-			this._onSelectedCallbackEvent = undefined;
+			this.onSelectedCallbackEvent = undefined;
 			super.unsetCallbacks();
 		}
 
@@ -261,7 +261,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		protected unsetHtmlElements(): void {
-			this._monthPickerProviderInputElem = undefined;
+			this.monthPickerProviderInputElem = undefined;
 		}
 
 		/**
@@ -318,7 +318,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public clear(): void {
-			const isInputDisable = this._monthPickerProviderInputElem.disabled;
+			const isInputDisable = this.monthPickerProviderInputElem.disabled;
 			if (isInputDisable === false) {
 				this.provider.clear();
 			}
@@ -363,7 +363,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public open(): void {
-			const isInputDisable = this._monthPickerProviderInputElem.disabled;
+			const isInputDisable = this.monthPickerProviderInputElem.disabled;
 			if (this.provider.isOpen === false && isInputDisable === false) {
 				this.provider.open();
 			}
@@ -377,7 +377,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		public registerCallback(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
 				case OSFramework.OSUI.Patterns.MonthPicker.Enum.Events.OnSelected:
-					this._onSelectedCallbackEvent = callback;
+					this.onSelectedCallbackEvent = callback;
 					break;
 
 				default:
@@ -433,7 +433,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * @memberof OSUIFlatpickrMonth
 		 */
 		public updateInitialMonth(monthYear: MonthYear): void {
-			if (this._monthPickerProviderInputElem.disabled === false) {
+			if (this.monthPickerProviderInputElem.disabled === false) {
 				// Redefine the Initial month
 				this.configs.InitialMonth = monthYear;
 
@@ -449,7 +449,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * @memberof OSUIFlatpickrMonth
 		 */
 		public updatePrompt(promptMessage: string): void {
-			this._flatpickrInputElem.placeholder = promptMessage;
+			this.flatpickrInputElem.placeholder = promptMessage;
 		}
 	}
 }

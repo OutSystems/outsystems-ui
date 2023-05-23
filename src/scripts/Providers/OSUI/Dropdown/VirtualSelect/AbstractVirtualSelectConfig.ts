@@ -14,7 +14,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		// Store the Provider Options
 		private _providerOptions: VirtualSelectOpts;
 		// Store configs set using extensibility
-		protected _providerExtendedOptions: VirtualSelectOpts;
+		protected providerExtendedOptions: VirtualSelectOpts;
 		public ElementId: string;
 		public NoOptionsText: string;
 		public NoResultsText: string;
@@ -192,7 +192,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 				search: true,
 				searchPlaceholderText: this.SearchPrompt,
 				selectAllOnlyVisible: true,
-				selectedValue: this._getSelectedValues() as [],
+				selectedValue: this.getSelectedValues() as [],
 				showDropboxAsPopup: this.ShowDropboxAsPopup,
 				silentInitialValueSet: true,
 				textDirection: OutSystems.OSUI.Utils.GetIsRTL()
@@ -218,7 +218,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 					`The option description may be affected when modifying the property ${Enum.ExtendedConfigs.hasOptionDescription}.`
 				);
 
-			this._providerExtendedOptions = newConfigs;
+			this.providerExtendedOptions = newConfigs;
 		}
 
 		/**
@@ -247,6 +247,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		}
 
 		// Common methods all DropdownsConfigs must implement
-		protected abstract _getSelectedValues(): string[];
+		protected abstract getSelectedValues(): string[];
 	}
 }

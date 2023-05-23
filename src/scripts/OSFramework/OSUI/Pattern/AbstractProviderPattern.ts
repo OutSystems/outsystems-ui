@@ -16,9 +16,9 @@ namespace OSFramework.OSUI.Patterns {
 		// Holds the callback for the provider config applied event
 		private _platformEventProviderConfigsAppliedCallback: GlobalCallbacks.OSGeneric;
 		// Holds the provider
-		protected _provider: P;
+		private _provider: P;
 		// Holds the provider info
-		protected _providerInfo: ProviderInfo;
+		private _providerInfo: ProviderInfo;
 		// Holds the providerEvents instance, that manages the provider events
 		protected providerEventsManagerInstance: Event.ProviderEvents.IProviderEventManager;
 
@@ -32,7 +32,7 @@ namespace OSFramework.OSUI.Patterns {
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
 
-			this._isProviderBased = true;
+			this.isProviderBased = true;
 		}
 
 		// Method to get an event index from an array

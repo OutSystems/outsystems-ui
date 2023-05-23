@@ -20,7 +20,7 @@ namespace Providers.OSUI.RangeSlider.NoUISlider.SliderSingle {
 				connect: NoUiSlider.Enum.NoUiSliderConnectOptions.Lower,
 			};
 
-			return this.mergeConfigs(super.getProviderConfig(), singleSliderOptions, this._providerExtendedOptions);
+			return this.mergeConfigs(super.getProviderConfig(), singleSliderOptions, this.providerExtendedOptions);
 		}
 	}
 }

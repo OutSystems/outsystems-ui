@@ -11,13 +11,13 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		// Validation of ZIndex position common behavior
 		private _zindexCommonBehavior: SharedProviderResources.Flatpickr.UpdateZindex;
 		// Store pattern input HTML element reference
-		protected _datePickerPlatformInputElem: HTMLInputElement;
+		protected datePickerPlatformInputElem: HTMLInputElement;
 		// Store the flatpickr input html element that will be added by library
-		protected _flatpickrInputElem: HTMLInputElement;
+		protected flatpickrInputElem: HTMLInputElement;
 		// Store the provider options
-		protected _flatpickrOpts: FlatpickrOptions;
+		protected flatpickrOpts: FlatpickrOptions;
 		// Flatpickr onChange (SelectedDate) event
-		protected _onSelectedCallbackEvent: OSFramework.OSUI.Patterns.DatePicker.Callbacks.OSOnChangeEvent;
+		protected onSelectedCallbackEvent: OSFramework.OSUI.Patterns.DatePicker.Callbacks.OSOnChangeEvent;
 
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
@@ -29,20 +29,20 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		// Method used to set the needed HTML attributes
 		private _setAttributes(): void {
 			// Since a new input will be added by the flatpickr library, we must address it only at onReady
-			if (this._datePickerPlatformInputElem.nextSibling) {
-				this._flatpickrInputElem = this._datePickerPlatformInputElem.nextSibling as HTMLInputElement;
+			if (this.datePickerPlatformInputElem.nextSibling) {
+				this.flatpickrInputElem = this.datePickerPlatformInputElem.nextSibling as HTMLInputElement;
 
 				// Added the data-input attribute in order to input be styled as all platform inputs
 				OSFramework.OSUI.Helper.Dom.Attribute.Set(
-					this._flatpickrInputElem,
+					this.flatpickrInputElem,
 					OSFramework.OSUI.GlobalEnum.HTMLAttributes.DataInput,
 					''
 				);
 
 				// If the provider cloned a disabled platform input, remove the disable attribute form the provider input
-				if (this._flatpickrInputElem.disabled) {
+				if (this.flatpickrInputElem.disabled) {
 					OSFramework.OSUI.Helper.Dom.Attribute.Remove(
-						this._flatpickrInputElem,
+						this.flatpickrInputElem,
 						OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled
 					);
 				}
@@ -114,7 +114,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 */
 		protected createProviderInstance(): void {
 			// Init provider
-			this.provider = window.flatpickr(this._datePickerPlatformInputElem, this._flatpickrOpts);
+			this.provider = window.flatpickr(this.datePickerPlatformInputElem, this.flatpickrOpts);
 
 			// Set provider Info to be used by setProviderConfigs API calls
 			this.updateProviderEvents({
@@ -158,9 +158,9 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			}
 
 			// Due to platform validations every time a new redraw occurs we must ensure we remove the class based on a clone from the platform input!
-			if (this._flatpickrInputElem !== undefined && this.isBuilt) {
+			if (this.flatpickrInputElem !== undefined && this.isBuilt) {
 				OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(
-					this._flatpickrInputElem,
+					this.flatpickrInputElem,
 					OSFramework.OSUI.GlobalEnum.CssClassElements.InputNotValid
 				);
 			}
@@ -195,7 +195,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 */
 		protected prepareConfigs(): void {
 			// Get the library configurations
-			this._flatpickrOpts = this.configs.getProviderConfig();
+			this.flatpickrOpts = this.configs.getProviderConfig();
 
 			// Instance will be Created!
 			this.createProviderInstance();
@@ -220,23 +220,23 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 */
 		protected setA11YProperties(): void {
 			// Since native behaviour could be enabled, check if the calendar container exist!
-			if (this.provider.calendarContainer !== undefined && this._flatpickrInputElem !== undefined) {
+			if (this.provider.calendarContainer !== undefined && this.flatpickrInputElem !== undefined) {
 				// Set the default aria-label value attribute in case user didn't set it!
 				let ariaLabelValue = Enum.Attribute.DefaultAriaLabel as string;
 
 				// Check if aria-label attribute has been added to the default input
 				if (
-					this._datePickerPlatformInputElem.hasAttribute(OSFramework.OSUI.Constants.A11YAttributes.Aria.Label)
+					this.datePickerPlatformInputElem.hasAttribute(OSFramework.OSUI.Constants.A11YAttributes.Aria.Label)
 				) {
-					ariaLabelValue = this._datePickerPlatformInputElem.getAttribute(
+					ariaLabelValue = this.datePickerPlatformInputElem.getAttribute(
 						OSFramework.OSUI.Constants.A11YAttributes.Aria.Label
 					);
 				}
 
 				// Set the aria-label attribute value
-				OSFramework.OSUI.Helper.A11Y.AriaLabel(this._flatpickrInputElem, ariaLabelValue);
+				OSFramework.OSUI.Helper.A11Y.AriaLabel(this.flatpickrInputElem, ariaLabelValue);
 				// Set the aria-describedby attribute in order to give more context about how to navigate into calendar using keyboard
-				OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(this._flatpickrInputElem, this._a11yInfoContainerElem.id);
+				OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(this.flatpickrInputElem, this._a11yInfoContainerElem.id);
 				// Check if lang is not EN (default one)
 				if (this.configs.Lang !== OSFramework.OSUI.Constants.Language.short) {
 					// Update A11yContainer info based on the given language
@@ -264,7 +264,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 */
 		protected setHtmlElements(): void {
 			// Set the inputHTML element
-			this._datePickerPlatformInputElem = this.selfElement.querySelector('input.form-control');
+			this.datePickerPlatformInputElem = this.selfElement.querySelector('input.form-control');
 			// Store the reference to the info container about how to use keyboard to navigate through calendar
 			this._a11yInfoContainerElem = OSFramework.OSUI.Helper.Dom.TagSelector(
 				this.selfElement.parentElement,
@@ -272,7 +272,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			);
 
 			// If the input hasn't be added
-			if (!this._datePickerPlatformInputElem) {
+			if (!this.datePickerPlatformInputElem) {
 				throw new Error(`The datepicker input at DatepickerId '${this.widgetId}' is missing`);
 			}
 		}
@@ -285,7 +285,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 */
 		protected unsetCallbacks(): void {
 			this.configs.OnChange = undefined;
-			this._onSelectedCallbackEvent = undefined;
+			this.onSelectedCallbackEvent = undefined;
 
 			super.unsetCallbacks();
 		}
@@ -298,7 +298,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 */
 		protected unsetHtmlElements(): void {
 			this._a11yInfoContainerElem = undefined;
-			this._datePickerPlatformInputElem = undefined;
+			this.datePickerPlatformInputElem = undefined;
 		}
 
 		/**
@@ -353,7 +353,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		public clear(): void {
-			const isInputDisable = this._datePickerPlatformInputElem.disabled;
+			const isInputDisable = this.datePickerPlatformInputElem.disabled;
 			if (isInputDisable === false) {
 				this.provider.clear();
 			}
@@ -421,7 +421,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		public open(): void {
-			const isInputDisable = this._datePickerPlatformInputElem.disabled;
+			const isInputDisable = this.datePickerPlatformInputElem.disabled;
 			if (this.provider.isOpen === false && isInputDisable === false) {
 				this.provider.open();
 			}
@@ -435,7 +435,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		public registerCallback(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
 				case OSFramework.OSUI.Patterns.DatePicker.Enum.DatePickerEvents.OnChange:
-					this._onSelectedCallbackEvent = callback;
+					this.onSelectedCallbackEvent = callback;
 					break;
 
 				default:
@@ -503,7 +503,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		public updatePrompt(promptMessage: string): void {
-			this._flatpickrInputElem.placeholder = promptMessage;
+			this.flatpickrInputElem.placeholder = promptMessage;
 		}
 
 		// Common methods all DatePickers must implement
