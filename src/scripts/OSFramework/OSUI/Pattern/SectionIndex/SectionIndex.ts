@@ -263,7 +263,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 
 			this._toggleIsFixed();
 
-			this.finishBuild();
+			super.finishBuild();
 		}
 
 		/**

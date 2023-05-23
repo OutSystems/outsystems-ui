@@ -364,7 +364,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 
 			this._setValue();
 
-			this.finishBuild();
+			super.finishBuild();
 		}
 
 		/**

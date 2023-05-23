@@ -838,12 +838,10 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			this.changeTab(this.configs.StartingTab);
 
 			// Call following methods async to prevent affecting Main Thread and causing Long Tasks on page load
-
 			Helper.AsyncInvocation(this.setCallbacks.bind(this));
-
 			Helper.AsyncInvocation(this.setA11YProperties.bind(this));
 
-			this.finishBuild();
+			super.finishBuild();
 		}
 
 		/**

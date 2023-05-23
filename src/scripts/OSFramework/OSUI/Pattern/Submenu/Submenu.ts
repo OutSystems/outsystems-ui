@@ -309,7 +309,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 			this.setCallbacks();
 
-			this.finishBuild();
+			super.finishBuild();
 		}
 
 		/**

@@ -178,7 +178,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 
 				this.setCallbacks();
 
-				this.finishBuild();
+				super.finishBuild();
 			});
 		}
 

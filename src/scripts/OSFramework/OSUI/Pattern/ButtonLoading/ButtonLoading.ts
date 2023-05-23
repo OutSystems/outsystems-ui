@@ -137,7 +137,7 @@ namespace OSFramework.OSUI.Patterns.ButtonLoading {
 
 			this.setA11YProperties();
 
-			this.finishBuild();
+			super.finishBuild();
 		}
 
 		/**

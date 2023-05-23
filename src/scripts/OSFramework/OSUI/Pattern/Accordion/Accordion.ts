@@ -119,7 +119,7 @@ namespace OSFramework.OSUI.Patterns.Accordion {
 
 			this.setA11YProperties();
 
-			this.finishBuild();
+			super.finishBuild();
 		}
 
 		/**

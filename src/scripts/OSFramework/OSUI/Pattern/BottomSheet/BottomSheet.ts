@@ -334,7 +334,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 			this.setCallbacks();
 			this.setA11YProperties();
 			this._handleGestureEvents();
-			this.finishBuild();
+			super.finishBuild();
 		}
 
 		/**

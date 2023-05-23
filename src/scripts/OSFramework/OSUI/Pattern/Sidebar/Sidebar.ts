@@ -360,7 +360,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 
 			this._handleGestureEvents();
 
-			this.finishBuild();
+			super.finishBuild();
 		}
 
 		/**

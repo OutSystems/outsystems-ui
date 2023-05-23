@@ -261,7 +261,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 
 			this._setLinkAttribute();
 
-			this.finishBuild();
+			super.finishBuild();
 		}
 
 		/**

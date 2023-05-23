@@ -929,8 +929,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			this._moveBallonElement();
 			// Set the balloon coordinates
 			this._setBalloonCoordinates();
-
-			this.finishBuild();
 		}
 
 		/**
@@ -1013,6 +1011,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			this.setCallbacks();
 			this.setHtmlElements();
 			this._setInitialOptions();
+			super.finishBuild();
 		}
 
 		/**

@@ -681,8 +681,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 				// Update the AriaHidden to the balloon!
 				Helper.A11Y.AriaHiddenFalse(this._tooltipBalloonWrapperElem);
 			}
-
-			this.finishBuild();
 		}
 
 		/**
@@ -731,6 +729,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			super.build();
 			this.setCallbacks();
 			this.setHtmlElements();
+			super.finishBuild();
 		}
 
 		/**

@@ -188,7 +188,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 			// Update the Status value with the it's Toggled value
 			this._updateSelectedStatus(this.configs.IsSelected);
 
-			this.finishBuild();
+			super.finishBuild();
 		}
 
 		/**

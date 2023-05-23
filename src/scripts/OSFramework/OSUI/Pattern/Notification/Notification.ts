@@ -337,7 +337,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 
 			this._handleGestureEvents();
 
-			this.finishBuild();
+			super.finishBuild();
 		}
 
 		/**
