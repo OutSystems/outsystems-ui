@@ -77,7 +77,7 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 
 			this._setSvgCode();
 
-			super.finishBuild();
+			this.finishBuild();
 		}
 
 		/**

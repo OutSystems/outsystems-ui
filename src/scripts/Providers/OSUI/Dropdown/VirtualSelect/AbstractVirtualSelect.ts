@@ -252,7 +252,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 
 			this.prepareConfigs();
 
-			super.finishBuild();
+			this.finishBuild();
 		}
 
 		/**

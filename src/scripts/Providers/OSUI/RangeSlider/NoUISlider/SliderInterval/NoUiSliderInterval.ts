@@ -97,7 +97,7 @@ namespace Providers.OSUI.RangeSlider.NoUISlider.IntervalSlider {
 
 			this.setA11YProperties();
 
-			super.finishBuild();
+			this.finishBuild();
 		}
 
 		/**

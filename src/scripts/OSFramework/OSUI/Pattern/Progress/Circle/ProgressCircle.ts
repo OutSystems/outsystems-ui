@@ -387,7 +387,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 
 			this.setCallbacks();
 
-			super.finishBuild();
+			this.finishBuild();
 		}
 
 		/**

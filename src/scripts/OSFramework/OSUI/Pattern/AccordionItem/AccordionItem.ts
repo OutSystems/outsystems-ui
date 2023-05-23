@@ -403,7 +403,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			this._setIsDisabledState();
 			this.setA11YProperties();
 
-			super.finishBuild();
+			this.finishBuild();
 		}
 
 		/**

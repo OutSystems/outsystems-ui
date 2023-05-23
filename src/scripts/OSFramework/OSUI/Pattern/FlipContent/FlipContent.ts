@@ -164,7 +164,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 			// Set the A11Y defaults
 			this.setA11YProperties();
 
-			super.finishBuild();
+			this.finishBuild();
 		}
 
 		/**

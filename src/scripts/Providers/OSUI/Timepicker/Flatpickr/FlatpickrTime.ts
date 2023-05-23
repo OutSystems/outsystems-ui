@@ -248,7 +248,7 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 			this.setHtmlElements();
 			this.prepareConfigs();
 
-			super.finishBuild();
+			this.finishBuild();
 		}
 
 		/**

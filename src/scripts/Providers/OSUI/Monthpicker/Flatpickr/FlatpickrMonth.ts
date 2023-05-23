@@ -275,7 +275,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 			this.setHtmlElements();
 			this.prepareConfigs();
 
-			super.finishBuild();
+			this.finishBuild();
 		}
 
 		/**

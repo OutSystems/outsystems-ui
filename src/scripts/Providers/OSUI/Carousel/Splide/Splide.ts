@@ -272,7 +272,7 @@ namespace Providers.OSUI.Carousel.Splide {
 
 			this.prepareConfigs();
 
-			super.finishBuild();
+			this.finishBuild();
 		}
 
 		/**

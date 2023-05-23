@@ -729,7 +729,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			super.build();
 			this.setCallbacks();
 			this.setHtmlElements();
-			super.finishBuild();
+			this.finishBuild();
 		}
 
 		/**

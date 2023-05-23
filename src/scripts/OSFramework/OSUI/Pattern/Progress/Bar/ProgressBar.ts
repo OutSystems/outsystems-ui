@@ -171,7 +171,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Bar {
 				Helper.AsyncInvocation(this.addInitialAnimation.bind(this));
 			}
 
-			super.finishBuild();
+			this.finishBuild();
 		}
 
 		public changeProperty(propertyName: string, propertyValue: unknown): void {

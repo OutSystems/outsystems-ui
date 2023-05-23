@@ -1011,7 +1011,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			this.setCallbacks();
 			this.setHtmlElements();
 			this._setInitialOptions();
-			super.finishBuild();
+			this.finishBuild();
 		}
 
 		/**

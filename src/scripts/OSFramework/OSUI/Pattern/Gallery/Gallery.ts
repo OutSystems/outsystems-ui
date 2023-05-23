@@ -179,7 +179,7 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 
 			this._setItemsGap();
 
-			super.finishBuild();
+			this.finishBuild();
 		}
 
 		/**

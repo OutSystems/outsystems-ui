@@ -90,7 +90,7 @@ namespace Providers.OSUI.RangeSlider.NoUISlider.SingleSlider {
 
 			this.setA11YProperties();
 
-			super.finishBuild();
+			this.finishBuild();
 		}
 
 		/**

@@ -203,7 +203,7 @@ namespace OSFramework.OSUI.Patterns.TouchEvents {
 			super.build();
 			this.setHtmlElements();
 			this.setCallbacks();
-			super.finishBuild();
+			this.finishBuild();
 		}
 
 		/**

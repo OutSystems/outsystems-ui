@@ -841,7 +841,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			Helper.AsyncInvocation(this.setCallbacks.bind(this));
 			Helper.AsyncInvocation(this.setA11YProperties.bind(this));
 
-			super.finishBuild();
+			this.finishBuild();
 		}
 
 		/**
