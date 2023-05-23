@@ -112,8 +112,6 @@ namespace Providers.OSUI.Utils {
 			if (this._floatingUIOptions.updatePosition) {
 				this.eventOnUpdateCallback();
 			}
-
-			this._floatingUIOptions = undefined;
 		}
 
 		public update(options: FloatingUIOptions): void {
