@@ -7717,32 +7717,44 @@ span.flatpickr-weekday{
   border-radius:var(--osui-balloon-shape);
   background-color:var(--color-neutral-0);
   display:none;
-  padding:var(--space-s);
   position:absolute;
   top:0;
   left:0;
   width:-webkit-max-content;
   width:-moz-max-content;
   width:max-content;
-  min-width:100px;
   height:auto;
-  min-height:100px;
   -webkit-transform:translate(var(--osui-floating-position-x), var(--osui-floating-position-y));
       -ms-transform:translate(var(--osui-floating-position-x), var(--osui-floating-position-y));
           transform:translate(var(--osui-floating-position-x), var(--osui-floating-position-y));
-  -webkit-transition:-webkit-transform 150ms ease;
-  transition:-webkit-transform 150ms ease;
-  -o-transition:transform 150ms ease;
-  transition:transform 150ms ease;
-  transition:transform 150ms ease, -webkit-transform 150ms ease;
+  -webkit-transition:-webkit-transform 250ms ease-out;
+  transition:-webkit-transform 250ms ease-out;
+  -o-transition:transform 250ms ease-out;
+  transition:transform 250ms ease-out;
+  transition:transform 250ms ease-out, -webkit-transform 250ms ease-out;
   will-change:transform;
   z-index:var(--layer-global-elevated);
 }
 .osui-balloon--is-open{
   display:block;
 }
+.osui-overflow-menu__trigger{
+  --osui-floating-offset:var(--space-s);
+  background-color:var(--color-neutral-3);
+  cursor:pointer;
+  width:32px;
+  height:32px;
+  border:1px solid transparent;
+  border-radius:var(--border-radius-soft);
+}
+.osui-overflow-menu__trigger:hover{
+  background-color:var(--color-neutral-5);
+}
 .osui-overflow-menu__trigger *{
   pointer-events:none;
+}
+.osui-overflow-menu--is-open .osui-overflow-menu__trigger{
+  background-color:var(--color-neutral-5);
 }
 /*! 6.3.5. Bottom Sheet */
 .osui-bottom-sheet{

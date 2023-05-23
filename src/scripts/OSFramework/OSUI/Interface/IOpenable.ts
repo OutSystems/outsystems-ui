@@ -7,6 +7,7 @@ namespace OSFramework.OSUI.Interface {
 	 * @interface IOpenable
 	 */
 	export interface IOpenable {
+		isOpen?: boolean;
 		/**
 		 * Method signature to close the pattern.
 		 *

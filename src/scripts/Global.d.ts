@@ -1,5 +1,5 @@
 // FloatingUI => Balloon
-import {computePosition, autoPlacement, AutoPlacementOptions, DetectOverflowOptions, autoUpdate, flip, shift } from './../../node_modules/@floating-ui/dom/index';
+import {computePosition, autoPlacement, AutoPlacementOptions, DetectOverflowOptions, autoUpdate, flip, shift, offset } from './../../node_modules/@floating-ui/dom/index';
 
 // DatePicker => Flatpickr
 import flatpickr from 'flatpickr';
@@ -33,6 +33,7 @@ declare global {
 		autoUpdate: typeof autoUpdate;
 		flip: typeof flip;
 		shift: typeof shift;
+		offset: typeof offset;
 
 		// DatePicker => Flatpickr
 		flatpickr: typeof flatpickr;
@@ -71,6 +72,7 @@ declare global {
 		autoUpdate(reference: ReferenceElement, floating: FloatingElement, update: () => void, options?: Partial<Options>): () => void;
 		flip: (options?: Partial<FlipOptions & DetectOverflowOptions>) => Middleware;
 		shift: (options?: Partial<Options & DetectOverflowOptions>) => Middleware;
+		offset: (value?: Options) => Middleware;
 	}
 
 	type AutoPlacementOptions = placementOptions;

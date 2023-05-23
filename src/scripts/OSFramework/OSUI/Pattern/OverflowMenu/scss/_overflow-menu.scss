@@ -4,6 +4,8 @@
 /// Patterns - Navigation - OverflowMenu
 
 .osui-overflow-menu {
+    --osui-floating-offset: var(--space-base);
+
     &__trigger {
         * {
             pointer-events: none;

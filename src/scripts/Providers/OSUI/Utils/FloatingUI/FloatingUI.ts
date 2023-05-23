@@ -21,6 +21,14 @@ namespace Providers.OSUI.Utils {
 			this.build();
 		}
 
+		private _getOffsetValue(): number {
+			return parseInt(
+				getComputedStyle(this._floatingUIOptions.anchorElem).getPropertyValue(
+					Utils.Enum.CssCustomProperties.Offset
+				)
+			);
+		}
+
 		private _setFloatingPosition(): void {
 			let _eventOnUpdatePosition = undefined;
 			const _middlewareArray = [];
@@ -35,12 +43,15 @@ namespace Providers.OSUI.Utils {
 						OSFramework.OSUI.GlobalEnum.FloatingPosition.BottomStart
 					);
 				}
+
 				_middlewareArray.push(window.FloatingUIDOM.autoPlacement(this._floatingUIOptions.autoPlacementOptions));
 			}
 
 			if (this._floatingUIOptions.useShift) {
 				_middlewareArray.push(window.FloatingUIDOM.shift());
 			}
+
+			_middlewareArray.push(window.FloatingUIDOM.offset(this._getOffsetValue()));
 
 			_eventOnUpdatePosition = () => {
 				window.FloatingUIDOM.computePosition(
@@ -67,13 +78,11 @@ namespace Providers.OSUI.Utils {
 			_eventOnUpdatePosition();
 
 			if (this._floatingUIOptions.updatePosition) {
-				this.eventOnUpdateCallback = () => {
-					window.FloatingUIDOM.autoUpdate(
-						this._floatingUIOptions.anchorElem,
-						this._floatingUIOptions.floatingElem,
-						_eventOnUpdatePosition.bind(this)
-					);
-				};
+				this.eventOnUpdateCallback = window.FloatingUIDOM.autoUpdate(
+					this._floatingUIOptions.anchorElem,
+					this._floatingUIOptions.floatingElem,
+					_eventOnUpdatePosition.bind(this)
+				);
 
 				this.eventOnUpdateCallback();
 			}

@@ -3,8 +3,7 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 	/**
 	 * Defines the interface for OutSystemsUI Balloon Pattern
 	 */
-	export interface IBalloon extends Interface.IPattern, Interface.IOpenable, Interface.ICallback {
+	export interface IBalloon extends Interface.IPattern, Interface.IFloatable, Interface.ICallback {
 		anchorElem: HTMLElement;
-		isOpen: boolean;
 	}
 }

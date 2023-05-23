@@ -2,10 +2,10 @@
 namespace OSFramework.OSUI.Patterns.OverflowMenu {
 	export class OverflowMenu extends AbstractPattern<OverflowMenuConfig> implements IOverflowMenu {
 		private _eventOnClick: GlobalCallbacks.Generic;
-		private _isOpen = false;
 		private _platformEventInitialized: GlobalCallbacks.Generic;
 		private _triggerElem: HTMLElement;
 		public balloonElem: Balloon.IBalloon;
+		public isOpen = false;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new OverflowMenuConfig(configs));
@@ -90,7 +90,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 			this.setHtmlElements();
 			this.setCallbacks();
 			this.setEventListeners();
-			super.finishBuild();
+			this.finishBuild();
 		}
 
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
@@ -98,8 +98,11 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		}
 
 		public close(): void {
-			this.balloonElem.close();
-			this._isOpen = false;
+			if (this.balloonElem.isOpen) {
+				this.balloonElem.close();
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.Open);
+				this.isOpen = false;
+			}
 		}
 
 		public dispose(): void {
@@ -110,8 +113,11 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		}
 
 		public open(): void {
-			this.balloonElem.open();
-			this._isOpen = true;
+			if (this.balloonElem.isOpen === false) {
+				this.balloonElem.open();
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.Open);
+				this.isOpen = true;
+			}
 		}
 
 		/**

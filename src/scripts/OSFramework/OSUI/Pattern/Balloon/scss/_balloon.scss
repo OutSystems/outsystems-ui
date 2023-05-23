@@ -10,16 +10,13 @@
     border-radius: var(--osui-balloon-shape);
     background-color: var(--color-neutral-0);
     display: none;
-    padding: var(--space-s);
     position: absolute;
     top: 0;
     left: 0;
     width: max-content;
-    min-width: 100px;
     height: auto;
-    min-height: 100px;
     transform: translate(var(--osui-floating-position-x),var(--osui-floating-position-y));
-    transition: transform 150ms ease;
+    transition: transform 250ms ease-out;
     will-change: transform;
     z-index: var(--layer-global-elevated);
 
@@ -30,8 +27,27 @@
 
 .osui-overflow-menu {
     &__trigger {
+        --osui-floating-offset: var(--space-s);
+
+        background-color: var(--color-neutral-3);
+        cursor: pointer;
+        width: 32px;
+        height: 32px;
+        border: 1px solid transparent;
+        border-radius: var(--border-radius-soft);
+
+        &:hover {
+            background-color: var(--color-neutral-5);
+        }
+
         * {
             pointer-events: none;
+        }
+    }
+
+    &--is-open {
+        .osui-overflow-menu__trigger {
+            background-color: var(--color-neutral-5);
         }
     }
 }

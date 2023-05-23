@@ -172,10 +172,6 @@ declare namespace OSFramework.OSUI.GlobalCallbacks {
     };
 }
 declare namespace OSFramework.OSUI.GlobalEnum {
-    enum CommonCSSClasses {
-        IsOpen = "--is-open",
-        Prefix = "osui-"
-    }
     enum CommonPatternsProperties {
         ExtendedClass = "ExtendedClass"
     }
@@ -232,7 +228,11 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         BottomEnd = "bottom-end",
         Center = "center",
         Left = "left",
+        LeftEnd = "left-end",
+        LeftStart = "left-start",
         Right = "right",
+        RightEnd = "right-end",
+        RightStart = "right-start",
         Top = "top",
         TopStart = "top-start",
         TopEnd = "top-end"
@@ -1046,7 +1046,6 @@ declare namespace OSFramework.OSUI.Interface {
 }
 declare namespace OSFramework.OSUI.Interface {
     interface IFloatable extends IOpenable {
-        isOpen: boolean;
     }
 }
 declare namespace OSFramework.OSUI.Interface {
@@ -1057,6 +1056,7 @@ declare namespace OSFramework.OSUI.Interface {
 }
 declare namespace OSFramework.OSUI.Interface {
     interface IOpenable {
+        isOpen?: boolean;
         close(): void;
         open(): void;
     }
@@ -1170,9 +1170,9 @@ declare namespace OSFramework.OSUI.Patterns {
         protected openCSSClass: string;
         isOpen: boolean;
         private _handleFocusTrap;
-        private _onkeypressCallback;
         private _triggerOnToggleEvent;
         protected bodyClickCallback(_args: string, e: MouseEvent): void;
+        protected onkeypressCallback(e: KeyboardEvent): void;
         protected removeEventListeners(): void;
         protected setA11YProperties(): void;
         protected setCallbacks(): void;
@@ -1478,9 +1478,8 @@ declare namespace OSFramework.OSUI.Patterns.Balloon.Enum {
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Balloon {
-    interface IBalloon extends Interface.IPattern, Interface.IOpenable, Interface.ICallback {
+    interface IBalloon extends Interface.IPattern, Interface.IFloatable, Interface.ICallback {
         anchorElem: HTMLElement;
-        isOpen: boolean;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.BottomSheet {
@@ -2356,6 +2355,7 @@ declare namespace OSFramework.OSUI.Patterns.Notification {
 }
 declare namespace OSFramework.OSUI.Patterns.OverflowMenu.Enum {
     enum CssClass {
+        Open = "osui-overflow-menu--is-open",
         Trigger = "osui-overflow-menu__trigger"
     }
     enum Events {
@@ -2371,10 +2371,10 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
 declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
     class OverflowMenu extends AbstractPattern<OverflowMenuConfig> implements IOverflowMenu {
         private _eventOnClick;
-        private _isOpen;
         private _platformEventInitialized;
         private _triggerElem;
         balloonElem: Balloon.IBalloon;
+        isOpen: boolean;
         constructor(uniqueId: string, configs: JSON);
         private _onClickCallback;
         private _triggerInitializedEvent;
@@ -5497,7 +5497,8 @@ declare namespace Providers.OSUI.TimePicker.Flatpickr {
 declare namespace Providers.OSUI.Utils.Enum {
     enum CssCustomProperties {
         YPosition = "--osui-floating-position-y",
-        XPosition = "--osui-floating-position-x"
+        XPosition = "--osui-floating-position-x",
+        Offset = "--osui-floating-offset"
     }
 }
 declare namespace Providers.OSUI.Utils {
@@ -5514,6 +5515,7 @@ declare namespace Providers.OSUI.Utils {
         private _floatingUIOptions;
         eventOnUpdateCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
         constructor(options: FloatingUIOptions);
+        private _getOffsetValue;
         private _setFloatingPosition;
         build(): void;
         close(): void;

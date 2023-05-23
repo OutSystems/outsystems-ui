@@ -167,6 +167,7 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 
 			super.dispose();
 		}
+
 		/**
 		 * Set callbacks for the pattern events
 		 *
