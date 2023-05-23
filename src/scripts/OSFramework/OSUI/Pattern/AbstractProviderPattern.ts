@@ -22,6 +22,19 @@ namespace OSFramework.OSUI.Patterns {
 		// Holds the providerEvents instance, that manages the provider events
 		protected providerEventsManagerInstance: Event.ProviderEvents.IProviderEventManager;
 
+		/**
+		 * Creates an instance of AbstractProviderPattern.
+		 *
+		 * @param {string} uniqueId
+		 * @param {C} configs
+		 * @memberof OSFramework.Patterns.AbstractProviderPattern
+		 */
+		constructor(uniqueId: string, configs: C) {
+			super(uniqueId, configs);
+
+			this._isProviderBased = true;
+		}
+
 		// Method to get an event index from an array
 		private _getEventIndexFromArray(event: Event.ProviderEvents.IProviderEvent): number {
 			// Get callback from array
@@ -122,8 +135,6 @@ namespace OSFramework.OSUI.Patterns {
 		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
 		public build(): void {
-			this._isProviderBased = true;
-
 			this.providerInfo = {
 				name: undefined,
 				version: undefined,

@@ -25,6 +25,13 @@ namespace OSFramework.OSUI.Patterns {
 		// Flag to help on check if a pattern has a provider.
 		protected _isProviderBased = false;
 
+		/**
+		 * Creates an instance of AbstractPattern.
+		 *
+		 * @param {string} uniqueId
+		 * @param {C} configs
+		 * @memberof OSFramework.Patterns.AbstractPattern
+		 */
 		constructor(uniqueId: string, configs: C) {
 			this._uniqueId = uniqueId;
 			this._configs = configs;
