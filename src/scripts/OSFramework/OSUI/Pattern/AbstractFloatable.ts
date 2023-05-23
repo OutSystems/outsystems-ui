@@ -12,7 +12,6 @@ namespace OSFramework.OSUI.Patterns {
 		private _focusableActiveElement: HTMLElement;
 		// WidgetId element
 		private _parentSelf: HTMLElement;
-		private _patternName: string;
 		private _platformEventOnToggle: GlobalCallbacks.Generic;
 		// eslint-disable-next-line @typescript-eslint/naming-convention
 		protected openCSSClass: string;
