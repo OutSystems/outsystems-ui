@@ -2,7 +2,6 @@
 namespace OSFramework.OSUI.Patterns.OverflowMenu {
 	export class OverflowMenu extends AbstractPattern<OverflowMenuConfig> implements IOverflowMenu {
 		private _eventOnClick: GlobalCallbacks.Generic;
-		private _platformEventInitialized: GlobalCallbacks.Generic;
 		private _triggerElem: HTMLElement;
 		public balloonElem: Balloon.IBalloon;
 		public isOpen = false;
@@ -17,11 +16,6 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 			} else {
 				this.open();
 			}
-		}
-
-		// Method that triggers the Intialized event
-		private _triggerInitializedEvent(): void {
-			Helper.AsyncInvocation(this._platformEventInitialized, this.widgetId);
 		}
 
 		protected removeEventListeners(): void {
@@ -71,7 +65,6 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnClick = undefined;
-			this._platformEventInitialized = undefined;
 		}
 
 		/**
@@ -117,36 +110,6 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 				this.balloonElem.open();
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.Open);
 				this.isOpen = true;
-			}
-		}
-
-		/**
-		 * Set callbacks for the pattern events
-		 *
-		 * @param {GlobalCallbacks.OSGeneric} callback
-		 * @param {string} eventName
-		 * @memberof OverflowMenu
-		 */
-		public registerCallback(callback: GlobalCallbacks.OSGeneric, eventName: string): void {
-			switch (eventName) {
-				case Enum.Events.Initialized:
-					if (this._platformEventInitialized === undefined) {
-						this._platformEventInitialized = callback;
-					} else {
-						console.warn(
-							`The ${GlobalEnum.PatternName.OverflowMenu} already has the ${eventName} callback set.`
-						);
-					}
-					break;
-				case Enum.Events.OnMenuToggle:
-					/* 					if (this._platformEventOnToggle === undefined) {
-						this._platformEventOnToggle = callback;
-					} else {
-						console.warn(
-							`The ${GlobalEnum.PatternName.OverflowMenu} already has the ${eventName} callback set.`
-						);
-					} */
-					break;
 			}
 		}
 	}

@@ -166,7 +166,7 @@ namespace OutSystems.OSUI.Patterns.BalloonAPI {
 			callback: () => {
 				const _balloon = GetBalloonById(balloonId);
 
-				_balloon.registerCallback(callback, eventName);
+				_balloon.registerCallback(eventName, callback);
 			},
 		});
 

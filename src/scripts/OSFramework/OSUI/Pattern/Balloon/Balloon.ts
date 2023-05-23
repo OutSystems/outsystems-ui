@@ -11,7 +11,6 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 	export class Balloon extends AbstractFloatable<BalloonConfig> implements IBalloon {
 		// eslint-disable-next-line @typescript-eslint/naming-convention
 		private _floatingUIInstance: Providers.OSUI.Utils.FloatingUI;
-		private _platformEventInitialized: GlobalCallbacks.Generic;
 		public anchorElem: HTMLElement;
 		public floatingOptions: Providers.OSUI.Utils.FloatingUIOptions;
 
@@ -27,11 +26,6 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 				Enum.CssCustomProperties.Shape,
 				'var(--border-radius-' + this.configs.Shape + ')'
 			);
-		}
-
-		// Method that triggers the Intialized event
-		private _triggerInitializedEvent(): void {
-			Helper.AsyncInvocation(this._platformEventInitialized, this.widgetId);
 		}
 
 		protected bodyClickCallback(_args: string, e: MouseEvent): void {
@@ -111,7 +105,6 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 		 */
 		protected unsetCallbacks(): void {
 			super.unsetCallbacks();
-			this._platformEventInitialized = undefined;
 		}
 
 		/**
@@ -129,7 +122,6 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 			super.build();
 			this._handleShape();
 			this.finishBuild();
-			this._triggerInitializedEvent();
 		}
 
 		/**
@@ -166,27 +158,6 @@ namespace OSFramework.OSUI.Patterns.Balloon {
 			this._floatingUIInstance.dispose();
 
 			super.dispose();
-		}
-
-		/**
-		 * Set callbacks for the pattern events
-		 *
-		 * @param {GlobalCallbacks.OSGeneric} callback
-		 * @param {string} eventName
-		 * @memberof Balloon
-		 */
-		public registerCallback(callback: GlobalCallbacks.OSGeneric, eventName: string): void {
-			switch (eventName) {
-				case Enum.Events.Initialized:
-					if (this._platformEventInitialized === undefined) {
-						this._platformEventInitialized = callback;
-					} else {
-						console.warn(
-							`The ${GlobalEnum.PatternName.Balloon} already has the ${eventName} callback set.`
-						);
-					}
-					break;
-			}
 		}
 	}
 }
