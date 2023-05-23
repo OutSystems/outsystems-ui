@@ -13,16 +13,18 @@
     visibility: hidden;
     opacity: 0;
     position: absolute;
+    pointer-events: none;
     top: var(--osui-floating-position-y);
     left: var(--osui-floating-position-x);
     width: max-content;
     height: auto;
     z-index: var(--layer-global-elevated);
-    transition: opacity 300ms ease-in;
 
     &--is-open {
         visibility: visible;
         opacity: 1;
+        pointer-events: all;
+        transition: opacity 300ms ease-in;
     }
 }
 
