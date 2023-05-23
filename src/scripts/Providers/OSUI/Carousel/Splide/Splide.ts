@@ -113,7 +113,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		// Method to set the OnInitializeEvent
 		private _setOnInitializedEvent(): void {
 			this._provider.on(Enum.SpliderEvents.Mounted, () => {
-				this.finishBuild();
+				this.triggerPlatformInitializedEventCallback();
 			});
 		}
 
@@ -271,6 +271,8 @@ namespace Providers.OSUI.Carousel.Splide {
 			this.setInitialCssClasses();
 
 			this.prepareConfigs();
+
+			super.finishBuild();
 		}
 
 		/**

@@ -126,6 +126,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 		public build(): void {
 			super.build();
 			this.prepareConfigs();
+			super.finishBuild();
 		}
 
 		/**
