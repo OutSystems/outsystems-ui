@@ -31,6 +31,16 @@ namespace OSFramework.OSUI.Patterns.AccordionItem.Enum {
 		PatternTitle = 'osui-accordion-item__title',
 	}
 
+	/**
+	 * Callbacks eventName
+	 *
+	 * @export
+	 * @enum {number}
+	 */
+	export enum Events {
+		OnToggle = 'OnToggle',
+	}
+
 	export enum IconType {
 		Caret = 'Caret',
 		Custom = 'Custom',

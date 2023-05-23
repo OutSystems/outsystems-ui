@@ -34,7 +34,6 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		// Store the parent element
 		private _parentSelf: HTMLElement;
 		// Store the platform events
-		private _platformEventOnInitialize: Callbacks.OSInitializedEvent;
 		private _platformEventOnToggle: Callbacks.OSOnToggleEvent;
 
 		constructor(uniqueId: string, configs: JSON) {
@@ -270,7 +269,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 
 		// Method that triggers the OnToggle event
 		private _triggerOnToggleEvent(): void {
-			Helper.AsyncInvocation(this._platformEventOnToggle, this.widgetId, this._isOpen);
+			this.triggerPlatformEventCallback(this._platformEventOnToggle, this._isOpen);
 		}
 
 		/**
@@ -314,8 +313,6 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			this._parentSelf = Helper.Dom.GetElementById(this.widgetId);
 
 			this._setWidth();
-
-			Helper.AsyncInvocation(this._platformEventOnInitialize, this.widgetId);
 		}
 
 		/**
@@ -340,7 +337,6 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		 */
 		protected unsetHtmlElements(): void {
 			this._parentSelf = undefined;
-			this._platformEventOnInitialize = undefined;
 			this._platformEventOnToggle = undefined;
 		}
 
@@ -454,17 +450,12 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		/**
 		 * Set callbacks for the pattern
 		 *
-		 * @param {Callbacks.OSOnToggleEvent} callback
-		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
+		 * @param {string} eventName
+		 * @param {GlobalCallbacks.OSGeneric} callback
+		 @memberof OSFramework.Patterns.Sidebar.Sidebar
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
-				case Patterns.Sidebar.Enum.Events.OnInitialize:
-					if (this._platformEventOnInitialize === undefined) {
-						this._platformEventOnInitialize = callback;
-					}
-					break;
-
 				case Patterns.Sidebar.Enum.Events.OnToggle:
 					if (this._platformEventOnToggle === undefined) {
 						this._platformEventOnToggle = callback;
@@ -474,9 +465,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 					break;
 
 				default:
-					throw new Error(
-						`${ErrorCodes.Sidebar.FailRegisterCallback}:	The given '${eventName}' event name is not defined.`
-					);
+					super.registerCallback(eventName, callback);
 			}
 		}
 

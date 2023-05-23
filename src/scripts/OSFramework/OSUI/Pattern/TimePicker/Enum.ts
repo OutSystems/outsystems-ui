@@ -13,7 +13,6 @@ namespace OSFramework.OSUI.Patterns.TimePicker.Enum {
 	 */
 	export enum TimePickerEvents {
 		OnChange = 'OnChange',
-		OnInitialized = 'OnInitialized',
 	}
 
 	/**

@@ -50,5 +50,14 @@ namespace OSFramework.OSUI.Interface {
 		 * @memberof OSFramework.Interface.IPattern
 		 */
 		changeProperty(propertyName: string, propertyValue: unknown): void;
+
+		/**
+		 * Enables to register simple callbacks for the platform. Internal use.
+		 *
+		 * @param {string} eventName
+		 * @param {GlobalCallbacks.OSGeneric} callback
+		 * @memberof OSFramework.Interface.IPattern
+		 */
+		registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
 	}
 }

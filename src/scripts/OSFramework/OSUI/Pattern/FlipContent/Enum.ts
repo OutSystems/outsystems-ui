@@ -19,4 +19,14 @@ namespace OSFramework.OSUI.Patterns.FlipContent.Enum {
 		PatternFront = 'osui-flip-content__container__front',
 		PatternIsFlipped = 'osui-flip-content--flipped',
 	}
+
+	/**
+	 * Callbacks eventName
+	 *
+	 * @export
+	 * @enum {number}
+	 */
+	export enum Events {
+		OnToggle = 'OnToggle',
+	}
 }

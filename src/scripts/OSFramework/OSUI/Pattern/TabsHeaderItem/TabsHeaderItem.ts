@@ -122,7 +122,7 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 
 			this._setUpEvents();
 
-			super.finishBuild();
+			this.finishBuild();
 		}
 
 		/**

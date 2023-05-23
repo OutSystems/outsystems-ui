@@ -15,5 +15,6 @@ namespace OSFramework.OSUI.Patterns.TimePicker {
 		public abstract open(): void;
 		public abstract setLanguage(value: string): void;
 		public abstract updateInitialTime(time: string): void;
+		public abstract updatePrompt(promptMessage: string): void;
 	}
 }

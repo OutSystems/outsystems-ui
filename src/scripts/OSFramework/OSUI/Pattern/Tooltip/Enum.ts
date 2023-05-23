@@ -25,7 +25,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip.Enum {
 	 * Events
 	 */
 	export enum Events {
-		Initialized = 'Initialized',
 		OnToggle = 'OnToggle',
 	}
 

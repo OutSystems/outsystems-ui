@@ -291,6 +291,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		FloatingActions = 'Floating Actions',
 		FloatingActionsItem = 'Floating Actions Item',
 		Gallery = 'Gallery',
+		InlineSvg = 'InlineSVG',
 		MonthPicker = 'MonthPicker',
 		Notification = 'Notification',
 		OverflowMenu = 'OverflowMenu',
@@ -402,5 +403,11 @@ namespace OSFramework.OSUI.GlobalEnum {
 	export enum ProviderEvents {
 		Initialized = 'Initialized',
 		OnProviderConfigsApplied = 'OnProviderConfigsApplied',
+	}
+
+	export enum SVGHelperConstants {
+		DOMType = 'image/svg+xml',
+		ParserError = 'parsererror',
+		SVG = 'svg',
 	}
 }

@@ -115,6 +115,32 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	}
 
 	/**
+	 * Function to register a provider callback
+	 *
+	 * @export
+	 * @param {string} dropdownId
+	 * @param {string} eventName
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
+	 * @return {*}  {string}
+	 */
+	export function RegisterCallback(
+		dropdownId: string,
+		eventName: string,
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
+	): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.AnimatedLabel.FailRegisterCallback,
+			callback: () => {
+				const animatedlabel = this.GetAnimatedLabelById(dropdownId);
+
+				animatedlabel.registerCallback(eventName, callback);
+			},
+		});
+
+		return result;
+	}
+
+	/**
 	 * Fucntion that will update the Label text according text has been changed inside the input
 	 *
 	 * @export

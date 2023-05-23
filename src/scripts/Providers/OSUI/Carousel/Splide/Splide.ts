@@ -113,8 +113,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		// Method to set the OnInitializeEvent
 		private _setOnInitializedEvent(): void {
 			this._provider.on(Enum.SpliderEvents.Mounted, () => {
-				// Trigger platform's InstanceIntializedHandler client Action
-				this.triggerPlatformEventInitialized();
+				this.triggerPlatformInitializedEventCallback();
 			});
 		}
 
@@ -122,7 +121,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		private _setOnSlideMovedEvent(): void {
 			this._provider.on(Enum.SpliderEvents.Moved, (index) => {
 				if (index !== this._currentIndex) {
-					this.triggerPlatformEventplatformCallback(this._platformEventOnSlideMoved, index);
+					this.triggerPlatformEventCallback(this._platformEventOnSlideMoved, index);
 					this._currentIndex = index;
 				}
 			});

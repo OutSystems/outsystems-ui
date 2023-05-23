@@ -153,18 +153,21 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	 *
 	 * @export
 	 * @param {string} bottomSheetId
-	 * @param {*} callback
+	 * @param {string} eventName
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
+	 * @return {*}  {string}
 	 */
 	export function RegisterCallback(
 		bottomSheetId: string,
-		callback: OSFramework.OSUI.GlobalCallbacks.Generic
+		eventName: string,
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.BottomSheet.FailRegisterCallback,
 			callback: () => {
 				const bottomSheet = GetBottomSheetItemById(bottomSheetId);
 
-				bottomSheet.registerCallback(callback);
+				bottomSheet.registerCallback(eventName, callback);
 			},
 		});
 

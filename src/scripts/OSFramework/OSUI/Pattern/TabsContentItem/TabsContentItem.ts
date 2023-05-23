@@ -103,7 +103,7 @@ namespace OSFramework.OSUI.Patterns.TabsContentItem {
 
 			this.setA11YProperties(false);
 
-			super.finishBuild();
+			this.finishBuild();
 		}
 
 		/**

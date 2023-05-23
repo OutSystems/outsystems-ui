@@ -165,11 +165,16 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				);
 			}
 
-			// Trigger platform's InstanceIntializedHandler client Action
-			this.triggerPlatformEventInitialized();
-
 			// Remove inline height value style!
 			this._unsetParentMinHeight();
+
+			/**
+			 * Trigger Innitialized Event.
+			 * - This is needed for the patterns based on a provider since at the Initialized Event at the
+			 * Platform side, custom code can be added in order to add customization to the provider.
+			 * - This way, Initialized Event will be triggered every time a redraw occurs.
+			 */
+			this.triggerPlatformInitializedEventCallback();
 		}
 
 		/**
@@ -489,6 +494,16 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				this.configs.DisableMobile = !isNative;
 				this.prepareToAndRedraw();
 			}
+		}
+
+		/**
+		 * Method used to update the prompt message
+		 *
+		 * @param promptMessage The new prompt message value
+		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
+		 */
+		public updatePrompt(promptMessage: string): void {
+			this._flatpickrInputElem.placeholder = promptMessage;
 		}
 
 		// Common methods all DatePickers must implement

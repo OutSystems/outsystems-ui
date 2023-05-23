@@ -76,7 +76,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		// Get the selected options and pass them into callBack
 		private _onSelectedOption() {
 			// Trigger platform's SelectedOptionCallbackEvent client Action
-			this.triggerPlatformEventplatformCallback(this._platformEventSelectedOptCallback, this.getSelectedValues());
+			this.triggerPlatformEventCallback(this._platformEventSelectedOptCallback, this.getSelectedValues());
 		}
 
 		// Close the dropdown if it's open!
@@ -153,9 +153,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			// Add attributes to the element if needed
 			this._manageAttributes();
 
-			// Trigger platform's InstanceIntializedHandler client Action
-			this.triggerPlatformEventInitialized();
-
 			const _bodyEvent = OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(
 				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick
 			) as OSFramework.OSUI.Event.DOMEvents.Listeners.IListener;
@@ -169,6 +166,14 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 					_bodyEvent.enableBodyClickEvent();
 				});
 			}
+
+			/**
+			 * Trigger Innitialized Event.
+			 * - This is needed for the patterns based on a provider since at the Initialized Event at the
+			 * Platform side, custom code can be added in order to add customization to the provider.
+			 * - This way, Initialized Event will be triggered every time a redraw occurs.
+			 */
+			this.triggerPlatformInitializedEventCallback();
 		}
 
 		/**

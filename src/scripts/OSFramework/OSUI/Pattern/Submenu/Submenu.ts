@@ -13,8 +13,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		private _hasElements = false;
 		private _isActive = false;
 		private _isOpen = false;
-		// Platform OnInitialize Callback
-		private _platformEventInitializedCallback: GlobalCallbacks.OSGeneric;
 		private _platformEventOnToggleCallback: GlobalCallbacks.OSGeneric;
 		private _submenuActiveLinksElement: HTMLElement;
 		private _submenuAllLinksElement: HTMLAnchorElement[];
@@ -279,7 +277,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			this._globalEventBody = undefined;
 			this._eventOnMouseEnter = undefined;
 			this._eventOnMouseLeave = undefined;
-			this._platformEventInitializedCallback = undefined;
 			this._platformEventOnToggleCallback = undefined;
 		}
 
@@ -311,9 +308,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			this.setA11YProperties();
 
 			this.setCallbacks();
-
-			// Trigger platform's _platformEventInitializedCallback client Action
-			Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
 
 			this.finishBuild();
 		}
@@ -374,7 +368,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 				this._updateA11yProperties();
 
 				// Trigger the _platformEventOnToggleCallback callback!
-				Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, false);
+				this.triggerPlatformEventCallback(this._platformEventOnToggleCallback, false);
 			}
 		}
 
@@ -412,7 +406,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			Helper.AsyncInvocation(this._show.bind(this));
 
 			// Trigger the _platformEventOnToggleCallback callback!
-			Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, true);
+			this.triggerPlatformEventCallback(this._platformEventOnToggleCallback, true);
 		}
 
 		/**
@@ -422,24 +416,15 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 * @param {GlobalCallbacks.OSGeneric} callback
 		 * @memberof Submenu
 		 */
-		public registerCallback(callback: GlobalCallbacks.OSGeneric, eventName: string): void {
+		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
-				case Enum.Events.Initialized:
-					if (this._platformEventInitializedCallback === undefined) {
-						this._platformEventInitializedCallback = callback;
-					}
-					break;
-
 				case Enum.Events.OnToggle:
 					if (this._platformEventOnToggleCallback === undefined) {
 						this._platformEventOnToggleCallback = callback;
 					}
 					break;
-
 				default:
-					throw new Error(
-						`${ErrorCodes.Submenu.FailRegisterCallback}: The given '${eventName}' event name is not defined.`
-					);
+					super.registerCallback(eventName, callback);
 			}
 		}
 

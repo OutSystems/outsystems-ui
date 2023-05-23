@@ -261,7 +261,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	}
 
 	/**
-	 * Function that will update the InitialDate fot a given DatepickerId
+	 * Function that will update the InitialDate for a given DatepickerId
 	 * 	When:
 	 * 		SingleDate
 	 * 			=> Date1 = InitialDate
@@ -293,6 +293,26 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 					const _datePicker = this.GetDatePickerItemById(datePickerId);
 					_datePicker.updateInitialDate(date1, date2);
 				}
+			},
+		});
+
+		return result;
+	}
+
+	/**
+	 * Function that will update the prompt message for a given DatepickerId
+	 *
+	 * @param {string} datePickerId
+	 * @param {string} promptMessage The value for the prompt message
+	 * @return {*} Response Object as a JSON String
+	 */
+	export function UpdatePrompt(datePickerId: string, promptMessage: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.DatePicker.FailUpdatePrompt,
+			callback: () => {
+				const _datePicker = this.GetDatePickerItemById(datePickerId);
+
+				_datePicker.updatePrompt(promptMessage);
 			},
 		});
 

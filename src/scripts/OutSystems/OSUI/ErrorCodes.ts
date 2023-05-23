@@ -48,6 +48,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailCollapseAll: 'OSUI-API-04002',
 		FailDispose: 'OSUI-API-04003',
 		FailExpandAll: 'OSUI-API-04004',
+		FailRegisterCallback: 'OSUI-API-04005',
 	};
 
 	export const AccordionItem = {
@@ -93,6 +94,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailSetLanguage: 'OSUI-API-07014',
 		FailToggleNativeBehavior: 'OSUI-API-07015',
 		FailUpdateInitialDate: 'OSUI-API-07016',
+		FailUpdatePrompt: 'OSUI-API-07017',
 	};
 
 	export const FlipContent = {
@@ -110,6 +112,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailProgressValue: 'OSUI-API-09003',
 		FailProgressReset: 'OSUI-API-09004',
 		FailtProgressGradient: 'OSUI-API-09005',
+		FailRegisterCallback: 'OSUI-API-09006',
 	};
 
 	export const RangeSlider = {
@@ -158,12 +161,14 @@ namespace OutSystems.OSUI.ErrorCodes {
 	export const AnimatedLabel = {
 		FailChangeProperty: 'OSUI-API-14001',
 		FailDispose: 'OSUI-API-14002',
+		FailRegisterCallback: 'OSUI-API-14004',
 		FailUpdate: 'OSUI-API-14003',
 	};
 
 	export const ButtonLoading = {
 		FailChangeProperty: 'OSUI-API-15001',
 		FailDispose: 'OSUI-API-15002',
+		FailRegisterCallback: 'OSUI-API-15003',
 	};
 
 	export const DropdownServerSideItem = {
@@ -181,6 +186,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 	export const Gallery = {
 		FailChangeProperty: 'OSUI-API-18001',
 		FailDispose: 'OSUI-API-18002',
+		FailRegisterCallback: 'OSUI-API-18003',
 	};
 
 	export const Rating = {
@@ -214,6 +220,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 	export const TabsContentItem = {
 		FailChangeProperty: 'OSUI-API-23001',
 		FailDispose: 'OSUI-API-23002',
+		FailRegisterCallback: 'OSUI-API-23003',
 	};
 
 	export const TabsHeaderItem = {
@@ -221,6 +228,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailDisableTabHeader: 'OSUI-API-24002',
 		FailDispose: 'OSUI-API-24003',
 		FailEnableTabHeader: 'OSUI-API-24004',
+		FailRegisterCallback: 'OSUI-API-24006',
 		FailUpdate: 'OSUI-API-24005',
 	};
 
@@ -247,6 +255,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailSetLanguage: 'OSUI-API-26012',
 		FailUpdateInitialTime: 'OSUI-API-26013',
 		FailSetEditableInput: 'OSUI-API-26014',
+		FailUpdatePrompt: 'OSUI-API-26015',
 	};
 
 	export const MonthPicker = {
@@ -263,6 +272,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailSetEditableInput: 'OSUI-API-27011',
 		FailSetLanguage: 'OSUI-API-27012',
 		FailUpdateInitialMonth: 'OSUI-API-27013',
+		FailUpdatePrompt: 'OSUI-API-27014',
 	};
 
 	//Error codes used on the context of the Utilities client actions
@@ -295,18 +305,24 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailCheckIsRTL: 'OSUI-API-28026',
 	};
 
-	export const Balloon = {
+	export const InlineSvg = {
 		FailChangeProperty: 'OSUI-API-29001',
 		FailDispose: 'OSUI-API-29002',
 		FailRegisterCallback: 'OSUI-API-29003',
-		FailOpen: 'OSUI-API-29004',
-		FailClose: 'OSUI-API-29005',
 	};
 
-	export const OverflowMenu = {
+	export const Balloon = {
 		FailChangeProperty: 'OSUI-API-30001',
 		FailDispose: 'OSUI-API-30002',
 		FailRegisterCallback: 'OSUI-API-30003',
+		FailOpen: 'OSUI-API-30004',
+		FailClose: 'OSUI-API-30005',
+	};
+
+	export const OverflowMenu = {
+		FailChangeProperty: 'OSUI-API-31001',
+		FailDispose: 'OSUI-API-31002',
+		FailRegisterCallback: 'OSUI-API-31003',
 	};
 
 	// Error Codes used in Legacy Client Action
