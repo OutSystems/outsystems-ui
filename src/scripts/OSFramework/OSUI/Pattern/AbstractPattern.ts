@@ -52,10 +52,8 @@ namespace OSFramework.OSUI.Patterns {
 		protected finishBuild(): void {
 			this._isBuilt = true;
 
-			if (this._platformEventInitialized !== undefined) {
-				// Trigger platform's _platformEventInitialized handler.
-				this.triggerPlatformEventCallback(this._platformEventInitialized);
-			}
+			// Trigger the Initialized Callback Event
+			this.triggerPlatformInitializedEventCallback();
 		}
 
 		/**
@@ -69,6 +67,19 @@ namespace OSFramework.OSUI.Patterns {
 		protected triggerPlatformEventCallback(platFormCallback: GlobalCallbacks.OSGeneric, ...args: unknown[]): void {
 			if (platFormCallback !== undefined) {
 				Helper.AsyncInvocation(platFormCallback, this.widgetId, ...args);
+			}
+		}
+
+		/**
+		 * Trigger the Initialized callback platform event.
+		 *
+		 * @protected
+		 * @memberof AbstractPattern
+		 */
+		protected triggerPlatformInitializedEventCallback() {
+			if (this._platformEventInitialized !== undefined) {
+				// Trigger platform's _platformEventInitialized handler.
+				this.triggerPlatformEventCallback(this._platformEventInitialized);
 			}
 		}
 
