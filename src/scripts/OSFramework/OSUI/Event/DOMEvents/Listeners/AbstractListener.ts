@@ -19,11 +19,11 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		// Store the listener callback
 		protected eventCallback: EventListenerObject;
 
-		constructor(eventTarget, eventType) {
+		constructor(eventTarget, eventType, isCustomEvent = false) {
 			super();
 			this._eventTarget = eventTarget;
 			this._eventType = eventType;
-			this._eventName = GlobalEnum.HTMLEvent.Prefix + this._eventType;
+			this._eventName = isCustomEvent === false ? GlobalEnum.HTMLEvent.Prefix + this._eventType : this._eventType;
 
 			// Make async call to wait for extended event Class to set tge eventCallback property first
 			Helper.AsyncInvocation(this.addEvent.bind(this));
@@ -36,7 +36,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		 */
 		public addEvent(): void {
 			// Check if event exist in the window
-			if (this._eventName in window) {
+			if (this._eventName in window || window[this._eventName] !== undefined) {
 				this._eventTarget.addEventListener(this._eventType, this.eventCallback);
 			}
 		}
@@ -48,7 +48,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		 */
 		public removeEvent(): void {
 			// Check if event exist in the window
-			if (this._eventName in window) {
+			if (this._eventName in window || window[this._eventName] !== undefined) {
 				this._eventTarget.removeEventListener(this._eventType, this.eventCallback);
 			}
 		}

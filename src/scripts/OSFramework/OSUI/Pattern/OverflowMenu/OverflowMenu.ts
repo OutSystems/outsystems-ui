@@ -1,15 +1,24 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Patterns.OverflowMenu {
 	export class OverflowMenu extends AbstractPattern<OverflowMenuConfig> implements IOverflowMenu {
-		private _eventOnClick: GlobalCallbacks.Generic;
-		private _triggerElem: HTMLElement;
 		private _balloonElem: HTMLElement;
+		private _balloonOnToggleEvent: GlobalCallbacks.Generic;
+		private _eventOnClick: GlobalCallbacks.Generic;
+		// Store the platform events
+		private _platformEventOnToggle: Callbacks.OSOnToggleEvent;
+		private _triggerElem: HTMLElement;
 		public balloonFeature: Feature.Balloon.IBalloon;
 		public balloonOptions: Feature.Balloon.BalloonOptions;
 		public isOpen = false;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new OverflowMenuConfig(configs));
+		}
+
+		private _balloonOnToggleCallback(_args: string, e: CustomEvent): void {
+			if (e.detail.balloonElem === this._balloonElem) {
+				this.togglePattern(e.detail.isOpen);
+			}
 		}
 
 		private _onClickCallback(): void {
@@ -20,8 +29,18 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 			}
 		}
 
+		// Method that triggers the OnToggle event
+		private _triggerOnToggleEvent(): void {
+			this.triggerPlatformEventCallback(this._platformEventOnToggle, this.isOpen);
+		}
+
 		protected removeEventListeners(): void {
 			this._triggerElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				Event.DOMEvents.Listeners.Type.BalloonOnToggle,
+				this._balloonOnToggleCallback.bind(this)
+			);
 		}
 
 		/**
@@ -46,11 +65,17 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 * @memberof OSFramework.Patterns.OverflowMenu.OverflowMenu
 		 */
 		protected setCallbacks(): void {
+			this._balloonOnToggleEvent = this._balloonOnToggleCallback.bind(this);
 			this._eventOnClick = this._onClickCallback.bind(this);
 		}
 
 		protected setEventListeners(): void {
 			this._triggerElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+				Event.DOMEvents.Listeners.Type.BalloonOnToggle,
+				this._balloonOnToggleCallback.bind(this)
+			);
 		}
 
 		/**
@@ -72,12 +97,15 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 					GlobalEnum.FloatingPosition.TopEnd,
 				],
 				anchorElem: this._triggerElem,
-				balloonElem: this._balloonElem,
 				position: this.configs.Position,
 				shape: this.configs.Shape,
 			};
 
-			this.balloonFeature = new OSFramework.OSUI.Feature.Balloon.Balloon(this.balloonOptions);
+			this.balloonFeature = new OSFramework.OSUI.Feature.Balloon.Balloon<IOverflowMenu>(
+				this,
+				this._balloonElem,
+				this.balloonOptions
+			);
 		}
 
 		/**
@@ -87,6 +115,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 * @memberof OSFramework.Patterns.OverflowMenu.OverflowMenu
 		 */
 		protected unsetCallbacks(): void {
+			this._balloonOnToggleEvent = undefined;
 			this._eventOnClick = undefined;
 		}
 
@@ -117,9 +146,6 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		public close(): void {
 			if (this.balloonFeature.isOpen) {
 				this.balloonFeature.close();
-				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.Open);
-				this.isOpen = false;
-				this.setA11YProperties();
 			}
 		}
 
@@ -133,10 +159,43 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		public open(): void {
 			if (this.balloonFeature.isOpen === false) {
 				this.balloonFeature.open();
-				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.Open);
-				this.isOpen = true;
-				this.setA11YProperties();
 			}
+		}
+
+		/**
+		 * Set callbacks for the pattern
+		 *
+		 * @param {string} eventName
+		 * @param {GlobalCallbacks.OSGeneric} callback
+		 @memberof OSFramework.Patterns.OverflowMenu.OverflowMenu
+		 */
+		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
+			switch (eventName) {
+				case Patterns.OverflowMenu.Enum.Events.OnMenuToggle:
+					if (this._platformEventOnToggle === undefined) {
+						this._platformEventOnToggle = callback;
+					} else {
+						console.warn(`The ${GlobalEnum.PatternName.OverflowMenu} already has the toggle callback set.`);
+					}
+					break;
+
+				default:
+					super.registerCallback(eventName, callback);
+			}
+		}
+
+		public togglePattern(isOpen: boolean): void {
+			if (isOpen) {
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.Open);
+			} else {
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.Open);
+			}
+
+			this.isOpen = isOpen;
+
+			this.setA11YProperties();
+
+			this._triggerOnToggleEvent();
 		}
 	}
 }

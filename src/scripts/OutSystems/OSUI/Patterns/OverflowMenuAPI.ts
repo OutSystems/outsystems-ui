@@ -92,7 +92,7 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 	 */
 	export function GetOverflowMenuById(overflowMenuId: string): OSFramework.OSUI.Patterns.OverflowMenu.IOverflowMenu {
 		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
-			'OverflowMenu',
+			OSFramework.OSUI.GlobalEnum.PatternName.OverflowMenu,
 			overflowMenuId,
 			_overflowMenuMap
 		) as OSFramework.OSUI.Patterns.OverflowMenu.IOverflowMenu;

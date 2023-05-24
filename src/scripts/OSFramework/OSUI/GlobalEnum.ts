@@ -202,6 +202,13 @@ namespace OSFramework.OSUI.GlobalEnum {
 	}
 
 	/**
+	 * OutSystemsUI Custom Events
+	 */
+	export enum CustomEvent {
+		BalloonOnToggle = 'BalloonOnToggle',
+	}
+
+	/**
 	 * OutSystemsUI elements inline styles
 	 */
 	export enum InlineStyle {

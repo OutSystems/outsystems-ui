@@ -4,59 +4,48 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		alignment: string;
 		allowedPlacements: Array<GlobalEnum.FloatingPosition>;
 		anchorElem: HTMLElement;
-		balloonElem: HTMLElement;
 		position: GlobalEnum.FloatingPosition;
 		shape: GlobalEnum.ShapeTypes;
 	};
 
-	export class Balloon implements IBalloon {
+	export class Balloon<PT> extends AbstractFeature<PT, BalloonOptions> implements IBalloon {
 		// Listener callbacks
 		private _eventBodyClick: GlobalCallbacks.Generic;
 		private _eventOnKeypress: GlobalCallbacks.Generic;
+		// eslint-disable-next-line @typescript-eslint/naming-convention
+		private _floatingUIInstance: Providers.OSUI.Utils.FloatingUI;
+		// eslint-disable-next-line @typescript-eslint/naming-convention
+		private _floatingUIOptions: Providers.OSUI.Utils.FloatingUIOptions;
 		// FocusTrap Properties
 		private _focusTrapInstance: Behaviors.FocusTrap;
 		private _focusableActiveElement: HTMLElement;
-		// WidgetId element
-		private _parentSelf: HTMLElement;
-		private _platformEventOnToggle: GlobalCallbacks.Generic;
-		// eslint-disable-next-line @typescript-eslint/naming-convention
-		protected openCSSClass: string;
+		private _onToggleEvent: GlobalCallbacks.Generic;
 		// Store if the pattern is open
 		public isOpen = false;
-		// eslint-disable-next-line @typescript-eslint/naming-convention
-		private _floatingUIInstance: Providers.OSUI.Utils.FloatingUI;
-		public anchorElem: HTMLElement;
-		public floatingOptions: Providers.OSUI.Utils.FloatingUIOptions;
-		public selfElement: HTMLElement;
-		public balloonOptions: BalloonOptions;
 
-		constructor(options: BalloonOptions) {
-			this.balloonOptions = options;
-			this.openCSSClass = Enum.CssClasses.IsOpen;
-			this.selfElement = this.balloonOptions.balloonElem;
-
-			this.build();
+		constructor(featurePattern: PT, featureElem: HTMLElement, options: BalloonOptions) {
+			super(featurePattern, featureElem, options);
 		}
 
-		// Add Focus Trap to Pattern
-		private _handleFocusTrap(): void {
-			const opts = {
-				focusTargetElement: this.floatingOptions.anchorElem.parentElement,
-			} as Behaviors.FocusTrapParams;
-
-			this._focusTrapInstance = new Behaviors.FocusTrap(opts);
-		}
-
-		protected bodyClickCallback(_args: string, e: MouseEvent): void {
-			if (e.target === this.anchorElem) {
+		private _bodyClickCallback(_args: string, e: MouseEvent): void {
+			if (e.target === this.featureOptions.anchorElem) {
 				return;
 			}
 			this.close();
 			e.stopPropagation();
 		}
 
+		// Add Focus Trap to Pattern
+		private _handleFocusTrap(): void {
+			const opts = {
+				focusTargetElement: this._floatingUIOptions.anchorElem.parentElement,
+			} as Behaviors.FocusTrapParams;
+
+			this._focusTrapInstance = new Behaviors.FocusTrap(opts);
+		}
+
 		// Call methods to open or close, based on e.key and behaviour applied
-		protected onkeypressCallback(e: KeyboardEvent): void {
+		private _onkeypressCallback(e: KeyboardEvent): void {
 			const isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
 
 			// Close the Balloon when pressing Esc
@@ -65,23 +54,14 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			}
 		}
 
-		// Method to handle the Shape config css variable
-		private _handleShape(): void {
-			Helper.Dom.Styles.SetStyleAttribute(
-				this.selfElement,
-				Enum.CssCustomProperties.Shape,
-				'var(--border-radius-' + this.balloonOptions.shape + ')'
-			);
-		}
-
 		/**
 		 * Method to remove the event listeners
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.Balloon.Balloon
 		 */
-		protected removeEventListeners(): void {
-			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
+		private _removeEventListeners(): void {
+			this.featureElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
 			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
 				Event.DOMEvents.Listeners.Type.BodyOnClick,
 				this._eventBodyClick
@@ -94,11 +74,12 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		 * @protected
 		 * @memberof AbstractFloatable
 		 */
-		protected setA11YProperties(): void {
-			Helper.Dom.Attribute.Set(this.selfElement, Constants.A11YAttributes.Aria.Hidden, (!this.isOpen).toString());
+		// eslint-disable-next-line @typescript-eslint/naming-convention
+		private _setA11YProperties(): void {
+			Helper.Dom.Attribute.Set(this.featureElem, Constants.A11YAttributes.Aria.Hidden, (!this.isOpen).toString());
 
 			Helper.Dom.Attribute.Set(
-				this.selfElement,
+				this.featureElem,
 				Constants.A11YAttributes.TabIndex,
 				this.isOpen
 					? Constants.A11YAttributes.States.TabIndexShow
@@ -110,14 +91,25 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		}
 
 		/**
+		 * Update info based on htmlContent
+		 *
+		 * @protected
+		 * @memberof AbstractFloatable
+		 */
+		// eslint-disable-next-line @typescript-eslint/naming-convention
+		private _setCSSClasses(): void {
+			Helper.Dom.Styles.AddClass(this.featureElem, Enum.CssClasses.Pattern);
+		}
+
+		/**
 		 * Set the callbacks
 		 *
 		 * @protected
 		 * @memberof AbstractFloatable
 		 */
-		protected setCallbacks(): void {
-			this._eventBodyClick = this.bodyClickCallback.bind(this);
-			this._eventOnKeypress = this.onkeypressCallback.bind(this);
+		private _setCallbacks(): void {
+			this._eventBodyClick = this._bodyClickCallback.bind(this);
+			this._eventOnKeypress = this._onkeypressCallback.bind(this);
 		}
 
 		/**
@@ -126,8 +118,18 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		 * @protected
 		 * @memberof AbstractFloatable
 		 */
-		protected setEventListeners(): void {
-			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
+		private _setEventListeners(): void {
+			if (this.isBuilt) {
+				this._onToggleEvent = function dispatchCustomEvent(isOpen, balloonElem) {
+					const _customEvent = new CustomEvent(GlobalEnum.CustomEvent.BalloonOnToggle, {
+						detail: { isOpen: isOpen, balloonElem: balloonElem },
+					});
+					document.dispatchEvent(_customEvent);
+				};
+				window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] =
+					OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle;
+			}
+			this.featureElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
 
 			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
 				Event.DOMEvents.Listeners.Type.BodyOnClick,
@@ -135,48 +137,13 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			);
 		}
 
-		/**
-		 * Update info based on htmlContent
-		 *
-		 * @protected
-		 * @memberof AbstractFloatable
-		 */
-		protected setHtmlElements(): void {
-			//this.anchorElem = document.getElementById(this.configs.AnchorId);
-		}
-
-		protected setFloatingBehaviour(isUpdate = false): void {
-			if (this._floatingUIInstance === undefined || isUpdate) {
-				this.floatingOptions = {
-					autoPlacement: this.balloonOptions.position === GlobalEnum.FloatingPosition.Auto,
-					anchorElem: this.balloonOptions.anchorElem,
-					autoPlacementOptions: {
-						placement: this.balloonOptions.alignment,
-						allowedPlacements: this.balloonOptions.allowedPlacements,
-					},
-					floatingElem: this.selfElement,
-					position: this.balloonOptions.position,
-					useShift: true,
-					updatePosition: true,
-				};
-
-				if (isUpdate && this._floatingUIInstance !== undefined) {
-					this._floatingUIInstance.update(this.floatingOptions);
-				}
-
-				this._floatingUIInstance = new Providers.OSUI.Utils.FloatingUI(this.floatingOptions);
-			} else {
-				this._floatingUIInstance.build();
-			}
-		}
-
 		// Method to toggle the open/close the Balloon
-		protected togglePattern(isOpen: boolean): void {
+		private _toggleBalloon(isOpen: boolean): void {
 			// Toggle class
 			if (isOpen) {
-				Helper.Dom.Styles.AddClass(this.selfElement, this.openCSSClass);
+				Helper.Dom.Styles.AddClass(this.featureElem, Enum.CssClasses.IsOpen);
 			} else {
-				Helper.Dom.Styles.RemoveClass(this.selfElement, this.openCSSClass);
+				Helper.Dom.Styles.RemoveClass(this.featureElem, Enum.CssClasses.IsOpen);
 			}
 
 			// Update property
@@ -184,16 +151,16 @@ namespace OSFramework.OSUI.Feature.Balloon {
 
 			// Update listeners and A11y properties
 			if (isOpen) {
-				this.setEventListeners();
+				this._setEventListeners();
 			} else {
-				this.removeEventListeners();
+				this._removeEventListeners();
 			}
 
-			this.setA11YProperties();
+			this._setA11YProperties();
 
 			// Update listeners and A11y properties
 			if (isOpen) {
-				this.setFloatingBehaviour();
+				this.setFloatingUIBehaviour();
 			} else {
 				this._floatingUIInstance.close();
 			}
@@ -203,62 +170,34 @@ namespace OSFramework.OSUI.Feature.Balloon {
 				this._focusableActiveElement = document.activeElement as HTMLElement;
 				this._focusTrapInstance.enableForA11y();
 				// Focus on element when pattern is open
-				this.selfElement.focus();
+				this.featureElem.focus();
 			} else {
 				this._focusTrapInstance.disableForA11y();
 
 				// Focus on last element clicked. Async to avoid conflict with closing animation
 				Helper.AsyncInvocation(() => {
-					this.selfElement.blur();
+					this.featureElem.blur();
 					this._focusableActiveElement.focus();
 				});
 			}
-		}
 
-		/**
-		 * Removes the local value of the variables pointing to HTML elements;
-		 *
-		 * @protected
-		 * @memberof OSFramework.Patterns.Balloon.Balloon
-		 */
-		protected unsetHtmlElements(): void {
-			this.anchorElem = undefined;
+			this._onToggleEvent(this.isOpen, this.featureElem);
 		}
 
 		public build(): void {
-			this.setHtmlElements();
-			this.setCallbacks();
-			this.setEventListeners();
-			this.setFloatingBehaviour();
+			super.build();
+			this._setCSSClasses();
+			this._setCallbacks();
+			this._setEventListeners();
+			this.setFloatingUIBehaviour();
 			this._handleFocusTrap();
-			this.setA11YProperties();
-			this._handleShape();
-		}
-
-		/**
-		 * Method to change the value of configs/current state.
-		 *
-		 * @param {string} propertyName
-		 * @param {*} propertyValue
-		 * @memberof OSFramework.Patterns.Balloon.Balloon
-		 */
-		public changeProperty(propertyName: string, propertyValue: unknown): void {
-			switch (propertyName) {
-				case Enum.Properties.AnchorId:
-					this.setHtmlElements();
-					this.setFloatingBehaviour();
-					break;
-				case Enum.Properties.BalloonPosition:
-					this.setFloatingBehaviour();
-					break;
-				case Enum.Properties.BalloonShape:
-					this._handleShape();
-			}
+			this._setA11YProperties();
+			this.setBalloonShape();
 		}
 
 		public close(): void {
 			if (this.isOpen) {
-				this.togglePattern(false);
+				this._toggleBalloon(false);
 			}
 		}
 
@@ -269,11 +208,46 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		 */
 		public dispose(): void {
 			this._floatingUIInstance.dispose();
+			super.dispose();
 		}
 
 		public open(): void {
 			if (this.isOpen === false) {
-				this.togglePattern(true);
+				this._toggleBalloon(true);
+			}
+		}
+
+		// Method to handle the Shape config css variable
+		public setBalloonShape(): void {
+			Helper.Dom.Styles.SetStyleAttribute(
+				this.featureElem,
+				Enum.CssCustomProperties.Shape,
+				'var(--border-radius-' + this.featureOptions.shape + ')'
+			);
+		}
+
+		public setFloatingUIBehaviour(isUpdate?: boolean): void {
+			if (isUpdate || this._floatingUIInstance === undefined) {
+				this._floatingUIOptions = {
+					autoPlacement: this.featureOptions.position === GlobalEnum.FloatingPosition.Auto,
+					anchorElem: this.featureOptions.anchorElem,
+					autoPlacementOptions: {
+						placement: this.featureOptions.alignment,
+						allowedPlacements: this.featureOptions.allowedPlacements,
+					},
+					floatingElem: this.featureElem,
+					position: this.featureOptions.position,
+					useShift: true,
+					updatePosition: true,
+				};
+
+				if (isUpdate && this._floatingUIInstance !== undefined) {
+					this._floatingUIInstance.update(this._floatingUIOptions);
+				}
+
+				this._floatingUIInstance = new Providers.OSUI.Utils.FloatingUI(this._floatingUIOptions);
+			} else {
+				this._floatingUIInstance.build();
 			}
 		}
 	}
