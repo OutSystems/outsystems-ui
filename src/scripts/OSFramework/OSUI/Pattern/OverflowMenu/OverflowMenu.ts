@@ -1,5 +1,13 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Patterns.OverflowMenu {
+	/**
+	 * Class for the OverflowMenu Pattern
+	 *
+	 * @export
+	 * @class OverflowMenu
+	 * @extends {AbstractPattern<OverflowMenuConfig>}
+	 * @implements {IOverflowMenu}
+	 */
 	export class OverflowMenu extends AbstractPattern<OverflowMenuConfig> implements IOverflowMenu {
 		// Store the Balloon Element
 		private _balloonElem: HTMLElement;

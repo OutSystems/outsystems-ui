@@ -11,6 +11,12 @@ namespace Providers.OSUI.Utils {
 		useShift: boolean;
 	};
 
+	/**
+	 * Floating UI Class to handle the Floating UI provider utils
+	 *
+	 * @export
+	 * @class FloatingUI
+	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class FloatingUI {
 		// Store the update callback

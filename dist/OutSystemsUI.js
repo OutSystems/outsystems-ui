@@ -1827,38 +1827,26 @@ var OSFramework;
                         OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventBodyClick);
                     }
                     _toggleBalloon(isOpen) {
-                        if (isOpen) {
-                            OSUI.Helper.Dom.Styles.AddClass(this.featureElem, Balloon_1.Enum.CssClasses.IsOpen);
-                        }
-                        else {
-                            OSUI.Helper.Dom.Styles.RemoveClass(this.featureElem, Balloon_1.Enum.CssClasses.IsOpen);
-                        }
                         this.isOpen = isOpen;
                         if (isOpen) {
+                            OSUI.Helper.Dom.Styles.AddClass(this.featureElem, Balloon_1.Enum.CssClasses.IsOpen);
                             this._setEventListeners();
-                        }
-                        else {
-                            this._removeEventListeners();
-                        }
-                        this._setA11YProperties();
-                        if (isOpen) {
                             this.setFloatingUIBehaviour();
-                        }
-                        else {
-                            this._floatingUIInstance.close();
-                        }
-                        if (isOpen) {
                             this._focusableActiveElement = document.activeElement;
                             this._focusTrapInstance.enableForA11y();
                             this.featureElem.focus();
                         }
                         else {
+                            OSUI.Helper.Dom.Styles.RemoveClass(this.featureElem, Balloon_1.Enum.CssClasses.IsOpen);
+                            this._removeEventListeners();
+                            this._floatingUIInstance.close();
                             this._focusTrapInstance.disableForA11y();
                             OSUI.Helper.AsyncInvocation(() => {
                                 this.featureElem.blur();
                                 this._focusableActiveElement.focus();
                             });
                         }
+                        this._setA11YProperties();
                         this._onToggleEvent(this.isOpen, this.featureElem);
                     }
                     build() {
