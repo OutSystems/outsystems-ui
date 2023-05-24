@@ -10,4 +10,12 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu.Enum {
 		Initialized = 'Initialized',
 		OnMenuToggle = 'OnToggle',
 	}
+
+	/**
+	 * OverflowMenu Enum properties
+	 */
+	export enum Properties {
+		Position = 'Position',
+		Shape = 'Shape',
+	}
 }

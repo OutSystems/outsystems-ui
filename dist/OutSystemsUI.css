@@ -7710,6 +7710,7 @@ span.flatpickr-weekday{
 }
 /*! 6.3.4. Balloon */
 .osui-balloon{
+  --border-radius-rounded:16px;
   --osui-floating-position-x:0;
   --osui-floating-position-y:0;
   -webkit-box-shadow:var(--shadow-s);

@@ -69,6 +69,12 @@ namespace OSFramework.OSUI.GlobalEnum {
 		TopRight = 'top-right',
 	}
 
+	export enum FloatingAlignment {
+		Center = 'center',
+		End = 'end',
+		Start = 'start',
+	}
+
 	export enum FloatingPosition {
 		Auto = 'auto',
 		Bottom = 'bottom',

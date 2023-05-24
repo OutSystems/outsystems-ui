@@ -2,12 +2,12 @@
 namespace OSFramework.OSUI.Patterns.OverflowMenu {
 	export class OverflowMenu extends AbstractPattern<OverflowMenuConfig> implements IOverflowMenu {
 		private _balloonElem: HTMLElement;
+		private _balloonFeature: Feature.Balloon.IBalloon;
 		private _eventBalloonOnToggle: GlobalCallbacks.Generic;
 		private _eventOnClick: GlobalCallbacks.Generic;
 		// Store the platform events
 		private _platformEventOnToggle: Callbacks.OSOnToggleEvent;
 		private _triggerElem: HTMLElement;
-		public balloonFeature: Feature.Balloon.IBalloon;
 		public balloonOptions: Feature.Balloon.BalloonOptions;
 		public isOpen = false;
 
@@ -22,11 +22,21 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		}
 
 		private _onClickCallback(): void {
-			if (this.balloonFeature.isOpen) {
+			if (this._balloonFeature.isOpen) {
 				this.close();
 			} else {
 				this.open();
 			}
+		}
+
+		private _setBalloonFeature(): void {
+			this.setBalloonOptions();
+
+			this._balloonFeature = new OSFramework.OSUI.Feature.Balloon.Balloon<IOverflowMenu>(
+				this,
+				this._balloonElem,
+				this.balloonOptions
+			);
 		}
 
 		// Method that triggers the OnToggle event
@@ -87,25 +97,6 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		protected setHtmlElements(): void {
 			this._triggerElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.Trigger);
 			this._balloonElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.Balloon);
-
-			this.balloonOptions = {
-				alignment: 'start',
-				allowedPlacements: [
-					GlobalEnum.FloatingPosition.BottomStart,
-					GlobalEnum.FloatingPosition.BottomEnd,
-					GlobalEnum.FloatingPosition.TopStart,
-					GlobalEnum.FloatingPosition.TopEnd,
-				],
-				anchorElem: this._triggerElem,
-				position: this.configs.Position,
-				shape: this.configs.Shape,
-			};
-
-			this.balloonFeature = new OSFramework.OSUI.Feature.Balloon.Balloon<IOverflowMenu>(
-				this,
-				this._balloonElem,
-				this.balloonOptions
-			);
 		}
 
 		/**
@@ -127,12 +118,13 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 */
 		protected unsetHtmlElements(): void {
 			this._triggerElem = undefined;
-			this.balloonFeature = undefined;
+			this._balloonFeature = undefined;
 		}
 
 		public build(): void {
 			super.build();
 			this.setHtmlElements();
+			this._setBalloonFeature();
 			this.setCallbacks();
 			this.setA11YProperties();
 			this.setEventListeners();
@@ -141,15 +133,27 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
+
+			if (this.isBuilt) {
+				switch (propertyName) {
+					case Enum.Properties.Position:
+						this._balloonFeature.updatePositionOption(propertyValue as GlobalEnum.FloatingPosition);
+						break;
+					case Enum.Properties.Shape:
+						this._balloonFeature.setBalloonShape(propertyValue as GlobalEnum.ShapeTypes);
+						break;
+				}
+			}
 		}
 
 		public close(): void {
-			if (this.balloonFeature.isOpen) {
-				this.balloonFeature.close();
+			if (this._balloonFeature.isOpen) {
+				this._balloonFeature.close();
 			}
 		}
 
 		public dispose(): void {
+			this._balloonFeature.dispose();
 			this.removeEventListeners();
 			this.unsetCallbacks();
 			this.unsetHtmlElements();
@@ -157,8 +161,8 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		}
 
 		public open(): void {
-			if (this.balloonFeature.isOpen === false) {
-				this.balloonFeature.open();
+			if (this._balloonFeature.isOpen === false) {
+				this._balloonFeature.open();
 			}
 		}
 
@@ -181,6 +185,25 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 
 				default:
 					super.registerCallback(eventName, callback);
+			}
+		}
+
+		public setBalloonOptions(balloonOptions?: Feature.Balloon.BalloonOptions): void {
+			if (balloonOptions !== undefined) {
+				this.balloonOptions = balloonOptions;
+			} else {
+				this.balloonOptions = {
+					alignment: GlobalEnum.FloatingAlignment.Start,
+					allowedPlacements: [
+						GlobalEnum.FloatingPosition.BottomStart,
+						GlobalEnum.FloatingPosition.BottomEnd,
+						GlobalEnum.FloatingPosition.TopStart,
+						GlobalEnum.FloatingPosition.TopEnd,
+					],
+					anchorElem: this._triggerElem,
+					position: this.configs.Position,
+					shape: this.configs.Shape,
+				};
 			}
 		}
 

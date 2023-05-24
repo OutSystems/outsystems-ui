@@ -209,6 +209,11 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         TopLeft = "top-left",
         TopRight = "top-right"
     }
+    enum FloatingAlignment {
+        Center = "center",
+        End = "end",
+        Start = "start"
+    }
     enum FloatingPosition {
         Auto = "auto",
         Bottom = "bottom",
@@ -845,7 +850,7 @@ declare namespace OSFramework.OSUI.Feature {
 }
 declare namespace OSFramework.OSUI.Feature.Balloon {
     type BalloonOptions = {
-        alignment: string;
+        alignment: GlobalEnum.FloatingAlignment;
         allowedPlacements: Array<GlobalEnum.FloatingPosition>;
         anchorElem: HTMLElement;
         position: GlobalEnum.FloatingPosition;
@@ -874,8 +879,11 @@ declare namespace OSFramework.OSUI.Feature.Balloon {
         close(): void;
         dispose(): void;
         open(): void;
-        setBalloonShape(): void;
+        setBalloonShape(shape?: GlobalEnum.ShapeTypes): void;
         setFloatingUIBehaviour(isUpdate?: boolean): void;
+        setFloatingUIOptions(): void;
+        updateFloatingUIOptions(floatingUIOptions?: Providers.OSUI.Utils.FloatingUIOptions): void;
+        updatePositionOption(position: GlobalEnum.FloatingPosition): void;
     }
 }
 declare namespace OSFramework.OSUI.Feature.Balloon.Enum {
@@ -898,7 +906,9 @@ declare namespace OSFramework.OSUI.Feature.Balloon.Enum {
 }
 declare namespace OSFramework.OSUI.Feature.Balloon {
     interface IBalloon extends Feature.IFeature, Interface.IOpenable {
+        setBalloonShape(shape?: GlobalEnum.ShapeTypes): void;
         setFloatingUIBehaviour(isUpdate?: boolean): void;
+        updatePositionOption(position: GlobalEnum.FloatingPosition): void;
     }
 }
 declare namespace OSFramework.OSUI.Helper {
@@ -2402,6 +2412,10 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu.Enum {
         Initialized = "Initialized",
         OnMenuToggle = "OnToggle"
     }
+    enum Properties {
+        Position = "Position",
+        Shape = "Shape"
+    }
 }
 declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
     interface IOverflowMenu extends Interface.IPattern, Interface.IOpenable {
@@ -2411,16 +2425,17 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
 declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
     class OverflowMenu extends AbstractPattern<OverflowMenuConfig> implements IOverflowMenu {
         private _balloonElem;
+        private _balloonFeature;
         private _eventBalloonOnToggle;
         private _eventOnClick;
         private _platformEventOnToggle;
         private _triggerElem;
-        balloonFeature: Feature.Balloon.IBalloon;
         balloonOptions: Feature.Balloon.BalloonOptions;
         isOpen: boolean;
         constructor(uniqueId: string, configs: JSON);
         private _balloonOnToggleCallback;
         private _onClickCallback;
+        private _setBalloonFeature;
         private _triggerOnToggleEvent;
         protected removeEventListeners(): void;
         protected setA11YProperties(): void;
@@ -2435,6 +2450,7 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
         dispose(): void;
         open(): void;
         registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
+        setBalloonOptions(balloonOptions?: Feature.Balloon.BalloonOptions): void;
         togglePattern(isOpen: boolean): void;
     }
 }

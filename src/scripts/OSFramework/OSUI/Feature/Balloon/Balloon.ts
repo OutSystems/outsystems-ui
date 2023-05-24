@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Feature.Balloon {
 	export type BalloonOptions = {
-		alignment: string;
+		alignment: GlobalEnum.FloatingAlignment;
 		allowedPlacements: Array<GlobalEnum.FloatingPosition>;
 		anchorElem: HTMLElement;
 		position: GlobalEnum.FloatingPosition;
@@ -219,7 +219,11 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		}
 
 		// Method to handle the Shape config css variable
-		public setBalloonShape(): void {
+		public setBalloonShape(shape?: GlobalEnum.ShapeTypes): void {
+			if (shape !== undefined) {
+				this.featureOptions.shape = shape;
+			}
+
 			Helper.Dom.Styles.SetStyleAttribute(
 				this.featureElem,
 				Enum.CssCustomProperties.Shape,
@@ -229,18 +233,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 
 		public setFloatingUIBehaviour(isUpdate?: boolean): void {
 			if (isUpdate || this._floatingUIInstance === undefined) {
-				this._floatingUIOptions = {
-					autoPlacement: this.featureOptions.position === GlobalEnum.FloatingPosition.Auto,
-					anchorElem: this.featureOptions.anchorElem,
-					autoPlacementOptions: {
-						placement: this.featureOptions.alignment,
-						allowedPlacements: this.featureOptions.allowedPlacements,
-					},
-					floatingElem: this.featureElem,
-					position: this.featureOptions.position,
-					useShift: true,
-					updatePosition: true,
-				};
+				this.setFloatingUIOptions();
 
 				if (isUpdate && this._floatingUIInstance !== undefined) {
 					this._floatingUIInstance.update(this._floatingUIOptions);
@@ -250,6 +243,34 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			} else {
 				this._floatingUIInstance.build();
 			}
+		}
+
+		public setFloatingUIOptions(): void {
+			this._floatingUIOptions = {
+				autoPlacement: this.featureOptions.position === GlobalEnum.FloatingPosition.Auto,
+				anchorElem: this.featureOptions.anchorElem,
+				autoPlacementOptions: {
+					placement: this.featureOptions.alignment,
+					allowedPlacements: this.featureOptions.allowedPlacements,
+				},
+				floatingElem: this.featureElem,
+				position: this.featureOptions.position,
+				useShift: true,
+				updatePosition: true,
+			};
+		}
+
+		public updateFloatingUIOptions(floatingUIOptions?: Providers.OSUI.Utils.FloatingUIOptions): void {
+			if (floatingUIOptions !== undefined) {
+				this._floatingUIOptions = floatingUIOptions;
+			}
+
+			this.setFloatingUIBehaviour(true);
+		}
+
+		public updatePositionOption(position: GlobalEnum.FloatingPosition): void {
+			this.featureOptions.position = position;
+			this.setFloatingUIBehaviour(true);
 		}
 	}
 }
