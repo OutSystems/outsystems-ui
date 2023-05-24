@@ -29,7 +29,12 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 * @memberof OSFramework.Patterns.OverflowMenu.OverflowMenu
 		 */
 		protected setA11YProperties(): void {
-			//
+			if (this.isBuilt === false) {
+				Helper.A11Y.AriaHasPopupTrue(this.selfElement);
+				Helper.A11Y.AriaControls(this._triggerElem, this.balloonElem.widgetId);
+			}
+
+			Helper.A11Y.AriaExpanded(this.selfElement, this.isOpen.toString());
 		}
 
 		/**
@@ -82,6 +87,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 			super.build();
 			this.setHtmlElements();
 			this.setCallbacks();
+			this.setA11YProperties();
 			this.setEventListeners();
 			this.finishBuild();
 		}
@@ -95,6 +101,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 				this.balloonElem.close();
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.Open);
 				this.isOpen = false;
+				this.setA11YProperties();
 			}
 		}
 
@@ -110,6 +117,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 				this.balloonElem.open();
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.Open);
 				this.isOpen = true;
+				this.setA11YProperties();
 			}
 		}
 	}

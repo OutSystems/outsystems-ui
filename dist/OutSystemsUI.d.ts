@@ -1169,7 +1169,6 @@ declare namespace OSFramework.OSUI.Patterns {
         private _focusTrapInstance;
         private _focusableActiveElement;
         private _parentSelf;
-        private _patternName;
         private _platformEventOnToggle;
         protected openCSSClass: string;
         isOpen: boolean;

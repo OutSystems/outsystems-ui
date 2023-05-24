@@ -7111,6 +7111,11 @@ var OSFramework;
                         this._triggerElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
                     }
                     setA11YProperties() {
+                        if (this.isBuilt === false) {
+                            OSUI.Helper.A11Y.AriaHasPopupTrue(this.selfElement);
+                            OSUI.Helper.A11Y.AriaControls(this._triggerElem, this.balloonElem.widgetId);
+                        }
+                        OSUI.Helper.A11Y.AriaExpanded(this.selfElement, this.isOpen.toString());
                     }
                     setCallbacks() {
                         this._eventOnClick = this._onClickCallback.bind(this);
@@ -7133,6 +7138,7 @@ var OSFramework;
                         super.build();
                         this.setHtmlElements();
                         this.setCallbacks();
+                        this.setA11YProperties();
                         this.setEventListeners();
                         this.finishBuild();
                     }
@@ -7144,6 +7150,7 @@ var OSFramework;
                             this.balloonElem.close();
                             OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, OverflowMenu_1.Enum.CssClass.Open);
                             this.isOpen = false;
+                            this.setA11YProperties();
                         }
                     }
                     dispose() {
@@ -7157,6 +7164,7 @@ var OSFramework;
                             this.balloonElem.open();
                             OSUI.Helper.Dom.Styles.AddClass(this.selfElement, OverflowMenu_1.Enum.CssClass.Open);
                             this.isOpen = true;
+                            this.setA11YProperties();
                         }
                     }
                 }
