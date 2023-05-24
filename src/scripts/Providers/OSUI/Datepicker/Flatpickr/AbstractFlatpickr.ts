@@ -96,8 +96,10 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 			// Create the TodayBtn element
 			const todayBtn = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Link);
-			todayBtn.innerHTML = l10ns.TodayBtn[this.configs.Lang].title;
-			OSFramework.OSUI.Helper.A11Y.AriaLabel(todayBtn, l10ns.TodayBtn[this.configs.Lang].ariaLabel);
+			const langCode = l10ns.TodayBtn[this.configs.Lang] !== undefined ? this.configs.Lang : 'en';
+
+			todayBtn.innerHTML = l10ns.TodayBtn[langCode].title;
+			OSFramework.OSUI.Helper.A11Y.AriaLabel(todayBtn, l10ns.TodayBtn[langCode].ariaLabel);
 
 			todayBtn.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.Click, this.todayBtnClick.bind(this));
 
@@ -241,7 +243,9 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				if (this.configs.Lang !== OSFramework.OSUI.Constants.Language.short) {
 					// Update A11yContainer info based on the given language
 					this._a11yInfoContainerElem.innerHTML =
-						Datepicker.Flatpickr.l10ns.A11yContainerInfo[this.configs.Lang].htmlTex;
+						Datepicker.Flatpickr.l10ns.A11yContainerInfo[this.configs.Lang] !== undefined
+							? Datepicker.Flatpickr.l10ns.A11yContainerInfo[this.configs.Lang].htmlTex
+							: Datepicker.Flatpickr.l10ns.A11yContainerInfo.en.htmlTex;
 				}
 			}
 		}
