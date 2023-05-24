@@ -814,6 +814,9 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				} else {
 					this._balloonOptionsWrapperElement.focus();
 				}
+
+				// Trigger the toggle callback event
+				this._triggerToogleCalbackEvent();
 			} else {
 				// Remove IsOpend Class => Close it!
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpened);
@@ -828,9 +831,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 					this._eventOnCloseTransitionEnd
 				);
 			}
-
-			// Trigger the toggle callback event
-			this._triggerToogleCalbackEvent();
 		}
 
 		/**

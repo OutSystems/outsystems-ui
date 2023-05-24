@@ -15,7 +15,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		private _providerOptions: FlatpickrOptions;
 
 		// Store configs set using extensibility
-		protected _providerExtendedOptions: FlatpickrOptions;
+		protected providerExtendedOptions: FlatpickrOptions;
 
 		// Stores the ability to allow inputs to be editable or not
 		public AllowInput = false;
@@ -155,7 +155,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 				this._providerOptions.locale = this._checkLocale();
 			}
 
-			return this.mergeConfigs(this._providerOptions, undefined, this._providerExtendedOptions);
+			return this.mergeConfigs(this._providerOptions, undefined, this.providerExtendedOptions);
 		}
 
 		/**
@@ -165,7 +165,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.FlatpickrMonthConfig
 		 */
 		public setExtensibilityConfigs(newConfigs: FlatpickrOptions): void {
-			this._providerExtendedOptions = newConfigs;
+			this.providerExtendedOptions = newConfigs;
 		}
 
 		/**

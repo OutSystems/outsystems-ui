@@ -243,7 +243,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 					}
 					break;
 				default:
-					throw new Error(`The given '${eventName}' event name it's not defined.`);
+					super.registerCallback(eventName, callback);
 			}
 		}
 

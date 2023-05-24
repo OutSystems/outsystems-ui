@@ -56,7 +56,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 				mode: OSFramework.OSUI.Patterns.DatePicker.Enum.Mode.Range,
 			};
 
-			return this.mergeConfigs(super.getProviderConfig(), flatpickrRangeDateOpts, this._providerExtendedOptions);
+			return this.mergeConfigs(super.getProviderConfig(), flatpickrRangeDateOpts, this.providerExtendedOptions);
 		}
 	}
 }

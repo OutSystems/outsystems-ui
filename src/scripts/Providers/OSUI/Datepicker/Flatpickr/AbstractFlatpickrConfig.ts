@@ -25,7 +25,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		private _providerOptions: FlatpickrOptions;
 
 		// Store configs set using extensibility
-		protected _providerExtendedOptions: FlatpickrOptions;
+		protected providerExtendedOptions: FlatpickrOptions;
 
 		// Stores the ability to allow inputs to be editable or not
 		public AllowInput = false;
@@ -219,7 +219,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickrConfig
 		 */
 		public setExtensibilityConfigs(newConfigs: FlatpickrOptions): void {
-			this._providerExtendedOptions = newConfigs;
+			this.providerExtendedOptions = newConfigs;
 		}
 
 		/**
