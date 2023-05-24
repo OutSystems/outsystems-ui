@@ -3,7 +3,9 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 	export class OverflowMenu extends AbstractPattern<OverflowMenuConfig> implements IOverflowMenu {
 		private _eventOnClick: GlobalCallbacks.Generic;
 		private _triggerElem: HTMLElement;
-		public balloonElem: Balloon.IBalloon;
+		private _balloonElem: HTMLElement;
+		public balloonFeature: Feature.Balloon.IBalloon;
+		public balloonOptions: Feature.Balloon.BalloonOptions;
 		public isOpen = false;
 
 		constructor(uniqueId: string, configs: JSON) {
@@ -11,7 +13,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		}
 
 		private _onClickCallback(): void {
-			if (this.balloonElem.isOpen) {
+			if (this.balloonFeature.isOpen) {
 				this.close();
 			} else {
 				this.open();
@@ -31,7 +33,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		protected setA11YProperties(): void {
 			if (this.isBuilt === false) {
 				Helper.A11Y.AriaHasPopupTrue(this.selfElement);
-				Helper.A11Y.AriaControls(this._triggerElem, this.balloonElem.widgetId);
+				//Helper.A11Y.AriaControls(this._triggerElem, this.balloonElem.widgetId);
 			}
 
 			Helper.A11Y.AriaExpanded(this.selfElement, this.isOpen.toString());
@@ -59,7 +61,23 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 */
 		protected setHtmlElements(): void {
 			this._triggerElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.Trigger);
-			this.balloonElem = OutSystems.OSUI.Patterns.BalloonAPI.GetBalloonById(this.configs.BalloonWidgetId);
+			this._balloonElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.Balloon);
+
+			this.balloonOptions = {
+				alignment: 'start',
+				allowedPlacements: [
+					GlobalEnum.FloatingPosition.BottomStart,
+					GlobalEnum.FloatingPosition.BottomEnd,
+					GlobalEnum.FloatingPosition.TopStart,
+					GlobalEnum.FloatingPosition.TopEnd,
+				],
+				anchorElem: this._triggerElem,
+				balloonElem: this._balloonElem,
+				position: this.configs.Position,
+				shape: this.configs.Shape,
+			};
+
+			this.balloonFeature = new OSFramework.OSUI.Feature.Balloon.Balloon(this.balloonOptions);
 		}
 
 		/**
@@ -80,7 +98,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 */
 		protected unsetHtmlElements(): void {
 			this._triggerElem = undefined;
-			this.balloonElem = undefined;
+			this.balloonFeature = undefined;
 		}
 
 		public build(): void {
@@ -97,8 +115,8 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		}
 
 		public close(): void {
-			if (this.balloonElem.isOpen) {
-				this.balloonElem.close();
+			if (this.balloonFeature.isOpen) {
+				this.balloonFeature.close();
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.Open);
 				this.isOpen = false;
 				this.setA11YProperties();
@@ -113,8 +131,8 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		}
 
 		public open(): void {
-			if (this.balloonElem.isOpen === false) {
-				this.balloonElem.open();
+			if (this.balloonFeature.isOpen === false) {
+				this.balloonFeature.open();
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.Open);
 				this.isOpen = true;
 				this.setA11YProperties();

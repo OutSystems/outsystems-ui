@@ -4,6 +4,6 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 	 * Defines the interface for OutSystemsUI OverflowMenu Pattern
 	 */
 	export interface IOverflowMenu extends Interface.IPattern, Interface.IOpenable {
-		balloonElem: Balloon.IBalloon;
+		balloonFeature: Feature.Balloon.IBalloon;
 	}
 }

@@ -8,7 +8,8 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 	 * @extends {AbstractConfiguration}
 	 */
 	export class OverflowMenuConfig extends AbstractConfiguration {
-		public BalloonWidgetId: string;
+		public Position: GlobalEnum.FloatingPosition;
+		public Shape: GlobalEnum.ShapeTypes;
 
 		constructor(config: JSON) {
 			super(config);

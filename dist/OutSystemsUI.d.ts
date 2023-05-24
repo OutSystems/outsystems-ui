@@ -817,6 +817,72 @@ declare namespace OSFramework.OSUI.Event.ProviderEvents {
         get hasPendingEvents(): boolean;
     }
 }
+declare namespace OSFramework.OSUI.Feature.Balloon {
+    type BalloonOptions = {
+        alignment: string;
+        allowedPlacements: Array<GlobalEnum.FloatingPosition>;
+        anchorElem: HTMLElement;
+        balloonElem: HTMLElement;
+        position: GlobalEnum.FloatingPosition;
+        shape: GlobalEnum.ShapeTypes;
+    };
+    class Balloon implements IBalloon {
+        private _eventBodyClick;
+        private _eventOnKeypress;
+        private _focusTrapInstance;
+        private _focusableActiveElement;
+        private _parentSelf;
+        private _platformEventOnToggle;
+        protected openCSSClass: string;
+        isOpen: boolean;
+        private _floatingUIInstance;
+        anchorElem: HTMLElement;
+        floatingOptions: Providers.OSUI.Utils.FloatingUIOptions;
+        selfElement: HTMLElement;
+        balloonOptions: BalloonOptions;
+        constructor(options: BalloonOptions);
+        private _handleFocusTrap;
+        protected bodyClickCallback(_args: string, e: MouseEvent): void;
+        protected onkeypressCallback(e: KeyboardEvent): void;
+        private _handleShape;
+        protected removeEventListeners(): void;
+        protected setA11YProperties(): void;
+        protected setCallbacks(): void;
+        protected setEventListeners(): void;
+        protected setHtmlElements(): void;
+        protected setFloatingBehaviour(isUpdate?: boolean): void;
+        protected togglePattern(isOpen: boolean): void;
+        protected unsetHtmlElements(): void;
+        build(): void;
+        changeProperty(propertyName: string, propertyValue: unknown): void;
+        close(): void;
+        dispose(): void;
+        open(): void;
+    }
+}
+declare namespace OSFramework.OSUI.Feature.Balloon.Enum {
+    enum CssClasses {
+        IsOpen = "osui-balloon--is-open",
+        Pattern = "osui-balloon"
+    }
+    enum CssCustomProperties {
+        Shape = "--osui-balloon-shape"
+    }
+    enum Events {
+        Initialized = "Initialized",
+        OnToggle = "OnToggle"
+    }
+    enum Properties {
+        AnchorId = "AnchorId",
+        BalloonPosition = "BalloonPosition",
+        BalloonShape = "BalloonShape"
+    }
+}
+declare namespace OSFramework.OSUI.Feature.Balloon {
+    interface IBalloon extends Interface.IFloatable {
+        anchorElem: HTMLElement;
+    }
+}
 declare namespace OSFramework.OSUI.Helper {
     function AsyncInvocation(callback: GlobalCallbacks.Generic, ...args: unknown[]): void;
     function ApplySetTimeOut(callback: GlobalCallbacks.Generic, time: number, ...args: unknown[]): void;
@@ -1428,59 +1494,6 @@ declare namespace OSFramework.OSUI.Patterns.AnimatedLabel.Enum {
 }
 declare namespace OSFramework.OSUI.Patterns.AnimatedLabel {
     interface IAnimatedLabel extends Interface.IPattern, Interface.IRenderUpdate {
-    }
-}
-declare namespace OSFramework.OSUI.Patterns.Balloon {
-    class Balloon extends AbstractFloatable<BalloonConfig> implements IBalloon {
-        private _floatingUIInstance;
-        anchorElem: HTMLElement;
-        floatingOptions: Providers.OSUI.Utils.FloatingUIOptions;
-        constructor(uniqueId: string, configs: JSON);
-        private _handleShape;
-        protected bodyClickCallback(_args: string, e: MouseEvent): void;
-        protected setA11YProperties(): void;
-        protected setFloatingBehaviour(isUpdate?: boolean): void;
-        protected setHtmlElements(): void;
-        protected togglePattern(isOpen: boolean): void;
-        protected unsetCallbacks(): void;
-        protected unsetHtmlElements(): void;
-        build(): void;
-        changeProperty(propertyName: string, propertyValue: unknown): void;
-        dispose(): void;
-    }
-}
-declare namespace OSFramework.OSUI.Patterns.Balloon {
-    class BalloonConfig extends AbstractConfiguration {
-        Alignment: string;
-        AllowedPlacements: Array<GlobalEnum.FloatingPosition>;
-        AnchorId: string;
-        AnchorType: BalloonAnchor;
-        Position: GlobalEnum.FloatingPosition;
-        Shape: GlobalEnum.ShapeTypes;
-        constructor(config: JSON);
-    }
-}
-declare namespace OSFramework.OSUI.Patterns.Balloon.Enum {
-    enum CssClasses {
-        IsOpen = "osui-balloon--is-open",
-        Pattern = "osui-balloon"
-    }
-    enum CssCustomProperties {
-        Shape = "--osui-balloon-shape"
-    }
-    enum Events {
-        Initialized = "Initialized",
-        OnToggle = "OnToggle"
-    }
-    enum Properties {
-        AnchorId = "AnchorId",
-        BalloonPosition = "BalloonPosition",
-        BalloonShape = "BalloonShape"
-    }
-}
-declare namespace OSFramework.OSUI.Patterns.Balloon {
-    interface IBalloon extends Interface.IPattern, Interface.IFloatable {
-        anchorElem: HTMLElement;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.BottomSheet {
@@ -2387,7 +2400,8 @@ declare namespace OSFramework.OSUI.Patterns.Notification {
 declare namespace OSFramework.OSUI.Patterns.OverflowMenu.Enum {
     enum CssClass {
         Open = "osui-overflow-menu--is-open",
-        Trigger = "osui-overflow-menu__trigger"
+        Trigger = "osui-overflow-menu__trigger",
+        Balloon = "osui-overflow-menu__balloon"
     }
     enum Events {
         Initialized = "Initialized",
@@ -2396,14 +2410,16 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu.Enum {
 }
 declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
     interface IOverflowMenu extends Interface.IPattern, Interface.IOpenable {
-        balloonElem: Balloon.IBalloon;
+        balloonFeature: Feature.Balloon.IBalloon;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
     class OverflowMenu extends AbstractPattern<OverflowMenuConfig> implements IOverflowMenu {
         private _eventOnClick;
         private _triggerElem;
-        balloonElem: Balloon.IBalloon;
+        private _balloonElem;
+        balloonFeature: Feature.Balloon.IBalloon;
+        balloonOptions: Feature.Balloon.BalloonOptions;
         isOpen: boolean;
         constructor(uniqueId: string, configs: JSON);
         private _onClickCallback;
@@ -2423,7 +2439,8 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
 }
 declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
     class OverflowMenuConfig extends AbstractConfiguration {
-        BalloonWidgetId: string;
+        Position: GlobalEnum.FloatingPosition;
+        Shape: GlobalEnum.ShapeTypes;
         constructor(config: JSON);
     }
 }
@@ -3935,17 +3952,6 @@ declare namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
     function Initialize(animatedLabelId: string): OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel;
     function RegisterCallback(dropdownId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
     function UpdateOnRender(animatedLabelId: string): string;
-}
-declare namespace OutSystems.OSUI.Patterns.BalloonAPI {
-    function ChangeProperty(balloonId: string, propertyName: string, propertyValue: unknown): string;
-    function Create(balloonId: string, configs: string): OSFramework.OSUI.Patterns.Balloon.IBalloon;
-    function Dispose(balloonId: string): string;
-    function GetAllBalloons(): Array<string>;
-    function GetBalloonById(balloonId: string): OSFramework.OSUI.Patterns.Balloon.IBalloon;
-    function Initialize(balloonId: string): OSFramework.OSUI.Patterns.Balloon.IBalloon;
-    function Open(balloonId: string): string;
-    function Close(balloonId: string): string;
-    function RegisterCallback(balloonId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.Generic): string;
 }
 declare namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
     function ChangeProperty(bottomSheetId: string, propertyName: string, propertyValue: any): string;

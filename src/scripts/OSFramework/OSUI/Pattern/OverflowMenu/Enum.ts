@@ -3,6 +3,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu.Enum {
 	export enum CssClass {
 		Open = 'osui-overflow-menu--is-open',
 		Trigger = 'osui-overflow-menu__trigger',
+		Balloon = 'osui-overflow-menu__balloon',
 	}
 
 	export enum Events {

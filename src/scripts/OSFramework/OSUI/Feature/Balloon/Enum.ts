@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSFramework.OSUI.Patterns.Balloon.Enum {
+namespace OSFramework.OSUI.Feature.Balloon.Enum {
 	// Css Classes
 	export enum CssClasses {
 		IsOpen = 'osui-balloon--is-open',

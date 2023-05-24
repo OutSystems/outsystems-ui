@@ -5,7 +5,7 @@ const patternInfo = {
     "codeName": "Balloon",
     "inDevelopment": false,
     "name": "Balloon",
-    "scss": "../scripts/OSFramework/OSUI/Pattern/Balloon/scss/balloon",
+    "scss": "../scripts/OSFramework/OSUI/Feature/Balloon/scss/balloon",
     "section": "Interaction"
 };
 
