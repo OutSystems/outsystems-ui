@@ -25,6 +25,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 
 		constructor(featurePattern: PT, featureElem: HTMLElement, options: BalloonOptions) {
 			super(featurePattern, featureElem, options);
+			this.build();
 		}
 
 		private _bodyClickCallback(_args: string, e: MouseEvent): void {
@@ -118,8 +119,8 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		 * @protected
 		 * @memberof AbstractFloatable
 		 */
-		private _setEventListeners(): void {
-			if (this.isBuilt) {
+		private _setEventListeners(isBuild = false): void {
+			if (isBuild) {
 				this._onToggleEvent = function dispatchCustomEvent(isOpen, balloonElem) {
 					const _customEvent = new CustomEvent(GlobalEnum.CustomEvent.BalloonOnToggle, {
 						detail: { isOpen: isOpen, balloonElem: balloonElem },
@@ -129,6 +130,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 				window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] =
 					OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle;
 			}
+
 			this.featureElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
 
 			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
@@ -185,10 +187,9 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		}
 
 		public build(): void {
-			super.build();
 			this._setCSSClasses();
 			this._setCallbacks();
-			this._setEventListeners();
+			this._setEventListeners(true);
 			this.setFloatingUIBehaviour();
 			this._handleFocusTrap();
 			this._setA11YProperties();

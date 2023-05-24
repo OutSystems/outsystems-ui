@@ -832,19 +832,15 @@ declare namespace OSFramework.OSUI.Feature {
         private _featureElem;
         private _featureOptions;
         private _featurePattern;
-        private _isBuilt;
         constructor(featurePattern: PT, featureElem: HTMLElement, options: O);
-        build(): void;
         dispose(): void;
         get featureElem(): HTMLElement;
         get featureOptions(): O;
         get featurePattern(): PT;
-        get isBuilt(): boolean;
     }
 }
 declare namespace OSFramework.OSUI.Feature {
-    interface IFeature extends Interface.IBuilder, Interface.IDisposable {
-        isBuilt: boolean;
+    interface IFeature extends Interface.IDisposable {
     }
 }
 declare namespace OSFramework.OSUI.Feature.Balloon {
@@ -2415,7 +2411,7 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
 declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
     class OverflowMenu extends AbstractPattern<OverflowMenuConfig> implements IOverflowMenu {
         private _balloonElem;
-        private _balloonOnToggleEvent;
+        private _eventBalloonOnToggle;
         private _eventOnClick;
         private _platformEventOnToggle;
         private _triggerElem;

@@ -1736,10 +1736,6 @@ var OSFramework;
                     this._featureOptions = options;
                     this._featureElem = featureElem;
                     this._featurePattern = featurePattern;
-                    this.build();
-                }
-                build() {
-                    this._isBuilt = true;
                 }
                 dispose() {
                     this._featureOptions = undefined;
@@ -1753,9 +1749,6 @@ var OSFramework;
                 }
                 get featurePattern() {
                     return this._featurePattern;
-                }
-                get isBuilt() {
-                    return this._isBuilt;
                 }
             }
             Feature.AbstractFeature = AbstractFeature;
@@ -1774,6 +1767,7 @@ var OSFramework;
                     constructor(featurePattern, featureElem, options) {
                         super(featurePattern, featureElem, options);
                         this.isOpen = false;
+                        this.build();
                     }
                     _bodyClickCallback(_args, e) {
                         if (e.target === this.featureOptions.anchorElem) {
@@ -1812,8 +1806,8 @@ var OSFramework;
                         this._eventBodyClick = this._bodyClickCallback.bind(this);
                         this._eventOnKeypress = this._onkeypressCallback.bind(this);
                     }
-                    _setEventListeners() {
-                        if (this.isBuilt) {
+                    _setEventListeners(isBuild = false) {
+                        if (isBuild) {
                             this._onToggleEvent = function dispatchCustomEvent(isOpen, balloonElem) {
                                 const _customEvent = new CustomEvent(OSUI.GlobalEnum.CustomEvent.BalloonOnToggle, {
                                     detail: { isOpen: isOpen, balloonElem: balloonElem },
@@ -1862,10 +1856,9 @@ var OSFramework;
                         this._onToggleEvent(this.isOpen, this.featureElem);
                     }
                     build() {
-                        super.build();
                         this._setCSSClasses();
                         this._setCallbacks();
-                        this._setEventListeners();
+                        this._setEventListeners(true);
                         this.setFloatingUIBehaviour();
                         this._handleFocusTrap();
                         this._setA11YProperties();
@@ -7101,7 +7094,7 @@ var OSFramework;
                     }
                     removeEventListeners() {
                         this._triggerElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
-                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BalloonOnToggle, this._balloonOnToggleCallback.bind(this));
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BalloonOnToggle, this._eventBalloonOnToggle);
                     }
                     setA11YProperties() {
                         if (this.isBuilt === false) {
@@ -7110,12 +7103,12 @@ var OSFramework;
                         OSUI.Helper.A11Y.AriaExpanded(this.selfElement, this.isOpen.toString());
                     }
                     setCallbacks() {
-                        this._balloonOnToggleEvent = this._balloonOnToggleCallback.bind(this);
+                        this._eventBalloonOnToggle = this._balloonOnToggleCallback.bind(this);
                         this._eventOnClick = this._onClickCallback.bind(this);
                     }
                     setEventListeners() {
                         this._triggerElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
-                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BalloonOnToggle, this._balloonOnToggleCallback.bind(this));
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BalloonOnToggle, this._eventBalloonOnToggle);
                     }
                     setHtmlElements() {
                         this._triggerElem = OSUI.Helper.Dom.ClassSelector(this.selfElement, OverflowMenu_1.Enum.CssClass.Trigger);
@@ -7135,7 +7128,7 @@ var OSFramework;
                         this.balloonFeature = new OSFramework.OSUI.Feature.Balloon.Balloon(this, this._balloonElem, this.balloonOptions);
                     }
                     unsetCallbacks() {
-                        this._balloonOnToggleEvent = undefined;
+                        this._eventBalloonOnToggle = undefined;
                         this._eventOnClick = undefined;
                     }
                     unsetHtmlElements() {

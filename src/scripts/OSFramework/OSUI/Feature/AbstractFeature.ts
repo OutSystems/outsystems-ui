@@ -4,17 +4,11 @@ namespace OSFramework.OSUI.Feature {
 		private _featureElem: HTMLElement;
 		private _featureOptions: O;
 		private _featurePattern: PT;
-		private _isBuilt: boolean;
 
 		constructor(featurePattern: PT, featureElem: HTMLElement, options: O) {
 			this._featureOptions = options;
 			this._featureElem = featureElem;
 			this._featurePattern = featurePattern;
-			this.build();
-		}
-
-		public build(): void {
-			this._isBuilt = true;
 		}
 
 		public dispose(): void {
@@ -32,10 +26,6 @@ namespace OSFramework.OSUI.Feature {
 
 		public get featurePattern(): PT {
 			return this._featurePattern;
-		}
-
-		public get isBuilt(): boolean {
-			return this._isBuilt;
 		}
 	}
 }

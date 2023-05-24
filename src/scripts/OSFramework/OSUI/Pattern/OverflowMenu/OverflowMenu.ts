@@ -2,7 +2,7 @@
 namespace OSFramework.OSUI.Patterns.OverflowMenu {
 	export class OverflowMenu extends AbstractPattern<OverflowMenuConfig> implements IOverflowMenu {
 		private _balloonElem: HTMLElement;
-		private _balloonOnToggleEvent: GlobalCallbacks.Generic;
+		private _eventBalloonOnToggle: GlobalCallbacks.Generic;
 		private _eventOnClick: GlobalCallbacks.Generic;
 		// Store the platform events
 		private _platformEventOnToggle: Callbacks.OSOnToggleEvent;
@@ -39,7 +39,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 
 			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
 				Event.DOMEvents.Listeners.Type.BalloonOnToggle,
-				this._balloonOnToggleCallback.bind(this)
+				this._eventBalloonOnToggle
 			);
 		}
 
@@ -65,7 +65,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 * @memberof OSFramework.Patterns.OverflowMenu.OverflowMenu
 		 */
 		protected setCallbacks(): void {
-			this._balloonOnToggleEvent = this._balloonOnToggleCallback.bind(this);
+			this._eventBalloonOnToggle = this._balloonOnToggleCallback.bind(this);
 			this._eventOnClick = this._onClickCallback.bind(this);
 		}
 
@@ -74,7 +74,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 
 			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
 				Event.DOMEvents.Listeners.Type.BalloonOnToggle,
-				this._balloonOnToggleCallback.bind(this)
+				this._eventBalloonOnToggle
 			);
 		}
 
@@ -115,7 +115,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 * @memberof OSFramework.Patterns.OverflowMenu.OverflowMenu
 		 */
 		protected unsetCallbacks(): void {
-			this._balloonOnToggleEvent = undefined;
+			this._eventBalloonOnToggle = undefined;
 			this._eventOnClick = undefined;
 		}
 
