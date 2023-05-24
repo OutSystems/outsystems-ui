@@ -3,7 +3,5 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 	/**
 	 * Defines the interface for OutSystemsUI OverflowMenu Pattern
 	 */
-	export interface IOverflowMenu extends Interface.IPattern, Interface.IOpenable {
-		togglePattern(isOpen: boolean): void;
-	}
+	export interface IOverflowMenu extends Interface.IPattern, Interface.IOpenable {}
 }

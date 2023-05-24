@@ -5,7 +5,6 @@ namespace OSFramework.OSUI.Feature.Balloon {
 	 */
 	export interface IBalloon extends Feature.IFeature, Interface.IOpenable {
 		setBalloonShape(shape?: GlobalEnum.ShapeTypes): void;
-		setFloatingUIBehaviour(isUpdate?: boolean): void;
 		updatePositionOption(position: GlobalEnum.FloatingPosition): void;
 	}
 }

@@ -1,26 +1,35 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Patterns.OverflowMenu {
 	export class OverflowMenu extends AbstractPattern<OverflowMenuConfig> implements IOverflowMenu {
+		// Store the Balloon Element
 		private _balloonElem: HTMLElement;
+		// Store the Balloon Class instance
 		private _balloonFeature: Feature.Balloon.IBalloon;
+		// Store the Event Callbacks
 		private _eventBalloonOnToggle: GlobalCallbacks.Generic;
 		private _eventOnClick: GlobalCallbacks.Generic;
 		// Store the platform events
 		private _platformEventOnToggle: Callbacks.OSOnToggleEvent;
+		// Store the element that triggers the balloon
 		private _triggerElem: HTMLElement;
+		// Store the Balloon options to pass to the Balloon Class
 		public balloonOptions: Feature.Balloon.BalloonOptions;
+		// Store the isOpen ststus
 		public isOpen = false;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new OverflowMenuConfig(configs));
 		}
 
+		// Method to handle the custom BalloonOnToggle callback
 		private _balloonOnToggleCallback(_args: string, e: CustomEvent): void {
+			// If the balloon closed is the one from this pattern, toggle the OverflowMenu
 			if (e.detail.balloonElem === this._balloonElem) {
-				this.togglePattern(e.detail.isOpen);
+				this._togglePattern(e.detail.isOpen);
 			}
 		}
 
+		// Method to handle the trigger click callback
 		private _onClickCallback(): void {
 			if (this._balloonFeature.isOpen) {
 				this.close();
@@ -29,6 +38,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 			}
 		}
 
+		// Method to call the Balloon Class
 		private _setBalloonFeature(): void {
 			this.setBalloonOptions();
 
@@ -39,11 +49,32 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 			);
 		}
 
+		// Method to toggle the Pattern
+		private _togglePattern(isOpen: boolean): void {
+			if (isOpen) {
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.Open);
+			} else {
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.Open);
+			}
+
+			this.isOpen = isOpen;
+
+			this.setA11YProperties();
+
+			this._triggerOnToggleEvent();
+		}
+
 		// Method that triggers the OnToggle event
 		private _triggerOnToggleEvent(): void {
 			this.triggerPlatformEventCallback(this._platformEventOnToggle, this.isOpen);
 		}
 
+		/**
+		 * Method that removes the event listeners
+		 *
+		 * @protected
+		 * @memberof OverflowMenu
+		 */
 		protected removeEventListeners(): void {
 			this._triggerElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 
@@ -79,6 +110,12 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 			this._eventOnClick = this._onClickCallback.bind(this);
 		}
 
+		/**
+		 * Method to set the event listeners
+		 *
+		 * @protected
+		 * @memberof OverflowMenu
+		 */
 		protected setEventListeners(): void {
 			this._triggerElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 
@@ -100,7 +137,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		}
 
 		/**
-		 * Removes the listeners that were added in the code and unsets the callbacks.
+		 * Method to unset the callbacks.
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.OverflowMenu.OverflowMenu
@@ -117,10 +154,16 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 * @memberof OSFramework.Patterns.OverflowMenu.OverflowMenu
 		 */
 		protected unsetHtmlElements(): void {
+			this._balloonElem = undefined;
 			this._triggerElem = undefined;
 			this._balloonFeature = undefined;
 		}
 
+		/**
+		 * Method to build the Pattern
+		 *
+		 * @memberof OverflowMenu
+		 */
 		public build(): void {
 			super.build();
 			this.setHtmlElements();
@@ -131,6 +174,13 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 			this.finishBuild();
 		}
 
+		/**
+		 * Method to change the value of configs/current state.
+		 *
+		 * @param {string} propertyName
+		 * @param {unknown} propertyValue
+		 * @memberof OverflowMenu
+		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
 
@@ -146,12 +196,22 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 			}
 		}
 
+		/**
+		 * Method to close the Pattern
+		 *
+		 * @memberof OverflowMenu
+		 */
 		public close(): void {
 			if (this._balloonFeature.isOpen) {
 				this._balloonFeature.close();
 			}
 		}
 
+		/**
+		 * Method to destroy the Pattern
+		 *
+		 * @memberof OverflowMenu
+		 */
 		public dispose(): void {
 			this._balloonFeature.dispose();
 			this.removeEventListeners();
@@ -160,6 +220,11 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 			super.dispose();
 		}
 
+		/**
+		 * Method to open the Pattern
+		 *
+		 * @memberof OverflowMenu
+		 */
 		public open(): void {
 			if (this._balloonFeature.isOpen === false) {
 				this._balloonFeature.open();
@@ -167,7 +232,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		}
 
 		/**
-		 * Set callbacks for the pattern
+		 * Register the callbacks for the Pattern
 		 *
 		 * @param {string} eventName
 		 * @param {GlobalCallbacks.OSGeneric} callback
@@ -188,6 +253,12 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 			}
 		}
 
+		/**
+		 * Method to set the Balloon Feature options
+		 *
+		 * @param {Feature.Balloon.BalloonOptions} [balloonOptions]
+		 * @memberof OverflowMenu
+		 */
 		public setBalloonOptions(balloonOptions?: Feature.Balloon.BalloonOptions): void {
 			if (balloonOptions !== undefined) {
 				this.balloonOptions = balloonOptions;
@@ -205,20 +276,6 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 					shape: this.configs.Shape,
 				};
 			}
-		}
-
-		public togglePattern(isOpen: boolean): void {
-			if (isOpen) {
-				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.Open);
-			} else {
-				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.Open);
-			}
-
-			this.isOpen = isOpen;
-
-			this.setA11YProperties();
-
-			this._triggerOnToggleEvent();
 		}
 	}
 }
