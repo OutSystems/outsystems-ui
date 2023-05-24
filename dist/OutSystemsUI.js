@@ -1907,7 +1907,7 @@ var OSFramework;
                             autoPlacement: this.featureOptions.position === OSUI.GlobalEnum.FloatingPosition.Auto,
                             anchorElem: this.featureOptions.anchorElem,
                             autoPlacementOptions: {
-                                placement: this.featureOptions.alignment,
+                                alignment: this.featureOptions.alignment,
                                 allowedPlacements: this.featureOptions.allowedPlacements,
                             },
                             floatingElem: this.featureElem,
@@ -2984,20 +2984,6 @@ var OSFramework;
                 }
                 MapOperation.ExportKeys = ExportKeys;
             })(MapOperation = Helper.MapOperation || (Helper.MapOperation = {}));
-        })(Helper = OSUI.Helper || (OSUI.Helper = {}));
-    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
-})(OSFramework || (OSFramework = {}));
-var OSFramework;
-(function (OSFramework) {
-    var OSUI;
-    (function (OSUI) {
-        var Helper;
-        (function (Helper) {
-            function GetRoundPixelRatio(value) {
-                const dpr = window.devicePixelRatio || 1;
-                return Math.round(value * dpr) / dpr;
-            }
-            Helper.GetRoundPixelRatio = GetRoundPixelRatio;
         })(Helper = OSUI.Helper || (OSUI.Helper = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
 })(OSFramework || (OSFramework = {}));
@@ -7105,7 +7091,7 @@ var OSFramework;
                     }
                     _balloonOnToggleCallback(_args, e) {
                         if (e.detail.balloonElem === this._balloonElem) {
-                            this.togglePattern(e.detail.isOpen);
+                            this._togglePattern(e.detail.isOpen);
                         }
                     }
                     _onClickCallback() {
@@ -7119,6 +7105,17 @@ var OSFramework;
                     _setBalloonFeature() {
                         this.setBalloonOptions();
                         this._balloonFeature = new OSFramework.OSUI.Feature.Balloon.Balloon(this, this._balloonElem, this.balloonOptions);
+                    }
+                    _togglePattern(isOpen) {
+                        if (isOpen) {
+                            OSUI.Helper.Dom.Styles.AddClass(this.selfElement, OverflowMenu_1.Enum.CssClass.Open);
+                        }
+                        else {
+                            OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, OverflowMenu_1.Enum.CssClass.Open);
+                        }
+                        this.isOpen = isOpen;
+                        this.setA11YProperties();
+                        this._triggerOnToggleEvent();
                     }
                     _triggerOnToggleEvent() {
                         this.triggerPlatformEventCallback(this._platformEventOnToggle, this.isOpen);
@@ -7150,6 +7147,7 @@ var OSFramework;
                         this._eventOnClick = undefined;
                     }
                     unsetHtmlElements() {
+                        this._balloonElem = undefined;
                         this._triggerElem = undefined;
                         this._balloonFeature = undefined;
                     }
@@ -7224,17 +7222,6 @@ var OSFramework;
                                 shape: this.configs.Shape,
                             };
                         }
-                    }
-                    togglePattern(isOpen) {
-                        if (isOpen) {
-                            OSUI.Helper.Dom.Styles.AddClass(this.selfElement, OverflowMenu_1.Enum.CssClass.Open);
-                        }
-                        else {
-                            OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, OverflowMenu_1.Enum.CssClass.Open);
-                        }
-                        this.isOpen = isOpen;
-                        this.setA11YProperties();
-                        this._triggerOnToggleEvent();
                     }
                 }
                 OverflowMenu_1.OverflowMenu = OverflowMenu;
@@ -19935,11 +19922,10 @@ var Providers;
                     return parseInt(getComputedStyle(this._floatingUIOptions.anchorElem).getPropertyValue(Utils.Enum.CssCustomProperties.Offset));
                 }
                 _setFloatingPosition() {
-                    let _eventOnUpdatePosition = undefined;
                     const _middlewareArray = [];
                     if (this._floatingUIOptions.autoPlacement) {
-                        if (this._floatingUIOptions.autoPlacementOptions.aligment === '') {
-                            this._floatingUIOptions.autoPlacementOptions.aligment = null;
+                        if (this._floatingUIOptions.autoPlacementOptions.alignment === '') {
+                            this._floatingUIOptions.autoPlacementOptions.alignment = null;
                         }
                         if (this._floatingUIOptions.autoPlacementOptions.allowedPlacements.length <= 0) {
                             this._floatingUIOptions.autoPlacementOptions.allowedPlacements.push(OSFramework.OSUI.GlobalEnum.FloatingPosition.BottomStart);
@@ -19950,25 +19936,25 @@ var Providers;
                         _middlewareArray.push(window.FloatingUIDOM.shift());
                     }
                     _middlewareArray.push(window.FloatingUIDOM.offset(this._getOffsetValue()));
-                    _eventOnUpdatePosition = () => {
+                    const _eventOnUpdatePosition = () => {
                         window.FloatingUIDOM.computePosition(this._floatingUIOptions.anchorElem, this._floatingUIOptions.floatingElem, {
                             placement: this._floatingUIOptions.position,
                             middleware: _middlewareArray,
                         }).then(({ x, y }) => {
-                            OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, Utils.Enum.CssCustomProperties.YPosition, OSFramework.OSUI.Helper.GetRoundPixelRatio(y) + OSFramework.OSUI.GlobalEnum.Units.Pixel);
-                            OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, Utils.Enum.CssCustomProperties.XPosition, OSFramework.OSUI.Helper.GetRoundPixelRatio(x) + OSFramework.OSUI.GlobalEnum.Units.Pixel);
+                            OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, Utils.Enum.CssCustomProperties.YPosition, y + OSFramework.OSUI.GlobalEnum.Units.Pixel);
+                            OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, Utils.Enum.CssCustomProperties.XPosition, x + OSFramework.OSUI.GlobalEnum.Units.Pixel);
                         });
                     };
                     _eventOnUpdatePosition();
                     if (this._floatingUIOptions.updatePosition) {
-                        this.eventOnUpdateCallback = window.FloatingUIDOM.autoUpdate(this._floatingUIOptions.anchorElem, this._floatingUIOptions.floatingElem, _eventOnUpdatePosition.bind(this));
+                        this._eventOnUpdateCallback = window.FloatingUIDOM.autoUpdate(this._floatingUIOptions.anchorElem, this._floatingUIOptions.floatingElem, _eventOnUpdatePosition.bind(this));
                     }
                 }
                 build() {
                     this._setFloatingPosition();
                 }
                 close() {
-                    this.eventOnUpdateCallback();
+                    this._eventOnUpdateCallback();
                     setTimeout(() => {
                         OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, Utils.Enum.CssCustomProperties.YPosition, 0);
                         OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, Utils.Enum.CssCustomProperties.XPosition, 0);
@@ -19976,7 +19962,7 @@ var Providers;
                 }
                 dispose() {
                     if (this._floatingUIOptions.updatePosition) {
-                        this.eventOnUpdateCallback();
+                        this._eventOnUpdateCallback();
                     }
                 }
                 update(options) {

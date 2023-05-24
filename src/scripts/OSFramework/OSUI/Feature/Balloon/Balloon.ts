@@ -250,7 +250,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 				autoPlacement: this.featureOptions.position === GlobalEnum.FloatingPosition.Auto,
 				anchorElem: this.featureOptions.anchorElem,
 				autoPlacementOptions: {
-					placement: this.featureOptions.alignment,
+					alignment: this.featureOptions.alignment,
 					allowedPlacements: this.featureOptions.allowedPlacements,
 				},
 				floatingElem: this.featureElem,

@@ -907,7 +907,6 @@ declare namespace OSFramework.OSUI.Feature.Balloon.Enum {
 declare namespace OSFramework.OSUI.Feature.Balloon {
     interface IBalloon extends Feature.IFeature, Interface.IOpenable {
         setBalloonShape(shape?: GlobalEnum.ShapeTypes): void;
-        setFloatingUIBehaviour(isUpdate?: boolean): void;
         updatePositionOption(position: GlobalEnum.FloatingPosition): void;
     }
 }
@@ -1081,9 +1080,6 @@ declare namespace OSFramework.OSUI.Helper {
 declare namespace OSFramework.OSUI.Helper.MapOperation {
     function FindInMap(patternName: string, patternId: string, map: Map<string, Interface.IPattern>): Interface.IPattern;
     function ExportKeys(map: Map<string, Interface.IPattern>): Array<string>;
-}
-declare namespace OSFramework.OSUI.Helper {
-    function GetRoundPixelRatio(value: number): number;
 }
 declare namespace OSFramework.OSUI.Helper {
     abstract class SVG {
@@ -2419,7 +2415,6 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu.Enum {
 }
 declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
     interface IOverflowMenu extends Interface.IPattern, Interface.IOpenable {
-        togglePattern(isOpen: boolean): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
@@ -2436,6 +2431,7 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
         private _balloonOnToggleCallback;
         private _onClickCallback;
         private _setBalloonFeature;
+        private _togglePattern;
         private _triggerOnToggleEvent;
         protected removeEventListeners(): void;
         protected setA11YProperties(): void;
@@ -2451,7 +2447,6 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
         open(): void;
         registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
         setBalloonOptions(balloonOptions?: Feature.Balloon.BalloonOptions): void;
-        togglePattern(isOpen: boolean): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
@@ -5593,8 +5588,8 @@ declare namespace Providers.OSUI.Utils {
         useShift: boolean;
     };
     class FloatingUI {
+        private _eventOnUpdateCallback;
         private _floatingUIOptions;
-        eventOnUpdateCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
         constructor(options: FloatingUIOptions);
         private _getOffsetValue;
         private _setFloatingPosition;
