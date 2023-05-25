@@ -1802,6 +1802,9 @@ var OSFramework;
                     _setA11YProperties() {
                         OSUI.Helper.Dom.Attribute.Set(this.featureElem, OSUI.Constants.A11YAttributes.Aria.Hidden, (!this.isOpen).toString());
                         OSUI.Helper.A11Y.SetElementsTabIndex(this.isOpen, this._focusTrapInstance.focusableElements);
+                        OSUI.Helper.Dom.Attribute.Set(this.featureElem, OSUI.Constants.A11YAttributes.TabIndex, this.isOpen
+                            ? OSUI.Constants.A11YAttributes.States.TabIndexShow
+                            : OSUI.Constants.A11YAttributes.States.TabIndexHidden);
                         OSUI.Helper.Dom.Attribute.Set(this._floatingUIOptions.anchorElem, OSUI.Constants.A11YAttributes.TabIndex, this.isOpen
                             ? OSUI.Constants.A11YAttributes.States.TabIndexHidden
                             : OSUI.Constants.A11YAttributes.States.TabIndexShow);

@@ -87,6 +87,14 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			Helper.A11Y.SetElementsTabIndex(this.isOpen, this._focusTrapInstance.focusableElements);
 
 			Helper.Dom.Attribute.Set(
+				this.featureElem,
+				Constants.A11YAttributes.TabIndex,
+				this.isOpen
+					? Constants.A11YAttributes.States.TabIndexShow
+					: Constants.A11YAttributes.States.TabIndexHidden
+			);
+
+			Helper.Dom.Attribute.Set(
 				this._floatingUIOptions.anchorElem,
 				Constants.A11YAttributes.TabIndex,
 				this.isOpen
@@ -151,6 +159,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 				// Handle focus trap logic
 				this._focusableActiveElement = document.activeElement as HTMLElement;
 				this._focusTrapInstance.enableForA11y();
+
 				// Set FloatingUI
 				this.setFloatingUIBehaviour();
 
