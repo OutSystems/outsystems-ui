@@ -1,35 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
-	const _tabsMap = new Map<string, string>();
 	const _tabsContentItemMap = new Map<string, OSFramework.OSUI.Patterns.TabsContentItem.ITabsContentItem>();
-	/**
-	 * Gets the Tabd pattern the Item belongs to
-	 *
-	 * @return {*}  {Map<string, OSFramework.OSUI.Patterns.TabsContentItem.ITabsContentItem>}
-	 */
-	export function GetTabsByItem(tabsContentItemId: string): OSFramework.OSUI.Patterns.Tabs.ITabs {
-		let tabs: OSFramework.OSUI.Patterns.Tabs.ITabs;
-
-		if (_tabsMap.has(tabsContentItemId)) {
-			tabs = TabsAPI.GetTabsById(_tabsMap.get(tabsContentItemId));
-		} else {
-			// Try to find its reference on DOM
-			const elem = OSFramework.OSUI.Helper.Dom.GetElementByUniqueId(tabsContentItemId);
-			const tabsElem = elem.closest(
-				OSFramework.OSUI.Constants.Dot + OSFramework.OSUI.Patterns.Tabs.Enum.CssClasses.TabsWrapper
-			);
-
-			if (!tabsElem) {
-				throw Error(
-					`This ${OSFramework.OSUI.GlobalEnum.PatternName.TabsContentItem} does not belong to any ${OSFramework.OSUI.GlobalEnum.PatternName.Tabs} pattern.`
-				);
-			}
-			const uniqueId = tabsElem.getAttribute('name');
-			tabs = TabsAPI.GetTabsById(uniqueId);
-		}
-
-		return tabs;
-	}
 
 	/**
 	 * Function that will change the property of a given Tabs pattern.
@@ -70,7 +41,6 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.TabsContentItem} registered under id: ${tabsContentItemId}`
 			);
 		}
-		const tabs = GetTabsByItem(tabsContentItemId);
 
 		const _newTabsContentItem = new OSFramework.OSUI.Patterns.TabsContentItem.TabsContentItem(
 			tabsContentItemId,
@@ -78,11 +48,6 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 		);
 
 		_tabsContentItemMap.set(tabsContentItemId, _newTabsContentItem);
-		_newTabsContentItem.build();
-
-		if (tabs !== undefined) {
-			_tabsMap.set(tabsContentItemId, tabs.uniqueId);
-		}
 
 		return _newTabsContentItem;
 	}
@@ -133,6 +98,21 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 			tabsContentItemId,
 			_tabsContentItemMap
 		) as OSFramework.OSUI.Patterns.TabsContentItem.ITabsContentItem;
+	}
+
+	/**
+	 * Function that will initialize the pattern instance.
+	 *
+	 * @export
+	 * @param {string} tabsContentItemId ID of the TabsContentItem pattern that will be initialized.
+	 * @return {*}  {OSFramework.OSUI.Patterns.TabsContentItem.ITabsContentItem}
+	 */
+	export function Initialize(tabsContentItemId: string): OSFramework.OSUI.Patterns.TabsContentItem.ITabsContentItem {
+		const tabsContentItem = GetTabsContentItemById(tabsContentItemId);
+
+		tabsContentItem.build();
+
+		return tabsContentItem;
 	}
 
 	/**
