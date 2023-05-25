@@ -1,8 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Feature {
 	export abstract class AbstractFeature<PT, O> implements IFeature {
+		// Store the feature DOM elem
 		private _featureElem: HTMLElement;
+		// Store the faeture Options
 		private _featureOptions: O;
+		// Store the feature Pattern
 		private _featurePattern: PT;
 
 		constructor(featurePattern: PT, featureElem: HTMLElement, options: O) {
@@ -11,19 +14,45 @@ namespace OSFramework.OSUI.Feature {
 			this._featurePattern = featurePattern;
 		}
 
+		/**
+		 *
+		 *
+		 * @memberof AbstractFeature
+		 */
 		public dispose(): void {
 			this._featureOptions = undefined;
 			this._featureElem = undefined;
 		}
 
+		/**
+		 * Getter for the feature Elemement
+		 *
+		 * @readonly
+		 * @type {HTMLElement}
+		 * @memberof AbstractFeature
+		 */
 		public get featureElem(): HTMLElement {
 			return this._featureElem;
 		}
 
+		/**
+		 * Getter for the feature options
+		 *
+		 * @readonly
+		 * @type {O}
+		 * @memberof AbstractFeature
+		 */
 		public get featureOptions(): O {
 			return this._featureOptions;
 		}
 
+		/**
+		 * Getter for the the feature pattern element
+		 *
+		 * @readonly
+		 * @type {PT}
+		 * @memberof AbstractFeature
+		 */
 		public get featurePattern(): PT {
 			return this._featurePattern;
 		}
