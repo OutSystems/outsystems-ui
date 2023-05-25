@@ -268,7 +268,6 @@ namespace OSFramework.OSUI.Feature.Balloon {
 				},
 				floatingElem: this.featureElem,
 				position: this.featureOptions.position,
-				useShift: true,
 				updatePosition: true,
 			};
 		}

@@ -5572,9 +5572,9 @@ declare namespace Providers.OSUI.TimePicker.Flatpickr {
 }
 declare namespace Providers.OSUI.Utils.Enum {
     enum CssCustomProperties {
+        Offset = "--osui-floating-offset",
         YPosition = "--osui-floating-position-y",
-        XPosition = "--osui-floating-position-x",
-        Offset = "--osui-floating-offset"
+        XPosition = "--osui-floating-position-x"
     }
 }
 declare namespace Providers.OSUI.Utils {
@@ -5585,7 +5585,6 @@ declare namespace Providers.OSUI.Utils {
         floatingElem: HTMLElement;
         position: string;
         updatePosition: boolean;
-        useShift: boolean;
     };
     class FloatingUI {
         private _eventOnUpdateCallback;

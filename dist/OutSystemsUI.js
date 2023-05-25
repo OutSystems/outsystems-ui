@@ -1900,7 +1900,6 @@ var OSFramework;
                             },
                             floatingElem: this.featureElem,
                             position: this.featureOptions.position,
-                            useShift: true,
                             updatePosition: true,
                         };
                     }
@@ -19887,9 +19886,9 @@ var Providers;
             (function (Enum) {
                 let CssCustomProperties;
                 (function (CssCustomProperties) {
+                    CssCustomProperties["Offset"] = "--osui-floating-offset";
                     CssCustomProperties["YPosition"] = "--osui-floating-position-y";
                     CssCustomProperties["XPosition"] = "--osui-floating-position-x";
-                    CssCustomProperties["Offset"] = "--osui-floating-offset";
                 })(CssCustomProperties = Enum.CssCustomProperties || (Enum.CssCustomProperties = {}));
             })(Enum = Utils.Enum || (Utils.Enum = {}));
         })(Utils = OSUI.Utils || (OSUI.Utils = {}));
@@ -19919,8 +19918,6 @@ var Providers;
                             this._floatingUIOptions.autoPlacementOptions.allowedPlacements.push(OSFramework.OSUI.GlobalEnum.FloatingPosition.BottomStart);
                         }
                         _middlewareArray.push(window.FloatingUIDOM.autoPlacement(this._floatingUIOptions.autoPlacementOptions));
-                    }
-                    if (this._floatingUIOptions.useShift) {
                         _middlewareArray.push(window.FloatingUIDOM.shift());
                     }
                     _middlewareArray.push(window.FloatingUIDOM.offset(this._getOffsetValue()));

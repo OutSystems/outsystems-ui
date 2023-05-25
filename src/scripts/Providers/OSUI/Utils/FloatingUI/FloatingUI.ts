@@ -8,7 +8,6 @@ namespace Providers.OSUI.Utils {
 		floatingElem: HTMLElement;
 		position: string;
 		updatePosition: boolean;
-		useShift: boolean;
 	};
 
 	/**
@@ -60,10 +59,7 @@ namespace Providers.OSUI.Utils {
 				}
 
 				_middlewareArray.push(window.FloatingUIDOM.autoPlacement(this._floatingUIOptions.autoPlacementOptions));
-			}
-
-			// If useShift is true, add it to middleware
-			if (this._floatingUIOptions.useShift) {
+				// Make sure to also use shift for better auto behaviour
 				_middlewareArray.push(window.FloatingUIDOM.shift());
 			}
 
