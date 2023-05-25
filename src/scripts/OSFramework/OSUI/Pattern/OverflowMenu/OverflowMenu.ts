@@ -101,7 +101,8 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		protected setA11YProperties(): void {
 			if (this.isBuilt === false) {
 				Helper.A11Y.AriaHasPopupTrue(this.selfElement);
-				//Helper.A11Y.AriaControls(this._triggerElem, this.balloonElem.widgetId);
+				Helper.A11Y.AriaControls(this._triggerElem, this._balloonElem.id);
+				Helper.Dom.Attribute.Set(this._triggerElem, Constants.FocusTrapIgnoreAttr, true);
 			}
 
 			Helper.A11Y.AriaExpanded(this.selfElement, this.isOpen.toString());
@@ -175,9 +176,9 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		public build(): void {
 			super.build();
 			this.setHtmlElements();
+			this.setA11YProperties();
 			this._setBalloonFeature();
 			this.setCallbacks();
-			this.setA11YProperties();
 			this.setEventListeners();
 			this.finishBuild();
 		}

@@ -83,16 +83,16 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		private _setA11YProperties(): void {
 			Helper.Dom.Attribute.Set(this.featureElem, Constants.A11YAttributes.Aria.Hidden, (!this.isOpen).toString());
 
-			Helper.Dom.Attribute.Set(
-				this.featureElem,
-				Constants.A11YAttributes.TabIndex,
-				this.isOpen
-					? Constants.A11YAttributes.States.TabIndexShow
-					: Constants.A11YAttributes.States.TabIndexHidden
-			);
-
 			// Will handle the tabindex value of the elements inside pattern
 			Helper.A11Y.SetElementsTabIndex(this.isOpen, this._focusTrapInstance.focusableElements);
+
+			Helper.Dom.Attribute.Set(
+				this._floatingUIOptions.anchorElem,
+				Constants.A11YAttributes.TabIndex,
+				this.isOpen
+					? Constants.A11YAttributes.States.TabIndexHidden
+					: Constants.A11YAttributes.States.TabIndexShow
+			);
 		}
 
 		// Set the CSS Classes
@@ -138,31 +138,35 @@ namespace OSFramework.OSUI.Feature.Balloon {
 				Helper.Dom.Styles.AddClass(this.featureElem, Enum.CssClasses.IsOpen);
 				// add listeners and A11y properties
 				this._setEventListeners();
-				// Set FloatingUI
-				this.setFloatingUIBehaviour();
-				// Handle focus trap logic
-				this._focusableActiveElement = document.activeElement as HTMLElement;
-				this._focusTrapInstance.enableForA11y();
-				// Focus on element when pattern is open
-				this.featureElem.focus();
 			} else {
 				Helper.Dom.Styles.RemoveClass(this.featureElem, Enum.CssClasses.IsOpen);
 				// remove listeners and A11y properties
 				this._removeEventListeners();
-				// Remove FloatingUI
-				this._floatingUIInstance.close();
+			}
+
+			// Update A11y attributes
+			this._setA11YProperties();
+
+			if (this.isOpen) {
+				// Handle focus trap logic
+				this._focusableActiveElement = document.activeElement as HTMLElement;
+				this._focusTrapInstance.enableForA11y();
+				// Set FloatingUI
+				this.setFloatingUIBehaviour();
+
+				// Focus on element when pattern is open
+				this.featureElem.focus();
+			} else {
 				// Handle focus trap logic
 				this._focusTrapInstance.disableForA11y();
-
+				// Remove FloatingUI
+				this._floatingUIInstance.close();
 				// Focus on last element clicked. Async to avoid conflict with closing animation
 				Helper.AsyncInvocation(() => {
 					this.featureElem.blur();
 					this._focusableActiveElement.focus();
 				});
 			}
-
-			// Update A11y attributes
-			this._setA11YProperties();
 
 			// Trigger the Custom Event BalloonOnToggle
 			this._onToggleEvent(this.isOpen, this.featureElem);

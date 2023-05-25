@@ -59,16 +59,18 @@ namespace OSFramework.OSUI.Behaviors {
 
 		// Handler for bottom on top element
 		private _focusBottomHandler(): void {
-			this._focusHandler(this._firstFocusableElement, this._focusBottomCallback);
+			this._focusHandler(false, this._focusBottomCallback);
 		}
 
-		private _focusHandler(focusableElement: HTMLElement, callback: GlobalCallbacks.Generic): void {
+		private _focusHandler(isTopHandler: boolean, callback: GlobalCallbacks.Generic): void {
 			if (this._isFocusTrap) {
 				// Update focusable elements
 				this._setFocusableElements();
-
 				// Focus on element
-				this._setFocusOnElement(focusableElement, this._targetElement);
+				this._setFocusOnElement(
+					isTopHandler ? this._lastFocusableElement : this._firstFocusableElement,
+					this._targetElement
+				);
 			}
 
 			// Trigger the methods on pattern
@@ -79,7 +81,7 @@ namespace OSFramework.OSUI.Behaviors {
 
 		// Handler for focus on top element
 		private _focusTopHandler(): void {
-			this._focusHandler(this._lastFocusableElement, this._focusTopCallback);
+			this._focusHandler(true, this._focusTopCallback);
 		}
 
 		// Method that removes the added event listeners

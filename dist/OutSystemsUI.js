@@ -99,6 +99,7 @@ var OSFramework;
             Constants.Comma = ',';
             Constants.EnableLogMessages = false;
             Constants.EmptyString = '';
+            Constants.FocusTrapIgnoreAttr = 'ignore-focus-trap';
             Constants.FocusableElems = 'a[href]:not([disabled]),[tabindex="0"], button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]),input[type="submit"]:not([disabled]), select:not([disabled])';
             Constants.JavaScriptTypes = {
                 Undefined: 'undefined',
@@ -812,19 +813,19 @@ var OSFramework;
                     this._setFocusableProperties();
                 }
                 _focusBottomHandler() {
-                    this._focusHandler(this._firstFocusableElement, this._focusBottomCallback);
+                    this._focusHandler(false, this._focusBottomCallback);
                 }
-                _focusHandler(focusableElement, callback) {
+                _focusHandler(isTopHandler, callback) {
                     if (this._isFocusTrap) {
                         this._setFocusableElements();
-                        this._setFocusOnElement(focusableElement, this._targetElement);
+                        this._setFocusOnElement(isTopHandler ? this._lastFocusableElement : this._firstFocusableElement, this._targetElement);
                     }
                     if (callback !== undefined) {
                         callback();
                     }
                 }
                 _focusTopHandler() {
-                    this._focusHandler(this._lastFocusableElement, this._focusTopCallback);
+                    this._focusHandler(true, this._focusTopCallback);
                 }
                 _removeEventListeners() {
                     this._predictableBottomElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Focus, this._focusBottomHandler.bind(this));
@@ -1800,10 +1801,10 @@ var OSFramework;
                     }
                     _setA11YProperties() {
                         OSUI.Helper.Dom.Attribute.Set(this.featureElem, OSUI.Constants.A11YAttributes.Aria.Hidden, (!this.isOpen).toString());
-                        OSUI.Helper.Dom.Attribute.Set(this.featureElem, OSUI.Constants.A11YAttributes.TabIndex, this.isOpen
-                            ? OSUI.Constants.A11YAttributes.States.TabIndexShow
-                            : OSUI.Constants.A11YAttributes.States.TabIndexHidden);
                         OSUI.Helper.A11Y.SetElementsTabIndex(this.isOpen, this._focusTrapInstance.focusableElements);
+                        OSUI.Helper.Dom.Attribute.Set(this._floatingUIOptions.anchorElem, OSUI.Constants.A11YAttributes.TabIndex, this.isOpen
+                            ? OSUI.Constants.A11YAttributes.States.TabIndexHidden
+                            : OSUI.Constants.A11YAttributes.States.TabIndexShow);
                     }
                     _setCSSClasses() {
                         OSUI.Helper.Dom.Styles.AddClass(this.featureElem, Balloon_1.Enum.CssClasses.Pattern);
@@ -1831,22 +1832,26 @@ var OSFramework;
                         if (isOpen) {
                             OSUI.Helper.Dom.Styles.AddClass(this.featureElem, Balloon_1.Enum.CssClasses.IsOpen);
                             this._setEventListeners();
-                            this.setFloatingUIBehaviour();
-                            this._focusableActiveElement = document.activeElement;
-                            this._focusTrapInstance.enableForA11y();
-                            this.featureElem.focus();
                         }
                         else {
                             OSUI.Helper.Dom.Styles.RemoveClass(this.featureElem, Balloon_1.Enum.CssClasses.IsOpen);
                             this._removeEventListeners();
-                            this._floatingUIInstance.close();
+                        }
+                        this._setA11YProperties();
+                        if (this.isOpen) {
+                            this._focusableActiveElement = document.activeElement;
+                            this._focusTrapInstance.enableForA11y();
+                            this.setFloatingUIBehaviour();
+                            this.featureElem.focus();
+                        }
+                        else {
                             this._focusTrapInstance.disableForA11y();
+                            this._floatingUIInstance.close();
                             OSUI.Helper.AsyncInvocation(() => {
                                 this.featureElem.blur();
                                 this._focusableActiveElement.focus();
                             });
                         }
-                        this._setA11YProperties();
                         this._onToggleEvent(this.isOpen, this.featureElem);
                     }
                     build() {
@@ -2652,7 +2657,9 @@ var OSFramework;
                     }
                 }
                 static GetFocusableElements(element) {
-                    return [...element.querySelectorAll(OSUI.Constants.FocusableElems)];
+                    const _focusableElems = element.querySelectorAll(OSUI.Constants.FocusableElems);
+                    const _filteredElements = Array.from(_focusableElems).filter((element) => element.getAttribute(OSUI.Constants.FocusTrapIgnoreAttr) !== 'true');
+                    return [..._filteredElements];
                 }
                 static Move(element, target) {
                     if (element && target) {
@@ -7114,6 +7121,8 @@ var OSFramework;
                     setA11YProperties() {
                         if (this.isBuilt === false) {
                             OSUI.Helper.A11Y.AriaHasPopupTrue(this.selfElement);
+                            OSUI.Helper.A11Y.AriaControls(this._triggerElem, this._balloonElem.id);
+                            OSUI.Helper.Dom.Attribute.Set(this._triggerElem, OSUI.Constants.FocusTrapIgnoreAttr, true);
                         }
                         OSUI.Helper.A11Y.AriaExpanded(this.selfElement, this.isOpen.toString());
                     }
@@ -7141,9 +7150,9 @@ var OSFramework;
                     build() {
                         super.build();
                         this.setHtmlElements();
+                        this.setA11YProperties();
                         this._setBalloonFeature();
                         this.setCallbacks();
-                        this.setA11YProperties();
                         this.setEventListeners();
                         this.finishBuild();
                     }
