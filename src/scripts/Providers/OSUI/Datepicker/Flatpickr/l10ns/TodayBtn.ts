@@ -34,6 +34,10 @@ namespace Providers.OSUI.Datepicker.Flatpickr.l10ns {
 			ariaLabel: "Feu clic aquí per saltar a la data d'avui",
 			title: 'Avui',
 		},
+		cat: {
+			ariaLabel: "Feu clic aquí per saltar a la data d'avui",
+			title: 'Avui',
+		},
 		ckb: {
 			ariaLabel: 'Li vir bikirtînin da ku hûn biçin roja îro',
 			title: 'Îro',
@@ -173,6 +177,10 @@ namespace Providers.OSUI.Datepicker.Flatpickr.l10ns {
 		nl: {
 			ariaLabel: 'Klik hier om naar de datum van vandaag te gaan',
 			title: 'Vandaag',
+		},
+		nb: {
+			ariaLabel: 'Klikk her for å hoppe til dagens dato',
+			title: 'I dag',
 		},
 		nn: {
 			ariaLabel: 'Klikk her for å hoppe til dagens dato',
