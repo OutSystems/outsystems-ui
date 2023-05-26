@@ -873,7 +873,6 @@ declare namespace OSFramework.OSUI.Feature.Balloon {
         private _onkeypressCallback;
         private _removeEventListeners;
         private _setA11YProperties;
-        private _setCSSClasses;
         private _setCallbacks;
         private _setEventListeners;
         private _toggleBalloon;

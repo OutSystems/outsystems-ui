@@ -107,12 +107,6 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			);
 		}
 
-		// Set the CSS Classes
-		// eslint-disable-next-line @typescript-eslint/naming-convention
-		private _setCSSClasses(): void {
-			Helper.Dom.Styles.AddClass(this.featureElem, Enum.CssClasses.Pattern);
-		}
-
 		// Set the callbacks
 		private _setCallbacks(): void {
 			this._eventBodyClick = this._bodyClickCallback.bind(this);
@@ -196,7 +190,6 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		 * @memberof Balloon
 		 */
 		public build(): void {
-			this._setCSSClasses();
 			this._setCallbacks();
 			this._setEventListeners(true);
 			this.setFloatingUIBehaviour();

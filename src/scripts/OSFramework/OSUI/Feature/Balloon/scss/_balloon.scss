@@ -27,4 +27,83 @@
         pointer-events: all;
         transition: opacity 300ms ease-in;
     }
+
+    // Service Studio Preview
+    & {
+        -servicestudio-visibility: visible;
+        -servicestudio-opacity: 1;
+        -servicestudio-position: absolute;
+        -servicestudio-top: 100%;
+        -servicestudio-left: 0;
+
+        &.bottom {
+            -servicestudio-left: 50%;
+            -servicestudio-transform: translate(-50%);
+        }
+
+        &.bottom-start {
+            -servicestudio-left: 0;
+        }
+
+        &.bottom-end {
+            -servicestudio-left: 100%;
+            -servicestudio-transform: translateX(-100%);
+        }
+
+        &.center {
+            -servicestudio-top: 0;
+            -servicestudio-left: 0;
+        }
+
+        &.left-end {
+            -servicestudio-top: 100%;
+            -servicestudio-transform: translateY(-100%) translateX(-100%);
+        }
+
+        &.left-start {
+            -servicestudio-top: 0;
+            -servicestudio-transform: translateX(-100%);
+        }
+
+        &.left {
+            -servicestudio-top: 50%;
+            -servicestudio-transform: translateY(-50%) translateX(-100%);
+        }
+
+        &.right-end {
+            -servicestudio-top: 100%;
+            -servicestudio-left: 100%;
+            -servicestudio-transform: translateY(-100%);
+        }
+
+        &.right-start {
+            -servicestudio-top: 0;
+            -servicestudio-left: 100%;
+        }
+         
+         &.right {
+            -servicestudio-top: 50%;
+            -servicestudio-left: 100%;
+            -servicestudio-transform: translateY(-50%);
+        }
+
+        &.top-end {
+            -servicestudio-top: 0;
+            -servicestudio-left: 100%;
+            -servicestudio-transform: translateY(-100%) translateX(-100%);
+        }
+
+        &.top-start {
+            -servicestudio-top: 0;
+            -servicestudio-left: 0;
+            -servicestudio-transform: translateY(-100%);
+        }
+
+        &.top {
+            -servicestudio-top: 0;
+            -servicestudio-left: 50%;
+            -servicestudio-transform: translateY(-100%) translateX(-50%);
+        }
+    }
 }
+

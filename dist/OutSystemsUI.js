@@ -1812,9 +1812,6 @@ var OSFramework;
                             ? OSUI.Constants.A11YAttributes.States.TabIndexHidden
                             : OSUI.Constants.A11YAttributes.States.TabIndexShow);
                     }
-                    _setCSSClasses() {
-                        OSUI.Helper.Dom.Styles.AddClass(this.featureElem, Balloon_1.Enum.CssClasses.Pattern);
-                    }
                     _setCallbacks() {
                         this._eventBodyClick = this._bodyClickCallback.bind(this);
                         this._eventOnKeypress = this._onkeypressCallback.bind(this);
@@ -1864,7 +1861,6 @@ var OSFramework;
                         });
                     }
                     build() {
-                        this._setCSSClasses();
                         this._setCallbacks();
                         this._setEventListeners(true);
                         this.setFloatingUIBehaviour();
