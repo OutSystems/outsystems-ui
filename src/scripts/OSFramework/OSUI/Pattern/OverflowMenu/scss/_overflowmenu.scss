@@ -4,11 +4,28 @@
 /// Patterns - Navigation - OverflowMenu
 
 .osui-overflow-menu {
-    --osui-floating-offset: var(--space-base);
-
     &__trigger {
+        --osui-floating-offset: var(--space-s);
+
+        background-color: var(--color-neutral-3);
+        border: var(--border-size-s) solid transparent;
+        border-radius: var(--border-radius-soft);
+        cursor: pointer;
+        height: 32px;
+        width: 32px;
+
+        &:hover {
+            background-color: var(--color-neutral-5);
+        }
+
         * {
             pointer-events: none;
+        }
+    }
+
+    &--is-open {
+        .osui-overflow-menu__trigger {
+            background-color: var(--color-neutral-5);
         }
     }
 }

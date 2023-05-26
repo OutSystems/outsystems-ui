@@ -118,12 +118,13 @@ Section Index:
     6.4. Navigation
         6.4.1. Bottom Bar Item
         6.4.2. Breadcrumbs
-        6.4.3. Pagination
-        6.4.4. Section Index
-        6.4.5. Submenu
-        6.4.6. Tabs
-        6.4.7. Timeline
-        6.4.8. Wizard
+        6.4.3. OverflowMenu
+        6.4.4. Pagination
+        6.4.5. Section Index
+        6.4.6. Submenu
+        6.4.7. Tabs
+        6.4.8. Timeline
+        6.4.9. Wizard
     6.5. Numbers
         6.5.1. Badge
         6.5.2. Counter
@@ -413,17 +414,19 @@ Functions & Mixins
 @import '04-patterns/04-navigation/bottom-bar-item';
 /*! 6.4.2. Breadcrumbs */
 @import '04-patterns/04-navigation/breadcrumbs';
-/*! 6.4.3. Pagination */
+/*! 6.4.3. OverflowMenu */
+@import '../scripts/OSFramework/OSUI/Pattern/OverflowMenu/scss/overflowmenu';
+/*! 6.4.4. Pagination */
 @import '04-patterns/04-navigation/pagination';
-/*! 6.4.4. Section Index */
+/*! 6.4.5. Section Index */
 @import '../scripts/OSFramework/OSUI/Pattern/SectionIndex/scss/sectionindex';
-/*! 6.4.5. Submenu */
+/*! 6.4.6. Submenu */
 @import '../scripts/OSFramework/OSUI/Pattern/Submenu/scss/submenu';
-/*! 6.4.6. Tabs */
+/*! 6.4.7. Tabs */
 @import '../scripts/OSFramework/OSUI/Pattern/Tabs/scss/tabs';
-/*! 6.4.7. Timeline */
+/*! 6.4.8. Timeline */
 @import '04-patterns/04-navigation/timeline';
-/*! 6.4.8. Wizard */
+/*! 6.4.9. Wizard */
 @import '04-patterns/04-navigation/wizard';
 
 /*! 6.5. Numbers */
