@@ -16,7 +16,7 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		// Flatpickr onChange (SelectedTime) event
 		protected onChangeCallbackEvent: OSFramework.OSUI.Patterns.TimePicker.Callbacks.OSOnChangeEvent;
 		// Store pattern input HTML element reference
-		protected timePickerProviderInputElem: HTMLInputElement;
+		protected timePickerPlatformInputElem: HTMLInputElement;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new FlatpickrTimeConfig(configs));
@@ -28,7 +28,7 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		// Method used to set the needed HTML attributes
 		private _setAttributes(): void {
 			// Since a new input will be added by the flatpickr library, we must address it only at onReady
-			this.flatpickrInputElem = this.timePickerProviderInputElem.nextSibling as HTMLInputElement;
+			this.flatpickrInputElem = this.timePickerPlatformInputElem.nextSibling as HTMLInputElement;
 
 			// Added the data-input attribute in order to input be styled as all platform inputs
 			OSFramework.OSUI.Helper.Dom.Attribute.Set(
@@ -93,12 +93,12 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 */
 		protected createProviderInstance(): void {
 			/* In order to avoid dateFormat convert issues done by provider when InitialTime was not defined and input has a default time lets clean that value before creating provider instance. This happen when DateFormat is different from YYYY-MM-DD */
-			if (this.timePickerProviderInputElem && this._flatpickrOpts.defaultDate === undefined) {
-				this.timePickerProviderInputElem.value = '';
+			if (this.timePickerPlatformInputElem && this._flatpickrOpts.defaultDate === undefined) {
+				this.timePickerPlatformInputElem.value = '';
 			}
 
 			// Init provider
-			this.provider = window.flatpickr(this.timePickerProviderInputElem, this._flatpickrOpts);
+			this.provider = window.flatpickr(this.timePickerPlatformInputElem, this._flatpickrOpts);
 			// Set the needed HTML attributes
 			this._setAttributes();
 
@@ -128,6 +128,10 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 				});
 			}
 
+			this.updatePlatformInputAttrs();
+
+			this.setA11YProperties();
+
 			this.createdInstance();
 		}
 
@@ -155,14 +159,38 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		}
 
 		// Method that will be triggered by library each time any time is selected
-		protected onTimeSelectedEvent(selectedTime: string[]): void {
+		protected onTimeSelectedEvent(selectedTime: Array<Date>): void {
 			/* NOTE: timeStr param is not in use since the library has an issue arround it */
 			let _selectedTime = '';
 
 			// Check if any time has been selected, In case of Clear this will return empty string
 			if (selectedTime.length > 0) {
-				_selectedTime = this.provider.formatDate(selectedTime[0], this._flatpickrOpts.dateFormat);
+				// Store the selected TimeValue as a DateTime
+				const _selectedTimeValue = selectedTime[0] as Date;
+
+				// The following approach is needed since we'll set the time input value to the 'hidden' input time, so time format is mandatory!
+				// Get the Hour at the selected DateTime
+				const _selectedHour =
+					_selectedTimeValue.getHours() < 10
+						? '0' + _selectedTimeValue.getHours()
+						: _selectedTimeValue.getHours();
+				// Get the Minutes at the selected DateTime
+				const _selectedMin =
+					_selectedTimeValue.getMinutes() < 10
+						? '0' + _selectedTimeValue.getMinutes()
+						: _selectedTimeValue.getMinutes();
+				// Get the Secounds at the selected DateTime
+				const _selectedSec =
+					_selectedTimeValue.getSeconds() < 10
+						? '0' + _selectedTimeValue.getSeconds()
+						: _selectedTimeValue.getSeconds();
+
+				// Set the string with a default time format
+				_selectedTime = _selectedHour + ':' + _selectedMin + ':' + _selectedSec;
 			}
+
+			// Trigger the platform update attribute value change!
+			OSFramework.OSUI.Helper.Dom.SetInputValue(this.timePickerPlatformInputElem, _selectedTime);
 
 			// Trigger platform's onChange callback event
 			this.triggerPlatformEventCallback(this.onChangeCallbackEvent, _selectedTime);
@@ -188,7 +216,13 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		protected setA11YProperties(): void {
-			console.warn(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+			// This is needed once library set it as an hidden by default which can not be since otherwise the updating it's value will not be triggered the local variable update.
+			// Since this will be hidden through css, in terms of accessibility it should not be "visible"!
+			OSFramework.OSUI.Helper.Dom.Attribute.Set(
+				this.timePickerPlatformInputElem,
+				OSFramework.OSUI.Constants.A11YAttributes.TabIndex,
+				OSFramework.OSUI.Constants.A11YAttributes.States.TabIndexHidden
+			);
 		}
 
 		/**
@@ -209,12 +243,12 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 */
 		protected setHtmlElements(): void {
 			// Set the inputHTML element
-			this.timePickerProviderInputElem = this.selfElement.querySelector(
+			this.timePickerPlatformInputElem = this.selfElement.querySelector(
 				OSFramework.OSUI.GlobalEnum.CSSSelectors.InputFormControl
 			);
 
 			// If the input hasn't be added
-			if (!this.timePickerProviderInputElem) {
+			if (!this.timePickerPlatformInputElem) {
 				throw new Error(`The timepicker input at TimepickerId '${this.widgetId}' is missing`);
 			}
 		}
@@ -239,7 +273,23 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		protected unsetHtmlElements(): void {
-			this.timePickerProviderInputElem = undefined;
+			this.timePickerPlatformInputElem = undefined;
+		}
+
+		/**
+		 * Used to set needed properties to the platform input.
+		 *
+		 * @protected
+		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
+		 */
+		protected updatePlatformInputAttrs(): void {
+			// Set the type attribute value
+			// This is needed once library set it as an hidden by default which can not be since otherwise the updating it's value will not be triggered the local variable update. That said it will be hidden through CSS!
+			OSFramework.OSUI.Helper.Dom.Attribute.Set(
+				this.timePickerPlatformInputElem,
+				OSFramework.OSUI.GlobalEnum.HTMLAttributes.type,
+				OSFramework.OSUI.GlobalEnum.InputTypeAttr.Time
+			);
 		}
 
 		public build(): void {
@@ -292,7 +342,7 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public clear(): void {
-			const isInputDisable = this.timePickerProviderInputElem.disabled;
+			const isInputDisable = this.timePickerPlatformInputElem.disabled;
 			if (isInputDisable === false) {
 				this.provider.clear();
 			}
@@ -337,7 +387,7 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public open(): void {
-			const isInputDisable = this.timePickerProviderInputElem.disabled;
+			const isInputDisable = this.timePickerPlatformInputElem.disabled;
 			if (this.provider.isOpen === false && isInputDisable === false) {
 				this.provider.open();
 			}
@@ -420,7 +470,7 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 * @memberof OSUIFlatpickrTime
 		 */
 		public updateInitialTime(value: string): void {
-			if (this.timePickerProviderInputElem.disabled === false) {
+			if (this.timePickerPlatformInputElem.disabled === false) {
 				// Redefine the Initial time
 				this.configs.InitialTime = value;
 				// Trigger the Redraw method in order to update calendar with this new value

@@ -64,7 +64,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 		 * @param {string[]} selectedDates Array of selected dates
 		 * @memberof Providers.OSUI.DatePicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate
 		 */
-		protected onDateSelectedEvent(selectedDates: string[]): void {
+		protected onDateSelectedEvent(selectedDates: Array<Date>): void {
 			// Store selected dates with the expected dateFormat as a string type
 			const _selectedDate = [];
 

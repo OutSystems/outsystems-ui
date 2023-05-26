@@ -319,6 +319,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Date = 'date',
 		DateTime = 'date-time-edit',
 		Text = 'text',
+		Time = 'time',
 	}
 
 	/**

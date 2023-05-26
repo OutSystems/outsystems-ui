@@ -511,7 +511,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		}
 
 		// Common methods all DatePickers must implement
-		protected abstract onDateSelectedEvent(selectedDates: string[], dateStr: string, fp: Flatpickr): void;
+		protected abstract onDateSelectedEvent(selectedDates: Array<Date>): void;
 		protected abstract todayBtnClick(event: MouseEvent): void;
 		protected abstract updatePlatformInputAttrs(): void;
 		// eslint-disable-next-line @typescript-eslint/member-ordering
