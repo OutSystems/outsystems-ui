@@ -1,6 +1,13 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Patterns.OverflowMenu.Enum {
 	/**
+	 * OverflowMenu Enum AriaLabel
+	 */
+	export enum AriaLabel {
+		Trigger = 'Trigger the balloon',
+	}
+
+	/**
 	 * OverflowMenu Enum CSSClasses
 	 */
 	export enum CssClass {

@@ -106,6 +106,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 			if (this.isBuilt === false) {
 				Helper.A11Y.AriaHasPopupTrue(this.selfElement);
 				Helper.A11Y.AriaControls(this._triggerElem, this._balloonElem.id);
+				Helper.A11Y.AriaLabel(this._triggerElem, Enum.AriaLabel.Trigger);
 				Helper.Dom.Attribute.Set(this._triggerElem, Constants.FocusTrapIgnoreAttr, true);
 			}
 
