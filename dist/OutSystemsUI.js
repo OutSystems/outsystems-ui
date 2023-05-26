@@ -11609,17 +11609,12 @@ var OutSystems;
                 FailDispose: 'OSUI-API-29002',
                 FailRegisterCallback: 'OSUI-API-29003',
             };
-            ErrorCodes.Balloon = {
+            ErrorCodes.OverflowMenu = {
                 FailChangeProperty: 'OSUI-API-30001',
                 FailDispose: 'OSUI-API-30002',
                 FailRegisterCallback: 'OSUI-API-30003',
                 FailOpen: 'OSUI-API-30004',
                 FailClose: 'OSUI-API-30005',
-            };
-            ErrorCodes.OverflowMenu = {
-                FailChangeProperty: 'OSUI-API-31001',
-                FailDispose: 'OSUI-API-31002',
-                FailRegisterCallback: 'OSUI-API-31003',
             };
             ErrorCodes.Legacy = {
                 FailAddFavicon_Legacy: 'OSUI-LEG-000001',
@@ -13380,6 +13375,28 @@ var OutSystems;
                     return result;
                 }
                 OverflowMenuAPI.RegisterCallback = RegisterCallback;
+                function Open(overflowMenuId) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.OverflowMenu.FailOpen,
+                        callback: () => {
+                            const _overflowMenuItem = GetOverflowMenuById(overflowMenuId);
+                            _overflowMenuItem.open();
+                        },
+                    });
+                    return result;
+                }
+                OverflowMenuAPI.Open = Open;
+                function Close(overflowMenuId) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.OverflowMenu.FailClose,
+                        callback: () => {
+                            const _overflowMenuItem = GetOverflowMenuById(overflowMenuId);
+                            _overflowMenuItem.close();
+                        },
+                    });
+                    return result;
+                }
+                OverflowMenuAPI.Close = Close;
             })(OverflowMenuAPI = Patterns.OverflowMenuAPI || (Patterns.OverflowMenuAPI = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));

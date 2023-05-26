@@ -3906,17 +3906,12 @@ declare namespace OutSystems.OSUI.ErrorCodes {
         FailDispose: string;
         FailRegisterCallback: string;
     };
-    const Balloon: {
+    const OverflowMenu: {
         FailChangeProperty: string;
         FailDispose: string;
         FailRegisterCallback: string;
         FailOpen: string;
         FailClose: string;
-    };
-    const OverflowMenu: {
-        FailChangeProperty: string;
-        FailDispose: string;
-        FailRegisterCallback: string;
     };
     const Legacy: {
         FailAddFavicon_Legacy: string;
@@ -4127,6 +4122,8 @@ declare namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
     function GetOverflowMenuById(overflowMenuId: string): OSFramework.OSUI.Patterns.OverflowMenu.IOverflowMenu;
     function Initialize(overflowMenuId: string): OSFramework.OSUI.Patterns.OverflowMenu.IOverflowMenu;
     function RegisterCallback(overflowMenuId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.Generic): string;
+    function Open(overflowMenuId: string): string;
+    function Close(overflowMenuId: string): string;
 }
 declare namespace OutSystems.OSUI.Patterns.ProgressAPI {
     function ChangeProperty(progressId: string, propertyName: string, propertyValue: any): string;
