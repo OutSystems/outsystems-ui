@@ -1773,15 +1773,18 @@ var OSFramework;
                 class Balloon extends Feature.AbstractFeature {
                     constructor(featurePattern, featureElem, options) {
                         super(featurePattern, featureElem, options);
+                        this._isOpenedByApi = false;
                         this.isOpen = false;
                         this.build();
                     }
                     _bodyClickCallback(_args, e) {
-                        if (e.target === this.featureOptions.anchorElem) {
+                        if (e.target === this.featureOptions.anchorElem || this._isOpenedByApi) {
                             return;
                         }
-                        this.close();
-                        e.stopPropagation();
+                        if (this.isOpen) {
+                            this._toggleBalloon(false);
+                            e.stopPropagation();
+                        }
                     }
                     _handleFocusTrap() {
                         const opts = {
@@ -1856,6 +1859,9 @@ var OSFramework;
                             });
                         }
                         this._onToggleEvent(this.isOpen, this.featureElem);
+                        OSUI.Helper.AsyncInvocation(() => {
+                            this._isOpenedByApi = false;
+                        });
                     }
                     build() {
                         this._setCSSClasses();
@@ -1875,8 +1881,9 @@ var OSFramework;
                         this._floatingUIInstance.dispose();
                         super.dispose();
                     }
-                    open() {
+                    open(isOpenedByApi) {
                         if (this.isOpen === false) {
+                            this._isOpenedByApi = isOpenedByApi;
                             this._toggleBalloon(true);
                         }
                     }
@@ -7084,6 +7091,7 @@ var OSFramework;
                 class OverflowMenu extends Patterns.AbstractPattern {
                     constructor(uniqueId, configs) {
                         super(uniqueId, new OverflowMenu_1.OverflowMenuConfig(configs));
+                        this._isOpenedByApi = false;
                         this.isOpen = false;
                     }
                     _balloonOnToggleCallback(_args, e) {
@@ -7096,7 +7104,8 @@ var OSFramework;
                             this.close();
                         }
                         else {
-                            this.open();
+                            this._isOpenedByApi = false;
+                            this.open(this._isOpenedByApi);
                         }
                     }
                     _setBalloonFeature() {
@@ -7184,9 +7193,10 @@ var OSFramework;
                         this.unsetHtmlElements();
                         super.dispose();
                     }
-                    open() {
+                    open(isOpenedByApi) {
                         if (this._balloonFeature.isOpen === false) {
-                            this._balloonFeature.open();
+                            this._isOpenedByApi = isOpenedByApi;
+                            this._balloonFeature.open(this._isOpenedByApi);
                         }
                     }
                     registerCallback(eventName, callback) {
@@ -13380,7 +13390,7 @@ var OutSystems;
                         errorCode: OSUI.ErrorCodes.OverflowMenu.FailOpen,
                         callback: () => {
                             const _overflowMenuItem = GetOverflowMenuById(overflowMenuId);
-                            _overflowMenuItem.open();
+                            _overflowMenuItem.open(true);
                         },
                     });
                     return result;

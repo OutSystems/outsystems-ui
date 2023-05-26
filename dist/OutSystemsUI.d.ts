@@ -864,6 +864,7 @@ declare namespace OSFramework.OSUI.Feature.Balloon {
         private _floatingUIOptions;
         private _focusTrapInstance;
         private _focusableActiveElement;
+        private _isOpenedByApi;
         private _onToggleEvent;
         isOpen: boolean;
         constructor(featurePattern: PT, featureElem: HTMLElement, options: BalloonOptions);
@@ -879,7 +880,7 @@ declare namespace OSFramework.OSUI.Feature.Balloon {
         build(): void;
         close(): void;
         dispose(): void;
-        open(): void;
+        open(isOpenedByApi: boolean): void;
         setBalloonShape(shape?: GlobalEnum.ShapeTypes): void;
         setFloatingUIBehaviour(isUpdate?: boolean): void;
         setFloatingUIOptions(): void;
@@ -1148,7 +1149,7 @@ declare namespace OSFramework.OSUI.Interface {
     interface IOpenable {
         isOpen?: boolean;
         close(): void;
-        open(): void;
+        open(isOpenedByApi?: boolean): void;
     }
 }
 declare namespace OSFramework.OSUI.Interface {
@@ -2424,6 +2425,7 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
         private _balloonFeature;
         private _eventBalloonOnToggle;
         private _eventOnClick;
+        private _isOpenedByApi;
         private _platformEventOnToggle;
         private _triggerElem;
         balloonOptions: Feature.Balloon.BalloonOptions;
@@ -2445,7 +2447,7 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
         changeProperty(propertyName: string, propertyValue: unknown): void;
         close(): void;
         dispose(): void;
-        open(): void;
+        open(isOpenedByApi: any): void;
         registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
         setBalloonOptions(balloonOptions?: Feature.Balloon.BalloonOptions): void;
     }

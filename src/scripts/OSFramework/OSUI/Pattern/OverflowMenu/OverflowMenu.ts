@@ -16,10 +16,13 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		// Store the Event Callbacks
 		private _eventBalloonOnToggle: GlobalCallbacks.Generic;
 		private _eventOnClick: GlobalCallbacks.Generic;
+		// Flag used to deal with onBodyClick and open api concurrency methods!
+		private _isOpenedByApi = false;
 		// Store the platform events
 		private _platformEventOnToggle: Callbacks.OSOnToggleEvent;
 		// Store the element that triggers the balloon
 		private _triggerElem: HTMLElement;
+
 		// Store the Balloon options to pass to the Balloon Class
 		public balloonOptions: Feature.Balloon.BalloonOptions;
 		// Store the isOpen ststus
@@ -42,7 +45,8 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 			if (this._balloonFeature.isOpen) {
 				this.close();
 			} else {
-				this.open();
+				this._isOpenedByApi = false;
+				this.open(this._isOpenedByApi);
 			}
 		}
 
@@ -234,9 +238,10 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 *
 		 * @memberof OverflowMenu
 		 */
-		public open(): void {
+		public open(isOpenedByApi): void {
 			if (this._balloonFeature.isOpen === false) {
-				this._balloonFeature.open();
+				this._isOpenedByApi = isOpenedByApi;
+				this._balloonFeature.open(this._isOpenedByApi);
 			}
 		}
 

@@ -152,7 +152,7 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 			callback: () => {
 				const _overflowMenuItem = GetOverflowMenuById(overflowMenuId);
 
-				_overflowMenuItem.open();
+				_overflowMenuItem.open(true);
 			},
 		});
 

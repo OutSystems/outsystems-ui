@@ -14,11 +14,13 @@ namespace OSFramework.OSUI.Interface {
 		 * @memberof OSFramework.Interface.IOpenable
 		 */
 		close(): void;
+
 		/**
 		 * Method signature to open the pattern.
 		 *
-		 * @memberof OSFramework.Interface.IOpenable
+		 * @param {boolean} [isOpenedByApi]
+		 * @memberof IOpenable
 		 */
-		open(): void;
+		open(isOpenedByApi?: boolean): void;
 	}
 }

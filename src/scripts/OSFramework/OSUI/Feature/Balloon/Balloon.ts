@@ -31,6 +31,8 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		// FocusTrap Properties
 		private _focusTrapInstance: Behaviors.FocusTrap;
 		private _focusableActiveElement: HTMLElement;
+		// Flag used to deal with onBodyClick and open api concurrency methods!
+		private _isOpenedByApi = false;
 		// Store the onTogle custom event
 		private _onToggleEvent: GlobalCallbacks.Generic;
 		// Store if the pattern is open
@@ -43,11 +45,13 @@ namespace OSFramework.OSUI.Feature.Balloon {
 
 		// Method to handle the body click callback, that closes the Balloon
 		private _bodyClickCallback(_args: string, e: MouseEvent): void {
-			if (e.target === this.featureOptions.anchorElem) {
+			if (e.target === this.featureOptions.anchorElem || this._isOpenedByApi) {
 				return;
 			}
-			this.close();
-			e.stopPropagation();
+			if (this.isOpen) {
+				this._toggleBalloon(false);
+				e.stopPropagation();
+			}
 		}
 
 		// Add Focus Trap to the Pattern
@@ -179,6 +183,11 @@ namespace OSFramework.OSUI.Feature.Balloon {
 
 			// Trigger the Custom Event BalloonOnToggle
 			this._onToggleEvent(this.isOpen, this.featureElem);
+
+			// Delay the _isOpenedByApi assignement in order to deal with clickOnBody() and open() api concurrency!
+			Helper.AsyncInvocation(() => {
+				this._isOpenedByApi = false;
+			});
 		}
 
 		/**
@@ -222,8 +231,9 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		 *
 		 * @memberof Balloon
 		 */
-		public open(): void {
+		public open(isOpenedByApi: boolean): void {
 			if (this.isOpen === false) {
+				this._isOpenedByApi = isOpenedByApi;
 				this._toggleBalloon(true);
 			}
 		}
