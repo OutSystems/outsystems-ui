@@ -183,6 +183,12 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 				// Provider works with index starting on 0 but we need to match with real month number, so we increment 1
 				_selectedMonthYear.monthOrder = _selectedMonthIndex + 1;
 				_selectedMonthYear.year = _selectedDate.getFullYear();
+			} else {
+				/**
+				 * For some reason, platform local var do no gets updated with an empty string, that said, set an empty char to it!
+				 * At the next iteraction DOM value will be updated accordingly.
+				 */
+				OSFramework.OSUI.Helper.Dom.SetInputValue(this.monthPickerPlatformInputElem, ' ');
 			}
 
 			// Trigger the platform update attribute value change!
