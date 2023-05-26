@@ -94,7 +94,7 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		protected createProviderInstance(): void {
 			/* In order to avoid dateFormat convert issues done by provider when InitialTime was not defined and input has a default time lets clean that value before creating provider instance. This happen when DateFormat is different from YYYY-MM-DD */
 			if (this.timePickerPlatformInputElem && this._flatpickrOpts.defaultDate === undefined) {
-				this.timePickerPlatformInputElem.value = '';
+				this.timePickerPlatformInputElem.value = OSFramework.OSUI.Constants.EmptyString;
 			}
 
 			// Init provider
