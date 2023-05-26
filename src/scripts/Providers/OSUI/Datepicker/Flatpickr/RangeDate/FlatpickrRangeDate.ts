@@ -76,12 +76,14 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 				}
 			}
 
-			// Trigger the platform update attribute value based on the flatpicker text input value!
-			// This can be done on this context since on this case the "hidden" input should be text type!
-			OSFramework.OSUI.Helper.Dom.SetInputValue(this.datePickerPlatformInputElem, this.flatpickrInputElem.value);
-
 			// Ensure user has selected start and end dates before trigger the onSelectedDate callback, or user has clean the seelcted dates!
 			if (selectedDates.length === 0 || selectedDates.length === 2) {
+				// Trigger the platform update attribute value based on the flatpicker text input value!
+				// This can be done on this context since on this case the "hidden" input should be text type!
+				OSFramework.OSUI.Helper.Dom.SetInputValue(
+					this.datePickerPlatformInputElem,
+					this.flatpickrInputElem.value
+				);
 				// Trigger platform's onChange callback event
 				this.triggerPlatformEventCallback(this.onSelectedCallbackEvent, _selectedDate[0], _selectedDate[1]);
 			}
