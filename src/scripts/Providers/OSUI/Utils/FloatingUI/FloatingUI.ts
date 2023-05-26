@@ -64,7 +64,9 @@ namespace Providers.OSUI.Utils {
 			}
 
 			// Add offset value to middleware
-			_middlewareArray.push(window.FloatingUIDOM.offset(this._getOffsetValue()));
+			if (this._floatingUIOptions.position !== OSFramework.OSUI.GlobalEnum.FloatingPosition.Center) {
+				_middlewareArray.push(window.FloatingUIDOM.offset(this._getOffsetValue()));
+			}
 
 			// Set the computePosition method. This is the main provider method to set the balloon position
 			const _eventOnUpdatePosition = () => {

@@ -19960,7 +19960,9 @@ var Providers;
                         _middlewareArray.push(window.FloatingUIDOM.autoPlacement(this._floatingUIOptions.autoPlacementOptions));
                         _middlewareArray.push(window.FloatingUIDOM.shift());
                     }
-                    _middlewareArray.push(window.FloatingUIDOM.offset(this._getOffsetValue()));
+                    if (this._floatingUIOptions.position !== OSFramework.OSUI.GlobalEnum.FloatingPosition.Center) {
+                        _middlewareArray.push(window.FloatingUIDOM.offset(this._getOffsetValue()));
+                    }
                     const _eventOnUpdatePosition = () => {
                         window.FloatingUIDOM.computePosition(this._floatingUIOptions.anchorElem, this._floatingUIOptions.floatingElem, {
                             placement: this._floatingUIOptions.position,
