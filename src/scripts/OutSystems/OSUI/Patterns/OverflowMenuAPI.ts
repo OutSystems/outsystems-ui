@@ -138,4 +138,44 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 
 		return result;
 	}
+
+	/**
+	 * Function to open this pattern
+	 *
+	 * @export
+	 * @param {string} overflowMenuId
+	 * @return {*}  {string}
+	 */
+	export function Open(overflowMenuId: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.OverflowMenu.FailOpen,
+			callback: () => {
+				const _overflowMenuItem = GetOverflowMenuById(overflowMenuId);
+
+				_overflowMenuItem.open();
+			},
+		});
+
+		return result;
+	}
+
+	/**
+	 * Function to close this pattern
+	 *
+	 * @export
+	 * @param {string} overflowMenuId
+	 * @return {*}  {string}
+	 */
+	export function Close(overflowMenuId: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.OverflowMenu.FailClose,
+			callback: () => {
+				const _overflowMenuItem = GetOverflowMenuById(overflowMenuId);
+
+				_overflowMenuItem.close();
+			},
+		});
+
+		return result;
+	}
 }
