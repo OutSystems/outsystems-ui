@@ -47,7 +47,7 @@ namespace Providers.OSUI.Utils {
 			// If autoPlacement is true, add it to middleware
 			if (this._floatingUIOptions.autoPlacement) {
 				// Check if alignment is not empty, otherwise set it to null
-				if (this._floatingUIOptions.autoPlacementOptions.alignment === '') {
+				if (this._floatingUIOptions.autoPlacementOptions.alignment === OSFramework.OSUI.Constants.EmptyString) {
 					this._floatingUIOptions.autoPlacementOptions.alignment = null;
 				}
 
