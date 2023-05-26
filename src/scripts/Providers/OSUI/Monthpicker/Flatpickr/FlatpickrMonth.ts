@@ -12,7 +12,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		// Validation of ZIndex position common behavior
 		private _zindexCommonBehavior: SharedProviderResources.Flatpickr.UpdateZindex;
 		// Store the flatpickr input html element that will be added by library
-		protected flatpickrInputElem: HTMLInputElement; //datePickerPlatformInputElem
+		protected flatpickrInputElem: HTMLInputElement;
 		// Store pattern input HTML element reference
 		protected monthPickerPlatformInputElem: HTMLInputElement;
 		// Flatpickr onChange (SelectedMonth) event
