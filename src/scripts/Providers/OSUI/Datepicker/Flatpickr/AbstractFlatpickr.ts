@@ -221,6 +221,14 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		protected setA11YProperties(): void {
+			// This is needed once library set it as an hidden by default which can not be since otherwise the updating it's value will not be triggered the local variable update.
+			// Since this will be hidden through css, in terms of accessibility it should not be "visible"!
+			OSFramework.OSUI.Helper.Dom.Attribute.Set(
+				this.datePickerPlatformInputElem,
+				OSFramework.OSUI.Constants.A11YAttributes.TabIndex,
+				OSFramework.OSUI.Constants.A11YAttributes.States.TabIndexHidden
+			);
+
 			// Since native behaviour could be enabled, check if the calendar container exist!
 			if (this.provider.calendarContainer !== undefined && this.flatpickrInputElem !== undefined) {
 				// Set the default aria-label value attribute in case user didn't set it!
@@ -511,7 +519,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		}
 
 		// Common methods all DatePickers must implement
-		protected abstract onDateSelectedEvent(selectedDates: string[], dateStr: string, fp: Flatpickr): void;
+		protected abstract onDateSelectedEvent(selectedDates: Array<Date>): void;
 		protected abstract todayBtnClick(event: MouseEvent): void;
 		protected abstract updatePlatformInputAttrs(): void;
 		// eslint-disable-next-line @typescript-eslint/member-ordering

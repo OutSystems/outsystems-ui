@@ -18,7 +18,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 		 * @param {string[]} selectedDates Array of selected dates
 		 * @memberof Providers.OSUI.DatePicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate
 		 */
-		protected onDateSelectedEvent(selectedDates: string[]): void {
+		protected onDateSelectedEvent(selectedDates: Array<Date>): void {
 			// Store selected date with the expected dateFormat as a string type
 			let _selectedDate = '';
 
@@ -88,6 +88,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 				dateType
 			);
 		}
+
 		/**
 		 * Builds the Pattern
 		 *
