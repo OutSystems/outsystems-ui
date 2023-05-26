@@ -15,6 +15,9 @@ const sectionInfo = {
             "path": "04-patterns/04-navigation/breadcrumbs"
         },
         {
+            "key": "overflowmenu"
+        },
+        {
             "name": "Pagination",
             "path": "04-patterns/04-navigation/pagination"
         },
