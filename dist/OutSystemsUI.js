@@ -7055,6 +7055,10 @@ var OSFramework;
             (function (OverflowMenu) {
                 var Enum;
                 (function (Enum) {
+                    let AriaLabel;
+                    (function (AriaLabel) {
+                        AriaLabel["Trigger"] = "Trigger the balloon";
+                    })(AriaLabel = Enum.AriaLabel || (Enum.AriaLabel = {}));
                     let CssClass;
                     (function (CssClass) {
                         CssClass["Open"] = "osui-overflow-menu--is-open";
@@ -7130,6 +7134,7 @@ var OSFramework;
                         if (this.isBuilt === false) {
                             OSUI.Helper.A11Y.AriaHasPopupTrue(this.selfElement);
                             OSUI.Helper.A11Y.AriaControls(this._triggerElem, this._balloonElem.id);
+                            OSUI.Helper.A11Y.AriaLabel(this._triggerElem, OverflowMenu_1.Enum.AriaLabel.Trigger);
                             OSUI.Helper.Dom.Attribute.Set(this._triggerElem, OSUI.Constants.FocusTrapIgnoreAttr, true);
                         }
                         OSUI.Helper.A11Y.AriaExpanded(this.selfElement, this.isOpen.toString());
@@ -19946,7 +19951,7 @@ var Providers;
                 _setFloatingPosition() {
                     const _middlewareArray = [];
                     if (this._floatingUIOptions.autoPlacement) {
-                        if (this._floatingUIOptions.autoPlacementOptions.alignment === '') {
+                        if (this._floatingUIOptions.autoPlacementOptions.alignment === OSFramework.OSUI.Constants.EmptyString) {
                             this._floatingUIOptions.autoPlacementOptions.alignment = null;
                         }
                         if (this._floatingUIOptions.autoPlacementOptions.allowedPlacements.length <= 0) {

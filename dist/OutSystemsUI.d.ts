@@ -2400,6 +2400,9 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu.Callbacks {
     };
 }
 declare namespace OSFramework.OSUI.Patterns.OverflowMenu.Enum {
+    enum AriaLabel {
+        Trigger = "Trigger the balloon"
+    }
     enum CssClass {
         Open = "osui-overflow-menu--is-open",
         Trigger = "osui-overflow-menu__trigger",
