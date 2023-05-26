@@ -166,7 +166,7 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 			// Check if any time has been selected, In case of Clear this will return empty string
 			if (selectedTime.length > 0) {
 				// Store the selected TimeValue as a DateTime
-				const _selectedTimeValue = selectedTime[0] as Date;
+				const _selectedTimeValue = selectedTime[0];
 
 				// The following approach is needed since we'll set the time input value to the 'hidden' input time, so time format is mandatory!
 				// Get the Hour at the selected DateTime
