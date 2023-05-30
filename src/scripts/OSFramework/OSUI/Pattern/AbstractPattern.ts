@@ -90,7 +90,7 @@ namespace OSFramework.OSUI.Patterns {
 		 * @memberof AbstractPattern
 		 */
 		protected triggerPlatformInitializedEventCallback() {
-			if (this._platformEventInitialized !== undefined) {
+			if (this._platformEventInitialized !== undefined && this._isBuilt === false) {
 				// Trigger platform's _platformEventInitialized handler.
 				this.triggerPlatformEventCallback(this._platformEventInitialized);
 			}
