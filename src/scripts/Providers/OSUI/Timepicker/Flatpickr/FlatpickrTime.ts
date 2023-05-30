@@ -135,6 +135,13 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 
 			this.setA11YProperties();
 
+			// Set provider Info to be used by setProviderConfigs API calls
+			this.updateProviderEvents({
+				name: SharedProviderResources.Flatpickr.Enum.ProviderInfo.Name,
+				version: SharedProviderResources.Flatpickr.Enum.ProviderInfo.Version,
+				events: this.provider.config,
+			});
+
 			/**
 			 * Trigger Innitialized Event.
 			 * - This is needed for the patterns based on a provider since at the Initialized Event at the

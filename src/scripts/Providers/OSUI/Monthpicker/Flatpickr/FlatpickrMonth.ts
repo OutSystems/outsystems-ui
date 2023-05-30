@@ -7,6 +7,8 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 	{
 		// Store container HTML element reference that contains an explanation about how to navigate through calendar with keyboard
 		private _a11yInfoContainerElem: HTMLElement;
+		// Store the instance of bodyOnClick global event
+		private _bodyOnClickGlobalEvent: OSFramework.OSUI.Event.DOMEvents.Listeners.IListener;
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
 		// Store the provider options
@@ -24,7 +26,22 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 			super(uniqueId, new FlatpickrMonthConfig(configs));
 
 			// Set the default library Event handler that will be used to set on the provider configs
-			this.configs.OnChange = this.onMonthSelectedEvent.bind(this);
+			this.configs.OnChangeEventCallback = this.onMonthSelectedEvent.bind(this);
+			this.configs.OnCloseEventCallback = this.onClose.bind(this);
+			this.configs.OnOpenEventCallback = this.onOpen.bind(this);
+		}
+
+		/**
+		 * Method that will get the instance of the Global onBodyClick event.
+		 *
+		 * @private
+		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
+		 */
+		private _getBodyOnClickGlobalEvent(): void {
+			this._bodyOnClickGlobalEvent =
+				OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(
+					OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick
+				);
 		}
 
 		// Method used to set the needed HTML attributes
@@ -116,34 +133,10 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 				this._zindexCommonBehavior = new SharedProviderResources.Flatpickr.UpdateZindex(this);
 			}
 
-			const _bodyEvent = OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(
-				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick
-			) as OSFramework.OSUI.Event.DOMEvents.Listeners.IListener;
-
-			if (_bodyEvent) {
-				// Add triggers to change the global event triggering of body click on Open / Close
-				this.provider.config.onOpen.push(function () {
-					_bodyEvent.disableBodyClickEvent();
-				});
-				this.provider.config.onClose.push(() => {
-					_bodyEvent.enableBodyClickEvent();
-				});
-			}
-
 			this.updatePlatformInputAttrs();
 
 			this.setA11YProperties();
 
-			this.createdInstance();
-		}
-
-		/**
-		 * Method that will be triggered at Flatpickr instance is ready
-		 *
-		 * @protected
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
-		 */
-		protected createdInstance(): void {
 			// Set provider Info to be used by setProviderConfigs API calls
 			this.updateProviderEvents({
 				name: SharedProviderResources.Flatpickr.Enum.ProviderInfo.Name,
@@ -161,11 +154,25 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		}
 
 		/**
+		 * Method that will be triggerd each time MonthPicker will be closed
+		 *
+		 * @protected
+		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
+		 */
+		protected onClose(): void {
+			// Check if bodyOnClickEvent exist
+			if (this._bodyOnClickGlobalEvent !== undefined) {
+				// Enabled it since MonthPicker has been closed
+				this._bodyOnClickGlobalEvent.enableBodyClickEvent();
+			}
+		}
+
+		/**
 		 * Method that will be triggered by library each month and year is selected
 		 *
 		 * @protected
 		 * @param {string[]} selectedMonthYear
-		 * @memberof OSUIFlatpickrMonth
+		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		protected onMonthSelectedEvent(selectedMonthYear: Array<Date>): void {
 			// Default values to null values, so that a null date comes from the picker, we pass it correctly as null to the platform
@@ -203,6 +210,20 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 				_selectedMonthYear.monthOrder,
 				_selectedMonthYear.year
 			);
+		}
+
+		/**
+		 * Method that will be triggerd each time MonthPicker will open
+		 *
+		 * @protected
+		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
+		 */
+		protected onOpen(): void {
+			// Check if bodyOnClickEvent exist
+			if (this._bodyOnClickGlobalEvent !== undefined) {
+				// Disabled it since MonthPicker will be open
+				this._bodyOnClickGlobalEvent.disableBodyClickEvent();
+			}
 		}
 
 		/**
@@ -322,7 +343,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		protected unsetCallbacks(): void {
-			this.configs.OnChange = undefined;
+			this.configs.OnChangeEventCallback = undefined;
 
 			this.onSelectedCallbackEvent = undefined;
 			super.unsetCallbacks();
@@ -361,10 +382,9 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 */
 		public build(): void {
 			super.build();
-
+			this._getBodyOnClickGlobalEvent();
 			this.setHtmlElements();
 			this.prepareConfigs();
-
 			this.finishBuild();
 		}
 
@@ -520,7 +540,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * Method used to update the InitialMonth config value
 		 *
 		 * @param {string} value The new InitialMonth value that will be set
-		 * @memberof OSUIFlatpickrMonth
+		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public updateInitialMonth(monthYear: MonthYear): void {
 			if (this.monthPickerPlatformInputElem.disabled === false) {
@@ -536,7 +556,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * Method used to update the prompt message
 		 *
 		 * @param promptMessage The new prompt message value
-		 * @memberof OSUIFlatpickrMonth
+		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public updatePrompt(promptMessage: string): void {
 			this.flatpickrInputElem.placeholder = promptMessage;
