@@ -103,7 +103,7 @@ stages:
                       ENVIRONMENT: dev
                       TAGS: not @skipLegacy and not @skipSafari and ($(tags))
                       LEGACY: True
-                      BRANCH: $(branch)
+                      MODULE: $(branch)
 
     - stage: safari_functional_tests
       variables:
@@ -128,7 +128,7 @@ stages:
                       ENVIRONMENT: dev
                       TAGS: not @legacy and not @skipSafari and ($(tags))
                       LEGACY: False
-                      BRANCH: $(branch)
+                      MODULE: $(branch)
 
     - stage: chrome_functional_tests_legacy
       variables:
@@ -151,7 +151,7 @@ stages:
                       ENVIRONMENT: dev
                       TAGS: not @skipLegacy and not @skipChrome and ($(tags))
                       LEGACY: True
-                      BRANCH: $(branch)
+                      MODULE: $(branch)
 
     - stage: chrome_functional_tests
       variables:
@@ -176,7 +176,7 @@ stages:
                       ENVIRONMENT: dev
                       TAGS: not @legacy and not @skipChrome and ($(tags))
                       LEGACY: False
-                      BRANCH: $(branch)
+                      MODULE: $(branch)
 
     - stage: publish_cucumber_results
       displayName: 'Publish cucumber results'
