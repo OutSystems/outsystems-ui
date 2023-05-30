@@ -5,6 +5,8 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		extends OSFramework.OSUI.Patterns.MonthPicker.AbstractMonthPicker<Flatpickr, FlatpickrMonthConfig>
 		implements IFlatpickrMonth
 	{
+		// Store container HTML element reference that contains an explanation about how to navigate through calendar with keyboard
+		private _a11yInfoContainerElem: HTMLElement;
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
 		// Store the provider options
@@ -230,6 +232,53 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 				OSFramework.OSUI.Constants.A11YAttributes.TabIndex,
 				OSFramework.OSUI.Constants.A11YAttributes.States.TabIndexHidden
 			);
+			// Ensure datePickerPlatformInputElem will also be hidden for ScreenReaders
+			OSFramework.OSUI.Helper.Dom.Attribute.Set(
+				this.monthPickerPlatformInputElem,
+				OSFramework.OSUI.Constants.A11YAttributes.Aria.Hidden,
+				OSFramework.OSUI.Constants.A11YAttributes.States.True
+			);
+			// Ensure A11yContainer will not be direclty visible
+			OSFramework.OSUI.Helper.Dom.Attribute.Set(
+				this._a11yInfoContainerElem,
+				OSFramework.OSUI.Constants.A11YAttributes.Aria.Hidden,
+				OSFramework.OSUI.Constants.A11YAttributes.States.True
+			);
+			// Ensure flatpickrInputElem has active tabindex
+			OSFramework.OSUI.Helper.Dom.Attribute.Set(
+				this.flatpickrInputElem,
+				OSFramework.OSUI.Constants.A11YAttributes.TabIndex,
+				OSFramework.OSUI.Constants.A11YAttributes.States.TabIndexShow
+			);
+
+			// Since native behaviour could be enabled, check if the calendar container exist!
+			if (this.provider.calendarContainer !== undefined && this.flatpickrInputElem !== undefined) {
+				// Set the default aria-label value attribute in case user didn't set it!
+				let ariaLabelValue = Enum.Attribute.DefaultAriaLabel as string;
+
+				// Check if aria-label attribute has been added to the default input
+				if (
+					this.monthPickerPlatformInputElem.hasAttribute(OSFramework.OSUI.Constants.A11YAttributes.Aria.Label)
+				) {
+					ariaLabelValue = this.monthPickerPlatformInputElem.getAttribute(
+						OSFramework.OSUI.Constants.A11YAttributes.Aria.Label
+					);
+				}
+
+				// Set the aria-label attribute value
+				OSFramework.OSUI.Helper.A11Y.AriaLabel(this.flatpickrInputElem, ariaLabelValue);
+				// Set the aria-describedby attribute in order to give more context about how to navigate into calendar using keyboard
+				OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(this.flatpickrInputElem, this._a11yInfoContainerElem.id);
+
+				// Check if lang is not EN (default one)
+				if (this.configs.Lang !== OSFramework.OSUI.Constants.Language.short) {
+					// Update A11yContainer info based on the given language
+					this._a11yInfoContainerElem.innerHTML =
+						MonthPicker.Flatpickr.l10ns.A11yContainerInfo[this.configs.Lang] !== undefined
+							? MonthPicker.Flatpickr.l10ns.A11yContainerInfo[this.configs.Lang].htmlTex
+							: MonthPicker.Flatpickr.l10ns.A11yContainerInfo.en.htmlTex;
+				}
+			}
 		}
 
 		/**
@@ -252,6 +301,12 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 			// Set the inputHTML element
 			this.monthPickerPlatformInputElem = this.selfElement.querySelector(
 				OSFramework.OSUI.GlobalEnum.CSSSelectors.InputFormControl
+			);
+
+			// Store the reference to the info container about how to use keyboard to navigate through calendar
+			this._a11yInfoContainerElem = OSFramework.OSUI.Helper.Dom.TagSelector(
+				this.selfElement.parentElement,
+				OSFramework.OSUI.Constants.Dot + Enum.CssClasses.AccessibilityContainerInfo
 			);
 
 			// If the input hasn't be added
