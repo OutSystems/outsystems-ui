@@ -129,6 +129,15 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 
 				// set the zindex update position behaviour!
 				this._zindexCommonBehavior = new SharedProviderResources.Flatpickr.UpdateZindex(this);
+
+				// Check if an InitialTime has been set in order to ensure hidden input will have the expected value
+				if (this.configs.InitialTime !== undefined) {
+					// Trigger the platform update attribute value change!
+					OSFramework.OSUI.Helper.Dom.SetInputValue(
+						this.timePickerPlatformInputElem,
+						this.configs.InitialTime
+					);
+				}
 			}
 
 			this.updatePlatformInputAttrs();
@@ -182,33 +191,8 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		// Method that will be triggered by library each time any time is selected
 		protected onTimeSelectedEvent(selectedTime: Array<Date>): void {
 			/* NOTE: timeStr param is not in use since the library has an issue arround it */
-			let _selectedTime = '';
-
-			// Check if any time has been selected, In case of Clear this will return empty string
-			if (selectedTime.length > 0) {
-				// Store the selected TimeValue as a DateTime
-				const _selectedTimeValue = selectedTime[0];
-
-				// The following approach is needed since we'll set the time input value to the 'hidden' input time, so time format is mandatory!
-				// Get the Hour at the selected DateTime
-				const _selectedHour =
-					_selectedTimeValue.getHours() < 10
-						? '0' + _selectedTimeValue.getHours()
-						: _selectedTimeValue.getHours();
-				// Get the Minutes at the selected DateTime
-				const _selectedMin =
-					_selectedTimeValue.getMinutes() < 10
-						? '0' + _selectedTimeValue.getMinutes()
-						: _selectedTimeValue.getMinutes();
-				// Get the Secounds at the selected DateTime
-				const _selectedSec =
-					_selectedTimeValue.getSeconds() < 10
-						? '0' + _selectedTimeValue.getSeconds()
-						: _selectedTimeValue.getSeconds();
-
-				// Set the string with a default time format
-				_selectedTime = _selectedHour + ':' + _selectedMin + ':' + _selectedSec;
-			}
+			const _selectedTime =
+				selectedTime.length > 0 ? OSFramework.OSUI.Helper.Dates.GetTimeFromDate(selectedTime[0]) : '';
 
 			// Trigger the platform update attribute value change!
 			OSFramework.OSUI.Helper.Dom.SetInputValue(this.timePickerPlatformInputElem, _selectedTime);

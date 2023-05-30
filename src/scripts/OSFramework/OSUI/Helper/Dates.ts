@@ -7,6 +7,26 @@ namespace OSFramework.OSUI.Helper {
 		private static _serverFormat = '';
 
 		/**
+		 * Function to be used in order to get the Time from a given Date
+		 *
+		 * @static
+		 * @param {Date} _date
+		 * @return {*}  {string}
+		 * @memberof OSFramework.Helper.Dates
+		 */
+		public static GetTimeFromDate(_date: Date): string {
+			// Get the Hour at the selected DateTime
+			const _selectedHour = _date.getHours() < 10 ? '0' + _date.getHours() : _date.getHours();
+			// Get the Minutes at the selected DateTime
+			const _selectedMin = _date.getMinutes() < 10 ? '0' + _date.getMinutes() : _date.getMinutes();
+			// Get the Secounds at the selected DateTime
+			const _selectedSec = _date.getSeconds() < 10 ? '0' + _date.getSeconds() : _date.getSeconds();
+
+			// return the string with a default time format
+			return _selectedHour + ':' + _selectedMin + ':' + _selectedSec;
+		}
+
+		/**
 		 * Function used to check if the given date1 is minor than given date2
 		 *
 		 * @static

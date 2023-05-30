@@ -131,6 +131,12 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 
 				// set the zindex update position behaviour!
 				this._zindexCommonBehavior = new SharedProviderResources.Flatpickr.UpdateZindex(this);
+
+				// Trigger the platform update attribute value change!
+				OSFramework.OSUI.Helper.Dom.SetInputValue(
+					this.monthPickerPlatformInputElem,
+					(this.monthPickerPlatformInputElem.nextSibling as HTMLInputElement).value
+				);
 			}
 
 			this.updatePlatformInputAttrs();
