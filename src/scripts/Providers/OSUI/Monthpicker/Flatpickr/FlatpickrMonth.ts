@@ -350,6 +350,8 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 */
 		protected unsetCallbacks(): void {
 			this.configs.OnChangeEventCallback = undefined;
+			this.configs.OnCloseEventCallback = undefined;
+			this.configs.OnOpenEventCallback = undefined;
 
 			this.onSelectedCallbackEvent = undefined;
 			super.unsetCallbacks();

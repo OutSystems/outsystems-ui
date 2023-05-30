@@ -278,6 +278,8 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 */
 		protected unsetCallbacks(): void {
 			this.configs.OnChangeEventCallback = undefined;
+			this.configs.OnCloseEventCallback = undefined;
+			this.configs.OnOpenEventCallback = undefined;
 
 			this.onChangeCallbackEvent = undefined;
 			super.unsetCallbacks();
