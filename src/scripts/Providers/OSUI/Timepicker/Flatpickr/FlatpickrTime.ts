@@ -221,25 +221,28 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		protected setA11YProperties(): void {
-			// This is needed once library set it as an hidden by default which can not be since otherwise the updating it's value will not be triggered the local variable update.
-			// Since this will be hidden through css, in terms of accessibility it should not be "visible"!
-			OSFramework.OSUI.Helper.Dom.Attribute.Set(
-				this.timePickerPlatformInputElem,
-				OSFramework.OSUI.Constants.A11YAttributes.TabIndex,
-				OSFramework.OSUI.Constants.A11YAttributes.States.TabIndexHidden
-			);
-			// Ensure timePickerPlatformInputElem will also be hidden for ScreenReaders
-			OSFramework.OSUI.Helper.Dom.Attribute.Set(
-				this.timePickerPlatformInputElem,
-				OSFramework.OSUI.Constants.A11YAttributes.Aria.Hidden,
-				OSFramework.OSUI.Constants.A11YAttributes.States.True
-			);
-			// Ensure flatpickrInputElem has active tabindex
-			OSFramework.OSUI.Helper.Dom.Attribute.Set(
-				this.flatpickrInputElem,
-				OSFramework.OSUI.Constants.A11YAttributes.TabIndex,
-				OSFramework.OSUI.Constants.A11YAttributes.States.TabIndexShow
-			);
+			// Since native behaviour could be enabled, check if the calendar container exist!
+			if (this.provider.calendarContainer !== undefined) {
+				// This is needed once library set it as an hidden by default which can not be since otherwise the updating it's value will not be triggered the local variable update.
+				// Since this will be hidden through css, in terms of accessibility it should not be "visible"!
+				OSFramework.OSUI.Helper.Dom.Attribute.Set(
+					this.timePickerPlatformInputElem,
+					OSFramework.OSUI.Constants.A11YAttributes.TabIndex,
+					OSFramework.OSUI.Constants.A11YAttributes.States.TabIndexHidden
+				);
+				// Ensure timePickerPlatformInputElem will also be hidden for ScreenReaders
+				OSFramework.OSUI.Helper.Dom.Attribute.Set(
+					this.timePickerPlatformInputElem,
+					OSFramework.OSUI.Constants.A11YAttributes.Aria.Hidden,
+					OSFramework.OSUI.Constants.A11YAttributes.States.True
+				);
+				// Ensure flatpickrInputElem has active tabindex
+				OSFramework.OSUI.Helper.Dom.Attribute.Set(
+					this.flatpickrInputElem,
+					OSFramework.OSUI.Constants.A11YAttributes.TabIndex,
+					OSFramework.OSUI.Constants.A11YAttributes.States.TabIndexShow
+				);
+			}
 		}
 
 		/**

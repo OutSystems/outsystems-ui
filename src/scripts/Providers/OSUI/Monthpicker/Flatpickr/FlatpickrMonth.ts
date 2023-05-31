@@ -278,33 +278,28 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 				OSFramework.OSUI.Constants.A11YAttributes.States.TabIndexShow
 			);
 
-			// Since native behaviour could be enabled, check if the calendar container exist!
-			if (this.provider.calendarContainer !== undefined && this.flatpickrInputElem !== undefined) {
-				// Set the default aria-label value attribute in case user didn't set it!
-				let ariaLabelValue = Enum.Attribute.DefaultAriaLabel as string;
+			// Set the default aria-label value attribute in case user didn't set it!
+			let ariaLabelValue = Enum.Attribute.DefaultAriaLabel as string;
 
-				// Check if aria-label attribute has been added to the default input
-				if (
-					this.monthPickerPlatformInputElem.hasAttribute(OSFramework.OSUI.Constants.A11YAttributes.Aria.Label)
-				) {
-					ariaLabelValue = this.monthPickerPlatformInputElem.getAttribute(
-						OSFramework.OSUI.Constants.A11YAttributes.Aria.Label
-					);
-				}
+			// Check if aria-label attribute has been added to the default input
+			if (this.monthPickerPlatformInputElem.hasAttribute(OSFramework.OSUI.Constants.A11YAttributes.Aria.Label)) {
+				ariaLabelValue = this.monthPickerPlatformInputElem.getAttribute(
+					OSFramework.OSUI.Constants.A11YAttributes.Aria.Label
+				);
+			}
 
-				// Set the aria-label attribute value
-				OSFramework.OSUI.Helper.A11Y.AriaLabel(this.flatpickrInputElem, ariaLabelValue);
-				// Set the aria-describedby attribute in order to give more context about how to navigate into calendar using keyboard
-				OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(this.flatpickrInputElem, this._a11yInfoContainerElem.id);
+			// Set the aria-label attribute value
+			OSFramework.OSUI.Helper.A11Y.AriaLabel(this.flatpickrInputElem, ariaLabelValue);
+			// Set the aria-describedby attribute in order to give more context about how to navigate into calendar using keyboard
+			OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(this.flatpickrInputElem, this._a11yInfoContainerElem.id);
 
-				// Check if lang is not EN (default one)
-				if (this.configs.Lang !== OSFramework.OSUI.Constants.Language.short) {
-					// Update A11yContainer info based on the given language
-					this._a11yInfoContainerElem.innerHTML =
-						MonthPicker.Flatpickr.l10ns.A11yContainerInfo[this.configs.Lang] !== undefined
-							? MonthPicker.Flatpickr.l10ns.A11yContainerInfo[this.configs.Lang].htmlTex
-							: MonthPicker.Flatpickr.l10ns.A11yContainerInfo.en.htmlTex;
-				}
+			// Check if lang is not EN (default one)
+			if (this.configs.Lang !== OSFramework.OSUI.Constants.Language.short) {
+				// Update A11yContainer info based on the given language
+				this._a11yInfoContainerElem.innerHTML =
+					MonthPicker.Flatpickr.l10ns.A11yContainerInfo[this.configs.Lang] !== undefined
+						? MonthPicker.Flatpickr.l10ns.A11yContainerInfo[this.configs.Lang].htmlTex
+						: MonthPicker.Flatpickr.l10ns.A11yContainerInfo.en.htmlTex;
 			}
 		}
 
