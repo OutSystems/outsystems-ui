@@ -161,7 +161,7 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		}
 
 		/**
-		 * Method that will be triggerd each time TimePicker will be closed
+		 * Method that will be triggered each time TimePicker will be closed
 		 *
 		 * @protected
 		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
@@ -175,7 +175,7 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		}
 
 		/**
-		 * Method that will be triggerd each time TimePicker will open
+		 * Method that will be triggered each time TimePicker will open
 		 *
 		 * @protected
 		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime

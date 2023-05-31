@@ -160,7 +160,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		}
 
 		/**
-		 * Method that will be triggerd each time MonthPicker will be closed
+		 * Method that will be triggered each time MonthPicker will be closed
 		 *
 		 * @protected
 		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
@@ -219,7 +219,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		}
 
 		/**
-		 * Method that will be triggerd each time MonthPicker will open
+		 * Method that will be triggered each time MonthPicker will open
 		 *
 		 * @protected
 		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
