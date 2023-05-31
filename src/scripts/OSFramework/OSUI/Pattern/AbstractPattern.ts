@@ -59,14 +59,15 @@ namespace OSFramework.OSUI.Patterns {
 		 * @memberof OSFramework.Patterns.AbstractPattern
 		 */
 		protected finishBuild(): void {
-			this._isBuilt = true;
-
 			// Check if this is a provider based pattern, If true Initialization cb Event will be triggered at the new provider instance creation.
 			// For non provider based patterns this should be triggered here.
 			if (this.isProviderBased === false) {
 				// Trigger the Initialized Callback Event
 				this.triggerPlatformInitializedEventCallback();
 			}
+
+			// Set pattern has been build
+			this._isBuilt = true;
 		}
 
 		/**
@@ -90,7 +91,7 @@ namespace OSFramework.OSUI.Patterns {
 		 * @memberof AbstractPattern
 		 */
 		protected triggerPlatformInitializedEventCallback() {
-			if (this._platformEventInitialized !== undefined) {
+			if (this._platformEventInitialized !== undefined && this._isBuilt === false) {
 				// Trigger platform's _platformEventInitialized handler.
 				this.triggerPlatformEventCallback(this._platformEventInitialized);
 			}

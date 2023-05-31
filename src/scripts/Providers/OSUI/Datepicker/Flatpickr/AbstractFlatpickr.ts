@@ -221,16 +221,34 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		protected setA11YProperties(): void {
-			// This is needed once library set it as an hidden by default which can not be since otherwise the updating it's value will not be triggered the local variable update.
-			// Since this will be hidden through css, in terms of accessibility it should not be "visible"!
-			OSFramework.OSUI.Helper.Dom.Attribute.Set(
-				this.datePickerPlatformInputElem,
-				OSFramework.OSUI.Constants.A11YAttributes.TabIndex,
-				OSFramework.OSUI.Constants.A11YAttributes.States.TabIndexHidden
-			);
-
 			// Since native behaviour could be enabled, check if the calendar container exist!
 			if (this.provider.calendarContainer !== undefined && this.flatpickrInputElem !== undefined) {
+				// This is needed once library set it as an hidden by default which can not be since otherwise the updating it's value will not be triggered the local variable update.
+				// Since this will be hidden through css, in terms of accessibility it should not be "visible"!
+				OSFramework.OSUI.Helper.Dom.Attribute.Set(
+					this.datePickerPlatformInputElem,
+					OSFramework.OSUI.Constants.A11YAttributes.TabIndex,
+					OSFramework.OSUI.Constants.A11YAttributes.States.TabIndexHidden
+				);
+				// Ensure datePickerPlatformInputElem will also be hidden for ScreenReaders
+				OSFramework.OSUI.Helper.Dom.Attribute.Set(
+					this.datePickerPlatformInputElem,
+					OSFramework.OSUI.Constants.A11YAttributes.Aria.Hidden,
+					OSFramework.OSUI.Constants.A11YAttributes.States.True
+				);
+				// Ensure A11yContainer will not be direclty visible
+				OSFramework.OSUI.Helper.Dom.Attribute.Set(
+					this._a11yInfoContainerElem,
+					OSFramework.OSUI.Constants.A11YAttributes.Aria.Hidden,
+					OSFramework.OSUI.Constants.A11YAttributes.States.True
+				);
+				// Ensure flatpickrInputElem has active tabindex
+				OSFramework.OSUI.Helper.Dom.Attribute.Set(
+					this.flatpickrInputElem,
+					OSFramework.OSUI.Constants.A11YAttributes.TabIndex,
+					OSFramework.OSUI.Constants.A11YAttributes.States.TabIndexShow
+				);
+
 				// Set the default aria-label value attribute in case user didn't set it!
 				let ariaLabelValue = Enum.Attribute.DefaultAriaLabel as string;
 
@@ -247,6 +265,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				OSFramework.OSUI.Helper.A11Y.AriaLabel(this.flatpickrInputElem, ariaLabelValue);
 				// Set the aria-describedby attribute in order to give more context about how to navigate into calendar using keyboard
 				OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(this.flatpickrInputElem, this._a11yInfoContainerElem.id);
+
 				// Check if lang is not EN (default one)
 				if (this.configs.Lang !== OSFramework.OSUI.Constants.Language.short) {
 					// Update A11yContainer info based on the given language

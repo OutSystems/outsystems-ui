@@ -10,21 +10,20 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 	export class FlatpickrMonthConfig extends OSFramework.OSUI.Patterns.MonthPicker.AbstractMonthPickerConfig {
 		// Store the language that will be assigned as a locale to the MonthPicker
 		private _lang: string;
-
 		// Store the Provider Options
 		private _providerOptions: FlatpickrOptions;
-
 		// Store configs set using extensibility
 		protected providerExtendedOptions: FlatpickrOptions;
-
 		// Stores the ability to allow inputs to be editable or not
 		public AllowInput = false;
-
 		// Stores the ability to disable the mobile flatpickr behavior. False is the default provider option
 		public DisableMobile = true;
-
 		// Set the OnChange Event that will be defined in the specific context for each Flatpickr mode
-		public OnChange: OSFramework.OSUI.GlobalCallbacks.Generic;
+		public OnChangeEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
+		// Store the OnClose callback to be defined to the Flatpicker config instance
+		public OnCloseEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
+		// Store the OnOpen callback to be defined to the Flatpicker config instance
+		public OnOpenEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
 
 		// Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr
 		public ServerDateFormat: string;
@@ -137,7 +136,9 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 				disableMobile: this.DisableMobile,
 				maxDate: this._getDateFromMonthYear(this.MaxMonth),
 				minDate: this._getDateFromMonthYear(this.MinMonth),
-				onChange: this.OnChange,
+				onChange: this.OnChangeEventCallback,
+				onClose: this.OnCloseEventCallback,
+				onOpen: this.OnOpenEventCallback,
 				plugins: [
 					// Provider doesn't has the expected type difined
 					// eslint-disable-next-line @typescript-eslint/ban-ts-comment

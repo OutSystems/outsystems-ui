@@ -19,12 +19,14 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 
 		// Stores the ability to allow inputs to be editable or not
 		public AllowInput = false;
-
 		// Stores the ability to disable the mobile flatpickr behavior. False is the default provider option
 		public DisableMobile = false;
-
-		// Set the OnChange Event that will be defined in the specific context for each Flatpickr mode
-		public OnChange: OSFramework.OSUI.GlobalCallbacks.Generic;
+		// Store the OnChange Event callback to be defined in the specific context for each Flatpickr mode
+		public OnChangeEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
+		// Store the OnClose callback to be defined to the Flatpicker config instance
+		public OnCloseEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
+		// Store the OnOpen callback to be defined to the Flatpicker config instance
+		public OnOpenEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
 
 		// Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr
 		public ServerDateFormat: string;
@@ -88,8 +90,10 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 				maxTime: OSFramework.OSUI.Helper.Times.IsNull(this.MaxTime) ? undefined : this.MaxTime,
 				minTime: OSFramework.OSUI.Helper.Times.IsNull(this.MinTime) ? undefined : this.MinTime,
 				dateFormat: Enum.InputFormats.Format24h,
+				onChange: this.OnChangeEventCallback,
+				onClose: this.OnCloseEventCallback,
+				onOpen: this.OnOpenEventCallback,
 				time_24hr: this.Is24Hours,
-				onChange: this.OnChange,
 			} as FlatpickrOptions;
 
 			// Make sure locale is not undefined, as when definig the providerOptions defaults in the costructor, the window.locale is no yet available
