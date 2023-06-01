@@ -13,7 +13,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		// Store the listener name, to check later if event is supported on the window
 		private _eventName: string;
 		// Store the listener target
-		private _eventTarget: HTMLElement;
+		private _eventTarget: HTMLElement | Window;
 		// Store the listener type
 		private _eventType: GlobalEnum.HTMLEvent;
 
@@ -37,13 +37,13 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		/**
 		 * Creates an instance of AbstractListener.
 		 *
-		 * @param {unknown} eventTarget, window can be in use, so, HTMLElement can't be the type of the input by default
+		 * @param {(HTMLElement | Window)} eventTarget
 		 * @param {GlobalEnum.HTMLEvent} eventType
 		 * @memberof AbstractListener
 		 */
-		constructor(eventTarget: unknown, eventType: GlobalEnum.HTMLEvent) {
+		constructor(eventTarget: HTMLElement | Window, eventType: GlobalEnum.HTMLEvent) {
 			super();
-			this._eventTarget = eventTarget as HTMLElement;
+			this._eventTarget = eventTarget;
 			this._eventType = eventType;
 			this._eventName = GlobalEnum.HTMLEvent.Prefix + this._eventType;
 
