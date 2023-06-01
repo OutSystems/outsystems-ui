@@ -16,12 +16,34 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		private _eventTarget: HTMLElement;
 		// Store the listener type
 		private _eventType: GlobalEnum.HTMLEvent;
-		// Store the listener callback
+
+		/**
+		 * Store the listener callback
+		 *
+		 * @protected
+		 * @type {EventListenerObject}
+		 * @memberof AbstractListener
+		 */
 		protected eventCallback: EventListenerObject;
 
-		constructor(eventTarget, eventType) {
+		/**
+		 * Flag to indicate if event will be dispatched to the registered listener before being dispatched to any EventTarget beneath it in the DOM tree.
+		 *
+		 * @protected
+		 * @memberof AbstractListener
+		 */
+		protected useCapture = false;
+
+		/**
+		 * Creates an instance of AbstractListener.
+		 *
+		 * @param {unknown} eventTarget, window can be in use, so, HTMLElement can't be the type of the input by default
+		 * @param {GlobalEnum.HTMLEvent} eventType
+		 * @memberof AbstractListener
+		 */
+		constructor(eventTarget: unknown, eventType: GlobalEnum.HTMLEvent) {
 			super();
-			this._eventTarget = eventTarget;
+			this._eventTarget = eventTarget as HTMLElement;
 			this._eventType = eventType;
 			this._eventName = GlobalEnum.HTMLEvent.Prefix + this._eventType;
 
@@ -37,7 +59,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		public addEvent(): void {
 			// Check if event exist in the window
 			if (this._eventName in window) {
-				this._eventTarget.addEventListener(this._eventType, this.eventCallback);
+				this._eventTarget.addEventListener(this._eventType, this.eventCallback, this.useCapture);
 			}
 		}
 

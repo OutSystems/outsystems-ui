@@ -10,6 +10,9 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	export class BodyOnScroll extends AbstractListener<string> {
 		constructor() {
 			super(document.body, GlobalEnum.HTMLEvent.Scroll);
+			// Ensure capture is being set in order Event can be "listened" to the element where it has been set.
+			this.useCapture = true;
+			// super(document.querySelector('.active-screen'), GlobalEnum.HTMLEvent.Scroll);
 			this.eventCallback = this._bodyTrigger.bind(this);
 		}
 
