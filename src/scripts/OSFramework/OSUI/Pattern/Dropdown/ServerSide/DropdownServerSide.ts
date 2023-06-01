@@ -57,6 +57,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		private _eventOnkeyboardPress: GlobalCallbacks.Generic;
 		// Store the instance of the Object responsible to Add Custom HTML elements to the DropdownBallon that will help on deal with keyboard navigation (Accessibility)
 		private _focusTrapInstance: Behaviors.FocusTrap;
+		// Flag that will be used to check if DropdownBalloon should be also set with a11y selector.
+		private _hasA11yEnabled = false;
 		// Set the observer that will check if the balloon is inside screen boundaries!
 		private _intersectionObserver: IntersectionObserver;
 		// Store a Flag property that will control if the dropdown is blocked (like it's under closing animation)
@@ -754,6 +756,19 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				? Constants.A11YAttributes.States.TabIndexShow
 				: Constants.A11YAttributes.States.TabIndexHidden;
 
+			// Get the layout container
+			const layoutElemContainer = OSFramework.OSUI.Helper.Dom.ClassSelector(
+				document,
+				OSFramework.OSUI.GlobalEnum.CssClassElements.Layout
+			);
+			// If it exist and contains a11y class, we must enable it to the Balloon as well since it will be placed outside layout container.
+			this._hasA11yEnabled =
+				layoutElemContainer !== undefined &&
+				OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(
+					layoutElemContainer,
+					OSFramework.OSUI.Constants.HasAccessibilityClass
+				);
+
 			// If there is the Search input
 			if (this._balloonSearchInputElement !== undefined) {
 				Helper.A11Y.TabIndex(this._balloonSearchInputElement, tabIndexValue);
@@ -771,10 +786,16 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			// Update FocusHTML elements attributes
 			if (this._isOpen) {
 				this._focusTrapInstance.enableForA11y();
+				// If a11y is enabled at the layout, set it to the ballon as well since if it't outside of layout context
+				if (this._hasA11yEnabled) {
+					Helper.Dom.Styles.AddClass(this._balloonWrapperElement, Constants.HasAccessibilityClass);
+				}
 				// Ballon Options Wrapper
 				Helper.A11Y.AriaHiddenFalse(this._balloonOptionsWrapperElement);
 			} else {
 				this._focusTrapInstance.disableForA11y();
+				// Remove a11y selector in order to grant it will be updated each time Balloon gets open
+				Helper.Dom.Styles.RemoveClass(this._balloonWrapperElement, Constants.HasAccessibilityClass);
 				// Ballon Options Wrapper
 				Helper.A11Y.AriaHiddenTrue(this._balloonOptionsWrapperElement);
 			}
@@ -844,6 +865,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		protected setA11YProperties(): void {
 			// Update Tabindex Ballon elements
 			this._updateBalloonAccessibilityElements();
+
 			// Enabled TabIndex to the SelectValuesWrapper
 			Helper.A11Y.TabIndexTrue(this._selectValuesWrapper);
 			// Set SelectValuesWrapper with button as a role
