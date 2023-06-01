@@ -56,7 +56,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		// Keyboard Key Press Event
 		private _eventOnkeyboardPress: GlobalCallbacks.Generic;
 		// Store the instance of the Object responsible to Add Custom HTML elements to the DropdownBallon that will help on deal with keyboard navigation (Accessibility)
-		private _focusTrapObject: Behaviors.FocusTrap;
+		private _focusTrapInstance: Behaviors.FocusTrap;
 		// Set the observer that will check if the balloon is inside screen boundaries!
 		private _intersectionObserver: IntersectionObserver;
 		// Store a Flag property that will control if the dropdown is blocked (like it's under closing animation)
@@ -179,6 +179,17 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			}
 		}
 
+		// Method to set the FocusTrap at DropdownBallon in order to help on deal with keyboard navigation (Accessibility)
+		private _handleFocusTrap(): void {
+			const opts = {
+				focusBottomCallback: this._eventOnSpanFocus.bind(this),
+				focusTargetElement: this._balloonWrapperElement,
+				focusTopCallback: this._eventOnSpanFocus.bind(this),
+			} as Behaviors.FocusTrapParams;
+
+			this._focusTrapInstance = new Behaviors.FocusTrap(opts);
+		}
+
 		// Method that will return HasNoImplementation Error Info
 		private _hasNoImplementation(): string {
 			throw new Error(
@@ -273,7 +284,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 						if (this._balloonSearchInputElement) {
 							this._balloonSearchInputElement.focus();
 						} else {
-							this._focusTrapObject.topElement.focus();
+							this._focusTrapInstance.topElement.focus();
 						}
 					} else if (event.key === GlobalEnum.Keycodes.ArrowDown) {
 						// If ArrowDown Key
@@ -446,7 +457,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 						if (this._balloonSearchInputElement) {
 							this._balloonSearchInputElement.focus();
 						} else {
-							this._focusTrapObject.topElement.focus();
+							this._focusTrapInstance.topElement.focus();
 						}
 						break;
 
@@ -457,7 +468,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 							// Set focus the the first one
 							this._balloonFocusableElemsInFooter[0].focus();
 						} else {
-							this._focusTrapObject.bottomElement.focus();
+							this._focusTrapInstance.bottomElement.focus();
 						}
 						break;
 
@@ -548,16 +559,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				this._setBalloonWrapperExtendedClass(this.configs.ExtendedClass);
 			}
 		}
-		// Add Custom HTML elements to the DropdownBallon in order to help on deal with keyboard navigation (Accessibility)
-		private _setFocusSpanElements(): void {
-			const opts = {
-				focusBottomCallback: this._eventOnSpanFocus.bind(this),
-				focusTargetElement: this._balloonWrapperElement,
-				focusTopCallback: this._eventOnSpanFocus.bind(this),
-			} as Behaviors.FocusTrapParams;
-
-			this._focusTrapObject = new Behaviors.FocusTrap(opts);
-		}
 
 		// Method to set the initial options on screen load
 		private _setInitialOptions(): void {
@@ -565,6 +566,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				this.disable();
 			}
 		}
+
 		// Method used to store a given DropdownOption into optionItems list, it's triggered by DropdownServerSideItem
 		private _setNewOptionItem(optionItem: Patterns.DropdownServerSideItem.DropdownServerSideItem): void {
 			// Check if the given OptionId has been already added
@@ -768,11 +770,11 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 			// Update FocusHTML elements attributes
 			if (this._isOpen) {
-				this._focusTrapObject.enableForA11y();
+				this._focusTrapInstance.enableForA11y();
 				// Ballon Options Wrapper
 				Helper.A11Y.AriaHiddenFalse(this._balloonOptionsWrapperElement);
 			} else {
-				this._focusTrapObject.disableForA11y();
+				this._focusTrapInstance.disableForA11y();
 				// Ballon Options Wrapper
 				Helper.A11Y.AriaHiddenTrue(this._balloonOptionsWrapperElement);
 			}
@@ -917,8 +919,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			);
 			this._selectValuesWrapper = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.SelectValuesWrapper);
 
-			// Add custom SPAN HTML Elements that will help on Accessibility keyboard navigation
-			this._setFocusSpanElements();
+			// Set focusTrap in order to help with A11y
+			this._handleFocusTrap();
 			// Add Accessibility properties
 			this.setA11YProperties();
 			// Add the pattern Events
@@ -1085,7 +1087,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 */
 		public dispose(): void {
 			this._unsetObserver();
-			this._focusTrapObject.dispose();
+			this._focusTrapInstance.dispose();
 			this._unsetEvents();
 			this.unsetCallbacks();
 			this.unsetHtmlElements();
