@@ -80,6 +80,12 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			} as Behaviors.FocusTrapParams;
 
 			this._focusTrapInstance = new Behaviors.FocusTrap(opts);
+
+			// Disable tabIndex to the inner focusable elements if its start closed!
+			if (this._isOpen === false) {
+				// Will handle the tabindex value of the elements inside pattern
+				Helper.A11Y.SetElementsTabIndex(false, this._focusTrapInstance.focusableElements);
+			}
 		}
 
 		// Method to handle the creation of the GestureEvents
