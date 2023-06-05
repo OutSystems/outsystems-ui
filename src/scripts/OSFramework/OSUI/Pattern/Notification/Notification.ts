@@ -57,7 +57,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		// Add Focus Trap to Pattern
 		private _handleFocusTrap(): void {
 			const opts = {
-				focusTargetElement: this.selfElement,
+				focusTargetElement: this._parentSelf,
 			} as Behaviors.FocusTrapParams;
 
 			this._focusTrapInstance = new Behaviors.FocusTrap(opts);
