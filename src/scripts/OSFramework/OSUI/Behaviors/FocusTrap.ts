@@ -5,7 +5,6 @@ namespace OSFramework.OSUI.Behaviors {
 		focusBottomCallback: GlobalCallbacks.Generic;
 		focusTargetElement: HTMLElement;
 		focusTopCallback: GlobalCallbacks.Generic;
-		focusTrapEnabled: boolean;
 	};
 
 	/**
@@ -19,18 +18,21 @@ namespace OSFramework.OSUI.Behaviors {
 		private _focusBottomCallback: GlobalCallbacks.Generic;
 		private _focusTopCallback: GlobalCallbacks.Generic;
 		private _focusableElements: HTMLElement[];
-		private _isFocusTrap: boolean;
+		private _hasBeenPassThoughFirstOne = false;
 		private _lastFocusableElement: HTMLElement;
 		private _predictableBottomElement: HTMLElement;
 		private _predictableTopElement: HTMLElement;
 		private _targetElement: HTMLElement;
 
+		/**
+		 * Creates an instance of FocusTrap.
+		 *
+		 * @param {FocusTrapParams} opts
+		 * @memberof FocusTrap
+		 */
 		constructor(opts: FocusTrapParams) {
 			// Store the focus target element
 			this._targetElement = opts.focusTargetElement;
-
-			// Toggle the focus trap behavior
-			this._isFocusTrap = opts.focusTrapEnabled || true;
 
 			// Set the callbacks to focusable elements
 			this._focusBottomCallback = opts.focusBottomCallback;
@@ -38,9 +40,6 @@ namespace OSFramework.OSUI.Behaviors {
 
 			// Create the elements needed!
 			this._buildPredictableElements();
-
-			// Set focusable elements
-			this._setFocusableElements();
 		}
 
 		// Method to create elements
@@ -55,31 +54,43 @@ namespace OSFramework.OSUI.Behaviors {
 
 			// Set the default properties of focusable elements
 			this._setFocusableProperties();
+
+			// Set focusable elements
+			this._setFocusableElements();
 		}
 
 		// Handler for bottom on top element
 		private _focusBottomHandler(): void {
-			this._focusHandler(this._firstFocusableElement, this._focusBottomCallback);
+			this._focusHandler(this._predictableBottomElement, this._focusBottomCallback);
 		}
 
+		// Method that will handle the focus behaviour
 		private _focusHandler(focusableElement: HTMLElement, callback: GlobalCallbacks.Generic): void {
-			if (this._isFocusTrap) {
-				// Update focusable elements
-				this._setFocusableElements();
+			// Ensure the list of focusable elements is updated!
+			this._setFocusableElements();
 
-				// Focus on element
-				this._setFocusOnElement(focusableElement, this._targetElement);
-			}
+			// Ensure callback has been not defined in order to manage the focus trap.
+			if (callback === undefined) {
+				if (focusableElement === this._predictableTopElement && this._hasBeenPassThoughFirstOne === false) {
+					this._firstFocusableElement.focus();
+					this._hasBeenPassThoughFirstOne = true;
+				} else {
+					this._lastFocusableElement.focus();
+				}
 
-			// Trigger the methods on pattern
-			if (callback !== undefined) {
+				if (focusableElement === this._predictableBottomElement) {
+					this._firstFocusableElement.focus();
+					this._hasBeenPassThoughFirstOne = true;
+				}
+			} else {
+				// If a callback has been defined, the focus will be managed on the context of that callback (pattern)
 				callback();
 			}
 		}
 
 		// Handler for focus on top element
 		private _focusTopHandler(): void {
-			this._focusHandler(this._lastFocusableElement, this._focusTopCallback);
+			this._focusHandler(this._predictableTopElement, this._focusTopCallback);
 		}
 
 		// Method that removes the added event listeners
@@ -103,23 +114,22 @@ namespace OSFramework.OSUI.Behaviors {
 			this._predictableTopElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._focusTopHandler.bind(this));
 		}
 
-		//Method to focus on element inside the block
-		private _setFocusOnElement(focusableElement: HTMLElement, selfElement: HTMLElement): void {
-			if (focusableElement) {
-				focusableElement.focus();
-			} else {
-				selfElement?.focus();
-			}
-		}
-
 		// Method to set the focusable elements to be used
 		private _setFocusableElements(): void {
 			this._focusableElements = Helper.Dom.GetFocusableElements(this._targetElement);
 
+			// Check if predicted elements exist at the _focusableElements
+			for (const predictedElement of this._focusableElements.filter(
+				(item) => item === this._predictableTopElement || item === this._predictableBottomElement
+			)) {
+				// If so, remove them from the array collection of _focusableElements
+				this._focusableElements.splice(this._focusableElements.indexOf(predictedElement), 1);
+			}
+
 			// Remove the first element from array, because of predictable top element added for trapping
-			this._firstFocusableElement = this._focusableElements[1];
+			this._firstFocusableElement = this._focusableElements[0];
 			// Remove the last element from array, because of predictable bottom element added for trapping
-			this._lastFocusableElement = this._focusableElements[this._focusableElements.length - 2];
+			this._lastFocusableElement = this._focusableElements[this._focusableElements.length - 1];
 		}
 
 		// Method to add properties to HTML elements
@@ -127,6 +137,7 @@ namespace OSFramework.OSUI.Behaviors {
 			// Set CSS classes
 			Helper.Dom.Styles.AddClass(this._predictableBottomElement, GlobalEnum.FocusTrapClasses.FocusTrapBottom);
 			Helper.Dom.Styles.AddClass(this._predictableBottomElement, Constants.AccessibilityHideElementClass);
+
 			Helper.Dom.Styles.AddClass(this._predictableTopElement, GlobalEnum.FocusTrapClasses.FocusTrapTop);
 			Helper.Dom.Styles.AddClass(this._predictableTopElement, Constants.AccessibilityHideElementClass);
 
@@ -151,6 +162,8 @@ namespace OSFramework.OSUI.Behaviors {
 		 * @memberof OSFramework.Behaviors.FocusTrap
 		 */
 		public disableForA11y(): void {
+			this._hasBeenPassThoughFirstOne = false;
+
 			// Unset A11Y properties from bottom & top focusable element
 			Helper.A11Y.TabIndexFalse(this._predictableBottomElement);
 			Helper.A11Y.TabIndexFalse(this._predictableTopElement);
@@ -189,6 +202,9 @@ namespace OSFramework.OSUI.Behaviors {
 			// Set A11Y AriaHidden as false
 			Helper.A11Y.AriaHiddenFalse(this._predictableBottomElement);
 			Helper.A11Y.AriaHiddenFalse(this._predictableTopElement);
+
+			// Ensure the list of focusable elements is updated, predictable elements starts with TabIndex Hidden
+			this._setFocusableElements();
 		}
 
 		/**
