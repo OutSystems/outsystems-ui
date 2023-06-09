@@ -12,11 +12,11 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		private _platformEventSelectedOptCallback: OSFramework.OSUI.Patterns.Dropdown.Callbacks.OSOnSelectEvent;
 
 		// Store the hidden input AriaLabel value
-		protected _hiddenInputWrapperAriaLabelVal: string;
+		protected hiddenInputWrapperAriaLabelVal: string;
 		// Store a reference of available provider methods
-		protected _virtualselectConfigs: VirtualSelectMethods;
+		protected virtualselectConfigs: VirtualSelectMethods;
 		// Store the provider options
-		protected _virtualselectOpts: VirtualSelectOpts;
+		protected virtualselectOpts: VirtualSelectOpts;
 
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
@@ -52,7 +52,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		// Manage the disable status of the pattern
 		private _manageDisableStatus(): void {
 			// Ensure that is closed!
-			this._virtualselectConfigs.close();
+			this.virtualselectConfigs.close();
 
 			if (this.configs.IsDisabled) {
 				OSFramework.OSUI.Helper.Dom.Attribute.Set(
@@ -82,7 +82,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		// Close the dropdown if it's open!
 		private _onWindowResize() {
 			if (this.provider.isOpened()) {
-				this._virtualselectConfigs.close();
+				this.virtualselectConfigs.close();
 			}
 		}
 
@@ -130,13 +130,13 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 */
 		protected createProviderInstance(): void {
 			// Create the provider instance
-			this.provider = window.VirtualSelect.init(this._virtualselectOpts);
+			this.provider = window.VirtualSelect.init(this.virtualselectOpts);
 
 			/* NOTE: When user change the URL and then click at browser back button we're getting an error. This happen because library (VS - VirtualSelect) creates a new instance of the same object and assign it into an array of VS objects that are in the same screen (in this case 2 equal VS objects since we're creating a new VS instance for each Dropdown), that said and in order to avoid this issue, we must follow this approach. 
 			Again, this only happens when user change directly the URL! */
 			this.provider = Array.isArray(this.provider) ? this.provider[0] : this.provider;
 
-			this._virtualselectConfigs = this.provider.$ele;
+			this.virtualselectConfigs = this.provider.$ele;
 			// Since at native devices we're detaching the balloon from pattern context we must set this attribute to it in order to be possible create a relation between pattern default structure and the detached balloon!
 			this.provider.$dropboxContainer.setAttribute(
 				OSFramework.OSUI.GlobalEnum.HTMLAttributes.Name,
@@ -147,7 +147,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			this.updateProviderEvents({
 				name: Enum.ProviderInfo.Name,
 				version: Enum.ProviderInfo.Version,
-				events: this._virtualselectConfigs,
+				events: this.virtualselectConfigs,
 			});
 
 			// Add attributes to the element if needed
@@ -219,8 +219,8 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		protected unsetCallbacks(): void {
 			this._eventOnWindowResize = undefined;
 			this._onSelectedOptionEvent = undefined;
-			this._virtualselectConfigs = undefined;
-			this._virtualselectOpts = undefined;
+			this.virtualselectConfigs = undefined;
+			this.virtualselectOpts = undefined;
 			this.provider = undefined;
 
 			super.unsetCallbacks();
@@ -309,7 +309,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public clear(): void {
-			this._virtualselectConfigs.reset();
+			this.virtualselectConfigs.reset();
 		}
 
 		/**
@@ -319,7 +319,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 */
 		public close(): void {
 			// SetTimeout is needed in order to ensure there is no conflit between OnClickBody and a button click that trigger this method.
-			OSFramework.OSUI.Helper.AsyncInvocation(this._virtualselectConfigs.close.bind(this._virtualselectConfigs));
+			OSFramework.OSUI.Helper.AsyncInvocation(this.virtualselectConfigs.close.bind(this.virtualselectConfigs));
 		}
 
 		/**
@@ -405,7 +405,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 */
 		public open(): void {
 			// SetTimeout is needed in order to ensure there is no conflit between OnClickBody and a button click that trigger this method.
-			OSFramework.OSUI.Helper.AsyncInvocation(this._virtualselectConfigs.open.bind(this._virtualselectConfigs));
+			OSFramework.OSUI.Helper.AsyncInvocation(this.virtualselectConfigs.open.bind(this.virtualselectConfigs));
 		}
 
 		/**
@@ -436,9 +436,9 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public setHiddenInputWrapperAriaLabelVal(value?: string): void {
-			this._hiddenInputWrapperAriaLabelVal = value === undefined ? this._hiddenInputWrapperAriaLabelVal : value;
+			this.hiddenInputWrapperAriaLabelVal = value === undefined ? this.hiddenInputWrapperAriaLabelVal : value;
 			// Set HiddenInput AriaLabel Value
-			OSFramework.OSUI.Helper.A11Y.AriaLabel(this.provider.$wrapper, this._hiddenInputWrapperAriaLabelVal);
+			OSFramework.OSUI.Helper.A11Y.AriaLabel(this.provider.$wrapper, this.hiddenInputWrapperAriaLabelVal);
 		}
 
 		/**
@@ -465,12 +465,12 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			let valuesToSelect = [];
 
 			if (optionsToSelect.length > 0) {
-				if (this._virtualselectOpts.multiple) valuesToSelect = optionsToSelect.map((option) => option.value);
+				if (this.virtualselectOpts.multiple) valuesToSelect = optionsToSelect.map((option) => option.value);
 				else valuesToSelect = [optionsToSelect[0].value];
 			}
 
 			if (valuesToSelect.sort().join(' ') !== selectedValues.sort().join(' '))
-				this._virtualselectConfigs.setValue(valuesToSelect, silentOnChangedEvent);
+				this.virtualselectConfigs.setValue(valuesToSelect, silentOnChangedEvent);
 		}
 
 		/**

@@ -25,7 +25,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		private _providerOptions: FlatpickrOptions;
 
 		// Store configs set using extensibility
-		protected _providerExtendedOptions: FlatpickrOptions;
+		protected providerExtendedOptions: FlatpickrOptions;
 
 		// Stores the ability to allow inputs to be editable or not
 		public AllowInput = false;
@@ -72,7 +72,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		// Method used to check the language and also map it into Flatpickr expected format
 		private _checkLocale(): FlatpickrLocale {
 			// FlatpickrLocale script file is already loaded
-			let _locale: FlatpickrLocale;
+			let _locale: FlatpickrLocale = window.flatpickr.l10ns.en;
 			try {
 				// Set the locale in order to define the calendar language
 				_locale = window.flatpickr.l10ns[this._lang];
@@ -80,7 +80,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				// Set the calendar first week day
 				_locale.firstDayOfWeek = this.FirstWeekDay;
 			} catch (error) {
-				throw new Error(`${Flatpickr.ErrorCodes.FailSetLocale}: Locale '${this._lang}' not found!`);
+				console.error(`${Flatpickr.ErrorCodes.FailSetLocale}: Locale '${this._lang}' not found!`);
 			}
 
 			return _locale;
@@ -219,7 +219,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickrConfig
 		 */
 		public setExtensibilityConfigs(newConfigs: FlatpickrOptions): void {
-			this._providerExtendedOptions = newConfigs;
+			this.providerExtendedOptions = newConfigs;
 		}
 
 		/**

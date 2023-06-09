@@ -12,7 +12,7 @@
 .osui-timepicker {
 	input {
 		// Hack used to disable dateTime input pseudoElements (browser native placeholders)
-		&[type='date'] {
+		&[type='time'] {
 			&::-webkit-inner-spin-button,
 			&::-webkit-calendar-picker-indicator,
 			&::-webkit-datetime-edit-year-field,
@@ -22,6 +22,11 @@
 				display: none;
 				-moz-appearance: none;
 			}
+		}
+
+		// Hide the platform input which is set as hidden by the library and we're change it into the expected type, however we do not want it visible since library will add a clone to better deal with the selected dates.
+		&:first-of-type {
+			display: none !important;
 		}
 
 		// Disable states for Datepicker

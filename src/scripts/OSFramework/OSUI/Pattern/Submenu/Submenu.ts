@@ -313,17 +313,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		}
 
 		/**
-		 * Method to change the value of configs/current state.
-		 *
-		 * @param {string} propertyName
-		 * @param {unknown} propertyValue
-		 * @memberof OSFramework.Patterns.Submenu.Submenu
-		 */
-		public changeProperty(propertyName: string, propertyValue: unknown): void {
-			super.changeProperty(propertyName, propertyValue);
-		}
-
-		/**
 		 * Method to toggle the behaviour to close submenu when clicking the body
 		 *
 		 * @param {boolean} clickOutsideToClose

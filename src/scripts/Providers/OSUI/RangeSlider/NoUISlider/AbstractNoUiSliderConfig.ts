@@ -14,7 +14,7 @@ namespace Providers.OSUI.RangeSlider.NoUiSlider {
 		// Store the Provider Options
 		private _providerOptions: NoUiSliderOptions;
 		// Store configs set using extensibility
-		protected _providerExtendedOptions: NoUiSliderOptions;
+		protected providerExtendedOptions: NoUiSliderOptions;
 		// Store rangeslider mode is in use
 		public rangeSliderMode: OSFramework.OSUI.Patterns.RangeSlider.Enum.Mode;
 
@@ -85,7 +85,7 @@ namespace Providers.OSUI.RangeSlider.NoUiSlider {
 				tooltips: this.getTooltipFormat(),
 			};
 
-			return this.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
+			return this.mergeConfigs(this._providerOptions, this.providerExtendedOptions);
 		}
 
 		/**
@@ -127,7 +127,7 @@ namespace Providers.OSUI.RangeSlider.NoUiSlider {
 		 * @memberof Providers.OSUI.RangeSlider.NoUiSlider.AbstractNoUiSliderConfig
 		 */
 		public setExtensibilityConfigs(newConfigs: NoUiSliderOptions): void {
-			this._providerExtendedOptions = newConfigs;
+			this.providerExtendedOptions = newConfigs;
 		}
 	}
 }

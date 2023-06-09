@@ -26,7 +26,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		// Store the parent element
 		private _parentSelf: HTMLElement;
 		// Store the platform events
-		private _platformEventOnInitialize: Callbacks.OSInitializedEvent;
 		private _platformEventOnToggle: Callbacks.OSOnToggleEvent;
 
 		constructor(uniqueId: string, configs: JSON) {
@@ -317,7 +316,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 */
 		protected unsetHtmlElements(): void {
 			this._parentSelf = undefined;
-			this._platformEventOnInitialize = undefined;
 			this._platformEventOnToggle = undefined;
 		}
 

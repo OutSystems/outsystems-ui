@@ -34,6 +34,10 @@ namespace Providers.OSUI.Datepicker.Flatpickr.l10ns {
 			htmlTex:
 				'Per poder navegar pel calendari amb tecla de teclat: utilitzeu la tecla CMD o CTRL + Down Arrow per navegar cap al context del calendari; Utilitzeu les tecles de fletxa per navegar durant els dies naturals; Utilitzeu les tecles de fletxa CMD o CTRL + dreta o esquerra per navegar durant mesos; Utilitzeu les tecles de fletxa CMD o Ctrl + amunt o avall per navegar durant anys;',
 		},
+		cat: {
+			htmlTex:
+				'Per poder navegar pel calendari amb tecla de teclat: utilitzeu la tecla CMD o CTRL + Down Arrow per navegar cap al context del calendari; Utilitzeu les tecles de fletxa per navegar durant els dies naturals; Utilitzeu les tecles de fletxa CMD o CTRL + dreta o esquerra per navegar durant mesos; Utilitzeu les tecles de fletxa CMD o Ctrl + amunt o avall per navegar durant anys;',
+		},
 		ckb: {
 			htmlTex:
 				'Ji bo ku bikaribin bi kalîfar bi klavyeyê bi klavyeyê vegerin: Bişkojka CMD an CTRL + Down-ê bikar bînin da ku nav çarçoveya salnameyê veguhezînin; Bişkojkên arrow bikar bînin ku bi rojên salnameyê vegerin. Bişkojkên CMD an CTRL + rast an çepê bikar bînin da ku bi mehan rêve bibin; Bişkojkên CMD an CTRL + UP an Down bikar bînin da ku bi salan navigirin;',
@@ -173,6 +177,10 @@ namespace Providers.OSUI.Datepicker.Flatpickr.l10ns {
 		nl: {
 			htmlTex:
 				'Om door de agenda met toetsenbordsleutel door de kalender te kunnen navigeren: gebruik CMD of Ctrl + Down Arrow -toets om naar de context van de kalender te navigeren; Gebruik pijltoetsen om door kalenderdagen te navigeren; Gebruik CMD of Ctrl + rechter- of linker pijltoetsen om maanden door te navigeren; Gebruik CMD of Ctrl + omhoog of omlaag pijltoetsen om jaren door te navigeren;',
+		},
+		nb: {
+			htmlTex:
+				'For å kunne navigere gjennom kalender med tastaturnøkkel: Bruk CMD eller CTRL + ned piletasten for å navigere inn i kalenderkontekst; Bruk piltastene for å navigere gjennom kalenderdagene; Bruk CMD eller Ctrl + høyre eller venstre piltaster for å navigere gjennom måneder; Bruk CMD eller Ctrl + opp eller ned piltastene for å navigere gjennom år;',
 		},
 		nn: {
 			htmlTex:

@@ -15,7 +15,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Tags {
 		 * @return {*}  {string[]}
 		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.Tags.VirtualSelectTagsConfig
 		 */
-		protected _getSelectedValues(): string[] {
+		protected getSelectedValues(): string[] {
 			const selectedKeyvalues = [];
 
 			// Has selected values
@@ -41,7 +41,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Tags {
 				showValueAsTags: true,
 			};
 
-			return this.mergeConfigs(super.getProviderConfig(), virtualSelectTagsOpts, this._providerExtendedOptions);
+			return this.mergeConfigs(super.getProviderConfig(), virtualSelectTagsOpts, this.providerExtendedOptions);
 		}
 	}
 }

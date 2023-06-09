@@ -10,6 +10,8 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	export class BodyOnScroll extends AbstractListener<string> {
 		constructor() {
 			super(document.body, GlobalEnum.HTMLEvent.Scroll);
+			/* Since the scroll can be set to other elements than body, such as ".active-screen" container, we must enable this property in order to ensure it will be "listened" at the body where the event has been set!  */
+			this.useCapture = true;
 			this.eventCallback = this._bodyTrigger.bind(this);
 		}
 

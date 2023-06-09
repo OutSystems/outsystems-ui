@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace Providers.OSUI.Carousel.Splide {
 	export class SplideConfig extends OSFramework.OSUI.Patterns.Carousel.AbstractCarouselConfig {
+		// Store configs set using extensibility
+		private _providerExtendedOptions: SplideOpts;
 		// Store provider configs
 		private _providerOptions: SplideOpts;
-		// Store configs set using extensibility
-		protected _providerExtendedOptions: SplideOpts;
 
 		// Prepare Arrows expected config
 		private _getArrowConfig(): boolean {
