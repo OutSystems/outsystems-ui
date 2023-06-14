@@ -28,6 +28,11 @@
         transition: opacity 300ms ease-in;
     }
 
+    // Prevent the pattern from occupying space when closed, without interfering with its own open animation
+    &:not(.osui-balloon--is-open) * {
+        display: none;
+    }
+
     // Service Studio Preview
     & {
         -servicestudio-visibility: visible;

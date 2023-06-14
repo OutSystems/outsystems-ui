@@ -7738,6 +7738,9 @@ span.flatpickr-weekday{
   -o-transition:opacity 300ms ease-in;
   transition:opacity 300ms ease-in;
 }
+.osui-balloon:not(.osui-balloon--is-open) *{
+  display:none;
+}
 .osui-balloon{
   -servicestudio-visibility:visible;
   -servicestudio-opacity:1;
