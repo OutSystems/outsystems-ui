@@ -162,7 +162,9 @@ namespace OSFramework.OSUI.Feature.Balloon {
 				this.setFloatingUIBehaviour();
 
 				// Focus on element when pattern is open
-				this.featureElem.focus();
+				Helper.AsyncInvocation(() => {
+					this.featureElem.focus();
+				});
 			} else {
 				// Handle focus trap logic
 				this._focusTrapInstance.disableForA11y();

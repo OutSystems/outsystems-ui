@@ -13,9 +13,9 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		// Store the listener name, to check later if event is supported on the window
 		private _eventName: string;
 		// Store the listener target
-		private _eventTarget: HTMLElement | Window;
+		private _eventTarget: HTMLElement | Document | Window;
 		// Store the listener type
-		private _eventType: GlobalEnum.HTMLEvent;
+		private _eventType: GlobalEnum.HTMLEvent | GlobalEnum.CustomEvent;
 
 		/**
 		 * Store the listener callback
@@ -41,7 +41,11 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		 * @param {GlobalEnum.HTMLEvent} eventType
 		 * @memberof AbstractListener
 		 */
-		constructor(eventTarget: HTMLElement | Window, eventType: GlobalEnum.HTMLEvent, isCustomEvent = false) {
+		constructor(
+			eventTarget: HTMLElement | Document | Window,
+			eventType: GlobalEnum.HTMLEvent | GlobalEnum.CustomEvent,
+			isCustomEvent = false
+		) {
 			super();
 			this._eventTarget = eventTarget;
 			this._eventType = eventType;

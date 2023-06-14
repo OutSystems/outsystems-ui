@@ -499,6 +499,7 @@ var OSFramework;
                 InputTypeAttr["Date"] = "date";
                 InputTypeAttr["DateTime"] = "date-time-edit";
                 InputTypeAttr["Text"] = "text";
+                InputTypeAttr["Time"] = "time";
             })(InputTypeAttr = GlobalEnum.InputTypeAttr || (GlobalEnum.InputTypeAttr = {}));
             let Units;
             (function (Units) {
@@ -798,12 +799,11 @@ var OSFramework;
         (function (Behaviors) {
             class FocusTrap {
                 constructor(opts) {
+                    this._hasBeenPassThoughFirstOne = false;
                     this._targetElement = opts.focusTargetElement;
-                    this._isFocusTrap = opts.focusTrapEnabled || true;
                     this._focusBottomCallback = opts.focusBottomCallback;
                     this._focusTopCallback = opts.focusTopCallback;
                     this._buildPredictableElements();
-                    this._setFocusableElements();
                 }
                 _buildPredictableElements() {
                     this._predictableTopElement = document.createElement(OSUI.GlobalEnum.HTMLElement.Span);
@@ -811,21 +811,32 @@ var OSFramework;
                     this._targetElement.prepend(this._predictableTopElement);
                     this._targetElement.append(this._predictableBottomElement);
                     this._setFocusableProperties();
+                    this._setFocusableElements();
                 }
                 _focusBottomHandler() {
-                    this._focusHandler(false, this._focusBottomCallback);
+                    this._focusHandler(this._predictableBottomElement, this._focusBottomCallback);
                 }
-                _focusHandler(isTopHandler, callback) {
-                    if (this._isFocusTrap) {
-                        this._setFocusableElements();
-                        this._setFocusOnElement(isTopHandler ? this._lastFocusableElement : this._firstFocusableElement, this._targetElement);
+                _focusHandler(focusableElement, callback) {
+                    this._setFocusableElements();
+                    if (callback === undefined) {
+                        if (focusableElement === this._predictableTopElement && this._hasBeenPassThoughFirstOne === false) {
+                            this._firstFocusableElement.focus();
+                            this._hasBeenPassThoughFirstOne = true;
+                        }
+                        else {
+                            this._lastFocusableElement.focus();
+                        }
+                        if (focusableElement === this._predictableBottomElement) {
+                            this._firstFocusableElement.focus();
+                            this._hasBeenPassThoughFirstOne = true;
+                        }
                     }
-                    if (callback !== undefined) {
+                    else {
                         callback();
                     }
                 }
                 _focusTopHandler() {
-                    this._focusHandler(true, this._focusTopCallback);
+                    this._focusHandler(this._predictableTopElement, this._focusTopCallback);
                 }
                 _removeEventListeners() {
                     this._predictableBottomElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Focus, this._focusBottomHandler.bind(this));
@@ -835,18 +846,13 @@ var OSFramework;
                     this._predictableBottomElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.Focus, this._focusBottomHandler.bind(this));
                     this._predictableTopElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.Focus, this._focusTopHandler.bind(this));
                 }
-                _setFocusOnElement(focusableElement, selfElement) {
-                    if (focusableElement) {
-                        focusableElement.focus();
-                    }
-                    else {
-                        selfElement === null || selfElement === void 0 ? void 0 : selfElement.focus();
-                    }
-                }
                 _setFocusableElements() {
                     this._focusableElements = OSUI.Helper.Dom.GetFocusableElements(this._targetElement);
-                    this._firstFocusableElement = this._focusableElements[1];
-                    this._lastFocusableElement = this._focusableElements[this._focusableElements.length - 2];
+                    for (const predictedElement of this._focusableElements.filter((item) => item === this._predictableTopElement || item === this._predictableBottomElement)) {
+                        this._focusableElements.splice(this._focusableElements.indexOf(predictedElement), 1);
+                    }
+                    this._firstFocusableElement = this._focusableElements[0];
+                    this._lastFocusableElement = this._focusableElements[this._focusableElements.length - 1];
                 }
                 _setFocusableProperties() {
                     OSUI.Helper.Dom.Styles.AddClass(this._predictableBottomElement, OSUI.GlobalEnum.FocusTrapClasses.FocusTrapBottom);
@@ -863,6 +869,7 @@ var OSFramework;
                     this._focusTopHandler = undefined;
                 }
                 disableForA11y() {
+                    this._hasBeenPassThoughFirstOne = false;
                     OSUI.Helper.A11Y.TabIndexFalse(this._predictableBottomElement);
                     OSUI.Helper.A11Y.TabIndexFalse(this._predictableTopElement);
                     OSUI.Helper.A11Y.AriaHiddenTrue(this._predictableBottomElement);
@@ -879,6 +886,7 @@ var OSFramework;
                     OSUI.Helper.A11Y.TabIndexTrue(this._predictableTopElement);
                     OSUI.Helper.A11Y.AriaHiddenFalse(this._predictableBottomElement);
                     OSUI.Helper.A11Y.AriaHiddenFalse(this._predictableTopElement);
+                    this._setFocusableElements();
                 }
                 get bottomElement() {
                     return this._predictableBottomElement;
@@ -1042,6 +1050,7 @@ var OSFramework;
                     class AbstractListener extends DOMEvents.AbstractEvent {
                         constructor(eventTarget, eventType, isCustomEvent = false) {
                             super();
+                            this.useCapture = false;
                             this._eventTarget = eventTarget;
                             this._eventType = eventType;
                             this._eventName = isCustomEvent === false ? OSUI.GlobalEnum.HTMLEvent.Prefix + this._eventType : this._eventType;
@@ -1164,6 +1173,7 @@ var OSFramework;
                     class BodyOnScroll extends Listeners.AbstractListener {
                         constructor() {
                             super(document.body, OSUI.GlobalEnum.HTMLEvent.Scroll);
+                            this.useCapture = true;
                             this.eventCallback = this._bodyTrigger.bind(this);
                         }
                         _bodyTrigger(evt) {
@@ -1845,7 +1855,9 @@ var OSFramework;
                             this._focusableActiveElement = document.activeElement;
                             this._focusTrapInstance.enableForA11y();
                             this.setFloatingUIBehaviour();
-                            this.featureElem.focus();
+                            OSUI.Helper.AsyncInvocation(() => {
+                                this.featureElem.focus();
+                            });
                         }
                         else {
                             this._focusTrapInstance.disableForA11y();
@@ -2103,6 +2115,12 @@ var OSFramework;
         var Helper;
         (function (Helper) {
             class Dates {
+                static GetTimeFromDate(_date) {
+                    const _selectedHour = _date.getHours() < 10 ? '0' + _date.getHours() : _date.getHours();
+                    const _selectedMin = _date.getMinutes() < 10 ? '0' + _date.getMinutes() : _date.getMinutes();
+                    const _selectedSec = _date.getSeconds() < 10 ? '0' + _date.getSeconds() : _date.getSeconds();
+                    return _selectedHour + ':' + _selectedMin + ':' + _selectedSec;
+                }
                 static IsBeforeThan(date1, date2) {
                     return Date.parse(date1) <= Date.parse(date2);
                 }
@@ -3097,7 +3115,7 @@ var OSFramework;
             class AbstractPattern {
                 constructor(uniqueId, configs) {
                     this._isBuilt = false;
-                    this._isProviderBased = false;
+                    this.isProviderBased = false;
                     this._uniqueId = uniqueId;
                     this._configs = configs;
                 }
@@ -3112,10 +3130,10 @@ var OSFramework;
                     this._selfElem = undefined;
                 }
                 finishBuild() {
-                    this._isBuilt = true;
-                    if (this._isProviderBased === false) {
+                    if (this.isProviderBased === false) {
                         this.triggerPlatformInitializedEventCallback();
                     }
+                    this._isBuilt = true;
                 }
                 triggerPlatformEventCallback(platFormCallback, ...args) {
                     if (platFormCallback !== undefined) {
@@ -3123,7 +3141,7 @@ var OSFramework;
                     }
                 }
                 triggerPlatformInitializedEventCallback() {
-                    if (this._platformEventInitialized !== undefined) {
+                    if (this._platformEventInitialized !== undefined && this._isBuilt === false) {
                         this.triggerPlatformEventCallback(this._platformEventInitialized);
                     }
                 }
@@ -3423,7 +3441,7 @@ var OSFramework;
             class AbstractProviderPattern extends Patterns.AbstractPattern {
                 constructor(uniqueId, configs) {
                     super(uniqueId, configs);
-                    this._isProviderBased = true;
+                    this.isProviderBased = true;
                 }
                 _getEventIndexFromArray(event) {
                     const _providerCallback = this.providerInfo.events[event.eventName].find((item) => {
@@ -5175,6 +5193,7 @@ var OSFramework;
                             super(uniqueId, new ServerSide.OSUIDropdownServerSideConfig(configs));
                             this._balloonPositionClass = '';
                             this._closeDynamically = false;
+                            this._hasA11yEnabled = false;
                             this._isBlocked = false;
                             this._isOpen = false;
                             this._selfElementBoundingClientRect = new DOMRect(0, 0);
@@ -5228,6 +5247,14 @@ var OSFramework;
                                 this._balloonPositionClass = newClassPosition;
                                 OSUI.Helper.Dom.Styles.AddClass(this._balloonWrapperElement, this._balloonPositionClass);
                             }
+                        }
+                        _handleFocusTrap() {
+                            const opts = {
+                                focusBottomCallback: this._eventOnSpanFocus.bind(this),
+                                focusTargetElement: this._balloonWrapperElement,
+                                focusTopCallback: this._eventOnSpanFocus.bind(this),
+                            };
+                            this._focusTrapInstance = new OSUI.Behaviors.FocusTrap(opts);
                         }
                         _hasNoImplementation() {
                             throw new Error(`${OSUI.ErrorCodes.Dropdown.HasNoImplementation.code}: ${OSUI.ErrorCodes.Dropdown.HasNoImplementation.message}`);
@@ -5286,7 +5313,7 @@ var OSFramework;
                                             this._balloonSearchInputElement.focus();
                                         }
                                         else {
-                                            this._focusTrapObject.topElement.focus();
+                                            this._focusTrapInstance.topElement.focus();
                                         }
                                     }
                                     else if (event.key === OSUI.GlobalEnum.Keycodes.ArrowDown) {
@@ -5391,7 +5418,7 @@ var OSFramework;
                                             this._balloonSearchInputElement.focus();
                                         }
                                         else {
-                                            this._focusTrapObject.topElement.focus();
+                                            this._focusTrapInstance.topElement.focus();
                                         }
                                         break;
                                     case OSUI.GlobalEnum.Keycodes.Tab:
@@ -5399,7 +5426,7 @@ var OSFramework;
                                             this._balloonFocusableElemsInFooter[0].focus();
                                         }
                                         else {
-                                            this._focusTrapObject.bottomElement.focus();
+                                            this._focusTrapInstance.bottomElement.focus();
                                         }
                                         break;
                                     case OSUI.GlobalEnum.Keycodes.Escape:
@@ -5441,14 +5468,6 @@ var OSFramework;
                             if (this.configs.ExtendedClass !== '') {
                                 this._setBalloonWrapperExtendedClass(this.configs.ExtendedClass);
                             }
-                        }
-                        _setFocusSpanElements() {
-                            const opts = {
-                                focusBottomCallback: this._eventOnSpanFocus.bind(this),
-                                focusTargetElement: this._balloonWrapperElement,
-                                focusTopCallback: this._eventOnSpanFocus.bind(this),
-                            };
-                            this._focusTrapObject = new OSUI.Behaviors.FocusTrap(opts);
                         }
                         _setInitialOptions() {
                             if (this.configs.IsDisabled) {
@@ -5538,6 +5557,10 @@ var OSFramework;
                             const tabIndexValue = this._isOpen
                                 ? OSUI.Constants.A11YAttributes.States.TabIndexShow
                                 : OSUI.Constants.A11YAttributes.States.TabIndexHidden;
+                            const layoutElemContainer = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CssClassElements.Layout);
+                            this._hasA11yEnabled =
+                                layoutElemContainer !== undefined &&
+                                    OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(layoutElemContainer, OSFramework.OSUI.Constants.HasAccessibilityClass);
                             if (this._balloonSearchInputElement !== undefined) {
                                 OSUI.Helper.A11Y.TabIndex(this._balloonSearchInputElement, tabIndexValue);
                             }
@@ -5546,11 +5569,15 @@ var OSFramework;
                                 OSUI.Helper.A11Y.SetElementsTabIndex(this._isOpen, this._balloonFocusableElemsInFooter);
                             }
                             if (this._isOpen) {
-                                this._focusTrapObject.enableForA11y();
+                                this._focusTrapInstance.enableForA11y();
+                                if (this._hasA11yEnabled) {
+                                    OSUI.Helper.Dom.Styles.AddClass(this._balloonWrapperElement, OSUI.Constants.HasAccessibilityClass);
+                                }
                                 OSUI.Helper.A11Y.AriaHiddenFalse(this._balloonOptionsWrapperElement);
                             }
                             else {
-                                this._focusTrapObject.disableForA11y();
+                                this._focusTrapInstance.disableForA11y();
+                                OSUI.Helper.Dom.Styles.RemoveClass(this._balloonWrapperElement, OSUI.Constants.HasAccessibilityClass);
                                 OSUI.Helper.A11Y.AriaHiddenTrue(this._balloonOptionsWrapperElement);
                             }
                         }
@@ -5573,6 +5600,7 @@ var OSFramework;
                                 else {
                                     this._balloonOptionsWrapperElement.focus();
                                 }
+                                this._triggerToogleCalbackEvent();
                             }
                             else {
                                 OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, ServerSide.Enum.CssClass.IsOpened);
@@ -5580,7 +5608,6 @@ var OSFramework;
                                 this._isBlocked = true;
                                 this._balloonWrapperElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.TransitionEnd, this._eventOnCloseTransitionEnd);
                             }
-                            this._triggerToogleCalbackEvent();
                         }
                         setA11YProperties() {
                             this._updateBalloonAccessibilityElements();
@@ -5621,7 +5648,7 @@ var OSFramework;
                             this._balloonWrapperElement = OSUI.Helper.Dom.ClassSelector(this.selfElement, ServerSide.Enum.CssClass.BalloonWrapper);
                             this._balloonOptionsWrapperElement = OSUI.Helper.Dom.ClassSelector(this._balloonWrapperElement, ServerSide.Enum.CssClass.BalloonContent);
                             this._selectValuesWrapper = OSUI.Helper.Dom.ClassSelector(this.selfElement, ServerSide.Enum.CssClass.SelectValuesWrapper);
-                            this._setFocusSpanElements();
+                            this._handleFocusTrap();
                             this.setA11YProperties();
                             this._setUpEvents();
                             this._setCssClasses();
@@ -5710,7 +5737,7 @@ var OSFramework;
                         }
                         dispose() {
                             this._unsetObserver();
-                            this._focusTrapObject.dispose();
+                            this._focusTrapInstance.dispose();
                             this._unsetEvents();
                             this.unsetCallbacks();
                             this.unsetHtmlElements();
@@ -6015,7 +6042,7 @@ var OSFramework;
                                 }
                                 break;
                             default:
-                                throw new Error(`The given '${eventName}' event name it's not defined.`);
+                                super.registerCallback(eventName, callback);
                         }
                     }
                     setBlur() {
@@ -6880,7 +6907,6 @@ var OSFramework;
                     }
                     unsetHtmlElements() {
                         this._parentSelf = undefined;
-                        this._platformEventOnInitialize = undefined;
                         this._platformEventOnToggle = undefined;
                     }
                     build() {
@@ -8870,6 +8896,9 @@ var OSFramework;
                             focusTargetElement: this._parentSelf,
                         };
                         this._focusTrapInstance = new OSUI.Behaviors.FocusTrap(opts);
+                        if (this._isOpen === false) {
+                            OSUI.Helper.A11Y.SetElementsTabIndex(false, this._focusTrapInstance.focusableElements);
+                        }
                     }
                     _handleGestureEvents() {
                         if (OSUI.Helper.DeviceInfo.IsNative) {
@@ -9368,9 +9397,6 @@ var OSFramework;
                         this.setA11YProperties();
                         this.setCallbacks();
                         this.finishBuild();
-                    }
-                    changeProperty(propertyName, propertyValue) {
-                        super.changeProperty(propertyName, propertyValue);
                     }
                     clickOutsideToClose(clickOutsideToClose) {
                         this.hasClickOutsideToClose = clickOutsideToClose;
@@ -14282,25 +14308,7 @@ var OutSystems;
         (function (Patterns) {
             var TabsContentItemAPI;
             (function (TabsContentItemAPI) {
-                const _tabsMap = new Map();
                 const _tabsContentItemMap = new Map();
-                function GetTabsByItem(tabsContentItemId) {
-                    let tabs;
-                    if (_tabsMap.has(tabsContentItemId)) {
-                        tabs = Patterns.TabsAPI.GetTabsById(_tabsMap.get(tabsContentItemId));
-                    }
-                    else {
-                        const elem = OSFramework.OSUI.Helper.Dom.GetElementByUniqueId(tabsContentItemId);
-                        const tabsElem = elem.closest(OSFramework.OSUI.Constants.Dot + OSFramework.OSUI.Patterns.Tabs.Enum.CssClasses.TabsWrapper);
-                        if (!tabsElem) {
-                            throw Error(`This ${OSFramework.OSUI.GlobalEnum.PatternName.TabsContentItem} does not belong to any ${OSFramework.OSUI.GlobalEnum.PatternName.Tabs} pattern.`);
-                        }
-                        const uniqueId = tabsElem.getAttribute('name');
-                        tabs = Patterns.TabsAPI.GetTabsById(uniqueId);
-                    }
-                    return tabs;
-                }
-                TabsContentItemAPI.GetTabsByItem = GetTabsByItem;
                 function ChangeProperty(tabsContentItemId, propertyName, propertyValue) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.TabsContentItem.FailChangeProperty,
@@ -14316,13 +14324,8 @@ var OutSystems;
                     if (_tabsContentItemMap.has(tabsContentItemId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.TabsContentItem} registered under id: ${tabsContentItemId}`);
                     }
-                    const tabs = GetTabsByItem(tabsContentItemId);
                     const _newTabsContentItem = new OSFramework.OSUI.Patterns.TabsContentItem.TabsContentItem(tabsContentItemId, JSON.parse(configs));
                     _tabsContentItemMap.set(tabsContentItemId, _newTabsContentItem);
-                    _newTabsContentItem.build();
-                    if (tabs !== undefined) {
-                        _tabsMap.set(tabsContentItemId, tabs.uniqueId);
-                    }
                     return _newTabsContentItem;
                 }
                 TabsContentItemAPI.Create = Create;
@@ -14346,6 +14349,12 @@ var OutSystems;
                     return OSFramework.OSUI.Helper.MapOperation.FindInMap('TabsContentItem', tabsContentItemId, _tabsContentItemMap);
                 }
                 TabsContentItemAPI.GetTabsContentItemById = GetTabsContentItemById;
+                function Initialize(tabsContentItemId) {
+                    const tabsContentItem = GetTabsContentItemById(tabsContentItemId);
+                    tabsContentItem.build();
+                    return tabsContentItem;
+                }
+                TabsContentItemAPI.Initialize = Initialize;
                 function RegisterCallback(tabsContentItemId, eventName, callback) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.TabsContentItem.FailRegisterCallback,
@@ -14369,25 +14378,7 @@ var OutSystems;
         (function (Patterns) {
             var TabsHeaderItemAPI;
             (function (TabsHeaderItemAPI) {
-                const _tabsMap = new Map();
                 const _tabsHeaderItemMap = new Map();
-                function GetTabsByItem(tabsHeaderItemId) {
-                    let tabs;
-                    if (_tabsMap.has(tabsHeaderItemId)) {
-                        tabs = Patterns.TabsAPI.GetTabsById(_tabsMap.get(tabsHeaderItemId));
-                    }
-                    else {
-                        const elem = OSFramework.OSUI.Helper.Dom.GetElementByUniqueId(tabsHeaderItemId);
-                        const tabsElem = elem.closest(OSFramework.OSUI.Constants.Dot + OSFramework.OSUI.Patterns.Tabs.Enum.CssClasses.TabsWrapper);
-                        if (!tabsElem) {
-                            throw Error(`This ${OSFramework.OSUI.GlobalEnum.PatternName.TabsHeaderItem} does not belong to any ${OSFramework.OSUI.GlobalEnum.PatternName.Tabs} pattern.`);
-                        }
-                        const uniqueId = tabsElem.getAttribute('name');
-                        tabs = Patterns.TabsAPI.GetTabsById(uniqueId);
-                    }
-                    return tabs;
-                }
-                TabsHeaderItemAPI.GetTabsByItem = GetTabsByItem;
                 function ChangeProperty(tabsHeaderItemId, propertyName, propertyValue) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.TabsHeaderItem.FailChangeProperty,
@@ -14403,13 +14394,8 @@ var OutSystems;
                     if (_tabsHeaderItemMap.has(tabsHeaderItemId)) {
                         throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.TabsHeaderItem} registered under id: ${tabsHeaderItemId}`);
                     }
-                    const tabs = GetTabsByItem(tabsHeaderItemId);
                     const _newTabsHeaderItem = new OSFramework.OSUI.Patterns.TabsHeaderItem.TabsHeaderItem(tabsHeaderItemId, JSON.parse(configs));
                     _tabsHeaderItemMap.set(tabsHeaderItemId, _newTabsHeaderItem);
-                    _newTabsHeaderItem.build();
-                    if (tabs !== undefined) {
-                        _tabsMap.set(tabsHeaderItemId, tabs.uniqueId);
-                    }
                     return _newTabsHeaderItem;
                 }
                 TabsHeaderItemAPI.Create = Create;
@@ -14466,6 +14452,12 @@ var OutSystems;
                     return result;
                 }
                 TabsHeaderItemAPI.UpdateOnRender = UpdateOnRender;
+                function Initialize(tabsHeaderItemId) {
+                    const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
+                    tabsHeaderItem.build();
+                    return tabsHeaderItem;
+                }
+                TabsHeaderItemAPI.Initialize = Initialize;
                 function RegisterCallback(tabsHeaderItemId, eventName, callback) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.TabsHeaderItem.FailRegisterCallback,
@@ -16374,7 +16366,7 @@ var Providers;
                         }
                     }
                     _initProvider() {
-                        this._provider = new window.Splide(this._carouselProviderElem, this._splideOptions);
+                        this.provider = new window.Splide(this._carouselProviderElem, this._splideOptions);
                         this.updateProviderEvents({
                             name: Splide.Enum.ProviderInfo.Name,
                             version: Splide.Enum.ProviderInfo.Version,
@@ -16383,7 +16375,7 @@ var Providers;
                         this._setOnInitializedEvent();
                         this._setOnSlideMovedEvent();
                         this._setCarouselWidth();
-                        this._provider.mount();
+                        this.provider.mount();
                         this._togglePaginationClass();
                     }
                     _prepareCarouselItems() {
@@ -16405,12 +16397,12 @@ var Providers;
                         OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._carouselTrackElem, OSFramework.OSUI.Patterns.Carousel.Enum.CssVariables.CarouselWidth, this.selfElement.offsetWidth + OSFramework.OSUI.GlobalEnum.Units.Pixel);
                     }
                     _setOnInitializedEvent() {
-                        this._provider.on(Splide.Enum.SpliderEvents.Mounted, () => {
+                        this.provider.on(Splide.Enum.SpliderEvents.Mounted, () => {
                             this.triggerPlatformInitializedEventCallback();
                         });
                     }
                     _setOnSlideMovedEvent() {
-                        this._provider.on(Splide.Enum.SpliderEvents.Moved, (index) => {
+                        this.provider.on(Splide.Enum.SpliderEvents.Moved, (index) => {
                             if (index !== this._currentIndex) {
                                 this.triggerPlatformEventCallback(this._platformEventOnSlideMoved, index);
                                 this._currentIndex = index;
@@ -16491,13 +16483,13 @@ var Providers;
                                     this.redraw();
                                     break;
                                 case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.Height:
-                                    this._provider.options = { height: propertyValue };
+                                    this.provider.options = { height: propertyValue };
                                     break;
                                 case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.Padding:
-                                    this._provider.options = { padding: propertyValue };
+                                    this.provider.options = { padding: propertyValue };
                                     break;
                                 case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.ItemsGap:
-                                    this._provider.options = { gap: propertyValue };
+                                    this.provider.options = { gap: propertyValue };
                                     break;
                             }
                         }
@@ -16505,20 +16497,20 @@ var Providers;
                     }
                     dispose() {
                         if (this.isBuilt) {
-                            this._provider.destroy();
+                            this.provider.destroy();
                         }
                         this.unsetCallbacks();
                         this.unsetHtmlElements();
                         super.dispose();
                     }
                     goTo(index) {
-                        this._provider.go(index);
+                        this.provider.go(index);
                     }
                     next() {
-                        this._provider.go(Splide.Enum.Go.Next);
+                        this.provider.go(Splide.Enum.Go.Next);
                     }
                     previous() {
-                        this._provider.go(Splide.Enum.Go.Previous);
+                        this.provider.go(Splide.Enum.Go.Previous);
                     }
                     registerCallback(eventName, callback) {
                         switch (eventName) {
@@ -16550,7 +16542,7 @@ var Providers;
                         super.setProviderConfigs(newConfigs);
                     }
                     toggleDrag(hasDrag) {
-                        this._provider.options = { drag: hasDrag };
+                        this.provider.options = { drag: hasDrag };
                     }
                     toggleOnRender(blockOnRender) {
                         this._blockOnRender = blockOnRender;
@@ -16558,7 +16550,7 @@ var Providers;
                     updateOnRender() {
                         if (this._blockOnRender === false) {
                             this.setInitialCssClasses();
-                            if (typeof this._provider === 'object') {
+                            if (typeof this.provider === 'object') {
                                 if (this._currentIndex !== undefined || this.configs.AutoPlay === true) {
                                     this.configs.StartingPosition = this.provider.index;
                                 }
@@ -16696,11 +16688,11 @@ var Providers;
                         this.configs.OnChange = this.onDateSelectedEvent.bind(this);
                     }
                     _setAttributes() {
-                        if (this._datePickerPlatformInputElem.nextSibling) {
-                            this._flatpickrInputElem = this._datePickerPlatformInputElem.nextSibling;
-                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.DataInput, '');
-                            if (this._flatpickrInputElem.disabled) {
-                                OSFramework.OSUI.Helper.Dom.Attribute.Remove(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled);
+                        if (this.datePickerPlatformInputElem.nextSibling) {
+                            this.flatpickrInputElem = this.datePickerPlatformInputElem.nextSibling;
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this.flatpickrInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.DataInput, '');
+                            if (this.flatpickrInputElem.disabled) {
+                                OSFramework.OSUI.Helper.Dom.Attribute.Remove(this.flatpickrInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled);
                             }
                         }
                     }
@@ -16720,14 +16712,15 @@ var Providers;
                         const todayBtnWrapper = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
                         todayBtnWrapper.classList.add(Flatpickr.Enum.CssClasses.TodayBtn);
                         const todayBtn = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Link);
-                        todayBtn.innerHTML = Flatpickr.l10ns.TodayBtn[this.configs.Lang].title;
-                        OSFramework.OSUI.Helper.A11Y.AriaLabel(todayBtn, Flatpickr.l10ns.TodayBtn[this.configs.Lang].ariaLabel);
+                        const langCode = Flatpickr.l10ns.TodayBtn[this.configs.Lang] !== undefined ? this.configs.Lang : 'en';
+                        todayBtn.innerHTML = Flatpickr.l10ns.TodayBtn[langCode].title;
+                        OSFramework.OSUI.Helper.A11Y.AriaLabel(todayBtn, Flatpickr.l10ns.TodayBtn[langCode].ariaLabel);
                         todayBtn.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.Click, this.todayBtnClick.bind(this));
                         todayBtnWrapper.appendChild(todayBtn);
                         this.provider.calendarContainer.appendChild(todayBtnWrapper);
                     }
                     createProviderInstance() {
-                        this.provider = window.flatpickr(this._datePickerPlatformInputElem, this._flatpickrOpts);
+                        this.provider = window.flatpickr(this.datePickerPlatformInputElem, this.flatpickrOpts);
                         this.updateProviderEvents({
                             name: OSUI.SharedProviderResources.Flatpickr.Enum.ProviderInfo.Name,
                             version: OSUI.SharedProviderResources.Flatpickr.Enum.ProviderInfo.Version,
@@ -16748,8 +16741,8 @@ var Providers;
                                 this._zindexCommonBehavior = new OSUI.SharedProviderResources.Flatpickr.UpdateZindex(this);
                             }
                         }
-                        if (this._flatpickrInputElem !== undefined && this.isBuilt) {
-                            OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.CssClassElements.InputNotValid);
+                        if (this.flatpickrInputElem !== undefined && this.isBuilt) {
+                            OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(this.flatpickrInputElem, OSFramework.OSUI.GlobalEnum.CssClassElements.InputNotValid);
                         }
                         this._unsetParentMinHeight();
                         this.triggerPlatformInitializedEventCallback();
@@ -16758,7 +16751,7 @@ var Providers;
                         this.provider.jumpToDate(this.provider.now);
                     }
                     prepareConfigs() {
-                        this._flatpickrOpts = this.configs.getProviderConfig();
+                        this.flatpickrOpts = this.configs.getProviderConfig();
                         this.createProviderInstance();
                     }
                     prepareToAndRedraw() {
@@ -16766,16 +16759,22 @@ var Providers;
                         this.redraw();
                     }
                     setA11YProperties() {
-                        if (this.provider.calendarContainer !== undefined && this._flatpickrInputElem !== undefined) {
+                        if (this.provider.calendarContainer !== undefined && this.flatpickrInputElem !== undefined) {
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this.datePickerPlatformInputElem, OSFramework.OSUI.Constants.A11YAttributes.TabIndex, OSFramework.OSUI.Constants.A11YAttributes.States.TabIndexHidden);
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this.datePickerPlatformInputElem, OSFramework.OSUI.Constants.A11YAttributes.Aria.Hidden, OSFramework.OSUI.Constants.A11YAttributes.States.True);
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this._a11yInfoContainerElem, OSFramework.OSUI.Constants.A11YAttributes.Aria.Hidden, OSFramework.OSUI.Constants.A11YAttributes.States.True);
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this.flatpickrInputElem, OSFramework.OSUI.Constants.A11YAttributes.TabIndex, OSFramework.OSUI.Constants.A11YAttributes.States.TabIndexShow);
                             let ariaLabelValue = Flatpickr.Enum.Attribute.DefaultAriaLabel;
-                            if (this._datePickerPlatformInputElem.hasAttribute(OSFramework.OSUI.Constants.A11YAttributes.Aria.Label)) {
-                                ariaLabelValue = this._datePickerPlatformInputElem.getAttribute(OSFramework.OSUI.Constants.A11YAttributes.Aria.Label);
+                            if (this.datePickerPlatformInputElem.hasAttribute(OSFramework.OSUI.Constants.A11YAttributes.Aria.Label)) {
+                                ariaLabelValue = this.datePickerPlatformInputElem.getAttribute(OSFramework.OSUI.Constants.A11YAttributes.Aria.Label);
                             }
-                            OSFramework.OSUI.Helper.A11Y.AriaLabel(this._flatpickrInputElem, ariaLabelValue);
-                            OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(this._flatpickrInputElem, this._a11yInfoContainerElem.id);
+                            OSFramework.OSUI.Helper.A11Y.AriaLabel(this.flatpickrInputElem, ariaLabelValue);
+                            OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(this.flatpickrInputElem, this._a11yInfoContainerElem.id);
                             if (this.configs.Lang !== OSFramework.OSUI.Constants.Language.short) {
                                 this._a11yInfoContainerElem.innerHTML =
-                                    Datepicker.Flatpickr.l10ns.A11yContainerInfo[this.configs.Lang].htmlTex;
+                                    Datepicker.Flatpickr.l10ns.A11yContainerInfo[this.configs.Lang] !== undefined
+                                        ? Datepicker.Flatpickr.l10ns.A11yContainerInfo[this.configs.Lang].htmlTex
+                                        : Datepicker.Flatpickr.l10ns.A11yContainerInfo.en.htmlTex;
                             }
                         }
                     }
@@ -16783,20 +16782,20 @@ var Providers;
                         console.log(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
                     }
                     setHtmlElements() {
-                        this._datePickerPlatformInputElem = this.selfElement.querySelector('input.form-control');
+                        this.datePickerPlatformInputElem = this.selfElement.querySelector('input.form-control');
                         this._a11yInfoContainerElem = OSFramework.OSUI.Helper.Dom.TagSelector(this.selfElement.parentElement, OSFramework.OSUI.Constants.Dot + Flatpickr.Enum.CssClasses.AccessibilityContainerInfo);
-                        if (!this._datePickerPlatformInputElem) {
+                        if (!this.datePickerPlatformInputElem) {
                             throw new Error(`The datepicker input at DatepickerId '${this.widgetId}' is missing`);
                         }
                     }
                     unsetCallbacks() {
                         this.configs.OnChange = undefined;
-                        this._onSelectedCallbackEvent = undefined;
+                        this.onSelectedCallbackEvent = undefined;
                         super.unsetCallbacks();
                     }
                     unsetHtmlElements() {
                         this._a11yInfoContainerElem = undefined;
-                        this._datePickerPlatformInputElem = undefined;
+                        this.datePickerPlatformInputElem = undefined;
                     }
                     build() {
                         super.build();
@@ -16821,7 +16820,7 @@ var Providers;
                         }
                     }
                     clear() {
-                        const isInputDisable = this._datePickerPlatformInputElem.disabled;
+                        const isInputDisable = this.datePickerPlatformInputElem.disabled;
                         if (isInputDisable === false) {
                             this.provider.clear();
                         }
@@ -16852,7 +16851,7 @@ var Providers;
                         super.dispose();
                     }
                     open() {
-                        const isInputDisable = this._datePickerPlatformInputElem.disabled;
+                        const isInputDisable = this.datePickerPlatformInputElem.disabled;
                         if (this.provider.isOpen === false && isInputDisable === false) {
                             this.provider.open();
                         }
@@ -16860,7 +16859,7 @@ var Providers;
                     registerCallback(eventName, callback) {
                         switch (eventName) {
                             case OSFramework.OSUI.Patterns.DatePicker.Enum.DatePickerEvents.OnChange:
-                                this._onSelectedCallbackEvent = callback;
+                                this.onSelectedCallbackEvent = callback;
                                 break;
                             default:
                                 super.registerCallback(eventName, callback);
@@ -16891,7 +16890,7 @@ var Providers;
                         }
                     }
                     updatePrompt(promptMessage) {
-                        this._flatpickrInputElem.placeholder = promptMessage;
+                        this.flatpickrInputElem.placeholder = promptMessage;
                     }
                 }
                 Flatpickr.AbstractFlatpickr = AbstractFlatpickr;
@@ -16932,13 +16931,13 @@ var Providers;
                         return this._disabledWeekDays.indexOf(date.getDay()) > -1;
                     }
                     _checkLocale() {
-                        let _locale;
+                        let _locale = window.flatpickr.l10ns.en;
                         try {
                             _locale = window.flatpickr.l10ns[this._lang];
                             _locale.firstDayOfWeek = this.FirstWeekDay;
                         }
                         catch (error) {
-                            throw new Error(`${Flatpickr.ErrorCodes.FailSetLocale}: Locale '${this._lang}' not found!`);
+                            console.error(`${Flatpickr.ErrorCodes.FailSetLocale}: Locale '${this._lang}' not found!`);
                         }
                         return _locale;
                     }
@@ -17019,7 +17018,7 @@ var Providers;
                         return this._providerOptions;
                     }
                     setExtensibilityConfigs(newConfigs) {
-                        this._providerExtendedOptions = newConfigs;
+                        this.providerExtendedOptions = newConfigs;
                     }
                     get Lang() {
                         return this._lang;
@@ -17160,9 +17159,9 @@ var Providers;
                         }
                         _onUpdateDateFormat() {
                             if (this.provider.selectedDates.length > 0) {
-                                this.configs.InitialStartDate = this.provider.formatDate(this.provider.selectedDates[0], this._flatpickrOpts.dateFormat);
+                                this.configs.InitialStartDate = this.provider.formatDate(this.provider.selectedDates[0], this.flatpickrOpts.dateFormat);
                                 if (this.provider.selectedDates[1]) {
-                                    this.configs.InitialEndDate = this.provider.formatDate(this.provider.selectedDates[1], this._flatpickrOpts.dateFormat);
+                                    this.configs.InitialEndDate = this.provider.formatDate(this.provider.selectedDates[1], this.flatpickrOpts.dateFormat);
                                 }
                             }
                             this.prepareToAndRedraw();
@@ -17180,14 +17179,14 @@ var Providers;
                         onDateSelectedEvent(selectedDates) {
                             const _selectedDate = [];
                             if (selectedDates.length > 0) {
-                                _selectedDate[0] = this.provider.formatDate(selectedDates[0], this._flatpickrOpts.dateFormat);
+                                _selectedDate[0] = this.provider.formatDate(selectedDates[0], this.flatpickrOpts.dateFormat);
                                 if (selectedDates[1]) {
-                                    _selectedDate[1] = this.provider.formatDate(selectedDates[1], this._flatpickrOpts.dateFormat);
+                                    _selectedDate[1] = this.provider.formatDate(selectedDates[1], this.flatpickrOpts.dateFormat);
                                 }
                             }
-                            OSFramework.OSUI.Helper.Dom.SetInputValue(this._datePickerPlatformInputElem, this._flatpickrInputElem.value);
                             if (selectedDates.length === 0 || selectedDates.length === 2) {
-                                this.triggerPlatformEventCallback(this._onSelectedCallbackEvent, _selectedDate[0], _selectedDate[1]);
+                                OSFramework.OSUI.Helper.Dom.SetInputValue(this.datePickerPlatformInputElem, this.flatpickrInputElem.value);
+                                this.triggerPlatformEventCallback(this.onSelectedCallbackEvent, _selectedDate[0], _selectedDate[1]);
                             }
                         }
                         todayBtnClick(event) {
@@ -17195,7 +17194,7 @@ var Providers;
                             this.jumpIntoToday();
                         }
                         updatePlatformInputAttrs() {
-                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this._datePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.type, OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text);
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this.datePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.type, OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text);
                         }
                         build() {
                             super.build();
@@ -17219,7 +17218,7 @@ var Providers;
                         updateInitialDate(startDate, endDate) {
                             if (OSFramework.OSUI.Helper.Dates.IsNull(startDate) === false &&
                                 OSFramework.OSUI.Helper.Dates.IsNull(endDate) === false &&
-                                this._datePickerPlatformInputElem.disabled === false) {
+                                this.datePickerPlatformInputElem.disabled === false) {
                                 this.configs.InitialStartDate = startDate;
                                 this.configs.InitialEndDate = endDate;
                                 if (OSFramework.OSUI.Helper.Dates.IsBeforeThan(startDate, endDate)) {
@@ -17271,7 +17270,7 @@ var Providers;
                                 defaultDate: this._setDefaultDate(),
                                 mode: OSFramework.OSUI.Patterns.DatePicker.Enum.Mode.Range,
                             };
-                            return this.mergeConfigs(super.getProviderConfig(), flatpickrRangeDateOpts, this._providerExtendedOptions);
+                            return this.mergeConfigs(super.getProviderConfig(), flatpickrRangeDateOpts, this.providerExtendedOptions);
                         }
                     }
                     RangeDate.FlatpickrRangeDateConfig = FlatpickrRangeDateConfig;
@@ -17320,11 +17319,11 @@ var Providers;
                         onDateSelectedEvent(selectedDates) {
                             let _selectedDate = '';
                             if (selectedDates.length > 0) {
-                                _selectedDate = this.provider.formatDate(selectedDates[0], this._flatpickrOpts.dateFormat);
+                                _selectedDate = this.provider.formatDate(selectedDates[0], this.flatpickrOpts.dateFormat);
                             }
-                            OSFramework.OSUI.Helper.Dom.SetInputValue(this._datePickerPlatformInputElem, _selectedDate);
+                            OSFramework.OSUI.Helper.Dom.SetInputValue(this.datePickerPlatformInputElem, _selectedDate);
                             if (this._isUpdatedInitialDateByClientAction === false) {
-                                this.triggerPlatformEventCallback(this._onSelectedCallbackEvent, _selectedDate);
+                                this.triggerPlatformEventCallback(this.onSelectedCallbackEvent, _selectedDate);
                             }
                             this._isUpdatedInitialDateByClientAction = false;
                         }
@@ -17341,7 +17340,7 @@ var Providers;
                             const dateType = this.configs.TimeFormat === OSFramework.OSUI.Patterns.DatePicker.Enum.TimeFormatMode.Disable
                                 ? OSFramework.OSUI.GlobalEnum.InputTypeAttr.Date
                                 : OSFramework.OSUI.GlobalEnum.InputTypeAttr.DateTime;
-                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this._datePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.type, dateType);
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this.datePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.type, dateType);
                         }
                         build() {
                             super.build();
@@ -17367,7 +17366,7 @@ var Providers;
                                 switch (propertyName) {
                                     case OSFramework.OSUI.Patterns.DatePicker.Enum.Properties.DateFormat:
                                         if (this.provider.selectedDates.length > 0) {
-                                            this.configs.InitialDate = this.provider.formatDate(this.provider.selectedDates[0], this._flatpickrOpts.dateFormat);
+                                            this.configs.InitialDate = this.provider.formatDate(this.provider.selectedDates[0], this.flatpickrOpts.dateFormat);
                                         }
                                         this.prepareToAndRedraw();
                                         break;
@@ -17383,10 +17382,10 @@ var Providers;
                             }
                         }
                         updateInitialDate(value) {
-                            if (this._datePickerPlatformInputElem.disabled === false) {
+                            if (this.datePickerPlatformInputElem.disabled === false) {
                                 this._isUpdatedInitialDateByClientAction = true;
                                 this.configs.InitialDate = value;
-                                OSFramework.OSUI.Helper.Dom.SetInputValue(this._datePickerPlatformInputElem, this.provider.formatDate(value, this._flatpickrOpts.dateFormat));
+                                OSFramework.OSUI.Helper.Dom.SetInputValue(this.datePickerPlatformInputElem, this.provider.formatDate(value, this.flatpickrOpts.dateFormat));
                                 this.prepareToAndRedraw();
                             }
                         }
@@ -17419,7 +17418,7 @@ var Providers;
                                 enableTime: this.TimeFormat !== OSFramework.OSUI.Patterns.DatePicker.Enum.TimeFormatMode.Disable,
                                 onChange: this.OnChange,
                             };
-                            return this.mergeConfigs(super.getProviderConfig(), flatpickrSingleDateOpts, this._providerExtendedOptions);
+                            return this.mergeConfigs(super.getProviderConfig(), flatpickrSingleDateOpts, this.providerExtendedOptions);
                         }
                     }
                     SingleDate.FlatpickrSingleDateConfig = FlatpickrSingleDateConfig;
@@ -17461,6 +17460,9 @@ var Providers;
                             htmlTex: 'Da biste mogli kretati kroz kalendar s tipkovnicom tipkovnicom: Koristite CMD ili Ctrl + tipku sa strelicom dolje za kretanje u kontekst kalendara; Koristite tipke sa strelicama za navigaciju kroz dane kalendara; Koristite CMD ili CTRL + tastere sa strelicom ili lijeve strelice za kretanje kroz mjesece; Upotrijebite CMD ili Ctrl + gore ili dolje tipke sa strelicama za navigaciju kroz godine;',
                         },
                         ca: {
+                            htmlTex: 'Per poder navegar pel calendari amb tecla de teclat: utilitzeu la tecla CMD o CTRL + Down Arrow per navegar cap al context del calendari; Utilitzeu les tecles de fletxa per navegar durant els dies naturals; Utilitzeu les tecles de fletxa CMD o CTRL + dreta o esquerra per navegar durant mesos; Utilitzeu les tecles de fletxa CMD o Ctrl + amunt o avall per navegar durant anys;',
+                        },
+                        cat: {
                             htmlTex: 'Per poder navegar pel calendari amb tecla de teclat: utilitzeu la tecla CMD o CTRL + Down Arrow per navegar cap al context del calendari; Utilitzeu les tecles de fletxa per navegar durant els dies naturals; Utilitzeu les tecles de fletxa CMD o CTRL + dreta o esquerra per navegar durant mesos; Utilitzeu les tecles de fletxa CMD o Ctrl + amunt o avall per navegar durant anys;',
                         },
                         ckb: {
@@ -17568,6 +17570,9 @@ var Providers;
                         nl: {
                             htmlTex: 'Om door de agenda met toetsenbordsleutel door de kalender te kunnen navigeren: gebruik CMD of Ctrl + Down Arrow -toets om naar de context van de kalender te navigeren; Gebruik pijltoetsen om door kalenderdagen te navigeren; Gebruik CMD of Ctrl + rechter- of linker pijltoetsen om maanden door te navigeren; Gebruik CMD of Ctrl + omhoog of omlaag pijltoetsen om jaren door te navigeren;',
                         },
+                        nb: {
+                            htmlTex: 'For å kunne navigere gjennom kalender med tastaturnøkkel: Bruk CMD eller CTRL + ned piletasten for å navigere inn i kalenderkontekst; Bruk piltastene for å navigere gjennom kalenderdagene; Bruk CMD eller Ctrl + høyre eller venstre piltaster for å navigere gjennom måneder; Bruk CMD eller Ctrl + opp eller ned piltastene for å navigere gjennom år;',
+                        },
                         nn: {
                             htmlTex: 'For å kunne navigere gjennom kalender med tastaturnøkkel: Bruk CMD eller CTRL + ned piletasten for å navigere inn i kalenderkontekst; Bruk piltastene for å navigere gjennom kalenderdagene; Bruk CMD eller Ctrl + høyre eller venstre piltaster for å navigere gjennom måneder; Bruk CMD eller Ctrl + opp eller ned piltastene for å navigere gjennom år;',
                         },
@@ -17674,6 +17679,10 @@ var Providers;
                             title: 'Danas',
                         },
                         ca: {
+                            ariaLabel: "Feu clic aquí per saltar a la data d'avui",
+                            title: 'Avui',
+                        },
+                        cat: {
                             ariaLabel: "Feu clic aquí per saltar a la data d'avui",
                             title: 'Avui',
                         },
@@ -17817,6 +17826,10 @@ var Providers;
                             ariaLabel: 'Klik hier om naar de datum van vandaag te gaan',
                             title: 'Vandaag',
                         },
+                        nb: {
+                            ariaLabel: 'Klikk her for å hoppe til dagens dato',
+                            title: 'I dag',
+                        },
                         nn: {
                             ariaLabel: 'Klikk her for å hoppe til dagens dato',
                             title: 'I dag',
@@ -17929,7 +17942,7 @@ var Providers;
                         this.setA11YProperties();
                     }
                     _manageDisableStatus() {
-                        this._virtualselectConfigs.close();
+                        this.virtualselectConfigs.close();
                         if (this.configs.IsDisabled) {
                             OSFramework.OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled, '');
                         }
@@ -17945,7 +17958,7 @@ var Providers;
                     }
                     _onWindowResize() {
                         if (this.provider.isOpened()) {
-                            this._virtualselectConfigs.close();
+                            this.virtualselectConfigs.close();
                         }
                     }
                     _setElementId() {
@@ -17966,14 +17979,14 @@ var Providers;
                         OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowResize, this._eventOnWindowResize);
                     }
                     createProviderInstance() {
-                        this.provider = window.VirtualSelect.init(this._virtualselectOpts);
+                        this.provider = window.VirtualSelect.init(this.virtualselectOpts);
                         this.provider = Array.isArray(this.provider) ? this.provider[0] : this.provider;
-                        this._virtualselectConfigs = this.provider.$ele;
+                        this.virtualselectConfigs = this.provider.$ele;
                         this.provider.$dropboxContainer.setAttribute(OSFramework.OSUI.GlobalEnum.HTMLAttributes.Name, this.uniqueId);
                         this.updateProviderEvents({
                             name: VirtualSelect.Enum.ProviderInfo.Name,
                             version: VirtualSelect.Enum.ProviderInfo.Version,
-                            events: this._virtualselectConfigs,
+                            events: this.virtualselectConfigs,
                         });
                         this._manageAttributes();
                         const _bodyEvent = OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick);
@@ -18001,8 +18014,8 @@ var Providers;
                     unsetCallbacks() {
                         this._eventOnWindowResize = undefined;
                         this._onSelectedOptionEvent = undefined;
-                        this._virtualselectConfigs = undefined;
-                        this._virtualselectOpts = undefined;
+                        this.virtualselectConfigs = undefined;
+                        this.virtualselectOpts = undefined;
                         this.provider = undefined;
                         super.unsetCallbacks();
                     }
@@ -18051,10 +18064,10 @@ var Providers;
                         }
                     }
                     clear() {
-                        this._virtualselectConfigs.reset();
+                        this.virtualselectConfigs.reset();
                     }
                     close() {
-                        OSFramework.OSUI.Helper.AsyncInvocation(this._virtualselectConfigs.close.bind(this._virtualselectConfigs));
+                        OSFramework.OSUI.Helper.AsyncInvocation(this.virtualselectConfigs.close.bind(this.virtualselectConfigs));
                     }
                     disable() {
                         if (this.configs.IsDisabled === false) {
@@ -18094,7 +18107,7 @@ var Providers;
                         return '';
                     }
                     open() {
-                        OSFramework.OSUI.Helper.AsyncInvocation(this._virtualselectConfigs.open.bind(this._virtualselectConfigs));
+                        OSFramework.OSUI.Helper.AsyncInvocation(this.virtualselectConfigs.open.bind(this.virtualselectConfigs));
                     }
                     registerCallback(eventName, callback) {
                         switch (eventName) {
@@ -18109,8 +18122,8 @@ var Providers;
                         }
                     }
                     setHiddenInputWrapperAriaLabelVal(value) {
-                        this._hiddenInputWrapperAriaLabelVal = value === undefined ? this._hiddenInputWrapperAriaLabelVal : value;
-                        OSFramework.OSUI.Helper.A11Y.AriaLabel(this.provider.$wrapper, this._hiddenInputWrapperAriaLabelVal);
+                        this.hiddenInputWrapperAriaLabelVal = value === undefined ? this.hiddenInputWrapperAriaLabelVal : value;
+                        OSFramework.OSUI.Helper.A11Y.AriaLabel(this.provider.$wrapper, this.hiddenInputWrapperAriaLabelVal);
                     }
                     setProviderConfigs(newConfigs) {
                         this.configs.setExtensibilityConfigs(newConfigs);
@@ -18121,13 +18134,13 @@ var Providers;
                         const selectedValues = this.getSelectedOptionsStructure().map((value) => value.value) || [];
                         let valuesToSelect = [];
                         if (optionsToSelect.length > 0) {
-                            if (this._virtualselectOpts.multiple)
+                            if (this.virtualselectOpts.multiple)
                                 valuesToSelect = optionsToSelect.map((option) => option.value);
                             else
                                 valuesToSelect = [optionsToSelect[0].value];
                         }
                         if (valuesToSelect.sort().join(' ') !== selectedValues.sort().join(' '))
-                            this._virtualselectConfigs.setValue(valuesToSelect, silentOnChangedEvent);
+                            this.virtualselectConfigs.setValue(valuesToSelect, silentOnChangedEvent);
                     }
                     togglePopup(isEnabled) {
                         if (this.configs.ShowDropboxAsPopup !== isEnabled) {
@@ -18271,7 +18284,7 @@ var Providers;
                             search: true,
                             searchPlaceholderText: this.SearchPrompt,
                             selectAllOnlyVisible: true,
-                            selectedValue: this._getSelectedValues(),
+                            selectedValue: this.getSelectedValues(),
                             showDropboxAsPopup: this.ShowDropboxAsPopup,
                             silentInitialValueSet: true,
                             textDirection: OutSystems.OSUI.Utils.GetIsRTL()
@@ -18286,7 +18299,7 @@ var Providers;
                     setExtensibilityConfigs(newConfigs) {
                         if (newConfigs[VirtualSelect.Enum.ExtendedConfigs.hasOptionDescription] !== undefined)
                             console.warn(`The option description may be affected when modifying the property ${VirtualSelect.Enum.ExtendedConfigs.hasOptionDescription}.`);
-                        this._providerExtendedOptions = newConfigs;
+                        this.providerExtendedOptions = newConfigs;
                     }
                     validateDefault(key, value) {
                         let validatedValue = undefined;
@@ -18451,24 +18464,24 @@ var Providers;
                     class OSUIVirtualSelectSearch extends VirtualSelect.AbstractVirtualSelect {
                         constructor(uniqueId, configs) {
                             super(uniqueId, new Search.VirtualSelectSearchConfig(configs));
-                            this._hiddenInputWrapperAriaLabelVal = this.configs.AllowMultipleSelection
+                            this.hiddenInputWrapperAriaLabelVal = this.configs.AllowMultipleSelection
                                 ? Dropdown.VirtualSelect.Enum.PropertiesValues.AriaLabelMultipleValue
                                 : Dropdown.VirtualSelect.Enum.PropertiesValues.AriaLabelSingleValue;
                         }
                         getSelectedOptionsStructure() {
                             let optionsSelected = [];
                             if (this.configs.AllowMultipleSelection) {
-                                optionsSelected = this._virtualselectConfigs.getSelectedOptions();
+                                optionsSelected = this.virtualselectConfigs.getSelectedOptions();
                             }
                             else {
-                                if (this._virtualselectConfigs.getSelectedOptions()) {
-                                    optionsSelected.push(this._virtualselectConfigs.getSelectedOptions());
+                                if (this.virtualselectConfigs.getSelectedOptions()) {
+                                    optionsSelected.push(this.virtualselectConfigs.getSelectedOptions());
                                 }
                             }
                             return optionsSelected;
                         }
                         prepareConfigs() {
-                            this._virtualselectOpts = this.configs.getProviderConfig();
+                            this.virtualselectOpts = this.configs.getProviderConfig();
                             this.createProviderInstance();
                         }
                         changeProperty(propertyName, propertyValue) {
@@ -18499,7 +18512,7 @@ var Providers;
                 var Search;
                 (function (Search) {
                     class VirtualSelectSearchConfig extends VirtualSelect.AbstractVirtualSelectConfig {
-                        _getSelectedValues() {
+                        getSelectedValues() {
                             var _a;
                             const selectedKeyvalues = [];
                             if (((_a = this.StartingSelection) === null || _a === void 0 ? void 0 : _a.length) > 0) {
@@ -18518,7 +18531,7 @@ var Providers;
                             const virtualSelectSearchOpts = {
                                 multiple: this.AllowMultipleSelection,
                             };
-                            return this.mergeConfigs(super.getProviderConfig(), virtualSelectSearchOpts, this._providerExtendedOptions);
+                            return this.mergeConfigs(super.getProviderConfig(), virtualSelectSearchOpts, this.providerExtendedOptions);
                         }
                         validateDefault(key, value) {
                             let validatedValue = undefined;
@@ -18552,14 +18565,14 @@ var Providers;
                     class OSUIVirtualSelectTags extends VirtualSelect.AbstractVirtualSelect {
                         constructor(uniqueId, configs) {
                             super(uniqueId, new Tags.VirtualSelectTagsConfig(configs));
-                            this._hiddenInputWrapperAriaLabelVal = Dropdown.VirtualSelect.Enum.PropertiesValues.AriaLabelMultipleValue;
+                            this.hiddenInputWrapperAriaLabelVal = Dropdown.VirtualSelect.Enum.PropertiesValues.AriaLabelMultipleValue;
                         }
                         getSelectedOptionsStructure() {
-                            const optionsSelected = this._virtualselectConfigs.getSelectedOptions();
+                            const optionsSelected = this.virtualselectConfigs.getSelectedOptions();
                             return optionsSelected;
                         }
                         prepareConfigs() {
-                            this._virtualselectOpts = this.configs.getProviderConfig();
+                            this.virtualselectOpts = this.configs.getProviderConfig();
                             this.createProviderInstance();
                         }
                     }
@@ -18580,7 +18593,7 @@ var Providers;
                 var Tags;
                 (function (Tags) {
                     class VirtualSelectTagsConfig extends VirtualSelect.AbstractVirtualSelectConfig {
-                        _getSelectedValues() {
+                        getSelectedValues() {
                             const selectedKeyvalues = [];
                             if (this.StartingSelection.length > 0) {
                                 for (const option of this.StartingSelection) {
@@ -18594,13 +18607,36 @@ var Providers;
                                 multiple: true,
                                 showValueAsTags: true,
                             };
-                            return this.mergeConfigs(super.getProviderConfig(), virtualSelectTagsOpts, this._providerExtendedOptions);
+                            return this.mergeConfigs(super.getProviderConfig(), virtualSelectTagsOpts, this.providerExtendedOptions);
                         }
                     }
                     Tags.VirtualSelectTagsConfig = VirtualSelectTagsConfig;
                 })(Tags = VirtualSelect.Tags || (VirtualSelect.Tags = {}));
             })(VirtualSelect = Dropdown.VirtualSelect || (Dropdown.VirtualSelect = {}));
         })(Dropdown = OSUI.Dropdown || (OSUI.Dropdown = {}));
+    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
+})(Providers || (Providers = {}));
+var Providers;
+(function (Providers) {
+    var OSUI;
+    (function (OSUI) {
+        var MonthPicker;
+        (function (MonthPicker) {
+            var Flatpickr;
+            (function (Flatpickr) {
+                var Enum;
+                (function (Enum) {
+                    let Attribute;
+                    (function (Attribute) {
+                        Attribute["DefaultAriaLabel"] = "Select a month";
+                    })(Attribute = Enum.Attribute || (Enum.Attribute = {}));
+                    let CssClasses;
+                    (function (CssClasses) {
+                        CssClasses["AccessibilityContainerInfo"] = "osui-monthpicker-a11y";
+                    })(CssClasses = Enum.CssClasses || (Enum.CssClasses = {}));
+                })(Enum = Flatpickr.Enum || (Flatpickr.Enum = {}));
+            })(Flatpickr = MonthPicker.Flatpickr || (MonthPicker.Flatpickr = {}));
+        })(MonthPicker = OSUI.MonthPicker || (OSUI.MonthPicker = {}));
     })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
 })(Providers || (Providers = {}));
 var Providers;
@@ -18629,21 +18665,27 @@ var Providers;
                 class OSUIFlatpickrMonth extends OSFramework.OSUI.Patterns.MonthPicker.AbstractMonthPicker {
                     constructor(uniqueId, configs) {
                         super(uniqueId, new Flatpickr.FlatpickrMonthConfig(configs));
-                        this.configs.OnChange = this.onMonthSelectedEvent.bind(this);
+                        this.configs.OnChangeEventCallback = this.onMonthSelectedEvent.bind(this);
+                        this.configs.OnCloseEventCallback = this.onClose.bind(this);
+                        this.configs.OnOpenEventCallback = this.onOpen.bind(this);
+                    }
+                    _getBodyOnClickGlobalEvent() {
+                        this._bodyOnClickGlobalEvent =
+                            OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick);
                     }
                     _setAttributes() {
-                        this._flatpickrInputElem = this._monthPickerProviderInputElem.nextSibling;
-                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.DataInput, OSFramework.OSUI.Constants.EmptyString);
-                        if (this._flatpickrInputElem.disabled) {
-                            OSFramework.OSUI.Helper.Dom.Attribute.Remove(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled);
+                        this.flatpickrInputElem = this.monthPickerPlatformInputElem.nextSibling;
+                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this.flatpickrInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.DataInput, OSFramework.OSUI.Constants.EmptyString);
+                        if (this.flatpickrInputElem.disabled) {
+                            OSFramework.OSUI.Helper.Dom.Attribute.Remove(this.flatpickrInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled);
                         }
                     }
                     _setCalendarCssClasses() {
                         OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.provider.calendarContainer, OSFramework.OSUI.Patterns.MonthPicker.Enum.CssClass.Dropdown);
-                        if (OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.InputClassTypes.InputLarge)) {
+                        if (OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(this.flatpickrInputElem, OSFramework.OSUI.GlobalEnum.InputClassTypes.InputLarge)) {
                             OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.provider.calendarContainer, OSFramework.OSUI.Patterns.Dropdown.Enum.CssClass.DropdownLarge);
                         }
-                        else if (OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.InputClassTypes.InputSmall)) {
+                        else if (OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(this.flatpickrInputElem, OSFramework.OSUI.GlobalEnum.InputClassTypes.InputSmall)) {
                             OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.provider.calendarContainer, OSFramework.OSUI.Patterns.Dropdown.Enum.CssClass.DropdownSmall);
                         }
                         if (this.configs.ExtendedClass !== '') {
@@ -18651,34 +18693,30 @@ var Providers;
                         }
                     }
                     createProviderInstance() {
-                        if (this._monthPickerProviderInputElem && this._flatpickrOpts.defaultDate === undefined) {
-                            this._monthPickerProviderInputElem.value = '';
+                        if (this.monthPickerPlatformInputElem && this._flatpickrOpts.defaultDate === undefined) {
+                            this.monthPickerPlatformInputElem.value = OSFramework.OSUI.Constants.EmptyString;
                         }
-                        this.provider = window.flatpickr(this._monthPickerProviderInputElem, this._flatpickrOpts);
+                        this.provider = window.flatpickr(this.monthPickerPlatformInputElem, this._flatpickrOpts);
                         this._setAttributes();
                         if (this.provider.calendarContainer !== undefined) {
                             this._setCalendarCssClasses();
                             this._bodyScrollCommonBehaviour = new OSUI.SharedProviderResources.Flatpickr.UpdatePositionOnScroll(this);
                             this._zindexCommonBehavior = new OSUI.SharedProviderResources.Flatpickr.UpdateZindex(this);
+                            OSFramework.OSUI.Helper.Dom.SetInputValue(this.monthPickerPlatformInputElem, this.monthPickerPlatformInputElem.nextSibling.value);
                         }
-                        const _bodyEvent = OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick);
-                        if (_bodyEvent) {
-                            this.provider.config.onOpen.push(function () {
-                                _bodyEvent.disableBodyClickEvent();
-                            });
-                            this.provider.config.onClose.push(() => {
-                                _bodyEvent.enableBodyClickEvent();
-                            });
-                        }
-                        this.createdInstance();
-                    }
-                    createdInstance() {
+                        this.updatePlatformInputAttrs();
+                        this.setA11YProperties();
                         this.updateProviderEvents({
                             name: OSUI.SharedProviderResources.Flatpickr.Enum.ProviderInfo.Name,
                             version: OSUI.SharedProviderResources.Flatpickr.Enum.ProviderInfo.Version,
                             events: this.provider.config,
                         });
                         this.triggerPlatformInitializedEventCallback();
+                    }
+                    onClose() {
+                        if (this._bodyOnClickGlobalEvent !== undefined) {
+                            this._bodyOnClickGlobalEvent.enableBodyClickEvent();
+                        }
                     }
                     onMonthSelectedEvent(selectedMonthYear) {
                         const _selectedMonthYear = {
@@ -18687,40 +18725,71 @@ var Providers;
                             year: OSFramework.OSUI.Constants.InvalidNumber,
                         };
                         if (selectedMonthYear.length > 0) {
-                            const _selectedDate = new Date(selectedMonthYear[0]);
+                            const _selectedDate = selectedMonthYear[0];
                             const _selectedMonthIndex = _selectedDate.getMonth();
                             _selectedMonthYear.month = OSFramework.OSUI.Constants.Months[_selectedMonthIndex];
                             _selectedMonthYear.monthOrder = _selectedMonthIndex + 1;
                             _selectedMonthYear.year = _selectedDate.getFullYear();
                         }
-                        this.triggerPlatformEventCallback(this._onSelectedCallbackEvent, _selectedMonthYear.month, _selectedMonthYear.monthOrder, _selectedMonthYear.year);
+                        else {
+                            OSFramework.OSUI.Helper.Dom.SetInputValue(this.monthPickerPlatformInputElem, ' ');
+                        }
+                        OSFramework.OSUI.Helper.Dom.SetInputValue(this.monthPickerPlatformInputElem, this.flatpickrInputElem.value);
+                        this.triggerPlatformEventCallback(this.onSelectedCallbackEvent, _selectedMonthYear.month, _selectedMonthYear.monthOrder, _selectedMonthYear.year);
+                    }
+                    onOpen() {
+                        if (this._bodyOnClickGlobalEvent !== undefined) {
+                            this._bodyOnClickGlobalEvent.disableBodyClickEvent();
+                        }
                     }
                     prepareConfigs() {
                         this._flatpickrOpts = this.configs.getProviderConfig();
                         this.createProviderInstance();
                     }
                     setA11YProperties() {
-                        console.warn(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this.monthPickerPlatformInputElem, OSFramework.OSUI.Constants.A11YAttributes.TabIndex, OSFramework.OSUI.Constants.A11YAttributes.States.TabIndexHidden);
+                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this.monthPickerPlatformInputElem, OSFramework.OSUI.Constants.A11YAttributes.Aria.Hidden, OSFramework.OSUI.Constants.A11YAttributes.States.True);
+                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this._a11yInfoContainerElem, OSFramework.OSUI.Constants.A11YAttributes.Aria.Hidden, OSFramework.OSUI.Constants.A11YAttributes.States.True);
+                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this.flatpickrInputElem, OSFramework.OSUI.Constants.A11YAttributes.TabIndex, OSFramework.OSUI.Constants.A11YAttributes.States.TabIndexShow);
+                        let ariaLabelValue = Flatpickr.Enum.Attribute.DefaultAriaLabel;
+                        if (this.monthPickerPlatformInputElem.hasAttribute(OSFramework.OSUI.Constants.A11YAttributes.Aria.Label)) {
+                            ariaLabelValue = this.monthPickerPlatformInputElem.getAttribute(OSFramework.OSUI.Constants.A11YAttributes.Aria.Label);
+                        }
+                        OSFramework.OSUI.Helper.A11Y.AriaLabel(this.flatpickrInputElem, ariaLabelValue);
+                        OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(this.flatpickrInputElem, this._a11yInfoContainerElem.id);
+                        if (this.configs.Lang !== OSFramework.OSUI.Constants.Language.short) {
+                            this._a11yInfoContainerElem.innerHTML =
+                                MonthPicker.Flatpickr.l10ns.A11yContainerInfo[this.configs.Lang] !== undefined
+                                    ? MonthPicker.Flatpickr.l10ns.A11yContainerInfo[this.configs.Lang].htmlTex
+                                    : MonthPicker.Flatpickr.l10ns.A11yContainerInfo.en.htmlTex;
+                        }
                     }
                     setCallbacks() {
                         console.log(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
                     }
                     setHtmlElements() {
-                        this._monthPickerProviderInputElem = this.selfElement.querySelector(OSFramework.OSUI.GlobalEnum.CSSSelectors.InputFormControl);
-                        if (!this._monthPickerProviderInputElem) {
+                        this.monthPickerPlatformInputElem = this.selfElement.querySelector(OSFramework.OSUI.GlobalEnum.CSSSelectors.InputFormControl);
+                        this._a11yInfoContainerElem = OSFramework.OSUI.Helper.Dom.TagSelector(this.selfElement.parentElement, OSFramework.OSUI.Constants.Dot + Flatpickr.Enum.CssClasses.AccessibilityContainerInfo);
+                        if (!this.monthPickerPlatformInputElem) {
                             throw new Error(`The monthpicker input at MonthpickerId '${this.widgetId}' is missing`);
                         }
                     }
                     unsetCallbacks() {
-                        this.configs.OnChange = undefined;
-                        this._onSelectedCallbackEvent = undefined;
+                        this.configs.OnChangeEventCallback = undefined;
+                        this.configs.OnCloseEventCallback = undefined;
+                        this.configs.OnOpenEventCallback = undefined;
+                        this.onSelectedCallbackEvent = undefined;
                         super.unsetCallbacks();
                     }
                     unsetHtmlElements() {
-                        this._monthPickerProviderInputElem = undefined;
+                        this.monthPickerPlatformInputElem = undefined;
+                    }
+                    updatePlatformInputAttrs() {
+                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this.monthPickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.type, OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text);
                     }
                     build() {
                         super.build();
+                        this._getBodyOnClickGlobalEvent();
                         this.setHtmlElements();
                         this.prepareConfigs();
                         this.finishBuild();
@@ -18743,7 +18812,7 @@ var Providers;
                         }
                     }
                     clear() {
-                        const isInputDisable = this._monthPickerProviderInputElem.disabled;
+                        const isInputDisable = this.monthPickerPlatformInputElem.disabled;
                         if (isInputDisable === false) {
                             this.provider.clear();
                         }
@@ -18766,7 +18835,7 @@ var Providers;
                         super.dispose();
                     }
                     open() {
-                        const isInputDisable = this._monthPickerProviderInputElem.disabled;
+                        const isInputDisable = this.monthPickerPlatformInputElem.disabled;
                         if (this.provider.isOpen === false && isInputDisable === false) {
                             this.provider.open();
                         }
@@ -18774,7 +18843,7 @@ var Providers;
                     registerCallback(eventName, callback) {
                         switch (eventName) {
                             case OSFramework.OSUI.Patterns.MonthPicker.Enum.Events.OnSelected:
-                                this._onSelectedCallbackEvent = callback;
+                                this.onSelectedCallbackEvent = callback;
                                 break;
                             default:
                                 super.registerCallback(eventName, callback);
@@ -18799,13 +18868,13 @@ var Providers;
                         super.setProviderConfigs(newConfigs);
                     }
                     updateInitialMonth(monthYear) {
-                        if (this._monthPickerProviderInputElem.disabled === false) {
+                        if (this.monthPickerPlatformInputElem.disabled === false) {
                             this.configs.InitialMonth = monthYear;
                             this.redraw();
                         }
                     }
                     updatePrompt(promptMessage) {
-                        this._flatpickrInputElem.placeholder = promptMessage;
+                        this.flatpickrInputElem.placeholder = promptMessage;
                     }
                 }
                 Flatpickr.OSUIFlatpickrMonth = OSUIFlatpickrMonth;
@@ -18886,7 +18955,9 @@ var Providers;
                             disableMobile: this.DisableMobile,
                             maxDate: this._getDateFromMonthYear(this.MaxMonth),
                             minDate: this._getDateFromMonthYear(this.MinMonth),
-                            onChange: this.OnChange,
+                            onChange: this.OnChangeEventCallback,
+                            onClose: this.OnCloseEventCallback,
+                            onOpen: this.OnOpenEventCallback,
                             plugins: [
                                 new monthSelectPlugin({
                                     shorthand: true,
@@ -18898,10 +18969,10 @@ var Providers;
                         if (this._providerOptions.locale === undefined) {
                             this._providerOptions.locale = this._checkLocale();
                         }
-                        return this.mergeConfigs(this._providerOptions, undefined, this._providerExtendedOptions);
+                        return this.mergeConfigs(this._providerOptions, undefined, this.providerExtendedOptions);
                     }
                     setExtensibilityConfigs(newConfigs) {
-                        this._providerExtendedOptions = newConfigs;
+                        this.providerExtendedOptions = newConfigs;
                     }
                     get Lang() {
                         return this._lang;
@@ -18911,6 +18982,218 @@ var Providers;
                     }
                 }
                 Flatpickr.FlatpickrMonthConfig = FlatpickrMonthConfig;
+            })(Flatpickr = MonthPicker.Flatpickr || (MonthPicker.Flatpickr = {}));
+        })(MonthPicker = OSUI.MonthPicker || (OSUI.MonthPicker = {}));
+    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
+})(Providers || (Providers = {}));
+var Providers;
+(function (Providers) {
+    var OSUI;
+    (function (OSUI) {
+        var MonthPicker;
+        (function (MonthPicker) {
+            var Flatpickr;
+            (function (Flatpickr) {
+                var l10ns;
+                (function (l10ns) {
+                    l10ns.A11yContainerInfo = {
+                        ar: {
+                            htmlTex: 'من أجل أن تكون قادرًا على التنقل من خلال التقويم باستخدام مفتاح لوحة المفاتيح: استخدم مفاتيح السهم اليمنى أو CTRL + CTRL + للتنقل عبر أشهر ؛ استخدم مفاتيح الأسهم CMD أو CTRL + لأعلى أو لأسفل للتنقل عبر سنوات ؛',
+                        },
+                        at: {
+                            htmlTex: 'Um mit Tastaturschlüssel durch den Kalender navigieren zu können: Verwenden Sie CMD oder Strg + rechte oder linke Pfeiltasten, um Monate zu navigieren; Verwenden Sie CMD oder Strg + Up- oder Down -Pfeiltasten, um durch Jahre zu navigieren.',
+                        },
+                        az: {
+                            htmlTex: 'Klaviatura açarı ilə təqvimlə naviqasiya etmək üçün: aylarla gəzmək üçün CMD və ya CTRL + sağ və ya sol ox düymələrindən istifadə edin; İllərlə gəzmək üçün CMD və ya CTRL + yuxarı və ya aşağı ox düymələrindən istifadə edin;',
+                        },
+                        be: {
+                            htmlTex: 'Для таго, каб мець магчымасць перамяшчацца па календары з клавішнай клавішай: Выкарыстоўвайце CMD або Ctrl + правай або левай клавішы са стрэлкамі для навігацыі праз месяцы; Выкарыстоўвайце CMD або CTRL + клавішы са стрэлкамі ўверх ці ўніз, каб перамяшчацца праз гады;',
+                        },
+                        bg: {
+                            htmlTex: 'За да можете да се движите през календара с клавиатура на клавиатурата: използвайте CMD или CTRL + десни или леви клавиши със стрелки, за да се движите през месеци; Използвайте CMD или Ctrl + нагоре или надолу клавиши със стрелки, за да навигирате през години;',
+                        },
+                        bn: {
+                            htmlTex: 'কীবোর্ড কী দিয়ে ক্যালেন্ডারের মাধ্যমে নেভিগেট করতে সক্ষম হওয়ার জন্য: কয়েক মাস ধরে নেভিগেট করতে সিএমডি বা সিটিআরএল + ডান বা বাম তীর কী ব্যবহার করুন; কয়েক বছর ধরে নেভিগেট করতে সিএমডি বা সিটিআরএল + উপরে বা ডাউন তীর কী ব্যবহার করুন;',
+                        },
+                        bs: {
+                            htmlTex: 'Da biste mogli kretati se kroz kalendar s tipkovnicom tipkovnicom: koristite CMD ili Ctrl + desno ili lijeve tipke sa strelicama za navigaciju kroz mjesece; Upotrijebite CMD ili Ctrl + gore ili dolje tipke sa strelicama za navigaciju kroz godine;',
+                        },
+                        ca: {
+                            htmlTex: 'Per poder navegar pel calendari amb tecla del teclat: utilitzeu les tecles de fletxa CMD o CTRL + dreta o esquerra per navegar durant mesos; Utilitzeu les tecles de fletxa CMD o Ctrl + amunt o avall per navegar durant anys;',
+                        },
+                        cat: {
+                            htmlTex: 'Per poder navegar pel calendari amb tecla del teclat: utilitzeu les tecles de fletxa CMD o CTRL + dreta o esquerra per navegar durant mesos; Utilitzeu les tecles de fletxa CMD o Ctrl + amunt o avall per navegar durant anys;',
+                        },
+                        ckb: {
+                            htmlTex: 'Ji bo ku bikaribin bi kalîfar bi klavyeyê bi klavyeyê veguhezînin: Bişkojkên CMD an CTRL + Rast an çep an çepê bikar bînin da ku bi mehan rêve bibin; Bişkojkên CMD an CTRL + UP an Down bikar bînin da ku bi salan navigirin;',
+                        },
+                        cs: {
+                            htmlTex: 'Aby bylo možné procházet kalendářem pomocí klávesnice: Použijte KMU CMD nebo CTRL + PRÁVO nebo levé šipky pro navigaci v měsících; Pro navigaci v letech použijte CMD nebo CTRL + nahoru nebo dolů klíče se šipkami;',
+                        },
+                        cy: {
+                            htmlTex: "Er mwyn gallu llywio trwy'r calendr gydag allwedd bysellfwrdd: defnyddiwch allweddi saeth CMD neu Ctrl + dde neu chwith i lywio trwy fisoedd; Defnyddio CMD neu Ctrl + i fyny neu i lawr allweddi saeth i lywio trwy flynyddoedd;",
+                        },
+                        da: {
+                            htmlTex: 'For at kunne navigere gennem kalender med tastaturnøgle: Brug CMD eller Ctrl + højre eller venstre piletaster til at navigere gennem måneder; Brug CMD eller CTRL + op eller ned på piletasterne til at navigere gennem år;',
+                        },
+                        de: {
+                            htmlTex: 'Um mit Tastaturschlüssel durch den Kalender navigieren zu können: Verwenden Sie CMD oder Strg + rechte oder linke Pfeiltasten, um Monate zu navigieren; Verwenden Sie CMD oder Strg + Up- oder Down -Pfeiltasten, um durch Jahre zu navigieren.',
+                        },
+                        en: {
+                            htmlTex: 'In order to be able to navigate through calendar with keyboard key: Use cmd or ctrl + right or left arrow keys to navigate through months; Use cmd or ctrl + up or down arrow keys to navigate through years;',
+                        },
+                        eo: {
+                            htmlTex: 'Por povi navigi tra kalendaro per klavara ŝlosilo: Uzu CMD aŭ CTRL + dekstran aŭ maldekstran sagon por navigi tra monatoj; Uzu CMD aŭ Ctrl + supren aŭ malsupren sago -ŝlosilojn por navigi tra jaroj;',
+                        },
+                        es: {
+                            htmlTex: 'Para poder navegar a través del calendario con la tecla de teclado: use las teclas CMD o CTRL + de flecha derecha o izquierda para navegar durante meses; Use CMD o CTRL + las teclas de flecha hacia arriba o hacia abajo para navegar durante años;',
+                        },
+                        et: {
+                            htmlTex: 'Klaviatuuri klahviga kalendris navigeerimiseks: kasutage kuude jooksul navigeerimiseks CMD või CTRL + paremat või vasakut nooleklahvi; Kasutage aastate jooksul navigeerimiseks CMD või Ctrl + üles või alla nooleklahve;',
+                        },
+                        fa: {
+                            htmlTex: 'برای اینکه بتوانید از طریق تقویم با کلید صفحه کلید حرکت کنید: از کلیدهای پیکان CMD یا CTRL + راست یا چپ برای حرکت در طی ماه ها استفاده کنید. برای حرکت در طی سالها از کلیدهای Arrow CMD یا Ctrl + بالا یا پایین استفاده کنید.',
+                        },
+                        fi: {
+                            htmlTex: 'Kalenterin läpi näppäimistön näppäimellä voi kulkea CMD: n tai Ctrl +: n oikean tai vasemman nuolinäppäimen avulla kulkeaksesi kuukausia; Käytä CMD: tä tai Ctrl + ylös tai alas nuolinäppäimiä navigoidaksesi vuosien ajan;',
+                        },
+                        fo: {
+                            htmlTex: 'Um mit Tastaturschlüssel durch den Kalender navigieren zu können: Verwenden Sie CMD oder Strg + rechte oder linke Pfeiltasten, um Monate zu navigieren; Verwenden Sie CMD oder Strg + Up- oder Down -Pfeiltasten, um durch Jahre zu navigieren.',
+                        },
+                        fr: {
+                            htmlTex: 'Afin de pouvoir naviguer dans le calendrier avec la clé du clavier: utilisez les touches CMD ou CTRL + droite ou gauche pour naviguer dans des mois; Utilisez CMD ou CTRL + les clés de flèches vers le haut ou vers le bas pour naviguer dans des années;',
+                        },
+                        ga: {
+                            htmlTex: "D'fhonn a bheith in ann nascleanúint a dhéanamh trí fhéilire le heochair mhéarchláir: Úsáid Eochracha saighead CMD nó CTRL + ar chlé nó ar chlé chun nascleanúint a dhéanamh trí mhí; Bain úsáid as eochracha CMD nó Ctrl + suas nó síos saighead le nascleanúint a dhéanamh trí bhlianta;",
+                        },
+                        gr: {
+                            htmlTex: 'Προκειμένου να μπορείτε να περιηγηθείτε στο ημερολόγιο με το πλήκτρο πληκτρολογίου: Χρησιμοποιήστε CMD ή CTRL + δεξιά ή αριστερά πλήκτρα βέλους για να περιηγηθείτε σε μήνες. Χρησιμοποιήστε CMD ή CTRL + πάνω ή κάτω πλήκτρα βέλους για να περιηγηθείτε σε χρόνια.',
+                        },
+                        he: {
+                            htmlTex: 'על מנת להיות מסוגל לנווט בלוח השנה עם מקש המקלדת: השתמש במקשי CMD או Ctrl + ימין או שמאל כדי לנווט בחודשים; השתמש במקשי CMD או Ctrl + למעלה או במורד חצים כדי לנווט בשנים;',
+                        },
+                        hi: {
+                            htmlTex: 'कीबोर्ड कुंजी के साथ कैलेंडर के माध्यम से नेविगेट करने में सक्षम होने के लिए: महीनों के माध्यम से नेविगेट करने के लिए सीएमडी या सीटीआरएल + दाएं या बाएं तीर कुंजियों का उपयोग करें; वर्षों के माध्यम से नेविगेट करने के लिए CMD या CTRL + अप या डाउन तीर कुंजियों का उपयोग करें;',
+                        },
+                        hr: {
+                            htmlTex: 'Da biste mogli kretati se kroz kalendar s tipkovnicom tipki: Upotrijebite CMD ili CTRL + desne ili lijeve tipke sa strelicama za kretanje kroz mjesece; Koristite CMD ili Ctrl + tipke sa strelicama gore ili dolje za kretanje kroz godine;',
+                        },
+                        hu: {
+                            htmlTex: 'Annak érdekében, hogy a naptárban navigálhassunk a billentyűzet billentyűvel: használja a CMD vagy a CTRL + jobb vagy a bal nyíl billentyűket a hónapok navigálásához; Használja a CMD -t vagy a Ctrl + felfelé vagy lefelé nyíl kulcsokat az évek során;',
+                        },
+                        hy: {
+                            htmlTex: 'Որպեսզի կարողանաք նավարկվել ստեղնաշարի ստեղնաշարի միջոցով. Օգտագործեք CMD կամ CTRL + աջ կամ ձախ սլաքի ստեղներ `ամիսների միջոցով նավարկելու համար; Տարիներ շարունակ նավարկելու համար օգտագործեք CMD կամ CTRL + Up կամ Down Arrow ստեղներ.',
+                        },
+                        id: {
+                            htmlTex: 'Agar dapat menavigasi melalui kalender dengan kunci keyboard: Gunakan cmd atau ctrl + tombol panah kanan atau kiri untuk menavigasi selama berbulan -bulan; Gunakan CMD atau Ctrl + Kunci Panah Atas atau Bawah untuk menavigasi selama bertahun -tahun;',
+                        },
+                        is: {
+                            htmlTex: 'Til þess að geta flett í gegnum dagatal með lyklaborðslykli: Notaðu CMD eða Ctrl + hægri eða vinstri örvatakkana til að sigla í gegnum mánuði; Notaðu CMD eða Ctrl + upp eða niður örvatakkana til að sigla í gegnum ár;',
+                        },
+                        it: {
+                            htmlTex: 'Per poter navigare attraverso il calendario con il tasto tastiera: utilizzare i tasti freccia CMD o CTRL + destra o sinistra per navigare nei mesi; Utilizzare CMD o CTRL + SU o Down Freccia per navigare per anni;',
+                        },
+                        ja: {
+                            htmlTex: 'キーボードキーを使用してカレンダーをナビゲートできるようにするCMDまたはCtrl +上または下の矢印キーを使用して、年を操作します。',
+                        },
+                        ka: {
+                            htmlTex: 'იმისათვის, რომ შეძლოთ კალენდარი კლავიშის გასაღებით კალენდარში: გამოიყენეთ CMD ან CTRL + მარჯვენა ან მარცხენა ისრის გასაღებები, რომ მოხდეს თვეების განმავლობაში ნავიგაცია; გამოიყენეთ CMD ან CTRL + ზემოთ ან ქვემოთ ისრის გასაღებები, რომლითაც წლების განმავლობაში ნავიგაციაა;',
+                        },
+                        km: {
+                            htmlTex: 'ដើម្បីអាចរុករកតាមប្រតិទិនដោយប្រើគ្រាប់ចុចក្តារចុច: ប្រើ cmd ឬបញ្ជា (Ctrl) + គ្រាប់ចុចព្រួញស្ដាំឬឆ្វេងដើម្បីរុករកពេញមួយខែ។ ប្រើ CMD ឬបញ្ជា (Ctrl) + គ្រាប់ចុចព្រួញចុះក្រោមឬចុះក្រោមដើម្បីរុករកពេញមួយឆ្នាំ;',
+                        },
+                        ko: {
+                            htmlTex: '키보드 키로 캘린더를 탐색 할 수 있도록 : CMD 또는 CTRL + 오른쪽 또는 왼쪽 화살표 키를 사용하여 몇 달 동안 탐색하십시오. CMD 또는 Ctrl + Up 또는 Down Arrow 키를 사용하여 수년 동안 탐색하십시오.',
+                        },
+                        kz: {
+                            htmlTex: 'Пернетақта пернесімен күнтізбе арқылы шарлау үшін: бірнеше айлармен шарлау үшін CMD немесе CTRL + оң немесе сол жақ көрсеткі пернелерін пайдаланыңыз; Жылдар бойына шарлау үшін CMD немесе CTRL + UP немесе төмен көрсеткілерді қолданыңыз;',
+                        },
+                        lt: {
+                            htmlTex: 'Norėdami naršyti po kalendorių su klaviatūros klavišu: naudokite CMD arba CTRL + dešinę arba kairę rodyklės klavišus, kad galėtumėte naršyti po mėnesių; Norėdami naršyti po metus, naudokite CMD arba CTRL + aukštyn arba žemyn rodyklių klavišus;',
+                        },
+                        lv: {
+                            htmlTex: 'Lai varētu pārvietoties pa kalendāru ar tastatūras atslēgu: izmantojiet CMD vai CTRL + labās vai kreisās bultiņas taustiņus, lai pārvietotos mēnešos; Izmantojiet cmd vai ctrl + uz augšu vai uz leju bultiņu taustiņiem, lai pārvietotos pa gadiem;',
+                        },
+                        mk: {
+                            htmlTex: 'За да можете да се движите низ календарот со копчето за тастатура: Користете CMD или CTRL + десно или лево стрела со стрелки за да се движите низ месеци; Користете CMD или CTRL + UPAR или DOWN ARROW ARROW за да се движите низ години;',
+                        },
+                        mn: {
+                            htmlTex: 'Гарны түлхүүрээр хуанлигаар дамжуулан явах боломжтой байхын тулд: CMD эсвэл CTD эсвэл CTRL + CRD эсвэл CTRL + RUPER эсвэл LOUT эсвэл LOW эсвэл Зүүн сум ашиглана уу; CMD эсвэл CTRL + UP эсвэл AP A эсвэл DOWN ARCE товчийг ашиглан олон жилийн турш дамжин өнгөрөх;',
+                        },
+                        ms: {
+                            htmlTex: 'Untuk dapat menavigasi kalendar dengan kekunci papan kekunci: Gunakan kekunci anak panah kanan atau kiri CTRL + untuk menavigasi bulan; Gunakan kekunci anak panah CMD atau Ctrl + Up atau Down untuk menavigasi selama bertahun -tahun;',
+                        },
+                        my: {
+                            htmlTex: 'ကီးဘုတ်ကီးနှင့်အတူပြက္ခဒိန်မှတဆင့်ဖြတ်သန်းသွားနိုင်ရန်အတွက်လများကိုသွားရန် CMD သို့မဟုတ် Ctrl + လက်ဝဲသို့မဟုတ်လက်ဝဲ lerow keys များကိုသုံးပါ။ နှစ်ပေါင်းသွားရန် CMD သို့မဟုတ် Ctrl + Up သို့မဟုတ် Up arrow သော့များကိုသုံးပါ။',
+                        },
+                        nl: {
+                            htmlTex: 'Om door de kalender met toetsenbordsleutel te kunnen navigeren: gebruik CMD of CTRL + rechter- of linker pijltoetsen om maanden door te navigeren; Gebruik CMD of Ctrl + omhoog of omlaag pijltoetsen om jaren door te navigeren;',
+                        },
+                        nb: {
+                            htmlTex: 'For å kunne navigere gjennom kalender med tastaturnøkkel: Bruk CMD eller CTRL + høyre eller venstre piltaster for å navigere gjennom måneder; Bruk CMD eller CTRL + opp eller ned piltastene for å navigere gjennom år;',
+                        },
+                        nn: {
+                            htmlTex: 'For å kunne navigere gjennom kalender med tastaturnøkkel: Bruk CMD eller CTRL + høyre eller venstre piltaster for å navigere gjennom måneder; Bruk CMD eller CTRL + opp eller ned piltastene for å navigere gjennom år;',
+                        },
+                        no: {
+                            htmlTex: 'For å kunne navigere gjennom kalender med tastaturnøkkel: Bruk CMD eller CTRL + høyre eller venstre piltaster for å navigere gjennom måneder; Bruk CMD eller CTRL + opp eller ned piltastene for å navigere gjennom år;',
+                        },
+                        pa: {
+                            htmlTex: 'ਕੀਬੋਰਡ ਕੁੰਜੀ ਨਾਲ ਕੈਲੰਡਰ ਨੂੰ ਨੈਵੀਗੇਟ ਕਰਨ ਦੇ ਯੋਗ ਹੋਣ ਲਈ: ਮਹੀਨਿਆਂ ਦੇ ਜ਼ਰੀਏ ਨੈਵੀਗੇਟ ਕਰਨ ਲਈ ਸੀ.ਐੱਮ.ਡੀ. ਜਾਂ Ctrl + ਸੱਜੇ ਜਾਂ ਖੱਬੇ ਐਰੋ ਬਟਨ ਦੀ ਵਰਤੋਂ ਕਰੋ; ਸਾਲਾਂ ਦੁਆਰਾ ਨੇਵੀਗੇਟ ਕਰਨ ਲਈ ਸੀ.ਐੱਮ.ਡੀ. ਜਾਂ Ctrl + U ਉੱਪਰ ਜਾਂ ਹੇਠਾਂ ਐਰੋ ਬਟਨ ਦੀ ਵਰਤੋਂ ਕਰੋ;',
+                        },
+                        pl: {
+                            htmlTex: 'Aby móc poruszać się po kalendarzu z klawiszem klawiatury: Użyj CMD lub CTRL + prawej lub lewej strzałki, aby nawigować przez miesiące; Użyj CMD lub CTRL + w górę lub w dół klawiszy strzałek, aby poruszać się przez lata;',
+                        },
+                        pt: {
+                            htmlTex: 'Para poder navegar pelo calendário com a tecla do teclado: use as teclas de seta CMD ou Ctrl + direita ou esquerda para navegar por meses; Use as teclas de seta CMD ou Ctrl + para cima ou para baixo para navegar por anos;',
+                        },
+                        ro: {
+                            htmlTex: 'Pentru a putea naviga prin calendarul cu tasta tastatură: utilizați tastele săgeată CMD sau CTRL + dreapta sau stânga pentru a naviga prin luni; Utilizați tastele săgeată CMD sau Ctrl + în sus sau în jos pentru a naviga de -a lungul anilor;',
+                        },
+                        ru: {
+                            htmlTex: 'Чтобы иметь возможность ориентироваться в календаре с клавишной клавиш: используйте CMD или Ctrl + правый или левый клавиш стрелка, чтобы перемещаться в течение нескольких месяцев; Используйте CMD или CTRL + клавиши стрелки вверх или вниз, чтобы перемещаться по годам;',
+                        },
+                        si: {
+                            htmlTex: 'යතුරුපුවරු යතුර සමඟ දින දර්ශනය හරහා සැරිසැරීමට හැකි වීම සඳහා: මාස ගණනක් තුළ සැරිසැරීමට CMD හෝ CTRL + දකුණ හෝ වම් ඊතල යතුරු භාවිතා කරන්න; අවුරුදු ගණනාව තුළ සැරිසැරීමට CMD හෝ CTRL + ඉහළට හෝ පහළට ඊතල යතුරු භාවිතා කරන්න;',
+                        },
+                        sk: {
+                            htmlTex: 'Aby ste mohli prejsť v kalendári s klávesom Keyboard: Pomocou klávesov CMD alebo CTRL + vpravo alebo ľavej šípky navigujte v priebehu mesiacov; Na previgovanie rokov použite kľúče od CMD alebo CTRL + hore alebo dole;',
+                        },
+                        sl: {
+                            htmlTex: 'Da bi se lahko pomaknili po koledarju s tipkovnico tipkovnice: uporabite CMD ali Ctrl + desno ali levo puščico za krmarjenje po mesecih; Za krmarjenje skozi leta uporabite tipke CMD ali CTRL + UP ali Down;',
+                        },
+                        sq: {
+                            htmlTex: 'Në mënyrë që të jeni në gjendje të lundroni nëpër kalendar me çelësin e tastierës: Përdorni çelësat e shigjetës CMD ose CTRL + të djathtë ose të majtë për të lundruar me muaj; Përdorni çelësat e shigjetës CMD ose CTRL + lart ose poshtë për të lundruar me vite;',
+                        },
+                        sr: {
+                            htmlTex: 'Да бисте могли да се крећете кроз календар са кључем тастатуре: Користите ЦМД или ЦТРЛ + десно или леве тастере са стрелицом да се крећете кроз месецима; Користите ЦМД или ЦТРЛ + горе или доле стрелице са стрелицама да бисте се кретали кроз године;',
+                        },
+                        sv: {
+                            htmlTex: 'För att kunna navigera genom kalendern med tangentbordsknapp: Använd CMD eller CTRL + höger eller vänster pilnycklar för att navigera genom månader; Använd CMD eller CTRL + upp eller ned pilnycklar för att navigera genom år;',
+                        },
+                        th: {
+                            htmlTex: 'เพื่อให้สามารถนำทางผ่านปฏิทินด้วยคีย์บอร์ดคีย์บอร์ด: ใช้ปุ่มลูกศร CMD หรือ CTRL + ขวาหรือซ้ายเพื่อนำทางผ่านเดือน ใช้ปุ่มลูกศร CMD หรือ CTRL + ขึ้นหรือลงเพื่อนำทางผ่านปี',
+                        },
+                        tr: {
+                            htmlTex: 'Klavye anahtarıyla takvimde gezinebilmek için: aylar boyunca gezinmek için CMD veya CTRL + sağ veya sol ok tuşlarını kullanın; Yıllar boyunca gezinmek için CMD veya CTRL + yukarı veya aşağı ok tuşlarını kullanın;',
+                        },
+                        uk: {
+                            htmlTex: 'Для того, щоб мати можливість орієнтуватися по календарі за допомогою клавіатури клавіатури: Використовуйте клавіші стрілки CMD або CTRL +, щоб перейти до місяців; Використовуйте клавіші стрілки CMD або CTRL + вгору або вниз, щоб орієнтуватися на роки;',
+                        },
+                        uz: {
+                            htmlTex: "Klaviatura kaliti bilan taqvimga o'tish imkoniyatiga ega bo'lish uchun: CMD yoki CTRL + o'ng yoki chap o'q tugmalaridan oylar davomida harakatlanish uchun foydalaning; CMD yoki CTRL + yuqoriga yoki pastga o'qishni yillar davomida o'tish uchun foydalaning;",
+                        },
+                        vn: {
+                            htmlTex: 'Để có thể điều hướng qua lịch bằng phím bàn phím: Sử dụng các phím CMD hoặc CTRL + bên phải hoặc bên trái để điều hướng qua tháng; Sử dụng các phím mũi tên CMD hoặc Ctrl + lên hoặc xuống để điều hướng qua nhiều năm;',
+                        },
+                        zh: {
+                            htmlTex: '為了能夠使用鍵盤鍵瀏覽日曆：使用CMD或CTRL +右或左箭頭密鑰在幾個月中導航；使用CMD或CTRL +向上或向下箭頭鍵在多年中導航；',
+                        },
+                        zh_tw: {
+                            htmlTex: '为了能够使用键盘键浏览日历：使用CMD或CTRL +右或左箭头密钥在几个月中导航；使用CMD或CTRL +向上或向下箭头键在多年中导航；',
+                        },
+                    };
+                })(l10ns = Flatpickr.l10ns || (Flatpickr.l10ns = {}));
             })(Flatpickr = MonthPicker.Flatpickr || (MonthPicker.Flatpickr = {}));
         })(MonthPicker = OSUI.MonthPicker || (OSUI.MonthPicker = {}));
     })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
@@ -19123,7 +19406,7 @@ var Providers;
                             range: this.getRangeConfig(),
                             tooltips: this.getTooltipFormat(),
                         };
-                        return this.mergeConfigs(this._providerOptions, this._providerExtendedOptions);
+                        return this.mergeConfigs(this._providerOptions, this.providerExtendedOptions);
                     }
                     getRangeConfig() {
                         return {
@@ -19143,7 +19426,7 @@ var Providers;
                         return tooltipsFormat;
                     }
                     setExtensibilityConfigs(newConfigs) {
-                        this._providerExtendedOptions = newConfigs;
+                        this.providerExtendedOptions = newConfigs;
                     }
                 }
                 NoUiSlider.AbstractNoUiSliderConfig = AbstractNoUiSliderConfig;
@@ -19371,7 +19654,7 @@ var Providers;
                                 start: [this.StartingValueFrom, this.StartingValueTo],
                                 connect: true,
                             };
-                            return this.mergeConfigs(super.getProviderConfig(), rangeSliderOptions, this._providerExtendedOptions);
+                            return this.mergeConfigs(super.getProviderConfig(), rangeSliderOptions, this.providerExtendedOptions);
                         }
                     }
                     SliderInterval.NoUiSliderIntervalConfig = NoUiSliderIntervalConfig;
@@ -19483,7 +19766,7 @@ var Providers;
                                 start: [this.StartingValueFrom],
                                 connect: RangeSlider.NoUiSlider.Enum.NoUiSliderConnectOptions.Lower,
                             };
-                            return this.mergeConfigs(super.getProviderConfig(), singleSliderOptions, this._providerExtendedOptions);
+                            return this.mergeConfigs(super.getProviderConfig(), singleSliderOptions, this.providerExtendedOptions);
                         }
                     }
                     SliderSingle.NoUiSliderSingleConfig = NoUiSliderSingleConfig;
@@ -19662,21 +19945,27 @@ var Providers;
                 class OSUIFlatpickrTime extends OSFramework.OSUI.Patterns.TimePicker.AbstractTimePicker {
                     constructor(uniqueId, configs) {
                         super(uniqueId, new Flatpickr.FlatpickrTimeConfig(configs));
-                        this.configs.OnChange = this.onTimeSelectedEvent.bind(this);
+                        this.configs.OnChangeEventCallback = this.onTimeSelectedEvent.bind(this);
+                        this.configs.OnCloseEventCallback = this.onClose.bind(this);
+                        this.configs.OnOpenEventCallback = this.onOpen.bind(this);
+                    }
+                    _getBodyOnClickGlobalEvent() {
+                        this._bodyOnClickGlobalEvent =
+                            OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick);
                     }
                     _setAttributes() {
-                        this._flatpickrInputElem = this._timePickerProviderInputElem.nextSibling;
-                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.DataInput, OSFramework.OSUI.Constants.EmptyString);
-                        if (this._flatpickrInputElem.disabled) {
-                            OSFramework.OSUI.Helper.Dom.Attribute.Remove(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled);
+                        this.flatpickrInputElem = this.timePickerPlatformInputElem.nextSibling;
+                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this.flatpickrInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.DataInput, OSFramework.OSUI.Constants.EmptyString);
+                        if (this.flatpickrInputElem.disabled) {
+                            OSFramework.OSUI.Helper.Dom.Attribute.Remove(this.flatpickrInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled);
                         }
                     }
                     _setCalendarCssClasses() {
                         OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.provider.calendarContainer, OSFramework.OSUI.Patterns.TimePicker.Enum.CssClass.Dropdown);
-                        if (OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.InputClassTypes.InputLarge)) {
+                        if (OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(this.flatpickrInputElem, OSFramework.OSUI.GlobalEnum.InputClassTypes.InputLarge)) {
                             OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.provider.calendarContainer, OSFramework.OSUI.Patterns.Dropdown.Enum.CssClass.DropdownLarge);
                         }
-                        else if (OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(this._flatpickrInputElem, OSFramework.OSUI.GlobalEnum.InputClassTypes.InputSmall)) {
+                        else if (OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(this.flatpickrInputElem, OSFramework.OSUI.GlobalEnum.InputClassTypes.InputSmall)) {
                             OSFramework.OSUI.Helper.Dom.Styles.AddClass(this.provider.calendarContainer, OSFramework.OSUI.Patterns.Dropdown.Enum.CssClass.DropdownSmall);
                         }
                         if (this.configs.ExtendedClass !== '') {
@@ -19684,28 +19973,21 @@ var Providers;
                         }
                     }
                     createProviderInstance() {
-                        if (this._timePickerProviderInputElem && this._flatpickrOpts.defaultDate === undefined) {
-                            this._timePickerProviderInputElem.value = '';
+                        if (this.timePickerPlatformInputElem && this._flatpickrOpts.defaultDate === undefined) {
+                            this.timePickerPlatformInputElem.value = OSFramework.OSUI.Constants.EmptyString;
                         }
-                        this.provider = window.flatpickr(this._timePickerProviderInputElem, this._flatpickrOpts);
+                        this.provider = window.flatpickr(this.timePickerPlatformInputElem, this._flatpickrOpts);
                         this._setAttributes();
                         if (this.provider.calendarContainer !== undefined) {
                             this._setCalendarCssClasses();
                             this._bodyScrollCommonBehaviour = new OSUI.SharedProviderResources.Flatpickr.UpdatePositionOnScroll(this);
                             this._zindexCommonBehavior = new OSUI.SharedProviderResources.Flatpickr.UpdateZindex(this);
+                            if (this.configs.InitialTime !== undefined) {
+                                OSFramework.OSUI.Helper.Dom.SetInputValue(this.timePickerPlatformInputElem, this.configs.InitialTime);
+                            }
                         }
-                        const _bodyEvent = OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick);
-                        if (_bodyEvent) {
-                            this.provider.config.onOpen.push(() => {
-                                _bodyEvent.disableBodyClickEvent();
-                            });
-                            this.provider.config.onClose.push(() => {
-                                _bodyEvent.enableBodyClickEvent();
-                            });
-                        }
-                        this.createdInstance();
-                    }
-                    createdInstance() {
+                        this.updatePlatformInputAttrs();
+                        this.setA11YProperties();
                         this.updateProviderEvents({
                             name: OSUI.SharedProviderResources.Flatpickr.Enum.ProviderInfo.Name,
                             version: OSUI.SharedProviderResources.Flatpickr.Enum.ProviderInfo.Version,
@@ -19713,39 +19995,57 @@ var Providers;
                         });
                         this.triggerPlatformInitializedEventCallback();
                     }
-                    onTimeSelectedEvent(selectedTime) {
-                        let _selectedTime = '';
-                        if (selectedTime.length > 0) {
-                            _selectedTime = this.provider.formatDate(selectedTime[0], this._flatpickrOpts.dateFormat);
+                    onClose() {
+                        if (this._bodyOnClickGlobalEvent !== undefined) {
+                            this._bodyOnClickGlobalEvent.enableBodyClickEvent();
                         }
-                        this.triggerPlatformEventCallback(this._onChangeCallbackEvent, _selectedTime);
+                    }
+                    onOpen() {
+                        if (this._bodyOnClickGlobalEvent !== undefined) {
+                            this._bodyOnClickGlobalEvent.disableBodyClickEvent();
+                        }
+                    }
+                    onTimeSelectedEvent(selectedTime) {
+                        const _selectedTime = selectedTime.length > 0 ? OSFramework.OSUI.Helper.Dates.GetTimeFromDate(selectedTime[0]) : '';
+                        OSFramework.OSUI.Helper.Dom.SetInputValue(this.timePickerPlatformInputElem, _selectedTime);
+                        this.triggerPlatformEventCallback(this.onChangeCallbackEvent, _selectedTime);
                     }
                     prepareConfigs() {
                         this._flatpickrOpts = this.configs.getProviderConfig();
                         this.createProviderInstance();
                     }
                     setA11YProperties() {
-                        console.warn(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                        if (this.provider.calendarContainer !== undefined) {
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this.timePickerPlatformInputElem, OSFramework.OSUI.Constants.A11YAttributes.TabIndex, OSFramework.OSUI.Constants.A11YAttributes.States.TabIndexHidden);
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this.timePickerPlatformInputElem, OSFramework.OSUI.Constants.A11YAttributes.Aria.Hidden, OSFramework.OSUI.Constants.A11YAttributes.States.True);
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this.flatpickrInputElem, OSFramework.OSUI.Constants.A11YAttributes.TabIndex, OSFramework.OSUI.Constants.A11YAttributes.States.TabIndexShow);
+                        }
                     }
                     setCallbacks() {
                         console.log(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
                     }
                     setHtmlElements() {
-                        this._timePickerProviderInputElem = this.selfElement.querySelector(OSFramework.OSUI.GlobalEnum.CSSSelectors.InputFormControl);
-                        if (!this._timePickerProviderInputElem) {
+                        this.timePickerPlatformInputElem = this.selfElement.querySelector(OSFramework.OSUI.GlobalEnum.CSSSelectors.InputFormControl);
+                        if (!this.timePickerPlatformInputElem) {
                             throw new Error(`The timepicker input at TimepickerId '${this.widgetId}' is missing`);
                         }
                     }
                     unsetCallbacks() {
-                        this.configs.OnChange = undefined;
-                        this._onChangeCallbackEvent = undefined;
+                        this.configs.OnChangeEventCallback = undefined;
+                        this.configs.OnCloseEventCallback = undefined;
+                        this.configs.OnOpenEventCallback = undefined;
+                        this.onChangeCallbackEvent = undefined;
                         super.unsetCallbacks();
                     }
                     unsetHtmlElements() {
-                        this._timePickerProviderInputElem = undefined;
+                        this.timePickerPlatformInputElem = undefined;
+                    }
+                    updatePlatformInputAttrs() {
+                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this.timePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.type, OSFramework.OSUI.GlobalEnum.InputTypeAttr.Time);
                     }
                     build() {
                         super.build();
+                        this._getBodyOnClickGlobalEvent();
                         this.setHtmlElements();
                         this.prepareConfigs();
                         this.finishBuild();
@@ -19769,7 +20069,7 @@ var Providers;
                         }
                     }
                     clear() {
-                        const isInputDisable = this._timePickerProviderInputElem.disabled;
+                        const isInputDisable = this.timePickerPlatformInputElem.disabled;
                         if (isInputDisable === false) {
                             this.provider.clear();
                         }
@@ -19792,7 +20092,7 @@ var Providers;
                         super.dispose();
                     }
                     open() {
-                        const isInputDisable = this._timePickerProviderInputElem.disabled;
+                        const isInputDisable = this.timePickerPlatformInputElem.disabled;
                         if (this.provider.isOpen === false && isInputDisable === false) {
                             this.provider.open();
                         }
@@ -19800,7 +20100,7 @@ var Providers;
                     registerCallback(eventName, callback) {
                         switch (eventName) {
                             case OSFramework.OSUI.Patterns.TimePicker.Enum.TimePickerEvents.OnChange:
-                                this._onChangeCallbackEvent = callback;
+                                this.onChangeCallbackEvent = callback;
                                 break;
                             default:
                                 super.registerCallback(eventName, callback);
@@ -19831,13 +20131,13 @@ var Providers;
                         }
                     }
                     updateInitialTime(value) {
-                        if (this._timePickerProviderInputElem.disabled === false) {
+                        if (this.timePickerPlatformInputElem.disabled === false) {
                             this.configs.InitialTime = value;
                             this.redraw();
                         }
                     }
                     updatePrompt(promptMessage) {
-                        this._flatpickrInputElem.placeholder = promptMessage;
+                        this.flatpickrInputElem.placeholder = promptMessage;
                     }
                 }
                 Flatpickr.OSUIFlatpickrTime = OSUIFlatpickrTime;
@@ -19893,16 +20193,18 @@ var Providers;
                             maxTime: OSFramework.OSUI.Helper.Times.IsNull(this.MaxTime) ? undefined : this.MaxTime,
                             minTime: OSFramework.OSUI.Helper.Times.IsNull(this.MinTime) ? undefined : this.MinTime,
                             dateFormat: Flatpickr.Enum.InputFormats.Format24h,
+                            onChange: this.OnChangeEventCallback,
+                            onClose: this.OnCloseEventCallback,
+                            onOpen: this.OnOpenEventCallback,
                             time_24hr: this.Is24Hours,
-                            onChange: this.OnChange,
                         };
                         if (this._providerOptions.locale === undefined) {
                             this._providerOptions.locale = this._checkLocale();
                         }
-                        return this.mergeConfigs(this._providerOptions, undefined, this._providerExtendedOptions);
+                        return this.mergeConfigs(this._providerOptions, undefined, this.providerExtendedOptions);
                     }
                     setExtensibilityConfigs(newConfigs) {
-                        this._providerExtendedOptions = newConfigs;
+                        this.providerExtendedOptions = newConfigs;
                     }
                     get Lang() {
                         return this._lang;

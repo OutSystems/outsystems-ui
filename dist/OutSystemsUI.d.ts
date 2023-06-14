@@ -412,7 +412,8 @@ declare namespace OSFramework.OSUI.GlobalEnum {
     enum InputTypeAttr {
         Date = "date",
         DateTime = "date-time-edit",
-        Text = "text"
+        Text = "text",
+        Time = "time"
     }
     enum Units {
         Percentage = "%",
@@ -520,14 +521,13 @@ declare namespace OSFramework.OSUI.Behaviors {
         focusBottomCallback: GlobalCallbacks.Generic;
         focusTargetElement: HTMLElement;
         focusTopCallback: GlobalCallbacks.Generic;
-        focusTrapEnabled: boolean;
     };
     class FocusTrap {
         private _firstFocusableElement;
         private _focusBottomCallback;
         private _focusTopCallback;
         private _focusableElements;
-        private _isFocusTrap;
+        private _hasBeenPassThoughFirstOne;
         private _lastFocusableElement;
         private _predictableBottomElement;
         private _predictableTopElement;
@@ -539,7 +539,6 @@ declare namespace OSFramework.OSUI.Behaviors {
         private _focusTopHandler;
         private _removeEventListeners;
         private _setEventListeners;
-        private _setFocusOnElement;
         private _setFocusableElements;
         private _setFocusableProperties;
         private _unsetCallbacks;
@@ -595,7 +594,8 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
         private _eventTarget;
         private _eventType;
         protected eventCallback: EventListenerObject;
-        constructor(eventTarget: any, eventType: any, isCustomEvent?: boolean);
+        protected useCapture: boolean;
+        constructor(eventTarget: HTMLElement | Document | Window, eventType: GlobalEnum.HTMLEvent | GlobalEnum.CustomEvent, isCustomEvent?: boolean);
         addEvent(): void;
         removeEvent(): void;
     }
@@ -927,6 +927,7 @@ declare namespace OSFramework.OSUI.Helper {
 declare namespace OSFramework.OSUI.Helper {
     abstract class Dates {
         private static _serverFormat;
+        static GetTimeFromDate(_date: Date): string;
         static IsBeforeThan(date1: string, date2: string): boolean;
         static IsNull(date: string | Date): boolean;
         static NormalizeDateTime(date: string | Date, normalizeToMax?: boolean): Date;
@@ -1198,7 +1199,7 @@ declare namespace OSFramework.OSUI.Patterns {
         private _selfElem;
         private _uniqueId;
         private _widgetId;
-        protected _isProviderBased: boolean;
+        protected isProviderBased: boolean;
         constructor(uniqueId: string, configs: C);
         private _setCommonHtmlElements;
         private _unsetCommonHtmlElements;
@@ -1275,8 +1276,8 @@ declare namespace OSFramework.OSUI.Patterns {
 declare namespace OSFramework.OSUI.Patterns {
     abstract class AbstractProviderPattern<P, C extends AbstractConfiguration> extends AbstractPattern<C> implements Interface.IProviderPattern<P> {
         private _platformEventProviderConfigsAppliedCallback;
-        protected _provider: P;
-        protected _providerInfo: ProviderInfo;
+        private _provider;
+        private _providerInfo;
         protected providerEventsManagerInstance: Event.ProviderEvents.IProviderEventManager;
         constructor(uniqueId: string, configs: C);
         private _getEventIndexFromArray;
@@ -1889,7 +1890,8 @@ declare namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
         private _eventOnTouchMove;
         private _eventOnWindowResize;
         private _eventOnkeyboardPress;
-        private _focusTrapObject;
+        private _focusTrapInstance;
+        private _hasA11yEnabled;
         private _intersectionObserver;
         private _isBlocked;
         private _isOpen;
@@ -1904,6 +1906,7 @@ declare namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
         private _close;
         private _endOfCloseAnimation;
         private _getRecommendedPosition;
+        private _handleFocusTrap;
         private _hasNoImplementation;
         private _moveBallonElement;
         private _onBodyClick;
@@ -1923,7 +1926,6 @@ declare namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
         private _setBalloonCoordinates;
         private _setBalloonWrapperExtendedClass;
         private _setCssClasses;
-        private _setFocusSpanElements;
         private _setInitialOptions;
         private _setNewOptionItem;
         private _setObserver;
@@ -2296,9 +2298,6 @@ declare namespace OSFramework.OSUI.Patterns.Notification.Callbacks {
     type OSOnToggleEvent = {
         (notificationId: string, isOpen: boolean): void;
     };
-    type OSInitializedEvent = {
-        (notificationId: string): void;
-    };
 }
 declare namespace OSFramework.OSUI.Patterns.Notification.Enum {
     enum CssClass {
@@ -2343,7 +2342,6 @@ declare namespace OSFramework.OSUI.Patterns.Notification {
         private _hasGestureEvents;
         private _isOpen;
         private _parentSelf;
-        private _platformEventOnInitialize;
         private _platformEventOnToggle;
         constructor(uniqueId: string, configs: JSON);
         private _autoCloseNotification;
@@ -3102,7 +3100,6 @@ declare namespace OSFramework.OSUI.Patterns.Submenu {
         protected unsetCallbacks(): void;
         protected unsetHtmlElements(): void;
         build(): void;
-        changeProperty(propertyName: string, propertyValue: unknown): void;
         clickOutsideToClose(clickOutsideToClose: boolean): void;
         close(): void;
         dispose(): void;
@@ -4234,16 +4231,15 @@ declare namespace OutSystems.OSUI.Patterns.TabsAPI {
     function SetActiveTab(tabsId: string, tabsNumber: number): string;
 }
 declare namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
-    function GetTabsByItem(tabsContentItemId: string): OSFramework.OSUI.Patterns.Tabs.ITabs;
     function ChangeProperty(tabsContentItemId: string, propertyName: string, propertyValue: any): string;
     function Create(tabsContentItemId: string, configs: string): OSFramework.OSUI.Patterns.TabsContentItem.ITabsContentItem;
     function Dispose(tabsContentItemId: string): string;
     function GetAllTabsContentItems(): Array<string>;
     function GetTabsContentItemById(tabsContentItemId: string): OSFramework.OSUI.Patterns.TabsContentItem.ITabsContentItem;
+    function Initialize(tabsContentItemId: string): OSFramework.OSUI.Patterns.TabsContentItem.ITabsContentItem;
     function RegisterCallback(tabsContentItemId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
 }
 declare namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
-    function GetTabsByItem(tabsHeaderItemId: string): OSFramework.OSUI.Patterns.Tabs.ITabs;
     function ChangeProperty(tabsHeaderItemId: string, propertyName: string, propertyValue: any): string;
     function Create(tabsHeaderItemId: string, configs: string): OSFramework.OSUI.Patterns.TabsHeaderItem.ITabsHeaderItem;
     function DisableTabItem(tabsHeaderItemId: string): string;
@@ -4252,6 +4248,7 @@ declare namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
     function GetAllTabsHeaderItems(): Array<string>;
     function GetTabsHeaderItemById(tabsHeaderItemId: string): OSFramework.OSUI.Patterns.TabsHeaderItem.ITabsHeaderItem;
     function UpdateOnRender(tabsHeaderItemId: string): string;
+    function Initialize(tabsHeaderItemId: string): OSFramework.OSUI.Patterns.TabsHeaderItem.ITabsHeaderItem;
     function RegisterCallback(tabsHeaderItemId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
 }
 declare namespace OutSystems.OSUI.Patterns.TimePickerAPI {
@@ -4518,8 +4515,8 @@ declare namespace Providers.OSUI.Carousel.Splide {
 }
 declare namespace Providers.OSUI.Carousel.Splide {
     class SplideConfig extends OSFramework.OSUI.Patterns.Carousel.AbstractCarouselConfig {
+        private _providerExtendedOptions;
         private _providerOptions;
-        protected _providerExtendedOptions: SplideOpts;
         private _getArrowConfig;
         private _getDirectionConfig;
         private _getPaginationConfig;
@@ -4535,10 +4532,10 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr {
         private _a11yInfoContainerElem;
         private _bodyScrollCommonBehaviour;
         private _zindexCommonBehavior;
-        protected _datePickerPlatformInputElem: HTMLInputElement;
-        protected _flatpickrInputElem: HTMLInputElement;
-        protected _flatpickrOpts: FlatpickrOptions;
-        protected _onSelectedCallbackEvent: OSFramework.OSUI.Patterns.DatePicker.Callbacks.OSOnChangeEvent;
+        protected datePickerPlatformInputElem: HTMLInputElement;
+        protected flatpickrInputElem: HTMLInputElement;
+        protected flatpickrOpts: FlatpickrOptions;
+        protected onSelectedCallbackEvent: OSFramework.OSUI.Patterns.DatePicker.Callbacks.OSOnChangeEvent;
         constructor(uniqueId: string, configs: C);
         private _setAttributes;
         private _setCalendarCssClasses;
@@ -4568,7 +4565,7 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr {
         setProviderConfigs(newConfigs: FlatpickrOptions): void;
         toggleNativeBehavior(isNative: boolean): void;
         updatePrompt(promptMessage: string): void;
-        protected abstract onDateSelectedEvent(selectedDates: string[], dateStr: string, fp: Flatpickr): void;
+        protected abstract onDateSelectedEvent(selectedDates: Array<Date>): void;
         protected abstract todayBtnClick(event: MouseEvent): void;
         protected abstract updatePlatformInputAttrs(): void;
         abstract updateInitialDate(start: string, end?: string): void;
@@ -4582,7 +4579,7 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr {
         private _isUsingDateTime;
         private _lang;
         private _providerOptions;
-        protected _providerExtendedOptions: FlatpickrOptions;
+        protected providerExtendedOptions: FlatpickrOptions;
         AllowInput: boolean;
         CalendarMode: OSFramework.OSUI.Patterns.DatePicker.Enum.Mode;
         Disable: any[];
@@ -4642,7 +4639,7 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
         constructor(uniqueId: string, configs: JSON);
         private _onUpdateDateFormat;
         private _updateInitialStartAndEndDates;
-        protected onDateSelectedEvent(selectedDates: string[]): void;
+        protected onDateSelectedEvent(selectedDates: Array<Date>): void;
         protected todayBtnClick(event: MouseEvent): void;
         protected updatePlatformInputAttrs(): void;
         build(): void;
@@ -4668,7 +4665,7 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
     class OSUIFlatpickrSingleDate extends AbstractFlatpickr<FlatpickrSingleDateConfig> {
         private _isUpdatedInitialDateByClientAction;
         constructor(uniqueId: string, configs: JSON);
-        protected onDateSelectedEvent(selectedDates: string[]): void;
+        protected onDateSelectedEvent(selectedDates: Array<Date>): void;
         protected prepareToAndRedraw(): void;
         protected todayBtnClick(event: MouseEvent): void;
         protected updatePlatformInputAttrs(): void;
@@ -4708,6 +4705,9 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr.l10ns {
             htmlTex: string;
         };
         ca: {
+            htmlTex: string;
+        };
+        cat: {
             htmlTex: string;
         };
         ckb: {
@@ -4813,6 +4813,9 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr.l10ns {
             htmlTex: string;
         };
         nl: {
+            htmlTex: string;
+        };
+        nb: {
             htmlTex: string;
         };
         nn: {
@@ -4911,6 +4914,10 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr.l10ns {
             ariaLabel: string;
             title: string;
         };
+        cat: {
+            ariaLabel: string;
+            title: string;
+        };
         ckb: {
             ariaLabel: string;
             title: string;
@@ -5051,6 +5058,10 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr.l10ns {
             ariaLabel: string;
             title: string;
         };
+        nb: {
+            ariaLabel: string;
+            title: string;
+        };
         nn: {
             ariaLabel: string;
             title: string;
@@ -5139,9 +5150,9 @@ declare namespace Providers.OSUI.Dropdown.VirtualSelect {
         private _onMouseUpEvent;
         private _onSelectedOptionEvent;
         private _platformEventSelectedOptCallback;
-        protected _hiddenInputWrapperAriaLabelVal: string;
-        protected _virtualselectConfigs: VirtualSelectMethods;
-        protected _virtualselectOpts: VirtualSelectOpts;
+        protected hiddenInputWrapperAriaLabelVal: string;
+        protected virtualselectConfigs: VirtualSelectMethods;
+        protected virtualselectOpts: VirtualSelectOpts;
         constructor(uniqueId: string, configs: C);
         private _addErrorMessage;
         private _manageAttributes;
@@ -5182,7 +5193,7 @@ declare namespace Providers.OSUI.Dropdown.VirtualSelect {
         .AbstractDropdownConfig {
         private _groupedOptionsList;
         private _providerOptions;
-        protected _providerExtendedOptions: VirtualSelectOpts;
+        protected providerExtendedOptions: VirtualSelectOpts;
         ElementId: string;
         NoOptionsText: string;
         NoResultsText: string;
@@ -5201,7 +5212,7 @@ declare namespace Providers.OSUI.Dropdown.VirtualSelect {
         getProviderConfig(): VirtualSelectOpts;
         setExtensibilityConfigs(newConfigs: VirtualSelectOpts): void;
         validateDefault(key: string, value: unknown): unknown;
-        protected abstract _getSelectedValues(): string[];
+        protected abstract getSelectedValues(): string[];
     }
 }
 declare namespace Providers.OSUI.Dropdown.VirtualSelect.Enum {
@@ -5270,7 +5281,7 @@ declare namespace Providers.OSUI.Dropdown.VirtualSelect.Search {
 declare namespace Providers.OSUI.Dropdown.VirtualSelect.Search {
     class VirtualSelectSearchConfig extends AbstractVirtualSelectConfig {
         AllowMultipleSelection: boolean;
-        protected _getSelectedValues(): string[];
+        protected getSelectedValues(): string[];
         getProviderConfig(): VirtualSelectOpts;
         validateDefault(key: string, value: unknown): unknown;
     }
@@ -5284,8 +5295,16 @@ declare namespace Providers.OSUI.Dropdown.VirtualSelect.Tags {
 }
 declare namespace Providers.OSUI.Dropdown.VirtualSelect.Tags {
     class VirtualSelectTagsConfig extends AbstractVirtualSelectConfig {
-        protected _getSelectedValues(): string[];
+        protected getSelectedValues(): string[];
         getProviderConfig(): VirtualSelectOpts;
+    }
+}
+declare namespace Providers.OSUI.MonthPicker.Flatpickr.Enum {
+    enum Attribute {
+        DefaultAriaLabel = "Select a month"
+    }
+    enum CssClasses {
+        AccessibilityContainerInfo = "osui-monthpicker-a11y"
     }
 }
 declare namespace Providers.OSUI.MonthPicker.Flatpickr {
@@ -5295,24 +5314,29 @@ declare namespace Providers.OSUI.MonthPicker.Flatpickr {
 }
 declare namespace Providers.OSUI.MonthPicker.Flatpickr {
     class OSUIFlatpickrMonth extends OSFramework.OSUI.Patterns.MonthPicker.AbstractMonthPicker<Flatpickr, FlatpickrMonthConfig> implements IFlatpickrMonth {
+        private _a11yInfoContainerElem;
+        private _bodyOnClickGlobalEvent;
         private _bodyScrollCommonBehaviour;
         private _flatpickrOpts;
         private _zindexCommonBehavior;
-        protected _flatpickrInputElem: HTMLInputElement;
-        protected _monthPickerProviderInputElem: HTMLInputElement;
-        protected _onSelectedCallbackEvent: OSFramework.OSUI.Patterns.MonthPicker.Callbacks.OSOnSelectedEvent;
+        protected flatpickrInputElem: HTMLInputElement;
+        protected monthPickerPlatformInputElem: HTMLInputElement;
+        protected onSelectedCallbackEvent: OSFramework.OSUI.Patterns.MonthPicker.Callbacks.OSOnSelectedEvent;
         constructor(uniqueId: string, configs: JSON);
+        private _getBodyOnClickGlobalEvent;
         private _setAttributes;
         private _setCalendarCssClasses;
         protected createProviderInstance(): void;
-        protected createdInstance(): void;
-        protected onMonthSelectedEvent(selectedMonthYear: string[]): void;
+        protected onClose(): void;
+        protected onMonthSelectedEvent(selectedMonthYear: Array<Date>): void;
+        protected onOpen(): void;
         protected prepareConfigs(): void;
         protected setA11YProperties(): void;
         protected setCallbacks(): void;
         protected setHtmlElements(): void;
         protected unsetCallbacks(): void;
         protected unsetHtmlElements(): void;
+        protected updatePlatformInputAttrs(): void;
         build(): void;
         changeProperty(propertyName: string, propertyValue: unknown): void;
         clear(): void;
@@ -5331,10 +5355,12 @@ declare namespace Providers.OSUI.MonthPicker.Flatpickr {
     class FlatpickrMonthConfig extends OSFramework.OSUI.Patterns.MonthPicker.AbstractMonthPickerConfig {
         private _lang;
         private _providerOptions;
-        protected _providerExtendedOptions: FlatpickrOptions;
+        protected providerExtendedOptions: FlatpickrOptions;
         AllowInput: boolean;
         DisableMobile: boolean;
-        OnChange: OSFramework.OSUI.GlobalCallbacks.Generic;
+        OnChangeEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
+        OnCloseEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
+        OnOpenEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
         ServerDateFormat: string;
         constructor(config: JSON);
         private _checkDateFormat;
@@ -5351,6 +5377,205 @@ declare namespace Providers.OSUI.MonthPicker.Flatpickr {
 declare namespace Providers.OSUI.MonthPicker.Flatpickr {
     interface IFlatpickrMonth extends OSFramework.OSUI.Patterns.MonthPicker.IMonthPicker, OSFramework.OSUI.Interface.IProviderPattern<Flatpickr> {
     }
+}
+declare namespace Providers.OSUI.MonthPicker.Flatpickr.l10ns {
+    const A11yContainerInfo: {
+        ar: {
+            htmlTex: string;
+        };
+        at: {
+            htmlTex: string;
+        };
+        az: {
+            htmlTex: string;
+        };
+        be: {
+            htmlTex: string;
+        };
+        bg: {
+            htmlTex: string;
+        };
+        bn: {
+            htmlTex: string;
+        };
+        bs: {
+            htmlTex: string;
+        };
+        ca: {
+            htmlTex: string;
+        };
+        cat: {
+            htmlTex: string;
+        };
+        ckb: {
+            htmlTex: string;
+        };
+        cs: {
+            htmlTex: string;
+        };
+        cy: {
+            htmlTex: string;
+        };
+        da: {
+            htmlTex: string;
+        };
+        de: {
+            htmlTex: string;
+        };
+        en: {
+            htmlTex: string;
+        };
+        eo: {
+            htmlTex: string;
+        };
+        es: {
+            htmlTex: string;
+        };
+        et: {
+            htmlTex: string;
+        };
+        fa: {
+            htmlTex: string;
+        };
+        fi: {
+            htmlTex: string;
+        };
+        fo: {
+            htmlTex: string;
+        };
+        fr: {
+            htmlTex: string;
+        };
+        ga: {
+            htmlTex: string;
+        };
+        gr: {
+            htmlTex: string;
+        };
+        he: {
+            htmlTex: string;
+        };
+        hi: {
+            htmlTex: string;
+        };
+        hr: {
+            htmlTex: string;
+        };
+        hu: {
+            htmlTex: string;
+        };
+        hy: {
+            htmlTex: string;
+        };
+        id: {
+            htmlTex: string;
+        };
+        is: {
+            htmlTex: string;
+        };
+        it: {
+            htmlTex: string;
+        };
+        ja: {
+            htmlTex: string;
+        };
+        ka: {
+            htmlTex: string;
+        };
+        km: {
+            htmlTex: string;
+        };
+        ko: {
+            htmlTex: string;
+        };
+        kz: {
+            htmlTex: string;
+        };
+        lt: {
+            htmlTex: string;
+        };
+        lv: {
+            htmlTex: string;
+        };
+        mk: {
+            htmlTex: string;
+        };
+        mn: {
+            htmlTex: string;
+        };
+        ms: {
+            htmlTex: string;
+        };
+        my: {
+            htmlTex: string;
+        };
+        nl: {
+            htmlTex: string;
+        };
+        nb: {
+            htmlTex: string;
+        };
+        nn: {
+            htmlTex: string;
+        };
+        no: {
+            htmlTex: string;
+        };
+        pa: {
+            htmlTex: string;
+        };
+        pl: {
+            htmlTex: string;
+        };
+        pt: {
+            htmlTex: string;
+        };
+        ro: {
+            htmlTex: string;
+        };
+        ru: {
+            htmlTex: string;
+        };
+        si: {
+            htmlTex: string;
+        };
+        sk: {
+            htmlTex: string;
+        };
+        sl: {
+            htmlTex: string;
+        };
+        sq: {
+            htmlTex: string;
+        };
+        sr: {
+            htmlTex: string;
+        };
+        sv: {
+            htmlTex: string;
+        };
+        th: {
+            htmlTex: string;
+        };
+        tr: {
+            htmlTex: string;
+        };
+        uk: {
+            htmlTex: string;
+        };
+        uz: {
+            htmlTex: string;
+        };
+        vn: {
+            htmlTex: string;
+        };
+        zh: {
+            htmlTex: string;
+        };
+        zh_tw: {
+            htmlTex: string;
+        };
+    };
 }
 declare namespace Providers.OSUI.RangeSlider.NoUISlider {
     abstract class AbstractNoUiSlider<C extends NoUiSlider.AbstractNoUiSliderConfig> extends OSFramework.OSUI.Patterns.RangeSlider.AbstractRangeSlider<NoUiSlider, C> implements INoUiSlider {
@@ -5388,7 +5613,7 @@ declare namespace Providers.OSUI.RangeSlider.NoUiSlider {
     abstract class AbstractNoUiSliderConfig extends OSFramework.OSUI.Patterns.RangeSlider
         .AbstractRangeSliderConfig {
         private _providerOptions;
-        protected _providerExtendedOptions: NoUiSliderOptions;
+        protected providerExtendedOptions: NoUiSliderOptions;
         rangeSliderMode: OSFramework.OSUI.Patterns.RangeSlider.Enum.Mode;
         getPipsConfig(): NoUiSliderPips;
         getProviderConfig(): NoUiSliderOptions;
@@ -5517,24 +5742,28 @@ declare namespace Providers.OSUI.TimePicker.Flatpickr {
 }
 declare namespace Providers.OSUI.TimePicker.Flatpickr {
     class OSUIFlatpickrTime extends OSFramework.OSUI.Patterns.TimePicker.AbstractTimePicker<Flatpickr, FlatpickrTimeConfig> implements IFlatpickrTime {
+        private _bodyOnClickGlobalEvent;
         private _bodyScrollCommonBehaviour;
         private _flatpickrOpts;
         private _zindexCommonBehavior;
-        protected _flatpickrInputElem: HTMLInputElement;
-        protected _onChangeCallbackEvent: OSFramework.OSUI.Patterns.TimePicker.Callbacks.OSOnChangeEvent;
-        protected _timePickerProviderInputElem: HTMLInputElement;
+        protected flatpickrInputElem: HTMLInputElement;
+        protected onChangeCallbackEvent: OSFramework.OSUI.Patterns.TimePicker.Callbacks.OSOnChangeEvent;
+        protected timePickerPlatformInputElem: HTMLInputElement;
         constructor(uniqueId: string, configs: JSON);
+        private _getBodyOnClickGlobalEvent;
         private _setAttributes;
         private _setCalendarCssClasses;
         protected createProviderInstance(): void;
-        protected createdInstance(): void;
-        protected onTimeSelectedEvent(selectedTime: string[]): void;
+        protected onClose(): void;
+        protected onOpen(): void;
+        protected onTimeSelectedEvent(selectedTime: Array<Date>): void;
         protected prepareConfigs(): void;
         protected setA11YProperties(): void;
         protected setCallbacks(): void;
         protected setHtmlElements(): void;
         protected unsetCallbacks(): void;
         protected unsetHtmlElements(): void;
+        protected updatePlatformInputAttrs(): void;
         build(): void;
         changeProperty(propertyName: string, propertyValue: unknown): void;
         clear(): void;
@@ -5554,10 +5783,12 @@ declare namespace Providers.OSUI.TimePicker.Flatpickr {
     class FlatpickrTimeConfig extends OSFramework.OSUI.Patterns.TimePicker.AbstractTimePickerConfig {
         private _lang;
         private _providerOptions;
-        protected _providerExtendedOptions: FlatpickrOptions;
+        protected providerExtendedOptions: FlatpickrOptions;
         AllowInput: boolean;
         DisableMobile: boolean;
-        OnChange: OSFramework.OSUI.GlobalCallbacks.Generic;
+        OnChangeEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
+        OnCloseEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
+        OnOpenEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
         ServerDateFormat: string;
         constructor(config: JSON);
         private _checkAltFormat;
