@@ -20280,13 +20280,18 @@ var Providers;
                         _middlewareArray.push(window.FloatingUIDOM.offset(this._getOffsetValue()));
                     }
                     const _eventOnUpdatePosition = () => {
-                        window.FloatingUIDOM.computePosition(this._floatingUIOptions.anchorElem, this._floatingUIOptions.floatingElem, {
-                            placement: this._floatingUIOptions.position,
-                            middleware: _middlewareArray,
-                        }).then(({ x, y }) => {
-                            OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, Utils.Enum.CssCustomProperties.YPosition, y + OSFramework.OSUI.GlobalEnum.Units.Pixel);
-                            OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, Utils.Enum.CssCustomProperties.XPosition, x + OSFramework.OSUI.GlobalEnum.Units.Pixel);
-                        });
+                        try {
+                            window.FloatingUIDOM.computePosition(this._floatingUIOptions.anchorElem, this._floatingUIOptions.floatingElem, {
+                                placement: this._floatingUIOptions.position,
+                                middleware: _middlewareArray,
+                            }).then(({ x, y }) => {
+                                OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, Utils.Enum.CssCustomProperties.YPosition, y + OSFramework.OSUI.GlobalEnum.Units.Pixel);
+                                OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, Utils.Enum.CssCustomProperties.XPosition, x + OSFramework.OSUI.GlobalEnum.Units.Pixel);
+                            });
+                        }
+                        catch (error) {
+                            throw new Error(`FloatingUIDOM is not available.`);
+                        }
                     };
                     _eventOnUpdatePosition();
                     if (this._floatingUIOptions.updatePosition) {

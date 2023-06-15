@@ -70,26 +70,30 @@ namespace Providers.OSUI.Utils {
 
 			// Set the computePosition method. This is the main provider method to set the balloon position
 			const _eventOnUpdatePosition = () => {
-				window.FloatingUIDOM.computePosition(
-					this._floatingUIOptions.anchorElem,
-					this._floatingUIOptions.floatingElem,
-					{
-						placement: this._floatingUIOptions.position,
-						middleware: _middlewareArray,
-					}
-				).then(({ x, y }) => {
-					// Update the Balloon CSS Variables with the returned optimal x & y for position
-					OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
+				try {
+					window.FloatingUIDOM.computePosition(
+						this._floatingUIOptions.anchorElem,
 						this._floatingUIOptions.floatingElem,
-						Enum.CssCustomProperties.YPosition,
-						y + OSFramework.OSUI.GlobalEnum.Units.Pixel
-					);
-					OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
-						this._floatingUIOptions.floatingElem,
-						Enum.CssCustomProperties.XPosition,
-						x + OSFramework.OSUI.GlobalEnum.Units.Pixel
-					);
-				});
+						{
+							placement: this._floatingUIOptions.position,
+							middleware: _middlewareArray,
+						}
+					).then(({ x, y }) => {
+						// Update the Balloon CSS Variables with the returned optimal x & y for position
+						OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
+							this._floatingUIOptions.floatingElem,
+							Enum.CssCustomProperties.YPosition,
+							y + OSFramework.OSUI.GlobalEnum.Units.Pixel
+						);
+						OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
+							this._floatingUIOptions.floatingElem,
+							Enum.CssCustomProperties.XPosition,
+							x + OSFramework.OSUI.GlobalEnum.Units.Pixel
+						);
+					});
+				} catch (error) {
+					throw new Error(`FloatingUIDOM is not available.`);
+				}
 			};
 
 			// Set the position
