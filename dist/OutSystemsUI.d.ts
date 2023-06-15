@@ -4446,6 +4446,12 @@ declare namespace OutSystems.OSUI.Utils {
     function SetSelectedTableRow(TableId: string, RowNumber: number, IsSelected: boolean): string;
     function ShowPassword(): string;
 }
+declare namespace Providers.OSUI.ErrorCodes {
+    const FloatingUI: {
+        FailCallProvider: string;
+        FailSetPosition: string;
+    };
+}
 declare namespace Providers {
 }
 declare namespace Providers.OSUI.Carousel.Splide.Enum {

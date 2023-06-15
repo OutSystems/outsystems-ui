@@ -16314,6 +16314,19 @@ var Providers;
 (function (Providers) {
     var OSUI;
     (function (OSUI) {
+        var ErrorCodes;
+        (function (ErrorCodes) {
+            ErrorCodes.FloatingUI = {
+                FailCallProvider: 'OSUI-PVR-01001',
+                FailSetPosition: 'OSUI-PVR-01002',
+            };
+        })(ErrorCodes = OSUI.ErrorCodes || (OSUI.ErrorCodes = {}));
+    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
+})(Providers || (Providers = {}));
+var Providers;
+(function (Providers) {
+    var OSUI;
+    (function (OSUI) {
         var Carousel;
         (function (Carousel) {
             var Splide;
@@ -20289,13 +20302,18 @@ var Providers;
                             OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, Utils.Enum.CssCustomProperties.XPosition, x + OSFramework.OSUI.GlobalEnum.Units.Pixel);
                         }
                         catch (error) {
-                            throw new Error(`FloatingUIDOM provider is not available.`);
+                            throw new Error(Providers.OSUI.ErrorCodes.FloatingUI.FailCallProvider);
                         }
                     };
-                    _eventOnUpdatePosition();
-                    if (this._floatingUIOptions.updatePosition) {
-                        this._eventOnUpdateCallback = window.FloatingUIDOM.autoUpdate(this._floatingUIOptions.anchorElem, this._floatingUIOptions.floatingElem, _eventOnUpdatePosition.bind(this));
-                    }
+                    _eventOnUpdatePosition()
+                        .then(() => {
+                        if (this._floatingUIOptions.updatePosition) {
+                            this._eventOnUpdateCallback = window.FloatingUIDOM.autoUpdate(this._floatingUIOptions.anchorElem, this._floatingUIOptions.floatingElem, _eventOnUpdatePosition.bind(this));
+                        }
+                    })
+                        .catch((error) => {
+                        console.error(`${Providers.OSUI.ErrorCodes.FloatingUI.FailCallProvider}: FloatingUI failed to update the position: ${error}`);
+                    });
                 }
                 build() {
                     this._setFloatingPosition();
