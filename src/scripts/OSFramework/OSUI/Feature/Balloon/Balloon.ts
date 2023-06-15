@@ -49,7 +49,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 				return;
 			}
 			if (this.isOpen) {
-				this._toggleBalloon(false);
+				this._toggleBalloon(false, true);
 				e.stopPropagation();
 			}
 		}
@@ -135,7 +135,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		}
 
 		// Method to toggle the open/close the Balloon
-		private _toggleBalloon(isOpen: boolean): void {
+		private _toggleBalloon(isOpen: boolean, isBodyClick = false): void {
 			// Update property
 			this.isOpen = isOpen;
 
@@ -173,7 +173,9 @@ namespace OSFramework.OSUI.Feature.Balloon {
 				// Focus on last element clicked. Async to avoid conflict with closing animation
 				Helper.AsyncInvocation(() => {
 					this.featureElem.blur();
-					this._focusableActiveElement.focus();
+					if (isBodyClick === false) {
+						this._focusableActiveElement.focus();
+					}
 				});
 			}
 

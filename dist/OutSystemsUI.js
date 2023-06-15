@@ -1792,7 +1792,7 @@ var OSFramework;
                             return;
                         }
                         if (this.isOpen) {
-                            this._toggleBalloon(false);
+                            this._toggleBalloon(false, true);
                             e.stopPropagation();
                         }
                     }
@@ -1840,7 +1840,7 @@ var OSFramework;
                         this.featureElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
                         OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventBodyClick);
                     }
-                    _toggleBalloon(isOpen) {
+                    _toggleBalloon(isOpen, isBodyClick = false) {
                         this.isOpen = isOpen;
                         if (isOpen) {
                             OSUI.Helper.Dom.Styles.AddClass(this.featureElem, Balloon_1.Enum.CssClasses.IsOpen);
@@ -1864,7 +1864,9 @@ var OSFramework;
                             this._floatingUIInstance.close();
                             OSUI.Helper.AsyncInvocation(() => {
                                 this.featureElem.blur();
-                                this._focusableActiveElement.focus();
+                                if (isBodyClick === false) {
+                                    this._focusableActiveElement.focus();
+                                }
                             });
                         }
                         this._onToggleEvent(this.isOpen, this.featureElem);
