@@ -99,6 +99,7 @@ var OSFramework;
             Constants.Comma = ',';
             Constants.EnableLogMessages = false;
             Constants.EmptyString = '';
+            Constants.FocusTrapIgnoreAttr = 'ignore-focus-trap';
             Constants.FocusableElems = 'a[href]:not([disabled]),[tabindex="0"], button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]),input[type="submit"]:not([disabled]), select:not([disabled])';
             Constants.JavaScriptTypes = {
                 Undefined: 'undefined',
@@ -275,6 +276,29 @@ var OSFramework;
                 Position["TopLeft"] = "top-left";
                 Position["TopRight"] = "top-right";
             })(Position = GlobalEnum.Position || (GlobalEnum.Position = {}));
+            let FloatingAlignment;
+            (function (FloatingAlignment) {
+                FloatingAlignment["Center"] = "center";
+                FloatingAlignment["End"] = "end";
+                FloatingAlignment["Start"] = "start";
+            })(FloatingAlignment = GlobalEnum.FloatingAlignment || (GlobalEnum.FloatingAlignment = {}));
+            let FloatingPosition;
+            (function (FloatingPosition) {
+                FloatingPosition["Auto"] = "auto";
+                FloatingPosition["Bottom"] = "bottom";
+                FloatingPosition["BottomStart"] = "bottom-start";
+                FloatingPosition["BottomEnd"] = "bottom-end";
+                FloatingPosition["Center"] = "center";
+                FloatingPosition["Left"] = "left";
+                FloatingPosition["LeftEnd"] = "left-end";
+                FloatingPosition["LeftStart"] = "left-start";
+                FloatingPosition["Right"] = "right";
+                FloatingPosition["RightEnd"] = "right-end";
+                FloatingPosition["RightStart"] = "right-start";
+                FloatingPosition["Top"] = "top";
+                FloatingPosition["TopStart"] = "top-start";
+                FloatingPosition["TopEnd"] = "top-end";
+            })(FloatingPosition = GlobalEnum.FloatingPosition || (GlobalEnum.FloatingPosition = {}));
             let CssProperties;
             (function (CssProperties) {
                 CssProperties["Auto"] = "auto";
@@ -366,6 +390,10 @@ var OSFramework;
                 HTMLEvent["TouchStart"] = "touchstart";
                 HTMLEvent["TransitionEnd"] = "transitionend";
             })(HTMLEvent = GlobalEnum.HTMLEvent || (GlobalEnum.HTMLEvent = {}));
+            let CustomEvent;
+            (function (CustomEvent) {
+                CustomEvent["BalloonOnToggle"] = "BalloonOnToggle";
+            })(CustomEvent = GlobalEnum.CustomEvent || (GlobalEnum.CustomEvent = {}));
             let InlineStyle;
             (function (InlineStyle) {
                 InlineStyle["Display"] = "display";
@@ -422,6 +450,7 @@ var OSFramework;
                 PatternName["Accordion"] = "Accordion";
                 PatternName["AccordionItem"] = "Accordion Item";
                 PatternName["AnimatedLabel"] = "Animated Label";
+                PatternName["Balloon"] = "Balloon";
                 PatternName["BottomSheet"] = "Bottom Sheet";
                 PatternName["ButtonLoading"] = "ButtonLoading";
                 PatternName["Carousel"] = "Carousel";
@@ -435,6 +464,7 @@ var OSFramework;
                 PatternName["InlineSvg"] = "InlineSVG";
                 PatternName["MonthPicker"] = "MonthPicker";
                 PatternName["Notification"] = "Notification";
+                PatternName["OverflowMenu"] = "OverflowMenu";
                 PatternName["ProgressBar"] = "Progress Bar";
                 PatternName["ProgressCircle"] = "Progress Circle";
                 PatternName["RangeSlider"] = "Range Slider";
@@ -1018,26 +1048,51 @@ var OSFramework;
                 var Listeners;
                 (function (Listeners) {
                     class AbstractListener extends DOMEvents.AbstractEvent {
-                        constructor(eventTarget, eventType) {
+                        constructor(eventTarget, eventType, isCustomEvent = false) {
                             super();
                             this.useCapture = false;
                             this._eventTarget = eventTarget;
                             this._eventType = eventType;
-                            this._eventName = OSUI.GlobalEnum.HTMLEvent.Prefix + this._eventType;
+                            this._eventName = isCustomEvent === false ? OSUI.GlobalEnum.HTMLEvent.Prefix + this._eventType : this._eventType;
                             OSUI.Helper.AsyncInvocation(this.addEvent.bind(this));
                         }
                         addEvent() {
-                            if (this._eventName in window) {
-                                this._eventTarget.addEventListener(this._eventType, this.eventCallback, this.useCapture);
+                            if (this._eventName in window || window[this._eventName] !== undefined) {
+                                this._eventTarget.addEventListener(this._eventType, this.eventCallback);
                             }
                         }
                         removeEvent() {
-                            if (this._eventName in window) {
+                            if (this._eventName in window || window[this._eventName] !== undefined) {
                                 this._eventTarget.removeEventListener(this._eventType, this.eventCallback);
                             }
                         }
                     }
                     Listeners.AbstractListener = AbstractListener;
+                })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
+            })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
+        })(Event = OSUI.Event || (OSUI.Event = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Event;
+        (function (Event) {
+            var DOMEvents;
+            (function (DOMEvents) {
+                var Listeners;
+                (function (Listeners) {
+                    class BalloonOnToggle extends Listeners.AbstractListener {
+                        constructor() {
+                            super(document, OSUI.GlobalEnum.CustomEvent.BalloonOnToggle, true);
+                            this.eventCallback = this._onToggleTrigger.bind(this);
+                        }
+                        _onToggleTrigger(evt) {
+                            this.trigger(OSUI.GlobalEnum.CustomEvent.BalloonOnToggle, evt);
+                        }
+                    }
+                    Listeners.BalloonOnToggle = BalloonOnToggle;
                 })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
             })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
         })(Event = OSUI.Event || (OSUI.Event = {}));
@@ -1143,6 +1198,7 @@ var OSFramework;
                 (function (Listeners) {
                     let Type;
                     (function (Type) {
+                        Type["BalloonOnToggle"] = "BalloonOnToggle";
                         Type["BodyOnClick"] = "body.onclick";
                         Type["BodyOnScroll"] = "body.onscroll";
                         Type["BodyOnMouseDown"] = "body.mousedown";
@@ -1167,6 +1223,8 @@ var OSFramework;
                     class ListenerManager extends DOMEvents.AbstractEventsManager {
                         getInstanceOfEventType(listenerType) {
                             switch (listenerType) {
+                                case Listeners.Type.BalloonOnToggle:
+                                    return new Listeners.BalloonOnToggle();
                                 case Listeners.Type.BodyOnClick:
                                     return new Listeners.BodyOnClick();
                                 case Listeners.Type.BodyOnScroll:
@@ -1682,6 +1740,243 @@ var OSFramework;
                 ProviderEvents.ProviderEventsManager = ProviderEventsManager;
             })(ProviderEvents = Event.ProviderEvents || (Event.ProviderEvents = {}));
         })(Event = OSUI.Event || (OSUI.Event = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Feature;
+        (function (Feature) {
+            class AbstractFeature {
+                constructor(featurePattern, featureElem, options) {
+                    this._featureOptions = options;
+                    this._featureElem = featureElem;
+                    this._featurePattern = featurePattern;
+                }
+                dispose() {
+                    this._featureOptions = undefined;
+                    this._featureElem = undefined;
+                }
+                get featureElem() {
+                    return this._featureElem;
+                }
+                get featureOptions() {
+                    return this._featureOptions;
+                }
+                get featurePattern() {
+                    return this._featurePattern;
+                }
+            }
+            Feature.AbstractFeature = AbstractFeature;
+        })(Feature = OSUI.Feature || (OSUI.Feature = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Feature;
+        (function (Feature) {
+            var Balloon;
+            (function (Balloon_1) {
+                class Balloon extends Feature.AbstractFeature {
+                    constructor(featurePattern, featureElem, options) {
+                        super(featurePattern, featureElem, options);
+                        this._isOpenedByApi = false;
+                        this.isOpen = false;
+                        this.build();
+                    }
+                    _bodyClickCallback(_args, e) {
+                        if (e.target === this.featureOptions.anchorElem || this._isOpenedByApi) {
+                            return;
+                        }
+                        if (this.isOpen) {
+                            this._toggleBalloon(false, true);
+                            e.stopPropagation();
+                        }
+                    }
+                    _handleFocusTrap() {
+                        const opts = {
+                            focusTargetElement: this._floatingUIOptions.anchorElem.parentElement,
+                        };
+                        this._focusTrapInstance = new OSUI.Behaviors.FocusTrap(opts);
+                    }
+                    _onkeypressCallback(e) {
+                        const isEscapedPressed = e.key === OSUI.GlobalEnum.Keycodes.Escape;
+                        if (isEscapedPressed && this.isOpen) {
+                            this.close();
+                        }
+                    }
+                    _removeEventListeners() {
+                        this.featureElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventBodyClick);
+                    }
+                    _setA11YProperties() {
+                        OSUI.Helper.Dom.Attribute.Set(this.featureElem, OSUI.Constants.A11YAttributes.Aria.Hidden, (!this.isOpen).toString());
+                        OSUI.Helper.A11Y.SetElementsTabIndex(this.isOpen, this._focusTrapInstance.focusableElements);
+                        OSUI.Helper.Dom.Attribute.Set(this.featureElem, OSUI.Constants.A11YAttributes.TabIndex, this.isOpen
+                            ? OSUI.Constants.A11YAttributes.States.TabIndexShow
+                            : OSUI.Constants.A11YAttributes.States.TabIndexHidden);
+                        OSUI.Helper.Dom.Attribute.Set(this._floatingUIOptions.anchorElem, OSUI.Constants.A11YAttributes.TabIndex, this.isOpen
+                            ? OSUI.Constants.A11YAttributes.States.TabIndexHidden
+                            : OSUI.Constants.A11YAttributes.States.TabIndexShow);
+                    }
+                    _setCallbacks() {
+                        this._eventBodyClick = this._bodyClickCallback.bind(this);
+                        this._eventOnKeypress = this._onkeypressCallback.bind(this);
+                    }
+                    _setEventListeners(isBuild = false) {
+                        if (isBuild) {
+                            this._onToggleEvent = function dispatchCustomEvent(isOpen, balloonElem) {
+                                const _customEvent = new CustomEvent(OSUI.GlobalEnum.CustomEvent.BalloonOnToggle, {
+                                    detail: { isOpen: isOpen, balloonElem: balloonElem },
+                                });
+                                document.dispatchEvent(_customEvent);
+                            };
+                            window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] =
+                                OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle;
+                        }
+                        this.featureElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventBodyClick);
+                    }
+                    _toggleBalloon(isOpen, isBodyClick = false) {
+                        this.isOpen = isOpen;
+                        if (isOpen) {
+                            OSUI.Helper.Dom.Styles.AddClass(this.featureElem, Balloon_1.Enum.CssClasses.IsOpen);
+                            this._setEventListeners();
+                        }
+                        else {
+                            OSUI.Helper.Dom.Styles.RemoveClass(this.featureElem, Balloon_1.Enum.CssClasses.IsOpen);
+                            this._removeEventListeners();
+                        }
+                        this._setA11YProperties();
+                        if (this.isOpen) {
+                            this._focusableActiveElement = document.activeElement;
+                            this._focusTrapInstance.enableForA11y();
+                            this.setFloatingUIBehaviour();
+                            OSUI.Helper.AsyncInvocation(() => {
+                                this.featureElem.focus();
+                            });
+                        }
+                        else {
+                            this._focusTrapInstance.disableForA11y();
+                            this._floatingUIInstance.close();
+                            OSUI.Helper.AsyncInvocation(() => {
+                                this.featureElem.blur();
+                                if (isBodyClick === false) {
+                                    this._focusableActiveElement.focus();
+                                }
+                            });
+                        }
+                        this._onToggleEvent(this.isOpen, this.featureElem);
+                        OSUI.Helper.AsyncInvocation(() => {
+                            this._isOpenedByApi = false;
+                        });
+                    }
+                    build() {
+                        this._setCallbacks();
+                        this._setEventListeners(true);
+                        this.setFloatingUIBehaviour();
+                        this._handleFocusTrap();
+                        this._setA11YProperties();
+                        this.setBalloonShape();
+                    }
+                    close() {
+                        if (this.isOpen) {
+                            this._toggleBalloon(false);
+                        }
+                    }
+                    dispose() {
+                        this._floatingUIInstance.dispose();
+                        super.dispose();
+                    }
+                    open(isOpenedByApi) {
+                        if (this.isOpen === false) {
+                            this._isOpenedByApi = isOpenedByApi;
+                            this._toggleBalloon(true);
+                        }
+                    }
+                    setBalloonShape(shape) {
+                        if (shape !== undefined) {
+                            this.featureOptions.shape = shape;
+                        }
+                        OSUI.Helper.Dom.Styles.SetStyleAttribute(this.featureElem, Balloon_1.Enum.CssCustomProperties.Shape, 'var(--border-radius-' + this.featureOptions.shape + ')');
+                    }
+                    setFloatingUIBehaviour(isUpdate) {
+                        if (isUpdate || this._floatingUIInstance === undefined) {
+                            this.setFloatingUIOptions();
+                            if (isUpdate && this._floatingUIInstance !== undefined) {
+                                this._floatingUIInstance.update(this._floatingUIOptions);
+                            }
+                            this._floatingUIInstance = new Providers.OSUI.Utils.FloatingUI(this._floatingUIOptions);
+                        }
+                        else {
+                            this._floatingUIInstance.build();
+                        }
+                    }
+                    setFloatingUIOptions() {
+                        this._floatingUIOptions = {
+                            autoPlacement: this.featureOptions.position === OSUI.GlobalEnum.FloatingPosition.Auto,
+                            anchorElem: this.featureOptions.anchorElem,
+                            autoPlacementOptions: {
+                                alignment: this.featureOptions.alignment,
+                                allowedPlacements: this.featureOptions.allowedPlacements,
+                            },
+                            floatingElem: this.featureElem,
+                            position: this.featureOptions.position,
+                            updatePosition: true,
+                        };
+                    }
+                    updateFloatingUIOptions(floatingUIOptions) {
+                        if (floatingUIOptions !== undefined) {
+                            this._floatingUIOptions = floatingUIOptions;
+                        }
+                        this.setFloatingUIBehaviour(true);
+                    }
+                    updatePositionOption(position) {
+                        this.featureOptions.position = position;
+                        this.setFloatingUIBehaviour(true);
+                    }
+                }
+                Balloon_1.Balloon = Balloon;
+            })(Balloon = Feature.Balloon || (Feature.Balloon = {}));
+        })(Feature = OSUI.Feature || (OSUI.Feature = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Feature;
+        (function (Feature) {
+            var Balloon;
+            (function (Balloon) {
+                var Enum;
+                (function (Enum) {
+                    let CssClasses;
+                    (function (CssClasses) {
+                        CssClasses["IsOpen"] = "osui-balloon--is-open";
+                        CssClasses["Pattern"] = "osui-balloon";
+                    })(CssClasses = Enum.CssClasses || (Enum.CssClasses = {}));
+                    let CssCustomProperties;
+                    (function (CssCustomProperties) {
+                        CssCustomProperties["Shape"] = "--osui-balloon-shape";
+                    })(CssCustomProperties = Enum.CssCustomProperties || (Enum.CssCustomProperties = {}));
+                    let Events;
+                    (function (Events) {
+                        Events["Initialized"] = "Initialized";
+                        Events["OnToggle"] = "OnToggle";
+                    })(Events = Enum.Events || (Enum.Events = {}));
+                    let Properties;
+                    (function (Properties) {
+                        Properties["AnchorId"] = "AnchorId";
+                        Properties["BalloonPosition"] = "BalloonPosition";
+                        Properties["BalloonShape"] = "BalloonShape";
+                    })(Properties = Enum.Properties || (Enum.Properties = {}));
+                })(Enum = Balloon.Enum || (Balloon.Enum = {}));
+            })(Balloon = Feature.Balloon || (Feature.Balloon = {}));
+        })(Feature = OSUI.Feature || (OSUI.Feature = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
 })(OSFramework || (OSFramework = {}));
 var OSFramework;
@@ -2388,7 +2683,9 @@ var OSFramework;
                     }
                 }
                 static GetFocusableElements(element) {
-                    return [...element.querySelectorAll(OSUI.Constants.FocusableElems)];
+                    const _focusableElems = element.querySelectorAll(OSUI.Constants.FocusableElems);
+                    const _filteredElements = Array.from(_focusableElems).filter((element) => element.getAttribute(OSUI.Constants.FocusTrapIgnoreAttr) !== 'true');
+                    return [..._filteredElements];
                 }
                 static Move(element, target) {
                     if (element && target) {
@@ -6782,6 +7079,230 @@ var OSFramework;
     (function (OSUI) {
         var Patterns;
         (function (Patterns) {
+            var OverflowMenu;
+            (function (OverflowMenu) {
+                var Enum;
+                (function (Enum) {
+                    let AriaLabel;
+                    (function (AriaLabel) {
+                        AriaLabel["Trigger"] = "Trigger the balloon";
+                    })(AriaLabel = Enum.AriaLabel || (Enum.AriaLabel = {}));
+                    let CssClass;
+                    (function (CssClass) {
+                        CssClass["Open"] = "osui-overflow-menu--is-open";
+                        CssClass["Trigger"] = "osui-overflow-menu__trigger";
+                        CssClass["Balloon"] = "osui-overflow-menu__balloon";
+                    })(CssClass = Enum.CssClass || (Enum.CssClass = {}));
+                    let CssCustomProperties;
+                    (function (CssCustomProperties) {
+                        CssCustomProperties["Shape"] = "--osui-overflow-menu-shape";
+                    })(CssCustomProperties = Enum.CssCustomProperties || (Enum.CssCustomProperties = {}));
+                    let Events;
+                    (function (Events) {
+                        Events["Initialized"] = "Initialized";
+                        Events["OnMenuToggle"] = "OnToggle";
+                    })(Events = Enum.Events || (Enum.Events = {}));
+                    let Properties;
+                    (function (Properties) {
+                        Properties["Position"] = "Position";
+                        Properties["Shape"] = "Shape";
+                    })(Properties = Enum.Properties || (Enum.Properties = {}));
+                })(Enum = OverflowMenu.Enum || (OverflowMenu.Enum = {}));
+            })(OverflowMenu = Patterns.OverflowMenu || (Patterns.OverflowMenu = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
+            var OverflowMenu;
+            (function (OverflowMenu_1) {
+                class OverflowMenu extends Patterns.AbstractPattern {
+                    constructor(uniqueId, configs) {
+                        super(uniqueId, new OverflowMenu_1.OverflowMenuConfig(configs));
+                        this._isOpenedByApi = false;
+                        this.isOpen = false;
+                    }
+                    _balloonOnToggleCallback(_args, e) {
+                        if (e.detail.balloonElem === this._balloonElem) {
+                            this._togglePattern(e.detail.isOpen);
+                        }
+                    }
+                    _onClickCallback() {
+                        if (this._balloonFeature.isOpen) {
+                            this.close();
+                        }
+                        else {
+                            this._isOpenedByApi = false;
+                            this.open(this._isOpenedByApi);
+                        }
+                    }
+                    _setBalloonFeature() {
+                        this.setBalloonOptions();
+                        this._balloonFeature = new OSFramework.OSUI.Feature.Balloon.Balloon(this, this._balloonElem, this.balloonOptions);
+                    }
+                    _setOverflowMenuShape(shape) {
+                        if (shape !== undefined) {
+                            this.configs.Shape = shape;
+                        }
+                        OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, OverflowMenu_1.Enum.CssCustomProperties.Shape, 'var(--border-radius-' + this.configs.Shape + ')');
+                    }
+                    _togglePattern(isOpen) {
+                        if (isOpen) {
+                            OSUI.Helper.Dom.Styles.AddClass(this.selfElement, OverflowMenu_1.Enum.CssClass.Open);
+                        }
+                        else {
+                            OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, OverflowMenu_1.Enum.CssClass.Open);
+                        }
+                        this.isOpen = isOpen;
+                        this.setA11YProperties();
+                        this._triggerOnToggleEvent();
+                    }
+                    _triggerOnToggleEvent() {
+                        this.triggerPlatformEventCallback(this._platformEventOnToggle, this.isOpen);
+                    }
+                    removeEventListeners() {
+                        this._triggerElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BalloonOnToggle, this._eventBalloonOnToggle);
+                    }
+                    setA11YProperties() {
+                        if (this.isBuilt === false) {
+                            OSUI.Helper.A11Y.AriaHasPopupTrue(this.selfElement);
+                            OSUI.Helper.A11Y.AriaControls(this._triggerElem, this._balloonElem.id);
+                            OSUI.Helper.A11Y.AriaLabel(this._triggerElem, OverflowMenu_1.Enum.AriaLabel.Trigger);
+                            OSUI.Helper.Dom.Attribute.Set(this._triggerElem, OSUI.Constants.FocusTrapIgnoreAttr, true);
+                        }
+                        OSUI.Helper.A11Y.AriaExpanded(this.selfElement, this.isOpen.toString());
+                    }
+                    setCallbacks() {
+                        this._eventBalloonOnToggle = this._balloonOnToggleCallback.bind(this);
+                        this._eventOnClick = this._onClickCallback.bind(this);
+                    }
+                    setEventListeners() {
+                        this._triggerElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BalloonOnToggle, this._eventBalloonOnToggle);
+                    }
+                    setHtmlElements() {
+                        this._triggerElem = OSUI.Helper.Dom.ClassSelector(this.selfElement, OverflowMenu_1.Enum.CssClass.Trigger);
+                        this._balloonElem = OSUI.Helper.Dom.ClassSelector(this.selfElement, OverflowMenu_1.Enum.CssClass.Balloon);
+                    }
+                    unsetCallbacks() {
+                        this._eventBalloonOnToggle = undefined;
+                        this._eventOnClick = undefined;
+                    }
+                    unsetHtmlElements() {
+                        this._balloonElem = undefined;
+                        this._triggerElem = undefined;
+                        this._balloonFeature = undefined;
+                    }
+                    build() {
+                        super.build();
+                        this.setHtmlElements();
+                        this.setA11YProperties();
+                        this._setBalloonFeature();
+                        this._setOverflowMenuShape();
+                        this.setCallbacks();
+                        this.setEventListeners();
+                        this.finishBuild();
+                    }
+                    changeProperty(propertyName, propertyValue) {
+                        super.changeProperty(propertyName, propertyValue);
+                        if (this.isBuilt) {
+                            switch (propertyName) {
+                                case OverflowMenu_1.Enum.Properties.Position:
+                                    this._balloonFeature.updatePositionOption(propertyValue);
+                                    break;
+                                case OverflowMenu_1.Enum.Properties.Shape:
+                                    this._setOverflowMenuShape(propertyValue);
+                                    this._balloonFeature.setBalloonShape(propertyValue);
+                                    break;
+                            }
+                        }
+                    }
+                    close() {
+                        if (this._balloonFeature.isOpen) {
+                            this._balloonFeature.close();
+                        }
+                    }
+                    dispose() {
+                        this._balloonFeature.dispose();
+                        this.removeEventListeners();
+                        this.unsetCallbacks();
+                        this.unsetHtmlElements();
+                        super.dispose();
+                    }
+                    open(isOpenedByApi) {
+                        if (this._balloonFeature.isOpen === false) {
+                            this._isOpenedByApi = isOpenedByApi;
+                            this._balloonFeature.open(this._isOpenedByApi);
+                        }
+                    }
+                    registerCallback(eventName, callback) {
+                        switch (eventName) {
+                            case Patterns.OverflowMenu.Enum.Events.OnMenuToggle:
+                                if (this._platformEventOnToggle === undefined) {
+                                    this._platformEventOnToggle = callback;
+                                }
+                                else {
+                                    console.warn(`The ${OSUI.GlobalEnum.PatternName.OverflowMenu} already has the toggle callback set.`);
+                                }
+                                break;
+                            default:
+                                super.registerCallback(eventName, callback);
+                        }
+                    }
+                    setBalloonOptions(balloonOptions) {
+                        if (balloonOptions !== undefined) {
+                            this.balloonOptions = balloonOptions;
+                        }
+                        else {
+                            this.balloonOptions = {
+                                alignment: OSUI.GlobalEnum.FloatingAlignment.Start,
+                                allowedPlacements: [
+                                    OSUI.GlobalEnum.FloatingPosition.BottomStart,
+                                    OSUI.GlobalEnum.FloatingPosition.BottomEnd,
+                                    OSUI.GlobalEnum.FloatingPosition.TopStart,
+                                    OSUI.GlobalEnum.FloatingPosition.TopEnd,
+                                ],
+                                anchorElem: this._triggerElem,
+                                position: this.configs.Position,
+                                shape: this.configs.Shape,
+                            };
+                        }
+                    }
+                }
+                OverflowMenu_1.OverflowMenu = OverflowMenu;
+            })(OverflowMenu = Patterns.OverflowMenu || (Patterns.OverflowMenu = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
+            var OverflowMenu;
+            (function (OverflowMenu) {
+                class OverflowMenuConfig extends Patterns.AbstractConfiguration {
+                    constructor(config) {
+                        super(config);
+                    }
+                }
+                OverflowMenu.OverflowMenuConfig = OverflowMenuConfig;
+            })(OverflowMenu = Patterns.OverflowMenu || (Patterns.OverflowMenu = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
             var Progress;
             (function (Progress) {
                 class AbstractProgress extends Patterns.AbstractPattern {
@@ -11139,6 +11660,13 @@ var OutSystems;
                 FailDispose: 'OSUI-API-29002',
                 FailRegisterCallback: 'OSUI-API-29003',
             };
+            ErrorCodes.OverflowMenu = {
+                FailChangeProperty: 'OSUI-API-30001',
+                FailDispose: 'OSUI-API-30002',
+                FailRegisterCallback: 'OSUI-API-30003',
+                FailOpen: 'OSUI-API-30004',
+                FailClose: 'OSUI-API-30005',
+            };
             ErrorCodes.Legacy = {
                 FailAddFavicon_Legacy: 'OSUI-LEG-000001',
                 MoveElement_Legacy: 'OSUI-LEG-000002',
@@ -12829,6 +13357,98 @@ var OutSystems;
                 }
                 NotificationAPI.Show = Show;
             })(NotificationAPI = Patterns.NotificationAPI || (Patterns.NotificationAPI = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
+})(OutSystems || (OutSystems = {}));
+var OutSystems;
+(function (OutSystems) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
+            var OverflowMenuAPI;
+            (function (OverflowMenuAPI) {
+                const _overflowMenuMap = new Map();
+                function ChangeProperty(overflowMenuId, propertyName, propertyValue) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.OverflowMenu.FailChangeProperty,
+                        callback: () => {
+                            const overflowMenu = GetOverflowMenuById(overflowMenuId);
+                            overflowMenu.changeProperty(propertyName, propertyValue);
+                        },
+                    });
+                    return result;
+                }
+                OverflowMenuAPI.ChangeProperty = ChangeProperty;
+                function Create(overflowMenuId, configs) {
+                    if (_overflowMenuMap.has(overflowMenuId)) {
+                        throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.OverflowMenu} registered under id: ${overflowMenuId}`);
+                    }
+                    const _overflowMenuItem = new OSFramework.OSUI.Patterns.OverflowMenu.OverflowMenu(overflowMenuId, JSON.parse(configs));
+                    _overflowMenuMap.set(overflowMenuId, _overflowMenuItem);
+                    return _overflowMenuItem;
+                }
+                OverflowMenuAPI.Create = Create;
+                function Dispose(overflowMenuId) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.OverflowMenu.FailDispose,
+                        callback: () => {
+                            const _overflowMenu = GetOverflowMenuById(overflowMenuId);
+                            _overflowMenu.dispose();
+                            _overflowMenuMap.delete(_overflowMenu.uniqueId);
+                        },
+                    });
+                    return result;
+                }
+                OverflowMenuAPI.Dispose = Dispose;
+                function GetAllOverflowMenus() {
+                    return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_overflowMenuMap);
+                }
+                OverflowMenuAPI.GetAllOverflowMenus = GetAllOverflowMenus;
+                function GetOverflowMenuById(overflowMenuId) {
+                    return OSFramework.OSUI.Helper.MapOperation.FindInMap(OSFramework.OSUI.GlobalEnum.PatternName.OverflowMenu, overflowMenuId, _overflowMenuMap);
+                }
+                OverflowMenuAPI.GetOverflowMenuById = GetOverflowMenuById;
+                function Initialize(overflowMenuId) {
+                    const _overflowMenu = GetOverflowMenuById(overflowMenuId);
+                    _overflowMenu.build();
+                    return _overflowMenu;
+                }
+                OverflowMenuAPI.Initialize = Initialize;
+                function RegisterCallback(overflowMenuId, eventName, callback) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.OverflowMenu.FailRegisterCallback,
+                        callback: () => {
+                            const _overflowMenu = GetOverflowMenuById(overflowMenuId);
+                            _overflowMenu.registerCallback(eventName, callback);
+                        },
+                    });
+                    return result;
+                }
+                OverflowMenuAPI.RegisterCallback = RegisterCallback;
+                function Open(overflowMenuId) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.OverflowMenu.FailOpen,
+                        callback: () => {
+                            const _overflowMenuItem = GetOverflowMenuById(overflowMenuId);
+                            _overflowMenuItem.open(true);
+                        },
+                    });
+                    return result;
+                }
+                OverflowMenuAPI.Open = Open;
+                function Close(overflowMenuId) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.OverflowMenu.FailClose,
+                        callback: () => {
+                            const _overflowMenuItem = GetOverflowMenuById(overflowMenuId);
+                            _overflowMenuItem.close();
+                        },
+                    });
+                    return result;
+                }
+                OverflowMenuAPI.Close = Close;
+            })(OverflowMenuAPI = Patterns.OverflowMenuAPI || (Patterns.OverflowMenuAPI = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
 })(OutSystems || (OutSystems = {}));
@@ -19610,5 +20230,90 @@ var Providers;
                 Flatpickr.FlatpickrTimeConfig = FlatpickrTimeConfig;
             })(Flatpickr = TimePicker.Flatpickr || (TimePicker.Flatpickr = {}));
         })(TimePicker = OSUI.TimePicker || (OSUI.TimePicker = {}));
+    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
+})(Providers || (Providers = {}));
+var Providers;
+(function (Providers) {
+    var OSUI;
+    (function (OSUI) {
+        var Utils;
+        (function (Utils) {
+            var Enum;
+            (function (Enum) {
+                let CssCustomProperties;
+                (function (CssCustomProperties) {
+                    CssCustomProperties["Offset"] = "--osui-floating-offset";
+                    CssCustomProperties["YPosition"] = "--osui-floating-position-y";
+                    CssCustomProperties["XPosition"] = "--osui-floating-position-x";
+                })(CssCustomProperties = Enum.CssCustomProperties || (Enum.CssCustomProperties = {}));
+            })(Enum = Utils.Enum || (Utils.Enum = {}));
+        })(Utils = OSUI.Utils || (OSUI.Utils = {}));
+    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
+})(Providers || (Providers = {}));
+var Providers;
+(function (Providers) {
+    var OSUI;
+    (function (OSUI) {
+        var Utils;
+        (function (Utils) {
+            class FloatingUI {
+                constructor(options) {
+                    this._floatingUIOptions = options;
+                    this.build();
+                }
+                _getOffsetValue() {
+                    return parseInt(getComputedStyle(this._floatingUIOptions.anchorElem).getPropertyValue(Utils.Enum.CssCustomProperties.Offset));
+                }
+                _setFloatingPosition() {
+                    const _middlewareArray = [];
+                    if (this._floatingUIOptions.autoPlacement) {
+                        if (this._floatingUIOptions.autoPlacementOptions.alignment === OSFramework.OSUI.Constants.EmptyString) {
+                            this._floatingUIOptions.autoPlacementOptions.alignment = null;
+                        }
+                        if (this._floatingUIOptions.autoPlacementOptions.allowedPlacements.length <= 0) {
+                            this._floatingUIOptions.autoPlacementOptions.allowedPlacements.push(OSFramework.OSUI.GlobalEnum.FloatingPosition.BottomStart);
+                        }
+                        _middlewareArray.push(window.FloatingUIDOM.autoPlacement(this._floatingUIOptions.autoPlacementOptions));
+                        _middlewareArray.push(window.FloatingUIDOM.shift());
+                    }
+                    if (this._floatingUIOptions.position !== OSFramework.OSUI.GlobalEnum.FloatingPosition.Center) {
+                        _middlewareArray.push(window.FloatingUIDOM.offset(this._getOffsetValue()));
+                    }
+                    const _eventOnUpdatePosition = () => {
+                        window.FloatingUIDOM.computePosition(this._floatingUIOptions.anchorElem, this._floatingUIOptions.floatingElem, {
+                            placement: this._floatingUIOptions.position,
+                            middleware: _middlewareArray,
+                        }).then(({ x, y }) => {
+                            OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, Utils.Enum.CssCustomProperties.YPosition, y + OSFramework.OSUI.GlobalEnum.Units.Pixel);
+                            OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, Utils.Enum.CssCustomProperties.XPosition, x + OSFramework.OSUI.GlobalEnum.Units.Pixel);
+                        });
+                    };
+                    _eventOnUpdatePosition();
+                    if (this._floatingUIOptions.updatePosition) {
+                        this._eventOnUpdateCallback = window.FloatingUIDOM.autoUpdate(this._floatingUIOptions.anchorElem, this._floatingUIOptions.floatingElem, _eventOnUpdatePosition.bind(this));
+                    }
+                }
+                build() {
+                    this._setFloatingPosition();
+                }
+                close() {
+                    this._eventOnUpdateCallback();
+                    setTimeout(() => {
+                        OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, Utils.Enum.CssCustomProperties.YPosition, 0);
+                        OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, Utils.Enum.CssCustomProperties.XPosition, 0);
+                    }, 50);
+                }
+                dispose() {
+                    if (this._floatingUIOptions.updatePosition) {
+                        this._eventOnUpdateCallback();
+                    }
+                }
+                update(options) {
+                    this._floatingUIOptions = options;
+                    this.build();
+                }
+            }
+            Utils.FloatingUI = FloatingUI;
+        })(Utils = OSUI.Utils || (OSUI.Utils = {}));
     })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
 })(Providers || (Providers = {}));
