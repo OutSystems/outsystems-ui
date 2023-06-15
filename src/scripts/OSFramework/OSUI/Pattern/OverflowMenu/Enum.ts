@@ -17,6 +17,13 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu.Enum {
 	}
 
 	/**
+	 * Balloon Enum CSS Variables
+	 */
+	export enum CssCustomProperties {
+		Shape = '--osui-overflow-menu-shape',
+	}
+
+	/**
 	 * OverflowMenu Enum events
 	 */
 	export enum Events {

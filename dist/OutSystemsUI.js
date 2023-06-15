@@ -7091,6 +7091,10 @@ var OSFramework;
                         CssClass["Trigger"] = "osui-overflow-menu__trigger";
                         CssClass["Balloon"] = "osui-overflow-menu__balloon";
                     })(CssClass = Enum.CssClass || (Enum.CssClass = {}));
+                    let CssCustomProperties;
+                    (function (CssCustomProperties) {
+                        CssCustomProperties["Shape"] = "--osui-overflow-menu-shape";
+                    })(CssCustomProperties = Enum.CssCustomProperties || (Enum.CssCustomProperties = {}));
                     let Events;
                     (function (Events) {
                         Events["Initialized"] = "Initialized";
@@ -7137,6 +7141,12 @@ var OSFramework;
                     _setBalloonFeature() {
                         this.setBalloonOptions();
                         this._balloonFeature = new OSFramework.OSUI.Feature.Balloon.Balloon(this, this._balloonElem, this.balloonOptions);
+                    }
+                    _setOverflowMenuShape(shape) {
+                        if (shape !== undefined) {
+                            this.configs.Shape = shape;
+                        }
+                        OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, OverflowMenu_1.Enum.CssCustomProperties.Shape, 'var(--border-radius-' + this.configs.Shape + ')');
                     }
                     _togglePattern(isOpen) {
                         if (isOpen) {
@@ -7191,6 +7201,7 @@ var OSFramework;
                         this.setHtmlElements();
                         this.setA11YProperties();
                         this._setBalloonFeature();
+                        this._setOverflowMenuShape();
                         this.setCallbacks();
                         this.setEventListeners();
                         this.finishBuild();
@@ -7203,6 +7214,7 @@ var OSFramework;
                                     this._balloonFeature.updatePositionOption(propertyValue);
                                     break;
                                 case OverflowMenu_1.Enum.Properties.Shape:
+                                    this._setOverflowMenuShape(propertyValue);
                                     this._balloonFeature.setBalloonShape(propertyValue);
                                     break;
                             }

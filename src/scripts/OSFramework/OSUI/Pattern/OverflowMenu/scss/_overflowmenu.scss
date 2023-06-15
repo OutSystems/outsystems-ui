@@ -4,19 +4,15 @@
 /// Patterns - Navigation - OverflowMenu
 
 .osui-overflow-menu {
+    --border-radius-rounded: 16px;
+
     &__trigger {
         --osui-floating-offset: var(--space-s);
 
-        background-color: var(--color-neutral-3);
         border: var(--border-size-s) solid transparent;
-        border-radius: var(--border-radius-soft);
-        cursor: pointer;
-        height: 32px;
+        border-radius: var(--osui-overflow-menu-shape);
+        color: var(--color-neutral-9);
         width: 32px;
-
-        &:hover {
-            background-color: var(--color-neutral-5);
-        }
 
         * {
             pointer-events: none;
@@ -25,7 +21,19 @@
 
     &--is-open {
         .osui-overflow-menu__trigger {
-            background-color: var(--color-neutral-5);
+            background-color: var(--color-neutral-4);
+        }
+    }
+}
+
+.tablet,
+.phone {
+    .osui-overflow-menu {
+        .osui-overflow-menu__trigger {
+            &.btn {
+                // Longer specificity to be able to always override default responsive styles for buttons
+                width: 40px;
+            }
         }
     }
 }

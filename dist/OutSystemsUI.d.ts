@@ -2406,6 +2406,9 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu.Enum {
         Trigger = "osui-overflow-menu__trigger",
         Balloon = "osui-overflow-menu__balloon"
     }
+    enum CssCustomProperties {
+        Shape = "--osui-overflow-menu-shape"
+    }
     enum Events {
         Initialized = "Initialized",
         OnMenuToggle = "OnToggle"
@@ -2434,6 +2437,7 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
         private _balloonOnToggleCallback;
         private _onClickCallback;
         private _setBalloonFeature;
+        private _setOverflowMenuShape;
         private _togglePattern;
         private _triggerOnToggleEvent;
         protected removeEventListeners(): void;

@@ -10799,23 +10799,26 @@ html[data-uieditorversion^="1"] .osui-timepicker__dropdown-ss-preview.time12h, h
   width:auto;
 }
 /*! 6.4.3. OverflowMenu */
+.osui-overflow-menu{
+  --border-radius-rounded:16px;
+}
 .osui-overflow-menu__trigger{
   --osui-floating-offset:var(--space-s);
-  background-color:var(--color-neutral-3);
   border:var(--border-size-s) solid transparent;
-  border-radius:var(--border-radius-soft);
+  border-radius:var(--osui-overflow-menu-shape);
+  color:var(--color-neutral-9);
   cursor:pointer;
-  height:32px;
   width:32px;
-}
-.osui-overflow-menu__trigger:hover{
-  background-color:var(--color-neutral-5);
 }
 .osui-overflow-menu__trigger *{
   pointer-events:none;
 }
 .osui-overflow-menu--is-open .osui-overflow-menu__trigger{
-  background-color:var(--color-neutral-5);
+  background-color:var(--color-neutral-4);
+}
+.tablet .osui-overflow-menu .osui-overflow-menu__trigger.btn,
+.phone .osui-overflow-menu .osui-overflow-menu__trigger.btn{
+  width:40px;
 }
 /*! 6.4.4. Pagination */
 .pagination{

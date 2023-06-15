@@ -61,6 +61,19 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 			);
 		}
 
+		// Method to handle the Shape config css variable
+		private _setOverflowMenuShape(shape?: GlobalEnum.ShapeTypes): void {
+			if (shape !== undefined) {
+				this.configs.Shape = shape;
+			}
+
+			Helper.Dom.Styles.SetStyleAttribute(
+				this.selfElement,
+				Enum.CssCustomProperties.Shape,
+				'var(--border-radius-' + this.configs.Shape + ')'
+			);
+		}
+
 		// Method to toggle the Pattern
 		private _togglePattern(isOpen: boolean): void {
 			if (isOpen) {
@@ -183,6 +196,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 			this.setHtmlElements();
 			this.setA11YProperties();
 			this._setBalloonFeature();
+			this._setOverflowMenuShape();
 			this.setCallbacks();
 			this.setEventListeners();
 			this.finishBuild();
@@ -204,6 +218,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 						this._balloonFeature.updatePositionOption(propertyValue as GlobalEnum.FloatingPosition);
 						break;
 					case Enum.Properties.Shape:
+						this._setOverflowMenuShape(propertyValue as GlobalEnum.ShapeTypes);
 						this._balloonFeature.setBalloonShape(propertyValue as GlobalEnum.ShapeTypes);
 						break;
 				}
