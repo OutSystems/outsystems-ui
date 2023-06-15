@@ -20279,7 +20279,7 @@ var Providers;
                     if (this._floatingUIOptions.position !== OSFramework.OSUI.GlobalEnum.FloatingPosition.Center) {
                         _middlewareArray.push(window.FloatingUIDOM.offset(this._getOffsetValue()));
                     }
-                    const _eventOnUpdatePosition = () => {
+                    const _eventOnUpdatePosition = async () => {
                         try {
                             window.FloatingUIDOM.computePosition(this._floatingUIOptions.anchorElem, this._floatingUIOptions.floatingElem, {
                                 placement: this._floatingUIOptions.position,
