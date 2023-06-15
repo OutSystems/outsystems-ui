@@ -2337,7 +2337,7 @@ select.dropdown-display[disabled]{
   font-size:var(--font-size-base);
   padding:0;
 }
-.layout-native .footer .btn{
+.layout-native .footer > .btn{
   border-radius:0;
   height:100%;
   padding-bottom:var(--os-safe-area-bottom);
