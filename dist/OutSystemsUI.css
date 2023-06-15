@@ -10807,7 +10807,6 @@ html[data-uieditorversion^="1"] .osui-timepicker__dropdown-ss-preview.time12h, h
   border:var(--border-size-s) solid transparent;
   border-radius:var(--osui-overflow-menu-shape);
   color:var(--color-neutral-9);
-  cursor:pointer;
   width:32px;
 }
 .osui-overflow-menu__trigger *{
@@ -10815,6 +10814,19 @@ html[data-uieditorversion^="1"] .osui-timepicker__dropdown-ss-preview.time12h, h
 }
 .osui-overflow-menu--is-open .osui-overflow-menu__trigger{
   background-color:var(--color-neutral-4);
+}
+.osui-overflow-menu__balloon{
+  min-width:170px;
+}
+.osui-overflow-menu__balloon a{
+  color:var(--color-neutral-9);
+}
+.osui-overflow-menu__balloon a:hover{
+  background:var(--color-neutral-4);
+  text-decoration:none;
+}
+.osui-overflow-menu__balloon a:not([class^=padding-]){
+  padding:var(--space-s) var(--space-base);
 }
 .tablet .osui-overflow-menu .osui-overflow-menu__trigger.btn,
 .phone .osui-overflow-menu .osui-overflow-menu__trigger.btn{
