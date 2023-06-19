@@ -12249,7 +12249,7 @@ html[data-uieditorversion^="1"] .wizard-wrapper-item{
   width:80%;
   z-index:var(--layer-local-tier-1);
 }
-.osui-progress-circle .svg-wrapper{
+.osui-progress-circle .osui-inline-svg{
   display:-webkit-inline-box;
   display:-ms-inline-flexbox;
   display:inline-flex;
@@ -12257,7 +12257,7 @@ html[data-uieditorversion^="1"] .wizard-wrapper-item{
   position:relative;
   width:var(--circle-size);
 }
-.osui-progress-circle .svg-wrapper svg{
+.osui-progress-circle .osui-inline-svg svg{
   height:var(--circle-size);
   width:var(--circle-size);
 }
