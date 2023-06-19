@@ -51,9 +51,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 
 		// Manage the disable status of the pattern
 		private _manageDisableStatus(): void {
-			// Ensure that is closed!
-			this.virtualselectConfigs.close();
-
 			if (this.configs.IsDisabled) {
 				OSFramework.OSUI.Helper.Dom.Attribute.Set(
 					this.selfElement,
@@ -263,6 +260,8 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			// Ensure Dropdown will be closed before any possible redraw, since provider needs it!
+			this.virtualselectConfigs.close();
 			// If/When we've the dropdown outside an IsDataFetched IF and OnParametersChannge where we're receiving (for both cases) a JSON string that must be parsed into an Object
 			if (
 				(propertyName === Enum.Properties.OptionsList || propertyName === Enum.Properties.StartingSelection) &&
@@ -279,17 +278,9 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 						this._manageDisableStatus();
 						break;
 					case Enum.Properties.NoOptionsText:
-						this.redraw();
-						break;
 					case Enum.Properties.NoResultsText:
-						this.redraw();
-						break;
 					case Enum.Properties.OptionsList:
-						this.redraw();
-						break;
 					case Enum.Properties.Prompt:
-						this.redraw();
-						break;
 					case Enum.Properties.SearchPrompt:
 						this.redraw();
 						break;
