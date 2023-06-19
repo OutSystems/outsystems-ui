@@ -77,7 +77,7 @@
 		z-index: var(--layer-local-tier-1);
 	}
 
-	.svg-wrapper {
+	.osui-inline-svg {
 		display: inline-flex;
 		// the !important is used to override the inline style
 		height: var(--circle-size) !important;
