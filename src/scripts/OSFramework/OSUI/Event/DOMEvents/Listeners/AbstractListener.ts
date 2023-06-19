@@ -49,6 +49,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 			super();
 			this._eventTarget = eventTarget;
 			this._eventType = eventType;
+			// If the event is not customl, it will always have the 'on' prefix used by the window events
 			this._eventName = isCustomEvent === false ? GlobalEnum.HTMLEvent.Prefix + this._eventType : this._eventType;
 
 			// Make async call to wait for extended event Class to set tge eventCallback property first
