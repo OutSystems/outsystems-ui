@@ -8415,7 +8415,7 @@ span.flatpickr-weekday{
   -moz-appearance:none;
 }
 .osui-datepicker input:first-of-type{
-  display:none;
+  display:none !important;
 }
 .osui-datepicker input.flatpickr-input[disabled] + input{
   background-color:var(--color-neutral-2);
@@ -9514,7 +9514,10 @@ body.vscomp-popup-active .vscomp-wrapper{
 .osui-monthpicker .not-valid + .flatpickr-mobile{
   border-color:var(--color-error);
 }
-.osui-monthpicker input.flatpickr-input[disabled] + input{
+.osui-monthpicker input:first-of-type{
+  display:none !important;
+}
+.osui-monthpicker input[disabled] + input{
   background-color:var(--color-neutral-2);
   border:var(--border-size-s) solid var(--color-neutral-4);
   color:var(--color-neutral-6);
@@ -10473,9 +10476,12 @@ body.vscomp-popup-active .vscomp-wrapper{
 .osui-timepicker__dropdown .flatpickr-am-pm:hover, .osui-timepicker__dropdown .flatpickr-am-pm:focus{
   background-color:var(--color-neutral-8);
 }
-.osui-timepicker input[type=date]::-webkit-inner-spin-button, .osui-timepicker input[type=date]::-webkit-calendar-picker-indicator, .osui-timepicker input[type=date]::-webkit-datetime-edit-year-field, .osui-timepicker input[type=date]::-webkit-datetime-edit-month-field, .osui-timepicker input[type=date]::-webkit-datetime-edit-day-field, .osui-timepicker input[type=date]::-webkit-datetime-edit-fields-wrapper{
+.osui-timepicker input[type=time]::-webkit-inner-spin-button, .osui-timepicker input[type=time]::-webkit-calendar-picker-indicator, .osui-timepicker input[type=time]::-webkit-datetime-edit-year-field, .osui-timepicker input[type=time]::-webkit-datetime-edit-month-field, .osui-timepicker input[type=time]::-webkit-datetime-edit-day-field, .osui-timepicker input[type=time]::-webkit-datetime-edit-fields-wrapper{
   display:none;
   -moz-appearance:none;
+}
+.osui-timepicker input:first-of-type{
+  display:none !important;
 }
 .osui-timepicker input.flatpickr-input[disabled] + input{
   background-color:var(--color-neutral-2);
@@ -12934,9 +12940,11 @@ body:has(.popup-dialog):has(.osui-dropdown-serverside--is-opened) .osui-dropdown
   -o-transition:background 250ms ease;
   transition:background 250ms ease;
   width:100%;
+  z-index:0;
 }
 .osui-dropdown-serverside-item:hover, .osui-dropdown-serverside-item--is-selected{
   background-color:var(--color-neutral-2);
+  z-index:1;
 }
 .osui-dropdown-serverside-item:hover, .osui-dropdown-serverside-item--is-selected{
   -servicestudio-background-color:var(--color-neutral-0);

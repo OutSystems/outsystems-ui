@@ -293,6 +293,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Timepicker = 'Timepicker',
 		Tooltip = 'Tooltip',
 		TouchEvents = 'TouchEvents',
+		Video = 'Video',
 	}
 
 	/**
