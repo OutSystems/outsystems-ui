@@ -7170,7 +7170,7 @@ var OSFramework;
                         if (this.isBuilt === false) {
                             OSUI.Helper.A11Y.AriaHasPopupTrue(this.selfElement);
                             OSUI.Helper.A11Y.AriaControls(this._triggerElem, this._balloonElem.id);
-                            OSUI.Helper.A11Y.AriaLabel(this._triggerElem, OverflowMenu_1.Enum.AriaLabel.Trigger);
+                            this.setTriggerAriaLabel(OverflowMenu_1.Enum.AriaLabel.Trigger);
                             OSUI.Helper.Dom.Attribute.Set(this._triggerElem, OSUI.Constants.FocusTrapIgnoreAttr, true);
                         }
                         OSUI.Helper.A11Y.AriaExpanded(this.selfElement, this.isOpen.toString());
@@ -7269,6 +7269,12 @@ var OSFramework;
                                 position: this.configs.Position,
                                 shape: this.configs.Shape,
                             };
+                        }
+                    }
+                    setTriggerAriaLabel(ariaLabelText) {
+                        if (ariaLabelText !== OSUI.Constants.EmptyString) {
+                            this._ariaLabelTrigger = ariaLabelText;
+                            OSUI.Helper.A11Y.AriaLabel(this._triggerElem, this._ariaLabelTrigger);
                         }
                     }
                 }

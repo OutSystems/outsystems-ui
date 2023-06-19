@@ -2424,6 +2424,7 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
 }
 declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
     class OverflowMenu extends AbstractPattern<OverflowMenuConfig> implements IOverflowMenu {
+        private _ariaLabelTrigger;
         private _balloonElem;
         private _balloonFeature;
         private _eventBalloonOnToggle;
@@ -2454,6 +2455,7 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
         open(isOpenedByApi: any): void;
         registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
         setBalloonOptions(balloonOptions?: Feature.Balloon.BalloonOptions): void;
+        setTriggerAriaLabel(ariaLabelText: string): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.OverflowMenu {

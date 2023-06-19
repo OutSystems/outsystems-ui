@@ -9,6 +9,8 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 	 * @implements {IOverflowMenu}
 	 */
 	export class OverflowMenu extends AbstractPattern<OverflowMenuConfig> implements IOverflowMenu {
+		// Store the aria-label text used on the Trigger Element
+		private _ariaLabelTrigger: string;
 		// Store the Balloon Element
 		private _balloonElem: HTMLElement;
 		// Store the Balloon Class instance
@@ -119,7 +121,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 			if (this.isBuilt === false) {
 				Helper.A11Y.AriaHasPopupTrue(this.selfElement);
 				Helper.A11Y.AriaControls(this._triggerElem, this._balloonElem.id);
-				Helper.A11Y.AriaLabel(this._triggerElem, Enum.AriaLabel.Trigger);
+				this.setTriggerAriaLabel(Enum.AriaLabel.Trigger);
 				Helper.Dom.Attribute.Set(this._triggerElem, Constants.FocusTrapIgnoreAttr, true);
 			}
 
@@ -305,6 +307,19 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 					position: this.configs.Position,
 					shape: this.configs.Shape,
 				};
+			}
+		}
+
+		/**
+		 * Method to set the aria-label text for the Trigger element
+		 *
+		 * @param {string} ariaLabelText
+		 * @memberof OverflowMenu
+		 */
+		public setTriggerAriaLabel(ariaLabelText: string): void {
+			if (ariaLabelText !== Constants.EmptyString) {
+				this._ariaLabelTrigger = ariaLabelText;
+				Helper.A11Y.AriaLabel(this._triggerElem, this._ariaLabelTrigger);
 			}
 		}
 	}
