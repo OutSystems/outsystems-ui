@@ -4,6 +4,7 @@
 /// Patterns - Navigation - OverflowMenu
 
 .osui-overflow-menu {
+    --osui-overflow-menu-min-width: 170px;
     --border-radius-rounded: 16px;
 
     &__trigger {
@@ -26,7 +27,7 @@
     }
     
     &__balloon {
-        min-width: 170px;
+        min-width: var(--osui-overflow-menu-min-width);
 
         a {
             color: var(--color-neutral-9);

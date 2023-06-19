@@ -10801,6 +10801,7 @@ html[data-uieditorversion^="1"] .osui-timepicker__dropdown-ss-preview.time12h, h
 }
 /*! 6.4.3. OverflowMenu */
 .osui-overflow-menu{
+  --osui-overflow-menu-min-width:170px;
   --border-radius-rounded:16px;
 }
 .osui-overflow-menu__trigger{
@@ -10817,7 +10818,7 @@ html[data-uieditorversion^="1"] .osui-timepicker__dropdown-ss-preview.time12h, h
   background-color:var(--color-neutral-4);
 }
 .osui-overflow-menu__balloon{
-  min-width:170px;
+  min-width:var(--osui-overflow-menu-min-width);
 }
 .osui-overflow-menu__balloon a{
   color:var(--color-neutral-9);

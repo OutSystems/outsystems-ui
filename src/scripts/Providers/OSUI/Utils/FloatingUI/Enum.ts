@@ -8,4 +8,12 @@ namespace Providers.OSUI.Utils.Enum {
 		YPosition = '--osui-floating-position-y',
 		XPosition = '--osui-floating-position-x',
 	}
+
+	/**
+	 * FloatingUI Provider Info enum
+	 */
+	export enum ProviderInfo {
+		Name = 'FloatingUI',
+		Version = '1.2.8',
+	}
 }
