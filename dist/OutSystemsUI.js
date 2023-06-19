@@ -1788,7 +1788,8 @@ var OSFramework;
                         this.build();
                     }
                     _bodyClickCallback(_args, e) {
-                        if (e.target === this.featureOptions.anchorElem || this._isOpenedByApi) {
+                        var _a;
+                        if (e.target === ((_a = this.featureOptions) === null || _a === void 0 ? void 0 : _a.anchorElem) || this._isOpenedByApi) {
                             return;
                         }
                         if (this.isOpen) {
@@ -1836,13 +1837,15 @@ var OSFramework;
                     }
                     _setEventListeners() {
                         this.featureElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
-                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventBodyClick);
+                        if (this.isOpen) {
+                            OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventBodyClick);
+                        }
                     }
                     _toggleBalloon(isOpen, isBodyClick = false) {
                         this.isOpen = isOpen;
                         if (isOpen) {
                             OSUI.Helper.Dom.Styles.AddClass(this.featureElem, Balloon_1.Enum.CssClasses.IsOpen);
-                            this._setEventListeners();
+                            OSUI.Helper.AsyncInvocation(this._setEventListeners.bind(this));
                         }
                         else {
                             OSUI.Helper.Dom.Styles.RemoveClass(this.featureElem, Balloon_1.Enum.CssClasses.IsOpen);
@@ -1872,6 +1875,12 @@ var OSFramework;
                             this._isOpenedByApi = false;
                         });
                     }
+                    _unsetCallbacks() {
+                        this._eventBodyClick = undefined;
+                        this._eventOnKeypress = undefined;
+                        this._onToggleEvent = undefined;
+                        window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] = undefined;
+                    }
                     build() {
                         this._setCallbacks();
                         this._setEventListeners();
@@ -1887,6 +1896,7 @@ var OSFramework;
                     }
                     dispose() {
                         this._floatingUIInstance.dispose();
+                        this._unsetCallbacks();
                         super.dispose();
                     }
                     open(isOpenedByApi) {
@@ -20263,6 +20273,11 @@ var Providers;
                     CssCustomProperties["YPosition"] = "--osui-floating-position-y";
                     CssCustomProperties["XPosition"] = "--osui-floating-position-x";
                 })(CssCustomProperties = Enum.CssCustomProperties || (Enum.CssCustomProperties = {}));
+                let ProviderInfo;
+                (function (ProviderInfo) {
+                    ProviderInfo["Name"] = "FloatingUI";
+                    ProviderInfo["Version"] = "1.2.8";
+                })(ProviderInfo = Enum.ProviderInfo || (Enum.ProviderInfo = {}));
             })(Enum = Utils.Enum || (Utils.Enum = {}));
         })(Utils = OSUI.Utils || (OSUI.Utils = {}));
     })(OSUI = Providers.OSUI || (Providers.OSUI = {}));

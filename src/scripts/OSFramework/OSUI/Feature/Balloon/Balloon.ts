@@ -45,7 +45,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 
 		// Method to handle the body click callback, that closes the Balloon
 		private _bodyClickCallback(_args: string, e: MouseEvent): void {
-			if (e.target === this.featureOptions.anchorElem || this._isOpenedByApi) {
+			if (e.target === this.featureOptions?.anchorElem || this._isOpenedByApi) {
 				return;
 			}
 			if (this.isOpen) {
@@ -129,10 +129,12 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		private _setEventListeners(): void {
 			this.featureElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
 
-			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
-				Event.DOMEvents.Listeners.Type.BodyOnClick,
-				this._eventBodyClick
-			);
+			if (this.isOpen) {
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+					Event.DOMEvents.Listeners.Type.BodyOnClick,
+					this._eventBodyClick
+				);
+			}
 		}
 
 		// Method to toggle the open/close the Balloon
@@ -143,8 +145,8 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			// Toggle class
 			if (isOpen) {
 				Helper.Dom.Styles.AddClass(this.featureElem, Enum.CssClasses.IsOpen);
-				// add listeners and A11y properties
-				this._setEventListeners();
+				// Add listeners and A11y properties. this is async to prevent unnecessary calls when clicking on triggers
+				Helper.AsyncInvocation(this._setEventListeners.bind(this));
 			} else {
 				Helper.Dom.Styles.RemoveClass(this.featureElem, Enum.CssClasses.IsOpen);
 				// remove listeners and A11y properties

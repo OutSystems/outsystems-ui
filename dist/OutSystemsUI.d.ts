@@ -876,6 +876,7 @@ declare namespace OSFramework.OSUI.Feature.Balloon {
         private _setCallbacks;
         private _setEventListeners;
         private _toggleBalloon;
+        private _unsetCallbacks;
         build(): void;
         close(): void;
         dispose(): void;
@@ -5820,6 +5821,10 @@ declare namespace Providers.OSUI.Utils.Enum {
         Offset = "--osui-floating-offset",
         YPosition = "--osui-floating-position-y",
         XPosition = "--osui-floating-position-x"
+    }
+    enum ProviderInfo {
+        Name = "FloatingUI",
+        Version = "1.2.8"
     }
 }
 declare namespace Providers.OSUI.Utils {
