@@ -35,11 +35,13 @@
 
     // Service Studio Preview
     & {
-        -servicestudio-visibility: visible;
+        -servicestudio-left: 0;
+        -servicestudio-min-width: 170px;
         -servicestudio-opacity: 1;
         -servicestudio-position: absolute;
         -servicestudio-top: 100%;
-        -servicestudio-left: 0;
+        -servicestudio-visibility: visible;
+
 
         &.bottom {
             -servicestudio-left: 50%;
