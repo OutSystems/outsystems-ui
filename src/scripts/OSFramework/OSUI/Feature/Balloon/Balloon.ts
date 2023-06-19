@@ -111,21 +111,22 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		private _setCallbacks(): void {
 			this._eventBodyClick = this._bodyClickCallback.bind(this);
 			this._eventOnKeypress = this._onkeypressCallback.bind(this);
+
+			// Set custom Balloon event
+			this._onToggleEvent = function dispatchCustomEvent(isOpen, balloonElem) {
+				const _customEvent = new CustomEvent(GlobalEnum.CustomEvent.BalloonOnToggle, {
+					detail: { isOpen: isOpen, balloonElem: balloonElem },
+				});
+				document.dispatchEvent(_customEvent);
+			};
+
+			// Set its reference on the window
+			window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] =
+				OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle;
 		}
 
 		//  Method to add event listeners
-		private _setEventListeners(isBuild = false): void {
-			if (isBuild) {
-				this._onToggleEvent = function dispatchCustomEvent(isOpen, balloonElem) {
-					const _customEvent = new CustomEvent(GlobalEnum.CustomEvent.BalloonOnToggle, {
-						detail: { isOpen: isOpen, balloonElem: balloonElem },
-					});
-					document.dispatchEvent(_customEvent);
-				};
-				window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] =
-					OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle;
-			}
-
+		private _setEventListeners(): void {
 			this.featureElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
 
 			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
@@ -195,7 +196,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		 */
 		public build(): void {
 			this._setCallbacks();
-			this._setEventListeners(true);
+			this._setEventListeners();
 			this.setFloatingUIBehaviour();
 			this._handleFocusTrap();
 			this._setA11YProperties();

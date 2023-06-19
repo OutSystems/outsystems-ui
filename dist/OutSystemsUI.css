@@ -7742,11 +7742,12 @@ span.flatpickr-weekday{
   display:none;
 }
 .osui-balloon{
-  -servicestudio-visibility:visible;
+  -servicestudio-left:0;
+  -servicestudio-min-width:170px;
   -servicestudio-opacity:1;
   -servicestudio-position:absolute;
   -servicestudio-top:100%;
-  -servicestudio-left:0;
+  -servicestudio-visibility:visible;
 }
 .osui-balloon.bottom{
   -servicestudio-left:50%;

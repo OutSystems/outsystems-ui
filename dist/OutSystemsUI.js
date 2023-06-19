@@ -1825,18 +1825,16 @@ var OSFramework;
                     _setCallbacks() {
                         this._eventBodyClick = this._bodyClickCallback.bind(this);
                         this._eventOnKeypress = this._onkeypressCallback.bind(this);
+                        this._onToggleEvent = function dispatchCustomEvent(isOpen, balloonElem) {
+                            const _customEvent = new CustomEvent(OSUI.GlobalEnum.CustomEvent.BalloonOnToggle, {
+                                detail: { isOpen: isOpen, balloonElem: balloonElem },
+                            });
+                            document.dispatchEvent(_customEvent);
+                        };
+                        window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] =
+                            OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle;
                     }
-                    _setEventListeners(isBuild = false) {
-                        if (isBuild) {
-                            this._onToggleEvent = function dispatchCustomEvent(isOpen, balloonElem) {
-                                const _customEvent = new CustomEvent(OSUI.GlobalEnum.CustomEvent.BalloonOnToggle, {
-                                    detail: { isOpen: isOpen, balloonElem: balloonElem },
-                                });
-                                document.dispatchEvent(_customEvent);
-                            };
-                            window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] =
-                                OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle;
-                        }
+                    _setEventListeners() {
                         this.featureElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
                         OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventBodyClick);
                     }
@@ -1876,7 +1874,7 @@ var OSFramework;
                     }
                     build() {
                         this._setCallbacks();
-                        this._setEventListeners(true);
+                        this._setEventListeners();
                         this.setFloatingUIBehaviour();
                         this._handleFocusTrap();
                         this._setA11YProperties();
