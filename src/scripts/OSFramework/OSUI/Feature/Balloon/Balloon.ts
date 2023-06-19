@@ -189,6 +189,14 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			});
 		}
 
+		// Method to unset the callbaks
+		private _unsetCallbacks(): void {
+			this._eventBodyClick = undefined;
+			this._eventOnKeypress = undefined;
+			this._onToggleEvent = undefined;
+			window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] = undefined;
+		}
+
 		/**
 		 * Method to build the Feature
 		 *
@@ -221,6 +229,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		 */
 		public dispose(): void {
 			this._floatingUIInstance.dispose();
+			this._unsetCallbacks();
 			super.dispose();
 		}
 
