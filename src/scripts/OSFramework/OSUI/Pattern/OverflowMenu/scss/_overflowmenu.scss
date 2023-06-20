@@ -36,6 +36,14 @@
                 background: var(--color-neutral-4);
                 text-decoration: none;
             }
+
+            // Service Studio Preview
+            & {
+                -servicestudio-align-items: center;
+                -servicestudio-display: inline-flex!important;
+                -servicestudio-color:var(--color-neutral-9);
+                -servicestudio-padding: var(--space-s) var(--space-base);
+            }
         }
     
         // To make extensibility with ExtendedClass easier

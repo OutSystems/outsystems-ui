@@ -2453,7 +2453,7 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
         changeProperty(propertyName: string, propertyValue: unknown): void;
         close(): void;
         dispose(): void;
-        open(isOpenedByApi: any): void;
+        open(isOpenedByApi: boolean): void;
         registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
         setBalloonOptions(balloonOptions?: Feature.Balloon.BalloonOptions): void;
         setTriggerAriaLabel(ariaLabelText: string): void;

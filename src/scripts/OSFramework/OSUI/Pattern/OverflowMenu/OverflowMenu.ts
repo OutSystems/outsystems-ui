@@ -256,7 +256,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 *
 		 * @memberof OverflowMenu
 		 */
-		public open(isOpenedByApi): void {
+		public open(isOpenedByApi: boolean): void {
 			if (this._balloonFeature.isOpen === false) {
 				this._isOpenedByApi = isOpenedByApi;
 				this._balloonFeature.open(this._isOpenedByApi);
