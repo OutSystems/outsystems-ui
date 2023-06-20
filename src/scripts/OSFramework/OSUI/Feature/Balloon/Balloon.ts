@@ -147,7 +147,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			// Toggle class
 			if (isOpen) {
 				Helper.Dom.Styles.AddClass(this.featureElem, Enum.CssClasses.IsOpen);
-				// Add listeners and A11y properties. this is async to prevent unnecessary calls when clicking on triggers
+				// Add event listeners. This is async to prevent unnecessary calls when clicking on triggers
 				Helper.AsyncInvocation(this._setEventListeners.bind(this));
 			} else {
 				Helper.Dom.Styles.RemoveClass(this.featureElem, Enum.CssClasses.IsOpen);
