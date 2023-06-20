@@ -315,7 +315,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         TransitionEnd = "transitionend"
     }
     enum CustomEvent {
-        BalloonOnToggle = "BalloonOnToggle"
+        BalloonOnToggle = "balloon.onToggle"
     }
     enum InlineStyle {
         Display = "display",
@@ -636,7 +636,7 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
     enum Type {
-        BalloonOnToggle = "BalloonOnToggle",
+        BalloonOnToggle = "balloon.onToggle",
         BodyOnClick = "body.onclick",
         BodyOnScroll = "body.onscroll",
         BodyOnMouseDown = "body.mousedown",

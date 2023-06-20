@@ -392,7 +392,7 @@ var OSFramework;
             })(HTMLEvent = GlobalEnum.HTMLEvent || (GlobalEnum.HTMLEvent = {}));
             let CustomEvent;
             (function (CustomEvent) {
-                CustomEvent["BalloonOnToggle"] = "BalloonOnToggle";
+                CustomEvent["BalloonOnToggle"] = "balloon.onToggle";
             })(CustomEvent = GlobalEnum.CustomEvent || (GlobalEnum.CustomEvent = {}));
             let InlineStyle;
             (function (InlineStyle) {
@@ -1198,7 +1198,7 @@ var OSFramework;
                 (function (Listeners) {
                     let Type;
                     (function (Type) {
-                        Type["BalloonOnToggle"] = "BalloonOnToggle";
+                        Type["BalloonOnToggle"] = "balloon.onToggle";
                         Type["BodyOnClick"] = "body.onclick";
                         Type["BodyOnScroll"] = "body.onscroll";
                         Type["BodyOnMouseDown"] = "body.mousedown";

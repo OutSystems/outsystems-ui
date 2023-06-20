@@ -8,6 +8,13 @@ namespace OSFramework.OSUI.Feature {
 		// Store the feature Pattern
 		private _featurePattern: PT;
 
+		/**
+		 * Creates an instance of AbstractFeature.
+		 * @param {PT} featurePattern The pattern reference that uses this feature
+		 * @param {HTMLElement} featureElem The feature DOM element that will be targeted
+		 * @param {O} options The options passed to this feature, by the featurePattern
+		 * @memberof AbstractFeature
+		 */
 		constructor(featurePattern: PT, featureElem: HTMLElement, options: O) {
 			this._featureOptions = options;
 			this._featureElem = featureElem;
