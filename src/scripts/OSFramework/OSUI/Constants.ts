@@ -62,6 +62,7 @@ namespace OSFramework.OSUI.Constants {
 	/* Used to typify the empty string value*/
 	export const EmptyString = '';
 
+	/* Attribute used to flag some elements to be ignored by the Focus Trap behaviour */
 	export const FocusTrapIgnoreAttr = 'ignore-focus-trap';
 
 	/* Store focusable elements when doing a focus trap inside an element*/
