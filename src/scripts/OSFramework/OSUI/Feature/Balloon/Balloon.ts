@@ -279,9 +279,9 @@ namespace OSFramework.OSUI.Feature.Balloon {
 
 				if (isUpdate && this._floatingUIInstance !== undefined) {
 					this._floatingUIInstance.update(this._floatingUIOptions);
+				} else {
+					this._floatingUIInstance = new Providers.OSUI.Utils.FloatingUI(this._floatingUIOptions);
 				}
-
-				this._floatingUIInstance = new Providers.OSUI.Utils.FloatingUI(this._floatingUIOptions);
 			} else {
 				this._floatingUIInstance.build();
 			}
