@@ -1919,7 +1919,9 @@ var OSFramework;
                             if (isUpdate && this._floatingUIInstance !== undefined) {
                                 this._floatingUIInstance.update(this._floatingUIOptions);
                             }
-                            this._floatingUIInstance = new Providers.OSUI.Utils.FloatingUI(this._floatingUIOptions);
+                            else {
+                                this._floatingUIInstance = new Providers.OSUI.Utils.FloatingUI(this._floatingUIOptions);
+                            }
                         }
                         else {
                             this._floatingUIInstance.build();
@@ -1973,11 +1975,6 @@ var OSFramework;
                     (function (CssCustomProperties) {
                         CssCustomProperties["Shape"] = "--osui-balloon-shape";
                     })(CssCustomProperties = Enum.CssCustomProperties || (Enum.CssCustomProperties = {}));
-                    let Events;
-                    (function (Events) {
-                        Events["Initialized"] = "Initialized";
-                        Events["OnToggle"] = "OnToggle";
-                    })(Events = Enum.Events || (Enum.Events = {}));
                     let Properties;
                     (function (Properties) {
                         Properties["AnchorId"] = "AnchorId";

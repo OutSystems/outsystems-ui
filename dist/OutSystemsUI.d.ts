@@ -896,10 +896,6 @@ declare namespace OSFramework.OSUI.Feature.Balloon.Enum {
     enum CssCustomProperties {
         Shape = "--osui-balloon-shape"
     }
-    enum Events {
-        Initialized = "Initialized",
-        OnToggle = "OnToggle"
-    }
     enum Properties {
         AnchorId = "AnchorId",
         BalloonPosition = "BalloonPosition",

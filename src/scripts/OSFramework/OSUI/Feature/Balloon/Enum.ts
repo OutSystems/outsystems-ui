@@ -16,14 +16,6 @@ namespace OSFramework.OSUI.Feature.Balloon.Enum {
 	}
 
 	/**
-	 * Balloon Enum events
-	 */
-	export enum Events {
-		Initialized = 'Initialized',
-		OnToggle = 'OnToggle',
-	}
-
-	/**
 	 * Balloon Enum Properties
 	 */
 	export enum Properties {
