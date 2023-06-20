@@ -121,8 +121,10 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			};
 
 			// Set its reference on the window
-			window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] =
-				OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle;
+			if ((window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] = undefined)) {
+				window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] =
+					OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle;
+			}
 		}
 
 		//  Method to add event listeners

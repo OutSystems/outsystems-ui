@@ -1832,8 +1832,10 @@ var OSFramework;
                             });
                             document.dispatchEvent(_customEvent);
                         };
-                        window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] =
-                            OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle;
+                        if ((window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] = undefined)) {
+                            window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] =
+                                OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle;
+                        }
                     }
                     _setEventListeners() {
                         this.featureElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
