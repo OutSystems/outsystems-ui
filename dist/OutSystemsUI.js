@@ -7154,7 +7154,7 @@ var OSFramework;
                         if (shape !== undefined) {
                             this.configs.Shape = shape;
                         }
-                        OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, OverflowMenu_1.Enum.CssCustomProperties.Shape, 'var(--border-radius-' + this.configs.Shape + ')');
+                        OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, OverflowMenu_1.Enum.CssCustomProperties.Shape, `var(--border-radius-${this.configs.Shape})`);
                     }
                     _togglePattern(isOpen) {
                         if (isOpen) {

@@ -72,7 +72,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this.selfElement,
 				Enum.CssCustomProperties.Shape,
-				'var(--border-radius-' + this.configs.Shape + ')'
+				`var(--border-radius-${this.configs.Shape})`
 			);
 		}
 
