@@ -131,7 +131,8 @@ namespace Providers.OSUI.Utils {
 		 */
 		public close(): void {
 			this._eventOnUpdateCallback();
-			setTimeout(() => {
+			// SetTimeout used to make sure we reset the variables, after the floatingUI finsishes cleaning it up
+			OSFramework.OSUI.Helper.ApplySetTimeOut(() => {
 				OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
 					this._floatingUIOptions.floatingElem,
 					Enum.CssCustomProperties.YPosition,

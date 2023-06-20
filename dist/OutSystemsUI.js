@@ -20337,7 +20337,7 @@ var Providers;
                 }
                 close() {
                     this._eventOnUpdateCallback();
-                    setTimeout(() => {
+                    OSFramework.OSUI.Helper.ApplySetTimeOut(() => {
                         OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, Utils.Enum.CssCustomProperties.YPosition, 0);
                         OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, Utils.Enum.CssCustomProperties.XPosition, 0);
                     }, 50);
