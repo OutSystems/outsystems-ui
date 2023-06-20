@@ -1,5 +1,15 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Feature {
+	/**
+	 * Abstract class to be extended by all Features
+	 *
+	 * @export
+	 * @abstract
+	 * @class AbstractFeature
+	 * @implements {IFeature}
+	 * @template PT Pattern type that will use this feature
+	 * @template O Feature Options type
+	 */
 	export abstract class AbstractFeature<PT, O> implements IFeature {
 		// Store the feature DOM elem
 		private _featureElem: HTMLElement;
