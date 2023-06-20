@@ -190,6 +190,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 				options: this._getOptionsList() as [],
 				placeholder: this.Prompt,
 				search: true,
+				searchNormalize: true,
 				searchPlaceholderText: this.SearchPrompt,
 				selectAllOnlyVisible: true,
 				selectedValue: this.getSelectedValues() as [],

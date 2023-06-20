@@ -17676,6 +17676,7 @@ var Providers;
                             options: this._getOptionsList(),
                             placeholder: this.Prompt,
                             search: true,
+                            searchNormalize: true,
                             searchPlaceholderText: this.SearchPrompt,
                             selectAllOnlyVisible: true,
                             selectedValue: this.getSelectedValues(),
