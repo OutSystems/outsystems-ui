@@ -121,7 +121,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			};
 
 			// Set its reference on the window
-			if ((window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] = undefined)) {
+			if (window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] === undefined) {
 				window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] =
 					OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle;
 			}

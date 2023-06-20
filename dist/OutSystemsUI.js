@@ -1832,7 +1832,7 @@ var OSFramework;
                             });
                             document.dispatchEvent(_customEvent);
                         };
-                        if ((window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] = undefined)) {
+                        if (window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] === undefined) {
                             window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] =
                                 OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle;
                         }
