@@ -151,7 +151,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 				Helper.AsyncInvocation(this._setEventListeners.bind(this));
 			} else {
 				Helper.Dom.Styles.RemoveClass(this.featureElem, Enum.CssClasses.IsOpen);
-				// remove listeners and A11y properties
+				// remove event listeners
 				this._removeEventListeners();
 			}
 
