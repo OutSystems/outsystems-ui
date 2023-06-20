@@ -27,7 +27,6 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu.Enum {
 	 * OverflowMenu Enum events
 	 */
 	export enum Events {
-		Initialized = 'Initialized',
 		OnMenuToggle = 'OnToggle',
 	}
 

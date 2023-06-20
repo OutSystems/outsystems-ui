@@ -2407,7 +2407,6 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu.Enum {
         Shape = "--osui-overflow-menu-shape"
     }
     enum Events {
-        Initialized = "Initialized",
         OnMenuToggle = "OnToggle"
     }
     enum Properties {

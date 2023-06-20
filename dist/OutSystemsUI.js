@@ -7106,7 +7106,6 @@ var OSFramework;
                     })(CssCustomProperties = Enum.CssCustomProperties || (Enum.CssCustomProperties = {}));
                     let Events;
                     (function (Events) {
-                        Events["Initialized"] = "Initialized";
                         Events["OnMenuToggle"] = "OnToggle";
                     })(Events = Enum.Events || (Enum.Events = {}));
                     let Properties;
