@@ -4,7 +4,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	 * Listener Event Types
 	 */
 	export enum Type {
-		BalloonOnToggle = 'BalloonOnToggle',
+		BalloonOnToggle = 'balloon.onToggle',
 		BodyOnClick = 'body.onclick',
 		BodyOnScroll = 'body.onscroll',
 		BodyOnMouseDown = 'body.mousedown',
