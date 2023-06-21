@@ -122,9 +122,7 @@ namespace OSFramework.OSUI.Patterns.Video {
 
 			if (subtitlesList.length !== 0) {
 				for (const item of subtitlesList) {
-					const trackElement = document.createElement(
-						Patterns.Video.Enum.VideoTags.Track
-					) as HTMLTrackElement;
+					const trackElement = document.createElement(Patterns.Video.Enum.VideoTags.Track);
 
 					// Add class to track element created
 					OSUI.Helper.Dom.Styles.AddClass(trackElement, Patterns.Video.Enum.CssClass.VideoTrack);
