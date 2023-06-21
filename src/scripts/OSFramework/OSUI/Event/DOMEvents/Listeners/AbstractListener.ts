@@ -52,7 +52,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 			// If the event is not custom, it will always have the 'on' prefix used by the window events
 			this._eventName = isCustomEvent === false ? GlobalEnum.HTMLEvent.Prefix + this._eventType : this._eventType;
 
-			// Add custom event refernce to the window
+			// Add custom event reference to the window
 			if (isCustomEvent) {
 				window[this._eventName] = this._eventName;
 			}
