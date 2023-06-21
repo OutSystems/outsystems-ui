@@ -1054,6 +1054,9 @@ var OSFramework;
                             this._eventTarget = eventTarget;
                             this._eventType = eventType;
                             this._eventName = isCustomEvent === false ? OSUI.GlobalEnum.HTMLEvent.Prefix + this._eventType : this._eventType;
+                            if (isCustomEvent) {
+                                window[this._eventName] = this._eventName;
+                            }
                             OSUI.Helper.AsyncInvocation(this.addEvent.bind(this));
                         }
                         addEvent() {
@@ -1832,10 +1835,6 @@ var OSFramework;
                             });
                             document.dispatchEvent(_customEvent);
                         };
-                        if (window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] === undefined) {
-                            window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] =
-                                OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle;
-                        }
                     }
                     _setEventListeners() {
                         this.featureElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
