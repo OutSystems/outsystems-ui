@@ -7805,6 +7805,9 @@ span.flatpickr-weekday{
   -servicestudio-left:50%;
   -servicestudio-transform:translateY(-100%) translateX(-50%);
 }
+.osui-tabs__header-item .osui-balloon{
+  position:fixed;
+}
 /*! 6.3.5. Bottom Sheet */
 .osui-bottom-sheet{
   --bottom-sheet-max-height:calc(100vh - 54px);

@@ -114,3 +114,9 @@
     }
 }
 
+// To fix the balloon getting cut inside Tabs
+.osui-tabs__header-item{
+    .osui-balloon {
+        position: fixed;
+    }
+}
