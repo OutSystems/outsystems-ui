@@ -69,17 +69,15 @@ namespace Providers.OSUI.Utils {
 			}
 
 			// Set the computePosition method. This is the main provider method to set the balloon position
-			const _eventOnUpdatePosition = async () => {
-				try {
-					const { x, y } = await window.FloatingUIDOM.computePosition(
-						this._floatingUIOptions.anchorElem,
-						this._floatingUIOptions.floatingElem,
-						{
-							placement: this._floatingUIOptions.position,
-							middleware: _middlewareArray,
-						}
-					);
-
+			const _eventOnUpdatePosition = () => {
+				window.FloatingUIDOM.computePosition(
+					this._floatingUIOptions.anchorElem,
+					this._floatingUIOptions.floatingElem,
+					{
+						placement: this._floatingUIOptions.position,
+						middleware: _middlewareArray,
+					}
+				).then(({ x, y }) => {
 					// Update the Balloon CSS Variables with the returned optimal x & y for position
 					OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
 						this._floatingUIOptions.floatingElem,
@@ -91,28 +89,20 @@ namespace Providers.OSUI.Utils {
 						Enum.CssCustomProperties.XPosition,
 						x + OSFramework.OSUI.GlobalEnum.Units.Pixel
 					);
-				} catch (error) {
-					throw new Error(Providers.OSUI.ErrorCodes.FloatingUI.FailCallProvider);
-				}
+				});
 			};
 
 			// Set the position
-			_eventOnUpdatePosition()
-				.then(() => {
-					// If updatePosition is used, set a callback to run autoUpdate method. This is also used to then clean-up on destroy
-					if (this._floatingUIOptions.updatePosition) {
-						this._eventOnUpdateCallback = window.FloatingUIDOM.autoUpdate(
-							this._floatingUIOptions.anchorElem,
-							this._floatingUIOptions.floatingElem,
-							_eventOnUpdatePosition.bind(this)
-						);
-					}
-				})
-				.catch((error) => {
-					console.error(
-						`${Providers.OSUI.ErrorCodes.FloatingUI.FailCallProvider}: FloatingUI failed to update the position: ${error}`
-					);
-				});
+			_eventOnUpdatePosition();
+
+			// If updatePosition is used, set a callback to run autoUpdate method. This is also used to then clean-up on destroy
+			if (this._floatingUIOptions.updatePosition) {
+				this._eventOnUpdateCallback = window.FloatingUIDOM.autoUpdate(
+					this._floatingUIOptions.anchorElem,
+					this._floatingUIOptions.floatingElem,
+					_eventOnUpdatePosition.bind(this)
+				);
+			}
 		}
 
 		/**

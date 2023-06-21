@@ -1886,7 +1886,7 @@ var OSFramework;
                     build() {
                         this._setCallbacks();
                         this._setEventListeners();
-                        this.setFloatingUIBehaviour();
+                        this.setFloatingUIOptions();
                         this._handleFocusTrap();
                         this._setA11YProperties();
                         this.setBalloonShape();
@@ -20309,28 +20309,19 @@ var Providers;
                     if (this._floatingUIOptions.position !== OSFramework.OSUI.GlobalEnum.FloatingPosition.Center) {
                         _middlewareArray.push(window.FloatingUIDOM.offset(this._getOffsetValue()));
                     }
-                    const _eventOnUpdatePosition = async () => {
-                        try {
-                            const { x, y } = await window.FloatingUIDOM.computePosition(this._floatingUIOptions.anchorElem, this._floatingUIOptions.floatingElem, {
-                                placement: this._floatingUIOptions.position,
-                                middleware: _middlewareArray,
-                            });
+                    const _eventOnUpdatePosition = () => {
+                        window.FloatingUIDOM.computePosition(this._floatingUIOptions.anchorElem, this._floatingUIOptions.floatingElem, {
+                            placement: this._floatingUIOptions.position,
+                            middleware: _middlewareArray,
+                        }).then(({ x, y }) => {
                             OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, Utils.Enum.CssCustomProperties.YPosition, y + OSFramework.OSUI.GlobalEnum.Units.Pixel);
                             OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, Utils.Enum.CssCustomProperties.XPosition, x + OSFramework.OSUI.GlobalEnum.Units.Pixel);
-                        }
-                        catch (error) {
-                            throw new Error(Providers.OSUI.ErrorCodes.FloatingUI.FailCallProvider);
-                        }
+                        });
                     };
-                    _eventOnUpdatePosition()
-                        .then(() => {
-                        if (this._floatingUIOptions.updatePosition) {
-                            this._eventOnUpdateCallback = window.FloatingUIDOM.autoUpdate(this._floatingUIOptions.anchorElem, this._floatingUIOptions.floatingElem, _eventOnUpdatePosition.bind(this));
-                        }
-                    })
-                        .catch((error) => {
-                        console.error(`${Providers.OSUI.ErrorCodes.FloatingUI.FailCallProvider}: FloatingUI failed to update the position: ${error}`);
-                    });
+                    _eventOnUpdatePosition();
+                    if (this._floatingUIOptions.updatePosition) {
+                        this._eventOnUpdateCallback = window.FloatingUIDOM.autoUpdate(this._floatingUIOptions.anchorElem, this._floatingUIOptions.floatingElem, _eventOnUpdatePosition.bind(this));
+                    }
                 }
                 build() {
                     this._setFloatingPosition();
