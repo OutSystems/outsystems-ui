@@ -11017,8 +11017,10 @@ var OSFramework;
                         }
                     }
                     _triggerOnStateChangedEvent(stateChanged) {
-                        if (this._videoElement.currentTime === 0 && stateChanged === Patterns.Video.Enum.VideoStates.Unstarted) {
-                            this.triggerPlatformEventCallback(this._platformEventOnStateChanged.bind(this), stateChanged);
+                        if (stateChanged === Patterns.Video.Enum.VideoStates.Unstarted) {
+                            if (this._videoElement.currentTime === 0) {
+                                this.triggerPlatformEventCallback(this._platformEventOnStateChanged.bind(this), stateChanged);
+                            }
                         }
                         else {
                             this.triggerPlatformEventCallback(this._platformEventOnStateChanged.bind(this), stateChanged);
