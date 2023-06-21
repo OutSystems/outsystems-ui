@@ -70,10 +70,13 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
 		}
 
+		/**
+		 * Builds the pattern.
+		 *
+		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
+		 */
 		public build(): void {
 			super.build();
-
-			this.setHtmlElements();
 
 			this._setSvgCode();
 
@@ -106,9 +109,6 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		public dispose(): void {
 			if (this.isBuilt) {
 				this.unsetCallbacks();
-
-				// Remove unused HTML elements
-				this.unsetHtmlElements();
 
 				//Destroying the base of pattern
 				super.dispose();

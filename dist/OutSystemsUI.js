@@ -18009,6 +18009,7 @@ var Providers;
                             options: this._getOptionsList(),
                             placeholder: this.Prompt,
                             search: true,
+                            searchNormalize: true,
                             searchPlaceholderText: this.SearchPrompt,
                             selectAllOnlyVisible: true,
                             selectedValue: this.getSelectedValues(),
@@ -18062,7 +18063,7 @@ var Providers;
                     let ProviderInfo;
                     (function (ProviderInfo) {
                         ProviderInfo["Name"] = "VirtualSelect";
-                        ProviderInfo["Version"] = "1.0.37";
+                        ProviderInfo["Version"] = "1.0.39";
                     })(ProviderInfo = Enum.ProviderInfo || (Enum.ProviderInfo = {}));
                     let CssClass;
                     (function (CssClass) {
