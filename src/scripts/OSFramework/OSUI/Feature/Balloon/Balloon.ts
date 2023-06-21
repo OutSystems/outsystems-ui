@@ -209,7 +209,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		public build(): void {
 			this._setCallbacks();
 			this._setEventListeners();
-			this.setFloatingUIBehaviour();
+			this.setFloatingUIOptions();
 			this._handleFocusTrap();
 			this._setA11YProperties();
 			this.setBalloonShape();
