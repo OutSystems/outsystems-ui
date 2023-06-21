@@ -5016,7 +5016,7 @@ declare namespace Providers.OSUI.Dropdown.VirtualSelect {
 declare namespace Providers.OSUI.Dropdown.VirtualSelect.Enum {
     enum ProviderInfo {
         Name = "VirtualSelect",
-        Version = "1.0.37"
+        Version = "1.0.39"
     }
     enum CssClass {
         ErrorMessage = "osui-dropdown-error-message",
