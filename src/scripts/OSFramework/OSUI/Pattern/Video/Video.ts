@@ -88,11 +88,17 @@ namespace OSFramework.OSUI.Patterns.Video {
 		// Method to apply all initial video configs
 		private _setVideoConfigs(): void {
 			this._setAutoplay();
+
 			this._setControls();
+
 			this._setLoop();
+
 			this._setMuted();
+
 			this._setPosterUrl();
+
 			this._setWidth();
+
 			this._setHeight();
 
 			// Trigger the event of unstarted based on video progress
@@ -120,7 +126,7 @@ namespace OSFramework.OSUI.Patterns.Video {
 			// If true, create the element with all the attributes
 			const subtitlesList = JSON.parse(this.configs.Subtitles);
 
-			if (subtitlesList.length !== 0) {
+			if (subtitlesList.length > 0) {
 				for (const item of subtitlesList) {
 					const trackElement = document.createElement(Patterns.Video.Enum.VideoTags.Track);
 

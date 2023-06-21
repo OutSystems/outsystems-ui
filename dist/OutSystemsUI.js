@@ -10902,19 +10902,9 @@ var OSFramework;
                     })(VideoTags = Enum.VideoTags || (Enum.VideoTags = {}));
                     let VideoAttributes;
                     (function (VideoAttributes) {
-                        VideoAttributes["Autoplay"] = "autoplay";
                         VideoAttributes["Captions"] = "captions";
-                        VideoAttributes["Controls"] = "controls";
                         VideoAttributes["Default"] = "default";
                         VideoAttributes["Height"] = "height";
-                        VideoAttributes["Kind"] = "kind";
-                        VideoAttributes["Label"] = "label";
-                        VideoAttributes["Loop"] = "loop";
-                        VideoAttributes["Muted"] = "muted";
-                        VideoAttributes["PosterURL"] = "poster";
-                        VideoAttributes["Src"] = "src";
-                        VideoAttributes["SrcLang"] = "srclang";
-                        VideoAttributes["Type"] = "type";
                         VideoAttributes["TypePath"] = "video/";
                         VideoAttributes["Width"] = "width";
                     })(VideoAttributes = Enum.VideoAttributes || (Enum.VideoAttributes = {}));
@@ -11006,7 +10996,7 @@ var OSFramework;
                     }
                     _setVideoTrack() {
                         const subtitlesList = JSON.parse(this.configs.Subtitles);
-                        if (subtitlesList.length !== 0) {
+                        if (subtitlesList.length > 0) {
                             for (const item of subtitlesList) {
                                 const trackElement = document.createElement(Patterns.Video.Enum.VideoTags.Track);
                                 OSUI.Helper.Dom.Styles.AddClass(trackElement, Patterns.Video.Enum.CssClass.VideoTrack);

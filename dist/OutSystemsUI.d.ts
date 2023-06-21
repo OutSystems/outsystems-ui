@@ -3481,19 +3481,9 @@ declare namespace OSFramework.OSUI.Patterns.Video.Enum {
         Track = "track"
     }
     enum VideoAttributes {
-        Autoplay = "autoplay",
         Captions = "captions",
-        Controls = "controls",
         Default = "default",
         Height = "height",
-        Kind = "kind",
-        Label = "label",
-        Loop = "loop",
-        Muted = "muted",
-        PosterURL = "poster",
-        Src = "src",
-        SrcLang = "srclang",
-        Type = "type",
         TypePath = "video/",
         Width = "width"
     }
