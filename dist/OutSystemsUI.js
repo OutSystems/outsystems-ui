@@ -452,6 +452,7 @@ var OSFramework;
                 PatternName["Timepicker"] = "Timepicker";
                 PatternName["Tooltip"] = "Tooltip";
                 PatternName["TouchEvents"] = "TouchEvents";
+                PatternName["Video"] = "Video";
             })(PatternName = GlobalEnum.PatternName || (GlobalEnum.PatternName = {}));
             let ShapeTypes;
             (function (ShapeTypes) {
@@ -10857,6 +10858,262 @@ var OSFramework;
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
 })(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
+            var Video;
+            (function (Video) {
+                var Enum;
+                (function (Enum) {
+                    let CssClass;
+                    (function (CssClass) {
+                        CssClass["VideoSource"] = "osui-video-source";
+                        CssClass["VideoTrack"] = "osui-video-track";
+                    })(CssClass = Enum.CssClass || (Enum.CssClass = {}));
+                    let Events;
+                    (function (Events) {
+                        Events["OnStateChanged"] = "StateChanged";
+                    })(Events = Enum.Events || (Enum.Events = {}));
+                    let VideoStates;
+                    (function (VideoStates) {
+                        VideoStates["OnEnded"] = "Ended";
+                        VideoStates["OnPause"] = "Paused";
+                        VideoStates["OnPlaying"] = "Playing";
+                        VideoStates["Unstarted"] = "Unstarted";
+                    })(VideoStates = Enum.VideoStates || (Enum.VideoStates = {}));
+                    let Properties;
+                    (function (Properties) {
+                        Properties["Autoplay"] = "Autoplay";
+                        Properties["Controls"] = "Controls";
+                        Properties["Height"] = "Height";
+                        Properties["Loop"] = "Loop";
+                        Properties["Muted"] = "Muted";
+                        Properties["PosterURL"] = "PosterURL";
+                        Properties["URL"] = "URL";
+                        Properties["Width"] = "Width";
+                    })(Properties = Enum.Properties || (Enum.Properties = {}));
+                    let VideoTags;
+                    (function (VideoTags) {
+                        VideoTags["Source"] = "source";
+                        VideoTags["Track"] = "track";
+                    })(VideoTags = Enum.VideoTags || (Enum.VideoTags = {}));
+                    let VideoAttributes;
+                    (function (VideoAttributes) {
+                        VideoAttributes["Captions"] = "captions";
+                        VideoAttributes["Default"] = "default";
+                        VideoAttributes["Height"] = "height";
+                        VideoAttributes["TypePath"] = "video/";
+                        VideoAttributes["Width"] = "width";
+                    })(VideoAttributes = Enum.VideoAttributes || (Enum.VideoAttributes = {}));
+                })(Enum = Video.Enum || (Video.Enum = {}));
+            })(Video = Patterns.Video || (Patterns.Video = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
+            var Video;
+            (function (Video_1) {
+                class Video extends Patterns.AbstractPattern {
+                    constructor(uniqueId, configs) {
+                        super(uniqueId, new Video_1.VideoConfig(configs));
+                    }
+                    _setAutoplay() {
+                        this._videoElement.autoplay = this.configs.Autoplay;
+                        if (this.configs.Autoplay && this.configs.Muted === false) {
+                            console.warn(`Some modern browsers will not autoplay your video on ${OSUI.GlobalEnum.PatternName.Video} if it's not muted. The general rule of many browsers is that a user must opt-in to certain actions before they can happen. Set the Muted parameter to True, to start the video automatically.`);
+                        }
+                    }
+                    _setControls() {
+                        this._videoElement.controls = this.configs.Controls;
+                    }
+                    _setHeight() {
+                        if (this.configs.Height !== OSUI.Constants.EmptyString) {
+                            OSUI.Helper.Dom.Attribute.Set(this._videoElement, Patterns.Video.Enum.VideoAttributes.Height, this.configs.Height);
+                        }
+                        else {
+                            OSUI.Helper.Dom.Attribute.Remove(this._videoElement, Patterns.Video.Enum.VideoAttributes.Height);
+                        }
+                    }
+                    _setLoop() {
+                        this._videoElement.loop = this.configs.Loop;
+                    }
+                    _setMuted() {
+                        this._videoElement.muted = this.configs.Muted;
+                    }
+                    _setPosterUrl() {
+                        if (this.configs.PosterURL !== OSUI.Constants.EmptyString) {
+                            this._videoElement.poster = this.configs.PosterURL;
+                        }
+                        else {
+                            this._videoElement.poster = OSUI.Constants.EmptyString;
+                        }
+                    }
+                    _setVideoConfigs() {
+                        this._setAutoplay();
+                        this._setControls();
+                        this._setLoop();
+                        this._setMuted();
+                        this._setPosterUrl();
+                        this._setWidth();
+                        this._setHeight();
+                        if (this._videoElement.currentTime === 0) {
+                            this._triggerOnStateChangedEvent(Patterns.Video.Enum.VideoStates.Unstarted);
+                        }
+                    }
+                    _setVideoSource() {
+                        const _urlFileExtension = this.configs.URL.split('.').pop();
+                        OSUI.Helper.Dom.Styles.AddClass(this._videoSourceElement, Patterns.Video.Enum.CssClass.VideoSource);
+                        this._videoSourceElement.src = this.configs.URL;
+                        this._videoSourceElement.type = Patterns.Video.Enum.VideoAttributes.TypePath + _urlFileExtension;
+                    }
+                    _setVideoTrack() {
+                        const subtitlesList = JSON.parse(this.configs.Subtitles);
+                        if (subtitlesList.length > 0) {
+                            for (const item of subtitlesList) {
+                                const trackElement = document.createElement(Patterns.Video.Enum.VideoTags.Track);
+                                OSUI.Helper.Dom.Styles.AddClass(trackElement, Patterns.Video.Enum.CssClass.VideoTrack);
+                                trackElement.kind = Patterns.Video.Enum.VideoAttributes.Captions;
+                                trackElement.srclang = item.LanguageCode;
+                                trackElement.src = item.SourceFile;
+                                trackElement.label = item.Label;
+                                this.selfElement.appendChild(trackElement);
+                            }
+                        }
+                    }
+                    _setWidth() {
+                        if (this.configs.Width !== OSUI.Constants.EmptyString) {
+                            OSUI.Helper.Dom.Attribute.Set(this._videoElement, Patterns.Video.Enum.VideoAttributes.Width, this.configs.Width);
+                        }
+                        else {
+                            OSUI.Helper.Dom.Attribute.Remove(this._videoElement, Patterns.Video.Enum.VideoAttributes.Width);
+                        }
+                    }
+                    _triggerOnStateChangedEvent(stateChanged) {
+                        if (stateChanged === Patterns.Video.Enum.VideoStates.Unstarted) {
+                            if (this._videoElement.currentTime === 0) {
+                                this.triggerPlatformEventCallback(this._platformEventOnStateChanged.bind(this), stateChanged);
+                            }
+                        }
+                        else {
+                            this.triggerPlatformEventCallback(this._platformEventOnStateChanged.bind(this), stateChanged);
+                        }
+                    }
+                    setA11YProperties() {
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    setCallbacks() {
+                        this._videoElement.onplay = this._triggerOnStateChangedEvent.bind(this, Patterns.Video.Enum.VideoStates.Unstarted);
+                        this._videoElement.onplaying = this._triggerOnStateChangedEvent.bind(this, Patterns.Video.Enum.VideoStates.OnPlaying);
+                        this._videoElement.onpause = this._triggerOnStateChangedEvent.bind(this, Patterns.Video.Enum.VideoStates.OnPause);
+                        this._videoElement.onended = this._triggerOnStateChangedEvent.bind(this, Patterns.Video.Enum.VideoStates.OnEnded);
+                    }
+                    setHtmlElements() {
+                        this._videoElement = this.selfElement;
+                        this._videoSourceElement = document.createElement(Patterns.Video.Enum.VideoTags.Source);
+                        this.selfElement.appendChild(this._videoSourceElement);
+                        this._setVideoSource();
+                        this._setVideoConfigs();
+                        this._setVideoTrack();
+                    }
+                    unsetCallbacks() {
+                        this._platformEventOnStateChanged = undefined;
+                        this._videoElement.onended = undefined;
+                        this._videoElement.onpause = undefined;
+                        this._videoElement.onplay = undefined;
+                        this._videoElement.onplaying = undefined;
+                    }
+                    unsetHtmlElements() {
+                        this._videoElement = undefined;
+                        this._videoSourceElement = undefined;
+                    }
+                    build() {
+                        super.build();
+                        this.setHtmlElements();
+                        this.setCallbacks();
+                        this.finishBuild();
+                    }
+                    changeProperty(propertyName, propertyValue) {
+                        super.changeProperty(propertyName, propertyValue);
+                        if (this.isBuilt) {
+                            switch (propertyName) {
+                                case Video_1.Enum.Properties.Autoplay:
+                                    this._setAutoplay();
+                                    break;
+                                case Video_1.Enum.Properties.Controls:
+                                    this._setControls();
+                                    break;
+                                case Video_1.Enum.Properties.Loop:
+                                    this._setLoop();
+                                    break;
+                                case Video_1.Enum.Properties.Muted:
+                                    this._setMuted();
+                                    break;
+                                case Video_1.Enum.Properties.PosterURL:
+                                    this._setPosterUrl();
+                                    break;
+                                case Video_1.Enum.Properties.URL:
+                                    this._setVideoSource();
+                                    break;
+                                case Video_1.Enum.Properties.Width:
+                                    this._setWidth();
+                                    break;
+                                case Video_1.Enum.Properties.Height:
+                                    this._setHeight();
+                                    break;
+                            }
+                        }
+                    }
+                    dispose() {
+                        this.unsetCallbacks();
+                        this.unsetHtmlElements();
+                        super.dispose();
+                    }
+                    registerCallback(eventName, callback) {
+                        switch (eventName) {
+                            case Patterns.Video.Enum.Events.OnStateChanged:
+                                if (this._platformEventOnStateChanged === undefined) {
+                                    this._platformEventOnStateChanged = callback;
+                                }
+                                else {
+                                    console.warn(`The ${OSUI.GlobalEnum.PatternName.Video} already has the state changed callback set.`);
+                                }
+                                break;
+                            default:
+                                super.registerCallback(eventName, callback);
+                        }
+                    }
+                }
+                Video_1.Video = Video;
+            })(Video = Patterns.Video || (Patterns.Video = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
+            var Video;
+            (function (Video) {
+                class VideoConfig extends Patterns.AbstractConfiguration {
+                    constructor(config) {
+                        super(config);
+                    }
+                }
+                Video.VideoConfig = VideoConfig;
+            })(Video = Patterns.Video || (Patterns.Video = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
 var OutSystems;
 (function (OutSystems) {
     var OSUI;
@@ -11138,6 +11395,12 @@ var OutSystems;
                 FailChangeProperty: 'OSUI-API-29001',
                 FailDispose: 'OSUI-API-29002',
                 FailRegisterCallback: 'OSUI-API-29003',
+            };
+            ErrorCodes.Video = {
+                FailChangeProperty: 'OSUI-API-31001',
+                FailClose: 'OSUI-API-31002',
+                FailDispose: 'OSUI-API-31003',
+                FailRegisterCallback: 'OSUI-API-31004',
             };
             ErrorCodes.Legacy = {
                 FailAddFavicon_Legacy: 'OSUI-LEG-000001',
@@ -14208,6 +14471,76 @@ var OutSystems;
                 }
                 TouchEventsAPI.RegisterCallback = RegisterCallback;
             })(TouchEventsAPI = Patterns.TouchEventsAPI || (Patterns.TouchEventsAPI = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
+})(OutSystems || (OutSystems = {}));
+var OutSystems;
+(function (OutSystems) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
+            var VideoAPI;
+            (function (VideoAPI) {
+                const _videoMap = new Map();
+                function ChangeProperty(videoId, propertyName, propertyValue) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Video.FailChangeProperty,
+                        callback: () => {
+                            const video = GetVideoById(videoId);
+                            video.changeProperty(propertyName, propertyValue);
+                        },
+                    });
+                    return result;
+                }
+                VideoAPI.ChangeProperty = ChangeProperty;
+                function Create(videoId, configs) {
+                    if (_videoMap.has(videoId)) {
+                        throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Video} registered under id: ${videoId}`);
+                    }
+                    const _newVideo = new OSFramework.OSUI.Patterns.Video.Video(videoId, JSON.parse(configs));
+                    _videoMap.set(videoId, _newVideo);
+                    return _newVideo;
+                }
+                VideoAPI.Create = Create;
+                function Dispose(videoId) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Video.FailDispose,
+                        callback: () => {
+                            const video = GetVideoById(videoId);
+                            video.dispose();
+                            _videoMap.delete(videoId);
+                        },
+                    });
+                    return result;
+                }
+                VideoAPI.Dispose = Dispose;
+                function GetAllVideos() {
+                    return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_videoMap);
+                }
+                VideoAPI.GetAllVideos = GetAllVideos;
+                function GetVideoById(videoId) {
+                    return OSFramework.OSUI.Helper.MapOperation.FindInMap(OSFramework.OSUI.GlobalEnum.PatternName.Video, videoId, _videoMap);
+                }
+                VideoAPI.GetVideoById = GetVideoById;
+                function Initialize(videoId) {
+                    const video = GetVideoById(videoId);
+                    video.build();
+                    return video;
+                }
+                VideoAPI.Initialize = Initialize;
+                function RegisterCallback(videoId, eventName, callback) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Video.FailRegisterCallback,
+                        callback: () => {
+                            const _videoItem = this.GetVideoById(videoId);
+                            _videoItem.registerCallback(eventName, callback);
+                        },
+                    });
+                    return result;
+                }
+                VideoAPI.RegisterCallback = RegisterCallback;
+            })(VideoAPI = Patterns.VideoAPI || (Patterns.VideoAPI = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
 })(OutSystems || (OutSystems = {}));

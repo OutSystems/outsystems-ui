@@ -371,7 +371,8 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         TabsContentItem = "TabsContentItem",
         Timepicker = "Timepicker",
         Tooltip = "Tooltip",
-        TouchEvents = "TouchEvents"
+        TouchEvents = "TouchEvents",
+        Video = "Video"
     }
     enum ShapeTypes {
         Rounded = "rounded",
@@ -3446,6 +3447,93 @@ declare namespace OSFramework.OSUI.Patterns.TouchEvents {
         constructor(config: JSON);
     }
 }
+declare namespace OSFramework.OSUI.Patterns.Video.Callbacks {
+    type OSOnStateChangedEvent = {
+        (videoId: string, stateChanged: string): void;
+    };
+}
+declare namespace OSFramework.OSUI.Patterns.Video.Enum {
+    enum CssClass {
+        VideoSource = "osui-video-source",
+        VideoTrack = "osui-video-track"
+    }
+    enum Events {
+        OnStateChanged = "StateChanged"
+    }
+    enum VideoStates {
+        OnEnded = "Ended",
+        OnPause = "Paused",
+        OnPlaying = "Playing",
+        Unstarted = "Unstarted"
+    }
+    enum Properties {
+        Autoplay = "Autoplay",
+        Controls = "Controls",
+        Height = "Height",
+        Loop = "Loop",
+        Muted = "Muted",
+        PosterURL = "PosterURL",
+        URL = "URL",
+        Width = "Width"
+    }
+    enum VideoTags {
+        Source = "source",
+        Track = "track"
+    }
+    enum VideoAttributes {
+        Captions = "captions",
+        Default = "default",
+        Height = "height",
+        TypePath = "video/",
+        Width = "width"
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.Video {
+    interface IVideo extends Interface.IPattern {
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.Video {
+    class Video extends AbstractPattern<VideoConfig> implements IVideo {
+        private _platformEventOnStateChanged;
+        private _videoElement;
+        private _videoSourceElement;
+        constructor(uniqueId: string, configs: JSON);
+        private _setAutoplay;
+        private _setControls;
+        private _setHeight;
+        private _setLoop;
+        private _setMuted;
+        private _setPosterUrl;
+        private _setVideoConfigs;
+        private _setVideoSource;
+        private _setVideoTrack;
+        private _setWidth;
+        private _triggerOnStateChangedEvent;
+        protected setA11YProperties(): void;
+        protected setCallbacks(): void;
+        protected setHtmlElements(): void;
+        protected unsetCallbacks(): void;
+        protected unsetHtmlElements(): void;
+        build(): void;
+        changeProperty(propertyName: string, propertyValue: unknown): void;
+        dispose(): void;
+        registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.Video {
+    class VideoConfig extends AbstractConfiguration {
+        Autoplay: boolean;
+        Controls: boolean;
+        Height: string;
+        Loop: boolean;
+        Muted: boolean;
+        PosterURL: string;
+        Subtitles: string;
+        URL: string;
+        Width: string;
+        constructor(config: JSON);
+    }
+}
 declare namespace OutSystems.OSUI.ErrorCodes {
     const Success: {
         code: string;
@@ -3720,6 +3808,12 @@ declare namespace OutSystems.OSUI.ErrorCodes {
     };
     const InlineSvg: {
         FailChangeProperty: string;
+        FailDispose: string;
+        FailRegisterCallback: string;
+    };
+    const Video: {
+        FailChangeProperty: string;
+        FailClose: string;
         FailDispose: string;
         FailRegisterCallback: string;
     };
@@ -4088,6 +4182,15 @@ declare namespace OutSystems.OSUI.Patterns.TouchEventsAPI {
     function GetTouchEventsById(touchEventsId: string): OSFramework.OSUI.Patterns.TouchEvents.ITouchEvents;
     function Initialize(touchEventsId: string): OSFramework.OSUI.Patterns.TouchEvents.ITouchEvents;
     function RegisterCallback(touchEventsID: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void;
+}
+declare namespace OutSystems.OSUI.Patterns.VideoAPI {
+    function ChangeProperty(videoId: string, propertyName: string, propertyValue: unknown): string;
+    function Create(videoId: string, configs: string): OSFramework.OSUI.Patterns.Video.IVideo;
+    function Dispose(videoId: string): string;
+    function GetAllVideos(): Array<string>;
+    function GetVideoById(videoId: string): OSFramework.OSUI.Patterns.Video.IVideo;
+    function Initialize(videoId: string): OSFramework.OSUI.Patterns.Video.IVideo;
+    function RegisterCallback(videoId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
 }
 declare namespace OutSystems.OSUI.Utils.Accessibility {
     function SetAccessibilityRole(widgetId: string, role: string): string;
