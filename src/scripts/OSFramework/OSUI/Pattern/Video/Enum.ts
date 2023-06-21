@@ -56,5 +56,6 @@ namespace OSFramework.OSUI.Patterns.Video.Enum {
 		Height = 'height',
 		TypePath = 'video/',
 		Width = 'width',
+		Muted = 'muted',
 	}
 }
