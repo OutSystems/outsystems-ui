@@ -3490,7 +3490,6 @@ declare namespace OSFramework.OSUI.Patterns.Video.Enum {
 }
 declare namespace OSFramework.OSUI.Patterns.Video {
     interface IVideo extends Interface.IPattern {
-        registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Video {

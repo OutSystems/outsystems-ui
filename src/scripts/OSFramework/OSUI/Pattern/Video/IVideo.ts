@@ -8,7 +8,5 @@ namespace OSFramework.OSUI.Patterns.Video {
 	 * @extends {Interface.IPattern}
 	 * @extends {Interface.ICallback}
 	 */
-	export interface IVideo extends Interface.IPattern {
-		registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
-	}
+	export interface IVideo extends Interface.IPattern {}
 }
