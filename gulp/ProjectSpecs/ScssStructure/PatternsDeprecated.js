@@ -81,6 +81,10 @@ const sectionInfo = {
         {
             "name": "Tooltip",
             "path": "10-deprecated/tooltip-deprecated"
+        },
+        {
+            "name": "Video",
+            "path": "10-deprecated/video-deprecated"
         }
     ]
 };
