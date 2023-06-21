@@ -8441,8 +8441,9 @@ var OSFramework;
                     _overlayMouseDownCallback(_args, e) {
                         const targetElem = e.target;
                         this._clickedOutsideElement = true;
-                        if (targetElem.closest('.osui-sidebar__header') ||
-                            (targetElem.closest('.osui-sidebar__content') && this.selfElement.contains(targetElem) === false)) {
+                        if (targetElem.closest(`${OSUI.Constants.Dot} ${Sidebar_1.Enum.CssClass.Header}`) ||
+                            (targetElem.closest(`${OSUI.Constants.Dot} + ${Sidebar_1.Enum.CssClass.Content}`) &&
+                                this.selfElement.contains(targetElem) === false)) {
                             this._clickedOutsideElement = false;
                         }
                     }
