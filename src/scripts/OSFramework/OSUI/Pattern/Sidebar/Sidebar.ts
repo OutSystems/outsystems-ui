@@ -188,8 +188,8 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			const targetElem = e.target as HTMLElement;
 			this._clickedOutsideElement = true;
 			if (
-				targetElem.closest(`${Constants.Dot} ${Enum.CssClass.Header}`) ||
-				(targetElem.closest(`${Constants.Dot} + ${Enum.CssClass.Content}`) &&
+				targetElem.closest(`${Constants.Dot}${Enum.CssClass.Header}`) ||
+				(targetElem.closest(`${Constants.Dot}${Enum.CssClass.Content}`) &&
 					this.selfElement.contains(targetElem) === false)
 			) {
 				// If the click was inside the side bar, then change the flag to false.

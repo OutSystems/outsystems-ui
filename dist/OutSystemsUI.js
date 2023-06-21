@@ -1,5 +1,5 @@
 /*!
-OutSystems UI 2.16.0
+OutSystems UI 2.17.0
 Website:
  • https://www.outsystems.com/outsystems-ui
 GitHub:
@@ -133,7 +133,7 @@ var OSFramework;
             Constants.AccessibilityHideElementClass = 'wcag-hide-text';
             Constants.IsRTLClass = 'is-rtl';
             Constants.NoTransition = 'no-transition';
-            Constants.OSUIVersion = '2.16.0';
+            Constants.OSUIVersion = '2.17.0';
             Constants.ZeroValue = 0;
         })(Constants = OSUI.Constants || (OSUI.Constants = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
@@ -8442,8 +8442,8 @@ var OSFramework;
                     _overlayMouseDownCallback(_args, e) {
                         const targetElem = e.target;
                         this._clickedOutsideElement = true;
-                        if (targetElem.closest(`${OSUI.Constants.Dot} ${Sidebar_1.Enum.CssClass.Header}`) ||
-                            (targetElem.closest(`${OSUI.Constants.Dot} + ${Sidebar_1.Enum.CssClass.Content}`) &&
+                        if (targetElem.closest(`${OSUI.Constants.Dot}${Sidebar_1.Enum.CssClass.Header}`) ||
+                            (targetElem.closest(`${OSUI.Constants.Dot}${Sidebar_1.Enum.CssClass.Content}`) &&
                                 this.selfElement.contains(targetElem) === false)) {
                             this._clickedOutsideElement = false;
                         }
@@ -10907,6 +10907,7 @@ var OSFramework;
                         VideoAttributes["Height"] = "height";
                         VideoAttributes["TypePath"] = "video/";
                         VideoAttributes["Width"] = "width";
+                        VideoAttributes["Muted"] = "muted";
                     })(VideoAttributes = Enum.VideoAttributes || (Enum.VideoAttributes = {}));
                 })(Enum = Video.Enum || (Video.Enum = {}));
             })(Video = Patterns.Video || (Patterns.Video = {}));
