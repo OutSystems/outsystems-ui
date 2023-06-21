@@ -10989,10 +10989,10 @@ var OSFramework;
                         }
                     }
                     _setVideoSource() {
-                        const urlFileExtension = this.configs.URL.split('.').pop();
+                        const _urlFileExtension = this.configs.URL.split('.').pop();
                         OSUI.Helper.Dom.Styles.AddClass(this._videoSourceElement, Patterns.Video.Enum.CssClass.VideoSource);
                         this._videoSourceElement.src = this.configs.URL;
-                        this._videoSourceElement.type = Patterns.Video.Enum.VideoAttributes.TypePath + urlFileExtension;
+                        this._videoSourceElement.type = Patterns.Video.Enum.VideoAttributes.TypePath + _urlFileExtension;
                     }
                     _setVideoTrack() {
                         const subtitlesList = JSON.parse(this.configs.Subtitles);
@@ -11017,17 +11017,18 @@ var OSFramework;
                         }
                     }
                     _triggerOnStateChangedEvent(stateChanged) {
-                        this.triggerPlatformEventCallback(this._platformEventOnStateChanged.bind(this), stateChanged);
+                        if (this._videoElement.currentTime === 0 && stateChanged === Patterns.Video.Enum.VideoStates.Unstarted) {
+                            this.triggerPlatformEventCallback(this._platformEventOnStateChanged.bind(this), stateChanged);
+                        }
+                        else {
+                            this.triggerPlatformEventCallback(this._platformEventOnStateChanged.bind(this), stateChanged);
+                        }
                     }
                     setA11YProperties() {
                         console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
                     }
                     setCallbacks() {
-                        this._videoElement.onplay = () => {
-                            if (this._videoElement.currentTime === 0) {
-                                this._triggerOnStateChangedEvent(Patterns.Video.Enum.VideoStates.Unstarted);
-                            }
-                        };
+                        this._videoElement.onplay = this._triggerOnStateChangedEvent.bind(this, Patterns.Video.Enum.VideoStates.Unstarted);
                         this._videoElement.onplaying = this._triggerOnStateChangedEvent.bind(this, Patterns.Video.Enum.VideoStates.OnPlaying);
                         this._videoElement.onpause = this._triggerOnStateChangedEvent.bind(this, Patterns.Video.Enum.VideoStates.OnPause);
                         this._videoElement.onended = this._triggerOnStateChangedEvent.bind(this, Patterns.Video.Enum.VideoStates.OnEnded);
@@ -11414,10 +11415,10 @@ var OutSystems;
                 FailRegisterCallback: 'OSUI-API-29003',
             };
             ErrorCodes.Video = {
-                FailChangeProperty: 'OSUI-API-30001',
-                FailClose: 'OSUI-API-30002',
-                FailDispose: 'OSUI-API-30003',
-                FailRegisterCallback: 'OSUI-API-30004',
+                FailChangeProperty: 'OSUI-API-31001',
+                FailClose: 'OSUI-API-31002',
+                FailDispose: 'OSUI-API-31003',
+                FailRegisterCallback: 'OSUI-API-31004',
             };
             ErrorCodes.Legacy = {
                 FailAddFavicon_Legacy: 'OSUI-LEG-000001',

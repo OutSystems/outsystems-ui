@@ -145,6 +145,7 @@ Section Index:
         6.8.17. Submenu
         6.8.18. Tabs
         6.8.19. Tooltip
+        6.8.20. Video
 7. Usefull Classes
     7.1. a11y (Accessibility)
     7.2. Colors - Brand
@@ -15465,6 +15466,16 @@ input.OSFillParent.calendar-input{
 }
 .layout-native .tabs-content .tooltip-background{
   position:absolute;
+}
+/*! 6.8.20. Video */
+.video-preview{
+  display:block;
+}
+.video-wrapper.hide-controls{
+  pointer-events:none;
+}
+.video-wrapper.hide-controls::-webkit-media-controls-panel, .video-wrapper.hide-controls::-webkit-media-controls-panel-container{
+  display:none !important;
 }
 /*! ==============================================================================
 7. Usefull Classes

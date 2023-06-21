@@ -107,17 +107,17 @@ namespace OSFramework.OSUI.Patterns.Video {
 			}
 		}
 
-		// Method create the source element
+		// Method to create the source element
 		private _setVideoSource(): void {
 			// Get the file extension from URL
-			const urlFileExtension = this.configs.URL.split('.').pop();
+			const _urlFileExtension = this.configs.URL.split('.').pop();
 
 			// Add class to video source element
 			OSUI.Helper.Dom.Styles.AddClass(this._videoSourceElement, Patterns.Video.Enum.CssClass.VideoSource);
 
 			// Set the attributes to video source created
 			this._videoSourceElement.src = this.configs.URL;
-			this._videoSourceElement.type = Patterns.Video.Enum.VideoAttributes.TypePath + urlFileExtension;
+			this._videoSourceElement.type = Patterns.Video.Enum.VideoAttributes.TypePath + _urlFileExtension;
 		}
 
 		// Method create the track element
@@ -160,7 +160,11 @@ namespace OSFramework.OSUI.Patterns.Video {
 
 		// Method that triggers the OnStateChanged event
 		private _triggerOnStateChangedEvent(stateChanged: string): void {
-			this.triggerPlatformEventCallback(this._platformEventOnStateChanged.bind(this), stateChanged);
+			if (this._videoElement.currentTime === 0 && stateChanged === Patterns.Video.Enum.VideoStates.Unstarted) {
+				this.triggerPlatformEventCallback(this._platformEventOnStateChanged.bind(this), stateChanged);
+			} else {
+				this.triggerPlatformEventCallback(this._platformEventOnStateChanged.bind(this), stateChanged);
+			}
 		}
 
 		/**
@@ -181,11 +185,10 @@ namespace OSFramework.OSUI.Patterns.Video {
 		 */
 		protected setCallbacks(): void {
 			// Check the video time and trigger the event if is 0 with the status Unstarted
-			this._videoElement.onplay = () => {
-				if (this._videoElement.currentTime === 0) {
-					this._triggerOnStateChangedEvent(Patterns.Video.Enum.VideoStates.Unstarted);
-				}
-			};
+			this._videoElement.onplay = this._triggerOnStateChangedEvent.bind(
+				this,
+				Patterns.Video.Enum.VideoStates.Unstarted
+			);
 
 			this._videoElement.onplaying = this._triggerOnStateChangedEvent.bind(
 				this,

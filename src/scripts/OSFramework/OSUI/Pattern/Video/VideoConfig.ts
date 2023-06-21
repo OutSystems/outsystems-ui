@@ -1,5 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Patterns.Video {
+	/**
+	 *
+	 * Class that represents the custom configurations received by the Video.
+	 * @export
+	 * @class VideoConfig
+	 * @extends {AbstractConfiguration}
+	 */
 	export class VideoConfig extends AbstractConfiguration {
 		public Autoplay: boolean;
 		public Controls: boolean;
